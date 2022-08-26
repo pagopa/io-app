@@ -1,19 +1,16 @@
 import "react-native-reanimated";
 import React, { useEffect, useState } from "react";
-import {
-  Camera,
-  CameraPermissionRequestResult,
-  useCameraDevices
-} from "react-native-vision-camera";
-import { View, Dimensions, StyleSheet } from "react-native";
+import { Camera, useCameraDevices } from "react-native-vision-camera";
+import { View, Dimensions, StyleSheet, PermissionsAndroid } from "react-native";
 import {
   useScanBarcodes,
   BarcodeFormat,
   Barcode
 } from "vision-camera-code-scanner";
+import { StackNavigationProp } from "@react-navigation/stack/lib/typescript/src/types";
+import { ParamListBase, useNavigation } from "@react-navigation/native";
 import I18n from "../i18n";
 import { isAndroid } from "../utils/platform";
-import { AsyncAlert } from "../utils/asyncAlert";
 import customVariables from "../theme/variables";
 import { usePrevious } from "../utils/hooks/usePrevious";
 import { openAppSettings } from "../utils/appSettings";
@@ -126,29 +123,6 @@ export const retrieveNextBarcode = (
   return chosenBarcodes.QRCODE || chosenBarcodes.DATA_MATRIX || null;
 };
 
-/**
- * Show the Android permissions rationale and after
- * pressing the button trigger the permissions request.
- * Everything is wrapped inside a Promise in order to
- * be used with async/await.
- */
-function handleAndroidPermissions() {
-  return new Promise<CameraPermissionRequestResult>((resolve, reject) => {
-    AsyncAlert(
-      I18n.t("permissionRationale.camera.title"),
-      I18n.t("permissionRationale.camera.message"),
-      [
-        {
-          text: I18n.t("global.buttons.choose"),
-          style: "default",
-          onPress: () =>
-            Camera.requestCameraPermission().then(resolve).catch(reject)
-        }
-      ]
-    ).catch(reject);
-  });
-}
-
 type Props = {
   onBarcodeScanned: (barcode: ScannedBarcode) => void;
   disabled?: boolean;
@@ -166,6 +140,7 @@ export const BarcodeCamera = (props: Props) => {
   const [permissionsGranted, setPermissionsGranted] = useState(false);
   const device = devices.back;
   const barcodeConfig = useIOSelector(barcodesScannerConfigSelector);
+  const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
 
   const [frameProcessor, barcodes] = useScanBarcodes(
     [BarcodeFormat.QR_CODE, BarcodeFormat.DATA_MATRIX],
@@ -174,9 +149,8 @@ export const BarcodeCamera = (props: Props) => {
     }
   );
 
-  // Hook that handles the permissions initialization.
   useEffect(() => {
-    async function checkPermissions() {
+    const fn = async () => {
       const cameraPermissions = await Camera.getCameraPermissionStatus();
 
       if (
@@ -186,17 +160,28 @@ export const BarcodeCamera = (props: Props) => {
         const selectedPermissions = isAndroid
           ? // The scanner package automatically asks for android permission, but we have to display before an alert with
             // the rationale
-            await handleAndroidPermissions()
+            await PermissionsAndroid.request("android.permission.CAMERA", {
+              title: I18n.t("permissionRationale.camera.title"),
+              message: I18n.t("permissionRationale.camera.message"),
+              buttonPositive: I18n.t("global.buttons.choose")
+            })
           : await Camera.requestCameraPermission();
 
-        setPermissionsGranted(selectedPermissions === "authorized");
+        setPermissionsGranted(
+          selectedPermissions === "authorized" ||
+            selectedPermissions === "granted"
+        );
       } else {
         setPermissionsGranted(cameraPermissions === "authorized");
       }
-    }
+    };
 
-    void checkPermissions();
-  }, [setPermissionsGranted]);
+    navigation.addListener("transitionEnd", fn);
+
+    return () => {
+      navigation.removeListener("transitionEnd", fn);
+    };
+  }, [navigation]);
 
   // Hook that handles the `onBarcodeScanned` callback.
   useEffect(() => {
