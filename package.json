@@ -80,12 +80,13 @@
     "generate-myportal-readme": "jsdoc2md ts/utils/webviewScripts/*.js > MYPORTAL_README.md"
   },
   "dependencies": {
+    "@babel/plugin-transform-regenerator": "^7.18.6",
     "@gorhom/bottom-sheet": "^4.1.5",
     "@pagopa/io-pagopa-commons": "^2.0.2",
     "@pagopa/react-native-cie": "^1.1.4",
     "@pagopa/ts-commons": "^9.4.0",
-    "@react-native-clipboard/clipboard": "^1.10.0",
     "@react-native-async-storage/async-storage": "^1.17.10",
+    "@react-native-clipboard/clipboard": "^1.10.0",
     "@react-native-community/cameraroll": "^4.0.0",
     "@react-native-community/datetimepicker": "^3.5.2",
     "@react-native-community/push-notification-ios": "^1.8.0",
@@ -115,6 +116,7 @@
     "italia-ts-commons": "8.6.0",
     "jail-monkey": "^2.3.2",
     "lodash": "^4.17.21",
+    "metro-babel-register": "^0.72.1",
     "native-base": "^2.15.2",
     "native-base-shoutem-theme": "0.3.1",
     "path-browserify": "0.0.0",
