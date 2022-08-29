@@ -66,7 +66,8 @@ const OtpCode = (code: string) => (
     color={"bluegrey"}
     weight={"Regular"}
     fontStyle={styles.optCode}
-    font={"RobotoMono"}>
+    font={"RobotoMono"}
+  >
     {code}
   </BaseTypography>
 );
@@ -183,7 +184,8 @@ export const OtpCodeComponent = (props: Props) => {
         onPress={() => clipboardSetStringWithFeedback(props.otp.code)}
         accessible={true}
         accessibilityRole={"button"}
-        accessibilityHint={I18n.t("bonus.cgn.accessibility.code")}>
+        accessibilityHint={I18n.t("bonus.cgn.accessibility.code")}
+      >
         {OtpCode(formattedCode)}
         <View style={{ justifyContent: "center" }}>
           <IconFont name="io-copy" color={IOColors.blue} />
@@ -196,7 +198,8 @@ export const OtpCodeComponent = (props: Props) => {
             backgroundColor:
               props.progressBaseBgColor ?? styles.progressBase.backgroundColor
           }
-        ]}>
+        ]}
+      >
         <Animated.View
           style={[
             styles.progress,

@@ -78,7 +78,8 @@ const IbanKoNotOwned: React.FunctionComponent<Props> = props => {
     <BaseScreenComponent
       goBack={props.modifyIban}
       headerTitle={headerTitle}
-      contextualHelp={props.contextualHelp}>
+      contextualHelp={props.contextualHelp}
+    >
       <SafeAreaView style={IOStyles.flex}>
         <InfoScreenComponent
           image={renderInfoRasterImage(image)}

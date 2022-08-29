@@ -106,7 +106,8 @@ const SummaryScreen = (props: Props): React.ReactElement | null => {
       <BaseScreenComponent
         goBack={true}
         contextualHelp={emptyContextualHelp}
-        headerTitle={I18n.t("bonus.sv.headerTitle")}>
+        headerTitle={I18n.t("bonus.sv.headerTitle")}
+      >
         <LoadingErrorComponent
           isLoading={isLoading(props.availableDestinations)}
           loadingCaption={I18n.t("global.genericWaiting")}
@@ -147,7 +148,8 @@ const SummaryScreen = (props: Props): React.ReactElement | null => {
     <BaseScreenComponent
       goBack={true}
       contextualHelp={emptyContextualHelp}
-      headerTitle={I18n.t("bonus.sv.headerTitle")}>
+      headerTitle={I18n.t("bonus.sv.headerTitle")}
+    >
       <SafeAreaView style={IOStyles.flex} testID={"SummaryScreen"}>
         <ScrollView style={[IOStyles.horizontalContentPadding]}>
           <H1>{I18n.t("bonus.sv.voucherGeneration.summary.title")}</H1>

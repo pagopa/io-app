@@ -114,7 +114,8 @@ const getTosFooter = (
         <Link
           weight={"SemiBold"}
           numberOfLines={1}
-          onPress={() => handleModalPress(bT)}>
+          onPress={() => handleModalPress(bT)}
+        >
           {I18n.t("bonus.tos.title")}
         </Link>
       </>,
@@ -127,7 +128,8 @@ const getTosFooter = (
           <View spacer={true} extralarge={true} />
           <Markdown
             cssStyle={CSS_STYLE}
-            extraBodyHeight={extraMarkdownBodyHeight}>
+            extraBodyHeight={extraMarkdownBodyHeight}
+          >
             {I18n.t("bonus.termsAndConditionFooter", {
               ctaText,
               regulationLink: rU.url,
@@ -188,7 +190,8 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
       <View key={`${idx}_${url.url}`}>
         <ButtonDefaultOpacity
           bordered={true}
-          onPress={() => handleModalPress(url.url)}>
+          onPress={() => handleModalPress(url.url)}
+        >
           <Text style={styles.urlButton}>{url.name}</Text>
         </ButtonDefaultOpacity>
         {idx !== urls.length - 1 && <View spacer={true} small={true} />}
@@ -217,7 +220,8 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
       headerTitle={bonusTypeLocalizedContent.name}
       contextualHelpMarkdown={props.contextualHelpMarkdown}
       contextualHelp={props.contextualHelp}
-      faqCategories={props.faqCategories}>
+      faqCategories={props.faqCategories}
+    >
       <SafeAreaView style={IOStyles.flex}>
         {isScreenReaderEnabled && isMarkdownLoaded && footerComponent}
         <Content>
@@ -250,7 +254,8 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
           <Markdown
             cssStyle={CSS_STYLE}
             extraBodyHeight={extraMarkdownBodyHeight}
-            onLoadEnd={onMarkdownLoaded}>
+            onLoadEnd={onMarkdownLoaded}
+          >
             {bonusTypeLocalizedContent.content}
           </Markdown>
           <View spacer={true} extralarge={true} />

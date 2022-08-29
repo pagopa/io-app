@@ -92,7 +92,8 @@ const WebPlayground: React.FunctionComponent<Props> = (props: Props) => {
             <View hspacer={true} />
             <ButtonDefaultOpacity
               style={styles.contentCenter}
-              onPress={() => setLoadUri(navigationURI)}>
+              onPress={() => setLoadUri(navigationURI)}
+            >
               <IconFont
                 name={"io-right"}
                 style={{
@@ -105,12 +106,14 @@ const WebPlayground: React.FunctionComponent<Props> = (props: Props) => {
           <View style={styles.row}>
             <ButtonDefaultOpacity
               style={styles.contentCenter}
-              onPress={() => setReloadKey(r => r + 1)}>
+              onPress={() => setReloadKey(r => r + 1)}
+            >
               <Label color={"white"}>Reload</Label>
             </ButtonDefaultOpacity>
             <ButtonDefaultOpacity
               style={styles.contentCenter}
-              onPress={clearCookies}>
+              onPress={clearCookies}
+            >
               <Label color={"white"}>Clear cookies</Label>
             </ButtonDefaultOpacity>
           </View>
@@ -147,7 +150,8 @@ const WebPlayground: React.FunctionComponent<Props> = (props: Props) => {
                 <View spacer={true} small={true} />
                 <ButtonDefaultOpacity
                   style={styles.contentCenter}
-                  onPress={() => setCookieOnDomain()}>
+                  onPress={() => setCookieOnDomain()}
+                >
                   <Label color={"white"}>Save</Label>
                 </ButtonDefaultOpacity>
               </>

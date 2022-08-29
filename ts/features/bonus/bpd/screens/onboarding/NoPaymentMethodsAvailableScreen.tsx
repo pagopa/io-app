@@ -35,7 +35,8 @@ const NoPaymentMethodsAvailableScreen: React.FunctionComponent<Props> =
       <BaseScreenComponent
         goBack={false}
         headerTitle={headerTitle}
-        contextualHelp={emptyContextualHelp}>
+        contextualHelp={emptyContextualHelp}
+      >
         <SafeAreaView style={IOStyles.flex}>
           <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
             <View spacer={true} large={true} />

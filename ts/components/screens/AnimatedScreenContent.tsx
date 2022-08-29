@@ -139,7 +139,8 @@ export default class AnimatedScreenContent extends React.Component<
           onScroll={Animated.event(
             [{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }],
             { useNativeDriver: true }
-          )}>
+          )}
+        >
           <NavigationEvents onWillFocus={this.scrollToTop} />
 
           {!this.props.hideHeader && (
@@ -166,7 +167,8 @@ export default class AnimatedScreenContent extends React.Component<
             {
               transform: [{ translateY: subHeaderTranslation }]
             }
-          ]}>
+          ]}
+        >
           <View style={{ marginTop: this.headerHeight }}>
             {this.props.dynamicSubHeader}
           </View>

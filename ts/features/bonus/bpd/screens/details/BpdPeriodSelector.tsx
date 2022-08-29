@@ -46,7 +46,8 @@ const BpdPeriodSelector: React.FunctionComponent<Props> = props => {
     periodWithAmountList.map((periodWithAmount, i) => (
       <View
         key={`bpd-card-${i}`}
-        style={[IOStyles.horizontalContentPadding, styles.cardWrapper]}>
+        style={[IOStyles.horizontalContentPadding, styles.cardWrapper]}
+      >
         <BpdCardComponent
           period={periodWithAmount}
           totalAmount={periodWithAmount.amount}

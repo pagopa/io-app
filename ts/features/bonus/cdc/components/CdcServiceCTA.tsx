@@ -47,7 +47,8 @@ const ReadyButton = (props: ReadyButtonProp) => {
             screen: CDC_ROUTES.INFORMATION_TOS
           });
         }}
-        testID={"activateCardButton"}>
+        testID={"activateCardButton"}
+      >
         <Label color={"white"}>
           {I18n.t("bonus.cdc.serviceCta.activable")}
         </Label>
@@ -65,7 +66,8 @@ const ReadyButton = (props: ReadyButtonProp) => {
         block
         disabled={true}
         onPress={() => true}
-        testID={"pendingCardButton"}>
+        testID={"pendingCardButton"}
+      >
         <Label color={"white"}>{I18n.t("bonus.cdc.serviceCta.pending")}</Label>
       </ButtonDefaultOpacity>
     );
@@ -91,7 +93,8 @@ const ErrorButton = (props: ErrorButtonProp) => {
         iconColor={IOColors.white}
         iconName={"io-warning"}
         viewRef={viewRef}
-        labelColor={"white"}>
+        labelColor={"white"}
+      >
         {I18n.t("bonus.cdc.serviceCta.error.status")}
       </StatusContent>
       <View spacer={true} />
@@ -100,7 +103,8 @@ const ErrorButton = (props: ErrorButtonProp) => {
         primary
         bordered
         onPress={props.onPress}
-        testID={"retryButton"}>
+        testID={"retryButton"}
+      >
         <Label color={"blue"}>{I18n.t("global.buttons.retry")}</Label>
       </ButtonDefaultOpacity>
     </View>

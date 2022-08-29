@@ -41,7 +41,8 @@ export const EuCovidCertQrCodeFullScreen = (
     <BaseScreenComponent goBack={true}>
       <SafeAreaView
         style={IOStyles.flex}
-        testID={"EuCovidCertQrCodeFullScreen"}>
+        testID={"EuCovidCertQrCodeFullScreen"}
+      >
         <ScrollView>
           <View spacer={true} extralarge={true} />
           <View spacer={true} extralarge={true} />

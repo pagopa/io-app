@@ -53,7 +53,8 @@ const AddBPayComponent: React.FunctionComponent<Props> = (props: Props) => {
     <BaseScreenComponent
       customGoBack={<View hspacer={true} spacer={true} />}
       headerTitle={I18n.t("wallet.onboarding.bPay.headerTitle")}
-      contextualHelp={props.contextualHelp}>
+      contextualHelp={props.contextualHelp}
+    >
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView style={IOStyles.flex}>
           <View spacer={true} />
@@ -62,7 +63,8 @@ const AddBPayComponent: React.FunctionComponent<Props> = (props: Props) => {
               styles.container,
               IOStyles.flex,
               IOStyles.horizontalContentPadding
-            ]}>
+            ]}
+          >
             <H1 style={styles.title}>
               {I18n.t("wallet.onboarding.bPay.add.screenTitle")}
             </H1>

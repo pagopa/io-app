@@ -155,14 +155,16 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
           style={styles.cancelButtonStyle}
           block={true}
           light={true}
-          bordered={true}>
+          bordered={true}
+        >
           <BodyText>{I18n.t("global.buttons.cancel")}</BodyText>
         </ButtonDefaultOpacity>
         <ButtonDefaultOpacity
           onPress={handleReload}
           style={{ flex: 2 }}
           block={true}
-          primary={true}>
+          primary={true}
+        >
           <Label color={"white"}>{I18n.t("global.buttons.retry")}</Label>
         </ButtonDefaultOpacity>
       </View>

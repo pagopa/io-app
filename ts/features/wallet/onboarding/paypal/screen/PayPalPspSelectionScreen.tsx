@@ -61,7 +61,8 @@ const RadioListHeader = (props: {
       <H4
         color={color}
         weight={weight}
-        style={styles.radioListHeaderRightColumn}>
+        style={styles.radioListHeaderRightColumn}
+      >
         {props.rightColumnTitle}
       </H4>
     </View>
@@ -142,7 +143,8 @@ const PayPalPspSelectionScreen = (props: Props): React.ReactElement | null => {
     <BaseScreenComponent
       goBack={props.goBack}
       contextualHelp={emptyContextualHelp}
-      headerTitle={I18n.t("wallet.onboarding.paypal.headerTitle")}>
+      headerTitle={I18n.t("wallet.onboarding.paypal.headerTitle")}
+    >
       {isReady(props.pspList) ? (
         <SafeAreaView style={IOStyles.flex} testID={"PayPalPpsSelectionScreen"}>
           <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
@@ -153,7 +155,8 @@ const PayPalPspSelectionScreen = (props: Props): React.ReactElement | null => {
               <Body>{locales.body}</Body>
               <Link
                 onPress={presentWhatIsPspBottomSheet}
-                testID={"whatIsPSPTestID"}>
+                testID={"whatIsPSPTestID"}
+              >
                 {locales.link}
               </Link>
               <View spacer={true} large={true} />

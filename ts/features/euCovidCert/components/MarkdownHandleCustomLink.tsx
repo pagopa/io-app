@@ -26,7 +26,8 @@ export const MarkdownHandleCustomLink = (
             })
           );
       });
-    }}>
+    }}
+  >
     {props.children}
   </Markdown>
 );

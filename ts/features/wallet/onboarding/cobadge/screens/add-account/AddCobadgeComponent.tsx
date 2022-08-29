@@ -69,7 +69,8 @@ const AddCobadgeComponent: React.FunctionComponent<Props> = (props: Props) => {
     <BaseScreenComponent
       customGoBack={<View hspacer={true} spacer={true} />}
       headerTitle={headerTitle}
-      contextualHelp={props.contextualHelp}>
+      contextualHelp={props.contextualHelp}
+    >
       <SafeAreaView style={IOStyles.flex} testID={"AddCobadgeComponent"}>
         <ScrollView style={IOStyles.flex}>
           <View spacer={true} />
@@ -78,7 +79,8 @@ const AddCobadgeComponent: React.FunctionComponent<Props> = (props: Props) => {
               styles.container,
               IOStyles.flex,
               IOStyles.horizontalContentPadding
-            ]}>
+            ]}
+          >
             <H1 style={styles.title}>{screenTitle}</H1>
             <View spacer small />
             <H4 weight={"Regular"} style={styles.flexStart}>

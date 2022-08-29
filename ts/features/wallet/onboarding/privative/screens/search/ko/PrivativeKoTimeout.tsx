@@ -60,7 +60,8 @@ const PrivativeKoTimeout = (props: Props): React.ReactElement | null => {
         goBack={false}
         customGoBack={<View />}
         headerTitle={headerTitle}
-        contextualHelp={emptyContextualHelp}>
+        contextualHelp={emptyContextualHelp}
+      >
         <SafeAreaView style={IOStyles.flex} testID={"PrivativeKoTimeout"}>
           <InfoScreenComponent
             image={renderInfoRasterImage(image)}

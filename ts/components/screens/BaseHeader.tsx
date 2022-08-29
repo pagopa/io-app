@@ -49,7 +49,8 @@ const HelpButton: FC<HelpButtonProps> = ({ onShowHelp }) => (
     )}
     style={styles.helpButton}
     accessibilityHint={I18n.t("global.accessibility.contextualHelp.open.hint")}
-    testID={"helpButton"}>
+    testID={"helpButton"}
+  >
     <IconFont name={"io-question"} />
   </ButtonDefaultOpacity>
 );
@@ -171,7 +172,8 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
           accessibilityRole={"header"}
           style={{
             color: titleColor ? IOColors[titleColor] : IOColors.bluegrey
-          }}>
+          }}
+        >
           {l}
         </Text>
       );
@@ -195,7 +197,8 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
         backgroundColor={backgroundColor}
         primary={this.props.primary}
         noShadow={isSearchEnabled}
-        dark={dark}>
+        dark={dark}
+      >
         {this.renderLeft()}
 
         {/* if screen reader is active and the accessibility label is defined, render the accessibility label
@@ -249,7 +252,8 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
             onPress={customRightIcon.onPress}
             transparent={true}
             accessible={customRightIcon.accessibilityLabel !== undefined}
-            accessibilityLabel={customRightIcon.accessibilityLabel}>
+            accessibilityLabel={customRightIcon.accessibilityLabel}
+          >
             {!isStringNullyOrEmpty(customRightIcon.iconName) && (
               <IconFont name={customRightIcon.iconName} />
             )}
@@ -303,7 +307,8 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
           <View
             accessible={true}
             accessibilityElementsHidden={true}
-            importantForAccessibility="no-hide-descendants">
+            importantForAccessibility="no-hide-descendants"
+          >
             <IconFont name={"io-logo"} color={iconColor} accessible={false} />
           </View>
         </Left>

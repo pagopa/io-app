@@ -44,7 +44,8 @@ const TransactionsUnavailableV2Base: React.FunctionComponent<Props> = props => {
     <BaseScreenComponent
       goBack={true}
       headerTitle={headerTitle}
-      contextualHelp={props.contextualHelp}>
+      contextualHelp={props.contextualHelp}
+    >
       <SafeAreaView style={IOStyles.flex} testID={"TransactionUnavailableV2"}>
         <InfoScreenComponent
           image={renderInfoRasterImage(image)}

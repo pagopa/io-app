@@ -55,7 +55,8 @@ const StatusContent: React.FC<Props> = ({
     accessible={accessible ?? true}
     ref={viewRef}
     style={[styles.container, { backgroundColor: IOColors[backgroundColor] }]}
-    testID={"SectionStatusContent"}>
+    testID={"SectionStatusContent"}
+  >
     <IconFont
       color={iconColor}
       name={iconName}
@@ -68,7 +69,8 @@ const StatusContent: React.FC<Props> = ({
         styles.text,
         labelPaddingVertical ? { paddingVertical: labelPaddingVertical } : {}
       ]}
-      weight={"Regular"}>
+      weight={"Regular"}
+    >
       {children}
     </Label>
   </View>

@@ -272,7 +272,8 @@ export const errorTransactionUIElements = (
           <H4
             weight={"Regular"}
             style={{ textAlign: "center" }}
-            testID={"ongoing-subtitle"}>
+            testID={"ongoing-subtitle"}
+          >
             {I18n.t("wallet.errors.ONGOING_SUBTITLE")}
           </H4>
         ),
@@ -288,7 +289,8 @@ export const errorTransactionUIElements = (
           <H4
             weight={"Regular"}
             style={{ textAlign: "center" }}
-            testID={"expired-subtitle"}>
+            testID={"expired-subtitle"}
+          >
             {I18n.t("wallet.errors.contactECsubtitle")}
           </H4>
         ),
@@ -302,7 +304,8 @@ export const errorTransactionUIElements = (
           <H4
             weight={"Regular"}
             style={{ textAlign: "center" }}
-            testID={"revoked-subtitle"}>
+            testID={"revoked-subtitle"}
+          >
             {I18n.t("wallet.errors.contactECsubtitle")}
           </H4>
         ),

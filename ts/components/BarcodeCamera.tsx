@@ -244,7 +244,8 @@ export const BarcodeCamera = (props: Props) => {
 
         <ButtonDefaultOpacity
           onPress={openAppSettings}
-          style={styles.notAuthorizedBtn}>
+          style={styles.notAuthorizedBtn}
+        >
           <Label color="white">{I18n.t("global.buttons.settings")}</Label>
         </ButtonDefaultOpacity>
       </View>

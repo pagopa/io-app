@@ -34,7 +34,8 @@ const BPayKoNotFound = (props: Props): React.ReactElement => {
     <BaseScreenComponent
       goBack={true}
       headerTitle={headerTitle}
-      contextualHelp={props.contextualHelp}>
+      contextualHelp={props.contextualHelp}
+    >
       <SafeAreaView style={IOStyles.flex}>
         <InfoScreenComponent
           image={renderInfoRasterImage(image)}

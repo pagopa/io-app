@@ -44,7 +44,8 @@ const BaseDonationsBanner = (props: BaseProps): React.ReactElement => (
   <TouchableWithoutFeedback
     onPress={props.onPress}
     accessible={true}
-    accessibilityRole={"button"}>
+    accessibilityRole={"button"}
+  >
     <View style={styles.background} testID={"UaDonationsBanner"}>
       <View style={styles.row}>
         <H5 color={"white"} weight={"Regular"} style={styles.text}>

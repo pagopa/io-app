@@ -69,7 +69,8 @@ export const AppStackNavigator = () => {
     <Stack.Navigator
       initialRouteName={"INGRESS"}
       headerMode={"none"}
-      screenOptions={{ gestureEnabled: false }}>
+      screenOptions={{ gestureEnabled: false }}
+    >
       <Stack.Screen name={ROUTES.INGRESS} component={IngressScreen} />
       <Stack.Screen
         name={ROUTES.AUTHENTICATION}
@@ -231,7 +232,8 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
           trackScreen(previousRouteName, currentRouteName);
         }
         routeNameRef.current = currentRouteName;
-      }}>
+      }}
+    >
       {props.children}
     </NavigationContainer>
   );

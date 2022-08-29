@@ -71,25 +71,30 @@ class MarkdownScreen extends React.Component<Props, State> {
       <Container>
         <Content>
           <View
-            style={{ flexDirection: "row", justifyContent: "space-around" }}>
+            style={{ flexDirection: "row", justifyContent: "space-around" }}
+          >
             <ButtonDefaultOpacity
               small={true}
-              onPress={() => this.setMarkdown(MARKDOWN_HEADING)}>
+              onPress={() => this.setMarkdown(MARKDOWN_HEADING)}
+            >
               <Text>Heading</Text>
             </ButtonDefaultOpacity>
             <ButtonDefaultOpacity
               small={true}
-              onPress={() => this.setMarkdown(MARKDOWN_PARAGRAPH)}>
+              onPress={() => this.setMarkdown(MARKDOWN_PARAGRAPH)}
+            >
               <Text>Paragraph</Text>
             </ButtonDefaultOpacity>
             <ButtonDefaultOpacity
               small={true}
-              onPress={() => this.setMarkdown(MARKDOWN_LIST)}>
+              onPress={() => this.setMarkdown(MARKDOWN_LIST)}
+            >
               <Text>List</Text>
             </ButtonDefaultOpacity>
             <ButtonDefaultOpacity
               small={true}
-              onPress={() => this.setMarkdown(MARKDOWN_REFERENCE)}>
+              onPress={() => this.setMarkdown(MARKDOWN_REFERENCE)}
+            >
               <Text>Reference</Text>
             </ButtonDefaultOpacity>
           </View>

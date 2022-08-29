@@ -29,7 +29,8 @@ const BottomSheetContent: React.FunctionComponent<Props> = ({
 }: Props) => (
   <View
     style={{ flex: 1, ...IOStyles.horizontalContentPadding }}
-    testID={testID}>
+    testID={testID}
+  >
     <BottomSheetScrollView>{children}</BottomSheetScrollView>
   </View>
 );
@@ -133,7 +134,8 @@ export const useIOBottomSheetModal = (
       handleComponentAccessibility={{
         accessible: false
       }}
-      importantForAccessibility={"yes"}>
+      importantForAccessibility={"yes"}
+    >
       {screenReaderEnabled && Platform.OS === "android" ? (
         <Modal>
           <View style={IOStyles.flex} accessible={true}>

@@ -65,7 +65,8 @@ const BancomatInformation: React.FunctionComponent<Props> = props => {
           props.onAddPaymentMethod?.();
         }}
         onPressWithGestureHandler={true}
-        testID={"addPaymentMethodButton"}>
+        testID={"addPaymentMethodButton"}
+      >
         <Label>{I18n.t("wallet.bancomat.details.debit.addCta")}</Label>
       </ButtonDefaultOpacity>
       {bottomSheet}

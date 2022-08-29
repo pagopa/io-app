@@ -180,7 +180,8 @@ const VoucherListScreen = (props: Props): React.ReactElement => {
       <BaseScreenComponent
         goBack={true}
         contextualHelp={emptyContextualHelp}
-        headerTitle={I18n.t("bonus.sv.headerTitle")}>
+        headerTitle={I18n.t("bonus.sv.headerTitle")}
+      >
         <LoadingErrorComponent
           isLoading={
             isLoading(props.possibleVoucherState) || isDataLoadedLoading
@@ -210,7 +211,8 @@ const VoucherListScreen = (props: Props): React.ReactElement => {
       isSearchAvailable={{
         enabled: true,
         onSearchTap: openFiltersModal
-      }}>
+      }}
+    >
       <SafeAreaView style={IOStyles.flex} testID={"VoucherListScreen"}>
         <>
           <H1 style={IOStyles.horizontalContentPadding}>

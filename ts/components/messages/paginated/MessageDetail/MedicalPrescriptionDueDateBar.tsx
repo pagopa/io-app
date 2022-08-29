@@ -77,7 +77,8 @@ const MedicalPrescriptionDueDateBar = ({
     return (
       <View
         testID={"MedicalPrescriptionDueDate_expired_or_expiring"}
-        style={[styles.container, styles.row, bannerStyle]}>
+        style={[styles.container, styles.row, bannerStyle]}
+      >
         <CalendarIconComponent
           month={capitalize(formatDateAsMonth(dueDate))}
           day={formatDateAsDay(dueDate)}
@@ -109,7 +110,8 @@ const MedicalPrescriptionDueDateBar = ({
   return (
     <View
       testID={"MedicalPrescriptionDueDate_valid"}
-      style={[styles.container, bannerStyle]}>
+      style={[styles.container, bannerStyle]}
+    >
       <Text style={styles.text} white={false}>
         {I18n.t("messages.cta.prescription.addMemo")}
         <Text bold={true}>{` ${date}`}</Text>

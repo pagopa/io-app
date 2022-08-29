@@ -138,7 +138,8 @@ const BasePrivativeCard: React.FunctionComponent<Props> = (props: Props) => {
             {props.blocked && (
               <Badge
                 style={[styles.badgeInfo, styles.badgeInfoExpired]}
-                testID={"blockedBadge"}>
+                testID={"blockedBadge"}
+              >
                 <H5 color="red">{I18n.t("global.badges.blocked")}</H5>
               </Badge>
             )}

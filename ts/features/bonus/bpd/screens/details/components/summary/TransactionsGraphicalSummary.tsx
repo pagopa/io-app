@@ -80,7 +80,8 @@ const TextualTransactionsSummary = (props: Props) => {
         <H2
           testID={"textualTransaction.transactions"}
           color={"blue"}
-          style={styles.title}>
+          style={styles.title}
+        >
           {formatIntegerNumber(props.transactions)}
         </H2>
       }
@@ -88,7 +89,8 @@ const TextualTransactionsSummary = (props: Props) => {
         <H5
           testID={"textualTransaction.minTransactions"}
           color={"bluegrey"}
-          style={styles.title}>
+          style={styles.title}
+        >
           {of} {formatIntegerNumber(props.minTransactions)}
         </H5>
       }

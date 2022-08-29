@@ -48,7 +48,8 @@ const ListSelectionBar = ({
       bordered={true}
       light={true}
       onPress={onResetSelection}
-      style={styles.flex2}>
+      style={styles.flex2}
+    >
       <Text>{I18n.t("global.buttons.cancel")}</Text>
     </ButtonDefaultOpacity>
     {onToggleAllSelection && (
@@ -57,7 +58,8 @@ const ListSelectionBar = ({
         bordered={true}
         style={[styles.buttonBarCenter, styles.flex2]}
         onPress={onToggleAllSelection}
-        testID={"toggleAllSelection"}>
+        testID={"toggleAllSelection"}
+      >
         <Text>
           {I18n.t(
             selectedItems === totalItems
@@ -71,7 +73,8 @@ const ListSelectionBar = ({
       block={true}
       style={styles.flex2}
       disabled={selectedItems === 0}
-      onPress={onToggleSelection}>
+      onPress={onToggleSelection}
+    >
       <Text>{primaryButtonText}</Text>
     </ButtonDefaultOpacity>
   </View>

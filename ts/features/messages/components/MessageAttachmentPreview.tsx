@@ -124,7 +124,8 @@ export const MessageAttachmentPreview = (props: Props): React.ReactElement => {
     <BaseScreenComponent
       goBack={true}
       contextualHelp={emptyContextualHelp}
-      headerTitle={I18n.t("features.mvl.details.attachments.pdfPreview.title")}>
+      headerTitle={I18n.t("features.mvl.details.attachments.pdfPreview.title")}
+    >
       <SafeAreaView style={styles.container} testID={"MvlDetailsScreen"}>
         {!isError && (
           <Pdf

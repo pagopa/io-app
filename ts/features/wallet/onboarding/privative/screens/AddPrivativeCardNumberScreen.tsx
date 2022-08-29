@@ -108,13 +108,16 @@ const AddPrivativeCardNumberScreen = (props: Props): React.ReactElement => {
     <BaseScreenComponent
       goBack={true}
       headerTitle={I18n.t("wallet.onboarding.privative.headerTitle")}
-      contextualHelp={emptyContextualHelp}>
+      contextualHelp={emptyContextualHelp}
+    >
       <KeyboardAvoidingView
         style={IOStyles.flex}
-        behavior={Platform.OS === "ios" ? "padding" : undefined}>
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
+      >
         <SafeAreaView
           style={IOStyles.flex}
-          testID={"AddPrivativeCardNumberScreen"}>
+          testID={"AddPrivativeCardNumberScreen"}
+        >
           <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
             <H1>{title}</H1>
             <View spacer={true} />

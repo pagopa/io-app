@@ -131,10 +131,12 @@ const OptInPaymentMethodsChoiceScreen = () => {
       }}
       customGoBack={
         <ButtonDefaultOpacity onPress={() => true} transparent={true} />
-      }>
+      }
+    >
       <SafeAreaView
         style={IOStyles.flex}
-        testID={"OptInPaymentMethodsCashbackUpdate"}>
+        testID={"OptInPaymentMethodsCashbackUpdate"}
+      >
         <ScrollView style={[IOStyles.horizontalContentPadding]}>
           <H1>{I18n.t("bonus.bpd.optInPaymentMethods.choice.title")}</H1>
           <View spacer small />

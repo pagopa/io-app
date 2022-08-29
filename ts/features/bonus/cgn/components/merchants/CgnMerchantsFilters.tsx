@@ -108,7 +108,8 @@ const CgnMerchantsFilters: React.FunctionComponent<Props> = (props: Props) => {
         <ScrollView
           style={[IOStyles.flex]}
           bounces={false}
-          keyboardShouldPersistTaps={"handled"}>
+          keyboardShouldPersistTaps={"handled"}
+        >
           <View style={IOStyles.horizontalContentPadding}>
             <H2>{I18n.t("bonus.cgn.merchantsList.filter.searchTitle")}</H2>
             <LabelledItem

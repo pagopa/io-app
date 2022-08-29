@@ -43,7 +43,8 @@ const PrivativeKoNotFound = (props: Props): React.ReactElement => {
     <BaseScreenComponent
       goBack={false}
       customGoBack={<View />}
-      headerTitle={headerTitle}>
+      headerTitle={headerTitle}
+    >
       <SafeAreaView style={IOStyles.flex} testID={"PrivativeKoNotFound"}>
         <InfoScreenComponent
           image={renderInfoRasterImage(image)}

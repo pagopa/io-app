@@ -61,7 +61,8 @@ const ServicesPreferenceScreen = (props: Props): React.ReactElement => {
     <BaseScreenComponent
       goBack={true}
       contextualHelp={emptyContextualHelp}
-      headerTitle={I18n.t("profile.preferences.list.service_contact")}>
+      headerTitle={I18n.t("profile.preferences.list.service_contact")}
+    >
       <ScrollView style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
         <ServicesContactComponent
           onSelectMode={handleOnSelectMode}

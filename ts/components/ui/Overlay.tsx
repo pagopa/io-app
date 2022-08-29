@@ -49,7 +49,8 @@ export const Overlay: React.SFC<Props> = props => {
               opacity,
               backgroundColor
             }
-          ]}>
+          ]}
+        >
           {props.foreground}
         </View>
       )}

@@ -86,7 +86,8 @@ const EnrollPaymentMethodsScreen: React.FunctionComponent<Props> = props => {
     <BaseScreenComponent
       goBack={false}
       headerTitle={headerTitle}
-      contextualHelp={emptyContextualHelp}>
+      contextualHelp={emptyContextualHelp}
+    >
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView>
           <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>

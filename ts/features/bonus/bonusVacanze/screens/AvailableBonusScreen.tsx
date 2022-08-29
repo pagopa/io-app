@@ -245,12 +245,14 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
         goBack={true}
         headerTitle={I18n.t("bonus.bonusList.title")}
         contextualHelpMarkdown={contextualHelpMarkdown}
-        faqCategories={["bonus_available_list"]}>
+        faqCategories={["bonus_available_list"]}
+      >
         <SafeAreaView style={bonusVacanzeStyle.flex}>
           <Content
             noPadded={true}
             scrollEnabled={false}
-            style={styles.whiteContent}>
+            style={styles.whiteContent}
+          >
             <View style={styles.paddedContent}>
               <FlatList
                 scrollEnabled={false}

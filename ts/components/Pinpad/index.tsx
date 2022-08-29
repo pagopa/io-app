@@ -304,11 +304,13 @@ class Pinpad extends React.PureComponent<Props, State> {
               white={this.props.buttonType === "primary"}
               onPress={this.confirmResetAlert}
               alignCenter={true}
-              accessibilityRole="button">
+              accessibilityRole="button"
+            >
               {`${I18n.t("identification.unlockCode.reset.button")} `}
               <Text
                 underlined={true}
-                white={this.props.buttonType === "primary"}>
+                white={this.props.buttonType === "primary"}
+              >
                 {I18n.t("identification.unlockCode.reset.code")}
               </Text>
               <Text white={this.props.buttonType === "primary"}>
@@ -321,7 +323,8 @@ class Pinpad extends React.PureComponent<Props, State> {
         <View spacer={true} />
         <ShakeAnimation
           duration={SHAKE_ANIMATION_DURATION}
-          ref={this.shakeAnimationRef}>
+          ref={this.shakeAnimationRef}
+        >
           <KeyPad
             digits={this.pinPadDigits()}
             buttonType={this.props.buttonType}

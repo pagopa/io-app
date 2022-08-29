@@ -55,7 +55,8 @@ export const BottomSheetHeader: React.FunctionComponent<Props> = ({
           style={IOStyles.flex}
           accessible={true}
           accessibilityRole={"header"}
-          accessibilityLabel={typeof title === "string" ? title : undefined}>
+          accessibilityLabel={typeof title === "string" ? title : undefined}
+        >
           <H3>{title}</H3>
         </View>
       )}
@@ -66,7 +67,8 @@ export const BottomSheetHeader: React.FunctionComponent<Props> = ({
         transparent={true}
         accessible={true}
         accessibilityRole={"button"}
-        accessibilityLabel={I18n.t("global.buttons.close")}>
+        accessibilityLabel={I18n.t("global.buttons.close")}
+      >
         <IconFont name="io-close" color={IOColors.grey} style={styles.icon} />
       </ButtonDefaultOpacity>
     </View>

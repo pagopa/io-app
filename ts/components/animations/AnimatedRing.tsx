@@ -80,7 +80,8 @@ export default class AnimatedRing extends React.Component<Props> {
               }
             ]
           }
-        ]}>
+        ]}
+      >
         {this.props.children}
       </Animated.View>
     );

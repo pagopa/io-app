@@ -208,7 +208,8 @@ export default class CieReadingCardAnimation extends React.PureComponent<
                 : customVariables.brandPrimary
             }
             shadowColor={IOColors.greyLight}
-            bgColor={IOColors.greyLight}>
+            bgColor={IOColors.greyLight}
+          >
             <Image
               source={require("../../../img/cie/place-card-illustration.png")}
               style={styles.img}

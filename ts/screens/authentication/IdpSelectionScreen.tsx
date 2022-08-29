@@ -87,7 +87,8 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
       contextualHelpMarkdown={contextualHelpMarkdown}
       faqCategories={["authentication_IPD_selection"]}
       goBack={true}
-      headerTitle={I18n.t("authentication.idp_selection.headerTitle")}>
+      headerTitle={I18n.t("authentication.idp_selection.headerTitle")}
+    >
       <LoadingSpinnerOverlay isLoading={props.isIdpsLoading}>
         <Content noPadded={true} overScrollMode={"never"} bounces={false}>
           <ScreenContentHeader
@@ -104,7 +105,8 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
               block={true}
               light={true}
               bordered={true}
-              onPress={props.goBack}>
+              onPress={props.goBack}
+            >
               <Text>{I18n.t("global.buttons.cancel")}</Text>
             </ButtonDefaultOpacity>
           </View>

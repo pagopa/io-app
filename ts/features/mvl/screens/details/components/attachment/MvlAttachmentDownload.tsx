@@ -58,7 +58,8 @@ const useDownloadAttachmentConfirmationBottomSheet = ({
         />
         <Body
           style={{ paddingLeft: 8 }}
-          onPress={() => setDontAskAgain(!dontAskAgain)}>
+          onPress={() => setDontAskAgain(!dontAskAgain)}
+        >
           {i18n.t("features.mvl.details.attachments.bottomSheet.checkBox")}
         </Body>
       </View>

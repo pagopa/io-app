@@ -57,7 +57,8 @@ const DateTimePicker: React.FunctionComponent<Props> = (props: Props) => {
       <TouchableDefaultOpacity style={styles.inputContainer} onPress={onPress}>
         <H4
           weight={"Regular"}
-          color={props.date ? "bluegrey" : "bluegreyLight"}>
+          color={props.date ? "bluegrey" : "bluegreyLight"}
+        >
           {props.date
             ? formatDateAsLocal(props.date, true, true)
             : I18n.t("global.dateFormats.dateTimePicker")}

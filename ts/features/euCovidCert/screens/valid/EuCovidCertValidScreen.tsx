@@ -105,7 +105,8 @@ const EuCovidCertValidComponent = (
             props.navigateToQrCodeFullScreen(
               props.validCertificate.qrCode.content
             )
-          }>
+          }
+        >
           <Image
             source={{
               uri: withBase64Uri(props.validCertificate.qrCode.content, "png")
@@ -125,7 +126,8 @@ const EuCovidCertValidComponent = (
       <View style={props.markdownWebViewStyle}>
         <MarkdownHandleCustomLink
           testID={"markdownPreview"}
-          extraBodyHeight={60}>
+          extraBodyHeight={60}
+        >
           {props.validCertificate.markdownInfo}
         </MarkdownHandleCustomLink>
         <View spacer={true} />
@@ -144,7 +146,8 @@ const addBottomSheetItem = (config: {
   <ButtonDefaultOpacity
     onPress={config.onPress}
     style={styles.container}
-    onPressWithGestureHandler={true}>
+    onPressWithGestureHandler={true}
+  >
     <View style={styles.flexColumn}>
       <View style={styles.row}>
         <View style={IOStyles.flex}>
@@ -263,7 +266,8 @@ const EuCovidCertValidScreen = (props: Props): React.ReactElement => {
         <View
           collapsable={false}
           ref={screenShotViewContainer}
-          style={[IOStyles.flex, { backgroundColor: IOColors.white }]}>
+          style={[IOStyles.flex, { backgroundColor: IOColors.white }]}
+        >
           {/* add extra space (top,sides,bottom) and padding while capturing the screenshot */}
           {isCapturingScreenShoot && <View spacer={true} large={true} />}
           {isCapturingScreenShoot && (

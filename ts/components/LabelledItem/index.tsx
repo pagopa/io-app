@@ -162,7 +162,8 @@ export const LabelledItem: React.FC<Props> = ({
         <View
           testID="label"
           importantForAccessibility="no-hide-descendants"
-          accessibilityElementsHidden={true}>
+          accessibilityElementsHidden={true}
+        >
           <Item style={styles.noBottomLine}>
             <H5 color={labelColor}>{props.label}</H5>
           </Item>
@@ -174,7 +175,8 @@ export const LabelledItem: React.FC<Props> = ({
         accessibilityLabel={I18n.t("global.accessibility.textField", {
           inputLabel: accessibilityLabel
         })}
-        accessibilityHint={props.accessibilityHint}>
+        accessibilityHint={props.accessibilityHint}
+      >
         <Item
           style={{
             ...styles.bottomLine,
@@ -184,7 +186,8 @@ export const LabelledItem: React.FC<Props> = ({
           }}
           error={isNotValid}
           success={isValid}
-          testID="Item">
+          testID="Item"
+        >
           {props.hasNavigationEvents && props.onPress && (
             <NavigationEvents onWillBlur={props.onPress} />
           )}
@@ -246,12 +249,14 @@ export const LabelledItem: React.FC<Props> = ({
           testID="description"
           importantForAccessibility="no-hide-descendants"
           accessibilityElementsHidden={true}
-          key={"description"}>
+          key={"description"}
+        >
           <Item style={styles.noBottomLine}>
             <H5
               weight={"Regular"}
               color={descriptionColor}
-              testID="H5-description">
+              testID="H5-description"
+            >
               {props.description}
             </H5>
           </Item>

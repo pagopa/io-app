@@ -69,7 +69,8 @@ export default class DarkLayout extends React.Component<Props> {
             this.props.headerPaddingMin
               ? styles.headerContentsMin
               : styles.headerContents
-          }>
+          }
+        >
           {children}
         </LinearGradient>
       ) : (
@@ -79,7 +80,8 @@ export default class DarkLayout extends React.Component<Props> {
               ? styles.headerContentsMin
               : styles.headerContents,
             { backgroundColor: IOColors.bluegrey }
-          ]}>
+          ]}
+        >
           {children}
         </View>
       );
@@ -108,7 +110,8 @@ export default class DarkLayout extends React.Component<Props> {
         contextualHelp={this.props.contextualHelp}
         contextualHelpMarkdown={this.props.contextualHelpMarkdown}
         faqCategories={this.props.faqCategories}
-        titleColor={"white"}>
+        titleColor={"white"}
+      >
         <FocusAwareStatusBar
           backgroundColor={IOColors.bluegrey}
           barStyle={"light-content"}
@@ -125,7 +128,8 @@ export default class DarkLayout extends React.Component<Props> {
             topContentHeight={
               this.props.topContentHeight ? this.props.topContentHeight : 0
             }
-            animationOffset={40}>
+            animationOffset={40}
+          >
             {this.screenContent()}
           </AnimatedScreenContent>
         ) : (
@@ -136,7 +140,8 @@ export default class DarkLayout extends React.Component<Props> {
             iconFont={this.props.iconFont}
             dark={true}
             contentStyle={this.props.contentStyle}
-            bounces={this.props.bounces}>
+            bounces={this.props.bounces}
+          >
             {this.screenContent()}
           </ScreenContent>
         )}

@@ -119,11 +119,13 @@ const AllTabs = ({
     <AnimatedTabs
       tabContainerStyle={[styles.tabBarContainer, styles.tabBarUnderline]}
       tabBarUnderlineStyle={styles.tabBarUnderlineActive}
-      initialPage={0}>
+      initialPage={0}
+    >
       <Tab
         activeTextStyle={styles.activeTextStyle}
         textStyle={styles.textStyle}
-        heading={I18n.t("messages.tab.inbox")}>
+        heading={I18n.t("messages.tab.inbox")}
+      >
         <MessagesInbox
           messages={inbox}
           navigateToMessageDetail={navigateToMessageDetail}
@@ -134,7 +136,8 @@ const AllTabs = ({
       <Tab
         activeTextStyle={styles.activeTextStyle}
         textStyle={styles.textStyle}
-        heading={I18n.t("messages.tab.archive")}>
+        heading={I18n.t("messages.tab.archive")}
+      >
         <MessagesArchive
           messages={archive}
           navigateToMessageDetail={navigateToMessageDetail}
@@ -240,7 +243,8 @@ const MessagesHomeScreen = ({
       faqCategories={["messages"]}
       headerTitle={I18n.t("messages.contentTitle")}
       isSearchAvailable={{ enabled: true, searchType: "Messages" }}
-      appLogo={true}>
+      appLogo={true}
+    >
       <FocusAwareStatusBar
         barStyle={"dark-content"}
         backgroundColor={IOColors.white}

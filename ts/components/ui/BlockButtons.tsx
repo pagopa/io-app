@@ -166,7 +166,8 @@ export default class BlockButtons extends React.Component<Props, never> {
           fromNullable(props.labelColor).fold(undefined, lc => ({
             color: lc
           }))
-        ]}>
+        ]}
+      >
         {props.title}
       </Text>
     </ButtonDefaultOpacity>

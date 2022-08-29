@@ -38,7 +38,8 @@ const renderLoading = (loadingCaption: string, loadingSubtitle?: string) => (
     accessible={true}
     ref={loadingRef}
     style={{ flex: 1 }}
-    testID={"LoadingErrorComponentLoading"}>
+    testID={"LoadingErrorComponentLoading"}
+  >
     <InfoScreenComponent
       image={
         <ActivityIndicator

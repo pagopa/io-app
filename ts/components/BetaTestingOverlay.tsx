@@ -47,9 +47,8 @@ export const BetaTestingOverlay: FC<Props> = ({ title, body }): JSX.Element => {
         <TouchableOpacity onPress={handleVisibility}>
           <Label style={styles.versionText}>{title}</Label>
           <Body
-            style={
-              styles.versionText
-            }>{`${getAppVersion()} ${bodyString}`}</Body>
+            style={styles.versionText}
+          >{`${getAppVersion()} ${bodyString}`}</Body>
         </TouchableOpacity>
       )}
     </View>

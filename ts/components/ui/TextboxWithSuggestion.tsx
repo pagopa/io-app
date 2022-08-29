@@ -142,7 +142,8 @@ const TextboxWithSuggestion = (props: Props) => {
                 wrappedFlatlist={props.wrappedFlatlist}
               />
             )
-          }>
+          }
+        >
           {props.selectedValue ? (
             <H4 weight={"Regular"} color={"bluegrey"}>
               {props.selectedValue}

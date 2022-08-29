@@ -178,7 +178,8 @@ const ZendeskSupportComponent = (props: Props) => {
             }}
             disabled={false}
             bordered={true}
-            testID={"showTicketsButton"}>
+            testID={"showTicketsButton"}
+          >
             <Label>{I18n.t("support.helpCenter.cta.seeReports")}</Label>
           </ButtonDefaultOpacity>
           <View spacer={true} />
@@ -192,7 +193,8 @@ const ZendeskSupportComponent = (props: Props) => {
             }}
             onPress={handleContactSupportPress}
             disabled={false}
-            testID={"contactSupportButton"}>
+            testID={"contactSupportButton"}
+          >
             <Label color={"white"}>
               {I18n.t("support.helpCenter.cta.contactSupport")}
             </Label>

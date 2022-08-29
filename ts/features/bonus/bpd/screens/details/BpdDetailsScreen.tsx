@@ -102,7 +102,8 @@ const BpdDetailsScreen: React.FunctionComponent<Props> = props => {
     <LoadingSpinnerOverlay
       isLoading={loading}
       loadingCaption={I18n.t("bonus.bpd.unsubscribe.loading")}
-      loadingOpacity={0.95}>
+      loadingOpacity={0.95}
+    >
       <DarkLayout
         bounces={false}
         title={I18n.t("bonus.bpd.name")}
@@ -119,7 +120,8 @@ const BpdDetailsScreen: React.FunctionComponent<Props> = props => {
             <View />
           )
         }
-        footerFullWidth={<SectionStatusComponent sectionKey={"cashback"} />}>
+        footerFullWidth={<SectionStatusComponent sectionKey={"cashback"} />}
+      >
         <View style={styles.selector}>
           <BpdPeriodSelector />
         </View>

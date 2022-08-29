@@ -55,10 +55,12 @@ const CoBadgeKoSingleBankNotFound: React.FunctionComponent<Props> = props => {
       goBack={false}
       customGoBack={<View />}
       headerTitle={headerTitle}
-      contextualHelp={emptyContextualHelp}>
+      contextualHelp={emptyContextualHelp}
+    >
       <SafeAreaView
         style={IOStyles.flex}
-        testID={"CoBadgeKoSingleBankNotFound"}>
+        testID={"CoBadgeKoSingleBankNotFound"}
+      >
         <InfoScreenComponent
           image={renderInfoRasterImage(image)}
           title={title}

@@ -35,7 +35,8 @@ export const ExtractedCtaButton: React.FunctionComponent<Props> = (
       xsmall={props.xsmall}
       bordered={!props.primary}
       onPress={() => props.onCTAPress(cta)}
-      style={{ flex: 1 }}>
+      style={{ flex: 1 }}
+    >
       <Text style={styles.marginTop1}>{cta.text}</Text>
     </ButtonDefaultOpacity>
   );

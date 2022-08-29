@@ -12,10 +12,12 @@ export const BpdAvailableTransactionsScreenV2 = (): React.ReactElement => (
   <BaseScreenComponent
     goBack={true}
     headerTitle={I18n.t("bonus.bpd.title")}
-    contextualHelp={emptyContextualHelp}>
+    contextualHelp={emptyContextualHelp}
+  >
     <SafeAreaView
       style={IOStyles.flex}
-      testID={"BpdAvailableTransactionsScreenV2"}>
+      testID={"BpdAvailableTransactionsScreenV2"}
+    >
       <View spacer={true} />
       <View style={IOStyles.horizontalContentPadding}>
         <H1>{I18n.t("bonus.bpd.details.transaction.title")}</H1>

@@ -165,7 +165,8 @@ export default class MessageDetailComponent extends React.PureComponent<
 
           <MessageMarkdown
             webViewStyle={styles.webview}
-            onLoadEnd={this.onMarkdownLoadEnd}>
+            onLoadEnd={this.onMarkdownLoadEnd}
+          >
             {cleanMarkdownFromCTAs(message.content.markdown)}
           </MessageMarkdown>
 

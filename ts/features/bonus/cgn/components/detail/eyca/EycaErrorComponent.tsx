@@ -32,7 +32,8 @@ const EycaErrorComponent = (props: Props) => (
   <>
     <View
       style={[styles.rowBlock, styles.spaced]}
-      testID={"eyca-error-component"}>
+      testID={"eyca-error-component"}
+    >
       <H4>{I18n.t("bonus.cgn.detail.status.eycaCircuit")}</H4>
       <IconFont
         name={"io-info"}
@@ -51,7 +52,8 @@ const EycaErrorComponent = (props: Props) => (
     <ButtonDefaultOpacity
       bordered
       style={{ width: "100%" }}
-      onPress={props.onRetry}>
+      onPress={props.onRetry}
+    >
       <Label color={"blue"}>{I18n.t("global.buttons.retry")}</Label>
     </ButtonDefaultOpacity>
   </>

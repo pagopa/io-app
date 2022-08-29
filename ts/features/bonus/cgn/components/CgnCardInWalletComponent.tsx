@@ -61,7 +61,8 @@ const CgnCardList = (props: Props) => (
         <ImageBackground
           source={cgnBackground}
           style={styles.preview}
-          imageStyle={styles.imagePreview}>
+          imageStyle={styles.imagePreview}
+        >
           <TouchableDefaultOpacity
             onPress={props.navigateToCgnDetailScreen}
             style={[
@@ -70,7 +71,8 @@ const CgnCardList = (props: Props) => (
               styles.paddedContentPreview,
               { alignItems: "center" }
             ]}
-            testID={"cgn-card-component"}>
+            testID={"cgn-card-component"}
+          >
             <H3 color={"black"} weight={"Bold"}>
               {I18n.t("bonus.cgn.name")}
             </H3>

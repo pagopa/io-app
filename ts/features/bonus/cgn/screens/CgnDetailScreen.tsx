@@ -92,14 +92,16 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
         props.isCgnInfoLoading ||
         (props.cgnDetails && cardLoading) ||
         isLoading(props.unsubscriptionStatus)
-      }>
+      }
+    >
       <BaseScreenComponent
         headerBackgroundColor={HEADER_BACKGROUND_COLOR}
         goBack={props.goBack}
         headerTitle={I18n.t("bonus.cgn.name")}
         dark={true}
         titleColor={"white"}
-        contextualHelp={emptyContextualHelp}>
+        contextualHelp={emptyContextualHelp}
+      >
         <SafeAreaView style={IOStyles.flex}>
           <FocusAwareStatusBar
             backgroundColor={HEADER_BACKGROUND_COLOR}
@@ -116,7 +118,8 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
               <ScrollView style={[IOStyles.flex]} bounces={false}>
                 {/* cgn gradient */}
                 <LinearGradient
-                  colors={[HEADER_BACKGROUND_COLOR, GRADIENT_END_COLOR]}>
+                  colors={[HEADER_BACKGROUND_COLOR, GRADIENT_END_COLOR]}
+                >
                   <View
                     style={[IOStyles.horizontalContentPadding, { height: 149 }]}
                   />
@@ -132,7 +135,8 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
                     IOStyles.flex,
                     IOStyles.horizontalContentPadding,
                     { paddingTop: customVariables.contentPadding }
-                  ]}>
+                  ]}
+                >
                   <View spacer extralarge />
                   <View spacer xsmall />
                   {/* Ownership block rendering owner's fiscal code */}

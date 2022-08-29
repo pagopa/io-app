@@ -36,7 +36,8 @@ export const WhyOtherCards = () => (
       <ButtonDefaultOpacity
         onPress={() => openWebUrl(findOutMore)}
         onPressWithGestureHandler={true}
-        style={styles.link}>
+        style={styles.link}
+      >
         <Link>
           {I18n.t(
             "bonus.bpd.details.paymentMethods.activateOnOthersChannel.whyOtherCards.cta"

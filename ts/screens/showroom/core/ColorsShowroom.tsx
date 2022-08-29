@@ -99,7 +99,8 @@ const ColorBox = (props: ColorBoxProps) => (
       style={{
         ...styles.colorItem,
         backgroundColor: props.color
-      }}>
+      }}
+    >
       {props.color && <Text style={styles.colorPill}>{props.color}</Text>}
     </View>
     {props.name && (
@@ -118,7 +119,8 @@ const GradientBox = (props: GradientBoxProps) => {
         colors={props.colors}
         useAngle={true}
         angle={180}
-        style={styles.gradientItem}>
+        style={styles.gradientItem}
+      >
         {first && <Text style={styles.colorPill}>{first}</Text>}
         {last && <Text style={styles.colorPill}>{last}</Text>}
       </LinearGradient>

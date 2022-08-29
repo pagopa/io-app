@@ -35,7 +35,8 @@ const BancomatKoNotFound: React.FunctionComponent<Props> = props => {
     <BaseScreenComponent
       goBack={true}
       headerTitle={headerTitle}
-      contextualHelp={props.contextualHelp}>
+      contextualHelp={props.contextualHelp}
+    >
       <SafeAreaView style={IOStyles.flex}>
         <InfoScreenComponent
           image={renderInfoRasterImage(image)}

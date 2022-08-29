@@ -95,21 +95,24 @@ const ZendeskChooseCategory = (props: Props) => {
         }}
         first={listItem.index === 0}
         style={{ paddingRight: 0 }}
-        testID={category.value}>
+        testID={category.value}
+      >
         <View
           style={{
             flex: 1,
             flexGrow: 1,
             flexDirection: "row",
             justifyContent: "space-between"
-          }}>
+          }}
+        >
           <H4
             weight={"Regular"}
             color={"bluegreyDark"}
             style={{
               flex: 1,
               flexGrow: 1
-            }}>
+            }}
+          >
             {category.description[locale]}
           </H4>
           <View>
@@ -133,7 +136,8 @@ const ZendeskChooseCategory = (props: Props) => {
         iconName: "",
         onPress: () => true
       }}
-      headerTitle={I18n.t("support.chooseCategory.header")}>
+      headerTitle={I18n.t("support.chooseCategory.header")}
+    >
       <SafeAreaView style={IOStyles.flex} testID={"ZendeskChooseCategory"}>
         <ScrollView style={[IOStyles.horizontalContentPadding]}>
           <H1>{I18n.t("support.chooseCategory.title.category")}</H1>

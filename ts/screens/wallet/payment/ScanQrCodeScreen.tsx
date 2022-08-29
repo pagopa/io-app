@@ -306,7 +306,8 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
         headerTitle={I18n.t("wallet.QRtoPay.byCameraTitle")}
         goBack={this.goBack}
         contextualHelpMarkdown={contextualHelpMarkdown}
-        faqCategories={["wallet"]}>
+        faqCategories={["wallet"]}
+      >
         <NavigationEvents
           onWillFocus={this.handleWillFocus}
           onWillBlur={this.handleWillBlur}
@@ -332,7 +333,8 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
               <ButtonDefaultOpacity
                 onPress={this.onShowImagePicker}
                 style={styles.button}
-                bordered={true}>
+                bordered={true}
+              >
                 <Text>{I18n.t("wallet.QRtoPay.chooser")}</Text>
               </ButtonDefaultOpacity>
               <View style={styles.content}>

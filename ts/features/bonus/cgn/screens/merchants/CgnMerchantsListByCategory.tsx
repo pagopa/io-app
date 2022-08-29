@@ -114,7 +114,8 @@ const CgnMerchantsListByCategory = () => {
           cs => cs.nameKey
         )
       )}
-      contextualHelp={emptyContextualHelp}>
+      contextualHelp={emptyContextualHelp}
+    >
       {categorySpecs && (
         <LinearGradient
           useAngle={true}
@@ -126,7 +127,8 @@ const CgnMerchantsListByCategory = () => {
               paddingTop: 16,
               paddingBottom: 32
             }
-          ]}>
+          ]}
+        >
           <View style={[IOStyles.row, { alignItems: "center" }]}>
             <H1 color={"white"} style={[IOStyles.flex, { paddingRight: 30 }]}>
               {I18n.t(categorySpecs.nameKey)}

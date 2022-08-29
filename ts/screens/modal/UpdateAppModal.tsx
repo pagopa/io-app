@@ -59,7 +59,8 @@ const IOSFooter: FC<FooterProps> = ({ onOpenAppStore }: FooterProps) => (
         block={true}
         primary={true}
         onPress={onOpenAppStore}
-        accessibilityRole={"button"}>
+        accessibilityRole={"button"}
+      >
         <Text>{I18n.t("btnUpdateApp")}</Text>
       </Button>
       <View spacer />
@@ -126,7 +127,8 @@ const UpdateAppModal: React.FC = () => {
         appLogo={true}
         goBack={false}
         accessibilityEvents={{ avoidNavigationEventsUsage: true }}
-        contextualHelp={emptyContextualHelp}>
+        contextualHelp={emptyContextualHelp}
+      >
         <Container>
           <View style={styles.container}>
             <H2>{I18n.t("titleUpdateApp")}</H2>

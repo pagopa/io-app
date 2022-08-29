@@ -41,7 +41,8 @@ const VoucherInformationComponent = (props: Props): React.ReactElement => (
       style={{
         flex: 1,
         flexDirection: "row"
-      }}>
+      }}
+    >
       <H3 color={"bluegreyDark"} style={IOStyles.flex}>
         {props.voucherCode}
       </H3>

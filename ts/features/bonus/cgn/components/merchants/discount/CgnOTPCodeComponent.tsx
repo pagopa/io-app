@@ -73,7 +73,8 @@ const CgnOTPCodeContent = ({ onCodePress }: Props) => {
           onPress={requestOtp}
           accessible={true}
           accessibilityRole={"button"}
-          accessibilityHint={I18n.t("bonus.cgn.accessibility.code")}>
+          accessibilityHint={I18n.t("bonus.cgn.accessibility.code")}
+        >
           <View>
             <H4 weight={"Regular"} style={[IOStyles.flex]}>
               {I18n.t("bonus.cgn.otp.error")}
@@ -91,13 +92,15 @@ const CgnOTPCodeContent = ({ onCodePress }: Props) => {
       onPress={requestOtp}
       accessible={true}
       accessibilityRole={"button"}
-      accessibilityHint={I18n.t("bonus.cgn.accessibility.code")}>
+      accessibilityHint={I18n.t("bonus.cgn.accessibility.code")}
+    >
       <View style={[styles.row, styles.codeContainer]}>
         <BaseTypography
           weight={"Bold"}
           color={"bluegreyDark"}
           font={"RobotoMono"}
-          style={styles.codeText}>
+          style={styles.codeText}
+        >
           {"••••••••••"}
         </BaseTypography>
 

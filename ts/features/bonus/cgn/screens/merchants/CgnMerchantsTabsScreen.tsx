@@ -85,7 +85,8 @@ const CgnMerchantsTabsScreen: React.FunctionComponent<Props> = (
       goBack
       headerTitle={I18n.t("bonus.cgn.merchantsList.navigationTitle")}
       contextualHelp={emptyContextualHelp}
-      isSearchAvailable={{ enabled: true, onSearchTap: openFiltersModal }}>
+      isSearchAvailable={{ enabled: true, onSearchTap: openFiltersModal }}
+    >
       <SafeAreaView style={IOStyles.flex}>
         <Tabs
           tabContainerStyle={[styles.tabBarContainer, styles.tabBarUnderline]}
@@ -93,11 +94,13 @@ const CgnMerchantsTabsScreen: React.FunctionComponent<Props> = (
           onChangeTab={(e: any) => {
             setSelectedTab(e.i === 1 ? "places" : "online");
           }}
-          initialPage={0}>
+          initialPage={0}
+        >
           <Tab
             activeTextStyle={styles.activeTextStyle}
             textStyle={styles.textStyle}
-            heading={I18n.t("bonus.cgn.merchantsList.online")}>
+            heading={I18n.t("bonus.cgn.merchantsList.online")}
+          >
             <CgnMerchantsListView
               // TODO replace with correct handler
               onRefresh={constNull}
@@ -109,7 +112,8 @@ const CgnMerchantsTabsScreen: React.FunctionComponent<Props> = (
           <Tab
             activeTextStyle={styles.activeTextStyle}
             textStyle={styles.textStyle}
-            heading={I18n.t("bonus.cgn.merchantsList.places")}>
+            heading={I18n.t("bonus.cgn.merchantsList.places")}
+          >
             <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
               {/* TODO PLACEHOLDER HERE GOES THE MAP */}
               <H1>{`${I18n.t("bonus.cgn.merchantsList.places")} TAB`}</H1>

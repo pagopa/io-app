@@ -72,7 +72,8 @@ const renderItem =
         block={true}
         white={true}
         onPress={onPress}
-        testID={`idp-${item.id}-button`}>
+        testID={`idp-${item.id}-button`}
+      >
         <Image
           source={item.localLogo ? item.localLogo : { uri: item.logo }}
           style={styles.idpLogo}

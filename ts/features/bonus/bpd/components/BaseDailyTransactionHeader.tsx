@@ -31,7 +31,8 @@ const BaseDailyTransactionHeader: React.FunctionComponent<Props> = (
 ) => (
   <View
     style={[styles.whiteBg, { paddingHorizontal: 24 }]}
-    testID={"BaseDailyTransactionHeader"}>
+    testID={"BaseDailyTransactionHeader"}
+  >
     <H3 weight={"Bold"} color={"black"}>
       {props.date}
     </H3>

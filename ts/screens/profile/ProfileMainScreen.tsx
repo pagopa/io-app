@@ -170,7 +170,8 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
           primary={true}
           danger={isDanger}
           small={true}
-          onPress={onPress}>
+          onPress={onPress}
+        >
           <Text numberOfLines={1}>{title}</Text>
         </ButtonDefaultOpacity>
       </ListItem>
@@ -555,12 +556,14 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
               this.props.navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
                 screen: ROUTES.PROFILE_FISCAL_CODE
               })
-            }>
+            }
+          >
             <FiscalCodeComponent type={"Preview"} />
           </TouchableDefaultOpacity>
         }
         contextualHelpMarkdown={contextualHelpMarkdown}
-        faqCategories={["profile"]}>
+        faqCategories={["profile"]}
+      >
         {screenContent()}
       </DarkLayout>
     );

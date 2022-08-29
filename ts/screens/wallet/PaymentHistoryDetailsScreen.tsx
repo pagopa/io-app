@@ -254,7 +254,8 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
         onPress={this.handleAskAssistance}
         bordered={true}
         block={true}
-        style={styles.button}>
+        style={styles.button}
+      >
         <IconFont name={"io-messaggi"} />
         <Text>{I18n.t("payment.details.info.buttons.help")}</Text>
       </ButtonDefaultOpacity>
@@ -269,7 +270,8 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
         goBack={() => this.props.navigation.goBack()}
         showChat={false}
         dark={true}
-        headerTitle={I18n.t("payment.details.info.title")}>
+        headerTitle={I18n.t("payment.details.info.title")}
+      >
         <SlidedContentComponent hasFlatBottom={true}>
           {data.paymentOutcome.isSome() && data.paymentOutcome.value ? (
             <PaymentSummaryComponent
@@ -336,7 +338,8 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
                   <Text
                     style={[styles.bigText, styles.flex]}
                     bold={true}
-                    dark={true}>
+                    dark={true}
+                  >
                     {I18n.t("wallet.firstTransactionSummary.total")}
                   </Text>
                   <Text style={styles.bigText} bold={true} dark={true}>

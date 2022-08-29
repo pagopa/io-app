@@ -52,7 +52,8 @@ export const BottomSheetBpdTransactionsBody: React.FunctionComponent = () => {
       <Markdown
         cssStyle={CSS_STYLE}
         avoidTextSelection={true}
-        onLoadEnd={setCTAVisible}>
+        onLoadEnd={setCTAVisible}
+      >
         {I18n.t(
           "bonus.bpd.details.transaction.detail.summary.bottomSheet.body"
         )}

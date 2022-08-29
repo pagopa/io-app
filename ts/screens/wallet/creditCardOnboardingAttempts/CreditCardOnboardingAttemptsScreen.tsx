@@ -41,7 +41,8 @@ const styles = StyleSheet.create({
 const ListEmptyComponent = (
   <Content
     scrollEnabled={false}
-    style={[styles.noBottomPadding, styles.whiteBg]}>
+    style={[styles.noBottomPadding, styles.whiteBg]}
+  >
     <H2 color={"bluegreyDark"}>
       {I18n.t("wallet.creditCard.onboardingAttempts.emptyTitle")}
     </H2>
@@ -61,7 +62,8 @@ class CreditCardOnboardingAttemptsScreen extends React.Component<Props, never> {
     return (
       <BaseScreenComponent
         goBack={() => this.props.navigation.goBack()}
-        headerTitle={I18n.t("wallet.creditCard.onboardingAttempts.title")}>
+        headerTitle={I18n.t("wallet.creditCard.onboardingAttempts.title")}
+      >
         <CreditCardAttemptsList
           title={I18n.t(
             "wallet.creditCard.onboardingAttempts.lastAttemptsTitle"

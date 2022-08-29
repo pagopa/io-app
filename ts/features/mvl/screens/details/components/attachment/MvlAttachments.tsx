@@ -89,7 +89,8 @@ const MvlAttachmentItem = (props: {
       <TouchableOpacity
         style={styles.container}
         onPress={onAttachmentSelect}
-        disabled={pot.isLoading(downloadPot)}>
+        disabled={pot.isLoading(downloadPot)}
+      >
         <View style={styles.row}>
           <AttachmentIcon contentType={props.attachment.contentType} />
           <View style={styles.middleSection}>
@@ -97,7 +98,8 @@ const MvlAttachmentItem = (props: {
               color={"bluegrey"}
               weight={"SemiBold"}
               ellipsizeMode={"middle"}
-              numberOfLines={2}>
+              numberOfLines={2}
+            >
               {props.attachment.displayName}
             </H5>
             {typeof props.attachment.size !== "undefined" && (

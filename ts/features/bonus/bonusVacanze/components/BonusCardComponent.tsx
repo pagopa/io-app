@@ -167,7 +167,8 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
           code: props.bonus.id,
           value: props.bonus.dsu_request.max_amount,
           status: maybeStatusDescription.getOrElse(props.bonus.status)
-        })}>
+        })}
+      >
         <View style={{ flexDirection: "column" }}>
           <View spacer={true} small={true} />
           <Text bold={true} style={[styles.colorWhite, styles.fontLarge]}>
@@ -181,7 +182,8 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
                 !isBonusActive(props.bonus) ? styles.consumedOpacity : {},
                 styles.colorWhite,
                 styles.previewAmount
-              ]}>
+              ]}
+            >
               {bonus.dsu_request.max_amount}
             </Text>
             <Text
@@ -189,7 +191,8 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
                 !isBonusActive(props.bonus) ? styles.consumedOpacity : {},
                 styles.colorWhite,
                 styles.fontLarge
-              ]}>
+              ]}
+            >
               {"€"}
             </Text>
             <View hspacer={true} />
@@ -214,7 +217,8 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
             style={styles.flexEnd}
             accessible={true}
             importantForAccessibility={"no-hide-descendants"}
-            accessibilityElementsHidden={true}>
+            accessibilityElementsHidden={true}
+          >
             <Menu>
               <MenuTrigger>
                 <IconFont name={"io-more"} color={IOColors.white} />
@@ -222,7 +226,8 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
 
               <MenuOptions>
                 <MenuOption
-                  onSelect={() => clipboardSetStringWithFeedback(bonus.id)}>
+                  onSelect={() => clipboardSetStringWithFeedback(bonus.id)}
+                >
                   <Text style={styles.actions}>
                     {I18n.t("bonus.bonusVacanze.cta.copyCode")}
                   </Text>
@@ -268,7 +273,8 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
         status: I18n.t(`bonus.${props.bonus.status.toLowerCase()}`, {
           defaultValue: ""
         })
-      })}>
+      })}
+    >
       <View style={[styles.row]}>
         <Text bold={true} style={[styles.colorWhite, styles.previewName]}>
           {I18n.t("bonus.bonusVacanze.name")}
@@ -280,7 +286,8 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
             !isBonusActive(props.bonus) ? styles.consumedOpacity : {},
             styles.colorWhite,
             styles.previewAmount
-          ]}>
+          ]}
+        >
           {bonus.dsu_request.max_amount}
         </Text>
         <Text
@@ -288,7 +295,8 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
             !isBonusActive(props.bonus) ? styles.consumedOpacity : {},
             styles.colorWhite,
             { fontSize: 20 }
-          ]}>
+          ]}
+        >
           {"€"}
         </Text>
       </View>
@@ -302,7 +310,8 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
       <ImageBackground
         style={[styles.container, props.preview ? styles.preview : {}]}
         imageStyle={props.preview ? styles.imagePreview : styles.imageFull}
-        source={props.preview ? bonusVacanzePreviewBg : bonusVacanzeBg}>
+        source={props.preview ? bonusVacanzePreviewBg : bonusVacanzeBg}
+      >
         <View style={styles.paddedContent}>
           {props.preview ? renderPreviewCard() : renderFullCard()}
         </View>

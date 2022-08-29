@@ -42,13 +42,15 @@ const InformationRow = ({
       onPress={onPress}
       style={styles.touchable}
       accessibilityRole={"button"}
-      accessibilityLabel={accessibilityLabel}>
+      accessibilityLabel={accessibilityLabel}
+    >
       <H4
         style={styles.label}
         ellipsizeMode={"tail"}
         numberOfLines={1}
         color={"bluegrey"}
-        weight={"Regular"}>
+        weight={"Regular"}
+      >
         {capitalize(I18n.t(label))}
       </H4>
       <NBView hspacer={true} />
@@ -57,7 +59,8 @@ const InformationRow = ({
         ellipsizeMode={"tail"}
         numberOfLines={1}
         color={"blue"}
-        weight={"SemiBold"}>
+        weight={"SemiBold"}
+      >
         {value}
       </H4>
     </TouchableDefaultOpacity>

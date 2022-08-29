@@ -274,7 +274,8 @@ const MessageListItem = ({
       accessible={true}
       accessibilityLabel={announceMessage(message, isRead, maybeItemBadge)}
       accessibilityRole="button"
-      testID={`MessageListItem_${message.id}`}>
+      testID={`MessageListItem_${message.id}`}
+    >
       <View style={styles.titleRow}>
         <View style={styles.organizationNameWrapper}>
           <H5 numberOfLines={1}>{organizationName}</H5>
@@ -309,7 +310,8 @@ const MessageListItem = ({
             style={[
               styles.checkBoxContainer,
               hasQrCode && styles.qrCheckBoxContainer
-            ]}>
+            ]}
+          >
             <IconFont
               name={iconName}
               size={ICON_WIDTH}

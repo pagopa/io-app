@@ -109,7 +109,8 @@ export class ScreenContentHeader extends React.PureComponent<Props> {
             heading={
               <H3
                 testID={"screen-content-header-title"}
-                style={dark && styles.white}>
+                style={dark && styles.white}
+              >
                 {title}
               </H3>
             }

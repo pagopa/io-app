@@ -167,10 +167,12 @@ class PreferencesScreen extends React.Component<Props> {
       <TopScreenComponent
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["profile", "privacy", "authentication_SPID"]}
-        goBack={true}>
+        goBack={true}
+      >
         <ScreenContent
           title={I18n.t("profile.preferences.title")}
-          subtitle={I18n.t("profile.preferences.subtitle")}>
+          subtitle={I18n.t("profile.preferences.subtitle")}
+        >
           <List withContentLateralPadding={true}>
             <ListItemComponent
               onPress={this.checkPermissionThenGoCalendar}

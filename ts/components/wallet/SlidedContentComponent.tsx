@@ -51,14 +51,16 @@ export const SlidedContentComponent = (props: Props & React.Props<Content>) => (
     noPadded={true}
     style={[styles.container, styles.flexGrow]}
     contentContainerStyle={styles.flexGrow}
-    bounces={false}>
+    bounces={false}
+  >
     <View
       style={[
         styles.flexGrow,
         styles.correctBottomPadding,
         props.hasFlatBottom ? styles.contentBottomFlat : styles.content,
         props.dark ? styles.dark : styles.white
-      ]}>
+      ]}
+    >
       {props.children}
     </View>
   </Content>

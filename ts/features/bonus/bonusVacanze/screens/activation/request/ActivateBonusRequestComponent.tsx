@@ -83,7 +83,8 @@ export const ActivateBonusRequestComponent: React.FunctionComponent<Props> =
             ? ["bonus_eligible", "bonus_eligible_discrepancies"]
             : ["bonus_eligible"]
         }
-        contextualHelpMarkdown={contextualHelpMarkdown}>
+        contextualHelpMarkdown={contextualHelpMarkdown}
+      >
         <SafeAreaView style={bonusVacanzeStyle.flex}>
           <ScrollView>
             <View style={bonusVacanzeStyle.horizontalPadding}>

@@ -182,11 +182,13 @@ class PrivacyMainScreen extends React.Component<Props, State> {
       <TopScreenComponent
         goBack={() => this.props.navigation.goBack()}
         contextualHelpMarkdown={contextualHelpMarkdown}
-        faqCategories={["privacy"]}>
+        faqCategories={["privacy"]}
+      >
         <ScreenContent
           title={I18n.t("profile.main.privacy.title")}
           subtitle={I18n.t("profile.main.privacy.subtitle")}
-          bounces={false}>
+          bounces={false}
+        >
           <List withContentLateralPadding={true}>
             {/* Privacy Policy */}
             <ListItemComponent

@@ -274,7 +274,8 @@ export default class CardComponent extends React.Component<Props> {
         style={[styles.footerButton, buttonStyle]}
         block={true}
         iconRight={true}
-        onPress={this.handleOnCardPress}>
+        onPress={this.handleOnCardPress}
+      >
         <Text style={footerTextStyle}>{text}</Text>
         <IconFont
           name={"io-right"}
@@ -300,7 +301,8 @@ export default class CardComponent extends React.Component<Props> {
           styles.cardShadow,
           hasFlatBottom ? styles.flatBottom : undefined,
           isHeader && styles.cardHeader
-        ]}>
+        ]}
+      >
         <View style={[styles.cardInner]}>
           <View style={[styles.row, styles.spaced]}>
             <View style={styles.row}>

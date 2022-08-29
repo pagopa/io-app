@@ -266,7 +266,8 @@ export const UAWebViewScreen = () => {
     <BaseScreenComponent
       goBack={true}
       contextualHelp={emptyContextualHelp}
-      headerTitle={I18n.t("features.uaDonations.webViewScreen.headerTitle")}>
+      headerTitle={I18n.t("features.uaDonations.webViewScreen.headerTitle")}
+    >
       <SafeAreaView style={IOStyles.flex}>
         {errorType === undefined && uri && (
           <WebView

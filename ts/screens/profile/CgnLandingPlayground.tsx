@@ -60,14 +60,16 @@ const CgnLandingPlayground = () => {
           <View style={styles.row}>
             <ButtonDefaultOpacity
               style={styles.contentCenter}
-              onPress={() => setReloadKey(r => r + 1)}>
+              onPress={() => setReloadKey(r => r + 1)}
+            >
               <Label color={"white"}>Reload</Label>
             </ButtonDefaultOpacity>
             <ButtonDefaultOpacity
               style={styles.contentCenter}
               onPress={() => {
                 setLoadUri(navigationURI);
-              }}>
+              }}
+            >
               <IconFont
                 name={"io-right"}
                 style={{

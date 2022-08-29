@@ -214,7 +214,8 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
         contextualHelpMarkdown={contextualHelpMarkdown}
         goBack={this.handleBackPress}
         headerTitle={I18n.t("wallet.transactionDetails")}
-        faqCategories={["wallet_transaction"]}>
+        faqCategories={["wallet_transaction"]}
+      >
         <FocusAwareStatusBar
           backgroundColor={IOColors.bluegrey}
           barStyle={"light-content"}
@@ -234,7 +235,8 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
               this.state.showFullReason
                 ? I18n.t("global.accessibility.expanded")
                 : I18n.t("global.accessibility.collapsed")
-            }`}>
+            }`}
+          >
             {I18n.t("wallet.transactionFullReason")}
           </Link>
           {this.state.showFullReason && (
@@ -242,7 +244,8 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
               selectable={true}
               onLongPress={() =>
                 clipboardSetStringWithFeedback(data.fullReason)
-              }>
+              }
+            >
               {data.fullReason}
             </Text>
           )}
@@ -333,7 +336,8 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
             light={true}
             bordered={true}
             block={true}
-            onPress={this.handleBackPress}>
+            onPress={this.handleBackPress}
+          >
             <Text>{I18n.t("global.buttons.close")}</Text>
           </ButtonDefaultOpacity>
           <View spacer={true} />

@@ -182,7 +182,8 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
     return (
       <TopScreenComponent
         goBack={goBack}
-        headerTitle={I18n.t("authentication.cie.genericTitle")}>
+        headerTitle={I18n.t("authentication.cie.genericTitle")}
+      >
         {this.getContent()}
       </TopScreenComponent>
     );

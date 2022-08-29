@@ -400,7 +400,8 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       accessible={true}
       accessibilityRole={"button"}
       accessibilityLabel={I18n.t("services.accessibility.edit")}
-      onPress={this.props.navigateToServicePreference}>
+      onPress={this.props.navigateToServicePreference}
+    >
       <IconFont name={"io-coggle"} size={16} color={IOColors.blue} />
       <Label color={"blue"} weight={"Bold"} style={{ marginLeft: 8 }}>
         {I18n.t("global.buttons.edit").toLocaleUpperCase()}
@@ -413,7 +414,8 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : undefined}
         enabled={true}
-        style={styles.container}>
+        style={styles.container}
+      >
         <View style={styles.topScreenContainer}>
           <FocusAwareStatusBar
             barStyle={"dark-content"}
@@ -424,7 +426,8 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             headerTitle={I18n.t("services.title")}
             appLogo={true}
             contextualHelpMarkdown={contextualHelpMarkdown}
-            faqCategories={["services"]}>
+            faqCategories={["services"]}
+          >
             {this.renderErrorContent() ? (
               this.renderErrorContent()
             ) : this.props.isSearchEnabled ? (
@@ -518,11 +521,13 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           tabBarUnderlineStyle={styles.tabBarUnderlineActive}
           onScroll={this.handleOnScroll}
           onChangeTab={this.handleOnChangeTab}
-          initialPage={0}>
+          initialPage={0}
+        >
           <Tab
             activeTextStyle={styles.activeTextStyle}
             textStyle={styles.textStyle}
-            heading={I18n.t("services.tab.national")}>
+            heading={I18n.t("services.tab.national")}
+          >
             <ServicesTab
               sections={nationalTabSections}
               isRefreshing={isRefreshing}
@@ -534,7 +539,8 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           <Tab
             activeTextStyle={styles.activeTextStyle}
             textStyle={styles.textStyle}
-            heading={I18n.t("services.tab.locals")}>
+            heading={I18n.t("services.tab.locals")}
+          >
             <LocalServicesWebView onServiceSelect={this.onServiceSelect} />
           </Tab>
         </AnimatedTabs>

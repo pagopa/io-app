@@ -153,7 +153,8 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
       <BaseScreenComponent
         goBack={true}
         contextualHelp={emptyContextualHelp}
-        headerTitle={I18n.t("bonus.sv.headerTitle")}>
+        headerTitle={I18n.t("bonus.sv.headerTitle")}
+      >
         <LoadingErrorComponent
           isLoading={isLoading(props.selectedVoucher)}
           loadingCaption={I18n.t("global.remoteStates.loading")}
@@ -186,7 +187,8 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
       <BaseScreenComponent
         goBack={true}
         contextualHelp={emptyContextualHelp}
-        headerTitle={I18n.t("bonus.sv.headerTitle")}>
+        headerTitle={I18n.t("bonus.sv.headerTitle")}
+      >
         <LoadingErrorComponent
           isLoading={true}
           loadingCaption={I18n.t("global.remoteStates.loading")}
@@ -207,7 +209,8 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
     <BaseScreenComponent
       goBack={true}
       contextualHelp={emptyContextualHelp}
-      headerTitle={I18n.t("bonus.sv.headerTitle")}>
+      headerTitle={I18n.t("bonus.sv.headerTitle")}
+    >
       <SafeAreaView style={IOStyles.flex} testID={"VoucherGeneratedScreen"}>
         <ScrollView style={[IOStyles.horizontalContentPadding]}>
           <H1>{I18n.t("bonus.sv.voucherList.details.title")}</H1>
@@ -218,7 +221,8 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
             <View
               style={{
                 flexDirection: "row"
-              }}>
+              }}
+            >
               <H3 color={"bluegreyDark"}>{voucherId}</H3>
               <View hspacer />
               <CopyButtonComponent textToCopy={voucherId} />

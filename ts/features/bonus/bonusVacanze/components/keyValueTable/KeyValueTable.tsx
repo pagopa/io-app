@@ -45,7 +45,8 @@ const row = (kvRow: KeyValueRow, columnWidthStyle: ColumnWidthStyle) => (
   <View
     style={[styles.row, styles.baseRow]}
     key={kvRow.key.text + kvRow.value.text}
-    accessible={true}>
+    accessible={true}
+  >
     <Text style={[kvRow.key.style, columnWidthStyle.left]}>
       {kvRow.key.text}
     </Text>

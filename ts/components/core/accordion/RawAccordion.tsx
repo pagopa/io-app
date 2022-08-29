@@ -99,7 +99,8 @@ export const RawAccordion: React.FunctionComponent<Props> = props => {
           (isOpen
             ? I18n.t("global.accessibility.expanded")
             : I18n.t("global.accessibility.collapsed"))
-        }>
+        }
+      >
         <View style={[styles.row, headerStyle]}>
           <View style={styles.internalHeader}>{props.header}</View>
           <Animated.View
@@ -107,7 +108,8 @@ export const RawAccordion: React.FunctionComponent<Props> = props => {
             style={{
               ...styles.headerIcon,
               transform: [{ rotateZ: arrowAngle }]
-            }}>
+            }}
+          >
             <IconFont
               name={"io-right"}
               color={customVariables.brandPrimary}

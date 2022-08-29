@@ -150,7 +150,8 @@ const CgnCardComponent: React.FunctionComponent<Props> = (props: Props) => {
       <ImageBackground
         source={cardBg}
         imageStyle={[styles.imageFull]}
-        style={styles.cardContainer}>
+        style={styles.cardContainer}
+      >
         <WebView
           androidCameraAccessDisabled={true}
           androidMicrophoneAccessDisabled={true}
@@ -168,7 +169,8 @@ const CgnCardComponent: React.FunctionComponent<Props> = (props: Props) => {
             IOStyles.row,
             IOStyles.flex,
             { justifyContent: "space-between" }
-          ]}>
+          ]}
+        >
           <View style={[styles.column, styles.flex2, styles.spaced]}>
             <View>
               <H3 weight={"Bold"} color={"black"}>
@@ -183,7 +185,8 @@ const CgnCardComponent: React.FunctionComponent<Props> = (props: Props) => {
                 <H3
                   weight={"Bold"}
                   color={"black"}
-                  testID={"profile-name-surname"}>
+                  testID={"profile-name-surname"}
+                >
                   {props.currentProfile}
                 </H3>
               )}

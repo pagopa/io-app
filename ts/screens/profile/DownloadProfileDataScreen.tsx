@@ -99,14 +99,17 @@ class DownloadProfileDataScreen extends React.PureComponent<Props, State> {
     const ContainerComponent = withLoadingSpinner(() => (
       <BaseScreenComponent
         goBack={true}
-        headerTitle={I18n.t("profile.main.privacy.exportData.title")}>
+        headerTitle={I18n.t("profile.main.privacy.exportData.title")}
+      >
         <ScreenContent
           title={I18n.t("profile.main.privacy.exportData.title")}
           subtitle={I18n.t("profile.main.privacy.exportData.info.title")}
-          bounces={false}>
+          bounces={false}
+        >
           <View style={styles.markdownContainer}>
             <Markdown
-              onLoadEnd={() => this.setState({ isMarkdownLoaded: true })}>
+              onLoadEnd={() => this.setState({ isMarkdownLoaded: true })}
+            >
               {I18n.t("profile.main.privacy.exportData.info.body")}
             </Markdown>
             {this.state.isMarkdownLoaded && <EdgeBorderComponent />}

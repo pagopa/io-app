@@ -77,7 +77,8 @@ const VoucherGeneratedScreen = (props: Props): React.ReactElement | null => {
       <BaseScreenComponent
         goBack={false}
         contextualHelp={emptyContextualHelp}
-        headerTitle={I18n.t("bonus.sv.headerTitle")}>
+        headerTitle={I18n.t("bonus.sv.headerTitle")}
+      >
         <LoadingErrorComponent
           isLoading={isLoading(remoteVoucherGenerated)}
           loadingCaption={I18n.t("global.remoteStates.loading")}
@@ -109,7 +110,8 @@ const VoucherGeneratedScreen = (props: Props): React.ReactElement | null => {
         <BaseScreenComponent
           goBack={false}
           contextualHelp={emptyContextualHelp}
-          headerTitle={I18n.t("bonus.sv.headerTitle")}>
+          headerTitle={I18n.t("bonus.sv.headerTitle")}
+        >
           <SafeAreaView style={IOStyles.flex} testID={"VoucherGeneratedScreen"}>
             <ScrollView style={[IOStyles.horizontalContentPadding]}>
               <H1>

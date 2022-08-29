@@ -248,14 +248,16 @@ class IdpLoginScreen extends React.Component<Props, State> {
               style={styles.cancelButtonStyle}
               block={true}
               light={true}
-              bordered={true}>
+              bordered={true}
+            >
               <Text>{I18n.t("global.buttons.cancel")}</Text>
             </ButtonDefaultOpacity>
             <ButtonDefaultOpacity
               onPress={this.setRequestStateToLoading}
               style={styles.flex2}
               block={true}
-              primary={true}>
+              primary={true}
+            >
               <Text>{I18n.t("global.buttons.retry")}</Text>
             </ButtonDefaultOpacity>
           </View>
@@ -304,7 +306,8 @@ class IdpLoginScreen extends React.Component<Props, State> {
         faqCategories={["authentication_SPID"]}
         headerTitle={`${I18n.t("authentication.idp_login.headerTitle")} - ${
           loggedOutWithIdpAuth.idp.name
-        }`}>
+        }`}
+      >
         <View style={styles.webViewWrapper}>
           {!hasError && (
             <WebView

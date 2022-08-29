@@ -129,7 +129,8 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
         horizontal={true}
         style={[IOStyles.horizontalContentPadding, styles.scrollViewPadding]}
         alwaysBounceHorizontal={false}
-        showsHorizontalScrollIndicator={false}>
+        showsHorizontalScrollIndicator={false}
+      >
         {reverse([...props.availableBonusesList]).map((b, i) => {
           const handler = fromNullable(bonusMap.get(b.id_type)).fold(
             () => constUndefined,

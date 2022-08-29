@@ -119,7 +119,8 @@ export default class ListItemComponent extends React.Component<Props> {
         accessibilityLabel={this.props.accessibilityLabel}
         accessibilityState={this.props.accessibilityState}
         accessibilityRole={this.props.accessibilityRole}
-        testID={this.props.testID}>
+        testID={this.props.testID}
+      >
         <View style={styles.flexColumn}>
           <View style={styles.flexRow}>
             <View style={styles.flexRow2}>
@@ -133,7 +134,8 @@ export default class ListItemComponent extends React.Component<Props> {
                 style={[
                   styles.serviceName,
                   this.props.isItemDisabled && styles.disabledItem
-                ]}>
+                ]}
+              >
                 {this.props.title}
               </Text>
               {this.props.titleBadge && (
@@ -169,7 +171,8 @@ export default class ListItemComponent extends React.Component<Props> {
                   paddingRight:
                     this.props.paddingRightDescription || PADDING_R_DESCRIPTION
                 }
-              ]}>
+              ]}
+            >
               {this.props.subTitle}
             </Text>
           )}

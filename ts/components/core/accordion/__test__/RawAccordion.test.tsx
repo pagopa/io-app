@@ -124,7 +124,8 @@ const renderRawAccordion = (
           <Fingerprint width={32} height={32} />
           <H3 style={{ alignSelf: "center" }}>{headerText}</H3>
         </View>
-      }>
+      }
+    >
       <Body>{bodyText}</Body>
     </RawAccordion>
   );

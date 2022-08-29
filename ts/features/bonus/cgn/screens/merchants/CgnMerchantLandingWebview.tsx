@@ -38,7 +38,8 @@ const CgnMerchantLandingWebview: React.FunctionComponent<Props> = (
       customRightIcon={{
         iconName: "io-close",
         onPress: () => props.navigation.goBack()
-      }}>
+      }}
+    >
       <SafeAreaView style={IOStyles.flex}>
         <WebviewComponent
           source={{

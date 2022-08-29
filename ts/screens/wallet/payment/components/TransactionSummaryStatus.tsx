@@ -25,7 +25,8 @@ export const renderStatusContent = (props: StatusContentProps) => (
     iconName={props.iconName}
     labelColor={props.labelColor}
     viewRef={props.viewRef}
-    labelPaddingVertical={props.line2 ? 4 : 14}>
+    labelPaddingVertical={props.line2 ? 4 : 14}
+  >
     <LabelSmall color={props.labelColor} weight={"Regular"}>
       {props.line1}
     </LabelSmall>

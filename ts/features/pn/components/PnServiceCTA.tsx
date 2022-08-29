@@ -43,7 +43,8 @@ const LoadingButton = (props: { isServiceActive: boolean }) => (
         ? IOColors.white
         : IOColors.greyLight,
       width: "100%"
-    }}>
+    }}
+  >
     <LoadingIndicator />
   </ButtonDefaultOpacity>
 );
@@ -52,7 +53,8 @@ const ActivateButton = (props: { dispatch: AppDispatch }) => (
   <ButtonDefaultOpacity
     block
     primary
-    onPress={() => props.dispatch(pnActivationUpsert.request(true))}>
+    onPress={() => props.dispatch(pnActivationUpsert.request(true))}
+  >
     <Label color={"white"}>{I18n.t("features.pn.service.activate")}</Label>
   </ButtonDefaultOpacity>
 );
@@ -64,7 +66,8 @@ const DeactivateButton = (props: { dispatch: AppDispatch }) => (
     onPress={() => props.dispatch(pnActivationUpsert.request(false))}
     style={{
       backgroundColor: IOColors.white
-    }}>
+    }}
+  >
     <Link weight={"SemiBold"} color={"red"}>
       {I18n.t("features.pn.service.deactivate")}
     </Link>

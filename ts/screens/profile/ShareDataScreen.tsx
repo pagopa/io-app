@@ -46,7 +46,8 @@ const ShareDataScreen = (props: Props): React.ReactElement => {
   return (
     <BaseScreenComponent
       goBack={true}
-      headerTitle={I18n.t("profile.main.privacy.shareData.title")}>
+      headerTitle={I18n.t("profile.main.privacy.shareData.title")}
+    >
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView style={[IOStyles.horizontalContentPadding]}>
           <ShareDataComponent />

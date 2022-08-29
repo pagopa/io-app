@@ -31,7 +31,8 @@ const logoWidth = ovalWith * 0.4;
 const PayPalLogo = () => (
   <View
     style={{ alignItems: "center", justifyContent: "center" }}
-    testID={"payPalLogo"}>
+    testID={"payPalLogo"}
+  >
     <Oval width={ovalWith} height={ovalWith} />
     <PPLogo
       width={logoWidth}
@@ -71,10 +72,12 @@ const PayPalStartOnboardingScreen = (
     <BaseScreenComponent
       goBack={props.goBack}
       contextualHelp={emptyContextualHelp}
-      headerTitle={I18n.t("wallet.onboarding.paypal.headerTitle")}>
+      headerTitle={I18n.t("wallet.onboarding.paypal.headerTitle")}
+    >
       <SafeAreaView
         style={IOStyles.flex}
-        testID={"PayPalStartOnboardingScreen"}>
+        testID={"PayPalStartOnboardingScreen"}
+      >
         <InfoScreenComponent
           image={<PayPalLogo />}
           title={I18n.t("wallet.onboarding.paypal.start.title")}

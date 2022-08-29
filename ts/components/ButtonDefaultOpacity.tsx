@@ -76,7 +76,8 @@ const ButtonDefaultOpacity = (props: Props) => {
       accessible={true} // allows with TalkBack the feedback request to touch for button activation
       accessibilityRole={"button"}
       accessibilityState={{ disabled: props.disabled }}
-      hitSlop={hitSlop}>
+      hitSlop={hitSlop}
+    >
       {props.children}
     </Button>
   );
@@ -88,7 +89,8 @@ const ButtonDefaultOpacity = (props: Props) => {
         if (props.onPress && event.nativeEvent.state === State.END) {
           props.onPress();
         }
-      }}>
+      }}
+    >
       {button}
     </TapGestureHandler>
   ) : (

@@ -41,7 +41,8 @@ const styles = StyleSheet.create({
 const ListEmptyComponent = (
   <Content
     scrollEnabled={false}
-    style={[styles.noBottomPadding, styles.whiteBg]}>
+    style={[styles.noBottomPadding, styles.whiteBg]}
+  >
     <H2 color={"bluegrey"}>{I18n.t("payment.details.list.empty.title")}</H2>
     <View spacer={true} />
     <Text>{I18n.t("payment.details.list.empty.description")}</Text>
@@ -60,7 +61,8 @@ class PaymentsHistoryScreen extends React.Component<Props, never> {
     return (
       <BaseScreenComponent
         goBack={() => this.props.navigation.goBack()}
-        headerTitle={I18n.t("payment.details.list.title")}>
+        headerTitle={I18n.t("payment.details.list.title")}
+      >
         <PaymentHistoryList
           title={I18n.t("wallet.latestTransactions")}
           payments={reverse([...historyPayments])}

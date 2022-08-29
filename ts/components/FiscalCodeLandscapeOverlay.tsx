@@ -85,7 +85,8 @@ const FiscalCodeLandscapeOverlay: React.FunctionComponent<Props> = (
             onPress={props.onCancel}
             accessible={true}
             accessibilityRole={"button"}
-            accessibilityLabel={I18n.t("global.buttons.close")}>
+            accessibilityLabel={I18n.t("global.buttons.close")}
+          >
             <IconFont name="io-close" color={IOColors.white} />
           </Button>
         </Right>
@@ -97,7 +98,8 @@ const FiscalCodeLandscapeOverlay: React.FunctionComponent<Props> = (
       <ScrollView
         onLayout={scrollToEnd}
         ref={ScrollViewRef}
-        style={styles.content}>
+        style={styles.content}
+      >
         <View spacer={true} />
         <View>
           <FiscalCodeComponent

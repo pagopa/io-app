@@ -65,7 +65,8 @@ const DestinationSelector: React.FunctionComponent<Props> = (props: Props) => {
             props.onStateSelected(i.item);
             props.onMunicipalitySelected(undefined);
             hideModal();
-          }}>
+          }}
+        >
           <H4 weight={"Regular"} color={"bluegreyDark"}>
             {i.item.name}
           </H4>

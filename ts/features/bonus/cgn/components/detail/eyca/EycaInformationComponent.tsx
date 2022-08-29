@@ -33,7 +33,8 @@ const EycaInformationComponent: React.FunctionComponent = () => {
                 showToast(I18n.t("bonus.cgn.generic.linkError"))
               )
             }
-            onPressWithGestureHandler>
+            onPressWithGestureHandler
+          >
             <Label color={"blue"}>
               {I18n.t("bonus.cgn.detail.cta.eyca.bottomSheet")}
             </Label>

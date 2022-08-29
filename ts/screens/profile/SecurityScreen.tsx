@@ -71,10 +71,12 @@ const SecurityScreen: FC<Props> = ({
     <TopScreenComponent
       contextualHelpMarkdown={contextualHelpMarkdown}
       faqCategories={["profile", "privacy", "authentication_SPID"]}
-      goBack>
+      goBack
+    >
       <ScreenContent
         title={I18n.t("profile.security.title")}
-        subtitle={I18n.t("profile.security.subtitle")}>
+        subtitle={I18n.t("profile.security.subtitle")}
+      >
         <List withContentLateralPadding>
           {/* Ask for verification and reset unlock code */}
           <ListItemComponent

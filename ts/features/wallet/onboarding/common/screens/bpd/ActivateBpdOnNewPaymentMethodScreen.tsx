@@ -71,7 +71,8 @@ const ActivateBpdOnNewPaymentMethodScreen: React.FunctionComponent<Props> =
     return (
       <BaseScreenComponent
         headerTitle={props.title}
-        contextualHelp={props.contextualHelp}>
+        contextualHelp={props.contextualHelp}
+      >
         <SafeAreaView style={IOStyles.flex}>
           <ScrollView>
             <View style={IOStyles.horizontalContentPadding}>

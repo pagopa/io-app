@@ -74,7 +74,8 @@ const OutcomeCodeMessageComponent: React.FC<Props> = (props: Props) => {
       customGoBack={<View />}
       contextualHelp={
         props.hideContextualHelp === true ? undefined : emptyContextualHelp
-      }>
+      }
+    >
       <SafeAreaView style={IOStyles.flex} testID={"OutcomeCode"}>
         {props.outcomeCode.status === "success" ? (
           <>

@@ -25,7 +25,8 @@ export function withLoadingSpinner<
           isLoading={isLoading}
           loadingCaption={loadingCaption}
           loadingOpacity={loadingOpacity}
-          onCancel={onCancel}>
+          onCancel={onCancel}
+        >
           <WrappedComponent {...this.props} />
         </LoadingSpinnerOverlay>
       );

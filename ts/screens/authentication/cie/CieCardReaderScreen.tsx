@@ -480,7 +480,8 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       <TopScreenComponent
         onAccessibilityNavigationHeaderFocus={this.handleOnHeaderFocus}
         goBack={true}
-        headerTitle={I18n.t("authentication.cie.card.headerTitle")}>
+        headerTitle={I18n.t("authentication.cie.card.headerTitle")}
+      >
         <ScreenContentHeader title={this.state.title} />
         <Content bounces={false} noPadded={true}>
           <Text style={styles.padded} ref={this.subTitleRef}>

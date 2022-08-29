@@ -41,7 +41,8 @@ const SatispayKoTimeout: React.FunctionComponent<Props> = props => {
     <BaseScreenComponent
       goBack={true}
       headerTitle={headerTitle}
-      contextualHelp={emptyContextualHelp}>
+      contextualHelp={emptyContextualHelp}
+    >
       <SafeAreaView style={IOStyles.flex}>
         <InfoScreenComponent
           image={renderInfoRasterImage(image)}

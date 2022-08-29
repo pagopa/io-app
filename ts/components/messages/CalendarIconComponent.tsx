@@ -32,7 +32,8 @@ class CalendarIconComponent extends React.PureComponent<Props, never> {
             x={"50%"}
             y={"30%"}
             fill={textColor}
-            fontSize={10}>
+            fontSize={10}
+          >
             {month}
           </Text>
           <Text
@@ -42,7 +43,8 @@ class CalendarIconComponent extends React.PureComponent<Props, never> {
             y={"65%"}
             fill={textColor}
             fontSize={18}
-            fontWeight={"bold"}>
+            fontWeight={"bold"}
+          >
             {day}
           </Text>
         </G>

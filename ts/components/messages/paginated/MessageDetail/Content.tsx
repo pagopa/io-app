@@ -54,16 +54,16 @@ const Content = ({ message, goToServiceDetail, serviceContacts }: Props) => {
         <NBText>{I18n.t("messageDetails.dateSending")}</NBText>
         <NBText
           style={styles.sectionValue}
-          bold={true}>{` ${convertDateTimeToWordDistance(
-          message.createdAt
-        )}`}</NBText>
+          bold={true}
+        >{` ${convertDateTimeToWordDistance(message.createdAt)}`}</NBText>
       </View>
 
       <View style={styles.section}>
         <NBText>{I18n.t("messageDetails.sender")}</NBText>
         <NBText
           style={styles.sectionValue}
-          bold={true}>{` ${message.organizationName}`}</NBText>
+          bold={true}
+        >{` ${message.organizationName}`}</NBText>
       </View>
 
       <View style={styles.section}>
@@ -71,7 +71,8 @@ const Content = ({ message, goToServiceDetail, serviceContacts }: Props) => {
         <Link
           weight={"Bold"}
           style={styles.sectionValue}
-          onPress={goToServiceDetail}>
+          onPress={goToServiceDetail}
+        >
           {message.serviceName}
         </Link>
       </View>

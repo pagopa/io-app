@@ -73,7 +73,8 @@ const renderListItem = (cardPathItem: ListRenderItemInfo<IAddCardPath>) => (
   <ListItem
     onPress={cardPathItem.item.onPress}
     first={cardPathItem.index === 0}
-    testID={`${cardPathItem.item.path}Item`}>
+    testID={`${cardPathItem.item.path}Item`}
+  >
     <View style={styles.flexColumn}>
       <View style={styles.row}>
         <View>
@@ -86,7 +87,8 @@ const renderListItem = (cardPathItem: ListRenderItemInfo<IAddCardPath>) => (
       <H5
         color={"bluegrey"}
         weight={"Regular"}
-        style={styles.descriptionPadding}>
+        style={styles.descriptionPadding}
+      >
         {cardPathItem.item.description}
       </H5>
     </View>
@@ -132,7 +134,8 @@ const CoBadgeChooseType = (props: Props): React.ReactElement => {
     <BaseScreenComponent
       goBack={true}
       headerTitle={I18n.t("wallet.onboarding.coBadge.headerTitle")}
-      contextualHelp={emptyContextualHelp}>
+      contextualHelp={emptyContextualHelp}
+    >
       <SafeAreaView style={IOStyles.flex} testID="coBadgeChooseType">
         <Content style={IOStyles.flex}>
           <H1>{I18n.t("wallet.onboarding.coBadge.chooseType.title")}</H1>

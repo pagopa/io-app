@@ -57,11 +57,13 @@ const StudentSelectDestinationScreen = (
     <BaseScreenComponent
       goBack={true}
       contextualHelp={emptyContextualHelp}
-      headerTitle={I18n.t("bonus.sv.headerTitle")}>
+      headerTitle={I18n.t("bonus.sv.headerTitle")}
+    >
       <SafeAreaView
         style={IOStyles.flex}
         testID={"StudentSelectDestinationScreen"}
-        ref={elementRef}>
+        ref={elementRef}
+      >
         <ScrollView style={[IOStyles.horizontalContentPadding]}>
           <H1>
             {I18n.t(

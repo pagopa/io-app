@@ -108,7 +108,8 @@ const BaseCoBadgeCard: React.FunctionComponent<Props> = (props: Props) => {
               flexDirection: "row",
               alignItems: "center",
               justifyContent: "space-between"
-            }}>
+            }}
+          >
             {props.abi.logoUrl && imageStyle ? (
               <Image
                 source={{ uri: props.abi.logoUrl }}
@@ -127,7 +128,8 @@ const BaseCoBadgeCard: React.FunctionComponent<Props> = (props: Props) => {
             {props.blocked && (
               <Badge
                 style={[styles.badgeInfo, styles.badgeInfoExpired]}
-                testID={"blockedBadge"}>
+                testID={"blockedBadge"}
+              >
                 <H5 color="red">{I18n.t("global.badges.blocked")}</H5>
               </Badge>
             )}
@@ -138,7 +140,8 @@ const BaseCoBadgeCard: React.FunctionComponent<Props> = (props: Props) => {
               <H5
                 weight={props.isExpired ? "SemiBold" : "Regular"}
                 color={props.isExpired ? "red" : "bluegreyDark"}
-                testID={"expirationDate"}>
+                testID={"expirationDate"}
+              >
                 {I18n.t("wallet.cobadge.details.card.validUntil", {
                   expiryDate: localeDateFormat(
                     props.expiringDate,

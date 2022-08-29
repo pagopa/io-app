@@ -32,10 +32,12 @@ export const BaseEuCovidCertificateLayout = (props: Props) => {
       <SafeAreaView
         style={IOStyles.flex}
         testID={"BaseEuCovidCertificateLayout"}
-        ref={elementRef}>
+        ref={elementRef}
+      >
         <ScrollView
           style={[IOStyles.horizontalContentPadding]}
-          testID={props.testID}>
+          testID={props.testID}
+        >
           {/* if the header is not defined put an empty header that works as a spacer
           (design directions, to avoid content too close with the top of the screen) */}
           {props.header ?? <View style={styles.emptyHeader} />}

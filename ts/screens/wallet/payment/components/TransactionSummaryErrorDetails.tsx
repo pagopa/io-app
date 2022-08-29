@@ -86,7 +86,8 @@ export const TransactionSummaryErrorDetails = ({
         }}
         accessibilityLabel={I18n.t(
           "wallet.firstTransactionSummary.errorDetails.title"
-        )}>
+        )}
+      >
         <View>
           <Separator />
           {detailsData.map((row, index, array) =>

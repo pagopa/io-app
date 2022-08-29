@@ -64,7 +64,8 @@ export const InfoScreenComponent: React.FunctionComponent<Props> = props => {
         testID="infoScreenTitle"
         accessible
         ref={elementRef}
-        style={styles.textAlignCenter}>
+        style={styles.textAlignCenter}
+      >
         {props.title}
       </H2>
       <View spacer={true} />

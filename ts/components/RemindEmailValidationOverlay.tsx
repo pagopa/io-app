@@ -258,7 +258,8 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
       onPress={this.handleOnboardingGoBack}
       accessible={true}
       accessibilityLabel={I18n.t("global.buttons.back")}
-      accessibilityRole={"button"}>
+      accessibilityRole={"button"}
+    >
       <IconFont name={"io-back"} />
     </TouchableDefaultOpacity>
   );
@@ -374,7 +375,8 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
       <TopScreenComponent
         {...(onboardingCompleted ? this.onMainProps : this.onBoardingProps)}
         contextualHelpMarkdown={this.contextualHelpMarkdown}
-        accessibilityEvents={{ avoidNavigationEventsUsage: true }}>
+        accessibilityEvents={{ avoidNavigationEventsUsage: true }}
+      >
         <Content bounces={false}>
           <View spacer={true} extralarge={true} />
           <IconFont
@@ -390,7 +392,8 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
           {!this.state.emailHasBeenValidate ? (
             <Markdown
               onLoadEnd={this.handleOnContentLoadEnd}
-              cssStyle={MARKDOWN_BODY_STYLE}>
+              cssStyle={MARKDOWN_BODY_STYLE}
+            >
               {onboardingCompleted
                 ? I18n.t("email.validate.content2", { email })
                 : I18n.t("email.validate.content1", { email })}

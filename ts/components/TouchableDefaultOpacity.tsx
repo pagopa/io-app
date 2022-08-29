@@ -15,7 +15,8 @@ const TouchableDefaultOpacity: React.FunctionComponent<TouchableDefaultOpacityPr
       {...{
         ...props,
         activeOpacity: props.activeOpacity || defaultActiveOpacity
-      }}>
+      }}
+    >
       {props.children}
     </TouchableOpacity>
   );

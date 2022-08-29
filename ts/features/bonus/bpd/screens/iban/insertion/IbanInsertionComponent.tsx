@@ -53,7 +53,8 @@ export const IbanInsertionComponent: React.FunctionComponent<Props> = props => {
     <BaseScreenComponent
       goBack={props.onBack}
       headerTitle={headerTitle}
-      contextualHelp={props.contextualHelp}>
+      contextualHelp={props.contextualHelp}
+    >
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView>
           <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>

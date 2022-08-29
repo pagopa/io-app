@@ -82,7 +82,8 @@ export const PnMessageDetailsScreen = (
     <BaseScreenComponent
       goBack={true}
       headerTitle={I18n.t("features.pn.details.title")}
-      contextualHelp={emptyContextualHelp}>
+      contextualHelp={emptyContextualHelp}
+    >
       <SafeAreaView style={IOStyles.flex}>
         {renderMessage(messageId, message, service, loadContent)}
       </SafeAreaView>

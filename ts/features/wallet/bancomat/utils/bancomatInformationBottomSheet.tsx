@@ -37,7 +37,8 @@ export default (onAdd?: () => void) => {
           onAdd?.();
           dismiss();
         }}
-        onPressWithGestureHandler={true}>
+        onPressWithGestureHandler={true}
+      >
         <Label>{I18n.t("wallet.bancomat.details.debit.addCta")}</Label>
       </ButtonDefaultOpacity>
     </View>,

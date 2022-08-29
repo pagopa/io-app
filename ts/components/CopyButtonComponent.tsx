@@ -62,10 +62,12 @@ const CopyButtonComponent: React.FunctionComponent<Props> = (props: Props) => {
       style={styles.button}
       bordered={!isTap}
       primary={isTap}
-      onPressWithGestureHandler={props.onPressWithGestureHandler}>
+      onPressWithGestureHandler={props.onPressWithGestureHandler}
+    >
       <Text
         style={[styles.text, isTap ? styles.colorWhite : styles.colorBlue]}
-        small={true}>
+        small={true}
+      >
         {isTap
           ? I18n.t("clipboard.copyFeedbackButton")
           : I18n.t("clipboard.copyText")}

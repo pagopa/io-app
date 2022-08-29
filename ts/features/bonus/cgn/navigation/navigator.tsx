@@ -49,7 +49,8 @@ export const CgnActivationNavigator = () => (
   <ActivationStack.Navigator
     initialRouteName={CGN_ROUTES.ACTIVATION.INFORMATION_TOS}
     headerMode="none"
-    screenOptions={{ gestureEnabled: isGestureEnabled }}>
+    screenOptions={{ gestureEnabled: isGestureEnabled }}
+  >
     <ActivationStack.Screen
       name={CGN_ROUTES.ACTIVATION.INFORMATION_TOS}
       component={CgnInformationScreen}
@@ -91,7 +92,8 @@ export const CgnDetailsNavigator = () => (
   <DetailStack.Navigator
     initialRouteName={CGN_ROUTES.DETAILS.DETAILS}
     headerMode="none"
-    screenOptions={{ gestureEnabled: isGestureEnabled }}>
+    screenOptions={{ gestureEnabled: isGestureEnabled }}
+  >
     <DetailStack.Screen
       name={CGN_ROUTES.DETAILS.DETAILS}
       component={CgnDetailScreen}
@@ -129,7 +131,8 @@ export const CgnEYCAActivationNavigator = () => (
   <EycaActivationStack.Navigator
     initialRouteName={CGN_ROUTES.EYCA.ACTIVATION.LOADING}
     headerMode="none"
-    screenOptions={{ gestureEnabled: isGestureEnabled }}>
+    screenOptions={{ gestureEnabled: isGestureEnabled }}
+  >
     <EycaActivationStack.Screen
       name={CGN_ROUTES.EYCA.ACTIVATION.LOADING}
       component={EycaActivationLoading}

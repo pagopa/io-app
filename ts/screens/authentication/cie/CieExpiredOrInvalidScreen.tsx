@@ -32,7 +32,8 @@ class CieExpiredOrInvalidScreen extends React.PureComponent<Props> {
     return (
       <TopScreenComponent
         goBack={this.handleGoBack}
-        headerTitle={I18n.t("authentication.landing.expiredCardHeaderTitle")}>
+        headerTitle={I18n.t("authentication.landing.expiredCardHeaderTitle")}
+      >
         <ScreenContentHeader
           title={I18n.t("authentication.landing.expiredCardTitle")}
         />

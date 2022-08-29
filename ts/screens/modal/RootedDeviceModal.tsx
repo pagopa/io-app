@@ -126,7 +126,8 @@ const RootedDeviceModal: React.FunctionComponent<Props> = (props: Props) => {
   const ComponentWithLoading = withLoadingSpinner(() => (
     <BaseScreenComponent
       goBack={false}
-      accessibilityEvents={{ avoidNavigationEventsUsage: true }}>
+      accessibilityEvents={{ avoidNavigationEventsUsage: true }}
+    >
       <Container>
         <SafeAreaView style={styles.flex}>
           <Content>
@@ -141,7 +142,8 @@ const RootedDeviceModal: React.FunctionComponent<Props> = (props: Props) => {
             <Markdown
               cssStyle={CSS_STYLE}
               onLoadEnd={onMarkdownLoaded}
-              extraBodyHeight={100}>
+              extraBodyHeight={100}
+            >
               {body}
             </Markdown>
           </Content>

@@ -32,7 +32,8 @@ const EycaStatusDetailsComponent = (props: Props) => (
   <>
     <View
       style={[styles.rowBlock, styles.spaced]}
-      testID={"eyca-pending-component"}>
+      testID={"eyca-pending-component"}
+    >
       <H4>{I18n.t("bonus.cgn.detail.status.eycaCircuit")}</H4>
       <IconFont
         name={"io-info"}
@@ -56,7 +57,8 @@ const EycaStatusDetailsComponent = (props: Props) => (
           showToast(I18n.t("bonus.cgn.generic.linkError"))
         )
       }
-      testID={"eyca-pending-button"}>
+      testID={"eyca-pending-button"}
+    >
       <Label color={"blue"}>
         {I18n.t("bonus.cgn.detail.cta.eyca.pending")}
       </Label>

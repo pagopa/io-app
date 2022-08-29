@@ -54,7 +54,8 @@ export const PspComponent: FC<Props> = ({ psp, onPress }) => {
     <TouchableDefaultOpacity
       onPress={onPress}
       style={styles.itemContainer}
-      testID={`psp-${psp.idPsp}`}>
+      testID={`psp-${psp.idPsp}`}
+    >
       <View style={styles.line1}>
         {imageStyle ? (
           <Image

@@ -65,10 +65,12 @@ const DisabledAdditionalInfoScreen = (props: Props): React.ReactElement => {
     <BaseScreenComponent
       goBack={true}
       contextualHelp={emptyContextualHelp}
-      headerTitle={headerTitle}>
+      headerTitle={headerTitle}
+    >
       <SafeAreaView
         style={IOStyles.flex}
-        testID={"DisabledAdditionalInfoScreen"}>
+        testID={"DisabledAdditionalInfoScreen"}
+      >
         <ScrollView style={[IOStyles.horizontalContentPadding]}>
           <H1>{title}</H1>
           <View spacer={true} extralarge={true} />

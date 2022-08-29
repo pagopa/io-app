@@ -79,7 +79,8 @@ class ScreenHeader extends React.Component<Props> {
         <View
           accessible={true}
           style={styles.text}
-          accessibilityRole={"header"}>
+          accessibilityRole={"header"}
+        >
           {heading}
         </View>
         {fromNullable(rightComponent).fold(this.getIcon(), c => c)}

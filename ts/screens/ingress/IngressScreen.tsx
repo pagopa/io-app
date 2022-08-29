@@ -65,7 +65,8 @@ class IngressScreen extends React.PureComponent<Props> {
         contextualHelpMarkdown={contextualHelpMarkdown}
         primary={true}
         headerBackgroundColor={variables.brandPrimary}
-        appLogo={false}>
+        appLogo={false}
+      >
         <StatusBar
           barStyle="light-content"
           backgroundColor={styles.container.backgroundColor}

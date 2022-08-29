@@ -121,7 +121,8 @@ const getBadgeStatus = (
             style={[
               styles.badgeContainer,
               { backgroundColor: statusColorMap[section.level] }
-            ]}>
+            ]}
+          >
             <Text style={styles.badgeText} semibold={true}>
               {badgeLabel}
             </Text>
@@ -148,7 +149,8 @@ const renderListItem = (
           onPress={badgeStatus?.alert ?? itemInfo.item.onPress}
           style={styles.container}
           first={itemInfo.index === 0}
-          last={itemInfo.index === paymentMethodsLength}>
+          last={itemInfo.index === paymentMethodsLength}
+        >
           {itemInfo.item.icon({ width: 20, height: 20 })}
           <View hspacer />
           <View style={styles.flexColumn}>
@@ -163,7 +165,8 @@ const renderListItem = (
             <H5
               color={"bluegrey"}
               weight={"Regular"}
-              style={styles.descriptionPadding}>
+              style={styles.descriptionPadding}
+            >
               {itemInfo.item.description}
             </H5>
           </View>
@@ -177,7 +180,8 @@ const renderListItem = (
           onPress={showPaymentMethodIncomingAlert}
           style={styles.container}
           first={itemInfo.index === 0}
-          last={itemInfo.index === paymentMethodsLength}>
+          last={itemInfo.index === paymentMethodsLength}
+        >
           <View style={styles.flexColumn}>
             <View>
               <Badge style={styles.badgeContainer}>
@@ -192,7 +196,8 @@ const renderListItem = (
             <H5
               color={"bluegrey"}
               weight={"Regular"}
-              style={styles.descriptionPadding}>
+              style={styles.descriptionPadding}
+            >
               {itemInfo.item.description}
             </H5>
           </View>

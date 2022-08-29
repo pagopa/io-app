@@ -27,7 +27,8 @@ const renderButton = (props: BlockButtonProps) => (
       <Text
         style={fromNullable(props.buttonFontSize).fold(undefined, fs => ({
           fontSize: fs
-        }))}>
+        }))}
+      >
         {props.title}
       </Text>
     </ButtonDefaultOpacity>

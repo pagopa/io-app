@@ -120,13 +120,15 @@ class LanguagesPreferencesScreen extends React.PureComponent<Props, State> {
       <TopScreenComponent
         contextualHelpMarkdown={contextualHelpMarkdown}
         headerTitle={I18n.t("profile.preferences.title")}
-        goBack={true}>
+        goBack={true}
+      >
         <SafeAreaView style={IOStyles.flex}>
           <ScreenContent
             title={I18n.t("profile.preferences.list.preferred_language.title")}
             subtitle={I18n.t(
               "profile.preferences.list.preferred_language.subtitle"
-            )}>
+            )}
+          >
             <List withContentLateralPadding={true}>
               {availableTranslations.map((lang, index) => {
                 const isSelectedLanguage = this.isAlreadyPreferred(lang);

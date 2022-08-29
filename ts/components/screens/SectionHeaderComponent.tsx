@@ -61,11 +61,13 @@ export default class SectionHeaderComponent extends React.Component<Props> {
           styles.sectionView,
           this.props.logoUri ? styles.withLogo : styles.withoutLogo,
           this.props.style
-        ]}>
+        ]}
+      >
         <H2
           style={IOStyles.flex}
           accessible={true}
-          accessibilityRole={this.props.accessibilityRole}>
+          accessibilityRole={this.props.accessibilityRole}
+        >
           {this.props.sectionHeader}
         </H2>
         <>

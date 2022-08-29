@@ -69,7 +69,8 @@ const PspListHeader = (props: {
       <H4
         color={color}
         weight={weight}
-        style={styles.radioListHeaderRightColumn}>
+        style={styles.radioListHeaderRightColumn}
+      >
         {props.rightColumnTitle}
       </H4>
     </View>
@@ -105,13 +106,15 @@ const PspItem = (props: { psp: IOPayPalPsp; onPress: () => void }) => {
       testID={`pspItemTestID_${psp.id}`}
       style={styles.pspListItem}
       accessibilityRole={"button"}
-      onPress={props.onPress}>
+      onPress={props.onPress}
+    >
       <View style={{ flex: 1 }}>
         {imgDimensions.fold<React.ReactNode>(
           <H4
             weight={"SemiBold"}
             color={"bluegreyDark"}
-            testID={"pspNameTestID"}>
+            testID={"pspNameTestID"}
+          >
             {psp.name}
           </H4>,
           imgDim => (
@@ -169,7 +172,8 @@ const PayPalPspUpdateScreen: React.FunctionComponent<Props> = (
     <BaseScreenComponent
       goBack={goBack}
       contextualHelp={emptyContextualHelp}
-      headerTitle={I18n.t("wallet.onboarding.paypal.updatePsp.headerTitle")}>
+      headerTitle={I18n.t("wallet.onboarding.paypal.updatePsp.headerTitle")}
+    >
       {isReady(pspList) ? (
         <SafeAreaView style={IOStyles.flex} testID={"PayPalPspUpdateScreen"}>
           <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>

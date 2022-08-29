@@ -15,7 +15,8 @@ export const MvlStackNavigator = () => (
   <Stack.Navigator
     initialRouteName={MVL_ROUTES.DETAILS}
     headerMode={"none"}
-    screenOptions={{ gestureEnabled: isGestureEnabled }}>
+    screenOptions={{ gestureEnabled: isGestureEnabled }}
+  >
     <Stack.Screen name={MVL_ROUTES.DETAILS} component={MvlRouterScreen} />
     <Stack.Screen
       name={MVL_ROUTES.CERTIFICATES}

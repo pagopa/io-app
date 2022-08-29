@@ -43,7 +43,8 @@ export const MarkdownBaseScreen: React.FunctionComponent<Props> = props => {
         title={props.title}
         subtitle={props.subtitle}
         bounces={false}
-        hideHeader={props.hideHeader}>
+        hideHeader={props.hideHeader}
+      >
         <View style={styles.markdownContainer}>
           <Markdown onLoadEnd={() => setMarkdownLoaded(true)}>
             {props.markDown}

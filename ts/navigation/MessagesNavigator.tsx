@@ -26,7 +26,8 @@ export const MessagesStackNavigator = () => {
     <Stack.Navigator
       initialRouteName={ROUTES.MESSAGE_ROUTER}
       headerMode={"none"}
-      screenOptions={{ gestureEnabled: isGestureEnabled }}>
+      screenOptions={{ gestureEnabled: isGestureEnabled }}
+    >
       <Stack.Screen
         name={ROUTES.MESSAGE_ROUTER}
         component={MessageRouterScreen}

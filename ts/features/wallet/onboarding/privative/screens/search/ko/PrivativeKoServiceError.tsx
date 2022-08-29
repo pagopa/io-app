@@ -45,7 +45,8 @@ const PrivativeKoServiceError = (props: Props): React.ReactElement => {
       goBack={false}
       customGoBack={<View />}
       headerTitle={headerTitle}
-      contextualHelp={emptyContextualHelp}>
+      contextualHelp={emptyContextualHelp}
+    >
       <SafeAreaView style={IOStyles.flex} testID={"PrivativeKoServiceError"}>
         <InfoScreenComponent
           image={renderInfoRasterImage(image)}

@@ -148,7 +148,8 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
           ) : (
             <ButtonDefaultOpacity
               onPress={this.handleSearchPress}
-              transparent={true}>
+              transparent={true}
+            >
               <IconFont
                 name="io-search"
                 accessible={true}
@@ -267,7 +268,8 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
     return (
       <View style={styles.container}>
         <AppHeader
-          style={matchingTextPredicate ? undefined : styles.headerNoSearch}>
+          style={matchingTextPredicate ? undefined : styles.headerNoSearch}
+        >
           {matchingTextPredicate && this.renderSearchBar()}
         </AppHeader>
         <Content noPadded={true} style={styles.content}>
@@ -292,7 +294,8 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
           keyboardVerticalOffset={Platform.select({
             ios: 0,
             android: customVariables.contentPadding
-          })}>
+          })}
+        >
           {this.renderFooterButtons(
             areSetEqual(this.props.initialSelectedItemIds, selectedItemIds)
           )}

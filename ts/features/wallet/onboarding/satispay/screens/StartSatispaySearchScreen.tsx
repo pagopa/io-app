@@ -54,7 +54,8 @@ const StartSatispaySearchScreen: React.FunctionComponent<Props> = props => {
     <BaseScreenComponent
       goBack={props.goBack}
       headerTitle={headerTitle}
-      contextualHelp={emptyContextualHelp}>
+      contextualHelp={emptyContextualHelp}
+    >
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView>
           <View style={IOStyles.horizontalContentPadding}>

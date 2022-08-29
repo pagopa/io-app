@@ -102,7 +102,8 @@ class ButtonWithImage extends React.PureComponent<Props> {
           baseStyles.button,
           light ? lightStyles.button : darkStyles.button
         ]}
-        testID={testID}>
+        testID={testID}
+      >
         <View style={styles.viewRL}>
           <IconFont
             name={icon}
@@ -117,7 +118,8 @@ class ButtonWithImage extends React.PureComponent<Props> {
             style={[
               baseStyles.text,
               light ? lightStyles.text : darkStyles.text
-            ]}>
+            ]}
+          >
             {text}
           </Text>
         </View>

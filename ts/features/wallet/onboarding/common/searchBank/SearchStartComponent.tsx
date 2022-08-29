@@ -77,7 +77,8 @@ export const SearchStartComponent: React.FunctionComponent<Props> = (
               props.methodType === "cobadge"
                 ? props.openParticipatingBanksModal
                 : props.openTosModal
-            }>
+            }
+          >
             {locales.text2}
           </Link>
         )}
@@ -91,7 +92,8 @@ export const SearchStartComponent: React.FunctionComponent<Props> = (
         <Link
           onPress={
             props.methodType === "cobadge" ? props.openTosModal : props.onSearch
-          }>
+          }
+        >
           {locales.text4}
         </Link>
       </Body>
