@@ -58,12 +58,14 @@ export const BpdTestOverlay: React.FunctionComponent = () => {
         <>
           <Label
             style={styles.versionText}
-            onPress={() => setEnabled(!enabled)}
-          >{`🛠️ BPD TEST VERSION 🛠️`}</Label>
+            onPress={() =>
+              setEnabled(!enabled)
+            }>{`🛠️ BPD TEST VERSION 🛠️`}</Label>
           <Body
             style={styles.versionText}
-            onPress={() => setEnabled(!enabled)}
-          >{`${getAppVersion()} - bpd: ${bpdEndpointStr} - PM: ${pmEndpointStr}`}</Body>
+            onPress={() =>
+              setEnabled(!enabled)
+            }>{`${getAppVersion()} - bpd: ${bpdEndpointStr} - PM: ${pmEndpointStr}`}</Body>
         </>
       ) : null}
     </View>

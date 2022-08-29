@@ -148,8 +148,7 @@ export default class TransactionsList extends React.Component<Props, State> {
             this.setState({ loadingMore: true }, () =>
               this.props.onLoadMoreTransactions()
             );
-          }}
-        >
+          }}>
           <Text>
             {I18n.t(
               // change the button text if we are loading another slice of transactions

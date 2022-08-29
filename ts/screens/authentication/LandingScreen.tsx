@@ -242,8 +242,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={
           isCieSupported ? ["landing_SPID", "landing_CIE"] : ["landing_SPID"]
-        }
-      >
+        }>
         {isDevEnv && <DevScreenButton onPress={this.navigateToMarkdown} />}
 
         {this.state.isSessionExpired ? (
@@ -273,8 +272,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
               isCieSupported
                 ? "landing-button-login-cie"
                 : "landing-button-login-spid"
-            }
-          >
+            }>
             <IconFont
               name={isCieSupported ? "io-cie" : "io-profilo"}
               color={IOColors.white}
@@ -300,8 +298,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
               this.isCieSupported()
                 ? "landing-button-login-spid"
                 : "landing-button-login-cie"
-            }
-          >
+            }>
             <IconFont
               name={this.isCieSupported() ? "io-profilo" : "io-cie"}
               color={IOColors.white}
@@ -315,8 +312,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
           <View spacer={true} />
           <Link
             style={styles.link}
-            onPress={this.navigateToSpidCieInformationRequest}
-          >
+            onPress={this.navigateToSpidCieInformationRequest}>
             {this.isCieSupported()
               ? I18n.t("authentication.landing.nospid-nocie")
               : I18n.t("authentication.landing.nospid")}

@@ -123,8 +123,7 @@ export default class WalletLayout extends React.Component<Props> {
         contextualHelpMarkdown={this.props.contextualHelpMarkdown}
         faqCategories={this.props.faqCategories}
         gradientHeader={this.props.gradientHeader}
-        headerPaddingMin={this.props.headerPaddingMin}
-      >
+        headerPaddingMin={this.props.headerPaddingMin}>
         {this.props.children}
       </DarkLayout>
     );

@@ -55,8 +55,7 @@ const EycaStatusBadge = ({ text, badgeStyle, textColor }: BadgeProps) => (
       weight={"SemiBold"}
       color={textColor}
       style={styles.statusBadgeText}
-      testID={"eyca-status-label"}
-    >
+      testID={"eyca-status-label"}>
       {text}
     </H5>
   </Badge>
@@ -136,8 +135,7 @@ const EycaStatusDetailsComponent = (props: Props) => {
         style={{ width: "100%" }}
         onPress={() =>
           clipboardSetStringWithFeedback(props.eycaCard.card_number)
-        }
-      >
+        }>
         <Label color={"blue"}>{I18n.t("bonus.cgn.detail.cta.eyca.copy")}</Label>
       </ButtonDefaultOpacity>
     </>

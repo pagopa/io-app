@@ -92,8 +92,7 @@ const PinScreen: React.FC<Props> = ({ navigation, showModal }) => {
       goBack={handleGoBack}
       contextualHelpMarkdown={contextualHelpMarkdown}
       faqCategories={["onboarding_pin", "unlock"]}
-      headerTitle={I18n.t("onboarding.pin.headerTitle")}
-    >
+      headerTitle={I18n.t("onboarding.pin.headerTitle")}>
       <SafeAreaView style={{ flex: 1 }}>
         <PinCreationForm onSubmit={handleSubmit} />
       </SafeAreaView>

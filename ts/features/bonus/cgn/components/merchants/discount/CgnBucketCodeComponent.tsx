@@ -61,15 +61,13 @@ const BucketCodeHandler = ({
     onPress={onPress}
     accessible={true}
     accessibilityRole={"button"}
-    accessibilityHint={I18n.t("bonus.cgn.accessibility.code")}
-  >
+    accessibilityHint={I18n.t("bonus.cgn.accessibility.code")}>
     <View style={[styles.row, styles.codeContainer]}>
       <BaseTypography
         weight={"Bold"}
         color={"bluegreyDark"}
         font={"RobotoMono"}
-        style={styles.codeText}
-      >
+        style={styles.codeText}>
         {content}
       </BaseTypography>
 
@@ -139,8 +137,7 @@ const CgnBucketCodeContent = (props: ContentProps) => {
           iconColor={IOColors.aqua}
           iconName={"io-error"}
           iconSize={24}
-          alignedCentral
-        >
+          alignedCentral>
           <H4 weight={"Regular"} style={[IOStyles.flex]}>
             {I18n.t("bonus.cgn.merchantDetail.bucket.error.noCode")}
           </H4>

@@ -62,8 +62,7 @@ class CieWrongCiePinScreen extends React.PureComponent<Props> {
         goBack={false}
         headerTitle={I18n.t(
           "authentication.cie.pin.incorrectCiePinHeaderTitle"
-        )}
-      >
+        )}>
         <ScreenContentHeader
           title={I18n.t("authentication.cie.pin.incorrectCiePinTitle", {
             remainingCount

@@ -73,8 +73,7 @@ const AcceptTosComponent = (props: Props): React.ReactElement => {
     <BaseScreenComponent
       goBack={props.onCancel}
       contextualHelp={emptyContextualHelp}
-      headerTitle={I18n.t("bonus.sv.headerTitle")}
-    >
+      headerTitle={I18n.t("bonus.sv.headerTitle")}>
       <SafeAreaView style={IOStyles.flex} testID={"AcceptTosComponent"}>
         {renderContent()}
         {tosLoadingState === "loaded" && (

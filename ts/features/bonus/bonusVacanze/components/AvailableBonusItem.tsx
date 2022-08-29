@@ -97,8 +97,7 @@ export const AvailableBonusItem: React.FunctionComponent<Props> = (
     <ListItem
       style={styles.listItem}
       onPress={props.onPress}
-      testID={`AvailableBonusItem-${bonusItem.id_type}`}
-    >
+      testID={`AvailableBonusItem-${bonusItem.id_type}`}>
       <View style={styles.columnLeft}>
         <Grid>
           <Row>

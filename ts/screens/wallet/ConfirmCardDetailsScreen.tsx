@@ -273,8 +273,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
           <InfoBox
             alignedCentral={true}
             iconSize={24}
-            iconColor={IOColors.bluegreyDark}
-          >
+            iconColor={IOColors.bluegreyDark}>
             <H5 weight={"Regular"}>{I18n.t("wallet.saveCard.notice")}</H5>
           </InfoBox>
           <View spacer large />
@@ -339,8 +338,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
             : I18n.t("wallet.saveCard.header")
         }
         contextualHelpMarkdown={contextualHelpMarkdown}
-        faqCategories={["wallet_methods"]}
-      >
+        faqCategories={["wallet_methods"]}>
         {/* error could include credit card errors (add wallet (step-1))
             and load wallets error too
         */}

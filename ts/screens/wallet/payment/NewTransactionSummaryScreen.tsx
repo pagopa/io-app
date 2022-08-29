@@ -266,8 +266,7 @@ const NewTransactionSummaryScreen = ({
       backButtonTestID={"back-button-transaction-summary"}
       goBack={goBack}
       contextualHelp={emptyContextualHelp}
-      headerTitle={I18n.t("wallet.ConfirmPayment.paymentInformations")}
-    >
+      headerTitle={I18n.t("wallet.ConfirmPayment.paymentInformations")}>
       <SafeAreaView style={IOStyles.flex}>
         {showsInlineError && <TransactionSummaryStatus error={error} />}
         <ScrollView style={styles.container}>

@@ -54,8 +54,7 @@ const OnboardingShareDataScreen = (props: Props): React.ReactElement => {
   return (
     <BaseScreenComponent
       goBack={handleGoBack}
-      headerTitle={I18n.t("onboarding.shareData.title")}
-    >
+      headerTitle={I18n.t("onboarding.shareData.title")}>
       <SafeAreaView style={IOStyles.flex}>
         <StatusBar backgroundColor={IOColors.white} barStyle={"dark-content"} />
         <ScrollView style={[IOStyles.horizontalContentPadding]}>

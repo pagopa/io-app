@@ -101,8 +101,7 @@ export const CreditCardAttemptsList: React.FC<Props> = (props: Props) => {
       <View style={IOStyles.flex}>
         <TouchableDefaultOpacity
           onPress={() => props.onAttemptPress(info.item)}
-          style={itemStyles.verticalPad}
-        >
+          style={itemStyles.verticalPad}>
           <View style={[IOStyles.flex, IOStyles.row]}>
             <View style={IOStyles.flex}>
               <View style={itemStyles.spaced}>

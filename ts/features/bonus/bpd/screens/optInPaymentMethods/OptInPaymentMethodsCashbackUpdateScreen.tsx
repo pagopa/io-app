@@ -78,12 +78,10 @@ const OptInPaymentMethodsCashbackUpdateScreen = () => {
       }}
       customGoBack={
         <ButtonDefaultOpacity onPress={() => true} transparent={true} />
-      }
-    >
+      }>
       <SafeAreaView
         style={IOStyles.flex}
-        testID={"OptInPaymentMethodsCashbackUpdate"}
-      >
+        testID={"OptInPaymentMethodsCashbackUpdate"}>
         <ScrollView style={[IOStyles.horizontalContentPadding]}>
           <View style={styles.headerContainer}>
             <View style={IOStyles.flex}>

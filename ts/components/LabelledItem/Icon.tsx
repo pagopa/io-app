@@ -47,8 +47,7 @@ export const Icon: React.FC<Props> = ({
     testID="ButtonDefaultOpacity"
     onPress={onPress}
     transparent
-    style={styles.button}
-  >
+    style={styles.button}>
     {isString(icon) ? (
       <IconFont
         size={variables.iconSize3}

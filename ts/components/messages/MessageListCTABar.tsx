@@ -183,8 +183,7 @@ class MessageListCTABar extends React.PureComponent<Props> {
           style={[styles.topContainer, this.paid && styles.topContainerPaid]}
           accessible={false}
           accessibilityElementsHidden={true}
-          importantForAccessibility={"no-hide-descendants"}
-        >
+          importantForAccessibility={"no-hide-descendants"}>
           {content}
         </View>
       </>

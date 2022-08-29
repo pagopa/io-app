@@ -173,8 +173,7 @@ const ItemComponent = (props: Item) => (
         flex: 1,
         flexDirection: "row",
         alignItems: "center"
-      }}
-    >
+      }}>
       <View>{props.icon}</View>
       <View hspacer />
       <View style={{ flex: 1, flexDirection: "column" }}>
@@ -322,8 +321,7 @@ const ZendeskAskPermissions = () => {
         iconName: "",
         onPress: constNull
       }}
-      headerTitle={I18n.t("support.askPermissions.header")}
-    >
+      headerTitle={I18n.t("support.askPermissions.header")}>
       <SafeAreaView style={IOStyles.flex} testID={"ZendeskAskPermissions"}>
         <ScrollView>
           <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>

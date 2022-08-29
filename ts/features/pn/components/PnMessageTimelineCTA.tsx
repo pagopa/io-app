@@ -12,16 +12,14 @@ export const PnMessageTimelineCTA = (props: { url: string }) => (
     style={{
       flexDirection: "column",
       marginBottom: 40
-    }}
-  >
+    }}>
     <View
       style={{
         flex: 1,
         flexDirection: "row",
         alignItems: "center",
         marginBottom: 8
-      }}
-    >
+      }}>
       <IconFont
         name={"io-info"}
         size={24}
@@ -31,8 +29,7 @@ export const PnMessageTimelineCTA = (props: { url: string }) => (
       <H5
         weight="Regular"
         color="bluegreyDark"
-        style={{ marginRight: 46, marginVertical: 14 }}
-      >
+        style={{ marginRight: 46, marginVertical: 14 }}>
         {i18n.t("features.pn.details.timeline.info")}
       </H5>
     </View>

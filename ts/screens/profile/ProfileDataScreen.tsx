@@ -44,12 +44,10 @@ const ProfileDataScreen: React.FC<Props> = ({
     <TopScreenComponent
       contextualHelpMarkdown={contextualHelpMarkdown}
       faqCategories={["profile", "privacy", "authentication_SPID"]}
-      goBack
-    >
+      goBack>
       <ScreenContent
         title={I18n.t("profile.data.title")}
-        subtitle={I18n.t("profile.data.subtitle")}
-      >
+        subtitle={I18n.t("profile.data.subtitle")}>
         <List withContentLateralPadding>
           {/* Show name and surname */}
           {nameSurname && (

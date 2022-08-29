@@ -27,8 +27,7 @@ const GoToTransactions: React.FunctionComponent<Props> = props => (
         : DeviceInfo.hasNotch()
         ? 10
         : 0
-    }}
-  >
+    }}>
     <IconFont name="io-transactions" size={24} color={"white"} />
     <Label color={"white"}>
       {I18n.t("bonus.bpd.details.transaction.goToButton")}

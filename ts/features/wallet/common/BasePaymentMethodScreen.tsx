@@ -93,8 +93,7 @@ const BasePaymentMethodScreen = (props: Props): React.ReactElement => {
       allowGoBack={true}
       topContent={<View style={styles.headerSpacer} />}
       gradientHeader={true}
-      hideHeader={true}
-    >
+      hideHeader={true}>
       <View style={styles.cardContainer}>{card}</View>
       <View spacer={true} extralarge={true} />
       <View style={IOStyles.horizontalContentPadding}>

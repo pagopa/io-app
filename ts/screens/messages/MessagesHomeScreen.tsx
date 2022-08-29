@@ -165,8 +165,7 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
         faqCategories={["messages"]}
         headerTitle={I18n.t("messages.contentTitle")}
         isSearchAvailable={{ enabled: true, searchType: "Messages" }}
-        appLogo={true}
-      >
+        appLogo={true}>
         <FocusAwareStatusBar
           barStyle={"dark-content"}
           backgroundColor={IOColors.white}
@@ -226,13 +225,11 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
           tabBarUnderlineStyle={styles.tabBarUnderlineActive}
           onScroll={this.handleOnTabsScroll}
           onChangeTab={this.handleOnChangeTab}
-          initialPage={0}
-        >
+          initialPage={0}>
           <Tab
             activeTextStyle={styles.activeTextStyle}
             textStyle={styles.textStyle}
-            heading={I18n.t("messages.tab.inbox")}
-          >
+            heading={I18n.t("messages.tab.inbox")}>
             <MessagesInbox
               currentTab={this.state.currentTab}
               messagesState={lexicallyOrderedMessagesState}
@@ -256,8 +253,7 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
           <Tab
             activeTextStyle={styles.activeTextStyle}
             textStyle={styles.textStyle}
-            heading={I18n.t("messages.tab.deadlines")}
-          >
+            heading={I18n.t("messages.tab.deadlines")}>
             <MessagesDeadlines
               currentTab={this.state.currentTab}
               messagesState={lexicallyOrderedMessagesState}
@@ -271,8 +267,7 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
           <Tab
             activeTextStyle={styles.activeTextStyle}
             textStyle={styles.textStyle}
-            heading={I18n.t("messages.tab.archive")}
-          >
+            heading={I18n.t("messages.tab.archive")}>
             <MessagesArchive
               currentTab={this.state.currentTab}
               messagesState={lexicallyOrderedMessagesState}

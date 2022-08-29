@@ -397,8 +397,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
         white={true}
         primary={false}
         accessible={true}
-        ref={this.errorStatusRef}
-      >
+        ref={this.errorStatusRef}>
         {des}
       </Text>
     ));
@@ -424,8 +423,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
           white={!isValidatingTask}
           dark={isValidatingTask}
           accessible={true}
-          ref={this.headerRef}
-        >
+          ref={this.headerRef}>
           {isValidatingTask
             ? I18n.t("identification.titleValidation")
             : fromNullable(this.props.profileName).fold(
@@ -439,8 +437,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
         <Text
           alignCenter={true}
           white={!isValidatingTask}
-          dark={isValidatingTask}
-        >
+          dark={isValidatingTask}>
           {this.getInstructions()}
         </Text>
       </React.Fragment>
@@ -488,8 +485,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
           primary={!isValidatingTask}
           showChat={false}
           faqCategories={["unlock", "onboarding_pin", "onboarding_fingerprint"]}
-          appLogo={true}
-        >
+          appLogo={true}>
           <StatusBar
             barStyle="light-content"
             backgroundColor={customVariables.contentPrimaryBackground}
@@ -497,8 +493,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
           <Content
             primary={!isValidatingTask}
             contentContainerStyle={styles.contentContainerStyle}
-            noPadded
-          >
+            noPadded>
             {this.renderHeader(isValidatingTask)}
             {this.renderErrorDescription()}
             <Pinpad

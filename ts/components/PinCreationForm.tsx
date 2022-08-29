@@ -136,8 +136,7 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
             <View
               style={{ position: "absolute", bottom: -25, left: 2 }}
               accessibilityElementsHidden={true}
-              importantForAccessibility="no-hide-descendants"
-            >
+              importantForAccessibility="no-hide-descendants">
               <LabelSmall weight="Regular" color="red">
                 {I18n.t("onboarding.pin.errors.length")}
               </LabelSmall>
@@ -173,8 +172,7 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
             <View
               style={{ position: "absolute", bottom: -25, left: 2 }}
               accessibilityElementsHidden={true}
-              importantForAccessibility="no-hide-descendants"
-            >
+              importantForAccessibility="no-hide-descendants">
               <LabelSmall weight="Regular" color="red">
                 {I18n.t("onboarding.pin.errors.match")}
               </LabelSmall>

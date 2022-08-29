@@ -10,12 +10,16 @@ Created on **15/12/2021**
     - `getMacAddress`
     - `getMacAddressSync`
 
-### @types/react-native+0.63.2
+### @types/react-native+0.69.4
 Created on **29/07/2020**
 
 #### Reason:
 - Missing accessibility types.
 
+Updated on **29/08/2022**
+
+#### Reason:
+- Fixes deprecation of PropTypes for backward compatibility on libraries.
 
 ### react-native-mixpanel+1.2.0
 
@@ -49,6 +53,12 @@ Created on **05/08/2020**
 
 #### Reason:
 - Removed minSdkVersion from gradle to allow the compilation on Android. 
+
+Updated on **29/08/2022**
+
+#### Reason:
+
+- This patch is going to fix a gradle issue that breaks the compile on android platform, due to gradle imcompatibility
 
 ### danger-plugin-digitalcitizenship+0.3.1
 Created on **06/08/2020**
@@ -107,3 +117,11 @@ Created on **24/03/2022**
 - This patch is going to add the customization of accessibility props on bottom sheet children components.
   A [PR has been opened](https://github.com/gorhom/react-native-bottom-sheet/pull/889) on the package repo in order to
   fix the issue on the dependency too.
+
+### react-native-flag-secure-android+1.0.3
+
+Created on **29/08/2022**
+
+#### Reason:
+
+- This patch is going to fix a gradle issue that breaks the compile on android platform, due to gradle imcompatibility

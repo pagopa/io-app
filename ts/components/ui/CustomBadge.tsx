@@ -66,14 +66,12 @@ const CustomBadge = (props: Props) => {
       style={[
         styles.badgeStyle,
         { width: styles.badgeStyle.width * getWidthMultiplier(badge) }
-      ]}
-    >
+      ]}>
       <Text
         badge={true}
         style={styles.textStyle}
         accessible={false}
-        importantForAccessibility={"no-hide-descendants"}
-      >
+        importantForAccessibility={"no-hide-descendants"}>
         {badge}
       </Text>
     </Badge>

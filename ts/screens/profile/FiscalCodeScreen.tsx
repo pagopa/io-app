@@ -107,8 +107,7 @@ const FiscalCodeScreen: React.FunctionComponent<Props> = (props: Props) => {
       onPress={handleBackPress}
       accessible={true}
       accessibilityLabel={I18n.t("global.buttons.back")}
-      accessibilityRole={"button"}
-    >
+      accessibilityRole={"button"}>
       <IconFont name={"io-back"} style={{ color: IOColors.white }} />
     </TouchableDefaultOpacity>
   );
@@ -133,19 +132,16 @@ const FiscalCodeScreen: React.FunctionComponent<Props> = (props: Props) => {
             <H2 color={"white"}>{I18n.t("profile.fiscalCode.fiscalCode")}</H2>
             <View spacer={true} />
           </React.Fragment>
-        }
-      >
+        }>
         {props.profile && (
           <React.Fragment>
             <ScrollView
               horizontal={true}
-              showsHorizontalScrollIndicator={false}
-            >
+              showsHorizontalScrollIndicator={false}>
               <View style={styles.largeSpacer} />
               <TouchableDefaultOpacity
                 onPress={() => showModal()}
-                accessibilityRole={"button"}
-              >
+                accessibilityRole={"button"}>
                 <View style={styles.shadow}>
                   <FiscalCodeComponent
                     type={"Full"}
@@ -158,8 +154,7 @@ const FiscalCodeScreen: React.FunctionComponent<Props> = (props: Props) => {
               <View style={styles.spacer} />
               <TouchableDefaultOpacity
                 onPress={() => showModal(true)}
-                accessibilityRole={"button"}
-              >
+                accessibilityRole={"button"}>
                 <View style={styles.shadow}>
                   <FiscalCodeComponent
                     type={"Full"}

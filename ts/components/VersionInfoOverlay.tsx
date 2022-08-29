@@ -57,13 +57,13 @@ const VersionInfoOverlay: React.FunctionComponent<Props> = (props: Props) => {
     <View style={styles.versionContainer} pointerEvents="box-none">
       <Text
         style={styles.versionText}
-        onPress={() => setShowRootName(prevState => !prevState)}
-      >{`v: ${appVersion}`}</Text>
+        onPress={() =>
+          setShowRootName(prevState => !prevState)
+        }>{`v: ${appVersion}`}</Text>
       {showRootName && (
         <Text
           style={styles.routeText}
-          onPress={() => clipboardSetStringWithFeedback(props.screenNameDebug)}
-        >
+          onPress={() => clipboardSetStringWithFeedback(props.screenNameDebug)}>
           {props.screenNameDebug}
         </Text>
       )}

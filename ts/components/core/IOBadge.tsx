@@ -71,13 +71,11 @@ export const IOBadge = ({ text, small, labelColor }: IOBadgeCommonProps) => {
         },
         borderStyle(lColor ?? "white"),
         small ? commonBadgeStyles.badgeSmall : {}
-      ]}
-    >
+      ]}>
       <LabelSmall
         color={lColor}
         fontSize={small ? "small" : "regular"}
-        weight={"SemiBold"}
-      >
+        weight={"SemiBold"}>
         {text}
       </LabelSmall>
     </Badge>

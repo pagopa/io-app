@@ -49,8 +49,7 @@ const styles = StyleSheet.create({
 export const BaseBpdTransactionItem: React.FunctionComponent<Props> = props => (
   <TouchableOpacity
     style={{ marginVertical: 4, paddingHorizontal: 16 }}
-    onPress={props.onPress}
-  >
+    onPress={props.onPress}>
     <ShadowBox>
       {/* The base row */}
       <View style={styles.baseRow} testID={"BaseBpdTransactionItem"}>
@@ -64,8 +63,7 @@ export const BaseBpdTransactionItem: React.FunctionComponent<Props> = props => (
               color={"bluegreyDark"}
               ellipsizeMode={"tail"}
               numberOfLines={1}
-              style={IOStyles.flex}
-            >
+              style={IOStyles.flex}>
               {props.title}
             </H4>
             <H5 color={"bluegrey"}>{props.subtitle}</H5>

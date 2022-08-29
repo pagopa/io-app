@@ -82,8 +82,7 @@ const getBody = <T,>(
         style={IOStyles.flex}
         color={"bluegreyDark"}
         weight={"Regular"}
-        onPress={onItemPress}
-      >
+        onPress={onItemPress}>
         {radioItem.body}
       </H4>
     );
@@ -117,8 +116,7 @@ export const RadioButtonList = <T,>(props: Props<T>) => (
             props.rightSideSelection && styles.rightSideItem,
             props.bordered && styles.borderedItem
           ]}
-          testID={`pspItemTestID_${item.id}`}
-        >
+          testID={`pspItemTestID_${item.id}`}>
           <IconFont
             name={
               props.selectedItem === item.id ? "io-radio-on" : "io-radio-off"

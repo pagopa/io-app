@@ -83,8 +83,7 @@ const InnerSectionStatus = (
       iconName={iconName}
       testID={"SectionStatusComponentContent"}
       viewRef={viewRef}
-      labelColor={color}
-    >
+      labelColor={color}>
       {`${sectionStatus.message[locale]} `}
     </StatusContent>,
 
@@ -97,8 +96,7 @@ const InnerSectionStatus = (
         )}`}
         accessibilityRole={"link"}
         onPress={() => openWebUrl(webUrl)}
-        testID={"SectionStatusComponentPressable"}
-      >
+        testID={"SectionStatusComponentPressable"}>
         <StatusContent
           // disable accessibility to prevent the override of the container
           accessible={false}
@@ -106,14 +104,12 @@ const InnerSectionStatus = (
           iconColor={IOColors[color]}
           iconName={iconName}
           viewRef={viewRef}
-          labelColor={color}
-        >
+          labelColor={color}>
           {`${sectionStatus.message[locale]} `}
           <Link
             testID={"SectionStatusComponentMoreInfo"}
             color={backgroundColor === "aqua" ? "bluegreyDark" : "white"}
-            weight={"Bold"}
-          >
+            weight={"Bold"}>
             {I18n.t("global.sectionStatus.moreInfo")}
           </Link>
         </StatusContent>

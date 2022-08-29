@@ -52,8 +52,7 @@ const NoneErrorVersion = <E, _>(props: NoneErrorProps<E>) => (
     accessibilityLabel={I18n.t("global.genericRetry")}
     hitSlop={{ bottom: slop, left: slop, right: slop, top: slop }}
     onPress={props.onRetry}
-    style={{ width: IOStyleVariables.switchWidth }}
-  >
+    style={{ width: IOStyleVariables.switchWidth }}>
     <IconFont
       testID={props.testID}
       name={"io-reload"}

@@ -63,8 +63,7 @@ const SuperCashbackRankingReady = (props: {
             <H2
               testID={"supercashbackSummary.ranking"}
               color={"blue"}
-              style={styles.title}
-            >
+              style={styles.title}>
               {formatIntegerNumber(props.ranking)}°
             </H2>
           }
@@ -72,8 +71,7 @@ const SuperCashbackRankingReady = (props: {
             <H5
               testID={"supercashbackSummary.minRanking"}
               color={"bluegrey"}
-              style={styles.title}
-            >
+              style={styles.title}>
               {of} {formatIntegerNumber(props.minRanking)}
             </H5>
           }
@@ -94,8 +92,7 @@ const SuperCashbackRankingNotReady = (): React.ReactElement => {
           row1={
             <H5
               testID={"superCashbackRankingNotReady.title"}
-              style={styles.title}
-            >
+              style={styles.title}>
               {title}
             </H5>
           }

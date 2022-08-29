@@ -186,8 +186,7 @@ const DueDateBar: React.FunctionComponent<Props> = ({
           <Text
             style={styles.text}
             white={paymentStatus === "expired"}
-            testID={"DueDateBar_TextContent"}
-          >
+            testID={"DueDateBar_TextContent"}>
             <TextContent
               status={paymentStatus}
               dueDate={dueDate}

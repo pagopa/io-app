@@ -35,8 +35,7 @@ const LinkRow = ({ text, href }: Props) => (
         openWebUrl(href, () => showToast(I18n.t("global.jserror.title")))
       }
       numberOfLines={1}
-      style={styles.link}
-    >
+      style={styles.link}>
       {I18n.t(text)}
     </Link>
     <ItemSeparatorComponent noPadded />

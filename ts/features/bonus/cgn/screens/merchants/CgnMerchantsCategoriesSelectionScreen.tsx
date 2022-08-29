@@ -83,8 +83,7 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
           style={[
             countAvailable ? IOStyles.row : {},
             { alignItems: "flex-end" }
-          ]}
-        >
+          ]}>
           {countAvailable && (
             <View style={IOStyles.flex}>
               <IOBadge
@@ -139,8 +138,7 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
     <BaseScreenComponent
       goBack
       headerTitle={I18n.t("bonus.cgn.merchantsList.navigationTitle")}
-      contextualHelp={emptyContextualHelp}
-    >
+      contextualHelp={emptyContextualHelp}>
       <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
         <H1>{I18n.t("bonus.cgn.merchantsList.categoriesList.title")}</H1>
         <View spacer large />

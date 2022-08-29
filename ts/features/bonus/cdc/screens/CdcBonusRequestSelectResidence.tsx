@@ -60,8 +60,7 @@ const CdcBonusRequestSelectResidence = () => {
     <BaseScreenComponent
       goBack={true}
       contextualHelp={emptyContextualHelp}
-      headerTitle={I18n.t("bonus.cdc.title")}
-    >
+      headerTitle={I18n.t("bonus.cdc.title")}>
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView style={[IOStyles.horizontalContentPadding]}>
           <H1>{I18n.t("bonus.cdc.bonusRequest.selectResidence.header")}</H1>
@@ -78,8 +77,7 @@ const CdcBonusRequestSelectResidence = () => {
                   flex: 1,
                   flexDirection: "row",
                   alignItems: "center"
-                }}
-              >
+                }}>
                 <BonusIcon width={20} height={20} />
                 <View hspacer />
                 <H3 weight={"SemiBold"} color={"bluegrey"}>

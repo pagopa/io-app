@@ -383,8 +383,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
               !isFake && sectionId === nextDeadlineId
                 ? styles.sectionHeaderHighlightText
                 : styles.sectionHeaderText
-            }
-          >
+            }>
             {startCase(
               format(
                 info.section.title,
@@ -488,8 +487,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
             small={true}
             bordered={true}
             style={styles.button}
-            onPress={this.loadMoreData}
-          >
+            onPress={this.loadMoreData}>
             <Text numberOfLines={1}>{I18n.t("reminders.loadMoreData")}</Text>
           </ButtonDefaultOpacity>
         </View>
@@ -515,8 +513,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
         style={{
           flex: 1,
           width: screenWidth
-        }}
-      >
+        }}>
         <SectionList
           // If we not have a final deadline then we not have deadlines
           sections={sections}

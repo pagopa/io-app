@@ -135,8 +135,7 @@ const PayPalOnboardingCheckoutScreen = (props: Props) => {
       backButtonTestID={"host-back-button"}
       goBack={handleBack}
       headerTitle={I18n.t("wallet.onboarding.paypal.headerTitle")}
-      contextualHelp={emptyContextualHelp}
-    >
+      contextualHelp={emptyContextualHelp}>
       <CheckoutContent
         {...props}
         onGoBack={handleBack}

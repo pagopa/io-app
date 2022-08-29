@@ -98,8 +98,7 @@ export const CgnDiscountDetail: React.FunctionComponent<Props> = ({
                   paddingBottom: 2,
                   marginRight: 8
                 }
-              ]}
-            >
+              ]}>
               {c.icon({
                 height: CATEGORY_ICON_SIZE,
                 width: CATEGORY_ICON_SIZE,
@@ -109,8 +108,7 @@ export const CgnDiscountDetail: React.FunctionComponent<Props> = ({
               <H5
                 weight={"SemiBold"}
                 color={"bluegrey"}
-                testID={"category-name"}
-              >
+                testID={"category-name"}>
                 {I18n.t(c.nameKey).toLocaleUpperCase()}
               </H5>
             </View>
@@ -166,8 +164,7 @@ export const CgnDiscountDetail: React.FunctionComponent<Props> = ({
               discount.landingPageReferrer as string
             );
           }}
-          onPressWithGestureHandler={true}
-        >
+          onPressWithGestureHandler={true}>
           <Label color={"white"}>
             {I18n.t("bonus.cgn.merchantDetail.cta.landingPage")}
           </Label>
@@ -184,8 +181,7 @@ export const CgnDiscountDetail: React.FunctionComponent<Props> = ({
               );
             }}
             onPressWithGestureHandler={true}
-            bordered
-          >
+            bordered>
             <Label color={"blue"}>
               {I18n.t("bonus.cgn.merchantDetail.cta.discountUrl")}
             </Label>

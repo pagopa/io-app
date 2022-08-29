@@ -58,8 +58,7 @@ export const MainTabNavigator = () => (
       activeTintColor: IOColors.blue,
       inactiveTintColor: IOColors.bluegrey,
       style: [styles.tabBarStyle, styles.notchPadding]
-    }}
-  >
+    }}>
     <Tab.Screen
       name={ROUTES.MESSAGES_HOME}
       component={

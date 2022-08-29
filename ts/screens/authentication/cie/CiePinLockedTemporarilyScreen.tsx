@@ -89,8 +89,7 @@ class CiePinLockedTemporarilyScreen extends React.PureComponent<Props, State> {
           <Markdown
             onLoadEnd={() => {
               this.setState({ isLoadingCompleted: true });
-            }}
-          >
+            }}>
             {I18n.t("authentication.cie.pinTempLocked.content")}
           </Markdown>
         </Content>

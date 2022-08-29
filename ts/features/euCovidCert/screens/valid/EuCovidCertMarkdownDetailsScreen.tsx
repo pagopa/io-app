@@ -85,12 +85,10 @@ export const EuCovidCertMarkdownDetailsScreen = (
       headerTitle={I18n.t(
         "features.euCovidCertificate.valid.markdownDetails.headerTitle"
       )}
-      contextualHelp={emptyContextualHelp}
-    >
+      contextualHelp={emptyContextualHelp}>
       <SafeAreaView
         style={IOStyles.flex}
-        testID={"EuCovidCertQrCodeFullScreen"}
-      >
+        testID={"EuCovidCertQrCodeFullScreen"}>
         <ScrollView style={IOStyles.horizontalContentPadding}>
           {/* add an extra padding while capturing the screenshot */}
           <View
@@ -101,15 +99,13 @@ export const EuCovidCertMarkdownDetailsScreen = (
               isCapturingScreenShoot
                 ? IOStyles.horizontalContentPadding
                 : undefined
-            ]}
-          >
+            ]}>
             {/* add an extra top and bottom (as extra height in the markdown component)
             margin while capturing the screenshot  */}
             {isCapturingScreenShoot && <View large={true} spacer={true} />}
             <MarkdownHandleCustomLink
               extraBodyHeight={60}
-              onLoadEnd={() => setLoadMarkdownComplete(true)}
-            >
+              onLoadEnd={() => setLoadMarkdownComplete(true)}>
               {props.route.params.markdownDetails}
             </MarkdownHandleCustomLink>
             {canShowButton && (
@@ -120,8 +116,7 @@ export const EuCovidCertMarkdownDetailsScreen = (
                   onPress={() => {
                     void mixpanelTrack("EUCOVIDCERT_SAVE_MARKDOWN_DETAILS");
                     setIsCapturingScreenShoot(true);
-                  }}
-                >
+                  }}>
                   <Label color={"white"}>
                     {I18n.t(
                       "features.euCovidCertificate.valid.markdownDetails.save"

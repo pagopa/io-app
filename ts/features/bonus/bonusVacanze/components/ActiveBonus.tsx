@@ -80,8 +80,9 @@ const ActiveBonus: React.FunctionComponent<Props> = (props: Props) => {
   return (
     <TouchableDefaultOpacity
       style={styles.containerColor}
-      onPress={() => props.onPress(props.bonus, props.validFrom, props.validTo)}
-    >
+      onPress={() =>
+        props.onPress(props.bonus, props.validFrom, props.validTo)
+      }>
       <View style={styles.spaced}>
         {bonusValidityInterval.isSome() && (
           <Text>{`${I18n.t("bonus.bonusVacanze.validity")} ${

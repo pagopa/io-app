@@ -206,12 +206,10 @@ const ZendeskSupportHelpCenter = () => {
         onPress: workUnitCancel,
         accessibilityLabel: I18n.t("global.accessibility.contextualHelp.close")
       }}
-      headerTitle={I18n.t("support.helpCenter.header")}
-    >
+      headerTitle={I18n.t("support.helpCenter.header")}>
       <SafeAreaView
         style={IOStyles.flex}
-        testID={"ZendeskSupportHelpCenterScreen"}
-      >
+        testID={"ZendeskSupportHelpCenterScreen"}>
         <ScrollView style={[IOStyles.horizontalContentPadding]}>
           <FaqManager
             contextualHelpConfig={contextualHelpConfig}

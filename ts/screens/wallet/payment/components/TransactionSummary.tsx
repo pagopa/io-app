@@ -94,8 +94,7 @@ const InfoButton = (props: { onPress: () => void }) => (
     accessibilityLabel={I18n.t(
       "wallet.firstTransactionSummary.amountInfo.title"
     )}
-    accessibilityRole={"button"}
-  >
+    accessibilityRole={"button"}>
     <IconFont name={"io-info"} size={24} color={IOColors.blue} />
   </TouchableDefaultOpacity>
 );
@@ -132,8 +131,7 @@ export const TransactionSummaryRow = (
               props.isLoading
                 ? I18n.t("global.accessibility.activityIndicator.label")
                 : props.subtitle
-            }`}
-          >
+            }`}>
             <Body weight="Regular" color={"bluegrey"} style={styles.title}>
               {props.title}
             </Body>
@@ -236,8 +234,7 @@ export const TransactionSummary = (props: Props): React.ReactElement => {
         subtitle={amount}
         icon={<AmountIcon {...iconProps}></AmountIcon>}
         placeholder={<LoadingPlaceholder size={"half"} />}
-        isLoading={isLoading}
-      >
+        isLoading={isLoading}>
         {props.isPaid && !isLoading && (
           <IOBadge
             text={I18n.t("messages.badge.paid")}

@@ -71,8 +71,7 @@ export function withErrorModal<
         <Overlay
           foreground={
             error.isSome() ? this.renderContent(errorMessage) : undefined
-          }
-        >
+          }>
           <WrappedComponent {...this.props} />
         </Overlay>
       );
@@ -97,8 +96,7 @@ export function withErrorModal<
           onPress={this.props.onCancel}
           style={styles.buttonCancel}
           light={true}
-          block={true}
-        >
+          block={true}>
           <Text white={true}>{I18n.t("global.buttons.cancel")}</Text>
         </ButtonDefaultOpacity>
         {this.props.onRetry && <View style={styles.separator} />}
@@ -107,8 +105,7 @@ export function withErrorModal<
             primary={true}
             block={true}
             onPress={this.props.onRetry}
-            style={styles.buttonRetry}
-          >
+            style={styles.buttonRetry}>
             <Text>{I18n.t("global.buttons.retry")}</Text>
           </ButtonDefaultOpacity>
         )}

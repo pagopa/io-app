@@ -109,8 +109,7 @@ class PickPspScreen extends React.Component<Props> {
         goBack={true}
         headerTitle={I18n.t("wallet.pickPsp.headerTitle")}
         contextualHelpMarkdown={contextualHelpMarkdown}
-        faqCategories={["payment"]}
-      >
+        faqCategories={["payment"]}>
         {this.props.isLoading || this.props.hasError ? (
           <LoadingErrorComponent
             isLoading={this.props.isLoading}

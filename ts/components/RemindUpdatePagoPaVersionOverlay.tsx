@@ -92,8 +92,7 @@ class RemindUpdatePagoPaVersionOverlay extends React.PureComponent<
           block={true}
           primary={true}
           disabled={false}
-          onPress={this.openAppStore}
-        >
+          onPress={this.openAppStore}>
           <Text>{I18n.t("wallet.alert.btnUpdateApp")}</Text>
         </Button>
 

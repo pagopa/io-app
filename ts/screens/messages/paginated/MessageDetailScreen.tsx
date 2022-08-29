@@ -129,8 +129,7 @@ const MessageDetailScreen = ({
           goBack={goBack}
           backButtonTestID={"back-button"}
           contextualHelpMarkdown={contextualHelpMarkdown}
-          faqCategories={["messages_detail"]}
-        >
+          faqCategories={["messages_detail"]}>
           <MessageDetailComponent
             hasPaidBadge={hasPaidBadge}
             message={message}

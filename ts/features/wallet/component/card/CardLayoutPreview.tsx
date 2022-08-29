@@ -70,8 +70,7 @@ export const CardLayoutPreview: React.FunctionComponent<Props> = props => (
       accessible={true}
       accessibilityRole={"button"}
       style={styles.rotatedCard}
-      testID={"cardPreview"}
-    >
+      testID={"cardPreview"}>
       <View style={[styles.card]}>
         <View style={[styles.cardInner]}>
           <View style={[styles.row, styles.spaced]}>

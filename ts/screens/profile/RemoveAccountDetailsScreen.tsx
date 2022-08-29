@@ -135,8 +135,7 @@ const RemoveAccountDetails: React.FunctionComponent<Props> = (props: Props) => {
   return (
     <BaseScreenComponent
       goBack={true}
-      headerTitle={I18n.t("profile.main.title")}
-    >
+      headerTitle={I18n.t("profile.main.title")}>
       {props.isLoading || props.isError ? (
         <LoadingErrorComponent
           isLoading={props.isLoading}

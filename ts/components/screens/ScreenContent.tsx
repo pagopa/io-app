@@ -35,8 +35,7 @@ class ScreenContent extends React.PureComponent<Props> {
         noPadded={true}
         style={contentStyle}
         bounces={bounces}
-        refreshControl={this.props.contentRefreshControl}
-      >
+        refreshControl={this.props.contentRefreshControl}>
         {!hideHeader && (
           <ScreenContentHeader
             icon={icon}

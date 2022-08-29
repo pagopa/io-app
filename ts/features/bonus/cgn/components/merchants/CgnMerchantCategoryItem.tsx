@@ -36,13 +36,11 @@ const CgnMerchantCategoryItem = (props: Props) => (
     colors={props.colors}
     useAngle={true}
     angle={CATEGORY_GRADIENT_ANGLE}
-    style={styles.body}
-  >
+    style={styles.body}>
     <TouchableDefaultOpacity
       accessibilityRole={"button"}
       style={[IOStyles.flex, styles.container]}
-      onPress={props.onPress}
-    >
+      onPress={props.onPress}>
       <View style={[IOStyles.flex, IOStyles.row]}>
         <H2 color={"white"}>{props.title}</H2>
       </View>

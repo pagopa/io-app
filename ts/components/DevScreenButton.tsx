@@ -23,8 +23,7 @@ export const DevScreenButton: React.SFC<Props> = props => (
     small={true}
     bordered={true}
     transparent={true}
-    style={styles.devButton}
-  >
+    style={styles.devButton}>
     <Text>Dev</Text>
   </ButtonDefaultOpacity>
 );

@@ -15,8 +15,7 @@ export const ZendeskStackNavigator = () => (
   <Stack.Navigator
     initialRouteName={ZENDESK_ROUTES.HELP_CENTER}
     headerMode={"none"}
-    screenOptions={{ gestureEnabled: isGestureEnabled }}
-  >
+    screenOptions={{ gestureEnabled: isGestureEnabled }}>
     <Stack.Screen
       name={ZENDESK_ROUTES.HELP_CENTER}
       component={ZendeskSupportHelpCenter}

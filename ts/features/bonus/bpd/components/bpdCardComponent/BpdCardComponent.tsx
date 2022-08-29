@@ -270,8 +270,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
         styles.spaced,
         styles.paddedContentFull,
         { height: "100%" }
-      ]}
-    >
+      ]}>
       <View style={[styles.column, styles.flex2, styles.spaced]}>
         <View>
           <H2 weight={"Bold"} color={"white"}>
@@ -333,20 +332,17 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
           I18n.t("global.dateFormats.dayFullMonth")
         ),
         amount: formatNumberAmount(props.totalAmount.totalCashback)
-      })}
-    >
+      })}>
       <View
         style={[styles.column, { width: widthPercentageToDP("60%") }]}
         accessible={false}
         accessibilityElementsHidden={true}
-        importantForAccessibility={"no-hide-descendants"}
-      >
+        importantForAccessibility={"no-hide-descendants"}>
         <View style={[styles.row, styles.alignItemsCenter, styles.spaced]}>
           <H5
             color={"white"}
             weight={"Regular"}
-            style={{ textTransform: "capitalize" }}
-          >
+            style={{ textTransform: "capitalize" }}>
             {`${localeDateFormat(
               props.period.startDate,
               I18n.t("global.dateFormats.dayFullMonth")
@@ -369,8 +365,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
               styles.row,
               styles.alignItemsCenter,
               styles.justifyContentCenter
-            ]}
-          >
+            ]}>
             <IconFont name={iconName} size={16} color={IOColors.white} />
             <View hspacer={true} small={true} />
             {isInGracePeriod || isPeriodInactive ? (
@@ -383,8 +378,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
               <Text
                 bold={true}
                 white={true}
-                style={[styles.amountTextBasePreview, { textAlign: "right" }]}
-              >
+                style={[styles.amountTextBasePreview, { textAlign: "right" }]}>
                 {"€ "}
                 <Text white={true} style={styles.amountTextUpperPreview}>
                   {`${amount[0]}${I18n.t(
@@ -414,8 +408,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
       <ImageBackground
         source={props.preview ? bpdCardBgPreview : bpdCardBgFull}
         style={[props.preview ? styles.preview : styles.container]}
-        imageStyle={props.preview ? styles.imagePreview : styles.imageFull}
-      >
+        imageStyle={props.preview ? styles.imagePreview : styles.imageFull}>
         {props.preview ? <PreviewCard /> : <FullCard />}
       </ImageBackground>
       {Platform.OS === "android" && !props.preview && (

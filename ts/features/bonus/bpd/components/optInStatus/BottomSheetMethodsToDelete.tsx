@@ -28,8 +28,7 @@ export const BottomSheetMethodsToDelete = (props: Props) => (
     {props.paymentMethods.map(pm => (
       <ListItem
         key={`payment_method_${pm.idWallet}`}
-        testID={`payment_method_${pm.idWallet}`}
-      >
+        testID={`payment_method_${pm.idWallet}`}>
         <PaymentMethodRepresentationComponent {...pm} />
       </ListItem>
     ))}

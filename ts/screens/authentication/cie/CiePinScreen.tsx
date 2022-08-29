@@ -101,8 +101,7 @@ const CiePinScreen: React.FC<Props> = props => {
       <ButtonDefaultOpacity
         onPress={onOpenForgotPinPage}
         style={styles.bsLinkButton}
-        onPressWithGestureHandler={true}
-      >
+        onPressWithGestureHandler={true}>
         <Link>{I18n.t("authentication.cie.pin.bottomSheetCTA")}</Link>
       </ButtonDefaultOpacity>
     </View>,
@@ -153,8 +152,7 @@ const CiePinScreen: React.FC<Props> = props => {
       onAccessibilityNavigationHeaderFocus={doSetAccessibilityFocus}
       contextualHelp={getContextualHelp()}
       goBack={true}
-      headerTitle={I18n.t("authentication.cie.pin.pinCardHeader")}
-    >
+      headerTitle={I18n.t("authentication.cie.pin.pinCardHeader")}>
       <ScrollView>
         <ScreenContentHeader
           title={I18n.t("authentication.cie.pin.pinCardTitle")}

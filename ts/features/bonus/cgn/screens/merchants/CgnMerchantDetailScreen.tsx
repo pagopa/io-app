@@ -83,8 +83,7 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
   const renderAddressesListItem = ({ item }: ListRenderItemInfo<Address>) => (
     <TouchableDefaultOpacity
       style={[IOStyles.row, styles.spaced, { paddingVertical: 10 }]}
-      onPress={() => clipboardSetStringWithFeedback(item.full_address)}
-    >
+      onPress={() => clipboardSetStringWithFeedback(item.full_address)}>
       <H4 weight={"Regular"} style={IOStyles.flex}>
         {item.full_address}
       </H4>
@@ -105,8 +104,7 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
       headerTitle={
         isReady(merchantDetail) ? merchantDetail.value.name : undefined
       }
-      contextualHelp={emptyContextualHelp}
-    >
+      contextualHelp={emptyContextualHelp}>
       <SafeAreaView style={IOStyles.flex}>
         {isReady(merchantDetail) ? (
           <>
@@ -148,8 +146,7 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
                         openWebUrl(url, () =>
                           showToast(I18n.t("bonus.cgn.generic.linkError"))
                         )
-                      }
-                    >
+                      }>
                       <H4 weight={"Regular"} style={IOStyles.flex}>
                         {url}
                       </H4>

@@ -482,8 +482,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
             styles.rowBlock,
             styles.itemsCenter,
             { justifyContent: "center" }
-          ]}
-        >
+          ]}>
           <IconFont
             name={icon}
             color={fromNullable(iconColor).getOrElse(variables.textColor)}
@@ -560,18 +559,15 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
         topContent={<View style={styles.headerSpacer} />}
         footerContent={renderFooterButtons()}
         gradientHeader={true}
-        hideHeader={true}
-      >
+        hideHeader={true}>
         <ViewShot
           ref={screenShotRef}
           style={styles.viewShot}
-          options={screenShotOption}
-        >
+          options={screenShotOption}>
           <SafeAreaView>
             <View>
               <View
-                style={[styles.paddedContentLeft, styles.paddedContentRight]}
-              >
+                style={[styles.paddedContentLeft, styles.paddedContentRight]}>
                 <View style={[styles.image, screenShotState.imageStyle]}>
                   <BonusCardComponent
                     bonus={bonus}
@@ -592,8 +588,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
                 />
               )}
               <View
-                style={[styles.paddedContentLeft, styles.paddedContentRight]}
-              >
+                style={[styles.paddedContentLeft, styles.paddedContentRight]}>
                 <ItemSeparatorComponent noPadded={true} />
                 <View spacer={true} />
                 <BonusCompositionDetails
@@ -613,8 +608,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
                   <View style={styles.rowBlock}>
                     <Text
                       semibold={true}
-                      style={[styles.sectionLabel, styles.textColorDark]}
-                    >
+                      style={[styles.sectionLabel, styles.textColorDark]}>
                       {I18n.t("bonus.bonusVacanze.status")}
                     </Text>
                     <Badge
@@ -622,13 +616,11 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
                         isBonusActive(bonus)
                           ? styles.statusBadgeActive
                           : styles.statusBadgeRevoked
-                      }
-                    >
+                      }>
                       <Text
                         style={styles.statusText}
                         semibold={true}
-                        dark={!isBonusActive(bonus)}
-                      >
+                        dark={!isBonusActive(bonus)}>
                         {maybeStatusDescription.value}
                       </Text>
                     </Badge>
@@ -663,8 +655,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
                     <View spacer={true} large={true} />
                     <Link
                       onPress={() => handleModalPress(maybeBonusTos.value)}
-                      numberOfLines={1}
-                    >
+                      numberOfLines={1}>
                       {I18n.t("bonus.tos.title")}
                     </Link>
                   </>

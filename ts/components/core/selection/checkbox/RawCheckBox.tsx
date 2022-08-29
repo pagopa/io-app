@@ -54,8 +54,7 @@ export const RawCheckBox: React.FunctionComponent<OwnProps> = props => {
       testID="RawCheckbox"
       onPress={props.onPress}
       hitSlop={{ bottom: slop, left: slop, right: slop, top: slop }}
-      style={[styles.checkBox, { borderColor: getBorderColor(checked) }]}
-    >
+      style={[styles.checkBox, { borderColor: getBorderColor(checked) }]}>
       {checked && (
         <IconFont name={"io-tick-big"} size={tickSize} color={onColor} />
       )}

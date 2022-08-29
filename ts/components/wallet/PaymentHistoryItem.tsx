@@ -66,8 +66,7 @@ export default class PaymentHistoryItem extends React.PureComponent<Props> {
     return (
       <TouchableDefaultOpacity
         onPress={this.props.onPressItem}
-        style={styles.verticalPad}
-      >
+        style={styles.verticalPad}>
         <View style={styles.spaced}>
           <BadgeComponent color={this.props.color} />
           <Text style={styles.text11}>{this.props.text11}</Text>
@@ -81,8 +80,7 @@ export default class PaymentHistoryItem extends React.PureComponent<Props> {
           <View style={styles.text3Container}>
             <Text
               numberOfLines={2}
-              style={[styles.text3, styles.text3FontWeight]}
-            >
+              style={[styles.text3, styles.text3FontWeight]}>
               {`${I18n.t("payment.IUV")} ${this.props.text3}`}
             </Text>
           </View>

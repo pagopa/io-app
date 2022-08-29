@@ -20,8 +20,7 @@ export const FimsNavigator = () => (
   <Stack.Navigator
     initialRouteName={FIMS_ROUTES.MAIN}
     headerMode={"none"}
-    screenOptions={{ gestureEnabled: false }}
-  >
+    screenOptions={{ gestureEnabled: false }}>
     <Stack.Screen name={FIMS_ROUTES.WEBVIEW} component={FimsWebviewScreen} />
   </Stack.Navigator>
 );

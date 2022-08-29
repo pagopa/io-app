@@ -28,8 +28,7 @@ const LogoutScreen = (props: Props) => {
   return (
     <BaseScreenComponent
       customGoBack={<View hspacer={true} spacer={true} />}
-      headerTitle={I18n.t("profile.logout.menulabel")}
-    >
+      headerTitle={I18n.t("profile.logout.menulabel")}>
       <LoadingErrorComponent
         isLoading={true}
         loadingCaption={I18n.t("profile.logout.loading")}

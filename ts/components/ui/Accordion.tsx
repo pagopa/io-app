@@ -57,8 +57,7 @@ const Accordion: React.FunctionComponent<Props> = (props: Props) => {
           ? I18n.t("global.accessibility.expanded")
           : I18n.t("global.accessibility.collapsed"))
       }
-      onPress={() => setExpanded(!expanded)}
-    >
+      onPress={() => setExpanded(!expanded)}>
       <View style={styles.header}>
         <Text bold={true} style={styles.flex}>
           {title}
@@ -85,8 +84,7 @@ const Accordion: React.FunctionComponent<Props> = (props: Props) => {
         shouldHandleLink={props.shouldHandleLink}
         onLinkClicked={(url: string) => {
           fromNullable(props.onLinkClicked).map(s => s(url));
-        }}
-      >
+        }}>
         {content}
       </Markdown>
     </View>

@@ -18,8 +18,7 @@ const OrderOption = ({ text, value, onPress, checked }: Props) => (
       justifyContent: "space-between",
       paddingVertical: 12
     }}
-    onPress={() => onPress(value)}
-  >
+    onPress={() => onPress(value)}>
     <H4 weight={checked ? "SemiBold" : "Regular"} color={"bluegreyDark"}>
       {text}
     </H4>

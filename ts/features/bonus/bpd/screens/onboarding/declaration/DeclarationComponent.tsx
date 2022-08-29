@@ -113,8 +113,7 @@ export const DeclarationComponent: React.FunctionComponent<Props> = props => {
     <BaseScreenComponent
       goBack={props.onCancel}
       headerTitle={title}
-      contextualHelp={props.contextualHelp}
-    >
+      contextualHelp={props.contextualHelp}>
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView>
           <View style={IOStyles.horizontalContentPadding}>

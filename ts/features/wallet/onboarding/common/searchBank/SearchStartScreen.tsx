@@ -83,8 +83,7 @@ const SearchStartScreen: React.FunctionComponent<Props> = (props: Props) => {
       headerTitle={I18n.t("wallet.searchAbi.header", {
         methodName: handleMethodName(props.methodType)
       })}
-      contextualHelp={emptyContextualHelp}
-    >
+      contextualHelp={emptyContextualHelp}>
       <SafeAreaView style={IOStyles.flex} testID={props.testID}>
         <Content style={IOStyles.flex}>
           <SearchStartComponent

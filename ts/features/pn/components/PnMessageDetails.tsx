@@ -129,8 +129,7 @@ export const PnMessageDetails = (props: Props) => {
       )}
       <ScrollView
         style={{ padding: customVariables.contentPadding }}
-        ref={scrollViewRef}
-      >
+        ref={scrollViewRef}>
         {props.service && <PnMessageDetailsHeader service={props.service} />}
         <PnMessageDetailsContent
           style={styles.content}
@@ -138,8 +137,7 @@ export const PnMessageDetails = (props: Props) => {
         />
         {props.message.attachments && (
           <PnMessageDetailsSection
-            title={I18n.t("features.pn.details.attachmentsSection.title")}
-          >
+            title={I18n.t("features.pn.details.attachmentsSection.title")}>
             <MvlAttachments
               attachments={props.message.attachments}
               openPreview={openAttachment}
@@ -148,8 +146,7 @@ export const PnMessageDetails = (props: Props) => {
         )}
         {maybePayment && (
           <PnMessageDetailsSection
-            title={I18n.t("features.pn.details.paymentSection.title")}
-          >
+            title={I18n.t("features.pn.details.paymentSection.title")}>
             {firstLoadingRequest && (
               <>
                 <TransactionSummary
@@ -171,8 +168,7 @@ export const PnMessageDetails = (props: Props) => {
           </PnMessageDetailsSection>
         )}
         <PnMessageDetailsSection
-          title={I18n.t("features.pn.details.infoSection.title")}
-        >
+          title={I18n.t("features.pn.details.infoSection.title")}>
           <TransactionSummaryRow
             axis="horizontal"
             title={I18n.t("features.pn.details.infoSection.iun")}
@@ -182,8 +178,7 @@ export const PnMessageDetails = (props: Props) => {
           />
           <H5
             color="bluegrey"
-            style={{ marginBottom: customVariables.spacerLargeHeight }}
-          >
+            style={{ marginBottom: customVariables.spacerLargeHeight }}>
             {I18n.t("features.pn.details.timeline.title")}
           </H5>
           <PnMessageTimeline

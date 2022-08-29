@@ -56,8 +56,7 @@ export const SelectionBox = (props: Props) => (
     disabled={!props.onPress}
     onPress={props.onPress}
     accessibilityLabel={props.accessibilityLabel}
-    accessible={props.accessibilityLabel !== undefined}
-  >
+    accessible={props.accessibilityLabel !== undefined}>
     <View style={styles.selectionBox}>
       {props.logo && <View style={styles.selectionBoxIcon}>{props.logo}</View>}
 

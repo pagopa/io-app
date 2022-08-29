@@ -1,6 +1,8 @@
 /**
  * Entities reducer
  */
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import _ from "lodash";
 import { combineReducers } from "redux";
 import {
   createMigrate,
@@ -9,13 +11,11 @@ import {
   PersistedState,
   PersistPartial
 } from "redux-persist";
-import _ from "lodash";
-import AsyncStorage from "@react-native-community/async-storage";
-import { Action } from "../../actions/types";
-import { GlobalState } from "../types";
 import { isDevEnv } from "../../../utils/environment";
-import { PotTransform } from "../../transforms/potTransform";
+import { Action } from "../../actions/types";
 import { DateISO8601Transform } from "../../transforms/dateISO8601Tranform";
+import { PotTransform } from "../../transforms/potTransform";
+import { GlobalState } from "../types";
 import calendarEventsReducer, { CalendarEventsState } from "./calendarEvents";
 import messagesReducer, { MessagesState } from "./messages";
 import messagesStatusReducer, {

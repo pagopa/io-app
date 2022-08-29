@@ -1,4 +1,4 @@
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as pot from "italia-ts-commons/lib/pot";
 import _ from "lodash";
 import {
@@ -22,6 +22,7 @@ import {
 } from "redux-persist";
 import createSagaMiddleware from "redux-saga";
 import { remoteUndefined } from "../features/bonus/bpd/model/RemoteValue";
+import { mvlPersistConfig } from "../features/mvl";
 import rootSaga from "../sagas";
 import { Action, StoreEnhancer } from "../store/actions/types";
 import { analytics } from "../store/middlewares";
@@ -32,6 +33,10 @@ import {
 } from "../store/reducers";
 import { ContentState } from "../store/reducers/content";
 import { entitiesPersistConfig } from "../store/reducers/entities";
+import {
+  InstallationState,
+  INSTALLATION_INITIAL_STATE
+} from "../store/reducers/installation";
 import { NotificationsState } from "../store/reducers/notifications";
 import { getInitialState as getInstallationInitialState } from "../store/reducers/notifications/installation";
 import { GlobalState, PersistedGlobalState } from "../store/reducers/types";
@@ -39,11 +44,6 @@ import { walletsPersistConfig } from "../store/reducers/wallet";
 import { DateISO8601Transform } from "../store/transforms/dateISO8601Tranform";
 import { PotTransform } from "../store/transforms/potTransform";
 import { isDevEnv } from "../utils/environment";
-import {
-  INSTALLATION_INITIAL_STATE,
-  InstallationState
-} from "../store/reducers/installation";
-import { mvlPersistConfig } from "../features/mvl";
 import { configureReactotron } from "./configureRectotron";
 
 /**

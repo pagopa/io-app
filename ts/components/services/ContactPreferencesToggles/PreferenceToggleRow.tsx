@@ -53,8 +53,7 @@ const PreferenceToggleRow = ({
             onPress={onReload}
             testID={`${testID}-reload`}
             accessibilityRole={"button"}
-            accessibilityLabel={I18n.t("global.accessibility.reload")}
-          >
+            accessibilityLabel={I18n.t("global.accessibility.reload")}>
             <IconFont name={"io-reload"} size={20} color={IOColors.blue} />
           </TouchableDefaultOpacity>
         );
@@ -78,8 +77,7 @@ const PreferenceToggleRow = ({
           weight={"Regular"}
           color={"bluegreyDark"}
           testID={`${testID}-label`}
-          accessibilityRole={"text"}
-        >
+          accessibilityRole={"text"}>
           {label}
         </H4>
       </View>

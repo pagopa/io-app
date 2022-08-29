@@ -67,8 +67,7 @@ const PnMessageTimelineItem = (props: ItemProps) => (
         fontSize="small"
         color="bluegrey"
         weight="Regular"
-        style={styles.month}
-      >
+        style={styles.month}>
         {props.month}
       </LabelSmall>
     </View>

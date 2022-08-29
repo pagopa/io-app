@@ -34,8 +34,7 @@ export const PaymentMethodRepresentationComponent: React.FunctionComponent<Payme
       <Body
         testID={"paymentMethodCaptionId"}
         numberOfLines={1}
-        style={styles.text}
-      >
+        style={styles.text}>
         {props.caption}
       </Body>
     </View>

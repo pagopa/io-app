@@ -88,8 +88,7 @@ const MessageDetailsComponent = ({
           webViewStyle={styles.webview}
           onLoadEnd={() => {
             setIsContentLoadCompleted(true);
-          }}
-        >
+          }}>
           {cleanMarkdownFromCTAs(markdown)}
         </MessageMarkdown>
 

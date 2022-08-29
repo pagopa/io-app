@@ -154,14 +154,12 @@ export class EmailReadScreen extends React.PureComponent<Props> {
         <TopScreenComponent
           goBack={this.handleGoBack}
           headerTitle={I18n.t("profile.data.list.email")}
-          contextualHelpMarkdown={contextualHelpMarkdown}
-        >
+          contextualHelpMarkdown={contextualHelpMarkdown}>
           <ScreenContent
             title={I18n.t("email.read.title")}
             subtitle={
               isFromProfileSection ? undefined : I18n.t("email.insert.subtitle")
-            }
-          >
+            }>
             <View style={styles.content}>
               <Text>{I18n.t("email.insert.label")}</Text>
               <View style={styles.spacerSmall} />

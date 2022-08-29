@@ -86,8 +86,7 @@ const CgnServiceCTA = (props: Props) => {
         block
         bordered
         danger
-        onPress={requestUnsubscription}
-      >
+        onPress={requestUnsubscription}>
         <Label color={"red"}>{I18n.t("bonus.cgn.cta.deactivateBonus")}</Label>
       </ButtonDefaultOpacity>
     );
@@ -99,8 +98,7 @@ const CgnServiceCTA = (props: Props) => {
       onPress={() => {
         dispatch(loadAvailableBonuses.request());
         dispatch(cgnActivationStart());
-      }}
-    >
+      }}>
       <Label color={"white"}>{I18n.t("bonus.cgn.cta.activeBonus")}</Label>
     </ButtonDefaultOpacity>
   );

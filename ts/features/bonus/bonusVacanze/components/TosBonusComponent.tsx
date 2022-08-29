@@ -104,8 +104,7 @@ const TosBonusComponent: React.FunctionComponent<Props> = props => {
             }}
             style={{ flex: 2 }}
             block={true}
-            primary={true}
-          >
+            primary={true}>
             <Text>{I18n.t("global.buttons.retry")}</Text>
           </ButtonDefaultOpacity>
         </View>

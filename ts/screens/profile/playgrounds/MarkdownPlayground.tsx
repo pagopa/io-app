@@ -66,8 +66,7 @@ const MarkdownPlayground = () => {
             <View>
               <ButtonDefaultOpacity
                 style={styles.contentCenter}
-                onPress={() => setMarkdownText(inputText)}
-              >
+                onPress={() => setMarkdownText(inputText)}>
                 <IconFont
                   name={"io-right"}
                   style={{
@@ -81,8 +80,7 @@ const MarkdownPlayground = () => {
             <Label
               weight={"Regular"}
               color={"blue"}
-              onPress={() => setInputText("")}
-            >
+              onPress={() => setInputText("")}>
               {"clear"}
             </Label>
           </View>

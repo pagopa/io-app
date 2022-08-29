@@ -155,14 +155,12 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
         goBack={true}
         headerTitle={I18n.t("wallet.insertManually.header")}
         contextualHelpMarkdown={contextualHelpMarkdown}
-        faqCategories={["wallet_insert_notice_data"]}
-      >
+        faqCategories={["wallet_insert_notice_data"]}>
         <SafeAreaView style={IOStyles.flex}>
           <NavigationEvents />
           <ScrollView
             style={styles.whiteBg}
-            keyboardShouldPersistTaps="handled"
-          >
+            keyboardShouldPersistTaps="handled">
             <Content scrollEnabled={false}>
               <H1>{I18n.t("wallet.insertManually.title")}</H1>
               <Text>{I18n.t("wallet.insertManually.info")}</Text>

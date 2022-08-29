@@ -63,8 +63,7 @@ const AddPrivativeCardComponent: React.FunctionComponent<Props> = (
     <BaseScreenComponent
       customGoBack={<View hspacer={true} spacer={true} />}
       headerTitle={headerTitle}
-      contextualHelp={props.contextualHelp}
-    >
+      contextualHelp={props.contextualHelp}>
       <SafeAreaView style={IOStyles.flex} testID={"AddPrivativeComponent"}>
         <ScrollView style={IOStyles.flex}>
           <View spacer={true} />
@@ -73,8 +72,7 @@ const AddPrivativeCardComponent: React.FunctionComponent<Props> = (
               styles.container,
               IOStyles.flex,
               IOStyles.horizontalContentPadding
-            ]}
-          >
+            ]}>
             {!isBlocked ? <H1 style={styles.title}>{screenTitle}</H1> : null}
             <View spacer={true} large={true} />
             <BasePrivativeCard

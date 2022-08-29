@@ -75,8 +75,7 @@ const InputPlaceHolder: React.FunctionComponent<Props> = (props: Props) => {
           number: props.inputValue.length,
           length: props.digits
         }
-      )}
-    >
+      )}>
       {placeholderPositions.map(renderPlaceholder)}
     </View>
   );

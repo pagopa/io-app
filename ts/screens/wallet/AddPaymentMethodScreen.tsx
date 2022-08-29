@@ -205,8 +205,7 @@ const AddPaymentMethodScreen: React.FunctionComponent<Props> = (
         inPayment.isSome()
           ? I18n.t("wallet.payWith.header")
           : I18n.t("wallet.addPaymentMethodTitle")
-      }
-    >
+      }>
       <SafeAreaView style={IOStyles.flex}>
         {inPayment.isSome() ? (
           <Content noPadded={true}>

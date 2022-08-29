@@ -71,16 +71,14 @@ const ServicesContactComponent = (props: Props): React.ReactElement => {
           onPress={
             // do nothing if it is the current mode set
             isSelected ? constNull : () => props.onSelectMode(item.mode)
-          }
-        >
+          }>
           <View style={IOStyles.flex}>
             {props.showBadge && item.mode === ServicesPreferencesModeEnum.AUTO && (
               <Badge style={[styles.badge]}>
                 <BaseTypography
                   weight={"SemiBold"}
                   color={"white"}
-                  style={{ fontSize: 12 }}
-                >
+                  style={{ fontSize: 12 }}>
                   {I18n.t("services.optIn.preferences.oldUsersBadge")}
                 </BaseTypography>
               </Badge>

@@ -21,8 +21,7 @@ const CategoryCheckbox = ({ text, icon, value, onPress, checked }: Props) => (
       justifyContent: "space-between",
       paddingVertical: 12
     }}
-    onPress={() => onPress(value)}
-  >
+    onPress={() => onPress(value)}>
     <View style={{ flexDirection: "row" }}>
       {icon({ height: 22, width: 22, fill: IOColors.bluegrey })}
       <View hspacer />

@@ -60,8 +60,7 @@ const AddBancomatComponent: React.FunctionComponent<Props> = (props: Props) => {
         title: "wallet.walletCardTransaction.contextualHelpTitle",
         body: "wallet.walletCardTransaction.contextualHelpContent"
       }}
-      contextualHelp={props.contextualHelp}
-    >
+      contextualHelp={props.contextualHelp}>
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView style={IOStyles.flex}>
           <View spacer={true} />
@@ -70,8 +69,7 @@ const AddBancomatComponent: React.FunctionComponent<Props> = (props: Props) => {
               styles.container,
               IOStyles.flex,
               IOStyles.horizontalContentPadding
-            ]}
-          >
+            ]}>
             <H1 style={styles.title}>
               {I18n.t("wallet.onboarding.bancomat.add.screenTitle")}
             </H1>

@@ -9,10 +9,10 @@ import {
   remoteUndefined
 } from "../../../../../../bonus/bpd/model/RemoteValue";
 import { searchUserBPay } from "../../actions";
-import { bPayAttMock, bPayDisMock } from "../__mock__/bpay.mock";
 import { onboardingBPayFoundAccountsSelector } from "../foundBpay";
+import { bPayAttMock, bPayDisMock } from "../__mock__/bpay.mock";
 
-jest.mock("@react-native-community/async-storage", () => ({
+jest.mock("@react-native-async-storage/async-storage", () => ({
   AsyncStorage: jest.fn()
 }));
 

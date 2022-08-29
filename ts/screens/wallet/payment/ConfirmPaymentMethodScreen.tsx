@@ -372,8 +372,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
       headerTitle={I18n.t("wallet.ConfirmPayment.header")}
       contextualHelpMarkdown={contextualHelpMarkdown}
       faqCategories={["payment"]}
-      backButtonTestID="cancelPaymentButton"
-    >
+      backButtonTestID="cancelPaymentButton">
       <SafeAreaView style={styles.flex}>
         <Content noPadded={true}>
           <View style={IOStyles.horizontalContentPadding}>
@@ -385,8 +384,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
               accessibilityLabel={`${I18n.t(
                 "wallet.ConfirmPayment.total"
               )} ${formattedTotal}`}
-              accessible
-            >
+              accessible>
               <H1>{I18n.t("wallet.ConfirmPayment.total")}</H1>
               <H1>{formattedTotal}</H1>
             </View>
@@ -405,8 +403,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
               <H3
                 color="bluegrey"
                 style={styles.iconRowText}
-                accessibilityRole="header"
-              >
+                accessibilityRole="header">
                 {I18n.t("wallet.ConfirmPayment.paymentInformations")}
               </H3>
             </View>
@@ -415,8 +412,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
 
             <View
               accessibilityLabel={`${paymentReason}, ${formattedSingleAmount}`}
-              accessible
-            >
+              accessible>
               <H4 weight="SemiBold" color="bluegreyDark" numberOfLines={1}>
                 {paymentReason}
               </H4>
@@ -434,8 +430,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
               <H3
                 color="bluegrey"
                 style={styles.iconRowText}
-                accessibilityRole="header"
-              >
+                accessibilityRole="header">
                 {I18n.t("wallet.ConfirmPayment.payWith")}
               </H3>
             </View>
@@ -461,8 +456,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
               <H3
                 color="bluegrey"
                 style={styles.iconRowText}
-                accessibilityRole="header"
-              >
+                accessibilityRole="header">
                 {I18n.t("wallet.ConfirmPayment.transactionCosts")}
               </H3>
             </View>
@@ -495,8 +489,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
 
                 <Text
                   onPress={() => openWebUrl(privacyUrl)}
-                  accessibilityRole="link"
-                >
+                  accessibilityRole="link">
                   <LabelSmall color="bluegrey" weight="Regular">
                     {`${I18n.t(
                       "wallet.onboarding.paypal.paymentCheckout.privacyDisclaimer"

@@ -93,8 +93,7 @@ export const BankPreviewItem: React.FunctionComponent<Props> = (
     <ButtonDefaultOpacity
       white={true}
       style={styles.gridItem}
-      onPress={onItemPress}
-    >
+      onPress={onItemPress}>
       {bankLogo}
       <View spacer={true} />
       <LabelSmall color={"bluegrey"} weight={"Bold"}>

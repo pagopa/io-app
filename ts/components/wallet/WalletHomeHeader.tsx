@@ -83,8 +83,7 @@ const WalletHomeHeader = (props: Props) => {
               item.onPress();
             }}
             style={styles.container}
-            onPressWithGestureHandler={true}
-          >
+            onPressWithGestureHandler={true}>
             <View style={styles.flexColumn}>
               <View style={styles.row}>
                 <View style={IOStyles.flex}>
@@ -119,8 +118,7 @@ const WalletHomeHeader = (props: Props) => {
           justifyContent: "space-between",
           paddingHorizontal: 8
         }
-      ]}
-    >
+      ]}>
       <H1 color={"white"} accessible={true} accessibilityRole="header">
         {I18n.t("wallet.wallet")}
       </H1>
@@ -132,8 +130,7 @@ const WalletHomeHeader = (props: Props) => {
         onPress={present}
         accessible={true}
         accessibilityLabel={I18n.t("wallet.accessibility.addElement")}
-        accessibilityRole="button"
-      >
+        accessibilityRole="button">
         <IconFont
           name="io-plus"
           color={IOColors.white}

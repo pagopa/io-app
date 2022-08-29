@@ -52,16 +52,14 @@ export default class ContextualInfo extends React.Component<Props> {
           <Right>
             <ButtonDefaultOpacity
               onPress={() => this.props.onClose()}
-              transparent={true}
-            >
+              transparent={true}>
               <IconFont name="io-close" />
             </ButtonDefaultOpacity>
           </Right>
         </AppHeader>
         <Content
           contentContainerStyle={styles.contentContainerStyle}
-          noPadded={true}
-        >
+          noPadded={true}>
           <H1>{this.props.title}</H1>
           {this.props.body()}
         </Content>

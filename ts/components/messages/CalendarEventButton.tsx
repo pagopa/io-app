@@ -343,8 +343,7 @@ class CalendarEventButton extends React.PureComponent<Props, State> {
         xsmall={small}
         small={medium}
         bordered={!disabled}
-        style={this.props.small ? styles.oneThird : styles.button}
-      >
+        style={this.props.small ? styles.oneThird : styles.button}>
         <IconFont name={iconName} />
         <Text style={styles.marginTop1}>{reminderText}</Text>
       </ButtonDefaultOpacity>

@@ -137,8 +137,7 @@ export default class DetailedlistItemComponent extends React.Component<Props> {
         onPress={this.props.onPressItem}
         onLongPress={this.props.onLongPressItem}
         style={styles.verticalPad}
-        {...this.props}
-      >
+        {...this.props}>
         <View style={styles.header}>
           <View style={styles.headerMain}>
             <H5>{this.props.text11}</H5>

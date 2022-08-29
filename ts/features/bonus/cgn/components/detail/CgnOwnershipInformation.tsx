@@ -36,8 +36,9 @@ const CgnOwnershipInformation = (props: Props): React.ReactElement => (
           <H4
             weight={"Regular"}
             color={"bluegrey"}
-            style={IOStyles.flex}
-          >{`${props.currentProfile.value.name} ${props.currentProfile.value.family_name}`}</H4>
+            style={
+              IOStyles.flex
+            }>{`${props.currentProfile.value.name} ${props.currentProfile.value.family_name}`}</H4>
           <Monospace>{props.currentProfile.value.fiscal_code}</Monospace>
         </View>
         <View spacer />

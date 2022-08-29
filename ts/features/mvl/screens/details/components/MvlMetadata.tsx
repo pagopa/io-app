@@ -144,8 +144,7 @@ export const MvlMetadataComponent = (props: Props): React.ReactElement => (
     <RawAccordion
       header={<Header />}
       headerStyle={styles.headerContent}
-      accessibilityLabel={I18n.t("features.mvl.details.metadata.title")}
-    >
+      accessibilityLabel={I18n.t("features.mvl.details.metadata.title")}>
       <View style={IOStyles.horizontalContentPadding}>
         <Description {...props} />
         <View spacer={true} />

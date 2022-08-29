@@ -105,8 +105,7 @@ const PagoPaPaymentCapability: React.FC<Props> = props => {
       <ButtonDefaultOpacity
         onPress={onOpenLearnMoreAboutInAppPayments}
         style={styles.bottomSheetCTA}
-        onPressWithGestureHandler={true}
-      >
+        onPressWithGestureHandler={true}>
         <Link>
           {I18n.t("wallet.methods.card.pagoPaCapability.bottomSheetCTA")}
         </Link>
@@ -120,8 +119,7 @@ const PagoPaPaymentCapability: React.FC<Props> = props => {
     <>
       {bottomSheet}
       <TouchableDefaultOpacity
-        onPress={paymentSupported === "available" ? undefined : present}
-      >
+        onPress={paymentSupported === "available" ? undefined : present}>
         <BasePaymentFeatureListItem
           testID={"PagoPaPaymentCapability"}
           title={I18n.t("wallet.methods.card.pagoPaCapability.title")}

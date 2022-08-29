@@ -86,8 +86,7 @@ const PaymentButton = ({
     <ButtonDefaultOpacity
       primary={true}
       onPress={handleOnPress}
-      style={styles.half}
-    >
+      style={styles.half}>
       <Text style={styles.marginTop1}>{I18n.t("messages.cta.seeNotice")}</Text>
     </ButtonDefaultOpacity>
   );

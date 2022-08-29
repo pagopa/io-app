@@ -74,8 +74,7 @@ const CdcBonusRequestInformationTos = () => {
     <BaseScreenComponent
       goBack={true}
       contextualHelp={emptyContextualHelp}
-      headerTitle={I18n.t("bonus.cdc.title")}
-    >
+      headerTitle={I18n.t("bonus.cdc.title")}>
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView style={[IOStyles.horizontalContentPadding]}>
           <View style={styles.headerContainer}>

@@ -74,8 +74,7 @@ class TopScreenComponent extends React.PureComponent<Props> {
         customRightIcon={customRightIcon}
         customGoBack={customGoBack}
         accessibilityEvents={accessibilityEvents}
-        titleColor={titleColor}
-      >
+        titleColor={titleColor}>
         {this.props.children}
       </BaseScreenComponent>
     );

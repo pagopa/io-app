@@ -66,8 +66,7 @@ class SearchButton extends React.Component<Props, State> {
             hasFullHitSlop
             onPress={this.handleSearchPress}
             transparent={true}
-            accessibilityLabel={I18n.t("global.buttons.search")}
-          >
+            accessibilityLabel={I18n.t("global.buttons.search")}>
             <IconFont name="io-search" color={this.props.color} />
           </ButtonDefaultOpacity>
         )}

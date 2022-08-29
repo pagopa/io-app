@@ -48,8 +48,7 @@ export const getContextualHelpConfig = (
           <Markdown
             onLinkClicked={onLinkClicked}
             onLoadEnd={onLoadEnd}
-            shouldHandleLink={shouldHandleLink}
-          >
+            shouldHandleLink={shouldHandleLink}>
             {I18n.t(contextualHelpMarkdown.body)}
           </Markdown>
         ),

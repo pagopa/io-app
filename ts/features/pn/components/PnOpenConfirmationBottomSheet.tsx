@@ -48,8 +48,7 @@ const Header = () => (
       flex: 1,
       flexDirection: "row",
       alignItems: "center"
-    }}
-  >
+    }}>
     <HeaderImage
       width={32}
       height={32}

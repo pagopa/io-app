@@ -154,16 +154,14 @@ const BaseBancomatCard: React.FunctionComponent<Props> = (props: Props) => {
           props.expiringDate,
           props.user
         )}
-        accessible
-      >
+        accessible>
         <View>
           <View
             style={{
               flexDirection: "row",
               alignItems: "center",
               justifyContent: "space-between"
-            }}
-          >
+            }}>
             {renderBankLogo(props.abi, imgDimensions)}
             {props.blocked && (
               <Badge style={[styles.badgeInfo, styles.badgeInfoExpired]}>
@@ -175,8 +173,9 @@ const BaseBancomatCard: React.FunctionComponent<Props> = (props: Props) => {
           {props.expiringDate && (
             <H5
               color={props.isExpired ? "red" : "bluegreyDark"}
-              weight={"SemiBold"}
-            >{`${I18n.t("cardComponent.validUntil")} ${localeDateFormat(
+              weight={"SemiBold"}>{`${I18n.t(
+              "cardComponent.validUntil"
+            )} ${localeDateFormat(
               props.expiringDate,
               I18n.t("global.dateFormats.numericMonthYear")
             )}`}</H5>

@@ -175,23 +175,19 @@ export const PayWebViewModal = (props: Props) => {
       animationType="fade"
       transparent={false}
       visible={props.isVisible ?? true}
-      onRequestClose={props.onGoBack}
-    >
+      onRequestClose={props.onGoBack}>
       <BaseScreenComponent
         goBack={props.onGoBack}
         contextualHelp={emptyContextualHelp}
-        headerTitle={props.modalHeaderTitle}
-      >
+        headerTitle={props.modalHeaderTitle}>
         {showInfoHeader && (
           <View
             style={styles.descriptionContainer}
-            testID={"PayWebViewModal-description"}
-          >
+            testID={"PayWebViewModal-description"}>
             <InfoBox
               iconName={"io-info"}
               iconColor={IOColors.bluegreyDark}
-              iconSize={24}
-            >
+              iconSize={24}>
               <Label weight={"Regular"} color={"bluegrey"}>
                 {I18n.t("wallet.challenge3ds.description")}
               </Label>

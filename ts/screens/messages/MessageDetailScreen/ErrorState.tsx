@@ -90,8 +90,7 @@ const errorState = ({ messageId, onRetry, goBack }: Props) => (
           <ButtonDefaultOpacity
             xsmall={true}
             bordered={true}
-            onPress={() => clipboardSetStringWithFeedback(messageId)}
-          >
+            onPress={() => clipboardSetStringWithFeedback(messageId)}>
             <Text>{I18n.t("clipboard.copyText")}</Text>
           </ButtonDefaultOpacity>
         </View>
@@ -108,16 +107,14 @@ const errorState = ({ messageId, onRetry, goBack }: Props) => (
         block={true}
         cancel={true}
         onPress={goBack}
-        style={styles.errorStateCancelButton}
-      >
+        style={styles.errorStateCancelButton}>
         <Text>{I18n.t("global.buttons.cancel")}</Text>
       </ButtonDefaultOpacity>
       <ButtonDefaultOpacity
         block={true}
         primary={true}
         onPress={onRetry}
-        style={styles.errorStateRetryButton}
-      >
+        style={styles.errorStateRetryButton}>
         <Text>{I18n.t("global.buttons.retry")}</Text>
       </ButtonDefaultOpacity>
     </View>

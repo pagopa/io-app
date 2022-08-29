@@ -120,15 +120,13 @@ export const AssetViewerBox = ({
     style={[
       styles.assetWrapper,
       size === "small" ? styles.assetWrapperSmall : {}
-    ]}
-  >
+    ]}>
     <View
       style={[
         styles.assetItem,
         size === "small" ? styles.assetItemSmall : {},
         colorMode === "dark" ? styles.assetItemDark : {}
-      ]}
-    >
+      ]}>
       <ImageBackground
         style={styles.fakeTransparentBg}
         source={FakeTransparentBg}
@@ -140,8 +138,7 @@ export const AssetViewerBox = ({
             styles.pill,
             size === "small" ? styles.pillSmall : {},
             pillMap[type].style
-          ]}
-        >
+          ]}>
           {pillMap[type].text}
         </Text>
       )}
@@ -152,14 +149,12 @@ export const AssetViewerBox = ({
         flexDirection: "row",
         justifyContent: "space-between",
         marginTop: 4
-      }}
-    >
+      }}>
       {name && (
         <H5
           color={"bluegrey"}
           style={{ alignSelf: "flex-start" }}
-          weight={"Regular"}
-        >
+          weight={"Regular"}>
           {name}
         </H5>
       )}

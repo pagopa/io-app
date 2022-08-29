@@ -64,8 +64,7 @@ export const ShareDataComponent = (): React.ReactElement => {
           )} `}
           <Link
             onPress={() => openWebUrl(shareDataSecurityMoreLink)}
-            testID="security"
-          >
+            testID="security">
             {I18n.t("profile.main.privacy.shareData.screen.security.cta")}
           </Link>
         </Body>
@@ -88,8 +87,7 @@ export const ShareDataComponent = (): React.ReactElement => {
       <Body
         accessibilityRole="link"
         onPress={() => openWebUrl(privacyUrl)}
-        testID="additionalInformation"
-      >
+        testID="additionalInformation">
         {I18n.t(
           "profile.main.privacy.shareData.screen.additionalInformation.description"
         )}

@@ -87,8 +87,7 @@ export const OthersShowroom = () => (
             <H3 style={{ alignSelf: "center" }}>{"Custom header "}</H3>
             <H5 style={{ alignSelf: "center" }}>{"Purgatorio, Canto VI"}</H5>
           </View>
-        }
-      >
+        }>
         <Body>
           {"Ahi serva Italia, di dolore ostello, \n" +
             "nave sanza nocchiere in gran tempesta, \n" +

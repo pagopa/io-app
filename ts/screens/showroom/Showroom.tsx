@@ -42,8 +42,7 @@ export const Showroom = () => {
   return (
     <BaseScreenComponent
       goBack={true}
-      headerTitle={I18n.t("profile.main.showroom")}
-    >
+      headerTitle={I18n.t("profile.main.showroom")}>
       <SafeAreaView style={styles.body}>
         <ScrollView>
           <View style={IOStyles.horizontalContentPadding}>

@@ -35,8 +35,7 @@ const RemoveAccountInfo: React.FunctionComponent<Props> = props => {
   return (
     <BaseScreenComponent
       goBack={true}
-      headerTitle={I18n.t("profile.main.title")}
-    >
+      headerTitle={I18n.t("profile.main.title")}>
       <SafeAreaView style={IOStyles.flex}>
         <Content>
           <H1>{I18n.t("profile.main.privacy.removeAccount.title")}</H1>

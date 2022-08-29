@@ -39,28 +39,23 @@ export const IllustrationsShowroom = () => (
       <AssetViewerBox
         type="raster"
         name={"05"}
-        image={renderRasterImage(Landing05)}
-      ></AssetViewerBox>
+        image={renderRasterImage(Landing05)}></AssetViewerBox>
       <AssetViewerBox
         type="raster"
         name={"01"}
-        image={renderRasterImage(Landing01)}
-      ></AssetViewerBox>
+        image={renderRasterImage(Landing01)}></AssetViewerBox>
       <AssetViewerBox
         type="raster"
         name={"02"}
-        image={renderRasterImage(Landing02)}
-      ></AssetViewerBox>
+        image={renderRasterImage(Landing02)}></AssetViewerBox>
       <AssetViewerBox
         type="raster"
         name={"03"}
-        image={renderRasterImage(Landing03)}
-      ></AssetViewerBox>
+        image={renderRasterImage(Landing03)}></AssetViewerBox>
       <AssetViewerBox
         type="raster"
         name={"04"}
-        image={renderRasterImage(Landing04)}
-      ></AssetViewerBox>
+        image={renderRasterImage(Landing04)}></AssetViewerBox>
     </View>
     <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
       CIE
@@ -69,13 +64,11 @@ export const IllustrationsShowroom = () => (
       <AssetViewerBox
         type="raster"
         name={"CIE"}
-        image={renderRasterImage(LandingCIE)}
-      ></AssetViewerBox>
+        image={renderRasterImage(LandingCIE)}></AssetViewerBox>
       <AssetViewerBox
         type="raster"
         name={"Placing Card"}
-        image={renderRasterImage(PlacingCard)}
-      ></AssetViewerBox>
+        image={renderRasterImage(PlacingCard)}></AssetViewerBox>
     </View>
   </ShowroomSection>
 );

@@ -51,13 +51,11 @@ const RankPositionItem = (props: Props): React.ReactElement => (
               : IOColors.greyLight
           }
         ]}
-        testID={"PositionBoxContainer"}
-      >
+        testID={"PositionBoxContainer"}>
         <H4
           color={props.currentUserPosition ? "white" : "bluegreyDark"}
           style={{ textAlign: "center", lineHeight: 30 }}
-          testID={"PositionBoxedLabel"}
-        >
+          testID={"PositionBoxedLabel"}>
           {props.boxedLabel}
         </H4>
       </View>

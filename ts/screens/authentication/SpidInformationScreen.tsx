@@ -56,8 +56,7 @@ class SpidInformationScreen extends React.Component<Props, never> {
     return (
       <BaseScreenComponent
         goBack={true}
-        headerTitle={I18n.t("authentication.spid_information.headerTitle")}
-      >
+        headerTitle={I18n.t("authentication.spid_information.headerTitle")}>
         <Content>
           <H1>{I18n.t("authentication.spid_information.contentTitle")}</H1>
 
@@ -104,8 +103,7 @@ class SpidInformationScreen extends React.Component<Props, never> {
           <ButtonDefaultOpacity
             block={true}
             primary={true}
-            onPress={browseToLink}
-          >
+            onPress={browseToLink}>
             <Text>{I18n.t("authentication.spid_information.knowMore")}</Text>
           </ButtonDefaultOpacity>
         </View>

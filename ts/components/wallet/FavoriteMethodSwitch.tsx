@@ -55,8 +55,7 @@ const FavoritePaymentMethodSwitch = (props: Props) => {
       style={{
         width: IOStyleVariables.switchWidth,
         alignSelf: isAndroid ? "center" : undefined
-      }}
-    >
+      }}>
       <ActivityIndicator
         color={"black"}
         accessible={false}

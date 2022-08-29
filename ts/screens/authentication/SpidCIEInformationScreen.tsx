@@ -107,8 +107,7 @@ class SpidCIEInformationScreen extends React.Component<Props, State> {
     return (
       <BaseScreenComponent
         goBack={true}
-        headerTitle={I18n.t("authentication.landing.infoSpidCie")}
-      >
+        headerTitle={I18n.t("authentication.landing.infoSpidCie")}>
         <ScreenContentHeader
           title={I18n.t("authentication.landing.contentTitleCie")}
           subtitle={I18n.t("authentication.landing.spid_or_cie")}
@@ -116,12 +115,10 @@ class SpidCIEInformationScreen extends React.Component<Props, State> {
         <Tabs
           tabBarUnderlineStyle={styles.tabBarUnderline}
           tabContainerStyle={styles.tabBarContainer}
-          onChangeTab={(e: any) => this.setState({ currentTab: e.i })}
-        >
+          onChangeTab={(e: any) => this.setState({ currentTab: e.i })}>
           <Tab
             heading={I18n.t("authentication.spid")}
-            activeTextStyle={styles.activeTextStyle}
-          >
+            activeTextStyle={styles.activeTextStyle}>
             <Content>
               <Markdown>
                 {I18n.t("authentication.spid_information.spid")}
@@ -152,8 +149,7 @@ class SpidCIEInformationScreen extends React.Component<Props, State> {
           </Tab>
           <Tab
             heading={I18n.t("authentication.cie.cie")}
-            activeTextStyle={styles.activeTextStyle}
-          >
+            activeTextStyle={styles.activeTextStyle}>
             <Content>
               <Markdown>
                 {I18n.t("authentication.landing.cie_information_request")}

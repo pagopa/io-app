@@ -1,4 +1,4 @@
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Millisecond } from "italia-ts-commons/lib/units";
 import { List, ListItem, Text, Toast, View } from "native-base";
 import * as React from "react";
@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import { TranslationKeys } from "../../../locales/locales";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import ContextualInfo from "../../components/ContextualInfo";
+import { IOColors } from "../../components/core/variables/IOColors";
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
@@ -48,7 +49,6 @@ import { getAppVersion } from "../../utils/appVersion";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { getDeviceId } from "../../utils/device";
 import { isDevEnv } from "../../utils/environment";
-import { IOColors } from "../../components/core/variables/IOColors";
 
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "PROFILE_MAIN"> &
   LightModalContextInterface &
@@ -170,8 +170,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
           primary={true}
           danger={isDanger}
           small={true}
-          onPress={onPress}
-        >
+          onPress={onPress}>
           <Text numberOfLines={1}>{title}</Text>
         </ButtonDefaultOpacity>
       </ListItem>
@@ -556,14 +555,12 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
               this.props.navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
                 screen: ROUTES.PROFILE_FISCAL_CODE
               })
-            }
-          >
+            }>
             <FiscalCodeComponent type={"Preview"} />
           </TouchableDefaultOpacity>
         }
         contextualHelpMarkdown={contextualHelpMarkdown}
-        faqCategories={["profile"]}
-      >
+        faqCategories={["profile"]}>
         {screenContent()}
       </DarkLayout>
     );

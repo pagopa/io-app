@@ -35,8 +35,7 @@ export const ActivateBonusDiscrepancies: React.FunctionComponent<Props> =
         styles.discrepanciesBox,
         bonusVacanzeStyle.row,
         bonusVacanzeStyle.horizontalPadding
-      ]}
-    >
+      ]}>
       <IconFont name={"io-notice"} size={iconSize} />
       <View hspacer={true} />
       <Text style={activateBonusStyle.boxText} dark={true}>

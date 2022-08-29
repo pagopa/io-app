@@ -96,8 +96,7 @@ const CgnMerchantListItem: React.FunctionComponent<Props> = (props: Props) => (
   <TouchableDefaultOpacity
     style={[styles.verticalPadding]}
     accessibilityRole={"button"}
-    onPress={props.onPress}
-  >
+    onPress={props.onPress}>
     <View style={[styles.categories, { justifyContent: "space-between" }]}>
       <H2 style={IOStyles.flex}>{props.name}</H2>
       {props.isNew && (

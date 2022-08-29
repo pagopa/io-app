@@ -72,8 +72,7 @@ const renderComponent = (state: GlobalState, withContext: boolean = true) => {
       value={{
         authCode: "authCode" as EUCovidCertificateAuthCode,
         messageId: "messageId"
-      }}
-    >
+      }}>
       <EuCovidCertWrongFormatKoScreen />
     </EUCovidContext.Provider>
   ) : (

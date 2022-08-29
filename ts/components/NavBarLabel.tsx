@@ -109,8 +109,7 @@ const NavBarLabel: React.FunctionComponent<Props> = (props: Props) => {
           color: options.tintColor === null ? undefined : options.tintColor
         }
       ]}
-      accessibilityLabel={`${isSelected} ${panelAccessibilityLabel}`}
-    >
+      accessibilityLabel={`${isSelected} ${panelAccessibilityLabel}`}>
       {label}
     </Text>
   );

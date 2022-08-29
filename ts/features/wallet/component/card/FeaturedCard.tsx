@@ -58,8 +58,7 @@ const FeaturedCard: React.FunctionComponent<Props> = (props: Props) => (
   <TouchableDefaultOpacity
     style={styles.container}
     onPress={props.onPress}
-    testID={props.testID}
-  >
+    testID={props.testID}>
     <View style={styles.row}>
       {fromNullable(props.image).fold(
         <View

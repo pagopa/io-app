@@ -406,8 +406,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
         {`${I18n.t("wallet.transactionHelpMessage.text1")} `}
         <Body
           weight={"SemiBold"}
-          style={alignCenter ? styles.centered : undefined}
-        >
+          style={alignCenter ? styles.centered : undefined}>
           {I18n.t("wallet.transactionHelpMessage.text2")}
         </Body>
       </Body>
@@ -418,8 +417,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     return (
       <Content
         scrollEnabled={false}
-        style={[styles.noBottomPadding, styles.whiteBg, styles.flex1]}
-      >
+        style={[styles.noBottomPadding, styles.whiteBg, styles.flex1]}>
         {renderHelp && this.renderHelpMessage()}
         <View spacer={true} large={true} />
         <H3 weight="SemiBold" color="bluegreyDark">
@@ -433,8 +431,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
           small={true}
           onPress={() =>
             this.props.loadTransactions(this.props.transactionsLoadedLength)
-          }
-        >
+          }>
           <Body color={"blue"}>{I18n.t("wallet.transactionsShow")}</Body>
         </ButtonDefaultOpacity>
         <EdgeBorderComponent />
@@ -494,8 +491,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
             ? this.props.navigateToPaymentScanQrCode
             : undefined
         }
-        activeOpacity={1}
-      >
+        activeOpacity={1}>
         <IconFont name="io-qr" style={styles.white} />
         <Text>{I18n.t("wallet.payNotice")}</Text>
       </ButtonDefaultOpacity>
@@ -546,8 +542,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
         faqCategories={["wallet", "wallet_methods"]}
         gradientHeader={true}
         headerPaddingMin={true}
-        footerFullWidth={<SectionStatusComponent sectionKey={"wallets"} />}
-      >
+        footerFullWidth={<SectionStatusComponent sectionKey={"wallets"} />}>
         <BpdOptInPaymentMethodsContainer />
         <>
           {(bpdEnabled || this.props.isCgnEnabled) && <FeaturedCardCarousel />}

@@ -107,8 +107,7 @@ const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
       goBack={true}
       headerTitle={I18n.t("wallet.payWith.header")}
       contextualHelpMarkdown={contextualHelpMarkdown}
-      faqCategories={["wallet_methods"]}
-    >
+      faqCategories={["wallet_methods"]}>
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView style={IOStyles.flex}>
           <Content>
@@ -145,8 +144,7 @@ const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
               <H4
                 weight={"Regular"}
                 color={"bluegreyDark"}
-                testID={"noWallets"}
-              >
+                testID={"noWallets"}>
                 {I18n.t("wallet.payWith.noWallets.text")}
               </H4>
             )}

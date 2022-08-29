@@ -143,8 +143,7 @@ class TosScreen extends React.PureComponent<Props, State> {
             }}
             style={{ flex: 2 }}
             block={true}
-            primary={true}
-          >
+            primary={true}>
             <Text>{I18n.t("global.buttons.retry")}</Text>
           </ButtonDefaultOpacity>
         </View>
@@ -177,8 +176,7 @@ class TosScreen extends React.PureComponent<Props, State> {
           onboardingCompleted
             ? I18n.t("profile.main.privacy.privacyPolicy.title")
             : I18n.t("onboarding.tos.headerTitle")
-        }
-      >
+        }>
         <SafeAreaView style={styles.webViewContainer}>
           {!this.props.hasAcceptedCurrentTos && (
             <View style={styles.alert}>

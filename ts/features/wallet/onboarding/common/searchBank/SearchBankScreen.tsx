@@ -76,8 +76,7 @@ const SearchBankScreen: React.FunctionComponent<Props> = (props: Props) => {
             ? I18n.t("wallet.methods.pagobancomat.name")
             : I18n.t("wallet.methods.bancomatPay.name")
       })}
-      contextualHelp={emptyContextualHelp}
-    >
+      contextualHelp={emptyContextualHelp}>
       <NavigationEvents onDidBlur={() => clearTimeout(errorRetry.current)} />
       <SafeAreaView style={IOStyles.flex}>
         <Content style={IOStyles.flex}>

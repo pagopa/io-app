@@ -42,8 +42,7 @@ export const SvVoucherListNavigator = () => (
   <ListStack.Navigator
     initialRouteName={SV_ROUTES.VOUCHER_LIST.LIST}
     headerMode="none"
-    screenOptions={{ gestureEnabled: isGestureEnabled }}
-  >
+    screenOptions={{ gestureEnabled: isGestureEnabled }}>
     <ListStack.Screen
       name={SV_ROUTES.VOUCHER_LIST.LIST}
       component={VoucherListScreen}
@@ -61,8 +60,7 @@ export const SvVoucherGenerationNavigator = () => (
   <GenerationStack.Navigator
     initialRouteName={SV_ROUTES.VOUCHER_GENERATION.CHECK_STATUS}
     headerMode="none"
-    screenOptions={{ gestureEnabled: isGestureEnabled }}
-  >
+    screenOptions={{ gestureEnabled: isGestureEnabled }}>
     <GenerationStack.Screen
       name={SV_ROUTES.VOUCHER_GENERATION.CHECK_STATUS}
       component={CheckStatusRouterScreen}

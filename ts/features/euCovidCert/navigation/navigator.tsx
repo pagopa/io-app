@@ -13,8 +13,7 @@ export const EUCovidCertStackNavigator = () => (
   <Stack.Navigator
     initialRouteName={EUCOVIDCERT_ROUTES.CERTIFICATE}
     headerMode={"none"}
-    screenOptions={{ gestureEnabled: isGestureEnabled }}
-  >
+    screenOptions={{ gestureEnabled: isGestureEnabled }}>
     <Stack.Screen
       name={EUCOVIDCERT_ROUTES.CERTIFICATE}
       component={EuCovidCertificateRouterScreen}

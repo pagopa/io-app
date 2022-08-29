@@ -140,8 +140,7 @@ const ServiceDetailsScreen = (props: Props) => {
       goBack={() => props.navigation.goBack()}
       headerTitle={I18n.t("serviceDetail.headerTitle")}
       contextualHelpMarkdown={contextualHelpMarkdown}
-      faqCategories={["services_detail"]}
-    >
+      faqCategories={["services_detail"]}>
       <SafeAreaView style={IOStyles.flex}>
         <Content style={IOStyles.flex}>
           <Grid>
@@ -158,8 +157,7 @@ const ServiceDetailsScreen = (props: Props) => {
               <Markdown
                 animated={true}
                 onLoadEnd={onMarkdownEnd}
-                onError={onMarkdownEnd}
-              >
+                onError={onMarkdownEnd}>
                 {metadata.description}
               </Markdown>
               <View spacer={true} large={true} />

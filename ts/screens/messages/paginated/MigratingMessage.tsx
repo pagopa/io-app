@@ -67,8 +67,7 @@ const MigratingMessage = ({ status, onRetry, onEnd }: Props) => {
               primary={false}
               disabled={false}
               onPress={onRetry}
-              style={{ width: "100%" }}
-            >
+              style={{ width: "100%" }}>
               <Text style={styles.migrationMessageButtonText}>
                 {I18n.t("global.buttons.retry")}
               </Text>

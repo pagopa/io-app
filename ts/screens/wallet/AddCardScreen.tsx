@@ -249,8 +249,7 @@ const AddCardScreen: React.FC<Props> = props => {
           dismiss();
           props.startAddCobadgeWorkflow();
         }}
-        onPressWithGestureHandler={true}
-      >
+        onPressWithGestureHandler={true}>
         <Label>{I18n.t("wallet.missingDataText.cta")}</Label>
       </ButtonDefaultOpacity>
     </>,
@@ -302,14 +301,12 @@ const AddCardScreen: React.FC<Props> = props => {
       goBack={true}
       headerTitle={I18n.t("wallet.addCardTitle")}
       contextualHelpMarkdown={contextualHelpMarkdown}
-      faqCategories={["wallet_methods", "wallet_methods_security"]}
-    >
+      faqCategories={["wallet_methods", "wallet_methods_security"]}>
       <SafeAreaView style={styles.flex}>
         <ScrollView
           bounces={false}
           style={styles.whiteBg}
-          keyboardShouldPersistTaps="handled"
-        >
+          keyboardShouldPersistTaps="handled">
           <Content scrollEnabled={false}>
             <LabelledItem
               label={I18n.t("wallet.dummyCard.labels.holder.label")}
@@ -431,8 +428,7 @@ const AddCardScreen: React.FC<Props> = props => {
                 <Link
                   accessibilityRole="link"
                   accessibilityLabel={I18n.t("wallet.missingDataCTA")}
-                  onPress={present}
-                >
+                  onPress={present}>
                   {I18n.t("wallet.missingDataCTA")}
                 </Link>
               </>
@@ -442,8 +438,7 @@ const AddCardScreen: React.FC<Props> = props => {
             <Link
               accessibilityRole="link"
               accessibilityLabel={I18n.t("wallet.openAcceptedCardsPageCTA")}
-              onPress={openSupportedCardsPage}
-            >
+              onPress={openSupportedCardsPage}>
               {I18n.t("wallet.openAcceptedCardsPageCTA")}
             </Link>
           </Content>

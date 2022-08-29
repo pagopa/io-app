@@ -92,8 +92,7 @@ const renderPinCol = (
         block={style === "label"}
         primary={buttonType === "primary"}
         unNamed={buttonType === "light"}
-        accessibilityLabel={accessibilityLabel}
-      >
+        accessibilityLabel={accessibilityLabel}>
         {label.fold(
           l => (
             <Text
@@ -101,8 +100,7 @@ const renderPinCol = (
               style={[
                 styles.buttonTextBase,
                 style === "label" && styles.buttonTextLabel
-              ]}
-            >
+              ]}>
               {l}
             </Text>
           ),

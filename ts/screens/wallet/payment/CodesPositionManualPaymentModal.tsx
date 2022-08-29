@@ -64,8 +64,7 @@ class CodesPositionManualPaymentModal extends React.PureComponent<Props> {
           <Right>
             <ButtonDefaultOpacity
               onPress={this.props.onCancel}
-              transparent={true}
-            >
+              transparent={true}>
               <IconFont name="io-close" />
             </ButtonDefaultOpacity>
           </Right>
@@ -74,8 +73,7 @@ class CodesPositionManualPaymentModal extends React.PureComponent<Props> {
           imageHeight={screenHeight}
           imageWidth={screenWidth}
           cropHeight={screenHeight}
-          cropWidth={screenWidth}
-        >
+          cropWidth={screenWidth}>
           <Image
             source={require("../../../../img/wallet/payment-notice-pagopa.png")}
             style={styles.imageStyle}

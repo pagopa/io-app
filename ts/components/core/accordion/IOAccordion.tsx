@@ -29,8 +29,7 @@ export const IOAccordion = (props: Props): React.ReactElement => (
       <H3 numberOfLines={1} style={IOStyles.flex}>
         {props.title}
       </H3>
-    }
-  >
+    }>
     {props.children}
   </RawAccordion>
 );

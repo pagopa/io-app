@@ -93,8 +93,7 @@ export const HorizontalScroll: React.FunctionComponent<Props> = (
           {
             marginLeft: i === 0 ? noWidth : itemWidth
           }
-        ]}
-      >
+        ]}>
         <Animated.View
           style={[
             styles.bar,
@@ -139,8 +138,7 @@ export const HorizontalScroll: React.FunctionComponent<Props> = (
         )}
         accessibilityHint={I18n.t(
           "authentication.landing.accessibility.carousel.hint"
-        )}
-      >
+        )}>
         {props.cards}
       </ScrollView>
 

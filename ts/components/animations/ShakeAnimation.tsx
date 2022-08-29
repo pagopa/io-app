@@ -41,8 +41,7 @@ export class ShakeAnimation extends React.PureComponent<Props> {
               translateX: shaker
             }
           ]
-        }}
-      >
+        }}>
         {this.props.children}
       </Animated.View>
     );

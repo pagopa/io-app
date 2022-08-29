@@ -46,8 +46,7 @@ class SystemOffModal extends React.PureComponent<Props> {
         <BaseScreenComponent
           appLogo={true}
           goBack={false}
-          accessibilityEvents={{ avoidNavigationEventsUsage: true }}
-        >
+          accessibilityEvents={{ avoidNavigationEventsUsage: true }}>
           <Container>
             <View style={styles.container}>
               <React.Fragment>

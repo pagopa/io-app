@@ -65,8 +65,9 @@ const getItem = (props: Props) => [
     description: (
       <View>
         <TouchableWithoutFeedback
-          onPress={() => props.pspPrivacyUrl && openWebUrl(props.pspPrivacyUrl)}
-        >
+          onPress={() =>
+            props.pspPrivacyUrl && openWebUrl(props.pspPrivacyUrl)
+          }>
           <Link weight={"SemiBold"}>
             {I18n.t(
               "wallet.onboarding.paypal.selectPsp.infoBottomSheet.row3Description1",

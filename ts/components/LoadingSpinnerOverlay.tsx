@@ -45,8 +45,7 @@ class LoadingSpinnerOverlay extends React.Component<Props> {
                 <Text
                   alignCenter={true}
                   style={styles.textCaption}
-                  accessible={true}
-                >
+                  accessible={true}>
                   {loadingCaption || I18n.t("global.remoteStates.wait")}
                 </Text>
               }
@@ -55,16 +54,14 @@ class LoadingSpinnerOverlay extends React.Component<Props> {
                   <ButtonDefaultOpacity
                     onPress={onCancel}
                     cancel={true}
-                    style={styles.cancelButtonStyle}
-                  >
+                    style={styles.cancelButtonStyle}>
                     <Text>{I18n.t("global.buttons.cancel")}</Text>
                   </ButtonDefaultOpacity>
                 )
               }
             />
           )
-        }
-      >
+        }>
         {children}
       </Overlay>
     );

@@ -44,8 +44,7 @@ const CoBadgeKoServiceError: React.FunctionComponent<Props> = props => {
       goBack={false}
       customGoBack={<View />}
       headerTitle={headerTitle}
-      contextualHelp={emptyContextualHelp}
-    >
+      contextualHelp={emptyContextualHelp}>
       <SafeAreaView style={IOStyles.flex} testID={"CoBadgeKoServiceError"}>
         <InfoScreenComponent
           image={renderInfoRasterImage(image)}

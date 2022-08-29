@@ -250,15 +250,13 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
             ? I18n.t("profile.data.list.email")
             : I18n.t("email.insert.header")
         }
-        contextualHelpMarkdown={contextualHelpMarkdown}
-      >
+        contextualHelpMarkdown={contextualHelpMarkdown}>
         <SafeAreaView style={styles.flex}>
           <Content noPadded={true} style={styles.flex} scrollEnabled={false}>
             <H1
               color={"bluegreyDark"}
               weight={"Bold"}
-              style={[styles.horizontalPadding]}
-            >
+              style={[styles.horizontalPadding]}>
               {isFromProfileSection
                 ? I18n.t("email.edit.title")
                 : I18n.t("email.insert.title")}

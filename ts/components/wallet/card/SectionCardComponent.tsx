@@ -132,8 +132,7 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
               style={[
                 styles.labelButton,
                 { fontSize: customVariables.fontSize1 + 1 }
-              ]}
-            >
+              ]}>
               {I18n.t("wallet.newPaymentMethod.add").toUpperCase()}
             </Text>
           </>
@@ -156,8 +155,7 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
               style={[
                 styles.labelButton,
                 { fontSize: customVariables.fontSize1 + 1 }
-              ]}
-            >
+              ]}>
               {I18n.t("wallet.newPaymentMethod.refresh").toUpperCase()}
             </Text>
             <Text
@@ -166,8 +164,7 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
                 height: 22,
                 paddingTop: 8,
                 color: "white"
-              }}
-            >
+              }}>
               {" ⟳"}
             </Text>
           </View>
@@ -180,8 +177,7 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
               style={[
                 styles.labelButton,
                 { fontSize: customVariables.fontSize1 + 1 }
-              ]}
-            >
+              ]}>
               {I18n.t("wallet.newPaymentMethod.show").toUpperCase()}
             </Text>
             <IconFont
@@ -209,27 +205,23 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
         style={styles.rotateCard}
         onPress={onPress}
         accessible={true}
-        accessibilityRole={"button"}
-      >
+        accessibilityRole={"button"}>
         <View
           style={[
             styles.card,
             styles.flatBottom,
             cardStyle || styles.cardBlueGrey
-          ]}
-        >
+          ]}>
           <View
             style={[styles.cardInner]}
             accessibilityLabel={props.accessibilityLabel}
             accessibilityHint={props.accessibilityHint}
-            accessibilityRole="button"
-          >
+            accessibilityRole="button">
             <View style={[styles.flexRow, styles.topSpacing]}>
               <View style={styles.flexRow2}>
                 <Text
                   style={[styles.greyUltraLight, styles.headerText]}
-                  ellipsizeMode="tail"
-                >
+                  ellipsizeMode="tail">
                   {label}
                 </Text>
                 {isNew && (

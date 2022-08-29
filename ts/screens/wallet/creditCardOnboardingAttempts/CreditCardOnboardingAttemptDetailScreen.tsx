@@ -127,8 +127,7 @@ const CreditCardOnboardingAttemptDetailScreen = (props: Props) => {
       <ButtonDefaultOpacity
         onPress={handleAskAssistance}
         bordered={true}
-        block={true}
-      >
+        block={true}>
         <IconFont name={"io-messaggi"} />
         <Text>{I18n.t("payment.details.info.buttons.help")}</Text>
       </ButtonDefaultOpacity>
@@ -159,8 +158,7 @@ const CreditCardOnboardingAttemptDetailScreen = (props: Props) => {
       goBack={() => props.navigation.goBack()}
       showChat={false}
       dark={true}
-      headerTitle={I18n.t("wallet.creditCard.onboardingAttempts.title")}
-    >
+      headerTitle={I18n.t("wallet.creditCard.onboardingAttempts.title")}>
       <SlidedContentComponent hasFlatBottom={true}>
         <View spacer={true} xsmall={true} />
         <H3 color={"bluegreyDark"}>

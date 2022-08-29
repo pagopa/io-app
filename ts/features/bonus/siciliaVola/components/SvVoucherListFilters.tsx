@@ -59,8 +59,7 @@ const PossibleVoucherStateOption = ({
       justifyContent: "space-between",
       paddingVertical: 12
     }}
-    onPress={() => onPress(value)}
-  >
+    onPress={() => onPress(value)}>
     <H4 weight={checked ? "SemiBold" : "Regular"} color={"bluegreyDark"}>
       {text}
     </H4>
@@ -145,8 +144,7 @@ const SvVoucherListFilters: React.FunctionComponent<Props> = (props: Props) => {
         <ScrollView
           style={[IOStyles.flex]}
           bounces={false}
-          keyboardShouldPersistTaps={"handled"}
-        >
+          keyboardShouldPersistTaps={"handled"}>
           <View style={IOStyles.horizontalContentPadding}>
             <LabelledItem
               iconPosition={"right"}

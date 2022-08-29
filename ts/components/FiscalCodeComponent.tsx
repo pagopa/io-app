@@ -347,8 +347,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
         selectable={selectable}
         accessible={true}
         accessibilityElementsHidden={true}
-        importantForAccessibility={"no-hide-descendants"}
-      >
+        importantForAccessibility={"no-hide-descendants"}>
         {content.toUpperCase()}
       </Text>
     );
@@ -495,8 +494,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
           robotomono={true}
           bold={true}
           alignCenter={true}
-          style={styles.landscapeFacSimile}
-        >
+          style={styles.landscapeFacSimile}>
           {I18n.t("profile.fiscalCode.facSimile")}
         </Text>
       </View>
@@ -513,8 +511,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
           robotomono={true}
           bold={true}
           alignCenter={true}
-          style={styles.fullFacSimileText}
-        >
+          style={styles.fullFacSimileText}>
           {I18n.t("profile.fiscalCode.facSimile")}
         </Text>
       </View>
@@ -526,8 +523,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
       <View
         accessible={true}
         accessibilityLabel={this.accessibilityText.accessibilityLabel}
-        accessibilityHint={this.accessibilityText.accessibilityHint}
-      >
+        accessibilityHint={this.accessibilityText.accessibilityHint}>
         <Image
           source={
             this.props.type !== "Preview" && this.props.getBackSide

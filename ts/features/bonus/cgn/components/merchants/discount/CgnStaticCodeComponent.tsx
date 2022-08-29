@@ -71,15 +71,13 @@ const CgnStaticCodeComponent: React.FunctionComponent<Props> = ({
         accessible={true}
         accessibilityRole={"button"}
         accessibilityHint={I18n.t("bonus.cgn.accessibility.code")}
-        testID={"static-code-component"}
-      >
+        testID={"static-code-component"}>
         <View style={[styles.row, styles.codeContainer]}>
           <BaseTypography
             weight={"Bold"}
             color={"bluegreyDark"}
             font={"RobotoMono"}
-            style={styles.codeText}
-          >
+            style={styles.codeText}>
             {isCodeVisible && staticCode ? staticCode : "••••••••••"}
           </BaseTypography>
 

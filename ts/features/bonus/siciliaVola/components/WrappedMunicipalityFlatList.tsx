@@ -45,8 +45,7 @@ const FooterError = (props: Props) => (
         if (props.selectedText.current) {
           props.requestAvailableMunicipalities(props.selectedText.current);
         }
-      }}
-    >
+      }}>
       {I18n.t("bonus.sv.components.destinationSelector.municipality.ko.label2")}
     </Link>
   </View>
@@ -74,8 +73,7 @@ const WrappedMunicipalityFlatList = (props: Props) => {
           onPress={() => {
             props.onPress(i.item);
             hideModal();
-          }}
-        >
+          }}>
           <H4 weight={"Regular"} color={"bluegreyDark"}>
             {i.item.name}
           </H4>
