@@ -10,16 +10,11 @@ Created on **15/12/2021**
     - `getMacAddress`
     - `getMacAddressSync`
 
-### @types/react-native+0.69.4
-Created on **29/07/2020**
+### @types/react-native+0.69.6
+Created on **30/08/2022**
 
 #### Reason:
 - Missing accessibility types.
-
-Updated on **29/08/2022**
-
-#### Reason:
-- Fixes deprecation of PropTypes for backward compatibility on libraries.
 
 ### react-native-mixpanel+1.2.0
 
@@ -78,13 +73,19 @@ Created on **16/08/2021**
 #### Reason:
 - implementation 'androidx.core:core:1.+' not compatible with the new gradle settings used by react-native 0.64.2
 
-### react-native+0.64.2
+### react-native+0.69.4
 Created on **20/08/2021**
 
 #### Reason:
 - As for known issue anytime a developer launch a pod install on his own machine the podfile would be updated with 
   different hashes: [here the issue](https://github.com/facebook/react-native/issues/31193)
   To be removed when updating to `react-native` *0.65*
+
+
+Updated on **29/08/2022**
+
+#### Reason:
+- Fixes deprecation of PropTypes for backward compatibility on libraries.
 
 ### react-native-qrcode-scanner+1.5.3
 Created on **16/09/2021**
