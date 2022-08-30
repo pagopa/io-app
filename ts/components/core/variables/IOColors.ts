@@ -55,7 +55,7 @@ export const IOColors = asIOColors({
   brandHighlight: "#00C5CA" /* from variables.ts, duplicate of aqua */,
   brandHighLighter: "#00CDD2" /* from variables.ts */,
   toastColor: "#C1F4F2" /* from variables.ts, ALIAS TOKEN */,
-  badgeYellow: "#FFC824" /* from variables.ts, ALIAS TOKEN */,
+  yellow: "#FFC824" /* from variables.ts, ALIAS TOKEN */,
   cgnDiscountDetailBg: "#EB9505" /* from relative component */,
   cardExpiredTextColor: "#FF0000" /* from variables.ts, ALIAS TOKEN */,
   calendarExpirableColor: "#D0021B" /* from variables.ts, ALIAS TOKEN */,

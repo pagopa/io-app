@@ -3032,7 +3032,9 @@ features:
           save: "Salva"
           savedAtLocation: "Il documento {{name}} è stato salvato nella cartella Download."
           errors:
-            previewing: "Non è possibile mostrare l'anteprima del documento. E' comunque possibile salvarlo e aprirlo con un'applicazione per i PDF"
+            previewing:
+              title: "L’anteprima non è disponibile"
+              body: "Per visualizzare il documento, scaricalo e aprilo con un’app di lettura PDF."
             sharing: "Si è verificato un errore condividendo il documento."
             opening: "Si è verificato un errore aprendo il documento. Potresti non avere installata l'applicazione per i PDF."
             saving: "Si è verificato un errore salvando il documento."
@@ -3143,7 +3145,10 @@ features:
           VIEWED: Perfezionata per visione
           REFUSED: REFUSED
           UNDEFINED: Non definito
-        expand: mostra gli stati precedenti      
+          CANCELLED: Annullata
+        expand: mostra gli stati precedenti
+        info: Puoi vedere il dettaglio di ciascuno stato, scaricare le ricevute e le attestazioni opponibili a terzi accedendo alla versione web del servizio   
+        cta: Accedi alla versione web   
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina

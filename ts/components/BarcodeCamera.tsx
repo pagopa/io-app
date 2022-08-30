@@ -1,13 +1,16 @@
 import "react-native-reanimated";
 import React, { useEffect, useState } from "react";
 import { Camera, useCameraDevices } from "react-native-vision-camera";
-import { View, Dimensions, StyleSheet } from "react-native";
+import { View, Dimensions, StyleSheet, PermissionsAndroid } from "react-native";
 import {
   useScanBarcodes,
   BarcodeFormat,
   Barcode
 } from "vision-camera-code-scanner";
+import { StackNavigationProp } from "@react-navigation/stack/lib/typescript/src/types";
+import { ParamListBase, useNavigation } from "@react-navigation/native";
 import I18n from "../i18n";
+import { isAndroid } from "../utils/platform";
 import customVariables from "../theme/variables";
 import { usePrevious } from "../utils/hooks/usePrevious";
 import { openAppSettings } from "../utils/appSettings";
@@ -137,6 +140,7 @@ export const BarcodeCamera = (props: Props) => {
   const [permissionsGranted, setPermissionsGranted] = useState(false);
   const device = devices.back;
   const barcodeConfig = useIOSelector(barcodesScannerConfigSelector);
+  const navigation = useNavigation<StackNavigationProp<ParamListBase>>();
 
   const [frameProcessor, barcodes] = useScanBarcodes(
     [BarcodeFormat.QR_CODE, BarcodeFormat.DATA_MATRIX],
@@ -145,21 +149,52 @@ export const BarcodeCamera = (props: Props) => {
     }
   );
 
-  // Hook that handles the permissions initialization.
+  // This is a preventive check for the authorizations
+  // in order to show the camera as soon as possible.
   useEffect(() => {
-    async function checkPermissions() {
+    void (async () => {
+      const cameraPermissions = await Camera.getCameraPermissionStatus();
+      setPermissionsGranted(cameraPermissions === "authorized");
+    })();
+  }, [setPermissionsGranted]);
+
+  // This effect will trigger the authorization request for the camera.
+  // It's inside a `transitionEnd` event because on Android the rationale
+  // will block the app rendering. This means that we are going to fully load
+  // the component and _then_ show the authorization request.
+  useEffect(() => {
+    const fn = async () => {
       const cameraPermissions = await Camera.getCameraPermissionStatus();
 
-      if (cameraPermissions === "not-determined") {
-        const selectedPermissions = await Camera.requestCameraPermission();
-        setPermissionsGranted(selectedPermissions === "authorized");
+      if (
+        cameraPermissions === "not-determined" ||
+        cameraPermissions === "denied"
+      ) {
+        const selectedPermissions = isAndroid
+          ? // The scanner package automatically asks for android permission, but we have to display before an alert with
+            // the rationale
+            await PermissionsAndroid.request("android.permission.CAMERA", {
+              title: I18n.t("permissionRationale.camera.title"),
+              message: I18n.t("permissionRationale.camera.message"),
+              buttonPositive: I18n.t("global.buttons.choose")
+            })
+          : await Camera.requestCameraPermission();
+
+        setPermissionsGranted(
+          selectedPermissions === "authorized" ||
+            selectedPermissions === "granted"
+        );
       } else {
         setPermissionsGranted(cameraPermissions === "authorized");
       }
-    }
+    };
 
-    void checkPermissions();
-  }, [setPermissionsGranted]);
+    navigation.addListener("transitionEnd", fn);
+
+    return () => {
+      navigation.removeListener("transitionEnd", fn);
+    };
+  }, [navigation]);
 
   // Hook that handles the `onBarcodeScanned` callback.
   useEffect(() => {

@@ -3007,7 +3007,9 @@ features:
           save: "Save"
           savedAtLocation: "Document {{name}} was successfully saved in your Download folder."
           errors:
-            previewing: "Non è possibile mostrare l'anteprima del documento. E' comunque possibile salvarlo e aprirlo con un'applicazione per i PDF"
+            previewing:
+              title: "Preview is not available"
+              body: "To view the document, download and open it with a PDF reader app."
             sharing: "An error occurred while sharing the document"
             opening: "An error occurred while opening the document. You may not have a PDF reader installed."
             saving: "An error occurred while saving the document"
@@ -3118,7 +3120,10 @@ features:
           VIEWED: Perfezionata per visione
           REFUSED: REFUSED
           UNDEFINED: Non definito
+          CANCELLED: Annullata
         expand: mostra gli stati precedenti
+        info: Puoi vedere il dettaglio di ciascuno stato, scaricare le ricevute e le attestazioni opponibili a terzi accedendo alla versione web del servizio   
+        cta: Accedi alla versione web  
 webView:
   error:
     missingParams: Not all information necessary to access this page are available

@@ -1,6 +1,6 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/pagopa/io-app/master/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png" width="100"/></br>
-  IO - The public services app
+  <img src="img/app-logo.svg" width="100"/></br>
+  <h3 align="center">IO - The public services app</h3>
 </p>
 
 <p align="center">
@@ -14,15 +14,15 @@
   <img src="https://img.shields.io/github/repo-size/pagopa/io-app" />
 </p>
 
+
 <p align="center">
     <a href="https://apps.apple.com/it/app/io/id1501681835">
-        <img src="https://raw.githubusercontent.com/pagopa/io-app/master/img/badges/app-store-badge.png" />
+        <img height="50" src="img/badges/app-store-badge.png" alt="Download on the App Store" />
     </a>
     <a href="https://play.google.com/store/apps/details?id=it.pagopa.io.app">
-        <img src="https://raw.githubusercontent.com/pagopa/io-app/master/img/badges/google-play-badge.png" />
+        <img height="50" src="img/badges/google-play-badge.png" alt="Get it on Google Play"/>
     </a>
 </p>
-
 
 # The mobile app of the Digital Citizenship project
 
