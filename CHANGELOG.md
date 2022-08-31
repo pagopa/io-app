@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.15.0-rc.0](https://github.com/pagopa/io-app/compare/2.14.0-rc.6...2.15.0-rc.0) (2022-08-29)
+
+
+### Features
+
+* [[IIP-63](https://pagopa.atlassian.net/browse/IIP-63)] Change PDF preview error copy ([#4106](https://github.com/pagopa/io-app/issues/4106)) ([b8585fb](https://github.com/pagopa/io-app/commit/b8585fb26cb52534ca0f01a7c21c98148a6d4f43))
+* **Piattaforma Notifiche:** [[IAMVL-89](https://pagopa.atlassian.net/browse/IAMVL-89)] Add a CTA for viewing a notification in the PN website ([#4088](https://github.com/pagopa/io-app/issues/4088)) ([1bc0b89](https://github.com/pagopa/io-app/commit/1bc0b89ca284f06179cc20b90b1f97167e2ff64b))
+
+
+### Bug Fixes
+
+* [[IA-827](https://pagopa.atlassian.net/browse/IA-827)] Message is still shown as unread after opening it ([#4096](https://github.com/pagopa/io-app/issues/4096)) ([6f8cc68](https://github.com/pagopa/io-app/commit/6f8cc68e0fde52a810c1120b3c291bc7afbb2f0c))
+
+
+### Chores
+
+* **Piattaforma Notifiche:** [[IAMVL-87](https://pagopa.atlassian.net/browse/IAMVL-87)] Enable PN in production ([#4107](https://github.com/pagopa/io-app/issues/4107)) ([87a75e4](https://github.com/pagopa/io-app/commit/87a75e4a7a4671893b8a0e43624e075d45aa5c8a))
+* [[IAI-223](https://pagopa.atlassian.net/browse/IAI-223)] Pictograms and Illustrations' inventory ([#4101](https://github.com/pagopa/io-app/issues/4101)) ([723e236](https://github.com/pagopa/io-app/commit/723e236c4335eb924e5e6b50dcdadd7e389d537e))
+
 ## [2.14.0-rc.6](https://github.com/pagopa/io-app/compare/2.14.0-rc.5...2.14.0-rc.6) (2022-08-04)
 
 
