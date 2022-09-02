@@ -73,6 +73,131 @@ install_node_modules: &install_node_modules
     command: |
       yarn install --frozen-lockfile --no-progress --non-interactive --network-concurrency 1
 
+e2e-environment-setup:
+  <<: *defaults_macos
+
+  steps:
+    # Restore workflow workspace
+    - attach_workspace:
+        at: /Users/distiller
+
+    # Restore bundle cache
+    - restore_cache:
+        keys:
+          - *ios_gems_cache_key
+
+    - run:
+        name: Configure Node
+        command: |
+          brew uninstall node yarn
+          nvm install 14.17.4
+          nvm alias default 14.17.4
+          npm install -g yarn
+
+    - run:
+        name: Configure Bundler
+        command: |
+          echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
+          source $BASH_ENV
+          gem install bundler:$BUNDLER_VERSION
+
+    - run:
+        name: Install Bundle
+        command: bundle check || bundle install
+
+    # Store bundle cache
+    - save_cache:
+        key: *ios_gems_cache_key
+        paths:
+          - vendor/bundle
+
+    - run:
+        name: Prepare dependencies for build
+        command: |
+          cp .env.local .env
+          yarn run postinstall
+          cd ios && bundle exec pod install --verbose
+          rm -rf /tmp/metro-bundler-cache-*
+          rm -rf /tmp/haste-map-react-native-packager-*
+
+    - run:
+        name: Install Detox and simulator's utils
+        command: |
+          brew tap wix/brew
+          brew install applesimutils
+
+gradle-dependencies:
+  description: "Get Gradle dependencies"
+  steps:
+    - run:
+        working_directory: ./android
+        name: Chmod permissions
+        command: sudo chmod +x ./gradlew
+    - restore_cache:
+        name: Restore Gradle cache
+        key: v1-gradle-{{ checksum "./android/build.gradle" }}-{{ checksum  "./android/app/build.gradle" }}-{{ arch }}
+    - run:
+        working_directory: ./android
+        name: Download Gradle dependencies
+        command: ./gradlew dependencies
+    - save_cache:
+        name: Save Gradle cache
+        paths:
+          - ~/.gradle
+        key: v1-gradle-{{ checksum "./android/build.gradle" }}-{{ checksum  "./android/app/build.gradle" }}-{{ arch }}
+
+android-sdk-dependencies:
+  description: "Install and set android SDK"
+  steps:
+    - run:
+        name: set ANDROID_SDK_ROOT
+        command: |
+          echo 'export ANDROID_SDK_ROOT=$HOME/android-tools'  >> $BASH_ENV
+
+    - restore_cache:
+        key: android=tools-v1-{{ checksum "scripts/install-android-tools.sh" }}-{{ arch }}
+
+    - run:
+        name: install android tools
+        command: |
+          sh scripts/install-android-tools.sh
+          echo 'export PATH=$ANDROID_SDK_ROOT/tools/bin:$PATH'  >> $BASH_ENV
+          echo 'export PATH=$ANDROID_SDK_ROOT/tools:$PATH'  >> $BASH_ENV
+          echo 'export PATH=$ANDROID_SDK_ROOT/platform-tools:$PATH'  >> $BASH_ENV
+          echo 'export PATH=$ANDROID_SDK_ROOT/emulator:$PATH'  >> $BASH_ENV
+          source $BASH_ENV
+          sdkmanager --list
+
+    - save_cache:
+        key: android=tools-v1-{{ checksum "scripts/install-android-tools.sh" }}-{{ arch }}
+        paths:
+          - /Users/distiller/android-tools
+
+create-launch-android-emulator:
+  description: "create and launch android emulators"
+  steps:
+    - run:
+        name: create AVD
+        command: echo "no" | avdmanager --verbose create avd --force --name "Pixel_3a_API_29" --package "system-images;android-29;google_apis;x86_64"
+
+    - run:
+        name: start AVD
+        command: emulator @Pixel_3a_API_29 -no-window -no-audio
+        background: true
+
+    - run:
+        name: wait for emulator
+        command: adb wait-for-device shell 'while [[ -z $(getprop dev.bootcomplete) ]]; do sleep 1; done;'
+
+clear-detox-cache:
+  description: "Clears detox framework cache"
+  steps:
+    - run:
+        working_directory: .
+        name: Clear detox cache
+        command: |
+          npx detox clean-framework-cache
+          npx detox build-framework-cache
 #
 # Build pipeline
 #
@@ -394,132 +519,6 @@ jobs:
   ###############################################################################
   # Prepare the environment, build, and run e2e tests
   ###############################################################################
-  e2e-environment-setup:
-    <<: *defaults_macos
-
-    steps:
-      # Restore workflow workspace
-      - attach_workspace:
-          at: /Users/distiller
-
-      # Restore bundle cache
-      - restore_cache:
-          keys:
-            - *ios_gems_cache_key
-
-      - run:
-          name: Configure Node
-          command: |
-            brew uninstall node yarn
-            nvm install 14.17.4
-            nvm alias default 14.17.4
-            npm install -g yarn
-
-      - run:
-          name: Configure Bundler
-          command: |
-            echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
-            source $BASH_ENV
-            gem install bundler:$BUNDLER_VERSION
-
-      - run:
-          name: Install Bundle
-          command: bundle check || bundle install
-
-      # Store bundle cache
-      - save_cache:
-          key: *ios_gems_cache_key
-          paths:
-            - vendor/bundle
-
-      - run:
-          name: Prepare dependencies for build
-          command: |
-            cp .env.local .env
-            yarn run postinstall
-            cd ios && bundle exec pod install --verbose
-            rm -rf /tmp/metro-bundler-cache-*
-            rm -rf /tmp/haste-map-react-native-packager-*
-
-      - run:
-          name: Install Detox and simulator's utils
-          command: |
-            brew tap wix/brew
-            brew install applesimutils
-
-  gradle-dependencies:
-    description: "Get Gradle dependencies"
-    steps:
-      - run:
-          working_directory: ./android
-          name: Chmod permissions
-          command: sudo chmod +x ./gradlew
-      - restore_cache:
-          name: Restore Gradle cache
-          key: v1-gradle-{{ checksum "./android/build.gradle" }}-{{ checksum  "./android/app/build.gradle" }}-{{ arch }}
-      - run:
-          working_directory: ./android
-          name: Download Gradle dependencies
-          command: ./gradlew dependencies
-      - save_cache:
-          name: Save Gradle cache
-          paths:
-            - ~/.gradle
-          key: v1-gradle-{{ checksum "./android/build.gradle" }}-{{ checksum  "./android/app/build.gradle" }}-{{ arch }}
-
-  android-sdk-dependencies:
-    description: "Install and set android SDK"
-    steps:
-      - run:
-          name: set ANDROID_SDK_ROOT
-          command: |
-            echo 'export ANDROID_SDK_ROOT=$HOME/android-tools'  >> $BASH_ENV
-
-      - restore_cache:
-          key: android=tools-v1-{{ checksum "scripts/install-android-tools.sh" }}-{{ arch }}
-
-      - run:
-          name: install android tools
-          command: |
-            sh scripts/install-android-tools.sh
-            echo 'export PATH=$ANDROID_SDK_ROOT/tools/bin:$PATH'  >> $BASH_ENV
-            echo 'export PATH=$ANDROID_SDK_ROOT/tools:$PATH'  >> $BASH_ENV
-            echo 'export PATH=$ANDROID_SDK_ROOT/platform-tools:$PATH'  >> $BASH_ENV
-            echo 'export PATH=$ANDROID_SDK_ROOT/emulator:$PATH'  >> $BASH_ENV
-            source $BASH_ENV
-            sdkmanager --list
-
-      - save_cache:
-          key: android=tools-v1-{{ checksum "scripts/install-android-tools.sh" }}-{{ arch }}
-          paths:
-            - /Users/distiller/android-tools
-
-  create-launch-android-emulator:
-    description: "create and launch android emulators"
-    steps:
-      - run:
-          name: create AVD
-          command: echo "no" | avdmanager --verbose create avd --force --name "Pixel_3a_API_29" --package "system-images;android-29;google_apis;x86_64"
-
-      - run:
-          name: start AVD
-          command: emulator @Pixel_3a_API_29 -no-window -no-audio
-          background: true
-
-      - run:
-          name: wait for emulator
-          command: adb wait-for-device shell 'while [[ -z $(getprop dev.bootcomplete) ]]; do sleep 1; done;'
-
-  clear-detox-cache:
-    description: "Clears detox framework cache"
-    steps:
-      - run:
-          working_directory: .
-          name: Clear detox cache
-          command: |
-            npx detox clean-framework-cache
-            npx detox build-framework-cache
-
   run-e2e-test-ANDROID:
     description: "Build and run e2e tests on Android"
     steps:
