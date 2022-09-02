@@ -620,9 +620,6 @@ workflows:
       - run-e2e-test-ANDROID:
           requires:
             - compile-typescript
-          filters:
-            branches:
-              only: master
       - run-e2e-test-IOS:
           requires:
             - compile-typescript
