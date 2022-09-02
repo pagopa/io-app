@@ -140,7 +140,10 @@ export const MessageAttachmentPreview = (props: Props): React.ReactElement => {
           <InfoScreenComponent
             image={renderInfoRasterImage(image)}
             title={I18n.t(
-              "features.mvl.details.attachments.pdfPreview.errors.previewing"
+              "features.mvl.details.attachments.pdfPreview.errors.previewing.title"
+            )}
+            body={I18n.t(
+              "features.mvl.details.attachments.pdfPreview.errors.previewing.body"
             )}
           />
         )}
