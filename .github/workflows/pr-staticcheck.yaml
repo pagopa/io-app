@@ -7,10 +7,8 @@ jobs:
     steps:
       - id: checkout
         uses: actions/checkout@v3.0.2
-      - id: nodenv
-        uses: nodenv/actions/node-version@v2.0.4
       - id: setup-node
         uses: actions/setup-node@v3
         with:
-          node-version: '${{ steps.nodenv.outputs.node-version }}'
+          node-version: {{ contents('.node-version') }}
         
