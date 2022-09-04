@@ -10,5 +10,5 @@ jobs:
       - id: setup-node
         uses: actions/setup-node@v3
         with:
-          node-version: {{ contents('.node-version') }}
+          node-version-file: '.node-version'
         
