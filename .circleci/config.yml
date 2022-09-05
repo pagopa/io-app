@@ -475,12 +475,12 @@ jobs:
             echo 'export ANDROID_SDK_ROOT=$HOME/android-tools'  >> $BASH_ENV
 
       - restore_cache:
-          key: android=tools-v1-{{ checksum "scripts/install-android-tools.sh" }}-{{ arch }}
+          key: android=tools-v1-{{ checksum "scripts/circleci-android-setup.sh" }}-{{ arch }}
 
       - run:
           name: install android tools
           command: |
-            sh scripts/install-android-tools.sh
+            sh scripts/circleci-android-setup.sh
             echo 'export PATH=$ANDROID_SDK_ROOT/tools/bin:$PATH'  >> $BASH_ENV
             echo 'export PATH=$ANDROID_SDK_ROOT/tools:$PATH'  >> $BASH_ENV
             echo 'export PATH=$ANDROID_SDK_ROOT/platform-tools:$PATH'  >> $BASH_ENV
@@ -489,7 +489,7 @@ jobs:
             sdkmanager --list
 
       - save_cache:
-          key: android=tools-v1-{{ checksum "scripts/install-android-tools.sh" }}-{{ arch }}
+          key: android=tools-v1-{{ checksum "scripts/circleci-android-setup.sh" }}-{{ arch }}
           paths:
             - /Users/distiller/android-tools
 
@@ -628,6 +628,9 @@ workflows:
           requires:
             - clear-detox-cache
             - create-launch-android-emulator
+          filters:
+            branches:
+              only: master
       - run-e2e-test-IOS:
           requires:
             - e2e-environment-setup

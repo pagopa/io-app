@@ -1,10 +1,12 @@
 rootProject.name = 'ItaliaApp'
+include ':detox'
+project(':detox').projectDir = new File(rootProject.projectDir, '../node_modules/detox/android/detox')
 include ':react-native-reanimated'
 project(':react-native-reanimated').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-reanimated/android')
 include ':@react-native-clipboard_clipboard'
 project(':@react-native-clipboard_clipboard').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native-clipboard/clipboard/android')
 include ':@react-native-community_cookies'
-project(':@react-native-community_cookies').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native-community/cookies/android')
+project(':@react-native-community_cookies').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native-cookies/cookies/android')
 include ':@react-native-community_cameraroll'
 project(':@react-native-community_cameraroll').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native-community/cameraroll/android')
 include ':react-native-view-shot'
@@ -60,8 +62,6 @@ include ':react-native-config'
 project(':react-native-config').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-config/android')
 include ':react-native-cie'
 project(':react-native-cie').projectDir = new File(rootProject.projectDir, '../node_modules/@pagopa/react-native-cie/android')
-include ':react-native-community-netinfo'
-project(':react-native-community-netinfo').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native-community/netinfo/android')
 include ':react-native-screen-brightness'
 project(':react-native-screen-brightness').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-screen-brightness/android')
 include ':app'

@@ -53,4 +53,13 @@ allprojects {
     configurations.all {
         resolutionStrategy.force "com.android.support:support-v4:${rootProject.ext.supportLibVersion}"
     }
+    afterEvaluate {
+        if (it.hasProperty('android')){
+            android {
+                defaultConfig {
+                    minSdkVersion 21
+                }
+            }
+        }
+    }
 }
