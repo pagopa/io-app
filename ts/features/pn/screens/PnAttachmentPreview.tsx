@@ -29,6 +29,15 @@ export const PnAttachmentPreview = (
           previewStatus: "displayed"
         });
       }}
+      onShare={() => {
+        void mixpanelTrack("PN_ATTACHMENT_SHARE");
+      }}
+      onOpen={() => {
+        void mixpanelTrack("PN_ATTACHMENT_OPEN");
+      }}
+      onDownload={() => {
+        void mixpanelTrack("PN_ATTACHMENT_SAVE");
+      }}
     />
   );
 };

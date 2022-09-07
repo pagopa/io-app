@@ -33,11 +33,19 @@ const styles = StyleSheet.create({
   }
 });
 
-const renderFooter = ({ attachment, path }: MvlDownload) =>
+const renderFooter = (
+  { attachment, path }: MvlDownload,
+  onShare?: () => void,
+  onOpen?: () => void,
+  onDownload?: () => void
+) =>
   isIos ? (
     <FooterWithButtons
       type={"SingleButton"}
       leftButton={confirmButtonProps(() => {
+        if (onShare !== undefined) {
+          onShare();
+        }
         ReactNativeBlobUtil.ios.presentOptionsMenu(path);
       }, I18n.t("features.mvl.details.attachments.pdfPreview.singleBtn"))}
     />
@@ -48,6 +56,9 @@ const renderFooter = ({ attachment, path }: MvlDownload) =>
         bordered: true,
         primary: false,
         onPress: () => {
+          if (onShare !== undefined) {
+            onShare();
+          }
           share(`file://${path}`, undefined, false)
             .run()
             .catch(_ => {
@@ -64,6 +75,9 @@ const renderFooter = ({ attachment, path }: MvlDownload) =>
         bordered: true,
         primary: false,
         onPress: () => {
+          if (onDownload !== undefined) {
+            onDownload();
+          }
           ReactNativeBlobUtil.MediaCollection.copyToMediaStore(
             {
               name: attachment.displayName,
@@ -95,6 +109,9 @@ const renderFooter = ({ attachment, path }: MvlDownload) =>
         title: I18n.t("features.mvl.details.attachments.pdfPreview.save")
       }}
       rightButton={confirmButtonProps(() => {
+        if (onOpen !== undefined) {
+          onOpen();
+        }
         ReactNativeBlobUtil.android
           .actionViewIntent(path, attachment.contentType)
           .catch(_ => {
@@ -112,6 +129,9 @@ type Props = {
   attachmentId: MvlAttachmentId;
   onLoadComplete?: () => void;
   onError?: () => void;
+  onShare?: () => void;
+  onOpen?: () => void;
+  onDownload?: () => void;
 };
 
 export const MessageAttachmentPreview = (props: Props): React.ReactElement => {
@@ -153,7 +173,7 @@ export const MessageAttachmentPreview = (props: Props): React.ReactElement => {
             )}
           />
         )}
-        {renderFooter(download)}
+        {renderFooter(download, props.onShare, props.onOpen, props.onDownload)}
       </SafeAreaView>
     </BaseScreenComponent>
   ) : (
