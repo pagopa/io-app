@@ -110,6 +110,8 @@ const renderFooter = ({ attachment, path }: MvlDownload) =>
 
 type Props = {
   attachmentId: MvlAttachmentId;
+  onLoadComplete?: () => void;
+  onError?: () => void;
 };
 
 export const MessageAttachmentPreview = (props: Props): React.ReactElement => {
@@ -131,7 +133,11 @@ export const MessageAttachmentPreview = (props: Props): React.ReactElement => {
           <Pdf
             source={{ uri: download.path, cache: true }}
             style={styles.pdf}
+            onLoadComplete={props.onLoadComplete}
             onError={_ => {
+              if (props.onError !== undefined) {
+                props.onError();
+              }
               setIsError(true);
             }}
           />
