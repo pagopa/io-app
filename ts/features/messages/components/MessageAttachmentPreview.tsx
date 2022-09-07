@@ -43,7 +43,7 @@ const renderFooter = (
     <FooterWithButtons
       type={"SingleButton"}
       leftButton={confirmButtonProps(() => {
-        if (onShare !== undefined) {
+        if (onShare) {
           onShare();
         }
         ReactNativeBlobUtil.ios.presentOptionsMenu(path);
@@ -56,7 +56,7 @@ const renderFooter = (
         bordered: true,
         primary: false,
         onPress: () => {
-          if (onShare !== undefined) {
+          if (onShare) {
             onShare();
           }
           share(`file://${path}`, undefined, false)
@@ -75,7 +75,7 @@ const renderFooter = (
         bordered: true,
         primary: false,
         onPress: () => {
-          if (onDownload !== undefined) {
+          if (onDownload) {
             onDownload();
           }
           ReactNativeBlobUtil.MediaCollection.copyToMediaStore(
@@ -109,7 +109,7 @@ const renderFooter = (
         title: I18n.t("features.mvl.details.attachments.pdfPreview.save")
       }}
       rightButton={confirmButtonProps(() => {
-        if (onOpen !== undefined) {
+        if (onOpen) {
           onOpen();
         }
         ReactNativeBlobUtil.android
@@ -155,7 +155,7 @@ export const MessageAttachmentPreview = (props: Props): React.ReactElement => {
             style={styles.pdf}
             onLoadComplete={props.onLoadComplete}
             onError={_ => {
-              if (props.onError !== undefined) {
+              if (props.onError) {
                 props.onError();
               }
               setIsError(true);

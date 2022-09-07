@@ -99,6 +99,5 @@ export function* watchThirdPartyMessageSaga(
   );
 
   yield* takeEvery(getType(loadThirdPartyMessage.success), trackSuccess);
-
   yield* takeEvery(getType(loadThirdPartyMessage.failure), trackFailure);
 }
