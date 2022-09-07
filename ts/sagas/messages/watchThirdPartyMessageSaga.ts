@@ -59,11 +59,11 @@ function* trackSuccess(
     const pnMessage = toPNMessage(messageFromApi);
 
     if (pnMessage === undefined) {
-      mixpanelTrack("PN_NOTIFICATION_LOAD_ERROR", {
+      void mixpanelTrack("PN_NOTIFICATION_LOAD_ERROR", {
         jsonDecodeFailed: true
       });
     } else {
-      mixpanelTrack("PN_NOTIFICATION_LOAD_SUCCESS", {
+      void mixpanelTrack("PN_NOTIFICATION_LOAD_SUCCESS", {
         notificationLastStatus:
           pnMessage.notificationStatusHistory[
             pnMessage.notificationStatusHistory.length - 1
@@ -83,7 +83,7 @@ function* trackFailure(
   const message = pot.toUndefined(yield* select(getMessageById, messageId));
 
   if (message?.category.tag === "PN") {
-    mixpanelTrack("PN_NOTIFICATION_LOAD_ERROR", {
+    void mixpanelTrack("PN_NOTIFICATION_LOAD_ERROR", {
       errorCode
     });
   }
