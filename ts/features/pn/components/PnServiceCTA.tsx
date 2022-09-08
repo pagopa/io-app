@@ -16,6 +16,7 @@ import { showToast } from "../../../utils/showToast";
 import { Link } from "../../../components/core/typography/Link";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { loadServicePreference } from "../../../store/actions/services/servicePreference";
+import { mixpanelTrack } from "../../../mixpanel";
 
 type Props = {
   serviceId: ServiceId;
@@ -53,7 +54,10 @@ const ActivateButton = (props: { dispatch: AppDispatch }) => (
   <ButtonDefaultOpacity
     block
     primary
-    onPress={() => props.dispatch(pnActivationUpsert.request(true))}
+    onPress={() => {
+      void mixpanelTrack("PN_SERVICE_CTAFIRED");
+      props.dispatch(pnActivationUpsert.request(true));
+    }}
   >
     <Label color={"white"}>{I18n.t("features.pn.service.activate")}</Label>
   </ButtonDefaultOpacity>
@@ -63,7 +67,10 @@ const DeactivateButton = (props: { dispatch: AppDispatch }) => (
   <ButtonDefaultOpacity
     block
     primary
-    onPress={() => props.dispatch(pnActivationUpsert.request(false))}
+    onPress={() => {
+      void mixpanelTrack("PN_SERVICE_CTAFIRED");
+      props.dispatch(pnActivationUpsert.request(false));
+    }}
     style={{
       backgroundColor: IOColors.white
     }}
@@ -99,8 +106,14 @@ const PnServiceCTA = ({ serviceId, activate }: Props) => {
     const isError = pot.isError(serviceActivation);
     if (wasUpdating && !isStillUpdating) {
       if (isError) {
+        void mixpanelTrack("PN_SERVICE_STATUSCHANGE_ERROR", {
+          currentStatus: isServiceActive
+        });
         showToast(I18n.t("features.pn.service.toast.error"), "danger");
       } else {
+        void mixpanelTrack("PN_SERVICE_STATUSCHANGE_SUCCESS", {
+          newStatus: pot.toUndefined(serviceActivation)
+        });
         dispatch(loadServicePreference.request(serviceId));
         if (pot.toUndefined(serviceActivation)) {
           showToast(I18n.t("features.pn.service.toast.activated"), "success");
@@ -108,7 +121,7 @@ const PnServiceCTA = ({ serviceId, activate }: Props) => {
       }
     }
     setIsUpdating(isStillUpdating);
-  }, [isUpdating, dispatch, serviceId, serviceActivation]);
+  }, [isUpdating, dispatch, serviceId, serviceActivation, isServiceActive]);
 
   useOnFirstRender(
     () => {
