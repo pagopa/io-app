@@ -39,7 +39,10 @@ import {
   navigateToWalletHome
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
-import { paymentInitializeState } from "../../../store/actions/wallet/payment";
+import {
+  paymentInitializeState,
+  paymentSetStartOrigin
+} from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
 import { withPaymentFeatureSelector } from "../../../store/reducers/wallet/wallets";
 import { alertNoPayablePaymentMethods } from "../../../utils/paymentMethod";
@@ -253,6 +256,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   ) => {
     Keyboard.dismiss();
     dispatch(paymentInitializeState());
+
+    dispatch(paymentSetStartOrigin("manual_insertion"));
 
     navigateToPaymentTransactionSummaryScreen({
       rptId,

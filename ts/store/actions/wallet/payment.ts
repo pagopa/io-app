@@ -40,6 +40,7 @@ import { fetchWalletsFailure, fetchWalletsSuccess } from "./wallets";
 export type PaymentStartOrigin =
   | "message"
   | "qrcode_scan"
+  | "poste_datamatrix_scan"
   | "manual_insertion"
   | "donation";
 
@@ -49,6 +50,13 @@ export type PaymentStartOrigin =
 export const paymentInitializeState = createStandardAction(
   "PAYMENT_INITIALIZE_STATE"
 )();
+
+/**
+ * Set the origin of the payment flow
+ */
+export const paymentSetStartOrigin = createStandardAction(
+  "PAYMENT_SET_START_ORIGIN"
+)<PaymentStartOrigin>();
 
 /**
  * Track the route whence the payment started
@@ -291,6 +299,7 @@ export const pspForPaymentV2WithCallbacks = createStandardAction(
  */
 export type PaymentActions =
   | ActionType<typeof paymentInitializeState>
+  | ActionType<typeof paymentSetStartOrigin>
   | ActionType<typeof paymentInitializeEntrypointRoute>
   | ActionType<typeof backToEntrypointPayment>
   | ActionType<typeof paymentUpdateWalletPsp>

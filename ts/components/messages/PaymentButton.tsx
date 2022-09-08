@@ -14,7 +14,10 @@ import {
   navigateToPaymentTransactionSummaryScreen,
   navigateToWalletHome
 } from "../../store/actions/navigation";
-import { paymentInitializeState } from "../../store/actions/wallet/payment";
+import {
+  paymentInitializeState,
+  paymentSetStartOrigin
+} from "../../store/actions/wallet/payment";
 import { useIODispatch } from "../../store/hooks";
 import { isProfileEmailValidatedSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
@@ -69,6 +72,7 @@ const PaymentButton = ({
       // TODO: optimize the management of the payment initialization
       if (isEmailValidated && isPagoPaSupported) {
         dispatch(paymentInitializeState());
+        dispatch(paymentSetStartOrigin("message"));
         navigateToPaymentTransactionSummaryScreen({
           rptId: rptId.value,
           initialAmount: amount.value,

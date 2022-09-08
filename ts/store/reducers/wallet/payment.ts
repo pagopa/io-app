@@ -10,6 +10,8 @@ import {
   paymentIdPolling,
   paymentInitializeEntrypointRoute,
   paymentInitializeState,
+  paymentSetStartOrigin,
+  PaymentStartOrigin,
   paymentVerifica,
   paymentWebViewEnd,
   pspForPaymentV2,
@@ -52,6 +54,7 @@ export type PaymentStartWebViewPayload = PaymentStartPayload & {
 //       a state for each RptId - this will make unnecessary to reset the state
 //       at the beginning of a new payment flow.
 export type PaymentState = Readonly<{
+  startOrigin?: PaymentStartOrigin;
   verifica: PotFromActions<
     typeof paymentVerifica["success"],
     typeof paymentVerifica["failure"]
@@ -160,6 +163,11 @@ const reducer = (
     // start a new payment from scratch
     case getType(paymentInitializeState):
       return PAYMENT_INITIAL_STATE;
+    case getType(paymentSetStartOrigin):
+      return {
+        ...state,
+        startOrigin: action.payload
+      };
     // track the route whence the payment started
     case getType(paymentInitializeEntrypointRoute):
       return {
