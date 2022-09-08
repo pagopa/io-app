@@ -1,10 +1,7 @@
 import I18n from "../../../i18n";
-import {
-  NotificationStatus,
-  NotificationStatusEnum
-} from "../store/types/types";
+import { NotificationStatusEnum } from "../store/types/types";
 
-export function getNotificationStatusInfo(status: NotificationStatus): {
+export function getNotificationStatusInfo(status: string): {
   label: string;
 } {
   switch (status) {
@@ -42,7 +39,7 @@ export function getNotificationStatusInfo(status: NotificationStatus): {
       };
     default:
       return {
-        label: I18n.t("features.pn.details.timeline.status.UNDEFINED")
+        label: status
       };
   }
 }

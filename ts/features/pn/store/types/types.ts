@@ -34,7 +34,10 @@ const NotificationStatusHistoryElementR = t.interface({
     "array of TimelineElementId"
   ),
 
-  status: NotificationStatus
+  // To be more resilient to PN backend changes, this is defined as string
+  // so that, if the enum changes, old apps continue to work showing
+  // a default value in the UI.
+  status: t.string // t.NotificationStatus
 });
 const NotificationStatusHistoryElementO = t.partial({});
 
