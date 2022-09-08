@@ -52,6 +52,7 @@ allprojects {
       }
     configurations.all {
         resolutionStrategy.force "com.android.support:support-v4:${rootProject.ext.supportLibVersion}"
+        resolutionStrategy.force "org.jetbrains.kotlin:kotlin-reflect:${rootProject.ext.kotlin_version}"
     }
     afterEvaluate {
         if (it.hasProperty('android')){
