@@ -1,27 +1,10 @@
 import * as t from "io-ts";
-import { enumType } from "italia-ts-commons/lib/types";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { MvlAttachment } from "../../../mvl/types/mvlData";
 import { UTCISODateFromString } from "../../utils/dates";
 
-export enum NotificationStatusEnum {
-  "IN_VALIDATION" = "IN_VALIDATION",
-  "ACCEPTED" = "ACCEPTED",
-  "DELIVERING" = "DELIVERING",
-  "DELIVERED" = "DELIVERED",
-  "VIEWED" = "VIEWED",
-  "EFFECTIVE_DATE" = "EFFECTIVE_DATE",
-  "PAID" = "PAID",
-  "UNREACHABLE" = "UNREACHABLE",
-  "REFUSED" = "REFUSED",
-  "CANCELLED" = "CANCELLED"
-}
-
 export type NotificationStatus = t.TypeOf<typeof NotificationStatus>;
-export const NotificationStatus = enumType<NotificationStatusEnum>(
-  NotificationStatusEnum,
-  "NotificationStatus"
-);
+export const NotificationStatus = t.string;
 
 export type TimelineElementId = t.TypeOf<typeof TimelineElementId>;
 export const TimelineElementId = t.string;
@@ -34,10 +17,7 @@ const NotificationStatusHistoryElementR = t.interface({
     "array of TimelineElementId"
   ),
 
-  // To be more resilient to PN backend changes, this is defined as string
-  // so that, if the enum changes, old apps continue to work showing
-  // a default value in the UI.
-  status: t.string // t.NotificationStatus
+  status: NotificationStatus
 });
 const NotificationStatusHistoryElementO = t.partial({});
 
