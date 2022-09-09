@@ -18,6 +18,7 @@ import HeaderImage from "../../../../img/features/pn/pn_alert_header.svg";
 import { H4 } from "../../../components/core/typography/H4";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import customVariables from "../../../theme/variables";
+import { mixpanelTrack } from "../../../mixpanel";
 
 const BOTTOM_SHEET_HEIGHT = 500;
 
@@ -132,6 +133,7 @@ export const usePnOpenConfirmationBottomSheet = ({
       type={"TwoButtonsInlineHalf"}
       leftButton={{
         ...cancelButtonProps(() => {
+          void mixpanelTrack("PN_DISCLAIMER_REJECTED");
           bsDismiss();
         }),
         onPressWithGestureHandler: true
@@ -140,6 +142,17 @@ export const usePnOpenConfirmationBottomSheet = ({
         ...confirmButtonProps(() => {
           bsDismiss();
           if (message) {
+            const notificationTimestamp = fromEither(
+              MessageCategoryPN.decode(message.category)
+            )
+              .map(category => category.original_receipt_date?.toISOString())
+              .toUndefined();
+
+            void mixpanelTrack("PN_DISCLAIMER_ACCEPTED", {
+              eventTimestamp: new Date().toISOString(),
+              messageTimestamp: message.createdAt.toISOString(),
+              notificationTimestamp
+            });
             onConfirm(message, dontAskAgain);
           }
         }, i18n.t("global.buttons.continue")),
@@ -150,6 +163,7 @@ export const usePnOpenConfirmationBottomSheet = ({
 
   return {
     present: (message: UIMessage) => {
+      void mixpanelTrack("PN_DISCLAIMER_SHOW_SUCCESS");
       setDontAskAgain(false);
       setMessage(message);
       bsPresent();

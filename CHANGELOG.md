@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.15.0-rc.1](https://github.com/pagopa/io-app/compare/2.15.0-rc.0...2.15.0-rc.1) (2022-09-08)
+
+
+### Features
+
+* **Piattaforma Notifiche:** [[IAMVL-97](https://pagopa.atlassian.net/browse/IAMVL-97)] Track PN events to Mixpanel ([#4111](https://github.com/pagopa/io-app/issues/4111)) ([af27021](https://github.com/pagopa/io-app/commit/af27021c794424e92f709a9241a3b2a71670462a))
+
+
+### Bug Fixes
+
+* [[IABT-1386](https://pagopa.atlassian.net/browse/IABT-1386)] Fix the Android camera permissions request ([#4095](https://github.com/pagopa/io-app/issues/4095)) ([bf5bb81](https://github.com/pagopa/io-app/commit/bf5bb812f758a03b89ef9223c4c90fb3827b542b))
+
+
+### Chores
+
+* [[IA-926](https://pagopa.atlassian.net/browse/IA-926)] Enter with CIE: copy changes ([#4108](https://github.com/pagopa/io-app/issues/4108)) ([8a34e14](https://github.com/pagopa/io-app/commit/8a34e146c7a9c32edb7309bcba40574d3cda58a3))
+
 ## [2.15.0-rc.0](https://github.com/pagopa/io-app/compare/2.14.0-rc.6...2.15.0-rc.0) (2022-08-29)
 
 

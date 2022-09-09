@@ -42,6 +42,7 @@ import { navigateToPnMessageDetailsScreen } from "../../../features/pn/navigatio
 import { useIOSelector } from "../../../store/hooks";
 import { isPnEnabledSelector } from "../../../store/reducers/backendStatus";
 import ROUTES from "../../../navigation/routes";
+import { mixpanelTrack } from "../../../mixpanel";
 
 export type MessageRouterScreenPaginatedNavigationParams = {
   messageId: UIMessageId;
@@ -159,6 +160,7 @@ const MessageRouterScreen = ({
       //
       // https://pagopa.atlassian.net/browse/IA-917
       if (fromNotification && maybeMessage.category.tag === "PN") {
+        void mixpanelTrack("PN_PUSH_OPENED");
         navigation.navigate(ROUTES.MAIN, {
           screen: ROUTES.MESSAGES_HOME
         });

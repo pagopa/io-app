@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import * as pot from "italia-ts-commons/lib/pot";
 import { ScrollView } from "react-native-gesture-handler";
 import { StyleSheet, View } from "react-native";
@@ -34,6 +34,7 @@ import PN_ROUTES from "../navigation/routes";
 import { MvlAttachmentId } from "../../mvl/types/mvlData";
 import { H5 } from "../../../components/core/typography/H5";
 import { PnConfigSelector } from "../../../store/reducers/backendStatus";
+import { mixpanelTrack } from "../../../mixpanel";
 import { PnMessageDetailsSection } from "./PnMessageDetailsSection";
 import { PnMessageDetailsHeader } from "./PnMessageDetailsHeader";
 import { PnMessageDetailsContent } from "./PnMessageDetailsContent";
@@ -55,6 +56,7 @@ type Props = Readonly<{
 
 export const PnMessageDetails = (props: Props) => {
   const [firstLoadingRequest, setFirstLoadingRequest] = useState(false);
+  const [shouldTrackMixpanel, setShouldTrackMixpanel] = useState(true);
 
   const dispatch = useIODispatch();
   const navigation = useNavigation();
@@ -120,7 +122,31 @@ export const PnMessageDetails = (props: Props) => {
 
   const scrollViewRef = React.createRef<ScrollView>();
 
+  const isVerifyingPayment = pot.isLoading(paymentVerification);
   const isPaid = isDuplicatedPayment(paymentVerificationError);
+
+  useEffect(() => {
+    if (!firstLoadingRequest || isVerifyingPayment || !shouldTrackMixpanel) {
+      return;
+    }
+
+    if (isPaid) {
+      void mixpanelTrack("PN_PAYMENTINFO_PAID");
+    } else if (paymentVerificationError.isSome()) {
+      void mixpanelTrack("PN_PAYMENTINFO_ERROR", {
+        paymentStatus: paymentVerificationError.getOrElse(undefined)
+      });
+    } else {
+      void mixpanelTrack("PN_PAYMENTINFO_PAYABLE");
+    }
+    setShouldTrackMixpanel(false);
+  }, [
+    firstLoadingRequest,
+    isPaid,
+    isVerifyingPayment,
+    paymentVerificationError,
+    shouldTrackMixpanel
+  ]);
 
   return (
     <>
