@@ -52,13 +52,6 @@ export const paymentInitializeState = createStandardAction(
 )();
 
 /**
- * Set the origin of the payment flow
- */
-export const paymentSetStartOrigin = createStandardAction(
-  "PAYMENT_SET_START_ORIGIN"
-)<PaymentStartOrigin>();
-
-/**
  * Track the route whence the payment started
  */
 export const paymentInitializeEntrypointRoute = createStandardAction(
@@ -299,7 +292,6 @@ export const pspForPaymentV2WithCallbacks = createStandardAction(
  */
 export type PaymentActions =
   | ActionType<typeof paymentInitializeState>
-  | ActionType<typeof paymentSetStartOrigin>
   | ActionType<typeof paymentInitializeEntrypointRoute>
   | ActionType<typeof backToEntrypointPayment>
   | ActionType<typeof paymentUpdateWalletPsp>

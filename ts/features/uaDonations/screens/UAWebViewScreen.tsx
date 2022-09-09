@@ -28,10 +28,7 @@ import {
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
 import { navigateToPaymentTransactionSummaryScreen } from "../../../store/actions/navigation";
-import {
-  paymentInitializeState,
-  paymentSetStartOrigin
-} from "../../../store/actions/wallet/payment";
+import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import { useIODispatch } from "../../../store/hooks";
 import { checkoutUADonationsUrl } from "../../../urls";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
@@ -219,7 +216,7 @@ export const UAWebViewScreen = () => {
     initialAmount: AmountInEuroCents
   ) => {
     dispatch(paymentInitializeState());
-    dispatch(paymentSetStartOrigin("donation"));
+
     navigateToPaymentTransactionSummaryScreen({
       rptId,
       initialAmount,

@@ -46,7 +46,6 @@ import {
 import { Dispatch } from "../../../store/actions/types";
 import {
   paymentInitializeState,
-  paymentSetStartOrigin,
   PaymentStartOrigin
 } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
@@ -383,8 +382,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     origin: PaymentStartOrigin
   ) => {
     dispatch(paymentInitializeState());
-
-    dispatch(paymentSetStartOrigin(origin));
 
     navigateToPaymentTransactionSummaryScreen({
       rptId,

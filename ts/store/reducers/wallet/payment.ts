@@ -10,7 +10,6 @@ import {
   paymentIdPolling,
   paymentInitializeEntrypointRoute,
   paymentInitializeState,
-  paymentSetStartOrigin,
   PaymentStartOrigin,
   paymentVerifica,
   paymentWebViewEnd,
@@ -163,11 +162,6 @@ const reducer = (
     // start a new payment from scratch
     case getType(paymentInitializeState):
       return PAYMENT_INITIAL_STATE;
-    case getType(paymentSetStartOrigin):
-      return {
-        ...state,
-        startOrigin: action.payload
-      };
     // track the route whence the payment started
     case getType(paymentInitializeEntrypointRoute):
       return {
@@ -183,6 +177,7 @@ const reducer = (
         // effectively starting a new payment session, thus we also invalidate
         // the rest of the payment state
         ...PAYMENT_INITIAL_STATE,
+        startOrigin: action.payload.startOrigin,
         entrypointRoute: state.entrypointRoute,
         verifica: pot.noneLoading
       };
