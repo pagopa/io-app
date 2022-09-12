@@ -3118,7 +3118,6 @@ features:
           EFFECTIVE_DATE: Perfezionata per decorrenza termini
           VIEWED: Perfezionata per visione
           REFUSED: REFUSED
-          UNDEFINED: Non definito
           CANCELLED: Annullata
         expand: mostra gli stati precedenti
         info: Puoi vedere il dettaglio di ciascuno stato, scaricare le ricevute e le attestazioni opponibili a terzi accedendo alla versione web del servizio   
