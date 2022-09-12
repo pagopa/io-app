@@ -3020,8 +3020,7 @@ features:
             body: "Sto scaricando l'allegato"
           failing:
             title: "Allegato"
-            body: "Non sono riuscito a scaricare l'allegato"
-            details: "Per favore, controlla la tua connessione e riprova"
+            details: "Non sono riuscito a scaricare l’allegato. Riprova o apri una segnalazione"
           checkBox: "OK, non mostrarmelo più"
         pdfPreview:
           title: "Anteprima PDF"
