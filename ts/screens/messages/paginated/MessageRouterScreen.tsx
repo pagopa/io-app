@@ -44,6 +44,8 @@ import { serviceByIdSelector } from "../../../store/reducers/entities/services/s
 import { GlobalState } from "../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { isStrictSome } from "../../../utils/pot";
+import { mixpanelTrack } from "../../../mixpanel";
+
 
 export type MessageRouterScreenPaginatedNavigationParams = {
   messageId: UIMessageId;
@@ -161,6 +163,7 @@ const MessageRouterScreen = ({
       //
       // https://pagopa.atlassian.net/browse/IA-917
       if (fromNotification && maybeMessage.category.tag === "PN") {
+        void mixpanelTrack("PN_PUSH_OPENED");
         navigation.navigate(ROUTES.MAIN, {
           screen: ROUTES.MESSAGES_HOME
         });
