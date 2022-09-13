@@ -2996,8 +2996,7 @@ features:
             body: "Downloading the attachment"
           failing:
             title: "Attachment"
-            body: "An error occurred while downloading the attachment"
-            details: "Check your connection please and try again"
+            details: "An error occurred while downloading the attachment. Retry or create a ticket"
           checkBox: "OK, don't show me again"
         pdfPreview:
           title: "PDF Preview"
