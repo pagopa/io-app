@@ -46,7 +46,6 @@ import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { isStrictSome } from "../../../utils/pot";
 import { mixpanelTrack } from "../../../mixpanel";
 
-
 export type MessageRouterScreenPaginatedNavigationParams = {
   messageId: UIMessageId;
   fromNotification: boolean;
