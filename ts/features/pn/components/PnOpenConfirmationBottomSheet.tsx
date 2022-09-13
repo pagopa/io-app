@@ -11,6 +11,7 @@ import { IOColors } from "../../../components/core/variables/IOColors";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { handleInternalLink } from "../../../components/ui/Markdown/handlers/internalLink";
 import i18n from "../../../i18n";
+import { mixpanelTrack } from "../../../mixpanel";
 import { UIMessage } from "../../../store/reducers/entities/messages/types";
 import customVariables from "../../../theme/variables";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
@@ -19,7 +20,6 @@ import {
   cancelButtonProps,
   confirmButtonProps
 } from "../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import { mixpanelTrack } from "../../../mixpanel";
 
 const BOTTOM_SHEET_HEIGHT = 500;
 
@@ -149,11 +149,11 @@ export const usePnOpenConfirmationBottomSheet = ({
         ...confirmButtonProps(() => {
           bsDismiss();
           if (message) {
-            const notificationTimestamp = fromEither(
-              MessageCategoryPN.decode(message.category)
-            )
-              .map(category => category.original_receipt_date?.toISOString())
-              .toUndefined();
+            const notificationTimestamp = pipe(
+              O.fromEither(MessageCategoryPN.decode(message.category)),
+              O.map(category => category.original_receipt_date?.toISOString()),
+              O.toUndefined
+            );
 
             void mixpanelTrack("PN_DISCLAIMER_ACCEPTED", {
               eventTimestamp: new Date().toISOString(),

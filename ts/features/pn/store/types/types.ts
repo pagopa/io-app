@@ -1,4 +1,3 @@
-import { enumType } from "@pagopa/ts-commons/lib/types";
 import * as t from "io-ts";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { MvlAttachment } from "../../../mvl/types/mvlData";
