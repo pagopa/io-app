@@ -136,7 +136,7 @@ export const PnMessageTimeline = ({ message, onExpand }: Props & ViewProps) => {
             obj.activeFrom,
             I18n.t("global.dateFormats.timeFormat")
           ),
-          text: getNotificationStatusInfo(obj.status).label,
+          text: getNotificationStatusInfo(obj.status),
           hasNext: i < arr.length - 1,
           hasPrevious: i > 0
         } as ItemProps;

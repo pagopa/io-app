@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.15.0-rc.3](https://github.com/pagopa/io-app/compare/2.15.0-rc.2...2.15.0-rc.3) (2022-09-12)
+
+
+### Features
+
+* [[IIP-103](https://pagopa.atlassian.net/browse/IIP-103)] Fix error message when attachment download fails ([#4114](https://github.com/pagopa/io-app/issues/4114)) ([9dd7ec6](https://github.com/pagopa/io-app/commit/9dd7ec63c61dbde6433c54b502860b36122beebf))
+
+## [2.15.0-rc.2](https://github.com/pagopa/io-app/compare/2.15.0-rc.1...2.15.0-rc.2) (2022-09-12)
+
+
+### Bug Fixes
+
+* [[IA-928](https://pagopa.atlassian.net/browse/IA-928)] Fix tab bar safe area handling in iPhone 14 Pro ([#4113](https://github.com/pagopa/io-app/issues/4113)) ([e720e5e](https://github.com/pagopa/io-app/commit/e720e5e50f9e94edfdb2a3076f48488e743e7010))
+
+
+### Chores
+
+* **Piattaforma Notifiche:** [[IAMVL-98](https://pagopa.atlassian.net/browse/IAMVL-98)] Update PN backend types ([#4112](https://github.com/pagopa/io-app/issues/4112)) ([fa95686](https://github.com/pagopa/io-app/commit/fa956863d15e66583a749705b4e3e1b81ecc4e78))
+
 ## [2.15.0-rc.1](https://github.com/pagopa/io-app/compare/2.15.0-rc.0...2.15.0-rc.1) (2022-09-08)
 
 
