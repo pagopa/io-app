@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
 
   errorStateMessageRetry: {
     marginTop: 16,
-    color: customVariables.brandDarkestGray
+    color: customVariables.textColorDark
   },
 
   errorStateMessageSubmitBug: {

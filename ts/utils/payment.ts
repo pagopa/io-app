@@ -38,6 +38,12 @@ import {
   DetailEnum
 } from "../../definitions/backend/PaymentProblemJson";
 import { PspData } from "../../definitions/pagopa/PspData";
+import { PayloadForAction } from "../types/utils";
+import {
+  paymentAttiva,
+  paymentIdPolling,
+  paymentVerifica
+} from "../store/actions/wallet/payment";
 import { getTranslatedShortNumericMonthYear } from "./dates";
 import { getFullLocale, getLocalePrimaryWithFallback } from "./locale";
 import { maybeInnerProperty } from "./options";
@@ -440,3 +446,18 @@ export const getPickPaymentMethodDescription = (
       })
     : fromNullable(paymentMethod.info.holder).getOrElse(defaultHolder);
 };
+
+export const isDuplicatedPayment = (
+  error: Option<
+    PayloadForAction<
+      | typeof paymentVerifica["failure"]
+      | typeof paymentAttiva["failure"]
+      | typeof paymentIdPolling["failure"]
+    >
+  >
+) =>
+  error.exists(
+    detail =>
+      detail === "PAA_PAGAMENTO_DUPLICATO" ||
+      detail === "PPT_PAGAMENTO_DUPLICATO"
+  );

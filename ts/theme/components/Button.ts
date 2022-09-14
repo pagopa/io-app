@@ -78,7 +78,7 @@ export default (): Theme => ({
     "UIComponent.IconFont": {
       color: IOColors.white
     },
-    backgroundColor: variables.brandDarkGray
+    backgroundColor: IOColors.bluegrey
   },
 
   ".gray": {
@@ -88,7 +88,7 @@ export default (): Theme => ({
     "UIComponent.IconFont": {
       color: IOColors.white
     },
-    backgroundColor: variables.lighterGray
+    backgroundColor: IOColors.bluegreyLight
   },
 
   ".unNamed": {
@@ -98,7 +98,7 @@ export default (): Theme => ({
     "UIComponent.IconFont": {
       color: variables.textMessageDetailLinkColor
     },
-    backgroundColor: variables.lightestGray
+    backgroundColor: IOColors.greyLight
   },
 
   ".light": {
@@ -112,7 +112,7 @@ export default (): Theme => ({
       },
       borderWidth: 1,
       borderColor: variables.btnLightBorderColor,
-      backgroundColor: variables.brandLight,
+      backgroundColor: IOColors.white,
       ".primary": {
         "NativeBase.Text": { color: variables.brandPrimary },
         borderWidth: 1,
@@ -156,7 +156,7 @@ export default (): Theme => ({
   },
 
   ".cancel": {
-    backgroundColor: variables.brandDarkGray,
+    backgroundColor: IOColors.bluegrey,
     "NativeBase.Text": {
       color: IOColors.white
     },

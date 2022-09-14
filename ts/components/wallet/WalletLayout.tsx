@@ -68,10 +68,6 @@ const styles = StyleSheet.create({
     position: "relative"
   },
 
-  brandDarkGray: {
-    color: customVariables.brandDarkGray
-  },
-
   subHeaderContent: {
     flexDirection: "row",
     alignItems: "baseline",

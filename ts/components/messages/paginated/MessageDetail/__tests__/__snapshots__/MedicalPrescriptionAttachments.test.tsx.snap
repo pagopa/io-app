@@ -59,7 +59,7 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
         Array [
           Object {},
           Object {
-            "backgroundColor": "#C9C9C9",
+            "backgroundColor": "#CCD4DC",
           },
           false,
           Object {
@@ -162,7 +162,7 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
         Array [
           Object {},
           Object {
-            "backgroundColor": "#C9C9C9",
+            "backgroundColor": "#CCD4DC",
           },
           Object {
             "marginLeft": 24,
@@ -180,7 +180,7 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
       Array [
         Object {},
         Object {
-          "backgroundColor": "#C9C9C9",
+          "backgroundColor": "#CCD4DC",
         },
         Object {
           "marginLeft": 24,
@@ -279,7 +279,7 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
         Array [
           Object {},
           Object {
-            "backgroundColor": "#C9C9C9",
+            "backgroundColor": "#CCD4DC",
           },
           false,
           Object {
@@ -294,7 +294,7 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
       Array [
         Object {},
         Object {
-          "backgroundColor": "#C9C9C9",
+          "backgroundColor": "#CCD4DC",
         },
         Object {
           "marginLeft": 24,
@@ -393,7 +393,7 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
         Array [
           Object {},
           Object {
-            "backgroundColor": "#C9C9C9",
+            "backgroundColor": "#CCD4DC",
           },
           false,
           Object {
@@ -408,7 +408,7 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
       Array [
         Object {},
         Object {
-          "backgroundColor": "#C9C9C9",
+          "backgroundColor": "#CCD4DC",
         },
         Object {
           "marginLeft": 24,
@@ -507,7 +507,7 @@ exports[`MedicalPrescriptionAttachments component when the organization name is 
         Array [
           Object {},
           Object {
-            "backgroundColor": "#C9C9C9",
+            "backgroundColor": "#CCD4DC",
           },
           false,
           Object {
@@ -522,7 +522,7 @@ exports[`MedicalPrescriptionAttachments component when the organization name is 
       Array [
         Object {},
         Object {
-          "backgroundColor": "#C9C9C9",
+          "backgroundColor": "#CCD4DC",
         },
         Object {
           "marginLeft": 24,
@@ -604,7 +604,7 @@ exports[`MedicalPrescriptionAttachments component with default properties should
         Array [
           Object {},
           Object {
-            "backgroundColor": "#C9C9C9",
+            "backgroundColor": "#CCD4DC",
           },
           false,
           Object {
@@ -619,7 +619,7 @@ exports[`MedicalPrescriptionAttachments component with default properties should
       Array [
         Object {},
         Object {
-          "backgroundColor": "#C9C9C9",
+          "backgroundColor": "#CCD4DC",
         },
         Object {
           "marginLeft": 24,

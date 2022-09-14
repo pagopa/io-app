@@ -1,44 +1,8 @@
 import I18n from "../../../i18n";
-import {
-  NotificationStatus,
-  NotificationStatusEnum
-} from "../store/types/types";
+import { NotificationStatus } from "../store/types/types";
 
-export function getNotificationStatusInfo(status: NotificationStatus): {
-  label: string;
-} {
-  switch (status) {
-    case NotificationStatusEnum.DELIVERED:
-      return {
-        label: I18n.t("features.pn.details.timeline.status.DELIVERED")
-      };
-    case NotificationStatusEnum.DELIVERING:
-      return {
-        label: I18n.t("features.pn.details.timeline.status.DELIVERING")
-      };
-    case NotificationStatusEnum.UNREACHABLE:
-      return {
-        label: I18n.t("features.pn.details.timeline.status.UNREACHABLE")
-      };
-    case NotificationStatusEnum.PAID:
-      return {
-        label: I18n.t("features.pn.details.timeline.status.PAID")
-      };
-    case NotificationStatusEnum.ACCEPTED:
-      return {
-        label: I18n.t("features.pn.details.timeline.status.ACCEPTED")
-      };
-    case NotificationStatusEnum.EFFECTIVE_DATE:
-      return {
-        label: I18n.t("features.pn.details.timeline.status.EFFECTIVE_DATE")
-      };
-    case NotificationStatusEnum.VIEWED:
-      return {
-        label: I18n.t("features.pn.details.timeline.status.VIEWED")
-      };
-    default:
-      return {
-        label: I18n.t("features.pn.details.timeline.status.UNDEFINED")
-      };
-  }
+export function getNotificationStatusInfo(status: NotificationStatus) {
+  return I18n.t(`features.pn.details.timeline.status.${status}`, {
+    defaultValue: status
+  });
 }

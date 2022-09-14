@@ -8,6 +8,7 @@ import I18n from "../../../../i18n";
 import { TransactionSummaryError } from "../NewTransactionSummaryScreen";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
+import { isDuplicatedPayment } from "../../../../utils/payment";
 import { TransactionSummaryRow } from "./TransactionSummary";
 
 type Props = Readonly<{
@@ -35,7 +36,7 @@ export const TransactionSummaryErrorDetails = ({
   const errorOrUndefined = error.toUndefined();
   if (
     errorOrUndefined === undefined ||
-    errorOrUndefined === "PAA_PAGAMENTO_DUPLICATO" ||
+    isDuplicatedPayment(error) ||
     !Object.keys(Detail_v2Enum).includes(errorOrUndefined)
   ) {
     return null;

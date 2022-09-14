@@ -55,9 +55,6 @@ const styles = StyleSheet.create({
     alignItems: "baseline",
     justifyContent: "space-between"
   },
-  brandDarkGray: {
-    color: variables.brandDarkGray
-  },
   moreButton: {
     flex: 1,
     alignContent: "center",

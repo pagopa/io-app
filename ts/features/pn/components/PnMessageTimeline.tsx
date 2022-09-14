@@ -8,6 +8,7 @@ import { formatDateAsDay, formatDateAsMonth } from "../../../utils/dates";
 import { getNotificationStatusInfo } from "../utils";
 import { Link } from "../../../components/core/typography/Link";
 import I18n from "../../../i18n";
+import { localeDateFormat } from "../../../utils/locale";
 
 const styles = StyleSheet.create({
   row: {
@@ -131,8 +132,11 @@ export const PnMessageTimeline = ({ message, onExpand }: Props & ViewProps) => {
         const props = {
           day: formatDateAsDay(obj.activeFrom),
           month: formatDateAsMonth(obj.activeFrom),
-          time: obj.activeFrom.toLocaleTimeString(),
-          text: getNotificationStatusInfo(obj.status).label,
+          time: localeDateFormat(
+            obj.activeFrom,
+            I18n.t("global.dateFormats.timeFormat")
+          ),
+          text: getNotificationStatusInfo(obj.status),
           hasNext: i < arr.length - 1,
           hasPrevious: i > 0
         } as ItemProps;

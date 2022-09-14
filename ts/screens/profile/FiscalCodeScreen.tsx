@@ -35,7 +35,7 @@ type Props = ReturnType<typeof mapStateToProps> & {
 
 const styles = StyleSheet.create({
   darkBg: {
-    backgroundColor: customVariables.brandDarkGray
+    backgroundColor: IOColors.bluegrey
   },
   white: {
     color: IOColors.white
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   shadow: {
     // iOS
     paddingBottom: 20,
-    shadowColor: customVariables.brandDarkestGray,
+    shadowColor: IOColors.bluegreyDark,
     shadowOffset: {
       width: 1,
       height: 8

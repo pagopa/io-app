@@ -13,54 +13,27 @@ function asIOColorGradients<T extends { [key: string]: Array<ColorValue> }>(
 
 export const IOColors = asIOColors({
   white: "#FFFFFF",
-  colorWhiteRGB: `rgb(255, 255, 255)` /* from various JEST tests */,
-  greyUltralight: "#FCFDFF",
-  brandLight: "#FCFDFF" /* from variables.ts, duplicate of greyUltraLight */,
-  tabUnderlineColor:
-    "#F6F6F6" /* from variables.ts, similar to brandGray, ALIAS TOKEN */,
-  brandGray: "#F5F6F7" /* from variables.ts */,
+  greyUltraLight: "#F5F6F7",
+  /* ↳ ALIAS TOKEN: tabUnderlineColor → greyUltraLight */
   greyLight: "#E6E9F2",
-  brandLightGray: "#E6E9F2" /* from variables.ts, duplicate of greyLight */,
-  lightestGray: "#E0E3E6" /* from variables.ts */,
-  headerIconLight: "#E4E7EA" /* from variables.ts, ALIAS TOKEN */,
-  optCodeComponent: "#D9D9D9" /* from relative component */,
-  borderColor: `rgb(216, 216, 216)` /* found in various JEST tests, similar to optCodeComponent */,
-  lighterGray: "#C1C9D2" /* from variables.ts */,
+  /* ↳ ALIAS TOKEN: headerIconLight → greyLight */
   bluegreyLight: "#CCD4DC",
-  brandMildGray: "#C7D1D9" /* from variables.ts */,
-  shineColor:
-    "#C1CCD6" /* from variables.ts, similar to brandMildGray, Animation ALIAS TOKEN */,
-  itemSeparator: "#C9C9C9" /* from variables.ts, ALIAS TOKEN */,
-  listSelectionBarColor: "#A9A9A9" /* from relative JEST snap test */,
-  btnLightBorderColor: "#AEB5BF" /* from variables.ts, ALIAS TOKEN */,
-  lightGray: "#909DA8" /* from variables.ts, duplicate of grey */,
-
-  disabledService:
-    "#909DA8" /* from variables.ts, duplicate of grey, ALIAS TOKEN */,
+  /* ↳ ALIAS TOKEN: colorSkeleton → bluegreyLight */
+  /* ↳ ALIAS TOKEN: itemSeparator → bluegreyLight */
   grey: "#909DA8",
-  headerIconDark: "#798593" /* from variables.ts, ALIAS TOKEN */,
-  itemBorderDefaultColor:
-    "#5F6F82" /* from variables.ts, similar to milderGray, ALIAS TOKEN */,
-  milderGray: "#5F6F80" /* from variables.ts */,
-  darkerGray: "#4B5C6F" /* from variables.ts */,
+  /* ↳ ALIAS TOKEN: btnLightBorderColor → grey */
+  /* ↳ ALIAS TOKEN: disabledService → grey, not referenced though */
+  milderGray: "#5F6F80",
+  /* ↳ ALIAS TOKEN: headerIconDark → milderGray */
   bluegrey: "#475A6D",
-  brandDarkGray: "#475A6D" /* from variables.ts, duplicate of bluegrey */,
-  textColor:
-    "#475A6D" /* from variables.ts, duplicate of bluegrey, ALIAS TOKEN */,
-  topTabBarTextColor:
-    "#475A6D" /* from variables.ts, duplicate of bluegrey, ALIAS TOKEN */,
-  unselectedColor:
-    "#475A6D" /* from variables.ts, duplicate of bluegrey, ALIAS TOKEN */,
+  /* ↳ ALIAS TOKEN: textColor → bluegrey */
+  /* ↳ ALIAS TOKEN: topTabBarTextColor → bluegrey */
+  /* ↳ ALIAS TOKEN: unselectedColor → bluegrey */
   bluegreyDark: "#17324D",
-  brandDarkestGray:
-    "#17324D" /* from variables.ts, duplicate of bluegreyDark */,
-  cardFontColor:
-    "#17324D" /* from variables.ts, duplicate of bluegreyDark and brandDarkestGray, ALIAS TOKEN */,
-  textColorDark: `rgb(28, 28, 30)` /* found in various JEST tests */,
+  /* ↳ ALIAS TOKEN: textColorDark → bluegreyDark */
+  /* ↳ ALIAS TOKEN: cardTextColor → bluegreyDark */
   black: "#000000",
-  colorBlack: "#000000" /* from variables.ts, duplicate of black */,
-  footerShadowColor:
-    "#000000" /* from variables.ts, duplicate of black, ALIAS TOKEN */,
+  /* ↳ ALIAS TOKEN: footerShadowColor → black */
   brandPrimary: "#0066CC" /* from variables.ts */,
   topTabBarActiveTextColor:
     "#0066CC" /* from variables.ts, duplicate of brandPrimary, ALIAS TOKEN */,
@@ -69,25 +42,23 @@ export const IOColors = asIOColors({
     "#0073E6" /* from variables.ts, duplicate of blue, ALIAS TOKEN */,
   contentPrimaryBackground:
     "#0073E6" /* from variables.ts, duplicate of blue, ALIAS TOKEN */,
-  ListSelectionBarColor: "#007AFF" /* from ListSelectionBar JEST test */,
+
   textLinkColor:
     "#0073E6" /* from variables.ts, duplicate of blue, ALIAS TOKEN */,
   checkBoxColor: "#039BE5" /* from CheckBox component */,
   brandPrimaryLight: "#99CCFF" /* from variables.ts */,
   noCieButton:
     "#789CCD" /* Background of half-disabled noCIE CTA, from LandingScreen.tsx */,
-  featuredCardShadow: "#00274E" /* from FeaturedCard component */,
   activeBonus: "#2C489D" /* from relative component (BonusVacanze) */,
   cgnDiscount: "#9B5897" /* from CgnDiscountValueBox */,
   aqua: "#00C5CA",
   brandHighlight: "#00C5CA" /* from variables.ts, duplicate of aqua */,
   brandHighLighter: "#00CDD2" /* from variables.ts */,
   toastColor: "#C1F4F2" /* from variables.ts, ALIAS TOKEN */,
-  badgeYellow: "#FFC824" /* from variables.ts, ALIAS TOKEN */,
+  yellow: "#FFC824" /* from variables.ts, ALIAS TOKEN */,
   cgnDiscountDetailBg: "#EB9505" /* from relative component */,
   cardExpiredTextColor: "#FF0000" /* from variables.ts, ALIAS TOKEN */,
   calendarExpirableColor: "#D0021B" /* from variables.ts, ALIAS TOKEN */,
-  itemTest: "#ED1727" /* from relative JEST snap test */,
   red: "#C02927",
   brandDanger: "#CC3333" /* from variables.ts */,
   brandSuccess: "#007005" /* from variables.ts */,

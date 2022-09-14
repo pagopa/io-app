@@ -7,6 +7,8 @@ import I18n from "../../../../i18n";
 import variables from "../../../../theme/variables";
 import { getRemoteLocale } from "../../../../utils/messages";
 
+import { IOColors } from "../../../../components/core/variables/IOColors";
+
 export type AvailableBonusItemState = "incoming" | "active" | "completed";
 
 type Props = {
@@ -28,7 +30,7 @@ const styles = StyleSheet.create({
     flexDirection: "column"
   },
   methodTitle: {
-    color: variables.colorBlack
+    color: IOColors.black
   },
   methodImage: {
     width: 48,
@@ -48,7 +50,7 @@ const styles = StyleSheet.create({
   badge: {
     height: 18,
     marginTop: 2,
-    backgroundColor: variables.lightGray
+    backgroundColor: IOColors.grey
   },
   badgeText: {
     lineHeight: Platform.OS === "ios" ? 20 : 21

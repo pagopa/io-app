@@ -4,6 +4,7 @@ import { Platform, StyleSheet } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 import customVariables from "../../../../theme/variables";
 import { TestID } from "../../../../types/WithTestID";
+import { IOColors } from "../../../../components/core/variables/IOColors";
 
 type Props = {
   topLeftCorner: React.ReactNode;
@@ -22,7 +23,7 @@ const styles = StyleSheet.create({
     paddingBottom: 22,
     flexDirection: "column",
     justifyContent: "space-between",
-    backgroundColor: customVariables.brandGray,
+    backgroundColor: IOColors.greyUltraLight,
     borderRadius: 8,
     shadowColor: "#000",
     shadowOffset: {

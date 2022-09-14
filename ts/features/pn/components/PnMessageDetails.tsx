@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import * as pot from "italia-ts-commons/lib/pot";
 import { ScrollView } from "react-native-gesture-handler";
 import { StyleSheet, View } from "react-native";
@@ -16,7 +16,10 @@ import {
 } from "../../../screens/wallet/payment/components/TransactionSummary";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { paymentVerifica } from "../../../store/actions/wallet/payment";
-import { getRptIdFromNoticeNumber } from "../../../utils/payment";
+import {
+  getRptIdFromNoticeNumber,
+  isDuplicatedPayment
+} from "../../../utils/payment";
 import { PaymentNoticeNumber } from "../../../../definitions/backend/PaymentNoticeNumber";
 import { OrganizationFiscalCode } from "../../../../definitions/backend/OrganizationFiscalCode";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
@@ -30,10 +33,13 @@ import { UIMessageId } from "../../../store/reducers/entities/messages/types";
 import PN_ROUTES from "../navigation/routes";
 import { MvlAttachmentId } from "../../mvl/types/mvlData";
 import { H5 } from "../../../components/core/typography/H5";
+import { PnConfigSelector } from "../../../store/reducers/backendStatus";
+import { mixpanelTrack } from "../../../mixpanel";
 import { PnMessageDetailsSection } from "./PnMessageDetailsSection";
 import { PnMessageDetailsHeader } from "./PnMessageDetailsHeader";
 import { PnMessageDetailsContent } from "./PnMessageDetailsContent";
 import { PnMessageTimeline } from "./PnMessageTimeline";
+import { PnMessageTimelineCTA } from "./PnMessageTimelineCTA";
 
 const styles = StyleSheet.create({
   content: {
@@ -50,10 +56,12 @@ type Props = Readonly<{
 
 export const PnMessageDetails = (props: Props) => {
   const [firstLoadingRequest, setFirstLoadingRequest] = useState(false);
+  const [shouldTrackMixpanel, setShouldTrackMixpanel] = useState(true);
 
   const dispatch = useIODispatch();
   const navigation = useNavigation();
   const currentFiscalCode = useIOSelector(profileFiscalCodeSelector);
+  const frontendUrl = useIOSelector(PnConfigSelector).frontend_url;
 
   const maybePayment = props.message.recipients.find(
     _ => _.taxId === currentFiscalCode
@@ -114,6 +122,32 @@ export const PnMessageDetails = (props: Props) => {
 
   const scrollViewRef = React.createRef<ScrollView>();
 
+  const isVerifyingPayment = pot.isLoading(paymentVerification);
+  const isPaid = isDuplicatedPayment(paymentVerificationError);
+
+  useEffect(() => {
+    if (!firstLoadingRequest || isVerifyingPayment || !shouldTrackMixpanel) {
+      return;
+    }
+
+    if (isPaid) {
+      void mixpanelTrack("PN_PAYMENTINFO_PAID");
+    } else if (paymentVerificationError.isSome()) {
+      void mixpanelTrack("PN_PAYMENTINFO_ERROR", {
+        paymentStatus: paymentVerificationError.getOrElse(undefined)
+      });
+    } else {
+      void mixpanelTrack("PN_PAYMENTINFO_PAYABLE");
+    }
+    setShouldTrackMixpanel(false);
+  }, [
+    firstLoadingRequest,
+    isPaid,
+    isVerifyingPayment,
+    paymentVerificationError,
+    shouldTrackMixpanel
+  ]);
+
   return (
     <>
       {firstLoadingRequest && paymentVerificationError.isSome() && (
@@ -148,10 +182,7 @@ export const PnMessageDetails = (props: Props) => {
                   paymentVerification={paymentVerification}
                   paymentNoticeNumber={maybePayment.noticeCode}
                   organizationFiscalCode={maybePayment.creditorTaxId}
-                  isPaid={
-                    paymentVerificationError.toUndefined() ===
-                    "PAA_PAGAMENTO_DUPLICATO"
-                  }
+                  isPaid={isPaid}
                 />
                 {paymentVerificationError.isSome() && (
                   <TransactionSummaryErrorDetails
@@ -187,6 +218,7 @@ export const PnMessageDetails = (props: Props) => {
               scrollViewRef.current?.scrollToEnd({ animated: true })
             }
           />
+          {frontendUrl.length > 0 && <PnMessageTimelineCTA url={frontendUrl} />}
         </PnMessageDetailsSection>
         <View style={styles.spacer} />
       </ScrollView>

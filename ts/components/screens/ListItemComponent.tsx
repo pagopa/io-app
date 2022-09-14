@@ -11,6 +11,7 @@ import {
 import Switch from "../../components/ui/Switch";
 import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
+import { IOColors } from "../core/variables/IOColors";
 import IconFont from "./../ui/IconFont";
 import { BadgeComponent } from "./BadgeComponent";
 
@@ -50,7 +51,8 @@ const PADDING_R_DESCRIPTION = 24;
 const styles = StyleSheet.create({
   listItem: {
     paddingLeft: 0,
-    paddingRight: 0
+    paddingRight: 0,
+    borderBottomColor: customVariables.itemSeparator
   },
   spacingBase: {
     paddingTop: 6,
@@ -72,13 +74,13 @@ const styles = StyleSheet.create({
   },
   serviceName: {
     fontSize: 18,
-    color: customVariables.brandDarkestGray,
+    color: customVariables.textColorDark,
     ...makeFontStyleObject(Platform.select, "600"),
     alignSelf: "flex-start",
     paddingRight: 16
   },
   disabledItem: {
-    color: customVariables.lightGray
+    color: IOColors.grey
   },
   description: {
     paddingRight: PADDING_R_DESCRIPTION,

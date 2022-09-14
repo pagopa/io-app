@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     color: customVariables.brandPrimary
   },
   textStyle: {
-    color: customVariables.brandDarkGray
+    color: customVariables.textColor
   }
 });
 
