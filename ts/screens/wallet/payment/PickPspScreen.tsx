@@ -6,6 +6,7 @@ import * as React from "react";
 import { FlatList, SafeAreaView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 
+import { pipe } from "fp-ts/lib/function";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { H4 } from "../../../components/core/typography/H4";
 import { H5 } from "../../../components/core/typography/H5";
@@ -25,7 +26,10 @@ import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList"
 import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
 import { navigateBack } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
-import { pspForPaymentV2 } from "../../../store/actions/wallet/payment";
+import {
+  PaymentStartOrigin,
+  pspForPaymentV2
+} from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
 import { pspV2ListSelector } from "../../../store/reducers/wallet/payment";
 import customVariables from "../../../theme/variables";
@@ -75,6 +79,16 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "wallet.pickPsp.contextualHelpContent"
 };
 
+const filterPspsIfOriginPosteDataMatrix =
+  (startOrigin: PaymentStartOrigin | undefined) =>
+  (pspList: ReadonlyArray<PspData>) => {
+    if (startOrigin === "poste_datamatrix_scan") {
+      // TODO: Export to remote configuration
+      return pspList.filter(psp => psp.idPsp === "BPPIITRRXXX");
+    }
+    return pspList;
+  };
+
 /**
  * Select a PSP to be used for a the current selected wallet
  */
@@ -102,7 +116,12 @@ class PickPspScreen extends React.Component<Props> {
   );
 
   public render(): React.ReactNode {
-    const availablePsps = orderPspByAmount(this.props.allPsps);
+    // const availablePsps = orderPspByAmount(this.props.allPsps);
+
+    const availablePsps = pipe(
+      filterPspsIfOriginPosteDataMatrix(this.props.paymentStartOrigin),
+      orderPspByAmount
+    )(this.props.allPsps);
 
     return (
       <BaseScreenComponent
@@ -174,6 +193,7 @@ const mapStateToProps = (state: GlobalState) => {
     isLoading:
       pot.isLoading(state.wallet.wallets.walletById) || isLoading(psps),
     hasError: pot.isError(state.wallet.wallets.walletById) || isError(psps),
+    paymentStartOrigin: state.wallet.payment.startOrigin,
     allPsps: getValueOrElse(psps, [])
   };
 };
