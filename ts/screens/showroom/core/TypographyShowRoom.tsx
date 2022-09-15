@@ -1,6 +1,6 @@
-import { View } from "native-base";
 import * as React from "react";
 import { Alert, StyleSheet } from "react-native";
+import { View } from "native-base";
 import { IOBadge } from "../../../components/core/IOBadge";
 import { Body } from "../../../components/core/typography/Body";
 import { H1 } from "../../../components/core/typography/H1";
@@ -13,7 +13,7 @@ import { LabelSmall } from "../../../components/core/typography/LabelSmall";
 import { Link } from "../../../components/core/typography/Link";
 import { Monospace } from "../../../components/core/typography/Monospace";
 import { IOColors } from "../../../components/core/variables/IOColors";
-import { ShowroomSection } from "../ShowroomSection";
+import { ShowroomSection } from "../components/ShowroomSection";
 
 const styles = StyleSheet.create({
   alignCenter: {
@@ -33,13 +33,10 @@ export const TypographyShowroom = () => (
     <H4Row />
     <H5Row />
     <Body>Body</Body>
-    <View spacer={true} extralarge={true} />
     <LabelSmallRow />
     <LabelRow />
     <Link onPress={() => Alert.alert("onPress link!")}>Link</Link>
-    <View spacer={true} extralarge={true} />
     <Monospace>MonoSpace</Monospace>
-    <View spacer={true} extralarge={true} />
     <IOBadgeRow />
   </ShowroomSection>
 );

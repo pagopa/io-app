@@ -31,6 +31,7 @@ import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
 } from "../../utils/supportAssistance";
+import { IOColors } from "../../components/core/variables/IOColors";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -41,7 +42,7 @@ const styles = StyleSheet.create({
   gridContainer: {
     padding: variables.contentPadding,
     flex: 1,
-    backgroundColor: variables.brandGray
+    backgroundColor: IOColors.greyUltraLight
   }
 });
 

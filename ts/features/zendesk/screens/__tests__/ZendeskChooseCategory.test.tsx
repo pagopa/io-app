@@ -1,17 +1,14 @@
-import { fireEvent, RenderAPI } from "@testing-library/react-native";
-import { ReactTestInstance } from "react-test-renderer";
+import { RenderAPI } from "@testing-library/react-native";
 import { createStore, Store } from "redux";
 import { Zendesk } from "../../../../../definitions/content/Zendesk";
 import { ZendeskCategories } from "../../../../../definitions/content/ZendeskCategories";
 import { ZendeskCategory } from "../../../../../definitions/content/ZendeskCategory";
 import { ZendeskSubCategories } from "../../../../../definitions/content/ZendeskSubCategories";
-import MockZendesk from "../../../../__mocks__/io-react-native-zendesk";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
-import ZENDESK_ROUTES from "../../navigation/routes";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import * as zendeskAction from "../../store/actions";
 import { getZendeskConfig } from "../../store/actions";
 import ZendeskChooseCategory from "../ZendeskChooseCategory";
@@ -148,63 +145,11 @@ describe("the ZendeskChooseCategory screen", () => {
         )
       ).toBeNull();
     });
-    it("should call the addTicketCustomField and the navigateToZendeskChooseSubCategory functions when press the category if it has sub-categories", () => {
-      const store: Store<GlobalState> = createStore(
-        appReducer,
-        globalState as any
-      );
-      const component: RenderAPI = renderComponent(store);
-      store.dispatch(
-        getZendeskConfig.success({
-          ...mockedZendeskConfig,
-          zendeskCategories: {
-            ...mockedZendeskConfig.zendeskCategories,
-            categories: [
-              {
-                ...mockedZendeskConfig.zendeskCategories?.categories[0],
-                zendeskSubCategories: mockedZendeskSubcategories
-              } as ZendeskCategory
-            ]
-          } as ZendeskCategories
-        })
-      );
-      const categoryItem: ReactTestInstance = component.getByTestId(
-        mockedZendeskConfig.zendeskCategories?.categories[0].value as string
-      );
-      fireEvent(categoryItem, "onPress");
-      expect(MockZendesk.addTicketCustomField).toBeCalled();
-      expect(mockedNavigation).toHaveBeenCalledTimes(1);
-      expect(mockedNavigation).toHaveBeenCalledWith(
-        ZENDESK_ROUTES.CHOOSE_SUB_CATEGORY,
-        {
-          assistanceForPayment: undefined
-        }
-      );
-    });
-    it("should call the navigateToZendeskAskPermissions action when press the category if it has not sub-categories", () => {
-      const store: Store<GlobalState> = createStore(
-        appReducer,
-        globalState as any
-      );
-      const component: RenderAPI = renderComponent(store);
-      store.dispatch(getZendeskConfig.success(mockedZendeskConfig));
-      const categoryItem: ReactTestInstance = component.getByTestId(
-        mockedZendeskConfig.zendeskCategories?.categories[0].value as string
-      );
-      fireEvent(categoryItem, "onPress");
-      expect(mockedNavigation).toHaveBeenCalledTimes(1);
-      expect(mockedNavigation).toHaveBeenCalledWith(
-        ZENDESK_ROUTES.ASK_PERMISSIONS,
-        {
-          assistanceForPayment: undefined
-        }
-      );
-    });
   });
 });
 
 function renderComponent(store: Store<GlobalState>) {
-  return renderScreenFakeNavRedux<GlobalState>(
+  return renderScreenWithNavigationStoreContext<GlobalState>(
     ZendeskChooseCategory,
     ROUTES.MAIN,
     {},

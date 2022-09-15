@@ -7,7 +7,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { getAppVersion } from "../utils/appVersion";
 import { Label } from "../components/core/typography/Label";
 import { Body } from "../components/core/typography/Body";
-import customVariables from "../theme/variables";
+import { IOColors } from "../components/core/variables/IOColors";
 
 const styles = StyleSheet.create({
   versionContainer: {
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   },
   versionText: {
     padding: 2,
-    backgroundColor: customVariables.colorWhite,
+    backgroundColor: IOColors.white,
     textAlign: "center"
   }
 });

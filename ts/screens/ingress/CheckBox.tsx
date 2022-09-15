@@ -1,7 +1,7 @@
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import IconFont from "../../components/ui/IconFont";
-import customVariables from "../../theme/variables";
+import { IOColors } from "../../components/core/variables/IOColors";
 
 type Props = {
   checked: boolean;
@@ -33,7 +33,7 @@ export const IngressCheckBox = (props: Props) => {
         <IconFont
           name={checkBoxIcon}
           size={styles.base.width * 0.8}
-          color={customVariables.colorWhite}
+          color={IOColors.white}
         />
       )}
     </View>

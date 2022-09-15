@@ -43,12 +43,14 @@ import {
 } from "../../store/reducers/search";
 import { GlobalState } from "../../store/reducers/types";
 import { makeFontStyleObject } from "../../theme/fonts";
-import customVariables from "../../theme/variables";
 import {
   isScreenReaderEnabled,
   setAccessibilityFocus
 } from "../../utils/accessibility";
 import { HEADER_HEIGHT, MESSAGE_ICON_HEIGHT } from "../../utils/constants";
+
+import customVariables from "../../theme/variables";
+import { IOColors } from "../../components/core/variables/IOColors";
 
 type Props = {
   navigation: CompatNavigationProp<
@@ -87,7 +89,7 @@ const styles = StyleSheet.create({
     color: customVariables.brandPrimary
   },
   textStyle: {
-    color: customVariables.brandDarkGray
+    color: customVariables.textColor
   }
 });
 
@@ -167,7 +169,7 @@ class MessagesHomeScreen extends React.PureComponent<Props, State> {
       >
         <FocusAwareStatusBar
           barStyle={"dark-content"}
-          backgroundColor={customVariables.colorWhite}
+          backgroundColor={IOColors.white}
         />
         {this.state.isScreenReaderEnabled && statusComponent}
         {!isSearchEnabled && (

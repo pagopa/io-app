@@ -28,15 +28,24 @@ export const scheduleLocalNotificationsAccessSpid = () => {
     twoMonthsFromPrev,
     sixMonthsFromPrev
   ];
-  localNotificationDates.forEach((scheduledDate: Date) =>
-    PushNotification.localNotificationSchedule({
-      title: I18n.t("global.localNotifications.spidLogin.title"),
-      message: I18n.t("global.localNotifications.spidLogin.message"),
-      date: scheduledDate,
-      tag: FIRST_ACCESS_SPID_TAG,
-      userInfo: { tag: FIRST_ACCESS_SPID_TAG }
-    })
-  );
+
+  PushNotification.checkPermissions(({ alert, badge, sound }) => {
+    const notificationsAllowed = alert || badge || sound;
+
+    if (!notificationsAllowed) {
+      return;
+    }
+
+    localNotificationDates.forEach((scheduledDate: Date) =>
+      PushNotification.localNotificationSchedule({
+        title: I18n.t("global.localNotifications.spidLogin.title"),
+        message: I18n.t("global.localNotifications.spidLogin.message"),
+        date: scheduledDate,
+        tag: FIRST_ACCESS_SPID_TAG,
+        userInfo: { tag: FIRST_ACCESS_SPID_TAG }
+      })
+    );
+  });
 };
 
 /*

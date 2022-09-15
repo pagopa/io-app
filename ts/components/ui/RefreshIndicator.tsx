@@ -3,12 +3,13 @@ import * as React from "react";
 import { ActivityIndicator, Platform, StyleSheet } from "react-native";
 
 import variables from "../../theme/variables";
+import { IOColors } from "../core/variables/IOColors";
 
 const styles = StyleSheet.create({
   androidIndicatorInner: {
     justifyContent: "center",
     alignSelf: "center",
-    backgroundColor: variables.colorWhite,
+    backgroundColor: IOColors.white,
     width: 42,
     height: 42,
     elevation: 4,

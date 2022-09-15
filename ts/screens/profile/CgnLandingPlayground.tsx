@@ -6,7 +6,6 @@ import { Label } from "../../components/core/typography/Label";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import IconFont from "../../components/ui/IconFont";
-import customVariables from "../../theme/variables";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { H5 } from "../../components/core/typography/H5";
 import WebviewComponent from "../../components/WebviewComponent";
@@ -74,7 +73,7 @@ const CgnLandingPlayground = () => {
               <IconFont
                 name={"io-right"}
                 style={{
-                  color: customVariables.colorWhite
+                  color: IOColors.white
                 }}
               />
             </ButtonDefaultOpacity>

@@ -28,6 +28,7 @@ import {
   mvlEnabled,
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest,
+  pnEnabled,
   svEnabled,
   usePaginatedMessages,
   zendeskEnabled
@@ -76,6 +77,8 @@ import { UIMessageId } from "../store/reducers/entities/messages/types";
 import { watchBonusCdcSaga } from "../features/bonus/cdc/saga";
 import { differentProfileLoggedIn } from "../store/actions/crossSessions";
 import { clearAllMvlAttachments } from "../features/mvl/saga/mvlAttachments";
+import { watchMessageAttachmentsSaga } from "../features/messages/saga/attachments";
+import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -131,6 +134,7 @@ import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
 import { completeOnboardingSaga } from "./startup/completeOnboardingSaga";
 import { watchLoadMessageById } from "./messages/watchLoadMessageById";
+import { watchThirdPartyMessageSaga } from "./messages/watchThirdPartyMessageSaga";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -406,6 +410,16 @@ export function* initializeApplicationSaga(): Generator<
     yield* fork(watchMvlSaga, sessionToken);
   }
 
+  if (pnEnabled) {
+    // Start watching for PN actions
+    yield* fork(watchPnSaga, sessionToken);
+  }
+
+  if (mvlEnabled || pnEnabled) {
+    // Start watching for message attachments actions
+    yield* fork(watchMessageAttachmentsSaga, sessionToken);
+  }
+
   // Load the user metadata
   yield* call(loadUserMetadata, backendClient.getUserMetadata, true);
 
@@ -517,6 +531,9 @@ export function* initializeApplicationSaga(): Generator<
     );
   }
 
+  // Load third party message content when requested
+  yield* fork(watchThirdPartyMessageSaga, backendClient);
+
   // Load a message when requested
   yield* fork(watchMessageLoadSaga, backendClient.getMessage);
 
@@ -556,7 +573,8 @@ export function* initializeApplicationSaga(): Generator<
     if (usePaginatedMessages) {
       NavigationService.dispatchNavigationAction(
         navigateToPaginatedMessageRouterAction({
-          messageId: messageId as UIMessageId
+          messageId: messageId as UIMessageId,
+          fromNotification: true
         })
       );
     } else {

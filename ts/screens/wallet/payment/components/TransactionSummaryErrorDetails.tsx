@@ -1,7 +1,6 @@
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { RawAccordion } from "../../../../components/core/accordion/RawAccordion";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { H4 } from "../../../../components/core/typography/H4";
 import customVariables from "../../../../theme/variables";
 import BlockButtons from "../../../../components/ui/BlockButtons";
@@ -9,6 +8,7 @@ import I18n from "../../../../i18n";
 import { TransactionSummaryError } from "../NewTransactionSummaryScreen";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
+import { isDuplicatedPayment } from "../../../../utils/payment";
 import { TransactionSummaryRow } from "./TransactionSummary";
 
 type Props = Readonly<{
@@ -22,8 +22,7 @@ const Separator = () => (
   <View
     style={{
       backgroundColor: customVariables.itemSeparator,
-      height: StyleSheet.hairlineWidth,
-      marginHorizontal: customVariables.contentPadding
+      height: StyleSheet.hairlineWidth
     }}
   />
 );
@@ -37,7 +36,7 @@ export const TransactionSummaryErrorDetails = ({
   const errorOrUndefined = error.toUndefined();
   if (
     errorOrUndefined === undefined ||
-    errorOrUndefined === "PAA_PAGAMENTO_DUPLICATO" ||
+    isDuplicatedPayment(error) ||
     !Object.keys(Detail_v2Enum).includes(errorOrUndefined)
   ) {
     return null;
@@ -82,7 +81,6 @@ export const TransactionSummaryErrorDetails = ({
           <H4>{I18n.t("wallet.firstTransactionSummary.errorDetails.title")}</H4>
         }
         headerStyle={{
-          ...IOStyles.horizontalContentPadding,
           paddingTop: customVariables.spacerLargeHeight,
           paddingBottom: customVariables.spacerSmallHeight
         }}
@@ -103,7 +101,7 @@ export const TransactionSummaryErrorDetails = ({
               />
             ) : undefined
           )}
-          <View style={{ paddingHorizontal: customVariables.contentPadding }}>
+          <View>
             <BlockButtons
               type={"SingleButton"}
               leftButton={{

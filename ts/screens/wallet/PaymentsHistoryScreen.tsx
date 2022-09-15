@@ -22,6 +22,7 @@ import {
 } from "../../store/reducers/payments/history";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
+import { IOColors } from "../../components/core/variables/IOColors";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -33,7 +34,7 @@ const styles = StyleSheet.create({
     paddingBottom: 0
   },
   whiteBg: {
-    backgroundColor: variables.colorWhite
+    backgroundColor: IOColors.white
   }
 });
 

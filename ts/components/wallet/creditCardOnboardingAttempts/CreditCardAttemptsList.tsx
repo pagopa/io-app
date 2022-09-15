@@ -16,6 +16,7 @@ import IconFont from "../../ui/IconFont";
 import customVariables from "../../../theme/variables";
 import { Label } from "../../core/typography/Label";
 import { IOStyles } from "../../core/variables/IOStyles";
+import { IOColors } from "../../core/variables/IOColors";
 
 type Props = Readonly<{
   title: string;
@@ -26,7 +27,7 @@ type Props = Readonly<{
 
 const styles = StyleSheet.create({
   whiteContent: {
-    backgroundColor: customVariables.colorWhite,
+    backgroundColor: IOColors.white,
     flex: 1
   },
   subHeaderContent: {

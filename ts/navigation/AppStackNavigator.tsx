@@ -4,7 +4,10 @@ import {
   LinkingOptions,
   NavigationContainer
 } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
+import {
+  createStackNavigator,
+  TransitionPresets
+} from "@react-navigation/stack";
 import { View } from "native-base";
 import * as React from "react";
 import { useRef } from "react";
@@ -30,7 +33,7 @@ import {
 import FIMS_ROUTES from "../features/fims/navigation/routes";
 import UADONATION_ROUTES from "../features/uaDonations/navigation/routes";
 import { UAWebViewScreen } from "../features/uaDonations/screens/UAWebViewScreen";
-import { zendeskSupportNavigator } from "../features/zendesk/navigation/navigator";
+import { ZendeskStackNavigator } from "../features/zendesk/navigation/navigator";
 import ZENDESK_ROUTES from "../features/zendesk/navigation/routes";
 import IngressScreen from "../screens/ingress/IngressScreen";
 import { setDebugCurrentRouteName } from "../store/actions/debug";
@@ -50,7 +53,7 @@ import onboardingNavigator from "./OnboardingNavigator";
 import { AppParamsList } from "./params/AppParamsList";
 import ProfileStackNavigator from "./ProfileNavigator";
 import ROUTES from "./routes";
-import servicesNavigator from "./ServicesNavigator";
+import ServicesNavigator from "./ServicesNavigator";
 import { MainTabNavigator } from "./TabNavigator";
 import walletNavigator from "./WalletNavigator";
 
@@ -86,7 +89,7 @@ export const AppStackNavigator = () => {
       />
       <Stack.Screen
         name={ROUTES.SERVICES_NAVIGATOR}
-        component={servicesNavigator}
+        component={ServicesNavigator}
       />
       <Stack.Screen
         name={ROUTES.PROFILE_NAVIGATOR}
@@ -120,7 +123,8 @@ export const AppStackNavigator = () => {
       />
       <Stack.Screen
         name={ZENDESK_ROUTES.MAIN}
-        component={zendeskSupportNavigator}
+        component={ZendeskStackNavigator}
+        options={{ ...TransitionPresets.ModalSlideFromBottomIOS }}
       />
       <Stack.Screen
         name={UADONATION_ROUTES.WEBVIEW}
@@ -192,6 +196,12 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
         [ROUTES.SERVICES_NAVIGATOR]: {
           path: "services",
           screens: {
+            [ROUTES.SERVICE_DETAIL]: {
+              path: "service-detail",
+              parse: {
+                activate: activate => activate === "true"
+              }
+            },
             ...(myPortalEnabled ? { [ROUTES.SERVICE_WEBVIEW]: "webview" } : {}),
             ...(svEnabled ? svLinkingOptions : {})
           }

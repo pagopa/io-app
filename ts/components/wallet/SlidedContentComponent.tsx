@@ -1,8 +1,8 @@
 import { Content, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import customVariables from "../../theme/variables";
 import { FOOTER_SAFE_AREA } from "../../utils/constants";
+import { IOColors } from "../core/variables/IOColors";
 
 type Props = Readonly<{
   dark?: boolean;
@@ -11,7 +11,7 @@ type Props = Readonly<{
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: customVariables.milderGray
+    backgroundColor: IOColors.milderGray
   },
   content: {
     borderRadius: 8,
@@ -26,10 +26,10 @@ const styles = StyleSheet.create({
     padding: 16
   },
   dark: {
-    backgroundColor: customVariables.darkerGray
+    backgroundColor: IOColors.bluegrey
   },
   white: {
-    backgroundColor: customVariables.colorWhite
+    backgroundColor: IOColors.white
   },
   flexGrow: {
     flexGrow: 1
