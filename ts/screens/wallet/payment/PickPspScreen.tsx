@@ -86,7 +86,9 @@ const filterPspsIfOriginPosteDataMatrix =
   (startOrigin: PaymentStartOrigin | undefined) =>
   (pspList: ReadonlyArray<PspData>) => {
     if (startOrigin === "poste_datamatrix_scan") {
-      return pspList.filter(psp => DATAMATRIX_POSTE_ALLOWED_PSP_IDS.includes(psp.idPsp));
+      return pspList.filter(psp =>
+        DATAMATRIX_POSTE_ALLOWED_PSP_IDS.includes(psp.idPsp)
+      );
     }
     return pspList;
   };
@@ -118,10 +120,9 @@ class PickPspScreen extends React.Component<Props> {
   );
 
   public render(): React.ReactNode {
-    // const availablePsps = orderPspByAmount(this.props.allPsps);
-
     const availablePsps = pipe(
       filterPspsIfOriginPosteDataMatrix(this.props.paymentStartOrigin),
+      // Show PSPs with lower fee first
       orderPspByAmount
     )(this.props.allPsps);
 
