@@ -79,12 +79,14 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "wallet.pickPsp.contextualHelpContent"
 };
 
+// TODO: Export to remote configuration
+const DATAMATRIX_POSTE_ALLOWED_PSP_IDS = ["BPPIITRRXXX"];
+
 const filterPspsIfOriginPosteDataMatrix =
   (startOrigin: PaymentStartOrigin | undefined) =>
   (pspList: ReadonlyArray<PspData>) => {
     if (startOrigin === "poste_datamatrix_scan") {
-      // TODO: Export to remote configuration
-      return pspList.filter(psp => psp.idPsp === "BPPIITRRXXX");
+      return pspList.filter(psp => DATAMATRIX_POSTE_ALLOWED_PSP_IDS.includes(psp.idPsp));
     }
     return pspList;
   };
