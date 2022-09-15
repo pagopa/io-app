@@ -7,12 +7,14 @@ import { H3, Text, View } from "native-base";
 import * as React from "react";
 import { Animated, ImageSourcePropType, StyleSheet } from "react-native";
 import { IconProps } from "react-native-vector-icons/Icon";
-import variables from "../../theme/variables";
 import {
   HEADER_ANIMATION_DURATION,
   HEADER_HEIGHT
 } from "../../utils/constants";
 import ScreenHeader from "../ScreenHeader";
+
+import variables from "../../theme/variables";
+import { IOColors } from "../core/variables/IOColors";
 
 type Props = Readonly<{
   title?: string;
@@ -33,10 +35,10 @@ const styles = StyleSheet.create({
     paddingRight: variables.contentPadding
   },
   darkGrayBg: {
-    backgroundColor: variables.brandDarkGray
+    backgroundColor: IOColors.bluegrey
   },
   white: {
-    color: variables.colorWhite
+    color: IOColors.white
   }
 });
 

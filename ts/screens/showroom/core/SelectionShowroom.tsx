@@ -1,11 +1,10 @@
 import * as pot from "italia-ts-commons/lib/pot";
-import { View } from "native-base";
 import * as React from "react";
-import { Alert, StyleSheet } from "react-native";
+import { View, Alert, StyleSheet } from "react-native";
 import { CheckBox } from "../../../components/core/selection/checkbox/CheckBox";
 import { RemoteSwitch } from "../../../components/core/selection/RemoteSwitch";
 import { Label } from "../../../components/core/typography/Label";
-import { ShowroomSection } from "../ShowroomSection";
+import { ShowroomSection } from "../components/ShowroomSection";
 
 const styles = StyleSheet.create({
   content: {

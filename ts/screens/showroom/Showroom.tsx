@@ -1,11 +1,13 @@
+import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { View } from "native-base";
 import * as React from "react";
 import { useEffect } from "react";
-import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
 import { ColorsShowroom } from "./core/ColorsShowroom";
+import { IllustrationsShowroom } from "./core/IllustrationsShowroom";
+import { PictogramsShowroom } from "./core/PictogramsShowroom";
 import { SelectionShowroom } from "./core/SelectionShowroom";
 import { TypographyShowroom } from "./core/TypographyShowRoom";
 import { OthersShowroom } from "./OthersShowroom";
@@ -13,7 +15,7 @@ import { OthersShowroom } from "./OthersShowroom";
 const styles = StyleSheet.create({
   body: {
     flex: 1,
-    alignItems: "center"
+    alignItems: "flex-start"
   },
 
   scrollView: {
@@ -51,6 +53,9 @@ export const Showroom = () => {
             <SelectionShowroom />
             <View spacer={true} extralarge={true} />
             <OthersShowroom />
+            <View spacer={true} extralarge={true} />
+            <PictogramsShowroom />
+            <IllustrationsShowroom />
           </View>
         </ScrollView>
       </SafeAreaView>

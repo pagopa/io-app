@@ -11,8 +11,6 @@ import * as React from "react";
 import {
   Alert,
   Dimensions,
-  PermissionsAndroid,
-  Platform,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -62,6 +60,7 @@ import {
 import { isAndroid } from "../../../utils/platform";
 import { showToast } from "../../../utils/showToast";
 import { mixpanelTrack } from "../../../mixpanel";
+import { IOColors } from "../../../components/core/variables/IOColors";
 
 type Props = IOStackNavigationRouteProps<AppParamsList> &
   ReturnType<typeof mapDispatchToProps> &
@@ -70,9 +69,6 @@ type Props = IOStackNavigationRouteProps<AppParamsList> &
 type State = {
   scanningState: ComponentProps<typeof CameraMarker>["state"];
   isFocused: boolean;
-  // The scanner package automatically asks for android permission, but we have to display before an alert with
-  // the rationale
-  permissionRationaleDisplayed: boolean;
 };
 
 const screenWidth = Dimensions.get("screen").width;
@@ -85,7 +81,7 @@ const styles = StyleSheet.create({
   },
 
   white: {
-    backgroundColor: customVariables.brandPrimaryInverted
+    backgroundColor: IOColors.white
   },
 
   bottomText: {
@@ -93,7 +89,7 @@ const styles = StyleSheet.create({
   },
 
   content: {
-    backgroundColor: customVariables.colorWhite,
+    backgroundColor: IOColors.white,
     marginTop: -cameraTextOverlapping,
     zIndex: 1
   },
@@ -111,7 +107,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginTop: -cameraTextOverlapping,
     width: screenWidth - customVariables.contentPadding * 2,
-    backgroundColor: customVariables.colorWhite,
+    backgroundColor: IOColors.white,
     zIndex: 999
   },
 
@@ -281,8 +277,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
     super(props);
     this.state = {
       scanningState: "SCANNING",
-      isFocused: false,
-      permissionRationaleDisplayed: Platform.OS !== "android"
+      isFocused: false
     };
   }
 
@@ -291,28 +286,6 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
       // cancel the QR scanner reactivation before unmounting the component
       clearTimeout(this.scannerReactivateTimeoutHandler);
     }
-  }
-
-  public async componentDidMount() {
-    if (Platform.OS !== "android") {
-      return;
-    }
-    const hasPermission = await PermissionsAndroid.check(
-      PermissionsAndroid.PERMISSIONS.CAMERA
-    );
-    if (!hasPermission) {
-      await AsyncAlert(
-        I18n.t("permissionRationale.camera.title"),
-        I18n.t("permissionRationale.camera.message"),
-        [
-          {
-            text: I18n.t("global.buttons.choose"),
-            style: "default"
-          }
-        ]
-      );
-    }
-    this.setState({ permissionRationaleDisplayed: true });
   }
 
   private handleWillFocus = () => this.setState({ isFocused: true });
@@ -342,7 +315,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
         <SafeAreaView style={IOStyles.flex}>
           <FocusAwareStatusBar
             barStyle={"dark-content"}
-            backgroundColor={customVariables.colorWhite}
+            backgroundColor={IOColors.white}
           />
           <ScrollView bounces={false}>
             <BarcodeCamera

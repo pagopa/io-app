@@ -27,6 +27,7 @@ import DetailedlistItemComponent from "../DetailedlistItemComponent";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 import BoxedRefreshIndicator from "../ui/BoxedRefreshIndicator";
+import { IOColors } from "../core/variables/IOColors";
 
 type State = {
   loadingMore: boolean;
@@ -46,7 +47,7 @@ type Props = Readonly<{
 const screenWidth = Dimensions.get("screen").width;
 const styles = StyleSheet.create({
   whiteContent: {
-    backgroundColor: variables.colorWhite,
+    backgroundColor: IOColors.white,
     flex: 1
   },
   subHeaderContent: {
@@ -54,16 +55,13 @@ const styles = StyleSheet.create({
     alignItems: "baseline",
     justifyContent: "space-between"
   },
-  brandDarkGray: {
-    color: variables.brandDarkGray
-  },
   moreButton: {
     flex: 1,
     alignContent: "center",
     justifyContent: "center",
     alignSelf: "center",
     width: screenWidth - variables.contentPadding * 2,
-    backgroundColor: variables.colorWhite
+    backgroundColor: IOColors.white
   }
 });
 

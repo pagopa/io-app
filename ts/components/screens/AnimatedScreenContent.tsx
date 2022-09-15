@@ -18,6 +18,8 @@ import {
 import { isIphoneX } from "react-native-iphone-x-helper";
 import customVariables from "../../theme/variables";
 import { ComponentProps } from "../../types/react";
+import { IOColors } from "../core/variables/IOColors";
+
 import { ScreenContentHeader } from "./ScreenContentHeader";
 
 type OwnProps = Readonly<{
@@ -57,7 +59,7 @@ const styles = StyleSheet.create({
   },
 
   animatedDarkItem: {
-    backgroundColor: customVariables.brandDarkGray,
+    backgroundColor: IOColors.bluegrey,
     position: "absolute",
     width: "100%",
     zIndex: -5,

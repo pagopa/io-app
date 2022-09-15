@@ -10,6 +10,7 @@ import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
+import { IOColors } from "../../core/variables/IOColors";
 
 export type SectionCardStatus = "add" | "refresh" | "loading" | "show";
 type Props = {
@@ -39,8 +40,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center"
   },
-  brandLightGray: {
-    color: customVariables.brandGray
+  greyUltraLight: {
+    color: IOColors.greyUltraLight
   },
   badgeColor: {
     height: 18,
@@ -55,7 +56,7 @@ const styles = StyleSheet.create({
     marginTop: 3,
     fontSize: customVariables.fontSizeSmall,
     lineHeight: 16,
-    color: customVariables.brandDarkGray
+    color: IOColors.bluegrey
   },
   cardInner: {
     paddingBottom: 13,
@@ -77,8 +78,8 @@ const styles = StyleSheet.create({
     marginLeft: 0,
     marginRight: 0
   },
-  cardGrey: {
-    backgroundColor: customVariables.brandDarkGray
+  cardBlueGrey: {
+    backgroundColor: IOColors.bluegrey
   },
   flatBottom: {
     borderBottomLeftRadius: 0,
@@ -102,7 +103,7 @@ const styles = StyleSheet.create({
   },
   labelButton: {
     marginLeft: customVariables.fontSizeBase / 4,
-    color: customVariables.colorWhite
+    color: IOColors.white
   },
   shadowBox: {
     marginBottom: -15,
@@ -123,7 +124,7 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
           <>
             <IconFont
               name="io-plus"
-              color={customVariables.colorWhite}
+              color={IOColors.white}
               size={customVariables.fontSize2}
             />
             <Text
@@ -186,7 +187,7 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
             <IconFont
               style={{ marginTop: 1, marginLeft: 2 }}
               name={"io-right"}
-              color={customVariables.colorWhite}
+              color={IOColors.white}
               size={20}
             />
           </View>
@@ -211,7 +212,11 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
         accessibilityRole={"button"}
       >
         <View
-          style={[styles.card, styles.flatBottom, cardStyle || styles.cardGrey]}
+          style={[
+            styles.card,
+            styles.flatBottom,
+            cardStyle || styles.cardBlueGrey
+          ]}
         >
           <View
             style={[styles.cardInner]}
@@ -222,7 +227,7 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
             <View style={[styles.flexRow, styles.topSpacing]}>
               <View style={styles.flexRow2}>
                 <Text
-                  style={[styles.brandLightGray, styles.headerText]}
+                  style={[styles.greyUltraLight, styles.headerText]}
                   ellipsizeMode="tail"
                 >
                   {label}

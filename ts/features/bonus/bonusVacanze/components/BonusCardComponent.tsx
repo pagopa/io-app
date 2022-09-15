@@ -18,6 +18,7 @@ import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { isShareEnabled } from "../../../../utils/share";
 import { maybeNotNullyString } from "../../../../utils/strings";
 import { getBonusCodeFormatted, isBonusActive } from "../utils/bonus";
+import { IOColors } from "../../../../components/core/variables/IOColors";
 
 type Props = {
   bonus: BonusActivationWithQrCode;
@@ -83,7 +84,7 @@ const styles = StyleSheet.create({
     padding: 16
   },
   colorWhite: {
-    color: customVariables.colorWhite
+    color: IOColors.white
   },
   fontLarge: {
     fontSize: customVariables.fontSize2
@@ -122,7 +123,7 @@ const styles = StyleSheet.create({
   badge: {
     height: 18,
     marginTop: 6,
-    backgroundColor: customVariables.colorWhite
+    backgroundColor: IOColors.white
   },
   statusText: {
     fontSize: 12,
@@ -220,7 +221,7 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
           >
             <Menu>
               <MenuTrigger>
-                <IconFont name={"io-more"} color={customVariables.colorWhite} />
+                <IconFont name={"io-more"} color={IOColors.white} />
               </MenuTrigger>
 
               <MenuOptions>

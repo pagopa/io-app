@@ -68,13 +68,14 @@ import {
   showServiceDetails
 } from "../../../../store/actions/services";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { IOColors } from "../../../../components/core/variables/IOColors";
 
 export type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 const styles = StyleSheet.create({
   whiteContent: {
-    backgroundColor: variables.colorWhite,
+    backgroundColor: IOColors.white,
     flex: 1
   },
   paddedContent: {
@@ -157,7 +158,7 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
           s => () => {
             this.props.showServiceDetails(s);
             this.props.navigateToServiceDetailsScreen({
-              service: s
+              serviceId: s.service_id
             });
           }
         )();

@@ -72,6 +72,7 @@ Object {
     "detailsById": Object {},
     "idsByServiceId": Object {},
     "paginatedById": Object {},
+    "thirdPartyById": Object {},
   },
   "messagesStatus": Object {},
   "organizations": Object {
@@ -163,6 +164,7 @@ Object {
   "isFingerprintEnabled": undefined,
   "isMixpanelEnabled": null,
   "isPagoPATestEnabled": false,
+  "isPnTestEnabled": false,
   "preferredCalendar": undefined,
   "preferredLanguage": undefined,
   "wasServiceAlertDisplayedOnce": false,

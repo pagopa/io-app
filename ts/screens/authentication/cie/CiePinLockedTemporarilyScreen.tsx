@@ -15,7 +15,7 @@ import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParam
 import { AuthenticationParamsList } from "../../../navigation/params/AuthenticationParamsList";
 import { resetToAuthenticationRoute } from "../../../store/actions/navigation";
 import { ReduxProps } from "../../../store/actions/types";
-import variables from "../../../theme/variables";
+import { IOColors } from "../../../components/core/variables/IOColors";
 
 type NavigationProps = IOStackNavigationRouteProps<
   AuthenticationParamsList,
@@ -57,7 +57,7 @@ class CiePinLockedTemporarilyScreen extends React.PureComponent<Props, State> {
     };
     const retryButtonProps = {
       primary: true,
-      iconColor: variables.colorWhite,
+      iconColor: IOColors.white,
       iconName: "io-cie",
       onPress: this.goToCieID,
       title: I18n.t("authentication.cie.pinTempLocked.button")

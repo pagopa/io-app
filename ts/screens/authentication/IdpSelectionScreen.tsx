@@ -30,6 +30,7 @@ import {
 import ROUTES from "../../navigation/routes";
 import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
 import { AuthenticationParamsList } from "../../navigation/params/AuthenticationParamsList";
+import { IOColors } from "../../components/core/variables/IOColors";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -40,7 +41,7 @@ const styles = StyleSheet.create({
   gridContainer: {
     padding: variables.contentPadding,
     flex: 1,
-    backgroundColor: variables.brandGray
+    backgroundColor: IOColors.greyUltraLight
   }
 });
 

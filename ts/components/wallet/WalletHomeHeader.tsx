@@ -136,7 +136,7 @@ const WalletHomeHeader = (props: Props) => {
       >
         <IconFont
           name="io-plus"
-          color={customVariables.colorWhite}
+          color={IOColors.white}
           size={customVariables.fontSize2}
         />
         <View hspacer={true} small />
