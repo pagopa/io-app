@@ -121,6 +121,7 @@ class PickPspScreen extends React.Component<Props> {
 
   public render(): React.ReactNode {
     const availablePsps = pipe(
+      // TODO: Add a FF to enable/disable the filter
       filterPspsIfOriginPosteDataMatrix(this.props.paymentStartOrigin),
       // Show PSPs with lower fee first
       orderPspByAmount
