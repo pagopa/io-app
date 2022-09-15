@@ -1,9 +1,8 @@
-import { CompatNavigationProp } from "@react-navigation/compat";
+import { useNavigation } from "@react-navigation/native";
 import { constNull } from "fp-ts/lib/function";
 import { ListItem, View } from "native-base";
 import React, { ReactNode } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import EmailIcon from "../../../../img/assistance/email.svg";
 import FiscalCodeIcon from "../../../../img/assistance/fiscalCode.svg";
 import NameSurnameIcon from "../../../../img/assistance/nameSurname.svg";
@@ -17,7 +16,8 @@ import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import {
   AppParamsList,
-  IOStackNavigationProp
+  IOStackNavigationProp,
+  IOStackNavigationRouteProps
 } from "../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../store/hooks";
 import {
@@ -95,23 +95,17 @@ const ItemComponent = (props: Item) => (
   </ListItem>
 );
 
-type Props = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<
-      ZendeskParamsList,
-      "ZENDESK_ASK_SEE_REPORTS_PERMISSIONS"
-    >
-  >;
-};
+type Props = IOStackNavigationRouteProps<
+  ZendeskParamsList,
+  "ZENDESK_ASK_SEE_REPORTS_PERMISSIONS"
+>;
 /**
  * this screen shows the kinds of data the app could collect when a user is looking at the previous ticket only for the authenticated users
  * @constructor
  */
 const ZendeskAskSeeReportsPermissions = (props: Props) => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
-  const assistanceForPayment = props.navigation.getParam(
-    "assistanceForPayment"
-  );
+  const assistanceForPayment = props.route.params.assistanceForPayment;
   const notAvailable = I18n.t("global.remoteStates.notAvailable");
   const fiscalCode = useIOSelector(profileFiscalCodeSelector) ?? notAvailable;
   const nameSurname = useIOSelector(profileNameSurnameSelector) ?? notAvailable;

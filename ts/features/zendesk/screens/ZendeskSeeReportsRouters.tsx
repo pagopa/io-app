@@ -1,22 +1,22 @@
-import { CompatNavigationProp } from "@react-navigation/compat";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { useNavigation } from "@react-navigation/native";
+import { fromNullable } from "fp-ts/lib/Option";
 import React, { useEffect } from "react";
 import { SafeAreaView } from "react-native";
 import { useDispatch } from "react-redux";
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import { fromNullable } from "fp-ts/lib/Option";
-import { useNavigation } from "@react-navigation/native";
+import image from "../../../../img/wallet/errors/payment-unavailable-icon.png";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
+import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
+import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import {
   AppParamsList,
-  IOStackNavigationProp
+  IOStackNavigationProp,
+  IOStackNavigationRouteProps
 } from "../../../navigation/params/AppParamsList";
-import { ZendeskParamsList } from "../navigation/params";
-import {
-  zendeskRequestTicketNumber,
-  zendeskSupportCompleted
-} from "../store/actions";
+import { useIOSelector } from "../../../store/hooks";
+import { zendeskTokenSelector } from "../../../store/reducers/authentication";
 import {
   AnonymousIdentity,
   initSupportAssistance,
@@ -28,17 +28,17 @@ import {
   zendeskDefaultAnonymousConfig,
   zendeskDefaultJwtConfig
 } from "../../../utils/supportAssistance";
-import { useIOSelector } from "../../../store/hooks";
-import { zendeskTokenSelector } from "../../../store/reducers/authentication";
+import { LoadingErrorComponent } from "../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { isReady } from "../../bonus/bpd/model/RemoteValue";
+import { ZendeskParamsList } from "../navigation/params";
+import {
+  zendeskRequestTicketNumber,
+  zendeskSupportCompleted
+} from "../store/actions";
 import {
   zendeskConfigSelector,
   zendeskTicketNumberSelector
 } from "../store/reducers";
-import { LoadingErrorComponent } from "../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
-import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
-import image from "../../../../img/wallet/errors/payment-unavailable-icon.png";
-import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
-import { isReady } from "../../bonus/bpd/model/RemoteValue";
 
 export type ZendeskSeeReportsRoutersNavigationParams = {
   assistanceForPayment: boolean;
@@ -105,14 +105,10 @@ const EmptyTicketsComponent = ({ assistanceForPayment }: EmptyTicketsProps) => {
   );
 };
 
-type Props = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<
-      ZendeskParamsList,
-      "ZENDESK_ASK_SEE_REPORTS_PERMISSIONS"
-    >
-  >;
-};
+type Props = IOStackNavigationRouteProps<
+  ZendeskParamsList,
+  "ZENDESK_ASK_SEE_REPORTS_PERMISSIONS"
+>;
 /**
  * this screen checks if a user has at least a ticket, it shows:
  * - a loading state when the request start
@@ -124,9 +120,7 @@ const ZendeskSeeReportsRouters = (props: Props) => {
   const dispatch = useDispatch();
   const zendeskToken = useIOSelector(zendeskTokenSelector);
   const ticketNumber = useIOSelector(zendeskTicketNumberSelector);
-  const assistanceForPayment = props.navigation.getParam(
-    "assistanceForPayment"
-  );
+  const assistanceForPayment = props.route.params.assistanceForPayment;
 
   const [zendeskConfig, setZendeskConfig] = React.useState<ZendeskAppConfig>(
     zendeskToken
