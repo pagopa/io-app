@@ -20,7 +20,7 @@ import CieNfcOverlay from "../../../components/cie/CieNfcOverlay";
 import CieReadingCardAnimation, {
   ReadingState
 } from "../../../components/cie/CieReadingCardAnimation";
-import { withConditionalView } from "../../../components/helpers/withConditionalView";
+import { IOColors } from "../../../components/core/variables/IOColors";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
@@ -59,12 +59,15 @@ type NavigationProps = IOStackNavigationRouteProps<
   "CIE_CARD_READER_SCREEN"
 >;
 
-type Props = { nav: NavigationProps } & ReduxProps &
-  ReturnType<typeof mapStateToProps>;
+type Props = NavigationProps & ReduxProps & ReturnType<typeof mapStateToProps>;
 
 const styles = StyleSheet.create({
   padded: {
     paddingHorizontal: customVariables.contentPadding
+  },
+  container: {
+    flex: 1,
+    backgroundColor: IOColors.white
   }
 });
 
@@ -196,11 +199,11 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
   }
 
   get ciePin(): string {
-    return this.props.nav.route.params.ciePin;
+    return this.props.route.params.ciePin;
   }
 
   get cieAuthorizationUri(): string {
-    return this.props.nav.route.params.authorizationUri;
+    return this.props.route.params.authorizationUri;
   }
 
   private setError = ({
@@ -260,7 +263,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
         this.setError({
           eventReason: event.event,
           navigation: () =>
-            this.props.nav.navigation.navigate(ROUTES.AUTHENTICATION, {
+            this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
               screen: ROUTES.CIE_PIN_TEMP_LOCKED_SCREEN
             })
         });
@@ -271,7 +274,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
         this.setError({
           eventReason: event.event,
           navigation: () =>
-            this.props.nav.navigation.navigate(ROUTES.AUTHENTICATION, {
+            this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
               screen: ROUTES.CIE_WRONG_PIN_SCREEN,
               params: {
                 remainingCount: event.attemptsLeft
@@ -286,7 +289,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
         this.setError({
           eventReason: event.event,
           navigation: () =>
-            this.props.nav.navigation.navigate(ROUTES.AUTHENTICATION, {
+            this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
               screen: ROUTES.CIE_EXPIRED_SCREEN
             })
         });
@@ -359,7 +362,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       this.updateContent();
       setTimeout(
         async () => {
-          this.props.nav.navigation.navigate(ROUTES.AUTHENTICATION, {
+          this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
             screen: ROUTES.CIE_CONSENT_DATA_USAGE,
             params: {
               cieConsentUri
@@ -510,10 +513,14 @@ const mapStateToProps = (state: GlobalState) => {
   };
 };
 
-export default connect(mapStateToProps)(
-  withConditionalView(
-    CieCardReaderScreen,
-    (props: Props) => props.isNfcEnabled,
-    CieNfcOverlay
-  )
+const ReaderScreen = (props: Props) => (
+  <View style={styles.container}>
+    {props.isNfcEnabled ? (
+      <CieCardReaderScreen {...props} />
+    ) : (
+      <CieNfcOverlay {...props} />
+    )}
+  </View>
 );
+
+export default connect(mapStateToProps)(ReaderScreen);
