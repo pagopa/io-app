@@ -1,7 +1,5 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore, Store } from "redux";
-import { PublicSession } from "../../../../../definitions/backend/PublicSession";
-import { SpidLevelEnum } from "../../../../../definitions/backend/SpidLevel";
 import { SpidIdp } from "../../../../../definitions/content/SpidIdp";
 import { Zendesk } from "../../../../../definitions/content/Zendesk";
 import ROUTES from "../../../../navigation/routes";
@@ -22,14 +20,6 @@ import {
 } from "../../store/actions";
 import ZendeskSupportComponent from "../ZendeskSupportComponent";
 
-const mockPublicSession: PublicSession = {
-  bpdToken: "bpdToken",
-  myPortalToken: "myPortalToken",
-  spidLevel: SpidLevelEnum["https://www.spid.gov.it/SpidL2"],
-  walletToken: "walletToken",
-  zendeskToken: "zendeskToken",
-  fimsToken: "fimsToken"
-};
 const mockZendeskConfig: Zendesk = {
   panicMode: false
 };
