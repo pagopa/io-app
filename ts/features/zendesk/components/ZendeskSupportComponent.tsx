@@ -1,8 +1,8 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import { isNone, Option } from "fp-ts/lib/Option";
 import { View } from "native-base";
 import * as React from "react";
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
 import AdviceComponent from "../../../components/AdviceComponent";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
@@ -18,8 +18,9 @@ import {
 import { useIOSelector } from "../../../store/hooks";
 import { profileSelector } from "../../../store/reducers/profile";
 import { isPanicModeActive } from "../../../utils/supportAssistance";
-import { zendeskConfigSelector } from "../store/reducers";
 import { isReady } from "../../bonus/bpd/model/RemoteValue";
+import ZENDESK_ROUTES from "../navigation/routes";
+import { zendeskConfigSelector } from "../store/reducers";
 
 type Props = {
   assistanceForPayment: boolean;
@@ -30,7 +31,7 @@ type Props = {
  * It has 2 buttons that respectively allow a user to open a ticket and see the already opened tickets.
  *
  * Here is managed the initialization of the Zendesk SDK and is chosen the config to use between authenticated or anonymous.
- * If the panic mode is active in the remote Zendesk config pressing the open a ticket button, the user will be sent to the {@link ZendeskPanicMode}
+ * If the panic mode is active in the remote Zendesk config pressing the open a ticket button, the user will be sent to the ZendeskPanicMode
  * @constructor
  */
 const ZendeskSupportComponent = (props: Props) => {
@@ -46,20 +47,20 @@ const ZendeskSupportComponent = (props: Props) => {
 
     if (isPanicModeActive(zendeskRemoteConfig)) {
       // Go to panic mode screen
-      navigation.navigate("ZENDESK_MAIN", {
-        screen: "ZENDESK_PANIC_MODE"
+      navigation.navigate(ZENDESK_ROUTES.MAIN, {
+        screen: ZENDESK_ROUTES.PANIC_MODE
       });
       return;
     }
 
     if (canSkipCategoryChoice) {
-      navigation.navigate("ZENDESK_MAIN", {
-        screen: "ZENDESK_ASK_PERMISSIONS",
+      navigation.navigate(ZENDESK_ROUTES.MAIN, {
+        screen: ZENDESK_ROUTES.ASK_PERMISSIONS,
         params: { assistanceForPayment }
       });
     } else {
-      navigation.navigate("ZENDESK_MAIN", {
-        screen: "ZENDESK_CHOOSE_CATEGORY",
+      navigation.navigate(ZENDESK_ROUTES.MAIN, {
+        screen: ZENDESK_ROUTES.CHOOSE_CATEGORY,
         params: { assistanceForPayment }
       });
     }
@@ -83,13 +84,13 @@ const ZendeskSupportComponent = (props: Props) => {
         onPress={() => {
           void mixpanelTrack("ZENDESK_SHOW_TICKETS_STARTS");
           if (isNone(maybeProfile)) {
-            navigation.navigate("ZENDESK_MAIN", {
-              screen: "ZENDESK_SEE_REPORTS_ROUTERS",
+            navigation.navigate(ZENDESK_ROUTES.MAIN, {
+              screen: ZENDESK_ROUTES.SEE_REPORTS_ROUTERS,
               params: { assistanceForPayment }
             });
           } else {
-            navigation.navigate("ZENDESK_MAIN", {
-              screen: "ZENDESK_ASK_SEE_REPORTS_PERMISSIONS",
+            navigation.navigate(ZENDESK_ROUTES.MAIN, {
+              screen: ZENDESK_ROUTES.ASK_SEE_REPORTS_PERMISSIONS,
               params: { assistanceForPayment }
             });
           }
