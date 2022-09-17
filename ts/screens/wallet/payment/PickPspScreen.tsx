@@ -6,7 +6,8 @@ import * as React from "react";
 import { FlatList, SafeAreaView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 
-import { pipe } from "fp-ts/lib/function";
+import { identity, pipe } from "fp-ts/lib/function";
+import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { H4 } from "../../../components/core/typography/H4";
 import { H5 } from "../../../components/core/typography/H5";
@@ -42,6 +43,9 @@ import {
   isError,
   isLoading
 } from "../../../features/bonus/bpd/model/RemoteValue";
+import { POSTE_DATAMATRIX_SCAN_ALLOWED_PSPS } from "../../../config";
+import { paymentsConfigSelector } from "../../../store/reducers/backendStatus";
+import { Config } from "../../../../definitions/content/Config";
 import { dispatchUpdatePspForWalletAndConfirm } from "./common";
 
 export type PickPspScreenNavigationParams = Readonly<{
@@ -79,19 +83,53 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "wallet.pickPsp.contextualHelpContent"
 };
 
-// TODO: Export to remote configuration
-const DATAMATRIX_POSTE_ALLOWED_PSP_IDS = ["BPPIITRRXXX"];
+/**
+ * If needed, filter the PSPs list by the allowed PSPs.
+ * Allowed PSPs could be defined remotely with a local fallback.
+ * Remote configuration has priority over local configuration.
+ */
+const filterPspsByAllowedPsps = (
+  pspList: ReadonlyArray<PspData>,
+  remoteAllowedPsps: ReadonlyArray<string> | undefined,
+  fallbackAllowedPsps: ReadonlyArray<string> | undefined
+): ReadonlyArray<PspData> => {
+  const allowedPsps = remoteAllowedPsps ?? fallbackAllowedPsps;
 
-const filterPspsIfOriginPosteDataMatrix =
-  (startOrigin: PaymentStartOrigin | undefined) =>
-  (pspList: ReadonlyArray<PspData>) => {
-    if (startOrigin === "poste_datamatrix_scan") {
-      return pspList.filter(psp =>
-        DATAMATRIX_POSTE_ALLOWED_PSP_IDS.includes(psp.idPsp)
-      );
-    }
+  // If allowedPsps is undefined we return the original list
+  // because we don't have any filter to apply
+  if (allowedPsps === undefined) {
     return pspList;
-  };
+  }
+
+  // If the allowedPsp array is empty, return empty array immediately
+  // because no PSP is allowed
+  if (allowedPsps.length === 0) {
+    return [];
+  }
+
+  return pspList.filter(psp => allowedPsps.includes(psp.idPsp));
+};
+
+/**
+ * Filter the PSPs list by the payment start origin.
+ */
+const filterPspsByPaymentStartOrigin = (
+  paymentsStartOrigin: PaymentStartOrigin,
+  allowedPspsByOrigin: NonNullable<Config["payments"]["allowedPspsByOrigin"]>,
+  pspList: ReadonlyArray<PspData>
+) => {
+  switch (paymentsStartOrigin) {
+    case "poste_datamatrix_scan":
+      return filterPspsByAllowedPsps(
+        pspList,
+        allowedPspsByOrigin.poste_datamatrix_scan,
+        POSTE_DATAMATRIX_SCAN_ALLOWED_PSPS
+      );
+
+    default:
+      return pspList;
+  }
+};
 
 /**
  * Select a PSP to be used for a the current selected wallet
@@ -120,12 +158,28 @@ class PickPspScreen extends React.Component<Props> {
   );
 
   public render(): React.ReactNode {
+    const { paymentStartOrigin } = this.props;
+    const allowedPspsByOrigin = this.props.paymentsConfig
+      .map(pc => pc.allowedPspsByOrigin)
+      .toUndefined();
     const availablePsps = pipe(
-      // TODO: Add a FF to enable/disable the filter
-      filterPspsIfOriginPosteDataMatrix(this.props.paymentStartOrigin),
-      // Show PSPs with lower fee first
+      () => this.props.allPsps,
+      allPsps => {
+        // If necessary, filter the PSPs list by the payment start origin
+        if (
+          paymentStartOrigin !== undefined &&
+          allowedPspsByOrigin !== undefined
+        ) {
+          return filterPspsByPaymentStartOrigin(
+            paymentStartOrigin,
+            allowedPspsByOrigin,
+            allPsps
+          );
+        }
+        return allPsps;
+      },
       orderPspByAmount
-    )(this.props.allPsps);
+    )({});
 
     return (
       <BaseScreenComponent
@@ -198,7 +252,8 @@ const mapStateToProps = (state: GlobalState) => {
       pot.isLoading(state.wallet.wallets.walletById) || isLoading(psps),
     hasError: pot.isError(state.wallet.wallets.walletById) || isError(psps),
     paymentStartOrigin: state.wallet.payment.startOrigin,
-    allPsps: getValueOrElse(psps, [])
+    allPsps: getValueOrElse(psps, []),
+    paymentsConfig: paymentsConfigSelector(state)
   };
 };
 
