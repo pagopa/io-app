@@ -3020,8 +3020,7 @@ features:
             body: "Sto scaricando l'allegato"
           failing:
             title: "Allegato"
-            body: "Non sono riuscito a scaricare l'allegato"
-            details: "Per favore, controlla la tua connessione e riprova"
+            details: "Non sono riuscito a scaricare l’allegato. Riprova o apri una segnalazione"
           checkBox: "OK, non mostrarmelo più"
         pdfPreview:
           title: "Anteprima PDF"
@@ -3142,7 +3141,6 @@ features:
           EFFECTIVE_DATE: Perfezionata per decorrenza termini
           VIEWED: Perfezionata per visione
           REFUSED: REFUSED
-          UNDEFINED: Non definito
           CANCELLED: Annullata
         expand: mostra gli stati precedenti
         info: Puoi vedere il dettaglio di ciascuno stato, scaricare le ricevute e le attestazioni opponibili a terzi accedendo alla versione web del servizio   
