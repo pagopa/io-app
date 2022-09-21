@@ -3129,8 +3129,8 @@ webView:
 support:
   ticketList:
     noTicket:
-      title: "There's no ongoing request"
-      body: "If you need help, submit a new request"
+      title: "There are no ongoing requests"
+      body: "If you need help, submit a new request."
   helpCenter:
     header: "Support"
     cta:
@@ -3159,7 +3159,7 @@ support:
     header: "Submit a request"
     listTitle: "Ongoing requests"
     title: "Do you give us your consent?"
-    listBody: "To load your ongoing requests, we need to access to some perdonal data."
+    listBody: "To retrieve your ongoing requests, we need to access to some data."
     privacyLink: "Read the privacy policy"
     body: "In order to respond to the support request, we need access to some personal data. If you deny consent, you’ll have to send us a generic request via e-mail."
     listHeader: "If you consent, we'll access this data:"
