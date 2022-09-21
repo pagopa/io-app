@@ -3151,6 +3151,10 @@ webView:
     missingToken: Non hai l'autorizzazione per avviare questo flusso
     convertMessage: Non è stato possibile decodificare il messaggio inviato all'app
 support:
+  ticketList:
+    noTicket:
+      title: "Non hai richieste in corso"
+      body: "Se hai bisogno d’aiuto, apri una nuova richiesta."
   helpCenter:
     header: "Assistenza"
     cta:

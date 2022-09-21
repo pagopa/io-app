@@ -4,11 +4,10 @@ import { fromNullable } from "fp-ts/lib/Option";
 import React, { useEffect } from "react";
 import { SafeAreaView } from "react-native";
 import { useDispatch } from "react-redux";
-import image from "../../../../img/wallet/errors/payment-unavailable-icon.png";
+import image from "../../../../img/pictograms/doubt.png";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import {
   AppParamsList,
@@ -17,6 +16,7 @@ import {
 } from "../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../store/hooks";
 import { zendeskTokenSelector } from "../../../store/reducers/authentication";
+import { isStrictSome } from "../../../utils/pot";
 import {
   AnonymousIdentity,
   initSupportAssistance,
@@ -28,6 +28,7 @@ import {
   zendeskDefaultAnonymousConfig,
   zendeskDefaultJwtConfig
 } from "../../../utils/supportAssistance";
+import { FooterStackButton } from "../../bonus/bonusVacanze/components/buttons/FooterStackButtons";
 import { LoadingErrorComponent } from "../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { isReady } from "../../bonus/bpd/model/RemoteValue";
 import { ZendeskParamsList } from "../navigation/params";
@@ -81,26 +82,24 @@ const EmptyTicketsComponent = ({ assistanceForPayment }: EmptyTicketsProps) => {
     testID: "continueButtonId",
     bordered: false,
     onPress: handleContactSupportPress,
-    title: I18n.t("support.askPermissions.cta.allow")
+    title: I18n.t("support.helpCenter.cta.contactSupport")
   };
+
   const cancelButtonProps = {
-    testID: "continueButtonId",
-    bordered: false,
+    testID: "cancelButtonId",
+    bordered: true,
     onPress: () => navigation.goBack(),
-    title: I18n.t("support.askPermissions.cta.allow")
+    title: I18n.t("global.buttons.back")
   };
+
   return (
     <SafeAreaView style={IOStyles.flex} testID={"emptyTicketsComponent"}>
       <InfoScreenComponent
         image={renderInfoRasterImage(image)}
-        title={I18n.t("support.panicMode.title")}
-        body={I18n.t("support.panicMode.body")}
+        title={I18n.t("support.ticketList.noTicket.title")}
+        body={I18n.t("support.ticketList.noTicket.body")}
       />
-      <FooterWithButtons
-        type={"TwoButtonsInlineHalf"}
-        leftButton={continueButtonProps}
-        rightButton={cancelButtonProps}
-      />
+      <FooterStackButton buttons={[continueButtonProps, cancelButtonProps]} />
     </SafeAreaView>
   );
 };
@@ -162,10 +161,10 @@ const ZendeskSeeReportsRouters = (props: Props) => {
     }
   }, [ticketNumber, dispatch]);
 
-  if (ticketNumber.kind !== "PotSome") {
+  if (!isStrictSome(ticketNumber) && !pot.isNone(ticketNumber)) {
     return (
       <LoadingErrorComponent
-        isLoading={pot.isLoading(ticketNumber) || pot.isNone(ticketNumber)}
+        isLoading={pot.isLoading(ticketNumber)}
         loadingCaption={I18n.t("global.remoteStates.loading")}
         onRetry={() => {
           dispatch(zendeskRequestTicketNumber.request());
@@ -175,7 +174,7 @@ const ZendeskSeeReportsRouters = (props: Props) => {
   }
 
   // if is some and there are 0 tickets show the
-  if (ticketNumber.value === 0) {
+  if (pot.isNone(ticketNumber) || ticketNumber.value === 0) {
     return (
       <EmptyTicketsComponent assistanceForPayment={assistanceForPayment} />
     );

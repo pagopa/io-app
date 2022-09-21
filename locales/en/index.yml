@@ -3127,6 +3127,10 @@ webView:
     missingToken: Missing authorization to start this flow
     convertMessage: Unable to decode the message from the webview
 support:
+  ticketList:
+    noTicket:
+      title: "There's no ongoing request"
+      body: "If you need help, submit a new request"
   helpCenter:
     header: "Support"
     cta:
