@@ -173,7 +173,7 @@ const ZendeskSeeReportsRouters = (props: Props) => {
     );
   }
 
-  // if is some and there are 0 tickets show the
+  // if is some and there are 0 tickets show the Empty list component
   if (pot.isNone(ticketNumber) || ticketNumber.value === 0) {
     return (
       <EmptyTicketsComponent assistanceForPayment={assistanceForPayment} />
