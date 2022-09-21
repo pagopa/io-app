@@ -3181,7 +3181,10 @@ support:
     prominentDisclosure: "Accesso alla galleria del dispositivo"
     prominentDisclosureData: "Per caricare foto e screenshot"
     header: "Apri una richiesta"
+    listTitle: "Richieste in corso"
     title: "Ci dai il tuo consenso?"
+    listBody: "Per caricare le tue richieste in corso, abbiamo bisogno di accedere ad alcuni tuoi dati."
+    privacyLink: "Leggi l'informativa sulla privacy"
     body: "Per rispondere alla richiesta di assistenza, abbiamo bisogno di accedere ad alcuni tuoi dati. Se neghi il consenso, dovrai inviarci una richiesta generica via email."
     listHeader: "Se dai il consenso, riceveremo questi dati:"
     cta:

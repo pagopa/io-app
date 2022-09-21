@@ -10,6 +10,7 @@ import { H1 } from "../../../components/core/typography/H1";
 import { H3 } from "../../../components/core/typography/H3";
 import { H4 } from "../../../components/core/typography/H4";
 import { H5 } from "../../../components/core/typography/H5";
+import { Link } from "../../../components/core/typography/Link";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
@@ -25,6 +26,8 @@ import {
   profileFiscalCodeSelector,
   profileNameSurnameSelector
 } from "../../../store/reducers/profile";
+import { showToast } from "../../../utils/showToast";
+import { openWebUrl } from "../../../utils/url";
 import { ZendeskParamsList } from "../navigation/params";
 
 export type ZendeskAskSeeReportsPermissionsNavigationParams = {
@@ -99,6 +102,8 @@ type Props = IOStackNavigationRouteProps<
   ZendeskParamsList,
   "ZENDESK_ASK_SEE_REPORTS_PERMISSIONS"
 >;
+
+const POLICY_URL = "https://www.pagopa.it/it/privacy-policy-assistenza/";
 /**
  * this screen shows the kinds of data the app could collect when a user is looking at the previous ticket only for the authenticated users
  * @constructor
@@ -142,14 +147,26 @@ const ZendeskAskSeeReportsPermissions = (props: Props) => {
         iconName: "",
         onPress: constNull
       }}
-      headerTitle={I18n.t("support.askPermissions.header")}
+      headerTitle={I18n.t("support.askPermissions.listTitle")}
     >
       <SafeAreaView style={IOStyles.flex} testID={"ZendeskAskPermissions"}>
         <ScrollView>
           <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
             <H1>{I18n.t("support.askPermissions.title")}</H1>
             <View spacer />
-            <H4 weight={"Regular"}>{I18n.t("support.askPermissions.body")}</H4>
+            <H4 weight={"Regular"}>
+              {I18n.t("support.askPermissions.listBody")}
+            </H4>
+            <View spacer xsmall={true} />
+            <Link
+              onPress={() => {
+                openWebUrl(POLICY_URL, () =>
+                  showToast(I18n.t("global.jserror.title"))
+                );
+              }}
+            >
+              {I18n.t("support.askPermissions.privacyLink")}
+            </Link>
             <View spacer small={true} />
             <H3>{I18n.t("support.askPermissions.listHeader")}</H3>
 

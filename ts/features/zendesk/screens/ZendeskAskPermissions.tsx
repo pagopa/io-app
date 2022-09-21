@@ -1,10 +1,10 @@
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { constNull } from "fp-ts/lib/function";
+import { fromNullable } from "fp-ts/lib/Option";
 import { ListItem, View } from "native-base";
 import React, { ReactNode, useEffect } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { useDispatch } from "react-redux";
-import { fromNullable } from "fp-ts/lib/Option";
 import BatteryIcon from "../../../../img/assistance/battery.svg";
 import EmailIcon from "../../../../img/assistance/email.svg";
 import FiscalCodeIcon from "../../../../img/assistance/fiscalCode.svg";
@@ -20,6 +20,7 @@ import { H1 } from "../../../components/core/typography/H1";
 import { H3 } from "../../../components/core/typography/H3";
 import { H4 } from "../../../components/core/typography/H4";
 import { H5 } from "../../../components/core/typography/H5";
+import { Link } from "../../../components/core/typography/Link";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
@@ -60,7 +61,7 @@ import {
   zendeskidentityProviderId,
   zendeskVersionsHistoryId
 } from "../../../utils/supportAssistance";
-import { handleItemOnPress } from "../../../utils/url";
+import { handleItemOnPress, openWebUrl } from "../../../utils/url";
 import { ZendeskParamsList } from "../navigation/params";
 import {
   zendeskSupportCompleted,
@@ -197,6 +198,8 @@ const ItemComponent = (props: Item) => (
 export type ZendeskAskPermissionsNavigationParams = {
   assistanceForPayment: boolean;
 };
+
+const POLICY_URL = "https://www.pagopa.it/it/privacy-policy-assistenza/";
 
 /**
  * this screen shows the kinds of data the app could collect when a user is asking for assistance
@@ -373,6 +376,16 @@ const ZendeskAskPermissions = () => {
             <H1>{I18n.t("support.askPermissions.title")}</H1>
             <View spacer />
             <H4 weight={"Regular"}>{I18n.t("support.askPermissions.body")}</H4>
+            <View spacer xsmall={true} />
+            <Link
+              onPress={() => {
+                openWebUrl(POLICY_URL, () =>
+                  showToast(I18n.t("global.jserror.title"))
+                );
+              }}
+            >
+              {I18n.t("support.askPermissions.privacyLink")}
+            </Link>
             <View spacer small={true} />
             <H3>{I18n.t("support.askPermissions.listHeader")}</H3>
 
