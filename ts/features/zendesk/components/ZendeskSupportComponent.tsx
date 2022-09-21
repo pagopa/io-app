@@ -9,6 +9,7 @@ import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { H3 } from "../../../components/core/typography/H3";
 import { H4 } from "../../../components/core/typography/H4";
 import { Label } from "../../../components/core/typography/Label";
+import { Link } from "../../../components/core/typography/Link";
 import I18n from "../../../i18n";
 import { mixpanelTrack } from "../../../mixpanel";
 import {
@@ -17,7 +18,9 @@ import {
 } from "../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../store/hooks";
 import { profileSelector } from "../../../store/reducers/profile";
+import { showToast } from "../../../utils/showToast";
 import { isPanicModeActive } from "../../../utils/supportAssistance";
+import { openWebUrl } from "../../../utils/url";
 import { isReady } from "../../bonus/bpd/model/RemoteValue";
 import ZENDESK_ROUTES from "../navigation/routes";
 import { zendeskConfigSelector } from "../store/reducers";
@@ -25,6 +28,8 @@ import { zendeskConfigSelector } from "../store/reducers";
 type Props = {
   assistanceForPayment: boolean;
 };
+
+const POLICY_URL = "https://www.pagopa.it/it/privacy-policy-assistenza/";
 
 /**
  * This component represents the entry point for the Zendesk workflow.
@@ -71,9 +76,17 @@ const ZendeskSupportComponent = (props: Props) => {
       <H3>{I18n.t("support.helpCenter.supportComponent.title")}</H3>
       <View spacer={true} />
       <H4 weight={"Regular"}>
-        {I18n.t("support.helpCenter.supportComponent.subtitle")}
+        {I18n.t("support.helpCenter.supportComponent.subtitle")}{" "}
+        <Link
+          onPress={() => {
+            openWebUrl(POLICY_URL, () =>
+              showToast(I18n.t("global.jserror.title"))
+            );
+          }}
+        >
+          {I18n.t("support.askPermissions.privacyLink")}
+        </Link>
       </H4>
-      {isNone(maybeProfile) && <H4>{"Informativa privacy"}</H4>}
       <View spacer={true} large={true} />
       <AdviceComponent
         text={I18n.t("support.helpCenter.supportComponent.adviceMessage")}
