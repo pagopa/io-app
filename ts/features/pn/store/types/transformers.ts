@@ -22,7 +22,7 @@ export const toPNMessage = (
       ...maybeNotification.value,
       serviceId: messageFromApi.sender_service_id,
       attachments: messageFromApi.third_party_message.attachments?.map(_ => ({
-        id: _.id as string as MvlAttachmentId,
+        id: (messageFromApi.id + "/" + _.id) as MvlAttachmentId,
         displayName: _.name ?? _.id,
         contentType: _.content_type ?? ContentTypeValues.applicationOctetStream,
         resourceUrl: { href: generateAttachmentUrl(messageFromApi.id, _.url) }
