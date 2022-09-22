@@ -3,6 +3,7 @@ import { ValidUrl } from "@pagopa/ts-commons/lib/url";
 import { EmailAddress } from "../../../../definitions/backend/EmailAddress";
 import {
   UIMessageDetails,
+  UIMessageId,
   WithUIMessageId
 } from "../../../store/reducers/entities/messages/types";
 import { Byte } from "../../../types/digitalInformationUnit";
@@ -23,6 +24,9 @@ export type MvlId = string & IUnitTag<"MvlId">;
  * Represent an attachment with the metadata and resourceUrl to retrieve the attachment
  */
 export type MvlAttachment = {
+  // the message ID that contains the attachment
+  messageId: UIMessageId;
+  // the ID of the attachment (only guaranteed to be unique per message)
   id: MvlAttachmentId;
   // a display name for the file
   displayName: string;
