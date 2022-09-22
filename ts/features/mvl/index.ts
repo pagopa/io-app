@@ -18,9 +18,9 @@ const migrations: MigrationManifest = {
   // version 2
   // reset "downloads" section because of changing how they are stored
   "2": (state: PersistedState): PersistedMvlState => {
-    const entities = state as PersistedMvlState;
+    const mvl = state as PersistedMvlState;
     return {
-      ...entities,
+      ...mvl,
       downloads: {}
     };
   }
