@@ -280,6 +280,10 @@ export const paymentsConfigSelector = createSelector(configSelector, config =>
   config.map(c => c.payments)
 );
 
+export const allowedPspsByOriginSelector = createSelector(paymentsConfigSelector, config =>
+  config.map(c => c.allowedPspsByOrigin).toUndefined()
+);
+
 // systems could be consider dead when we have no updates for at least DEAD_COUNTER_THRESHOLD times
 export const DEAD_COUNTER_THRESHOLD = 2;
 

@@ -57,6 +57,9 @@ import {
 } from "../../utils/errors";
 import { checkCurrentSession } from "../../store/actions/authentication";
 import { deleteAllPaymentMethodsByFunction } from "../../store/actions/wallet/delete";
+import { allowedPspsByOriginSelector } from "../../store/reducers/backendStatus";
+import { paymentStartOriginSelector } from "../../store/reducers/wallet/payment";
+import { getAllowedPspsList } from "../../screens/wallet/payment/common";
 
 //
 // Payment Manager APIs
@@ -757,7 +760,17 @@ export function* getPspV2(
     const response: SagaCallReturnType<typeof request> = yield* call(request);
     if (response.isRight()) {
       if (response.value.status === 200) {
-        yield* put(pspForPaymentV2.success(response.value.value.data));
+        const psps = response.value.value.data;
+
+        const paymentStartOrigin = yield* select(paymentStartOriginSelector);
+        const allowedPspsByOrigin = yield* select(allowedPspsByOriginSelector);
+
+        const allowedPsps = getAllowedPspsList(
+          psps,
+          paymentStartOrigin,
+          allowedPspsByOrigin
+        );
+        yield* put(pspForPaymentV2.success(allowedPsps));
       } else {
         yield* put(
           pspForPaymentV2.failure(
@@ -792,6 +805,17 @@ export function* getPspV2WithCallbacks(
   if (isActionOf(pspForPaymentV2.failure, result)) {
     action.payload.onFailure();
   } else if (isActionOf(pspForPaymentV2.success, result)) {
-    action.payload.onSuccess(result.payload);
+    const psps = result.payload;
+
+    const paymentStartOrigin = yield* select(paymentStartOriginSelector);
+    const allowedPspsByOrigin = yield* select(allowedPspsByOriginSelector);
+
+    const allowedPsps = getAllowedPspsList(
+      psps,
+      paymentStartOrigin,
+      allowedPspsByOrigin
+    );
+
+    action.payload.onSuccess(allowedPsps);
   }
 }

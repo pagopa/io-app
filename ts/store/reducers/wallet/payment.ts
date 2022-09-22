@@ -136,6 +136,11 @@ export const paymentStartPayloadSelector = (
   state: GlobalState
 ): PaymentStartPayload | undefined => state.wallet.payment.paymentStartPayload;
 
+export const paymentStartOriginSelector = createSelector(
+  paymentSelector,
+  payment => payment.startOrigin
+);
+
 const PAYMENT_INITIAL_STATE: PaymentState = {
   verifica: pot.none,
   attiva: pot.none,
