@@ -132,9 +132,9 @@ export const MessageAttachmentPreview = (props: Props): React.ReactElement => {
   const [isError, setIsError] = useState(false);
 
   const messageId = props.messageId;
-  const id = props.attachmentId;
+  const attachmentId = props.attachmentId;
   const downloadPot = useIOSelector(state =>
-    mvlDownloadFromAttachmentSelector(state, { messageId, id })
+    mvlDownloadFromAttachmentSelector(state, { messageId, id: attachmentId })
   );
   const download = pot.toUndefined(downloadPot);
   return download ? (
