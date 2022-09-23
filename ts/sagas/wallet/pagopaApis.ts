@@ -7,6 +7,7 @@ import { ActionType, isActionOf } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
 import { PaymentManagerClient } from "../../api/pagopa";
 import { mixpanelTrack } from "../../mixpanel";
+import { getFilteredPspsList } from "../../screens/wallet/payment/common";
 import { checkCurrentSession } from "../../store/actions/authentication";
 import { deleteAllPaymentMethodsByFunction } from "../../store/actions/wallet/delete";
 import {
@@ -43,7 +44,9 @@ import {
   setFavouriteWalletSuccess,
   updatePaymentStatus
 } from "../../store/actions/wallet/wallets";
+import { preferredPspsByOriginSelector } from "../../store/reducers/backendStatus";
 import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
+import { paymentStartOriginSelector } from "../../store/reducers/wallet/payment";
 import { PaymentManagerToken, Wallet } from "../../types/pagopa";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
 import {
@@ -765,7 +768,19 @@ export function* getPspV2(
     const response: SagaCallReturnType<typeof request> = yield* call(request);
     if (E.isRight(response)) {
       if (response.right.status === 200) {
-        yield* put(pspForPaymentV2.success(response.right.value.data));
+        const psps = response.right.value.data;
+
+        const paymentStartOrigin = yield* select(paymentStartOriginSelector);
+        const preferredPspsByOrigin = yield* select(
+          preferredPspsByOriginSelector
+        );
+
+        const filteredPsps = getFilteredPspsList(
+          psps,
+          paymentStartOrigin,
+          preferredPspsByOrigin
+        );
+        yield* put(pspForPaymentV2.success(filteredPsps));
       } else {
         yield* put(
           pspForPaymentV2.failure(
@@ -800,6 +815,17 @@ export function* getPspV2WithCallbacks(
   if (isActionOf(pspForPaymentV2.failure, result)) {
     action.payload.onFailure();
   } else if (isActionOf(pspForPaymentV2.success, result)) {
-    action.payload.onSuccess(result.payload);
+    const psps = result.payload;
+
+    const paymentStartOrigin = yield* select(paymentStartOriginSelector);
+    const preferredPspsByOrigin = yield* select(preferredPspsByOriginSelector);
+
+    const filteredPsps = getFilteredPspsList(
+      psps,
+      paymentStartOrigin,
+      preferredPspsByOrigin
+    );
+
+    action.payload.onSuccess(filteredPsps);
   }
 }

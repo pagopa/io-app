@@ -1,10 +1,12 @@
 // Main config file. Mostly read the configuration from .env files
 
+import { CommaSeparatedListOf } from "@pagopa/ts-commons/lib/comma-separated-list";
 import { NonNegativeNumber } from "@pagopa/ts-commons/lib/numbers";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { Millisecond, Second } from "@pagopa/ts-commons/lib/units";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import Config from "react-native-config";
 
@@ -184,3 +186,19 @@ export const maximumItemsFromAPI: number = 100;
 
 export const testOverlayCaption: string | undefined =
   Config.TEST_OVERLAY_CAPTION;
+
+/**
+ * Payments
+ */
+
+// If not defined or invalid we don't want to filter PSPs
+export const POSTE_DATAMATRIX_SCAN_PREFERRED_PSPS:
+  | ReadonlyArray<NonEmptyString>
+  | undefined = pipe(
+  O.fromEither(
+    CommaSeparatedListOf(NonEmptyString).decode(
+      Config.POSTE_DATAMATRIX_SCAN_PREFERRED_PSPS_CSL
+    )
+  ),
+  O.toUndefined
+);

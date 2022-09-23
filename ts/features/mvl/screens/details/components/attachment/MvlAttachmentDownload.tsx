@@ -9,6 +9,7 @@ import { Body } from "../../../../../../components/core/typography/Body";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
 import i18n from "../../../../../../i18n";
+import { mixpanelTrack } from "../../../../../../mixpanel";
 import { useIODispatch, useIOSelector } from "../../../../../../store/hooks";
 import { ContentTypeValues } from "../../../../../../types/contentType";
 import { useIOBottomSheetModal } from "../../../../../../utils/hooks/bottomSheet";
@@ -20,10 +21,9 @@ import {
 } from "../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { mvlPreferencesSetWarningForAttachments } from "../../../../store/actions";
 import { mvlAttachmentDownload } from "../../../../store/actions/downloads";
-import { mvlAttachmentDownloadFromIdSelector } from "../../../../store/reducers/downloads";
+import { mvlDownloadFromAttachmentSelector } from "../../../../store/reducers/downloads";
 import { mvlPreferencesSelector } from "../../../../store/reducers/preferences";
 import { MvlAttachment, MvlAttachmentId } from "../../../../types/mvlData";
-import { mixpanelTrack } from "../../../../../../mixpanel";
 
 const BOTTOM_SHEET_HEIGHT = 375;
 
@@ -94,7 +94,7 @@ export const useMvlAttachmentDownload = (
   const { showAlertForAttachments } = useIOSelector(mvlPreferencesSelector);
 
   const downloadPot = useIOSelector(state =>
-    mvlAttachmentDownloadFromIdSelector(state, attachment.id)
+    mvlDownloadFromAttachmentSelector(state, attachment)
   );
 
   const openAttachment = useCallback(async () => {

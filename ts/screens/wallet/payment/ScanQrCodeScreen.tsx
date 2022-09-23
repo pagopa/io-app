@@ -47,7 +47,10 @@ import {
   navigateToWalletHome
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
-import { paymentInitializeState } from "../../../store/actions/wallet/payment";
+import {
+  paymentInitializeState,
+  PaymentStartOrigin
+} from "../../../store/actions/wallet/payment";
 import { barcodesScannerConfigSelector } from "../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../store/reducers/types";
 import customVariables, {
@@ -136,8 +139,11 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
   /**
    * Handles valid pagoPA QR codes
    */
-  private onValidQrCode = (data: ITuple2<RptId, AmountInEuroCents>) => {
-    this.props.runPaymentTransactionSummarySaga(data.e1, data.e2);
+  private onValidQrCode = (
+    data: ITuple2<RptId, AmountInEuroCents>,
+    origin: PaymentStartOrigin
+  ) => {
+    this.props.runPaymentTransactionSummarySaga(data.e1, data.e2, origin);
   };
 
   /**
@@ -174,7 +180,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
       resultOrError,
       O.foldW(
         () => this.onInvalidQrCode,
-        _ => this.onValidQrCode(_)
+        _ => this.onValidQrCode(_, "qrcode_scan")
       )
     );
   };
@@ -199,7 +205,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
           },
           data => {
             void mixpanelTrack("WALLET_SCAN_POSTE_DATAMATRIX_SUCCESS");
-            this.onValidQrCode(data);
+            this.onValidQrCode(data, "poste_datamatrix_scan");
           }
         )
       );
@@ -382,14 +388,15 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     navigateToPaymentManualDataInsertion(),
   runPaymentTransactionSummarySaga: (
     rptId: RptId,
-    initialAmount: AmountInEuroCents
+    initialAmount: AmountInEuroCents,
+    origin: PaymentStartOrigin
   ) => {
     dispatch(paymentInitializeState());
 
     navigateToPaymentTransactionSummaryScreen({
       rptId,
       initialAmount,
-      paymentStartOrigin: "qrcode_scan"
+      paymentStartOrigin: origin
     });
   }
 });

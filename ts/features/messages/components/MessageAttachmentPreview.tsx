@@ -12,14 +12,15 @@ import BaseScreenComponent from "../../../components/screens/BaseScreenComponent
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import { useIOSelector } from "../../../store/hooks";
+import { UIMessageId } from "../../../store/reducers/entities/messages/types";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { isIos } from "../../../utils/platform";
 import { share } from "../../../utils/share";
 import { showToast } from "../../../utils/showToast";
 import { confirmButtonProps } from "../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import {
-  mvlAttachmentDownloadFromIdSelector,
-  MvlDownload
+  MvlDownload,
+  mvlDownloadFromAttachmentSelector
 } from "../../mvl/store/reducers/downloads";
 import { MvlAttachmentId } from "../../mvl/types/mvlData";
 
@@ -116,6 +117,7 @@ const renderFooter = (
   );
 
 type Props = {
+  messageId: UIMessageId;
   attachmentId: MvlAttachmentId;
   onLoadComplete?: () => void;
   onError?: () => void;
@@ -127,9 +129,10 @@ type Props = {
 export const MessageAttachmentPreview = (props: Props): React.ReactElement => {
   const [isError, setIsError] = useState(false);
 
+  const messageId = props.messageId;
   const attachmentId = props.attachmentId;
   const downloadPot = useIOSelector(state =>
-    mvlAttachmentDownloadFromIdSelector(state, attachmentId)
+    mvlDownloadFromAttachmentSelector(state, { messageId, id: attachmentId })
   );
   const download = pot.toUndefined(downloadPot);
   return download ? (

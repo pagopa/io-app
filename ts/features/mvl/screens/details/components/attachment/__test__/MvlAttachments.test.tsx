@@ -71,7 +71,11 @@ describe("MvlAttachments", () => {
               openPreview: jest.fn()
             },
             { showAlertForAttachments: false },
-            { [mvlMockPdfAttachment.id]: loadingPot }
+            {
+              [mvlMockPdfAttachment.messageId]: {
+                [mvlMockPdfAttachment.id]: loadingPot
+              }
+            }
           );
           expect(
             res.queryByTestId("attachmentActivityIndicator")
@@ -97,7 +101,11 @@ describe("MvlAttachments", () => {
               openPreview: jest.fn()
             },
             { showAlertForAttachments: false },
-            { [mvlMockPdfAttachment.id]: notLoadingPot }
+            {
+              [mvlMockPdfAttachment.messageId]: {
+                [mvlMockPdfAttachment.id]: notLoadingPot
+              }
+            }
           );
           expect(res.queryByTestId("attachmentActivityIndicator")).toBeNull();
         });

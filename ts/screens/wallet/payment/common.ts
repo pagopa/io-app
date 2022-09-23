@@ -2,6 +2,7 @@ import * as O from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { ActionType } from "typesafe-actions";
 
+import { pipe } from "fp-ts/lib/function";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import {
   navigateToPaymentConfirmPaymentMethodScreen,
@@ -11,6 +12,7 @@ import {
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import {
+  PaymentStartOrigin,
   paymentUpdateWalletPsp,
   pspForPaymentV2WithCallbacks,
   pspSelectedForPaymentV2
@@ -18,6 +20,79 @@ import {
 import { isRawPayPal, Wallet } from "../../../types/pagopa";
 import { walletHasFavoriteAvailablePspData } from "../../../utils/payment";
 import { PspData } from "../../../../definitions/pagopa/PspData";
+import { Config } from "../../../../definitions/content/Config";
+import { POSTE_DATAMATRIX_SCAN_PREFERRED_PSPS } from "../../../config";
+
+/**
+ * If needed, filter the PSPs list by the preferred PSPs.
+ * Preferred PSPs could be defined remotely with a local fallback.
+ * Remote configuration has priority over local configuration.
+ */
+export const filterPspsByPreferredPsps = (
+  pspList: ReadonlyArray<PspData>,
+  remotePreferredPsps: ReadonlyArray<string> | undefined,
+  fallbackPreferredPsps: ReadonlyArray<string> | undefined
+): ReadonlyArray<PspData> => {
+  const preferredPsps = remotePreferredPsps ?? fallbackPreferredPsps;
+
+  // If preferredPsps is undefined or empty we return the original list
+  // because we don't have any filter to apply
+  if (preferredPsps === undefined || preferredPsps.length === 0) {
+    return pspList;
+  }
+
+  // The list of filtered PSPs
+  const filteredPsps = pspList.filter(psp => preferredPsps.includes(psp.idPsp));
+
+  // If we have filtered PSPs we return them, otherwise we return the original list
+  return filteredPsps.length > 0 ? filteredPsps : pspList;
+};
+
+/**
+ * Filter the PSPs list by the payment start origin.
+ */
+const filterPspsByPaymentStartOrigin = (
+  paymentsStartOrigin: PaymentStartOrigin,
+  preferredPspsByOrigin: NonNullable<
+    Config["payments"]["preferredPspsByOrigin"]
+  >,
+  pspList: ReadonlyArray<PspData>
+) => {
+  switch (paymentsStartOrigin) {
+    case "poste_datamatrix_scan":
+      return filterPspsByPreferredPsps(
+        pspList,
+        preferredPspsByOrigin.poste_datamatrix_scan,
+        POSTE_DATAMATRIX_SCAN_PREFERRED_PSPS
+      );
+
+    default:
+      return pspList;
+  }
+};
+
+export const getFilteredPspsList = (
+  allPsps: ReadonlyArray<PspData>,
+  paymentStartOrigin?: PaymentStartOrigin,
+  preferredPspsByOrigin?: Config["payments"]["preferredPspsByOrigin"]
+) =>
+  pipe(
+    () => allPsps,
+    allPsps => {
+      // If necessary, filter the PSPs list by the payment start origin
+      if (
+        paymentStartOrigin !== undefined &&
+        preferredPspsByOrigin !== undefined
+      ) {
+        return filterPspsByPaymentStartOrigin(
+          paymentStartOrigin,
+          preferredPspsByOrigin,
+          allPsps
+        );
+      }
+      return allPsps;
+    }
+  )({});
 
 /**
  * Common action dispatchers for payment screens

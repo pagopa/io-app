@@ -22,7 +22,9 @@ describe("mvlDownloadsReducer", () => {
 
       it("then it returns pot.loading", () => {
         expect(
-          pot.isLoading(afterRequestState[attachment.id] ?? pot.none)
+          pot.isLoading(
+            afterRequestState[attachment.messageId][attachment.id] ?? pot.none
+          )
         ).toBeTruthy();
       });
 
@@ -36,7 +38,7 @@ describe("mvlDownloadsReducer", () => {
                   attachment,
                   path
                 })
-              )[attachment.id] ?? pot.none
+              )[attachment.messageId][attachment.id] ?? pot.none
             )
           ).toBeTruthy();
         });
@@ -52,7 +54,7 @@ describe("mvlDownloadsReducer", () => {
                   attachment,
                   error: new Error()
                 })
-              )[attachment.id] ?? pot.none
+              )[attachment.messageId][attachment.id] ?? pot.none
             )
           ).toBeTruthy();
         });
@@ -65,7 +67,7 @@ describe("mvlDownloadsReducer", () => {
               mvlDownloadsReducer(
                 afterRequestState,
                 mvlAttachmentDownload.cancel(attachment)
-              )[attachment.id] ?? pot.none
+              )[attachment.messageId][attachment.id] ?? pot.none
             )
           ).toBeTruthy();
         });
@@ -76,7 +78,9 @@ describe("mvlDownloadsReducer", () => {
   describe("given a downloaded attachment", () => {
     const attachment = mvlMockPdfAttachment;
     const initialState: MvlDownloads = {
-      [attachment.id]: pot.some({ attachment, path })
+      [attachment.messageId]: {
+        [attachment.id]: pot.some({ attachment, path })
+      }
     };
 
     describe("when clearing the attachment", () => {
@@ -85,8 +89,8 @@ describe("mvlDownloadsReducer", () => {
           pot.isNone(
             mvlDownloadsReducer(
               initialState,
-              mvlRemoveCachedAttachment({ id: attachment.id, path })
-            )[attachment.id] ?? pot.none
+              mvlRemoveCachedAttachment({ attachment, path })
+            )[attachment.messageId][attachment.id] ?? pot.none
           )
         ).toBeTruthy();
       });

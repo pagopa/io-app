@@ -112,11 +112,15 @@ export const PnMessageDetails = (props: Props) => {
     }
   }, [rptId, navigation]);
 
+  const messageId = props.messageId;
   const openAttachment = useCallback(
     (attachmentId: MvlAttachmentId) => {
-      navigation.navigate(PN_ROUTES.MESSAGE_ATTACHMENT, { attachmentId });
+      navigation.navigate(PN_ROUTES.MESSAGE_ATTACHMENT, {
+        messageId,
+        attachmentId
+      });
     },
-    [navigation]
+    [messageId, navigation]
   );
 
   useOnFirstRender(verifyPaymentIfNeeded);

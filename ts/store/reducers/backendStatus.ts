@@ -332,6 +332,20 @@ export const isPnEnabledSelector = createSelector(
     )
 );
 
+export const configSelector = createSelector(
+  backendStatusSelector,
+  backendStatus => backendStatus.map(bs => bs.config)
+);
+
+export const paymentsConfigSelector = createSelector(configSelector, config =>
+  config.map(c => c.payments)
+);
+
+export const preferredPspsByOriginSelector = createSelector(
+  paymentsConfigSelector,
+  config => config.map(c => c.preferredPspsByOrigin).toUndefined()
+);
+
 // systems could be consider dead when we have no updates for at least DEAD_COUNTER_THRESHOLD times
 export const DEAD_COUNTER_THRESHOLD = 2;
 
