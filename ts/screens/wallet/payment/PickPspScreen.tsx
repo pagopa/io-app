@@ -143,7 +143,7 @@ class PickPspScreen extends React.Component<Props> {
               testID="pspList"
               ItemSeparatorComponent={() => <ItemSeparatorComponent />}
               removeClippedSubviews={false}
-              data={orderedPsps}
+              data={availablePsps}
               keyExtractor={item => item.idPsp}
               renderItem={({ item }) => (
                 <PspComponent
