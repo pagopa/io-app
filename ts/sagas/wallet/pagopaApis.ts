@@ -763,14 +763,16 @@ export function* getPspV2(
         const psps = response.value.value.data;
 
         const paymentStartOrigin = yield* select(paymentStartOriginSelector);
-        const allowedPspsByOrigin = yield* select(preferredPspsByOriginSelector);
+        const preferredPspsByOrigin = yield* select(
+          preferredPspsByOriginSelector
+        );
 
-        const allowedPsps = getFilteredPspsList(
+        const filteredPsps = getFilteredPspsList(
           psps,
           paymentStartOrigin,
-          allowedPspsByOrigin
+          preferredPspsByOrigin
         );
-        yield* put(pspForPaymentV2.success(allowedPsps));
+        yield* put(pspForPaymentV2.success(filteredPsps));
       } else {
         yield* put(
           pspForPaymentV2.failure(
@@ -808,14 +810,14 @@ export function* getPspV2WithCallbacks(
     const psps = result.payload;
 
     const paymentStartOrigin = yield* select(paymentStartOriginSelector);
-    const allowedPspsByOrigin = yield* select(preferredPspsByOriginSelector);
+    const preferredPspsByOrigin = yield* select(preferredPspsByOriginSelector);
 
-    const allowedPsps = getFilteredPspsList(
+    const filteredPsps = getFilteredPspsList(
       psps,
       paymentStartOrigin,
-      allowedPspsByOrigin
+      preferredPspsByOrigin
     );
 
-    action.payload.onSuccess(allowedPsps);
+    action.payload.onSuccess(filteredPsps);
   }
 }

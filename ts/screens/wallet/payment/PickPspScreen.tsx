@@ -102,9 +102,7 @@ class PickPspScreen extends React.Component<Props> {
   );
 
   public render(): React.ReactNode {
-    const { allPsps } = this.props;
-
-    const orderedPsps = orderPspByAmount(allPsps);
+    const availablePsps = orderPspByAmount(this.props.allPsps);
 
     return (
       <BaseScreenComponent
@@ -176,7 +174,6 @@ const mapStateToProps = (state: GlobalState) => {
     isLoading:
       pot.isLoading(state.wallet.wallets.walletById) || isLoading(psps),
     hasError: pot.isError(state.wallet.wallets.walletById) || isError(psps),
-    paymentStartOrigin: state.wallet.payment.startOrigin,
     allPsps: getValueOrElse(psps, [])
   };
 };
