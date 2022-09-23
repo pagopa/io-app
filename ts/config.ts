@@ -1,10 +1,12 @@
 // Main config file. Mostly read the configuration from .env files
 
+import { fromEither } from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import { NonNegativeNumber } from "italia-ts-commons/lib/numbers";
 import { NonEmptyString } from "italia-ts-commons/lib/strings";
 import { Millisecond, Second } from "italia-ts-commons/lib/units";
 import Config from "react-native-config";
+import { CommaSeparatedListOf } from "./types/comma-separated-list";
 
 // default repository for fetching app content (e.g. services metadata)
 const DEFAULT_CONTENT_REPO_URL =
@@ -162,3 +164,16 @@ export const maximumItemsFromAPI: number = 100;
 
 export const testOverlayCaption: string | undefined =
   Config.TEST_OVERLAY_CAPTION;
+
+/**
+ * Payments
+ */
+
+// If not defined or invalid we don't want to filter PSPs
+export const POSTE_DATAMATRIX_SCAN_PREFERRED_PSPS:
+  | ReadonlyArray<NonEmptyString>
+  | undefined = fromEither(
+  CommaSeparatedListOf(NonEmptyString).decode(
+    Config.POSTE_DATAMATRIX_SCAN_PREFERRED_PSPS_CSL
+  )
+).toUndefined();
