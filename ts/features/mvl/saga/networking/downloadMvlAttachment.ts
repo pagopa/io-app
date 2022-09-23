@@ -9,7 +9,7 @@ import { MvlAttachment } from "../../types/mvlData";
 import { getError } from "../../../../utils/errors";
 
 export const MvlAttachmentsDirectoryPath =
-  RNFS.CachesDirectoryPath + "/mvl/attachments";
+  RNFS.CachesDirectoryPath + "/attachments";
 
 /**
  * Builds the save path for the given attachment
@@ -17,6 +17,8 @@ export const MvlAttachmentsDirectoryPath =
  */
 const savePath = (attachment: MvlAttachment) =>
   MvlAttachmentsDirectoryPath +
+  "/" +
+  attachment.messageId +
   "/" +
   attachment.id +
   "/" +
