@@ -49,7 +49,7 @@ import { IO_INTERNAL_LINK_PREFIX } from "../utils/navigation";
 import authenticationNavigator from "./AuthenticationNavigator";
 import { MessagesStackNavigator } from "./MessagesNavigator";
 import NavigationService, { navigationRef } from "./NavigationService";
-import onboardingNavigator from "./OnboardingNavigator";
+import OnboardingNavigator from "./OnboardingNavigator";
 import { AppParamsList } from "./params/AppParamsList";
 import ProfileStackNavigator from "./ProfileNavigator";
 import ROUTES from "./routes";
@@ -76,7 +76,7 @@ export const AppStackNavigator = () => {
         name={ROUTES.AUTHENTICATION}
         component={authenticationNavigator}
       />
-      <Stack.Screen name={ROUTES.ONBOARDING} component={onboardingNavigator} />
+      <Stack.Screen name={ROUTES.ONBOARDING} component={OnboardingNavigator} />
       <Stack.Screen name={ROUTES.MAIN} component={MainTabNavigator} />
 
       <Stack.Screen
