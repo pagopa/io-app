@@ -38,7 +38,6 @@ import {
   isError,
   isLoading
 } from "../../../features/bonus/bpd/model/RemoteValue";
-import { allowedPspsByOriginSelector } from "../../../store/reducers/backendStatus";
 import { dispatchUpdatePspForWalletAndConfirm } from "./common";
 
 export type PickPspScreenNavigationParams = Readonly<{
@@ -178,8 +177,7 @@ const mapStateToProps = (state: GlobalState) => {
       pot.isLoading(state.wallet.wallets.walletById) || isLoading(psps),
     hasError: pot.isError(state.wallet.wallets.walletById) || isError(psps),
     paymentStartOrigin: state.wallet.payment.startOrigin,
-    allPsps: getValueOrElse(psps, []),
-    allowedPspsByOrigin: allowedPspsByOriginSelector(state)
+    allPsps: getValueOrElse(psps, [])
   };
 };
 

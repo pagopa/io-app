@@ -216,7 +216,6 @@ export const UAWebViewScreen = () => {
     initialAmount: AmountInEuroCents
   ) => {
     dispatch(paymentInitializeState());
-
     navigateToPaymentTransactionSummaryScreen({
       rptId,
       initialAmount,

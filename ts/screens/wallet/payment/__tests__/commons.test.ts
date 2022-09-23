@@ -1,5 +1,5 @@
 import { PspData } from "../../../../../definitions/pagopa/PspData";
-import { filterPspsByAllowedPsps } from "../common";
+import { filterPspsByPreferredPsps } from "../common";
 
 type SimplePspData = Pick<PspData, "idPsp">;
 
@@ -81,7 +81,7 @@ describe("filterPspsByAllowedPsps", () => {
       expectedPsps
     }) => {
       expect(
-        filterPspsByAllowedPsps(
+        filterPspsByPreferredPsps(
           originalPsps as unknown as ReadonlyArray<PspData>,
           remotePreferredPsps,
           fallbackPreferredPsps

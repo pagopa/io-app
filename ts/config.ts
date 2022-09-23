@@ -170,10 +170,10 @@ export const testOverlayCaption: string | undefined =
  */
 
 // If not defined or invalid we don't want to filter PSPs
-export const POSTE_DATAMATRIX_SCAN_ALLOWED_PSPS:
+export const POSTE_DATAMATRIX_SCAN_PREFERRED_PSPS:
   | ReadonlyArray<NonEmptyString>
   | undefined = fromEither(
   CommaSeparatedListOf(NonEmptyString).decode(
-    Config.POSTE_DATAMATRIX_SCAN_ALLOWED_PSPS_CSL
+    Config.POSTE_DATAMATRIX_SCAN_PREFERRED_PSPS_CSL
   )
 ).toUndefined();

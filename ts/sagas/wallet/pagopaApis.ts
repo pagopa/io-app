@@ -57,9 +57,9 @@ import {
 } from "../../utils/errors";
 import { checkCurrentSession } from "../../store/actions/authentication";
 import { deleteAllPaymentMethodsByFunction } from "../../store/actions/wallet/delete";
-import { allowedPspsByOriginSelector } from "../../store/reducers/backendStatus";
+import { preferredPspsByOriginSelector } from "../../store/reducers/backendStatus";
 import { paymentStartOriginSelector } from "../../store/reducers/wallet/payment";
-import { getAllowedPspsList } from "../../screens/wallet/payment/common";
+import { getFilteredPspsList } from "../../screens/wallet/payment/common";
 
 //
 // Payment Manager APIs
@@ -763,9 +763,9 @@ export function* getPspV2(
         const psps = response.value.value.data;
 
         const paymentStartOrigin = yield* select(paymentStartOriginSelector);
-        const allowedPspsByOrigin = yield* select(allowedPspsByOriginSelector);
+        const allowedPspsByOrigin = yield* select(preferredPspsByOriginSelector);
 
-        const allowedPsps = getAllowedPspsList(
+        const allowedPsps = getFilteredPspsList(
           psps,
           paymentStartOrigin,
           allowedPspsByOrigin
@@ -808,9 +808,9 @@ export function* getPspV2WithCallbacks(
     const psps = result.payload;
 
     const paymentStartOrigin = yield* select(paymentStartOriginSelector);
-    const allowedPspsByOrigin = yield* select(allowedPspsByOriginSelector);
+    const allowedPspsByOrigin = yield* select(preferredPspsByOriginSelector);
 
-    const allowedPsps = getAllowedPspsList(
+    const allowedPsps = getFilteredPspsList(
       psps,
       paymentStartOrigin,
       allowedPspsByOrigin
