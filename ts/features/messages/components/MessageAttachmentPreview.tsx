@@ -4,8 +4,8 @@ import Pdf from "react-native-pdf";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import * as pot from "italia-ts-commons/lib/pot";
 import {
-  mvlAttachmentDownloadFromIdSelector,
-  MvlDownload
+  MvlDownload,
+  mvlDownloadFromAttachmentSelector
 } from "../../mvl/store/reducers/downloads";
 import { isIos } from "../../../utils/platform";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
@@ -22,6 +22,7 @@ import image from "../../../../img/servicesStatus/error-detail-icon.png";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
 import { IOColors } from "../../../components/core/variables/IOColors";
+import { UIMessageId } from "../../../store/reducers/entities/messages/types";
 
 const styles = StyleSheet.create({
   container: {
@@ -118,6 +119,7 @@ const renderFooter = (
   );
 
 type Props = {
+  messageId: UIMessageId;
   attachmentId: MvlAttachmentId;
   onLoadComplete?: () => void;
   onError?: () => void;
@@ -129,9 +131,10 @@ type Props = {
 export const MessageAttachmentPreview = (props: Props): React.ReactElement => {
   const [isError, setIsError] = useState(false);
 
+  const messageId = props.messageId;
   const attachmentId = props.attachmentId;
   const downloadPot = useIOSelector(state =>
-    mvlAttachmentDownloadFromIdSelector(state, attachmentId)
+    mvlDownloadFromAttachmentSelector(state, { messageId, id: attachmentId })
   );
   const download = pot.toUndefined(downloadPot);
   return download ? (

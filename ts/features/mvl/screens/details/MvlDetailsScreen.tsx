@@ -52,11 +52,12 @@ export const MvlDetailsScreen = (props: Props): React.ReactElement => {
     }
   }, [dispatch, props.mvl.message.serviceId, service]);
 
+  const messageId = props.mvl.message.id;
   const openAttachment = useCallback(
     (attachmentId: MvlAttachmentId) => {
-      navigation.navigate(MVL_ROUTES.ATTACHMENT, { attachmentId });
+      navigation.navigate(MVL_ROUTES.ATTACHMENT, { messageId, attachmentId });
     },
-    [navigation]
+    [messageId, navigation]
   );
 
   return (
