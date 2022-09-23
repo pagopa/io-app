@@ -53,7 +53,9 @@ export const filterPspsByPreferredPsps = (
  */
 const filterPspsByPaymentStartOrigin = (
   paymentsStartOrigin: PaymentStartOrigin,
-  preferredPspsByOrigin: NonNullable<Config["payments"]["preferredPspsByOrigin"]>,
+  preferredPspsByOrigin: NonNullable<
+    Config["payments"]["preferredPspsByOrigin"]
+  >,
   pspList: ReadonlyArray<PspData>
 ) => {
   switch (paymentsStartOrigin) {
