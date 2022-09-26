@@ -117,7 +117,6 @@ import {
   checkSession,
   watchCheckSessionSaga
 } from "./startup/watchCheckSessionSaga";
-import { watchLoadMessages } from "./startup/watchLoadMessagesSaga";
 import { watchLoadMessageWithRelationsSaga } from "./startup/watchLoadMessageWithRelationsSaga";
 import { watchLogoutSaga } from "./startup/watchLogoutSaga";
 import { watchMessageLoadSaga } from "./startup/watchMessageLoadSaga";
@@ -509,9 +508,6 @@ export function* initializeApplicationSaga(): Generator<
   }
   // Load visible services and service details from backend when requested
   yield* fork(watchLoadServicesSaga, backendClient);
-
-  // Load all messages when requested
-  yield* fork(watchLoadMessages, backendClient.getMessages);
 
   yield* fork(watchLoadNextPageMessages, backendClient.getMessages);
   yield* fork(watchLoadPreviousPageMessages, backendClient.getMessages);

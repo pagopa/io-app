@@ -146,15 +146,6 @@ export const upsertMessageStatusAttributes = createAsyncAction(
   { error: Error; payload: UpsertMessageStatusAttributesPayload }
 >();
 
-/**
- *  @deprecated Please use actions with pagination instead
- */
-export const DEPRECATED_loadMessages = createAsyncAction(
-  "MESSAGES_LOAD_REQUEST",
-  "MESSAGES_LOAD_SUCCESS",
-  "MESSAGES_LOAD_FAILURE"
-)<void, ReadonlyArray<string>, Error>();
-
 export const removeMessages =
   createStandardAction("MESSAGES_REMOVE")<ReadonlyArray<string>>();
 
@@ -209,7 +200,6 @@ export type MessagesActions =
   | ActionType<typeof loadMessageDetails>
   | ActionType<typeof migrateToPaginatedMessages>
   | ActionType<typeof resetMigrationStatus>
-  | ActionType<typeof DEPRECATED_loadMessages>
   | ActionType<typeof removeMessages>
   | ActionType<typeof DEPRECATED_setMessageReadState>
   | ActionType<typeof upsertMessageStatusAttributes>

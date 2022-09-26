@@ -48,7 +48,6 @@ import {
 } from "../actions/identification";
 import {
   DEPRECATED_loadMessage,
-  DEPRECATED_loadMessages as loadMessages,
   removeMessages,
   DEPRECATED_setMessageReadState,
   migrateToPaginatedMessages
@@ -162,8 +161,6 @@ const trackAction =
           count: action.payload.data.length,
           total: action.payload.total.getOrElse(-1)
         });
-      // messages
-      case getType(loadMessages.success):
       // end pay webview Payment (payment + onboarding credit card) actions (with properties)
       case getType(addCreditCardWebViewEnd):
         return mp.track(action.type, {
@@ -282,7 +279,6 @@ const trackAction =
       case getType(profileUpsert.failure):
       case getType(userMetadataUpsert.failure):
       case getType(userMetadataLoad.failure):
-      case getType(loadMessages.failure):
       case getType(refreshPMTokenWhileAddCreditCard.failure):
       case getType(deleteWalletFailure):
       case getType(setFavouriteWalletFailure):
@@ -351,7 +347,6 @@ const trackAction =
       case getType(userMetadataLoad.request):
       case getType(userMetadataLoad.success):
       // messages
-      case getType(loadMessages.request):
       case getType(searchMessagesEnabled):
       // wallet
       case getType(addWalletCreditCardInit):

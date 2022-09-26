@@ -41,7 +41,7 @@ export type EntitiesState = Readonly<{
 
 export type PersistedEntitiesState = EntitiesState & PersistPartial;
 
-const CURRENT_REDUX_ENTITIES_STORE_VERSION = 1;
+const CURRENT_REDUX_ENTITIES_STORE_VERSION = 2;
 const migrations: MigrationManifest = {
   // version 0
   // remove "currentSelectedService" section
@@ -60,7 +60,16 @@ const migrations: MigrationManifest = {
   "1": (state: PersistedState): PersistedEntitiesState =>
     ({
       ...state
-    } as PersistedEntitiesState)
+    } as PersistedEntitiesState),
+  // version 2
+  // remove messages allIds after moving to pagination
+  "2": (state: PersistedState): PersistedEntitiesState => {
+    const entities = state as PersistedEntitiesState;
+    return {
+      ...entities,
+      messages: { ..._.omit(entities.messages, "allIds") }
+    };
+  }
 };
 
 // A custom configuration to avoid persisting messages section
