@@ -2,12 +2,7 @@ import { createStandardAction } from "typesafe-actions";
 import { CreatedMessageWithContent } from "../../../../../definitions/backend/CreatedMessageWithContent";
 import { FiscalCode } from "../../../../../definitions/backend/FiscalCode";
 import { MessageContent } from "../../../../../definitions/backend/MessageContent";
-import {
-  DEPRECATED_loadMessage,
-  removeMessages,
-  DEPRECATED_setMessageReadState,
-  DEPRECATED_setMessagesArchivedState
-} from "../../../actions/messages";
+import { DEPRECATED_loadMessage } from "../../../actions/messages";
 import { Action } from "../../../actions/types";
 import reducer, {
   EMPTY_MESSAGE_STATUS,
@@ -61,39 +56,6 @@ describe("messagesStatus reducer", () => {
     testLength(state, 2);
   });
 
-  it("should return the loaded message with read state to true", () => {
-    expect(
-      reducer(
-        undefined,
-        DEPRECATED_setMessageReadState(messageWithContent.id, true, "unknown")
-      )
-    ).toEqual({
-      [messageWithContent.id]: { ...EMPTY_MESSAGE_STATUS, isRead: true }
-    });
-  });
-
-  it("should return the loaded message with read state to false", () => {
-    expect(
-      reducer(
-        undefined,
-        DEPRECATED_setMessageReadState(messageWithContent.id, false, "unknown")
-      )
-    ).toEqual({
-      [messageWithContent.id]: { ...EMPTY_MESSAGE_STATUS, isRead: false }
-    });
-  });
-
-  it("should return the loaded message with isArchived state to true", () => {
-    expect(
-      reducer(
-        undefined,
-        DEPRECATED_setMessagesArchivedState([messageWithContent.id], true)
-      )
-    ).toEqual({
-      [messageWithContent.id]: { ...EMPTY_MESSAGE_STATUS, isArchived: true }
-    });
-  });
-
   describe("when `differentProfileLoggedIn` is passed and a message is already persisted", () => {
     it("should return the initial state", () => {
       const notEmptyState = reducer(
@@ -101,35 +63,6 @@ describe("messagesStatus reducer", () => {
         DEPRECATED_loadMessage.success(messageWithContent)
       );
       expect(reducer(notEmptyState, differentProfileLoggedIn())).toEqual({});
-    });
-  });
-
-  it("should return the loaded message with isArchived state to false", () => {
-    expect(
-      reducer(
-        undefined,
-        DEPRECATED_setMessagesArchivedState([messageWithContent.id], false)
-      )
-    ).toEqual({
-      [messageWithContent.id]: { ...EMPTY_MESSAGE_STATUS, isArchived: false }
-    });
-  });
-
-  it("should return the state without the removed message", () => {
-    const state = reducer(
-      {
-        "1": EMPTY_MESSAGE_STATUS,
-        "2": EMPTY_MESSAGE_STATUS,
-        "3": EMPTY_MESSAGE_STATUS,
-        "4": EMPTY_MESSAGE_STATUS
-      },
-      DEPRECATED_setMessageReadState("4", true, "unknown")
-    );
-    testLength(state, 4);
-    const stateAfterRemove = reducer(state, removeMessages(["1", "2", "3"]));
-    testLength(stateAfterRemove, 1);
-    expect(stateAfterRemove).toEqual({
-      4: { ...EMPTY_MESSAGE_STATUS, isRead: true }
     });
   });
 });

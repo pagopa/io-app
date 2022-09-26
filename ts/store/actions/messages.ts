@@ -18,8 +18,6 @@ import {
   UIMessageId
 } from "../reducers/entities/messages/types";
 import { Cursor } from "../reducers/entities/messages/allPaginated";
-import { MessageCategory } from "../../../definitions/backend/MessageCategory";
-import { TagEnum } from "../../../definitions/backend/MessageCategoryPayment";
 import { MessagesStatus } from "../reducers/entities/messages/messagesStatus";
 import { loadThirdPartyMessage } from "../../features/messages/store/actions";
 
@@ -149,27 +147,6 @@ export const upsertMessageStatusAttributes = createAsyncAction(
 export const removeMessages =
   createStandardAction("MESSAGES_REMOVE")<ReadonlyArray<string>>();
 
-export type MessageReadType =
-  | Extract<MessageCategory["tag"], TagEnum.PAYMENT>
-  | "unknown";
-/**
- *  @deprecated Please use actions with pagination instead
- */
-export const DEPRECATED_setMessageReadState = createAction(
-  "MESSAGES_SET_READ",
-  resolve => (id: string, read: boolean, messageType: MessageReadType) =>
-    resolve({ id, read, messageType }, { id, read })
-);
-
-/**
- *  @deprecated Please use actions with pagination instead
- */
-export const DEPRECATED_setMessagesArchivedState = createAction(
-  "MESSAGES_SET_ARCHIVED",
-  resolve => (ids: ReadonlyArray<string>, archived: boolean) =>
-    resolve({ ids, archived })
-);
-
 type MigrationFailure = {
   error: unknown;
   messageId: string;
@@ -201,8 +178,6 @@ export type MessagesActions =
   | ActionType<typeof migrateToPaginatedMessages>
   | ActionType<typeof resetMigrationStatus>
   | ActionType<typeof removeMessages>
-  | ActionType<typeof DEPRECATED_setMessageReadState>
   | ActionType<typeof upsertMessageStatusAttributes>
-  | ActionType<typeof DEPRECATED_setMessagesArchivedState>
   | ActionType<typeof loadMessageById>
   | ActionType<typeof loadThirdPartyMessage>;

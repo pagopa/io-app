@@ -49,7 +49,6 @@ import {
 import {
   DEPRECATED_loadMessage,
   removeMessages,
-  DEPRECATED_setMessageReadState,
   migrateToPaginatedMessages
 } from "../actions/messages";
 import { setMixpanelEnabled } from "../actions/mixpanel";
@@ -242,9 +241,6 @@ const trackAction =
         return mp.track(action.type, {
           messagesIdsToRemoveFromCache: action.payload
         });
-      }
-      case getType(DEPRECATED_setMessageReadState): {
-        return mp.track(action.type, action.payload);
       }
       case getType(migrateToPaginatedMessages.request): {
         return mp.track("MESSAGES_MIGRATION_START", {

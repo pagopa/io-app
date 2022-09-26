@@ -3,9 +3,7 @@ import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import {
   DEPRECATED_loadMessage,
-  removeMessages,
-  DEPRECATED_setMessageReadState,
-  DEPRECATED_setMessagesArchivedState
+  removeMessages
 } from "../../../actions/messages";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
@@ -43,38 +41,6 @@ const reducer = (
       };
     }
 
-    case getType(DEPRECATED_setMessageReadState): {
-      const { id, read } = action.payload;
-      // if misses, set the default values for given message
-      const prevState = state[id] || EMPTY_MESSAGE_STATUS;
-      return {
-        ...state,
-        [id]: {
-          ...prevState,
-          isRead: read
-        }
-      };
-    }
-    case getType(DEPRECATED_setMessagesArchivedState): {
-      const { ids, archived } = action.payload;
-      const updatedMessageStates = ids.reduce<{
-        [key: string]: MessageStatus;
-      }>((accumulator, id) => {
-        // if misses, set the default values for given message
-        const prevState = state[id] || EMPTY_MESSAGE_STATUS;
-        return {
-          ...accumulator,
-          [id]: {
-            ...prevState,
-            isArchived: archived
-          }
-        };
-      }, {});
-      return {
-        ...state,
-        ...updatedMessageStates
-      };
-    }
     case getType(removeMessages):
       const idsToRemove = action.payload;
       return Object.keys(state).reduce<MessagesStatus>(
