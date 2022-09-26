@@ -9,10 +9,7 @@ import { getType } from "typesafe-actions";
 
 import { CreatedMessageWithContentAndAttachments } from "../../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { CreatedMessageWithoutContent } from "../../../../../definitions/backend/CreatedMessageWithoutContent";
-import {
-  DEPRECATED_loadMessage,
-  removeMessages
-} from "../../../actions/messages";
+import { removeMessages } from "../../../actions/messages";
 import { clearCache } from "../../../actions/profile";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
@@ -34,42 +31,6 @@ const reducer = (
   action: Action
 ): MessageStateById => {
   switch (action.type) {
-    case getType(DEPRECATED_loadMessage.request):
-      return {
-        ...state,
-        [action.payload.id]: {
-          meta: action.payload,
-          message: pot.noneLoading
-        }
-      };
-
-    case getType(DEPRECATED_loadMessage.success): {
-      const id = action.payload.id;
-      const prevState = state[id];
-      if (prevState === undefined) {
-        // we can't deal with a success without a request
-        return state;
-      }
-      return {
-        ...state,
-        [id]: { ...prevState, message: pot.some(action.payload) }
-      };
-    }
-    case getType(DEPRECATED_loadMessage.failure): {
-      const id = action.payload.id;
-      const prevState = state[id];
-      if (prevState === undefined) {
-        // we can't deal with a failure without a request
-        return state;
-      }
-      return {
-        ...state,
-        [id]: {
-          ...prevState,
-          message: pot.noneError(action.payload.error.message)
-        }
-      };
-    }
     case getType(removeMessages): {
       const clonedState = { ...state };
       const ids = action.payload;

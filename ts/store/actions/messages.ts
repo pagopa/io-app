@@ -9,9 +9,6 @@ import {
   createStandardAction
 } from "typesafe-actions";
 
-import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
-
-import { CreatedMessageWithoutContent } from "../../../definitions/backend/CreatedMessageWithoutContent";
 import {
   UIMessage,
   UIMessageDetails,
@@ -39,36 +36,12 @@ export const loadMessageDetails = createAsyncAction(
   "MESSAGE_DETAILS_LOAD_FAILURE"
 )<{ id: UIMessageId }, UIMessageDetails, { id: string; error: Error }>();
 
-/**
- * Load a single message's details given its content
- * @deprecated use loadMessageDetails instead
- */
-export const DEPRECATED_loadMessage = createAsyncAction(
-  "MESSAGE_LOAD_REQUEST",
-  "MESSAGE_LOAD_SUCCESS",
-  "MESSAGE_LOAD_FAILURE"
-)<
-  CreatedMessageWithoutContent,
-  CreatedMessageWithContentAndAttachments,
-  { id: string; error: Error }
->();
-
 export type Filter = { getArchived?: boolean };
 // generic error used by all pagination actions
 export type MessagesFailurePayload = {
   error: Error;
   filter: Filter;
 };
-
-/**
- * Load a single message's details given its ID, and the sender service
- * if needed.
- */
-export const loadMessageWithRelations = createAsyncAction(
-  "MESSAGE_WITH_RELATIONS_LOAD_REQUEST",
-  "MESSAGE_WITH_RELATIONS_LOAD_SUCCESS",
-  "MESSAGE_WITH_RELATIONS_LOAD_FAILURE"
-)<CreatedMessageWithoutContent, void, MessagesFailurePayload>();
 
 export type LoadMessagesRequestPayload = {
   pageSize: number;
@@ -169,8 +142,6 @@ export const resetMigrationStatus = createAction(
 );
 
 export type MessagesActions =
-  | ActionType<typeof DEPRECATED_loadMessage>
-  | ActionType<typeof loadMessageWithRelations>
   | ActionType<typeof reloadAllMessages>
   | ActionType<typeof loadNextPageMessages>
   | ActionType<typeof loadPreviousPageMessages>

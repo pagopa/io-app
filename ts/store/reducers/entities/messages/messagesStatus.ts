@@ -1,10 +1,7 @@
 import { fromNullable } from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-import {
-  DEPRECATED_loadMessage,
-  removeMessages
-} from "../../../actions/messages";
+import { removeMessages } from "../../../actions/messages";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
 import { differentProfileLoggedIn } from "../../../actions/crossSessions";
@@ -29,18 +26,6 @@ const reducer = (
   action: Action
 ): MessagesStatus => {
   switch (action.type) {
-    case getType(DEPRECATED_loadMessage.success): {
-      const { id } = action.payload;
-      // if hits, skip it!
-      if (state[id] !== undefined) {
-        return state;
-      }
-      return {
-        ...state,
-        [id]: EMPTY_MESSAGE_STATUS
-      };
-    }
-
     case getType(removeMessages):
       const idsToRemove = action.payload;
       return Object.keys(state).reduce<MessagesStatus>(

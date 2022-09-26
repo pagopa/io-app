@@ -45,7 +45,6 @@ import NavigationService from "../navigation/NavigationService";
 import { startApplicationInitialization } from "../store/actions/application";
 import { sessionExpired } from "../store/actions/authentication";
 import { previousInstallationDataDeleteSuccess } from "../store/actions/installation";
-import { loadMessageWithRelations } from "../store/actions/messages";
 import { setMixpanelEnabled } from "../store/actions/mixpanel";
 import {
   navigateToMainNavigatorAction,
@@ -117,9 +116,7 @@ import {
   checkSession,
   watchCheckSessionSaga
 } from "./startup/watchCheckSessionSaga";
-import { watchLoadMessageWithRelationsSaga } from "./startup/watchLoadMessageWithRelationsSaga";
 import { watchLogoutSaga } from "./startup/watchLogoutSaga";
-import { watchMessageLoadSaga } from "./startup/watchMessageLoadSaga";
 import { watchSessionExpiredSaga } from "./startup/watchSessionExpiredSaga";
 import { watchUserDataProcessingSaga } from "./user/userDataProcessing";
 import {
@@ -525,16 +522,6 @@ export function* initializeApplicationSaga(): Generator<
 
   // Load third party message content when requested
   yield* fork(watchThirdPartyMessageSaga, backendClient);
-
-  // Load a message when requested
-  yield* fork(watchMessageLoadSaga, backendClient.getMessage);
-
-  // Load message and related entities (ex. the sender service)
-  yield* takeEvery(
-    getType(loadMessageWithRelations.request),
-    watchLoadMessageWithRelationsSaga,
-    backendClient.getMessage
-  );
 
   // Watch for the app going to background/foreground
   yield* fork(watchApplicationActivitySaga);
