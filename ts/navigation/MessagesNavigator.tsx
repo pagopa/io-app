@@ -5,7 +5,6 @@ import { EUCovidCertStackNavigator } from "../features/euCovidCert/navigation/na
 import EUCOVIDCERT_ROUTES from "../features/euCovidCert/navigation/routes";
 import { MvlStackNavigator } from "../features/mvl/navigation/navigator";
 import MVL_ROUTES from "../features/mvl/navigation/routes";
-import MessageDetailScreen from "../screens/messages/MessageDetailScreen";
 import PaginatedMessageDetailScreen from "../screens/messages/paginated/MessageDetailScreen";
 import PaginatedMessageRouterScreen from "../screens/messages/paginated/MessageRouterScreen";
 import { PnStackNavigator } from "../features/pn/navigation/navigator";
@@ -27,11 +26,6 @@ export const MessagesStackNavigator = () => {
       headerMode={"none"}
       screenOptions={{ gestureEnabled: isGestureEnabled }}
     >
-      <Stack.Screen
-        name={ROUTES.MESSAGE_DETAIL}
-        component={MessageDetailScreen}
-      />
-
       <Stack.Screen
         name={ROUTES.MESSAGE_ROUTER_PAGINATED}
         component={PaginatedMessageRouterScreen}
