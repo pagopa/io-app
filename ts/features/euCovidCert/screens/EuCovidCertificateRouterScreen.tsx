@@ -4,8 +4,6 @@ import * as React from "react";
 import { useEffect, useRef } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { usePaginatedMessages } from "../../../config";
-import { DEPRECATED_setMessageReadState } from "../../../store/actions/messages";
 import { GlobalState } from "../../../store/reducers/types";
 import { EUCovidCertParamsList } from "../navigation/params";
 import { euCovidCertificateGet } from "../store/actions";
@@ -104,15 +102,11 @@ const EuCovidCertificateRouterScreen = (
 
   const authCode = route.params.authCode;
   const messageId = route.params.messageId;
-  const { setMessageRead, shouldBeLoaded, loadCertificate } = props;
+  const { shouldBeLoaded, loadCertificate } = props;
   const firstLoading = useRef<boolean>(true);
 
   useEffect(() => {
     if (firstLoading.current) {
-      if (!usePaginatedMessages) {
-        // TODO: remove once we publish pagination
-        setMessageRead(messageId);
-      }
       // check if a load is required
       if (shouldBeLoaded(authCode)) {
         loadCertificate(authCode);
@@ -120,7 +114,7 @@ const EuCovidCertificateRouterScreen = (
       // eslint-disable-next-line functional/immutable-data
       firstLoading.current = false;
     }
-  }, [setMessageRead, shouldBeLoaded, loadCertificate, messageId, authCode]);
+  }, [shouldBeLoaded, loadCertificate, messageId, authCode]);
 
   // handle with the fold the remote state and with routeEuCovidResponse the different response values
   return (
@@ -156,9 +150,7 @@ const EuCovidCertificateRouterScreen = (
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadCertificate: (authCode: EUCovidCertificateAuthCode) =>
-    dispatch(euCovidCertificateGet.request(authCode)),
-  setMessageRead: (messageId: string) =>
-    dispatch(DEPRECATED_setMessageReadState(messageId, true, "unknown"))
+    dispatch(euCovidCertificateGet.request(authCode))
 });
 
 const mapStateToProps = (state: GlobalState) => ({

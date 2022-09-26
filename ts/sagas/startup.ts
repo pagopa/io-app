@@ -30,7 +30,6 @@ import {
   pagoPaApiUrlPrefixTest,
   pnEnabled,
   svEnabled,
-  usePaginatedMessages,
   zendeskEnabled
 } from "../config";
 import { watchBonusSaga } from "../features/bonus/bonusVacanze/store/sagas/bonusSaga";
@@ -50,7 +49,6 @@ import { loadMessageWithRelations } from "../store/actions/messages";
 import { setMixpanelEnabled } from "../store/actions/mixpanel";
 import {
   navigateToMainNavigatorAction,
-  navigateToMessageRouterScreen,
   navigateToPaginatedMessageRouterAction,
   navigateToPrivacyScreen
 } from "../store/actions/navigation";
@@ -515,21 +513,19 @@ export function* initializeApplicationSaga(): Generator<
   // Load all messages when requested
   yield* fork(watchLoadMessages, backendClient.getMessages);
 
-  if (usePaginatedMessages) {
-    yield* fork(watchLoadNextPageMessages, backendClient.getMessages);
-    yield* fork(watchLoadPreviousPageMessages, backendClient.getMessages);
-    yield* fork(watchReloadAllMessages, backendClient.getMessages);
-    yield* fork(watchLoadMessageById, backendClient.getMessage);
-    yield* fork(watchLoadMessageDetails, backendClient.getMessage);
-    yield* fork(
-      watchUpsertMessageStatusAttribues,
-      backendClient.upsertMessageStatusAttributes
-    );
-    yield* fork(
-      watchMigrateToPagination,
-      backendClient.upsertMessageStatusAttributes
-    );
-  }
+  yield* fork(watchLoadNextPageMessages, backendClient.getMessages);
+  yield* fork(watchLoadPreviousPageMessages, backendClient.getMessages);
+  yield* fork(watchReloadAllMessages, backendClient.getMessages);
+  yield* fork(watchLoadMessageById, backendClient.getMessage);
+  yield* fork(watchLoadMessageDetails, backendClient.getMessage);
+  yield* fork(
+    watchUpsertMessageStatusAttribues,
+    backendClient.upsertMessageStatusAttributes
+  );
+  yield* fork(
+    watchMigrateToPagination,
+    backendClient.upsertMessageStatusAttributes
+  );
 
   // Load third party message content when requested
   yield* fork(watchThirdPartyMessageSaga, backendClient);
@@ -570,16 +566,12 @@ export function* initializeApplicationSaga(): Generator<
 
     yield* call(navigateToMainNavigatorAction);
     // Navigate to message router screen
-    if (usePaginatedMessages) {
-      NavigationService.dispatchNavigationAction(
-        navigateToPaginatedMessageRouterAction({
-          messageId: messageId as UIMessageId,
-          fromNotification: true
-        })
-      );
-    } else {
-      yield* call(navigateToMessageRouterScreen, { messageId });
-    }
+    NavigationService.dispatchNavigationAction(
+      navigateToPaginatedMessageRouterAction({
+        messageId: messageId as UIMessageId,
+        fromNotification: true
+      })
+    );
   } else {
     yield* call(navigateToMainNavigatorAction);
   }
