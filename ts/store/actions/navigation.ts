@@ -192,19 +192,6 @@ export const navigateToPaginatedMessageRouterAction = (
   });
 
 /**
- * @deprecated
- */
-export const navigateToMessageRouterScreen = (
-  params: MessageDetailScreenNavigationParams
-) =>
-  NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.MESSAGES_NAVIGATOR, {
-      screen: ROUTES.MESSAGE_ROUTER,
-      params
-    })
-  );
-
-/**
  * Service
  */
 

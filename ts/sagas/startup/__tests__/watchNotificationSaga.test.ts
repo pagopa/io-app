@@ -1,6 +1,7 @@
 import { testSaga } from "redux-saga-test-plan";
-import { navigateToMessageRouterScreen } from "../../../store/actions/navigation";
+import { navigateToPaginatedMessageRouterAction } from "../../../store/actions/navigation";
 import { clearNotificationPendingMessage } from "../../../store/actions/notifications";
+import { UIMessageId } from "../../../store/reducers/entities/messages/types";
 import {
   PendingMessageState,
   pendingMessageStateSelector
@@ -23,8 +24,9 @@ describe("watchNotificationSaga", () => {
       .next(mockedPendingMessageState)
       .put(clearNotificationPendingMessage())
       .next()
-      .call(navigateToMessageRouterScreen, {
-        messageId: mockedPendingMessageState.id
+      .call(navigateToPaginatedMessageRouterAction, {
+        messageId: mockedPendingMessageState.id as UIMessageId,
+        fromNotification: true
       })
       .next()
       .isDone();
