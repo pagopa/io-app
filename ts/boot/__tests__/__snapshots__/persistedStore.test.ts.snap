@@ -44,9 +44,6 @@ Object {
     "byMessageId": Object {},
   },
   "messages": Object {
-    "allIds": Object {
-      "kind": "PotNone",
-    },
     "allPaginated": Object {
       "archive": Object {
         "data": Object {
@@ -68,9 +65,7 @@ Object {
         "_tag": "None",
       },
     },
-    "byId": Object {},
     "detailsById": Object {},
-    "idsByServiceId": Object {},
     "paginatedById": Object {},
     "thirdPartyById": Object {},
   },
