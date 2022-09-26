@@ -6,10 +6,7 @@ import { combineReducers } from "redux";
 
 import { Action } from "../../../actions/types";
 
-import messagesByIdReducer, {
-  MessageState,
-  MessageStateById
-} from "./messagesById";
+import { MessageState } from "./messagesById";
 import { MessageStatus } from "./messagesStatus";
 import allPaginatedReducer, { AllPaginated } from "./allPaginated";
 import detailsByIdReducer, { DetailsById } from "./detailsById";
@@ -17,7 +14,6 @@ import paginatedByIdReducer, { PaginatedById } from "./paginatedById";
 import { thirdPartyByIdReducer, ThirdPartyById } from "./thirdPartyById";
 
 export type MessagesState = Readonly<{
-  byId: MessageStateById;
   allPaginated: AllPaginated;
   paginatedById: PaginatedById;
   detailsById: DetailsById;
@@ -25,7 +21,6 @@ export type MessagesState = Readonly<{
 }>;
 
 const reducer = combineReducers<MessagesState, Action>({
-  byId: messagesByIdReducer,
   allPaginated: allPaginatedReducer,
   paginatedById: paginatedByIdReducer,
   detailsById: detailsByIdReducer,

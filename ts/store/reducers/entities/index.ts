@@ -62,12 +62,14 @@ const migrations: MigrationManifest = {
       ...state
     } as PersistedEntitiesState),
   // version 2
-  // remove messages allIds and idsByServiceId after moving to pagination
+  // remove some sections unused after moving to pagination.
   "2": (state: PersistedState): PersistedEntitiesState => {
     const entities = state as PersistedEntitiesState;
     return {
       ...entities,
-      messages: { ..._.omit(entities.messages, "allIds", "idsByServiceId") }
+      messages: {
+        ..._.omit(entities.messages, "allIds", "idsByServiceId", "byId")
+      }
     };
   }
 };
