@@ -526,12 +526,24 @@ jobs:
       - run:
           working_directory: .
           name: Run android detox build
-          command: npx detox build -c android.emu.release
+          command: RN_SRC_EXT=e2e.ts yarn detox build -c android.emu.release
 
       - run:
           working_directory: .
           name: Run android detox test
-          command: npx detox test \
+          command: |
+            git clone git@github.com:pagopa/io-dev-api-server.git --branch master --single-branch _io-dev-api-server_
+            cd _io-dev-api-server_
+            cp ../scripts/api-config.json config/config.json
+            yarn
+            yarn generate:all
+            yarn start &> /tmp/io-dev-api-server.log &
+            # wait for the server to be up and running
+            sleep 10
+            cd ..
+            yarn detox clean-framework-cache
+            yarn detox build-framework-cache
+            yarn detox test \
               --loglevel verbose \
               -c android.emu.release \
               --cleanup \
@@ -611,23 +623,20 @@ workflows:
       - e2e-environment-setup:
           requires:
             - compile-typescript
-      - gradle-dependencies:
-          requires:
-            - e2e-environment-setup
-      - android-sdk-dependencies:
-          requires:
-            - gradle-dependencies
-      - create-launch-android-emulator:
-          requires:
-            - android-sdk-dependencies
+          filters:
+            branches:
+              only: master
       - clear-detox-cache:
           requires:
             - e2e-environment-setup
+          filters:
+            branches:
+              only: master
       # TODO: Slack integration
       - run-e2e-test-ANDROID:
           requires:
+            - e2e-environment-setup
             - clear-detox-cache
-            - create-launch-android-emulator
           filters:
             branches:
               only: master
