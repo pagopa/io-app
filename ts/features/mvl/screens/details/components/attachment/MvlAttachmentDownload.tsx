@@ -18,11 +18,12 @@ import { MvlAttachment, MvlAttachmentId } from "../../../../types/mvlData";
 import { mvlPreferencesSetWarningForAttachments } from "../../../../store/actions";
 import { showToast } from "../../../../../../utils/showToast";
 import { mvlAttachmentDownload } from "../../../../store/actions/downloads";
-import { mvlAttachmentDownloadFromIdSelector } from "../../../../store/reducers/downloads";
 import { isIos } from "../../../../../../utils/platform";
 import { ContentTypeValues } from "../../../../../../types/contentType";
 import { useIOBottomSheetModal } from "../../../../../../utils/hooks/bottomSheet";
 import { mvlPreferencesSelector } from "../../../../store/reducers/preferences";
+import { mixpanelTrack } from "../../../../../../mixpanel";
+import { mvlDownloadFromAttachmentSelector } from "../../../../store/reducers/downloads";
 
 const BOTTOM_SHEET_HEIGHT = 375;
 
@@ -93,13 +94,14 @@ export const useMvlAttachmentDownload = (
   const { showAlertForAttachments } = useIOSelector(mvlPreferencesSelector);
 
   const downloadPot = useIOSelector(state =>
-    mvlAttachmentDownloadFromIdSelector(state, attachment.id)
+    mvlDownloadFromAttachmentSelector(state, attachment)
   );
 
   const openAttachment = useCallback(async () => {
     const download = pot.toUndefined(downloadPot);
 
     if (pot.isError(downloadPot)) {
+      void mixpanelTrack("PN_ATTACHMENT_DOWNLOADFAILURE");
       showToast(
         i18n.t("features.mvl.details.attachments.bottomSheet.failing.details")
       );
@@ -170,17 +172,21 @@ export const useMvlAttachmentDownload = (
   const { present, bottomSheet, dismiss } =
     useDownloadAttachmentConfirmationBottomSheet({
       onConfirm: dontAskAgain => {
+        void mixpanelTrack("PN_ATTACHMENTDISCLAIMER_ACCEPTED");
         dispatch(mvlPreferencesSetWarningForAttachments(!dontAskAgain));
         void downloadAttachmentIfNeeded();
         dismiss();
       },
       onCancel: () => {
+        void mixpanelTrack("PN_ATTACHMENTDISCLAIMER_REJECTED");
         dismiss();
       }
     });
 
   const onAttachmentSelect = () => {
+    void mixpanelTrack("PN_ATTACHMENT_OPEN");
     if (showAlertForAttachments) {
+      void mixpanelTrack("PN_ATTACHMENTDISCLAIMER_SHOW_SUCCESS");
       present();
     } else {
       void downloadAttachmentIfNeeded();

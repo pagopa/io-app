@@ -272,7 +272,8 @@ export const baseRawBackendStatus: BackendStatus = {
     pn: {
       enabled: false,
       frontend_url: ""
-    }
+    },
+    payments: {}
   }
 };
 
@@ -336,7 +337,8 @@ export const baseBackendConfig: Config = {
   pn: {
     enabled: false,
     frontend_url: ""
-  }
+  },
+  payments: {}
 };
 
 export const withBpdRankingConfig = (

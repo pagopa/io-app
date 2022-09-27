@@ -4,8 +4,8 @@ import Pdf from "react-native-pdf";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import * as pot from "italia-ts-commons/lib/pot";
 import {
-  mvlAttachmentDownloadFromIdSelector,
-  MvlDownload
+  MvlDownload,
+  mvlDownloadFromAttachmentSelector
 } from "../../mvl/store/reducers/downloads";
 import { isIos } from "../../../utils/platform";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
@@ -22,6 +22,7 @@ import image from "../../../../img/servicesStatus/error-detail-icon.png";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
 import { IOColors } from "../../../components/core/variables/IOColors";
+import { UIMessageId } from "../../../store/reducers/entities/messages/types";
 
 const styles = StyleSheet.create({
   container: {
@@ -33,11 +34,17 @@ const styles = StyleSheet.create({
   }
 });
 
-const renderFooter = ({ attachment, path }: MvlDownload) =>
+const renderFooter = (
+  { attachment, path }: MvlDownload,
+  onShare?: () => void,
+  onOpen?: () => void,
+  onDownload?: () => void
+) =>
   isIos ? (
     <FooterWithButtons
       type={"SingleButton"}
       leftButton={confirmButtonProps(() => {
+        onShare?.();
         ReactNativeBlobUtil.ios.presentOptionsMenu(path);
       }, I18n.t("features.mvl.details.attachments.pdfPreview.singleBtn"))}
     />
@@ -48,6 +55,7 @@ const renderFooter = ({ attachment, path }: MvlDownload) =>
         bordered: true,
         primary: false,
         onPress: () => {
+          onShare?.();
           share(`file://${path}`, undefined, false)
             .run()
             .catch(_ => {
@@ -64,6 +72,7 @@ const renderFooter = ({ attachment, path }: MvlDownload) =>
         bordered: true,
         primary: false,
         onPress: () => {
+          onDownload?.();
           ReactNativeBlobUtil.MediaCollection.copyToMediaStore(
             {
               name: attachment.displayName,
@@ -95,6 +104,7 @@ const renderFooter = ({ attachment, path }: MvlDownload) =>
         title: I18n.t("features.mvl.details.attachments.pdfPreview.save")
       }}
       rightButton={confirmButtonProps(() => {
+        onOpen?.();
         ReactNativeBlobUtil.android
           .actionViewIntent(path, attachment.contentType)
           .catch(_ => {
@@ -109,15 +119,22 @@ const renderFooter = ({ attachment, path }: MvlDownload) =>
   );
 
 type Props = {
+  messageId: UIMessageId;
   attachmentId: MvlAttachmentId;
+  onLoadComplete?: () => void;
+  onError?: () => void;
+  onShare?: () => void;
+  onOpen?: () => void;
+  onDownload?: () => void;
 };
 
 export const MessageAttachmentPreview = (props: Props): React.ReactElement => {
   const [isError, setIsError] = useState(false);
 
+  const messageId = props.messageId;
   const attachmentId = props.attachmentId;
   const downloadPot = useIOSelector(state =>
-    mvlAttachmentDownloadFromIdSelector(state, attachmentId)
+    mvlDownloadFromAttachmentSelector(state, { messageId, id: attachmentId })
   );
   const download = pot.toUndefined(downloadPot);
   return download ? (
@@ -131,7 +148,9 @@ export const MessageAttachmentPreview = (props: Props): React.ReactElement => {
           <Pdf
             source={{ uri: download.path, cache: true }}
             style={styles.pdf}
+            onLoadComplete={props.onLoadComplete}
             onError={_ => {
+              props.onError?.();
               setIsError(true);
             }}
           />
@@ -147,7 +166,7 @@ export const MessageAttachmentPreview = (props: Props): React.ReactElement => {
             )}
           />
         )}
-        {renderFooter(download)}
+        {renderFooter(download, props.onShare, props.onOpen, props.onDownload)}
       </SafeAreaView>
     </BaseScreenComponent>
   ) : (

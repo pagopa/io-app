@@ -1,5 +1,6 @@
 import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
 import { apiUrlPrefix } from "../../../../config";
+import { UIMessageId } from "../../../../store/reducers/entities/messages/types";
 import { ContentTypeValues } from "../../../../types/contentType";
 import { MvlAttachmentId } from "../../../mvl/types/mvlData";
 import { PNMessage, FullReceivedNotification } from "./types";
@@ -22,6 +23,7 @@ export const toPNMessage = (
       ...maybeNotification.value,
       serviceId: messageFromApi.sender_service_id,
       attachments: messageFromApi.third_party_message.attachments?.map(_ => ({
+        messageId: messageFromApi.id as UIMessageId,
         id: _.id as string as MvlAttachmentId,
         displayName: _.name ?? _.id,
         contentType: _.content_type ?? ContentTypeValues.applicationOctetStream,
