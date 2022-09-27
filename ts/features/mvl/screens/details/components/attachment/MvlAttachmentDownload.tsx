@@ -18,12 +18,12 @@ import { MvlAttachment, MvlAttachmentId } from "../../../../types/mvlData";
 import { mvlPreferencesSetWarningForAttachments } from "../../../../store/actions";
 import { showToast } from "../../../../../../utils/showToast";
 import { mvlAttachmentDownload } from "../../../../store/actions/downloads";
-import { mvlAttachmentDownloadFromIdSelector } from "../../../../store/reducers/downloads";
 import { isIos } from "../../../../../../utils/platform";
 import { ContentTypeValues } from "../../../../../../types/contentType";
 import { useIOBottomSheetModal } from "../../../../../../utils/hooks/bottomSheet";
 import { mvlPreferencesSelector } from "../../../../store/reducers/preferences";
 import { mixpanelTrack } from "../../../../../../mixpanel";
+import { mvlDownloadFromAttachmentSelector } from "../../../../store/reducers/downloads";
 
 const BOTTOM_SHEET_HEIGHT = 375;
 
@@ -94,7 +94,7 @@ export const useMvlAttachmentDownload = (
   const { showAlertForAttachments } = useIOSelector(mvlPreferencesSelector);
 
   const downloadPot = useIOSelector(state =>
-    mvlAttachmentDownloadFromIdSelector(state, attachment.id)
+    mvlDownloadFromAttachmentSelector(state, attachment)
   );
 
   const openAttachment = useCallback(async () => {

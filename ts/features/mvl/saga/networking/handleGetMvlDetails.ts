@@ -36,6 +36,7 @@ const convertMvlAttachment = (
 ): MvlAttachment =>
   // TODO some values are forced or mocked, specs should be improved https://pagopa.atlassian.net/browse/IAMVL-31
   ({
+    messageId,
     id: attachment.id as MvlAttachmentId,
     displayName: attachment.name,
     contentType: attachment.content_type.toLowerCase(),

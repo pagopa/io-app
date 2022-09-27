@@ -10,6 +10,7 @@ import {
   paymentIdPolling,
   paymentInitializeEntrypointRoute,
   paymentInitializeState,
+  PaymentStartOrigin,
   paymentVerifica,
   paymentWebViewEnd,
   pspForPaymentV2,
@@ -52,6 +53,7 @@ export type PaymentStartWebViewPayload = PaymentStartPayload & {
 //       a state for each RptId - this will make unnecessary to reset the state
 //       at the beginning of a new payment flow.
 export type PaymentState = Readonly<{
+  startOrigin?: PaymentStartOrigin;
   verifica: PotFromActions<
     typeof paymentVerifica["success"],
     typeof paymentVerifica["failure"]
@@ -134,6 +136,11 @@ export const paymentStartPayloadSelector = (
   state: GlobalState
 ): PaymentStartPayload | undefined => state.wallet.payment.paymentStartPayload;
 
+export const paymentStartOriginSelector = createSelector(
+  paymentSelector,
+  payment => payment.startOrigin
+);
+
 const PAYMENT_INITIAL_STATE: PaymentState = {
   verifica: pot.none,
   attiva: pot.none,
@@ -175,6 +182,7 @@ const reducer = (
         // effectively starting a new payment session, thus we also invalidate
         // the rest of the payment state
         ...PAYMENT_INITIAL_STATE,
+        startOrigin: action.payload.startOrigin,
         entrypointRoute: state.entrypointRoute,
         verifica: pot.noneLoading
       };
