@@ -12,7 +12,7 @@ import { appReducer } from "../../../store/reducers";
 import { GlobalState } from "../../../store/reducers/types";
 import { CreditCard, NullableWallet } from "../../../types/pagopa";
 import { CreditCardPan } from "../../../utils/input";
-import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
 import ConfirmCardDetailsScreen, {
   ConfirmCardDetailsScreenNavigationParams
 } from "../ConfirmCardDetailsScreen";
@@ -73,7 +73,7 @@ const getComponent = () => {
 
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(appReducer, globalState as any);
-  const component = renderScreenFakeNavRedux<GlobalState>(
+  const component = renderScreenWithNavigationStoreContext<GlobalState>(
     ToBeTested,
     ROUTES.WALLET_ADD_CARD,
     params,

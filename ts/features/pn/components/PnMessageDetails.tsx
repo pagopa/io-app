@@ -107,7 +107,7 @@ export const PnMessageDetails = (props: Props) => {
     if (rptId) {
       navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
         screen: ROUTES.PAYMENT_TRANSACTION_SUMMARY,
-        rptId
+        params: { rptId }
       });
     }
   }, [rptId, navigation]);

@@ -1,5 +1,4 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { CompatNavigationProp } from "@react-navigation/compat";
 import { useNavigation } from "@react-navigation/native";
 import { View } from "native-base";
 import React, {
@@ -46,12 +45,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   requestNfcEnabledCheck: () => dispatch(nfcIsEnabled.request())
 });
 
-type Props = ReduxProps &
-  ReturnType<typeof mapDispatchToProps> & {
-    navigation: CompatNavigationProp<
-      IOStackNavigationProp<AuthenticationParamsList, "CIE_PIN_SCREEN">
-    >;
-  };
+type Props = ReduxProps & ReturnType<typeof mapDispatchToProps>;
 
 const styles = StyleSheet.create({
   container: {
@@ -79,7 +73,10 @@ const onOpenForgotPinPage = () => openWebUrl(FORGOT_PIN_PAGE_URL);
 
 const CiePinScreen: React.FC<Props> = props => {
   const { showAnimatedModal, hideModal } = useContext(LightModalContext);
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<
+      IOStackNavigationProp<AuthenticationParamsList, "CIE_PIN_SCREEN">
+    >();
   const [pin, setPin] = useState("");
   const continueButtonRef = useRef<FooterWithButtons>(null);
   const pinPadViewRef = useRef<View>(null);

@@ -3,7 +3,6 @@
  */
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { ITuple2 } from "@pagopa/ts-commons/lib/tuples";
-import { NavigationEvents } from "@react-navigation/compat";
 import * as AR from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -134,6 +133,8 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 };
 class ScanQrCodeScreen extends React.Component<Props, State> {
   private scannerReactivateTimeoutHandler?: number;
+  private focusUnsubscribe!: () => void;
+  private blurUnsubscribe!: () => void;
   private goBack = () => this.props.navigation.goBack();
 
   /**
@@ -304,11 +305,26 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
       // cancel the QR scanner reactivation before unmounting the component
       clearTimeout(this.scannerReactivateTimeoutHandler);
     }
+    this.focusUnsubscribe();
+    this.blurUnsubscribe();
   }
 
   private handleWillFocus = () => this.setState({ isFocused: true });
 
   private handleWillBlur = () => this.setState({ isFocused: false });
+
+  public async componentDidMount() {
+    // eslint-disable-next-line functional/immutable-data
+    this.blurUnsubscribe = this.props.navigation.addListener(
+      "blur",
+      this.handleWillBlur
+    );
+    // eslint-disable-next-line functional/immutable-data
+    this.focusUnsubscribe = this.props.navigation.addListener(
+      "focus",
+      this.handleWillFocus
+    );
+  }
 
   public render(): React.ReactNode {
     const primaryButtonProps = {
@@ -326,10 +342,6 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["wallet"]}
       >
-        <NavigationEvents
-          onWillFocus={this.handleWillFocus}
-          onWillBlur={this.handleWillBlur}
-        />
         <SafeAreaView style={IOStyles.flex}>
           <FocusAwareStatusBar
             barStyle={"dark-content"}

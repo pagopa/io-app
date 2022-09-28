@@ -4,7 +4,6 @@
  */
 
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import { CompatNavigationProp } from "@react-navigation/compat";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -27,7 +26,7 @@ import SectionStatusComponent from "../../components/SectionStatus";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import { walletAddCoBadgeStart } from "../../features/wallet/onboarding/cobadge/store/actions";
 import I18n from "../../i18n";
-import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../navigation/params/WalletParamsList";
 import {
   navigateBack,
@@ -69,11 +68,10 @@ export type AddCardScreenNavigationParams = Readonly<{
   keyFrom?: string;
 }>;
 
-type OwnProps = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<WalletParamsList, "WALLET_ADD_CARD">
-  >;
-};
+type OwnProps = IOStackNavigationRouteProps<
+  WalletParamsList,
+  "WALLET_ADD_CARD"
+>;
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
@@ -243,7 +241,8 @@ const AddCardScreen: React.FC<Props> = props => {
   const [creditCard, setCreditCard] = useState<CreditCardState>(
     INITIAL_CARD_FORM_STATE
   );
-  const inPayment = props.navigation.getParam("inPayment");
+
+  const inPayment = props.route.params.inPayment;
 
   const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
     <>
@@ -501,8 +500,8 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
   navigateToConfirmCardDetailsScreen: (creditCard: CreditCard) =>
     navigateToWalletConfirmCardDetails({
       creditCard,
-      inPayment: props.navigation.getParam("inPayment"),
-      keyFrom: props.navigation.getParam("keyFrom")
+      inPayment: props.route.params.inPayment,
+      keyFrom: props.route.params.keyFrom
     })
 });
 

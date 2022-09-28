@@ -1,5 +1,4 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { NavigationEvents } from "@react-navigation/compat";
 import * as O from "fp-ts/lib/Option";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
@@ -182,6 +181,9 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  */
 class WalletHomeScreen extends React.PureComponent<Props, State> {
   private subscription: NativeEventSubscription | undefined;
+  private focusUnsubscribe!: () => void;
+  private blurUnsubscribe!: () => void;
+
   constructor(props: Props) {
     super(props);
     this.state = { hasFocus: false };
@@ -228,6 +230,18 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
   };
 
   public componentDidMount() {
+    if (bonusVacanzeEnabled) {
+      // eslint-disable-next-line functional/immutable-data
+      this.blurUnsubscribe = this.props.navigation.addListener(
+        "blur",
+        this.onLostFocus
+      );
+      // eslint-disable-next-line functional/immutable-data
+      this.focusUnsubscribe = this.props.navigation.addListener(
+        "focus",
+        this.onFocus
+      );
+    }
     // WIP loadTransactions should not be called from here
     // (transactions should be persisted & fetched periodically)
     // https://www.pivotaltracker.com/story/show/168836972
@@ -258,6 +272,10 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
 
   public componentWillUnmount() {
     this.subscription?.remove();
+    if (bonusVacanzeEnabled) {
+      this.focusUnsubscribe();
+      this.blurUnsubscribe();
+    }
   }
 
   public componentDidUpdate(prevProps: Readonly<Props>) {
@@ -553,12 +571,6 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
           {(bpdEnabled || this.props.isCgnEnabled) && <FeaturedCardCarousel />}
           {transactionContent}
         </>
-        {bonusVacanzeEnabled && (
-          <NavigationEvents
-            onWillFocus={this.onFocus}
-            onWillBlur={this.onLostFocus}
-          />
-        )}
         <NewPaymentMethodAddedNotifier />
       </WalletLayout>
     );

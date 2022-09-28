@@ -3,7 +3,6 @@ import {
   RptIdFromString
 } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { CompatNavigationProp } from "@react-navigation/compat";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { ActionSheet } from "native-base";
@@ -24,7 +23,7 @@ import {
   zendeskSupportStart
 } from "../../../features/zendesk/store/actions";
 import I18n from "../../../i18n";
-import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
 import {
   navigateToPaymentPickPaymentMethodScreen,
@@ -142,11 +141,10 @@ const renderFooter = (
   );
 };
 
-type OwnProps = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<WalletParamsList, "PAYMENT_TRANSACTION_SUMMARY">
-  >;
-};
+type OwnProps = IOStackNavigationRouteProps<
+  WalletParamsList,
+  "PAYMENT_TRANSACTION_SUMMARY"
+>;
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -162,6 +160,7 @@ const NewTransactionSummaryScreen = ({
   walletById,
   loadWallets,
   navigation,
+  route,
   continueWithPayment,
   maybeFavoriteWallet,
   hasPayableMethods,
@@ -182,7 +181,7 @@ const NewTransactionSummaryScreen = ({
   // We show inline error status only if the payment starts
   // from a message and the verification fails. In all the other
   // cases we present the fullscreen error message.
-  const paymentStartOrigin = navigation.getParam("paymentStartOrigin");
+  const paymentStartOrigin = route.params.paymentStartOrigin;
   const showsInlineError = paymentStartOrigin === "message";
 
   const errorOrUndefined = O.toUndefined(error);
@@ -245,8 +244,8 @@ const NewTransactionSummaryScreen = ({
     }
   };
 
-  const rptId = navigation.getParam("rptId");
-  const messageId = navigation.getParam("messageId");
+  const rptId = route.params.rptId;
+  const messageId = route.params.messageId;
 
   const paymentNoticeNumber = PaymentNoticeNumberFromString.encode(
     rptId.paymentNoticeNumber
@@ -373,9 +372,9 @@ const mapStateToProps = (state: GlobalState) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
-  const rptId = props.navigation.getParam("rptId");
-  const paymentStartOrigin = props.navigation.getParam("paymentStartOrigin");
-  const initialAmount = props.navigation.getParam("initialAmount");
+  const rptId = props.route.params.rptId;
+  const paymentStartOrigin = props.route.params.paymentStartOrigin;
+  const initialAmount = props.route.params.initialAmount;
 
   const verifyPayment = () =>
     dispatch(

@@ -21,7 +21,7 @@ import {
   CreditCardPaymentMethod,
   SatispayPaymentMethod
 } from "../../../../types/pagopa";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { convertWalletV2toWalletV1 } from "../../../../utils/walletv2";
 import PickPaymentMethodScreen from "../PickPaymentMethodScreen";
 
@@ -249,7 +249,7 @@ describe("PickPaymentMethodScreen", () => {
 });
 
 const renderPickPaymentMethodScreen = (store: Store<GlobalState, Action>) =>
-  renderScreenFakeNavRedux<GlobalState>(
+  renderScreenWithNavigationStoreContext<GlobalState>(
     PickPaymentMethodScreen,
     WALLET_ONBOARDING_PRIVATIVE_ROUTES.SEARCH_AVAILABLE,
     {

@@ -1,4 +1,3 @@
-import { CompatNavigationProp } from "@react-navigation/compat";
 import { useNavigation } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -15,7 +14,7 @@ import BaseScreenComponent from "../../../../components/screens/BaseScreenCompon
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import IconFont from "../../../../components/ui/IconFont";
 import I18n from "../../../../i18n";
-import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
 import {
   pspForPaymentV2,
@@ -153,11 +152,10 @@ export type PayPalPspUpdateScreenNavigationParams = {
   idPayment: string;
   idWallet: number;
 };
-type Props = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<WalletParamsList, "WALLET_PAYPAL_UPDATE_PAYMENT_PSP">
-  >;
-};
+type Props = IOStackNavigationRouteProps<
+  WalletParamsList,
+  "WALLET_PAYPAL_UPDATE_PAYMENT_PSP"
+>;
 
 /**
  * This screen is where the user updates the PSP that will be used for the payment
@@ -170,8 +168,8 @@ const PayPalPspUpdateScreen: React.FunctionComponent<Props> = (
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const pspList = useIOSelector(pspV2ListSelector);
-  const idPayment = props.navigation.getParam("idPayment");
-  const idWallet = props.navigation.getParam("idWallet");
+  const idPayment = props.route.params.idPayment;
+  const idWallet = props.route.params.idWallet;
   const searchPaypalPsp = () => {
     dispatch(pspForPaymentV2.request({ idPayment, idWallet }));
   };

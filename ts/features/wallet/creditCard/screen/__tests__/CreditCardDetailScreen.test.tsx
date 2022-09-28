@@ -14,7 +14,7 @@ import {
   CreditCardPaymentMethod,
   PatchedWalletV2ListResponse
 } from "../../../../../types/pagopa";
-import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { convertWalletV2toWalletV1 } from "../../../../../utils/walletv2";
 import CreditCardDetailScreen from "../CreditCardDetailScreen";
 // import I18n from "../../../../../i18n";
@@ -117,7 +117,7 @@ const renderDetailScreen = (
   store: Store,
   creditCard: CreditCardPaymentMethod
 ) =>
-  renderScreenFakeNavRedux<GlobalState>(
+  renderScreenWithNavigationStoreContext<GlobalState>(
     CreditCardWrapper,
     ROUTES.WALLET_CREDIT_CARD_DETAIL,
     { creditCard },

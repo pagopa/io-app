@@ -1,4 +1,3 @@
-import { CompatNavigationProp } from "@react-navigation/compat";
 import * as O from "fp-ts/lib/Option";
 import { Text, View } from "native-base";
 import * as React from "react";
@@ -21,7 +20,7 @@ import {
   zendeskSupportStart
 } from "../../../features/zendesk/store/actions";
 import I18n from "../../../i18n";
-import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
 import { useIOSelector } from "../../../store/hooks";
 import { canShowHelpSelector } from "../../../store/reducers/assistanceTools";
@@ -44,14 +43,10 @@ export type CreditCardOnboardingAttemptDetailScreenNavigationParams = Readonly<{
   attempt: CreditCardInsertion;
 }>;
 
-type Props = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<
-      WalletParamsList,
-      "CREDIT_CARD_ONBOARDING_ATTEMPT_DETAIL"
-    >
-  >;
-};
+type Props = IOStackNavigationRouteProps<
+  WalletParamsList,
+  "CREDIT_CARD_ONBOARDING_ATTEMPT_DETAIL"
+>;
 
 const styles = StyleSheet.create({
   row: {
@@ -85,7 +80,7 @@ const renderRow = (label: string, value: string) => (
  */
 const CreditCardOnboardingAttemptDetailScreen = (props: Props) => {
   const dispatch = useDispatch();
-  const attempt = props.navigation.getParam("attempt");
+  const attempt = props.route.params.attempt;
   const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
   const outcomeCodes = useIOSelector(outcomeCodesSelector);
   const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);

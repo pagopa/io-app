@@ -1,5 +1,4 @@
 import { RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import { CompatNavigationProp } from "@react-navigation/compat";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { Text, View } from "native-base";
@@ -26,7 +25,7 @@ import {
   zendeskSupportStart
 } from "../../features/zendesk/store/actions";
 import I18n from "../../i18n";
-import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../navigation/params/WalletParamsList";
 import { Dispatch } from "../../store/actions/types";
 import { canShowHelpSelector } from "../../store/reducers/assistanceTools";
@@ -62,11 +61,11 @@ export type PaymentHistoryDetailsScreenNavigationParams = Readonly<{
   payment: PaymentHistory;
 }>;
 
-type Props = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<WalletParamsList, "PAYMENT_HISTORY_DETAIL_INFO">
-  >;
-} & ReturnType<typeof mapStateToProps> &
+type Props = IOStackNavigationRouteProps<
+  WalletParamsList,
+  "PAYMENT_HISTORY_DETAIL_INFO"
+> &
+  ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 const styles = StyleSheet.create({
@@ -116,12 +115,10 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
     // Add rptId custom field
     addTicketCustomField(
       zendeskBlockedPaymentRptIdId,
-      RptIdFromString.encode(this.props.navigation.getParam("payment").data)
+      RptIdFromString.encode(this.props.route.params.payment.data)
     );
     // Append the payment history details in the log
-    appendLog(
-      getPaymentHistoryDetails(this.props.navigation.getParam("payment"))
-    );
+    appendLog(getPaymentHistoryDetails(this.props.route.params.payment));
 
     this.props.zendeskSupportWorkunitStart();
     this.props.zendeskSelectedCategory(zendeskPaymentCategory);
@@ -139,7 +136,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
   };
 
   private getData = () => {
-    const payment = this.props.navigation.getParam("payment");
+    const payment = this.props.route.params.payment;
     const codiceAvviso = getCodiceAvviso(payment.data);
     const paymentCheckout = isPaymentDoneSuccessfully(payment);
     const paymentInfo = getPaymentHistoryInfo(payment, paymentCheckout);

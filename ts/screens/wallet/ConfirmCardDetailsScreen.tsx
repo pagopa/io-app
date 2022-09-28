@@ -4,7 +4,6 @@
  */
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { CompatNavigationProp } from "@react-navigation/compat";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { Content, View } from "native-base";
@@ -42,7 +41,7 @@ import {
   isReady
 } from "../../features/bonus/bpd/model/RemoteValue";
 import I18n from "../../i18n";
-import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../navigation/params/WalletParamsList";
 import {
   navigateToAddCreditCardOutcomeCode,
@@ -85,11 +84,10 @@ type ReduxMergedProps = Readonly<{
   onRetry?: () => void;
 }>;
 
-type OwnProps = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<WalletParamsList, "WALLET_CONFIRM_CARD_DETAILS">
-  >;
-};
+type OwnProps = IOStackNavigationRouteProps<
+  WalletParamsList,
+  "WALLET_CONFIRM_CARD_DETAILS"
+>;
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
@@ -141,8 +139,8 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
   };
 
   public render(): React.ReactNode {
-    const creditCard = this.props.navigation.getParam("creditCard");
-    const isInPayment = O.isSome(this.props.navigation.getParam("inPayment"));
+    const creditCard = this.props.route.params.creditCard;
+    const isInPayment = O.isSome(this.props.route.params.inPayment);
 
     // WebView parameters
     const payUrlSuffix = "/v3/webview/transactions/cc/verify";
@@ -396,7 +394,7 @@ const mapStateToProps = (state: GlobalState) => {
 
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
   const navigateToNextScreen = (maybeWallet: O.Option<Wallet>) => {
-    const inPayment = props.navigation.getParam("inPayment");
+    const inPayment = props.route.params.inPayment;
     if (O.isSome(inPayment)) {
       const { rptId, initialAmount, verifica, idPayment } = inPayment.value;
       dispatchPickPspOrConfirm(dispatch)(
@@ -430,7 +428,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
     } else {
       navigateToWalletHome({
         newMethodAdded: O.isSome(maybeWallet),
-        keyFrom: props.navigation.getParam("keyFrom")
+        keyFrom: props.route.params.keyFrom
       });
     }
   };
@@ -491,7 +489,7 @@ const mergeProps = (
   const onRetry = isRetriableError
     ? () => {
         dispatchProps.runStartOrResumeAddCreditCardSaga(
-          ownProps.navigation.getParam("creditCard"),
+          ownProps.route.params.creditCard,
           // FIXME: Unfortunately we can't access the internal component state
           //        from here so we cannot know if the user wants to set this
           //        card as favourite, we pass true anyway since it's the
