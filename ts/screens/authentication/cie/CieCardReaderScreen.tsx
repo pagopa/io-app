@@ -4,9 +4,10 @@
  * TODO: when 100% is reached, the animation end
  */
 import cieManager, { Event as CEvent } from "@pagopa/react-native-cie";
-import { fromNullable } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
-import { Millisecond } from "italia-ts-commons/lib/units";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import {
@@ -213,7 +214,11 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
   }: setErrorParameter) => {
     const cieDescription =
       errorDescription ??
-      fromNullable(analyticActions.get(eventReason)).getOrElse("");
+      pipe(
+        analyticActions.get(eventReason),
+        O.fromNullable,
+        O.getOrElse(() => "")
+      );
 
     this.dispatchAnalyticEvent({
       reason: eventReason,

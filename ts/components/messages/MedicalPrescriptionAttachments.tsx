@@ -1,4 +1,5 @@
-import { fromNullable } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { FlatList, StyleSheet } from "react-native";
@@ -77,9 +78,15 @@ export default class MedicalPrescriptionAttachments extends React.PureComponent<
   // We should show the SvgXml and share the png version.
   // These two image are the same. They differ only for the mime_type
   private getImage = (att: MessageAttachment) =>
-    fromNullable(this.state.barCodeContents[att.name]).fold(
-      undefined,
-      content => <SvgXml xml={content} width={"100%"} height={BARCODE_HEIGHT} />
+    pipe(
+      this.state.barCodeContents[att.name],
+      O.fromNullable,
+      O.fold(
+        () => undefined,
+        content => (
+          <SvgXml xml={content} width={"100%"} height={BARCODE_HEIGHT} />
+        )
+      )
     );
 
   private renderItem = ({ item }: { item: MessageAttachment }) => {
@@ -96,7 +103,7 @@ export default class MedicalPrescriptionAttachments extends React.PureComponent<
           }).toUpperCase()}
         </Text>
         {this.getImage(item)}
-        {value.isSome() && (
+        {O.isSome(value) && (
           <Text semibold={true} style={{ textAlign: "center" }}>
             {I18n.t("global.symbols.asterisk")}
             {value.value}

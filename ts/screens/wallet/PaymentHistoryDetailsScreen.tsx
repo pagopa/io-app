@@ -1,5 +1,6 @@
 import { RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import { fromNullable } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -146,11 +147,17 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
     // the error could be on attiva or while the payment execution
     // so the description is built first checking the attiva failure, alternatively
     // it checks about the outcome if the payment went wrong
-    const errorDetail = fromNullable(
-      getErrorDescriptionV2(payment.failure)
-    ).alt(
-      fromNullable(payment.outcomeCode).chain(oc =>
-        getPaymentOutcomeCodeDescription(oc, this.props.outcomeCodes)
+    const errorDetail = pipe(
+      getErrorDescriptionV2(payment.failure),
+      O.fromNullable,
+      O.alt(() =>
+        pipe(
+          payment.outcomeCode,
+          O.fromNullable,
+          O.chain(oc =>
+            getPaymentOutcomeCodeDescription(oc, this.props.outcomeCodes)
+          )
+        )
       )
     );
 
@@ -162,20 +169,29 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
       true
     )} - ${new Date(payment.started_at).toLocaleTimeString()}`;
 
-    const reason = maybeInnerProperty<
-      PaymentRequestsGetResponse,
-      "causaleVersamento",
-      string
-    >(payment.verifiedData, "causaleVersamento", m => m).fold(
-      notAvailable,
-      cv => cv
+    const reason = pipe(
+      maybeInnerProperty<
+        PaymentRequestsGetResponse,
+        "causaleVersamento",
+        string
+      >(payment.verifiedData, "causaleVersamento", m => m),
+      O.fold(
+        () => notAvailable,
+        cv => cv
+      )
     );
 
-    const recipient = maybeInnerProperty<Transaction, "merchant", string>(
-      payment.transaction,
-      "merchant",
-      m => m
-    ).fold(notAvailable, c => c);
+    const recipient = pipe(
+      maybeInnerProperty<Transaction, "merchant", string>(
+        payment.transaction,
+        "merchant",
+        m => m
+      ),
+      O.fold(
+        () => notAvailable,
+        c => c
+      )
+    );
 
     const amount = maybeInnerProperty<Transaction, "amount", number>(
       payment.transaction,
@@ -188,19 +204,28 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
       "grandTotal",
       m => m.amount
     );
-    const idTransaction = maybeInnerProperty<Transaction, "id", number>(
-      payment.transaction,
-      "id",
-      m => m
-    ).fold(notAvailable, id => `${id}`);
+    const idTransaction = pipe(
+      maybeInnerProperty<Transaction, "id", number>(
+        payment.transaction,
+        "id",
+        m => m
+      ),
+      O.fold(
+        () => notAvailable,
+        id => `${id}`
+      )
+    );
 
     const fee = getTransactionFee(payment.transaction);
 
-    const enteBeneficiario = maybeInnerProperty<
-      PaymentRequestsGetResponse,
-      "enteBeneficiario",
-      EnteBeneficiario | undefined
-    >(payment.verifiedData, "enteBeneficiario", m => m).getOrElse(undefined);
+    const enteBeneficiario = pipe(
+      maybeInnerProperty<
+        PaymentRequestsGetResponse,
+        "enteBeneficiario",
+        EnteBeneficiario | undefined
+      >(payment.verifiedData, "enteBeneficiario", m => m),
+      O.toUndefined
+    );
 
     const outcomeCode = payment.outcomeCode ?? "-";
     return {
@@ -270,7 +295,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
         headerTitle={I18n.t("payment.details.info.title")}
       >
         <SlidedContentComponent hasFlatBottom={true}>
-          {data.paymentOutcome.isSome() && data.paymentOutcome.value ? (
+          {O.isSome(data.paymentOutcome) && data.paymentOutcome.value ? (
             <PaymentSummaryComponent
               title={I18n.t("payment.details.info.title")}
               recipient={data.recipient}
@@ -289,7 +314,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
                   I18n.t("payment.details.info.enteCreditore"),
                   `${data.enteBeneficiario.denominazioneBeneficiario}\n${data.enteBeneficiario.identificativoUnivocoBeneficiario}`
                 )}
-              {data.errorDetail.isSome() && (
+              {O.isSome(data.errorDetail) && (
                 <View key={"error"}>
                   <Text>{I18n.t("payment.errorDetails")}</Text>
                   <Text bold={true} dark={true}>
@@ -310,10 +335,10 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
             data.dateTime
           )}
           {this.renderSeparator()}
-          {data.paymentOutcome.isSome() &&
+          {O.isSome(data.paymentOutcome) &&
             data.paymentOutcome.value &&
-            data.amount.isSome() &&
-            data.grandTotal.isSome() && (
+            O.isSome(data.amount) &&
+            O.isSome(data.grandTotal) && (
               <React.Fragment>
                 {/** amount */}
                 {this.standardRow(

@@ -1,4 +1,5 @@
-import { readableReport } from "italia-ts-commons/lib/reporters";
+import { readableReport } from "@pagopa/ts-commons/lib/reporters";
+import * as E from "fp-ts/lib/Either";
 import _ from "lodash";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
@@ -24,16 +25,16 @@ export function* handleSearchUserSatispay(
 ) {
   try {
     const searchSatispayWithRefresh = sessionManager.withRefresh(
-      searchSatispay({})
+      searchSatispay("" as PaymentManagerToken)
     );
 
     const searchSatispayWithRefreshResult: SagaCallReturnType<
       typeof searchSatispayWithRefresh
     > = yield* call(searchSatispayWithRefresh);
-    if (searchSatispayWithRefreshResult.isRight()) {
-      const statusCode = searchSatispayWithRefreshResult.value.status;
+    if (E.isRight(searchSatispayWithRefreshResult)) {
+      const statusCode = searchSatispayWithRefreshResult.right.status;
       if (statusCode === 200) {
-        const value = searchSatispayWithRefreshResult.value.value;
+        const value = searchSatispayWithRefreshResult.right.value;
         // even if the user doesn't own satispay the response is 200 but the payload is empty
         // FIXME 200 must always contain a non-empty payload
         return yield* put(
@@ -49,7 +50,7 @@ export function* handleSearchUserSatispay(
           searchUserSatispay.failure({
             kind: "generic",
             value: new Error(
-              `response status ${searchSatispayWithRefreshResult.value.status}`
+              `response status ${searchSatispayWithRefreshResult.right.status}`
             )
           })
         );
@@ -59,7 +60,7 @@ export function* handleSearchUserSatispay(
         searchUserSatispay.failure(
           getGenericError(
             new Error(
-              readablePrivacyReport(searchSatispayWithRefreshResult.value)
+              readablePrivacyReport(searchSatispayWithRefreshResult.left)
             )
           )
         )
@@ -88,9 +89,9 @@ export function* handleAddUserSatispayToWallet(
     const addSatispayToWalletWithRefreshResult: SagaCallReturnType<
       typeof addSatispayToWalletWithRefresh
     > = yield* call(addSatispayToWalletWithRefresh);
-    if (addSatispayToWalletWithRefreshResult.isRight()) {
-      const statusCode = addSatispayToWalletWithRefreshResult.value.status;
-      const wallet = addSatispayToWalletWithRefreshResult.value.value.data;
+    if (E.isRight(addSatispayToWalletWithRefreshResult)) {
+      const statusCode = addSatispayToWalletWithRefreshResult.right.status;
+      const wallet = addSatispayToWalletWithRefreshResult.right.value.data;
       if (statusCode === 200) {
         const newSatispay = wallet
           ? fromPatchedWalletV2ToRawSatispay(wallet)
@@ -115,7 +116,7 @@ export function* handleAddUserSatispayToWallet(
     } else {
       return yield* put(
         addSatispayToWallet.failure(
-          new Error(readableReport(addSatispayToWalletWithRefreshResult.value))
+          new Error(readableReport(addSatispayToWalletWithRefreshResult.left))
         )
       );
     }

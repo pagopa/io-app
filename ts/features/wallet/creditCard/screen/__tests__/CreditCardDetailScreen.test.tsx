@@ -71,8 +71,7 @@ describe("Test CreditCardDetailScreen", () => {
       );
       const store = createStore(appReducer, globalState as any);
 
-      const paymentMethods = PatchedWalletV2ListResponse.decode(walletsV2_1)
-        .value as PatchedWalletV2ListResponse;
+      const paymentMethods = walletsV2_1 as PatchedWalletV2ListResponse;
       const updatedMethods = paymentMethods.data!.map(w =>
         convertWalletV2toWalletV1({ ...w, pagoPA: false })
       );
@@ -94,8 +93,7 @@ describe("Test CreditCardDetailScreen", () => {
       );
       const store = createStore(appReducer, globalState as any);
 
-      const paymentMethods = PatchedWalletV2ListResponse.decode(walletsV2_1)
-        .value as PatchedWalletV2ListResponse;
+      const paymentMethods = walletsV2_1 as PatchedWalletV2ListResponse;
       const updatedMethods = paymentMethods.data!.map(w =>
         convertWalletV2toWalletV1(w)
       );

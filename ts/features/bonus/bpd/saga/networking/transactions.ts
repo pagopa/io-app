@@ -1,4 +1,5 @@
-import { fromNullable } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { CircuitType } from "../../store/actions/transactions";
 
 /**
@@ -24,4 +25,8 @@ const mapNetworkCircuitType: Map<string, CircuitType> = new Map<
 ]);
 
 export const convertCircuitTypeCode = (code: string): CircuitType =>
-  fromNullable(mapNetworkCircuitType.get(code)).getOrElse("Unknown");
+  pipe(
+    mapNetworkCircuitType.get(code),
+    O.fromNullable,
+    O.getOrElse(() => "Unknown" as CircuitType)
+  );

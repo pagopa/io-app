@@ -2,9 +2,10 @@
  * The screen allows to identify a transaction by the QR code on the analogic notice
  */
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import { head } from "fp-ts/lib/Array";
-import { fromNullable, isSome } from "fp-ts/lib/Option";
-import { ITuple2 } from "italia-ts-commons/lib/tuples";
+import { ITuple2 } from "@pagopa/ts-commons/lib/tuples";
+import * as AR from "fp-ts/lib/Array";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { Text, View } from "native-base";
 import * as React from "react";
 import {
@@ -49,8 +50,8 @@ import {
   paymentInitializeState,
   PaymentStartOrigin
 } from "../../../store/actions/wallet/payment";
-import { GlobalState } from "../../../store/reducers/types";
 import { barcodesScannerConfigSelector } from "../../../store/reducers/backendStatus";
+import { GlobalState } from "../../../store/reducers/types";
 import customVariables, {
   VIBRATION_BARCODE_SCANNED_DURATION
 } from "../../../theme/variables";
@@ -176,8 +177,12 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
    */
   private onQrCodeData = (data: string) => {
     const resultOrError = decodePagoPaQrCode(data);
-    resultOrError.foldL<void>(this.onInvalidQrCode, _ =>
-      this.onValidQrCode(_, "qrcode_scan")
+    return pipe(
+      resultOrError,
+      O.foldW(
+        () => this.onInvalidQrCode,
+        _ => this.onValidQrCode(_, "qrcode_scan")
+      )
     );
   };
 
@@ -189,18 +194,21 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
     if (dataMatrixPosteEnabled) {
       const maybePosteDataMatrix = decodePosteDataMatrix(data);
 
-      return maybePosteDataMatrix.foldL<void>(
-        () => {
-          if (this.state.scanningState !== "INVALID") {
-            void mixpanelTrack("WALLET_SCAN_POSTE_DATAMATRIX_FAILURE");
-          }
+      return pipe(
+        maybePosteDataMatrix,
+        O.fold(
+          () => {
+            if (this.state.scanningState !== "INVALID") {
+              void mixpanelTrack("WALLET_SCAN_POSTE_DATAMATRIX_FAILURE");
+            }
 
-          this.onInvalidQrCode();
-        },
-        data => {
-          void mixpanelTrack("WALLET_SCAN_POSTE_DATAMATRIX_SUCCESS");
-          this.onValidQrCode(data, "poste_datamatrix_scan");
-        }
+            this.onInvalidQrCode();
+          },
+          data => {
+            void mixpanelTrack("WALLET_SCAN_POSTE_DATAMATRIX_SUCCESS");
+            this.onValidQrCode(data, "poste_datamatrix_scan");
+          }
+        )
       );
     }
   };
@@ -250,10 +258,12 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
     // Open Image Library
     ImagePicker.launchImageLibrary(options, response => {
       // With the current settings the user is allowed to pick only one image
-      const maybePickedImage = fromNullable(response.assets).chain(assets =>
-        head([...assets])
+      const maybePickedImage = pipe(
+        response.assets,
+        O.fromNullable,
+        O.chain(assets => AR.head([...assets]))
       );
-      if (isSome(maybePickedImage)) {
+      if (O.isSome(maybePickedImage)) {
         ReaderQR.readerQR(maybePickedImage.value.uri)
           .then((data: string) => {
             this.onQrCodeData(data);

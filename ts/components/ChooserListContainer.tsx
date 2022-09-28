@@ -1,5 +1,5 @@
-import { none, Option, some } from "fp-ts/lib/Option";
-import { Millisecond } from "italia-ts-commons/lib/units";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import * as O from "fp-ts/lib/Option";
 import { debounce } from "lodash";
 import { Body, Content, Right, View } from "native-base";
 import * as React from "react";
@@ -30,11 +30,11 @@ import IconFont from "./ui/IconFont";
 
 type OwnProps<T> = {
   items: ReadonlyArray<T>;
-  initialSelectedItemIds: Option<Set<string>>;
+  initialSelectedItemIds: O.Option<Set<string>>;
   keyExtractor: (item: T) => string;
   itemTitleExtractor: (item: T) => string;
   onCancel: () => void;
-  onSave: (selectedItemIds: Option<Set<string>>) => void;
+  onSave: (selectedItemIds: O.Option<Set<string>>) => void;
   isRefreshEnabled: boolean;
   isRefreshing?: boolean;
   onRefresh?: () => void;
@@ -49,8 +49,8 @@ type OtherProps<T> = OwnProps<T> &
 type Props<T> = OtherProps<T> & InjectedWithItemsSelectionProps;
 
 type State = {
-  searchText: Option<string>;
-  debouncedSearchText: Option<string>;
+  searchText: O.Option<string>;
+  debouncedSearchText: O.Option<string>;
 };
 
 const styles = StyleSheet.create({
@@ -76,9 +76,11 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
     super(props);
     this.state = {
       // The text entered by the user for the search
-      searchText: this.props.matchingTextPredicate ? some("") : none,
+      searchText: this.props.matchingTextPredicate ? O.some("") : O.none,
       // The debounced text used to avoid executing a search for each typed char
-      debouncedSearchText: this.props.matchingTextPredicate ? some("") : none
+      debouncedSearchText: this.props.matchingTextPredicate
+        ? O.some("")
+        : O.none
     };
   }
 
@@ -87,7 +89,7 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
     // Set the initial set of selected items ids if is any
     if (
       initialSelectedItemIds !== undefined &&
-      initialSelectedItemIds.isSome()
+      O.isSome(initialSelectedItemIds)
     ) {
       this.props.setSelectedItemIds(initialSelectedItemIds);
     }
@@ -132,7 +134,7 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
       <React.Fragment>
         <Body />
         <Right>
-          {searchText.isSome() ? (
+          {O.isSome(searchText) ? (
             <LabelledItem
               inputProps={{
                 placeholder: I18n.t("global.actions.search"),
@@ -167,13 +169,13 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
    */
   private handleSearchPress = () => {
     this.setState({
-      searchText: some("")
+      searchText: O.some("")
     });
   };
 
   private onSearchTextChange = (text: string) => {
     this.setState({
-      searchText: some(text)
+      searchText: O.some(text)
     });
     this.updateDebouncedSearchText(text);
   };
@@ -181,7 +183,7 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
   private updateDebouncedSearchText = debounce(
     (text: string) =>
       this.setState({
-        debouncedSearchText: some(text)
+        debouncedSearchText: O.some(text)
       }),
     searchDelay
   );
@@ -237,7 +239,7 @@ class ChooserListContainer<T> extends React.PureComponent<Props<T>, State> {
         selectedItemIds={selectedItemIds}
         itemIconComponent={itemIconComponent}
         onPressItem={this.handleOnPressItem}
-        searchText={debouncedSearchText.getOrElse("")}
+        searchText={O.getOrElse(() => "")(debouncedSearchText)}
         matchingTextPredicate={matchingTextPredicate}
         noSearchResultsSourceIcon={noSearchResultsSourceIcon}
         noSearchResultsSubtitle={noSearchResultsSubtitle}

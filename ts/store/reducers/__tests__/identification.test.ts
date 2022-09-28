@@ -1,6 +1,6 @@
-import { range } from "fp-ts/lib/Array";
+import * as AR from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
-import { fromNullable } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import { PinString } from "../../../types/PinString";
 import { reproduceSequence } from "../../../utils/tests";
 import {
@@ -117,12 +117,13 @@ describe("Identification reducer", () => {
     const identificationResetState = reducer(undefined, identificationReset());
 
     pipe(
+      identificationResetState,
       expectFailSequence,
       (state: IdentificationState) => reducer(state, identificationSuccess()),
       expectFailSequence,
       (state: IdentificationState) => reducer(state, identificationReset()),
       expectFailSequence
-    )(identificationResetState);
+    );
   });
 });
 
@@ -134,15 +135,15 @@ describe("Identification reducer", () => {
 const expectFailSequence = (
   initialState: IdentificationState
 ): IdentificationState => {
-  const sequenceOfActions: ReadonlyArray<Action> = range(
+  const sequenceOfActions: ReadonlyArray<Action> = AR.range(
     1,
     maxAttempts - 1
   ).map(_ => identificationFailure());
 
-  const expectedTimespan = range(1, freeAttempts)
+  const expectedTimespan = AR.range(1, freeAttempts)
     .map(_ => 0)
     .concat(
-      range(1, maxAttempts - freeAttempts).map(
+      AR.range(1, maxAttempts - freeAttempts).map(
         i => i * deltaTimespanBetweenAttempts
       )
     );
@@ -176,8 +177,12 @@ const expectFailState = (
 ) => {
   expect(state.fail).toBeDefined();
 
-  fromNullable(state.fail).map(failState => {
-    expect(failState.remainingAttempts).toEqual(expectedRemainingAttempts);
-    expect(failState.timespanBetweenAttempts).toEqual(expectedTimeSpan);
-  });
+  pipe(
+    state.fail,
+    O.fromNullable,
+    O.map(failState => {
+      expect(failState.remainingAttempts).toEqual(expectedRemainingAttempts);
+      expect(failState.timespanBetweenAttempts).toEqual(expectedTimeSpan);
+    })
+  );
 };

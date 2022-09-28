@@ -1,25 +1,25 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as React from "react";
-import * as pot from "italia-ts-commons/lib/pot";
 import { SafeAreaView } from "react-native";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 
+import { ServiceId } from "../../../../definitions/backend/ServiceId";
+import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
+import I18n from "../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { UIMessageId } from "../../../store/reducers/entities/messages/types";
+import { serviceByIdSelector } from "../../../store/reducers/entities/services/servicesById";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { MessageLoading } from "../../messages/components/MessageLoading";
-import { PnParamsList } from "../navigation/params";
-import { PnMessageDetailsError } from "../components/PnMessageDetailsError";
-import I18n from "../../../i18n";
 import { loadThirdPartyMessage } from "../../messages/store/actions";
+import { PnMessageDetails } from "../components/PnMessageDetails";
+import { PnMessageDetailsError } from "../components/PnMessageDetailsError";
+import { PnParamsList } from "../navigation/params";
 import { pnMessageFromIdSelector } from "../store/reducers";
 import { PNMessage } from "../store/types/types";
-import { PnMessageDetails } from "../components/PnMessageDetails";
-import { serviceByIdSelector } from "../../../store/reducers/entities/services/servicesById";
-import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
 
 export type PnMessageDetailsScreenNavigationParams = Readonly<{
   messageId: UIMessageId;

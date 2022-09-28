@@ -1,3 +1,4 @@
+import * as E from "fp-ts/lib/Either";
 import * as t from "io-ts";
 import { Alert } from "react-native";
 import I18n from "../i18n";
@@ -20,13 +21,13 @@ export const fixWalletPspTagsValues = (w: unknown) => {
     })
   });
   const decoded = decoder.decode(w);
-  if (decoded.isLeft()) {
+  if (E.isLeft(decoded)) {
     return w;
   }
-  const psp = decoded.value.psp;
-  const tags = decoded.value.psp.tags;
+  const psp = decoded.right.psp;
+  const tags = decoded.right.psp.tags;
   return {
-    ...decoded.value,
+    ...decoded.right,
     psp: {
       ...psp,
       tags: tags.filter(

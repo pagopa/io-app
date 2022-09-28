@@ -2,8 +2,8 @@
  * This screen allows the user to select the payment method for a selected transaction
  */
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import { some } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
 import { Content, View } from "native-base";
 import * as React from "react";
 import { FlatList, SafeAreaView } from "react-native";
@@ -257,7 +257,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
       props.route.params.initialAmount,
       props.route.params.verifica,
       props.route.params.idPayment,
-      some(wallet),
+      O.some(wallet),
       failureReason => {
         // selecting the payment method has failed, show a toast and stay in
         // this screen
@@ -276,7 +276,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
   },
   navigateToAddPaymentMethod: () =>
     navigateToWalletAddPaymentMethod({
-      inPayment: some({
+      inPayment: O.some({
         rptId: props.route.params.rptId,
         initialAmount: props.route.params.initialAmount,
         verifica: props.route.params.verifica,

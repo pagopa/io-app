@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-community/async-storage";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import _ from "lodash";
 import {
   applyMiddleware,

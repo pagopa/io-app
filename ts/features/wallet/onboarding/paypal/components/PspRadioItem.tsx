@@ -1,17 +1,19 @@
 // component that represents the item in the radio list
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import { View } from "native-base";
 import React from "react";
 import { Dimensions, Image, StyleSheet } from "react-native";
-import { View } from "native-base";
+import { H4 } from "../../../../../components/core/typography/H4";
+import { IOColors } from "../../../../../components/core/variables/IOColors";
+import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
+import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
+import IconFont from "../../../../../components/ui/IconFont";
 import I18n from "../../../../../i18n";
+import { TestID } from "../../../../../types/WithTestID";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { useImageResize } from "../../bancomat/screens/hooks/useImageResize";
-import { H4 } from "../../../../../components/core/typography/H4";
-import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
-import IconFont from "../../../../../components/ui/IconFont";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
-import { TestID } from "../../../../../types/WithTestID";
 import { IOPayPalPsp } from "../types";
-import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import { PspInfoBottomSheetContent } from "./PspInfoBottomSheet";
 
 export const PSP_LOGO_MAX_WIDTH = Dimensions.get("window").width;
@@ -82,17 +84,26 @@ export const PspRadioItem = (
   return (
     <View style={styles.radioItemBody} testID={props.testID}>
       {/* show the psp name while its image is loading */}
-      {imgDimensions.fold<React.ReactNode>(
-        <H4 weight={"SemiBold"} color={"bluegreyDark"} testID={"pspNameTestID"}>
-          {psp.name}
-        </H4>,
-        imgDim => (
-          <Image
-            testID={"pspNameLogoID"}
-            source={{ uri: psp.logoUrl }}
-            style={[styles.pspLogo, { width: imgDim[0], height: imgDim[1] }]}
-            resizeMode={"contain"}
-          />
+      {pipe(
+        imgDimensions,
+        O.fold(
+          () => (
+            <H4
+              weight={"SemiBold"}
+              color={"bluegreyDark"}
+              testID={"pspNameTestID"}
+            >
+              {psp.name}
+            </H4>
+          ),
+          imgDim => (
+            <Image
+              testID={"pspNameLogoID"}
+              source={{ uri: psp.logoUrl }}
+              style={[styles.pspLogo, { width: imgDim[0], height: imgDim[1] }]}
+              resizeMode={"contain"}
+            />
+          )
         )
       )}
       <View style={styles.radioItemRight}>

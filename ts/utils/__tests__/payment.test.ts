@@ -1,10 +1,12 @@
-import { none, some, isSome } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
+import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
+import * as O from "fp-ts/lib/Option";
 
-import { Tuple2 } from "italia-ts-commons/lib/tuples";
+import { Tuple2 } from "@pagopa/ts-commons/lib/tuples";
+import { pipe } from "fp-ts/lib/function";
 import { PaymentAmount } from "../../../definitions/backend/PaymentAmount";
 import { PaymentNoticeNumber } from "../../../definitions/backend/PaymentNoticeNumber";
+import I18n from "../../i18n";
 import { Transaction } from "../../types/pagopa";
 import {
   cleanTransactionDescription,
@@ -20,24 +22,22 @@ import {
   getTransactionIUV,
   getV2ErrorMainType
 } from "../payment";
-import I18n from "../../i18n";
 
 describe("getAmountFromPaymentAmount", () => {
-  const aPaymentAmount = PaymentAmount.decode(1).value as PaymentAmount;
+  const aPaymentAmount = 1 as PaymentAmount;
   it("should convert a valid PaymentAmount into an AmountInEuroCents", () => {
-    const amountInEuroCents = getAmountFromPaymentAmount(
-      aPaymentAmount
-    ).getOrElse("💰" as AmountInEuroCents);
+    const amountInEuroCents = pipe(
+      getAmountFromPaymentAmount(aPaymentAmount),
+      O.getOrElse(() => "💰" as AmountInEuroCents)
+    );
     expect(amountInEuroCents).toEqual("01" as AmountInEuroCents);
   });
 });
 
 describe("getRptIdFromNoticeNumber", () => {
-  const anOrganizationFiscalCode = OrganizationFiscalCode.decode("00000123456")
-    .value as OrganizationFiscalCode;
-  const aNoticeNumber = PaymentNoticeNumber.decode("002160020399398578")
-    .value as PaymentNoticeNumber;
-  const anRptId = RptId.decode({
+  const anOrganizationFiscalCode = "00000123456" as OrganizationFiscalCode;
+  const aNoticeNumber = "002160020399398578" as PaymentNoticeNumber;
+  const anRptId = {
     organizationFiscalCode: "00000123456",
     paymentNoticeNumber: {
       applicationCode: "02",
@@ -45,12 +45,12 @@ describe("getRptIdFromNoticeNumber", () => {
       checkDigit: "78",
       iuv13: "1600203993985"
     }
-  }).value as RptId;
+  };
   it("should convert a PaymentNoticeNumber into an RptId", () => {
-    const rptId = getRptIdFromNoticeNumber(
-      anOrganizationFiscalCode,
-      aNoticeNumber
-    ).getOrElse({} as RptId);
+    const rptId = pipe(
+      getRptIdFromNoticeNumber(anOrganizationFiscalCode, aNoticeNumber),
+      O.getOrElseW(() => ({} as RptId))
+    );
     expect(rptId).toEqual(anRptId);
   });
 });
@@ -107,7 +107,7 @@ describe("decodePagoPaQrCode", () => {
     [
       Tuple2(
         "PAGOPA|002|322201151398574181|81005750021|01",
-        some(
+        O.some(
           Tuple2(
             {
               organizationFiscalCode: "81005750021",
@@ -123,15 +123,15 @@ describe("decodePagoPaQrCode", () => {
         )
       ),
       // not supported version
-      Tuple2("PAGOPA|003|322201151398574181|810057500211|01A", none),
+      Tuple2("PAGOPA|003|322201151398574181|810057500211|01A", O.none),
       // invalid amount
-      Tuple2("PAGOPA|002|322201151398574181|810057500211|01A", none),
+      Tuple2("PAGOPA|002|322201151398574181|810057500211|01A", O.none),
       // invalid header
-      Tuple2("PAPAGO|002|322201151398574181|810057500211|01", none),
+      Tuple2("PAPAGO|002|322201151398574181|810057500211|01", O.none),
       // this is valid
       Tuple2(
         "PAGOPA|002|322201151398574181|81005750021|1",
-        some(
+        O.some(
           Tuple2(
             {
               organizationFiscalCode: "81005750021",
@@ -147,7 +147,7 @@ describe("decodePagoPaQrCode", () => {
         )
       ),
       // invalid organization fiscal code (12 digit instead of 11)
-      Tuple2("PAGOPA|002|322201151398574181|810057500211|01", none)
+      Tuple2("PAGOPA|002|322201151398574181|810057500211|01", O.none)
     ].forEach(tuple => {
       expect(decodePagoPaQrCode(tuple.e1)).toEqual(tuple.e2);
     });
@@ -161,7 +161,7 @@ describe("decodePosteDataMatrix", () => {
 
     const output = decodePosteDataMatrix(input);
 
-    expect(isSome(output)).toBe(true);
+    expect(O.isSome(output)).toBe(true);
   });
 
   it("should not decode an invalid string", () => {
@@ -170,21 +170,21 @@ describe("decodePosteDataMatrix", () => {
 
     const output = decodePosteDataMatrix(input);
 
-    expect(isSome(output)).toBe(false);
+    expect(O.isSome(output)).toBe(false);
   });
 
   it("should not decode a string encoded differently", () => {
     const input = "PAGOPA|002|322201151398574181|810057500211|01";
     const output = decodePosteDataMatrix(input);
 
-    expect(isSome(output)).toBe(false);
+    expect(O.isSome(output)).toBe(false);
   });
 
   it("should not decode an empty string", () => {
     const input = "";
     const output = decodePosteDataMatrix(input);
 
-    expect(isSome(output)).toBe(false);
+    expect(O.isSome(output)).toBe(false);
   });
 });
 
@@ -229,31 +229,31 @@ describe("getTransactionIUV", () => {
   [
     Tuple2(
       "/RFB/02000000000495213/0.01/TXT/TRANSACTION DESCRIPTION",
-      some("02000000000495213")
+      O.some("02000000000495213")
     ),
     Tuple2(
       "RFB/02000000000495213/0.01/TXT/TRANSACTION DESCRIPTION",
-      some("02000000000495213")
+      O.some("02000000000495213")
     ),
     Tuple2(
       "/RFA/02000000000495213/0.01/TXT/TRANSACTION DESCRIPTION",
-      some("02000000000495213")
+      O.some("02000000000495213")
     ),
     Tuple2(
       "RFA/02000000000495213/0.01/TXT/TRANSACTION DESCRIPTION",
-      some("02000000000495213")
+      O.some("02000000000495213")
     ),
     Tuple2(
       "/RFS/02000000000495213/0.01/TXT/TRANSACTION DESCRIPTION",
-      some("02000000000495213")
+      O.some("02000000000495213")
     ),
     Tuple2(
       "RFS/02000000000495213/0.01/TXT/TRANSACTION DESCRIPTION",
-      some("02000000000495213")
+      O.some("02000000000495213")
     ),
-    Tuple2("", none),
-    Tuple2("RFC/02000000000495213/0.01/TXT/TRANSACTION DESCRIPTION", none),
-    Tuple2("RFB/", none)
+    Tuple2("", O.none),
+    Tuple2("RFC/02000000000495213/0.01/TXT/TRANSACTION DESCRIPTION", O.none),
+    Tuple2("RFB/", O.none)
   ].forEach(tuple => {
     expect(getTransactionIUV(tuple.e1)).toEqual(tuple.e2);
   });
@@ -263,7 +263,7 @@ describe("getCodiceAvviso", () => {
   const organizationFiscalCode = "00000123456";
   [
     Tuple2<RptId, string>(
-      RptId.decode({
+      {
         organizationFiscalCode,
         paymentNoticeNumber: {
           applicationCode: "02",
@@ -271,32 +271,32 @@ describe("getCodiceAvviso", () => {
           checkDigit: "78",
           iuv13: "1600203993985"
         }
-      }).value as RptId,
+      } as RptId,
       `002160020399398578`
     ),
     Tuple2<RptId, string>(
-      RptId.decode({
+      {
         organizationFiscalCode,
         paymentNoticeNumber: {
           auxDigit: "1",
           iuv17: "16002039939851111"
         }
-      }).value as RptId,
+      } as RptId,
       `116002039939851111`
     ),
     Tuple2<RptId, string>(
-      RptId.decode({
+      {
         organizationFiscalCode,
         paymentNoticeNumber: {
           checkDigit: "78",
           auxDigit: "2",
           iuv15: "160020399398511"
         }
-      }).value as RptId,
+      } as RptId,
       `216002039939851178`
     ),
     Tuple2<RptId, string>(
-      RptId.decode({
+      {
         organizationFiscalCode,
         paymentNoticeNumber: {
           checkDigit: "78",
@@ -304,7 +304,7 @@ describe("getCodiceAvviso", () => {
           segregationCode: "55",
           iuv13: "1600203993985"
         }
-      }).value as RptId,
+      } as RptId,
       `355160020399398578`
     )
   ].forEach(tuple => {

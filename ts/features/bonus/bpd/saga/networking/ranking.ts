@@ -1,6 +1,8 @@
-import * as A from "fp-ts/lib/Array";
-import { Either, fromOption, left, right } from "fp-ts/lib/Either";
-import { readableReport } from "italia-ts-commons/lib/reporters";
+import { readableReport } from "@pagopa/ts-commons/lib/reporters";
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import * as RA from "fp-ts/lib/ReadonlyArray";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { CitizenRankingMilestoneResourceArray } from "../../../../../../definitions/bpd/citizen_v2/CitizenRankingMilestoneResourceArray";
@@ -57,7 +59,7 @@ export function* bpdLoadRakingV2(
   getRanking: ReturnType<typeof BackendBpdClient>["getRankingV2"]
 ): Generator<
   ReduxSagaEffect,
-  Either<Error, ReadonlyArray<BpdRankingReady>>,
+  E.Either<Error, ReadonlyArray<BpdRankingReady>>,
   any
 > {
   try {
@@ -66,34 +68,34 @@ export function* bpdLoadRakingV2(
       getRanking,
       {} as any
     );
-    if (getRankingResult.isRight()) {
-      if (getRankingResult.value.status === 200) {
+    if (E.isRight(getRankingResult)) {
+      if (getRankingResult.right.status === 200) {
         void mixpanelTrack(mixpanelActionSuccess, {
-          count: getRankingResult.value.value?.length
+          count: getRankingResult.right.value?.length
         });
-        return right<Error, ReadonlyArray<BpdRankingReady>>(
-          convertRankingArrayV2(getRankingResult.value.value)
+        return E.right<Error, ReadonlyArray<BpdRankingReady>>(
+          convertRankingArrayV2(getRankingResult.right.value)
         );
-      } else if (getRankingResult.value.status === 404) {
+      } else if (getRankingResult.right.status === 404) {
         void mixpanelTrack(mixpanelActionSuccess, {
           count: 0
         });
-        return right<Error, ReadonlyArray<BpdRankingReady>>([]);
+        return E.right<Error, ReadonlyArray<BpdRankingReady>>([]);
       } else {
-        return left<Error, ReadonlyArray<BpdRankingReady>>(
-          new Error(`response status ${getRankingResult.value.status}`)
+        return E.left<Error, ReadonlyArray<BpdRankingReady>>(
+          new Error(`response status ${getRankingResult.right.status}`)
         );
       }
     } else {
-      return left<Error, ReadonlyArray<BpdRankingReady>>(
-        new Error(readableReport(getRankingResult.value))
+      return E.left<Error, ReadonlyArray<BpdRankingReady>>(
+        new Error(readableReport(getRankingResult.left))
       );
     }
   } catch (e) {
     void mixpanelTrack(mixpanelActionFailure, {
       reason: getError(e).message
     });
-    return left<Error, ReadonlyArray<BpdRankingReady>>(getError(e));
+    return E.left<Error, ReadonlyArray<BpdRankingReady>>(getError(e));
   }
 }
 
@@ -112,29 +114,37 @@ export function* handleLoadMilestone(
     getRanking
   );
 
-  const extractMilestonePivot = result.chain(x =>
-    fromOption(
-      new Error(`Period ${action.payload} not found in the ranking response`)
-    )(
-      A.findFirst([...x], x => x.awardPeriodId === action.payload).map(
-        x => x.pivot
+  const extractMilestonePivot = pipe(
+    result,
+    E.chain(x =>
+      E.fromOption(
+        () =>
+          new Error(
+            `Period ${action.payload} not found in the ranking response`
+          )
+      )(
+        pipe(
+          x,
+          RA.findFirst(el => el.awardPeriodId === action.payload),
+          O.map(el => el.pivot)
+        )
       )
     )
   );
 
   // dispatch the related action
-  if (extractMilestonePivot.isRight()) {
+  if (E.isRight(extractMilestonePivot)) {
     yield* put(
       bpdTransactionsLoadMilestone.success({
         awardPeriodId: action.payload,
-        result: extractMilestonePivot.value
+        result: extractMilestonePivot.right
       })
     );
   } else {
     yield* put(
       bpdTransactionsLoadMilestone.failure({
         awardPeriodId: action.payload,
-        error: extractMilestonePivot.value
+        error: extractMilestonePivot.left
       })
     );
   }

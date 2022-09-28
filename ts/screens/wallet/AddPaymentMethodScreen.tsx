@@ -1,6 +1,6 @@
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import { Option } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
 import { Content, View } from "native-base";
 import * as React from "react";
 import { SafeAreaView } from "react-native";
@@ -48,7 +48,7 @@ import { AsyncAlert } from "../../utils/asyncAlert";
 import { isTestEnv } from "../../utils/environment";
 
 export type AddPaymentMethodScreenNavigationParams = Readonly<{
-  inPayment: Option<{
+  inPayment: O.Option<{
     rptId: RptId;
     initialAmount: AmountInEuroCents;
     verifica: PaymentRequestsGetResponse;
@@ -188,7 +188,7 @@ const AddPaymentMethodScreen: React.FunctionComponent<Props> = (
     light: true,
     bordered: true,
     onPress: props.navigateBack,
-    title: inPayment.isSome()
+    title: O.isSome(inPayment)
       ? I18n.t("global.buttons.back")
       : I18n.t("global.buttons.cancel")
   };
@@ -199,13 +199,13 @@ const AddPaymentMethodScreen: React.FunctionComponent<Props> = (
       contextualHelpMarkdown={contextualHelpMarkdown}
       faqCategories={["wallet", "wallet_methods"]}
       headerTitle={
-        inPayment.isSome()
+        O.isSome(inPayment)
           ? I18n.t("wallet.payWith.header")
           : I18n.t("wallet.addPaymentMethodTitle")
       }
     >
       <SafeAreaView style={IOStyles.flex}>
-        {inPayment.isSome() ? (
+        {O.isSome(inPayment) ? (
           <Content noPadded={true}>
             <PaymentBannerComponent
               paymentReason={inPayment.value.verifica.causaleVersamento}
@@ -219,7 +219,7 @@ const AddPaymentMethodScreen: React.FunctionComponent<Props> = (
               <PaymentMethodsList
                 paymentMethods={getPaymentMethods(props, {
                   onlyPaymentMethodCanPay: true,
-                  isPaymentOnGoing: inPayment.isSome(),
+                  isPaymentOnGoing: O.isSome(inPayment),
                   isPaypalEnabled: props.isPaypalEnabled,
                   // can onboard bpay only when both FF are enabled
                   canOnboardBPay: props.canOnboardBPay && props.canPayWithBPay
@@ -233,7 +233,7 @@ const AddPaymentMethodScreen: React.FunctionComponent<Props> = (
               paymentMethods={getPaymentMethods(props, {
                 onlyPaymentMethodCanPay:
                   canAddOnlyPayablePaymentMethod === true,
-                isPaymentOnGoing: inPayment.isSome(),
+                isPaymentOnGoing: O.isSome(inPayment),
                 isPaypalEnabled: props.isPaypalEnabled,
                 canOnboardBPay: props.canOnboardBPay
               })}

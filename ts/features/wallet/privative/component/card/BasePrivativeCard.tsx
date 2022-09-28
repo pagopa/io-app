@@ -1,4 +1,5 @@
-import { Option } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { Badge, View } from "native-base";
 import * as React from "react";
 import {
@@ -73,42 +74,51 @@ const BASE_IMG_H = 30;
 
 const renderLoyaltyLogo = (
   loyaltyLogo: ImageSourcePropType,
-  size: Option<[number, number]>
+  size: O.Option<[number, number]>
 ) =>
-  size.fold(fallbackLoyaltyLogo, imgDim => {
-    const imageStyle: StyleProp<ImageStyle> = {
-      width: imgDim[0],
-      height: imgDim[1],
-      resizeMode: "contain"
-    };
-    return (
-      <Image
-        source={loyaltyLogo}
-        style={imageStyle}
-        key={"loyaltyLogo"}
-        testID={"loyaltyLogo"}
-      />
-    );
-  });
+  pipe(
+    size,
+    O.fold(
+      () => fallbackLoyaltyLogo,
+      imgDim => {
+        const imageStyle: StyleProp<ImageStyle> = {
+          width: imgDim[0],
+          height: imgDim[1],
+          resizeMode: "contain"
+        };
+        return (
+          <Image
+            source={loyaltyLogo}
+            style={imageStyle}
+            key={"loyaltyLogo"}
+            testID={"loyaltyLogo"}
+          />
+        );
+      }
+    )
+  );
 
 const GdoLogo = (props: { gdoLogo: ImageURISource }) =>
-  useImageResize(BASE_IMG_W, BASE_IMG_H, props.gdoLogo.uri).fold(
-    null,
-    imgDim => {
-      const imageStyle: StyleProp<ImageStyle> = {
-        width: imgDim[0],
-        height: imgDim[1],
-        resizeMode: "contain"
-      };
-      return (
-        <Image
-          source={props.gdoLogo}
-          style={imageStyle}
-          key={"gdoLogo"}
-          testID={"gdoLogo"}
-        />
-      );
-    }
+  pipe(
+    useImageResize(BASE_IMG_W, BASE_IMG_H, props.gdoLogo.uri),
+    O.fold(
+      () => null,
+      imgDim => {
+        const imageStyle: StyleProp<ImageStyle> = {
+          width: imgDim[0],
+          height: imgDim[1],
+          resizeMode: "contain"
+        };
+        return (
+          <Image
+            source={props.gdoLogo}
+            style={imageStyle}
+            key={"gdoLogo"}
+            testID={"gdoLogo"}
+          />
+        );
+      }
+    )
   );
 
 const BasePrivativeCard: React.FunctionComponent<Props> = (props: Props) => {

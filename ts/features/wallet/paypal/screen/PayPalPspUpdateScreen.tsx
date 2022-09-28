@@ -1,4 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { ListItem, View } from "native-base";
 import React, { useEffect } from "react";
 import { Image, SafeAreaView, ScrollView, StyleSheet } from "react-native";
@@ -108,21 +110,29 @@ const PspItem = (props: { psp: IOPayPalPsp; onPress: () => void }) => {
       onPress={props.onPress}
     >
       <View style={{ flex: 1 }}>
-        {imgDimensions.fold<React.ReactNode>(
-          <H4
-            weight={"SemiBold"}
-            color={"bluegreyDark"}
-            testID={"pspNameTestID"}
-          >
-            {psp.name}
-          </H4>,
-          imgDim => (
-            <Image
-              testID={"pspNameLogoID"}
-              source={{ uri: psp.logoUrl }}
-              style={[styles.pspLogo, { width: imgDim[0], height: imgDim[1] }]}
-              resizeMode={"contain"}
-            />
+        {pipe(
+          imgDimensions,
+          O.fold(
+            () => (
+              <H4
+                weight={"SemiBold"}
+                color={"bluegreyDark"}
+                testID={"pspNameTestID"}
+              >
+                {psp.name}
+              </H4>
+            ),
+            imgDim => (
+              <Image
+                testID={"pspNameLogoID"}
+                source={{ uri: psp.logoUrl }}
+                style={[
+                  styles.pspLogo,
+                  { width: imgDim[0], height: imgDim[1] }
+                ]}
+                resizeMode={"contain"}
+              />
+            )
           )
         )}
       </View>

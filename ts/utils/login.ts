@@ -1,6 +1,6 @@
 import { WebViewNavigation } from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";
-import { none, Option, some } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import * as config from "../config";
 import { SessionToken } from "../types/SessionToken";
 import { isStringNullyOrEmpty } from "./strings";
@@ -25,18 +25,18 @@ export type LoginResult = LoginSuccess | LoginFailure;
  * more info https://developer.chrome.com/docs/multidevice/android/intents/
  * @param intentUrl
  */
-export const getIntentFallbackUrl = (intentUrl: string): Option<string> => {
+export const getIntentFallbackUrl = (intentUrl: string): O.Option<string> => {
   const intentProtocol = URLParse.extractProtocol(intentUrl);
   if (intentProtocol.protocol !== "intent:" || !intentProtocol.slashes) {
-    return none;
+    return O.none;
   }
   const hook = "S.browser_fallback_url=";
   const hookIndex = intentUrl.indexOf(hook);
   const endIndex = intentUrl.indexOf(";end", hookIndex + hook.length);
   if (hookIndex !== -1 && endIndex !== -1) {
-    return some(intentUrl.substring(hookIndex + hook.length, endIndex));
+    return O.some(intentUrl.substring(hookIndex + hook.length, endIndex));
   }
-  return none;
+  return O.none;
 };
 
 // Prefixes for LOGIN SUCCESS/ERROR

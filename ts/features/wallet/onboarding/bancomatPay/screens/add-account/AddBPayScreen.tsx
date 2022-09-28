@@ -1,6 +1,7 @@
-import { index } from "fp-ts/lib/Array";
-import { fromNullable } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as AR from "fp-ts/lib/Array";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -24,8 +25,8 @@ import {
   onboardingBPayChosenPanSelector
 } from "../../store/reducers/addingBPay";
 import { onboardingBPayFoundAccountsSelector } from "../../store/reducers/foundBpay";
-import LoadAddBPayComponent from "./LoadAddBPayComponent";
 import AddBPayComponent from "./AddBPayComponent";
+import LoadAddBPayComponent from "./LoadAddBPayComponent";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -72,15 +73,17 @@ const AddBPayScreen = (props: Props): React.ReactElement | null => {
     nextPan(false);
   };
 
-  const currentPan = index(currentIndex, [...props.bPayAccounts]);
+  const currentPan = AR.lookup(currentIndex, [...props.bPayAccounts]);
 
   return props.loading || props.isAddingResultError ? (
     <LoadAddBPayComponent
       isLoading={!props.isAddingResultError}
       onCancel={props.onCancel}
-      onRetry={() => fromNullable(props.selectedBPay).map(props.onRetry)}
+      onRetry={() =>
+        pipe(props.selectedBPay, O.fromNullable, O.map(props.onRetry))
+      }
     />
-  ) : currentPan.isSome() ? (
+  ) : O.isSome(currentPan) ? (
     <AddBPayComponent
       account={currentPan.value}
       accountsNumber={props.bPayAccounts.length}

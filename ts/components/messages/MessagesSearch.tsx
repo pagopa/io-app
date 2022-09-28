@@ -1,5 +1,6 @@
-import { fromNullable, none } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { View } from "native-base";
 import React, { ComponentProps } from "react";
 import { StyleSheet } from "react-native";
@@ -58,8 +59,10 @@ const generateMessagesStateMatchingSearchTextArrayAsync = (
               message =>
                 // Search in message properties
                 messageContainsText(message, searchText) ||
-                fromNullable(servicesById[message.sender_service_id])
-                  .map(potService =>
+                pipe(
+                  servicesById[message.sender_service_id],
+                  O.fromNullable,
+                  O.map(potService =>
                     pot.getOrElse(
                       pot.map(potService, service =>
                         // Search in service properties
@@ -67,8 +70,9 @@ const generateMessagesStateMatchingSearchTextArrayAsync = (
                       ),
                       false
                     )
-                  )
-                  .getOrElse(false)
+                  ),
+                  O.getOrElse(() => false)
+                )
             ),
             false
           )
@@ -157,7 +161,7 @@ class MessagesSearch extends React.PureComponent<Props, State> {
           onPressItem={this.handleOnPressItem}
           onLongPressItem={this.handleOnPressItem}
           refreshing={isLoading || isFiltering}
-          selectedMessageIds={none}
+          selectedMessageIds={O.none}
         />
       </View>
     ) : (

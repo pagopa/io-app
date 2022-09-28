@@ -1,7 +1,7 @@
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { fireEvent } from "@testing-library/react-native";
 import { some } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
 
 import { Action, Store } from "redux";
 import configureMockStore from "redux-mock-store";

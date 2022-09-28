@@ -1,4 +1,5 @@
-import { Option } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { Image, ImageStyle, StyleProp } from "react-native";
 import { connect } from "react-redux";
@@ -29,26 +30,35 @@ const BASE_IMG_H = 20;
  * @param props
  * @param size
  */
-const renderLeft = (props: Props, size: Option<[number, number]>) =>
-  size.fold(
-    <Body style={IOStyles.flex} numberOfLines={1} testID={"bankLogoFallback"}>
-      {props.bPay.caption}
-    </Body>,
-    imgDim => {
-      const imageUrl = props.bPay.abiInfo?.logoUrl;
-      const imageStyle: StyleProp<ImageStyle> = {
-        width: imgDim[0],
-        height: imgDim[1],
-        resizeMode: "contain"
-      };
-      return imageUrl ? (
-        <Image
-          source={{ uri: imageUrl }}
-          style={imageStyle}
-          testID={"bankLogo"}
-        />
-      ) : null;
-    }
+const renderLeft = (props: Props, size: O.Option<[number, number]>) =>
+  pipe(
+    size,
+    O.fold(
+      () => (
+        <Body
+          style={IOStyles.flex}
+          numberOfLines={1}
+          testID={"bankLogoFallback"}
+        >
+          {props.bPay.caption}
+        </Body>
+      ),
+      imgDim => {
+        const imageUrl = props.bPay.abiInfo?.logoUrl;
+        const imageStyle: StyleProp<ImageStyle> = {
+          width: imgDim[0],
+          height: imgDim[1],
+          resizeMode: "contain"
+        };
+        return imageUrl ? (
+          <Image
+            source={{ uri: imageUrl }}
+            style={imageStyle}
+            testID={"bankLogo"}
+          />
+        ) : null;
+      }
+    )
   );
 
 const getAccessibilityRepresentation = (bancomatPay: BPayPaymentMethod) => {

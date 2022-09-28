@@ -1,4 +1,4 @@
-import { left, right } from "fp-ts/lib/Either";
+import * as E from "fp-ts/lib/Either";
 import { expectSaga } from "redux-saga-test-plan";
 import { call } from "redux-saga-test-plan/matchers";
 import {
@@ -37,7 +37,7 @@ describe("loadPeriodsAmount, mock networking saga", () => {
       .provide([
         [
           call(bpdLoadPeriodsSaga, backendClient.awardPeriods),
-          left(awardPeriodFailure)
+          E.left(awardPeriodFailure)
         ]
       ])
       .put(bpdPeriodsAmountLoad.failure(awardPeriodFailure))
@@ -55,19 +55,19 @@ describe("loadPeriodsAmount, mock networking saga", () => {
       .provide([
         [
           call(bpdLoadPeriodsSaga, backendClient.awardPeriods),
-          right<Error, ReadonlyArray<BpdPeriod>>([activePeriod, closedPeriod])
+          E.right<Error, ReadonlyArray<BpdPeriod>>([activePeriod, closedPeriod])
         ],
         [
           call(bpdLoadAmountSaga, backendClient.totalCashback, 0),
-          right(zeroAmount)
+          E.right(zeroAmount)
         ],
         [
           call(bpdLoadAmountSaga, backendClient.totalCashback, 1),
-          left(totalCashbackFailure)
+          E.left(totalCashbackFailure)
         ],
         [
           call(bpdLoadRakingV2, backendClient.getRankingV2),
-          right([readyRanking])
+          E.right([readyRanking])
         ]
       ])
       .put(
@@ -75,7 +75,7 @@ describe("loadPeriodsAmount, mock networking saga", () => {
       )
       .run();
   });
-  it("Dispatch failure if all the totalCashback are left", async () => {
+  it("Dispatch failure if all the totalCashback are E.left", async () => {
     const totalCashbackFailure = new Error("Error for a single amount");
     const backendClient = {
       totalCashback: jest.fn(),
@@ -86,19 +86,19 @@ describe("loadPeriodsAmount, mock networking saga", () => {
       .provide([
         [
           call(bpdLoadPeriodsSaga, backendClient.awardPeriods),
-          right<Error, ReadonlyArray<BpdPeriod>>([activePeriod, closedPeriod])
+          E.right<Error, ReadonlyArray<BpdPeriod>>([activePeriod, closedPeriod])
         ],
         [
           call(bpdLoadAmountSaga, backendClient.totalCashback, 0),
-          left(totalCashbackFailure)
+          E.left(totalCashbackFailure)
         ],
         [
           call(bpdLoadAmountSaga, backendClient.totalCashback, 1),
-          left(totalCashbackFailure)
+          E.left(totalCashbackFailure)
         ],
         [
           call(bpdLoadRakingV2, backendClient.getRankingV2),
-          right([readyRanking])
+          E.right([readyRanking])
         ]
       ])
       .put(
@@ -107,7 +107,7 @@ describe("loadPeriodsAmount, mock networking saga", () => {
       .run();
   });
 
-  it("Dispatch failure if load ranking is left", async () => {
+  it("Dispatch failure if load ranking is E.left", async () => {
     const totalCashbackFailure = new Error("Error for a single amount");
     const backendClient = {
       totalCashback: jest.fn(),
@@ -118,19 +118,19 @@ describe("loadPeriodsAmount, mock networking saga", () => {
       .provide([
         [
           call(bpdLoadPeriodsSaga, backendClient.awardPeriods),
-          right<Error, ReadonlyArray<BpdPeriod>>([activePeriod, closedPeriod])
+          E.right<Error, ReadonlyArray<BpdPeriod>>([activePeriod, closedPeriod])
         ],
         [
           call(bpdLoadAmountSaga, backendClient.totalCashback, 0),
-          left(totalCashbackFailure)
+          E.left(totalCashbackFailure)
         ],
         [
           call(bpdLoadAmountSaga, backendClient.totalCashback, 1),
-          left(totalCashbackFailure)
+          E.left(totalCashbackFailure)
         ],
         [
           call(bpdLoadRakingV2, backendClient.getRankingV2),
-          left(new Error("error"))
+          E.left(new Error("error"))
         ]
       ])
       .put(
@@ -139,7 +139,7 @@ describe("loadPeriodsAmount, mock networking saga", () => {
       .run();
   });
 
-  it("Dispatch success if all the totalCashback are right", async () => {
+  it("Dispatch success if all the totalCashback are E.right", async () => {
     const amountForPeriod0: BpdAmount = {
       ...zeroAmount,
       awardPeriodId: 0 as AwardPeriodId
@@ -157,19 +157,19 @@ describe("loadPeriodsAmount, mock networking saga", () => {
       .provide([
         [
           call(bpdLoadPeriodsSaga, backendClient.awardPeriods),
-          right<Error, ReadonlyArray<BpdPeriod>>([activePeriod, closedPeriod])
+          E.right<Error, ReadonlyArray<BpdPeriod>>([activePeriod, closedPeriod])
         ],
         [
           call(bpdLoadAmountSaga, backendClient.totalCashback, 0),
-          right(amountForPeriod0)
+          E.right(amountForPeriod0)
         ],
         [
           call(bpdLoadAmountSaga, backendClient.totalCashback, 1),
-          right(amountForPeriod1)
+          E.right(amountForPeriod1)
         ],
         [
           call(bpdLoadRakingV2, backendClient.getRankingV2),
-          right([readyRanking])
+          E.right([readyRanking])
         ]
       ])
       .put(
@@ -184,7 +184,7 @@ describe("loadPeriodsAmount, mock networking saga", () => {
       )
       .run();
   });
-  it("Dispatch success if all the totalCashback are right, do not request inactive periods", async () => {
+  it("Dispatch success if all the totalCashback are E.right, do not request inactive periods", async () => {
     const amountForPeriod0: BpdAmount = {
       ...zeroAmount,
       awardPeriodId: 0 as AwardPeriodId
@@ -206,7 +206,7 @@ describe("loadPeriodsAmount, mock networking saga", () => {
       .provide([
         [
           call(bpdLoadPeriodsSaga, backendClient.awardPeriods),
-          right<Error, ReadonlyArray<BpdPeriod>>([
+          E.right<Error, ReadonlyArray<BpdPeriod>>([
             activePeriod,
             closedPeriod,
             inactivePeriod
@@ -214,19 +214,19 @@ describe("loadPeriodsAmount, mock networking saga", () => {
         ],
         [
           call(bpdLoadAmountSaga, backendClient.totalCashback, 0),
-          right(amountForPeriod0)
+          E.right(amountForPeriod0)
         ],
         [
           call(bpdLoadAmountSaga, backendClient.totalCashback, 1),
-          right(amountForPeriod1)
+          E.right(amountForPeriod1)
         ],
         [
           call(bpdLoadAmountSaga, backendClient.totalCashback, 2),
-          right(amountForPeriod2)
+          E.right(amountForPeriod2)
         ],
         [
           call(bpdLoadRakingV2, backendClient.getRankingV2),
-          right([readyRanking])
+          E.right([readyRanking])
         ]
       ])
       .put(

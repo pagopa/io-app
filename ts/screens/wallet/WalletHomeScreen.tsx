@@ -1,5 +1,5 @@
-import { none } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import {
@@ -617,7 +617,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadBpdData: () => dispatch(bpdAllData.request()),
   loadCgnData: () => dispatch(cgnDetails.request()),
   navigateToWalletAddPaymentMethod: (keyFrom?: string) =>
-    navigateToWalletAddPaymentMethod({ inPayment: none, keyFrom }),
+    navigateToWalletAddPaymentMethod({ inPayment: O.none, keyFrom }),
   navigateToPaymentScanQrCode: () => navigateToPaymentScanQrCode(),
   navigateToTransactionDetailsScreen: (transaction: Transaction) => {
     dispatch(readTransaction(transaction));

@@ -4,7 +4,8 @@
  */
 import { getType } from "typesafe-actions";
 
-import { takeEnd } from "fp-ts/lib/Array";
+import * as AR from "fp-ts/lib/Array";
+import { pipe } from "fp-ts/lib/function";
 import {
   appVersionHistory,
   previousInstallationDataDeleteSuccess
@@ -48,10 +49,10 @@ const reducer = (
       }
       return {
         ...state,
-        appVersionHistory: takeEnd(MAX_APP_VERSION_HISTORY_SIZE, [
-          ...state.appVersionHistory,
-          action.payload
-        ])
+        appVersionHistory: pipe(
+          [...state.appVersionHistory, action.payload],
+          AR.takeRight(MAX_APP_VERSION_HISTORY_SIZE)
+        )
       };
     default:
       return state;

@@ -4,7 +4,7 @@ import { expectSaga } from "redux-saga-test-plan";
 import {
   NonNegativeInteger,
   NonNegativeNumber
-} from "italia-ts-commons/lib/numbers";
+} from "@pagopa/ts-commons/lib/numbers";
 import { View } from "react-native";
 import { tosVersion } from "../../../config";
 import { applicationChangeState } from "../../../store/actions/application";
@@ -12,8 +12,8 @@ import { navigateToTosScreen } from "../../../store/actions/navigation";
 import { tosAccepted } from "../../../store/actions/onboarding";
 import { appReducer } from "../../../store/reducers";
 import { isProfileFirstOnBoarding } from "../../../store/reducers/profile";
-import mockedProfile from "../../../__mocks__/initializedProfile";
 import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
+import mockedProfile from "../../../__mocks__/initializedProfile";
 import { checkAcceptedTosSaga } from "../checkAcceptedTosSaga";
 
 describe("checkAcceptedTosSaga", () => {

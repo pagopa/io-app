@@ -1,3 +1,5 @@
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -42,7 +44,7 @@ const successComponent = () => (
  *
  */
 const AddCreditCardOutcomeCodeMessage: React.FC<Props> = (props: Props) => {
-  const outcomeCode = props.outcomeCode.outcomeCode.fold(undefined, oC => oC);
+  const outcomeCode = pipe(props.outcomeCode.outcomeCode, O.toUndefined);
 
   return outcomeCode ? (
     <OutcomeCodeMessageComponent
