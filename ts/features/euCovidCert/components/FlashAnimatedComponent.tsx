@@ -1,7 +1,7 @@
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import * as React from "react";
 import { useCallback } from "react";
 import { Animated, Easing, StyleSheet } from "react-native";
-import * as React from "react";
-import { Millisecond } from "italia-ts-commons/lib/units";
 const styles = StyleSheet.create({
   hover: {
     minWidth: "100%",

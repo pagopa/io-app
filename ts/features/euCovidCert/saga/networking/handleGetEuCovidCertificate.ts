@@ -1,9 +1,15 @@
-import * as pot from "italia-ts-commons/lib/pot";
-import { fromNullable } from "fp-ts/lib/Option";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
+import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
 import { Certificate } from "../../../../../definitions/eu_covid_cert/Certificate";
+import { HeaderInfo } from "../../../../../definitions/eu_covid_cert/HeaderInfo";
+import { contentRepoUrl } from "../../../../config";
 import { mixpanelTrack } from "../../../../mixpanel";
+import { profileSelector } from "../../../../store/reducers/profile";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
@@ -17,10 +23,6 @@ import {
   EUCovidCertificateResponse,
   EUCovidCertificateResponseFailure
 } from "../../types/EUCovidCertificateResponse";
-import { profileSelector } from "../../../../store/reducers/profile";
-import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
-import { HeaderInfo } from "../../../../../definitions/eu_covid_cert/HeaderInfo";
-import { contentRepoUrl } from "../../../../config";
 
 const mapKinds: Record<number, EUCovidCertificateResponseFailure["kind"]> = {
   400: "wrongFormat",
@@ -75,15 +77,19 @@ const convertSuccess = (
         return undefined;
     }
   };
-  return fromNullable(getCertificate()).foldL<EUCovidCertificateResponse>(
-    () => {
-      // track the conversion failure
-      void mixpanelTrack("EUCOVIDCERT_CONVERT_SUCCESS_ERROR", {
-        status: certificate.status
-      });
-      return { kind: "wrongFormat", authCode };
-    },
-    value => ({ kind: "success", value, authCode })
+  return pipe(
+    getCertificate(),
+    O.fromNullable,
+    O.foldW(
+      () => {
+        // track the conversion failure
+        void mixpanelTrack("EUCOVIDCERT_CONVERT_SUCCESS_ERROR", {
+          status: certificate.status
+        });
+        return { kind: "wrongFormat", authCode };
+      },
+      value => ({ kind: "success", value, authCode })
+    )
   );
 };
 
@@ -105,7 +111,7 @@ export function* handleGetEuCovidCertificate(
   try {
     const getCertificateResult: SagaCallReturnType<typeof getCertificate> =
       yield* call(getCertificate, {
-        getCertificateParams: {
+        accessData: {
           auth_code: authCode,
           preferred_languages: pot.getOrElse(
             pot.mapNullable(profile, p => p.preferred_languages),
@@ -113,20 +119,20 @@ export function* handleGetEuCovidCertificate(
           )
         }
       });
-    if (getCertificateResult.isRight()) {
-      if (getCertificateResult.value.status === 200) {
+    if (E.isRight(getCertificateResult)) {
+      if (getCertificateResult.right.status === 200) {
         // handled success
         yield* put(
           euCovidCertificateGet.success(
-            convertSuccess(getCertificateResult.value.value, authCode)
+            convertSuccess(getCertificateResult.right.value, authCode)
           )
         );
         return;
       }
-      if (mapKinds[getCertificateResult.value.status] !== undefined) {
+      if (mapKinds[getCertificateResult.right.status] !== undefined) {
         yield* put(
           euCovidCertificateGet.success({
-            kind: mapKinds[getCertificateResult.value.status],
+            kind: mapKinds[getCertificateResult.right.status],
             authCode
           })
         );
@@ -137,7 +143,7 @@ export function* handleGetEuCovidCertificate(
         euCovidCertificateGet.failure({
           ...getGenericError(
             new Error(
-              `response status code ${getCertificateResult.value.status}`
+              `response status code ${getCertificateResult.right.status}`
             )
           ),
           authCode
@@ -148,7 +154,7 @@ export function* handleGetEuCovidCertificate(
       yield* put(
         euCovidCertificateGet.failure({
           ...getGenericError(
-            new Error(readablePrivacyReport(getCertificateResult.value))
+            new Error(readablePrivacyReport(getCertificateResult.left))
           ),
           authCode
         })

@@ -1,6 +1,6 @@
 // TODO: create types for pivotaljs
 
-import { IUnitTag } from "italia-ts-commons/lib/units";
+import { IUnitTag } from "@pagopa/ts-commons/lib/units";
 
 export type PivotalStoryType = "feature" | "bug" | "chore" | "release";
 export type PivotalStoryCurrentState =

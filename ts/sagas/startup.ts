@@ -1,6 +1,6 @@
-import { fromNullable, isNone, none } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
-import { Millisecond } from "italia-ts-commons/lib/units";
+import * as O from "fp-ts/lib/Option";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { Alert } from "react-native";
 import { channel } from "redux-saga";
 import {
@@ -16,6 +16,7 @@ import {
   takeLatest
 } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
+import { pipe } from "fp-ts/lib/function";
 import { UserDataProcessingChoiceEnum } from "../../definitions/backend/UserDataProcessingChoice";
 import { UserDataProcessingStatusEnum } from "../../definitions/backend/UserDataProcessingStatus";
 import { BackendClient } from "../api/backend";
@@ -184,8 +185,8 @@ export function* initializeApplicationSaga(): Generator<
     yield* select(profileSelector);
 
   const lastEmailValidated = pot.isSome(lastLoggedInProfileState)
-    ? fromNullable(lastLoggedInProfileState.value.is_email_validated)
-    : none;
+    ? O.fromNullable(lastLoggedInProfileState.value.is_email_validated)
+    : O.none;
 
   // Watch for profile changes
   yield* fork(watchProfileEmailValidationChangedSaga, lastEmailValidated);
@@ -240,13 +241,13 @@ export function* initializeApplicationSaga(): Generator<
   // eslint-disable-next-line functional/no-let
   let maybeSessionInformation: ReturnType<typeof sessionInfoSelector> =
     yield* select(sessionInfoSelector);
-  if (isSessionRefreshed || maybeSessionInformation.isNone()) {
+  if (isSessionRefreshed || O.isNone(maybeSessionInformation)) {
     // let's try to load the session information from the backend.
     maybeSessionInformation = yield* call(
       loadSessionInformationSaga,
       backendClient.getSession
     );
-    if (maybeSessionInformation.isNone()) {
+    if (O.isNone(maybeSessionInformation)) {
       // we can't go further without session info, let's restart
       // the initialization process
       yield* put(startApplicationInitialization());
@@ -273,7 +274,7 @@ export function* initializeApplicationSaga(): Generator<
     backendClient.getProfile
   );
 
-  if (isNone(maybeUserProfile)) {
+  if (O.isNone(maybeUserProfile)) {
     // Start again if we can't load the profile but wait a while
     yield* delay(WAIT_INITIALIZE_SAGA);
     yield* put(startApplicationInitialization());
@@ -316,7 +317,7 @@ export function* initializeApplicationSaga(): Generator<
   // Start watching for requests of abort the onboarding
   const watchAbortOnboardingSagaTask = yield* fork(watchAbortOnboardingSaga);
 
-  if (!previousSessionToken || isNone(maybeStoredPin)) {
+  if (!previousSessionToken || O.isNone(maybeStoredPin)) {
     // The user wasn't logged in when the application started or, for some
     // reason, he was logged in but there is no unlock code set, thus we need
     // to pass through the onboarding process.
@@ -465,16 +466,18 @@ export function* initializeApplicationSaga(): Generator<
           typeof loadUserDataProcessing.success
         >
       ) {
-        const maybeDeletePending = fromNullable(
-          loadUserDataProcessingSuccess.payload.value
-        ).filter(
-          uc =>
-            uc.choice === UserDataProcessingChoiceEnum.DELETE &&
-            uc.status === UserDataProcessingStatusEnum.PENDING
+        const maybeDeletePending = pipe(
+          loadUserDataProcessingSuccess.payload.value,
+          O.fromNullable,
+          O.filter(
+            uc =>
+              uc.choice === UserDataProcessingChoiceEnum.DELETE &&
+              uc.status === UserDataProcessingStatusEnum.PENDING
+          )
         );
         type leftOrRight = "left" | "right";
         const alertChoiceChannel = channel<leftOrRight>();
-        if (maybeDeletePending.isSome()) {
+        if (O.isSome(maybeDeletePending)) {
           Alert.alert(
             I18n.t("startup.userDeletePendingAlert.title"),
             I18n.t("startup.userDeletePendingAlert.message"),

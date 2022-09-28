@@ -2,12 +2,16 @@
  * Implements the reducers for BackendServicesState.
  */
 
-import { none, Option, some } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
 import { BackendStatus } from "../../../definitions/content/BackendStatus";
+import { BancomatPayConfig } from "../../../definitions/content/BancomatPayConfig";
+import { BarcodesScannerConfig } from "../../../definitions/content/BarcodesScannerConfig";
 import { BpdConfig } from "../../../definitions/content/BpdConfig";
+import { PnConfig } from "../../../definitions/content/PnConfig";
 import { Sections } from "../../../definitions/content/Sections";
 import { SectionStatus } from "../../../definitions/content/SectionStatus";
 import { UaDonationsBanner } from "../../../definitions/content/UaDonationsBanner";
@@ -24,9 +28,6 @@ import { LocalizedMessageKeys } from "../../i18n";
 import { isStringNullyOrEmpty } from "../../utils/strings";
 import { backendStatusLoadSuccess } from "../actions/backendStatus";
 import { Action } from "../actions/types";
-import { BancomatPayConfig } from "../../../definitions/content/BancomatPayConfig";
-import { BarcodesScannerConfig } from "../../../definitions/content/BarcodesScannerConfig";
-import { PnConfig } from "../../../definitions/content/PnConfig";
 import { GlobalState } from "./types";
 
 export type SectionStatusKey = keyof Sections;
@@ -35,12 +36,12 @@ export type SectionStatusKey = keyof Sections;
  * see https://www.pivotaltracker.com/story/show/170998374
  */
 export type BackendStatusState = {
-  status: Option<BackendStatus>;
+  status: O.Option<BackendStatus>;
   areSystemsDead: boolean;
   deadsCounter: number;
 };
 const initialBackendInfoState: BackendStatusState = {
-  status: none,
+  status: O.none,
   areSystemsDead: false,
   deadsCounter: 0
 };
@@ -51,42 +52,60 @@ export const backendServicesStatusSelector = (
 
 export const backendStatusSelector = (
   state: GlobalState
-): Option<BackendStatus> => state.backendStatus.status;
+): O.Option<BackendStatus> => state.backendStatus.status;
 
 // return the section status for the given key. if it is not present, returns undefined
 export const sectionStatusSelector = (sectionStatusKey: SectionStatusKey) =>
   createSelector(
     backendStatusSelector,
     (backendStatus): SectionStatus | undefined =>
-      backendStatus.map(bs => bs.sections[sectionStatusKey]).toUndefined()
+      pipe(
+        backendStatus,
+        O.map(bs => bs.sections[sectionStatusKey]),
+        O.toUndefined
+      )
   );
 
 export const bpdRankingEnabledSelector = createSelector(
   backendStatusSelector,
   (backendStatus): boolean | undefined =>
-    backendStatus.map(bs => bs.config.bpd_ranking_v2).toUndefined()
+    pipe(
+      backendStatus,
+      O.map(bs => bs.config.bpd_ranking_v2),
+      O.toUndefined
+    )
 );
 
 export const bpdRemoteConfigSelector = createSelector(
   backendStatusSelector,
   (backendStatus): BpdConfig | undefined =>
-    backendStatus.map(bs => bs.config.bpd).toUndefined()
+    pipe(
+      backendStatus,
+      O.map(bs => bs.config.bpd),
+      O.toUndefined
+    )
 );
 
 export const cgnMerchantVersionSelector = createSelector(
   backendStatusSelector,
   (backendStatus): boolean | undefined =>
     cgnMerchantsV2Enabled &&
-    backendStatus
-      .mapNullable(bs => bs.config)
-      .mapNullable(config => config.cgn.merchants_v2)
-      .toUndefined()
+    pipe(
+      backendStatus,
+      O.chainNullableK(bs => bs.config),
+      O.chainNullableK(config => config.cgn.merchants_v2),
+      O.toUndefined
+    )
 );
 
 export const assistanceToolConfigSelector = createSelector(
   backendStatusSelector,
   (backendStatus): ToolEnum | undefined =>
-    backendStatus.map(bs => bs.config.assistanceTool.tool).toUndefined()
+    pipe(
+      backendStatus,
+      O.map(bs => bs.config.assistanceTool.tool),
+      O.toUndefined
+    )
 );
 
 /**
@@ -97,7 +116,11 @@ export const isUaDonationsEnabledSelector = createSelector(
   backendStatusSelector,
   (backendStatus): boolean =>
     (uaDonationsEnabled &&
-      backendStatus.map(bs => bs.config.uaDonations.enabled).toUndefined()) ??
+      pipe(
+        backendStatus,
+        O.map(bs => bs.config.uaDonations.enabled),
+        O.toUndefined
+      )) ??
     false
 );
 
@@ -107,7 +130,11 @@ export const isUaDonationsEnabledSelector = createSelector(
 export const uaDonationsBannerConfigSelector = createSelector(
   backendStatusSelector,
   (backendStatus): UaDonationsBanner | undefined =>
-    backendStatus.map(bs => bs.config.uaDonations.banner).toUndefined()
+    pipe(
+      backendStatus,
+      O.map(bs => bs.config.uaDonations.banner),
+      O.toUndefined
+    )
 );
 
 /**
@@ -117,35 +144,36 @@ export const uaDonationsBannerConfigSelector = createSelector(
  * - banner visible === true
  * - The description in the current locale is not an empty string
  *
- * Return `none` otherwise.
+ * Return `O.none` otherwise.
  * @param uaConfig
  * @param locale
  */
 const filterBannerVisible = (
   uaConfig: UaDonationsConfig,
   locale: LocalizedMessageKeys
-): Option<UaDonationsBanner> =>
+): O.Option<UaDonationsBanner> =>
   uaDonationsEnabled &&
   uaConfig.enabled &&
   uaConfig.banner.visible &&
   !isStringNullyOrEmpty(uaConfig.banner.description[locale])
-    ? some(uaConfig.banner)
-    : none;
+    ? O.some(uaConfig.banner)
+    : O.none;
 
 /**
  * The donation data is an information that we can or we cannot render, based on some conditions.
  * We represent this information using an {@link Option} in order to avoid chaining multiple boolean condition at component level
  * Return `some(UaDonationsBanner)` if all the enabled / visible conditions are met.
- * Return `none` otherwise
+ * Return `O.none` otherwise
  */
 export const uaDonationsBannerSelector = createSelector(
   [
     backendStatusSelector,
     (_: GlobalState, locale: LocalizedMessageKeys) => locale
   ],
-  (backendStatus, locale): Option<UaDonationsBanner> =>
-    backendStatus.chain(bs =>
-      filterBannerVisible(bs.config.uaDonations, locale)
+  (backendStatus, locale): O.Option<UaDonationsBanner> =>
+    pipe(
+      backendStatus,
+      O.chain(bs => filterBannerVisible(bs.config.uaDonations, locale))
     )
 );
 
@@ -156,7 +184,11 @@ export const uaDonationsBannerSelector = createSelector(
 export const isPaypalEnabledSelector = createSelector(
   backendStatusSelector,
   (backendStatus): boolean =>
-    backendStatus.map(bs => bs.config.paypal.enabled).toUndefined() ?? false
+    pipe(
+      backendStatus,
+      O.map(bs => bs.config.paypal.enabled),
+      O.toUndefined
+    ) ?? false
 );
 
 /**
@@ -166,13 +198,15 @@ export const isPaypalEnabledSelector = createSelector(
 export const bancomatPayConfigSelector = createSelector(
   backendStatusSelector,
   (backendStatus): BancomatPayConfig =>
-    backendStatus
-      .map(bs => bs.config.bancomatPay)
-      .getOrElse({
+    pipe(
+      backendStatus,
+      O.map(bs => bs.config.bancomatPay),
+      O.getOrElseW(() => ({
         display: false,
         onboarding: false,
         payment: false
-      })
+      }))
+    )
 );
 
 /**
@@ -182,7 +216,11 @@ export const bancomatPayConfigSelector = createSelector(
 export const isCGNEnabledSelector = createSelector(
   backendStatusSelector,
   (backendStatus): boolean =>
-    backendStatus.map(bs => bs.config.cgn.enabled).toUndefined() ?? false
+    pipe(
+      backendStatus,
+      O.map(bs => bs.config.cgn.enabled),
+      O.toUndefined
+    ) ?? false
 );
 
 /**
@@ -192,13 +230,21 @@ export const isCGNEnabledSelector = createSelector(
 export const isFIMSEnabledSelector = createSelector(
   backendStatusSelector,
   (backendStatus): boolean =>
-    backendStatus.map(bs => bs.config.fims.enabled).toUndefined() ?? false
+    pipe(
+      backendStatus,
+      O.map(bs => bs.config.fims.enabled),
+      O.toUndefined
+    ) ?? false
 );
 
 export const fimsDomainSelector = createSelector(
   backendStatusSelector,
   (backendStatus): string | undefined =>
-    backendStatus.map(bs => bs.config.fims.domain).toUndefined()
+    pipe(
+      backendStatus,
+      O.map(bs => bs.config.fims.domain),
+      O.toUndefined
+    )
 );
 
 /**
@@ -210,9 +256,11 @@ export const isPremiumMessagesOptInOutEnabledSelector = createSelector(
   backendStatusSelector,
   (backendStatus): boolean =>
     (premiumMessagesOptInEnabled &&
-      backendStatus
-        .map(bs => bs.config.premiumMessages.opt_in_out_enabled)
-        .toUndefined()) ??
+      pipe(
+        backendStatus,
+        O.map(bs => bs.config.premiumMessages.opt_in_out_enabled),
+        O.toUndefined
+      )) ??
     false
 );
 
@@ -225,7 +273,11 @@ export const isCdcEnabledSelector = createSelector(
   backendStatusSelector,
   (backendStatus): boolean =>
     cdcEnabled &&
-    backendStatus.map(bs => bs.config.cdc.enabled).getOrElse(false)
+    pipe(
+      backendStatus,
+      O.map(bs => bs.config.cdc.enabled),
+      O.getOrElse(() => false)
+    )
 );
 
 /**
@@ -236,14 +288,16 @@ export const isCdcEnabledSelector = createSelector(
 export const barcodesScannerConfigSelector = createSelector(
   backendStatusSelector,
   (backendStatus): BarcodesScannerConfig =>
-    backendStatus
-      .map(bs => bs.config.barcodesScanner)
+    pipe(
+      backendStatus,
+      O.map(bs => bs.config.barcodesScanner),
       // If the local feature flag is disabled all the
       // configurations should be set as `false`.
-      .filter(() => scanAdditionalBarcodesEnabled)
-      .getOrElse({
+      O.filter(() => scanAdditionalBarcodesEnabled),
+      O.getOrElseW(() => ({
         dataMatrixPosteEnabled: false
-      })
+      }))
+    )
 );
 
 /**
@@ -252,12 +306,14 @@ export const barcodesScannerConfigSelector = createSelector(
 export const PnConfigSelector = createSelector(
   backendStatusSelector,
   (backendStatus): PnConfig =>
-    backendStatus
-      .map(bs => bs.config.pn)
-      .getOrElse({
+    pipe(
+      backendStatus,
+      O.map(bs => bs.config.pn),
+      O.getOrElseW(() => ({
         enabled: false,
         frontend_url: ""
-      })
+      }))
+    )
 );
 
 /**
@@ -268,21 +324,38 @@ export const PnConfigSelector = createSelector(
 export const isPnEnabledSelector = createSelector(
   backendStatusSelector,
   (backendStatus): boolean =>
-    pnEnabled && backendStatus.map(bs => bs.config.pn.enabled).getOrElse(false)
+    pnEnabled &&
+    pipe(
+      backendStatus,
+      O.map(bs => bs.config.pn.enabled),
+      O.getOrElseW(() => false)
+    )
 );
 
 export const configSelector = createSelector(
   backendStatusSelector,
-  backendStatus => backendStatus.map(bs => bs.config)
+  backendStatus =>
+    pipe(
+      backendStatus,
+      O.map(bs => bs.config)
+    )
 );
 
 export const paymentsConfigSelector = createSelector(configSelector, config =>
-  config.map(c => c.payments)
+  pipe(
+    config,
+    O.map(c => c.payments)
+  )
 );
 
 export const preferredPspsByOriginSelector = createSelector(
   paymentsConfigSelector,
-  config => config.map(c => c.preferredPspsByOrigin).toUndefined()
+  config =>
+    pipe(
+      config,
+      O.map(c => c.preferredPspsByOrigin),
+      O.toUndefined
+    )
 );
 
 // systems could be consider dead when we have no updates for at least DEAD_COUNTER_THRESHOLD times
@@ -304,7 +377,7 @@ export const areSystemsDeadReducer = (
       : 0;
   return {
     ...currentState,
-    status: some(backendStatus),
+    status: O.some(backendStatus),
     areSystemsDead: deadsCounter >= DEAD_COUNTER_THRESHOLD,
     deadsCounter
   };

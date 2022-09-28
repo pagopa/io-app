@@ -1,8 +1,9 @@
-import { fromNullable } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { combineReducers } from "redux";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
+import { pipe } from "fp-ts/lib/function";
 import { Action } from "../../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import {
@@ -214,10 +215,19 @@ export const bpdUnsubscriptionSelector = createSelector(
 export const bpdIbanPrefillSelector = createSelector(
   [bpdIbanSelector, bpdUpsertIbanSelector, bpdTechnicalAccountSelector],
   (iban, upsertIban, technicalAccount): string =>
-    fromNullable(upsertIban.value as string)
-      .alt(fromNullable(getValue(technicalAccount)).map(_ => ""))
-      .alt(fromNullable(getValue(iban)))
-      .getOrElse("")
+    pipe(
+      upsertIban.value as string,
+      O.fromNullable,
+      O.alt(() =>
+        pipe(
+          getValue(technicalAccount),
+          O.fromNullable,
+          O.map(_ => "")
+        )
+      ),
+      O.alt(() => O.fromNullable(getValue(iban))),
+      O.getOrElse(() => "")
+    )
 );
 
 export default bpdActivationReducer;

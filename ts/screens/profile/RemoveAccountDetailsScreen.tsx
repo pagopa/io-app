@@ -1,5 +1,5 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { StackActions } from "@react-navigation/compat";
-import * as pot from "italia-ts-commons/lib/pot";
 import { Content, View } from "native-base";
 import * as React from "react";
 import { Alert, SafeAreaView } from "react-native";
@@ -19,6 +19,7 @@ import { shufflePinPadOnPayment } from "../../config";
 import { LoadingErrorComponent } from "../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { allBonusActiveSelector } from "../../features/bonus/bonusVacanze/store/reducers/allActive";
 import { bpdEnabledSelector } from "../../features/bonus/bpd/store/reducers/details/activation";
+import { isCgnEnrolledSelector } from "../../features/bonus/cgn/store/reducers/details";
 import I18n from "../../i18n";
 import NavigationService from "../../navigation/NavigationService";
 import { identificationRequest } from "../../store/actions/identification";
@@ -32,7 +33,6 @@ import { ReduxProps } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
 import { userDataProcessingSelector } from "../../store/reducers/userDataProcessing";
 import { withKeyboard } from "../../utils/keyboard";
-import { isCgnEnrolledSelector } from "../../features/bonus/cgn/store/reducers/details";
 
 type Props = ReduxProps &
   ReturnType<typeof mapStateToProps> &

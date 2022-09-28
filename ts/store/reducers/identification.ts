@@ -1,7 +1,8 @@
 import { getType } from "typesafe-actions";
 
-import { fromNullable } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import { PersistPartial } from "redux-persist";
+import { pipe } from "fp-ts/lib/function";
 import { PinString } from "../../types/PinString";
 import {
   identificationCancel,
@@ -136,13 +137,17 @@ const reducer = (
       return INITIAL_STATE;
 
     case getType(identificationFailure):
-      const newErrorData = fromNullable(state.fail).fold(
-        {
-          nextLegalAttempt: new Date(),
-          remainingAttempts: maxAttempts - 1,
-          timespanBetweenAttempts: 0
-        },
-        errorData => nextErrorData(errorData)
+      const newErrorData = pipe(
+        state.fail,
+        O.fromNullable,
+        O.fold(
+          () => ({
+            nextLegalAttempt: new Date(),
+            remainingAttempts: maxAttempts - 1,
+            timespanBetweenAttempts: 0
+          }),
+          errorData => nextErrorData(errorData)
+        )
       );
       return {
         ...state,
@@ -158,7 +163,7 @@ export default reducer;
 
 // Selectors
 export const identificationFailSelector = (state: GlobalState) =>
-  fromNullable(state.identification.fail);
+  O.fromNullable(state.identification.fail);
 
 export const progressSelector = (state: GlobalState) =>
   state.identification.progress;

@@ -1,4 +1,4 @@
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { expectSaga, testSaga } from "redux-saga-test-plan";
 import sha from "sha.js";
 import { getType } from "typesafe-actions";

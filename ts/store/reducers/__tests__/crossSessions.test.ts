@@ -1,4 +1,4 @@
-import { FiscalCode } from "italia-ts-commons/lib/strings";
+import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
 import sha from "sha.js";
 import { setProfileHashedFiscalCode } from "../../actions/crossSessions";
 import {

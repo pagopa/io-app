@@ -1,6 +1,8 @@
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { CompatNavigationProp } from "@react-navigation/compat";
+import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
-import { Millisecond } from "italia-ts-commons/lib/units";
+import * as O from "fp-ts/lib/Option";
 import { Tab, Tabs } from "native-base";
 import React, { useEffect } from "react";
 import { Animated, Platform, StyleSheet, View } from "react-native";
@@ -8,12 +10,13 @@ import { connect, useDispatch } from "react-redux";
 import { Dispatch } from "redux";
 
 import { createSelector } from "reselect";
+import { IOColors } from "../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
+import { useMessageOpening } from "../../../components/messages/paginated/hooks/useMessageOpening";
 import MessageList from "../../../components/messages/paginated/MessageList";
 import MessagesArchive from "../../../components/messages/paginated/MessagesArchive";
 import MessagesInbox from "../../../components/messages/paginated/MessagesInbox";
 import MessagesSearch from "../../../components/messages/paginated/MessagesSearch";
-import { useMessageOpening } from "../../../components/messages/paginated/hooks/useMessageOpening";
 import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
@@ -33,8 +36,7 @@ import { sectionStatusSelector } from "../../../store/reducers/backendStatus";
 import {
   allArchiveMessagesSelector,
   allInboxMessagesSelector,
-  allPaginatedSelector,
-  MessageOperation
+  allPaginatedSelector
 } from "../../../store/reducers/entities/messages/allPaginated";
 import {
   MessagesStatus,
@@ -47,6 +49,7 @@ import {
 } from "../../../store/reducers/search";
 import { GlobalState } from "../../../store/reducers/types";
 import { makeFontStyleObject } from "../../../theme/fonts";
+import customVariables from "../../../theme/variables";
 import {
   setAccessibilityFocus,
   useScreenReaderEnabled
@@ -54,8 +57,6 @@ import {
 import { MESSAGE_ICON_HEIGHT } from "../../../utils/constants";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { showToast } from "../../../utils/showToast";
-import { IOColors } from "../../../components/core/variables/IOColors";
-import customVariables from "../../../theme/variables";
 
 import MigratingMessage from "./MigratingMessage";
 
@@ -179,30 +180,24 @@ const MessagesHomeScreen = ({
       return;
     }
 
-    type toastData = {
-      operation: MessageOperation;
-      archive: string;
-      restore: string;
-      type: "success" | "danger";
-    };
-    pipe<typeof latestMessageOperation, toastData, void>(
-      lmo =>
-        lmo.fold<toastData>(
-          l => ({
-            operation: l.operation,
-            archive: I18n.t("messages.operations.archive.failure"),
-            restore: I18n.t("messages.operations.restore.failure"),
-            type: "danger"
-          }),
-          r => ({
-            operation: r,
-            archive: I18n.t("messages.operations.archive.success"),
-            restore: I18n.t("messages.operations.restore.success"),
-            type: "success"
-          })
-        ),
+    pipe(
+      latestMessageOperation,
+      E.foldW(
+        l => ({
+          operation: l.operation,
+          archive: I18n.t("messages.operations.archive.failure"),
+          restore: I18n.t("messages.operations.restore.failure"),
+          type: "danger" as const
+        }),
+        r => ({
+          operation: r,
+          archive: I18n.t("messages.operations.archive.success"),
+          restore: I18n.t("messages.operations.restore.success"),
+          type: "success" as const
+        })
+      ),
       lmo => showToast(lmo[lmo.operation], lmo.type)
-    )(latestMessageOperation);
+    );
   }, [latestMessageOperation]);
 
   const { openMessage, bottomSheets } = useMessageOpening();
@@ -274,8 +269,9 @@ const MessagesHomeScreen = ({
       )}
 
       {isSearchEnabled &&
-        searchText
-          .map(_ =>
+        pipe(
+          searchText,
+          O.map(_ =>
             _.length < MIN_CHARACTER_SEARCH_TEXT ? (
               <SearchNoResultMessage errorType="InvalidSearchBarText" />
             ) : (
@@ -291,10 +287,11 @@ const MessagesHomeScreen = ({
                 )}
               />
             )
-          )
-          .getOrElse(
+          ),
+          O.getOrElse(() => (
             <SearchNoResultMessage errorType="InvalidSearchBarText" />
-          )}
+          ))
+        )}
       {!isScreenReaderEnabled && statusComponent}
       {bottomSheets.map(_ => _)}
     </TopScreenComponent>

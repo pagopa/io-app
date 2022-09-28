@@ -1,6 +1,6 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import "@testing-library/jest-native/extend-expect";
 import { render, RenderAPI } from "@testing-library/react-native";
-import * as pot from "italia-ts-commons/lib/pot";
 import MockDate from "mockdate";
 import * as React from "react";
 import { Provider } from "react-redux";
@@ -13,6 +13,10 @@ import {
 } from "../../../../../../../../store/reducers/__mock__/backendStatus";
 import { dateToAccessibilityReadableFormat } from "../../../../../../../../utils/accessibility";
 import { formatIntegerNumber } from "../../../../../../../../utils/stringBuilder";
+import {
+  BpdPeriodWithInfo,
+  isBpdRankingReady
+} from "../../../../../store/reducers/details/periods";
 import {
   eligibleAmount,
   eligibleMaxAmount,
@@ -28,10 +32,6 @@ import {
   notReadyRanking,
   readyRanking
 } from "../../../../../store/reducers/__mock__/ranking";
-import {
-  BpdPeriodWithInfo,
-  isBpdRankingReady
-} from "../../../../../store/reducers/details/periods";
 import BpdSummaryComponent from "../BpdSummaryComponent";
 
 describe("Bpd Summary Component graphical test for different states", () => {

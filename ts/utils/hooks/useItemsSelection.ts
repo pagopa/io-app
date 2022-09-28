@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { fromNullable, Option } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 
 /**
  * Hook to persist a set representing selected strings.
@@ -10,7 +10,8 @@ export const useItemsSelection = () => {
   const [selections, setSelections] = useState<null | ReadonlySet<string>>(
     null
   );
-  const selectedItems: Option<ReadonlySet<string>> = fromNullable(selections);
+  const selectedItems: O.Option<ReadonlySet<string>> =
+    O.fromNullable(selections);
 
   return {
     selectedItems,

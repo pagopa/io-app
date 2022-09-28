@@ -1,9 +1,6 @@
-import {
-  CompatNavigationProp,
-  NavigationEvents
-} from "@react-navigation/compat";
-import { fromNullable } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { Text, View } from "native-base";
 import * as React from "react";
 import {
@@ -28,7 +25,7 @@ import { LightModalContextInterface } from "../../components/ui/LightModal";
 import { PaymentSummaryComponent } from "../../components/wallet/PaymentSummaryComponent";
 import { SlidedContentComponent } from "../../components/wallet/SlidedContentComponent";
 import I18n from "../../i18n";
-import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../navigation/params/WalletParamsList";
 import { Dispatch } from "../../store/actions/types";
 import { backToEntrypointPayment } from "../../store/actions/wallet/payment";
@@ -51,11 +48,10 @@ export type TransactionDetailsScreenNavigationParams = Readonly<{
   transaction: Transaction;
 }>;
 
-type OwnProps = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<WalletParamsList, "WALLET_TRANSACTION_DETAILS">
-  >;
-};
+type OwnProps = IOStackNavigationRouteProps<
+  WalletParamsList,
+  "WALLET_TRANSACTION_DETAILS"
+>;
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -112,12 +108,18 @@ type State = {
  */
 class TransactionDetailsScreen extends React.Component<Props, State> {
   private subscription: NativeEventSubscription | undefined;
+  private navigationEventUnsubscribe!: () => void;
   constructor(props: Props) {
     super(props);
     this.state = { showFullReason: false };
   }
 
   public componentDidMount() {
+    // eslint-disable-next-line functional/immutable-data
+    this.navigationEventUnsubscribe = this.props.navigation.addListener(
+      "focus",
+      this.handleWillFocus
+    );
     // eslint-disable-next-line functional/immutable-data
     this.subscription = BackHandler.addEventListener(
       "hardwareBackPress",
@@ -127,6 +129,7 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
 
   public componentWillUnmount() {
     this.subscription?.remove();
+    this.navigationEventUnsubscribe();
   }
 
   private handleBackPress = () => {
@@ -135,7 +138,7 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
   };
 
   private handleWillFocus = () => {
-    const transaction = this.props.navigation.getParam("transaction");
+    const transaction = this.props.route.params.transaction;
     // Fetch psp only if the store not contains this psp
     if (transaction.idPsp !== undefined && this.props.psp === undefined) {
       this.props.fetchPsp(transaction.idPsp);
@@ -143,7 +146,7 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
   };
 
   private getData = () => {
-    const transaction = this.props.navigation.getParam("transaction");
+    const transaction = this.props.route.params.transaction;
     const amount = formatNumberCentsToAmount(transaction.amount.amount, true);
 
     // fee
@@ -162,20 +165,21 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
       .concat(" - ")
       .concat(transaction.created.toLocaleTimeString());
 
-    const paymentMethodIcon = fromNullable(
+    const paymentMethodIcon = pipe(
       transactionWallet &&
         transactionWallet.creditCard &&
-        transactionWallet.creditCard.brandLogo
-    )
-      .map(logo => (logo.trim().length > 0 ? logo.trim() : undefined))
-      .getOrElse(undefined);
+        transactionWallet.creditCard.brandLogo,
+      O.fromNullable,
+      O.map(logo => (logo.trim().length > 0 ? logo.trim() : undefined)),
+      O.toUndefined
+    );
 
     const paymentMethodBrand =
       transactionWallet &&
       transactionWallet.creditCard &&
       transactionWallet.creditCard.brand;
 
-    const iuv = getTransactionIUV(transaction.description).toUndefined();
+    const iuv = pipe(getTransactionIUV(transaction.description), O.toUndefined);
 
     const idTransaction = transaction.id;
     return {
@@ -196,7 +200,7 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
 
   public render(): React.ReactNode {
     const { psp } = this.props;
-    const transaction = this.props.navigation.getParam("transaction");
+    const transaction = this.props.route.params.transaction;
     const data = this.getData();
 
     const standardRow = (label: string, value: string) => (
@@ -220,7 +224,6 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
           backgroundColor={IOColors.bluegrey}
           barStyle={"light-content"}
         />
-        <NavigationEvents onWillFocus={this.handleWillFocus} />
         <SlidedContentComponent hasFlatBottom={true}>
           <PaymentSummaryComponent
             title={I18n.t("wallet.receipt")}
@@ -353,11 +356,15 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
-  const transaction = ownProps.navigation.getParam("transaction");
+  const transaction = ownProps.route.params.transaction;
   const idPsp = String(transaction.idPsp);
 
-  const maybePotPspState = fromNullable(pspStateByIdSelector(idPsp)(state));
-  const potPsp = maybePotPspState.map(_ => _.psp).getOrElse(pot.none);
+  const potPsp = pipe(
+    pspStateByIdSelector(idPsp)(state),
+    O.fromNullable,
+    O.map(_ => _.psp),
+    O.getOrElseW(() => pot.none)
+  );
   const isLoading = pot.isLoading(potPsp);
 
   return {

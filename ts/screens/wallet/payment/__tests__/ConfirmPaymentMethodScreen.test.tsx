@@ -28,7 +28,7 @@ import {
   myWallet
 } from "../../../../utils/testFaker";
 import { reproduceSequence } from "../../../../utils/tests";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import ConfirmPaymentMethodScreen, {
   ConfirmPaymentMethodScreenNavigationParams
 } from "../ConfirmPaymentMethodScreen";
@@ -176,7 +176,7 @@ describe("Integration Tests With Actual Store and Simplified Navigation", () => 
       payment: true
     });
 
-    const rendered = renderScreenFakeNavRedux<GlobalState>(
+    const rendered = renderScreenWithNavigationStoreContext<GlobalState>(
       ConfirmPaymentMethodScreen,
       ROUTES.PAYMENT_CONFIRM_PAYMENT_METHOD,
       params,
@@ -253,7 +253,7 @@ describe("Integration Tests With Actual Store and Simplified Navigation", () => 
       }
     };
 
-    const rendered = renderScreenFakeNavRedux<GlobalState>(
+    const rendered = renderScreenWithNavigationStoreContext<GlobalState>(
       ConfirmPaymentMethodScreen,
       ROUTES.PAYMENT_CONFIRM_PAYMENT_METHOD,
       paypalParams,
@@ -316,7 +316,7 @@ describe("Integration Tests With Actual Store and Simplified Navigation", () => 
       }
     };
 
-    const rendered = renderScreenFakeNavRedux<GlobalState>(
+    const rendered = renderScreenWithNavigationStoreContext<GlobalState>(
       ConfirmPaymentMethodScreen,
       ROUTES.PAYMENT_CONFIRM_PAYMENT_METHOD,
       bpayParams,
@@ -392,7 +392,7 @@ describe("Integration Tests With Actual Store and Simplified Navigation", () => 
       customInitState as any
     );
 
-    renderScreenFakeNavRedux<GlobalState>(
+    renderScreenWithNavigationStoreContext<GlobalState>(
       ConfirmPaymentMethodScreen,
       ROUTES.PAYMENT_CONFIRM_PAYMENT_METHOD,
       params,

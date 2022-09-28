@@ -55,7 +55,7 @@ import ProfileStackNavigator from "./ProfileNavigator";
 import ROUTES from "./routes";
 import ServicesNavigator from "./ServicesNavigator";
 import { MainTabNavigator } from "./TabNavigator";
-import walletNavigator from "./WalletNavigator";
+import WalletNavigator from "./WalletNavigator";
 
 const Stack = createStackNavigator<AppParamsList>();
 
@@ -85,7 +85,7 @@ export const AppStackNavigator = () => {
       />
       <Stack.Screen
         name={ROUTES.WALLET_NAVIGATOR}
-        component={walletNavigator}
+        component={WalletNavigator}
       />
       <Stack.Screen
         name={ROUTES.SERVICES_NAVIGATOR}

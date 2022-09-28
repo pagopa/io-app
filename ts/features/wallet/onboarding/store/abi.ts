@@ -1,6 +1,7 @@
 import { getType } from "typesafe-actions";
 import { createSelector } from "reselect";
-import { fromNullable } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { IndexedById } from "../../../../store/helpers/indexer";
 import { Abi } from "../../../../../definitions/pagopa/walletv2/Abi";
 import {
@@ -22,10 +23,17 @@ export type AbiState = RemoteValue<IndexedById<Abi>, Error>;
 const getIndexedAbi = (abis: ReadonlyArray<Abi>): IndexedById<Abi> =>
   abis.reduce(
     (acc: IndexedById<Abi>, curr: Abi) =>
-      fromNullable(curr.abi).fold(acc, abi => ({
-        ...acc,
-        [abi]: curr
-      })),
+      pipe(
+        curr.abi,
+        O.fromNullable,
+        O.fold(
+          () => acc,
+          abi => ({
+            ...acc,
+            [abi]: curr
+          })
+        )
+      ),
     {}
   );
 
@@ -38,9 +46,11 @@ const abiReducer = (
       return remoteLoading;
     case getType(loadAbi.success):
       // since all fields are optional we ensure to index only entries those have abi defined
-      const indexedAbi: IndexedById<Abi> = fromNullable(
-        action.payload.data
-      ).fold({}, getIndexedAbi);
+      const indexedAbi: IndexedById<Abi> = pipe(
+        action.payload.data,
+        O.fromNullable,
+        O.fold(() => ({}), getIndexedAbi)
+      );
       return remoteReady(indexedAbi);
     case getType(loadAbi.failure):
       return remoteError(action.payload);
@@ -80,7 +90,14 @@ export const abiListSelector = createSelector<
     ? // build an array excluding the entry undefined
       Object.keys(abis.value).reduce(
         (acc: ReadonlyArray<Abi>, curr: string) =>
-          fromNullable(abis.value[curr]).fold(acc, abi => [...acc, abi]),
+          pipe(
+            abis.value[curr],
+            O.fromNullable,
+            O.fold(
+              () => acc,
+              abi => [...acc, abi]
+            )
+          ),
         []
       )
     : []

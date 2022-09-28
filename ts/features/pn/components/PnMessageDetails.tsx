@@ -1,43 +1,45 @@
-import React, { useCallback, useEffect, useState } from "react";
-import * as pot from "italia-ts-commons/lib/pot";
-import { ScrollView } from "react-native-gesture-handler";
-import { StyleSheet, View } from "react-native";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
-import { none, some } from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import React, { useCallback, useEffect, useState } from "react";
+import { StyleSheet, View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
+import { OrganizationFiscalCode } from "../../../../definitions/backend/OrganizationFiscalCode";
+import { PaymentNoticeNumber } from "../../../../definitions/backend/PaymentNoticeNumber";
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
-import { PNMessage } from "../store/types/types";
-import customVariables from "../../../theme/variables";
+import { H5 } from "../../../components/core/typography/H5";
+import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { profileFiscalCodeSelector } from "../../../store/reducers/profile";
+import { mixpanelTrack } from "../../../mixpanel";
+import ROUTES from "../../../navigation/routes";
 import {
   TransactionSummary,
   TransactionSummaryRow
 } from "../../../screens/wallet/payment/components/TransactionSummary";
-import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import { TransactionSummaryErrorDetails } from "../../../screens/wallet/payment/components/TransactionSummaryErrorDetails";
+import { TransactionSummaryStatus } from "../../../screens/wallet/payment/components/TransactionSummaryStatus";
+import { TransactionSummaryError } from "../../../screens/wallet/payment/NewTransactionSummaryScreen";
 import { paymentVerifica } from "../../../store/actions/wallet/payment";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { PnConfigSelector } from "../../../store/reducers/backendStatus";
+import { UIMessageId } from "../../../store/reducers/entities/messages/types";
+import { profileFiscalCodeSelector } from "../../../store/reducers/profile";
+import customVariables from "../../../theme/variables";
+import { clipboardSetStringWithFeedback } from "../../../utils/clipboard";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import {
   getRptIdFromNoticeNumber,
   isDuplicatedPayment
 } from "../../../utils/payment";
-import { PaymentNoticeNumber } from "../../../../definitions/backend/PaymentNoticeNumber";
-import { OrganizationFiscalCode } from "../../../../definitions/backend/OrganizationFiscalCode";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import ROUTES from "../../../navigation/routes";
-import { clipboardSetStringWithFeedback } from "../../../utils/clipboard";
-import { TransactionSummaryError } from "../../../screens/wallet/payment/NewTransactionSummaryScreen";
-import { TransactionSummaryStatus } from "../../../screens/wallet/payment/components/TransactionSummaryStatus";
-import { TransactionSummaryErrorDetails } from "../../../screens/wallet/payment/components/TransactionSummaryErrorDetails";
 import { MvlAttachments } from "../../mvl/screens/details/components/attachment/MvlAttachments";
-import { UIMessageId } from "../../../store/reducers/entities/messages/types";
-import PN_ROUTES from "../navigation/routes";
 import { MvlAttachmentId } from "../../mvl/types/mvlData";
-import { H5 } from "../../../components/core/typography/H5";
-import { PnConfigSelector } from "../../../store/reducers/backendStatus";
-import { mixpanelTrack } from "../../../mixpanel";
-import { PnMessageDetailsSection } from "./PnMessageDetailsSection";
-import { PnMessageDetailsHeader } from "./PnMessageDetailsHeader";
+import PN_ROUTES from "../navigation/routes";
+import { PNMessage } from "../store/types/types";
 import { PnMessageDetailsContent } from "./PnMessageDetailsContent";
+import { PnMessageDetailsHeader } from "./PnMessageDetailsHeader";
+import { PnMessageDetailsSection } from "./PnMessageDetailsSection";
 import { PnMessageTimeline } from "./PnMessageTimeline";
 import { PnMessageTimelineCTA } from "./PnMessageTimelineCTA";
 
@@ -73,11 +75,10 @@ export const PnMessageDetails = (props: Props) => {
   );
 
   const rptId =
-    noticeNumber.isRight() && creditorTaxId.isRight()
-      ? getRptIdFromNoticeNumber(
-          creditorTaxId.value,
-          noticeNumber.value
-        ).toUndefined()
+    E.isRight(noticeNumber) && E.isRight(creditorTaxId)
+      ? O.toUndefined(
+          getRptIdFromNoticeNumber(creditorTaxId.right, noticeNumber.right)
+        )
       : undefined;
 
   const paymentVerification = useIOSelector(
@@ -87,8 +88,8 @@ export const PnMessageDetails = (props: Props) => {
   const paymentVerificationError: TransactionSummaryError = pot.isError(
     paymentVerification
   )
-    ? some(paymentVerification.error)
-    : none;
+    ? O.some(paymentVerification.error)
+    : O.none;
 
   const verifyPaymentIfNeeded = useCallback(() => {
     if (rptId) {
@@ -106,7 +107,7 @@ export const PnMessageDetails = (props: Props) => {
     if (rptId) {
       navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
         screen: ROUTES.PAYMENT_TRANSACTION_SUMMARY,
-        rptId
+        params: { rptId }
       });
     }
   }, [rptId, navigation]);
@@ -136,9 +137,12 @@ export const PnMessageDetails = (props: Props) => {
 
     if (isPaid) {
       void mixpanelTrack("PN_PAYMENTINFO_PAID");
-    } else if (paymentVerificationError.isSome()) {
+    } else if (O.isSome(paymentVerificationError)) {
       void mixpanelTrack("PN_PAYMENTINFO_ERROR", {
-        paymentStatus: paymentVerificationError.getOrElse(undefined)
+        paymentStatus: pipe(
+          paymentVerificationError,
+          O.getOrElseW(() => undefined)
+        )
       });
     } else {
       void mixpanelTrack("PN_PAYMENTINFO_PAYABLE");
@@ -154,7 +158,7 @@ export const PnMessageDetails = (props: Props) => {
 
   return (
     <>
-      {firstLoadingRequest && paymentVerificationError.isSome() && (
+      {firstLoadingRequest && O.isSome(paymentVerificationError) && (
         <TransactionSummaryStatus error={paymentVerificationError} />
       )}
       <ScrollView
@@ -188,7 +192,7 @@ export const PnMessageDetails = (props: Props) => {
                   organizationFiscalCode={maybePayment.creditorTaxId}
                   isPaid={isPaid}
                 />
-                {paymentVerificationError.isSome() && (
+                {O.isSome(paymentVerificationError) && (
                   <TransactionSummaryErrorDetails
                     error={paymentVerificationError}
                     paymentNoticeNumber={maybePayment.noticeCode}

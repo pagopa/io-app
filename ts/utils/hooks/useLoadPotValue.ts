@@ -1,7 +1,7 @@
 /* eslint-disable functional/immutable-data */
 import { useNavigation } from "@react-navigation/native";
-import * as pot from "italia-ts-commons/lib/pot";
-import { Millisecond } from "italia-ts-commons/lib/units";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const retryTimeout = 5000 as Millisecond;

@@ -5,8 +5,9 @@
  * - it is displayed during the user onboarding
  * - it is displayed after the onboarding (navigation from the profile section)
  */
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { StackActions } from "@react-navigation/native";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { Alert, Platform, SafeAreaView, StyleSheet } from "react-native";
@@ -173,7 +174,7 @@ export class EmailReadScreen extends React.PureComponent<Props> {
                   size={24}
                   style={styles.icon}
                 />
-                {this.props.optionEmail.isSome() && (
+                {O.isSome(this.props.optionEmail) && (
                   <Text style={styles.email}>
                     {this.props.optionEmail.value}
                   </Text>

@@ -1,4 +1,4 @@
-import { IUnitTag } from "italia-ts-commons/lib/units";
+import { IUnitTag } from "@pagopa/ts-commons/lib/units";
 import { ActionType, createAsyncAction } from "typesafe-actions";
 import { BpdPeriodWithInfo } from "../reducers/details/periods";
 

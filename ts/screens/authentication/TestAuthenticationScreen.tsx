@@ -1,4 +1,6 @@
-import { FiscalCode } from "italia-ts-commons/lib/strings";
+import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
 import { Content, View } from "native-base";
 import * as React from "react";
 import { SafeAreaView } from "react-native";
@@ -15,7 +17,7 @@ import { Dispatch } from "../../store/actions/types";
 type Props = ReturnType<typeof mapDispatchToProps>;
 
 const checkUsernameValid = (username: string): boolean =>
-  FiscalCode.decode(username).isRight();
+  E.isRight(FiscalCode.decode(username));
 
 const TestAuthenticationScreen: React.FunctionComponent<Props> = (
   props: Props
@@ -28,7 +30,10 @@ const TestAuthenticationScreen: React.FunctionComponent<Props> = (
     primary: true,
     disabled: password.length === 0 || !checkUsernameValid(username),
     onPress: () =>
-      PasswordLogin.decode({ username, password }).map(props.requestLogin),
+      pipe(
+        PasswordLogin.decode({ username, password }),
+        E.map(props.requestLogin)
+      ),
     title: I18n.t("global.buttons.confirm")
   };
 

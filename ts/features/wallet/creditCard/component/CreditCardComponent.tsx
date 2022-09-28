@@ -1,9 +1,11 @@
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
 import { View } from "native-base";
 import * as React from "react";
+import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { StyleSheet } from "react-native";
 import { Body } from "../../../../components/core/typography/Body";
 import { H5 } from "../../../../components/core/typography/H5";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
@@ -71,7 +73,10 @@ const topLeft = (
   favorite: pot.Pot<boolean, Error>
 ) => {
   const expirationDate = buildExpirationDate(creditCard.info);
-  const isCardExpired = isPaymentMethodExpired(creditCard).getOrElse(false);
+  const isCardExpired = pipe(
+    isPaymentMethodExpired(creditCard),
+    E.getOrElse(() => false)
+  );
 
   return (
     <View style={styles.row}>
