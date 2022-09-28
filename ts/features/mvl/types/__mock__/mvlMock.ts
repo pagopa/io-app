@@ -35,6 +35,7 @@ export const mvlMockBody: MvlBody = {
 };
 
 export const mvlMockPdfAttachment: MvlAttachment = {
+  messageId: message_1.id as UIMessageId,
   id: "1" as MvlAttachmentId,
   displayName: "invoice.pdf",
   contentType: "application/pdf",
@@ -43,6 +44,7 @@ export const mvlMockPdfAttachment: MvlAttachment = {
 };
 
 export const mvlMockOtherAttachment: MvlAttachment = {
+  messageId: message_1.id as UIMessageId,
   id: "2" as MvlAttachmentId,
   displayName: "image.png",
   contentType: "other",
