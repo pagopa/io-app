@@ -3,20 +3,20 @@ import configureMockStore from "redux-mock-store";
 import { RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { Option, some } from "fp-ts/lib/Option";
 
-import { appReducer } from "../../../../store/reducers";
-import { applicationChangeState } from "../../../../store/actions/application";
-import { GlobalState } from "../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
+import I18n from "../../../../i18n";
 import ROUTES from "../../../../navigation/routes";
-import TransactionErrorScreen from "../TransactionErrorScreen";
-import { PayloadForAction } from "../../../../types/utils";
+import { applicationChangeState } from "../../../../store/actions/application";
 import {
   paymentAttiva,
   paymentIdPolling,
   paymentVerifica
 } from "../../../../store/actions/wallet/payment";
-import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
-import I18n from "../../../../i18n";
+import { appReducer } from "../../../../store/reducers";
+import { GlobalState } from "../../../../store/reducers/types";
+import { PayloadForAction } from "../../../../types/utils";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import TransactionErrorScreen from "../TransactionErrorScreen";
 
 const rptId = {
   organizationFiscalCode: "00000000005",
@@ -196,7 +196,7 @@ const renderComponent = (
   } as GlobalState);
 
   return {
-    component: renderScreenFakeNavRedux<GlobalState>(
+    component: renderScreenWithNavigationStoreContext<GlobalState>(
       TransactionErrorScreen,
       ROUTES.PAYMENT_TRANSACTION_ERROR,
       {
