@@ -1,4 +1,3 @@
-import { CompatNavigationProp } from "@react-navigation/compat";
 import { fromNullable, none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Text, View } from "native-base";
@@ -20,7 +19,7 @@ import Markdown from "../../components/ui/Markdown";
 import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
 import I18n from "../../i18n";
 import { mixpanelTrack } from "../../mixpanel";
-import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { AuthenticationParamsList } from "../../navigation/params/AuthenticationParamsList";
 import {
   idpLoginUrlChanged,
@@ -50,11 +49,13 @@ import {
 import { getUrlBasepath } from "../../utils/url";
 import { originSchemasWhiteList } from "./originSchemasWhiteList";
 
-type Props = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<AuthenticationParamsList, "AUTHENTICATION_IDP_LOGIN">
-  >;
-} & ReturnType<typeof mapStateToProps> &
+type NavigationProps = IOStackNavigationRouteProps<
+  AuthenticationParamsList,
+  "AUTHENTICATION_IDP_LOGIN"
+>;
+
+type Props = NavigationProps &
+  ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 enum ErrorType {

@@ -3,7 +3,6 @@ import {
   PaymentNoticeNumberFromString,
   RptId
 } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import { CompatNavigationProp } from "@react-navigation/compat";
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { ActionSheet, Text, View } from "native-base";
@@ -12,6 +11,7 @@ import { SafeAreaView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
+import { IOColors } from "../../../components/core/variables/IOColors";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
@@ -25,7 +25,7 @@ import {
   isUndefined
 } from "../../../features/bonus/bpd/model/RemoteValue";
 import I18n from "../../../i18n";
-import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
 import {
   navigateToPaymentManualDataInsertion,
@@ -66,7 +66,6 @@ import {
   formatNumberAmount
 } from "../../../utils/stringBuilder";
 import { formatTextRecipient } from "../../../utils/strings";
-import { IOColors } from "../../../components/core/variables/IOColors";
 import { dispatchPickPspOrConfirm } from "./common";
 
 export type TransactionSummaryScreenNavigationParams = Readonly<{
@@ -76,11 +75,10 @@ export type TransactionSummaryScreenNavigationParams = Readonly<{
   messageId?: string;
 }>;
 
-type OwnProps = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<WalletParamsList, "PAYMENT_TRANSACTION_SUMMARY">
-  >;
-};
+type OwnProps = IOStackNavigationRouteProps<
+  WalletParamsList,
+  "PAYMENT_TRANSACTION_SUMMARY"
+>;
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -138,8 +136,8 @@ class TransactionSummaryScreen extends React.Component<Props> {
       // this is the case when the component is already mounted (eg. process more payments)
       // we check if the rptId is different from the previous one, in that case fire the dispatchPaymentVerificaRequest
       pot.isNone(this.props.potVerifica) &&
-      this.props.navigation.getParam("rptId").paymentNoticeNumber !==
-        prevProps.navigation.getParam("rptId").paymentNoticeNumber
+      this.props.route.params.rptId.paymentNoticeNumber !==
+        prevProps.route.params.rptId.paymentNoticeNumber
     ) {
       this.props.dispatchPaymentVerificaRequest();
     }
@@ -241,7 +239,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
     );
 
   public render(): React.ReactNode {
-    const rptId: RptId = this.props.navigation.getParam("rptId");
+    const rptId: RptId = this.props.route.params.rptId;
 
     const { potVerifica } = this.props;
 
@@ -432,9 +430,9 @@ const mapStateToProps = (state: GlobalState) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
-  const rptId = props.navigation.getParam("rptId");
-  const initialAmount = props.navigation.getParam("initialAmount");
-  const paymentStartOrigin = props.navigation.getParam("paymentStartOrigin");
+  const rptId = props.route.params.rptId;
+  const initialAmount = props.route.params.initialAmount;
+  const paymentStartOrigin = props.route.params.paymentStartOrigin;
   const isManualPaymentInsertion = paymentStartOrigin === "manual_insertion";
 
   const dispatchPaymentVerificaRequest = () =>
@@ -530,7 +528,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
     onDuplicatedPayment: () =>
       dispatch(
         paymentCompletedSuccess({
-          rptId: props.navigation.getParam("rptId"),
+          rptId: props.route.params.rptId,
           kind: "DUPLICATED"
         })
       )

@@ -1,24 +1,35 @@
-import React, { useEffect } from "react";
-import { CompatNavigationProp } from "@react-navigation/compat";
-import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
-import * as pot from "italia-ts-commons/lib/pot";
-import { connect } from "react-redux";
 import {
   PaymentNoticeNumberFromString,
   RptIdFromString
 } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
+import * as pot from "italia-ts-commons/lib/pot";
 import { ActionSheet } from "native-base";
-import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
-import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
+import React, { useEffect } from "react";
+import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { connect } from "react-redux";
+import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import I18n from "../../../i18n";
-import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import { GlobalState } from "../../../store/reducers/types";
+import {
+  isError,
+  isLoading as isRemoteLoading,
+  isUndefined
+} from "../../../features/bonus/bpd/model/RemoteValue";
+import {
+  zendeskSelectedCategory,
+  zendeskSupportStart
+} from "../../../features/zendesk/store/actions";
+import I18n from "../../../i18n";
+import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
+import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
+import {
+  navigateToPaymentPickPaymentMethodScreen,
+  navigateToPaymentTransactionErrorScreen,
+  navigateToWalletAddPaymentMethod
+} from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
-import { fetchWalletsRequestWithExpBackoff } from "../../../store/actions/wallet/wallets";
-import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import {
   abortRunningPayment,
   backToEntrypointPayment,
@@ -30,37 +41,27 @@ import {
   runDeleteActivePaymentSaga,
   runStartOrResumePaymentActivationSaga
 } from "../../../store/actions/wallet/payment";
-import { PayloadForAction } from "../../../types/utils";
-import {
-  navigateToPaymentPickPaymentMethodScreen,
-  navigateToPaymentTransactionErrorScreen,
-  navigateToWalletAddPaymentMethod
-} from "../../../store/actions/navigation";
-import {
-  isError,
-  isLoading as isRemoteLoading,
-  isUndefined
-} from "../../../features/bonus/bpd/model/RemoteValue";
-import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
-import {
-  getFavoriteWallet,
-  withPaymentFeatureSelector
-} from "../../../store/reducers/wallet/wallets";
+import { fetchWalletsRequestWithExpBackoff } from "../../../store/actions/wallet/wallets";
 import {
   bancomatPayConfigSelector,
   isPaypalEnabledSelector
 } from "../../../store/reducers/backendStatus";
-import { alertNoPayablePaymentMethods } from "../../../utils/paymentMethod";
-import { showToast } from "../../../utils/showToast";
+import { GlobalState } from "../../../store/reducers/types";
+import {
+  getFavoriteWallet,
+  withPaymentFeatureSelector
+} from "../../../store/reducers/wallet/wallets";
+import customVariables from "../../../theme/variables";
+import { PayloadForAction } from "../../../types/utils";
+import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import {
   DetailV2Keys,
   getV2ErrorMainType,
   isDuplicatedPayment
 } from "../../../utils/payment";
-import {
-  zendeskSelectedCategory,
-  zendeskSupportStart
-} from "../../../features/zendesk/store/actions";
+import { alertNoPayablePaymentMethods } from "../../../utils/paymentMethod";
+import { showToast } from "../../../utils/showToast";
 import {
   addTicketCustomField,
   appendLog,
@@ -69,17 +70,15 @@ import {
   zendeskCategoryId,
   zendeskPaymentCategory
 } from "../../../utils/supportAssistance";
-import customVariables from "../../../theme/variables";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
-import { TransactionSummary } from "./components/TransactionSummary";
-import { TransactionSummaryStatus } from "./components/TransactionSummaryStatus";
 import { dispatchPickPspOrConfirm } from "./common";
-import { TransactionSummaryErrorDetails } from "./components/TransactionSummaryErrorDetails";
+import { TransactionSummary } from "./components/TransactionSummary";
 import {
   continueButtonProps,
   helpButtonProps,
   loadingButtonProps
 } from "./components/TransactionSummaryButtonConfigurations";
+import { TransactionSummaryErrorDetails } from "./components/TransactionSummaryErrorDetails";
+import { TransactionSummaryStatus } from "./components/TransactionSummaryStatus";
 
 export type TransactionSummaryError = Option<
   PayloadForAction<
@@ -141,11 +140,10 @@ const renderFooter = (
   );
 };
 
-type OwnProps = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<WalletParamsList, "PAYMENT_TRANSACTION_SUMMARY">
-  >;
-};
+type OwnProps = IOStackNavigationRouteProps<
+  WalletParamsList,
+  "PAYMENT_TRANSACTION_SUMMARY"
+>;
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -161,6 +159,7 @@ const NewTransactionSummaryScreen = ({
   walletById,
   loadWallets,
   navigation,
+  route,
   continueWithPayment,
   maybeFavoriteWallet,
   hasPayableMethods,
@@ -181,7 +180,7 @@ const NewTransactionSummaryScreen = ({
   // We show inline error status only if the payment starts
   // from a message and the verification fails. In all the other
   // cases we present the fullscreen error message.
-  const paymentStartOrigin = navigation.getParam("paymentStartOrigin");
+  const paymentStartOrigin = route.params.paymentStartOrigin;
   const showsInlineError = paymentStartOrigin === "message";
 
   const errorOrUndefined = error.toUndefined();
@@ -244,8 +243,8 @@ const NewTransactionSummaryScreen = ({
     }
   };
 
-  const rptId = navigation.getParam("rptId");
-  const messageId = navigation.getParam("messageId");
+  const rptId = route.params.rptId;
+  const messageId = route.params.messageId;
 
   const paymentNoticeNumber = PaymentNoticeNumberFromString.encode(
     rptId.paymentNoticeNumber
@@ -365,9 +364,9 @@ const mapStateToProps = (state: GlobalState) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
-  const rptId = props.navigation.getParam("rptId");
-  const paymentStartOrigin = props.navigation.getParam("paymentStartOrigin");
-  const initialAmount = props.navigation.getParam("initialAmount");
+  const rptId = props.route.params.rptId;
+  const paymentStartOrigin = props.route.params.paymentStartOrigin;
+  const initialAmount = props.route.params.initialAmount;
 
   const verifyPayment = () =>
     dispatch(

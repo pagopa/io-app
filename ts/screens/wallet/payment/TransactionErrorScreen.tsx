@@ -3,7 +3,6 @@
  * Inside the cancel and retry buttons are conditionally returned.
  */
 import { RptId, RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import { CompatNavigationProp } from "@react-navigation/compat";
 import { Option } from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import { View } from "native-base";
@@ -30,7 +29,7 @@ import {
   zendeskSupportStart
 } from "../../../features/zendesk/store/actions";
 import I18n from "../../../i18n";
-import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
 import { navigateToPaymentManualDataInsertion } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
@@ -76,11 +75,10 @@ export type TransactionErrorScreenNavigationParams = {
   onCancel: () => void;
 };
 
-type OwnProps = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<WalletParamsList, "PAYMENT_TRANSACTION_ERROR">
-  >;
-};
+type OwnProps = IOStackNavigationRouteProps<
+  WalletParamsList,
+  "PAYMENT_TRANSACTION_ERROR"
+>;
 
 type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &
@@ -329,9 +327,9 @@ export const errorTransactionUIElements = (
 };
 
 const TransactionErrorScreen = (props: Props) => {
-  const rptId = props.navigation.getParam("rptId");
-  const error = props.navigation.getParam("error");
-  const onCancel = props.navigation.getParam("onCancel");
+  const rptId = props.route.params.rptId;
+  const error = props.route.params.error;
+  const onCancel = props.route.params.onCancel;
   const { paymentsHistory } = props;
 
   const codiceAvviso = getCodiceAvviso(rptId);
