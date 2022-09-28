@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { isSome } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { useRef } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
@@ -46,7 +46,7 @@ const WorkerSelectDestinationScreen = (
   };
 
   if (
-    isSome(props.selectedBeneficiaryCategory) &&
+    O.isSome(props.selectedBeneficiaryCategory) &&
     props.selectedBeneficiaryCategory.value !== "worker"
   ) {
     props.failure("The selected category is not Worker");

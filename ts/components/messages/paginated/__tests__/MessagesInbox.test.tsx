@@ -1,15 +1,15 @@
 import { pot } from "@pagopa/ts-commons";
 import { fireEvent } from "@testing-library/react-native";
-import { none } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import React from "react";
 import configureMockStore from "redux-mock-store";
-import { successReloadMessagesPayload } from "../../../../__mocks__/messages";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { AllPaginated } from "../../../../store/reducers/entities/messages/allPaginated";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import { successReloadMessagesPayload } from "../../../../__mocks__/messages";
 
 import MessagesInbox from "../MessagesInbox";
 
@@ -37,10 +37,14 @@ describe("MessagesInbox component", () => {
 
 const renderComponent = (props: React.ComponentProps<typeof MessagesInbox>) => {
   const paginatedState: Partial<AllPaginated> = {
-    inbox: { data: pot.some({ page: messages }), lastRequest: none }
+    inbox: { data: pot.some({ page: messages }), lastRequest: O.none }
   };
   const globalState = appReducer(undefined, applicationChangeState("active"));
-  const allPaginated = { data: pot.none, lastRequest: none, ...paginatedState };
+  const allPaginated = {
+    data: pot.none,
+    lastRequest: O.none,
+    ...paginatedState
+  };
 
   const mockStore = configureMockStore<GlobalState>();
   const store: ReturnType<typeof mockStore> = mockStore({

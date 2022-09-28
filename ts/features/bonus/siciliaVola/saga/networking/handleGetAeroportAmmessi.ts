@@ -1,14 +1,15 @@
-import { ActionType } from "typesafe-actions";
+import * as E from "fp-ts/lib/Either";
 import { call, put } from "typed-redux-saga/macro";
-import { BackendSiciliaVolaClient } from "../../api/backendSiciliaVola";
-import { getGenericError, getNetworkError } from "../../../../../utils/errors";
+import { ActionType } from "typesafe-actions";
+import { AeroportoSedeBeanList } from "../../../../../../definitions/api_sicilia_vola/AeroportoSedeBeanList";
+import { MitVoucherToken } from "../../../../../../definitions/io_sicilia_vola_token/MitVoucherToken";
 import { SagaCallReturnType } from "../../../../../types/utils";
+import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { isDefined } from "../../../../../utils/guards";
 import { SessionManager } from "../../../../../utils/SessionManager";
-import { MitVoucherToken } from "../../../../../../definitions/io_sicilia_vola_token/MitVoucherToken";
+import { BackendSiciliaVolaClient } from "../../api/backendSiciliaVola";
 import { svGenerateVoucherAvailableDestination } from "../../store/actions/voucherGeneration";
 import { AvailableDestinations } from "../../types/SvVoucherRequest";
-import { AeroportoSedeBeanList } from "../../../../../../definitions/api_sicilia_vola/AeroportoSedeBeanList";
 
 const mapKinds: Record<number, string> = {
   400: "wrongFormat",
@@ -37,20 +38,20 @@ export function* handleGetAeroportiAmmessi(
     const getAeroportiAmmessiResult: SagaCallReturnType<typeof request> =
       yield* call(request);
 
-    if (getAeroportiAmmessiResult.isRight()) {
-      if (getAeroportiAmmessiResult.value.status === 200) {
+    if (E.isRight(getAeroportiAmmessiResult)) {
+      if (getAeroportiAmmessiResult.right.status === 200) {
         yield* put(
           svGenerateVoucherAvailableDestination.success(
-            convertSuccess(getAeroportiAmmessiResult.value.value)
+            convertSuccess(getAeroportiAmmessiResult.right.value)
           )
         );
         return;
       }
-      if (mapKinds[getAeroportiAmmessiResult.value.status] !== undefined) {
+      if (mapKinds[getAeroportiAmmessiResult.right.status] !== undefined) {
         yield* put(
           svGenerateVoucherAvailableDestination.failure({
             ...getGenericError(
-              new Error(mapKinds[getAeroportiAmmessiResult.value.status])
+              new Error(mapKinds[getAeroportiAmmessiResult.right.status])
             )
           })
         );

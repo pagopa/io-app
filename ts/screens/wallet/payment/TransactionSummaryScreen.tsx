@@ -3,8 +3,9 @@ import {
   PaymentNoticeNumberFromString,
   RptId
 } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { ActionSheet, Text, View } from "native-base";
 import * as React from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
@@ -117,21 +118,23 @@ class TransactionSummaryScreen extends React.Component<Props> {
 
   public componentDidUpdate(prevProps: Props) {
     const { error, potVerifica } = this.props;
-    if (error.toUndefined() !== prevProps.error.toUndefined()) {
+    if (O.toUndefined(error) !== O.toUndefined(prevProps.error)) {
       // in case the verifica returns an error indicating the payment has been
       // already completed for this notice, we update the payment state so that
       // the notice result paid
-      error
-        .filter(_ => _ === "PAA_PAGAMENTO_DUPLICATO")
-        .map(_ => this.props.onDuplicatedPayment());
-      if (error.isSome()) {
+      pipe(
+        error,
+        O.filter(_ => _ === "PAA_PAGAMENTO_DUPLICATO"),
+        O.map(_ => this.props.onDuplicatedPayment())
+      );
+      if (O.isSome(error)) {
         this.props.navigateToPaymentTransactionError(error);
       }
     } else if (
       potVerifica !== prevProps.potVerifica &&
       pot.isError(potVerifica)
     ) {
-      this.props.navigateToPaymentTransactionError(some(potVerifica.error));
+      this.props.navigateToPaymentTransactionError(O.some(potVerifica.error));
     } else if (
       // this is the case when the component is already mounted (eg. process more payments)
       // we check if the rptId is different from the previous one, in that case fire the dispatchPaymentVerificaRequest
@@ -232,10 +235,15 @@ class TransactionSummaryScreen extends React.Component<Props> {
   }
 
   private getFooterButtons = () =>
-    this.props.error.fold(this.renderFooterButtons(), error =>
-      error === "PAA_PAGAMENTO_DUPLICATO"
-        ? this.renderFooterSingleButton()
-        : this.renderFooterButtons()
+    pipe(
+      this.props.error,
+      O.fold(
+        () => this.renderFooterButtons(),
+        error =>
+          error === "PAA_PAGAMENTO_DUPLICATO"
+            ? this.renderFooterSingleButton()
+            : this.renderFooterButtons()
+      )
     );
 
   public render(): React.ReactNode {
@@ -243,20 +251,24 @@ class TransactionSummaryScreen extends React.Component<Props> {
 
     const { potVerifica } = this.props;
 
-    const recipient = pot
-      .toOption(potVerifica)
-      .mapNullable(_ => _.enteBeneficiario)
-      .map(formatTextRecipient);
+    const recipient = pipe(
+      pot.toOption(potVerifica),
+      O.chainNullableK(_ => _.enteBeneficiario),
+      O.map(formatTextRecipient)
+    );
 
     /**
      * try to show the organization fiscal code coming from the 'verifica' API
      * otherwise (it could be an issue with the API) it fallbacks on rptID coming from
      * static data: message, qrcode, manual insertion
      */
-    const organizationFiscalCode: string = pot
-      .toOption(potVerifica)
-      .mapNullable(_ => _.enteBeneficiario?.identificativoUnivocoBeneficiario)
-      .getOrElse(rptId.organizationFiscalCode);
+    const organizationFiscalCode: string = pipe(
+      pot.toOption(potVerifica),
+      O.chainNullableK(
+        _ => _.enteBeneficiario?.identificativoUnivocoBeneficiario
+      ),
+      O.getOrElse(() => rptId.organizationFiscalCode)
+    );
 
     const currentAmount: string = pot.getOrElse(
       pot.map(potVerifica, (verifica: PaymentRequestsGetResponse) =>
@@ -300,7 +312,13 @@ class TransactionSummaryScreen extends React.Component<Props> {
               dark={true}
               title={I18n.t("wallet.firstTransactionSummary.title")}
               description={transactionDescription}
-              recipient={recipient.fold("-", r => r)}
+              recipient={pipe(
+                recipient,
+                O.fold(
+                  () => "-",
+                  r => r
+                )
+              )}
             />
 
             <View spacer={true} large={true} />
@@ -360,32 +378,36 @@ const mapStateToProps = (state: GlobalState) => {
    * - payment method is Paypal & the relative feature flag is not enabled
    * - payment method is BPay & the relative feature flag is not enabled
    */
-  const maybeFavoriteWallet = fromNullable(favouriteWallet).filter(fw => {
-    switch (fw.paymentMethod?.kind) {
-      case "PayPal":
-        return isPaypalEnabled;
-      case "BPay":
-        return isBPayPaymentEnabled;
-      default:
-        return true;
-    }
-  });
+  const maybeFavoriteWallet = pipe(
+    favouriteWallet,
+    O.fromNullable,
+    O.filter(fw => {
+      switch (fw.paymentMethod?.kind) {
+        case "PayPal":
+          return isPaypalEnabled;
+        case "BPay":
+          return isBPayPaymentEnabled;
+        default:
+          return true;
+      }
+    })
+  );
   const psps = pspsV2.psps;
-  const error: Option<
+  const error: O.Option<
     PayloadForAction<
       | typeof paymentVerifica["failure"]
       | typeof paymentAttiva["failure"]
       | typeof paymentIdPolling["failure"]
     >
   > = pot.isError(verifica)
-    ? some(verifica.error)
+    ? O.some(verifica.error)
     : pot.isError(attiva)
-    ? some(attiva.error)
+    ? O.some(attiva.error)
     : pot.isError(paymentId)
-    ? some(paymentId.error)
+    ? O.some(paymentId.error)
     : pot.isError(check) || isError(psps)
-    ? some(undefined)
-    : none;
+    ? O.some(undefined)
+    : O.none;
 
   // we need to show the spinner when the data is in the loading state
   // and also while the logic is processing one step's response and
@@ -397,15 +419,15 @@ const mapStateToProps = (state: GlobalState) => {
     isLoadingWalletById ||
     isLoadingVerifica ||
     isLoadingAttiva ||
-    (error.isNone() && pot.isSome(attiva) && pot.isNone(paymentId)) ||
+    (O.isNone(error) && pot.isSome(attiva) && pot.isNone(paymentId)) ||
     pot.isLoading(paymentId) ||
-    (error.isNone() && pot.isSome(paymentId) && pot.isNone(check)) ||
+    (O.isNone(error) && pot.isSome(paymentId) && pot.isNone(check)) ||
     pot.isLoading(check) ||
-    (maybeFavoriteWallet.isSome() &&
-      error.isNone() &&
+    (O.isSome(maybeFavoriteWallet) &&
+      O.isNone(error) &&
       pot.isSome(check) &&
       isUndefined(psps)) ||
-    (maybeFavoriteWallet.isSome() && isRemoteLoading(psps));
+    (O.isSome(maybeFavoriteWallet) && isRemoteLoading(psps));
 
   const loadingCaption = isLoadingVerifica
     ? I18n.t("wallet.firstTransactionSummary.loadingMessage.verification")
@@ -485,7 +507,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
     );
 
   const navigateToPaymentTransactionError = (
-    error: Option<
+    error: O.Option<
       PayloadForAction<
         | typeof paymentVerifica["failure"]
         | typeof paymentAttiva["failure"]
@@ -510,7 +532,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
     backToEntrypointPayment: () => dispatch(backToEntrypointPayment()),
     navigateToWalletAddPaymentMethod: () =>
       navigateToWalletAddPaymentMethod({
-        inPayment: none,
+        inPayment: O.none,
         showOnlyPayablePaymentMethods: true
       }),
     dispatchPaymentVerificaRequest,

@@ -1,9 +1,10 @@
-import { head } from "fp-ts/lib/Array";
-import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as AR from "fp-ts/lib/Array";
+import * as O from "fp-ts/lib/Option";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import _ from "lodash";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
+import { pipe } from "fp-ts/lib/function";
 import { WinningTransactionPageResource } from "../../../../../../../../definitions/bpd/winning_transactions_v2/WinningTransactionPageResource";
 import { cardIcons } from "../../../../../../../components/wallet/card/Logo";
 import { Action } from "../../../../../../../store/actions/types";
@@ -120,10 +121,12 @@ export const bpdTransactionsUiReducer = (
         // If lastTransactionDate is null, pick the first transaction date
         lastTransactionDate:
           state.lastTransactionDate ??
-          head([...action.payload.results.transactions])
-            .chain(x => head([...x.transactions]))
-            .map(y => y.trxDate)
-            .toNullable(),
+          pipe(
+            AR.head([...action.payload.results.transactions]),
+            O.chain(x => AR.head([...x.transactions])),
+            O.map(y => y.trxDate),
+            O.toNullable
+          ),
         nextCursor: action.payload.results.nextCursor ?? null,
         sectionItems: pot.some(
           _.mergeWith(currentSectionItems, newSectionItems, customizer)
@@ -174,13 +177,16 @@ export const bpdTransactionsRequiredDataLoadStateSelector = createSelector(
     currentPeriodId,
     maybeSelectedPeriod
   ): pot.Pot<true, Error> =>
-    fromNullable(maybeSelectedPeriod)
-      .chain(selectedPeriod =>
+    pipe(
+      maybeSelectedPeriod,
+      O.fromNullable,
+      O.chain(selectedPeriod =>
         selectedPeriod.awardPeriodId === currentPeriodId
-          ? some(potRequiredData)
-          : none
-      )
-      .getOrElse(pot.none)
+          ? O.some(potRequiredData)
+          : O.none
+      ),
+      O.getOrElseW(() => pot.none)
+    )
 );
 
 /**
@@ -191,7 +197,7 @@ export const bpdLastTransactionUpdateSelector = createSelector(
     (state: GlobalState) =>
       state.bonus.bpd.details.transactionsV2.ui.lastTransactionDate
   ],
-  (lastTransactionDate): Option<Date> => fromNullable(lastTransactionDate)
+  (lastTransactionDate): O.Option<Date> => O.fromNullable(lastTransactionDate)
 );
 
 /**
@@ -232,18 +238,31 @@ export const bpdTransactionByIdSelector = createSelector(
     paymentMethods,
     selectedPeriod,
     trxId
-  ): Option<BpdTransactionDetailRepresentationV2> =>
-    fromNullable(awardPeriodId).chain(periodId =>
-      fromNullable(entitiesByPeriod[periodId]?.byId[trxId]).map(trx => ({
-        ...trx,
-        image: pickPaymentMethodFromHashpan(trx.hashPan, paymentMethods)
-          .map(pm => pm.icon)
-          .getOrElse(cardIcons.UNKNOWN),
-        title: pickPaymentMethodFromHashpan(trx.hashPan, paymentMethods)
-          .map(pm => pm.caption)
-          .getOrElse(FOUR_UNICODE_CIRCLES),
-        keyId: trx.idTrx,
-        maxCashbackForTransactionAmount: selectedPeriod?.maxTransactionCashback
-      }))
+  ): O.Option<BpdTransactionDetailRepresentationV2> =>
+    pipe(
+      awardPeriodId,
+      O.fromNullable,
+      O.chain(periodId =>
+        pipe(
+          entitiesByPeriod[periodId]?.byId[trxId],
+          O.fromNullable,
+          O.map(trx => ({
+            ...trx,
+            image: pipe(
+              pickPaymentMethodFromHashpan(trx.hashPan, paymentMethods),
+              O.map(pm => pm.icon),
+              O.getOrElse(() => cardIcons.UNKNOWN)
+            ),
+            title: pipe(
+              pickPaymentMethodFromHashpan(trx.hashPan, paymentMethods),
+              O.map(pm => pm.caption),
+              O.getOrElse(() => FOUR_UNICODE_CIRCLES)
+            ),
+            keyId: trx.idTrx,
+            maxCashbackForTransactionAmount:
+              selectedPeriod?.maxTransactionCashback
+          }))
+        )
+      )
     )
 );

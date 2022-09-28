@@ -1,4 +1,4 @@
-import { Omit } from "italia-ts-commons/lib/types";
+import { Omit } from "@pagopa/ts-commons/lib/types";
 import { getType } from "typesafe-actions";
 import { RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 

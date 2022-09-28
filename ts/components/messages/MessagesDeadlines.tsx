@@ -1,4 +1,6 @@
 /* eslint-disable functional/immutable-data */
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { Tuple2 } from "@pagopa/ts-commons/lib/tuples";
 import {
   compareAsc,
   differenceInMonths,
@@ -9,9 +11,9 @@ import {
   startOfToday,
   subMonths
 } from "date-fns";
-import { isNone, none, Option, some } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
-import { Tuple2 } from "italia-ts-commons/lib/tuples";
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { View } from "native-base";
 import React from "react";
 import { SectionListScrollParams, StyleSheet } from "react-native";
@@ -73,26 +75,26 @@ type State = {
   // Here we save the sections to render.
   // We only want to render sections starting from a specific time limit.
   sectionsToRender: Sections;
-  maybeLastLoadedStartOfMonthTime: Option<number>;
+  maybeLastLoadedStartOfMonthTime: O.Option<number>;
   lastMessagesState?: pot.Pot<ReadonlyArray<MessageState>, string>;
   allMessageIdsState: Set<string>;
   isContinuosScrollEnabled: boolean;
-  lastDeadlineId: Option<string>;
-  nextDeadlineId: Option<string>;
+  lastDeadlineId: O.Option<string>;
+  nextDeadlineId: O.Option<string>;
 };
 
 /**
  * Return the ID of the first non-placeholder item of the first section, if any.
  */
-const getLastDeadlineId = (sections: Sections): Option<string> => {
+const getLastDeadlineId = (sections: Sections): O.Option<string> => {
   if (sections[0] && sections[0].data[0]) {
     const item = sections[0].data[0];
     if (isPlaceholderItem(item)) {
-      return none;
+      return O.none;
     }
-    return some(item.e1.id);
+    return O.some(item.e1.id);
   }
-  return none;
+  return O.none;
 };
 
 export const testGetLastDeadlineId = isTestEnv ? getLastDeadlineId : undefined;
@@ -100,10 +102,10 @@ export const testGetLastDeadlineId = isTestEnv ? getLastDeadlineId : undefined;
 /**
  * Return the ID of the first upcoming non-placeholder item from start of today, if any.
  */
-const getNextDeadlineId = (sections: Sections): Option<string> => {
+const getNextDeadlineId = (sections: Sections): O.Option<string> => {
   const now = startOfDay(new Date()).getTime();
-  return sections
-    .reduce<Option<MessageAgendaItem>>((acc, curr) => {
+  return pipe(
+    sections.reduce<O.Option<MessageAgendaItem>>((acc, curr) => {
       const item = curr.data[0];
       // if item is fake, return the accumulator
       if (isPlaceholderItem(item)) {
@@ -111,19 +113,20 @@ const getNextDeadlineId = (sections: Sections): Option<string> => {
       }
       const newDate = new Date(item.e1.content.due_date).getTime();
       const diff = newDate - now;
-      // if the acc is none, we don't need to make comparison with previous value
-      if (isNone(acc)) {
+      // if the acc is O.none, we don't need to make comparison with previous value
+      if (O.isNone(acc)) {
         // just check the newDate is about future
-        return diff >= 0 ? some(item) : none;
+        return diff >= 0 ? O.some(item) : O.none;
       }
       const lastDate = acc.value.e1.content.due_date.getTime();
       // if the new date is about future and is less than in accumulator
       if (diff >= 0 && diff < now - lastDate) {
-        return some(item);
+        return O.some(item);
       }
       return acc;
-    }, none)
-    .map(item => item.e1.id);
+    }, O.none),
+    O.map(item => item.e1.id)
+  );
 };
 
 export const testGetNextDeadlineId = isTestEnv ? getNextDeadlineId : undefined;
@@ -169,7 +172,7 @@ const generateSections = (
           // -  if the current message due_date day is equal to the one of prevMessage
           //    add the message to the last section
           .reduce<{
-            lastTitle: Option<string>;
+            lastTitle: O.Option<string>;
             // eslint-disable-next-line
             sections: MessageAgendaSection[];
           }>(
@@ -180,7 +183,7 @@ const generateSections = (
                 messageAgendaItem.e1.content.due_date
               ).toISOString();
               if (
-                accumulator.lastTitle.isNone() ||
+                O.isNone(accumulator.lastTitle) ||
                 title !== accumulator.lastTitle.value
               ) {
                 // We need to create a new section
@@ -189,7 +192,7 @@ const generateSections = (
                   data: [messageAgendaItem]
                 };
                 return {
-                  lastTitle: some(title),
+                  lastTitle: O.some(title),
                   sections: [...accumulator.sections, newSection]
                 };
               } else {
@@ -203,14 +206,14 @@ const generateSections = (
                   data: [...prevSection.data, messageAgendaItem]
                 };
                 return {
-                  lastTitle: some(title),
+                  lastTitle: O.some(title),
                   // We used pop so we need to re-add the section.
                   sections: [...accumulator.sections, newSection]
                 };
               }
             },
             {
-              lastTitle: none,
+              lastTitle: O.none,
               sections: []
             }
           ).sections
@@ -230,8 +233,8 @@ const filterSectionsWithTimeLimit = (
 
   for (const section of sections) {
     const decodedValue = DateFromISOString.decode(section.title);
-    const sectionTime = decodedValue.isRight()
-      ? decodedValue.value.getTime()
+    const sectionTime = E.isRight(decodedValue)
+      ? decodedValue.right.getTime()
       : section.title;
     if (sectionTime > toTimeLimit) {
       break;
@@ -305,24 +308,31 @@ const selectPastMonthsData = (
 
 // return true if the last section is loaded
 const isLastSectionLoaded = (
-  lastDeadlineId: Option<string>,
+  lastDeadlineId: O.Option<string>,
   sections: Sections
 ): boolean =>
-  lastDeadlineId.fold(false, lastId =>
-    sections
-      .map(s => s.data)
-      .some(items =>
-        items.some(item => !isPlaceholderItem(item) && item.e1.id === lastId)
-      )
+  pipe(
+    lastDeadlineId,
+    O.fold(
+      () => false,
+      lastId =>
+        sections
+          .map(s => s.data)
+          .some(items =>
+            items.some(
+              item => !isPlaceholderItem(item) && item.e1.id === lastId
+            )
+          )
+    )
   );
 
 const selectInitialSectionsToRender = (
   sections: Sections,
-  maybeLastLoadedStartOfMonthTime: Option<number>
+  maybeLastLoadedStartOfMonthTime: O.Option<number>
 ): Sections => {
   const sectionsToRender: Sections = [];
 
-  if (maybeLastLoadedStartOfMonthTime.isSome()) {
+  if (O.isSome(maybeLastLoadedStartOfMonthTime)) {
     // Select past months data
     const lastLoadedStartOfMonthTime = maybeLastLoadedStartOfMonthTime.value;
     const startOfCurrentMonthTime = startOfMonth(new Date()).getTime();
@@ -344,7 +354,7 @@ const selectInitialSectionsToRender = (
 
 const selectMoreSectionsToRenderAsync = (
   sections: Sections,
-  maybeLastLoadedStartOfMonthTime: Option<number>
+  maybeLastLoadedStartOfMonthTime: O.Option<number>
 ): Sections => {
   const moreSectionsToRender: Sections = [];
 
@@ -352,11 +362,11 @@ const selectMoreSectionsToRenderAsync = (
     ...selectPastMonthsData(
       sections,
       PAST_DATA_MONTHS,
-      maybeLastLoadedStartOfMonthTime.toUndefined()
+      O.toUndefined(maybeLastLoadedStartOfMonthTime)
     )
   );
 
-  if (maybeLastLoadedStartOfMonthTime.isNone()) {
+  if (O.isNone(maybeLastLoadedStartOfMonthTime)) {
     moreSectionsToRender.push(...selectCurrentMonthRemainingData(sections));
   }
   return moreSectionsToRender;
@@ -366,7 +376,7 @@ const selectMoreSectionsToRenderAsync = (
  * A component to show the messages with a due_date.
  */
 class MessagesDeadlines extends React.PureComponent<Props, State> {
-  private scrollToLocation: Option<SectionListScrollParams> = none;
+  private scrollToLocation: O.Option<SectionListScrollParams> = O.none;
   private messageAgendaRef = React.createRef<MessageAgenda>();
 
   /**
@@ -374,19 +384,19 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
    * "previous" data.
    */
   private onContentSizeChange = () => {
-    if (this.messageAgendaRef.current && this.scrollToLocation.isSome()) {
+    if (this.messageAgendaRef.current && O.isSome(this.scrollToLocation)) {
       // Scroll to the sectionIndex we was before the content size change.
       this.messageAgendaRef.current.scrollToLocation(
         this.scrollToLocation.value
       );
-      // Reset the value to none.
+      // Reset the value to O.none.
       // eslint-disable-next-line
-      this.scrollToLocation = none;
+      this.scrollToLocation = O.none;
     }
   };
 
   private handleOnPressItem = (id: string) => {
-    if (this.props.selectedItemIds.isSome()) {
+    if (O.isSome(this.props.selectedItemIds)) {
       // Is the selection mode is active a simple "press" must act as
       // a "longPress" (select the item).
       this.handleOnLongPressItem(id);
@@ -402,9 +412,9 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
   private toggleAllMessagesSelection = () => {
     const { allMessageIdsState } = this.state;
     const { selectedItemIds } = this.props;
-    if (selectedItemIds.isSome()) {
+    if (O.isSome(selectedItemIds)) {
       this.props.setSelectedItemIds(
-        some(
+        O.some(
           allMessageIdsState.size === selectedItemIds.value.size
             ? new Set()
             : allMessageIdsState
@@ -416,7 +426,11 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
   private archiveMessages = () => {
     this.props.resetSelection();
     this.props.setMessagesArchivedState(
-      this.props.selectedItemIds.map(_ => Array.from(_)).getOrElse([]),
+      pipe(
+        this.props.selectedItemIds,
+        O.map(_ => Array.from(_)),
+        O.getOrElseW(() => [])
+      ),
       true
     );
   };
@@ -439,7 +453,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
         const itemIndex =
           moreSectionsToRender[moreSectionsToRender.length - 1].data.length - 1;
         // eslint-disable-next-line
-        this.scrollToLocation = some({
+        this.scrollToLocation = O.some({
           sectionIndex,
           itemIndex,
           viewOffset: 0,
@@ -448,7 +462,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
         });
       } else {
         // eslint-disable-next-line
-        this.scrollToLocation = some({
+        this.scrollToLocation = O.some({
           sectionIndex: moreSectionsToRender.length,
           itemIndex: -1,
           viewOffset: 0,
@@ -457,10 +471,10 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
         });
       }
 
-      const lastLoadedStartOfMonthTime =
-        maybeLastLoadedStartOfMonthTime.getOrElse(
-          startOfMonth(new Date()).getTime()
-        );
+      const lastLoadedStartOfMonthTime = pipe(
+        maybeLastLoadedStartOfMonthTime,
+        O.getOrElse(() => startOfMonth(new Date()).getTime())
+      );
 
       return {
         isWorking: false,
@@ -474,7 +488,7 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
           ),
           ...prevState.allMessageIdsState
         ]),
-        maybeLastLoadedStartOfMonthTime: some(
+        maybeLastLoadedStartOfMonthTime: O.some(
           startOfMonth(
             subMonths(lastLoadedStartOfMonthTime, PAST_DATA_MONTHS)
           ).getTime()
@@ -493,11 +507,11 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
       isWorking: true,
       sections: [],
       sectionsToRender: [],
-      maybeLastLoadedStartOfMonthTime: none,
+      maybeLastLoadedStartOfMonthTime: O.none,
       allMessageIdsState: new Set(),
       isContinuosScrollEnabled: true,
-      lastDeadlineId: none,
-      nextDeadlineId: none
+      lastDeadlineId: O.none,
+      nextDeadlineId: O.none
     };
   }
 
@@ -651,9 +665,13 @@ class MessagesDeadlines extends React.PureComponent<Props, State> {
             nextDeadlineId={nextDeadlineId}
           />
         </View>
-        {selectedItemIds.isSome() && (
+        {O.isSome(selectedItemIds) && (
           <ListSelectionBar
-            selectedItems={selectedItemIds.map(_ => _.size).getOrElse(0)}
+            selectedItems={pipe(
+              selectedItemIds,
+              O.map(_ => _.size),
+              O.getOrElse(() => 0)
+            )}
             totalItems={allMessageIdsState.size}
             onToggleSelection={this.archiveMessages}
             onToggleAllSelection={this.toggleAllMessagesSelection}

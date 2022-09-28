@@ -2,7 +2,7 @@ import {
   ApiHeaderJson,
   composeHeaderProducers,
   createFetchRequestForApi
-} from "italia-ts-commons/lib/requests";
+} from "@pagopa/ts-commons/lib/requests";
 import { SessionToken } from "../../../types/SessionToken";
 import { defaultRetryingFetch } from "../../../utils/fetch";
 import {

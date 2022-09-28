@@ -1,7 +1,8 @@
-import { fromNullable } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
+import { pipe } from "fp-ts/lib/function";
 import { Action } from "../../../../../../store/actions/types";
 import { deleteWalletSuccess } from "../../../../../../store/actions/wallet/wallets";
 import { IndexedById } from "../../../../../../store/helpers/indexer";
@@ -26,7 +27,11 @@ const readPot = (
   hPan: HPan,
   data: IndexedById<BpdPotPaymentMethodActivation>
 ): BpdPotPaymentMethodActivation =>
-  fromNullable(data[hPan]).getOrElse(pot.none);
+  pipe(
+    data[hPan],
+    O.fromNullable,
+    O.getOrElseW(() => pot.none)
+  );
 
 export const getPaymentStatus = (value: boolean): BpdPmActivationStatus =>
   value ? "active" : "inactive";
@@ -133,15 +138,18 @@ export const areAnyPaymentMethodsActiveSelector = (
     (bpdPaymentMethodsActivation): boolean => {
       const paymentMethodsHash = paymentMethods.map(getPaymentMethodHash);
       return paymentMethodsHash.some(pmh =>
-        fromNullable(pmh)
-          .mapNullable(h => bpdPaymentMethodsActivation[h])
-          .map(potActivation =>
+        pipe(
+          pmh,
+          O.fromNullable,
+          O.chainNullableK(h => bpdPaymentMethodsActivation[h]),
+          O.map(potActivation =>
             pot.getOrElse(
               pot.map(potActivation, p => p.activationStatus === "active"),
               false
             )
-          )
-          .getOrElse(false)
+          ),
+          O.getOrElse(() => false)
+        )
       );
     }
   );

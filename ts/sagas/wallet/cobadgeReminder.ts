@@ -1,5 +1,5 @@
 import { put, select, take } from "typed-redux-saga/macro";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { ActionType, isActionOf } from "typesafe-actions";
 import {
   bancomatListVisibleInWalletSelector,

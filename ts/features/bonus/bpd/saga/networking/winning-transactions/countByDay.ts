@@ -1,5 +1,5 @@
-import { Either, left, right } from "fp-ts/lib/Either";
-import { readableReport } from "italia-ts-commons/lib/reporters";
+import * as E from "fp-ts/lib/Either";
+import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { mixpanelTrack } from "../../../../../../mixpanel";
@@ -31,7 +31,7 @@ export function* bpdLoadCountByDay(
   awardPeriodId: AwardPeriodId
 ): Generator<
   ReduxSagaEffect,
-  Either<Error, TrxCountByDayResource>,
+  E.Either<Error, TrxCountByDayResource>,
   SagaCallReturnType<typeof getCountByDay>
 > {
   try {
@@ -39,24 +39,24 @@ export function* bpdLoadCountByDay(
     const getCountByDayResults = yield* call(getCountByDay, {
       awardPeriodId
     } as any);
-    if (getCountByDayResults.isRight()) {
-      if (getCountByDayResults.value.status === 200) {
+    if (E.isRight(getCountByDayResults)) {
+      if (getCountByDayResults.right.status === 200) {
         void mixpanelTrack(mixpanelActionSuccess, {
           awardPeriodId,
-          count: getCountByDayResults.value.value?.length
+          count: getCountByDayResults.right.value?.length
         });
-        return right<Error, TrxCountByDayResource>({
+        return E.right<Error, TrxCountByDayResource>({
           awardPeriodId,
-          results: getCountByDayResults.value.value
+          results: getCountByDayResults.right.value
         });
       } else {
-        return left<Error, TrxCountByDayResource>(
-          new Error(`response status ${getCountByDayResults.value.status}`)
+        return E.left<Error, TrxCountByDayResource>(
+          new Error(`response status ${getCountByDayResults.right.status}`)
         );
       }
     } else {
-      return left<Error, TrxCountByDayResource>(
-        new Error(readableReport(getCountByDayResults.value))
+      return E.left<Error, TrxCountByDayResource>(
+        new Error(readableReport(getCountByDayResults.left))
       );
     }
   } catch (e) {
@@ -64,7 +64,7 @@ export function* bpdLoadCountByDay(
       awardPeriodId,
       reason: getError(e).message
     });
-    return left<Error, TrxCountByDayResource>(getError(e));
+    return E.left<Error, TrxCountByDayResource>(getError(e));
   }
 }
 
@@ -87,13 +87,13 @@ export function* handleCountByDay(
   );
 
   // dispatch the related action
-  if (result.isRight()) {
-    yield* put(bpdTransactionsLoadCountByDay.success(result.value));
+  if (E.isRight(result)) {
+    yield* put(bpdTransactionsLoadCountByDay.success(result.right));
   } else {
     yield* put(
       bpdTransactionsLoadCountByDay.failure({
         awardPeriodId: action.payload,
-        error: result.value
+        error: result.left
       })
     );
   }

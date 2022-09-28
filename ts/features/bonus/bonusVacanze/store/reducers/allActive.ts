@@ -1,7 +1,8 @@
-import { fromNullable } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
+import { pipe } from "fp-ts/lib/function";
 import { BonusActivationStatusEnum } from "../../../../../../definitions/bonus_vacanze/BonusActivationStatus";
 import { BonusActivationWithQrCode } from "../../../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { Action } from "../../../../../store/actions/types";
@@ -80,23 +81,29 @@ export const ownedActiveOrRedeemedBonus = createSelector<
   ProfileState,
   ReadonlyArray<BonusActivationWithQrCode>
 >([allBonusActiveSelector, profileSelector], (allActiveArray, profile) =>
-  pot.toOption(profile).fold([], p =>
-    allActiveArray.reduce(
-      (
-        acc: ReadonlyArray<BonusActivationWithQrCode>,
-        curr: pot.Pot<BonusActivationWithQrCode, Error>
-      ) => {
-        if (
-          pot.isSome(curr) &&
-          curr.value.applicant_fiscal_code === p.fiscal_code &&
-          (curr.value.status === BonusActivationStatusEnum.ACTIVE ||
-            curr.value.status === BonusActivationStatusEnum.REDEEMED)
-        ) {
-          return [...acc, curr.value];
-        }
-        return acc;
-      },
-      []
+  pipe(
+    profile,
+    pot.toOption,
+    O.fold(
+      () => [],
+      p =>
+        allActiveArray.reduce(
+          (
+            acc: ReadonlyArray<BonusActivationWithQrCode>,
+            curr: pot.Pot<BonusActivationWithQrCode, Error>
+          ) => {
+            if (
+              pot.isSome(curr) &&
+              curr.value.applicant_fiscal_code === p.fiscal_code &&
+              (curr.value.status === BonusActivationStatusEnum.ACTIVE ||
+                curr.value.status === BonusActivationStatusEnum.REDEEMED)
+            ) {
+              return [...acc, curr.value];
+            }
+            return acc;
+          },
+          []
+        )
     )
   )
 );
@@ -108,7 +115,11 @@ export const bonusActiveDetailByIdSelector = (id: string) =>
     AllActiveState,
     pot.Pot<BonusActivationWithQrCode, Error>
   >(allBonusActiveByIdSelector, allActiveObj =>
-    fromNullable(allActiveObj[id]).getOrElse(pot.none)
+    pipe(
+      allActiveObj[id],
+      O.fromNullable,
+      O.getOrElseW(() => pot.none)
+    )
   );
 
 export default reducer;

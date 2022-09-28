@@ -2,8 +2,9 @@ import {
   PaymentNoticeNumberFromString,
   RptIdFromString
 } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { ActionSheet } from "native-base";
 import React, { useEffect } from "react";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
@@ -80,7 +81,7 @@ import {
 import { TransactionSummaryErrorDetails } from "./components/TransactionSummaryErrorDetails";
 import { TransactionSummaryStatus } from "./components/TransactionSummaryStatus";
 
-export type TransactionSummaryError = Option<
+export type TransactionSummaryError = O.Option<
   PayloadForAction<
     | typeof paymentVerifica["failure"]
     | typeof paymentAttiva["failure"]
@@ -100,8 +101,8 @@ const renderFooter = (
   continueWithPayment: () => void,
   help: () => void
 ) => {
-  if (error.isSome()) {
-    const errorOrUndefined = error.toUndefined();
+  if (O.isSome(error)) {
+    const errorOrUndefined = O.toUndefined(error);
     const errorType = getV2ErrorMainType(errorOrUndefined as DetailV2Keys);
     switch (errorType) {
       case "TECHNICAL":
@@ -183,10 +184,10 @@ const NewTransactionSummaryScreen = ({
   const paymentStartOrigin = route.params.paymentStartOrigin;
   const showsInlineError = paymentStartOrigin === "message";
 
-  const errorOrUndefined = error.toUndefined();
-  const isPaid = isDuplicatedPayment(error);
+  const errorOrUndefined = O.toUndefined(error);
+  const isError = O.isSome(error);
 
-  const isError = error.isSome();
+  const isPaid = isDuplicatedPayment(error);
   useEffect(() => {
     if (!isError) {
       return;
@@ -201,7 +202,7 @@ const NewTransactionSummaryScreen = ({
       (pot.isError(paymentVerification) && !showsInlineError) ||
       (!pot.isError(paymentVerification) && isError)
     ) {
-      navigateToPaymentTransactionError(fromNullable(errorOrUndefined));
+      navigateToPaymentTransactionError(O.fromNullable(errorOrUndefined));
     }
   }, [
     isError,
@@ -255,10 +256,13 @@ const NewTransactionSummaryScreen = ({
    * otherwise (it could be an issue with the API) use the rptID coming from
    * static data (e.g. message, qrcode, manual insertion, etc.)
    */
-  const organizationFiscalCode = pot
-    .toOption(paymentVerification)
-    .mapNullable(_ => _.enteBeneficiario?.identificativoUnivocoBeneficiario)
-    .getOrElse(rptId.organizationFiscalCode);
+  const organizationFiscalCode = pipe(
+    pot.toOption(paymentVerification),
+    O.chainNullableK(
+      _ => _.enteBeneficiario?.identificativoUnivocoBeneficiario
+    ),
+    O.getOrElse(() => rptId.organizationFiscalCode)
+  );
 
   return (
     <BaseScreenComponent
@@ -306,14 +310,14 @@ const mapStateToProps = (state: GlobalState) => {
   const { verifica, attiva, paymentId, check, pspsV2 } = state.wallet.payment;
 
   const error: TransactionSummaryError = pot.isError(verifica)
-    ? some(verifica.error)
+    ? O.some(verifica.error)
     : pot.isError(attiva)
-    ? some(attiva.error)
+    ? O.some(attiva.error)
     : pot.isError(paymentId)
-    ? some(paymentId.error)
+    ? O.some(paymentId.error)
     : pot.isError(check) || isError(pspsV2.psps)
-    ? some(undefined)
-    : none;
+    ? O.some(undefined)
+    : O.none;
 
   const walletById = state.wallet.wallets.walletById;
 
@@ -325,16 +329,20 @@ const mapStateToProps = (state: GlobalState) => {
    * - payment method is PayPal & the relative feature flag is not enabled
    * - payment method is BPay & the relative feature flag is not enabled
    */
-  const maybeFavoriteWallet = fromNullable(favouriteWallet).filter(fw => {
-    switch (fw.paymentMethod?.kind) {
-      case "PayPal":
-        return isPaypalEnabled;
-      case "BPay":
-        return isBPayPaymentEnabled;
-      default:
-        return true;
-    }
-  });
+  const maybeFavoriteWallet = pipe(
+    favouriteWallet,
+    O.fromNullable,
+    O.filter(fw => {
+      switch (fw.paymentMethod?.kind) {
+        case "PayPal":
+          return isPaypalEnabled;
+        case "BPay":
+          return isBPayPaymentEnabled;
+        default:
+          return true;
+      }
+    })
+  );
 
   const hasPayableMethods = withPaymentFeatureSelector(state).length > 0;
 
@@ -342,15 +350,15 @@ const mapStateToProps = (state: GlobalState) => {
     pot.isLoading(walletById) ||
     pot.isLoading(verifica) ||
     pot.isLoading(attiva) ||
-    (error.isNone() && pot.isSome(attiva) && pot.isNone(paymentId)) ||
+    (O.isNone(error) && pot.isSome(attiva) && pot.isNone(paymentId)) ||
     pot.isLoading(paymentId) ||
-    (error.isNone() && pot.isSome(paymentId) && pot.isNone(check)) ||
+    (O.isNone(error) && pot.isSome(paymentId) && pot.isNone(check)) ||
     pot.isLoading(check) ||
-    (maybeFavoriteWallet.isSome() &&
-      error.isNone() &&
+    (O.isSome(maybeFavoriteWallet) &&
+      O.isNone(error) &&
       pot.isSome(check) &&
       isUndefined(pspsV2.psps)) ||
-    (maybeFavoriteWallet.isSome() && isRemoteLoading(pspsV2.psps));
+    (O.isSome(maybeFavoriteWallet) && isRemoteLoading(pspsV2.psps));
 
   return {
     paymentVerification: verifica,
@@ -449,7 +457,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
     }
     alertNoPayablePaymentMethods(() =>
       navigateToWalletAddPaymentMethod({
-        inPayment: none,
+        inPayment: O.none,
         showOnlyPayablePaymentMethods: true
       })
     );

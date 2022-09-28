@@ -1,4 +1,4 @@
-import { none } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { createStore } from "redux";
 import I18n from "../../../i18n";
@@ -63,7 +63,7 @@ const getComponent = () => {
       pan: "123456789" as CreditCardPan,
       holder: "tester"
     } as CreditCard,
-    inPayment: none
+    inPayment: O.none
   } as ConfirmCardDetailsScreenNavigationParams;
   const ToBeTested: React.FunctionComponent<
     React.ComponentProps<typeof ConfirmCardDetailsScreen>

@@ -1,4 +1,4 @@
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import MockDate from "mockdate";
 import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../store/actions/application";

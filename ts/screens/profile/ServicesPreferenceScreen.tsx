@@ -1,23 +1,23 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as React from "react";
 import { ScrollView } from "react-native";
 import { connect } from "react-redux";
-import * as pot from "italia-ts-commons/lib/pot";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
-import { IOStyles } from "../../components/core/variables/IOStyles";
-import { GlobalState } from "../../store/reducers/types";
-import { Dispatch } from "../../store/actions/types";
-import I18n from "../../i18n";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
+import { IOStyles } from "../../components/core/variables/IOStyles";
+import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
+import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import I18n from "../../i18n";
 import { profileUpsert } from "../../store/actions/profile";
+import { Dispatch } from "../../store/actions/types";
 import {
   profileSelector,
   profileServicePreferencesModeSelector
 } from "../../store/reducers/profile";
-import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
+import { GlobalState } from "../../store/reducers/types";
+import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
 import { showToast } from "../../utils/showToast";
-import ServicesContactComponent from "./components/services/ServicesContactComponent";
 import { useManualConfigBottomSheet } from "./components/services/ManualConfigBottomSheet";
+import ServicesContactComponent from "./components/services/ServicesContactComponent";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;

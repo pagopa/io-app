@@ -1,8 +1,8 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { View } from "native-base";
 import React from "react";
 import { ActivityIndicator, StyleSheet, TouchableOpacity } from "react-native";
 import Svg from "react-native-svg";
-import * as pot from "italia-ts-commons/lib/pot";
 import Default from "../../../../../../../img/features/mvl/attachmentsIcon/default.svg";
 import Pdf from "../../../../../../../img/features/mvl/attachmentsIcon/pdf.svg";
 import { H5 } from "../../../../../../components/core/typography/H5";

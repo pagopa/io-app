@@ -1,3 +1,5 @@
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -33,7 +35,10 @@ const getExpireDate = (fullYear?: string, month?: string): Date | undefined => {
 const BancomatCard: React.FunctionComponent<Props> = props => (
   <BaseBancomatCard
     abi={props.enhancedBancomat.abiInfo ?? {}}
-    isExpired={isPaymentMethodExpired(props.enhancedBancomat).getOrElse(false)}
+    isExpired={pipe(
+      isPaymentMethodExpired(props.enhancedBancomat),
+      E.getOrElse(() => false)
+    )}
     expiringDate={getExpireDate(
       props.enhancedBancomat.info.expireYear,
       props.enhancedBancomat.info.expireMonth

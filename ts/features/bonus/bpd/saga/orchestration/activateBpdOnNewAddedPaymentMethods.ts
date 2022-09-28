@@ -1,3 +1,4 @@
+import * as E from "fp-ts/lib/Either";
 import { call, select } from "typed-redux-saga/macro";
 import { EnableableFunctionsEnum } from "../../../../../../definitions/pagopa/EnableableFunctions";
 import { navigateToWalletHome } from "../../../../../store/actions/navigation";
@@ -30,10 +31,10 @@ export function* activateBpdOnNewPaymentMethods(
     yield* select(bpdRemoteConfigSelector);
 
   // Error while reading the bpdEnabled, return to wallet
-  if (isBpdEnabledResponse.isLeft()) {
+  if (E.isLeft(isBpdEnabledResponse)) {
     yield* call(navigateToWalletHome);
   } else {
-    if (isBpdEnabledResponse.value && bpdRemoteConfig?.program_active) {
+    if (isBpdEnabledResponse.right && bpdRemoteConfig?.program_active) {
       // navigate to activate cashback on new payment methods if the user is onboarded to the program and is active
       yield* call(navigateToActivateNewMethods);
     } else if (bpdRemoteConfig?.enroll_bpd_after_add_payment_method) {

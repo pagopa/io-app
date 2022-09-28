@@ -1,5 +1,5 @@
 import { CompatNavigationProp } from "@react-navigation/compat";
-import { none } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import { Content, ListItem, View } from "native-base";
 import * as React from "react";
 import {
@@ -175,7 +175,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   addCreditCard: (popScreenNumber: number = 0) => {
     navigateBack(popScreenNumber, dispatch);
     navigateToWalletAddCreditCard({
-      inPayment: none
+      inPayment: O.none
     });
   }
 });

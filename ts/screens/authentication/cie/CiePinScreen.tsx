@@ -1,5 +1,5 @@
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useNavigation } from "@react-navigation/native";
-import { Millisecond } from "italia-ts-commons/lib/units";
 import { View } from "native-base";
 import React, {
   useCallback,

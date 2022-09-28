@@ -2,8 +2,9 @@
  * A screen where the user can choose to login with SPID or get more informations.
  * It includes a carousel with highlights on the app functionalities
  */
-import { none, Option, some } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import JailMonkey from "jail-monkey";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
@@ -15,6 +16,7 @@ import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import CieNotSupported from "../../components/cie/CieNotSupported";
 import ContextualInfo from "../../components/ContextualInfo";
 import { Link } from "../../components/core/typography/Link";
+import { IOColors } from "../../components/core/variables/IOColors";
 import { DevScreenButton } from "../../components/DevScreenButton";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { HorizontalScroll } from "../../components/HorizontalScroll";
@@ -53,7 +55,6 @@ import variables from "../../theme/variables";
 import { ComponentProps } from "../../types/react";
 import { isDevEnv } from "../../utils/environment";
 import RootedDeviceModal from "../modal/RootedDeviceModal";
-import { IOColors } from "../../components/core/variables/IOColors";
 
 type NavigationProps = IOStackNavigationRouteProps<AppParamsList, "INGRESS">;
 
@@ -63,7 +64,7 @@ type Props = NavigationProps &
   ReturnType<typeof mapDispatchToProps>;
 
 type State = {
-  isRootedOrJailbroken: Option<boolean>;
+  isRootedOrJailbroken: O.Option<boolean>;
   isSessionExpired: boolean;
 };
 
@@ -147,14 +148,14 @@ export const IdpCIE: IdentityProvider = {
 class LandingScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = { isRootedOrJailbroken: none, isSessionExpired: false };
+    this.state = { isRootedOrJailbroken: O.none, isSessionExpired: false };
   }
 
   private isCieSupported = () => this.props.isCieSupported;
 
   public async componentDidMount() {
     const isRootedOrJailbroken = await JailMonkey.isJailBroken();
-    this.setState({ isRootedOrJailbroken: some(isRootedOrJailbroken) });
+    this.setState({ isRootedOrJailbroken: O.some(isRootedOrJailbroken) });
     if (this.props.isSessionExpired) {
       this.setState({ isSessionExpired: true });
       this.props.resetState();
@@ -352,10 +353,13 @@ class LandingScreen extends React.PureComponent<Props, State> {
 
   public render() {
     // If the async loading of the isRootedOrJailbroken is not ready, display a loading
-    return this.state.isRootedOrJailbroken.fold(
-      this.renderLoadingScreen(),
-      // when the value isRootedOrJailbroken is ready, display the right screen based on a set of rule
-      rootedOrJailbroken => this.chooseScreenToRender(rootedOrJailbroken)
+    return pipe(
+      this.state.isRootedOrJailbroken,
+      O.fold(
+        () => this.renderLoadingScreen(),
+        // when the value isRootedOrJailbroken is ready, display the right screen based on a set of rule
+        rootedOrJailbroken => this.chooseScreenToRender(rootedOrJailbroken)
+      )
     );
   }
 }

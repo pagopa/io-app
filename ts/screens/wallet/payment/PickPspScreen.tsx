@@ -1,5 +1,5 @@
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { H3, View } from "native-base";
 import * as React from "react";
 import { FlatList, SafeAreaView, StyleSheet } from "react-native";
