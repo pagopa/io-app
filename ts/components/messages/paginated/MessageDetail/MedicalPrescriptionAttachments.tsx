@@ -1,3 +1,4 @@
+import * as O from "fp-ts/lib/Option";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -5,9 +6,9 @@ import { SvgXml } from "react-native-svg";
 
 import { PrescriptionData } from "../../../../../definitions/backend/PrescriptionData";
 import I18n from "../../../../i18n";
+import { Attachment } from "../../../../store/reducers/entities/messages/types";
 import customVariables from "../../../../theme/variables";
 import { getPrescriptionDataFromName } from "../../../../utils/messages";
-import { Attachment } from "../../../../store/reducers/entities/messages/types";
 import ItemSeparatorComponent from "../../../ItemSeparatorComponent";
 
 type Props = Readonly<{
@@ -61,7 +62,7 @@ const Item = ({
         }).toUpperCase()}
       </Text>
       {xml && <SvgXml xml={xml} width={"100%"} height={BARCODE_HEIGHT} />}
-      {value.isSome() && (
+      {O.isSome(value) && (
         <Text semibold={true} style={{ textAlign: "center" }}>
           {I18n.t("global.symbols.asterisk")}
           {value.value}

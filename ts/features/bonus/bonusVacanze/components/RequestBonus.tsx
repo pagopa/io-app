@@ -1,5 +1,6 @@
-import { fromNullable } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -47,14 +48,22 @@ const styles = StyleSheet.create({
 const RequestBonus: React.FunctionComponent<OwnProps> = (props: OwnProps) => {
   const { onButtonPress, activeBonuses, onBonusPress, availableBonusesList } =
     props;
-  const maybeBonusVacanzeCategory = fromNullable(
-    availableBonusesList.find(bi => bi.id_type === ID_BONUS_VACANZE_TYPE)
+  const maybeBonusVacanzeCategory = pipe(
+    O.fromNullable(
+      availableBonusesList.find(bi => bi.id_type === ID_BONUS_VACANZE_TYPE)
+    )
   );
 
-  const validFrom = maybeBonusVacanzeCategory
-    .map(b => b.valid_from)
-    .toUndefined();
-  const validTo = maybeBonusVacanzeCategory.map(b => b.valid_to).toUndefined();
+  const validFrom = pipe(
+    maybeBonusVacanzeCategory,
+    O.map(b => b.valid_from),
+    O.toUndefined
+  );
+  const validTo = pipe(
+    maybeBonusVacanzeCategory,
+    O.map(b => b.valid_to),
+    O.toUndefined
+  );
 
   return (
     <React.Fragment>

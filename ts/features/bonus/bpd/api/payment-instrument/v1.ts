@@ -1,9 +1,9 @@
 /* PAYMENT (status, enroll, delete) */
-import * as r from "italia-ts-commons/lib/requests";
+import * as r from "@pagopa/ts-commons/lib/requests";
 import {
   ApiHeaderJson,
   composeHeaderProducers
-} from "italia-ts-commons/lib/requests";
+} from "@pagopa/ts-commons/lib/requests";
 import {
   DeleteUsingDELETET,
   enrollmentPaymentInstrumentIOUsingPUTDefaultDecoder,

@@ -1,4 +1,4 @@
-import { Millisecond } from "italia-ts-commons/lib/units";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { View } from "native-base";
 import * as React from "react";
 import { Animated, Easing, Image, StyleSheet } from "react-native";

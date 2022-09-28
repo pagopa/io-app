@@ -1,6 +1,6 @@
 import { put, select, take } from "typed-redux-saga/macro";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import {
   fetchWalletsFailure,
   fetchWalletsRequestWithExpBackoff,

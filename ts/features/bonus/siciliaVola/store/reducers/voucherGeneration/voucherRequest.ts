@@ -1,6 +1,7 @@
-import { none, Option, some } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 import { createSelector } from "reselect";
+import { pipe } from "fp-ts/lib/function";
 import {
   Company,
   Hospital,
@@ -21,8 +22,8 @@ import {
 import { Action } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
 
-export type VoucherRequestState = Option<PartialVoucherRequest>;
-const INITIAL_STATE: VoucherRequestState = none;
+export type VoucherRequestState = O.Option<PartialVoucherRequest>;
+const INITIAL_STATE: VoucherRequestState = O.none;
 
 /**
  * Utils needed to update only the under threshold value
@@ -33,12 +34,15 @@ const updateUnderThresholdIncome = (
   state: VoucherRequestState,
   underThresholdIncome: boolean
 ): VoucherRequestState =>
-  state.chain(vR => {
-    if (vR.category === "worker" || vR.category === "sick") {
-      return some({ ...vR, underThresholdIncome });
-    }
-    return state;
-  });
+  pipe(
+    state,
+    O.chain(vR => {
+      if (vR.category === "worker" || vR.category === "sick") {
+        return O.some({ ...vR, underThresholdIncome });
+      }
+      return state;
+    })
+  );
 
 /**
  * Utils needed to update only the university value
@@ -49,12 +53,15 @@ const updateUniversity = (
   state: VoucherRequestState,
   university: University
 ): VoucherRequestState =>
-  state.chain(vR => {
-    if (vR.category === "student") {
-      return some({ ...vR, university });
-    }
-    return state;
-  });
+  pipe(
+    state,
+    O.chain(vR => {
+      if (vR.category === "student") {
+        return O.some({ ...vR, university });
+      }
+      return state;
+    })
+  );
 
 /**
  * Utils needed to update only the company value
@@ -65,12 +72,15 @@ const updateCompany = (
   state: VoucherRequestState,
   company: Company
 ): VoucherRequestState =>
-  state.chain(vR => {
-    if (vR.category === "worker") {
-      return some({ ...vR, company });
-    }
-    return state;
-  });
+  pipe(
+    state,
+    O.chain(vR => {
+      if (vR.category === "worker") {
+        return O.some({ ...vR, company });
+      }
+      return state;
+    })
+  );
 
 /**
  * Utils needed to update only the hospital value
@@ -81,12 +91,15 @@ const updateHospital = (
   state: VoucherRequestState,
   hospital: Hospital
 ): VoucherRequestState =>
-  state.chain(vR => {
-    if (vR.category === "sick") {
-      return some({ ...vR, hospital });
-    }
-    return state;
-  });
+  pipe(
+    state,
+    O.chain(vR => {
+      if (vR.category === "sick") {
+        return O.some({ ...vR, hospital });
+      }
+      return state;
+    })
+  );
 
 /**
  * Utils needed to update only the flights date values
@@ -97,12 +110,15 @@ const updateFlightsDate = (
   state: VoucherRequestState,
   flightsDate: FlightsDate
 ): VoucherRequestState =>
-  state.chain(vR =>
-    some({
-      ...vR,
-      departureDate: flightsDate.departureDate,
-      returnDate: flightsDate.returnDate
-    })
+  pipe(
+    state,
+    O.chain(vR =>
+      O.some({
+        ...vR,
+        departureDate: flightsDate.departureDate,
+        returnDate: flightsDate.returnDate
+      })
+    )
   );
 
 const reducer = (
@@ -113,7 +129,7 @@ const reducer = (
     case getType(svGenerateVoucherStart):
       return INITIAL_STATE;
     case getType(svGenerateVoucherSelectCategory):
-      return some({
+      return O.some({
         category: action.payload
       });
 
@@ -139,8 +155,14 @@ export default reducer;
 
 export const selectedBeneficiaryCategorySelector = createSelector(
   [(state: GlobalState) => state.bonus.sv.voucherGeneration.voucherRequest],
-  (voucherRequest: VoucherRequestState): Option<SvBeneficiaryCategory> =>
-    voucherRequest.fold(none, vR => some(vR.category))
+  (voucherRequest: VoucherRequestState): O.Option<SvBeneficiaryCategory> =>
+    pipe(
+      voucherRequest,
+      O.fold(
+        () => O.none,
+        vR => O.some(vR.category)
+      )
+    )
 );
 
 export const voucherRequestSelector = createSelector(

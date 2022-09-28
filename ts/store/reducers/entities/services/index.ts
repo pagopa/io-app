@@ -1,10 +1,11 @@
 /**
  * Services reducer
  */
-import { fromNullable } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { combineReducers } from "redux";
 import { createSelector } from "reselect";
+import { pipe } from "fp-ts/lib/function";
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
 import { isDefined } from "../../../../utils/guards";
 import { isVisibleService } from "../../../../utils/services";
@@ -241,9 +242,13 @@ const getServices = (
       }
 
       const orgsFiscalCodes = Object.keys(organizations).filter(cf =>
-        fromNullable(organizations[cf]).fold(
-          false,
-          name => organizationName === name // select all services that belong to organizations having organizationName
+        pipe(
+          organizations[cf],
+          O.fromNullable,
+          O.fold(
+            () => false,
+            name => organizationName === name // select all services that belong to organizations having organizationName
+          )
         )
       );
       orgsFiscalCodes.forEach(ocf => orgFiscalCodeProcessed.add(ocf));
@@ -321,39 +326,60 @@ export const notSelectedServicesSectionsSelector = createSelector(
     organizationsOfInterestSelector
   ],
   (services, organizations, selectedOrganizations) => {
-    const notSelectedOrganizations = fromNullable(organizations).map(orgs => {
-      // add to organizations all cf of other organizations having the same organization name
-      const organizationsWithSameNames = fromNullable(selectedOrganizations)
-        .map(so =>
-          so.reduce((acc, curr) => {
-            const orgName = fromNullable(orgs[curr]);
-            return orgName.fold(acc, on => {
-              if (organizations !== undefined) {
-                const orgsFiscalCodes = Object.keys(organizations).filter(cf =>
-                  fromNullable(organizations[cf]).fold(
-                    false,
-                    name => on === name // select all services that belong to organizations having organizationName
-                  )
-                );
-                orgsFiscalCodes.forEach(ofc => acc.add(ofc));
-              }
-              return acc;
-            });
-          }, new Set<string>())
-        )
-        .fold([], s => Array.from(s));
-      return Object.keys(orgs).filter(
-        fiscalCode =>
-          organizationsWithSameNames &&
-          organizationsWithSameNames.indexOf(fiscalCode) === -1
-      );
-    });
+    const notSelectedOrganizations = pipe(
+      organizations,
+      O.fromNullable,
+      O.map(orgs => {
+        // add to organizations all cf of other organizations having the same organization name
+        const organizationsWithSameNames = pipe(
+          selectedOrganizations,
+          O.fromNullable,
+          O.map(so =>
+            so.reduce((acc, curr) => {
+              const orgName = O.fromNullable(orgs[curr]);
+              return pipe(
+                orgName,
+                O.fold(
+                  () => acc,
+                  on => {
+                    if (organizations !== undefined) {
+                      const orgsFiscalCodes = Object.keys(organizations).filter(
+                        cf =>
+                          pipe(
+                            organizations[cf],
+                            O.fromNullable,
+                            O.fold(
+                              () => false,
+                              name => on === name // select all services that belong to organizations having organizationName
+                            )
+                          )
+                      );
+                      orgsFiscalCodes.forEach(ofc => acc.add(ofc));
+                    }
+                    return acc;
+                  }
+                )
+              );
+            }, new Set<string>())
+          ),
+          O.fold(
+            () => [],
+            s => Array.from(s)
+          )
+        );
+        return Object.keys(orgs).filter(
+          fiscalCode =>
+            organizationsWithSameNames &&
+            organizationsWithSameNames.indexOf(fiscalCode) === -1
+        );
+      })
+    );
 
     return getServices(
       services,
       organizations,
       undefined,
-      notSelectedOrganizations.toUndefined()
+      O.toUndefined(notSelectedOrganizations)
     );
   }
 );
@@ -387,6 +413,7 @@ export const servicesBadgeValueSelector = createSelector(
               pot.isSome(data) &&
               readServicesById[data.value.service_id] === undefined
           ).length;
+          // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
           return acc + servicesNotRead;
         },
         0

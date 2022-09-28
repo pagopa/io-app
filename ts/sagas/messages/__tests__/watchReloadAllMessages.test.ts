@@ -1,15 +1,15 @@
-import { right } from "fp-ts/lib/Either";
-import { getType } from "typesafe-actions";
+import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
+import { getType } from "typesafe-actions";
 
 import { reloadAllMessages as action } from "../../../store/actions/messages";
-import { testTryLoadPreviousPageMessages } from "../watchReloadAllMessages";
 import {
-  defaultRequestPayload,
-  defaultRequestError,
   apiPayload,
+  defaultRequestError,
+  defaultRequestPayload,
   successReloadMessagesPayload
 } from "../../../__mocks__/messages";
+import { testTryLoadPreviousPageMessages } from "../watchReloadAllMessages";
 
 const tryReloadAllMessages = testTryLoadPreviousPageMessages!;
 
@@ -31,7 +31,7 @@ describe("tryReloadAllMessages", () => {
       )
         .next()
         .call(getMessages, getMessagesPayload)
-        .next(right({ status: 200, value: apiPayload }))
+        .next(E.right({ status: 200, value: apiPayload }))
         .put(action.success(successReloadMessagesPayload))
         .next()
         .isDone();
@@ -48,7 +48,7 @@ describe("tryReloadAllMessages", () => {
         .next()
         .call(getMessages, getMessagesPayload)
         .next(
-          right({
+          E.right({
             status: 500,
             value: { title: defaultRequestError.error.message }
           })
@@ -73,7 +73,7 @@ describe("tryReloadAllMessages", () => {
         .next()
         .put(
           action.failure({
-            error: new TypeError("Cannot read property 'fold' of undefined"),
+            error: new Error("Response is undefined"),
             filter: defaultRequestPayload.filter
           })
         )

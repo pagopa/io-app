@@ -1,7 +1,7 @@
 /**
  * Reducers, states, selectors and guards for the cards
  */
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import _, { values } from "lodash";
 import { PersistPartial } from "redux-persist";
 import { createSelector } from "reselect";

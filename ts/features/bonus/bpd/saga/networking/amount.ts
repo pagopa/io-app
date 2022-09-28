@@ -1,5 +1,5 @@
-import { Either, left, right } from "fp-ts/lib/Either";
-import { readableReport } from "italia-ts-commons/lib/reporters";
+import * as E from "fp-ts/lib/Either";
+import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { call } from "typed-redux-saga/macro";
 import { TotalCashbackResource } from "../../../../../../definitions/bpd/winning_transactions/TotalCashbackResource";
 import { mixpanelTrack } from "../../../../../mixpanel";
@@ -46,31 +46,31 @@ export function* bpdLoadAmountSaga(
   awardPeriodId: AwardPeriodId
 ): Generator<
   ReduxSagaEffect,
-  Either<BpdAmountError, BpdAmount>,
+  E.Either<BpdAmountError, BpdAmount>,
   SagaCallReturnType<typeof totalCashback>
 > {
   void mixpanelTrack(mixpanelActionRequest, { awardPeriodId });
   try {
     const totalCashbackResult: SagaCallReturnType<typeof totalCashback> =
       yield* call(totalCashback, { awardPeriodId } as any);
-    if (totalCashbackResult.isRight()) {
-      if (totalCashbackResult.value.status === 200) {
+    if (E.isRight(totalCashbackResult)) {
+      if (totalCashbackResult.right.status === 200) {
         void mixpanelTrack(mixpanelActionSuccess, { awardPeriodId });
-        return right<BpdAmountError, BpdAmount>(
-          convertAmount(totalCashbackResult.value.value, awardPeriodId)
+        return E.right<BpdAmountError, BpdAmount>(
+          convertAmount(totalCashbackResult.right.value, awardPeriodId)
         );
       } else {
-        throw new Error(`response status ${totalCashbackResult.value.status}`);
+        throw new Error(`response status ${totalCashbackResult.right.status}`);
       }
     } else {
-      throw new Error(readableReport(totalCashbackResult.value));
+      throw new Error(readableReport(totalCashbackResult.left));
     }
   } catch (e) {
     void mixpanelTrack(mixpanelActionFailure, {
       awardPeriodId,
       reason: convertUnknownToError(e).message
     });
-    return left<BpdAmountError, BpdAmount>({
+    return E.left<BpdAmountError, BpdAmount>({
       error: getError(e),
       awardPeriodId
     });

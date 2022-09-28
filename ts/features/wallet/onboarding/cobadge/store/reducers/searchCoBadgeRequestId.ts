@@ -1,5 +1,6 @@
 import { getType } from "typesafe-actions";
-import { fromNullable } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { Action } from "../../../../../../store/actions/types";
 import { searchUserCoBadge, walletAddCoBadgeStart } from "../actions";
 import { GlobalState } from "../../../../../../store/reducers/types";
@@ -13,10 +14,15 @@ export type SearchCoBadgeRequestIdState = string | null;
  * @param cobadgeResponse
  */
 const isCobadgeResponsePending = (cobadgeResponse: CobadgeResponse): boolean =>
-  fromNullable(cobadgeResponse.payload)
-    .mapNullable(p => p.searchRequestMetadata)
-    .map(sm => sm.some(s => s.executionStatus === ExecutionStatusEnum.PENDING))
-    .getOrElse(false);
+  pipe(
+    cobadgeResponse.payload,
+    O.fromNullable,
+    O.chainNullableK(p => p.searchRequestMetadata),
+    O.map(sm =>
+      sm.some(s => s.executionStatus === ExecutionStatusEnum.PENDING)
+    ),
+    O.getOrElse(() => false)
+  );
 
 const reducer = (
   state: SearchCoBadgeRequestIdState = null,

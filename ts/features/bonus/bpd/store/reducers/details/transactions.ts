@@ -1,7 +1,8 @@
-import { fromNullable } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
+import { pipe } from "fp-ts/lib/function";
 import { Action } from "../../../../../../store/actions/types";
 import { IndexedById } from "../../../../../../store/helpers/indexer";
 import {
@@ -73,7 +74,10 @@ export const bpdTransactionsForSelectedPeriod = createSelector(
     bpdSelectedPeriodSelector
   ],
   (transactions, period) =>
-    fromNullable(period)
-      .chain(p => fromNullable(transactions[p.awardPeriodId]))
-      .getOrElse(pot.none)
+    pipe(
+      period,
+      O.fromNullable,
+      O.chain(p => O.fromNullable(transactions[p.awardPeriodId])),
+      O.getOrElseW(() => pot.none)
+    )
 );

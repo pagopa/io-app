@@ -2,16 +2,12 @@
  * Generic utilities for messages
  */
 
-import {
-  fromNullable,
-  fromPredicate,
-  none,
-  Option,
-  some
-} from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
+import { Predicate } from "fp-ts/lib/Predicate";
 import FM from "front-matter";
 import { Linking } from "react-native";
-import { Predicate } from "fp-ts/lib/function";
+import { identity, pipe } from "fp-ts/lib/function";
 import { CreatedMessageWithContentAndAttachments } from "../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { MessageBodyMarkdown } from "../../definitions/backend/MessageBodyMarkdown";
 import { PrescriptionData } from "../../definitions/backend/PrescriptionData";
@@ -65,7 +61,7 @@ export function messageNeedsCTABar(
     message.content.eu_covid_cert !== undefined || // eucovid data
     messageNeedsDueDateCTA(message) ||
     hasMessagePaymentData(message) ||
-    getCTA(message).isSome()
+    O.isSome(getCTA(message))
   );
 }
 
@@ -90,15 +86,15 @@ export const handleCtaAction = (
     handleInternalLink(linkTo, `${convertedLink}`);
   } else {
     const maybeHandledAction = deriveCustomHandledLink(cta.action);
-    if (maybeHandledAction.isRight()) {
-      Linking.openURL(maybeHandledAction.value.url).catch(() => 0);
+    if (E.isRight(maybeHandledAction)) {
+      Linking.openURL(maybeHandledAction.right.url).catch(() => 0);
     }
   }
 };
 
 export const hasPrescriptionData = (
   message: CreatedMessageWithContent
-): boolean => fromNullable(message.content.prescription_data).isSome();
+): boolean => pipe(message.content.prescription_data, O.fromNullable, O.isSome);
 
 type MessagePaymentUnexpirable = {
   kind: "UNEXPIRABLE";
@@ -154,10 +150,12 @@ export function getMessagePaymentExpirationInfo(
  */
 export const paymentExpirationInfo = (
   message: CreatedMessageWithContentAndAttachments
-): Option<MessagePaymentExpirationInfo> => {
+): O.Option<MessagePaymentExpirationInfo> => {
   const { payment_data, due_date } = message.content;
-  return fromNullable(payment_data).map(paymentData =>
-    getMessagePaymentExpirationInfo(paymentData, due_date)
+  return pipe(
+    payment_data,
+    O.fromNullable,
+    O.map(paymentData => getMessagePaymentExpirationInfo(paymentData, due_date))
   );
 };
 
@@ -193,18 +191,25 @@ export const isExpired = (
 export const getPrescriptionDataFromName = (
   prescriptionData: PrescriptionData | undefined,
   name: string
-): Option<string> =>
-  fromNullable(prescriptionData).fold(none, pd => {
-    switch (name.toLowerCase()) {
-      case "nre":
-        return some(pd.nre);
-      case "iup":
-        return fromNullable(pd.iup);
-      case "prescriber_fiscal_code":
-        return fromNullable(pd.prescriber_fiscal_code);
-    }
-    return none;
-  });
+): O.Option<string> =>
+  pipe(
+    prescriptionData,
+    O.fromNullable,
+    O.fold(
+      () => O.none,
+      pd => {
+        switch (name.toLowerCase()) {
+          case "nre":
+            return O.some(pd.nre);
+          case "iup":
+            return O.fromNullable(pd.iup);
+          case "prescriber_fiscal_code":
+            return O.fromNullable(pd.prescriber_fiscal_code);
+        }
+        return O.none;
+      }
+    )
+  );
 
 const hasMetadataTokenName = (metadata?: ServiceMetadata): boolean =>
   metadata?.token_name !== undefined;
@@ -224,33 +229,44 @@ const internalRoutePredicates: Map<
  * a fallback will be returned
  */
 export const getRemoteLocale = (): Extract<Locales, MessageCTALocales> =>
-  MessageCTALocales.decode(getLocalePrimaryWithFallback()).getOrElse(
-    localeFallback.locale
+  pipe(
+    getLocalePrimaryWithFallback(),
+    MessageCTALocales.decode,
+    E.getOrElseW(() => localeFallback.locale)
   );
 
 const extractCTA = (
   text: string,
   serviceMetadata?: ServiceMetadata,
   serviceId?: ServiceId
-): Option<CTAS> =>
-  fromPredicate((t: string) => FM.test(t))(text)
-    .mapNullable(m => {
+): O.Option<CTAS> =>
+  pipe(
+    text,
+    FM.test,
+    O.fromPredicate(identity),
+    O.chainNullableK(() => {
       try {
-        return FM<MessageCTA>(m).attributes;
+        return FM<MessageCTA>(text).attributes;
       } catch (e) {
         void mixpanelTrack("CTA_FRONT_MATTER_DECODING_ERROR", {
           serviceId
         });
         return null;
       }
-    })
-    .chain(attrs =>
-      CTAS.decode(attrs[getRemoteLocale()]).fold(
-        _ => none,
-        // check if the decoded actions are valid
-        cta => (hasCtaValidActions(cta, serviceMetadata) ? some(cta) : none)
+    }),
+    O.chain(attrs =>
+      pipe(
+        attrs[getRemoteLocale()],
+        CTAS.decode,
+        E.fold(
+          _ => O.none,
+          // check if the decoded actions are valid
+          cta =>
+            hasCtaValidActions(cta, serviceMetadata) ? O.some(cta) : O.none
+        )
       )
-    );
+    )
+  );
 
 /**
  * extract the CTAs if they are nested inside the message markdown content
@@ -264,7 +280,7 @@ export const getCTA = (
   message: CreatedMessageWithContentAndAttachments,
   serviceMetadata?: ServiceMetadata,
   serviceId?: ServiceId
-): Option<CTAS> =>
+): O.Option<CTAS> =>
   getMessageCTA(message.content.markdown, serviceMetadata, serviceId);
 
 /**
@@ -278,7 +294,7 @@ export const getMessageCTA = (
   markdown: MessageBodyMarkdown,
   serviceMetadata?: ServiceMetadata,
   serviceId?: ServiceId
-): Option<CTAS> => extractCTA(markdown, serviceMetadata, serviceId);
+): O.Option<CTAS> => extractCTA(markdown, serviceMetadata, serviceId);
 
 /**
  * extract the CTAs from a string given in serviceMetadata such as the front-matter of the message
@@ -287,9 +303,11 @@ export const getMessageCTA = (
  */
 export const getServiceCTA = (
   serviceMetadata?: ServiceMetadata
-): Option<CTAS> =>
-  fromNullable(serviceMetadata?.cta).chain(cta =>
-    extractCTA(cta, serviceMetadata)
+): O.Option<CTAS> =>
+  pipe(
+    serviceMetadata?.cta,
+    O.fromNullable,
+    O.chain(cta => extractCTA(cta, serviceMetadata))
   );
 
 /**
@@ -305,13 +323,16 @@ export const isCtaActionValid = (
   // check if it is an internal navigation
   if (isIoInternalLink(cta.action)) {
     const internalRoute = getInternalRoute(cta.action);
-    return fromNullable(internalRoutePredicates.get(internalRoute))
-      .map(f => f(serviceMetadata))
-      .getOrElse(true);
+    return pipe(
+      internalRoutePredicates.get(internalRoute),
+      O.fromNullable,
+      O.map(f => f(serviceMetadata)),
+      O.getOrElse(() => true)
+    );
   }
   // check if it is a custom action (it should be composed in a specific format)
   const maybeCustomHandledAction = deriveCustomHandledLink(cta.action);
-  return maybeCustomHandledAction.isRight();
+  return E.isRight(maybeCustomHandledAction);
 };
 
 /**
@@ -336,6 +357,10 @@ export const hasCtaValidActions = (
  * @param markdown
  */
 export const cleanMarkdownFromCTAs = (markdown: MessageBodyMarkdown): string =>
-  fromPredicate((t: string) => FM.test(t))(markdown)
-    .map(m => FM(m).body)
-    .getOrElse(markdown as string);
+  pipe(
+    markdown,
+    FM.test,
+    O.fromPredicate(identity),
+    O.map(() => FM(markdown).body),
+    O.getOrElse(() => markdown as string)
+  );

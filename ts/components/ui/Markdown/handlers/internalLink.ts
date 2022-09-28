@@ -1,7 +1,8 @@
 /**
  * An handler for application internal links
  */
-import { fromNullable } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import URLParse from "url-parse";
 import {
   bpdEnabled,
@@ -95,13 +96,17 @@ export function getInternalRoute(href: string): string {
   try {
     const url = new URLParse(href, true);
     if (url.protocol.toLowerCase() === IO_INTERNAL_LINK_PROTOCOL) {
-      return fromNullable(allowedRoutes[url.host.toUpperCase()]).fold(
-        href.replace(IO_INTERNAL_LINK_PREFIX, "/"),
-        internalUrl =>
-          href.replace(
-            `${IO_INTERNAL_LINK_PREFIX}${url.host.toUpperCase()}`,
-            internalUrl
-          )
+      return pipe(
+        allowedRoutes[url.host.toUpperCase()],
+        O.fromNullable,
+        O.fold(
+          () => href.replace(IO_INTERNAL_LINK_PREFIX, "/"),
+          internalUrl =>
+            href.replace(
+              `${IO_INTERNAL_LINK_PREFIX}${url.host.toUpperCase()}`,
+              internalUrl
+            )
+        )
       );
     }
     return href;

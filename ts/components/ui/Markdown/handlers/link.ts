@@ -1,5 +1,5 @@
 import * as t from "io-ts";
-import { Either, left, right } from "fp-ts/lib/Either";
+import * as E from "fp-ts/lib/Either";
 import I18n from "../../../../i18n";
 import { showToast } from "../../../../utils/showToast";
 import { openWebUrl } from "../../../../utils/url";
@@ -39,7 +39,7 @@ export const IO_CUSTOM_HANDLED_PRESS_PREFIX = "iohandledlink://";
  */
 export const deriveCustomHandledLink = (
   href: string
-): Either<Error, CustomHandledLink> => {
+): E.Either<Error, CustomHandledLink> => {
   const url = href.trim();
   if (url.toLowerCase().indexOf(IO_CUSTOM_HANDLED_PRESS_PREFIX) !== -1) {
     const cleanedLink = url.replace(
@@ -52,11 +52,13 @@ export const deriveCustomHandledLink = (
       value,
       url: cleanedLink
     });
-    if (maybeCustomHandledLink.isRight()) {
-      return right(maybeCustomHandledLink.value);
+    if (E.isRight(maybeCustomHandledLink)) {
+      return E.right(maybeCustomHandledLink.right);
     }
   }
-  return left(new Error(`"${href}" is not recognized as a valid handled link`));
+  return E.left(
+    new Error(`"${href}" is not recognized as a valid handled link`)
+  );
 };
 
 /**

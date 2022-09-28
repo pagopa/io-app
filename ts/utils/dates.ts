@@ -2,8 +2,9 @@ import { format as dateFnsFormat } from "date-fns";
 import dfns_de from "date-fns/locale/de";
 import dfns_en from "date-fns/locale/en";
 import dfns_it from "date-fns/locale/it";
-import { Either, left } from "fp-ts/lib/Either";
-import { none, Option, some } from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import { Errors } from "io-ts";
 import { Locales } from "../../locales/locales";
@@ -75,10 +76,12 @@ export function format(
   return dateFnsFormat(
     date,
     dateFormat,
-    localePrimary
-      .mapNullable(lp => locales[lp as Locales]) // becomes empty if locales[lp] is undefined
-      .map(locale => ({ locale }))
-      .toUndefined() // if some returns the value, if empty return undefined
+    pipe(
+      localePrimary,
+      O.chainNullableK(lp => locales[lp as Locales]), // becomes empty if locales[lp] is undefined
+      O.map(locale => ({ locale })),
+      O.toUndefined // if some returns the value, if empty return undefined)
+    )
   );
 }
 
@@ -88,13 +91,13 @@ export function format(
  */
 export const decodeCreditCardMonth = (
   month: string | number | undefined
-): Either<Error | Errors, number> => {
+): E.Either<Error | Errors, number> => {
   // convert month to string (if it is a number) and
   // ensure it is left padded: 2 -> 02
   const monthStr = (month ?? "").toString().trim().padStart(2, "0");
   // check that month matches the pattern (01-12)
   if (!CreditCardExpirationMonth.is(monthStr)) {
-    return left(
+    return E.left(
       new Error("month doesn't follow CreditCardExpirationMonth pattern")
     );
   }
@@ -107,13 +110,13 @@ export const decodeCreditCardMonth = (
  */
 export const decodeCreditCardYear = (
   year: string | number | undefined
-): Either<Error | Errors, number> => {
+): E.Either<Error | Errors, number> => {
   const yearStr = (year ?? "").toString().trim();
   // if the year is 2 digits, convert it to 4 digits: 21 -> 2021
   if (yearStr.length === 2) {
     // check that year is included matches the pattern (00-99)
     if (!CreditCardExpirationYear.is(yearStr)) {
-      return left(
+      return E.left(
         new Error("year doesn't follow CreditCardExpirationYear pattern")
       );
     }
@@ -138,13 +141,13 @@ export const decodeCreditCardYear = (
 export const dateFromMonthAndYear = (
   month: string | number | undefined,
   year: string | number | undefined
-): Option<Date> => {
+): O.Option<Date> => {
   const maybeMonth = decodeCreditCardMonth(month);
   const maybeYear = decodeCreditCardYear(year);
-  if (maybeMonth.isLeft() || maybeYear.isLeft()) {
-    return none;
+  if (E.isLeft(maybeMonth) || E.isLeft(maybeYear)) {
+    return O.none;
   }
-  return some(new Date(maybeYear.value, maybeMonth.value - 1));
+  return O.some(new Date(maybeYear.right, maybeMonth.right - 1));
 };
 
 /**
@@ -158,19 +161,24 @@ export const dateFromMonthAndYear = (
 export const isExpired = (
   expireMonth: string | number | undefined,
   expireYear: string | number | undefined
-): Either<Error, boolean> => {
+): E.Either<Error, boolean> => {
   const maybeMonth = decodeCreditCardMonth(expireMonth);
   const maybeYear = decodeCreditCardYear(expireYear);
-  return maybeYear
-    .chain(year =>
-      maybeMonth.map(month => {
-        const now = new Date();
-        const nowYearMonth = new Date(now.getFullYear(), now.getMonth() + 1);
-        const cardExpirationDate = new Date(year, month);
-        return nowYearMonth > cardExpirationDate;
-      })
-    )
-    .mapLeft(_ => new Error("invalid input"));
+  return pipe(
+    maybeYear,
+    E.chain(year =>
+      pipe(
+        maybeMonth,
+        E.map(month => {
+          const now = new Date();
+          const nowYearMonth = new Date(now.getFullYear(), now.getMonth() + 1);
+          const cardExpirationDate = new Date(year, month);
+          return nowYearMonth > cardExpirationDate;
+        })
+      )
+    ),
+    E.mapLeft(_ => new Error("invalid input"))
+  );
 };
 
 /**
@@ -202,10 +210,10 @@ export class DateFromISOStringType extends t.Type<Date, string, unknown> {
       (u): u is Date => u instanceof Date,
       (u, c) => {
         const validation = t.string.validate(u, c);
-        if (validation.isLeft()) {
+        if (E.isLeft(validation)) {
           return validation as any;
         } else {
-          const s = validation.value;
+          const s = validation.right;
           const d = new Date(s);
           return isNaN(d.getTime()) ? t.failure(s, c) : t.success(d);
         }

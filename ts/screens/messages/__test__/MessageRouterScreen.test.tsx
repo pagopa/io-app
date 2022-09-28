@@ -1,12 +1,12 @@
-import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
-import { CommonActions } from "@react-navigation/native";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import {
   FiscalCode,
   IPatternStringTag,
   NonEmptyString,
+  OrganizationFiscalCode,
   WithinRangeString
-} from "italia-ts-commons/lib/strings";
+} from "@pagopa/ts-commons/lib/strings";
+import { CommonActions } from "@react-navigation/native";
 import { createStore } from "redux";
 import configureMockStore from "redux-mock-store";
 import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/CreatedMessageWithContentAndAttachments";

@@ -1,5 +1,5 @@
 import { createStore, Store } from "redux";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RenderAPI } from "@testing-library/react-native";
 
 import { GlobalState } from "../../../../../../store/reducers/types";

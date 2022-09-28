@@ -1,4 +1,5 @@
-import { fromNullable, isSome } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { useEffect } from "react";
 import { connect } from "react-redux";
@@ -45,7 +46,11 @@ const AddPrivativeCardScreen = (props: Props): React.ReactElement | null => {
     }
   }, [addingResult, complete]);
 
-  const addToWallet = () => props.foundPrivative.map(p => props.addToWallet(p));
+  const addToWallet = () =>
+    pipe(
+      props.foundPrivative,
+      O.map(p => props.addToWallet(p))
+    );
   const loadErrorAddPrivativeCard = (isLoading: boolean) => (
     <LoadAddPrivativeCard
       isLoading={isLoading}
@@ -58,7 +63,7 @@ const AddPrivativeCardScreen = (props: Props): React.ReactElement | null => {
   return fold(
     props.addingResult,
     () =>
-      isSome(props.foundPrivative) ? (
+      O.isSome(props.foundPrivative) ? (
         <AddPrivativeCardComponent
           paymentInstrument={props.foundPrivative.value}
           handleSkip={props.cancel}
@@ -83,9 +88,11 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 const mapStateToProps = (state: GlobalState) => ({
-  foundPrivative: fromNullable(
-    getValueOrElse(onboardingPrivativeFoundSelector(state), undefined)
-  ).mapNullable(response => response.paymentInstrument),
+  foundPrivative: pipe(
+    getValueOrElse(onboardingPrivativeFoundSelector(state), undefined),
+    O.fromNullable,
+    O.chainNullableK(response => response.paymentInstrument)
+  ),
   addingResult: onboardingPrivativeAddingResultSelector(state)
 });
 

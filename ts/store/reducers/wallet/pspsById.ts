@@ -2,7 +2,7 @@
  * A reducer to store the psps by id
  */
 
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 
 import { Psp } from "../../../types/pagopa";

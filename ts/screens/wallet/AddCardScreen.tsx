@@ -4,16 +4,9 @@
  */
 
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import { CompatNavigationProp } from "@react-navigation/compat";
-import {
-  fromEither,
-  fromPredicate,
-  isNone,
-  isSome,
-  none,
-  Option,
-  some
-} from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { Content, View } from "native-base";
 import React, { useState } from "react";
 import { Keyboard, SafeAreaView, ScrollView, StyleSheet } from "react-native";
@@ -30,11 +23,10 @@ import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
 import SectionStatusComponent from "../../components/SectionStatus";
-import { BlockButtonProps } from "../../components/ui/BlockButtons";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import { walletAddCoBadgeStart } from "../../features/wallet/onboarding/cobadge/store/actions";
 import I18n from "../../i18n";
-import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../navigation/params/WalletParamsList";
 import {
   navigateBack,
@@ -67,7 +59,7 @@ import { showToast } from "../../utils/showToast";
 import { openWebUrl } from "../../utils/url";
 
 export type AddCardScreenNavigationParams = Readonly<{
-  inPayment: Option<{
+  inPayment: O.Option<{
     rptId: RptId;
     initialAmount: AmountInEuroCents;
     verifica: PaymentRequestsGetResponse;
@@ -76,11 +68,10 @@ export type AddCardScreenNavigationParams = Readonly<{
   keyFrom?: string;
 }>;
 
-type OwnProps = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<WalletParamsList, "WALLET_ADD_CARD">
-  >;
-};
+type OwnProps = IOStackNavigationRouteProps<
+  WalletParamsList,
+  "WALLET_ADD_CARD"
+>;
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
@@ -145,88 +136,102 @@ const usePrimaryButtonPropsFromState = (
   };
 
   const { isCardNumberValid, isCvvValid } = useLuhnValidation(
-    state.pan.getOrElse(""),
-    state.securityCode.getOrElse("")
+    pipe(
+      state.pan,
+      O.getOrElse(() => "")
+    ),
+    pipe(
+      state.securityCode,
+      O.getOrElse(() => "")
+    )
   );
 
   const card = getCreditCardFromState(state);
 
-  return card.fold<BlockButtonProps>(
-    (e: string | undefined) => ({
-      ...baseButtonProps,
-      disabled: true,
-      accessibilityRole: "button",
-      accessibilityLabel: e
-    }),
-    c => ({
-      ...baseButtonProps,
-      disabled:
-        !isCardNumberValid ||
-        !isCvvValid ||
-        !isHolderValid ||
-        !isExpirationDateValid,
-      onPress: () => {
-        Keyboard.dismiss();
-        onNavigate(c);
-      }
-    })
+  return pipe(
+    card,
+    E.foldW(
+      e => ({
+        ...baseButtonProps,
+        disabled: true,
+        accessibilityRole: "button",
+        accessibilityLabel: e
+      }),
+      c => ({
+        ...baseButtonProps,
+        disabled:
+          !isCardNumberValid ||
+          !isCvvValid ||
+          !isHolderValid ||
+          !isExpirationDateValid,
+        onPress: () => {
+          Keyboard.dismiss();
+          onNavigate(c);
+        }
+      })
+    )
   );
 };
 
 // return some(true) if the date is invalid or expired
 // none if it can't be evaluated
 const isCreditCardDateExpiredOrInvalid = (
-  expireDate: Option<string>
-): Option<boolean> =>
-  expireDate
-    .chain(date => {
+  expireDate: O.Option<string>
+): O.Option<boolean> =>
+  pipe(
+    expireDate,
+    O.chain(date => {
       // split the date in two parts: month, year
       const splitted = date.split("/");
       if (splitted.length !== 2) {
-        return none;
+        return O.none;
       }
 
-      return some([splitted[0], splitted[1]]);
-    })
-    .chain(my => {
+      return O.some([splitted[0], splitted[1]]);
+    }),
+    O.chain(my => {
       // if the input is not in the required format mm/yy
       if (
         !CreditCardExpirationMonth.is(my[0]) ||
         !CreditCardExpirationYear.is(my[1])
       ) {
-        return some(true);
+        return O.some(true);
       }
-      return fromEither(isExpired(my[0], my[1]));
-    });
+      return O.fromEither(isExpired(my[0], my[1]));
+    })
+  );
 
 const maybeCreditCardValidOrExpired = (
   creditCard: CreditCardState
-): Option<boolean> =>
-  isCreditCardDateExpiredOrInvalid(creditCard.expirationDate).map(v => !v);
+): O.Option<boolean> =>
+  pipe(
+    isCreditCardDateExpiredOrInvalid(creditCard.expirationDate),
+    O.map(v => !v)
+  );
 
 const getAccessibilityLabels = (creditCard: CreditCardState) => ({
   cardHolder:
-    isNone(creditCard.holder) || isValidCardHolder(creditCard.holder)
+    O.isNone(creditCard.holder) || isValidCardHolder(creditCard.holder)
       ? I18n.t("wallet.dummyCard.accessibility.holder.base")
       : I18n.t("wallet.dummyCard.accessibility.holder.error"),
   pan:
-    isNone(creditCard.pan) || isValidPan(creditCard.pan)
+    O.isNone(creditCard.pan) || isValidPan(creditCard.pan)
       ? I18n.t("wallet.dummyCard.accessibility.pan.base")
       : I18n.t("wallet.dummyCard.accessibility.pan.error", {
           minLength: MIN_PAN_DIGITS
         }),
   expirationDate:
-    isNone(maybeCreditCardValidOrExpired(creditCard)) ||
-    maybeCreditCardValidOrExpired(creditCard).toUndefined()
+    O.isNone(maybeCreditCardValidOrExpired(creditCard)) ||
+    O.toUndefined(maybeCreditCardValidOrExpired(creditCard))
       ? I18n.t("wallet.dummyCard.accessibility.expirationDate.base")
       : I18n.t("wallet.dummyCard.accessibility.expirationDate.error"),
   securityCode3D:
-    isNone(creditCard.securityCode) ||
+    O.isNone(creditCard.securityCode) ||
     isValidSecurityCode(creditCard.securityCode)
       ? I18n.t("wallet.dummyCard.accessibility.securityCode.3D.base")
       : I18n.t("wallet.dummyCard.accessibility.securityCode.3D.error"),
   securityCode4D:
-    isNone(creditCard.securityCode) ||
+    O.isNone(creditCard.securityCode) ||
     isValidSecurityCode(creditCard.securityCode)
       ? I18n.t("wallet.dummyCard.accessibility.securityCode.4D.base")
       : I18n.t("wallet.dummyCard.accessibility.securityCode.4D.error")
@@ -236,7 +241,8 @@ const AddCardScreen: React.FC<Props> = props => {
   const [creditCard, setCreditCard] = useState<CreditCardState>(
     INITIAL_CARD_FORM_STATE
   );
-  const inPayment = props.navigation.getParam("inPayment");
+
+  const inPayment = props.route.params.inPayment;
 
   const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
     <>
@@ -263,14 +269,20 @@ const AddCardScreen: React.FC<Props> = props => {
   );
 
   const { isCardNumberValid, isCvvValid } = useLuhnValidation(
-    creditCard.pan.getOrElse(""),
-    creditCard.securityCode.getOrElse("")
+    pipe(
+      creditCard.pan,
+      O.getOrElse(() => "")
+    ),
+    pipe(
+      creditCard.securityCode,
+      O.getOrElse(() => "")
+    )
   );
 
   const updateState = (key: CreditCardStateKeys, value: string) => {
     setCreditCard({
       ...creditCard,
-      [key]: fromPredicate((value: string) => value.length > 0)(value)
+      [key]: O.fromPredicate((value: string) => value.length > 0)(value)
     });
   };
 
@@ -314,20 +326,23 @@ const AddCardScreen: React.FC<Props> = props => {
             <LabelledItem
               label={I18n.t("wallet.dummyCard.labels.holder.label")}
               description={
-                isNone(creditCard.holder) ||
+                O.isNone(creditCard.holder) ||
                 isValidCardHolder(creditCard.holder)
                   ? I18n.t("wallet.dummyCard.labels.holder.description.base")
                   : I18n.t("wallet.dummyCard.labels.holder.description.error")
               }
               icon="io-titolare"
               isValid={
-                isNone(creditCard.holder)
+                O.isNone(creditCard.holder)
                   ? undefined
                   : isValidCardHolder(creditCard.holder)
               }
               accessibilityLabel={accessibilityLabels.cardHolder}
               inputProps={{
-                value: creditCard.holder.getOrElse(""),
+                value: pipe(
+                  creditCard.holder,
+                  O.getOrElse(() => "")
+                ),
                 placeholder: placeholders.placeholderHolder,
                 autoCapitalize: "words",
                 keyboardType: "default",
@@ -343,9 +358,12 @@ const AddCardScreen: React.FC<Props> = props => {
               label={I18n.t("wallet.dummyCard.labels.pan")}
               icon={detectedBrand.iconForm}
               iconStyle={styles.creditCardForm}
-              isValid={isNone(creditCard.pan) ? undefined : isCardNumberValid}
+              isValid={O.isNone(creditCard.pan) ? undefined : isCardNumberValid}
               inputMaskProps={{
-                value: creditCard.pan.getOrElse(""),
+                value: pipe(
+                  creditCard.pan,
+                  O.getOrElse(() => "")
+                ),
                 placeholder: placeholders.placeholderCard,
                 keyboardType: "numeric",
                 returnKeyType: "done",
@@ -373,11 +391,14 @@ const AddCardScreen: React.FC<Props> = props => {
                   label={I18n.t("wallet.dummyCard.labels.expirationDate")}
                   icon="io-calendario"
                   accessibilityLabel={accessibilityLabels.expirationDate}
-                  isValid={maybeCreditCardValidOrExpired(
-                    creditCard
-                  ).toUndefined()}
+                  isValid={O.toUndefined(
+                    maybeCreditCardValidOrExpired(creditCard)
+                  )}
                   inputMaskProps={{
-                    value: creditCard.expirationDate.getOrElse(""),
+                    value: pipe(
+                      creditCard.expirationDate,
+                      O.getOrElse(() => "")
+                    ),
                     placeholder: placeholders.placeholderDate,
                     keyboardType: "numeric",
                     returnKeyType: "done",
@@ -399,7 +420,10 @@ const AddCardScreen: React.FC<Props> = props => {
                   )}
                   icon="io-lucchetto"
                   isValid={
-                    creditCard.securityCode.getOrElse("")
+                    pipe(
+                      creditCard.securityCode,
+                      O.getOrElse(() => "")
+                    )
                       ? isCvvValid
                       : undefined
                   }
@@ -409,7 +433,10 @@ const AddCardScreen: React.FC<Props> = props => {
                       : accessibilityLabels.securityCode3D
                   }
                   inputMaskProps={{
-                    value: creditCard.securityCode.getOrElse(""),
+                    value: pipe(
+                      creditCard.securityCode,
+                      O.getOrElse(() => "")
+                    ),
                     placeholder: placeholders.placeholderSecureCode,
                     returnKeyType: "done",
                     maxLength: 4,
@@ -425,7 +452,7 @@ const AddCardScreen: React.FC<Props> = props => {
               </Col>
             </Grid>
 
-            {!isSome(inPayment) && (
+            {!O.isSome(inPayment) && (
               <>
                 <View spacer={true} />
                 <Link
@@ -456,7 +483,7 @@ const AddCardScreen: React.FC<Props> = props => {
             creditCard,
             props.navigateToConfirmCardDetailsScreen,
             isValidCardHolder(creditCard.holder),
-            maybeCreditCardValidOrExpired(creditCard).toUndefined()
+            O.toUndefined(maybeCreditCardValidOrExpired(creditCard))
           )}
         />
         {bottomSheet}
@@ -473,8 +500,8 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
   navigateToConfirmCardDetailsScreen: (creditCard: CreditCard) =>
     navigateToWalletConfirmCardDetails({
       creditCard,
-      inPayment: props.navigation.getParam("inPayment"),
-      keyFrom: props.navigation.getParam("keyFrom")
+      inPayment: props.route.params.inPayment,
+      keyFrom: props.route.params.keyFrom
     })
 });
 

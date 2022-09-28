@@ -1,9 +1,10 @@
+import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { View } from "react-native";
-import StatusContent from "../../../../components/SectionStatus/StatusContent";
-import { IOColors } from "../../../../components/core/variables/IOColors";
-import I18n from "../../../../i18n";
 import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
+import { IOColors } from "../../../../components/core/variables/IOColors";
+import StatusContent from "../../../../components/SectionStatus/StatusContent";
+import I18n from "../../../../i18n";
 import { getV2ErrorMainType } from "../../../../utils/payment";
 import { TransactionSummaryError } from "../NewTransactionSummaryScreen";
 
@@ -47,7 +48,7 @@ export const TransactionSummaryStatus = (props: {
   // eslint-disable-next-line functional/no-let
   let statusContentProps: StatusContentProps | undefined;
 
-  const errorOrUndefined = props.error.toUndefined();
+  const errorOrUndefined = O.toUndefined(props.error);
   if (
     errorOrUndefined === "PAYMENT_ID_TIMEOUT" ||
     errorOrUndefined === undefined
