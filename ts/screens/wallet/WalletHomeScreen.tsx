@@ -1,4 +1,3 @@
-import { NavigationEvents } from "@react-navigation/compat";
 import { none } from "fp-ts/lib/Option";
 import * as pot from "italia-ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
@@ -15,6 +14,7 @@ import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { Body } from "../../components/core/typography/Body";
 import { H3 } from "../../components/core/typography/H3";
+import { IOColors } from "../../components/core/variables/IOColors";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
 import { withValidatedPagoPaVersion } from "../../components/helpers/withValidatedPagoPaVersion";
@@ -45,6 +45,7 @@ import {
 } from "../../features/bonus/bonusVacanze/store/actions/bonusVacanze";
 import { allBonusActiveSelector } from "../../features/bonus/bonusVacanze/store/reducers/allActive";
 import { supportedAvailableBonusSelector } from "../../features/bonus/bonusVacanze/store/reducers/availableBonusesTypes";
+import BpdOptInPaymentMethodsContainer from "../../features/bonus/bpd/components/optInPaymentMethods/BpdOptInPaymentMethodsContainer";
 import BpdCardsInWalletContainer from "../../features/bonus/bpd/components/walletCardContainer/BpdCardsInWalletComponent";
 import { bpdAllData } from "../../features/bonus/bpd/store/actions/details";
 import { bpdPeriodsAmountWalletVisibleSelector } from "../../features/bonus/bpd/store/reducers/details/combiner";
@@ -100,8 +101,6 @@ import customVariables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
 import { isStrictSome } from "../../utils/pot";
 import { showToast } from "../../utils/showToast";
-import BpdOptInPaymentMethodsContainer from "../../features/bonus/bpd/components/optInPaymentMethods/BpdOptInPaymentMethodsContainer";
-import { IOColors } from "../../components/core/variables/IOColors";
 
 export type WalletHomeNavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -182,6 +181,9 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  */
 class WalletHomeScreen extends React.PureComponent<Props, State> {
   private subscription: NativeEventSubscription | undefined;
+  private focusUnsubscribe!: () => void;
+  private blurUnsubscribe!: () => void;
+
   constructor(props: Props) {
     super(props);
     this.state = { hasFocus: false };
@@ -228,6 +230,18 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
   };
 
   public componentDidMount() {
+    if (bonusVacanzeEnabled) {
+      // eslint-disable-next-line functional/immutable-data
+      this.blurUnsubscribe = this.props.navigation.addListener(
+        "blur",
+        this.onLostFocus
+      );
+      // eslint-disable-next-line functional/immutable-data
+      this.focusUnsubscribe = this.props.navigation.addListener(
+        "focus",
+        this.onFocus
+      );
+    }
     // WIP loadTransactions should not be called from here
     // (transactions should be persisted & fetched periodically)
     // https://www.pivotaltracker.com/story/show/168836972
@@ -258,6 +272,10 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
 
   public componentWillUnmount() {
     this.subscription?.remove();
+    if (bonusVacanzeEnabled) {
+      this.focusUnsubscribe();
+      this.blurUnsubscribe();
+    }
   }
 
   public componentDidUpdate(prevProps: Readonly<Props>) {
@@ -553,12 +571,6 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
           {(bpdEnabled || this.props.isCgnEnabled) && <FeaturedCardCarousel />}
           {transactionContent}
         </>
-        {bonusVacanzeEnabled && (
-          <NavigationEvents
-            onWillFocus={this.onFocus}
-            onWillBlur={this.onLostFocus}
-          />
-        )}
         <NewPaymentMethodAddedNotifier />
       </WalletLayout>
     );
