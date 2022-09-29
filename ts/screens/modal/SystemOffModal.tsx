@@ -3,6 +3,8 @@
  * not work properly. This is due to avoid user tries to access features or services potentially can't work
  * as expected
  */
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { Container, H2, Text, View } from "native-base";
 import * as React from "react";
 import { Image, Modal, StyleSheet } from "react-native";
@@ -34,13 +36,15 @@ const styles = StyleSheet.create({
 class SystemOffModal extends React.PureComponent<Props> {
   public render() {
     const locale = I18n.currentLocale() === "en" ? "en-EN" : "it-IT";
-    const message = this.props.backendStatus.status
-      .map(s =>
+    const message = pipe(
+      this.props.backendStatus.status,
+      O.map(s =>
         s.message[locale] !== undefined && s.message[locale].length > 0
           ? s.message[locale]
           : undefined
-      )
-      .getOrElse(undefined);
+      ),
+      O.toUndefined
+    );
     return (
       <Modal>
         <BaseScreenComponent

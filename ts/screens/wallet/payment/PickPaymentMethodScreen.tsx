@@ -2,9 +2,8 @@
  * This screen allows the user to select the payment method for a selected transaction
  */
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import { CompatNavigationProp } from "@react-navigation/compat";
-import { some } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
 import { Content, View } from "native-base";
 import * as React from "react";
 import { FlatList, SafeAreaView } from "react-native";
@@ -17,15 +16,35 @@ import BaseScreenComponent, {
 } from "../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 
+import { H1 } from "../../../components/core/typography/H1";
+import { H4 } from "../../../components/core/typography/H4";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
+import PickAvailablePaymentMethodListItem from "../../../components/wallet/payment/PickAvailablePaymentMethodListItem";
+import PickNotAvailablePaymentMethodListItem from "../../../components/wallet/payment/PickNotAvailablePaymentMethodListItem";
+import {
+  cancelButtonProps,
+  confirmButtonProps
+} from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import {
+  isLoading as isLoadingRemote,
+  isLoading as isRemoteLoading
+} from "../../../features/bonus/bpd/model/RemoteValue";
+import PaymentStatusSwitch from "../../../features/wallet/component/features/PaymentStatusSwitch";
 import I18n from "../../../i18n";
-import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
 import {
   navigateBack,
   navigateToWalletAddPaymentMethod
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
+import {
+  bancomatPayConfigSelector,
+  isPaypalEnabledSelector
+} from "../../../store/reducers/backendStatus";
+import { profileNameSurnameSelector } from "../../../store/reducers/profile";
 import { GlobalState } from "../../../store/reducers/types";
+import { pspV2ListSelector } from "../../../store/reducers/wallet/payment";
 import {
   bancomatListVisibleInWalletSelector,
   bPayListVisibleInWalletSelector,
@@ -40,28 +59,8 @@ import {
   isDisabledToPay,
   isEnabledToPay
 } from "../../../utils/paymentMethodCapabilities";
-import {
-  cancelButtonProps,
-  confirmButtonProps
-} from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
-import { H1 } from "../../../components/core/typography/H1";
-import { H4 } from "../../../components/core/typography/H4";
-import { profileNameSurnameSelector } from "../../../store/reducers/profile";
-import PickNotAvailablePaymentMethodListItem from "../../../components/wallet/payment/PickNotAvailablePaymentMethodListItem";
-import PickAvailablePaymentMethodListItem from "../../../components/wallet/payment/PickAvailablePaymentMethodListItem";
-import { pspV2ListSelector } from "../../../store/reducers/wallet/payment";
-import {
-  isLoading as isRemoteLoading,
-  isLoading as isLoadingRemote
-} from "../../../features/bonus/bpd/model/RemoteValue";
-import {
-  bancomatPayConfigSelector,
-  isPaypalEnabledSelector
-} from "../../../store/reducers/backendStatus";
 import { showToast } from "../../../utils/showToast";
 import { convertWalletV2toWalletV1 } from "../../../utils/walletv2";
-import PaymentStatusSwitch from "../../../features/wallet/component/features/PaymentStatusSwitch";
 import { dispatchPickPspOrConfirm } from "./common";
 
 export type PickPaymentMethodScreenNavigationParams = Readonly<{
@@ -71,11 +70,10 @@ export type PickPaymentMethodScreenNavigationParams = Readonly<{
   idPayment: string;
 }>;
 
-type OwnProps = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<WalletParamsList, "PAYMENT_PICK_PAYMENT_METHOD">
-  >;
-};
+type OwnProps = IOStackNavigationRouteProps<
+  WalletParamsList,
+  "PAYMENT_PICK_PAYMENT_METHOD"
+>;
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -255,11 +253,11 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
   goBack: () => navigateBack(),
   navigateToConfirmOrPickPsp: (wallet: Wallet) => {
     dispatchPickPspOrConfirm(dispatch)(
-      props.navigation.getParam("rptId"),
-      props.navigation.getParam("initialAmount"),
-      props.navigation.getParam("verifica"),
-      props.navigation.getParam("idPayment"),
-      some(wallet),
+      props.route.params.rptId,
+      props.route.params.initialAmount,
+      props.route.params.verifica,
+      props.route.params.idPayment,
+      O.some(wallet),
       failureReason => {
         // selecting the payment method has failed, show a toast and stay in
         // this screen
@@ -278,11 +276,11 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
   },
   navigateToAddPaymentMethod: () =>
     navigateToWalletAddPaymentMethod({
-      inPayment: some({
-        rptId: props.navigation.getParam("rptId"),
-        initialAmount: props.navigation.getParam("initialAmount"),
-        verifica: props.navigation.getParam("verifica"),
-        idPayment: props.navigation.getParam("idPayment")
+      inPayment: O.some({
+        rptId: props.route.params.rptId,
+        initialAmount: props.route.params.initialAmount,
+        verifica: props.route.params.verifica,
+        idPayment: props.route.params.idPayment
       })
     })
 });

@@ -1,23 +1,24 @@
+import { useLinkTo } from "@react-navigation/native";
+import * as O from "fp-ts/lib/Option";
+import { Content, View } from "native-base";
 import React, { useCallback } from "react";
 import { SafeAreaView, StyleSheet, TextInput } from "react-native";
-import { Content, View } from "native-base";
-import { useLinkTo } from "@react-navigation/native";
+import { CreatedMessageWithContent } from "../../../../definitions/backend/CreatedMessageWithContent";
+import { MessageBodyMarkdown } from "../../../../definitions/backend/MessageBodyMarkdown";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
+import { Label } from "../../../components/core/typography/Label";
+import { IOColors } from "../../../components/core/variables/IOColors";
+import { ExtractedCtaButton } from "../../../components/cta/ExtractedCtaButton";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import IconFont from "../../../components/ui/IconFont";
-import { Label } from "../../../components/core/typography/Label";
 import Markdown from "../../../components/ui/Markdown";
-import { CreatedMessageWithContent } from "../../../../definitions/backend/CreatedMessageWithContent";
+import { CTA } from "../../../types/MessageCTA";
 import {
   cleanMarkdownFromCTAs,
   getCTA,
   handleCtaAction
 } from "../../../utils/messages";
-import { MessageBodyMarkdown } from "../../../../definitions/backend/MessageBodyMarkdown";
-import { CTA } from "../../../types/MessageCTA";
 import { maybeNotNullyString } from "../../../utils/strings";
-import { IOColors } from "../../../components/core/variables/IOColors";
-import { ExtractedCtaButton } from "../../../components/cta/ExtractedCtaButton";
 
 const styles = StyleSheet.create({
   flex: { flex: 1 },
@@ -46,10 +47,10 @@ const MarkdownPlayground = () => {
     }
   } as CreatedMessageWithContent;
   const maybeCTA = getCTA(message);
-  const ctaMessage = maybeCTA.isSome()
+  const ctaMessage = O.isSome(maybeCTA)
     ? `${maybeCTA.value.cta_1 ? "2" : "1"} cta found!`
     : "no CTA found";
-  const isMarkdownSet = maybeNotNullyString(markdownText).isSome();
+  const isMarkdownSet = O.isSome(maybeNotNullyString(markdownText));
   return (
     <BaseScreenComponent goBack={true} headerTitle={"Markdown playground"}>
       <SafeAreaView style={styles.flex}>
@@ -89,7 +90,7 @@ const MarkdownPlayground = () => {
           <View spacer={true} />
           {isMarkdownSet && <Label color={"bluegrey"}>{ctaMessage}</Label>}
 
-          {maybeCTA.isSome() && (
+          {O.isSome(maybeCTA) && (
             <View style={styles.row}>
               <ExtractedCtaButton
                 cta={maybeCTA.value.cta_1}
@@ -98,7 +99,7 @@ const MarkdownPlayground = () => {
               />
             </View>
           )}
-          {maybeCTA.isSome() && maybeCTA.value.cta_2 && (
+          {O.isSome(maybeCTA) && maybeCTA.value.cta_2 && (
             <>
               <View spacer={true} />
               <View style={styles.row}>

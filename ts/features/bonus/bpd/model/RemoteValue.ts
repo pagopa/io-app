@@ -2,7 +2,8 @@
  * Experimental type used for represent an async load from remote source with a simpler structure than the pot
  * Use this when you need to load a remote value one shot that shouldn't be updated later
  */
-import { fromNullable } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 
 export type RemoteValue<V, E> =
   | RemoteUndefined
@@ -47,7 +48,12 @@ export const getValue = <V>(rv: RemoteValue<V, any>) =>
 export const getValueOrElse = <V>(
   rv: RemoteValue<V, any>,
   defaultValue: V
-): V => fromNullable(getValue(rv)).getOrElse(defaultValue);
+): V =>
+  pipe(
+    getValue(rv),
+    O.fromNullable,
+    O.getOrElse(() => defaultValue)
+  );
 
 export const remoteUndefined: RemoteUndefined = { kind: "undefined" };
 export const remoteLoading: RemoteLoading = { kind: "loading" };

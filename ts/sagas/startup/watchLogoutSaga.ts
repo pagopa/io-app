@@ -1,5 +1,7 @@
-import { readableReport } from "italia-ts-commons/lib/reporters";
-import { call, put, take, fork } from "typed-redux-saga/macro";
+import { readableReport } from "@pagopa/ts-commons/lib/reporters";
+import * as E from "fp-ts/lib/Either";
+
+import { call, fork, put, take } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
 import { startApplicationInitialization } from "../../store/actions/application";
@@ -22,21 +24,21 @@ export function* logoutSaga(
   //        block for a while.
   try {
     const response: SagaCallReturnType<typeof logout> = yield* call(logout, {});
-    if (response.isRight()) {
-      if (response.value.status === 200) {
+    if (E.isRight(response)) {
+      if (response.right.status === 200) {
         yield* put(logoutSuccess(action.payload));
       } else {
         // We got a error, send a LOGOUT_FAILURE action so we can log it using Mixpanel
         const error = Error(
-          response.value.status === 500 && response.value.value.title
-            ? response.value.value.title
+          response.right.status === 500 && response.right.value.title
+            ? response.right.value.title
             : "Unknown error"
         );
         yield* put(logoutFailure({ error, options: action.payload }));
       }
     } else {
       const logoutError = {
-        error: Error(readableReport(response.value)),
+        error: Error(readableReport(response.left)),
         options: action.payload
       };
       yield* put(logoutFailure(logoutError));

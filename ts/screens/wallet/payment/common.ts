@@ -1,9 +1,11 @@
-import { Option, some } from "fp-ts/lib/Option";
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import * as O from "fp-ts/lib/Option";
 import { ActionType } from "typesafe-actions";
 
-import { pipe } from "fp-ts/lib/function";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
+import { Config } from "../../../../definitions/content/Config";
+import { PspData } from "../../../../definitions/pagopa/PspData";
+import { POSTE_DATAMATRIX_SCAN_PREFERRED_PSPS } from "../../../config";
 import {
   navigateToPaymentConfirmPaymentMethodScreen,
   navigateToPaymentPickPaymentMethodScreen,
@@ -19,9 +21,6 @@ import {
 } from "../../../store/actions/wallet/payment";
 import { isRawPayPal, Wallet } from "../../../types/pagopa";
 import { walletHasFavoriteAvailablePspData } from "../../../utils/payment";
-import { PspData } from "../../../../definitions/pagopa/PspData";
-import { Config } from "../../../../definitions/content/Config";
-import { POSTE_DATAMATRIX_SCAN_PREFERRED_PSPS } from "../../../config";
 
 /**
  * If needed, filter the PSPs list by the preferred PSPs.
@@ -75,24 +74,17 @@ export const getFilteredPspsList = (
   allPsps: ReadonlyArray<PspData>,
   paymentStartOrigin?: PaymentStartOrigin,
   preferredPspsByOrigin?: Config["payments"]["preferredPspsByOrigin"]
-) =>
-  pipe(
-    () => allPsps,
-    allPsps => {
-      // If necessary, filter the PSPs list by the payment start origin
-      if (
-        paymentStartOrigin !== undefined &&
-        preferredPspsByOrigin !== undefined
-      ) {
-        return filterPspsByPaymentStartOrigin(
-          paymentStartOrigin,
-          preferredPspsByOrigin,
-          allPsps
-        );
-      }
-      return allPsps;
-    }
-  )({});
+) => {
+  // If necessary, filter the PSPs list by the payment start origin
+  if (paymentStartOrigin !== undefined && preferredPspsByOrigin !== undefined) {
+    return filterPspsByPaymentStartOrigin(
+      paymentStartOrigin,
+      preferredPspsByOrigin,
+      allPsps
+    );
+  }
+  return allPsps;
+};
 
 /**
  * Common action dispatchers for payment screens
@@ -149,14 +141,14 @@ export const dispatchPickPspOrConfirm =
     initialAmount: AmountInEuroCents,
     verifica: PaymentRequestsGetResponse,
     idPayment: string,
-    maybeSelectedWallet: Option<Wallet>,
+    maybeSelectedWallet: O.Option<Wallet>,
     // NO_PSPS_AVAILABLE: the wallet cannot be used for this payment
     // FETCH_PSPS_FAILURE: fetching the PSPs for this wallet has failed
     onFailure: (reason: "NO_PSPS_AVAILABLE" | "FETCH_PSPS_FAILURE") => void,
     hasWallets: boolean = true
     // eslint-disable-next-line sonarjs/cognitive-complexity
   ) => {
-    if (maybeSelectedWallet.isSome()) {
+    if (O.isSome(maybeSelectedWallet)) {
       const selectedWallet = maybeSelectedWallet.value;
       // if the paying method is paypal retrieve psp from new API
       // see https://pagopa.atlassian.net/wiki/spaces/IOAPP/pages/445844411/Modifiche+al+flusso+di+pagamento
@@ -269,7 +261,7 @@ export const dispatchPickPspOrConfirm =
         // the user never add a wallet, ask the user to add a new one
 
         navigateToWalletAddPaymentMethod({
-          inPayment: some({
+          inPayment: O.some({
             rptId,
             initialAmount,
             verifica,

@@ -1,10 +1,11 @@
+import * as E from "fp-ts/lib/Either";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { loadServicePreference } from "../../../store/actions/services/servicePreference";
 import { BackendClient } from "../../../api/backend";
+import { loadServicePreference } from "../../../store/actions/services/servicePreference";
+import { ServicePreferenceResponseFailure } from "../../../types/services/ServicePreferenceResponse";
 import { SagaCallReturnType } from "../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../utils/errors";
-import { ServicePreferenceResponseFailure } from "../../../types/services/ServicePreferenceResponse";
 import { readablePrivacyReport } from "../../../utils/reporters";
 
 export const mapKinds: Record<
@@ -31,32 +32,32 @@ export function* handleGetServicePreference(
     const response: SagaCallReturnType<typeof getServicePreference> =
       yield* call(getServicePreference, { service_id: action.payload });
 
-    if (response.isRight()) {
-      if (response.value.status === 200) {
+    if (E.isRight(response)) {
+      if (response.right.status === 200) {
         yield* put(
           loadServicePreference.success({
             id: action.payload,
             kind: "success",
             value: {
-              inbox: response.value.value.is_inbox_enabled,
-              push: response.value.value.is_webhook_enabled,
-              email: response.value.value.is_email_enabled,
-              settings_version: response.value.value.settings_version,
+              inbox: response.right.value.is_inbox_enabled,
+              push: response.right.value.is_webhook_enabled,
+              email: response.right.value.is_email_enabled,
+              settings_version: response.right.value.settings_version,
 
               // This will handle the premium messages flag.
               can_access_message_read_status:
-                response.value.value.can_access_message_read_status
+                response.right.value.can_access_message_read_status
             }
           })
         );
         return;
       }
 
-      if (mapKinds[response.value.status] !== undefined) {
+      if (mapKinds[response.right.status] !== undefined) {
         yield* put(
           loadServicePreference.success({
             id: action.payload,
-            kind: mapKinds[response.value.status]
+            kind: mapKinds[response.right.status]
           })
         );
         return;
@@ -66,7 +67,7 @@ export function* handleGetServicePreference(
         loadServicePreference.failure({
           id: action.payload,
           ...getGenericError(
-            new Error(`response status code ${response.value.status}`)
+            new Error(`response status code ${response.right.status}`)
           )
         })
       );
@@ -76,7 +77,7 @@ export function* handleGetServicePreference(
     yield* put(
       loadServicePreference.failure({
         id: action.payload,
-        ...getGenericError(new Error(readablePrivacyReport(response.value)))
+        ...getGenericError(new Error(readablePrivacyReport(response.left)))
       })
     );
   } catch (e) {

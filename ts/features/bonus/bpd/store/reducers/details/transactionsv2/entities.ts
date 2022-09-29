@@ -1,7 +1,8 @@
-import { fromNullable } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
+import { pipe } from "fp-ts/lib/function";
 import { WinningTransactionMilestoneResource } from "../../../../../../../../definitions/bpd/winning_transactions_v2/WinningTransactionMilestoneResource";
 import { WinningTransactionPageResource } from "../../../../../../../../definitions/bpd/winning_transactions_v2/WinningTransactionPageResource";
 import { Action } from "../../../../../../../store/actions/types";
@@ -225,10 +226,13 @@ export const bpdTransactionsPivotForSelectedPeriodSelector = createSelector(
     bpdTransactionsEntity,
     maybeSelectedPeriod
   ): pot.Pot<BpdPivotTransaction | null, Error> =>
-    fromNullable(maybeSelectedPeriod)
-      .chain(selectedPeriod =>
-        fromNullable(bpdTransactionsEntity[selectedPeriod.awardPeriodId])
-      )
-      .map(x => x.pivot)
-      .getOrElse(pot.none)
+    pipe(
+      maybeSelectedPeriod,
+      O.fromNullable,
+      O.chain(selectedPeriod =>
+        O.fromNullable(bpdTransactionsEntity[selectedPeriod.awardPeriodId])
+      ),
+      O.map(x => x.pivot),
+      O.getOrElseW(() => pot.none)
+    )
 );

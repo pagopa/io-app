@@ -1,83 +1,83 @@
-import { none, Option, some } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import { areSetEqual, areStringsEqual, maybeInnerProperty } from "../options";
 
 describe("areSetEqual", () => {
   it("should return true for equal set of strings", () => {
-    const setA: Option<Set<string>> = some(new Set(["1", "2", "3"]));
-    const setB: Option<Set<string>> = some(new Set(["2", "3", "1"]));
+    const setA: O.Option<Set<string>> = O.some(new Set(["1", "2", "3"]));
+    const setB: O.Option<Set<string>> = O.some(new Set(["2", "3", "1"]));
     expect(areSetEqual(setA, setB)).toBeTruthy();
   });
 
   it("should return false for not equal set of strings", () => {
-    const setA: Option<Set<string>> = some(new Set(["1", "2"]));
-    const setB: Option<Set<string>> = some(new Set(["2", "3", "1"]));
+    const setA: O.Option<Set<string>> = O.some(new Set(["1", "2"]));
+    const setB: O.Option<Set<string>> = O.some(new Set(["2", "3", "1"]));
     expect(areSetEqual(setA, setB)).toBeFalsy();
   });
 
   it("should return false for not equal set of strings", () => {
-    const setA: Option<Set<string>> = some(new Set(["1", "2", "4"]));
-    const setB: Option<Set<string>> = some(new Set(["1", "2"]));
+    const setA: O.Option<Set<string>> = O.some(new Set(["1", "2", "4"]));
+    const setB: O.Option<Set<string>> = O.some(new Set(["1", "2"]));
     expect(areSetEqual(setA, setB)).toBeFalsy();
   });
 
   it("should return false for not equal set of numbers", () => {
-    const setA: Option<Set<number>> = some(new Set([1, 2, 3]));
-    const setB: Option<Set<number>> = some(new Set([1, 4]));
+    const setA: O.Option<Set<number>> = O.some(new Set([1, 2, 3]));
+    const setB: O.Option<Set<number>> = O.some(new Set([1, 4]));
     expect(areSetEqual(setA, setB)).toBeFalsy();
   });
 
   it("should return false for not equal set of numbers", () => {
-    const setA: Option<Set<number>> = some(new Set([1, 2, 3]));
-    const setB: Option<Set<number>> = none;
+    const setA: O.Option<Set<number>> = O.some(new Set([1, 2, 3]));
+    const setB: O.Option<Set<number>> = O.none;
     expect(areSetEqual(setA, setB)).toBeFalsy();
   });
 
   it("should return true if none items are compared", () => {
-    const setA: Option<Set<number>> = none;
-    const setB: Option<Set<number>> = none;
+    const setA: O.Option<Set<number>> = O.none;
+    const setB: O.Option<Set<number>> = O.none;
     expect(areSetEqual(setA, setB)).toBeTruthy();
   });
 });
 
 describe("areStringEqual", () => {
   it("should return true if the strings are equal", () => {
-    expect(areStringsEqual(some("ab"), some("ab"))).toBeTruthy();
+    expect(areStringsEqual(O.some("ab"), O.some("ab"))).toBeTruthy();
   });
 
   it("should return true if both the strings has a different case and caseInsensitive is true", () => {
-    expect(areStringsEqual(some("AA"), some("aa"), true)).toBeTruthy();
+    expect(areStringsEqual(O.some("AA"), O.some("aa"), true)).toBeTruthy();
   });
 
   it("should return false if both the strings has a different case and caseInsensitive is not expressed", () => {
-    expect(areStringsEqual(some("AA"), some("aa"))).toBeFalsy();
+    expect(areStringsEqual(O.some("AA"), O.some("aa"))).toBeFalsy();
   });
 
   it("should return false if the strings are not equal", () => {
-    expect(areStringsEqual(some("ab"), some("abc"), true)).toBeFalsy();
+    expect(areStringsEqual(O.some("ab"), O.some("abc"), true)).toBeFalsy();
   });
 
   it("should return false if the first string is a segment of the second one", () => {
-    expect(areStringsEqual(some("ab"), some("abc"))).toBeFalsy();
+    expect(areStringsEqual(O.some("ab"), O.some("abc"))).toBeFalsy();
   });
 
   it("should return false if the second string is a segment of the first one", () => {
-    expect(areStringsEqual(some("abc"), some("ab"))).toBeFalsy();
+    expect(areStringsEqual(O.some("abc"), O.some("ab"))).toBeFalsy();
   });
 
   it("should return false if the strings are not equal", () => {
-    expect(areStringsEqual(some("a"), some("bb"))).toBeFalsy();
+    expect(areStringsEqual(O.some("a"), O.some("bb"))).toBeFalsy();
   });
 
   it("should return true if strings are empty", () => {
-    expect(areStringsEqual(some(""), some(""))).toBeTruthy();
+    expect(areStringsEqual(O.some(""), O.some(""))).toBeTruthy();
   });
 
   it("should return false if the compared objects are none", () => {
-    expect(areStringsEqual(none, none)).toBeFalsy();
+    expect(areStringsEqual(O.none, O.none)).toBeFalsy();
   });
 
   it("should return false if at least one of the compared objects is none", () => {
-    expect(areStringsEqual(none, some("a"))).toBeFalsy();
+    expect(areStringsEqual(O.none, O.some("a"))).toBeFalsy();
   });
 });
 
@@ -89,7 +89,7 @@ describe("maybeInnerProperty", () => {
       }
     };
     const innerProp = maybeInnerProperty(obj.person, "name", n => n);
-    expect(innerProp).toEqual(some("John"));
+    expect(innerProp).toEqual(O.some("John"));
   });
 
   it("should return the inner property", () => {
@@ -99,20 +99,20 @@ describe("maybeInnerProperty", () => {
       }
     };
     const innerProp = maybeInnerProperty(obj.person, "name", n => n + "salt");
-    expect(innerProp).toEqual(some("Johnsalt"));
+    expect(innerProp).toEqual(O.some("Johnsalt"));
   });
 
-  it("should return the none", () => {
+  it("should return the O.none", () => {
     const obj = {
       person: {
         name: undefined
       }
     };
     const innerProp = maybeInnerProperty(obj.person, "name", n => n);
-    expect(innerProp).toEqual(none);
+    expect(innerProp).toEqual(O.none);
   });
 
-  it("should return the none", () => {
+  it("should return the O.none", () => {
     type Person = {
       person?: { name?: string };
     };
@@ -120,6 +120,6 @@ describe("maybeInnerProperty", () => {
       person: undefined
     };
     const innerProp = maybeInnerProperty(obj.person, "name", n => n);
-    expect(innerProp).toEqual(none);
+    expect(innerProp).toEqual(O.none);
   });
 });

@@ -1,5 +1,5 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { combineReducers } from "redux";
-import * as pot from "italia-ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { Action } from "../../../../store/actions/types";
 import { thirdPartyFromIdSelector } from "../../../../store/reducers/entities/messages/thirdPartyById";

@@ -1,5 +1,7 @@
-import { fromNullable } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
 import { createTransform, TransformIn, TransformOut } from "redux-persist";
+import { pipe } from "fp-ts/lib/function";
 import { DateFromISOString } from "../../utils/dates";
 
 /**
@@ -42,19 +44,25 @@ const dataReplacer = (_: any, value: any): any => {
  */
 const dateReviver = (key: any, value: any): any => {
   const decodedValue = DateFromISOString.decode(value);
-  return dateFieldsTransformable.has(key) && decodedValue.isRight()
-    ? decodedValue.value
+  return dateFieldsTransformable.has(key) && E.isRight(decodedValue)
+    ? decodedValue.right
     : value;
 };
 
 const encoder: TransformIn<any, string> = (value: any, _: string): any =>
-  fromNullable(value).fold(undefined, v =>
-    JSON.parse(JSON.stringify(v), dataReplacer)
+  pipe(
+    value,
+    O.fromNullable,
+    O.map(v => JSON.parse(JSON.stringify(v), dataReplacer)),
+    O.toUndefined
   );
 
 const decoder: TransformOut<string, any> = (value: any, _: string): any =>
-  fromNullable(value).fold(undefined, v =>
-    JSON.parse(JSON.stringify(v), dateReviver)
+  pipe(
+    value,
+    O.fromNullable,
+    O.map(v => JSON.parse(JSON.stringify(v), dateReviver)),
+    O.toUndefined
   );
 
 /**

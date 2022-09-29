@@ -1,5 +1,5 @@
-import { some } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 
 import { Store } from "redux";
@@ -33,7 +33,7 @@ describe("TransactionsUnavailable component", () => {
         reason: "NOT_LOGGED_IN"
       },
       backendStatus: {
-        status: some({
+        status: O.some({
           config: {
             assistanceTool: { tool: ToolEnum.none },
             cgn: { enabled: true },

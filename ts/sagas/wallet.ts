@@ -4,11 +4,12 @@ import { NavigationActions, StackActions } from "@react-navigation/compat";
 /**
  * A saga that manages the Wallet.
  */
-import { isSome, none, Option, some } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as E from "fp-ts/lib/Either";
+import * as O from "fp-ts/lib/Option";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 
-import { DeferredPromise } from "italia-ts-commons/lib/promises";
-import { Millisecond } from "italia-ts-commons/lib/units";
+import { DeferredPromise } from "@pagopa/ts-commons/lib/promises";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import _ from "lodash";
 import {
   call,
@@ -194,6 +195,7 @@ import {
   updatePaymentStatusSaga,
   updateWalletPspRequestHandler
 } from "./wallet/pagopaApis";
+import { pipe } from "fp-ts/lib/function";
 
 const successScreenDelay = 2000 as Millisecond;
 
@@ -302,10 +304,10 @@ function* startOrResumeAddCreditCardSaga(
       yield* put(refreshPMTokenWhileAddCreditCard.request({ idWallet }));
       // Request a new token to the PM. This prevent expired token during the webview navigation.
       // If the request for the new token fails a new Error is caught, the step fails and we exit the flow.
-      const pagoPaToken: Option<PaymentManagerToken> = yield* call(
+      const pagoPaToken: O.Option<PaymentManagerToken> = yield* call(
         pmSessionManager.getNewToken
       );
-      if (pagoPaToken.isSome()) {
+      if (O.isSome(pagoPaToken)) {
         // store the pm session token
         yield* put(refreshPMTokenWhileAddCreditCard.success(pagoPaToken.value));
         // Wait until the outcome code from the webview is available
@@ -316,7 +318,7 @@ function* startOrResumeAddCreditCardSaga(
         > = yield* select(lastPaymentOutcomeCodeSelector);
         // Since we wait the dispatch of the addCreditCardOutcomeCode action,
         // the else case can't happen, because the action in every case set a some value in the store.
-        if (isSome(maybeOutcomeCode.outcomeCode)) {
+        if (O.isSome(maybeOutcomeCode.outcomeCode)) {
           const outcomeCode = maybeOutcomeCode.outcomeCode.value;
 
           // The credit card was added successfully
@@ -537,7 +539,7 @@ function* deleteActivePaymentSaga() {
   const maybePaymentId = pot.toOption(potPaymentId);
   // stop polling
   shouldAbortPaymentIdPollingRequest.e2(true);
-  if (maybePaymentId.isSome()) {
+  if (O.isSome(maybePaymentId)) {
     yield* put(
       paymentDeletePayment.request({ paymentId: maybePaymentId.value })
     );
@@ -552,7 +554,10 @@ function* deleteUnsuccessfulActivePaymentSaga() {
   // it can be related to a payment or a payment check done during the credit card onboarding
   const lastPaymentOutCome = yield* select(lastPaymentOutcomeCodeSelector);
   if (
-    lastPaymentOutCome.outcomeCode.exists(({ status }) => status !== "success")
+    pipe(
+      lastPaymentOutCome.outcomeCode,
+      O.exists(({ status }) => status !== "success")
+    )
   ) {
     /**
      * run the procedure to delete the payment activation
@@ -619,12 +624,12 @@ export function* watchWalletSaga(
   const getPaymentManagerSession = async () => {
     try {
       const response = await paymentManagerClient.getSession(walletToken);
-      if (response.isRight() && response.value.status === 200) {
-        return some(response.value.value.data.sessionToken);
+      if (E.isRight(response) && response.right.status === 200) {
+        return O.some(response.right.value.data.sessionToken);
       }
-      return none;
+      return O.none;
     } catch {
-      return none;
+      return O.none;
     }
   };
 

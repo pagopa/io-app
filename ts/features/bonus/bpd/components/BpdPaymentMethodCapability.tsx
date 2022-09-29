@@ -2,7 +2,7 @@
  * Display the bpd capability for a payment method
  * @constructor
  */
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as React from "react";
 import { useState } from "react";
 import { connect } from "react-redux";

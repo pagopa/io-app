@@ -1,3 +1,5 @@
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
 import { Toast } from "native-base";
 import * as React from "react";
 import Markdown from "../../../components/ui/Markdown";
@@ -12,20 +14,21 @@ export const MarkdownHandleCustomLink = (
   <Markdown
     {...props}
     onLinkClicked={(link: string) => {
-      deriveCustomHandledLink(link).map(hl => {
-        if (hl.schema === "copy") {
-          clipboardSetStringWithFeedback(hl.value);
-          return;
-        }
-        taskLinking(hl.url)
-          .run()
-          .catch(_ =>
+      pipe(
+        deriveCustomHandledLink(link),
+        E.map(hl => {
+          if (hl.schema === "copy") {
+            clipboardSetStringWithFeedback(hl.value);
+            return;
+          }
+          taskLinking(hl.url)().catch(_ =>
             Toast.show({
               text: I18n.t("global.genericError"),
               type: "danger"
             })
           );
-      });
+        })
+      );
     }}
   >
     {props.children}

@@ -1,4 +1,4 @@
-import { none, some } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import {
   addEvery,
   capitalize,
@@ -52,23 +52,23 @@ describe("isStringNullyOrEmpty", () => {
 
 describe("maybeNotNullyString", () => {
   it("should return none", () => {
-    expect(maybeNotNullyString(undefined)).toEqual(none);
+    expect(maybeNotNullyString(undefined)).toEqual(O.none);
   });
 
   it("should return some", () => {
-    expect(maybeNotNullyString("hello")).toEqual(some("hello"));
+    expect(maybeNotNullyString("hello")).toEqual(O.some("hello"));
   });
 
   it("should return none", () => {
-    expect(maybeNotNullyString("    ")).toEqual(none);
+    expect(maybeNotNullyString("    ")).toEqual(O.none);
   });
 
   it("should return none", () => {
-    expect(maybeNotNullyString("")).toEqual(none);
+    expect(maybeNotNullyString("")).toEqual(O.none);
   });
 
   it("should return none", () => {
-    expect(maybeNotNullyString(null)).toEqual(none);
+    expect(maybeNotNullyString(null)).toEqual(O.none);
   });
 });
 
