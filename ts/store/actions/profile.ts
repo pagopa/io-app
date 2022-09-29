@@ -2,8 +2,8 @@
  * Action types and action creator related to the Profile.
  */
 
-import { Option } from "fp-ts/lib/Option";
-import { Omit } from "italia-ts-commons/lib/types";
+import * as O from "fp-ts/lib/Option";
+import { Omit } from "@pagopa/ts-commons/lib/types";
 import {
   ActionType,
   createAction,
@@ -47,7 +47,7 @@ export const startEmailValidation = createAsyncAction(
 
 export const acknowledgeOnEmailValidation = createStandardAction(
   "ACKNOWLEDGE_ON_EMAIL_VALIDATION"
-)<Option<boolean>>();
+)<O.Option<boolean>>();
 
 export const profileFirstLogin = createStandardAction("PROFILE_FIRST_LOGIN")();
 

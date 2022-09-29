@@ -1,6 +1,6 @@
-import { none, some } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import { RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import { IPatternStringTag } from "italia-ts-commons/lib/strings";
+import { IPatternStringTag } from "@pagopa/ts-commons/lib/strings";
 
 import { PaymentHistory } from "../../../store/reducers/payments/history";
 import { isPaymentDoneSuccessfully } from "../../../store/reducers/payments/utils";
@@ -92,17 +92,17 @@ const paymentHistoryFailed: PaymentHistory = {
 describe("test the checkPaymentOutcome function", () => {
   it("the first test must show the payment status as Success, because paymentState and transactionState exist", () => {
     expect(isPaymentDoneSuccessfully(paymentHistorySuccess)).toEqual(
-      some(true)
+      O.some(true)
     );
   });
 
   it("the second test must show the payment status as Failed, because paymentState and transactionState do not exist", () => {
     expect(isPaymentDoneSuccessfully(paymentHistoryFailed)).toEqual(
-      some(false)
+      O.some(false)
     );
   });
 
   it("the last test must show the payment status as Incomplete, because only paymentState is set and transactionState is undefined or set to false", () => {
-    expect(isPaymentDoneSuccessfully(paymentHistoryIncomplete)).toEqual(none);
+    expect(isPaymentDoneSuccessfully(paymentHistoryIncomplete)).toEqual(O.none);
   });
 });

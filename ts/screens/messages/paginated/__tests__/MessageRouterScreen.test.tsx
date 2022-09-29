@@ -1,8 +1,8 @@
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import configureMockStore from "redux-mock-store";
+import I18n from "../../../../i18n";
 import { successLoadMessageDetails } from "../../../../__mocks__/message";
 import { successLoadNextPageMessagesPayload } from "../../../../__mocks__/messages";
-import I18n from "../../../../i18n";
 
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
@@ -15,10 +15,10 @@ import { navigateToPaginatedMessageDetailScreenAction } from "../../../../store/
 import { loadServiceDetail } from "../../../../store/actions/services";
 import { appReducer } from "../../../../store/reducers";
 import { DetailsById } from "../../../../store/reducers/entities/messages/detailsById";
+import { PaginatedById } from "../../../../store/reducers/entities/messages/paginatedById";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import MessageRouterScreen from "../MessageRouterScreen";
-import { PaginatedById } from "../../../../store/reducers/entities/messages/paginatedById";
 
 jest.useFakeTimers();
 
@@ -218,7 +218,6 @@ type InputState = {
 
 const renderComponent = (messageId: string, state: InputState = {}) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
-
   const paginatedById = state.paginatedById ?? {};
   const detailsById = state.detailsById ?? {};
 

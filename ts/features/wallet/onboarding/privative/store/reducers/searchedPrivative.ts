@@ -1,4 +1,4 @@
-import { IUnitTag } from "italia-ts-commons/lib/units";
+import { IUnitTag } from "@pagopa/ts-commons/lib/units";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../../store/actions/types";

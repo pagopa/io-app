@@ -1,4 +1,4 @@
-import { none, some } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import { testSaga } from "redux-saga-test-plan";
 import { profileLoadSuccess } from "../../store/actions/profile";
 import { profileEmailValidationChanged } from "../../store/actions/profileEmailValidationChange";
@@ -10,21 +10,23 @@ import mockedProfile from "../../__mocks__/initializedProfile";
 
 describe("isEmailValidatedChanged", () => {
   it("test all the combination for the method isEmailValidatedChanged", () => {
-    expect(isProfileEmailValidatedChanged(some(true), some(true))).toBeFalsy();
     expect(
-      isProfileEmailValidatedChanged(some(false), some(false))
+      isProfileEmailValidatedChanged(O.some(true), O.some(true))
     ).toBeFalsy();
-    expect(isProfileEmailValidatedChanged(none, some(false))).toBeFalsy();
-    expect(isProfileEmailValidatedChanged(none, some(true))).toBeFalsy();
-    expect(isProfileEmailValidatedChanged(some(false), none)).toBeFalsy();
-    expect(isProfileEmailValidatedChanged(some(true), none)).toBeFalsy();
-    expect(isProfileEmailValidatedChanged(none, none)).toBeFalsy();
+    expect(
+      isProfileEmailValidatedChanged(O.some(false), O.some(false))
+    ).toBeFalsy();
+    expect(isProfileEmailValidatedChanged(O.none, O.some(false))).toBeFalsy();
+    expect(isProfileEmailValidatedChanged(O.none, O.some(true))).toBeFalsy();
+    expect(isProfileEmailValidatedChanged(O.some(false), O.none)).toBeFalsy();
+    expect(isProfileEmailValidatedChanged(O.some(true), O.none)).toBeFalsy();
+    expect(isProfileEmailValidatedChanged(O.none, O.none)).toBeFalsy();
 
     expect(
-      isProfileEmailValidatedChanged(some(true), some(false))
+      isProfileEmailValidatedChanged(O.some(true), O.some(false))
     ).toBeTruthy();
     expect(
-      isProfileEmailValidatedChanged(some(false), some(true))
+      isProfileEmailValidatedChanged(O.some(false), O.some(true))
     ).toBeTruthy();
   });
 });

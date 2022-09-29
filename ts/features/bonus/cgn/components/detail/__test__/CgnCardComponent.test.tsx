@@ -1,23 +1,23 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { render } from "@testing-library/react-native";
 import * as React from "react";
 import { Provider } from "react-redux";
-import * as pot from "italia-ts-commons/lib/pot";
 import configureMockStore from "redux-mock-store";
 import { Card } from "../../../../../../../definitions/cgn/Card";
 import { StatusEnum as CgnActivatedStatusEnum } from "../../../../../../../definitions/cgn/CardActivated";
+import { StatusEnum as CgnExpiredStatusEnum } from "../../../../../../../definitions/cgn/CardExpired";
+import { StatusEnum as CgnPendingStatusEnum } from "../../../../../../../definitions/cgn/CardPending";
 import {
   CardRevoked,
   StatusEnum as CgnRevokedStatusEnum
 } from "../../../../../../../definitions/cgn/CardRevoked";
-import { StatusEnum as CgnExpiredStatusEnum } from "../../../../../../../definitions/cgn/CardExpired";
-import { StatusEnum as CgnPendingStatusEnum } from "../../../../../../../definitions/cgn/CardPending";
-import CgnCardComponent from "../CgnCardComponent";
-import { GlobalState } from "../../../../../../store/reducers/types";
-import { appReducer } from "../../../../../../store/reducers";
-import { profileLoadSuccess } from "../../../../../../store/actions/profile";
-import { profileNameSurnameSelector } from "../../../../../../store/reducers/profile";
 import { applicationChangeState } from "../../../../../../store/actions/application";
+import { profileLoadSuccess } from "../../../../../../store/actions/profile";
+import { appReducer } from "../../../../../../store/reducers";
+import { profileNameSurnameSelector } from "../../../../../../store/reducers/profile";
+import { GlobalState } from "../../../../../../store/reducers/types";
 import mockedProfile from "../../../../../../__mocks__/initializedProfile";
+import CgnCardComponent from "../CgnCardComponent";
 
 const cgnStatusActivated: Card = {
   status: CgnActivatedStatusEnum.ACTIVATED,

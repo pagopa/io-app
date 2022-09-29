@@ -2,8 +2,8 @@ import {
   createFetchRequestForApi,
   RequestHeaderProducer,
   RequestHeaders
-} from "italia-ts-commons/lib/requests";
-import { Omit } from "italia-ts-commons/lib/types";
+} from "@pagopa/ts-commons/lib/requests";
+import { Omit } from "@pagopa/ts-commons/lib/types";
 import {
   getAllBonusActivationsDefaultDecoder,
   GetAllBonusActivationsT,

@@ -1,14 +1,14 @@
-import { right } from "fp-ts/lib/Either";
-import { getType } from "typesafe-actions";
+import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
+import { getType } from "typesafe-actions";
 
 import {
   upsertMessageStatusAttributes as action,
   UpsertMessageStatusAttributesPayload
 } from "../../../store/actions/messages";
-import { testTryUpsertMessageStatusAttributes } from "../watchUpsertMessageStatusAttribues";
-import { successReloadMessagesPayload } from "../../../__mocks__/messages";
 import { UIMessageId } from "../../../store/reducers/entities/messages/types";
+import { successReloadMessagesPayload } from "../../../__mocks__/messages";
+import { testTryUpsertMessageStatusAttributes } from "../watchUpsertMessageStatusAttribues";
 
 const tryUpsertMessageStatusAttributes = testTryUpsertMessageStatusAttributes!;
 
@@ -23,7 +23,7 @@ describe("tryUpsertMessageStatusAttributes", () => {
 
   const callPayload = {
     id: "A",
-    messageStatusChange: {
+    body: {
       change_type: "bulk",
       is_archived: true,
       is_read: true
@@ -41,7 +41,7 @@ describe("tryUpsertMessageStatusAttributes", () => {
       )
         .next()
         .call(putMessage, callPayload)
-        .next(right({ status: 200, value: {} }))
+        .next(E.right({ status: 200, value: {} }))
         .put(action.success(actionPayload))
         .next()
         .isDone();
@@ -58,7 +58,7 @@ describe("tryUpsertMessageStatusAttributes", () => {
         .next()
         .call(putMessage, callPayload)
         .next(
-          right({
+          E.right({
             status: 500,
             value: { title: "462e5dffdb46435995d545999bed6b11" }
           })
@@ -88,7 +88,7 @@ describe("tryUpsertMessageStatusAttributes", () => {
         .next()
         .put(
           action.failure({
-            error: new TypeError("Cannot read property 'fold' of undefined"),
+            error: new Error("Response is undefined"),
             payload: actionPayload
           })
         )

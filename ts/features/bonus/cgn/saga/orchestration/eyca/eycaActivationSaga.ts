@@ -1,4 +1,5 @@
 import { CommonActions } from "@react-navigation/native";
+import * as E from "fp-ts/lib/Either";
 import { call, put, race, take } from "typed-redux-saga/macro";
 import NavigationService from "../../../../../../navigation/NavigationService";
 import { SagaCallReturnType } from "../../../../../../types/utils";
@@ -41,24 +42,24 @@ export function* eycaActivationWorker(
     getEycaActivation
   );
 
-  if (eycaActivation.isRight()) {
-    if (eycaActivation.value === "PROCESSING") {
+  if (E.isRight(eycaActivation)) {
+    if (eycaActivation.right === "PROCESSING") {
       yield* call(handleEycaActivationSaga, getEycaActivation);
     } else {
       const startActivation: SagaCallReturnType<typeof handleStartActivation> =
         yield* call(handleStartActivation, startEycaActivation);
       // activation not handled error, stop
-      if (startActivation.isLeft()) {
-        yield* put(cgnEycaActivation.failure(startActivation.value));
+      if (E.isLeft(startActivation)) {
+        yield* put(cgnEycaActivation.failure(startActivation.left));
         return;
       } else {
         // could be: ALREADY_ACTIVE, INELIGIBLE
         if (
           ["ALREADY_ACTIVE", "INELIGIBLE"].some(
-            v => v === startActivation.value
+            v => v === startActivation.right
           )
         ) {
-          yield* put(cgnEycaActivation.success(startActivation.value));
+          yield* put(cgnEycaActivation.success(startActivation.right));
           yield* call(navigateToCgnDetails);
           return;
         } else {

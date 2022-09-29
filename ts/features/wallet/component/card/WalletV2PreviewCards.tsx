@@ -1,7 +1,11 @@
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import {
+  bancomatPayConfigSelector,
+  isPaypalEnabledSelector
+} from "../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../store/reducers/types";
 import { paymentMethodListVisibleInWalletSelector } from "../../../../store/reducers/wallet/wallets";
 import { PaymentMethod } from "../../../../types/pagopa";
@@ -10,13 +14,9 @@ import BancomatWalletPreview from "../../bancomat/component/BancomatWalletPrevie
 import BPayWalletPreview from "../../bancomatpay/component/BPayWalletPreview";
 import CobadgeWalletPreview from "../../cobadge/component/CobadgeWalletPreview";
 import CreditCardWalletPreview from "../../creditCard/component/CreditCardWalletPreview";
+import PayPalWalletPreview from "../../paypal/PayPalWalletPreview";
 import PrivativeWalletPreview from "../../privative/component/PrivativeWalletPreview";
 import SatispayWalletPreview from "../../satispay/SatispayWalletPreview";
-import PayPalWalletPreview from "../../paypal/PayPalWalletPreview";
-import {
-  bancomatPayConfigSelector,
-  isPaypalEnabledSelector
-} from "../../../../store/reducers/backendStatus";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;

@@ -1,15 +1,15 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import * as pot from "italia-ts-commons/lib/pot";
-import ThankYouSuccessComponent from "../../components/optInPaymentMethods/ThankYouSuccessComponent";
-import { useIOSelector } from "../../../../../store/hooks";
-import { optInPaymentMethodsCompleted } from "../../store/actions/optInPaymentMethods";
-import { showToast } from "../../../../../utils/showToast";
-import I18n from "../../../../../i18n";
-import { optInStatusSelector } from "../../store/reducers/details/activation";
-import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
-import { bpdUpdateOptInStatusMethod } from "../../store/actions/onboarding";
 import { CitizenOptInStatusEnum } from "../../../../../../definitions/bpd/citizen_v2/CitizenOptInStatus";
+import I18n from "../../../../../i18n";
+import { useIOSelector } from "../../../../../store/hooks";
+import { showToast } from "../../../../../utils/showToast";
+import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import ThankYouSuccessComponent from "../../components/optInPaymentMethods/ThankYouSuccessComponent";
+import { bpdUpdateOptInStatusMethod } from "../../store/actions/onboarding";
+import { optInPaymentMethodsCompleted } from "../../store/actions/optInPaymentMethods";
+import { optInStatusSelector } from "../../store/reducers/details/activation";
 
 const OptInPaymentMethodsThankYouKeepMethodsScreen = () => {
   const dispatch = useDispatch();

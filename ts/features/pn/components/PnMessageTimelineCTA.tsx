@@ -5,6 +5,7 @@ import { IOColors } from "../../../components/core/variables/IOColors";
 import BlockButtons from "../../../components/ui/BlockButtons";
 import IconFont from "../../../components/ui/IconFont";
 import i18n from "../../../i18n";
+import { mixpanelTrack } from "../../../mixpanel";
 import { handleItemOnPress } from "../../../utils/url";
 
 export const PnMessageTimelineCTA = (props: { url: string }) => (
@@ -40,7 +41,10 @@ export const PnMessageTimelineCTA = (props: { url: string }) => (
       type="SingleButton"
       leftButton={{
         bordered: true,
-        onPress: handleItemOnPress(props.url),
+        onPress: () => {
+          void mixpanelTrack("PN_TIMELINE_EXTERNAL");
+          handleItemOnPress(props.url)();
+        },
         title: i18n.t("features.pn.details.timeline.cta")
       }}
     />

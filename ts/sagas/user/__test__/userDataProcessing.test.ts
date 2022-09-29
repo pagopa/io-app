@@ -1,13 +1,13 @@
-import { right } from "fp-ts/lib/Either";
+import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { ActionType } from "typesafe-actions";
 import { UserDataProcessing } from "../../../../definitions/backend/UserDataProcessing";
 import { UserDataProcessingChoiceEnum } from "../../../../definitions/backend/UserDataProcessingChoice";
 import { UserDataProcessingStatusEnum } from "../../../../definitions/backend/UserDataProcessingStatus";
 import {
+  deleteUserDataProcessing,
   loadUserDataProcessing,
-  upsertUserDataProcessing,
-  deleteUserDataProcessing
+  upsertUserDataProcessing
 } from "../../../store/actions/userDataProcessing";
 import {
   deleteUserDataProcessingSaga,
@@ -23,7 +23,7 @@ describe("loadUserDataProcessingSaga", () => {
   };
 
   it("if response is 404, the user never submit the kind of request specified as the payload choice", () => {
-    const get404Response = right({ status: 404 });
+    const get404Response = E.right({ status: 404 });
     testSaga(
       loadUserDataProcessingSaga,
       getUserDataProcessingRequest,
@@ -31,7 +31,7 @@ describe("loadUserDataProcessingSaga", () => {
     )
       .next()
       .call(getUserDataProcessingRequest, {
-        userDataProcessingChoiceParam: loadAction.payload
+        choice: loadAction.payload
       })
       .next(get404Response)
       .put(
@@ -50,7 +50,7 @@ describe("loadUserDataProcessingSaga", () => {
       status: UserDataProcessingStatusEnum.PENDING,
       version: 2
     };
-    const get200Response = right({ status: 200, value: mokedStatus });
+    const get200Response = E.right({ status: 200, value: mokedStatus });
 
     testSaga(
       loadUserDataProcessingSaga,
@@ -59,7 +59,7 @@ describe("loadUserDataProcessingSaga", () => {
     )
       .next()
       .call(getUserDataProcessingRequest, {
-        userDataProcessingChoiceParam: loadAction.payload
+        choice: loadAction.payload
       })
       .next(get200Response)
       .put(
@@ -76,7 +76,7 @@ describe("loadUserDataProcessingSaga", () => {
     const mokedError = new Error(
       "loadUserDataProcessingSaga response status 500"
     );
-    const get500Response = right({ status: 500, value: mokedError });
+    const get500Response = E.right({ status: 500, value: mokedError });
     testSaga(
       loadUserDataProcessingSaga,
       getUserDataProcessingRequest,
@@ -84,7 +84,7 @@ describe("loadUserDataProcessingSaga", () => {
     )
       .next()
       .call(getUserDataProcessingRequest, {
-        userDataProcessingChoiceParam: loadAction.payload
+        choice: loadAction.payload
       })
       .next(get500Response)
       .put(
@@ -112,7 +112,7 @@ describe("upsertUserDataProcessingSaga", () => {
   };
 
   it("if response is 200, the requrest has been submitted", () => {
-    const post200Response = right({ status: 200, value: mokedNewStatus });
+    const post200Response = E.right({ status: 200, value: mokedNewStatus });
     testSaga(
       upsertUserDataProcessingSaga,
       postUserDataProcessingRequest,
@@ -120,7 +120,7 @@ describe("upsertUserDataProcessingSaga", () => {
     )
       .next()
       .call(postUserDataProcessingRequest, {
-        userDataProcessingChoiceRequest: { choice: requestAction.payload }
+        body: { choice: requestAction.payload }
       })
       .next(post200Response)
       .put(upsertUserDataProcessing.success(mokedNewStatus))
@@ -133,7 +133,7 @@ describe("upsertUserDataProcessingSaga", () => {
     const mokedError = new Error(
       `An error occurred while submitting a request to ${choice} the profile`
     );
-    const get500Response = right({ status: 500 });
+    const get500Response = E.right({ status: 500 });
 
     testSaga(
       upsertUserDataProcessingSaga,
@@ -142,7 +142,7 @@ describe("upsertUserDataProcessingSaga", () => {
     )
       .next()
       .call(postUserDataProcessingRequest, {
-        userDataProcessingChoiceRequest: { choice: requestAction.payload }
+        body: { choice: requestAction.payload }
       })
       .next(get500Response)
       .put(
@@ -170,7 +170,7 @@ describe("deleteUserDataProcessingSaga", () => {
     payload: UserDataProcessingChoiceEnum.DOWNLOAD
   };
   it("if response is 202, the request has been submitted", () => {
-    const post202Response = right({ status: 202 });
+    const post202Response = E.right({ status: 202 });
     testSaga(
       deleteUserDataProcessingSaga,
       deleteUserDataProcessingRequest,
@@ -178,7 +178,7 @@ describe("deleteUserDataProcessingSaga", () => {
     )
       .next()
       .call(deleteUserDataProcessingRequest, {
-        userDataProcessingChoiceParam: requestAction.payload
+        choice: requestAction.payload
       })
       .next(post202Response)
       .put(deleteUserDataProcessing.success({ choice: requestAction.payload }))
@@ -193,7 +193,7 @@ describe("deleteUserDataProcessingSaga", () => {
     const mokedError = new Error(
       `response status ${409} with choice ${choice}`
     );
-    const get409Response = right({ status: 409 });
+    const get409Response = E.right({ status: 409 });
 
     testSaga(
       deleteUserDataProcessingSaga,
@@ -202,7 +202,7 @@ describe("deleteUserDataProcessingSaga", () => {
     )
       .next()
       .call(deleteUserDataProcessingRequest, {
-        userDataProcessingChoiceParam: choice
+        choice
       })
       .next(get409Response)
       .put(

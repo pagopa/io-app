@@ -1,29 +1,29 @@
+import { TouchableWithoutFeedback } from "@gorhom/bottom-sheet";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import { View } from "native-base";
 import * as React from "react";
 import { useEffect, useRef } from "react";
-import { View } from "native-base";
-import { TouchableWithoutFeedback } from "@gorhom/bottom-sheet";
 import { Alert, StyleSheet } from "react-native";
-import { Millisecond } from "italia-ts-commons/lib/units";
-import I18n from "../../../../../../i18n";
-import { BaseTypography } from "../../../../../../components/core/typography/BaseTypography";
-import { IOColors } from "../../../../../../components/core/variables/IOColors";
-import { useIODispatch, useIOSelector } from "../../../../../../store/hooks";
-import { isError, isLoading, isReady } from "../../../../bpd/model/RemoteValue";
+import { Discount } from "../../../../../../../definitions/cgn/merchants/Discount";
 import Eye from "../../../../../../../img/icons/Eye.svg";
+import { InfoBox } from "../../../../../../components/box/InfoBox";
+import { BaseTypography } from "../../../../../../components/core/typography/BaseTypography";
+import { H3 } from "../../../../../../components/core/typography/H3";
+import { H4 } from "../../../../../../components/core/typography/H4";
+import { IOColors } from "../../../../../../components/core/variables/IOColors";
+import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import ActivityIndicator from "../../../../../../components/ui/ActivityIndicator";
-import { cgnBucketSelector } from "../../../store/reducers/bucket";
+import IconFont from "../../../../../../components/ui/IconFont";
+import I18n from "../../../../../../i18n";
+import { useIODispatch, useIOSelector } from "../../../../../../store/hooks";
+import { clipboardSetStringWithFeedback } from "../../../../../../utils/clipboard";
+import { isError, isLoading, isReady } from "../../../../bpd/model/RemoteValue";
 import {
   cgnCodeFromBucket,
   cgnCodeFromBucketReset
 } from "../../../store/actions/bucket";
-import IconFont from "../../../../../../components/ui/IconFont";
-import { clipboardSetStringWithFeedback } from "../../../../../../utils/clipboard";
-import { H3 } from "../../../../../../components/core/typography/H3";
-import { Discount } from "../../../../../../../definitions/cgn/merchants/Discount";
+import { cgnBucketSelector } from "../../../store/reducers/bucket";
 import { isDiscountBucketCodeResponseSuccess } from "../../../types/DiscountBucketCodeResponse";
-import { H4 } from "../../../../../../components/core/typography/H4";
-import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
-import { InfoBox } from "../../../../../../components/box/InfoBox";
 
 type Props = {
   discountId: Discount["id"];

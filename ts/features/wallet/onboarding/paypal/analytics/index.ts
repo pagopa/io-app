@@ -1,6 +1,8 @@
+import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 import { mixpanel } from "../../../../../mixpanel";
 import { Action } from "../../../../../store/actions/types";
+import { getNetworkErrorMessage } from "../../../../../utils/errors";
 import {
   searchPaypalPsp,
   walletAddPaypalBack,
@@ -12,7 +14,6 @@ import {
   walletAddPaypalRefreshPMToken,
   walletAddPaypalStart
 } from "../store/actions";
-import { getNetworkErrorMessage } from "../../../../../utils/errors";
 
 const trackPaypalOnboarding =
   (mp: NonNullable<typeof mixpanel>) =>
@@ -33,7 +34,7 @@ const trackPaypalOnboarding =
         });
       case getType(walletAddPaypalOutcome):
         return mp.track(action.type, {
-          outcome: action.payload.toUndefined()
+          outcome: O.toUndefined(action.payload)
         });
       case getType(searchPaypalPsp.success):
         return mp.track(action.type, {

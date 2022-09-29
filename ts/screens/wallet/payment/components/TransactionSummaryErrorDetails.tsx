@@ -1,14 +1,15 @@
+import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
+import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
 import { RawAccordion } from "../../../../components/core/accordion/RawAccordion";
 import { H4 } from "../../../../components/core/typography/H4";
-import customVariables from "../../../../theme/variables";
 import BlockButtons from "../../../../components/ui/BlockButtons";
 import I18n from "../../../../i18n";
-import { TransactionSummaryError } from "../NewTransactionSummaryScreen";
+import customVariables from "../../../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
-import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
 import { isDuplicatedPayment } from "../../../../utils/payment";
+import { TransactionSummaryError } from "../NewTransactionSummaryScreen";
 import { TransactionSummaryRow } from "./TransactionSummary";
 
 type Props = Readonly<{
@@ -33,7 +34,7 @@ export const TransactionSummaryErrorDetails = ({
   organizationFiscalCode,
   messageId
 }: React.PropsWithChildren<Props>): React.ReactElement | null => {
-  const errorOrUndefined = error.toUndefined();
+  const errorOrUndefined = O.toUndefined(error);
   if (
     errorOrUndefined === undefined ||
     isDuplicatedPayment(error) ||

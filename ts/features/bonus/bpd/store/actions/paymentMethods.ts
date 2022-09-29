@@ -1,4 +1,4 @@
-import { IUnitTag } from "italia-ts-commons/lib/units";
+import { IUnitTag } from "@pagopa/ts-commons/lib/units";
 import { ActionType, createAsyncAction } from "typesafe-actions";
 
 // Temp type to ensure that only HPan from walled are used to query the bpd pm activation

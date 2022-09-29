@@ -1,20 +1,36 @@
-import { reverse } from "fp-ts/lib/Array";
-import { constUndefined } from "fp-ts/lib/function";
-import { fromNullable } from "fp-ts/lib/Option";
+import { useNavigation } from "@react-navigation/native";
+import * as AR from "fp-ts/lib/Array";
+import { constUndefined, pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { View } from "native-base";
 import * as React from "react";
+import { useEffect } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
-import { useEffect } from "react";
-import { useNavigation } from "@react-navigation/native";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import cashbackLogo from "../../../../../img/bonus/bpd/logo_cashback_blue.png";
 import cgnLogo from "../../../../../img/bonus/cgn/cgn_logo.png";
 import { H3 } from "../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
+import {
+  AppParamsList,
+  IOStackNavigationProp
+} from "../../../../navigation/params/AppParamsList";
+import ROUTES from "../../../../navigation/routes";
+import {
+  loadServiceDetail,
+  showServiceDetails
+} from "../../../../store/actions/services";
 import { Dispatch } from "../../../../store/actions/types";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import {
+  isCdcEnabledSelector,
+  isCGNEnabledSelector
+} from "../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../store/reducers/types";
+import { getRemoteLocale } from "../../../../utils/messages";
+import { showToast } from "../../../../utils/showToast";
 import {
   availableBonusTypesSelectorFromId,
   serviceFromAvailableBonusSelector,
@@ -28,22 +44,6 @@ import { bpdOnboardingStart } from "../../../bonus/bpd/store/actions/onboarding"
 import { bpdEnabledSelector } from "../../../bonus/bpd/store/reducers/details/activation";
 import { cgnActivationStart } from "../../../bonus/cgn/store/actions/activation";
 import { isCgnEnrolledSelector } from "../../../bonus/cgn/store/reducers/details";
-import { getRemoteLocale } from "../../../../utils/messages";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import {
-  isCdcEnabledSelector,
-  isCGNEnabledSelector
-} from "../../../../store/reducers/backendStatus";
-import {
-  loadServiceDetail,
-  showServiceDetails
-} from "../../../../store/actions/services";
-import { showToast } from "../../../../utils/showToast";
-import {
-  AppParamsList,
-  IOStackNavigationProp
-} from "../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../navigation/routes";
 import FeaturedCard from "./FeaturedCard";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -82,7 +82,7 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
   // If the cdc service is not loaded try to load it
   useEffect(() => {
     const cdcServiceId = cdcBonus?.service_id ?? undefined;
-    if (isCdcEnabled && cdcService.isNone() && cdcServiceId) {
+    if (isCdcEnabled && O.isNone(cdcService) && cdcServiceId) {
       dispatch(loadServiceDetail.request(cdcServiceId));
     }
   }, [cdcBonus, isCdcEnabled, cdcService, dispatch]);
@@ -97,19 +97,22 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
   if (isCdcEnabled) {
     bonusMap.set(ID_CDC_TYPE, {
       handler: _ => {
-        cdcService.fold(
-          () => {
-            // TODO: add mixpanel tracking and alert: https://pagopa.atlassian.net/browse/AP-14
-            showToast(I18n.t("bonus.cdc.serviceEntryPoint.notAvailable"));
-          },
-          s => () => {
-            dispatch(showServiceDetails(s));
-            navigation.navigate(ROUTES.SERVICES_NAVIGATOR, {
-              screen: ROUTES.SERVICE_DETAIL,
-              params: { serviceId: s.service_id }
-            });
-          }
-        )();
+        pipe(
+          cdcService,
+          O.fold(
+            () => {
+              // TODO: add mixpanel tracking and alert: https://pagopa.atlassian.net/browse/AP-14
+              showToast(I18n.t("bonus.cdc.serviceEntryPoint.notAvailable"));
+            },
+            s => () => {
+              dispatch(showServiceDetails(s));
+              navigation.navigate(ROUTES.SERVICES_NAVIGATOR, {
+                screen: ROUTES.SERVICE_DETAIL,
+                params: { serviceId: s.service_id }
+              });
+            }
+          )
+        );
       }
     });
   }
@@ -131,14 +134,22 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
         alwaysBounceHorizontal={false}
         showsHorizontalScrollIndicator={false}
       >
-        {reverse([...props.availableBonusesList]).map((b, i) => {
-          const handler = fromNullable(bonusMap.get(b.id_type)).fold(
-            () => constUndefined,
-            bu => bu.handler
+        {AR.reverse([...props.availableBonusesList]).map((b, i) => {
+          const handler = pipe(
+            bonusMap.get(b.id_type),
+            O.fromNullable,
+            O.fold(
+              () => constUndefined,
+              bu => bu.handler
+            )
           );
-          const logo = fromNullable(bonusMap.get(b.id_type)).fold(
-            undefined,
-            bu => bu.logo
+          const logo = pipe(
+            bonusMap.get(b.id_type),
+            O.fromNullable,
+            O.fold(
+              () => undefined,
+              bu => bu.logo
+            )
           );
           const currentLocale = getRemoteLocale();
 

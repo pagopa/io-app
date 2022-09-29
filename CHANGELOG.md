@@ -2,6 +2,93 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.17.0-rc.1](https://github.com/pagopa/io-app/compare/2.17.0-rc.0...2.17.0-rc.1) (2022-09-28)
+
+
+### Features
+
+* [[IAI-183](https://pagopa.atlassian.net/browse/IAI-183)] Upgrade io-ts, fp-ts and codegen ([#4020](https://github.com/pagopa/io-app/issues/4020)) ([635fe19](https://github.com/pagopa/io-app/commit/635fe192b2964be1b0a16d8f32d6ba498f7b42ef))
+
+
+### Chores
+
+* [[IAI-151](https://pagopa.atlassian.net/browse/IAI-151)] Update Authentication navigator ([#4056](https://github.com/pagopa/io-app/issues/4056)) ([681a6aa](https://github.com/pagopa/io-app/commit/681a6aa1378eb36f8095a2ed424611e04bc9fe2b))
+* [[IAI-164](https://pagopa.atlassian.net/browse/IAI-164)] Upgrade `WalletNavigator` to v5 ([#4097](https://github.com/pagopa/io-app/issues/4097)) ([9e6bfd1](https://github.com/pagopa/io-app/commit/9e6bfd101a3a981fff9729ed4a2e6d04127e6dda))
+* [[IAI-246](https://pagopa.atlassian.net/browse/IAI-246)] Changes pagopPa UAT API URI ([#4124](https://github.com/pagopa/io-app/issues/4124)) ([a4f5003](https://github.com/pagopa/io-app/commit/a4f500324ae358758930305c608e005b05964260))
+
+## [2.17.0-rc.0](https://github.com/pagopa/io-app/compare/2.16.0-rc.1...2.17.0-rc.0) (2022-09-27)
+
+## [2.16.0-rc.1](https://github.com/pagopa/io-app/compare/2.16.0-rc.0...2.16.0-rc.1) (2022-09-23)
+
+
+### Bug Fixes
+
+* **Piattaforma Notifiche:** [[IAMVL-99](https://pagopa.atlassian.net/browse/IAMVL-99)] Attachment ID might not be unique per user ([#4119](https://github.com/pagopa/io-app/issues/4119)) ([7b17562](https://github.com/pagopa/io-app/commit/7b1756267894cfe60a71ff5702ff204f5976362f))
+
+
+### Chores
+
+* [[IA-927](https://pagopa.atlassian.net/browse/IA-927)] Allow to filter PSPs on poste_datamatrix_scan payment origin ([#4120](https://github.com/pagopa/io-app/issues/4120)) ([91d4090](https://github.com/pagopa/io-app/commit/91d4090f0903cc3abb400015a1cc2d5b3c3195df))
+
+## [2.16.0-rc.0](https://github.com/pagopa/io-app/compare/2.15.0-rc.4...2.16.0-rc.0) (2022-09-20)
+
+## [2.15.0-rc.4](https://github.com/pagopa/io-app/compare/2.15.0-rc.3...2.15.0-rc.4) (2022-09-14)
+
+## [2.15.0-rc.3](https://github.com/pagopa/io-app/compare/2.15.0-rc.2...2.15.0-rc.3) (2022-09-12)
+
+
+### Features
+
+* [[IIP-103](https://pagopa.atlassian.net/browse/IIP-103)] Fix error message when attachment download fails ([#4114](https://github.com/pagopa/io-app/issues/4114)) ([9dd7ec6](https://github.com/pagopa/io-app/commit/9dd7ec63c61dbde6433c54b502860b36122beebf))
+
+## [2.15.0-rc.2](https://github.com/pagopa/io-app/compare/2.15.0-rc.1...2.15.0-rc.2) (2022-09-12)
+
+
+### Bug Fixes
+
+* [[IA-928](https://pagopa.atlassian.net/browse/IA-928)] Fix tab bar safe area handling in iPhone 14 Pro ([#4113](https://github.com/pagopa/io-app/issues/4113)) ([e720e5e](https://github.com/pagopa/io-app/commit/e720e5e50f9e94edfdb2a3076f48488e743e7010))
+
+
+### Chores
+
+* **Piattaforma Notifiche:** [[IAMVL-98](https://pagopa.atlassian.net/browse/IAMVL-98)] Update PN backend types ([#4112](https://github.com/pagopa/io-app/issues/4112)) ([fa95686](https://github.com/pagopa/io-app/commit/fa956863d15e66583a749705b4e3e1b81ecc4e78))
+
+## [2.15.0-rc.1](https://github.com/pagopa/io-app/compare/2.15.0-rc.0...2.15.0-rc.1) (2022-09-08)
+
+
+### Features
+
+* **Piattaforma Notifiche:** [[IAMVL-97](https://pagopa.atlassian.net/browse/IAMVL-97)] Track PN events to Mixpanel ([#4111](https://github.com/pagopa/io-app/issues/4111)) ([af27021](https://github.com/pagopa/io-app/commit/af27021c794424e92f709a9241a3b2a71670462a))
+
+
+### Bug Fixes
+
+* [[IABT-1386](https://pagopa.atlassian.net/browse/IABT-1386)] Fix the Android camera permissions request ([#4095](https://github.com/pagopa/io-app/issues/4095)) ([bf5bb81](https://github.com/pagopa/io-app/commit/bf5bb812f758a03b89ef9223c4c90fb3827b542b))
+
+
+### Chores
+
+* [[IA-926](https://pagopa.atlassian.net/browse/IA-926)] Enter with CIE: copy changes ([#4108](https://github.com/pagopa/io-app/issues/4108)) ([8a34e14](https://github.com/pagopa/io-app/commit/8a34e146c7a9c32edb7309bcba40574d3cda58a3))
+
+## [2.15.0-rc.0](https://github.com/pagopa/io-app/compare/2.14.0-rc.6...2.15.0-rc.0) (2022-08-29)
+
+
+### Features
+
+* [[IIP-63](https://pagopa.atlassian.net/browse/IIP-63)] Change PDF preview error copy ([#4106](https://github.com/pagopa/io-app/issues/4106)) ([b8585fb](https://github.com/pagopa/io-app/commit/b8585fb26cb52534ca0f01a7c21c98148a6d4f43))
+* **Piattaforma Notifiche:** [[IAMVL-89](https://pagopa.atlassian.net/browse/IAMVL-89)] Add a CTA for viewing a notification in the PN website ([#4088](https://github.com/pagopa/io-app/issues/4088)) ([1bc0b89](https://github.com/pagopa/io-app/commit/1bc0b89ca284f06179cc20b90b1f97167e2ff64b))
+
+
+### Bug Fixes
+
+* [[IA-827](https://pagopa.atlassian.net/browse/IA-827)] Message is still shown as unread after opening it ([#4096](https://github.com/pagopa/io-app/issues/4096)) ([6f8cc68](https://github.com/pagopa/io-app/commit/6f8cc68e0fde52a810c1120b3c291bc7afbb2f0c))
+
+
+### Chores
+
+* **Piattaforma Notifiche:** [[IAMVL-87](https://pagopa.atlassian.net/browse/IAMVL-87)] Enable PN in production ([#4107](https://github.com/pagopa/io-app/issues/4107)) ([87a75e4](https://github.com/pagopa/io-app/commit/87a75e4a7a4671893b8a0e43624e075d45aa5c8a))
+* [[IAI-223](https://pagopa.atlassian.net/browse/IAI-223)] Pictograms and Illustrations' inventory ([#4101](https://github.com/pagopa/io-app/issues/4101)) ([723e236](https://github.com/pagopa/io-app/commit/723e236c4335eb924e5e6b50dcdadd7e389d537e))
+
 ## [2.14.0-rc.6](https://github.com/pagopa/io-app/compare/2.14.0-rc.5...2.14.0-rc.6) (2022-08-04)
 
 

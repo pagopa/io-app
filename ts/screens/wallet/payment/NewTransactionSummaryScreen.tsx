@@ -1,24 +1,36 @@
-import React, { useEffect } from "react";
-import { CompatNavigationProp } from "@react-navigation/compat";
-import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
-import * as pot from "italia-ts-commons/lib/pot";
-import { connect } from "react-redux";
 import {
   PaymentNoticeNumberFromString,
   RptIdFromString
 } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { ActionSheet } from "native-base";
-import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
-import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
+import React, { useEffect } from "react";
+import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { connect } from "react-redux";
+import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import I18n from "../../../i18n";
-import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import { GlobalState } from "../../../store/reducers/types";
+import {
+  isError,
+  isLoading as isRemoteLoading,
+  isUndefined
+} from "../../../features/bonus/bpd/model/RemoteValue";
+import {
+  zendeskSelectedCategory,
+  zendeskSupportStart
+} from "../../../features/zendesk/store/actions";
+import I18n from "../../../i18n";
+import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
+import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
+import {
+  navigateToPaymentPickPaymentMethodScreen,
+  navigateToPaymentTransactionErrorScreen,
+  navigateToWalletAddPaymentMethod
+} from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
-import { fetchWalletsRequestWithExpBackoff } from "../../../store/actions/wallet/wallets";
-import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import {
   abortRunningPayment,
   backToEntrypointPayment,
@@ -30,37 +42,27 @@ import {
   runDeleteActivePaymentSaga,
   runStartOrResumePaymentActivationSaga
 } from "../../../store/actions/wallet/payment";
-import { PayloadForAction } from "../../../types/utils";
-import {
-  navigateToPaymentPickPaymentMethodScreen,
-  navigateToPaymentTransactionErrorScreen,
-  navigateToWalletAddPaymentMethod
-} from "../../../store/actions/navigation";
-import {
-  isError,
-  isLoading as isRemoteLoading,
-  isUndefined
-} from "../../../features/bonus/bpd/model/RemoteValue";
-import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
-import {
-  getFavoriteWallet,
-  withPaymentFeatureSelector
-} from "../../../store/reducers/wallet/wallets";
+import { fetchWalletsRequestWithExpBackoff } from "../../../store/actions/wallet/wallets";
 import {
   bancomatPayConfigSelector,
   isPaypalEnabledSelector
 } from "../../../store/reducers/backendStatus";
-import { alertNoPayablePaymentMethods } from "../../../utils/paymentMethod";
-import { showToast } from "../../../utils/showToast";
+import { GlobalState } from "../../../store/reducers/types";
+import {
+  getFavoriteWallet,
+  withPaymentFeatureSelector
+} from "../../../store/reducers/wallet/wallets";
+import customVariables from "../../../theme/variables";
+import { PayloadForAction } from "../../../types/utils";
+import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import {
   DetailV2Keys,
   getV2ErrorMainType,
   isDuplicatedPayment
 } from "../../../utils/payment";
-import {
-  zendeskSelectedCategory,
-  zendeskSupportStart
-} from "../../../features/zendesk/store/actions";
+import { alertNoPayablePaymentMethods } from "../../../utils/paymentMethod";
+import { showToast } from "../../../utils/showToast";
 import {
   addTicketCustomField,
   appendLog,
@@ -69,19 +71,17 @@ import {
   zendeskCategoryId,
   zendeskPaymentCategory
 } from "../../../utils/supportAssistance";
-import customVariables from "../../../theme/variables";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
-import { TransactionSummary } from "./components/TransactionSummary";
-import { TransactionSummaryStatus } from "./components/TransactionSummaryStatus";
 import { dispatchPickPspOrConfirm } from "./common";
-import { TransactionSummaryErrorDetails } from "./components/TransactionSummaryErrorDetails";
+import { TransactionSummary } from "./components/TransactionSummary";
 import {
   continueButtonProps,
   helpButtonProps,
   loadingButtonProps
 } from "./components/TransactionSummaryButtonConfigurations";
+import { TransactionSummaryErrorDetails } from "./components/TransactionSummaryErrorDetails";
+import { TransactionSummaryStatus } from "./components/TransactionSummaryStatus";
 
-export type TransactionSummaryError = Option<
+export type TransactionSummaryError = O.Option<
   PayloadForAction<
     | typeof paymentVerifica["failure"]
     | typeof paymentAttiva["failure"]
@@ -101,8 +101,8 @@ const renderFooter = (
   continueWithPayment: () => void,
   help: () => void
 ) => {
-  if (error.isSome()) {
-    const errorOrUndefined = error.toUndefined();
+  if (O.isSome(error)) {
+    const errorOrUndefined = O.toUndefined(error);
     const errorType = getV2ErrorMainType(errorOrUndefined as DetailV2Keys);
     switch (errorType) {
       case "TECHNICAL":
@@ -141,11 +141,10 @@ const renderFooter = (
   );
 };
 
-type OwnProps = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<WalletParamsList, "PAYMENT_TRANSACTION_SUMMARY">
-  >;
-};
+type OwnProps = IOStackNavigationRouteProps<
+  WalletParamsList,
+  "PAYMENT_TRANSACTION_SUMMARY"
+>;
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -161,6 +160,7 @@ const NewTransactionSummaryScreen = ({
   walletById,
   loadWallets,
   navigation,
+  route,
   continueWithPayment,
   maybeFavoriteWallet,
   hasPayableMethods,
@@ -181,13 +181,13 @@ const NewTransactionSummaryScreen = ({
   // We show inline error status only if the payment starts
   // from a message and the verification fails. In all the other
   // cases we present the fullscreen error message.
-  const paymentStartOrigin = navigation.getParam("paymentStartOrigin");
+  const paymentStartOrigin = route.params.paymentStartOrigin;
   const showsInlineError = paymentStartOrigin === "message";
 
-  const errorOrUndefined = error.toUndefined();
-  const isPaid = isDuplicatedPayment(error);
+  const errorOrUndefined = O.toUndefined(error);
+  const isError = O.isSome(error);
 
-  const isError = error.isSome();
+  const isPaid = isDuplicatedPayment(error);
   useEffect(() => {
     if (!isError) {
       return;
@@ -202,7 +202,7 @@ const NewTransactionSummaryScreen = ({
       (pot.isError(paymentVerification) && !showsInlineError) ||
       (!pot.isError(paymentVerification) && isError)
     ) {
-      navigateToPaymentTransactionError(fromNullable(errorOrUndefined));
+      navigateToPaymentTransactionError(O.fromNullable(errorOrUndefined));
     }
   }, [
     isError,
@@ -244,8 +244,8 @@ const NewTransactionSummaryScreen = ({
     }
   };
 
-  const rptId = navigation.getParam("rptId");
-  const messageId = navigation.getParam("messageId");
+  const rptId = route.params.rptId;
+  const messageId = route.params.messageId;
 
   const paymentNoticeNumber = PaymentNoticeNumberFromString.encode(
     rptId.paymentNoticeNumber
@@ -256,10 +256,13 @@ const NewTransactionSummaryScreen = ({
    * otherwise (it could be an issue with the API) use the rptID coming from
    * static data (e.g. message, qrcode, manual insertion, etc.)
    */
-  const organizationFiscalCode = pot
-    .toOption(paymentVerification)
-    .mapNullable(_ => _.enteBeneficiario?.identificativoUnivocoBeneficiario)
-    .getOrElse(rptId.organizationFiscalCode);
+  const organizationFiscalCode = pipe(
+    pot.toOption(paymentVerification),
+    O.chainNullableK(
+      _ => _.enteBeneficiario?.identificativoUnivocoBeneficiario
+    ),
+    O.getOrElse(() => rptId.organizationFiscalCode)
+  );
 
   return (
     <BaseScreenComponent
@@ -307,14 +310,14 @@ const mapStateToProps = (state: GlobalState) => {
   const { verifica, attiva, paymentId, check, pspsV2 } = state.wallet.payment;
 
   const error: TransactionSummaryError = pot.isError(verifica)
-    ? some(verifica.error)
+    ? O.some(verifica.error)
     : pot.isError(attiva)
-    ? some(attiva.error)
+    ? O.some(attiva.error)
     : pot.isError(paymentId)
-    ? some(paymentId.error)
+    ? O.some(paymentId.error)
     : pot.isError(check) || isError(pspsV2.psps)
-    ? some(undefined)
-    : none;
+    ? O.some(undefined)
+    : O.none;
 
   const walletById = state.wallet.wallets.walletById;
 
@@ -326,16 +329,20 @@ const mapStateToProps = (state: GlobalState) => {
    * - payment method is PayPal & the relative feature flag is not enabled
    * - payment method is BPay & the relative feature flag is not enabled
    */
-  const maybeFavoriteWallet = fromNullable(favouriteWallet).filter(fw => {
-    switch (fw.paymentMethod?.kind) {
-      case "PayPal":
-        return isPaypalEnabled;
-      case "BPay":
-        return isBPayPaymentEnabled;
-      default:
-        return true;
-    }
-  });
+  const maybeFavoriteWallet = pipe(
+    favouriteWallet,
+    O.fromNullable,
+    O.filter(fw => {
+      switch (fw.paymentMethod?.kind) {
+        case "PayPal":
+          return isPaypalEnabled;
+        case "BPay":
+          return isBPayPaymentEnabled;
+        default:
+          return true;
+      }
+    })
+  );
 
   const hasPayableMethods = withPaymentFeatureSelector(state).length > 0;
 
@@ -343,15 +350,15 @@ const mapStateToProps = (state: GlobalState) => {
     pot.isLoading(walletById) ||
     pot.isLoading(verifica) ||
     pot.isLoading(attiva) ||
-    (error.isNone() && pot.isSome(attiva) && pot.isNone(paymentId)) ||
+    (O.isNone(error) && pot.isSome(attiva) && pot.isNone(paymentId)) ||
     pot.isLoading(paymentId) ||
-    (error.isNone() && pot.isSome(paymentId) && pot.isNone(check)) ||
+    (O.isNone(error) && pot.isSome(paymentId) && pot.isNone(check)) ||
     pot.isLoading(check) ||
-    (maybeFavoriteWallet.isSome() &&
-      error.isNone() &&
+    (O.isSome(maybeFavoriteWallet) &&
+      O.isNone(error) &&
       pot.isSome(check) &&
       isUndefined(pspsV2.psps)) ||
-    (maybeFavoriteWallet.isSome() && isRemoteLoading(pspsV2.psps));
+    (O.isSome(maybeFavoriteWallet) && isRemoteLoading(pspsV2.psps));
 
   return {
     paymentVerification: verifica,
@@ -365,9 +372,9 @@ const mapStateToProps = (state: GlobalState) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
-  const rptId = props.navigation.getParam("rptId");
-  const paymentStartOrigin = props.navigation.getParam("paymentStartOrigin");
-  const initialAmount = props.navigation.getParam("initialAmount");
+  const rptId = props.route.params.rptId;
+  const paymentStartOrigin = props.route.params.paymentStartOrigin;
+  const initialAmount = props.route.params.initialAmount;
 
   const verifyPayment = () =>
     dispatch(
@@ -450,7 +457,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
     }
     alertNoPayablePaymentMethods(() =>
       navigateToWalletAddPaymentMethod({
-        inPayment: none,
+        inPayment: O.none,
         showOnlyPayablePaymentMethods: true
       })
     );

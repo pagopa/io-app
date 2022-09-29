@@ -1,4 +1,5 @@
-import { fromNullable } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { View } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
@@ -52,24 +53,41 @@ class ScreenHeader extends React.Component<Props> {
       return <Image source={icon} style={styles.image} />;
     }
     const { iconFont } = this.props;
-    return fromNullable(iconFont).fold(undefined, ic => {
-      const { dark } = this.props;
-      const imageColor = fromNullable(ic.color).getOrElse(
-        fromNullable(dark).fold(customVariables.headerIconLight, isDark =>
-          isDark
-            ? customVariables.headerIconDark
-            : customVariables.headerIconLight
-        )
-      );
-      return (
-        <IconFont
-          importantForAccessibility={"no-hide-descendants"}
-          name={ic.name}
-          size={Math.min(ic.size || HEADER_ICON_HEIGHT, HEADER_ICON_HEIGHT)}
-          color={imageColor}
-        />
-      );
-    });
+    return pipe(
+      iconFont,
+      O.fromNullable,
+      O.fold(
+        () => undefined,
+        ic => {
+          const { dark } = this.props;
+          const imageColor = pipe(
+            ic.color,
+            O.fromNullable,
+            O.getOrElse(() =>
+              pipe(
+                dark,
+                O.fromNullable,
+                O.fold(
+                  () => customVariables.headerIconLight,
+                  isDark =>
+                    isDark
+                      ? customVariables.headerIconDark
+                      : customVariables.headerIconLight
+                )
+              )
+            )
+          );
+          return (
+            <IconFont
+              importantForAccessibility={"no-hide-descendants"}
+              name={ic.name}
+              size={Math.min(ic.size || HEADER_ICON_HEIGHT, HEADER_ICON_HEIGHT)}
+              color={imageColor}
+            />
+          );
+        }
+      )
+    );
   };
 
   public render() {
@@ -83,7 +101,14 @@ class ScreenHeader extends React.Component<Props> {
         >
           {heading}
         </View>
-        {fromNullable(rightComponent).fold(this.getIcon(), c => c)}
+        {pipe(
+          rightComponent,
+          O.fromNullable,
+          O.fold(
+            () => this.getIcon(),
+            c => c
+          )
+        )}
       </View>
     );
   }

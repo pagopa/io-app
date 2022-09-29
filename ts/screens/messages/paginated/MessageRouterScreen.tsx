@@ -5,8 +5,10 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
+import { pipe } from "fp-ts/lib/function";
 import { TagEnum as TagEnumBase } from "../../../../definitions/backend/MessageCategoryBase";
 import { TagEnum as TagEnumPN } from "../../../../definitions/backend/MessageCategoryPN";
+
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 
 import { euCovidCertificateEnabled, mvlEnabled } from "../../../config";
@@ -14,9 +16,11 @@ import { LoadingErrorComponent } from "../../../features/bonus/bonusVacanze/comp
 import { navigateToEuCovidCertificateDetailScreen } from "../../../features/euCovidCert/navigation/actions";
 import { EUCovidCertificateAuthCode } from "../../../features/euCovidCert/types/EUCovidCertificate";
 import { navigateToMvlDetailsScreen } from "../../../features/mvl/navigation/actions";
+import { navigateToPnMessageDetailsScreen } from "../../../features/pn/navigation/actions";
 import I18n from "../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { MessagesParamsList } from "../../../navigation/params/MessagesParamsList";
+import ROUTES from "../../../navigation/routes";
 import {
   loadMessageById,
   loadMessageDetails,
@@ -27,7 +31,10 @@ import {
   navigateToPaginatedMessageDetailScreenAction
 } from "../../../store/actions/navigation";
 import { loadServiceDetail } from "../../../store/actions/services";
+import { useIOSelector } from "../../../store/hooks";
+import { isPnEnabledSelector } from "../../../store/reducers/backendStatus";
 import { getDetailsByMessageId } from "../../../store/reducers/entities/messages/detailsById";
+import { getMessageById } from "../../../store/reducers/entities/messages/paginatedById";
 import {
   UIMessage,
   UIMessageDetails,
@@ -37,11 +44,7 @@ import { serviceByIdSelector } from "../../../store/reducers/entities/services/s
 import { GlobalState } from "../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { isStrictSome } from "../../../utils/pot";
-import { getMessageById } from "../../../store/reducers/entities/messages/paginatedById";
-import { navigateToPnMessageDetailsScreen } from "../../../features/pn/navigation/actions";
-import { useIOSelector } from "../../../store/hooks";
-import { isPnEnabledSelector } from "../../../store/reducers/backendStatus";
-import ROUTES from "../../../navigation/routes";
+import { mixpanelTrack } from "../../../mixpanel";
 
 export type MessageRouterScreenPaginatedNavigationParams = {
   messageId: UIMessageId;
@@ -159,6 +162,7 @@ const MessageRouterScreen = ({
       //
       // https://pagopa.atlassian.net/browse/IA-917
       if (fromNotification && maybeMessage.category.tag === "PN") {
+        void mixpanelTrack("PN_PUSH_OPENED");
         navigation.navigate(ROUTES.MAIN, {
           screen: ROUTES.MESSAGES_HOME
         });
@@ -225,10 +229,13 @@ const mapStateToProps = (state: GlobalState, ownProps: NavigationProps) => {
   const messageId = ownProps.route.params.messageId;
   const fromNotification = ownProps.route.params.fromNotification;
   const maybeMessage = pot.toUndefined(getMessageById(state, messageId));
-  const isServiceAvailable = O.fromNullable(maybeMessage?.serviceId)
-    .map(serviceId => serviceByIdSelector(serviceId)(state) || pot.none)
-    .map(_ => Boolean(pot.toUndefined(_)))
-    .getOrElse(false);
+  const isServiceAvailable = pipe(
+    maybeMessage?.serviceId,
+    O.fromNullable,
+    O.map(serviceId => serviceByIdSelector(serviceId)(state) || pot.none),
+    O.map(_ => Boolean(pot.toUndefined(_))),
+    O.getOrElse(() => false)
+  );
   const maybeMessageDetails = getDetailsByMessageId(state, messageId);
   return {
     isServiceAvailable,

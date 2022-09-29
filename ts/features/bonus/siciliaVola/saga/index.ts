@@ -1,7 +1,8 @@
 import { takeLatest } from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
 import { SagaIterator } from "redux-saga";
-import { none, some } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
 import { SessionManager } from "../../../../utils/SessionManager";
 import { apiUrlPrefix } from "../../../../config";
 import {
@@ -53,12 +54,12 @@ export function* watchBonusSvSaga(sessionToken: SessionToken): SagaIterator {
   const getSiciliaVolaSessionToken = async () => {
     try {
       const response = await siciliaVolaClient.getMitVoucherToken(sessionToken);
-      if (response.isRight() && response.value.status === 200) {
-        return some(response.value.value);
+      if (E.isRight(response) && response.right.status === 200) {
+        return O.some(response.right.value);
       }
-      return none;
+      return O.none;
     } catch {
-      return none;
+      return O.none;
     }
   };
   // The session manager for SiciliaVola (Sv) will manage the

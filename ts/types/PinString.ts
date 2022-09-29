@@ -1,6 +1,6 @@
 import * as t from "io-ts";
 
-import { PatternString } from "italia-ts-commons/lib/strings";
+import { PatternString } from "@pagopa/ts-commons/lib/strings";
 import { PIN_LENGTH, PIN_LENGTH_SIX } from "../utils/constants";
 
 /**
