@@ -257,9 +257,9 @@ dependencies {
     implementation project(':@react-native-clipboard_clipboard')
     implementation project(':react-native-fingerprint-scanner')
     implementation project(':react-native-art')
-    implementation "org.jetbrains.kotlin:kotlin-reflect:1.5.21"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$rootProject.ext.kotlin_version"
 
-    implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
     androidTestImplementation('com.wix:detox:+') { transitive = true }
     androidTestImplementation 'junit:junit:4.12'
 }
