@@ -1,17 +1,18 @@
-import { Either } from "fp-ts/lib/Either";
-import { ITuple2 } from "italia-ts-commons/lib/tuples";
+import { ITuple2 } from "@pagopa/ts-commons/lib/tuples";
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
 import { Col, Grid, Row, Text } from "native-base";
 import * as React from "react";
 import { Platform, StyleSheet } from "react-native";
 import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
-import StyledIconFont from "../ui/IconFont";
 import { IOColors } from "../core/variables/IOColors";
+import StyledIconFont from "../ui/IconFont";
 
 // left -> the string to represent as text
 // right -> the icon to represent with name and size
-export type DigitRpr = Either<
+export type DigitRpr = E.Either<
   string,
   { name: string; size: number; accessibilityLabel: string }
 >;
@@ -79,9 +80,12 @@ const renderPinCol = (
       ? [styles.roundButton, styles.transparent]
       : undefined;
 
-  const accessibilityLabel = label.fold(
-    () => undefined,
-    ic => ic.accessibilityLabel
+  const accessibilityLabel = pipe(
+    label,
+    E.fold(
+      () => undefined,
+      ic => ic.accessibilityLabel
+    )
   );
 
   return (
@@ -95,29 +99,32 @@ const renderPinCol = (
         unNamed={buttonType === "light"}
         accessibilityLabel={accessibilityLabel}
       >
-        {label.fold(
-          l => (
-            <Text
-              white={style === "label" && buttonType === "primary"}
-              style={[
-                styles.buttonTextBase,
-                style === "label" && styles.buttonTextLabel
-              ]}
-            >
-              {l}
-            </Text>
-          ),
-          ic => (
-            <StyledIconFont
-              name={ic.name}
-              size={ic.size}
-              style={[styles.noPadded]}
-              color={
-                buttonType === "light"
-                  ? customVariables.contentPrimaryBackground
-                  : IOColors.white
-              }
-            />
+        {pipe(
+          label,
+          E.fold(
+            l => (
+              <Text
+                white={style === "label" && buttonType === "primary"}
+                style={[
+                  styles.buttonTextBase,
+                  style === "label" && styles.buttonTextLabel
+                ]}
+              >
+                {l}
+              </Text>
+            ),
+            ic => (
+              <StyledIconFont
+                name={ic.name}
+                size={ic.size}
+                style={[styles.noPadded]}
+                color={
+                  buttonType === "light"
+                    ? customVariables.contentPrimaryBackground
+                    : IOColors.white
+                }
+              />
+            )
           )
         )}
       </ButtonDefaultOpacity>
@@ -137,7 +144,7 @@ const renderPinRow = (
         renderPinCol(
           el.e1,
           el.e2,
-          el.e1.isLeft() ? "digit" : "label",
+          E.isLeft(el.e1) ? "digit" : "label",
           `pinpad-digit-${i}`,
           buttonType,
           isDisabled

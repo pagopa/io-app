@@ -1,3 +1,6 @@
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { Text } from "native-base";
 import React from "react";
 import {
@@ -9,6 +12,7 @@ import {
 import { Calendar } from "react-native-calendar-events";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import I18n from "../../i18n";
 import {
   addCalendarEvent,
@@ -37,7 +41,6 @@ import { withLightModalContext } from "../helpers/withLightModalContext";
 import SelectCalendarModal from "../SelectCalendarModal";
 import IconFont from "../ui/IconFont";
 import { LightModalContextInterface } from "../ui/LightModal";
-import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 
 type OwnProps = {
   message: CreatedMessageWithContentAndAttachments;
@@ -92,13 +95,14 @@ class CalendarEventButton extends React.PureComponent<Props, State> {
       });
       return;
     }
-    const mayBeInCalendar = await isEventInCalendar(
-      calendarEvent.eventId
-    ).run();
+    const mayBeInCalendar = await isEventInCalendar(calendarEvent.eventId)();
     this.setState({
-      isEventInDeviceCalendar: mayBeInCalendar.fold(
-        _ => false,
-        s => s
+      isEventInDeviceCalendar: pipe(
+        mayBeInCalendar,
+        E.fold(
+          _ => false,
+          s => s
+        )
       )
     });
   };
@@ -197,25 +201,28 @@ class CalendarEventButton extends React.PureComponent<Props, State> {
 
       searchEventInCalendar(dueDate, title)
         .then(mayBeEventId =>
-          mayBeEventId.foldL(
-            () => {
-              saveCalendarEvent(
-                calendar,
-                message,
-                dueDate,
-                title,
-                this.addCalendarEvent
-              );
-            },
-            async eventId => {
-              this.confirmSaveCalendarEventAlert(
-                calendar,
-                message,
-                dueDate,
-                title,
-                eventId
-              );
-            }
+          pipe(
+            mayBeEventId,
+            O.fold(
+              () => {
+                saveCalendarEvent(
+                  calendar,
+                  message,
+                  dueDate,
+                  title,
+                  this.addCalendarEvent
+                );
+              },
+              async eventId => {
+                this.confirmSaveCalendarEventAlert(
+                  calendar,
+                  message,
+                  dueDate,
+                  title,
+                  eventId
+                );
+              }
+            )
           )
         )
         .catch(() =>

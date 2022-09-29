@@ -1,15 +1,15 @@
-import React from "react";
+import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { fireEvent, render } from "@testing-library/react-native";
-import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
+import React from "react";
 import { testableGenServiceMetadataAccessibilityLabel } from "../";
-import { TranslationKeys } from "../../../../../locales/locales";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { ServiceMetadata } from "../../../../../definitions/backend/ServiceMetadata";
+import { ServiceScopeEnum } from "../../../../../definitions/backend/ServiceScope";
+import { StandardServiceCategoryEnum } from "../../../../../definitions/backend/StandardServiceCategory";
+import { TranslationKeys } from "../../../../../locales/locales";
+import I18n from "../../../../i18n";
 import { capitalize } from "../../../../utils/strings";
 import * as utilsUrl from "../../../../utils/url";
-import I18n from "../../../../i18n";
-import { ServiceScopeEnum } from "../../../../../definitions/backend/ServiceScope";
-import { ServiceMetadata } from "../../../../../definitions/backend/ServiceMetadata";
-import { StandardServiceCategoryEnum } from "../../../../../definitions/backend/StandardServiceCategory";
 import ServiceMetadataComponent from "../../ServiceMetadata";
 
 jest.mock("../../../../utils/platform");

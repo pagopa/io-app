@@ -1,5 +1,6 @@
 import { RouteProp, useRoute } from "@react-navigation/native";
-import { constNull } from "fp-ts/lib/function";
+import { constNull, pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { ListItem, View } from "native-base";
 import React, { ReactNode } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
@@ -203,12 +204,17 @@ const ZendeskAskPermissions = () => {
   const workUnitCompleted = () => dispatch(zendeskSupportCompleted());
   const notAvailable = I18n.t("global.remoteStates.notAvailable");
   const isUserLoggedIn = useIOSelector(s => isLoggedIn(s.authentication));
-  const identityProvider = useIOSelector(idpSelector)
-    .map(idp => idp.name)
-    .getOrElse(notAvailable);
+  const identityProvider = pipe(
+    useIOSelector(idpSelector),
+    O.map(idp => idp.name),
+    O.getOrElse(() => notAvailable)
+  );
   const fiscalCode = useIOSelector(profileFiscalCodeSelector) ?? notAvailable;
   const nameSurname = useIOSelector(profileNameSurnameSelector) ?? notAvailable;
-  const email = useIOSelector(profileEmailSelector).getOrElse(notAvailable);
+  const email = pipe(
+    useIOSelector(profileEmailSelector),
+    O.getOrElse(() => notAvailable)
+  );
   const versionsHistory = useIOSelector(appVersionHistorySelector);
   const zendeskSelectedCategory = useIOSelector(
     zendeskSelectedCategorySelector

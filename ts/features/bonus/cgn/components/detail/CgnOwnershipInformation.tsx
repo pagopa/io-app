@@ -1,15 +1,15 @@
-import * as React from "react";
-import { connect } from "react-redux";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { View } from "native-base";
+import * as React from "react";
 import { StyleSheet } from "react-native";
-import * as pot from "italia-ts-commons/lib/pot";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { Dispatch } from "../../../../../store/actions/types";
+import { connect } from "react-redux";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { Monospace } from "../../../../../components/core/typography/Monospace";
-import { profileSelector } from "../../../../../store/reducers/profile";
-import I18n from "../../../../../i18n";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import I18n from "../../../../../i18n";
+import { Dispatch } from "../../../../../store/actions/types";
+import { profileSelector } from "../../../../../store/reducers/profile";
+import { GlobalState } from "../../../../../store/reducers/types";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;

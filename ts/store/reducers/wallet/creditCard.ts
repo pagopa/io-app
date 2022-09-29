@@ -1,8 +1,13 @@
-import { getType } from "typesafe-actions";
-import sha from "sha.js";
-import { fromNullable } from "fp-ts/lib/Option";
-import { index, take, takeEnd } from "fp-ts/lib/Array";
+import * as AR from "fp-ts/lib/Array";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
+import sha from "sha.js";
+import { getType } from "typesafe-actions";
+import { getLookUpId } from "../../../utils/pmLookUpId";
+import { clearCache } from "../../actions/profile";
+import { Action } from "../../actions/types";
+import { addCreditCardOutcomeCode } from "../../actions/wallet/outcomeCode";
 import {
   addCreditCardWebViewEnd,
   AddCreditCardWebViewEndReason,
@@ -13,11 +18,7 @@ import {
   CreditCardFailure,
   creditCardPaymentNavigationUrls
 } from "../../actions/wallet/wallets";
-import { Action } from "../../actions/types";
-import { clearCache } from "../../actions/profile";
 import { GlobalState } from "../types";
-import { addCreditCardOutcomeCode } from "../../actions/wallet/outcomeCode";
-import { getLookUpId } from "../../../utils/pmLookUpId";
 
 export type CreditCardInsertion = {
   startDate: Date;
@@ -43,7 +44,7 @@ export type CreditCardInsertionState = ReadonlyArray<CreditCardInsertion>;
 export const MAX_HISTORY_LENGTH = 15;
 
 const trimState = (state: CreditCardInsertionState) =>
-  take(MAX_HISTORY_LENGTH, [...state]);
+  AR.takeLeft(MAX_HISTORY_LENGTH)([...state]);
 
 /**
  * Given a current state (which is represented by a stack), replace the head with a given item
@@ -60,15 +61,17 @@ const updateStateHead = (
   state: CreditCardInsertionState,
   updaterFn: (item: CreditCardInsertion) => CreditCardInsertion
 ): CreditCardInsertionState =>
-  index<CreditCardInsertion>(0, [...state])
-    .map(updaterFn)
-    .fold(state, updateItem => {
-      const [, ...tail] = state;
-      return trimState([
-        updateItem,
-        ...takeEnd<CreditCardInsertion>(tail.length, tail)
-      ]);
-    });
+  pipe(
+    AR.lookup<CreditCardInsertion>(0, [...state]),
+    O.map(updaterFn),
+    O.fold(
+      () => state,
+      updateItem => {
+        const [, ...tail] = state;
+        return trimState([updateItem, ...AR.takeRight(tail.length)(tail)]);
+      }
+    )
+  );
 const INITIAL_STATE: CreditCardInsertionState = [];
 /**
  * card insertion follow these step:
@@ -93,23 +96,28 @@ const reducer = (
   switch (action.type) {
     case getType(addWalletCreditCardRequest):
       const payload = action.payload;
-      return fromNullable(
-        payload.creditcard?.creditCard
-      ).fold<CreditCardInsertionState>(state, c => {
-        const hashedPan = sha("sha256").update(c.pan).digest("hex");
-        // ensure to have only a single item representing the card insertion
-        const newState = state.filter(c => c.hashedPan !== hashedPan);
-        const requestedAttempt: CreditCardInsertion = {
-          startDate: new Date(),
-          hashedPan,
-          blurredPan: c.pan.slice(-4),
-          expireMonth: c.expireMonth,
-          expireYear: c.expireYear,
-          onboardingComplete: false,
-          lookupId: getLookUpId()
-        };
-        return trimState([requestedAttempt, ...newState]);
-      });
+      return pipe(
+        payload.creditcard?.creditCard,
+        O.fromNullable,
+        O.fold(
+          () => state,
+          c => {
+            const hashedPan = sha("sha256").update(c.pan).digest("hex");
+            // ensure to have only a single item representing the card insertion
+            const newState = state.filter(c => c.hashedPan !== hashedPan);
+            const requestedAttempt: CreditCardInsertion = {
+              startDate: new Date(),
+              hashedPan,
+              blurredPan: c.pan.slice(-4),
+              expireMonth: c.expireMonth,
+              expireYear: c.expireYear,
+              onboardingComplete: false,
+              lookupId: getLookUpId()
+            };
+            return trimState([requestedAttempt, ...newState]);
+          }
+        )
+      );
     case getType(addWalletCreditCardSuccess):
       return updateStateHead(state, attempt => {
         const wallet = action.payload.data;
@@ -142,7 +150,10 @@ const reducer = (
     case getType(addCreditCardOutcomeCode):
       return updateStateHead(state, attempt => ({
         ...attempt,
-        outcomeCode: action.payload.getOrElse("n/a")
+        outcomeCode: pipe(
+          action.payload,
+          O.getOrElse(() => "n/a")
+        )
       }));
     case getType(addCreditCardWebViewEnd):
       return updateStateHead(state, attempt => ({

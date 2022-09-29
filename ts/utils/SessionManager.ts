@@ -1,11 +1,12 @@
 /* eslint-disable */
 
 import { Mutex } from "async-mutex";
-import { Function1, Lazy } from "fp-ts/lib/function";
-import { fromNullable, none, Option } from "fp-ts/lib/Option";
+import { FunctionN, Lazy, pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
 import * as t from "io-ts";
-import { IResponseType } from "italia-ts-commons/lib/requests";
-import { Millisecond } from "italia-ts-commons/lib/units";
+import { IResponseType } from "@pagopa/ts-commons/lib/requests";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { delayAsync } from "./timer";
 
 const waitRetry = 8000 as Millisecond;
@@ -41,7 +42,7 @@ export class SessionManager<T> {
       if (this.token === undefined || forceUpdate) {
         // token is not available, attempt to fetch a new token
         try {
-          this.token = (await this.refreshSession()).toUndefined();
+          this.token = pipe(await this.refreshSession(), O.toUndefined);
         } catch {
           // token is expired and we can't refresh, clear the current token
           // since it's useless.
@@ -77,19 +78,19 @@ export class SessionManager<T> {
     await this.setEnabledSession(enabled);
 
   constructor(
-    private refreshSession: () => Promise<Option<T>>,
+    private refreshSession: () => Promise<O.Option<T>>,
     private maxRetries: number = 0
   ) {}
 
   /**
    * Returns the current token, if there's one
    */
-  public get = () => fromNullable(this.token);
+  public get = () => O.fromNullable(this.token);
 
   /**
    * Returns a new token
    */
-  public getNewToken = async (): Promise<Option<T>> => {
+  public getNewToken = async (): Promise<O.Option<T>> => {
     let count = 0;
     while (count <= this.maxRetries) {
       count += 1;
@@ -98,9 +99,9 @@ export class SessionManager<T> {
         await delayAsync(waitRetry);
         continue;
       }
-      return fromNullable(this.token);
+      return O.fromNullable(this.token);
     }
-    return none;
+    return O.none;
   };
 
   /**
@@ -108,7 +109,7 @@ export class SessionManager<T> {
    * the first one, the token, that gets provided by the internal logic.
    */
   public withRefresh<R>(
-    f: Function1<T, Promise<t.Validation<IResponseType<401, any> | R>>>
+    f: FunctionN<[T], Promise<t.Validation<IResponseType<401, any> | R>>>
   ): Lazy<ReturnType<typeof f>> {
     return async () => {
       let count = 0;
@@ -137,7 +138,7 @@ export class SessionManager<T> {
         const response = await f(this.token);
         // BEWARE: we can cast to any only because we know for sure that f will
         // always return a Promise<IResponseType<A, B>>
-        if (response.isRight() && (response.value as any).status === 401) {
+        if (E.isRight(response) && (response.right as any).status === 401) {
           // our token is expired, reset it
           // eslint-disable-next-line
           this.token = undefined;

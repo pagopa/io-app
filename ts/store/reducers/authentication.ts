@@ -1,7 +1,8 @@
-import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import { PersistPartial } from "redux-persist";
 import { createSelector } from "reselect";
 import { isActionOf } from "typesafe-actions";
+import { pipe } from "fp-ts/lib/function";
 import { PublicSession } from "../../../definitions/backend/PublicSession";
 import { SessionToken } from "../../types/SessionToken";
 import {
@@ -153,8 +154,8 @@ export const ioBackendAuthenticationHeaderSelector = createSelector(
 
 export const sessionInfoSelector = (state: GlobalState) =>
   isLoggedInWithSessionInfo(state.authentication)
-    ? some(state.authentication.sessionInfo)
-    : none;
+    ? O.some(state.authentication.sessionInfo)
+    : O.none;
 
 export const supportTokenSelector = (state: GlobalState): SupportTokenState =>
   isLoggedInWithSessionInfo(state.authentication)
@@ -168,11 +169,20 @@ export const zendeskTokenSelector = (state: GlobalState): string | undefined =>
 
 export const tokenFromNameSelector = (
   tokenName?: TokenName
-): ((state: GlobalState) => Option<string>) =>
-  createSelector<GlobalState, Option<PublicSession>, Option<string>>(
+): ((state: GlobalState) => O.Option<string>) =>
+  createSelector<GlobalState, O.Option<PublicSession>, O.Option<string>>(
     sessionInfoSelector,
     maybeSessionInfo =>
-      fromNullable(tokenName).chain(tn => maybeSessionInfo.map(si => si[tn]))
+      pipe(
+        tokenName,
+        O.fromNullable,
+        O.chain(tn =>
+          pipe(
+            maybeSessionInfo,
+            O.map(si => si[tn])
+          )
+        )
+      )
   );
 
 export const selectedIdentityProviderSelector = (state: GlobalState) =>
@@ -180,11 +190,11 @@ export const selectedIdentityProviderSelector = (state: GlobalState) =>
     ? state.authentication.idp
     : undefined;
 
-function matchWithIdp<O>(
+function matchWithIdp<I>(
   state: AuthenticationState,
-  whenWithoutIdp: O,
-  whenWithIdp: (state: AuthenticationStateWithIdp) => O
-): O {
+  whenWithoutIdp: I,
+  whenWithIdp: (state: AuthenticationStateWithIdp) => I
+): I {
   if (state.kind === "LoggedOutWithoutIdp") {
     return whenWithoutIdp;
   }
@@ -192,8 +202,10 @@ function matchWithIdp<O>(
   return whenWithIdp(state);
 }
 
-export const idpSelector = ({ authentication }: GlobalState): Option<SpidIdp> =>
-  matchWithIdp(authentication, none, ({ idp }) => some(idp));
+export const idpSelector = ({
+  authentication
+}: GlobalState): O.Option<SpidIdp> =>
+  matchWithIdp(authentication, O.none, ({ idp }) => O.some(idp));
 
 // eslint-disable-next-line complexity
 const reducer = (

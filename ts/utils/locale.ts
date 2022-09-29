@@ -1,4 +1,6 @@
-import { fromNullable, Option, some } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
+import * as AR from "fp-ts/lib/Array";
+import { pipe } from "fp-ts/lib/function";
 import { Locales } from "../../locales/locales";
 import I18n, {
   availableTranslations,
@@ -27,10 +29,12 @@ export const getFullLocale = (): LocalizedMessageKeys =>
 export function getLocalePrimary(
   locale: string,
   separator: string = "-"
-): Option<string> {
-  return some(locale.split(separator))
-    .filter(_ => _.length > 0)
-    .map(_ => _[0]);
+): O.Option<string> {
+  return pipe(
+    O.some(locale.split(separator)),
+    O.filter(_ => _.length > 0),
+    O.chain(AR.head)
+  );
 }
 
 // return the current locale set in the device (this could be different from the app supported languages)
@@ -42,12 +46,14 @@ export const getCurrentLocale = (): Locales => I18n.currentLocale();
  * the fallback will returned
  */
 export const getLocalePrimaryWithFallback = (): Locales =>
-  getLocalePrimary(getCurrentLocale())
-    .filter(l =>
+  pipe(
+    getLocalePrimary(getCurrentLocale()),
+    O.filter(l =>
       availableTranslations.some(t => t.toLowerCase() === l.toLowerCase())
-    )
-    .map(s => s as Locales)
-    .getOrElse(localeFallback.locale);
+    ),
+    O.map(s => s as Locales),
+    O.getOrElseW(() => localeFallback.locale)
+  );
 
 const preferredLanguageMappingToLocale = new Map<
   PreferredLanguageEnum,
@@ -63,14 +69,18 @@ export const localeDateFormat = (date: Date, format: string): string =>
 export const fromLocaleToPreferredLanguage = (
   locale: Locales
 ): PreferredLanguageEnum =>
-  fromNullable(localeToPreferredLanguageMapping.get(locale)).getOrElse(
-    localeFallback.localeEnum
+  pipe(
+    localeToPreferredLanguageMapping.get(locale),
+    O.fromNullable,
+    O.getOrElse(() => localeFallback.localeEnum)
   );
 
 // from a given preferredLanguage return the relative Locales
 export const fromPreferredLanguageToLocale = (
   preferredLanguage: PreferredLanguageEnum
 ): Locales =>
-  fromNullable(
-    preferredLanguageMappingToLocale.get(preferredLanguage)
-  ).getOrElse(localeFallback.locale);
+  pipe(
+    preferredLanguageMappingToLocale.get(preferredLanguage),
+    O.fromNullable,
+    O.getOrElseW(() => localeFallback.locale)
+  );

@@ -1,3 +1,4 @@
+import * as E from "fp-ts/lib/Either";
 import { UADonationWebViewMessage } from "../index";
 
 const testCases: ReadonlyArray<
@@ -59,7 +60,7 @@ describe("isAvailableBonusLoadingSelector selector", () => {
   test.each(testCases)(
     "%p: given %p as argument, is right %p",
     (_, input, expectedResult) => {
-      const result = UADonationWebViewMessage.decode(input).isRight();
+      const result = E.isRight(UADonationWebViewMessage.decode(input));
       expect(result).toEqual(expectedResult);
     }
   );

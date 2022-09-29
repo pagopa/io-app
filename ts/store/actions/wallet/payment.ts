@@ -1,7 +1,7 @@
 import {
   OmitStatusFromResponse,
   TypeofApiResponse
-} from "italia-ts-commons/lib/requests";
+} from "@pagopa/ts-commons/lib/requests";
 import {
   ActionType,
   createAsyncAction,
@@ -40,6 +40,7 @@ import { fetchWalletsFailure, fetchWalletsSuccess } from "./wallets";
 export type PaymentStartOrigin =
   | "message"
   | "qrcode_scan"
+  | "poste_datamatrix_scan"
   | "manual_insertion"
   | "donation";
 

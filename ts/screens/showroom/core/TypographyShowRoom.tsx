@@ -13,7 +13,7 @@ import { LabelSmall } from "../../../components/core/typography/LabelSmall";
 import { Link } from "../../../components/core/typography/Link";
 import { Monospace } from "../../../components/core/typography/Monospace";
 import { IOColors } from "../../../components/core/variables/IOColors";
-import { ShowroomSection } from "../ShowroomSection";
+import { ShowroomSection } from "../components/ShowroomSection";
 
 const styles = StyleSheet.create({
   alignCenter: {

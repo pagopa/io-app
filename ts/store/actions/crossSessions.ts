@@ -3,7 +3,7 @@
  */
 
 import { ActionType, createStandardAction } from "typesafe-actions";
-import { FiscalCode } from "italia-ts-commons/lib/strings";
+import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
 
 /**
  * set the profile hashed fiscal code

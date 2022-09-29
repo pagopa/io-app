@@ -21,4 +21,4 @@ export const mvlAttachmentDownload = createAsyncAction(
  */
 export const mvlRemoveCachedAttachment = createStandardAction(
   "MVL_ATTACHMENT_REMOVE_CACHED"
-)<{ id: string; path: string | undefined }>();
+)<{ attachment: MvlAttachment; path: string | undefined }>();

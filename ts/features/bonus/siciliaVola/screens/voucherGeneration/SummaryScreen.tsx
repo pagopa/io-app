@@ -1,3 +1,5 @@
+import { useNavigation } from "@react-navigation/native";
+import * as O from "fp-ts/lib/Option";
 import { View } from "native-base";
 import * as React from "react";
 import { useEffect } from "react";
@@ -19,7 +21,7 @@ import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { openWebUrl } from "../../../../../utils/url";
 import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { isLoading, isReady } from "../../../bpd/model/RemoteValue";
-import { navigateToSvVoucherGeneratedScreen } from "../../navigation/actions";
+import SV_ROUTES from "../../navigation/routes";
 import {
   svGenerateVoucherAvailableDestination,
   svGenerateVoucherBack,
@@ -67,6 +69,8 @@ const disclaimerLink =
   "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.del.presidente.della.repubblica:2000-12-28;445";
 
 const SummaryScreen = (props: Props): React.ReactElement | null => {
+  const navigation = useNavigation();
+
   const {
     maybeVoucherRequest,
     requestAvailableDestinations,
@@ -74,7 +78,7 @@ const SummaryScreen = (props: Props): React.ReactElement | null => {
   } = props;
   useEffect(() => {
     if (
-      maybeVoucherRequest.isSome() &&
+      O.isSome(maybeVoucherRequest) &&
       isVoucherRequest(maybeVoucherRequest.value) &&
       maybeVoucherRequest.value.category !== "disabled"
     ) {
@@ -84,7 +88,7 @@ const SummaryScreen = (props: Props): React.ReactElement | null => {
     }
   }, [maybeVoucherRequest, requestAvailableDestinations]);
 
-  if (!maybeVoucherRequest.isSome()) {
+  if (!O.isSome(maybeVoucherRequest)) {
     props.failure();
     return null;
   }
@@ -125,7 +129,8 @@ const SummaryScreen = (props: Props): React.ReactElement | null => {
   };
   const continueButtonProps = {
     primary: true,
-    onPress: props.navigateToVoucherGeneratedScreen,
+    onPress: () =>
+      navigation.navigate(SV_ROUTES.VOUCHER_GENERATION.VOUCHER_GENERATED),
     title: I18n.t("global.buttons.continue")
   };
 
@@ -237,8 +242,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   ) =>
     dispatch(
       svGenerateVoucherAvailableDestination.request(availableDestinationRequest)
-    ),
-  navigateToVoucherGeneratedScreen: () => navigateToSvVoucherGeneratedScreen()
+    )
 });
 const mapStateToProps = (state: GlobalState) => ({
   maybeVoucherRequest: voucherRequestSelector(state),

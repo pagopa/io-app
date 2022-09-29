@@ -1,4 +1,4 @@
-import { none, some } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import { BackendStatus } from "../../../../definitions/content/BackendStatus";
 import { LevelEnum } from "../../../../definitions/content/SectionStatus";
 import { baseRawBackendStatus } from "../__mock__/backendStatus";
@@ -35,7 +35,7 @@ describe("backend service status reducer", () => {
   };
 
   const currentState: BackendStatusState = {
-    status: none,
+    status: O.none,
     areSystemsDead: false,
     deadsCounter: 0
   };
@@ -44,7 +44,7 @@ describe("backend service status reducer", () => {
     const newState = areSystemsDeadReducer(currentState, responseON);
     expect(newState.areSystemsDead).toBeFalsy();
     expect(newState.deadsCounter).toEqual(0);
-    expect(newState.status.isSome()).toBeTruthy();
+    expect(O.isSome(newState.status)).toBeTruthy();
   });
 
   it("should return a new state with alive false", () => {
@@ -222,13 +222,13 @@ describe("test selectors", () => {
 
   const someStore = {
     backendStatus: {
-      status: some(status)
+      status: O.some(status)
     }
   } as any as GlobalState;
 
   const noneStore = {
     backendStatus: {
-      status: none
+      status: O.none
     }
   } as any as GlobalState;
 
@@ -251,7 +251,7 @@ describe("test selectors", () => {
   it("should return true - someStoreConfig", () => {
     const someStoreConfig = {
       backendStatus: {
-        status: some({ ...status, config: { bpd_ranking_v2: true } })
+        status: O.some({ ...status, config: { bpd_ranking_v2: true } })
       }
     } as any as GlobalState;
     const bpd_ranking = bpdRankingEnabledSelector(someStoreConfig);
@@ -261,7 +261,7 @@ describe("test selectors", () => {
   it("should return false - someStoreConfig", () => {
     const someStoreConfig = {
       backendStatus: {
-        status: some({ ...status, config: { bpd_ranking_v2: false } })
+        status: O.some({ ...status, config: { bpd_ranking_v2: false } })
       }
     } as any as GlobalState;
     const bpd_ranking = bpdRankingEnabledSelector(someStoreConfig);
@@ -276,7 +276,7 @@ describe("test selectors", () => {
     it("isUaDonationsEnabledSelector should return the value of bs.config.donation.enabled if is defined", () => {
       const someFalsyStoreConfig = {
         backendStatus: {
-          status: some({
+          status: O.some({
             ...status,
             config: {
               ...status.config,
@@ -289,7 +289,7 @@ describe("test selectors", () => {
       expect(falsyConfig).toBeFalsy();
       const someTruthyStoreConfig = {
         backendStatus: {
-          status: some({
+          status: O.some({
             ...status,
             config: {
               ...status.config,
@@ -308,7 +308,7 @@ describe("test selectors", () => {
     it("uaDonationsBannerConfigSelector should return the banner config if bs.config.donation.banner is defined", () => {
       const someStoreConfig = {
         backendStatus: {
-          status: some(status)
+          status: O.some(status)
         }
       } as any as GlobalState;
       const bannerConfig = uaDonationsBannerConfigSelector(someStoreConfig);
@@ -325,7 +325,7 @@ describe("test selectors", () => {
     it("should return false if the remote flag is false", () => {
       const customStore = {
         backendStatus: {
-          status: some({
+          status: O.some({
             config: {
               premiumMessages: { opt_in_out_enabled: false }
             }
@@ -341,7 +341,7 @@ describe("test selectors", () => {
     it("should return true if the remote flag is true", () => {
       const customStore = {
         backendStatus: {
-          status: some({
+          status: O.some({
             config: {
               premiumMessages: { opt_in_out_enabled: true }
             }
@@ -364,7 +364,7 @@ describe("test selectors", () => {
     it("should return the correct configuration", () => {
       const customStore = {
         backendStatus: {
-          status: some({
+          status: O.some({
             config: {
               barcodesScanner: { dataMatrixPosteEnabled: true }
             }

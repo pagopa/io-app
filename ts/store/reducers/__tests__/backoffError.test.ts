@@ -1,6 +1,6 @@
 import { createStandardAction } from "typesafe-actions";
 import MockDate from "mockdate";
-import { range } from "fp-ts/lib/Array";
+import * as AR from "fp-ts/lib/Array";
 import { Action } from "../../actions/types";
 import { GlobalState } from "../types";
 import { appReducer } from "../index";
@@ -35,7 +35,7 @@ describe("backoffError reducer", () => {
       applicationChangeState("active")
     ) as GlobalState;
     // check that attempts increase and wait time is computed as expected
-    range(1, backoffConfig.maxAttempts + 1).forEach(attempts => {
+    AR.range(1, backoffConfig.maxAttempts + 1).forEach(attempts => {
       state = appReducer(
         state,
         aFailureAction() as any as Action

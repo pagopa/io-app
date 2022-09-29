@@ -2,7 +2,8 @@
  * Generic utilities for strings
  */
 
-import { fromNullable, fromPredicate, Option } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
 import { EnteBeneficiario } from "../../definitions/backend/EnteBeneficiario";
 
@@ -47,22 +48,41 @@ export function capitalize(text: string, separator: string = " ") {
  * @param e organization data
  */
 export const formatTextRecipient = (e: EnteBeneficiario): string => {
-  const denomUnitOper = fromNullable(e.denomUnitOperBeneficiario)
-    .map(d => ` - ${d}`)
-    .getOrElse("");
-  const address = fromNullable(e.indirizzoBeneficiario).getOrElse("");
-  const civicNumber = fromNullable(e.civicoBeneficiario)
-    .map(c => ` n. ${c}`)
-    .getOrElse("");
-  const cap = fromNullable(e.capBeneficiario)
-    .map(c => `${c} `)
-    .getOrElse("");
-  const city = fromNullable(e.localitaBeneficiario)
-    .map(l => `${l} `)
-    .getOrElse("");
-  const province = fromNullable(e.provinciaBeneficiario)
-    .map(p => `(${p})`)
-    .getOrElse("");
+  const denomUnitOper = pipe(
+    e.denomUnitOperBeneficiario,
+    O.fromNullable,
+    O.map(d => ` - ${d}`),
+    O.getOrElse(() => "")
+  );
+  const address = pipe(
+    e.indirizzoBeneficiario,
+    O.fromNullable,
+    O.getOrElse(() => "")
+  );
+  const civicNumber = pipe(
+    e.civicoBeneficiario,
+    O.fromNullable,
+    O.map(c => ` n. ${c}`),
+    O.getOrElse(() => "")
+  );
+  const cap = pipe(
+    e.capBeneficiario,
+    O.fromNullable,
+    O.map(c => `${c} `),
+    O.getOrElse(() => "")
+  );
+  const city = pipe(
+    e.localitaBeneficiario,
+    O.fromNullable,
+    O.map(l => `${l} `),
+    O.getOrElse(() => "")
+  );
+  const province = pipe(
+    e.provinciaBeneficiario,
+    O.fromNullable,
+    O.map(p => `(${p})`),
+    O.getOrElse(() => "")
+  );
 
   return `${e.denominazioneBeneficiario}${denomUnitOper}\n
 ${address}${civicNumber}\n
@@ -75,7 +95,15 @@ ${cap}${city}${province}`.trim();
  */
 export const isStringNullyOrEmpty = (
   text: string | null | undefined
-): boolean => fromNullable(text).fold(true, t => t.trim().length === 0);
+): boolean =>
+  pipe(
+    text,
+    O.fromNullable,
+    O.fold(
+      () => true,
+      t => t.trim().length === 0
+    )
+  );
 
 /**
  * return some(text) if the text is not nully and not empty (or composed only by blanks)
@@ -83,9 +111,15 @@ export const isStringNullyOrEmpty = (
  */
 export const maybeNotNullyString = (
   text: string | null | undefined
-): Option<string> =>
-  fromPredicate((t: string) => t.trim().length > 0)(
-    fromNullable(text).getOrElse("")
+): O.Option<string> =>
+  pipe(
+    O.fromPredicate((t: string) => t.trim().length > 0)(
+      pipe(
+        text,
+        O.fromNullable,
+        O.getOrElse(() => "")
+      )
+    )
   );
 
 /**
