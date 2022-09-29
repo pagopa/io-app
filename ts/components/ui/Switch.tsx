@@ -2,12 +2,13 @@ import { NativeBase, Switch as NBSwitch } from "native-base";
 import * as React from "react";
 import { Platform } from "react-native";
 
-import { fromPredicate } from "fp-ts/lib/Option";
-import variables from "../../theme/variables";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import I18n from "../../i18n";
+import variables from "../../theme/variables";
 import { IOColors } from "../core/variables/IOColors";
 
-const maybeDisabled = fromPredicate(
+const maybeDisabled = O.fromPredicate(
   (isDisabled: boolean | undefined = undefined) => isDisabled === true
 );
 /**
@@ -15,9 +16,11 @@ const maybeDisabled = fromPredicate(
  */
 export default class Switch extends React.Component<NativeBase.Switch> {
   public render() {
-    const thumbColor: string = maybeDisabled(this.props.disabled)
-      .map(_ => variables.brandPrimaryLight)
-      .getOrElse(variables.contentPrimaryBackground);
+    const thumbColor: string = pipe(
+      maybeDisabled(this.props.disabled),
+      O.map(_ => variables.brandPrimaryLight),
+      O.getOrElse(() => variables.contentPrimaryBackground)
+    );
 
     return (
       <NBSwitch

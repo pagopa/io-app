@@ -1,23 +1,23 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
-import { connect } from "react-redux";
-import * as pot from "italia-ts-commons/lib/pot";
 import { ImageSourcePropType } from "react-native";
-import { GlobalState } from "../../../store/reducers/types";
+import { connect } from "react-redux";
+import pagoBancomatLogo from "../../../../img/wallet/cards-icons/pagobancomat.png";
+import satispayLogo from "../../../../img/wallet/cards-icons/satispay.png";
+import bancomatPayLogo from "../../../../img/wallet/payment-methods/bancomatpay-logo.png";
+import I18n from "../../../i18n";
 import { profileNameSurnameSelector } from "../../../store/reducers/profile";
+import { GlobalState } from "../../../store/reducers/types";
 import { getFavoriteWalletId } from "../../../store/reducers/wallet/wallets";
 import { PaymentMethod } from "../../../types/pagopa";
-import pagoBancomatLogo from "../../../../img/wallet/cards-icons/pagobancomat.png";
-import bancomatPayLogo from "../../../../img/wallet/payment-methods/bancomatpay-logo.png";
-import satispayLogo from "../../../../img/wallet/cards-icons/satispay.png";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
-import { H4 } from "../../core/typography/H4";
-import IconFont from "../../ui/IconFont";
-import I18n from "../../../i18n";
-import { IOColors } from "../../core/variables/IOColors";
-import { getCardIconFromBrandLogo } from "../card/Logo";
 import { getPickPaymentMethodDescription } from "../../../utils/payment";
 import { getPaypalAccountEmail } from "../../../utils/paypal";
+import { H4 } from "../../core/typography/H4";
+import { IOColors } from "../../core/variables/IOColors";
+import IconFont from "../../ui/IconFont";
+import { getCardIconFromBrandLogo } from "../card/Logo";
 import PickPaymentMethodBaseListItem from "./PickPaymentMethodBaseListItem";
 
 type Props = {

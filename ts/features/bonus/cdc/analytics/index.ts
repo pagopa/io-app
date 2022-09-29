@@ -1,5 +1,6 @@
 import { getType } from "typesafe-actions";
-import { fromNullable } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { cdcEnabled } from "../../../../config";
 import { mixpanel } from "../../../../mixpanel";
 import { Action } from "../../../../store/actions/types";
@@ -23,19 +24,23 @@ const trackCdc =
       case getType(cdcEnrollUserToBonus.request):
         return mp.track(action.type, { bonusYear: action.payload });
       case getType(cdcEnrollUserToBonus.success):
-        const value = fromNullable(action.payload).map(p => {
-          // eslint-disable-next-line sonarjs/no-nested-switch
-          switch (p.kind) {
-            case "success":
-            case "partialSuccess":
-              return p.value;
-            case "wrongFormat":
-              return p.reason;
-            case "requirementsError":
-            case "genericError":
-              return undefined;
-          }
-        });
+        const value = pipe(
+          action.payload,
+          O.fromNullable,
+          O.map(p => {
+            // eslint-disable-next-line sonarjs/no-nested-switch
+            switch (p.kind) {
+              case "success":
+              case "partialSuccess":
+                return p.value;
+              case "wrongFormat":
+                return p.reason;
+              case "requirementsError":
+              case "genericError":
+                return undefined;
+            }
+          })
+        );
 
         return mp.track(action.type, { status: action.payload.kind, value });
     }

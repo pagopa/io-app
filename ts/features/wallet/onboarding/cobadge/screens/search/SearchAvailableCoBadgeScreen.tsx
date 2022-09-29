@@ -1,3 +1,5 @@
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
 import * as t from "io-ts";
 import * as React from "react";
 import { useEffect } from "react";
@@ -107,9 +109,12 @@ const SearchAvailableCoBadgeScreen = (
 
   if (isReady(coBadgeFound)) {
     const payload = decodePayload(coBadgeFound.value);
-    return payload.fold(
-      _ => <CoBadgeKoTimeout contextualHelp={emptyContextualHelp} />,
-      val => <CobadgePayloadRight props={props} payload={val} />
+    return pipe(
+      payload,
+      E.fold(
+        _ => <CoBadgeKoTimeout contextualHelp={emptyContextualHelp} />,
+        val => <CobadgePayloadRight props={props} payload={val} />
+      )
     );
   }
 

@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { isSome } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -16,7 +16,7 @@ const WorkerCheckIncomeScreen = (props: Props): React.ReactElement | null => {
   const navigation = useNavigation();
 
   if (
-    isSome(props.selectedBeneficiaryCategory) &&
+    O.isSome(props.selectedBeneficiaryCategory) &&
     props.selectedBeneficiaryCategory.value !== "worker"
   ) {
     props.failure("The selected category is not Worker");

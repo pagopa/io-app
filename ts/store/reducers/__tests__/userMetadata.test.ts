@@ -1,5 +1,5 @@
-import { left, right } from "fp-ts/lib/Either";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as E from "fp-ts/lib/Either";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 
 import { UserMetadata as BackendUserMetadata } from "../../../../definitions/backend/UserMetadata";
 import {
@@ -30,7 +30,7 @@ describe("userMetadata", () => {
         metadata
       };
       expect(backendUserMetadataToUserMetadata(backendUserMetadata)).toEqual(
-        right(userMetadata)
+        E.right(userMetadata)
       );
     });
 
@@ -46,7 +46,7 @@ describe("userMetadata", () => {
         backendUserMetadataToUserMetadata(
           backendUserMetadataBadExperimentalFeatures
         )
-      ).toEqual(left(new Error()));
+      ).toEqual(E.left(new Error()));
     });
 
     it("should return an Error if the decode of the backendUserMetadata organizationsOfInterest fails", () => {
@@ -59,7 +59,7 @@ describe("userMetadata", () => {
       };
       expect(
         backendUserMetadataToUserMetadata(backendUserMetadataBadOrganization)
-      ).toEqual(left(new Error()));
+      ).toEqual(E.left(new Error()));
     });
   });
 

@@ -3,7 +3,7 @@
  */
 import { getType } from "typesafe-actions";
 
-import { none, Option } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import {
   disableSearch,
   searchMessagesEnabled,
@@ -14,21 +14,21 @@ import { Action } from "../actions/types";
 import { GlobalState } from "./types";
 
 export type SearchState = Readonly<{
-  searchText: Option<string>;
+  searchText: O.Option<string>;
   isSearchEnabled: boolean;
   isSearchMessagesEnabled: boolean;
   isSearchServicesEnabled: boolean;
 }>;
 
 const INITIAL_STATE: SearchState = {
-  searchText: none,
+  searchText: O.none,
   isSearchEnabled: false,
   isSearchMessagesEnabled: false,
   isSearchServicesEnabled: false
 };
 
 // Selectors
-export const searchTextSelector = (state: GlobalState): Option<string> =>
+export const searchTextSelector = (state: GlobalState): O.Option<string> =>
   state.search.searchText;
 
 export const isSearchEnabledSelector = (state: GlobalState): boolean =>

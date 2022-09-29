@@ -1,3 +1,4 @@
+import * as E from "fp-ts/lib/Either";
 import * as t from "io-ts";
 
 /*
@@ -12,10 +13,10 @@ export class NumberFromStringType extends t.Type<number, string> {
       t.number.is,
       (u, c) => {
         const validation = t.string.validate(u, c);
-        if (validation.isLeft()) {
+        if (E.isLeft(validation)) {
           return validation as any;
         } else {
-          const s = validation.value;
+          const s = validation.right;
           const n = +s;
           return isNaN(n) ? t.failure(s, c) : t.success(n);
         }

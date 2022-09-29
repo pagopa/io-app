@@ -1,4 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
 import React, { useCallback } from "react";
 import { Pressable, View } from "react-native";
@@ -72,52 +74,57 @@ const InnerSectionStatus = (
     return () => navigation?.removeListener("focus", handleOnSectionRef);
   }, [handleOnSectionRef, navigation, viewRef]);
 
-  return maybeWebUrl.fold(
-    // render text only
-    <StatusContent
-      accessibilityLabel={`${sectionStatus.message[locale]}, ${I18n.t(
-        "global.accessibility.alert"
-      )}`}
-      backgroundColor={backgroundColor}
-      iconColor={IOColors[color]}
-      iconName={iconName}
-      testID={"SectionStatusComponentContent"}
-      viewRef={viewRef}
-      labelColor={color}
-    >
-      {`${sectionStatus.message[locale]} `}
-    </StatusContent>,
-
-    // render a pressable element with the link
-    webUrl => (
-      <Pressable
-        accessibilityHint={I18n.t("global.accessibility.linkHint")}
-        accessibilityLabel={`${sectionStatus.message[locale]}, ${I18n.t(
-          "global.sectionStatus.moreInfo"
-        )}`}
-        accessibilityRole={"link"}
-        onPress={() => openWebUrl(webUrl)}
-        testID={"SectionStatusComponentPressable"}
-      >
+  return pipe(
+    maybeWebUrl,
+    O.fold(
+      () => (
+        // render text only
         <StatusContent
-          // disable accessibility to prevent the override of the container
-          accessible={false}
+          accessibilityLabel={`${sectionStatus.message[locale]}, ${I18n.t(
+            "global.accessibility.alert"
+          )}`}
           backgroundColor={backgroundColor}
           iconColor={IOColors[color]}
           iconName={iconName}
+          testID={"SectionStatusComponentContent"}
           viewRef={viewRef}
           labelColor={color}
         >
           {`${sectionStatus.message[locale]} `}
-          <Link
-            testID={"SectionStatusComponentMoreInfo"}
-            color={backgroundColor === "aqua" ? "bluegreyDark" : "white"}
-            weight={"Bold"}
-          >
-            {I18n.t("global.sectionStatus.moreInfo")}
-          </Link>
         </StatusContent>
-      </Pressable>
+      ),
+
+      // render a pressable element with the link
+      webUrl => (
+        <Pressable
+          accessibilityHint={I18n.t("global.accessibility.linkHint")}
+          accessibilityLabel={`${sectionStatus.message[locale]}, ${I18n.t(
+            "global.sectionStatus.moreInfo"
+          )}`}
+          accessibilityRole={"link"}
+          onPress={() => openWebUrl(webUrl)}
+          testID={"SectionStatusComponentPressable"}
+        >
+          <StatusContent
+            // disable accessibility to prevent the override of the container
+            accessible={false}
+            backgroundColor={backgroundColor}
+            iconColor={IOColors[color]}
+            iconName={iconName}
+            viewRef={viewRef}
+            labelColor={color}
+          >
+            {`${sectionStatus.message[locale]} `}
+            <Link
+              testID={"SectionStatusComponentMoreInfo"}
+              color={backgroundColor === "aqua" ? "bluegreyDark" : "white"}
+              weight={"Bold"}
+            >
+              {I18n.t("global.sectionStatus.moreInfo")}
+            </Link>
+          </StatusContent>
+        </Pressable>
+      )
     )
   );
 };

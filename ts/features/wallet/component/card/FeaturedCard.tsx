@@ -1,15 +1,16 @@
-import { Badge, View, Text } from "native-base";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import { Badge, Text, View } from "native-base";
 import * as React from "react";
 import { Image, ImageSourcePropType, StyleSheet } from "react-native";
-import { fromNullable } from "fp-ts/lib/Option";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 import { H3 } from "../../../../components/core/typography/H3";
 import { IOColors } from "../../../../components/core/variables/IOColors";
-import customVariables from "../../../../theme/variables";
 import TouchableDefaultOpacity, {
   TouchableDefaultOpacityProps
 } from "../../../../components/TouchableDefaultOpacity";
 import I18n from "../../../../i18n";
+import customVariables from "../../../../theme/variables";
 
 type Props = {
   title: string;
@@ -61,15 +62,19 @@ const FeaturedCard: React.FunctionComponent<Props> = (props: Props) => (
     testID={props.testID}
   >
     <View style={styles.row}>
-      {fromNullable(props.image).fold(
-        <View
-          style={{
-            width: 40,
-            height: 40
-          }}
-        />,
-        i => (
-          <Image style={styles.image} source={i} />
+      {pipe(
+        props.image,
+        O.fromNullable,
+        O.fold(
+          () => (
+            <View
+              style={{
+                width: 40,
+                height: 40
+              }}
+            />
+          ),
+          i => <Image style={styles.image} source={i} />
         )
       )}
       {props.isNew && (

@@ -1,6 +1,7 @@
+import * as E from "fp-ts/lib/Either";
 import { call, put } from "typed-redux-saga/macro";
-import { BackendCGN } from "../../../../api/backendCgn";
 import { SagaCallReturnType } from "../../../../../../../types/utils";
+import { BackendCGN } from "../../../../api/backendCgn";
 import { cgnEycaActivation } from "../../../../store/actions/eyca/activation";
 import { getActivation } from "./getEycaActivationSaga";
 
@@ -11,9 +12,9 @@ export function* getEycaActivationStatusSaga(
     getActivation,
     getEycaActivation
   );
-  if (activationInfo.isLeft()) {
-    yield* put(cgnEycaActivation.failure(activationInfo.value));
+  if (E.isLeft(activationInfo)) {
+    yield* put(cgnEycaActivation.failure(activationInfo.left));
   } else {
-    yield* put(cgnEycaActivation.success(activationInfo.value));
+    yield* put(cgnEycaActivation.success(activationInfo.right));
   }
 }

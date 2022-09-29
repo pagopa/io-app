@@ -1,10 +1,11 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
-import { fromNullable, Option } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { View } from "native-base";
 import * as React from "react";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
 import AdviceComponent from "../../../components/AdviceComponent";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
@@ -31,6 +32,7 @@ import {
   zendeskDefaultAnonymousConfig,
   zendeskDefaultJwtConfig
 } from "../../../utils/supportAssistance";
+import { isReady } from "../../bonus/bpd/model/RemoteValue";
 import {
   zendeskRequestTicketNumber,
   zendeskSupportCompleted
@@ -39,7 +41,6 @@ import {
   zendeskConfigSelector,
   zendeskTicketNumberSelector
 } from "../store/reducers";
-import { isReady } from "../../bonus/bpd/model/RemoteValue";
 
 type Props = {
   assistanceForPayment: boolean;
@@ -94,7 +95,7 @@ const ZendeskSupportComponent = (props: Props) => {
   }, [zendeskToken]);
 
   useEffect(() => {
-    const maybeProfile: Option<InitializedProfile> = pot.toOption(profile);
+    const maybeProfile: O.Option<InitializedProfile> = pot.toOption(profile);
 
     initSupportAssistance(zendeskConfig);
 
@@ -106,19 +107,25 @@ const ZendeskSupportComponent = (props: Props) => {
     // - if the zendeskToken is not present but there is the profile,
     //   the user will be authenticated, in anonymous mode, with the profile data (if available)
     // - as last nothing is available (the user is not authenticated in IO) the user will be totally anonymous also in Zendesk
-    const zendeskIdentity = fromNullable(zendeskToken)
-      .map((zT: string): JwtIdentity | AnonymousIdentity => ({
+    const zendeskIdentity = pipe(
+      zendeskToken,
+      O.fromNullable,
+      O.map((zT: string): JwtIdentity | AnonymousIdentity => ({
         token: zT
-      }))
-      .alt(
-        maybeProfile.map(
-          (mP: InitializedProfile): AnonymousIdentity => ({
-            name: mP.name,
-            email: mP.email
-          })
+      })),
+      O.altW(() =>
+        pipe(
+          maybeProfile,
+          O.map(
+            (mP: InitializedProfile): AnonymousIdentity => ({
+              name: mP.name,
+              email: mP.email
+            })
+          )
         )
-      )
-      .getOrElse({});
+      ),
+      O.getOrElse(() => ({}))
+    );
 
     setUserIdentity(zendeskIdentity);
 

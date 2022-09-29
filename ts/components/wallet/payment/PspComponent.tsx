@@ -1,14 +1,16 @@
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import React, { FC } from "react";
-import { ImageStyle, StyleProp, StyleSheet, View, Image } from "react-native";
+import { Image, ImageStyle, StyleProp, StyleSheet, View } from "react-native";
+import { PspData } from "../../../../definitions/pagopa/PspData";
 import { useImageResize } from "../../../features/wallet/onboarding/bancomat/screens/hooks/useImageResize";
 import customVariables from "../../../theme/variables";
+import { getPspIconUrlFromAbi } from "../../../utils/paymentMethod";
 import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
 import { Body } from "../../core/typography/Body";
 import { H4 } from "../../core/typography/H4";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
 import IconFont from "../../ui/IconFont";
-import { PspData } from "../../../../definitions/pagopa/PspData";
-import { getPspIconUrlFromAbi } from "../../../utils/paymentMethod";
 
 const ICON_SIZE = 24;
 const IMAGE_WIDTH = 100;
@@ -41,13 +43,16 @@ export const PspComponent: FC<Props> = ({ psp, onPress }) => {
   const imgDimensions = useImageResize(IMAGE_WIDTH, IMAGE_HEIGHT, pspLogoUrl);
   const cost = formatNumberCentsToAmount(psp.fee);
 
-  const imageStyle: StyleProp<ImageStyle> | undefined = imgDimensions.fold(
-    undefined,
-    imgDim => ({
-      width: imgDim[0],
-      height: imgDim[1],
-      resizeMode: "contain"
-    })
+  const imageStyle: StyleProp<ImageStyle> | undefined = pipe(
+    imgDimensions,
+    O.fold(
+      () => undefined,
+      imgDim => ({
+        width: imgDim[0],
+        height: imgDim[1],
+        resizeMode: "contain"
+      })
+    )
   );
 
   return (

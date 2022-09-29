@@ -1,6 +1,6 @@
-import { MaxRetries, RetryAborted } from "italia-ts-commons/lib/tasks";
-import { Millisecond } from "italia-ts-commons/lib/units";
-import { DeferredPromise } from "italia-ts-commons/lib/promises";
+import { MaxRetries, RetryAborted } from "@pagopa/ts-commons/lib/tasks";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import { DeferredPromise } from "@pagopa/ts-commons/lib/promises";
 import {
   CallbackResponseMessageResult,
   CallbackResponseResult

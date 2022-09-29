@@ -1,4 +1,4 @@
-import { right } from "fp-ts/lib/Either";
+import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { PaginatedServiceTupleCollection } from "../../../../definitions/backend/PaginatedServiceTupleCollection";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
@@ -21,7 +21,7 @@ describe("loadVisibleServicesHandler", () => {
         .next()
         .call(getVisibleServices, {})
         .next(
-          right({
+          E.right({
             status: 500,
             value: "An error occurred loading visible services"
           })
@@ -40,7 +40,7 @@ describe("loadVisibleServicesHandler", () => {
         .next()
         .call(getVisibleServices, {})
         .next(
-          right({
+          E.right({
             status: 401,
             value: "An error occurred loading visible services"
           })
@@ -54,7 +54,7 @@ describe("loadVisibleServicesHandler", () => {
       testSaga(loadVisibleServicesRequestHandler, getVisibleServices)
         .next()
         .call(getVisibleServices, {})
-        .next(right({ status: 200, value: { items: mockedVisibleServices } }))
+        .next(E.right({ status: 200, value: { items: mockedVisibleServices } }))
         .put(loadVisibleServices.success(mockedVisibleServices))
         .next();
     });

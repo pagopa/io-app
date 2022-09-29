@@ -1,5 +1,5 @@
+import * as E from "fp-ts/lib/Either";
 import { call, put } from "typed-redux-saga/macro";
-import { BackendCGN } from "../../../../api/backendCgn";
 import {
   ReduxSagaEffect,
   SagaCallReturnType
@@ -8,8 +8,9 @@ import {
   getGenericError,
   getNetworkError
 } from "../../../../../../../utils/errors";
-import { cgnEycaStatus } from "../../../../store/actions/eyca/details";
 import { readablePrivacyReport } from "../../../../../../../utils/reporters";
+import { BackendCGN } from "../../../../api/backendCgn";
+import { cgnEycaStatus } from "../../../../store/actions/eyca/details";
 import { EycaDetailKOStatus } from "../../../../store/reducers/eyca/details";
 
 const eycaStatusMap: Record<number, EycaDetailKOStatus> = {
@@ -33,34 +34,34 @@ export function* handleGetEycaStatus(
   try {
     const eycaInformationResult: SagaCallReturnType<typeof getEycaStatus> =
       yield* call(getEycaStatus, {});
-    if (eycaInformationResult.isLeft()) {
+    if (E.isLeft(eycaInformationResult)) {
       yield* put(
         cgnEycaStatus.failure(
           getGenericError(
-            new Error(readablePrivacyReport(eycaInformationResult.value))
+            new Error(readablePrivacyReport(eycaInformationResult.left))
           )
         )
       );
       return;
     }
 
-    if (eycaInformationResult.value.status === 200) {
+    if (eycaInformationResult.right.status === 200) {
       yield* put(
         cgnEycaStatus.success({
           status: "FOUND",
-          card: eycaInformationResult.value.value
+          card: eycaInformationResult.right.value
         })
       );
       return;
     }
-    const status = eycaStatusMap[eycaInformationResult.value.status];
+    const status = eycaStatusMap[eycaInformationResult.right.status];
     const action = status
       ? cgnEycaStatus.success({
           status
         })
       : cgnEycaStatus.failure(
           getGenericError(
-            new Error(`response status ${eycaInformationResult.value.status}`)
+            new Error(`response status ${eycaInformationResult.right.status}`)
           )
         );
     yield* put(action);

@@ -1,23 +1,25 @@
-import * as React from "react";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { List } from "native-base";
+import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import I18n from "../../i18n";
-import { GlobalState } from "../../store/reducers/types";
-import {
-  profileEmailSelector,
-  isProfileEmailValidatedSelector,
-  hasProfileEmailSelector,
-  profileNameSurnameSelector
-} from "../../store/reducers/profile";
-import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
+import ScreenContent from "../../components/screens/ScreenContent";
+import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import I18n from "../../i18n";
 import {
   navigateToEmailInsertScreen,
   navigateToEmailReadScreen
 } from "../../store/actions/navigation";
-import ScreenContent from "../../components/screens/ScreenContent";
+import {
+  hasProfileEmailSelector,
+  isProfileEmailValidatedSelector,
+  profileEmailSelector,
+  profileNameSurnameSelector
+} from "../../store/reducers/profile";
+import { GlobalState } from "../../store/reducers/types";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.preferences.contextualHelpTitle",
@@ -63,8 +65,9 @@ const ProfileDataScreen: React.FC<Props> = ({
           {/* Insert or edit email */}
           <ListItemComponent
             title={I18n.t("profile.data.list.email")}
-            subTitle={profileEmail.getOrElse(
-              I18n.t("global.remoteStates.notAvailable")
+            subTitle={pipe(
+              profileEmail,
+              O.getOrElse(() => I18n.t("global.remoteStates.notAvailable"))
             )}
             titleBadge={
               !isEmailValidated

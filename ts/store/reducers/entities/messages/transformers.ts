@@ -1,9 +1,9 @@
-import { PublicMessage } from "../../../../../definitions/backend/PublicMessage";
-import { EnrichedMessage } from "../../../../../definitions/backend/EnrichedMessage";
 import { CreatedMessageWithContentAndAttachments } from "../../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
+import { EnrichedMessage } from "../../../../../definitions/backend/EnrichedMessage";
 import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
-import { MessageStatusAttributes } from "../../../../../definitions/backend/MessageStatusAttributes";
 import { TagEnum } from "../../../../../definitions/backend/MessageCategoryBase";
+import { MessageStatusAttributes } from "../../../../../definitions/backend/MessageStatusAttributes";
+import { PublicMessage } from "../../../../../definitions/backend/PublicMessage";
 
 import {
   Attachment,

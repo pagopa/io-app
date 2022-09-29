@@ -1,11 +1,12 @@
-import { ActionType } from "typesafe-actions";
+import * as E from "fp-ts/lib/Either";
 import { call, put } from "typed-redux-saga/macro";
-import { svVoucherRevocation } from "../../store/actions/voucherList";
-import { SessionManager } from "../../../../../utils/SessionManager";
+import { ActionType } from "typesafe-actions";
 import { MitVoucherToken } from "../../../../../../definitions/io_sicilia_vola_token/MitVoucherToken";
-import { BackendSiciliaVolaClient } from "../../api/backendSiciliaVola";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
+import { SessionManager } from "../../../../../utils/SessionManager";
+import { BackendSiciliaVolaClient } from "../../api/backendSiciliaVola";
+import { svVoucherRevocation } from "../../store/actions/voucherList";
 
 /**
  * Handle the voucher revocation
@@ -27,8 +28,8 @@ export function* handleVoucherRevocation(
     const postAnnullaVoucherResult: SagaCallReturnType<typeof request> =
       yield* call(request);
 
-    if (postAnnullaVoucherResult.isRight()) {
-      if (postAnnullaVoucherResult.value.status === 200) {
+    if (E.isRight(postAnnullaVoucherResult)) {
+      if (postAnnullaVoucherResult.right.status === 200) {
         yield* put(svVoucherRevocation.success());
         return;
       }
@@ -36,7 +37,7 @@ export function* handleVoucherRevocation(
         svVoucherRevocation.failure(
           getGenericError(
             new Error(
-              `response status ${postAnnullaVoucherResult.value.status}`
+              `response status ${postAnnullaVoucherResult.right.status}`
             )
           )
         )

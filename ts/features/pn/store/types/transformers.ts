@@ -1,3 +1,4 @@
+import * as E from "fp-ts/lib/Either";
 import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
 import { apiUrlPrefix } from "../../../../config";
 import { UIMessageId } from "../../../../store/reducers/entities/messages/types";
@@ -18,9 +19,9 @@ export const toPNMessage = (
     messageFromApi.third_party_message.details
   );
 
-  if (maybeNotification.isRight()) {
+  if (E.isRight(maybeNotification)) {
     return {
-      ...maybeNotification.value,
+      ...maybeNotification.right,
       serviceId: messageFromApi.sender_service_id,
       attachments: messageFromApi.third_party_message.attachments?.map(_ => ({
         messageId: messageFromApi.id as UIMessageId,

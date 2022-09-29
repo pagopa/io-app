@@ -1,5 +1,5 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { render } from "@testing-library/react-native";
-import * as pot from "italia-ts-commons/lib/pot";
 import React from "react";
 import { RemoteSwitch } from "../RemoteSwitch";
 
