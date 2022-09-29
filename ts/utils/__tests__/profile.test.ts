@@ -1,5 +1,5 @@
-import { none, some } from "italia-ts-commons/lib/pot";
-import { FiscalCode } from "italia-ts-commons/lib/strings";
+import { none, some } from "@pagopa/ts-commons/lib/pot";
+import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { extractFiscalCodeData } from "../profile";
 import { mockedMunicipality } from "../__mocks__/municipality";
 

@@ -1,4 +1,5 @@
-import { fromNullable } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -39,7 +40,9 @@ const IbanLoadingUpsert: React.FunctionComponent<Props> = props => {
       {...props}
       loadingCaption={loading}
       onAbort={props.onAbort}
-      onRetry={() => fromNullable(props.ibanValue.value).map(props.onRetry)}
+      onRetry={() =>
+        pipe(props.ibanValue.value, O.fromNullable, O.map(props.onRetry))
+      }
     />
   );
 };

@@ -1,3 +1,4 @@
+import * as E from "fp-ts/lib/Either";
 import { ServicesWebviewParams } from "../ServicesWebviewParams";
 
 const validParams = {
@@ -20,18 +21,18 @@ const invalidParams3 = {
 
 describe("WebviewMessage", () => {
   it("Should recognize a valid payload for Params", () => {
-    expect(ServicesWebviewParams.decode(validParams).isRight()).toBeTruthy();
+    expect(E.isRight(ServicesWebviewParams.decode(validParams))).toBeTruthy();
   });
 
   it("Should recognize an invalid payload for Params", () => {
-    expect(ServicesWebviewParams.decode(invalidParams1).isRight()).toBeFalsy();
+    expect(E.isRight(ServicesWebviewParams.decode(invalidParams1))).toBeFalsy();
   });
 
   it("Should recognize an invalid payload for Params", () => {
-    expect(ServicesWebviewParams.decode(invalidParams2).isRight()).toBeFalsy();
+    expect(E.isRight(ServicesWebviewParams.decode(invalidParams2))).toBeFalsy();
   });
 
   it("Should recognize an invalid payload for Params", () => {
-    expect(ServicesWebviewParams.decode(invalidParams3).isRight()).toBeFalsy();
+    expect(E.isRight(ServicesWebviewParams.decode(invalidParams3))).toBeFalsy();
   });
 });

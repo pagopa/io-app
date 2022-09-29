@@ -1,4 +1,4 @@
-import { IUnitTag } from "italia-ts-commons/lib/units";
+import { IUnitTag } from "@pagopa/ts-commons/lib/units";
 import { AvailableDestinations, VoucherRequest } from "./SvVoucherRequest";
 
 /**

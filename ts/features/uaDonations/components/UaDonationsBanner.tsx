@@ -1,8 +1,9 @@
+import { useLinkTo } from "@react-navigation/native";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { View } from "native-base";
 import * as React from "react";
-
 import { Platform, StyleSheet, TouchableWithoutFeedback } from "react-native";
-import { useLinkTo } from "@react-navigation/native";
 import Heart from "../../../../img/features/uaDonations/heart.svg";
 import { H5 } from "../../../components/core/typography/H5";
 import { IOColors } from "../../../components/core/variables/IOColors";
@@ -78,13 +79,19 @@ export const UaDonationsBanner = () => {
 
   const linkTo = useLinkTo();
 
-  return uaDonationsBannerData.fold(null, uaDonationsData => (
-    <BaseDonationsBanner
-      text={uaDonationsData.description[locale]}
-      onPress={() => {
-        void mixpanelTrack("UADONATIONS_BANNER_HANDLER_SUCCESS");
-        linkTo(`/uadonations-webview?urlToLoad=${uaDonationsData.url}`);
-      }}
-    />
-  ));
+  return pipe(
+    uaDonationsBannerData,
+    O.fold(
+      () => null,
+      uaDonationsData => (
+        <BaseDonationsBanner
+          text={uaDonationsData.description[locale]}
+          onPress={() => {
+            void mixpanelTrack("UADONATIONS_BANNER_HANDLER_SUCCESS");
+            linkTo(`/uadonations-webview?urlToLoad=${uaDonationsData.url}`);
+          }}
+        />
+      )
+    )
+  );
 };

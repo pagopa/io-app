@@ -1,13 +1,13 @@
+import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import React from "react";
-import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
-import { isAndroid, isIos } from "../../../utils/platform";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { ServiceMetadata } from "../../../../definitions/backend/ServiceMetadata";
-import { ItemAction } from "../../../utils/url";
-import SectionHeader from ".././SectionHeader";
-import LinkRow from ".././LinkRow";
 import I18n from "../../../i18n";
 import { isTestEnv } from "../../../utils/environment";
+import { isAndroid, isIos } from "../../../utils/platform";
+import { ItemAction } from "../../../utils/url";
+import LinkRow from ".././LinkRow";
+import SectionHeader from ".././SectionHeader";
 import InformationRow from "./InformationRow";
 
 type Props = {

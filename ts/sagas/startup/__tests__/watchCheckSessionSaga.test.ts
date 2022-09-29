@@ -1,4 +1,4 @@
-import { left, right } from "fp-ts/lib/Either";
+import * as E from "fp-ts/lib/Either";
 import * as t from "io-ts";
 import { testSaga } from "redux-saga-test-plan";
 import { PublicSession } from "../../../../definitions/backend/PublicSession";
@@ -20,7 +20,7 @@ describe("checkSession", () => {
       spidLevel: "https://www.spid.gov.it/SpidL2",
       walletToken: "ZXCVBNM098876543"
     };
-    const responseOK = right({
+    const responseOK = E.right({
       status: 200,
       value: responseValue
     });
@@ -40,7 +40,7 @@ describe("checkSession", () => {
   });
 
   it("if response is 401 the session is invalid", () => {
-    const responseUnauthorized = right({ status: 401 });
+    const responseUnauthorized = E.right({ status: 401 });
     testSaga(testableCheckSession!, getSessionValidity)
       .next()
       .call(getSessionValidity, {})
@@ -55,7 +55,7 @@ describe("checkSession", () => {
   });
 
   it("if response is 500 the session is valid", () => {
-    const response500 = right({ status: 500 });
+    const response500 = E.right({ status: 500 });
     testSaga(testableCheckSession!, getSessionValidity)
       .next()
       .call(getSessionValidity, {})
@@ -74,7 +74,7 @@ describe("checkSession", () => {
       value: "some error occurred",
       context: [{ key: "", type: t.string }]
     };
-    const responeLeft = left([validatorError]);
+    const responeLeft = E.left([validatorError]);
     testSaga(testableCheckSession!, getSessionValidity)
       .next()
       .call(getSessionValidity, {})

@@ -1,23 +1,23 @@
+import * as E from "fp-ts/lib/Either";
+import { Action } from "redux";
 import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
-import { right } from "fp-ts/lib/Either";
-import { Action } from "redux";
-import { appReducer } from "../../store/reducers";
 import { applicationChangeState } from "../../store/actions/application";
+import { appReducer } from "../../store/reducers";
 import {
   notificationsPlatform,
   updateInstallationSaga
 } from "../notifications";
 
 import {
-  notificationsInstallationTokenRegistered,
-  updateNotificationsInstallationToken
-} from "../../store/actions/notifications";
-import {
   logoutRequest,
   sessionExpired,
   sessionInvalid
 } from "../../store/actions/authentication";
+import {
+  notificationsInstallationTokenRegistered,
+  updateNotificationsInstallationToken
+} from "../../store/actions/notifications";
 
 const installationId = "installationId";
 jest.mock("../../utils/installation", () => ({
@@ -56,12 +56,12 @@ describe("updateInstallationSaga", () => {
           .provide([
             [
               matchers.call.fn(createOrUpdateInstallation),
-              right({ status: 200 })
+              E.right({ status: 200 })
             ]
           ])
           .call(createOrUpdateInstallation, {
             installationID: installationId,
-            installation: {
+            body: {
               platform: notificationsPlatform,
               pushChannel: pushNotificationToken
             }
@@ -106,12 +106,12 @@ describe("updateInstallationSaga", () => {
           .provide([
             [
               matchers.call.fn(createOrUpdateInstallation),
-              right({ status: 200 })
+              E.right({ status: 200 })
             ]
           ])
           .call(createOrUpdateInstallation, {
             installationID: installationId,
-            installation: {
+            body: {
               platform: notificationsPlatform,
               pushChannel: newPushNotificationToken
             }
@@ -135,12 +135,12 @@ describe("updateInstallationSaga", () => {
           .provide([
             [
               matchers.call.fn(createOrUpdateInstallation),
-              right({ status: 200 })
+              E.right({ status: 200 })
             ]
           ])
           .call(createOrUpdateInstallation, {
             installationID: installationId,
-            installation: {
+            body: {
               platform: notificationsPlatform,
               pushChannel: pushNotificationToken
             }
@@ -159,12 +159,12 @@ describe("updateInstallationSaga", () => {
           .provide([
             [
               matchers.call.fn(createOrUpdateInstallation),
-              right({ status: 200 })
+              E.right({ status: 200 })
             ]
           ])
           .call(createOrUpdateInstallation, {
             installationID: installationId,
-            installation: {
+            body: {
               platform: notificationsPlatform,
               pushChannel: pushNotificationToken
             }
@@ -189,12 +189,12 @@ describe("updateInstallationSaga", () => {
           .provide([
             [
               matchers.call.fn(createOrUpdateInstallation),
-              right({ status: 200 })
+              E.right({ status: 200 })
             ]
           ])
           .call(createOrUpdateInstallation, {
             installationID: installationId,
-            installation: {
+            body: {
               platform: notificationsPlatform,
               pushChannel: pushNotificationToken
             }

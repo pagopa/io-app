@@ -1,4 +1,4 @@
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
 import { ActivityIndicator } from "react-native";
@@ -9,8 +9,8 @@ import I18n from "../../i18n";
 import { setFavouriteWalletRequest } from "../../store/actions/wallet/wallets";
 import { GlobalState } from "../../store/reducers/types";
 import {
-  updatingFavouriteWalletSelector,
-  getFavoriteWalletId
+  getFavoriteWalletId,
+  updatingFavouriteWalletSelector
 } from "../../store/reducers/wallet/wallets";
 import { PaymentMethod } from "../../types/pagopa";
 import { isAndroid } from "../../utils/platform";

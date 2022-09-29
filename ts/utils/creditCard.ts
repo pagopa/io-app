@@ -1,4 +1,6 @@
-import { fromNullable, Option } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import * as AR from "fp-ts/lib/Array";
 import { ImageURISource } from "react-native";
 
 export type IconSource = (string & ImageURISource) | undefined;
@@ -13,7 +15,7 @@ export type SupportedBrand = {
 
 type CreditCardDetector = {
   supportedBrands: Record<string, SupportedBrand>;
-  validate: (pan: Option<string>) => SupportedBrand;
+  validate: (pan: O.Option<string>) => SupportedBrand;
 };
 
 export const CreditCardDetector: CreditCardDetector = {
@@ -107,13 +109,18 @@ export const CreditCardDetector: CreditCardDetector = {
     }
   },
 
-  validate: (pan: Option<string>) => {
+  validate: (pan: O.Option<string>) => {
     const supportedBrands = CreditCardDetector.supportedBrands;
     const supportedBrandsValues = Object.values(supportedBrands);
-    return pan
-      .chain(myPan =>
-        fromNullable(supportedBrandsValues.find(brand => brand.re.test(myPan)))
-      )
-      .getOrElse(supportedBrands.unknown);
+    return pipe(
+      pan,
+      O.chain(myPan =>
+        pipe(
+          supportedBrandsValues,
+          AR.findFirst(brand => brand.re.test(myPan))
+        )
+      ),
+      O.getOrElse(() => supportedBrands.unknown)
+    );
   }
 };

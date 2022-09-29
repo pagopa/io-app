@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 // The script need to be executed by the danger bot that doesn't support the optional chaining operator
-import { Either, left, Right, right } from "fp-ts/lib/Either";
-import { fromNullable, none, Option, Some, some } from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { GenericTicket, GenericTicketType } from "../../common/ticket/types";
 
 const storyTag = new Map<GenericTicketType, string>([
@@ -81,23 +82,29 @@ export const allStoriesSameType = (
  */
 export const getChangelogPrefixByStories = (
   stories: ReadonlyArray<GenericTicket>
-): Option<string> => {
+): O.Option<string> => {
   // In case of multiple stories, only one tag can be added, following the order feature > bug > chore
-  const storyType = stories.reduce<Option<GenericTicketType>>((acc, val) => {
-    const currentStoryOrder = fromNullable(storyOrder.get(val.type));
-    const prevStoryOrder = acc.chain(v => fromNullable(storyOrder.get(v)));
+  const storyType = stories.reduce<O.Option<GenericTicketType>>((acc, val) => {
+    const currentStoryOrder = O.fromNullable(storyOrder.get(val.type));
+    const prevStoryOrder = pipe(
+      acc,
+      O.chain(v => O.fromNullable(storyOrder.get(v)))
+    );
 
-    if (currentStoryOrder.isSome() && prevStoryOrder.isSome()) {
+    if (O.isSome(currentStoryOrder) && O.isSome(prevStoryOrder)) {
       return currentStoryOrder.value > prevStoryOrder.value
-        ? some(val.type)
+        ? O.some(val.type)
         : acc;
-    } else if (currentStoryOrder.isSome()) {
-      return some(val.type);
+    } else if (O.isSome(currentStoryOrder)) {
+      return O.some(val.type);
     }
     return acc;
-  }, none);
+  }, O.none);
 
-  return storyType.chain(st => fromNullable(storyTag.get(st)));
+  return pipe(
+    storyType,
+    O.chain(st => O.fromNullable(storyTag.get(st)))
+  );
 };
 
 /**
@@ -110,9 +117,9 @@ export const getChangelogPrefixByStories = (
  */
 export const getStoryChangelogScope = (
   story: GenericTicket
-): Either<Error, Option<string>> => {
+): E.Either<Error, O.Option<string>> => {
   // try to retrieve the project scope (if any)
-  const maybeProjectScope = fromNullable(projectToScope.get(story.projectId));
+  const maybeProjectScope = O.fromNullable(projectToScope.get(story.projectId));
   // search for scope labels associated with the story
   const maybeChangelogScopeTag = story.tags
     .filter(l => l.match(regex))
@@ -121,7 +128,7 @@ export const getStoryChangelogScope = (
 
   // multiple scope labels found on the story
   if (maybeChangelogScopeTag.length > 1) {
-    return left(
+    return E.left(
       new Error(
         `Multiple labels match the expression \`${regex}\` for the story [#${story.id}].\n
        It is not possible to assign a single scope to this pull request!`
@@ -129,16 +136,16 @@ export const getStoryChangelogScope = (
     );
   }
   // the story matches a project scope and also have scope label
-  if (maybeProjectScope.isSome() && maybeChangelogScopeTag.length >= 1) {
-    return left(
+  if (O.isSome(maybeProjectScope) && maybeChangelogScopeTag.length >= 1) {
+    return E.left(
       new Error(
         `The story [#${story.id}] have the project_id ${story.projectId} associated with the scope ${maybeProjectScope.value} but also have labels matching the expression \`${regex}\`.\n
         It is not possible to assign a single scope to this pull request!`
       )
     );
   }
-  if (maybeProjectScope.isSome()) {
-    return right(maybeProjectScope);
+  if (O.isSome(maybeProjectScope)) {
+    return E.right(maybeProjectScope);
   }
   if (
     maybeChangelogScopeTag.length === 1 &&
@@ -147,8 +154,8 @@ export const getStoryChangelogScope = (
     // check if is allowed
     const scopeDisplayName = allowedScope.get(maybeChangelogScopeTag[0]);
     return scopeDisplayName !== undefined
-      ? right(some(scopeDisplayName))
-      : left(
+      ? E.right(O.some(scopeDisplayName))
+      : E.left(
           new Error(
             `The scope ${
               maybeChangelogScopeTag[0]
@@ -159,7 +166,7 @@ export const getStoryChangelogScope = (
         );
   }
   // neither project scope nor scope label found
-  return right(none);
+  return E.right(O.none);
 };
 
 /**
@@ -172,32 +179,32 @@ export const getStoryChangelogScope = (
  */
 export const getChangelogScope = (
   stories: ReadonlyArray<GenericTicket>
-): Either<ReadonlyArray<Error>, Option<string>> => {
+): E.Either<ReadonlyArray<Error>, O.Option<string>> => {
   const eitherChangelogScopes = stories.map(getStoryChangelogScope);
 
   // if there is some error, forward the errors
-  if (eitherChangelogScopes.some(scope => scope.isLeft())) {
-    return left(
+  if (eitherChangelogScopes.some(E.isLeft)) {
+    return E.left(
       eitherChangelogScopes.reduce<ReadonlyArray<Error>>(
-        (acc, val) => (val.isLeft() ? [...acc, val.value] : acc),
+        (acc, val) => (E.isLeft(val) ? [...acc, val.left] : acc),
         []
       )
     );
   }
   const scopesList = eitherChangelogScopes
     .filter(
-      (maybeScope): maybeScope is Right<Error, Some<string>> =>
-        maybeScope.isRight() && maybeScope.value.isSome()
+      (maybeScope): maybeScope is E.Right<O.Some<string>> =>
+        E.isRight(maybeScope) && O.isSome(maybeScope.right)
     )
-    .map(scope => scope.value.value);
+    .map(scope => scope.right.value);
 
   if (scopesList.length === 0) {
-    return right(none);
+    return E.right(O.none);
   }
 
   return scopesList.every((scope, _, arr) => scope === arr[0])
-    ? right(some(scopesList[0]))
-    : left([
+    ? E.right(O.some(scopesList[0]))
+    : E.left([
         new Error(
           `Different scopes were found on the stories related to the pull request: [${scopesList.join(
             ","

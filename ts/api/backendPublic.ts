@@ -5,7 +5,7 @@ import {
   createFetchRequestForApi,
   IGetApiRequestType,
   IPostApiRequestType
-} from "italia-ts-commons/lib/requests";
+} from "@pagopa/ts-commons/lib/requests";
 import { AccessToken } from "../../definitions/backend/AccessToken";
 import { PasswordLogin } from "../../definitions/backend/PasswordLogin";
 import { BackendStatus } from "../../definitions/content/BackendStatus";

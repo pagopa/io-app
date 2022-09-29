@@ -1,5 +1,5 @@
-import * as pot from "italia-ts-commons/lib/pot";
-import { NonEmptyString } from "italia-ts-commons/lib/strings";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { testSaga } from "redux-saga-test-plan";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { updateOrganizations } from "../../../store/actions/organizations";

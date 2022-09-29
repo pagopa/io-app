@@ -1,3 +1,4 @@
+import * as E from "fp-ts/lib/Either";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { ContentClient } from "../../../../../../api/content";
@@ -19,18 +20,18 @@ export function* handleLoadPrivativeConfiguration(
     const getPrivativeServicesResult: SagaCallReturnType<
       typeof getPrivativeServices
     > = yield* call(getPrivativeServices);
-    if (getPrivativeServicesResult.isRight()) {
-      if (getPrivativeServicesResult.value.status === 200) {
+    if (E.isRight(getPrivativeServicesResult)) {
+      if (getPrivativeServicesResult.right.status === 200) {
         yield* put(
-          loadPrivativeIssuers.success(getPrivativeServicesResult.value.value)
+          loadPrivativeIssuers.success(getPrivativeServicesResult.right.value)
         );
       } else {
         throw new Error(
-          `response status ${getPrivativeServicesResult.value.status}`
+          `response status ${getPrivativeServicesResult.right.status}`
         );
       }
     } else {
-      throw new Error(readablePrivacyReport(getPrivativeServicesResult.value));
+      throw new Error(readablePrivacyReport(getPrivativeServicesResult.left));
     }
   } catch (e) {
     yield* put(loadPrivativeIssuers.failure(getNetworkError(e)));

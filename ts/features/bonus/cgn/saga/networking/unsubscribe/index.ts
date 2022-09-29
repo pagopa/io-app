@@ -1,12 +1,13 @@
+import * as E from "fp-ts/lib/Either";
 import { call, put } from "typed-redux-saga/macro";
-import { cgnUnsubscribe } from "../../../store/actions/unsubscribe";
-import { BackendCGN } from "../../../api/backendCgn";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import {
   getGenericError,
   getNetworkError
 } from "../../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../../utils/reporters"; // handle the request for CGN unsubscription
+import { BackendCGN } from "../../../api/backendCgn";
+import { cgnUnsubscribe } from "../../../store/actions/unsubscribe";
 
 // handle the request for CGN unsubscription
 export function* cgnUnsubscriptionHandler(
@@ -18,22 +19,22 @@ export function* cgnUnsubscriptionHandler(
     const unsubscriptionResult: SagaCallReturnType<
       typeof startCgnUnsubscription
     > = yield* call(startCgnUnsubscription, {});
-    if (unsubscriptionResult.isRight()) {
+    if (E.isRight(unsubscriptionResult)) {
       if (
-        unsubscriptionResult.value.status === 201 ||
-        unsubscriptionResult.value.status === 202
+        unsubscriptionResult.right.status === 201 ||
+        unsubscriptionResult.right.status === 202
       ) {
         yield* put(cgnUnsubscribe.success());
         return;
       }
       throw new Error(
-        `Response in status ${unsubscriptionResult.value.status}`
+        `Response in status ${unsubscriptionResult.right.status}`
       );
     }
     yield* put(
       cgnUnsubscribe.failure(
         getGenericError(
-          new Error(readablePrivacyReport(unsubscriptionResult.value))
+          new Error(readablePrivacyReport(unsubscriptionResult.left))
         )
       )
     );

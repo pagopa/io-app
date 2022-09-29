@@ -1,4 +1,4 @@
-import { Either, left, right } from "fp-ts/lib/Either";
+import * as E from "fp-ts/lib/Either";
 import { CobadgeResponse } from "../../../../../../../definitions/pagopa/walletv2/CobadgeResponse";
 import { PaymentManagerClient } from "../../../../../../api/pagopa";
 import { mixpanelTrack } from "../../../../../../mixpanel";
@@ -40,7 +40,7 @@ export const searchUserCobadge = async (
   >["searchCobadgePans"],
   sessionManager: SessionManager<PaymentManagerToken>,
   searchRequestId: string | undefined
-): Promise<Either<NetworkError, CobadgeResponse>> => {
+): Promise<E.Either<NetworkError, CobadgeResponse>> => {
   const logPrefix = `${
     cobadgeQuery.panCode ? privativePrefix : cobadgePrefix
   }_${searchRequestId ? withTokenSuffix : withoutTokenSuffix}`;
@@ -55,37 +55,37 @@ export const searchUserCobadge = async (
         ? searchCobadgePans(searchRequestId)
         : getCobadgePans(cobadgeQuery.abiCode, cobadgeQuery.panCode)
     )();
-    if (getPansWithRefreshResult.isRight()) {
-      if (getPansWithRefreshResult.value.status === 200) {
-        if (getPansWithRefreshResult.value.value.data) {
+    if (E.isRight(getPansWithRefreshResult)) {
+      if (getPansWithRefreshResult.right.status === 200) {
+        if (getPansWithRefreshResult.right.value.data) {
           void mixpanelTrack(
             `${logPrefix}_SUCCESS`,
-            trackCobadgeResponse(getPansWithRefreshResult.value.value.data)
+            trackCobadgeResponse(getPansWithRefreshResult.right.value.data)
           );
-          return right(getPansWithRefreshResult.value.value.data);
+          return E.right(getPansWithRefreshResult.right.value.data);
         } else {
           // it should not never happen
           const error = getGenericError(new Error(`data is undefined`));
           void mixpanelTrack(`${logPrefix}_FAILURE`, { reason: error });
-          return left(error);
+          return E.left(error);
         }
       } else {
         const error = getGenericError(
-          new Error(`response status ${getPansWithRefreshResult.value.status}`)
+          new Error(`response status ${getPansWithRefreshResult.right.status}`)
         );
         void mixpanelTrack(`${logPrefix}_FAILURE`, { reason: error });
-        return left(error);
+        return E.left(error);
       }
     } else {
       const error = getGenericError(
-        new Error(readablePrivacyReport(getPansWithRefreshResult.value))
+        new Error(readablePrivacyReport(getPansWithRefreshResult.left))
       );
       void mixpanelTrack(`${logPrefix}_FAILURE`, { reason: error });
-      return left(error);
+      return E.left(error);
     }
   } catch (e) {
     const error = getNetworkError(e);
     void mixpanelTrack(`${logPrefix}_FAILURE`, { reason: error });
-    return left(error);
+    return E.left(error);
   }
 };

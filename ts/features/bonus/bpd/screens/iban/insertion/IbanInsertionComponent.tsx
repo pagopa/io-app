@@ -1,3 +1,6 @@
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { View } from "native-base";
 import * as React from "react";
 import { useState } from "react";
@@ -12,8 +15,8 @@ import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import { LabelledItem } from "../../../../../../components/LabelledItem";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../../i18n";
-import { FooterTwoButtons } from "../../../../bonusVacanze/components/markdown/FooterTwoButtons";
 import { maybeNotNullyString } from "../../../../../../utils/strings";
+import { FooterTwoButtons } from "../../../../bonusVacanze/components/markdown/FooterTwoButtons";
 
 type OwnProps = {
   onBack: () => void;
@@ -46,7 +49,7 @@ const upperCaseAndNoBlanks = (text: string) =>
 
 export const IbanInsertionComponent: React.FunctionComponent<Props> = props => {
   const [iban, setIban] = useState<string | undefined>(props.startIban);
-  const isValidIban = iban && Iban.decode(iban).isRight();
+  const isValidIban = iban && E.isRight(Iban.decode(iban));
   const { headerTitle, title, body1, body1Bold, body2, ibanDescription } =
     loadLocales();
   return (
@@ -68,8 +71,12 @@ export const IbanInsertionComponent: React.FunctionComponent<Props> = props => {
             <View spacer={true} large={true} />
             <H5>{ibanDescription}</H5>
             <LabelledItem
-              isValid={maybeNotNullyString(iban).fold(undefined, _ =>
-                Iban.decode(iban).isRight()
+              isValid={pipe(
+                maybeNotNullyString(iban),
+                O.fold(
+                  () => undefined,
+                  _ => E.isRight(Iban.decode(iban))
+                )
               )}
               inputProps={{
                 value: iban,
@@ -97,8 +104,9 @@ export const IbanInsertionComponent: React.FunctionComponent<Props> = props => {
         <FooterTwoButtons
           rightDisabled={!isValidIban}
           onRight={() =>
-            Iban.decode(upperCaseAndNoBlanks(iban as string)).map(
-              props.onIbanConfirm
+            pipe(
+              Iban.decode(upperCaseAndNoBlanks(iban as string)),
+              E.map(props.onIbanConfirm)
             )
           }
           onCancel={props.onContinue}
