@@ -1,10 +1,13 @@
-import { fromNullable, fromPredicate, Option } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { View } from "native-base";
 import React from "react";
 import { Platform, StyleSheet } from "react-native";
-import { connect } from "react-redux";
 import DeviceInfo from "react-native-device-info";
+import { connect } from "react-redux";
+import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import { Dispatch } from "../../store/actions/types";
 import { PaidReason } from "../../store/reducers/entities/payments";
 import { GlobalState } from "../../store/reducers/types";
 import {
@@ -13,9 +16,7 @@ import {
   MessagePaymentExpirationInfo,
   paymentExpirationInfo
 } from "../../utils/messages";
-import { Dispatch } from "../../store/actions/types";
 import ExtractedCTABar from "../cta/ExtractedCTABar";
-import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import CalendarEventButton from "./CalendarEventButton";
 import PaymentButton from "./PaymentButton";
 
@@ -44,7 +45,7 @@ const styles = StyleSheet.create({
  * - a button to show/start a payment
  */
 class MessageDetailCTABar extends React.PureComponent<Props> {
-  get paymentExpirationInfo(): Option<MessagePaymentExpirationInfo> {
+  get paymentExpirationInfo(): O.Option<MessagePaymentExpirationInfo> {
     return paymentExpirationInfo(this.props.message);
   }
 
@@ -53,11 +54,14 @@ class MessageDetailCTABar extends React.PureComponent<Props> {
   }
 
   get isPaymentExpired() {
-    return this.paymentExpirationInfo.fold(false, isExpired);
+    return pipe(
+      this.paymentExpirationInfo,
+      O.fold(() => false, isExpired)
+    );
   }
 
   get dueDate() {
-    return fromNullable(this.props.message.content.due_date);
+    return O.fromNullable(this.props.message.content.due_date);
   }
 
   // Render a button to add/remove an event related to the message in the calendar
@@ -65,9 +69,14 @@ class MessageDetailCTABar extends React.PureComponent<Props> {
     // The add/remove reminder button is hidden:
     // - if the message hasn't a due date
     // - if the message has a payment and it has been paid or is expired
-    this.dueDate
-      .chain(fromPredicate(() => !this.paid && !this.isPaymentExpired))
-      .fold(null, _ => <CalendarEventButton message={this.props.message} />);
+    pipe(
+      this.dueDate,
+      O.chain(O.fromPredicate(() => !this.paid && !this.isPaymentExpired)),
+      O.fold(
+        () => null,
+        _ => <CalendarEventButton message={this.props.message} />
+      )
+    );
 
   // return a payment button only when the advice is not paid and the payment_data is defined
   private renderPaymentButton(): React.ReactNode {
@@ -104,7 +113,7 @@ class MessageDetailCTABar extends React.PureComponent<Props> {
       maybeServiceMetadata,
       this.props.service?.service_id
     );
-    const footer2 = maybeCtas.isSome() && (
+    const footer2 = O.isSome(maybeCtas) && (
       <View footer={true} style={styles.row}>
         <ExtractedCTABar
           ctas={maybeCtas.value}

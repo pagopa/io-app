@@ -1,4 +1,5 @@
-import { Either, left, right } from "fp-ts/lib/Either";
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { PaymentManagerClient } from "../../../../../../api/pagopa";
@@ -16,10 +17,10 @@ import { addPrivativeToWallet } from "../../store/actions";
 
 const toRawPrivativePaymentMethod = (
   rpm: RawPaymentMethod
-): Either<NetworkError, RawPrivativePaymentMethod> =>
+): E.Either<NetworkError, RawPrivativePaymentMethod> =>
   isRawPrivative(rpm)
-    ? right(rpm)
-    : left(
+    ? E.right(rpm)
+    : E.left(
         getGenericError(
           new Error("Cannot decode the payload as RawPrivativePaymentMethod")
         )
@@ -40,12 +41,12 @@ export function* handleAddPrivativeToWallet(
     addAction.payload
   );
 
-  const eitherRawPrivative = result.chain(toRawPrivativePaymentMethod);
+  const eitherRawPrivative = pipe(result, E.chain(toRawPrivativePaymentMethod));
 
   // dispatch the related action
-  if (eitherRawPrivative.isRight()) {
-    yield* put(addPrivativeToWallet.success(eitherRawPrivative.value));
+  if (E.isRight(eitherRawPrivative)) {
+    yield* put(addPrivativeToWallet.success(eitherRawPrivative.right));
   } else {
-    yield* put(addPrivativeToWallet.failure(eitherRawPrivative.value));
+    yield* put(addPrivativeToWallet.failure(eitherRawPrivative.left));
   }
 }

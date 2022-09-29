@@ -538,8 +538,8 @@ authentication:
       title: Login with CIE unavailable
       body: !include cie/cieNotSupported.md
       android_desc: !include cie/cieNotSupported_android.md
-      os_version_unsupported: an OS version compatible with CIE authentication (Android 6.0 or higher)
-      nfc_incompatible: an NFC antenna compatible with authentication via CIE
+      os_version_unsupported: an Android 6.0 or higher operating system
+      nfc_incompatible: a NFC chip 
     contentTitleCie: Don't have SPID or CIE?
     cie_information_request: !include cie.md
     spid_or_cie: To use IO you must have one of these digital tools, which certify your identity.
@@ -561,9 +561,8 @@ authentication:
     card3-title: Quickly pay a physical notice
     card3-content: You can pay a notice also by scanning the QR code on the physical
       notice
-    card4-title: You can use the app by SPID only
-    card4-content: The access is allowed only by SPID (Public Service of Digital Identity)
-      to guarantee your online safety
+    card4-title: You can login only with SPID
+    card4-content: The device you are using does not support access with Electronic Identity Card (CIE)
     card5-title: Welcome to the public version of IO!
     card5-content: In this version you can find in the upper-right corner
       the icons to report bugs or start a chat with the development team.
@@ -2997,8 +2996,7 @@ features:
             body: "Downloading the attachment"
           failing:
             title: "Attachment"
-            body: "An error occurred while downloading the attachment"
-            details: "Check your connection please and try again"
+            details: "An error occurred while downloading the attachment. Retry or create a ticket"
           checkBox: "OK, don't show me again"
         pdfPreview:
           title: "PDF Preview"
@@ -3007,7 +3005,9 @@ features:
           save: "Save"
           savedAtLocation: "Document {{name}} was successfully saved in your Download folder."
           errors:
-            previewing: "Non è possibile mostrare l'anteprima del documento. E' comunque possibile salvarlo e aprirlo con un'applicazione per i PDF"
+            previewing:
+              title: "Preview is not available"
+              body: "To view the document, download and open it with a PDF reader app."
             sharing: "An error occurred while sharing the document"
             opening: "An error occurred while opening the document. You may not have a PDF reader installed."
             saving: "An error occurred while saving the document"
@@ -3117,7 +3117,6 @@ features:
           EFFECTIVE_DATE: Perfezionata per decorrenza termini
           VIEWED: Perfezionata per visione
           REFUSED: REFUSED
-          UNDEFINED: Non definito
           CANCELLED: Annullata
         expand: mostra gli stati precedenti
         info: Puoi vedere il dettaglio di ciascuno stato, scaricare le ricevute e le attestazioni opponibili a terzi accedendo alla versione web del servizio   

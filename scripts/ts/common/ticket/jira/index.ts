@@ -1,5 +1,6 @@
-import { Either, toError } from "fp-ts/lib/Either";
-import { TaskEither, tryCatch } from "fp-ts/lib/TaskEither";
+import * as E from "fp-ts/lib/Either";
+import { flow, pipe } from "fp-ts/lib/function";
+import * as TE from "fp-ts/lib/TaskEither";
 import { Errors } from "io-ts";
 import fetch from "node-fetch";
 import { RemoteJiraTicket } from "./types";
@@ -30,8 +31,8 @@ const retrieveRawJiraTicket = async (id: string): Promise<unknown> => {
   return await res.json();
 };
 
-const retrieveRawJiraTicketTask = (id: string): TaskEither<Error, unknown> =>
-  tryCatch(() => retrieveRawJiraTicket(id), toError);
+const retrieveRawJiraTicketTask = (id: string): TE.TaskEither<Error, unknown> =>
+  TE.tryCatch(() => retrieveRawJiraTicket(id), E.toError);
 
 /**
  * Ensure that the remote payload has the required fields
@@ -39,16 +40,15 @@ const retrieveRawJiraTicketTask = (id: string): TaskEither<Error, unknown> =>
  */
 const decodeRemoteJiraTicket = (
   payload: any
-): Either<Errors, RemoteJiraTicket> => RemoteJiraTicket.decode(payload);
+): E.Either<Errors, RemoteJiraTicket> => RemoteJiraTicket.decode(payload);
 
 const getJiraTicket = async (
   jiraId: string
-): Promise<Either<Errors | Error, RemoteJiraTicket>> =>
-  (
-    await retrieveRawJiraTicketTask(jiraId)
-      .mapLeft<Errors | Error>(e => e)
-      .run()
-  ).chain(decodeRemoteJiraTicket);
+): Promise<E.Either<Errors | Error, RemoteJiraTicket>> =>
+  pipe(
+    retrieveRawJiraTicketTask(jiraId),
+    TE.chainW(flow(decodeRemoteJiraTicket, TE.fromEither))
+  )();
 
 /**
  * Retrieve {@link RemoteJiraTicket} using jiraIds as input
@@ -56,5 +56,5 @@ const getJiraTicket = async (
  */
 export const getJiraTickets = async (
   jiraIds: ReadonlyArray<string>
-): Promise<ReadonlyArray<Either<Errors | Error, RemoteJiraTicket>>> =>
+): Promise<ReadonlyArray<E.Either<Errors | Error, RemoteJiraTicket>>> =>
   await Promise.all(jiraIds.map(getJiraTicket));

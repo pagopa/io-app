@@ -1,7 +1,7 @@
 /**
  * This component displays a list of transactions
  */
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import {

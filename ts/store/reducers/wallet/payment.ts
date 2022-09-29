@@ -1,7 +1,20 @@
-import * as pot from "italia-ts-commons/lib/pot";
-import { getType } from "typesafe-actions";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
+import { getType } from "typesafe-actions";
+import { PspData } from "../../../../definitions/pagopa/PspData";
+import { Locales } from "../../../../locales/locales";
+import {
+  remoteError,
+  remoteLoading,
+  remoteReady,
+  remoteUndefined,
+  RemoteValue
+} from "../../../features/bonus/bpd/model/RemoteValue";
+import { walletAddPaypalRefreshPMToken } from "../../../features/wallet/onboarding/paypal/store/actions";
+import { PaymentManagerToken } from "../../../types/pagopa";
 import { PotFromActions } from "../../../types/utils";
+import { getError } from "../../../utils/errors";
 import { Action } from "../../actions/types";
 import {
   paymentAttiva,
@@ -10,28 +23,17 @@ import {
   paymentIdPolling,
   paymentInitializeEntrypointRoute,
   paymentInitializeState,
+  PaymentStartOrigin,
   paymentVerifica,
   paymentWebViewEnd,
   pspForPaymentV2,
   pspSelectedForPaymentV2
 } from "../../actions/wallet/payment";
-import { GlobalState } from "../types";
-import {
-  remoteError,
-  remoteLoading,
-  remoteReady,
-  remoteUndefined,
-  RemoteValue
-} from "../../../features/bonus/bpd/model/RemoteValue";
-import { Locales } from "../../../../locales/locales";
-import { PaymentManagerToken } from "../../../types/pagopa";
 import {
   addCreditCardWebViewEnd,
   refreshPMTokenWhileAddCreditCard
 } from "../../actions/wallet/wallets";
-import { walletAddPaypalRefreshPMToken } from "../../../features/wallet/onboarding/paypal/store/actions";
-import { PspData } from "../../../../definitions/pagopa/PspData";
-import { getError } from "../../../utils/errors";
+import { GlobalState } from "../types";
 
 export type EntrypointRoute = Readonly<{
   name: string;
@@ -52,6 +54,7 @@ export type PaymentStartWebViewPayload = PaymentStartPayload & {
 //       a state for each RptId - this will make unnecessary to reset the state
 //       at the beginning of a new payment flow.
 export type PaymentState = Readonly<{
+  startOrigin?: PaymentStartOrigin;
   verifica: PotFromActions<
     typeof paymentVerifica["success"],
     typeof paymentVerifica["failure"]
@@ -108,7 +111,7 @@ export const pspSelectedV2ListSelector = createSelector(
 );
 
 export const isPaymentOngoingSelector = (state: GlobalState) =>
-  getPaymentIdFromGlobalState(state).isSome();
+  O.isSome(getPaymentIdFromGlobalState(state));
 
 export const entrypointRouteSelector = (state: GlobalState) =>
   state.wallet.payment.entrypointRoute;
@@ -133,6 +136,11 @@ export const paymentIdSelector = (
 export const paymentStartPayloadSelector = (
   state: GlobalState
 ): PaymentStartPayload | undefined => state.wallet.payment.paymentStartPayload;
+
+export const paymentStartOriginSelector = createSelector(
+  paymentSelector,
+  payment => payment.startOrigin
+);
 
 const PAYMENT_INITIAL_STATE: PaymentState = {
   verifica: pot.none,
@@ -175,6 +183,7 @@ const reducer = (
         // effectively starting a new payment session, thus we also invalidate
         // the rest of the payment state
         ...PAYMENT_INITIAL_STATE,
+        startOrigin: action.payload.startOrigin,
         entrypointRoute: state.entrypointRoute,
         verifica: pot.noneLoading
       };

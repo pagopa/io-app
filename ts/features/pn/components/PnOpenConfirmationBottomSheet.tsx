@@ -1,23 +1,25 @@
 import { useLinkTo } from "@react-navigation/native";
-import { fromEither, fromNullable } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import React, { useEffect, useState } from "react";
 import { View } from "react-native";
 import { MessageCategoryPN } from "../../../../definitions/backend/MessageCategoryPN";
+import HeaderImage from "../../../../img/features/pn/pn_alert_header.svg";
 import { IORenderHtml } from "../../../components/core/IORenderHtml";
+import { H4 } from "../../../components/core/typography/H4";
+import { IOColors } from "../../../components/core/variables/IOColors";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { handleInternalLink } from "../../../components/ui/Markdown/handlers/internalLink";
 import i18n from "../../../i18n";
+import { mixpanelTrack } from "../../../mixpanel";
 import { UIMessage } from "../../../store/reducers/entities/messages/types";
+import customVariables from "../../../theme/variables";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { localeDateFormat } from "../../../utils/locale";
 import {
   cancelButtonProps,
   confirmButtonProps
 } from "../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import HeaderImage from "../../../../img/features/pn/pn_alert_header.svg";
-import { H4 } from "../../../components/core/typography/H4";
-import { IOColors } from "../../../components/core/variables/IOColors";
-import customVariables from "../../../theme/variables";
 
 const BOTTOM_SHEET_HEIGHT = 500;
 
@@ -75,26 +77,32 @@ export const usePnOpenConfirmationBottomSheet = ({
   };
 
   useEffect(() => {
-    const params = fromEither(MessageCategoryPN.decode(message?.category))
-      .map(
+    const params = pipe(
+      MessageCategoryPN.decode(message?.category),
+      O.fromEither,
+      O.map(
         category =>
           ({
             sender: category.original_sender ?? emptyHTMLParams.sender,
             subject: category.summary ?? emptyHTMLParams.subject,
-            date: fromNullable(category.original_receipt_date)
-              .map(timestamp => new Date(timestamp))
-              .map(
+            date: pipe(
+              category.original_receipt_date,
+              O.fromNullable,
+              O.map(timestamp => new Date(timestamp)),
+              O.map(
                 date =>
                   `${localeDateFormat(
                     date,
                     i18n.t("global.dateFormats.shortFormatWithTime")
                   )}`
-              )
-              .getOrElse(emptyHTMLParams.date),
+              ),
+              O.getOrElse(() => emptyHTMLParams.date)
+            ),
             iun: category.id
           } as HTMLParams)
-      )
-      .getOrElse(emptyHTMLParams);
+      ),
+      O.getOrElse(() => emptyHTMLParams)
+    );
     setParams(params);
   }, [message, setParams]);
 
@@ -132,6 +140,7 @@ export const usePnOpenConfirmationBottomSheet = ({
       type={"TwoButtonsInlineHalf"}
       leftButton={{
         ...cancelButtonProps(() => {
+          void mixpanelTrack("PN_DISCLAIMER_REJECTED");
           bsDismiss();
         }),
         onPressWithGestureHandler: true
@@ -140,6 +149,17 @@ export const usePnOpenConfirmationBottomSheet = ({
         ...confirmButtonProps(() => {
           bsDismiss();
           if (message) {
+            const notificationTimestamp = pipe(
+              O.fromEither(MessageCategoryPN.decode(message.category)),
+              O.map(category => category.original_receipt_date?.toISOString()),
+              O.toUndefined
+            );
+
+            void mixpanelTrack("PN_DISCLAIMER_ACCEPTED", {
+              eventTimestamp: new Date().toISOString(),
+              messageTimestamp: message.createdAt.toISOString(),
+              notificationTimestamp
+            });
             onConfirm(message, dontAskAgain);
           }
         }, i18n.t("global.buttons.continue")),
@@ -150,6 +170,7 @@ export const usePnOpenConfirmationBottomSheet = ({
 
   return {
     present: (message: UIMessage) => {
+      void mixpanelTrack("PN_DISCLAIMER_SHOW_SUCCESS");
       setDontAskAgain(false);
       setMessage(message);
       bsPresent();

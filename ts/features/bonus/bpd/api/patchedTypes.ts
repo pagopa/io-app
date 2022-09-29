@@ -1,5 +1,5 @@
 import * as t from "io-ts";
-import { enumType } from "italia-ts-commons/lib/types";
+import { enumType } from "@pagopa/ts-commons/lib/types";
 import { CitizenOptInStatusEnum } from "../../../../../definitions/bpd/citizen_v2/CitizenOptInStatus";
 
 /**

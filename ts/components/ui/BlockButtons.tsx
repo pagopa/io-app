@@ -1,10 +1,11 @@
-import { fromNullable } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { Button, Text, View } from "native-base";
 import * as React from "react";
 import { ActivityIndicator, StyleSheet } from "react-native";
+import I18n from "../../i18n";
 import { ComponentProps } from "../../types/react";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
-import I18n from "../../i18n";
 import IconFont from "./IconFont";
 
 const styles = StyleSheet.create({
@@ -153,19 +154,40 @@ export default class BlockButtons extends React.Component<Props, never> {
       {props.iconName && (
         <IconFont
           name={props.iconName}
-          style={fromNullable(props.iconColor).fold(undefined, c => ({
-            color: c
-          }))}
+          style={pipe(
+            props.iconColor,
+            O.fromNullable,
+            O.fold(
+              () => undefined,
+              c => ({
+                color: c
+              })
+            )
+          )}
         />
       )}
       <Text
         style={[
-          fromNullable(props.buttonFontSize).fold(undefined, fs => ({
-            fontSize: fs
-          })),
-          fromNullable(props.labelColor).fold(undefined, lc => ({
-            color: lc
-          }))
+          pipe(
+            props.buttonFontSize,
+            O.fromNullable,
+            O.fold(
+              () => undefined,
+              fs => ({
+                fontSize: fs
+              })
+            )
+          ),
+          pipe(
+            props.labelColor,
+            O.fromNullable,
+            O.fold(
+              () => undefined,
+              lc => ({
+                color: lc
+              })
+            )
+          )
         ]}
       >
         {props.title}

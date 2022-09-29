@@ -28,7 +28,7 @@ describe("PagoPaPaymentCapability", () => {
   it("should render a toggle with kind=CreditCard and without issuerAbiCode and enableableFunction contains pagoPA", () => {
     const aNonMaestroCreditCard = {
       info: {
-        brand: CreditCardType.decode("VISA").value
+        brand: "VISA" as CreditCardType
       }
     } as CreditCardPaymentMethod;
     const aPaymentMethod = {
@@ -39,8 +39,7 @@ describe("PagoPaPaymentCapability", () => {
       enableableFunctions: [EnableableFunctionsEnum.pagoPA]
     } as PaymentMethod;
 
-    const paymentMethods = PatchedWalletV2ListResponse.decode(walletsV2_1)
-      .value as PatchedWalletV2ListResponse;
+    const paymentMethods = walletsV2_1 as PatchedWalletV2ListResponse;
     const updatedMethods = paymentMethods.data!.map(w =>
       convertWalletV2toWalletV1({ ...w, pagoPA: false })
     );
@@ -103,7 +102,7 @@ describe("PagoPaPaymentCapability", () => {
   it("should render a badge with the text Incompatible if passed a co-badge, payment method of kind CreditCard with issuerAbiCode and doesn't have enableableFunction pagoPA", () => {
     const aNonMaestroCreditCard = {
       info: {
-        brand: CreditCardType.decode("VISA").value,
+        brand: "VISA" as CreditCardType,
         issuerAbiCode: "123"
       }
     } as CreditCardPaymentMethod;
@@ -128,7 +127,7 @@ describe("PagoPaPaymentCapability", () => {
   it('should render a badge with test "Incompatible" if passed a privative card, payment method of kind CreditCard with issuerAbiCode and type = PRV', () => {
     const aNonMaestroCreditCard = {
       info: {
-        brand: CreditCardType.decode("VISA").value,
+        brand: "VISA" as CreditCardType,
         issuerAbiCode: "123",
         type: TypeEnum.PRV
       }

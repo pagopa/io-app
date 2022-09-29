@@ -1,6 +1,7 @@
 import { call, put, take } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
-import { fromNullable } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import { startApplicationInitialization } from "../../store/actions/application";
 import { profileFirstLogin, profileUpsert } from "../../store/actions/profile";
@@ -27,7 +28,11 @@ export function* checkProfileEnabledSaga(
   | ActionType<typeof profileUpsert["success"]>
   | ActionType<typeof profileUpsert["failure"]>
 > {
-  const atv = fromNullable(profile.accepted_tos_version).getOrElse(0);
+  const atv = pipe(
+    profile.accepted_tos_version,
+    O.fromNullable,
+    O.getOrElse(() => 0)
+  );
   const shouldEnableInbox = !profile.is_inbox_enabled && atv > 0;
   const tosNotAccepted = atv === 0;
   // auto-update for those profiles that have been fallen in a buggy scenario

@@ -1,12 +1,13 @@
-import { ActionType } from "typesafe-actions";
+import * as E from "fp-ts/lib/Either";
 import { call, put } from "typed-redux-saga/macro";
-import { BackendSiciliaVolaClient } from "../../api/backendSiciliaVola";
-import { getGenericError, getNetworkError } from "../../../../../utils/errors";
-import { svGenerateVoucherAvailableState } from "../../store/actions/voucherGeneration";
-import { SagaCallReturnType } from "../../../../../types/utils";
+import { ActionType } from "typesafe-actions";
 import { StatoUEBeanList } from "../../../../../../definitions/api_sicilia_vola/StatoUEBeanList";
-import { State } from "../../types/SvVoucherRequest";
+import { SagaCallReturnType } from "../../../../../types/utils";
+import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { isDefined } from "../../../../../utils/guards";
+import { BackendSiciliaVolaClient } from "../../api/backendSiciliaVola";
+import { svGenerateVoucherAvailableState } from "../../store/actions/voucherGeneration";
+import { State } from "../../types/SvVoucherRequest";
 
 // TODO: add the mapping when the swagger will be fixed
 const mapKinds: Record<number, string> = {};
@@ -33,20 +34,20 @@ export function* handleGetStatiUE(
       getStatiUE,
       {}
     );
-    if (getStatiUEResult.isRight()) {
-      if (getStatiUEResult.value.status === 200) {
+    if (E.isRight(getStatiUEResult)) {
+      if (getStatiUEResult.right.status === 200) {
         yield* put(
           svGenerateVoucherAvailableState.success(
-            convertSuccess(getStatiUEResult.value.value)
+            convertSuccess(getStatiUEResult.right.value)
           )
         );
         return;
       }
-      if (mapKinds[getStatiUEResult.value.status] !== undefined) {
+      if (mapKinds[getStatiUEResult.right.status] !== undefined) {
         yield* put(
           svGenerateVoucherAvailableState.failure({
             ...getGenericError(
-              new Error(mapKinds[getStatiUEResult.value.status])
+              new Error(mapKinds[getStatiUEResult.right.status])
             )
           })
         );

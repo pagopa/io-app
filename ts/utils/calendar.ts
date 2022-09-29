@@ -1,8 +1,9 @@
-import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
-import { Task } from "fp-ts/lib/Task";
-import { TaskEither, tryCatch } from "fp-ts/lib/TaskEither";
+import * as O from "fp-ts/lib/Option";
+import * as TE from "fp-ts/lib/TaskEither";
+import * as E from "fp-ts/lib/Either";
 import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
 import { Platform } from "react-native";
+import { pipe } from "fp-ts/lib/function";
 import { TranslationKeys } from "../../locales/locales";
 import I18n from "../i18n";
 import { AddCalendarEventPayload } from "../store/actions/calendarEvents";
@@ -81,9 +82,14 @@ const calendarTitleTranslations: CalendarTitleTranslation = {
 };
 
 export function convertLocalCalendarName(calendarTitle: string) {
-  return fromNullable(
-    calendarTitleTranslations[calendarTitle.trim().toLowerCase()]
-  ).fold(calendarTitle, s => I18n.t(s));
+  return pipe(
+    calendarTitleTranslations[calendarTitle.trim().toLowerCase()],
+    O.fromNullable,
+    O.fold(
+      () => calendarTitle,
+      s => I18n.t(s)
+    )
+  );
 }
 
 /**
@@ -93,21 +99,26 @@ export function convertLocalCalendarName(calendarTitle: string) {
  */
 export const isEventInCalendar = (
   eventId: string
-): TaskEither<Error, boolean> => {
-  const authTask = new Task(() => checkAndRequestPermission());
-  const findTask = new Task(() => RNCalendarEvents.findEventById(eventId));
-  return tryCatch(
-    () =>
-      authTask
-        .chain(auth => {
-          if (!auth.authorized) {
-            return new Task(() => Promise.reject());
-          }
-          return findTask;
-        })
-        .run(),
+): TE.TaskEither<Error, boolean> => {
+  const authTask = TE.tryCatch(
+    () => checkAndRequestPermission(),
     message => new Error(String(message))
-  ).map(ev => ev !== null);
+  );
+  const findTask = TE.tryCatch(
+    () => RNCalendarEvents.findEventById(eventId),
+    E.toError
+  );
+  return pipe(
+    authTask,
+    TE.chain(
+      TE.fromPredicate(
+        auth => auth.authorized,
+        () => new Error("Not authorized")
+      )
+    ),
+    TE.chain(() => findTask),
+    TE.map(ev => ev !== null)
+  );
 };
 /**
  * Check if an event for endDate with that title already exists in the calendar.
@@ -116,7 +127,7 @@ export const isEventInCalendar = (
 export const searchEventInCalendar = async (
   endDate: Date,
   title: string
-): Promise<Option<string>> => {
+): Promise<O.Option<string>> => {
   const startDate = new Date(endDate.getTime());
   return RNCalendarEvents.fetchAllEvents(
     formatDateAsReminder(new Date(startDate.setDate(endDate.getDate() - 1))),
@@ -124,21 +135,24 @@ export const searchEventInCalendar = async (
   )
     .then(
       events =>
-        fromNullable(events)
-          .mapNullable(evs =>
+        pipe(
+          events,
+          O.fromNullable,
+          O.chainNullableK(evs =>
             evs.find(
               e =>
                 e.title === title &&
                 e.endDate &&
                 new Date(e.endDate).getDay() === endDate.getDay()
             )
-          )
-          .map(ev => some(ev.id))
-          .getOrElse(none),
+          ),
+          O.map(ev => O.some(ev.id)),
+          O.getOrElseW(() => O.none)
+        ),
       // handle promise rejection
-      () => none
+      () => O.none
     )
-    .catch(() => none);
+    .catch(() => O.none);
 };
 
 export const saveCalendarEvent = (

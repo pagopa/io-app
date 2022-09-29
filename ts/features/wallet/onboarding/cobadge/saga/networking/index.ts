@@ -1,4 +1,5 @@
-import { Either, left, right } from "fp-ts/lib/Either";
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { ContentClient } from "../../../../../../api/content";
@@ -54,19 +55,19 @@ export function* handleSearchUserCoBadge(
   );
 
   // dispatch the related action
-  if (result.isRight()) {
-    yield* put(searchUserCoBadge.success(result.value));
+  if (E.isRight(result)) {
+    yield* put(searchUserCoBadge.success(result.right));
   } else {
-    yield* put(searchUserCoBadge.failure(result.value));
+    yield* put(searchUserCoBadge.failure(result.left));
   }
 }
 
 const toRawCreditCardPaymentMethod = (
   rpm: RawPaymentMethod
-): Either<NetworkError, RawCreditCardPaymentMethod> =>
+): E.Either<NetworkError, RawCreditCardPaymentMethod> =>
   isRawCreditCard(rpm)
-    ? right(rpm)
-    : left(
+    ? E.right(rpm)
+    : E.left(
         getGenericError(
           new Error("Cannot decode the payload as RawCreditCardPaymentMethod")
         )
@@ -90,13 +91,16 @@ export function* handleAddCoBadgeToWallet(
     action.payload
   );
 
-  const eitherRawCreditCard = result.chain(toRawCreditCardPaymentMethod);
+  const eitherRawCreditCard = pipe(
+    result,
+    E.chain(toRawCreditCardPaymentMethod)
+  );
 
   // dispatch the related action
-  if (eitherRawCreditCard.isRight()) {
-    yield* put(addCoBadgeToWallet.success(eitherRawCreditCard.value));
+  if (E.isRight(eitherRawCreditCard)) {
+    yield* put(addCoBadgeToWallet.success(eitherRawCreditCard.right));
   } else {
-    yield* put(addCoBadgeToWallet.failure(eitherRawCreditCard.value));
+    yield* put(addCoBadgeToWallet.failure(eitherRawCreditCard.left));
   }
 }
 
@@ -111,20 +115,20 @@ export function* handleLoadCoBadgeConfiguration(
     const getCobadgeServicesResult: SagaCallReturnType<
       typeof getCobadgeServices
     > = yield* call(getCobadgeServices);
-    if (getCobadgeServicesResult.isRight()) {
-      if (getCobadgeServicesResult.value.status === 200) {
+    if (E.isRight(getCobadgeServicesResult)) {
+      if (getCobadgeServicesResult.right.status === 200) {
         yield* put(
           loadCoBadgeAbiConfiguration.success(
-            getCobadgeServicesResult.value.value
+            getCobadgeServicesResult.right.value
           )
         );
       } else {
         throw new Error(
-          `response status ${getCobadgeServicesResult.value.status}`
+          `response status ${getCobadgeServicesResult.right.status}`
         );
       }
     } else {
-      throw new Error(readablePrivacyReport(getCobadgeServicesResult.value));
+      throw new Error(readablePrivacyReport(getCobadgeServicesResult.left));
     }
   } catch (e) {
     yield* put(loadCoBadgeAbiConfiguration.failure(getNetworkError(e)));

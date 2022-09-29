@@ -1,9 +1,9 @@
-import { left, right } from "fp-ts/lib/Either";
+import * as E from "fp-ts/lib/Either";
 
 import * as t from "io-ts";
 import { testSaga } from "redux-saga-test-plan";
 
-import { NonEmptyString } from "italia-ts-commons/lib/strings";
+import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { DEPRECATED_loadMessage as loadMessageAction } from "../../../store/actions/messages";
 import { testFetchMessage, loadMessage } from "../loadMessage";
@@ -27,7 +27,7 @@ const testMessageWithContent1: CreatedMessageWithContentAndAttachments = {
 
 describe("messages", () => {
   describe("fetchMessage test plan", () => {
-    it("should call getMessage with the right parameters", () => {
+    it("should call getMessage with the E.right parameters", () => {
       const getMessage = jest.fn();
       testSaga(fetchMessage, getMessage, testMessageWithContent1)
         .next()
@@ -43,8 +43,8 @@ describe("messages", () => {
       testSaga(fetchMessage, getMessage, testMessageWithContent1)
         .next()
         // Return a new `Either` holding a `Left` validatorError as getMessage response
-        .next(left([validatorError]))
-        .returns(left(Error("some value at [root] is not a valid [string]")));
+        .next(E.left([validatorError]))
+        .returns(E.left(Error("some value at [root] is not a valid [string]")));
     });
 
     it("should only return the error if the getMessage response status is not 200", () => {
@@ -53,8 +53,8 @@ describe("messages", () => {
       testSaga(fetchMessage, getMessage, testMessageWithContent1)
         .next()
         // Return 500 with an error message as getMessage response
-        .next(right({ status: 500, value: { title: error.message } }))
-        .returns(left(error));
+        .next(E.right({ status: 500, value: { title: error.message } }))
+        .returns(E.left(error));
     });
 
     it("should return the message if the getMessage response status is 200", () => {
@@ -62,13 +62,13 @@ describe("messages", () => {
       testSaga(fetchMessage, getMessage, testMessageWithContent1)
         .next()
         // Return 200 with a valid value as getMessage response
-        .next(right({ status: 200, value: testMessageWithContent1 }))
-        .returns(right(testMessageWithContent1));
+        .next(E.right({ status: 200, value: testMessageWithContent1 }))
+        .returns(E.right(testMessageWithContent1));
     });
   });
 
   describe("loadMessage test plan", () => {
-    it("should call fetchMessage with the right parameters", () => {
+    it("should call fetchMessage with the E.right parameters", () => {
       const getMessage = jest.fn();
       testSaga(loadMessage, getMessage, testMessageWithContent1)
         .next()
@@ -83,7 +83,7 @@ describe("messages", () => {
         .next()
         .call(fetchMessage, getMessage, testMessageWithContent1)
         // Return 200 with a valid message as getMessage response
-        .next(left(Error("Error")))
+        .next(E.left(Error("Error")))
         .put(
           loadMessageAction.failure({
             id: testMessageId1,
@@ -91,7 +91,7 @@ describe("messages", () => {
           })
         )
         .next()
-        .returns(left(Error("Error")));
+        .returns(E.left(Error("Error")));
     });
 
     it("should put MESSAGE_LOAD_SUCCESS and return the message if the message is fetched successfully", () => {
@@ -101,10 +101,10 @@ describe("messages", () => {
         .next()
         .call(fetchMessage, getMessage, testMessageWithContent1)
         // Return 200 with a valid message as getMessage response
-        .next(right(testMessageWithContent1))
+        .next(E.right(testMessageWithContent1))
         .put(loadMessageAction.success(testMessageWithContent1))
         .next()
-        .returns(right(testMessageWithContent1));
+        .returns(E.right(testMessageWithContent1));
     });
   });
 });

@@ -1,18 +1,18 @@
 import { call, put, takeEvery } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 
+import { MessageStatusArchivingChange } from "../../../definitions/backend/MessageStatusArchivingChange";
+import { MessageStatusBulkChange } from "../../../definitions/backend/MessageStatusBulkChange";
+import { MessageStatusChange } from "../../../definitions/backend/MessageStatusChange";
+import { MessageStatusReadingChange } from "../../../definitions/backend/MessageStatusReadingChange";
 import { BackendClient } from "../../api/backend";
 import {
   upsertMessageStatusAttributes,
   UpsertMessageStatusAttributesPayload
 } from "../../store/actions/messages";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
-import { getError } from "../../utils/errors";
-import { MessageStatusChange } from "../../../definitions/backend/MessageStatusChange";
-import { MessageStatusBulkChange } from "../../../definitions/backend/MessageStatusBulkChange";
-import { MessageStatusReadingChange } from "../../../definitions/backend/MessageStatusReadingChange";
-import { MessageStatusArchivingChange } from "../../../definitions/backend/MessageStatusArchivingChange";
 import { isTestEnv } from "../../utils/environment";
+import { getError } from "../../utils/errors";
 import { handleResponse } from "./utils";
 
 type LocalActionType = ActionType<
@@ -65,10 +65,10 @@ function tryUpsertMessageStatusAttributes(putMessage: LocalBeClient) {
     action: LocalActionType
   ): Generator<ReduxSagaEffect, void, SagaCallReturnType<typeof putMessage>> {
     try {
-      const messageStatusChange = validatePayload(action.payload);
+      const body = validatePayload(action.payload);
       const response: SagaCallReturnType<typeof putMessage> = yield* call(
         putMessage,
-        { id: action.payload.message.id, messageStatusChange }
+        { id: action.payload.message.id, body }
       );
 
       const nextAction = handleResponse<unknown>(

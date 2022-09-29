@@ -1,4 +1,6 @@
-import { none, Option, some } from "fp-ts/lib/Option";
+import { flow, pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
 import { getType } from "typesafe-actions";
 import doubtImage from "../../../../img/pictograms/doubt.png";
 import authorizationDenied from "../../../../img/servicesStatus/error-detail-icon.png";
@@ -20,10 +22,10 @@ import {
 import { GlobalState } from "../types";
 
 export type OutcomeCodeState = {
-  outcomeCode: Option<OutcomeCode>;
+  outcomeCode: O.Option<OutcomeCode>;
 };
 const initialOutcomeCodeState: OutcomeCodeState = {
-  outcomeCode: none
+  outcomeCode: O.none
 };
 
 // TODO: As refinement make the outcomeCodes list remote, like backend status.
@@ -167,11 +169,20 @@ const fallbackOutcomeCodes = (): OutcomeCode => ({
 // This function extracts, given an Option<string>, the outcomeCode object from the OutcomeCodesPrintable object
 // that contains the list of outcome codes.
 // If the string is none or if the the code is not a key of the OutcomeCodesPrintable the fallback outcome code object is returned.
-export const extractOutcomeCode = (code: Option<string>): Option<OutcomeCode> =>
-  code.fold(some(fallbackOutcomeCodes()), c =>
-    OutcomeCodesKey.decode(c).fold(
-      _ => some(fallbackOutcomeCodes()),
-      oCK => some(OutcomeCodesPrintable()[oCK])
+export const extractOutcomeCode = (
+  code: O.Option<string>
+): O.Option<OutcomeCode> =>
+  pipe(
+    code,
+    O.fold(
+      () => O.some(fallbackOutcomeCodes()),
+      flow(
+        OutcomeCodesKey.decode,
+        E.fold(
+          _ => O.some(fallbackOutcomeCodes()),
+          oCK => O.some(OutcomeCodesPrintable()[oCK])
+        )
+      )
     )
   );
 

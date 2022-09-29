@@ -1,27 +1,29 @@
-import { fromNullable } from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { useContext } from "react";
 import { Alert } from "react-native";
 import WebView, { WebViewMessageEvent } from "react-native-webview";
-import URLParse from "url-parse";
 import {
   WebViewErrorEvent,
   WebViewHttpErrorEvent
 } from "react-native-webview/lib/WebViewTypes";
+import URLParse from "url-parse";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
+import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
+import { LightModalContext } from "../../../components/ui/LightModal";
 import I18n from "../../../i18n";
 import { WebviewMessage } from "../../../types/WebviewMessage";
+import { getRemoteLocale } from "../../../utils/messages";
 import { showToast } from "../../../utils/showToast";
 import {
   APP_EVENT_HANDLER,
   AVOID_ZOOM_JS,
   closeInjectedScript
 } from "../../../utils/webview";
-import { getRemoteLocale } from "../../../utils/messages";
-import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
-import { LightModalContext } from "../../../components/ui/LightModal";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
-import SuccessContent from "./SuccessContent";
 import ErrorContent from "./ErrorContent";
+import SuccessContent from "./SuccessContent";
 import WebviewErrorComponent from "./WebviewErrorComponent";
 
 type Props = {
@@ -81,13 +83,13 @@ const FimsWebView = (props: Props) => {
 
     const maybeData = WebviewMessage.decode(JSON.parse(event.nativeEvent.data));
 
-    if (maybeData.isLeft()) {
+    if (E.isLeft(maybeData)) {
       showToast(I18n.t("webView.error.convertMessage"));
       return;
     }
 
     const locale = getRemoteLocale();
-    const message = maybeData.value;
+    const message = maybeData.right;
     switch (message.type) {
       case "CLOSE_MODAL":
         props.onWebviewClose();
@@ -101,7 +103,11 @@ const FimsWebView = (props: Props) => {
       case "SHOW_SUCCESS":
         showModal(
           <SuccessContent
-            text={fromNullable(message[locale]).getOrElse(message.en)}
+            text={pipe(
+              message[locale],
+              O.fromNullable,
+              O.getOrElse(() => message.en)
+            )}
             close={() => {
               hideModal();
               props.onWebviewClose();
@@ -112,13 +118,21 @@ const FimsWebView = (props: Props) => {
       case "SHOW_ERROR":
         showModal(
           <ErrorContent
-            text={fromNullable(message[locale]).getOrElse(message.en)}
+            text={pipe(
+              message[locale],
+              O.fromNullable,
+              O.getOrElse(() => message.en)
+            )}
             close={hideModal}
           />
         );
         return;
       case "SHOW_ALERT":
-        const value = fromNullable(message[locale]).getOrElse(message.en);
+        const value = pipe(
+          message[locale],
+          O.fromNullable,
+          O.getOrElse(() => message.en)
+        );
         Alert.alert(value.title, value.description);
         return;
       default:
@@ -127,8 +141,10 @@ const FimsWebView = (props: Props) => {
   };
 
   const injectJS = () => {
-    fromNullable(ref.current).map(wv =>
-      wv.injectJavaScript(injectedJavascript)
+    pipe(
+      ref.current,
+      O.fromNullable,
+      O.map(wv => wv.injectJavaScript(injectedJavascript))
     );
     setLoading(false);
   };

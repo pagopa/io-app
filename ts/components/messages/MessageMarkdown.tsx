@@ -2,7 +2,7 @@
  * A specialized Markdown component that sets a specific CSS style
  */
 
-import { Omit } from "italia-ts-commons/lib/types";
+import { Omit } from "@pagopa/ts-commons/lib/types";
 import React from "react";
 
 import customVariables from "../../theme/variables";

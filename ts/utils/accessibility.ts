@@ -1,6 +1,7 @@
-import { fromNullable } from "fp-ts/lib/Option";
-import { tryCatch } from "fp-ts/lib/Task";
-import { Millisecond } from "italia-ts-commons/lib/units";
+import * as O from "fp-ts/lib/Option";
+import * as T from "fp-ts/lib/Task";
+import * as TE from "fp-ts/lib/TaskEither";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import {
@@ -9,6 +10,7 @@ import {
   Platform,
   UIManager
 } from "react-native";
+import { pipe } from "fp-ts/lib/function";
 import I18n from "../i18n";
 import { format } from "./dates";
 
@@ -26,9 +28,10 @@ export const setAccessibilityFocus = <T extends React.Component>(
   callback?: () => void
 ) => {
   setTimeout(() => {
-    fromNullable(nodeReference && nodeReference.current) // nodeReference could be null or undefined
-      .chain(ref => fromNullable(findNodeHandle(ref)))
-      .map(reactTag => {
+    pipe(
+      O.fromNullable(nodeReference && nodeReference.current),
+      O.chain(ref => O.fromNullable(findNodeHandle(ref))), // nodeReference could be null or undefined
+      O.map(reactTag => {
         // could raise an exception
         try {
           if (Platform.OS === "android") {
@@ -47,20 +50,22 @@ export const setAccessibilityFocus = <T extends React.Component>(
             callback();
           }
         }
-      });
+      })
+    );
   }, executionDelay);
 };
 
 /**
  * return a Promise where true means there is a screen reader active (VoiceOver / TalkBack)
  */
-export const isScreenReaderEnabled = async (): Promise<boolean> => {
-  const maybeReaderEnabled = await tryCatch(
-    () => AccessibilityInfo.isScreenReaderEnabled(),
-    errorMsg => new Error(String(errorMsg))
-  ).run();
-  return maybeReaderEnabled.getOrElse(false);
-};
+export const isScreenReaderEnabled = async (): Promise<boolean> =>
+  await pipe(
+    TE.tryCatch(
+      () => AccessibilityInfo.isScreenReaderEnabled(),
+      errorMsg => new Error(String(errorMsg))
+    ),
+    TE.getOrElse(() => T.of(false))
+  )();
 
 // return the state of the screen reader when the caller component is mounted
 export const useScreenReaderEnabled = () => {

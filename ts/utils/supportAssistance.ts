@@ -1,5 +1,6 @@
 import ZendDesk from "io-react-native-zendesk";
-import { fromNullable } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { ToolEnum } from "../../definitions/content/AssistanceToolConfig";
 import { ZendeskCategory } from "../../definitions/content/ZendeskCategory";
 import { ZendeskConfig } from "../features/zendesk/store/reducers";
@@ -26,9 +27,14 @@ export const anonymousAssistanceAddressWithSubject = (
   category: string,
   subcategory?: string
 ): string =>
-  `mailto:${anonymousAssistanceAddress}?subject=${category}${fromNullable(
-    subcategory
-  ).fold("", s => ": " + s)}`;
+  `mailto:${anonymousAssistanceAddress}?subject=${category}${pipe(
+    subcategory,
+    O.fromNullable,
+    O.fold(
+      () => "",
+      s => ": " + s
+    )
+  )}`;
 
 export const zendeskDefaultJwtConfig: ZendeskAppConfig = {
   key: "mp9agCp6LWusBxvHIGbeBmfI0wMeLIJM",
@@ -47,7 +53,11 @@ export const zendeskDefaultAnonymousConfig: ZendeskAppConfig = {
 
 // If is not possible to get the assistance tool remotely assume it is none.
 export const assistanceToolRemoteConfig = (aTC: ToolEnum | undefined) =>
-  fromNullable(aTC).getOrElse(ToolEnum.none);
+  pipe(
+    aTC,
+    O.fromNullable,
+    O.getOrElse(() => ToolEnum.none)
+  );
 
 // If is not possible to get the zendeskConfig remotely assume panicMode is not active.
 export const isPanicModeActive = (zendeskConfig: ZendeskConfig) =>

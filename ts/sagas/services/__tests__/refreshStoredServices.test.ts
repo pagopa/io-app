@@ -1,5 +1,5 @@
-import * as pot from "italia-ts-commons/lib/pot";
-import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { testSaga } from "redux-saga-test-plan";
 import { DepartmentName } from "../../../../definitions/backend/DepartmentName";
 import { OrganizationName } from "../../../../definitions/backend/OrganizationName";

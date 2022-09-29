@@ -1,6 +1,6 @@
 import * as t from "io-ts";
 
-import { PatternString } from "italia-ts-commons/lib/strings";
+import { PatternString } from "@pagopa/ts-commons/lib/strings";
 
 /**
  * A string that represents a municipality codice catastale

@@ -1,3 +1,6 @@
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { getCardIconFromBrandLogo } from "../../../../components/wallet/card/Logo";
 import { CreditCardPaymentMethod } from "../../../../types/pagopa";
@@ -14,15 +17,20 @@ type Props = { enhancedCoBadge: CreditCardPaymentMethod };
  */
 const CoBadgeCard: React.FunctionComponent<Props> = props => {
   const brandLogo = getCardIconFromBrandLogo(props.enhancedCoBadge.info);
-  const expiringDate = dateFromMonthAndYear(
-    props.enhancedCoBadge.info.expireMonth,
-    props.enhancedCoBadge.info.expireYear
-  ).toUndefined();
+  const expiringDate = O.toUndefined(
+    dateFromMonthAndYear(
+      props.enhancedCoBadge.info.expireMonth,
+      props.enhancedCoBadge.info.expireYear
+    )
+  );
 
   return (
     <BaseCoBadgeCard
       abi={props.enhancedCoBadge.abiInfo ?? {}}
-      isExpired={isPaymentMethodExpired(props.enhancedCoBadge).getOrElse(false)}
+      isExpired={pipe(
+        isPaymentMethodExpired(props.enhancedCoBadge),
+        E.getOrElse(() => false)
+      )}
       expiringDate={expiringDate}
       brand={props.enhancedCoBadge.info.brand}
       brandLogo={brandLogo}
