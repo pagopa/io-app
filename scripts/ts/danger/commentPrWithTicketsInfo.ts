@@ -1,7 +1,7 @@
 import { DangerDSLType } from "danger/distribution/dsl/DangerDSL";
-import { isLeft, isRight } from "fp-ts/lib/Either";
+import * as E from "fp-ts/lib/Either";
 import { Errors } from "io-ts";
-import { readableReport } from "italia-ts-commons/lib/reporters";
+import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { GenericTicket, GenericTicketType } from "../common/ticket/types";
 import { GenericTicketRetrievalResults } from "./utils/titleParser";
 
@@ -82,10 +82,10 @@ export const commentPrWithTicketsInfo = (
     warningNoTicket();
     return;
   }
-  if (foundTicket.some(isLeft)) {
-    renderFailure(foundTicket.filter(isLeft).map(x => x.value));
+  if (foundTicket.some(E.isLeft)) {
+    renderFailure(foundTicket.filter(E.isLeft).map(x => x.left));
   }
-  if (foundTicket.some(isRight)) {
-    renderTickets(foundTicket.filter(isRight).map(x => x.value));
+  if (foundTicket.some(E.isRight)) {
+    renderTickets(foundTicket.filter(E.isRight).map(x => x.right));
   }
 };

@@ -1,5 +1,6 @@
 /* eslint-disable no-fallthrough */
 // disabled in order to allows comments between the switch
+import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 import {
   loadAllBonusActivations,
@@ -7,15 +8,15 @@ import {
 } from "../../features/bonus/bonusVacanze/store/actions/bonusVacanze";
 
 import trackBpdAction from "../../features/bonus/bpd/analytics/index";
+import trackCdc from "../../features/bonus/cdc/analytics/index";
 import trackCgnAction from "../../features/bonus/cgn/analytics/index";
 import trackEuCovidCertificateActions from "../../features/euCovidCert/analytics/index";
 import trackBancomatAction from "../../features/wallet/onboarding/bancomat/analytics/index";
-import trackPaypalOnboarding from "../../features/wallet/onboarding/paypal/analytics/index";
 import { trackBPayAction } from "../../features/wallet/onboarding/bancomatPay/analytics";
 import { trackCoBadgeAction } from "../../features/wallet/onboarding/cobadge/analytics";
+import trackPaypalOnboarding from "../../features/wallet/onboarding/paypal/analytics/index";
 import { trackPrivativeAction } from "../../features/wallet/onboarding/privative/analytics";
 import trackZendesk from "../../features/zendesk/analytics/index";
-import trackCdc from "../../features/bonus/cdc/analytics/index";
 import { mixpanel } from "../../mixpanel";
 import { getNetworkErrorMessage } from "../../utils/errors";
 import {
@@ -157,7 +158,7 @@ const trackAction =
       case getType(fetchTransactionsSuccess):
         return mp.track(action.type, {
           count: action.payload.data.length,
-          total: action.payload.total.getOrElse(-1)
+          total: O.getOrElse(() => -1)(action.payload.total)
         });
       // end pay webview Payment (payment + onboarding credit card) actions (with properties)
       case getType(addCreditCardWebViewEnd):
@@ -166,12 +167,12 @@ const trackAction =
         });
       case getType(paymentOutcomeCode):
         return mp.track(action.type, {
-          outCome: action.payload.outcome.getOrElse(""),
+          outCome: O.getOrElse(() => "")(action.payload.outcome),
           paymentMethodType: action.payload.paymentMethodType
         });
       case getType(addCreditCardOutcomeCode):
         return mp.track(action.type, {
-          outCome: action.payload.getOrElse("")
+          outCome: O.getOrElse(() => "")(action.payload)
         });
       case getType(paymentWebViewEnd):
         return mp.track(action.type, {

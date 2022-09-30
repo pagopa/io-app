@@ -1,5 +1,6 @@
 import { call, put } from "typed-redux-saga/macro";
-import { Option } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
 import { PaymentManagerClient } from "../../../../../../api/pagopa";
 import { SessionManager } from "../../../../../../utils/SessionManager";
 import { PaymentManagerToken } from "../../../../../../types/pagopa";
@@ -28,11 +29,11 @@ export function* handlePaypalSearchPsp(
   try {
     const searchPayPalPspRequest: SagaCallReturnType<typeof searchPsp> =
       yield* call(sessionManager.withRefresh(searchPsp));
-    if (searchPayPalPspRequest.isRight()) {
-      if (searchPayPalPspRequest.value.status === 200) {
+    if (E.isRight(searchPayPalPspRequest)) {
+      if (searchPayPalPspRequest.right.status === 200) {
         yield* put(
           searchPaypalPsp.success(
-            searchPayPalPspRequest.value.value.data.map(convertPayPalPsp)
+            searchPayPalPspRequest.right.value.data.map(convertPayPalPsp)
           )
         );
         return;
@@ -41,7 +42,7 @@ export function* handlePaypalSearchPsp(
       yield* put(
         searchPaypalPsp.failure(
           getGenericError(
-            new Error(`response status ${searchPayPalPspRequest.value.status}`)
+            new Error(`response status ${searchPayPalPspRequest.right.status}`)
           )
         )
       );
@@ -49,7 +50,7 @@ export function* handlePaypalSearchPsp(
       yield* put(
         searchPaypalPsp.failure(
           getGenericError(
-            new Error(readablePrivacyReport(searchPayPalPspRequest.value))
+            new Error(readablePrivacyReport(searchPayPalPspRequest.left))
           )
         )
       );
@@ -65,10 +66,10 @@ export function* refreshPMToken(
 ) {
   try {
     // If the request for the new token fails a new Error is raised
-    const pagoPaToken: Option<PaymentManagerToken> = yield* call(
+    const pagoPaToken: O.Option<PaymentManagerToken> = yield* call(
       sessionManager.getNewToken
     );
-    if (pagoPaToken.isSome()) {
+    if (O.isSome(pagoPaToken)) {
       yield* put(walletAddPaypalRefreshPMToken.success(pagoPaToken.value));
     } else {
       yield* put(

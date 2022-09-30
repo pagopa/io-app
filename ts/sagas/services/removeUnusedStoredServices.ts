@@ -1,5 +1,5 @@
-import * as pot from "italia-ts-commons/lib/pot";
-import { ITuple2, Tuple2 } from "italia-ts-commons/lib/tuples";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { ITuple2, Tuple2 } from "@pagopa/ts-commons/lib/tuples";
 import { SagaIterator } from "redux-saga";
 import { put, select } from "typed-redux-saga/macro";
 import { PaginatedServiceTupleCollection } from "../../../definitions/backend/PaginatedServiceTupleCollection";

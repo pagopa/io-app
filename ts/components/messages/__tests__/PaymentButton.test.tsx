@@ -1,7 +1,7 @@
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { fireEvent } from "@testing-library/react-native";
-import { some } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import React from "react";
 import DeviceInfo from "react-native-device-info";
 import { createStore } from "redux";
@@ -101,10 +101,10 @@ const testPaymentButton = (
 
   jest
     .spyOn(PaymentsUtils, "getAmountFromPaymentAmount")
-    .mockReturnValue(some("132213" as AmountInEuroCents));
+    .mockReturnValue(O.some("132213" as AmountInEuroCents));
   jest
     .spyOn(PaymentsUtils, "getRptIdFromNoticeNumber")
-    .mockReturnValue(some("132213" as unknown as RptId));
+    .mockReturnValue(O.some("132213" as unknown as RptId));
 
   fireEvent.press(testComponent.getByRole("button"));
 

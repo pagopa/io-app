@@ -4,7 +4,7 @@ import {
   createFetchRequestForApi,
   RequestHeaderProducer,
   RequestHeaders
-} from "italia-ts-commons/lib/requests";
+} from "@pagopa/ts-commons/lib/requests";
 import { defaultRetryingFetch } from "../../../../utils/fetch";
 import {
   generateOtpDefaultDecoder,

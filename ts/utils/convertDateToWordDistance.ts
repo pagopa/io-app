@@ -1,9 +1,11 @@
 import { differenceInCalendarDays } from "date-fns";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import I18n from "../i18n";
 import { dateToAccessibilityReadableFormat } from "./accessibility";
 import { format, formatDateAsLocal } from "./dates";
-import { capitalize, maybeNotNullyString } from "./strings";
 import { localeDateFormat } from "./locale";
+import { capitalize, maybeNotNullyString } from "./strings";
 
 /**
  * This function converts the distance from now to date in :
@@ -21,9 +23,13 @@ export function convertDateToWordDistance(
   // 0 days, distance < one day
   if (distance < 1) {
     const formatted = format(date, "H:mm");
-    return maybeNotNullyString(todayAtLabel).fold(
-      formatted,
-      result => `${result} ${formatted}`
+    return pipe(
+      todayAtLabel,
+      maybeNotNullyString,
+      O.fold(
+        () => formatted,
+        result => `${result} ${formatted}`
+      )
     );
   } // distance = 1 day
   else if (distance === 1) {
@@ -35,9 +41,13 @@ export function convertDateToWordDistance(
       I18n.t("global.dateFormats.dayMonthWithoutTime")
     );
   } else if (isNaN(distance)) {
-    return maybeNotNullyString(invalidDateLabel).fold(
-      I18n.t("datetimes.notValid"),
-      result => result
+    return pipe(
+      invalidDateLabel,
+      maybeNotNullyString,
+      O.fold(
+        () => I18n.t("datetimes.notValid"),
+        result => result
+      )
     );
   } else {
     // distance > current year

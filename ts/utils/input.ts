@@ -1,8 +1,9 @@
-import { Either, left, right } from "fp-ts/lib/Either";
-import { none, Option } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
 import * as t from "io-ts";
-import { PatternString } from "italia-ts-commons/lib/strings";
 import * as _ from "lodash";
+import { PatternString } from "@pagopa/ts-commons/lib/strings";
+import { pipe } from "fp-ts/lib/function";
 import I18n from "../i18n";
 import { CreditCard } from "../types/pagopa";
 import { CreditCardDetector, SupportedBrand } from "./creditCard";
@@ -52,27 +53,33 @@ export const CreditCardCVC = PatternString("^[0-9]{3,4}$");
 export type CreditCardCVC = t.TypeOf<typeof CreditCardCVC>;
 
 export const INITIAL_CARD_FORM_STATE: CreditCardState = {
-  pan: none,
-  expirationDate: none,
-  securityCode: none,
-  holder: none
+  pan: O.none,
+  expirationDate: O.none,
+  securityCode: O.none,
+  holder: O.none
 };
 
-export const isValidPan = (pan: Option<string>) =>
-  pan.map(pan => CreditCardPan.is(pan)).toUndefined();
+export const isValidPan = (pan: O.Option<string>) =>
+  pipe(
+    pan,
+    O.map(pan => CreditCardPan.is(pan)),
+    O.toUndefined
+  );
 
 export const isValidSecurityCode = (
-  securityCode: Option<string>
+  securityCode: O.Option<string>
 ): boolean | undefined =>
-  securityCode
-    .map(securityCode => CreditCardCVC.is(securityCode))
-    .toUndefined();
+  pipe(
+    securityCode,
+    O.map(securityCode => CreditCardCVC.is(securityCode)),
+    O.toUndefined
+  );
 
 export type CreditCardState = Readonly<{
-  pan: Option<string>;
-  expirationDate: Option<string>;
-  securityCode: Option<string>;
-  holder: Option<string>;
+  pan: O.Option<string>;
+  expirationDate: O.Option<string>;
+  securityCode: O.Option<string>;
+  holder: O.Option<string>;
 }>;
 
 export type CreditCardStateKeys = keyof CreditCardState;
@@ -86,19 +93,21 @@ export type CreditCardStateKeys = keyof CreditCardState;
  */
 export function getCreditCardFromState(
   state: CreditCardState
-): Either<string, CreditCard> {
+): E.Either<string, CreditCard> {
   const { pan, expirationDate, securityCode, holder } = state;
   if (
-    pan.isNone() ||
-    expirationDate.isNone() ||
-    securityCode.isNone() ||
-    holder.isNone()
+    O.isNone(pan) ||
+    O.isNone(expirationDate) ||
+    O.isNone(securityCode) ||
+    O.isNone(holder)
   ) {
-    return left(I18n.t("wallet.dummyCard.accessibility.button.missingFields"));
+    return E.left(
+      I18n.t("wallet.dummyCard.accessibility.button.missingFields")
+    );
   }
 
   if (!isValidCardHolder(holder)) {
-    return left(
+    return E.left(
       I18n.t("wallet.dummyCard.accessibility.button.fieldError", {
         field: I18n.t("wallet.dummyCard.labels.holder.label")
       })
@@ -107,7 +116,7 @@ export function getCreditCardFromState(
 
   if (!CreditCardPan.is(pan.value)) {
     // invalid pan
-    return left(
+    return E.left(
       I18n.t("wallet.dummyCard.accessibility.button.fieldError", {
         field: I18n.t("wallet.dummyCard.labels.pan")
       })
@@ -121,7 +130,7 @@ export function getCreditCardFromState(
     !CreditCardExpirationYear.is(expirationYear)
   ) {
     // invalid date
-    return left(
+    return E.left(
       I18n.t("wallet.dummyCard.accessibility.button.fieldError", {
         field: I18n.t("wallet.dummyCard.labels.expirationDate")
       })
@@ -133,7 +142,7 @@ export function getCreditCardFromState(
       CreditCardDetector.validate(securityCode);
 
     // invalid cvc
-    return left(
+    return E.left(
       I18n.t("wallet.dummyCard.accessibility.button.fieldError", {
         field: I18n.t(
           detectedBrand.cvvLength === 4
@@ -152,7 +161,7 @@ export function getCreditCardFromState(
     securityCode: securityCode.value
   };
 
-  return right(card);
+  return E.right(card);
 }
 
 /**
@@ -161,11 +170,17 @@ export function getCreditCardFromState(
  *
  * @param cardHolder
  */
-export const isValidCardHolder = (cardHolder: Option<string>): boolean =>
-  cardHolder.fold(false, cH => {
-    const cardHolderWithoutDiacriticalMarks = _.deburr(cH);
-    if (cH === cardHolderWithoutDiacriticalMarks) {
-      return CreditCardHolder.is(cH) && !isStringNullyOrEmpty(cH);
-    }
-    return false;
-  });
+export const isValidCardHolder = (cardHolder: O.Option<string>): boolean =>
+  pipe(
+    cardHolder,
+    O.fold(
+      () => false,
+      cH => {
+        const cardHolderWithoutDiacriticalMarks = _.deburr(cH);
+        if (cH === cardHolderWithoutDiacriticalMarks) {
+          return CreditCardHolder.is(cH) && !isStringNullyOrEmpty(cH);
+        }
+        return false;
+      }
+    )
+  );

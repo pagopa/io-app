@@ -1,4 +1,4 @@
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Button, Text, View } from "native-base";
 import * as React from "react";
 

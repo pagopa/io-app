@@ -1,5 +1,6 @@
-import { fromNullable } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { Content, Grid, View } from "native-base";
 import * as React from "react";
 import { useEffect, useState } from "react";
@@ -132,7 +133,7 @@ const ServiceDetailsScreen = (props: Props) => {
 
   const maybeCTA = getServiceCTA(metadata);
   const showCTA =
-    (maybeCTA.isSome() || SpecialServiceMetadata.is(metadata)) &&
+    (O.isSome(maybeCTA) || SpecialServiceMetadata.is(metadata)) &&
     canRenderItems;
 
   return (
@@ -202,7 +203,7 @@ const ServiceDetailsScreen = (props: Props) => {
 
         {showCTA && (
           <FooterTopShadow>
-            {maybeCTA.isSome() && (
+            {O.isSome(maybeCTA) && (
               <View style={[styles.flexRow]}>
                 <ExtractedCTABar
                   ctas={maybeCTA.value}
@@ -237,9 +238,12 @@ const mapStateToProps = (state: GlobalState, props: OwnProps) => {
   return {
     serviceId,
     activate,
-    service: fromNullable(serviceByIdSelector(serviceId)(state))
-      .chain(pot.toOption)
-      .toUndefined(),
+    service: pipe(
+      serviceByIdSelector(serviceId)(state),
+      O.fromNullable,
+      O.chain(pot.toOption),
+      O.toUndefined
+    ),
     isInboxEnabled: isInboxEnabledSelector(state),
     isEmailEnabled: isEmailEnabledSelector(state),
     isEmailValidated: isProfileEmailValidatedSelector(state),

@@ -2,10 +2,11 @@
  * Set the basic PushNotification configuration
  */
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
-import { constNull } from "fp-ts/lib/function";
-import { fromEither, fromNullable } from "fp-ts/lib/Option";
+import { constNull, pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
 import * as t from "io-ts";
-import { NonEmptyString } from "italia-ts-commons/lib/strings";
+import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { Alert, Platform } from "react-native";
 import PushNotification from "react-native-push-notification";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -99,11 +100,51 @@ function configurePushNotifications() {
         Alert.alert("Notification", JSON.stringify(notification));
       }
 
-      const maybeMessageId = fromEither(
-        NotificationPayload.decode(notification).mapLeft(errors => {
+      pipe(
+        notification,
+        NotificationPayload.decode,
+        E.mapLeft(errors => {
           void mixpanelTrack("NOTIFICATION_PARSING_FAILURE", {
             reason: readablePrivacyReport(errors)
           });
+        }),
+        O.fromEither,
+        O.chain(payload =>
+          pipe(
+            payload.message_id,
+            O.fromNullable,
+            O.alt(() =>
+              pipe(
+                payload.data,
+                O.fromNullable,
+                O.chainNullableK(_ => _.message_id)
+              )
+            )
+          )
+        ),
+        O.map(messageId => {
+          // We just received a push notification about a new message
+          if (notification.foreground) {
+            // The App is in foreground so just refresh the messages list
+            if (usePaginatedMessages) {
+              handleMessageReload();
+            } else {
+              store.dispatch(DEPRECATED_loadMessages.request());
+            }
+          } else {
+            // The App was closed/in background and has been now opened clicking
+            // on the push notification.
+            // Save the message id of the notification in the store so the App can
+            // navigate to the message detail screen as soon as possible (if
+            // needed after the user login/insert the unlock code)
+            store.dispatch(updateNotificationsPendingMessage(messageId, false));
+
+            if (!usePaginatedMessages) {
+              // finally, refresh the message list to start loading the content of
+              // the new message - only needed for legacy system
+              store.dispatch(DEPRECATED_loadMessages.request());
+            }
+          }
         })
       ).chain(payload =>
         fromNullable(payload.message_id).alt(

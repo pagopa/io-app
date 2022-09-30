@@ -1,14 +1,14 @@
+import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
-
 import { Action } from "../../../../../../store/actions/types";
+import { GlobalState } from "../../../../../../store/reducers/types";
 import {
-  walletAddPaypalStart,
   OnOnboardingCompleted,
   walletAddPaypalCompleted,
   walletAddPaypalFailure,
-  walletAddPaypalOutcome
+  walletAddPaypalOutcome,
+  walletAddPaypalStart
 } from "../actions";
-import { GlobalState } from "../../../../../../store/reducers/types";
 
 export type PaypalOnOnboardingCompletedState = Partial<{
   onCompleted: OnOnboardingCompleted;
@@ -26,7 +26,7 @@ const onboardingCompletedReducer = (
     case getType(walletAddPaypalStart):
       return { onCompleted: action.payload, outcome: undefined };
     case getType(walletAddPaypalOutcome):
-      return { ...state, outcome: action.payload.toUndefined() };
+      return { ...state, outcome: O.toUndefined(action.payload) };
     case getType(walletAddPaypalFailure):
     case getType(walletAddPaypalCompleted):
       return initialState;

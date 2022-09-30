@@ -1,5 +1,6 @@
-import { none, Option, some } from "fp-ts/lib/Option";
-import { readableReport } from "italia-ts-commons/lib/reporters";
+import * as O from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
+import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { call, put } from "typed-redux-saga/macro";
 import { PublicSession } from "../../../definitions/backend/PublicSession";
 
@@ -23,31 +24,31 @@ export function* loadSessionInformationSaga(
   getSession: ReturnType<typeof BackendClient>["getSession"]
 ): Generator<
   ReduxSagaEffect,
-  Option<PublicSession>,
+  O.Option<PublicSession>,
   SagaCallReturnType<typeof getSession>
 > {
   try {
     // Call the Backend service
     const response = yield* call(getSession, {});
     // Ko we got an error
-    if (response.isLeft()) {
-      throw readableReport(response.value);
+    if (E.isLeft(response)) {
+      throw readableReport(response.left);
     }
 
-    if (response.value.status === 200) {
+    if (response.right.status === 200) {
       // Ok we got a valid response, send a SESSION_LOAD_SUCCESS action
-      yield* put(sessionInformationLoadSuccess(response.value.value));
-      return some(response.value.value);
+      yield* put(sessionInformationLoadSuccess(response.right.value));
+      return O.some(response.right.value);
     }
 
     // we got a valid response but its status code is describing an error
     const errorMsgDefault = "Invalid server response";
 
-    throw response.value.status === 400
-      ? response.value.value.title || errorMsgDefault
+    throw response.right.status === 400
+      ? response.right.value.title || errorMsgDefault
       : errorMsgDefault;
   } catch (e) {
     yield* put(sessionInformationLoadFailure(convertUnknownToError(e)));
-    return none;
+    return O.none;
   }
 }

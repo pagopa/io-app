@@ -1,14 +1,14 @@
+import * as r from "@pagopa/ts-commons/lib/requests";
 import {
-  createFetchRequestForApi,
   ApiHeaderJson,
-  composeHeaderProducers
-} from "italia-ts-commons/lib/requests";
-import * as r from "italia-ts-commons/lib/requests";
+  composeHeaderProducers,
+  createFetchRequestForApi
+} from "@pagopa/ts-commons/lib/requests";
+import { ProblemJson } from "../../../../definitions/backend/ProblemJson";
+import { UpsertPNActivationT } from "../../../../definitions/pn/requestTypes";
 import { SessionToken } from "../../../types/SessionToken";
 import { tokenHeaderProducer, withBearerToken } from "../../../utils/api";
 import { defaultRetryingFetch } from "../../../utils/fetch";
-import { ProblemJson } from "../../../../definitions/backend/ProblemJson";
-import { UpsertPNActivationT } from "../../../../definitions/pn/requestTypes";
 
 // TODO: remove this once codegen has been updated (https://pagopa.atlassian.net/browse/IA-914)
 //
@@ -42,7 +42,7 @@ const upsertActivation: UpsertPNActivationT = {
   url: _ => `/api/v1/pn/activation`,
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   query: query => ({ isTest: query.isTest }),
-  body: body => JSON.stringify(body.pNActivation),
+  body: body => JSON.stringify(body.body),
   response_decoder: upsertPNActivationDecoderCustom()
 };
 

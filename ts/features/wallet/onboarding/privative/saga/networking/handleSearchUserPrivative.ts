@@ -1,7 +1,8 @@
 /**
  * Load the user's privative card.
  */
-import { Either, left, right } from "fp-ts/lib/Either";
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { CobadgeResponse } from "../../../../../../../definitions/pagopa/walletv2/CobadgeResponse";
@@ -22,21 +23,23 @@ import { onboardingPrivativeSearchRequestId } from "../../store/reducers/searchP
  */
 const toPrivativeResponse = (
   response: CobadgeResponse
-): Either<GenericError, PrivativeResponse> =>
-  CoBadgePayload.decode(response.payload)
-    .mapLeft(errors =>
+): E.Either<GenericError, PrivativeResponse> =>
+  pipe(
+    response.payload,
+    CoBadgePayload.decode,
+    E.mapLeft(errors =>
       getGenericError(new Error(readablePrivacyReport(errors)))
-    )
-    .chain(x =>
+    ),
+    E.chain(x =>
       x.paymentInstruments.length > 1
-        ? left(
+        ? E.left(
             getGenericError(
               new Error(
                 `paymentInstruments in privative response should be only 0 or 1, received ${x.paymentInstruments.length}`
               )
             )
           )
-        : right({
+        : E.right({
             paymentInstrument:
               x.paymentInstruments.length === 0
                 ? null
@@ -44,7 +47,8 @@ const toPrivativeResponse = (
             searchRequestId: x.searchRequestId,
             searchRequestMetadata: x.searchRequestMetadata
           })
-    );
+    )
+  );
 
 export function* handleSearchUserPrivative(
   getCobadgePans: ReturnType<typeof PaymentManagerClient>["getCobadgePans"],
@@ -71,11 +75,11 @@ export function* handleSearchUserPrivative(
     searchRequestId
   );
 
-  const eitherPrivative = result.chain(toPrivativeResponse);
+  const eitherPrivative = pipe(result, E.chainW(toPrivativeResponse));
   // dispatch the related action
-  if (eitherPrivative.isRight()) {
-    yield* put(searchUserPrivative.success(eitherPrivative.value));
+  if (E.isRight(eitherPrivative)) {
+    yield* put(searchUserPrivative.success(eitherPrivative.right));
   } else {
-    yield* put(searchUserPrivative.failure(eitherPrivative.value));
+    yield* put(searchUserPrivative.failure(eitherPrivative.left));
   }
 }

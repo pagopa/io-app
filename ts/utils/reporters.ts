@@ -1,3 +1,5 @@
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
 import { Context, ValidationError } from "io-ts";
 import { Reporter } from "io-ts/lib/Reporter";
 
@@ -51,5 +53,6 @@ export function readablePrivacyReport(
  * readable messages.
  */
 export const ReadableReporter: Reporter<ReadonlyArray<string>> = {
-  report: validation => validation.fold(errorsToReadableMessages, success)
+  report: validation =>
+    pipe(validation, E.fold(errorsToReadableMessages, success))
 };

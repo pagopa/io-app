@@ -1,8 +1,6 @@
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-import { Action } from "../../../actions/types";
-import { GlobalState } from "../../types";
 import {
   loadMessageById,
   loadNextPageMessages,
@@ -12,6 +10,8 @@ import {
   UpsertMessageStatusAttributesPayload
 } from "../../../actions/messages";
 import { clearCache } from "../../../actions/profile";
+import { Action } from "../../../actions/types";
+import { GlobalState } from "../../types";
 import { UIMessage } from "./types";
 
 // State

@@ -1,4 +1,4 @@
-import { OrganizationFiscalCode } from "italia-ts-commons/lib/strings";
+import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { appReducer } from "../../../index";
 import {
   loadServiceDetailNotFound,

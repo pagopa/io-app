@@ -1,5 +1,5 @@
 import { fireEvent } from "@testing-library/react-native";
-import { some } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import React from "react";
 import { Store } from "redux";
 import configureMockStore from "redux-mock-store";
@@ -29,7 +29,7 @@ describe("BaseScreenComponent", () => {
   const state = {
     ...globalState,
     backendStatus: {
-      status: some({
+      status: O.some({
         config: {
           assistanceTool: { tool: ToolEnum.none }
         } as Config
@@ -50,7 +50,7 @@ describe("BaseScreenComponent", () => {
         mockStore({
           ...state,
           backendStatus: {
-            status: some({
+            status: O.some({
               config: {
                 assistanceTool: { tool },
                 cgn: { enabled: true },
@@ -70,7 +70,7 @@ describe("BaseScreenComponent", () => {
       mockStore({
         ...state,
         backendStatus: {
-          status: some({
+          status: O.some({
             config: {
               assistanceTool: { tool: ToolEnum.zendesk },
               cgn: { enabled: true },

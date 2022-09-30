@@ -1,6 +1,7 @@
-import { fromNullable } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
+import { pipe } from "fp-ts/lib/function";
 import { removeMessages } from "../../../actions/messages";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
@@ -54,9 +55,12 @@ export const messagesUnreadSelector = createSelector(
   messagesStatusSelector,
   items =>
     Object.keys(items).filter(messageId =>
-      fromNullable(items[messageId])
-        .map(item => item.isRead === false)
-        .getOrElse(true)
+      pipe(
+        items[messageId],
+        O.fromNullable,
+        O.map(item => item.isRead === false),
+        O.getOrElse(() => true)
+      )
     )
 );
 
@@ -65,9 +69,12 @@ export const messagesReadSelector = createSelector(
   messagesStatusSelector,
   items =>
     Object.keys(items).filter(messageId =>
-      fromNullable(items[messageId])
-        .map(item => item.isRead === true)
-        .getOrElse(false)
+      pipe(
+        items[messageId],
+        O.fromNullable,
+        O.map(item => item.isRead === true),
+        O.getOrElse(() => false)
+      )
     )
 );
 
@@ -76,9 +83,12 @@ export const messagesArchivedSelector = createSelector(
   messagesStatusSelector,
   items =>
     Object.keys(items).filter(messageId =>
-      fromNullable(items[messageId])
-        .map(item => item.isArchived === true)
-        .getOrElse(false)
+      pipe(
+        items[messageId],
+        O.fromNullable,
+        O.map(item => item.isArchived === true),
+        O.getOrElse(() => false)
+      )
     )
 );
 
@@ -87,9 +97,12 @@ export const messagesUnarchivedSelector = createSelector(
   messagesStatusSelector,
   items =>
     Object.keys(items).filter(messageId =>
-      fromNullable(items[messageId])
-        .map(item => item.isArchived === false)
-        .getOrElse(true)
+      pipe(
+        items[messageId],
+        O.fromNullable,
+        O.map(item => item.isArchived === false),
+        O.getOrElse(() => true)
+      )
     )
 );
 
@@ -109,9 +122,12 @@ export const messagesUnreadAndUnarchivedSelector = createSelector(
 export const isMessageRead = createSelector(
   [messagesStatusSelector, (_: GlobalState, messageId: string) => messageId],
   (messagesStatus, messageId) =>
-    fromNullable(messagesStatus[messageId])
-      .map(ms => ms.isRead)
-      .getOrElse(false)
+    pipe(
+      messagesStatus[messageId],
+      O.fromNullable,
+      O.map(ms => ms.isRead),
+      O.getOrElse(() => false)
+    )
 );
 
 /**
@@ -124,10 +140,14 @@ export const isMessageRead = createSelector(
 export const getMessageStatus = createSelector(
   [messagesStatusSelector, (_: GlobalState, messageId: string) => messageId],
   (messagesStatus, messageId) =>
-    fromNullable(messagesStatus[messageId]).getOrElse({
-      isRead: false,
-      isArchived: false
-    })
+    pipe(
+      messagesStatus[messageId],
+      O.fromNullable,
+      O.getOrElse(() => ({
+        isRead: false,
+        isArchived: false
+      }))
+    )
 );
 
 export default reducer;

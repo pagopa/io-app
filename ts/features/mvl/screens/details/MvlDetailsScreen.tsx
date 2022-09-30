@@ -1,11 +1,17 @@
-import * as pot from "italia-ts-commons/lib/pot";
-import { View } from "native-base";
-import React, { useEffect, useCallback } from "react";
-import { SafeAreaView, ScrollView } from "react-native";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import { View } from "native-base";
+import React, { useCallback, useEffect } from "react";
+import { SafeAreaView, ScrollView } from "react-native";
+import { H2 } from "../../../../components/core/typography/H2";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
+import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import CtaBar from "../../../../components/messages/paginated/MessageDetail/common/CtaBar";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import I18n from "../../../../i18n";
+import { loadServiceDetail } from "../../../../store/actions/services";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
   serviceByIdSelector,
@@ -14,12 +20,8 @@ import {
 import { toUIService } from "../../../../store/reducers/entities/services/transformers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { loadServiceDetail } from "../../../../store/actions/services";
-import { Mvl, MvlAttachmentId } from "../../types/mvlData";
-import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
-import I18n from "../../../../i18n";
-import { H2 } from "../../../../components/core/typography/H2";
 import MVL_ROUTES from "../../navigation/routes";
+import { Mvl, MvlAttachmentId } from "../../types/mvlData";
 import { MvlAttachments } from "./components/attachment/MvlAttachments";
 import { MvlBody } from "./components/MvlBody";
 import { MvlDetailsHeader } from "./components/MvlDetailsHeader";
@@ -94,12 +96,13 @@ export const MvlDetailsScreen = (props: Props): React.ReactElement => {
 };
 
 const selectServiceState = (state: GlobalState, props: Props) => {
-  const service = pot
-    .toOption(
+  const service = pipe(
+    pot.toOption(
       serviceByIdSelector(props.mvl.message.serviceId)(state) || pot.none
-    )
-    .map(toUIService)
-    .toUndefined();
+    ),
+    O.map(toUIService),
+    O.toUndefined
+  );
 
   const serviceMetadata = serviceMetadataByIdSelector(
     props.mvl.message.serviceId

@@ -1,21 +1,21 @@
+import { pot } from "@pagopa/ts-commons";
+import * as O from "fp-ts/lib/Option";
 import React from "react";
 import { Text } from "react-native";
 import configureMockStore from "redux-mock-store";
-import { pot } from "@pagopa/ts-commons";
-import { none } from "fp-ts/lib/Option";
 
-import MessageList from "../MessageList";
-import { appReducer } from "../../../../store/reducers";
+import I18n from "../../../../i18n";
+import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
+import { appReducer } from "../../../../store/reducers";
+import { AllPaginated } from "../../../../store/reducers/entities/messages/allPaginated";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
-import ROUTES from "../../../../navigation/routes";
-import { AllPaginated } from "../../../../store/reducers/entities/messages/allPaginated";
-import I18n from "../../../../i18n";
 import {
   defaultRequestPayload,
   successReloadMessagesPayload
 } from "../../../../__mocks__/messages";
+import MessageList from "../MessageList";
 
 jest.useFakeTimers();
 jest.mock("../../../../utils/showToast", () => ({
@@ -30,8 +30,8 @@ const filter = defaultRequestPayload.filter;
 describe("MessagesInbox component", () => {
   describe("when messages aren't loaded yet", () => {
     const messagesState = {
-      inbox: { data: pot.noneLoading, lastRequest: none },
-      archive: { data: pot.noneLoading, lastRequest: none }
+      inbox: { data: pot.noneLoading, lastRequest: O.none },
+      archive: { data: pot.noneLoading, lastRequest: O.none }
     };
 
     it("should not render the empty component", () => {
@@ -54,7 +54,7 @@ describe("MessagesInbox component", () => {
     it("should render the error component", () => {
       const { component } = renderComponent(
         { ListEmptyComponent, filter },
-        { inbox: { data: pot.noneError("paura, eh?"), lastRequest: none } }
+        { inbox: { data: pot.noneError("paura, eh?"), lastRequest: O.none } }
       );
       expect(
         component.getByText(I18n.t("messages.loadingErrorTitle"))
@@ -64,7 +64,7 @@ describe("MessagesInbox component", () => {
 
   describe("when the messages state contains messages", () => {
     const messagesState = {
-      inbox: { data: pot.some({ page: messages }), lastRequest: none }
+      inbox: { data: pot.some({ page: messages }), lastRequest: O.none }
     };
 
     // eslint-disable-next-line sonarjs/no-identical-functions
@@ -108,7 +108,7 @@ const renderComponent = (
         previous: undefined,
         next: undefined
       }),
-      lastRequest: none
+      lastRequest: O.none
     },
     inbox: {
       data: pot.some({
@@ -116,7 +116,7 @@ const renderComponent = (
         previous: undefined,
         next: undefined
       }),
-      lastRequest: none
+      lastRequest: O.none
     },
     ...paginatedState
   };

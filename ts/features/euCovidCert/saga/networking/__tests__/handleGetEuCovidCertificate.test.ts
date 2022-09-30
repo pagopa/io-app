@@ -1,4 +1,4 @@
-import { Either, left, right } from "fp-ts/lib/Either";
+import * as E from "fp-ts/lib/Either";
 import { expectSaga } from "redux-saga-test-plan";
 import { ActionType } from "typesafe-actions";
 import { Certificate } from "../../../../../../definitions/eu_covid_cert/Certificate";
@@ -65,14 +65,14 @@ const requestAction = euCovidCertificateGet.request(authCode);
 
 const cases: ReadonlyArray<
   [
-    apiResponse: Either<Error, { status: number; value?: Certificate }>,
+    apiResponse: E.Either<Error, { status: number; value?: Certificate }>,
     expectedAction:
       | ActionType<typeof euCovidCertificateGet.success>
       | ActionType<typeof euCovidCertificateGet.failure>
   ]
 > = [
   [
-    right({ status: 200, value: revokedCertificate }),
+    E.right({ status: 200, value: revokedCertificate }),
     euCovidCertificateGet.success({
       kind: "success",
       value: {
@@ -85,7 +85,7 @@ const cases: ReadonlyArray<
     })
   ],
   [
-    right({ status: 200, value: expiredCertificate }),
+    E.right({ status: 200, value: expiredCertificate }),
     euCovidCertificateGet.success({
       kind: "success",
       value: {
@@ -98,7 +98,7 @@ const cases: ReadonlyArray<
     })
   ],
   [
-    right({ status: 200, value: validCertificate }),
+    E.right({ status: 200, value: validCertificate }),
     euCovidCertificateGet.success({
       kind: "success",
       value: {
@@ -116,51 +116,51 @@ const cases: ReadonlyArray<
     })
   ],
   [
-    right({
+    E.right({
       status: 200,
       value: { kind: "strangeKind" } as unknown as Certificate
     }), // should not never happen
     euCovidCertificateGet.success({ kind: "wrongFormat", authCode })
   ],
   [
-    right({ status: 401 }),
+    E.right({ status: 401 }),
     euCovidCertificateGet.failure({
       ...getGenericError(new Error(`response status code 401`)),
       authCode
     })
   ],
   [
-    right({ status: 600 }), // unexpected code
+    E.right({ status: 600 }), // unexpected code
     euCovidCertificateGet.failure({
       ...getGenericError(new Error(`response status code 600`)),
       authCode
     })
   ],
   [
-    right({ status: 400 }),
+    E.right({ status: 400 }),
     euCovidCertificateGet.success({ kind: "wrongFormat", authCode })
   ],
   [
-    right({ status: 403 }),
+    E.right({ status: 403 }),
     euCovidCertificateGet.success({ kind: "notFound", authCode })
   ],
   [
-    right({ status: 410 }),
+    E.right({ status: 410 }),
     euCovidCertificateGet.success({ kind: "notOperational", authCode })
   ],
   [
-    right({ status: 500 }),
+    E.right({ status: 500 }),
     euCovidCertificateGet.failure({
       ...getGenericError(new Error(`response status code 500`)),
       authCode
     })
   ],
   [
-    right({ status: 504 }),
+    E.right({ status: 504 }),
     euCovidCertificateGet.success({ kind: "temporarilyNotAvailable", authCode })
   ],
   [
-    left(new Error("cannot parse")),
+    E.left(new Error("cannot parse")),
     euCovidCertificateGet.failure({
       ...getGenericError(new Error("cant parse")),
       authCode

@@ -1,5 +1,5 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { fireEvent, RenderAPI } from "@testing-library/react-native";
-import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
 
 import { Action, createStore, Store } from "redux";

@@ -1,3 +1,4 @@
+import * as E from "fp-ts/lib/Either";
 import { fixWalletPspTagsValues } from "../../utils/wallet";
 import {
   Amount,
@@ -154,30 +155,30 @@ const validWalletWithMalformedPspTags = {
 // Amount testing
 describe("Amount", () => {
   it("should recognize a valid Amount", () => {
-    expect(Amount.decode(validAmount).isRight()).toBeTruthy();
+    expect(E.isRight(Amount.decode(validAmount))).toBeTruthy();
   });
   it("should NOT recognize an invalid Amount", () => {
-    expect(Amount.decode(invalidAmount).isRight()).toBeFalsy();
+    expect(E.isRight(Amount.decode(invalidAmount))).toBeFalsy();
   });
 });
 
 // CreditCard testing
 describe("CreditCard", () => {
   it("should recognize a valid CreditCard", () => {
-    expect(CreditCard.decode(validCreditCard).isRight()).toBeTruthy();
+    expect(E.isRight(CreditCard.decode(validCreditCard))).toBeTruthy();
   });
   it("should NOT recognize an invalid CreditCard", () => {
-    expect(CreditCard.decode(invalidCreditCard).isRight()).toBeFalsy();
+    expect(E.isRight(CreditCard.decode(invalidCreditCard))).toBeFalsy();
   });
 });
 
 // Psp testing
 describe("Psp", () => {
   it("should recognize a valid Psp", () => {
-    expect(Psp.decode(validPsp).isRight()).toBeTruthy();
+    expect(E.isRight(Psp.decode(validPsp))).toBeTruthy();
   });
   it("should NOT recognize an invalid Psp", () => {
-    expect(Psp.decode(invalidPsp).isRight()).toBeFalsy();
+    expect(E.isRight(Psp.decode(invalidPsp))).toBeFalsy();
   });
 });
 
@@ -186,23 +187,23 @@ describe("PspListResponse", () => {
     const pspListResponse = {
       data: [validPsp, validPsp]
     };
-    expect(PspListResponse.decode(pspListResponse).isRight()).toBeTruthy();
+    expect(E.isRight(PspListResponse.decode(pspListResponse))).toBeTruthy();
   });
   it("should NOT recognize an invalid PspListResponse", () => {
     const pspListResponse = {
       data: [validPsp, invalidPsp]
     };
-    expect(PspListResponse.decode(pspListResponse).isRight()).toBeFalsy();
+    expect(E.isRight(PspListResponse.decode(pspListResponse))).toBeFalsy();
   });
 });
 
 // Transaction testing
 describe("Transaction", () => {
   it("should accept a valid Transaction", () => {
-    expect(Transaction.decode(validTransaction).isRight()).toBeTruthy();
+    expect(E.isRight(Transaction.decode(validTransaction))).toBeTruthy();
   });
   it("should NOT accept an invalid Transaction", () => {
-    expect(Transaction.decode(invalidTransaction).isRight()).toBeFalsy();
+    expect(E.isRight(Transaction.decode(invalidTransaction))).toBeFalsy();
   });
 });
 
@@ -215,7 +216,7 @@ describe("TransactionListResponse", () => {
       size: 10
     };
     expect(
-      TransactionListResponse.decode(transactionListResponse).isRight()
+      E.isRight(TransactionListResponse.decode(transactionListResponse))
     ).toBeTruthy();
   });
   it("should NOT recognize an invalid TransactionListResponse", () => {
@@ -226,7 +227,7 @@ describe("TransactionListResponse", () => {
       size: 10
     };
     expect(
-      TransactionListResponse.decode(transactionListResponse).isRight()
+      E.isRight(TransactionListResponse.decode(transactionListResponse))
     ).toBeFalsy();
   });
 });
@@ -237,7 +238,7 @@ describe("TransactionResponse", () => {
       data: validTransaction
     };
     expect(
-      TransactionResponse.decode(transactionResponse).isRight()
+      E.isRight(TransactionResponse.decode(transactionResponse))
     ).toBeTruthy();
   });
   it("should NOT recognize an invalid TransactionResponse", () => {
@@ -245,7 +246,7 @@ describe("TransactionResponse", () => {
       data: invalidTransaction
     };
     expect(
-      TransactionResponse.decode(transactionResponse).isRight()
+      E.isRight(TransactionResponse.decode(transactionResponse))
     ).toBeFalsy();
   });
 });
@@ -253,15 +254,15 @@ describe("TransactionResponse", () => {
 // Wallet testing
 describe("Wallet", () => {
   it("should accept a valid Wallet", () => {
-    expect(Wallet.decode(validWallet).isRight()).toBeTruthy();
+    expect(E.isRight(Wallet.decode(validWallet))).toBeTruthy();
   });
 
   it("should accept a valid Wallet that contains no credit card", () => {
-    expect(Wallet.decode(validWalletNoCreditCard).isRight()).toBeTruthy();
+    expect(E.isRight(Wallet.decode(validWalletNoCreditCard))).toBeTruthy();
   });
 
   it("should NOT accept an invalid Wallet", () => {
-    expect(Wallet.decode(invalidWallet).isRight()).toBeFalsy();
+    expect(E.isRight(Wallet.decode(invalidWallet))).toBeFalsy();
   });
 });
 
@@ -271,7 +272,7 @@ describe("WalletListResponse", () => {
       data: [validWallet, validWallet]
     };
     expect(
-      WalletListResponse.decode(walletListResponse).isRight()
+      E.isRight(WalletListResponse.decode(walletListResponse))
     ).toBeTruthy();
   });
 
@@ -288,7 +289,7 @@ describe("WalletListResponse", () => {
       data: walletListResponse.data.map(d => fixWalletPspTagsValues(d))
     };
     expect(
-      WalletListResponse.decode(walletListResponseSanitized).isRight()
+      E.isRight(WalletListResponse.decode(walletListResponseSanitized))
     ).toBeTruthy();
   });
 
@@ -296,7 +297,9 @@ describe("WalletListResponse", () => {
     const walletListResponse = {
       data: [validWallet, invalidWallet]
     };
-    expect(WalletListResponse.decode(walletListResponse).isRight()).toBeFalsy();
+    expect(
+      E.isRight(WalletListResponse.decode(walletListResponse))
+    ).toBeFalsy();
   });
 });
 
@@ -305,23 +308,23 @@ describe("WalletResponse", () => {
     const walletResponse = {
       data: validWallet
     };
-    expect(WalletResponse.decode(walletResponse).isRight()).toBeTruthy();
+    expect(E.isRight(WalletResponse.decode(walletResponse))).toBeTruthy();
   });
   it("should NOT recognize an invalid WalletResponse", () => {
     const walletResponse = {
       data: invalidWallet
     };
-    expect(WalletResponse.decode(walletResponse).isRight()).toBeFalsy();
+    expect(E.isRight(WalletResponse.decode(walletResponse))).toBeFalsy();
   });
 });
 
 // Session testing
 describe("Session", () => {
   it("should recognize a valid Session", () => {
-    expect(Session.decode(validSession).isRight()).toBeTruthy();
+    expect(E.isRight(Session.decode(validSession))).toBeTruthy();
   });
   it("should NOT recognize an invalid Session", () => {
-    expect(Session.decode(invalidSession).isRight()).toBeFalsy();
+    expect(E.isRight(Session.decode(invalidSession))).toBeFalsy();
   });
 });
 
@@ -330,12 +333,12 @@ describe("SessionResponse", () => {
     const sessionResponse = {
       data: validSession
     };
-    expect(SessionResponse.decode(sessionResponse).isRight()).toBeTruthy();
+    expect(E.isRight(SessionResponse.decode(sessionResponse))).toBeTruthy();
   });
   it("should NOT recognize an invalid Session", () => {
     const sessionResponse = {
       data: invalidSession
     };
-    expect(SessionResponse.decode(sessionResponse).isRight()).toBeFalsy();
+    expect(E.isRight(SessionResponse.decode(sessionResponse))).toBeFalsy();
   });
 });

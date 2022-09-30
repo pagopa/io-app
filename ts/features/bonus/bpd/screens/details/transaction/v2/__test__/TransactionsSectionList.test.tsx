@@ -1,4 +1,4 @@
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as React from "react";
 
 import { createStore, Store } from "redux";
@@ -14,10 +14,10 @@ import {
   bpdTransactionsLoadPage,
   bpdTransactionsLoadRequiredData
 } from "../../../../../store/actions/transactions";
+import { transactionTemplate } from "../../../../../store/reducers/details/transactionsv2/__mock__/transactions";
 import { eligibleAmount } from "../../../../../store/reducers/__mock__/amount";
 import { activePeriod } from "../../../../../store/reducers/__mock__/periods";
 import { readyRanking } from "../../../../../store/reducers/__mock__/ranking";
-import { transactionTemplate } from "../../../../../store/reducers/details/transactionsv2/__mock__/transactions";
 import TransactionsSectionList from "../TransactionsSectionList";
 
 jest.mock("react-native-share", () => ({
