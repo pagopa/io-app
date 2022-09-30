@@ -126,11 +126,7 @@ function configurePushNotifications() {
           // We just received a push notification about a new message
           if (notification.foreground) {
             // The App is in foreground so just refresh the messages list
-            if (usePaginatedMessages) {
-              handleMessageReload();
-            } else {
-              store.dispatch(DEPRECATED_loadMessages.request());
-            }
+            handleMessageReload();
           } else {
             // The App was closed/in background and has been now opened clicking
             // on the push notification.
@@ -138,34 +134,9 @@ function configurePushNotifications() {
             // navigate to the message detail screen as soon as possible (if
             // needed after the user login/insert the unlock code)
             store.dispatch(updateNotificationsPendingMessage(messageId, false));
-
-            if (!usePaginatedMessages) {
-              // finally, refresh the message list to start loading the content of
-              // the new message - only needed for legacy system
-              store.dispatch(DEPRECATED_loadMessages.request());
-            }
           }
         })
-      ).chain(payload =>
-        fromNullable(payload.message_id).alt(
-          fromNullable(payload.data).mapNullable(_ => _.message_id)
-        )
       );
-
-      maybeMessageId.map(messageId => {
-        // We just received a push notification about a new message
-        if (notification.foreground) {
-          // The App is in foreground so just refresh the messages list
-          handleMessageReload();
-        } else {
-          // The App was closed/in background and has been now opened clicking
-          // on the push notification.
-          // Save the message id of the notification in the store so the App can
-          // navigate to the message detail screen as soon as possible (if
-          // needed after the user login/insert the unlock code)
-          store.dispatch(updateNotificationsPendingMessage(messageId, false));
-        }
-      });
 
       // On iOS we need to call this when the remote notification handling is complete
       notification.finish(PushNotificationIOS.FetchResult.NoData);
