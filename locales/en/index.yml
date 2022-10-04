@@ -483,6 +483,9 @@ profile:
           title: Do you want to change the language to
           subtitle: You'll need to restart the application to make this happen
         not_selected: Not selected
+      notifications:
+        title: Notifiche
+        subtitle: Consenti anteprima e promemoria
     empty:
       default: No preference set
     unavailable:

@@ -483,6 +483,9 @@ profile:
           title: Vuoi cambiare la lingua in
           subtitle: Dovrai riavviare l'applicazione per applicare il cambiamento
         not_selected: Non selezionato
+      notifications:
+        title: Notifiche
+        subtitle: Consenti anteprima e promemoria
     empty:
       default: Nessuna preferenza impostata
     unavailable:
