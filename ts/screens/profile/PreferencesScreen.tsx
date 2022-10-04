@@ -22,6 +22,7 @@ import {
   AppParamsList,
   IOStackNavigationRouteProps
 } from "../../navigation/params/AppParamsList";
+import ROUTES from "../../navigation/routes";
 import {
   navigateToCalendarPreferenceScreen,
   navigateToEmailForwardingPreferenceScreen,
@@ -184,7 +185,11 @@ class PreferencesScreen extends React.Component<Props> {
           <List withContentLateralPadding={true}>
             {remindersOptInEnabled && (
               <ListItemComponent
-                onPress={() => {}}
+                onPress={() => {
+                  this.props.navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+                    screen: ROUTES.PROFILE_PREFERENCES_NOTIFICATIONS
+                  });
+                }}
                 title={I18n.t("profile.preferences.list.notifications.title")}
                 subTitle={I18n.t(
                   "profile.preferences.list.notifications.subtitle"

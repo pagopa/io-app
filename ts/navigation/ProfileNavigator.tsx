@@ -1,6 +1,7 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
 import LogoutScreen from "../components/screens/LogoutScreen";
+import { remindersOptInEnabled } from "../config";
 import EmailInsertScreen from "../screens/onboarding/EmailInsertScreen";
 import EmailReadScreen from "../screens/onboarding/EmailReadScreen";
 import TosScreen from "../screens/onboarding/TosScreen";
@@ -10,6 +11,7 @@ import DownloadProfileDataScreen from "../screens/profile/DownloadProfileDataScr
 import EmailForwardingScreen from "../screens/profile/EmailForwardingScreen";
 import FiscalCodeScreen from "../screens/profile/FiscalCodeScreen";
 import LanguagesPreferencesScreen from "../screens/profile/LanguagesPreferencesScreen";
+import { NotificationsPreferenceScreen } from "../screens/profile/NotificationsPreferenceScreen";
 import MarkdownPlayground from "../screens/profile/playgrounds/MarkdownPlayground";
 import PreferencesScreen from "../screens/profile/PreferencesScreen";
 import PrivacyMainScreen from "../screens/profile/PrivacyMainScreen";
@@ -104,6 +106,12 @@ const ProfileStackNavigator = () => (
       name={ROUTES.PROFILE_REMOVE_ACCOUNT_SUCCESS}
       component={RemoveAccountSuccess}
     />
+    {remindersOptInEnabled && (
+      <Stack.Screen
+        name={ROUTES.PROFILE_PREFERENCES_NOTIFICATIONS}
+        component={NotificationsPreferenceScreen}
+      />
+    )}
   </Stack.Navigator>
 );
 
