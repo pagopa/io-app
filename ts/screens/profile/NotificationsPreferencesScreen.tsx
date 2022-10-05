@@ -61,6 +61,7 @@ export const NotificationsPreferencesScreen = () => {
               <RemoteSwitch
                 value={remindersPreference}
                 onValueChange={toggleRemindersPreference}
+                testID="remindersPreferenceSwitch"
               ></RemoteSwitch>
             }
           />
