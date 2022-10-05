@@ -7,7 +7,7 @@ import * as React from "react";
 import { useState } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { PreferencesListItem } from "../../../../components/PreferenceListItem";
+import { PreferencesListItem } from "../../../../components/PreferencesListItem";
 import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
 import { PaymentMethod } from "../../../../types/pagopa";

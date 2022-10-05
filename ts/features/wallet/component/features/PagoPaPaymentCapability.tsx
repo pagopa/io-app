@@ -5,7 +5,7 @@ import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import { H5 } from "../../../../components/core/typography/H5";
 import { Link } from "../../../../components/core/typography/Link";
 import { IOColors } from "../../../../components/core/variables/IOColors";
-import { PreferencesListItem } from "../../../../components/PreferenceListItem";
+import { PreferencesListItem } from "../../../../components/PreferencesListItem";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import Markdown from "../../../../components/ui/Markdown";
 import Switch from "../../../../components/ui/Switch";
