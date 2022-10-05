@@ -15,7 +15,7 @@ import { PaymentMethod } from "../../types/pagopa";
 import { isAndroid } from "../../utils/platform";
 import { handleSetFavourite } from "../../utils/wallet";
 import { IOStyleVariables } from "../core/variables/IOStyleVariables";
-import { PreferencesListItem } from "../PreferenceListItem";
+import { PreferencesListItem } from "../PreferencesListItem";
 import Switch from "../ui/Switch";
 
 type OwnProps = {
