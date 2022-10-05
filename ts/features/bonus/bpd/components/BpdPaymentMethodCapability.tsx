@@ -7,12 +7,12 @@ import * as React from "react";
 import { useState } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { PreferenceListItem } from "../../../../components/PreferenceListItem";
 import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
 import { PaymentMethod } from "../../../../types/pagopa";
 import { useLoadPotValue } from "../../../../utils/hooks/useLoadPotValue";
 import { getPaymentMethodHash } from "../../../../utils/paymentMethod";
-import { BasePaymentFeatureListItem } from "../../../wallet/component/features/BasePaymentFeatureListItem";
 import { bpdOnboardingStart } from "../store/actions/onboarding";
 import {
   bpdPaymentMethodActivation,
@@ -93,7 +93,7 @@ const InnerBpdPaymentMethodCapability = (
 
   return (
     <>
-      <BasePaymentFeatureListItem
+      <PreferenceListItem
         testID={"BpdPaymentMethodCapability"}
         title={I18n.t("bonus.bpd.title")}
         description={I18n.t("bonus.bpd.description")}

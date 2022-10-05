@@ -502,6 +502,13 @@ profile:
       contextualHelpContent: !include profile/profile_preferences_calendar.md
       local_calendar: Calendario locale
       birthday_calendar: Compleanni
+    notifications:
+      header: Notifiche
+      title: Personalizza le notifiche
+      subtitle: Scegli come ricevere aggiornamenti sui messaggi e promemoria che ricevi.
+      reminders:
+        title: Consenti i promemoria
+        description: Ricevi notifiche in prossimità di scadenze o quando non hai ancora letto dei messaggi
 userMetadata:
   errors:
     upsertVersion: Impossibile creare o aggiornare i metadata utente con questa versione
