@@ -1,4 +1,5 @@
-import React from "react";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import React, { useEffect, useState } from "react";
 import { List } from "native-base";
 import { useSelector } from "react-redux";
 import { PreferencesListItem } from "../../components/PreferencesListItem";
@@ -10,13 +11,28 @@ import { profileRemindersPreferenceSelector } from "../../store/reducers/profile
 import { useIODispatch } from "../../store/hooks";
 import { profileUpsert } from "../../store/actions/profile";
 import { ReminderStatusEnum } from "../../../definitions/backend/ReminderStatus";
+import { showToast } from "../../utils/showToast";
 
 export const NotificationsPreferencesScreen = () => {
   const dispatch = useIODispatch();
+  const [isUpserting, setIsUpserting] = useState(false);
 
   const remindersPreference = useSelector(profileRemindersPreferenceSelector);
 
+  const isError = pot.isError(remindersPreference);
+  const isUpdating = pot.isUpdating(remindersPreference);
+
+  useEffect(() => {
+    if (isError && isUpserting) {
+      showToast(I18n.t("profile.preferences.notifications.error"));
+    }
+    if (!isUpdating) {
+      setIsUpserting(false);
+    }
+  }, [isError, isUpdating, isUpserting]);
+
   const toggleRemindersPreference = (isEnabled: boolean) => {
+    setIsUpserting(true);
     dispatch(
       profileUpsert.request({
         reminder_status: isEnabled

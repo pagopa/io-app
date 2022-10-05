@@ -509,6 +509,7 @@ profile:
       reminders:
         title: Consenti i promemoria
         description: Ricevi notifiche in prossimità di scadenze o quando non hai ancora letto dei messaggi
+      error: Si è verificato un errore con la tua richiesta
 userMetadata:
   errors:
     upsertVersion: Can't upsert user metadata with this version
