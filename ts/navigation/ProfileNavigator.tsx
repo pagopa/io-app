@@ -11,7 +11,7 @@ import DownloadProfileDataScreen from "../screens/profile/DownloadProfileDataScr
 import EmailForwardingScreen from "../screens/profile/EmailForwardingScreen";
 import FiscalCodeScreen from "../screens/profile/FiscalCodeScreen";
 import LanguagesPreferencesScreen from "../screens/profile/LanguagesPreferencesScreen";
-import { NotificationsPreferenceScreen } from "../screens/profile/NotificationsPreferenceScreen";
+import { NotificationsPreferencesScreen } from "../screens/profile/NotificationsPreferencesScreen";
 import MarkdownPlayground from "../screens/profile/playgrounds/MarkdownPlayground";
 import PreferencesScreen from "../screens/profile/PreferencesScreen";
 import PrivacyMainScreen from "../screens/profile/PrivacyMainScreen";
@@ -109,7 +109,7 @@ const ProfileStackNavigator = () => (
     {remindersOptInEnabled && (
       <Stack.Screen
         name={ROUTES.PROFILE_PREFERENCES_NOTIFICATIONS}
-        component={NotificationsPreferenceScreen}
+        component={NotificationsPreferencesScreen}
       />
     )}
   </Stack.Navigator>

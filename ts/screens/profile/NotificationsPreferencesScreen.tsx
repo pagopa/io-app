@@ -1,7 +1,7 @@
 import React from "react";
 import { List } from "native-base";
 import { useSelector } from "react-redux";
-import { PreferencesListItem } from "../../components/PreferenceListItem";
+import { PreferencesListItem } from "../../components/PreferencesListItem";
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import I18n from "../../i18n";
@@ -11,7 +11,7 @@ import { useIODispatch } from "../../store/hooks";
 import { profileUpsert } from "../../store/actions/profile";
 import { ReminderStatusEnum } from "../../../definitions/backend/ReminderStatus";
 
-export const NotificationsPreferenceScreen = () => {
+export const NotificationsPreferencesScreen = () => {
   const dispatch = useIODispatch();
 
   const remindersPreference = useSelector(profileRemindersPreferenceSelector);
