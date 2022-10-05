@@ -1,7 +1,7 @@
 import React from "react";
 import { List } from "native-base";
 import { useSelector } from "react-redux";
-import { PreferenceListItem } from "../../components/PreferenceListItem";
+import { PreferencesListItem } from "../../components/PreferenceListItem";
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import I18n from "../../i18n";
@@ -36,7 +36,7 @@ export const NotificationsPreferenceScreen = () => {
         subtitle={I18n.t("profile.preferences.notifications.subtitle")}
       >
         <List withContentLateralPadding={true}>
-          <PreferenceListItem
+          <PreferencesListItem
             title={I18n.t("profile.preferences.notifications.reminders.title")}
             description={I18n.t(
               "profile.preferences.notifications.reminders.description"

@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
  * @param props
  * @constructor
  */
-export const PreferenceListItem = (props: Props): React.ReactElement => (
+export const PreferencesListItem = (props: Props): React.ReactElement => (
   <View style={styles.row} testID={props.testID}>
     <View style={styles.left}>
       <H4 weight={"SemiBold"} color={"bluegreyDark"}>

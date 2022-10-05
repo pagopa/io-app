@@ -5,7 +5,7 @@ import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import { H5 } from "../../../../components/core/typography/H5";
 import { Link } from "../../../../components/core/typography/Link";
 import { IOColors } from "../../../../components/core/variables/IOColors";
-import { PreferenceListItem } from "../../../../components/PreferenceListItem";
+import { PreferencesListItem } from "../../../../components/PreferenceListItem";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import Markdown from "../../../../components/ui/Markdown";
 import Switch from "../../../../components/ui/Switch";
@@ -122,7 +122,7 @@ const PagoPaPaymentCapability: React.FC<Props> = props => {
       <TouchableDefaultOpacity
         onPress={paymentSupported === "available" ? undefined : present}
       >
-        <PreferenceListItem
+        <PreferencesListItem
           testID={"PagoPaPaymentCapability"}
           title={I18n.t("wallet.methods.card.pagoPaCapability.title")}
           description={I18n.t(

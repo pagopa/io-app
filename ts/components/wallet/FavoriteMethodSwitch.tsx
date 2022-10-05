@@ -15,7 +15,7 @@ import { PaymentMethod } from "../../types/pagopa";
 import { isAndroid } from "../../utils/platform";
 import { handleSetFavourite } from "../../utils/wallet";
 import { IOStyleVariables } from "../core/variables/IOStyleVariables";
-import { PreferenceListItem } from "../PreferenceListItem";
+import { PreferencesListItem } from "../PreferenceListItem";
 import Switch from "../ui/Switch";
 
 type OwnProps = {
@@ -75,7 +75,7 @@ const FavoritePaymentMethodSwitch = (props: Props) => {
     />
   );
   return (
-    <PreferenceListItem
+    <PreferencesListItem
       testID={"FavoritePaymentMethodSwitch"}
       title={I18n.t("wallet.favourite.setFavoriteTitle")}
       description={I18n.t("wallet.favourite.setFavoriteSubtitle")}
