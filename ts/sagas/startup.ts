@@ -136,6 +136,7 @@ import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValid
 import { completeOnboardingSaga } from "./startup/completeOnboardingSaga";
 import { watchLoadMessageById } from "./messages/watchLoadMessageById";
 import { watchThirdPartyMessageSaga } from "./messages/watchThirdPartyMessageSaga";
+import { checkNotificationsPreferencesSaga } from "./startup/checkNotificationsPreferencesSaga";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -336,6 +337,9 @@ export function* initializeApplicationSaga(): Generator<
 
     const isFirstOnboarding = isProfileFirstOnBoarding(userProfile);
 
+    // check if the user must set preferences for push notifications (e.g. reminders)
+    yield* call(checkNotificationsPreferencesSaga, isFirstOnboarding);
+
     yield* call(askServicesPreferencesModeOptin, isFirstOnboarding);
 
     // Show the thank-you screen for the onboarding
@@ -366,6 +370,9 @@ export function* initializeApplicationSaga(): Generator<
 
       // check if the user expressed preference about mixpanel, if not ask for it
       yield* call(askMixpanelOptIn);
+
+      // check if the user must set preferences for push notifications (e.g. reminders)
+      yield* call(checkNotificationsPreferencesSaga, false);
 
       yield* call(askServicesPreferencesModeOptin, false);
 
