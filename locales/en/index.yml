@@ -484,7 +484,7 @@ profile:
           subtitle: You'll need to restart the application to make this happen
         not_selected: Not selected
       notifications:
-        title: Notifiche
+        title: Push notifications
         subtitle: Consenti anteprima e promemoria
     empty:
       default: No preference set
