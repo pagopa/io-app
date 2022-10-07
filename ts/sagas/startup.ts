@@ -338,7 +338,7 @@ export function* initializeApplicationSaga(): Generator<
     const isFirstOnboarding = isProfileFirstOnBoarding(userProfile);
 
     // check if the user must set preferences for push notifications (e.g. reminders)
-    yield* call(checkNotificationsPreferencesSaga, isFirstOnboarding);
+    yield* call(checkNotificationsPreferencesSaga, userProfile);
 
     yield* call(askServicesPreferencesModeOptin, isFirstOnboarding);
 
@@ -372,7 +372,7 @@ export function* initializeApplicationSaga(): Generator<
       yield* call(askMixpanelOptIn);
 
       // check if the user must set preferences for push notifications (e.g. reminders)
-      yield* call(checkNotificationsPreferencesSaga, false);
+      yield* call(checkNotificationsPreferencesSaga, userProfile);
 
       yield* call(askServicesPreferencesModeOptin, false);
 
