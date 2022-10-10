@@ -80,7 +80,7 @@ install_node_modules: &install_node_modules
 version: 2.1
 
 orbs:
-  rn: react-native-community/react-native@7.1.1
+  # rn: react-native-community/react-native@7.1.1
   node: circleci/node@5.0.3
   android: circleci/android@2.1.2
   ruby: circleci/ruby@1.8.0
