@@ -412,8 +412,47 @@ jobs:
   ###############################################################################
   # Prepare the environment, build, and run e2e tests
   ###############################################################################
-  e2e-environment-setup:
+  detox_android:
+    executor:
+      name: android/android-machine
+      resource-class: large
+    steps:
+      - checkout
+      - node/install-yarn
+      - rn/yarn_install
+      - rn/android_emulator_start:
+          device_name: Pixel_3a_API_30_x86
+      - detox_build_android
+      - run: |
+            git clone git@github.com:pagopa/io-dev-api-server.git --branch master --single-branch _io-dev-api-server_
+            cd _io-dev-api-server_
+            cp ../scripts/api-config.json config/config.json
+            yarn
+            yarn generate:all
+            yarn start &> /tmp/io-dev-api-server.log &
+            # wait for the server to be up and running
+            sleep 10
+            cd ..
+
+      - run: |
+            yarn detox test \
+              --loglevel verbose \
+              -c android.emu.release \
+              --cleanup \
+              --artifacts-location /tmp/e2e_artifacts/detox/ \
+              --record-logs all \
+              --take-screenshots all \
+              --record-videos failing \
+              --debug-synchronization 1000 \
+              --retries 3
+      - store_artifacts:
+          path: /tmp/e2e_artifacts
+      - store_artifacts:
+            path: /tmp/io-dev-api-server.log
+
+  run-e2e-test-IOS:
     <<: *defaults_macos
+    description: "Build and run e2e tests on iOS"
     steps:
       # Restore workflow workspace
       - attach_workspace:
@@ -464,88 +503,6 @@ jobs:
             brew tap wix/brew
             brew install applesimutils
 
-  detox_android:
-    executor:
-      name: android/android-machine
-      resource-class: large
-    steps:
-      - checkout
-      - node/install-yarn
-      - rn/yarn_install
-      - rn/android_emulator_start:
-          device_name: Pixel_3a_API_30_x86
-      - detox_build_android
-      - run: |
-            git clone git@github.com:pagopa/io-dev-api-server.git --branch master --single-branch _io-dev-api-server_
-            cd _io-dev-api-server_
-            cp ../scripts/api-config.json config/config.json
-            yarn
-            yarn generate:all
-            yarn start &> /tmp/io-dev-api-server.log &
-            # wait for the server to be up and running
-            sleep 10
-            cd ..
-
-      - run: |
-            yarn detox test \
-              --loglevel verbose \
-              -c android.emu.release \
-              --cleanup \
-              --artifacts-location /tmp/e2e_artifacts/detox/ \
-              --record-logs all \
-              --take-screenshots all \
-              --record-videos failing \
-              --debug-synchronization 1000 \
-              --retries 3
-      - store_artifacts:
-          path: /tmp/e2e_artifacts
-      - store_artifacts:
-            path: /tmp/io-dev-api-server.log
-
-  run-e2e-test-ANDROID:
-    description: "Build and run e2e tests on Android"
-    steps:
-      
-      - run:
-          working_directory: .
-          name: Run android detox build
-          command: RN_SRC_EXT=e2e.ts yarn detox build -c android.emu.release
-
-      - run:
-          working_directory: .
-          name: Run android detox test
-          command: |
-            git clone git@github.com:pagopa/io-dev-api-server.git --branch master --single-branch _io-dev-api-server_
-            cd _io-dev-api-server_
-            cp ../scripts/api-config.json config/config.json
-            yarn
-            yarn generate:all
-            yarn start &> /tmp/io-dev-api-server.log &
-            # wait for the server to be up and running
-            sleep 10
-            cd ..
-            yarn detox clean-framework-cache
-            yarn detox build-framework-cache
-            yarn detox test \
-              --loglevel verbose \
-              -c android.emu.release \
-              --cleanup \
-              --artifacts-location /tmp/e2e_artifacts/detox/ \
-              --record-logs all \
-              --take-screenshots all \
-              --record-videos failing \
-              --debug-synchronization 1000 \
-              --retries 3
-
-      - store_artifacts:
-          path: /tmp/e2e_artifacts
-          
-      - store_artifacts:
-          path: /tmp/io-dev-api-server.log
-
-  run-e2e-test-IOS:
-    description: "Build and run e2e tests on iOS"
-    steps:
       - run:
           name: Prepare build for Detox
           command: RN_SRC_EXT=e2e.ts yarn detox build -c ios.sim.release
@@ -611,13 +568,6 @@ workflows:
               only: master
       - detox_android
       # TODO: Slack integration
-      - run-e2e-test-ANDROID:
-          requires:
-            - e2e-environment-setup
-            - clear-detox-cache
-          filters:
-            branches:
-              only: master
       - run-e2e-test-IOS:
           requires:
             - e2e-environment-setup
