@@ -560,18 +560,9 @@ workflows:
           requires:
             - compile-typescript
 
-      - e2e-environment-setup:
-          requires:
-            - compile-typescript
-          filters:
-            branches:
-              only: master
-      - detox_android
+      # - detox_android
       # TODO: Slack integration
       - run-e2e-test-IOS:
-          requires:
-            - e2e-environment-setup
-            - clear-detox-cache
           filters:
             branches:
               only: master
