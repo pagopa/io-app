@@ -77,7 +77,27 @@ install_node_modules: &install_node_modules
 # Build pipeline
 #
 
-version: 2
+version: 2.1
+
+orbs:
+  rn: react-native-community/react-native@7.1.1
+  node: circleci/node@5.0.3
+  android: circleci/android@2.1.2
+  ruby: circleci/ruby@1.8.0
+
+commands:
+  detox_build_android:
+    steps:
+      - android/restore-gradle-cache
+      - run:
+          command: ./scripts/circleci-android-setup.sh
+      - run:
+          command: ./scripts/google-services-json-file-setup.sh ./android/app
+      - run: |
+          npm install -g detox-cli react-native-cli
+          detox build --configuration android.emu.release
+      - android/save-gradle-cache
+
 jobs:
   # Compile typescript
   compile-typescript:
@@ -173,8 +193,7 @@ jobs:
       - checkout
       - *restore_node_cache
       - *install_node_modules
-      - run: '[ -z "IO_APP_SLACK_HELPER_BOT_TOKEN" ] || yarn ts-node --skip-project -O
-       ''{"lib":["es2015"]}'' scripts/ts/checkOutdatedDependencies/checkOutdatedDependencies.ts'
+      - run: '[ -z "IO_APP_SLACK_HELPER_BOT_TOKEN" ] || yarn ts-node --skip-project -O ''{"lib":["es2015"]}'' scripts/ts/checkOutdatedDependencies/checkOutdatedDependencies.ts'
 
   # Send a Slack message to notify the release of a new app version in beta
   notify-new-app-version:
@@ -184,8 +203,7 @@ jobs:
       - checkout
       - *restore_node_cache
       - *install_node_modules
-      - run: '[ -z "IO_APP_SLACK_HELPER_BOT_TOKEN" ] || yarn ts-node --skip-project -O
-       ''{"lib":["es2015"]}'' scripts/ts/notifyNewAppVersion/notifyNewAppVersion.ts'
+      - run: '[ -z "IO_APP_SLACK_HELPER_BOT_TOKEN" ] || yarn ts-node --skip-project -O ''{"lib":["es2015"]}'' scripts/ts/notifyNewAppVersion/notifyNewAppVersion.ts'
 
   # Create signed Android release
   android-release:
@@ -446,6 +464,44 @@ jobs:
             brew tap wix/brew
             brew install applesimutils
 
+  detox_android:
+    executor:
+      name: android/android-machine
+      resource-class: large
+    steps:
+      - checkout
+      - node/install-yarn
+      - rn/yarn_install
+      - rn/android_emulator_start:
+          device_name: Pixel_3a_API_30_x86
+      - detox_build_android
+      - run: |
+            git clone git@github.com:pagopa/io-dev-api-server.git --branch master --single-branch _io-dev-api-server_
+            cd _io-dev-api-server_
+            cp ../scripts/api-config.json config/config.json
+            yarn
+            yarn generate:all
+            yarn start &> /tmp/io-dev-api-server.log &
+            # wait for the server to be up and running
+            sleep 10
+            cd ..
+
+      - run: |
+            yarn detox test \
+              --loglevel verbose \
+              -c android.emu.release \
+              --cleanup \
+              --artifacts-location /tmp/e2e_artifacts/detox/ \
+              --record-logs all \
+              --take-screenshots all \
+              --record-videos failing \
+              --debug-synchronization 1000 \
+              --retries 3
+      - store_artifacts:
+          path: /tmp/e2e_artifacts
+      - store_artifacts:
+            path: /tmp/io-dev-api-server.log
+
   run-e2e-test-ANDROID:
     description: "Build and run e2e tests on Android"
     steps:
@@ -553,12 +609,7 @@ workflows:
           filters:
             branches:
               only: master
-      - clear-detox-cache:
-          requires:
-            - e2e-environment-setup
-          filters:
-            branches:
-              only: master
+      - detox_android
       # TODO: Slack integration
       - run-e2e-test-ANDROID:
           requires:
