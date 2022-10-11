@@ -1,6 +1,9 @@
-import { take } from "typed-redux-saga/dist";
+import { CommonActions } from "@react-navigation/native";
+import { call, take } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
+import NavigationService from "../../navigation/NavigationService";
+import ROUTES from "../../navigation/routes";
 import { profileUpsert } from "../../store/actions/profile";
 import { isProfileFirstOnBoarding } from "../../store/reducers/profile";
 
@@ -15,6 +18,14 @@ export function* checkNotificationsPreferencesSaga(
   }
 
   // show the opt-in screen
+  yield* call(() =>
+    NavigationService.dispatchNavigationAction(
+      CommonActions.navigate(ROUTES.ONBOARDING, {
+        screen: ROUTES.ONBOARDING_NOTIFICATIONS_PREFERENCES,
+        params: { isFirstOnboarding }
+      })
+    )
+  );
 
   // wait for the notifications preferences to be set
   while (true) {

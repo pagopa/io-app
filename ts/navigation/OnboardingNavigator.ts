@@ -9,6 +9,7 @@ import TosScreen from "../screens/onboarding/TosScreen";
 import OnboardingServicesPreferenceScreen from "../screens/onboarding/OnboardingServicesPreferenceScreen";
 import ServicePreferenceCompleteScreen from "../screens/onboarding/ServicePreferenceCompleteScreen";
 import OnboardingCompletedScreen from "../screens/onboarding/OnboardingCompletedScreen";
+import OnboardingNotificationsPreferencesScreen from "../screens/onboarding/OnboardingNotificationsPreferencesScreen";
 import ROUTES from "./routes";
 
 /**
@@ -42,6 +43,9 @@ const navigator = createCompatNavigatorFactory(createStackNavigator)(
     },
     [ROUTES.ONBOARDING_COMPLETED]: {
       screen: OnboardingCompletedScreen
+    },
+    [ROUTES.ONBOARDING_NOTIFICATIONS_PREFERENCES]: {
+      screen: OnboardingNotificationsPreferencesScreen
     }
   },
   {
