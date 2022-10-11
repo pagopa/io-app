@@ -36,6 +36,13 @@ static void InitializeFlipper(UIApplication *application) {
 
 @implementation AppDelegate
 
+- (BOOL)application:(UIApplication *)application
+   openURL:(NSURL *)url
+   options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
+{
+  return [RCTLinkingManager application:application openURL:url options:options];
+}
+
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
@@ -52,26 +59,26 @@ static void InitializeFlipper(UIApplication *application) {
       RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
                                                        moduleName:@"IO"
                                                 initialProperties:nil];
-      
+
       if (@available(iOS 13.0, *)) {
           rootView.backgroundColor = [UIColor systemBackgroundColor];
       } else {
           rootView.backgroundColor = [UIColor whiteColor];
       }
-      
+
       self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
       UIViewController *rootViewController = [UIViewController new];
       rootViewController.view = rootView;
       self.window.rootViewController = rootViewController;
       [self.window makeKeyAndVisible];
-      
+
       // see https://github.com/crazycodeboy/react-native-splash-screen#third-stepplugin-configuration
       [RNSplashScreen show];
-  
+
   // Define UNUserNotificationCenter
   UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
   center.delegate = self;
-  
+
   return YES;
 }
 
@@ -121,7 +128,7 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
   [RNCPushNotificationIOS didReceiveLocalNotification:notification];
-  
+
 }
 
 //Called when a notification is delivered to a foreground app.

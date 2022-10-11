@@ -7,7 +7,8 @@ import {
   AppStateStatus,
   NativeEventSubscription,
   Platform,
-  StatusBar
+  StatusBar,
+  Linking
 } from "react-native";
 import SplashScreen from "react-native-splash-screen";
 import { connect } from "react-redux";
@@ -15,6 +16,7 @@ import configurePushNotifications from "./boot/configurePushNotification";
 import { BetaTestingOverlay } from "./components/BetaTestingOverlay";
 import FlagSecureComponent from "./components/FlagSecure";
 import { LightModalRoot } from "./components/ui/LightModal";
+import { getInternalRoute } from "./components/ui/Markdown/handlers/internalLink";
 import VersionInfoOverlay from "./components/VersionInfoOverlay";
 import { testOverlayCaption } from "./config";
 import { setLocale } from "./i18n";
@@ -50,7 +52,28 @@ class RootContainer extends React.PureComponent<Props> {
   private handleApplicationActivity = (activity: AppStateStatus) =>
     this.props.applicationChangeState(activity);
 
+  private handleOpenUrlEvent = (event: { url: string }): void => {
+    this.navigateToUrlHandler(event.url);
+  };
+
+  private navigateToUrlHandler = (url: string | null) => {
+    if (!url) {
+      return;
+    }
+    const internalUrl = getInternalRoute(url);
+    console.log("From deep link: ", url, internalUrl);
+  };
+
   public componentDidMount() {
+
+    if (Platform.OS === "android") {
+      Linking.getInitialURL()
+        .then(this.navigateToUrlHandler)
+        .catch(console.error); // eslint-disable-line no-console
+    } else {
+      Linking.addEventListener("url", this.handleOpenUrlEvent);
+    }
+
     // boot: send the status of the application
     this.handleApplicationActivity(AppState.currentState);
     // eslint-disable-next-line functional/immutable-data
