@@ -1,5 +1,5 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { CompatNavigationProp } from "@react-navigation/compat";
-import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
 import { SafeAreaView, ScrollView } from "react-native";
@@ -88,9 +88,10 @@ const OnboardingServicesPreferenceScreen = (
       props.onServicePreferenceSelected(modeSelected);
     }
   };
-  const { present: confirmManualConfig } = useManualConfigBottomSheet(() =>
-    props.onServicePreferenceSelected(ServicesPreferencesModeEnum.MANUAL)
-  );
+  const { present: confirmManualConfig, manualConfigBottomSheet } =
+    useManualConfigBottomSheet(() =>
+      props.onServicePreferenceSelected(ServicesPreferencesModeEnum.MANUAL)
+    );
 
   const handleOnSelectMode = (mode: ServicesPreferencesModeEnum) => {
     // if user's choice is 'manual', open bottom sheet to ask confirmation
@@ -126,6 +127,7 @@ const OnboardingServicesPreferenceScreen = (
             disabled: !isServicesPreferenceModeSet(modeSelected)
           }}
         />
+        {manualConfigBottomSheet}
       </SafeAreaView>
     </BaseScreenComponent>
   );

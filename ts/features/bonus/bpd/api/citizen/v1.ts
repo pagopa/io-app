@@ -1,6 +1,6 @@
-import { left } from "fp-ts/lib/Either";
+import * as E from "fp-ts/lib/Either";
 import * as t from "io-ts";
-import * as r from "italia-ts-commons/lib/requests";
+import * as r from "@pagopa/ts-commons/lib/requests";
 import { CitizenPatchDTO } from "../../../../../../definitions/bpd/citizen/CitizenPatchDTO";
 import {
   findRankingUsingGETDefaultDecoder,
@@ -107,7 +107,7 @@ export const citizenPaymentMethodPATCH =
     const decode = await patchIbanDecoders(PatchIban)(response);
     return (
       decode ??
-      left([
+      E.left([
         {
           context: [],
           value: response

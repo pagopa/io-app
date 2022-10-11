@@ -1,5 +1,5 @@
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import AsyncStorage from "@react-native-community/async-storage";
-import { Millisecond } from "italia-ts-commons/lib/units";
 import { List, ListItem, Text, Toast, View } from "native-base";
 import * as React from "react";
 import { Alert, ScrollView, StyleSheet } from "react-native";

@@ -1,5 +1,6 @@
-import { fromNullable } from "fp-ts/lib/Option";
-import { Millisecond } from "italia-ts-commons/lib/units";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { Alert, Modal, StatusBar, StyleSheet } from "react-native";
@@ -17,6 +18,7 @@ import {
   identificationSuccess
 } from "../../store/actions/identification";
 import { appCurrentStateSelector } from "../../store/reducers/appState";
+import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
 import {
   freeAttempts,
   IdentificationCancelData,
@@ -24,8 +26,8 @@ import {
   maxAttempts,
   progressSelector
 } from "../../store/reducers/identification";
-import { profileNameSelector } from "../../store/reducers/profile";
 import { isFingerprintEnabledSelector } from "../../store/reducers/persistedPreferences";
+import { profileNameSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import {
@@ -35,10 +37,9 @@ import {
   isBiometricsValidType
 } from "../../utils/biometrics";
 import { maybeNotNullyString } from "../../utils/strings";
-import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
 
-import customVariables from "../../theme/variables";
 import { IOColors } from "../../components/core/variables/IOColors";
+import customVariables from "../../theme/variables";
 
 import { IdentificationLockModal } from "./IdentificationLockModal";
 
@@ -105,7 +106,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       identificationByPinState: "unstarted",
       identificationByBiometryState: "unstarted",
       biometryAuthAvailable: true,
-      canInsertPinTooManyAttempts: this.props.identificationFailState.isNone()
+      canInsertPinTooManyAttempts: O.isNone(this.props.identificationFailState)
     };
   }
 
@@ -119,31 +120,37 @@ class IdentificationModal extends React.PureComponent<Props, State> {
    * return the updated value of `canInsertPinTooManyAttempts` in order to be used without waiting the state update
    */
   private updateCanInsertPinTooManyAttempts = () =>
-    this.props.identificationFailState.map(errorData => {
-      const now = new Date();
-      const canInsertPinTooManyAttempts = errorData.nextLegalAttempt <= now;
-      this.setState({
-        canInsertPinTooManyAttempts,
-        countdown: (errorData.nextLegalAttempt.getTime() -
-          now.getTime()) as Millisecond
-      });
-      return canInsertPinTooManyAttempts;
-    });
+    pipe(
+      this.props.identificationFailState,
+      O.map(errorData => {
+        const now = new Date();
+        const canInsertPinTooManyAttempts = errorData.nextLegalAttempt <= now;
+        this.setState({
+          canInsertPinTooManyAttempts,
+          countdown: (errorData.nextLegalAttempt.getTime() -
+            now.getTime()) as Millisecond
+        });
+        return canInsertPinTooManyAttempts;
+      })
+    );
 
   /**
    * Activate the interval check on the pin state if the condition is satisfied
    */
   private scheduleCanInsertPinUpdate = () => {
-    this.props.identificationFailState.map(failState => {
-      if (failState.remainingAttempts < checkTimerThreshold) {
-        this.updateCanInsertPinTooManyAttempts();
-        // eslint-disable-next-line
-        this.idUpdateCanInsertPinTooManyAttempts = setInterval(
-          this.updateCanInsertPinTooManyAttempts,
-          checkPinInterval
-        );
-      }
-    });
+    pipe(
+      this.props.identificationFailState,
+      O.map(failState => {
+        if (failState.remainingAttempts < checkTimerThreshold) {
+          this.updateCanInsertPinTooManyAttempts();
+          // eslint-disable-next-line
+          this.idUpdateCanInsertPinTooManyAttempts = setInterval(
+            this.updateCanInsertPinTooManyAttempts,
+            checkPinInterval
+          );
+        }
+      })
+    );
   };
 
   public componentDidMount() {
@@ -166,8 +173,9 @@ class IdentificationModal extends React.PureComponent<Props, State> {
 
     // first time the component is mounted, need to calculate the state value for `canInsertPinTooManyAttempts`
     // and schedule the update if needed
-    this.updateCanInsertPinTooManyAttempts().map(_ =>
-      this.scheduleCanInsertPinUpdate()
+    pipe(
+      this.updateCanInsertPinTooManyAttempts(),
+      O.map(_ => this.scheduleCanInsertPinUpdate())
     );
   }
 
@@ -248,20 +256,28 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     // Added to solve the issue https://www.pivotaltracker.com/story/show/173217033
     if (prevProps.isFingerprintEnabled !== this.props.isFingerprintEnabled) {
       this.setState((_, props) => ({
-        biometryAuthAvailable: fromNullable(
-          props.isFingerprintEnabled
-        ).getOrElse(false)
+        biometryAuthAvailable: pipe(
+          props.isFingerprintEnabled,
+          O.fromNullable,
+          O.getOrElse(() => false)
+        )
       }));
     }
 
-    const previousAttempts = prevProps.identificationFailState.fold(
-      Number.MAX_VALUE,
-      x => x.remainingAttempts
+    const previousAttempts = pipe(
+      prevProps.identificationFailState,
+      O.fold(
+        () => Number.MAX_VALUE,
+        x => x.remainingAttempts
+      )
     );
 
-    const currentAttempts = this.props.identificationFailState.fold(
-      Number.MAX_VALUE,
-      x => x.remainingAttempts
+    const currentAttempts = pipe(
+      this.props.identificationFailState,
+      O.fold(
+        () => Number.MAX_VALUE,
+        x => x.remainingAttempts
+      )
     );
 
     // trigger an update in the management of the updateInterval if the attempts or the state
@@ -273,8 +289,10 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     ) {
       // trigger a state update based on the current props and use the results to choose what to do
       // with the scheduled interval
-      const caninsertPin =
-        this.updateCanInsertPinTooManyAttempts().getOrElse(true);
+      const caninsertPin = pipe(
+        this.updateCanInsertPinTooManyAttempts(),
+        O.getOrElse(() => true)
+      );
       // if the pin can be inserted, the timer is no longer needed
       if (caninsertPin) {
         clearInterval(this.idUpdateCanInsertPinTooManyAttempts);
@@ -307,9 +325,11 @@ class IdentificationModal extends React.PureComponent<Props, State> {
   private onIdentificationFailureHandler = () => {
     const { identificationFailState } = this.props;
 
-    const forceLogout = identificationFailState
-      .map(failState => failState.remainingAttempts === 1)
-      .getOrElse(false);
+    const forceLogout = pipe(
+      identificationFailState,
+      O.map(failState => failState.remainingAttempts === 1),
+      O.getOrElse(() => false)
+    );
     if (forceLogout) {
       this.props.onIdentificationForceLogout();
     } else {
@@ -320,19 +340,23 @@ class IdentificationModal extends React.PureComponent<Props, State> {
   private loadAlertTexts = (
     profileName: string | undefined
   ): [string, string] =>
-    fromNullable(profileName).fold(
-      [
-        I18n.t("identification.logout"),
-        I18n.t("identification.logoutDescription")
-      ],
-      pn => [
-        I18n.t("identification.logoutProfileName", {
-          profileName: pn
-        }),
-        I18n.t("identification.logoutDescriptionProfileName", {
-          profileName: pn
-        })
-      ]
+    pipe(
+      profileName,
+      O.fromNullable,
+      O.fold(
+        () => [
+          I18n.t("identification.logout"),
+          I18n.t("identification.logoutDescription")
+        ],
+        pn => [
+          I18n.t("identification.logoutProfileName", {
+            profileName: pn
+          }),
+          I18n.t("identification.logoutDescriptionProfileName", {
+            profileName: pn
+          })
+        ]
+      )
     );
 
   private onLogout = () => {
@@ -364,9 +388,10 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       this.setState({
         identificationByBiometryState: "unstarted"
       });
-      return this.props.identificationFailState
-        .filter(fs => fs.remainingAttempts <= maxAttempts - freeAttempts)
-        .map(
+      return pipe(
+        this.props.identificationFailState,
+        O.filter(fs => fs.remainingAttempts <= maxAttempts - freeAttempts),
+        O.map(
           // here if the user finished his free attempts
           fd =>
             `${textTryAgain}. ${I18n.t(
@@ -375,8 +400,9 @@ class IdentificationModal extends React.PureComponent<Props, State> {
                 : "identification.fail.remainingAttemptSingle",
               { attempts: fd.remainingAttempts }
             )}`
-        )
-        .getOrElse(textTryAgain);
+        ),
+        O.getOrElse(() => textTryAgain)
+      );
     }
 
     if (this.state.identificationByBiometryState === "failure") {
@@ -390,18 +416,24 @@ class IdentificationModal extends React.PureComponent<Props, State> {
   };
 
   private renderErrorDescription = () =>
-    maybeNotNullyString(this.getErrorText()).fold(undefined, des => (
-      <Text
-        alignCenter={true}
-        bold={true}
-        white={true}
-        primary={false}
-        accessible={true}
-        ref={this.errorStatusRef}
-      >
-        {des}
-      </Text>
-    ));
+    pipe(
+      maybeNotNullyString(this.getErrorText()),
+      O.fold(
+        () => undefined,
+        des => (
+          <Text
+            alignCenter={true}
+            bold={true}
+            white={true}
+            primary={false}
+            accessible={true}
+            ref={this.errorStatusRef}
+          >
+            {des}
+          </Text>
+        )
+      )
+    );
 
   /**
    * Create handlers merging default internal actions (to manage the identification state)
@@ -428,12 +460,16 @@ class IdentificationModal extends React.PureComponent<Props, State> {
         >
           {isValidatingTask
             ? I18n.t("identification.titleValidation")
-            : fromNullable(this.props.profileName).fold(
-                I18n.t("identification.title"),
-                pN =>
-                  I18n.t("identification.titleProfileName", {
-                    profileName: pN
-                  })
+            : pipe(
+                this.props.profileName,
+                O.fromNullable,
+                O.fold(
+                  () => I18n.t("identification.title"),
+                  pN =>
+                    I18n.t("identification.titleProfileName", {
+                      profileName: pN
+                    })
+                )
               )}
         </Text>
         <Text
@@ -466,12 +502,15 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       this.state.canInsertPinTooManyAttempts;
 
     // display the remaining attempts number only if start to lock the application for too many attempts
-    const displayRemainingAttempts = this.props.identificationFailState.fold(
-      undefined,
-      failState =>
-        failState.remainingAttempts <= maxAttempts - freeAttempts
-          ? failState.remainingAttempts
-          : undefined
+    const displayRemainingAttempts = pipe(
+      this.props.identificationFailState,
+      O.fold(
+        () => undefined,
+        failState =>
+          failState.remainingAttempts <= maxAttempts - freeAttempts
+            ? failState.remainingAttempts
+            : undefined
+      )
     );
 
     const defaultColor = isValidatingTask
@@ -542,12 +581,16 @@ class IdentificationModal extends React.PureComponent<Props, State> {
             {!isValidatingTask && (
               <View style={styles.bottomContainer}>
                 <Link onPress={this.onLogout} weight="Bold" color="white">
-                  {fromNullable(this.props.profileName).fold(
-                    I18n.t("identification.logout"),
-                    pN =>
-                      I18n.t("identification.logoutProfileName", {
-                        profileName: pN
-                      })
+                  {pipe(
+                    this.props.profileName,
+                    O.fromNullable,
+                    O.fold(
+                      () => I18n.t("identification.logout"),
+                      pN =>
+                        I18n.t("identification.logoutProfileName", {
+                          profileName: pN
+                        })
+                    )
                   )}
                 </Link>
               </View>

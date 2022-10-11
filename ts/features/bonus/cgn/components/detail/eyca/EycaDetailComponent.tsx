@@ -1,29 +1,30 @@
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { useEffect } from "react";
-import { connect } from "react-redux";
-import { fromNullable } from "fp-ts/lib/Option";
 import { ActivityIndicator } from "react-native";
-import { GlobalState } from "../../../../../../store/reducers/types";
+import { connect } from "react-redux";
+import { CardPending } from "../../../../../../../definitions/cgn/CardPending";
+import { EycaCard } from "../../../../../../../definitions/cgn/EycaCard";
 import { Dispatch } from "../../../../../../store/actions/types";
-import {
-  eycaCardSelector,
-  eycaDetailSelector
-} from "../../../store/reducers/eyca/details";
+import { GlobalState } from "../../../../../../store/reducers/types";
+import { isLoading } from "../../../../bpd/model/RemoteValue";
 import {
   cgnEycaActivation,
   cgnEycaActivationStatusRequest
 } from "../../../store/actions/eyca/activation";
-import { EycaCard } from "../../../../../../../definitions/cgn/EycaCard";
 import {
   cgnEycaActivationLoading,
   cgnEycaActivationStatus
 } from "../../../store/reducers/eyca/activation";
-import { CardPending } from "../../../../../../../definitions/cgn/CardPending";
-import { isLoading } from "../../../../bpd/model/RemoteValue";
-import EycaStatusDetailsComponent from "./EycaStatusDetailsComponent";
-import EycaPendingComponent from "./EycaPendingComponent";
+import {
+  eycaCardSelector,
+  eycaDetailSelector
+} from "../../../store/reducers/eyca/details";
 import EycaErrorComponent from "./EycaErrorComponent";
 import { useEycaInformationBottomSheet } from "./EycaInformationComponent";
+import EycaPendingComponent from "./EycaPendingComponent";
+import EycaStatusDetailsComponent from "./EycaStatusDetailsComponent";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -58,14 +59,18 @@ const EycaDetailComponent = (props: Props) => {
           />
         );
       case "PENDING":
-        return fromNullable(props.eycaActivationStatus).fold(
-          errorComponent,
-          as =>
-            as === "ERROR" || as === "NOT_FOUND" ? (
-              errorComponent
-            ) : (
-              <EycaPendingComponent openBottomSheet={present} />
-            )
+        return pipe(
+          props.eycaActivationStatus,
+          O.fromNullable,
+          O.fold(
+            () => errorComponent,
+            as =>
+              as === "ERROR" || as === "NOT_FOUND" ? (
+                errorComponent
+              ) : (
+                <EycaPendingComponent openBottomSheet={present} />
+              )
+          )
         );
       default:
         return null;
@@ -81,7 +86,11 @@ const EycaDetailComponent = (props: Props) => {
           accessibilityElementsHidden={true}
         />
       ) : (
-        fromNullable(props.eyca).fold(errorComponent, renderComponentEycaStatus)
+        pipe(
+          props.eyca,
+          O.fromNullable,
+          O.fold(() => errorComponent, renderComponentEycaStatus)
+        )
       )}
       {bottomSheet}
     </>

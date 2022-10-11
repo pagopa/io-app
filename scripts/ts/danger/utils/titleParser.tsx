@@ -2,8 +2,9 @@ import {
   getPivotalStories,
   getPivotalStoryIDs
 } from "danger-plugin-digitalcitizenship/dist/utils";
-import { Either, left, right } from "fp-ts/lib/Either";
-import { fromNullable, Option } from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { Errors } from "io-ts";
 import { getJiraTickets } from "../../common/ticket/jira";
 import {
@@ -15,7 +16,7 @@ import {
 const jiraRegex = /\[([A-Z0-9]+-\d+(,[A-Z0-9]+-\d+)*)]\s.+/;
 
 export type GenericTicketRetrievalResults = ReadonlyArray<
-  Either<Error | Errors, GenericTicket>
+  E.Either<Error | Errors, GenericTicket>
 >;
 
 /**
@@ -24,8 +25,12 @@ export type GenericTicketRetrievalResults = ReadonlyArray<
  */
 export const getJiraIdFromPrTitle = (
   title: string
-): Option<ReadonlyArray<string>> =>
-  fromNullable(title.match(jiraRegex)).map(a => a[1].split(","));
+): O.Option<ReadonlyArray<string>> =>
+  pipe(
+    title.match(jiraRegex),
+    O.fromNullable,
+    O.map(a => a[1].split(","))
+  );
 
 /**
  * Try to retrieve Jira tickets (or Pivotal stories as fallback) from pr title
@@ -36,19 +41,23 @@ export const getJiraIdFromPrTitle = (
 export const getTicketsFromTitle = async (
   title: string
 ): Promise<GenericTicketRetrievalResults> => {
-  const maybeJiraId = await getJiraIdFromPrTitle(title)
-    .map(getJiraTickets)
-    .toUndefined();
+  const maybeJiraId = await pipe(
+    getJiraIdFromPrTitle(title),
+    O.map(getJiraTickets),
+    O.toUndefined
+  );
 
   if (maybeJiraId) {
-    return maybeJiraId.map(x => x.map(fromJiraToGenericTicket));
+    return maybeJiraId.map(E.map(fromJiraToGenericTicket));
   }
 
   const maybePivotalId = await getPivotalStories(getPivotalStoryIDs(title));
   return maybePivotalId
-    ? maybePivotalId
-        .filter(s => s.story_type !== undefined)
-        .map<GenericTicket>(fromPivotalToGenericTicket)
-        .map(x => right(x))
-    : [left(new Error("No Pivotal stories found"))];
+    ? pipe(
+        maybePivotalId
+          .filter(s => s.story_type !== undefined)
+          .map<GenericTicket>(fromPivotalToGenericTicket)
+          .map(E.right)
+      )
+    : [E.left(new Error("No Pivotal stories found"))];
 };

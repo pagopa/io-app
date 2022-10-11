@@ -1,7 +1,7 @@
 import {
   IPatternStringTag,
   IWithinRangeStringTag
-} from "italia-ts-commons/lib/strings";
+} from "@pagopa/ts-commons/lib/strings";
 
 import { paymentVerifica } from "../store/actions/wallet/payment";
 import { ImportoEuroCents } from "../../definitions/backend/ImportoEuroCents";

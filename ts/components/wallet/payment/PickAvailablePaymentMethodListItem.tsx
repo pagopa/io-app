@@ -1,21 +1,22 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import * as React from "react";
-import { connect } from "react-redux";
-import * as pot from "italia-ts-commons/lib/pot";
 import { ImageSourcePropType } from "react-native";
-import { fromNullable } from "fp-ts/lib/Option";
-import { GlobalState } from "../../../store/reducers/types";
+import { connect } from "react-redux";
+import pagoBancomatLogo from "../../../../img/wallet/cards-icons/pagobancomat.png";
+import satispayLogo from "../../../../img/wallet/cards-icons/satispay.png";
+import bancomatPayLogo from "../../../../img/wallet/payment-methods/bpay.png";
+import paypalLogo from "../../../../img/wallet/payment-methods/paypal.png";
+import I18n from "../../../i18n";
 import { profileNameSurnameSelector } from "../../../store/reducers/profile";
+import { GlobalState } from "../../../store/reducers/types";
 import { getFavoriteWalletId } from "../../../store/reducers/wallet/wallets";
 import { PaymentMethod } from "../../../types/pagopa";
-import pagoBancomatLogo from "../../../../img/wallet/cards-icons/pagobancomat.png";
-import bancomatPayLogo from "../../../../img/wallet/payment-methods/bpay.png";
-import satispayLogo from "../../../../img/wallet/cards-icons/satispay.png";
-import paypalLogo from "../../../../img/wallet/payment-methods/paypal.png";
-import IconFont from "../../ui/IconFont";
-import { IOColors } from "../../core/variables/IOColors";
 import { getPickPaymentMethodDescription } from "../../../utils/payment";
+import { IOColors } from "../../core/variables/IOColors";
+import IconFont from "../../ui/IconFont";
 import { getCardIconFromBrandLogo } from "../card/Logo";
-import I18n from "../../../i18n";
 import PickPaymentMethodBaseListItem from "./PickPaymentMethodBaseListItem";
 
 type Props = {
@@ -56,13 +57,19 @@ const extractInfoFromPaymentMethod = (
         // phone number -> if bank is not defined
         // bank -> if phone number is not defined
         // empty -> if both are not defined
-        description: fromNullable(paymentMethod.info.numberObfuscated)
-          .map(numb =>
-            fromNullable(paymentMethod.info.bankName)
-              .map(bn => `${numb} · ${bn}`)
-              .getOrElse(numb)
-          )
-          .getOrElse(paymentMethod.info.bankName ?? "")
+        description: pipe(
+          paymentMethod.info.numberObfuscated,
+          O.fromNullable,
+          O.map(numb =>
+            pipe(
+              paymentMethod.info.bankName,
+              O.fromNullable,
+              O.map(bn => `${numb} · ${bn}`),
+              O.getOrElse(() => numb)
+            )
+          ),
+          O.getOrElse(() => paymentMethod.info.bankName ?? "")
+        )
       };
     case "Satispay":
       return {

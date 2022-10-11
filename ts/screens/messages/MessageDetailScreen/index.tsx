@@ -1,5 +1,6 @@
-import { fromNullable, none } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { connect } from "react-redux";
 import { CreatedMessageWithoutContent } from "../../../../definitions/backend/CreatedMessageWithoutContent";
@@ -115,12 +116,17 @@ export class MessageDetailScreen extends React.PureComponent<Props, never> {
           goBack={goBack}
           potMessage={potMessage}
           messageId={messageId}
-          onRetry={() => maybeMeta.map(meta => loadMessageWithRelations(meta))}
+          onRetry={() =>
+            pipe(
+              maybeMeta,
+              O.map(meta => loadMessageWithRelations(meta))
+            )
+          }
           onServiceLinkPressHandler={_ =>
-            this.props.maybeService.map(this.onServiceLinkPressHandler)
+            pipe(this.props.maybeService, O.map(this.onServiceLinkPressHandler))
           }
           paymentsByRptId={paymentsByRptId}
-          service={maybeService.toUndefined()}
+          service={O.toUndefined(maybeService)}
           maybeServiceMetadata={maybeServiceMetadata}
         />
       </BaseScreenComponent>
@@ -133,20 +139,28 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   const isRead = isMessageRead(state, messageId);
   const paymentsByRptId = paymentsByRptIdSelector(state);
   const goBack = () => ownProps.navigation.goBack();
-  const potMessage = fromNullable(
-    messageStateByIdSelector(messageId)(state)?.message
-  ).getOrElse(pot.none);
-  const maybeServiceId = pot.toOption(potMessage).map(_ => _.sender_service_id);
-  const maybeService = maybeServiceId
-    .map(_ => serviceByIdSelector(_)(state))
-    .chain(maybePot => {
+  const potMessage = pipe(
+    messageStateByIdSelector(messageId)(state)?.message,
+    O.fromNullable,
+    O.getOrElseW(() => pot.none)
+  );
+  const maybeServiceId = pipe(
+    pot.toOption(potMessage),
+    O.map(_ => _.sender_service_id)
+  );
+  const maybeService = pipe(
+    maybeServiceId,
+    O.map(_ => serviceByIdSelector(_)(state)),
+    O.chain(maybePot => {
       if (maybePot) {
         return pot.toOption(maybePot);
       }
-      return none;
-    });
-  const maybeMeta = fromNullable(
-    messageStateByIdSelector(messageId)(state)?.meta
+      return O.none;
+    })
+  );
+  const maybeMeta = pipe(
+    messageStateByIdSelector(messageId)(state)?.meta,
+    O.fromNullable
   );
   // Map the potential message to the potential service
   const maybeServiceMetadata = pot.toUndefined(

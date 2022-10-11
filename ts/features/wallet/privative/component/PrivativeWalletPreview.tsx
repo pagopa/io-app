@@ -1,3 +1,5 @@
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import {
   Image,
@@ -50,23 +52,29 @@ const Right = (
   props: Props & Pick<ImageURISource, "uri">
 ): React.ReactElement => {
   const size = useImageResize(BASE_IMG_W, BASE_IMG_H, props.uri);
-  return size.fold(fallbackLoyaltyLogo, imgDim => {
-    const imageUrl = props.privative.icon;
+  return pipe(
+    size,
+    O.fold(
+      () => fallbackLoyaltyLogo,
+      imgDim => {
+        const imageUrl = props.privative.icon;
 
-    const imageStyle: StyleProp<ImageStyle> = {
-      width: imgDim[0],
-      height: imgDim[1],
-      resizeMode: "contain"
-    };
-    return (
-      <Image
-        source={imageUrl}
-        style={imageStyle}
-        key={"loyaltyLogo"}
-        testID={"loyaltyLogo"}
-      />
-    );
-  });
+        const imageStyle: StyleProp<ImageStyle> = {
+          width: imgDim[0],
+          height: imgDim[1],
+          resizeMode: "contain"
+        };
+        return (
+          <Image
+            source={imageUrl}
+            style={imageStyle}
+            key={"loyaltyLogo"}
+            testID={"loyaltyLogo"}
+          />
+        );
+      }
+    )
+  );
 };
 
 const getAccessibilityRepresentation = (privative: PrivativePaymentMethod) => {

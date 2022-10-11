@@ -1,5 +1,5 @@
 import { getType } from "typesafe-actions";
-import { UTCISODateFromString } from "italia-ts-commons/lib/dates";
+import { UTCISODateFromString } from "@pagopa/ts-commons/lib/dates";
 import { createSelector } from "reselect";
 import { Action } from "../../../../../../store/actions/types";
 import { svSetFilter } from "../../actions/voucherList";

@@ -3,8 +3,8 @@
  * It only manages SUCCESS actions because all UI state properties (like loading/error)
  * are managed by different global reducers.
  */
-import { fromNullable, none, Option } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { EmailAddress } from "../../../definitions/backend/EmailAddress";
@@ -45,19 +45,19 @@ export const isInboxEnabledSelector = createSelector(profileSelector, profile =>
 
 export const getProfileEmail = (
   user: InitializedProfile
-): Option<EmailAddress> => fromNullable(user.email);
+): O.Option<EmailAddress> => O.fromNullable(user.email);
 
 export const getProfileSpidEmail = (
   user: InitializedProfile
-): Option<EmailAddress> => fromNullable(user.spid_email);
+): O.Option<EmailAddress> => O.fromNullable(user.spid_email);
 
 // return the email address (as a string) if the profile pot is some and its value is of kind InitializedProfile and it has an email
 export const profileEmailSelector = createSelector(
   profileSelector,
-  (profile: ProfileState): Option<string> =>
+  (profile: ProfileState): O.Option<string> =>
     pot.getOrElse(
       pot.map(profile, p => getProfileEmail(p)),
-      none
+      O.none
     )
 );
 

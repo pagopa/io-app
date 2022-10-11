@@ -1,17 +1,17 @@
+import { ValidationError } from "io-ts";
 import { call, put, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
-import { ValidationError } from "io-ts";
-import { MessageStatusBulkChange } from "../../../definitions/backend/MessageStatusBulkChange";
 import { MessageStatusArchivingChange } from "../../../definitions/backend/MessageStatusArchivingChange";
+import { MessageStatusBulkChange } from "../../../definitions/backend/MessageStatusBulkChange";
 import { BackendClient } from "../../api/backend";
+import migrateToPagination from "../../boot/migrateToPagination";
 import {
   migrateToPaginatedMessages,
   removeMessages
 } from "../../store/actions/messages";
+import { MessageStatus } from "../../store/reducers/entities/messages/messagesStatus";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
 import { isTestEnv } from "../../utils/environment";
-import migrateToPagination from "../../boot/migrateToPagination";
-import { MessageStatus } from "../../store/reducers/entities/messages/messagesStatus";
 import { readablePrivacyReport } from "../../utils/reporters";
 
 type LocalActionType = ActionType<typeof migrateToPaginatedMessages["request"]>;
@@ -74,7 +74,7 @@ function tryMigration(putMessages: LocalBeClient) {
           if (isRead) {
             return putMessages({
               id,
-              messageStatusChange: {
+              body: {
                 change_type: "bulk",
                 is_read: true,
                 is_archived: isArchived
@@ -83,7 +83,7 @@ function tryMigration(putMessages: LocalBeClient) {
           }
           return putMessages({
             id,
-            messageStatusChange: {
+            body: {
               change_type: "archiving",
               is_archived: isArchived
             } as MessageStatusArchivingChange

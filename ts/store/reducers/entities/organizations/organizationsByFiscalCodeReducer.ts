@@ -2,7 +2,7 @@
  * A reducer to store the organization names by their fiscal codes
  */
 
-import { NonEmptyString } from "italia-ts-commons/lib/strings";
+import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { getType } from "typesafe-actions";
 import { logoutSuccess, sessionExpired } from "../../../actions/authentication";
 

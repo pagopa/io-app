@@ -1,4 +1,5 @@
-import { none, Option, some } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { InfoBox } from "../../../../../../../../components/box/InfoBox";
 import { Body } from "../../../../../../../../components/core/typography/Body";
@@ -74,13 +75,13 @@ const endGracePeriod = (period: BpdPeriod) => {
  * Enriches the text in case of Super Cashback or max amount
  * @param props
  */
-const enhanceOkText = (props: Props): Option<string> => {
+const enhanceOkText = (props: Props): O.Option<string> => {
   // the user earned the super cashback
   if (
     props.period.superCashbackAmount > 0 &&
     props.period.amount.totalCashback >= props.period.superCashbackAmount
   ) {
-    return some(
+    return O.some(
       I18n.t(
         "bonus.bpd.details.components.transactionsCountOverview.closedPeriodSuperCashback",
         {
@@ -93,13 +94,13 @@ const enhanceOkText = (props: Props): Option<string> => {
   else if (
     props.period.amount.totalCashback >= props.period.maxPeriodCashback
   ) {
-    return some(
+    return O.some(
       I18n.t(
         "bonus.bpd.details.components.transactionsCountOverview.closedPeriodMaxAmount"
       )
     );
   }
-  return none;
+  return O.none;
 };
 
 /**
@@ -117,7 +118,10 @@ const OK = (props: Props) => (
           amount: formatNumberAmount(props.period.amount.totalCashback)
         }
       )}
-      {enhanceOkText(props).getOrElse("") + "!\n"}
+      {pipe(
+        enhanceOkText(props),
+        O.getOrElse(() => "")
+      ) + "!\n"}
       {I18n.t(
         "bonus.bpd.details.components.transactionsCountOverview.moneyTransfer",
         {

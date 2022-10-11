@@ -1,5 +1,5 @@
 import { right } from "fp-ts/lib/TaskEither";
-import { Task } from "fp-ts/lib/Task";
+import * as T from "fp-ts/lib/Task";
 import { captureScreenshot, screenshotOptions } from "../screenshot";
 import { saveImageToGallery } from "../../../../utils/share";
 import I18n from "../../../../i18n";
@@ -28,7 +28,7 @@ jest.mock("react-native-fs", () => ({
 }));
 
 // the resolved value returned by saveImageToGallery doesn't matter for the testing purpose
-const mockSave = right(new Task(() => Promise.resolve("")));
+const mockSave = right(T.of(() => Promise.resolve("")));
 jest.mock("../../../../utils/share", () => ({
   saveImageToGallery: jest.fn(_ => mockSave)
 }));

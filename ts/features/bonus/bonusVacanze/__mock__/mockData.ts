@@ -2,7 +2,7 @@
  * This is just a temporary file to define utility types to develop Bonus section
  */
 
-import { FiscalCode, NonEmptyString } from "italia-ts-commons/lib/strings";
+import { FiscalCode, NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { BonusActivationStatusEnum } from "../../../../../definitions/bonus_vacanze/BonusActivationStatus";
 import { BonusActivationWithQrCode } from "../../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { BonusCode } from "../../../../../definitions/bonus_vacanze/BonusCode";

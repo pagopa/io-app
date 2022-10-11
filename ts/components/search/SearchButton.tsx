@@ -2,7 +2,8 @@ import debounce from "lodash/debounce";
 import * as React from "react";
 import { connect } from "react-redux";
 
-import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import I18n from "../../i18n";
 import {
   disableSearch,
@@ -12,8 +13,8 @@ import {
 } from "../../store/actions/search";
 import { Dispatch } from "../../store/actions/types";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
-import IconFont from "../ui/IconFont";
 import { LabelledItem } from "../LabelledItem";
+import IconFont from "../ui/IconFont";
 
 export const MIN_CHARACTER_SEARCH_TEXT = 3;
 
@@ -29,16 +30,16 @@ interface OwnProps {
 type Props = OwnProps & ReturnType<typeof mapDispatchToProps>;
 
 type State = {
-  searchText: Option<string>;
-  debouncedSearchText: Option<string>;
+  searchText: O.Option<string>;
+  debouncedSearchText: O.Option<string>;
 };
 
 class SearchButton extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      searchText: none,
-      debouncedSearchText: none
+      searchText: O.none,
+      debouncedSearchText: O.none
     };
   }
 
@@ -46,7 +47,7 @@ class SearchButton extends React.Component<Props, State> {
     const { searchText } = this.state;
     return (
       <React.Fragment>
-        {searchText.isSome() ? (
+        {O.isSome(searchText) ? (
           <LabelledItem
             hasNavigationEvents
             inputProps={{
@@ -78,22 +79,25 @@ class SearchButton extends React.Component<Props, State> {
   private handleSearchPress = () => {
     const { onSearchTap } = this.props;
 
-    fromNullable(onSearchTap).foldL(
-      () => {
-        const { searchText } = this.state;
-        this.setState({
-          searchText: some("")
-        });
-        this.props.dispatchSearchText(searchText);
-        this.props.dispatchSearchEnabled(true);
-      },
-      ost => ost()
+    pipe(
+      O.fromNullable(onSearchTap),
+      O.fold(
+        () => {
+          const { searchText } = this.state;
+          this.setState({
+            searchText: O.some("")
+          });
+          this.props.dispatchSearchText(searchText);
+          this.props.dispatchSearchEnabled(true);
+        },
+        ost => ost()
+      )
     );
   };
 
   private onSearchTextChange = (text: string) => {
     this.setState({
-      searchText: some(text)
+      searchText: O.some(text)
     });
     this.updateDebouncedSearchText(text);
   };
@@ -101,7 +105,7 @@ class SearchButton extends React.Component<Props, State> {
   private updateDebouncedSearchText = debounce((text: string) => {
     this.setState(
       {
-        debouncedSearchText: some(text)
+        debouncedSearchText: O.some(text)
       },
       () => {
         this.props.dispatchSearchText(this.state.debouncedSearchText);
@@ -111,15 +115,15 @@ class SearchButton extends React.Component<Props, State> {
 
   private onSearchDisable = () => {
     this.setState({
-      searchText: none,
-      debouncedSearchText: none
+      searchText: O.none,
+      debouncedSearchText: O.none
     });
     this.props.dispatchDisableSearch();
   };
 }
 
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
-  dispatchSearchText: (searchText: Option<string>) =>
+  dispatchSearchText: (searchText: O.Option<string>) =>
     dispatch(updateSearchText(searchText)),
   dispatchDisableSearch: () => dispatch(disableSearch()),
   dispatchSearchEnabled: (isSearchEnabled: boolean) => {

@@ -1,4 +1,5 @@
-import { none, Option, some } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { EnableableFunctionsEnum } from "../../definitions/pagopa/EnableableFunctions";
 import { TypeEnum } from "../../definitions/pagopa/walletv2/CardInfo";
 import { CreditCardPaymentMethod, PaymentMethod } from "../types/pagopa";
@@ -52,17 +53,19 @@ const paymentNotSupportedCustomRepresentation = (
 export const isPaymentSupported = (
   paymentMethod: PaymentMethod
 ): PaymentSupportStatus => {
-  const paymentSupported: Option<PaymentSupportStatus> = hasPaymentFeature(
+  const paymentSupported: O.Option<PaymentSupportStatus> = hasPaymentFeature(
     paymentMethod
   )
-    ? some("available")
-    : none;
+    ? O.some("available")
+    : O.none;
 
-  const notAvailableCustomRepresentation = some(
+  const notAvailableCustomRepresentation = O.some(
     paymentNotSupportedCustomRepresentation(paymentMethod)
   );
 
-  return paymentSupported
-    .alt(notAvailableCustomRepresentation)
-    .getOrElse("notAvailable");
+  return pipe(
+    paymentSupported,
+    O.alt(() => notAvailableCustomRepresentation),
+    O.getOrElseW(() => "notAvailable" as const)
+  );
 };

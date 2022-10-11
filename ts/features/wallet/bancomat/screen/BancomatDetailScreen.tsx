@@ -1,4 +1,3 @@
-import { CompatNavigationProp } from "@react-navigation/compat";
 import { View } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
@@ -6,7 +5,7 @@ import { Dispatch } from "redux";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import I18n from "../../../../i18n";
 import { mixpanelTrack } from "../../../../mixpanel";
-import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
 import { GlobalState } from "../../../../store/reducers/types";
 import { BancomatPaymentMethod } from "../../../../types/pagopa";
@@ -23,18 +22,15 @@ export type BancomatDetailScreenNavigationParams = Readonly<{
 }>;
 
 type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps> & {
-    navigation: CompatNavigationProp<
-      IOStackNavigationProp<WalletParamsList, "WALLET_BANCOMAT_DETAIL">
-    >;
-  };
+  ReturnType<typeof mapStateToProps> &
+  IOStackNavigationRouteProps<WalletParamsList, "WALLET_BANCOMAT_DETAIL">;
 
 /**
  * Start the cobadge onboarding, if the abi is defined
  * @param props
  */
 const startCoBadge = (props: Props) => {
-  const bancomat = props.navigation.getParam("bancomat");
+  const bancomat = props.route.params.bancomat;
   if (bancomat.info.issuerAbiCode === undefined) {
     showToast(I18n.t("global.genericError"), "danger");
     // This should never happen. This condition is due to the weakness of the remote specifications
@@ -63,7 +59,7 @@ const bancomatScreenContent = (
  * @constructor
  */
 const BancomatDetailScreen: React.FunctionComponent<Props> = props => {
-  const bancomat: BancomatPaymentMethod = props.navigation.getParam("bancomat");
+  const bancomat: BancomatPaymentMethod = props.route.params.bancomat;
 
   return (
     <BasePaymentMethodScreen

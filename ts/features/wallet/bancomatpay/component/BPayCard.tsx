@@ -1,17 +1,18 @@
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import { View } from "native-base";
 import * as React from "react";
 import { Image, ImageStyle, StyleProp, StyleSheet } from "react-native";
 import { connect } from "react-redux";
-import { fromNullable } from "fp-ts/lib/Option";
-import { View } from "native-base";
-import BaseCardComponent from "../../component/card/BaseCardComponent";
 import bancomatLogoMin from "../../../../../img/wallet/payment-methods/bancomatpay-logo.png";
-import { GlobalState } from "../../../../store/reducers/types";
-import { profileNameSurnameSelector } from "../../../../store/reducers/profile";
-import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImageResize";
 import { H3 } from "../../../../components/core/typography/H3";
-import IconFont from "../../../../components/ui/IconFont";
 import { H4 } from "../../../../components/core/typography/H4";
+import IconFont from "../../../../components/ui/IconFont";
 import I18n from "../../../../i18n";
+import { profileNameSurnameSelector } from "../../../../store/reducers/profile";
+import { GlobalState } from "../../../../store/reducers/types";
+import BaseCardComponent from "../../component/card/BaseCardComponent";
+import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImageResize";
 
 type Props = {
   phone?: string;
@@ -56,13 +57,16 @@ const getAccessibilityRepresentation = (
 const BPayCard: React.FunctionComponent<Props> = (props: Props) => {
   const imgDimensions = useImageResize(BASE_IMG_W, BASE_IMG_H, props.abiLogo);
 
-  const imageStyle: StyleProp<ImageStyle> | undefined = imgDimensions.fold(
-    undefined,
-    imgDim => ({
-      width: imgDim[0],
-      height: imgDim[1],
-      resizeMode: "contain"
-    })
+  const imageStyle: StyleProp<ImageStyle> | undefined = pipe(
+    imgDimensions,
+    O.fold(
+      () => undefined,
+      imgDim => ({
+        width: imgDim[0],
+        height: imgDim[1],
+        resizeMode: "contain"
+      })
+    )
   );
   return (
     <BaseCardComponent
@@ -98,11 +102,18 @@ const BPayCard: React.FunctionComponent<Props> = (props: Props) => {
               <View spacer small />
             </>
           )}
-          {fromNullable(props.nameSurname).fold(undefined, nameSurname => (
-            <H4 weight={"Regular"} testID={"nameSurname"}>
-              {nameSurname.toLocaleUpperCase()}
-            </H4>
-          ))}
+          {pipe(
+            props.nameSurname,
+            O.fromNullable,
+            O.fold(
+              () => undefined,
+              nameSurname => (
+                <H4 weight={"Regular"} testID={"nameSurname"}>
+                  {nameSurname.toLocaleUpperCase()}
+                </H4>
+              )
+            )
+          )}
         </View>
       }
       bottomRightCorner={

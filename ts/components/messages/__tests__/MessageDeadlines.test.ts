@@ -1,13 +1,14 @@
 import { compareAsc, startOfDay } from "date-fns";
-import { none } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import {
   FiscalCode,
   IPatternStringTag,
   NonEmptyString,
   WithinRangeString
-} from "italia-ts-commons/lib/strings";
-import { Tuple2 } from "italia-ts-commons/lib/tuples";
+} from "@pagopa/ts-commons/lib/strings";
+import { Tuple2 } from "@pagopa/ts-commons/lib/tuples";
+import { pipe } from "fp-ts/lib/function";
 import { PaymentAmount } from "../../../../definitions/backend/PaymentAmount";
 import { TimeToLiveSeconds } from "../../../../definitions/backend/TimeToLiveSeconds";
 import { MessagesStateAndStatus } from "../../../store/reducers/entities/messages";
@@ -219,22 +220,30 @@ const messagesState: Array<MessagesStateAndStatus> = [
 const sections = generateSections(messagesState);
 describe("getLastDeadlineId", () => {
   it("should retrieve the last section loaded", () => {
-    expect(getLastDeadlineId(sections).getOrElse("")).toEqual(oldestItemID);
+    expect(
+      pipe(
+        getLastDeadlineId(sections),
+        O.getOrElse(() => "")
+      )
+    ).toEqual(oldestItemID);
   });
 
-  it("should return none when the section list is empty", () => {
-    expect(getLastDeadlineId([])).toBe(none);
+  it("should return O.none when the section list is empty", () => {
+    expect(getLastDeadlineId([])).toBe(O.none);
   });
 });
 
 describe("getNextDeadlineId", () => {
   it("should return the next section in time", () => {
-    expect(getNextDeadlineId(sections).getOrElse("")).toEqual(
-      nextItemAfterNowID
-    );
+    expect(
+      pipe(
+        getNextDeadlineId(sections),
+        O.getOrElse(() => "")
+      )
+    ).toEqual(nextItemAfterNowID);
   });
 
-  it("should return none when there are no items in the future", () => {
+  it("should return O.none when there are no items in the future", () => {
     const sectionsWithNoNext = sections.filter(
       s =>
         // remove any sections with due_date greater than today (no future)
@@ -242,10 +251,10 @@ describe("getNextDeadlineId", () => {
         s.data[0].e1.content.due_date.getTime() <
           startOfDay(new Date()).getTime()
     );
-    expect(getNextDeadlineId(sectionsWithNoNext)).toEqual(none);
+    expect(getNextDeadlineId(sectionsWithNoNext)).toEqual(O.none);
   });
 
-  it("should return none when the list is empty", () => {
-    expect(getNextDeadlineId([])).toEqual(none);
+  it("should return O.none when the list is empty", () => {
+    expect(getNextDeadlineId([])).toEqual(O.none);
   });
 });

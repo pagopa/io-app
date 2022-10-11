@@ -1,4 +1,5 @@
-import { fromNullable } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { PaymentNetworkEnum } from "../../definitions/pagopa/walletv2/PaymentInstrument";
 import defaultCardIcon from "../../img/wallet/cards-icons/unknown.png";
 
@@ -12,7 +13,15 @@ export const cardIcons: { [key in PaymentNetworkEnum]: any } = {
 
 export const getCardIconFromPaymentNetwork = (
   brand: PaymentNetworkEnum | undefined
-) => fromNullable(brand).fold(defaultCardIcon, b => cardIcons[b]);
+) =>
+  pipe(
+    brand,
+    O.fromNullable,
+    O.fold(
+      () => defaultCardIcon,
+      b => cardIcons[b]
+    )
+  );
 
 const sumNumbers = (sum: number, current: number): number => sum + current;
 

@@ -1,6 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
-import { isNone, Option } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import { View } from "native-base";
 import * as React from "react";
 import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
@@ -42,7 +42,7 @@ const POLICY_URL = "https://www.pagopa.it/it/privacy-policy-assistenza/";
 const ZendeskSupportComponent = (props: Props) => {
   const { assistanceForPayment } = props;
   const profile = useIOSelector(profileSelector);
-  const maybeProfile: Option<InitializedProfile> = pot.toOption(profile);
+  const maybeProfile: O.Option<InitializedProfile> = pot.toOption(profile);
   const zendeskRemoteConfig = useIOSelector(zendeskConfigSelector);
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
@@ -96,7 +96,7 @@ const ZendeskSupportComponent = (props: Props) => {
       <ButtonDefaultOpacity
         onPress={() => {
           void mixpanelTrack("ZENDESK_SHOW_TICKETS_STARTS");
-          if (isNone(maybeProfile)) {
+          if (O.isNone(maybeProfile)) {
             navigation.navigate(ZENDESK_ROUTES.MAIN, {
               screen: ZENDESK_ROUTES.SEE_REPORTS_ROUTERS,
               params: { assistanceForPayment }

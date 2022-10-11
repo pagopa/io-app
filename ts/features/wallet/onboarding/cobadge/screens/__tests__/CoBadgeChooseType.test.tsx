@@ -1,6 +1,6 @@
 import { CommonActions } from "@react-navigation/native";
 import { fireEvent } from "@testing-library/react-native";
-import { none } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import configureMockStore from "redux-mock-store";
 import NavigationService from "../../../../../../navigation/NavigationService";
 import ROUTES from "../../../../../../navigation/routes";
@@ -38,7 +38,7 @@ describe("CoBadgeChooseType component", () => {
         [
           CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
             screen: ROUTES.WALLET_ADD_CARD,
-            params: { inPayment: none }
+            params: { inPayment: O.none }
           })
         ]
       ]);

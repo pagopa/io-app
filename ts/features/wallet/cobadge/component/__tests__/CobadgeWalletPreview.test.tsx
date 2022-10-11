@@ -1,18 +1,18 @@
 import { NavigationAction } from "@react-navigation/native";
 import { fireEvent } from "@testing-library/react-native";
-import { none, some } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { Store } from "redux";
 import configureMockStore from "redux-mock-store";
 import { ToolEnum } from "../../../../../../definitions/content/AssistanceToolConfig";
+import { BackendStatus } from "../../../../../../definitions/content/BackendStatus";
+import { Config } from "../../../../../../definitions/content/Config";
 import NavigationService from "../../../../../navigation/NavigationService";
 import ROUTES from "../../../../../navigation/routes";
 import { CreditCardPaymentMethod } from "../../../../../types/pagopa";
 import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
 import * as hooks from "../../../onboarding/bancomat/screens/hooks/useImageResize";
 import CobadgeWalletPreview from "../CobadgeWalletPreview";
-import { Config } from "../../../../../../definitions/content/Config";
-import { BackendStatus } from "../../../../../../definitions/content/BackendStatus";
 
 jest.mock("../../../onboarding/bancomat/screens/hooks/useImageResize");
 describe("CobadgeWalletPreview component", () => {
@@ -51,7 +51,7 @@ describe("CobadgeWalletPreview component", () => {
   beforeEach(() => {
     store = mockStore({
       backendStatus: {
-        status: some({
+        status: O.some({
           config: {
             assistanceTool: { tool: ToolEnum.none },
             cgn: { enabled: true },
@@ -62,7 +62,7 @@ describe("CobadgeWalletPreview component", () => {
     });
   });
   it("should show the caption if useImageResize return none", () => {
-    const myspy = jest.spyOn(hooks, "useImageResize").mockReturnValue(none);
+    const myspy = jest.spyOn(hooks, "useImageResize").mockReturnValue(O.none);
     const component = getComponent(aCobadgeCard, store);
     const bankLogo = component.queryByTestId("bankLogoFallback");
 
@@ -72,7 +72,7 @@ describe("CobadgeWalletPreview component", () => {
   });
 
   it("should show nothing if useImageResize return a size but there isn't the logoUrl", () => {
-    jest.spyOn(hooks, "useImageResize").mockReturnValue(some([15, 15]));
+    jest.spyOn(hooks, "useImageResize").mockReturnValue(O.some([15, 15]));
     const component = getComponent(aCobadgeCard, store);
     const bankLogo = component.queryByTestId("bankLogo");
     const bankLogoFallback = component.queryByTestId("bankLogoFallback");
@@ -82,7 +82,7 @@ describe("CobadgeWalletPreview component", () => {
   });
 
   it("should show the logo image if there is the abiInfo logoUrl", () => {
-    jest.spyOn(hooks, "useImageResize").mockReturnValue(some([15, 15]));
+    jest.spyOn(hooks, "useImageResize").mockReturnValue(O.some([15, 15]));
 
     const infobankName = "a different bank name";
     const abiInfoBankName = "INTESA SANPAOLO - S.P.A.";
@@ -106,7 +106,7 @@ describe("CobadgeWalletPreview component", () => {
   });
 
   it("should show a visa card icon if in the info there is the corresponding name", () => {
-    jest.spyOn(hooks, "useImageResize").mockReturnValue(some([15, 15]));
+    jest.spyOn(hooks, "useImageResize").mockReturnValue(O.some([15, 15]));
     const component = getComponent(
       {
         ...aCobadgeCard,
@@ -126,7 +126,7 @@ describe("CobadgeWalletPreview component", () => {
     });
   });
   it("should show a default card icon if in the info there isn't the brandlogo", () => {
-    jest.spyOn(hooks, "useImageResize").mockReturnValue(some([15, 15]));
+    jest.spyOn(hooks, "useImageResize").mockReturnValue(O.some([15, 15]));
     const component = getComponent(
       {
         ...aCobadgeCard,
@@ -144,7 +144,7 @@ describe("CobadgeWalletPreview component", () => {
   });
 
   it("should call navigateToCobadgeDetails when press on it", () => {
-    jest.spyOn(hooks, "useImageResize").mockReturnValue(none);
+    jest.spyOn(hooks, "useImageResize").mockReturnValue(O.none);
     const spy = jest.spyOn(NavigationService, "dispatchNavigationAction");
     const component = getComponent(aCobadgeCard, store);
     const cardComponent = component.queryByTestId("cardPreview");
