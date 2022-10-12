@@ -1,0 +1,1 @@
+Vsaka institucija, ki upravlja plačila s pagoPA (Ponudniki plačilnih storitev - Prestatori di Servizi di Pagamento), lahko neodvisno uveljavlja različne stroške, odvisno od svoje poslovne politike in pogodbenih pogojev uporabnika.

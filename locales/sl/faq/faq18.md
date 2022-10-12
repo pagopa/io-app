@@ -1,0 +1,1 @@
+Da, kodo za odklepanje bo mogoče ponastaviti na strani profila z izbiro »Ponastavi kodo za odklepanje«. Po preverjanju pristnosti s SPID ali CIE boš pozvan/a, da znova začneš postopek preverjanja pristnosti, tako da vneseš novo kodo za odklepanje.

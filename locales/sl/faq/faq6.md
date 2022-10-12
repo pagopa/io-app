@@ -1,0 +1,1 @@
+Identiteto SPID izdajo ponudniki digitalnih identitet (Identity Provider), zasebni subjekti, akreditirani s strani AgID, ki v skladu s pravili Agencije zagotavljajo digitalne identitete in upravljajo avtentikacijo uporabnikov. Tvoj ponudnik identitete je subjekt, ki si ga izbral/a kot ponudnika tvoje identitete SPID.

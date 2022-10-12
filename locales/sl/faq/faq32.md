@@ -1,0 +1,1 @@
+Identifikacijska koda ali ID sporočila je edinstvena koda, ki jo aplikacija IO ustvari v povezavi z vsakim poslanim sporočilom. Uporabiš jo lahko za identifikacijo sporočila v primeru zahtev za pomoč.
