@@ -104,7 +104,7 @@ export class ScreenContentHeader extends React.PureComponent<Props> {
     } = this.props;
 
     return (
-      <View style={[contentStyle]}>
+      <View style={[dark && styles.darkGrayBg, contentStyle]}>
         <Animated.View
           style={
             this.props.dynamicHeight !== undefined && {
