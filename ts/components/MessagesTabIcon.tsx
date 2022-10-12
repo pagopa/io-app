@@ -1,5 +1,4 @@
 import React from "react";
-import { connect } from "react-redux";
 
 import TabIconComponent from "./ui/TabIconComponent";
 
@@ -26,4 +25,4 @@ class MessagesTabIcon extends React.PureComponent<Props> {
   }
 }
 
-export default connect()(MessagesTabIcon);
+export default MessagesTabIcon;
