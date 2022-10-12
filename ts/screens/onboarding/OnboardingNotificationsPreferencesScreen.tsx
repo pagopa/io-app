@@ -2,7 +2,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import React, { memo, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { CompatNavigationProp } from "@react-navigation/compat";
-import { StyleSheet, View } from "react-native";
+import { SafeAreaView, StyleSheet, View } from "react-native";
 import { PreferencesListItem } from "../../components/PreferencesListItem";
 import ScreenContent from "../../components/screens/ScreenContent";
 import I18n from "../../i18n";
@@ -189,14 +189,16 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
           </InfoBox>
         </View>
       </ScreenContent>
-      <FooterWithButtons
-        type="SingleButton"
-        leftButton={
-          isUpdating
-            ? loadingButtonProps()
-            : continueButtonProps(isUpdating, upsertPreferences)
-        }
-      />
+      <SafeAreaView>
+        <FooterWithButtons
+          type="SingleButton"
+          leftButton={
+            isUpdating
+              ? loadingButtonProps()
+              : continueButtonProps(isUpdating, upsertPreferences)
+          }
+        />
+      </SafeAreaView>
     </BaseScreenComponent>
   );
 };
