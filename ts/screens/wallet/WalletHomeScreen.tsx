@@ -250,10 +250,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
 
     // To maintain retro compatibility, if the opt-in payment methods feature flag is turned off,
     // load the bonus information on Wallet mount
-    if (
-      !this.props.bpdConfig?.opt_in_payment_methods ||
-      !bpdOptInPaymentMethodsEnabled
-    ) {
+    if (!bpdOptInPaymentMethodsEnabled) {
       this.loadBonusBpd();
     }
     // FIXME restore loadTransactions see https://www.pivotaltracker.com/story/show/176051000
@@ -407,9 +404,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
         )}
 
         {/* When the opt_in_payment_methods FF is active hide the BpdCardsInWalletContainer component */}
-        {!this.props.bpdConfig?.opt_in_payment_methods && bpdEnabled && (
-          <BpdCardsInWalletContainer />
-        )}
+        {bpdEnabled && <BpdCardsInWalletContainer />}
         <CgnCardInWalletContainer />
       </View>
     );
