@@ -5,7 +5,13 @@
  */
 import { H3, Text, View } from "native-base";
 import * as React from "react";
-import { Animated, ImageSourcePropType, StyleSheet } from "react-native";
+import {
+  Animated,
+  ImageSourcePropType,
+  StyleSheet,
+  StyleProp,
+  ViewStyle
+} from "react-native";
 import { IconProps } from "react-native-vector-icons/Icon";
 import {
   HEADER_ANIMATION_DURATION,
@@ -23,6 +29,7 @@ type Props = Readonly<{
   subtitle?: string;
   subtitleLink?: JSX.Element;
   dark?: boolean;
+  contentStyle?: StyleProp<ViewStyle>;
   dynamicHeight?: Animated.AnimatedInterpolation;
   // Specified if a custom component is needed, if both icon and rightComponent are defined rightComponent
   // will be rendered in place of icon
@@ -92,11 +99,12 @@ export class ScreenContentHeader extends React.PureComponent<Props> {
       icon,
       iconFont,
       title,
-      rightComponent
+      rightComponent,
+      contentStyle
     } = this.props;
 
     return (
-      <View style={dark && styles.darkGrayBg}>
+      <View style={[contentStyle]}>
         <Animated.View
           style={
             this.props.dynamicHeight !== undefined && {
@@ -117,11 +125,17 @@ export class ScreenContentHeader extends React.PureComponent<Props> {
             icon={icon}
             iconFont={iconFont}
             dark={dark}
+            contentStyle={contentStyle}
             rightComponent={rightComponent}
           />
           {subtitle && (
             <View style={styles.subheaderContainer}>
-              <Text testID={"screen-content-header-subtitle"}>{subtitle}</Text>
+              <Text
+                testID={"screen-content-header-subtitle"}
+                style={dark && styles.white}
+              >
+                {subtitle}
+              </Text>
               {subtitleLink}
               <View spacer={true} large={true} />
             </View>

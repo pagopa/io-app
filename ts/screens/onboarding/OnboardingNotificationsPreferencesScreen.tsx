@@ -1,9 +1,8 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import React, { useEffect, useState } from "react";
-import { List } from "native-base";
+import React, { memo, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { CompatNavigationProp } from "@react-navigation/compat";
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { PreferencesListItem } from "../../components/PreferencesListItem";
 import ScreenContent from "../../components/screens/ScreenContent";
 import I18n from "../../i18n";
@@ -23,6 +22,8 @@ import { InfoBox } from "../../components/box/InfoBox";
 import { IOColors } from "../../components/core/variables/IOColors";
 import { H5 } from "../../components/core/typography/H5";
 import customVariables from "../../theme/variables";
+import { IOBadge } from "../../components/core/IOBadge";
+import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import { NotificationsPreferencesPreview } from "./components/NotificationsPreferencesPreview";
 
 const styles = StyleSheet.create({
@@ -32,6 +33,20 @@ const styles = StyleSheet.create({
   },
   bottomSpacer: {
     marginBottom: customVariables.spacerLargeHeight
+  },
+  darkBg: {
+    backgroundColor: IOColors.blue
+  },
+  containerActions: {
+    backgroundColor: IOColors.white,
+    borderRadius: 16,
+    height: "100%",
+    flexGrow: 1,
+    padding: customVariables.contentPadding,
+    paddingTop: 0
+  },
+  badge: {
+    padding: customVariables.contentPadding / 2
   }
 });
 
@@ -68,6 +83,19 @@ const loadingButtonProps = (): BlockButtonProps => ({
   iconColor: IOColors.bluegreyDark
 });
 
+const CustomGoBack = memo(
+  ({ isFirstOnboarding }: { isFirstOnboarding: boolean }) => (
+    <View style={styles.badge}>
+      {!isFirstOnboarding && (
+        <IOBadge
+          text={I18n.t("onboarding.notifications.badge")}
+          labelColor={"bluegreyDark"}
+        />
+      )}
+    </View>
+  )
+);
+
 const OnboardingNotificationsPreferencesScreen = (props: Props) => {
   const dispatch = useIODispatch();
 
@@ -103,22 +131,42 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
 
   return (
     <BaseScreenComponent
-      customGoBack={<View />}
+      customGoBack={<CustomGoBack isFirstOnboarding={isFirstOnboarding} />}
       headerTitle={
         isFirstOnboarding
           ? I18n.t("onboarding.notifications.headerTitle")
           : undefined
       }
       contextualHelp={emptyContextualHelp}
+      primary={!isFirstOnboarding}
     >
       <ScreenContent
-        title={I18n.t("profile.preferences.notifications.title")}
-        subtitle={I18n.t("profile.preferences.notifications.subtitle")}
+        hideHeader={true}
+        {...(!isFirstOnboarding && {
+          contentStyle: styles.darkBg
+        })}
       >
-        <List withContentLateralPadding={true}>
-          <NotificationsPreferencesPreview
-            remindersEnabled={remindersEnabled}
-          />
+        <ScreenContentHeader
+          title={I18n.t(
+            isFirstOnboarding
+              ? "profile.preferences.notifications.titleNewUser"
+              : "profile.preferences.notifications.title"
+          )}
+          subtitle={I18n.t(
+            isFirstOnboarding
+              ? "profile.preferences.notifications.subtitleNewUser"
+              : "profile.preferences.notifications.subtitle"
+          )}
+          {...(!isFirstOnboarding && {
+            dark: true,
+            contentStyle: styles.darkBg
+          })}
+        />
+        <NotificationsPreferencesPreview
+          remindersEnabled={remindersEnabled}
+          isFirstOnboarding={isFirstOnboarding}
+        />
+        <View style={styles.containerActions}>
           <View style={styles.separator} />
           <PreferencesListItem
             title={I18n.t("profile.preferences.notifications.reminders.title")}
@@ -139,18 +187,16 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
               {I18n.t("profile.main.privacy.shareData.screen.profileSettings")}
             </H5>
           </InfoBox>
-        </List>
+        </View>
       </ScreenContent>
-      <SafeAreaView>
-        <FooterWithButtons
-          type="SingleButton"
-          leftButton={
-            isUpdating
-              ? loadingButtonProps()
-              : continueButtonProps(isUpdating, upsertPreferences)
-          }
-        />
-      </SafeAreaView>
+      <FooterWithButtons
+        type="SingleButton"
+        leftButton={
+          isUpdating
+            ? loadingButtonProps()
+            : continueButtonProps(isUpdating, upsertPreferences)
+        }
+      />
     </BaseScreenComponent>
   );
 };
