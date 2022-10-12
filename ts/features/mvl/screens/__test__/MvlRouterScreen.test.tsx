@@ -1,7 +1,6 @@
 import { createStore, Store } from "redux";
 import configureMockStore, { MockStore } from "redux-mock-store";
 import { applicationChangeState } from "../../../../store/actions/application";
-import { DEPRECATED_setMessageReadState } from "../../../../store/actions/messages";
 import { Action } from "../../../../store/actions/types";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -35,13 +34,6 @@ describe("MvlRouterScreen behaviour", () => {
 
       expect(finalStore.getActions()).toContainEqual(
         mvlDetailsLoad.request(mvlMockId)
-      );
-    });
-
-    it("Should set the message ID as read", () => {
-      const { store } = renderWithDefaultStore();
-      expect(store.getActions()).toContainEqual(
-        DEPRECATED_setMessageReadState(mvlMockId, true, "unknown")
       );
     });
 
@@ -109,8 +101,6 @@ describe("MvlRouterScreen behaviour", () => {
   });
 
   describe("When the screen is rendered with a success in feature.mvl.byId", () => {
-    const success = mvlDetailsLoad.success(mvlMock);
-
     it("Should render the MvlDetailsScreen", () => {
       const render = dispatchActionAndRenderComponent([
         mvlDetailsLoad.success(mvlMock)
@@ -135,14 +125,6 @@ describe("MvlRouterScreen behaviour", () => {
         mvlDetailsLoad.request(mvlMockId)
       );
     });
-
-    it("Should set the message ID as read", () => {
-      const { store } = renderWithDefaultStore();
-      store.dispatch(success);
-      expect(store.getActions()).toContainEqual(
-        DEPRECATED_setMessageReadState(mvlMockId, true, "unknown")
-      );
-    });
   });
 });
 
@@ -162,14 +144,3 @@ const renderComponent = (store: MockStore<GlobalState> | Store) => ({
   ),
   store
 });
-
-function renderWithDefaultStore() {
-  const globalState = appReducer(undefined, applicationChangeState("active"));
-  const store = createStore(appReducer, globalState as any);
-  const mockStore = configureMockStore<GlobalState>();
-  const finalStore: ReturnType<typeof mockStore> = mockStore({
-    ...store.getState()
-  } as GlobalState);
-  const result = renderComponent(finalStore);
-  return { ...result, store: result.store as MockStore<GlobalState> };
-}
