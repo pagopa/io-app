@@ -4,13 +4,7 @@ import { View } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import * as React from "react";
-import {
-  Image,
-  ImageSourcePropType,
-  StyleSheet,
-  StyleProp,
-  ViewStyle
-} from "react-native";
+import { Image, ImageSourcePropType, StyleSheet } from "react-native";
 import { IconProps } from "react-native-vector-icons/Icon";
 import customVariables from "../theme/variables";
 import { HEADER_ICON_HEIGHT } from "../utils/constants";
@@ -22,7 +16,6 @@ type Props = {
   icon?: ImageSourcePropType;
   iconFont?: IconProps;
   dark?: boolean;
-  contentStyle?: StyleProp<ViewStyle>;
   // Specified if a custom component is needed, if both icon and rightComponent are defined rightComponent
   // will be rendered in place of icon
   rightComponent?: React.ReactElement;
@@ -98,9 +91,9 @@ class ScreenHeader extends React.Component<Props> {
   };
 
   public render() {
-    const { heading, dark, rightComponent, contentStyle } = this.props;
+    const { heading, dark, rightComponent } = this.props;
     return (
-      <View style={[dark && styles.darkGrayBg, styles.container, contentStyle]}>
+      <View style={[dark && styles.darkGrayBg, styles.container]}>
         <View
           accessible={true}
           style={styles.text}

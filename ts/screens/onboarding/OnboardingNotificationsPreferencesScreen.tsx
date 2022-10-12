@@ -23,10 +23,15 @@ import { IOColors } from "../../components/core/variables/IOColors";
 import { H5 } from "../../components/core/typography/H5";
 import customVariables from "../../theme/variables";
 import { IOBadge } from "../../components/core/IOBadge";
-import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
+import { H1 } from "../../components/core/typography/H1";
+import { Body } from "../../components/core/typography/Body";
 import { NotificationsPreferencesPreview } from "./components/NotificationsPreferencesPreview";
 
 const styles = StyleSheet.create({
+  contentHeader: {
+    padding: customVariables.contentPadding,
+    paddingTop: 0
+  },
   separator: {
     backgroundColor: customVariables.itemSeparator,
     height: StyleSheet.hairlineWidth
@@ -96,6 +101,33 @@ const CustomGoBack = memo(
   )
 );
 
+const Header = memo(({ isFirstOnboarding }: { isFirstOnboarding: boolean }) => (
+  <View style={styles.contentHeader}>
+    <H1
+      {...(!isFirstOnboarding && {
+        color: "white"
+      })}
+    >
+      {I18n.t(
+        isFirstOnboarding
+          ? "profile.preferences.notifications.titleNewUser"
+          : "profile.preferences.notifications.title"
+      )}
+    </H1>
+    <Body
+      {...(!isFirstOnboarding && {
+        color: "white"
+      })}
+    >
+      {I18n.t(
+        isFirstOnboarding
+          ? "profile.preferences.notifications.subtitleNewUser"
+          : "profile.preferences.notifications.subtitle"
+      )}
+    </Body>
+  </View>
+));
+
 const OnboardingNotificationsPreferencesScreen = (props: Props) => {
   const dispatch = useIODispatch();
 
@@ -146,22 +178,7 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
           contentStyle: styles.darkBg
         })}
       >
-        <ScreenContentHeader
-          title={I18n.t(
-            isFirstOnboarding
-              ? "profile.preferences.notifications.titleNewUser"
-              : "profile.preferences.notifications.title"
-          )}
-          subtitle={I18n.t(
-            isFirstOnboarding
-              ? "profile.preferences.notifications.subtitleNewUser"
-              : "profile.preferences.notifications.subtitle"
-          )}
-          {...(!isFirstOnboarding && {
-            dark: true,
-            contentStyle: styles.darkBg
-          })}
-        />
+        <Header isFirstOnboarding={isFirstOnboarding} />
         <NotificationsPreferencesPreview
           remindersEnabled={remindersEnabled}
           isFirstOnboarding={isFirstOnboarding}
