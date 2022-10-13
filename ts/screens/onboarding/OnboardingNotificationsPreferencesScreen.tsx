@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   bottomSpacer: {
     marginBottom: customVariables.spacerLargeHeight
   },
-  darkBg: {
+  blueBg: {
     backgroundColor: IOColors.blue
   },
   containerActions: {
@@ -47,8 +47,11 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     height: "100%",
     flexGrow: 1,
-    padding: customVariables.contentPadding,
-    paddingTop: 0
+    paddingLeft: customVariables.contentPadding,
+    paddingRight: customVariables.contentPadding
+  },
+  containerActionsBlueBg: {
+    paddingTop: customVariables.contentPadding
   },
   badge: {
     padding: customVariables.contentPadding / 2
@@ -103,22 +106,14 @@ const CustomGoBack = memo(
 
 const Header = memo(({ isFirstOnboarding }: { isFirstOnboarding: boolean }) => (
   <View style={styles.contentHeader}>
-    <H1
-      {...(!isFirstOnboarding && {
-        color: "white"
-      })}
-    >
+    <H1 color={isFirstOnboarding ? "bluegreyDark" : "white"}>
       {I18n.t(
         isFirstOnboarding
           ? "profile.preferences.notifications.titleNewUser"
           : "profile.preferences.notifications.title"
       )}
     </H1>
-    <Body
-      {...(!isFirstOnboarding && {
-        color: "white"
-      })}
-    >
+    <Body color={isFirstOnboarding ? "bluegreyDark" : "white"}>
       {I18n.t(
         isFirstOnboarding
           ? "profile.preferences.notifications.subtitleNewUser"
@@ -175,7 +170,7 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
       <ScreenContent
         hideHeader={true}
         {...(!isFirstOnboarding && {
-          contentStyle: styles.darkBg
+          contentStyle: styles.blueBg
         })}
       >
         <Header isFirstOnboarding={isFirstOnboarding} />
@@ -183,8 +178,13 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
           remindersEnabled={remindersEnabled}
           isFirstOnboarding={isFirstOnboarding}
         />
-        <View style={styles.containerActions}>
-          <View style={styles.separator} />
+        <View
+          style={[
+            styles.containerActions,
+            !isFirstOnboarding && styles.containerActionsBlueBg
+          ]}
+        >
+          {isFirstOnboarding && <View style={styles.separator} />}
           <PreferencesListItem
             title={I18n.t("profile.preferences.notifications.reminders.title")}
             description={I18n.t(

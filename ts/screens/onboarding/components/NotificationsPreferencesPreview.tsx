@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: backgroundImageHeight
   },
-  dark: {
+  blue: {
     backgroundColor: IOColors.blue
   },
   notification: {
@@ -30,11 +30,13 @@ const styles = StyleSheet.create({
     backgroundColor: IOColors.white,
     left: customVariables.contentPadding,
     right: customVariables.contentPadding,
-    borderColor: IOColors.bluegreyLight,
-    borderWidth: 1,
-    borderRadius: 4,
+    borderRadius: customVariables.borderRadiusBase,
     padding: 16,
     minHeight: notificationHeight
+  },
+  notificationWhiteBg: {
+    borderWidth: 1,
+    borderColor: IOColors.bluegreyLight
   },
   box: {
     flex: 1,
@@ -63,13 +65,18 @@ export const NotificationsPreferencesPreview = ({
   const message = I18n.t("onboarding.notifications.previewMessage");
 
   return (
-    <View style={[styles.container, !isFirstOnboarding && styles.dark]}>
+    <View style={[styles.container, !isFirstOnboarding && styles.blue]}>
       {isFirstOnboarding ? (
         <NotificationsBackground />
       ) : (
         <NotificationsBackgroundBlue />
       )}
-      <View style={styles.notification}>
+      <View
+        style={[
+          styles.notification,
+          isFirstOnboarding && styles.notificationWhiteBg
+        ]}
+      >
         <View style={styles.box}>
           <AppLogo style={{ width: 24, height: 24 }} />
           <View style={styles.info}>
