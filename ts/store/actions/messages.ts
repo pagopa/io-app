@@ -9,17 +9,12 @@ import {
   createStandardAction
 } from "typesafe-actions";
 
-import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
-
-import { CreatedMessageWithoutContent } from "../../../definitions/backend/CreatedMessageWithoutContent";
 import {
   UIMessage,
   UIMessageDetails,
   UIMessageId
 } from "../reducers/entities/messages/types";
 import { Cursor } from "../reducers/entities/messages/allPaginated";
-import { MessageCategory } from "../../../definitions/backend/MessageCategory";
-import { TagEnum } from "../../../definitions/backend/MessageCategoryPayment";
 import { MessagesStatus } from "../reducers/entities/messages/messagesStatus";
 import { loadThirdPartyMessage } from "../../features/messages/store/actions";
 
@@ -41,36 +36,12 @@ export const loadMessageDetails = createAsyncAction(
   "MESSAGE_DETAILS_LOAD_FAILURE"
 )<{ id: UIMessageId }, UIMessageDetails, { id: string; error: Error }>();
 
-/**
- * Load a single message's details given its content
- * @deprecated use loadMessageDetails instead
- */
-export const DEPRECATED_loadMessage = createAsyncAction(
-  "MESSAGE_LOAD_REQUEST",
-  "MESSAGE_LOAD_SUCCESS",
-  "MESSAGE_LOAD_FAILURE"
-)<
-  CreatedMessageWithoutContent,
-  CreatedMessageWithContentAndAttachments,
-  { id: string; error: Error }
->();
-
 export type Filter = { getArchived?: boolean };
 // generic error used by all pagination actions
 export type MessagesFailurePayload = {
   error: Error;
   filter: Filter;
 };
-
-/**
- * Load a single message's details given its ID, and the sender service
- * if needed.
- */
-export const loadMessageWithRelations = createAsyncAction(
-  "MESSAGE_WITH_RELATIONS_LOAD_REQUEST",
-  "MESSAGE_WITH_RELATIONS_LOAD_SUCCESS",
-  "MESSAGE_WITH_RELATIONS_LOAD_FAILURE"
-)<CreatedMessageWithoutContent, void, MessagesFailurePayload>();
 
 export type LoadMessagesRequestPayload = {
   pageSize: number;
@@ -146,38 +117,8 @@ export const upsertMessageStatusAttributes = createAsyncAction(
   { error: Error; payload: UpsertMessageStatusAttributesPayload }
 >();
 
-/**
- *  @deprecated Please use actions with pagination instead
- */
-export const DEPRECATED_loadMessages = createAsyncAction(
-  "MESSAGES_LOAD_REQUEST",
-  "MESSAGES_LOAD_SUCCESS",
-  "MESSAGES_LOAD_FAILURE"
-)<void, ReadonlyArray<string>, Error>();
-
 export const removeMessages =
   createStandardAction("MESSAGES_REMOVE")<ReadonlyArray<string>>();
-
-export type MessageReadType =
-  | Extract<MessageCategory["tag"], TagEnum.PAYMENT>
-  | "unknown";
-/**
- *  @deprecated Please use actions with pagination instead
- */
-export const DEPRECATED_setMessageReadState = createAction(
-  "MESSAGES_SET_READ",
-  resolve => (id: string, read: boolean, messageType: MessageReadType) =>
-    resolve({ id, read, messageType }, { id, read })
-);
-
-/**
- *  @deprecated Please use actions with pagination instead
- */
-export const DEPRECATED_setMessagesArchivedState = createAction(
-  "MESSAGES_SET_ARCHIVED",
-  resolve => (ids: ReadonlyArray<string>, archived: boolean) =>
-    resolve({ ids, archived })
-);
 
 type MigrationFailure = {
   error: unknown;
@@ -201,18 +142,13 @@ export const resetMigrationStatus = createAction(
 );
 
 export type MessagesActions =
-  | ActionType<typeof DEPRECATED_loadMessage>
-  | ActionType<typeof loadMessageWithRelations>
   | ActionType<typeof reloadAllMessages>
   | ActionType<typeof loadNextPageMessages>
   | ActionType<typeof loadPreviousPageMessages>
   | ActionType<typeof loadMessageDetails>
   | ActionType<typeof migrateToPaginatedMessages>
   | ActionType<typeof resetMigrationStatus>
-  | ActionType<typeof DEPRECATED_loadMessages>
   | ActionType<typeof removeMessages>
-  | ActionType<typeof DEPRECATED_setMessageReadState>
   | ActionType<typeof upsertMessageStatusAttributes>
-  | ActionType<typeof DEPRECATED_setMessagesArchivedState>
   | ActionType<typeof loadMessageById>
   | ActionType<typeof loadThirdPartyMessage>;
