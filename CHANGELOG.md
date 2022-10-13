@@ -2,6 +2,40 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.18.0-rc.0](https://github.com/pagopa/io-app/compare/2.17.0-rc.2...2.18.0-rc.0) (2022-10-11)
+
+## [2.17.0-rc.2](https://github.com/pagopa/io-app/compare/2.17.0-rc.1...2.17.0-rc.2) (2022-10-07)
+
+## [2.17.0-rc.1](https://github.com/pagopa/io-app/compare/2.17.0-rc.0...2.17.0-rc.1) (2022-09-28)
+
+
+### Features
+
+* [[IAI-183](https://pagopa.atlassian.net/browse/IAI-183)] Upgrade io-ts, fp-ts and codegen ([#4020](https://github.com/pagopa/io-app/issues/4020)) ([635fe19](https://github.com/pagopa/io-app/commit/635fe192b2964be1b0a16d8f32d6ba498f7b42ef))
+
+
+### Chores
+
+* [[IAI-151](https://pagopa.atlassian.net/browse/IAI-151)] Update Authentication navigator ([#4056](https://github.com/pagopa/io-app/issues/4056)) ([681a6aa](https://github.com/pagopa/io-app/commit/681a6aa1378eb36f8095a2ed424611e04bc9fe2b))
+* [[IAI-164](https://pagopa.atlassian.net/browse/IAI-164)] Upgrade `WalletNavigator` to v5 ([#4097](https://github.com/pagopa/io-app/issues/4097)) ([9e6bfd1](https://github.com/pagopa/io-app/commit/9e6bfd101a3a981fff9729ed4a2e6d04127e6dda))
+* [[IAI-246](https://pagopa.atlassian.net/browse/IAI-246)] Changes pagopPa UAT API URI ([#4124](https://github.com/pagopa/io-app/issues/4124)) ([a4f5003](https://github.com/pagopa/io-app/commit/a4f500324ae358758930305c608e005b05964260))
+
+## [2.17.0-rc.0](https://github.com/pagopa/io-app/compare/2.16.0-rc.1...2.17.0-rc.0) (2022-09-27)
+
+## [2.16.0-rc.1](https://github.com/pagopa/io-app/compare/2.16.0-rc.0...2.16.0-rc.1) (2022-09-23)
+
+
+### Bug Fixes
+
+* **Piattaforma Notifiche:** [[IAMVL-99](https://pagopa.atlassian.net/browse/IAMVL-99)] Attachment ID might not be unique per user ([#4119](https://github.com/pagopa/io-app/issues/4119)) ([7b17562](https://github.com/pagopa/io-app/commit/7b1756267894cfe60a71ff5702ff204f5976362f))
+
+
+### Chores
+
+* [[IA-927](https://pagopa.atlassian.net/browse/IA-927)] Allow to filter PSPs on poste_datamatrix_scan payment origin ([#4120](https://github.com/pagopa/io-app/issues/4120)) ([91d4090](https://github.com/pagopa/io-app/commit/91d4090f0903cc3abb400015a1cc2d5b3c3195df))
+
+## [2.16.0-rc.0](https://github.com/pagopa/io-app/compare/2.15.0-rc.4...2.16.0-rc.0) (2022-09-20)
+
 ## [2.15.0-rc.4](https://github.com/pagopa/io-app/compare/2.15.0-rc.3...2.15.0-rc.4) (2022-09-14)
 
 ## [2.15.0-rc.3](https://github.com/pagopa/io-app/compare/2.15.0-rc.2...2.15.0-rc.3) (2022-09-12)

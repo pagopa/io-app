@@ -1,16 +1,11 @@
 /**
  * A saga that manages the Profile.
  */
-import {
-  none,
-  Option,
-  some,
-  fromNullable,
-  isNone,
-  fromEither
-} from "fp-ts/lib/Option";
-import { setoidString } from "fp-ts/lib/Setoid";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import * as S from "fp-ts/lib/string";
 import {
   all,
   call,
@@ -20,8 +15,10 @@ import {
   takeLatest
 } from "typed-redux-saga/macro";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
+import { AppVersion } from "../../definitions/backend/AppVersion";
 import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
+import { ServicesPreferencesModeEnum } from "../../definitions/backend/ServicesPreferencesMode";
 import { UserDataProcessingChoiceEnum } from "../../definitions/backend/UserDataProcessingChoice";
 import { Locales } from "../../locales/locales";
 import { BackendClient } from "../api/backend";
@@ -30,8 +27,15 @@ import { loadAllBonusActivations } from "../features/bonus/bonusVacanze/store/ac
 import { allBonusActiveSelector } from "../features/bonus/bonusVacanze/store/reducers/allActive";
 import { bpdLoadActivationStatus } from "../features/bonus/bpd/store/actions/details";
 import { bpdEnabledSelector } from "../features/bonus/bpd/store/reducers/details/activation";
+import { cgnDetails } from "../features/bonus/cgn/store/actions/details";
+import { cgnDetailSelector } from "../features/bonus/cgn/store/reducers/details";
 import I18n from "../i18n";
+import { mixpanelTrack } from "../mixpanel";
 import { sessionExpired } from "../store/actions/authentication";
+import {
+  differentProfileLoggedIn,
+  setProfileHashedFiscalCode
+} from "../store/actions/crossSessions";
 import { navigateToRemoveAccountSuccess } from "../store/actions/navigation";
 import { preferredLanguageSaveSuccess } from "../store/actions/persistedPreferences";
 import {
@@ -44,67 +48,58 @@ import {
   startEmailValidation
 } from "../store/actions/profile";
 import { upsertUserDataProcessing } from "../store/actions/userDataProcessing";
+import { isCGNEnabledSelector } from "../store/reducers/backendStatus";
+import { isDifferentFiscalCodeSelector } from "../store/reducers/crossSessions";
 import { preferredLanguageSelector } from "../store/reducers/persistedPreferences";
 import { profileSelector } from "../store/reducers/profile";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
+import { getAppVersion } from "../utils/appVersion";
+import { isTestEnv } from "../utils/environment";
+import { convertUnknownToError } from "../utils/errors";
+import { deletePin } from "../utils/keychain";
 import {
   fromLocaleToPreferredLanguage,
   fromPreferredLanguageToLocale,
   getLocalePrimaryWithFallback
 } from "../utils/locale";
-import {
-  differentProfileLoggedIn,
-  setProfileHashedFiscalCode
-} from "../store/actions/crossSessions";
-import { isDifferentFiscalCodeSelector } from "../store/reducers/crossSessions";
-import { isTestEnv } from "../utils/environment";
-import { deletePin } from "../utils/keychain";
-import { ServicesPreferencesModeEnum } from "../../definitions/backend/ServicesPreferencesMode";
-import { mixpanelTrack } from "../mixpanel";
 import { readablePrivacyReport } from "../utils/reporters";
-import { cgnDetailSelector } from "../features/bonus/cgn/store/reducers/details";
-import { cgnDetails } from "../features/bonus/cgn/store/actions/details";
-import { isCGNEnabledSelector } from "../store/reducers/backendStatus";
-import { getAppVersion } from "../utils/appVersion";
-import { AppVersion } from "../../definitions/backend/AppVersion";
-import { convertUnknownToError } from "../utils/errors";
 
 // A saga to load the Profile.
 export function* loadProfile(
   getProfile: ReturnType<typeof BackendClient>["getProfile"]
 ): Generator<
   ReduxSagaEffect,
-  Option<InitializedProfile>,
+  O.Option<InitializedProfile>,
   SagaCallReturnType<typeof getProfile>
 > {
   try {
     const response = yield* call(getProfile, {});
     // we got an error, throw it
-    if (response.isLeft()) {
-      throw Error(readablePrivacyReport(response.value));
+    if (E.isLeft(response)) {
+      throw Error(readablePrivacyReport(response.left));
     }
-    if (response.value.status === 200) {
+    if (response.right.status === 200) {
       // Ok we got a valid response, send a SESSION_LOAD_SUCCESS action
       // BEWARE: we need to cast to UserProfileUnion to make UserProfile a
       // discriminated union!
       // eslint-disable-next-line
       yield* put(
-        profileLoadSuccess(response.value.value as InitializedProfile)
+        profileLoadSuccess(response.right.value as InitializedProfile)
       );
-      return some(response.value.value);
+      return O.some(response.right.value);
     }
-    if (response.value.status === 401) {
+    if (response.right.status === 401) {
       // in case we got an expired session while loading the profile, we reset
       // the session
       yield* put(sessionExpired());
     }
     throw response
-      ? Error(`response status ${response.value.status}`)
+      ? Error(`response status ${response.right.status}`)
       : Error(I18n.t("profile.errors.load"));
   } catch (e) {
     yield* put(profileLoadFailure(convertUnknownToError(e)));
   }
-  return none;
+  return O.none;
 }
 
 // A saga to update the Profile.
@@ -128,7 +123,7 @@ function* createOrUpdateProfileSaga(
   const currentProfile = profileState.value;
 
   const rawAppVersion = yield* call(getAppVersion);
-  const maybeAppVersion = fromEither(AppVersion.decode(rawAppVersion));
+  const maybeAppVersion = O.fromEither(AppVersion.decode(rawAppVersion));
 
   // If we already have a profile, merge it with the new updated attributes
   // or else, create a new profile from the provided object
@@ -146,7 +141,7 @@ function* createOrUpdateProfileSaga(
         preferred_languages: currentProfile.preferred_languages,
         blocked_inbox_or_channels: currentProfile.blocked_inbox_or_channels,
         accepted_tos_version: currentProfile.accepted_tos_version,
-        last_app_version: maybeAppVersion.toUndefined(),
+        last_app_version: O.toUndefined(maybeAppVersion),
         ...action.payload
       }
     : {
@@ -157,7 +152,7 @@ function* createOrUpdateProfileSaga(
         is_webhook_enabled: false,
         is_email_validated: action.payload.is_email_validated || false,
         is_email_enabled: action.payload.is_email_enabled || false,
-        last_app_version: maybeAppVersion.toUndefined(),
+        last_app_version: O.toUndefined(maybeAppVersion),
         ...action.payload,
         accepted_tos_version: tosVersion,
         version: 0
@@ -165,36 +160,36 @@ function* createOrUpdateProfileSaga(
   try {
     const response: SagaCallReturnType<typeof createOrUpdateProfile> =
       yield* call(createOrUpdateProfile, {
-        profile: newProfile
+        body: newProfile
       });
 
-    if (response.isLeft()) {
-      throw new Error(readablePrivacyReport(response.value));
+    if (E.isLeft(response)) {
+      throw new Error(readablePrivacyReport(response.left));
     }
 
-    if (response.value.status === 409) {
+    if (response.right.status === 409) {
       // It could happen that profile update fails due to version number mismatch
       // app has a different version of profile compared to that one owned by the backend
       // so we force profile reloading (see https://www.pivotaltracker.com/n/projects/2048617/stories/171994417)
       yield* put(profileLoadRequest());
-      throw new Error(response.value.value.title);
+      throw new Error(response.right.value.title);
     }
 
-    if (response.value.status === 401) {
+    if (response.right.status === 401) {
       // on 401, expire the current session and restart the authentication flow
       yield* put(sessionExpired());
       throw new Error(I18n.t("profile.errors.upsert"));
     }
 
-    if (response.value.status !== 200) {
+    if (response.right.status !== 200) {
       // We got a error, send a SESSION_UPSERT_FAILURE action
-      throw new Error(response.value.value.title);
+      throw new Error(response.right.value.title);
     } else {
       // Ok we got a valid response, send a SESSION_UPSERT_SUCCESS action
       yield* put(
         profileUpsert.success({
           value: currentProfile,
-          newValue: response.value.value
+          newValue: response.right.value
         })
       );
     }
@@ -285,19 +280,19 @@ function* startEmailValidationProcessSaga(
   try {
     const response = yield* call(startEmailValidationProcess, {});
     // we got an error, throw it
-    if (response.isLeft()) {
-      throw Error(readablePrivacyReport(response.value));
+    if (E.isLeft(response)) {
+      throw Error(readablePrivacyReport(response.left));
     }
-    if (response.value.status === 202) {
+    if (response.right.status === 202) {
       yield* put(startEmailValidation.success());
     }
-    if (response.value.status === 401) {
+    if (response.right.status === 401) {
       // in case we got an expired session while loading the profile, we reset
       // the session
       yield* put(sessionExpired());
     }
     throw response
-      ? Error(`response status ${response.value.status}`)
+      ? Error(`response status ${response.right.status}`)
       : Error(I18n.t("profile.errors.load"));
   } catch (e) {
     yield* put(startEmailValidation.failure(convertUnknownToError(e)));
@@ -307,15 +302,16 @@ function* startEmailValidationProcessSaga(
 // check if the current device language matches the one saved in the profile
 function* checkPreferredLanguage(
   profileLoadSuccessAction: ActionType<typeof profileLoadSuccess>
-): Generator<ReduxSagaEffect, any, Option<Locales>> {
+): Generator<ReduxSagaEffect, any, O.Option<Locales>> {
   // check if the preferred_languages is up to date
   const preferredLanguages =
     profileLoadSuccessAction.payload.preferred_languages;
   const currentStoredLocale: ReturnType<typeof preferredLanguageSelector> =
     yield* select(preferredLanguageSelector);
   // deviceLocale could be the one stored or the one retrieved from the running device
-  const deviceLocale = currentStoredLocale.getOrElse(
-    getLocalePrimaryWithFallback()
+  const deviceLocale = pipe(
+    currentStoredLocale,
+    O.getOrElse(() => getLocalePrimaryWithFallback())
   );
   // if the preferred language isn't set, update it with the current device locale
   if (!preferredLanguages || preferredLanguages.length === 0) {
@@ -332,7 +328,7 @@ function* checkPreferredLanguage(
   // if there is not value stored about preferred language or
   // the stored value is different from one into the profile, update it
   if (
-    currentStoredLocale.isNone() ||
+    O.isNone(currentStoredLocale) ||
     currentStoredLocale.value !== currentLocale
   ) {
     yield* put(
@@ -492,20 +488,27 @@ export function* upsertAppVersionSaga() {
     return;
   }
 
-  const maybeStoredVersion = fromNullable(profileState.value.last_app_version);
+  const maybeStoredVersion = O.fromNullable(
+    profileState.value.last_app_version
+  );
   const rawAppVersion = yield* call(getAppVersion);
-  const maybeAppVersion = fromEither(AppVersion.decode(rawAppVersion));
+  const maybeAppVersion = O.fromEither(AppVersion.decode(rawAppVersion));
 
   // There was a problem decoding the local app version
   // using the regex from the backend. The upsert won't be
   // triggered in this case.
-  if (isNone(maybeAppVersion)) {
+  if (O.isNone(maybeAppVersion)) {
     return;
   }
 
   // If the stored app version is the same as the
   // current one, we are going to skip the upsert.
-  if (maybeStoredVersion.contains(setoidString, maybeAppVersion.value)) {
+  const isSameVersion = pipe(
+    maybeStoredVersion,
+    O.elem(S.Eq)(maybeAppVersion.value)
+  );
+
+  if (isSameVersion) {
     return;
   }
 

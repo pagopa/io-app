@@ -1,6 +1,6 @@
-import { fromNullable, isNone, none } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
-import { Millisecond } from "italia-ts-commons/lib/units";
+import * as O from "fp-ts/lib/Option";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { Alert } from "react-native";
 import { channel } from "redux-saga";
 import {
@@ -16,6 +16,7 @@ import {
   takeLatest
 } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
+import { pipe } from "fp-ts/lib/function";
 import { UserDataProcessingChoiceEnum } from "../../definitions/backend/UserDataProcessingChoice";
 import { UserDataProcessingStatusEnum } from "../../definitions/backend/UserDataProcessingStatus";
 import { BackendClient } from "../api/backend";
@@ -30,7 +31,6 @@ import {
   pagoPaApiUrlPrefixTest,
   pnEnabled,
   svEnabled,
-  usePaginatedMessages,
   zendeskEnabled
 } from "../config";
 import { watchBonusSaga } from "../features/bonus/bonusVacanze/store/sagas/bonusSaga";
@@ -46,11 +46,9 @@ import NavigationService from "../navigation/NavigationService";
 import { startApplicationInitialization } from "../store/actions/application";
 import { sessionExpired } from "../store/actions/authentication";
 import { previousInstallationDataDeleteSuccess } from "../store/actions/installation";
-import { loadMessageWithRelations } from "../store/actions/messages";
 import { setMixpanelEnabled } from "../store/actions/mixpanel";
 import {
   navigateToMainNavigatorAction,
-  navigateToMessageRouterScreen,
   navigateToPaginatedMessageRouterAction,
   navigateToPrivacyScreen
 } from "../store/actions/navigation";
@@ -119,10 +117,7 @@ import {
   checkSession,
   watchCheckSessionSaga
 } from "./startup/watchCheckSessionSaga";
-import { watchLoadMessages } from "./startup/watchLoadMessagesSaga";
-import { watchLoadMessageWithRelationsSaga } from "./startup/watchLoadMessageWithRelationsSaga";
 import { watchLogoutSaga } from "./startup/watchLogoutSaga";
-import { watchMessageLoadSaga } from "./startup/watchMessageLoadSaga";
 import { watchSessionExpiredSaga } from "./startup/watchSessionExpiredSaga";
 import { watchUserDataProcessingSaga } from "./user/userDataProcessing";
 import {
@@ -184,8 +179,8 @@ export function* initializeApplicationSaga(): Generator<
     yield* select(profileSelector);
 
   const lastEmailValidated = pot.isSome(lastLoggedInProfileState)
-    ? fromNullable(lastLoggedInProfileState.value.is_email_validated)
-    : none;
+    ? O.fromNullable(lastLoggedInProfileState.value.is_email_validated)
+    : O.none;
 
   // Watch for profile changes
   yield* fork(watchProfileEmailValidationChangedSaga, lastEmailValidated);
@@ -240,13 +235,13 @@ export function* initializeApplicationSaga(): Generator<
   // eslint-disable-next-line functional/no-let
   let maybeSessionInformation: ReturnType<typeof sessionInfoSelector> =
     yield* select(sessionInfoSelector);
-  if (isSessionRefreshed || maybeSessionInformation.isNone()) {
+  if (isSessionRefreshed || O.isNone(maybeSessionInformation)) {
     // let's try to load the session information from the backend.
     maybeSessionInformation = yield* call(
       loadSessionInformationSaga,
       backendClient.getSession
     );
-    if (maybeSessionInformation.isNone()) {
+    if (O.isNone(maybeSessionInformation)) {
       // we can't go further without session info, let's restart
       // the initialization process
       yield* put(startApplicationInitialization());
@@ -273,7 +268,7 @@ export function* initializeApplicationSaga(): Generator<
     backendClient.getProfile
   );
 
-  if (isNone(maybeUserProfile)) {
+  if (O.isNone(maybeUserProfile)) {
     // Start again if we can't load the profile but wait a while
     yield* delay(WAIT_INITIALIZE_SAGA);
     yield* put(startApplicationInitialization());
@@ -316,7 +311,7 @@ export function* initializeApplicationSaga(): Generator<
   // Start watching for requests of abort the onboarding
   const watchAbortOnboardingSagaTask = yield* fork(watchAbortOnboardingSaga);
 
-  if (!previousSessionToken || isNone(maybeStoredPin)) {
+  if (!previousSessionToken || O.isNone(maybeStoredPin)) {
     // The user wasn't logged in when the application started or, for some
     // reason, he was logged in but there is no unlock code set, thus we need
     // to pass through the onboarding process.
@@ -465,16 +460,18 @@ export function* initializeApplicationSaga(): Generator<
           typeof loadUserDataProcessing.success
         >
       ) {
-        const maybeDeletePending = fromNullable(
-          loadUserDataProcessingSuccess.payload.value
-        ).filter(
-          uc =>
-            uc.choice === UserDataProcessingChoiceEnum.DELETE &&
-            uc.status === UserDataProcessingStatusEnum.PENDING
+        const maybeDeletePending = pipe(
+          loadUserDataProcessingSuccess.payload.value,
+          O.fromNullable,
+          O.filter(
+            uc =>
+              uc.choice === UserDataProcessingChoiceEnum.DELETE &&
+              uc.status === UserDataProcessingStatusEnum.PENDING
+          )
         );
         type leftOrRight = "left" | "right";
         const alertChoiceChannel = channel<leftOrRight>();
-        if (maybeDeletePending.isSome()) {
+        if (O.isSome(maybeDeletePending)) {
           Alert.alert(
             I18n.t("startup.userDeletePendingAlert.title"),
             I18n.t("startup.userDeletePendingAlert.message"),
@@ -512,37 +509,22 @@ export function* initializeApplicationSaga(): Generator<
   // Load visible services and service details from backend when requested
   yield* fork(watchLoadServicesSaga, backendClient);
 
-  // Load all messages when requested
-  yield* fork(watchLoadMessages, backendClient.getMessages);
-
-  if (usePaginatedMessages) {
-    yield* fork(watchLoadNextPageMessages, backendClient.getMessages);
-    yield* fork(watchLoadPreviousPageMessages, backendClient.getMessages);
-    yield* fork(watchReloadAllMessages, backendClient.getMessages);
-    yield* fork(watchLoadMessageById, backendClient.getMessage);
-    yield* fork(watchLoadMessageDetails, backendClient.getMessage);
-    yield* fork(
-      watchUpsertMessageStatusAttribues,
-      backendClient.upsertMessageStatusAttributes
-    );
-    yield* fork(
-      watchMigrateToPagination,
-      backendClient.upsertMessageStatusAttributes
-    );
-  }
+  yield* fork(watchLoadNextPageMessages, backendClient.getMessages);
+  yield* fork(watchLoadPreviousPageMessages, backendClient.getMessages);
+  yield* fork(watchReloadAllMessages, backendClient.getMessages);
+  yield* fork(watchLoadMessageById, backendClient.getMessage);
+  yield* fork(watchLoadMessageDetails, backendClient.getMessage);
+  yield* fork(
+    watchUpsertMessageStatusAttribues,
+    backendClient.upsertMessageStatusAttributes
+  );
+  yield* fork(
+    watchMigrateToPagination,
+    backendClient.upsertMessageStatusAttributes
+  );
 
   // Load third party message content when requested
   yield* fork(watchThirdPartyMessageSaga, backendClient);
-
-  // Load a message when requested
-  yield* fork(watchMessageLoadSaga, backendClient.getMessage);
-
-  // Load message and related entities (ex. the sender service)
-  yield* takeEvery(
-    getType(loadMessageWithRelations.request),
-    watchLoadMessageWithRelationsSaga,
-    backendClient.getMessage
-  );
 
   // Watch for the app going to background/foreground
   yield* fork(watchApplicationActivitySaga);
@@ -570,16 +552,12 @@ export function* initializeApplicationSaga(): Generator<
 
     yield* call(navigateToMainNavigatorAction);
     // Navigate to message router screen
-    if (usePaginatedMessages) {
-      NavigationService.dispatchNavigationAction(
-        navigateToPaginatedMessageRouterAction({
-          messageId: messageId as UIMessageId,
-          fromNotification: true
-        })
-      );
-    } else {
-      yield* call(navigateToMessageRouterScreen, { messageId });
-    }
+    NavigationService.dispatchNavigationAction(
+      navigateToPaginatedMessageRouterAction({
+        messageId: messageId as UIMessageId,
+        fromNotification: true
+      })
+    );
   } else {
     yield* call(navigateToMainNavigatorAction);
   }

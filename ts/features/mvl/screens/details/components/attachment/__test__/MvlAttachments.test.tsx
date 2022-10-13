@@ -1,17 +1,17 @@
 import React from "react";
 
-import { createStore } from "redux";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { fireEvent } from "@testing-library/react-native";
-import * as pot from "italia-ts-commons/lib/pot";
+import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../../../../../utils/testWrapper";
 import MVL_ROUTES from "../../../../../navigation/routes";
-import { mvlMockPdfAttachment } from "../../../../../types/__mock__/mvlMock";
-import { MvlPreferences } from "../../../../../store/reducers/preferences";
-import { MvlAttachments } from "../MvlAttachments";
 import { MvlDownloads } from "../../../../../store/reducers/downloads";
+import { MvlPreferences } from "../../../../../store/reducers/preferences";
+import { mvlMockPdfAttachment } from "../../../../../types/__mock__/mvlMock";
+import { MvlAttachments } from "../MvlAttachments";
 
 const mockPresentBottomSheet = jest.fn();
 
@@ -71,7 +71,11 @@ describe("MvlAttachments", () => {
               openPreview: jest.fn()
             },
             { showAlertForAttachments: false },
-            { [mvlMockPdfAttachment.id]: loadingPot }
+            {
+              [mvlMockPdfAttachment.messageId]: {
+                [mvlMockPdfAttachment.id]: loadingPot
+              }
+            }
           );
           expect(
             res.queryByTestId("attachmentActivityIndicator")
@@ -97,7 +101,11 @@ describe("MvlAttachments", () => {
               openPreview: jest.fn()
             },
             { showAlertForAttachments: false },
-            { [mvlMockPdfAttachment.id]: notLoadingPot }
+            {
+              [mvlMockPdfAttachment.messageId]: {
+                [mvlMockPdfAttachment.id]: notLoadingPot
+              }
+            }
           );
           expect(res.queryByTestId("attachmentActivityIndicator")).toBeNull();
         });

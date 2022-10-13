@@ -1,4 +1,5 @@
-import { fromNullable, Option } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 
 import { Platform } from "react-native";
 import { createSelector } from "reselect";
@@ -40,8 +41,8 @@ export const versionInfoDataSelector = (state: GlobalState) =>
  */
 const selectVersion = (
   versionPerPlatform: IOVersionPerPlatform | undefined
-): Option<string> =>
-  fromNullable(
+): O.Option<string> =>
+  O.fromNullable(
     Platform.select({
       ios: versionPerPlatform?.ios,
       android: versionPerPlatform?.android
@@ -49,9 +50,11 @@ const selectVersion = (
   );
 
 const isSupported = (versionPerPlatform: IOVersionPerPlatform | undefined) =>
-  selectVersion(versionPerPlatform)
-    .map(v => isVersionSupported(v, getAppVersion()))
-    .getOrElse(true);
+  pipe(
+    selectVersion(versionPerPlatform),
+    O.map(v => isVersionSupported(v, getAppVersion())),
+    O.getOrElse(() => true)
+  );
 
 /**
  * Return true if the app needs to be updated and the user cannot continue to use the app without an update

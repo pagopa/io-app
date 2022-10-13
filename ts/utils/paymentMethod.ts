@@ -1,6 +1,7 @@
-import { fromNullable } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
 import { Alert, ImageSourcePropType, ImageURISource } from "react-native";
-import { Either, right } from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
 import { Abi } from "../../definitions/pagopa/walletv2/Abi";
 import {
   Card,
@@ -115,10 +116,13 @@ export const getTitleFromBancomat = (
   bancomatInfo: RawBancomatPaymentMethod,
   abiList: IndexedById<Abi>
 ) =>
-  fromNullable(bancomatInfo.info.issuerAbiCode)
-    .chain(abiCode => fromNullable(abiList[abiCode]))
-    .chain(abi => fromNullable(abi.name))
-    .getOrElse(I18n.t("wallet.methods.bancomat.name"));
+  pipe(
+    bancomatInfo.info.issuerAbiCode,
+    O.fromNullable,
+    O.chain(abiCode => O.fromNullable(abiList[abiCode])),
+    O.chain(abi => O.fromNullable(abi.name)),
+    O.getOrElse(() => I18n.t("wallet.methods.bancomat.name"))
+  );
 
 const getTitleForSatispay = () => I18n.t("wallet.methods.satispay.name");
 const getTitleForPaypal = (paypal: RawPayPalPaymentMethod) =>
@@ -143,10 +147,13 @@ export const getTitleFromPaymentMethod = (
   }
   if (isRawBPay(paymentMethod)) {
     return (
-      fromNullable(paymentMethod.info.instituteCode)
-        .chain(abiCode => fromNullable(abiList[abiCode]))
-        .chain(abi => fromNullable(abi.name))
-        .toUndefined() ??
+      pipe(
+        paymentMethod.info.instituteCode,
+        O.fromNullable,
+        O.chain(abiCode => O.fromNullable(abiList[abiCode])),
+        O.chain(abi => O.fromNullable(abi.name)),
+        O.toUndefined
+      ) ??
       paymentMethod.info.bankName ??
       I18n.t("wallet.methods.bancomatPay.name")
     );
@@ -257,12 +264,12 @@ export const isCoBadgeOrPrivativeBlocked = (pan: PaymentInstrument) =>
  */
 export const isPaymentMethodExpired = (
   paymentMethod: RawPaymentMethod
-): Either<Error, boolean> => {
+): E.Either<Error, boolean> => {
   switch (paymentMethod.kind) {
     case "BPay":
     case "PayPal":
     case "Satispay":
-      return right(false);
+      return E.right(false);
     case "Bancomat":
     case "Privative":
     case "CreditCard":

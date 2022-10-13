@@ -1,8 +1,7 @@
-import { CompatNavigationProp } from "@react-navigation/compat";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
 import { GlobalState } from "../../../../store/reducers/types";
 import { SatispayPaymentMethod } from "../../../../types/pagopa";
@@ -16,18 +15,15 @@ export type SatispayDetailScreenNavigationParams = Readonly<{
 }>;
 
 type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps> & {
-    navigation: CompatNavigationProp<
-      IOStackNavigationProp<WalletParamsList, "WALLET_SATISPAY_DETAIL">
-    >;
-  };
+  ReturnType<typeof mapStateToProps> &
+  IOStackNavigationRouteProps<WalletParamsList, "WALLET_SATISPAY_DETAIL">;
 
 /**
  * Detail screen for a satispay
  * @constructor
  */
 const SatispayDetailScreen: React.FunctionComponent<Props> = props => {
-  const satispay: SatispayPaymentMethod = props.navigation.getParam("satispay");
+  const satispay: SatispayPaymentMethod = props.route.params.satispay;
   return (
     <BasePaymentMethodScreen
       paymentMethod={satispay}

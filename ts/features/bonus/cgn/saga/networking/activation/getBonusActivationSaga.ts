@@ -1,18 +1,19 @@
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import * as E from "fp-ts/lib/Either";
 import { call } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
-import { Millisecond } from "italia-ts-commons/lib/units";
+import { StatusEnum } from "../../../../../../../definitions/cgn/CgnActivationDetail";
+import { mixpanelTrack } from "../../../../../../mixpanel";
 import {
   ReduxSagaEffect,
   SagaCallReturnType
 } from "../../../../../../types/utils";
+import { getError } from "../../../../../../utils/errors";
+import { readablePrivacyReport } from "../../../../../../utils/reporters";
+import { startTimer } from "../../../../../../utils/timer";
 import { BackendCGN } from "../../../api/backendCgn";
 import { cgnActivationStatus } from "../../../store/actions/activation";
 import { CgnActivationProgressEnum } from "../../../store/reducers/activation";
-import { startTimer } from "../../../../../../utils/timer";
-import { readablePrivacyReport } from "../../../../../../utils/reporters";
-import { getError } from "../../../../../../utils/errors";
-import { mixpanelTrack } from "../../../../../../mixpanel";
-import { StatusEnum } from "../../../../../../../definitions/cgn/CgnActivationDetail";
 
 // wait time between requests
 const cgnResultPolling = 1000 as Millisecond;
@@ -51,8 +52,8 @@ export const cgnActivationSaga = (
         typeof startCgnActivation
       > = yield* call(startCgnActivation, {});
 
-      if (startCgnActivationResult.isRight()) {
-        const status = startCgnActivationResult.value.status;
+      if (E.isRight(startCgnActivationResult)) {
+        const status = startCgnActivationResult.right.status;
         // Status is 201 request has been created -> Start Polling
         if (status === 201) {
           return yield* call(handleCgnStatusPolling);
@@ -70,10 +71,10 @@ export const cgnActivationSaga = (
             status: statusProgressRecord[status]
           });
         }
-        throw Error(`response status ${startCgnActivationResult.value.status}`);
+        throw Error(`response status ${startCgnActivationResult.right.status}`);
       }
       // decoding failure
-      throw Error(readablePrivacyReport(startCgnActivationResult.value));
+      throw Error(readablePrivacyReport(startCgnActivationResult.left));
     } catch (e) {
       return cgnActivationStatus.failure(getError(e));
     }
@@ -97,23 +98,23 @@ export const handleCgnStatusPolling = (
       const cgnActivationResult: SagaCallReturnType<typeof getCgnActivation> =
         yield* call(getCgnActivation, {});
       // blocking error -> stop polling
-      if (cgnActivationResult.isLeft()) {
-        throw cgnActivationResult.value;
+      if (E.isLeft(cgnActivationResult)) {
+        throw cgnActivationResult.left;
       }
       // we got the result -> stop polling
       else if (
-        cgnActivationResult.isRight() &&
-        cgnActivationResult.value.status === 200
+        E.isRight(cgnActivationResult) &&
+        cgnActivationResult.right.status === 200
       ) {
-        switch (cgnActivationResult.value.value.status) {
+        switch (cgnActivationResult.right.value.status) {
           case StatusEnum.COMPLETED:
             return cgnActivationStatus.success({
               status: CgnActivationProgressEnum.SUCCESS,
-              activation: cgnActivationResult.value.value
+              activation: cgnActivationResult.right.value
             });
           case StatusEnum.ERROR:
             throw Error(
-              `CGN Activation status ${cgnActivationResult.value.value.status}`
+              `CGN Activation status ${cgnActivationResult.right.value.status}`
             );
             break;
           // activation is still pending skip
@@ -121,7 +122,7 @@ export const handleCgnStatusPolling = (
             break;
           default:
             void mixpanelTrack(getType(cgnActivationStatus.failure), {
-              reason: `unexpected status result ${cgnActivationResult.value.value.status}`
+              reason: `unexpected status result ${cgnActivationResult.right.value.status}`
             });
             break;
         }

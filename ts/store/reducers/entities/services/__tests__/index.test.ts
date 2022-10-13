@@ -2,11 +2,11 @@
 
 // It implies item 42, not having the corresponding serviceMetadata being loaded, is not included among the local sections
 // Check what happen with items 41 and 42 beign someLoading and someError
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import {
   NonEmptyString,
   OrganizationFiscalCode
-} from "italia-ts-commons/lib/strings";
+} from "@pagopa/ts-commons/lib/strings";
 import {
   localServicesSectionsSelector,
   nationalServicesSectionsSelector,

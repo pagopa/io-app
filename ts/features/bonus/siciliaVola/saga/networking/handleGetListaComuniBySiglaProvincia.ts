@@ -1,11 +1,12 @@
-import { ActionType } from "typesafe-actions";
+import * as E from "fp-ts/lib/Either";
 import { call, put } from "typed-redux-saga/macro";
-import { BackendSiciliaVolaClient } from "../../api/backendSiciliaVola";
-import { getGenericError, getNetworkError } from "../../../../../utils/errors";
-import { svGenerateVoucherAvailableMunicipality } from "../../store/actions/voucherGeneration";
-import { SagaCallReturnType } from "../../../../../types/utils";
-import { Municipality } from "../../types/SvVoucherRequest";
+import { ActionType } from "typesafe-actions";
 import { ComuneBeanList } from "../../../../../../definitions/api_sicilia_vola/ComuneBeanList";
+import { SagaCallReturnType } from "../../../../../types/utils";
+import { getGenericError, getNetworkError } from "../../../../../utils/errors";
+import { BackendSiciliaVolaClient } from "../../api/backendSiciliaVola";
+import { svGenerateVoucherAvailableMunicipality } from "../../store/actions/voucherGeneration";
+import { Municipality } from "../../types/SvVoucherRequest";
 
 // TODO: add the mapping when the swagger will be fixed
 const mapKinds: Record<number, string> = {};
@@ -38,20 +39,20 @@ export function* handleGetListaComuniBySiglaProvincia(
     const getListaComuniResult: SagaCallReturnType<typeof getListaComuni> =
       yield* call(getListaComuni, { siglaProvincia: action.payload });
 
-    if (getListaComuniResult.isRight()) {
-      if (getListaComuniResult.value.status === 200) {
+    if (E.isRight(getListaComuniResult)) {
+      if (getListaComuniResult.right.status === 200) {
         yield* put(
           svGenerateVoucherAvailableMunicipality.success(
-            convertSuccess(getListaComuniResult.value.value)
+            convertSuccess(getListaComuniResult.right.value)
           )
         );
         return;
       }
-      if (mapKinds[getListaComuniResult.value.status] !== undefined) {
+      if (mapKinds[getListaComuniResult.right.status] !== undefined) {
         yield* put(
           svGenerateVoucherAvailableMunicipality.failure({
             ...getGenericError(
-              new Error(mapKinds[getListaComuniResult.value.status])
+              new Error(mapKinds[getListaComuniResult.right.status])
             )
           })
         );

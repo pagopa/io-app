@@ -124,7 +124,7 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is expired sh
                   }
                 }
               >
-                MESSAGE_DETAIL
+                MESSAGE_DETAIL_PAGINATED
               </Text>
             </View>
           </View>
@@ -801,7 +801,7 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is expiring s
                   }
                 }
               >
-                MESSAGE_DETAIL
+                MESSAGE_DETAIL_PAGINATED
               </Text>
             </View>
           </View>
@@ -1449,7 +1449,7 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is not expira
                   }
                 }
               >
-                MESSAGE_DETAIL
+                MESSAGE_DETAIL_PAGINATED
               </Text>
             </View>
           </View>
@@ -2225,7 +2225,7 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is valid shou
                   }
                 }
               >
-                MESSAGE_DETAIL
+                MESSAGE_DETAIL_PAGINATED
               </Text>
             </View>
           </View>

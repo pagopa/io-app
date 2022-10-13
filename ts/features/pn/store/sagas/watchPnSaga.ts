@@ -1,13 +1,14 @@
+import { readableReport } from "@pagopa/ts-commons/lib/reporters";
+import * as E from "fp-ts/lib/Either";
 import { SagaIterator } from "redux-saga";
-import { ActionType, getType } from "typesafe-actions";
 import { call, put, select, takeLatest } from "typed-redux-saga/macro";
-import { readableReport } from "italia-ts-commons/lib/reporters";
-import { pnActivationUpsert } from "../actions/service";
-import { BackendPnClient } from "../../api/backendPn";
+import { ActionType, getType } from "typesafe-actions";
 import { apiUrlPrefix } from "../../../../config";
+import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { SessionToken } from "../../../../types/SessionToken";
 import { getError } from "../../../../utils/errors";
-import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
+import { BackendPnClient } from "../../api/backendPn";
+import { pnActivationUpsert } from "../actions/service";
 
 function* upsertPnActivation(
   client: ReturnType<typeof BackendPnClient>,
@@ -20,22 +21,22 @@ function* upsertPnActivation(
     );
 
     const result = yield* call(client.upsertPnActivation, {
-      pNActivation: {
+      body: {
         activation_status
       },
       isTest
     });
 
-    if (result.isLeft()) {
+    if (E.isLeft(result)) {
       yield* put(
-        pnActivationUpsert.failure(new Error(readableReport(result.value)))
+        pnActivationUpsert.failure(new Error(readableReport(result.left)))
       );
-    } else if (result.value.status === 204) {
+    } else if (result.right.status === 204) {
       yield* put(pnActivationUpsert.success(activation_status));
     } else {
       yield* put(
         pnActivationUpsert.failure(
-          new Error(`response status ${result.value.status}`)
+          new Error(`response status ${result.right.status}`)
         )
       );
     }

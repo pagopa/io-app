@@ -1,5 +1,5 @@
+import * as O from "fp-ts/lib/Option";
 import { call, take } from "typed-redux-saga/macro";
-
 import { navigateToOnboardingPinScreenAction } from "../../store/actions/navigation";
 import { createPinSuccess } from "../../store/actions/pinset";
 
@@ -17,7 +17,7 @@ export function* checkConfiguredPinSaga(): Generator<
   // it from the Keychain
   const pinCode = yield* call(getPin);
 
-  if (pinCode.isSome()) {
+  if (O.isSome(pinCode)) {
     return pinCode.value;
   }
 

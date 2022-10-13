@@ -1,4 +1,4 @@
-import { right } from "fp-ts/lib/Either";
+import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import NavigationService from "../../../../../../navigation/NavigationService";
 import { fetchWalletsRequest } from "../../../../../../store/actions/wallet/wallets";
@@ -31,7 +31,7 @@ describe("bpdStartOnboardingWorker", () => {
       .call(navigateToBpdOnboardingLoadActivationStatus)
       .next()
       .call(isBpdEnabled)
-      .next(right(true))
+      .next(E.right(true))
       .put(fetchWalletsRequest())
       .next()
       .call(navigateToBpdOnboardingInformationTos)

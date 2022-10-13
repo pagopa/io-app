@@ -1,27 +1,28 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import React, { useState } from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
-import Pdf from "react-native-pdf";
 import ReactNativeBlobUtil from "react-native-blob-util";
-import * as pot from "italia-ts-commons/lib/pot";
-import {
-  mvlAttachmentDownloadFromIdSelector,
-  MvlDownload
-} from "../../mvl/store/reducers/downloads";
-import { isIos } from "../../../utils/platform";
+import Pdf from "react-native-pdf";
+import image from "../../../../img/servicesStatus/error-detail-icon.png";
+import { IOColors } from "../../../components/core/variables/IOColors";
+import WorkunitGenericFailure from "../../../components/error/WorkunitGenericFailure";
+import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
+import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
+import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import { confirmButtonProps } from "../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import I18n from "../../../i18n";
+import { useIOSelector } from "../../../store/hooks";
+import { UIMessageId } from "../../../store/reducers/entities/messages/types";
+import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
+import { isIos } from "../../../utils/platform";
 import { share } from "../../../utils/share";
 import { showToast } from "../../../utils/showToast";
+import { confirmButtonProps } from "../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import {
+  MvlDownload,
+  mvlDownloadFromAttachmentSelector
+} from "../../mvl/store/reducers/downloads";
 import { MvlAttachmentId } from "../../mvl/types/mvlData";
-import { useIOSelector } from "../../../store/hooks";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
-import WorkunitGenericFailure from "../../../components/error/WorkunitGenericFailure";
-import image from "../../../../img/servicesStatus/error-detail-icon.png";
-import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
-import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
-import { IOColors } from "../../../components/core/variables/IOColors";
 
 const styles = StyleSheet.create({
   container: {
@@ -55,15 +56,13 @@ const renderFooter = (
         primary: false,
         onPress: () => {
           onShare?.();
-          share(`file://${path}`, undefined, false)
-            .run()
-            .catch(_ => {
-              showToast(
-                I18n.t(
-                  "features.mvl.details.attachments.pdfPreview.errors.sharing"
-                )
-              );
-            });
+          share(`file://${path}`, undefined, false)().catch(_ => {
+            showToast(
+              I18n.t(
+                "features.mvl.details.attachments.pdfPreview.errors.sharing"
+              )
+            );
+          });
         },
         title: I18n.t("global.buttons.share")
       }}
@@ -118,6 +117,7 @@ const renderFooter = (
   );
 
 type Props = {
+  messageId: UIMessageId;
   attachmentId: MvlAttachmentId;
   onLoadComplete?: () => void;
   onError?: () => void;
@@ -129,9 +129,10 @@ type Props = {
 export const MessageAttachmentPreview = (props: Props): React.ReactElement => {
   const [isError, setIsError] = useState(false);
 
+  const messageId = props.messageId;
   const attachmentId = props.attachmentId;
   const downloadPot = useIOSelector(state =>
-    mvlAttachmentDownloadFromIdSelector(state, attachmentId)
+    mvlDownloadFromAttachmentSelector(state, { messageId, id: attachmentId })
   );
   const download = pot.toUndefined(downloadPot);
   return download ? (

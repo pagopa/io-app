@@ -1,7 +1,8 @@
-import { CompatNavigationProp } from "@react-navigation/compat";
-import { fromNullable, none, Option } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
-import { Millisecond } from "italia-ts-commons/lib/units";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { Badge, Text, Toast, View } from "native-base";
 import * as React from "react";
 import { useCallback } from "react";
@@ -29,14 +30,14 @@ import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpac
 import IconFont from "../../../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../../../components/ui/LightModal";
 import I18n from "../../../../i18n";
-import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
 import { navigateBack } from "../../../../store/actions/navigation";
 import { Dispatch } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import variables from "../../../../theme/variables";
-import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { formatDateAsLocal } from "../../../../utils/dates";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { withBase64Uri } from "../../../../utils/image";
 import { getRemoteLocale } from "../../../../utils/messages";
 import {
@@ -84,11 +85,10 @@ export type ActiveBonusScreenNavigationParams = Readonly<{
 const QR_CODE_MIME_TYPE = "image/svg+xml";
 const PNG_IMAGE_TYPE = "image/png";
 
-type OwnProps = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<WalletParamsList, "BONUS_ACTIVE_DETAIL_SCREEN">
-  >;
-};
+type OwnProps = IOStackNavigationRouteProps<
+  WalletParamsList,
+  "BONUS_ACTIVE_DETAIL_SCREEN"
+>;
 
 type Props = OwnProps &
   ReturnType<typeof mapDispatchToProps> &
@@ -231,8 +231,11 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 };
 
 const shareQR = async (content: string, code: string) => {
-  const shared = await share(withBase64Uri(content, "png"), code).run();
-  shared.mapLeft(_ => showToastGenericError());
+  const shared = await share(withBase64Uri(content, "png"), code)();
+  pipe(
+    shared,
+    E.mapLeft(_ => showToastGenericError())
+  );
 };
 const showToastGenericError = () => showToast(I18n.t("global.genericError"));
 const startRefreshPollingAfter = 3000 as Millisecond;
@@ -285,7 +288,7 @@ const ActiveBonusFooterButtons: React.FunctionComponent<FooterProps> = (
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
-  const bonusFromNav = props.navigation.getParam("bonus");
+  const bonusFromNav = props.route.params.bonus;
   const bonus = pot.getOrElse(props.bonus, bonusFromNav);
   const screenShotRef = React.createRef<ViewShot>();
   const [qrCode, setQRCode] = React.useState<QRCodeContents>({});
@@ -321,8 +324,8 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
   // return an option containing the capture function
 
   const captureScreenshot = useCallback(
-    (): Option<() => Promise<string>> =>
-      fromNullable(
+    (): O.Option<() => Promise<string>> =>
+      O.fromNullable(
         screenShotRef && screenShotRef.current && screenShotRef.current.capture
       ),
     [screenShotRef]
@@ -332,22 +335,25 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
     if (screenShotState.isPrintable) {
       {
         // start capture screenshot
-        captureScreenshot().map(capture => {
-          capture()
-            .then(screenShotUri => {
-              setScreenShotState(prev => ({ ...prev, screenShotUri }));
-            })
-            .catch(() => {
-              showToastGenericError();
-              // animate fadeOut of flash light animation
-              Animated.timing(backgroundAnimation, {
-                duration: flashAnimation,
-                toValue: 0,
-                useNativeDriver: false,
-                easing: Easing.cubic
-              }).start();
-            });
-        });
+        pipe(
+          captureScreenshot(),
+          O.map(capture => {
+            capture()
+              .then(screenShotUri => {
+                setScreenShotState(prev => ({ ...prev, screenShotUri }));
+              })
+              .catch(() => {
+                showToastGenericError();
+                // animate fadeOut of flash light animation
+                Animated.timing(backgroundAnimation, {
+                  duration: flashAnimation,
+                  toValue: 0,
+                  useNativeDriver: false,
+                  easing: Easing.cubic
+                }).start();
+              });
+          })
+        );
         return;
       }
     }
@@ -357,14 +363,16 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
     // if the screenShotUri is defined start saving image and restore default style
     // show a toast error if something went wrong
     if (screenShotState.screenShotUri) {
-      saveImageToGallery(`file://${screenShotState.screenShotUri}`)
-        .run()
+      saveImageToGallery(`file://${screenShotState.screenShotUri}`)()
         .then(maybeSaved => {
-          maybeSaved.fold(showToastGenericError, () => {
-            Toast.show({
-              text: I18n.t("bonus.bonusVacanze.saveScreenShotOk")
-            });
-          });
+          E.foldW(
+            () => showToastGenericError,
+            () => {
+              Toast.show({
+                text: I18n.t("bonus.bonusVacanze.saveScreenShotOk")
+              });
+            }
+          )(maybeSaved);
         })
         .catch(showToastGenericError)
         .finally(() => {
@@ -391,7 +399,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
 
   // call this function to create a screenshot and save it into the device camera roll
   const saveScreenShot = () => {
-    if (captureScreenshot().isSome()) {
+    if (O.isSome(captureScreenshot())) {
       // start screen capturing when first flash light animation will be completed (screen becomes white)
       Animated.timing(backgroundAnimation, {
         duration: flashAnimation,
@@ -486,7 +494,11 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
         >
           <IconFont
             name={icon}
-            color={fromNullable(iconColor).getOrElse(variables.textColor)}
+            color={pipe(
+              iconColor,
+              O.fromNullable,
+              O.getOrElse(() => variables.textColor)
+            )}
             size={variables.fontSize3}
             style={styles.paddedIconLeft}
           />
@@ -505,8 +517,20 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
         return renderInformationBlock(
           "io-calendario",
           I18n.t("bonus.bonusVacanze.statusInfo.validBetween", {
-            from: bonusValidityInterval.fold("n/a", v => v.e1),
-            to: bonusValidityInterval.fold("n/a", v => v.e2)
+            from: pipe(
+              bonusValidityInterval,
+              O.fold(
+                () => "n/a",
+                v => v.e1
+              )
+            ),
+            to: pipe(
+              bonusValidityInterval,
+              O.fold(
+                () => "n/a",
+                v => v.e2
+              )
+            )
           })
         );
       case BonusActivationStatusEnum.REDEEMED:
@@ -514,7 +538,11 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
           "io-complete",
           I18n.t("bonus.bonusVacanze.statusInfo.redeemed", {
             date: formatDateAsLocal(
-              fromNullable(bonus.redeemed_at).getOrElse(bonus.created_at),
+              pipe(
+                bonus.redeemed_at,
+                O.fromNullable,
+                O.getOrElse(() => bonus.created_at)
+              ),
               true
             )
           }),
@@ -535,19 +563,29 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
       <TosBonusComponent tos_url={tos} onClose={props.hideModal} />
     );
 
-  const maybeBonusInfo = fromNullable(props.bonusInfo);
-  const bonusInfoFromLocale = maybeBonusInfo
-    .map(b => b[getRemoteLocale()])
-    .toUndefined();
-  const maybeBonusTos = fromNullable(bonusInfoFromLocale).fold(none, b =>
-    maybeNotNullyString(b.tos_url)
+  const maybeBonusInfo = O.fromNullable(props.bonusInfo);
+  const bonusInfoFromLocale = pipe(
+    maybeBonusInfo,
+    O.map(b => b[getRemoteLocale()]),
+    O.toUndefined
+  );
+  const maybeBonusTos = pipe(
+    bonusInfoFromLocale,
+    O.fromNullable,
+    O.chain(b => maybeNotNullyString(b.tos_url))
   );
 
-  const from = maybeBonusInfo.map(bi => bi.valid_from);
-  const to = maybeBonusInfo.map(bi => bi.valid_to);
+  const from = pipe(
+    maybeBonusInfo,
+    O.map(bi => bi.valid_from)
+  );
+  const to = pipe(
+    maybeBonusInfo,
+    O.map(bi => bi.valid_to)
+  );
   const bonusValidityInterval = validityInterval(
-    from.toUndefined(),
-    to.toUndefined()
+    O.toUndefined(from),
+    O.toUndefined(to)
   );
   return !props.isError && bonus ? (
     <>
@@ -609,7 +647,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
                 <View spacer={true} />
                 <ItemSeparatorComponent noPadded={true} />
                 <View spacer={true} />
-                {maybeStatusDescription.isSome() && (
+                {O.isSome(maybeStatusDescription) && (
                   <View style={styles.rowBlock}>
                     <Text
                       semibold={true}
@@ -656,7 +694,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
                     {formatDateAsLocal(bonus.created_at, true)}
                   </Text>
                 </View>
-                {!screenShotState.isPrintable && maybeBonusTos.isSome() && (
+                {!screenShotState.isPrintable && O.isSome(maybeBonusTos) && (
                   <>
                     <View spacer={true} />
                     <ItemSeparatorComponent noPadded={true} />
@@ -699,7 +737,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
 };
 
 const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
-  const bonusFromNav = ownProps.navigation.getParam("bonus");
+  const bonusFromNav = ownProps.route.params.bonus;
   const bonus = bonusActiveDetailByIdSelector(bonusFromNav.id)(state);
 
   return {

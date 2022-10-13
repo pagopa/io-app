@@ -1,6 +1,6 @@
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { bpdAllData } from "../../../../store/actions/details";
 import {
   optInPaymentMethodsShowChoice,

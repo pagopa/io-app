@@ -1,4 +1,4 @@
-import { left, right } from "fp-ts/lib/Either";
+import * as E from "fp-ts/lib/Either";
 import * as t from "io-ts";
 import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
@@ -19,7 +19,7 @@ describe("loadSessionInformationSaga", () => {
       .provide([
         [
           matchers.call.fn(getSession),
-          right({ status: 200, value: aPublicSession })
+          E.right({ status: 200, value: aPublicSession })
         ]
       ])
       .put(sessionInformationLoadSuccess(aPublicSession))
@@ -32,7 +32,7 @@ describe("loadSessionInformationSaga", () => {
       .provide([
         [
           matchers.call.fn(getSession),
-          left([
+          E.left([
             t.getValidationError(
               "some error occurred",
               t.getDefaultContext(t.null)

@@ -1,3 +1,5 @@
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -39,10 +41,34 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 const mapStateToProps = (state: GlobalState) => {
   const elc = eligibilityEligibleSelector(state);
   return {
-    bonusAmount: elc.fold(0, e => e.dsu_request.max_amount),
-    taxBenefit: elc.fold(0, e => e.dsu_request.max_tax_benefit),
-    familyMembers: elc.fold([], e => e.dsu_request.family_members),
-    hasDiscrepancies: elc.fold(false, e => e.dsu_request.has_discrepancies),
+    bonusAmount: pipe(
+      elc,
+      O.fold(
+        () => 0,
+        e => e.dsu_request.max_amount
+      )
+    ),
+    taxBenefit: pipe(
+      elc,
+      O.fold(
+        () => 0,
+        e => e.dsu_request.max_tax_benefit
+      )
+    ),
+    familyMembers: pipe(
+      elc,
+      O.fold(
+        () => [],
+        e => e.dsu_request.family_members
+      )
+    ),
+    hasDiscrepancies: pipe(
+      elc,
+      O.fold(
+        () => false,
+        e => e.dsu_request.has_discrepancies
+      )
+    ),
     logo: bonusVacanzeLogo(state)
   };
 };

@@ -1,6 +1,6 @@
 import { expectSaga } from "redux-saga-test-plan";
 
-import { NonNegativeInteger } from "italia-ts-commons/lib/numbers";
+import { NonNegativeInteger } from "@pagopa/ts-commons/lib/numbers";
 import { getType } from "typesafe-actions";
 
 import { startApplicationInitialization } from "../../../store/actions/application";

@@ -1,17 +1,18 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as E from "fp-ts/lib/Either";
 import { call, put, select } from "typed-redux-saga/macro";
-import * as pot from "italia-ts-commons/lib/pot";
 import { ActionType } from "typesafe-actions";
-import { upsertServicePreference } from "../../../store/actions/services/servicePreference";
-import { BackendClient } from "../../../api/backend";
-import { SagaCallReturnType } from "../../../types/utils";
-import { getGenericError, getNetworkError } from "../../../utils/errors";
 import { ServicePreference } from "../../../../definitions/backend/ServicePreference";
-import { readablePrivacyReport } from "../../../utils/reporters";
+import { BackendClient } from "../../../api/backend";
+import { upsertServicePreference } from "../../../store/actions/services/servicePreference";
 import {
   servicePreferenceSelector,
   ServicePreferenceState
 } from "../../../store/reducers/entities/services/servicePreference";
 import { isServicePreferenceResponseSuccess } from "../../../types/services/ServicePreferenceResponse";
+import { SagaCallReturnType } from "../../../types/utils";
+import { getGenericError, getNetworkError } from "../../../utils/errors";
+import { readablePrivacyReport } from "../../../utils/reporters";
 import { mapKinds } from "./handleGetServicePreferenceSaga";
 
 /**
@@ -80,37 +81,37 @@ export function* handleUpsertServicePreference(
     const response: SagaCallReturnType<typeof upsertServicePreferences> =
       yield* call(upsertServicePreferences, {
         service_id: action.payload.id,
-        upsertServicePreference: updatingPreference
+        body: updatingPreference
       });
 
-    if (response.isRight()) {
-      if (response.value.status === 200) {
+    if (E.isRight(response)) {
+      if (response.right.status === 200) {
         yield* put(
           upsertServicePreference.success({
             id: action.payload.id,
             kind: "success",
             value: {
-              inbox: response.value.value.is_inbox_enabled,
-              push: response.value.value.is_webhook_enabled,
-              email: response.value.value.is_email_enabled,
+              inbox: response.right.value.is_inbox_enabled,
+              push: response.right.value.is_webhook_enabled,
+              email: response.right.value.is_email_enabled,
 
               // If the optional flag does not exists it will be set
               // as the value of `inbox`.
               can_access_message_read_status:
-                response.value.value.can_access_message_read_status ??
-                response.value.value.is_inbox_enabled,
-              settings_version: response.value.value.settings_version
+                response.right.value.can_access_message_read_status ??
+                response.right.value.is_inbox_enabled,
+              settings_version: response.right.value.settings_version
             }
           })
         );
         return;
       }
 
-      if (mapKinds[response.value.status] !== undefined) {
+      if (mapKinds[response.right.status] !== undefined) {
         yield* put(
           upsertServicePreference.success({
             id: action.payload.id,
-            kind: mapKinds[response.value.status]
+            kind: mapKinds[response.right.status]
           })
         );
         return;
@@ -120,7 +121,7 @@ export function* handleUpsertServicePreference(
         upsertServicePreference.failure({
           id: action.payload.id,
           ...getGenericError(
-            new Error(`response status code ${response.value.status}`)
+            new Error(`response status code ${response.right.status}`)
           )
         })
       );
@@ -130,7 +131,7 @@ export function* handleUpsertServicePreference(
     yield* put(
       upsertServicePreference.failure({
         id: action.payload.id,
-        ...getGenericError(new Error(readablePrivacyReport(response.value)))
+        ...getGenericError(new Error(readablePrivacyReport(response.left)))
       })
     );
   } catch (e) {

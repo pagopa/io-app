@@ -1,14 +1,14 @@
-import { right } from "fp-ts/lib/Either";
-import { getType } from "typesafe-actions";
+import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
+import { getType } from "typesafe-actions";
 
 import { loadNextPageMessages as action } from "../../../store/actions/messages";
-import { testTryLoadNextPageMessages } from "../watchLoadNextPageMessages";
 import {
   apiPayload,
   defaultRequestPayload,
   successLoadNextPageMessagesPayload
 } from "../../../__mocks__/messages";
+import { testTryLoadNextPageMessages } from "../watchLoadNextPageMessages";
 
 const tryLoadNextPageMessages = testTryLoadNextPageMessages!;
 
@@ -31,7 +31,7 @@ describe("tryLoadNextPageMessages", () => {
       )
         .next()
         .call(getMessages, getMessagesPayload)
-        .next(right({ status: 200, value: apiPayload }))
+        .next(E.right({ status: 200, value: apiPayload }))
         .put(action.success(successLoadNextPageMessagesPayload))
         .next()
         .isDone();
@@ -47,7 +47,7 @@ describe("tryLoadNextPageMessages", () => {
       )
         .next()
         .call(getMessages, getMessagesPayload)
-        .next(right({ status: 500, value: { title: "Backend error" } }))
+        .next(E.right({ status: 500, value: { title: "Backend error" } }))
         .put(
           action.failure({
             error: new Error("Backend error"),
@@ -73,7 +73,7 @@ describe("tryLoadNextPageMessages", () => {
         .next()
         .put(
           action.failure({
-            error: new TypeError("Cannot read property 'fold' of undefined"),
+            error: new Error("Response is undefined"),
             filter: defaultRequestPayload.filter
           })
         )

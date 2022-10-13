@@ -1,10 +1,16 @@
-import { isNone, isSome, Option } from "fp-ts/lib/Option";
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
+import * as O from "fp-ts/lib/Option";
 import { CreatedMessageWithContent } from "../../../definitions/backend/CreatedMessageWithContent";
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { FiscalCode } from "../../../definitions/backend/FiscalCode";
 import { MessageBodyMarkdown } from "../../../definitions/backend/MessageBodyMarkdown";
 import { MessageContent } from "../../../definitions/backend/MessageContent";
+import { MessageSubject } from "../../../definitions/backend/MessageSubject";
+import { ServiceId } from "../../../definitions/backend/ServiceId";
+import { ServiceMetadata } from "../../../definitions/backend/ServiceMetadata";
+import { ServiceScope } from "../../../definitions/backend/ServiceScope";
+import { StandardServiceCategoryEnum } from "../../../definitions/backend/StandardServiceCategory";
+import { TimeToLiveSeconds } from "../../../definitions/backend/TimeToLiveSeconds";
 import { Locales } from "../../../locales/locales";
 import { setLocale } from "../../i18n";
 import { CTA, CTAS } from "../../types/MessageCTA";
@@ -18,9 +24,6 @@ import {
   MessagePaymentExpirationInfo,
   paymentExpirationInfo
 } from "../messages";
-import { ServiceScope } from "../../../definitions/backend/ServiceScope";
-import { ServiceMetadata } from "../../../definitions/backend/ServiceMetadata";
-import { StandardServiceCategoryEnum } from "../../../definitions/backend/StandardServiceCategory";
 
 const messageBody = `### this is a message
 
@@ -70,24 +73,24 @@ it:
 ---
 ` + messageBody;
 
-const messageWithoutPaymentData = {
+const messageWithoutPaymentData: CreatedMessageWithContent = {
   created_at: new Date(),
   fiscal_code: "RSSMRA83A12H501D" as FiscalCode,
   id: "93726BD8-D29C-48F2-AE6D-2F",
-  sender_service_id: "dev-service_0",
-  time_to_live: 3600,
+  sender_service_id: "dev-service_0" as ServiceId,
+  time_to_live: 3600 as TimeToLiveSeconds,
   content: {
-    subject: "Subject - test 1",
-    markdown: CTA_2
-  } as MessageContent
-} as CreatedMessageWithContent;
+    subject: "Subject - test 1" as MessageSubject,
+    markdown: CTA_2 as MessageBodyMarkdown
+  }
+};
 
 const messageWithContentWithoutDueDate = {
   created_at: new Date(),
   fiscal_code: "RSSMRA83A12H501D" as FiscalCode,
   id: "93726BD8-D29C-48F2-AE6D-2F",
   sender_service_id: "dev-service_0",
-  time_to_live: 3600,
+  time_to_live: 3600 as TimeToLiveSeconds,
   content: {
     subject: "Subject - test 1",
     markdown: CTA_2,
@@ -225,7 +228,7 @@ some noise`;
         markdown: CTA_1 as MessageBodyMarkdown
       }
     });
-    expect(maybeCTA.isNone());
+    expect(O.isNone(maybeCTA));
   });
 
   it("should not have a valid CTA", () => {
@@ -236,7 +239,7 @@ some noise`;
         markdown: "nothing of nothing" as MessageBodyMarkdown
       }
     });
-    expect(maybeCTA.isNone()).toBeTruthy();
+    expect(O.isNone(maybeCTA)).toBeTruthy();
   });
 
   it("should not have a valid CTA", () => {
@@ -254,7 +257,7 @@ some noise`;
         markdown: NO_CTA as MessageBodyMarkdown
       }
     });
-    expect(maybeCTA.isNone()).toBeTruthy();
+    expect(O.isNone(maybeCTA)).toBeTruthy();
   });
 
   it("should have a valid CTA for service", () => {
@@ -272,8 +275,8 @@ some noise`;
       },
       validServiceMetadata
     );
-    expect(maybeCTAs.isSome()).toBeTruthy();
-    if (maybeCTAs.isSome()) {
+    expect(O.isSome(maybeCTAs)).toBeTruthy();
+    if (O.isSome(maybeCTAs)) {
       const ctas = maybeCTAs.value;
       expect(ctas.cta_1).toBeDefined();
       expect(ctas.cta_1.text).toEqual("Interno con params");
@@ -291,19 +294,19 @@ some noise`;
         markdown: CTA_MALFORMED as MessageBodyMarkdown
       }
     });
-    expect(maybeCTAs.isSome()).toBeFalsy();
+    expect(O.isSome(maybeCTAs)).toBeFalsy();
   });
 });
 
 const test2CTA = (
-  maybeCTAS: Option<CTAS>,
+  maybeCTAS: O.Option<CTAS>,
   text1: string,
   action1: string,
   text2: string,
   action2: string
 ) => {
-  expect(maybeCTAS.isSome()).toBeTruthy();
-  if (maybeCTAS.isSome()) {
+  expect(O.isSome(maybeCTAS)).toBeTruthy();
+  if (O.isSome(maybeCTAS)) {
     const ctas = maybeCTAS.value;
     expect(ctas.cta_1).toBeDefined();
     expect(ctas.cta_2).toBeDefined();
@@ -334,8 +337,8 @@ en:
       cta: CTA_SERVICE as ServiceMetadata["cta"]
     };
     const maybeCTA = getServiceCTA(validServiceMetadata);
-    expect(maybeCTA.isSome()).toBeTruthy();
-    if (maybeCTA.isSome()) {
+    expect(O.isSome(maybeCTA)).toBeTruthy();
+    if (O.isSome(maybeCTA)) {
       const ctas = maybeCTA.value;
       expect(ctas.cta_1).toBeDefined();
       expect(ctas.cta_1.text).toEqual("Interno con params");
@@ -351,7 +354,7 @@ en:
       token_name: "myPortalToken" as ServiceMetadata["token_name"]
     };
     const maybeCTA = getServiceCTA(invalidServiceMetadata);
-    expect(maybeCTA.isSome()).toBeFalsy();
+    expect(O.isSome(maybeCTA)).toBeFalsy();
   });
 });
 
@@ -481,11 +484,11 @@ describe("getMessagePaymentExpirationInfo", () => {
 describe("paymentExpirationInfo", () => {
   it("should be None if there isn't payment data in the message", () => {
     const expirationInfo = paymentExpirationInfo(messageWithoutPaymentData);
-    expect(isNone(expirationInfo)).toBe(true);
+    expect(O.isNone(expirationInfo)).toBe(true);
   });
   it("should be a MessagePaymentExpirationInfo if there is payment data in the message", () => {
     const expirationInfo = paymentExpirationInfo(messageWithoutPaymentData);
-    if (isSome(expirationInfo)) {
+    if (O.isSome(expirationInfo)) {
       expect(expirationInfo.value).toBeInstanceOf(
         {} as MessagePaymentExpirationInfo
       );
