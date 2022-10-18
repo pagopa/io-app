@@ -2,6 +2,7 @@ import { CommonActions } from "@react-navigation/native";
 import { call, take } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
+import { remindersOptInEnabled } from "../../config";
 import NavigationService from "../../navigation/NavigationService";
 import ROUTES from "../../navigation/routes";
 import { profileUpsert } from "../../store/actions/profile";
@@ -10,6 +11,11 @@ import { isProfileFirstOnBoarding } from "../../store/reducers/profile";
 export function* checkNotificationsPreferencesSaga(
   userProfile: InitializedProfile
 ) {
+  if (!remindersOptInEnabled) {
+    // the feature flag is disabled
+    return;
+  }
+
   const isFirstOnboarding = isProfileFirstOnBoarding(userProfile);
 
   if (userProfile.reminder_status !== undefined) {
