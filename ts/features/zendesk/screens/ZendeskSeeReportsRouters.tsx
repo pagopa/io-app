@@ -1,6 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
-import { fromNullable } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import React, { useEffect } from "react";
 import { SafeAreaView } from "react-native";
 import { useDispatch } from "react-redux";
@@ -144,11 +145,14 @@ const ZendeskSeeReportsRouters = (props: Props) => {
     // we sequentially check both:
     // - if the zendeskToken is present the user will be authenticated via jwt
     // - nothing is available (the user is not authenticated in IO) the user will be totally anonymous also in Zendesk
-    const zendeskIdentity = fromNullable(zendeskToken)
-      .map((zT: string): JwtIdentity | AnonymousIdentity => ({
+    const zendeskIdentity = pipe(
+      zendeskToken,
+      O.fromNullable,
+      O.map((zT: string): JwtIdentity | AnonymousIdentity => ({
         token: zT
-      }))
-      .getOrElse({});
+      })),
+      O.getOrElse(() => ({}))
+    );
 
     setUserIdentity(zendeskIdentity);
     dispatch(zendeskRequestTicketNumber.request());
