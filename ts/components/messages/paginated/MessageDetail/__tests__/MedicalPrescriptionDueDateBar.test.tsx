@@ -87,7 +87,7 @@ const renderComponent = (
   return {
     component: renderScreenFakeNavRedux<GlobalState>(
       () => <MedicalPrescriptionDueDateBar {...props} />,
-      ROUTES.MESSAGE_DETAIL,
+      ROUTES.MESSAGE_DETAIL_PAGINATED,
       {},
       store
     ),

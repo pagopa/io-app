@@ -48,11 +48,8 @@ import {
   identificationSuccess
 } from "../actions/identification";
 import {
-  DEPRECATED_loadMessage,
-  DEPRECATED_loadMessages as loadMessages,
-  DEPRECATED_setMessageReadState,
-  migrateToPaginatedMessages,
-  removeMessages
+  removeMessages,
+  migrateToPaginatedMessages
 } from "../actions/messages";
 import { setMixpanelEnabled } from "../actions/mixpanel";
 import {
@@ -163,8 +160,6 @@ const trackAction =
           count: action.payload.data.length,
           total: O.getOrElse(() => -1)(action.payload.total)
         });
-      // messages
-      case getType(loadMessages.success):
       // end pay webview Payment (payment + onboarding credit card) actions (with properties)
       case getType(addCreditCardWebViewEnd):
         return mp.track(action.type, {
@@ -247,9 +242,6 @@ const trackAction =
           messagesIdsToRemoveFromCache: action.payload
         });
       }
-      case getType(DEPRECATED_setMessageReadState): {
-        return mp.track(action.type, action.payload);
-      }
       case getType(migrateToPaginatedMessages.request): {
         return mp.track("MESSAGES_MIGRATION_START", {
           total: Object.keys(action.payload).length
@@ -269,7 +261,6 @@ const trackAction =
       // logout / load message / delete wallets / failure
       case getType(deleteAllPaymentMethodsByFunction.failure):
       case getType(upsertUserDataProcessing.failure):
-      case getType(DEPRECATED_loadMessage.failure):
       case getType(logoutFailure):
         return mp.track(action.type, {
           reason: action.payload.error.message
@@ -283,7 +274,6 @@ const trackAction =
       case getType(profileUpsert.failure):
       case getType(userMetadataUpsert.failure):
       case getType(userMetadataLoad.failure):
-      case getType(loadMessages.failure):
       case getType(refreshPMTokenWhileAddCreditCard.failure):
       case getType(deleteWalletFailure):
       case getType(setFavouriteWalletFailure):
@@ -352,7 +342,6 @@ const trackAction =
       case getType(userMetadataLoad.request):
       case getType(userMetadataLoad.success):
       // messages
-      case getType(loadMessages.request):
       case getType(searchMessagesEnabled):
       // wallet
       case getType(addWalletCreditCardInit):
@@ -385,7 +374,6 @@ const trackAction =
       //  profile First time Login
       case getType(profileFirstLogin):
       // other
-      case getType(DEPRECATED_loadMessage.success):
       case getType(updateNotificationsInstallationToken):
       case getType(notificationsInstallationTokenRegistered):
       case getType(loadAllBonusActivations.request):
