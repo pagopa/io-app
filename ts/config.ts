@@ -76,10 +76,6 @@ export const svEnabled: boolean = Config.SICILIAVOLA_ENABLED === "YES";
 // Zendesk Feature Flag
 export const zendeskEnabled: boolean = Config.ZENDESK_ENABLED === "YES";
 
-// Paginated messages
-export const usePaginatedMessages: boolean =
-  Config.PAGINATED_MESSAGES === "YES";
-
 // MVL messages
 export const mvlEnabled: boolean = Config.MVL_ENABLED === "YES";
 
@@ -112,6 +108,9 @@ export const newTransactionSummaryEnabled =
 
 // PN (Piattaforma Notifiche) Feature Flag
 export const pnEnabled = Config.PN_ENABLED === "YES";
+
+// Opt-in for reminder push notifications
+export const remindersOptInEnabled = Config.REMINDERS_OPT_IN_ENABLED === "YES";
 
 // version of ToS
 export const tosVersion: NonNegativeNumber = 4.0 as NonNegativeNumber;
