@@ -8,15 +8,17 @@ import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import I18n from "../../i18n";
 import { RemoteSwitch } from "../../components/core/selection/RemoteSwitch";
-import { profileRemindersPreferenceSelector } from "../../store/reducers/profile";
+import { profilePreferencesSelector } from "../../store/reducers/profile";
 import { useIODispatch } from "../../store/hooks";
 import { profileUpsert } from "../../store/actions/profile";
 import { ReminderStatusEnum } from "../../../definitions/backend/ReminderStatus";
+import { PushNotificationsContentTypeEnum } from "../../../definitions/backend/PushNotificationsContentType";
 import { showToast } from "../../utils/showToast";
 import { Link } from "../../components/core/typography/Link";
 import customVariables from "../../theme/variables";
 import { useIOBottomSheetModal } from "../../utils/hooks/bottomSheet";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
+import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
 import { Body } from "../../components/core/typography/Body";
 
 const styles = StyleSheet.create({
@@ -29,11 +31,12 @@ const styles = StyleSheet.create({
 export const NotificationsPreferencesScreen = () => {
   const dispatch = useIODispatch();
   const [isUpserting, setIsUpserting] = useState(false);
+  const preferences = useSelector(profilePreferencesSelector);
 
-  const remindersPreference = useSelector(profileRemindersPreferenceSelector);
-
-  const isError = pot.isError(remindersPreference);
-  const isUpdating = pot.isUpdating(remindersPreference);
+  const reminder = pot.map(preferences, p => p.remider);
+  const preview = pot.map(preferences, p => p.preview);
+  const isError = pot.isError(preferences);
+  const isUpdating = pot.isUpdating(preferences);
 
   const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
     <Body>
@@ -92,19 +95,20 @@ export const NotificationsPreferencesScreen = () => {
             }
             rightElement={
               <RemoteSwitch
-                value={remindersPreference}
+                value={preview}
                 onValueChange={(value: boolean) =>
-                  togglePreference<ReminderStatusEnum>(
-                    "reminder_status",
+                  togglePreference<PushNotificationsContentTypeEnum>(
+                    "push_notifications_content_type",
                     value
-                      ? ReminderStatusEnum.ENABLED
-                      : ReminderStatusEnum.DISABLED
+                      ? PushNotificationsContentTypeEnum.FULL
+                      : PushNotificationsContentTypeEnum.ANONYMOUS
                   )
                 }
                 testID="previewPreferenceSwitch"
               />
             }
           />
+          <ItemSeparatorComponent noPadded={true} />
           <PreferencesListItem
             title={I18n.t("profile.preferences.notifications.reminders.title")}
             description={I18n.t(
@@ -112,7 +116,7 @@ export const NotificationsPreferencesScreen = () => {
             )}
             rightElement={
               <RemoteSwitch
-                value={remindersPreference}
+                value={reminder}
                 onValueChange={(value: boolean) =>
                   togglePreference<ReminderStatusEnum>(
                     "reminder_status",
@@ -125,6 +129,7 @@ export const NotificationsPreferencesScreen = () => {
               />
             }
           />
+          <ItemSeparatorComponent noPadded={true} />
         </List>
         {bottomSheet}
       </ScreenContent>

@@ -20,6 +20,7 @@ import {
 import { Action } from "../actions/types";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
 import { ReminderStatusEnum } from "../../../definitions/backend/ReminderStatus";
+import { PushNotificationsContentTypeEnum } from "../../../definitions/backend/PushNotificationsContentType";
 import { GlobalState } from "./types";
 
 export type ProfileState = pot.Pot<InitializedProfile, Error>;
@@ -148,10 +149,18 @@ export const isProfileEmailValidatedSelector = createSelector(
     )
 );
 
-export const profileRemindersPreferenceSelector = createSelector(
+// return preferences
+export const profilePreferencesSelector = createSelector(
   profileSelector,
-  (profile: ProfileState): pot.Pot<boolean, Error> =>
-    pot.map(profile, p => p.reminder_status === ReminderStatusEnum.ENABLED)
+  (
+    profile: ProfileState
+  ): pot.Pot<{ remider: boolean; preview: boolean }, Error> =>
+    pot.map(profile, p => ({
+      remider: p.reminder_status === ReminderStatusEnum.ENABLED,
+      preview:
+        p.push_notifications_content_type ===
+        PushNotificationsContentTypeEnum.FULL
+    }))
 );
 
 const reducer = (
@@ -206,6 +215,8 @@ const reducer = (
             service_preferences_settings:
               newProfile.service_preferences_settings,
             reminder_status: newProfile.reminder_status,
+            push_notifications_content_type:
+              newProfile.push_notifications_content_type,
             version: 0
           });
         }
@@ -229,6 +240,8 @@ const reducer = (
             service_preferences_settings:
               newProfile.service_preferences_settings,
             reminder_status: newProfile.reminder_status,
+            push_notifications_content_type:
+              newProfile.push_notifications_content_type,
             version: newProfile.version
           });
         }

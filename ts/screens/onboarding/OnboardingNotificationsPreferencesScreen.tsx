@@ -6,7 +6,7 @@ import { SafeAreaView, StyleSheet, View } from "react-native";
 import { PreferencesListItem } from "../../components/PreferencesListItem";
 import ScreenContent from "../../components/screens/ScreenContent";
 import I18n from "../../i18n";
-import { profileRemindersPreferenceSelector } from "../../store/reducers/profile";
+import { profilePreferencesSelector } from "../../store/reducers/profile";
 import { useIODispatch } from "../../store/hooks";
 import { profileUpsert } from "../../store/actions/profile";
 import { ReminderStatusEnum } from "../../../definitions/backend/ReminderStatus";
@@ -129,10 +129,10 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
   const [remindersEnabled, setRemindersEnabled] = useState(true);
   const [isUpserting, setIsUpserting] = useState(false);
 
-  const remindersPreference = useSelector(profileRemindersPreferenceSelector);
+  const preferences = useSelector(profilePreferencesSelector);
 
-  const isError = pot.isError(remindersPreference);
-  const isUpdating = pot.isUpdating(remindersPreference);
+  const isError = pot.isError(preferences);
+  const isUpdating = pot.isUpdating(preferences);
 
   const isFirstOnboarding = props.navigation.getParam("isFirstOnboarding");
 
