@@ -112,6 +112,9 @@ export const fciEnabled = Config.FCI_ENABLED === "YES";
 // PN (Piattaforma Notifiche) Feature Flag
 export const pnEnabled = Config.PN_ENABLED === "YES";
 
+// Opt-in for reminder push notifications
+export const remindersOptInEnabled = Config.REMINDERS_OPT_IN_ENABLED === "YES";
+
 // version of ToS
 export const tosVersion: NonNegativeNumber = 4.0 as NonNegativeNumber;
 
