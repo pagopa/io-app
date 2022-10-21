@@ -76,10 +76,6 @@ export const svEnabled: boolean = Config.SICILIAVOLA_ENABLED === "YES";
 // Zendesk Feature Flag
 export const zendeskEnabled: boolean = Config.ZENDESK_ENABLED === "YES";
 
-// Paginated messages
-export const usePaginatedMessages: boolean =
-  Config.PAGINATED_MESSAGES === "YES";
-
 // MVL messages
 export const mvlEnabled: boolean = Config.MVL_ENABLED === "YES";
 
@@ -109,6 +105,9 @@ export const scanAdditionalBarcodesEnabled =
 // Redesign of the transaction summary screen
 export const newTransactionSummaryEnabled =
   Config.NEW_TRANSACTION_SUMMARY_ENABLED === "YES";
+
+// FCI (Firma con IO) Feature Flag
+export const fciEnabled = Config.FCI_ENABLED === "YES";
 
 // PN (Piattaforma Notifiche) Feature Flag
 export const pnEnabled = Config.PN_ENABLED === "YES";
