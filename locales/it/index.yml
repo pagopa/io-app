@@ -511,6 +511,14 @@ profile:
       reminders:
         title: Consenti i promemoria
         description: Ricevi notifiche in prossimità di scadenze o quando non hai ancora letto dei messaggi
+      preview:
+        title: Mostra anteprime
+        description: Includi nella notifica push il mittente e l’oggetto del messaggio ·
+        link: Più info
+        bottomSheet:
+          title: Mostra anteprime
+          content: "Quando l’opzione è attiva, le notifiche push mostrano il mittente e l’oggetto dei messaggi: così sai chi ti ha scritto senza accedere all’app.\nQueste informazioni, che potrebbero essere sensibili, vengono trattate dal gestore del tuo sistema operativo e sono mostrate anche quando il dispositivo è bloccato. Se vuoi evitare la visualizzazione delle anteprime, disattiva l’opzione."
+          cta: Ho capito!
       error: Si è verificato un errore con la tua richiesta
 userMetadata:
   errors:
