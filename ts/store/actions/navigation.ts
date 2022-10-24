@@ -3,7 +3,6 @@ import { CreditCardDetailScreenNavigationParams } from "../../features/wallet/cr
 import NavigationService from "../../navigation/NavigationService";
 import ROUTES from "../../navigation/routes";
 import { CieCardReaderScreenNavigationParams } from "../../screens/authentication/cie/CieCardReaderScreen";
-import { MessageDetailScreenNavigationParams } from "../../screens/messages/MessageDetailScreen";
 import { MessageDetailScreenPaginatedNavigationParams } from "../../screens/messages/paginated/MessageDetailScreen";
 import { MessageRouterScreenPaginatedNavigationParams } from "../../screens/messages/paginated/MessageRouterScreen";
 import { FingerprintScreenNavigationParams } from "../../screens/onboarding/FingerprintScreen";
@@ -157,19 +156,6 @@ export const navigateToEmailInsertScreen = () => {
  */
 
 /**
- * @deprecated
- */
-export const navigateToMessageDetailScreenAction = (
-  params: MessageDetailScreenNavigationParams
-) =>
-  NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.MESSAGES_NAVIGATOR, {
-      screen: ROUTES.MESSAGE_DETAIL,
-      params
-    })
-  );
-
-/**
  * Open the Message Detail screen supporting the new UIMessage type.
  */
 export const navigateToPaginatedMessageDetailScreenAction = (
@@ -190,19 +176,6 @@ export const navigateToPaginatedMessageRouterAction = (
     screen: ROUTES.MESSAGE_ROUTER_PAGINATED,
     params
   });
-
-/**
- * @deprecated
- */
-export const navigateToMessageRouterScreen = (
-  params: MessageDetailScreenNavigationParams
-) =>
-  NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.MESSAGES_NAVIGATOR, {
-      screen: ROUTES.MESSAGE_ROUTER,
-      params
-    })
-  );
 
 /**
  * Service
