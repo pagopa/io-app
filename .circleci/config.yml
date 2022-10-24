@@ -270,6 +270,13 @@ jobs:
       - restore_cache:
           key: *android_jars_cache_key
 
+      # Set the ruby version to the version used by devs
+      - run:
+        name: Set ruby to version 2.7.6
+        command: |
+          rvm install 2.7.6
+          echo . $(rvm 2.7.6 do rvm env --path) >> $BASH_ENV
+
       - run:
           name: Configure Bundler
           command: |
@@ -327,6 +334,13 @@ jobs:
           keys:
             - *ios_gems_cache_key
 
+      # Set the ruby version to the version used by devs
+      - run:
+        name: Set ruby to version 2.7.6
+        command: |
+          rvm install 2.7.6
+          echo . $(rvm 2.7.6 do rvm env --path) >> $BASH_ENV
+          
       - run:
           name: Configure Bundler
           command: |
