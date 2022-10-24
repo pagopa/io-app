@@ -49,7 +49,8 @@ const projectToScope = new Map<string, string>([
   ["ASZ", "Zendesk"],
   ["IAMVL", "Piattaforma Notifiche"],
   ["IAFIMS", "Federated Identity Management System"],
-  ["AP", "Carta della cultura"]
+  ["AP", "Carta della cultura"],
+  ["SFEQS", "Firma con IO"]
 ]);
 
 const cleanChangelogRegex =
