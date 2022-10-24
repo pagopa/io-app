@@ -109,15 +109,15 @@ const Header = memo(({ isFirstOnboarding }: { isFirstOnboarding: boolean }) => (
     <H1 color={isFirstOnboarding ? "bluegreyDark" : "white"}>
       {I18n.t(
         isFirstOnboarding
-          ? "profile.preferences.notifications.titleNewUser"
-          : "profile.preferences.notifications.title"
+          ? "profile.preferences.notifications.titleUser"
+          : "profile.preferences.notifications.titleExistingUser"
       )}
     </H1>
     <Body color={isFirstOnboarding ? "bluegreyDark" : "white"}>
       {I18n.t(
         isFirstOnboarding
-          ? "profile.preferences.notifications.subtitleNewUser"
-          : "profile.preferences.notifications.subtitle"
+          ? "profile.preferences.notifications.subtitle"
+          : "profile.preferences.notifications.subtitleExistingUser"
       )}
     </Body>
   </View>

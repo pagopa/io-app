@@ -504,10 +504,10 @@ profile:
       birthday_calendar: Compleanni
     notifications:
       header: Notifiche
-      title: Notifiche push più intelligenti
-      subtitle: Ora puoi vedere subito chi ti ha scritto o ricevere promemoria da messaggi importanti.
-      titleNewUser: Personalizza le notifiche
-      subtitleNewUser: Scegli come ricevere aggiornamenti sui messaggi e promemoria che ricevi.
+      title: Personalizza le notifiche
+      subtitle: Scegli come ricevere aggiornamenti sui messaggi e promemoria che ricevi.
+      titleExistingUser: Notifiche push più intelligenti
+      subtitleExistingUser: Ora puoi vedere subito chi ti ha scritto o ricevere promemoria da messaggi importanti.
       reminders:
         title: Consenti i promemoria
         description: Ricevi notifiche in prossimità di scadenze o quando non hai ancora letto dei messaggi
