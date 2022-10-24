@@ -1,11 +1,11 @@
-import { testSaga } from "redux-saga-test-plan";
 import * as O from "fp-ts/lib/Option";
-import { paymentStartRequest } from "../pagopaApis";
-import { SessionManager } from "../../../utils/SessionManager";
-import { PaymentManagerToken } from "../../../types/pagopa";
+import { testSaga } from "redux-saga-test-plan";
 import { paymentExecuteStart } from "../../../store/actions/wallet/payment";
+import { PaymentManagerToken } from "../../../types/pagopa";
+import { SessionManager } from "../../../utils/SessionManager";
+import { paymentStartRequest } from "../pagopaApis";
 
-jest.mock("@react-native-community/async-storage", () => ({
+jest.mock("@react-native-async-storage/async-storage", () => ({
   AsyncStorage: jest.fn()
 }));
 
