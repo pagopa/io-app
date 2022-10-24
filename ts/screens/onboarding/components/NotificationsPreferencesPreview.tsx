@@ -8,6 +8,7 @@ import { IOColors } from "../../../components/core/variables/IOColors";
 import customVariables from "../../../theme/variables";
 import AppLogo from "../../../../img/app-logo.svg";
 import I18n from "../../../i18n";
+import { TranslationKeys } from "../../../../locales/locales";
 
 const backgroundImageHeight = 200;
 const notificationHeight = 72;
@@ -51,18 +52,48 @@ const styles = StyleSheet.create({
 });
 
 type Props = {
+  previewEnabled: boolean;
   remindersEnabled: boolean;
   isFirstOnboarding: boolean;
 };
 
+const computeTitleAndMessageKeys = (isPreviewEnabled: boolean, areRemindersEnabled: boolean): {titleKey: TranslationKeys; messageKey: TranslationKeys} => {
+  
+  if (isPreviewEnabled && areRemindersEnabled) {
+    
+    return {
+      titleKey: "onboarding.notifications.preview.reminderOnPreviewOnTitle" as TranslationKeys,
+      messageKey: "onboarding.notifications.preview.reminderOnPreviewOnMessage" as TranslationKeys
+    };
+
+  } else if (isPreviewEnabled && !areRemindersEnabled) {
+
+    return {
+      titleKey: "onboarding.notifications.preview.reminderOffPreviewOnTitle" as TranslationKeys,
+      messageKey: "onboarding.notifications.preview.reminderOffPreviewOnMessage" as TranslationKeys
+    };
+
+  } else if (!isPreviewEnabled && areRemindersEnabled) {
+
+    return {
+      titleKey: "onboarding.notifications.preview.reminderOnPreviewOffTitle" as TranslationKeys,
+      messageKey: "onboarding.notifications.preview.reminderOnPreviewOffMessage" as TranslationKeys
+    };
+  }
+  
+  return {
+    titleKey: "onboarding.notifications.preview.reminderOffPreviewOffTitle" as TranslationKeys,
+    messageKey: "onboarding.notifications.preview.reminderOffPreviewOffMessage" as TranslationKeys
+  };
+};
+
 export const NotificationsPreferencesPreview = ({
+  previewEnabled,
   remindersEnabled,
   isFirstOnboarding
 }: Props) => {
-  const title = remindersEnabled
-    ? I18n.t("onboarding.notifications.remindersPreviewTitle")
-    : I18n.t("onboarding.notifications.previewTitle");
-  const message = I18n.t("onboarding.notifications.previewMessage");
+
+  const { titleKey, messageKey } = computeTitleAndMessageKeys(previewEnabled, remindersEnabled);
 
   return (
     <View style={[styles.container, !isFirstOnboarding && styles.blue]}>
@@ -81,10 +112,10 @@ export const NotificationsPreferencesPreview = ({
           <AppLogo style={{ width: 24, height: 24 }} />
           <View style={styles.info}>
             <H4 weight="SemiBold" color="bluegreyDark">
-              {title}
+              {I18n.t(titleKey)}
             </H4>
             <H5 weight={"Regular"} color={"bluegrey"}>
-              {message}
+              {I18n.t(messageKey)}
             </H5>
           </View>
         </View>

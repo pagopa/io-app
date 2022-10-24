@@ -852,9 +852,15 @@ onboarding:
     badge: Novità
     headerTitle: Configura IO
     continue: Continua
-    remindersPreviewTitle: Promemoria
-    previewTitle: Hai un nuovo messaggio
-    previewMessage: Apri l’app per leggere il contenuto
+    preview:
+      reminderOnPreviewOnTitle: Bonus Terme
+      reminderOnPreviewOnMessage: Hai ancora 7 giorni per richiedere il bonus!
+      reminderOffPreviewOnTitle: Ministero dell’Interno
+      reminderOffPreviewOnMessage: Aggiornamenti sul tuo cambio di residenza
+      reminderOnPreviewOffTitle: Promemoria
+      reminderOnPreviewOffMessage: Apri l’app per leggere il contenuto
+      reminderOffPreviewOffTitle: Hai un nuovo messaggio
+      reminderOffPreviewOffMessage: Apri l’app per leggere il contenuto
 forms:
   validators:
     required: Valore richiesto

@@ -16,10 +16,8 @@ import { PushNotificationsContentTypeEnum } from "../../../definitions/backend/P
 import { showToast } from "../../utils/showToast";
 import { Link } from "../../components/core/typography/Link";
 import customVariables from "../../theme/variables";
-import { useIOBottomSheetModal } from "../../utils/hooks/bottomSheet";
-import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
-import { Body } from "../../components/core/typography/Body";
+import { usePreviewMoreInfo } from "../../utils/hooks/usePreviewMoreInfo";
 
 const styles = StyleSheet.create({
   mediumText: {
@@ -33,29 +31,12 @@ export const NotificationsPreferencesScreen = () => {
   const [isUpserting, setIsUpserting] = useState(false);
   const preferences = useSelector(profilePreferencesSelector);
 
-  const reminder = pot.map(preferences, p => p.remider);
+  const reminder = pot.map(preferences, p => p.reminder);
   const preview = pot.map(preferences, p => p.preview);
   const isError = pot.isError(preferences);
   const isUpdating = pot.isUpdating(preferences);
 
-  const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
-    <Body>
-      {I18n.t("profile.preferences.notifications.preview.bottomSheet.content")}
-    </Body>,
-    I18n.t("profile.preferences.notifications.preview.bottomSheet.title"),
-    400,
-    <FooterWithButtons
-      type="SingleButton"
-      leftButton={{
-        block: true,
-        primary: true,
-        onPress: () => dismiss(),
-        title: I18n.t(
-          "profile.preferences.notifications.preview.bottomSheet.cta"
-        )
-      }}
-    />
-  );
+  const { present, bottomSheet } = usePreviewMoreInfo();
 
   useEffect(() => {
     if (isError && isUpserting) {
