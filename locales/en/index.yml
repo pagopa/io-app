@@ -485,7 +485,7 @@ profile:
         not_selected: Not selected
       notifications:
         title: Push notifications
-        subtitle: Consenti anteprima e promemoria
+        subtitle: Allow previews and reminders 
     empty:
       default: No preference set
     unavailable:
