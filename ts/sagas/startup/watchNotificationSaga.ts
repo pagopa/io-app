@@ -1,14 +1,10 @@
 import { AppStateStatus } from "react-native";
 import { SagaIterator } from "redux-saga";
-import { call, put, select } from "typed-redux-saga/macro";
-import {
-  navigateToMessageRouterScreen,
-  navigateToPaginatedMessageRouterAction
-} from "../../store/actions/navigation";
+import { put, select } from "typed-redux-saga/macro";
+import { navigateToPaginatedMessageRouterAction } from "../../store/actions/navigation";
 import { clearNotificationPendingMessage } from "../../store/actions/notifications";
 import { pendingMessageStateSelector } from "../../store/reducers/notifications/pendingMessage";
 import { isPaymentOngoingSelector } from "../../store/reducers/wallet/payment";
-import { usePaginatedMessages } from "../../config";
 import NavigationService from "../../navigation/NavigationService";
 import { UIMessageId } from "../../store/reducers/entities/messages/types";
 
@@ -41,16 +37,12 @@ export function* watchNotificationSaga(
       yield* put(clearNotificationPendingMessage());
 
       // Navigate to message details screen
-      if (usePaginatedMessages) {
-        NavigationService.dispatchNavigationAction(
-          navigateToPaginatedMessageRouterAction({
-            messageId: messageId as UIMessageId,
-            fromNotification: true
-          })
-        );
-      } else {
-        yield* call(navigateToMessageRouterScreen, { messageId });
-      }
+      NavigationService.dispatchNavigationAction(
+        navigateToPaginatedMessageRouterAction({
+          messageId: messageId as UIMessageId,
+          fromNotification: true
+        })
+      );
     }
   }
 }
