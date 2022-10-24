@@ -75,6 +75,10 @@ export const NotificationsPreferencesScreen = () => {
     <TopScreenComponent
       goBack={true}
       headerTitle={I18n.t("profile.preferences.notifications.header")}
+      contextualHelpMarkdown={{
+        title: "profile.preferences.notifications.contextualHelpTitle",
+        body: "profile.preferences.notifications.contextualHelpContent"
+      }}
     >
       <ScreenContent
         title={I18n.t("profile.preferences.notifications.title")}

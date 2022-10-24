@@ -503,6 +503,8 @@ profile:
       local_calendar: Calendario locale
       birthday_calendar: Compleanni
     notifications:
+      contextualHelpTitle: Titolo
+      contextualHelpContent: !include profile/profile_preferences_notifications.md
       header: Notifiche
       title: Personalizza le notifiche
       subtitle: Scegli come ricevere aggiornamenti sui messaggi e promemoria che ricevi.
