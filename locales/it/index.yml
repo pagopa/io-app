@@ -484,8 +484,8 @@ profile:
           subtitle: Dovrai riavviare l'applicazione per applicare il cambiamento
         not_selected: Non selezionato
       notifications:
-        title: Notifiche
-        subtitle: Consenti anteprima e promemoria
+        title: Notifiche push
+        subtitle: Consenti anteprime e promemoria
     empty:
       default: Nessuna preferenza impostata
     unavailable:
@@ -505,14 +505,14 @@ profile:
     notifications:
       contextualHelpTitle: Titolo
       contextualHelpContent: !include profile/profile_preferences_notifications.md
-      header: Notifiche
-      title: Personalizza le notifiche
-      subtitle: Scegli come ricevere aggiornamenti sui messaggi e promemoria che ricevi.
+      header: Notifiche push
+      title: Personalizza le notifiche push
+      subtitle: Scegli come ricevere aggiornamenti sui messaggi e promemoria che ricevi
       titleExistingUser: Notifiche push più intelligenti
       subtitleExistingUser: Ora puoi vedere subito chi ti ha scritto o ricevere promemoria da messaggi importanti.
       reminders:
         title: Consenti i promemoria
-        description: Ricevi notifiche in prossimità di scadenze o quando non hai ancora letto dei messaggi
+        description: Ricevi notifiche push in prossimità di scadenze o quando non hai ancora letto dei messaggi
       preview:
         title: Mostra anteprime
         description: Includi nella notifica push il mittente e l’oggetto del messaggio ·
