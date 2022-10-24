@@ -33,7 +33,7 @@ export const NotificationsPreferencesScreen = () => {
   const [isUpserting, setIsUpserting] = useState(false);
   const preferences = useSelector(profilePreferencesSelector);
 
-  const reminder = pot.map(preferences, p => p.remider);
+  const reminder = pot.map(preferences, p => p.reminder);
   const preview = pot.map(preferences, p => p.preview);
   const isError = pot.isError(preferences);
   const isUpdating = pot.isUpdating(preferences);
