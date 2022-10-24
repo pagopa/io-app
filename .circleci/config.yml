@@ -27,7 +27,7 @@ defaults_js: &defaults_js
 defaults_android: &defaults_android
   <<: *defaults
   docker:
-    - image: cimg/android:2022.01.1-node
+    - image: cimg/android:2022.09.2-node
   environment:
     TERM: "dumb"
     ANDROID_SDK_BUILD_TOOLS_REVISION: "29.0.3"
@@ -270,14 +270,6 @@ jobs:
       - restore_cache:
           key: *android_jars_cache_key
 
-      # Set the ruby version to the version used by devs
-      - run:
-          name: Set ruby to version 2.7.6
-          command: |
-            curl -L https://get.rvm.io | bash -s stable --ruby
-            rvm install 2.7.6
-            echo . $(rvm 2.7.6 do rvm env --path) >> $BASH_ENV
-
       - run:
           name: Configure Bundler
           command: |
@@ -334,14 +326,6 @@ jobs:
       - restore_cache:
           keys:
             - *ios_gems_cache_key
-
-      # Set the ruby version to the version used by devs
-      - run:
-          name: Set ruby to version 2.7.6
-          command: |
-            curl -L https://get.rvm.io | bash -s stable --ruby
-            rvm install 2.7.6
-            echo . $(rvm 2.7.6 do rvm env --path) >> $BASH_ENV
 
       - run:
           name: Configure Bundler
@@ -521,13 +505,11 @@ workflows:
             - compile-typescript
       - alpha-release-android:
           requires:
-            - compile-typescript
             - run-tests
             - run-eslint
             - run-prettier
       - ios-beta-release:
           requires:
-            - compile-typescript
             - run-tests
             - run-eslint
             - run-prettier
