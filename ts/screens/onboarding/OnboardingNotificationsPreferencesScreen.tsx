@@ -109,7 +109,7 @@ const Header = memo(({ isFirstOnboarding }: { isFirstOnboarding: boolean }) => (
     <H1 color={isFirstOnboarding ? "bluegreyDark" : "white"}>
       {I18n.t(
         isFirstOnboarding
-          ? "profile.preferences.notifications.titleUser"
+          ? "profile.preferences.notifications.title"
           : "profile.preferences.notifications.titleExistingUser"
       )}
     </H1>
