@@ -274,6 +274,7 @@ jobs:
       - run:
           name: Set ruby to version 2.7.6
           command: |
+            curl -L https://get.rvm.io | bash -s stable --ruby
             rvm install 2.7.6
             echo . $(rvm 2.7.6 do rvm env --path) >> $BASH_ENV
 
@@ -338,6 +339,7 @@ jobs:
       - run:
           name: Set ruby to version 2.7.6
           command: |
+            curl -L https://get.rvm.io | bash -s stable --ruby
             rvm install 2.7.6
             echo . $(rvm 2.7.6 do rvm env --path) >> $BASH_ENV
 
