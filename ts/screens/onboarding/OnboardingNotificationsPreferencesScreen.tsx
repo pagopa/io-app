@@ -210,6 +210,7 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
                 value={previewEnabled}
                 onValueChange={setPreviewEnabled}
                 disabled={isUpdating}
+                testID="previewsPreferenceSwitch"
               />
             }
           />
@@ -224,6 +225,7 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
                 value={remindersEnabled}
                 onValueChange={setRemindersEnabled}
                 disabled={isUpdating}
+                testID="remindersPreferenceSwitch"
               />
             }
           />
