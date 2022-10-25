@@ -278,7 +278,7 @@ jobs:
             tar -xzvf chruby-0.3.9.tar.gz
             cd chruby-0.3.9/
             sudo make install
-            
+
       - run:
           name: install ruby-install
           command: |
@@ -527,12 +527,6 @@ workflows:
       - run-prettier:
           requires:
             - compile-typescript
-      - alpha-release-android:
-          requires:
-            - run-tests
-            - run-eslint
-            - run-prettier
-
       # TODO: Native Android e2e tests
       # TODO: Slack integration
       - run-e2e-test-IOS:
