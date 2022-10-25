@@ -1,7 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import React, { memo, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { CompatNavigationProp } from "@react-navigation/compat";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import { PreferencesListItem } from "../../components/PreferencesListItem";
 import ScreenContent from "../../components/screens/ScreenContent";
@@ -11,7 +10,7 @@ import { useIODispatch } from "../../store/hooks";
 import { profileUpsert } from "../../store/actions/profile";
 import { ReminderStatusEnum } from "../../../definitions/backend/ReminderStatus";
 import { showToast } from "../../utils/showToast";
-import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { OnboardingParamsList } from "../../navigation/params/OnboardingParamsList";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
@@ -69,14 +68,10 @@ export type OnboardingNotificationsPreferencesScreenNavigationParams = {
   isFirstOnboarding: boolean;
 };
 
-type Props = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<
-      OnboardingParamsList,
-      "ONBOARDING_NOTIFICATIONS_PREFERENCES"
-    >
-  >;
-};
+type Props = IOStackNavigationRouteProps<
+  OnboardingParamsList,
+  "ONBOARDING_NOTIFICATIONS_PREFERENCES"
+>;
 
 const continueButtonProps = (
   isLoading: boolean,
@@ -143,7 +138,7 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
   const isError = pot.isError(preferences);
   const isUpdating = pot.isUpdating(preferences);
 
-  const isFirstOnboarding = props.navigation.getParam("isFirstOnboarding");
+  const { isFirstOnboarding } = props.route.params;
 
   useEffect(() => {
     if (isError && isUpserting) {

@@ -12,5 +12,6 @@ export type OnboardingParamsList = {
   [ROUTES.ONBOARDING_FINGERPRINT]: FingerprintScreenNavigationParams;
   [ROUTES.INSERT_EMAIL_SCREEN]: undefined;
   [ROUTES.READ_EMAIL_SCREEN]: undefined;
+  [ROUTES.ONBOARDING_COMPLETED]: undefined;
   [ROUTES.ONBOARDING_NOTIFICATIONS_PREFERENCES]: OnboardingNotificationsPreferencesScreenNavigationParams;
 };
