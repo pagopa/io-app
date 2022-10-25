@@ -31,6 +31,7 @@ import SectionStatusComponent from "../../components/SectionStatus";
 import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
+import { mixpanelTrack } from "../../mixpanel";
 import { IdentityProvider } from "../../models/IdentityProvider";
 import {
   AppParamsList,
@@ -336,6 +337,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
     // if the device is compromised and the user didn't allow to continue
     // show a blocking modal
     if (isRootedOrJailbroken && !this.props.continueWithRootOrJailbreak) {
+      void mixpanelTrack("SHOW_ROOTED_OR_JAILBROKEN_MODAL");
       return (
         <RootedDeviceModal
           onContinue={() => this.handleContinueWithRootOrJailbreak(true)}
