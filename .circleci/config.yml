@@ -279,13 +279,12 @@ jobs:
             cd chruby-0.3.9/
             sudo make install
       - run:
-        name: install ruby-install
-        command: |
-          wget -O ruby-install-0.7.0.tar.gz \
-          https://github.com/postmodern/ruby-install/archive/v0.7.0.tar.gz
-          tar -xzvf ruby-install-0.7.0.tar.gz
-          cd ruby-install-0.7.0/
-          sudo make install
+          name: install ruby-install
+          command: |
+            wget -O ruby-install-0.8.5.tar.gz https://github.com/postmodern/ruby-install/archive/v0.8.5.tar.gz
+            tar -xzvf ruby-install-0.8.5.tar.gz
+            cd ruby-install-0.8.5/
+            sudo make install
       - run: ruby-install ruby 2.7.6
       - run:
           name: Set chruby
