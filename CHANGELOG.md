@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.18.0-rc.6](https://github.com/pagopa/io-app/compare/2.18.0-rc.5...2.18.0-rc.6) (2022-10-25)
+
+
+### Chores
+
+* [[IOAPPFD0-8](https://pagopa.atlassian.net/browse/IOAPPFD0-8)] Upgrade react-native-vision-camera to fix the build time error in Android ([#4145](https://github.com/pagopa/io-app/issues/4145)) ([4eabf8c](https://github.com/pagopa/io-app/commit/4eabf8c3e7c4a3c61beb09cd91804b0d9b0fbdd0))
+
 ## [2.18.0-rc.5](https://github.com/pagopa/io-app/compare/2.18.0-rc.4...2.18.0-rc.5) (2022-10-25)
 
 
