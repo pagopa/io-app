@@ -484,8 +484,8 @@ profile:
           subtitle: You'll need to restart the application to make this happen
         not_selected: Not selected
       notifications:
-        title: Notifiche
-        subtitle: Consenti anteprima e promemoria
+        title: Push notifications
+        subtitle: Allow previews and reminders 
     empty:
       default: No preference set
     unavailable:
@@ -503,13 +503,13 @@ profile:
       local_calendar: Local calendar
       birthday_calendar: Birthdays
     notifications:
-      header: Notifiche
-      title: Personalizza le notifiche
-      subtitle: Scegli come ricevere aggiornamenti sui messaggi e promemoria che ricevi.
+      header: Push notifications
+      title: Customize push notifications
+      subtitle: Choose how to get updates on the messages and reminders you receive
       reminders:
-        title: Consenti i promemoria
-        description: Ricevi notifiche in prossimità di scadenze o quando non hai ancora letto dei messaggi
-      error: Si è verificato un errore con la tua richiesta
+        title: Allow reminders
+        description: Receive push notifications close to deadlines or when you have unread messages
+      error: An error occurred with your request
 userMetadata:
   errors:
     upsertVersion: Can't upsert user metadata with this version
