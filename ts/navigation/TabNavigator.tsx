@@ -8,7 +8,6 @@ import MessagesTabIcon from "../components/MessagesTabIcon";
 import ProfileTabIcon from "../components/ProfileTabIcon";
 import ServiceTabIcon from "../components/ServiceTabIcon";
 import WalletTabIcon from "../components/WalletTabIcon";
-import { PDNDAcceptanceScreen } from "../features/idpay/screens/PdndAcceptance";
 import I18n from "../i18n";
 import PaginatedMessagesHomeScreen from "../screens/messages/paginated/MessagesHomeScreen";
 import ProfileMainScreen from "../screens/profile/ProfileMainScreen";
@@ -91,7 +90,7 @@ export const MainTabNavigator = () => {
       />
       <Tab.Screen
         name={ROUTES.PROFILE_MAIN}
-        component={PDNDAcceptanceScreen} // ProfileMainScreen}
+        component={ProfileMainScreen}
         options={{
           title: I18n.t("global.navigator.profile"),
           tabBarIcon: ({ color }) => <ProfileTabIcon color={color} />

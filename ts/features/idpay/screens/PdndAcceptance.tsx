@@ -7,56 +7,62 @@ import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import TypedI18n from "../../../i18n";
 
-// TODO:: REMOVE MOCKS
+// TODO:: REMOVE MOCKS -- everything under this has to be changed
 
-const title = "Possiedi I seguenti requisiti?"; // should be in i18n
-const subtitle =
-  "Verificheremo con alcuni Enti se hai i requisiti per accedere al servizio"; // should be in i18n
-const headerString = "Adesione all'Iniziativa"; // should be in i18n
-const onPress = () => console.log("PDNDAcceptanceScreen"); // should be custom
+// will be needed when implementing the info buttons
+const understoodCTAtext = TypedI18n.t(
+  "idpay.pdndAcceptance.requisites.info.understoodCTA"
+);
+const requisiteInfoHeader = TypedI18n.t(
+  "idpay.pdndAcceptance.requisites.info.header"
+);
+const subtitle = TypedI18n.t('idpay.pdndAcceptance.subtitle',{service:'18App'}); // get SERVICE from store;
+
+const requisiteInfoBody=TypedI18n.t('idpay.pdndAcceptance.requisites.info.body',{provider:'Lorem'});// get PROVIDER from store;
+const continueOnPress = () => console.log("PDNDAcceptanceScreen"); // should be custom
+const cancelOnPress = () => console.log("PDNDAcceptanceScreen"); // should be custom
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  // needs an actual contextual help, needs original i18n
   title: "profile.main.contextualHelpTitle",
   body: "profile.main.contextualHelpContent"
 };
-type i18nString = ReturnType<TypedI18n["t"]>;
-type Prerequisite = string;
-type Prerequisites = Array<Prerequisite>;
 
-const requisiteList: Prerequisites = [
+type Prerequisite = string; // most likely will be an obj
+type Prerequisites = Array<Prerequisite>; // or is it just an array?
+
+const prerequisiteList: Prerequisites = [
+  // fetched from state/backend
   "requisito 1",
   "requisito2",
   "requisito3",
   "requisito5"
 ];
 
-// TODO:: END OF MOCKS
-
-type ButtonProps = {
-  block: boolean;
-  bordered: boolean;
-  onPress: () => void;
-  title: i18nString; // This or bare string?
-};
-
-const secondaryButtonProps: ButtonProps = {
-  block: true,
-  bordered: true,
-  onPress,
-  title: TypedI18n.t("global.buttons.cancel")
-};
-const primaryButtonProps: ButtonProps = {
-  block: true,
-  bordered: false,
-  onPress,
-  title: TypedI18n.t("global.buttons.continue")
-};
-
 type PageProps = {
+  // needs full implementation
   prerequites: Prerequisites;
 };
 
-// what does it get from state?
+// TODO:: END OF MOCKS
+
+const title = TypedI18n.t("idpay.pdndAcceptance.title");
+const headerString = TypedI18n.t("idpay.navigation.header");
+
+const secondaryButtonProps = {
+  block: true,
+  bordered: true,
+  onPress: cancelOnPress,
+  title: TypedI18n.t("global.buttons.cancel")
+};
+const primaryButtonProps = {
+  block: true,
+  bordered: false,
+  onPress: continueOnPress,
+  title: TypedI18n.t("global.buttons.continue")
+};
+
+//  statex's alternative of mapStateToProps?
 export const PDNDAcceptanceScreen: React.FC<PageProps> = ({ prerequisites }) => (
   <SafeAreaView style={{ flex: 1 }}>
     <TopScreenComponent
@@ -64,9 +70,13 @@ export const PDNDAcceptanceScreen: React.FC<PageProps> = ({ prerequisites }) => 
       headerTitle={headerString}
       contextualHelpMarkdown={contextualHelpMarkdown}
     >
-      <ScreenContent title={title} subtitle={subtitle}>
+      <ScreenContent
+        title={title}
+        // fontSize is 28 here, the component described in the figma is 26
+        subtitle={subtitle}
+      >
         <List withContentLateralPadding>
-          {requisiteList.map((requisite, index) => (
+          {prerequisiteList.map((requisite, index) => (
             <Text key={index}>{requisite}</Text>
           ))}
         </List>
@@ -76,6 +86,7 @@ export const PDNDAcceptanceScreen: React.FC<PageProps> = ({ prerequisites }) => 
       type="TwoButtonsInlineHalf"
       leftButton={secondaryButtonProps}
       rightButton={primaryButtonProps}
+      // will use custom generator state-based function to derive from state (see '../screens/wallet/AddCardScreen.tsx' line 126 & 482)
     />
   </SafeAreaView>
 );
