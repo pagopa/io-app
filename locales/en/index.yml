@@ -485,7 +485,7 @@ profile:
         not_selected: Not selected
       notifications:
         title: Push notifications
-        subtitle: Allow previews and reminders 
+        subtitle: Allow previews and reminders
     empty:
       default: No preference set
     unavailable:
@@ -845,6 +845,14 @@ onboarding:
       reminderOnPreviewOffMessage: Apri l’app per leggere il contenuto
       reminderOffPreviewOffTitle: Hai un nuovo messaggio
       reminderOffPreviewOffMessage: Apri l’app per leggere il contenuto
+  infoConsent:
+    headerTitle: Configura IO
+    title: Attiviamo le notifiche?
+    subTitle: "Per ricevere la notifiche di IO, devi abilitarle nelle Impostazioni di iOS. Ecco come fare:"
+    instruction1: 1. Tocca Notifiche
+    instruction2: 2. Abilita “Consenti Notifiche”
+    openSettings: Apri Impostazioni di iOS
+    continue: Non ora
 forms:
   validators:
     required: Required value

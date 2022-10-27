@@ -140,7 +140,8 @@ function configurePushNotifications() {
 
       // On iOS we need to call this when the remote notification handling is complete
       notification.finish(PushNotificationIOS.FetchResult.NoData);
-    }
+    },
+    requestPermissions: Platform.OS !== "ios"
   });
 }
 

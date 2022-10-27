@@ -220,10 +220,6 @@ export function* initializeApplicationSaga(): Generator<
     return;
   }
 
-  // Start the notification installation update as early as
-  // possible to begin receiving push notifications
-  yield* call(updateInstallationSaga, backendClient.createOrUpdateInstallation);
-
   // whether we asked the user to login again
   const isSessionRefreshed = previousSessionToken !== sessionToken;
 
@@ -374,6 +370,10 @@ export function* initializeApplicationSaga(): Generator<
       yield* cancel(watchAbortOnboardingSagaTask);
     }
   }
+
+  // Start the notification installation update as early as
+  // possible to begin receiving push notifications
+  yield* call(updateInstallationSaga, backendClient.createOrUpdateInstallation);
 
   //
   // User is autenticated, session token is valid
