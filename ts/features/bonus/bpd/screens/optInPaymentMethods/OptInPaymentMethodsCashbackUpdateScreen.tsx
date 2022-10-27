@@ -1,17 +1,10 @@
 import { useNavigation } from "@react-navigation/native";
-import { Text, View } from "native-base";
+import { View } from "native-base";
 import React from "react";
-import {
-  Image,
-  ImageSourcePropType,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet
-} from "react-native";
-import dafaultLogo from "../../../../../../img/bonus/bpd/logo_cashback_blue.png";
+import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
 import { IORenderHtml } from "../../../../../components/core/IORenderHtml";
-import { H2 } from "../../../../../components/core/typography/H2";
+import { H1 } from "../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
@@ -22,8 +15,6 @@ import {
   paymentMethodsSelector
 } from "../../../../../store/reducers/wallet/wallets";
 import { confirmButtonProps } from "../../../bonusVacanze/components/buttons/ButtonConfigurations";
-import { availableBonusTypesSelectorFromId } from "../../../bonusVacanze/store/reducers/availableBonusesTypes";
-import { ID_BPD_TYPE } from "../../../bonusVacanze/utils/bonus";
 import { navigateToOptInPaymentMethodsChoiceScreen } from "../../navigation/actions";
 import {
   optInPaymentMethodsCompleted,
@@ -46,10 +37,6 @@ const OptInPaymentMethodsCashbackUpdateScreen = () => {
   const dispatch = useIODispatch();
   const bpdPaymentMethods = useIOSelector(getBPDMethodsSelector);
   const paymentMethods = useIOSelector(paymentMethodsSelector);
-  const bpdInfo = useIOSelector(availableBonusTypesSelectorFromId(ID_BPD_TYPE));
-  const bpdLogo: ImageSourcePropType = bpdInfo?.cover
-    ? { uri: bpdInfo?.cover }
-    : dafaultLogo;
 
   // This screen should be shown only if the payment method are correctly loaded
   if (paymentMethods.kind !== "PotSome") {
@@ -87,16 +74,10 @@ const OptInPaymentMethodsCashbackUpdateScreen = () => {
         <ScrollView style={[IOStyles.horizontalContentPadding]}>
           <View style={styles.headerContainer}>
             <View style={IOStyles.flex}>
-              <H2>
+              <H1>
                 {I18n.t("bonus.bpd.optInPaymentMethods.cashbackUpdate.title")}
-              </H2>
-              <Text>
-                {I18n.t(
-                  "bonus.bpd.optInPaymentMethods.cashbackUpdate.subtitle"
-                )}
-              </Text>
+              </H1>
             </View>
-            <Image source={bpdLogo} style={styles.logo} />
           </View>
           <View spacer />
           <IORenderHtml
@@ -121,7 +102,7 @@ const OptInPaymentMethodsCashbackUpdateScreen = () => {
           type={"SingleButton"}
           leftButton={confirmButtonProps(
             handleOnContinuePress,
-            I18n.t("global.buttons.continue"),
+            I18n.t("global.buttons.choose"),
             undefined,
             "continueButton"
           )}
