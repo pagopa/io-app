@@ -56,9 +56,8 @@ type PageProps = {
   prerequites: Prerequisites;
 };
 
-export const PDNDAcceptanceScreen: React.FC<PageProps> = ({
-  prerequisites
-}) => (
+// what does it get from state?
+export const PDNDAcceptanceScreen: React.FC<PageProps> = ({ prerequisites }) => (
   <SafeAreaView style={{ flex: 1 }}>
     <TopScreenComponent
       goBack={true}
