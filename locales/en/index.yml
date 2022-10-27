@@ -483,6 +483,9 @@ profile:
           title: Do you want to change the language to
           subtitle: You'll need to restart the application to make this happen
         not_selected: Not selected
+      notifications:
+        title: Push notifications
+        subtitle: Allow previews and reminders 
     empty:
       default: No preference set
     unavailable:
@@ -499,6 +502,14 @@ profile:
       contextualHelpContent: !include profile/profile_preferences_calendar.md
       local_calendar: Local calendar
       birthday_calendar: Birthdays
+    notifications:
+      header: Push notifications
+      title: Customize push notifications
+      subtitle: Choose how to get updates on the messages and reminders you receive
+      reminders:
+        title: Allow reminders
+        description: Receive push notifications close to deadlines or when you have unread messages
+      error: An error occurred with your request
 userMetadata:
   errors:
     upsertVersion: Can't upsert user metadata with this version

@@ -16,11 +16,13 @@ import ListItemComponent from "../../components/screens/ListItemComponent";
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
+import { remindersOptInEnabled } from "../../config";
 import I18n from "../../i18n";
 import {
   AppParamsList,
   IOStackNavigationRouteProps
 } from "../../navigation/params/AppParamsList";
+import ROUTES from "../../navigation/routes";
 import {
   navigateToCalendarPreferenceScreen,
   navigateToEmailForwardingPreferenceScreen,
@@ -181,6 +183,20 @@ class PreferencesScreen extends React.Component<Props> {
           subtitle={I18n.t("profile.preferences.subtitle")}
         >
           <List withContentLateralPadding={true}>
+            {remindersOptInEnabled && (
+              <ListItemComponent
+                onPress={() => {
+                  this.props.navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+                    screen: ROUTES.PROFILE_PREFERENCES_NOTIFICATIONS
+                  });
+                }}
+                title={I18n.t("profile.preferences.list.notifications.title")}
+                subTitle={I18n.t(
+                  "profile.preferences.list.notifications.subtitle"
+                )}
+              />
+            )}
+
             <ListItemComponent
               onPress={this.checkPermissionThenGoCalendar}
               title={I18n.t(

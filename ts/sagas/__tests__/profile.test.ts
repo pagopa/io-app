@@ -29,7 +29,7 @@ import {
 const hash = (value: string): string =>
   sha("sha256").update(value).digest("hex");
 
-jest.mock("@react-native-community/async-storage", () => ({
+jest.mock("@react-native-async-storage/async-storage", () => ({
   AsyncStorage: jest.fn()
 }));
 
