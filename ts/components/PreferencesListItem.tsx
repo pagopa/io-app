@@ -1,10 +1,9 @@
-import { View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
-import { H4 } from "../../../../components/core/typography/H4";
-import { H5 } from "../../../../components/core/typography/H5";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import { TestID } from "../../../../types/WithTestID";
+import { StyleSheet, View } from "react-native";
+import { TestID } from "../types/WithTestID";
+import { H4 } from "./core/typography/H4";
+import { H5 } from "./core/typography/H5";
+import { IOStyles } from "./core/variables/IOStyles";
 
 type Props = {
   title: string;
@@ -25,13 +24,12 @@ const styles = StyleSheet.create({
 });
 
 /**
- * The base layout for the Payment feature list items, used to compose the different functionalities
+ * The base layout for a preference list item, with a title, a subtitle and a right element
+ * (e.g. a switch).
  * @param props
  * @constructor
  */
-export const BasePaymentFeatureListItem = (
-  props: Props
-): React.ReactElement => (
+export const PreferencesListItem = (props: Props): React.ReactElement => (
   <View style={styles.row} testID={props.testID}>
     <View style={styles.left}>
       <H4 weight={"SemiBold"} color={"bluegreyDark"}>

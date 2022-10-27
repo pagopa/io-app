@@ -11,7 +11,7 @@ import {
 import { IbanStatus } from "../../../saga/networking/patchCitizenIban";
 import { bpdUpsertIban } from "../../actions/iban";
 
-jest.mock("@react-native-community/async-storage", () => ({
+jest.mock("@react-native-async-storage/async-storage", () => ({
   AsyncStorage: jest.fn()
 }));
 

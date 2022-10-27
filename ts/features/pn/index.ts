@@ -1,4 +1,4 @@
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PersistConfig, PersistPartial, persistReducer } from "redux-persist";
 import { Action } from "../../store/actions/types";
 import { PotTransform } from "../../store/transforms/potTransform";
