@@ -2,7 +2,6 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import React, { useEffect, useState } from "react";
 import { List } from "native-base";
 import { useSelector } from "react-redux";
-import { CompatNavigationProp } from "@react-navigation/compat";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import { PreferencesListItem } from "../../components/PreferencesListItem";
 import ScreenContent from "../../components/screens/ScreenContent";
@@ -39,14 +38,10 @@ export type OnboardingNotificationsPreferencesScreenNavigationParams = {
   isFirstOnboarding: boolean;
 };
 
-type Props = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<
+type Props = IOStackNavigationRouteProp<
       OnboardingParamsList,
       "ONBOARDING_NOTIFICATIONS_PREFERENCES"
-    >
-  >;
-};
+    >;
 
 const continueButtonProps = (
   isLoading: boolean,
@@ -79,7 +74,7 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
   const isError = pot.isError(remindersPreference);
   const isUpdating = pot.isUpdating(remindersPreference);
 
-  const isFirstOnboarding = props.navigation.getParam("isFirstOnboarding");
+  const { isFirstOnboarding } = props.route.params;
 
   useEffect(() => {
     if (isError && isUpserting) {
