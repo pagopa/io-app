@@ -93,7 +93,7 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
         <IconFont
           name={"io-complete"}
           size={120}
-          color={customVariables.brandHighlight}
+          color={customVariables.colorHighlight}
           style={styles.selfCenter}
         />
         <View spacer={true} large={true} />
