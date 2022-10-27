@@ -2,7 +2,7 @@
  * A reducer for the wallet, aggregating those for
  * transactions and for cards
  */
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Action, combineReducers } from "redux";
 import { PersistConfig, persistReducer } from "redux-persist";
 import onboardingReducer, {
@@ -13,11 +13,11 @@ import abiReducer, {
 } from "../../../features/wallet/onboarding/store/abi";
 import { DateISO8601Transform } from "../../transforms/dateISO8601Tranform";
 import { PotTransform } from "../../transforms/potTransform";
+import outcomeCodeReducer, { OutcomeCodeState } from "./outcomeCode";
 import paymentReducer, { PaymentState } from "./payment";
 import pspsByIdReducer, { PspStateById } from "./pspsById";
 import transactionsReducer, { TransactionsState } from "./transactions";
 import walletsReducer, { PersistedWalletsState, WalletsState } from "./wallets";
-import outcomeCodeReducer, { OutcomeCodeState } from "./outcomeCode";
 
 export type WalletState = Readonly<{
   transactions: TransactionsState;

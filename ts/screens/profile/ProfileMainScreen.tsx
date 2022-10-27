@@ -1,5 +1,5 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { List, ListItem, Text, Toast, View } from "native-base";
 import * as React from "react";
 import { Alert, ScrollView, StyleSheet } from "react-native";
@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import { TranslationKeys } from "../../../locales/locales";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import ContextualInfo from "../../components/ContextualInfo";
+import { IOColors } from "../../components/core/variables/IOColors";
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
@@ -48,7 +49,6 @@ import { getAppVersion } from "../../utils/appVersion";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { getDeviceId } from "../../utils/device";
 import { isDevEnv } from "../../utils/environment";
-import { IOColors } from "../../components/core/variables/IOColors";
 
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "PROFILE_MAIN"> &
   LightModalContextInterface &

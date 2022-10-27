@@ -8,9 +8,7 @@ import MessagesTabIcon from "../components/MessagesTabIcon";
 import ProfileTabIcon from "../components/ProfileTabIcon";
 import ServiceTabIcon from "../components/ServiceTabIcon";
 import WalletTabIcon from "../components/WalletTabIcon";
-import { usePaginatedMessages } from "../config";
 import I18n from "../i18n";
-import MessagesHomeScreen from "../screens/messages/MessagesHomeScreen";
 import PaginatedMessagesHomeScreen from "../screens/messages/paginated/MessagesHomeScreen";
 import ProfileMainScreen from "../screens/profile/ProfileMainScreen";
 import ServicesHomeScreen from "../screens/services/ServicesHomeScreen";
@@ -68,11 +66,7 @@ export const MainTabNavigator = () => {
     >
       <Tab.Screen
         name={ROUTES.MESSAGES_HOME}
-        component={
-          usePaginatedMessages
-            ? PaginatedMessagesHomeScreen
-            : MessagesHomeScreen
-        }
+        component={PaginatedMessagesHomeScreen}
         options={{
           title: I18n.t("global.navigator.messages"),
           tabBarIcon: ({ color }) => <MessagesTabIcon color={color} />
