@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     borderRightWidth: 1
   },
   badgeContainer: {
-    backgroundColor: customVariables.brandHighLighter,
+    backgroundColor: customVariables.colorHighlight,
     marginLeft: 4,
     paddingLeft: 0,
     paddingRight: 0,

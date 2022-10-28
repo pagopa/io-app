@@ -52,25 +52,21 @@ const customVariables = Object.assign(materialVariables, {
   /* Don't put hardcoded color values here.
     Add them to IOColors object, instead.
   */
-  brandPrimary: "#0066CC",
-  brandPrimaryLight: "#99CCFF",
-  brandHighlight: "#00C5CA",
-  brandHighLighter: "#00CDD2",
-  brandSuccess: "#007005",
-  brandDanger: "#CC3333",
+  brandPrimary: IOColors.blue /* NB Theme variable, don't remove */,
+  colorHighlight: IOColors.aqua,
+  brandSuccess: IOColors.green /* NB Theme variable, don't remove */,
+  brandDanger: IOColors.red /* NB Theme variable, don't remove */,
 
   btnLightBorderColor: IOColors.grey,
 
   cardShadow: IOColors.black,
-  cardExpiredTextColor: "#FF0000",
   cardTextColor: IOColors.bluegreyDark,
 
-  calendarExpirableColor: "#D0021B",
+  calendarExpirableColor: IOColors.red,
 
   itemSeparator: IOColors.bluegreyLight,
 
-  toastColor: "#C1f4f2",
-  badgeYellow: "#ffc824",
+  toastColor: IOColors.aquaUltraLight,
 
   /* When the background is dark */
   headerIconDark: IOColors.milderGray,
@@ -158,8 +154,8 @@ const customVariables = Object.assign(materialVariables, {
   // Content
   contentPadding: 24,
   contentPaddingLarge: 48,
-  contentBackground: "#FFFFFF",
-  contentPrimaryBackground: "#0073E6",
+  contentBackground: IOColors.white,
+  contentPrimaryBackground: IOColors.blue,
 
   // Footer
   footerBackground: IOColors.white,
@@ -264,7 +260,7 @@ const customVariables = Object.assign(materialVariables, {
   // Text
   textColor: IOColors.bluegrey,
   textColorDark: IOColors.bluegreyDark,
-  textLinkColor: "#0073E6",
+  textLinkColor: IOColors.blue,
   textMessageDetailLinkColor: "#0073E6",
   textNormalWeight: "400" as FontWeight,
   textBoldWeight: "700" as FontWeight,
@@ -298,7 +294,7 @@ const customVariables = Object.assign(materialVariables, {
   tabUnderlineColor: IOColors.greyUltraLight,
   tabUnderlineHeight: 2,
   topTabBarTextColor: IOColors.bluegrey,
-  topTabBarActiveTextColor: "#0066CC",
+  topTabBarActiveTextColor: IOColors.blue,
 
   // Animations
   activeOpacity: 0.25,
@@ -307,7 +303,7 @@ const customVariables = Object.assign(materialVariables, {
   spacingBase: 8,
 
   // IconFont
-  selectedColor: "#0073E6",
+  selectedColor: IOColors.blue,
   unselectedColor: IOColors.bluegrey,
 
   // Checkbox
