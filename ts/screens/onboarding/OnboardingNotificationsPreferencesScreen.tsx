@@ -67,7 +67,6 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
   const dispatch = useIODispatch();
 
   const [remindersEnabled, setRemindersEnabled] = useState(true);
-  const [isUpserting, setIsUpserting] = useState(false);
 
   const remindersPreference = useSelector(profileRemindersPreferenceSelector);
 
@@ -77,16 +76,12 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
   const { isFirstOnboarding } = props.route.params;
 
   useEffect(() => {
-    if (isError && isUpserting) {
+    if (isError && !isUpdating) {
       showToast(I18n.t("profile.preferences.notifications.error"));
     }
-    if (!isUpdating) {
-      setIsUpserting(false);
-    }
-  }, [isError, isUpdating, isUpserting]);
+  }, [isError, isUpdating]);
 
   const upsertPreferences = () => {
-    setIsUpserting(true);
     dispatch(
       profileUpsert.request({
         reminder_status: remindersEnabled
