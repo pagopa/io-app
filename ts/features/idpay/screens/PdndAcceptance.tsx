@@ -1,8 +1,9 @@
-import { List, Text } from "native-base";
+import { List, Text, View } from "native-base";
 import React from "react";
 import { SafeAreaView } from "react-native";
+import { H1 } from "../../../components/core/typography/H1";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
-import ScreenContent from "../../../components/screens/ScreenContent";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import TypedI18n from "../../../i18n";
@@ -16,9 +17,14 @@ const understoodCTAtext = TypedI18n.t(
 const requisiteInfoHeader = TypedI18n.t(
   "idpay.pdndAcceptance.requisites.info.header"
 );
-const subtitle = TypedI18n.t('idpay.pdndAcceptance.subtitle',{service:'18App'}); // get SERVICE from store;
+const subtitle = TypedI18n.t("idpay.pdndAcceptance.subtitle", {
+  service: "18App"
+}); // get SERVICE from store;
 
-const requisiteInfoBody=TypedI18n.t('idpay.pdndAcceptance.requisites.info.body',{provider:'Lorem'});// get PROVIDER from store;
+const requisiteInfoBody = TypedI18n.t(
+  "idpay.pdndAcceptance.requisites.info.body",
+  { provider: "Lorem" }
+); // get PROVIDER from store;
 const continueOnPress = () => console.log("PDNDAcceptanceScreen"); // should be custom
 const cancelOnPress = () => console.log("PDNDAcceptanceScreen"); // should be custom
 
@@ -70,17 +76,19 @@ export const PDNDAcceptanceScreen: React.FC<PageProps> = ({ prerequisites }) => 
       headerTitle={headerString}
       contextualHelpMarkdown={contextualHelpMarkdown}
     >
-      <ScreenContent
-        title={title}
-        // fontSize is 28 here, the component described in the figma is 26
-        subtitle={subtitle}
-      >
-        <List withContentLateralPadding>
-          {prerequisiteList.map((requisite, index) => (
-            <Text key={index}>{requisite}</Text>
-          ))}
-        </List>
-      </ScreenContent>
+      <View style={IOStyles.horizontalContentPadding}>
+        <View spacer />
+        <H1>{title}</H1>
+        <View spacer />
+        <Text>{subtitle}</Text>
+        <View large spacer />
+      </View>
+
+      <List withContentLateralPadding>
+        {prerequisiteList.map((requisite, index) => (
+          <Text key={index}>{requisite}</Text>
+        ))}
+      </List>
     </TopScreenComponent>
     <FooterWithButtons
       type="TwoButtonsInlineHalf"
