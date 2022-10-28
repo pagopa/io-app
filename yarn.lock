@@ -2929,10 +2929,10 @@
     fp-ts "^2.12.1"
     io-ts "^2.2.16"
 
-"@pagopa/openapi-codegen-ts@^11.1.2":
-  version "11.1.2"
-  resolved "https://registry.yarnpkg.com/@pagopa/openapi-codegen-ts/-/openapi-codegen-ts-11.1.2.tgz#594543307e4acecdd4ebb4938bac42bfc778d71a"
-  integrity sha512-9RTeoCwseSWfeAFrJBJptt7EYr6Agj8YUAav/37OeTuFP2AQukYkJZ43jyCYshnoQ46r8UHUvYzz9Sy21iJAWw==
+"@pagopa/openapi-codegen-ts@^12.0.1":
+  version "12.0.1"
+  resolved "https://registry.yarnpkg.com/@pagopa/openapi-codegen-ts/-/openapi-codegen-ts-12.0.1.tgz#6a944024365cab1f4ff5a2d896ccb11dea322606"
+  integrity sha512-b2znjzrpwJqCZG9n6jHL4lwMGRYnRlXBc1InfTBJbtuyKjzkkq9SVmHKYlzfvsiU1xtsDv55xFq0fQKyVGldKw==
   dependencies:
     "@pagopa/ts-commons" "^10.3.0"
     fs-extra "^6.0.0"
