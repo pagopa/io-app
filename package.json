@@ -79,7 +79,8 @@
     "generate:idpay-onboarding": "rimraf definitions/idpay/onboarding && mkdir -p definitions/idpay/onboarding && gen-api-models --api-spec $npm_package_idpay_onboarding --out-dir ./definitions/idpay/onboarding --no-strict --response-decoders --request-types --client",
     "generate": "npm-run-all generate:*",
     "locales_unused": "ts-node --skip-project -O '{\"lib\":[\"es2015\"]}' scripts/unused-locales.ts",
-    "generate-myportal-readme": "jsdoc2md ts/utils/webviewScripts/*.js > MYPORTAL_README.md"
+    "generate-myportal-readme": "jsdoc2md ts/utils/webviewScripts/*.js > MYPORTAL_README.md",
+    "generate:xstate-types": "xstate typegen \"ts/**/*.ts?(x)\""
   },
   "dependencies": {
     "@babel/plugin-transform-regenerator": "^7.18.6",
@@ -230,6 +231,7 @@
     "@types/validator": "^9.4.2",
     "@typescript-eslint/eslint-plugin": "^5.9.1",
     "@typescript-eslint/parser": "^5.9.1",
+    "@xstate/cli": "^0.3.3",
     "abortcontroller-polyfill": "1.7.3",
     "babel-jest": "^26.6.3",
     "babel-plugin-macros": "^3.1.0",
