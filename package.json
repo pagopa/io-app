@@ -190,7 +190,8 @@
     "uuid": "^8.3.2",
     "validator": "^13.7.0",
     "vision-camera-code-scanner": "^0.2.0",
-    "xss": "1.0.10"
+    "xss": "1.0.10",
+    "xstate": "^4.33.6"
   },
   "devDependencies": {
     "@babel/core": "^7.15.0",
