@@ -2277,7 +2277,7 @@ bonus:
         title: "Siamo spiacenti.\n Non hai un ISEE ordinario o corrente in corso di validità."
         text:
           first: "E' necessario presentare una Dichiarazione Sostitutiva Unica (DSU) per il calcolo dell’ISEE ordinario o corrente, prima di richiedere nuovamente il Bonus Vacanze.\n\n
-                  Puoi fare subito una "
+            Puoi fare subito una "
           secondo: "simulazione online"
           third: " sul sito dell'INPS per verificare la tua idoneità, oppure richiedere l'ISEE sui canali previsti da INPS."
         goToDSU: Richiedi ISEE
@@ -2428,7 +2428,7 @@ bonus:
     suggestActivation:
       title: "Vuoi attivare il Cashback?"
       body: "Hai aggiunto dei metodi di pagamento compatibili con il Cashback, l’iniziativa promossa dalla Presidenza del Consiglio dei Ministri e dal Ministero dell’Economia e delle Finanze, allo scopo di incentivare un maggiore utilizzo di moneta elettronica nel Paese.\n\n
-             Puoi ricevere un rimborso sugli acquisti effettuati con carte, bancomat e app di pagamento.\n\n"
+        Puoi ricevere un rimborso sugli acquisti effettuati con carte, bancomat e app di pagamento.\n\n"
       skip: "No, grazie"
       confirm: "Info e attivazione"
     activateOnNewMethods:
@@ -2471,9 +2471,9 @@ bonus:
         title: "Extra Cashback di Natale"
         body: "1. Il programma Cashback si divide in periodi. Il periodo corrente inizia il **{{startDate}}** e finisce il **{{endDate}}**. **Accumula transazioni** valide durante tutta la durata di ciascun periodo con i **metodi di pagamento che hai attivato**.\n
 
-               2. In questo periodo, se raggiungi le **{{minTransactionNumber}} transazioni**, riceverai un rimborso pari al {{cashbackPercentage}}% fino ad un rimborso massimo di **{{maxTransactionCashback}} euro** a transazione ed un massimo di **{{maxPeriodCashback}} euro** in tutto il periodo.\n
+          2. In questo periodo, se raggiungi le **{{minTransactionNumber}} transazioni**, riceverai un rimborso pari al {{cashbackPercentage}}% fino ad un rimborso massimo di **{{maxTransactionCashback}} euro** a transazione ed un massimo di **{{maxPeriodCashback}} euro** in tutto il periodo.\n
 
-               3. Al termine del periodo, ricevi il rimborso accumulato sull’IBAN da te indicato.\n\n‎"
+          3. Al termine del periodo, ricevi il rimborso accumulato sull’IBAN da te indicato.\n\n‎"
       components:
         iban:
           title: "IBAN per l’accredito"
@@ -2504,8 +2504,8 @@ bonus:
           notReady:
             title: "Quando vedrai la classifica Super Cashback?"
             body: "La classifica si basa sul **numero di transazioni** eseguite con i metodi di pagamento su cui hai attivato il Cashback.\n\n
-                   Mostreremo la tua posizione in classifica **quando la distribuzione dei partecipanti sarà più significativa**: in questo momento ci sono moltissimi utenti con lo stesso numero di transazioni.\n\n
-                   Una volta pubblicata, la classifica **continuerà a cambiare** a seconda del numero di transazioni di tutti i partecipanti, fino alla fine dei 6 mesi."
+              Mostreremo la tua posizione in classifica **quando la distribuzione dei partecipanti sarà più significativa**: in questo momento ci sono moltissimi utenti con lo stesso numero di transazioni.\n\n
+              Una volta pubblicata, la classifica **continuerà a cambiare** a seconda del numero di transazioni di tutti i partecipanti, fino alla fine dei 6 mesi."
       transaction:
         label:
           one: "1 transazione"
@@ -2569,7 +2569,7 @@ bonus:
           text2: "altri canali"
           title: "Metodi aggiunti da altri canali"
           body: "Hai aggiunto al Cashback questi metodi di pagamento direttamente dai canali messi a disposizione dalla tua banca o app di pagamenti. Puoi attivare o disattivare la registrazione delle transazioni di questi metodi anche da IO.\n
-                 Se vuoi usare alcuni di questi metodi anche per pagare tramite IO, aggiungili al tuo portafoglio!"
+            Se vuoi usare alcuni di questi metodi anche per pagare tramite IO, aggiungili al tuo portafoglio!"
           addWallet: "Aggiungi al portafoglio"
           whyOtherCards:
             title: "Perché vedo carte che non riconosco?"
@@ -2589,7 +2589,7 @@ bonus:
         deactivate:
           title: "Disattivare il Cashback su questo metodo?"
           body: "Se confermi questa scelta, le transazioni effettuate con questo metodo non verranno più collezionate.
-                 La disattivazione sarà operativa **da domani**, quindi potrebbero essere ancora collezionate le transazioni effettuate oggi."
+            La disattivazione sarà operativa **da domani**, quindi potrebbero essere ancora collezionate le transazioni effettuate oggi."
       card:
         status:
           active: Attivo
@@ -3225,3 +3225,14 @@ support:
       subCategory: "Puoi darci più dettagli?"
     subTitle:
       category: "Aiutaci a capire meglio come possiamo aiutarti selezionando l’argomento del tuo problema: ti risponderemo il prima possibile, in orario lavorativo."
+idpay:
+  onboarding:
+    headerTitle: "Adesione all'iniziativa"
+    buttons: 
+      cancel: "Annulla"
+      continue: "Continua"
+    beforeContinue:
+      text1: "Proseguendo accetti i "
+      tosLink: "Termini e condizioni d'uso"
+      text2: " del servizio e confermi di avere letto l' "
+      privacyLink: "Informativa privacy"
