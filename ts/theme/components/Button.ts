@@ -23,8 +23,8 @@ declare module "native-base" {
 
 export default (): Theme => ({
   ".info": {
-    backgroundColor: variables.brandHighLighter,
-    bordercolor: variables.brandHighLighter
+    backgroundColor: variables.colorHighlight,
+    bordercolor: variables.colorHighlight
   },
 
   ".xsmall": {

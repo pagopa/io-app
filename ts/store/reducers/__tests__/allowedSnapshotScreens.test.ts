@@ -10,7 +10,7 @@ import {
 import { appReducer } from "../index";
 import { GlobalState } from "../types";
 
-jest.mock("@react-native-community/async-storage", () => ({
+jest.mock("@react-native-async-storage/async-storage", () => ({
   AsyncStorage: jest.fn()
 }));
 

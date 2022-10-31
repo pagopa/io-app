@@ -2,6 +2,64 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.18.0-rc.7](https://github.com/pagopa/io-app/compare/2.18.0-rc.6...2.18.0-rc.7) (2022-10-28)
+
+
+### Chores
+
+* [[IAI-232](https://pagopa.atlassian.net/browse/IAI-232)] Remove/Update references to color values ([#4075](https://github.com/pagopa/io-app/issues/4075)) ([fa22016](https://github.com/pagopa/io-app/commit/fa22016880aa89c0ff6c8c5e1ebd8d082a965aba))
+
+## [2.18.0-rc.6](https://github.com/pagopa/io-app/compare/2.18.0-rc.5...2.18.0-rc.6) (2022-10-25)
+
+
+### Chores
+
+* [[IOAPPFD0-8](https://pagopa.atlassian.net/browse/IOAPPFD0-8)] Upgrade react-native-vision-camera to fix the build time error in Android ([#4145](https://github.com/pagopa/io-app/issues/4145)) ([4eabf8c](https://github.com/pagopa/io-app/commit/4eabf8c3e7c4a3c61beb09cd91804b0d9b0fbdd0))
+
+## [2.18.0-rc.5](https://github.com/pagopa/io-app/compare/2.18.0-rc.4...2.18.0-rc.5) (2022-10-25)
+
+
+### Chores
+
+* [[IOAPPFD0-7](https://pagopa.atlassian.net/browse/IOAPPFD0-7)] Set the ruby version of android image on circleCI ([#4143](https://github.com/pagopa/io-app/issues/4143)) ([7a0747d](https://github.com/pagopa/io-app/commit/7a0747d556a0d809fe9ebf6492863a69e460f191))
+
+## [2.18.0-rc.4](https://github.com/pagopa/io-app/compare/2.18.0-rc.3...2.18.0-rc.4) (2022-10-24)
+
+## [2.18.0-rc.3](https://github.com/pagopa/io-app/compare/2.18.0-rc.2...2.18.0-rc.3) (2022-10-24)
+
+## [2.18.0-rc.2](https://github.com/pagopa/io-app/compare/2.18.0-rc.1...2.18.0-rc.2) (2022-10-24)
+
+
+### Features
+
+* [[IA-945](https://pagopa.atlassian.net/browse/IA-945)] Add a screen to preferences to opt-in/out reminders notifications ([#4128](https://github.com/pagopa/io-app/issues/4128)) ([4703efe](https://github.com/pagopa/io-app/commit/4703efefc9a208b191f311e46cbd517984a97c51))
+
+
+### Chores
+
+* [[IOAPPFD0-7](https://pagopa.atlassian.net/browse/IOAPPFD0-7)] Updates the minor version of ruby to fix CI release workflows ([#4141](https://github.com/pagopa/io-app/issues/4141)) ([bf37098](https://github.com/pagopa/io-app/commit/bf37098b0e23bfa34a3536c5a4881497b4f70136))
+
+## [2.18.0-rc.1](https://github.com/pagopa/io-app/compare/2.18.0-rc.0...2.18.0-rc.1) (2022-10-24)
+
+
+### Features
+
+* **Firma con IO:** [[SFEQS-884](https://pagopa.atlassian.net/browse/SFEQS-884)] Add FCI local feature flag ([#4063](https://github.com/pagopa/io-app/issues/4063)) ([d54e6e4](https://github.com/pagopa/io-app/commit/d54e6e45df3b024a77d9d3ffef8941b7b5ebcb59))
+* [[IA-946](https://pagopa.atlassian.net/browse/IA-946)] Add the feature flag for enabling the reminders opt-in in app ([#4126](https://github.com/pagopa/io-app/issues/4126)) ([bf126c0](https://github.com/pagopa/io-app/commit/bf126c0a168a1362ef546b8e1fd7bb03aaa4ac5d))
+
+
+### Bug Fixes
+
+* [[IABT-1398](https://pagopa.atlassian.net/browse/IABT-1398),[IOAPPCOM-5](https://pagopa.atlassian.net/browse/IOAPPCOM-5)] Update Android Manifest with a flag required to save images to Camera Roll ([#4135](https://github.com/pagopa/io-app/issues/4135)) ([dca4f75](https://github.com/pagopa/io-app/commit/dca4f752a2efd2ed7d0bb6d6dbbb9b4a2448ca93))
+
+
+### Chores
+
+* [[IA-545](https://pagopa.atlassian.net/browse/IA-545)] Remove legacy code of messages without pagination ([#4123](https://github.com/pagopa/io-app/issues/4123)) ([5f06bc3](https://github.com/pagopa/io-app/commit/5f06bc3177b6053cfe051d7c2a1ce1864e943e38))
+* [[IAI-152](https://pagopa.atlassian.net/browse/IAI-152)] Upgrade OnboardingNavigator to support react-navigation v5 ([#4122](https://github.com/pagopa/io-app/issues/4122)) ([15ae5f2](https://github.com/pagopa/io-app/commit/15ae5f21a9ed43a44b8f3916c379bd03f78a407f))
+* [[IAI-192](https://pagopa.atlassian.net/browse/IAI-192)] Upgrade `react-native` to `0.69.5` ([#4103](https://github.com/pagopa/io-app/issues/4103)) ([11df37b](https://github.com/pagopa/io-app/commit/11df37bf1b6f20e5ffdf38dca1fa672099288d07))
+* [[IOAPPFD0-3](https://pagopa.atlassian.net/browse/IOAPPFD0-3)] Next generation eu logo missing from splash ([#4137](https://github.com/pagopa/io-app/issues/4137)) ([2025491](https://github.com/pagopa/io-app/commit/2025491c20f4a4ef02406303c3800154e11632f2))
+
 ## [2.18.0-rc.0](https://github.com/pagopa/io-app/compare/2.17.0-rc.2...2.18.0-rc.0) (2022-10-11)
 
 ## [2.17.0-rc.2](https://github.com/pagopa/io-app/compare/2.17.0-rc.1...2.17.0-rc.2) (2022-10-07)

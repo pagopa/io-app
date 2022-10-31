@@ -34,35 +34,28 @@ export const IOColors = asIOColors({
   /* ↳ ALIAS TOKEN: cardTextColor → bluegreyDark */
   black: "#000000",
   /* ↳ ALIAS TOKEN: footerShadowColor → black */
-  brandPrimary: "#0066CC" /* from variables.ts */,
-  topTabBarActiveTextColor:
-    "#0066CC" /* from variables.ts, duplicate of brandPrimary, ALIAS TOKEN */,
-  blue: "#0073E6",
-  selectedColor:
-    "#0073E6" /* from variables.ts, duplicate of blue, ALIAS TOKEN */,
-  contentPrimaryBackground:
-    "#0073E6" /* from variables.ts, duplicate of blue, ALIAS TOKEN */,
-
-  textLinkColor:
-    "#0073E6" /* from variables.ts, duplicate of blue, ALIAS TOKEN */,
-  checkBoxColor: "#039BE5" /* from CheckBox component */,
-  brandPrimaryLight: "#99CCFF" /* from variables.ts */,
   noCieButton:
     "#789CCD" /* Background of half-disabled noCIE CTA, from LandingScreen.tsx */,
-  activeBonus: "#2C489D" /* from relative component (BonusVacanze) */,
-  cgnDiscount: "#9B5897" /* from CgnDiscountValueBox */,
+  blue: "#0073E6",
+  /* ↳ ALIAS TOKEN: topTabBarActiveTextColor → blue */
+  /* ↳ ALIAS TOKEN: selectedColor → blue */
+  /* ↳ ALIAS TOKEN: contentPrimaryBackground → blue */
+  /* ↳ ALIAS TOKEN: textLinkColor → blue */
+  blueUltraLight: "#99CCFF" /* Almost deprecated, avoid if possible */,
   aqua: "#00C5CA",
-  brandHighlight: "#00C5CA" /* from variables.ts, duplicate of aqua */,
-  brandHighLighter: "#00CDD2" /* from variables.ts */,
-  toastColor: "#C1F4F2" /* from variables.ts, ALIAS TOKEN */,
-  yellow: "#FFC824" /* from variables.ts, ALIAS TOKEN */,
-  cgnDiscountDetailBg: "#EB9505" /* from relative component */,
-  cardExpiredTextColor: "#FF0000" /* from variables.ts, ALIAS TOKEN */,
-  calendarExpirableColor: "#D0021B" /* from variables.ts, ALIAS TOKEN */,
-  red: "#C02927",
-  brandDanger: "#CC3333" /* from variables.ts */,
-  brandSuccess: "#007005" /* from variables.ts */,
+  /* ↳ ALIAS TOKEN: colorHighlight → aqua */
+  aquaUltraLight: "#C1F4F2",
+  /* ↳ ALIAS TOKEN: toastColor → aquaUltraLight */
+  cobalt: "#2C489D" /* used in the `Bonus Vacanze` only */,
+  antiqueFuchsia:
+    "#9B5897" /* used in the CgnDiscountValueBox component only */,
+  yellow: "#FFC824" /* Almost deprecated, used in `PaymentHistoryList` only */,
   orange: "#EA7614",
+  red: "#C02927",
+  /* ↳ ALIAS TOKEN: brandDanger → red */
+  /* ↳ ALIAS TOKEN: calendarExpirableColor → red */
+  green: "#005C3C",
+  /* ↳ ALIAS TOKEN: brandSuccess → green */
   greyGradientTop: "#475A6D",
   greyGradientBottom: "#42484F",
   yellowGradientTop: "#FEC709",

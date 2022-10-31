@@ -484,7 +484,7 @@ profile:
           subtitle: Dovrai riavviare l'applicazione per applicare il cambiamento
         not_selected: Non selezionato
       notifications:
-        title: Notifiche
+        title: Notifiche push
         subtitle: Consenti anteprima e promemoria
     empty:
       default: Nessuna preferenza impostata
@@ -503,14 +503,14 @@ profile:
       local_calendar: Calendario locale
       birthday_calendar: Compleanni
     notifications:
-      header: Notifiche
-      title: Notifiche push più intelligenti
+      header: Notifiche push
+      title: Personalizza le notifiche push
       subtitle: Ora puoi vedere subito chi ti ha scritto o ricevere promemoria da messaggi importanti.
       titleNewUser: Personalizza le notifiche
-      subtitleNewUser: Scegli come ricevere aggiornamenti sui messaggi e promemoria che ricevi.
+      subtitleNewUser: Scegli come ricevere aggiornamenti sui messaggi e promemoria che ricevi
       reminders:
         title: Consenti i promemoria
-        description: Ricevi notifiche in prossimità di scadenze o quando non hai ancora letto dei messaggi
+        description: Ricevi notifiche push in prossimità di scadenze o quando non hai ancora letto dei messaggi
       error: Si è verificato un errore con la tua richiesta
 userMetadata:
   errors:

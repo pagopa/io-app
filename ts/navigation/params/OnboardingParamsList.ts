@@ -13,4 +13,5 @@ export type OnboardingParamsList = {
   [ROUTES.INSERT_EMAIL_SCREEN]: undefined;
   [ROUTES.READ_EMAIL_SCREEN]: undefined;
   [ROUTES.ONBOARDING_NOTIFICATIONS_PREFERENCES]: OnboardingNotificationsPreferencesScreenNavigationParams;
+  [ROUTES.ONBOARDING_COMPLETED]: undefined;
 };
