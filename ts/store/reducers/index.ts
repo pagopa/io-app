@@ -47,6 +47,7 @@ import persistedPreferencesReducer, {
 import preferencesReducer from "./preferences";
 import profileReducer from "./profile";
 import searchReducer from "./search";
+import startupReducer from "./startup";
 import { GlobalState } from "./types";
 import userDataProcessingReducer from "./userDataProcessing";
 import userMetadataReducer from "./userMetadata";
@@ -95,6 +96,7 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
   cie: cieReducer,
   bonus: bonusReducer,
   assistanceTools: assistanceToolsReducer,
+  startup: startupReducer,
   //
   // persisted state
   //

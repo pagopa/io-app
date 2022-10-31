@@ -77,6 +77,7 @@ import { differentProfileLoggedIn } from "../store/actions/crossSessions";
 import { clearAllMvlAttachments } from "../features/mvl/saga/mvlAttachments";
 import { watchMessageAttachmentsSaga } from "../features/messages/saga/attachments";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
+import { startupLoadSuccess } from "../store/actions/startup";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -559,7 +560,7 @@ export function* initializeApplicationSaga(): Generator<
       })
     );
   } else {
-    yield* call(navigateToMainNavigatorAction);
+    yield* put(startupLoadSuccess(true));
   }
 }
 

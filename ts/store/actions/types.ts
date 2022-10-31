@@ -53,6 +53,7 @@ import { UserDataProcessingActions } from "./userDataProcessing";
 import { UserMetadataActions } from "./userMetadata";
 import { WalletActions } from "./wallet";
 import { OutcomeCodeActions } from "./wallet/outcomeCode";
+import { StartupActions } from "./startup";
 
 export type Action =
   | AnalyticsActions
@@ -98,7 +99,8 @@ export type Action =
   | MvlActions
   | ZendeskSupportActions
   | CdcActions
-  | PnActions;
+  | PnActions
+  | StartupActions;
 
 export type Dispatch = DispatchAPI<Action>;
 

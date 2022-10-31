@@ -8,6 +8,7 @@ import {
   createStackNavigator,
   TransitionPresets
 } from "@react-navigation/stack";
+import * as O from "fp-ts/lib/Option";
 import { View } from "native-base";
 import * as React from "react";
 import { useRef } from "react";
@@ -40,12 +41,18 @@ import { setDebugCurrentRouteName } from "../store/actions/debug";
 import { useIODispatch, useIOSelector } from "../store/hooks";
 import { trackScreen } from "../store/middlewares/navigation";
 import {
+  sessionInfoSelector,
+  sessionTokenSelector
+} from "../store/reducers/authentication";
+import {
   isCdcEnabledSelector,
   isCGNEnabledSelector,
   isFIMSEnabledSelector
 } from "../store/reducers/backendStatus";
 import { isTestEnv } from "../utils/environment";
+import { startApplicationInitialization } from "../store/actions/application";
 import { IO_INTERNAL_LINK_PREFIX } from "../utils/navigation";
+import { isStartupLoaded } from "../store/reducers/startup";
 import authenticationNavigator from "./AuthenticationNavigator";
 import { MessagesStackNavigator } from "./MessagesNavigator";
 import NavigationService, { navigationRef } from "./NavigationService";
@@ -59,23 +66,47 @@ import WalletNavigator from "./WalletNavigator";
 
 const Stack = createStackNavigator<AppParamsList>();
 
-export const AppStackNavigator = () => {
+export const AppStackNavigator = (): React.ReactElement => {
+  const dispatch = useIODispatch();
   const cdcEnabled = useIOSelector(isCdcEnabledSelector);
   const fimsEnabledSelector = useIOSelector(isFIMSEnabledSelector);
   const cgnEnabled = useIOSelector(isCGNEnabledSelector);
 
   const isFimsEnabled = fimsEnabled && fimsEnabledSelector;
+
+  const maybeSessionToken = useIOSelector(sessionTokenSelector);
+  const maybeSessionInfo = useIOSelector(sessionInfoSelector);
+  const startupLoaded = useIOSelector(isStartupLoaded);
+
+  React.useEffect(() => {
+    dispatch(startApplicationInitialization());
+  }, [dispatch]);
+
+  if (maybeSessionToken === undefined && O.isNone(maybeSessionInfo)) {
+    return (
+      <Stack.Navigator
+        initialRouteName={ROUTES.AUTHENTICATION}
+        headerMode={"none"}
+        screenOptions={{ gestureEnabled: false }}
+      >
+        <Stack.Screen
+          name={ROUTES.AUTHENTICATION}
+          component={authenticationNavigator}
+        />
+      </Stack.Navigator>
+    );
+  }
+
+  if (!startupLoaded) {
+    return <IngressScreen />;
+  }
+
   return (
     <Stack.Navigator
-      initialRouteName={"INGRESS"}
+      initialRouteName={ROUTES.MAIN}
       headerMode={"none"}
       screenOptions={{ gestureEnabled: false }}
     >
-      <Stack.Screen name={ROUTES.INGRESS} component={IngressScreen} />
-      <Stack.Screen
-        name={ROUTES.AUTHENTICATION}
-        component={authenticationNavigator}
-      />
       <Stack.Screen name={ROUTES.ONBOARDING} component={OnboardingNavigator} />
       <Stack.Screen name={ROUTES.MAIN} component={MainTabNavigator} />
 
@@ -161,9 +192,10 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
   const isFimsEnabled = useIOSelector(isFIMSEnabledSelector) && fimsEnabled;
 
   const linking: LinkingOptions = {
-    enabled: false,
+    enabled: true,
     prefixes: [IO_INTERNAL_LINK_PREFIX],
     config: {
+      initialRouteName: ROUTES.MAIN,
       screens: {
         [ROUTES.MAIN]: {
           path: "main",
