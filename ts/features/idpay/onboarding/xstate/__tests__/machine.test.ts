@@ -1,40 +1,45 @@
-import { assign, interpret, MachineOptionsFrom } from "xstate";
+import { interpret } from "xstate";
 import { waitFor } from "@testing-library/react-native";
 import {
-  createIDPayOnboardingMachine,
-  OnboardingMachineType
-} from "../machine";
+  createIDPayOnboardingMachine} from "../machine";
+import { InitiativeDto } from "../../../../../../definitions/idpay/onboarding/InitiativeDto";
+import { RequiredCriteriaDTO } from "../../../../../../definitions/idpay/onboarding/RequiredCriteriaDTO";
+import { _typeEnum as teSelfBool } from "../../../../../../definitions/idpay/onboarding/SelfConsentBoolDTO";
+import { PDNDCriteriaDTO } from "../../../../../../definitions/idpay/onboarding/PDNDCriteriaDTO";
+import { SelfDeclarationDTO } from "../../../../../../definitions/idpay/onboarding/SelfDeclarationDTO";
 
 const T_SERVICE_ID = "T_SERVICE_ID";
 const T_INITIATIVE_ID = "T_INITIATIVE_ID";
 
-const fakeLoadInitiativeData = jest.fn(async () => ({
-  initiativeId: T_INITIATIVE_ID
-}));
-
-const fakeAcceptTos = jest.fn(async () => undefined);
-
-const fakeLoadPrerequisites = jest.fn(async () => ({
-  pdnd: true,
-  self: true
-}));
-
-const fakeAcceptPrerequisites = jest.fn(async () => undefined);
-
-const DEFAULT_ACTIONS: MachineOptionsFrom<OnboardingMachineType>["actions"] = {
-  selectInitiative: assign((_, event) => ({
-    serviceId: event.serviceId
-  })),
-  loadInitiativeDataSuccess: assign((_, event) => ({
-    initiativeId: event.data.initiativeId
-  })),
-  loadPrerequisitesSuccess: assign((_, event) => ({
-    prerequisites: {
-      pdnd: event.data.pdnd,
-      self: event.data.self
-    }
-  }))
+const T_REQUIRED_PDND_CRITERIA: PDNDCriteriaDTO = {
+  code: "T_CODE",
+  description: "T_DESCRIPTION",
+  authority: "T_AUTHORITY"
 };
+
+const T_REQUIRED_SELF_CRITERIA: SelfDeclarationDTO = {
+  _type: teSelfBool.boolean,
+  code: "T_CODE",
+  description: "T_DESCRIPTION",
+  value: true
+};
+
+const mockLoadInitiative = jest.fn(
+  async (): Promise<InitiativeDto> => ({
+    initiativeId: T_INITIATIVE_ID
+  })
+);
+
+const mockAcceptTos = jest.fn(async () => undefined);
+
+const mockLoadRequiredCriteria = jest.fn(
+  async (): Promise<RequiredCriteriaDTO> => ({
+    pdndCriteria: [T_REQUIRED_PDND_CRITERIA],
+    selfDeclarationList: [T_REQUIRED_SELF_CRITERIA]
+  })
+);
+
+const mockAcceptRequiredCritera = jest.fn(async () => undefined);
 
 describe("machine", () => {
   beforeEach(() => {
@@ -48,20 +53,11 @@ describe("machine", () => {
 
   it("should allow the citizen to complete onboarding on happy path", async () => {
     const machine = createIDPayOnboardingMachine().withConfig({
-      actions: {
-        selectInitiative: DEFAULT_ACTIONS.selectInitiative,
-        loadInitiativeDataSuccess: DEFAULT_ACTIONS.loadInitiativeDataSuccess,
-        loadPrerequisitesSuccess: DEFAULT_ACTIONS.loadPrerequisitesSuccess
-      },
       services: {
-        loadInitiativeData: fakeLoadInitiativeData,
-        acceptTos: fakeAcceptTos,
-        loadPrerequisites: fakeLoadPrerequisites,
-        acceptPrerequisites: fakeAcceptPrerequisites
-      },
-      guards: {
-        hasPDNDPrerequisites: context => !!context.prerequisites?.pdnd,
-        hasSelfPrerequisites: context => !!context.prerequisites?.self
+        loadInitiative: mockLoadInitiative,
+        acceptTos: mockAcceptTos,
+        loadRequiredCriteria: mockLoadRequiredCriteria,
+        acceptRequiredCriteria: mockAcceptRequiredCritera
       }
     });
 
@@ -71,19 +67,19 @@ describe("machine", () => {
 
     onboardingService.send("SELECT_INITIATIVE", { serviceId: T_SERVICE_ID });
 
-    await waitFor(() => expect(fakeLoadInitiativeData).toHaveBeenCalled());
+    await waitFor(() => expect(mockLoadInitiative).toHaveBeenCalled());
 
     onboardingService.send("ACCEPT_TOS");
 
-    await waitFor(() => expect(fakeAcceptTos).toHaveBeenCalled());
+    await waitFor(() => expect(mockAcceptTos).toHaveBeenCalled());
 
-    onboardingService.send("ACCEPT_PDND_PREREQUISITES");
+    await waitFor(() => expect(mockLoadRequiredCriteria).toHaveBeenCalled());
 
-    await waitFor(() => expect(fakeLoadPrerequisites).toHaveBeenCalled());
+    onboardingService.send("ACCEPT_REQUIRED_PDND_CRITERIA");
 
-    onboardingService.send("ACCEPT_SELF_PREREQUISITES");
+    onboardingService.send("ACCEPT_REQUIRED_SELF_CRITERIA");
 
-    await waitFor(() => expect(fakeAcceptPrerequisites).toHaveBeenCalled());
+    await waitFor(() => expect(mockAcceptRequiredCritera).toHaveBeenCalled());
 
     expect(
       onboardingService.getSnapshot().matches("DISPLAYING_ONBOARDING_COMPLETED")
@@ -91,31 +87,22 @@ describe("machine", () => {
   });
 
   it("should not display PDND prerequisite is not needed", async () => {
-    const fakeLoadPrerequisitesWithoutPDND = jest.fn(async () => ({
-      pdnd: false,
-      self: true
+    const mockLoadRequiredCriteriaWithoutPDND = jest.fn(async () => ({
+      pdndCriteria: [],
+      selfDeclarationList: [T_REQUIRED_SELF_CRITERIA]
     }));
 
     const machine = createIDPayOnboardingMachine().withConfig({
-      actions: {
-        selectInitiative: DEFAULT_ACTIONS.selectInitiative,
-        loadInitiativeDataSuccess: DEFAULT_ACTIONS.loadInitiativeDataSuccess,
-        loadPrerequisitesSuccess: DEFAULT_ACTIONS.loadPrerequisitesSuccess
-      },
       services: {
-        loadInitiativeData: fakeLoadInitiativeData,
-        acceptTos: fakeAcceptTos,
-        loadPrerequisites: fakeLoadPrerequisitesWithoutPDND,
-        acceptPrerequisites: fakeAcceptPrerequisites
-      },
-      guards: {
-        hasPDNDPrerequisites: context => !!context.prerequisites?.pdnd,
-        hasSelfPrerequisites: context => !!context.prerequisites?.self
+        loadInitiative: mockLoadInitiative,
+        acceptTos: mockAcceptTos,
+        loadRequiredCriteria: mockLoadRequiredCriteriaWithoutPDND,
+        acceptRequiredCriteria: mockAcceptRequiredCritera
       }
     });
 
     const onboardingService = interpret(machine).onTransition(state => {
-      if (state.matches("DISPLAYING_PDND_PREREQUISITES")) {
+      if (state.matches("DISPLAYING_REQUIRED_PDND_CRITERIA")) {
         fail("PDND prerequisite should not be displayed");
       }
     });
@@ -124,15 +111,15 @@ describe("machine", () => {
 
     onboardingService.send("SELECT_INITIATIVE", { serviceId: T_SERVICE_ID });
 
-    await waitFor(() => expect(fakeLoadInitiativeData).toHaveBeenCalled());
+    await waitFor(() => expect(mockLoadInitiative).toHaveBeenCalled());
 
     onboardingService.send("ACCEPT_TOS");
 
-    await waitFor(() => expect(fakeAcceptTos).toHaveBeenCalled());
+    await waitFor(() => expect(mockAcceptTos).toHaveBeenCalled());
 
-    onboardingService.send("ACCEPT_SELF_PREREQUISITES");
+    onboardingService.send("ACCEPT_REQUIRED_SELF_CRITERIA");
 
-    await waitFor(() => expect(fakeAcceptPrerequisites).toHaveBeenCalled());
+    await waitFor(() => expect(mockAcceptRequiredCritera).toHaveBeenCalled());
 
     expect(
       onboardingService.getSnapshot().matches("DISPLAYING_ONBOARDING_COMPLETED")
@@ -140,32 +127,23 @@ describe("machine", () => {
   });
 
   it("should not display SELF prerequisite is not needed", async () => {
-    const fakeLoadPrerequisitesWithoutSELF = jest.fn(async () => ({
-      pdnd: true,
-      self: false
+    const mockLoadRequiredCriteriaWithoutSELF = jest.fn(async () => ({
+      pdndCriteria: [T_REQUIRED_PDND_CRITERIA],
+      selfDeclarationList: []
     }));
 
     const machine = createIDPayOnboardingMachine().withConfig({
-      actions: {
-        selectInitiative: DEFAULT_ACTIONS.selectInitiative,
-        loadInitiativeDataSuccess: DEFAULT_ACTIONS.loadInitiativeDataSuccess,
-        loadPrerequisitesSuccess: DEFAULT_ACTIONS.loadPrerequisitesSuccess
-      },
       services: {
-        loadInitiativeData: fakeLoadInitiativeData,
-        acceptTos: fakeAcceptTos,
-        loadPrerequisites: fakeLoadPrerequisitesWithoutSELF,
-        acceptPrerequisites: fakeAcceptPrerequisites
-      },
-      guards: {
-        hasPDNDPrerequisites: context => !!context.prerequisites?.pdnd,
-        hasSelfPrerequisites: context => !!context.prerequisites?.self
+        loadInitiative: mockLoadInitiative,
+        acceptTos: mockAcceptTos,
+        loadRequiredCriteria: mockLoadRequiredCriteriaWithoutSELF,
+        acceptRequiredCriteria: mockAcceptRequiredCritera
       }
     });
 
     const onboardingService = interpret(machine).onTransition(state => {
-      if (state.matches("DISPLAYING_SELF_PREREQUISITES")) {
-        fail("SELF prerequisite should not be displayed");
+      if (state.matches("DISPLAYING_REQUIRED_SELF_CRITERIA")) {
+        fail("SELF criteria should not be displayed");
       }
     });
 
@@ -173,54 +151,45 @@ describe("machine", () => {
 
     onboardingService.send("SELECT_INITIATIVE", { serviceId: T_SERVICE_ID });
 
-    await waitFor(() => expect(fakeLoadInitiativeData).toHaveBeenCalled());
+    await waitFor(() => expect(mockLoadInitiative).toHaveBeenCalled());
 
     onboardingService.send("ACCEPT_TOS");
 
-    await waitFor(() => expect(fakeAcceptTos).toHaveBeenCalled());
+    await waitFor(() => expect(mockAcceptTos).toHaveBeenCalled());
 
-    onboardingService.send("ACCEPT_PDND_PREREQUISITES");
+    onboardingService.send("ACCEPT_REQUIRED_PDND_CRITERIA");
 
-    await waitFor(() => expect(fakeAcceptPrerequisites).toHaveBeenCalled());
+    await waitFor(() => expect(mockAcceptRequiredCritera).toHaveBeenCalled());
 
     expect(
       onboardingService.getSnapshot().matches("DISPLAYING_ONBOARDING_COMPLETED")
     );
   });
 
-  it("should skip all the prerequisites steps if not needed", async () => {
-    const fakeLoadPrerequisitesNO = jest.fn(async () => ({
-      pdnd: false,
-      self: false
+  it("should skip all the criteria steps if not needed", async () => {
+    const mockLoadRequiredCriteriaNO = jest.fn(async () => ({
+      pdndCriteria: [],
+      selfDeclarationList: []
     }));
 
     const machine = createIDPayOnboardingMachine().withConfig({
-      actions: {
-        selectInitiative: DEFAULT_ACTIONS.selectInitiative,
-        loadInitiativeDataSuccess: DEFAULT_ACTIONS.loadInitiativeDataSuccess,
-        loadPrerequisitesSuccess: DEFAULT_ACTIONS.loadPrerequisitesSuccess
-      },
       services: {
-        loadInitiativeData: fakeLoadInitiativeData,
-        acceptTos: fakeAcceptTos,
-        loadPrerequisites: fakeLoadPrerequisitesNO,
-        acceptPrerequisites: fakeAcceptPrerequisites
-      },
-      guards: {
-        hasPDNDPrerequisites: context => !!context.prerequisites?.pdnd,
-        hasSelfPrerequisites: context => !!context.prerequisites?.self
+        loadInitiative: mockLoadInitiative,
+        acceptTos: mockAcceptTos,
+        loadRequiredCriteria: mockLoadRequiredCriteriaNO,
+        acceptRequiredCriteria: mockAcceptRequiredCritera
       }
     });
 
     const onboardingService = interpret(machine).onTransition(state => {
       if (
         state.matches(
-          "DISPLAYING_PDND_PREREQUISITES" ||
-            "DISPLAYING_SELF_PREREQUISITES" ||
-            "ACCEPTING_PREREQUISITES"
+          "DISPLAYING_REQUIRED_PDND_CRITERIA" ||
+            "DISPLAYING_REQUIRED_SELF_CRITERIA" ||
+            "ACCEPTING_REQUIRED_CRITERIA"
         )
       ) {
-        fail("SELF prerequisite should not be displayed");
+        fail("all criteria steps should not be displayed");
       }
     });
 
@@ -228,13 +197,13 @@ describe("machine", () => {
 
     onboardingService.send("SELECT_INITIATIVE", { serviceId: T_SERVICE_ID });
 
-    await waitFor(() => expect(fakeLoadInitiativeData).toHaveBeenCalled());
+    await waitFor(() => expect(mockLoadInitiative).toHaveBeenCalled());
 
     onboardingService.send("ACCEPT_TOS");
 
-    await waitFor(() => expect(fakeAcceptTos).toHaveBeenCalled());
+    await waitFor(() => expect(mockAcceptTos).toHaveBeenCalled());
 
-    await waitFor(() => expect(fakeAcceptPrerequisites).not.toHaveBeenCalled());
+    await waitFor(() => expect(mockAcceptRequiredCritera).not.toHaveBeenCalled());
 
     expect(
       onboardingService.getSnapshot().matches("DISPLAYING_ONBOARDING_COMPLETED")
