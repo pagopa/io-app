@@ -1152,7 +1152,7 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is expiring s
                                               "flexDirection": "row",
                                             },
                                             Object {
-                                              "backgroundColor": "#D0021B",
+                                              "backgroundColor": "#C02927",
                                             },
                                           ]
                                         }
@@ -1203,7 +1203,7 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is expiring s
                                                 content={null}
                                                 dx={Array []}
                                                 dy={Array []}
-                                                fill={4291822107}
+                                                fill={4290783527}
                                                 font={
                                                   Object {
                                                     "fontSize": 10,
@@ -1242,7 +1242,7 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is expiring s
                                                 content={null}
                                                 dx={Array []}
                                                 dy={Array []}
-                                                fill={4291822107}
+                                                fill={4290783527}
                                                 font={
                                                   Object {
                                                     "fontSize": 18,

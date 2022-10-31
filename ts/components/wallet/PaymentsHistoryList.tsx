@@ -52,7 +52,7 @@ export const getPaymentHistoryInfo = (
       () => ({
         text11: I18n.t("payment.details.state.incomplete"),
         text3: getIuv(paymentHistory.data),
-        color: customVariables.badgeYellow
+        color: IOColors.yellow
       }),
       success => {
         if (success) {
@@ -74,7 +74,7 @@ export const getPaymentHistoryInfo = (
                   )
               )
             ),
-            color: customVariables.brandHighlight
+            color: customVariables.colorHighlight
           };
         }
 

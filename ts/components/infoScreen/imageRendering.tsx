@@ -48,6 +48,6 @@ export const renderInfoIconImage = (
   <IconFont
     name={image}
     size={iconSize}
-    color={customVariables.brandHighlight}
+    color={customVariables.colorHighlight}
   />
 );
