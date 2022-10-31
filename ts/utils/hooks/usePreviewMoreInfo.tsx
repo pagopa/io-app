@@ -6,11 +6,10 @@ import { IOBottomSheetModal, useIOBottomSheetModal } from "./bottomSheet";
 
 /**
  * Return on object to open an IO bottom sheet modal
- * which content is shared between the notification 
+ * which content is shared between the notification
  * preferences views
  */
 export const usePreviewMoreInfo = (): IOBottomSheetModal => {
-  
   const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
     <Body>
       {I18n.t("profile.preferences.notifications.preview.bottomSheet.content")}

@@ -232,7 +232,7 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
           </InfoBox>
         </View>
       </ScreenContent>
-        {bottomSheet}
+      {bottomSheet}
       <SafeAreaView>
         <FooterWithButtons
           type="SingleButton"
