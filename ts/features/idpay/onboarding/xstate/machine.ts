@@ -203,7 +203,7 @@ const createIDPayOnboardingMachine = () =>
     }
   );
 
-type OnboardingMachineType = ReturnType<typeof createIDPayOnboardingMachine>;
+type IDPayOnboardingMachineType = ReturnType<typeof createIDPayOnboardingMachine>;
 
-export type { OnboardingMachineType };
+export type { IDPayOnboardingMachineType };
 export { hasRequiredCriteriaType as isDefinedUnemptyArray, createIDPayOnboardingMachine };
