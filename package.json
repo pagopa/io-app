@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "2.18.0-rc.4",
+  "version": "2.18.0-rc.7",
   "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v9.1.0-RELEASE/api_backend.yaml",
   "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v9.1.0-RELEASE/api_public.yaml",
   "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.19/definitions.yml",
@@ -160,7 +160,7 @@
     "react-native-svg": "^12.3.0",
     "react-native-vector-icons": "^7.0.0",
     "react-native-view-shot": "3.1.2",
-    "react-native-vision-camera": "2.14.1",
+    "react-native-vision-camera": "2.15.1",
     "react-native-webview": "^11.13.0",
     "react-redux": "7.2.4",
     "reactotron-react-native": "^5.0.0",

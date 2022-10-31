@@ -18,8 +18,8 @@ import Switch from "../../components/ui/Switch";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import { BlockButtonProps } from "../../components/ui/BlockButtons";
 import { InfoBox } from "../../components/box/InfoBox";
-import { IOColors } from "../../components/core/variables/IOColors";
 import { H5 } from "../../components/core/typography/H5";
+import { IOColors } from "../../components/core/variables/IOColors";
 import customVariables from "../../theme/variables";
 import { IOBadge } from "../../components/core/IOBadge";
 import { H1 } from "../../components/core/typography/H1";
@@ -122,7 +122,6 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
   const dispatch = useIODispatch();
 
   const [remindersEnabled, setRemindersEnabled] = useState(true);
-  const [isUpserting, setIsUpserting] = useState(false);
 
   const preferences = useSelector(profilePreferencesSelector);
 
@@ -132,16 +131,12 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
   const { isFirstOnboarding } = props.route.params;
 
   useEffect(() => {
-    if (isError && isUpserting) {
+    if (isError && !isUpdating) {
       showToast(I18n.t("profile.preferences.notifications.error"));
     }
-    if (!isUpdating) {
-      setIsUpserting(false);
-    }
-  }, [isError, isUpdating, isUpserting]);
+  }, [isError, isUpdating]);
 
   const upsertPreferences = () => {
-    setIsUpserting(true);
     dispatch(
       profileUpsert.request({
         reminder_status: remindersEnabled
