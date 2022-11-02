@@ -152,10 +152,13 @@ export const ioBackendAuthenticationHeaderSelector = createSelector(
   (token): { [key: string]: string } => ({ Authorization: `Bearer ${token}` })
 );
 
-export const sessionInfoSelector = (state: GlobalState) =>
-  isLoggedInWithSessionInfo(state.authentication)
-    ? O.some(state.authentication.sessionInfo)
-    : O.none;
+export const sessionInfoSelector = createSelector(
+  (state: GlobalState) => state.authentication,
+  authentication =>
+    isLoggedInWithSessionInfo(authentication)
+      ? O.some(authentication.sessionInfo)
+      : O.none
+);
 
 export const supportTokenSelector = (state: GlobalState): SupportTokenState =>
   isLoggedInWithSessionInfo(state.authentication)
