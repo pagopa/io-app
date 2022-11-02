@@ -11,7 +11,7 @@ import { IOBadge } from "../../../../../components/core/IOBadge";
 import { H1 } from "../../../../../components/core/typography/H1";
 import {
   IOColors,
-  IOColorGradients
+  getGradientColorValues
 } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
@@ -36,8 +36,6 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
     useNavigation<
       IOStackNavigationProp<CgnDetailsParamsList, "CGN_MERCHANTS_CATEGORIES">
     >();
-
-  const [gradFirstColor, gradSecondColor] = IOColorGradients.cgnAll;
 
   const loadCategories = () => {
     dispatch(cgnCategories.request());
@@ -65,7 +63,7 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
       return (
         <CgnMerchantCategoryItem
           title={I18n.t("bonus.cgn.merchantDetail.categories.all")}
-          colors={[gradFirstColor, gradSecondColor]}
+          colors={getGradientColorValues("cgnAll")}
           onPress={() => navigation.navigate(CGN_ROUTES.DETAILS.MERCHANTS.LIST)}
           child={
             <View style={[{ alignItems: "flex-end" }, IOStyles.flex]}>

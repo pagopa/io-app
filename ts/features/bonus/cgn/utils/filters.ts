@@ -1,6 +1,5 @@
 import * as O from "fp-ts/lib/Option";
 import { ComponentProps, FC } from "react";
-import { ColorValue } from "react-native";
 import { SvgProps } from "react-native-svg";
 import LinearGradient from "react-native-linear-gradient";
 import { TranslationKeys } from "../../../../../locales/locales";
@@ -20,23 +19,13 @@ import SustainableMobility from "../../../../../img/bonus/cgn/categories/sustain
 import Job from "../../../../../img/bonus/cgn/categories/job.svg";
 import I18n from "../../../../i18n";
 import { ProductCategoryWithNewDiscountsCount } from "../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
-import {
-  IOColorGradients,
-  IOColorGradientType
-} from "../../../../components/core/variables/IOColors";
+import { getGradientColorValues } from "../../../../components/core/variables/IOColors";
 
 export type Category = {
   type: ProductCategory;
   icon: FC<SvgProps>;
   nameKey: TranslationKeys;
   colors: ComponentProps<typeof LinearGradient>["colors"];
-};
-
-export const getGradientColorValues = (
-  gradientId: IOColorGradientType
-): ComponentProps<typeof LinearGradient>["colors"] => {
-  const [first, second]: Array<ColorValue> = IOColorGradients[gradientId];
-  return [first, second];
 };
 
 export const categories: Record<ProductCategory, Category> = {
