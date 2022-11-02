@@ -307,7 +307,7 @@ $ pod install   # skip on linux
 Finally, generate the definitions from the OpenAPI specs and from the YAML translations:
 
 ```
-$ yarn generate:all
+$ yarn generate
 ```
 
 #### Installation on the simulator

@@ -121,7 +121,8 @@ describe("NotificationsPreferencesScreen", () => {
         ...globalState,
         profile: pot.some({
           ...mockedProfile,
-          push_notifications_content_type: PushNotificationsContentTypeEnum.ANONYMOUS
+          push_notifications_content_type:
+            PushNotificationsContentTypeEnum.ANONYMOUS
         })
       });
       expect(screen).not.toBeNull();

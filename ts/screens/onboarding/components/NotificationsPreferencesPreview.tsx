@@ -57,33 +57,38 @@ type Props = {
   isFirstOnboarding: boolean;
 };
 
-const computeTitleAndMessageKeys = (isPreviewEnabled: boolean, areRemindersEnabled: boolean): {titleKey: TranslationKeys; messageKey: TranslationKeys} => {
-  
+const computeTitleAndMessageKeys = (
+  isPreviewEnabled: boolean,
+  areRemindersEnabled: boolean
+): { titleKey: TranslationKeys; messageKey: TranslationKeys } => {
   if (isPreviewEnabled && areRemindersEnabled) {
-    
     return {
-      titleKey: "onboarding.notifications.preview.reminderOnPreviewOnTitle" as TranslationKeys,
-      messageKey: "onboarding.notifications.preview.reminderOnPreviewOnMessage" as TranslationKeys
+      titleKey:
+        "onboarding.notifications.preview.reminderOnPreviewOnTitle" as TranslationKeys,
+      messageKey:
+        "onboarding.notifications.preview.reminderOnPreviewOnMessage" as TranslationKeys
     };
-
   } else if (isPreviewEnabled && !areRemindersEnabled) {
-
     return {
-      titleKey: "onboarding.notifications.preview.reminderOffPreviewOnTitle" as TranslationKeys,
-      messageKey: "onboarding.notifications.preview.reminderOffPreviewOnMessage" as TranslationKeys
+      titleKey:
+        "onboarding.notifications.preview.reminderOffPreviewOnTitle" as TranslationKeys,
+      messageKey:
+        "onboarding.notifications.preview.reminderOffPreviewOnMessage" as TranslationKeys
     };
-
   } else if (!isPreviewEnabled && areRemindersEnabled) {
-
     return {
-      titleKey: "onboarding.notifications.preview.reminderOnPreviewOffTitle" as TranslationKeys,
-      messageKey: "onboarding.notifications.preview.reminderOnPreviewOffMessage" as TranslationKeys
+      titleKey:
+        "onboarding.notifications.preview.reminderOnPreviewOffTitle" as TranslationKeys,
+      messageKey:
+        "onboarding.notifications.preview.reminderOnPreviewOffMessage" as TranslationKeys
     };
   }
-  
+
   return {
-    titleKey: "onboarding.notifications.preview.reminderOffPreviewOffTitle" as TranslationKeys,
-    messageKey: "onboarding.notifications.preview.reminderOffPreviewOffMessage" as TranslationKeys
+    titleKey:
+      "onboarding.notifications.preview.reminderOffPreviewOffTitle" as TranslationKeys,
+    messageKey:
+      "onboarding.notifications.preview.reminderOffPreviewOffMessage" as TranslationKeys
   };
 };
 
@@ -92,8 +97,10 @@ export const NotificationsPreferencesPreview = ({
   remindersEnabled,
   isFirstOnboarding
 }: Props) => {
-
-  const { titleKey, messageKey } = computeTitleAndMessageKeys(previewEnabled, remindersEnabled);
+  const { titleKey, messageKey } = computeTitleAndMessageKeys(
+    previewEnabled,
+    remindersEnabled
+  );
 
   return (
     <View style={[styles.container, !isFirstOnboarding && styles.blue]}>
