@@ -31,6 +31,10 @@ import {
   FimsNavigator
 } from "../features/fims/navigation/navigator";
 import FIMS_ROUTES from "../features/fims/navigation/routes";
+import {
+  IDPayOnboardingNavigator,
+  IDPayOnboardingRoutes
+} from "../features/idpay/onboarding/navigation/navigator";
 import UADONATION_ROUTES from "../features/uaDonations/navigation/routes";
 import { UAWebViewScreen } from "../features/uaDonations/screens/UAWebViewScreen";
 import { ZendeskStackNavigator } from "../features/zendesk/navigation/navigator";
@@ -141,6 +145,11 @@ export const AppStackNavigator = () => {
           component={CdcStackNavigator}
         />
       )}
+
+      <Stack.Screen
+        name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN}
+        component={IDPayOnboardingNavigator}
+      />
     </Stack.Navigator>
   );
 };
