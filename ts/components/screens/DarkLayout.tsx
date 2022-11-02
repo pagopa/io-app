@@ -14,7 +14,7 @@ import { IconProps } from "react-native-vector-icons/Icon";
 import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
 import customVariables from "../../theme/variables";
 import { FAQsCategoriesType } from "../../utils/faq";
-import { IOColors, IOColorGradients } from "../core/variables/IOColors";
+import { IOColors, getGradientColorValues } from "../core/variables/IOColors";
 import AnimatedScreenContent from "./AnimatedScreenContent";
 import {
   ContextualHelpProps,
@@ -59,12 +59,10 @@ const styles = StyleSheet.create({
 
 export default class DarkLayout extends React.Component<Props> {
   screenContent() {
-    const [gradFirstColor, gradSecondColor] = IOColorGradients.grey;
-
     const wrapper = (children: React.ReactNode) =>
       this.props.gradientHeader ? (
         <LinearGradient
-          colors={[gradFirstColor, gradSecondColor]}
+          colors={getGradientColorValues("grey")}
           style={
             this.props.headerPaddingMin
               ? styles.headerContentsMin
