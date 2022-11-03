@@ -1,25 +1,25 @@
 <body>
-  Nel tuo Portafoglio ci sono dei metodi di pagamento che potresti avere aggiunto per <b>iniziative ormai scadute o terminate.</b>
+  There are payment methods in your Wallet that you may have added for <b>initiatives that have now expired or ended.</b>
 </body>
 <br />
 <body>
-  Nei prossimi mesi arriverranno su IO <b>nuovi bonus e iniziative:</b> per questo, ti chiediamo di scegliere <b>se mantenere o eliminare i metodi di pagamento</b> del tuo Portafoglio. 
+  Coming in the next few months on IO <b>new bonuses and initiatives:</b> for this, we ask you to choose <b>whether to keep or eliminate the payment methods</b> of your Wallet. 
 </body>
 <H3>
-  Perché dovrei mantenerli?
+  Why should I keep them?
 </H3>
 <body>
-  Perché potrai utilizzarli per aderire ai bonus e alle iniziative in arrivo o <b>pagare avvisi pagoPA</b> senza dover inserire di nuovo i dati del metodo. Non è una decisione definitiva: se cambi idea, puoi sempre eliminarli in un secondo momento.
+  Because you will be able to use them to sign up for bonuses and upcoming initiatives or <b>pay pagoPA alerts</b> without having to re-enter method data. It is not a final decision: if you change your mind, you can always eliminate them later.
 </body>
 <H3>
-  Cosa succede se li elimino?
+  What happens if I delete them?
 </H3>
 <body>
-  I metodi verranno eliminati <b>in modo definitivo</b> dal tuo Portafoglio. Questo significa che, se vorrai usarli per aderire ai bonus e alle iniziative in arrivo o per pagare avvisi pagoPA, dovrai aggiungerli di nuovo.
+  The methods will be removed <b>definitely</b> from your Wallet. This means that if you want to use them to sign up for upcoming bonuses and initiatives or to pay pagoPA notices, you will have to add them back in.
 </body>
 <H3>
-  Cosa succede se non faccio alcuna scelta?
+  What happens if I make no choice?
 </H3>
 <body>
-  Se non ci dai alcuna indicazione entro il 29 novembre 2022, tutti i tuoi metodi verranno eliminati dal Portafoglio. 
+  If you give us no indication by November 29, 2022, all your methods will be removed from the Wallet. 
 </body>
