@@ -833,6 +833,12 @@ onboarding:
   thankYouPage:
     title: Setup completed!
     body: Now you can start using IO
+  notifications:
+    headerTitle: IO Settings
+    continue: Continue
+    remindersPreviewTitle: Promemoria
+    previewTitle: Hai un nuovo messaggio
+    previewMessage: Apri l’app per leggere il contenuto
 forms:
   validators:
     required: Required value

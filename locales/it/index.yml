@@ -498,7 +498,7 @@ profile:
         not_selected: Non selezionato
       notifications:
         title: Notifiche push
-        subtitle: Consenti anteprime e promemoria
+        subtitle: Consenti anteprima e promemoria
     empty:
       default: Nessuna preferenza impostata
     unavailable:
@@ -849,6 +849,12 @@ onboarding:
   thankYouPage:
     title: Configurazione terminata!
     body: Ora puoi iniziare a usare IO
+  notifications:
+    headerTitle: Configura IO
+    continue: Continua
+    remindersPreviewTitle: Promemoria
+    previewTitle: Hai un nuovo messaggio
+    previewMessage: Apri l’app per leggere il contenuto
 forms:
   validators:
     required: Valore richiesto
