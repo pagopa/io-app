@@ -9,6 +9,7 @@ import {
 } from "../../../utils/notification";
 import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
+import { notificationsInfoScreenConsent } from "../../../store/actions/notifications";
 
 describe("checkNotificationsPermissionsSaga", () => {
   it("upon saga startup, it should ask for push notifications permission", () => {
@@ -51,9 +52,8 @@ describe("checkNotificationsPermissionsSaga", () => {
       .isDone();
   });
 
-  /* it("if the saga asks for push permissions and the user does not give them, the saga navigates to the Info Screen", () => {
+  it("if the saga asks for push permissions and the user does not give them, the saga navigates to the Info Screen and waits for the notificationsInfoScreenConsent action", () => {
     const mockedProfile = { ...InitializedProfile, version: 0 };
-    const spy = jest.spyOn(NavigationService, "dispatchNavigationAction");
 
     testSaga(checkNotificationsPermissionsSaga, mockedProfile)
       .next()
@@ -61,12 +61,34 @@ describe("checkNotificationsPermissionsSaga", () => {
       .next(false)
       .call(requestNotificationPermissions)
       .next({ authorizationStatus: AuthorizationStatus.StatusDenied })
-      .next();
+      .call(
+        NavigationService.dispatchNavigationAction,
+        CommonActions.navigate(ROUTES.ONBOARDING, {
+          screen: ROUTES.ONBOARDING_NOTIFICATIONS_INFO_SCREEN_CONSENT
+        })
+      )
+      .next()
+      .take(notificationsInfoScreenConsent);
+  });
 
-    expect(spy).toHaveBeenCalledWith(
-      CommonActions.navigate(ROUTES.ONBOARDING, {
-        screen: ROUTES.ONBOARDING_NOTIFICATIONS_INFO_SCREEN_CONSENT
-      })
-    );
-  }); */
+  it("if the saga is waiting for the notificationsInfoScreenConsent action and the latter is received, the saga terminates", () => {
+    const mockedProfile = { ...InitializedProfile, version: 0 };
+
+    testSaga(checkNotificationsPermissionsSaga, mockedProfile)
+      .next()
+      .call(checkNotificationPermissions)
+      .next(false)
+      .call(requestNotificationPermissions)
+      .next({ authorizationStatus: AuthorizationStatus.StatusDenied })
+      .call(
+        NavigationService.dispatchNavigationAction,
+        CommonActions.navigate(ROUTES.ONBOARDING, {
+          screen: ROUTES.ONBOARDING_NOTIFICATIONS_INFO_SCREEN_CONSENT
+        })
+      )
+      .next()
+      .take(notificationsInfoScreenConsent)
+      .next()
+      .isDone();
+  });
 });

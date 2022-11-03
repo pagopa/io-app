@@ -33,13 +33,12 @@ export function* checkNotificationsPermissionsSaga(
         return;
       }
     }
-
-    yield* call(() =>
-      NavigationService.dispatchNavigationAction(
+    
+    yield* call(
+      NavigationService.dispatchNavigationAction,
         CommonActions.navigate(ROUTES.ONBOARDING, {
           screen: ROUTES.ONBOARDING_NOTIFICATIONS_INFO_SCREEN_CONSENT
         })
-      )
     );
 
     yield* take<ActionType<typeof notificationsInfoScreenConsent>>(
