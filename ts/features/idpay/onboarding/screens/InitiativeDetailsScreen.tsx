@@ -20,6 +20,8 @@ import { useIOSelector } from "../../../../store/hooks";
 import { serviceByIdSelector } from "../../../../store/reducers/entities/services/servicesById";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { toUIService } from "../../../../store/reducers/entities/services/transformers";
+import { showToast } from "../../../../utils/showToast";
+import { openWebUrl } from "../../../../utils/url";
 
 const InitiativeOrganizationHeader = ({
   name,
@@ -71,7 +73,6 @@ const InitiativeDetailsScreen = () => {
 
   const service = pipe(
     pot.toOption(useIOSelector(serviceByIdSelector(serviceId)) || pot.none),
-    O.map(toUIService),
     O.toUndefined
   );
 
@@ -90,11 +91,19 @@ const InitiativeDetailsScreen = () => {
   };
 
   const handlePrivacyLinkPress = () => {
-    // TODO add privacy link press logic
+    if(service.service_metadata?.privacy_url!== undefined) {
+      openWebUrl(service.service_metadata?.privacy_url, () =>
+        showToast(I18n.t("global.jserror.title"))
+      );
+    }
   };
 
   const handleTosLinkPress = () => {
-    // TODO add TOS link press logic
+    if (service.service_metadata?.tos_url !== undefined) {
+       openWebUrl(service.service_metadata?.tos_url, () =>
+         showToast(I18n.t("global.jserror.title"))
+       );
+    }
   };
 
   return (
@@ -109,7 +118,7 @@ const InitiativeDetailsScreen = () => {
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView style={IOStyles.flex}>
           <View style={styles.padded}>
-            <InitiativeOrganizationHeader {...service} />
+            <InitiativeOrganizationHeader {...toUIService(service)} />
             <View spacer={true} />
             <Markdown>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
