@@ -8,7 +8,7 @@ const createOnboardingClient = (baseUrl: string, token: string) =>
     withDefaults: op => params => {
       const paramsWithDefaults = {
         ...params,
-        bearerAuth: `Bearer ${token}`
+        bearerAuth: token
       } as Parameters<typeof op>[0];
 
       return op(paramsWithDefaults);
