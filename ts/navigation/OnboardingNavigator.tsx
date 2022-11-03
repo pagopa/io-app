@@ -4,6 +4,7 @@ import EmailInsertScreen from "../screens/onboarding/EmailInsertScreen";
 import EmailReadScreen from "../screens/onboarding/EmailReadScreen";
 import FingerprintScreen from "../screens/onboarding/FingerprintScreen";
 import OnboardingCompletedScreen from "../screens/onboarding/OnboardingCompletedScreen";
+import OnboardingNotificationsPreferencesScreen from "../screens/onboarding/OnboardingNotificationsPreferencesScreen";
 import OnboardingServicesPreferenceScreen from "../screens/onboarding/OnboardingServicesPreferenceScreen";
 import OnboardingShareDataScreen from "../screens/onboarding/OnboardingShareDataScreen";
 import PinScreen from "../screens/onboarding/PinScreen";
@@ -49,6 +50,10 @@ const navigator = () => (
     <Stack.Screen
       name={ROUTES.ONBOARDING_COMPLETED}
       component={OnboardingCompletedScreen}
+    />
+    <Stack.Screen
+      name={ROUTES.ONBOARDING_NOTIFICATIONS_PREFERENCES}
+      component={OnboardingNotificationsPreferencesScreen}
     />
   </Stack.Navigator>
 );
