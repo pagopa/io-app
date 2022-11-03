@@ -403,7 +403,6 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
           />
         )}
 
-        {/* When the opt_in_payment_methods FF is active hide the BpdCardsInWalletContainer component */}
         {bpdEnabled && <BpdCardsInWalletContainer />}
         <CgnCardInWalletContainer />
       </View>
