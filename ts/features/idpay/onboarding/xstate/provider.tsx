@@ -5,6 +5,10 @@ import { useInterpret } from "@xstate/react";
 import { useIOSelector } from "../../../../store/hooks";
 import { sessionInfoSelector } from "../../../../store/reducers/authentication";
 import { createOnboardingClient } from "../api/client";
+import {
+  IDPAY_API_TEST_TOKEN,
+  IDPAY_API_UAT_BASEURL
+} from "../../../../config";
 import { createServicesImplementation } from "./services";
 import {
   createIDPayOnboardingMachine,
@@ -30,10 +34,12 @@ const IDPayOnboardingMachineProvider = (props: Props) => {
     throw new Error("Session info is undefined");
   }
 
-  const onboardingClient = createOnboardingClient(
-    "",
-    sessionInfo.value.bpdToken
-  );
+  const token =
+    IDPAY_API_TEST_TOKEN !== undefined
+      ? IDPAY_API_TEST_TOKEN
+      : sessionInfo.value.bpdToken;
+
+  const onboardingClient = createOnboardingClient(IDPAY_API_UAT_BASEURL, token);
 
   const machine = createIDPayOnboardingMachine();
 
