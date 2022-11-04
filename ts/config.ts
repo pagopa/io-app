@@ -204,3 +204,12 @@ export const POSTE_DATAMATRIX_SCAN_PREFERRED_PSPS:
   ),
   O.toUndefined
 );
+
+/**
+ * IDPay
+ */
+
+export const IDPAY_API_TEST_TOKEN =
+  Config.IDPAY_API_TEST_TOKEN !== "" ? Config.IDPAY_API_TEST_TOKEN : undefined;
+
+export const IDPAY_API_UAT_BASEURL = Config.IDPAY_API_UAT_BASEURL;
