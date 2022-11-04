@@ -57,12 +57,6 @@ type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
   OwnProps;
 
-const styles = StyleSheet.create({
-  flexRow: {
-    flexDirection: "row"
-  }
-});
-
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "serviceDetail.headerTitle",
   body: "serviceDetail.contextualHelpContent"
@@ -169,7 +163,7 @@ const ServiceDetailsScreen = (props: Props) => {
         {showCTA && (
           <FooterTopShadow>
             {O.isSome(maybeCTA) && (
-              <View style={styles.flexRow}>
+              <View style={IOStyles.row}>
                 <ExtractedCTABar
                   ctas={maybeCTA.value}
                   xsmall={false}
