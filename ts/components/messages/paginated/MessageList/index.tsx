@@ -47,7 +47,6 @@ import {
   EmptyComponent,
   generateItemLayout,
   ItemSeparator,
-  ITEM_HEIGHT,
   renderEmptyList,
   renderItem
 } from "./helpers";
