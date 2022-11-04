@@ -1,6 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { List } from "native-base";
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import { useSelector } from "react-redux";
 import { ReminderStatusEnum } from "../../../definitions/backend/ReminderStatus";
@@ -20,17 +19,41 @@ import { profileUpsert } from "../../store/actions/profile";
 import { useIODispatch } from "../../store/hooks";
 import { profileRemindersPreferenceSelector } from "../../store/reducers/profile";
 import customVariables from "../../theme/variables";
+import { IOBadge } from "../../components/core/IOBadge";
+import { H1 } from "../../components/core/typography/H1";
+import { Body } from "../../components/core/typography/Body";
 import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
 import { showToast } from "../../utils/showToast";
 import { NotificationsPreferencesPreview } from "./components/NotificationsPreferencesPreview";
 
 const styles = StyleSheet.create({
+  contentHeader: {
+    padding: customVariables.contentPadding,
+    paddingTop: 0
+  },
   separator: {
     backgroundColor: customVariables.itemSeparator,
     height: StyleSheet.hairlineWidth
   },
   bottomSpacer: {
     marginBottom: customVariables.spacerLargeHeight
+  },
+  blueBg: {
+    backgroundColor: IOColors.blue
+  },
+  containerActions: {
+    backgroundColor: IOColors.white,
+    borderRadius: 16,
+    height: "100%",
+    flexGrow: 1,
+    paddingLeft: customVariables.contentPadding,
+    paddingRight: customVariables.contentPadding
+  },
+  containerActionsBlueBg: {
+    paddingTop: customVariables.contentPadding
+  },
+  badge: {
+    padding: customVariables.contentPadding / 2
   }
 });
 
@@ -63,6 +86,38 @@ const loadingButtonProps = (): BlockButtonProps => ({
   iconColor: IOColors.bluegreyDark
 });
 
+const CustomGoBack = memo(
+  ({ isFirstOnboarding }: { isFirstOnboarding: boolean }) => (
+    <View style={styles.badge}>
+      {!isFirstOnboarding && (
+        <IOBadge
+          text={I18n.t("onboarding.notifications.badge")}
+          labelColor={"bluegreyDark"}
+        />
+      )}
+    </View>
+  )
+);
+
+const Header = memo(({ isFirstOnboarding }: { isFirstOnboarding: boolean }) => (
+  <View style={styles.contentHeader}>
+    <H1 color={isFirstOnboarding ? "bluegreyDark" : "white"}>
+      {I18n.t(
+        isFirstOnboarding
+          ? "profile.preferences.notifications.titleNewUser"
+          : "profile.preferences.notifications.title"
+      )}
+    </H1>
+    <Body color={isFirstOnboarding ? "bluegreyDark" : "white"}>
+      {I18n.t(
+        isFirstOnboarding
+          ? "profile.preferences.notifications.subtitleNewUser"
+          : "profile.preferences.notifications.subtitle"
+      )}
+    </Body>
+  </View>
+));
+
 const OnboardingNotificationsPreferencesScreen = (props: Props) => {
   const dispatch = useIODispatch();
 
@@ -93,23 +148,33 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
 
   return (
     <BaseScreenComponent
-      customGoBack={<View />}
+      customGoBack={<CustomGoBack isFirstOnboarding={isFirstOnboarding} />}
       headerTitle={
         isFirstOnboarding
           ? I18n.t("onboarding.notifications.headerTitle")
           : undefined
       }
       contextualHelp={emptyContextualHelp}
+      primary={!isFirstOnboarding}
     >
       <ScreenContent
-        title={I18n.t("profile.preferences.notifications.title")}
-        subtitle={I18n.t("profile.preferences.notifications.subtitle")}
+        hideHeader={true}
+        {...(!isFirstOnboarding && {
+          contentStyle: styles.blueBg
+        })}
       >
-        <List withContentLateralPadding={true}>
-          <NotificationsPreferencesPreview
-            remindersEnabled={remindersEnabled}
-          />
-          <View style={styles.separator} />
+        <Header isFirstOnboarding={isFirstOnboarding} />
+        <NotificationsPreferencesPreview
+          remindersEnabled={remindersEnabled}
+          isFirstOnboarding={isFirstOnboarding}
+        />
+        <View
+          style={[
+            styles.containerActions,
+            !isFirstOnboarding && styles.containerActionsBlueBg
+          ]}
+        >
+          {isFirstOnboarding && <View style={styles.separator} />}
           <PreferencesListItem
             title={I18n.t("profile.preferences.notifications.reminders.title")}
             description={I18n.t(
@@ -129,7 +194,7 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
               {I18n.t("profile.main.privacy.shareData.screen.profileSettings")}
             </H5>
           </InfoBox>
-        </List>
+        </View>
       </ScreenContent>
       <SafeAreaView>
         <FooterWithButtons
