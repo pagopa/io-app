@@ -4,7 +4,7 @@ import * as O from "fp-ts/lib/Option";
 import { Content, Grid, View } from "native-base";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { SafeAreaView, StyleSheet } from "react-native";
+import { SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { SpecialServiceMetadata } from "../../../definitions/backend/SpecialServiceMetadata";
