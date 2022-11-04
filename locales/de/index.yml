@@ -90,7 +90,7 @@ global:
         label: Kontextbezogene Hilfe
         hint: Zugriff auf Informationen über den Inhalt des aktuellen Bildschirms
     chat:
-      description: "IO Service-Mitteilungen"
+      description: "IO Servicemitteilungen"
       unread_singular: "{{message}} neue Mitteilung"
       unread_plural: "{{message}} neue Mitteilungen"
   ioWebSite: https://io.italia.it
