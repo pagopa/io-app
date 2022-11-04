@@ -37,9 +37,7 @@ class LoadingSpinnerOverlay extends React.Component<Props> {
     } = this.props;
     return (
       <Overlay
-        backgroundColor={`rgba(255, 255, 255, ${loadingOpacity})`}
-        // TODO: Replace reference to RGB with formatted value from IOColors,
-        // using `hexToRgba` function
+        backgroundColor={hexToRgba(IOColors.white, loadingOpacity)}
         foreground={
           isLoading && (
             <BoxedRefreshIndicator
