@@ -1,4 +1,4 @@
-import { Either, left, right } from "fp-ts/lib/Either";
+import * as E from "fp-ts/lib/Either";
 import { ValidationError } from "io-ts";
 import { IResponseType } from "@pagopa/ts-commons/lib/requests";
 
@@ -12,15 +12,16 @@ import {
 
 describe("`handleResponse` function", () => {
   describe("given a failure", () => {
-    const failure: Either<Array<ValidationError>, ResponseType<unknown>> = left(
-      [
-        {
-          value: 42,
-          context: [],
-          message: "a password here"
-        } as ValidationError
-      ]
-    );
+    const failure: E.Either<
+      Array<ValidationError>,
+      ResponseType<unknown>
+    > = E.left([
+      {
+        value: 42,
+        context: [],
+        message: "a password here"
+      } as ValidationError
+    ]);
 
     it("should run `onFailure` callback with a privacy report", () => {
       const onFailure = jest.fn();
@@ -40,10 +41,13 @@ describe("`handleResponse` function", () => {
 
   describe("given a success", () => {
     describe("with a 200 status", () => {
-      const success: Either<
+      const success: E.Either<
         Array<ValidationError>,
         ResponseType<string>
-      > = right({ status: 200, value: "حبيبتي" } as IResponseType<200, string>);
+      > = E.right({ status: 200, value: "حبيبتي" } as IResponseType<
+        200,
+        string
+      >);
 
       it("should run `onSuccess` callback with the response and return its action", () => {
         const expectedAction = reloadAllMessages.request(defaultRequestPayload);
@@ -61,7 +65,7 @@ describe("`handleResponse` function", () => {
     });
 
     describe("with a 401 status", () => {
-      const success: Either<Array<ValidationError>, any> = right({
+      const success: E.Either<Array<ValidationError>, any> = E.right({
         status: 401,
         value: {}
       });
@@ -82,7 +86,7 @@ describe("`handleResponse` function", () => {
     });
 
     describe("with a 500 status", () => {
-      const success: Either<Array<ValidationError>, any> = right({
+      const success: E.Either<Array<ValidationError>, any> = E.right({
         status: 500,
         value: { title: "seriously?" }
       });
@@ -104,7 +108,7 @@ describe("`handleResponse` function", () => {
   });
 
   describe("with any other status", () => {
-    const success: Either<Array<ValidationError>, any> = right({
+    const success: E.Either<Array<ValidationError>, any> = E.right({
       status: Math.random(),
       value: {}
     });

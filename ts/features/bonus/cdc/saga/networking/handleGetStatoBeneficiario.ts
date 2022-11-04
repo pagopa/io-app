@@ -1,11 +1,12 @@
+import * as E from "fp-ts/lib/Either";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
+import { ListaStatoPerAnno } from "../../../../../../definitions/cdc/ListaStatoPerAnno";
+import { isTestEnv } from "../../../../../utils/environment";
+import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { BackendCdcClient } from "../../api/backendCdc";
 import { cdcRequestBonusList } from "../../store/actions/cdcBonusRequest";
-import { getGenericError, getNetworkError } from "../../../../../utils/errors";
-import { ListaStatoPerAnno } from "../../../../../../definitions/cdc/ListaStatoPerAnno";
 import { CdcBonusRequestList } from "../../types/CdcBonusRequest";
-import { isTestEnv } from "../../../../../utils/environment";
 
 // convert a success response to the logical app representation of it
 const convertSuccess = (listaPerAnno: ListaStatoPerAnno): CdcBonusRequestList =>
@@ -26,11 +27,11 @@ export function* handleGetStatoBeneficiario(
   try {
     const getStatoBeneficiarioResult = yield* call(getStatoBeneficiario, {});
 
-    if (getStatoBeneficiarioResult.isRight()) {
-      if (getStatoBeneficiarioResult.value.status === 200) {
+    if (E.isRight(getStatoBeneficiarioResult)) {
+      if (getStatoBeneficiarioResult.right.status === 200) {
         yield* put(
           cdcRequestBonusList.success(
-            convertSuccess(getStatoBeneficiarioResult.value.value)
+            convertSuccess(getStatoBeneficiarioResult.right.value)
           )
         );
         return;
@@ -38,7 +39,7 @@ export function* handleGetStatoBeneficiario(
       yield* put(
         cdcRequestBonusList.failure(
           getGenericError(
-            new Error(getStatoBeneficiarioResult.value.status.toString())
+            new Error(getStatoBeneficiarioResult.right.status.toString())
           )
         )
       );

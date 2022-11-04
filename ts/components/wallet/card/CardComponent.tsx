@@ -3,7 +3,10 @@
  * with different appearences based on
  * the props passed
  */
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { Alert, Image } from "react-native";
@@ -13,19 +16,18 @@ import {
   MenuOptions,
   MenuTrigger
 } from "react-native-popup-menu";
-import { some } from "fp-ts/lib/Option";
 import { BlurredPan } from "../../../features/wallet/component/card/BlurredPan";
 import I18n from "../../../i18n";
 import variables from "../../../theme/variables";
 import { CreditCard, CreditCardType, Wallet } from "../../../types/pagopa";
+import { CreditCardDetector, SupportedBrand } from "../../../utils/creditCard";
+import { isPaymentMethodExpired } from "../../../utils/paymentMethod";
 import { buildExpirationDate } from "../../../utils/stringBuilder";
 import { FOUR_UNICODE_CIRCLES } from "../../../utils/wallet";
 import ButtonDefaultOpacity from "../../ButtonDefaultOpacity";
-import IconFont from "../../ui/IconFont";
 import { H5 } from "../../core/typography/H5";
-import { isPaymentMethodExpired } from "../../../utils/paymentMethod";
-import { CreditCardDetector, SupportedBrand } from "../../../utils/creditCard";
 import { IOColors } from "../../core/variables/IOColors";
+import IconFont from "../../ui/IconFont";
 import styles from "./CardComponent.style";
 import Logo, { cardIcons } from "./Logo";
 import { CreditCardStyles } from "./style";
@@ -196,7 +198,7 @@ export default class CardComponent extends React.Component<Props> {
 
     // Extract the brand name from the credit card pan
     const detectedBrand: SupportedBrand = CreditCardDetector.validate(
-      some(creditCard.pan)
+      O.some(creditCard.pan)
     );
     /**
      * Extract the brand logo from the brand name
@@ -206,7 +208,13 @@ export default class CardComponent extends React.Component<Props> {
     const creditCardType = CreditCardType.decode(
       detectedBrand.name.toUpperCase()
     );
-    const logo = cardIcons[creditCardType.getOrElse("UNKNOWN")];
+    const logo =
+      cardIcons[
+        pipe(
+          creditCardType,
+          E.getOrElseW(() => "UNKNOWN" as const)
+        )
+      ];
 
     const BASE_ICON_W = 48;
     const BASE_ICON_H = 30;
@@ -233,7 +241,10 @@ export default class CardComponent extends React.Component<Props> {
     };
     const expirationDate = buildExpirationDate(creditCard);
     const isCardExpired = this.props.wallet.paymentMethod
-      ? isPaymentMethodExpired(this.props.wallet.paymentMethod).getOrElse(false)
+      ? pipe(
+          isPaymentMethodExpired(this.props.wallet.paymentMethod),
+          E.getOrElse(() => false)
+        )
       : false;
     return (
       <View style={[styles.columns, styles.paddedTop]}>

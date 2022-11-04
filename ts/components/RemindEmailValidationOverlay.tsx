@@ -1,9 +1,10 @@
 /**
  * A component to remind the user to validate his email
  */
-import { none, Option, some } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
-import { Millisecond } from "italia-ts-commons/lib/units";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { Content, Text, View } from "native-base";
 import * as React from "react";
 import {
@@ -73,7 +74,7 @@ const styles = StyleSheet.create({
     alignSelf: "center"
   },
   error: {
-    backgroundColor: customVariables.colorDanger,
+    backgroundColor: customVariables.brandDanger,
     paddingHorizontal: customVariables.contentPadding,
     paddingVertical: 11,
     flexDirection: "row",
@@ -128,7 +129,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     this.idPolling = setInterval(this.props.reloadProfile, profilePolling);
     this.props.reloadProfile();
     // since we are here, set the user doesn't acknowledge about the email validation
-    this.props.dispatchAcknowledgeOnEmailValidation(some(false));
+    this.props.dispatchAcknowledgeOnEmailValidation(O.some(false));
   }
 
   public componentWillUnmount() {
@@ -142,9 +143,12 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
 
   private handleSendEmailValidationButton = () => {
     // send email validation only if it exists
-    this.props.optionEmail.map(_ => {
-      this.props.sendEmailValidation();
-    });
+    pipe(
+      this.props.optionEmail,
+      O.map(_ => {
+        this.props.sendEmailValidation();
+      })
+    );
     this.setState({
       isLoading: true,
       isCtaSentEmailValidationDisabled: true
@@ -156,7 +160,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     if (this.state.isLoading) {
       return;
     }
-    this.props.dispatchAcknowledgeOnEmailValidation(none);
+    this.props.dispatchAcknowledgeOnEmailValidation(O.none);
     this.props.reloadProfile();
     if (!isOnboardingCompleted()) {
       this.props.acknowledgeEmailInsert();
@@ -203,11 +207,14 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     // if the email becomes validated
     if (!prevProps.isEmailValidated && this.props.isEmailValidated) {
       // and the user doesn't acknowledgeknow about validation
-      this.props.acknowledgeOnEmailValidated.map(v => {
-        if (v === false && this.state.emailHasBeenValidate === false) {
-          this.setState({ emailHasBeenValidate: true });
-        }
-      });
+      pipe(
+        this.props.acknowledgeOnEmailValidated,
+        O.map(v => {
+          if (v === false && this.state.emailHasBeenValidate === false) {
+            this.setState({ emailHasBeenValidate: true });
+          }
+        })
+      );
     }
   }
 
@@ -356,7 +363,10 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
   };
 
   public render() {
-    const email = this.props.optionEmail.getOrElse(EMPTY_EMAIL);
+    const email = pipe(
+      this.props.optionEmail,
+      O.getOrElse(() => EMPTY_EMAIL)
+    );
 
     const onboardingCompleted = isOnboardingCompleted();
 
@@ -435,8 +445,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(profileLoadRequest());
   },
   acknowledgeEmailInsert: () => dispatch(emailAcknowledged()),
-  dispatchAcknowledgeOnEmailValidation: (maybeAcknowledged: Option<boolean>) =>
-    dispatch(acknowledgeOnEmailValidation(maybeAcknowledged)),
+  dispatchAcknowledgeOnEmailValidation: (
+    maybeAcknowledged: O.Option<boolean>
+  ) => dispatch(acknowledgeOnEmailValidation(maybeAcknowledged)),
   abortOnboarding: () => dispatch(abortOnboarding())
 });
 

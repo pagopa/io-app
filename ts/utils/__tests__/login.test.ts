@@ -1,4 +1,4 @@
-import { none, Option, some } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import { extractLoginResult, getIntentFallbackUrl } from "../login";
 import { SessionToken } from "../../types/SessionToken";
 
@@ -81,30 +81,30 @@ describe("hook the login outcome from the url", () => {
 });
 
 describe("getIntentFallbackUrl", () => {
-  const isIntentSchemeCases: ReadonlyArray<[string, Option<string>]> = [
-    ["", none],
-    ["https://www.google.com", none],
-    ["intent:", none],
-    ["intent://", none],
+  const isIntentSchemeCases: ReadonlyArray<[string, O.Option<string>]> = [
+    ["", O.none],
+    ["https://www.google.com", O.none],
+    ["intent:", O.none],
+    ["intent://", O.none],
     [
       "intent://domain.test.it/?tranId=abc#Intent;scheme=https;package=com.test.it;S.browser_fallback_url=https://domain.it/?tranId=acb;end",
-      some("https://domain.it/?tranId=acb")
+      O.some("https://domain.it/?tranId=acb")
     ],
     [
       "intent://domain.test.it/?tranId=abc#Intent;scheme=https;package=com.test.it;S.browser_fallback_url=https://domain.it/?tranId=acb",
-      none
+      O.none
     ],
     [
       "intent://domain.test.it/?tranId=abc#Intent;scheme=https;package=com.test.it;end",
-      none
+      O.none
     ],
     [
       "intent://domain.test.it/?tranId=abc#Intent;scheme=https;package=com.test.it;fallback_url=https://domain.it/?tranId=acb;end",
-      none
+      O.none
     ],
     [
       "intent:/domain.test.it/?tranId=abc#Intent;scheme=https;package=com.test.it;S.browser_fallback_url=https://domain.it/?tranId=acb;end",
-      none
+      O.none
     ]
   ];
   test.each(isIntentSchemeCases)(

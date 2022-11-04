@@ -1,4 +1,4 @@
-import { range } from "fp-ts/lib/Array";
+import * as NAR from "fp-ts/lib/NonEmptyArray";
 import { View } from "native-base";
 import * as React from "react";
 import { Dimensions, StyleSheet, ViewStyle } from "react-native";
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
 const screenWidth = Dimensions.get("window").width;
 
 const InputPlaceHolder: React.FunctionComponent<Props> = (props: Props) => {
-  const placeholderPositions = range(0, props.digits - 1);
+  const placeholderPositions = NAR.range(0, props.digits - 1);
 
   const renderPlaceholder = (i: number) => {
     const {

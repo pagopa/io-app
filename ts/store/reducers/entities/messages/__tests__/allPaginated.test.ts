@@ -1,5 +1,5 @@
 import { getType } from "typesafe-actions";
-import { none, some } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import { pot } from "@pagopa/ts-commons";
 
 import {
@@ -45,7 +45,7 @@ describe("allPaginated reducer", () => {
       });
       it("should set the Archive lastRequest to 'all'", () => {
         expect(reducer(undefined, actionRequest).archive.lastRequest).toEqual(
-          some("all")
+          O.some("all")
         );
       });
 
@@ -70,7 +70,7 @@ describe("allPaginated reducer", () => {
         });
         it("should set the Archive lastRequest to 'none'", () => {
           expect(reducer(initialState, action).archive.lastRequest).toEqual(
-            none
+            O.none
           );
         });
       });
@@ -95,7 +95,7 @@ describe("allPaginated reducer", () => {
       // eslint-disable-next-line sonarjs/no-identical-functions
       it("should set the Inbox lastRequest to 'all'", () => {
         expect(reducer(undefined, actionRequest).inbox.lastRequest).toEqual(
-          some("all")
+          O.some("all")
         );
       });
 
@@ -119,7 +119,9 @@ describe("allPaginated reducer", () => {
           expect(reducer(initialState, action).archive.data).toEqual(pot.none);
         });
         it("should set the Inbox lastRequest to 'none'", () => {
-          expect(reducer(initialState, action).inbox.lastRequest).toEqual(none);
+          expect(reducer(initialState, action).inbox.lastRequest).toEqual(
+            O.none
+          );
         });
       });
     });
@@ -146,7 +148,7 @@ describe("allPaginated reducer", () => {
       });
       it("should set the Archive lastRequest to `next'", () => {
         expect(reducer(undefined, actionRequest).archive.lastRequest).toEqual(
-          some("next")
+          O.some("next")
         );
       });
 
@@ -182,7 +184,7 @@ describe("allPaginated reducer", () => {
         // eslint-disable-next-line sonarjs/no-identical-functions
         it("should set the Archive lastRequest to 'none'", () => {
           expect(reducer(initialState, action).archive.lastRequest).toEqual(
-            none
+            O.none
           );
         });
       });
@@ -209,7 +211,7 @@ describe("allPaginated reducer", () => {
       // eslint-disable-next-line sonarjs/no-identical-functions
       it("should set the Inbox lastRequest to `next'", () => {
         expect(reducer(undefined, actionRequest).inbox.lastRequest).toEqual(
-          some("next")
+          O.some("next")
         );
       });
 
@@ -242,8 +244,11 @@ describe("allPaginated reducer", () => {
           );
           expect(reducer(initialState, action).archive.data).toEqual(pot.none);
         });
+        // eslint-disable-next-line sonarjs/no-identical-functions
         it("should set the Inbox lastRequest to 'none'", () => {
-          expect(reducer(initialState, action).inbox.lastRequest).toEqual(none);
+          expect(reducer(initialState, action).inbox.lastRequest).toEqual(
+            O.none
+          );
         });
       });
     });
@@ -270,7 +275,7 @@ describe("allPaginated reducer", () => {
       });
       it("should set the Archive lastRequest to `next'", () => {
         expect(reducer(undefined, actionRequest).archive.lastRequest).toEqual(
-          some("previous")
+          O.some("previous")
         );
       });
 
@@ -334,7 +339,7 @@ describe("allPaginated reducer", () => {
         // eslint-disable-next-line sonarjs/no-identical-functions
         it("should set the Archive lastRequest to 'none'", () => {
           expect(reducer(initialState, action).archive.lastRequest).toEqual(
-            none
+            O.none
           );
         });
       });
@@ -361,7 +366,7 @@ describe("allPaginated reducer", () => {
       // eslint-disable-next-line sonarjs/no-identical-functions
       it("should set the Inbox lastRequest to `next'", () => {
         expect(reducer(undefined, actionRequest).inbox.lastRequest).toEqual(
-          some("previous")
+          O.some("previous")
         );
       });
 
@@ -422,8 +427,11 @@ describe("allPaginated reducer", () => {
           });
         });
 
+        // eslint-disable-next-line sonarjs/no-identical-functions
         it("should set the Inbox lastRequest to 'none'", () => {
-          expect(reducer(initialState, action).inbox.lastRequest).toEqual(none);
+          expect(reducer(initialState, action).inbox.lastRequest).toEqual(
+            O.none
+          );
         });
       });
     });
@@ -438,7 +446,7 @@ describe("allPaginated reducer", () => {
           previous: "abcde",
           next: "12345"
         }),
-        lastRequest: none
+        lastRequest: O.none
       }
     };
 
@@ -507,9 +515,9 @@ describe("allPaginated reducer", () => {
 });
 
 const defaultState: AllPaginated = {
-  inbox: { data: pot.none, lastRequest: none },
-  archive: { data: pot.none, lastRequest: none },
-  migration: none
+  inbox: { data: pot.none, lastRequest: O.none },
+  archive: { data: pot.none, lastRequest: O.none },
+  migration: O.none
 };
 
 function toGlobalState(localState: AllPaginated): GlobalState {
@@ -524,7 +532,7 @@ describe("isLoadingPreviousPage selector", () => {
     {
       archive: pot.noneLoading,
       inbox: pot.noneLoading,
-      lastRequest: none,
+      lastRequest: O.none,
       expectedArchive: false,
       expectedInbox: false
     },
@@ -532,7 +540,7 @@ describe("isLoadingPreviousPage selector", () => {
     {
       archive: pot.none,
       inbox: pot.none,
-      lastRequest: none,
+      lastRequest: O.none,
       expectedArchive: false,
       expectedInbox: false
     },
@@ -540,7 +548,7 @@ describe("isLoadingPreviousPage selector", () => {
     {
       archive: pot.noneLoading,
       inbox: pot.noneLoading,
-      lastRequest: some("previous"),
+      lastRequest: O.some("previous"),
       expectedArchive: true,
       expectedInbox: true
     },
@@ -548,7 +556,7 @@ describe("isLoadingPreviousPage selector", () => {
     {
       archive: pot.noneLoading,
       inbox: pot.none,
-      lastRequest: some("previous"),
+      lastRequest: O.some("previous"),
       expectedArchive: true,
       expectedInbox: false
     },
@@ -556,14 +564,14 @@ describe("isLoadingPreviousPage selector", () => {
     {
       archive: pot.noneLoading,
       inbox: pot.noneLoading,
-      lastRequest: some("next"),
+      lastRequest: O.some("next"),
       expectedArchive: false,
       expectedInbox: false
     },
     {
       archive: pot.noneLoading,
       inbox: pot.noneLoading,
-      lastRequest: some("all"),
+      lastRequest: O.some("all"),
       expectedArchive: false,
       expectedInbox: false
     }
@@ -622,7 +630,7 @@ describe("isLoadingNextPage selector", () => {
     {
       archive: pot.noneLoading,
       inbox: pot.noneLoading,
-      lastRequest: none,
+      lastRequest: O.none,
       expectedArchive: false,
       expectedInbox: false
     },
@@ -630,7 +638,7 @@ describe("isLoadingNextPage selector", () => {
     {
       archive: pot.none,
       inbox: pot.none,
-      lastRequest: none,
+      lastRequest: O.none,
       expectedArchive: false,
       expectedInbox: false
     },
@@ -638,7 +646,7 @@ describe("isLoadingNextPage selector", () => {
     {
       archive: pot.noneLoading,
       inbox: pot.noneLoading,
-      lastRequest: some("next"),
+      lastRequest: O.some("next"),
       expectedArchive: true,
       expectedInbox: true
     },
@@ -646,7 +654,7 @@ describe("isLoadingNextPage selector", () => {
     {
       archive: pot.noneLoading,
       inbox: pot.none,
-      lastRequest: some("next"),
+      lastRequest: O.some("next"),
       expectedArchive: true,
       expectedInbox: false
     },
@@ -654,14 +662,14 @@ describe("isLoadingNextPage selector", () => {
     {
       archive: pot.noneLoading,
       inbox: pot.noneLoading,
-      lastRequest: some("previous"),
+      lastRequest: O.some("previous"),
       expectedArchive: false,
       expectedInbox: false
     },
     {
       archive: pot.noneLoading,
       inbox: pot.noneLoading,
-      lastRequest: some("all"),
+      lastRequest: O.some("all"),
       expectedArchive: false,
       expectedInbox: false
     }
@@ -714,7 +722,7 @@ describe("isLoadingNextPage selector", () => {
   );
 });
 
-describe("Message archiving", () => {
+describe("Message state upsert", () => {
   const A = successReloadMessagesPayload.messages[0];
   const B = successReloadMessagesPayload.messages[1];
   const C = successReloadMessagesPayload.messages[2];
@@ -732,7 +740,8 @@ describe("Message archiving", () => {
       },
       when: {
         desc: "when archiving a message",
-        archivingMessage: A
+        message: A,
+        update: { tag: "archiving", isArchived: true }
       },
       then: {
         desc: "then the message is deleted from inbox and archive remains unchanged",
@@ -761,7 +770,8 @@ describe("Message archiving", () => {
       },
       when: {
         desc: "when archiving a message",
-        archivingMessage: A
+        message: A,
+        update: { tag: "archiving", isArchived: true }
       },
       then: {
         desc: "then the message is moved from inbox to archive and cursors updated",
@@ -771,7 +781,7 @@ describe("Message archiving", () => {
           next: undefined
         }),
         expectedArchive: pot.some({
-          page: [A],
+          page: [{ ...A, isArchived: true }],
           previous: A.id,
           next: undefined
         })
@@ -794,7 +804,8 @@ describe("Message archiving", () => {
       },
       when: {
         desc: "when archiving a message newer than the archived ones",
-        archivingMessage: A
+        message: A,
+        update: { tag: "archiving", isArchived: true }
       },
       then: {
         desc: "then the message is moved from inbox to archive and cursors updated",
@@ -804,7 +815,7 @@ describe("Message archiving", () => {
           next: undefined
         }),
         expectedArchive: pot.some({
-          page: [A, B, C],
+          page: [{ ...A, isArchived: true }, B, C],
           previous: A.id,
           next: C.id
         })
@@ -827,7 +838,8 @@ describe("Message archiving", () => {
       },
       when: {
         desc: "when archiving a message older than the archived ones",
-        archivingMessage: C
+        message: C,
+        update: { tag: "archiving", isArchived: true }
       },
       then: {
         desc: "then the message is removed from inbox and archive remains unchanged",
@@ -860,7 +872,8 @@ describe("Message archiving", () => {
       },
       when: {
         desc: "when archiving a message neither newer nor older than the archived ones",
-        archivingMessage: B
+        message: B,
+        update: { tag: "archiving", isArchived: true }
       },
       then: {
         desc: "then the message is moved from inbox to archive and archive cursors remain unchanged",
@@ -870,7 +883,7 @@ describe("Message archiving", () => {
           next: undefined
         }),
         expectedArchive: pot.some({
-          page: [A, B, C],
+          page: [A, { ...B, isArchived: true }, C],
           previous: A.id,
           next: C.id
         })
@@ -893,7 +906,8 @@ describe("Message archiving", () => {
       },
       when: {
         desc: "when archiving a message older than the archived ones",
-        archivingMessage: C
+        message: C,
+        update: { tag: "archiving", isArchived: true }
       },
       then: {
         desc: "then the message is moved from inbox to archive and next cursor remains undefined",
@@ -903,7 +917,65 @@ describe("Message archiving", () => {
           next: undefined
         }),
         expectedArchive: pot.some({
-          page: [A, B, C],
+          page: [A, B, { ...C, isArchived: true }],
+          previous: A.id,
+          next: undefined
+        })
+      }
+    },
+    {
+      given: {
+        desc: "given an unread message in inbox",
+        inbox: pot.some({
+          page: [{ ...A, isRead: false }],
+          previous: A.id,
+          next: undefined
+        }),
+        archive: pot.none
+      },
+      when: {
+        desc: "when reading the message",
+        message: { ...A, isRead: false },
+        update: { tag: "reading" }
+      },
+      then: {
+        desc: "then the message state is updated accordingly",
+        expectedInbox: pot.some({
+          page: [{ ...A, isRead: true }],
+          previous: A.id,
+          next: undefined
+        }),
+        expectedArchive: pot.none
+      }
+    },
+    {
+      given: {
+        desc: "given an unread message in inbox",
+        inbox: pot.some({
+          page: [{ ...A, isRead: false, isArchived: false }],
+          previous: A.id,
+          next: undefined
+        }),
+        archive: pot.some({
+          page: [],
+          previous: undefined,
+          next: undefined
+        })
+      },
+      when: {
+        desc: "when reading and archiving the message",
+        message: { ...A, isRead: false, isArchived: false },
+        update: { tag: "bulk", isArchived: true }
+      },
+      then: {
+        desc: "then the message state is updated accordingly",
+        expectedInbox: pot.some({
+          page: [],
+          previous: undefined,
+          next: undefined
+        }),
+        expectedArchive: pot.some({
+          page: [{ ...A, isRead: true, isArchived: true }],
           previous: A.id,
           next: undefined
         })
@@ -919,8 +991,8 @@ describe("Message archiving", () => {
 
       describe(`${when.desc}`, () => {
         const payload: UpsertMessageStatusAttributesPayload = {
-          message: when.archivingMessage,
-          update: { tag: "archiving", isArchived: true }
+          message: when.message,
+          update: when.update as UpsertMessageStatusAttributesPayload["update"]
         };
 
         const requestState = reducer(

@@ -1,29 +1,30 @@
+import { useNavigation } from "@react-navigation/native";
+import { View } from "native-base";
 import * as React from "react";
 import { useRef, useState } from "react";
+import { SafeAreaView, ScrollView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { SafeAreaView, ScrollView } from "react-native";
-import { View } from "native-base";
-import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
-import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import {
+  RadioButtonList,
+  RadioItem
+} from "../../../../../components/core/selection/RadioButtonList";
 import { H1 } from "../../../../../components/core/typography/H1";
+import { H5 } from "../../../../../components/core/typography/H5";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
+import DateTimePicker from "../../../../../components/ui/DateTimePicker";
+import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
+import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import SV_ROUTES from "../../navigation/routes";
 import {
   FlightsDate,
   svGenerateVoucherBack,
   svGenerateVoucherCancel,
   svGenerateVoucherSelectFlightsDate
 } from "../../store/actions/voucherGeneration";
-import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
-import { navigateToSvSummaryScreen } from "../../navigation/actions";
-import I18n from "../../../../../i18n";
-import DateTimePicker from "../../../../../components/ui/DateTimePicker";
-import {
-  RadioButtonList,
-  RadioItem
-} from "../../../../../components/core/selection/RadioButtonList";
-import { H5 } from "../../../../../components/core/typography/H5";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -52,6 +53,8 @@ const SelectFlightsDateScreen = (props: Props): React.ReactElement => {
 
   const [showReturn, setShowReturn] = useState<boolean | undefined>(false);
 
+  const navigation = useNavigation();
+
   const handleDisableContinue = (): boolean => {
     if (showReturn === true) {
       return departureDate === undefined || returnDate === undefined;
@@ -66,7 +69,7 @@ const SelectFlightsDateScreen = (props: Props): React.ReactElement => {
         returnDate
       });
     }
-    props.navigateToSummaryScreen();
+    navigation.navigate(SV_ROUTES.VOUCHER_GENERATION.SUMMARY);
   };
 
   const cancelButtonProps = {
@@ -142,9 +145,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   back: () => dispatch(svGenerateVoucherBack()),
   cancel: () => dispatch(svGenerateVoucherCancel()),
   selectFlightsDate: (flightsDate: FlightsDate) =>
-    dispatch(svGenerateVoucherSelectFlightsDate(flightsDate)),
-  navigateToSummaryScreen: () => navigateToSvSummaryScreen()
+    dispatch(svGenerateVoucherSelectFlightsDate(flightsDate))
 });
+
 const mapStateToProps = (_: GlobalState) => ({});
 
 export default connect(

@@ -1,70 +1,73 @@
+import { useNavigation } from "@react-navigation/native";
+import { View } from "native-base";
 import * as React from "react";
 import { useContext, useEffect, useState } from "react";
+import { ActivityIndicator, FlatList, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { ActivityIndicator, FlatList, SafeAreaView } from "react-native";
-import { View } from "native-base";
-import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
-import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import EmptyListImage from "../../../../../../img/bonus/siciliaVola/emptyVoucherList.svg";
 import { H1 } from "../../../../../components/core/typography/H1";
-import { GlobalState } from "../../../../../store/reducers/types";
-import I18n from "../../../../../i18n";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import { InfoScreenComponent } from "../../../../../components/infoScreen/InfoScreenComponent";
+import ItemSeparatorComponent from "../../../../../components/ItemSeparatorComponent";
+import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
+import ListItemComponent from "../../../../../components/screens/ListItemComponent";
+import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import {
   BottomTopAnimation,
   LightModalContext
 } from "../../../../../components/ui/LightModal";
-import SvVoucherListFilters from "../../components/SvVoucherListFilters";
-import {
-  svPossibleVoucherStateGet,
-  svSetFilter,
-  svVoucherListGet,
-  svSelectVoucher
-} from "../../store/actions/voucherList";
-import ListItemComponent from "../../../../../components/screens/ListItemComponent";
-import ItemSeparatorComponent from "../../../../../components/ItemSeparatorComponent";
-import { svVouchersSelector } from "../../store/reducers/voucherList/vouchers";
+import I18n from "../../../../../i18n";
 import { toArray } from "../../../../../store/helpers/indexer";
+import { useIODispatch } from "../../../../../store/hooks";
+import { GlobalState } from "../../../../../store/reducers/types";
 import { formatDateAsLocal } from "../../../../../utils/dates";
-import {
-  FilterState,
-  svFiltersSelector
-} from "../../store/reducers/voucherList/filters";
-import { VoucherPreview } from "../../types/SvVoucherResponse";
-import {
-  svRequiredDataLoadedSelector,
-  svVouchersListUiSelector
-} from "../../store/reducers/voucherList/ui";
+import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import { showToast } from "../../../../../utils/showToast";
+import { confirmButtonProps } from "../../../bonusVacanze/components/buttons/ButtonConfigurations";
+import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import {
   isError,
   isLoading,
   isReady,
   isUndefined
 } from "../../../bpd/model/RemoteValue";
+import SvVoucherListFilters from "../../components/SvVoucherListFilters";
+import SV_ROUTES from "../../navigation/routes";
 import { svGenerateVoucherStart } from "../../store/actions/voucherGeneration";
-import { useIODispatch } from "../../../../../store/hooks";
-import { confirmButtonProps } from "../../../bonusVacanze/components/buttons/ButtonConfigurations";
-import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
-import EmptyListImage from "../../../../../../img/bonus/siciliaVola/emptyVoucherList.svg";
-import { InfoScreenComponent } from "../../../../../components/infoScreen/InfoScreenComponent";
-import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
-import { possibleVoucherStateSelector } from "../../store/reducers/voucherList/possibleVoucherState";
-import { showToast } from "../../../../../utils/showToast";
-import { navigateToSvVoucherDetailsScreen } from "../../navigation/actions";
+import {
+  svPossibleVoucherStateGet,
+  svSelectVoucher,
+  svSetFilter,
+  svVoucherListGet
+} from "../../store/actions/voucherList";
 import { selectedVoucherRevocationStateSelector } from "../../store/reducers/selectedVoucher";
+import {
+  FilterState,
+  svFiltersSelector
+} from "../../store/reducers/voucherList/filters";
+import { possibleVoucherStateSelector } from "../../store/reducers/voucherList/possibleVoucherState";
+import {
+  svRequiredDataLoadedSelector,
+  svVouchersListUiSelector
+} from "../../store/reducers/voucherList/ui";
+import { svVouchersSelector } from "../../store/reducers/voucherList/vouchers";
+import { VoucherPreview } from "../../types/SvVoucherResponse";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 const RenderItemBase = (voucher: VoucherPreview): React.ReactElement => {
   const dispatch = useIODispatch();
+  const navigation = useNavigation();
+
   return (
     <ListItemComponent
       title={voucher.destination}
       subTitle={formatDateAsLocal(voucher.departureDate, true, true)}
       onPress={() => {
         dispatch(svSelectVoucher(voucher.idVoucher));
-        navigateToSvVoucherDetailsScreen();
+        navigation.navigate(SV_ROUTES.VOUCHER_LIST.DETAILS);
       }}
     />
   );

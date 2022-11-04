@@ -1,5 +1,6 @@
-import { none, Option, some } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { View } from "native-base";
 import * as React from "react";
 import { useEffect, useRef } from "react";
@@ -35,21 +36,22 @@ type Props = ReturnType<typeof mapDispatchToProps> &
  */
 const toOptionPot = (
   p: pot.Pot<boolean | undefined, Error>
-): Option<pot.Pot<boolean, Error>> =>
+): O.Option<pot.Pot<boolean, Error>> =>
   pot.fold(
     p,
-    () => some(pot.none) as Option<pot.Pot<boolean, Error>>,
-    () => some(pot.noneLoading),
-    newVal => (newVal !== undefined ? some(pot.noneUpdating(newVal)) : none),
-    error => some(pot.noneError(error)),
-    value => (value !== undefined ? some(pot.some(value)) : none),
-    value => (value !== undefined ? some(pot.someLoading(value)) : none),
+    () => O.some(pot.none) as O.Option<pot.Pot<boolean, Error>>,
+    () => O.some(pot.noneLoading),
+    newVal =>
+      newVal !== undefined ? O.some(pot.noneUpdating(newVal)) : O.none,
+    error => O.some(pot.noneError(error)),
+    value => (value !== undefined ? O.some(pot.some(value)) : O.none),
+    value => (value !== undefined ? O.some(pot.someLoading(value)) : O.none),
     (oldValue, newValue) =>
       oldValue !== undefined && newValue !== undefined
-        ? some(pot.someUpdating(oldValue, newValue))
-        : none,
+        ? O.some(pot.someUpdating(oldValue, newValue))
+        : O.none,
     (value, error) =>
-      value !== undefined ? some(pot.someError(value, error)) : none
+      value !== undefined ? O.some(pot.someError(value, error)) : O.none
   );
 
 /**
@@ -89,19 +91,25 @@ const PaymentStatusSwitch = (props: Props): React.ReactElement | null => {
     }
   }, [isError]);
 
-  return paymentMethodExists.fold(<Fallback />, val => (
-    <RemoteSwitch
-      testID={"PaymentStatusSwitch"}
-      value={val}
-      onRetry={props.loadWallets}
-      onValueChange={newVal => {
-        props.updatePaymentStatus({
-          paymentEnabled: newVal,
-          idWallet: props.paymentMethod.idWallet
-        });
-      }}
-    />
-  ));
+  return pipe(
+    paymentMethodExists,
+    O.fold(
+      () => <Fallback />,
+      val => (
+        <RemoteSwitch
+          testID={"PaymentStatusSwitch"}
+          value={val}
+          onRetry={props.loadWallets}
+          onValueChange={newVal => {
+            props.updatePaymentStatus({
+              paymentEnabled: newVal,
+              idWallet: props.paymentMethod.idWallet
+            });
+          }}
+        />
+      )
+    )
+  );
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

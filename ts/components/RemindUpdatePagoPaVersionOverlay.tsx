@@ -1,4 +1,4 @@
-import { Millisecond } from "italia-ts-commons/lib/units";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { Button, Content, Text, View } from "native-base";
 import * as React from "react";
 import { Image, Linking, StyleSheet } from "react-native";
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     marginTop: customVariables.contentPadding,
     fontSize: 18,
     textAlign: "center",
-    color: customVariables.colorDanger
+    color: customVariables.brandDanger
   }
 });
 

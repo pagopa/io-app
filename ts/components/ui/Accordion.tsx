@@ -1,8 +1,9 @@
-import { fromNullable } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { Text, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
 import { ComponentProps } from "react";
+import { StyleSheet } from "react-native";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
@@ -81,7 +82,11 @@ const Accordion: React.FunctionComponent<Props> = (props: Props) => {
       <Markdown
         shouldHandleLink={props.shouldHandleLink}
         onLinkClicked={(url: string) => {
-          fromNullable(props.onLinkClicked).map(s => s(url));
+          pipe(
+            props.onLinkClicked,
+            O.fromNullable,
+            O.map(s => s(url))
+          );
         }}
       >
         {content}

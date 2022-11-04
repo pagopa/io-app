@@ -1,4 +1,4 @@
-import { Option } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import {
   ActionType,
   createAsyncAction,
@@ -25,7 +25,7 @@ export const fetchTransactionsRequestWithExpBackoff = createStandardAction(
 // transactions are available
 export const fetchTransactionsSuccess = createStandardAction(
   "FETCH_TRANSACTIONS_SUCCESS"
-)<{ data: ReadonlyArray<Transaction>; total: Option<number> }>();
+)<{ data: ReadonlyArray<Transaction>; total: O.Option<number> }>();
 
 // on transactions refresh all stored transactions are cleared
 export const clearTransactions =

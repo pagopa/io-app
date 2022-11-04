@@ -1,7 +1,8 @@
 /**
  * A component to display the list item in the MessagesHomeScreen
  */
-import { fromNullable } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import React from "react";
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
@@ -84,10 +85,17 @@ class MessageListItem extends React.PureComponent<Props> {
       isSelected
     } = this.props;
 
-    const uiService = fromNullable(service).fold(UNKNOWN_SERVICE_DATA, _ => ({
-      organizationName: _.organization_name,
-      serviceName: _.service_name
-    }));
+    const uiService = pipe(
+      service,
+      O.fromNullable,
+      O.fold(
+        () => UNKNOWN_SERVICE_DATA,
+        _ => ({
+          organizationName: _.organization_name,
+          serviceName: _.service_name
+        })
+      )
+    );
 
     const uiDate = convertDateToWordDistance(
       message.created_at,

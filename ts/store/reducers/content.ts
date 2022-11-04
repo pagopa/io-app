@@ -1,10 +1,11 @@
 /**
  * Implements the reducers for static content.
  */
-import { fromNullable, none, Option } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
+import { pipe } from "fp-ts/lib/function";
 import { ContextualHelp } from "../../../definitions/content/ContextualHelp";
 import { Idp } from "../../../definitions/content/Idp";
 import { Municipality as MunicipalityMetadata } from "../../../definitions/content/Municipality";
@@ -83,18 +84,20 @@ export const idpsSelector = createSelector(
  * @param id
  */
 export const idpContextualHelpDataFromIdSelector = (id: SpidIdp["id"]) =>
-  createSelector<GlobalState, pot.Pot<ContextualHelp, Error>, Option<Idp>>(
+  createSelector<GlobalState, pot.Pot<ContextualHelp, Error>, O.Option<Idp>>(
     contextualHelpDataSelector,
     contextualHelpData =>
       pot.getOrElse(
         pot.map(contextualHelpData, data => {
           const locale = getRemoteLocale();
 
-          return fromNullable(data[locale]).chain(l =>
-            fromNullable(l.idps[id as IdentityProviderId])
+          return pipe(
+            data[locale],
+            O.fromNullable,
+            O.chain(l => O.fromNullable(l.idps[id as IdentityProviderId]))
           );
         }),
-        none
+        O.none
       )
   );
 
@@ -106,13 +109,13 @@ export const screenContextualHelpDataSelector = createSelector<
   GlobalState,
   pot.Pot<ContextualHelp, Error>,
   string,
-  pot.Pot<Option<ScreenCHData>, Error>
+  pot.Pot<O.Option<ScreenCHData>, Error>
 >(
   [contextualHelpDataSelector, currentRouteSelector],
   (contextualHelpData, currentRoute) =>
     pot.map(contextualHelpData, data => {
       if (currentRoute === undefined) {
-        return none;
+        return O.none;
       }
       const locale = getRemoteLocale();
       const screenData =
@@ -122,7 +125,7 @@ export const screenContextualHelpDataSelector = createSelector<
                 s.route_name.toLowerCase() === currentRoute.toLocaleLowerCase()
             )
           : undefined;
-      return fromNullable(screenData);
+      return O.fromNullable(screenData);
     })
 );
 
@@ -134,11 +137,11 @@ export const getContextualHelpDataFromRouteSelector = (route: string) =>
   createSelector<
     GlobalState,
     pot.Pot<ContextualHelp, Error>,
-    pot.Pot<Option<ScreenCHData>, Error>
+    pot.Pot<O.Option<ScreenCHData>, Error>
   >([contextualHelpDataSelector], contextualHelpData =>
     pot.map(contextualHelpData, data => {
       if (route === undefined) {
-        return none;
+        return O.none;
       }
       const locale = getRemoteLocale();
       const screenData =
@@ -147,7 +150,7 @@ export const getContextualHelpDataFromRouteSelector = (route: string) =>
               s => s.route_name.toLowerCase() === route.toLocaleLowerCase()
             )
           : undefined;
-      return fromNullable(screenData);
+      return O.fromNullable(screenData);
     })
   );
 

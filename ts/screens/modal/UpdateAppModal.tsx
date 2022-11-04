@@ -3,7 +3,7 @@
  *
  */
 
-import { Millisecond } from "italia-ts-commons/lib/units";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { Button, Container, H2, Text, View } from "native-base";
 import React, { FC, useCallback, useEffect, useState } from "react";
 import {
@@ -17,6 +17,7 @@ import {
 import updateIcon from "../../../img/icons/update-icon.png";
 
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import SectionStatusComponent from "../../components/SectionStatus";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import { useHardwareBackButton } from "../../features/bonus/bonusVacanze/components/hooks/useHardwareBackButton";
 import I18n from "../../i18n";
@@ -24,7 +25,6 @@ import customVariables from "../../theme/variables";
 import { storeUrl, webStoreURL } from "../../utils/appVersion";
 import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
 import { openWebUrl } from "../../utils/url";
-import SectionStatusComponent from "../../components/SectionStatus";
 
 const ERROR_MESSAGE_TIMEOUT: Millisecond = 5000 as Millisecond;
 
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     marginTop: customVariables.contentPadding,
     fontSize: 18,
     textAlign: "center",
-    color: customVariables.colorDanger
+    color: customVariables.brandDanger
   },
   container: {
     margin: customVariables.contentPadding,

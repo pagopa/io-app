@@ -1,23 +1,24 @@
 /**
  * This component displays a list of payments
  */
+import * as O from "fp-ts/lib/Option";
+import { Content, Text, View } from "native-base";
 import * as React from "react";
 import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
-import { fromNullable, Option } from "fp-ts/lib/Option";
-import { Content, Text, View } from "native-base";
 
+import { pipe } from "fp-ts/lib/function";
 import I18n from "../../i18n";
 import {
   PaymentHistory,
   PaymentsHistoryState
 } from "../../store/reducers/payments/history";
+import { isPaymentDoneSuccessfully } from "../../store/reducers/payments/utils";
 import customVariables from "../../theme/variables";
 import { formatDateAsLocal } from "../../utils/dates";
+import { getIuv } from "../../utils/payment";
+import { IOColors } from "../core/variables/IOColors";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
-import { getIuv } from "../../utils/payment";
-import { isPaymentDoneSuccessfully } from "../../store/reducers/payments/utils";
-import { IOColors } from "../core/variables/IOColors";
 
 import PaymentHistoryItem from "./PaymentHistoryItem";
 
@@ -43,33 +44,47 @@ const styles = StyleSheet.create({
 const notAvailable = I18n.t("global.remoteStates.notAvailable");
 export const getPaymentHistoryInfo = (
   paymentHistory: PaymentHistory,
-  paymentCheckout: Option<boolean>
+  paymentCheckout: O.Option<boolean>
 ) =>
-  paymentCheckout.fold(
-    {
-      text11: I18n.t("payment.details.state.incomplete"),
-      text3: getIuv(paymentHistory.data),
-      color: IOColors.yellow
-    },
-    success => {
-      if (success) {
+  pipe(
+    paymentCheckout,
+    O.fold(
+      () => ({
+        text11: I18n.t("payment.details.state.incomplete"),
+        text3: getIuv(paymentHistory.data),
+        color: IOColors.yellow
+      }),
+      success => {
+        if (success) {
+          return {
+            text11: I18n.t("payment.details.state.successful"),
+            text3: pipe(
+              paymentHistory.verifiedData,
+              O.fromNullable,
+              O.fold(
+                () => notAvailable,
+                vd =>
+                  pipe(
+                    vd.causaleVersamento,
+                    O.fromNullable,
+                    O.fold(
+                      () => notAvailable,
+                      cv => cv
+                    )
+                  )
+              )
+            ),
+            color: customVariables.colorHighlight
+          };
+        }
+
         return {
-          text11: I18n.t("payment.details.state.successful"),
-          text3: fromNullable(paymentHistory.verifiedData).fold(
-            notAvailable,
-            vd =>
-              fromNullable(vd.causaleVersamento).fold(notAvailable, cv => cv)
-          ),
-          color: customVariables.colorHighlight
+          text11: I18n.t("payment.details.state.failed"),
+          text3: getIuv(paymentHistory.data),
+          color: customVariables.brandDanger
         };
       }
-
-      return {
-        text11: I18n.t("payment.details.state.failed"),
-        text3: getIuv(paymentHistory.data),
-        color: customVariables.colorDanger
-      };
-    }
+    )
   );
 /**
  * Payments List component

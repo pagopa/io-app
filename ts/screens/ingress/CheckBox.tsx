@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
 });
 
 export const IngressCheckBox = (props: Props) => (
-  <View style={[styles.base, props.checked && styles.checked]}>
+  <View style={[styles.base, props.checked ? styles.checked : {}]}>
     {props.checked && (
       <IconFont
         name={checkBoxIcon}

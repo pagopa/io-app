@@ -31,6 +31,10 @@ import {
   FimsNavigator
 } from "../features/fims/navigation/navigator";
 import FIMS_ROUTES from "../features/fims/navigation/routes";
+import {
+  IDPayOnboardingNavigator,
+  IDPayOnboardingRoutes
+} from "../features/idpay/onboarding/navigation/navigator";
 import UADONATION_ROUTES from "../features/uaDonations/navigation/routes";
 import { UAWebViewScreen } from "../features/uaDonations/screens/UAWebViewScreen";
 import { ZendeskStackNavigator } from "../features/zendesk/navigation/navigator";
@@ -49,13 +53,13 @@ import { IO_INTERNAL_LINK_PREFIX } from "../utils/navigation";
 import authenticationNavigator from "./AuthenticationNavigator";
 import { MessagesStackNavigator } from "./MessagesNavigator";
 import NavigationService, { navigationRef } from "./NavigationService";
-import onboardingNavigator from "./OnboardingNavigator";
+import OnboardingNavigator from "./OnboardingNavigator";
 import { AppParamsList } from "./params/AppParamsList";
 import ProfileStackNavigator from "./ProfileNavigator";
 import ROUTES from "./routes";
 import ServicesNavigator from "./ServicesNavigator";
 import { MainTabNavigator } from "./TabNavigator";
-import walletNavigator from "./WalletNavigator";
+import WalletNavigator from "./WalletNavigator";
 
 const Stack = createStackNavigator<AppParamsList>();
 
@@ -76,7 +80,7 @@ export const AppStackNavigator = () => {
         name={ROUTES.AUTHENTICATION}
         component={authenticationNavigator}
       />
-      <Stack.Screen name={ROUTES.ONBOARDING} component={onboardingNavigator} />
+      <Stack.Screen name={ROUTES.ONBOARDING} component={OnboardingNavigator} />
       <Stack.Screen name={ROUTES.MAIN} component={MainTabNavigator} />
 
       <Stack.Screen
@@ -85,7 +89,7 @@ export const AppStackNavigator = () => {
       />
       <Stack.Screen
         name={ROUTES.WALLET_NAVIGATOR}
-        component={walletNavigator}
+        component={WalletNavigator}
       />
       <Stack.Screen
         name={ROUTES.SERVICES_NAVIGATOR}
@@ -141,6 +145,11 @@ export const AppStackNavigator = () => {
           component={CdcStackNavigator}
         />
       )}
+
+      <Stack.Screen
+        name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN}
+        component={IDPayOnboardingNavigator}
+      />
     </Stack.Navigator>
   );
 };
@@ -196,7 +205,12 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
         [ROUTES.SERVICES_NAVIGATOR]: {
           path: "services",
           screens: {
-            [ROUTES.SERVICE_DETAIL]: "service-detail",
+            [ROUTES.SERVICE_DETAIL]: {
+              path: "service-detail",
+              parse: {
+                activate: activate => activate === "true"
+              }
+            },
             ...(myPortalEnabled ? { [ROUTES.SERVICE_WEBVIEW]: "webview" } : {}),
             ...(svEnabled ? svLinkingOptions : {})
           }

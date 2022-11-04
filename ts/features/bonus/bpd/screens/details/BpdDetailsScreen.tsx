@@ -1,4 +1,5 @@
-import { fromNullable } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
@@ -86,18 +87,28 @@ const BpdDetailsScreen: React.FunctionComponent<Props> = props => {
    * - Period is active
    * never displays for inactive/incoming period
    */
-  const canRenderButton = fromNullable(props.selectedPeriod).fold(false, sp => {
-    switch (sp.status) {
-      case "Closed":
-        return fromNullable(props.selectedPeriod?.amount?.transactionNumber)
-          .map(trx => trx > 0)
-          .getOrElse(false);
-      case "Inactive":
-        return false;
-      default:
-        return true;
-    }
-  });
+  const canRenderButton = pipe(
+    props.selectedPeriod,
+    O.fromNullable,
+    O.fold(
+      () => false,
+      sp => {
+        switch (sp.status) {
+          case "Closed":
+            return pipe(
+              props.selectedPeriod?.amount?.transactionNumber,
+              O.fromNullable,
+              O.map(trx => trx > 0),
+              O.getOrElse(() => false)
+            );
+          case "Inactive":
+            return false;
+          default:
+            return true;
+        }
+      }
+    )
+  );
   return (
     <LoadingSpinnerOverlay
       isLoading={loading}

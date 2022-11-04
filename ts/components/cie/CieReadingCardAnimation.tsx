@@ -1,4 +1,4 @@
-import { Millisecond } from "italia-ts-commons/lib/units";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { View } from "native-base";
 import * as React from "react";
 import { Animated, Easing, Image, StyleSheet } from "react-native";
@@ -204,7 +204,7 @@ export default class CieReadingCardAnimation extends React.PureComponent<
             borderWidth={3}
             color={
               this.props.readingState === ReadingState.error
-                ? customVariables.colorDanger
+                ? customVariables.brandDanger
                 : customVariables.brandPrimary
             }
             shadowColor={IOColors.greyLight}

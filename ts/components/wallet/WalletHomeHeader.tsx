@@ -1,4 +1,4 @@
-import { none } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import { View } from "native-base";
 import * as React from "react";
 import { FlatList, StyleSheet } from "react-native";
@@ -147,7 +147,7 @@ const mapStateToProps = (_: GlobalState) => ({});
 
 const mapDispatchToProps = (_: Dispatch) => ({
   navigateToWalletAddPaymentMethod: (keyFrom?: string) =>
-    navigateToWalletAddPaymentMethod({ inPayment: none, keyFrom }),
+    navigateToWalletAddPaymentMethod({ inPayment: O.none, keyFrom }),
   navigateToBonusList: () => navigateToAvailableBonusScreen()
 });
 

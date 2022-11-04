@@ -1,26 +1,26 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
+import { pipe } from "fp-ts/lib/function";
 import { TagEnum as TagEnumBase } from "../../../../definitions/backend/MessageCategoryBase";
 import { TagEnum as TagEnumPN } from "../../../../definitions/backend/MessageCategoryPN";
+
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 
-import {
-  euCovidCertificateEnabled,
-  mvlEnabled,
-  pnEnabled
-} from "../../../config";
+import { euCovidCertificateEnabled, mvlEnabled } from "../../../config";
 import { LoadingErrorComponent } from "../../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { navigateToEuCovidCertificateDetailScreen } from "../../../features/euCovidCert/navigation/actions";
 import { EUCovidCertificateAuthCode } from "../../../features/euCovidCert/types/EUCovidCertificate";
 import { navigateToMvlDetailsScreen } from "../../../features/mvl/navigation/actions";
+import { navigateToPnMessageDetailsScreen } from "../../../features/pn/navigation/actions";
 import I18n from "../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { MessagesParamsList } from "../../../navigation/params/MessagesParamsList";
+import ROUTES from "../../../navigation/routes";
 import {
   loadMessageById,
   loadMessageDetails,
@@ -31,7 +31,10 @@ import {
   navigateToPaginatedMessageDetailScreenAction
 } from "../../../store/actions/navigation";
 import { loadServiceDetail } from "../../../store/actions/services";
+import { useIOSelector } from "../../../store/hooks";
+import { isPnEnabledSelector } from "../../../store/reducers/backendStatus";
 import { getDetailsByMessageId } from "../../../store/reducers/entities/messages/detailsById";
+import { getMessageById } from "../../../store/reducers/entities/messages/paginatedById";
 import {
   UIMessage,
   UIMessageDetails,
@@ -40,13 +43,12 @@ import {
 import { serviceByIdSelector } from "../../../store/reducers/entities/services/servicesById";
 import { GlobalState } from "../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
-import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { isStrictSome } from "../../../utils/pot";
-import { getMessageById } from "../../../store/reducers/entities/messages/paginatedById";
-import { navigateToPnMessageDetailsScreen } from "../../../features/pn/navigation/actions";
+import { mixpanelTrack } from "../../../mixpanel";
 
 export type MessageRouterScreenPaginatedNavigationParams = {
   messageId: UIMessageId;
+  fromNotification: boolean;
 };
 
 type NavigationProps = IOStackNavigationRouteProps<
@@ -65,7 +67,11 @@ type Props = ReturnType<typeof mapDispatchToProps> &
  * @param messageDetails
  */
 const navigateToScreenHandler =
-  (message: UIMessage, messageDetails: UIMessageDetails) =>
+  (
+    message: UIMessage,
+    messageDetails: UIMessageDetails,
+    isPnEnabled: boolean
+  ) =>
   (dispatch: Props["navigation"]["dispatch"]) => {
     if (euCovidCertificateEnabled && messageDetails.euCovidCertificate) {
       navigateBack();
@@ -80,7 +86,7 @@ const navigateToScreenHandler =
     ) {
       navigateBack();
       dispatch(navigateToMvlDetailsScreen({ id: message.id }));
-    } else if (pnEnabled && message.category.tag === TagEnumPN.PN) {
+    } else if (isPnEnabled && message.category.tag === TagEnumPN.PN) {
       navigateBack();
       dispatch(
         navigateToPnMessageDetailsScreen({
@@ -112,13 +118,21 @@ const MessageRouterScreen = ({
   maybeMessage,
   maybeMessageDetails,
   messageId,
-  setMessageReadState
+  setMessageReadState,
+  fromNotification
 }: Props): React.ReactElement => {
   const navigation = useNavigation();
   // used to automatically dispatch loadMessages if the pot is not some at the first rendering
   // (avoid displaying error at the first frame)
   const firstRendering = useRef(true);
+
+  // used to avoid multiple navigations dispatch
+  const [didNavigateToScreenHandler, setDidNavigateToScreenHandler] =
+    useState(false);
+
   const isLoading = !pot.isError(maybeMessageDetails);
+
+  const isPnEnabled = useIOSelector(isPnEnabledSelector);
 
   const tryLoadMessageDetails = useCallback(() => {
     if (maybeMessage === undefined) {
@@ -127,12 +141,6 @@ const MessageRouterScreen = ({
     loadMessageDetails(messageId);
   }, [maybeMessage, messageId, loadMessageById, loadMessageDetails]);
 
-  useOnFirstRender(() => {
-    if (maybeMessage !== undefined && !maybeMessage.isRead) {
-      setMessageReadState(maybeMessage);
-    }
-  });
-
   useEffect(() => {
     if (!isServiceAvailable && maybeMessage) {
       loadServiceDetail(maybeMessage.serviceId);
@@ -140,12 +148,33 @@ const MessageRouterScreen = ({
   }, [isServiceAvailable, loadServiceDetail, maybeMessage]);
 
   useEffect(() => {
+    if (didNavigateToScreenHandler) {
+      return;
+    }
+
     // message in the list and its details loaded: green light
     if (isStrictSome(maybeMessageDetails) && maybeMessage !== undefined) {
-      navigateToScreenHandler(
-        maybeMessage,
-        maybeMessageDetails.value
-      )(navigation.dispatch);
+      // TODO: this is a mitigation to prevent user from opening
+      // a PN message without a confirmation. If the user taps on
+      // a push notification from PN, she will navigate to the inbox
+      // instead of the message details. A better solution with a good
+      // UX will come later.
+      //
+      // https://pagopa.atlassian.net/browse/IA-917
+      if (fromNotification && maybeMessage.category.tag === "PN") {
+        void mixpanelTrack("PN_PUSH_OPENED");
+        navigation.navigate(ROUTES.MAIN, {
+          screen: ROUTES.MESSAGES_HOME
+        });
+      } else {
+        setMessageReadState(maybeMessage);
+        navigateToScreenHandler(
+          maybeMessage,
+          maybeMessageDetails.value,
+          isPnEnabled
+        )(navigation.dispatch);
+      }
+      setDidNavigateToScreenHandler(true);
       return;
     }
     if (firstRendering.current) {
@@ -154,11 +183,13 @@ const MessageRouterScreen = ({
       firstRendering.current = false;
     }
   }, [
-    loadMessageDetails,
+    didNavigateToScreenHandler,
+    fromNotification,
+    isPnEnabled,
     maybeMessage,
     maybeMessageDetails,
-    messageId,
     navigation,
+    setMessageReadState,
     tryLoadMessageDetails
   ]);
 
@@ -196,17 +227,22 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 const mapStateToProps = (state: GlobalState, ownProps: NavigationProps) => {
   const messageId = ownProps.route.params.messageId;
+  const fromNotification = ownProps.route.params.fromNotification;
   const maybeMessage = pot.toUndefined(getMessageById(state, messageId));
-  const isServiceAvailable = O.fromNullable(maybeMessage?.serviceId)
-    .map(serviceId => serviceByIdSelector(serviceId)(state) || pot.none)
-    .map(_ => Boolean(pot.toUndefined(_)))
-    .getOrElse(false);
+  const isServiceAvailable = pipe(
+    maybeMessage?.serviceId,
+    O.fromNullable,
+    O.map(serviceId => serviceByIdSelector(serviceId)(state) || pot.none),
+    O.map(_ => Boolean(pot.toUndefined(_))),
+    O.getOrElse(() => false)
+  );
   const maybeMessageDetails = getDetailsByMessageId(state, messageId);
   return {
     isServiceAvailable,
     maybeMessage,
     maybeMessageDetails,
-    messageId
+    messageId,
+    fromNotification
   };
 };
 

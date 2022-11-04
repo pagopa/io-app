@@ -1,5 +1,5 @@
-import { range } from "fp-ts/lib/Array";
-import { none, some } from "fp-ts/lib/Option";
+import * as AR from "fp-ts/lib/Array";
+import * as O from "fp-ts/lib/Option";
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 
 import {
@@ -41,7 +41,7 @@ describe("history reducer", () => {
 
     it("should add a payment that is not yet ended", () => {
       const state = reducer(initialState, paymentVerificaRequest);
-      expect(isPaymentDoneSuccessfully(state[0])).toEqual(none);
+      expect(isPaymentDoneSuccessfully(state[0])).toEqual(O.none);
     });
   });
 
@@ -103,7 +103,7 @@ describe("history reducer", () => {
       state = reducer(
         state,
         paymentOutcomeCode({
-          outcome: some(randomCode),
+          outcome: O.some(randomCode),
           paymentMethodType: "CreditCard"
         })
       );
@@ -153,7 +153,7 @@ describe("history reducer", () => {
   it(`should limit the payment history insertions to ${HISTORY_SIZE}`, () => {
     // eslint-disable-next-line functional/no-let
     let state = initialState;
-    range(1, HISTORY_SIZE + 1).forEach((_, i) => {
+    AR.range(1, HISTORY_SIZE + 1).forEach((_, i) => {
       state = reducer(
         state,
         paymentVerifica.request({

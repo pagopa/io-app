@@ -1,25 +1,26 @@
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { Badge, Text, View } from "native-base";
 import * as React from "react";
 import { Image, ImageBackground, Platform, StyleSheet } from "react-native";
-import { fromNullable } from "fp-ts/lib/Option";
 import { widthPercentageToDP } from "react-native-responsive-screen";
-import { H2 } from "../../../../../components/core/typography/H2";
-import { H5 } from "../../../../../components/core/typography/H5";
-import {
-  IOColors,
-  hexToRgba
-} from "../../../../../components/core/variables/IOColors";
-import { BpdAmount } from "../../saga/networking/amount";
-import { BpdPeriod, BpdPeriodStatus } from "../../store/actions/periods";
-import { H4 } from "../../../../../components/core/typography/H4";
-import I18n from "../../../../../i18n";
-import bpdBonusLogo from "../../../../../../img/bonus/bpd/logo_BonusCashback_White.png";
 import bpdCardBgFull from "../../../../../../img/bonus/bpd/bonus_bg.png";
 import bpdCardBgPreview from "../../../../../../img/bonus/bpd/bonus_preview_bg.png";
-import { formatNumberAmount } from "../../../../../utils/stringBuilder";
-import IconFont from "../../../../../components/ui/IconFont";
+import bpdBonusLogo from "../../../../../../img/bonus/bpd/logo_BonusCashback_White.png";
+import { H2 } from "../../../../../components/core/typography/H2";
+import { H4 } from "../../../../../components/core/typography/H4";
+import { H5 } from "../../../../../components/core/typography/H5";
+import {
+  hexToRgba,
+  IOColors
+} from "../../../../../components/core/variables/IOColors";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
+import IconFont from "../../../../../components/ui/IconFont";
+import I18n from "../../../../../i18n";
 import { localeDateFormat } from "../../../../../utils/locale";
+import { formatNumberAmount } from "../../../../../utils/stringBuilder";
+import { BpdAmount } from "../../saga/networking/amount";
+import { BpdPeriod, BpdPeriodStatus } from "../../store/actions/periods";
 
 type Props = {
   period: BpdPeriod;
@@ -254,9 +255,13 @@ const statusHandlersMap = new Map<
  * grace period is given adding the gracePeriod value of days to period.endDate
  */
 const calculateGraphicalState = (props: Props) =>
-  fromNullable(statusHandlersMap.get(props.period.status)).fold(
-    initialGraphicalState,
-    handler => handler(props)
+  pipe(
+    statusHandlersMap.get(props.period.status),
+    O.fromNullable,
+    O.fold(
+      () => initialGraphicalState,
+      handler => handler(props)
+    )
   );
 
 export const BpdCardComponent: React.FunctionComponent<Props> = (

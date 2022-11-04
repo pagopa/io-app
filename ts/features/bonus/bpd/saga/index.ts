@@ -3,8 +3,7 @@ import { takeEvery, takeLatest } from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
 import {
   bpdApiUrlPrefix,
-  bpdOptInPaymentMethodsEnabled,
-  bpdTransactionsPaging
+  bpdOptInPaymentMethodsEnabled
 } from "../../../../config";
 import { BackendBpdClient } from "../api/backendBpdClient";
 import { bpdAllData, bpdLoadActivationStatus } from "../store/actions/details";
@@ -27,7 +26,6 @@ import {
 } from "../store/actions/paymentMethods";
 import { bpdPeriodsAmountLoad } from "../store/actions/periods";
 import {
-  bpdTransactionsLoad,
   bpdTransactionsLoadCountByDay,
   bpdTransactionsLoadMilestone,
   bpdTransactionsLoadPage,
@@ -47,7 +45,6 @@ import {
   bpdUpdatePaymentMethodActivationSaga
 } from "./networking/paymentMethod";
 import { handleLoadMilestone } from "./networking/ranking";
-import { bpdLoadTransactionsSaga } from "./networking/transactions";
 import { handleCountByDay } from "./networking/winning-transactions/countByDay";
 import { handleTransactionsLoadRequiredData } from "./networking/winning-transactions/loadTransactionsRequiredData";
 import { handleTransactionsPage } from "./networking/winning-transactions/transactionsPage";
@@ -116,13 +113,6 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
   // prefetch all the bpd data
   yield* takeEvery(bpdAllData.request, loadBpdData);
 
-  // load bpd transactions for a period
-  yield* takeEvery(
-    bpdTransactionsLoad.request,
-    bpdLoadTransactionsSaga,
-    bpdBackendClient.winningTransactions
-  );
-
   // Load bpd periods with amount
   yield* takeEvery(
     bpdPeriodsAmountLoad.request,
@@ -130,34 +120,32 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
     bpdBackendClient
   );
 
-  if (bpdTransactionsPaging) {
-    // Load count by day info for a period
-    yield* takeEvery(
-      bpdTransactionsLoadCountByDay.request,
-      handleCountByDay,
-      bpdBackendClient.winningTransactionsV2CountByDay
-    );
+  // Load count by day info for a period
+  yield* takeEvery(
+    bpdTransactionsLoadCountByDay.request,
+    handleCountByDay,
+    bpdBackendClient.winningTransactionsV2CountByDay
+  );
 
-    // Load the milestone (pivot) information for a period
-    yield* takeEvery(
-      bpdTransactionsLoadMilestone.request,
-      handleLoadMilestone,
-      bpdBackendClient.getRankingV2
-    );
+  // Load the milestone (pivot) information for a period
+  yield* takeEvery(
+    bpdTransactionsLoadMilestone.request,
+    handleLoadMilestone,
+    bpdBackendClient.getRankingV2
+  );
 
-    // Load a transactions page for a period
-    yield* takeEvery(
-      bpdTransactionsLoadPage.request,
-      handleTransactionsPage,
-      bpdBackendClient.winningTransactionsV2
-    );
+  // Load a transactions page for a period
+  yield* takeEvery(
+    bpdTransactionsLoadPage.request,
+    handleTransactionsPage,
+    bpdBackendClient.winningTransactionsV2
+  );
 
-    // Load all the required transactions data, for a period
-    yield* takeEvery(
-      bpdTransactionsLoadRequiredData.request,
-      handleTransactionsLoadRequiredData
-    );
-  }
+  // Load all the required transactions data, for a period
+  yield* takeEvery(
+    bpdTransactionsLoadRequiredData.request,
+    handleTransactionsLoadRequiredData
+  );
 
   // First step of the onboarding workflow; check if the user is enrolled to the bpd program
   yield* takeLatest(getType(bpdOnboardingStart), handleBpdStartOnboardingSaga);

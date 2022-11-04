@@ -1,25 +1,26 @@
+import { useNavigation } from "@react-navigation/native";
+import { View } from "native-base";
 import * as React from "react";
+import { SafeAreaView, ScrollView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { SafeAreaView, ScrollView } from "react-native";
-import { View } from "native-base";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import { H1 } from "../../../../components/core/typography/H1";
-import { GlobalState } from "../../../../store/reducers/types";
-import {
-  svGenerateVoucherCancel,
-  svGenerateVoucherUnderThresholdIncome
-} from "../store/actions/voucherGeneration";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import { navigateToSvKoCheckIncomeThresholdScreen } from "../navigation/actions";
-import I18n from "../../../../i18n";
 import {
   RadioButtonList,
   RadioItem
 } from "../../../../components/core/selection/RadioButtonList";
+import { H1 } from "../../../../components/core/typography/H1";
+import { IOStyles } from "../../../../components/core/variables/IOStyles";
+import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
+import I18n from "../../../../i18n";
+import { GlobalState } from "../../../../store/reducers/types";
+import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { formatNumberAmount } from "../../../../utils/stringBuilder";
+import SV_ROUTES from "../navigation/routes";
+import {
+  svGenerateVoucherCancel,
+  svGenerateVoucherUnderThresholdIncome
+} from "../store/actions/voucherGeneration";
 
 type OwnProps = {
   onContinuePress: () => void;
@@ -50,15 +51,20 @@ const CheckIncomeComponent = (props: Props): React.ReactElement => {
   const [incomeUnderThreshold, setIncomeUnderThreshold] = React.useState<
     boolean | undefined
   >();
+  const navigation = useNavigation();
 
   const handleContinue = () => {
     if (incomeUnderThreshold === undefined) {
       return;
     }
     props.underThresholdIncome(incomeUnderThreshold);
-    (incomeUnderThreshold
-      ? props.onContinuePress
-      : props.navigateToSvKoCheckIncomeThreshold)();
+
+    if (incomeUnderThreshold) {
+      props.onContinuePress();
+      return;
+    }
+
+    navigation.navigate(SV_ROUTES.VOUCHER_GENERATION.KO_CHECK_INCOME_THRESHOLD);
   };
 
   const cancelButtonProps = {
@@ -102,8 +108,6 @@ const CheckIncomeComponent = (props: Props): React.ReactElement => {
 };
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   cancel: () => dispatch(svGenerateVoucherCancel()),
-  navigateToSvKoCheckIncomeThreshold: () =>
-    navigateToSvKoCheckIncomeThresholdScreen(),
   underThresholdIncome: (isUnderThresholdIncome: boolean) =>
     dispatch(svGenerateVoucherUnderThresholdIncome(isUnderThresholdIncome))
 });

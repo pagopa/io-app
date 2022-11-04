@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { View, ViewProps, StyleSheet } from "react-native";
-import { PNMessage } from "../store/types/types";
-import { LabelSmall } from "../../../components/core/typography/LabelSmall";
-import { H1 } from "../../../components/core/typography/H1";
+import { StyleSheet, View, ViewProps } from "react-native";
 import { Body } from "../../../components/core/typography/Body";
-import { formatDateAsDay, formatDateAsMonth } from "../../../utils/dates";
-import { getNotificationStatusInfo } from "../utils";
+import { H1 } from "../../../components/core/typography/H1";
+import { LabelSmall } from "../../../components/core/typography/LabelSmall";
 import { Link } from "../../../components/core/typography/Link";
-import I18n from "../../../i18n";
 import { IOColors } from "../../../components/core/variables/IOColors";
+import I18n from "../../../i18n";
+import { formatDateAsDay, formatDateAsMonth } from "../../../utils/dates";
+import { localeDateFormat } from "../../../utils/locale";
+import { PNMessage } from "../store/types/types";
+import { getNotificationStatusInfo } from "../utils";
 
 const styles = StyleSheet.create({
   row: {
@@ -132,8 +133,11 @@ export const PnMessageTimeline = ({ message, onExpand }: Props & ViewProps) => {
         const props = {
           day: formatDateAsDay(obj.activeFrom),
           month: formatDateAsMonth(obj.activeFrom),
-          time: obj.activeFrom.toLocaleTimeString(),
-          text: getNotificationStatusInfo(obj.status).label,
+          time: localeDateFormat(
+            obj.activeFrom,
+            I18n.t("global.dateFormats.timeFormat")
+          ),
+          text: getNotificationStatusInfo(obj.status),
           hasNext: i < arr.length - 1,
           hasPrevious: i > 0
         } as ItemProps;

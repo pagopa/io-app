@@ -27,7 +27,7 @@ defaults_js: &defaults_js
 defaults_android: &defaults_android
   <<: *defaults
   docker:
-    - image: cimg/android:2022.01.1-node
+    - image: cimg/android:2022.09.2-node
   environment:
     TERM: "dumb"
     ANDROID_SDK_BUILD_TOOLS_REVISION: "29.0.3"
@@ -40,7 +40,7 @@ defaults_android: &defaults_android
 defaults_macos: &defaults_macos
   <<: *defaults
   macos:
-    xcode: "13.3.0"
+    xcode: "13.4.1"
   resource_class: macos.x86.medium.gen2
   working_directory: /Users/distiller/italia-app
   environment:
@@ -90,7 +90,7 @@ jobs:
       - *save_node_cache
 
       # Build app
-      - run: yarn generate:all
+      - run: yarn generate
       # Needed to make compliant old Android code to AndroidX
       - run: yarn jetify
       - run: yarn tsc:noemit
@@ -113,7 +113,7 @@ jobs:
       - *install_node_modules
 
       # Generate models and locales
-      - run: yarn generate:all
+      - run: yarn generate
 
       # Run tests
       - run:
@@ -269,6 +269,30 @@ jobs:
       # Restore jars cache
       - restore_cache:
           key: *android_jars_cache_key
+
+      # Setup ruby version with chruby
+      - run:
+          name: install chruby
+          command: |
+            wget -O chruby-0.3.9.tar.gz https://github.com/postmodern/chruby/archive/v0.3.9.tar.gz
+            tar -xzvf chruby-0.3.9.tar.gz
+            cd chruby-0.3.9/
+            sudo make install
+
+      - run:
+          name: install ruby-install
+          command: |
+            wget -O ruby-install-0.8.5.tar.gz https://github.com/postmodern/ruby-install/archive/v0.8.5.tar.gz
+            tar -xzvf ruby-install-0.8.5.tar.gz
+            cd ruby-install-0.8.5/
+            sudo make install
+
+      - run: ruby-install ruby 2.7.6
+      - run:
+          name: Set chruby
+          command: |
+            echo 'source /usr/local/share/chruby/chruby.sh' >> $BASH_ENV
+            echo 'chruby ruby-2.7.6' >> $BASH_ENV 
 
       - run:
           name: Configure Bundler
@@ -458,7 +482,7 @@ jobs:
             cd _io-dev-api-server_
             cp ../scripts/api-config.json config/config.json
             yarn
-            yarn generate:all
+            yarn generate
             yarn start &> /tmp/io-dev-api-server.log &
             # wait for the server to be up and running
             sleep 10

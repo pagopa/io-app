@@ -1,24 +1,24 @@
-import { Millisecond } from "italia-ts-commons/lib/units";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import { View } from "native-base";
 import * as React from "react";
+import { Image, ImageBackground, Platform, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { Image, ImageBackground, Platform, StyleSheet } from "react-native";
-import { View } from "native-base";
-import { navigateToCgnDetails } from "../navigation/actions";
-import { isCgnInformationAvailableSelector } from "../store/reducers/details";
-import { cgnDetails } from "../store/actions/details";
-import { useActionOnFocus } from "../../../../utils/hooks/useOnFocus";
-import { GlobalState } from "../../../../store/reducers/types";
 import cgnBackground from "../../../../../img/bonus/cgn/cgn-preview.png";
 import cgnLogo from "../../../../../img/bonus/cgn/cgn_logo.png";
-import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { H3 } from "../../../../components/core/typography/H3";
-import I18n from "../../../../i18n";
 import {
-  IOColors,
-  hexToRgba
+  hexToRgba,
+  IOColors
 } from "../../../../components/core/variables/IOColors";
+import { IOStyles } from "../../../../components/core/variables/IOStyles";
+import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
+import I18n from "../../../../i18n";
+import { GlobalState } from "../../../../store/reducers/types";
+import { useActionOnFocus } from "../../../../utils/hooks/useOnFocus";
+import { navigateToCgnDetails } from "../navigation/actions";
+import { cgnDetails } from "../store/actions/details";
+import { isCgnInformationAvailableSelector } from "../store/reducers/details";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;

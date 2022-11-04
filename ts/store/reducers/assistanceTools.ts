@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { Action } from "../actions/types";
 import zendeskReducer, {

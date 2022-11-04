@@ -1,6 +1,6 @@
 import { put, take } from "typed-redux-saga/macro";
 import { AsyncActionCreator, getType, PayloadAction } from "typesafe-actions";
-import { left, right } from "fp-ts/lib/Either";
+import * as E from "fp-ts/lib/Either";
 
 /**
  * execute an async action dispatching request and wait for the result.
@@ -20,7 +20,7 @@ export function* getAsyncResult<T, I>(
     [successType, failureType]
   );
   if (result.type === successType) {
-    return right<Error, T>(result.payload as T);
+    return E.right<Error, T>(result.payload as T);
   }
-  return left<Error, T>(result.payload as Error);
+  return E.left<Error, T>(result.payload as Error);
 }

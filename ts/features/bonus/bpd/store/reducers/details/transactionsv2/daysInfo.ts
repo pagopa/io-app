@@ -1,7 +1,8 @@
-import { fromNullable, Option } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
+import { pipe } from "fp-ts/lib/function";
 import { Action } from "../../../../../../../store/actions/types";
 import {
   IndexedById,
@@ -106,11 +107,14 @@ export const bpdDaysInfoForSelectedPeriodSelector = createSelector(
     selectedPeriod
   ): pot.Pot<ReadonlyArray<BpdTransactionsDayInfo>, Error> =>
     pot.map(
-      fromNullable(selectedPeriod)
-        .chain(periodId =>
-          fromNullable(daysInfoByPeriod[periodId.awardPeriodId]?.byId)
-        )
-        .getOrElse(pot.none),
+      pipe(
+        selectedPeriod,
+        O.fromNullable,
+        O.chain(periodId =>
+          O.fromNullable(daysInfoByPeriod[periodId.awardPeriodId]?.byId)
+        ),
+        O.getOrElseW(() => pot.none)
+      ),
       byId => toArray(byId)
     )
 );
@@ -130,9 +134,12 @@ export const bpdDaysInfoByIdSelector = createSelector(
     awardPeriodId,
     daysInfoByPeriod,
     daysInfoId
-  ): Option<BpdTransactionsDayInfo> =>
-    fromNullable(awardPeriodId)
-      .chain(periodId => fromNullable(daysInfoByPeriod[periodId]?.byId))
-      .chain(pot.toOption)
-      .chain(daysInfoById => fromNullable(daysInfoById[daysInfoId]))
+  ): O.Option<BpdTransactionsDayInfo> =>
+    pipe(
+      awardPeriodId,
+      O.fromNullable,
+      O.chain(periodId => O.fromNullable(daysInfoByPeriod[periodId]?.byId)),
+      O.chain(pot.toOption),
+      O.chain(daysInfoById => O.fromNullable(daysInfoById[daysInfoId]))
+    )
 );

@@ -1,5 +1,6 @@
-import { none, Option, some } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import * as O from "fp-ts/lib/Option";
 import React, { useEffect, useRef, useState } from "react";
 import {
   ActivityIndicator,
@@ -39,12 +40,14 @@ import customVariables, {
   VIBRATION_LONG_PRESS_DURATION
 } from "../../../../theme/variables";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { useActionOnFocus } from "../../../../utils/hooks/useOnFocus";
 import { showToast } from "../../../../utils/showToast";
 import { EdgeBorderComponent } from "../../../screens/EdgeBorderComponent";
 import {
   EmptyComponent,
   generateItemLayout,
   ItemSeparator,
+  ITEM_HEIGHT,
   renderEmptyList,
   renderItem
 } from "./helpers";
@@ -102,6 +105,9 @@ const animated = {
   scrollEventThrottle: 8
 };
 
+// Do not refresh again automatically before minimumRefreshInterval has passed
+const minimumRefreshInterval = 60000 as Millisecond; // 1 minute
+
 type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -153,8 +159,9 @@ const MessageList = ({
 
   const flatListRef: React.RefObject<FlatList> = useRef(null);
 
-  const [longPressedItemIndex, setLongPressedItemIndex] =
-    useState<Option<number>>(none);
+  const [longPressedItemIndex, setLongPressedItemIndex] = useState<
+    O.Option<number>
+  >(O.none);
 
   const [isRefreshing, setIsRefreshing] = useState(false);
 
@@ -171,6 +178,13 @@ const MessageList = ({
     () => shouldUseLoad && !didLoad
   );
 
+  useActionOnFocus(() => {
+    // check if there are new messages when the component becomes focused
+    if (previousCursor) {
+      loadPreviousPage(previousCursor);
+    }
+  }, minimumRefreshInterval);
+
   useEffect(() => {
     if (error) {
       showToast(I18n.t("global.genericError"), "warning");
@@ -184,9 +198,9 @@ const MessageList = ({
   };
 
   const handleOnLayoutChange = () => {
-    if (longPressedItemIndex.isSome()) {
+    if (O.isSome(longPressedItemIndex)) {
       scrollTo(longPressedItemIndex.value, true);
-      setLongPressedItemIndex(none);
+      setLongPressedItemIndex(O.none);
     }
   };
 
@@ -199,7 +213,7 @@ const MessageList = ({
     const lastIndex = messages.length - 1;
     const lastMessageId = messages[lastIndex].id;
     if (id === lastMessageId) {
-      setLongPressedItemIndex(some(lastIndex));
+      setLongPressedItemIndex(O.some(lastIndex));
     }
   };
 
@@ -218,12 +232,7 @@ const MessageList = ({
         }
 
         setIsRefreshing(true);
-
-        if (messages.length === 0) {
-          reloadAll();
-        } else if (previousCursor !== undefined) {
-          loadPreviousPage(previousCursor);
-        }
+        reloadAll();
       }}
     />
   ) : undefined;

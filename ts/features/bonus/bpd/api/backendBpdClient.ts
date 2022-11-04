@@ -1,4 +1,4 @@
-import { createFetchRequestForApi } from "italia-ts-commons/lib/requests";
+import { createFetchRequestForApi } from "@pagopa/ts-commons/lib/requests";
 import { Iban } from "../../../../../definitions/backend/Iban";
 import { InitializedProfile } from "../../../../../definitions/backend/InitializedProfile";
 import { PayoffInstrTypeEnum } from "../../../../../definitions/bpd/citizen/CitizenPatchDTO";
@@ -8,7 +8,6 @@ import { awardPeriodsGET } from "./award-period/v1";
 import {
   citizenDELETE,
   citizenPaymentMethodPATCH,
-  citizenRankingGET,
   PatchOptions
 } from "./citizen/v1";
 import {
@@ -21,10 +20,7 @@ import {
   paymentInstrumentsEnrollPUT,
   paymentInstrumentsFindGET
 } from "./payment-instrument/v1";
-import {
-  winningTransactionsGET,
-  winningTransactionsTotalCashbackGET
-} from "./winning-transactions/v1";
+import { winningTransactionsTotalCashbackGET } from "./winning-transactions/v1";
 import {
   winningTransactionsV2CountByDayGET,
   winningTransactionsV2GET
@@ -100,23 +96,11 @@ export function BackendBpdClient(
     totalCashback: withBearerToken(
       createFetchRequestForApi(winningTransactionsTotalCashbackGET, options)
     ),
-    /**
-     * @deprecated
-     */
-    winningTransactions: withBearerToken(
-      createFetchRequestForApi(winningTransactionsGET, options)
-    ),
     winningTransactionsV2: withBearerToken(
       createFetchRequestForApi(winningTransactionsV2GET, options)
     ),
     winningTransactionsV2CountByDay: withBearerToken(
       createFetchRequestForApi(winningTransactionsV2CountByDayGET, options)
-    ),
-    /**
-     * @deprecated
-     */
-    getRanking: withBearerToken(
-      createFetchRequestForApi(citizenRankingGET, options)
     ),
     getRankingV2: withBearerToken(
       createFetchRequestForApi(citizenV2RankingGET, options)

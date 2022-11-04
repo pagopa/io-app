@@ -1,12 +1,14 @@
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { ListItem, View } from "native-base";
 import * as React from "react";
 import { Image, ImageStyle, StyleProp, StyleSheet } from "react-native";
-import I18n from "../../../../../i18n";
 import { Abi } from "../../../../../../definitions/pagopa/walletv2/Abi";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import IconFont from "../../../../../components/ui/IconFont";
+import I18n from "../../../../../i18n";
 import { useImageResize } from "../screens/hooks/useImageResize";
 
 type Props = {
@@ -57,13 +59,16 @@ export const BankPreviewItem: React.FunctionComponent<Props> = (
     props.bank.logoUrl
   );
 
-  const imageStyle: StyleProp<ImageStyle> | undefined = imageDimensions.fold(
-    undefined,
-    imgDim => ({
-      width: imgDim[0],
-      height: imgDim[1],
-      resizeMode: "contain"
-    })
+  const imageStyle: StyleProp<ImageStyle> | undefined = pipe(
+    imageDimensions,
+    O.fold(
+      () => undefined,
+      imgDim => ({
+        width: imgDim[0],
+        height: imgDim[1],
+        resizeMode: "contain"
+      })
+    )
   );
 
   const onItemPress = () => props.bank.abi && props.onPress(props.bank.abi);

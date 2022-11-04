@@ -1,17 +1,17 @@
+import { TouchableWithoutFeedback } from "@gorhom/bottom-sheet";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import { View } from "native-base";
 import * as React from "react";
 import { useCallback } from "react";
-import { View } from "native-base";
-import { Millisecond } from "italia-ts-commons/lib/units";
-import { TouchableWithoutFeedback } from "@gorhom/bottom-sheet";
 import { StyleSheet } from "react-native";
-import { clipboardSetStringWithFeedback } from "../../../../../../utils/clipboard";
-import I18n from "../../../../../../i18n";
-import { BaseTypography } from "../../../../../../components/core/typography/BaseTypography";
-import IconFont from "../../../../../../components/ui/IconFont";
-import { IOColors } from "../../../../../../components/core/variables/IOColors";
-import Eye from "../../../../../../../img/icons/Eye.svg";
 import { Discount } from "../../../../../../../definitions/cgn/merchants/Discount";
+import Eye from "../../../../../../../img/icons/Eye.svg";
+import { BaseTypography } from "../../../../../../components/core/typography/BaseTypography";
 import { H3 } from "../../../../../../components/core/typography/H3";
+import { IOColors } from "../../../../../../components/core/variables/IOColors";
+import IconFont from "../../../../../../components/ui/IconFont";
+import I18n from "../../../../../../i18n";
+import { clipboardSetStringWithFeedback } from "../../../../../../utils/clipboard";
 
 type Props = {
   staticCode: Discount["staticCode"];

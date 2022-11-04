@@ -1,5 +1,9 @@
 import { ColorValue } from "react-native";
 
+/* Used by `getGradientColorValues` function */
+import LinearGradient from "react-native-linear-gradient";
+import { ComponentProps } from "react";
+
 // Ensure the Type for IOColor without losing the inferred types
 function asIOColors<T extends { [key: string]: ColorValue }>(arg: T): T {
   return arg;
@@ -68,10 +72,10 @@ export const IOColors = asIOColors({
   yellow: "#FFC824" /* Almost deprecated, used in `PaymentHistoryList` only */,
   orange: "#EA7614",
   red: "#C02927",
-  /* ↳ ALIAS TOKEN: colorDanger → red */
+  /* ↳ ALIAS TOKEN: brandDanger → red */
   /* ↳ ALIAS TOKEN: calendarExpirableColor → red */
   green: "#005C3C"
-  /* ↳ ALIAS TOKEN: colorSuccess → green */
+  /* ↳ ALIAS TOKEN: brandSuccess → green */
 });
 
 export const IOColorGradients = asIOColorGradients({
@@ -91,6 +95,13 @@ export const IOColorGradients = asIOColorGradients({
   cgnTelco: ["#0871B6", "#83B8DA"],
   cgnTravel: ["#E00F69", "#F8C78C"]
 });
+
+export const getGradientColorValues = (
+  gradientId: IOColorGradientType
+): ComponentProps<typeof LinearGradient>["colors"] => {
+  const [first, second]: Array<ColorValue> = IOColorGradients[gradientId];
+  return [first, second];
+};
 
 export type IOColorType = keyof typeof IOColors;
 export type IOColorGradientType = keyof typeof IOColorGradients;

@@ -1,10 +1,12 @@
-import { fromNullable } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { capitalize } from "lodash";
 import { Text, View } from "native-base";
 import React from "react";
 import { StyleSheet, ViewStyle } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import { navigateToWalletHome } from "../../store/actions/navigation";
@@ -21,10 +23,9 @@ import {
   isExpiring,
   paymentExpirationInfo
 } from "../../utils/messages";
-import IconFont from "../ui/IconFont";
-import { IOColors } from "../core/variables/IOColors";
 import { Link } from "../core/typography/Link";
-import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
+import { IOColors } from "../core/variables/IOColors";
+import IconFont from "../ui/IconFont";
 import CalendarIconComponent from "./CalendarIconComponent";
 
 type OwnProps = {
@@ -170,11 +171,19 @@ const bannerStyle = (status: PaymentStatus): ViewStyle => {
 
 const isPaymentExpired = (
   message: CreatedMessageWithContentAndAttachments
-): boolean => paymentExpirationInfo(message).fold(false, isExpired);
+): boolean =>
+  pipe(
+    paymentExpirationInfo(message),
+    O.fold(() => false, isExpired)
+  );
 
 const isPaymentExpiring = (
   message: CreatedMessageWithContentAndAttachments
-): boolean => paymentExpirationInfo(message).fold(false, isExpiring);
+): boolean =>
+  pipe(
+    paymentExpirationInfo(message),
+    O.fold(() => false, isExpiring)
+  );
 
 const paid = (payment: PaidReason | undefined): boolean =>
   payment !== undefined;
@@ -219,25 +228,32 @@ const MessageDueDateBar: React.FunctionComponent<Props> = ({
   if (paymentStatus === "paid") {
     return getNoticePaid();
   }
-  return fromNullable(message.content.due_date).fold(null, dueDate => (
-    <>
-      <View style={[styles.container, bannerStyle(paymentStatus)]}>
+  return pipe(
+    message.content.due_date,
+    O.fromNullable,
+    O.fold(
+      () => null,
+      dueDate => (
         <>
-          <CalendarIcon status={paymentStatus} dueDate={dueDate} />
-          <View hspacer={true} small={true} />
+          <View style={[styles.container, bannerStyle(paymentStatus)]}>
+            <>
+              <CalendarIcon status={paymentStatus} dueDate={dueDate} />
+              <View hspacer={true} small={true} />
 
-          <Text style={styles.text} white={paymentStatus === "expired"}>
-            <TextContent
-              status={paymentStatus}
-              dueDate={dueDate}
-              onPaidPress={onGoToWallet}
-            />
-          </Text>
+              <Text style={styles.text} white={paymentStatus === "expired"}>
+                <TextContent
+                  status={paymentStatus}
+                  dueDate={dueDate}
+                  onPaidPress={onGoToWallet}
+                />
+              </Text>
+            </>
+          </View>
+          <View spacer={true} large={true} />
         </>
-      </View>
-      <View spacer={true} large={true} />
-    </>
-  ));
+      )
+    )
+  );
 };
 
 const mapDispatchToProps = (_: Dispatch) => ({

@@ -1,4 +1,5 @@
-import { fromNullable } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { Text, View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
@@ -47,9 +48,14 @@ const styles = StyleSheet.create({
 });
 
 const renderQRCode = (base64: string) =>
-  fromNullable(base64).fold(null, s => (
-    <SvgXml xml={s} height={249} width={249} />
-  ));
+  pipe(
+    base64,
+    O.fromNullable,
+    O.fold(
+      () => null,
+      s => <SvgXml xml={s} height={249} width={249} />
+    )
+  );
 
 const QrModalBox: React.FunctionComponent<Props> = (props: Props) => {
   const { qrCode, codeToDisplay, codeToCopy } = props;

@@ -1,4 +1,5 @@
-import { Option } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { Badge, View } from "native-base";
 import * as React from "react";
 import {
@@ -119,22 +120,27 @@ const getAccessibilityRepresentation = (
  * @param size
  * TODO: refactor with {@link BancomatWalletPreview}
  */
-const renderBankLogo = (abi: Abi, size: Option<[number, number]>) =>
-  size.fold(
-    <Body numberOfLines={1}>
-      {abi.name ?? I18n.t("wallet.methods.bancomat.name")}
-    </Body>,
-    imgDim => {
-      const imageUrl = abi.logoUrl;
-      const imageStyle: StyleProp<ImageStyle> = {
-        width: imgDim[0],
-        height: imgDim[1],
-        resizeMode: "contain"
-      };
-      return imageUrl ? (
-        <Image source={{ uri: imageUrl }} style={imageStyle} />
-      ) : null;
-    }
+const renderBankLogo = (abi: Abi, size: O.Option<[number, number]>) =>
+  pipe(
+    size,
+    O.fold(
+      () => (
+        <Body numberOfLines={1}>
+          {abi.name ?? I18n.t("wallet.methods.bancomat.name")}
+        </Body>
+      ),
+      imgDim => {
+        const imageUrl = abi.logoUrl;
+        const imageStyle: StyleProp<ImageStyle> = {
+          width: imgDim[0],
+          height: imgDim[1],
+          resizeMode: "contain"
+        };
+        return imageUrl ? (
+          <Image source={{ uri: imageUrl }} style={imageStyle} />
+        ) : null;
+      }
+    )
   );
 
 /**

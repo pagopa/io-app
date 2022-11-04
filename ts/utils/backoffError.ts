@@ -1,4 +1,4 @@
-import { Millisecond } from "italia-ts-commons/lib/units";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { call, delay, select } from "typed-redux-saga/macro";
 import { backOffWaitingTime } from "../store/reducers/backoffError";
 import { mixpanelTrack } from "../mixpanel";

@@ -1,3 +1,4 @@
+import * as E from "fp-ts/lib/Either";
 import { call, put } from "typed-redux-saga/macro";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { getNetworkError } from "../../../../../../utils/errors";
@@ -18,17 +19,17 @@ export function* cgnBucketConsuption(
     > = yield* call(getDiscountBucketCode, {
       discountId: cgnCodeFromBucketRequest.payload
     });
-    if (discountBucketCodeResult.isRight()) {
-      if (discountBucketCodeResult.value.status === 200) {
+    if (E.isRight(discountBucketCodeResult)) {
+      if (discountBucketCodeResult.right.status === 200) {
         yield* put(
           cgnCodeFromBucket.success({
             kind: "success",
-            value: discountBucketCodeResult.value.value
+            value: discountBucketCodeResult.right.value
           })
         );
         return;
       }
-      if (discountBucketCodeResult.value.status === 404) {
+      if (discountBucketCodeResult.right.status === 404) {
         yield* put(
           cgnCodeFromBucket.success({
             kind: "notFound"
@@ -45,7 +46,7 @@ export function* cgnBucketConsuption(
       }
     }
 
-    throw new Error(readablePrivacyReport(discountBucketCodeResult.value));
+    throw new Error(readablePrivacyReport(discountBucketCodeResult.left));
   } catch (e) {
     yield* put(cgnCodeFromBucket.failure(getNetworkError(e)));
   }

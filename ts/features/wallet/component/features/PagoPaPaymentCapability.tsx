@@ -5,6 +5,7 @@ import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import { H5 } from "../../../../components/core/typography/H5";
 import { Link } from "../../../../components/core/typography/Link";
 import { IOColors } from "../../../../components/core/variables/IOColors";
+import { PreferencesListItem } from "../../../../components/PreferencesListItem";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import Markdown from "../../../../components/ui/Markdown";
 import Switch from "../../../../components/ui/Switch";
@@ -14,7 +15,6 @@ import { PaymentSupportStatus } from "../../../../types/paymentMethodCapabilitie
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { isPaymentSupported } from "../../../../utils/paymentMethodCapabilities";
 import { openWebUrl } from "../../../../utils/url";
-import { BasePaymentFeatureListItem } from "./BasePaymentFeatureListItem";
 import PaymentStatusSwitch from "./PaymentStatusSwitch";
 
 const styles = StyleSheet.create({
@@ -117,7 +117,7 @@ const PagoPaPaymentCapability: React.FC<Props> = props => {
       <TouchableDefaultOpacity
         onPress={paymentSupported === "available" ? undefined : present}
       >
-        <BasePaymentFeatureListItem
+        <PreferencesListItem
           testID={"PagoPaPaymentCapability"}
           title={I18n.t("wallet.methods.card.pagoPaCapability.title")}
           description={I18n.t(

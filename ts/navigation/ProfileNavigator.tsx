@@ -1,6 +1,7 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
 import LogoutScreen from "../components/screens/LogoutScreen";
+import { remindersOptInEnabled } from "../config";
 import EmailInsertScreen from "../screens/onboarding/EmailInsertScreen";
 import EmailReadScreen from "../screens/onboarding/EmailReadScreen";
 import TosScreen from "../screens/onboarding/TosScreen";
@@ -10,6 +11,8 @@ import DownloadProfileDataScreen from "../screens/profile/DownloadProfileDataScr
 import EmailForwardingScreen from "../screens/profile/EmailForwardingScreen";
 import FiscalCodeScreen from "../screens/profile/FiscalCodeScreen";
 import LanguagesPreferencesScreen from "../screens/profile/LanguagesPreferencesScreen";
+import { NotificationsPreferencesScreen } from "../screens/profile/NotificationsPreferencesScreen";
+import IDPayOnboardingPlayground from "../screens/profile/playgrounds/IDPayOnboardingPlayground";
 import MarkdownPlayground from "../screens/profile/playgrounds/MarkdownPlayground";
 import PreferencesScreen from "../screens/profile/PreferencesScreen";
 import PrivacyMainScreen from "../screens/profile/PrivacyMainScreen";
@@ -22,6 +25,7 @@ import ServicesPreferenceScreen from "../screens/profile/ServicesPreferenceScree
 import ShareDataScreen from "../screens/profile/ShareDataScreen";
 import WebPlayground from "../screens/profile/WebPlayground";
 import { Showroom } from "../screens/showroom/Showroom";
+import { isGestureEnabled } from "../utils/navigation";
 import { ProfileParamsList } from "./params/ProfileParamsList";
 import ROUTES from "./routes";
 
@@ -34,7 +38,7 @@ const ProfileStackNavigator = () => (
   <Stack.Navigator
     initialRouteName={ROUTES.PROFILE_DATA}
     headerMode={"none"}
-    screenOptions={{ gestureEnabled: true }}
+    screenOptions={{ gestureEnabled: isGestureEnabled }}
   >
     <Stack.Screen name={ROUTES.PROFILE_DATA} component={ProfileDataScreen} />
     <Stack.Screen
@@ -92,6 +96,10 @@ const ProfileStackNavigator = () => (
       component={CgnLandingPlayground}
     />
     <Stack.Screen
+      name={ROUTES.IDPAY_ONBOARDING_PLAYGROUND}
+      component={IDPayOnboardingPlayground}
+    />
+    <Stack.Screen
       name={ROUTES.PROFILE_REMOVE_ACCOUNT_INFO}
       component={RemoveAccountInfo}
     />
@@ -103,6 +111,12 @@ const ProfileStackNavigator = () => (
       name={ROUTES.PROFILE_REMOVE_ACCOUNT_SUCCESS}
       component={RemoveAccountSuccess}
     />
+    {remindersOptInEnabled && (
+      <Stack.Screen
+        name={ROUTES.PROFILE_PREFERENCES_NOTIFICATIONS}
+        component={NotificationsPreferencesScreen}
+      />
+    )}
   </Stack.Navigator>
 );
 

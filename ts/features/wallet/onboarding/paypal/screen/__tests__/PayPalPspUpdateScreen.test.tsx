@@ -1,13 +1,13 @@
 import { createStore } from "redux";
-import { appReducer } from "../../../../../../store/reducers";
-import { applicationChangeState } from "../../../../../../store/actions/application";
-import { renderScreenFakeNavRedux } from "../../../../../../utils/testWrapper";
-import { GlobalState } from "../../../../../../store/reducers/types";
-import I18n from "../../../../../../i18n";
-import { getNetworkError } from "../../../../../../utils/errors";
-import PayPalPspUpdateScreen from "../../../../paypal/screen/PayPalPspUpdateScreen";
 import { PspData } from "../../../../../../../definitions/pagopa/PspData";
+import I18n from "../../../../../../i18n";
+import { applicationChangeState } from "../../../../../../store/actions/application";
 import { pspForPaymentV2 } from "../../../../../../store/actions/wallet/payment";
+import { appReducer } from "../../../../../../store/reducers";
+import { GlobalState } from "../../../../../../store/reducers/types";
+import { getNetworkError } from "../../../../../../utils/errors";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
+import PayPalPspUpdateScreen from "../../../../paypal/screen/PayPalPspUpdateScreen";
 
 const pspList: ReadonlyArray<PspData> = [
   {
@@ -91,7 +91,7 @@ const renderComponent = () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(appReducer, globalState as any);
   return {
-    component: renderScreenFakeNavRedux<GlobalState>(
+    component: renderScreenWithNavigationStoreContext<GlobalState>(
       PayPalPspUpdateScreen,
       "N/A",
       {},

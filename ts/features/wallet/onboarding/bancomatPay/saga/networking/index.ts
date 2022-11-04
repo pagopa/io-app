@@ -1,3 +1,6 @@
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { RestBPayResponse } from "../../../../../../../definitions/pagopa/walletv2/RestBPayResponse";
@@ -35,11 +38,11 @@ export function* handleSearchUserBPay(
     const searchBPayWithRefreshResult: SagaCallReturnType<
       typeof searchBPayWithRefresh
     > = yield* call(searchBPayWithRefresh);
-    if (searchBPayWithRefreshResult.isRight()) {
-      const statusCode = searchBPayWithRefreshResult.value.status;
+    if (E.isRight(searchBPayWithRefreshResult)) {
+      const statusCode = searchBPayWithRefreshResult.right.status;
       if (statusCode === 200) {
         const payload: RestBPayResponse =
-          searchBPayWithRefreshResult.value.value;
+          searchBPayWithRefreshResult.right.value;
         const bPayList = payload.data ?? [];
         return yield* put(searchUserBPay.success(bPayList));
       } else if (statusCode === 404) {
@@ -50,7 +53,7 @@ export function* handleSearchUserBPay(
           searchUserBPay.failure(
             getGenericError(
               new Error(
-                `response status ${searchBPayWithRefreshResult.value.status}`
+                `response status ${searchBPayWithRefreshResult.right.status}`
               )
             )
           )
@@ -60,7 +63,7 @@ export function* handleSearchUserBPay(
       return yield* put(
         searchUserBPay.failure(
           getGenericError(
-            new Error(readablePrivacyReport(searchBPayWithRefreshResult.value))
+            new Error(readablePrivacyReport(searchBPayWithRefreshResult.left))
           )
         )
       );
@@ -86,20 +89,22 @@ export function* handleAddpayToWallet(
     const addBPayToWalletWithRefreshResult: SagaCallReturnType<
       typeof addBPayToWalletWithRefresh
     > = yield* call(addBPayToWalletWithRefresh);
-    if (addBPayToWalletWithRefreshResult.isRight()) {
-      const statusCode = addBPayToWalletWithRefreshResult.value.status;
+    if (E.isRight(addBPayToWalletWithRefreshResult)) {
+      const statusCode = addBPayToWalletWithRefreshResult.right.status;
       if (statusCode === 200) {
         const payload: PatchedWalletV2ListResponse =
-          addBPayToWalletWithRefreshResult.value.value;
+          addBPayToWalletWithRefreshResult.right.value;
         // search for the added bpay
         const maybeAddedBPay = (payload.data ?? [])
           .map(fromPatchedWalletV2ToRawBPay)
           .find(w =>
-            w
-              .map(bp => bp.info.uidHash === action.payload.uidHash)
-              .getOrElse(false)
+            pipe(
+              w,
+              O.map(bp => bp.info.uidHash === action.payload.uidHash),
+              O.getOrElse(() => false)
+            )
           );
-        if (maybeAddedBPay && maybeAddedBPay.isSome()) {
+        if (maybeAddedBPay && O.isSome(maybeAddedBPay)) {
           return yield* put(
             addBpayToWalletAction.success(maybeAddedBPay.value)
           );
@@ -117,7 +122,7 @@ export function* handleAddpayToWallet(
           addBpayToWalletAction.failure(
             getGenericError(
               new Error(
-                `response status ${addBPayToWalletWithRefreshResult.value.status}`
+                `response status ${addBPayToWalletWithRefreshResult.right.status}`
               )
             )
           )
@@ -128,7 +133,7 @@ export function* handleAddpayToWallet(
         addBpayToWalletAction.failure(
           getGenericError(
             new Error(
-              readablePrivacyReport(addBPayToWalletWithRefreshResult.value)
+              readablePrivacyReport(addBPayToWalletWithRefreshResult.left)
             )
           )
         )

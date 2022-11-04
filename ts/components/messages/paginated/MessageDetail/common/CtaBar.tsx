@@ -1,3 +1,4 @@
+import * as O from "fp-ts/lib/Option";
 import { View as NBView } from "native-base";
 import React from "react";
 import { Platform, StyleSheet } from "react-native";
@@ -126,7 +127,7 @@ const CtaBar = ({
     serviceMetadata,
     service?.id as ServiceId
   );
-  const footer2 = maybeCtas.isSome() && (
+  const footer2 = O.isSome(maybeCtas) && (
     // Added a wrapper to enable the usage of the component outside the Container of Native Base
     <NBView style={styles.footerContainer} pointerEvents={"box-none"}>
       <NBView testID={"CtaBar_withCTA"} footer={true} style={footerStyle}>

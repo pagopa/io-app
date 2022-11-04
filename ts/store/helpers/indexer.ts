@@ -1,4 +1,5 @@
-import { fromNullable } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 
 /**
  * represents a "list" of objects that have
@@ -29,6 +30,13 @@ export const toIndexed = <T>(
 export const toArray = <T>(indexedById: IndexedById<T>): ReadonlyArray<T> =>
   Object.keys(indexedById).reduce(
     (acc: ReadonlyArray<T>, curr: string) =>
-      fromNullable(indexedById[curr]).fold(acc, val => [...acc, val]),
+      pipe(
+        indexedById[curr],
+        O.fromNullable,
+        O.fold(
+          () => acc,
+          val => [...acc, val]
+        )
+      ),
     []
   );

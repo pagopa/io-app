@@ -1,5 +1,5 @@
-import { createFetchRequestForApi } from "italia-ts-commons/lib/requests";
-import { Omit } from "italia-ts-commons/lib/types";
+import { createFetchRequestForApi } from "@pagopa/ts-commons/lib/requests";
+import { Omit } from "@pagopa/ts-commons/lib/types";
 import {
   getStatoBeneficiarioDefaultDecoder,
   GetStatoBeneficiarioT,
@@ -26,7 +26,7 @@ const PostRegistraBeneficiario: RegistraBeneficiarioT = {
   method: "post",
   url: () => "/cdc/beneficiario/registrazione",
   query: _ => ({}),
-  body: ({ anniRiferimento }) => JSON.stringify(anniRiferimento),
+  body: ({ body }) => JSON.stringify(body),
   headers: p => ({
     Authorization: `BearerAuth ${p.BearerAuth}`,
     "Content-Type": "application/json"

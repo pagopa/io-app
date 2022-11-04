@@ -2,7 +2,7 @@ import * as t from "io-ts";
 import {
   replaceProp1 as repP,
   requiredProp1 as reqP
-} from "italia-ts-commons/lib/types";
+} from "@pagopa/ts-commons/lib/types";
 import { CreatedMessageWithContentAndAttachments } from "../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { NewMessageContent } from "../../definitions/backend/NewMessageContent";
 

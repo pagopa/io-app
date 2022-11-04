@@ -7,7 +7,7 @@
 
 /* eslint-disable no-invalid-this */
 
-import { Millisecond } from "italia-ts-commons/lib/units";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import materialVariables from "native-base/src/theme/variables/material";
 import { Platform } from "react-native";
 import { IOColors } from "../components/core/variables/IOColors";
@@ -21,6 +21,9 @@ export const VIBRATION_BARCODE_SCANNED_DURATION = 50 as Millisecond;
 // eslint-disable-next-line
 const customVariables = Object.assign(materialVariables, {
   minTouchableAreaSize: 48,
+
+  // Android
+  buttonUppercaseAndroidText: false /* NB Theme variable, don't remove */,
 
   // Button
   btnTextFontWeight: "700" as FontWeight,
@@ -49,10 +52,10 @@ const customVariables = Object.assign(materialVariables, {
   /* Don't put hardcoded color values here.
     Add them to IOColors object, instead.
   */
-  brandPrimary: IOColors.blue,
+  brandPrimary: IOColors.blue /* NB Theme variable, don't remove */,
   colorHighlight: IOColors.aqua,
-  colorSuccess: IOColors.green,
-  colorDanger: IOColors.red,
+  brandSuccess: IOColors.green /* NB Theme variable, don't remove */,
+  brandDanger: IOColors.red /* NB Theme variable, don't remove */,
 
   btnLightBorderColor: IOColors.grey,
 

@@ -1,6 +1,8 @@
 /**
  * Entities reducer
  */
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import _ from "lodash";
 import { combineReducers } from "redux";
 import {
   createMigrate,
@@ -9,13 +11,11 @@ import {
   PersistedState,
   PersistPartial
 } from "redux-persist";
-import _ from "lodash";
-import AsyncStorage from "@react-native-community/async-storage";
-import { Action } from "../../actions/types";
-import { GlobalState } from "../types";
 import { isDevEnv } from "../../../utils/environment";
-import { PotTransform } from "../../transforms/potTransform";
+import { Action } from "../../actions/types";
 import { DateISO8601Transform } from "../../transforms/dateISO8601Tranform";
+import { PotTransform } from "../../transforms/potTransform";
+import { GlobalState } from "../types";
 import calendarEventsReducer, { CalendarEventsState } from "./calendarEvents";
 import messagesReducer, { MessagesState } from "./messages";
 import messagesStatusReducer, {
@@ -41,7 +41,7 @@ export type EntitiesState = Readonly<{
 
 export type PersistedEntitiesState = EntitiesState & PersistPartial;
 
-const CURRENT_REDUX_ENTITIES_STORE_VERSION = 1;
+const CURRENT_REDUX_ENTITIES_STORE_VERSION = 2;
 const migrations: MigrationManifest = {
   // version 0
   // remove "currentSelectedService" section
@@ -60,7 +60,18 @@ const migrations: MigrationManifest = {
   "1": (state: PersistedState): PersistedEntitiesState =>
     ({
       ...state
-    } as PersistedEntitiesState)
+    } as PersistedEntitiesState),
+  // version 2
+  // remove some sections unused after moving to pagination.
+  "2": (state: PersistedState): PersistedEntitiesState => {
+    const entities = state as PersistedEntitiesState;
+    return {
+      ...entities,
+      messages: {
+        ..._.omit(entities.messages, "allIds", "idsByServiceId", "byId")
+      }
+    };
+  }
 };
 
 // A custom configuration to avoid persisting messages section

@@ -4,8 +4,8 @@
  * are managed by different global reducers.
  */
 
-import { none, Option } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import {
   acknowledgeOnEmailValidation,
@@ -16,12 +16,12 @@ import { GlobalState } from "./types";
 
 export type EmailValidationState = {
   sendEmailValidationRequest: pot.Pot<void, Error>;
-  acknowledgeOnEmailValidated: Option<boolean>;
+  acknowledgeOnEmailValidated: O.Option<boolean>;
 };
 
 const INITIAL_STATE: EmailValidationState = {
   sendEmailValidationRequest: pot.none,
-  acknowledgeOnEmailValidated: none
+  acknowledgeOnEmailValidated: O.none
 };
 
 // Selector

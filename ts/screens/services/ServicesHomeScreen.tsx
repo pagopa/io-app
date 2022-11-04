@@ -21,8 +21,9 @@
  * tabs are hidden and they are displayed renderServiceLoadingPlaceholder/renderErrorPlaceholder
  *
  */
-import { Option } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { Tab, Tabs, Text, View } from "native-base";
 import * as React from "react";
 import {
@@ -107,7 +108,7 @@ type OwnProps = IOStackNavigationRouteProps<AppParamsList>;
 
 type ReduxMergedProps = Readonly<{
   updateOrganizationsOfInterestMetadata: (
-    selectedItemIds: Option<Set<string>>
+    selectedItemIds: O.Option<Set<string>>
   ) => void;
 }>;
 
@@ -408,8 +409,9 @@ class ServicesHomeScreen extends React.Component<Props, State> {
    * Render ServicesSearch component.
    */
   private renderSearch = () =>
-    this.props.searchText
-      .map(_ =>
+    pipe(
+      this.props.searchText,
+      O.map(_ =>
         _.length < MIN_CHARACTER_SEARCH_TEXT ? (
           <SearchNoResultMessage errorType={"InvalidSearchBarText"} />
         ) : (
@@ -420,8 +422,11 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             searchText={_}
           />
         )
-      )
-      .getOrElse(<SearchNoResultMessage errorType={"InvalidSearchBarText"} />);
+      ),
+      O.getOrElse(() => (
+        <SearchNoResultMessage errorType={"InvalidSearchBarText"} />
+      ))
+    );
 
   private refreshServices = () => {
     this.setState({
@@ -637,9 +642,9 @@ const mergeProps = (
   // If the user updates the area of interest, the upsert of
   // the user metadata stored on backend is triggered
   const updateOrganizationsOfInterestMetadata = (
-    selectedItemIds: Option<Set<string>>
+    selectedItemIds: O.Option<Set<string>>
   ) => {
-    if (selectedItemIds.isSome() && stateProps.userMetadata) {
+    if (O.isSome(selectedItemIds) && stateProps.userMetadata) {
       const updatedAreasOfInterest = Array.from(selectedItemIds.value);
       dispatchProps.saveSelectedOrganizationItems(
         stateProps.userMetadata,

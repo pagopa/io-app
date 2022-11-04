@@ -2,17 +2,15 @@
  * The screen allows to identify a transaction by the QR code on the analogic notice
  */
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import { NavigationEvents } from "@react-navigation/compat";
-import { head } from "fp-ts/lib/Array";
-import { fromNullable, isSome } from "fp-ts/lib/Option";
-import { ITuple2 } from "italia-ts-commons/lib/tuples";
+import { ITuple2 } from "@pagopa/ts-commons/lib/tuples";
+import * as AR from "fp-ts/lib/Array";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { Text, View } from "native-base";
 import * as React from "react";
 import {
   Alert,
   Dimensions,
-  PermissionsAndroid,
-  Platform,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -27,6 +25,7 @@ import {
   ScannedBarcode
 } from "../../../components/BarcodeCamera";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
+import { IOColors } from "../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
@@ -36,6 +35,7 @@ import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { CameraMarker } from "../../../components/wallet/CameraMarker";
 import { cancelButtonProps } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import I18n from "../../../i18n";
+import { mixpanelTrack } from "../../../mixpanel";
 import {
   AppParamsList,
   IOStackNavigationRouteProps
@@ -46,9 +46,12 @@ import {
   navigateToWalletHome
 } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
-import { paymentInitializeState } from "../../../store/actions/wallet/payment";
-import { GlobalState } from "../../../store/reducers/types";
+import {
+  paymentInitializeState,
+  PaymentStartOrigin
+} from "../../../store/actions/wallet/payment";
 import { barcodesScannerConfigSelector } from "../../../store/reducers/backendStatus";
+import { GlobalState } from "../../../store/reducers/types";
 import customVariables, {
   VIBRATION_BARCODE_SCANNED_DURATION
 } from "../../../theme/variables";
@@ -61,8 +64,6 @@ import {
 } from "../../../utils/payment";
 import { isAndroid } from "../../../utils/platform";
 import { showToast } from "../../../utils/showToast";
-import { mixpanelTrack } from "../../../mixpanel";
-import { IOColors } from "../../../components/core/variables/IOColors";
 
 type Props = IOStackNavigationRouteProps<AppParamsList> &
   ReturnType<typeof mapDispatchToProps> &
@@ -71,9 +72,6 @@ type Props = IOStackNavigationRouteProps<AppParamsList> &
 type State = {
   scanningState: ComponentProps<typeof CameraMarker>["state"];
   isFocused: boolean;
-  // The scanner package automatically asks for android permission, but we have to display before an alert with
-  // the rationale
-  permissionRationaleDisplayed: boolean;
 };
 
 const screenWidth = Dimensions.get("screen").width;
@@ -118,13 +116,18 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 };
 class ScanQrCodeScreen extends React.Component<Props, State> {
   private scannerReactivateTimeoutHandler?: number;
+  private focusUnsubscribe!: () => void;
+  private blurUnsubscribe!: () => void;
   private goBack = () => this.props.navigation.goBack();
 
   /**
    * Handles valid pagoPA QR codes
    */
-  private onValidQrCode = (data: ITuple2<RptId, AmountInEuroCents>) => {
-    this.props.runPaymentTransactionSummarySaga(data.e1, data.e2);
+  private onValidQrCode = (
+    data: ITuple2<RptId, AmountInEuroCents>,
+    origin: PaymentStartOrigin
+  ) => {
+    this.props.runPaymentTransactionSummarySaga(data.e1, data.e2, origin);
   };
 
   /**
@@ -157,7 +160,13 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
    */
   private onQrCodeData = (data: string) => {
     const resultOrError = decodePagoPaQrCode(data);
-    resultOrError.foldL<void>(this.onInvalidQrCode, this.onValidQrCode);
+    return pipe(
+      resultOrError,
+      O.foldW(
+        () => this.onInvalidQrCode,
+        _ => this.onValidQrCode(_, "qrcode_scan")
+      )
+    );
   };
 
   private onDataMatrixData = (data: string) => {
@@ -168,18 +177,21 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
     if (dataMatrixPosteEnabled) {
       const maybePosteDataMatrix = decodePosteDataMatrix(data);
 
-      return maybePosteDataMatrix.foldL<void>(
-        () => {
-          if (this.state.scanningState !== "INVALID") {
-            void mixpanelTrack("WALLET_SCAN_POSTE_DATAMATRIX_FAILURE");
-          }
+      return pipe(
+        maybePosteDataMatrix,
+        O.fold(
+          () => {
+            if (this.state.scanningState !== "INVALID") {
+              void mixpanelTrack("WALLET_SCAN_POSTE_DATAMATRIX_FAILURE");
+            }
 
-          this.onInvalidQrCode();
-        },
-        data => {
-          void mixpanelTrack("WALLET_SCAN_POSTE_DATAMATRIX_SUCCESS");
-          this.onValidQrCode(data);
-        }
+            this.onInvalidQrCode();
+          },
+          data => {
+            void mixpanelTrack("WALLET_SCAN_POSTE_DATAMATRIX_SUCCESS");
+            this.onValidQrCode(data, "poste_datamatrix_scan");
+          }
+        )
       );
     }
   };
@@ -229,10 +241,12 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
     // Open Image Library
     ImagePicker.launchImageLibrary(options, response => {
       // With the current settings the user is allowed to pick only one image
-      const maybePickedImage = fromNullable(response.assets).chain(assets =>
-        head([...assets])
+      const maybePickedImage = pipe(
+        response.assets,
+        O.fromNullable,
+        O.chain(assets => AR.head([...assets]))
       );
-      if (isSome(maybePickedImage)) {
+      if (O.isSome(maybePickedImage)) {
         ReaderQR.readerQR(maybePickedImage.value.uri)
           .then((data: string) => {
             this.onQrCodeData(data);
@@ -265,8 +279,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
     super(props);
     this.state = {
       scanningState: "SCANNING",
-      isFocused: false,
-      permissionRationaleDisplayed: Platform.OS !== "android"
+      isFocused: false
     };
   }
 
@@ -275,33 +288,26 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
       // cancel the QR scanner reactivation before unmounting the component
       clearTimeout(this.scannerReactivateTimeoutHandler);
     }
-  }
-
-  public async componentDidMount() {
-    if (Platform.OS !== "android") {
-      return;
-    }
-    const hasPermission = await PermissionsAndroid.check(
-      PermissionsAndroid.PERMISSIONS.CAMERA
-    );
-    if (!hasPermission) {
-      await AsyncAlert(
-        I18n.t("permissionRationale.camera.title"),
-        I18n.t("permissionRationale.camera.message"),
-        [
-          {
-            text: I18n.t("global.buttons.choose"),
-            style: "default"
-          }
-        ]
-      );
-    }
-    this.setState({ permissionRationaleDisplayed: true });
+    this.focusUnsubscribe();
+    this.blurUnsubscribe();
   }
 
   private handleWillFocus = () => this.setState({ isFocused: true });
 
   private handleWillBlur = () => this.setState({ isFocused: false });
+
+  public async componentDidMount() {
+    // eslint-disable-next-line functional/immutable-data
+    this.blurUnsubscribe = this.props.navigation.addListener(
+      "blur",
+      this.handleWillBlur
+    );
+    // eslint-disable-next-line functional/immutable-data
+    this.focusUnsubscribe = this.props.navigation.addListener(
+      "focus",
+      this.handleWillFocus
+    );
+  }
 
   public render(): React.ReactNode {
     const primaryButtonProps = {
@@ -319,10 +325,6 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["wallet"]}
       >
-        <NavigationEvents
-          onWillFocus={this.handleWillFocus}
-          onWillBlur={this.handleWillBlur}
-        />
         <SafeAreaView style={IOStyles.flex}>
           <FocusAwareStatusBar
             barStyle={"dark-content"}
@@ -381,14 +383,15 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     navigateToPaymentManualDataInsertion(),
   runPaymentTransactionSummarySaga: (
     rptId: RptId,
-    initialAmount: AmountInEuroCents
+    initialAmount: AmountInEuroCents,
+    origin: PaymentStartOrigin
   ) => {
     dispatch(paymentInitializeState());
 
     navigateToPaymentTransactionSummaryScreen({
       rptId,
       initialAmount,
-      paymentStartOrigin: "qrcode_scan"
+      paymentStartOrigin: origin
     });
   }
 });

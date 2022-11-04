@@ -1,9 +1,10 @@
-import { some } from "fp-ts/lib/Option";
-import { BackendStatusState } from "../backendStatus";
-import { BackendStatus } from "../../../../definitions/content/BackendStatus";
-import { LevelEnum } from "../../../../definitions/content/SectionStatus";
-import { Config } from "../../../../definitions/content/Config";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
+import { BackendStatus } from "../../../../definitions/content/BackendStatus";
+import { Config } from "../../../../definitions/content/Config";
+import { LevelEnum } from "../../../../definitions/content/SectionStatus";
+import { BackendStatusState } from "../backendStatus";
 
 export const baseRawBackendStatus: BackendStatus = {
   is_alive: true,
@@ -265,12 +266,20 @@ export const baseRawBackendStatus: BackendStatus = {
     },
     barcodesScanner: {
       dataMatrixPosteEnabled: false
-    }
+    },
+    fci: {
+      enabled: false
+    },
+    pn: {
+      enabled: false,
+      frontend_url: ""
+    },
+    payments: {}
   }
 };
 
 export const baseBackendState: BackendStatusState = {
-  status: some(baseRawBackendStatus),
+  status: O.some(baseRawBackendStatus),
   areSystemsDead: false,
   deadsCounter: 0
 };
@@ -322,7 +331,15 @@ export const baseBackendConfig: Config = {
   },
   barcodesScanner: {
     dataMatrixPosteEnabled: false
-  }
+  },
+  fci: {
+    enabled: false
+  },
+  pn: {
+    enabled: false,
+    frontend_url: ""
+  },
+  payments: {}
 };
 
 export const withBpdRankingConfig = (
@@ -330,8 +347,11 @@ export const withBpdRankingConfig = (
   newConfig: Config
 ): BackendStatusState => ({
   ...baseState,
-  status: baseState.status.map(s => ({
-    ...s,
-    config: { ...newConfig }
-  }))
+  status: pipe(
+    baseState.status,
+    O.map(s => ({
+      ...s,
+      config: { ...newConfig }
+    }))
+  )
 });

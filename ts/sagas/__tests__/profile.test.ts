@@ -1,12 +1,12 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { expectSaga, testSaga } from "redux-saga-test-plan";
-import { getType } from "typesafe-actions";
-import * as pot from "italia-ts-commons/lib/pot";
 import sha from "sha.js";
+import { getType } from "typesafe-actions";
+import { AppVersion } from "../../../definitions/backend/AppVersion";
 import {
-  profileSagaTestable,
-  upsertAppVersionSaga,
-  watchProfile
-} from "../profile";
+  differentProfileLoggedIn,
+  setProfileHashedFiscalCode
+} from "../../store/actions/crossSessions";
 import {
   loadBonusBeforeRemoveAccount,
   profileLoadSuccess,
@@ -14,22 +14,22 @@ import {
   removeAccountMotivation,
   startEmailValidation
 } from "../../store/actions/profile";
-import {
-  differentProfileLoggedIn,
-  setProfileHashedFiscalCode
-} from "../../store/actions/crossSessions";
-import { isDifferentFiscalCodeSelector } from "../../store/reducers/crossSessions";
-import { GlobalState } from "../../store/reducers/types";
 import { appReducer } from "../../store/reducers";
-import mockedProfile from "../../__mocks__/initializedProfile";
-import { getAppVersion } from "../../utils/appVersion";
-import { AppVersion } from "../../../definitions/backend/AppVersion";
+import { isDifferentFiscalCodeSelector } from "../../store/reducers/crossSessions";
 import { profileSelector } from "../../store/reducers/profile";
+import { GlobalState } from "../../store/reducers/types";
+import { getAppVersion } from "../../utils/appVersion";
+import mockedProfile from "../../__mocks__/initializedProfile";
+import {
+  profileSagaTestable,
+  upsertAppVersionSaga,
+  watchProfile
+} from "../profile";
 
 const hash = (value: string): string =>
   sha("sha256").update(value).digest("hex");
 
-jest.mock("@react-native-community/async-storage", () => ({
+jest.mock("@react-native-async-storage/async-storage", () => ({
   AsyncStorage: jest.fn()
 }));
 

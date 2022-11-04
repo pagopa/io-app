@@ -1,7 +1,9 @@
-import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
 import { fireEvent, render } from "@testing-library/react-native";
+import * as O from "fp-ts/lib/Option";
+import React from "react";
+import { Text, TouchableOpacity, View } from "react-native";
 
+import { pipe } from "fp-ts/lib/function";
 import { useItemsSelection } from "../useItemsSelection";
 
 const TestContainer = ({
@@ -16,16 +18,16 @@ const TestContainer = ({
   return (
     <View>
       {/* Test initial value */}
-      {selectedItems.isNone() && <Text>{"Selection not active"}</Text>}
+      {O.isNone(selectedItems) && <Text>{"Selection not active"}</Text>}
 
       {/* Test content of the Set at any given time */}
       <View>
-        {selectedItems
-          .map(_ => Array.from(_))
-          .getOrElse([])
-          .map(id => (
-            <Text key={id}>{id}</Text>
-          ))}
+        {pipe(
+          selectedItems,
+          O.map(_ => Array.from(_)),
+          O.map(res => res.map(id => <Text key={id}>{id}</Text>)),
+          O.getOrElseW(() => [])
+        )}
       </View>
 
       {/* Test toggle function */}

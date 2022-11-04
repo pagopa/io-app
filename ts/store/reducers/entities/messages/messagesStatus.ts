@@ -1,12 +1,8 @@
-import { fromNullable } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-import {
-  DEPRECATED_loadMessage,
-  removeMessages,
-  DEPRECATED_setMessageReadState,
-  DEPRECATED_setMessagesArchivedState
-} from "../../../actions/messages";
+import { pipe } from "fp-ts/lib/function";
+import { removeMessages } from "../../../actions/messages";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
 import { differentProfileLoggedIn } from "../../../actions/crossSessions";
@@ -31,50 +27,6 @@ const reducer = (
   action: Action
 ): MessagesStatus => {
   switch (action.type) {
-    case getType(DEPRECATED_loadMessage.success): {
-      const { id } = action.payload;
-      // if hits, skip it!
-      if (state[id] !== undefined) {
-        return state;
-      }
-      return {
-        ...state,
-        [id]: EMPTY_MESSAGE_STATUS
-      };
-    }
-
-    case getType(DEPRECATED_setMessageReadState): {
-      const { id, read } = action.payload;
-      // if misses, set the default values for given message
-      const prevState = state[id] || EMPTY_MESSAGE_STATUS;
-      return {
-        ...state,
-        [id]: {
-          ...prevState,
-          isRead: read
-        }
-      };
-    }
-    case getType(DEPRECATED_setMessagesArchivedState): {
-      const { ids, archived } = action.payload;
-      const updatedMessageStates = ids.reduce<{
-        [key: string]: MessageStatus;
-      }>((accumulator, id) => {
-        // if misses, set the default values for given message
-        const prevState = state[id] || EMPTY_MESSAGE_STATUS;
-        return {
-          ...accumulator,
-          [id]: {
-            ...prevState,
-            isArchived: archived
-          }
-        };
-      }, {});
-      return {
-        ...state,
-        ...updatedMessageStates
-      };
-    }
     case getType(removeMessages):
       const idsToRemove = action.payload;
       return Object.keys(state).reduce<MessagesStatus>(
@@ -103,9 +55,12 @@ export const messagesUnreadSelector = createSelector(
   messagesStatusSelector,
   items =>
     Object.keys(items).filter(messageId =>
-      fromNullable(items[messageId])
-        .map(item => item.isRead === false)
-        .getOrElse(true)
+      pipe(
+        items[messageId],
+        O.fromNullable,
+        O.map(item => item.isRead === false),
+        O.getOrElse(() => true)
+      )
     )
 );
 
@@ -114,9 +69,12 @@ export const messagesReadSelector = createSelector(
   messagesStatusSelector,
   items =>
     Object.keys(items).filter(messageId =>
-      fromNullable(items[messageId])
-        .map(item => item.isRead === true)
-        .getOrElse(false)
+      pipe(
+        items[messageId],
+        O.fromNullable,
+        O.map(item => item.isRead === true),
+        O.getOrElse(() => false)
+      )
     )
 );
 
@@ -125,9 +83,12 @@ export const messagesArchivedSelector = createSelector(
   messagesStatusSelector,
   items =>
     Object.keys(items).filter(messageId =>
-      fromNullable(items[messageId])
-        .map(item => item.isArchived === true)
-        .getOrElse(false)
+      pipe(
+        items[messageId],
+        O.fromNullable,
+        O.map(item => item.isArchived === true),
+        O.getOrElse(() => false)
+      )
     )
 );
 
@@ -136,9 +97,12 @@ export const messagesUnarchivedSelector = createSelector(
   messagesStatusSelector,
   items =>
     Object.keys(items).filter(messageId =>
-      fromNullable(items[messageId])
-        .map(item => item.isArchived === false)
-        .getOrElse(true)
+      pipe(
+        items[messageId],
+        O.fromNullable,
+        O.map(item => item.isArchived === false),
+        O.getOrElse(() => true)
+      )
     )
 );
 
@@ -158,9 +122,12 @@ export const messagesUnreadAndUnarchivedSelector = createSelector(
 export const isMessageRead = createSelector(
   [messagesStatusSelector, (_: GlobalState, messageId: string) => messageId],
   (messagesStatus, messageId) =>
-    fromNullable(messagesStatus[messageId])
-      .map(ms => ms.isRead)
-      .getOrElse(false)
+    pipe(
+      messagesStatus[messageId],
+      O.fromNullable,
+      O.map(ms => ms.isRead),
+      O.getOrElse(() => false)
+    )
 );
 
 /**
@@ -173,10 +140,14 @@ export const isMessageRead = createSelector(
 export const getMessageStatus = createSelector(
   [messagesStatusSelector, (_: GlobalState, messageId: string) => messageId],
   (messagesStatus, messageId) =>
-    fromNullable(messagesStatus[messageId]).getOrElse({
-      isRead: false,
-      isArchived: false
-    })
+    pipe(
+      messagesStatus[messageId],
+      O.fromNullable,
+      O.getOrElse(() => ({
+        isRead: false,
+        isArchived: false
+      }))
+    )
 );
 
 export default reducer;

@@ -1,15 +1,15 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
 import React, { useCallback, useEffect } from "react";
-import * as pot from "italia-ts-commons/lib/pot";
-import { some } from "fp-ts/lib/Option";
 import WorkunitGenericFailure from "../../../../../components/error/WorkunitGenericFailure";
 import OutcomeCodeMessageComponent from "../../../../../components/wallet/OutcomeCodeMessageComponent";
-import { extractOutcomeCode } from "../../../../../store/reducers/wallet/outcomeCode";
-import { walletAddPaypalFailure } from "../store/actions";
+import I18n from "../../../../../i18n";
 import { fetchWalletsRequestWithExpBackoff } from "../../../../../store/actions/wallet/wallets";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { extractOutcomeCode } from "../../../../../store/reducers/wallet/outcomeCode";
 import { paypalSelector } from "../../../../../store/reducers/wallet/wallets";
 import { LoadingErrorComponent } from "../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
-import I18n from "../../../../../i18n";
-import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { walletAddPaypalFailure } from "../store/actions";
 import { paypalOnboardingOutcomeCodeSelector } from "../store/reducers/onOboardingCompleted";
 import PayPalOnboardingCompletedSuccessComponent from "./PayPalOnboardingCompletedSuccessComponent";
 
@@ -38,9 +38,9 @@ const PayPalOnboardingCheckoutCompletedScreen = () =>
     if (paypalOutcomeCode === undefined) {
       return <WorkunitGenericFailure />;
     }
-    const outcomeCode = extractOutcomeCode(some(paypalOutcomeCode));
+    const outcomeCode = extractOutcomeCode(O.some(paypalOutcomeCode));
     // it should never happen (the outcome code is not recognized as valid)
-    if (outcomeCode.isNone()) {
+    if (O.isNone(outcomeCode)) {
       return <WorkunitGenericFailure />;
     }
     // show a loading or error component to handle the wallet reload

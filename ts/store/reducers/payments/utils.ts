@@ -1,4 +1,5 @@
-import { fromNullable, Option, some } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { isSuccessTransaction } from "../../../types/pagopa";
 import { PaymentHistory } from "./history";
 
@@ -10,17 +11,19 @@ import { PaymentHistory } from "./history";
  */
 export const isPaymentDoneSuccessfully = (
   payment: PaymentHistory
-): Option<boolean> => {
+): O.Option<boolean> => {
   if (payment.failure) {
-    return some(false);
+    return O.some(false);
   }
   if (payment.success) {
-    return some(true);
+    return O.some(true);
   }
   // if we have an outcomeCode we got an error on pay
   return payment.outcomeCode
-    ? some(false)
-    : fromNullable(payment.transaction).map(
-        t => t !== undefined && isSuccessTransaction(t)
+    ? O.some(false)
+    : pipe(
+        payment.transaction,
+        O.fromNullable,
+        O.map(t => t !== undefined && isSuccessTransaction(t))
       );
 };

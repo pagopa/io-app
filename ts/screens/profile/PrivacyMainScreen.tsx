@@ -5,7 +5,7 @@
  * - send a request to delete his profile
  * - send a request to export all his data (receiving them by email)
  */
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { List } from "native-base";
 import * as React from "react";
 import { Alert, AlertButton } from "react-native";
