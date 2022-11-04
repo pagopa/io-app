@@ -40,8 +40,6 @@ describe("machine", () => {
 
     await waitFor(() => expect(mockLoadInitiative).toHaveBeenCalled());
 
-    expect(
-        onboardingService.getSnapshot().matches("DISPLAYING_INITIATIVE")
-      );
+    expect(onboardingService.getSnapshot().matches("DISPLAYING_INITIATIVE"));
   });
 });
