@@ -83,15 +83,19 @@ describe("OnboardingNotificationsInfoScreenConsent", () => {
     expect(component).not.toBeNull();
 
     appStateSpy.mock.calls[0][1]("background");
+    expect(checkNotificationPermissions).not.toBeCalled();
     expect(notificationsInfoScreenConsentSpy).not.toBeCalled();
 
     appStateSpy.mock.calls[0][1]("inactive");
+    expect(checkNotificationPermissions).not.toBeCalled();
     expect(notificationsInfoScreenConsentSpy).not.toBeCalled();
 
     appStateSpy.mock.calls[0][1]("unknown");
+    expect(checkNotificationPermissions).not.toBeCalled();
     expect(notificationsInfoScreenConsentSpy).not.toBeCalled();
 
     appStateSpy.mock.calls[0][1]("extension");
+    expect(checkNotificationPermissions).not.toBeCalled();
     expect(notificationsInfoScreenConsentSpy).not.toBeCalled();
   });
 });
