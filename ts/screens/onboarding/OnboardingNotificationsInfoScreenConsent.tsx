@@ -1,5 +1,7 @@
 import React, { memo, useEffect } from "react";
 import { AppState, SafeAreaView, StyleSheet, View } from "react-native";
+import { useSelector } from "react-redux";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import ScreenContent from "../../components/screens/ScreenContent";
 import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
@@ -15,6 +17,8 @@ import NotificationsToggleIcon from "../../../img/onboarding/ios-notifications-t
 import customVariables from "../../theme/variables";
 import { H4 } from "../../components/core/typography/H4";
 import { checkNotificationPermissions } from "../../utils/notification";
+import { profilePreferencesSelector } from "../../store/reducers/profile";
+import { mixpanelTrack } from "../../mixpanel";
 
 const styles = StyleSheet.create({
   container: {
@@ -70,6 +74,8 @@ const InstructionRow = memo(
 const OnboardingNotificationsInfoScreenConsent = () => {
   const dispatch = useIODispatch();
 
+  const optInPreferencesPot = useSelector(profilePreferencesSelector);
+
   useEffect(() => {
     const subscription = AppState.addEventListener(
       "change",
@@ -90,6 +96,17 @@ const OnboardingNotificationsInfoScreenConsent = () => {
   }, [dispatch]);
 
   const goNext = () => {
+    // When this code executes, we know for sure that system notifications permissions are disabled,
+    // otherwise the component would either have been skipped by the saga or it would have automatically
+    // handled the given permission using the AppState listener (registered on the useEffect)
+
+    if (pot.isSome(optInPreferencesPot)) {
+      const optInPreferences = optInPreferencesPot.value;
+      if (optInPreferences.reminder) {
+        void mixpanelTrack("NOTIFICATIONS_OPTIN_REMINDER_ON_PERMISSIONS_OFF");
+      }
+    }
+
     dispatch(notificationsInfoScreenConsent());
   };
 
