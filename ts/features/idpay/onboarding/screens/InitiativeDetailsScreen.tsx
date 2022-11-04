@@ -1,11 +1,12 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useNavigation } from "@react-navigation/native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import I18n from "i18n-js";
 import * as React from "react";
 import { View } from "native-base";
 import { pipe } from "fp-ts/lib/function";
+import { useActor } from "@xstate/react";
 import * as O from "fp-ts/lib/Option";
-import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet, Text } from "react-native";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import OrganizationHeader from "../../../../components/OrganizationHeader";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
@@ -18,10 +19,22 @@ import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
 import { UIService } from "../../../../store/reducers/entities/services/types";
 import { useIOSelector } from "../../../../store/hooks";
 import { serviceByIdSelector } from "../../../../store/reducers/entities/services/servicesById";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { toUIService } from "../../../../store/reducers/entities/services/transformers";
 import { showToast } from "../../../../utils/showToast";
 import { openWebUrl } from "../../../../utils/url";
+import { IDPayOnboardingParamsList } from "../navigation/navigator";
+import { useOnboardingMachineService } from "../xstate/provider";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
+
+type InitiativeDetailsScreenRouteParams = {
+  serviceId: string;
+};
+
+type InitiativeDetailsRouteProps = RouteProp<
+  IDPayOnboardingParamsList,
+  "IDPAY_ONBOARDING_INITIATIVE_DETAILS"
+>;
 
 const InitiativeOrganizationHeader = ({
   name,
@@ -36,51 +49,66 @@ const InitiativeOrganizationHeader = ({
 );
 
 type BeforeContinueBodyProps = {
-  onTOSLinkPress: () => void;
-  onPrivacyLinkPress: () => void;
+  tosUrl?: string;
+  privacyUrl?: string;
 };
 
-const InitiativeBeforeContinueBody = (props: BeforeContinueBodyProps) => (
-  <Body accessibilityRole="link" testID="IDPayOnboardingBeforeContinue">
-    <LabelSmall weight={"Regular"} color={"bluegrey"}>
-      {I18n.t("idpay.onboarding.beforeContinue.text1")}
-    </LabelSmall>
-    <LabelSmall
-      color={"blue"}
-      onPress={props.onTOSLinkPress}
-      testID="IDPayOnboardingPrivacyLink"
-    >
-      {I18n.t("idpay.onboarding.beforeContinue.tosLink")}
-    </LabelSmall>
-    <LabelSmall weight={"Regular"} color={"bluegrey"}>
-      {I18n.t("idpay.onboarding.beforeContinue.text2")}
-    </LabelSmall>
-    <LabelSmall
-      color={"blue"}
-      onPress={props.onPrivacyLinkPress}
-      testID="IDPayOnboardingTOSLink"
-    >
-      {I18n.t("idpay.onboarding.beforeContinue.privacyLink")}
-    </LabelSmall>
-  </Body>
-);
+const BeforeContinueBody = (props: BeforeContinueBodyProps) => {
+  const { tosUrl, privacyUrl } = props;
+
+  const handlePrivacyLinkPress = () => {
+    if (privacyUrl !== undefined) {
+      openWebUrl(privacyUrl, () => showToast(I18n.t("global.jserror.title")));
+    }
+  };
+
+  const handleTosLinkPress = () => {
+    if (tosUrl !== undefined) {
+      openWebUrl(tosUrl, () => showToast(I18n.t("global.jserror.title")));
+    }
+  };
+
+  return (
+    <Body accessibilityRole="link" testID="IDPayOnboardingBeforeContinue">
+      <LabelSmall weight={"Regular"} color={"bluegrey"}>
+        {I18n.t("idpay.onboarding.beforeContinue.text1")}
+      </LabelSmall>
+      <LabelSmall
+        color={"blue"}
+        onPress={handleTosLinkPress}
+        testID="IDPayOnboardingPrivacyLink"
+      >
+        {I18n.t("idpay.onboarding.beforeContinue.tosLink")}
+      </LabelSmall>
+      <LabelSmall weight={"Regular"} color={"bluegrey"}>
+        {I18n.t("idpay.onboarding.beforeContinue.text2")}
+      </LabelSmall>
+      <LabelSmall
+        color={"blue"}
+        onPress={handlePrivacyLinkPress}
+        testID="IDPayOnboardingTOSLink"
+      >
+        {I18n.t("idpay.onboarding.beforeContinue.privacyLink")}
+      </LabelSmall>
+    </Body>
+  );
+};
 
 const InitiativeDetailsScreen = () => {
-  const navigation = useNavigation();
+  const onboardingMachineService = useOnboardingMachineService();
+  const [state, send] = useActor(onboardingMachineService);
 
-  // TODO mocked service Id, remove this when final logic will provide the correct id
-  const serviceId = "serviceSv" as ServiceId;
+  const navigation = useNavigation();
+  const route = useRoute<InitiativeDetailsRouteProps>();
+
+  const { serviceId } = route.params;
 
   const service = pipe(
-    pot.toOption(useIOSelector(serviceByIdSelector(serviceId)) || pot.none),
+    pot.toOption(
+      useIOSelector(serviceByIdSelector(serviceId as ServiceId)) || pot.none
+    ),
     O.toUndefined
   );
-
-  // This has been considered just to avoid compiling errors
-  // once we navigate from service details screen we always have the service data since they're previously loaded
-  if (service === undefined) {
-    return null;
-  }
 
   const handleGoBackPress = () => {
     navigation.goBack();
@@ -90,21 +118,30 @@ const InitiativeDetailsScreen = () => {
     // TODO add continue press logic
   };
 
-  const handlePrivacyLinkPress = () => {
-    if(service.service_metadata?.privacy_url!== undefined) {
-      openWebUrl(service.service_metadata?.privacy_url, () =>
-        showToast(I18n.t("global.jserror.title"))
-      );
-    }
-  };
+  React.useEffect(() => {
+    send({
+      type: "SELECT_INITIATIVE",
+      serviceId
+    });
+  }, [send, serviceId]);
 
-  const handleTosLinkPress = () => {
-    if (service.service_metadata?.tos_url !== undefined) {
-       openWebUrl(service.service_metadata?.tos_url, () =>
-         showToast(I18n.t("global.jserror.title"))
-       );
+  const isLoading = React.useMemo(
+    () =>
+      state.matches("WAITING_INITIATIVE_SELECTION") ||
+      state.matches("LOADING_INITIATIVE"),
+    [state]
+  );
+
+  const content = React.useMemo(() => {
+    if (
+      state.matches("DISPLAYING_INITIATIVE") &&
+      state.context.initative !== undefined
+    ) {
+      return `Initiative ID: ${state.context.initative.initiativeId}`;
     }
-  };
+
+    return null;
+  }, [state]);
 
   return (
     <BaseScreenComponent
@@ -115,45 +152,50 @@ const InitiativeDetailsScreen = () => {
         onPress: handleGoBackPress
       }}
     >
-      <SafeAreaView style={IOStyles.flex}>
-        <ScrollView style={IOStyles.flex}>
-          <View style={styles.padded}>
-            <InitiativeOrganizationHeader {...toUIService(service)} />
+      <LoadingSpinnerOverlay isLoading={isLoading}>
+        <SafeAreaView style={IOStyles.flex}>
+          <ScrollView style={IOStyles.flex}>
+            <View style={styles.padded}>
+              {service !== undefined && (
+                <InitiativeOrganizationHeader {...toUIService(service)} />
+              )}
+              {content && <Text>{content}</Text>}
+              <View spacer={true} />
+              <Markdown>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+                sunt in culpa qui officia deserunt mollit anim id est laborum.
+              </Markdown>
+              <View spacer={true} />
+              <ItemSeparatorComponent noPadded={true} />
+              <View spacer={true} />
+              <BeforeContinueBody
+                tosUrl={service?.service_metadata?.tos_url}
+                privacyUrl={service?.service_metadata?.privacy_url}
+              />
+            </View>
             <View spacer={true} />
-            <Markdown>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </Markdown>
-            <View spacer={true} />
-            <ItemSeparatorComponent noPadded={true} />
-            <View spacer={true} />
-            <InitiativeBeforeContinueBody
-              onTOSLinkPress={handleTosLinkPress}
-              onPrivacyLinkPress={handlePrivacyLinkPress}
-            />
-          </View>
-          <View spacer={true} />
-        </ScrollView>
-        <FooterWithButtons
-          type={"TwoButtonsInlineThird"}
-          leftButton={{
-            bordered: true,
-            title: I18n.t("idpay.onboarding.buttons.cancel"),
-            onPress: handleGoBackPress,
-            testID: "IDPayOnboardingCancel"
-          }}
-          rightButton={{
-            title: I18n.t("idpay.onboarding.buttons.continue"),
-            onPress: handleContinuePress,
-            testID: "IDPayOnboardingContinue"
-          }}
-        />
-      </SafeAreaView>
+          </ScrollView>
+          <FooterWithButtons
+            type={"TwoButtonsInlineThird"}
+            leftButton={{
+              bordered: true,
+              title: I18n.t("idpay.onboarding.buttons.cancel"),
+              onPress: handleGoBackPress,
+              testID: "IDPayOnboardingCancel"
+            }}
+            rightButton={{
+              title: I18n.t("idpay.onboarding.buttons.continue"),
+              onPress: handleContinuePress,
+              testID: "IDPayOnboardingContinue"
+            }}
+          />
+        </SafeAreaView>
+      </LoadingSpinnerOverlay>
     </BaseScreenComponent>
   );
 };
@@ -163,5 +205,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: variables.contentPadding
   }
 });
+
+export type { InitiativeDetailsScreenRouteParams };
 
 export default InitiativeDetailsScreen;
