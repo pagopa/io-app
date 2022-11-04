@@ -1,6 +1,6 @@
 import { assign, createMachine } from "xstate";
 import { InitiativeDto } from "../../../../../definitions/idpay/onboarding/InitiativeDto";
-import { LOADING_TAG } from "../../../../utils/xstate";
+import { LOADING_TAG, UPSERTING_TAG } from "../../../../utils/xstate";
 
 // Context types
 export type Context = {
@@ -14,12 +14,19 @@ type E_SELECT_INITIATIVE = {
   serviceId: string;
 };
 
-type Events = E_SELECT_INITIATIVE;
+type E_ACCEPT_TOS = {
+  type: "ACCEPT_TOS";
+};
+
+type Events = E_SELECT_INITIATIVE | E_ACCEPT_TOS;
 
 // Services types
 type Services = {
   loadInitiative: {
     data: InitiativeDto;
+  };
+  acceptTos: {
+    data: undefined;
   };
 };
 
@@ -61,8 +68,28 @@ const createIDPayOnboardingMachine = () =>
           }
         },
         DISPLAYING_INITIATIVE: {
+          on: {
+            ACCEPT_TOS: {
+              target: "ACCEPTING_TOS"
+            }
+          }
+        },
+        ACCEPTING_TOS: {
+          tags: [UPSERTING_TAG],
+          invoke: {
+            id: "acceptTos",
+            src: "acceptTos",
+            onDone: [
+              {
+                target: "LOADING_REQUIRED_CRITERIA"
+              }
+            ]
+          }
+        },
+        LOADING_REQUIRED_CRITERIA: {
+          tags: [LOADING_TAG],
           type: "final"
-        }
+        },
       }
     },
     {
