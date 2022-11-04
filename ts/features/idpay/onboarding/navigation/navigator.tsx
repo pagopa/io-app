@@ -22,7 +22,7 @@ export const IDPayOnboardingNavigator = () => (
       initialRouteName={
         IDPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS
       }
-      screenOptions={{headerShown: false}}
+      screenOptions={{ headerShown: false }}
     >
       <Stack.Screen
         name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS}
