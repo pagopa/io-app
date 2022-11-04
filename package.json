@@ -22,6 +22,7 @@
   "pagopa_api_walletv2": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.19/bonus/specs/bpd/pm/walletv2.json",
   "pagopa_cobadge_configuration": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.19/pagopa/cobadge/abi_definitions.yml",
   "pagopa_privative_configuration": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.19/pagopa/privative/definitions.yml",
+  "idpay_onboarding": "https://raw.githubusercontent.com/pagopa/cstar-infrastructure/v1.43.0/src/domains/idpay-app/api/idpay_onboarding_workflow/openapi.onboarding.yml",
   "private": true,
   "scripts": {
     "start": "react-native start",
@@ -75,6 +76,7 @@
     "generate:sicilia_vola": "npm-run-all generate:io_sicilia_vola_token generate:sicilia_vola_api",
     "generate:cdc": "npm-run-all generate:cdc-api",
     "generate:pn": "npm-run-all generate:pn-definitions",
+    "generate:idpay-onboarding": "rimraf definitions/idpay/onboarding && mkdir -p definitions/idpay/onboarding && gen-api-models --api-spec $npm_package_idpay_onboarding --out-dir ./definitions/idpay/onboarding --no-strict --response-decoders --request-types --client",
     "generate": "npm-run-all generate:*",
     "locales_unused": "ts-node --skip-project -O '{\"lib\":[\"es2015\"]}' scripts/unused-locales.ts",
     "generate-myportal-readme": "jsdoc2md ts/utils/webviewScripts/*.js > MYPORTAL_README.md"
@@ -195,7 +197,7 @@
     "@babel/preset-typescript": "^7.16.7",
     "@babel/runtime": "^7.15.3",
     "@jambit/eslint-plugin-typed-redux-saga": "^0.4.0",
-    "@pagopa/openapi-codegen-ts": "^11.1.2",
+    "@pagopa/openapi-codegen-ts": "^12.0.1",
     "@react-native-community/eslint-config": "^3.0.1",
     "@testing-library/jest-native": "^3.4.3",
     "@testing-library/react-native": "^8.0.0",
