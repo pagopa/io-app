@@ -1,28 +1,98 @@
 ---
+date:
+  formats:
+    default: "%d/%m/%Y"
+    short: "%d %B"
+    long: "%d %B %Y"
+  day_names:
+    - "Sonntag"
+    - "Montag"
+    - "Dienstag"
+    - "Mittwoch"
+    - "Donnerstag"
+    - "Freitag"
+    - "Samstag"
+  abbr_day_names:
+    - "So"
+    - "Mo"
+    - "Di"
+    - "Mi"
+    - "Do"
+    - "Fr"
+    - "Sa"
+  month_names:
+    - ""
+    - "Januar"
+    - "Februar"
+    - "März"
+    - "April"
+    - "Mai"
+    - "Juni"
+    - "Juli"
+    - "August"
+    - "September"
+    - "Oktober"
+    - "November"
+    - "Dezember"
+  abbr_month_names:
+    - ""
+    - "Jan."
+    - "Feb."
+    - ""
+    - "Apr."
+    - "Mai"
+    - "Jun."
+    - "Jul."
+    - "Aug."
+    - "Sept."
+    - "Okt."
+    - "Nov."
+    - "Dez."
+  meridian:
+    - "am"
+    - "pm"
 global:
+  you: "Du"
+  id: "ID"
+  badges:
+    blocked: "Blockiert"
+    onGoing: "In Bearbeitung"
   password: Passwort
   username: Benutzername
-  disclaimer_beta: Wenn Sie Probleme bei der Anmeldung haben, lassen Sie es uns bitte wissen!
+  disclaimer_beta: Wenn du Probleme bei der Anmeldung hast, lassen es uns bitte wissen!
+  unknown: Unbekannt
+  sectionStatus:
+    moreInfo: weitere Informationen
   accessibility:
-    dateFormat: MMMM Do YYYY
+    reload: "Neu laden"
+    switchLabel: "Zum Aktiveren auswählen"
+    inputLabel: "{{header}}, Überschrift"
+    textField: "{{inputLabel}}, Textfeld"
+    description: Beschreibung
+    dateField: Zwei Ziffern für das Monat, zwei für das Jahr
+    threeDigits: 3 Ziffern
+    fourDigits: 4 Ziffern
+    dateFormat: DD MMMM YYYY
     expanded: Erweiterter Absatz
     collapsed: Eingeklappter Absatz
-    active: State active
-    inactive: Aktiver Zustand
+    active: Aktiver Zustand
+    inactive: Inaktiver Zustand
+    linkHint: Wenn du dieses Element aktivieren, wirst du zum Browser des Geräts weitergeleitet
+    alert: Hinweis
     activityIndicator:
-      label: Laden
-      hint: Warten auf das Laden des Inhalts
+      label: Wird geladen
+      hint: Warten, bis der Inhalt geladen ist
     header:
       label: Kopfzeile der Anwendung
     contextualHelp:
-      close: Schließen Sie die kontextbezogene Hilfe
+      close: Kontextbezogene Hilfe schließen
       open:
         label: Kontextbezogene Hilfe
         hint: Zugriff auf Informationen über den Inhalt des aktuellen Bildschirms
     chat:
-      description: "IO assistance messages"
-      unread_singular: "{{message}} new message"
-      unread_plural: "{{message}} new messages"
+      description: "IO Servicemitteilungen"
+      unread_singular: "{{message}} neue Mitteilung"
+      unread_plural: "{{message}} neue Mitteilungen"
   ioWebSite: https://io.italia.it
   symbols:
     question: "?"
@@ -31,25 +101,44 @@ global:
     delimiterSeparator: "."
     decimalSeparator: ","
   date:
+    invalid: "Ungültiges Datum"
     today: "heute"
     tomorrow: "morgen"
   dateFormats:
-    timeFormat: "%H.%M"
+    shortFormat: "%d.%m.%Y"
+    shortFormatWithTime: "%d.%m.%Y, %H:%M"
+    fullFormatShortMonthLiteral: "%d %b %Y"
+    fullFormatShortMonthLiteralWithTime: "%d %b %Y, %H:%M"
+    fullFormatShortMonthLiteralWithoutTime: "%d %b %Y"
+    fullFormatFullMonthLiteral: "%d %B %Y"
+    fullMonthLiteral: "%B"
+    fullMonthLiteralWithYear: "%B %Y"
+    timeFormat: "%H:%M"
+    timeFormatWithTimezone: "%H:%M:%S (%z)"
+    dayMonthWithTime: "%d %b, %H:%M"
+    dayMonthWithoutTime: "%d %b"
+    dayFullMonth: "%d %B"
+    numericMonthYear: "%m/%Y"
+    shortNumericMonthYear: "%m/%-y"
     monthYear: "MMMM YYYY"
     dayAndMonth: "dddd D MMMM"
-    dayMonth: "MM/DD"
+    dayMonth: "MM.DD."
     dayMonthYear: "D MMMM YYYY"
     weekdayDayMonthYear: "dddd D MMMM YYYY"
-  genericAlert: Warnung!
-  genericWaiting: Warten Sie ein paar Sekunden..
+    dateTimePicker: "gg.mm.yyyy"
+  genericError: Es liegt ein vorübergehendes Problem vor, bitte versuche es erneut.
+  genericAlert: Achtung!
+  genericWaiting: Warte ein paar Sekunden..
   genericThanks: Danke
   genericShare: Teilen
   genericSave: Speichern
+  genericRetry: Erneut versuchen
   jserror:
-    title: Unerwarteter Fehler aufgetreten
-    message: Wir haben dies an unser Team gemeldet! Bitte schließen Sie die App und starten Sie diese erneut!
+    title: Es ist ein unerwarteter Fehler aufgetreten
+    message: Wir haben dies unserem Team gemeldet! Bitte schließe die App und starten sie neu!
   markdown:
-    decodeError: Nachricht kann nicht entschlüsselt werden
+    reference: !include markdown_reference.md
+    decodeError: Die Nachricht kann nicht entschlüsselt werden
   buttons:
     share: Teilen
     delete: Löschen
