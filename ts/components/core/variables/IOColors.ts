@@ -1,5 +1,9 @@
 import { ColorValue } from "react-native";
 
+/* Used by `getGradientColorValues` function */
+import LinearGradient from "react-native-linear-gradient";
+import { ComponentProps } from "react";
+
 // Ensure the Type for IOColor without losing the inferred types
 function asIOColors<T extends { [key: string]: ColorValue }>(arg: T): T {
   return arg;
@@ -54,29 +58,34 @@ export const IOColors = asIOColors({
   red: "#C02927",
   /* ↳ ALIAS TOKEN: brandDanger → red */
   /* ↳ ALIAS TOKEN: calendarExpirableColor → red */
-  green: "#005C3C",
+  green: "#005C3C"
   /* ↳ ALIAS TOKEN: brandSuccess → green */
-  greyGradientTop: "#475A6D",
-  greyGradientBottom: "#42484F",
-  yellowGradientTop: "#FEC709",
-  yellowGradientBottom: "#FAA01F"
 });
 
 export const IOColorGradients = asIOColorGradients({
   appLaunch: ["#0C00D3", "#0073E6"],
   appIcon: ["#1D51DF", "#1723D5"],
   grey: ["#475A6D", "#42484F"],
-  yellow: ["#FEC709", "#FAA01F"],
+  cgnAll: ["#475A6D", "#E6E9F2"],
   cgn: ["#9184B7", "#5C488F"],
-  cgnCulture: ["#C51C82", "#E28DC0"],
-  cgnHealth: ["#F1901A", "#EE898A"],
-  cgnLearning: ["#0871B6", "#AE97C3"],
-  cgnSport: ["#DC1415", "#F8C78C"],
-  cgnTelco: ["#0871B6", "#83B8DA"],
   cgnFinance: ["#3E2F87", "#8FDBC0"],
-  cgnTravel: ["#E00F69", "#F8C78C"],
+  cgnCulture: ["#C51C82", "#E28DC0"],
+  cgnLearning: ["#0871B6", "#AE97C3"],
+  cgnHealth: ["#F1901A", "#EE898A"],
+  cgnHome: ["#DC1415", "#F8C78C"],
+  cgnJobOffers: ["#DC1415", "#EE898A"],
+  cgnSport: ["#1D827D", "#83B8DA"],
   cgnMobility: ["#1D827D", "#8FC7C5"],
-  cgnJobOffers: ["#DC1415", "#EE898A"]
+  cgnTelco: ["#0871B6", "#83B8DA"],
+  cgnTravel: ["#E00F69", "#F8C78C"]
 });
 
+export const getGradientColorValues = (
+  gradientId: IOColorGradientType
+): ComponentProps<typeof LinearGradient>["colors"] => {
+  const [first, second]: Array<ColorValue> = IOColorGradients[gradientId];
+  return [first, second];
+};
+
 export type IOColorType = keyof typeof IOColors;
+export type IOColorGradientType = keyof typeof IOColorGradients;
