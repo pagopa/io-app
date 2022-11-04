@@ -39,7 +39,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: BUTTON_DIAMETER,
     height: BUTTON_DIAMETER,
-    borderRadius: BUTTON_DIAMETER / 2
+    borderRadius: BUTTON_DIAMETER / 2,
+    backgroundColor: `rgba(0,0,0,0.1)`
   },
   transparent: {
     backgroundColor: "transparent"

@@ -43,13 +43,6 @@ const styles = StyleSheet.create({
   verticalPadding: {
     paddingBottom: 16
   },
-  discountValueBox: {
-    borderRadius: 6.5,
-    paddingVertical: 5,
-    width: 40,
-    textAlign: "center",
-    backgroundColor: "#EB9505"
-  },
   container: {
     paddingTop: 16
   },

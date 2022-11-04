@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   badgeColor: {
     height: 18,
     marginTop: 4,
-    backgroundColor: customVariables.brandHighLighter
+    backgroundColor: customVariables.colorHighlight
   },
   headerText: {
     fontSize: 17,

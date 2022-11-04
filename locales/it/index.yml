@@ -483,6 +483,9 @@ profile:
           title: Vuoi cambiare la lingua in
           subtitle: Dovrai riavviare l'applicazione per applicare il cambiamento
         not_selected: Non selezionato
+      notifications:
+        title: Notifiche push
+        subtitle: Consenti anteprima e promemoria
     empty:
       default: Nessuna preferenza impostata
     unavailable:
@@ -499,6 +502,14 @@ profile:
       contextualHelpContent: !include profile/profile_preferences_calendar.md
       local_calendar: Calendario locale
       birthday_calendar: Compleanni
+    notifications:
+      header: Notifiche push
+      title: Personalizza le notifiche push
+      subtitle: Scegli come ricevere aggiornamenti sui messaggi e promemoria che ricevi
+      reminders:
+        title: Consenti i promemoria
+        description: Ricevi notifiche push in prossimità di scadenze o quando non hai ancora letto dei messaggi
+      error: Si è verificato un errore con la tua richiesta
 userMetadata:
   errors:
     upsertVersion: Impossibile creare o aggiornare i metadata utente con questa versione
@@ -825,6 +836,12 @@ onboarding:
   thankYouPage:
     title: Configurazione terminata!
     body: Ora puoi iniziare a usare IO
+  notifications:
+    headerTitle: Configura IO
+    continue: Continua
+    remindersPreviewTitle: Promemoria
+    previewTitle: Hai un nuovo messaggio
+    previewMessage: Apri l’app per leggere il contenuto
 forms:
   validators:
     required: Valore richiesto

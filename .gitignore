@@ -23,13 +23,9 @@ DerivedData
 *.xcuserstate
 project.xcworkspace
 
-# CocoaPods
-#
-# We recommend against adding the Pods directory to your .gitignore. However
-# you should judge for yourself, the pros and cons are mentioned at:
-# https://guides.cocoapods.org/using/using-cocoapods.html#should-i-check-the-pods-directory-into-source-control
-#
-Pods/
+# Ruby / CocoaPods
+/ios/Pods/
+/vendor/bundle/
 
 # Android/IntelliJ
 #
@@ -41,6 +37,11 @@ local.properties
 *.iml
 *.hprof
 Google Play Android Developer-04750d2c0cf8.json
+
+**/fastlane/report.xml
+**/fastlane/Preview.html
+**/fastlane/screenshots
+**/fastlane/test_output
 
 # node.js
 #

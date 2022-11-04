@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     paddingBottom: themeVariables.spacerHeight
   },
   discrepanciesBox: {
-    backgroundColor: themeVariables.brandHighlight
+    backgroundColor: themeVariables.colorHighlight
   }
 });
 
