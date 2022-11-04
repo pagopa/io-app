@@ -50,7 +50,8 @@ const continueButtonProps = (
   onPress,
   title: I18n.t("onboarding.infoConsent.continue"),
   isLoading,
-  primary: true
+  primary: true,
+  testID: "continue-btn"
 });
 
 const InstructionRow = memo(
