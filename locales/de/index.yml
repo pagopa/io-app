@@ -368,148 +368,230 @@ profile:
             confirmSubtitle: Nach der Bearbeitung erhalten Sie eine E-Mail mit allen Informationen, die mit deinem Profil verbunden sind.
           error: Bei der Anfrage zum Datenexport ist ein Fehler aufgetreten, bitte versuche es erneut!
       privacyPolicy:
-        title: Datenschutzbestimmungen
-        header: Siehe die Datenschutzbestimmungen und die Nutzungsbedingungen von IO
-        updated: Wir haben unsere Allgemeinen Geschäftsbedingungen aktualisiert
-        infobox: Es ist notwendig, die Allgemeinen Geschäftsbedingungen zu lesen und zu akzeptieren
-        contextualHelpTitlePolicy: Was sind die Informationen über die Verarbeitung von personenbezogenen Daten
-        contextualHelpTitle: Ihre Datenschutzeinstellungen
+        title: Datenschutz und Nutzungsbedingungen
+        description: Sieh die Datenschutzbestimmungen und Nutzungsbedingungen der IO-App an
+        header: Informationen über die Verarbeitung personenbezogener Daten der Nutzer der IO-App
+        updated: Wir haben unsere Datenschutzbestimmungen und unsere Nutzungsbedingungen aktualisiert
+        infobox: Es ist notwendig, die Datenschutzbestimmungen und die Nutzungsbedingungen zu lesen und zu akzeptieren
+        contextualHelpTitlePolicy: Informationen über die Datenschutzbestimmungen und die Nutzungsbedingungen des Dienstes
+        contextualHelpContentPolicy: !include profile/profile_privacy_policy.md
+        contextualHelpTitle: Deine Datenschutzeinstellungen
+        contextualHelpContent: !include profile/profile_privacy_main.md
+      shareData:
+        title: "Privacy"
+        listItem:
+          title: "Freigabe von Nutzungsdaten"
+          description: "Unterstütze das IO-Teams bei der Überwachung der Funktionsweise der App"
+        screen:
+          title: "Deine Nutzungsdaten"
+          description: "Unterstütze das IO-Teams bei der Überwachung der Funktionsweise der App und im Falle von Problemen dir die entsprechende Unterstützung zukommen zu lassen."
+          why:
+            description:
+              one: "IO sammelt nur die für das Funktionieren der angebotenen Dienste  "
+              two: "notwendigen "
+              three: "Daten."
+            cta: "Warum?"
+          security:
+            description:
+              one: "Wir ergreifen Sicherheitsmaßnahmen zum Schutz deiner Daten."
+            cta: "Weitere Informationen"
+          gdpr:
+            description:
+              one: "Das IO-Team arbeitet mit Dienstleistern in "
+              two: "Übereinstimmung mit dem GDPR "
+              three: "zusammen."
+            cta: "Siehe Liste der Dienstleister"
+          additionalInformation:
+            description: "Für weitere Informationen lies bitte die  "
+            cta: "Datenschutzbestimmungen und Nutzungsbedingungen"
+          profileSettings: "Du kannst diese Einstellung jederzeit unter Profil > Einstellungen ändern."
+          cta:
+            shareData: "Daten freigeben"
+            dontShareData: "Daten nicht freigeben"
+            dontShare: "Nicht freigeben"
+          confirmToast: "Einstellungen aktualisiert!"
+        alert:
+          title: "Du gibst IO nicht die Erlaubnis, deine Nutzungsdaten zu sammeln."
+          body: "Wenn du diese Option bestätigen, kann es sein, dass dem IO-Support-Team bei technischen Problemen nicht alle Daten zur Verfügung stehen, um diese zu lösen."
+        whyBottomSheet:
+          title: "Für welche Zwecke sammeln wir Informationen?"
+          body: "**IO sammelt keine Daten für Marketingzwecke.** \nWir verwenden Tools, die es uns ermöglichen, Daten über deine Nutzung der App aufzuzeichnen, um dir einen besseren Service zu bieten und dich bei Problemen zu unterstützen."
+        securityBottomSheet:
+          title: "Was ist eine Pseudonymisierung?"
+          body: "Sie ist die Verarbeitung personenbezogener Daten in einer Weise, dass die personenbezogenen Daten ohne Hinzuziehung zusätzlicher Informationen nicht mehr einer bestimmten betroffenen Person zugeordnet werden können, sofern diese zusätzlichen Informationen gesondert aufbewahrt werden und technischen und organisatorischen Maßnahmen unterliegen, die gewährleisten, dass diese personenbezogenen Daten nicht einer identifizierten oder identifizierbaren natürlichen Person zugewiesen werden können."
     appInfo:
       title: Über IO
-      description: Erfahren Sie mehr über die IO-App
+      description: Erfahre mehr über die IO-App
+      contextualHelpContent: !include profile/profile_appinfo_main.md
     developersSectionHeader: Entwickler
     experimentalFeatures:
-      confirmTitle: Experimentelle Merkmale
-      confirmMessage: Experimentelle Funktionen können die Anwendung instabil machen. Sind Sie sicher, dass Sie sie aktivieren möchten?
-      bannerMessage: Sie verwenden experimentelle Funktionen, die möglicherweise unvollständig oder instabil sind.
+      confirmTitle: Experimentelle Funktionen
+      confirmMessage: Experimentelle Funktionen könnten die Anwendung instabil machen. Willst du sie wirklich aktivieren?
+      bannerMessage: Du verwendst experimentelle Funktionen, die unvollständig oder instabil sein können.
     pagoPaEnvironment:
       pagoPaEnv: pagoPA Testumgebung
       pagoPAEnvAlert: Diese Änderung erfordert einen Neustart der App
-      alertConfirmTitle: Möchten Sie die pagoPA Testumgebung nutzen?
-      alertConfirmMessage: Wenn Sie die pagoPA-Testumgebung aktivieren, sehen Sie die Historie Ihrer Transaktionen und Ihre gespeicherten Zahlungsmethoden nicht mehr und können nur noch ausdrücklich dafür angelegte Zahlungsmethoden verwenden. Wenn Sie nicht verstehen, was das bedeutet, aktivieren Sie diese Funktion nicht.
+      alertConfirmTitle: Möchtest du die pagoPA Testumgebung nutzen?
+      alertConfirmMessage: Wenn du die pagoPA Testumgebung aktivierst, siehst du deine Transaktionshistorie und gespeicherten Zahlungsmittel nicht mehr und kannst nur noch eigens dafür angelegte Zahlungsmittel nutzen. Wenn dir nicht klar ist, was das bedeutet, solltest du diese Funktion nicht aktivieren.
       alertMessage: Die Anwendung muss neu gestartet werden, damit die Änderungen wirksam werden.
+    pnEnvironment:
+      pnEnv: PN Testumgebung
     appVersion: App-Version
     backendVersion: Backend-Version
     debugMode: Debug-Modus
     showroom: UI Showroom
   data:
-    title: Ihre Daten
-    subtitle: "Die von IO benutzten anagrafischen und Kontaktdaten einsehen"
+    title: Deine Daten
+    subtitle: "Die von IO benutzten anagrafischen Daten und Kontaktinformationen einsehen"
     list:
       email: "E-Mail-Adresse"
-      nameSurname: Name und Nachname
+      need_validate: Noch zu bestätigen
+      nameSurname: Vor- und Nachname
       spid:
         headerTitle: SPID Daten
-        email: "SPID – E-Mail"
+        email: "SPID – E-Mail-Adresse"
+    email:
+      contextualHelpTitle: E-Mail-Adresse verwalten
+      contextualHelpContent: !include profile/profile_data_email_address.md
+    spid_email:
+      contextualHelpTitle: Diese Daten sind in deinem SPID-Profil festgelegt
+      contextualHelpContent: !include profile/profile_data_spid_email.md
   security:
     title: Sicherheit
-    subtitle: Authentifizierungsmethode der App einstellen.
+    subtitle: Verwalte die Authentifizierungsmethoden in der App.
     list:
       biometric_recognition:
         title: Biometrische Erkennung
-        subtitle: Fingerabdruck- oder Gesichts-erkennung benutzen
+        subtitle: Fingerabdruck- oder Gesichtserkennung benutzen
+        needed_to_disable: Bestätigung zur Deaktivierung erforderlich
   preferences:
     title: Einstellungen
-    subtitle: "Diese Einstellungen ermöglichen es, die IO-App zu personalisieren."
-    contextualHelpTitle: Ihre Vorlieben
+    subtitle: "Diese Einstellungen ermöglichen es dir, die IO-App zu personalisieren."
+    contextualHelpTitle: Deine Einstellungen
+    contextualHelpContent: !include profile/profile_preferences_home.md
     list:
       wip: In Bearbeitung
       language: Sprache
       digitalDomicile: Digitales Domizil
-      service_contact: Dienst-management
+      service_contact: Dienst verwalten
       preferred_calendar:
-        title: Standard-Kalender
+        title: Bevorzugter Kalender
         not_selected: Nicht ausgewählt
       preferred_language:
         title: Bevorzugte Sprache
-        subtitle: In welcher Sprache möchten Sie die Anwendung nutzen?
+        subtitle: In welcher Sprache möchtest du die Anwendung nutzen?
         alert:
-          title: Möchten Sie die Sprache ändern zu
-          subtitle: Sie müssen die Anwendung neu starten, damit dies geschieht
+          title: Möchtest du die Sprache ändern in
+          subtitle: Du musst die Anwendung neu starten, um die Änderung zu übernehmen
         not_selected: Nicht ausgewählt
+      notifications:
+        title: Push-Benachrichtigungen
+        subtitle: Vorschau und Erinnerung zulassen
     empty:
-      default: Keine Präferenzen eingestellt
+      default: Keine Präferenzen festgelegt
     unavailable:
-      title: Diese Einstellung wird in Ihrem SPID-Profil eingerichtet
+      title: Diese Einstellung wird von deinem SPID-Profil festgelegt
     language:
-      contextualHelpTitle: Wie Sie Ihre Spracheinstellung verwalten
+      contextualHelpTitle: Wie verwalte ich die Spracheinstellung?
+      contextualHelpContent: !include profile/profile_preferences_language.md
     email:
       forward:
-        contextualHelpTitle: Wie Sie die Nachrichtenweiterleitung handhaben
+        contextualHelpTitle: Wie verwalte ich die Nachrichtenweiterleitung?
+        contextualHelpContent: !include profile/profile_preferences_email_forward.md
     calendar:
-      contextualHelpTitle: Was ist Ihr bevorzugter Kalender
+      contextualHelpTitle: Was ist dein bevorzugter Kalender?
+      contextualHelpContent: !include profile/profile_preferences_calendar.md
       local_calendar: Lokaler Kalender
       birthday_calendar: Geburtstage
+    notifications:
+      header: Push-Benachrichtigungen
+      title: Push-Benachrichtigungen anpassen
+      subtitle: Jetzt kannst du sofort sehen, wer dir geschrieben hat oder dich an wichtige Nachrichten erinnern lassen.
+      titleNewUser: Benachrichtigungen anpassen
+      subtitleNewUser: Wählen aus, wie du Aktualisierungen zu den erhaltenen Nachrichten und Erinnerungen erhalten möchtest
+      reminders:
+        title: Erinnerungen zulassen
+        description: Erhalte Push-Benachrichtigungen kurz vor Fälligkeit oder wenn du die Nachrichten noch nicht gelesen hast
+      error: Bei deiner Anfrage ist ein Fehler aufgetreten
 userMetadata:
   errors:
-    upsertVersion: Benutzer-Metadaten können mit dieser Version nicht hochgeladen werden
+    upsertVersion: Mit dieser Version können keine Benutzermetadaten erstellt oder aktualisiert werden
 navigation:
   messages: Mitteilungen
   profile: Profil
   accessibility: "Abschnitt {{section}}, Panel, {{order}} von 4"
+  accessibilityWithBadge: "Abschnitt {{section}}, {{unread}} neue Elemente, Panel, {{order}} von 4"
 cie:
-  title: Berühren Sie die Karte
-  layCardMessageHeader: Legen Sie für einige Sekunden Ihre elektronische ID-Karte auf der Rückseite Ihres Telefons.
-  layCardMessageFooter: Wenn Sie nicht genau wissen, wo sich der NFC-Sensor befindet, bewegen Sie Ihre Karte an verschiedene Stellen und warten Sie ein paar Sekunden, bis Sie einen Ton hören.
+  title: Karte berühren
+  layCardMessageHeader: Halte deinen elektronischen Personalausweis für einige Sekunden auf die Rückseite deines Telefons.
+  layCardMessageFooter: Wenn du nicht genau weißt, wo sich der NFC-Sensor befindet, halte deine Karte an verschiedene Stellen und warte ein paar Sekunden, bis du einen Ton hörst.
   booking_url: https://www.cartaidentita.interno.gov.it/cittadini/sistema-di-prenotazione-della-cie/
 spid:
   login: LOGIN
   loginButton: LOGIN MIT
-  selectIdp: Um mit der Anmeldung fortzufahren, wählen Sie Ihren SPID-Anbieter.
-  selectDemoIdp: Wenn Sie noch keine eigene SPID-Identität haben, durchsuchen Sie die App in demo mode
+  selectIdp: Um sich anzumelden, wählen den Anbieter deiner SPID-Identität
+  selectDemoIdp: Wenn du noch keine eigene SPID-Identität habst, verwende die App im Demo-Modus
   loginErrorAlert:
     title: Fehler bei der Anmeldung
-    message: Entschuldigung, es gab einen Fehler bei der Anmeldung. Bitte versuchen Sie es noch einmal.
+    message: Entschuldigung, es ist einen Fehler bei der Anmeldung aufgetreten. Bitte versuche es erneut.
   subscription:
-    line1: SPID ist die digitale Identität für den Zugriff auf Online-Dienste der öffentlichen Verwaltung.
-    line2: Geben Sie Ihre E-Mail-Adresse ein, um sie zu aktivieren.
+    line1: SPID ist die digitale Identität für den Zugang zu den Online-Diensten der italienischen öffentlichen Verwaltung.
+    line2: Gieb deine E-Mail-Adresse ein, um sie zu aktivieren.
 authentication:
   landing:
     accessibility:
       carousel:
-        label: IO Präsentation
-        hint: Karussell, das eine Einführungsanleitung zu den IO-Funktionalitäten enthält. Wählen Sie, um den Inhalt kennenzulernen.
+        label: IO Vorstellung
+        hint: Karussell mit einer einführenden Anleitung zur IO-Funktionalität. Wählen, um den Inhalt kennenzulernen.
     session_expired:
-      title: Ihre Sitzung ist abgelaufen
+      title: Deine Sitzung ist abgelaufen
+      body: Aus Sicherheitsgründen bitten wir dich 30 Tage nach deiner letzten Anmeldung mit SPID oder CIE, deine Anmeldedaten erneut einzugeben, um IO zu benutzen.
     cie_unsupported:
       title: Anmeldung mit CIE nicht möglich
-      os_version_unsupported: eine mit der CIE-Authentifizierung kompatible Betriebssystemversion (Android 6.0 oder höher)
-      nfc_incompatible: eine NFC-Antenne, die mit der Authentifizierung über CIE kompatibel ist
-    contentTitleCie: Sie haben keinen SPID oder CIE?
-    spid_or_cie: Um die IO-App nutzen zu können, müssen Sie über eines dieser digitalen Werkzeuge verfügen, die Ihre Identität bestätigen.
+      body: !include cie/cieNotSupported.md
+      os_version_unsupported: ein Betriebssystem mit Android 6.0 oder höher
+      nfc_incompatible: eine kompatible NFC-Antenne
+    contentTitleCie: Du hast keinen SPID oder CIE?
+    cie_information_request: !include cie.md
+    spid_or_cie: Um IO nutzen zu können, musst du über eine dieser digitalen Werkzeuge verfügen, die Ihre Identität bestätigen.
     request_cie: CIE anfordern
     request_spid: SPID anfordern
-    contextualHelpTitle: So registrieren Sie sich in der IO-App
+    contextualHelpTitle: Anmeldung zur IO-App
+    contextualHelpContent: !include authentication/authentication_landing.md
     loginSpid: Anmeldung mit SPID
     loginCie: Anmeldung mit CIE
     loginSpidCie: Anmeldung mittels SPID oder CIE
     infoSpidCie: Einführung in SPID und CIE
-    loginSpidCieContent: Ab heute können Sie sich zusätzlich zu SPID mit Ihrer elektronischen Identitätskarte (CIE) anmelden
-    nospid: Sie haben keinen SPID? Finden Sie mehr heraus
-    nospid-nocie: Sie haben keinen SPID oder CIE?  Finden Sie mehr heraus
+    loginSpidCieContent: Ab heute kannst du dich zusätzlich zu SPID mit deiner elektronischen Identitätskarte (CIE) anmelden
+    nospid: Du hast keinen SPID? Weitere Informationen
+    nospid-nocie: Du hast keinen SPID und keine CIE? Weitere Informationen
     card1-title: Alle Mitteilungen an einem Ort
-    card1-content: Anzeige aller eingehenden Mitteilungen von öffentlichen Körperschaften
-    card2-title: Verwenden Sie Ihre bevorzugte Zahlungsmethode
-    card2-content: Sie können eine Steuer oder auch eine Strafe über Ihr Bankkonto oder mit Ihrer Bankkarte bezahlen
-    card3-title: Schnelles Bezahlen einer physischen Mitteilung
-    card3-content: Sie können eine Zahlungsmitteilung auch durch Scannen des QR-Codes bezahlen
-    card4-title: Sie können die App nur mittels SPID verwenden
-    card4-content: Der Zugriff ist nur über SPID (Public Service of Digital Identity) erlaubt,
-      um Ihre Online-Sicherheit zu gewährleisten
-    card5-title: Willkommen bei der öffentlichen Version von IO!
+    card1-content: Zeige alle erhaltenen Mitteilungen von öffentlichen Körperschaften an
+    card2-title: Verwende deine bevorzugten Zahlungsmittel
+    card2-content: Du kannst eine Steuer oder eine Strafe über dein Bankkonto oder mit deiner Bankkarte bezahlen
+    card3-title: Bezahle schnell eine Aufforderung in Papierform
+    card3-content: Durch dem Scannen des QR-Codes kannst du schnell und einfach eine Zahlungsaufforderung in Papierform bezahlen
+    card4-title: Du kannst dich nur mit SPID anmelden
+    card4-content: Das von dir verwendete Gerät unterstützt den Zugang mit einer elektronischen Identitätskarte (CIE) nicht
+    card5-title: Willkommen bei der ersten öffentlichen Version von IO!
+    card5-content: In der oberen rechten Ecke findest du das Symbol '?', mit dem du einen Chat mit dem IO-Team eröffnen kannst, wenn etwas nicht so funktioniert, wie es sollte.
+    expiredCardTitle: Karte abgelaufe oder nicht mehr gültig
     expiredCardHeaderTitle: Anmeldung mit CIE
-    expiredCardContent: "Die verwendete Karte ist nicht mehr gültig oder abgelaufen.\nWenn Sie sich anmelden und auf die IO-App zugreifen möchten, müssen Sie SPID verwenden."
+    expiredCardContent: "Die verwendete Karte ist nicht mehr gültig oder abgelaufen.\nWenn du dich anmelden und auf die IO zugreifen möchten, musst du SPID verwenden."
     expiredCardHelp: Wie erneuert man seine elektronische Identitätskarte?
   cie:
     genericTitle: Anmeldung mit CIE
     cie: CIE
-    noDataTitle: Um die IO-App zu verwenden, müssen Sie das Senden von Daten zulassen
+    noDataTitle: Um IO zu verwenden, musst du das Senden von Daten zulassen
+    authToSendData: !include cie/auth_to_send_data.md
     nfc:
+      apduNotSupported: "Dein Betriebssystem unterstützt das Auslesen deiner elektronischen Identitätskarte nicht. Für weitere Informationen wenden dich bitte an den Hersteller deines Geräts."
       retry: Wiederholen
-      noNfcConnectionTitle: Sind Sie sicher, dass Sie die Karte abgelegt haben?
-      enableNfcTitle: NFC einschalten
-      enableNfcHeader: NFC prüfen
-      enableNfcContent: Damit die App Ihre elektronische Identitätskarte verifizieren kann, müssen Sie zunächst die NFC-Funktion Ihres Geräts aktivieren. Kommen Sie zu diesem Menüpunkt zurück, sobald Sie die Funktion aktiviert haben!
+      noNfcConnectionTitle: Hast du die Karte berührt?
+      noNfcConnectionContent: !include cie/noNfcConnection.md
+      enableNfcTitle: NFC aktivieren
+      enableNfcHeader: NFC überprüfen
+      enableNfcContent: Damit die App deine elektronische Identitätskarte verifizieren kann, musst du zunächst die NFC-Funktion deines Geräts aktivieren. Komm hierher zurück, sobald du die Funktion aktiviert hast!
     pin:
       accessibility:
         placeholderLabel: PIN der elektronischen Identitätskarte
