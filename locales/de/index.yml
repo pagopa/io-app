@@ -59,7 +59,7 @@ global:
     onGoing: "In Bearbeitung"
   password: Passwort
   username: Benutzername
-  disclaimer_beta: Wenn du Probleme bei der Anmeldung hast, lassen es uns bitte wissen!
+  disclaimer_beta: Wenn du Probleme bei der Anmeldung hast, lass es uns bitte wissen!
   unknown: Unbekannt
   sectionStatus:
     moreInfo: weitere Informationen
@@ -77,7 +77,7 @@ global:
     collapsed: Eingeklappter Absatz
     active: Aktiver Zustand
     inactive: Inaktiver Zustand
-    linkHint: Wenn du dieses Element aktivieren, wirst du zum Browser des Geräts weitergeleitet
+    linkHint: Wenn du dieses Element aktivierst, wirst du zum Browser des Geräts weitergeleitet
     alert: Hinweis
     activityIndicator:
       label: Wird geladen
@@ -128,7 +128,7 @@ global:
     dateTimePicker: "gg.mm.yyyy"
   genericError: Es liegt ein vorübergehendes Problem vor, bitte versuche es erneut.
   genericAlert: Achtung!
-  genericWaiting: Warte ein paar Sekunden..
+  genericWaiting: Warte ein paar Sekunden...
   genericThanks: Danke
   genericShare: Teilen
   genericSave: Speichern
@@ -143,6 +143,7 @@ global:
     share: Teilen
     delete: Löschen
     cancel: Abbrechen
+    settings: Einstellungen
     ok: OK
     ok2: Ok
     continue: Weiter
@@ -151,11 +152,19 @@ global:
     confirm: Bestätigen
     close: Schließen
     exit: Beenden
-    saveSelection: Speichern Sie die Auswahl
+    saveSelection: Auswahl speichern
     search: Suche
     skip: "Überspringen"
     add: Hinzufügen
+    edit: "Ändern"
+    info: "Info"
+    activate: "Aktivieren"
+    deactivate: "Deaktivieren"
+    show: "Zeigen"
+    update: "Aktualisieren"
+    findOutMore: "Mehr erfahren"
     details: Details
+    choose: "Wähle"
   navigator:
     messages: Mitteilungen
     wallet: Konto
@@ -163,33 +172,39 @@ global:
     profile: Profil
     services: Dienste
   actions:
-    retry: Es ist ein Fehler aufgetreten, bitte versuchen Sie es erneu
+    retry: Es ist ein Fehler aufgetreten, bitte versuche es erneut.
     search: Suchtext
   remoteStates:
-    loading: Laden...
-    wait: Warten Sie ein paar Sekunden..
+    loading: Wird geladen...
+    wait: Warte ein paar Sekunden...
     notAvailable: Nicht verfügbar
   notImplemented: NICHT IMPLEMENTIERT
   search:
     invalidSearchBarText: Mindestens {{minCharacter}} Zeichen eingeben
-    noResultsFound: "Es gibt keine Ergebnisse für diese Suche: versuchen Sie etwas anderes."
+    noResultsFound: "Es gibt keine Ergebnisse für diese Suche: versuche etwas anderes."
     noResultsTitle: Keine Ergebnisse.
+  localNotifications:
+    spidLogin:
+      title: Melde dich an, um die App zu nutzen
+      message: IO funktioniert nur, wenn du dich mindestens einmal angemeldet hast
   media:
     email: "E-Mail"
     pec: PEC
     phone: Telefon
 tablet:
-  message: Die Oberfläche der IO-App ist für Smartphones optimiert, aber alle Funktionen, die mit Ihrem Gerät kompatibel sind, sind weiterhin verfügbar.
+  message: Die Benutzeroberfläche der IO-App ist für Smartphones optimiert, aber alle mit deinem Gerät kompatiblen Funktionen sind weiterhin verfügbar.
 rooted:
-  title: Es sieht so aus, als ob die Sicherheit Ihres Geräts kompromittiert worden ist!
+  title: Es scheint, dass die Sicherheit deines Geräts kompromittiert ist!
+  bodyiOS: !include jailbroken_body.md
+  bodyAndroid: !include rooted_body.md
   continueAlert:
     title: Weiter
-    body: Sind Sie sicher, dass Sie die Risiken kennen und weitermachen wollen?
+    body: Haben du die Risiken verstanden und willst weitermachen?
     confirmText: Ja
     cancelText: Abbrechen
   cancelAlert:
     title: Beenden
-    body: Sie können die App schließen
+    body: Du kannst die App schließen
     confirmText: Beenden
 locales:
   it: Italienisch
@@ -201,101 +216,157 @@ clipboard:
   copyFeedbackButton: kopiert
 betaBanner:
   title: 'IO-App'
-  description: Ihre Berichte helfen uns, Tag für Tag besser zu werden.
+  description: Deine Rückmeldungen helfen uns, Tag für Tag besser zu werden.
 connection:
   status:
-    offline: Offline! Einige Funktionen werden nicht funktionieren.
+    offline: Offline! Etwas wird nicht funktionieren.
 errors:
-  loginError: Es gab einen Fehler bei der Anmeldung, wiederholen Sie den Vorgang.
-  profileUpdateError: Beim Aktualisieren Ihres Profils ist ein Fehler aufgetreten.
+  loginError: Es gab einen Fehler beim Anmelden, wiederhole den Vorgang.
+  profileUpdateError: Beim Aktualisieren deines Profils ist ein Fehler aufgetreten.
+permissionRationale:
+  storage:
+    title: "Zugriff auf die Galerie gewähren"
+    message: "Du kannst Gutscheine und Zertifikate speichern und Screenshots und Zahlungsmitteilungen hochladen."
+  camera:
+    title: "Zugriff auf die Kamera gewähren"
+    message: "Du kannst QR-Codes lesen und pagoPA-Mitteilungen bezahlen."
+  calendar:
+    title: "Zugriff auf den Kalender gewähren"
+    message: "Du kannst Fälligkeiten in deinem Kalender eintragen und eine Benachrichtigung einstellen."
 startup:
   title: Initialisierung
   authentication: Benutzer authentifiziert
   sessionInfo: SPID-Attribute geladen
   profileInfo: Benutzerprofil geladen
   profileEnabled: Benutzerprofil aktiviert
+  userDeletePendingAlert:
+    title: Profil wird gerade gelöscht
+    message: Wenn du deine Meinung geändert hast, kannst du die Anfrage im Abschnitt Datenschutz deines Profils löschen.
+    cta_1: Gehe zum Datenschutz
+    cta_2: Ignorieren
+  contextualHelp:
+    title: Probleme bei der Initialisierung?
+    body: Wenn du Probleme beim Zugriff auf die App hast, melde dies bitte unserem Team und wir werden das Problem so schnell wie möglich lösen.
 login:
   welcome:
-    line1: willkommen in Ihrem
+    line1: Willkommen in deinem
     line2: Digitale Staatsbürgerschaft
+  expiration_info: Aus Sicherheitsgründen wirst du alle 30 Tage aufgefordert, dich erneut mittels CIE oder SPID zu authentifizieren.
 inbox:
-  enableButton: Posteingang freigeben
+  enableButton: Posteingang aktivieren
   disableButton: Posteingang deaktivieren
-  enableCallToActionDescription: Aktivieren Sie den Posteingang, um Nachrichten einzusehen
+  enableCallToActionDescription: Aktiviere den Posteingang, um Mitteilungen einzusehen
 profile:
   fiscalCode:
     accessibility:
       unavailable: Nicht verfügbar
       preview:
-        label: Vorschau auf Ihre Steuernummerkarte
-        hint: Aktivieren Sie diese Option, um ein Faksimile Ihre Steuernummerkarte anzuzeigen
+        label: Vorschau deiner Steuernummer
+        hint: Aktivieren, um ein Faksimile deiner Steuernummer anzuzeigen
       front:
-        label: Vorderseite der Steuernummerkarte mit dem Code {{code}} von {{name}} {{Familienname}}, Geschlecht {{Geschlecht}}, geboren in {{Geburtsort}}, {{Provinz}} am {{Geburtsdatum}}
-        hint: Aktivieren, um die Querformatansicht anzuzeigen
+        label: Vorderseite der Steuernummerkarte {{code}} von {{name}} {{family_name}}, Geschlecht {{gender}}, geboren in {{placeOfBirth}}, {{province}} am {{birthDate}}
+        hint: Aktivieren, um zur Vollbildansicht zu wechseln
       rear:
-        label: Barcode Ihrer Steuernummerkarte
-        hint: Aktivieren, um die Querformatansicht anzuzeigen
-    title: Ihre persönlichen Dokumente
+        label: Barcode deiner Steuernummerkarte
+        hint: Aktivieren, um zur Vollbildansicht zu wechseln
+    title: Deine persönlichen Dokumente
     fiscalCode: Steuernummer
-    content: Das Faksimile der Steuernummerkarte ersetzt nicht das physische Dokument, aber es ermöglicht das Lesen von Daten und Barcodes
-    facSimile: FAC-SIMILE
+    help: !include profile/profile_fiscal_code.md
+    content: Das Faksimile der Steuernummer ersetzt nicht das physische Dokument, sondern ermöglicht es, die Daten oder den Barcode auf der Rückseite zu lesen
+    facSimile: Faksimile
   sections:
-    spid: SPID PROFIL
+    spid: SPID Profil
   unknown: Unbekannt
   logout:
     menulabel: IO beenden
-    alertTitle: "Möchten Sie wirklich beenden?"
-    alertMessage: "Sind Sie sicher, dass Sie sich abmelden wollen? Wenn Sie sich das nächste Mal anmelden, benötigen Sie eine neue Anmeldung mit CIE oder SPID."
+    alertTitle: "Möchtest du wirklich beenden?"
+    alertMessage: "Wenn du dich das nächste Mal anmeldest, musst du dich erneut mit CIE oder SPID authentifizieren."
+    loading: Abmeldung läuft...
     exit: Beenden
     cta:
-      header: Wie wollen Sie die App verlassen?
+      header: Wie willst du die App verlassen?
       keepData:
         title: Beenden und alle Daten behalten
-        description: Um die IO-App zu nutzen, müssen Sie sich erneut mit Ihrer digitalen Identität anmelden. Alle Einstellungsdaten bleiben erhalten und sind beim nächsten Start sofort verfügbar. Diese Wahl hat nichts mit einer Löschung der Sie betreffenden personenbezogenen Daten durch die App zu tun.
+        description: Um die IO-App wieder zu benützen, musst du dich erneut mit deiner digitalen Identität anmelden, aber alle Einstellungsdaten bleiben erhalten und sind beim nächsten Start sofort verfügbar. Diese Wahl bedeutet nicht, dass deine persönlichen Daten durch die App gelöscht werden.
       resetData:
-        title: Beenden und Zurücksetzen dieser App
-        description: "IO-App wird in den Ausgangszustand zurückversetzt, so als ob sie gerade installiert worden wäre. Diese Option hat nichts mit einer Löschung der Sie betreffenden personenbezogenen Daten durch die App zu tun."
+        title: Beenden und Zurücksetzen der App
+        description: "Die Einstellungen und Daten, die auf deinem Gerät gespeichert sind, werden zurückgesetzt. Diese Wahl bedeutet nicht, dass deine persönlichen Daten von der App gelöscht werden."
   errors:
     load: Fehler beim Laden des Profils
     upsert: Fehler beim Erstellen oder Aktualisieren des Profils
   alerts:
     emailNotValidated:
-      title: Ungültige E-Mail
-      subtitle: Sie müssen Ihre E-Mail validieren, bevor Sie mit dem Vorgang fortfahren können. Gehen Sie dazu in den Profilbereich und wählen Sie Einstellungen.
+      title: Nicht bestätigte E-Mail-Adresse
+      subtitle: Du musst deine E-Mail-Adresse bestätigen, bevor du mit dem Vorgang fortfahren kannst. Gehen dazu in den Profilbereich und wählen Einstellungen.
   main:
     title: Profil
-    logout: Logout/Beenden
+    logout: Abmelden/Beenden
     forgetCurrentSession: Aktuelle Sitzung löschen
-    contextualHelpTitle: Was Sie in Ihrem Profil machen können
+    clearAsyncStorage: Inhalt von AsyncStorage löschen
+    dumpAsyncStorage: AsyncStorage-Inhalt herunterladen
+    contextualHelpTitle: Was du in deinem Profil machen kannst
+    contextualHelpContent: !include profile/profile_account_main.md
     developerModeOn: Entwicklermodus aktiviert
     cache:
-      alert: Sind Sie sicher, dass Sie den Cache löschen wollen?
+      alert: Bist du sicher den Cache löschen zu wollen?
       clear: Cache löschen
       cleared: Der Cache wurde geleert.
     data:
-      title: Ihre Daten
-      description: Ihre Informationen aktualisieren
+      title: Deine Daten
+      description: Deine Informationen überprüfen
     preferences:
-      title: Voreinstellungen
-      description: App-interne Einstellungen verwalten
+      title: Einstellungen
+      description: Appeinstellungen verwalten
     security:
       title: Sicherheit
-      description: "Biometrischen Zugang und PIN ändern"
+      description: "Biometrischen Zugang und PIN verwalten"
     privacy:
       title: Privacy und Nutzungsbestimmungen
-      description: Ihre Rechte und Pflichten bei der Nutzung der IO-App
-      loading: Warten Sie ein paar Sekunden, wir überprüfen Ihr Profil.
+      description: Deine Rechte und Pflichten bei der Nutzung der IO-App
+      subtitle: Hier findest du Informationen zu deinen Rechten und Pflichten sowie über die Verarbeitung deiner persönlichen Daten.
+      loading: Warte ein paar Sekunden, wir überprüfen dein Profil...
+      removeAccount:
+        title: Dein Konto löschen
+        description: Dein Konto und deine persönlichen Daten endgültig löschen
+        error: Bei der Anfrage zur Kontolöschung ist ein Fehler aufgetreten. Bitte versuche es erneut.
+        alert:
+          activeBonusTitle: Aktive Boni
+          activeBonusDescription: Es scheint, dass du aktive Boni hast. Wir möchten dich darauf hinweisen, dass die Löschung deines Profils nicht gleichbedeutend mit der Streichung von Boni oder der Abmeldung von Initiativen ist. Um deine Boni zu verwalten, gehe zum Abschnitt Konto, ansonsten wähle Weiter
+          oldRequest: Du hast bereits die Löschung deines Kontos beantragt.
+          oldRequestSubtitle: "Wir bearbeiten deinen Antrag.\n Wenn du eine Meinung geändert hast oder versehentlich die Löschung beantragt hast, klicke bitte unten auf "Löschung abbrechen"."
+          cta:
+            manageBonus: Boni verwalten
+            continue: Weiter
+            return: Zurück
+            cancel: Löschung abbrechen
+        info:
+          body: "Du kannst jederzeit von deinem Recht auf Löschung deines IO-Profils Gebrauch machen.\n\nWir informieren dich darüber, dass die Löschung deines Kontos endgültig ist und innerhalb von 30 Tagen nach der Anfrage erfolgt.\n\nWenn du dich entscheidest, fortzufahren, kannst du die Nachrichten oder Einstellungen, die du in der App vorgenommen hast, nicht mehr abrufen.\nBitte beachte auch, dass über die IO-App erhaltene Boni oder Rabatte nicht mehr zugänglich sind.\n\nDu kannst dich jederzeit erneut für die IO-App registrieren, indem du eine neue Registrierung mittels SPID oder CIE durchführst."
+          cta: Weiter
+        details:
+          body: "Wir würden gerne wissen, warum du dein Konto löschst, damit wir uns in Zukunft verbessern können. Du kannst auch direkt mit der Löschung fortfahren, indem du auf die Schaltfläche unten klickst."
+          question: Was ist der Grund für die Löschung?
+          answer_1: Ich halte IO nicht mehr für nützlich
+          answer_2: Ich fühle mich in IO nicht sicher
+          answer_3: Ich habe die App nie benutzt
+          answer_4: Keiner der oben genannten Punkte
+          labelOpenAnswer: Erzähle uns mehr
+          cta: Account löschen
+        success:
+          title: Wir bearbeiten deine Anfrage.
+          body: "Deine Anfrage wird bearbeitet und wir werden dein Konto innerhalb von 30 Tagen löschen.\n\nDu kannst dich jederzeit erneut bei der IO App anmelden, indem du eine neue Registrierung mittels SPID oder CIE durchführst.\n\nWenn du auf "Beenden" drücken, wird deine Sitzung beendet.\n\nVielen Dank für die Nutzung von IO."
+          cta: Beenden
       exportData:
-          cta: Kopie Ihrer Daten anfordern
-          title: Zugriff auf Ihre Daten
-          description: Sie erhalten eine Kopie der mit Ihrem IO-Profil verbundenen Daten
+          cta: Kopie deiner Daten anfordern
+          title: Zugriff auf deine Daten
+          description: Du erhälst eine Kopie der mit deinem IO-Profil verbundenen Daten
           info:
-            title: Sie können Ihre IO-Profilinformationen jederzeit herunterladen.
+            title: Du kannst deine IO-Profilinformationen jederzeit herunterladen.
+            body: !include profile/profile_download_data.md
           alert:
-            requestTitle: Sind Sie sicher, dass Sie alle Ihre Daten exportieren möchten?
-            oldRequest: Wir sind bereits dabei, alle Ihre Daten zu exportieren
-            confirmSubtitle: Nach der Bearbeitung erhalten Sie eine E-Mail mit allen Ihren Daten.
-          error: Beim Absenden Ihrer Exportanfrage ist ein Fehler aufgetreten, bitte versuchen Sie es erneut!
+            requestTitle: Willst du wirklich all deine Daten exportieren?
+            oldRequest: Wir bearbeiten bereits eine Anfrage zum Datenexport
+            confirmSubtitle: Nach der Bearbeitung erhalten Sie eine E-Mail mit allen Informationen, die mit deinem Profil verbunden sind.
+          error: Bei der Anfrage zum Datenexport ist ein Fehler aufgetreten, bitte versuche es erneut!
       privacyPolicy:
         title: Datenschutzbestimmungen
         header: Siehe die Datenschutzbestimmungen und die Nutzungsbedingungen von IO
