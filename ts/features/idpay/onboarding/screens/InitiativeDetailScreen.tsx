@@ -1,6 +1,6 @@
 import React from "react";
 import { RouteProp, useRoute } from "@react-navigation/native";
-import { Text } from "react-native";
+import { Button, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useActor } from "@xstate/react";
 import { IDPayOnboardingParamsList } from "../navigation/navigator";
@@ -44,16 +44,26 @@ const InitiativeDetailsScreen = () => {
       state.matches("DISPLAYING_INITIATIVE") &&
       state.context.initative !== undefined
     ) {
-      return <Text>Initiative ID: {state.context.initative.initiativeId}</Text>;
+      return (
+        <Button
+          title="Continue"
+          onPress={() =>
+            send({
+              type: "ACCEPT_TOS"
+            })
+          }
+        />
+      );
     }
 
     return null;
-  }, [state]);
+  }, [state, send]);
 
   return (
     <SafeAreaView>
       <Text>ServiceID: {serviceId}</Text>
       <Text>State: {state.value}</Text>
+      <Text>Context: {JSON.stringify(state.context, undefined, "\t")}</Text>
       {content}
     </SafeAreaView>
   );
