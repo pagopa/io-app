@@ -28,7 +28,7 @@ describe("machine", () => {
     const machine = createIDPayOnboardingMachine().withConfig({
       services: {
         loadInitiative: mockLoadInitiative,
-        acceptTos: mockAcceptTos,
+        acceptTos: mockAcceptTos
       }
     });
 
@@ -49,6 +49,8 @@ describe("machine", () => {
 
     await waitFor(() => expect(mockAcceptTos).toHaveBeenCalled());
 
-    expect(onboardingService.getSnapshot().matches("LOADING_REQUIRED_CRITERIA")).toBeTruthy();
+    expect(
+      onboardingService.getSnapshot().matches("LOADING_REQUIRED_CRITERIA")
+    ).toBeTruthy();
   });
 });

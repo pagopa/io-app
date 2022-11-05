@@ -89,7 +89,7 @@ const createIDPayOnboardingMachine = () =>
         LOADING_REQUIRED_CRITERIA: {
           tags: [LOADING_TAG],
           type: "final"
-        },
+        }
       }
     },
     {
