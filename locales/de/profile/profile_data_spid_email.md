@@ -1,0 +1,1 @@
+IO erbt die E-Mail-Adresse von deinem SPID-Account. Du kannst dies im SPID-Profil deines Identitätsanbieters ändern, es könnte dann aber möglicherweise sein, dass du dich erneut bei IO anmelden musst.
