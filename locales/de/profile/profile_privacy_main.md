@@ -1,0 +1,1 @@
+**Hier findest du die Informationen zum Datenschutz deines Profils**, insbesondere kannst du die Datenschutzbestimmungen einsehen, dein Konto löschen und die mit deinem Profil verbundenen personenbezogenen Daten exportieren. 
