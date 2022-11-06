@@ -549,6 +549,7 @@ authentication:
     cie_unsupported:
       title: Anmeldung mit CIE nicht möglich
       body: !include cie/cieNotSupported.md
+      android_desc: !include cie/cieNotSupported_android.md
       os_version_unsupported: ein Betriebssystem mit Android 6.0 oder höher
       nfc_incompatible: ein kompatibler NFC-Sensor
     contentTitleCie: Du hast keinen SPID oder CIE?
