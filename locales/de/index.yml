@@ -550,7 +550,7 @@ authentication:
       title: Anmeldung mit CIE nicht möglich
       body: !include cie/cieNotSupported.md
       os_version_unsupported: ein Betriebssystem mit Android 6.0 oder höher
-      nfc_incompatible: eine kompatible NFC-Antenne
+      nfc_incompatible: ein kompatibler NFC-Sensor
     contentTitleCie: Du hast keinen SPID oder CIE?
     cie_information_request: !include cie.md
     spid_or_cie: Um IO nutzen zu können, musst du über eine dieser digitalen Werkzeuge verfügen, die Ihre Identität bestätigen.
