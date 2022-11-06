@@ -1,0 +1,1 @@
+**Dein bevorzugter Kalender ist standardmäßig der, der mit deiner E-Mail-Adresse verknüpft ist,** wenn du dich mit einem Google-Konto registriert habst. Du kannst die mit deinem Kalender verknüpfte E-Mail-Adresse jederzeit ändern, so dass du IO-Erinnerungen in dem von dir am häufigsten verwendeten Kalender erhälst.
