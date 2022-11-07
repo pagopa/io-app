@@ -38,7 +38,7 @@ export const renderCategoryElement = (category: ProductCategory) =>
     O.fold(
       () => undefined,
       c => (
-        <View style={[styles.row]}>
+        <View style={styles.row}>
           {c.icon({ height: 22, width: 22, fill: IOColors.bluegrey })}
           <View hspacer small />
           <H5 weight={"SemiBold"} color={"bluegrey"}>
@@ -108,7 +108,7 @@ const CategoriesRow = ({ categories }: Pick<Props, "categories">) => (
  */
 const CgnMerchantListItem: React.FunctionComponent<Props> = (props: Props) => (
   <TouchableDefaultOpacity
-    style={[styles.verticalPadding]}
+    style={styles.verticalPadding}
     accessibilityRole={"button"}
     onPress={props.onPress}
   >
