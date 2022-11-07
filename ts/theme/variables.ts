@@ -168,6 +168,9 @@ const customVariables = Object.assign(materialVariables, {
   spacerLargeWidth: 24,
   spacerExtralargeWidth: 40,
 
+  // Border radius
+  borderRadiusBase: 4,
+
   // Tabs
   tabDefaultBg: IOColors.white /* NB Theme variable, don't remove */,
   topTabBarTextColor: IOColors.bluegrey /* NB Theme variable, don't remove */,
