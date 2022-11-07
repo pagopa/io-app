@@ -2,7 +2,6 @@ import { Text, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import IconFont from "../../../../../../components/ui/IconFont";
-import themeVariables from "../../../../../../theme/variables";
 import { bonusVacanzeStyle } from "../../../components/Styles";
 import { IOColors } from "../../../../../../components/core/variables/IOColors";
 import { activateBonusStyle } from "./Style";
@@ -14,9 +13,6 @@ type Props = {
 const styles = StyleSheet.create({
   reminder: {
     color: IOColors.grey
-  },
-  link: {
-    color: themeVariables.textLinkColor
   }
 });
 
@@ -26,7 +22,7 @@ const styles = StyleSheet.create({
  * @constructor
  */
 export const ActivateBonusReminder: React.FunctionComponent<Props> = props => (
-  <View style={[bonusVacanzeStyle.row]}>
+  <View style={bonusVacanzeStyle.row}>
     <IconFont name={"io-titolare"} size={24} color={IOColors.grey} />
     <View hspacer={true} />
     <Text style={[activateBonusStyle.boxText, styles.reminder]}>

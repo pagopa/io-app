@@ -129,7 +129,7 @@ const ZendeskChooseSubCategory = (props: Props) => {
       headerTitle={selectedCategory.description[locale]}
     >
       <SafeAreaView style={IOStyles.flex} testID={"ZendeskChooseCategory"}>
-        <ScrollView style={[IOStyles.horizontalContentPadding]}>
+        <ScrollView style={IOStyles.horizontalContentPadding}>
           <H1>{I18n.t("support.chooseCategory.title.subCategory")}</H1>
           <View spacer />
           <FlatList

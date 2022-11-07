@@ -2,7 +2,10 @@ import { View } from "native-base";
 import * as React from "react";
 import { AccessibilityProps, Platform, StyleSheet } from "react-native";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
-import { IOColors } from "../../../../components/core/variables/IOColors";
+import {
+  IOColors,
+  hexToRgba
+} from "../../../../components/core/variables/IOColors";
 
 type Props = {
   left: React.ReactNode;
@@ -10,10 +13,12 @@ type Props = {
   onPress?: () => void;
 } & AccessibilityProps;
 
+const opaqueBorderColor = hexToRgba(IOColors.black, 0.1);
+
 const styles = StyleSheet.create({
   card: {
     // iOS and Android card shadow
-    shadowColor: "#000",
+    shadowColor: IOColors.black,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 1.5,
@@ -38,7 +43,7 @@ const styles = StyleSheet.create({
   },
 
   rotatedCard: {
-    shadowColor: "#000",
+    shadowColor: IOColors.black,
     marginBottom: -30,
     flex: 1,
     shadowRadius: 10,
@@ -50,7 +55,7 @@ const styles = StyleSheet.create({
     marginBottom: -15,
     borderRadius: 8,
     borderTopWidth: 8,
-    borderTopColor: "rgba(0,0,0,0.1)",
+    borderTopColor: opaqueBorderColor,
     height: 15
   }
 });
@@ -72,8 +77,8 @@ export const CardLayoutPreview: React.FunctionComponent<Props> = props => (
       style={styles.rotatedCard}
       testID={"cardPreview"}
     >
-      <View style={[styles.card]}>
-        <View style={[styles.cardInner]}>
+      <View style={styles.card}>
+        <View style={styles.cardInner}>
           <View style={[styles.row, styles.spaced]}>
             {props.left}
             {props.right}

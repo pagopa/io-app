@@ -1,8 +1,9 @@
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
+import { IOColors } from "../core/variables/IOColors";
 
 const DEFAULT_OVERLAY_OPACITY = 1;
-const DEFAULT_BACKGROUND_COLOR = "#fff";
+const DEFAULT_BACKGROUND_COLOR = IOColors.white;
 
 const styles = StyleSheet.create({
   container: {
@@ -10,11 +11,12 @@ const styles = StyleSheet.create({
   },
   overlay: {
     position: "absolute",
+    inset: 0,
     top: 0,
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: "#fff",
+    backgroundColor: DEFAULT_BACKGROUND_COLOR,
     zIndex: 1,
     justifyContent: "center"
   },

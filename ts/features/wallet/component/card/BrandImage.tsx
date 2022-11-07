@@ -7,6 +7,8 @@ type Props = {
 };
 
 const styles = StyleSheet.create({
+  // TODO: Remove this unused style, use const variables instead
+  // eslint-disable-next-line react-native/no-unused-styles
   cardLogo: {
     height: 30,
     width: 48

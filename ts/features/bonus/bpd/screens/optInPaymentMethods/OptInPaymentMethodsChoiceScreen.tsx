@@ -137,7 +137,7 @@ const OptInPaymentMethodsChoiceScreen = () => {
         style={IOStyles.flex}
         testID={"OptInPaymentMethodsCashbackUpdate"}
       >
-        <ScrollView style={[IOStyles.horizontalContentPadding]}>
+        <ScrollView style={IOStyles.horizontalContentPadding}>
           <H1>{I18n.t("bonus.bpd.optInPaymentMethods.choice.title")}</H1>
           <View spacer small />
           <Body color="bluegreyDark">

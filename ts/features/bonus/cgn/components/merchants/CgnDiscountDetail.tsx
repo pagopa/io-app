@@ -40,18 +40,9 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row"
   },
-  verticalPadding: {
-    paddingBottom: 16
-  },
   container: {
     paddingTop: 16
-  },
-  codeContainer: { alignItems: "center", justifyContent: "space-between" },
-  codeText: {
-    fontSize: 20
-  },
-  flexEnd: { alignSelf: "flex-end" },
-  discountValue: { textAlign: "center", lineHeight: 30 }
+  }
 });
 
 const CATEGORY_ICON_SIZE = 22;

@@ -20,7 +20,7 @@ exports[`CustomBadge component match snapshot for 10 1`] = `
       Object {
         "alignContent": "center",
         "backgroundColor": "#0073E6",
-        "borderColor": "white",
+        "borderColor": "#FFFFFF",
         "borderWidth": 2,
         "bottom": 10,
         "elevation": 0.1,
@@ -30,7 +30,7 @@ exports[`CustomBadge component match snapshot for 10 1`] = `
         "paddingLeft": 0,
         "paddingRight": 0,
         "position": "absolute",
-        "shadowColor": "white",
+        "shadowColor": "#FFFFFF",
         "width": 20,
       },
       Object {
@@ -86,7 +86,7 @@ exports[`CustomBadge component match snapshot for 100 1`] = `
       Object {
         "alignContent": "center",
         "backgroundColor": "#0073E6",
-        "borderColor": "white",
+        "borderColor": "#FFFFFF",
         "borderWidth": 2,
         "bottom": 10,
         "elevation": 0.1,
@@ -96,7 +96,7 @@ exports[`CustomBadge component match snapshot for 100 1`] = `
         "paddingLeft": 0,
         "paddingRight": 0,
         "position": "absolute",
-        "shadowColor": "white",
+        "shadowColor": "#FFFFFF",
         "width": 20,
       },
       Object {

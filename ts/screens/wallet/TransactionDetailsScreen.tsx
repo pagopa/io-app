@@ -64,13 +64,6 @@ type Props = ReturnType<typeof mapStateToProps> &
  */
 
 const styles = StyleSheet.create({
-  pspLogo: {
-    maxWidth: 80,
-    maxHeight: 32,
-    width: "100%",
-    height: "100%",
-    resizeMode: "contain"
-  },
   cardLogo: {
     alignSelf: "flex-end",
     height: 30,
@@ -80,11 +73,6 @@ const styles = StyleSheet.create({
     fontSize: 20
   },
   row: { flexDirection: "row", justifyContent: "space-between" },
-  cardIcon: {
-    alignSelf: "flex-end",
-    height: 30,
-    width: 48
-  },
   centered: { alignItems: "center" },
   flex: {
     flex: 1,
