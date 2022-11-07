@@ -1,6 +1,8 @@
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
 import { InitiativeDto } from "../../../../../definitions/idpay/onboarding/InitiativeDto";
+import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/onboarding/RequiredCriteriaDTO";
 import { OnboardingClient } from "../api/client";
 import { Context } from "./machine";
 
@@ -31,12 +33,12 @@ const createServicesImplementation = (onboardingClient: OnboardingClient) => {
   };
 
   const acceptTos = async (context: Context) => {
-    if (context.initative === undefined) {
+    if (context.initiative === undefined) {
       throw new Error("initative is undefined");
     }
     const response = await onboardingClient.onboardingCitizen({
       body: {
-        initiativeId: context.initative.initiativeId
+        initiativeId: context.initiative.initiativeId
       }
     });
 
@@ -56,9 +58,40 @@ const createServicesImplementation = (onboardingClient: OnboardingClient) => {
     return dataPromise;
   };
 
+  const loadRequiredCriteria = async (context: Context) => {
+    if (context.initiative === undefined) {
+      throw new Error("initative is undefined");
+    }
+
+    const response = await onboardingClient.checkPrerequisites({
+      body: {
+        initiativeId: context.initiative.initiativeId
+      }
+    });
+
+    const dataPromise: Promise<O.Option<RequiredCriteriaDTO>> = pipe(
+      response,
+      E.fold(
+        _ => Promise.reject("Error loading required criteria"),
+        _ => {
+          if (_.status === 200) {
+            return Promise.resolve(O.some(_.value));
+          }
+          if (_.status === 202) {
+            return Promise.resolve(O.none);
+          }
+          return Promise.reject("Error loading required criteria");
+        }
+      )
+    );
+
+    return dataPromise;
+  };
+
   return {
     loadInitiative,
-    acceptTos
+    acceptTos,
+    loadRequiredCriteria
   };
 };
 

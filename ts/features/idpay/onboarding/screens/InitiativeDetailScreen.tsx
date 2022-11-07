@@ -40,10 +40,7 @@ const InitiativeDetailsScreen = () => {
       return <Text>Loading...</Text>;
     }
 
-    if (
-      state.matches("DISPLAYING_INITIATIVE") &&
-      state.context.initative !== undefined
-    ) {
+    if (state.matches("DISPLAYING_INITIATIVE")) {
       return (
         <Button
           title="Continue"
