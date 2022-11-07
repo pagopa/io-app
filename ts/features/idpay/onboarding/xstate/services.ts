@@ -30,8 +30,35 @@ const createServicesImplementation = (onboardingClient: OnboardingClient) => {
     return data;
   };
 
+  const acceptTos = async (context: Context) => {
+    if (context.initative === undefined) {
+      throw new Error("initative is undefined");
+    }
+    const response = await onboardingClient.onboardingCitizen({
+      body: {
+        initiativeId: context.initative.initiativeId
+      }
+    });
+
+    const dataPromise: Promise<undefined> = pipe(
+      response,
+      E.fold(
+        _ => Promise.reject(new Error("Error accepting tos")),
+        _ => {
+          if (_.status !== 204) {
+            return Promise.reject(new Error("Error accepting tos"));
+          }
+          return Promise.resolve(undefined);
+        }
+      )
+    );
+
+    return dataPromise;
+  };
+
   return {
-    loadInitiative
+    loadInitiative,
+    acceptTos
   };
 };
 
