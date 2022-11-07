@@ -26,6 +26,7 @@ import { IDPayOnboardingParamsList } from "../navigation/navigator";
 import { useOnboardingMachineService } from "../xstate/provider";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
+import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 
 type InitiativeDetailsScreenRouteParams = {
   serviceId: string;
@@ -147,10 +148,7 @@ const InitiativeDetailsScreen = () => {
     <BaseScreenComponent
       goBack={handleGoBackPress}
       headerTitle={I18n.t("idpay.onboarding.headerTitle")}
-      customRightIcon={{
-        iconName: "io-close",
-        onPress: handleGoBackPress
-      }}
+      contextualHelp={emptyContextualHelp}
     >
       <LoadingSpinnerOverlay isLoading={isLoading}>
         <SafeAreaView style={IOStyles.flex}>
