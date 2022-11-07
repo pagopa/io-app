@@ -483,6 +483,9 @@ profile:
           title: Do you want to change the language to
           subtitle: You'll need to restart the application to make this happen
         not_selected: Not selected
+      notifications:
+        title: Push notifications
+        subtitle: Allow previews and reminders 
     empty:
       default: No preference set
     unavailable:
@@ -499,6 +502,16 @@ profile:
       contextualHelpContent: !include profile/profile_preferences_calendar.md
       local_calendar: Local calendar
       birthday_calendar: Birthdays
+    notifications:
+      header: Push notifications
+      title: Customize push notifications
+      subtitle: Ora puoi vedere subito chi ti ha scritto o ricevere promemoria da messaggi importanti.
+      titleNewUser: Personalizza le notifiche
+      subtitleNewUser: Choose how to get updates on the messages and reminders you receive
+      reminders:
+        title: Allow reminders
+        description: Receive push notifications close to deadlines or when you have unread messages
+      error: An error occurred with your request
 userMetadata:
   errors:
     upsertVersion: Can't upsert user metadata with this version
@@ -539,7 +552,7 @@ authentication:
       body: !include cie/cieNotSupported.md
       android_desc: !include cie/cieNotSupported_android.md
       os_version_unsupported: an Android 6.0 or higher operating system
-      nfc_incompatible: a NFC chip 
+      nfc_incompatible: a NFC chip
     contentTitleCie: Don't have SPID or CIE?
     cie_information_request: !include cie.md
     spid_or_cie: To use IO you must have one of these digital tools, which certify your identity.
@@ -809,6 +822,13 @@ onboarding:
   thankYouPage:
     title: Setup completed!
     body: Now you can start using IO
+  notifications:
+    badge: News
+    headerTitle: IO Settings
+    continue: Continue
+    remindersPreviewTitle: Promemoria
+    previewTitle: Hai un nuovo messaggio
+    previewMessage: Apri l’app per leggere il contenuto
 forms:
   validators:
     required: Required value
@@ -3119,8 +3139,8 @@ features:
           REFUSED: REFUSED
           CANCELLED: Annullata
         expand: mostra gli stati precedenti
-        info: Puoi vedere il dettaglio di ciascuno stato, scaricare le ricevute e le attestazioni opponibili a terzi accedendo alla versione web del servizio   
-        cta: Accedi alla versione web  
+        info: Puoi vedere il dettaglio di ciascuno stato, scaricare le ricevute e le attestazioni opponibili a terzi accedendo alla versione web del servizio
+        cta: Accedi alla versione web
 webView:
   error:
     missingParams: Not all information necessary to access this page are available

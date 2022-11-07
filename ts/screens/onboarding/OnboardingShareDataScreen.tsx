@@ -58,7 +58,7 @@ const OnboardingShareDataScreen = (props: Props): React.ReactElement => {
     >
       <SafeAreaView style={IOStyles.flex}>
         <StatusBar backgroundColor={IOColors.white} barStyle={"dark-content"} />
-        <ScrollView style={[IOStyles.horizontalContentPadding]}>
+        <ScrollView style={IOStyles.horizontalContentPadding}>
           <ShareDataComponent />
           <View spacer={true} />
           <InfoBox iconName={"io-titolare"} iconColor={IOColors.bluegrey}>

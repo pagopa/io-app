@@ -16,14 +16,6 @@ const styles = StyleSheet.create({
   body: {
     flex: 1,
     alignItems: "flex-start"
-  },
-
-  scrollView: {
-    width: "100%"
-  },
-  separator: {
-    paddingTop: 25,
-    paddingBottom: 25
   }
 });
 

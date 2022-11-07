@@ -19,6 +19,7 @@ import {
 } from "../actions/profile";
 import { Action } from "../actions/types";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
+import { ReminderStatusEnum } from "../../../definitions/backend/ReminderStatus";
 import { GlobalState } from "./types";
 
 export type ProfileState = pot.Pot<InitializedProfile, Error>;
@@ -147,6 +148,12 @@ export const isProfileEmailValidatedSelector = createSelector(
     )
 );
 
+export const profileRemindersPreferenceSelector = createSelector(
+  profileSelector,
+  (profile: ProfileState): pot.Pot<boolean, Error> =>
+    pot.map(profile, p => p.reminder_status === ReminderStatusEnum.ENABLED)
+);
+
 const reducer = (
   state: ProfileState = INITIAL_STATE,
   action: Action
@@ -198,6 +205,7 @@ const reducer = (
             accepted_tos_version: newProfile.accepted_tos_version,
             service_preferences_settings:
               newProfile.service_preferences_settings,
+            reminder_status: newProfile.reminder_status,
             version: 0
           });
         }
@@ -220,6 +228,7 @@ const reducer = (
             accepted_tos_version: newProfile.accepted_tos_version,
             service_preferences_settings:
               newProfile.service_preferences_settings,
+            reminder_status: newProfile.reminder_status,
             version: newProfile.version
           });
         }

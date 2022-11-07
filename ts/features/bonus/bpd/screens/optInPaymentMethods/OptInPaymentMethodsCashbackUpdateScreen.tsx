@@ -84,7 +84,7 @@ const OptInPaymentMethodsCashbackUpdateScreen = () => {
         style={IOStyles.flex}
         testID={"OptInPaymentMethodsCashbackUpdate"}
       >
-        <ScrollView style={[IOStyles.horizontalContentPadding]}>
+        <ScrollView style={IOStyles.horizontalContentPadding}>
           <View style={styles.headerContainer}>
             <View style={IOStyles.flex}>
               <H2>

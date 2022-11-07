@@ -60,10 +60,6 @@ type State = {
 };
 
 const styles = StyleSheet.create({
-  itemLeft: {
-    flexDirection: "column",
-    alignItems: "flex-start"
-  },
   itemLeftText: {
     alignSelf: "flex-start"
   },
@@ -78,9 +74,6 @@ const styles = StyleSheet.create({
   },
   developerSectionItemRight: {
     flex: 0
-  },
-  modalHeader: {
-    lineHeight: 40
   },
   whiteBg: {
     backgroundColor: IOColors.white
@@ -321,6 +314,14 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
               onPress={() =>
                 navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
                   screen: ROUTES.CGN_LANDING_PLAYGROUND
+                })
+              }
+            />
+            <ListItemComponent
+              title={"IDPay Onboarding Playground"}
+              onPress={() =>
+                navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+                  screen: ROUTES.IDPAY_ONBOARDING_PLAYGROUND
                 })
               }
             />
