@@ -1,9 +1,11 @@
+import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import * as E from "fp-ts/lib/Either";
 import { InitiativeDto } from "../../../../../definitions/idpay/onboarding/InitiativeDto";
 import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/onboarding/RequiredCriteriaDTO";
+import NavigationService from "../../../../navigation/NavigationService";
 import { OnboardingClient } from "../api/client";
+import { IDPayOnboardingRoutes } from "../navigation/navigator";
 import { Context } from "./machine";
 
 const createServicesImplementation = (onboardingClient: OnboardingClient) => {
@@ -62,6 +64,11 @@ const createServicesImplementation = (onboardingClient: OnboardingClient) => {
     if (context.initiative === undefined) {
       throw new Error("initative is undefined");
     }
+
+    NavigationService.navigate(IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
+      screen: IDPayOnboardingRoutes.IDPAY_ONBOARDING_PDNDACCEPTANCE
+      // TODO:: add logic to pick the right screen
+    });
 
     const response = await onboardingClient.checkPrerequisites({
       body: {
