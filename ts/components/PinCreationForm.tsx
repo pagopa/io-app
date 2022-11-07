@@ -21,10 +21,6 @@ export type Props = {
 const styles = StyleSheet.create({
   flex: {
     flex: 1
-  },
-  header: {
-    fontSize: 20,
-    lineHeight: 22
   }
 });
 

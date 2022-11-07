@@ -60,10 +60,6 @@ type State = {
 };
 
 const styles = StyleSheet.create({
-  itemLeft: {
-    flexDirection: "column",
-    alignItems: "flex-start"
-  },
   itemLeftText: {
     alignSelf: "flex-start"
   },
@@ -78,9 +74,6 @@ const styles = StyleSheet.create({
   },
   developerSectionItemRight: {
     flex: 0
-  },
-  modalHeader: {
-    lineHeight: 40
   },
   whiteBg: {
     backgroundColor: IOColors.white

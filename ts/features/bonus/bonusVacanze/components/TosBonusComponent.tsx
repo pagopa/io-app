@@ -35,22 +35,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginTop: 10
   },
-
-  errorBody: {
-    marginTop: 10,
-    marginBottom: 10,
-    textAlign: "center"
-  },
-
   errorButtonsContainer: {
     position: "absolute",
     bottom: 30,
     flex: 1,
     flexDirection: "row"
-  },
-  cancelButtonStyle: {
-    flex: 1,
-    marginEnd: 10
   }
 });
 

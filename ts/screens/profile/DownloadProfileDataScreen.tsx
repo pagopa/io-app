@@ -38,9 +38,6 @@ type State = {
 };
 
 const styles = StyleSheet.create({
-  mainContent: {
-    flex: 1
-  },
   markdownContainer: {
     paddingLeft: themeVariables.contentPadding,
     paddingRight: themeVariables.contentPadding

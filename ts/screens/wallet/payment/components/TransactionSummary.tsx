@@ -57,12 +57,6 @@ const styles = StyleSheet.create({
   children: {
     paddingLeft: customVariables.spacingBase
   },
-  badgeInfo: {
-    height: 18,
-    alignItems: "center",
-    backgroundColor: IOColors.aqua,
-    paddingHorizontal: 8
-  },
   separator: {
     backgroundColor: customVariables.itemSeparator,
     height: StyleSheet.hairlineWidth
