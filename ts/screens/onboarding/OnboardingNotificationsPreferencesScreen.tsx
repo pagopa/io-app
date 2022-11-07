@@ -2,8 +2,8 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import React, { memo, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { SafeAreaView, StyleSheet, View } from "react-native";
+import { Content } from "native-base";
 import { PreferencesListItem } from "../../components/PreferencesListItem";
-import ScreenContent from "../../components/screens/ScreenContent";
 import I18n from "../../i18n";
 import { profilePreferencesSelector } from "../../store/reducers/profile";
 import { useIODispatch } from "../../store/hooks";
@@ -27,12 +27,16 @@ import { Body } from "../../components/core/typography/Body";
 import { Link } from "../../components/core/typography/Link";
 import { PushNotificationsContentTypeEnum } from "../../../definitions/backend/PushNotificationsContentType";
 import { usePreviewMoreInfo } from "../../utils/hooks/usePreviewMoreInfo";
+import { IOStyles } from "../../components/core/variables/IOStyles";
 import { NotificationsPreferencesPreview } from "./components/NotificationsPreferencesPreview";
 
 const styles = StyleSheet.create({
   contentHeader: {
     padding: customVariables.contentPadding,
     paddingTop: 0
+  },
+  flexGrow: {
+    flexGrow: 1
   },
   separator: {
     backgroundColor: customVariables.itemSeparator,
@@ -48,7 +52,6 @@ const styles = StyleSheet.create({
     backgroundColor: IOColors.white,
     borderRadius: 16,
     height: "100%",
-    flexGrow: 1,
     paddingLeft: customVariables.contentPadding,
     paddingRight: customVariables.contentPadding
   },
@@ -169,71 +172,74 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
       contextualHelp={emptyContextualHelp}
       primary={!isFirstOnboarding}
     >
-      <ScreenContent
-        hideHeader={true}
-        {...(!isFirstOnboarding && {
-          contentStyle: styles.blueBg
-        })}
-      >
-        <Header isFirstOnboarding={isFirstOnboarding} />
-        <NotificationsPreferencesPreview
-          previewEnabled={previewEnabled}
-          remindersEnabled={remindersEnabled}
-          isFirstOnboarding={isFirstOnboarding}
-        />
-        <View
-          style={[
-            styles.containerActions,
-            !isFirstOnboarding && styles.containerActionsBlueBg
-          ]}
+      <SafeAreaView style={IOStyles.flex}>
+        <Content
+          noPadded={true}
+          contentContainerStyle={styles.flexGrow}
+          style={[!isFirstOnboarding && styles.blueBg]}
         >
-          {isFirstOnboarding && <View style={styles.separator} />}
-          <PreferencesListItem
-            title={I18n.t("profile.preferences.notifications.preview.title")}
-            description={
-              <>
-                {`${I18n.t(
-                  "profile.preferences.notifications.preview.description"
-                )} `}
-                <Link style={styles.mediumText} onPress={present}>
-                  {I18n.t("profile.preferences.notifications.preview.link")}
-                </Link>
-              </>
-            }
-            rightElement={
-              <Switch
-                value={previewEnabled}
-                onValueChange={setPreviewEnabled}
-                disabled={isUpdating}
-                testID="previewsPreferenceSwitch"
-              />
-            }
+          <Header isFirstOnboarding={isFirstOnboarding} />
+          <NotificationsPreferencesPreview
+            previewEnabled={previewEnabled}
+            remindersEnabled={remindersEnabled}
+            isFirstOnboarding={isFirstOnboarding}
           />
-          <View style={styles.separator} />
-          <PreferencesListItem
-            title={I18n.t("profile.preferences.notifications.reminders.title")}
-            description={I18n.t(
-              "profile.preferences.notifications.reminders.description"
-            )}
-            rightElement={
-              <Switch
-                value={remindersEnabled}
-                onValueChange={setRemindersEnabled}
-                disabled={isUpdating}
-                testID="remindersPreferenceSwitch"
-              />
-            }
-          />
-          <View style={[styles.separator, styles.bottomSpacer]} />
-          <InfoBox iconName={"io-profilo"} iconColor={IOColors.bluegrey}>
-            <H5 color={"bluegrey"} weight={"Regular"}>
-              {I18n.t("profile.main.privacy.shareData.screen.profileSettings")}
-            </H5>
-          </InfoBox>
-        </View>
-      </ScreenContent>
-      {bottomSheet}
-      <SafeAreaView>
+          <View
+            style={[
+              styles.containerActions,
+              !isFirstOnboarding && styles.containerActionsBlueBg
+            ]}
+          >
+            {isFirstOnboarding && <View style={styles.separator} />}
+            <PreferencesListItem
+              title={I18n.t("profile.preferences.notifications.preview.title")}
+              description={
+                <>
+                  {`${I18n.t(
+                    "profile.preferences.notifications.preview.description"
+                  )} `}
+                  <Link style={styles.mediumText} onPress={present}>
+                    {I18n.t("profile.preferences.notifications.preview.link")}
+                  </Link>
+                </>
+              }
+              rightElement={
+                <Switch
+                  value={previewEnabled}
+                  onValueChange={setPreviewEnabled}
+                  disabled={isUpdating}
+                  testID="previewsPreferenceSwitch"
+                />
+              }
+            />
+            <View style={styles.separator} />
+            <PreferencesListItem
+              title={I18n.t(
+                "profile.preferences.notifications.reminders.title"
+              )}
+              description={I18n.t(
+                "profile.preferences.notifications.reminders.description"
+              )}
+              rightElement={
+                <Switch
+                  value={remindersEnabled}
+                  onValueChange={setRemindersEnabled}
+                  disabled={isUpdating}
+                  testID="remindersPreferenceSwitch"
+                />
+              }
+            />
+            <View style={[styles.separator, styles.bottomSpacer]} />
+            <InfoBox iconName={"io-profilo"} iconColor={IOColors.bluegrey}>
+              <H5 color={"bluegrey"} weight={"Regular"}>
+                {I18n.t(
+                  "profile.main.privacy.shareData.screen.profileSettings"
+                )}
+              </H5>
+            </InfoBox>
+          </View>
+        </Content>
+        {bottomSheet}
         <FooterWithButtons
           type="SingleButton"
           leftButton={
