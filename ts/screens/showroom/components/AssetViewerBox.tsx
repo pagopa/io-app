@@ -7,7 +7,10 @@ import {
   ImageSourcePropType,
   ImageBackground
 } from "react-native";
-import { IOColors } from "../../../components/core/variables/IOColors";
+import {
+  IOColors,
+  hexToRgba
+} from "../../../components/core/variables/IOColors";
 import { H5 } from "../../../components/core/typography/H5";
 
 /* Fake Transparent BG */
@@ -24,11 +27,6 @@ const styles = StyleSheet.create({
   },
   assetWrapperSmall: {
     width: "33%"
-  },
-  bgImage: {
-    position: "absolute",
-    width: "150%",
-    height: "150%"
   },
   image: {
     width: "100%",
@@ -48,14 +46,14 @@ const styles = StyleSheet.create({
     padding: 32,
     alignItems: "center",
     justifyContent: "center",
-    borderColor: "rgba(0, 0, 0, 0.1)",
+    borderColor: hexToRgba(IOColors.black, 0.1),
     borderWidth: 1
   },
   assetItemSmall: {
     padding: 24
   },
   assetItemDark: {
-    backgroundColor: "rgba(0,0,0,1)"
+    backgroundColor: hexToRgba(IOColors.black, 0.1)
   },
   pill: {
     position: "absolute",

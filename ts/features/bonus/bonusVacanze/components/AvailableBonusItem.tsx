@@ -55,9 +55,6 @@ const styles = StyleSheet.create({
   badgeText: {
     lineHeight: Platform.OS === "ios" ? 20 : 21
   },
-  centeredContents: {
-    alignItems: "center"
-  },
   servicesName: {
     color: variables.textColor
   }

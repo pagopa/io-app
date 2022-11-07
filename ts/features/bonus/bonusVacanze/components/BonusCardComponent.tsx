@@ -20,7 +20,10 @@ import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { isShareEnabled } from "../../../../utils/share";
 import { maybeNotNullyString } from "../../../../utils/strings";
 import { getBonusCodeFormatted, isBonusActive } from "../utils/bonus";
-import { IOColors } from "../../../../components/core/variables/IOColors";
+import {
+  IOColors,
+  hexToRgba
+} from "../../../../components/core/variables/IOColors";
 
 type Props = {
   bonus: BonusActivationWithQrCode;
@@ -29,6 +32,8 @@ type Props = {
   viewQR?: () => void;
   share?: () => void;
 };
+
+const opaqueBorderColor = hexToRgba(IOColors.black, 0.1);
 
 const styles = StyleSheet.create({
   container: {
@@ -49,17 +54,6 @@ const styles = StyleSheet.create({
     marginBottom: -20,
     height: 88
   },
-  previewContainer: {
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 12
-    },
-    shadowOpacity: 0.58,
-    shadowRadius: 16.0,
-    zIndex: 0,
-    elevation: 0
-  },
   row: {
     flexDirection: "row",
     alignItems: "center",
@@ -67,9 +61,6 @@ const styles = StyleSheet.create({
   },
   spaced: {
     justifyContent: "space-between"
-  },
-  alignCenter: {
-    alignSelf: "center"
   },
   flexEnd: {
     alignSelf: "flex-end"
@@ -79,9 +70,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     ...makeFontStyleObject(Platform.select)
   },
-  paddedIcon: {
-    paddingLeft: 10
-  },
   paddedContent: {
     padding: 16
   },
@@ -90,10 +78,6 @@ const styles = StyleSheet.create({
   },
   fontLarge: {
     fontSize: customVariables.fontSize2
-  },
-  fontXLarge: {
-    lineHeight: 30,
-    fontSize: customVariables.fontSize4
   },
   previewName: {
     lineHeight: 24,
@@ -118,10 +102,6 @@ const styles = StyleSheet.create({
     height: 40,
     width: 40
   },
-  euroCharacter: {
-    fontSize: customVariables.fontSize3,
-    lineHeight: customVariables.lineHeightH3
-  },
   badge: {
     height: 18,
     marginTop: 6,
@@ -139,7 +119,7 @@ const styles = StyleSheet.create({
     marginBottom: -13,
     borderRadius: 8,
     borderTopWidth: 10,
-    borderTopColor: "rgba(0,0,0,0.1)",
+    borderTopColor: opaqueBorderColor,
     height: 15,
     width: "100%",
     maxWidth: 327
@@ -210,7 +190,7 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
             )}
           </View>
           <View spacer={true} />
-          <Text style={[styles.colorWhite]}>
+          <Text style={styles.colorWhite}>
             {I18n.t("bonus.bonusVacanze.code")}
           </Text>
           <Text style={[styles.colorWhite, styles.fontLarge, styles.bonusCode]}>
@@ -280,7 +260,7 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
         })
       })}
     >
-      <View style={[styles.row]}>
+      <View style={styles.row}>
         <Text bold={true} style={[styles.colorWhite, styles.previewName]}>
           {I18n.t("bonus.bonusVacanze.name")}
         </Text>

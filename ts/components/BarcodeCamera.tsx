@@ -20,6 +20,7 @@ import { isAndroid } from "../utils/platform";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import { Body } from "./core/typography/Body";
 import { Label } from "./core/typography/Label";
+import { IOColors } from "./core/variables/IOColors";
 
 /**
  * Type describing the supported barcodes in IO.
@@ -61,7 +62,7 @@ const styles = StyleSheet.create({
     position: "relative",
     width: "100%",
     height: screenWidth,
-    backgroundColor: "#000"
+    backgroundColor: IOColors.black
   },
 
   camera: {

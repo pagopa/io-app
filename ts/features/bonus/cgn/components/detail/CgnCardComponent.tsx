@@ -146,7 +146,7 @@ const CgnCardComponent: React.FunctionComponent<Props> = (props: Props) => {
   useEffect(() => () => props.onCardLoadEnd(), []);
 
   return (
-    <View style={[styles.cgnCard]} testID={"card-component"}>
+    <View style={styles.cgnCard} testID={"card-component"}>
       <ImageBackground
         source={cardBg}
         imageStyle={[styles.imageFull]}
