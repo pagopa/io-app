@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
 });
 
 const header = (title: string) => (
-  <Text style={[keyValueTableStyle.baseRow]} bold={true}>
+  <Text style={keyValueTableStyle.baseRow} bold={true}>
     {title}
   </Text>
 );

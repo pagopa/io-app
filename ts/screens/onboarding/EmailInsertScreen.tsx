@@ -264,7 +264,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
             <H1
               color={"bluegreyDark"}
               weight={"Bold"}
-              style={[styles.horizontalPadding]}
+              style={styles.horizontalPadding}
             >
               {isFromProfileSection
                 ? I18n.t("email.edit.title")

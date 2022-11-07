@@ -31,9 +31,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     alignSelf: "center"
   },
-  noBorder: {
-    borderWidth: 0
-  },
   flex: {
     flex: 1
   }

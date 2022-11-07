@@ -10,7 +10,7 @@ import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
-import { IOColors } from "../../core/variables/IOColors";
+import { hexToRgba, IOColors } from "../../core/variables/IOColors";
 
 export type SectionCardStatus = "add" | "refresh" | "loading" | "show";
 type Props = {
@@ -23,6 +23,8 @@ type Props = {
   accessibilityLabel?: string;
   accessibilityHint?: string;
 };
+
+const opaqueBorderColor = hexToRgba(IOColors.black, 0.1);
 
 const styles = StyleSheet.create({
   flexRow: {
@@ -86,15 +88,12 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 0
   },
   rotateCard: {
-    shadowColor: "#000",
+    shadowColor: IOColors.black,
     marginBottom: -38,
     flex: 1,
     shadowRadius: 10,
     shadowOpacity: 0.15,
     transform: [{ perspective: 1200 }, { rotateX: "-20deg" }, { scaleX: 0.99 }]
-  },
-  rotateText: {
-    flex: 1
   },
   button: {
     flexDirection: "row",
@@ -109,7 +108,7 @@ const styles = StyleSheet.create({
     marginBottom: -15,
     borderRadius: 8,
     borderTopWidth: 8,
-    borderTopColor: "rgba(0,0,0,0.1)",
+    borderTopColor: opaqueBorderColor,
     height: 15
   }
 });
@@ -165,7 +164,7 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
                 fontSize: customVariables.fontSize1 + 16,
                 height: 22,
                 paddingTop: 8,
-                color: "white"
+                color: IOColors.white
               }}
             >
               {" ⟳"}
@@ -219,7 +218,7 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
           ]}
         >
           <View
-            style={[styles.cardInner]}
+            style={styles.cardInner}
             accessibilityLabel={props.accessibilityLabel}
             accessibilityHint={props.accessibilityHint}
             accessibilityRole="button"
@@ -240,7 +239,7 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
                   </Badge>
                 )}
               </View>
-              {!isError && <View style={[styles.button]}>{rightLabel()}</View>}
+              {!isError && <View style={styles.button}>{rightLabel()}</View>}
             </View>
           </View>
         </View>
