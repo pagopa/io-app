@@ -52,5 +52,5 @@ export function* checkNotificationsPreferencesSaga(
   }
 
   // check if the user has given system notification permissions
-  yield* call(checkNotificationsPermissionsSaga, userProfile);
+  yield* call(checkNotificationsPermissionsSaga);
 }
