@@ -58,6 +58,9 @@ const prerequisiteList: Prerequisites = [
   }
 ]; // fetched from state/backend
 
+// displaying_required_pdnd_criteria
+// 
+
 type PageProps = {
   // needs full implementation
   prerequites: Prerequisites;
