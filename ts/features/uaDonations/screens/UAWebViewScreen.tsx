@@ -6,6 +6,7 @@ import {
 } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { Route, useNavigation, useRoute } from "@react-navigation/native";
+import * as E from "fp-ts/lib/Either";
 import { View } from "native-base";
 import React, { useEffect, useState } from "react";
 import { Linking, Platform, SafeAreaView, StyleSheet } from "react-native";
@@ -100,28 +101,28 @@ const handleOnMessage = (
   const maybeMessage = UADonationWebViewMessage.decode(
     JSON.parse(event.nativeEvent.data)
   );
-  if (maybeMessage.isLeft()) {
+  if (E.isLeft(maybeMessage)) {
     void mixpanelTrack("UADONATIONS_WEBVIEW_DECODE_ERROR", {
-      reason: `decoding error: ${readableReport(maybeMessage.value)}`
+      reason: `decoding error: ${readableReport(maybeMessage.left)}`
     });
     handleError();
     return;
   }
-  switch (maybeMessage.value.kind) {
+  switch (maybeMessage.right.kind) {
     case "webUrl":
-      const webUrl = maybeMessage.value.payload;
+      const webUrl = maybeMessage.right.payload;
       void mixpanelTrack("UADONATIONS_WEBVIEW_OPEN_WEBURL_REQUEST", {
         url: webUrl
       });
       openWebUrl(webUrl, () => {
         void mixpanelTrack("UADONATIONS_WEBVIEW_OPEN_WEBURL_ERROR", {
-          url: maybeMessage.value.payload
+          url: maybeMessage.right.payload
         });
         handleError();
       });
       break;
     case "payment":
-      const { nav, cf, amount } = maybeMessage.value.payload;
+      const { nav, cf, amount } = maybeMessage.right.payload;
       void mixpanelTrack("UADONATIONS_WEBVIEW_PAYMENT_DECODE_REQUEST", {
         organizationFiscalCode: cf,
         paymentNoticeNumber: PaymentNoticeNumberFromString.encode(nav),
@@ -132,10 +133,12 @@ const handleOnMessage = (
         organizationFiscalCode: cf
       });
       const maybeAmount = AmountInEuroCents.decode(amount.toString());
-      if (maybeRptId.isLeft() || maybeAmount.isLeft()) {
-        const reason = maybeRptId.isLeft()
-          ? maybeRptId.value
-          : maybeAmount.value;
+      if (E.isLeft(maybeRptId) || E.isLeft(maybeAmount)) {
+        const reason = E.isLeft(maybeRptId)
+          ? maybeRptId.left
+          : E.isLeft(maybeAmount)
+          ? maybeAmount.left
+          : maybeAmount.right;
         void mixpanelTrack("UADONATIONS_WEBVIEW_PAYMENT_DECODE_ERROR", {
           reason
         });
@@ -143,16 +146,16 @@ const handleOnMessage = (
         return;
       }
       void mixpanelTrack("UADONATIONS_WEBVIEW_PAYMENT_DECODE_SUCCESS", {
-        organizationFiscalCode: maybeRptId.value.organizationFiscalCode,
+        organizationFiscalCode: maybeRptId.right.organizationFiscalCode,
         paymentNoticeNumber: PaymentNoticeNumber.encode(
-          maybeRptId.value.paymentNoticeNumber
+          maybeRptId.right.paymentNoticeNumber
         ),
-        amount: maybeAmount.value
+        amount: maybeAmount.right
       });
-      onPaymentPayload(maybeRptId.value, maybeAmount.value);
+      onPaymentPayload(maybeRptId.right, maybeAmount.right);
       break;
     case "error":
-      const error = maybeMessage.value.payload;
+      const error = maybeMessage.right.payload;
       void mixpanelTrack("UADONATIONS_WEBVIEW_REPORT_ERROR", {
         reason: error
       });

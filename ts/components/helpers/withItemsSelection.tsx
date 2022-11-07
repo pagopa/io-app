@@ -1,17 +1,18 @@
-import { none, Option, some } from "fp-ts/lib/Option";
+import { Omit } from "@pagopa/ts-commons/lib/types";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import hoistNonReactStatics from "hoist-non-react-statics";
-import { Omit } from "italia-ts-commons/lib/types";
 import React from "react";
 
 type State = {
-  selectedItemIds: Option<Set<string>>;
+  selectedItemIds: O.Option<Set<string>>;
 };
 
 export type InjectedWithItemsSelectionProps = {
-  selectedItemIds: Option<Set<string>>;
+  selectedItemIds: O.Option<Set<string>>;
   toggleItemSelection: (id: string) => void;
   resetSelection: () => void;
-  setSelectedItemIds: (newSelectedItemIds: Option<Set<string>>) => void;
+  setSelectedItemIds: (newSelectedItemIds: O.Option<Set<string>>) => void;
 };
 
 /**
@@ -29,7 +30,7 @@ export function withItemsSelection<P extends InjectedWithItemsSelectionProps>(
     constructor(props: Omit<P, keyof InjectedWithItemsSelectionProps>) {
       super(props);
       this.state = {
-        selectedItemIds: none
+        selectedItemIds: O.none
       };
     }
 
@@ -49,8 +50,9 @@ export function withItemsSelection<P extends InjectedWithItemsSelectionProps>(
     // A function to add/remove an id from the selectedItemIds Set.
     private toggleItemSelection = (id: string) => {
       this.setState(({ selectedItemIds }) =>
-        selectedItemIds
-          .map(_ => {
+        pipe(
+          selectedItemIds,
+          O.map(_ => {
             const newSelectedItemIds = new Set(_);
             if (newSelectedItemIds.has(id)) {
               newSelectedItemIds.delete(id);
@@ -59,16 +61,19 @@ export function withItemsSelection<P extends InjectedWithItemsSelectionProps>(
             }
 
             return {
-              selectedItemIds: some(newSelectedItemIds)
+              selectedItemIds: O.some(newSelectedItemIds)
             };
-          })
-          .getOrElse({
-            selectedItemIds: some(new Set<string>([id]))
-          })
+          }),
+          O.getOrElse(() => ({
+            selectedItemIds: O.some(new Set<string>([id]))
+          }))
+        )
       );
     };
 
-    private setSelectedItemIds = (newSelectedItemIds: Option<Set<string>>) => {
+    private setSelectedItemIds = (
+      newSelectedItemIds: O.Option<Set<string>>
+    ) => {
       this.setState({
         selectedItemIds: newSelectedItemIds
       });
@@ -76,7 +81,7 @@ export function withItemsSelection<P extends InjectedWithItemsSelectionProps>(
 
     private resetSelection = () => {
       this.setState({
-        selectedItemIds: none
+        selectedItemIds: O.none
       });
     };
   }

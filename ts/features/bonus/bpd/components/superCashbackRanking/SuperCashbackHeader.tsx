@@ -1,15 +1,16 @@
-import * as React from "react";
-import { connect } from "react-redux";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { Badge, Text as NBText, View } from "native-base";
-import { StyleSheet, Platform } from "react-native";
-import { fromNullable } from "fp-ts/lib/Option";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { bpdSelectedPeriodSelector } from "../../store/reducers/details/selectedPeriod";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
-import { BpdPeriodWithInfo } from "../../store/reducers/details/periods";
-import I18n from "../../../../../i18n";
+import * as React from "react";
+import { Platform, StyleSheet } from "react-native";
+import { connect } from "react-redux";
 import { H3 } from "../../../../../components/core/typography/H3";
+import { IOColors } from "../../../../../components/core/variables/IOColors";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import I18n from "../../../../../i18n";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { BpdPeriodWithInfo } from "../../store/reducers/details/periods";
+import { bpdSelectedPeriodSelector } from "../../store/reducers/details/selectedPeriod";
 
 type Props = ReturnType<typeof mapStateToProps>;
 
@@ -28,20 +29,27 @@ const styles = StyleSheet.create({
 });
 
 const isPeriodOnGoing = (period: BpdPeriodWithInfo | undefined) =>
-  fromNullable(period).fold(false, p => {
-    if (p.status !== "Closed") {
-      return true;
-    }
+  pipe(
+    period,
+    O.fromNullable,
+    O.fold(
+      () => false,
+      p => {
+        if (p.status !== "Closed") {
+          return true;
+        }
 
-    const actualDate = new Date();
-    const endDate = new Date(p.endDate.getTime());
-    endDate.setDate(endDate.getDate() + p.gracePeriod);
+        const actualDate = new Date();
+        const endDate = new Date(p.endDate.getTime());
+        endDate.setDate(endDate.getDate() + p.gracePeriod);
 
-    return (
-      actualDate.getTime() >= p.endDate.getTime() &&
-      actualDate.getTime() <= endDate.getTime()
-    );
-  });
+        return (
+          actualDate.getTime() >= p.endDate.getTime() &&
+          actualDate.getTime() <= endDate.getTime()
+        );
+      }
+    )
+  );
 
 const SuperCashbackHeader: React.FunctionComponent<Props> = (props: Props) => (
   <View style={[IOStyles.row, { alignItems: "center" }]}>

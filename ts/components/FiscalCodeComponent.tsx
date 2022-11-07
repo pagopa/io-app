@@ -7,7 +7,9 @@
  * The fac-simile back side can be rendered for both full and landscape modes,
  * and it includes the barcode of the fiscal code with the code 128 format
  */
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import {
@@ -24,9 +26,9 @@ import { Municipality } from "../../definitions/content/Municipality";
 import I18n from "../i18n";
 import customVariables from "../theme/variables";
 import { dateToAccessibilityReadableFormat } from "../utils/accessibility";
+import { formatDateAsShortFormatUTC } from "../utils/dates";
 import { extractFiscalCodeData } from "../utils/profile";
 import { maybeNotNullyString } from "../utils/strings";
-import { formatDateAsShortFormatUTC } from "../utils/dates";
 import { IOColors } from "./core/variables/IOColors";
 
 interface BaseProps {
@@ -400,12 +402,14 @@ export default class FiscalCodeComponent extends React.Component<Props> {
           birthDate: birthDate
             ? dateToAccessibilityReadableFormat(birthDate)
             : na,
-          province: maybeNotNullyString(
-            fiscalCodeData.siglaProvincia
-          ).getOrElse(na),
-          placeOfBirth: maybeNotNullyString(
-            fiscalCodeData.denominazione
-          ).getOrElse(na)
+          province: pipe(
+            maybeNotNullyString(fiscalCodeData.siglaProvincia),
+            O.getOrElse(() => na)
+          ),
+          placeOfBirth: pipe(
+            maybeNotNullyString(fiscalCodeData.denominazione),
+            O.getOrElse(() => na)
+          )
         }
       ),
       accessibilityHint: isLandScape

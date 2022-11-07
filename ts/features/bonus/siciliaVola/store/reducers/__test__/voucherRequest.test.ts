@@ -1,5 +1,5 @@
 import { createStore } from "redux";
-import { none, some } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import { appReducer } from "../../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import {
@@ -48,7 +48,7 @@ describe("Test availableRegion reducer", () => {
   it("Initial state should be none", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     expect(globalState.bonus.sv.voucherGeneration.voucherRequest).toStrictEqual(
-      none
+      O.none
     );
   });
   it("Should none after if the voucher generation workunit starts", () => {
@@ -56,7 +56,7 @@ describe("Test availableRegion reducer", () => {
     const store = createStore(appReducer, globalState as any);
     store.dispatch(svGenerateVoucherStart());
     expect(globalState.bonus.sv.voucherGeneration.voucherRequest).toStrictEqual(
-      none
+      O.none
     );
   });
   it("Should be some with the category valued after the select category action dispatched", () => {
@@ -64,7 +64,7 @@ describe("Test availableRegion reducer", () => {
     const store = createStore(appReducer, globalState as any);
     store.dispatch(svGenerateVoucherSelectCategory(mockCategoryStudent));
 
-    const mockState: VoucherRequestState = some({
+    const mockState: VoucherRequestState = O.some({
       category: mockCategoryStudent
     });
 
@@ -78,7 +78,7 @@ describe("Test availableRegion reducer", () => {
     store.dispatch(svGenerateVoucherSelectCategory(mockCategoryWorker));
     store.dispatch(svGenerateVoucherUnderThresholdIncome(true));
 
-    const mockState: VoucherRequestState = some({
+    const mockState: VoucherRequestState = O.some({
       category: mockCategoryWorker,
       underThresholdIncome: true
     });
@@ -94,12 +94,12 @@ describe("Test availableRegion reducer", () => {
     store.dispatch(svGenerateVoucherUnderThresholdIncome(true));
     expect(
       store.getState().bonus.sv.voucherGeneration.voucherRequest
-    ).toStrictEqual(none);
+    ).toStrictEqual(O.none);
 
     store.dispatch(svGenerateVoucherSelectCategory(mockCategoryStudent));
     store.dispatch(svGenerateVoucherUnderThresholdIncome(true));
 
-    const mockState: VoucherRequestState = some({
+    const mockState: VoucherRequestState = O.some({
       category: mockCategoryStudent
     });
 
@@ -113,7 +113,7 @@ describe("Test availableRegion reducer", () => {
     store.dispatch(svGenerateVoucherSelectCategory(mockCategoryWorker));
     store.dispatch(svGenerateVoucherSelectCompany(mockCompany));
 
-    const mockState: VoucherRequestState = some({
+    const mockState: VoucherRequestState = O.some({
       category: mockCategoryWorker,
       company: mockCompany
     });
@@ -129,12 +129,12 @@ describe("Test availableRegion reducer", () => {
     store.dispatch(svGenerateVoucherSelectCompany(mockCompany));
     expect(
       store.getState().bonus.sv.voucherGeneration.voucherRequest
-    ).toStrictEqual(none);
+    ).toStrictEqual(O.none);
 
     store.dispatch(svGenerateVoucherSelectCategory(mockCategoryStudent));
     store.dispatch(svGenerateVoucherSelectCompany(mockCompany));
 
-    const mockState: VoucherRequestState = some({
+    const mockState: VoucherRequestState = O.some({
       category: mockCategoryStudent
     });
 
@@ -148,7 +148,7 @@ describe("Test availableRegion reducer", () => {
     store.dispatch(svGenerateVoucherSelectCategory(mockCategorySick));
     store.dispatch(svGenerateVoucherSelectHospital(mockHospital));
 
-    const mockState: VoucherRequestState = some({
+    const mockState: VoucherRequestState = O.some({
       category: mockCategorySick,
       hospital: mockHospital
     });
@@ -163,12 +163,12 @@ describe("Test availableRegion reducer", () => {
     store.dispatch(svGenerateVoucherSelectHospital(mockHospital));
     expect(
       store.getState().bonus.sv.voucherGeneration.voucherRequest
-    ).toStrictEqual(none);
+    ).toStrictEqual(O.none);
 
     store.dispatch(svGenerateVoucherSelectCategory(mockCategoryWorker));
     store.dispatch(svGenerateVoucherSelectHospital(mockHospital));
 
-    const mockState: VoucherRequestState = some({
+    const mockState: VoucherRequestState = O.some({
       category: mockCategoryWorker
     });
 
@@ -182,7 +182,7 @@ describe("Test availableRegion reducer", () => {
     store.dispatch(svGenerateVoucherSelectCategory(mockCategoryStudent));
     store.dispatch(svGenerateVoucherSelectUniversity(mockUniversity));
 
-    const mockState: VoucherRequestState = some({
+    const mockState: VoucherRequestState = O.some({
       category: mockCategoryStudent,
       university: mockUniversity
     });
@@ -197,12 +197,12 @@ describe("Test availableRegion reducer", () => {
     store.dispatch(svGenerateVoucherSelectUniversity(mockUniversity));
     expect(
       store.getState().bonus.sv.voucherGeneration.voucherRequest
-    ).toStrictEqual(none);
+    ).toStrictEqual(O.none);
 
     store.dispatch(svGenerateVoucherSelectCategory(mockCategoryWorker));
     store.dispatch(svGenerateVoucherSelectUniversity(mockUniversity));
 
-    const mockState: VoucherRequestState = some({
+    const mockState: VoucherRequestState = O.some({
       category: mockCategoryWorker
     });
 
@@ -216,7 +216,7 @@ describe("Test availableRegion reducer", () => {
     store.dispatch(svGenerateVoucherSelectCategory(mockCategoryStudent));
     store.dispatch(svGenerateVoucherSelectFlightsDate(mockFlightsDate));
 
-    const mockState: VoucherRequestState = some({
+    const mockState: VoucherRequestState = O.some({
       category: mockCategoryStudent,
       departureDate: mockFlightsDate.departureDate,
       returnDate: mockFlightsDate.returnDate

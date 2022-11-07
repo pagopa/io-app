@@ -2,7 +2,9 @@
  * A screens to express the preferences related to email forwarding.
  * //TODO: magage errors (check toast etc.) + avoid useless updates
  */
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { List, Text as NBText } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
@@ -221,9 +223,12 @@ const mapStateToProps = (state: GlobalState) => {
   // : pot.getOrElse(potIsCustomEmailChannelEnabled, false);
 
   const potUserEmail = profileEmailSelector(state);
-  const userEmail = potUserEmail.fold(
-    I18n.t("global.remoteStates.notAvailable"),
-    (i: string) => i
+  const userEmail = pipe(
+    potUserEmail,
+    O.fold(
+      () => I18n.t("global.remoteStates.notAvailable"),
+      (i: string) => i
+    )
   );
 
   return {

@@ -3,6 +3,7 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import I18n from "../i18n";
 import variables from "../theme/variables";
+import { IOColors, hexToRgba } from "../components/core/variables/IOColors";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import BoxedRefreshIndicator from "./ui/BoxedRefreshIndicator";
 import { Overlay } from "./ui/Overlay";
@@ -37,9 +38,7 @@ class LoadingSpinnerOverlay extends React.Component<Props> {
     } = this.props;
     return (
       <Overlay
-        backgroundColor={`rgba(255, 255, 255, ${loadingOpacity})`}
-        // TODO: Replace reference to RGB with formatted value from IOColors,
-        // using `hexToRgba` function
+        backgroundColor={hexToRgba(IOColors.white, loadingOpacity)}
         foreground={
           isLoading && (
             <BoxedRefreshIndicator

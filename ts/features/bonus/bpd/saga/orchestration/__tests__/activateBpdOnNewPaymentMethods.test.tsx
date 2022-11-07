@@ -1,9 +1,10 @@
-import { left, right } from "fp-ts/lib/Either";
+import * as E from "fp-ts/lib/Either";
 import { View } from "react-native";
 import { createStore } from "redux";
 import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
 import { BpdConfig } from "../../../../../../../definitions/content/BpdConfig";
+import { EnableableFunctionsEnum } from "../../../../../../../definitions/pagopa/EnableableFunctions";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { navigateToWalletHome } from "../../../../../../store/actions/navigation";
 import { appReducer } from "../../../../../../store/reducers";
@@ -14,7 +15,6 @@ import { navigateToSuggestBpdActivation } from "../../../../../wallet/onboarding
 import { navigateToActivateBpdOnNewPrivative } from "../../../../../wallet/onboarding/privative/navigation/action";
 import { activateBpdOnNewPaymentMethods } from "../activateBpdOnNewAddedPaymentMethods";
 import { isBpdEnabled } from "../onboarding/startOnboarding";
-import { EnableableFunctionsEnum } from "../../../../../../../definitions/pagopa/EnableableFunctions";
 
 const enrollAfterAddTrue: BpdConfig = {
   enroll_bpd_after_add_payment_method: true,
@@ -65,7 +65,7 @@ describe("Test activateBpdOnNewPaymentMethods behaviour", () => {
       navigateToActivateBpdOnNewPrivative
     )
       .provide([
-        [matchers.call(isBpdEnabled), left(new Error("An error"))],
+        [matchers.call(isBpdEnabled), E.left(new Error("An error"))],
         [matchers.select(bpdRemoteConfigSelector), enrollAfterAddFalse]
       ])
       .call(isBpdEnabled)
@@ -91,7 +91,7 @@ describe("Test activateBpdOnNewPaymentMethods behaviour", () => {
       navigateToActivateBpdOnNewPrivative
     )
       .provide([
-        [matchers.call(isBpdEnabled), right(true)],
+        [matchers.call(isBpdEnabled), E.right(true)],
         [matchers.select(bpdRemoteConfigSelector), enrollAfterAddFalse]
       ])
       .call(navigateToWalletHome)
@@ -109,7 +109,7 @@ describe("Test activateBpdOnNewPaymentMethods behaviour", () => {
       navigateToActivateBpdOnNewPrivative
     )
       .provide([
-        [matchers.call(isBpdEnabled), right(true)],
+        [matchers.call(isBpdEnabled), E.right(true)],
         [matchers.select(bpdRemoteConfigSelector), enrollAfterAddFalse]
       ])
       .not.call(navigateToWalletHome)
@@ -127,7 +127,7 @@ describe("Test activateBpdOnNewPaymentMethods behaviour", () => {
       navigateToActivateBpdOnNewPrivative
     )
       .provide([
-        [matchers.call(isBpdEnabled), right(true)],
+        [matchers.call(isBpdEnabled), E.right(true)],
         [
           matchers.select(bpdRemoteConfigSelector),
           { ...enrollAfterAddFalse, program_active: false }
@@ -148,7 +148,7 @@ describe("Test activateBpdOnNewPaymentMethods behaviour", () => {
       navigateToActivateBpdOnNewPrivative
     )
       .provide([
-        [matchers.call(isBpdEnabled), right(false)],
+        [matchers.call(isBpdEnabled), E.right(false)],
         [matchers.select(bpdRemoteConfigSelector), enrollAfterAddFalse]
       ])
       .call(isBpdEnabled)
@@ -163,7 +163,7 @@ describe("Test activateBpdOnNewPaymentMethods behaviour", () => {
       navigateToActivateBpdOnNewPrivative
     )
       .provide([
-        [matchers.call(isBpdEnabled), right(false)],
+        [matchers.call(isBpdEnabled), E.right(false)],
         [matchers.select(bpdRemoteConfigSelector), undefined]
       ])
       .call(isBpdEnabled)
@@ -180,7 +180,7 @@ describe("Test activateBpdOnNewPaymentMethods behaviour", () => {
       navigateToActivateBpdOnNewPrivative
     )
       .provide([
-        [matchers.call(isBpdEnabled), right(false)],
+        [matchers.call(isBpdEnabled), E.right(false)],
         [matchers.select(bpdRemoteConfigSelector), enrollAfterAddTrue]
       ])
       .call(isBpdEnabled)

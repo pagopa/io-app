@@ -483,6 +483,9 @@ profile:
           title: Do you want to change the language to
           subtitle: You'll need to restart the application to make this happen
         not_selected: Not selected
+      notifications:
+        title: Push notifications
+        subtitle: Allow previews and reminders 
     empty:
       default: No preference set
     unavailable:
@@ -499,6 +502,16 @@ profile:
       contextualHelpContent: !include profile/profile_preferences_calendar.md
       local_calendar: Local calendar
       birthday_calendar: Birthdays
+    notifications:
+      header: Push notifications
+      title: Customize push notifications
+      subtitle: Ora puoi vedere subito chi ti ha scritto o ricevere promemoria da messaggi importanti.
+      titleNewUser: Personalizza le notifiche
+      subtitleNewUser: Choose how to get updates on the messages and reminders you receive
+      reminders:
+        title: Allow reminders
+        description: Receive push notifications close to deadlines or when you have unread messages
+      error: An error occurred with your request
 userMetadata:
   errors:
     upsertVersion: Can't upsert user metadata with this version
@@ -538,8 +551,8 @@ authentication:
       title: Login with CIE unavailable
       body: !include cie/cieNotSupported.md
       android_desc: !include cie/cieNotSupported_android.md
-      os_version_unsupported: an OS version compatible with CIE authentication (Android 6.0 or higher)
-      nfc_incompatible: an NFC antenna compatible with authentication via CIE
+      os_version_unsupported: an Android 6.0 or higher operating system
+      nfc_incompatible: a NFC chip
     contentTitleCie: Don't have SPID or CIE?
     cie_information_request: !include cie.md
     spid_or_cie: To use IO you must have one of these digital tools, which certify your identity.
@@ -561,9 +574,8 @@ authentication:
     card3-title: Quickly pay a physical notice
     card3-content: You can pay a notice also by scanning the QR code on the physical
       notice
-    card4-title: You can use the app by SPID only
-    card4-content: The access is allowed only by SPID (Public Service of Digital Identity)
-      to guarantee your online safety
+    card4-title: You can login only with SPID
+    card4-content: The device you are using does not support access with Electronic Identity Card (CIE)
     card5-title: Welcome to the public version of IO!
     card5-content: In this version you can find in the upper-right corner
       the icons to report bugs or start a chat with the development team.
@@ -810,6 +822,13 @@ onboarding:
   thankYouPage:
     title: Setup completed!
     body: Now you can start using IO
+  notifications:
+    badge: News
+    headerTitle: IO Settings
+    continue: Continue
+    remindersPreviewTitle: Promemoria
+    previewTitle: Hai un nuovo messaggio
+    previewMessage: Apri l’app per leggere il contenuto
 forms:
   validators:
     required: Required value
@@ -2997,8 +3016,7 @@ features:
             body: "Downloading the attachment"
           failing:
             title: "Attachment"
-            body: "An error occurred while downloading the attachment"
-            details: "Check your connection please and try again"
+            details: "An error occurred while downloading the attachment. Retry or create a ticket"
           checkBox: "OK, don't show me again"
         pdfPreview:
           title: "PDF Preview"
@@ -3007,7 +3025,9 @@ features:
           save: "Save"
           savedAtLocation: "Document {{name}} was successfully saved in your Download folder."
           errors:
-            previewing: "Non è possibile mostrare l'anteprima del documento. E' comunque possibile salvarlo e aprirlo con un'applicazione per i PDF"
+            previewing:
+              title: "Preview is not available"
+              body: "To view the document, download and open it with a PDF reader app."
             sharing: "An error occurred while sharing the document"
             opening: "An error occurred while opening the document. You may not have a PDF reader installed."
             saving: "An error occurred while saving the document"
@@ -3117,8 +3137,10 @@ features:
           EFFECTIVE_DATE: Perfezionata per decorrenza termini
           VIEWED: Perfezionata per visione
           REFUSED: REFUSED
-          UNDEFINED: Non definito
+          CANCELLED: Annullata
         expand: mostra gli stati precedenti
+        info: Puoi vedere il dettaglio di ciascuno stato, scaricare le ricevute e le attestazioni opponibili a terzi accedendo alla versione web del servizio
+        cta: Accedi alla versione web
 webView:
   error:
     missingParams: Not all information necessary to access this page are available

@@ -1,30 +1,31 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import React from "react";
-import { View, StyleSheet } from "react-native";
-import * as pot from "italia-ts-commons/lib/pot";
+import { StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
-import customVariables from "../../../../theme/variables";
-import { H4 } from "../../../../components/core/typography/H4";
-import I18n from "../../../../i18n";
-import { IOColors } from "../../../../components/core/variables/IOColors";
-
 import AmountIcon from "../../../../../img/features/payments/Amount.svg";
 import CalendarIcon from "../../../../../img/features/payments/calendar.svg";
 import NoticeIcon from "../../../../../img/features/payments/Giacenza.svg";
+import { IOBadge } from "../../../../components/core/IOBadge";
+import { Body } from "../../../../components/core/typography/Body";
+import { H4 } from "../../../../components/core/typography/H4";
+import { IOColors } from "../../../../components/core/variables/IOColors";
+import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
+import IconFont from "../../../../components/ui/IconFont";
+import { MultiImage } from "../../../../components/ui/MultiImage";
+import I18n from "../../../../i18n";
 import { PaymentState } from "../../../../store/reducers/wallet/payment";
-import { formatTextRecipient } from "../../../../utils/strings";
+import customVariables from "../../../../theme/variables";
+import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
+import { getLogoForOrganization } from "../../../../utils/organizations";
+import { cleanTransactionDescription } from "../../../../utils/payment";
 import {
   centsToAmount,
   formatNumberAmount
 } from "../../../../utils/stringBuilder";
-import { cleanTransactionDescription } from "../../../../utils/payment";
-import IconFont from "../../../../components/ui/IconFont";
-import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
+import { formatTextRecipient } from "../../../../utils/strings";
 import { usePaymentAmountInfoBottomSheet } from "../hooks/usePaymentAmountInfoBottomSheet";
-import { getLogoForOrganization } from "../../../../utils/organizations";
-import { MultiImage } from "../../../../components/ui/MultiImage";
-import { IOBadge } from "../../../../components/core/IOBadge";
-import { Body } from "../../../../components/core/typography/Body";
-import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 
 const styles = StyleSheet.create({
   row: {
@@ -165,11 +166,12 @@ type Props = Readonly<{
 export const TransactionSummary = (props: Props): React.ReactElement => {
   const isLoading = pot.isLoading(props.paymentVerification);
 
-  const recipient = pot
-    .toOption(props.paymentVerification)
-    .mapNullable(_ => _.enteBeneficiario)
-    .map(formatTextRecipient)
-    .toUndefined();
+  const recipient = pipe(
+    pot.toOption(props.paymentVerification),
+    O.chainNullableK(_ => _.enteBeneficiario),
+    O.map(formatTextRecipient),
+    O.toUndefined
+  );
 
   const organizationIcon = [
     ...getLogoForOrganization(props.organizationFiscalCode),
@@ -263,7 +265,7 @@ export const TransactionSummary = (props: Props): React.ReactElement => {
         title={I18n.t("payment.noticeCode")}
         subtitle={formattedPaymentNoticeNumber}
         onPress={() =>
-          clipboardSetStringWithFeedback(formattedPaymentNoticeNumber)
+          clipboardSetStringWithFeedback(props.paymentNoticeNumber)
         }
       />
       <TransactionSummaryRow

@@ -1,4 +1,4 @@
-import { none } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import { View } from "native-base";
 import * as React from "react";
 import { SafeAreaView } from "react-native";
@@ -61,7 +61,7 @@ const mapDispatchToProps = (_: Dispatch) => ({
   },
   addPaymentMethod: () => {
     navigateToWalletHome();
-    navigateToWalletAddPaymentMethod({ inPayment: none });
+    navigateToWalletAddPaymentMethod({ inPayment: O.none });
   }
 });
 

@@ -1,9 +1,10 @@
-import { findIndex } from "fp-ts/lib/Array";
-import { fromNullable } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as AR from "fp-ts/lib/Array";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { View } from "native-base";
-import { useEffect, useState } from "react";
 import * as React from "react";
+import { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 import { connect } from "react-redux";
@@ -57,20 +58,27 @@ const BpdPeriodSelector: React.FunctionComponent<Props> = props => {
     ));
 
   const selectPeriod = (index: number) =>
-    fromNullable(periodWithAmountList[index]).map(currentItem => {
-      if (currentItem.awardPeriodId === props.selectedPeriod?.awardPeriodId) {
-        return;
-      }
-      props.changeSelectPeriod(currentItem);
-    });
+    pipe(
+      periodWithAmountList[index],
+      O.fromNullable,
+      O.map(currentItem => {
+        if (currentItem.awardPeriodId === props.selectedPeriod?.awardPeriodId) {
+          return;
+        }
+        props.changeSelectPeriod(currentItem);
+      })
+    );
 
   useEffect(() => {
     if (initialPeriod === undefined) {
       setInitialperiod(
-        findIndex(
+        pipe(
           periodWithAmountList,
-          elem => elem.awardPeriodId === props.selectedPeriod?.awardPeriodId
-        ).getOrElse(0)
+          AR.findIndex(
+            elem => elem.awardPeriodId === props.selectedPeriod?.awardPeriodId
+          ),
+          O.getOrElse(() => 0)
+        )
       );
     }
   }, [

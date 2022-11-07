@@ -1,13 +1,17 @@
+import * as AR from "fp-ts/lib/Array";
+import { constNull, pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { Content, Text as NBText, View } from "native-base";
 import * as React from "react";
 import { ComponentProps } from "react";
 import { Image, SafeAreaView, StyleSheet } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
-import { fromNullable, Option } from "fp-ts/lib/Option";
-import { index } from "fp-ts/lib/Array";
-import { constNull } from "fp-ts/lib/function";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
+import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
+import { H1 } from "../../../../components/core/typography/H1";
+import { H3 } from "../../../../components/core/typography/H3";
+import { Link } from "../../../../components/core/typography/Link";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { withLightModalContext } from "../../../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../../../components/helpers/withLoadingSpinner";
@@ -20,14 +24,10 @@ import Markdown from "../../../../components/ui/Markdown";
 import I18n from "../../../../i18n";
 import customVariables from "../../../../theme/variables";
 import { useScreenReaderEnabled } from "../../../../utils/accessibility";
-import { maybeNotNullyString } from "../../../../utils/strings";
-import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
-import TosBonusComponent from "../../bonusVacanze/components/TosBonusComponent";
 import { getRemoteLocale } from "../../../../utils/messages";
-import { Link } from "../../../../components/core/typography/Link";
+import { maybeNotNullyString } from "../../../../utils/strings";
 import { confirmButtonProps } from "../../bonusVacanze/components/buttons/ButtonConfigurations";
-import { H1 } from "../../../../components/core/typography/H1";
-import { H3 } from "../../../../components/core/typography/H3";
+import TosBonusComponent from "../../bonusVacanze/components/TosBonusComponent";
 
 type OwnProps = {
   onBack?: () => void;
@@ -82,47 +82,59 @@ const extraMarkdownBodyHeight = 20;
 
 // TODO get the tos footer from props
 const getTosFooter = (
-  maybeBonusTos: Option<string>,
-  maybeRegulationUrl: Option<{ url: string; name: string }>,
+  maybeBonusTos: O.Option<string>,
+  maybeRegulationUrl: O.Option<{ url: string; name: string }>,
   handleModalPress: (tos: string) => void,
   ctaText: string
 ) =>
-  maybeBonusTos.fold(null, bT =>
-    maybeRegulationUrl.fold(
-      // if tos is defined and the regolation url is not defined
-      // return the link (BONUS VACANZE)
-      <>
-        <View spacer={true} extralarge={true} />
-        <ItemSeparatorComponent noPadded={true} />
-        <View spacer={true} extralarge={true} />
-        <NBText dark={true}>{I18n.t("bonus.bonusVacanze.advice")}</NBText>
-        <Link
-          weight={"SemiBold"}
-          numberOfLines={1}
-          onPress={() => handleModalPress(bT)}
-        >
-          {I18n.t("bonus.tos.title")}
-        </Link>
-      </>,
-      // if tos and regulation url is defined
-      // return a markdown footer including both links reference (BPD)
-      rU => (
-        <>
-          <View spacer={true} extralarge={true} />
-          <ItemSeparatorComponent noPadded={true} />
-          <View spacer={true} extralarge={true} />
-          <Markdown
-            cssStyle={CSS_STYLE}
-            extraBodyHeight={extraMarkdownBodyHeight}
-          >
-            {I18n.t("bonus.termsAndConditionFooter", {
-              ctaText,
-              regulationLink: rU.url,
-              tosUrl: bT
-            })}
-          </Markdown>
-        </>
-      )
+  pipe(
+    maybeBonusTos,
+    O.fold(
+      () => null,
+      bT =>
+        pipe(
+          maybeRegulationUrl,
+          O.fold(
+            () => (
+              // if tos is defined and the regolation url is not defined
+              // return the link (BONUS VACANZE)
+              <>
+                <View spacer={true} extralarge={true} />
+                <ItemSeparatorComponent noPadded={true} />
+                <View spacer={true} extralarge={true} />
+                <NBText dark={true}>
+                  {I18n.t("bonus.bonusVacanze.advice")}
+                </NBText>
+                <Link
+                  weight={"SemiBold"}
+                  numberOfLines={1}
+                  onPress={() => handleModalPress(bT)}
+                >
+                  {I18n.t("bonus.tos.title")}
+                </Link>
+              </>
+            ),
+            // if tos and regulation url is defined
+            // return a markdown footer including both links reference (BPD)
+            rU => (
+              <>
+                <View spacer={true} extralarge={true} />
+                <ItemSeparatorComponent noPadded={true} />
+                <View spacer={true} extralarge={true} />
+                <Markdown
+                  cssStyle={CSS_STYLE}
+                  extraBodyHeight={extraMarkdownBodyHeight}
+                >
+                  {I18n.t("bonus.termsAndConditionFooter", {
+                    ctaText,
+                    regulationLink: rU.url,
+                    tosUrl: bT
+                  })}
+                </Markdown>
+              </>
+            )
+          )
+        )
     )
   );
 
@@ -161,8 +173,10 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
     );
 
   // bonus rules url should be the first one in the urls list
-  const maybeRegulationUrl = fromNullable(bonusTypeLocalizedContent.urls).chain(
-    urls => index(0, [...urls])
+  const maybeRegulationUrl = pipe(
+    bonusTypeLocalizedContent.urls,
+    O.fromNullable,
+    O.chain(urls => AR.lookup(0, [...urls]))
   );
 
   // render a stack of button each one representing a url
@@ -212,14 +226,14 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
         <Content>
           <View style={styles.row}>
             <View style={styles.flexStart}>
-              {maybeSponsorshipDescription.isSome() && (
+              {O.isSome(maybeSponsorshipDescription) && (
                 <H3>{maybeSponsorshipDescription.value}</H3>
               )}
 
               <H1>{bonusTypeLocalizedContent.title}</H1>
             </View>
             <View style={styles.flexEnd}>
-              {maybeCover.isSome() && (
+              {O.isSome(maybeCover) && (
                 <Image
                   source={{ uri: maybeCover.value }}
                   style={styles.cover}

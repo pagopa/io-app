@@ -1,5 +1,6 @@
 import { NavigationEvents } from "@react-navigation/compat";
-import { none } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import React from "react";
 import { View } from "react-native";
 
@@ -80,13 +81,17 @@ const mapStateToProps = (state: GlobalState) => {
   // knows about the validation completed
   return {
     isEmailValidated:
-      isEmailValidated && acknowledgeOnEmailValidated.getOrElse(true)
+      isEmailValidated &&
+      pipe(
+        acknowledgeOnEmailValidated,
+        O.getOrElse(() => true)
+      )
   };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   dispatchAcknowledgeOnEmailValidation: () =>
-    dispatch(acknowledgeOnEmailValidation(none))
+    dispatch(acknowledgeOnEmailValidation(O.none))
 });
 
 /**

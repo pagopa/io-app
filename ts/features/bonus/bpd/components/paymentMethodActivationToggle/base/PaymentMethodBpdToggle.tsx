@@ -1,6 +1,6 @@
 /* eslint-disable functional/immutable-data */
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
-import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
 import { useCallback, useEffect, useRef, useState } from "react";

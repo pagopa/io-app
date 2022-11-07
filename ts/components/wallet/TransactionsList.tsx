@@ -1,7 +1,7 @@
 /**
  * This component displays a list of transactions
  */
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Content, Text as NBText, View } from "native-base";
 import * as React from "react";
 import {
@@ -23,11 +23,11 @@ import { cleanTransactionDescription } from "../../utils/payment";
 import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import { H3 } from "../core/typography/H3";
+import { IOColors } from "../core/variables/IOColors";
 import DetailedlistItemComponent from "../DetailedlistItemComponent";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 import BoxedRefreshIndicator from "../ui/BoxedRefreshIndicator";
-import { IOColors } from "../core/variables/IOColors";
 
 type State = {
   loadingMore: boolean;

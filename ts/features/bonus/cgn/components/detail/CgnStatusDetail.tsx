@@ -1,12 +1,12 @@
+import { Badge, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { Badge, View } from "native-base";
 import { Card } from "../../../../../../definitions/cgn/Card";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { H5 } from "../../../../../components/core/typography/H5";
+import { IOColors } from "../../../../../components/core/variables/IOColors";
 import I18n from "../../../../../i18n";
 import { localeDateFormat } from "../../../../../utils/locale";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
 
 type Props = {
   cgnDetail: Card;

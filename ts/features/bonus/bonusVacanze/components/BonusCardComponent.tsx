@@ -1,3 +1,5 @@
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { Badge, Text as NBText, View } from "native-base";
 import * as React from "react";
 import { Image, ImageBackground, Platform, StyleSheet } from "react-native";
@@ -8,6 +10,10 @@ import {
   MenuTrigger
 } from "react-native-popup-menu";
 import { BonusActivationWithQrCode } from "../../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
+import {
+  hexToRgba,
+  IOColors
+} from "../../../../components/core/variables/IOColors";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import IconFont from "../../../../components/ui/IconFont";
@@ -18,10 +24,6 @@ import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { isShareEnabled } from "../../../../utils/share";
 import { maybeNotNullyString } from "../../../../utils/strings";
 import { getBonusCodeFormatted, isBonusActive } from "../utils/bonus";
-import {
-  IOColors,
-  hexToRgba
-} from "../../../../components/core/variables/IOColors";
 
 type Props = {
   bonus: BonusActivationWithQrCode;
@@ -124,9 +126,9 @@ const styles = StyleSheet.create({
   }
 });
 
-import bonusVacanzeWhiteLogo from "../../../../../img/bonus/bonusVacanze/logo_BonusVacanze_White.png";
-import bonusVacanzePreviewBg from "../../../../../img/bonus/bonusVacanze/bonus_preview_bg.png";
 import bonusVacanzeBg from "../../../../../img/bonus/bonusVacanze/bonus_bg.png";
+import bonusVacanzePreviewBg from "../../../../../img/bonus/bonusVacanze/bonus_preview_bg.png";
+import bonusVacanzeWhiteLogo from "../../../../../img/bonus/bonusVacanze/logo_BonusVacanze_White.png";
 // eslint-disable-next-line sonarjs/cognitive-complexity
 const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
   const { bonus } = props;
@@ -146,7 +148,10 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
         accessibilityLabel={I18n.t("bonus.bonusVacanze.accessibility.card", {
           code: props.bonus.id,
           value: props.bonus.dsu_request.max_amount,
-          status: maybeStatusDescription.getOrElse(props.bonus.status)
+          status: pipe(
+            maybeStatusDescription,
+            O.getOrElseW(() => props.bonus.status)
+          )
         })}
       >
         <View style={{ flexDirection: "column" }}>
@@ -176,7 +181,7 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
               {"€"}
             </NBText>
             <View hspacer={true} />
-            {maybeStatusDescription.isSome() && (
+            {O.isSome(maybeStatusDescription) && (
               <Badge style={styles.badge}>
                 <NBText style={styles.statusText} semibold={true}>
                   {maybeStatusDescription.value}

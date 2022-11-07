@@ -1,4 +1,4 @@
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Reactotron } from "reactotron-core-client";
 import ReactotronReactNative from "reactotron-react-native";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment

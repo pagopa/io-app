@@ -1,8 +1,7 @@
-import { CompatNavigationProp } from "@react-navigation/compat";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
 import { GlobalState } from "../../../../store/reducers/types";
 import { CreditCardPaymentMethod } from "../../../../types/pagopa";
@@ -16,18 +15,15 @@ export type CobadgeDetailScreenNavigationParams = Readonly<{
 }>;
 
 type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps> & {
-    navigation: CompatNavigationProp<
-      IOStackNavigationProp<WalletParamsList, "WALLET_COBADGE_DETAIL">
-    >;
-  };
+  ReturnType<typeof mapStateToProps> &
+  IOStackNavigationRouteProps<WalletParamsList, "WALLET_COBADGE_DETAIL">;
 
 /**
  * Detail screen for a cobadge card
  * @constructor
  */
 const CobadgeDetailScreen: React.FunctionComponent<Props> = props => {
-  const cobadge: CreditCardPaymentMethod = props.navigation.getParam("cobadge");
+  const cobadge: CreditCardPaymentMethod = props.route.params.cobadge;
   return (
     <BasePaymentMethodScreen
       paymentMethod={cobadge}

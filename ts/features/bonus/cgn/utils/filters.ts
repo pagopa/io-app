@@ -1,6 +1,5 @@
-import { fromNullable, Option } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import { ComponentProps, FC } from "react";
-import { ColorValue } from "react-native";
 import { SvgProps } from "react-native-svg";
 import LinearGradient from "react-native-linear-gradient";
 import { TranslationKeys } from "../../../../../locales/locales";
@@ -20,23 +19,13 @@ import SustainableMobility from "../../../../../img/bonus/cgn/categories/sustain
 import Job from "../../../../../img/bonus/cgn/categories/job.svg";
 import I18n from "../../../../i18n";
 import { ProductCategoryWithNewDiscountsCount } from "../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
-import {
-  IOColorGradients,
-  IOColorGradientType
-} from "../../../../components/core/variables/IOColors";
+import { getGradientColorValues } from "../../../../components/core/variables/IOColors";
 
 export type Category = {
   type: ProductCategory;
   icon: FC<SvgProps>;
   nameKey: TranslationKeys;
   colors: ComponentProps<typeof LinearGradient>["colors"];
-};
-
-export const getGradientColorValues = (
-  gradientId: IOColorGradientType
-): ComponentProps<typeof LinearGradient>["colors"] => {
-  const [first, second]: Array<ColorValue> = IOColorGradients[gradientId];
-  return [first, second];
 };
 
 export const categories: Record<ProductCategory, Category> = {
@@ -102,8 +91,9 @@ export const categories: Record<ProductCategory, Category> = {
   }
 };
 
-export const getCategorySpecs = (category: ProductCategory): Option<Category> =>
-  fromNullable(categories[category]);
+export const getCategorySpecs = (
+  category: ProductCategory
+): O.Option<Category> => O.fromNullable(categories[category]);
 
 export type OrderType = {
   label: TranslationKeys;
@@ -140,11 +130,11 @@ export const orderCategoriesByNameKey = (
   [...categories].sort((c1, c2) => {
     const c1Specs = getCategorySpecs(c1.productCategory);
     const c2Specs = getCategorySpecs(c2.productCategory);
-    if (c1Specs.isNone() && c2Specs.isSome()) {
+    if (O.isNone(c1Specs) && O.isSome(c2Specs)) {
       return 1;
-    } else if (c1Specs.isSome() && c2Specs.isNone()) {
+    } else if (O.isSome(c1Specs) && O.isNone(c2Specs)) {
       return -1;
-    } else if (c1Specs.isSome() && c2Specs.isSome()) {
+    } else if (O.isSome(c1Specs) && O.isSome(c2Specs)) {
       return I18n.t(c1Specs.value.nameKey)
         .toLocaleLowerCase()
         .localeCompare(I18n.t(c2Specs.value.nameKey).toLocaleLowerCase());

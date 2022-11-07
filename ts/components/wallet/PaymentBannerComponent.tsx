@@ -1,4 +1,5 @@
-import { fromNullable } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -36,9 +37,13 @@ const styles = StyleSheet.create({
  * Fee is shown only when a method screen is selected
  */
 const PaymentBannerComponent: React.SFC<Props> = props => {
-  const totalAmount = fromNullable(props.fee).fold(
-    props.currentAmount,
-    fee => (props.currentAmount as number) + (fee as number)
+  const totalAmount = pipe(
+    props.fee,
+    O.fromNullable,
+    O.fold(
+      () => props.currentAmount,
+      fee => (props.currentAmount as number) + (fee as number)
+    )
   );
   return (
     <View style={styles.container}>

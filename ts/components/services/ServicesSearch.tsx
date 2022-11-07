@@ -4,7 +4,7 @@
  *    https://www.pivotaltracker.com/story/show/168803731
  */
 
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import React from "react";
 import { SectionListData } from "react-native";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";

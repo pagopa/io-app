@@ -1,13 +1,13 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import { ActivityIndicator, StyleSheet } from "react-native";
-import * as pot from "italia-ts-commons/lib/pot";
-import { Text as NBText, View } from "native-base";
+import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
+import { ServiceMetadata } from "../../../../definitions/backend/ServiceMetadata";
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
 import MessageDetailComponent from "../../../components/messages/MessageDetailComponent";
 import I18n from "../../../i18n";
 import { PaymentByRptIdState } from "../../../store/reducers/entities/payments";
-import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
-import { ServiceMetadata } from "../../../../definitions/backend/ServiceMetadata";
 import ErrorState from "./ErrorState";
 
 type Props = {

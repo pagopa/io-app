@@ -1,3 +1,4 @@
+import * as E from "fp-ts/lib/Either";
 import * as t from "io-ts";
 import { AlertContent, WebviewMessage } from "../WebviewMessage";
 
@@ -122,89 +123,95 @@ const localeIT = "it";
 
 describe("WebviewMessage", () => {
   it("Should recognize a valid Message for Close Modal event", () => {
-    expect(WebviewMessage.decode(validCloseModal).isRight()).toBeTruthy();
+    expect(E.isRight(WebviewMessage.decode(validCloseModal))).toBeTruthy();
   });
 
   it("Should recognize a valid Message for Start Load event", () => {
-    expect(WebviewMessage.decode(validStartLoad).isRight()).toBeTruthy();
+    expect(E.isRight(WebviewMessage.decode(validStartLoad))).toBeTruthy();
   });
 
   it("Should recognize a valid Message for End Load event", () => {
-    expect(WebviewMessage.decode(validEndLoad).isRight()).toBeTruthy();
+    expect(E.isRight(WebviewMessage.decode(validEndLoad))).toBeTruthy();
   });
 
   it("Should recognize a valid Message for Show Success event", () => {
-    expect(WebviewMessage.decode(validShowSuccess1).isRight()).toBeTruthy();
-    expect(t.string.decode(validShowSuccess1[localeEN]).isRight()).toBeTruthy();
-    expect(t.string.decode(validShowSuccess1[localeIT]).isRight()).toBeTruthy();
+    expect(E.isRight(WebviewMessage.decode(validShowSuccess1))).toBeTruthy();
+    expect(
+      E.isRight(t.string.decode(validShowSuccess1[localeEN]))
+    ).toBeTruthy();
+    expect(
+      E.isRight(t.string.decode(validShowSuccess1[localeIT]))
+    ).toBeTruthy();
   });
 
   it("Should recognize a valid Message for Show Success event", () => {
-    expect(WebviewMessage.decode(validShowSuccess2).isRight()).toBeTruthy();
-    expect(t.string.decode(validShowSuccess2[localeEN]).isRight()).toBeTruthy();
+    expect(E.isRight(WebviewMessage.decode(validShowSuccess2))).toBeTruthy();
+    expect(
+      E.isRight(t.string.decode(validShowSuccess2[localeEN]))
+    ).toBeTruthy();
   });
 
   it("Should NOT recognize a valid Message for Show Success event", () => {
-    expect(WebviewMessage.decode(invalidShowSuccess1).isLeft()).toBeTruthy();
+    expect(E.isLeft(WebviewMessage.decode(invalidShowSuccess1))).toBeTruthy();
   });
 
   it("Should NOT recognize a valid Message for Show Success event", () => {
-    expect(WebviewMessage.decode(invalidShowSuccess2).isLeft()).toBeTruthy();
+    expect(E.isLeft(WebviewMessage.decode(invalidShowSuccess2))).toBeTruthy();
   });
 
   it("Should NOT recognize a valid Message for Show Success event", () => {
-    expect(WebviewMessage.decode(invalidShowSuccess3).isLeft()).toBeTruthy();
+    expect(E.isLeft(WebviewMessage.decode(invalidShowSuccess3))).toBeTruthy();
   });
 
   it("Should recognize a valid Message for Show Error event", () => {
-    expect(WebviewMessage.decode(validShowError1).isRight()).toBeTruthy();
-    expect(t.string.decode(validShowError1[localeEN]).isRight()).toBeTruthy();
-    expect(t.string.decode(validShowError1[localeIT]).isRight()).toBeTruthy();
+    expect(E.isRight(WebviewMessage.decode(validShowError1))).toBeTruthy();
+    expect(E.isRight(t.string.decode(validShowError1[localeEN]))).toBeTruthy();
+    expect(E.isRight(t.string.decode(validShowError1[localeIT]))).toBeTruthy();
   });
 
   it("Should recognize a valid Message for Show Error event", () => {
-    expect(WebviewMessage.decode(validShowError2).isRight()).toBeTruthy();
-    expect(t.string.decode(validShowError2[localeEN]).isRight()).toBeTruthy();
+    expect(E.isRight(WebviewMessage.decode(validShowError2))).toBeTruthy();
+    expect(E.isRight(t.string.decode(validShowError2[localeEN]))).toBeTruthy();
   });
 
   it("Should NOT recognize a valid Message for Show Error event", () => {
-    expect(WebviewMessage.decode(invalidShowError1).isLeft()).toBeTruthy();
+    expect(E.isLeft(WebviewMessage.decode(invalidShowError1))).toBeTruthy();
   });
 
   it("Should NOT recognize a valid Message for Show Error event", () => {
-    expect(WebviewMessage.decode(invalidShowError2).isLeft()).toBeTruthy();
+    expect(E.isLeft(WebviewMessage.decode(invalidShowError2))).toBeTruthy();
   });
 
   it("Should NOT recognize a valid Message for Show Error event", () => {
-    expect(WebviewMessage.decode(invalidShowError3).isLeft()).toBeTruthy();
+    expect(E.isLeft(WebviewMessage.decode(invalidShowError3))).toBeTruthy();
   });
 
   it("Should recognize a valid Message for Show Alert event", () => {
-    expect(WebviewMessage.decode(validShowAlert1).isRight()).toBeTruthy();
+    expect(E.isRight(WebviewMessage.decode(validShowAlert1))).toBeTruthy();
     expect(
-      AlertContent.decode(validShowAlert1[localeEN]).isRight()
+      E.isRight(AlertContent.decode(validShowAlert1[localeEN]))
     ).toBeTruthy();
     expect(
-      AlertContent.decode(validShowAlert1[localeIT]).isRight()
+      E.isRight(AlertContent.decode(validShowAlert1[localeIT]))
     ).toBeTruthy();
   });
 
   it("Should recognize a valid Message for Show Alert event", () => {
-    expect(WebviewMessage.decode(validShowAlert2).isRight()).toBeTruthy();
+    expect(E.isRight(WebviewMessage.decode(validShowAlert2))).toBeTruthy();
     expect(
-      AlertContent.decode(validShowAlert1[localeEN]).isRight()
+      E.isRight(AlertContent.decode(validShowAlert1[localeEN]))
     ).toBeTruthy();
   });
 
   it("Should NOT recognize a valid Message for Show Alert event", () => {
-    expect(WebviewMessage.decode(invalidShowAlert1).isRight()).toBeFalsy();
+    expect(E.isRight(WebviewMessage.decode(invalidShowAlert1))).toBeFalsy();
   });
 
   it("Should NOT recognize a valid Message for Show Alert event", () => {
-    expect(WebviewMessage.decode(invalidShowAlert2).isRight()).toBeFalsy();
+    expect(E.isRight(WebviewMessage.decode(invalidShowAlert2))).toBeFalsy();
   });
 
   it("Should NOT recognize a valid Message for Show Alert event", () => {
-    expect(WebviewMessage.decode(invalidShowAlert3).isRight()).toBeFalsy();
+    expect(E.isRight(WebviewMessage.decode(invalidShowAlert3))).toBeFalsy();
   });
 });

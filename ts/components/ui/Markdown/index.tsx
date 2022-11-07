@@ -1,4 +1,5 @@
-import { fromNullable } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import React from "react";
 import {
   ActivityIndicator,
@@ -24,8 +25,8 @@ import customVariables from "../../../theme/variables";
 import { WithTestID } from "../../../types/WithTestID";
 import { remarkProcessor } from "../../../utils/markdown";
 import { closeInjectedScript } from "../../../utils/webview";
-import { NOTIFY_BODY_HEIGHT_SCRIPT, NOTIFY_LINK_CLICK_SCRIPT } from "./script";
 import MarkdownWebviewComponent from "./MarkdownWebviewComponent";
+import { NOTIFY_BODY_HEIGHT_SCRIPT, NOTIFY_LINK_CLICK_SCRIPT } from "./script";
 
 const INJECTED_JAVASCRIPT = `
 ${NOTIFY_LINK_CLICK_SCRIPT}
@@ -399,7 +400,10 @@ class Markdown extends React.PureComponent<Props, State> {
           // for retro compatibility
           // eslint-disable-next-line @typescript-eslint/no-unused-expressions
           error
-            ? fromNullable(onError).map(_ => _(error))
+            ? pipe(
+                O.fromNullable(onError),
+                O.map(_ => _(error))
+              )
             : this.setState({
                 html: generateHtml(
                   String(file),

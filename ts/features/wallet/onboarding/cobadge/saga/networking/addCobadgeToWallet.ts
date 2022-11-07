@@ -1,6 +1,6 @@
-import { Either, left, right } from "fp-ts/lib/Either";
-import { fromNullable } from "fp-ts/lib/Option";
-import { readableReport } from "italia-ts-commons/lib/reporters";
+import * as E from "fp-ts/lib/Either";
+import * as O from "fp-ts/lib/Option";
+import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { PaymentInstrument } from "../../../../../../../definitions/pagopa/walletv2/PaymentInstrument";
 import { PaymentManagerClient } from "../../../../../../api/pagopa";
 import {
@@ -28,7 +28,7 @@ export const addCobadgeToWallet = async (
   >["addCobadgeToWallet"],
   sessionManager: SessionManager<PaymentManagerToken>,
   paymentInstrument: PaymentInstrument
-): Promise<Either<NetworkError, RawPaymentMethod>> => {
+): Promise<E.Either<NetworkError, RawPaymentMethod>> => {
   try {
     const addCobadgeToWalletWithRefresh = sessionManager.withRefresh(
       addCobadgeToWallet({
@@ -37,13 +37,13 @@ export const addCobadgeToWallet = async (
     );
     const addCobadgeToWalletWithRefreshResult =
       await addCobadgeToWalletWithRefresh();
-    if (addCobadgeToWalletWithRefreshResult.isRight()) {
-      if (addCobadgeToWalletWithRefreshResult.value.status === 200) {
+    if (E.isRight(addCobadgeToWalletWithRefreshResult)) {
+      if (addCobadgeToWalletWithRefreshResult.right.status === 200) {
         const wallets = (
-          addCobadgeToWalletWithRefreshResult.value.value.data ?? []
+          addCobadgeToWalletWithRefreshResult.right.value.data ?? []
         ).map(convertWalletV2toWalletV1);
         // search for the added cobadge.
-        const maybeWallet = fromNullable(
+        const maybeWallet = O.fromNullable(
           wallets.find(
             w =>
               w.paymentMethod &&
@@ -51,34 +51,34 @@ export const addCobadgeToWallet = async (
           )
         );
         if (
-          maybeWallet.isSome() &&
+          O.isSome(maybeWallet) &&
           maybeWallet.value.paymentMethod !== undefined
         ) {
-          return right(maybeWallet.value.paymentMethod);
+          return E.right(maybeWallet.value.paymentMethod);
         } else {
-          return left(
+          return E.left(
             getGenericError(
               new Error(`cannot find added cobadge in wallets list response`)
             )
           );
         }
       } else {
-        return left(
+        return E.left(
           getGenericError(
             new Error(
-              `response status ${addCobadgeToWalletWithRefreshResult.value.status}`
+              `response status ${addCobadgeToWalletWithRefreshResult.right.status}`
             )
           )
         );
       }
     } else {
-      return left(
+      return E.left(
         getGenericError(
-          new Error(readableReport(addCobadgeToWalletWithRefreshResult.value))
+          new Error(readableReport(addCobadgeToWalletWithRefreshResult.left))
         )
       );
     }
   } catch (e) {
-    return left(getNetworkError(e));
+    return E.left(getNetworkError(e));
   }
 };

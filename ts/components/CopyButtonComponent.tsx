@@ -1,4 +1,4 @@
-import { Millisecond } from "italia-ts-commons/lib/units";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { Text as NBText } from "native-base";
 import * as React from "react";
 import { Platform, StyleSheet } from "react-native";

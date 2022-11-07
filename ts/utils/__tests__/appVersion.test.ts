@@ -1,4 +1,4 @@
-import { Tuple3 } from "italia-ts-commons/lib/tuples";
+import { Tuple3 } from "@pagopa/ts-commons/lib/tuples";
 
 jest.mock("react-native-device-info", () => ({
   getReadableVersion: jest

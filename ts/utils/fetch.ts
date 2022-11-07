@@ -3,21 +3,22 @@
  * timeout and retries with exponential backoff.
  */
 
-import { left, right } from "fp-ts/lib/Either";
-import { fromEither, TaskEither } from "fp-ts/lib/TaskEither";
-import { calculateExponentialBackoffInterval } from "italia-ts-commons/lib/backoff";
+import * as E from "fp-ts/lib/Either";
+import * as TE from "fp-ts/lib/TaskEither";
+import { calculateExponentialBackoffInterval } from "@pagopa/ts-commons/lib/backoff";
 import {
   AbortableFetch,
   retriableFetch,
   setFetchTimeout,
   toFetch
-} from "italia-ts-commons/lib/fetch";
+} from "@pagopa/ts-commons/lib/fetch";
 import {
   RetriableTask,
   TransientError,
   withRetries
-} from "italia-ts-commons/lib/tasks";
-import { Millisecond } from "italia-ts-commons/lib/units";
+} from "@pagopa/ts-commons/lib/tasks";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import { pipe } from "fp-ts/lib/function";
 import { fetchMaxRetries, fetchTimeout } from "../config";
 
 // FIXME: This is a temporary type created to avoid
@@ -71,17 +72,16 @@ function retryLogicForTransientResponseError(
   retryLogic: (
     t: RetriableTask<Error, Response>,
     shouldAbort?: Promise<boolean>
-  ) => TaskEither<Error | "max-retries" | "retry-aborted", Response>
+  ) => TE.TaskEither<Error | "max-retries" | "retry-aborted", Response>
 ): typeof retryLogic {
   return (t: RetriableTask<Error, Response>, shouldAbort?: Promise<boolean>) =>
     retryLogic(
       // when the result of the task is a Response that satisfies
       // the predicate p, map it to a transient error
-      t.chain((r: any) =>
-        fromEither(
-          p(r)
-            ? left<TransientError, never>(TransientError)
-            : right<never, Response>(r)
+      pipe(
+        t,
+        TE.chainW((r: any) =>
+          TE.fromEither(p(r) ? E.left(TransientError) : E.right(r))
         )
       ),
       shouldAbort

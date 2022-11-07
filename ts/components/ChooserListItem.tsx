@@ -1,4 +1,5 @@
-import { Either } from "fp-ts/lib/Either";
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
 import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -10,7 +11,7 @@ import IconFont from "./ui/IconFont";
 type Props = Readonly<{
   itemTitle: string;
   itemId: string;
-  itemIconComponent?: Either<
+  itemIconComponent?: E.Either<
     (itemId: string) => React.ReactElement,
     React.ReactElement
   >;
@@ -56,7 +57,10 @@ export default class ChooserListItem extends React.Component<Props> {
       : customVariables.unselectedColor;
 
     const icon = itemIconComponent
-      ? itemIconComponent.getOrElseL(f => f(itemId))
+      ? pipe(
+          itemIconComponent,
+          E.getOrElse(f => f(itemId))
+        )
       : itemIconComponent;
 
     return (

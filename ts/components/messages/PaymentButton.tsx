@@ -1,4 +1,5 @@
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
+import * as O from "fp-ts/lib/Option";
 import { Text as NBText } from "native-base";
 import React from "react";
 import { StyleSheet } from "react-native";
@@ -65,7 +66,7 @@ const PaymentButton = ({
       noticeNumber
     );
 
-    if (amount.isSome() && rptId.isSome()) {
+    if (O.isSome(amount) && O.isSome(rptId)) {
       // TODO: optimize the management of the payment initialization
       if (isEmailValidated && isPagoPaSupported) {
         dispatch(paymentInitializeState());

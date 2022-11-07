@@ -1,4 +1,5 @@
-import { fromNullable } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import I18n from "../i18n";
 
 /** map, for each FAQ category, the ids of the FAQs related to the category */
@@ -74,7 +75,17 @@ export const getFAQsFromCategories = (
 ): ReadonlyArray<FAQType> => {
   const faqIDs: Set<number> = categories.reduce(
     (acc, val) =>
-      new Set<number>([...acc, ...fromNullable(FAQs[val]).fold([], s => s)]),
+      new Set<number>([
+        ...acc,
+        ...pipe(
+          FAQs[val],
+          O.fromNullable,
+          O.fold(
+            () => [],
+            s => s
+          )
+        )
+      ]),
     new Set<number>()
   );
 

@@ -1,7 +1,10 @@
 import { fireEvent } from "@testing-library/react-native";
-import { none, some } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
+import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
+import { BackendStatus } from "../../../../definitions/content/BackendStatus";
+import { Config } from "../../../../definitions/content/Config";
 import {
   LevelEnum,
   SectionStatus
@@ -12,9 +15,6 @@ import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
 import { openWebUrl } from "../../../utils/url";
 import { IOColors } from "../../core/variables/IOColors";
 import SectionStatusComponent from "../index";
-import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
-import { Config } from "../../../../definitions/content/Config";
-import { BackendStatus } from "../../../../definitions/content/BackendStatus";
 
 jest.mock("../../../utils/url");
 
@@ -36,7 +36,7 @@ const mockSectionStatusState = (
   sectionStatus: SectionStatus
 ) => ({
   backendStatus: {
-    status: some({
+    status: O.some({
       sections: { [sectionKey]: sectionStatus },
       config: {
         assistanceTool: { tool: ToolEnum.none },
@@ -168,7 +168,7 @@ describe("Section Status Component should return null", () => {
     const component = getComponent(
       "messages",
       mockStore({
-        backendStatus: { status: none }
+        backendStatus: { status: O.none }
       })
     );
     expect(component.queryByTestId("SectionStatusComponentLabel")).toBeNull();

@@ -1,6 +1,7 @@
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { format } from "date-fns";
-import { fromNullable } from "fp-ts/lib/Option";
-import { Millisecond } from "italia-ts-commons/lib/units";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import { Image, Modal, StyleSheet } from "react-native";
@@ -46,8 +47,13 @@ const fromMillisecondsToTimeRepresentation = (ms: Millisecond): string =>
 
 export const IdentificationLockModal: React.FunctionComponent<Props> =
   props => {
-    const minuteSeconds = fromNullable(props.countdown).fold("0:00", x =>
-      fromMillisecondsToTimeRepresentation(x)
+    const minuteSeconds = pipe(
+      props.countdown,
+      O.fromNullable,
+      O.fold(
+        () => "0:00",
+        x => fromMillisecondsToTimeRepresentation(x)
+      )
     );
 
     return (

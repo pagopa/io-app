@@ -4,6 +4,8 @@
  *  - message list https://www.pivotaltracker.com/story/show/165716236
  *  - service lists https://www.pivotaltracker.com/story/show/166792020
  */
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { View } from "native-base";
 import * as React from "react";
 import {
@@ -12,13 +14,12 @@ import {
   StyleSheet,
   ViewStyle
 } from "react-native";
-import { fromNullable } from "fp-ts/lib/Option";
 import customVariables from "../../theme/variables";
+import { H2 } from "../core/typography/H2";
+import { IOColors } from "../core/variables/IOColors";
+import { IOStyles } from "../core/variables/IOStyles";
 import OrganizationLogo from "../services/OrganizationLogo";
 import { MultiImage } from "../ui/MultiImage";
-import { H2 } from "../core/typography/H2";
-import { IOStyles } from "../core/variables/IOStyles";
-import { IOColors } from "../core/variables/IOColors";
 
 type Props = Readonly<{
   sectionHeader: string;
@@ -49,12 +50,17 @@ const styles = StyleSheet.create({
 
 export default class SectionHeaderComponent extends React.Component<Props> {
   public render() {
-    const rightItem = fromNullable<React.ReactNode | undefined>(
-      this.props.rightItem
-    ).getOrElse(
-      fromNullable(this.props.logoUri)
-        .map(uri => <OrganizationLogo key={"right_item"} logoUri={uri} />)
-        .toUndefined()
+    const rightItem = pipe(
+      this.props.rightItem,
+      O.fromNullable,
+      O.getOrElseW(() =>
+        pipe(
+          this.props.logoUri,
+          O.fromNullable,
+          O.map(uri => <OrganizationLogo key={"right_item"} logoUri={uri} />),
+          O.toUndefined
+        )
+      )
     );
     return (
       <View

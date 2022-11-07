@@ -1,5 +1,5 @@
 import { SagaIterator } from "@redux-saga/core";
-import { Millisecond } from "italia-ts-commons/lib/units";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { call, put, race, take, delay } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
 import {

@@ -483,6 +483,9 @@ profile:
           title: Vuoi cambiare la lingua in
           subtitle: Dovrai riavviare l'applicazione per applicare il cambiamento
         not_selected: Non selezionato
+      notifications:
+        title: Notifiche push
+        subtitle: Consenti anteprima e promemoria
     empty:
       default: Nessuna preferenza impostata
     unavailable:
@@ -499,6 +502,16 @@ profile:
       contextualHelpContent: !include profile/profile_preferences_calendar.md
       local_calendar: Calendario locale
       birthday_calendar: Compleanni
+    notifications:
+      header: Notifiche push
+      title: Personalizza le notifiche push
+      subtitle: Ora puoi vedere subito chi ti ha scritto o ricevere promemoria da messaggi importanti.
+      titleNewUser: Personalizza le notifiche
+      subtitleNewUser: Scegli come ricevere aggiornamenti sui messaggi e promemoria che ricevi
+      reminders:
+        title: Consenti i promemoria
+        description: Ricevi notifiche push in prossimità di scadenze o quando non hai ancora letto dei messaggi
+      error: Si è verificato un errore con la tua richiesta
 userMetadata:
   errors:
     upsertVersion: Impossibile creare o aggiornare i metadata utente con questa versione
@@ -541,8 +554,8 @@ authentication:
       title: Accesso con CIE non disponibile
       body: !include cie/cieNotSupported.md
       android_desc: !include cie/cieNotSupported_android.md
-      os_version_unsupported: una versione del sistema operativo compatibile con l'autenticazione tramite CIE (Android 6.0 o superiore)
-      nfc_incompatible: una antenna NFC compatibile con l'autenticazione tramite CIE
+      os_version_unsupported: un sistema operativo Android 6.0 o superiore
+      nfc_incompatible: un chip NFC compatibile
     contentTitleCie: Non hai SPID o la CIE?
     cie_information_request: !include cie.md
     spid_or_cie: Per utilizzare IO devi dotarti di uno di questi strumenti digitali, che certificano in maniera certa la tua identità.
@@ -569,10 +582,8 @@ authentication:
     card3-content:
       Tramite la scansione del QR code puoi velocemente pagare anche
       un avviso cartaceo
-    card4-title: Potrai utilizzare l'app solo tramite SPID
-    card4-content:
-      L'accesso è consentito solo tramite SPID (Sistema Pubblico di Identità
-      Digitale) per garantire la tua sicurezza online
+    card4-title: Puoi accedere solo con SPID
+    card4-content: Il dispositivo che stai utilizzando non supporta l’accesso con Carta d’Identità Elettronica (CIE)
     card5-title: Benvenuto nella prima versione pubblica di IO!
     card5-content: In alto a destra trovi l'icona '?' per aprire
       una chat con il team di IO se qualcosa non funziona come dovrebbe.
@@ -827,6 +838,13 @@ onboarding:
   thankYouPage:
     title: Configurazione terminata!
     body: Ora puoi iniziare a usare IO
+  notifications:
+    badge: Novità
+    headerTitle: Configura IO
+    continue: Continua
+    remindersPreviewTitle: Promemoria
+    previewTitle: Hai un nuovo messaggio
+    previewMessage: Apri l’app per leggere il contenuto
 forms:
   validators:
     required: Valore richiesto
@@ -3022,8 +3040,7 @@ features:
             body: "Sto scaricando l'allegato"
           failing:
             title: "Allegato"
-            body: "Non sono riuscito a scaricare l'allegato"
-            details: "Per favore, controlla la tua connessione e riprova"
+            details: "Non sono riuscito a scaricare l’allegato. Riprova o apri una segnalazione"
           checkBox: "OK, non mostrarmelo più"
         pdfPreview:
           title: "Anteprima PDF"
@@ -3032,7 +3049,9 @@ features:
           save: "Salva"
           savedAtLocation: "Il documento {{name}} è stato salvato nella cartella Download."
           errors:
-            previewing: "Non è possibile mostrare l'anteprima del documento. E' comunque possibile salvarlo e aprirlo con un'applicazione per i PDF"
+            previewing:
+              title: "L’anteprima non è disponibile"
+              body: "Per visualizzare il documento, scaricalo e aprilo con un’app di lettura PDF."
             sharing: "Si è verificato un errore condividendo il documento."
             opening: "Si è verificato un errore aprendo il documento. Potresti non avere installata l'applicazione per i PDF."
             saving: "Si è verificato un errore salvando il documento."
@@ -3142,8 +3161,10 @@ features:
           EFFECTIVE_DATE: Perfezionata per decorrenza termini
           VIEWED: Perfezionata per visione
           REFUSED: REFUSED
-          UNDEFINED: Non definito
-        expand: mostra gli stati precedenti      
+          CANCELLED: Annullata
+        expand: mostra gli stati precedenti
+        info: Puoi vedere il dettaglio di ciascuno stato, scaricare le ricevute e le attestazioni opponibili a terzi accedendo alla versione web del servizio
+        cta: Accedi alla versione web
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
@@ -3195,5 +3216,3 @@ support:
       subCategory: "Puoi darci più dettagli?"
     subTitle:
       category: "Aiutaci a capire meglio come possiamo aiutarti selezionando l’argomento del tuo problema: ti risponderemo il prima possibile, in orario lavorativo."
-
-

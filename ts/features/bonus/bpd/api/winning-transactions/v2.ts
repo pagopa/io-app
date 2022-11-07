@@ -1,5 +1,6 @@
-import { fromNullable } from "fp-ts/lib/Option";
-import * as r from "italia-ts-commons/lib/requests";
+import * as r from "@pagopa/ts-commons/lib/requests";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import {
   findWinningTransactionsUsingGETDecoder,
   getCountByDayGETDefaultDecoder,
@@ -38,18 +39,22 @@ export type PatchedFindWinningTransactionsUsingGETT = r.IGetApiRequestType<
 
 const cursorToQueryString = (cursor: number) => `&nextCursor=${cursor}`;
 
+const findWinningTransactionsUsingGETCustomDecoder =
+  findWinningTransactionsUsingGETDecoder({
+    200: PatchedWinningTransactionPageResource
+  });
+
 export const winningTransactionsV2GET: PatchedFindWinningTransactionsUsingGETT =
   {
     method: "get",
     url: ({ awardPeriodId, nextCursor }) =>
-      `/bpd/io/winning-transactions/v2?awardPeriodId=${awardPeriodId}${fromNullable(
-        nextCursor
-      )
-        .map(cursorToQueryString)
-        .getOrElse("")}`,
+      `/bpd/io/winning-transactions/v2?awardPeriodId=${awardPeriodId}${pipe(
+        nextCursor,
+        O.fromNullable,
+        O.map(cursorToQueryString),
+        O.getOrElse(() => "")
+      )}`,
     query: _ => ({}),
     headers: bpdHeadersProducers(),
-    response_decoder: findWinningTransactionsUsingGETDecoder(
-      PatchedWinningTransactionPageResource
-    )
+    response_decoder: findWinningTransactionsUsingGETCustomDecoder
   };

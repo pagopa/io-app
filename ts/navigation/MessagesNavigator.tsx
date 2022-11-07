@@ -5,13 +5,12 @@ import { EUCovidCertStackNavigator } from "../features/euCovidCert/navigation/na
 import EUCOVIDCERT_ROUTES from "../features/euCovidCert/navigation/routes";
 import { MvlStackNavigator } from "../features/mvl/navigation/navigator";
 import MVL_ROUTES from "../features/mvl/navigation/routes";
-import MessageDetailScreen from "../screens/messages/MessageDetailScreen";
-import MessageRouterScreen from "../screens/messages/MessageRouterScreen";
 import PaginatedMessageDetailScreen from "../screens/messages/paginated/MessageDetailScreen";
 import PaginatedMessageRouterScreen from "../screens/messages/paginated/MessageRouterScreen";
 import { PnStackNavigator } from "../features/pn/navigation/navigator";
 import PN_ROUTES from "../features/pn/navigation/routes";
 import { useIOSelector } from "../store/hooks";
+import { isGestureEnabled } from "../utils/navigation";
 import { isPnEnabledSelector } from "../store/reducers/backendStatus";
 import { MessagesParamsList } from "./params/MessagesParamsList";
 import ROUTES from "./routes";
@@ -23,21 +22,10 @@ export const MessagesStackNavigator = () => {
 
   return (
     <Stack.Navigator
-      initialRouteName={ROUTES.MESSAGE_ROUTER}
+      initialRouteName={ROUTES.MESSAGE_ROUTER_PAGINATED}
       headerMode={"none"}
-      screenOptions={{ gestureEnabled: true }}
+      screenOptions={{ gestureEnabled: isGestureEnabled }}
     >
-      <Stack.Screen
-        name={ROUTES.MESSAGE_ROUTER}
-        component={MessageRouterScreen}
-        options={{ gestureEnabled: false }}
-      />
-
-      <Stack.Screen
-        name={ROUTES.MESSAGE_DETAIL}
-        component={MessageDetailScreen}
-      />
-
       <Stack.Screen
         name={ROUTES.MESSAGE_ROUTER_PAGINATED}
         component={PaginatedMessageRouterScreen}

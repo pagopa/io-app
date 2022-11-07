@@ -1,11 +1,5 @@
-import * as pot from "italia-ts-commons/lib/pot";
 import merge from "lodash/merge";
 
-import {
-  messagesStateByIdSelector,
-  MessageStateById
-} from "../reducers/entities/messages/messagesById";
-import { MessagesIdsByServiceId } from "../reducers/entities/messages/messagesIdsByServiceId";
 import { PersistedGlobalState } from "../reducers/types";
 
 /**
@@ -15,31 +9,10 @@ import { PersistedGlobalState } from "../reducers/types";
 export const addMessagesIdsByServiceId = (
   state: PersistedGlobalState
 ): PersistedGlobalState => {
-  const messageStatesById: MessageStateById = messagesStateByIdSelector(state);
-
-  const messagesIdsByServiceId: MessagesIdsByServiceId = Object.keys(
-    messageStatesById
-  ).reduce<MessagesIdsByServiceId>((accumulator, messageId) => {
-    const messageState = messageStatesById[messageId];
-
-    if (messageState !== undefined && pot.isSome(messageState.message)) {
-      const serviceId = messageState.message.value.sender_service_id;
-      const messagesIds = accumulator[serviceId];
-      const newMessagesIds =
-        messagesIds === undefined ? [messageId] : messagesIds.concat(messageId);
-      return {
-        ...accumulator,
-        [serviceId]: newMessagesIds
-      };
-    }
-
-    return accumulator;
-  }, {});
-
   const sectionState = {
     entities: {
       messages: {
-        idsByServiceId: messagesIdsByServiceId
+        idsByServiceId: {} // this has been removed after moving to paginated messages.
       }
     }
   };

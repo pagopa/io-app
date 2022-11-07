@@ -1,4 +1,5 @@
-import { fromNullable } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { Platform, StyleSheet, Text } from "react-native";
 import { connect } from "react-redux";
@@ -42,8 +43,13 @@ const routeOrder = new Map<Routes, number>([
 const getLabel = (routeName: string, locale: Locales): string =>
   // "routeName as Routes" is assumed to be safe as explained @https://github.com/pagopa/io-app/pull/193#discussion_r192347234
   // adding fallback anyway -- better safe than sorry
-  fromNullable(ROUTE_LABEL[routeName as Routes]).fold(fallbackLabel, l =>
-    I18n.t(l, { locale })
+  pipe(
+    ROUTE_LABEL[routeName as Routes],
+    O.fromNullable,
+    O.fold(
+      () => fallbackLabel,
+      l => I18n.t(l, { locale })
+    )
   );
 const styles = StyleSheet.create({
   labelStyle: {
@@ -81,9 +87,15 @@ const NavBarLabel: React.FunctionComponent<Props> = (props: Props) => {
     messagesUnread,
     transactionsNumUnread
   } = props;
-  const locale: Locales = preferredLanguage.fold(I18n.locale, l => l);
+  const locale: Locales = pipe(
+    preferredLanguage,
+    O.fold(
+      () => I18n.locale,
+      l => l
+    )
+  );
   const label = getLabel(routeName, locale);
-  const maybeOrder = fromNullable(routeOrder.get(routeName as Routes));
+  const maybeOrder = O.fromNullable(routeOrder.get(routeName as Routes));
   const isSelected = options.focused
     ? `${I18n.t("navigation.selected")}, `
     : "";
@@ -97,7 +109,7 @@ const NavBarLabel: React.FunctionComponent<Props> = (props: Props) => {
 
   const panelAccessibilityLabel = computeAccessibilityLabel(
     label,
-    maybeOrder.getOrElse(0),
+    O.getOrElse(() => 0)(maybeOrder),
     computedUnreadMessages
   );
 

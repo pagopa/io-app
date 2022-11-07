@@ -1,14 +1,15 @@
+import * as O from "fp-ts/lib/Option";
 import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { BonusActivationWithQrCode } from "../../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
+import { IOColors } from "../../../../components/core/variables/IOColors";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import IconFont from "../../../../components/ui/IconFont";
 import I18n from "../../../../i18n";
 import customVariables from "../../../../theme/variables";
 import { formatNumberAmount } from "../../../../utils/stringBuilder";
 import { validityInterval } from "../utils/bonus";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 
 type Props = {
   bonus: BonusActivationWithQrCode;
@@ -83,7 +84,7 @@ const ActiveBonus: React.FunctionComponent<Props> = (props: Props) => {
       onPress={() => props.onPress(props.bonus, props.validFrom, props.validTo)}
     >
       <View style={styles.spaced}>
-        {bonusValidityInterval.isSome() && (
+        {O.isSome(bonusValidityInterval) && (
           <NBText>{`${I18n.t("bonus.bonusVacanze.validity")} ${
             bonusValidityInterval.value.e1
           } - ${bonusValidityInterval.value.e2}`}</NBText>

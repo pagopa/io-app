@@ -1,25 +1,23 @@
+import { useNavigation } from "@react-navigation/native";
+import { View } from "native-base";
 import React from "react";
+import { SafeAreaView, ScrollView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { SafeAreaView, ScrollView } from "react-native";
-import { View } from "native-base";
 import {
   RadioButtonList,
   RadioItem
 } from "../../../../components/core/selection/RadioButtonList";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import { H1 } from "../../../../components/core/typography/H1";
 import { Body } from "../../../../components/core/typography/Body";
-import { GlobalState } from "../../../../store/reducers/types";
-import { svGenerateVoucherCancel } from "../store/actions/voucherGeneration";
+import { H1 } from "../../../../components/core/typography/H1";
+import { IOStyles } from "../../../../components/core/variables/IOStyles";
+import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import {
-  navigateToSvKoCheckResidenceScreen,
-  navigateToSvSelectBeneficiaryCategoryScreen
-} from "../navigation/actions";
 import I18n from "../../../../i18n";
+import { GlobalState } from "../../../../store/reducers/types";
+import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import SV_ROUTES from "../navigation/routes";
+import { svGenerateVoucherCancel } from "../store/actions/voucherGeneration";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -39,6 +37,8 @@ const CheckResidenceComponent = (props: Props): React.ReactElement => {
     boolean | undefined
   >();
 
+  const navigation = useNavigation();
+
   const cancelButtonProps = {
     primary: false,
     bordered: true,
@@ -47,10 +47,12 @@ const CheckResidenceComponent = (props: Props): React.ReactElement => {
   };
   const continueButtonProps = {
     bordered: false,
-    onPress:
+    onPress: () =>
       isResidentInSicily === true
-        ? props.navigateToSvSelectBeneficiaryCategory
-        : props.navigateToSvKoCheckResidence,
+        ? navigation.navigate(
+            SV_ROUTES.VOUCHER_GENERATION.SELECT_BENEFICIARY_CATEGORY
+          )
+        : navigation.navigate(SV_ROUTES.VOUCHER_GENERATION.KO_CHECK_RESIDENCE),
     title: I18n.t("global.buttons.continue"),
     disabled: isResidentInSicily === undefined
   };
@@ -88,10 +90,7 @@ const CheckResidenceComponent = (props: Props): React.ReactElement => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  cancel: () => dispatch(svGenerateVoucherCancel()),
-  navigateToSvSelectBeneficiaryCategory: () =>
-    navigateToSvSelectBeneficiaryCategoryScreen(),
-  navigateToSvKoCheckResidence: () => navigateToSvKoCheckResidenceScreen()
+  cancel: () => dispatch(svGenerateVoucherCancel())
 });
 const mapStateToProps = (_: GlobalState) => ({});
 

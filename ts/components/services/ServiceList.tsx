@@ -1,7 +1,7 @@
 /**
  * A component to render a list of services grouped by organization.
  */
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import React from "react";
 import {
   Animated,

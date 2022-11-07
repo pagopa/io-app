@@ -1,11 +1,13 @@
 /**
  * Reducers, states, selectors and guards for the transactions
  */
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
 import { values } from "lodash";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 
+import { pipe } from "fp-ts/lib/function";
 import { isSuccessTransaction, Transaction } from "../../../types/pagopa";
 import { clearCache } from "../../actions/profile";
 import { Action } from "../../actions/types";
@@ -127,7 +129,15 @@ const reducer = (
       return {
         ...state,
         transactions: pot.some(total),
-        total: pot.some(action.payload.total.fold(0, s => s))
+        total: pot.some(
+          pipe(
+            action.payload.total,
+            O.fold(
+              () => 0,
+              s => s
+            )
+          )
+        )
       };
 
     case getType(fetchTransactionsFailure):

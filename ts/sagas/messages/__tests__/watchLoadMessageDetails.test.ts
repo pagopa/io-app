@@ -1,15 +1,15 @@
-import { right } from "fp-ts/lib/Either";
-import { getType } from "typesafe-actions";
+import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
+import { getType } from "typesafe-actions";
 
 import { loadMessageDetails as action } from "../../../store/actions/messages";
 import { UIMessageId } from "../../../store/reducers/entities/messages/types";
-import { testTryLoadMessageDetails } from "../watchLoadMessageDetails";
 import {
   apiPayload,
   paymentValidInvalidAfterDueDate,
   successLoadMessageDetails
 } from "../../../__mocks__/message";
+import { testTryLoadMessageDetails } from "../watchLoadMessageDetails";
 
 const tryLoadMessageDetails = testTryLoadMessageDetails!;
 
@@ -26,7 +26,7 @@ describe("tryReloadAllMessages", () => {
       testSaga(tryLoadMessageDetails(getMessage), action.request({ id }))
         .next()
         .call(getMessage, getMessagesPayload)
-        .next(right({ status: 200, value: apiPayload }))
+        .next(E.right({ status: 200, value: apiPayload }))
         .put(action.success(successLoadMessageDetails))
         .next()
         .isDone();
@@ -39,7 +39,7 @@ describe("tryReloadAllMessages", () => {
       testSaga(tryLoadMessageDetails(getMessage), action.request({ id }))
         .next()
         .call(getMessage, getMessagesPayload)
-        .next(right({ status: 500, value: { title: "Backend error" } }))
+        .next(E.right({ status: 500, value: { title: "Backend error" } }))
         .put(action.failure({ id, error: Error("Backend error") }))
         .next()
         .isDone();
@@ -58,7 +58,7 @@ describe("tryReloadAllMessages", () => {
         .put(
           action.failure({
             id,
-            error: TypeError("Cannot read property 'fold' of undefined")
+            error: new Error("Response is undefined")
           })
         )
         .next()

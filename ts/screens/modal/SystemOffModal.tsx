@@ -3,15 +3,17 @@
  * not work properly. This is due to avoid user tries to access features or services potentially can't work
  * as expected
  */
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { Container, Text as NBText, View } from "native-base";
 import * as React from "react";
 import { Image, Modal, StyleSheet } from "react-native";
 import { connect } from "react-redux";
+import { H1 } from "../../components/core/typography/H1";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
 import { backendServicesStatusSelector } from "../../store/reducers/backendStatus";
 import { GlobalState } from "../../store/reducers/types";
-import { H1 } from "../../components/core/typography/H1";
 import customVariables from "../../theme/variables";
 
 type Props = ReturnType<typeof mapStateToProps>;
@@ -35,13 +37,15 @@ const styles = StyleSheet.create({
 class SystemOffModal extends React.PureComponent<Props> {
   public render() {
     const locale = I18n.currentLocale() === "en" ? "en-EN" : "it-IT";
-    const message = this.props.backendStatus.status
-      .map(s =>
+    const message = pipe(
+      this.props.backendStatus.status,
+      O.map(s =>
         s.message[locale] !== undefined && s.message[locale].length > 0
           ? s.message[locale]
           : undefined
-      )
-      .getOrElse(undefined);
+      ),
+      O.toUndefined
+    );
     return (
       <Modal>
         <BaseScreenComponent

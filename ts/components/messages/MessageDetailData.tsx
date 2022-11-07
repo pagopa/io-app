@@ -1,18 +1,19 @@
-import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import I18n from "i18n-js";
 import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
+import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
+import { ServiceMetadata } from "../../../definitions/backend/ServiceMetadata";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { PaymentByRptIdState } from "../../store/reducers/entities/payments";
 import customVariables from "../../theme/variables";
+import { convertDateTimeToWordDistance } from "../../utils/convertDateToWordDistance";
 import CopyButtonComponent from "../CopyButtonComponent";
 import { Link } from "../core/typography/Link";
-import EmailCallCTA from "../screens/EmailCallCTA";
-import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
-import { convertDateTimeToWordDistance } from "../../utils/convertDateToWordDistance";
-import { ServiceMetadata } from "../../../definitions/backend/ServiceMetadata";
 import { IOColors } from "../core/variables/IOColors";
+import EmailCallCTA from "../screens/EmailCallCTA";
 
 const styles = StyleSheet.create({
   container: {
@@ -35,17 +36,17 @@ const styles = StyleSheet.create({
 
 type Props = Readonly<{
   message: CreatedMessageWithContentAndAttachments;
-  serviceDetail: Option<ServicePublic>;
+  serviceDetail: O.Option<ServicePublic>;
   serviceMetadata?: ServiceMetadata;
   paymentsByRptId?: PaymentByRptIdState;
   goToServiceDetail?: () => void;
 }>;
 
 type MessageData = {
-  service_detail: Option<ServicePublic>;
-  organization_name: Option<string>;
-  service_name: Option<string>;
-  metadata: Option<ServiceMetadata>;
+  service_detail: O.Option<ServicePublic>;
+  organization_name: O.Option<string>;
+  service_name: O.Option<string>;
+  metadata: O.Option<ServiceMetadata>;
 };
 
 /**
@@ -55,21 +56,31 @@ type MessageData = {
 class MessageDetailData extends React.PureComponent<Props> {
   get data(): MessageData {
     const serviceDetail = this.props.serviceDetail;
-    const metadata = fromNullable(this.props.serviceMetadata);
+    const metadata = O.fromNullable(this.props.serviceMetadata);
     return {
       service_detail: serviceDetail,
-      organization_name: serviceDetail.map(s => s.organization_name),
-      service_name: serviceDetail.map(s => s.service_name),
-      metadata: metadata.fold(none, m =>
-        fromNullable(m).fold(none, mm => some(mm))
+      organization_name: pipe(
+        serviceDetail,
+        O.map(s => s.organization_name)
+      ),
+      service_name: pipe(
+        serviceDetail,
+        O.map(s => s.service_name)
+      ),
+      metadata: pipe(
+        metadata,
+        O.chain(m => O.fromNullable(m))
       )
     };
   }
 
   get hasEmailOrPhone(): boolean {
-    return this.data.metadata.fold(
-      false,
-      m => m.phone !== undefined || m.email !== undefined
+    return pipe(
+      this.data.metadata,
+      O.fold(
+        () => false,
+        m => m.phone !== undefined || m.email !== undefined
+      )
     );
   }
 
@@ -77,16 +88,26 @@ class MessageDetailData extends React.PureComponent<Props> {
     if (!this.hasEmailOrPhone) {
       return undefined;
     }
-    const phone = this.data.metadata.fold(undefined, m => m.phone);
-    const email = this.data.metadata.fold(undefined, m => m.email);
+    const phone = pipe(
+      this.data.metadata,
+      O.map(m => m.phone),
+      O.toUndefined
+    );
+    const email = pipe(
+      this.data.metadata,
+      O.map(m => m.email),
+      O.toUndefined
+    );
 
     return <EmailCallCTA phone={phone} email={email} />;
   };
 
   public render() {
-    const textToCopy: string = this.props.serviceDetail
-      .map(({ service_name }) => `${service_name} - ${this.props.message.id}`)
-      .getOrElse(this.props.message.id);
+    const textToCopy: string = pipe(
+      this.props.serviceDetail,
+      O.map(({ service_name }) => `${service_name} - ${this.props.message.id}`),
+      O.getOrElse(() => this.props.message.id)
+    );
 
     return (
       <View style={styles.container}>
@@ -97,7 +118,7 @@ class MessageDetailData extends React.PureComponent<Props> {
           )}`}</NBText>
         </NBText>
 
-        {this.data.organization_name.isSome() && (
+        {O.isSome(this.data.organization_name) && (
           <NBText>
             {I18n.t("messageDetails.sender")}
             <NBText
@@ -106,16 +127,17 @@ class MessageDetailData extends React.PureComponent<Props> {
           </NBText>
         )}
 
-        {this.data.service_name.isSome() && this.data.service_detail.isSome() && (
-          <View style={styles.service}>
-            <NBText>
-              {`${I18n.t("messageDetails.service")} `}
-              <Link weight={"Bold"} onPress={this.props.goToServiceDetail}>
-                {this.data.service_detail.value.service_name}
-              </Link>
-            </NBText>
-          </View>
-        )}
+        {O.isSome(this.data.service_name) &&
+          O.isSome(this.data.service_detail) && (
+            <View style={styles.service}>
+              <NBText>
+                {`${I18n.t("messageDetails.service")} `}
+                <Link weight={"Bold"} onPress={this.props.goToServiceDetail}>
+                  {this.data.service_detail.value.service_name}
+                </Link>
+              </NBText>
+            </View>
+          )}
         {this.hasEmailOrPhone && (
           <React.Fragment>
             <View spacer={true} />

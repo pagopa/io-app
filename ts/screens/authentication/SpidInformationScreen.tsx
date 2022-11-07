@@ -1,27 +1,22 @@
 /**
  * A screen where the user can know more about spid and access to spid.gov.it
  */
-import { CompatNavigationProp } from "@react-navigation/compat";
 import { Col, Content, Grid, Row, Text as NBText, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
-import { H1 } from "../../components/core/typography/H1";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
+import { H1 } from "../../components/core/typography/H1";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import { openLink } from "../../components/ui/Markdown/handlers/link";
 import I18n from "../../i18n";
-import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { AuthenticationParamsList } from "../../navigation/params/AuthenticationParamsList";
 
-type Props = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<
-      AuthenticationParamsList,
-      "AUTHENTICATION_SPID_INFORMATION"
-    >
-  >;
-};
+type Props = IOStackNavigationRouteProps<
+  AuthenticationParamsList,
+  "AUTHENTICATION_SPID_INFORMATION"
+>;
 
 const styles = StyleSheet.create({
   row: {

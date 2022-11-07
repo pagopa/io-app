@@ -1,34 +1,29 @@
+import { useNavigation } from "@react-navigation/native";
+import { View } from "native-base";
 import * as React from "react";
 import { useRef, useState } from "react";
+import { SafeAreaView, ScrollView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { SafeAreaView, ScrollView } from "react-native";
-import { View } from "native-base";
-import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
-import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import {
+  RadioButtonList,
+  RadioItem
+} from "../../../../../components/core/selection/RadioButtonList";
 import { H1 } from "../../../../../components/core/typography/H1";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
+import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
+import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import SV_ROUTES from "../../navigation/routes";
 import {
   svGenerateVoucherBack,
   svGenerateVoucherCancel,
   svGenerateVoucherSelectCategory
 } from "../../store/actions/voucherGeneration";
-import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
-import { SvBeneficiaryCategory } from "../../types/SvVoucherRequest";
 import { selectedBeneficiaryCategorySelector } from "../../store/reducers/voucherGeneration/voucherRequest";
-import {
-  navigateToSvDisabledAdditionalInfoScreen,
-  navigateToSvKoSelectBeneficiaryCategoryScreen,
-  navigateToSvSickCheckIncomeThresholdScreen,
-  navigateToSvStudentSelectDestinationScreen,
-  navigateToSvWorkerCheckIncomeThresholdScreen
-} from "../../navigation/actions";
-import I18n from "../../../../../i18n";
-import {
-  RadioButtonList,
-  RadioItem
-} from "../../../../../components/core/selection/RadioButtonList";
+import { SvBeneficiaryCategory } from "../../types/SvVoucherRequest";
 
 type BeneficiaryCategory = SvBeneficiaryCategory | "other";
 
@@ -77,26 +72,38 @@ const SelectBeneficiaryCategoryScreen = (props: Props): React.ReactElement => {
     BeneficiaryCategory | undefined
   >(undefined);
 
+  const navigation = useNavigation();
+
   const routeNextScreen = () => {
     switch (categoryBeneficiary) {
       case "student":
         props.selectCategory(categoryBeneficiary);
-        props.navigateToSvStudentSelectDestination();
+        navigation.navigate(
+          SV_ROUTES.VOUCHER_GENERATION.STUDENT_SELECT_DESTINATION
+        );
         return;
       case "disabled":
         props.selectCategory(categoryBeneficiary);
-        props.navigateToSvDisabledAdditionalInfo();
+        navigation.navigate(
+          SV_ROUTES.VOUCHER_GENERATION.DISABLED_ADDITIONAL_INFO
+        );
         return;
       case "worker":
         props.selectCategory(categoryBeneficiary);
-        props.navigateToSvWorkerCheckIncomeThreshold();
+        navigation.navigate(
+          SV_ROUTES.VOUCHER_GENERATION.WORKER_CHECK_INCOME_THRESHOLD
+        );
         return;
       case "sick":
         props.selectCategory(categoryBeneficiary);
-        props.navigateToSvSickCheckIncomeThreshold();
+        navigation.navigate(
+          SV_ROUTES.VOUCHER_GENERATION.SICK_CHECK_INCOME_THRESHOLD
+        );
         return;
       case "other":
-        props.navigateToSvKoSelectBeneficiaryCategory();
+        navigation.navigate(
+          SV_ROUTES.VOUCHER_GENERATION.KO_SELECT_BENEFICIARY_CATEGORY
+        );
         return;
     }
   };
@@ -154,17 +161,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   back: () => dispatch(svGenerateVoucherBack()),
   cancel: () => dispatch(svGenerateVoucherCancel()),
   selectCategory: (category: SvBeneficiaryCategory) =>
-    dispatch(svGenerateVoucherSelectCategory(category)),
-  navigateToSvStudentSelectDestination: () =>
-    navigateToSvStudentSelectDestinationScreen(),
-  navigateToSvDisabledAdditionalInfo: () =>
-    navigateToSvDisabledAdditionalInfoScreen(),
-  navigateToSvWorkerCheckIncomeThreshold: () =>
-    navigateToSvWorkerCheckIncomeThresholdScreen(),
-  navigateToSvSickCheckIncomeThreshold: () =>
-    navigateToSvSickCheckIncomeThresholdScreen(),
-  navigateToSvKoSelectBeneficiaryCategory: () =>
-    navigateToSvKoSelectBeneficiaryCategoryScreen()
+    dispatch(svGenerateVoucherSelectCategory(category))
 });
 const mapStateToProps = (state: GlobalState) => ({
   selectedBeneficiaryCategory: selectedBeneficiaryCategorySelector(state)

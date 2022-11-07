@@ -1,5 +1,7 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { format as dateFnsFormat } from "date-fns";
-import * as pot from "italia-ts-commons/lib/pot";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { BlockedInboxOrChannels } from "../../definitions/backend/BlockedInboxOrChannels";
 import { FiscalCode } from "../../definitions/backend/FiscalCode";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
@@ -182,25 +184,26 @@ export function getEnabledChannelsForService(
   potProfile: ProfileState,
   serviceId: ServiceId
 ): EnabledChannels {
-  return pot
-    .toOption(potProfile)
-    .mapNullable(profile =>
+  return pipe(
+    pot.toOption(potProfile),
+    O.chainNullableK(profile =>
       InitializedProfile.is(profile) ? profile.blocked_inbox_or_channels : null
-    )
-    .mapNullable(blockedChannels => blockedChannels[serviceId])
-    .map(_ => ({
+    ),
+    O.chainNullableK(blockedChannels => blockedChannels[serviceId]),
+    O.map(_ => ({
       inbox: _.indexOf(INBOX_CHANNEL) === -1,
       email: _.indexOf(EMAIL_CHANNEL) === -1,
       push: _.indexOf(PUSH_CHANNEL) === -1,
       can_access_message_read_status:
         _.indexOf(SEND_READ_MESSAGE_STATUS_CHANNEL) === -1
-    }))
-    .getOrElse({
+    })),
+    O.getOrElseW(() => ({
       inbox: true,
       email: true,
       push: true,
       can_access_message_read_status: true
-    });
+    }))
+  );
 }
 
 /**

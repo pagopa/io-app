@@ -1,4 +1,4 @@
-import { isRight } from "fp-ts/lib/Either";
+import * as E from "fp-ts/lib/Either";
 import { DateFromISOString } from "../dates";
 
 describe("should convert a ISO string into a date object and a date object into ISO string representation", () => {
@@ -10,12 +10,12 @@ describe("should convert a ISO string into a date object and a date object into 
   it("should convert a string representing a date in ISO format in the relative date object", () => {
     const xmas = new Date(2019, 11, 25).toISOString();
     const validation = DateFromISOString.decode(xmas);
-    expect(isRight(validation)).toBeTruthy();
+    expect(E.isRight(validation)).toBeTruthy();
   });
 
   it("should fail to convert a string representing a wrong date in ISO format", () => {
     const xmas = "2019-32-24T23:00:00.000Z";
     const validation = DateFromISOString.decode(xmas);
-    expect(isRight(validation)).toBeFalsy();
+    expect(E.isRight(validation)).toBeFalsy();
   });
 });

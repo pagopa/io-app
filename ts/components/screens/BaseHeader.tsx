@@ -1,6 +1,7 @@
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { NavigationEvents } from "@react-navigation/compat";
-import { fromNullable } from "fp-ts/lib/Option";
-import { Millisecond } from "italia-ts-commons/lib/units";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { Body, Left, Right, Text as NBText, View } from "native-base";
 import * as React from "react";
 import { FC, Ref } from "react";
@@ -100,7 +101,7 @@ const setAccessibilityTimeout = 0 as Millisecond;
 const noReferenceTimeout = 150 as Millisecond;
 /** A component representing the properties common to all the screens (and the most of modal/overlay displayed) */
 class BaseHeaderComponent extends React.PureComponent<Props, State> {
-  private firstElementRef = React.createRef<View>();
+  private firstElementRef = React.createRef<NBText>();
 
   public constructor(props: Props) {
     super(props);
@@ -120,9 +121,13 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
 
         if (
           isScreenReaderActive &&
-          fromNullable(this.props.accessibilityEvents).fold(
-            false,
-            ({ avoidNavigationEventsUsage }) => avoidNavigationEventsUsage
+          pipe(
+            this.props.accessibilityEvents,
+            O.fromNullable,
+            O.fold(
+              () => false,
+              ({ avoidNavigationEventsUsage }) => avoidNavigationEventsUsage
+            )
           )
         ) {
           this.handleFocus();
@@ -136,9 +141,13 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
   }
 
   get canHandleFocus() {
-    return fromNullable(this.props.accessibilityEvents).fold(
-      true,
-      ae => ae.disableAccessibilityFocus !== true
+    return pipe(
+      this.props.accessibilityEvents,
+      O.fromNullable,
+      O.fold(
+        () => true,
+        ae => ae.disableAccessibilityFocus !== true
+      )
     );
   }
 
@@ -162,22 +171,28 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
   }
 
   private renderBodyLabel = (label?: string, ref?: Ref<NBText>) =>
-    maybeNotNullyString(label).fold(undefined, l => {
-      const { titleColor } = this.props;
-      return (
-        <NBText
-          ref={ref}
-          numberOfLines={1}
-          accessible={true}
-          accessibilityRole={"header"}
-          style={{
-            color: titleColor ? IOColors[titleColor] : IOColors.bluegrey
-          }}
-        >
-          {l}
-        </NBText>
-      );
-    });
+    pipe(
+      maybeNotNullyString(label),
+      O.fold(
+        () => undefined,
+        l => {
+          const { titleColor } = this.props;
+          return (
+            <NBText
+              ref={ref}
+              numberOfLines={1}
+              accessible={true}
+              accessibilityRole={"header"}
+              style={{
+                color: titleColor ? IOColors[titleColor] : IOColors.bluegrey
+              }}
+            >
+              {l}
+            </NBText>
+          );
+        }
+      )
+    );
 
   public render() {
     const {
@@ -207,7 +222,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
         {!isSearchEnabled && (
           <Body style={goBack || customGoBack ? styles.body : styles.noLeft}>
             {this.state.isScreenReaderActive &&
-            maybeAccessibilityLabel.isSome() ? (
+            O.isSome(maybeAccessibilityLabel) ? (
               this.renderBodyLabel(
                 maybeAccessibilityLabel.value,
                 this.firstElementRef
@@ -265,9 +280,13 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
           <ButtonDefaultOpacity transparent={true} />
         )}
 
-        {fromNullable(this.props.accessibilityEvents).fold(
-          true,
-          ({ avoidNavigationEventsUsage }) => !avoidNavigationEventsUsage
+        {pipe(
+          this.props.accessibilityEvents,
+          O.fromNullable,
+          O.fold(
+            () => true,
+            ({ avoidNavigationEventsUsage }) => !avoidNavigationEventsUsage
+          )
         ) && <NavigationEvents onWillFocus={this.handleFocus} />}
       </Right>
     );
