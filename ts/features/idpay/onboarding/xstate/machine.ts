@@ -1,11 +1,14 @@
+import * as O from "fp-ts/lib/Option";
 import { assign, createMachine } from "xstate";
 import { InitiativeDto } from "../../../../../definitions/idpay/onboarding/InitiativeDto";
+import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/onboarding/RequiredCriteriaDTO";
 import { LOADING_TAG, UPSERTING_TAG } from "../../../../utils/xstate";
 
 // Context types
 export type Context = {
   serviceId?: string;
-  initative?: InitiativeDto;
+  initiative?: InitiativeDto;
+  requiredCriteria?: O.Option<RequiredCriteriaDTO>;
 };
 
 // Events types
@@ -27,6 +30,9 @@ type Services = {
   };
   acceptTos: {
     data: undefined;
+  };
+  loadRequiredCriteria: {
+    data: O.Option<RequiredCriteriaDTO>;
   };
 };
 
@@ -88,7 +94,21 @@ const createIDPayOnboardingMachine = () =>
         },
         LOADING_REQUIRED_CRITERIA: {
           tags: [LOADING_TAG],
-          type: "final"
+          invoke: {
+            id: "loadRequiredCriteria",
+            src: "loadRequiredCriteria",
+            onDone: [
+              {
+                target: "EVALUATING_REQUIRED_CRITERIA",
+                actions: "loadRequiredCriteriaSuccess"
+              }
+            ]
+          }
+        },
+        // Self transition node to evaluate required criteria
+        EVALUATING_REQUIRED_CRITERIA: {
+          type: "final",
+          tags: [LOADING_TAG]
         }
       }
     },
@@ -98,7 +118,10 @@ const createIDPayOnboardingMachine = () =>
           serviceId: event.serviceId
         })),
         loadInitiativeSuccess: assign((_, event) => ({
-          initative: event.data
+          initiative: event.data
+        })),
+        loadRequiredCriteriaSuccess: assign((_, event) => ({
+          requiredCriteria: event.data
         }))
       }
     }
