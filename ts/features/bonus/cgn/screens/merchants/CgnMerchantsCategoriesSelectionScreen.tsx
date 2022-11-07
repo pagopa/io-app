@@ -9,7 +9,10 @@ import { FlatList, ListRenderItemInfo, Platform } from "react-native";
 import { ProductCategoryWithNewDiscountsCount } from "../../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
 import { IOBadge } from "../../../../../components/core/IOBadge";
 import { H1 } from "../../../../../components/core/typography/H1";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
+import {
+  IOColors,
+  getGradientColorValues
+} from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../../../../components/screens/EdgeBorderComponent";
@@ -60,7 +63,7 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
       return (
         <CgnMerchantCategoryItem
           title={I18n.t("bonus.cgn.merchantDetail.categories.all")}
-          colors={["#475A6D", "#E6E9F2"]}
+          colors={getGradientColorValues("cgnAll")}
           onPress={() => navigation.navigate(CGN_ROUTES.DETAILS.MERCHANTS.LIST)}
           child={
             <View style={[{ alignItems: "flex-end" }, IOStyles.flex]}>

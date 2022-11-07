@@ -505,7 +505,9 @@ profile:
     notifications:
       header: Notifiche push
       title: Personalizza le notifiche push
-      subtitle: Scegli come ricevere aggiornamenti sui messaggi e promemoria che ricevi
+      subtitle: Ora puoi vedere subito chi ti ha scritto o ricevere promemoria da messaggi importanti.
+      titleNewUser: Personalizza le notifiche
+      subtitleNewUser: Scegli come ricevere aggiornamenti sui messaggi e promemoria che ricevi
       reminders:
         title: Consenti i promemoria
         description: Ricevi notifiche push in prossimità di scadenze o quando non hai ancora letto dei messaggi
@@ -837,6 +839,7 @@ onboarding:
     title: Configurazione terminata!
     body: Ora puoi iniziare a usare IO
   notifications:
+    badge: Novità
     headerTitle: Configura IO
     continue: Continua
     remindersPreviewTitle: Promemoria
@@ -3160,8 +3163,8 @@ features:
           REFUSED: REFUSED
           CANCELLED: Annullata
         expand: mostra gli stati precedenti
-        info: Puoi vedere il dettaglio di ciascuno stato, scaricare le ricevute e le attestazioni opponibili a terzi accedendo alla versione web del servizio   
-        cta: Accedi alla versione web   
+        info: Puoi vedere il dettaglio di ciascuno stato, scaricare le ricevute e le attestazioni opponibili a terzi accedendo alla versione web del servizio
+        cta: Accedi alla versione web
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
@@ -3220,5 +3223,3 @@ support:
       subCategory: "Puoi darci più dettagli?"
     subTitle:
       category: "Aiutaci a capire meglio come possiamo aiutarti selezionando l’argomento del tuo problema: ti risponderemo il prima possibile, in orario lavorativo."
-
-
