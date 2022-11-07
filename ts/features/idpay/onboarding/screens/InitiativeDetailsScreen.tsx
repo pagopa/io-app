@@ -6,12 +6,11 @@ import { View } from "native-base";
 import { pipe } from "fp-ts/lib/function";
 import { useActor } from "@xstate/react";
 import * as O from "fp-ts/lib/Option";
-import { SafeAreaView, ScrollView, StyleSheet, Text } from "react-native";
+import { SafeAreaView, ScrollView, Text } from "react-native";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import OrganizationHeader from "../../../../components/OrganizationHeader";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import variables from "../../../../theme/variables";
 import Markdown from "../../../../components/ui/Markdown";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import { Body } from "../../../../components/core/typography/Body";
@@ -27,6 +26,7 @@ import { useOnboardingMachineService } from "../xstate/provider";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { LOADING_TAG, UPSERTING_TAG } from "../../../../utils/xstate";
 
 type InitiativeDetailsScreenRouteParams = {
   serviceId: string;
@@ -96,9 +96,6 @@ const BeforeContinueBody = (props: BeforeContinueBodyProps) => {
 };
 
 const InitiativeDetailsScreen = () => {
-  const onboardingMachineService = useOnboardingMachineService();
-  const [state, send] = useActor(onboardingMachineService);
-
   const navigation = useNavigation();
   const route = useRoute<InitiativeDetailsRouteProps>();
 
@@ -111,12 +108,19 @@ const InitiativeDetailsScreen = () => {
     O.toUndefined
   );
 
+  const onboardingMachineService = useOnboardingMachineService();
+  const [state, send] = useActor(onboardingMachineService);
+
+  const isLoading = state.tags.has(LOADING_TAG);
+  const isAcceptingTos = state.tags.has(UPSERTING_TAG);
+
   const handleGoBackPress = () => {
+    // TODO send back event to machine to handle back navigation
     navigation.goBack();
   };
 
   const handleContinuePress = () => {
-    // TODO add continue press logic
+    send("ACCEPT_TOS");
   };
 
   React.useEffect(() => {
@@ -126,23 +130,12 @@ const InitiativeDetailsScreen = () => {
     });
   }, [send, serviceId]);
 
-  const isLoading = React.useMemo(
-    () =>
-      state.matches("WAITING_INITIATIVE_SELECTION") ||
-      state.matches("LOADING_INITIATIVE"),
-    [state]
+  // TODO show initaitveID for testing purposes
+  const content = pipe(
+    O.fromNullable(state.context.initiative),
+    O.map(initiative => `Initiative ID: ${initiative.initiativeId}`),
+    O.toUndefined
   );
-
-  const content = React.useMemo(() => {
-    if (
-      state.matches("DISPLAYING_INITIATIVE") &&
-      state.context.initative !== undefined
-    ) {
-      return `Initiative ID: ${state.context.initative.initiativeId}`;
-    }
-
-    return null;
-  }, [state]);
 
   return (
     <BaseScreenComponent
@@ -153,7 +146,7 @@ const InitiativeDetailsScreen = () => {
       <LoadingSpinnerOverlay isLoading={isLoading}>
         <SafeAreaView style={IOStyles.flex}>
           <ScrollView style={IOStyles.flex}>
-            <View style={styles.padded}>
+            <View style={IOStyles.horizontalContentPadding}>
               {service !== undefined && (
                 <InitiativeOrganizationHeader {...toUIService(service)} />
               )}
@@ -189,7 +182,9 @@ const InitiativeDetailsScreen = () => {
             rightButton={{
               title: I18n.t("idpay.onboarding.buttons.continue"),
               onPress: handleContinuePress,
-              testID: "IDPayOnboardingContinue"
+              testID: "IDPayOnboardingContinue",
+              isLoading: isAcceptingTos,
+              disabled: isAcceptingTos
             }}
           />
         </SafeAreaView>
@@ -197,12 +192,6 @@ const InitiativeDetailsScreen = () => {
     </BaseScreenComponent>
   );
 };
-
-const styles = StyleSheet.create({
-  padded: {
-    paddingHorizontal: variables.contentPadding
-  }
-});
 
 export type { InitiativeDetailsScreenRouteParams };
 
