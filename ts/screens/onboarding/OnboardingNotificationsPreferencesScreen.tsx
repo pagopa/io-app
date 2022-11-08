@@ -1,29 +1,29 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import React, { memo, useEffect, useState } from "react";
-import { SafeAreaView, StyleSheet, View } from "react-native";
 import { useSelector } from "react-redux";
+import { SafeAreaView, StyleSheet, View } from "react-native";
+import { PreferencesListItem } from "../../components/PreferencesListItem";
+import ScreenContent from "../../components/screens/ScreenContent";
+import I18n from "../../i18n";
+import { profilePreferencesSelector } from "../../store/reducers/profile";
+import { useIODispatch } from "../../store/hooks";
+import { profileUpsert } from "../../store/actions/profile";
 import { ReminderStatusEnum } from "../../../definitions/backend/ReminderStatus";
+import { showToast } from "../../utils/showToast";
+import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
+import { OnboardingParamsList } from "../../navigation/params/OnboardingParamsList";
+import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
+import Switch from "../../components/ui/Switch";
+import FooterWithButtons from "../../components/ui/FooterWithButtons";
+import { BlockButtonProps } from "../../components/ui/BlockButtons";
 import { InfoBox } from "../../components/box/InfoBox";
 import { H5 } from "../../components/core/typography/H5";
 import { IOColors } from "../../components/core/variables/IOColors";
-import { PreferencesListItem } from "../../components/PreferencesListItem";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import ScreenContent from "../../components/screens/ScreenContent";
-import { BlockButtonProps } from "../../components/ui/BlockButtons";
-import FooterWithButtons from "../../components/ui/FooterWithButtons";
-import Switch from "../../components/ui/Switch";
-import I18n from "../../i18n";
-import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
-import { OnboardingParamsList } from "../../navigation/params/OnboardingParamsList";
-import { profileUpsert } from "../../store/actions/profile";
-import { useIODispatch } from "../../store/hooks";
-import { profileRemindersPreferenceSelector } from "../../store/reducers/profile";
 import customVariables from "../../theme/variables";
 import { IOBadge } from "../../components/core/IOBadge";
 import { H1 } from "../../components/core/typography/H1";
 import { Body } from "../../components/core/typography/Body";
-import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
-import { showToast } from "../../utils/showToast";
 import { NotificationsPreferencesPreview } from "./components/NotificationsPreferencesPreview";
 
 const styles = StyleSheet.create({
@@ -99,34 +99,38 @@ const CustomGoBack = memo(
   )
 );
 
-const Header = memo(({ isFirstOnboarding }: { isFirstOnboarding: boolean }) => (
-  <View style={styles.contentHeader}>
-    <H1 color={isFirstOnboarding ? "bluegreyDark" : "white"}>
-      {I18n.t(
-        isFirstOnboarding
-          ? "profile.preferences.notifications.titleNewUser"
-          : "profile.preferences.notifications.title"
-      )}
-    </H1>
-    <Body color={isFirstOnboarding ? "bluegreyDark" : "white"}>
-      {I18n.t(
-        isFirstOnboarding
-          ? "profile.preferences.notifications.subtitleNewUser"
-          : "profile.preferences.notifications.subtitle"
-      )}
-    </Body>
-  </View>
-));
+const Header = memo(({ isFirstOnboarding }: { isFirstOnboarding: boolean }) => {
+  const { title, subtitle } = isFirstOnboarding
+    ? {
+        title: I18n.t("profile.preferences.notifications.title"),
+        subtitle: I18n.t("profile.preferences.notifications.subtitle")
+      }
+    : {
+        title: I18n.t("profile.preferences.notifications.titleExistingUser"),
+        subtitle: I18n.t(
+          "profile.preferences.notifications.subtitleExistingUser"
+        )
+      };
+
+  return (
+    <View style={styles.contentHeader}>
+      <H1 color={isFirstOnboarding ? "bluegreyDark" : "white"}>{title}</H1>
+      <Body color={isFirstOnboarding ? "bluegreyDark" : "white"}>
+        {subtitle}
+      </Body>
+    </View>
+  );
+});
 
 const OnboardingNotificationsPreferencesScreen = (props: Props) => {
   const dispatch = useIODispatch();
 
   const [remindersEnabled, setRemindersEnabled] = useState(true);
 
-  const remindersPreference = useSelector(profileRemindersPreferenceSelector);
+  const preferences = useSelector(profilePreferencesSelector);
 
-  const isError = pot.isError(remindersPreference);
-  const isUpdating = pot.isUpdating(remindersPreference);
+  const isError = pot.isError(preferences);
+  const isUpdating = pot.isUpdating(preferences);
 
   const { isFirstOnboarding } = props.route.params;
 

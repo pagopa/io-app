@@ -1,28 +1,28 @@
 import { useNavigation } from "@react-navigation/native";
+import { View } from "native-base";
 import React, { useMemo, useState } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
-import { View } from "native-base";
-import I18n from "../../../../../i18n";
-import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import { H1 } from "../../../../../components/core/typography/H1";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
+import { IOBadge } from "../../../../../components/core/IOBadge";
+import {
+  RadioButtonList,
+  RadioItem
+} from "../../../../../components/core/selection/RadioButtonList";
+import { Body } from "../../../../../components/core/typography/Body";
+import { H1 } from "../../../../../components/core/typography/H1";
+import { H4 } from "../../../../../components/core/typography/H4";
+import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
+import { BlockButtonProps } from "../../../../../components/ui/BlockButtons";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
+import I18n from "../../../../../i18n";
 import {
   confirmButtonProps,
   disablePrimaryButtonProps,
   errorBorderedButtonProps
 } from "../../../bonusVacanze/components/buttons/ButtonConfigurations";
-import { BlockButtonProps } from "../../../../../components/ui/BlockButtons";
-import {
-  RadioButtonList,
-  RadioItem
-} from "../../../../../components/core/selection/RadioButtonList";
-import { H4 } from "../../../../../components/core/typography/H4";
-import { Body } from "../../../../../components/core/typography/Body";
-import { IOBadge } from "../../../../../components/core/IOBadge";
 import { useBottomSheetMethodsToDelete } from "../../components/optInStatus/BottomSheetMethodsToDelete";
-import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import {
   navigateToOptInPaymentMethodsThankYouDeleteMethodsScreen,
   navigateToOptInPaymentMethodsThankYouKeepMethodsScreen
@@ -73,11 +73,12 @@ const radioButtonListItems: () => ReadonlyArray<
   }
 ];
 
-const disabledButtonProps = disablePrimaryButtonProps(
-  I18n.t("global.buttons.continue"),
-  undefined,
-  "disabledContinueButton"
-);
+const disabledButtonProps = () =>
+  disablePrimaryButtonProps(
+    I18n.t("global.buttons.continue"),
+    undefined,
+    "disabledContinueButton"
+  );
 
 const OptInPaymentMethodsChoiceScreen = () => {
   const [selectedMethod, setSelectedMethod] =
@@ -114,10 +115,13 @@ const OptInPaymentMethodsChoiceScreen = () => {
     [navigation, presentBottomSheet]
   );
 
-  const computedBottomButtonProps =
-    selectedMethod === null
-      ? disabledButtonProps
-      : bottomButtons[selectedMethod];
+  const computedBottomButtonProps = useMemo(
+    () =>
+      selectedMethod === null
+        ? disabledButtonProps()
+        : bottomButtons[selectedMethod],
+    [selectedMethod, bottomButtons]
+  );
 
   return (
     // The void customRightIcon and customGoBack are needed to have a centered header title

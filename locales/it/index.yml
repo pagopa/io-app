@@ -485,7 +485,7 @@ profile:
         not_selected: Non selezionato
       notifications:
         title: Notifiche push
-        subtitle: Consenti anteprima e promemoria
+        subtitle: Consenti anteprime e promemoria
     empty:
       default: Nessuna preferenza impostata
     unavailable:
@@ -503,14 +503,24 @@ profile:
       local_calendar: Calendario locale
       birthday_calendar: Compleanni
     notifications:
+      contextualHelpTitle: Titolo
+      contextualHelpContent: !include profile/profile_preferences_notifications.md
       header: Notifiche push
-      title: Personalizza le notifiche push
-      subtitle: Ora puoi vedere subito chi ti ha scritto o ricevere promemoria da messaggi importanti.
-      titleNewUser: Personalizza le notifiche
-      subtitleNewUser: Scegli come ricevere aggiornamenti sui messaggi e promemoria che ricevi
+      title: Personalizza le notifiche
+      subtitle: Scegli come ricevere aggiornamenti sui messaggi e promemoria che ricevi.
+      titleExistingUser: Notifiche push più intelligenti
+      subtitleExistingUser: Ora puoi vedere subito chi ti ha scritto o ricevere promemoria da messaggi importanti.
       reminders:
         title: Consenti i promemoria
         description: Ricevi notifiche push in prossimità di scadenze o quando non hai ancora letto dei messaggi
+      preview:
+        title: Mostra anteprime
+        description: Includi nella notifica push il mittente e l’oggetto del messaggio ·
+        link: Più info
+        bottomSheet:
+          title: Mostra anteprime
+          content: "Quando l’opzione è attiva, le notifiche push mostrano il mittente e l’oggetto dei messaggi: così sai chi ti ha scritto senza accedere all’app.\nQueste informazioni, che potrebbero essere sensibili, vengono trattate dal gestore del tuo sistema operativo e sono mostrate anche quando il dispositivo è bloccato. Se vuoi evitare la visualizzazione delle anteprime, disattiva l’opzione."
+          cta: Ho capito!
       error: Si è verificato un errore con la tua richiesta
 userMetadata:
   errors:
@@ -2598,8 +2608,7 @@ bonus:
     optInPaymentMethods:
       cashbackUpdate:
         header: "Novità e aggiornamenti"
-        title: "Aggiornamenti sul Cashback"
-        subtitle: "Ministero dell’Economia e delle Finanze"
+        title: "Decidi se mantenere o eliminare i tuoi metodi di pagamento"
         body: !include bonus/bpd/optInPaymentMethods.md
       choice:
         header: "Configura IO"
@@ -2609,7 +2618,7 @@ bonus:
         options:
           keepAll:
             title: Mantieni tutti i metodi nel Portafoglio
-            body: Se compatibili, puoi utilizzarli per aderire a sconti, bonus e iniziative future o per altre funzionalità, come effettuare pagamenti in app. Potrai modificare le preferenze dei tuoi metodi o eliminarli in qualsiasi momento.
+            body: PagoPA S.p.A. tratterà i dati dei tuoi metodi di pagamento in qualità di titolare del trattamento. Per maggiori informazioni puoi consultare l’Informativa Privacy.
           deleteAll:
             title: Elimina tutti i metodi dal Portafoglio
             body: Tutti i metodi che hai aggiunto finora verranno rimossi in modo definitivo. Potrai aggiungerli di nuovo in qualsiasi momento, ma dovrai reinserire i dati e ripetere le procedure di autorizzazione.
@@ -3216,3 +3225,15 @@ support:
       subCategory: "Puoi darci più dettagli?"
     subTitle:
       category: "Aiutaci a capire meglio come possiamo aiutarti selezionando l’argomento del tuo problema: ti risponderemo il prima possibile, in orario lavorativo."
+idpay:
+  onboarding:
+    headerTitle: "Adesione all'iniziativa"
+    buttons: 
+      cancel: "Annulla"
+      continue: "Continua"
+    beforeContinue:
+      text1: "Proseguendo accetti i "
+      tosLink: "Termini e condizioni d'uso"
+      text2: " del servizio e confermi di avere letto l' "
+      privacyLink: "Informativa privacy"
+

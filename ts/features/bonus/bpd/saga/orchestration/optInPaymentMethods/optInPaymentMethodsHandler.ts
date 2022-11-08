@@ -1,6 +1,7 @@
-import { NavigationActions } from "@react-navigation/compat";
+import { CommonActions } from "@react-navigation/native";
 import { call } from "typed-redux-saga/macro";
 import NavigationService from "../../../../../../navigation/NavigationService";
+import ROUTES from "../../../../../../navigation/routes";
 import {
   executeWorkUnit,
   withFailureHandling,
@@ -18,8 +19,11 @@ function* optInPaymentMethodsWorkUnit() {
   return yield* call(executeWorkUnit, {
     startScreenNavigation: () => {
       NavigationService.dispatchNavigationAction(
-        NavigationActions.navigate({
-          routeName: BPD_ROUTES.OPT_IN_PAYMENT_METHODS.CASHBACK_UPDATE
+        CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
+          screen: BPD_ROUTES.OPT_IN_PAYMENT_METHODS.MAIN,
+          params: {
+            screen: BPD_ROUTES.OPT_IN_PAYMENT_METHODS.CASHBACK_UPDATE
+          }
         })
       );
     },
