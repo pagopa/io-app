@@ -2585,8 +2585,7 @@ bonus:
     optInPaymentMethods:
       cashbackUpdate:
         header: "News and updates"
-        title: "Update on the Cashback initiative"
-        subtitle: "Ministry of Economy and Finance"
+        title: "Choose to keep or delete your payment methods"
         body: !include bonus/bpd/optInPaymentMethods.md
       choice:
         header: Configure IO
@@ -2596,7 +2595,7 @@ bonus:
         options:
           keepAll:
             title: Keep all payment methods in the Wallet
-            body: If supported, you’ll be able to use them to take part in discounts, bonuses and future initiatives or for other features, such as in-app payments. You can change your method preferences or delete them at any time.
+            body: PagoPA S.p.A. will handle your payment method's data as the owner of the threatment. For further informations you can check the Privacy Policy.
           deleteAll:
             title: Delete all payment methods from the Wallet
             body: All methods added in the Wallet so far will be permanently deleted. You can add them again at any time, but you’ll have to enter back the method details and have it authorized.
