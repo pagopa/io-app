@@ -1,5 +1,4 @@
 /* eslint-disable no-underscore-dangle */
-import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { InitiativeDto } from "../../../../../definitions/idpay/onboarding/InitiativeDto";
@@ -7,12 +6,11 @@ import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/onboarding
 import NavigationService from "../../../../navigation/NavigationService";
 import { OnboardingClient } from "../api/client";
 import { SelfConsentDTO } from "../../../../../definitions/idpay/onboarding/SelfConsentDTO";
-import { IDPayOnboardingRoutes } from "../navigation/navigator";
 import { Context } from "./machine";
 
 /**
  * Temporary function to convert the required criteria to the self consents
- * 
+ *
  * TODO: Process inputs from the citizen
  */
 const createSelfConsents = (requiredCriteria: RequiredCriteriaDTO) => {
