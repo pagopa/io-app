@@ -28,7 +28,6 @@ import PictogramUploadFile from "./svg/PictogramUploadFile";
 import PictogramHourglass from "./svg/PictogramHourglass";
 import PictogramTeaBreak from "./svg/PictogramTeaBreak";
 import PictogramSms from "./svg/PictogramSms";
-import PictogramCondom from "./svg/PictogramCondom";
 import PictogramInbox from "./svg/PictogramInbox";
 import PictogramBeerMug from "./svg/PictogramBeerMug";
 
@@ -59,7 +58,6 @@ export const IOPictograms = {
   teaBreak: PictogramTeaBreak,
   beerMug: PictogramBeerMug,
   sms: PictogramSms,
-  condom: PictogramCondom,
   heart: PictogramHeart /* io-heart */,
   completed: PictogramCompleted
 };
