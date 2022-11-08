@@ -89,6 +89,7 @@ const createIDPayOnboardingMachine = () =>
       initial: "WAITING_INITIATIVE_SELECTION",
       states: {
         WAITING_INITIATIVE_SELECTION: {
+          tags: [LOADING_TAG],
           on: {
             SELECT_INITIATIVE: {
               target: "LOADING_INITIATIVE",
@@ -97,6 +98,7 @@ const createIDPayOnboardingMachine = () =>
           }
         },
         LOADING_INITIATIVE: {
+          tags: [LOADING_TAG],
           invoke: {
             src: "loadInitiative",
             id: "loadInitiative",
