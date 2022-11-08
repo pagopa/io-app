@@ -34,7 +34,6 @@ export const IDPayOnboardingNavigator = () => (
       <Stack.Screen
         name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_PDNDACCEPTANCE}
         component={PDNDPrerequisites}
-        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   </IDPayOnboardingMachineProvider>

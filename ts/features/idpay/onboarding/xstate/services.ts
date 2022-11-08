@@ -96,6 +96,7 @@ const createServicesImplementation = (onboardingClient: OnboardingClient) => {
         initiativeId: context.initiative.initiativeId
       }
     });
+
     const dataPromise: Promise<O.Option<RequiredCriteriaDTO>> = pipe(
       response,
       E.fold(
