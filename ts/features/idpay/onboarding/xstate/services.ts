@@ -96,11 +96,6 @@ const createServicesImplementation = (onboardingClient: OnboardingClient) => {
         initiativeId: context.initiative.initiativeId
       }
     });
-
-    // NavigationService.navigate(IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
-    //   screen: IDPayOnboardingRoutes.IDPAY_ONBOARDING_PDNDACCEPTANCE
-    //   // TODO:: add logic to pick the right screen
-    // });
     const dataPromise: Promise<O.Option<RequiredCriteriaDTO>> = pipe(
       response,
       E.fold(
