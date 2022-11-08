@@ -159,6 +159,7 @@ const createIDPayOnboardingMachine = () =>
         },
         DISPLAYING_REQUIRED_PDND_CRITERIA: {
           tags: [WAITING_USER_INPUT_TAG],
+          entry: "navigateToPDNDCriteriaScreen",
           on: {
             ACCEPT_REQUIRED_PDND_CRITERIA: [
               {

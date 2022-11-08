@@ -4,10 +4,7 @@ import InitiativeDetailsScreen, {
   InitiativeDetailsScreenRouteParams
 } from "../screens/InitiativeDetailsScreen";
 import { IDPayOnboardingMachineProvider } from "../xstate/provider";
-import {
-  PDNDPrerequisites,
-  PDNDPrerequisitesRouteParams
-} from "../screens/PDNDPrerequisites";
+import { PDNDPrerequisites } from "../screens/PDNDPrerequisites";
 
 export const IDPayOnboardingRoutes = {
   IDPAY_ONBOARDING_MAIN: "IDPAY_ONBOARDING_MAIN",
@@ -17,7 +14,7 @@ export const IDPayOnboardingRoutes = {
 
 export type IDPayOnboardingParamsList = {
   [IDPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS]: InitiativeDetailsScreenRouteParams;
-  [IDPayOnboardingRoutes.IDPAY_ONBOARDING_PDNDACCEPTANCE]: PDNDPrerequisitesRouteParams;
+  [IDPayOnboardingRoutes.IDPAY_ONBOARDING_PDNDACCEPTANCE]: undefined;
 };
 
 const Stack = createStackNavigator<IDPayOnboardingParamsList>();
