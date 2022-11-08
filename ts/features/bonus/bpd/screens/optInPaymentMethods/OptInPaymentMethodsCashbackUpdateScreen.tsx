@@ -22,11 +22,6 @@ import {
 } from "../../store/actions/optInPaymentMethods";
 
 const styles = StyleSheet.create({
-  logo: {
-    resizeMode: "contain",
-    width: 48,
-    height: 46
-  },
   headerContainer: {
     ...IOStyles.row,
     justifyContent: "space-between"
