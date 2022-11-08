@@ -55,13 +55,6 @@ h4 {
 `;
 const coverImageWidth = Math.min(48, widthPercentageToDP("30%"));
 const styles = StyleSheet.create({
-  noPadded: {
-    paddingLeft: 0,
-    paddingRight: 0
-  },
-  mainContent: {
-    flex: 1
-  },
   flexEnd: {
     alignSelf: "flex-start"
   },

@@ -71,7 +71,7 @@ const DisabledAdditionalInfoScreen = (props: Props): React.ReactElement => {
         style={IOStyles.flex}
         testID={"DisabledAdditionalInfoScreen"}
       >
-        <ScrollView style={[IOStyles.horizontalContentPadding]}>
+        <ScrollView style={IOStyles.horizontalContentPadding}>
           <H1>{title}</H1>
           <View spacer={true} extralarge={true} />
           <DeclarationEntry

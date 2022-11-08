@@ -106,24 +106,28 @@ const CustomGoBack = memo(
   )
 );
 
-const Header = memo(({ isFirstOnboarding }: { isFirstOnboarding: boolean }) => (
-  <View style={styles.contentHeader}>
-    <H1 color={isFirstOnboarding ? "bluegreyDark" : "white"}>
-      {I18n.t(
-        isFirstOnboarding
-          ? "profile.preferences.notifications.title"
-          : "profile.preferences.notifications.titleExistingUser"
-      )}
-    </H1>
-    <Body color={isFirstOnboarding ? "bluegreyDark" : "white"}>
-      {I18n.t(
-        isFirstOnboarding
-          ? "profile.preferences.notifications.subtitle"
-          : "profile.preferences.notifications.subtitleExistingUser"
-      )}
-    </Body>
-  </View>
-));
+const Header = memo(({ isFirstOnboarding }: { isFirstOnboarding: boolean }) => {
+  const { title, subtitle } = isFirstOnboarding
+    ? {
+        title: I18n.t("profile.preferences.notifications.title"),
+        subtitle: I18n.t("profile.preferences.notifications.subtitle")
+      }
+    : {
+        title: I18n.t("profile.preferences.notifications.titleExistingUser"),
+        subtitle: I18n.t(
+          "profile.preferences.notifications.subtitleExistingUser"
+        )
+      };
+
+  return (
+    <View style={styles.contentHeader}>
+      <H1 color={isFirstOnboarding ? "bluegreyDark" : "white"}>{title}</H1>
+      <Body color={isFirstOnboarding ? "bluegreyDark" : "white"}>
+        {subtitle}
+      </Body>
+    </View>
+  );
+});
 
 const OnboardingNotificationsPreferencesScreen = (props: Props) => {
   const dispatch = useIODispatch();

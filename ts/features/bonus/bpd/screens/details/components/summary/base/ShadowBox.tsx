@@ -1,12 +1,13 @@
 import { View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
+import { IOColors } from "../../../../../../../../components/core/variables/IOColors";
 
 const styles = StyleSheet.create({
   body: {
     borderRadius: 8,
-    backgroundColor: "white",
-    shadowColor: "#17324D",
+    backgroundColor: IOColors.white,
+    shadowColor: IOColors.bluegreyDark,
     shadowOffset: {
       width: 0,
       height: 3

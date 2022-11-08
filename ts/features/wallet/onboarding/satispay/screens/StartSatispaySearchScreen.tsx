@@ -29,7 +29,6 @@ export type Props = ReturnType<typeof mapDispatchToProps> &
 
 const styles = StyleSheet.create({
   title: { flex: 1, paddingRight: 16 },
-  image: { width: 100, height: 25 },
   row: { flexDirection: "row", flex: 1 }
 });
 

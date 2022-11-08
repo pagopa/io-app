@@ -63,7 +63,7 @@ const CdcBonusRequestSelectResidence = () => {
       headerTitle={I18n.t("bonus.cdc.title")}
     >
       <SafeAreaView style={IOStyles.flex}>
-        <ScrollView style={[IOStyles.horizontalContentPadding]}>
+        <ScrollView style={IOStyles.horizontalContentPadding}>
           <H1>{I18n.t("bonus.cdc.bonusRequest.selectResidence.header")}</H1>
           <View spacer={true} />
           <H4 weight={"Regular"}>
