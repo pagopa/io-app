@@ -7,7 +7,7 @@ import { IOStyles } from "./core/variables/IOStyles";
 
 type Props = {
   title: string;
-  description: string;
+  description: string | React.ReactNode;
   rightElement: React.ReactNode;
 } & TestID;
 
