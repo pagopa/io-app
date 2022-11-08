@@ -21,19 +21,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center"
   },
-  title: {
-    textAlign: "center",
-    fontSize: 20
-  },
   textAlignCenter: {
     textAlign: "center"
-  },
-  bold: {
-    fontWeight: "bold"
   }
 });
-
-export const InfoScreenStyle = styles;
 
 const renderNode = (body: string | React.ReactNode) => {
   if (typeof body === "string") {

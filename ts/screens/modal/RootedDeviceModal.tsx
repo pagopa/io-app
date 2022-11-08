@@ -37,12 +37,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 20
   },
-  body: {
-    textAlign: "center"
-  },
-  bold: {
-    fontWeight: "bold"
-  },
   image: {
     width: 66,
     height: 104

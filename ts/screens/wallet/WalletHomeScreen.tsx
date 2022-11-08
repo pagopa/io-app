@@ -117,29 +117,11 @@ type Props = ReturnType<typeof mapStateToProps> &
   LightModalContextInterface;
 
 const styles = StyleSheet.create({
-  inLineSpace: {
-    lineHeight: 20
-  },
-  addDescription: {
-    lineHeight: 24,
-    fontSize: customVariables.fontSize1
-  },
   white: {
     color: IOColors.white
   },
-  container: {
-    flex: 1,
-    alignItems: "flex-start",
-    justifyContent: "center",
-    backgroundColor: "transparent"
-  },
   flex1: {
     flex: 1
-  },
-  flexRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between"
   },
   emptyListWrapper: {
     padding: customVariables.contentPadding,
@@ -155,18 +137,8 @@ const styles = StyleSheet.create({
     padding: customVariables.contentPadding,
     paddingBottom: 0
   },
-  center: {
-    alignSelf: "center"
-  },
-  end: {
-    alignSelf: "flex-end"
-  },
-
   centered: {
     textAlign: "center"
-  },
-  textStyleHelp: {
-    lineHeight: 18
   }
 });
 

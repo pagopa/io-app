@@ -181,7 +181,7 @@ export class LightModalProvider extends React.Component<Props, State> {
   public showModal = async (childComponent: React.ReactNode) => {
     const isScreenReaderActive = await isScreenReaderEnabled();
     const component = (
-      <View style={[styles.container]}>
+      <View style={styles.container}>
         {isScreenReaderActive ? (
           <Modal>{childComponent}</Modal>
         ) : (

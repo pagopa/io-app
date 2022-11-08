@@ -147,7 +147,7 @@ const generateItemLayouts = (messageStates: ReadonlyArray<MessageState>) => {
 };
 
 const MessageListItemPlaceholder = (
-  <View style={[styles.itemLoadingContainer]}>
+  <View style={styles.itemLoadingContainer}>
     <View style={styles.itemLoadingHeaderWrapper}>
       <View style={styles.itemLoadingHeaderCenter}>
         <Placeholder.Paragraph

@@ -24,11 +24,6 @@ const styles = StyleSheet.create({
     height: 25,
     flexDirection: "row"
   },
-  badgeAvailable: {
-    backgroundColor: IOColors.blue,
-    borderColor: IOColors.blue,
-    width: 65
-  },
   badgeArriving: {
     backgroundColor: IOColors.white,
     borderColor: IOColors.blue,

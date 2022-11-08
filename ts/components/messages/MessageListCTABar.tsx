@@ -12,7 +12,6 @@ import { ViewEUCovidButton } from "../../features/euCovidCert/components/ViewEUC
 import { Dispatch } from "../../store/actions/types";
 import { PaidReason } from "../../store/reducers/entities/payments";
 import { GlobalState } from "../../store/reducers/types";
-import customVariables from "../../theme/variables";
 import { formatDateAsDay, formatDateAsMonth } from "../../utils/dates";
 import {
   getCTA,
@@ -41,11 +40,6 @@ type Props = OwnProps &
 const styles = StyleSheet.create({
   topContainer: {
     flexDirection: "row"
-  },
-  topContainerLarge: {
-    paddingVertical: customVariables.contentPadding / 2,
-    paddingHorizontal: customVariables.contentPadding,
-    backgroundColor: IOColors.greyUltraLight
   },
   topContainerPaid: {
     paddingVertical: 0,

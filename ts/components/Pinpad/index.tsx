@@ -44,10 +44,6 @@ interface State {
 }
 
 const styles = StyleSheet.create({
-  placeholderContainer: {
-    flexDirection: "row",
-    justifyContent: "center"
-  },
   mediumText: {
     fontSize: 18,
     lineHeight: 21,

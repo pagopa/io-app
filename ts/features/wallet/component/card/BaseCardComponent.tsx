@@ -4,7 +4,10 @@ import { Platform, StyleSheet } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 import customVariables from "../../../../theme/variables";
 import { TestID } from "../../../../types/WithTestID";
-import { IOColors } from "../../../../components/core/variables/IOColors";
+import {
+  IOColors,
+  hexToRgba
+} from "../../../../components/core/variables/IOColors";
 
 type Props = {
   topLeftCorner: React.ReactNode;
@@ -12,6 +15,8 @@ type Props = {
   bottomRightCorner: React.ReactNode;
   accessibilityLabel?: string;
 } & TestID;
+
+const opaqueBorderColor = hexToRgba(IOColors.black, 0.1);
 
 const styles = StyleSheet.create({
   cardBox: {
@@ -25,7 +30,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     backgroundColor: IOColors.greyUltraLight,
     borderRadius: 8,
-    shadowColor: "#000",
+    shadowColor: IOColors.black,
     shadowOffset: {
       width: 0,
       height: 3
@@ -39,7 +44,7 @@ const styles = StyleSheet.create({
     marginBottom: -13,
     borderRadius: 8,
     borderTopWidth: 10,
-    borderTopColor: "rgba(0,0,0,0.1)",
+    borderTopColor: opaqueBorderColor,
     height: 15,
     width: widthPercentageToDP("90%"),
     maxWidth: 343
@@ -48,11 +53,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "flex-end"
-  },
-  bancomatLogo: {
-    width: 60,
-    height: 36,
-    resizeMode: "contain"
   }
 });
 
