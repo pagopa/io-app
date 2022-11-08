@@ -93,10 +93,6 @@ const createServicesImplementation = (onboardingClient: OnboardingClient) => {
       throw new Error("initative is undefined");
     }
 
-    NavigationService.navigate(IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
-      screen: IDPayOnboardingRoutes.IDPAY_ONBOARDING_PDNDACCEPTANCE
-      // TODO:: add logic to pick the right screen
-    });
 
     const response = await onboardingClient.checkPrerequisites({
       body: {
@@ -104,6 +100,10 @@ const createServicesImplementation = (onboardingClient: OnboardingClient) => {
       }
     });
 
+    NavigationService.navigate(IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
+      screen: IDPayOnboardingRoutes.IDPAY_ONBOARDING_PDNDACCEPTANCE
+      // TODO:: add logic to pick the right screen
+    });
     const dataPromise: Promise<O.Option<RequiredCriteriaDTO>> = pipe(
       response,
       E.fold(
