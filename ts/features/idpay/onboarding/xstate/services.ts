@@ -1,11 +1,11 @@
 /* eslint-disable no-underscore-dangle */
+import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { InitiativeDto } from "../../../../../definitions/idpay/onboarding/InitiativeDto";
 import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/onboarding/RequiredCriteriaDTO";
-import NavigationService from "../../../../navigation/NavigationService";
-import { OnboardingClient } from "../api/client";
 import { SelfConsentDTO } from "../../../../../definitions/idpay/onboarding/SelfConsentDTO";
+import { OnboardingClient } from "../api/client";
 import { Context } from "./machine";
 
 /**
@@ -91,17 +91,16 @@ const createServicesImplementation = (onboardingClient: OnboardingClient) => {
       throw new Error("initative is undefined");
     }
 
-
     const response = await onboardingClient.checkPrerequisites({
       body: {
         initiativeId: context.initiative.initiativeId
       }
     });
 
-    NavigationService.navigate(IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
-      screen: IDPayOnboardingRoutes.IDPAY_ONBOARDING_PDNDACCEPTANCE
-      // TODO:: add logic to pick the right screen
-    });
+    // NavigationService.navigate(IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
+    //   screen: IDPayOnboardingRoutes.IDPAY_ONBOARDING_PDNDACCEPTANCE
+    //   // TODO:: add logic to pick the right screen
+    // });
     const dataPromise: Promise<O.Option<RequiredCriteriaDTO>> = pipe(
       response,
       E.fold(
