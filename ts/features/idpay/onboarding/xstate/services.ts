@@ -10,7 +10,7 @@ import { Context } from "./machine";
 
 /**
  * Temporary function to convert the required criteria to the self consents
- * 
+ *
  * TODO: Process inputs from the citizen
  */
 const createSelfConsents = (requiredCriteria: RequiredCriteriaDTO) => {

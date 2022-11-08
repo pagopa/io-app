@@ -29,7 +29,7 @@ const IDPayOnboardingPlayground = () => {
   return (
     <BaseScreenComponent goBack={true} headerTitle={"Playground"}>
       <SafeAreaView style={IOStyles.flex}>
-        <ScrollView style={[IOStyles.horizontalContentPadding]}>
+        <ScrollView style={IOStyles.horizontalContentPadding}>
           <LabelledItem
             label={"Service ID"}
             inputProps={{
