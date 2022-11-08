@@ -53,6 +53,32 @@ const InitiativeDetailsScreen = () => {
       );
     }
 
+    if (state.matches("DISPLAYING_REQUIRED_PDND_CRITERIA")) {
+      return (
+        <Button
+          title="Accept PDND"
+          onPress={() =>
+            send({
+              type: "ACCEPT_REQUIRED_PDND_CRITERIA"
+            })
+          }
+        />
+      );
+    }
+
+    if (state.matches("DISPLAYING_REQUIRED_SELF_CRITERIA")) {
+      return (
+        <Button
+          title="Accept Self"
+          onPress={() =>
+            send({
+              type: "ACCEPT_REQUIRED_SELF_CRITERIA"
+            })
+          }
+        />
+      );
+    }
+
     return null;
   }, [state, send]);
 

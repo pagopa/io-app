@@ -2,7 +2,11 @@ import * as O from "fp-ts/lib/Option";
 import { assign, createMachine } from "xstate";
 import { InitiativeDto } from "../../../../../definitions/idpay/onboarding/InitiativeDto";
 import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/onboarding/RequiredCriteriaDTO";
-import { LOADING_TAG, UPSERTING_TAG } from "../../../../utils/xstate";
+import {
+  LOADING_TAG,
+  UPSERTING_TAG,
+  WAITING_USER_INPUT_TAG
+} from "../../../../utils/xstate";
 
 // Context types
 export type Context = {
@@ -21,7 +25,19 @@ type E_ACCEPT_TOS = {
   type: "ACCEPT_TOS";
 };
 
-type Events = E_SELECT_INITIATIVE | E_ACCEPT_TOS;
+type E_ACCEPT_REQUIRED_PDND_CRITERIA = {
+  type: "ACCEPT_REQUIRED_PDND_CRITERIA";
+};
+
+type E_ACCEPT_REQUIRED_SELF_CRITERIA = {
+  type: "ACCEPT_REQUIRED_SELF_CRITERIA";
+};
+
+type Events =
+  | E_SELECT_INITIATIVE
+  | E_ACCEPT_TOS
+  | E_ACCEPT_REQUIRED_PDND_CRITERIA
+  | E_ACCEPT_REQUIRED_SELF_CRITERIA;
 
 // Services types
 type Services = {
@@ -34,6 +50,27 @@ type Services = {
   loadRequiredCriteria: {
     data: O.Option<RequiredCriteriaDTO>;
   };
+  acceptRequiredCriteria: {
+    data: undefined;
+  };
+};
+
+const hasPDNDRequiredCriteria = (context: Context) => {
+  const requiredCriteria = context.requiredCriteria;
+  if (requiredCriteria !== undefined && O.isSome(requiredCriteria)) {
+    return requiredCriteria.value.pdndCriteria.length > 0;
+  }
+
+  return false;
+};
+
+const hasSelfRequiredCriteria = (context: Context) => {
+  const requiredCriteria = context.requiredCriteria;
+  if (requiredCriteria !== undefined && O.isSome(requiredCriteria)) {
+    return requiredCriteria.value.selfDeclarationList.length > 0;
+  }
+
+  return false;
 };
 
 const createIDPayOnboardingMachine = () =>
@@ -98,7 +135,86 @@ const createIDPayOnboardingMachine = () =>
             target: "EVALUATING_REQUIRED_CRITERIA",
             actions: "loadRequiredCriteriaSuccess"
           }
-        ]
+        },
+        ACCEPTING_TOS: {
+          tags: [UPSERTING_TAG],
+          invoke: {
+            id: "acceptTos",
+            src: "acceptTos",
+            onDone: [
+              {
+                target: "LOADING_REQUIRED_CRITERIA"
+              }
+            ]
+          }
+        },
+        LOADING_REQUIRED_CRITERIA: {
+          tags: [LOADING_TAG],
+          invoke: {
+            id: "loadRequiredCriteria",
+            src: "loadRequiredCriteria",
+            onDone: [
+              {
+                target: "EVALUATING_REQUIRED_CRITERIA",
+                actions: "loadRequiredCriteriaSuccess"
+              }
+            ]
+          }
+        },
+        // Self transition node to evaluate required criteria
+        EVALUATING_REQUIRED_CRITERIA: {
+          tags: [LOADING_TAG],
+          always: [
+            {
+              target: "DISPLAYING_REQUIRED_PDND_CRITERIA",
+              cond: "hasPDNDRequiredCriteria"
+            },
+            {
+              target: "DISPLAYING_REQUIRED_SELF_CRITERIA",
+              cond: "hasSelfRequiredCriteria"
+            },
+            {
+              target: "DISPLAYING_ONBOARDING_COMPLETED"
+            }
+          ]
+        },
+        DISPLAYING_REQUIRED_PDND_CRITERIA: {
+          tags: [WAITING_USER_INPUT_TAG],
+          on: {
+            ACCEPT_REQUIRED_PDND_CRITERIA: [
+              {
+                target: "DISPLAYING_REQUIRED_SELF_CRITERIA",
+                cond: "hasSelfRequiredCriteria"
+              },
+              {
+                target: "ACCEPTING_REQUIRED_CRITERIA"
+              }
+            ]
+          }
+        },
+        DISPLAYING_REQUIRED_SELF_CRITERIA: {
+          tags: [WAITING_USER_INPUT_TAG],
+          on: {
+            ACCEPT_REQUIRED_SELF_CRITERIA: {
+              target: "ACCEPTING_REQUIRED_CRITERIA"
+            }
+          }
+        },
+        ACCEPTING_REQUIRED_CRITERIA: {
+          tags: [UPSERTING_TAG],
+          invoke: {
+            src: "acceptRequiredCriteria",
+            id: "acceptRequiredCriteria",
+            onDone: [
+              {
+                target: "DISPLAYING_ONBOARDING_COMPLETED"
+              }
+            ]
+          }
+        },
+        DISPLAYING_ONBOARDING_COMPLETED: {
+          type: "final"
+        }
       }
     },
     EVALUATING_REQUIRED_CRITERIA: {
@@ -117,6 +233,10 @@ const createIDPayOnboardingMachine = () =>
         loadRequiredCriteriaSuccess: assign((_, event) => ({
           requiredCriteria: event.data
         }))
+      },
+      guards: {
+        hasPDNDRequiredCriteria,
+        hasSelfRequiredCriteria
       }
     }
   );
