@@ -16,13 +16,14 @@ const IDPayOnboardingPlayground = () => {
   const [serviceId, setServiceId] = React.useState<string | undefined>();
 
   const navigateToIDPayOnboarding = () => {
-    // if (serviceId !== undefined && serviceId !== "") {
-    navigation.navigate(IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
-      screen: IDPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS,
-      params: {
-        serviceId: "01GH1879JD77Y9FB51DQH7DK05"
-      }
-    });
+    if (serviceId !== undefined && serviceId !== "") {
+      navigation.navigate(IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
+        screen: IDPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS,
+        params: {
+          serviceId
+        }
+      });
+    }
   };
 
   return (
