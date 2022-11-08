@@ -1,31 +1,25 @@
-<H3>
-  The Cashback initiative has ended
-</H3>
 <body>
-  The law n.234 of 30/12/2021 has established the end of the Cashback initiative. This means that you won’t be able to earn cashback rewards anymore.
+  There are payment methods in your Wallet that you may have added for <b>initiatives that have now expired or ended.</b>
+</body>
+<br />
+<body>
+  Coming in the next few months on IO <b>new bonuses and initiatives:</b> for this, we ask you to choose <b>whether to keep or eliminate the payment methods</b> of your Wallet. 
 </body>
 <H3>
-  What happens now?
+  Why should I keep them?
 </H3>
 <body>
-   The Cashback cards will be removed from the Wallet.
+  Because you will be able to use them to sign up for bonuses and upcoming initiatives or <b>pay pagoPA alerts</b> without having to re-enter method data. It is not a final decision: if you change your mind, you can always eliminate them later.
 </body>
 <H3>
-  What about my payment methods?
+  What happens if I delete them?
 </H3>
 <body>
-  Choose if you want to keep or remove all your payment methods in the Wallet.
+  The methods will be removed <b>definitely</b> from your Wallet. This means that if you want to use them to sign up for upcoming bonuses and initiatives or to pay pagoPA notices, you will have to add them back in.
 </body>
-<ul style="list-style-type: square">
-  <li>
-    <body>
-      <b>If you keep them</b>, you’ll be able to use them to take part in discounts, bonuses and future initiatives or for other features, such as in-app payments. It’s not a final decision: you can delete them at any time.
-      The data controller will no longer be the Ministry of Economy and Finance, but PagoPA S.p.A., the company in charge of managing the IO app. See the <a href="https://io.italia.it/app-content/tos_privacy.html">Privacy Policy</a> for more information. 
-    </body>
-  </li>
-  <li>
-      <body>
-          <b>If you delete them</b>, they will be removed permanently. To take part in future initiatives or use them for other features, you’ll have to add them again.
-      </body>
-  </li>
-</ul>
+<H3>
+  What happens if I make no choice?
+</H3>
+<body>
+  If you give us no indication by November 29, 2022, all your methods will be removed from the Wallet. 
+</body>

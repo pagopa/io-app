@@ -2621,8 +2621,7 @@ bonus:
     optInPaymentMethods:
       cashbackUpdate:
         header: "Novità e aggiornamenti"
-        title: "Aggiornamenti sul Cashback"
-        subtitle: "Ministero dell’Economia e delle Finanze"
+        title: "Decidi se mantenere o eliminare i tuoi metodi di pagamento"
         body: !include bonus/bpd/optInPaymentMethods.md
       choice:
         header: "Configura IO"
@@ -2632,7 +2631,7 @@ bonus:
         options:
           keepAll:
             title: Mantieni tutti i metodi nel Portafoglio
-            body: Se compatibili, puoi utilizzarli per aderire a sconti, bonus e iniziative future o per altre funzionalità, come effettuare pagamenti in app. Potrai modificare le preferenze dei tuoi metodi o eliminarli in qualsiasi momento.
+            body: PagoPA S.p.A. tratterà i dati dei tuoi metodi di pagamento in qualità di titolare del trattamento. Per maggiori informazioni puoi consultare l’Informativa Privacy.
           deleteAll:
             title: Elimina tutti i metodi dal Portafoglio
             body: Tutti i metodi che hai aggiunto finora verranno rimossi in modo definitivo. Potrai aggiungerli di nuovo in qualsiasi momento, ma dovrai reinserire i dati e ripetere le procedure di autorizzazione.
@@ -3239,3 +3238,15 @@ support:
       subCategory: "Puoi darci più dettagli?"
     subTitle:
       category: "Aiutaci a capire meglio come possiamo aiutarti selezionando l’argomento del tuo problema: ti risponderemo il prima possibile, in orario lavorativo."
+idpay:
+  onboarding:
+    headerTitle: "Adesione all'iniziativa"
+    buttons: 
+      cancel: "Annulla"
+      continue: "Continua"
+    beforeContinue:
+      text1: "Proseguendo accetti i "
+      tosLink: "Termini e condizioni d'uso"
+      text2: " del servizio e confermi di avere letto l' "
+      privacyLink: "Informativa privacy"
+
