@@ -14,7 +14,13 @@ import { useRef } from "react";
 import { IOColors } from "../components/core/variables/IOColors";
 import workunitGenericFailure from "../components/error/WorkunitGenericFailure";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
-import { bpdEnabled, fimsEnabled, myPortalEnabled, svEnabled } from "../config";
+import {
+  bpdEnabled,
+  bpdOptInPaymentMethodsEnabled,
+  fimsEnabled,
+  myPortalEnabled,
+  svEnabled
+} from "../config";
 import BPD_ROUTES from "../features/bonus/bpd/navigation/routes";
 import { CdcStackNavigator } from "../features/bonus/cdc/navigation/CdcStackNavigator";
 import { CDC_ROUTES } from "../features/bonus/cdc/navigation/routes";
@@ -44,6 +50,7 @@ import { setDebugCurrentRouteName } from "../store/actions/debug";
 import { useIODispatch, useIOSelector } from "../store/hooks";
 import { trackScreen } from "../store/middlewares/navigation";
 import {
+  bpdRemoteConfigSelector,
   isCdcEnabledSelector,
   isCGNEnabledSelector,
   isFIMSEnabledSelector
@@ -169,6 +176,10 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
   const cgnEnabled = useIOSelector(isCGNEnabledSelector);
   const isFimsEnabled = useIOSelector(isFIMSEnabledSelector) && fimsEnabled;
 
+  const bpdRemoteConfig = useIOSelector(bpdRemoteConfigSelector);
+  const isOptInPaymentMethodsEnabled =
+    bpdRemoteConfig?.opt_in_payment_methods && bpdOptInPaymentMethodsEnabled;
+
   const linking: LinkingOptions = {
     enabled: false,
     prefixes: [IO_INTERNAL_LINK_PREFIX],
@@ -199,6 +210,16 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
               "card-onboarding-attempts",
             ...(bpdEnabled
               ? { [BPD_ROUTES.CTA_BPD_IBAN_EDIT]: "bpd-iban-update" }
+              : {}),
+            ...(isOptInPaymentMethodsEnabled
+              ? {
+                  [BPD_ROUTES.OPT_IN_PAYMENT_METHODS.MAIN]: {
+                    path: "bpd-opt-in",
+                    screens: {
+                      [BPD_ROUTES.OPT_IN_PAYMENT_METHODS.CHOICE]: "choice"
+                    }
+                  }
+                }
               : {})
           }
         },
