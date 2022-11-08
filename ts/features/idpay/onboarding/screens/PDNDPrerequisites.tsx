@@ -60,7 +60,6 @@ export const PDNDPrerequisites = () => {
         goBack={true}
         headerTitle={headerString}
         contextualHelpMarkdown={contextualHelpMarkdown}
-        // faqCategories={[]}
       >
         <View style={IOStyles.horizontalContentPadding}>
           <View spacer={true} />
