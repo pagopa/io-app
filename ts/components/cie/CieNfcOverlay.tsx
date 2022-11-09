@@ -17,9 +17,6 @@ import FooterWithButtons from "../ui/FooterWithButtons";
 type Props = ReduxProps;
 
 const styles = StyleSheet.create({
-  contentContainerStyle: {
-    padding: variables.contentPadding
-  },
   text: {
     fontSize: variables.fontSizeBase
   }

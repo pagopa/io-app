@@ -2,7 +2,6 @@ import { Content, View } from "native-base";
 import URLParse from "url-parse";
 import * as React from "react";
 import { SafeAreaView, StyleSheet, TextInput } from "react-native";
-import { heightPercentageToDP } from "react-native-responsive-screen";
 import { connect } from "react-redux";
 import CookieManager, { Cookie } from "@react-native-cookies/cookies";
 import { Label } from "../../components/core/typography/Label";
@@ -23,18 +22,11 @@ type Props = ReturnType<typeof mapDispatchToProps>;
 const styles = StyleSheet.create({
   flex: { flex: 1 },
   textInput: { flex: 1, padding: 1, borderWidth: 1, height: 30 },
-  center: { alignItems: "center" },
   contentCenter: { justifyContent: "center" },
   row: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center"
-  },
-  debugArea: {
-    position: "absolute",
-    bottom: 0,
-    zIndex: 10,
-    height: heightPercentageToDP("15%")
   }
 });
 

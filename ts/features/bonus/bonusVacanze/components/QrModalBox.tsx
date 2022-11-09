@@ -44,9 +44,6 @@ const styles = StyleSheet.create({
   bonusLogo: {
     height: 48,
     width: 48
-  },
-  icon: {
-    paddingRight: 0
   }
 });
 

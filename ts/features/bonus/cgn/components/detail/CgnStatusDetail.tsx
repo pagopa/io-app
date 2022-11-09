@@ -226,7 +226,7 @@ const CgnStatusDetail: React.FunctionComponent<Props> = (props: Props) => {
   const { badge, dateInformation } = elementsFromStatus(props);
   return (
     <>
-      <View style={[styles.rowBlock]}>
+      <View style={styles.rowBlock}>
         <H4>{I18n.t("bonus.cgn.detail.status.title")}</H4>
         {badge}
       </View>

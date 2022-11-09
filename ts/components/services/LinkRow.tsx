@@ -12,13 +12,6 @@ import ItemSeparatorComponent from "../ItemSeparatorComponent";
 const styles = StyleSheet.create({
   link: {
     paddingVertical: 16
-  },
-  header: {
-    flexDirection: "row",
-    paddingVertical: 8
-  },
-  icon: {
-    marginRight: 3.85
   }
 });
 

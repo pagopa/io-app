@@ -21,6 +21,10 @@ import { FimsParamsList } from "../../features/fims/navigation/params";
 import { UAWebviewScreenNavigationParams } from "../../features/uaDonations/screens/UAWebViewScreen";
 import { FCI_ROUTES } from "../../features/fci/navigation/routes";
 import { FciParamsList } from "../../features/fci/navigation/params";
+import {
+  IDPayOnboardingParamsList,
+  IDPayOnboardingRoutes
+} from "../../features/idpay/onboarding/navigation/navigator";
 import { AuthenticationParamsList } from "./AuthenticationParamsList";
 import { MainTabParamsList } from "./MainTabParamsList";
 import { MessagesParamsList } from "./MessagesParamsList";
@@ -52,6 +56,8 @@ export type AppParamsList = {
   [CDC_ROUTES.BONUS_REQUEST_MAIN]: NavigatorScreenParams<CdcBonusRequestParamsList>;
   [FIMS_ROUTES.MAIN]: NavigatorScreenParams<FimsParamsList>;
   [FCI_ROUTES.MAIN]: NavigatorScreenParams<FciParamsList>;
+
+  [IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN]: NavigatorScreenParams<IDPayOnboardingParamsList>;
 };
 
 /**

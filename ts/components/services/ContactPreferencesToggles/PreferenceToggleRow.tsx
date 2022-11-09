@@ -72,7 +72,7 @@ const PreferenceToggleRow = ({
     }
   };
   return (
-    <View style={[styles.row]}>
+    <View style={styles.row}>
       <View style={IOStyles.flex}>
         <H4
           weight={"Regular"}

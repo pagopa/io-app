@@ -19,7 +19,10 @@ import { BonusActivationStatusEnum } from "../../../../../definitions/bonus_vaca
 import { BonusActivationWithQrCode } from "../../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { Label } from "../../../../components/core/typography/Label";
 import { Link } from "../../../../components/core/typography/Link";
-import { IOColors } from "../../../../components/core/variables/IOColors";
+import {
+  IOColors,
+  hexToRgba
+} from "../../../../components/core/variables/IOColors";
 import { withLightModalContext } from "../../../../components/helpers/withLightModalContext";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import { ContextualHelpPropsMarkdown } from "../../../../components/screens/BaseScreenComponent";
@@ -84,6 +87,8 @@ export type ActiveBonusScreenNavigationParams = Readonly<{
 
 const QR_CODE_MIME_TYPE = "image/svg+xml";
 const PNG_IMAGE_TYPE = "image/png";
+const whiteBgTransparent = hexToRgba(IOColors.white, 0);
+const whiteBg = hexToRgba(IOColors.white, 1);
 
 type OwnProps = IOStackNavigationRouteProps<
   WalletParamsList,
@@ -96,7 +101,6 @@ type Props = OwnProps &
   LightModalContextInterface;
 
 const styles = StyleSheet.create({
-  emptyHeader: { height: 90 },
   flex: {
     flex: 1
   },
@@ -109,7 +113,7 @@ const styles = StyleSheet.create({
     top: -144,
     height: 168,
     width: "100%",
-    shadowColor: "#000",
+    shadowColor: IOColors.black,
     shadowOffset: {
       width: 0,
       height: 3
@@ -121,9 +125,6 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     justifyContent: "center",
     maxWidth: 327
-  },
-  center: {
-    alignSelf: "center"
   },
   validUntil: {
     color: variables.textColorDark,
@@ -177,7 +178,7 @@ const styles = StyleSheet.create({
   },
   viewShot: {
     flex: 1,
-    backgroundColor: "white"
+    backgroundColor: IOColors.white
   },
   commonLabel: {
     lineHeight: 18
@@ -298,7 +299,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
   const backgroundAnimation = React.useRef(new Animated.Value(0)).current;
   const backgroundInterpolation = backgroundAnimation.interpolate({
     inputRange: [0, 1],
-    outputRange: ["rgba(255,255,255,0)", "rgba(255,255,255,1)"]
+    outputRange: [whiteBgTransparent, whiteBg]
   });
 
   // TODO: this hooks doesn't follow the hooks rule but this functionality will be dismissed in December 2021. Otherwise rewrite this hook following all the rules.

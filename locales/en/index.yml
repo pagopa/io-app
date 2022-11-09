@@ -503,12 +503,24 @@ profile:
       local_calendar: Local calendar
       birthday_calendar: Birthdays
     notifications:
+      contextualHelpTitle: Titolo
+      contextualHelpContent: !include profile/profile_preferences_notifications.md
       header: Push notifications
       title: Customize push notifications
       subtitle: Choose how to get updates on the messages and reminders you receive
+      titleExistingUser: Notifiche push più intelligenti
+      subtitleExistingUser: Ora puoi vedere subito chi ti ha scritto o ricevere promemoria da messaggi importanti.
       reminders:
         title: Allow reminders
         description: Receive push notifications close to deadlines or when you have unread messages
+      preview:
+        title: Mostra anteprime
+        description: Includi nella notifica push il mittente e l’oggetto del messaggio ·
+        link: Più info
+        bottomSheet:
+          title: Mostra anteprime
+          content: "Quando l’opzione è attiva, le notifiche push mostrano il mittente e l’oggetto dei messaggi: così sai chi ti ha scritto senza accedere all’app.\nQueste informazioni, che potrebbero essere sensibili, vengono trattate dal gestore del tuo sistema operativo e sono mostrate anche quando il dispositivo è bloccato. Se vuoi evitare la visualizzazione delle anteprime, disattiva l’opzione."
+          cta: Ho capito!
       error: An error occurred with your request
 userMetadata:
   errors:
@@ -550,7 +562,7 @@ authentication:
       body: !include cie/cieNotSupported.md
       android_desc: !include cie/cieNotSupported_android.md
       os_version_unsupported: an Android 6.0 or higher operating system
-      nfc_incompatible: a NFC chip 
+      nfc_incompatible: a NFC chip
     contentTitleCie: Don't have SPID or CIE?
     cie_information_request: !include cie.md
     spid_or_cie: To use IO you must have one of these digital tools, which certify your identity.
@@ -821,6 +833,7 @@ onboarding:
     title: Setup completed!
     body: Now you can start using IO
   notifications:
+    badge: News
     headerTitle: IO Settings
     continue: Continue
     remindersPreviewTitle: Promemoria
@@ -2572,8 +2585,7 @@ bonus:
     optInPaymentMethods:
       cashbackUpdate:
         header: "News and updates"
-        title: "Update on the Cashback initiative"
-        subtitle: "Ministry of Economy and Finance"
+        title: "Choose to keep or delete your payment methods"
         body: !include bonus/bpd/optInPaymentMethods.md
       choice:
         header: Configure IO
@@ -2583,7 +2595,7 @@ bonus:
         options:
           keepAll:
             title: Keep all payment methods in the Wallet
-            body: If supported, you’ll be able to use them to take part in discounts, bonuses and future initiatives or for other features, such as in-app payments. You can change your method preferences or delete them at any time.
+            body: PagoPA S.p.A. will handle your payment method's data as the owner of the threatment. For further informations you can check the Privacy Policy.
           deleteAll:
             title: Delete all payment methods from the Wallet
             body: All methods added in the Wallet so far will be permanently deleted. You can add them again at any time, but you’ll have to enter back the method details and have it authorized.
@@ -3203,3 +3215,25 @@ support:
       subCategory: "Can you give us more details?"
     subTitle:
       category: "Help us understand how we can help you by selecting the topic of your problem: we will reply as soon as possible, during business hours."
+idpay:
+  onboarding:
+    headerTitle: "Adesione all'iniziativa"
+    buttons: 
+      cancel: "Annulla"
+      continue: "Continua"
+    beforeContinue:
+      text1: "Proseguendo accetti i "
+      tosLink: "Termini e condizioni d'uso"
+      text2: " del servizio e confermi di avere letto l' "
+      privacyLink: "Informativa privacy"
+    navigation:
+      header: Adesione all'iniziativa
+    PDNDPrerequisites:
+      prerequisites:
+        info:
+          header: Come avviene la verifica?
+          body: Comunichiamo direttamente con l’Ente che detiene l’informazione necessaria a effettuare il controllo, in questo caso **{{provider}}**.
+            In questo modo non devi produrre alcuna autocertificazione. Comodo, no?
+          understoodCTA: Ho capito
+      title: Possiedi i seguenti requisiti?
+      subtitle: Verificheremo con alcuni Enti se sei in possesso dei requisiti per poter richiedere {{service}}. 

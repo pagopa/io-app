@@ -141,7 +141,7 @@ const CgnBucketCodeContent = (props: ContentProps) => {
           iconSize={24}
           alignedCentral
         >
-          <H4 weight={"Regular"} style={[IOStyles.flex]}>
+          <H4 weight={"Regular"} style={IOStyles.flex}>
             {I18n.t("bonus.cgn.merchantDetail.bucket.error.noCode")}
           </H4>
         </InfoBox>

@@ -42,10 +42,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between"
   },
-  column: {
-    flexDirection: "column",
-    justifyContent: "space-between"
-  },
   image: {
     width: 40,
     height: 40,
