@@ -14,7 +14,13 @@ import { useRef } from "react";
 import { IOColors } from "../components/core/variables/IOColors";
 import workunitGenericFailure from "../components/error/WorkunitGenericFailure";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
-import { bpdEnabled, fimsEnabled, myPortalEnabled, svEnabled } from "../config";
+import {
+  bpdEnabled,
+  fciEnabled,
+  fimsEnabled,
+  myPortalEnabled,
+  svEnabled
+} from "../config";
 import BPD_ROUTES from "../features/bonus/bpd/navigation/routes";
 import { CdcStackNavigator } from "../features/bonus/cdc/navigation/CdcStackNavigator";
 import { CDC_ROUTES } from "../features/bonus/cdc/navigation/routes";
@@ -26,6 +32,11 @@ import {
 } from "../features/bonus/cgn/navigation/navigator";
 import CGN_ROUTES from "../features/bonus/cgn/navigation/routes";
 import { svLinkingOptions } from "../features/bonus/siciliaVola/navigation/navigator";
+import {
+  fciLinkingOptions,
+  FciStackNavigator
+} from "../features/fci/navigation/FciStackNavigator";
+import { FCI_ROUTES } from "../features/fci/navigation/routes";
 import {
   fimsLinkingOptions,
   FimsNavigator
@@ -141,6 +152,10 @@ export const AppStackNavigator = () => {
           component={CdcStackNavigator}
         />
       )}
+
+      {fciEnabled && (
+        <Stack.Screen name={FCI_ROUTES.MAIN} component={FciStackNavigator} />
+      )}
     </Stack.Navigator>
   );
 };
@@ -208,6 +223,7 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
         },
         ...(isFimsEnabled ? fimsLinkingOptions : {}),
         ...(cgnEnabled ? cgnLinkingOptions : {}),
+        ...(fciEnabled ? fciLinkingOptions : {}),
         [UADONATION_ROUTES.WEBVIEW]: "uadonations-webview",
         [ROUTES.WORKUNIT_GENERIC_FAILURE]: "*"
       }
