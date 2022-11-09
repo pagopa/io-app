@@ -178,7 +178,7 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
 
   const bpdRemoteConfig = useIOSelector(bpdRemoteConfigSelector);
   const isOptInPaymentMethodsEnabled =
-    bpdRemoteConfig?.opt_in_payment_methods && bpdOptInPaymentMethodsEnabled;
+    bpdRemoteConfig?.opt_in_payment_methods_v2 && bpdOptInPaymentMethodsEnabled;
 
   const linking: LinkingOptions = {
     enabled: false,
