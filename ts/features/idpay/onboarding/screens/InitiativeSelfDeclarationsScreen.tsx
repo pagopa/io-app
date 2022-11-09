@@ -20,7 +20,7 @@ import { SelfDeclarationBoolDTO } from "../../../../../definitions/idpay/onboard
 
 const InitiativeSelfDeclarationsScreen = () => {
   const machine = useOnboardingMachineService();
-  const [state] = useActor(machine);
+  const [state, send] = useActor(machine);
 
   const isLoading = state.tags.has(LOADING_TAG);
 
@@ -34,6 +34,8 @@ const InitiativeSelfDeclarationsScreen = () => {
       _ => _.selfDeclarationList.filter(SelfDeclarationBoolDTO.is)
     )
   );
+
+  const continueOnPress = () => send({ type: "ACCEPT_REQUIRED_SELF_CRITERIA" });
 
   return (
     <BaseScreenComponent
@@ -72,7 +74,8 @@ const InitiativeSelfDeclarationsScreen = () => {
               title: "Indietro"
             }}
             rightButton={{
-              title: "Continua"
+              title: "Continua",
+              onPress: continueOnPress
             }}
           />
         </SafeAreaView>
