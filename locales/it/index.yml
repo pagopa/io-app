@@ -3236,4 +3236,14 @@ idpay:
       tosLink: "Termini e condizioni d'uso"
       text2: " del servizio e confermi di avere letto l' "
       privacyLink: "Informativa privacy"
-
+    navigation:
+      header: Adesione all'iniziativa
+    PDNDPrerequisites:
+      prerequisites:
+        info:
+          header: Come avviene la verifica?
+          body: Comunichiamo direttamente con l’Ente che detiene l’informazione necessaria a effettuare il controllo, in questo caso **{{provider}}**.
+            In questo modo non devi produrre alcuna autocertificazione. Comodo, no?
+          understoodCTA: Ho capito
+      title: Possiedi i seguenti requisiti?
+      subtitle: Verificheremo con alcuni Enti se sei in possesso dei requisiti per poter richiedere {{service}}. 

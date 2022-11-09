@@ -1,11 +1,11 @@
 /* eslint-disable no-underscore-dangle */
+import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import * as E from "fp-ts/lib/Either";
 import { InitiativeDto } from "../../../../../definitions/idpay/onboarding/InitiativeDto";
 import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/onboarding/RequiredCriteriaDTO";
-import { OnboardingClient } from "../api/client";
 import { SelfConsentDTO } from "../../../../../definitions/idpay/onboarding/SelfConsentDTO";
+import { OnboardingClient } from "../api/client";
 import { Context } from "./machine";
 
 /**
