@@ -37,7 +37,6 @@ export const IDPayOnboardingNavigator = () => (
       <Stack.Screen
         name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_SELF_DECLARATIONS}
         component={InitiativeSelfDeclarationsScreen}
-        options={{ headerShown: false }}
       />
       <Stack.Screen
         name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_PDNDACCEPTANCE}
