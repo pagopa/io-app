@@ -1,3 +1,5 @@
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { useActor } from "@xstate/react";
 import React from "react";
 import { View } from "native-base";
@@ -14,13 +16,24 @@ import { Link } from "../../../../components/core/typography/Link";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import ListItemComponent from "../../../../components/screens/ListItemComponent";
 import { LOADING_TAG } from "../../../../utils/xstate";
-
+import { SelfDeclarationBoolDTO } from "../../../../../definitions/idpay/onboarding/SelfDeclarationBoolDTO";
 
 const InitiativeSelfDeclarationsScreen = () => {
   const machine = useOnboardingMachineService();
   const [state] = useActor(machine);
 
   const isLoading = state.tags.has(LOADING_TAG);
+
+  const selfCriteriaBool: Array<SelfDeclarationBoolDTO> = pipe(
+    state.context.requiredCriteria,
+    O.fromNullable,
+    O.flatten,
+    O.fold(
+      () => [],
+      // eslint-disable-next-line no-underscore-dangle
+      _ => _.selfDeclarationList.filter(SelfDeclarationBoolDTO.is)
+    )
+  );
 
   return (
     <BaseScreenComponent
@@ -37,27 +50,19 @@ const InitiativeSelfDeclarationsScreen = () => {
               <Body>L’autodichiarazione è resa ai sensi del</Body>
               <Link>Dpr 28 dicembre 2000 n. 445 art 46 e 47</Link>
               <View spacer={true} large={true} />
-              <ListItemComponent
-                title="Criterio 1"
-                switchValue={false}
-                accessibilityRole={"switch"}
-                accessibilityState={{ checked: false }}
-                isLongPressEnabled={true}
-              />
-              <ListItemComponent
-                title="Criterio 2"
-                switchValue={false}
-                accessibilityRole={"switch"}
-                accessibilityState={{ checked: false }}
-                isLongPressEnabled={true}
-              />
-              <ListItemComponent
-                title="Criterio 3"
-                switchValue={false}
-                accessibilityRole={"switch"}
-                accessibilityState={{ checked: false }}
-                isLongPressEnabled={true}
-              />
+              {selfCriteriaBool.map((criteria, index) => (
+                <>
+                  <ListItemComponent
+                    key={index}
+                    title={criteria.description}
+                    switchValue={true}
+                    accessibilityRole={"switch"}
+                    accessibilityState={{ checked: false }}
+                    isLongPressEnabled={true}
+                  />
+                  <View spacer={true} />
+                </>
+              ))}
             </View>
           </ScrollView>
           <FooterWithButtons
