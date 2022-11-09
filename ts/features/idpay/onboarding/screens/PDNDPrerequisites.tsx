@@ -81,8 +81,6 @@ export const PDNDPrerequisites = () => {
               <View spacer={true} />
             </React.Fragment>
           ))}
-          <Text>{state.value}</Text>
-          <Text>{JSON.stringify(state.context)}</Text>
         </List>
       </BaseScreenComponent>
       <FooterWithButtons
