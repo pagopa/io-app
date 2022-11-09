@@ -131,7 +131,8 @@ const bptRoutes = () => (
 const WalletNavigator = () => {
   const bpdRemoteConfig = useIOSelector(bpdRemoteConfigSelector);
   const isOptInPaymentMethodsEnabled =
-    bpdRemoteConfig?.opt_in_payment_methods && bpdOptInPaymentMethodsEnabled;
+    bpdRemoteConfig?.opt_in_payment_methods_v2 && bpdOptInPaymentMethodsEnabled;
+
   return (
     <Stack.Navigator
       initialRouteName={ROUTES.WALLET_ADD_PAYMENT_METHOD}
