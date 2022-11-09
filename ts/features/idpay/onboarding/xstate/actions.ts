@@ -13,7 +13,13 @@ const createActionsImplementation = (
     });
   };
 
-  return { navigateToPDNDCriteriaScreen };
+  const navigateToSelfDeclarationsScreen = () => {
+    navigation.navigate(IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
+      screen: IDPayOnboardingRoutes.IDPAY_ONBOARDING_SELF_DECLARATIONS
+    });
+  };
+
+  return { navigateToPDNDCriteriaScreen, navigateToSelfDeclarationsScreen };
 };
 
 export { createActionsImplementation };

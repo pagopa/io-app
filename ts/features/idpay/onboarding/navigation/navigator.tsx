@@ -4,9 +4,7 @@ import InitiativeDetailsScreen, {
   InitiativeDetailsScreenRouteParams
 } from "../screens/InitiativeDetailsScreen";
 import { IDPayOnboardingMachineProvider } from "../xstate/provider";
-import InitiativeSelfDeclarationsScreen, {
-  InitiativeSelfDeclarationsScreenRouteParams
-} from "../screens/InitiativeSelfDeclarationsScreen";
+import InitiativeSelfDeclarationsScreen from "../screens/InitiativeSelfDeclarationsScreen";
 import { PDNDPrerequisites } from "../screens/PDNDPrerequisites";
 
 export const IDPayOnboardingRoutes = {
@@ -18,7 +16,7 @@ export const IDPayOnboardingRoutes = {
 
 export type IDPayOnboardingParamsList = {
   [IDPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS]: InitiativeDetailsScreenRouteParams;
-  [IDPayOnboardingRoutes.IDPAY_ONBOARDING_SELF_DECLARATIONS]: InitiativeSelfDeclarationsScreenRouteParams;
+  [IDPayOnboardingRoutes.IDPAY_ONBOARDING_SELF_DECLARATIONS]: undefined;
   [IDPayOnboardingRoutes.IDPAY_ONBOARDING_PDNDACCEPTANCE]: undefined;
 };
 

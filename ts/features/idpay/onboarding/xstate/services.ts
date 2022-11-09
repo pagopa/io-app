@@ -7,8 +7,6 @@ import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/onboarding
 import { SelfConsentDTO } from "../../../../../definitions/idpay/onboarding/SelfConsentDTO";
 import { OnboardingClient } from "../api/client";
 import { Context } from "./machine";
-import NavigationService from "../../../../navigation/NavigationService";
-import { IDPayOnboardingRoutes } from "../navigation/navigator";
 
 /**
  * Temporary function to convert the required criteria to the self consents
@@ -92,10 +90,6 @@ const createServicesImplementation = (onboardingClient: OnboardingClient) => {
     if (context.initiative === undefined) {
       throw new Error("initative is undefined");
     }
-
-    NavigationService.navigate(IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
-      screen: IDPayOnboardingRoutes.IDPAY_ONBOARDING_SELF_DECLARATIONS
-    });
 
     const response = await onboardingClient.checkPrerequisites({
       body: {

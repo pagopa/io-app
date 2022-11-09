@@ -2,7 +2,6 @@ import { useActor } from "@xstate/react";
 import React from "react";
 import { View } from "native-base";
 import { SafeAreaView } from "react-native";
-import I18n from "i18n-js";
 import { ScrollView } from "react-native-gesture-handler";
 import { H1 } from "../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
@@ -14,16 +13,14 @@ import { Body } from "../../../../components/core/typography/Body";
 import { Link } from "../../../../components/core/typography/Link";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import ListItemComponent from "../../../../components/screens/ListItemComponent";
+import { LOADING_TAG } from "../../../../utils/xstate";
 
-export type InitiativeSelfDeclarationsScreenRouteParams = {
-  serviceId: string;
-};
 
 const InitiativeSelfDeclarationsScreen = () => {
   const machine = useOnboardingMachineService();
-  const [state, send] = useActor(machine);
+  const [state] = useActor(machine);
 
-  const isLoading = state.tags.has("LOADING_TAG");
+  const isLoading = state.tags.has(LOADING_TAG);
 
   return (
     <BaseScreenComponent
@@ -32,7 +29,7 @@ const InitiativeSelfDeclarationsScreen = () => {
       contextualHelp={emptyContextualHelp}
     >
       <LoadingSpinnerOverlay isLoading={isLoading}>
-        <SafeAreaView style={[IOStyles.flex]}>
+        <SafeAreaView style={IOStyles.flex}>
           <ScrollView style={IOStyles.flex}>
             <View style={IOStyles.horizontalContentPadding}>
               <H1>Per aderire, dichiari di:</H1>

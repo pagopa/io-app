@@ -176,6 +176,7 @@ const createIDPayOnboardingMachine = () =>
         },
         DISPLAYING_REQUIRED_SELF_CRITERIA: {
           tags: [WAITING_USER_INPUT_TAG],
+          entry: "navigateToSelfDeclarationsScreen",
           on: {
             ACCEPT_REQUIRED_SELF_CRITERIA: {
               target: "ACCEPTING_REQUIRED_CRITERIA"
