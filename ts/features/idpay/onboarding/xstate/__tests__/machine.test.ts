@@ -59,6 +59,7 @@ const mockLoadRequiredCriteria = jest.fn(
 );
 
 const mockNavigateToPDNDCriteriaScreen = jest.fn();
+const mockNavigateToSelfDeclarationsScreen = jest.fn();
 
 const mockAcceptRequiredCriteria = jest.fn(
   async (): Promise<undefined> => undefined
@@ -83,7 +84,8 @@ describe("machine", () => {
         acceptRequiredCriteria: mockAcceptRequiredCriteria
       },
       actions: {
-        navigateToPDNDCriteriaScreen: mockNavigateToPDNDCriteriaScreen
+        navigateToPDNDCriteriaScreen: mockNavigateToPDNDCriteriaScreen,
+        navigateToSelfDeclarationsScreen: mockNavigateToSelfDeclarationsScreen
       }
     });
 
@@ -140,6 +142,10 @@ describe("machine", () => {
     onboardingService.send({
       type: "ACCEPT_REQUIRED_PDND_CRITERIA"
     });
+
+    await waitFor(() =>
+      expect(mockNavigateToSelfDeclarationsScreen).toHaveBeenCalled()
+    );
 
     onboardingService.send({
       type: "ACCEPT_REQUIRED_SELF_CRITERIA"
