@@ -8,8 +8,9 @@ import { H1 } from "../../../../components/core/typography/H1";
 import { H4 } from "../../../../components/core/typography/H4";
 import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import { ContextualHelpPropsMarkdown } from "../../../../components/screens/BaseScreenComponent";
-import TopScreenComponent from "../../../../components/screens/TopScreenComponent";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import TypedI18n from "../../../../i18n";
 import { useOnboardingMachineService } from "../xstate/provider";
@@ -56,7 +57,7 @@ export const PDNDPrerequisites = () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <TopScreenComponent
+      <BaseScreenComponent
         goBack={true}
         headerTitle={headerString}
         contextualHelpMarkdown={contextualHelpMarkdown}
@@ -83,7 +84,7 @@ export const PDNDPrerequisites = () => {
           <Text>{state.value}</Text>
           <Text>{JSON.stringify(state.context)}</Text>
         </List>
-      </TopScreenComponent>
+      </BaseScreenComponent>
       <FooterWithButtons
         type="TwoButtonsInlineHalf"
         leftButton={secondaryButtonProps}
