@@ -25,9 +25,6 @@ const styles = StyleSheet.create({
   contentContainerStyle: {
     padding: variables.contentPadding
   },
-  text: {
-    fontSize: variables.fontSizeBase
-  },
   flex: {
     flex: 1
   }

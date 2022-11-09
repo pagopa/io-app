@@ -1,11 +1,14 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { put, select, take } from "typed-redux-saga/macro";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
-import * as pot from "@pagopa/ts-commons/lib/pot";
+import { CitizenOptInStatusEnum } from "../../../../../../../definitions/bpd/citizen_v2/CitizenOptInStatus";
 import {
   fetchWalletsFailure,
   fetchWalletsRequestWithExpBackoff,
   fetchWalletsSuccess
 } from "../../../../../../store/actions/wallet/wallets";
+import { ReduxSagaEffect } from "../../../../../../types/utils";
+import { isReady, RemoteValue } from "../../../model/RemoteValue";
 import { ActivationStatus, bpdAllData } from "../../../store/actions/details";
 import {
   optInPaymentMethodsShowChoice,
@@ -15,9 +18,6 @@ import {
   activationStatusSelector,
   optInStatusSelector
 } from "../../../store/reducers/details/activation";
-import { CitizenOptInStatusEnum } from "../../../../../../../definitions/bpd/citizen_v2/CitizenOptInStatus";
-import { ReduxSagaEffect } from "../../../../../../types/utils";
-import { isReady, RemoteValue } from "../../../model/RemoteValue";
 
 /**
  * This saga manage the flow that checks if a user has already take a choice about the opt-in of the payment methods.

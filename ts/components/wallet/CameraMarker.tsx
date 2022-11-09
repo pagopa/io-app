@@ -36,21 +36,21 @@ export const CameraMarker: React.SFC<Props> = ({ screenWidth, state }) => {
       flex: 1,
       alignItems: "center",
       justifyContent: "center",
-      backgroundColor: "transparent"
+      backgroundColor: `transparent`
     },
 
     rectangle: {
       height: sideLength,
       width: sideLength,
       borderWidth: 0,
-      backgroundColor: "transparent"
+      backgroundColor: `transparent`
     },
 
     smallBorded: {
       height: borderLength,
       width: borderLength,
       borderColor: IOColors.white,
-      backgroundColor: "transparent",
+      backgroundColor: `transparent`,
       position: "absolute"
     },
 

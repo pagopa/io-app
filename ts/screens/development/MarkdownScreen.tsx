@@ -2,6 +2,7 @@ import { Container, Content, Text, View } from "native-base";
 import * as React from "react";
 import { TextInput } from "react-native";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
+import { IOColors } from "../../components/core/variables/IOColors";
 
 import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
@@ -100,7 +101,11 @@ class MarkdownScreen extends React.Component<Props, State> {
           </View>
           <View spacer={true} />
           <TextInput
-            style={{ borderColor: "gray", borderWidth: 1, width: "100%" }}
+            style={{
+              borderColor: IOColors.grey,
+              borderWidth: 1,
+              width: "100%"
+            }}
             onChangeText={text => this.setState({ markdown: text })}
             value={this.state.markdown}
             multiline={true}
