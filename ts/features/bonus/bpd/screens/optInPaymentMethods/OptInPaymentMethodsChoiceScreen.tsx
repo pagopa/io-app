@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { View } from "native-base";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
 import { IOBadge } from "../../../../../components/core/IOBadge";
@@ -17,6 +17,7 @@ import BaseScreenComponent from "../../../../../components/screens/BaseScreenCom
 import { BlockButtonProps } from "../../../../../components/ui/BlockButtons";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../i18n";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import {
   confirmButtonProps,
   disablePrimaryButtonProps,
@@ -27,6 +28,8 @@ import {
   navigateToOptInPaymentMethodsThankYouDeleteMethodsScreen,
   navigateToOptInPaymentMethodsThankYouKeepMethodsScreen
 } from "../../navigation/actions";
+import { optInPaymentMethodsShowChoice } from "../../store/actions/optInPaymentMethods";
+import { showOptInChoiceSelector } from "../../store/reducers/details/activation/ui";
 
 type PaymentMethodsChoiceOptions =
   | "keepPaymentMethods"
@@ -84,6 +87,8 @@ const OptInPaymentMethodsChoiceScreen = () => {
   const [selectedMethod, setSelectedMethod] =
     useState<PaymentMethodsChoiceOptions | null>(null);
   const navigation = useNavigation();
+  const dispatch = useIODispatch();
+  const showOptInChoice = useIOSelector(showOptInChoiceSelector);
 
   const { presentBottomSheet, bottomSheet } = useBottomSheetMethodsToDelete({
     onDeletePress: () =>
@@ -122,6 +127,12 @@ const OptInPaymentMethodsChoiceScreen = () => {
         : bottomButtons[selectedMethod],
     [selectedMethod, bottomButtons]
   );
+
+  useEffect(() => {
+    if (!showOptInChoice) {
+      dispatch(optInPaymentMethodsShowChoice.request());
+    }
+  }, [dispatch, showOptInChoice]);
 
   return (
     // The void customRightIcon and customGoBack are needed to have a centered header title

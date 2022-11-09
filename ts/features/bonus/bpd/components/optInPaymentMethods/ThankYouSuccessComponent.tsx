@@ -1,16 +1,19 @@
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { useDispatch } from "react-redux";
 import { SafeAreaView } from "react-native";
-import { InfoScreenComponent } from "../../../../../components/infoScreen/InfoScreenComponent";
 import Completed from "../../../../../../img/pictograms/payment-completed.svg";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import { cancelButtonProps } from "../../../bonusVacanze/components/buttons/ButtonConfigurations";
-import { optInPaymentMethodsCompleted } from "../../store/actions/optInPaymentMethods";
+import { InfoScreenComponent } from "../../../../../components/infoScreen/InfoScreenComponent";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../i18n";
+import ROUTES from "../../../../../navigation/routes";
+import { useIODispatch } from "../../../../../store/hooks";
+import { cancelButtonProps } from "../../../bonusVacanze/components/buttons/ButtonConfigurations";
+import { optInPaymentMethodsCompleted } from "../../store/actions/optInPaymentMethods";
 
 const ThankYouSuccessComponent = () => {
-  const dispatch = useDispatch();
+  const navigation = useNavigation();
+  const dispatch = useIODispatch();
   return (
     <SafeAreaView style={IOStyles.flex} testID={"ThankYouSuccessComponent"}>
       <InfoScreenComponent
@@ -23,7 +26,10 @@ const ThankYouSuccessComponent = () => {
       <FooterWithButtons
         type={"SingleButton"}
         leftButton={cancelButtonProps(
-          () => dispatch(optInPaymentMethodsCompleted()),
+          () => {
+            dispatch(optInPaymentMethodsCompleted());
+            navigation.navigate(ROUTES.WALLET_HOME);
+          },
           I18n.t("bonus.bpd.optInPaymentMethods.thankYouPage.cta.goToWallet"),
           undefined,
           "goToWalletButton"
