@@ -1,6 +1,7 @@
 import * as React from "react";
 import I18n from "../../../i18n";
 import imageExpired from "../../../../img/wallet/errors/payment-expired-icon.png";
+import hourglass from "../../../../img/pictograms/hourglass.png";
 import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
 import FciDocumentsScreen from "../screens/valid/FciDocumentsScreen";
 import ErrorComponent from "./ErrorComponent";
@@ -40,7 +41,7 @@ const SuccessComponent = (props: {
         <ErrorComponent
           title={I18n.t("features.fci.errors.waitForQtsp.title")}
           subTitle={I18n.t("features.fci.errors.waitForQtsp.subTitle")}
-          image={imageExpired}
+          image={hourglass}
           testID={"WaitQtspSignatureRequestTestID"}
         />
       );
