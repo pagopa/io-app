@@ -143,6 +143,10 @@ describe("machine", () => {
       type: "ACCEPT_REQUIRED_PDND_CRITERIA"
     });
 
+    await waitFor(() =>
+      expect(mockNavigateToSelfDeclarationsScreen).toHaveBeenCalled()
+    );
+
     onboardingService.send({
       type: "ACCEPT_REQUIRED_SELF_CRITERIA"
     });
