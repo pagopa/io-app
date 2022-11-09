@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { View, ViewProps, StyleSheet } from "react-native";
-import { PNMessage } from "../store/types/types";
-import { LabelSmall } from "../../../components/core/typography/LabelSmall";
-import { H1 } from "../../../components/core/typography/H1";
+import { StyleSheet, View, ViewProps } from "react-native";
 import { Body } from "../../../components/core/typography/Body";
-import { formatDateAsDay, formatDateAsMonth } from "../../../utils/dates";
-import { getNotificationStatusInfo } from "../utils";
+import { H1 } from "../../../components/core/typography/H1";
+import { LabelSmall } from "../../../components/core/typography/LabelSmall";
 import { Link } from "../../../components/core/typography/Link";
+import { IOColors } from "../../../components/core/variables/IOColors";
 import I18n from "../../../i18n";
+import { formatDateAsDay, formatDateAsMonth } from "../../../utils/dates";
 import { localeDateFormat } from "../../../utils/locale";
+import { PNMessage } from "../store/types/types";
+import { getNotificationStatusInfo } from "../utils";
 
 const styles = StyleSheet.create({
   row: {
@@ -26,7 +27,7 @@ const styles = StyleSheet.create({
   timeline: {},
   line: {
     width: 1,
-    backgroundColor: "#BACCD9"
+    backgroundColor: IOColors.bluegreyLight
   },
   topLine: {
     height: 16
@@ -39,7 +40,7 @@ const styles = StyleSheet.create({
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: "#BACCD9",
+    backgroundColor: IOColors.bluegreyLight,
     left: -3.5,
     marginVertical: 4
   },

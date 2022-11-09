@@ -275,7 +275,7 @@ const MessageListItem = ({
     <TouchableDefaultOpacity
       onPress={() => onPress(message)}
       onLongPress={onLongPress}
-      style={[styles.verticalPad]}
+      style={styles.verticalPad}
       accessible={true}
       accessibilityLabel={announceMessage(message, isRead, maybeItemBadge)}
       accessibilityRole="button"

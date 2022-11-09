@@ -13,8 +13,9 @@ exports[`WebviewComponent tests snapshot for component 1`] = `
     style={
       Array [
         Object {
-          "backgroundColor": "#fff",
+          "backgroundColor": "#FFFFFF",
           "bottom": 0,
+          "inset": 0,
           "justifyContent": "center",
           "left": 0,
           "position": "absolute",

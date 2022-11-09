@@ -16,6 +16,7 @@ import {
 } from "react-native";
 import customVariables from "../../theme/variables";
 import { H2 } from "../core/typography/H2";
+import { IOColors } from "../core/variables/IOColors";
 import { IOStyles } from "../core/variables/IOStyles";
 import OrganizationLogo from "../services/OrganizationLogo";
 import { MultiImage } from "../ui/MultiImage";
@@ -40,7 +41,7 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   sectionView: {
-    backgroundColor: "#FFF",
+    backgroundColor: IOColors.white,
     flexDirection: "row",
     borderBottomColor: customVariables.itemSeparator,
     borderBottomWidth: StyleSheet.hairlineWidth

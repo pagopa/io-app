@@ -17,6 +17,7 @@ import { GlobalState } from "../../store/reducers/types";
 import { isStrictSome } from "../../utils/pot";
 import { showToast } from "../../utils/showToast";
 import { AVOID_ZOOM_JS, closeInjectedScript } from "../../utils/webview";
+import { hexToRgba, IOColors } from "../core/variables/IOColors";
 import { withLightModalContext } from "../helpers/withLightModalContext";
 import GenericErrorComponent from "../screens/GenericErrorComponent";
 import { RefreshIndicator } from "../ui/RefreshIndicator";
@@ -26,6 +27,8 @@ type Props = {
 } & ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
+const opaqueBgColor = hexToRgba(IOColors.white, 0.5);
+
 const styles = StyleSheet.create({
   refreshIndicatorContainer: {
     position: "absolute",
@@ -33,7 +36,7 @@ const styles = StyleSheet.create({
     right: 0,
     top: 0,
     bottom: 0,
-    backgroundColor: "rgba(255,255,255,0.5)",
+    backgroundColor: opaqueBgColor,
     justifyContent: "center",
     alignItems: "center",
     zIndex: 1000

@@ -1,13 +1,13 @@
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import IconFont from "../../components/ui/IconFont";
-import { IOColors } from "../../components/core/variables/IOColors";
+import { IOColors, hexToRgba } from "../../components/core/variables/IOColors";
 
 type Props = {
   checked: boolean;
 };
 
-const checkBoxColor = `rgba(255, 255, 255, 0.15)`;
+const checkBoxColor = hexToRgba(IOColors.white, 0.15);
 const checkBoxIcon = "io-tick-big";
 
 const styles = StyleSheet.create({
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     borderRadius: 4
   },
   checked: {
-    borderColor: "transparent",
+    borderColor: `transparent`,
     backgroundColor: checkBoxColor
   }
 });

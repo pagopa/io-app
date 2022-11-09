@@ -33,8 +33,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center"
   },
-  title: { lineHeight: 33, alignSelf: "flex-start" },
-  flexStart: { alignSelf: "flex-start" }
+  title: { lineHeight: 33, alignSelf: "flex-start" }
 });
 
 const loadLocales = () => ({

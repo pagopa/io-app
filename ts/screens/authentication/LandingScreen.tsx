@@ -116,10 +116,6 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 };
 
 const styles = StyleSheet.create({
-  noPadded: {
-    paddingLeft: 0,
-    paddingRight: 0
-  },
   flex: {
     flex: 1
   },
