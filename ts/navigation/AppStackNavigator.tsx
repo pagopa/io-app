@@ -178,7 +178,7 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
 
   const bpdRemoteConfig = useIOSelector(bpdRemoteConfigSelector);
   const isOptInPaymentMethodsEnabled =
-    bpdRemoteConfig?.opt_in_payment_methods_v2 && bpdOptInPaymentMethodsEnabled;
+    bpdRemoteConfig?.opt_in_payment_methods && bpdOptInPaymentMethodsEnabled;
 
   const linking: LinkingOptions = {
     enabled: false,
@@ -208,19 +208,17 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
             [ROUTES.PAYMENTS_HISTORY_SCREEN]: "payments-history",
             [ROUTES.CREDIT_CARD_ONBOARDING_ATTEMPTS_SCREEN]:
               "card-onboarding-attempts",
-            ...(bpdEnabled
-              ? { [BPD_ROUTES.CTA_BPD_IBAN_EDIT]: "bpd-iban-update" }
-              : {}),
-            ...(isOptInPaymentMethodsEnabled
-              ? {
-                  [BPD_ROUTES.OPT_IN_PAYMENT_METHODS.MAIN]: {
-                    path: "bpd-opt-in",
-                    screens: {
-                      [BPD_ROUTES.OPT_IN_PAYMENT_METHODS.CHOICE]: "choice"
-                    }
-                  }
+            ...(bpdEnabled && {
+              [BPD_ROUTES.CTA_BPD_IBAN_EDIT]: "bpd-iban-update"
+            }),
+            ...(isOptInPaymentMethodsEnabled && {
+              [BPD_ROUTES.OPT_IN_PAYMENT_METHODS.MAIN]: {
+                path: "bpd-opt-in",
+                screens: {
+                  [BPD_ROUTES.OPT_IN_PAYMENT_METHODS.CHOICE]: "choice"
                 }
-              : {})
+              }
+            })
           }
         },
         [ROUTES.SERVICES_NAVIGATOR]: {
@@ -232,17 +230,18 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
                 activate: activate => activate === "true"
               }
             },
-            ...(myPortalEnabled ? { [ROUTES.SERVICE_WEBVIEW]: "webview" } : {}),
-            ...(svEnabled ? svLinkingOptions : {})
+            ...(myPortalEnabled && { [ROUTES.SERVICE_WEBVIEW]: "webview" }),
+            ...(svEnabled && svLinkingOptions)
           }
         },
-        ...(isFimsEnabled ? fimsLinkingOptions : {}),
-        ...(cgnEnabled ? cgnLinkingOptions : {}),
+        ...(isFimsEnabled && fimsLinkingOptions),
+        ...(cgnEnabled && cgnLinkingOptions),
         [UADONATION_ROUTES.WEBVIEW]: "uadonations-webview",
         [ROUTES.WORKUNIT_GENERIC_FAILURE]: "*"
       }
     }
   };
+
   return (
     <NavigationContainer
       theme={IOTheme}
