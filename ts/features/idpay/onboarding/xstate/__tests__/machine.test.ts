@@ -58,6 +58,13 @@ const mockLoadRequiredCriteria = jest.fn(
     O.some(T_REQUIRED_CRITERIA)
 );
 
+const mockNavigateToPDNDCriteriaScreen = jest.fn();
+const mockNavigateToSelfDeclarationsScreen = jest.fn();
+
+const mockAcceptRequiredCriteria = jest.fn(
+  async (): Promise<undefined> => undefined
+);
+
 describe("machine", () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -73,7 +80,12 @@ describe("machine", () => {
       services: {
         loadInitiative: mockLoadInitiative,
         acceptTos: mockAcceptTos,
-        loadRequiredCriteria: mockLoadRequiredCriteria
+        loadRequiredCriteria: mockLoadRequiredCriteria,
+        acceptRequiredCriteria: mockAcceptRequiredCriteria
+      },
+      actions: {
+        navigateToPDNDCriteriaScreen: mockNavigateToPDNDCriteriaScreen,
+        navigateToSelfDeclarationsScreen: mockNavigateToSelfDeclarationsScreen
       }
     });
 
@@ -123,8 +135,38 @@ describe("machine", () => {
       )
     );
 
+    await waitFor(() =>
+      expect(mockNavigateToPDNDCriteriaScreen).toHaveBeenCalled()
+    );
+
+    onboardingService.send({
+      type: "ACCEPT_REQUIRED_PDND_CRITERIA"
+    });
+
+    await waitFor(() =>
+      expect(mockNavigateToSelfDeclarationsScreen).toHaveBeenCalled()
+    );
+
+    onboardingService.send({
+      type: "ACCEPT_REQUIRED_SELF_CRITERIA"
+    });
+
+    await waitFor(() =>
+      expect(mockAcceptRequiredCriteria).toHaveBeenCalledWith(
+        expect.objectContaining({
+          serviceId: T_SERVICE_ID,
+          initiative: {
+            initiativeId: T_INITIATIVE_ID
+          },
+          requiredCriteria: O.some(T_REQUIRED_CRITERIA)
+        }),
+        expect.anything(),
+        expect.anything()
+      )
+    );
+
     expect(
-      onboardingService.getSnapshot().matches("EVALUATING_REQUIRED_CRITERIA")
+      onboardingService.getSnapshot().matches("DISPLAYING_ONBOARDING_COMPLETED")
     ).toBeTruthy();
   });
 });

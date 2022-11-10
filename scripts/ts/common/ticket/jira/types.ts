@@ -6,6 +6,7 @@ const JiraIssueType = t.keyof({
   Task: null,
   Sottotask: null,
   "Sub-task": null,
+  Subtask: null,
   Bug: null
 });
 

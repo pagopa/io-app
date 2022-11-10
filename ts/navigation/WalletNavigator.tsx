@@ -60,6 +60,8 @@ import TransactionSummaryScreen from "../screens/wallet/payment/TransactionSumma
 import PaymentHistoryDetailsScreen from "../screens/wallet/PaymentHistoryDetailsScreen";
 import PaymentsHistoryScreen from "../screens/wallet/PaymentsHistoryScreen";
 import TransactionDetailsScreen from "../screens/wallet/TransactionDetailsScreen";
+import { useIOSelector } from "../store/hooks";
+import { bpdRemoteConfigSelector } from "../store/reducers/backendStatus";
 import ROUTES from "./routes";
 
 const Stack = createStackNavigator();
@@ -126,140 +128,145 @@ const bptRoutes = () => (
   </>
 );
 
-const WalletNavigator = () => (
-  <Stack.Navigator
-    initialRouteName={ROUTES.WALLET_ADD_PAYMENT_METHOD}
-    headerMode={"none"}
-    screenOptions={{ gestureEnabled: true }}
-  >
-    <Stack.Screen
-      name={ROUTES.WALLET_ADD_PAYMENT_METHOD}
-      component={AddPaymentMethodScreen}
-    />
-    <Stack.Screen
-      name={ROUTES.WALLET_TRANSACTION_DETAILS}
-      component={TransactionDetailsScreen}
-    />
-    <Stack.Screen
-      name={ROUTES.WALLET_CREDIT_CARD_DETAIL}
-      component={CreditCardDetailScreen}
-    />
-    <Stack.Screen
-      name={ROUTES.WALLET_BANCOMAT_DETAIL}
-      component={BancomatDetailScreen}
-    />
-    <Stack.Screen
-      name={ROUTES.WALLET_SATISPAY_DETAIL}
-      component={SatispayDetailScreen}
-    />
-    <Stack.Screen
-      name={ROUTES.WALLET_PAYPAL_DETAIL}
-      component={PaypalDetailScreen}
-    />
-    <Stack.Screen
-      name={ROUTES.WALLET_PAYPAL_UPDATE_PAYMENT_PSP}
-      component={PayPalPspUpdateScreen}
-    />
-    <Stack.Screen
-      name={ROUTES.WALLET_BPAY_DETAIL}
-      component={BPayDetailScreen}
-    />
-    <Stack.Screen
-      name={ROUTES.WALLET_COBADGE_DETAIL}
-      component={CobadgeDetailScreen}
-    />
-    <Stack.Screen
-      name={ROUTES.WALLET_PRIVATIVE_DETAIL}
-      component={PrivativeDetailScreen}
-    />
-    <Stack.Screen name={ROUTES.WALLET_ADD_CARD} component={AddCardScreen} />
-    <Stack.Screen
-      name={ROUTES.WALLET_CONFIRM_CARD_DETAILS}
-      component={ConfirmCardDetailsScreen}
-    />
-    <Stack.Screen
-      name={ROUTES.PAYMENT_SCAN_QR_CODE}
-      component={ScanQrCodeScreen}
-    />
-    <Stack.Screen
-      name={ROUTES.PAYMENT_MANUAL_DATA_INSERTION}
-      component={ManualDataInsertionScreen}
-    />
-    <Stack.Screen
-      name={ROUTES.PAYMENT_TRANSACTION_SUMMARY}
-      component={
-        newTransactionSummaryEnabled
-          ? NewTransactionSummaryScreen
-          : TransactionSummaryScreen
-      }
-    />
-    <Stack.Screen
-      name={ROUTES.PAYMENT_TRANSACTION_ERROR}
-      component={TransactionErrorScreen}
-    />
-    <Stack.Screen
-      name={ROUTES.PAYMENT_CONFIRM_PAYMENT_METHOD}
-      component={ConfirmPaymentMethodScreen}
-    />
-    <Stack.Screen name={ROUTES.PAYMENT_PICK_PSP} component={PickPspScreen} />
-    <Stack.Screen
-      name={ROUTES.PAYMENT_PICK_PAYMENT_METHOD}
-      component={PickPaymentMethodScreen}
-    />
-    <Stack.Screen
-      name={ROUTES.PAYMENTS_HISTORY_SCREEN}
-      component={PaymentsHistoryScreen}
-    />
-    <Stack.Screen
-      name={ROUTES.PAYMENT_HISTORY_DETAIL_INFO}
-      component={PaymentHistoryDetailsScreen}
-    />
-    <Stack.Screen
-      name={ROUTES.CREDIT_CARD_ONBOARDING_ATTEMPTS_SCREEN}
-      component={CreditCardOnboardingAttemptsScreen}
-    />
-    <Stack.Screen
-      name={ROUTES.CREDIT_CARD_ONBOARDING_ATTEMPT_DETAIL}
-      component={CreditCardOnboardingAttemptDetailScreen}
-    />
-    <Stack.Screen
-      name={ROUTES.ADD_CREDIT_CARD_OUTCOMECODE_MESSAGE}
-      component={AddCreditCardOutcomeCodeMessage}
-    />
-    <Stack.Screen
-      name={ROUTES.PAYMENT_OUTCOMECODE_MESSAGE}
-      component={PaymentOutcomeCodeMessage}
-    />
-    {/* Paypal */}
-    <Stack.Screen
-      name={PAYPAL_ROUTES.ONBOARDING.MAIN}
-      component={PaymentMethodOnboardingPayPalOnboardingNavigator}
-    />
+const WalletNavigator = () => {
+  const bpdRemoteConfig = useIOSelector(bpdRemoteConfigSelector);
+  const isOptInPaymentMethodsEnabled =
+    bpdRemoteConfig?.opt_in_payment_methods_v2 && bpdOptInPaymentMethodsEnabled;
 
-    {/* Bonus Vacanze */}
-    {bonusVacanzeEnabled && (
-      <>
-        <Stack.Screen
-          name={BONUSVACANZE_ROUTES.MAIN}
-          component={BonusVacanzeNavigator}
-        />
-        <Stack.Screen
-          name={BONUSVACANZE_ROUTES.BONUS_ACTIVE_DETAIL_SCREEN}
-          component={ActiveBonusScreen}
-        />
-      </>
-    )}
-
-    {/* BPD */}
-    {bptRoutes()}
-    {/* BPD Opt-In */}
-    {bpdOptInPaymentMethodsEnabled && (
+  return (
+    <Stack.Navigator
+      initialRouteName={ROUTES.WALLET_ADD_PAYMENT_METHOD}
+      headerMode={"none"}
+      screenOptions={{ gestureEnabled: true }}
+    >
       <Stack.Screen
-        name={BPD_ROUTES.OPT_IN_PAYMENT_METHODS.MAIN}
-        component={OptInPaymentMethodNavigator}
+        name={ROUTES.WALLET_ADD_PAYMENT_METHOD}
+        component={AddPaymentMethodScreen}
       />
-    )}
-  </Stack.Navigator>
-);
+      <Stack.Screen
+        name={ROUTES.WALLET_TRANSACTION_DETAILS}
+        component={TransactionDetailsScreen}
+      />
+      <Stack.Screen
+        name={ROUTES.WALLET_CREDIT_CARD_DETAIL}
+        component={CreditCardDetailScreen}
+      />
+      <Stack.Screen
+        name={ROUTES.WALLET_BANCOMAT_DETAIL}
+        component={BancomatDetailScreen}
+      />
+      <Stack.Screen
+        name={ROUTES.WALLET_SATISPAY_DETAIL}
+        component={SatispayDetailScreen}
+      />
+      <Stack.Screen
+        name={ROUTES.WALLET_PAYPAL_DETAIL}
+        component={PaypalDetailScreen}
+      />
+      <Stack.Screen
+        name={ROUTES.WALLET_PAYPAL_UPDATE_PAYMENT_PSP}
+        component={PayPalPspUpdateScreen}
+      />
+      <Stack.Screen
+        name={ROUTES.WALLET_BPAY_DETAIL}
+        component={BPayDetailScreen}
+      />
+      <Stack.Screen
+        name={ROUTES.WALLET_COBADGE_DETAIL}
+        component={CobadgeDetailScreen}
+      />
+      <Stack.Screen
+        name={ROUTES.WALLET_PRIVATIVE_DETAIL}
+        component={PrivativeDetailScreen}
+      />
+      <Stack.Screen name={ROUTES.WALLET_ADD_CARD} component={AddCardScreen} />
+      <Stack.Screen
+        name={ROUTES.WALLET_CONFIRM_CARD_DETAILS}
+        component={ConfirmCardDetailsScreen}
+      />
+      <Stack.Screen
+        name={ROUTES.PAYMENT_SCAN_QR_CODE}
+        component={ScanQrCodeScreen}
+      />
+      <Stack.Screen
+        name={ROUTES.PAYMENT_MANUAL_DATA_INSERTION}
+        component={ManualDataInsertionScreen}
+      />
+      <Stack.Screen
+        name={ROUTES.PAYMENT_TRANSACTION_SUMMARY}
+        component={
+          newTransactionSummaryEnabled
+            ? NewTransactionSummaryScreen
+            : TransactionSummaryScreen
+        }
+      />
+      <Stack.Screen
+        name={ROUTES.PAYMENT_TRANSACTION_ERROR}
+        component={TransactionErrorScreen}
+      />
+      <Stack.Screen
+        name={ROUTES.PAYMENT_CONFIRM_PAYMENT_METHOD}
+        component={ConfirmPaymentMethodScreen}
+      />
+      <Stack.Screen name={ROUTES.PAYMENT_PICK_PSP} component={PickPspScreen} />
+      <Stack.Screen
+        name={ROUTES.PAYMENT_PICK_PAYMENT_METHOD}
+        component={PickPaymentMethodScreen}
+      />
+      <Stack.Screen
+        name={ROUTES.PAYMENTS_HISTORY_SCREEN}
+        component={PaymentsHistoryScreen}
+      />
+      <Stack.Screen
+        name={ROUTES.PAYMENT_HISTORY_DETAIL_INFO}
+        component={PaymentHistoryDetailsScreen}
+      />
+      <Stack.Screen
+        name={ROUTES.CREDIT_CARD_ONBOARDING_ATTEMPTS_SCREEN}
+        component={CreditCardOnboardingAttemptsScreen}
+      />
+      <Stack.Screen
+        name={ROUTES.CREDIT_CARD_ONBOARDING_ATTEMPT_DETAIL}
+        component={CreditCardOnboardingAttemptDetailScreen}
+      />
+      <Stack.Screen
+        name={ROUTES.ADD_CREDIT_CARD_OUTCOMECODE_MESSAGE}
+        component={AddCreditCardOutcomeCodeMessage}
+      />
+      <Stack.Screen
+        name={ROUTES.PAYMENT_OUTCOMECODE_MESSAGE}
+        component={PaymentOutcomeCodeMessage}
+      />
+      {/* Paypal */}
+      <Stack.Screen
+        name={PAYPAL_ROUTES.ONBOARDING.MAIN}
+        component={PaymentMethodOnboardingPayPalOnboardingNavigator}
+      />
 
+      {/* Bonus Vacanze */}
+      {bonusVacanzeEnabled && (
+        <>
+          <Stack.Screen
+            name={BONUSVACANZE_ROUTES.MAIN}
+            component={BonusVacanzeNavigator}
+          />
+          <Stack.Screen
+            name={BONUSVACANZE_ROUTES.BONUS_ACTIVE_DETAIL_SCREEN}
+            component={ActiveBonusScreen}
+          />
+        </>
+      )}
+
+      {/* BPD */}
+      {bptRoutes()}
+      {/* BPD Opt-In */}
+      {isOptInPaymentMethodsEnabled && (
+        <Stack.Screen
+          name={BPD_ROUTES.OPT_IN_PAYMENT_METHODS.MAIN}
+          component={OptInPaymentMethodNavigator}
+        />
+      )}
+    </Stack.Navigator>
+  );
+};
 export default WalletNavigator;
