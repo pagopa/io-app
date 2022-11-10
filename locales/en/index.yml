@@ -2613,7 +2613,7 @@ bonus:
           body: "We’ve saved your choice."
         retryAfterDeletion:
           title: "Si è verificato un errore imprevisto"
-          body: "I tuoi metodi non sono stati eliminati. Riprova, oppure vai al Portafoglio ed eliminali manualmente."
+          body: "Your methods have not been deleted. Try again, or go to Wallet and delete them one by one."
         toast: "La tua scelta non è stata salvata. Riprova più tardi."
   cgn:
     generic:
