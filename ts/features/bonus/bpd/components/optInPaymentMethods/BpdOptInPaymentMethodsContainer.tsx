@@ -53,12 +53,14 @@ const BpdOptInPaymentMethodsContainer = () => {
       (isReady(showOptInChoice) || isError(showOptInChoice))
     ) {
       hideModal();
-      navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
-        screen: BPD_ROUTES.OPT_IN_PAYMENT_METHODS.MAIN,
-        params: {
-          screen: BPD_ROUTES.OPT_IN_PAYMENT_METHODS.CASHBACK_UPDATE
-        }
-      });
+      if (isReady(showOptInChoice) && showOptInChoice.value) {
+        navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
+          screen: BPD_ROUTES.OPT_IN_PAYMENT_METHODS.MAIN,
+          params: {
+            screen: BPD_ROUTES.OPT_IN_PAYMENT_METHODS.CASHBACK_UPDATE
+          }
+        });
+      }
     }
   }, [isOptInPaymentMethodsEnabled, hideModal, showOptInChoice, navigation]);
 
