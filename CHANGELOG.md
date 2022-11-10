@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.19.0-rc.2](https://github.com/pagopa/io-app/compare/2.19.0-rc.1...2.19.0-rc.2) (2022-11-10)
+
+
+### Features
+
+* [[IOAPPPEB-6](https://pagopa.atlassian.net/browse/IOAPPPEB-6)] Filter mehods not in BPD or added by EXT channel ([#4169](https://github.com/pagopa/io-app/issues/4169)) ([664a29b](https://github.com/pagopa/io-app/commit/664a29bb1e5ab63da7b917d8f9093ed6f1a783a3))
+
 ## [2.19.0-rc.1](https://github.com/pagopa/io-app/compare/2.19.0-rc.0...2.19.0-rc.1) (2022-11-10)
 
 
