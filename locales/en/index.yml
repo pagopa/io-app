@@ -2614,7 +2614,7 @@ bonus:
         retryAfterDeletion:
           title: "An unexpected error has occurred"
           body: "Your methods have not been deleted. Try again, or go to Wallet and delete them one by one."
-        toast: "La tua scelta non è stata salvata. Riprova più tardi."
+        toast: "Your choice was not saved. Try again later."
   cgn:
     generic:
       linkError: "The site can't be reached at the moment. Please, try again later."
