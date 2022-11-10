@@ -191,12 +191,12 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                   inputProps={{
                     keyboardType: "numeric",
                     returnKeyType: "done",
-                    maxLength: 18,
                     onChangeText: value => {
                       this.setState({
                         paymentNoticeNumber: pipe(
                           O.some(value),
                           O.filter(NonEmptyString.is),
+                          O.map(_ => _.replace(/\s/g, "")),
                           O.map(_ => PaymentNoticeNumberFromString.decode(_))
                         )
                       });
