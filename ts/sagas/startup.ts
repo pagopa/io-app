@@ -314,13 +314,12 @@ export function* initializeApplicationSaga(): Generator<
   // as simple as possible, only this part has been edited
   const hasSessionAndPin = previousSessionToken && O.isSome(maybeStoredPin);
   if (hasSessionAndPin) {
-    storedPin = maybeStoredPin.value;
 
     // we ask the user to identify using the unlock code.
     // FIXME: This is an unsafe cast caused by a wrongly described type.
     const identificationResult: SagaCallReturnType<
       typeof startAndReturnIdentificationResult
-    > = yield* call(startAndReturnIdentificationResult, storedPin);
+    > = yield* call(startAndReturnIdentificationResult, maybeStoredPin.value);
 
     if (identificationResult === IdentificationResult.pinreset) {
       // If we are here the user had chosen to reset the unlock code
@@ -335,12 +334,19 @@ export function* initializeApplicationSaga(): Generator<
   // check if the user expressed preference about mixpanel, if not ask for it
   yield* call(askMixpanelOptIn);
 
-  // This condition comes from the refactoring. By reading it, it may seem that
-  // this code is handling a non-logged in user (due to not having a session) but
-  // actually, if the session was not valid, the code would have stopped before
-  // reaching this point. Consider refactoring even more by removing the check
-  // on the session
-  if (!hasSessionAndPin) {
+  if (hasSessionAndPin) {
+
+    // We have to retrieve the pin here and not on the previous if-condition (same guard)
+    // otherwise the typescript compiler will complain of an unassigned variable later on
+    storedPin = maybeStoredPin.value;
+
+  } else {
+
+    // This condition comes from the refactoring. By reading it, it may seem that
+    // this code is handling a non-logged in user (due to not having a session) but
+    // actually, if the session was not valid, the code would have stopped before
+    // reaching this point. Consider refactoring even more by removing the check
+    // on the session
     storedPin = yield* call(checkConfiguredPinSaga);
 
     yield* call(checkAcknowledgedFingerprintSaga);
