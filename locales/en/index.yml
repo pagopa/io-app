@@ -2592,7 +2592,7 @@ bonus:
         title: "Vuoi mantenere i tuoi metodi di pagamento?"
         subtitle: Se li mantieni, potrai utilizzarli per aderire a sconti, bonus e iniziative future o per altre funzionalità, come pagare in app.
         suggestedOption: Consigliato
-        toast: "Hai già fatto la tua scelta"
+        toast: "You've already made your choice"
         options:
           keepAll:
             title: Mantieni tutti i metodi nel Portafoglio
