@@ -7,6 +7,10 @@ import { Dispatch } from "redux";
 import cgnBackground from "../../../../../img/bonus/cgn/cgn-preview.png";
 import cgnLogo from "../../../../../img/bonus/cgn/cgn_logo.png";
 import { H3 } from "../../../../components/core/typography/H3";
+import {
+  hexToRgba,
+  IOColors
+} from "../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import I18n from "../../../../i18n";
@@ -18,6 +22,8 @@ import { isCgnInformationAvailableSelector } from "../store/reducers/details";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
+
+const opaqueBorderColor = hexToRgba(IOColors.black, 0.1);
 
 const styles = StyleSheet.create({
   preview: {
@@ -47,7 +53,7 @@ const styles = StyleSheet.create({
     marginBottom: -13,
     borderRadius: 8,
     borderTopWidth: 13,
-    borderTopColor: "rgba(0,0,0,0.1)",
+    borderTopColor: opaqueBorderColor,
     height: 17,
     width: "100%"
   }

@@ -224,7 +224,7 @@ const VoucherListScreen = (props: Props): React.ReactElement => {
             <EmptyVoucherList />
           ) : (
             <FlatList
-              style={[IOStyles.horizontalContentPadding]}
+              style={IOStyles.horizontalContentPadding}
               data={vouchers}
               ListFooterComponent={
                 isLoading(props.requiredDataLoaded) && <FooterLoading />

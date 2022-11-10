@@ -50,18 +50,6 @@ const styles = StyleSheet.create({
     padding: customVariables.contentPadding,
     alignItems: "center"
   },
-
-  // ListHeader
-  listHeaderWrapper: {
-    height: LIST_HEADER_HEIGHT,
-    paddingHorizontal: customVariables.contentPadding,
-    paddingTop: 24,
-    paddingBottom: 8
-  },
-  listHeaderButtonText: {
-    ...makeFontStyleObject(Platform.select)
-  },
-
   // SectionHeader
   sectionHeaderWrapper: {
     height: SECTION_HEADER_HEIGHT,
@@ -95,10 +83,6 @@ const styles = StyleSheet.create({
   },
   itemEmptyText: {
     color: customVariables.textColorDark
-  },
-  itemSeparator: {
-    height: ITEM_SEPARATOR_HEIGHT,
-    backgroundColor: IOColors.greyLight
   },
   button: {
     alignContent: "center",

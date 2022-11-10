@@ -94,10 +94,10 @@ const styles = StyleSheet.create({
   },
   badgeStyle: {
     backgroundColor: customVariables.brandPrimary,
-    borderColor: "white",
+    borderColor: IOColors.white,
     borderWidth: 2,
     elevation: 0.1,
-    shadowColor: "white",
+    shadowColor: IOColors.white,
     justifyContent: "center",
     alignContent: "center",
     marginTop: -3

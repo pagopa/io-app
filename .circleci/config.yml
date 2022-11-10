@@ -90,7 +90,7 @@ jobs:
       - *save_node_cache
 
       # Build app
-      - run: yarn generate:all
+      - run: yarn generate
       # Needed to make compliant old Android code to AndroidX
       - run: yarn jetify
       - run: yarn tsc:noemit
@@ -113,7 +113,7 @@ jobs:
       - *install_node_modules
 
       # Generate models and locales
-      - run: yarn generate:all
+      - run: yarn generate
 
       # Run tests
       - run:
@@ -482,7 +482,7 @@ jobs:
             cd _io-dev-api-server_
             cp ../scripts/api-config.json config/config.json
             yarn
-            yarn generate:all
+            yarn generate
             yarn start &> /tmp/io-dev-api-server.log &
             # wait for the server to be up and running
             sleep 10

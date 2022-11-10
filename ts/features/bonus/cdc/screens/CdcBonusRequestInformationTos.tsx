@@ -77,7 +77,7 @@ const CdcBonusRequestInformationTos = () => {
       headerTitle={I18n.t("bonus.cdc.title")}
     >
       <SafeAreaView style={IOStyles.flex}>
-        <ScrollView style={[IOStyles.horizontalContentPadding]}>
+        <ScrollView style={IOStyles.horizontalContentPadding}>
           <View style={styles.headerContainer}>
             <View style={IOStyles.flex}>
               <H4 weight={"Regular"} color={"bluegrey"}>

@@ -6,6 +6,7 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { BonusActivationWithQrCode } from "../../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { BonusesAvailable } from "../../../../../definitions/content/BonusesAvailable";
+import { IOColors } from "../../../../components/core/variables/IOColors";
 import SectionCardComponent, {
   SectionCardStatus
 } from "../../../../components/wallet/card/SectionCardComponent";
@@ -27,7 +28,7 @@ type OwnProps = {
 
 const styles = StyleSheet.create({
   preview: {
-    shadowColor: "#000",
+    shadowColor: IOColors.black,
     shadowOffset: {
       width: 0,
       height: 12

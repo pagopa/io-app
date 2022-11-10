@@ -40,10 +40,6 @@ type OwnProps = {
 type Props = OwnProps & AnimatedProps;
 
 const styles = StyleSheet.create({
-  listItem: {
-    paddingLeft: customVariables.contentPadding,
-    paddingRight: customVariables.contentPadding
-  },
   padded: {
     marginLeft: customVariables.contentPadding,
     marginRight: customVariables.contentPadding

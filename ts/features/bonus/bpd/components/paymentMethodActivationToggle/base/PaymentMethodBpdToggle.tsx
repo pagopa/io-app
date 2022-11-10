@@ -50,14 +50,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     height: 48
-  },
-  cardIcon: {
-    width: 40,
-    height: 25,
-    overflow: "hidden",
-    resizeMode: "contain"
-  },
-  leftSection: { flexDirection: "row", flex: 1 }
+  }
 });
 
 /**
