@@ -9,7 +9,10 @@ import I18n from "../../../../../i18n";
 import ROUTES from "../../../../../navigation/routes";
 import { useIODispatch } from "../../../../../store/hooks";
 import { cancelButtonProps } from "../../../bonusVacanze/components/buttons/ButtonConfigurations";
-import { optInPaymentMethodsCompleted } from "../../store/actions/optInPaymentMethods";
+import {
+  optInPaymentMethodsCompleted,
+  optInPaymentMethodsShowChoice
+} from "../../store/actions/optInPaymentMethods";
 
 const ThankYouSuccessComponent = () => {
   const navigation = useNavigation();
@@ -28,6 +31,7 @@ const ThankYouSuccessComponent = () => {
         leftButton={cancelButtonProps(
           () => {
             dispatch(optInPaymentMethodsCompleted());
+            dispatch(optInPaymentMethodsShowChoice.success(false));
             navigation.navigate(ROUTES.WALLET_HOME);
           },
           I18n.t("bonus.bpd.optInPaymentMethods.thankYouPage.cta.goToWallet"),

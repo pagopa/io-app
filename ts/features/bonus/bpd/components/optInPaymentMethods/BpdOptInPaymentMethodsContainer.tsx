@@ -27,7 +27,12 @@ const BpdOptInPaymentMethodsContainer = () => {
     bpdRemoteConfig?.opt_in_payment_methods_v2 && bpdOptInPaymentMethodsEnabled;
 
   useEffect(() => {
-    if (isOptInPaymentMethodsEnabled && !showOptInChecked) {
+    if (
+      (isOptInPaymentMethodsEnabled &&
+        !showOptInChecked &&
+        !isReady(showOptInChoice)) ||
+      isError(showOptInChoice)
+    ) {
       setShowOptInChecked(true);
       // Starts the optInShouldShowChoiceHandler saga
       dispatch(optInPaymentMethodsShowChoice.request());
@@ -44,7 +49,8 @@ const BpdOptInPaymentMethodsContainer = () => {
     dispatch,
     showOptInChecked,
     bpdLastUpdate,
-    showModal
+    showModal,
+    showOptInChoice
   ]);
 
   useEffect(() => {

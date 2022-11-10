@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { View } from "native-base";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
 import { IOBadge } from "../../../../../components/core/IOBadge";
@@ -93,6 +93,8 @@ const OptInPaymentMethodsChoiceScreen = () => {
   const dispatch = useIODispatch();
   const showOptInChoice = useIOSelector(showOptInChoiceSelector);
 
+  const renderingRef = useRef(false);
+
   const { presentBottomSheet, bottomSheet } = useBottomSheetMethodsToDelete({
     onDeletePress: () =>
       navigation.dispatch(
@@ -143,12 +145,16 @@ const OptInPaymentMethodsChoiceScreen = () => {
       if (isError(showOptInChoice)) {
         showToast(I18n.t("global.genericError"));
       }
-      // TODO replace with a toast when the toast more explicit message
-      showToast(
-        I18n.t("bonus.bpd.optInPaymentMethods.choice.toast"),
-        "warning"
-      );
+      if (!renderingRef.current) {
+        showToast(
+          I18n.t("bonus.bpd.optInPaymentMethods.choice.toast"),
+          "warning"
+        );
+      }
     }
+
+    // eslint-disable-next-line functional/immutable-data
+    renderingRef.current = true;
   }, [dispatch, showOptInChoice, navigation]);
 
   return (

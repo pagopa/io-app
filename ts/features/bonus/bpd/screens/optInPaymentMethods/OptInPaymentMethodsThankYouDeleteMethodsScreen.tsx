@@ -16,10 +16,7 @@ import {
   isReady,
   isUndefined
 } from "../../model/RemoteValue";
-import {
-  optInPaymentMethodsCompleted,
-  optInPaymentMethodsDeletionChoice
-} from "../../store/actions/optInPaymentMethods";
+import { optInPaymentMethodsDeletionChoice } from "../../store/actions/optInPaymentMethods";
 import { optInStatusSelector } from "../../store/reducers/details/activation";
 
 const OptInPaymentMethodsThankYouDeleteMethodsScreen = () => {
@@ -42,7 +39,6 @@ const OptInPaymentMethodsThankYouDeleteMethodsScreen = () => {
       isReady(deleteAllPaymentMethodsByFunctionStatus)
     ) {
       showToast(I18n.t("bonus.bpd.optInPaymentMethods.thankYouPage.toast"));
-      dispatch(optInPaymentMethodsCompleted());
       navigation.navigate(ROUTES.WALLET_HOME);
     }
   }, [

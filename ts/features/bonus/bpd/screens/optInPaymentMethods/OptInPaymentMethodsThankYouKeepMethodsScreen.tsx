@@ -10,7 +10,6 @@ import { showToast } from "../../../../../utils/showToast";
 import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import ThankYouSuccessComponent from "../../components/optInPaymentMethods/ThankYouSuccessComponent";
 import { bpdUpdateOptInStatusMethod } from "../../store/actions/onboarding";
-import { optInPaymentMethodsCompleted } from "../../store/actions/optInPaymentMethods";
 import { optInStatusSelector } from "../../store/reducers/details/activation";
 
 const OptInPaymentMethodsThankYouKeepMethodsScreen = () => {
@@ -29,7 +28,6 @@ const OptInPaymentMethodsThankYouKeepMethodsScreen = () => {
     // if the opt-in choice fails complete the workunit and show an error toast to the user
     if (pot.isError(optInStatus)) {
       showToast(I18n.t("bonus.bpd.optInPaymentMethods.thankYouPage.toast"));
-      dispatch(optInPaymentMethodsCompleted());
       navigation.navigate(ROUTES.WALLET_HOME);
     }
   }, [optInStatus, dispatch, navigation]);
