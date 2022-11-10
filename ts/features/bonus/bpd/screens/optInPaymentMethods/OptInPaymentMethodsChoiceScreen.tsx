@@ -140,8 +140,14 @@ const OptInPaymentMethodsChoiceScreen = () => {
       (isReady(showOptInChoice) && !showOptInChoice.value)
     ) {
       navigation.goBack();
+      if (isError(showOptInChoice)) {
+        showToast(I18n.t("global.genericError"));
+      }
       // TODO replace with a toast when the toast more explicit message
-      showToast(I18n.t("global.genericError"));
+      showToast(
+        I18n.t("bonus.bpd.optInPaymentMethods.choice.toast"),
+        "warning"
+      );
     }
   }, [dispatch, showOptInChoice, navigation]);
 
