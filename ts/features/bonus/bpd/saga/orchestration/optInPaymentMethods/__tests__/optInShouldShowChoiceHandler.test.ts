@@ -7,6 +7,7 @@ import {
   fetchWalletsRequestWithExpBackoff,
   fetchWalletsSuccess
 } from "../../../../../../../store/actions/wallet/wallets";
+import { getBPDMethodsVisibleInWalletSelector } from "../../../../../../../store/reducers/wallet/wallets";
 import { remoteReady, remoteUndefined } from "../../../../model/RemoteValue";
 import { bpdAllData } from "../../../../store/actions/details";
 import { optInPaymentMethodsShowChoice } from "../../../../store/actions/optInPaymentMethods";
@@ -119,7 +120,7 @@ describe("optInShouldShowChoiceHandler saga", () => {
       .isDone();
   });
 
-  it("If fetchWallets succeed, should dispatch the optInPaymentMethodsShowChoice.success and the optInPaymentMethodsStart actions", () => {
+  it("If fetchWallets succeed, should dispatch the optInPaymentMethodsShowChoice.success action", () => {
     testSaga(optInShouldShowChoiceHandler)
       .next()
       .put(bpdAllData.request())
@@ -134,7 +135,9 @@ describe("optInShouldShowChoiceHandler saga", () => {
       .next()
       .take([getType(fetchWalletsSuccess), getType(fetchWalletsFailure)])
       .next(fetchWalletsSuccess([]))
-      .put(optInPaymentMethodsShowChoice.success(true))
+      .select(getBPDMethodsVisibleInWalletSelector)
+      .next([])
+      .put(optInPaymentMethodsShowChoice.success(false))
       .next()
       .isDone();
   });
