@@ -2609,7 +2609,7 @@ bonus:
           goToWallet: "Vai al Portafoglio"
           retry: "Riprova"
         success:
-          title: "Fatto!"
+          title: "Done!"
           body: "Abbiamo salvato la tua scelta"
         retryAfterDeletion:
           title: "Si è verificato un errore imprevisto"
