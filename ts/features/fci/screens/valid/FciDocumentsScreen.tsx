@@ -1,5 +1,4 @@
 import * as React from "react";
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import Pdf from "react-native-pdf";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -9,10 +8,8 @@ import { useNavigation } from "@react-navigation/native";
 import IconFont from "../../../../components/ui/IconFont";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import { fciSignatureDetailViewSelector } from "../../store/reducers/fciSignatureDetailView";
-import { SignatureRequestDetailView } from "../../../../../definitions/fci/SignatureRequestDetailView";
+import { fciDSignatureDetailDocumentsSelector } from "../../store/reducers/fciSignatureDetailView";
 import { IOColors } from "../../../../components/core/variables/IOColors";
-import { apiUrlPrefix } from "../../../../config";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
 import DocumentsNavigationBar from "../../components/DocumentsNavigationBar";
@@ -27,23 +24,12 @@ const styles = StyleSheet.create({
 });
 
 const FciDocumentsScreen = () => {
-  const [documents, setDocuments] = React.useState<
-    SignatureRequestDetailView["documents"]
-  >([]);
   const [pdfRef, setPdfRef] = React.useState<Pdf | null>();
   const [totalPages, setTotalPages] = React.useState(0);
   const [currentPage, setCurrentPage] = React.useState(0);
   const [currentDoc, setCurrentDoc] = React.useState(0);
-  const signatureRequestDetailViewSelector = useSelector(
-    fciSignatureDetailViewSelector
-  );
+  const documents = useSelector(fciDSignatureDetailDocumentsSelector);
   const navigation = useNavigation();
-
-  React.useEffect(() => {
-    if (pot.isSome(signatureRequestDetailViewSelector)) {
-      setDocuments(signatureRequestDetailViewSelector.value.documents);
-    }
-  }, [signatureRequestDetailViewSelector]);
 
   // TODO: abort signature flow
   const onCancelPress = () => constNull;
@@ -78,7 +64,7 @@ const FciDocumentsScreen = () => {
     <Pdf
       ref={_ => setPdfRef(_)}
       source={{
-        uri: `${apiUrlPrefix}${documents[currentDoc].url}`
+        uri: `${documents[currentDoc].url}`
       }}
       onLoadComplete={(numberOfPages, _) => {
         setTotalPages(numberOfPages);
@@ -141,23 +127,22 @@ const FciDocumentsScreen = () => {
         }
         onPrevious={onPrevious}
         onNext={onNext}
+        testID={"FciDocumentsNavBarTestID"}
       />
-      <SafeAreaView style={IOStyles.flex} testID={"FciDocumentsScreenTestID"}>
-        {documents.length > 0 && (
-          <>
-            {renderPager()}
-            <FooterWithButtons
-              type={"TwoButtonsInlineThird"}
-              leftButton={cancelButtonProps}
-              rightButton={
-                currentPage < totalPages
-                  ? keepReadingButtonProps
-                  : continueButtonProps
-              }
-            />
-          </>
-        )}
-      </SafeAreaView>
+      {documents.length > 0 && (
+        <SafeAreaView style={IOStyles.flex} testID={"FciDocumentsScreenTestID"}>
+          {renderPager()}
+          <FooterWithButtons
+            type={"TwoButtonsInlineThird"}
+            leftButton={cancelButtonProps}
+            rightButton={
+              currentPage < totalPages
+                ? keepReadingButtonProps
+                : continueButtonProps
+            }
+          />
+        </SafeAreaView>
+      )}
     </BaseScreenComponent>
   );
 };

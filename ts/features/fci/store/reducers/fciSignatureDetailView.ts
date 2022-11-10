@@ -1,4 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { SignatureRequestDetailView } from "../../../../../definitions/fci/SignatureRequestDetailView";
 import { Action } from "../../../../store/actions/types";
@@ -33,5 +34,11 @@ const reducer = (
 export const fciSignatureDetailViewSelector = (
   state: GlobalState
 ): FciSignatureDetailViewRequestState => state.features.fci.signatureDetailView;
+
+export const fciDSignatureDetailDocumentsSelector = createSelector(
+  fciSignatureDetailViewSelector,
+  signatureDetailView =>
+    pot.isSome(signatureDetailView) ? signatureDetailView.value.documents : []
+);
 
 export default reducer;
