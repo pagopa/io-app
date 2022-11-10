@@ -314,7 +314,6 @@ export function* initializeApplicationSaga(): Generator<
   // as simple as possible, only this part has been edited
   const hasSessionAndPin = previousSessionToken && O.isSome(maybeStoredPin);
   if (hasSessionAndPin) {
-
     // we ask the user to identify using the unlock code.
     // FIXME: This is an unsafe cast caused by a wrongly described type.
     const identificationResult: SagaCallReturnType<
@@ -335,13 +334,10 @@ export function* initializeApplicationSaga(): Generator<
   yield* call(askMixpanelOptIn);
 
   if (hasSessionAndPin) {
-
     // We have to retrieve the pin here and not on the previous if-condition (same guard)
     // otherwise the typescript compiler will complain of an unassigned variable later on
     storedPin = maybeStoredPin.value;
-
   } else {
-
     // This condition comes from the refactoring. By reading it, it may seem that
     // this code is handling a non-logged in user (due to not having a session) but
     // actually, if the session was not valid, the code would have stopped before
