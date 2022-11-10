@@ -1,7 +1,9 @@
 import { useNavigation } from "@react-navigation/native";
-import { View } from "native-base";
+import { ListItem, View } from "native-base";
 import React from "react";
-import { Button, SafeAreaView, ScrollView, Text } from "react-native";
+import { Button, SafeAreaView, ScrollView } from "react-native";
+import { H4 } from "../../../components/core/typography/H4";
+import { Monospace } from "../../../components/core/typography/Monospace";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { LabelledItem } from "../../../components/LabelledItem";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
@@ -26,6 +28,12 @@ const IDPayOnboardingPlayground = () => {
     }
   };
 
+  const testIDs = [
+    "01GH187R1S8W4XG810STWXWBF3",
+    "01GH1879JD77Y9FB51DQH7DK05",
+    "01GH187HQ4JAGRGC7010GVBGCV"
+  ];
+
   return (
     <BaseScreenComponent goBack={true} headerTitle={"Playground"}>
       <SafeAreaView style={IOStyles.flex}>
@@ -36,7 +44,8 @@ const IDPayOnboardingPlayground = () => {
               keyboardType: "default",
               returnKeyType: "done",
               autoFocus: true,
-              onChangeText: text => setServiceId(text)
+              onChangeText: text => setServiceId(text),
+              value: serviceId
             }}
           />
           <View spacer={true} />
@@ -44,17 +53,13 @@ const IDPayOnboardingPlayground = () => {
             onPress={navigateToIDPayOnboarding}
             title="Start onboarding"
           />
-          <View spacer={true} />
-          <Text selectable>{`
-          Test service IDs:
-
-          01GH187R1S8W4XG810STWXWBF3
-
-          01GH1879JD77Y9FB51DQH7DK05
-
-          01GH187HQ4JAGRGC7010GVBGCV
-
-          `}</Text>
+          <View spacer={true} large={true} />
+          <H4>Test service IDs:</H4>
+          {testIDs.map(id => (
+            <ListItem key={id} onPress={() => setServiceId(id)}>
+              <Monospace selectable>{id}</Monospace>
+            </ListItem>
+          ))}
         </ScrollView>
       </SafeAreaView>
     </BaseScreenComponent>

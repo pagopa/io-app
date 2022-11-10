@@ -2592,6 +2592,7 @@ bonus:
         title: Do you want to keep your payment methods?
         subtitle: If you keep them, you’ll be able to use them to take part in discounts, bonuses and future initiatives or for other features, such as in-app payments.
         suggestedOption: Recommended
+        toast: "You've already made your choice"
         options:
           keepAll:
             title: Keep all payment methods in the Wallet
@@ -3203,12 +3204,23 @@ support:
       category: "Help us understand how we can help you by selecting the topic of your problem: we will reply as soon as possible, during business hours."
 idpay:
   onboarding:
-    headerTitle: "Adehesion to the initiative"
+    headerTitle: "Adesione all'iniziativa"
     buttons: 
-      cancel: "Cancel"
-      continue: "Continue"
+      cancel: "Annulla"
+      continue: "Continua"
     beforeContinue:
-      text1: "Continuing you declare to accept the "
-      tosLink: "Terms and conditions"
-      text2: " of the service and confirm that you have read the "
-      privacyLink: "Privacy policy"
+      text1: "Proseguendo accetti i "
+      tosLink: "Termini e condizioni d'uso"
+      text2: " del servizio e confermi di avere letto l' "
+      privacyLink: "Informativa privacy"
+    navigation:
+      header: Adesione all'iniziativa
+    PDNDPrerequisites:
+      prerequisites:
+        info:
+          header: Come avviene la verifica?
+          body: Comunichiamo direttamente con l’Ente che detiene l’informazione necessaria a effettuare il controllo, in questo caso **{{provider}}**.
+            In questo modo non devi produrre alcuna autocertificazione. Comodo, no?
+          understoodCTA: Ho capito
+      title: Possiedi i seguenti requisiti?
+      subtitle: Verificheremo con alcuni Enti se sei in possesso dei requisiti per poter richiedere {{service}}. 
