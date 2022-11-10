@@ -1,17 +1,164 @@
 import * as React from "react";
-import { SafeAreaView, ScrollView } from "react-native";
-import { H1 } from "../../../../components/core/typography/H1";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import Pdf from "react-native-pdf";
+import { constNull, pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import { SafeAreaView, StyleSheet } from "react-native";
+import { useSelector } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
+import IconFont from "../../../../components/ui/IconFont";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import { fciSignatureDetailViewSelector } from "../../store/reducers/fciSignatureDetailView";
+import { SignatureRequestDetailView } from "../../../../../definitions/fci/SignatureRequestDetailView";
+import { IOColors } from "../../../../components/core/variables/IOColors";
+import { apiUrlPrefix } from "../../../../config";
+import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
+import I18n from "../../../../i18n";
+import DocumentsNavigationBar from "../../components/DocumentsNavigationBar";
+import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
+import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 
-const FciDocumentsScreen = () => (
-  <BaseScreenComponent goBack={true} headerTitle={"Documenti"}>
-    <SafeAreaView style={IOStyles.flex} testID={"FciDocumentsScreenTestID"}>
-      <ScrollView style={[IOStyles.horizontalContentPadding]}>
-        <H1>{"FciDocumentsScreen"}</H1>
-      </ScrollView>
-    </SafeAreaView>
-  </BaseScreenComponent>
-);
+const styles = StyleSheet.create({
+  pdf: {
+    flex: 1,
+    backgroundColor: IOColors.bluegrey
+  }
+});
 
+const FciDocumentsScreen = () => {
+  const [documents, setDocuments] = React.useState<
+    SignatureRequestDetailView["documents"]
+  >([]);
+  const [pdfRef, setPdfRef] = React.useState<Pdf | null>();
+  const [totalPages, setTotalPages] = React.useState(0);
+  const [currentPage, setCurrentPage] = React.useState(0);
+  const [currentDoc, setCurrentDoc] = React.useState(0);
+  const signatureRequestDetailViewSelector = useSelector(
+    fciSignatureDetailViewSelector
+  );
+  const navigation = useNavigation();
+
+  React.useEffect(() => {
+    if (pot.isSome(signatureRequestDetailViewSelector)) {
+      setDocuments(signatureRequestDetailViewSelector.value.documents);
+    }
+  }, [signatureRequestDetailViewSelector]);
+
+  // TODO: abort signature flow
+  const onCancelPress = () => constNull;
+
+  const cancelButtonProps = {
+    block: true,
+    light: false,
+    bordered: true,
+    onPress: onCancelPress,
+    title: I18n.t("global.buttons.cancel")
+  };
+
+  // TODO: navigate to signature fields selection screen
+  const onContinuePress = () => constNull;
+
+  const continueButtonProps = {
+    block: true,
+    primary: true,
+    onPress: onContinuePress,
+    title: I18n.t("global.buttons.continue")
+  };
+
+  const keepReadingButtonProps = {
+    block: true,
+    light: true,
+    bordered: true,
+    onPress: () => pdfRef?.setPage(totalPages),
+    title: I18n.t("global.buttons.continue")
+  };
+
+  const renderPager = () => (
+    <Pdf
+      ref={_ => setPdfRef(_)}
+      source={{
+        uri: `${apiUrlPrefix}${documents[currentDoc].url}`
+      }}
+      onLoadComplete={(numberOfPages, _) => {
+        setTotalPages(numberOfPages);
+      }}
+      onPageChanged={(page, _) => {
+        setCurrentPage(page);
+      }}
+      onError={constNull}
+      onPressLink={constNull}
+      style={styles.pdf}
+    />
+  );
+
+  const onPrevious = () => {
+    pipe(
+      currentDoc,
+      O.fromNullable,
+      O.chain(doc => (doc > 0 ? O.some(doc - 1) : O.none)),
+      O.map(setCurrentDoc)
+    );
+  };
+
+  const onNext = () => {
+    pipe(
+      currentDoc,
+      O.fromNullable,
+      O.chain(doc => (doc < documents.length - 1 ? O.some(doc + 1) : O.none)),
+      O.map(setCurrentDoc)
+    );
+  };
+
+  const customGoBack: React.ReactElement = (
+    <TouchableDefaultOpacity
+      onPress={navigation.goBack}
+      accessible={true}
+      accessibilityLabel={I18n.t("global.buttons.back")}
+      accessibilityRole={"button"}
+    >
+      <IconFont name={"io-close"} style={{ color: IOColors.bluegrey }} />
+    </TouchableDefaultOpacity>
+  );
+
+  return (
+    <BaseScreenComponent
+      goBack={true}
+      headerTitle={"Firma con IO"}
+      customGoBack={customGoBack}
+      contextualHelp={emptyContextualHelp}
+    >
+      <DocumentsNavigationBar
+        titleLeft={`Documento ${currentDoc + 1} di ${documents.length}`}
+        titleRight={`Pagina ${currentPage} di ${totalPages}`}
+        iconLeftColor={
+          currentDoc === 0 ? IOColors.bluegreyLight : IOColors.blue
+        }
+        iconRightColor={
+          currentDoc === documents.length - 1
+            ? IOColors.bluegreyLight
+            : IOColors.blue
+        }
+        onPrevious={onPrevious}
+        onNext={onNext}
+      />
+      <SafeAreaView style={IOStyles.flex} testID={"FciDocumentsScreenTestID"}>
+        {documents.length > 0 && (
+          <>
+            {renderPager()}
+            <FooterWithButtons
+              type={"TwoButtonsInlineThird"}
+              leftButton={cancelButtonProps}
+              rightButton={
+                currentPage < totalPages
+                  ? keepReadingButtonProps
+                  : continueButtonProps
+              }
+            />
+          </>
+        )}
+      </SafeAreaView>
+    </BaseScreenComponent>
+  );
+};
 export default FciDocumentsScreen;
