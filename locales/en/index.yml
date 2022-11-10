@@ -2612,7 +2612,7 @@ bonus:
           title: "Done!"
           body: "We’ve saved your choice."
         retryAfterDeletion:
-          title: "Si è verificato un errore imprevisto"
+          title: "An unexpected error has occurred"
           body: "Your methods have not been deleted. Try again, or go to Wallet and delete them one by one."
         toast: "La tua scelta non è stata salvata. Riprova più tardi."
   cgn:
