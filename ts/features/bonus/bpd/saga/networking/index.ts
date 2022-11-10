@@ -88,7 +88,7 @@ export function* putOptInStatusCitizenV2(
         updateCitizenIO,
         // due to avoid required headers coming from code autogenerate
         // (note the required header will be injected automatically)
-        { citizenOptInStatus: action.payload } as any
+        { optInStatus: action.payload } as any
       );
 
     if (E.isRight(updateCitizenIOResult)) {
