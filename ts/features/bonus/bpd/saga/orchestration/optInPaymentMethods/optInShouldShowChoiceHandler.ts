@@ -10,10 +10,7 @@ import {
 import { ReduxSagaEffect } from "../../../../../../types/utils";
 import { isReady, RemoteValue } from "../../../model/RemoteValue";
 import { ActivationStatus, bpdAllData } from "../../../store/actions/details";
-import {
-  optInPaymentMethodsShowChoice,
-  optInPaymentMethodsStart
-} from "../../../store/actions/optInPaymentMethods";
+import { optInPaymentMethodsShowChoice } from "../../../store/actions/optInPaymentMethods";
 import {
   activationStatusSelector,
   optInStatusSelector
@@ -97,7 +94,6 @@ export function* optInShouldShowChoiceHandler(): Generator<
   // If the loading work successfully starts the OptInPaymentMethods saga
   if (isActionOf(fetchWalletsSuccess, fetchWalletsResultAction)) {
     yield* put(optInPaymentMethodsShowChoice.success(true));
-    yield* put(optInPaymentMethodsStart());
   } else {
     yield* put(
       optInPaymentMethodsShowChoice.failure(fetchWalletsResultAction.payload)
