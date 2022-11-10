@@ -21,5 +21,5 @@
   Cosa succede se non faccio alcuna scelta?
 </H3>
 <body>
-  Se non ci dai alcuna indicazione entro il 29 novembre 2022, tutti i tuoi metodi verranno eliminati dal Portafoglio. 
+  Se non scegli, presto tutti i tuoi metodi verranno eliminati dal Portafoglio.
 </body>

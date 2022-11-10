@@ -2608,7 +2608,7 @@ bonus:
     optInPaymentMethods:
       cashbackUpdate:
         header: "Novità e aggiornamenti"
-        title: "Decidi se mantenere o eliminare i tuoi metodi di pagamento"
+        title: "Vuoi mantenere i tuoi metodi di pagamento?"
         body: !include bonus/bpd/optInPaymentMethods.md
       choice:
         header: "Configura IO"
@@ -2622,7 +2622,7 @@ bonus:
             body: PagoPA S.p.A. tratterà i dati dei tuoi metodi di pagamento in qualità di titolare del trattamento. Per maggiori informazioni puoi consultare l’Informativa Privacy.
           deleteAll:
             title: Elimina tutti i metodi dal Portafoglio
-            body: Tutti i metodi che hai aggiunto finora verranno rimossi in modo definitivo. Potrai aggiungerli di nuovo in qualsiasi momento, ma dovrai reinserire i dati e ripetere le procedure di autorizzazione.
+            body:  Potrai aggiungerli di nuovo in qualsiasi momento, ma dovrai reinserire i dati e ripetere le procedure di autorizzazione.
         deleteAllButton: Elimina tutti i metodi
       deletePaymentMethodsBottomSheet:
         title: "Vuoi davvero eliminare i seguenti metodi dal Portafoglio?"
