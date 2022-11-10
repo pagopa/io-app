@@ -1,25 +1,25 @@
 <body>
-  There are payment methods in your Wallet that you may have added for <b>initiatives that have now expired or ended.</b>
+  Nel tuo Portafoglio ci sono dei metodi di pagamento che potresti avere aggiunto per <b>iniziative ormai scadute o terminate.</b>
 </body>
-<br />
+<br/>
 <body>
-  Coming in the next few months on IO <b>new bonuses and initiatives:</b> for this, we ask you to choose <b>whether to keep or eliminate the payment methods</b> of your Wallet. 
-</body>
-<H3>
-  Why should I keep them?
-</H3>
-<body>
-  Because you will be able to use them to sign up for bonuses and upcoming initiatives or <b>pay pagoPA alerts</b> without having to re-enter method data. It is not a final decision: if you change your mind, you can always eliminate them later.
+  Nei prossimi mesi arriverranno su IO <b>nuovi bonus e iniziative:</b> per questo, ti chiediamo di scegliere <b>se mantenere o eliminare i metodi di pagamento</b> del tuo Portafoglio. 
 </body>
 <H3>
-  What happens if I delete them?
+  Perché dovrei mantenerli?
 </H3>
 <body>
-  The methods will be removed <b>definitely</b> from your Wallet. This means that if you want to use them to sign up for upcoming bonuses and initiatives or to pay pagoPA notices, you will have to add them back in.
+  Perché potrai utilizzarli per aderire ai bonus e alle iniziative in arrivo o <b>pagare avvisi pagoPA</b> senza dover inserire di nuovo i dati del metodo. Non è una decisione definitiva: se cambi idea, puoi sempre eliminarli in un secondo momento.
 </body>
 <H3>
-  What happens if I make no choice?
+  Cosa succede se li elimino?
 </H3>
 <body>
-  If you give us no indication by November 29, 2022, all your methods will be removed from the Wallet. 
+  I metodi verranno eliminati <b>in modo definitivo</b> dal tuo Portafoglio. Questo significa che, se vorrai usarli per aderire ai bonus e alle iniziative in arrivo o per pagare avvisi pagoPA, dovrai aggiungerli di nuovo.
+</body>
+<H3>
+  Cosa succede se non faccio alcuna scelta?
+</H3>
+<body>
+  Se non scegli, presto tutti i tuoi metodi verranno eliminati dal Portafoglio.
 </body>

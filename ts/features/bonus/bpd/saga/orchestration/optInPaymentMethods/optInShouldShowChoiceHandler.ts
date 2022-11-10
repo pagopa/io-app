@@ -7,6 +7,7 @@ import {
   fetchWalletsRequestWithExpBackoff,
   fetchWalletsSuccess
 } from "../../../../../../store/actions/wallet/wallets";
+import { getBPDMethodsVisibleInWalletSelector } from "../../../../../../store/reducers/wallet/wallets";
 import { ReduxSagaEffect } from "../../../../../../types/utils";
 import { isReady, RemoteValue } from "../../../model/RemoteValue";
 import { ActivationStatus, bpdAllData } from "../../../store/actions/details";
@@ -93,7 +94,15 @@ export function* optInShouldShowChoiceHandler(): Generator<
 
   // If the loading work successfully starts the OptInPaymentMethods saga
   if (isActionOf(fetchWalletsSuccess, fetchWalletsResultAction)) {
-    yield* put(optInPaymentMethodsShowChoice.success(true));
+    const bpdPaymentMethods = yield* select(
+      getBPDMethodsVisibleInWalletSelector
+    );
+
+    if (bpdPaymentMethods.length > 0) {
+      yield* put(optInPaymentMethodsShowChoice.success(true));
+      return;
+    }
+    yield* put(optInPaymentMethodsShowChoice.success(false));
   } else {
     yield* put(
       optInPaymentMethodsShowChoice.failure(fetchWalletsResultAction.payload)
