@@ -12,9 +12,9 @@ import fciSignatureDetailViewReducer, {
 } from "./fciSignatureDetailView";
 
 export type FciState = {
-  signatureDetailView: FciSignatureDetailViewRequestState;
-  qtsp: FciQtspClausesRequestState;
-  filled_document: FciQtspFilledDocumentRequestState;
+  signatureRequest: FciSignatureRequestRequestState;
+  qtspClauses: FciQtspClausesRequestState;
+  qstpFilledDocument: FciQtspFilledDocumentRequestState;
   signature: FciSignatureState;
 };
 
