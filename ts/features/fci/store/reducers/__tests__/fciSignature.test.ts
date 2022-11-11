@@ -3,7 +3,10 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getTimeoutError } from "../../../../../utils/errors";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
-import { fciSigningRequest } from "../../actions/fciSignatureRequest";
+import {
+  fciAbortingRequest,
+  fciSigningRequest
+} from "../../actions/fciSignatureRequest";
 import { mockCreateSignatureBody } from "../../../types/__mocks__/CreateSignatureBody.mock";
 
 const genericError = getTimeoutError();
@@ -34,5 +37,11 @@ describe("FciSignatureReducer", () => {
     expect(store.getState().features.fci.signature).toStrictEqual(
       pot.noneError(genericError)
     );
+  });
+  it("The signature should be pot.none if the fciAbortingRequest is dispatched", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const store = createStore(appReducer, globalState as any);
+    store.dispatch(fciAbortingRequest());
+    expect(store.getState().features.fci.signature).toStrictEqual(pot.none);
   });
 });

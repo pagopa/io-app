@@ -5,7 +5,10 @@ import { SignatureRequestDetailView } from "../../../../../definitions/fci/Signa
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { NetworkError } from "../../../../utils/errors";
-import { fciSignatureRequestFromId } from "../actions/fciSignatureRequest";
+import {
+  fciAbortingRequest,
+  fciSignatureRequestFromId
+} from "../actions/fciSignatureRequest";
 
 export type FciSignatureDetailViewRequestState = pot.Pot<
   SignatureRequestDetailView,
@@ -25,6 +28,8 @@ const reducer = (
       return pot.some(action.payload);
     case getType(fciSignatureRequestFromId.failure):
       return pot.toError(state, action.payload);
+    case getType(fciAbortingRequest):
+      return emptyState;
   }
 
   return state;

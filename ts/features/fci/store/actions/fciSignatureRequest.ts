@@ -1,4 +1,8 @@
-import { ActionType, createAsyncAction } from "typesafe-actions";
+import {
+  ActionType,
+  createAsyncAction,
+  createStandardAction
+} from "typesafe-actions";
 import { CreateFilledDocumentBody } from "../../../../../definitions/fci/CreateFilledDocumentBody";
 import { CreateSignatureBody } from "../../../../../definitions/fci/CreateSignatureBody";
 import { FilledDocumentDetailView } from "../../../../../definitions/fci/FilledDocumentDetailView";
@@ -42,8 +46,14 @@ export const fciSigningRequest = createAsyncAction(
   "FCI_SIGNING_FAILURE"
 )<CreateSignatureBody, void, NetworkError>();
 
+/**
+ * clear the FCI store
+ */
+export const fciAbortingRequest = createStandardAction("FCI_ABORT_REQUEST")();
+
 export type FciRequestActions =
   | ActionType<typeof fciSignatureRequestFromId>
   | ActionType<typeof fciLoadQtspClauses>
   | ActionType<typeof fciLoadQtspFilledDocument>
-  | ActionType<typeof fciSigningRequest>;
+  | ActionType<typeof fciSigningRequest>
+  | ActionType<typeof fciAbortingRequest>;
