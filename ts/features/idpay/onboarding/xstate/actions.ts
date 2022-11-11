@@ -19,7 +19,17 @@ const createActionsImplementation = (
     });
   };
 
-  return { navigateToPDNDCriteriaScreen, navigateToSelfDeclarationsScreen };
+  const navigateToCompletionScreen = () => {
+    navigation.navigate(IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
+      screen: IDPayOnboardingRoutes.IDPAY_ONBOARDING_COMPLETION
+    });
+  };
+
+  return {
+    navigateToPDNDCriteriaScreen,
+    navigateToSelfDeclarationsScreen,
+    navigateToCompletionScreen
+  };
 };
 
 export { createActionsImplementation };
