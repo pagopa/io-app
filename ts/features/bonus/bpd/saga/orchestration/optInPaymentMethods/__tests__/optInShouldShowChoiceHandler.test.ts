@@ -1,23 +1,21 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import { bpdAllData } from "../../../../store/actions/details";
-import {
-  optInPaymentMethodsShowChoice,
-  optInPaymentMethodsStart
-} from "../../../../store/actions/optInPaymentMethods";
-import { optInShouldShowChoiceHandler } from "../optInShouldShowChoiceHandler";
-import {
-  activationStatusSelector,
-  optInStatusSelector
-} from "../../../../store/reducers/details/activation";
 import { CitizenOptInStatusEnum } from "../../../../../../../../definitions/bpd/citizen_v2/CitizenOptInStatus";
 import {
   fetchWalletsFailure,
   fetchWalletsRequestWithExpBackoff,
   fetchWalletsSuccess
 } from "../../../../../../../store/actions/wallet/wallets";
+import { getBPDMethodsVisibleInWalletSelector } from "../../../../../../../store/reducers/wallet/wallets";
 import { remoteReady, remoteUndefined } from "../../../../model/RemoteValue";
+import { bpdAllData } from "../../../../store/actions/details";
+import { optInPaymentMethodsShowChoice } from "../../../../store/actions/optInPaymentMethods";
+import {
+  activationStatusSelector,
+  optInStatusSelector
+} from "../../../../store/reducers/details/activation";
+import { optInShouldShowChoiceHandler } from "../optInShouldShowChoiceHandler";
 
 describe("optInShouldShowChoiceHandler saga", () => {
   jest.useFakeTimers();
@@ -122,7 +120,7 @@ describe("optInShouldShowChoiceHandler saga", () => {
       .isDone();
   });
 
-  it("If fetchWallets succeed, should dispatch the optInPaymentMethodsShowChoice.success and the optInPaymentMethodsStart actions", () => {
+  it("If fetchWallets succeed, should dispatch the optInPaymentMethodsShowChoice.success action", () => {
     testSaga(optInShouldShowChoiceHandler)
       .next()
       .put(bpdAllData.request())
@@ -137,9 +135,9 @@ describe("optInShouldShowChoiceHandler saga", () => {
       .next()
       .take([getType(fetchWalletsSuccess), getType(fetchWalletsFailure)])
       .next(fetchWalletsSuccess([]))
-      .put(optInPaymentMethodsShowChoice.success(true))
-      .next()
-      .put(optInPaymentMethodsStart())
+      .select(getBPDMethodsVisibleInWalletSelector)
+      .next([])
+      .put(optInPaymentMethodsShowChoice.success(false))
       .next()
       .isDone();
   });
