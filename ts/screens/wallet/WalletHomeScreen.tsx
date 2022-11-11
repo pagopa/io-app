@@ -216,7 +216,6 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
 
     this.props.loadWallets();
 
-    // To maintain retro compatibility, if the opt-in payment methods feature flag is turned off,
     // load the bonus information on Wallet mount
     this.loadBonusBpd();
     // FIXME restore loadTransactions see https://www.pivotaltracker.com/story/show/176051000
