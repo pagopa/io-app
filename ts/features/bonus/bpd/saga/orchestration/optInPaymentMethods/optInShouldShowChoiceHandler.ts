@@ -40,7 +40,7 @@ export function* optInShouldShowChoiceHandler(): Generator<
 > {
   // Load the information about the participation of the user to the bpd program
   yield* put(bpdLoadActivationStatus.request());
-  const bpdAllDataResponse = yield* take<
+  const bpdLoadActivationStatusResponse = yield* take<
     ActionType<
       | typeof bpdLoadActivationStatus.success
       | typeof bpdLoadActivationStatus.failure
@@ -51,9 +51,13 @@ export function* optInShouldShowChoiceHandler(): Generator<
   ]);
 
   // If the bpdAllData request fail report the error
-  if (isActionOf(bpdLoadActivationStatus.failure, bpdAllDataResponse)) {
+  if (
+    isActionOf(bpdLoadActivationStatus.failure, bpdLoadActivationStatusResponse)
+  ) {
     yield* put(
-      optInPaymentMethodsShowChoice.failure(bpdAllDataResponse.payload)
+      optInPaymentMethodsShowChoice.failure(
+        bpdLoadActivationStatusResponse.payload
+      )
     );
     return;
   }
