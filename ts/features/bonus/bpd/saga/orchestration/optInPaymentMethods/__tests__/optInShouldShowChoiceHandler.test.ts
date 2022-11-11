@@ -7,7 +7,10 @@ import {
   fetchWalletsRequestWithExpBackoff,
   fetchWalletsSuccess
 } from "../../../../../../../store/actions/wallet/wallets";
-import { getBPDMethodsVisibleInWalletSelector } from "../../../../../../../store/reducers/wallet/wallets";
+import {
+  getBPDMethodsVisibleInWalletSelector,
+  pagoPaCreditCardWalletV1Selector
+} from "../../../../../../../store/reducers/wallet/wallets";
 import { remoteReady, remoteUndefined } from "../../../../model/RemoteValue";
 import { bpdAllData } from "../../../../store/actions/details";
 import { optInPaymentMethodsShowChoice } from "../../../../store/actions/optInPaymentMethods";
@@ -111,6 +114,8 @@ describe("optInShouldShowChoiceHandler saga", () => {
       .next(remoteReady("subscribed"))
       .select(optInStatusSelector)
       .next(pot.some(CitizenOptInStatusEnum.NOREQ))
+      .select(pagoPaCreditCardWalletV1Selector)
+      .next(pot.none)
       .put(fetchWalletsRequestWithExpBackoff())
       .next()
       .take([getType(fetchWalletsSuccess), getType(fetchWalletsFailure)])
@@ -131,6 +136,8 @@ describe("optInShouldShowChoiceHandler saga", () => {
       .next(remoteReady("subscribed"))
       .select(optInStatusSelector)
       .next(pot.some(CitizenOptInStatusEnum.NOREQ))
+      .select(pagoPaCreditCardWalletV1Selector)
+      .next(pot.none)
       .put(fetchWalletsRequestWithExpBackoff())
       .next()
       .take([getType(fetchWalletsSuccess), getType(fetchWalletsFailure)])

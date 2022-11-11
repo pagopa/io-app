@@ -7,10 +7,16 @@ import {
   fetchWalletsRequestWithExpBackoff,
   fetchWalletsSuccess
 } from "../../../../../../store/actions/wallet/wallets";
-import { getBPDMethodsVisibleInWalletSelector } from "../../../../../../store/reducers/wallet/wallets";
+import {
+  getBPDMethodsVisibleInWalletSelector,
+  pagoPaCreditCardWalletV1Selector
+} from "../../../../../../store/reducers/wallet/wallets";
 import { ReduxSagaEffect } from "../../../../../../types/utils";
 import { isReady, RemoteValue } from "../../../model/RemoteValue";
-import { ActivationStatus, bpdAllData } from "../../../store/actions/details";
+import {
+  ActivationStatus,
+  bpdLoadActivationStatus
+} from "../../../store/actions/details";
 import { optInPaymentMethodsShowChoice } from "../../../store/actions/optInPaymentMethods";
 import {
   activationStatusSelector,
@@ -33,13 +39,19 @@ export function* optInShouldShowChoiceHandler(): Generator<
   any
 > {
   // Load the information about the participation of the user to the bpd program
-  yield* put(bpdAllData.request());
+  yield* put(bpdLoadActivationStatus.request());
   const bpdAllDataResponse = yield* take<
-    ActionType<typeof bpdAllData.success | typeof bpdAllData.failure>
-  >([getType(bpdAllData.success), getType(bpdAllData.failure)]);
+    ActionType<
+      | typeof bpdLoadActivationStatus.success
+      | typeof bpdLoadActivationStatus.failure
+    >
+  >([
+    getType(bpdLoadActivationStatus.success),
+    getType(bpdLoadActivationStatus.failure)
+  ]);
 
   // If the bpdAllData request fail report the error
-  if (isActionOf(bpdAllData.failure, bpdAllDataResponse)) {
+  if (isActionOf(bpdLoadActivationStatus.failure, bpdAllDataResponse)) {
     yield* put(
       optInPaymentMethodsShowChoice.failure(bpdAllDataResponse.payload)
     );
@@ -86,8 +98,14 @@ export function* optInShouldShowChoiceHandler(): Generator<
     return;
   }
 
-  // Load the user payment methods
-  yield* put(fetchWalletsRequestWithExpBackoff());
+  // Check if wallets are already loaded
+  // this check is needed becaus the exponential backoff would raise an error cause of the spawning of multiple requests
+  const potWallets = yield* select(pagoPaCreditCardWalletV1Selector);
+
+  if (!pot.isLoading(potWallets)) {
+    // Load the user payment methods
+    yield* put(fetchWalletsRequestWithExpBackoff());
+  }
   const fetchWalletsResultAction = yield* take<
     ActionType<typeof fetchWalletsSuccess | typeof fetchWalletsFailure>
   >([getType(fetchWalletsSuccess), getType(fetchWalletsFailure)]);
