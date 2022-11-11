@@ -185,6 +185,7 @@ const createIDPayOnboardingMachine = () =>
         },
         ACCEPTING_REQUIRED_CRITERIA: {
           tags: [UPSERTING_TAG],
+          entry: "navigateToCompletionScreen",
           invoke: {
             src: "acceptRequiredCriteria",
             id: "acceptRequiredCriteria",
