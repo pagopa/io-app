@@ -15,6 +15,7 @@ import I18n from "../../../../i18n";
 import DocumentsNavigationBar from "../../components/DocumentsNavigationBar";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
 
 const styles = StyleSheet.create({
   pdf: {
@@ -31,8 +32,10 @@ const FciDocumentsScreen = () => {
   const documents = useSelector(fciDSignatureDetailDocumentsSelector);
   const navigation = useNavigation();
 
-  // TODO: abort signature flow
-  const onCancelPress = () => constNull;
+  const { present, bottomSheet: fciAbortSignature } =
+    useFciAbortSignatureFlow();
+
+  const onCancelPress = () => present();
 
   const cancelButtonProps = {
     block: true,
@@ -129,20 +132,24 @@ const FciDocumentsScreen = () => {
         onNext={onNext}
         testID={"FciDocumentsNavBarTestID"}
       />
-      {documents.length > 0 && (
-        <SafeAreaView style={IOStyles.flex} testID={"FciDocumentsScreenTestID"}>
-          {renderPager()}
-          <FooterWithButtons
-            type={"TwoButtonsInlineThird"}
-            leftButton={cancelButtonProps}
-            rightButton={
-              currentPage < totalPages
-                ? keepReadingButtonProps
-                : continueButtonProps
-            }
-          />
-        </SafeAreaView>
-      )}
+      <SafeAreaView style={IOStyles.flex} testID={"FciDocumentsScreenTestID"}>
+        {documents.length > 0 && (
+          <>
+            {renderPager()}
+            <FooterWithButtons
+              type={"TwoButtonsInlineThird"}
+              leftButton={cancelButtonProps}
+              rightButton={
+                currentPage < totalPages
+                  ? keepReadingButtonProps
+                  : continueButtonProps
+              }
+            />
+          </>
+        )}
+      </SafeAreaView>
+
+      {fciAbortSignature}
     </BaseScreenComponent>
   );
 };

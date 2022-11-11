@@ -3189,6 +3189,12 @@ features:
       generic:
         title: C’è un problema
         subTitle: Per procedere alla firma, verifica di aver aggiornato l’app IO all’ultima versione
+    abort:
+      title: "Annulla la firma"
+      content: "Vuoi annullare la firma dei documenti?"
+      cancel: "Torna indietro"
+      confirm: "Annulla"
+
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina

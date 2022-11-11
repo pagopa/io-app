@@ -3165,6 +3165,11 @@ features:
       generic:
         title: There is a problem
         subTitle: To proceed with the signature, check that you have updated the IO app to the latest version.
+    abort:
+      title: "Cancel signing flow"
+      content: "Do you want to cancel the documents signing process?"
+      cancel: "Back"
+      confirm: "Cancel"
 webView:
   error:
     missingParams: Not all information necessary to access this page are available

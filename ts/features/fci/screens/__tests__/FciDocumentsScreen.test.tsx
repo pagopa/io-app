@@ -38,22 +38,6 @@ describe("Test FciDocuments screen", () => {
       testComponent.getByTestId("FciDocumentsScreenTestID")
     ).not.toBeNull();
   });
-  it("should render the content without footer if no documents", () => {
-    const globalState = appReducer(undefined, applicationChangeState("active"));
-
-    const mockWithNoDocuments = {
-      ...mockSignatureRequestDetailView,
-      documents: []
-    };
-    const store: Store<GlobalState> = createStore(
-      appReducer,
-      globalState as any
-    );
-    const component = renderComponent(store);
-    store.dispatch(fciSignatureRequestFromId.success(mockWithNoDocuments));
-    expect(component).toBeTruthy();
-    expect(component.queryByTestId("FciDocumentsScreenTestID")).toBeNull();
-  });
 });
 
 const renderComponent = (store: Store) =>
