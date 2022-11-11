@@ -12,7 +12,7 @@ import {
   pagoPaCreditCardWalletV1Selector
 } from "../../../../../../store/reducers/wallet/wallets";
 import { ReduxSagaEffect } from "../../../../../../types/utils";
-import { isReady, RemoteValue } from "../../../model/RemoteValue";
+import { isLoading, isReady, RemoteValue } from "../../../model/RemoteValue";
 import {
   ActivationStatus,
   bpdLoadActivationStatus
@@ -38,8 +38,15 @@ export function* optInShouldShowChoiceHandler(): Generator<
   void,
   any
 > {
-  // Load the information about the participation of the user to the bpd program
-  yield* put(bpdLoadActivationStatus.request());
+  const bpdActivationInitialStatus: RemoteValue<ActivationStatus, Error> =
+    yield* select(activationStatusSelector);
+
+  // Check is needed to avoid to spawn multiple request if the status
+  // is already loading
+  if (!isLoading(bpdActivationInitialStatus)) {
+    // Load the information about the participation of the user to the bpd program
+    yield* put(bpdLoadActivationStatus.request());
+  }
   const bpdLoadActivationStatusResponse = yield* take<
     ActionType<
       | typeof bpdLoadActivationStatus.success
