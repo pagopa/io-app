@@ -38,10 +38,12 @@ export function* optInShouldShowChoiceHandler(): Generator<
   void,
   any
 > {
-  const iactivationInitialStatus: RemoteValue<ActivationStatus, Error> =
+  const bpdActivationInitialStatus: RemoteValue<ActivationStatus, Error> =
     yield* select(activationStatusSelector);
 
-  if (!isLoading(iactivationInitialStatus)) {
+  // Check is needed to avoid to spawn multiple request if the status
+  // is already loading
+  if (!isLoading(bpdActivationInitialStatus)) {
     // Load the information about the participation of the user to the bpd program
     yield* put(bpdLoadActivationStatus.request());
   }
