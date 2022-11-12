@@ -11,14 +11,14 @@ import fciSignatureRequestReducer, {
 
 export type FciState = {
   signatureRequest: FciSignatureRequestState;
-  qtsp: FciQtspClausesState;
+  qtspClauses: FciQtspClausesState;
   qstpFilledDocument: FciQtspFilledDocumentState;
   signature: FciSignatureState;
 };
 
 const fciReducer = combineReducers<FciState, Action>({
   signatureRequest: fciSignatureRequestReducer,
-  qtsp: fciQtspClausesReducer,
+  qtspClauses: fciQtspClausesReducer,
   qstpFilledDocument: fciLoadQtspFilledDocumentReducer,
   signature: fciSignatureReducer
 });
