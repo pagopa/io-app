@@ -5,7 +5,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { getTimeoutError } from "../../../../utils/errors";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { FCI_ROUTES } from "../../navigation/routes";
-import { fciSignatureRequestFromId } from "../../store/actions/fciSignatureRequest";
+import { fciSignatureRequestFromId } from "../../store/actions";
 import FciRouterScreen from "../FciRouterScreen";
 import { mockSignatureRequestDetailView } from "../../types/__mocks__/SignatureRequestDetailView.mock";
 import { StatusEnum as SignatureRequestDetailViewStatusEnum } from "../../../../../definitions/fci/SignatureRequestDetailView";
@@ -112,7 +112,7 @@ describe("Test FciRouterScreen", () => {
 const renderComponent = (store: Store) => ({
   component: renderScreenWithNavigationStoreContext<GlobalState>(
     FciRouterScreen,
-    FCI_ROUTES.SIGNATURE,
+    FCI_ROUTES.ROUTER,
     { signatureRequestId: "signatureRequestId" },
     store
   ),

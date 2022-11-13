@@ -5,7 +5,7 @@ import * as E from "fp-ts/lib/Either";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { BackendFciClient } from "../../api/backendFci";
-import { fciSignatureRequestFromId } from "../../store/actions/fciSignatureRequest";
+import { fciSignatureRequestFromId } from "../../store/actions";
 import { getNetworkError } from "../../../../utils/errors";
 
 // handle bonus list loading

@@ -7,7 +7,7 @@ import BaseScreenComponent from "../../../../components/screens/BaseScreenCompon
 const FciDocumentsScreen = () => (
   <BaseScreenComponent goBack={true} headerTitle={"Documenti"}>
     <SafeAreaView style={IOStyles.flex} testID={"FciDocumentsScreenTestID"}>
-      <ScrollView style={[IOStyles.horizontalContentPadding]}>
+      <ScrollView style={IOStyles.horizontalContentPadding}>
         <H1>{"FciDocumentsScreen"}</H1>
       </ScrollView>
     </SafeAreaView>
