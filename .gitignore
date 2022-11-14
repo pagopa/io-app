@@ -101,3 +101,6 @@ shim.js
 android/app/google-services.json
 # React native config generated file
 GeneratedDotEnv.m
+
+# XState Typegen
+**/*.typegen.*

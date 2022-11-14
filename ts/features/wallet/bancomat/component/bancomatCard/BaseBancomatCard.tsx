@@ -14,7 +14,10 @@ import { Abi } from "../../../../../../definitions/pagopa/walletv2/Abi";
 import pagoBancomatLogo from "../../../../../../img/wallet/cards-icons/pagobancomat.png";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H5 } from "../../../../../components/core/typography/H5";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
+import {
+  IOColors,
+  hexToRgba
+} from "../../../../../components/core/variables/IOColors";
 import I18n from "../../../../../i18n";
 import customVariables from "../../../../../theme/variables";
 import { localeDateFormat } from "../../../../../utils/locale";
@@ -30,6 +33,10 @@ type Props = {
   accessibilityLabel?: string;
 };
 
+const BASE_IMG_W = 160;
+const BASE_IMG_H = 40;
+const opaqueBorderColor = hexToRgba(IOColors.black, 0.1);
+
 const styles = StyleSheet.create({
   cardBox: {
     height: 192,
@@ -42,7 +49,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     backgroundColor: IOColors.greyUltraLight,
     borderRadius: 8,
-    shadowColor: "#000",
+    shadowColor: IOColors.black,
     shadowOffset: {
       width: 0,
       height: 3
@@ -56,7 +63,7 @@ const styles = StyleSheet.create({
     marginBottom: -13,
     borderRadius: 8,
     borderTopWidth: 10,
-    borderTopColor: "rgba(0,0,0,0.1)",
+    borderTopColor: opaqueBorderColor,
     height: 15,
     width: widthPercentageToDP("90%"),
     maxWidth: 343
@@ -77,9 +84,6 @@ const styles = StyleSheet.create({
     borderColor: IOColors.red
   }
 });
-
-const BASE_IMG_W = 160;
-const BASE_IMG_H = 40;
 
 /**
  * Generate the accessibility label for the card.

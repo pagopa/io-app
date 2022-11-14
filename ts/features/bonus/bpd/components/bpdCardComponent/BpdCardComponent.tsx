@@ -10,7 +10,10 @@ import bpdBonusLogo from "../../../../../../img/bonus/bpd/logo_BonusCashback_Whi
 import { H2 } from "../../../../../components/core/typography/H2";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { H5 } from "../../../../../components/core/typography/H5";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
+import {
+  hexToRgba,
+  IOColors
+} from "../../../../../components/core/variables/IOColors";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
 import IconFont from "../../../../../components/ui/IconFont";
 import I18n from "../../../../../i18n";
@@ -25,6 +28,8 @@ type Props = {
   preview?: boolean;
   onPress?: () => void;
 };
+
+const opaqueBorderColor = hexToRgba(IOColors.black, 0.1);
 
 const styles = StyleSheet.create({
   flex1: {
@@ -119,7 +124,7 @@ const styles = StyleSheet.create({
     marginBottom: -13,
     borderRadius: 8,
     borderTopWidth: 13,
-    borderTopColor: "rgba(0,0,0,0.1)",
+    borderTopColor: opaqueBorderColor,
     height: 17,
     width: "100%"
   },
@@ -127,7 +132,7 @@ const styles = StyleSheet.create({
     marginBottom: 6,
     borderRadius: 8,
     borderBottomWidth: 15,
-    borderBottomColor: "rgba(0,0,0,0.1)",
+    borderBottomColor: opaqueBorderColor,
     width: "100%"
   }
 });
@@ -294,7 +299,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
         </View>
         <View>
           <View style={[styles.row, { alignItems: "center" }]}>
-            <Text bold={true} white={true} style={[styles.amountTextBaseFull]}>
+            <Text bold={true} white={true} style={styles.amountTextBaseFull}>
               {"€ "}
               <Text white={true} style={styles.amountTextUpperFull}>
                 {`${amount[0]}${I18n.t(
@@ -312,7 +317,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
         </View>
       </View>
       <View style={[styles.column, styles.flex1, styles.spaced]}>
-        <Badge style={[styles.badgeBase]}>
+        <Badge style={styles.badgeBase}>
           <Text semibold={true} style={styles.badgeTextBase} dark={true}>
             {statusBadge.label}
           </Text>
@@ -418,7 +423,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
       )}
       <ImageBackground
         source={props.preview ? bpdCardBgPreview : bpdCardBgFull}
-        style={[props.preview ? styles.preview : styles.container]}
+        style={props.preview ? styles.preview : styles.container}
         imageStyle={props.preview ? styles.imagePreview : styles.imageFull}
       >
         {props.preview ? <PreviewCard /> : <FullCard />}

@@ -106,7 +106,7 @@ const CgnMerchantsFilters: React.FunctionComponent<Props> = (props: Props) => {
       </AppHeader>
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView
-          style={[IOStyles.flex]}
+          style={IOStyles.flex}
           bounces={false}
           keyboardShouldPersistTaps={"handled"}
         >

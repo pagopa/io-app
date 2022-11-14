@@ -2,7 +2,6 @@ import { View } from "native-base";
 import * as React from "react";
 import { StyleSheet, TextInput } from "react-native";
 import I18n from "../../i18n";
-import customVariables from "../../theme/variables";
 import InputPlaceHolder from "../Pinpad/InputPlaceholder";
 import { INPUT_PLACEHOLDER_HEIGHT } from "../Pinpad/Placeholders";
 import { IOColors } from "../core/variables/IOColors";
@@ -15,27 +14,8 @@ type Props = {
 };
 
 const styles = StyleSheet.create({
-  placeholderContainer: {
-    flexDirection: "row",
-    justifyContent: "center"
-  },
-  text: {
-    alignSelf: "center",
-    justifyContent: "center",
-    color: IOColors.white
-  },
-  placeHolderStyle: {
-    height: 4,
-    marginLeft: 2,
-    marginRight: 2,
-    marginTop: 2
-  },
-  textInputStyle: {
-    textAlign: "center",
-    fontSize: customVariables.fontSize3
-  },
   input: {
-    color: "transparent",
+    color: `transparent`,
     position: "absolute",
     width: "100%",
     height: INPUT_PLACEHOLDER_HEIGHT

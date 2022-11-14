@@ -2622,21 +2622,21 @@ bonus:
     optInPaymentMethods:
       cashbackUpdate:
         header: "Novità e aggiornamenti"
-        title: "Aggiornamenti sul Cashback"
-        subtitle: "Ministero dell’Economia e delle Finanze"
+        title: "Vuoi mantenere i tuoi metodi di pagamento?"
         body: !include bonus/bpd/optInPaymentMethods.md
       choice:
         header: "Configura IO"
         title: "Vuoi mantenere i tuoi metodi di pagamento?"
         subtitle: Se li mantieni, potrai utilizzarli per aderire a sconti, bonus e iniziative future o per altre funzionalità, come pagare in app.
         suggestedOption: Consigliato
+        toast: "Hai già fatto la tua scelta"
         options:
           keepAll:
             title: Mantieni tutti i metodi nel Portafoglio
-            body: Se compatibili, puoi utilizzarli per aderire a sconti, bonus e iniziative future o per altre funzionalità, come effettuare pagamenti in app. Potrai modificare le preferenze dei tuoi metodi o eliminarli in qualsiasi momento.
+            body: PagoPA S.p.A. tratterà i dati dei tuoi metodi di pagamento in qualità di titolare del trattamento. Per maggiori informazioni puoi consultare l’Informativa Privacy.
           deleteAll:
             title: Elimina tutti i metodi dal Portafoglio
-            body: Tutti i metodi che hai aggiunto finora verranno rimossi in modo definitivo. Potrai aggiungerli di nuovo in qualsiasi momento, ma dovrai reinserire i dati e ripetere le procedure di autorizzazione.
+            body: Potrai aggiungerli di nuovo in qualsiasi momento, ma dovrai reinserire i dati e ripetere le procedure di autorizzazione.
         deleteAllButton: Elimina tutti i metodi
       deletePaymentMethodsBottomSheet:
         title: "Vuoi davvero eliminare i seguenti metodi dal Portafoglio?"
@@ -3240,3 +3240,25 @@ support:
       subCategory: "Puoi darci più dettagli?"
     subTitle:
       category: "Aiutaci a capire meglio come possiamo aiutarti selezionando l’argomento del tuo problema: ti risponderemo il prima possibile, in orario lavorativo."
+idpay:
+  onboarding:
+    headerTitle: "Adesione all'iniziativa"
+    buttons: 
+      cancel: "Annulla"
+      continue: "Continua"
+    beforeContinue:
+      text1: "Proseguendo accetti i "
+      tosLink: "Termini e condizioni d'uso"
+      text2: " del servizio e confermi di avere letto l' "
+      privacyLink: "Informativa privacy"
+    navigation:
+      header: Adesione all'iniziativa
+    PDNDPrerequisites:
+      prerequisites:
+        info:
+          header: Come avviene la verifica?
+          body: Comunichiamo direttamente con l’Ente che detiene l’informazione necessaria a effettuare il controllo, in questo caso **{{provider}}**.
+            In questo modo non devi produrre alcuna autocertificazione. Comodo, no?
+          understoodCTA: Ho capito
+      title: Possiedi i seguenti requisiti?
+      subtitle: Verificheremo con alcuni Enti se sei in possesso dei requisiti per poter richiedere {{service}}. 

@@ -51,7 +51,7 @@ const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
       navigateToLandingWebview
     );
   return (
-    <TouchableDefaultOpacity style={[styles.listItem]} onPress={present}>
+    <TouchableDefaultOpacity style={styles.listItem} onPress={present}>
       <View style={[IOStyles.row, styles.container]}>
         <View style={[IOStyles.flex, IOStyles.row]}>
           <Label weight={"SemiBold"} color={"bluegreyDark"}>

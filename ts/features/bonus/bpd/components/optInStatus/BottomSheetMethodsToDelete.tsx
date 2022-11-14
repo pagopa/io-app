@@ -1,17 +1,17 @@
-import { Dimensions } from "react-native";
-import * as React from "react";
-import { useSelector } from "react-redux";
 import { ListItem, View } from "native-base";
-import { PaymentMethodRepresentationComponent } from "../paymentMethodActivationToggle/base/PaymentMethodRepresentationComponent";
-import { getBPDMethodsSelector } from "../../../../../store/reducers/wallet/wallets";
+import * as React from "react";
+import { Dimensions } from "react-native";
+import { useSelector } from "react-redux";
+import { H3 } from "../../../../../components/core/typography/H3";
+import { Label } from "../../../../../components/core/typography/Label";
+import { IOColors } from "../../../../../components/core/variables/IOColors";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../i18n";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
+import { getBPDMethodsVisibleInWalletSelector } from "../../../../../store/reducers/wallet/wallets";
 import { PaymentMethod } from "../../../../../types/pagopa";
-import { Label } from "../../../../../components/core/typography/Label";
-import { H3 } from "../../../../../components/core/typography/H3";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
+import { PaymentMethodRepresentationComponent } from "../paymentMethodActivationToggle/base/PaymentMethodRepresentationComponent";
 
 type Props = {
   paymentMethods: ReadonlyArray<PaymentMethod>;
@@ -49,7 +49,7 @@ type BottomSheetReturnType = {
 export const useBottomSheetMethodsToDelete = (props: {
   onDeletePress: () => void;
 }): BottomSheetReturnType => {
-  const paymentMethods = useSelector(getBPDMethodsSelector);
+  const paymentMethods = useSelector(getBPDMethodsVisibleInWalletSelector);
   const snapPoint = Math.min(
     Dimensions.get("window").height * 0.8,
     // (subtitle + footer) + items

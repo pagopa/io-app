@@ -3,6 +3,7 @@ import React, { memo } from "react";
 import { StyleSheet } from "react-native";
 import variables from "../../theme/variables";
 import { isTestEnv } from "../../utils/environment";
+import { IOColors } from "../../components/core/variables/IOColors";
 
 type Props = {
   badgeValue?: number;
@@ -15,11 +16,11 @@ const styles = StyleSheet.create({
   },
   badgeStyle: {
     backgroundColor: variables.brandPrimary,
-    borderColor: "white",
+    borderColor: IOColors.white,
     borderWidth: 2,
     position: "absolute",
     elevation: 0.1,
-    shadowColor: "white",
+    shadowColor: IOColors.white,
     width: 20,
     height: 20,
     left: 12,

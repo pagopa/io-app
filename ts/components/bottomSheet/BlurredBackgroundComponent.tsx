@@ -1,6 +1,9 @@
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
+import { IOColors, hexToRgba } from "../core/variables/IOColors";
+
+const opaqueBgColor = hexToRgba(IOColors.black, 0.5);
 
 /**
  * Simple component used as background when the bottom sheet pops up to blur the background and demands its closing when tapping on it
@@ -13,7 +16,7 @@ export const BlurredBackgroundComponent = (onPress: () => void) => (
     style={{
       ...StyleSheet.absoluteFillObject,
       overflow: "hidden",
-      backgroundColor: "rgba(0,0,0, 0.5)"
+      backgroundColor: opaqueBgColor
     }}
   />
 );
