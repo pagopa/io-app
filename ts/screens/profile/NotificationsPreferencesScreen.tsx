@@ -1,7 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import React, { useEffect, useState } from "react";
 import { List } from "native-base";
-import { StyleSheet } from "react-native";
 import { useSelector } from "react-redux";
 import { PreferencesListItem } from "../../components/PreferencesListItem";
 import ScreenContent from "../../components/screens/ScreenContent";
@@ -14,17 +13,9 @@ import { profileUpsert } from "../../store/actions/profile";
 import { ReminderStatusEnum } from "../../../definitions/backend/ReminderStatus";
 import { PushNotificationsContentTypeEnum } from "../../../definitions/backend/PushNotificationsContentType";
 import { showToast } from "../../utils/showToast";
-import { Link } from "../../components/core/typography/Link";
-import customVariables from "../../theme/variables";
 import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
 import { usePreviewMoreInfo } from "../../utils/hooks/usePreviewMoreInfo";
-
-const styles = StyleSheet.create({
-  mediumText: {
-    fontSize: customVariables.fontSizeSmall,
-    lineHeight: customVariables.h5LineHeight
-  }
-});
+import { LabelSmall } from "../../components/core/typography/LabelSmall";
 
 export const NotificationsPreferencesScreen = () => {
   const dispatch = useIODispatch();
@@ -73,9 +64,9 @@ export const NotificationsPreferencesScreen = () => {
                 {`${I18n.t(
                   "profile.preferences.notifications.preview.description"
                 )} `}
-                <Link style={styles.mediumText} onPress={present}>
+                <LabelSmall accessibilityRole="link" onPress={present}>
                   {I18n.t("profile.preferences.notifications.preview.link")}
-                </Link>
+                </LabelSmall>
               </>
             }
             rightElement={

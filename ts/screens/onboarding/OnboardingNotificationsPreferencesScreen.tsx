@@ -24,7 +24,7 @@ import customVariables from "../../theme/variables";
 import { IOBadge } from "../../components/core/IOBadge";
 import { H1 } from "../../components/core/typography/H1";
 import { Body } from "../../components/core/typography/Body";
-import { Link } from "../../components/core/typography/Link";
+import { LabelSmall } from "../../components/core/typography/LabelSmall";
 import { PushNotificationsContentTypeEnum } from "../../../definitions/backend/PushNotificationsContentType";
 import { usePreviewMoreInfo } from "../../utils/hooks/usePreviewMoreInfo";
 import { NotificationsPreferencesPreview } from "./components/NotificationsPreferencesPreview";
@@ -57,10 +57,6 @@ const styles = StyleSheet.create({
   },
   badge: {
     padding: customVariables.contentPadding / 2
-  },
-  mediumText: {
-    fontSize: customVariables.fontSizeSmall,
-    lineHeight: customVariables.h5LineHeight
   }
 });
 
@@ -199,9 +195,9 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
                 {`${I18n.t(
                   "profile.preferences.notifications.preview.description"
                 )} `}
-                <Link style={styles.mediumText} onPress={present}>
+                <LabelSmall accessibilityRole="link" onPress={present}>
                   {I18n.t("profile.preferences.notifications.preview.link")}
-                </Link>
+                </LabelSmall>
               </>
             }
             rightElement={
