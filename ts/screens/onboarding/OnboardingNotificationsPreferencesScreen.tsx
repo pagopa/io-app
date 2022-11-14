@@ -198,7 +198,7 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
                   {`${I18n.t(
                     "profile.preferences.notifications.preview.description"
                   )} `}
-                  <LabelSmall onPress={present}>
+                  <LabelSmall accessibilityRole="link" onPress={present}>
                     {I18n.t("profile.preferences.notifications.preview.link")}
                   </LabelSmall>
                 </>
