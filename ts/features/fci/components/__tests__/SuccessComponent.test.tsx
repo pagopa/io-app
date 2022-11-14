@@ -18,9 +18,12 @@ type Props = {
   signatureRequest: SignatureRequestDetailView;
 };
 
+const now = new Date();
+
 describe("Test SuccessComponent", () => {
-  const now = new Date();
-  jest.useFakeTimers();
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
   it("with a signature request status WAIT_FOR_SIGNATURE should render a FciDocuments Container correctly", () => {
     const props = {
       signatureRequest: mockSignatureRequestDetailView
