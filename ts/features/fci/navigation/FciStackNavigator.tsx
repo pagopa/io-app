@@ -13,18 +13,18 @@ export const fciLinkingOptions: PathConfigMap = {
   [FCI_ROUTES.MAIN]: {
     path: "fci",
     screens: {
-      [FCI_ROUTES.SIGNATURE]: "main"
+      [FCI_ROUTES.ROUTER]: "main"
     }
   }
 };
 
 export const FciStackNavigator = () => (
   <Stack.Navigator
-    initialRouteName={FCI_ROUTES.SIGNATURE}
+    initialRouteName={FCI_ROUTES.ROUTER}
     headerMode={"none"}
     screenOptions={{ gestureEnabled: isGestureEnabled }}
   >
-    <Stack.Screen name={FCI_ROUTES.SIGNATURE} component={FciRouterScreen} />
+    <Stack.Screen name={FCI_ROUTES.ROUTER} component={FciRouterScreen} />
     <Stack.Screen name={FCI_ROUTES.DOCUMENTS} component={FciDocumentsScreen} />
   </Stack.Navigator>
 );

@@ -5,23 +5,21 @@ import { SignatureRequestDetailView } from "../../../../definitions/fci/Signatur
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { FciParamsList } from "../navigation/params";
-import { fciSignatureRequestFromId } from "../store/actions/fciSignatureRequest";
-import { fciSignatureDetailViewSelector } from "../store/reducers/fciSignatureDetailView";
+import { fciSignatureRequestFromId } from "../store/actions";
+import { fciSignatureRequestSelector } from "../store/reducers/fciSignatureRequest";
 import { LoadingErrorComponent } from "../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import SuccessComponent from "../components/SuccessComponent";
 import GenericErrorComponent from "../components/GenericErrorComponent";
 
-export type FciSignatureScreenNavigationParams = Readonly<{
+export type FciRouterScreenNavigationParams = Readonly<{
   signatureRequestId: SignatureRequestDetailView["id"];
 }>;
 
 const FciSignatureScreen = (
-  props: IOStackNavigationRouteProps<FciParamsList, "FCI_SIGNATURE">
+  props: IOStackNavigationRouteProps<FciParamsList, "FCI_ROUTER">
 ): React.ReactElement => {
   const dispatch = useIODispatch();
-  const fciSignatureDetailViewRequest = useIOSelector(
-    fciSignatureDetailViewSelector
-  );
+  const fciSignatureRequest = useIOSelector(fciSignatureRequestSelector);
 
   React.useEffect(() => {
     const signatureRequestId = props.route.params.signatureRequestId;
@@ -38,7 +36,7 @@ const FciSignatureScreen = (
   );
 
   return pot.fold(
-    fciSignatureDetailViewRequest,
+    fciSignatureRequest,
     () => <LoadingComponent />,
     () => <LoadingComponent />,
     () => <LoadingComponent />,

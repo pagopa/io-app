@@ -66,7 +66,7 @@ const renderComponent = ({ signatureRequest }: Props) => {
 
   return renderScreenFakeNavRedux<GlobalState>(
     () => Component,
-    FCI_ROUTES.SIGNATURE,
+    FCI_ROUTES.ROUTER,
     {},
     store
   );

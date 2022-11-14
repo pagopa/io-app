@@ -4,7 +4,7 @@ import { call, takeLatest } from "typed-redux-saga/macro";
 import { apiUrlPrefix } from "../../../config";
 import { SessionToken } from "../../../types/SessionToken";
 import { BackendFciClient } from "../api/backendFci";
-import { fciSignatureRequestFromId } from "../store/actions/fciSignatureRequest";
+import { fciSignatureRequestFromId } from "../store/actions";
 import { handleGetSignatureRequestById } from "./networking/handleGetSignatureRequestById";
 
 /**

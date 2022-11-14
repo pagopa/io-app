@@ -5,7 +5,7 @@ import * as E from "fp-ts/lib/Either";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { BackendFciClient } from "../../api/backendFci";
-import { fciSignatureRequestFromId } from "../../store/actions/fciSignatureRequest";
+import { fciSignatureRequestFromId } from "../../store/actions";
 import { getNetworkError } from "../../../../utils/errors";
 
 // handle bonus list loading
@@ -16,20 +16,26 @@ export function* handleGetSignatureRequestById(
   action: ActionType<typeof fciSignatureRequestFromId["request"]>
 ): SagaIterator {
   try {
-    const getDossierByIdResponse: SagaCallReturnType<
+    const getSignatureDetailViewByIdResponse: SagaCallReturnType<
       typeof getSignatureDetailViewById
     > = yield* call(getSignatureDetailViewById, { id: action.payload });
-    if (E.isLeft(getDossierByIdResponse)) {
-      throw Error(readablePrivacyReport(getDossierByIdResponse.left));
+    if (E.isLeft(getSignatureDetailViewByIdResponse)) {
+      throw Error(
+        readablePrivacyReport(getSignatureDetailViewByIdResponse.left)
+      );
     }
-    if (E.isRight(getDossierByIdResponse)) {
-      if (getDossierByIdResponse.right.status === 200) {
+    if (E.isRight(getSignatureDetailViewByIdResponse)) {
+      if (getSignatureDetailViewByIdResponse.right.status === 200) {
         yield* put(
-          fciSignatureRequestFromId.success(getDossierByIdResponse.right.value)
+          fciSignatureRequestFromId.success(
+            getSignatureDetailViewByIdResponse.right.value
+          )
         );
         return;
       }
-      throw Error(`response status ${getDossierByIdResponse.right.status}`);
+      throw Error(
+        `response status ${getSignatureDetailViewByIdResponse.right.status}`
+      );
     }
   } catch (e) {
     return fciSignatureRequestFromId.failure(getNetworkError(e));
