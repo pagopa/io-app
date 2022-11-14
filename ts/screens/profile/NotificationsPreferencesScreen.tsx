@@ -13,10 +13,8 @@ import { profileUpsert } from "../../store/actions/profile";
 import { ReminderStatusEnum } from "../../../definitions/backend/ReminderStatus";
 import { PushNotificationsContentTypeEnum } from "../../../definitions/backend/PushNotificationsContentType";
 import { showToast } from "../../utils/showToast";
-import { useIOBottomSheetModal } from "../../utils/hooks/bottomSheet";
-import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
-import { Body } from "../../components/core/typography/Body";
+import { usePreviewMoreInfo } from "../../utils/hooks/usePreviewMoreInfo";
 import { LabelSmall } from "../../components/core/typography/LabelSmall";
 
 export const NotificationsPreferencesScreen = () => {
@@ -29,24 +27,7 @@ export const NotificationsPreferencesScreen = () => {
   const isError = pot.isError(preferences);
   const isUpdating = pot.isUpdating(preferences);
 
-  const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
-    <Body>
-      {I18n.t("profile.preferences.notifications.preview.bottomSheet.content")}
-    </Body>,
-    I18n.t("profile.preferences.notifications.preview.bottomSheet.title"),
-    400,
-    <FooterWithButtons
-      type="SingleButton"
-      leftButton={{
-        block: true,
-        primary: true,
-        onPress: () => dismiss(),
-        title: I18n.t(
-          "profile.preferences.notifications.preview.bottomSheet.cta"
-        )
-      }}
-    />
-  );
+  const { present, bottomSheet } = usePreviewMoreInfo();
 
   useEffect(() => {
     if (isError && isUpserting) {
@@ -83,7 +64,7 @@ export const NotificationsPreferencesScreen = () => {
                 {`${I18n.t(
                   "profile.preferences.notifications.preview.description"
                 )} `}
-                <LabelSmall weight="SemiBold" onPress={present}>
+                <LabelSmall accessibilityRole="link" weight="SemiBold" onPress={present}>
                   {I18n.t("profile.preferences.notifications.preview.link")}
                 </LabelSmall>
               </>
