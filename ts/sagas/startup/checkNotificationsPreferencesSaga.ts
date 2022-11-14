@@ -7,6 +7,7 @@ import NavigationService from "../../navigation/NavigationService";
 import ROUTES from "../../navigation/routes";
 import { profileUpsert } from "../../store/actions/profile";
 import { isProfileFirstOnBoarding } from "../../store/reducers/profile";
+import { requestNotificationPermissions } from "../../utils/notification";
 import { checkNotificationsPermissionsSaga } from "./checkNotificationsPermissionsSaga";
 
 export function* checkNotificationsPreferencesSaga(
@@ -19,11 +20,23 @@ export function* checkNotificationsPreferencesSaga(
 
   const isFirstOnboarding = isProfileFirstOnBoarding(userProfile);
 
+  // Check if the user has already set a preference for push notification opt-in
   if (
     userProfile.reminder_status !== undefined &&
     userProfile.push_notifications_content_type !== undefined
   ) {
-    // user has already set a preference
+    // Make sure to ask for push notification permissions. This call is needed
+    // since an existing user that has already opted-in may be running the
+    // application on a new device. To enable the push receival, the system
+    // permission must be asked explicitly and this is the first entry point
+    // where it makes sense to do so. On iOS, if the user denies the permission,
+    // the popup dialog does not appear anymore (on following application
+    // restarts).
+    // TODO when upgrading Android target SDK to 33+, check that the system does
+    // not show the dialog on following application restarts, if the user has
+    // initially denied the permission
+    yield* call(requestNotificationPermissions);
+
     return;
   }
 
