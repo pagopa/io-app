@@ -9,11 +9,13 @@ import {
 } from "../../../euCovidCert/store/reducers";
 import { mvlPersistor, PersistedMvlState } from "../../../mvl";
 import { PersistedPnState, pnPersistor } from "../../../pn";
+import fciReducer, { FciState } from "../../../fci/store/reducers";
 
 export type FeaturesState = {
   euCovidCert: EuCovidCertState;
   mvl: PersistedMvlState;
   pn: PersistedPnState;
+  fci: FciState;
 };
 
 export type PersistedFeaturesState = FeaturesState & PersistPartial;
@@ -21,7 +23,8 @@ export type PersistedFeaturesState = FeaturesState & PersistPartial;
 const rootReducer = combineReducers<FeaturesState, Action>({
   euCovidCert: euCovidCertReducer,
   mvl: mvlPersistor,
-  pn: pnPersistor
+  pn: pnPersistor,
+  fci: fciReducer
 });
 
 const CURRENT_REDUX_FEATURES_STORE_VERSION = 1;
