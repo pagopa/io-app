@@ -848,7 +848,7 @@ onboarding:
   infoConsent:
     headerTitle: IO Settings
     title: Enable push notifications?
-    subTitle: To receive push notifications from IO, enable them in the iOS Settings. Here's how:
+    subTitle: "To receive push notifications from IO, enable them in the iOS Settings. Here's how:"
     instruction1: 1. Press 'Notifications'
     instruction2: 2. Enable 'Allow notifications'
     openSettings: Open iOS settings

@@ -864,7 +864,7 @@ onboarding:
   infoConsent:
     headerTitle: Configura IO
     title: Vuoi attivare le notifiche?
-    subTitle: Per ricevere notifiche push da IO, devi attivarle nelle Impostazioni di iOS. Ecco come fare:
+    subTitle: "Per ricevere notifiche push da IO, devi attivarle nelle Impostazioni di iOS. Ecco come fare:"
     instruction1: 1. Seleziona 'Notifiche'
     instruction2: 2. Attiva 'Consenti Notifiche'
     openSettings: Apri Impostazioni di iOS
