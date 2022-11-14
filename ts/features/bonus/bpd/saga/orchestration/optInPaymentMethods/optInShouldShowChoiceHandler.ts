@@ -7,9 +7,16 @@ import {
   fetchWalletsRequestWithExpBackoff,
   fetchWalletsSuccess
 } from "../../../../../../store/actions/wallet/wallets";
+import {
+  getBPDMethodsVisibleInWalletSelector,
+  pagoPaCreditCardWalletV1Selector
+} from "../../../../../../store/reducers/wallet/wallets";
 import { ReduxSagaEffect } from "../../../../../../types/utils";
-import { isReady, RemoteValue } from "../../../model/RemoteValue";
-import { ActivationStatus, bpdAllData } from "../../../store/actions/details";
+import { isLoading, isReady, RemoteValue } from "../../../model/RemoteValue";
+import {
+  ActivationStatus,
+  bpdLoadActivationStatus
+} from "../../../store/actions/details";
 import { optInPaymentMethodsShowChoice } from "../../../store/actions/optInPaymentMethods";
 import {
   activationStatusSelector,
@@ -31,16 +38,33 @@ export function* optInShouldShowChoiceHandler(): Generator<
   void,
   any
 > {
-  // Load the information about the participation of the user to the bpd program
-  yield* put(bpdAllData.request());
-  const bpdAllDataResponse = yield* take<
-    ActionType<typeof bpdAllData.success | typeof bpdAllData.failure>
-  >([getType(bpdAllData.success), getType(bpdAllData.failure)]);
+  const bpdActivationInitialStatus: RemoteValue<ActivationStatus, Error> =
+    yield* select(activationStatusSelector);
+
+  // Check is needed to avoid to spawn multiple request if the status
+  // is already loading
+  if (!isLoading(bpdActivationInitialStatus)) {
+    // Load the information about the participation of the user to the bpd program
+    yield* put(bpdLoadActivationStatus.request());
+  }
+  const bpdLoadActivationStatusResponse = yield* take<
+    ActionType<
+      | typeof bpdLoadActivationStatus.success
+      | typeof bpdLoadActivationStatus.failure
+    >
+  >([
+    getType(bpdLoadActivationStatus.success),
+    getType(bpdLoadActivationStatus.failure)
+  ]);
 
   // If the bpdAllData request fail report the error
-  if (isActionOf(bpdAllData.failure, bpdAllDataResponse)) {
+  if (
+    isActionOf(bpdLoadActivationStatus.failure, bpdLoadActivationStatusResponse)
+  ) {
     yield* put(
-      optInPaymentMethodsShowChoice.failure(bpdAllDataResponse.payload)
+      optInPaymentMethodsShowChoice.failure(
+        bpdLoadActivationStatusResponse.payload
+      )
     );
     return;
   }
@@ -85,15 +109,29 @@ export function* optInShouldShowChoiceHandler(): Generator<
     return;
   }
 
-  // Load the user payment methods
-  yield* put(fetchWalletsRequestWithExpBackoff());
+  // Check if wallets are already loaded
+  // this check is needed becaus the exponential backoff would raise an error cause of the spawning of multiple requests
+  const potWallets = yield* select(pagoPaCreditCardWalletV1Selector);
+
+  if (!pot.isLoading(potWallets)) {
+    // Load the user payment methods
+    yield* put(fetchWalletsRequestWithExpBackoff());
+  }
   const fetchWalletsResultAction = yield* take<
     ActionType<typeof fetchWalletsSuccess | typeof fetchWalletsFailure>
   >([getType(fetchWalletsSuccess), getType(fetchWalletsFailure)]);
 
   // If the loading work successfully starts the OptInPaymentMethods saga
   if (isActionOf(fetchWalletsSuccess, fetchWalletsResultAction)) {
-    yield* put(optInPaymentMethodsShowChoice.success(true));
+    const bpdPaymentMethods = yield* select(
+      getBPDMethodsVisibleInWalletSelector
+    );
+
+    if (bpdPaymentMethods.length > 0) {
+      yield* put(optInPaymentMethodsShowChoice.success(true));
+      return;
+    }
+    yield* put(optInPaymentMethodsShowChoice.success(false));
   } else {
     yield* put(
       optInPaymentMethodsShowChoice.failure(fetchWalletsResultAction.payload)
