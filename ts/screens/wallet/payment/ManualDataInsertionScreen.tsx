@@ -64,6 +64,7 @@ type State = Readonly<{
   organizationFiscalCode: O.Option<
     ReturnType<typeof OrganizationFiscalCode.decode>
   >;
+  inputValue: string;
 }>;
 
 const styles = StyleSheet.create({
@@ -95,7 +96,8 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
     super(props);
     this.state = {
       paymentNoticeNumber: O.none,
-      organizationFiscalCode: O.none
+      organizationFiscalCode: O.none,
+      inputValue: ""
     };
   }
 
@@ -188,11 +190,17 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                     "wallet.insertManually.noticeCode"
                   )}
                   testID={"NoticeCode"}
-                  inputProps={{
+                  inputMaskProps={{
+                    type: "custom",
+                    options: { mask: "9999 9999 9999 9999 99" },
                     keyboardType: "numeric",
                     returnKeyType: "done",
+                    value: this.state.inputValue,
+                    // struttura codice avviso:
+                    // <aux digit 1n 0-3>| IUV 17>>|<codice segregazione (2n)><sistema informativo locale (2n)><progressivo versamento (11n)><check digit (2n)>
                     onChangeText: value => {
                       this.setState({
+                        inputValue: value,
                         paymentNoticeNumber: pipe(
                           O.some(value),
                           O.filter(NonEmptyString.is),
