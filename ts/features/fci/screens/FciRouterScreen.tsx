@@ -18,13 +18,13 @@ export type FciRouterScreenNavigationParams = Readonly<{
 const FciSignatureScreen = (
   props: IOStackNavigationRouteProps<FciParamsList, "FCI_ROUTER">
 ): React.ReactElement => {
+  const signatureRequestId = props.route.params.signatureRequestId;
   const dispatch = useIODispatch();
   const fciSignatureRequest = useIOSelector(fciSignatureRequestSelector);
 
   React.useEffect(() => {
-    const signatureRequestId = props.route.params.signatureRequestId;
     dispatch(fciSignatureRequestFromId.request(signatureRequestId));
-  }, [dispatch, props.route.params.signatureRequestId]);
+  }, [dispatch, signatureRequestId]);
 
   const LoadingComponent = () => (
     <LoadingErrorComponent
