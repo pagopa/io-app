@@ -9,7 +9,7 @@ import { IOColors } from "../../../components/core/variables/IOColors";
 import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
 import { errorButtonProps } from "../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import { fciAbortingRequest } from "../store/actions/fciSignatureRequest";
+import { fciAbortingRequest } from "../store/actions";
 import { useIODispatch } from "../../../store/hooks";
 
 const styles = StyleSheet.create({

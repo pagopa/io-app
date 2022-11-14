@@ -7,7 +7,7 @@ import FciDocumentsScreen from "../valid/FciDocumentsScreen";
 import { FCI_ROUTES } from "../../navigation/routes";
 import { mockSignatureRequestDetailView } from "../../types/__mocks__/SignatureRequestDetailView.mock";
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
-import { fciSignatureRequestFromId } from "../../store/actions/fciSignatureRequest";
+import { fciSignatureRequestFromId } from "../../store/actions";
 
 describe("Test FciDocuments screen", () => {
   jest.useFakeTimers();
