@@ -31,7 +31,9 @@ const ErrorComponent = (props: Props) => {
           type={"SingleButton"}
           leftButton={cancelButtonProps(
             navigation.goBack,
-            I18n.t("global.buttons.close")
+            I18n.t("global.buttons.close"),
+            undefined,
+            "closeButton"
           )}
         />
       </SafeAreaView>
