@@ -1,29 +1,24 @@
-import { testSaga } from "redux-saga-test-plan";
 import { CommonActions } from "@react-navigation/native";
-import { checkNotificationsPermissionsSaga } from "../checkNotificationsPermissionsSaga";
-import InitializedProfile from "../../../__mocks__/initializedProfile";
+import { testSaga } from "redux-saga-test-plan";
+import NavigationService from "../../../navigation/NavigationService";
+import ROUTES from "../../../navigation/routes";
+import { notificationsInfoScreenConsent } from "../../../store/actions/notifications";
 import {
   AuthorizationStatus,
   checkNotificationPermissions,
   requestNotificationPermissions
 } from "../../../utils/notification";
-import NavigationService from "../../../navigation/NavigationService";
-import ROUTES from "../../../navigation/routes";
-import { notificationsInfoScreenConsent } from "../../../store/actions/notifications";
+import { checkNotificationsPermissionsSaga } from "../checkNotificationsPermissionsSaga";
 
 describe("checkNotificationsPermissionsSaga", () => {
   it("upon saga startup, it should ask for push notifications permission", () => {
-    const mockedProfile = { ...InitializedProfile, version: 0 };
-
-    testSaga(checkNotificationsPermissionsSaga, mockedProfile)
+    testSaga(checkNotificationsPermissionsSaga)
       .next()
       .call(checkNotificationPermissions);
   });
 
   it("if the push notifications permission was given, the saga will terminate ", () => {
-    const mockedProfile = { ...InitializedProfile, version: 0 };
-
-    testSaga(checkNotificationsPermissionsSaga, mockedProfile)
+    testSaga(checkNotificationsPermissionsSaga)
       .next()
       .call(checkNotificationPermissions)
       .next(true)
@@ -31,9 +26,7 @@ describe("checkNotificationsPermissionsSaga", () => {
   });
 
   it("if the push notifications permission was not given and is first onboarding, the saga will request push notification permissions", () => {
-    const mockedProfile = { ...InitializedProfile, version: 0 };
-
-    testSaga(checkNotificationsPermissionsSaga, mockedProfile)
+    testSaga(checkNotificationsPermissionsSaga)
       .next()
       .call(checkNotificationPermissions)
       .next(false)
@@ -41,9 +34,7 @@ describe("checkNotificationsPermissionsSaga", () => {
   });
 
   it("if the saga asks for push permissions and the user give them, the saga will terminate", () => {
-    const mockedProfile = { ...InitializedProfile, version: 0 };
-
-    testSaga(checkNotificationsPermissionsSaga, mockedProfile)
+    testSaga(checkNotificationsPermissionsSaga)
       .next()
       .call(checkNotificationPermissions)
       .next(false)
@@ -53,9 +44,7 @@ describe("checkNotificationsPermissionsSaga", () => {
   });
 
   it("if the saga asks for push permissions and the user does not give them, the saga navigates to the Info Screen and waits for the notificationsInfoScreenConsent action", () => {
-    const mockedProfile = { ...InitializedProfile, version: 0 };
-
-    testSaga(checkNotificationsPermissionsSaga, mockedProfile)
+    testSaga(checkNotificationsPermissionsSaga)
       .next()
       .call(checkNotificationPermissions)
       .next(false)
@@ -72,9 +61,7 @@ describe("checkNotificationsPermissionsSaga", () => {
   });
 
   it("if the saga is waiting for the notificationsInfoScreenConsent action and the latter is received, the saga terminates", () => {
-    const mockedProfile = { ...InitializedProfile, version: 0 };
-
-    testSaga(checkNotificationsPermissionsSaga, mockedProfile)
+    testSaga(checkNotificationsPermissionsSaga)
       .next()
       .call(checkNotificationPermissions)
       .next(false)
