@@ -9,9 +9,9 @@ import { apiUrlPrefix } from "../../../config";
 import { SessionToken } from "../../../types/SessionToken";
 import { BackendFciClient } from "../api/backendFci";
 import {
-  fciAbortingRequest,
-  fciSignatureRequestFromId
-} from "../store/actions/fciSignatureRequest";
+  fciSignatureRequestFromId,
+  fciAbortingRequest
+} from "../store/actions";
 import { handleGetSignatureRequestById } from "./networking/handleGetSignatureRequestById";
 
 /**

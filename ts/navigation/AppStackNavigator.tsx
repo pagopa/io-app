@@ -59,6 +59,7 @@ import {
   bpdRemoteConfigSelector,
   isCdcEnabledSelector,
   isCGNEnabledSelector,
+  isFciEnabledSelector,
   isFIMSEnabledSelector
 } from "../store/reducers/backendStatus";
 import { isTestEnv } from "../utils/environment";
@@ -80,8 +81,10 @@ export const AppStackNavigator = () => {
   const cdcEnabled = useIOSelector(isCdcEnabledSelector);
   const fimsEnabledSelector = useIOSelector(isFIMSEnabledSelector);
   const cgnEnabled = useIOSelector(isCGNEnabledSelector);
+  const fciEnabledSelector = useIOSelector(isFciEnabledSelector);
 
   const isFimsEnabled = fimsEnabled && fimsEnabledSelector;
+  const isFciEnabled = fciEnabled && fciEnabledSelector;
   return (
     <Stack.Navigator
       initialRouteName={"INGRESS"}
@@ -159,7 +162,7 @@ export const AppStackNavigator = () => {
         />
       )}
 
-      {fciEnabled && (
+      {isFciEnabled && (
         <Stack.Screen name={FCI_ROUTES.MAIN} component={FciStackNavigator} />
       )}
 
@@ -185,6 +188,7 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
 
   const cgnEnabled = useIOSelector(isCGNEnabledSelector);
   const isFimsEnabled = useIOSelector(isFIMSEnabledSelector) && fimsEnabled;
+  const isFciEnabled = useIOSelector(isFciEnabledSelector) && fciEnabled;
 
   const bpdRemoteConfig = useIOSelector(bpdRemoteConfigSelector);
   const isOptInPaymentMethodsEnabled =
@@ -246,7 +250,7 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
         },
         ...(isFimsEnabled ? fimsLinkingOptions : {}),
         ...(cgnEnabled ? cgnLinkingOptions : {}),
-        ...(fciEnabled ? fciLinkingOptions : {}),
+        ...(isFciEnabled ? fciLinkingOptions : {}),
         [UADONATION_ROUTES.WEBVIEW]: "uadonations-webview",
         [ROUTES.WORKUNIT_GENERIC_FAILURE]: "*"
       }

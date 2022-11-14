@@ -8,7 +8,6 @@ import { useNavigation } from "@react-navigation/native";
 import IconFont from "../../../../components/ui/IconFont";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import { fciDSignatureDetailDocumentsSelector } from "../../store/reducers/fciSignatureDetailView";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
@@ -16,6 +15,7 @@ import DocumentsNavigationBar from "../../components/DocumentsNavigationBar";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
+import { fciSignatureDetailDocumentsSelector } from "../../store/reducers/fciSignatureRequest";
 
 const styles = StyleSheet.create({
   pdf: {
@@ -29,7 +29,7 @@ const FciDocumentsScreen = () => {
   const [totalPages, setTotalPages] = React.useState(0);
   const [currentPage, setCurrentPage] = React.useState(0);
   const [currentDoc, setCurrentDoc] = React.useState(0);
-  const documents = useSelector(fciDSignatureDetailDocumentsSelector);
+  const documents = useSelector(fciSignatureDetailDocumentsSelector);
   const navigation = useNavigation();
 
   const { present, bottomSheet: fciAbortSignature } =

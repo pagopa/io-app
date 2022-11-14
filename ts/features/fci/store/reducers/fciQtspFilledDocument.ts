@@ -1,24 +1,21 @@
 import { getType } from "typesafe-actions";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import {
-  fciAbortingRequest,
-  fciLoadQtspFilledDocument
-} from "../actions/fciSignatureRequest";
+import { fciLoadQtspFilledDocument, fciAbortingRequest } from "../actions";
 import { Action } from "../../../../store/actions/types";
 import { NetworkError } from "../../../../utils/errors";
 import { FilledDocumentDetailView } from "../../../../../definitions/fci/FilledDocumentDetailView";
 
-export type FciQtspFilledDocumentRequestState = pot.Pot<
+export type FciQtspFilledDocumentState = pot.Pot<
   FilledDocumentDetailView,
   NetworkError
 >;
 
-const emptyState: FciQtspFilledDocumentRequestState = pot.none;
+const emptyState: FciQtspFilledDocumentState = pot.none;
 
 const reducer = (
-  state: FciQtspFilledDocumentRequestState = emptyState,
+  state: FciQtspFilledDocumentState = emptyState,
   action: Action
-): FciQtspFilledDocumentRequestState => {
+): FciQtspFilledDocumentState => {
   switch (action.type) {
     case getType(fciLoadQtspFilledDocument.request):
       return pot.toLoading(state);

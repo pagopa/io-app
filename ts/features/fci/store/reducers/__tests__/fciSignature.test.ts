@@ -3,10 +3,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getTimeoutError } from "../../../../../utils/errors";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
-import {
-  fciAbortingRequest,
-  fciSigningRequest
-} from "../../actions/fciSignatureRequest";
+import { fciSigningRequest, fciAbortingRequest } from "../../actions";
 import { mockCreateSignatureBody } from "../../../types/__mocks__/CreateSignatureBody.mock";
 
 const genericError = getTimeoutError();

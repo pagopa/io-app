@@ -1,24 +1,18 @@
 import { getType } from "typesafe-actions";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import {
-  fciAbortingRequest,
-  fciLoadQtspClauses
-} from "../actions/fciSignatureRequest";
+import { fciLoadQtspClauses, fciAbortingRequest } from "../actions";
 import { Action } from "../../../../store/actions/types";
 import { NetworkError } from "../../../../utils/errors";
 import { QtspClausesMetadata } from "../../../../../definitions/fci/QtspClausesMetadata";
 
-export type FciQtspClausesRequestState = pot.Pot<
-  QtspClausesMetadata,
-  NetworkError
->;
+export type FciQtspClausesState = pot.Pot<QtspClausesMetadata, NetworkError>;
 
-const emptyState: FciQtspClausesRequestState = pot.none;
+const emptyState: FciQtspClausesState = pot.none;
 
 const reducer = (
-  state: FciQtspClausesRequestState = emptyState,
+  state: FciQtspClausesState = emptyState,
   action: Action
-): FciQtspClausesRequestState => {
+): FciQtspClausesState => {
   switch (action.type) {
     case getType(fciLoadQtspClauses.request):
       return pot.toLoading(state);

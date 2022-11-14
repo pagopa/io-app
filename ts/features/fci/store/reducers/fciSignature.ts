@@ -2,10 +2,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
 import { NetworkError } from "../../../../utils/errors";
-import {
-  fciAbortingRequest,
-  fciSigningRequest
-} from "../actions/fciSignatureRequest";
+import { fciSigningRequest, fciAbortingRequest } from "../actions";
 
 export type FciSignatureState = pot.Pot<void, NetworkError>;
 
