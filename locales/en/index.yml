@@ -2588,25 +2588,26 @@ bonus:
         title: "Choose to keep or delete your payment methods"
         body: !include bonus/bpd/optInPaymentMethods.md
       choice:
-        header: Configure IO
-        title: Do you want to keep your payment methods?
-        subtitle: If you keep them, you’ll be able to use them to take part in discounts, bonuses and future initiatives or for other features, such as in-app payments.
-        suggestedOption: Recommended
+        header: "Configura IO"
+        title: "Vuoi mantenere i tuoi metodi di pagamento?"
+        subtitle: Se li mantieni, potrai utilizzarli per aderire a sconti, bonus e iniziative future o per altre funzionalità, come pagare in app.
+        suggestedOption: Consigliato
+        toast: "You've already made your choice"
         options:
           keepAll:
-            title: Keep all payment methods in the Wallet
-            body: PagoPA S.p.A. will handle your payment method's data as the owner of the threatment. For further informations you can check the Privacy Policy.
+            title: Mantieni tutti i metodi nel Portafoglio
+            body: PagoPA S.p.A. tratterà i dati dei tuoi metodi di pagamento in qualità di titolare del trattamento. Per maggiori informazioni puoi consultare l’Informativa Privacy.
           deleteAll:
-            title: Delete all payment methods from the Wallet
-            body: All methods added in the Wallet so far will be permanently deleted. You can add them again at any time, but you’ll have to enter back the method details and have it authorized.
-        deleteAllButton: Delete all methods
+            title: Elimina tutti i metodi dal Portafoglio
+            body:  Potrai aggiungerli di nuovo in qualsiasi momento, ma dovrai reinserire i dati e ripetere le procedure di autorizzazione.
+        deleteAllButton: Elimina tutti i metodi
       deletePaymentMethodsBottomSheet:
-        title: "Do you really want to delete the following methods from the Wallet?"
-        subtitle: "You can add them again at any time, but you will have to re-enter the data and repeat the authorization procedures."
+        title: "Vuoi davvero eliminare i seguenti metodi dal Portafoglio?"
+        subtitle: "Potrai aggiungerli di nuovo in qualsiasi momento, ma dovrai reinserire i dati e ripetere le procedure di autorizzazione."
       thankYouPage:
         cta:
-          goToWallet: "Go to Wallet"
-          retry: "Try again"
+          goToWallet: "Vai al Portafoglio"
+          retry: "Riprova"
         success:
           title: "Done!"
           body: "We’ve saved your choice."
@@ -3210,12 +3211,23 @@ support:
       category: "Help us understand how we can help you by selecting the topic of your problem: we will reply as soon as possible, during business hours."
 idpay:
   onboarding:
-    headerTitle: "Adehesion to the initiative"
+    headerTitle: "Adesione all'iniziativa"
     buttons: 
-      cancel: "Cancel"
-      continue: "Continue"
+      cancel: "Annulla"
+      continue: "Continua"
     beforeContinue:
-      text1: "Continuing you declare to accept the "
-      tosLink: "Terms and conditions"
-      text2: " of the service and confirm that you have read the "
-      privacyLink: "Privacy policy"
+      text1: "Proseguendo accetti i "
+      tosLink: "Termini e condizioni d'uso"
+      text2: " del servizio e confermi di avere letto l' "
+      privacyLink: "Informativa privacy"
+    navigation:
+      header: Adesione all'iniziativa
+    PDNDPrerequisites:
+      prerequisites:
+        info:
+          header: Come avviene la verifica?
+          body: Comunichiamo direttamente con l’Ente che detiene l’informazione necessaria a effettuare il controllo, in questo caso **{{provider}}**.
+            In questo modo non devi produrre alcuna autocertificazione. Comodo, no?
+          understoodCTA: Ho capito
+      title: Possiedi i seguenti requisiti?
+      subtitle: Verificheremo con alcuni Enti se sei in possesso dei requisiti per poter richiedere {{service}}. 

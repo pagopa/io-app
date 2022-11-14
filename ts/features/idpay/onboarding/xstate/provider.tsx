@@ -1,19 +1,25 @@
+import { useNavigation } from "@react-navigation/native";
+import { useInterpret } from "@xstate/react";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
 import { InterpreterFrom } from "xstate";
-import { useInterpret } from "@xstate/react";
-import { useIOSelector } from "../../../../store/hooks";
-import { sessionInfoSelector } from "../../../../store/reducers/authentication";
-import { createOnboardingClient } from "../api/client";
 import {
   IDPAY_API_TEST_TOKEN,
   IDPAY_API_UAT_BASEURL
 } from "../../../../config";
-import { createServicesImplementation } from "./services";
+import {
+  AppParamsList,
+  IOStackNavigationProp
+} from "../../../../navigation/params/AppParamsList";
+import { useIOSelector } from "../../../../store/hooks";
+import { sessionInfoSelector } from "../../../../store/reducers/authentication";
+import { createOnboardingClient } from "../api/client";
+import { createActionsImplementation } from "./actions";
 import {
   createIDPayOnboardingMachine,
   IDPayOnboardingMachineType
 } from "./machine";
+import { createServicesImplementation } from "./services";
 
 type OnboardingMachineContext = InterpreterFrom<IDPayOnboardingMachineType>;
 
@@ -30,6 +36,8 @@ const IDPayOnboardingMachineProvider = (props: Props) => {
 
   const sessionInfo = useIOSelector(sessionInfoSelector);
 
+  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+
   if (O.isNone(sessionInfo)) {
     throw new Error("Session info is undefined");
   }
@@ -45,8 +53,11 @@ const IDPayOnboardingMachineProvider = (props: Props) => {
 
   const services = createServicesImplementation(onboardingClient);
 
+  const actions = createActionsImplementation(navigation);
+
   const machineService = useInterpret(machine, {
-    services
+    services,
+    actions
   });
 
   return (
