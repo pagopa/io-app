@@ -196,7 +196,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                     keyboardType: "numeric",
                     returnKeyType: "done",
                     value: this.state.inputValue,
-                    // struttura codice avviso:
+                    // notice code structure:
                     // <aux digit 1n 0-3>| IUV 17>>|<segregation code (2n)><local info system (2n)><payment number (11n)><check digit (2n)>
                     onChangeText: value => {
                       this.setState({
