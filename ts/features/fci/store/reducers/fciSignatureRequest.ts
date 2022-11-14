@@ -35,8 +35,8 @@ export const fciSignatureRequestSelector = (
   state: GlobalState
 ): FciSignatureRequestState => state.features.fci.signatureRequest;
 
-export const fciDSignatureDetailDocumentsSelector = createSelector(
-  fciSignatureDetailViewSelector,
+export const fciSignatureDetailDocumentsSelector = createSelector(
+  fciSignatureRequestSelector,
   signatureDetailView =>
     pot.isSome(signatureDetailView) ? signatureDetailView.value.documents : []
 );
