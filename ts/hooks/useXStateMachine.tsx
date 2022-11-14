@@ -8,8 +8,6 @@ const useXStateMachine = <T,>(fn: MachineCreatorFn<T>): [T] => {
   if (machine.current === undefined) {
     // eslint-disable-next-line functional/immutable-data
     machine.current = fn();
-    // eslint-disable-next-line no-console
-    console.log("Created new xstate machine");
   }
 
   return [machine.current];
