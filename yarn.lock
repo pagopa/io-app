@@ -3072,21 +3072,7 @@
   resolved "https://registry.yarnpkg.com/@pagopa/react-native-cie/-/react-native-cie-1.1.4.tgz#3b876851764264d8b34beb6fdec7d4b270512a0a"
   integrity sha512-QBYK8N9sAC8TtH+Lf4/DxXgLl7IAupa6+MSZm1NWG+uGJwXbZFMJJQWSjeHN+pPNV+MJhc2sg2tFY9L3oE0oVw==
 
-"@pagopa/ts-commons@^10.10.0":
-  version "10.10.0"
-  resolved "https://registry.yarnpkg.com/@pagopa/ts-commons/-/ts-commons-10.10.0.tgz#9eae84003956ac44aad710b91abd7614bb09665e"
-  integrity sha512-/bIEHIvswrp9mi+NdBOJftPAP9YeI5Z1+mK1WV/RDTvy6nb5Zd7C9kwdBJbXjl4zW/eiQsb5PqLHEC6odQKlWg==
-  dependencies:
-    abort-controller "^3.0.0"
-    agentkeepalive "^4.1.4"
-    applicationinsights "^1.8.10"
-    fp-ts "^2.11.0"
-    io-ts "^2.2.16"
-    json-set-map "^1.1.2"
-    node-fetch "^2.6.0"
-    validator "^13.7.0"
-
-"@pagopa/ts-commons@^10.3.0", "@pagopa/ts-commons@^10.5.0":
+"@pagopa/ts-commons@^10.10.0", "@pagopa/ts-commons@^10.3.0", "@pagopa/ts-commons@^10.5.0":
   version "10.10.0"
   resolved "https://registry.yarnpkg.com/@pagopa/ts-commons/-/ts-commons-10.10.0.tgz#9eae84003956ac44aad710b91abd7614bb09665e"
   integrity sha512-/bIEHIvswrp9mi+NdBOJftPAP9YeI5Z1+mK1WV/RDTvy6nb5Zd7C9kwdBJbXjl4zW/eiQsb5PqLHEC6odQKlWg==
@@ -3402,6 +3388,13 @@
   dependencies:
     color "^3.1.3"
     react-native-iphone-x-helper "^1.3.0"
+
+"@react-navigation/material-top-tabs@^5.x":
+  version "5.3.19"
+  resolved "https://registry.yarnpkg.com/@react-navigation/material-top-tabs/-/material-top-tabs-5.3.19.tgz#64f3a933f5d7e86e99f3d57d9f0c1e833ffa7e4f"
+  integrity sha512-I7bEF99THxxcY7kCUZ5pPmwXr6kgo6L2sg3P1YJo+CcBWSGvGiHyNbZXNs15HuKRuFvEuueChNV9n8QuKBWbDA==
+  dependencies:
+    color "^3.1.3"
 
 "@react-navigation/native@^5.9.8":
   version "5.9.8"
@@ -14051,6 +14044,11 @@ react-native-svg@^12.3.0:
   dependencies:
     css-select "^4.2.1"
     css-tree "^1.0.0-alpha.39"
+
+react-native-tab-view@^2.x:
+  version "2.16.0"
+  resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-2.16.0.tgz#cae72c7084394bd328fac5fefb86cd966df37a86"
+  integrity sha512-ac2DmT7+l13wzIFqtbfXn4wwfgtPoKzWjjZyrK1t+T8sdemuUvD4zIt+UImg03fu3s3VD8Wh/fBrIdcqQyZJWg==
 
 react-native-vector-icons@^7.0.0:
   version "7.0.0"
