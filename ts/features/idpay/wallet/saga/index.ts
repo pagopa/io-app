@@ -5,7 +5,7 @@ import { IDPAY_API_UAT_BASEURL } from "../../../../config";
 import { idPayWalletGet } from "../store/actions";
 import { waitBackoffError } from "../../../../utils/backoffError";
 import { SessionToken } from "../../../../types/SessionToken";
-import { handleGetIDPayWallet } from "./networking/handleGetIDPayWallet";
+import { handleGetIDPayWallet } from "./handleGetIDPayWallet";
 
 /**
  * Handle the IDPay Wallet requests

@@ -1,10 +1,10 @@
 import { call, put } from "typed-redux-saga/macro";
 import * as E from "fp-ts/lib/Either";
-import { SagaCallReturnType } from "../../../../../types/utils";
-import { IDPayWalletClient } from "../../api/client";
-import { idPayWalletGet } from "../../store/actions";
-import { readablePrivacyReport } from "../../../../../utils/reporters";
-import { getGenericError, getNetworkError } from "../../../../../utils/errors";
+import { SagaCallReturnType } from "../../../../types/utils";
+import { IDPayWalletClient } from "../api/client";
+import { idPayWalletGet } from "../store/actions";
+import { readablePrivacyReport } from "../../../../utils/reporters";
+import { getGenericError, getNetworkError } from "../../../../utils/errors";
 
 /**
  * Handle the remote call to retrieve the IDPay wallet
