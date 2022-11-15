@@ -1,4 +1,4 @@
-import { Text, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import IconFont from "../../../../../../components/ui/IconFont";
@@ -39,11 +39,11 @@ export const ActivateBonusDiscrepancies: React.FunctionComponent<Props> =
     >
       <IconFont name={"io-notice"} size={iconSize} />
       <View hspacer={true} />
-      <Text style={activateBonusStyle.boxText} dark={true}>
-        <Text bold={true} style={activateBonusStyle.boxText} dark={true}>
+      <NBText style={activateBonusStyle.boxText} dark={true}>
+        <NBText bold={true} style={activateBonusStyle.boxText} dark={true}>
           {`${props.attention} `}
-        </Text>
+        </NBText>
         {props.text}
-      </Text>
+      </NBText>
     </View>
   );

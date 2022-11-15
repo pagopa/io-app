@@ -1,4 +1,4 @@
-import { Text } from "native-base";
+import { Text as NBText } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -14,11 +14,11 @@ type Props = ReturnType<typeof mapDispatchToProps>;
 const dsuUrl = "https://servizi2.inps.it/servizi/Iseeriforma/FrmSimHome.aspx";
 
 const renderBody = (first: string, second: string, third: string) => (
-  <Text>
+  <NBText>
     {first}
     <Link onPress={() => openLink(dsuUrl)}>{second}</Link>
     {third}
-  </Text>
+  </NBText>
 );
 
 /**

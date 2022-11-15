@@ -38,15 +38,15 @@ exports[`Test Typography Components H1 Snapshot 1`] = `
   font="TitilliumWeb"
   fontStyle={
     Object {
-      "fontSize": 28,
-      "lineHeight": 34.44,
+      "fontSize": 26,
+      "lineHeight": 32,
     }
   }
   style={
     Array [
       Object {
-        "fontSize": 28,
-        "lineHeight": 34.44,
+        "fontSize": 26,
+        "lineHeight": 32,
       },
       Object {
         "color": "#17324D",
@@ -70,15 +70,15 @@ exports[`Test Typography Components H1 Snapshot 2`] = `
   font="TitilliumWeb"
   fontStyle={
     Object {
-      "fontSize": 28,
-      "lineHeight": 34.44,
+      "fontSize": 26,
+      "lineHeight": 32,
     }
   }
   style={
     Array [
       Object {
-        "fontSize": 28,
-        "lineHeight": 34.44,
+        "fontSize": 26,
+        "lineHeight": 32,
       },
       Object {
         "color": "#FFFFFF",
@@ -103,12 +103,14 @@ exports[`Test Typography Components H2 Snapshot 1`] = `
   fontStyle={
     Object {
       "fontSize": 20,
+      "lineHeight": 24,
     }
   }
   style={
     Array [
       Object {
         "fontSize": 20,
+        "lineHeight": 24,
       },
       Object {
         "color": "#17324D",

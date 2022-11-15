@@ -2,7 +2,7 @@
  * A screen to check if the NFC in enabled on the device.
  * If not, alert/guide the user to activate it from device settings
  */
-import { Content, Text } from "native-base";
+import { Content, Text as NBText } from "native-base";
 import * as React from "react";
 import { Alert, StyleSheet } from "react-native";
 import I18n from "../../i18n";
@@ -56,9 +56,9 @@ export default class CieNfcOverlay extends React.PureComponent<Props> {
           icon={require("../../../img/icons/nfc-icon.png")}
         />
         <Content>
-          <Text style={styles.text}>
+          <NBText style={styles.text}>
             {I18n.t("authentication.cie.nfc.enableNfcContent")}
-          </Text>
+          </NBText>
         </Content>
         <FooterWithButtons
           type={"SingleButton"}

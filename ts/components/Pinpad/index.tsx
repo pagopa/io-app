@@ -3,7 +3,7 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as E from "fp-ts/lib/Either";
 import * as NAR from "fp-ts/lib/NonEmptyArray";
 import { debounce, shuffle } from "lodash";
-import { Text, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import { Alert, StyleSheet } from "react-native";
 import I18n from "../../i18n";
@@ -296,23 +296,23 @@ class Pinpad extends React.PureComponent<Props, State> {
         <View spacer={true} />
         {this.props.onPinResetHandler !== undefined && (
           <React.Fragment>
-            <Text
+            <NBText
               white={this.props.buttonType === "primary"}
               onPress={this.confirmResetAlert}
               alignCenter={true}
               accessibilityRole="button"
             >
               {`${I18n.t("identification.unlockCode.reset.button")} `}
-              <Text
+              <NBText
                 underlined={true}
                 white={this.props.buttonType === "primary"}
               >
                 {I18n.t("identification.unlockCode.reset.code")}
-              </Text>
-              <Text white={this.props.buttonType === "primary"}>
+              </NBText>
+              <NBText white={this.props.buttonType === "primary"}>
                 {I18n.t("global.symbols.question")}
-              </Text>
-            </Text>
+              </NBText>
+            </NBText>
             <View spacer={true} />
           </React.Fragment>
         )}
