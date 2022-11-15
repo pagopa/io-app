@@ -1,4 +1,4 @@
-import { Text, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import customVariables from "../theme/variables";
@@ -114,14 +114,14 @@ class ButtonWithImage extends React.PureComponent<Props> {
           />
         </View>
         <View style={styles.viewCenter}>
-          <Text
+          <NBText
             style={[
               baseStyles.text,
               light ? lightStyles.text : darkStyles.text
             ]}
           >
             {text}
-          </Text>
+          </NBText>
         </View>
         <View style={styles.viewRL} />
       </ButtonDefaultOpacity>

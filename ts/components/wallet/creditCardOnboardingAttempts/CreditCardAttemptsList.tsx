@@ -1,4 +1,4 @@
-import { Content, Text, View } from "native-base";
+import { Content, Text as NBText, View } from "native-base";
 import * as React from "react";
 import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
 import I18n from "../../../i18n";
@@ -136,7 +136,7 @@ export const CreditCardAttemptsList: React.FC<Props> = (props: Props) => {
     <Content style={styles.whiteContent}>
       <View>
         <View style={styles.subHeaderContent}>
-          <Text>{props.title}</Text>
+          <NBText>{props.title}</NBText>
         </View>
       </View>
 

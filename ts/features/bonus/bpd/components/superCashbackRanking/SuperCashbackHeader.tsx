@@ -1,6 +1,6 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Badge, Text, View } from "native-base";
+import { Badge, Text as NBText, View } from "native-base";
 import * as React from "react";
 import { Platform, StyleSheet } from "react-native";
 import { connect } from "react-redux";
@@ -55,9 +55,9 @@ const SuperCashbackHeader: React.FunctionComponent<Props> = (props: Props) => (
   <View style={[IOStyles.row, { alignItems: "center" }]}>
     {isPeriodOnGoing(props.selectedPeriod) && (
       <Badge style={styles.badgeAqua}>
-        <Text style={styles.badgeText} semibold={true}>
+        <NBText style={styles.badgeText} semibold={true}>
           {I18n.t("global.badges.onGoing")}
-        </Text>
+        </NBText>
       </Badge>
     )}
     <View hspacer />

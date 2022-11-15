@@ -19,11 +19,25 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     flexWrap: "wrap"
+  },
+  distancedTitle: {
+    marginTop: 12
   }
 });
 
+const sectionTitleMargin = 16;
+
 export const TypographyShowroom = () => (
   <ShowroomSection title={"Typography"}>
+    <H2
+      color={"bluegrey"}
+      weight={"SemiBold"}
+      style={{ marginBottom: sectionTitleMargin }}
+    >
+      Font family
+    </H2>
+    {/* <FontFamilyShowroom /> */}
+    {/*  <DarkBackgroundTypographicScale /> */}
     <H1Row />
     <H2Row />
     <H3Row />
@@ -38,14 +52,30 @@ export const TypographyShowroom = () => (
   </ShowroomSection>
 );
 
-export const H1Row = () => (
+/* export const FontFamilyShowroom = () => (
   <>
     <View style={styles.row}>
-      <H1>Header H1</H1>
       <View hspacer={true} />
-      <View style={{ backgroundColor: IOColors.bluegrey }}>
-        <H1 color={"white"}>Header h1</H1>
-      </View>
+    </View>
+  </>
+); */
+
+const getTitle = (element: string) => `Heading ${element}`;
+const getLongerTitle = (element: string) =>
+  `Very loooong looong title set with Heading ${element}`;
+
+export const DarkBackgroundTypographicScale = () => (
+  <View style={{ backgroundColor: IOColors.bluegrey }}>
+    <H1 color={"white"}>Header H1</H1>
+    <View hspacer={true} />
+  </View>
+);
+
+export const H1Row = () => (
+  <>
+    <View>
+      <H1>{getTitle("H1")}</H1>
+      <H1 style={styles.distancedTitle}>{getLongerTitle("H1")}</H1>
     </View>
     <View spacer={true} extralarge={true} />
   </>
@@ -53,9 +83,12 @@ export const H1Row = () => (
 
 export const H2Row = () => (
   <>
-    <View style={styles.row}>
-      <H2>Header H2</H2>
-      <View hspacer={true} />
+    <View>
+      <H2>{getTitle("H2")}</H2>
+      <H2 style={styles.distancedTitle}>{getLongerTitle("H2")}</H2>
+      <H2 style={styles.distancedTitle} weight={"SemiBold"}>
+        {getTitle("H2 Semibold")}
+      </H2>
     </View>
     <View spacer={true} extralarge={true} />
   </>

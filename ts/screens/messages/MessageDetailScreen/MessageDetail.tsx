@@ -1,5 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { Text, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import { ActivityIndicator, StyleSheet } from "react-native";
 import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
@@ -65,9 +65,9 @@ const messageDetail = ({
   if (pot.isLoading(potMessage)) {
     return (
       <View style={styles.notFullStateContainer}>
-        <Text style={styles.notFullStateMessageText}>
+        <NBText style={styles.notFullStateMessageText}>
           {I18n.t("messageDetails.loadingText")}
-        </Text>
+        </NBText>
         <ActivityIndicator />
       </View>
     );
@@ -82,9 +82,9 @@ const messageDetail = ({
   // Fallback to invalid state
   return (
     <View style={styles.notFullStateContainer}>
-      <Text style={styles.notFullStateMessageText}>
+      <NBText style={styles.notFullStateMessageText}>
         {I18n.t("messageDetails.emptyMessage")}
-      </Text>
+      </NBText>
     </View>
   );
 };

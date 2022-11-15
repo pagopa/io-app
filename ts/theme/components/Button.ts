@@ -186,7 +186,7 @@ export default (): Theme => ({
   justifyContent: "center",
   paddingHorizontal: 16,
 
-  borderRadius: variables.borderRadiusBase,
+  borderRadius: variables.btnBorderRadius,
   height: variables.btnHeight,
   elevation: 0,
   shadowOffset: { width: 0, height: 0 },

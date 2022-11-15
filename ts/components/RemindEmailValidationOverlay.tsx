@@ -5,7 +5,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Content, Text, View } from "native-base";
+import { Content, Text as NBText, View } from "native-base";
 import * as React from "react";
 import {
   Alert,
@@ -14,6 +14,7 @@ import {
   StyleSheet
 } from "react-native";
 import { connect } from "react-redux";
+import { IOColors } from "../components/core/variables/IOColors";
 import I18n from "../i18n";
 import NavigationService from "../navigation/NavigationService";
 import ROUTES from "../navigation/routes";
@@ -39,7 +40,6 @@ import {
 } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
 import customVariables from "../theme/variables";
-import { IOColors } from "../components/core/variables/IOColors";
 import { isOnboardingCompleted } from "../utils/navigation";
 import { ContextualHelpPropsMarkdown } from "./screens/BaseScreenComponent";
 import TopScreenComponent, {
@@ -220,7 +220,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
 
   private renderErrorBanner = (
     <View style={styles.error}>
-      <Text white={true}>{I18n.t("global.actions.retry")}</Text>
+      <NBText white={true}>{I18n.t("global.actions.retry")}</NBText>
       <View>
         <IconFont
           name={"io-close"}
@@ -393,9 +393,9 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
             style={styles.center}
           />
           <View spacer={true} extralarge={true} />
-          <Text alignCenter={true} bold={true}>
+          <NBText alignCenter={true} bold={true}>
             {title}
-          </Text>
+          </NBText>
           {!this.state.emailHasBeenValidate ? (
             <Markdown
               onLoadEnd={this.handleOnContentLoadEnd}
@@ -407,9 +407,9 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
             </Markdown>
           ) : (
             <View style={styles.validated}>
-              <Text alignCenter={true}>
+              <NBText alignCenter={true}>
                 {I18n.t("email.validate.validated_ok")}
-              </Text>
+              </NBText>
             </View>
           )}
           <View spacer={true} large={true} />

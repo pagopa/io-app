@@ -1,4 +1,4 @@
-import { Text, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
@@ -81,9 +81,9 @@ export class SearchNoResultMessage extends React.PureComponent<Props> {
 
         {renderIconErrorSearch(errorType)}
 
-        <Text style={styles.message}>
+        <NBText style={styles.message}>
           {renderMessageErrorSearch(errorType)}
-        </Text>
+        </NBText>
       </View>
     );
   }
