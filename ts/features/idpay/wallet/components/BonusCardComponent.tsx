@@ -74,7 +74,7 @@ const BonusCardComponent = (props: Props) => {
     //       })
     //     : ""
     // );
-    const isBonusActive = props.status === "REFUNDABLE";
+    const isBonusActive = props.nInstr !== "0";
     return (
       <View
         style={[styles.row, styles.spaced, { flex: 1 }]}
