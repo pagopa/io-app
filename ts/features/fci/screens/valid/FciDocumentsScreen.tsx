@@ -21,6 +21,7 @@ import {
   SignatureField,
   SignatureFieldAttrs
 } from "../../../../../definitions/fci/SignatureField";
+import { Document } from "../../../../../definitions/fci/Document";
 import { FciParamsList } from "../../navigation/params";
 
 const styles = StyleSheet.create({
@@ -32,6 +33,7 @@ const styles = StyleSheet.create({
 
 export type FciDocumentsScreenNavigationParams = Readonly<{
   attrs: SignatureField["attrs"];
+  currentDoc: number;
 }>;
 
 const FciDocumentsScreen = () => {
@@ -43,12 +45,14 @@ const FciDocumentsScreen = () => {
   const navigation = useNavigation();
   const route = useRoute<RouteProp<FciParamsList, "FCI_DOCUMENTS">>();
   const attrs = route.params.attrs;
+  const cDoc = route.params.currentDoc;
 
   React.useEffect(() => {
     if (attrs) {
       onSignatureDetail(attrs);
+      setCurrentDoc(cDoc);
     }
-  }, [attrs]);
+  }, [attrs, cDoc]);
 
   const { present, bottomSheet: fciAbortSignature } =
     useFciAbortSignatureFlow();
@@ -66,7 +70,8 @@ const FciDocumentsScreen = () => {
   // TODO: navigate to signature fields selection screen
   const onContinuePress = () =>
     navigation.navigate(FCI_ROUTES.SIGNATURE_FIELDS, {
-      documentId: documents[currentDoc].id
+      documentId: documents[currentDoc].id,
+      currentDoc
     });
 
   const continueButtonProps = {

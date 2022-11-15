@@ -24,6 +24,7 @@ import { FCI_ROUTES } from "../../navigation/routes";
 
 export type FciSignatureFieldsScreenNavigationParams = Readonly<{
   documentId: Document["id"];
+  currentDoc: number;
 }>;
 
 const FciSignatureFieldsScreen = (
@@ -83,7 +84,8 @@ const FciSignatureFieldsScreen = (
     navigation.navigate(FCI_ROUTES.MAIN, {
       screen: FCI_ROUTES.DOCUMENTS,
       params: {
-        attrs: signatureField.attrs
+        attrs: signatureField.attrs,
+        currentDoc: props.route.params.currentDoc
       },
       merge: true
     });
