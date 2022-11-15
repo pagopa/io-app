@@ -3176,6 +3176,9 @@ features:
       content: "Do you want to cancel the documents signing process?"
       cancel: "Back"
       confirm: "Cancel"
+    signatureFields:
+      title: "Sign here"
+      showOnDocument: "See on document"
 webView:
   error:
     missingParams: Not all information necessary to access this page are available

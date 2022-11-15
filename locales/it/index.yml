@@ -3200,7 +3200,9 @@ features:
       content: "Vuoi annullare la firma dei documenti?"
       cancel: "Torna indietro"
       confirm: "Annulla"
-
+    signatureFields:
+      title: "Firma qui"
+      showOnDocument: "Vedi sul documento"
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina

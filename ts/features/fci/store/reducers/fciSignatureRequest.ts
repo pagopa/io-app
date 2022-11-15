@@ -1,6 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
+import { Document } from "../../../../../definitions/fci/Document";
 import { SignatureRequestDetailView } from "../../../../../definitions/fci/SignatureRequestDetailView";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -42,5 +43,20 @@ export const fciSignatureDetailDocumentsSelector = createSelector(
   signatureDetailView =>
     pot.isSome(signatureDetailView) ? signatureDetailView.value.documents : []
 );
+
+export const fciDocumentSignatureFieldsFieldsSelector = (
+  documentId: Document["id"]
+) =>
+  createSelector(fciSignatureRequestSelector, signatureDetailView =>
+    pot.getOrElse(
+      pot.map(
+        signatureDetailView,
+        signatureRequest =>
+          signatureRequest.documents.find(d => d.id === documentId)?.metadata
+            .signature_fields || []
+      ),
+      []
+    )
+  );
 
 export default reducer;

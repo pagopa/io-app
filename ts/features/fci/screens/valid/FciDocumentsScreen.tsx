@@ -4,7 +4,7 @@ import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { SafeAreaView, StyleSheet } from "react-native";
 import { useSelector } from "react-redux";
-import { useNavigation } from "@react-navigation/native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import IconFont from "../../../../components/ui/IconFont";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
@@ -16,6 +16,12 @@ import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpac
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
 import { fciSignatureDetailDocumentsSelector } from "../../store/reducers/fciSignatureRequest";
+import { FCI_ROUTES } from "../../navigation/routes";
+import {
+  SignatureField,
+  SignatureFieldAttrs
+} from "../../../../../definitions/fci/SignatureField";
+import { FciParamsList } from "../../navigation/params";
 
 const styles = StyleSheet.create({
   pdf: {
@@ -24,6 +30,10 @@ const styles = StyleSheet.create({
   }
 });
 
+export type FciDocumentsScreenNavigationParams = Readonly<{
+  attrs: SignatureField["attrs"];
+}>;
+
 const FciDocumentsScreen = () => {
   const [pdfRef, setPdfRef] = React.useState<Pdf | null>();
   const [totalPages, setTotalPages] = React.useState(0);
@@ -31,6 +41,14 @@ const FciDocumentsScreen = () => {
   const [currentDoc, setCurrentDoc] = React.useState(0);
   const documents = useSelector(fciSignatureDetailDocumentsSelector);
   const navigation = useNavigation();
+  const route = useRoute<RouteProp<FciParamsList, "FCI_DOCUMENTS">>();
+  const attrs = route.params.attrs;
+
+  React.useEffect(() => {
+    if (attrs) {
+      onSignatureDetail(attrs);
+    }
+  }, [attrs]);
 
   const { present, bottomSheet: fciAbortSignature } =
     useFciAbortSignatureFlow();
@@ -46,7 +64,10 @@ const FciDocumentsScreen = () => {
   };
 
   // TODO: navigate to signature fields selection screen
-  const onContinuePress = () => constNull;
+  const onContinuePress = () =>
+    navigation.navigate(FCI_ROUTES.SIGNATURE_FIELDS, {
+      documentId: documents[currentDoc].id
+    });
 
   const continueButtonProps = {
     block: true,
@@ -61,6 +82,10 @@ const FciDocumentsScreen = () => {
     bordered: true,
     onPress: () => pdfRef?.setPage(totalPages),
     title: I18n.t("global.buttons.continue")
+  };
+
+  const onSignatureDetail = (attrs: SignatureFieldAttrs) => {
+    console.log("onSignatureDetail", attrs);
   };
 
   const renderPager = () => (
