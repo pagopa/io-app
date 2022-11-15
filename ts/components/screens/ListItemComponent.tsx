@@ -1,4 +1,4 @@
-import { Badge, ListItem, Text, View } from "native-base";
+import { Badge, ListItem, Text as NBText, View } from "native-base";
 import * as React from "react";
 import {
   AccessibilityRole,
@@ -129,7 +129,7 @@ export default class ListItemComponent extends React.Component<Props> {
                   <BadgeComponent />
                 </View>
               )}
-              <Text
+              <NBText
                 numberOfLines={2}
                 style={[
                   styles.serviceName,
@@ -137,10 +137,10 @@ export default class ListItemComponent extends React.Component<Props> {
                 ]}
               >
                 {this.props.title}
-              </Text>
+              </NBText>
               {this.props.titleBadge && (
                 <Badge style={styles.badgeStyle}>
-                  <Text badge={true}>{this.props.titleBadge}</Text>
+                  <NBText badge={true}>{this.props.titleBadge}</NBText>
                 </Badge>
               )}
             </View>
@@ -163,7 +163,7 @@ export default class ListItemComponent extends React.Component<Props> {
               ))}
           </View>
           {this.props.subTitle && (
-            <Text
+            <NBText
               numberOfLines={this.props.useExtendedSubTitle ? undefined : 1}
               style={[
                 styles.description,
@@ -174,7 +174,7 @@ export default class ListItemComponent extends React.Component<Props> {
               ]}
             >
               {this.props.subTitle}
-            </Text>
+            </NBText>
           )}
         </View>
         {this.props.iconName !== undefined && this.props.hideIcon !== true && (

@@ -1,4 +1,4 @@
-import { Text, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import I18n from "../../i18n";
@@ -33,7 +33,7 @@ export default function BetaBannerComponent() {
         />
         <View style={styles.separator} />
         <View style={styles.flex}>
-          <Text primary={true}>{I18n.t("betaBanner.description")}</Text>
+          <NBText primary={true}>{I18n.t("betaBanner.description")}</NBText>
         </View>
       </View>
       <View spacer={true} />

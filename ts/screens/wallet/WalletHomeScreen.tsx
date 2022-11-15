@@ -1,6 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
-import { Content, Text, View } from "native-base";
+import { Content, Text as NBText, View } from "native-base";
 import * as React from "react";
 import {
   BackHandler,
@@ -474,7 +474,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
         activeOpacity={1}
       >
         <IconFont name="io-qr" style={styles.white} />
-        <Text>{I18n.t("wallet.payNotice")}</Text>
+        <NBText>{I18n.t("wallet.payNotice")}</NBText>
       </ButtonDefaultOpacity>
     );
   }
