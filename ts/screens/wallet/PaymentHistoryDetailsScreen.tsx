@@ -1,7 +1,7 @@
 import { RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Text, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
@@ -94,10 +94,10 @@ const renderItem = (label: string, value?: string) => {
   }
   return (
     <React.Fragment>
-      <Text>{label}</Text>
-      <Text bold={true} white={false}>
+      <NBText>{label}</NBText>
+      <NBText bold={true} white={false}>
         {value}
-      </Text>
+      </NBText>
       <View spacer={true} />
     </React.Fragment>
   );
@@ -248,10 +248,10 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
 
   private standardRow = (label: string, value: string) => (
     <View style={styles.row}>
-      <Text style={styles.flex}>{label}</Text>
-      <Text bold={true} dark={true}>
+      <NBText style={styles.flex}>{label}</NBText>
+      <NBText bold={true} dark={true}>
         {value}
-      </Text>
+      </NBText>
     </View>
   );
 
@@ -268,9 +268,9 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
    */
   private renderHelper = () => (
     <View>
-      <Text alignCenter={true} style={styles.padded}>
+      <NBText alignCenter={true} style={styles.padded}>
         {I18n.t("payment.details.info.help")}
-      </Text>
+      </NBText>
       <View spacer={true} />
       <ButtonDefaultOpacity
         onPress={this.handleAskAssistance}
@@ -279,7 +279,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
         style={styles.button}
       >
         <IconFont name={"io-messaggi"} />
-        <Text>{I18n.t("payment.details.info.buttons.help")}</Text>
+        <NBText>{I18n.t("payment.details.info.buttons.help")}</NBText>
       </ButtonDefaultOpacity>
     </View>
   );
@@ -316,10 +316,10 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
                 )}
               {O.isSome(data.errorDetail) && (
                 <View key={"error"}>
-                  <Text>{I18n.t("payment.errorDetails")}</Text>
-                  <Text bold={true} dark={true}>
+                  <NBText>{I18n.t("payment.errorDetails")}</NBText>
+                  <NBText bold={true} dark={true}>
                     {data.errorDetail.value}
-                  </Text>
+                  </NBText>
                 </View>
               )}
             </React.Fragment>
@@ -357,29 +357,29 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
 
                 {/** total amount */}
                 <View style={styles.row}>
-                  <Text
+                  <NBText
                     style={[styles.bigText, styles.flex]}
                     bold={true}
                     dark={true}
                   >
                     {I18n.t("wallet.firstTransactionSummary.total")}
-                  </Text>
-                  <Text style={styles.bigText} bold={true} dark={true}>
+                  </NBText>
+                  <NBText style={styles.bigText} bold={true} dark={true}>
                     {formatNumberCentsToAmount(data.grandTotal.value, true)}
-                  </Text>
+                  </NBText>
                 </View>
 
                 {this.renderSeparator()}
 
                 {/** Transaction id */}
                 <View>
-                  <Text>
+                  <NBText>
                     {I18n.t("wallet.firstTransactionSummary.idTransaction")}
-                  </Text>
+                  </NBText>
                   <View style={styles.row}>
-                    <Text bold={true} dark={true}>
+                    <NBText bold={true} dark={true}>
                       {data.idTransaction}
-                    </Text>
+                    </NBText>
                     <CopyButtonComponent
                       textToCopy={data.idTransaction.toString()}
                     />

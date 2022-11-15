@@ -1,4 +1,4 @@
-import { Container, Content, Text, View } from "native-base";
+import { Container, Content, Text as NBText, View } from "native-base";
 import React from "react";
 import { BackHandler, NativeEventSubscription, StyleSheet } from "react-native";
 import { Calendar } from "react-native-calendar-events";
@@ -64,7 +64,7 @@ class SelectCalendarModal extends React.PureComponent<Props, State> {
                 this.props.defaultCalendar === undefined && (
                   <View>
                     <ItemSeparatorComponent />
-                    <Text>{I18n.t("messages.cta.helper")}</Text>
+                    <NBText>{I18n.t("messages.cta.helper")}</NBText>
                   </View>
                 )
               }
