@@ -142,6 +142,9 @@ function configurePushNotifications() {
       // On iOS we need to call this when the remote notification handling is complete
       notification.finish(PushNotificationIOS.FetchResult.NoData);
     },
+    // Only for iOS, we need to customize push notification prompt.
+    // We delay the push notification promt until opt-in screen
+    // during onboarding where permission is clearly required
     requestPermissions: !remindersOptInEnabled || Platform.OS !== "ios"
   });
 }
