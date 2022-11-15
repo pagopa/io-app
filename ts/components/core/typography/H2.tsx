@@ -16,7 +16,7 @@ type OwnProps = ExternalTypographyProps<
 
 const fontName: IOFontFamily = "TitilliumWeb";
 export const h2FontSize = 20;
-export const h2LineHeight = h2FontSize * 1.2;
+export const h2LineHeight = 24;
 export const h2DefaultColor: AllowedColors = "bluegreyDark";
 export const h2DefaultWeight: AllowedWeight = "Bold";
 
