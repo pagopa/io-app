@@ -64,7 +64,11 @@ export const NotificationsPreferencesScreen = () => {
                 {`${I18n.t(
                   "profile.preferences.notifications.preview.description"
                 )} `}
-                <LabelSmall accessibilityRole="link" weight="SemiBold" onPress={present}>
+                <LabelSmall
+                  accessibilityRole="link"
+                  weight="SemiBold"
+                  onPress={present}
+                >
                   {I18n.t("profile.preferences.notifications.preview.link")}
                 </LabelSmall>
               </>
