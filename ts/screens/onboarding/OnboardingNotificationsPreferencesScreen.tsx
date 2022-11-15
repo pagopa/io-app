@@ -24,6 +24,9 @@ import customVariables from "../../theme/variables";
 import { IOBadge } from "../../components/core/IOBadge";
 import { H1 } from "../../components/core/typography/H1";
 import { Body } from "../../components/core/typography/Body";
+import { LabelSmall } from "../../components/core/typography/LabelSmall";
+import { PushNotificationsContentTypeEnum } from "../../../definitions/backend/PushNotificationsContentType";
+import { usePreviewMoreInfo } from "../../utils/hooks/usePreviewMoreInfo";
 import { NotificationsPreferencesPreview } from "./components/NotificationsPreferencesPreview";
 
 const styles = StyleSheet.create({
@@ -125,9 +128,11 @@ const Header = memo(({ isFirstOnboarding }: { isFirstOnboarding: boolean }) => {
 const OnboardingNotificationsPreferencesScreen = (props: Props) => {
   const dispatch = useIODispatch();
 
+  const [previewEnabled, setPreviewEnabled] = useState(true);
   const [remindersEnabled, setRemindersEnabled] = useState(true);
 
   const preferences = useSelector(profilePreferencesSelector);
+  const { present, bottomSheet } = usePreviewMoreInfo();
 
   const isError = pot.isError(preferences);
   const isUpdating = pot.isUpdating(preferences);
@@ -145,7 +150,10 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
       profileUpsert.request({
         reminder_status: remindersEnabled
           ? ReminderStatusEnum.ENABLED
-          : ReminderStatusEnum.DISABLED
+          : ReminderStatusEnum.DISABLED,
+        push_notifications_content_type: previewEnabled
+          ? PushNotificationsContentTypeEnum.FULL
+          : PushNotificationsContentTypeEnum.ANONYMOUS
       })
     );
   };
@@ -169,6 +177,7 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
       >
         <Header isFirstOnboarding={isFirstOnboarding} />
         <NotificationsPreferencesPreview
+          previewEnabled={previewEnabled}
           remindersEnabled={remindersEnabled}
           isFirstOnboarding={isFirstOnboarding}
         />
@@ -180,6 +189,28 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
         >
           {isFirstOnboarding && <View style={styles.separator} />}
           <PreferencesListItem
+            title={I18n.t("profile.preferences.notifications.preview.title")}
+            description={
+              <>
+                {`${I18n.t(
+                  "profile.preferences.notifications.preview.description"
+                )} `}
+                <LabelSmall accessibilityRole="link" onPress={present}>
+                  {I18n.t("profile.preferences.notifications.preview.link")}
+                </LabelSmall>
+              </>
+            }
+            rightElement={
+              <Switch
+                value={previewEnabled}
+                onValueChange={setPreviewEnabled}
+                disabled={isUpdating}
+                testID="previewsPreferenceSwitch"
+              />
+            }
+          />
+          <View style={styles.separator} />
+          <PreferencesListItem
             title={I18n.t("profile.preferences.notifications.reminders.title")}
             description={I18n.t(
               "profile.preferences.notifications.reminders.description"
@@ -189,6 +220,7 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
                 value={remindersEnabled}
                 onValueChange={setRemindersEnabled}
                 disabled={isUpdating}
+                testID="remindersPreferenceSwitch"
               />
             }
           />
@@ -200,6 +232,7 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
           </InfoBox>
         </View>
       </ScreenContent>
+      {bottomSheet}
       <SafeAreaView>
         <FooterWithButtons
           type="SingleButton"

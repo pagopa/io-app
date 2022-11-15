@@ -6,7 +6,7 @@ import { ITuple2 } from "@pagopa/ts-commons/lib/tuples";
 import * as AR from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Text, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import {
   Alert,
@@ -348,13 +348,13 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
                 style={styles.button}
                 bordered={true}
               >
-                <Text>{I18n.t("wallet.QRtoPay.chooser")}</Text>
+                <NBText>{I18n.t("wallet.QRtoPay.chooser")}</NBText>
               </ButtonDefaultOpacity>
               <View style={styles.content}>
                 <View spacer={true} />
-                <Text style={[styles.padded, styles.bottomText]}>
+                <NBText style={[styles.padded, styles.bottomText]}>
                   {I18n.t("wallet.QRtoPay.cameraUsageInfo")}
-                </Text>
+                </NBText>
                 <View spacer={true} extralarge={true} />
               </View>
             </View>

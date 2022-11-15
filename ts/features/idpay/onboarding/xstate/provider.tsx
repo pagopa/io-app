@@ -7,6 +7,7 @@ import {
   IDPAY_API_TEST_TOKEN,
   IDPAY_API_UAT_BASEURL
 } from "../../../../config";
+import { useXStateMachine } from "../../../../hooks/useXStateMachine";
 import {
   AppParamsList,
   IOStackNavigationProp
@@ -32,7 +33,7 @@ type Props = {
 };
 
 const IDPayOnboardingMachineProvider = (props: Props) => {
-  const { children } = props;
+  const [machine] = useXStateMachine(createIDPayOnboardingMachine);
 
   const sessionInfo = useIOSelector(sessionInfoSelector);
 
@@ -49,8 +50,6 @@ const IDPayOnboardingMachineProvider = (props: Props) => {
 
   const onboardingClient = createOnboardingClient(IDPAY_API_UAT_BASEURL, token);
 
-  const machine = createIDPayOnboardingMachine();
-
   const services = createServicesImplementation(onboardingClient);
 
   const actions = createActionsImplementation(navigation);
@@ -62,7 +61,7 @@ const IDPayOnboardingMachineProvider = (props: Props) => {
 
   return (
     <OnboardingMachineContext.Provider value={machineService}>
-      {children}
+      {props.children}
     </OnboardingMachineContext.Provider>
   );
 };

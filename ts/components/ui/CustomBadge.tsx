@@ -1,4 +1,4 @@
-import { Badge, Text } from "native-base";
+import { Badge, Text as NBText } from "native-base";
 import React, { memo } from "react";
 import { StyleSheet } from "react-native";
 import variables from "../../theme/variables";
@@ -69,14 +69,14 @@ const CustomBadge = (props: Props) => {
         { width: styles.badgeStyle.width * getWidthMultiplier(badge) }
       ]}
     >
-      <Text
+      <NBText
         badge={true}
         style={styles.textStyle}
         accessible={false}
         importantForAccessibility={"no-hide-descendants"}
       >
         {badge}
-      </Text>
+      </NBText>
     </Badge>
   );
 };
