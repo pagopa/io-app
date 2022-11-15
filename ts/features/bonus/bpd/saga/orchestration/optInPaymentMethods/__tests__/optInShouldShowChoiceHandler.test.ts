@@ -7,8 +7,15 @@ import {
   fetchWalletsRequestWithExpBackoff,
   fetchWalletsSuccess
 } from "../../../../../../../store/actions/wallet/wallets";
+import {
+  getBPDMethodsVisibleInWalletSelector,
+  pagoPaCreditCardWalletV1Selector
+} from "../../../../../../../store/reducers/wallet/wallets";
 import { remoteReady, remoteUndefined } from "../../../../model/RemoteValue";
-import { bpdAllData } from "../../../../store/actions/details";
+import {
+  BpdActivationPayload,
+  bpdLoadActivationStatus
+} from "../../../../store/actions/details";
 import { optInPaymentMethodsShowChoice } from "../../../../store/actions/optInPaymentMethods";
 import {
   activationStatusSelector,
@@ -16,16 +23,28 @@ import {
 } from "../../../../store/reducers/details/activation";
 import { optInShouldShowChoiceHandler } from "../optInShouldShowChoiceHandler";
 
+const mockActivationStatus: BpdActivationPayload = {
+  enabled: true,
+  activationStatus: "never",
+  payoffInstr: undefined,
+  optInStatus: CitizenOptInStatusEnum.NOREQ
+};
+
 describe("optInShouldShowChoiceHandler saga", () => {
   jest.useFakeTimers();
 
   it("If bpdAllData fails, should dispatch the optInPaymentMethodsShowChoice.failure action and return", () => {
     testSaga(optInShouldShowChoiceHandler)
       .next()
-      .put(bpdAllData.request())
+      .select(activationStatusSelector)
+      .next(remoteUndefined)
+      .put(bpdLoadActivationStatus.request())
       .next()
-      .take([getType(bpdAllData.success), getType(bpdAllData.failure)])
-      .next(bpdAllData.failure(new Error()))
+      .take([
+        getType(bpdLoadActivationStatus.success),
+        getType(bpdLoadActivationStatus.failure)
+      ])
+      .next(bpdLoadActivationStatus.failure(new Error()))
       .put(optInPaymentMethodsShowChoice.failure(new Error()))
       .next()
       .isDone();
@@ -34,10 +53,15 @@ describe("optInShouldShowChoiceHandler saga", () => {
   it("If bpdEnabled is not potSome, should dispatch the optInPaymentMethodsShowChoice.failure action and return", () => {
     testSaga(optInShouldShowChoiceHandler)
       .next()
-      .put(bpdAllData.request())
+      .select(activationStatusSelector)
+      .next(remoteUndefined)
+      .put(bpdLoadActivationStatus.request())
       .next()
-      .take([getType(bpdAllData.success), getType(bpdAllData.failure)])
-      .next(bpdAllData.success())
+      .take([
+        getType(bpdLoadActivationStatus.success),
+        getType(bpdLoadActivationStatus.failure)
+      ])
+      .next(bpdLoadActivationStatus.success(mockActivationStatus))
       .select(activationStatusSelector)
       .next(remoteUndefined)
       .put(
@@ -52,10 +76,15 @@ describe("optInShouldShowChoiceHandler saga", () => {
   it("If bpdEnabled is potSome with the value false, should dispatch the optInPaymentMethodsShowChoice.success action with payload false and return", () => {
     testSaga(optInShouldShowChoiceHandler)
       .next()
-      .put(bpdAllData.request())
+      .select(activationStatusSelector)
+      .next(remoteUndefined)
+      .put(bpdLoadActivationStatus.request())
       .next()
-      .take([getType(bpdAllData.success), getType(bpdAllData.failure)])
-      .next(bpdAllData.success())
+      .take([
+        getType(bpdLoadActivationStatus.success),
+        getType(bpdLoadActivationStatus.failure)
+      ])
+      .next(bpdLoadActivationStatus.success(mockActivationStatus))
       .select(activationStatusSelector)
       .next(remoteReady("never"))
       .put(optInPaymentMethodsShowChoice.success(false))
@@ -66,10 +95,15 @@ describe("optInShouldShowChoiceHandler saga", () => {
   it("If optInStatus is not potSome, should dispatch the optInPaymentMethodsShowChoice.failure action and return", () => {
     testSaga(optInShouldShowChoiceHandler)
       .next()
-      .put(bpdAllData.request())
+      .select(activationStatusSelector)
+      .next(remoteUndefined)
+      .put(bpdLoadActivationStatus.request())
       .next()
-      .take([getType(bpdAllData.success), getType(bpdAllData.failure)])
-      .next(bpdAllData.success())
+      .take([
+        getType(bpdLoadActivationStatus.success),
+        getType(bpdLoadActivationStatus.failure)
+      ])
+      .next(bpdLoadActivationStatus.success(mockActivationStatus))
       .select(activationStatusSelector)
       .next(remoteReady("subscribed"))
       .select(optInStatusSelector)
@@ -86,10 +120,15 @@ describe("optInShouldShowChoiceHandler saga", () => {
   it("If optInStatus is potSome with value different from NOREQ, should dispatch the optInPaymentMethodsShowChoice.success action with payload false and return", () => {
     testSaga(optInShouldShowChoiceHandler)
       .next()
-      .put(bpdAllData.request())
+      .select(activationStatusSelector)
+      .next(remoteUndefined)
+      .put(bpdLoadActivationStatus.request())
       .next()
-      .take([getType(bpdAllData.success), getType(bpdAllData.failure)])
-      .next(bpdAllData.success())
+      .take([
+        getType(bpdLoadActivationStatus.success),
+        getType(bpdLoadActivationStatus.failure)
+      ])
+      .next(bpdLoadActivationStatus.success(mockActivationStatus))
       .select(activationStatusSelector)
       .next(remoteReady("subscribed"))
       .select(optInStatusSelector)
@@ -102,14 +141,21 @@ describe("optInShouldShowChoiceHandler saga", () => {
   it("If fetchWallets fails, should dispatch the optInPaymentMethodsShowChoice.failure action", () => {
     testSaga(optInShouldShowChoiceHandler)
       .next()
-      .put(bpdAllData.request())
+      .select(activationStatusSelector)
+      .next(remoteUndefined)
+      .put(bpdLoadActivationStatus.request())
       .next()
-      .take([getType(bpdAllData.success), getType(bpdAllData.failure)])
-      .next(bpdAllData.success())
+      .take([
+        getType(bpdLoadActivationStatus.success),
+        getType(bpdLoadActivationStatus.failure)
+      ])
+      .next(bpdLoadActivationStatus.success(mockActivationStatus))
       .select(activationStatusSelector)
       .next(remoteReady("subscribed"))
       .select(optInStatusSelector)
       .next(pot.some(CitizenOptInStatusEnum.NOREQ))
+      .select(pagoPaCreditCardWalletV1Selector)
+      .next(pot.none)
       .put(fetchWalletsRequestWithExpBackoff())
       .next()
       .take([getType(fetchWalletsSuccess), getType(fetchWalletsFailure)])
@@ -119,22 +165,31 @@ describe("optInShouldShowChoiceHandler saga", () => {
       .isDone();
   });
 
-  it("If fetchWallets succeed, should dispatch the optInPaymentMethodsShowChoice.success and the optInPaymentMethodsStart actions", () => {
+  it("If fetchWallets succeed, should dispatch the optInPaymentMethodsShowChoice.success action", () => {
     testSaga(optInShouldShowChoiceHandler)
       .next()
-      .put(bpdAllData.request())
+      .select(activationStatusSelector)
+      .next(remoteUndefined)
+      .put(bpdLoadActivationStatus.request())
       .next()
-      .take([getType(bpdAllData.success), getType(bpdAllData.failure)])
-      .next(bpdAllData.success())
+      .take([
+        getType(bpdLoadActivationStatus.success),
+        getType(bpdLoadActivationStatus.failure)
+      ])
+      .next(bpdLoadActivationStatus.success(mockActivationStatus))
       .select(activationStatusSelector)
       .next(remoteReady("subscribed"))
       .select(optInStatusSelector)
       .next(pot.some(CitizenOptInStatusEnum.NOREQ))
+      .select(pagoPaCreditCardWalletV1Selector)
+      .next(pot.none)
       .put(fetchWalletsRequestWithExpBackoff())
       .next()
       .take([getType(fetchWalletsSuccess), getType(fetchWalletsFailure)])
       .next(fetchWalletsSuccess([]))
-      .put(optInPaymentMethodsShowChoice.success(true))
+      .select(getBPDMethodsVisibleInWalletSelector)
+      .next([])
+      .put(optInPaymentMethodsShowChoice.success(false))
       .next()
       .isDone();
   });
