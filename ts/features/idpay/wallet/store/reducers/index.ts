@@ -1,13 +1,13 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
-import { ErrorDTO } from "../../../../../../definitions/idpay/wallet/ErrorDTO";
 import { WalletDTO } from "../../../../../../definitions/idpay/wallet/WalletDTO";
 import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { NetworkError } from "../../../../../utils/errors";
 import { idPayWalletGet } from "../actions";
 
 export type IDPayWalletState = {
-  wallet: pot.Pot<WalletDTO, ErrorDTO>;
+  wallet: pot.Pot<WalletDTO, NetworkError>;
 };
 
 const INITIAL_STATE: IDPayWalletState = {
