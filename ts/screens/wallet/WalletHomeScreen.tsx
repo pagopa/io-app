@@ -52,6 +52,7 @@ import {
   cgnDetailSelector,
   isCgnInformationAvailableSelector
 } from "../../features/bonus/cgn/store/reducers/details";
+import { idPayWalletGet } from "../../features/idpay/wallet/store/actions";
 import FeaturedCardCarousel from "../../features/wallet/component/card/FeaturedCardCarousel";
 import WalletV2PreviewCards from "../../features/wallet/component/card/WalletV2PreviewCards";
 import NewPaymentMethodAddedNotifier from "../../features/wallet/component/NewMethodAddedNotifier";
@@ -194,6 +195,12 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
   private loadBonusCgn = () => {
     if (this.props.isCgnEnabled) {
       this.props.loadCgnData();
+    }
+  };
+
+  private loadBonusIDPay = () => {
+    if (this.props.isIdPayEnabled) {
+      this.props.loadIdPayWalletData();
     }
   };
 
@@ -360,6 +367,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
                 this.loadBonusVacanze();
                 this.loadBonusBpd();
                 this.loadBonusCgn();
+                this.loadBonusIDPay();
               }
             }}
             activeBonuses={this.props.allActiveBonus}
@@ -569,12 +577,14 @@ const mapStateToProps = (state: GlobalState) => ({
   isCgnEnabled: isCGNEnabledSelector(state),
   bancomatListVisibleInWallet: bancomatListVisibleInWalletSelector(state),
   coBadgeListVisibleInWallet: cobadgeListVisibleInWalletSelector(state),
-  bpdConfig: bpdRemoteConfigSelector(state)
+  bpdConfig: bpdRemoteConfigSelector(state),
+  isIdPayEnabled: true, // TODO add remote config to enable/disable idPay
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadBpdData: () => dispatch(bpdAllData.request()),
   loadCgnData: () => dispatch(cgnDetails.request()),
+  loadIdPayWalletData: () => dispatch(idPayWalletGet.request()),
   navigateToWalletAddPaymentMethod: (keyFrom?: string) =>
     navigateToWalletAddPaymentMethod({ inPayment: O.none, keyFrom }),
   navigateToPaymentScanQrCode: () => navigateToPaymentScanQrCode(),
