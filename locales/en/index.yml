@@ -845,6 +845,8 @@ onboarding:
       reminderOnPreviewOffMessage: Open the app to read the content
       reminderOffPreviewOffTitle: You have a new message
       reminderOffPreviewOffMessage: Open the app to read the content
+    contextualHelpTitle: Push notifications
+    contextualHelpContent: !include onboarding/onboarding_notifications.md
   infoConsent:
     headerTitle: IO Settings
     title: Enable push notifications?
@@ -853,6 +855,8 @@ onboarding:
     instruction2: 2. Enable 'Allow notifications'
     openSettings: Open iOS settings
     continue: Maybe later
+    contextualHelpTitle: Push notifications
+    contextualHelpContent: !include onboarding/onboarding_notifications_info_consent.md
 forms:
   validators:
     required: Required value

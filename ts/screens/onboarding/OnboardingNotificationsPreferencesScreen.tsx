@@ -14,7 +14,9 @@ import { LabelSmall } from "../../components/core/typography/LabelSmall";
 import { IOColors } from "../../components/core/variables/IOColors";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { PreferencesListItem } from "../../components/PreferencesListItem";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "../../components/screens/BaseScreenComponent";
 import { BlockButtonProps } from "../../components/ui/BlockButtons";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import Switch from "../../components/ui/Switch";
@@ -25,7 +27,6 @@ import { profileUpsert } from "../../store/actions/profile";
 import { useIODispatch } from "../../store/hooks";
 import { profilePreferencesSelector } from "../../store/reducers/profile";
 import customVariables from "../../theme/variables";
-import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
 import { usePreviewMoreInfo } from "../../utils/hooks/usePreviewMoreInfo";
 import { showToast } from "../../utils/showToast";
 import { NotificationsPreferencesPreview } from "./components/NotificationsPreferencesPreview";
@@ -62,6 +63,11 @@ const styles = StyleSheet.create({
     padding: customVariables.contentPadding / 2
   }
 });
+
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "onboarding.notifications.contextualHelpTitle",
+  body: "onboarding.notifications.contextualHelpContent"
+};
 
 export type OnboardingNotificationsPreferencesScreenNavigationParams = {
   isFirstOnboarding: boolean;
@@ -169,7 +175,7 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
           ? I18n.t("onboarding.notifications.headerTitle")
           : undefined
       }
-      contextualHelp={emptyContextualHelp}
+      contextualHelpMarkdown={contextualHelpMarkdown}
       primary={!isFirstOnboarding}
     >
       <SafeAreaView style={IOStyles.flex}>

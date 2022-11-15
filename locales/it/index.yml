@@ -861,6 +861,8 @@ onboarding:
       reminderOnPreviewOffMessage: Apri l’app per leggere il contenuto
       reminderOffPreviewOffTitle: Hai un nuovo messaggio
       reminderOffPreviewOffMessage: Apri l’app per leggere il contenuto
+    contextualHelpTitle: Notifiche push
+    contextualHelpContent: !include onboarding/onboarding_notifications.md
   infoConsent:
     headerTitle: Configura IO
     title: Vuoi attivare le notifiche?
@@ -869,6 +871,8 @@ onboarding:
     instruction2: 2. Attiva 'Consenti Notifiche'
     openSettings: Apri Impostazioni di iOS
     continue: Non ora
+    contextualHelpTitle: Notifiche push
+    contextualHelpContent: !include onboarding/onboarding_notifications_info_consent.md
 forms:
   validators:
     required: Valore richiesto
