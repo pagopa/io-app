@@ -8,8 +8,8 @@ import BaseScreenComponent, {
 import ScreenContent from "../../components/screens/ScreenContent";
 import I18n from "../../i18n";
 import { IOStyles } from "../../components/core/variables/IOStyles";
-import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import { BlockButtonProps } from "../../components/ui/BlockButtons";
+import { FooterStackButton } from "../../features/bonus/bonusVacanze/components/buttons/FooterStackButtons";
 import { openAppSettings } from "../../utils/appSettings";
 import { useIODispatch } from "../../store/hooks";
 import { notificationsInfoScreenConsent } from "../../store/actions/notifications";
@@ -144,10 +144,11 @@ const OnboardingNotificationsInfoScreenConsent = () => {
             />
           </View>
         </ScreenContent>
-        <FooterWithButtons
-          type="TwoButtonsVertical"
-          leftButton={settingsButtonProps(false, openSettings)}
-          rightButton={continueButtonProps(false, goNext)}
+        <FooterStackButton
+          buttons={[
+            settingsButtonProps(false, openSettings),
+            continueButtonProps(false, goNext)
+          ]}
         />
       </SafeAreaView>
     </BaseScreenComponent>
