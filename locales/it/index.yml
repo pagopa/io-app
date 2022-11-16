@@ -515,7 +515,7 @@ profile:
         description: Su richiesta dell'ente, ricevi notifiche push in prossimità di scadenze o quando hai dei messaggi non letti
       preview:
         title: Mostra anteprime
-        description: Includi nella notifica push il mittente e l’oggetto del messaggio
+        description: Includi nella notifica push il mittente e l’oggetto del messaggio · 
         link: Più info
         bottomSheet:
           title: Mostra anteprime
@@ -853,8 +853,8 @@ onboarding:
     headerTitle: Configura IO
     continue: Continua
     preview:
-      reminderOnPreviewOnTitle: Bonus Terme
-      reminderOnPreviewOnMessage: Hai ancora 7 giorni per richiedere il bonus!
+      reminderOnPreviewOnTitle: Hai un avviso che scade domani
+      reminderOnPreviewOnMessage: Entra nell’app per pagarlo
       reminderOffPreviewOnTitle: Ministero dell’Interno
       reminderOffPreviewOnMessage: Aggiornamenti sul tuo cambio di residenza
       reminderOnPreviewOffTitle: Promemoria

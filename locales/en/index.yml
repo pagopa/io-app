@@ -515,7 +515,7 @@ profile:
         description: Upon request of the sender, receive push notifications close to deadlines or when you have unread messages
       preview:
         title: Show previews
-        description: Include the sender and subject of the message in the push notification
+        description: Include the sender and subject of the message in the push notification · 
         link: More info
         bottomSheet:
           title: Show previews
@@ -837,8 +837,8 @@ onboarding:
     headerTitle: IO Settings
     continue: Continue
     preview:
-      reminderOnPreviewOnTitle: Bonus
-      reminderOnPreviewOnMessage: You have 7 days left to apply for the bonus!
+      reminderOnPreviewOnTitle: There’s a notice expiring tomorrow
+      reminderOnPreviewOnMessage: Log in to pay for it
       reminderOffPreviewOnTitle: Ministry of Interior
       reminderOffPreviewOnMessage: Updates on your change of address
       reminderOnPreviewOffTitle: Reminder
