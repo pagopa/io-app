@@ -3167,8 +3167,22 @@ features:
           REFUSED: REFUSED
           CANCELLED: Annullata
         expand: mostra gli stati precedenti
-        info: Puoi vedere il dettaglio di ciascuno stato, scaricare le ricevute e le attestazioni opponibili a terzi accedendo alla versione web del servizio
-        cta: Accedi alla versione web
+        info: Puoi vedere il dettaglio di ciascuno stato, scaricare le ricevute e le attestazioni opponibili a terzi accedendo alla versione web del servizio   
+        cta: Accedi alla versione web  
+  fci:
+    errors:
+      expired:
+        title: Document no longer available for signature
+        subTitle: The document is no longer available for signature. Contact the institution for more information.
+      waitForQtsp:
+        title: The document is being processed
+        subTitle: Please wait, you will soon receive the signed contract in the app.
+      unsupportedDevice:
+        title: There is a problem
+        subTitle: Your device does not support the "Firma con IO" feature.
+      generic:
+        title: There is a problem
+        subTitle: To proceed with the signature, check that you have updated the IO app to the latest version.
 webView:
   error:
     missingParams: Not all information necessary to access this page are available

@@ -16,6 +16,7 @@ import workunitGenericFailure from "../components/error/WorkunitGenericFailure";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
 import {
   bpdEnabled,
+  fciEnabled,
   bpdOptInPaymentMethodsEnabled,
   fimsEnabled,
   myPortalEnabled,
@@ -32,6 +33,11 @@ import {
 } from "../features/bonus/cgn/navigation/navigator";
 import CGN_ROUTES from "../features/bonus/cgn/navigation/routes";
 import { svLinkingOptions } from "../features/bonus/siciliaVola/navigation/navigator";
+import {
+  fciLinkingOptions,
+  FciStackNavigator
+} from "../features/fci/navigation/FciStackNavigator";
+import { FCI_ROUTES } from "../features/fci/navigation/routes";
 import {
   fimsLinkingOptions,
   FimsNavigator
@@ -53,6 +59,7 @@ import {
   bpdRemoteConfigSelector,
   isCdcEnabledSelector,
   isCGNEnabledSelector,
+  isFciEnabledSelector,
   isFIMSEnabledSelector
 } from "../store/reducers/backendStatus";
 import { isTestEnv } from "../utils/environment";
@@ -74,8 +81,10 @@ export const AppStackNavigator = () => {
   const cdcEnabled = useIOSelector(isCdcEnabledSelector);
   const fimsEnabledSelector = useIOSelector(isFIMSEnabledSelector);
   const cgnEnabled = useIOSelector(isCGNEnabledSelector);
+  const fciEnabledSelector = useIOSelector(isFciEnabledSelector);
 
   const isFimsEnabled = fimsEnabled && fimsEnabledSelector;
+  const isFciEnabled = fciEnabled && fciEnabledSelector;
   return (
     <Stack.Navigator
       initialRouteName={"INGRESS"}
@@ -153,6 +162,10 @@ export const AppStackNavigator = () => {
         />
       )}
 
+      {isFciEnabled && (
+        <Stack.Screen name={FCI_ROUTES.MAIN} component={FciStackNavigator} />
+      )}
+
       <Stack.Screen
         name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN}
         component={IDPayOnboardingNavigator}
@@ -175,6 +188,7 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
 
   const cgnEnabled = useIOSelector(isCGNEnabledSelector);
   const isFimsEnabled = useIOSelector(isFIMSEnabledSelector) && fimsEnabled;
+  const isFciEnabled = useIOSelector(isFciEnabledSelector) && fciEnabled;
 
   const bpdRemoteConfig = useIOSelector(bpdRemoteConfigSelector);
   const isOptInPaymentMethodsEnabled =
@@ -234,8 +248,9 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
             ...(svEnabled && svLinkingOptions)
           }
         },
-        ...(isFimsEnabled && fimsLinkingOptions),
-        ...(cgnEnabled && cgnLinkingOptions),
+        ...(isFimsEnabled ? fimsLinkingOptions : {}),
+        ...(cgnEnabled ? cgnLinkingOptions : {}),
+        ...(isFciEnabled ? fciLinkingOptions : {}),
         [UADONATION_ROUTES.WEBVIEW]: "uadonations-webview",
         [ROUTES.WORKUNIT_GENERIC_FAILURE]: "*"
       }
