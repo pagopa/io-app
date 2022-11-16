@@ -135,20 +135,22 @@ const FciDocumentsScreen = () => {
         onNext={onNext}
         testID={"FciDocumentsNavBarTestID"}
       />
-      {documents.length > 0 && (
-        <SafeAreaView style={IOStyles.flex} testID={"FciDocumentsScreenTestID"}>
-          {renderPager()}
-          <FooterWithButtons
-            type={"TwoButtonsInlineThird"}
-            leftButton={cancelButtonProps}
-            rightButton={
-              currentPage < totalPages
-                ? keepReadingButtonProps
-                : continueButtonProps
-            }
-          />
-        </SafeAreaView>
-      )}
+      <SafeAreaView style={IOStyles.flex} testID={"FciDocumentsScreenTestID"}>
+        {documents.length > 0 && (
+          <>
+            {renderPager()}
+            <FooterWithButtons
+              type={"TwoButtonsInlineThird"}
+              leftButton={cancelButtonProps}
+              rightButton={
+                currentPage < totalPages
+                  ? keepReadingButtonProps
+                  : continueButtonProps
+              }
+            />
+          </>
+        )}
+      </SafeAreaView>
     </BaseScreenComponent>
   );
 };
