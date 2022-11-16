@@ -30,15 +30,15 @@ exports[`EuCovidCertHeader it should match the snapshot 1`] = `
       font="TitilliumWeb"
       fontStyle={
         Object {
-          "fontSize": 28,
-          "lineHeight": 34.44,
+          "fontSize": 26,
+          "lineHeight": 32,
         }
       }
       style={
         Array [
           Object {
-            "fontSize": 28,
-            "lineHeight": 34.44,
+            "fontSize": 26,
+            "lineHeight": 32,
           },
           Object {
             "color": "#17324D",
@@ -61,12 +61,14 @@ exports[`EuCovidCertHeader it should match the snapshot 1`] = `
       fontStyle={
         Object {
           "fontSize": 20,
+          "lineHeight": 24,
         }
       }
       style={
         Array [
           Object {
             "fontSize": 20,
+            "lineHeight": 24,
           },
           Object {
             "color": "#17324D",

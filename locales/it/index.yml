@@ -503,23 +503,23 @@ profile:
       local_calendar: Calendario locale
       birthday_calendar: Compleanni
     notifications:
-      contextualHelpTitle: Titolo
+      contextualHelpTitle: Notifiche push
       contextualHelpContent: !include profile/profile_preferences_notifications.md
       header: Notifiche push
       title: Personalizza le notifiche
-      subtitle: Scegli come ricevere aggiornamenti sui messaggi e promemoria che ricevi.
-      titleExistingUser: Notifiche push più intelligenti
+      subtitle: Scegli se mostrare le anteprime e ricevere promemoria.
+      titleExistingUser: Personalizza le notifiche
       subtitleExistingUser: Ora puoi vedere subito chi ti ha scritto o ricevere promemoria da messaggi importanti.
       reminders:
-        title: Consenti i promemoria
-        description: Ricevi notifiche push in prossimità di scadenze o quando non hai ancora letto dei messaggi
+        title: Consenti promemoria
+        description: Su richiesta dell'ente, ricevi notifiche push in prossimità di scadenze o quando hai dei messaggi non letti
       preview:
         title: Mostra anteprime
-        description: Includi nella notifica push il mittente e l’oggetto del messaggio ·
+        description: Includi nella notifica push il mittente e l’oggetto del messaggio · 
         link: Più info
         bottomSheet:
           title: Mostra anteprime
-          content: "Quando l’opzione è attiva, le notifiche push mostrano il mittente e l’oggetto dei messaggi: così sai chi ti ha scritto senza accedere all’app.\nQueste informazioni, che potrebbero essere sensibili, vengono trattate dal gestore del tuo sistema operativo e sono mostrate anche quando il dispositivo è bloccato. Se vuoi evitare la visualizzazione delle anteprime, disattiva l’opzione."
+          content: Se l’opzione è attiva le notifiche push mostrano il mittente e l’oggetto dei messaggi, anche quando lo schermo è bloccato. Queste informazioni vengono trattate dal gestore del tuo sistema operativo e da app di terze parti eventualmente in esecuzione.
           cta: Ho capito!
       error: Si è verificato un errore con la tua richiesta
 userMetadata:
@@ -852,9 +852,27 @@ onboarding:
     badge: Novità
     headerTitle: Configura IO
     continue: Continua
-    remindersPreviewTitle: Promemoria
-    previewTitle: Hai un nuovo messaggio
-    previewMessage: Apri l’app per leggere il contenuto
+    preview:
+      reminderOnPreviewOnTitle: Hai un avviso che scade domani
+      reminderOnPreviewOnMessage: Entra nell’app per pagarlo
+      reminderOffPreviewOnTitle: Ministero dell’Interno
+      reminderOffPreviewOnMessage: Aggiornamenti sul tuo cambio di residenza
+      reminderOnPreviewOffTitle: Promemoria
+      reminderOnPreviewOffMessage: Apri l’app per leggere il contenuto
+      reminderOffPreviewOffTitle: Hai un nuovo messaggio
+      reminderOffPreviewOffMessage: Apri l’app per leggere il contenuto
+    contextualHelpTitle: Notifiche push
+    contextualHelpContent: !include onboarding/onboarding_notifications.md
+  infoConsent:
+    headerTitle: Configura IO
+    title: Vuoi attivare le notifiche?
+    subTitle: "Per ricevere notifiche push da IO, devi attivarle nelle Impostazioni di iOS. Ecco come fare:"
+    instruction1: 1. Seleziona 'Notifiche'
+    instruction2: 2. Attiva 'Consenti Notifiche'
+    openSettings: Apri Impostazioni di iOS
+    continue: Non ora
+    contextualHelpTitle: Notifiche push
+    contextualHelpContent: !include onboarding/onboarding_notifications_info_consent.md
 forms:
   validators:
     required: Valore richiesto
@@ -3173,8 +3191,22 @@ features:
           REFUSED: REFUSED
           CANCELLED: Annullata
         expand: mostra gli stati precedenti
-        info: Puoi vedere il dettaglio di ciascuno stato, scaricare le ricevute e le attestazioni opponibili a terzi accedendo alla versione web del servizio
-        cta: Accedi alla versione web
+        info: Puoi vedere il dettaglio di ciascuno stato, scaricare le ricevute e le attestazioni opponibili a terzi accedendo alla versione web del servizio   
+        cta: Accedi alla versione web   
+  fci:
+    errors:
+      expired:
+        title: Documento non più disponibile per la firma
+        subTitle: Il documento non è più disponibile per la firma. Contatta l’ente per maggiori informazioni
+      waitForQtsp:
+        title: Il documento è in elaborazione
+        subTitle: Ti preghiamo di attendere, presto riceverai il contratto firmato in app.
+      unsupportedDevice:
+        title: C’è un problema
+        subTitle: Il tuo device non supporta la funzionalità Firma con IO.
+      generic:
+        title: C’è un problema
+        subTitle: Per procedere alla firma, verifica di aver aggiornato l’app IO all’ultima versione
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina

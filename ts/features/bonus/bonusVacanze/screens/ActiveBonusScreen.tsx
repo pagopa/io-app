@@ -3,7 +3,7 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Badge, Text, Toast, View } from "native-base";
+import { Badge, Text as NBText, Toast, View } from "native-base";
 import * as React from "react";
 import { useCallback } from "react";
 import {
@@ -20,8 +20,8 @@ import { BonusActivationWithQrCode } from "../../../../../definitions/bonus_vaca
 import { Label } from "../../../../components/core/typography/Label";
 import { Link } from "../../../../components/core/typography/Link";
 import {
-  IOColors,
-  hexToRgba
+  hexToRgba,
+  IOColors
 } from "../../../../components/core/variables/IOColors";
 import { withLightModalContext } from "../../../../components/helpers/withLightModalContext";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
   },
   validUntil: {
     color: variables.textColorDark,
-    lineHeight: variables.lineHeightSmall,
+    lineHeight: 18,
     paddingVertical: 8
   },
   rowBlock: {
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
   itemsCenter: {
     alignItems: "center"
   },
-  paddedIconLeft: {
+  icon: {
     paddingLeft: 12
   },
   paddedContentLeft: {
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     color: variables.textColor
   },
   sectionLabel: {
-    fontSize: variables.fontSize1,
+    fontSize: variables.fontSizeBase,
     lineHeight: 21
   },
   viewShot: {
@@ -478,13 +478,13 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
       <>
         {/* show the time when the screenshot is captured */}
         {screenShotState.isPrintable && (
-          <Text style={styles.screenshotTime} bold={true}>
+          <NBText style={styles.screenshotTime} bold={true}>
             {`${I18n.t("bonus.bonusVacanze.savedOn")}${formatDateAsLocal(
               now,
               true,
               true
             )} - ${now.toLocaleTimeString()}`}
-          </Text>
+          </NBText>
         )}
         <View
           style={[
@@ -500,13 +500,13 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
               O.fromNullable,
               O.getOrElse(() => variables.textColor)
             )}
-            size={variables.fontSize3}
-            style={styles.paddedIconLeft}
+            size={variables.iconSize3}
+            style={styles.icon}
           />
           <View hspacer={true} />
-          <Text style={[styles.flex, styles.validUntil]} bold={true}>
+          <NBText style={[styles.flex, styles.validUntil]} bold={true}>
             {text}
-          </Text>
+          </NBText>
         </View>
       </>
     );
@@ -650,12 +650,12 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
                 <View spacer={true} />
                 {O.isSome(maybeStatusDescription) && (
                   <View style={styles.rowBlock}>
-                    <Text
+                    <NBText
                       semibold={true}
                       style={[styles.sectionLabel, styles.textColorDark]}
                     >
                       {I18n.t("bonus.bonusVacanze.status")}
-                    </Text>
+                    </NBText>
                     <Badge
                       style={
                         isBonusActive(bonus)
@@ -663,13 +663,13 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
                           : styles.statusBadgeRevoked
                       }
                     >
-                      <Text
+                      <NBText
                         style={styles.statusText}
                         semibold={true}
                         dark={!isBonusActive(bonus)}
                       >
                         {maybeStatusDescription.value}
-                      </Text>
+                      </NBText>
                     </Badge>
                   </View>
                 )}
@@ -677,23 +677,23 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
                 {!isBonusActive(bonus) && bonus.redeemed_at && (
                   <>
                     <View style={styles.rowBlock}>
-                      <Text style={[styles.colorGrey, styles.commonLabel]}>
+                      <NBText style={[styles.colorGrey, styles.commonLabel]}>
                         {I18n.t("bonus.bonusVacanze.consumedAt")}
-                      </Text>
-                      <Text style={[styles.colorGrey, styles.commonLabel]}>
+                      </NBText>
+                      <NBText style={[styles.colorGrey, styles.commonLabel]}>
                         {formatDateAsLocal(bonus.redeemed_at, true)}
-                      </Text>
+                      </NBText>
                     </View>
                     <View spacer={true} small={true} />
                   </>
                 )}
                 <View style={styles.rowBlock}>
-                  <Text style={[styles.colorGrey, styles.commonLabel]}>
+                  <NBText style={[styles.colorGrey, styles.commonLabel]}>
                     {I18n.t("bonus.bonusVacanze.requestedAt")}
-                  </Text>
-                  <Text style={[styles.colorGrey, styles.commonLabel]}>
+                  </NBText>
+                  <NBText style={[styles.colorGrey, styles.commonLabel]}>
                     {formatDateAsLocal(bonus.created_at, true)}
-                  </Text>
+                  </NBText>
                 </View>
                 {!screenShotState.isPrintable && O.isSome(maybeBonusTos) && (
                   <>

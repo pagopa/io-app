@@ -1,7 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Text, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import React from "react";
 import { ActivityIndicator, StyleSheet } from "react-native";
 import { connect } from "react-redux";
@@ -66,9 +66,9 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 
 const renderLoadingState = () => (
   <View style={styles.notFullStateContainer}>
-    <Text style={styles.notFullStateMessageText}>
+    <NBText style={styles.notFullStateMessageText}>
       {I18n.t("messageDetails.loadingText")}
-    </Text>
+    </NBText>
     <ActivityIndicator />
   </View>
 );
@@ -117,9 +117,9 @@ const MessageDetailScreen = ({
       messageDetails,
       () => (
         <View style={styles.notFullStateContainer}>
-          <Text style={styles.notFullStateMessageText}>
+          <NBText style={styles.notFullStateMessageText}>
             {I18n.t("messageDetails.emptyMessage")}
-          </Text>
+          </NBText>
         </View>
       ),
       () => renderLoadingState(),

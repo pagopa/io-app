@@ -1,7 +1,7 @@
 import { ITuple2 } from "@pagopa/ts-commons/lib/tuples";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
-import { Col, Grid, Row, Text } from "native-base";
+import { Col, Grid, Row, Text as NBText } from "native-base";
 import * as React from "react";
 import { Platform, StyleSheet } from "react-native";
 import { makeFontStyleObject } from "../../theme/fonts";
@@ -98,7 +98,7 @@ const renderPinCol = (
           label,
           E.fold(
             l => (
-              <Text
+              <NBText
                 white={style === "label" && buttonType === "primary"}
                 style={[
                   styles.buttonTextBase,
@@ -106,7 +106,7 @@ const renderPinCol = (
                 ]}
               >
                 {l}
-              </Text>
+              </NBText>
             ),
             ic => (
               <StyledIconFont

@@ -1,4 +1,4 @@
-import { Text, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import themeVariables from "../theme/variables";
@@ -37,7 +37,7 @@ const AdviceComponent: React.FunctionComponent<Props> = (props: Props) => (
       size={props.iconSize ?? defaultIconSize}
       color={props.iconColor || themeVariables.brandPrimary}
     />
-    <Text style={styles.text}>{props.text}</Text>
+    <NBText style={styles.text}>{props.text}</NBText>
   </View>
 );
 
