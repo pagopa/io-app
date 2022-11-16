@@ -172,6 +172,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
 
   private onFocus = () => {
     this.loadBonusVacanze();
+    this.loadBonusIDPay();
     this.setState({ hasFocus: true });
   };
 
