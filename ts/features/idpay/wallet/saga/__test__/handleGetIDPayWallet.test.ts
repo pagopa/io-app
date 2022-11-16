@@ -1,13 +1,10 @@
 import * as E from "fp-ts/lib/Either";
 import { expectSaga } from "redux-saga-test-plan";
-import { ActionType } from "typesafe-actions";
 import { appReducer } from "../../../../../store/reducers";
 import { idPayWalletGet } from "../../store/actions";
 import { WalletDTO } from "../../../../../../definitions/idpay/wallet/WalletDTO";
 import { ErrorDTO } from "../../../../../../definitions/idpay/wallet/ErrorDTO";
 import { handleGetIDPayWallet } from "../handleGetIDPayWallet";
-import { getGenericError } from "../../../../../utils/errors";
-import { readablePrivacyReport } from "../../../../../utils/reporters";
 
 const mockedWallet: WalletDTO = { initiativeList: [] };
 const mockedError: ErrorDTO = { code: 0, message: "message" };
