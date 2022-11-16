@@ -91,7 +91,7 @@ export const MainTabNavigator = () => {
       />
       <Tab.Screen
         name={ROUTES.PROFILE_MAIN}
-        component={BonusDetailsScreen} // {ProfileMainScreen}
+        component={ProfileMainScreen}
         options={{
           title: I18n.t("global.navigator.profile"),
           tabBarIcon: ({ color }) => <ProfileTabIcon color={color} />

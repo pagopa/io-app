@@ -8,13 +8,15 @@ import { H5 } from "../../../../components/core/typography/H5";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import TypedI18n from "../../../../i18n";
 import { formatDateAsLocal } from "../../../../utils/dates";
+import bonusVacanzeWhiteLogo from "../../../../../img/bonus/bonusVacanze/logo_BonusVacanze_White.png";
+import bonusCardBG from "../../../../../img/idpay/bonus_bg.png";
 
 type Props = InitiativeDTO;
 
 const opaqueBorderColor = IOColors.bluegreyDark;
 
 const styles = StyleSheet.create({
-  container: {
+  flexFull: {
     flex: 1
   },
   imageFull: {
@@ -62,9 +64,6 @@ const styles = StyleSheet.create({
   }
 });
 
-import bonusVacanzeWhiteLogo from "../../../../../img/bonus/bonusVacanze/logo_BonusVacanze_White.png";
-import bonusCardBG from "../../../../../img/idpay/bonus_bg.png";
-
 const BonusCardComponent = (props: Props) => {
   const renderFullCard = () => {
     // const maybeStatusDescription = maybeNotNullyString(
@@ -77,7 +76,7 @@ const BonusCardComponent = (props: Props) => {
     const isBonusActive = props.nInstr !== "0";
     return (
       <View
-        style={[styles.row, styles.spaced, { flex: 1 }]}
+        style={[styles.row, styles.spaced, styles.flexFull]}
         accessible={true}
         accessibilityLabel={TypedI18n.t(
           "bonus.bonusVacanze.accessibility.card", // CHANGE THIS
@@ -89,10 +88,12 @@ const BonusCardComponent = (props: Props) => {
         )}
       >
         <View
-          style={{
-            height: "100%",
-            justifyContent: "space-between"
-          }}
+          style={[
+            {
+              height: "100%"
+            },
+            styles.spaced
+          ]}
         >
           <View>
             <View spacer={true} small={true} />
@@ -103,7 +104,7 @@ const BonusCardComponent = (props: Props) => {
             >{`Valido fino al ${formatDateAsLocal(props.endDate, true)}`}</Text>
           </View>
           <View style={styles.row}>
-            <View style={{ flexDirection: "column" }}>
+            <View>
               <Text
                 bold={true}
                 style={[
@@ -118,7 +119,7 @@ const BonusCardComponent = (props: Props) => {
 
             <View small hspacer />
 
-            <View style={{ flexDirection: "column" }}>
+            <View>
               <Text
                 bold={true}
                 style={[
@@ -153,7 +154,7 @@ const BonusCardComponent = (props: Props) => {
         <View style={styles.shadowBox} />
       ) : undefined}
       <ImageBackground
-        style={styles.container}
+        style={styles.flexFull}
         imageStyle={styles.imageFull}
         source={bonusCardBG}
       >
