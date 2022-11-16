@@ -39,8 +39,8 @@ const reducer = (
 };
 
 export const idPayWalletSelector = (state: GlobalState) =>
-  state.features.idpay.wallet;
+  state.features.idPay.wallet;
 export const idPayWalletInitiativeListSelector = (state: GlobalState) =>
-  pot.map(state.features.idpay.wallet, w => w.initiativeList);
+  pot.map(state.features.idPay.wallet, w => w.initiativeList);
 
 export default reducer;
