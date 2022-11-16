@@ -31,9 +31,14 @@ export const clearNotificationPendingMessage = createStandardAction(
   "NOTIFICATIONS_PENDING_MESSAGE_CLEAR"
 )();
 
+export const notificationsInfoScreenConsent = createStandardAction(
+  "NOTIFICATIONS_INFO_SCREEN_CONSENT"
+)<undefined>();
+
 export type NotificationsActions =
   | ActionType<typeof updateNotificationsInstallationToken>
   | ActionType<typeof updateNotificationInstallationFailure>
   | ActionType<typeof updateNotificationsPendingMessage>
   | ActionType<typeof clearNotificationPendingMessage>
-  | ActionType<typeof notificationsInstallationTokenRegistered>;
+  | ActionType<typeof notificationsInstallationTokenRegistered>
+  | ActionType<typeof notificationsInfoScreenConsent>;
