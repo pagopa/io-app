@@ -1,4 +1,4 @@
-import { Text, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import { Image, ImageSourcePropType, StyleSheet } from "react-native";
 import I18n from "../../i18n";
@@ -60,15 +60,15 @@ export const PaymentSummaryComponent = (props: Props) => {
     }
     return (
       <React.Fragment>
-        <Text style={props.dark && styles.bluegreyLight}>{label}</Text>
-        <Text
+        <NBText style={props.dark && styles.bluegreyLight}>{label}</NBText>
+        <NBText
           bold={true}
           dark={!props.dark}
           white={props.dark}
           selectable={true}
         >
           {value}
-        </Text>
+        </NBText>
         <View spacer={true} />
       </React.Fragment>
     );
@@ -79,7 +79,7 @@ export const PaymentSummaryComponent = (props: Props) => {
       <View style={styles.paymentOutcome}>
         <BadgeComponent color={props.paymentStatus.color} />
         <View hspacer={true} small={true} />
-        <Text>{props.paymentStatus.description}</Text>
+        <NBText>{props.paymentStatus.description}</NBText>
       </View>
       <View spacer={true} />
     </React.Fragment>
@@ -87,12 +87,12 @@ export const PaymentSummaryComponent = (props: Props) => {
 
   return (
     <React.Fragment>
-      <Text
+      <NBText
         bold={true}
         style={[styles.title, props.dark ? styles.bluegreyLight : styles.grey]}
       >
         {props.title}
-      </Text>
+      </NBText>
 
       {/** screen title */}
       <View spacer={true} />

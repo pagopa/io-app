@@ -1,6 +1,6 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Badge, Text, View } from "native-base";
+import { Badge, Text as NBText, View } from "native-base";
 import React from "react";
 import { StyleSheet } from "react-native";
 import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
@@ -287,14 +287,14 @@ const MessageListItem = ({
         </View>
         <View style={styles.titleIconAndDate}>
           {getTopIcon(category)}
-          <Text numberOfLines={1} style={styles.dateTime}>
+          <NBText numberOfLines={1} style={styles.dateTime}>
             {uiDate}
-          </Text>
+          </NBText>
         </View>
       </View>
 
       <View style={[styles.serviceName, showQrCode && styles.qrMargin]}>
-        <Text>{serviceName}</Text>
+        <NBText>{serviceName}</NBText>
       </View>
 
       <View style={styles.smallSpacer} />
