@@ -10,16 +10,14 @@ import {
 import { mvlPersistor, PersistedMvlState } from "../../../mvl";
 import { PersistedPnState, pnPersistor } from "../../../pn";
 import fciReducer, { FciState } from "../../../fci/store/reducers";
-import idPayWalletReducer, {
-  IDPayWalletState
-} from "../../../idpay/wallet/store/reducers";
+import idPayReducer, { IDPayState } from "../../../idpay/wallet/store/reducers";
 
 export type FeaturesState = {
   euCovidCert: EuCovidCertState;
   mvl: PersistedMvlState;
   pn: PersistedPnState;
   fci: FciState;
-  idPayWallet: IDPayWalletState;
+  idPay: IDPayState;
 };
 
 export type PersistedFeaturesState = FeaturesState & PersistPartial;
@@ -29,7 +27,7 @@ const rootReducer = combineReducers<FeaturesState, Action>({
   mvl: mvlPersistor,
   pn: pnPersistor,
   fci: fciReducer,
-  idPayWallet: idPayWalletReducer
+  idPay: idPayReducer
 });
 
 const CURRENT_REDUX_FEATURES_STORE_VERSION = 1;

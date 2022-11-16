@@ -19,7 +19,7 @@ const mockFailure: NetworkError = {
 describe("Test IDPay wallet reducers and selectors", () => {
   it("should be pot.none before the first loading action", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
-    expect(globalState.features.idPayWallet.wallet).toStrictEqual(pot.none);
+    expect(globalState.features.idpay.wallet).toStrictEqual(pot.none);
     expect(idPayWalletSelector(globalState)).toStrictEqual(pot.none);
     expect(idPayWalletInitiativeListSelector(globalState)).toStrictEqual(
       pot.none
@@ -29,7 +29,7 @@ describe("Test IDPay wallet reducers and selectors", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
     store.dispatch(idPayWalletGet.request());
-    expect(store.getState().features.idPayWallet.wallet).toStrictEqual(
+    expect(store.getState().features.idpay.wallet).toStrictEqual(
       pot.noneLoading
     );
     expect(idPayWalletSelector(store.getState())).toStrictEqual(
@@ -44,7 +44,7 @@ describe("Test IDPay wallet reducers and selectors", () => {
     const store = createStore(appReducer, globalState as any);
     store.dispatch(idPayWalletGet.request());
     store.dispatch(idPayWalletGet.success(mockResponseSuccess));
-    expect(store.getState().features.idPayWallet.wallet).toStrictEqual(
+    expect(store.getState().features.idpay.wallet).toStrictEqual(
       pot.some(mockResponseSuccess)
     );
     expect(idPayWalletSelector(store.getState())).toStrictEqual(
@@ -59,7 +59,7 @@ describe("Test IDPay wallet reducers and selectors", () => {
     const store = createStore(appReducer, globalState as any);
     store.dispatch(idPayWalletGet.request());
     store.dispatch(idPayWalletGet.failure(mockFailure));
-    expect(store.getState().features.idPayWallet.wallet).toStrictEqual(
+    expect(store.getState().features.idpay.wallet).toStrictEqual(
       pot.noneError(mockFailure)
     );
     expect(idPayWalletSelector(store.getState())).toStrictEqual(

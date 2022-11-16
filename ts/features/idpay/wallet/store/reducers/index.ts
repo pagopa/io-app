@@ -6,18 +6,18 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../utils/errors";
 import { idPayWalletGet } from "../actions";
 
-export type IDPayWalletState = {
+export type IDPayState = {
   wallet: pot.Pot<WalletDTO, NetworkError>;
 };
 
-const INITIAL_STATE: IDPayWalletState = {
+const INITIAL_STATE: IDPayState = {
   wallet: pot.none
 };
 
 const reducer = (
-  state: IDPayWalletState = INITIAL_STATE,
+  state: IDPayState = INITIAL_STATE,
   action: Action
-): IDPayWalletState => {
+): IDPayState => {
   switch (action.type) {
     case getType(idPayWalletGet.request):
       return {
@@ -39,8 +39,8 @@ const reducer = (
 };
 
 export const idPayWalletSelector = (state: GlobalState) =>
-  state.features.idPayWallet.wallet;
+  state.features.idpay.wallet;
 export const idPayWalletInitiativeListSelector = (state: GlobalState) =>
-  pot.map(state.features.idPayWallet.wallet, w => w.initiativeList);
+  pot.map(state.features.idpay.wallet, w => w.initiativeList);
 
 export default reducer;
