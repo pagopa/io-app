@@ -1,19 +1,19 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createStore } from "redux";
 import { idPayWalletInitiativeListSelector, idPayWalletSelector } from "..";
-import { ErrorDTO } from "../../../../../../../definitions/idpay/wallet/ErrorDTO";
 import { WalletDTO } from "../../../../../../../definitions/idpay/wallet/WalletDTO";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
+import { NetworkError } from "../../../../../../utils/errors";
 import { idPayWalletGet } from "../../actions";
 
 const mockResponseSuccess: WalletDTO = {
   initiativeList: []
 };
 
-const mockFailure: ErrorDTO = {
-  code: 0,
-  message: "message"
+const mockFailure: NetworkError = {
+  kind: "generic",
+  value: new Error("response status code 401")
 };
 
 describe("Test IDPay wallet reducers and selectors", () => {
