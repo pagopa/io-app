@@ -11,20 +11,28 @@ import IDPayCardPreviewComponent from "./IDPayCardPreviewComponent";
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
-const IDPayCardsList = (props: Props) => (
-  <View>
-    {pot.isSome(props.initiativeList) &&
-      props.initiativeList.value.map(initiative => (
-        <IDPayCardPreviewComponent
-          key={initiative.initiativeId}
-          initiativeId={initiative.initiativeId}
-          initiativeName={initiative.initiativeName}
-          endDate={initiative.endDate}
-          availableAmount={initiative.available}
-        />
-      ))}
-  </View>
-);
+const IDPayCardsList = (props: Props) => {
+
+  const handleCardPress = (_: string) => {
+    // TODO: handle card press
+  };
+
+  return (
+    <View>
+      {pot.isSome(props.initiativeList) &&
+        props.initiativeList.value.map(initiative => (
+          <IDPayCardPreviewComponent
+            key={initiative.initiativeId}
+            initiativeId={initiative.initiativeId}
+            initiativeName={initiative.initiativeName}
+            endDate={initiative.endDate}
+            availableAmount={initiative.available}
+            onPress={() => handleCardPress(initiative.initiativeId)}
+          />
+        ))}
+    </View>
+  );
+};
 
 const IDPayCardsListMemo = React.memo(
   IDPayCardsList,
