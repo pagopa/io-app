@@ -13,6 +13,7 @@ import TypedI18n from "../../../../i18n";
 import { formatDateAsLocal } from "../../../../utils/dates";
 import bonusVacanzeWhiteLogo from "../../../../../img/bonus/bonusVacanze/logo_BonusVacanze_White.png";
 import bonusCardBG from "../../../../../img/idpay/bonus_bg.png";
+import BonusCardSVG from "../../../../../img/idpay/bonus_bg_svg.svg";
 
 type Props = InitiativeDTO;
 
@@ -24,7 +25,7 @@ const styles = StyleSheet.create({
   },
   imageFull: {
     resizeMode: "stretch",
-    zIndex: 0
+    zIndex: -1
   },
   row: {
     flexDirection: "row",
@@ -39,6 +40,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end"
   },
   paddedContent: {
+    zIndex: 1,
     flex: 1,
     padding: 16
   },
@@ -160,13 +162,18 @@ const BonusCardComponent = (props: Props) => {
       {Platform.OS === "android" ? (
         <View style={styles.shadowBox} />
       ) : undefined}
-      <ImageBackground
+      {/* <ImageBackground
         style={styles.flexFull}
         imageStyle={styles.imageFull}
         source={bonusCardBG}
-      >
-        <View style={styles.paddedContent}>{renderFullCard()}</View>
-      </ImageBackground>
+      > */}
+      <View style={styles.flexFull}>
+        <View style={styles.imageFull}>
+          <BonusCardSVG />
+        </View>
+      <View style={styles.paddedContent}>{renderFullCard()}</View>
+      </View>
+      {/* </ImageBackground> */}
     </>
   );
 };
