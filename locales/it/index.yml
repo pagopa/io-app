@@ -3233,6 +3233,21 @@ support:
     subTitle:
       category: "Aiutaci a capire meglio come possiamo aiutarti selezionando l’argomento del tuo problema: ti risponderemo il prima possibile, in orario lavorativo."
 idpay:
+  wallet:
+    bonusCard:
+      availableAmount: Disponibile
+      validUntil: Valido fino al
+      toRefund: da rimborsare
+    bonusDetailsScreen:
+      yourOperations: Le tue Operazioni
+      yourOperationsSubtitle: Qui vedrai le transazioni effettuate con i metodi che hai associato.
+      yourOperationsLink: Come si fa?
+      settings:
+        header: Impostazioni
+        associatedPaymentMethods: Metodi di pagamento associati
+        methodsi18n: metodi 
+        selectedIBAN: IBAN per l'accredito
+      startConfigurationCTA: Inizia
   onboarding:
     headerTitle: "Adesione all'iniziativa"
     buttons: 

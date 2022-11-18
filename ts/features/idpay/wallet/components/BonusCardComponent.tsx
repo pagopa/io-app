@@ -1,7 +1,10 @@
 import { Text, View } from "native-base";
 import * as React from "react";
 import { Image, ImageBackground, Platform, StyleSheet } from "react-native";
-import { InitiativeDTO } from "../../../../../definitions/idpay/wallet/InitiativeDTO";
+import {
+  InitiativeDTO,
+  StatusEnum
+} from "../../../../../definitions/idpay/wallet/InitiativeDTO";
 import { makeFontStyleObject } from "../../../../components/core/fonts";
 import { H2 } from "../../../../components/core/typography/H2";
 import { H5 } from "../../../../components/core/typography/H5";
@@ -73,7 +76,7 @@ const BonusCardComponent = (props: Props) => {
     //       })
     //     : ""
     // );
-    const isBonusActive = props.nInstr !== "0";
+    const isBonusActive = props.status === StatusEnum.REFUNDABLE;
     return (
       <View
         style={[styles.row, styles.spaced, styles.flexFull]}
@@ -99,9 +102,9 @@ const BonusCardComponent = (props: Props) => {
             <View spacer={true} small={true} />
 
             <H2 color="white">{props.initiativeName}</H2>
-            <Text
-              style={{ color: IOColors.white }}
-            >{`Valido fino al ${formatDateAsLocal(props.endDate, true)}`}</Text>
+            <Text style={{ color: IOColors.white }}>{`${TypedI18n.t(
+              "idpay.wallet.bonusCard.validUntil"
+            )} ${formatDateAsLocal(props.endDate, true)}`}</Text>
           </View>
           <View style={styles.row}>
             <View>
@@ -114,7 +117,9 @@ const BonusCardComponent = (props: Props) => {
               >
                 {`${props.available},00 €`}
               </Text>
-              <H5 color="white">{"Disponibile"}</H5>
+              <H5 color="white">
+                {TypedI18n.t("idpay.wallet.bonusCard.availableAmount")}
+              </H5>
             </View>
 
             <View small hspacer />
@@ -130,7 +135,9 @@ const BonusCardComponent = (props: Props) => {
                 {`${props.accrued},00 €`}
               </Text>
 
-              <H5 color="white">{"da rimborsare"}</H5>
+              <H5 color="white">
+                {TypedI18n.t("idpay.wallet.bonusCard.toRefund")}
+              </H5>
             </View>
           </View>
         </View>

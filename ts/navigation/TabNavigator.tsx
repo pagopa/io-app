@@ -8,7 +8,6 @@ import MessagesTabIcon from "../components/MessagesTabIcon";
 import ProfileTabIcon from "../components/ProfileTabIcon";
 import ServiceTabIcon from "../components/ServiceTabIcon";
 import WalletTabIcon from "../components/WalletTabIcon";
-import { BonusDetailsScreen } from "../features/idpay/wallet/screens/BonusDetailsScreen";
 import I18n from "../i18n";
 import PaginatedMessagesHomeScreen from "../screens/messages/paginated/MessagesHomeScreen";
 import ProfileMainScreen from "../screens/profile/ProfileMainScreen";

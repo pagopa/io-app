@@ -15,6 +15,7 @@ import BaseScreenComponent from "../../../../components/screens/BaseScreenCompon
 import ListItemComponent from "../../../../components/screens/ListItemComponent";
 import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
+import TypedI18n from "../../../../i18n";
 import customVariables from "../../../../theme/variables";
 import BonusCardComponent from "../components/BonusCardComponent";
 
@@ -31,37 +32,51 @@ const styles = StyleSheet.create({
 
 const BonusDetailsList = (bonus: InitiativeDTO) => (
   <>
-    <H3>Le tue Operazioni</H3>
+    <H3>{TypedI18n.t("idpay.wallet.bonusDetailsScreen.yourOperations")}</H3>
     <View spacer xsmall />
     <LabelSmall weight="Regular" color="bluegreyDark">
-      Qui vedrai le transazioni effettuate con i metodi che hai associato.&nbsp;
-      <LabelSmall weight="Regular">Come si fa?</LabelSmall>
+      {TypedI18n.t("idpay.wallet.bonusDetailsScreen.yourOperationsSubtitle") +
+        " "}
+      <LabelSmall weight="SemiBold">
+        {TypedI18n.t("idpay.wallet.bonusDetailsScreen.yourOperationsLink")}
+      </LabelSmall>
     </LabelSmall>
     <View spacer extralarge />
-    <H3>Impostazioni</H3>
+    <H3>{TypedI18n.t("idpay.wallet.bonusDetailsScreen.settings.header")}</H3>
     <View spacer small />
     <List>
       <ListItemComponent
-        title="Metodi di pagamento associati"
-        subTitle={`${bonus.nInstr} metodi`}
+        title={TypedI18n.t(
+          "idpay.wallet.bonusDetailsScreen.settings.associatedPaymentMethods"
+        )}
+        subTitle={`${bonus.nInstr} ${TypedI18n.t(
+          "idpay.wallet.bonusDetailsScreen.settings.methodsi18n"
+        )}`}
       />
-      <ListItemComponent title="IBAN per l'accredito" subTitle={bonus.iban} />
+      <ListItemComponent
+        title={TypedI18n.t(
+          "idpay.wallet.bonusDetailsScreen.settings.selectedIBAN"
+        )}
+        subTitle={bonus.iban}
+      />
     </List>
   </>
 );
 
 export const BonusDetailsScreen = () => {
   const bonus: InitiativeDTO = {
-    nInstr: "1",
+    nInstr: "0",
     endDate: new Date("2021-12-31"),
     initiativeId: "1",
     iban: "IT60X0542811101000000123456",
-    status: StatusEnum.NOT_REFUNDABLE_ONLY_INSTRUMENT,
+    status: StatusEnum.NOT_REFUNDABLE_ONLY_IBAN,
     accrued: 0,
     available: 500,
     refunded: 0,
     initiativeName: "18App"
   };
+
+  const isRefundable = bonus.status === StatusEnum.NOT_REFUNDABLE;
 
   return (
     <BaseScreenComponent
@@ -92,18 +107,24 @@ export const BonusDetailsScreen = () => {
         >
           <View spacer extralarge />
           <View spacer small />
-          {bonus.nInstr === "0" ? (
+          {isRefundable ? (
             <Text>INIZIATIVA NON CONFIGURATA</Text>
           ) : (
             BonusDetailsList(bonus)
           )}
         </View>
       </ScrollView>
-      {bonus.nInstr === "0" && (
+      {isRefundable && (
         <>
           <FooterWithButtons
             type="SingleButton"
-            leftButton={{ block: true, primary: true, title: "Inizia" }}
+            leftButton={{
+              block: true,
+              primary: true,
+              title: TypedI18n.t(
+                "idpay.wallet.bonusDetailsScreen.startConfigurationCTA"
+              )
+            }}
           />
           <View spacer />
         </>
