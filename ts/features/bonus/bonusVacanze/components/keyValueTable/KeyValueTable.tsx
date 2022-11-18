@@ -1,4 +1,4 @@
-import { Text, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import React from "react";
 import { StyleProp, StyleSheet, TextStyle } from "react-native";
 import themeVariables from "../../../../../theme/variables";
@@ -47,12 +47,12 @@ const row = (kvRow: KeyValueRow, columnWidthStyle: ColumnWidthStyle) => (
     key={kvRow.key.text + kvRow.value.text}
     accessible={true}
   >
-    <Text style={[kvRow.key.style, columnWidthStyle.left]}>
+    <NBText style={[kvRow.key.style, columnWidthStyle.left]}>
       {kvRow.key.text}
-    </Text>
-    <Text style={[kvRow.value.style, styles.right, columnWidthStyle.right]}>
+    </NBText>
+    <NBText style={[kvRow.value.style, styles.right, columnWidthStyle.right]}>
       {kvRow.value.text}
-    </Text>
+    </NBText>
   </View>
 );
 

@@ -1,5 +1,5 @@
 import { capitalize } from "lodash";
-import { Text, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import React from "react";
 import { StyleSheet, ViewStyle } from "react-native";
 
@@ -46,12 +46,6 @@ const styles = StyleSheet.create({
     paddingRight: 50,
     paddingLeft: 5
   },
-  highlight: {
-    color: customVariables.colorHighlight
-  },
-  center: {
-    justifyContent: "center"
-  },
   padded: {
     paddingHorizontal: customVariables.contentPadding
   },
@@ -75,9 +69,9 @@ const TextContent: React.FunctionComponent<{
       return (
         <>
           {I18n.t("messages.cta.payment.expiredAlert.block1")}
-          <Text bold={true} white={true}>{` ${time} `}</Text>
+          <NBText bold={true} white={true}>{` ${time} `}</NBText>
           {I18n.t("messages.cta.payment.expiredAlert.block2")}
-          <Text bold={true} white={true}>{` ${date}`}</Text>
+          <NBText bold={true} white={true}>{` ${date}`}</NBText>
         </>
       );
     case "valid":
@@ -85,7 +79,7 @@ const TextContent: React.FunctionComponent<{
       return (
         <>
           {I18n.t("messages.cta.payment.expiringOrValidAlert.block1")}
-          <Text bold={true}>{` ${date} `}</Text>
+          <NBText bold={true}>{` ${date} `}</NBText>
         </>
       );
   }
@@ -167,9 +161,9 @@ const DueDateBar: React.FunctionComponent<Props> = ({
     return (
       <View style={styles.messagePaidBg}>
         <IconFont name="io-complete" color={IOColors.bluegreyDark} />
-        <Text style={[styles.padded, { color: IOColors.bluegreyDark }]}>
+        <NBText style={[styles.padded, { color: IOColors.bluegreyDark }]}>
           {I18n.t("wallet.errors.DUPLICATED")}
-        </Text>
+        </NBText>
       </View>
     );
   }
@@ -183,7 +177,7 @@ const DueDateBar: React.FunctionComponent<Props> = ({
           <CalendarIcon status={paymentStatus} dueDate={dueDate} />
           <View hspacer={true} small={true} />
 
-          <Text
+          <NBText
             style={styles.text}
             white={paymentStatus === "expired"}
             testID={"DueDateBar_TextContent"}
@@ -193,7 +187,7 @@ const DueDateBar: React.FunctionComponent<Props> = ({
               dueDate={dueDate}
               onPaidPress={() => navigateToWalletHome()}
             />
-          </Text>
+          </NBText>
         </>
       </View>
       <View spacer={true} large={true} />

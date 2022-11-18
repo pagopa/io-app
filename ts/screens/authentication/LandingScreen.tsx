@@ -6,7 +6,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import JailMonkey from "jail-monkey";
-import { Content, Text, View } from "native-base";
+import { Content, Text as NBText, View } from "native-base";
 import * as React from "react";
 import { Alert, StyleSheet } from "react-native";
 import DeviceInfo from "react-native-device-info";
@@ -116,15 +116,13 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 };
 
 const styles = StyleSheet.create({
-  noPadded: {
-    paddingLeft: 0,
-    paddingRight: 0
-  },
   flex: {
     flex: 1
   },
   noCie: {
     // don't use opacity since the button still have the active color when it is pressed
+    // TODO: Remove this half-disabled state.
+    // See also discusssion on Slack: https://pagopaspa.slack.com/archives/C012L0U4NQL/p1657171504522639
     backgroundColor: IOColors.noCieButton
   },
   fullOpacity: {
@@ -279,11 +277,11 @@ class LandingScreen extends React.PureComponent<Props, State> {
               name={isCieSupported ? "io-cie" : "io-profilo"}
               color={IOColors.white}
             />
-            <Text>
+            <NBText>
               {isCieSupported
                 ? I18n.t("authentication.landing.loginCie")
                 : I18n.t("authentication.landing.loginSpid")}
-            </Text>
+            </NBText>
           </ButtonDefaultOpacity>
           <View spacer={true} />
           <ButtonDefaultOpacity
@@ -306,11 +304,11 @@ class LandingScreen extends React.PureComponent<Props, State> {
               name={this.isCieSupported() ? "io-profilo" : "io-cie"}
               color={IOColors.white}
             />
-            <Text>
+            <NBText>
               {this.isCieSupported()
                 ? I18n.t("authentication.landing.loginSpid")
                 : I18n.t("authentication.landing.loginCie")}
-            </Text>
+            </NBText>
           </ButtonDefaultOpacity>
           <View spacer={true} />
           <Link

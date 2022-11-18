@@ -17,8 +17,7 @@ const commonBadgeStyles = StyleSheet.create({
   },
   badgeSmall: {
     height: 18
-  },
-  badgeSmallLabel: { fontSize: 12, lineHeight: 18 }
+  }
 });
 
 const mapForegroundBackgroundColor: Record<

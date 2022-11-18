@@ -2,7 +2,7 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { NavigationEvents } from "@react-navigation/compat";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Body, Left, Right, Text, View } from "native-base";
+import { Body, Left, Right, Text as NBText, View } from "native-base";
 import * as React from "react";
 import { FC, Ref } from "react";
 import { AccessibilityInfo, ColorValue, StyleSheet } from "react-native";
@@ -101,7 +101,7 @@ const setAccessibilityTimeout = 0 as Millisecond;
 const noReferenceTimeout = 150 as Millisecond;
 /** A component representing the properties common to all the screens (and the most of modal/overlay displayed) */
 class BaseHeaderComponent extends React.PureComponent<Props, State> {
-  private firstElementRef = React.createRef<View>();
+  private firstElementRef = React.createRef<NBText>();
 
   public constructor(props: Props) {
     super(props);
@@ -170,7 +170,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
     }, noReferenceTimeout);
   }
 
-  private renderBodyLabel = (label?: string, ref?: Ref<Text>) =>
+  private renderBodyLabel = (label?: string, ref?: Ref<NBText>) =>
     pipe(
       maybeNotNullyString(label),
       O.fold(
@@ -178,7 +178,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
         l => {
           const { titleColor } = this.props;
           return (
-            <Text
+            <NBText
               ref={ref}
               numberOfLines={1}
               accessible={true}
@@ -188,7 +188,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
               }}
             >
               {l}
-            </Text>
+            </NBText>
           );
         }
       )
@@ -220,7 +220,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
           as placeholder where force focus
         */}
         {!isSearchEnabled && (
-          <Body style={[goBack || customGoBack ? styles.body : styles.noLeft]}>
+          <Body style={goBack || customGoBack ? styles.body : styles.noLeft}>
             {this.state.isScreenReaderActive &&
             O.isSome(maybeAccessibilityLabel) ? (
               this.renderBodyLabel(

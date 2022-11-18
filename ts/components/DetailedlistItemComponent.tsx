@@ -1,4 +1,4 @@
-import { Badge, Text, View } from "native-base";
+import { Badge, Text as NBText, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import customVariables from "../theme/variables";
@@ -145,14 +145,14 @@ export default class DetailedlistItemComponent extends React.Component<Props> {
           </View>
 
           <View style={styles.headerSub}>
-            <Text bold={true} style={styles.text12}>
+            <NBText bold={true} style={styles.text12}>
               {this.props.text12}
-            </Text>
+            </NBText>
           </View>
         </View>
 
         <View style={styles.viewStyle}>
-          <Text>{this.props.text2}</Text>
+          <NBText>{this.props.text2}</NBText>
         </View>
         <View style={styles.smallSpacer} />
         <View style={styles.text3Line}>

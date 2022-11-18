@@ -1,6 +1,6 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Content, H3, Text, View } from "native-base";
+import { Content, Text as NBText, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import DeviceInfo from "react-native-device-info";
@@ -15,7 +15,7 @@ import {
   paymentExpirationInfo
 } from "../../utils/messages";
 import { logosForService } from "../../utils/services";
-import { IOColors } from "../core/variables/IOColors";
+import { H1 } from "../core/typography/H1";
 import OrganizationHeader from "../OrganizationHeader";
 import MedicalPrescriptionAttachments from "./MedicalPrescriptionAttachments";
 import MedicalPrescriptionDueDateBar from "./MedicalPrescriptionDueDateBar";
@@ -41,37 +41,9 @@ const styles = StyleSheet.create({
   padded: {
     paddingHorizontal: variables.contentPadding
   },
-  serviceContainer: {
-    marginBottom: variables.contentPadding
-  },
-  subjectContainer: {
-    marginBottom: variables.spacerSmallHeight
-  },
-  ctaBarContainer: {
-    backgroundColor: IOColors.greyUltraLight,
-    padding: variables.contentPadding,
-    marginBottom: variables.contentPadding
-  },
   webview: {
     marginLeft: variables.contentPadding,
     marginRight: variables.contentPadding
-  },
-  messageIDContainer: {
-    width: "100%",
-    alignContent: "space-between",
-    display: "flex",
-    flexDirection: "row",
-    flexWrap: "wrap"
-  },
-  messageIDLabelContainer: {
-    flex: 1,
-    height: variables.lineHeightBase,
-    marginBottom: 5
-  },
-  messageIDBtnContainer: {
-    flex: 0,
-    marginBottom: 5,
-    height: variables.lineHeightBase
   }
 });
 
@@ -120,11 +92,11 @@ export default class MessageDetailComponent extends React.PureComponent<
     pipe(
       this.maybeMedicalData,
       O.fold(
-        () => <H3>{this.props.message.content.subject}</H3>,
+        () => <H1>{this.props.message.content.subject}</H1>,
         _ => (
           <React.Fragment>
-            <H3>{I18n.t("messages.medical.prescription")}</H3>
-            <Text>{I18n.t("messages.medical.memo")}</Text>
+            <H1>{I18n.t("messages.medical.prescription")}</H1>
+            <NBText>{I18n.t("messages.medical.memo")}</NBText>
           </React.Fragment>
         )
       )

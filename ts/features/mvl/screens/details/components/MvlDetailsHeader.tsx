@@ -51,7 +51,7 @@ const headerImageProps: React.ComponentProps<typeof Svg> = {
 const HeaderItem = (props: { text: string; image: React.ReactElement }) => (
   <View style={styles.row}>
     {props.image}
-    <H5 weight={"Regular"} color={"bluegrey"} style={[styles.rightElement]}>
+    <H5 weight={"Regular"} color={"bluegrey"} style={styles.rightElement}>
       {props.text}
     </H5>
   </View>

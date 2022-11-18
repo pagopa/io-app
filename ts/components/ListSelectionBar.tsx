@@ -1,4 +1,4 @@
-import { Text, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import React from "react";
 import { StyleSheet } from "react-native";
 import I18n from "../i18n";
@@ -50,7 +50,7 @@ const ListSelectionBar = ({
       onPress={onResetSelection}
       style={styles.flex2}
     >
-      <Text>{I18n.t("global.buttons.cancel")}</Text>
+      <NBText>{I18n.t("global.buttons.cancel")}</NBText>
     </ButtonDefaultOpacity>
     {onToggleAllSelection && (
       <ButtonDefaultOpacity
@@ -60,13 +60,13 @@ const ListSelectionBar = ({
         onPress={onToggleAllSelection}
         testID={"toggleAllSelection"}
       >
-        <Text>
+        <NBText>
           {I18n.t(
             selectedItems === totalItems
               ? "messages.cta.deselectAll"
               : "messages.cta.selectAll"
           )}
-        </Text>
+        </NBText>
       </ButtonDefaultOpacity>
     )}
     <ButtonDefaultOpacity
@@ -75,7 +75,7 @@ const ListSelectionBar = ({
       disabled={selectedItems === 0}
       onPress={onToggleSelection}
     >
-      <Text>{primaryButtonText}</Text>
+      <NBText>{primaryButtonText}</NBText>
     </ButtonDefaultOpacity>
   </View>
 );

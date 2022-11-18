@@ -270,7 +270,7 @@ const BpdAvailableTransactionsScreen: React.FunctionComponent<Props> =
           <View style={IOStyles.horizontalContentPadding}>
             <H1>{I18n.t("bonus.bpd.details.transaction.title")}</H1>
           </View>
-          <ScrollView style={[IOStyles.flex]}>
+          <ScrollView style={IOStyles.flex}>
             <View style={IOStyles.horizontalContentPadding}>
               <View spacer={true} />
               {props.selectedPeriod && O.isSome(maybeLastUpdateDate) && (

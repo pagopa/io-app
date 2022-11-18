@@ -1,4 +1,4 @@
-import { Badge, Grid, ListItem, Row, Text, View } from "native-base";
+import { Badge, Grid, ListItem, Row, Text as NBText, View } from "native-base";
 import * as React from "react";
 import { Image, Platform, StyleSheet } from "react-native";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
@@ -55,9 +55,6 @@ const styles = StyleSheet.create({
   badgeText: {
     lineHeight: Platform.OS === "ios" ? 20 : 21
   },
-  centeredContents: {
-    alignItems: "center"
-  },
   servicesName: {
     color: variables.textColor
   }
@@ -65,7 +62,7 @@ const styles = StyleSheet.create({
 
 const BonusBadge = (props: { caption: string }) => (
   <Badge style={styles.badge}>
-    <Text style={styles.badgeText}>{props.caption}</Text>
+    <NBText style={styles.badgeText}>{props.caption}</NBText>
   </Badge>
 );
 
@@ -103,16 +100,16 @@ export const AvailableBonusItem: React.FunctionComponent<Props> = (
         <Grid>
           <Row>
             <View style={styles.bonusItem}>
-              <Text bold={true} style={[disabledStyle, styles.methodTitle]}>
+              <NBText bold={true} style={[disabledStyle, styles.methodTitle]}>
                 {bonusTypeLocalizedContent.name}
-              </Text>
+              </NBText>
               {renderBadge(state)}
             </View>
           </Row>
           <Row>
-            <Text style={[styles.servicesName, disabledStyle]}>
+            <NBText style={[styles.servicesName, disabledStyle]}>
               {bonusTypeLocalizedContent.description ?? ""}
-            </Text>
+            </NBText>
           </Row>
         </Grid>
       </View>

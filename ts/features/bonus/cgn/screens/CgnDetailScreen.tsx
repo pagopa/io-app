@@ -53,12 +53,15 @@ import {
 import { eycaDetailSelector } from "../store/reducers/eyca/details";
 import { cgnUnsubscribeSelector } from "../store/reducers/unsubscribe";
 import { canEycaCardBeShown } from "../utils/eyca";
+import { IOColorGradients } from "../../../../components/core/variables/IOColors";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
-const HEADER_BACKGROUND_COLOR = "#9184B7";
-const GRADIENT_END_COLOR = "#5C488F";
+const [gradFirstColor, gradSecondColor] = IOColorGradients.cgn;
+
+const HEADER_BACKGROUND_COLOR = gradFirstColor;
+const GRADIENT_END_COLOR = gradSecondColor;
 
 /**
  * Screen to display all the information about the active CGN
@@ -115,7 +118,7 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
             />
           ) : (
             <>
-              <ScrollView style={[IOStyles.flex]} bounces={false}>
+              <ScrollView style={IOStyles.flex} bounces={false}>
                 {/* cgn gradient */}
                 <LinearGradient
                   colors={[HEADER_BACKGROUND_COLOR, GRADIENT_END_COLOR]}

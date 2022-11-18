@@ -3,7 +3,14 @@
  */
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
-import { Body, Container, List, ListItem, Spinner, Text } from "native-base";
+import {
+  Body,
+  Container,
+  List,
+  ListItem,
+  Spinner,
+  Text as NBText
+} from "native-base";
 import * as React from "react";
 import { StatusBar, StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
@@ -73,9 +80,9 @@ class IngressScreen extends React.PureComponent<Props> {
           backgroundColor={styles.container.backgroundColor}
         />
         <Container style={styles.container}>
-          <Text white={true} alignCenter={true}>
+          <NBText white={true} alignCenter={true}>
             {I18n.t("startup.title")}
-          </Text>
+          </NBText>
           <Spinner color="white" />
 
           <List withContentLateralPadding={true}>
@@ -83,9 +90,9 @@ class IngressScreen extends React.PureComponent<Props> {
               <ListItem key={`item-${index}`}>
                 <IngressCheckBox checked={item.enabled} />
                 <Body>
-                  <Text white={true} bold={item.enabled}>
+                  <NBText white={true} bold={item.enabled}>
                     {item.label}
-                  </Text>
+                  </NBText>
                 </Body>
               </ListItem>
             ))}

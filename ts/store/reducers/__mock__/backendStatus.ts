@@ -226,7 +226,8 @@ export const baseRawBackendStatus: BackendStatus = {
     bpd: {
       enroll_bpd_after_add_payment_method: false,
       program_active: true,
-      opt_in_payment_methods: false
+      opt_in_payment_methods: false,
+      opt_in_payment_methods_v2: false
     },
     bpd_ranking: true,
     bpd_ranking_v2: true,
@@ -291,7 +292,8 @@ export const baseBackendConfig: Config = {
   bpd: {
     enroll_bpd_after_add_payment_method: false,
     program_active: true,
-    opt_in_payment_methods: false
+    opt_in_payment_methods: false,
+    opt_in_payment_methods_v2: false
   },
   bpd_ranking: true,
   bpd_ranking_v2: true,

@@ -1,4 +1,4 @@
-import { Badge, Text, View } from "native-base";
+import { Badge, Text as NBText, View } from "native-base";
 import * as React from "react";
 import {
   ActivityIndicator,
@@ -10,7 +10,7 @@ import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
-import { IOColors } from "../../core/variables/IOColors";
+import { hexToRgba, IOColors } from "../../core/variables/IOColors";
 
 export type SectionCardStatus = "add" | "refresh" | "loading" | "show";
 type Props = {
@@ -23,6 +23,8 @@ type Props = {
   accessibilityLabel?: string;
   accessibilityHint?: string;
 };
+
+const opaqueBorderColor = hexToRgba(IOColors.black, 0.1);
 
 const styles = StyleSheet.create({
   flexRow: {
@@ -54,7 +56,7 @@ const styles = StyleSheet.create({
   },
   badgeText: {
     marginTop: 3,
-    fontSize: customVariables.fontSizeSmall,
+    fontSize: 14,
     lineHeight: 16,
     color: IOColors.bluegrey
   },
@@ -86,15 +88,12 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 0
   },
   rotateCard: {
-    shadowColor: "#000",
+    shadowColor: IOColors.black,
     marginBottom: -38,
     flex: 1,
     shadowRadius: 10,
     shadowOpacity: 0.15,
     transform: [{ perspective: 1200 }, { rotateX: "-20deg" }, { scaleX: 0.99 }]
-  },
-  rotateText: {
-    flex: 1
   },
   button: {
     flexDirection: "row",
@@ -109,7 +108,7 @@ const styles = StyleSheet.create({
     marginBottom: -15,
     borderRadius: 8,
     borderTopWidth: 8,
-    borderTopColor: "rgba(0,0,0,0.1)",
+    borderTopColor: opaqueBorderColor,
     height: 15
   }
 });
@@ -127,15 +126,15 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
               color={IOColors.white}
               size={customVariables.fontSize2}
             />
-            <Text
+            <NBText
               bold={true}
               style={[
                 styles.labelButton,
-                { fontSize: customVariables.fontSize1 + 1 }
+                { fontSize: customVariables.fontSizeBase }
               ]}
             >
               {I18n.t("wallet.newPaymentMethod.add").toUpperCase()}
-            </Text>
+            </NBText>
           </>
         );
       case "loading":
@@ -151,39 +150,35 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
       case "refresh":
         return (
           <View style={styles.row}>
-            <Text
-              bold={true}
-              style={[
-                styles.labelButton,
-                { fontSize: customVariables.fontSize1 + 1 }
-              ]}
-            >
+            <NBText bold={true} style={[styles.labelButton, { fontSize: 16 }]}>
               {I18n.t("wallet.newPaymentMethod.refresh").toUpperCase()}
-            </Text>
-            <Text
+            </NBText>
+            {/* TODO: Replace this Unicode character with a proper Icon component
+            with size and color props */}
+            <NBText
               style={{
-                fontSize: customVariables.fontSize1 + 16,
+                fontSize: 32,
                 height: 22,
                 paddingTop: 8,
-                color: "white"
+                color: IOColors.white
               }}
             >
               {" ⟳"}
-            </Text>
+            </NBText>
           </View>
         );
       case "show":
         return (
           <View style={styles.row}>
-            <Text
+            <NBText
               bold={true}
               style={[
                 styles.labelButton,
-                { fontSize: customVariables.fontSize1 + 1 }
+                { fontSize: customVariables.fontSizeBase }
               ]}
             >
               {I18n.t("wallet.newPaymentMethod.show").toUpperCase()}
-            </Text>
+            </NBText>
             <IconFont
               style={{ marginTop: 1, marginLeft: 2 }}
               name={"io-right"}
@@ -219,28 +214,32 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
           ]}
         >
           <View
-            style={[styles.cardInner]}
+            style={styles.cardInner}
             accessibilityLabel={props.accessibilityLabel}
             accessibilityHint={props.accessibilityHint}
             accessibilityRole="button"
           >
             <View style={[styles.flexRow, styles.topSpacing]}>
               <View style={styles.flexRow2}>
-                <Text
+                <NBText
                   style={[styles.greyUltraLight, styles.headerText]}
                   ellipsizeMode="tail"
                 >
                   {label}
-                </Text>
+                </NBText>
                 {isNew && (
                   <Badge style={styles.badgeColor}>
-                    <Text semibold={true} style={styles.badgeText} dark={true}>
+                    <NBText
+                      semibold={true}
+                      style={styles.badgeText}
+                      dark={true}
+                    >
                       {I18n.t("wallet.methods.newCome")}
-                    </Text>
+                    </NBText>
                   </Badge>
                 )}
               </View>
-              {!isError && <View style={[styles.button]}>{rightLabel()}</View>}
+              {!isError && <View style={styles.button}>{rightLabel()}</View>}
             </View>
           </View>
         </View>

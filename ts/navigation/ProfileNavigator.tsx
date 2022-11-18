@@ -12,6 +12,7 @@ import EmailForwardingScreen from "../screens/profile/EmailForwardingScreen";
 import FiscalCodeScreen from "../screens/profile/FiscalCodeScreen";
 import LanguagesPreferencesScreen from "../screens/profile/LanguagesPreferencesScreen";
 import { NotificationsPreferencesScreen } from "../screens/profile/NotificationsPreferencesScreen";
+import IDPayOnboardingPlayground from "../screens/profile/playgrounds/IDPayOnboardingPlayground";
 import MarkdownPlayground from "../screens/profile/playgrounds/MarkdownPlayground";
 import PreferencesScreen from "../screens/profile/PreferencesScreen";
 import PrivacyMainScreen from "../screens/profile/PrivacyMainScreen";
@@ -93,6 +94,10 @@ const ProfileStackNavigator = () => (
     <Stack.Screen
       name={ROUTES.CGN_LANDING_PLAYGROUND}
       component={CgnLandingPlayground}
+    />
+    <Stack.Screen
+      name={ROUTES.IDPAY_ONBOARDING_PLAYGROUND}
+      component={IDPayOnboardingPlayground}
     />
     <Stack.Screen
       name={ROUTES.PROFILE_REMOVE_ACCOUNT_INFO}
