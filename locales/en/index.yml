@@ -1679,10 +1679,11 @@ messages:
         block1: Add a reminder for the
         block2: at
       expiringOrValidAlert:
-        block1: This notice will expire on
+        block1: Expiring on 
+        block2: at
       expiredAlert:
-        block1: This notice expired at
-        block2: on
+        block1: Expired on
+        block2: at
     prescription:
       addMemo: This prescription expires the
       expiringAlert: This prescription expires today

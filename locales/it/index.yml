@@ -1699,10 +1699,11 @@ messages:
         block1: Aggiungi un promemoria per il
         block2: alle
       expiringOrValidAlert:
-        block1: Questo avviso scade il giorno
+        block1: Scade il 
+        block2: alle ore 
       expiredAlert:
-        block1: L'avviso è scaduto alle
-        block2: del
+        block1: Scaduto il 
+        block2: alle ore 
     prescription:
       addMemo: Questa ricetta scade il
       expiringAlert: Questa ricetta scade oggi

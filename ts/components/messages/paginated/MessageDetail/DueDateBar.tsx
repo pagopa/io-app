@@ -69,9 +69,9 @@ const TextContent: React.FunctionComponent<{
       return (
         <>
           {I18n.t("messages.cta.payment.expiredAlert.block1")}
-          <NBText bold={true} white={true}>{` ${time} `}</NBText>
+          <NBText bold={true} white={true}>{` ${date} `}</NBText>
           {I18n.t("messages.cta.payment.expiredAlert.block2")}
-          <NBText bold={true} white={true}>{` ${date}`}</NBText>
+          <NBText bold={true} white={true}>{` ${time}`}</NBText>
         </>
       );
     case "valid":
@@ -80,6 +80,8 @@ const TextContent: React.FunctionComponent<{
         <>
           {I18n.t("messages.cta.payment.expiringOrValidAlert.block1")}
           <NBText bold={true}>{` ${date} `}</NBText>
+          {I18n.t("messages.cta.payment.expiringOrValidAlert.block2")}
+          <NBText bold={true}>{` ${time}`}</NBText>
         </>
       );
   }
