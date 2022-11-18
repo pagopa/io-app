@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.20.0-rc.0](https://github.com/pagopa/io-app/compare/2.19.0-rc.4...2.20.0-rc.0) (2022-11-17)
+
+
+### Features
+
+* [[IOAPPCOM-3](https://pagopa.atlassian.net/browse/IOAPPCOM-3)] Add consent screen to manage push notifications ([#4147](https://github.com/pagopa/io-app/issues/4147)) ([627ef46](https://github.com/pagopa/io-app/commit/627ef46847c35ad8d8e3201ed9a7d7ab8b48a2d1))
+* **Firma con IO:** [[SFEQS-1097](https://pagopa.atlassian.net/browse/SFEQS-1097)] Router screen for signature request ([#4166](https://github.com/pagopa/io-app/issues/4166)) ([f1d555f](https://github.com/pagopa/io-app/commit/f1d555f1c48835defcd524f4b36a27575c24fc71))
+* [[IOAPPCOM-1](https://pagopa.atlassian.net/browse/IOAPPCOM-1)] Add preview flag on notification onboarding ([#4142](https://github.com/pagopa/io-app/issues/4142)) ([1d2bb7c](https://github.com/pagopa/io-app/commit/1d2bb7cbfa284c6af57c6b645abedb84fba4a5d1))
+* **Firma con IO:** [[SFEQS-1073](https://pagopa.atlassian.net/browse/SFEQS-1073)] Actions and reducers ([#4165](https://github.com/pagopa/io-app/issues/4165)) ([4cc2a87](https://github.com/pagopa/io-app/commit/4cc2a87a79338afbcb661067d4c9315c01555fbb))
+
+
+### Chores
+
+* [[IAI-233](https://pagopa.atlassian.net/browse/IAI-233)] Remove deprecated NativeBase components related to typography ([#4093](https://github.com/pagopa/io-app/issues/4093)) ([eedea6d](https://github.com/pagopa/io-app/commit/eedea6d528b0857e77ef81c6cb09699ef6b4709f))
+* [[IOAPPCOM-12](https://pagopa.atlassian.net/browse/IOAPPCOM-12)] Enables the FF and updates required tos version ([#4182](https://github.com/pagopa/io-app/issues/4182)) ([397df53](https://github.com/pagopa/io-app/commit/397df5391255ec0b218e9c862d2403ced4c00a84))
+* **IDPay:** [[IODPAY-51](https://pagopa.atlassian.net/browse/IODPAY-51)] Avoid XState machine recreation on provider rerendering ([#4177](https://github.com/pagopa/io-app/issues/4177)) ([4d40393](https://github.com/pagopa/io-app/commit/4d40393b8699384c0602760ce02cde3530c1dcff))
+
 ## [2.19.0-rc.4](https://github.com/pagopa/io-app/compare/2.19.0-rc.3...2.19.0-rc.4) (2022-11-11)
 
 
