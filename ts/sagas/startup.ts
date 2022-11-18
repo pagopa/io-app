@@ -351,7 +351,7 @@ export function* initializeApplicationSaga(): Generator<
 
     yield* call(checkAcknowledgedEmailSaga, userProfile);
   }
-  
+
   // check if the user must set preferences for push notifications (e.g. reminders)
   yield* call(checkNotificationsPreferencesSaga, userProfile);
 
