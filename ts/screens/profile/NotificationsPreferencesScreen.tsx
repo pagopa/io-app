@@ -1,7 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import React, { useEffect, useState } from "react";
 import { List } from "native-base";
-import { StyleSheet } from "react-native";
 import { useSelector } from "react-redux";
 import { PreferencesListItem } from "../../components/PreferencesListItem";
 import ScreenContent from "../../components/screens/ScreenContent";
