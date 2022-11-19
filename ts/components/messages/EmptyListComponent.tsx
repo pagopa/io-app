@@ -1,4 +1,4 @@
-import { Text, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import { Image, ImageSourcePropType, StyleSheet } from "react-native";
 import customVariables from "../../theme/variables";
@@ -27,7 +27,9 @@ export const EmptyListComponent = (props: Props) => (
   <View style={styles.view}>
     <View spacer={true} />
     <Image source={props.image} />
-    <Text style={styles.title}>{props.title}</Text>
-    {props.subtitle && <Text style={styles.subtitle}>{props.subtitle}</Text>}
+    <NBText style={styles.title}>{props.title}</NBText>
+    {props.subtitle && (
+      <NBText style={styles.subtitle}>{props.subtitle}</NBText>
+    )}
   </View>
 );

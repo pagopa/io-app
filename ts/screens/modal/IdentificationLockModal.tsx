@@ -2,7 +2,7 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { format } from "date-fns";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Text, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import { Image, Modal, StyleSheet } from "react-native";
 import errorIcon from "../../../img/messages/error-message-detail-icon.png";
@@ -63,16 +63,16 @@ export const IdentificationLockModal: React.FunctionComponent<Props> =
             <Image source={errorIcon} />
           </View>
 
-          <Text bold={true} style={styles.title}>
+          <NBText bold={true} style={styles.title}>
             {wrongCodeText}
-          </Text>
-          <Text style={styles.text}>{tooManyAttemptsText}</Text>
-          <Text bold={true} style={styles.text}>
+          </NBText>
+          <NBText style={styles.text}>{tooManyAttemptsText}</NBText>
+          <NBText bold={true} style={styles.text}>
             {waitMessageText}
-          </Text>
-          <Text bold={true} style={styles.title}>
+          </NBText>
+          <NBText bold={true} style={styles.title}>
             {minuteSeconds}
-          </Text>
+          </NBText>
         </View>
       </Modal>
     );

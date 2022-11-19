@@ -1,6 +1,6 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Badge, Text, View } from "native-base";
+import { Badge, Text as NBText, View } from "native-base";
 import * as React from "react";
 import { Image, ImageBackground, Platform, StyleSheet } from "react-native";
 import {
@@ -10,6 +10,10 @@ import {
   MenuTrigger
 } from "react-native-popup-menu";
 import { BonusActivationWithQrCode } from "../../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
+import {
+  hexToRgba,
+  IOColors
+} from "../../../../components/core/variables/IOColors";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import IconFont from "../../../../components/ui/IconFont";
@@ -20,10 +24,6 @@ import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { isShareEnabled } from "../../../../utils/share";
 import { maybeNotNullyString } from "../../../../utils/strings";
 import { getBonusCodeFormatted, isBonusActive } from "../utils/bonus";
-import {
-  IOColors,
-  hexToRgba
-} from "../../../../components/core/variables/IOColors";
 
 type Props = {
   bonus: BonusActivationWithQrCode;
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
   },
   previewAmount: {
     lineHeight: 30,
-    fontSize: customVariables.fontSize4,
+    fontSize: 28,
     ...makeFontStyleObject(Platform.select, "700", undefined, "RobotoMono")
   },
   bonusCode: {
@@ -156,12 +156,12 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
       >
         <View style={{ flexDirection: "column" }}>
           <View spacer={true} small={true} />
-          <Text bold={true} style={[styles.colorWhite, styles.fontLarge]}>
+          <NBText bold={true} style={[styles.colorWhite, styles.fontLarge]}>
             {I18n.t("bonus.bonusVacanze.name")}
-          </Text>
+          </NBText>
           <View spacer={true} small={true} />
           <View style={styles.row}>
-            <Text
+            <NBText
               bold={true}
               style={[
                 !isBonusActive(props.bonus) ? styles.consumedOpacity : {},
@@ -170,8 +170,8 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
               ]}
             >
               {bonus.dsu_request.max_amount}
-            </Text>
-            <Text
+            </NBText>
+            <NBText
               style={[
                 !isBonusActive(props.bonus) ? styles.consumedOpacity : {},
                 styles.colorWhite,
@@ -179,23 +179,25 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
               ]}
             >
               {"€"}
-            </Text>
+            </NBText>
             <View hspacer={true} />
             {O.isSome(maybeStatusDescription) && (
               <Badge style={styles.badge}>
-                <Text style={styles.statusText} semibold={true}>
+                <NBText style={styles.statusText} semibold={true}>
                   {maybeStatusDescription.value}
-                </Text>
+                </NBText>
               </Badge>
             )}
           </View>
           <View spacer={true} />
-          <Text style={styles.colorWhite}>
+          <NBText style={styles.colorWhite}>
             {I18n.t("bonus.bonusVacanze.code")}
-          </Text>
-          <Text style={[styles.colorWhite, styles.fontLarge, styles.bonusCode]}>
+          </NBText>
+          <NBText
+            style={[styles.colorWhite, styles.fontLarge, styles.bonusCode]}
+          >
             {getBonusCodeFormatted(bonus)}
-          </Text>
+          </NBText>
         </View>
         <View>
           <View
@@ -213,25 +215,25 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
                 <MenuOption
                   onSelect={() => clipboardSetStringWithFeedback(bonus.id)}
                 >
-                  <Text style={styles.actions}>
+                  <NBText style={styles.actions}>
                     {I18n.t("bonus.bonusVacanze.cta.copyCode")}
-                  </Text>
+                  </NBText>
                 </MenuOption>
                 {isBonusActive(props.bonus) && (
                   <>
                     <ItemSeparatorComponent />
                     <MenuOption onSelect={props.viewQR}>
-                      <Text style={styles.actions}>
+                      <NBText style={styles.actions}>
                         {I18n.t("bonus.bonusVacanze.cta.openQRCode")}
-                      </Text>
+                      </NBText>
                     </MenuOption>
                     {isShareEnabled() ? (
                       <>
                         <ItemSeparatorComponent />
                         <MenuOption onSelect={props.share}>
-                          <Text style={styles.actions}>
+                          <NBText style={styles.actions}>
                             {I18n.t("global.buttons.share")}
-                          </Text>
+                          </NBText>
                         </MenuOption>
                       </>
                     ) : null}
@@ -261,11 +263,11 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
       })}
     >
       <View style={styles.row}>
-        <Text bold={true} style={[styles.colorWhite, styles.previewName]}>
+        <NBText bold={true} style={[styles.colorWhite, styles.previewName]}>
           {I18n.t("bonus.bonusVacanze.name")}
-        </Text>
+        </NBText>
         <View hspacer={true} large={true} />
-        <Text
+        <NBText
           bold={true}
           style={[
             !isBonusActive(props.bonus) ? styles.consumedOpacity : {},
@@ -274,8 +276,8 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
           ]}
         >
           {bonus.dsu_request.max_amount}
-        </Text>
-        <Text
+        </NBText>
+        <NBText
           style={[
             !isBonusActive(props.bonus) ? styles.consumedOpacity : {},
             styles.colorWhite,
@@ -283,7 +285,7 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
           ]}
         >
           {"€"}
-        </Text>
+        </NBText>
       </View>
       <Image source={bonusVacanzeWhiteLogo} style={styles.previewLogo} />
     </TouchableDefaultOpacity>
