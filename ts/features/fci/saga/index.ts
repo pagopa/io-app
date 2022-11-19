@@ -1,6 +1,6 @@
 import { SagaIterator } from "redux-saga";
 import { ActionType } from "typesafe-actions";
-import { call, take, takeLatest } from "typed-redux-saga/macro";
+import { call, fork, take, takeLatest } from "typed-redux-saga/macro";
 import { CommonActions } from "@react-navigation/native";
 import { ReduxSagaEffect } from "../../../types/utils";
 import NavigationService from "../../../navigation/NavigationService";
@@ -32,12 +32,14 @@ export function* watchFciSaga(bearerToken: SessionToken): SagaIterator {
       );
     }
   );
+
+  yield* fork(watchFciAbortingSaga);
 }
 
 /**
  * Handle the FCI abort requests
  */
-export function* watchFciAbortingSaga(): Iterator<ReduxSagaEffect> {
+function* watchFciAbortingSaga(): Iterator<ReduxSagaEffect> {
   yield* take(fciAbortingRequest);
   yield* call(
     NavigationService.dispatchNavigationAction,

@@ -41,7 +41,7 @@ import { watchBonusSvSaga } from "../features/bonus/siciliaVola/saga";
 import { watchEUCovidCertificateSaga } from "../features/euCovidCert/saga";
 import { watchMvlSaga } from "../features/mvl/saga";
 import { watchZendeskSupportSaga } from "../features/zendesk/saga";
-import { watchFciAbortingSaga, watchFciSaga } from "../features/fci/saga";
+import { watchFciSaga } from "../features/fci/saga";
 import I18n from "../i18n";
 import { mixpanelTrack } from "../mixpanel";
 import NavigationService from "../navigation/NavigationService";
@@ -426,7 +426,6 @@ export function* initializeApplicationSaga(): Generator<
 
   if (fciEnabled) {
     yield* fork(watchFciSaga, sessionToken);
-    yield* fork(watchFciAbortingSaga);
   }
 
   // Load the user metadata
