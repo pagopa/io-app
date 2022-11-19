@@ -49,11 +49,19 @@ export const fciSigningRequest = createAsyncAction(
 /**
  * clear the FCI store
  */
-export const fciAbortingRequest = createStandardAction("FCI_ABORT_REQUEST")();
+export const fciAbortingRequest =
+  createStandardAction("FCI_ABORT_REQUEST")<void>();
+
+/**
+ * start the FCI action
+ */
+export const fciStartingRequest =
+  createStandardAction("FCI_START_REQUEST")<void>();
 
 export type FciActions =
   | ActionType<typeof fciSignatureRequestFromId>
   | ActionType<typeof fciLoadQtspClauses>
   | ActionType<typeof fciLoadQtspFilledDocument>
   | ActionType<typeof fciSigningRequest>
-  | ActionType<typeof fciAbortingRequest>;
+  | ActionType<typeof fciAbortingRequest>
+  | ActionType<typeof fciStartingRequest>;

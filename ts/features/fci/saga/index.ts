@@ -4,13 +4,15 @@ import { call, fork, take, takeLatest } from "typed-redux-saga/macro";
 import { CommonActions } from "@react-navigation/native";
 import { ReduxSagaEffect } from "../../../types/utils";
 import NavigationService from "../../../navigation/NavigationService";
+import { FCI_ROUTES } from "../navigation/routes";
 import ROUTES from "../../../navigation/routes";
 import { apiUrlPrefix } from "../../../config";
 import { SessionToken } from "../../../types/SessionToken";
 import { BackendFciClient } from "../api/backendFci";
 import {
   fciSignatureRequestFromId,
-  fciAbortingRequest
+  fciAbortingRequest,
+  fciStartingRequest
 } from "../store/actions";
 import { handleGetSignatureRequestById } from "./networking/handleGetSignatureRequestById";
 
@@ -33,6 +35,8 @@ export function* watchFciSaga(bearerToken: SessionToken): SagaIterator {
     }
   );
 
+  yield* fork(watchFciStartingSaga);
+
   yield* fork(watchFciAbortingSaga);
 }
 
@@ -40,9 +44,24 @@ export function* watchFciSaga(bearerToken: SessionToken): SagaIterator {
  * Handle the FCI abort requests
  */
 function* watchFciAbortingSaga(): Iterator<ReduxSagaEffect> {
-  yield* take(fciAbortingRequest);
-  yield* call(
-    NavigationService.dispatchNavigationAction,
-    CommonActions.navigate(ROUTES.MAIN)
-  );
+  while (true) {
+    yield* take(fciAbortingRequest);
+    NavigationService.dispatchNavigationAction(
+      CommonActions.navigate(ROUTES.MAIN)
+    );
+  }
+}
+
+/**
+ * Handle the FCI start requests
+ */
+function* watchFciStartingSaga(): Iterator<ReduxSagaEffect> {
+  while (true) {
+    yield* take(fciStartingRequest);
+    NavigationService.dispatchNavigationAction(
+      CommonActions.navigate(FCI_ROUTES.MAIN, {
+        screen: FCI_ROUTES.DOCUMENTS
+      })
+    );
+  }
 }

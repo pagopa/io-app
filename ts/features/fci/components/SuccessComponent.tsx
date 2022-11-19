@@ -3,7 +3,8 @@ import I18n from "../../../i18n";
 import imageExpired from "../../../../img/wallet/errors/payment-expired-icon.png";
 import hourglass from "../../../../img/pictograms/hourglass.png";
 import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
-import FciDocumentsScreen from "../screens/valid/FciDocumentsScreen";
+import { useIODispatch } from "../../../store/hooks";
+import { fciStartingRequest } from "../store/actions";
 import ErrorComponent from "./ErrorComponent";
 import GenericErrorComponent from "./GenericErrorComponent";
 
@@ -16,6 +17,7 @@ const SuccessComponent = (props: {
   const now = new Date();
   const expires_at = new Date(props.signatureRequest.expires_at);
   const status = props.signatureRequest.status;
+  const dispatch = useIODispatch();
 
   // the signature request is expired
   if (expires_at < now) {
@@ -34,7 +36,8 @@ const SuccessComponent = (props: {
   // the signature request could have various status
   switch (status) {
     case "WAIT_FOR_SIGNATURE":
-      return <FciDocumentsScreen />;
+      dispatch(fciStartingRequest());
+      return null;
     case "WAIT_FOR_QTSP":
       return (
         <ErrorComponent
