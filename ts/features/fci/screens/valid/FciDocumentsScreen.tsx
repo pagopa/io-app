@@ -1,7 +1,10 @@
 import * as React from "react";
 import Pdf from "react-native-pdf";
+import { PDFDocument, rgb } from "pdf-lib";
+import ReactNativeBlobUtil from "react-native-blob-util";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { toError } from "fp-ts/lib/Either";
 import { SafeAreaView, StyleSheet } from "react-native";
 import { useSelector } from "react-redux";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
@@ -17,12 +20,9 @@ import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
 import { fciSignatureDetailDocumentsSelector } from "../../store/reducers/fciSignatureRequest";
 import { FCI_ROUTES } from "../../navigation/routes";
-import {
-  SignatureField,
-  SignatureFieldAttrs
-} from "../../../../../definitions/fci/SignatureField";
-import { Document } from "../../../../../definitions/fci/Document";
+import { SignatureField } from "../../../../../definitions/fci/SignatureField";
 import { FciParamsList } from "../../navigation/params";
+import { ExistingSignatureFieldAttrs } from "../../../../../definitions/fci/ExistingSignatureFieldAttrs";
 
 const styles = StyleSheet.create({
   pdf: {
@@ -41,10 +41,11 @@ const FciDocumentsScreen = () => {
   const [totalPages, setTotalPages] = React.useState(0);
   const [currentPage, setCurrentPage] = React.useState(0);
   const [currentDoc, setCurrentDoc] = React.useState(0);
+  const [pdfString, setPdfString] = React.useState<string>("");
   const documents = useSelector(fciSignatureDetailDocumentsSelector);
   const navigation = useNavigation();
   const route = useRoute<RouteProp<FciParamsList, "FCI_DOCUMENTS">>();
-  const attrs = route.params.attrs;
+  const attrs = route.params.attrs as ExistingSignatureFieldAttrs;
   const cDoc = route.params.currentDoc;
 
   React.useEffect(() => {
@@ -67,7 +68,6 @@ const FciDocumentsScreen = () => {
     title: I18n.t("global.buttons.cancel")
   };
 
-  // TODO: navigate to signature fields selection screen
   const onContinuePress = () =>
     navigation.navigate(FCI_ROUTES.SIGNATURE_FIELDS, {
       documentId: documents[currentDoc].id,
@@ -89,15 +89,58 @@ const FciDocumentsScreen = () => {
     title: I18n.t("global.buttons.continue")
   };
 
-  const onSignatureDetail = (attrs: SignatureFieldAttrs) => {
-    console.log("onSignatureDetail", attrs);
+  /**
+   * function to draw a rect over a signature field
+   * @param ids
+   */
+  const drawRectangleOverSignatureField = async (ids: string) => {
+    const doc = documents[currentDoc];
+    const url = doc.url;
+
+    const existingPdfBytes = await ReactNativeBlobUtil.fetch("GET", url).then(
+      res => res.base64()
+    );
+
+    const pdfDoc = PDFDocument.load(
+      `data:application/pdf;base64,${existingPdfBytes}`
+    );
+
+    await pdfDoc.then(res => {
+      pipe(
+        res.findPageForAnnotationRef(res.getForm().getSignature(ids).ref),
+        O.fromNullable,
+        O.map(pageRef => {
+          const page = res.getPages().indexOf(pageRef);
+          const signature = res.getForm().getSignature(ids);
+          const [widget] = signature.acroField.getWidgets();
+          const rect = widget.getRectangle();
+          res.getPage(page).drawRectangle({
+            x: rect.x,
+            y: rect.y,
+            width: rect.width,
+            height: rect.height,
+            color: rgb(0, 0.77, 0.79),
+            opacity: 0.5,
+            borderOpacity: 0.75
+          });
+        })
+      );
+
+      return res
+        .saveAsBase64()
+        .then(r => setPdfString(`data:application/pdf;base64,${r}`));
+    });
+  };
+
+  const onSignatureDetail = (attrs: ExistingSignatureFieldAttrs) => {
+    drawRectangleOverSignatureField(attrs.unique_name).catch(toError);
   };
 
   const renderPager = () => (
     <Pdf
       ref={_ => setPdfRef(_)}
       source={{
-        uri: `${documents[currentDoc].url}`
+        uri: pdfString ? pdfString : `${documents[currentDoc].url}`
       }}
       onLoadComplete={(numberOfPages, _) => {
         setTotalPages(numberOfPages);
@@ -131,7 +174,7 @@ const FciDocumentsScreen = () => {
 
   const customGoBack: React.ReactElement = (
     <TouchableDefaultOpacity
-      onPress={navigation.goBack}
+      onPress={onCancelPress}
       accessible={true}
       accessibilityLabel={I18n.t("global.buttons.back")}
       accessibilityRole={"button"}
@@ -166,6 +209,7 @@ const FciDocumentsScreen = () => {
         }
         onPrevious={onPrevious}
         onNext={onNext}
+        disabled={pdfString !== ""}
         testID={"FciDocumentsNavBarTestID"}
       />
       <SafeAreaView style={IOStyles.flex} testID={"FciDocumentsScreenTestID"}>
@@ -184,7 +228,6 @@ const FciDocumentsScreen = () => {
           </>
         )}
       </SafeAreaView>
-
       {fciAbortSignature}
     </BaseScreenComponent>
   );
