@@ -505,6 +505,7 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                                           fontStyle={
                                             Object {
                                               "fontSize": 20,
+                                              "lineHeight": 24,
                                             }
                                           }
                                           style={
@@ -514,6 +515,7 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                                               },
                                               Object {
                                                 "fontSize": 20,
+                                                "lineHeight": 24,
                                               },
                                               Object {
                                                 "color": "#17324D",

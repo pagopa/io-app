@@ -113,13 +113,19 @@ const FciDocumentsScreen = () => {
   return (
     <BaseScreenComponent
       goBack={true}
-      headerTitle={"Firma con IO"}
+      headerTitle={I18n.t("features.fci.title")}
       customGoBack={customGoBack}
       contextualHelp={emptyContextualHelp}
     >
       <DocumentsNavigationBar
-        titleLeft={`Documento ${currentDoc + 1} di ${documents.length}`}
-        titleRight={`Pagina ${currentPage} di ${totalPages}`}
+        titleLeft={I18n.t("features.fci.documentsBar.titleLeft", {
+          currentDoc: currentDoc + 1,
+          totalDocs: documents.length
+        })}
+        titleRight={I18n.t("features.fci.documentsBar.titleRight", {
+          currentPage,
+          totalPages
+        })}
         iconLeftColor={
           currentDoc === 0 ? IOColors.bluegreyLight : IOColors.blue
         }

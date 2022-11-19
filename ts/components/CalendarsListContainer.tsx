@@ -1,5 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { Button, Text, View } from "native-base";
+import { Button, Text as NBText, View } from "native-base";
 import * as React from "react";
 
 import { ListRenderItemInfo, SectionList } from "react-native";
@@ -117,9 +117,11 @@ class CalendarsListContainer extends React.PureComponent<Props, State> {
       <React.Fragment>
         {pot.isError(calendarsByAccount) && (
           <React.Fragment>
-            <Text>{mapResourceErrorToMessage(calendarsByAccount.error)}</Text>
+            <NBText>
+              {mapResourceErrorToMessage(calendarsByAccount.error)}
+            </NBText>
             <Button onPress={this.fetchCalendars}>
-              <Text>{I18n.t("global.buttons.retry")}</Text>
+              <NBText>{I18n.t("global.buttons.retry")}</NBText>
             </Button>
           </React.Fragment>
         )}

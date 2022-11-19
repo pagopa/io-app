@@ -7,14 +7,13 @@ import FciDocumentsScreen from "../screens/valid/FciDocumentsScreen";
 import ErrorComponent from "./ErrorComponent";
 import GenericErrorComponent from "./GenericErrorComponent";
 
-const now = new Date();
-
 /**
  * A component to render the cases of success for a signature request
  */
 const SuccessComponent = (props: {
   signatureRequest: SignatureRequestDetailView;
 }) => {
+  const now = new Date();
   const expires_at = new Date(props.signatureRequest.expires_at);
   const status = props.signatureRequest.status;
 

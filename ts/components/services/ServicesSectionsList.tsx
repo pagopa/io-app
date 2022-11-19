@@ -1,7 +1,7 @@
 /**
  * A component to render a list of services organized in sections, one for each organization.
  */
-import { Text, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import React from "react";
 import {
   Image,
@@ -55,9 +55,9 @@ const emptyListComponent = () => (
     <Image
       source={require("../../../img/services/icon-loading-services.png")}
     />
-    <Text style={styles.emptyListContentTitle}>
+    <NBText style={styles.emptyListContentTitle}>
       {I18n.t("services.emptyListMessage")}
-    </Text>
+    </NBText>
   </View>
 );
 
