@@ -37,7 +37,7 @@ export type FciDocumentsScreenNavigationParams = Readonly<{
 }>;
 
 const FciDocumentsScreen = () => {
-  const pdfRef = React.useRef<Pdf>();
+  const pdfRef = React.useRef() as React.MutableRefObject<Pdf>;
   const [totalPages, setTotalPages] = React.useState(0);
   const [currentPage, setCurrentPage] = React.useState(0);
   const [currentDoc, setCurrentDoc] = React.useState(0);
@@ -148,13 +148,7 @@ const FciDocumentsScreen = () => {
 
   const renderPager = () => (
     <Pdf
-      ref={r =>
-        pipe(
-          r,
-          O.fromNullable,
-          O.map(r => (pdfRef.current = r)) // eslint-disable-line functional/immutable-data
-        )
-      }
+      ref={pdfRef}
       source={{
         uri: pdfString ? pdfString : `${documents[currentDoc].url}`
       }}
