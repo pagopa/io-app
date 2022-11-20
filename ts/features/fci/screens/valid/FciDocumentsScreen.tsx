@@ -41,6 +41,7 @@ const FciDocumentsScreen = () => {
   const [totalPages, setTotalPages] = React.useState(0);
   const [currentPage, setCurrentPage] = React.useState(0);
   const [currentDoc, setCurrentDoc] = React.useState(0);
+  const [signaturePage, setSignaturePage] = React.useState(0);
   const [pdfString, setPdfString] = React.useState<string>("");
   const documents = useSelector(fciSignatureDetailDocumentsSelector);
   const navigation = useNavigation();
@@ -49,9 +50,12 @@ const FciDocumentsScreen = () => {
   const cDoc = route.params.currentDoc;
 
   React.useEffect(() => {
-    if (attrs) {
+    if (attrs !== undefined) {
       onSignatureDetail(attrs);
       setCurrentDoc(cDoc);
+    } else {
+      setCurrentDoc(0);
+      setPdfString("");
     }
   }, [attrs, cDoc]);
 
@@ -116,6 +120,7 @@ const FciDocumentsScreen = () => {
         O.fromNullable,
         O.map(pageRef => {
           const page = res.getPages().indexOf(pageRef);
+          setSignaturePage(page + 1);
           const signature = res.getForm().getSignature(ids);
           const [widget] = signature.acroField.getWidgets();
           const rect = widget.getRectangle();
@@ -155,6 +160,11 @@ const FciDocumentsScreen = () => {
       }}
       onLoadComplete={(numberOfPages, _) => {
         setTotalPages(numberOfPages);
+        pipe(
+          pdfRef.current,
+          O.fromNullable,
+          O.map(_ => _.setPage(signaturePage))
+        );
       }}
       onPageChanged={(page, _) => {
         setCurrentPage(page);

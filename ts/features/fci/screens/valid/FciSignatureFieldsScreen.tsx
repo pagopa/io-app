@@ -21,6 +21,9 @@ import { H3 } from "../../../../components/core/typography/H3";
 import { SignatureField } from "../../../../../definitions/fci/SignatureField";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { FCI_ROUTES } from "../../navigation/routes";
+import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
+import { IOColors } from "../../../../components/core/variables/IOColors";
+import IconFont from "../../../../components/ui/IconFont";
 
 export type FciSignatureFieldsScreenNavigationParams = Readonly<{
   documentId: Document["id"];
@@ -124,9 +127,30 @@ const FciSignatureFieldsScreen = (
     title: I18n.t("global.buttons.continue")
   };
 
+  const customGoBack: React.ReactElement = (
+    <TouchableDefaultOpacity
+      onPress={() =>
+        navigation.navigate(FCI_ROUTES.MAIN, {
+          screen: FCI_ROUTES.DOCUMENTS,
+          params: {
+            attrs: undefined,
+            currentDoc: undefined
+          },
+          merge: true
+        })
+      }
+      accessible={true}
+      accessibilityLabel={I18n.t("global.buttons.back")}
+      accessibilityRole={"button"}
+    >
+      <IconFont name={"io-back"} style={{ color: IOColors.bluegrey }} />
+    </TouchableDefaultOpacity>
+  );
+
   return (
     <BaseScreenComponent
       goBack={true}
+      customGoBack={customGoBack}
       headerTitle={I18n.t("features.fci.signatureFields.title")}
       contextualHelp={emptyContextualHelp}
     >
