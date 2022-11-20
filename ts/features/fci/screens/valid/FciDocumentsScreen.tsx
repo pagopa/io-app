@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
 });
 
 const FciDocumentsScreen = () => {
-  const [pdfRef, setPdfRef] = React.useState<Pdf | null>();
+  const pdfRef = React.useRef<Pdf>();
   const [totalPages, setTotalPages] = React.useState(0);
   const [currentPage, setCurrentPage] = React.useState(0);
   const [currentDoc, setCurrentDoc] = React.useState(0);
@@ -59,13 +59,24 @@ const FciDocumentsScreen = () => {
     block: true,
     light: true,
     bordered: true,
-    onPress: () => pdfRef?.setPage(totalPages),
+    onPress: () =>
+      pipe(
+        pdfRef.current,
+        O.fromNullable,
+        O.map(_ => _.setPage(totalPages))
+      ),
     title: I18n.t("global.buttons.continue")
   };
 
   const renderPager = () => (
     <Pdf
-      ref={_ => setPdfRef(_)}
+      ref={r =>
+        pipe(
+          r,
+          O.fromNullable,
+          O.map(r => (pdfRef.current = r)) // eslint-disable-line functional/immutable-data
+        )
+      }
       source={{
         uri: `${documents[currentDoc].url}`
       }}
