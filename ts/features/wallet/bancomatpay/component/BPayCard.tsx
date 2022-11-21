@@ -1,48 +1,37 @@
 import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
+/* import * as pot from "@pagopa/ts-commons/lib/pot" */ import * as O from "fp-ts/lib/Option";
 import { View } from "native-base";
 import * as React from "react";
-import { Image, ImageStyle, StyleProp, StyleSheet } from "react-native";
+import { Image, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import bancomatLogoMin from "../../../../../img/wallet/payment-methods/bancomatpay-logo.png";
-import { H3 } from "../../../../components/core/typography/H3";
 import { H4 } from "../../../../components/core/typography/H4";
 import IconFont from "../../../../components/ui/IconFont";
 import I18n from "../../../../i18n";
 import { profileNameSurnameSelector } from "../../../../store/reducers/profile";
 import { GlobalState } from "../../../../store/reducers/types";
+import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseCardComponent from "../../component/card/BaseCardComponent";
-import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImageResize";
 
-type Props = {
+type OwnProps = {
   phone?: string;
-  bankName: string;
-  abiLogo?: string;
 } & ReturnType<typeof mapStateToProps>;
+
+type Props = ReturnType<typeof mapStateToProps> & OwnProps;
 
 const styles = StyleSheet.create({
   bpayLogo: {
     width: 80,
     height: 40,
     resizeMode: "contain"
-  },
-  bankName: { textTransform: "capitalize" }
+  }
 });
-
-const BASE_IMG_W = 160;
-const BASE_IMG_H = 40;
 
 /**
  * Generate the accessibility label for the card.
  */
-const getAccessibilityRepresentation = (
-  bankName: string,
-  holder?: string,
-  phone?: string
-) => {
-  const cardRepresentation = I18n.t("wallet.accessibility.folded.bancomatPay", {
-    bankName
-  });
+const getAccessibilityRepresentation = (holder?: string, phone?: string) => {
+  const cardRepresentation = I18n.t("wallet.accessibility.folded.bancomatPay");
 
   const computedHolder =
     holder !== undefined
@@ -54,76 +43,58 @@ const getAccessibilityRepresentation = (
   return `${cardRepresentation}${computedHolder}${computedPhone}`;
 };
 
-const BPayCard: React.FunctionComponent<Props> = (props: Props) => {
-  const imgDimensions = useImageResize(BASE_IMG_W, BASE_IMG_H, props.abiLogo);
+/**
+ * Add a row; on the left the phone number, on the right the favourite star icon
+ * @param phone
+ * @param favorite
+ */
+const topLeft = (phone: string /* favorite: pot.Pot<boolean, Error> */) => (
+  <View style={IOStyles.rowSpaceBetween}>
+    {phone && (
+      <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <IconFont name={"io-phone"} size={22} />
+        <View hspacer small />
+        <H4 weight={"Regular"} testID="phone">
+          {phone}
+        </H4>
+      </View>
+    )}
+    {/* {pot.getOrElse(favorite, false) && (
+      <IconFont name={"io-filled-star"} color={variables.brandPrimary} />
+    )} */}
+  </View>
+);
 
-  const imageStyle: StyleProp<ImageStyle> | undefined = pipe(
-    imgDimensions,
-    O.fold(
-      () => undefined,
-      imgDim => ({
-        width: imgDim[0],
-        height: imgDim[1],
-        resizeMode: "contain"
-      })
-    )
-  );
-  return (
-    <BaseCardComponent
-      accessibilityLabel={getAccessibilityRepresentation(
-        props.bankName,
-        props.nameSurname,
-        props.phone
-      )}
-      topLeftCorner={
-        props.abiLogo && imageStyle ? (
-          <Image
-            source={{ uri: props.abiLogo }}
-            style={imageStyle}
-            testID={"abiLogo"}
-          />
-        ) : (
-          <H3 style={styles.bankName} testID={"bankName"}>
-            {props.bankName}
-          </H3>
-        )
-      }
-      bottomLeftCorner={
-        <View>
-          {props.phone && (
-            <>
-              <View style={{ flexDirection: "row" }}>
-                <IconFont name={"io-phone"} size={22} />
-                <View hspacer small />
-                <H4 weight={"Regular"} testID="phone">
-                  {props.phone}
-                </H4>
-              </View>
-              <View spacer small />
-            </>
-          )}
-          {pipe(
-            props.nameSurname,
-            O.fromNullable,
-            O.fold(
-              () => undefined,
-              nameSurname => (
-                <H4 weight={"Regular"} testID={"nameSurname"}>
-                  {nameSurname.toLocaleUpperCase()}
-                </H4>
-              )
+const BPayCard: React.FunctionComponent<Props> = (props: Props) => (
+  <BaseCardComponent
+    accessibilityLabel={getAccessibilityRepresentation(
+      props.nameSurname,
+      props.phone
+    )}
+    topLeftCorner={props.phone && topLeft(props.phone)}
+    bottomLeftCorner={
+      <View>
+        {pipe(
+          props.nameSurname,
+          O.fromNullable,
+          O.fold(
+            () => undefined,
+            nameSurname => (
+              <H4 weight={"Regular"} testID={"nameSurname"}>
+                {nameSurname.toLocaleUpperCase()}
+              </H4>
             )
-          )}
-        </View>
-      }
-      bottomRightCorner={
-        <View style={{ justifyContent: "flex-end", flexDirection: "column" }}>
-          <Image style={styles.bpayLogo} source={bancomatLogoMin} />
-        </View>
-      }
-    />
-  );
-};
+          )
+        )}
+      </View>
+    }
+    bottomRightCorner={
+      <View style={{ justifyContent: "flex-end", flexDirection: "column" }}>
+        <Image style={styles.bpayLogo} source={bancomatLogoMin} />
+      </View>
+    }
+  />
+);
 
 const mapStateToProps = (state: GlobalState) => ({
   nameSurname: profileNameSurnameSelector(state)
