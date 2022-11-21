@@ -45,7 +45,7 @@ const subtitle = (service: string) =>
 export const PDNDPrerequisites = () => {
   const machine = useOnboardingMachineService();
   const [state, send] = useActor(machine);
-  const [authority, setAuthority] = React.useState("");
+  const [authority, setAuthority] = React.useState(undefined);
 
   const continueOnPress = () => send({ type: "ACCEPT_REQUIRED_PDND_CRITERIA" });
 
