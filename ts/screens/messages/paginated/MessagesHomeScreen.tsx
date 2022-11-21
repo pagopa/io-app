@@ -1,16 +1,12 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { CompatNavigationProp } from "@react-navigation/compat";
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React, { useEffect } from "react";
-import { Platform } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
 import { createSelector } from "reselect";
-import { makeFontStyleObject } from "../../../components/core/fonts";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { useMessageOpening } from "../../../components/messages/paginated/hooks/useMessageOpening";
 import MessageList from "../../../components/messages/paginated/MessageList";
@@ -23,8 +19,7 @@ import { SearchNoResultMessage } from "../../../components/search/SearchNoResult
 import SectionStatusComponent from "../../../components/SectionStatus";
 import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
 import I18n from "../../../i18n";
-import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
-import { MainTabParamsList } from "../../../navigation/params/MainTabParamsList";
+import MessagesHomeTabNavigator from "../../../navigation/MessagesHomeTabNavigator";
 import {
   migrateToPaginatedMessages,
   resetMigrationStatus
@@ -51,60 +46,16 @@ import {
 import { MESSAGE_ICON_HEIGHT } from "../../../utils/constants";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { showToast } from "../../../utils/showToast";
-import MessagesArchiveScreen from "./MessagesArchiveScreen";
-import MessagesInboxScreen from "./MessagesInboxScreen";
 
 import MigratingMessage from "./MigratingMessage";
 
-type Props = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<MainTabParamsList, "MESSAGES_HOME">
-  >;
-} & ReturnType<typeof mapStateToProps> &
+type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "messages.contextualHelpTitle",
   body: "messages.contextualHelpContent"
 };
-
-const Tab = createMaterialTopTabNavigator();
-
-const AllTabs = () => (
-  <Tab.Navigator
-    initialRouteName="MESSAGES_INBOX"
-    tabBarPosition="top"
-    tabBarOptions={{
-      activeTintColor: IOColors.blue,
-      inactiveTintColor: IOColors.bluegrey,
-      tabStyle: {
-        height: 40
-      },
-      labelStyle: {
-        ...makeFontStyleObject("SemiBold"),
-        fontSize: Platform.OS === "android" ? 16 : undefined,
-        fontWeight: Platform.OS === "android" ? "normal" : "bold",
-        textTransform: "capitalize",
-        height: 34
-      }
-    }}
-  >
-    <Tab.Screen
-      name={"MESSAGES_INBOX"}
-      options={{
-        title: I18n.t("messages.tab.inbox")
-      }}
-      component={MessagesInboxScreen}
-    />
-    <Tab.Screen
-      name={"MESSAGES_ARCHIVE"}
-      options={{
-        title: I18n.t("messages.tab.archive")
-      }}
-      component={MessagesArchiveScreen}
-    />
-  </Tab.Navigator>
-);
 
 /**
  * Screen to gather and organize the information for the Inbox and SearchMessage views.
@@ -198,7 +149,7 @@ const MessagesHomeScreen = ({
               onEnd={resetMigrationStatus}
             />
           ) : (
-            <AllTabs />
+            <MessagesHomeTabNavigator />
           )}
         </React.Fragment>
       )}
