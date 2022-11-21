@@ -37,7 +37,9 @@ const IDPayCardsListMemo = React.memo(IDPayCardsList);
 
 const IDPayCardsInWalletContainer = () => {
   const initiativeList = useIOSelector(idPayWalletInitiativeListSelector);
-  return <IDPayCardsListMemo  initiativeList={pot.getOrElse(initiativeList, [])} />;
+  return (
+    <IDPayCardsListMemo initiativeList={pot.getOrElse(initiativeList, [])} />
+  );
 };
 
 export default IDPayCardsInWalletContainer;
