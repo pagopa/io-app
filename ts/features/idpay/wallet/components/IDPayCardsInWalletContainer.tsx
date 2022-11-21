@@ -2,57 +2,42 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import _ from "lodash";
 import React from "react";
 import { View } from "react-native";
-import { Dispatch } from "redux";
-import { connect } from "react-redux";
-import { GlobalState } from "../../../../store/reducers/types";
+import { InitiativeDTO } from "../../../../../definitions/idpay/wallet/InitiativeDTO";
+import { useIOSelector } from "../../../../store/hooks";
 import { idPayWalletInitiativeListSelector } from "../store/reducers";
 import IDPayCardPreviewComponent from "./IDPayCardPreviewComponent";
 
-type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps>;
+type Props = {
+  initiativeList: ReadonlyArray<InitiativeDTO>;
+};
 
 const IDPayCardsList = (props: Props) => {
-
   const handleCardPress = (_: string) => {
     // TODO: handle card press
   };
 
   return (
     <View>
-      {pot.isSome(props.initiativeList) &&
-        props.initiativeList.value.map(initiative => (
-          <IDPayCardPreviewComponent
-            key={initiative.initiativeId}
-            initiativeId={initiative.initiativeId}
-            initiativeName={initiative.initiativeName}
-            endDate={initiative.endDate}
-            availableAmount={initiative.amount}
-            onPress={() => handleCardPress(initiative.initiativeId)}
-          />
-        ))}
+      {props.initiativeList.map(initiative => (
+        <IDPayCardPreviewComponent
+          key={initiative.initiativeId}
+          initiativeId={initiative.initiativeId}
+          initiativeName={initiative.initiativeName}
+          endDate={initiative.endDate}
+          availableAmount={initiative.amount}
+          onPress={() => handleCardPress(initiative.initiativeId)}
+        />
+      ))}
     </View>
   );
 };
 
-const IDPayCardsListMemo = React.memo(
-  IDPayCardsList,
-  (prev: Props, curr: Props) =>
-    pot.isSome(prev.initiativeList) &&
-    pot.isSome(curr.initiativeList) &&
-    _.isEqual(curr.initiativeList.value, prev.initiativeList.value)
-);
+// Avoid re-rendering if the list of initiatives is the same
+const IDPayCardsListMemo = React.memo(IDPayCardsList);
 
-const IDPayCardsInWalletContainer = (props: Props) => (
-  <IDPayCardsListMemo {...props} />
-);
+const IDPayCardsInWalletContainer = () => {
+  const initiativeList = useIOSelector(idPayWalletInitiativeListSelector);
+  return <IDPayCardsListMemo  initiativeList={pot.getOrElse(initiativeList, [])} />;
+};
 
-const mapDispatchToProps = (_: Dispatch) => ({});
-
-const mapStateToProps = (state: GlobalState) => ({
-  initiativeList: idPayWalletInitiativeListSelector(state)
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(IDPayCardsInWalletContainer);
+export default IDPayCardsInWalletContainer;
