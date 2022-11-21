@@ -4,6 +4,7 @@ import EmailInsertScreen from "../screens/onboarding/EmailInsertScreen";
 import EmailReadScreen from "../screens/onboarding/EmailReadScreen";
 import FingerprintScreen from "../screens/onboarding/FingerprintScreen";
 import OnboardingCompletedScreen from "../screens/onboarding/OnboardingCompletedScreen";
+import OnboardingNotificationsInfoScreenConsent from "../screens/onboarding/OnboardingNotificationsInfoScreenConsent";
 import OnboardingNotificationsPreferencesScreen from "../screens/onboarding/OnboardingNotificationsPreferencesScreen";
 import OnboardingServicesPreferenceScreen from "../screens/onboarding/OnboardingServicesPreferenceScreen";
 import OnboardingShareDataScreen from "../screens/onboarding/OnboardingShareDataScreen";
@@ -54,6 +55,10 @@ const navigator = () => (
     <Stack.Screen
       name={ROUTES.ONBOARDING_NOTIFICATIONS_PREFERENCES}
       component={OnboardingNotificationsPreferencesScreen}
+    />
+    <Stack.Screen
+      name={ROUTES.ONBOARDING_NOTIFICATIONS_INFO_SCREEN_CONSENT}
+      component={OnboardingNotificationsInfoScreenConsent}
     />
   </Stack.Navigator>
 );

@@ -1,7 +1,7 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { capitalize } from "lodash";
-import { Text, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import React from "react";
 import { StyleSheet, ViewStyle } from "react-native";
 import { connect } from "react-redux";
@@ -80,7 +80,7 @@ const ValidOrExpiringTextContent: React.FunctionComponent<{
 }> = ({ date }) => (
   <>
     {I18n.t("messages.cta.payment.expiringOrValidAlert.block1")}
-    <Text bold={true}>{` ${date} `}</Text>
+    <NBText bold={true}>{` ${date} `}</NBText>
   </>
 );
 
@@ -90,9 +90,9 @@ const Expired: React.FunctionComponent<{
 }> = ({ time, date }) => (
   <>
     {I18n.t("messages.cta.payment.expiredAlert.block1")}
-    <Text bold={true} white={true}>{` ${time} `}</Text>
+    <NBText bold={true} white={true}>{` ${time} `}</NBText>
     {I18n.t("messages.cta.payment.expiredAlert.block2")}
-    <Text bold={true} white={true}>{` ${date}`}</Text>
+    <NBText bold={true} white={true}>{` ${date}`}</NBText>
   </>
 );
 
@@ -206,9 +206,9 @@ const calculatePaymentStatus = (
 const getNoticePaid = () => (
   <View style={styles.messagePaidBg}>
     <IconFont name="io-complete" color={IOColors.bluegreyDark} />
-    <Text style={[styles.padded, { color: IOColors.bluegreyDark }]}>
+    <NBText style={[styles.padded, { color: IOColors.bluegreyDark }]}>
       {I18n.t("wallet.errors.DUPLICATED")}
-    </Text>
+    </NBText>
   </View>
 );
 
@@ -240,13 +240,13 @@ const MessageDueDateBar: React.FunctionComponent<Props> = ({
               <CalendarIcon status={paymentStatus} dueDate={dueDate} />
               <View hspacer={true} small={true} />
 
-              <Text style={styles.text} white={paymentStatus === "expired"}>
+              <NBText style={styles.text} white={paymentStatus === "expired"}>
                 <TextContent
                   status={paymentStatus}
                   dueDate={dueDate}
                   onPaidPress={onGoToWallet}
                 />
-              </Text>
+              </NBText>
             </>
           </View>
           <View spacer={true} large={true} />

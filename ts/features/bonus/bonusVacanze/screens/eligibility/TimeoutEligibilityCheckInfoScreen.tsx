@@ -1,4 +1,4 @@
-import { Text } from "native-base";
+import { Text as NBText } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -16,11 +16,11 @@ type Props = ReturnType<typeof mapDispatchToProps>;
  */
 
 const renderBody = (first: string, second: string, third: string) => (
-  <Text>
+  <NBText>
     {first}
-    <Text style={{ fontWeight: "bold" }}>{second}</Text>
+    <NBText style={{ fontWeight: "bold" }}>{second}</NBText>
     {third}
-  </Text>
+  </NBText>
 );
 
 const TimeoutEligibilityCheckInfoScreen: React.FunctionComponent<Props> =

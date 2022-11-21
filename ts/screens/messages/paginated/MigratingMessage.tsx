@@ -50,7 +50,7 @@ const MigratingMessage = ({ status, onRetry, onEnd }: Props) => {
     if (pipe(status, O.toUndefined)?._tag === "succeeded") {
       setTimeout(onEnd, 1000);
     }
-  }, [status]);
+  }, [status, onEnd]);
 
   return pipe(
     status,
@@ -74,6 +74,8 @@ const MigratingMessage = ({ status, onRetry, onEnd }: Props) => {
                   onPress={onRetry}
                   style={{ width: "100%" }}
                 >
+                  {/* TODO: Replace with BaseTypography component (custom Text
+                componented based on RN Text) */}
                   <Text style={styles.migrationMessageButtonText}>
                     {I18n.t("global.buttons.retry")}
                   </Text>

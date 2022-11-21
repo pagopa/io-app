@@ -26,6 +26,7 @@ import {
   bpdEnabled,
   cdcEnabled,
   euCovidCertificateEnabled,
+  fciEnabled,
   mvlEnabled,
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest,
@@ -40,6 +41,7 @@ import { watchBonusSvSaga } from "../features/bonus/siciliaVola/saga";
 import { watchEUCovidCertificateSaga } from "../features/euCovidCert/saga";
 import { watchMvlSaga } from "../features/mvl/saga";
 import { watchZendeskSupportSaga } from "../features/zendesk/saga";
+import { watchFciSaga } from "../features/fci/saga";
 import I18n from "../i18n";
 import { mixpanelTrack } from "../mixpanel";
 import NavigationService from "../navigation/NavigationService";
@@ -220,10 +222,6 @@ export function* initializeApplicationSaga(): Generator<
     return;
   }
 
-  // Start the notification installation update as early as
-  // possible to begin receiving push notifications
-  yield* call(updateInstallationSaga, backendClient.createOrUpdateInstallation);
-
   // whether we asked the user to login again
   const isSessionRefreshed = previousSessionToken !== sessionToken;
 
@@ -375,6 +373,10 @@ export function* initializeApplicationSaga(): Generator<
     }
   }
 
+  // Start the notification installation update as early as
+  // possible to begin receiving push notifications
+  yield* call(updateInstallationSaga, backendClient.createOrUpdateInstallation);
+
   //
   // User is autenticated, session token is valid
   //
@@ -420,6 +422,10 @@ export function* initializeApplicationSaga(): Generator<
   if (mvlEnabled || pnEnabled) {
     // Start watching for message attachments actions
     yield* fork(watchMessageAttachmentsSaga, sessionToken);
+  }
+
+  if (fciEnabled) {
+    yield* fork(watchFciSaga, sessionToken);
   }
 
   // Load the user metadata

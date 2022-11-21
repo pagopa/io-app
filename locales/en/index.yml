@@ -485,7 +485,7 @@ profile:
         not_selected: Not selected
       notifications:
         title: Push notifications
-        subtitle: Allow previews and reminders 
+        subtitle: Allow previews and reminders
     empty:
       default: No preference set
     unavailable:
@@ -503,24 +503,24 @@ profile:
       local_calendar: Local calendar
       birthday_calendar: Birthdays
     notifications:
-      contextualHelpTitle: Titolo
+      contextualHelpTitle: Push notifications
       contextualHelpContent: !include profile/profile_preferences_notifications.md
       header: Push notifications
       title: Customize push notifications
-      subtitle: Choose how to get updates on the messages and reminders you receive
-      titleExistingUser: Notifiche push più intelligenti
-      subtitleExistingUser: Ora puoi vedere subito chi ti ha scritto o ricevere promemoria da messaggi importanti.
+      subtitle: Choose if you want to allow previews and receive reminders.
+      titleExistingUser: Customize push notifications
+      subtitleExistingUser: Now you can instantly see who messaged you and receive reminders from important messages.
       reminders:
         title: Allow reminders
-        description: Receive push notifications close to deadlines or when you have unread messages
+        description: Upon request of the sender, receive push notifications close to deadlines or when you have unread messages
       preview:
-        title: Mostra anteprime
-        description: Includi nella notifica push il mittente e l’oggetto del messaggio ·
-        link: Più info
+        title: Show previews
+        description: Include the sender and subject of the message in the push notification · 
+        link: More info
         bottomSheet:
-          title: Mostra anteprime
-          content: "Quando l’opzione è attiva, le notifiche push mostrano il mittente e l’oggetto dei messaggi: così sai chi ti ha scritto senza accedere all’app.\nQueste informazioni, che potrebbero essere sensibili, vengono trattate dal gestore del tuo sistema operativo e sono mostrate anche quando il dispositivo è bloccato. Se vuoi evitare la visualizzazione delle anteprime, disattiva l’opzione."
-          cta: Ho capito!
+          title: Show previews
+          content: If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
+          cta: Ok!
       error: An error occurred with your request
 userMetadata:
   errors:
@@ -833,12 +833,30 @@ onboarding:
     title: Setup completed!
     body: Now you can start using IO
   notifications:
-    badge: News
+    badge: New
     headerTitle: IO Settings
     continue: Continue
-    remindersPreviewTitle: Promemoria
-    previewTitle: Hai un nuovo messaggio
-    previewMessage: Apri l’app per leggere il contenuto
+    preview:
+      reminderOnPreviewOnTitle: You have a notice due soon
+      reminderOnPreviewOnMessage: Log in to pay the notice issued by ACI
+      reminderOffPreviewOnTitle: Comune di Ipazia
+      reminderOffPreviewOnMessage: Summer camp registration is now open
+      reminderOnPreviewOffTitle: You have a notice due soon
+      reminderOnPreviewOffMessage: Log in to pay for it
+      reminderOffPreviewOffTitle: You have a new message
+      reminderOffPreviewOffMessage: Open the app to read the content
+    contextualHelpTitle: Push notifications
+    contextualHelpContent: !include onboarding/onboarding_notifications.md
+  infoConsent:
+    headerTitle: IO Settings
+    title: Enable push notifications?
+    subTitle: "To receive push notifications from IO, enable them in the iOS Settings. Here's how:"
+    instruction1: 1. Press 'Notifications'
+    instruction2: 2. Enable 'Allow notifications'
+    openSettings: Open iOS settings
+    continue: Maybe later
+    contextualHelpTitle: Push notifications
+    contextualHelpContent: !include onboarding/onboarding_notifications_info_consent.md
 forms:
   validators:
     required: Required value
@@ -3149,8 +3167,22 @@ features:
           REFUSED: REFUSED
           CANCELLED: Annullata
         expand: mostra gli stati precedenti
-        info: Puoi vedere il dettaglio di ciascuno stato, scaricare le ricevute e le attestazioni opponibili a terzi accedendo alla versione web del servizio
-        cta: Accedi alla versione web
+        info: Puoi vedere il dettaglio di ciascuno stato, scaricare le ricevute e le attestazioni opponibili a terzi accedendo alla versione web del servizio   
+        cta: Accedi alla versione web  
+  fci:
+    errors:
+      expired:
+        title: Document no longer available for signature
+        subTitle: The document is no longer available for signature. Contact the institution for more information.
+      waitForQtsp:
+        title: The document is being processed
+        subTitle: Please wait, you will soon receive the signed contract in the app.
+      unsupportedDevice:
+        title: There is a problem
+        subTitle: Your device does not support the "Firma con IO" feature.
+      generic:
+        title: There is a problem
+        subTitle: To proceed with the signature, check that you have updated the IO app to the latest version.
 webView:
   error:
     missingParams: Not all information necessary to access this page are available

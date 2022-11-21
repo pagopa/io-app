@@ -5,10 +5,11 @@
  */
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Container, H2, Text, View } from "native-base";
+import { Container, Text as NBText, View } from "native-base";
 import * as React from "react";
 import { Image, Modal, StyleSheet } from "react-native";
 import { connect } from "react-redux";
+import { H1 } from "../../components/core/typography/H1";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
 import { backendServicesStatusSelector } from "../../store/reducers/backendStatus";
@@ -61,12 +62,12 @@ class SystemOffModal extends React.PureComponent<Props> {
                 />
                 <View spacer={true} extralarge={true} />
               </React.Fragment>
-              <H2 style={styles.title}>{I18n.t("systemsOff.title")}</H2>
+              <H1 style={styles.title}>{I18n.t("systemsOff.title")}</H1>
               <View spacer={true} />
-              {message && <Text style={styles.subTitle}>{message}</Text>}
-              <Text style={styles.subTitle} bold={true}>
+              {message && <NBText style={styles.subTitle}>{message}</NBText>}
+              <NBText style={styles.subTitle} bold={true}>
                 {I18n.t("systemsOff.closeApp")}
-              </Text>
+              </NBText>
             </View>
           </Container>
         </BaseScreenComponent>
