@@ -46,6 +46,10 @@ export const fciSigningRequest = createAsyncAction(
   "FCI_SIGNING_FAILURE"
 )<CreateSignatureBody, void, NetworkError>();
 
+export const fciCreateSignatureBody = createStandardAction(
+  "FCI_CREATE_SIGNATURE_BODY"
+)<CreateSignatureBody>();
+
 /**
  * clear the FCI store
  */
@@ -64,4 +68,5 @@ export type FciActions =
   | ActionType<typeof fciLoadQtspFilledDocument>
   | ActionType<typeof fciSigningRequest>
   | ActionType<typeof fciAbortingRequest>
-  | ActionType<typeof fciStartingRequest>;
+  | ActionType<typeof fciStartingRequest>
+  | ActionType<typeof fciCreateSignatureBody>;

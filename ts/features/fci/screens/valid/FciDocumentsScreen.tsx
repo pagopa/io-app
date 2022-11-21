@@ -3,6 +3,7 @@ import Pdf from "react-native-pdf";
 import { PDFDocument, rgb } from "pdf-lib";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import { constNull, pipe } from "fp-ts/lib/function";
+import * as S from "fp-ts/lib/string";
 import * as O from "fp-ts/lib/Option";
 import { toError } from "fp-ts/lib/Either";
 import { SafeAreaView, StyleSheet } from "react-native";
@@ -50,17 +51,29 @@ const FciDocumentsScreen = () => {
   const cDoc = route.params.currentDoc;
 
   React.useEffect(() => {
-    if (attrs !== undefined) {
-      onSignatureDetail(attrs);
-      setCurrentDoc(cDoc);
-    } else {
-      setCurrentDoc(0);
-      setPdfString("");
-    }
+    pipe(
+      attrs,
+      O.fromNullable,
+      O.map(_ => {
+        setCurrentDoc(cDoc);
+        onSignatureDetail(_);
+      }),
+      O.getOrElse(() => {
+        setCurrentDoc(0);
+        setPdfString("");
+        setSignaturePage(0);
+      })
+    );
   }, [attrs, cDoc]);
 
   const { present, bottomSheet: fciAbortSignature } =
     useFciAbortSignatureFlow();
+
+  const onContinuePress = () =>
+    navigation.navigate(FCI_ROUTES.SIGNATURE_FIELDS, {
+      documentId: documents[currentDoc].id,
+      currentDoc
+    });
 
   const onCancelPress = () => present();
 
@@ -71,12 +84,6 @@ const FciDocumentsScreen = () => {
     onPress: onCancelPress,
     title: I18n.t("global.buttons.cancel")
   };
-
-  const onContinuePress = () =>
-    navigation.navigate(FCI_ROUTES.SIGNATURE_FIELDS, {
-      documentId: documents[currentDoc].id,
-      currentDoc
-    });
 
   const continueButtonProps = {
     block: true,
@@ -98,6 +105,13 @@ const FciDocumentsScreen = () => {
     title: I18n.t("global.buttons.continue")
   };
 
+  const gotoSignatureButtonProps = {
+    block: true,
+    primary: true,
+    onPress: onContinuePress,
+    title: "Procedi alla firma"
+  };
+
   /**
    * function to draw a rect over a signature field
    * @param ids
@@ -114,6 +128,7 @@ const FciDocumentsScreen = () => {
       `data:application/pdf;base64,${existingPdfBytes}`
     );
 
+    // TODO: refactor this code to use fp-ts
     await pdfDoc.then(res => {
       pipe(
         res.findPageForAnnotationRef(res.getForm().getSignature(ids).ref),
@@ -150,7 +165,7 @@ const FciDocumentsScreen = () => {
     <Pdf
       ref={pdfRef}
       source={{
-        uri: pdfString ? pdfString : `${documents[currentDoc].url}`
+        uri: S.isEmpty(pdfString) ? `${documents[currentDoc].url}` : pdfString
       }}
       onLoadComplete={(numberOfPages, _) => {
         setTotalPages(numberOfPages);
@@ -198,6 +213,16 @@ const FciDocumentsScreen = () => {
     </TouchableDefaultOpacity>
   );
 
+  const renderFooterButtons = () => {
+    if (S.isEmpty(pdfString)) {
+      return currentPage < totalPages
+        ? keepReadingButtonProps
+        : continueButtonProps;
+    } else {
+      return gotoSignatureButtonProps;
+    }
+  };
+
   return (
     <BaseScreenComponent
       goBack={true}
@@ -224,7 +249,7 @@ const FciDocumentsScreen = () => {
         }
         onPrevious={onPrevious}
         onNext={onNext}
-        disabled={pdfString !== ""}
+        disabled={!S.isEmpty(pdfString)}
         testID={"FciDocumentsNavBarTestID"}
       />
       <SafeAreaView style={IOStyles.flex} testID={"FciDocumentsScreenTestID"}>
@@ -234,11 +259,7 @@ const FciDocumentsScreen = () => {
             <FooterWithButtons
               type={"TwoButtonsInlineThird"}
               leftButton={cancelButtonProps}
-              rightButton={
-                currentPage < totalPages
-                  ? keepReadingButtonProps
-                  : continueButtonProps
-              }
+              rightButton={renderFooterButtons()}
             />
           </>
         )}

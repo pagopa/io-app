@@ -11,7 +11,7 @@ import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { useIOSelector } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { fciDocumentSignatureFieldsFieldsSelector } from "../../store/reducers/fciSignatureRequest";
 import { Document } from "../../../../../definitions/fci/Document";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
@@ -24,6 +24,8 @@ import { FCI_ROUTES } from "../../navigation/routes";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import IconFont from "../../../../components/ui/IconFont";
+import { fciCreateSignatureRequest } from "../../store/actions";
+import { mockCreateSignatureBody } from "../../types/__mocks__/CreateSignatureBody.mock";
 
 export type FciSignatureFieldsScreenNavigationParams = Readonly<{
   documentId: Document["id"];
@@ -33,6 +35,7 @@ export type FciSignatureFieldsScreenNavigationParams = Readonly<{
 const FciSignatureFieldsScreen = (
   props: IOStackNavigationRouteProps<FciParamsList, "FCI_SIGNATURE_FIELDS">
 ) => {
+  const dispatch = useIODispatch();
   const signatureFieldsSelector = useIOSelector(
     fciDocumentSignatureFieldsFieldsSelector(props.route.params.documentId)
   );
@@ -94,6 +97,10 @@ const FciSignatureFieldsScreen = (
     });
   };
 
+  const onChange = item => {
+    dispatch(fciCreateSignatureRequest(mockCreateSignatureBody));
+  };
+
   const renderSignatureFields = () => (
     <SectionList
       style={IOStyles.horizontalContentPadding}
@@ -102,7 +109,7 @@ const FciSignatureFieldsScreen = (
       renderItem={({ item }) => (
         <SignatureFieldItem
           title={item.clause.title}
-          onChange={constNull}
+          onChange={() => onChange(item)}
           onPressDetail={() => onPressDetail(item)}
         />
       )}

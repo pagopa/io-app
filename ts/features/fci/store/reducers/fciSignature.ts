@@ -1,6 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
+import { GlobalState } from "../../../../store/reducers/types";
 import { NetworkError } from "../../../../utils/errors";
 import { fciSigningRequest, fciAbortingRequest } from "../actions";
 
@@ -25,5 +26,9 @@ const reducer = (
 
   return state;
 };
+
+// Selectors
+export const fciSignatureSelector = (state: GlobalState): FciSignatureState =>
+  state.features.fci.signature;
 
 export default reducer;
