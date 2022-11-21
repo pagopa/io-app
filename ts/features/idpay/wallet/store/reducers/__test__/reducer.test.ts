@@ -1,7 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createStore } from "redux";
 import { idPayWalletInitiativeListSelector, idPayWalletSelector } from "..";
-import { WalletDTO } from "../../../../../../../definitions/idPay/wallet/WalletDTO";
+import { WalletDTO } from "../../../../../../../definitions/idpay/wallet/WalletDTO";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { NetworkError } from "../../../../../../utils/errors";
