@@ -1,6 +1,9 @@
 import * as React from "react";
 import { View, StyleSheet, Text } from "react-native";
-import { IOColors } from "../../../components/core/variables/IOColors";
+import {
+  IOColors,
+  hexToRgba
+} from "../../../components/core/variables/IOColors";
 
 export const iconItemGutter = 8;
 
@@ -22,10 +25,6 @@ const styles = StyleSheet.create({
   iconWrapperAuto: {
     width: "auto"
   },
-  image: {
-    width: "100%",
-    height: "100%"
-  },
   nameWrapper: {
     display: "flex",
     flexDirection: "row",
@@ -40,7 +39,7 @@ const styles = StyleSheet.create({
     padding: 16,
     alignItems: "center",
     justifyContent: "center",
-    borderColor: "rgba(0, 0, 0, 0.1)",
+    borderColor: hexToRgba(IOColors.black, 0.1),
     borderWidth: 1
   },
   iconItemLarger: {
