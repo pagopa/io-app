@@ -25,72 +25,6 @@ type Props = {
   onPress?: () => void;
 };
 
-const opaqueBorderColor = hexToRgba(IOColors.black, 0.1);
-
-const styles = StyleSheet.create({
-  paddedContentPreview: {
-    paddingLeft: 18,
-    paddingTop: 8,
-    paddingRight: 22
-  },
-  row: {
-    flexDirection: "row"
-  },
-  spaced: {
-    justifyContent: "space-between"
-  },
-  column: {
-    flexDirection: "column"
-  },
-  alignItemsCenter: {
-    alignItems: "center"
-  },
-  upperShadowBox: {
-    marginBottom: -13,
-    borderRadius: 8,
-    borderTopWidth: 13,
-    borderTopColor: opaqueBorderColor,
-    height: 17,
-    width: "100%"
-  },
-  card: {
-    marginBottom: -20,
-    height: 88,
-    shadowOffset: {
-      width: 0,
-      height: 3
-    },
-    shadowOpacity: 0.29,
-    shadowRadius: 4.65,
-    borderRadius: 8,
-    zIndex: -7,
-    elevation: -7,
-    marginLeft: 0,
-    marginRight: 0
-  },
-  cardImage: {
-    resizeMode: "stretch",
-    height: 88,
-    width: "100%"
-  },
-  name: {
-    flex: 1,
-    marginRight: 8,
-  },
-  amountTextBase: {
-    fontSize: 20,
-    lineHeight: 32
-  },
-  amountTextUpper: { fontSize: 24 },
-  amountTextLower: { fontSize: 16 },
-  previewLogo: {
-    resizeMode: "contain",
-    height: 40,
-    width: 40,
-    alignSelf: "center"
-  }
-});
-
 const IDPayCardPreviewComponent = (props: Props) => {
   const availableAmount = pipe(
     props.availableAmount,
@@ -178,5 +112,71 @@ const IDPayCardPreviewComponent = (props: Props) => {
     </>
   );
 };
+
+const opaqueBorderColor = hexToRgba(IOColors.black, 0.1);
+
+const styles = StyleSheet.create({
+  paddedContentPreview: {
+    paddingLeft: 18,
+    paddingTop: 8,
+    paddingRight: 22
+  },
+  row: {
+    flexDirection: "row"
+  },
+  spaced: {
+    justifyContent: "space-between"
+  },
+  column: {
+    flexDirection: "column"
+  },
+  alignItemsCenter: {
+    alignItems: "center"
+  },
+  upperShadowBox: {
+    marginBottom: -13,
+    borderRadius: 8,
+    borderTopWidth: 13,
+    borderTopColor: opaqueBorderColor,
+    height: 17,
+    width: "100%"
+  },
+  card: {
+    marginBottom: -20,
+    height: 88,
+    shadowOffset: {
+      width: 0,
+      height: 3
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 4.65,
+    borderRadius: 8,
+    zIndex: -7,
+    elevation: -7,
+    marginLeft: 0,
+    marginRight: 0
+  },
+  cardImage: {
+    resizeMode: "stretch",
+    height: 88,
+    width: "100%"
+  },
+  name: {
+    flex: 1,
+    marginRight: 8
+  },
+  amountTextBase: {
+    fontSize: 20,
+    lineHeight: 32
+  },
+  amountTextUpper: { fontSize: 24 },
+  amountTextLower: { fontSize: 16 },
+  previewLogo: {
+    resizeMode: "contain",
+    height: 40,
+    width: 40,
+    alignSelf: "center"
+  }
+});
 
 export default IDPayCardPreviewComponent;

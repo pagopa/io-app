@@ -5,9 +5,12 @@ import { idPayWalletGet } from "../../store/actions";
 import { WalletDTO } from "../../../../../../definitions/idpay/wallet/WalletDTO";
 import { ErrorDTO } from "../../../../../../definitions/idpay/wallet/ErrorDTO";
 import { handleGetIDPayWallet } from "../handleGetIDPayWallet";
+import { PreferredLanguageEnum } from "../../../../../../definitions/backend/PreferredLanguage";
 
 const mockedWallet: WalletDTO = { initiativeList: [] };
 const mockedError: ErrorDTO = { code: 0, message: "message" };
+const mockToken = "mock";
+const mockLanguage = PreferredLanguageEnum.it_IT;
 
 describe("Test handleGetIDPayWallet selector", () => {
   it("should call the success action after successfull api call", async () => {
@@ -15,7 +18,7 @@ describe("Test handleGetIDPayWallet selector", () => {
     getWallet.mockImplementation(() =>
       E.right({ status: 200, value: mockedWallet })
     );
-    await expectSaga(handleGetIDPayWallet, getWallet)
+    await expectSaga(handleGetIDPayWallet, getWallet, mockToken, mockLanguage)
       .withReducer(appReducer)
       .put(idPayWalletGet.success(mockedWallet))
       .run();
@@ -25,7 +28,7 @@ describe("Test handleGetIDPayWallet selector", () => {
     getWallet.mockImplementation(() =>
       E.right({ status: 401, value: mockedError })
     );
-    await expectSaga(handleGetIDPayWallet, getWallet)
+    await expectSaga(handleGetIDPayWallet, getWallet, mockToken, mockLanguage)
       .withReducer(appReducer)
       .put(
         idPayWalletGet.failure({
@@ -40,7 +43,7 @@ describe("Test handleGetIDPayWallet selector", () => {
     getWallet.mockImplementation(() =>
       E.right({ status: 429, value: mockedError })
     );
-    await expectSaga(handleGetIDPayWallet, getWallet)
+    await expectSaga(handleGetIDPayWallet, getWallet, mockToken, mockLanguage)
       .withReducer(appReducer)
       .put(
         idPayWalletGet.failure({
@@ -55,7 +58,7 @@ describe("Test handleGetIDPayWallet selector", () => {
     getWallet.mockImplementation(() =>
       E.right({ status: 500, value: mockedError })
     );
-    await expectSaga(handleGetIDPayWallet, getWallet)
+    await expectSaga(handleGetIDPayWallet, getWallet, mockToken, mockLanguage)
       .withReducer(appReducer)
       .put(
         idPayWalletGet.failure({
@@ -68,7 +71,7 @@ describe("Test handleGetIDPayWallet selector", () => {
   it("should call the failure action with a network error after a network error", async () => {
     const getWallet = jest.fn();
     getWallet.mockImplementation(() => E.left([]));
-    await expectSaga(handleGetIDPayWallet, getWallet)
+    await expectSaga(handleGetIDPayWallet, getWallet, mockToken, mockLanguage)
       .withReducer(appReducer)
       .put(
         idPayWalletGet.failure({

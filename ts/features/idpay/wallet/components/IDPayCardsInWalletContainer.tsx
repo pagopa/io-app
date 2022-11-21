@@ -26,7 +26,7 @@ const IDPayCardsList = (props: Props) => {
             initiativeId={initiative.initiativeId}
             initiativeName={initiative.initiativeName}
             endDate={initiative.endDate}
-            availableAmount={initiative.available}
+            availableAmount={initiative.amount}
             onPress={() => handleCardPress(initiative.initiativeId)}
           />
         ))}
