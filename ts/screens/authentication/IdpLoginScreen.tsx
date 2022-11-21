@@ -1,7 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Text, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import { Image, Linking, StyleSheet } from "react-native";
 import { WebView } from "react-native-webview";
@@ -236,20 +236,20 @@ class IdpLoginScreen extends React.Component<Props, State> {
       return (
         <View style={styles.errorContainer}>
           <Image source={brokenLinkImage} resizeMode="contain" />
-          <Text style={styles.errorTitle} bold={true}>
+          <NBText style={styles.errorTitle} bold={true}>
             {I18n.t(
               errorType === ErrorType.LOADING_ERROR
                 ? "authentication.errors.network.title"
                 : "authentication.errors.login.title"
             )}
-          </Text>
+          </NBText>
 
           {errorType === ErrorType.LOGIN_ERROR && (
-            <Text style={styles.errorBody}>
+            <NBText style={styles.errorBody}>
               {I18n.t(errorTranslationKey, {
                 defaultValue: I18n.t("authentication.errors.spid.unknown")
               })}
-            </Text>
+            </NBText>
           )}
 
           <View style={styles.errorButtonsContainer}>
@@ -260,7 +260,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
               light={true}
               bordered={true}
             >
-              <Text>{I18n.t("global.buttons.cancel")}</Text>
+              <NBText>{I18n.t("global.buttons.cancel")}</NBText>
             </ButtonDefaultOpacity>
             <ButtonDefaultOpacity
               onPress={this.setRequestStateToLoading}
@@ -268,7 +268,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
               block={true}
               primary={true}
             >
-              <Text>{I18n.t("global.buttons.retry")}</Text>
+              <NBText>{I18n.t("global.buttons.retry")}</NBText>
             </ButtonDefaultOpacity>
           </View>
         </View>

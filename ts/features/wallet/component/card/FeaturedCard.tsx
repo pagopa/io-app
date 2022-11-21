@@ -1,6 +1,6 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Badge, Text, View } from "native-base";
+import { Badge, Text as NBText, View } from "native-base";
 import * as React from "react";
 import { Image, ImageSourcePropType, StyleSheet } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
@@ -75,9 +75,9 @@ const FeaturedCard: React.FunctionComponent<Props> = (props: Props) => (
       )}
       {props.isNew && (
         <Badge style={styles.badgeContainer}>
-          <Text style={styles.badgeText} semibold={true}>
+          <NBText style={styles.badgeText} semibold={true}>
             {I18n.t("wallet.methods.newCome")}
-          </Text>
+          </NBText>
         </Badge>
       )}
     </View>

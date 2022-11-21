@@ -1,4 +1,4 @@
-import { Text } from "native-base";
+import { Text as NBText } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import I18n from "../../i18n";
@@ -32,8 +32,8 @@ export const AddPaymentMethodButton: React.SFC<Props> = ({
 }) => (
   <TouchableDefaultOpacity onPress={onPress} style={styles.button}>
     <IconFont name="io-plus" color={IOColors.white} size={iconSize} />
-    <Text bold={true} style={[styles.label, { fontSize: labelSize }]}>
+    <NBText bold={true} style={[styles.label, { fontSize: labelSize }]}>
       {I18n.t("wallet.newPaymentMethod.add").toUpperCase()}
-    </Text>
+    </NBText>
   </TouchableDefaultOpacity>
 );
