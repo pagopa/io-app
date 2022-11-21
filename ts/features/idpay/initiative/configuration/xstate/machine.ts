@@ -2,7 +2,7 @@ import { createMachine } from "xstate";
 import {
   LOADING_TAG,
   WAITING_USER_INPUT_TAG
-} from "../../../../../../utils/xstate";
+} from "../../../../../utils/xstate";
 
 type Context = {
   initiativeId?: string;
