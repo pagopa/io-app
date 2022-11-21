@@ -429,6 +429,7 @@ export function* initializeApplicationSaga(): Generator<
   if (idPayEnabled) {
     // Start watching for IDPay wallet actions
     yield* fork(watchIDPayWalletSaga, sessionToken);
+  }
 
   if (fciEnabled) {
     yield* fork(watchFciSaga, sessionToken);
