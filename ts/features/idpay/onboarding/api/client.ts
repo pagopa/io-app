@@ -1,26 +1,10 @@
 import { createClient } from "../../../../../definitions/idpay/onboarding/client";
-
-import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
 import { defaultRetryingFetch } from "../../../../utils/fetch";
 
-const createOnboardingClient = (
-  baseUrl: string,
-  defaultsFunc: () => RequestInit
-  token: string,
-  language: PreferredLanguageEnum
-) =>
-  createClient<"bearerAuth" | "Accept-Language">({
+const createOnboardingClient = (baseUrl: string) =>
+  createClient({
     baseUrl,
-    fetchApi: defaultRetryingFetch(),
-    withDefaults:defaultsFunc
-    // withDefaults: op => params => {
-    //   const paramsWithDefaults = {
-    //     ...params,
-    //     bearerAuth: token
-    //   };
-
-    //   return op(paramsWithDefaults);
-    // }
+    fetchApi: defaultRetryingFetch()
   });
 
 export type OnboardingClient = ReturnType<typeof createOnboardingClient>;
