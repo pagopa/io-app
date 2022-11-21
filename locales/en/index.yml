@@ -837,12 +837,12 @@ onboarding:
     headerTitle: IO Settings
     continue: Continue
     preview:
-      reminderOnPreviewOnTitle: There’s a notice expiring tomorrow
-      reminderOnPreviewOnMessage: Log in to pay for it
-      reminderOffPreviewOnTitle: Ministry of Interior
-      reminderOffPreviewOnMessage: Updates on your change of address
-      reminderOnPreviewOffTitle: Reminder
-      reminderOnPreviewOffMessage: Open the app to read the content
+      reminderOnPreviewOnTitle: You have a notice due soon
+      reminderOnPreviewOnMessage: Log in to pay the notice issued by ACI
+      reminderOffPreviewOnTitle: Comune di Ipazia
+      reminderOffPreviewOnMessage: Summer camp registration is now open
+      reminderOnPreviewOffTitle: You have a notice due soon
+      reminderOnPreviewOffMessage: Log in to pay for it
       reminderOffPreviewOffTitle: You have a new message
       reminderOffPreviewOffMessage: Open the app to read the content
     contextualHelpTitle: Push notifications
