@@ -16,7 +16,7 @@ import {
   confirmButtonProps
 } from "../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { abiListSelector } from "../../../store/abi";
-import { Abi } from "../../../../../../../definitions/pagopa/walletv2/Abi";
+// import { Abi } from "../../../../../../../definitions/pagopa/walletv2/Abi";
 import { BPay } from "../../../../../../../definitions/pagopa/BPay";
 import BPayCard from "../../../../bancomatpay/component/BPayCard";
 
@@ -38,16 +38,17 @@ const styles = StyleSheet.create({
   flexStart: { alignSelf: "flex-start" }
 });
 
+// eslint-disable-next-line arrow-body-style
 const AddBPayComponent: React.FunctionComponent<Props> = (props: Props) => {
-  const [abiInfo, setAbiInfo] = React.useState<Abi>({});
-  const { account, abiList } = props;
+  // const [abiInfo, setAbiInfo] = React.useState<Abi>({});
+  // const { account, abiList } = props;
 
-  React.useEffect(() => {
-    const abi: Abi | undefined = abiList.find(
-      elem => elem.abi === account.instituteCode
-    );
-    setAbiInfo(abi ?? {});
-  }, [account, abiList]);
+  // React.useEffect(() => {
+  //   const abi: Abi | undefined = abiList.find(
+  //     elem => elem.abi === account.instituteCode
+  //   );
+  //   setAbiInfo(abi ?? {});
+  // }, [account, abiList]);
 
   return (
     <BaseScreenComponent
@@ -76,11 +77,7 @@ const AddBPayComponent: React.FunctionComponent<Props> = (props: Props) => {
               })}
             </H4>
             <View spacer={true} large={true} />
-            <BPayCard
-              phone={props.account.numberObfuscated}
-              abiLogo={abiInfo.logoUrl}
-              bankName={props.account.bankName ?? ""} // This should never be undefined
-            />
+            <BPayCard phone={props.account.numberObfuscated} />
           </View>
           <View spacer={true} />
         </ScrollView>
