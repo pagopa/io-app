@@ -581,7 +581,7 @@ const mapStateToProps = (state: GlobalState) => ({
   bancomatListVisibleInWallet: bancomatListVisibleInWalletSelector(state),
   coBadgeListVisibleInWallet: cobadgeListVisibleInWalletSelector(state),
   bpdConfig: bpdRemoteConfigSelector(state),
-  isIdPayEnabled: true, // TODO add remote config to enable/disable idPay
+  isIdPayEnabled: true // TODO add remote config to enable/disable idPay
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
