@@ -1,4 +1,11 @@
-import { Body, Container, Content, Right, Text, View } from "native-base";
+import {
+  Body,
+  Container,
+  Content,
+  Right,
+  Text as NBText,
+  View
+} from "native-base";
 import * as React from "react";
 import { BackHandler, Image, SafeAreaView, StyleSheet } from "react-native";
 import WebView from "react-native-webview";
@@ -35,22 +42,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginTop: 10
   },
-
-  errorBody: {
-    marginTop: 10,
-    marginBottom: 10,
-    textAlign: "center"
-  },
-
   errorButtonsContainer: {
     position: "absolute",
     bottom: 30,
     flex: 1,
     flexDirection: "row"
-  },
-  cancelButtonStyle: {
-    flex: 1,
-    marginEnd: 10
   }
 });
 
@@ -92,9 +88,9 @@ const TosBonusComponent: React.FunctionComponent<Props> = props => {
     return (
       <View style={styles.errorContainer}>
         <Image source={brokenLinkImage} resizeMode="contain" />
-        <Text style={styles.errorTitle} bold={true}>
+        <NBText style={styles.errorTitle} bold={true}>
           {I18n.t("onboarding.tos.error")}
-        </Text>
+        </NBText>
 
         <View style={styles.errorButtonsContainer}>
           <ButtonDefaultOpacity
@@ -106,7 +102,7 @@ const TosBonusComponent: React.FunctionComponent<Props> = props => {
             block={true}
             primary={true}
           >
-            <Text>{I18n.t("global.buttons.retry")}</Text>
+            <NBText>{I18n.t("global.buttons.retry")}</NBText>
           </ButtonDefaultOpacity>
         </View>
       </View>

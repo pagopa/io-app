@@ -31,9 +31,6 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
     justifyContent: "center",
     alignSelf: "center"
-  },
-  textStyle: {
-    fontSize: 30
   }
 });
 

@@ -1,6 +1,7 @@
-import { H3, H3 as NBH3, Text as NBText } from "native-base";
+import { Text as NBText } from "native-base";
 import * as React from "react";
 import I18n from "../../../../../i18n";
+import { H1 } from "../../../../../components/core/typography/H1";
 
 type Props = {
   title: string;
@@ -15,9 +16,9 @@ type Props = {
 export const MessageTitle = (props: Props): React.ReactElement =>
   props.isPrescription ? (
     <>
-      <NBH3>{I18n.t("messages.medical.prescription")}</NBH3>
+      <H1>{I18n.t("messages.medical.prescription")}</H1>
       <NBText>{I18n.t("messages.medical.memo")}</NBText>
     </>
   ) : (
-    <H3>{props.title}</H3>
+    <H1>{props.title}</H1>
   );

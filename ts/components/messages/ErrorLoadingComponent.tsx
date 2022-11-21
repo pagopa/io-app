@@ -1,4 +1,4 @@
-import { Text, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
 import I18n from "../../i18n";
@@ -20,6 +20,6 @@ export const ErrorLoadingComponent = () => (
     <Image
       source={require("../../../img/messages/empty-message-list-icon.png")}
     />
-    <Text style={styles.title}>{I18n.t("messages.loadingErrorTitle")}</Text>
+    <NBText style={styles.title}>{I18n.t("messages.loadingErrorTitle")}</NBText>
   </View>
 );

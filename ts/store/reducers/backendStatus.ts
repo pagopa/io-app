@@ -19,6 +19,7 @@ import { UaDonationsConfig } from "../../../definitions/content/UaDonationsConfi
 import {
   cdcEnabled,
   cgnMerchantsV2Enabled,
+  fciEnabled,
   pnEnabled,
   premiumMessagesOptInEnabled,
   scanAdditionalBarcodesEnabled,
@@ -355,6 +356,22 @@ export const preferredPspsByOriginSelector = createSelector(
       config,
       O.map(c => c.preferredPspsByOrigin),
       O.toUndefined
+    )
+);
+
+/**
+ * Return the remote config about FCI enabled/disabled
+ * if there is no data or the local Feature Flag is disabled,
+ * false is the default value -> (FCI disabled)
+ */
+export const isFciEnabledSelector = createSelector(
+  backendStatusSelector,
+  (backendStatus): boolean =>
+    fciEnabled &&
+    pipe(
+      backendStatus,
+      O.map(bs => bs.config.fci.enabled),
+      O.getOrElse(() => false)
     )
 );
 

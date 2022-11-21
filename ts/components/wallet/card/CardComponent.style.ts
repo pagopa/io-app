@@ -13,7 +13,7 @@ export default StyleSheet.create({
     borderBottomRightRadius: 8
   },
   cardShadow: {
-    shadowColor: "#000",
+    shadowColor: IOColors.black,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 1.5,
@@ -108,7 +108,7 @@ export default StyleSheet.create({
   },
   numberArea: {
     borderWidth: 1,
-    borderColor: "transparent",
+    borderColor: `transparent`,
     width: "82%"
   }
 });

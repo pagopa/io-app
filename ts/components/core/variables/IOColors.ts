@@ -1,5 +1,9 @@
 import { ColorValue } from "react-native";
 
+/* Used by `getGradientColorValues` function */
+import LinearGradient from "react-native-linear-gradient";
+import { ComponentProps } from "react";
+
 // Ensure the Type for IOColor without losing the inferred types
 function asIOColors<T extends { [key: string]: ColorValue }>(arg: T): T {
   return arg;
@@ -10,6 +14,22 @@ function asIOColorGradients<T extends { [key: string]: Array<ColorValue> }>(
 ): T {
   return arg;
 }
+/**
+Return the color value with RGBA format (RGB + Alpha transparency), starting from the hexadecimal color value only.
+
+@param hexCode Color value in hexadecimal format. No short version accepted.
+@param opacity Opacity value that range from 0 to 1. Default value = 1.
+ */
+/* Taken from this Gist: https://gist.github.com/danieliser/b4b24c9f772066bcf0a6 */
+export const hexToRgba = (hexCode: string, opacity: number = 1) => {
+  const hex = hexCode.replace("#", "");
+
+  const r = parseInt(hex.substring(0, 2), 16);
+  const g = parseInt(hex.substring(2, 4), 16);
+  const b = parseInt(hex.substring(4, 6), 16);
+
+  return `rgba(${r},${g},${b},${opacity})`;
+};
 
 export const IOColors = asIOColors({
   white: "#FFFFFF",
@@ -34,56 +54,54 @@ export const IOColors = asIOColors({
   /* ↳ ALIAS TOKEN: cardTextColor → bluegreyDark */
   black: "#000000",
   /* ↳ ALIAS TOKEN: footerShadowColor → black */
-  brandPrimary: "#0066CC" /* from variables.ts */,
-  topTabBarActiveTextColor:
-    "#0066CC" /* from variables.ts, duplicate of brandPrimary, ALIAS TOKEN */,
-  blue: "#0073E6",
-  selectedColor:
-    "#0073E6" /* from variables.ts, duplicate of blue, ALIAS TOKEN */,
-  contentPrimaryBackground:
-    "#0073E6" /* from variables.ts, duplicate of blue, ALIAS TOKEN */,
-
-  textLinkColor:
-    "#0073E6" /* from variables.ts, duplicate of blue, ALIAS TOKEN */,
-  checkBoxColor: "#039BE5" /* from CheckBox component */,
-  brandPrimaryLight: "#99CCFF" /* from variables.ts */,
   noCieButton:
     "#789CCD" /* Background of half-disabled noCIE CTA, from LandingScreen.tsx */,
-  activeBonus: "#2C489D" /* from relative component (BonusVacanze) */,
-  cgnDiscount: "#9B5897" /* from CgnDiscountValueBox */,
+  blue: "#0073E6",
+  /* ↳ ALIAS TOKEN: topTabBarActiveTextColor → blue */
+  /* ↳ ALIAS TOKEN: selectedColor → blue */
+  /* ↳ ALIAS TOKEN: contentPrimaryBackground → blue */
+  /* ↳ ALIAS TOKEN: textLinkColor → blue */
+  blueUltraLight: "#99CCFF" /* Almost deprecated, avoid if possible */,
   aqua: "#00C5CA",
-  brandHighlight: "#00C5CA" /* from variables.ts, duplicate of aqua */,
-  brandHighLighter: "#00CDD2" /* from variables.ts */,
-  toastColor: "#C1F4F2" /* from variables.ts, ALIAS TOKEN */,
-  yellow: "#FFC824" /* from variables.ts, ALIAS TOKEN */,
-  cgnDiscountDetailBg: "#EB9505" /* from relative component */,
-  cardExpiredTextColor: "#FF0000" /* from variables.ts, ALIAS TOKEN */,
-  calendarExpirableColor: "#D0021B" /* from variables.ts, ALIAS TOKEN */,
-  red: "#C02927",
-  brandDanger: "#CC3333" /* from variables.ts */,
-  brandSuccess: "#007005" /* from variables.ts */,
+  /* ↳ ALIAS TOKEN: colorHighlight → aqua */
+  aquaUltraLight: "#C1F4F2",
+  /* ↳ ALIAS TOKEN: toastColor → aquaUltraLight */
+  cobalt: "#2C489D" /* used in the `Bonus Vacanze` only */,
+  antiqueFuchsia:
+    "#9B5897" /* used in the CgnDiscountValueBox component only */,
+  yellow: "#FFC824" /* Almost deprecated, used in `PaymentHistoryList` only */,
   orange: "#EA7614",
-  greyGradientTop: "#475A6D",
-  greyGradientBottom: "#42484F",
-  yellowGradientTop: "#FEC709",
-  yellowGradientBottom: "#FAA01F"
+  red: "#C02927",
+  /* ↳ ALIAS TOKEN: brandDanger → red */
+  /* ↳ ALIAS TOKEN: calendarExpirableColor → red */
+  green: "#005C3C"
+  /* ↳ ALIAS TOKEN: brandSuccess → green */
 });
 
 export const IOColorGradients = asIOColorGradients({
   appLaunch: ["#0C00D3", "#0073E6"],
   appIcon: ["#1D51DF", "#1723D5"],
   grey: ["#475A6D", "#42484F"],
-  yellow: ["#FEC709", "#FAA01F"],
+  cgnAll: ["#475A6D", "#E6E9F2"],
   cgn: ["#9184B7", "#5C488F"],
-  cgnCulture: ["#C51C82", "#E28DC0"],
-  cgnHealth: ["#F1901A", "#EE898A"],
-  cgnLearning: ["#0871B6", "#AE97C3"],
-  cgnSport: ["#DC1415", "#F8C78C"],
-  cgnTelco: ["#0871B6", "#83B8DA"],
   cgnFinance: ["#3E2F87", "#8FDBC0"],
-  cgnTravel: ["#E00F69", "#F8C78C"],
+  cgnCulture: ["#C51C82", "#E28DC0"],
+  cgnLearning: ["#0871B6", "#AE97C3"],
+  cgnHealth: ["#F1901A", "#EE898A"],
+  cgnHome: ["#DC1415", "#F8C78C"],
+  cgnJobOffers: ["#DC1415", "#EE898A"],
+  cgnSport: ["#1D827D", "#83B8DA"],
   cgnMobility: ["#1D827D", "#8FC7C5"],
-  cgnJobOffers: ["#DC1415", "#EE898A"]
+  cgnTelco: ["#0871B6", "#83B8DA"],
+  cgnTravel: ["#E00F69", "#F8C78C"]
 });
 
+export const getGradientColorValues = (
+  gradientId: IOColorGradientType
+): ComponentProps<typeof LinearGradient>["colors"] => {
+  const [first, second]: Array<ColorValue> = IOColorGradients[gradientId];
+  return [first, second];
+};
+
 export type IOColorType = keyof typeof IOColors;
+export type IOColorGradientType = keyof typeof IOColorGradients;

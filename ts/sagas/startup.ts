@@ -26,12 +26,12 @@ import {
   bpdEnabled,
   cdcEnabled,
   euCovidCertificateEnabled,
+  fciEnabled,
   mvlEnabled,
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest,
   pnEnabled,
   svEnabled,
-  usePaginatedMessages,
   zendeskEnabled
 } from "../config";
 import { watchBonusSaga } from "../features/bonus/bonusVacanze/store/sagas/bonusSaga";
@@ -41,17 +41,16 @@ import { watchBonusSvSaga } from "../features/bonus/siciliaVola/saga";
 import { watchEUCovidCertificateSaga } from "../features/euCovidCert/saga";
 import { watchMvlSaga } from "../features/mvl/saga";
 import { watchZendeskSupportSaga } from "../features/zendesk/saga";
+import { watchFciSaga } from "../features/fci/saga";
 import I18n from "../i18n";
 import { mixpanelTrack } from "../mixpanel";
 import NavigationService from "../navigation/NavigationService";
 import { startApplicationInitialization } from "../store/actions/application";
 import { sessionExpired } from "../store/actions/authentication";
 import { previousInstallationDataDeleteSuccess } from "../store/actions/installation";
-import { loadMessageWithRelations } from "../store/actions/messages";
 import { setMixpanelEnabled } from "../store/actions/mixpanel";
 import {
   navigateToMainNavigatorAction,
-  navigateToMessageRouterScreen,
   navigateToPaginatedMessageRouterAction,
   navigateToPrivacyScreen
 } from "../store/actions/navigation";
@@ -120,10 +119,7 @@ import {
   checkSession,
   watchCheckSessionSaga
 } from "./startup/watchCheckSessionSaga";
-import { watchLoadMessages } from "./startup/watchLoadMessagesSaga";
-import { watchLoadMessageWithRelationsSaga } from "./startup/watchLoadMessageWithRelationsSaga";
 import { watchLogoutSaga } from "./startup/watchLogoutSaga";
-import { watchMessageLoadSaga } from "./startup/watchMessageLoadSaga";
 import { watchSessionExpiredSaga } from "./startup/watchSessionExpiredSaga";
 import { watchUserDataProcessingSaga } from "./user/userDataProcessing";
 import {
@@ -136,6 +132,7 @@ import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValid
 import { completeOnboardingSaga } from "./startup/completeOnboardingSaga";
 import { watchLoadMessageById } from "./messages/watchLoadMessageById";
 import { watchThirdPartyMessageSaga } from "./messages/watchThirdPartyMessageSaga";
+import { checkNotificationsPreferencesSaga } from "./startup/checkNotificationsPreferencesSaga";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -224,10 +221,6 @@ export function* initializeApplicationSaga(): Generator<
     yield* put(sessionExpired());
     return;
   }
-
-  // Start the notification installation update as early as
-  // possible to begin receiving push notifications
-  yield* call(updateInstallationSaga, backendClient.createOrUpdateInstallation);
 
   // whether we asked the user to login again
   const isSessionRefreshed = previousSessionToken !== sessionToken;
@@ -336,6 +329,9 @@ export function* initializeApplicationSaga(): Generator<
 
     const isFirstOnboarding = isProfileFirstOnBoarding(userProfile);
 
+    // check if the user must set preferences for push notifications (e.g. reminders)
+    yield* call(checkNotificationsPreferencesSaga, userProfile);
+
     yield* call(askServicesPreferencesModeOptin, isFirstOnboarding);
 
     // Show the thank-you screen for the onboarding
@@ -367,12 +363,19 @@ export function* initializeApplicationSaga(): Generator<
       // check if the user expressed preference about mixpanel, if not ask for it
       yield* call(askMixpanelOptIn);
 
+      // check if the user must set preferences for push notifications (e.g. reminders)
+      yield* call(checkNotificationsPreferencesSaga, userProfile);
+
       yield* call(askServicesPreferencesModeOptin, false);
 
       // Stop the watchAbortOnboardingSaga
       yield* cancel(watchAbortOnboardingSagaTask);
     }
   }
+
+  // Start the notification installation update as early as
+  // possible to begin receiving push notifications
+  yield* call(updateInstallationSaga, backendClient.createOrUpdateInstallation);
 
   //
   // User is autenticated, session token is valid
@@ -419,6 +422,10 @@ export function* initializeApplicationSaga(): Generator<
   if (mvlEnabled || pnEnabled) {
     // Start watching for message attachments actions
     yield* fork(watchMessageAttachmentsSaga, sessionToken);
+  }
+
+  if (fciEnabled) {
+    yield* fork(watchFciSaga, sessionToken);
   }
 
   // Load the user metadata
@@ -515,37 +522,22 @@ export function* initializeApplicationSaga(): Generator<
   // Load visible services and service details from backend when requested
   yield* fork(watchLoadServicesSaga, backendClient);
 
-  // Load all messages when requested
-  yield* fork(watchLoadMessages, backendClient.getMessages);
-
-  if (usePaginatedMessages) {
-    yield* fork(watchLoadNextPageMessages, backendClient.getMessages);
-    yield* fork(watchLoadPreviousPageMessages, backendClient.getMessages);
-    yield* fork(watchReloadAllMessages, backendClient.getMessages);
-    yield* fork(watchLoadMessageById, backendClient.getMessage);
-    yield* fork(watchLoadMessageDetails, backendClient.getMessage);
-    yield* fork(
-      watchUpsertMessageStatusAttribues,
-      backendClient.upsertMessageStatusAttributes
-    );
-    yield* fork(
-      watchMigrateToPagination,
-      backendClient.upsertMessageStatusAttributes
-    );
-  }
+  yield* fork(watchLoadNextPageMessages, backendClient.getMessages);
+  yield* fork(watchLoadPreviousPageMessages, backendClient.getMessages);
+  yield* fork(watchReloadAllMessages, backendClient.getMessages);
+  yield* fork(watchLoadMessageById, backendClient.getMessage);
+  yield* fork(watchLoadMessageDetails, backendClient.getMessage);
+  yield* fork(
+    watchUpsertMessageStatusAttribues,
+    backendClient.upsertMessageStatusAttributes
+  );
+  yield* fork(
+    watchMigrateToPagination,
+    backendClient.upsertMessageStatusAttributes
+  );
 
   // Load third party message content when requested
   yield* fork(watchThirdPartyMessageSaga, backendClient);
-
-  // Load a message when requested
-  yield* fork(watchMessageLoadSaga, backendClient.getMessage);
-
-  // Load message and related entities (ex. the sender service)
-  yield* takeEvery(
-    getType(loadMessageWithRelations.request),
-    watchLoadMessageWithRelationsSaga,
-    backendClient.getMessage
-  );
 
   // Watch for the app going to background/foreground
   yield* fork(watchApplicationActivitySaga);
@@ -573,16 +565,12 @@ export function* initializeApplicationSaga(): Generator<
 
     yield* call(navigateToMainNavigatorAction);
     // Navigate to message router screen
-    if (usePaginatedMessages) {
-      NavigationService.dispatchNavigationAction(
-        navigateToPaginatedMessageRouterAction({
-          messageId: messageId as UIMessageId,
-          fromNotification: true
-        })
-      );
-    } else {
-      yield* call(navigateToMessageRouterScreen, { messageId });
-    }
+    NavigationService.dispatchNavigationAction(
+      navigateToPaginatedMessageRouterAction({
+        messageId: messageId as UIMessageId,
+        fromNotification: true
+      })
+    );
   } else {
     yield* call(navigateToMainNavigatorAction);
   }

@@ -15,11 +15,10 @@ import {
   debugRemotePushNotification,
   maximumItemsFromAPI,
   pageSize,
-  usePaginatedMessages
+  remindersOptInEnabled
 } from "../config";
 import { mixpanelTrack, setMixpanelPushNotificationToken } from "../mixpanel";
 import {
-  DEPRECATED_loadMessages,
   loadPreviousPageMessages,
   reloadAllMessages
 } from "../store/actions/messages";
@@ -128,11 +127,7 @@ function configurePushNotifications() {
           // We just received a push notification about a new message
           if (notification.foreground) {
             // The App is in foreground so just refresh the messages list
-            if (usePaginatedMessages) {
-              handleMessageReload();
-            } else {
-              store.dispatch(DEPRECATED_loadMessages.request());
-            }
+            handleMessageReload();
           } else {
             // The App was closed/in background and has been now opened clicking
             // on the push notification.
@@ -140,19 +135,17 @@ function configurePushNotifications() {
             // navigate to the message detail screen as soon as possible (if
             // needed after the user login/insert the unlock code)
             store.dispatch(updateNotificationsPendingMessage(messageId, false));
-
-            if (!usePaginatedMessages) {
-              // finally, refresh the message list to start loading the content of
-              // the new message - only needed for legacy system
-              store.dispatch(DEPRECATED_loadMessages.request());
-            }
           }
         })
       );
 
       // On iOS we need to call this when the remote notification handling is complete
       notification.finish(PushNotificationIOS.FetchResult.NoData);
-    }
+    },
+    // Only for iOS, we need to customize push notification prompt.
+    // We delay the push notification promt until opt-in screen
+    // during onboarding where permission is clearly required
+    requestPermissions: !remindersOptInEnabled || Platform.OS !== "ios"
   });
 }
 

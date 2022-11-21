@@ -1,5 +1,5 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { Button, Content, Text, View } from "native-base";
+import { Button, Content, Text as NBText, View } from "native-base";
 import * as React from "react";
 import { Image, Linking, StyleSheet } from "react-native";
 import I18n from "../i18n";
@@ -85,7 +85,7 @@ class RemindUpdatePagoPaVersionOverlay extends React.PureComponent<
           {I18n.t("wallet.alert.titlePagoPaUpdateApp")}
         </H1>
         <View spacer={true} />
-        <Text>{I18n.t("wallet.alert.messagePagoPaUpdateApp")}</Text>
+        <NBText>{I18n.t("wallet.alert.messagePagoPaUpdateApp")}</NBText>
         <View spacer={true} />
 
         <Button
@@ -94,16 +94,16 @@ class RemindUpdatePagoPaVersionOverlay extends React.PureComponent<
           disabled={false}
           onPress={this.openAppStore}
         >
-          <Text>{I18n.t("wallet.alert.btnUpdateApp")}</Text>
+          <NBText>{I18n.t("wallet.alert.btnUpdateApp")}</NBText>
         </Button>
 
         <View spacer={true} />
         {this.state.hasError && (
           <React.Fragment>
             <View spacer={true} />
-            <Text style={styles.textDanger}>
+            <NBText style={styles.textDanger}>
               {I18n.t("wallet.alert.msgErrorUpdateApp")}
-            </Text>
+            </NBText>
           </React.Fragment>
         )}
       </Content>

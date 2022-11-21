@@ -2,6 +2,146 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.20.0-rc.0](https://github.com/pagopa/io-app/compare/2.19.0-rc.4...2.20.0-rc.0) (2022-11-17)
+
+
+### Features
+
+* [[IOAPPCOM-3](https://pagopa.atlassian.net/browse/IOAPPCOM-3)] Add consent screen to manage push notifications ([#4147](https://github.com/pagopa/io-app/issues/4147)) ([627ef46](https://github.com/pagopa/io-app/commit/627ef46847c35ad8d8e3201ed9a7d7ab8b48a2d1))
+* **Firma con IO:** [[SFEQS-1097](https://pagopa.atlassian.net/browse/SFEQS-1097)] Router screen for signature request ([#4166](https://github.com/pagopa/io-app/issues/4166)) ([f1d555f](https://github.com/pagopa/io-app/commit/f1d555f1c48835defcd524f4b36a27575c24fc71))
+* [[IOAPPCOM-1](https://pagopa.atlassian.net/browse/IOAPPCOM-1)] Add preview flag on notification onboarding ([#4142](https://github.com/pagopa/io-app/issues/4142)) ([1d2bb7c](https://github.com/pagopa/io-app/commit/1d2bb7cbfa284c6af57c6b645abedb84fba4a5d1))
+* **Firma con IO:** [[SFEQS-1073](https://pagopa.atlassian.net/browse/SFEQS-1073)] Actions and reducers ([#4165](https://github.com/pagopa/io-app/issues/4165)) ([4cc2a87](https://github.com/pagopa/io-app/commit/4cc2a87a79338afbcb661067d4c9315c01555fbb))
+
+
+### Chores
+
+* [[IAI-233](https://pagopa.atlassian.net/browse/IAI-233)] Remove deprecated NativeBase components related to typography ([#4093](https://github.com/pagopa/io-app/issues/4093)) ([eedea6d](https://github.com/pagopa/io-app/commit/eedea6d528b0857e77ef81c6cb09699ef6b4709f))
+* [[IOAPPCOM-12](https://pagopa.atlassian.net/browse/IOAPPCOM-12)] Enables the FF and updates required tos version ([#4182](https://github.com/pagopa/io-app/issues/4182)) ([397df53](https://github.com/pagopa/io-app/commit/397df5391255ec0b218e9c862d2403ced4c00a84))
+* **IDPay:** [[IODPAY-51](https://pagopa.atlassian.net/browse/IODPAY-51)] Avoid XState machine recreation on provider rerendering ([#4177](https://github.com/pagopa/io-app/issues/4177)) ([4d40393](https://github.com/pagopa/io-app/commit/4d40393b8699384c0602760ce02cde3530c1dcff))
+
+## [2.19.0-rc.4](https://github.com/pagopa/io-app/compare/2.19.0-rc.3...2.19.0-rc.4) (2022-11-11)
+
+
+### Features
+
+* [[IOAPPPEB-7](https://pagopa.atlassian.net/browse/IOAPPPEB-7)] Fixes double API request ([#4175](https://github.com/pagopa/io-app/issues/4175)) ([b9c16ab](https://github.com/pagopa/io-app/commit/b9c16ab389a13def6aef44e5bdc03a0e77149cb7))
+
+## [2.19.0-rc.3](https://github.com/pagopa/io-app/compare/2.19.0-rc.2...2.19.0-rc.3) (2022-11-11)
+
+
+### Features
+
+* [[IOAPPPEB-7](https://pagopa.atlassian.net/browse/IOAPPPEB-7)] Handles only the user activation status ([#4173](https://github.com/pagopa/io-app/issues/4173)) ([5b98af0](https://github.com/pagopa/io-app/commit/5b98af0168915f980bb4a5ae7f90240fce33a0bd))
+* **IDPay:** [[IODPAY-4](https://pagopa.atlassian.net/browse/IODPAY-4)] Onboarding completion steps ([#4171](https://github.com/pagopa/io-app/issues/4171)) ([b62c7b5](https://github.com/pagopa/io-app/commit/b62c7b509197c6b351beafe84214fcdaf9f8406c))
+
+## [2.19.0-rc.2](https://github.com/pagopa/io-app/compare/2.19.0-rc.1...2.19.0-rc.2) (2022-11-10)
+
+
+### Features
+
+* [[IOAPPPEB-6](https://pagopa.atlassian.net/browse/IOAPPPEB-6)] Filter mehods not in BPD or added by EXT channel ([#4169](https://github.com/pagopa/io-app/issues/4169)) ([664a29b](https://github.com/pagopa/io-app/commit/664a29bb1e5ab63da7b917d8f9093ed6f1a783a3))
+
+## [2.19.0-rc.1](https://github.com/pagopa/io-app/compare/2.19.0-rc.0...2.19.0-rc.1) (2022-11-10)
+
+
+### Features
+
+* [[IOAPPPEB-4](https://pagopa.atlassian.net/browse/IOAPPPEB-4)] Handle new opt-in FF and adds the support to new linking ([#4164](https://github.com/pagopa/io-app/issues/4164)) ([45bf5fb](https://github.com/pagopa/io-app/commit/45bf5fbcf95cd20552b398f1a1016e0d728223dd))
+* [[IOAPPPEB-5](https://pagopa.atlassian.net/browse/IOAPPPEB-5)] Fix navigation from cta issue ([#4167](https://github.com/pagopa/io-app/issues/4167)) ([5c867cb](https://github.com/pagopa/io-app/commit/5c867cbba77c7e2d6cf6749d6edd21bb01a9bf2e))
+* **IDPay:** [[IODPAY-27](https://pagopa.atlassian.net/browse/IODPAY-27)] Add IDPay initiative details screen ([#4153](https://github.com/pagopa/io-app/issues/4153)) ([03e802c](https://github.com/pagopa/io-app/commit/03e802c869f87e53e62782ef2f338210998dfee2))
+* **IDPay:** [[IODPAY-28](https://pagopa.atlassian.net/browse/IODPAY-28)] PDND prerequisite screen skeleton ([#4149](https://github.com/pagopa/io-app/issues/4149)) ([ed05968](https://github.com/pagopa/io-app/commit/ed059689c9189eee63f0645c49bf42da4d9aacda))
+* **IDPay:** [[IODPAY-36](https://pagopa.atlassian.net/browse/IODPAY-36)] State machine accept ToS steps ([#4159](https://github.com/pagopa/io-app/issues/4159)) ([6228c4b](https://github.com/pagopa/io-app/commit/6228c4bb8dbfbf57ce852f8223a6e50a19f44cb3))
+* **IDPay:** [[IODPAY-38](https://pagopa.atlassian.net/browse/IODPAY-38)] Retrieve required criteria machine steps ([#4161](https://github.com/pagopa/io-app/issues/4161)) ([8838f7d](https://github.com/pagopa/io-app/commit/8838f7db6b48313ff0f3869d4031c9963972f6b2))
+* **IDPay:** [[IODPAY-39](https://pagopa.atlassian.net/browse/IODPAY-39)] Add Self Declarations screen ([#4162](https://github.com/pagopa/io-app/issues/4162)) ([524b46d](https://github.com/pagopa/io-app/commit/524b46df644cd57d6c1a3a7ac524857707d61469))
+* [[IA-950](https://pagopa.atlassian.net/browse/IA-950)] Customize the UI of the opt-in screen for reminders notifications ([#4130](https://github.com/pagopa/io-app/issues/4130)) ([93a3f7d](https://github.com/pagopa/io-app/commit/93a3f7d5bd8ba7ee4f0eb5d4f92212df106e58ac))
+* [[IOAPPCOM-2](https://pagopa.atlassian.net/browse/IOAPPCOM-2)] Add support for descriptive push notifications ([#4139](https://github.com/pagopa/io-app/issues/4139)) ([54697f9](https://github.com/pagopa/io-app/commit/54697f91a16dc80ef0fd5831c19fe8ff915b9b7e))
+* [[IOAPPPEB-1](https://pagopa.atlassian.net/browse/IOAPPPEB-1)] Request Payment Methods OptIn fixes on copy and UI ([#4146](https://github.com/pagopa/io-app/issues/4146)) ([e98b70a](https://github.com/pagopa/io-app/commit/e98b70a2296e4b93b42c8670f8d97badf20b78cc))
+* **IDPay:** [[IODPAY-40](https://pagopa.atlassian.net/browse/IODPAY-40)] Add consent steps to machine ([#4163](https://github.com/pagopa/io-app/issues/4163)) ([1982b58](https://github.com/pagopa/io-app/commit/1982b58dbd8ea6ed25e73988f6acd902cbb86a3d))
+
+
+### Bug Fixes
+
+* **Platform:** [[IOAPPFD0-12](https://pagopa.atlassian.net/browse/IOAPPFD0-12)] Fix Android bundling ([#4160](https://github.com/pagopa/io-app/issues/4160)) ([0a64a92](https://github.com/pagopa/io-app/commit/0a64a92815cbd755daed7777b99631d91c600bab))
+
+
+### Chores
+
+* **Firma con IO:** [[SFEQS-1072](https://pagopa.atlassian.net/browse/SFEQS-1072)] Add remote firma con io feature flag ([#4138](https://github.com/pagopa/io-app/issues/4138)) ([a8d9945](https://github.com/pagopa/io-app/commit/a8d994559c1b4f18e6bcd644286d0d8c3ba8c64a))
+* [[IAI-231](https://pagopa.atlassian.net/browse/IAI-231)] Add `eslint-plugin-react-native` to detect unused style and/or bad practices ([#4081](https://github.com/pagopa/io-app/issues/4081)) ([cfa7198](https://github.com/pagopa/io-app/commit/cfa7198ce62f2b773ffe8f0e6b1e279dafd87de5))
+* **IDPay:** [[IODPAY-37](https://pagopa.atlassian.net/browse/IODPAY-37)] Add tests for initiative steps ([#4155](https://github.com/pagopa/io-app/issues/4155)) ([59922b7](https://github.com/pagopa/io-app/commit/59922b742e4dfa1b5be3075e1fdb3a44e97bdd56))
+* [[IAI-228](https://pagopa.atlassian.net/browse/IAI-228)] Remove/Update references to gradient values ([#4076](https://github.com/pagopa/io-app/issues/4076)) ([78fee39](https://github.com/pagopa/io-app/commit/78fee395647664c7779540c74582359a5cafa61b))
+* **IDPay:** [[IDPAY-30](https://pagopa.atlassian.net/browse/IDPAY-30)] Create XState machine for IDPay Onboarding flow ([#4151](https://github.com/pagopa/io-app/issues/4151)) ([eea9ad4](https://github.com/pagopa/io-app/commit/eea9ad4c1b706889c1cb74ceab8819b6b0e1322f))
+* **IDPay:** [[IDPAY-31](https://pagopa.atlassian.net/browse/IDPAY-31)] Generate IDPay onboarding types and client ([#4150](https://github.com/pagopa/io-app/issues/4150)) ([f35e73d](https://github.com/pagopa/io-app/commit/f35e73db7b9a0b654dc44fae797903c647b6ea8f))
+
+## [2.19.0-rc.0](https://github.com/pagopa/io-app/compare/2.18.0-rc.7...2.19.0-rc.0) (2022-11-02)
+
+
+### Features
+
+* [[IA-949](https://pagopa.atlassian.net/browse/IA-949)] Present the opt-in screen for reminders during the onboarding ([#4132](https://github.com/pagopa/io-app/issues/4132)) ([9937afa](https://github.com/pagopa/io-app/commit/9937afa305a6d6f895129fa5cc2c964fa227840a))
+
+## [2.18.0-rc.7](https://github.com/pagopa/io-app/compare/2.18.0-rc.6...2.18.0-rc.7) (2022-10-28)
+
+
+### Chores
+
+* [[IAI-232](https://pagopa.atlassian.net/browse/IAI-232)] Remove/Update references to color values ([#4075](https://github.com/pagopa/io-app/issues/4075)) ([fa22016](https://github.com/pagopa/io-app/commit/fa22016880aa89c0ff6c8c5e1ebd8d082a965aba))
+
+## [2.18.0-rc.6](https://github.com/pagopa/io-app/compare/2.18.0-rc.5...2.18.0-rc.6) (2022-10-25)
+
+
+### Chores
+
+* [[IOAPPFD0-8](https://pagopa.atlassian.net/browse/IOAPPFD0-8)] Upgrade react-native-vision-camera to fix the build time error in Android ([#4145](https://github.com/pagopa/io-app/issues/4145)) ([4eabf8c](https://github.com/pagopa/io-app/commit/4eabf8c3e7c4a3c61beb09cd91804b0d9b0fbdd0))
+
+## [2.18.0-rc.5](https://github.com/pagopa/io-app/compare/2.18.0-rc.4...2.18.0-rc.5) (2022-10-25)
+
+
+### Chores
+
+* [[IOAPPFD0-7](https://pagopa.atlassian.net/browse/IOAPPFD0-7)] Set the ruby version of android image on circleCI ([#4143](https://github.com/pagopa/io-app/issues/4143)) ([7a0747d](https://github.com/pagopa/io-app/commit/7a0747d556a0d809fe9ebf6492863a69e460f191))
+
+## [2.18.0-rc.4](https://github.com/pagopa/io-app/compare/2.18.0-rc.3...2.18.0-rc.4) (2022-10-24)
+
+## [2.18.0-rc.3](https://github.com/pagopa/io-app/compare/2.18.0-rc.2...2.18.0-rc.3) (2022-10-24)
+
+## [2.18.0-rc.2](https://github.com/pagopa/io-app/compare/2.18.0-rc.1...2.18.0-rc.2) (2022-10-24)
+
+
+### Features
+
+* [[IA-945](https://pagopa.atlassian.net/browse/IA-945)] Add a screen to preferences to opt-in/out reminders notifications ([#4128](https://github.com/pagopa/io-app/issues/4128)) ([4703efe](https://github.com/pagopa/io-app/commit/4703efefc9a208b191f311e46cbd517984a97c51))
+
+
+### Chores
+
+* [[IOAPPFD0-7](https://pagopa.atlassian.net/browse/IOAPPFD0-7)] Updates the minor version of ruby to fix CI release workflows ([#4141](https://github.com/pagopa/io-app/issues/4141)) ([bf37098](https://github.com/pagopa/io-app/commit/bf37098b0e23bfa34a3536c5a4881497b4f70136))
+
+## [2.18.0-rc.1](https://github.com/pagopa/io-app/compare/2.18.0-rc.0...2.18.0-rc.1) (2022-10-24)
+
+
+### Features
+
+* **Firma con IO:** [[SFEQS-884](https://pagopa.atlassian.net/browse/SFEQS-884)] Add FCI local feature flag ([#4063](https://github.com/pagopa/io-app/issues/4063)) ([d54e6e4](https://github.com/pagopa/io-app/commit/d54e6e45df3b024a77d9d3ffef8941b7b5ebcb59))
+* [[IA-946](https://pagopa.atlassian.net/browse/IA-946)] Add the feature flag for enabling the reminders opt-in in app ([#4126](https://github.com/pagopa/io-app/issues/4126)) ([bf126c0](https://github.com/pagopa/io-app/commit/bf126c0a168a1362ef546b8e1fd7bb03aaa4ac5d))
+
+
+### Bug Fixes
+
+* [[IABT-1398](https://pagopa.atlassian.net/browse/IABT-1398),[IOAPPCOM-5](https://pagopa.atlassian.net/browse/IOAPPCOM-5)] Update Android Manifest with a flag required to save images to Camera Roll ([#4135](https://github.com/pagopa/io-app/issues/4135)) ([dca4f75](https://github.com/pagopa/io-app/commit/dca4f752a2efd2ed7d0bb6d6dbbb9b4a2448ca93))
+
+
+### Chores
+
+* [[IA-545](https://pagopa.atlassian.net/browse/IA-545)] Remove legacy code of messages without pagination ([#4123](https://github.com/pagopa/io-app/issues/4123)) ([5f06bc3](https://github.com/pagopa/io-app/commit/5f06bc3177b6053cfe051d7c2a1ce1864e943e38))
+* [[IAI-152](https://pagopa.atlassian.net/browse/IAI-152)] Upgrade OnboardingNavigator to support react-navigation v5 ([#4122](https://github.com/pagopa/io-app/issues/4122)) ([15ae5f2](https://github.com/pagopa/io-app/commit/15ae5f21a9ed43a44b8f3916c379bd03f78a407f))
+* [[IAI-192](https://pagopa.atlassian.net/browse/IAI-192)] Upgrade `react-native` to `0.69.5` ([#4103](https://github.com/pagopa/io-app/issues/4103)) ([11df37b](https://github.com/pagopa/io-app/commit/11df37bf1b6f20e5ffdf38dca1fa672099288d07))
+* [[IOAPPFD0-3](https://pagopa.atlassian.net/browse/IOAPPFD0-3)] Next generation eu logo missing from splash ([#4137](https://github.com/pagopa/io-app/issues/4137)) ([2025491](https://github.com/pagopa/io-app/commit/2025491c20f4a4ef02406303c3800154e11632f2))
+
+## [2.18.0-rc.0](https://github.com/pagopa/io-app/compare/2.17.0-rc.2...2.18.0-rc.0) (2022-10-11)
+
+## [2.17.0-rc.2](https://github.com/pagopa/io-app/compare/2.17.0-rc.1...2.17.0-rc.2) (2022-10-07)
+
 ## [2.17.0-rc.1](https://github.com/pagopa/io-app/compare/2.17.0-rc.0...2.17.0-rc.1) (2022-09-28)
 
 

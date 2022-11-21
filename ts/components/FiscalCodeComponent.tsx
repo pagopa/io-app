@@ -10,7 +10,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Text, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import {
   Dimensions,
@@ -338,21 +338,21 @@ export default class FiscalCodeComponent extends React.Component<Props> {
     selectable: boolean = false
   ) {
     return (
-      <Text
+      <NBText
         robotomono={true}
         bold={true}
-        style={[
+        style={
           isLandscape
             ? [styles.landscapeText, landscapeStyle]
             : [styles.fullText, fullStyle]
-        ]}
+        }
         selectable={selectable}
         accessible={true}
         accessibilityElementsHidden={true}
         importantForAccessibility={"no-hide-descendants"}
       >
         {content.toUpperCase()}
-      </Text>
+      </NBText>
     );
   }
 
@@ -495,14 +495,14 @@ export default class FiscalCodeComponent extends React.Component<Props> {
           height={barCodeHeightL - 5}
           width={(barCodeWidthL - 5) / 211} // 211= 16*11 + 35: number of characters in the fiscal code barcode with CODE128
         />
-        <Text
+        <NBText
           robotomono={true}
           bold={true}
           alignCenter={true}
           style={styles.landscapeFacSimile}
         >
           {I18n.t("profile.fiscalCode.facSimile")}
-        </Text>
+        </NBText>
       </View>
     ) : (
       <View style={styles.fullBareCode}>
@@ -513,14 +513,14 @@ export default class FiscalCodeComponent extends React.Component<Props> {
           height={barCodeHeightF - 5}
           width={(barCodeWidthF - 5) / 211}
         />
-        <Text
+        <NBText
           robotomono={true}
           bold={true}
           alignCenter={true}
           style={styles.fullFacSimileText}
         >
           {I18n.t("profile.fiscalCode.facSimile")}
-        </Text>
+        </NBText>
       </View>
     );
   }

@@ -18,7 +18,7 @@ export default class Switch extends React.Component<NativeBase.Switch> {
   public render() {
     const thumbColor: string = pipe(
       maybeDisabled(this.props.disabled),
-      O.map(_ => variables.brandPrimaryLight),
+      O.map(_ => IOColors.blueUltraLight),
       O.getOrElse(() => variables.contentPrimaryBackground)
     );
 

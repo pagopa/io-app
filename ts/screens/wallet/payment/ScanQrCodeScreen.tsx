@@ -6,7 +6,7 @@ import { ITuple2 } from "@pagopa/ts-commons/lib/tuples";
 import * as AR from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Text, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import {
   Alert,
@@ -83,10 +83,6 @@ const styles = StyleSheet.create({
     paddingLeft: customVariables.contentPadding
   },
 
-  white: {
-    backgroundColor: IOColors.white
-  },
-
   bottomText: {
     paddingTop: cameraTextOverlapping
   },
@@ -95,12 +91,6 @@ const styles = StyleSheet.create({
     backgroundColor: IOColors.white,
     marginTop: -cameraTextOverlapping,
     zIndex: 1
-  },
-
-  cameraContainer: {
-    alignItems: "flex-start",
-    justifyContent: "center",
-    backgroundColor: "transparent"
   },
 
   button: {
@@ -112,13 +102,6 @@ const styles = StyleSheet.create({
     width: screenWidth - customVariables.contentPadding * 2,
     backgroundColor: IOColors.white,
     zIndex: 999
-  },
-
-  camera: {
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "transparent",
-    width: screenWidth
   }
 });
 
@@ -365,13 +348,13 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
                 style={styles.button}
                 bordered={true}
               >
-                <Text>{I18n.t("wallet.QRtoPay.chooser")}</Text>
+                <NBText>{I18n.t("wallet.QRtoPay.chooser")}</NBText>
               </ButtonDefaultOpacity>
               <View style={styles.content}>
                 <View spacer={true} />
-                <Text style={[styles.padded, styles.bottomText]}>
+                <NBText style={[styles.padded, styles.bottomText]}>
                   {I18n.t("wallet.QRtoPay.cameraUsageInfo")}
-                </Text>
+                </NBText>
                 <View spacer={true} extralarge={true} />
               </View>
             </View>

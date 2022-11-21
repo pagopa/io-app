@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: variables.contentPadding,
     paddingVertical: variables.spacingBase,
-    backgroundColor: variables.brandHighlight
+    backgroundColor: variables.colorHighlight
   },
   experimentalFeaturesBannerLeft: {
     flex: 0,

@@ -1,13 +1,13 @@
 import { ITuple2 } from "@pagopa/ts-commons/lib/tuples";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
-import { Col, Grid, Row, Text } from "native-base";
+import { Col, Grid, Row, Text as NBText } from "native-base";
 import * as React from "react";
 import { Platform, StyleSheet } from "react-native";
 import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
-import { IOColors } from "../core/variables/IOColors";
+import { hexToRgba, IOColors } from "../core/variables/IOColors";
 import StyledIconFont from "../ui/IconFont";
 
 // left -> the string to represent as text
@@ -27,6 +27,7 @@ type Props = Readonly<{
 // it generate buttons width of 56
 const radius = 18;
 const BUTTON_DIAMETER = 56;
+const opaqueButtonBackground = hexToRgba(IOColors.black, 0.1);
 
 const styles = StyleSheet.create({
   roundButton: {
@@ -39,22 +40,17 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: BUTTON_DIAMETER,
     height: BUTTON_DIAMETER,
-    borderRadius: BUTTON_DIAMETER / 2
+    borderRadius: BUTTON_DIAMETER / 2,
+    backgroundColor: opaqueButtonBackground
   },
   transparent: {
-    backgroundColor: "transparent"
+    backgroundColor: `transparent`
   },
   buttonTextBase: {
     ...makeFontStyleObject(Platform.select, "300"),
     fontSize: 30,
     lineHeight: 32,
     marginBottom: -10
-  },
-  white: {
-    color: IOColors.white
-  },
-  buttonTextDigit: {
-    fontSize: radius + 10
   },
   buttonTextLabel: {
     fontSize: radius - 5
@@ -102,7 +98,7 @@ const renderPinCol = (
           label,
           E.fold(
             l => (
-              <Text
+              <NBText
                 white={style === "label" && buttonType === "primary"}
                 style={[
                   styles.buttonTextBase,
@@ -110,13 +106,13 @@ const renderPinCol = (
                 ]}
               >
                 {l}
-              </Text>
+              </NBText>
             ),
             ic => (
               <StyledIconFont
                 name={ic.name}
                 size={ic.size}
-                style={[styles.noPadded]}
+                style={styles.noPadded}
                 color={
                   buttonType === "light"
                     ? customVariables.contentPrimaryBackground

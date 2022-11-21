@@ -49,7 +49,7 @@ const ShareDataScreen = (props: Props): React.ReactElement => {
       headerTitle={I18n.t("profile.main.privacy.shareData.title")}
     >
       <SafeAreaView style={IOStyles.flex}>
-        <ScrollView style={[IOStyles.horizontalContentPadding]}>
+        <ScrollView style={IOStyles.horizontalContentPadding}>
           <ShareDataComponent />
         </ScrollView>
         <FooterWithButtons type={"SingleButton"} leftButton={buttonProps} />
