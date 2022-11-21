@@ -52,24 +52,21 @@ const createIDPayInitiativeConfigurationMachine = () =>
       },
       EVALUTING_INITIATIVE_CONFIGURATION: {
         tags: [LOADING_TAG],
-        type: "final",
         always: [
           {
-            cond: "isIBANConfigurationNeeded",
-            target: "CONFIGURING_IBAN"
+            cond: "isInitiativeConfigurationNeeded",
+            target: "CONFIGURING_INITIATIVE"
           },
           {
-            cond: "isInstrumentsConfigurationNeeded",
-            target: "CONFIGURING_INSTRUMENTS"
+            target: "CONFIGURATION_NOT_NEEDED"
           }
         ]
       },
-      CONFIGURING_IBAN: {
+      CONFIGURING_INITIATIVE: {
         tags: [WAITING_USER_INPUT_TAG],
         type: "final"
       },
-      CONFIGURING_INSTRUMENTS: {
-        tags: [WAITING_USER_INPUT_TAG],
+      CONFIGURATION_NOT_NEEDED: {
         type: "final"
       }
     }
