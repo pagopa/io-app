@@ -312,12 +312,9 @@ export function* initializeApplicationSaga(): Generator<
   // Start watching for requests of abort the onboarding
   const watchAbortOnboardingSagaTask = yield* fork(watchAbortOnboardingSaga);
 
-  // This block has been refactored to avoid a code duplication on an if-else branching.
-  // Some of the conditions could have been simplified further (i.e., the firstOnBoarding
-  // check is done here but also inside some sagas) but, in order to keep the refactoring
-  // as simple as possible, only this part has been edited
-  const hasSessionAndPin = previousSessionToken && O.isSome(maybeStoredPin);
-  if (hasSessionAndPin) {
+  const hasPreviousSessionAndPin =
+    previousSessionToken && O.isSome(maybeStoredPin);
+  if (hasPreviousSessionAndPin) {
     // we ask the user to identify using the unlock code.
     // FIXME: This is an unsafe cast caused by a wrongly described type.
     const identificationResult: SagaCallReturnType<
@@ -337,16 +334,14 @@ export function* initializeApplicationSaga(): Generator<
   // check if the user expressed preference about mixpanel, if not ask for it
   yield* call(askMixpanelOptIn);
 
-  if (hasSessionAndPin) {
+  if (hasPreviousSessionAndPin) {
     // We have to retrieve the pin here and not on the previous if-condition (same guard)
     // otherwise the typescript compiler will complain of an unassigned variable later on
     storedPin = maybeStoredPin.value;
   } else {
-    // This condition comes from the refactoring. By reading it, it may seem that
-    // this code is handling a non-logged in user (due to not having a session) but
-    // actually, if the session was not valid, the code would have stopped before
+    // TODO If the session was not valid, the code would have stopped before
     // reaching this point. Consider refactoring even more by removing the check
-    // on the session
+    // on the session (IOAPPCIT-10)
     storedPin = yield* call(checkConfiguredPinSaga);
 
     yield* call(checkAcknowledgedFingerprintSaga);
