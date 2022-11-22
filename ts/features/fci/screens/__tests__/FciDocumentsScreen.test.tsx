@@ -10,7 +10,9 @@ import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import { fciSignatureRequestFromId } from "../../store/actions";
 
 describe("Test FciDocuments screen", () => {
-  jest.useFakeTimers();
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
   it("should render the FciDocuments screen", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store: Store<GlobalState> = createStore(
