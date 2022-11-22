@@ -1,18 +1,22 @@
 import * as React from "react";
 import { View } from "native-base";
 import { SafeAreaView, SectionList } from "react-native";
+import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as O from "fp-ts/lib/Option";
-import * as S from "fp-ts/string";
-import { constNull, pipe } from "fp-ts/lib/function";
+import * as S from "fp-ts/lib/string";
+import { increment, pipe } from "fp-ts/lib/function";
 import { H1 } from "../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { fciDocumentSignatureFieldsFieldsSelector } from "../../store/reducers/fciSignatureRequest";
+import { useIODispatch } from "../../../../store/hooks";
+import {
+  fciDocumentSignatureFieldsFieldsSelector,
+  fciSignatureDetailDocumentsSelector
+} from "../../store/reducers/fciSignatureRequest";
 import { Document } from "../../../../../definitions/fci/Document";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { FciParamsList } from "../../navigation/params";
@@ -26,6 +30,8 @@ import { IOColors } from "../../../../components/core/variables/IOColors";
 import IconFont from "../../../../components/ui/IconFont";
 import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentSignatures";
 import { fciUpdateDocumentSignaturesRequest } from "../../store/actions";
+import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
+import { ClausesTypeEnum } from "../../../../../definitions/fci/ClausesType";
 
 export type FciSignatureFieldsScreenNavigationParams = Readonly<{
   documentId: Document["id"];
@@ -36,14 +42,42 @@ const FciSignatureFieldsScreen = (
   props: IOStackNavigationRouteProps<FciParamsList, "FCI_SIGNATURE_FIELDS">
 ) => {
   const docId = props.route.params.documentId;
-  const signatureFieldsSelector = useIOSelector(
+  const currentDoc = props.route.params.currentDoc;
+  const documentsSelector = useSelector(fciSignatureDetailDocumentsSelector);
+  const signatureFieldsSelector = useSelector(
     fciDocumentSignatureFieldsFieldsSelector(docId)
   );
-  const documentsSignaturesSelector = useIOSelector(
+  const documentsSignaturesSelector = useSelector(
     fciDocumentSignaturesSelector
   );
   const dispatch = useIODispatch();
   const navigation = useNavigation();
+  const [isClausesChecked, setIsClausesChecked] = React.useState(false);
+
+  React.useEffect(() => {
+    const docSignatures = documentsSignaturesSelector.documentSignatures.find(
+      d => d.document_id === docId
+    );
+
+    const requiredFields = signatureFieldsSelector.filter(
+      signatureField => signatureField.clause.type === ClausesTypeEnum.REQUIRED
+    );
+
+    const res = requiredFields
+      .map(signatureField =>
+        docSignatures?.signature_fields.filter(f => f === signatureField)
+      )
+      .flat();
+
+    setIsClausesChecked(res.length >= requiredFields.length);
+  }, [
+    documentsSignaturesSelector.documentSignatures,
+    docId,
+    signatureFieldsSelector
+  ]);
+
+  const { present, bottomSheet: fciAbortSignature } =
+    useFciAbortSignatureFlow();
 
   type DATA_TYPE = {
     title: string;
@@ -95,13 +129,14 @@ const FciSignatureFieldsScreen = (
       screen: FCI_ROUTES.DOCUMENTS,
       params: {
         attrs: signatureField.attrs,
-        currentDoc: props.route.params.currentDoc
+        currentDoc
       },
       merge: true
     });
   };
 
   const onChange = (value: boolean, item: SignatureField) => {
+    // TODO: refactor this logic to use fp-ts
     const docSignatures = documentsSignaturesSelector.documentSignatures.find(
       d => d.document_id === docId
     );
@@ -133,6 +168,7 @@ const FciSignatureFieldsScreen = (
         <SignatureFieldItem
           title={item.clause.title}
           value={
+            // TODO: refactor this logic to use fp-ts
             documentsSignaturesSelector.documentSignatures
               .find(d => d.document_id === docId)
               ?.signature_fields.find(f => f === item)
@@ -153,15 +189,29 @@ const FciSignatureFieldsScreen = (
     block: true,
     light: false,
     bordered: true,
-    onPress: constNull,
+    onPress: present,
     title: I18n.t("global.buttons.cancel")
   };
 
   const continueButtonProps = {
     block: true,
     primary: true,
-    onPress: constNull,
-    title: I18n.t("global.buttons.continue")
+    disabled: !isClausesChecked,
+    onPress: () => {
+      if (currentDoc < documentsSelector.length - 1) {
+        navigation.navigate(FCI_ROUTES.MAIN, {
+          screen: FCI_ROUTES.DOCUMENTS,
+          params: {
+            attrs: undefined,
+            currentDoc: increment(currentDoc)
+          }
+        });
+      }
+    },
+    title:
+      currentDoc < documentsSelector.length - 1
+        ? I18n.t("global.buttons.continue")
+        : "Firma"
   };
 
   const customGoBack: React.ReactElement = (
@@ -204,6 +254,7 @@ const FciSignatureFieldsScreen = (
           rightButton={continueButtonProps}
         />
       </SafeAreaView>
+      {fciAbortSignature}
     </BaseScreenComponent>
   );
 };
