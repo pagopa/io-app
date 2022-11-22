@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
 import { Action } from "../../../../store/actions/types";
-import fciCreateSignatureRequestReducer, {
-  FciCreateSignatureRequestState
-} from "./fciCreateSignatureRequest";
+import fciDocumentSignaturesReducer, {
+  FciDocumentSignaturesState
+} from "./fciDocumentSignatures";
 import fciQtspClausesReducer, { FciQtspClausesState } from "./fciQtspClauses";
 import fciLoadQtspFilledDocumentReducer, {
   FciQtspFilledDocumentState
@@ -17,7 +17,7 @@ export type FciState = {
   qtspClauses: FciQtspClausesState;
   qstpFilledDocument: FciQtspFilledDocumentState;
   signature: FciSignatureState;
-  createSignatureRequest: FciCreateSignatureRequestState;
+  documentSignatures: FciDocumentSignaturesState;
 };
 
 const fciReducer = combineReducers<FciState, Action>({
@@ -25,7 +25,7 @@ const fciReducer = combineReducers<FciState, Action>({
   qtspClauses: fciQtspClausesReducer,
   qstpFilledDocument: fciLoadQtspFilledDocumentReducer,
   signature: fciSignatureReducer,
-  createSignatureRequest: fciCreateSignatureRequestReducer
+  documentSignatures: fciDocumentSignaturesReducer
 });
 
 export default fciReducer;

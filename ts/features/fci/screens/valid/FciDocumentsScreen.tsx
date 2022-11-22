@@ -24,6 +24,10 @@ import { FCI_ROUTES } from "../../navigation/routes";
 import { SignatureField } from "../../../../../definitions/fci/SignatureField";
 import { FciParamsList } from "../../navigation/params";
 import { ExistingSignatureFieldAttrs } from "../../../../../definitions/fci/ExistingSignatureFieldAttrs";
+import { DocumentSignature } from "../../../../../definitions/fci/DocumentSignature";
+import { fciAddDocumentSignaturesRequest } from "../../store/actions";
+import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentSignatures";
+import { useIODispatch } from "../../../../store/hooks";
 
 const styles = StyleSheet.create({
   pdf: {
@@ -49,6 +53,23 @@ const FciDocumentsScreen = () => {
   const route = useRoute<RouteProp<FciParamsList, "FCI_DOCUMENTS">>();
   const attrs = route.params.attrs as ExistingSignatureFieldAttrs;
   const cDoc = route.params.currentDoc;
+  const documentSignaturesSelector = useSelector(fciDocumentSignaturesSelector);
+  const dispatch = useIODispatch();
+
+  React.useEffect(() => {
+    // TODO: refactor using fp-ts
+    if (documentSignaturesSelector.documentSignatures.length === 0) {
+      documents.map(doc => {
+        console.log(doc.id);
+        const docSignature = {
+          document_id: doc.id,
+          signature: "",
+          signature_fields: []
+        } as DocumentSignature;
+        dispatch(fciAddDocumentSignaturesRequest(docSignature));
+      });
+    }
+  }, [dispatch, documentSignaturesSelector.documentSignatures, documents]);
 
   React.useEffect(() => {
     pipe(
@@ -112,6 +133,47 @@ const FciDocumentsScreen = () => {
     title: "Procedi alla firma"
   };
 
+  const renderPager = () => (
+    <Pdf
+      ref={pdfRef}
+      source={{
+        uri: S.isEmpty(pdfString) ? `${documents[currentDoc].url}` : pdfString
+      }}
+      onLoadComplete={(numberOfPages, _) => {
+        setTotalPages(numberOfPages);
+        pipe(
+          pdfRef.current,
+          O.fromNullable,
+          O.map(_ => _.setPage(signaturePage))
+        );
+      }}
+      onPageChanged={(page, _) => {
+        setCurrentPage(page);
+      }}
+      onError={constNull}
+      onPressLink={constNull}
+      style={styles.pdf}
+    />
+  );
+
+  const onPrevious = () => {
+    pipe(
+      currentDoc,
+      O.fromNullable,
+      O.chain(doc => (doc > 0 ? O.some(doc - 1) : O.none)),
+      O.map(setCurrentDoc)
+    );
+  };
+
+  const onNext = () => {
+    pipe(
+      currentDoc,
+      O.fromNullable,
+      O.chain(doc => (doc < documents.length - 1 ? O.some(doc + 1) : O.none)),
+      O.map(setCurrentDoc)
+    );
+  };
+
   /**
    * function to draw a rect over a signature field
    * @param ids
@@ -156,50 +218,8 @@ const FciDocumentsScreen = () => {
         .then(r => setPdfString(`data:application/pdf;base64,${r}`));
     });
   };
-
   const onSignatureDetail = (attrs: ExistingSignatureFieldAttrs) => {
     drawRectangleOverSignatureField(attrs.unique_name).catch(toError);
-  };
-
-  const renderPager = () => (
-    <Pdf
-      ref={pdfRef}
-      source={{
-        uri: S.isEmpty(pdfString) ? `${documents[currentDoc].url}` : pdfString
-      }}
-      onLoadComplete={(numberOfPages, _) => {
-        setTotalPages(numberOfPages);
-        pipe(
-          pdfRef.current,
-          O.fromNullable,
-          O.map(_ => _.setPage(signaturePage))
-        );
-      }}
-      onPageChanged={(page, _) => {
-        setCurrentPage(page);
-      }}
-      onError={constNull}
-      onPressLink={constNull}
-      style={styles.pdf}
-    />
-  );
-
-  const onPrevious = () => {
-    pipe(
-      currentDoc,
-      O.fromNullable,
-      O.chain(doc => (doc > 0 ? O.some(doc - 1) : O.none)),
-      O.map(setCurrentDoc)
-    );
-  };
-
-  const onNext = () => {
-    pipe(
-      currentDoc,
-      O.fromNullable,
-      O.chain(doc => (doc < documents.length - 1 ? O.some(doc + 1) : O.none)),
-      O.map(setCurrentDoc)
-    );
   };
 
   const customGoBack: React.ReactElement = (

@@ -24,8 +24,8 @@ import { FCI_ROUTES } from "../../navigation/routes";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import IconFont from "../../../../components/ui/IconFont";
-import { fciCreateSignatureRequest } from "../../store/actions";
-import { mockCreateSignatureBody } from "../../types/__mocks__/CreateSignatureBody.mock";
+import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentSignatures";
+import { fciUpdateDocumentSignaturesRequest } from "../../store/actions";
 
 export type FciSignatureFieldsScreenNavigationParams = Readonly<{
   documentId: Document["id"];
@@ -35,10 +35,14 @@ export type FciSignatureFieldsScreenNavigationParams = Readonly<{
 const FciSignatureFieldsScreen = (
   props: IOStackNavigationRouteProps<FciParamsList, "FCI_SIGNATURE_FIELDS">
 ) => {
-  const dispatch = useIODispatch();
+  const docId = props.route.params.documentId;
   const signatureFieldsSelector = useIOSelector(
-    fciDocumentSignatureFieldsFieldsSelector(props.route.params.documentId)
+    fciDocumentSignatureFieldsFieldsSelector(docId)
   );
+  const documentsSignaturesSelector = useIOSelector(
+    fciDocumentSignaturesSelector
+  );
+  const dispatch = useIODispatch();
   const navigation = useNavigation();
 
   type DATA_TYPE = {
@@ -97,8 +101,27 @@ const FciSignatureFieldsScreen = (
     });
   };
 
-  const onChange = item => {
-    dispatch(fciCreateSignatureRequest(mockCreateSignatureBody));
+  const onChange = (value: boolean, item: SignatureField) => {
+    const docSignatures = documentsSignaturesSelector.documentSignatures.find(
+      d => d.document_id === docId
+    );
+    if (docSignatures && value) {
+      dispatch(
+        fciUpdateDocumentSignaturesRequest({
+          ...docSignatures,
+          signature_fields: [...docSignatures.signature_fields, item]
+        })
+      );
+    } else if (docSignatures) {
+      dispatch(
+        fciUpdateDocumentSignaturesRequest({
+          ...docSignatures,
+          signature_fields: [
+            ...docSignatures.signature_fields.filter(f => f !== item)
+          ]
+        })
+      );
+    }
   };
 
   const renderSignatureFields = () => (
@@ -109,7 +132,14 @@ const FciSignatureFieldsScreen = (
       renderItem={({ item }) => (
         <SignatureFieldItem
           title={item.clause.title}
-          onChange={() => onChange(item)}
+          value={
+            documentsSignaturesSelector.documentSignatures
+              .find(d => d.document_id === docId)
+              ?.signature_fields.find(f => f === item)
+              ? true
+              : false
+          }
+          onChange={v => onChange(v, item)}
           onPressDetail={() => onPressDetail(item)}
         />
       )}
