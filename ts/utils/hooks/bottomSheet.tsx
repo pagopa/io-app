@@ -46,6 +46,12 @@ export type BottomSheetModalProps = {
   };
 };
 
+export type IOBottomSheetModal = {
+  present: () => void;
+  dismiss: () => void;
+  bottomSheet: JSX.Element;
+};
+
 /**
  * Utility function to build a BottomSheet considering accessibility. This will create a common BottomSheet object to be used in the `present` function
  * that is available only in component context since it uses the context api made available from https://gorhom.github.io/react-native-bottom-sheet/modal/methods
@@ -88,7 +94,7 @@ export const useIOBottomSheetModal = (
   title: string | React.ReactNode,
   snapPoint: number,
   footer?: React.ReactElement
-) => {
+): IOBottomSheetModal => {
   const { dismissAll } = useBottomSheetModal();
   const bottomSheetModalRef = React.useRef<BottomSheetModal>(null);
   const setBSOpened = useHardwareBackButtonToDismiss(dismissAll);

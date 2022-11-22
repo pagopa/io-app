@@ -1,4 +1,4 @@
-import { Body, List, ListItem, Text, View } from "native-base";
+import { Body, List, ListItem, Text as NBText, View } from "native-base";
 import * as React from "react";
 import { useState } from "react";
 import { Platform } from "react-native";
@@ -43,11 +43,11 @@ const CieNotSupported: React.FunctionComponent<Props> = props => {
                   color={props.hasCieApiLevelSupport ? okColor : koColor}
                 />
                 <Body>
-                  <Text>
+                  <NBText>
                     {I18n.t(
                       "authentication.landing.cie_unsupported.os_version_unsupported"
                     )}
-                  </Text>
+                  </NBText>
                 </Body>
               </ListItem>
               <ListItem>
@@ -58,11 +58,11 @@ const CieNotSupported: React.FunctionComponent<Props> = props => {
                   color={props.hasCieNFCFeature ? okColor : koColor}
                 />
                 <Body>
-                  <Text>
+                  <NBText>
                     {I18n.t(
                       "authentication.landing.cie_unsupported.nfc_incompatible"
                     )}
-                  </Text>
+                  </NBText>
                 </Body>
               </ListItem>
             </List>

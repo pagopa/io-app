@@ -4,6 +4,7 @@ import * as O from "fp-ts/lib/Option";
 import { List, Text, View } from "native-base";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
+import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import { H1 } from "../../../../components/core/typography/H1";
 import { H4 } from "../../../../components/core/typography/H4";
 import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
@@ -12,7 +13,9 @@ import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
+import Markdown from "../../../../components/ui/Markdown";
 import TypedI18n from "../../../../i18n";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { useOnboardingMachineService } from "../xstate/provider";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
@@ -42,8 +45,32 @@ const subtitle = (service: string) =>
 export const PDNDPrerequisites = () => {
   const machine = useOnboardingMachineService();
   const [state, send] = useActor(machine);
+  const [authority, setAuthority] = React.useState<string | undefined>();
 
   const continueOnPress = () => send({ type: "ACCEPT_REQUIRED_PDND_CRITERIA" });
+
+  const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
+    <Markdown>
+      {TypedI18n.t(
+        "idpay.onboarding.PDNDPrerequisites.prerequisites.info.body",
+        { provider: authority }
+      )}
+    </Markdown>,
+    TypedI18n.t("idpay.onboarding.PDNDPrerequisites.prerequisites.info.header"),
+    290,
+
+    <FooterWithButtons
+      type="SingleButton"
+      leftButton={{
+        onPress: () => dismiss(),
+        block: true,
+        bordered: false,
+        title: TypedI18n.t(
+          "idpay.onboarding.PDNDPrerequisites.prerequisites.info.understoodCTA"
+        )
+      }}
+    ></FooterWithButtons>
+  );
 
   const pdndCriteria = pipe(
     state.context.requiredCriteria,
@@ -74,10 +101,18 @@ export const PDNDPrerequisites = () => {
         <List withContentLateralPadding>
           {pdndCriteria.map((requisite, index) => (
             <React.Fragment key={index}>
-              <H4>{requisite.code}</H4>
-              <LabelSmall weight="Regular" color="bluegreyDark">
-                {requisite.description}
-              </LabelSmall>
+              <ButtonDefaultOpacity
+                bordered={true}
+                onPress={() => {
+                  setAuthority(requisite.authority);
+                  present();
+                }}
+              >
+                <H4>{requisite.code}</H4>
+                <LabelSmall weight="Regular" color="bluegreyDark">
+                  {requisite.description}
+                </LabelSmall>
+              </ButtonDefaultOpacity>
               <View spacer={true} />
             </React.Fragment>
           ))}
@@ -88,6 +123,7 @@ export const PDNDPrerequisites = () => {
         leftButton={secondaryButtonProps}
         rightButton={{ onPress: continueOnPress, ...primaryButtonProps }}
       />
+      {bottomSheet}
     </SafeAreaView>
   );
 };
