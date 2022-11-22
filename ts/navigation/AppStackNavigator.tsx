@@ -43,7 +43,10 @@ import {
   FimsNavigator
 } from "../features/fims/navigation/navigator";
 import FIMS_ROUTES from "../features/fims/navigation/routes";
-import { IDPayConfigurationRoutes } from "../features/idpay/initiative/configuration/navigation/navigator";
+import {
+  IDPayConfigurationNavigator,
+  IDPayConfigurationRoutes
+} from "../features/idpay/initiative/configuration/navigation/navigator";
 import {
   IDPayOnboardingNavigator,
   IDPayOnboardingRoutes
@@ -174,7 +177,7 @@ export const AppStackNavigator = () => {
 
       <Stack.Screen
         name={IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN}
-        component={IDPayOnboardingNavigator}
+        component={IDPayConfigurationNavigator}
       />
     </Stack.Navigator>
   );
