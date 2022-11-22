@@ -3183,6 +3183,10 @@ features:
       generic:
         title: There is a problem
         subTitle: To proceed with the signature, check that you have updated the IO app to the latest version.
+    title: "Firma con IO"
+    documentsBar:
+      titleLeft: Document {{currentDoc}} of {{totalDocs}}
+      titleRight: Page {{currentPage}} of {{totalPages}}
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
