@@ -3207,6 +3207,10 @@ features:
       generic:
         title: C’è un problema
         subTitle: Per procedere alla firma, verifica di aver aggiornato l’app IO all’ultima versione
+    title: "Firma con IO"
+    documentsBar:
+      titleLeft: Documento {{currentDoc}} di {{totalDocs}}
+      titleRight: Pagina {{currentPage}} di {{totalPages}}
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina

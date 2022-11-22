@@ -14,7 +14,9 @@ const genericError = getTimeoutError();
 const now = new Date();
 
 describe("Test FciRouterScreen", () => {
-  jest.useFakeTimers();
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
   it("With the default store state, the loading screen should be rendered", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
