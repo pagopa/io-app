@@ -1,18 +1,10 @@
 import { createClient } from "../../../../../definitions/idpay/wallet/client";
 import { defaultRetryingFetch } from "../../../../utils/fetch";
 
-const createIDPayWalletClient = (baseUrl: string, token: string) =>
-  createClient<"bearerAuth">({
+const createIDPayWalletClient = (baseUrl: string) =>
+  createClient({
     baseUrl,
-    fetchApi: defaultRetryingFetch(),
-    withDefaults: op => params => {
-      const paramsWithDefaults = {
-        ...params,
-        bearerAuth: token
-      } as Parameters<typeof op>[0];
-
-      return op(paramsWithDefaults);
-    }
+    fetchApi: defaultRetryingFetch()
   });
 
 export type IDPayWalletClient = ReturnType<typeof createIDPayWalletClient>;
