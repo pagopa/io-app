@@ -79,7 +79,7 @@ describe("the `DueDateBar` component", () => {
   });
 });
 
-describe("Render the DueDateBar accodingly with the due date", () => {
+describe("Render the DueDateBar accordingly with the due date", () => {
   const message = paymentValidInvalidAfterDueDate;
 
   const data: ReadonlyArray<
