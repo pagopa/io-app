@@ -1,7 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import React, { useEffect, useState } from "react";
 import { List } from "native-base";
-import { StyleSheet } from "react-native";
 import { useSelector } from "react-redux";
 import { PreferencesListItem } from "../../components/PreferencesListItem";
 import ScreenContent from "../../components/screens/ScreenContent";
@@ -14,19 +13,15 @@ import { profileUpsert } from "../../store/actions/profile";
 import { ReminderStatusEnum } from "../../../definitions/backend/ReminderStatus";
 import { PushNotificationsContentTypeEnum } from "../../../definitions/backend/PushNotificationsContentType";
 import { showToast } from "../../utils/showToast";
-import { Link } from "../../components/core/typography/Link";
-import customVariables from "../../theme/variables";
-import { useIOBottomSheetModal } from "../../utils/hooks/bottomSheet";
-import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
-import { Body } from "../../components/core/typography/Body";
+import { usePreviewMoreInfo } from "../../utils/hooks/usePreviewMoreInfo";
+import { LabelSmall } from "../../components/core/typography/LabelSmall";
+import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 
-const styles = StyleSheet.create({
-  mediumText: {
-    fontSize: customVariables.fontSizeSmall,
-    lineHeight: customVariables.h5LineHeight
-  }
-});
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "profile.preferences.notifications.contextualHelpTitle",
+  body: "profile.preferences.notifications.contextualHelpContent"
+};
 
 export const NotificationsPreferencesScreen = () => {
   const dispatch = useIODispatch();
@@ -38,24 +33,7 @@ export const NotificationsPreferencesScreen = () => {
   const isError = pot.isError(preferences);
   const isUpdating = pot.isUpdating(preferences);
 
-  const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
-    <Body>
-      {I18n.t("profile.preferences.notifications.preview.bottomSheet.content")}
-    </Body>,
-    I18n.t("profile.preferences.notifications.preview.bottomSheet.title"),
-    400,
-    <FooterWithButtons
-      type="SingleButton"
-      leftButton={{
-        block: true,
-        primary: true,
-        onPress: () => dismiss(),
-        title: I18n.t(
-          "profile.preferences.notifications.preview.bottomSheet.cta"
-        )
-      }}
-    />
-  );
+  const { present, bottomSheet } = usePreviewMoreInfo();
 
   useEffect(() => {
     if (isError && isUpserting) {
@@ -75,10 +53,7 @@ export const NotificationsPreferencesScreen = () => {
     <TopScreenComponent
       goBack={true}
       headerTitle={I18n.t("profile.preferences.notifications.header")}
-      contextualHelpMarkdown={{
-        title: "profile.preferences.notifications.contextualHelpTitle",
-        body: "profile.preferences.notifications.contextualHelpContent"
-      }}
+      contextualHelpMarkdown={contextualHelpMarkdown}
     >
       <ScreenContent
         title={I18n.t("profile.preferences.notifications.title")}
@@ -92,9 +67,13 @@ export const NotificationsPreferencesScreen = () => {
                 {`${I18n.t(
                   "profile.preferences.notifications.preview.description"
                 )} `}
-                <Link style={styles.mediumText} onPress={present}>
+                <LabelSmall
+                  accessibilityRole="link"
+                  weight="SemiBold"
+                  onPress={present}
+                >
                   {I18n.t("profile.preferences.notifications.preview.link")}
-                </Link>
+                </LabelSmall>
               </>
             }
             rightElement={

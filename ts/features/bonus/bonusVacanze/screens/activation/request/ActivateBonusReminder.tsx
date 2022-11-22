@@ -1,4 +1,4 @@
-import { Text, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import IconFont from "../../../../../../components/ui/IconFont";
@@ -25,8 +25,8 @@ export const ActivateBonusReminder: React.FunctionComponent<Props> = props => (
   <View style={bonusVacanzeStyle.row}>
     <IconFont name={"io-titolare"} size={24} color={IOColors.grey} />
     <View hspacer={true} />
-    <Text style={[activateBonusStyle.boxText, styles.reminder]}>
+    <NBText style={[activateBonusStyle.boxText, styles.reminder]}>
       {props.text}
-    </Text>
+    </NBText>
   </View>
 );

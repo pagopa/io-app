@@ -8,7 +8,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Content, Text, View } from "native-base";
+import { Content, Text as NBText, View } from "native-base";
 import * as React from "react";
 import {
   AccessibilityInfo,
@@ -177,7 +177,7 @@ const getTextForState = (
  *  This screen shown while reading the card
  */
 class CieCardReaderScreen extends React.PureComponent<Props, State> {
-  private subTitleRef = React.createRef<Text>();
+  private subTitleRef = React.createRef<NBText>();
   private choosenTool = assistanceToolRemoteConfig(
     this.props.assistanceToolConfig
   );
@@ -492,16 +492,16 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       >
         <ScreenContentHeader title={this.state.title} />
         <Content bounces={false} noPadded={true}>
-          <Text style={styles.padded} ref={this.subTitleRef}>
+          <NBText style={styles.padded} ref={this.subTitleRef}>
             {this.state.subtitle}
-          </Text>
+          </NBText>
           {!isIos && (
             <CieReadingCardAnimation readingState={this.state.readingState} />
           )}
           {isIos && <View spacer={true} />}
-          <Text style={styles.padded} accessible={true}>
+          <NBText style={styles.padded} accessible={true}>
             {this.state.content}
-          </Text>
+          </NBText>
         </Content>
         {this.state.readingState !== ReadingState.completed && // TODO: validate - the screen has the back button on top left so it includes cancel also on reading success
           this.getFooter()}

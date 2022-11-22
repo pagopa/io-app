@@ -481,7 +481,7 @@ profile:
         not_selected: Not selected
       notifications:
         title: Push notifications
-        subtitle: Allow previews and reminders 
+        subtitle: Allow previews and reminders
     empty:
       default: No preference set
     unavailable:
@@ -499,24 +499,24 @@ profile:
       local_calendar: Local calendar
       birthday_calendar: Birthdays
     notifications:
-      contextualHelpTitle: Titolo
+      contextualHelpTitle: Push notifications
       contextualHelpContent: !include profile/profile_preferences_notifications.md
       header: Push notifications
       title: Customize push notifications
-      subtitle: Choose how to get updates on the messages and reminders you receive
-      titleExistingUser: Notifiche push più intelligenti
-      subtitleExistingUser: Ora puoi vedere subito chi ti ha scritto o ricevere promemoria da messaggi importanti.
+      subtitle: Choose if you want to allow previews and receive reminders.
+      titleExistingUser: Customize push notifications
+      subtitleExistingUser: Now you can instantly see who messaged you and receive reminders from important messages.
       reminders:
         title: Allow reminders
-        description: Receive push notifications close to deadlines or when you have unread messages
+        description: Upon request of the sender, receive push notifications close to deadlines or when you have unread messages
       preview:
-        title: Mostra anteprime
-        description: Includi nella notifica push il mittente e l’oggetto del messaggio ·
-        link: Più info
+        title: Show previews
+        description: Include the sender and subject of the message in the push notification · 
+        link: More info
         bottomSheet:
-          title: Mostra anteprime
-          content: "Quando l’opzione è attiva, le notifiche push mostrano il mittente e l’oggetto dei messaggi: così sai chi ti ha scritto senza accedere all’app.\nQueste informazioni, che potrebbero essere sensibili, vengono trattate dal gestore del tuo sistema operativo e sono mostrate anche quando il dispositivo è bloccato. Se vuoi evitare la visualizzazione delle anteprime, disattiva l’opzione."
-          cta: Ho capito!
+          title: Show previews
+          content: If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
+          cta: Ok!
       error: An error occurred with your request
 userMetadata:
   errors:
@@ -829,12 +829,30 @@ onboarding:
     title: Setup completed!
     body: Now you can start using IO
   notifications:
-    badge: News
+    badge: New
     headerTitle: IO Settings
     continue: Continue
-    remindersPreviewTitle: Promemoria
-    previewTitle: Hai un nuovo messaggio
-    previewMessage: Apri l’app per leggere il contenuto
+    preview:
+      reminderOnPreviewOnTitle: You have a notice due soon
+      reminderOnPreviewOnMessage: Log in to pay the notice issued by ACI
+      reminderOffPreviewOnTitle: Comune di Ipazia
+      reminderOffPreviewOnMessage: Summer camp registration is now open
+      reminderOnPreviewOffTitle: You have a notice due soon
+      reminderOnPreviewOffMessage: Log in to pay for it
+      reminderOffPreviewOffTitle: You have a new message
+      reminderOffPreviewOffMessage: Open the app to read the content
+    contextualHelpTitle: Push notifications
+    contextualHelpContent: !include onboarding/onboarding_notifications.md
+  infoConsent:
+    headerTitle: IO Settings
+    title: Enable push notifications?
+    subTitle: "To receive push notifications from IO, enable them in the iOS Settings. Here's how:"
+    instruction1: 1. Press 'Notifications'
+    instruction2: 2. Enable 'Allow notifications'
+    openSettings: Open iOS settings
+    continue: Maybe later
+    contextualHelpTitle: Push notifications
+    contextualHelpContent: !include onboarding/onboarding_notifications_info_consent.md
 forms:
   validators:
     required: Required value
@@ -2584,26 +2602,26 @@ bonus:
         title: "Choose to keep or delete your payment methods"
         body: !include bonus/bpd/optInPaymentMethods.md
       choice:
-        header: Configure IO
-        title: Do you want to keep your payment methods?
-        subtitle: If you keep them, you’ll be able to use them to take part in discounts, bonuses and future initiatives or for other features, such as in-app payments.
-        suggestedOption: Recommended
+        header: "Configura IO"
+        title: "Vuoi mantenere i tuoi metodi di pagamento?"
+        subtitle: Se li mantieni, potrai utilizzarli per aderire a sconti, bonus e iniziative future o per altre funzionalità, come pagare in app.
+        suggestedOption: Consigliato
         toast: "You've already made your choice"
         options:
           keepAll:
-            title: Keep all payment methods in the Wallet
-            body: PagoPA S.p.A. will handle your payment method's data as the owner of the threatment. For further informations you can check the Privacy Policy.
+            title: Mantieni tutti i metodi nel Portafoglio
+            body: PagoPA S.p.A. tratterà i dati dei tuoi metodi di pagamento in qualità di titolare del trattamento. Per maggiori informazioni puoi consultare l’Informativa Privacy.
           deleteAll:
-            title: Delete all payment methods from the Wallet
-            body: All methods added in the Wallet so far will be permanently deleted. You can add them again at any time, but you’ll have to enter back the method details and have it authorized.
-        deleteAllButton: Delete all methods
+            title: Elimina tutti i metodi dal Portafoglio
+            body:  Potrai aggiungerli di nuovo in qualsiasi momento, ma dovrai reinserire i dati e ripetere le procedure di autorizzazione.
+        deleteAllButton: Elimina tutti i metodi
       deletePaymentMethodsBottomSheet:
-        title: "Do you really want to delete the following methods from the Wallet?"
-        subtitle: "You can add them again at any time, but you will have to re-enter the data and repeat the authorization procedures."
+        title: "Vuoi davvero eliminare i seguenti metodi dal Portafoglio?"
+        subtitle: "Potrai aggiungerli di nuovo in qualsiasi momento, ma dovrai reinserire i dati e ripetere le procedure di autorizzazione."
       thankYouPage:
         cta:
-          goToWallet: "Go to Wallet"
-          retry: "Try again"
+          goToWallet: "Vai al Portafoglio"
+          retry: "Riprova"
         success:
           title: "Done!"
           body: "We’ve saved your choice."
@@ -3145,8 +3163,22 @@ features:
           REFUSED: REFUSED
           CANCELLED: Annullata
         expand: mostra gli stati precedenti
-        info: Puoi vedere il dettaglio di ciascuno stato, scaricare le ricevute e le attestazioni opponibili a terzi accedendo alla versione web del servizio
-        cta: Accedi alla versione web
+        info: Puoi vedere il dettaglio di ciascuno stato, scaricare le ricevute e le attestazioni opponibili a terzi accedendo alla versione web del servizio   
+        cta: Accedi alla versione web  
+  fci:
+    errors:
+      expired:
+        title: Document no longer available for signature
+        subTitle: The document is no longer available for signature. Contact the institution for more information.
+      waitForQtsp:
+        title: The document is being processed
+        subTitle: Please wait, you will soon receive the signed contract in the app.
+      unsupportedDevice:
+        title: There is a problem
+        subTitle: Your device does not support the "Firma con IO" feature.
+      generic:
+        title: There is a problem
+        subTitle: To proceed with the signature, check that you have updated the IO app to the latest version.
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
@@ -3220,3 +3252,6 @@ idpay:
           understoodCTA: Ho capito
       title: Possiedi i seguenti requisiti?
       subtitle: Verificheremo con alcuni Enti se sei in possesso dei requisiti per poter richiedere {{service}}. 
+  wallet:
+    preview:
+      validThrough: "Valid through {{endDate}}"

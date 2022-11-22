@@ -1,7 +1,7 @@
 import { NavigationEvents } from "@react-navigation/compat";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Content, Text, View } from "native-base";
+import { Content, Text as NBText, View } from "native-base";
 import * as React from "react";
 import { Image, ImageSourcePropType, StyleSheet } from "react-native";
 import I18n from "../../i18n";
@@ -101,7 +101,7 @@ export default class GenericErrorComponent extends React.PureComponent<Props> {
               }
             />
             <View spacer={true} />
-            <Text
+            <NBText
               bold={true}
               alignCenter={true}
               style={styles.errorText}
@@ -110,13 +110,13 @@ export default class GenericErrorComponent extends React.PureComponent<Props> {
               {this.props.text
                 ? this.props.text
                 : I18n.t("wallet.errors.GENERIC_ERROR")}
-            </Text>
+            </NBText>
 
-            <Text alignCenter={true} accessible={subTextAccessible}>
+            <NBText alignCenter={true} accessible={subTextAccessible}>
               {this.props.subText !== undefined
                 ? this.props.subText
                 : I18n.t("wallet.errorTransaction.submitBugText")}
-            </Text>
+            </NBText>
             <View spacer={true} extralarge={true} />
           </View>
         </Content>
