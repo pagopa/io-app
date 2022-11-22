@@ -183,10 +183,6 @@ global:
     invalidSearchBarText: Inserisci almeno {{minCharacter}} caratteri
     noResultsFound: "Non ci sono risultati per questa ricerca: prova qualcos'altro."
     noResultsTitle: Nessun risultato.
-  localNotifications:
-    spidLogin:
-      title: Accedi per iniziare a usare l'app
-      message: IO funziona solo se hai effettuato l'accesso almeno una volta
   media:
     email: "Email"
     pec: "PEC"
