@@ -18,8 +18,8 @@ import {
 } from "react-native";
 import * as ImagePicker from "react-native-image-picker";
 import { ImageLibraryOptions } from "react-native-image-picker/src/types";
-import * as ReaderQR from "react-native-lewin-qrcode";
 import { connect } from "react-redux";
+import RNQRGenerator from "rn-qr-generator";
 import {
   BarcodeCamera,
   ScannedBarcode
@@ -247,9 +247,12 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
         O.chain(assets => AR.head([...assets]))
       );
       if (O.isSome(maybePickedImage)) {
-        ReaderQR.readerQR(maybePickedImage.value.uri)
-          .then((data: string) => {
-            this.onQrCodeData(data);
+        RNQRGenerator.detect({ uri: maybePickedImage.value.uri })
+          .then(data => {
+            if (data.values.length === 0) {
+              this.onInvalidQrCode();
+            }
+            this.onQrCodeData(data.values[0]);
           })
           .catch(() => {
             this.onInvalidQrCode();
