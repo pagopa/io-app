@@ -3,6 +3,7 @@ import { ListItem, View } from "native-base";
 import React from "react";
 import I18n from "i18n-js";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { useActor } from "@xstate/react";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { H3 } from "../../../../../components/core/typography/H3";
@@ -18,6 +19,8 @@ import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import InstitutionIcon from "../../../../../../img/features/idpay/institution.svg";
 import CreditCardIcon from "../../../../../../img/features/idpay/creditcard.svg";
 import { IDPayConfigurationParamsList } from "../navigation/navigator";
+import { useConfigurationMachineService } from "../xstate/provider";
+import { LOADING_TAG } from "../../../../../utils/xstate";
 
 type InitiativeConfigurationIntroScreenRouteParams = {
   initiativeId: string;
@@ -52,7 +55,12 @@ const InitiativeConfigurationIntroScreen = () => {
   const navigation = useNavigation();
   const route = useRoute<InitiativeConfigurationIntroRouteProps>();
 
-  const isLoading = false;
+  const { initiativeId } = route.params;
+
+  const configurationMachine = useConfigurationMachineService();
+  const [state, send] = useActor(configurationMachine);
+
+  const isLoading = state.tags.has(LOADING_TAG);
 
   const handleContinuePress = () => {
     // TODO: navigate to next screen
@@ -78,6 +86,13 @@ const InitiativeConfigurationIntroScreen = () => {
       )
     }
   ];
+
+  React.useEffect(() => {
+    send({
+      type: "SELECT_INITIATIVE",
+      initiativeId
+    });
+  }, [send, initiativeId]);
 
   return (
     <BaseScreenComponent

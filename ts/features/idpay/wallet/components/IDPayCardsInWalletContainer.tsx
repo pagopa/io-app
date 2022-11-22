@@ -1,9 +1,15 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { useNavigation } from "@react-navigation/native";
 import _ from "lodash";
 import React from "react";
 import { View } from "react-native";
 import { InitiativeDTO } from "../../../../../definitions/idpay/wallet/InitiativeDTO";
+import {
+  AppParamsList,
+  IOStackNavigationProp
+} from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
+import { IDPayConfigurationRoutes } from "../../initiative/configuration/navigation/navigator";
 import { idPayWalletInitiativeListSelector } from "../store/reducers";
 import IDPayCardPreviewComponent from "./IDPayCardPreviewComponent";
 
@@ -12,8 +18,16 @@ type Props = {
 };
 
 const IDPayCardsList = (props: Props) => {
-  const handleCardPress = (_: string) => {
+  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+
+  const handleCardPress = (initiativeId: string) => {
     // TODO: handle card press
+    navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
+      screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO,
+      params: {
+        initiativeId
+      }
+    });
   };
 
   return (
