@@ -3259,3 +3259,17 @@ idpay:
   wallet:
     preview:
       validThrough: "Valid through {{endDate}}"
+  configuration:
+    headerTitle: "Configure the initiative"
+    intro: 
+      title: "We are almost there"
+      body: "In order to take advantage of the initiative, we need some more information."
+      requiredData: 
+        title: "Required informations:"
+        ibanTitle: "IBAN in your name"
+        ibanSubtitle: "In order to receive any refunds"
+        instrumentTitle: "At least one payment method"
+        instrumentSubtitle: "Indicate the methods to be enabled for the initiative"
+      buttons:
+        continue: "Start configuration"
+    
