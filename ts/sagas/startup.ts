@@ -32,7 +32,8 @@ import {
   pagoPaApiUrlPrefixTest,
   pnEnabled,
   svEnabled,
-  zendeskEnabled
+  zendeskEnabled,
+  idPayEnabled
 } from "../config";
 import { watchBonusSaga } from "../features/bonus/bonusVacanze/store/sagas/bonusSaga";
 import { watchBonusBpdSaga } from "../features/bonus/bpd/saga";
@@ -79,6 +80,7 @@ import { differentProfileLoggedIn } from "../store/actions/crossSessions";
 import { clearAllMvlAttachments } from "../features/mvl/saga/mvlAttachments";
 import { watchMessageAttachmentsSaga } from "../features/messages/saga/attachments";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
+import { watchIDPayWalletSaga } from "../features/idpay/wallet/saga";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -422,6 +424,11 @@ export function* initializeApplicationSaga(): Generator<
   if (mvlEnabled || pnEnabled) {
     // Start watching for message attachments actions
     yield* fork(watchMessageAttachmentsSaga, sessionToken);
+  }
+
+  if (idPayEnabled) {
+    // Start watching for IDPay wallet actions
+    yield* fork(watchIDPayWalletSaga, sessionToken);
   }
 
   if (fciEnabled) {
