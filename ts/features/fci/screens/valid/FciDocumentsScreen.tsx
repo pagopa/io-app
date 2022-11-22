@@ -28,6 +28,7 @@ import { DocumentSignature } from "../../../../../definitions/fci/DocumentSignat
 import { fciAddDocumentSignaturesRequest } from "../../store/actions";
 import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentSignatures";
 import { useIODispatch } from "../../../../store/hooks";
+import { SignatureFieldToBeCreatedAttrs } from "../../../../../definitions/fci/SignatureFieldToBeCreatedAttrs";
 
 const styles = StyleSheet.create({
   pdf: {
@@ -51,7 +52,9 @@ const FciDocumentsScreen = () => {
   const documents = useSelector(fciSignatureDetailDocumentsSelector);
   const navigation = useNavigation();
   const route = useRoute<RouteProp<FciParamsList, "FCI_DOCUMENTS">>();
-  const attrs = route.params.attrs as ExistingSignatureFieldAttrs;
+  const attrs = route.params.attrs as
+    | ExistingSignatureFieldAttrs
+    | SignatureFieldToBeCreatedAttrs;
   const cDoc = route.params.currentDoc;
   const documentSignaturesSelector = useSelector(fciDocumentSignaturesSelector);
   const dispatch = useIODispatch();
@@ -60,7 +63,6 @@ const FciDocumentsScreen = () => {
     // TODO: refactor using fp-ts
     if (documentSignaturesSelector.documentSignatures.length === 0) {
       documents.map(doc => {
-        console.log(doc.id);
         const docSignature = {
           document_id: doc.id,
           signature: "",
@@ -80,11 +82,12 @@ const FciDocumentsScreen = () => {
         onSignatureDetail(_);
       }),
       O.getOrElse(() => {
-        setCurrentDoc(0);
+        setCurrentDoc(cDoc ?? 0);
         setPdfString("");
         setSignaturePage(0);
       })
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [attrs, cDoc]);
 
   const { present, bottomSheet: fciAbortSignature } =
@@ -178,7 +181,7 @@ const FciDocumentsScreen = () => {
    * function to draw a rect over a signature field
    * @param ids
    */
-  const drawRectangleOverSignatureField = async (ids: string) => {
+  const drawRectangleOverSignatureFieldById = async (ids: string) => {
     const doc = documents[currentDoc];
     const url = doc.url;
 
@@ -218,8 +221,53 @@ const FciDocumentsScreen = () => {
         .then(r => setPdfString(`data:application/pdf;base64,${r}`));
     });
   };
-  const onSignatureDetail = (attrs: ExistingSignatureFieldAttrs) => {
-    drawRectangleOverSignatureField(attrs.unique_name).catch(toError);
+
+  /**
+   * function to draw a rect over a signature field
+   * @param ids
+   */
+  const drawRectangleOverSignatureFieldByCoordinates = async (
+    field: SignatureFieldToBeCreatedAttrs
+  ) => {
+    const doc = documents[currentDoc];
+    const url = doc.url;
+
+    const existingPdfBytes = await ReactNativeBlobUtil.fetch("GET", url).then(
+      res => res.base64()
+    );
+
+    const pdfDoc = PDFDocument.load(
+      `data:application/pdf;base64,${existingPdfBytes}`
+    );
+
+    // TODO: refactor this code to use fp-ts
+    await pdfDoc.then(res => {
+      const page = field.page;
+      setSignaturePage(page);
+      res.getPage(page).drawRectangle({
+        x: field.coordinates.top_right.x,
+        y: field.coordinates.top_right.y,
+        width: field.coordinates.bottom_left.x,
+        height: field.coordinates.bottom_left.y,
+        color: rgb(0, 0.77, 0.79),
+        opacity: 0.5,
+        borderOpacity: 0.75
+      });
+
+      return res
+        .saveAsBase64()
+        .then(r => setPdfString(`data:application/pdf;base64,${r}`));
+    });
+  };
+
+  const onSignatureDetail = (
+    attrs: ExistingSignatureFieldAttrs | SignatureFieldToBeCreatedAttrs
+  ) => {
+    if ("unique_name" in attrs) {
+      drawRectangleOverSignatureFieldById(attrs.unique_name).catch(toError);
+    } else {
+      drawRectangleOverSignatureFieldByCoordinates(attrs).catch(toError);
+    }
   };
 
   const customGoBack: React.ReactElement = (
@@ -269,7 +317,7 @@ const FciDocumentsScreen = () => {
         }
         onPrevious={onPrevious}
         onNext={onNext}
-        disabled={!S.isEmpty(pdfString)}
+        disabled={true}
         testID={"FciDocumentsNavBarTestID"}
       />
       <SafeAreaView style={IOStyles.flex} testID={"FciDocumentsScreenTestID"}>
