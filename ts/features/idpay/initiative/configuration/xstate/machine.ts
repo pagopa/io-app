@@ -1,6 +1,6 @@
 import * as p from "@pagopa/ts-commons/lib/pot";
-import { assign } from "lodash";
-import { createMachine } from "xstate";
+
+import { assign, createMachine } from "xstate";
 import {
   InitiativeDTO,
   StatusEnum
@@ -35,7 +35,7 @@ type Services = {
 const createIDPayInitiativeConfigurationMachine = () =>
   createMachine(
     {
-      predictableActionArguments: true,
+      context: INITIAL_CONTEXT,
       tsTypes: {} as import("./machine.typegen").Typegen0,
       schema: {
         context: {} as Context,
@@ -43,7 +43,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
         services: {} as Services
       },
       id: "IDPAY_INITIATIVE_CONFIGURATION",
-      context: INITIAL_CONTEXT,
+      predictableActionArguments: true,
       initial: "WAITING_INITIATIVE_SELECTION",
       states: {
         WAITING_INITIATIVE_SELECTION: {
