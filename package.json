@@ -283,8 +283,7 @@
   "resolutions": {
     "@codler/react-native-keyboard-aware-scroll-view": "2.0.1",
     "@types/react": "16.7.18",
-    "@types/prop-types": "15.5.5",
-    "react-devtools-core": "4.13.0"
+    "@types/prop-types": "15.5.5"
   },
   "react-native": {
     "path": "path-browserify"
