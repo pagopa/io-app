@@ -183,10 +183,6 @@ global:
     invalidSearchBarText: Enter at least {{minCharacter}} characters
     noResultsFound: "There are no results for this search: try something else."
     noResultsTitle: No results.
-  localNotifications:
-    spidLogin:
-      title: Sign in to start using the app
-      message: IO can only work if you have signed in at least once
   media:
     email: "Email"
     pec: "Certified email"
