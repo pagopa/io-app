@@ -10,7 +10,7 @@ import {
   WAITING_USER_INPUT_TAG
 } from "../../../../../utils/xstate";
 
-type Context = {
+export type Context = {
   initiativeId?: string;
   initiative: p.Pot<InitiativeDTO, Error>;
 };
@@ -110,5 +110,11 @@ const createIDPayInitiativeConfigurationMachine = () =>
       }
     }
   );
+
+type IDPayInitiativeConfigurationMachineType = ReturnType<
+  typeof createIDPayInitiativeConfigurationMachine
+>;
+
+export type { IDPayInitiativeConfigurationMachineType };
 
 export { createIDPayInitiativeConfigurationMachine };

@@ -25,6 +25,10 @@ import {
   IDPayOnboardingParamsList,
   IDPayOnboardingRoutes
 } from "../../features/idpay/onboarding/navigation/navigator";
+import {
+  IDPayConfigurationParamsList,
+  IDPayConfigurationRoutes
+} from "../../features/idpay/initiative/configuration/navigation/navigator";
 import { AuthenticationParamsList } from "./AuthenticationParamsList";
 import { MainTabParamsList } from "./MainTabParamsList";
 import { MessagesParamsList } from "./MessagesParamsList";
@@ -58,6 +62,7 @@ export type AppParamsList = {
   [FCI_ROUTES.MAIN]: NavigatorScreenParams<FciParamsList>;
 
   [IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN]: NavigatorScreenParams<IDPayOnboardingParamsList>;
+  [IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN]: NavigatorScreenParams<IDPayConfigurationParamsList>;
 };
 
 /**

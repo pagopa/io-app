@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { ListItem, View } from "native-base";
 import React from "react";
 import I18n from "i18n-js";
@@ -17,6 +17,16 @@ import IconFont from "../../../../../components/ui/IconFont";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import InstitutionIcon from "../../../../../../img/features/idpay/institution.svg";
 import CreditCardIcon from "../../../../../../img/features/idpay/creditcard.svg";
+import { IDPayConfigurationParamsList } from "../navigation/navigator";
+
+type InitiativeConfigurationIntroScreenRouteParams = {
+  initiativeId: string;
+};
+
+type InitiativeConfigurationIntroRouteProps = RouteProp<
+  IDPayConfigurationParamsList,
+  "IDPAY_CONFIGURATION_INTRO"
+>;
 
 type RequiredDataItemProps = {
   icon?: React.ReactNode;
@@ -38,12 +48,10 @@ const RequiredDataItem = (props: RequiredDataItemProps) => (
   </ListItem>
 );
 
-type InitiativeConfigurationIntroScreenRouteParams = {
-  initiativeId: string;
-};
-
 const InitiativeConfigurationIntroScreen = () => {
   const navigation = useNavigation();
+  const route = useRoute<InitiativeConfigurationIntroRouteProps>();
+
   const isLoading = false;
 
   const handleContinuePress = () => {
@@ -114,5 +122,7 @@ const styles = StyleSheet.create({
     marginRight: 16
   }
 });
+
+export type { InitiativeConfigurationIntroScreenRouteParams };
 
 export default InitiativeConfigurationIntroScreen;
