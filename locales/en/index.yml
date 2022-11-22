@@ -3256,3 +3256,6 @@ idpay:
           understoodCTA: Ho capito
       title: Possiedi i seguenti requisiti?
       subtitle: Verificheremo con alcuni Enti se sei in possesso dei requisiti per poter richiedere {{service}}. 
+  wallet:
+    preview:
+      validThrough: "Valid through {{endDate}}"
