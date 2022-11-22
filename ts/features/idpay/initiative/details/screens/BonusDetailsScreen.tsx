@@ -6,18 +6,20 @@ import { widthPercentageToDP } from "react-native-responsive-screen";
 import {
   InitiativeDTO,
   StatusEnum
-} from "../../../../../definitions/idpay/wallet/InitiativeDTO";
-import { H3 } from "../../../../components/core/typography/H3";
-import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
-import { IOColors } from "../../../../components/core/variables/IOColors";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import ListItemComponent from "../../../../components/screens/ListItemComponent";
-import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import TypedI18n from "../../../../i18n";
-import customVariables from "../../../../theme/variables";
+} from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
+import { H3 } from "../../../../../components/core/typography/H3";
+import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
+import { IOColors } from "../../../../../components/core/variables/IOColors";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
+import ListItemComponent from "../../../../../components/screens/ListItemComponent";
+import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar";
+import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
+import TypedI18n from "../../../../../i18n";
+import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
+import customVariables from "../../../../../theme/variables";
 import BonusCardComponent from "../components/BonusCardComponent";
+import { BonusDetailsScreenProps } from "./params";
 
 const styles = StyleSheet.create({
   card: {
@@ -63,20 +65,22 @@ const BonusDetailsList = (bonus: InitiativeDTO) => (
   </>
 );
 
-export const BonusDetailsScreen = () => {
+export const BonusDetailsScreen = (
+  props: IOStackNavigationRouteProps<BonusDetailsScreenProps>
+) => {
   const bonus: InitiativeDTO = {
-    nInstr: "0",
+    nInstr: 0,
     endDate: new Date("2021-12-31"),
-    initiativeId: "1",
+    initiativeId: props.route.params.initiativeId,
     iban: "IT60X0542811101000000123456",
-    status: StatusEnum.NOT_REFUNDABLE_ONLY_IBAN,
+    status: StatusEnum.NOT_REFUNDABLE,
     accrued: 0,
-    available: 500,
+    amount: 500,
     refunded: 0,
     initiativeName: "18App"
   };
 
-  const isRefundable = bonus.status === StatusEnum.NOT_REFUNDABLE;
+  const isNotRefundable = bonus.status === StatusEnum.NOT_REFUNDABLE;
 
   return (
     <BaseScreenComponent
@@ -107,14 +111,14 @@ export const BonusDetailsScreen = () => {
         >
           <View spacer extralarge />
           <View spacer small />
-          {isRefundable ? (
-            <Text>INIZIATIVA NON CONFIGURATA</Text>
+          {isNotRefundable ? (
+            <Text>INIZIATIVA NON CONFIGURATA, ID: {bonus.initiativeId}</Text>
           ) : (
             BonusDetailsList(bonus)
           )}
         </View>
       </ScrollView>
-      {isRefundable && (
+      {isNotRefundable && (
         <>
           <FooterWithButtons
             type="SingleButton"

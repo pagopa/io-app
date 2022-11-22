@@ -1,18 +1,18 @@
 import { Text, View } from "native-base";
 import * as React from "react";
-import { Image, ImageBackground, Platform, StyleSheet } from "react-native";
+import { Image, Platform, StyleSheet } from "react-native";
 import {
   InitiativeDTO,
   StatusEnum
-} from "../../../../../definitions/idpay/wallet/InitiativeDTO";
-import { makeFontStyleObject } from "../../../../components/core/fonts";
-import { H2 } from "../../../../components/core/typography/H2";
-import { H5 } from "../../../../components/core/typography/H5";
-import { IOColors } from "../../../../components/core/variables/IOColors";
-import TypedI18n from "../../../../i18n";
-import { formatDateAsLocal } from "../../../../utils/dates";
-import bonusVacanzeWhiteLogo from "../../../../../img/bonus/bonusVacanze/logo_BonusVacanze_White.png";
-import BonusCardSVG from "../../../../../img/idpay/bonus_bg_svg.svg";
+} from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
+import { makeFontStyleObject } from "../../../../../components/core/fonts";
+import { H2 } from "../../../../../components/core/typography/H2";
+import { H5 } from "../../../../../components/core/typography/H5";
+import { IOColors } from "../../../../../components/core/variables/IOColors";
+import TypedI18n from "../../../../../i18n";
+import { formatDateAsLocal } from "../../../../../utils/dates";
+import bonusVacanzeWhiteLogo from "../../../../../../img/bonus/bonusVacanze/logo_BonusVacanze_White.png";
+import BonusCardSVG from "../../../../../../img/idpay/bonus_bg_svg.svg";
 
 type Props = InitiativeDTO;
 
@@ -88,7 +88,7 @@ const BonusCardComponent = (props: Props) => {
           "bonus.bonusVacanze.accessibility.card", // CHANGE THIS
           {
             code: props.initiativeId,
-            value: props.available,
+            value: props.amount,
             status: props.status
           }
         )}
@@ -118,7 +118,7 @@ const BonusCardComponent = (props: Props) => {
                   styles.Amount
                 ]}
               >
-                {`${props.available},00 €`}
+                {`${props.amount},00 €`}
               </Text>
               <H5 color="white">
                 {TypedI18n.t("idpay.wallet.bonusCard.availableAmount")}

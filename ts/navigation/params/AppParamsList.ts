@@ -4,27 +4,28 @@ import {
   RouteProp
 } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
+import { CdcBonusRequestParamsList } from "../../features/bonus/cdc/navigation/params";
+import { CDC_ROUTES } from "../../features/bonus/cdc/navigation/routes";
 import {
   CgnActivationParamsList,
   CgnDetailsParamsList,
   CgnEYCAActivationParamsList
 } from "../../features/bonus/cgn/navigation/params";
 import CGN_ROUTES from "../../features/bonus/cgn/navigation/routes";
-import UADONATION_ROUTES from "../../features/uaDonations/navigation/routes";
-import { ZendeskParamsList } from "../../features/zendesk/navigation/params";
-import ZENDESK_ROUTES from "../../features/zendesk/navigation/routes";
-import ROUTES from "../routes";
-import { CDC_ROUTES } from "../../features/bonus/cdc/navigation/routes";
-import { CdcBonusRequestParamsList } from "../../features/bonus/cdc/navigation/params";
-import FIMS_ROUTES from "../../features/fims/navigation/routes";
-import { FimsParamsList } from "../../features/fims/navigation/params";
-import { UAWebviewScreenNavigationParams } from "../../features/uaDonations/screens/UAWebViewScreen";
-import { FCI_ROUTES } from "../../features/fci/navigation/routes";
 import { FciParamsList } from "../../features/fci/navigation/params";
+import { FCI_ROUTES } from "../../features/fci/navigation/routes";
+import { FimsParamsList } from "../../features/fims/navigation/params";
+import FIMS_ROUTES from "../../features/fims/navigation/routes";
+import { BonusDetailsScreenProps } from "../../features/idpay/initiative/details/screens/params";
 import {
   IDPayOnboardingParamsList,
   IDPayOnboardingRoutes
 } from "../../features/idpay/onboarding/navigation/navigator";
+import UADONATION_ROUTES from "../../features/uaDonations/navigation/routes";
+import { UAWebviewScreenNavigationParams } from "../../features/uaDonations/screens/UAWebViewScreen";
+import { ZendeskParamsList } from "../../features/zendesk/navigation/params";
+import ZENDESK_ROUTES from "../../features/zendesk/navigation/routes";
+import ROUTES from "../routes";
 import { AuthenticationParamsList } from "./AuthenticationParamsList";
 import { MainTabParamsList } from "./MainTabParamsList";
 import { MessagesParamsList } from "./MessagesParamsList";
@@ -44,6 +45,7 @@ export type AppParamsList = {
   [ROUTES.WALLET_NAVIGATOR]: NavigatorScreenParams<WalletParamsList>;
   [ROUTES.SERVICES_NAVIGATOR]: NavigatorScreenParams<ServicesParamsList>;
   [ROUTES.PROFILE_NAVIGATOR]: NavigatorScreenParams<ProfileParamsList>;
+  [ROUTES.BONUS_DETAILS]: NavigatorScreenParams<BonusDetailsScreenProps>;
 
   [CGN_ROUTES.ACTIVATION.MAIN]: NavigatorScreenParams<CgnActivationParamsList>;
   [CGN_ROUTES.DETAILS.MAIN]: NavigatorScreenParams<CgnDetailsParamsList>;
