@@ -6,7 +6,6 @@ import { ActivityIndicator, StyleSheet } from "react-native";
 import I18n from "../../i18n";
 import { ComponentProps } from "../../types/react";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
-import { IOStyles } from "../core/variables/IOStyles";
 import IconFont from "./IconFont";
 
 const styles = StyleSheet.create({
@@ -15,14 +14,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flex: 1
   },
-  verticalButton: {
-    alignContent: "center",
-    justifyContent: "center"
-  },
   buttonTwoThirds: {
     alignContent: "center",
     flex: 2
-  }
+  },
+  flexRow: { flexDirection: "row" }
 });
 
 type OwnButtonProps = {
@@ -47,16 +43,6 @@ export type BlockButtonProps = ComponentProps<Button> & OwnButtonProps;
  */
 export interface SingleButton extends CommonProps {
   type: "SingleButton";
-}
-
-/**
- * |  left  |
- * |  right |
- */
-export interface TwoButtonsVertical extends CommonProps {
-  type: "TwoButtonsVertical";
-  leftButton: BlockButtonProps;
-  rightButton: BlockButtonProps;
 }
 
 /**
@@ -94,7 +80,6 @@ interface ThreeButtonsInLine extends CommonProps {
 
 type Props =
   | SingleButton
-  | TwoButtonsVertical
   | TwoButtonsInlineHalf
   | TwoButtonsInlineThird
   | TwoButtonsInlineThirdInverted
@@ -114,16 +99,11 @@ export default class BlockButtons extends React.Component<Props, never> {
     const rightButtonStyle =
       this.props.type === "TwoButtonsInlineThird"
         ? styles.buttonTwoThirds
-        : this.props.type === "TwoButtonsVertical"
-        ? styles.verticalButton
         : styles.button;
-
-    const spacer = this.props.type === "TwoButtonsVertical";
-    const hspacer = this.props.type !== "TwoButtonsVertical";
 
     return (
       <React.Fragment>
-        <View spacer={spacer} hspacer={hspacer} />
+        <View hspacer={true} />
         {this.renderButton(this.props.rightButton, rightButtonStyle)}
       </React.Fragment>
     );
@@ -146,8 +126,6 @@ export default class BlockButtons extends React.Component<Props, never> {
     const leftButtonStyle =
       this.props.type === "TwoButtonsInlineThirdInverted"
         ? styles.buttonTwoThirds
-        : this.props.type === "TwoButtonsVertical"
-        ? styles.verticalButton
         : styles.button;
 
     return this.renderButton(this.props.leftButton, leftButtonStyle);
@@ -219,13 +197,7 @@ export default class BlockButtons extends React.Component<Props, never> {
 
   public render() {
     return (
-      <View
-        style={
-          this.props.type === "TwoButtonsVertical"
-            ? IOStyles.column
-            : IOStyles.row
-        }
-      >
+      <View style={styles.flexRow}>
         {this.renderLeftButton()}
         {this.renderMidButton()}
         {this.renderRightButton()}
