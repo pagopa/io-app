@@ -163,7 +163,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
     return pipe(
       resultOrError,
       O.foldW(
-        () => this.onInvalidQrCode,
+        () => this.onInvalidQrCode(),
         _ => this.onValidQrCode(_, "qrcode_scan")
       )
     );
@@ -251,6 +251,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
           .then(data => {
             if (data.values.length === 0) {
               this.onInvalidQrCode();
+              return;
             }
             this.onQrCodeData(data.values[0]);
           })
