@@ -2,6 +2,7 @@
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { PreferredLanguage } from "../../../../../definitions/backend/PreferredLanguage";
 import { InitiativeDto } from "../../../../../definitions/idpay/onboarding/InitiativeDto";
 import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/onboarding/RequiredCriteriaDTO";
 import { SelfConsentDTO } from "../../../../../definitions/idpay/onboarding/SelfConsentDTO";
@@ -34,13 +35,23 @@ const createSelfConsents = (requiredCriteria: RequiredCriteriaDTO) => {
   return selfConsents;
 };
 
-const createServicesImplementation = (onboardingClient: OnboardingClient) => {
+const createServicesImplementation = (
+  onboardingClient: OnboardingClient,
+  token: string,
+  language: PreferredLanguage
+) => {
+  const clientOptions = {
+    bearerAuth: token,
+    "Accept-Language": language
+  };
+
   const loadInitiative = async (context: Context) => {
     if (context.serviceId === undefined) {
       return Promise.reject("serviceId is undefined");
     }
 
-    const response = await onboardingClient.getInitiativeId({
+    const response = await onboardingClient.getInitiativeData({
+      ...clientOptions,
       serviceId: context.serviceId
     });
 
@@ -65,6 +76,7 @@ const createServicesImplementation = (onboardingClient: OnboardingClient) => {
       throw new Error("initative is undefined");
     }
     const response = await onboardingClient.onboardingCitizen({
+      ...clientOptions,
       body: {
         initiativeId: context.initiative.initiativeId
       }
@@ -92,6 +104,7 @@ const createServicesImplementation = (onboardingClient: OnboardingClient) => {
     }
 
     const response = await onboardingClient.checkPrerequisites({
+      ...clientOptions,
       body: {
         initiativeId: context.initiative.initiativeId
       }
@@ -127,6 +140,7 @@ const createServicesImplementation = (onboardingClient: OnboardingClient) => {
     }
 
     const response = await onboardingClient.consentOnboarding({
+      ...clientOptions,
       body: {
         initiativeId: initiative.initiativeId,
         pdndAccept: true,
