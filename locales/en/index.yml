@@ -183,10 +183,6 @@ global:
     invalidSearchBarText: Enter at least {{minCharacter}} characters
     noResultsFound: "There are no results for this search: try something else."
     noResultsTitle: No results.
-  localNotifications:
-    spidLogin:
-      title: Sign in to start using the app
-      message: IO can only work if you have signed in at least once
   media:
     email: "Email"
     pec: "Certified email"
@@ -837,12 +833,12 @@ onboarding:
     headerTitle: IO Settings
     continue: Continue
     preview:
-      reminderOnPreviewOnTitle: There’s a notice expiring tomorrow
-      reminderOnPreviewOnMessage: Log in to pay for it
-      reminderOffPreviewOnTitle: Ministry of Interior
-      reminderOffPreviewOnMessage: Updates on your change of address
-      reminderOnPreviewOffTitle: Reminder
-      reminderOnPreviewOffMessage: Open the app to read the content
+      reminderOnPreviewOnTitle: You have a notice due soon
+      reminderOnPreviewOnMessage: Log in to pay the notice issued by ACI
+      reminderOffPreviewOnTitle: Comune di Ipazia
+      reminderOffPreviewOnMessage: Summer camp registration is now open
+      reminderOnPreviewOffTitle: You have a notice due soon
+      reminderOnPreviewOffMessage: Log in to pay for it
       reminderOffPreviewOffTitle: You have a new message
       reminderOffPreviewOffMessage: Open the app to read the content
     contextualHelpTitle: Push notifications
@@ -3184,6 +3180,10 @@ features:
       generic:
         title: There is a problem
         subTitle: To proceed with the signature, check that you have updated the IO app to the latest version.
+    title: "Firma con IO"
+    documentsBar:
+      titleLeft: Document {{currentDoc}} of {{totalDocs}}
+      titleRight: Page {{currentPage}} of {{totalPages}}
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
@@ -3257,3 +3257,6 @@ idpay:
           understoodCTA: Ho capito
       title: Possiedi i seguenti requisiti?
       subtitle: Verificheremo con alcuni Enti se sei in possesso dei requisiti per poter richiedere {{service}}. 
+  wallet:
+    preview:
+      validThrough: "Valid through {{endDate}}"

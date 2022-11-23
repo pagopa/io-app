@@ -183,10 +183,6 @@ global:
     invalidSearchBarText: Inserisci almeno {{minCharacter}} caratteri
     noResultsFound: "Non ci sono risultati per questa ricerca: prova qualcos'altro."
     noResultsTitle: Nessun risultato.
-  localNotifications:
-    spidLogin:
-      title: Accedi per iniziare a usare l'app
-      message: IO funziona solo se hai effettuato l'accesso almeno una volta
   media:
     email: "Email"
     pec: "PEC"
@@ -853,14 +849,14 @@ onboarding:
     headerTitle: Configura IO
     continue: Continua
     preview:
-      reminderOnPreviewOnTitle: Hai un avviso che scade domani
-      reminderOnPreviewOnMessage: Entra nell’app per pagarlo
-      reminderOffPreviewOnTitle: Ministero dell’Interno
-      reminderOffPreviewOnMessage: Aggiornamenti sul tuo cambio di residenza
-      reminderOnPreviewOffTitle: Promemoria
-      reminderOnPreviewOffMessage: Apri l’app per leggere il contenuto
+      reminderOnPreviewOnTitle: Hai un avviso in scadenza
+      reminderOnPreviewOnMessage: Entra nell’app e paga l’avviso emesso da ACI
+      reminderOffPreviewOnTitle: Comune di Ipazia
+      reminderOffPreviewOnMessage: Sono aperte le iscrizioni per il centro estivo
+      reminderOnPreviewOffTitle: Hai un avviso in scadenza
+      reminderOnPreviewOffMessage: Entra nell'app per pagarlo
       reminderOffPreviewOffTitle: Hai un nuovo messaggio
-      reminderOffPreviewOffMessage: Apri l’app per leggere il contenuto
+      reminderOffPreviewOffMessage: Entra nell'app per leggerlo
     contextualHelpTitle: Notifiche push
     contextualHelpContent: !include onboarding/onboarding_notifications.md
   infoConsent:
@@ -3208,6 +3204,10 @@ features:
       generic:
         title: C’è un problema
         subTitle: Per procedere alla firma, verifica di aver aggiornato l’app IO all’ultima versione
+    title: "Firma con IO"
+    documentsBar:
+      titleLeft: Documento {{currentDoc}} di {{totalDocs}}
+      titleRight: Pagina {{currentPage}} di {{totalPages}}
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
@@ -3281,3 +3281,6 @@ idpay:
           understoodCTA: Ho capito
       title: Possiedi i seguenti requisiti?
       subtitle: Verificheremo con alcuni Enti se sei in possesso dei requisiti per poter richiedere {{service}}. 
+  wallet:
+    preview:
+      validThrough: "Valido fino al {{endDate}}"
