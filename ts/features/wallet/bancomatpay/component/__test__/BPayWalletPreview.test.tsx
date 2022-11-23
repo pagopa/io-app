@@ -52,49 +52,6 @@ describe("BPayWalletPreview component", () => {
       }
     });
   });
-  it("should show the caption if useImageResize return none", () => {
-    const myspy = jest.spyOn(hooks, "useImageResize").mockReturnValue(O.none);
-    const component = getComponent(aBPay, store);
-    const bankLogo = component.queryByTestId("bankLogoFallback");
-
-    expect(bankLogo).not.toBeNull();
-    expect(bankLogo).toHaveTextContent("BANCOMAT Pay");
-    expect(myspy).toHaveBeenCalledTimes(1);
-  });
-
-  it("should show nothing if useImageResize return a size but there isn't the logoUrl", () => {
-    jest.spyOn(hooks, "useImageResize").mockReturnValue(O.some([15, 15]));
-    const component = getComponent(aBPay, store);
-    const bankLogo = component.queryByTestId("bankLogo");
-    const bankLogoFallback = component.queryByTestId("bankLogoFallback");
-
-    expect(bankLogo).toBeNull();
-    expect(bankLogoFallback).toBeNull();
-  });
-
-  it("should show the logo image if there is the abiInfo logoUrl", () => {
-    jest.spyOn(hooks, "useImageResize").mockReturnValue(O.some([15, 15]));
-
-    const infobankName = "a different bank name";
-    const abiInfoBankName = "INTESA SANPAOLO - S.P.A.";
-    const logoUrl = "http://127.0.0.1:3000/static_contents/logos/abi/03069.png";
-    const component = getComponent(
-      {
-        ...aBPay,
-        info: { ...aBPay.info, bankName: infobankName },
-        abiInfo: {
-          abi: "03069",
-          name: abiInfoBankName,
-          logoUrl
-        }
-      },
-      store
-    );
-    const bankLogo = component.queryByTestId("bankLogo");
-
-    expect(bankLogo).not.toBeNull();
-    expect(bankLogo).toHaveProp("source", { uri: logoUrl });
-  });
 
   it("should call navigateToBPayDetails when press on it", () => {
     jest.spyOn(hooks, "useImageResize").mockReturnValue(O.none);
