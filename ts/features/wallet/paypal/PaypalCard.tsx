@@ -27,10 +27,6 @@ const styles = StyleSheet.create({
     height: 33,
     resizeMode: "contain"
   },
-  row: {
-    flexDirection: "row",
-    justifyContent: "space-between"
-  },
   bottomLeftStyle: {
     ...IOStyles.flex,
     paddingRight: 16
@@ -47,7 +43,7 @@ const getAccessibilityRepresentation = (email: string) => {
 };
 
 const topLeft = (isFavourite: boolean) => (
-  <View style={styles.row}>
+  <View style={IOStyles.rowSpaceBetween}>
     <View style={IOStyles.flex}>
       <Image source={paypalLogoExt} style={styles.paypalLogoExt} />
     </View>
