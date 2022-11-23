@@ -2,6 +2,7 @@ import * as React from "react";
 import { PathConfigMap } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { isGestureEnabled } from "../../../utils/navigation";
+import FciDocumentsScreen from "../screens/valid/FciDocumentsScreen";
 import FciRouterScreen from "../screens/FciRouterScreen";
 import { FCI_ROUTES } from "./routes";
 import { FciParamsList } from "./params";
@@ -24,5 +25,6 @@ export const FciStackNavigator = () => (
     screenOptions={{ gestureEnabled: isGestureEnabled }}
   >
     <Stack.Screen name={FCI_ROUTES.ROUTER} component={FciRouterScreen} />
+    <Stack.Screen name={FCI_ROUTES.DOCUMENTS} component={FciDocumentsScreen} />
   </Stack.Navigator>
 );

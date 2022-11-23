@@ -3,7 +3,6 @@ import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import { View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { Body } from "../../../../components/core/typography/Body";
@@ -30,13 +29,6 @@ type OwnProps = {
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
   OwnProps;
-
-const styles = StyleSheet.create({
-  row: {
-    flexDirection: "row",
-    justifyContent: "space-between"
-  }
-});
 
 /**
  * Generate the accessibility label for the card.
@@ -79,7 +71,7 @@ const topLeft = (
   );
 
   return (
-    <View style={styles.row}>
+    <View style={IOStyles.rowSpaceBetween}>
       <View style={IOStyles.flex}>
         <BlurredPan>{creditCard.caption}</BlurredPan>
         <View spacer={true} small={true} />
