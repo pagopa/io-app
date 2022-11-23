@@ -1,5 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { format as dateFnsFormat } from "date-fns";
+import { DateFromString } from "@pagopa/ts-commons/lib/dates";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { BlockedInboxOrChannels } from "../../definitions/backend/BlockedInboxOrChannels";
@@ -8,7 +8,7 @@ import { InitializedProfile } from "../../definitions/backend/InitializedProfile
 import { ServiceId } from "../../definitions/backend/ServiceId";
 import { Municipality } from "../../definitions/content/Municipality";
 import { ProfileState } from "../store/reducers/profile";
-import { formatDateAsShortFormat } from "./dates";
+
 type GenderType = "M" | "F" | undefined;
 
 /**
@@ -16,8 +16,7 @@ type GenderType = "M" | "F" | undefined;
  */
 type FiscalCodeDerivedData = Readonly<{
   gender?: GenderType;
-  birthday?: Date;
-  birthDate?: ReturnType<typeof dateFnsFormat>;
+  birthDate?: Date;
   denominazione: string;
   siglaProvincia: string;
 }>;
@@ -82,12 +81,18 @@ export function extractFiscalCodeData(
   const year =
     tempYear +
     (new Date().getFullYear() - (1900 + tempYear) >= 100 ? 2000 : 1900);
-  const birthday = new Date(year, month - 1, day);
-  const birthDate = formatDateAsShortFormat(birthday);
+
+  const birthDate = pipe(
+    DateFromString.decode(`${year}-${month}-${day}`),
+    O.fromEither,
+    O.fold(
+      () => undefined,
+      date => date
+    )
+  );
 
   return {
     gender,
-    birthday,
     birthDate,
     siglaProvincia,
     denominazione
