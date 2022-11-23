@@ -21,8 +21,8 @@ type DFNSLocales = Record<Locales, DateFnsLocale>;
 const locales: DFNSLocales = { it: dfns_it, en: dfns_en, de: dfns_de };
 
 // return a string representing the date dd/MM/YYYY (ex: 1 Jan 1970 -> 01/01/1970)
-export const formatDateAsShortFormat = (date: Date | undefined): string => {
-  return pipe(
+export const formatDateAsShortFormat = (date: Date | undefined): string =>
+  pipe(
     date,
     O.fromNullable,
     O.chain(O.fromPredicate(d => !isNaN(d.getTime()))),
@@ -31,7 +31,6 @@ export const formatDateAsShortFormat = (date: Date | undefined): string => {
       d => I18n.strftime(d, I18n.t("global.dateFormats.shortFormat"))
     )
   );
-};
 
 export function formatDateAsMonth(date: Date): ReturnType<typeof format> {
   return format(date, "MMM");
