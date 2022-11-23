@@ -1,6 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
-import _ from "lodash";
 import React from "react";
 import { View } from "react-native";
 import { InitiativeDTO } from "../../../../../definitions/idpay/wallet/InitiativeDTO";
@@ -10,10 +9,6 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
 import { useIOSelector } from "../../../../store/hooks";
-import {
-  IDPayConfigurationParamsList,
-  IDPayConfigurationRoutes
-} from "../../initiative/configuration/navigation/navigator";
 import { idPayWalletInitiativeListSelector } from "../store/reducers";
 import IDPayCardPreviewComponent from "./IDPayCardPreviewComponent";
 

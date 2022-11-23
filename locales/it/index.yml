@@ -3260,6 +3260,8 @@ support:
       category: "Aiutaci a capire meglio come possiamo aiutarti selezionando l’argomento del tuo problema: ti risponderemo il prima possibile, in orario lavorativo."
 idpay:
   wallet:
+    preview:
+      validThrough: "Valido fino al {{endDate}}"
     bonusCard:
       availableAmount: Disponibile
       validUntil: Valido fino al
@@ -3295,9 +3297,6 @@ idpay:
           understoodCTA: Ho capito
       title: Possiedi i seguenti requisiti?
       subtitle: Verificheremo con alcuni Enti se sei in possesso dei requisiti per poter richiedere {{service}}. 
-  wallet:
-    preview:
-      validThrough: "Valido fino al {{endDate}}"
   configuration:
     headerTitle: "Configura l'iniziativa"
     intro: 
