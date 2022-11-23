@@ -2,7 +2,7 @@
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
+import { PreferredLanguage } from "../../../../../definitions/backend/PreferredLanguage";
 import { InitiativeDto } from "../../../../../definitions/idpay/onboarding/InitiativeDto";
 import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/onboarding/RequiredCriteriaDTO";
 import { SelfConsentDTO } from "../../../../../definitions/idpay/onboarding/SelfConsentDTO";
@@ -37,18 +37,22 @@ const createSelfConsents = (requiredCriteria: RequiredCriteriaDTO) => {
 
 const createServicesImplementation = (
   onboardingClient: OnboardingClient,
-  bearerToken: string,
-  language: PreferredLanguageEnum
+  token: string,
+  language: PreferredLanguage
 ) => {
+  const clientOptions = {
+    bearerAuth: token,
+    "Accept-Language": language
+  };
+
   const loadInitiative = async (context: Context) => {
     if (context.serviceId === undefined) {
       return Promise.reject("serviceId is undefined");
     }
 
     const response = await onboardingClient.getInitiativeData({
-      serviceId: context.serviceId,
-      bearerAuth: bearerToken,
-      "Accept-Language": language
+      ...clientOptions,
+      serviceId: context.serviceId
     });
 
     const data: Promise<InitiativeDto> = pipe(
@@ -72,11 +76,10 @@ const createServicesImplementation = (
       throw new Error("initative is undefined");
     }
     const response = await onboardingClient.onboardingCitizen({
+      ...clientOptions,
       body: {
         initiativeId: context.initiative.initiativeId
-      },
-      bearerAuth: bearerToken,
-      "Accept-Language": language
+      }
     });
 
     const dataPromise: Promise<undefined> = pipe(
@@ -101,11 +104,10 @@ const createServicesImplementation = (
     }
 
     const response = await onboardingClient.checkPrerequisites({
+      ...clientOptions,
       body: {
         initiativeId: context.initiative.initiativeId
-      },
-      bearerAuth: bearerToken,
-      "Accept-Language": language
+      }
     });
 
     const dataPromise: Promise<O.Option<RequiredCriteriaDTO>> = pipe(
@@ -138,13 +140,12 @@ const createServicesImplementation = (
     }
 
     const response = await onboardingClient.consentOnboarding({
+      ...clientOptions,
       body: {
         initiativeId: initiative.initiativeId,
         pdndAccept: true,
         selfDeclarationList: createSelfConsents(requiredCriteria.value)
-      },
-      bearerAuth: bearerToken,
-      "Accept-Language": language
+      }
     });
 
     const dataPromise: Promise<undefined> = pipe(

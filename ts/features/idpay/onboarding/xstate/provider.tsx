@@ -4,7 +4,6 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
 import { InterpreterFrom } from "xstate";
-import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
 import {
   IDPAY_API_TEST_TOKEN,
   IDPAY_API_UAT_BASEURL
@@ -17,7 +16,10 @@ import {
 import { useIOSelector } from "../../../../store/hooks";
 import { sessionInfoSelector } from "../../../../store/reducers/authentication";
 import { preferredLanguageSelector } from "../../../../store/reducers/persistedPreferences";
-import { fromLocaleToPreferredLanguage } from "../../../../utils/locale";
+import {
+  fromLocaleToPreferredLanguage,
+  getLocalePrimaryWithFallback
+} from "../../../../utils/locale";
 import { createOnboardingClient } from "../api/client";
 import { createActionsImplementation } from "./actions";
 import {
@@ -41,12 +43,6 @@ const IDPayOnboardingMachineProvider = (props: Props) => {
 
   const sessionInfo = useIOSelector(sessionInfoSelector);
 
-  const language = pipe(
-    useIOSelector(preferredLanguageSelector),
-    O.map(fromLocaleToPreferredLanguage),
-    O.getOrElse(() => PreferredLanguageEnum.it_IT)
-  );
-
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
   if (O.isNone(sessionInfo)) {
@@ -57,6 +53,12 @@ const IDPayOnboardingMachineProvider = (props: Props) => {
     IDPAY_API_TEST_TOKEN !== undefined
       ? IDPAY_API_TEST_TOKEN
       : sessionInfo.value.bpdToken;
+
+  const language = pipe(
+    useIOSelector(preferredLanguageSelector),
+    O.getOrElse(getLocalePrimaryWithFallback),
+    fromLocaleToPreferredLanguage
+  );
 
   const onboardingClient = createOnboardingClient(IDPAY_API_UAT_BASEURL);
 
