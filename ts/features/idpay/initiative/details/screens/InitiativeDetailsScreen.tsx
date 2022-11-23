@@ -1,3 +1,4 @@
+import { Route, useRoute } from "@react-navigation/core";
 import { List, Text, View } from "native-base";
 import React from "react";
 import { ScrollView, StyleSheet } from "react-native";
@@ -16,10 +17,9 @@ import ListItemComponent from "../../../../../components/screens/ListItemCompone
 import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import TypedI18n from "../../../../../i18n";
-import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
 import customVariables from "../../../../../theme/variables";
-import BonusCardComponent from "../components/BonusCardComponent";
-import { BonusDetailsScreenProps } from "./params";
+import InitiativeCardComponent from "../components/InitiativeCardComponent";
+import EmptyInitiativeSvg from "../../../../../../img/features/idpay/empty_initiative.svg";
 
 const styles = StyleSheet.create({
   card: {
@@ -29,10 +29,20 @@ const styles = StyleSheet.create({
     maxWidth: 343,
     height: 192,
     top: 2
+  },
+  newInitiativeMessageContainer: {
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  textCenter: {
+    textAlign: "center"
+  },
+  flexGrow: {
+    flexGrow: 1
   }
 });
 
-const BonusDetailsList = (bonus: InitiativeDTO) => (
+const InitiativeSettings = (bonus: InitiativeDTO) => (
   <>
     <H3>{TypedI18n.t("idpay.wallet.bonusDetailsScreen.yourOperations")}</H3>
     <View spacer xsmall />
@@ -65,13 +75,21 @@ const BonusDetailsList = (bonus: InitiativeDTO) => (
   </>
 );
 
-export const BonusDetailsScreen = (
-  props: IOStackNavigationRouteProps<BonusDetailsScreenProps>
-) => {
+export type InitiativeDetailsScreenParams = {
+  initiativeId: string;
+};
+type RouteProps = Route<
+  "IDPAY_INITIATIVE_DETAILS",
+  InitiativeDetailsScreenParams
+>;
+
+export const InitiativeDetailsScreen = () => {
+  const route = useRoute<RouteProps>();
+  const { initiativeId } = route.params;
   const bonus: InitiativeDTO = {
     nInstr: 0,
     endDate: new Date("2021-12-31"),
-    initiativeId: props.route.params.initiativeId,
+    initiativeId,
     iban: "IT60X0542811101000000123456",
     status: StatusEnum.NOT_REFUNDABLE,
     accrued: 0,
@@ -80,7 +98,18 @@ export const BonusDetailsScreen = (
     initiativeName: "18App"
   };
 
-  const isNotRefundable = bonus.status === StatusEnum.NOT_REFUNDABLE;
+  const initiativeNotConfiguredContent = (
+    <View style={[styles.newInitiativeMessageContainer, IOStyles.flex]}>
+      <EmptyInitiativeSvg width={130} height={130} />
+      <View spacer />
+      <H3>Configura l'iniziativa!</H3>
+      <View spacer />
+      <Text style={styles.textCenter}>
+        Aggiungi almeno un metodo per iniziare ad utilizzare 18 app.
+      </Text>
+    </View>
+  );
+  const isInitiativeConfigured = bonus.status === StatusEnum.REFUNDABLE;
 
   return (
     <BaseScreenComponent
@@ -94,31 +123,37 @@ export const BonusDetailsScreen = (
         backgroundColor={IOColors.bluegrey}
         barStyle={"light-content"}
       />
-      <ScrollView style={IOStyles.flex} bounces={false}>
+      <ScrollView
+        style={IOStyles.flex}
+        bounces={false}
+        contentContainerStyle={styles.flexGrow}
+      >
         <LinearGradient colors={[IOColors.bluegrey, IOColors.bluegreyDark]}>
           <View style={[IOStyles.horizontalContentPadding, { height: 149 }]} />
         </LinearGradient>
         <View style={styles.card}>
-          <BonusCardComponent {...bonus} />
+          <InitiativeCardComponent {...bonus} />
         </View>
 
         <View
           style={[
+            // styles.flexFull,
             IOStyles.flex,
             IOStyles.horizontalContentPadding,
-            { paddingTop: customVariables.contentPadding }
+            styles.flexGrow,
+            {
+              paddingTop: customVariables.contentPadding
+            }
           ]}
         >
           <View spacer extralarge />
           <View spacer small />
-          {isNotRefundable ? (
-            <Text>INIZIATIVA NON CONFIGURATA, ID: {bonus.initiativeId}</Text>
-          ) : (
-            BonusDetailsList(bonus)
-          )}
+          {isInitiativeConfigured
+            ? InitiativeSettings(bonus)
+            : initiativeNotConfiguredContent}
         </View>
       </ScrollView>
-      {isNotRefundable && (
+      {!isInitiativeConfigured && (
         <>
           <FooterWithButtons
             type="SingleButton"

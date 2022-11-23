@@ -12,7 +12,8 @@ import { IOColors } from "../../../../../components/core/variables/IOColors";
 import TypedI18n from "../../../../../i18n";
 import { formatDateAsLocal } from "../../../../../utils/dates";
 import bonusVacanzeWhiteLogo from "../../../../../../img/bonus/bonusVacanze/logo_BonusVacanze_White.png";
-import BonusCardSVG from "../../../../../../img/idpay/bonus_bg_svg.svg";
+import BonusCardSVG from "../../../../../../img/features/idpay/bonus_bg_svg.svg";
+import { formatNumberAmount } from "../../../../../utils/stringBuilder";
 
 type Props = InitiativeDTO;
 
@@ -45,7 +46,7 @@ const styles = StyleSheet.create({
     height: "100%",
     position: "absolute"
   },
-  Amount: {
+  amount: {
     lineHeight: 32,
     fontSize: 24,
     color: IOColors.white,
@@ -70,7 +71,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const BonusCardComponent = (props: Props) => {
+const InitiativeCardComponent = (props: Props) => {
   const renderFullCard = () => {
     // const maybeStatusDescription = maybeNotNullyString(
     //   props
@@ -79,7 +80,7 @@ const BonusCardComponent = (props: Props) => {
     //       })
     //     : ""
     // );
-    const isBonusActive = props.status === StatusEnum.REFUNDABLE;
+    const isInitiativeConfigured = props.status === StatusEnum.REFUNDABLE;
     return (
       <View
         style={[styles.row, styles.spaced, styles.flexFull]}
@@ -114,11 +115,11 @@ const BonusCardComponent = (props: Props) => {
               <Text
                 bold={true}
                 style={[
-                  !isBonusActive ? styles.consumedOpacity : {},
-                  styles.Amount
+                  !isInitiativeConfigured ? styles.consumedOpacity : {},
+                  styles.amount
                 ]}
               >
-                {`${props.amount},00 €`}
+                {formatNumberAmount(props.amount || 0, true)}
               </Text>
               <H5 color="white">
                 {TypedI18n.t("idpay.wallet.bonusCard.availableAmount")}
@@ -131,11 +132,11 @@ const BonusCardComponent = (props: Props) => {
               <Text
                 bold={true}
                 style={[
-                  !isBonusActive ? styles.consumedOpacity : {},
-                  styles.Amount
+                  !isInitiativeConfigured ? styles.consumedOpacity : {},
+                  styles.amount
                 ]}
               >
-                {`${props.accrued},00 €`}
+                {formatNumberAmount(props.accrued || 0, true)}
               </Text>
 
               <H5 color="white">
@@ -173,4 +174,4 @@ const BonusCardComponent = (props: Props) => {
   );
 };
 
-export default BonusCardComponent;
+export default InitiativeCardComponent;

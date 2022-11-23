@@ -16,7 +16,7 @@ import { FciParamsList } from "../../features/fci/navigation/params";
 import { FCI_ROUTES } from "../../features/fci/navigation/routes";
 import { FimsParamsList } from "../../features/fims/navigation/params";
 import FIMS_ROUTES from "../../features/fims/navigation/routes";
-import { BonusDetailsScreenProps } from "../../features/idpay/initiative/details/screens/params";
+import { InitiativeDetailsScreenParams } from "../../features/idpay/initiative/details/screens/InitiativeDetailsScreen";
 import {
   IDPayOnboardingParamsList,
   IDPayOnboardingRoutes
@@ -45,7 +45,6 @@ export type AppParamsList = {
   [ROUTES.WALLET_NAVIGATOR]: NavigatorScreenParams<WalletParamsList>;
   [ROUTES.SERVICES_NAVIGATOR]: NavigatorScreenParams<ServicesParamsList>;
   [ROUTES.PROFILE_NAVIGATOR]: NavigatorScreenParams<ProfileParamsList>;
-  [ROUTES.BONUS_DETAILS]: NavigatorScreenParams<BonusDetailsScreenProps>;
 
   [CGN_ROUTES.ACTIVATION.MAIN]: NavigatorScreenParams<CgnActivationParamsList>;
   [CGN_ROUTES.DETAILS.MAIN]: NavigatorScreenParams<CgnDetailsParamsList>;
@@ -60,6 +59,7 @@ export type AppParamsList = {
   [FCI_ROUTES.MAIN]: NavigatorScreenParams<FciParamsList>;
 
   [IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN]: NavigatorScreenParams<IDPayOnboardingParamsList>;
+  [ROUTES.IDPAY_INITIATIVE_DETAILS]: InitiativeDetailsScreenParams;
 };
 
 /**
