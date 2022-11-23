@@ -1,4 +1,3 @@
-import I18n from "i18n-js";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { View, Text as NBText } from "native-base";
@@ -16,6 +15,7 @@ import {
   IOColors
 } from "../../../../components/core/variables/IOColors";
 import { formatNumberAmount } from "../../../../utils/stringBuilder";
+import I18n from "../../../../i18n";
 
 type Props = {
   initiativeId: string;

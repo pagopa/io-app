@@ -1,7 +1,6 @@
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { ListItem, View } from "native-base";
 import React from "react";
-import I18n from "i18n-js";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { useActor } from "@xstate/react";
 import { Body } from "../../../../../components/core/typography/Body";
@@ -21,6 +20,7 @@ import CreditCardIcon from "../../../../../../img/features/idpay/creditcard.svg"
 import { IDPayConfigurationParamsList } from "../navigation/navigator";
 import { useConfigurationMachineService } from "../xstate/provider";
 import { LOADING_TAG } from "../../../../../utils/xstate";
+import I18n from "../../../../../i18n";
 
 type InitiativeConfigurationIntroScreenRouteParams = {
   initiativeId: string;

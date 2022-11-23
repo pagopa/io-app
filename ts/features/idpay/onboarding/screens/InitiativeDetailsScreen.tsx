@@ -1,6 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
-import I18n from "i18n-js";
 import * as React from "react";
 import { View } from "native-base";
 import { pipe } from "fp-ts/lib/function";
@@ -27,6 +26,7 @@ import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { LOADING_TAG, UPSERTING_TAG } from "../../../../utils/xstate";
+import I18n from "../../../../i18n";
 
 type InitiativeDetailsScreenRouteParams = {
   serviceId: string;
