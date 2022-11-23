@@ -10,6 +10,10 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
 import { useIOSelector } from "../../../../store/hooks";
+import {
+  IDPayConfigurationParamsList,
+  IDPayConfigurationRoutes
+} from "../../initiative/configuration/navigation/navigator";
 import { idPayWalletInitiativeListSelector } from "../store/reducers";
 import IDPayCardPreviewComponent from "./IDPayCardPreviewComponent";
 

@@ -21,6 +21,10 @@ import {
   IDPayOnboardingParamsList,
   IDPayOnboardingRoutes
 } from "../../features/idpay/onboarding/navigation/navigator";
+import {
+  IDPayConfigurationParamsList,
+  IDPayConfigurationRoutes
+} from "../../features/idpay/initiative/configuration/navigation/navigator";
 import UADONATION_ROUTES from "../../features/uaDonations/navigation/routes";
 import { UAWebviewScreenNavigationParams } from "../../features/uaDonations/screens/UAWebViewScreen";
 import { ZendeskParamsList } from "../../features/zendesk/navigation/params";
@@ -59,6 +63,7 @@ export type AppParamsList = {
   [FCI_ROUTES.MAIN]: NavigatorScreenParams<FciParamsList>;
 
   [IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN]: NavigatorScreenParams<IDPayOnboardingParamsList>;
+  [IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN]: NavigatorScreenParams<IDPayConfigurationParamsList>;
   [ROUTES.IDPAY_INITIATIVE_DETAILS]: InitiativeDetailsScreenParams;
 };
 
