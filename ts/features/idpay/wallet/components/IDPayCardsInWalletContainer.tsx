@@ -4,12 +4,12 @@ import _ from "lodash";
 import React from "react";
 import { View } from "react-native";
 import { InitiativeDTO } from "../../../../../definitions/idpay/wallet/InitiativeDTO";
-import {
-  AppParamsList,
-  IOStackNavigationProp
-} from "../../../../navigation/params/AppParamsList";
+import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
-import { IDPayConfigurationRoutes } from "../../initiative/configuration/navigation/navigator";
+import {
+  IDPayConfigurationParamsList,
+  IDPayConfigurationRoutes
+} from "../../initiative/configuration/navigation/navigator";
 import { idPayWalletInitiativeListSelector } from "../store/reducers";
 import IDPayCardPreviewComponent from "./IDPayCardPreviewComponent";
 
@@ -18,7 +18,8 @@ type Props = {
 };
 
 const IDPayCardsList = (props: Props) => {
-  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const navigation =
+    useNavigation<IOStackNavigationProp<IDPayConfigurationParamsList>>();
 
   const handleCardPress = (initiativeId: string) => {
     // TODO: handle card press
