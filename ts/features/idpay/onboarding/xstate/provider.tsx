@@ -1,8 +1,10 @@
 import { useNavigation } from "@react-navigation/native";
 import { useInterpret } from "@xstate/react";
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
 import { InterpreterFrom } from "xstate";
+import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
 import {
   IDPAY_API_TEST_TOKEN,
   IDPAY_API_UAT_BASEURL
@@ -14,6 +16,8 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { sessionInfoSelector } from "../../../../store/reducers/authentication";
+import { preferredLanguageSelector } from "../../../../store/reducers/persistedPreferences";
+import { fromLocaleToPreferredLanguage } from "../../../../utils/locale";
 import { createOnboardingClient } from "../api/client";
 import { createActionsImplementation } from "./actions";
 import {
@@ -37,6 +41,12 @@ const IDPayOnboardingMachineProvider = (props: Props) => {
 
   const sessionInfo = useIOSelector(sessionInfoSelector);
 
+  const language = pipe(
+    useIOSelector(preferredLanguageSelector),
+    O.map(fromLocaleToPreferredLanguage),
+    O.getOrElse(() => PreferredLanguageEnum.it_IT)
+  );
+
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
   if (O.isNone(sessionInfo)) {
@@ -48,9 +58,13 @@ const IDPayOnboardingMachineProvider = (props: Props) => {
       ? IDPAY_API_TEST_TOKEN
       : sessionInfo.value.bpdToken;
 
-  const onboardingClient = createOnboardingClient(IDPAY_API_UAT_BASEURL, token);
+  const onboardingClient = createOnboardingClient(IDPAY_API_UAT_BASEURL);
 
-  const services = createServicesImplementation(onboardingClient);
+  const services = createServicesImplementation(
+    onboardingClient,
+    token,
+    language
+  );
 
   const actions = createActionsImplementation(navigation);
 

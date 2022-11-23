@@ -2,6 +2,7 @@
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
 import { InitiativeDto } from "../../../../../definitions/idpay/onboarding/InitiativeDto";
 import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/onboarding/RequiredCriteriaDTO";
 import { SelfConsentDTO } from "../../../../../definitions/idpay/onboarding/SelfConsentDTO";
@@ -34,14 +35,20 @@ const createSelfConsents = (requiredCriteria: RequiredCriteriaDTO) => {
   return selfConsents;
 };
 
-const createServicesImplementation = (onboardingClient: OnboardingClient) => {
+const createServicesImplementation = (
+  onboardingClient: OnboardingClient,
+  bearerToken: string,
+  language: PreferredLanguageEnum
+) => {
   const loadInitiative = async (context: Context) => {
     if (context.serviceId === undefined) {
       return Promise.reject("serviceId is undefined");
     }
 
-    const response = await onboardingClient.getInitiativeId({
-      serviceId: context.serviceId
+    const response = await onboardingClient.getInitiativeData({
+      serviceId: context.serviceId,
+      bearerAuth: bearerToken,
+      "Accept-Language": language
     });
 
     const data: Promise<InitiativeDto> = pipe(
@@ -67,7 +74,9 @@ const createServicesImplementation = (onboardingClient: OnboardingClient) => {
     const response = await onboardingClient.onboardingCitizen({
       body: {
         initiativeId: context.initiative.initiativeId
-      }
+      },
+      bearerAuth: bearerToken,
+      "Accept-Language": language
     });
 
     const dataPromise: Promise<undefined> = pipe(
@@ -94,7 +103,9 @@ const createServicesImplementation = (onboardingClient: OnboardingClient) => {
     const response = await onboardingClient.checkPrerequisites({
       body: {
         initiativeId: context.initiative.initiativeId
-      }
+      },
+      bearerAuth: bearerToken,
+      "Accept-Language": language
     });
 
     const dataPromise: Promise<O.Option<RequiredCriteriaDTO>> = pipe(
@@ -131,7 +142,9 @@ const createServicesImplementation = (onboardingClient: OnboardingClient) => {
         initiativeId: initiative.initiativeId,
         pdndAccept: true,
         selfDeclarationList: createSelfConsents(requiredCriteria.value)
-      }
+      },
+      bearerAuth: bearerToken,
+      "Accept-Language": language
     });
 
     const dataPromise: Promise<undefined> = pipe(
