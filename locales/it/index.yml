@@ -183,10 +183,6 @@ global:
     invalidSearchBarText: Inserisci almeno {{minCharacter}} caratteri
     noResultsFound: "Non ci sono risultati per questa ricerca: prova qualcos'altro."
     noResultsTitle: Nessun risultato.
-  localNotifications:
-    spidLogin:
-      title: Accedi per iniziare a usare l'app
-      message: IO funziona solo se hai effettuato l'accesso almeno una volta
   media:
     email: "Email"
     pec: "PEC"
@@ -3207,6 +3203,10 @@ features:
       generic:
         title: C’è un problema
         subTitle: Per procedere alla firma, verifica di aver aggiornato l’app IO all’ultima versione
+    title: "Firma con IO"
+    documentsBar:
+      titleLeft: Documento {{currentDoc}} di {{totalDocs}}
+      titleRight: Pagina {{currentPage}} di {{totalPages}}
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
@@ -3283,3 +3283,17 @@ idpay:
   wallet:
     preview:
       validThrough: "Valido fino al {{endDate}}"
+  configuration:
+    headerTitle: "Configura l'iniziativa"
+    intro: 
+      title: "Ci siamo quasi"
+      body: "Per poter usufruire dell’iniziativa, abbiamo bisogno di qualche informazione in più."
+      requiredData: 
+        title: "Dati richiesti:"
+        ibanTitle: "IBAN a te intestato"
+        ibanSubtitle: "Per poter ricevere eventuali rimborsi"
+        instrumentTitle: "Almeno un metodo di pagamento"
+        instrumentSubtitle: "Indica i metodi da abilitare all’iniziativa"
+      buttons:
+        continue: "Inizia la configurazione"
+    
