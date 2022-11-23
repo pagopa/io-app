@@ -142,6 +142,9 @@ function* createOrUpdateProfileSaga(
         blocked_inbox_or_channels: currentProfile.blocked_inbox_or_channels,
         accepted_tos_version: currentProfile.accepted_tos_version,
         last_app_version: O.toUndefined(maybeAppVersion),
+        push_notifications_content_type:
+          currentProfile.push_notifications_content_type,
+        reminder_status: currentProfile.reminder_status,
         ...action.payload
       }
     : {

@@ -23,6 +23,7 @@ import {
 } from "../profile";
 import {
   initializeApplicationSaga,
+  testCancellAllLocalNotifications,
   testWaitForNavigatorServiceInitialization
 } from "../startup";
 import { watchSessionExpiredSaga } from "../startup/watchSessionExpiredSaga";
@@ -57,6 +58,8 @@ describe("initializeApplicationSaga", () => {
       .next()
       .call(testWaitForNavigatorServiceInitialization!)
       .next()
+      .call(testCancellAllLocalNotifications!)
+      .next()
       .call(previousInstallationDataDeleteSaga)
       .next()
       .put(previousInstallationDataDeleteSuccess())
@@ -88,6 +91,8 @@ describe("initializeApplicationSaga", () => {
       .next()
       .call(testWaitForNavigatorServiceInitialization!)
       .next()
+      .call(testCancellAllLocalNotifications!)
+      .next()
       .call(previousInstallationDataDeleteSaga)
       .next()
       .put(previousInstallationDataDeleteSuccess())
@@ -115,6 +120,8 @@ describe("initializeApplicationSaga", () => {
       .call(initMixpanel)
       .next()
       .call(testWaitForNavigatorServiceInitialization!)
+      .next()
+      .call(testCancellAllLocalNotifications!)
       .next()
       .call(previousInstallationDataDeleteSaga)
       .next()
