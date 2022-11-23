@@ -1,14 +1,14 @@
-import React from "react";
 import { render } from "@testing-library/react-native";
+import React from "react";
 
 import { ReactTestInstance } from "react-test-renderer";
-import I18n, { setLocale } from "../../../../../i18n";
-import { Locales } from "../../../../../../locales/locales";
 import { CreatedMessageWithContentAndAttachments } from "../../../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
-import { paymentValidInvalidAfterDueDate } from "../../../../../__mocks__/message";
+import { Locales } from "../../../../../../locales/locales";
+import I18n, { setLocale } from "../../../../../i18n";
 import { toUIMessageDetails } from "../../../../../store/reducers/entities/messages/transformers";
-import { MessagePaymentExpirationInfo } from "../../../../../utils/messages";
 import { getExpireStatus } from "../../../../../utils/dates";
+import { MessagePaymentExpirationInfo } from "../../../../../utils/messages";
+import { paymentValidInvalidAfterDueDate } from "../../../../../__mocks__/message";
 
 import DueDateBar from "../DueDateBar";
 
@@ -31,7 +31,7 @@ const defaultProps: React.ComponentProps<typeof DueDateBar> = {
 type LocaleInfo = { locale: string; timezone: string };
 const locales: Record<Locales, LocaleInfo> = {
   it: { locale: "it-IT", timezone: "Europe/Rome" },
-  en: { locale: "en-US", timezone: "America/New_York" },
+  en: { locale: "en-GB", timezone: "Europe/London" },
   de: { locale: "de-DE", timezone: "Europe/Berlin" }
 };
 
@@ -90,20 +90,20 @@ describe("Render the DueDateBar accordingly with the due date", () => {
       number // EN time (hour) offset between local timezone ad UTC
     ]
   > = [
-    ["2022-01-31", "22:59", 1, -5],
-    ["2022-02-28", "22:59", 1, -5],
-    ["2023-02-28", "22:59", 1, -5],
-    ["2024-02-29", "22:59", 1, -5],
-    ["2022-03-31", "21:59", 2, -4],
-    ["2022-04-30", "21:59", 2, -4],
-    ["2022-05-31", "21:59", 2, -4],
-    ["2022-06-30", "21:59", 2, -4],
-    ["2022-07-31", "21:59", 2, -4],
-    ["2022-08-31", "21:59", 2, -4],
-    ["2022-09-30", "21:59", 2, -4],
-    ["2022-10-31", "22:59", 1, -4],
-    ["2022-11-31", "22:59", 1, -5],
-    ["2022-12-31", "22:59", 1, -5]
+    ["2022-01-31", "22:59", 1, 0],
+    ["2022-02-28", "22:59", 1, 0],
+    ["2023-02-28", "22:59", 1, 0],
+    ["2024-02-29", "22:59", 1, 0],
+    ["2022-03-31", "21:59", 2, 1],
+    ["2022-04-30", "21:59", 2, 1],
+    ["2022-05-31", "21:59", 2, 1],
+    ["2022-06-30", "21:59", 2, 1],
+    ["2022-07-31", "21:59", 2, 1],
+    ["2022-08-31", "21:59", 2, 1],
+    ["2022-09-30", "21:59", 2, 1],
+    ["2022-10-31", "22:59", 1, 0],
+    ["2022-11-31", "22:59", 1, 0],
+    ["2022-12-31", "22:59", 1, 0]
   ];
   data.forEach(elem => {
     const [day, time, timeOffsetIT, timeOffsetEN] = elem;
