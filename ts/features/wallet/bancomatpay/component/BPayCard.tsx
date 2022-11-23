@@ -1,5 +1,5 @@
 import { pipe } from "fp-ts/lib/function";
-/* import * as pot from "@pagopa/ts-commons/lib/pot" */ import * as O from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import { View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
@@ -13,11 +13,9 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseCardComponent from "../../component/card/BaseCardComponent";
 
-type OwnProps = {
+type Props = {
   phone?: string;
 } & ReturnType<typeof mapStateToProps>;
-
-type Props = ReturnType<typeof mapStateToProps> & OwnProps;
 
 const styles = StyleSheet.create({
   bpayLogo: {
@@ -46,9 +44,8 @@ const getAccessibilityRepresentation = (holder?: string, phone?: string) => {
 /**
  * Add a row; on the left the phone number, on the right the favourite star icon
  * @param phone
- * @param favorite
  */
-const topLeft = (phone: string /* favorite: pot.Pot<boolean, Error> */) => (
+const topLeft = (phone: string) => (
   <View style={IOStyles.rowSpaceBetween}>
     {phone && (
       <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -59,9 +56,6 @@ const topLeft = (phone: string /* favorite: pot.Pot<boolean, Error> */) => (
         </H4>
       </View>
     )}
-    {/* {pot.getOrElse(favorite, false) && (
-      <IconFont name={"io-filled-star"} color={variables.brandPrimary} />
-    )} */}
   </View>
 );
 

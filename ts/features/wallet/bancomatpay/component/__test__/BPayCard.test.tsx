@@ -11,8 +11,6 @@ import * as hooks from "../../../onboarding/bancomat/screens/hooks/useImageResiz
 import BPayCard from "../BPayCard";
 
 const aPhone = "+39 34*******0000";
-// const aBankName = "Bank Name";
-// const anAbiLogo = "http://127.0.0.1:3000/static_contents/logos/abi/03069.png";
 describe("BPayWalletPreview component", () => {
   const mockStore = configureMockStore();
   // eslint-disable-next-line functional/no-let
@@ -21,23 +19,6 @@ describe("BPayWalletPreview component", () => {
   beforeEach(() => {
     store = mockStore(mockProfileNameSurnameState(mockedProfile));
   });
-  // it("should show the bankName if there isn't the abiLogo", () => {
-  //   jest.spyOn(hooks, "useImageResize").mockReturnValue(O.none);
-  //   const component = getComponent(store, aBankName);
-  //   const bankName = component.queryByTestId("bankName");
-
-  //   expect(bankName).not.toBeNull();
-  //   expect(bankName).toHaveTextContent(aBankName);
-  // });
-
-  // it("should show the abiLog if there is an abiLogo and useImageResize return some value", () => {
-  //   jest.spyOn(hooks, "useImageResize").mockReturnValue(O.some([15, 15]));
-  //   const component = getComponent(store, aBankName, anAbiLogo);
-  //   const abiLogo = component.queryByTestId("abiLogo");
-
-  //   expect(abiLogo).not.toBeNull();
-  //   expect(abiLogo).toHaveProp("source", { uri: anAbiLogo });
-  // });
 
   it("should show the phone in is defined", () => {
     jest.spyOn(hooks, "useImageResize").mockReturnValue(O.none);
