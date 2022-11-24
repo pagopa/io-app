@@ -21,13 +21,9 @@ const IDPayCardsList = (props: Props) => {
   const navigation =
     useNavigation<IOStackNavigationProp<IDPayConfigurationParamsList>>();
 
-  const handleCardPress = (initiativeId: string) => {
-    // TODO: handle card press
+  const handleCardPress = (_: string) => {
     navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
-      screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO,
-      params: {
-        initiativeId
-      }
+      screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_ASSOCIATION_SUCCES
     });
   };
 
