@@ -10,11 +10,11 @@ import {
 } from "../actions";
 
 export type FciDocumentSignaturesState = {
-  documentSignatures: ReadonlyArray<DocumentSignature>;
+  documents: ReadonlyArray<DocumentSignature>;
 };
 
 const emptyState: FciDocumentSignaturesState = {
-  documentSignatures: []
+  documents: []
 };
 
 const reducer = (
@@ -25,12 +25,12 @@ const reducer = (
     case getType(fciAddDocumentSignaturesRequest):
       return {
         ...state,
-        documentSignatures: [...state.documentSignatures, action.payload]
+        documents: [...state.documents, action.payload]
       };
     case getType(fciUpdateDocumentSignaturesRequest):
       return {
         ...state,
-        documentSignatures: state.documentSignatures.map(d =>
+        documents: state.documents.map(d =>
           d.document_id === action.payload.document_id ? action.payload : d
         )
       };
@@ -43,6 +43,7 @@ const reducer = (
 // Selectors
 export const fciDocumentSignaturesSelector = (
   state: GlobalState
-): FciDocumentSignaturesState => state.features.fci.documentSignatures;
+): FciDocumentSignaturesState["documents"] =>
+  state.features.fci.documentSignatures.documents;
 
 export default reducer;
