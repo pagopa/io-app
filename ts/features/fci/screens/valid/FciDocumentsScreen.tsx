@@ -1,11 +1,12 @@
 import * as React from "react";
 import Pdf from "react-native-pdf";
 import { PDFDocument, rgb } from "pdf-lib";
+import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import { constNull, pipe } from "fp-ts/lib/function";
+import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as S from "fp-ts/lib/string";
 import * as O from "fp-ts/lib/Option";
-import { toError } from "fp-ts/lib/Either";
 import { SafeAreaView, StyleSheet } from "react-native";
 import { useSelector } from "react-redux";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
@@ -42,6 +43,15 @@ export type FciDocumentsScreenNavigationParams = Readonly<{
   currentDoc: number;
 }>;
 
+type SignatureFieldAttrType =
+  | ExistingSignatureFieldAttrs
+  | SignatureFieldToBeCreatedAttrs;
+
+const hasUniqueName = (
+  f: SignatureFieldAttrType
+): f is ExistingSignatureFieldAttrs =>
+  (f as ExistingSignatureFieldAttrs).unique_name !== undefined;
+
 const FciDocumentsScreen = () => {
   const pdfRef = React.useRef<Pdf>(null);
   const [totalPages, setTotalPages] = React.useState(0);
@@ -60,18 +70,136 @@ const FciDocumentsScreen = () => {
   const dispatch = useIODispatch();
 
   React.useEffect(() => {
-    // TODO: refactor using fp-ts
-    if (documentSignaturesSelector.documentSignatures.length === 0) {
-      documents.map(doc => {
-        const docSignature = {
-          document_id: doc.id,
-          signature: "",
-          signature_fields: []
-        } as DocumentSignature;
-        dispatch(fciAddDocumentSignaturesRequest(docSignature));
-      });
+    // if the user hasn't checked any signauture field,
+    // we need to initialize the documentSignatures state
+    if (RA.isEmpty(documentSignaturesSelector)) {
+      pipe(
+        documents,
+        RA.map(d => {
+          const docSignature = {
+            document_id: d.id,
+            signature: "",
+            signature_fields: []
+          } as DocumentSignature;
+          dispatch(fciAddDocumentSignaturesRequest(docSignature));
+        })
+      );
     }
-  }, [dispatch, documentSignaturesSelector.documentSignatures, documents]);
+  }, [dispatch, documentSignaturesSelector, documents]);
+
+  /**
+   * function to draw a rect over a signature field
+   * @param uniqueName the of the signature field
+   */
+  const drawRectangleOverSignatureFieldById = React.useCallback(
+    async (uniqueName: string) => {
+      // TODO: refactor this function to use fp-ts
+      const doc = documents[currentDoc];
+      const url = doc.url;
+
+      const existingPdfBytes = await ReactNativeBlobUtil.fetch("GET", url).then(
+        res => res.base64()
+      );
+
+      const pdfDoc = PDFDocument.load(
+        `data:application/pdf;base64,${existingPdfBytes}`
+      );
+
+      // get the signature field by unique name
+      await pdfDoc.then(res => {
+        pipe(
+          res.findPageForAnnotationRef(
+            res.getForm().getSignature(uniqueName).ref
+          ),
+          O.fromNullable,
+          O.map(pageRef => {
+            const page = res.getPages().indexOf(pageRef);
+            setSignaturePage(page + 1);
+            // The signature field is extracted by its unique_name.
+            // Using low-level acrofield (acrobat field) it is possible
+            // to obtain the elements of the signature field such as the
+            // box that contains it. Once the box is obtained, its
+            // coordinates are used to draw a rectangle on the related page.
+            const signature = res.getForm().getSignature(uniqueName);
+            const [widget] = signature.acroField.getWidgets();
+            const rect = widget.getRectangle();
+            res.getPage(page).drawRectangle({
+              x: rect.x,
+              y: rect.y,
+              width: rect.width,
+              height: rect.height,
+              color: rgb(0, 0.77, 0.79),
+              opacity: 0.5,
+              borderOpacity: 0.75
+            });
+          })
+        );
+
+        return res
+          .saveAsBase64()
+          .then(r => setPdfString(`data:application/pdf;base64,${r}`));
+      });
+    },
+    [documents, currentDoc]
+  );
+
+  /**
+   * function to draw a rect over pdf giving a coordinates
+   * @param attrs the signature field attrs containing the coords
+   */
+  const drawRectangleOverSignatureFieldByCoordinates = React.useCallback(
+    async (attrs: SignatureFieldToBeCreatedAttrs) => {
+      // TODO: refactor this function to use fp-ts
+      const doc = documents[currentDoc];
+      const url = doc.url;
+
+      const existingPdfBytes = await ReactNativeBlobUtil.fetch("GET", url).then(
+        res => res.base64()
+      );
+
+      const pdfDoc = PDFDocument.load(
+        `data:application/pdf;base64,${existingPdfBytes}`
+      );
+
+      await pdfDoc.then(res => {
+        const page = attrs.page;
+        setSignaturePage(page);
+        // The signature box is drawn using the coordinates of the signature field.
+        res.getPage(page).drawRectangle({
+          x: attrs.coordinates.top_right.x,
+          y: attrs.coordinates.top_right.y,
+          width: attrs.coordinates.bottom_left.x,
+          height: attrs.coordinates.bottom_left.y,
+          color: rgb(0, 0.77, 0.79),
+          opacity: 0.5,
+          borderOpacity: 0.75
+        });
+
+        return res
+          .saveAsBase64()
+          .then(r => setPdfString(`data:application/pdf;base64,${r}`));
+      });
+    },
+    [documents, currentDoc]
+  );
+
+  const onSignatureDetail = React.useCallback(
+    (attrs: ExistingSignatureFieldAttrs | SignatureFieldToBeCreatedAttrs) => {
+      if (hasUniqueName(attrs)) {
+        drawRectangleOverSignatureFieldById(attrs.unique_name).catch(
+          readableReport
+        );
+      } else {
+        drawRectangleOverSignatureFieldByCoordinates(attrs).catch(
+          readableReport
+        );
+      }
+    },
+    [
+      drawRectangleOverSignatureFieldByCoordinates,
+      drawRectangleOverSignatureFieldById
+    ]
+  );
 
   React.useEffect(() => {
     pipe(
@@ -87,8 +215,7 @@ const FciDocumentsScreen = () => {
         setSignaturePage(0);
       })
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [attrs, cDoc]);
+  }, [attrs, cDoc, onSignatureDetail]);
 
   const { present, bottomSheet: fciAbortSignature } =
     useFciAbortSignatureFlow();
@@ -175,99 +302,6 @@ const FciDocumentsScreen = () => {
       O.chain(doc => (doc < documents.length - 1 ? O.some(doc + 1) : O.none)),
       O.map(setCurrentDoc)
     );
-  };
-
-  /**
-   * function to draw a rect over a signature field
-   * @param ids
-   */
-  const drawRectangleOverSignatureFieldById = async (ids: string) => {
-    const doc = documents[currentDoc];
-    const url = doc.url;
-
-    const existingPdfBytes = await ReactNativeBlobUtil.fetch("GET", url).then(
-      res => res.base64()
-    );
-
-    const pdfDoc = PDFDocument.load(
-      `data:application/pdf;base64,${existingPdfBytes}`
-    );
-
-    // TODO: refactor this code to use fp-ts
-    await pdfDoc.then(res => {
-      pipe(
-        res.findPageForAnnotationRef(res.getForm().getSignature(ids).ref),
-        O.fromNullable,
-        O.map(pageRef => {
-          const page = res.getPages().indexOf(pageRef);
-          setSignaturePage(page + 1);
-          const signature = res.getForm().getSignature(ids);
-          const [widget] = signature.acroField.getWidgets();
-          const rect = widget.getRectangle();
-          res.getPage(page).drawRectangle({
-            x: rect.x,
-            y: rect.y,
-            width: rect.width,
-            height: rect.height,
-            color: rgb(0, 0.77, 0.79),
-            opacity: 0.5,
-            borderOpacity: 0.75
-          });
-        })
-      );
-
-      return res
-        .saveAsBase64()
-        .then(r => setPdfString(`data:application/pdf;base64,${r}`));
-    });
-  };
-
-  /**
-   * function to draw a rect over a signature field
-   * @param ids
-   */
-  const drawRectangleOverSignatureFieldByCoordinates = async (
-    field: SignatureFieldToBeCreatedAttrs
-  ) => {
-    const doc = documents[currentDoc];
-    const url = doc.url;
-
-    const existingPdfBytes = await ReactNativeBlobUtil.fetch("GET", url).then(
-      res => res.base64()
-    );
-
-    const pdfDoc = PDFDocument.load(
-      `data:application/pdf;base64,${existingPdfBytes}`
-    );
-
-    // TODO: refactor this code to use fp-ts
-    await pdfDoc.then(res => {
-      const page = field.page;
-      setSignaturePage(page);
-      res.getPage(page).drawRectangle({
-        x: field.coordinates.top_right.x,
-        y: field.coordinates.top_right.y,
-        width: field.coordinates.bottom_left.x,
-        height: field.coordinates.bottom_left.y,
-        color: rgb(0, 0.77, 0.79),
-        opacity: 0.5,
-        borderOpacity: 0.75
-      });
-
-      return res
-        .saveAsBase64()
-        .then(r => setPdfString(`data:application/pdf;base64,${r}`));
-    });
-  };
-
-  const onSignatureDetail = (
-    attrs: ExistingSignatureFieldAttrs | SignatureFieldToBeCreatedAttrs
-  ) => {
-    if ("unique_name" in attrs) {
-      drawRectangleOverSignatureFieldById(attrs.unique_name).catch(toError);
-    } else {
-      drawRectangleOverSignatureFieldByCoordinates(attrs).catch(toError);
-    }
   };
 
   const customGoBack: React.ReactElement = (
