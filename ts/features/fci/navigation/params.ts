@@ -7,4 +7,5 @@ export type FciParamsList = {
   [FCI_ROUTES.ROUTER]: FciRouterScreenNavigationParams;
   [FCI_ROUTES.DOCUMENTS]: FciDocumentsScreenNavigationParams;
   [FCI_ROUTES.SIGNATURE_FIELDS]: FciSignatureFieldsScreenNavigationParams;
+  [FCI_ROUTES.USER_DATA_SHARE]: undefined;
 };

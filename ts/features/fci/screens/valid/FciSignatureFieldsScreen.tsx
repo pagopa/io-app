@@ -200,6 +200,10 @@ const FciSignatureFieldsScreen = (
             currentDoc: increment(currentDoc)
           }
         });
+      } else {
+        navigation.navigate(FCI_ROUTES.MAIN, {
+          screen: FCI_ROUTES.USER_DATA_SHARE
+        });
       }
     },
     title:

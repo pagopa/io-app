@@ -5,6 +5,7 @@ import { isGestureEnabled } from "../../../utils/navigation";
 import FciDocumentsScreen from "../screens/valid/FciDocumentsScreen";
 import FciRouterScreen from "../screens/FciRouterScreen";
 import FciSignatureFieldsScreen from "../screens/valid/FciSignatureFieldsScreen";
+import FciDataSharingScreen from "../screens/valid/FciDataSharingScreen";
 import { FCI_ROUTES } from "./routes";
 import { FciParamsList } from "./params";
 
@@ -30,6 +31,10 @@ export const FciStackNavigator = () => (
     <Stack.Screen
       name={FCI_ROUTES.SIGNATURE_FIELDS}
       component={FciSignatureFieldsScreen}
+    />
+    <Stack.Screen
+      name={FCI_ROUTES.USER_DATA_SHARE}
+      component={FciDataSharingScreen}
     />
   </Stack.Navigator>
 );

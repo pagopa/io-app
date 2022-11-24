@@ -3191,6 +3191,15 @@ features:
     documentsBar:
       titleLeft: Document {{currentDoc}} of {{totalDocs}}
       titleRight: Page {{currentPage}} of {{totalPages}}
+    shareDataScreen:
+      title: "Share your data"
+      content: "To complete the signing process, you must share this data with {{Nome Issuer}}."
+      cancel: "Cancel"
+      confirm: "Ok"
+      alertText: "Want to change or update your email address? Go here."
+      name: "Name"
+      familyName: "Family name"
+      birthDate: "Date of birth"
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
