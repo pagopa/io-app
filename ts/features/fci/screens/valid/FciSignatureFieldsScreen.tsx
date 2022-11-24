@@ -3,9 +3,10 @@ import { View } from "native-base";
 import { SafeAreaView, SectionList } from "react-native";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
+import * as A from "fp-ts/lib/Array";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as O from "fp-ts/lib/Option";
-import * as S from "fp-ts/lib/string";
+import * as B from "fp-ts/lib/boolean";
 import { increment, pipe } from "fp-ts/lib/function";
 import { H1 } from "../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
@@ -32,6 +33,12 @@ import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentS
 import { fciUpdateDocumentSignaturesRequest } from "../../store/actions";
 import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
 import { ClausesTypeEnum } from "../../../../../definitions/fci/ClausesType";
+import { DocumentSignature } from "../../../../../definitions/fci/DocumentSignature";
+import {
+  clausesByType,
+  clauseTypeMaping,
+  getSectionListData
+} from "../../utils/signatureFields";
 
 export type FciSignatureFieldsScreenNavigationParams = Readonly<{
   documentId: Document["id"];
@@ -54,75 +61,46 @@ const FciSignatureFieldsScreen = (
   const navigation = useNavigation();
   const [isClausesChecked, setIsClausesChecked] = React.useState(false);
 
+  // get signatureFields for the current document
+  const docSignatures = pipe(
+    documentsSignaturesSelector,
+    RA.findFirst(doc => doc.document_id === docId)
+  );
+
   React.useEffect(() => {
-    const docSignatures = documentsSignaturesSelector.documentSignatures.find(
-      d => d.document_id === docId
+    // get required signatureFields for the current document
+    // that user should check to sign the document
+    const requiredFields = clausesByType(
+      signatureFieldsSelector,
+      ClausesTypeEnum.REQUIRED
     );
 
-    const requiredFields = signatureFieldsSelector.filter(
-      signatureField => signatureField.clause.type === ClausesTypeEnum.REQUIRED
+    // get required signatureFields for the current document
+    // that user has already checked to sign the document
+    const res = pipe(
+      requiredFields,
+      RA.map(signatureField =>
+        pipe(
+          docSignatures,
+          RA.fromOption,
+          RA.map(doc => doc.signature_fields),
+          RA.map(fields => fields.filter(f => f === signatureField)),
+          RA.flatten
+        )
+      ),
+      RA.flatten
     );
-
-    const res = requiredFields
-      .map(signatureField =>
-        docSignatures?.signature_fields.filter(f => f === signatureField)
-      )
-      .flat();
 
     setIsClausesChecked(res.length >= requiredFields.length);
   }, [
-    documentsSignaturesSelector.documentSignatures,
+    documentsSignaturesSelector,
     docId,
-    signatureFieldsSelector
+    signatureFieldsSelector,
+    docSignatures
   ]);
 
   const { present, bottomSheet: fciAbortSignature } =
     useFciAbortSignatureFlow();
-
-  type DATA_TYPE = {
-    title: string;
-    data: ReadonlyArray<SignatureField>;
-  };
-
-  const clausesByType = (clauseType: string) =>
-    pipe(
-      signatureFieldsSelector,
-      RA.filterMap(signatureField =>
-        clauseType === signatureField.clause.type
-          ? O.fromNullable(signatureField)
-          : O.none
-      )
-    );
-
-  const getAllTypes = pipe(
-    signatureFieldsSelector,
-    RA.filterMap(signatureField => O.fromNullable(signatureField.clause.type)),
-    RA.uniq(S.Eq)
-  );
-
-  const DATA: ReadonlyArray<DATA_TYPE> = pipe(
-    getAllTypes,
-    RA.map(type => ({
-      title: type,
-      data: clausesByType(type)
-    }))
-  );
-
-  enum ClauseTypeMappingEnum {
-    "REQUIRED" = "FIRME OBBLIGATORIE",
-    "UNFAIR" = "FIRME CLAUSOLE VESSATORIE",
-    "OPTIONAL" = "FIRME FACOLTATIVE",
-    "UNDEFINED" = "FIRMA NON DEFINITA"
-  }
-
-  const clauseTypeMaping: Map<string, ClauseTypeMappingEnum> = new Map<
-    string,
-    ClauseTypeMappingEnum
-  >([
-    ["REQUIRED", ClauseTypeMappingEnum.REQUIRED],
-    ["UNFAIR", ClauseTypeMappingEnum.UNFAIR],
-    ["OPTIONAL", ClauseTypeMappingEnum.OPTIONAL]
-  ]);
 
   const onPressDetail = (signatureField: SignatureField) => {
     navigation.navigate(FCI_ROUTES.MAIN, {
@@ -135,46 +113,62 @@ const FciSignatureFieldsScreen = (
     });
   };
 
-  const onChange = (value: boolean, item: SignatureField) => {
-    // TODO: refactor this logic to use fp-ts
-    const docSignatures = documentsSignaturesSelector.documentSignatures.find(
-      d => d.document_id === docId
+  const updateDocumentSignatures = (fn: (doc: DocumentSignature) => void) =>
+    pipe(
+      docSignatures,
+      O.chain(document => O.fromNullable(document)),
+      O.map(doc => fn(doc))
     );
-    if (docSignatures && value) {
-      dispatch(
-        fciUpdateDocumentSignaturesRequest({
-          ...docSignatures,
-          signature_fields: [...docSignatures.signature_fields, item]
-        })
-      );
-    } else if (docSignatures) {
-      dispatch(
-        fciUpdateDocumentSignaturesRequest({
-          ...docSignatures,
-          signature_fields: [
-            ...docSignatures.signature_fields.filter(f => f !== item)
-          ]
-        })
-      );
-    }
-  };
+
+  const onChange = (value: boolean, item: SignatureField) =>
+    pipe(
+      value,
+      O.of,
+      O.map(
+        B.match(
+          () =>
+            updateDocumentSignatures(doc =>
+              dispatch(
+                fciUpdateDocumentSignaturesRequest({
+                  ...doc,
+                  signature_fields: [
+                    ...doc.signature_fields.filter(f => f !== item)
+                  ]
+                })
+              )
+            ),
+          () =>
+            updateDocumentSignatures(doc =>
+              dispatch(
+                fciUpdateDocumentSignaturesRequest({
+                  ...doc,
+                  signature_fields: [...doc.signature_fields, item]
+                })
+              )
+            )
+        )
+      )
+    );
 
   const renderSignatureFields = () => (
     <SectionList
       style={IOStyles.horizontalContentPadding}
-      sections={DATA}
+      sections={getSectionListData(signatureFieldsSelector)}
       keyExtractor={(item, index) => `${item.clause.title}${index}`}
+      testID={"FciSignatureFieldsSectionListTestID"}
       renderItem={({ item }) => (
         <SignatureFieldItem
           title={item.clause.title}
-          value={
-            // TODO: refactor this logic to use fp-ts
-            documentsSignaturesSelector.documentSignatures
-              .find(d => d.document_id === docId)
-              ?.signature_fields.find(f => f === item)
-              ? true
-              : false
-          }
+          value={O.isSome(
+            pipe(
+              documentsSignaturesSelector,
+              RA.findFirst(doc => doc.document_id === docId),
+              O.chain(document => O.fromNullable(document)),
+              O.map(doc => doc.signature_fields),
+              O.map(fields => A.isNonEmpty(fields.filter(f => f === item))),
+              O.chain(isNonEmpty => (isNonEmpty ? O.some(true) : O.none))
+            )
+          )}
           onChange={v => onChange(v, item)}
           onPressDetail={() => onPressDetail(item)}
         />
@@ -241,7 +235,7 @@ const FciSignatureFieldsScreen = (
       headerTitle={I18n.t("features.fci.signatureFields.title")}
       contextualHelp={emptyContextualHelp}
     >
-      <SafeAreaView style={IOStyles.flex}>
+      <SafeAreaView style={IOStyles.flex} testID={"FciSignatureFieldsTestID"}>
         <View
           style={[IOStyles.horizontalContentPadding, { paddingBottom: 56 }]}
         >
