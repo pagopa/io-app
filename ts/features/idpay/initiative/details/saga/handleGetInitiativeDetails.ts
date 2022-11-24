@@ -1,4 +1,5 @@
 import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
 import { call, put } from "typed-redux-saga/macro";
 import { PreferredLanguageEnum } from "../../../../../../definitions/backend/PreferredLanguage";
 import { SagaCallReturnType } from "../../../../../types/utils";
@@ -29,34 +30,28 @@ export function* handleGetInitiativeDetails(
       initiativeId: payload.initiativeId
     });
 
-    if (E.isRight(getInitiativeDetailsResult)) {
-      if (getInitiativeDetailsResult.right.status === 200) {
-        // handled success
-        yield* put(
-          idpayInitiativeGet.success(getInitiativeDetailsResult.right.value)
-        );
-        return;
-      }
-      // not handled error codes
-      yield* put(
-        idpayInitiativeGet.failure({
-          ...getGenericError(
-            new Error(
-              `response status code ${getInitiativeDetailsResult.right.status}`
+    yield *
+      pipe(
+        getInitiativeDetailsResult,
+        E.fold(
+          error =>
+            put(
+              idpayInitiativeGet.failure({
+                ...getGenericError(new Error(readablePrivacyReport(error)))
+              })
+            ),
+          response =>
+            put(
+              response.status === 200
+                ? idpayInitiativeGet.success(response.value)
+                : idpayInitiativeGet.failure({
+                    ...getGenericError(
+                      new Error(`response status code ${response.status}`)
+                    )
+                  })
             )
-          )
-        })
+        )
       );
-    } else {
-      // cannot decode response
-      yield* put(
-        idpayInitiativeGet.failure({
-          ...getGenericError(
-            new Error(readablePrivacyReport(getInitiativeDetailsResult.left))
-          )
-        })
-      );
-    }
   } catch (e) {
     yield * put(idpayInitiativeGet.failure({ ...getNetworkError(e) }));
   }
