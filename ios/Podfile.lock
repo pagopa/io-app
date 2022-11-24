@@ -494,6 +494,9 @@ PODS:
     - React
   - RNKeychain (4.0.5):
     - React
+  - RNQrGenerator (1.2.1):
+    - React
+    - ZXingObjC
   - RNReanimated (2.10.0):
     - DoubleConversion
     - FBLazyVector
@@ -570,6 +573,9 @@ PODS:
   - ZendeskSupportSDK (5.3.0):
     - ZendeskMessagingSDK (~> 3.8.2)
     - ZendeskSupportProvidersSDK (~> 5.3.0)
+  - ZXingObjC (3.6.5):
+    - ZXingObjC/All (= 3.6.5)
+  - ZXingObjC/All (3.6.5)
 
 DEPENDENCIES:
   - boost (from `../node_modules/react-native/third-party-podspecs/boost.podspec`)
@@ -662,6 +668,7 @@ DEPENDENCIES:
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNI18n (from `../node_modules/react-native-i18n`)
   - RNKeychain (from `../node_modules/react-native-keychain`)
+  - RNQrGenerator (from `../node_modules/rn-qr-generator`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSha256 (from `../node_modules/react-native-sha256`)
@@ -715,6 +722,7 @@ SPEC REPOS:
     - ZendeskSDKConfigurationsSDK
     - ZendeskSupportProvidersSDK
     - ZendeskSupportSDK
+    - ZXingObjC
 
 EXTERNAL SOURCES:
   boost:
@@ -849,6 +857,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-i18n"
   RNKeychain:
     :path: "../node_modules/react-native-keychain"
+  RNQrGenerator:
+    :path: "../node_modules/rn-qr-generator"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
@@ -964,6 +974,7 @@ SPEC CHECKSUMS:
   RNGestureHandler: e1ad51d31a580755079d5124d3ab66f0fcaa8311
   RNI18n: e2f7e76389fcc6e84f2c8733ea89b92502351fd8
   RNKeychain: 840f8e6f13be0576202aefcdffd26a4f54bfe7b5
+  RNQrGenerator: 0aa6c40e3f2e15a9cbaec9480b7028c339f89b66
   RNReanimated: 7faa787e8d4493fbc95fab2ad331fa7625828cfa
   RNScreens: f7ad633b2e0190b77b6a7aab7f914fad6f198d8d
   RNSha256: ab608b2185fb806185a2cc112e0474065842e085
@@ -987,6 +998,7 @@ SPEC CHECKSUMS:
   ZendeskSDKConfigurationsSDK: 8371b468db0d09e9198f6c5a97818826943ee1ee
   ZendeskSupportProvidersSDK: 2bdf8544f7cd0fd4c002546f5704b813845beb2a
   ZendeskSupportSDK: 3a8e508ab1d9dd22dc038df6c694466414e037ba
+  ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
 
 PODFILE CHECKSUM: 0d78c2a7f58353c7eed2163b7e3b3747b00ff101
 
