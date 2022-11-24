@@ -30,28 +30,27 @@ export function* handleGetInitiativeDetails(
       initiativeId: payload.initiativeId
     });
 
-    yield *
-      pipe(
-        getInitiativeDetailsResult,
-        E.fold(
-          error =>
-            put(
-              idpayInitiativeGet.failure({
-                ...getGenericError(new Error(readablePrivacyReport(error)))
-              })
-            ),
-          response =>
-            put(
-              response.status === 200
-                ? idpayInitiativeGet.success(response.value)
-                : idpayInitiativeGet.failure({
-                    ...getGenericError(
-                      new Error(`response status code ${response.status}`)
-                    )
-                  })
-            )
-        )
-      );
+    yield pipe(
+      getInitiativeDetailsResult,
+      E.fold(
+        error =>
+          put(
+            idpayInitiativeGet.failure({
+              ...getGenericError(new Error(readablePrivacyReport(error)))
+            })
+          ),
+        response =>
+          put(
+            response.status === 200
+              ? idpayInitiativeGet.success(response.value)
+              : idpayInitiativeGet.failure({
+                  ...getGenericError(
+                    new Error(`response status code ${response.status}`)
+                  )
+                })
+          )
+      )
+    );
   } catch (e) {
     yield * put(idpayInitiativeGet.failure({ ...getNetworkError(e) }));
   }
