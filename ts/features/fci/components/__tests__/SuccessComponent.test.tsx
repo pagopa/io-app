@@ -1,4 +1,5 @@
 import React from "react";
+import { createStore, Store } from "redux";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
@@ -12,6 +13,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { FCI_ROUTES } from "../../navigation/routes";
+import { fciStartingRequest } from "../../store/actions";
 
 type Props = {
   signatureRequest: SignatureRequestDetailView;
@@ -20,17 +22,26 @@ type Props = {
 const now = new Date();
 
 describe("Test SuccessComponent", () => {
+  const globalState = appReducer(undefined, applicationChangeState("active"));
   beforeEach(() => {
     jest.useFakeTimers();
   });
-  it("with a signature request status WAIT_FOR_SIGNATURE should render a FciDocuments Container correctly", () => {
+  it("with a signature request status WAIT_FOR_SIGNATURE should dispatch a fciStartingRequest correctly", () => {
+    const mockStore = configureMockStore<GlobalState>();
+    const store: ReturnType<typeof mockStore> = mockStore(globalState);
+
     const props = {
       signatureRequest: mockSignatureRequestDetailView
     };
-    const component = renderComponent({ ...props });
-    expect(component.getByTestId("FciDocumentsScreenTestID")).toBeTruthy();
+    const component = renderComponent(props, store);
+    expect(component).toBeTruthy();
+    expect(store.getActions()).toEqual([fciStartingRequest()]);
   });
   it("with a signature request EXPIRED should render the right Error component", () => {
+    const store: Store<GlobalState> = createStore(
+      appReducer,
+      globalState as any
+    );
     const expiredSignatureRequest = {
       ...mockSignatureRequestDetailView,
       expires_at: new Date(now.setDate(now.getDate() - 30))
@@ -38,10 +49,14 @@ describe("Test SuccessComponent", () => {
     const props = {
       signatureRequest: expiredSignatureRequest
     };
-    const component = renderComponent({ ...props });
+    const component = renderComponent(props, store);
     expect(component.getByTestId("ExpiredSignatureRequestTestID")).toBeTruthy();
   });
   it("with a signature request status WAIT_FOR_QTSP should render the right Error component", () => {
+    const store: Store<GlobalState> = createStore(
+      appReducer,
+      globalState as any
+    );
     const waitQtspSignatureRequest = {
       ...mockSignatureRequestDetailView,
       status: SignatureRequestDetailViewStatusEnum.WAIT_FOR_QTSP
@@ -49,28 +64,23 @@ describe("Test SuccessComponent", () => {
     const props = {
       signatureRequest: waitQtspSignatureRequest
     };
-    const component = renderComponent({ ...props });
+    const component = renderComponent(props, store);
     expect(
       component.getByTestId("WaitQtspSignatureRequestTestID")
     ).toBeTruthy();
   });
 });
 
-const renderComponent = ({ signatureRequest }: Props) => {
-  const globalState = appReducer(undefined, applicationChangeState("active"));
-  const mockStore = configureMockStore<GlobalState>();
-  const store: ReturnType<typeof mockStore> = mockStore(globalState);
-
+function renderComponent(props: Props, store: Store<GlobalState>) {
   const Component = (
     <Provider store={store}>
-      <SuccessComponent signatureRequest={signatureRequest} />
+      <SuccessComponent signatureRequest={props.signatureRequest} />
     </Provider>
   );
-
   return renderScreenFakeNavRedux<GlobalState>(
     () => Component,
-    FCI_ROUTES.ROUTER,
-    {},
+    FCI_ROUTES.MAIN,
+    { ...props },
     store
   );
-};
+}
