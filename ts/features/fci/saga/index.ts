@@ -23,7 +23,7 @@ import { handleGetSignatureRequestById } from "./networking/handleGetSignatureRe
 export function* watchFciSaga(bearerToken: SessionToken): SagaIterator {
   const fciClient = BackendFciClient(apiUrlPrefix, bearerToken);
 
-  // handle the request of getting SignWithIO products
+  // handle the request of getting FCI signatureRequestDetails
   yield* takeLatest(
     fciSignatureRequestFromId.request,
     function* (action: ActionType<typeof fciSignatureRequestFromId.request>) {
