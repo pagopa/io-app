@@ -1,13 +1,18 @@
-import { Route, useRoute } from "@react-navigation/core";
+import { pot } from "@pagopa/ts-commons";
+import { Route, useNavigation, useRoute } from "@react-navigation/core";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { List, Text, View } from "native-base";
-import React from "react";
+import React, { useEffect } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { widthPercentageToDP } from "react-native-responsive-screen";
+import { useDispatch, useSelector } from "react-redux";
 import {
   InitiativeDTO,
   StatusEnum
 } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
+import EmptyInitiativeSvg from "../../../../../../img/features/idpay/empty_initiative.svg";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
@@ -17,9 +22,14 @@ import ListItemComponent from "../../../../../components/screens/ListItemCompone
 import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import TypedI18n from "../../../../../i18n";
+import {
+  AppParamsList,
+  IOStackNavigationProp
+} from "../../../../../navigation/params/AppParamsList";
 import customVariables from "../../../../../theme/variables";
+import { IDPayConfigurationRoutes } from "../../configuration/navigation/navigator";
 import InitiativeCardComponent from "../components/InitiativeCardComponent";
-import EmptyInitiativeSvg from "../../../../../../img/features/idpay/empty_initiative.svg";
+import { idpayInitiativeDetailsSelector, idpayInitiativeGet } from "../store";
 
 const styles = StyleSheet.create({
   card: {
@@ -86,22 +96,37 @@ type RouteProps = Route<
 export const InitiativeDetailsScreen = () => {
   const route = useRoute<RouteProps>();
   const { initiativeId } = route.params;
-  const bonus: InitiativeDTO = {
+  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(idpayInitiativeGet.request({ initiativeId }));
+  }, [dispatch, initiativeId]);
+
+  const selected = useSelector(idpayInitiativeDetailsSelector);
+
+  const placeholder: InitiativeDTO = {
     nInstr: 0,
     endDate: new Date("2021-12-31"),
     initiativeId,
     iban: "IT60X0542811101000000123456",
-    status: StatusEnum.NOT_REFUNDABLE,
+    status: StatusEnum.UNSUBSCRIBED,
     accrued: 0,
     amount: 500,
     refunded: 0,
     initiativeName: "18App"
   };
+  const bonus: InitiativeDTO = pipe(
+    // placeholder;
+    selected,
+    pot.toOption,
+    O.getOrElse(() => placeholder)
+  );
 
   const initiativeNotConfiguredContent = (
     <View style={[styles.newInitiativeMessageContainer, IOStyles.flex]}>
       <EmptyInitiativeSvg width={130} height={130} />
       <View spacer />
+      {/* eslint-disable-next-line react/no-unescaped-entities */}
       <H3>Configura l'iniziativa!</H3>
       <View spacer />
       <Text style={styles.textCenter}>
@@ -109,8 +134,13 @@ export const InitiativeDetailsScreen = () => {
       </Text>
     </View>
   );
-  const isInitiativeConfigured = bonus.status === StatusEnum.REFUNDABLE;
-
+  const initiativeNeedsSubscription = bonus.status === StatusEnum.UNSUBSCRIBED;
+  const navigateToConfiguration = () => {
+    navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
+      screen: "IDPAY_CONFIGURATION_INTRO",
+      params: { initiativeId }
+    });
+  };
   return (
     <BaseScreenComponent
       dark={true}
@@ -148,18 +178,19 @@ export const InitiativeDetailsScreen = () => {
         >
           <View spacer extralarge />
           <View spacer small />
-          {isInitiativeConfigured
-            ? InitiativeSettings(bonus)
-            : initiativeNotConfiguredContent}
+          {initiativeNeedsSubscription
+            ? initiativeNotConfiguredContent
+            : InitiativeSettings(bonus)}
         </View>
       </ScrollView>
-      {!isInitiativeConfigured && (
+      {initiativeNeedsSubscription && (
         <>
           <FooterWithButtons
             type="SingleButton"
             leftButton={{
               block: true,
               primary: true,
+              onPress: navigateToConfiguration,
               title: TypedI18n.t(
                 "idpay.wallet.bonusDetailsScreen.startConfigurationCTA"
               )
