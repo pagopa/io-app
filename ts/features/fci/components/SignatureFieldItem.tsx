@@ -16,6 +16,13 @@ type Props = {
 };
 
 const styles = StyleSheet.create({
+  container: { paddingTop: 20, paddingBottom: 16 },
+  details: {
+    color: IOColors.blue,
+    textDecorationColor: IOColors.blue,
+    textDecorationLine: "underline",
+    paddingTop: 16
+  },
   borderBottom: {
     borderBottomColor: IOColors.greyLight,
     borderBottomWidth: 1,
@@ -31,26 +38,22 @@ const SignatureFieldItem = (props: Props) => {
   };
 
   return (
-    <View style={{ paddingTop: 20, paddingBottom: 16 }}>
+    <View style={styles.container}>
       <TouchableDefaultOpacity
         style={[IOStyles.row, styles.borderBottom]}
         accessibilityRole={"radio"}
         accessibilityState={{ checked }}
+        testID={"SignatureFieldItemButtonTestID"}
         onPress={() => {
           onChange(!checked);
           setChecked(!checked);
         }}
       >
         <View style={IOStyles.flex}>
-          <H4 testID="RadioButtonTitleTestID">{props.title}</H4>
+          <H4 testID="SignatureFieldItemTitleTestID">{props.title}</H4>
           <Text
-            testID="RadioButtonDetailTestID"
-            style={{
-              color: IOColors.blue,
-              textDecorationColor: IOColors.blue,
-              textDecorationLine: "underline",
-              paddingTop: 16
-            }}
+            testID="SignatureFieldItemDetailTestID"
+            style={styles.details}
             onPress={() => {
               props.onPressDetail();
             }}
@@ -59,7 +62,7 @@ const SignatureFieldItem = (props: Props) => {
           </Text>
         </View>
         <IconFont
-          testID="RadioButtonCheckboxTestID"
+          testID="SignatureFieldItemCheckboxTestID"
           name={checked ? "io-checkbox-on" : "io-checkbox-off"}
           color={checked ? IOColors.blue : IOColors.bluegreyDark}
           size={22}
