@@ -1,6 +1,7 @@
 import { render } from "@testing-library/react-native";
 import React from "react";
 
+import MockDate from "mockdate";
 import { ReactTestInstance } from "react-test-renderer";
 import { CreatedMessageWithContentAndAttachments } from "../../../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { Locales } from "../../../../../../locales/locales";
@@ -135,6 +136,10 @@ async function runDueDateBarComponentLocalizationTest(
   timeOffset: number,
   message: CreatedMessageWithContentAndAttachments
 ) {
+  // Set the current date at a specific moment according to our mock due dates
+  // and snapshots
+  MockDate.set("2022-11-04");
+
   setLocale(locale);
   // In `jestGlobalSetup.js` it has been set `process.env.TZ = "UTC";`
   const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
