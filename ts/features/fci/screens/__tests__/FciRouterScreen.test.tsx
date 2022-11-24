@@ -1,11 +1,15 @@
 import { createStore, Store } from "redux";
+import configureMockStore from "redux-mock-store";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { getTimeoutError } from "../../../../utils/errors";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { FCI_ROUTES } from "../../navigation/routes";
-import { fciSignatureRequestFromId } from "../../store/actions";
+import {
+  fciSignatureRequestFromId,
+  fciStartingRequest
+} from "../../store/actions";
 import FciRouterScreen from "../FciRouterScreen";
 import { mockSignatureRequestDetailView } from "../../types/__mocks__/SignatureRequestDetailView.mock";
 import { StatusEnum as SignatureRequestDetailViewStatusEnum } from "../../../../../definitions/fci/SignatureRequestDetailView";
@@ -87,9 +91,10 @@ describe("Test FciRouterScreen", () => {
       render.component.queryByTestId("WaitQtspSignatureRequestTestID")
     ).not.toBeNull();
   });
-  it("With a right signature request with status WAIT_FOR_SIGNATURE, the success component should be rendered an FciDocumentsScreen", () => {
+  it("With a right signature request with status WAIT_FOR_SIGNATURE, the success component should dispatch fciStartingRequest", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
-    const store = createStore(appReducer, globalState as any);
+    const mockStore = configureMockStore<GlobalState>();
+    const store: ReturnType<typeof mockStore> = mockStore(globalState);
 
     const render = renderComponent(store);
 
@@ -104,10 +109,8 @@ describe("Test FciRouterScreen", () => {
     render.store.dispatch(
       fciSignatureRequestFromId.success(qtspSignatureRequest)
     );
-
-    expect(
-      render.component.queryByTestId("FciDocumentsScreenTestID")
-    ).not.toBeNull();
+    render.store.dispatch(fciStartingRequest());
+    expect(store.getActions()).toContainEqual(fciStartingRequest());
   });
 });
 
