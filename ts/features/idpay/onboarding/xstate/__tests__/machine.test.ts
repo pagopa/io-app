@@ -20,7 +20,8 @@ const T_INITIATIVE_ID = "T_INITIATIVE_ID";
 const T_REQUIRED_PDND_CRITERIA: PDNDCriteriaDTO = {
   code: "T_CODE_PDBD",
   description: "T_DESCRIPTION",
-  authority: "T_AUTHORITY"
+  authority: "T_AUTHORITY",
+  value: "T_VALUE"
 };
 
 const T_REQUIRED_SELF_CRITERIA_BOOL: SelfDeclarationBoolDTO = {

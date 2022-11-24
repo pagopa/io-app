@@ -2,6 +2,44 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.20.0-rc.2](https://github.com/pagopa/io-app/compare/2.20.0-rc.1...2.20.0-rc.2) (2022-11-23)
+
+
+### Features
+
+* **IDPay:** [[IODPAY-58](https://pagopa.atlassian.net/browse/IODPAY-58)] Refactor using Accept-Language schema (onboarding) ([#4196](https://github.com/pagopa/io-app/issues/4196)) ([8bc7889](https://github.com/pagopa/io-app/commit/8bc7889f5f61079086cd66b6f60cf5ce4d8e70a5))
+* **IDPay:** [[IODPAY-59](https://pagopa.atlassian.net/browse/IODPAY-59)] Add initiative configuration intro screen ([#4191](https://github.com/pagopa/io-app/issues/4191)) ([0c4ed71](https://github.com/pagopa/io-app/commit/0c4ed71921cde3f4cef2bc1bc6a9f355239aab6c))
+
+
+### Bug Fixes
+
+* [[IABT-1405](https://pagopa.atlassian.net/browse/IABT-1405)] Solves the crash on iOS devices for QR code scanner from image ([#4193](https://github.com/pagopa/io-app/issues/4193)) ([127edc9](https://github.com/pagopa/io-app/commit/127edc9ef1197132708aa98f33002a4b74307a5d))
+* [[IABT-1409](https://pagopa.atlassian.net/browse/IABT-1409)] Remove bank reference from Bancomat Pay cards ([#4186](https://github.com/pagopa/io-app/issues/4186)) ([6724c7f](https://github.com/pagopa/io-app/commit/6724c7f5b78e3fa6bae4bb23076d6f5c3f40a2a3))
+
+## [2.20.0-rc.1](https://github.com/pagopa/io-app/compare/2.20.0-rc.0...2.20.0-rc.1) (2022-11-22)
+
+
+### Features
+
+* **Firma con IO:** [[SFEQS-1049](https://pagopa.atlassian.net/browse/SFEQS-1049)] Add documents screen with navigation bar ([#4180](https://github.com/pagopa/io-app/issues/4180)) ([6311242](https://github.com/pagopa/io-app/commit/63112420ef12a70524a1bda1eedb3b2c02773466))
+* **IDPay:** [[IODPAY-43](https://pagopa.atlassian.net/browse/IODPAY-43)] Add initiatives cards in wallet screen ([#4181](https://github.com/pagopa/io-app/issues/4181)) ([1529b6b](https://github.com/pagopa/io-app/commit/1529b6b2e236c035e3e9e3d5381e4d0649b6ff06))
+* **IDPay:** [[IODPAY-50](https://pagopa.atlassian.net/browse/IODPAY-50)] Implemented BottomSheetModal in PDNDPrerequisitesPage ([#4174](https://github.com/pagopa/io-app/issues/4174)) ([bf10782](https://github.com/pagopa/io-app/commit/bf107828a7561f5388a40d21f76495d436a507bf))
+* **IDPay:** [[IODPAY-57](https://pagopa.atlassian.net/browse/IODPAY-57)] Create machine steps to start the initiative configuration ([#4187](https://github.com/pagopa/io-app/issues/4187)) ([36dbe01](https://github.com/pagopa/io-app/commit/36dbe01d0a7286077661803dc337ff61a6ef138e))
+
+
+### Bug Fixes
+
+* [[IABT-1319](https://pagopa.atlassian.net/browse/IABT-1319),[IOAPPCIT-8](https://pagopa.atlassian.net/browse/IOAPPCIT-8)] Local login notification scheduling removed ([#4172](https://github.com/pagopa/io-app/issues/4172)) ([1459f3e](https://github.com/pagopa/io-app/commit/1459f3e0a6ed1633c8d8e56df38eab6276da8410))
+* [[IABT-1408](https://pagopa.atlassian.net/browse/IABT-1408),[IOAPPCOM-17](https://pagopa.atlassian.net/browse/IOAPPCOM-17)] Fixed toggles on Profile Preferences for Push Notifications Opt-in ([#4185](https://github.com/pagopa/io-app/issues/4185)) ([3f546e3](https://github.com/pagopa/io-app/commit/3f546e3afd436942f5b7aa27257ad8a4d9bdd342))
+* [[IOAPPCOM-14](https://pagopa.atlassian.net/browse/IOAPPCOM-14)] Fix regression on Push Notification handling on iOS ([#4188](https://github.com/pagopa/io-app/issues/4188)) ([d976b79](https://github.com/pagopa/io-app/commit/d976b790ce22c606eb30190b95f3aa6c5a798df2))
+
+
+### Chores
+
+* [[IOAPPFD0-15](https://pagopa.atlassian.net/browse/IOAPPFD0-15)] Unlock react-devtools-core to enable profiling in rn-debugger ([#4178](https://github.com/pagopa/io-app/issues/4178)) ([bd78209](https://github.com/pagopa/io-app/commit/bd782099baa0704ea8d4ef1745c651803bf40216))
+* **IDPay:** [[IODPAY-52](https://pagopa.atlassian.net/browse/IODPAY-52)] Add IDPay wallet API client ([#4179](https://github.com/pagopa/io-app/issues/4179)) ([f2689db](https://github.com/pagopa/io-app/commit/f2689db83339a47be3e2ce70115e92751fde83d8))
+* [[IAI-235](https://pagopa.atlassian.net/browse/IAI-235)] Add `Pictogram` and `SectionPictogram` components ([#4102](https://github.com/pagopa/io-app/issues/4102)) ([802ae9d](https://github.com/pagopa/io-app/commit/802ae9d7f53043c2f5168c6d2ba3603ff6fc56ee))
+
 ## [2.20.0-rc.0](https://github.com/pagopa/io-app/compare/2.19.0-rc.4...2.20.0-rc.0) (2022-11-17)
 
 

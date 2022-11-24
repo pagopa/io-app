@@ -1,18 +1,10 @@
 import { createClient } from "../../../../../definitions/idpay/onboarding/client";
 import { defaultRetryingFetch } from "../../../../utils/fetch";
 
-const createOnboardingClient = (baseUrl: string, token: string) =>
-  createClient<"bearerAuth">({
+const createOnboardingClient = (baseUrl: string) =>
+  createClient({
     baseUrl,
-    fetchApi: defaultRetryingFetch(),
-    withDefaults: op => params => {
-      const paramsWithDefaults = {
-        ...params,
-        bearerAuth: token
-      } as Parameters<typeof op>[0];
-
-      return op(paramsWithDefaults);
-    }
+    fetchApi: defaultRetryingFetch()
   });
 
 export type OnboardingClient = ReturnType<typeof createOnboardingClient>;

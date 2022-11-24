@@ -183,10 +183,6 @@ global:
     invalidSearchBarText: Inserisci almeno {{minCharacter}} caratteri
     noResultsFound: "Non ci sono risultati per questa ricerca: prova qualcos'altro."
     noResultsTitle: Nessun risultato.
-  localNotifications:
-    spidLogin:
-      title: Accedi per iniziare a usare l'app
-      message: IO funziona solo se hai effettuato l'accesso almeno una volta
   media:
     email: "Email"
     pec: "PEC"
@@ -3295,3 +3291,17 @@ idpay:
   wallet:
     preview:
       validThrough: "Valido fino al {{endDate}}"
+  configuration:
+    headerTitle: "Configura l'iniziativa"
+    intro: 
+      title: "Ci siamo quasi"
+      body: "Per poter usufruire dell’iniziativa, abbiamo bisogno di qualche informazione in più."
+      requiredData: 
+        title: "Dati richiesti:"
+        ibanTitle: "IBAN a te intestato"
+        ibanSubtitle: "Per poter ricevere eventuali rimborsi"
+        instrumentTitle: "Almeno un metodo di pagamento"
+        instrumentSubtitle: "Indica i metodi da abilitare all’iniziativa"
+      buttons:
+        continue: "Inizia la configurazione"
+    

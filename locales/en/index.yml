@@ -183,10 +183,6 @@ global:
     invalidSearchBarText: Enter at least {{minCharacter}} characters
     noResultsFound: "There are no results for this search: try something else."
     noResultsTitle: No results.
-  localNotifications:
-    spidLogin:
-      title: Sign in to start using the app
-      message: IO can only work if you have signed in at least once
   media:
     email: "Email"
     pec: "Certified email"
@@ -3271,3 +3267,17 @@ idpay:
   wallet:
     preview:
       validThrough: "Valid through {{endDate}}"
+  configuration:
+    headerTitle: "Configure the initiative"
+    intro: 
+      title: "We are almost there"
+      body: "In order to take advantage of the initiative, we need some more information."
+      requiredData: 
+        title: "Required informations:"
+        ibanTitle: "IBAN in your name"
+        ibanSubtitle: "In order to receive any refunds"
+        instrumentTitle: "At least one payment method"
+        instrumentSubtitle: "Indicate the methods to be enabled for the initiative"
+      buttons:
+        continue: "Start configuration"
+    

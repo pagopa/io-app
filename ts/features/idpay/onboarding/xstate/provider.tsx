@@ -1,5 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { useInterpret } from "@xstate/react";
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
 import { InterpreterFrom } from "xstate";
@@ -14,6 +15,11 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { sessionInfoSelector } from "../../../../store/reducers/authentication";
+import { preferredLanguageSelector } from "../../../../store/reducers/persistedPreferences";
+import {
+  fromLocaleToPreferredLanguage,
+  getLocalePrimaryWithFallback
+} from "../../../../utils/locale";
 import { createOnboardingClient } from "../api/client";
 import { createActionsImplementation } from "./actions";
 import {
@@ -48,9 +54,19 @@ const IDPayOnboardingMachineProvider = (props: Props) => {
       ? IDPAY_API_TEST_TOKEN
       : sessionInfo.value.bpdToken;
 
-  const onboardingClient = createOnboardingClient(IDPAY_API_UAT_BASEURL, token);
+  const language = pipe(
+    useIOSelector(preferredLanguageSelector),
+    O.getOrElse(getLocalePrimaryWithFallback),
+    fromLocaleToPreferredLanguage
+  );
 
-  const services = createServicesImplementation(onboardingClient);
+  const onboardingClient = createOnboardingClient(IDPAY_API_UAT_BASEURL);
+
+  const services = createServicesImplementation(
+    onboardingClient,
+    token,
+    language
+  );
 
   const actions = createActionsImplementation(navigation);
 
