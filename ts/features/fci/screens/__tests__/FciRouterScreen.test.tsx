@@ -91,7 +91,7 @@ describe("Test FciRouterScreen", () => {
       render.component.queryByTestId("WaitQtspSignatureRequestTestID")
     ).not.toBeNull();
   });
-  it("With a right signature request with status WAIT_FOR_SIGNATURE, the success component should dispatch fciStartingRequest", () => {
+  it("With a right signature request with status WAIT_FOR_SIGNATURE, the fciStartingRequest should be dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const mockStore = configureMockStore<GlobalState>();
     const store: ReturnType<typeof mockStore> = mockStore(globalState);
