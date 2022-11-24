@@ -3284,3 +3284,17 @@ idpay:
   wallet:
     preview:
       validThrough: "Valido fino al {{endDate}}"
+  configuration:
+    headerTitle: "Configura l'iniziativa"
+    intro: 
+      title: "Ci siamo quasi"
+      body: "Per poter usufruire dell’iniziativa, abbiamo bisogno di qualche informazione in più."
+      requiredData: 
+        title: "Dati richiesti:"
+        ibanTitle: "IBAN a te intestato"
+        ibanSubtitle: "Per poter ricevere eventuali rimborsi"
+        instrumentTitle: "Almeno un metodo di pagamento"
+        instrumentSubtitle: "Indica i metodi da abilitare all’iniziativa"
+      buttons:
+        continue: "Inizia la configurazione"
+    

@@ -1,6 +1,6 @@
 import * as p from "@pagopa/ts-commons/lib/pot";
-import { assign } from "lodash";
-import { createMachine } from "xstate";
+
+import { assign, createMachine } from "xstate";
 import {
   InitiativeDTO,
   StatusEnum
@@ -10,7 +10,7 @@ import {
   WAITING_USER_INPUT_TAG
 } from "../../../../../utils/xstate";
 
-type Context = {
+export type Context = {
   initiativeId?: string;
   initiative: p.Pot<InitiativeDTO, Error>;
 };
@@ -35,7 +35,7 @@ type Services = {
 const createIDPayInitiativeConfigurationMachine = () =>
   createMachine(
     {
-      predictableActionArguments: true,
+      context: INITIAL_CONTEXT,
       tsTypes: {} as import("./machine.typegen").Typegen0,
       schema: {
         context: {} as Context,
@@ -43,7 +43,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
         services: {} as Services
       },
       id: "IDPAY_INITIATIVE_CONFIGURATION",
-      context: INITIAL_CONTEXT,
+      predictableActionArguments: true,
       initial: "WAITING_INITIATIVE_SELECTION",
       states: {
         WAITING_INITIATIVE_SELECTION: {
@@ -110,5 +110,11 @@ const createIDPayInitiativeConfigurationMachine = () =>
       }
     }
   );
+
+type IDPayInitiativeConfigurationMachineType = ReturnType<
+  typeof createIDPayInitiativeConfigurationMachine
+>;
+
+export type { IDPayInitiativeConfigurationMachineType };
 
 export { createIDPayInitiativeConfigurationMachine };
