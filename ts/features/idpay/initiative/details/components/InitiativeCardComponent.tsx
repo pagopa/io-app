@@ -1,10 +1,7 @@
 import { Text, View } from "native-base";
 import * as React from "react";
 import { Image, Platform, StyleSheet } from "react-native";
-import {
-  InitiativeDTO,
-  StatusEnum
-} from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
+import { StatusEnum } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
 import { makeFontStyleObject } from "../../../../../components/core/fonts";
 import { H2 } from "../../../../../components/core/typography/H2";
 import { H5 } from "../../../../../components/core/typography/H5";
@@ -15,7 +12,13 @@ import bonusVacanzeWhiteLogo from "../../../../../../img/bonus/bonusVacanze/logo
 import BonusCardSVG from "../../../../../../img/features/idpay/bonus_bg_svg.svg";
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
 
-type Props = InitiativeDTO;
+type Props = {
+  status: StatusEnum;
+  endDate: Date;
+  initiativeName?: string;
+  amount?: number;
+  accrued?: number;
+};
 
 const opaqueBorderColor = IOColors.bluegreyDark;
 
@@ -73,27 +76,9 @@ const styles = StyleSheet.create({
 
 const InitiativeCardComponent = (props: Props) => {
   const renderFullCard = () => {
-    // const maybeStatusDescription = maybeNotNullyString(
-    //   props
-    //     ? TypedI18n.t(`bonus.${props.status.toLowerCase()}`, {
-    //         defaultValue: ""
-    //       })
-    //     : ""
-    // );
     const isInitiativeConfigured = props.status === StatusEnum.REFUNDABLE;
     return (
-      <View
-        style={[styles.row, styles.spaced, styles.flexFull]}
-        accessible={true}
-        accessibilityLabel={TypedI18n.t(
-          "bonus.bonusVacanze.accessibility.card", // CHANGE THIS
-          {
-            code: props.initiativeId,
-            value: props.amount,
-            status: props.status
-          }
-        )}
-      >
+      <View style={[styles.row, styles.spaced, styles.flexFull]}>
         <View
           style={[
             {

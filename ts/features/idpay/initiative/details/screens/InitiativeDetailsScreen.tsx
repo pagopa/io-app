@@ -1,13 +1,10 @@
-import { pot } from "@pagopa/ts-commons";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Route, useNavigation, useRoute } from "@react-navigation/core";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import { List, Text, View } from "native-base";
 import React, { useEffect } from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { widthPercentageToDP } from "react-native-responsive-screen";
-import { useDispatch, useSelector } from "react-redux";
 import {
   InitiativeDTO,
   StatusEnum
@@ -17,6 +14,7 @@ import { H3 } from "../../../../../components/core/typography/H3";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../../../../components/screens/ListItemComponent";
 import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar";
@@ -26,6 +24,7 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../../navigation/params/AppParamsList";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import customVariables from "../../../../../theme/variables";
 import { IDPayConfigurationRoutes } from "../../configuration/navigation/navigator";
 import InitiativeCardComponent from "../components/InitiativeCardComponent";
@@ -97,30 +96,20 @@ export const InitiativeDetailsScreen = () => {
   const route = useRoute<RouteProps>();
   const { initiativeId } = route.params;
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
-  const dispatch = useDispatch();
+  const dispatch = useIODispatch();
   useEffect(() => {
     dispatch(idpayInitiativeGet.request({ initiativeId }));
   }, [dispatch, initiativeId]);
 
-  const selected = useSelector(idpayInitiativeDetailsSelector);
-
-  const placeholder: InitiativeDTO = {
-    nInstr: 0,
-    endDate: new Date("2021-12-31"),
-    initiativeId,
-    iban: "IT60X0542811101000000123456",
-    status: StatusEnum.UNSUBSCRIBED,
-    accrued: 0,
-    amount: 500,
-    refunded: 0,
-    initiativeName: "18App"
-  };
-  const bonus: InitiativeDTO = pipe(
-    // placeholder;
-    selected,
-    pot.toOption,
-    O.getOrElse(() => placeholder)
+  const initiativeDetailsFromSelector = useIOSelector(
+    idpayInitiativeDetailsSelector
   );
+
+  const initiativeData: InitiativeDTO | undefined = pot.getOrElse(
+    initiativeDetailsFromSelector,
+    undefined
+  );
+  const isLoading = pot.isLoading(initiativeDetailsFromSelector);
 
   const initiativeNotConfiguredContent = (
     <View style={[styles.newInitiativeMessageContainer, IOStyles.flex]}>
@@ -134,57 +123,65 @@ export const InitiativeDetailsScreen = () => {
       </Text>
     </View>
   );
-  const initiativeNeedsSubscription = bonus.status === StatusEnum.UNSUBSCRIBED;
+
   const navigateToConfiguration = () => {
     navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
       screen: "IDPAY_CONFIGURATION_INTRO",
       params: { initiativeId }
     });
   };
-  return (
-    <BaseScreenComponent
-      dark={true}
-      titleColor={"white"}
-      goBack={true}
-      headerTitle={bonus.initiativeName}
-      headerBackgroundColor={IOColors.bluegrey}
-    >
-      <FocusAwareStatusBar
-        backgroundColor={IOColors.bluegrey}
-        barStyle={"light-content"}
-      />
-      <ScrollView
-        style={IOStyles.flex}
-        bounces={false}
-        contentContainerStyle={styles.flexGrow}
-      >
-        <LinearGradient colors={[IOColors.bluegrey, IOColors.bluegreyDark]}>
-          <View style={[IOStyles.horizontalContentPadding, { height: 149 }]} />
-        </LinearGradient>
-        <View style={styles.card}>
-          <InitiativeCardComponent {...bonus} />
-        </View>
 
-        <View
-          style={[
-            // styles.flexFull,
-            IOStyles.flex,
-            IOStyles.horizontalContentPadding,
-            styles.flexGrow,
-            {
-              paddingTop: customVariables.contentPadding
-            }
-          ]}
+  const renderContent = () => {
+    if (initiativeData === undefined) {
+      return null;
+    }
+    const initiativeNeedsSubscription =
+      initiativeData.status === StatusEnum.UNSUBSCRIBED;
+    return (
+      <SafeAreaView style={IOStyles.flex}>
+        <FocusAwareStatusBar
+          backgroundColor={IOColors.bluegrey}
+          barStyle={"light-content"}
+        />
+        <ScrollView
+          style={IOStyles.flex}
+          bounces={false}
+          contentContainerStyle={styles.flexGrow}
         >
-          <View spacer extralarge />
-          <View spacer small />
-          {initiativeNeedsSubscription
-            ? initiativeNotConfiguredContent
-            : InitiativeSettings(bonus)}
-        </View>
-      </ScrollView>
-      {initiativeNeedsSubscription && (
-        <>
+          <LinearGradient colors={[IOColors.bluegrey, IOColors.bluegreyDark]}>
+            <View
+              style={[IOStyles.horizontalContentPadding, { height: 149 }]}
+            />
+          </LinearGradient>
+          <View style={styles.card}>
+            <InitiativeCardComponent
+              endDate={initiativeData.endDate}
+              status={initiativeData.status}
+              accrued={initiativeData.accrued}
+              amount={initiativeData.amount}
+              initiativeName={initiativeData.initiativeName}
+            />
+          </View>
+
+          <View
+            style={[
+              // styles.flexFull,
+              IOStyles.flex,
+              IOStyles.horizontalContentPadding,
+              styles.flexGrow,
+              {
+                paddingTop: customVariables.contentPadding
+              }
+            ]}
+          >
+            <View spacer extralarge />
+            <View spacer small />
+            {initiativeNeedsSubscription
+              ? initiativeNotConfiguredContent
+              : InitiativeSettings(initiativeData)}
+          </View>
+        </ScrollView>
+        {initiativeNeedsSubscription && (
           <FooterWithButtons
             type="SingleButton"
             leftButton={{
@@ -196,9 +193,22 @@ export const InitiativeDetailsScreen = () => {
               )
             }}
           />
-          <View spacer />
-        </>
-      )}
+        )}
+      </SafeAreaView>
+    );
+  };
+
+  return (
+    <BaseScreenComponent
+      dark={true}
+      titleColor={"white"}
+      goBack={true}
+      headerTitle={initiativeData?.initiativeName ?? ""}
+      headerBackgroundColor={IOColors.bluegrey}
+    >
+      <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={100}>
+        {renderContent()}
+      </LoadingSpinnerOverlay>
     </BaseScreenComponent>
   );
 };

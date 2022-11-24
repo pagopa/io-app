@@ -2,7 +2,7 @@ import * as E from "fp-ts/lib/Either";
 import { call, put } from "typed-redux-saga/macro";
 import { PreferredLanguageEnum } from "../../../../../../definitions/backend/PreferredLanguage";
 import { SagaCallReturnType } from "../../../../../types/utils";
-import { getGenericError } from "../../../../../utils/errors";
+import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { IDPayWalletClient } from "../../../wallet/api/client";
 import { idpayInitiativeGet, IdPayInitiativeGetPayloadType } from "../store";
@@ -58,6 +58,6 @@ export function* handleGetInitiativeDetails(
       );
     }
   } catch (e) {
-    yield* put(idpayInitiativeGet.failure({ ...getGenericError(e) }));
+    yield * put(idpayInitiativeGet.failure({ ...getNetworkError(e) }));
   }
 }
