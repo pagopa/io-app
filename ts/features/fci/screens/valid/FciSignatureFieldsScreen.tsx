@@ -75,8 +75,8 @@ const FciSignatureFieldsScreen = (
       ClausesTypeEnum.REQUIRED
     );
 
-    // get required signatureFields for the current document
-    // that user has already checked to sign the document
+    // get the required signature fields for the current document,
+    // which the user has previously checked to sign it
     const res = pipe(
       requiredFields,
       RA.map(signatureField =>
@@ -117,7 +117,7 @@ const FciSignatureFieldsScreen = (
     pipe(
       docSignatures,
       O.chain(document => O.fromNullable(document)),
-      O.map(doc => fn(doc))
+      O.map(fn)
     );
 
   const onChange = (value: boolean, item: SignatureField) =>
@@ -159,14 +159,14 @@ const FciSignatureFieldsScreen = (
       renderItem={({ item }) => (
         <SignatureFieldItem
           title={item.clause.title}
-          value={O.isSome(
+          value={
             pipe(
               documentsSignaturesSelector,
               RA.findFirst(doc => doc.document_id === docId),
               O.chain(document => O.fromNullable(document)),
               O.map(doc => doc.signature_fields),
-              O.map(fields => A.isNonEmpty(fields.filter(f => f === item))),
-              O.chain(isNonEmpty => (isNonEmpty ? O.some(true) : O.none))
+              O.map(RA.filter(f => f === item)),
+              O.fold(constFalse, A.isNonEmpty),
             )
           )}
           onChange={v => onChange(v, item)}

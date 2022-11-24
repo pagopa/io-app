@@ -54,9 +54,7 @@ const SignatureFieldItem = (props: Props) => {
           <Text
             testID="SignatureFieldItemDetailTestID"
             style={styles.details}
-            onPress={() => {
-              props.onPressDetail();
-            }}
+            onPress={props.onPressDetail}
           >
             {I18n.t("features.fci.signatureFields.showOnDocument")}
           </Text>

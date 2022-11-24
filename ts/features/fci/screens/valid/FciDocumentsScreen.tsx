@@ -101,12 +101,11 @@ const FciDocumentsScreen = () => {
         res => res.base64()
       );
 
-      const pdfDoc = PDFDocument.load(
+      const pdfDoc = await PDFDocument.load(
         `data:application/pdf;base64,${existingPdfBytes}`
       );
 
       // get the signature field by unique name
-      await pdfDoc.then(res => {
         pipe(
           res.findPageForAnnotationRef(
             res.getForm().getSignature(uniqueName).ref
@@ -157,11 +156,10 @@ const FciDocumentsScreen = () => {
         res => res.base64()
       );
 
-      const pdfDoc = PDFDocument.load(
+      const pdfDoc = await PDFDocument.load(
         `data:application/pdf;base64,${existingPdfBytes}`
       );
 
-      await pdfDoc.then(res => {
         const page = attrs.page;
         setSignaturePage(page);
         // The signature box is drawn using the coordinates of the signature field.

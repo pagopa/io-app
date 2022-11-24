@@ -64,13 +64,13 @@ export const fciUpdateDocumentSignaturesRequest = createStandardAction(
 /**
  * clear the FCI store
  */
-export const fciAbortingRequest =
+export const fciAbortRequest =
   createStandardAction("FCI_ABORT_REQUEST")<void>();
 
 /**
  * start the FCI action
  */
-export const fciStartingRequest =
+export const fciStartRequest =
   createStandardAction("FCI_START_REQUEST")<void>();
 
 export type FciActions =

@@ -28,7 +28,7 @@ export const useFciAbortSignatureFlow = () => {
             color: ${IOColors.black};
         }
     `;
-  const dispacth = useIODispatch();
+  const dispatch = useIODispatch();
   const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
     <View style={styles.verticalPad}>
       <Markdown cssStyle={CSS_STYLE} avoidTextSelection>
@@ -47,15 +47,13 @@ export const useFciAbortSignatureFlow = () => {
         testID: "FciStopAbortingSignatureTestID",
         onPressWithGestureHandler: true,
         bordered: true,
-        onPress: () => {
-          dismiss();
-        },
+        onPress: dismiss,
         title: I18n.t("features.fci.abort.cancel")
       }}
       rightButton={{
         ...errorButtonProps(() => {
           dismiss();
-          dispacth(fciAbortingRequest());
+          dispatch(fciAbortingRequest());
         }, I18n.t("features.fci.abort.confirm")),
         onPressWithGestureHandler: true
       }}
