@@ -16,9 +16,7 @@ import Markdown from "../../../../components/ui/Markdown";
 import TypedI18n from "../../../../i18n";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { useOnboardingMachineService } from "../xstate/provider";
-import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
-import { H4 } from "../../../../components/core/typography/H4";
-import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
+import ButtonExtendedOutline from "../../../../components/ui/ButtonExtendedOutline";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.main.contextualHelpTitle",
@@ -112,18 +110,14 @@ export const PDNDPrerequisites = () => {
           >
             {pdndCriteria.map((requisite, index) => (
               <React.Fragment key={index}>
-                <ButtonDefaultOpacity
-                  bordered={true}
+                <ButtonExtendedOutline
+                  label={requisite.code}
+                  description={requisite.description}
                   onPress={() => {
                     setAuthority(requisite.authority);
                     present();
                   }}
-                >
-                  <H4>{requisite.code}</H4>
-                  <LabelSmall weight="Regular" color="bluegreyDark">
-                    {requisite.description}
-                  </LabelSmall>
-                </ButtonDefaultOpacity>
+                />
               </React.Fragment>
             ))}
           </View>
