@@ -9,7 +9,7 @@ import { IOColors } from "../../../components/core/variables/IOColors";
 import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
 import { errorButtonProps } from "../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import { fciAbortingRequest } from "../store/actions";
+import { fciAbortRequest } from "../store/actions";
 import { useIODispatch } from "../../../store/hooks";
 
 const styles = StyleSheet.create({
@@ -18,16 +18,17 @@ const styles = StyleSheet.create({
   }
 });
 
-/**
- * A hook that returns a function to present the abort signature flow bottom sheet
- */
-export const useFciAbortSignatureFlow = () => {
-  const CSS_STYLE = `
+const CSS_STYLE = `
         body {
             font-size: 18;
             color: ${IOColors.black};
         }
     `;
+
+/**
+ * A hook that returns a function to present the abort signature flow bottom sheet
+ */
+export const useFciAbortSignatureFlow = () => {
   const dispatch = useIODispatch();
   const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
     <View style={styles.verticalPad}>
@@ -47,13 +48,13 @@ export const useFciAbortSignatureFlow = () => {
         testID: "FciStopAbortingSignatureTestID",
         onPressWithGestureHandler: true,
         bordered: true,
-        onPress: dismiss,
+        onPress: () => dismiss(),
         title: I18n.t("features.fci.abort.cancel")
       }}
       rightButton={{
         ...errorButtonProps(() => {
           dismiss();
-          dispatch(fciAbortingRequest());
+          dispatch(fciAbortRequest());
         }, I18n.t("features.fci.abort.confirm")),
         onPressWithGestureHandler: true
       }}

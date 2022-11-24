@@ -3,7 +3,7 @@ import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { NetworkError } from "../../../../utils/errors";
-import { fciSigningRequest, fciAbortingRequest } from "../actions";
+import { fciSigningRequest, fciAbortRequest } from "../actions";
 
 export type FciSignatureState = pot.Pot<void, NetworkError>;
 
@@ -20,7 +20,7 @@ const reducer = (
       return pot.none;
     case getType(fciSigningRequest.failure):
       return pot.toError(state, action.payload);
-    case getType(fciAbortingRequest):
+    case getType(fciAbortRequest):
       return emptyState;
   }
 

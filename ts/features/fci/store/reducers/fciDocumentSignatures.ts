@@ -1,11 +1,12 @@
-// bonus reducer
+import { pipe } from "fp-ts/lib/function";
+import { updateAt } from "fp-ts/lib/ReadonlyArray";
+import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 import { DocumentSignature } from "../../../../../definitions/fci/DocumentSignature";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import {
-  fciAbortingRequest,
-  fciAddDocumentSignaturesRequest,
+  fciAbortRequest,
   fciUpdateDocumentSignaturesRequest
 } from "../actions";
 
@@ -22,19 +23,26 @@ const reducer = (
   action: Action
 ): FciDocumentSignaturesState => {
   switch (action.type) {
-    case getType(fciAddDocumentSignaturesRequest):
-      return {
-        ...state,
-        documents: [...state.documents, action.payload]
-      };
     case getType(fciUpdateDocumentSignaturesRequest):
       return {
         ...state,
-        documents: state.documents.map(d =>
-          d.document_id === action.payload.document_id ? action.payload : d
+        documents: pipe(
+          updateAt(
+            state.documents.findIndex(
+              d => d.document_id === action.payload.document_id
+            ),
+            action.payload
+          )(state.documents),
+          O.getOrElse(
+            () =>
+              [
+                ...state.documents,
+                action.payload
+              ] as ReadonlyArray<DocumentSignature>
+          )
         )
       };
-    case getType(fciAbortingRequest):
+    case getType(fciAbortRequest):
       return emptyState;
   }
   return state;

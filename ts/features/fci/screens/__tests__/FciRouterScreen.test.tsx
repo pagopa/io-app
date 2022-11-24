@@ -8,7 +8,7 @@ import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWr
 import { FCI_ROUTES } from "../../navigation/routes";
 import {
   fciSignatureRequestFromId,
-  fciStartingRequest
+  fciStartRequest
 } from "../../store/actions";
 import FciRouterScreen from "../FciRouterScreen";
 import { mockSignatureRequestDetailView } from "../../types/__mocks__/SignatureRequestDetailView.mock";
@@ -109,8 +109,8 @@ describe("Test FciRouterScreen", () => {
     render.store.dispatch(
       fciSignatureRequestFromId.success(qtspSignatureRequest)
     );
-    render.store.dispatch(fciStartingRequest());
-    expect(store.getActions()).toContainEqual(fciStartingRequest());
+    render.store.dispatch(fciStartRequest());
+    expect(store.getActions()).toContainEqual(fciStartRequest());
   });
 });
 

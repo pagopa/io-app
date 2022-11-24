@@ -4,7 +4,7 @@ import imageExpired from "../../../../img/wallet/errors/payment-expired-icon.png
 import hourglass from "../../../../img/pictograms/hourglass.png";
 import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
 import { useIODispatch } from "../../../store/hooks";
-import { fciStartingRequest } from "../store/actions";
+import { fciStartRequest } from "../store/actions";
 import ErrorComponent from "./ErrorComponent";
 import GenericErrorComponent from "./GenericErrorComponent";
 
@@ -36,7 +36,7 @@ const SuccessComponent = (props: {
   // the signature request could have various status
   switch (status) {
     case "WAIT_FOR_SIGNATURE":
-      dispatch(fciStartingRequest());
+      dispatch(fciStartRequest());
       return null;
     case "WAIT_FOR_QTSP":
       return (

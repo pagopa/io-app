@@ -26,7 +26,7 @@ import { SignatureField } from "../../../../../definitions/fci/SignatureField";
 import { FciParamsList } from "../../navigation/params";
 import { ExistingSignatureFieldAttrs } from "../../../../../definitions/fci/ExistingSignatureFieldAttrs";
 import { DocumentSignature } from "../../../../../definitions/fci/DocumentSignature";
-import { fciAddDocumentSignaturesRequest } from "../../store/actions";
+import { fciUpdateDocumentSignaturesRequest } from "../../store/actions";
 import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentSignatures";
 import { useIODispatch } from "../../../../store/hooks";
 import { SignatureFieldToBeCreatedAttrs } from "../../../../../definitions/fci/SignatureFieldToBeCreatedAttrs";
@@ -81,7 +81,7 @@ const FciDocumentsScreen = () => {
             signature: "",
             signature_fields: []
           } as DocumentSignature;
-          dispatch(fciAddDocumentSignaturesRequest(docSignature));
+          dispatch(fciUpdateDocumentSignaturesRequest(docSignature));
         })
       );
     }
@@ -101,11 +101,10 @@ const FciDocumentsScreen = () => {
         res => res.base64()
       );
 
-      const pdfDoc = await PDFDocument.load(
+      await PDFDocument.load(
         `data:application/pdf;base64,${existingPdfBytes}`
-      );
-
-      // get the signature field by unique name
+      ).then(res => {
+        // get the signature field by unique name
         pipe(
           res.findPageForAnnotationRef(
             res.getForm().getSignature(uniqueName).ref
@@ -156,10 +155,9 @@ const FciDocumentsScreen = () => {
         res => res.base64()
       );
 
-      const pdfDoc = await PDFDocument.load(
+      await PDFDocument.load(
         `data:application/pdf;base64,${existingPdfBytes}`
-      );
-
+      ).then(res => {
         const page = attrs.page;
         setSignaturePage(page);
         // The signature box is drawn using the coordinates of the signature field.

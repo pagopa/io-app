@@ -3,11 +3,9 @@ import { View } from "native-base";
 import { SafeAreaView, SectionList } from "react-native";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
-import * as A from "fp-ts/lib/Array";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as O from "fp-ts/lib/Option";
-import * as B from "fp-ts/lib/boolean";
-import { increment, pipe } from "fp-ts/lib/function";
+import { constFalse, increment, pipe } from "fp-ts/lib/function";
 import { H1 } from "../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
@@ -121,32 +119,14 @@ const FciSignatureFieldsScreen = (
     );
 
   const onChange = (value: boolean, item: SignatureField) =>
-    pipe(
-      value,
-      O.of,
-      O.map(
-        B.match(
-          () =>
-            updateDocumentSignatures(doc =>
-              dispatch(
-                fciUpdateDocumentSignaturesRequest({
-                  ...doc,
-                  signature_fields: [
-                    ...doc.signature_fields.filter(f => f !== item)
-                  ]
-                })
-              )
-            ),
-          () =>
-            updateDocumentSignatures(doc =>
-              dispatch(
-                fciUpdateDocumentSignaturesRequest({
-                  ...doc,
-                  signature_fields: [...doc.signature_fields, item]
-                })
-              )
-            )
-        )
+    updateDocumentSignatures(doc =>
+      dispatch(
+        fciUpdateDocumentSignaturesRequest({
+          ...doc,
+          signature_fields: !value
+            ? [...doc.signature_fields.filter(f => f !== item)]
+            : [...doc.signature_fields, item]
+        })
       )
     );
 
@@ -159,15 +139,13 @@ const FciSignatureFieldsScreen = (
       renderItem={({ item }) => (
         <SignatureFieldItem
           title={item.clause.title}
-          value={
-            pipe(
-              documentsSignaturesSelector,
-              RA.findFirst(doc => doc.document_id === docId),
-              O.chain(document => O.fromNullable(document)),
-              O.map(doc => doc.signature_fields),
-              O.map(RA.filter(f => f === item)),
-              O.fold(constFalse, A.isNonEmpty),
-            )
+          value={pipe(
+            documentsSignaturesSelector,
+            RA.findFirst(doc => doc.document_id === docId),
+            O.chain(document => O.fromNullable(document)),
+            O.map(doc => doc.signature_fields),
+            O.map(RA.filter(f => f === item)),
+            O.fold(constFalse, RA.isNonEmpty)
           )}
           onChange={v => onChange(v, item)}
           onPressDetail={() => onPressDetail(item)}
