@@ -1,20 +1,20 @@
 /**
  * Defines types for the available actions and store related stuff.
  */
- import {
-   Dispatch as DispatchAPI,
-   MiddlewareAPI as ReduxMiddlewareAPI,
-   Store as ReduxStore,
-   StoreEnhancer as ReduxStoreEnhancer
- } from "redux";
- import { VersionInfoActions } from "../../common/versionInfo/store/actions/versionInfo";
+import {
+  Dispatch as DispatchAPI,
+  MiddlewareAPI as ReduxMiddlewareAPI,
+  Store as ReduxStore,
+  StoreEnhancer as ReduxStoreEnhancer
+} from "redux";
+import { VersionInfoActions } from "../../common/versionInfo/store/actions/versionInfo";
 
- import { BonusActions } from "../../features/bonus/bonusVacanze/store/actions/bonusVacanze";
- import { BpdActions } from "../../features/bonus/bpd/store/actions";
- import { CgnActions } from "../../features/bonus/cgn/store/actions";
- import { SvActions } from "../../features/bonus/siciliaVola/store/actions";
- import { EuCovidCertActions } from "../../features/euCovidCert/store/actions";
- import { MvlActions } from "../../features/mvl/store/actions";
+import { BonusActions } from "../../features/bonus/bonusVacanze/store/actions/bonusVacanze";
+import { BpdActions } from "../../features/bonus/bpd/store/actions";
+import { CgnActions } from "../../features/bonus/cgn/store/actions";
+import { SvActions } from "../../features/bonus/siciliaVola/store/actions";
+import { EuCovidCertActions } from "../../features/euCovidCert/store/actions";
+import { MvlActions } from "../../features/mvl/store/actions";
 import { AbiActions } from "../../features/wallet/onboarding/bancomat/store/actions";
 import { BPayActions } from "../../features/wallet/onboarding/bancomatPay/store/actions";
 import { CoBadgeActions } from "../../features/wallet/onboarding/cobadge/store/actions";
