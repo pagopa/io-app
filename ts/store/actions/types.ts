@@ -1,24 +1,20 @@
 /**
  * Defines types for the available actions and store related stuff.
  */
-import {
-  Dispatch as DispatchAPI,
-  MiddlewareAPI as ReduxMiddlewareAPI,
-  Store as ReduxStore,
-  StoreEnhancer as ReduxStoreEnhancer
-} from "redux";
-import { VersionInfoActions } from "../../common/versionInfo/store/actions/versionInfo";
+ import {
+   Dispatch as DispatchAPI,
+   MiddlewareAPI as ReduxMiddlewareAPI,
+   Store as ReduxStore,
+   StoreEnhancer as ReduxStoreEnhancer
+ } from "redux";
+ import { VersionInfoActions } from "../../common/versionInfo/store/actions/versionInfo";
 
-import { BonusActions } from "../../features/bonus/bonusVacanze/store/actions/bonusVacanze";
-import { BpdActions } from "../../features/bonus/bpd/store/actions";
-import { CdcActions } from "../../features/bonus/cdc/store/actions";
-import { CgnActions } from "../../features/bonus/cgn/store/actions";
-import { SvActions } from "../../features/bonus/siciliaVola/store/actions";
-import { EuCovidCertActions } from "../../features/euCovidCert/store/actions";
-import { FciActions } from "../../features/fci/store/actions";
-import { IDPayActions } from "../../features/idpay/common/actions";
-import { MvlActions } from "../../features/mvl/store/actions";
-import { PnActions } from "../../features/pn/store/actions";
+ import { BonusActions } from "../../features/bonus/bonusVacanze/store/actions/bonusVacanze";
+ import { BpdActions } from "../../features/bonus/bpd/store/actions";
+ import { CgnActions } from "../../features/bonus/cgn/store/actions";
+ import { SvActions } from "../../features/bonus/siciliaVola/store/actions";
+ import { EuCovidCertActions } from "../../features/euCovidCert/store/actions";
+ import { MvlActions } from "../../features/mvl/store/actions";
 import { AbiActions } from "../../features/wallet/onboarding/bancomat/store/actions";
 import { BPayActions } from "../../features/wallet/onboarding/bancomatPay/store/actions";
 import { CoBadgeActions } from "../../features/wallet/onboarding/cobadge/store/actions";
@@ -27,6 +23,10 @@ import { PrivativeActions } from "../../features/wallet/onboarding/privative/sto
 import { SatispayActions } from "../../features/wallet/onboarding/satispay/store/actions";
 import { ZendeskSupportActions } from "../../features/zendesk/store/actions";
 import { GlobalState } from "../reducers/types";
+import { CdcActions } from "../../features/bonus/cdc/store/actions";
+import { PnActions } from "../../features/pn/store/actions";
+import { FciActions } from "../../features/fci/store/actions";
+import { IDPayActions } from "../../features/idpay/common/actions";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { AuthenticationActions } from "./authentication";

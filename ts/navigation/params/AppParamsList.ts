@@ -4,19 +4,23 @@ import {
   RouteProp
 } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { CdcBonusRequestParamsList } from "../../features/bonus/cdc/navigation/params";
-import { CDC_ROUTES } from "../../features/bonus/cdc/navigation/routes";
 import {
   CgnActivationParamsList,
   CgnDetailsParamsList,
   CgnEYCAActivationParamsList
 } from "../../features/bonus/cgn/navigation/params";
 import CGN_ROUTES from "../../features/bonus/cgn/navigation/routes";
-import { FciParamsList } from "../../features/fci/navigation/params";
-import { FCI_ROUTES } from "../../features/fci/navigation/routes";
-import { FimsParamsList } from "../../features/fims/navigation/params";
+import UADONATION_ROUTES from "../../features/uaDonations/navigation/routes";
+import { ZendeskParamsList } from "../../features/zendesk/navigation/params";
+import ZENDESK_ROUTES from "../../features/zendesk/navigation/routes";
+import ROUTES from "../routes";
+import { CDC_ROUTES } from "../../features/bonus/cdc/navigation/routes";
+import { CdcBonusRequestParamsList } from "../../features/bonus/cdc/navigation/params";
 import FIMS_ROUTES from "../../features/fims/navigation/routes";
-import { InitiativeDetailsScreenParams } from "../../features/idpay/initiative/details/screens/InitiativeDetailsScreen";
+import { FimsParamsList } from "../../features/fims/navigation/params";
+import { UAWebviewScreenNavigationParams } from "../../features/uaDonations/screens/UAWebViewScreen";
+import { FCI_ROUTES } from "../../features/fci/navigation/routes";
+import { FciParamsList } from "../../features/fci/navigation/params";
 import {
   IDPayOnboardingParamsList,
   IDPayOnboardingRoutes
@@ -25,11 +29,7 @@ import {
   IDPayConfigurationParamsList,
   IDPayConfigurationRoutes
 } from "../../features/idpay/initiative/configuration/navigation/navigator";
-import UADONATION_ROUTES from "../../features/uaDonations/navigation/routes";
-import { UAWebviewScreenNavigationParams } from "../../features/uaDonations/screens/UAWebViewScreen";
-import { ZendeskParamsList } from "../../features/zendesk/navigation/params";
-import ZENDESK_ROUTES from "../../features/zendesk/navigation/routes";
-import ROUTES from "../routes";
+import { InitiativeDetailsScreenParams } from "../../features/idpay/initiative/details/screens/InitiativeDetailsScreen";
 import { AuthenticationParamsList } from "./AuthenticationParamsList";
 import { MainTabParamsList } from "./MainTabParamsList";
 import { MessagesParamsList } from "./MessagesParamsList";
