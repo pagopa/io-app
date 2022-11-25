@@ -82,6 +82,7 @@ import { clearAllMvlAttachments } from "../features/mvl/saga/mvlAttachments";
 import { watchMessageAttachmentsSaga } from "../features/messages/saga/attachments";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
 import { watchIDPayWalletSaga } from "../features/idpay/wallet/saga";
+import { idpayInitiativeDetailsSaga } from "../features/idpay/initiative/details/saga";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -432,6 +433,7 @@ export function* initializeApplicationSaga(): Generator<
   if (idPayEnabled) {
     // Start watching for IDPay wallet actions
     yield* fork(watchIDPayWalletSaga, sessionToken);
+    yield* fork(idpayInitiativeDetailsSaga, sessionToken);
   }
 
   if (fciEnabled) {
