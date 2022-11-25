@@ -1,12 +1,12 @@
 import * as E from "fp-ts/lib/Either";
 import { expectSaga } from "redux-saga-test-plan";
 import { PreferredLanguageEnum } from "../../../../../../../definitions/backend/PreferredLanguage";
+import { ErrorDTO } from "../../../../../../../definitions/idpay/wallet/ErrorDTO";
 import {
   InitiativeDTO,
   StatusEnum
 } from "../../../../../../../definitions/idpay/wallet/InitiativeDTO";
 import { appReducer } from "../../../../../../store/reducers";
-import { NetworkError } from "../../../../../../utils/errors";
 import { idpayInitiativeGet } from "../../store";
 import { handleGetInitiativeDetails } from "../handleGetInitiativeDetails";
 
@@ -17,9 +17,9 @@ const mockResponseSuccess: InitiativeDTO = {
   nInstr: 123
 };
 
-const mockFailure: NetworkError = {
-  kind: "generic",
-  value: new Error("response status code 401")
+const mockFailure: ErrorDTO = {
+  code: 0,
+  message: "message"
 };
 const mockToken = "mock";
 const mockLanguage = PreferredLanguageEnum.it_IT;
@@ -44,7 +44,9 @@ describe("Test IDPay initiative details saga", () => {
   });
   it("should call the failure handler on failure", async () => {
     const getWallet = jest.fn();
-    getWallet.mockImplementation(() => E.left(mockFailure));
+    getWallet.mockImplementation(() =>
+      E.right({ status: 401, value: mockFailure })
+    );
 
     await expectSaga(
       handleGetInitiativeDetails,
@@ -54,7 +56,12 @@ describe("Test IDPay initiative details saga", () => {
       { initiativeId: "123" }
     )
       .withReducer(appReducer)
-      .put(idpayInitiativeGet.failure(mockFailure))
+      .put(
+        idpayInitiativeGet.failure({
+          kind: "generic",
+          value: new Error("response status code 401")
+        })
+      )
       .run();
   });
   it("should be callable more than once", async () => {
