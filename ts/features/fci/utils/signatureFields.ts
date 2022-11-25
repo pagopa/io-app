@@ -31,12 +31,12 @@ export type LIST_DATA_TYPE = {
  */
 export const clausesByType = (
   signatureFields: ReadonlyArray<SignatureField>,
-  clauseType: string
+  clauseType: ReadonlyArray<string>
 ) =>
   pipe(
     signatureFields,
     RA.filterMap(signatureField =>
-      clauseType === signatureField.clause.type
+      clauseType.includes(signatureField.clause.type)
         ? O.fromNullable(signatureField)
         : O.none
     )
@@ -68,6 +68,6 @@ export const getSectionListData = (
     getAllTypes(signatureFields),
     RA.map(type => ({
       title: type,
-      data: clausesByType(signatureFields, type)
+      data: clausesByType(signatureFields, [type])
     }))
   );
