@@ -2,7 +2,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { constNull } from "fp-ts/lib/function";
 import { List } from "native-base";
 import * as React from "react";
-import { SafeAreaView, StyleSheet, View, Text } from "react-native";
+import { SafeAreaView, StyleSheet, View } from "react-native";
 import { BaseTypography } from "../../../../components/core/typography/BaseTypography";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
@@ -82,7 +82,7 @@ const FciDataSharingScreen = (): React.ReactElement => {
 
   return (
     <BaseScreenComponent
-      headerTitle="Condividi questi dati"
+      headerTitle={I18n.t("features.fci.title")}
       contextualHelp={emptyContextualHelp}
       goBack
     >

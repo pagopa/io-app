@@ -1,6 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { SagaIterator } from "redux-saga";
-import { ActionType, isActionOf } from "typesafe-actions";
+import { ActionType } from "typesafe-actions";
 import {
   call,
   fork,
