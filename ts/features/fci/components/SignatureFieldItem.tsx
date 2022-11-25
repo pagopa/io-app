@@ -49,18 +49,17 @@ const SignatureFieldItem = (props: Props) => {
           setChecked(!checked);
         }}
       >
-        <View style={IOStyles.flex}>
+        <View style={IOStyles.column}>
           <H4 testID="SignatureFieldItemTitleTestID">{props.title}</H4>
           <Text
             testID="SignatureFieldItemDetailTestID"
             style={styles.details}
-            onPress={() => {
-              props.onPressDetail();
-            }}
+            onPress={props.onPressDetail}
           >
             {I18n.t("features.fci.signatureFields.showOnDocument")}
           </Text>
         </View>
+        <View style={IOStyles.flex} />
         <IconFont
           testID="SignatureFieldItemCheckboxTestID"
           name={checked ? "io-checkbox-on" : "io-checkbox-off"}

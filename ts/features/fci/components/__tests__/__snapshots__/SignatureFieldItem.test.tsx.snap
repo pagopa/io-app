@@ -45,7 +45,7 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
         Array [
           Object {},
           Object {
-            "flex": 1,
+            "flexDirection": "column",
           },
         ]
       }
@@ -78,7 +78,7 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
         Clause title 1
       </Text>
       <Text
-        onPress={[Function]}
+        onPress={[MockFunction]}
         style={
           Object {
             "color": "#0073E6",
@@ -92,6 +92,16 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
         See on document
       </Text>
     </View>
+    <View
+      style={
+        Array [
+          Object {},
+          Object {
+            "flex": 1,
+          },
+        ]
+      }
+    />
     <Text
       accessibilityElementsHidden={true}
       accessibilityLabel=""

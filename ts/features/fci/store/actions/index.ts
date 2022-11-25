@@ -48,13 +48,6 @@ export const fciSigningRequest = createAsyncAction(
 )<CreateSignatureBody, void, NetworkError>();
 
 /**
- * add documentSignatures
- */
-export const fciAddDocumentSignaturesRequest = createStandardAction(
-  "FCI_ADD_DOCUMENT_SIGNATURE"
-)<DocumentSignature>();
-
-/**
  * update documentSignatures
  */
 export const fciUpdateDocumentSignaturesRequest = createStandardAction(
@@ -64,13 +57,13 @@ export const fciUpdateDocumentSignaturesRequest = createStandardAction(
 /**
  * clear the FCI store
  */
-export const fciAbortingRequest =
+export const fciAbortRequest =
   createStandardAction("FCI_ABORT_REQUEST")<void>();
 
 /**
  * start the FCI action
  */
-export const fciStartingRequest =
+export const fciStartRequest =
   createStandardAction("FCI_START_REQUEST")<void>();
 
 export type FciActions =
@@ -78,7 +71,6 @@ export type FciActions =
   | ActionType<typeof fciLoadQtspClauses>
   | ActionType<typeof fciLoadQtspFilledDocument>
   | ActionType<typeof fciSigningRequest>
-  | ActionType<typeof fciAbortingRequest>
-  | ActionType<typeof fciStartingRequest>
-  | ActionType<typeof fciAddDocumentSignaturesRequest>
+  | ActionType<typeof fciAbortRequest>
+  | ActionType<typeof fciStartRequest>
   | ActionType<typeof fciUpdateDocumentSignaturesRequest>;

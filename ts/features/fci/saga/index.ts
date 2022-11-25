@@ -11,8 +11,8 @@ import { SessionToken } from "../../../types/SessionToken";
 import { BackendFciClient } from "../api/backendFci";
 import {
   fciSignatureRequestFromId,
-  fciAbortingRequest,
-  fciStartingRequest
+  fciAbortRequest,
+  fciStartRequest
 } from "../store/actions";
 import { handleGetSignatureRequestById } from "./networking/handleGetSignatureRequestById";
 
@@ -45,7 +45,7 @@ export function* watchFciSaga(bearerToken: SessionToken): SagaIterator {
  */
 function* watchFciAbortingSaga(): Iterator<ReduxSagaEffect> {
   while (true) {
-    yield* take(fciAbortingRequest);
+    yield* take(fciAbortRequest);
     NavigationService.dispatchNavigationAction(
       CommonActions.navigate(ROUTES.MAIN)
     );
@@ -57,7 +57,7 @@ function* watchFciAbortingSaga(): Iterator<ReduxSagaEffect> {
  */
 function* watchFciStartingSaga(): Iterator<ReduxSagaEffect> {
   while (true) {
-    yield* take(fciStartingRequest);
+    yield* take(fciStartRequest);
     NavigationService.dispatchNavigationAction(
       CommonActions.navigate(FCI_ROUTES.MAIN, {
         screen: FCI_ROUTES.DOCUMENTS

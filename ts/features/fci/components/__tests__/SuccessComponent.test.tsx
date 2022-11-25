@@ -13,7 +13,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { FCI_ROUTES } from "../../navigation/routes";
-import { fciStartingRequest } from "../../store/actions";
+import { fciStartRequest } from "../../store/actions";
 
 type Props = {
   signatureRequest: SignatureRequestDetailView;
@@ -35,7 +35,7 @@ describe("Test SuccessComponent", () => {
     };
     const component = renderComponent(props, store);
     expect(component).toBeTruthy();
-    expect(store.getActions()).toEqual([fciStartingRequest()]);
+    expect(store.getActions()).toEqual([fciStartRequest()]);
   });
   it("with a signature request EXPIRED should render the right Error component", () => {
     const store: Store<GlobalState> = createStore(
