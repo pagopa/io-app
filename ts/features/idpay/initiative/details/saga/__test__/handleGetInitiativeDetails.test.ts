@@ -64,14 +64,9 @@ describe("Test IDPay initiative details saga", () => {
       )
       .run();
   });
-  it("should be callable more than once", async () => {
+  it("should behave gracefully when the client throws an error", async () => {
     const getWallet = jest.fn();
-    getWallet.mockImplementation(props =>
-      E.right({
-        status: 200,
-        value: { ...mockResponseSuccess, initiativeId: props.initiativeId }
-      })
-    );
+    getWallet.mockImplementation(() => E.left([]));
 
     await expectSaga(
       handleGetInitiativeDetails,
@@ -81,21 +76,10 @@ describe("Test IDPay initiative details saga", () => {
       { initiativeId: "123" }
     )
       .withReducer(appReducer)
-      .put(idpayInitiativeGet.success(mockResponseSuccess))
-      .run();
-
-    await expectSaga(
-      handleGetInitiativeDetails,
-      getWallet,
-      mockToken,
-      mockLanguage,
-      { initiativeId: "213" }
-    )
-      .withReducer(appReducer)
       .put(
-        idpayInitiativeGet.success({
-          ...mockResponseSuccess,
-          initiativeId: "213"
+        idpayInitiativeGet.failure({
+          kind: "generic",
+          value: new Error("")
         })
       )
       .run();
