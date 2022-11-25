@@ -21,7 +21,6 @@ import { handleGetIDPayWallet } from "./handleGetIDPayWallet";
  */
 export function* watchIDPayWalletSaga(bearerToken: SessionToken): SagaIterator {
   const idPayWalletClient = createIDPayWalletClient(IDPAY_API_UAT_BASEURL);
-
   const token = IDPAY_API_TEST_TOKEN ?? bearerToken;
   const language = yield* select(preferredLanguageSelector);
 
