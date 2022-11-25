@@ -4,6 +4,7 @@ import { List } from "native-base";
 import * as React from "react";
 import { SafeAreaView, StyleSheet, View, Text } from "react-native";
 import { BaseTypography } from "../../../../components/core/typography/BaseTypography";
+import { IOColors } from "../../../../components/core/variables/IOColors";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../../../components/screens/ListItemComponent";
 import ScreenContent from "../../../../components/screens/ScreenContent";
@@ -68,7 +69,7 @@ const FciDataSharingScreen = (): React.ReactElement => {
         }
       ]}
     >
-      <IconFont name={"io-notice"} size={iconSize} />
+      <IconFont name={"io-notice"} size={iconSize} color={IOColors.bluegrey} />
       <BaseTypography
         weight="Regular"
         color="bluegreyDark"
