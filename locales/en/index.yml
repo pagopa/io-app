@@ -3192,7 +3192,7 @@ features:
       titleLeft: Document {{currentDoc}} of {{totalDocs}}
       titleRight: Page {{currentPage}} of {{totalPages}}
     shareDataScreen:
-      title: "Share your data"
+      title: "Do you share this data?"
       content: "To complete the signing process, you must share this data with {{Nome Issuer}}."
       cancel: "Cancel"
       confirm: "Ok"

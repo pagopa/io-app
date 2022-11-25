@@ -3216,7 +3216,7 @@ features:
       titleLeft: Documento {{currentDoc}} di {{totalDocs}}
       titleRight: Pagina {{currentPage}} di {{totalPages}}
     shareDataScreen:
-      title: "Condividi i tuoi dati"
+      title: "Condividi questi dati?"
       content: "Per completare la firma, devi condividere questi dati con {{issuer}}."
       cancel: "Annulla"
       confirm: "Ok. va bene"
