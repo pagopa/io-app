@@ -11,6 +11,7 @@ import { formatDateAsLocal } from "../../../../../utils/dates";
 import bonusVacanzeWhiteLogo from "../../../../../../img/bonus/bonusVacanze/logo_BonusVacanze_White.png";
 import BonusCardSVG from "../../../../../../img/features/idpay/bonus_bg_svg.svg";
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 
 type Props = {
   status: StatusEnum;
@@ -23,9 +24,6 @@ type Props = {
 const opaqueBorderColor = IOColors.bluegreyDark;
 
 const styles = StyleSheet.create({
-  flexFull: {
-    flex: 1
-  },
   imageFull: {
     resizeMode: "stretch",
     zIndex: -1
@@ -78,7 +76,7 @@ const InitiativeCardComponent = (props: Props) => {
   const renderFullCard = () => {
     const isInitiativeConfigured = props.status === StatusEnum.REFUNDABLE;
     return (
-      <View style={[styles.row, styles.spaced, styles.flexFull]}>
+      <View style={[styles.row, styles.spaced, IOStyles.flex]}>
         <View
           style={[
             {
@@ -149,7 +147,7 @@ const InitiativeCardComponent = (props: Props) => {
       {Platform.OS === "android" ? (
         <View style={styles.shadowBox} />
       ) : undefined}
-      <View style={styles.flexFull}>
+      <View style={IOStyles.flex}>
         <View style={styles.imageFull}>
           <BonusCardSVG />
         </View>
