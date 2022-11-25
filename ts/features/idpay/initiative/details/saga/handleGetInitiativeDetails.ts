@@ -24,12 +24,13 @@ export function* handleGetInitiativeDetails(
   try {
     const getInitiativeDetailsResult: SagaCallReturnType<
       typeof getInitiativeDetails
-    > = yield* call(getInitiativeDetails, {
-      bearerAuth: token,
-      "Accept-Language": language,
-      initiativeId: payload.initiativeId
-    });
-
+    > =
+      yield *
+      call(getInitiativeDetails, {
+        bearerAuth: token,
+        "Accept-Language": language,
+        initiativeId: payload.initiativeId
+      });
     yield pipe(
       getInitiativeDetailsResult,
       E.fold(
