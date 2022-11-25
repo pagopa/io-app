@@ -29,6 +29,7 @@ import {
   IDPayConfigurationParamsList,
   IDPayConfigurationRoutes
 } from "../../features/idpay/initiative/configuration/navigation/navigator";
+import { InitiativeDetailsScreenParams } from "../../features/idpay/initiative/details/screens/InitiativeDetailsScreen";
 import { AuthenticationParamsList } from "./AuthenticationParamsList";
 import { MainTabParamsList } from "./MainTabParamsList";
 import { MessagesParamsList } from "./MessagesParamsList";
@@ -63,6 +64,7 @@ export type AppParamsList = {
 
   [IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN]: NavigatorScreenParams<IDPayOnboardingParamsList>;
   [IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN]: NavigatorScreenParams<IDPayConfigurationParamsList>;
+  [ROUTES.IDPAY_INITIATIVE_DETAILS]: InitiativeDetailsScreenParams;
 };
 
 /**

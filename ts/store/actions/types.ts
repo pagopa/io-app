@@ -26,7 +26,7 @@ import { GlobalState } from "../reducers/types";
 import { CdcActions } from "../../features/bonus/cdc/store/actions";
 import { PnActions } from "../../features/pn/store/actions";
 import { FciActions } from "../../features/fci/store/actions";
-import { IDPayWalletActions } from "../../features/idpay/wallet/store/actions";
+import { IDPayActions } from "../../features/idpay/common/actions";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { AuthenticationActions } from "./authentication";
@@ -102,7 +102,7 @@ export type Action =
   | CdcActions
   | PnActions
   | FciActions
-  | IDPayWalletActions;
+  | IDPayActions;
 
 export type Dispatch = DispatchAPI<Action>;
 
