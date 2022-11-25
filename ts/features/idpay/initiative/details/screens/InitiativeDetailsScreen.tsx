@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const InitiativeSettings = (bonus: InitiativeDTO) => (
+const InitiativeSettings = (initiative: InitiativeDTO) => (
   <>
     <H3>{TypedI18n.t("idpay.wallet.bonusDetailsScreen.yourOperations")}</H3>
     <View spacer xsmall />
@@ -70,7 +70,7 @@ const InitiativeSettings = (bonus: InitiativeDTO) => (
         title={TypedI18n.t(
           "idpay.wallet.bonusDetailsScreen.settings.associatedPaymentMethods"
         )}
-        subTitle={`${bonus.nInstr} ${TypedI18n.t(
+        subTitle={`${initiative.nInstr} ${TypedI18n.t(
           "idpay.wallet.bonusDetailsScreen.settings.methodsi18n"
         )}`}
       />
@@ -78,7 +78,7 @@ const InitiativeSettings = (bonus: InitiativeDTO) => (
         title={TypedI18n.t(
           "idpay.wallet.bonusDetailsScreen.settings.selectedIBAN"
         )}
-        subTitle={bonus.iban}
+        subTitle={initiative.iban}
       />
     </List>
   </>

@@ -9,7 +9,7 @@ import { IOColors } from "../../../../../components/core/variables/IOColors";
 import TypedI18n from "../../../../../i18n";
 import { formatDateAsLocal } from "../../../../../utils/dates";
 import bonusVacanzeWhiteLogo from "../../../../../../img/bonus/bonusVacanze/logo_BonusVacanze_White.png";
-import BonusCardSVG from "../../../../../../img/features/idpay/bonus_bg_svg.svg";
+import InitiativeCardSVG from "../../../../../../img/features/idpay/bonus_bg_svg.svg";
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   spaced: {
     justifyContent: "space-between"
   },
-  bottomBonusIcon: {
+  bottomInitiativeIcon: {
     flex: 1,
     justifyContent: "flex-end"
   },
@@ -130,7 +130,7 @@ const InitiativeCardComponent = (props: Props) => {
         </View>
         <View>
           <View
-            style={styles.bottomBonusIcon}
+            style={styles.bottomInitiativeIcon}
             accessible={true}
             importantForAccessibility={"no-hide-descendants"}
             accessibilityElementsHidden={true}
@@ -149,7 +149,7 @@ const InitiativeCardComponent = (props: Props) => {
       ) : undefined}
       <View style={IOStyles.flex}>
         <View style={styles.imageFull}>
-          <BonusCardSVG />
+          <InitiativeCardSVG />
         </View>
         <View style={styles.paddedMainContent}>{renderFullCard()}</View>
       </View>
