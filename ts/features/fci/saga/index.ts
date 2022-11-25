@@ -1,6 +1,14 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { SagaIterator } from "redux-saga";
-import { ActionType } from "typesafe-actions";
-import { call, fork, take, takeLatest } from "typed-redux-saga/macro";
+import { ActionType, isActionOf } from "typesafe-actions";
+import {
+  call,
+  fork,
+  take,
+  takeLatest,
+  put,
+  select
+} from "typed-redux-saga/macro";
 import { CommonActions } from "@react-navigation/native";
 import { ReduxSagaEffect } from "../../../types/utils";
 import NavigationService from "../../../navigation/NavigationService";
@@ -12,9 +20,17 @@ import { BackendFciClient } from "../api/backendFci";
 import {
   fciSignatureRequestFromId,
   fciAbortRequest,
-  fciStartRequest
+  fciStartRequest,
+  fciLoadQtspClauses,
+  fciLoadQtspFilledDocument
 } from "../store/actions";
+import {
+  fciQtspClausesSelector,
+  FciQtspClausesState
+} from "../store/reducers/fciQtspClauses";
 import { handleGetSignatureRequestById } from "./networking/handleGetSignatureRequestById";
+import { handleGetQtspMetadata } from "./networking/handleGetQtspMetadata";
+import { handleCreateFilledDocument } from "./networking/handleCreateFilledDocument";
 
 /**
  * Handle the FCI Signature requests
@@ -35,9 +51,43 @@ export function* watchFciSaga(bearerToken: SessionToken): SagaIterator {
     }
   );
 
+  // handle the request of getting QTSP metadata
+  yield* takeLatest(fciLoadQtspClauses.request, function* () {
+    yield* call(handleGetQtspMetadata, fciClient.getQtspClausesMetadata);
+  });
+
+  yield* takeLatest(
+    fciLoadQtspFilledDocument.request,
+    function* (action: ActionType<typeof fciLoadQtspFilledDocument.request>) {
+      yield* call(
+        handleCreateFilledDocument,
+        fciClient.postQtspFilledBody,
+        action
+      );
+    }
+  );
+
+  yield* fork(watchFciQtspClausesSaga);
+
   yield* fork(watchFciStartingSaga);
 
   yield* fork(watchFciAbortingSaga);
+}
+
+function* watchFciQtspClausesSaga(): Iterator<ReduxSagaEffect> {
+  while (true) {
+    yield* take(fciLoadQtspClauses.success);
+    const potQtspClauses: FciQtspClausesState = yield* select(
+      fciQtspClausesSelector
+    );
+
+    if (pot.isSome(potQtspClauses)) {
+      const documentUrl = potQtspClauses.value.document_url;
+      yield* put(
+        fciLoadQtspFilledDocument.request({ document_url: documentUrl })
+      );
+    }
+  }
 }
 
 /**
@@ -63,5 +113,7 @@ function* watchFciStartingSaga(): Iterator<ReduxSagaEffect> {
         screen: FCI_ROUTES.DOCUMENTS
       })
     );
+    // start a request to get the QTSP metadata
+    yield* put(fciLoadQtspClauses.request());
   }
 }
