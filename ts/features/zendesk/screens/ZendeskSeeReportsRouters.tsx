@@ -122,21 +122,19 @@ const ZendeskSeeReportsRouters = (props: Props) => {
   const ticketNumber = useIOSelector(zendeskTicketNumberSelector);
   const assistanceForPayment = props.route.params.assistanceForPayment;
 
-  const [zendeskConfig, setZendeskConfig] = React.useState<ZendeskAppConfig>(
-    zendeskToken
-      ? { ...zendeskDefaultJwtConfig, token: zendeskToken }
-      : zendeskDefaultAnonymousConfig
-  );
-
   useEffect(() => {
-    setZendeskConfig(
-      zendeskToken
-        ? { ...zendeskDefaultJwtConfig, token: zendeskToken }
-        : zendeskDefaultAnonymousConfig
+    const zendeskConfig = pipe(
+      zendeskToken,
+      O.fromNullable,
+      O.map(
+        (zT: string): ZendeskAppConfig => ({
+          ...zendeskDefaultJwtConfig,
+          token: zT
+        })
+      ),
+      O.getOrElseW(() => zendeskDefaultAnonymousConfig)
     );
-  }, [zendeskToken]);
 
-  useEffect(() => {
     initSupportAssistance(zendeskConfig);
 
     // In Zendesk we have two configuration: JwtConfig and AnonymousConfig.
@@ -151,12 +149,12 @@ const ZendeskSeeReportsRouters = (props: Props) => {
       O.map((zT: string): JwtIdentity | AnonymousIdentity => ({
         token: zT
       })),
-      O.getOrElse(() => ({}))
+      O.getOrElseW(() => ({}))
     );
 
     setUserIdentity(zendeskIdentity);
     dispatch(zendeskRequestTicketNumber.request());
-  }, [dispatch, zendeskConfig, zendeskToken]);
+  }, [dispatch, zendeskToken]);
 
   useEffect(() => {
     if (ticketNumber.kind === "PotSome" && ticketNumber.value > 0) {

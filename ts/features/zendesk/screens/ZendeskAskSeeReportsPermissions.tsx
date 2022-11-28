@@ -1,8 +1,8 @@
 import { useNavigation } from "@react-navigation/native";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { ListItem, View } from "native-base";
-import React, { ReactNode } from "react";
+import { View } from "native-base";
+import React from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import EmailIcon from "../../../../img/assistance/email.svg";
 import FiscalCodeIcon from "../../../../img/assistance/fiscalCode.svg";
@@ -10,7 +10,6 @@ import NameSurnameIcon from "../../../../img/assistance/nameSurname.svg";
 import { H1 } from "../../../components/core/typography/H1";
 import { H3 } from "../../../components/core/typography/H3";
 import { H4 } from "../../../components/core/typography/H4";
-import { H5 } from "../../../components/core/typography/H5";
 import { Link } from "../../../components/core/typography/Link";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
@@ -29,23 +28,13 @@ import {
 } from "../../../store/reducers/profile";
 import { showToast } from "../../../utils/showToast";
 import { openWebUrl } from "../../../utils/url";
+import ZendeskItemPermissionComponent, {
+  ItemPermissionProps
+} from "../components/ZendeskItemPermissionComponent";
 import { ZendeskParamsList } from "../navigation/params";
 
 export type ZendeskAskSeeReportsPermissionsNavigationParams = {
   assistanceForPayment: boolean;
-};
-
-/**
- * id is optional since some items should recognized since they can be removed from the whole list
- * i.e: items about profile || payment
- */
-type Item = {
-  id?: string;
-  icon: ReactNode;
-  title: string;
-  value?: string;
-  zendeskId?: string;
-  testId: string;
 };
 
 type ItemProps = {
@@ -56,7 +45,7 @@ type ItemProps = {
 
 const iconProps = { width: 24, height: 24 };
 
-const getItems = (props: ItemProps): ReadonlyArray<Item> => [
+const getItems = (props: ItemProps): ReadonlyArray<ItemPermissionProps> => [
   {
     id: "profileNameSurname",
     icon: <NameSurnameIcon {...iconProps} />,
@@ -79,25 +68,6 @@ const getItems = (props: ItemProps): ReadonlyArray<Item> => [
     testId: "profileEmail"
   }
 ];
-
-const ItemComponent = (props: Item) => (
-  <ListItem testID={props.testId}>
-    <View
-      style={{
-        flex: 1,
-        flexDirection: "row",
-        alignItems: "center"
-      }}
-    >
-      <View>{props.icon}</View>
-      <View hspacer />
-      <View style={{ flex: 1, flexDirection: "column" }}>
-        <H4>{props.title}</H4>
-        {props.value && <H5 weight={"Regular"}>{props.value}</H5>}
-      </View>
-    </View>
-  </ListItem>
-);
 
 type Props = IOStackNavigationRouteProps<
   ZendeskParamsList,
@@ -175,7 +145,10 @@ const ZendeskAskSeeReportsPermissions = (props: Props) => {
             <H3>{I18n.t("support.askPermissions.listHeader")}</H3>
 
             {items.map((item, idx) => (
-              <ItemComponent key={`permission_item_${idx}`} {...item} />
+              <ZendeskItemPermissionComponent
+                key={`permission_item_${idx}`}
+                {...item}
+              />
             ))}
           </View>
         </ScrollView>

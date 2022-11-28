@@ -1,8 +1,8 @@
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { ListItem, View } from "native-base";
-import React, { ReactNode, useEffect } from "react";
+import { View } from "native-base";
+import React, { useEffect } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { useDispatch } from "react-redux";
 import BatteryIcon from "../../../../img/assistance/battery.svg";
@@ -19,7 +19,6 @@ import WebSiteIcon from "../../../../img/assistance/website.svg";
 import { H1 } from "../../../components/core/typography/H1";
 import { H3 } from "../../../components/core/typography/H3";
 import { H4 } from "../../../components/core/typography/H4";
-import { H5 } from "../../../components/core/typography/H5";
 import { Link } from "../../../components/core/typography/Link";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
@@ -62,6 +61,9 @@ import {
   zendeskVersionsHistoryId
 } from "../../../utils/supportAssistance";
 import { handleItemOnPress, openWebUrl } from "../../../utils/url";
+import ZendeskItemPermissionComponent, {
+  ItemPermissionProps
+} from "../components/ZendeskItemPermissionComponent";
 import { ZendeskParamsList } from "../navigation/params";
 import {
   zendeskSupportCompleted,
@@ -78,19 +80,6 @@ import {
  */
 const arrayToZendeskValue = (arr: Array<string>) => arr.join(", ");
 
-/**
- * id is optional since some items should recognized since they can be removed from the whole list
- * i.e: items about profile || payment
- */
-type Item = {
-  id?: string;
-  icon: ReactNode;
-  title: string;
-  value?: string;
-  zendeskId?: string;
-  testId: string;
-};
-
 type ItemProps = {
   fiscalCode: string;
   nameSurname: string;
@@ -101,7 +90,7 @@ type ItemProps = {
 
 const iconProps = { width: 24, height: 24 };
 
-const getItems = (props: ItemProps): ReadonlyArray<Item> => [
+const getItems = (props: ItemProps): ReadonlyArray<ItemPermissionProps> => [
   {
     id: "profileNameSurname",
     icon: <NameSurnameIcon {...iconProps} />,
@@ -176,25 +165,6 @@ const getItems = (props: ItemProps): ReadonlyArray<Item> => [
   }
 ];
 
-const ItemComponent = (props: Item) => (
-  <ListItem testID={props.testId}>
-    <View
-      style={{
-        flex: 1,
-        flexDirection: "row",
-        alignItems: "center"
-      }}
-    >
-      <View>{props.icon}</View>
-      <View hspacer />
-      <View style={{ flex: 1, flexDirection: "column" }}>
-        <H4>{props.title}</H4>
-        {props.value && <H5 weight={"Regular"}>{props.value}</H5>}
-      </View>
-    </View>
-  </ListItem>
-);
-
 export type ZendeskAskPermissionsNavigationParams = {
   assistanceForPayment: boolean;
 };
@@ -235,21 +205,19 @@ const ZendeskAskPermissions = () => {
   );
   const zendeskToken = useIOSelector(zendeskTokenSelector);
 
-  const [zendeskConfig, setZendeskConfig] = React.useState<ZendeskAppConfig>(
-    zendeskToken
-      ? { ...zendeskDefaultJwtConfig, token: zendeskToken }
-      : zendeskDefaultAnonymousConfig
-  );
-
   useEffect(() => {
-    setZendeskConfig(
-      zendeskToken
-        ? { ...zendeskDefaultJwtConfig, token: zendeskToken }
-        : zendeskDefaultAnonymousConfig
+    const zendeskConfig = pipe(
+      zendeskToken,
+      O.fromNullable,
+      O.map(
+        (zT: string): ZendeskAppConfig => ({
+          ...zendeskDefaultJwtConfig,
+          token: zT
+        })
+      ),
+      O.getOrElseW(() => zendeskDefaultAnonymousConfig)
     );
-  }, [zendeskToken]);
 
-  useEffect(() => {
     initSupportAssistance(zendeskConfig);
 
     // In Zendesk we have two configuration: JwtConfig and AnonymousConfig.
@@ -268,7 +236,7 @@ const ZendeskAskPermissions = () => {
     );
 
     setUserIdentity(zendeskIdentity);
-  }, [dispatch, zendeskConfig, zendeskToken]);
+  }, [dispatch, zendeskToken]);
 
   const currentVersion = getAppVersion();
 
@@ -398,7 +366,10 @@ const ZendeskAskPermissions = () => {
             <H3>{I18n.t("support.askPermissions.listHeader")}</H3>
 
             {items.map((item, idx) => (
-              <ItemComponent key={`permission_item_${idx}`} {...item} />
+              <ZendeskItemPermissionComponent
+                key={`permission_item_${idx}`}
+                {...item}
+              />
             ))}
           </View>
         </ScrollView>
