@@ -1,8 +1,8 @@
 ---
 idpay:
   wallet:
-      preview:
-        validThrough: "Valido fino al {{endDate}}"
+    preview:
+      validThrough: "Valido fino al {{endDate}}"
   initiative:
     configuration: 
       bottomSheet:

@@ -3236,8 +3236,8 @@ support:
       category: "Help us understand how we can help you by selecting the topic of your problem: we will reply as soon as possible, during business hours."
 idpay:
   wallet:
-      preview:
-        validThrough: "Valid through {{endDate}}"
+    preview:
+      validThrough: "Valid through {{endDate}}"
   initiative:
     configuration: 
       bottomSheet:
