@@ -153,8 +153,10 @@ export const InitiativeDetailsScreen = () => {
     if (initiativeData === undefined) {
       return null;
     }
-    const initiativeNeedsSubscription =
-      initiativeData.status === StatusEnum.UNSUBSCRIBED;
+
+    const initiativeNeedsConfiguration =
+      initiativeData.status === StatusEnum.NOT_REFUNDABLE;
+
     return (
       <SafeAreaView style={IOStyles.flex}>
         <FocusAwareStatusBar
@@ -194,12 +196,12 @@ export const InitiativeDetailsScreen = () => {
           >
             <View spacer extralarge />
             <View spacer small />
-            {initiativeNeedsSubscription
+            {initiativeNeedsConfiguration
               ? initiativeNotConfiguredContent
               : InitiativeSettings(initiativeData)}
           </View>
         </ScrollView>
-        {initiativeNeedsSubscription && (
+        {initiativeNeedsConfiguration && (
           <FooterWithButtons
             type="SingleButton"
             leftButton={{
