@@ -1,7 +1,6 @@
 import { createMockTask } from "@redux-saga/testing-utils";
 import { Task } from "redux-saga";
 import { testSaga } from "redux-saga-test-plan";
-import { removeScheduledNotificationAccessSpid } from "../../../boot/scheduleLocalNotifications";
 import {
   analyticsAuthenticationCompleted,
   analyticsAuthenticationStarted
@@ -41,8 +40,6 @@ describe("authenticationSaga", () => {
       .cancel(watchTestLoginRequest)
       .next()
       .call(stopCieManager)
-      .next()
-      .call(removeScheduledNotificationAccessSpid)
       .next()
       .put(analyticsAuthenticationCompleted())
       .next()

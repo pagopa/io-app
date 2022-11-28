@@ -183,10 +183,6 @@ global:
     invalidSearchBarText: Enter at least {{minCharacter}} characters
     noResultsFound: "There are no results for this search: try something else."
     noResultsTitle: No results.
-  localNotifications:
-    spidLogin:
-      title: Sign in to start using the app
-      message: IO can only work if you have signed in at least once
   media:
     email: "Email"
     pec: "Certified email"
@@ -3183,6 +3179,10 @@ features:
       generic:
         title: There is a problem
         subTitle: To proceed with the signature, check that you have updated the IO app to the latest version.
+    title: "Firma con IO"
+    documentsBar:
+      titleLeft: Document {{currentDoc}} of {{totalDocs}}
+      titleRight: Page {{currentPage}} of {{totalPages}}
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
@@ -3242,6 +3242,23 @@ support:
     subTitle:
       category: "Help us understand how we can help you by selecting the topic of your problem: we will reply as soon as possible, during business hours."
 idpay:
+  wallet:
+    preview:
+      validThrough: "Valid through {{endDate}}"
+    bonusCard:
+      availableAmount: Disponibile
+      validUntil: Valido fino al
+      toRefund: da rimborsare
+    bonusDetailsScreen:
+      yourOperations: Le tue Operazioni
+      yourOperationsSubtitle: Qui vedrai le transazioni effettuate con i metodi che hai associato.
+      yourOperationsLink: Come si fa?
+      settings:
+        header: Impostazioni
+        associatedPaymentMethods: Metodi di pagamento associati
+        methodsi18n: metodi 
+        selectedIBAN: IBAN per l'accredito
+      startConfigurationCTA: Inizia
   onboarding:
     headerTitle: "Adesione all'iniziativa"
     buttons: 
@@ -3263,3 +3280,17 @@ idpay:
           understoodCTA: Ho capito
       title: Possiedi i seguenti requisiti?
       subtitle: Verificheremo con alcuni Enti se sei in possesso dei requisiti per poter richiedere {{service}}. 
+  configuration:
+    headerTitle: "Configure the initiative"
+    intro: 
+      title: "We are almost there"
+      body: "In order to take advantage of the initiative, we need some more information."
+      requiredData: 
+        title: "Required informations:"
+        ibanTitle: "IBAN in your name"
+        ibanSubtitle: "In order to receive any refunds"
+        instrumentTitle: "At least one payment method"
+        instrumentSubtitle: "Indicate the methods to be enabled for the initiative"
+      buttons:
+        continue: "Start configuration"
+    

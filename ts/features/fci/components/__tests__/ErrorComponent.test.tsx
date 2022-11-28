@@ -18,7 +18,9 @@ type Props = {
 };
 
 describe("Test ErrorComponent", () => {
-  jest.useFakeTimers();
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
   it("with all props should render a ErrorComponent correctly", () => {
     const props = {
       title: "title",

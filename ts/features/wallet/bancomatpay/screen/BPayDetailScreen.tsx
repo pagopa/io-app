@@ -29,13 +29,7 @@ export const BPayDetailScreen: React.FunctionComponent = () => {
   return (
     <BasePaymentMethodScreen
       paymentMethod={bPay}
-      card={
-        <BPayCard
-          phone={bPay.info.numberObfuscated}
-          bankName={bPay.caption}
-          abiLogo={bPay.abiInfo?.logoUrl}
-        />
-      }
+      card={<BPayCard phone={bPay.info.numberObfuscated} />}
       content={<PaymentMethodFeatures paymentMethod={bPay} />}
     />
   );
