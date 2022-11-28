@@ -53,30 +53,41 @@ const styles = StyleSheet.create({
 
 const InitiativeSettings = (initiative: InitiativeDTO) => (
   <>
-    <H3>{TypedI18n.t("idpay.wallet.bonusDetailsScreen.yourOperations")}</H3>
+    <H3>
+      {TypedI18n.t(
+        "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperations"
+      )}
+    </H3>
     <View spacer xsmall />
     <LabelSmall weight="Regular" color="bluegreyDark">
-      {TypedI18n.t("idpay.wallet.bonusDetailsScreen.yourOperationsSubtitle") +
-        " "}
+      {TypedI18n.t(
+        "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperationsSubtitle"
+      ) + " "}
       <LabelSmall weight="SemiBold">
-        {TypedI18n.t("idpay.wallet.bonusDetailsScreen.yourOperationsLink")}
+        {TypedI18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperationsLink"
+        )}
       </LabelSmall>
     </LabelSmall>
     <View spacer extralarge />
-    <H3>{TypedI18n.t("idpay.wallet.bonusDetailsScreen.settings.header")}</H3>
+    <H3>
+      {TypedI18n.t(
+        "idpay.initiative.details.initiativeDetailsScreen.configured.settings.header"
+      )}
+    </H3>
     <View spacer small />
     <List>
       <ListItemComponent
         title={TypedI18n.t(
-          "idpay.wallet.bonusDetailsScreen.settings.associatedPaymentMethods"
+          "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
         )}
         subTitle={`${initiative.nInstr} ${TypedI18n.t(
-          "idpay.wallet.bonusDetailsScreen.settings.methodsi18n"
+          "idpay.initiative.details.initiativeDetailsScreen.configured.settings.methodsi18n"
         )}`}
       />
       <ListItemComponent
         title={TypedI18n.t(
-          "idpay.wallet.bonusDetailsScreen.settings.selectedIBAN"
+          "idpay.initiative.details.initiativeDetailsScreen.configured.settings.selectedIBAN"
         )}
         subTitle={initiative.iban}
       />
@@ -116,10 +127,17 @@ export const InitiativeDetailsScreen = () => {
       <EmptyInitiativeSvg width={130} height={130} />
       <View spacer />
       {/* eslint-disable-next-line react/no-unescaped-entities */}
-      <H3>Configura l'iniziativa!</H3>
+      <H3>
+        {TypedI18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.notConfigured.header"
+        )}
+      </H3>
       <View spacer />
       <Text style={styles.textCenter}>
-        Aggiungi almeno un metodo per iniziare ad utilizzare 18 app.
+        {TypedI18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.notConfigured.footer",
+          { initiative: "18 app" }
+        )}
       </Text>
     </View>
   );
@@ -191,7 +209,7 @@ export const InitiativeDetailsScreen = () => {
               primary: true,
               onPress: navigateToConfiguration,
               title: TypedI18n.t(
-                "idpay.wallet.bonusDetailsScreen.startConfigurationCTA"
+                "idpay.initiative.details.initiativeDetailsScreen.configured.startConfigurationCTA"
               )
             }}
           />
