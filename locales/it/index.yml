@@ -3260,8 +3260,8 @@ support:
       category: "Aiutaci a capire meglio come possiamo aiutarti selezionando l’argomento del tuo problema: ti risponderemo il prima possibile, in orario lavorativo."
 idpay:
   wallet:
-      preview:
-        validThrough: "Valido fino al {{endDate}}"
+    preview:
+      validThrough: "Valido fino al {{endDate}}"
   initiative:
     configuration: 
       bottomSheet:
