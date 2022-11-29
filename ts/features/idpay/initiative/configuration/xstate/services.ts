@@ -101,7 +101,35 @@ const createServicesImplementation = (
     return Promise.resolve({ pagoPAInstruments, idPayInstruments });
   };
 
-  return { loadInitiative, loadInstruments };
+  const addInstrument = async (context: Context) => {
+    if (context.initiativeId === undefined) {
+      return Promise.reject("initiativeId is undefined");
+    }
+
+    if (context.selectedInstrumentId === undefined) {
+      return Promise.reject("selectedInstrumentId is undefined");
+    }
+
+    const response = await walletClient.enrollInstrument({
+      initiativeId: context.initiativeId,
+      idWallet: context.selectedInstrumentId,
+      bearerAuth: bearerToken,
+      "Accept-Language": language
+    });
+
+    if (E.isLeft(response)) {
+      return Promise.reject("error enrolling instruments");
+    }
+
+    if (response.right.status !== 200) {
+      return Promise.reject("error enrolling instruments");
+    }
+
+    // After updating the list of instruments, we need to reload the list of enrloled instruments
+    return loadIDPayInstruments(context.initiativeId);
+  };
+
+  return { loadInitiative, loadInstruments, addInstrument };
 };
 
 export { createServicesImplementation };

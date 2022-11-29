@@ -17,6 +17,7 @@ export type Context = {
   initiative: p.Pot<InitiativeDTO, Error>;
   pagoPAInstruments: p.Pot<ReadonlyArray<Wallet>, Error>;
   idPayInstruments: p.Pot<ReadonlyArray<InstrumentDTO>, Error>;
+  selectedInstrumentId?: string;
 };
 
 const INITIAL_CONTEXT: Context = {
@@ -34,7 +35,25 @@ type E_START_CONFIGURATION = {
   type: "START_CONFIGURATION";
 };
 
-type Events = E_SELECT_INITIATIVE | E_START_CONFIGURATION;
+type E_ADD_INSTRUMENT = {
+  type: "ADD_INSTRUMENT";
+  walletId: string;
+};
+
+type E_CONFIRM_INSTRUMENTS = {
+  type: "CONFIRM_INSTRUMENTS";
+};
+
+type E_COMPLETE_CONFIGURATION = {
+  type: "COMPLETE_CONFIGURATION";
+};
+
+type Events =
+  | E_SELECT_INITIATIVE
+  | E_START_CONFIGURATION
+  | E_ADD_INSTRUMENT
+  | E_CONFIRM_INSTRUMENTS
+  | E_COMPLETE_CONFIGURATION;
 
 type Services = {
   loadInitiative: {
@@ -45,6 +64,9 @@ type Services = {
       pagoPAInstruments: ReadonlyArray<Wallet>;
       idPayInstruments: ReadonlyArray<InstrumentDTO>;
     };
+  };
+  addInstrument: {
+    data: ReadonlyArray<InstrumentDTO>;
   };
 };
 
@@ -119,7 +141,42 @@ const createIDPayInitiativeConfigurationMachine = () =>
           }
         },
         DISPLAYING_INSTRUMENTS: {
-          tags: [WAITING_USER_INPUT_TAG]
+          tags: [WAITING_USER_INPUT_TAG],
+          on: {
+            ADD_INSTRUMENT: {
+              target: "ADDING_INSTRUMENT",
+              actions: "selectInstrument"
+            },
+            CONFIRM_INSTRUMENTS: {
+              target: "DISPLAYING_CONFIGURATION_SUCCESS"
+            }
+          }
+        },
+        ADDING_INSTRUMENT: {
+          tags: [LOADING_TAG],
+          invoke: {
+            src: "addInstrument",
+            id: "addInstrument",
+            onDone: [
+              {
+                target: "DISPLAYING_INSTRUMENTS",
+                actions: "addInstrumentSuccess"
+              }
+            ]
+          }
+        },
+        DISPLAYING_CONFIGURATION_SUCCESS: {
+          tags: [WAITING_USER_INPUT_TAG],
+          entry: "navigateToConfigurationSuccessScreen",
+          on: {
+            COMPLETE_CONFIGURATION: {
+              target: "CONFIGURATION_COMPLETED"
+            }
+          }
+        },
+        CONFIGURATION_COMPLETED: {
+          type: "final",
+          entry: "navigateToInitiativeDetailScreen"
         },
         CONFIGURATION_NOT_NEEDED: {
           type: "final"
@@ -137,6 +194,13 @@ const createIDPayInitiativeConfigurationMachine = () =>
         loadInstrumentsSuccess: assign((_, event) => ({
           pagoPAInstruments: p.some(event.data.pagoPAInstruments),
           idPayInstruments: p.some(event.data.idPayInstruments)
+        })),
+        selectInstrument: assign((_, event) => ({
+          selectedInstrumentId: event.walletId
+        })),
+        addInstrumentSuccess: assign((_, event) => ({
+          idPayInstruments: p.some(event.data),
+          selectedInstrumentId: undefined
         }))
       },
       guards: {
