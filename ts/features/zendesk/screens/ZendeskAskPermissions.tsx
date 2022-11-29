@@ -23,6 +23,7 @@ import { Link } from "../../../components/core/typography/Link";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
+import { zendeskPrivacyUrl } from "../../../config";
 import I18n from "../../../i18n";
 import { mixpanelTrack } from "../../../mixpanel";
 import { useIOSelector } from "../../../store/hooks";
@@ -168,8 +169,6 @@ const getItems = (props: ItemProps): ReadonlyArray<ItemPermissionProps> => [
 export type ZendeskAskPermissionsNavigationParams = {
   assistanceForPayment: boolean;
 };
-
-const POLICY_URL = "https://www.pagopa.it/it/privacy-policy-assistenza/";
 
 /**
  * this screen shows the kinds of data the app could collect when a user is asking for assistance
@@ -355,7 +354,7 @@ const ZendeskAskPermissions = () => {
             <View spacer xsmall={true} />
             <Link
               onPress={() => {
-                openWebUrl(POLICY_URL, () =>
+                openWebUrl(zendeskPrivacyUrl, () =>
                   showToast(I18n.t("global.jserror.title"))
                 );
               }}

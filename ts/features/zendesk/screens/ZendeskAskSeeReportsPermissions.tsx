@@ -14,6 +14,7 @@ import { Link } from "../../../components/core/typography/Link";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
+import { zendeskPrivacyUrl } from "../../../config";
 import I18n from "../../../i18n";
 import {
   AppParamsList,
@@ -74,7 +75,6 @@ type Props = IOStackNavigationRouteProps<
   "ZENDESK_ASK_SEE_REPORTS_PERMISSIONS"
 >;
 
-const POLICY_URL = "https://www.pagopa.it/it/privacy-policy-assistenza/";
 /**
  * this screen shows the kinds of data the app could collect when a user is looking at the previous ticket only for the authenticated users
  * @constructor
@@ -134,7 +134,7 @@ const ZendeskAskSeeReportsPermissions = (props: Props) => {
             <View spacer xsmall={true} />
             <Link
               onPress={() => {
-                openWebUrl(POLICY_URL, () =>
+                openWebUrl(zendeskPrivacyUrl, () =>
                   showToast(I18n.t("global.jserror.title"))
                 );
               }}

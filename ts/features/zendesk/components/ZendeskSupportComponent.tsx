@@ -10,6 +10,7 @@ import { H3 } from "../../../components/core/typography/H3";
 import { H4 } from "../../../components/core/typography/H4";
 import { Label } from "../../../components/core/typography/Label";
 import { Link } from "../../../components/core/typography/Link";
+import { zendeskPrivacyUrl } from "../../../config";
 import I18n from "../../../i18n";
 import { mixpanelTrack } from "../../../mixpanel";
 import {
@@ -28,8 +29,6 @@ import { zendeskConfigSelector } from "../store/reducers";
 type Props = {
   assistanceForPayment: boolean;
 };
-
-const POLICY_URL = "https://www.pagopa.it/it/privacy-policy-assistenza/";
 
 /**
  * This component represents the entry point for the Zendesk workflow.
@@ -79,7 +78,7 @@ const ZendeskSupportComponent = (props: Props) => {
         {I18n.t("support.helpCenter.supportComponent.subtitle")}{" "}
         <Link
           onPress={() => {
-            openWebUrl(POLICY_URL, () =>
+            openWebUrl(zendeskPrivacyUrl, () =>
               showToast(I18n.t("global.jserror.title"))
             );
           }}
