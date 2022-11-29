@@ -53,8 +53,9 @@ const PaymentMethodChoiceScreen = () => {
   const cardsArray = pot.getOrElse(cardsFromSelector, []);
 
   const selectedCardRef = useRef<number | undefined>(undefined);
-  const sendToBackend = (): void => {
-    console.log(selectedCardRef.current);
+  const sendEvent = (): void => {
+    // eslint-disable-next-line no-console
+    console.log("selectedCardRef.current", selectedCardRef.current);
   };
 
   const onSwitchHandler = (idWallet: number | undefined) => {
@@ -80,7 +81,7 @@ const PaymentMethodChoiceScreen = () => {
       type="TwoButtonsInlineThird"
       rightButton={{
         onPress: () => {
-          sendToBackend();
+          sendEvent();
           dismiss();
         },
         block: true,
@@ -106,6 +107,7 @@ const PaymentMethodChoiceScreen = () => {
         <View spacer />
         <View style={IOStyles.horizontalContentPadding}>
           <H1>{TypedI18n.t("idpay.initiative.configuration.header")}</H1>
+          <View spacer small />
           <Text>
             {TypedI18n.t("idpay.initiative.configuration.subHeader", {
               initiativeName: "18app"
