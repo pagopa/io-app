@@ -26,8 +26,6 @@ export type LIST_DATA_TYPE = {
 
 /**
  * Get the list of clauses by type
- * @param clauseType
- * @returns an Option of the list of clauses
  */
 export const clausesByType = (
   signatureFields: ReadonlyArray<SignatureField>,
@@ -45,8 +43,6 @@ export const clausesByType = (
 /**
  * Get the list of all types for the signature fields
  * of the current document
- * @param signatureFields
- * @returns
  */
 export const getAllTypes = (signatureFields: ReadonlyArray<SignatureField>) =>
   pipe(
@@ -58,8 +54,6 @@ export const getAllTypes = (signatureFields: ReadonlyArray<SignatureField>) =>
 /**
  * Giving a list of signature fields, it returns the DATA
  * to rendering the SectionList
- * @param signatureFields
- * @returns
  */
 export const getSectionListData = (
   signatureFields: ReadonlyArray<SignatureField>
