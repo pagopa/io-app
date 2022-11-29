@@ -17,7 +17,7 @@ import ROUTES from "../../../../../navigation/routes";
 import themeVariables from "../../../../../theme/variables";
 import { useConfigurationMachineService } from "../xstate/provider";
 
-const AssociationSuccessScreen = () => {
+const ConfigurationSuccessScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
   const configurationMachine = useConfigurationMachineService();
@@ -80,4 +80,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default AssociationSuccessScreen;
+export default ConfigurationSuccessScreen;
