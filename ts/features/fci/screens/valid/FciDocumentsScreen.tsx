@@ -184,11 +184,11 @@ const FciDocumentsScreen = () => {
     (attrs: ExistingSignatureFieldAttrs | SignatureFieldToBeCreatedAttrs) => {
       if (hasUniqueName(attrs)) {
         drawRectangleOverSignatureFieldById(attrs.unique_name).catch(
-          readableReport
+          readableReport // TODO: it should be displayed to the user?
         );
       } else {
         drawRectangleOverSignatureFieldByCoordinates(attrs).catch(
-          readableReport
+          readableReport // TODO: it should be displayed to the user?
         );
       }
     },
