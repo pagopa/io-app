@@ -87,8 +87,13 @@ const FciDocumentsScreen = () => {
     }
   }, [dispatch, documentSignaturesSelector, documents]);
 
+  const pdfFromBase64 = (r: string) => `data:application/pdf;base64,${r}`;
+
   /**
-   * function to draw a rect over a signature field
+   * Get the pdf url from documents,
+   * download it as base64 string and
+   * load the pdf as pdf-lib object
+   * to draw a rect over the signature field
    * @param uniqueName the of the signature field
    */
   const drawRectangleOverSignatureFieldById = React.useCallback(
@@ -101,9 +106,7 @@ const FciDocumentsScreen = () => {
         res => res.base64()
       );
 
-      await PDFDocument.load(
-        `data:application/pdf;base64,${existingPdfBytes}`
-      ).then(res => {
+      await PDFDocument.load(pdfFromBase64(existingPdfBytes)).then(res => {
         // get the signature field by unique name
         pipe(
           res.findPageForAnnotationRef(
@@ -133,16 +136,18 @@ const FciDocumentsScreen = () => {
           })
         );
 
-        return res
-          .saveAsBase64()
-          .then(r => setPdfString(`data:application/pdf;base64,${r}`));
+        return res.saveAsBase64().then(r => setPdfString(pdfFromBase64(r)));
       });
     },
     [documents, currentDoc]
   );
 
   /**
-   * function to draw a rect over pdf giving a coordinates
+   * Get the pdf url from documents,
+   * download it as base64 string and
+   * load the pdf as pdf-lib object
+   * to draw a rect over the signature field
+   * giving a set of coordinates
    * @param attrs the signature field attrs containing the coords
    */
   const drawRectangleOverSignatureFieldByCoordinates = React.useCallback(
@@ -155,9 +160,7 @@ const FciDocumentsScreen = () => {
         res => res.base64()
       );
 
-      await PDFDocument.load(
-        `data:application/pdf;base64,${existingPdfBytes}`
-      ).then(res => {
+      await PDFDocument.load(pdfFromBase64(existingPdfBytes)).then(res => {
         const page = attrs.page;
         setSignaturePage(page);
         // The signature box is drawn using the coordinates of the signature field.
@@ -171,9 +174,7 @@ const FciDocumentsScreen = () => {
           borderOpacity: 0.75
         });
 
-        return res
-          .saveAsBase64()
-          .then(r => setPdfString(`data:application/pdf;base64,${r}`));
+        return res.saveAsBase64().then(r => setPdfString(pdfFromBase64(r)));
       });
     },
     [documents, currentDoc]
