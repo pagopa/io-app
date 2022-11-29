@@ -1,8 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import { useActor } from "@xstate/react";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import { Text, View } from "native-base";
 import React from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
@@ -25,19 +23,17 @@ const AssociationSuccessScreen = () => {
   const configurationMachine = useConfigurationMachineService();
   const [state] = useActor(configurationMachine);
 
-  const initiativeDetails = pipe(
-    state.context.initiative,
-    pot.toOption,
-    O.toUndefined
-  );
+  const initiativeDetails = pot.toUndefined(state.context.initiative);
 
   if (initiativeDetails === undefined) {
     return null;
   }
 
+  const { initiativeId, initiativeName } = initiativeDetails;
+
   const handleNavigateToInitiativePress = () => {
     navigation.navigate(ROUTES.IDPAY_INITIATIVE_DETAILS, {
-      initiativeId: initiativeDetails.initiativeId
+      initiativeId
     });
   };
 
@@ -51,7 +47,7 @@ const AssociationSuccessScreen = () => {
           <View spacer={true} />
           <Text style={styles.body}>
             {I18n.t("idpay.configuration.associationSuccess.body", {
-              initiativeName: initiativeDetails.initiativeName
+              initiativeName
             })}
           </Text>
         </View>
