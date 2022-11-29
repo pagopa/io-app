@@ -5,6 +5,7 @@ import {
   InitiativeDTO,
   StatusEnum
 } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
+import { InstrumentDTO } from "../../../../../../definitions/idpay/wallet/InstrumentDTO";
 import { Wallet } from "../../../../../../definitions/pagopa/Wallet";
 import {
   LOADING_TAG,
@@ -15,11 +16,13 @@ export type Context = {
   initiativeId?: string;
   initiative: p.Pot<InitiativeDTO, Error>;
   pagoPAInstruments: p.Pot<ReadonlyArray<Wallet>, Error>;
+  idPayInstruments: p.Pot<ReadonlyArray<InstrumentDTO>, Error>;
 };
 
 const INITIAL_CONTEXT: Context = {
   initiative: p.none,
-  pagoPAInstruments: p.none
+  pagoPAInstruments: p.none,
+  idPayInstruments: p.none
 };
 
 type E_SELECT_INITIATIVE = {
@@ -38,7 +41,10 @@ type Services = {
     data: InitiativeDTO;
   };
   loadInstruments: {
-    data: ReadonlyArray<Wallet>;
+    data: {
+      pagoPAInstruments: ReadonlyArray<Wallet>;
+      idPayInstruments: ReadonlyArray<InstrumentDTO>;
+    };
   };
 };
 
@@ -129,7 +135,8 @@ const createIDPayInitiativeConfigurationMachine = () =>
           initiative: p.some(event.data)
         })),
         loadInstrumentsSuccess: assign((_, event) => ({
-          pagoPAInstruments: p.some(event.data)
+          pagoPAInstruments: p.some(event.data.pagoPAInstruments),
+          idPayInstruments: p.some(event.data.idPayInstruments)
         }))
       },
       guards: {

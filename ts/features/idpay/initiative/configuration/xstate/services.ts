@@ -44,28 +44,61 @@ const createServicesImplementation = (
     return data;
   };
 
-  const loadInstruments = async (context: Context) => {
-    if (context.initiativeId === undefined) {
-      return Promise.reject("initiativeId is undefined");
-    }
-
+  const loadPagoPAInstruments = async () => {
     const pagoPAResponse = await pmSessionManager.withRefresh(
       paymentManagerClient.getWalletsV2
     )();
 
     if (E.isLeft(pagoPAResponse)) {
-      return Promise.reject("error loading instruments");
+      return Promise.reject("error loading pagoPA instruments");
     }
 
     if (pagoPAResponse.right.status !== 200) {
-      return Promise.reject("error loading instruments");
+      return Promise.reject("error loading pagoPA instruments");
     }
 
-    return pipe(
+    const data = pipe(
       pagoPAResponse.right.value.data,
       O.fromNullable,
       O.getOrElse(() => [] as ReadonlyArray<Wallet>)
     );
+
+    return Promise.resolve(data);
+  };
+
+  const loadIDPayInstruments = async (initiativeId: string) => {
+    const idPayResponse = await walletClient.getInstrumentList({
+      initiativeId,
+      bearerAuth: bearerToken,
+      "Accept-Language": language
+    });
+
+    if (E.isLeft(idPayResponse)) {
+      return Promise.reject("error loading idPay instruments");
+    }
+
+    if (idPayResponse.right.status === 404) {
+      return Promise.resolve([]);
+    }
+
+    if (idPayResponse.right.status !== 200) {
+      return Promise.reject("error loading idPay instruments");
+    }
+
+    return Promise.resolve(idPayResponse.right.value.instrumentList);
+  };
+
+  const loadInstruments = async (context: Context) => {
+    if (context.initiativeId === undefined) {
+      return Promise.reject("initiativeId is undefined");
+    }
+
+    const [pagoPAInstruments, idPayInstruments] = await Promise.all([
+      loadPagoPAInstruments(),
+      loadIDPayInstruments(context.initiativeId)
+    ]);
+
+    return Promise.resolve({ pagoPAInstruments, idPayInstruments });
   };
 
   return { loadInitiative, loadInstruments };
