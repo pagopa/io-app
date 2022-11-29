@@ -41,6 +41,7 @@
     "test:dev": "jest --detectOpenHandles --coverage=false",
     "test:tz": "yarn test:tz-eu-rome && yarn test:tz-us-ny && yarn test:tz-us-yt && yarn test:tz-au-syd",
     "test:tz-eu-rome": "TZ='Europe/Rome' jest --config='./jest.config.no.timezone.js' --detectOpenHandles --coverage=false -t 'Check fiscal code date IT' './ts/utils/__tests__/fiscal-code.test.ts'",
+    "test:tz-eu-rome-comp": "TZ='Europe/Rome' jest --config='./jest.config.no.timezone.js' --detectOpenHandles --coverage=false './ts/components/__tests__/FiscalCodeComponent.test.tsx'",
     "test:tz-us-ny": "TZ='America/New_York' jest --config='./jest.config.no.timezone.js' --detectOpenHandles --coverage=false -t 'Check fiscal code date NY' './ts/utils/__tests__/fiscal-code.test.ts'",
     "test:tz-us-yt": "TZ='America/Whitehorse' jest --config='./jest.config.no.timezone.js' --detectOpenHandles --coverage=false -t 'Check fiscal code date CA' './ts/utils/__tests__/fiscal-code.test.ts'",
     "test:tz-au-syd": "TZ='Australia/Sydney' jest --config='./jest.config.no.timezone.js' --detectOpenHandles --coverage=false -t 'Check fiscal code date AU' './ts/utils/__tests__/fiscal-code.test.ts'",
