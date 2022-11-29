@@ -1,9 +1,7 @@
 import { getMonth, getYear } from "date-fns";
 import * as E from "fp-ts/lib/Either";
 import MockDate from "mockdate";
-import * as NAR from "fp-ts/lib/NonEmptyArray";
-import I18n, { availableTranslations, setLocale } from "../../i18n";
-import { formatDateAsShortFormat, getExpireStatus, isExpired } from "../dates";
+import { getExpireStatus, isExpired } from "../dates";
 
 describe("getExpireStatus", () => {
   it("should be VALID", () => {
@@ -73,35 +71,5 @@ describe("getExpireStatus", () => {
         today.getFullYear().toString().substring(2, 4)
       )
     ).toEqual(E.right(false));
-  });
-});
-
-describe("formatDateAsShortFormat", () => {
-  it("Check if the generated date matches return value", () => {
-    availableTranslations.forEach(locale => {
-      setLocale(locale);
-      const toTest: ReadonlyArray<[Date | undefined, string]> = [
-        [new Date(1970, 0, 1), "01/01/1970"],
-        [new Date(2020, 10, 30), "30/11/2020"],
-        [new Date(1900, 5, 5), "05/06/1900"],
-        [new Date(1900, 13, 55), "27/03/1901"], // handle the overflow,
-        [new Date("not a date"), I18n.t("global.date.invalid")], // handle invalid date
-        [undefined, I18n.t("global.date.invalid")] // handle undefined value
-      ];
-      toTest.forEach(tt => {
-        expect(formatDateAsShortFormat(tt[0])).toEqual(tt[1]);
-      });
-    });
-  });
-
-  it("Check if the generated date (the timezone is always zero UTC offset, as denoted by the suffix Z) matches return value", () => {
-    const expected = "22/05/1977";
-    const toTest: ReadonlyArray<Date> = NAR.range(0, 23).map(
-      value =>
-        new Date(`1977-05-22T${value.toString().padStart(2, "0")}:00:00.000Z`)
-    );
-    toTest.forEach(tt => {
-      expect(formatDateAsShortFormat(tt)).toEqual(expected);
-    });
   });
 });

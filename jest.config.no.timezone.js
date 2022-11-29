@@ -10,11 +10,9 @@ module.exports = {
     "\\.svg": "<rootDir>/ts/__mocks__/svgMock.js"
   },
   setupFiles: ["./jestSetup.js"],
-  globalSetup: "./jestGlobalSetup.js",
   setupFilesAfterEnv: [
     "@testing-library/jest-native/extend-expect",
     "./jestSetupAfterEnv.js"
   ],
-  collectCoverage: true,
-  testPathIgnorePatterns: [".*fiscal-code.test.ts$"]
+  collectCoverage: true
 };

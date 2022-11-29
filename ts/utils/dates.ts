@@ -20,17 +20,67 @@ type DFNSLocales = Record<Locales, DateFnsLocale>;
 
 const locales: DFNSLocales = { it: dfns_it, en: dfns_en, de: dfns_de };
 
-// return a string representing the date dd/MM/YYYY (ex: 1 Jan 1970 -> 01/01/1970)
-export const formatDateAsShortFormat = (date: Date | undefined): string =>
-  pipe(
+const pad = (n: number) => {
+  return n.toString().padStart(2, "0");
+};
+
+/**
+ * This function is specific for the fiscal code birthday rendering.
+ * The birthday is an ISO8601 format where the time component is always 00:00:00.000
+ * and has no meaning. What's meaningful is only the date component that nust be
+ * rendered as is.
+ *
+ * i.e. 1976-05-22T00:00:00.000Z -> 22/05/1976
+ */
+// export const formatDateForFiscalCode = (
+//   date: Date | undefined,
+//   format: string = I18n.t("global.dateFormats.shortFormat")
+// ): string =>
+//   pipe(
+//     dateForFiscalCode(date),
+//     O.fromNullable,
+//     O.chain(O.fromPredicate(d => !isNaN(d.getTime()))),
+//     O.fold(
+//       () => I18n.t("global.date.invalid"),
+//       d => {
+//         return I18n.strftime(d, format);
+//       }
+//     )
+//   );
+
+//
+// maybe we can rename it with fiscalCodeUTC???
+//
+export const dateForFiscalCode = (date: Date | undefined): Date | undefined => {
+  return pipe(
     date,
     O.fromNullable,
     O.chain(O.fromPredicate(d => !isNaN(d.getTime()))),
     O.fold(
-      () => I18n.t("global.date.invalid"),
-      d => I18n.strftime(d, I18n.t("global.dateFormats.shortFormat"))
+      () => undefined,
+      d => {
+        const year = d.getUTCFullYear();
+        const month = pad(d.getUTCMonth() + 1);
+        const day = pad(d.getUTCDate());
+        // use current date to handle DST
+        const localDate = new Date();
+        const hours = pad(localDate.getUTCHours());
+        const minutes = pad(localDate.getUTCMinutes());
+        const seconds = pad(localDate.getUTCSeconds());
+
+        return new Date(
+          `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.000`
+        );
+      }
     )
   );
+};
+
+// return a string representing the date dd/MM/YYYY (ex: 1 Jan 1970 -> 01/01/1970)
+export const formatDateAsShortFormat = (date: Date): string =>
+  isNaN(date.getTime())
+    ? I18n.t("global.date.invalid")
+    : I18n.strftime(date, I18n.t("global.dateFormats.shortFormat"));
 
 export function formatDateAsMonth(date: Date): ReturnType<typeof format> {
   return format(date, "MMM");
