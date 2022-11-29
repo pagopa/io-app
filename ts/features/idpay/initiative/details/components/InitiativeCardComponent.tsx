@@ -90,7 +90,7 @@ const InitiativeCardComponent = (props: Props) => {
 
             <H2 color="white">{props.initiativeName}</H2>
             <Text style={{ color: IOColors.white }}>{`${TypedI18n.t(
-              "idpay.wallet.bonusCard.validUntil"
+              "idpay.initiative.details.initiativeCard.validUntil"
             )} ${formatDateAsLocal(props.endDate, true)}`}</Text>
           </View>
           <View style={styles.row}>
@@ -105,7 +105,9 @@ const InitiativeCardComponent = (props: Props) => {
                 {formatNumberAmount(props.amount || 0, true)}
               </Text>
               <H5 color="white">
-                {TypedI18n.t("idpay.wallet.bonusCard.availableAmount")}
+                {TypedI18n.t(
+                  "idpay.initiative.details.initiativeCard.availableAmount"
+                )}
               </H5>
             </View>
 
@@ -123,7 +125,9 @@ const InitiativeCardComponent = (props: Props) => {
               </Text>
 
               <H5 color="white">
-                {TypedI18n.t("idpay.wallet.bonusCard.toRefund")}
+                {TypedI18n.t(
+                  "idpay.initiative.details.initiativeCard.toRefund"
+                )}
               </H5>
             </View>
           </View>
