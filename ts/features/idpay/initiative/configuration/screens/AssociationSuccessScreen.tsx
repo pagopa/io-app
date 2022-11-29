@@ -8,6 +8,7 @@ import React from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
 import CompletedIcon from "../../../../../../img/pictograms/payment-completed.svg";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
+import { Pictogram } from "../../../../../components/core/pictograms";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";
@@ -45,7 +46,7 @@ const AssociationSuccessScreen = () => {
     <SafeAreaView style={IOStyles.flex}>
       <View style={[IOStyles.horizontalContentPadding, styles.container]}>
         <View style={styles.content}>
-          <CompletedIcon width={80} height={80} />
+          <Pictogram name="completed" size={80} />
           <View spacer={true} />
           <H3>{I18n.t("idpay.configuration.associationSuccess.title")}</H3>
           <View spacer={true} />
