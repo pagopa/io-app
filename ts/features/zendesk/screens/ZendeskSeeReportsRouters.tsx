@@ -157,7 +157,7 @@ const ZendeskSeeReportsRouters = (props: Props) => {
   }, [dispatch, zendeskToken]);
 
   useEffect(() => {
-    if (ticketNumber.kind === "PotSome" && ticketNumber.value > 0) {
+    if (isStrictSome(ticketNumber) && ticketNumber.value > 0) {
       showSupportTickets();
       dispatch(zendeskSupportCompleted());
     }
