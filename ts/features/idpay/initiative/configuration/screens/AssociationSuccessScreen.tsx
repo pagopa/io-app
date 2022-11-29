@@ -6,7 +6,6 @@ import * as O from "fp-ts/lib/Option";
 import { Text, View } from "native-base";
 import React from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
-import CompletedIcon from "../../../../../../img/pictograms/payment-completed.svg";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
 import { Pictogram } from "../../../../../components/core/pictograms";
 import { H3 } from "../../../../../components/core/typography/H3";
