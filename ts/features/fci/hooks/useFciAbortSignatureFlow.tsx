@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const CSS_STYLE = `
+const MARKDOWN_CSS_STYLE = `
         body {
             font-size: 18;
             color: ${IOColors.black};
@@ -32,7 +32,7 @@ export const useFciAbortSignatureFlow = () => {
   const dispatch = useIODispatch();
   const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
     <View style={styles.verticalPad}>
-      <Markdown cssStyle={CSS_STYLE} avoidTextSelection>
+      <Markdown cssStyle={MARKDOWN_CSS_STYLE} avoidTextSelection>
         {I18n.t("features.fci.abort.content")}
       </Markdown>
     </View>,
