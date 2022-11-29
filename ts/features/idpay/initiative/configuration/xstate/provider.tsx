@@ -93,10 +93,10 @@ const IDPayConfigurationMachineProvider = (props: Props) => {
 
   const pmSessionManager = new SessionManager(getPaymentManagerSession);
 
-  const onboardingClient = createIDPayWalletClient(IDPAY_API_UAT_BASEURL);
+  const walletClient = createIDPayWalletClient(IDPAY_API_UAT_BASEURL);
 
   const services = createServicesImplementation(
-    onboardingClient,
+    walletClient,
     paymentManagerClient,
     pmSessionManager,
     idPayToken,
