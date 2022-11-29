@@ -20,11 +20,10 @@ import {
 import { useIOSelector } from "../../../store/hooks";
 import { profileSelector } from "../../../store/reducers/profile";
 import { showToast } from "../../../utils/showToast";
-import { isPanicModeActive } from "../../../utils/supportAssistance";
 import { openWebUrl } from "../../../utils/url";
-import { isReady } from "../../bonus/bpd/model/RemoteValue";
 import ZENDESK_ROUTES from "../navigation/routes";
 import { zendeskConfigSelector } from "../store/reducers";
+import { handleContactSupport } from "../utils";
 
 type Props = {
   assistanceForPayment: boolean;
@@ -45,30 +44,15 @@ const ZendeskSupportComponent = (props: Props) => {
   const zendeskRemoteConfig = useIOSelector(zendeskConfigSelector);
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
-  const handleContactSupportPress = () => {
-    const canSkipCategoryChoice: boolean =
-      !isReady(zendeskRemoteConfig) || assistanceForPayment;
-
-    if (isPanicModeActive(zendeskRemoteConfig)) {
-      // Go to panic mode screen
-      navigation.navigate(ZENDESK_ROUTES.MAIN, {
-        screen: ZENDESK_ROUTES.PANIC_MODE
-      });
-      return;
-    }
-
-    if (canSkipCategoryChoice) {
-      navigation.navigate(ZENDESK_ROUTES.MAIN, {
-        screen: ZENDESK_ROUTES.ASK_PERMISSIONS,
-        params: { assistanceForPayment }
-      });
-    } else {
-      navigation.navigate(ZENDESK_ROUTES.MAIN, {
-        screen: ZENDESK_ROUTES.CHOOSE_CATEGORY,
-        params: { assistanceForPayment }
-      });
-    }
-  };
+  const handleContactSupportPress = React.useCallback(
+    () =>
+      handleContactSupport(
+        navigation,
+        assistanceForPayment,
+        zendeskRemoteConfig
+      ),
+    [navigation, assistanceForPayment, zendeskRemoteConfig]
+  );
 
   return (
     <>

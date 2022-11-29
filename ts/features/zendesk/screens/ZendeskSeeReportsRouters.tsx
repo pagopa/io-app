@@ -1,27 +1,16 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useNavigation } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React, { useEffect } from "react";
-import { SafeAreaView } from "react-native";
 import { useDispatch } from "react-redux";
-import image from "../../../../img/pictograms/doubt.png";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
-import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
-import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 import I18n from "../../../i18n";
-import {
-  AppParamsList,
-  IOStackNavigationProp,
-  IOStackNavigationRouteProps
-} from "../../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../store/hooks";
 import { zendeskTokenSelector } from "../../../store/reducers/authentication";
 import { isStrictSome } from "../../../utils/pot";
 import {
   AnonymousIdentity,
   initSupportAssistance,
-  isPanicModeActive,
   JwtIdentity,
   setUserIdentity,
   showSupportTickets,
@@ -29,80 +18,17 @@ import {
   zendeskDefaultAnonymousConfig,
   zendeskDefaultJwtConfig
 } from "../../../utils/supportAssistance";
-import { FooterStackButton } from "../../bonus/bonusVacanze/components/buttons/FooterStackButtons";
 import { LoadingErrorComponent } from "../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
-import { isReady } from "../../bonus/bpd/model/RemoteValue";
+import ZendeskEmptyTicketsComponent from "../components/ZendeskEmptyTicketsComponent";
 import { ZendeskParamsList } from "../navigation/params";
 import {
   zendeskRequestTicketNumber,
   zendeskSupportCompleted
 } from "../store/actions";
-import {
-  zendeskConfigSelector,
-  zendeskTicketNumberSelector
-} from "../store/reducers";
+import { zendeskTicketNumberSelector } from "../store/reducers";
 
 export type ZendeskSeeReportsRoutersNavigationParams = {
   assistanceForPayment: boolean;
-};
-
-type EmptyTicketsProps = {
-  assistanceForPayment: boolean;
-};
-
-const EmptyTicketsComponent = ({ assistanceForPayment }: EmptyTicketsProps) => {
-  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
-  const zendeskRemoteConfig = useIOSelector(zendeskConfigSelector);
-
-  const handleContactSupportPress = () => {
-    const canSkipCategoryChoice: boolean =
-      !isReady(zendeskRemoteConfig) || assistanceForPayment;
-
-    if (isPanicModeActive(zendeskRemoteConfig)) {
-      // Go to panic mode screen
-      navigation.navigate("ZENDESK_MAIN", {
-        screen: "ZENDESK_PANIC_MODE"
-      });
-      return;
-    }
-
-    if (canSkipCategoryChoice) {
-      navigation.navigate("ZENDESK_MAIN", {
-        screen: "ZENDESK_ASK_PERMISSIONS",
-        params: { assistanceForPayment }
-      });
-    } else {
-      navigation.navigate("ZENDESK_MAIN", {
-        screen: "ZENDESK_CHOOSE_CATEGORY",
-        params: { assistanceForPayment }
-      });
-    }
-  };
-
-  const continueButtonProps = {
-    testID: "continueButtonId",
-    bordered: false,
-    onPress: handleContactSupportPress,
-    title: I18n.t("support.helpCenter.cta.contactSupport")
-  };
-
-  const cancelButtonProps = {
-    testID: "cancelButtonId",
-    bordered: true,
-    onPress: () => navigation.goBack(),
-    title: I18n.t("global.buttons.back")
-  };
-
-  return (
-    <SafeAreaView style={IOStyles.flex} testID={"emptyTicketsComponent"}>
-      <InfoScreenComponent
-        image={renderInfoRasterImage(image)}
-        title={I18n.t("support.ticketList.noTicket.title")}
-        body={I18n.t("support.ticketList.noTicket.body")}
-      />
-      <FooterStackButton buttons={[continueButtonProps, cancelButtonProps]} />
-    </SafeAreaView>
-  );
 };
 
 type Props = IOStackNavigationRouteProps<
@@ -178,7 +104,9 @@ const ZendeskSeeReportsRouters = (props: Props) => {
   // if is some and there are 0 tickets show the Empty list component
   if (pot.isNone(ticketNumber) || ticketNumber.value === 0) {
     return (
-      <EmptyTicketsComponent assistanceForPayment={assistanceForPayment} />
+      <ZendeskEmptyTicketsComponent
+        assistanceForPayment={assistanceForPayment}
+      />
     );
   }
 
