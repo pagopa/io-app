@@ -5,6 +5,7 @@ import {
   InitiativeDTO,
   StatusEnum
 } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
+import { Wallet } from "../../../../../../definitions/pagopa/Wallet";
 import {
   LOADING_TAG,
   WAITING_USER_INPUT_TAG
@@ -13,10 +14,12 @@ import {
 export type Context = {
   initiativeId?: string;
   initiative: p.Pot<InitiativeDTO, Error>;
+  pagoPAInstruments: p.Pot<ReadonlyArray<Wallet>, Error>;
 };
 
 const INITIAL_CONTEXT: Context = {
-  initiative: p.none
+  initiative: p.none,
+  pagoPAInstruments: p.none
 };
 
 type E_SELECT_INITIATIVE = {
@@ -24,11 +27,18 @@ type E_SELECT_INITIATIVE = {
   initiativeId: string;
 };
 
-type Events = E_SELECT_INITIATIVE;
+type E_START_CONFIGURATION = {
+  type: "START_CONFIGURATION";
+};
+
+type Events = E_SELECT_INITIATIVE | E_START_CONFIGURATION;
 
 type Services = {
   loadInitiative: {
     data: InitiativeDTO;
+  };
+  loadInstruments: {
+    data: ReadonlyArray<Wallet>;
   };
 };
 
@@ -82,7 +92,28 @@ const createIDPayInitiativeConfigurationMachine = () =>
         },
         CONFIGURING_INITIATIVE: {
           tags: [WAITING_USER_INPUT_TAG],
-          type: "final"
+          on: {
+            START_CONFIGURATION: {
+              target: "LOADING_INSTRUMENTS"
+            }
+          }
+        },
+        LOADING_INSTRUMENTS: {
+          tags: [LOADING_TAG],
+          entry: "navigateToInstrumentsSelectionScreen",
+          invoke: {
+            src: "loadInstruments",
+            id: "loadInstruments",
+            onDone: [
+              {
+                target: "DISPLAYING_INSTRUMENTS",
+                actions: "loadInstrumentsSuccess"
+              }
+            ]
+          }
+        },
+        DISPLAYING_INSTRUMENTS: {
+          tags: [WAITING_USER_INPUT_TAG]
         },
         CONFIGURATION_NOT_NEEDED: {
           type: "final"
@@ -96,6 +127,9 @@ const createIDPayInitiativeConfigurationMachine = () =>
         })),
         loadInitiativeSuccess: assign((_, event) => ({
           initiative: p.some(event.data)
+        })),
+        loadInstrumentsSuccess: assign((_, event) => ({
+          pagoPAInstruments: p.some(event.data)
         }))
       },
       guards: {
