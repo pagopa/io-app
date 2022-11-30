@@ -104,7 +104,7 @@ const IDPayCardPreviewComponent = (props: Props) => {
       )}
       <ImageBackground
         source={cardBgPreview}
-        style={styles.card}
+        style={[styles.card, Platform.OS === "ios" ? styles.cardShadow : {}]}
         imageStyle={styles.cardImage}
       >
         <CardContent />
@@ -144,6 +144,10 @@ const styles = StyleSheet.create({
   card: {
     marginBottom: -20,
     height: 88,
+    marginLeft: 0,
+    marginRight: 0
+  },
+  cardShadow: {
     shadowOffset: {
       width: 0,
       height: 3
@@ -152,9 +156,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4.65,
     borderRadius: 8,
     zIndex: -7,
-    elevation: -7,
-    marginLeft: 0,
-    marginRight: 0
+    elevation: -7
   },
   cardImage: {
     resizeMode: "stretch",
