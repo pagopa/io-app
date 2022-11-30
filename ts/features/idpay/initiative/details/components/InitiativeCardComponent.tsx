@@ -1,6 +1,7 @@
 import { Text, View } from "native-base";
 import * as React from "react";
-import { Image, Platform, StyleSheet } from "react-native";
+import { Image, ImageBackground, StyleSheet } from "react-native";
+import { widthPercentageToDP } from "react-native-responsive-screen";
 import { StatusEnum } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
 import { makeFontStyleObject } from "../../../../../components/core/fonts";
 import { H2 } from "../../../../../components/core/typography/H2";
@@ -9,9 +10,9 @@ import { IOColors } from "../../../../../components/core/variables/IOColors";
 import TypedI18n from "../../../../../i18n";
 import { formatDateAsLocal } from "../../../../../utils/dates";
 import bonusVacanzeWhiteLogo from "../../../../../../img/bonus/bonusVacanze/logo_BonusVacanze_White.png";
-import InitiativeCardSVG from "../../../../../../img/features/idpay/bonus_bg_svg.svg";
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import cardBg from "../../../../../../img/features/idpay/card_full.png";
 
 type Props = {
   status: StatusEnum;
@@ -21,11 +22,18 @@ type Props = {
   accrued?: number;
 };
 
-const opaqueBorderColor = IOColors.bluegreyDark;
-
 const styles = StyleSheet.create({
+  cardContainer: {
+    height: 230,
+    width: widthPercentageToDP(100)
+  },
+  card: {
+    position: "absolute",
+    alignSelf: "center",
+    width: widthPercentageToDP(100),
+    height: 230
+  },
   imageFull: {
-    resizeMode: "stretch",
     zIndex: -1
   },
   row: {
@@ -42,7 +50,7 @@ const styles = StyleSheet.create({
   },
   paddedMainContent: {
     zIndex: 1,
-    padding: 16,
+    padding: 32,
     width: "100%",
     height: "100%",
     position: "absolute"
@@ -60,15 +68,6 @@ const styles = StyleSheet.create({
   },
   consumedOpacity: {
     opacity: 0.5
-  },
-  shadowBox: {
-    marginBottom: -13,
-    borderRadius: 8,
-    borderTopWidth: 10,
-    borderTopColor: opaqueBorderColor,
-    height: 15,
-    width: "100%",
-    maxWidth: 343
   }
 });
 
@@ -147,17 +146,14 @@ const InitiativeCardComponent = (props: Props) => {
   };
 
   return (
-    <>
-      {Platform.OS === "android" ? (
-        <View style={styles.shadowBox} />
-      ) : undefined}
-      <View style={IOStyles.flex}>
-        <View style={styles.imageFull}>
-          <InitiativeCardSVG />
-        </View>
-        <View style={styles.paddedMainContent}>{renderFullCard()}</View>
-      </View>
-    </>
+    <View style={styles.card} testID={"card-component"}>
+      <ImageBackground
+        source={cardBg}
+        imageStyle={[styles.imageFull]}
+        style={styles.cardContainer}
+      />
+      <View style={styles.paddedMainContent}>{renderFullCard()}</View>
+    </View>
   );
 };
 
