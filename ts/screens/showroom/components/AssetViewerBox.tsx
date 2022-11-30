@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     padding: 24
   },
   assetItemDark: {
-    backgroundColor: hexToRgba(IOColors.black, 0.1)
+    backgroundColor: IOColors.black
   },
   pill: {
     position: "absolute",
