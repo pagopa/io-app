@@ -34,7 +34,7 @@ const testFiscalCodeByLocale = (locale: Locales, timeZone: string) => {
   // set environment variable TZ from command line
   const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   expect(timezone).toBe(timeZone);
-  const testDate = dateForFiscalCode(new Date("1977-05-22T00:00:00.0000Z"));
+  const testDate = dateForFiscalCode(new Date("1977-05-22T00:00:00.000Z"));
   const checkDate = formatDateAsShortFormat(testDate!);
   expect("22/05/1977").toBe(checkDate);
 };
