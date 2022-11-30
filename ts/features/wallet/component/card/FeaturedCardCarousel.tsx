@@ -11,6 +11,7 @@ import { BonusAvailable } from "../../../../../definitions/content/BonusAvailabl
 import cashbackLogo from "../../../../../img/bonus/bpd/logo_cashback_blue.png";
 import cgnLogo from "../../../../../img/bonus/cgn/cgn_logo.png";
 import { H3 } from "../../../../components/core/typography/H3";
+import { IOColors } from "../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
 import {
@@ -55,8 +56,13 @@ type BonusUtils = {
 };
 
 const styles = StyleSheet.create({
-  container: { backgroundColor: "white", paddingTop: 14 },
-  scrollViewPadding: { paddingVertical: 15 }
+  container: {
+    backgroundColor: IOColors.white,
+    paddingTop: 14
+  },
+  scrollViewPadding: {
+    paddingVertical: 15
+  }
 });
 
 /**
@@ -123,7 +129,7 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
 
   return props.availableBonusesList.length > 0 && anyBonusNotActive ? (
     <View style={styles.container} testID={"FeaturedCardCarousel"}>
-      <View style={[IOStyles.horizontalContentPadding]}>
+      <View style={IOStyles.horizontalContentPadding}>
         <H3 weight={"SemiBold"} color={"bluegreyDark"}>
           {I18n.t("wallet.featured")}
         </H3>

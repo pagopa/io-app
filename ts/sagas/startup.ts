@@ -17,6 +17,7 @@ import {
 } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 import { pipe } from "fp-ts/lib/function";
+import PushNotification from "react-native-push-notification";
 import { UserDataProcessingChoiceEnum } from "../../definitions/backend/UserDataProcessingChoice";
 import { UserDataProcessingStatusEnum } from "../../definitions/backend/UserDataProcessingStatus";
 import { BackendClient } from "../api/backend";
@@ -26,13 +27,14 @@ import {
   bpdEnabled,
   cdcEnabled,
   euCovidCertificateEnabled,
+  fciEnabled,
   mvlEnabled,
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest,
   pnEnabled,
   svEnabled,
-  usePaginatedMessages,
-  zendeskEnabled
+  zendeskEnabled,
+  idPayEnabled
 } from "../config";
 import { watchBonusSaga } from "../features/bonus/bonusVacanze/store/sagas/bonusSaga";
 import { watchBonusBpdSaga } from "../features/bonus/bpd/saga";
@@ -41,17 +43,16 @@ import { watchBonusSvSaga } from "../features/bonus/siciliaVola/saga";
 import { watchEUCovidCertificateSaga } from "../features/euCovidCert/saga";
 import { watchMvlSaga } from "../features/mvl/saga";
 import { watchZendeskSupportSaga } from "../features/zendesk/saga";
+import { watchFciSaga } from "../features/fci/saga";
 import I18n from "../i18n";
 import { mixpanelTrack } from "../mixpanel";
 import NavigationService from "../navigation/NavigationService";
 import { startApplicationInitialization } from "../store/actions/application";
 import { sessionExpired } from "../store/actions/authentication";
 import { previousInstallationDataDeleteSuccess } from "../store/actions/installation";
-import { loadMessageWithRelations } from "../store/actions/messages";
 import { setMixpanelEnabled } from "../store/actions/mixpanel";
 import {
   navigateToMainNavigatorAction,
-  navigateToMessageRouterScreen,
   navigateToPaginatedMessageRouterAction,
   navigateToPrivacyScreen
 } from "../store/actions/navigation";
@@ -80,6 +81,8 @@ import { differentProfileLoggedIn } from "../store/actions/crossSessions";
 import { clearAllMvlAttachments } from "../features/mvl/saga/mvlAttachments";
 import { watchMessageAttachmentsSaga } from "../features/messages/saga/attachments";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
+import { watchIDPayWalletSaga } from "../features/idpay/wallet/saga";
+import { idpayInitiativeDetailsSaga } from "../features/idpay/initiative/details/saga";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -120,10 +123,7 @@ import {
   checkSession,
   watchCheckSessionSaga
 } from "./startup/watchCheckSessionSaga";
-import { watchLoadMessages } from "./startup/watchLoadMessagesSaga";
-import { watchLoadMessageWithRelationsSaga } from "./startup/watchLoadMessageWithRelationsSaga";
 import { watchLogoutSaga } from "./startup/watchLogoutSaga";
-import { watchMessageLoadSaga } from "./startup/watchMessageLoadSaga";
 import { watchSessionExpiredSaga } from "./startup/watchSessionExpiredSaga";
 import { watchUserDataProcessingSaga } from "./user/userDataProcessing";
 import {
@@ -136,6 +136,7 @@ import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValid
 import { completeOnboardingSaga } from "./startup/completeOnboardingSaga";
 import { watchLoadMessageById } from "./messages/watchLoadMessageById";
 import { watchThirdPartyMessageSaga } from "./messages/watchThirdPartyMessageSaga";
+import { checkNotificationsPreferencesSaga } from "./startup/checkNotificationsPreferencesSaga";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -165,6 +166,8 @@ export function* initializeApplicationSaga(): Generator<
   yield* call(initMixpanel);
   yield* call(waitForNavigatorServiceInitialization);
 
+  // remove all local notifications (see function comment)
+  yield* call(cancellAllLocalNotifications);
   yield* call(previousInstallationDataDeleteSaga);
   yield* put(previousInstallationDataDeleteSuccess());
 
@@ -224,10 +227,6 @@ export function* initializeApplicationSaga(): Generator<
     yield* put(sessionExpired());
     return;
   }
-
-  // Start the notification installation update as early as
-  // possible to begin receiving push notifications
-  yield* call(updateInstallationSaga, backendClient.createOrUpdateInstallation);
 
   // whether we asked the user to login again
   const isSessionRefreshed = previousSessionToken !== sessionToken;
@@ -336,6 +335,9 @@ export function* initializeApplicationSaga(): Generator<
 
     const isFirstOnboarding = isProfileFirstOnBoarding(userProfile);
 
+    // check if the user must set preferences for push notifications (e.g. reminders)
+    yield* call(checkNotificationsPreferencesSaga, userProfile);
+
     yield* call(askServicesPreferencesModeOptin, isFirstOnboarding);
 
     // Show the thank-you screen for the onboarding
@@ -367,12 +369,19 @@ export function* initializeApplicationSaga(): Generator<
       // check if the user expressed preference about mixpanel, if not ask for it
       yield* call(askMixpanelOptIn);
 
+      // check if the user must set preferences for push notifications (e.g. reminders)
+      yield* call(checkNotificationsPreferencesSaga, userProfile);
+
       yield* call(askServicesPreferencesModeOptin, false);
 
       // Stop the watchAbortOnboardingSaga
       yield* cancel(watchAbortOnboardingSagaTask);
     }
   }
+
+  // Start the notification installation update as early as
+  // possible to begin receiving push notifications
+  yield* call(updateInstallationSaga, backendClient.createOrUpdateInstallation);
 
   //
   // User is autenticated, session token is valid
@@ -419,6 +428,16 @@ export function* initializeApplicationSaga(): Generator<
   if (mvlEnabled || pnEnabled) {
     // Start watching for message attachments actions
     yield* fork(watchMessageAttachmentsSaga, sessionToken);
+  }
+
+  if (idPayEnabled) {
+    // Start watching for IDPay wallet actions
+    yield* fork(watchIDPayWalletSaga, sessionToken);
+    yield* fork(idpayInitiativeDetailsSaga, sessionToken);
+  }
+
+  if (fciEnabled) {
+    yield* fork(watchFciSaga, sessionToken);
   }
 
   // Load the user metadata
@@ -515,37 +534,22 @@ export function* initializeApplicationSaga(): Generator<
   // Load visible services and service details from backend when requested
   yield* fork(watchLoadServicesSaga, backendClient);
 
-  // Load all messages when requested
-  yield* fork(watchLoadMessages, backendClient.getMessages);
-
-  if (usePaginatedMessages) {
-    yield* fork(watchLoadNextPageMessages, backendClient.getMessages);
-    yield* fork(watchLoadPreviousPageMessages, backendClient.getMessages);
-    yield* fork(watchReloadAllMessages, backendClient.getMessages);
-    yield* fork(watchLoadMessageById, backendClient.getMessage);
-    yield* fork(watchLoadMessageDetails, backendClient.getMessage);
-    yield* fork(
-      watchUpsertMessageStatusAttribues,
-      backendClient.upsertMessageStatusAttributes
-    );
-    yield* fork(
-      watchMigrateToPagination,
-      backendClient.upsertMessageStatusAttributes
-    );
-  }
+  yield* fork(watchLoadNextPageMessages, backendClient.getMessages);
+  yield* fork(watchLoadPreviousPageMessages, backendClient.getMessages);
+  yield* fork(watchReloadAllMessages, backendClient.getMessages);
+  yield* fork(watchLoadMessageById, backendClient.getMessage);
+  yield* fork(watchLoadMessageDetails, backendClient.getMessage);
+  yield* fork(
+    watchUpsertMessageStatusAttribues,
+    backendClient.upsertMessageStatusAttributes
+  );
+  yield* fork(
+    watchMigrateToPagination,
+    backendClient.upsertMessageStatusAttributes
+  );
 
   // Load third party message content when requested
   yield* fork(watchThirdPartyMessageSaga, backendClient);
-
-  // Load a message when requested
-  yield* fork(watchMessageLoadSaga, backendClient.getMessage);
-
-  // Load message and related entities (ex. the sender service)
-  yield* takeEvery(
-    getType(loadMessageWithRelations.request),
-    watchLoadMessageWithRelationsSaga,
-    backendClient.getMessage
-  );
 
   // Watch for the app going to background/foreground
   yield* fork(watchApplicationActivitySaga);
@@ -573,16 +577,12 @@ export function* initializeApplicationSaga(): Generator<
 
     yield* call(navigateToMainNavigatorAction);
     // Navigate to message router screen
-    if (usePaginatedMessages) {
-      NavigationService.dispatchNavigationAction(
-        navigateToPaginatedMessageRouterAction({
-          messageId: messageId as UIMessageId,
-          fromNotification: true
-        })
-      );
-    } else {
-      yield* call(navigateToMessageRouterScreen, { messageId });
-    }
+    NavigationService.dispatchNavigationAction(
+      navigateToPaginatedMessageRouterAction({
+        messageId: messageId as UIMessageId,
+        fromNotification: true
+      })
+    );
   } else {
     yield* call(navigateToMainNavigatorAction);
   }
@@ -622,6 +622,20 @@ function* waitForNavigatorServiceInitialization() {
   });
 }
 
+/**
+ * Remove all the local notifications related to authentication with spid.
+ *
+ * With the previous library version (7.3.1 - now 8.1.1), cancelLocalNotifications
+ * did not work. At the moment, the "first access spid" is the only kind of
+ * scheduled notification and for this reason it is safe to use
+ * PushNotification.cancelAllLocalNotifications();
+ * If we add more scheduled notifications, we need to investigate if
+ * cancelLocalNotifications works with the new library version
+ */
+function cancellAllLocalNotifications() {
+  PushNotification.cancelAllLocalNotifications();
+}
+
 export function* startupSaga(): IterableIterator<ReduxSagaEffect> {
   // Wait until the IngressScreen gets mounted
   yield* takeLatest(
@@ -632,4 +646,8 @@ export function* startupSaga(): IterableIterator<ReduxSagaEffect> {
 
 export const testWaitForNavigatorServiceInitialization = isTestEnv
   ? waitForNavigatorServiceInitialization
+  : undefined;
+
+export const testCancellAllLocalNotifications = isTestEnv
+  ? cancellAllLocalNotifications
   : undefined;

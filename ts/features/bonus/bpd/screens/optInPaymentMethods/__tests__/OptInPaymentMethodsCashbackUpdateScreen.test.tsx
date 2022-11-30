@@ -1,25 +1,25 @@
 import { createStore, Store } from "redux";
 
 import { fireEvent, RenderAPI } from "@testing-library/react-native";
-import { GlobalState } from "../../../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../../../utils/testWrapper";
-import ROUTES from "../../../../../../navigation/routes";
-import { appReducer } from "../../../../../../store/reducers";
-import { applicationChangeState } from "../../../../../../store/actions/application";
+import { EnableableFunctionsEnum } from "../../../../../../../definitions/pagopa/EnableableFunctions";
 import I18n from "../../../../../../i18n";
-import OptInPaymentMethodsCashbackUpdateScreen from "../OptInPaymentMethodsCashbackUpdateScreen";
-import * as optInPaymentMethodsActions from "../../../store/actions/optInPaymentMethods";
-import * as navigationAction from "../../../navigation/actions";
+import ROUTES from "../../../../../../navigation/routes";
+import { applicationChangeState } from "../../../../../../store/actions/application";
 import {
   fetchWalletsFailure,
   fetchWalletsRequest,
   fetchWalletsSuccess
 } from "../../../../../../store/actions/wallet/wallets";
-import { EnableableFunctionsEnum } from "../../../../../../../definitions/pagopa/EnableableFunctions";
+import { appReducer } from "../../../../../../store/reducers";
+import { GlobalState } from "../../../../../../store/reducers/types";
 import {
   RawBancomatPaymentMethod,
   Wallet
 } from "../../../../../../types/pagopa";
+import { renderScreenFakeNavRedux } from "../../../../../../utils/testWrapper";
+import * as navigationAction from "../../../navigation/actions";
+import * as optInPaymentMethodsActions from "../../../store/actions/optInPaymentMethods";
+import OptInPaymentMethodsCashbackUpdateScreen from "../OptInPaymentMethodsCashbackUpdateScreen";
 
 jest.useFakeTimers();
 const mockPaymentMethodWithBPD = {
@@ -50,11 +50,6 @@ describe("the OptInPaymentMethodsCashbackUpdateScreen screen", () => {
     expect(
       component.getByText(
         I18n.t("bonus.bpd.optInPaymentMethods.cashbackUpdate.title")
-      )
-    ).toBeDefined();
-    expect(
-      component.getByText(
-        I18n.t("bonus.bpd.optInPaymentMethods.cashbackUpdate.subtitle")
       )
     ).toBeDefined();
   });

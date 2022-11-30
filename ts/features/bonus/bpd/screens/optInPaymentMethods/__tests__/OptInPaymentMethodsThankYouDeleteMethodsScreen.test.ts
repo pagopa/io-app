@@ -1,24 +1,23 @@
-import { createStore, Store } from "redux";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RenderAPI } from "@testing-library/react-native";
+import { createStore, Store } from "redux";
 
-import { GlobalState } from "../../../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../../../utils/testWrapper";
-import ROUTES from "../../../../../../navigation/routes";
-import OptInPaymentMethodsThankYouDeleteMethodsScreen from "../OptInPaymentMethodsThankYouDeleteMethodsScreen";
 import { CitizenOptInStatusEnum } from "../../../../../../../definitions/bpd/citizen_v2/CitizenOptInStatus";
+import ROUTES from "../../../../../../navigation/routes";
+import { applicationChangeState } from "../../../../../../store/actions/application";
+import { deleteAllPaymentMethodsByFunction } from "../../../../../../store/actions/wallet/delete";
+import { appReducer } from "../../../../../../store/reducers";
+import { GlobalState } from "../../../../../../store/reducers/types";
 import { WalletsState } from "../../../../../../store/reducers/wallet/wallets";
+import * as showToast from "../../../../../../utils/showToast";
+import { renderScreenFakeNavRedux } from "../../../../../../utils/testWrapper";
 import {
   remoteLoading,
   remoteReady,
   remoteUndefined
 } from "../../../model/RemoteValue";
-import { appReducer } from "../../../../../../store/reducers";
-import { applicationChangeState } from "../../../../../../store/actions/application";
-import { deleteAllPaymentMethodsByFunction } from "../../../../../../store/actions/wallet/delete";
 import { bpdUpdateOptInStatusMethod } from "../../../store/actions/onboarding";
-import * as showToast from "../../../../../../utils/showToast";
-import * as optInPaymentMethodsActions from "../../../store/actions/optInPaymentMethods";
+import OptInPaymentMethodsThankYouDeleteMethodsScreen from "../OptInPaymentMethodsThankYouDeleteMethodsScreen";
 
 const loadingCases: ReadonlyArray<
   [
@@ -129,10 +128,6 @@ describe("the OptInPaymentMethodsThankYouDeleteMethodsScreen screen", () => {
   });
   it("Should call the showToast and the optInPaymentMethodsCompleted functions if the delete payment methods status is ready and the opt-in status is error", () => {
     const showToastSpy = jest.spyOn(showToast, "showToast");
-    const optInPaymentMethodsCompletedSpy = jest.spyOn(
-      optInPaymentMethodsActions,
-      "optInPaymentMethodsCompleted"
-    );
     const store: Store<GlobalState> = createStore(
       appReducer,
       globalState as any
@@ -147,7 +142,6 @@ describe("the OptInPaymentMethodsThankYouDeleteMethodsScreen screen", () => {
     store.dispatch(bpdUpdateOptInStatusMethod.failure(new Error()));
     renderComponent(store);
     expect(showToastSpy).toBeCalledTimes(1);
-    expect(optInPaymentMethodsCompletedSpy).toBeCalledTimes(1);
   });
   it("Should render the ThankYouSuccessComponent if the delete payment methods status is ready and the opt-in status is some", () => {
     const store: Store<GlobalState> = createStore(

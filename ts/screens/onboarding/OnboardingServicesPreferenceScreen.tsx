@@ -1,5 +1,4 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { CompatNavigationProp } from "@react-navigation/compat";
 import { View } from "native-base";
 import * as React from "react";
 import { SafeAreaView, ScrollView } from "react-native";
@@ -14,7 +13,7 @@ import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import { confirmButtonProps } from "../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import I18n from "../../i18n";
-import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { OnboardingParamsList } from "../../navigation/params/OnboardingParamsList";
 import { navigateToOnboardingServicePreferenceCompleteAction } from "../../store/actions/navigation";
 import { servicesOptinCompleted } from "../../store/actions/onboarding";
@@ -35,19 +34,16 @@ export type OnboardingServicesPreferenceScreenNavigationParams = {
   isFirstOnboarding: boolean;
 };
 type Props = ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps> & {
-    navigation: CompatNavigationProp<
-      IOStackNavigationProp<
-        OnboardingParamsList,
-        "ONBOARDING_SERVICES_PREFERENCE"
-      >
-    >;
-  };
+  ReturnType<typeof mapDispatchToProps> &
+  IOStackNavigationRouteProps<
+    OnboardingParamsList,
+    "ONBOARDING_SERVICES_PREFERENCE"
+  >;
 
 const OnboardingServicesPreferenceScreen = (
   props: Props
 ): React.ReactElement => {
-  const isFirstOnboarding = props.navigation.getParam("isFirstOnboarding");
+  const isFirstOnboarding = props.route.params.isFirstOnboarding;
   // if the user is not new and he/she hasn't a preference set, pre-set with AUTO mode
   const mode =
     !isFirstOnboarding &&
@@ -88,9 +84,10 @@ const OnboardingServicesPreferenceScreen = (
       props.onServicePreferenceSelected(modeSelected);
     }
   };
-  const { present: confirmManualConfig } = useManualConfigBottomSheet(() =>
-    props.onServicePreferenceSelected(ServicesPreferencesModeEnum.MANUAL)
-  );
+  const { present: confirmManualConfig, manualConfigBottomSheet } =
+    useManualConfigBottomSheet(() =>
+      props.onServicePreferenceSelected(ServicesPreferencesModeEnum.MANUAL)
+    );
 
   const handleOnSelectMode = (mode: ServicesPreferencesModeEnum) => {
     // if user's choice is 'manual', open bottom sheet to ask confirmation
@@ -126,6 +123,7 @@ const OnboardingServicesPreferenceScreen = (
             disabled: !isServicesPreferenceModeSet(modeSelected)
           }}
         />
+        {manualConfigBottomSheet}
       </SafeAreaView>
     </BaseScreenComponent>
   );

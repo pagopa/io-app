@@ -1,12 +1,13 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import AsyncStorage from "@react-native-community/async-storage";
-import { List, ListItem, Text, Toast, View } from "native-base";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { List, ListItem, Text as NBText, Toast, View } from "native-base";
 import * as React from "react";
 import { Alert, ScrollView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { TranslationKeys } from "../../../locales/locales";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import ContextualInfo from "../../components/ContextualInfo";
+import { IOColors } from "../../components/core/variables/IOColors";
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
@@ -48,7 +49,6 @@ import { getAppVersion } from "../../utils/appVersion";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { getDeviceId } from "../../utils/device";
 import { isDevEnv } from "../../utils/environment";
-import { IOColors } from "../../components/core/variables/IOColors";
 
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "PROFILE_MAIN"> &
   LightModalContextInterface &
@@ -60,10 +60,6 @@ type State = {
 };
 
 const styles = StyleSheet.create({
-  itemLeft: {
-    flexDirection: "column",
-    alignItems: "flex-start"
-  },
   itemLeftText: {
     alignSelf: "flex-start"
   },
@@ -78,9 +74,6 @@ const styles = StyleSheet.create({
   },
   developerSectionItemRight: {
     flex: 0
-  },
-  modalHeader: {
-    lineHeight: 40
   },
   whiteBg: {
     backgroundColor: IOColors.white
@@ -151,9 +144,9 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       <ListItem style={styles.noRightPadding}>
         <View style={styles.developerSectionItem}>
           <View style={styles.developerSectionItemLeft}>
-            <Text style={styles.itemLeftText}>{title}</Text>
+            <NBText style={styles.itemLeftText}>{title}</NBText>
 
-            <Text style={styles.itemLeftText}>{description}</Text>
+            <NBText style={styles.itemLeftText}>{description}</NBText>
           </View>
           <View style={styles.developerSectionItemRight}>
             <Switch value={switchValue} onValueChange={onSwitchValueChange} />
@@ -172,7 +165,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
           small={true}
           onPress={onPress}
         >
-          <Text numberOfLines={1}>{title}</Text>
+          <NBText numberOfLines={1}>{title}</NBText>
         </ButtonDefaultOpacity>
       </ListItem>
     );
@@ -181,9 +174,9 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
   private versionListItem(title: string, onPress: () => void) {
     return (
       <ListItem style={styles.noRightPadding}>
-        <Text numberOfLines={1} semibold={true} onPress={onPress}>
+        <NBText numberOfLines={1} semibold={true} onPress={onPress}>
           {title}
-        </Text>
+        </NBText>
       </ListItem>
     );
   }
@@ -321,6 +314,14 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
               onPress={() =>
                 navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
                   screen: ROUTES.CGN_LANDING_PLAYGROUND
+                })
+              }
+            />
+            <ListItemComponent
+              title={"IDPay Onboarding Playground"}
+              onPress={() =>
+                navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+                  screen: ROUTES.IDPAY_ONBOARDING_PLAYGROUND
                 })
               }
             />

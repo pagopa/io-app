@@ -1,6 +1,9 @@
 import * as React from "react";
 import { View, StyleSheet, Text } from "react-native";
-import { IOColors } from "../../../components/core/variables/IOColors";
+import {
+  IOColors,
+  hexToRgba
+} from "../../../components/core/variables/IOColors";
 
 export const iconItemGutter = 8;
 
@@ -30,15 +33,16 @@ const styles = StyleSheet.create({
   },
   iconItem: {
     overflow: "hidden",
-    borderRadius: 8,
+    position: "relative",
     aspectRatio: 1,
+    borderRadius: 8,
     padding: 16,
     alignItems: "center",
     justifyContent: "center",
-    borderColor: "rgba(0, 0, 0, 0.1)",
+    borderColor: hexToRgba(IOColors.black, 0.1),
     borderWidth: 1
   },
-  iconItemSmall: {
+  iconItemLarger: {
     padding: 12
   },
   iconLabel: {
@@ -65,7 +69,7 @@ type IconViewerBoxProps = {
 const sizeMap = {
   small: {
     wrapper: styles.iconWrapperSmall,
-    item: styles.iconItemSmall,
+    item: styles.iconItemLarger,
     label: styles.iconLabelSmall
   },
   medium: {
@@ -75,7 +79,7 @@ const sizeMap = {
   },
   large: {
     wrapper: styles.iconWrapperLarge,
-    item: null,
+    item: styles.iconItemLarger,
     label: styles.iconLabelLarge
   }
 };

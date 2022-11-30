@@ -1,6 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
-import { Content, Text, View } from "native-base";
+import { Content, Text as NBText, View } from "native-base";
 import * as React from "react";
 import {
   BackHandler,
@@ -29,11 +29,7 @@ import SectionCardComponent, {
 import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletHomeHeader from "../../components/wallet/WalletHomeHeader";
 import WalletLayout from "../../components/wallet/WalletLayout";
-import {
-  bonusVacanzeEnabled,
-  bpdEnabled,
-  bpdOptInPaymentMethodsEnabled
-} from "../../config";
+import { bonusVacanzeEnabled, bpdEnabled, idPayEnabled } from "../../config";
 import RequestBonus from "../../features/bonus/bonusVacanze/components/RequestBonus";
 import {
   navigateToAvailableBonusScreen,
@@ -56,6 +52,8 @@ import {
   cgnDetailSelector,
   isCgnInformationAvailableSelector
 } from "../../features/bonus/cgn/store/reducers/details";
+import IDPayCardsInWalletContainer from "../../features/idpay/wallet/components/IDPayCardsInWalletContainer";
+import { idPayWalletGet } from "../../features/idpay/wallet/store/actions";
 import FeaturedCardCarousel from "../../features/wallet/component/card/FeaturedCardCarousel";
 import WalletV2PreviewCards from "../../features/wallet/component/card/WalletV2PreviewCards";
 import NewPaymentMethodAddedNotifier from "../../features/wallet/component/NewMethodAddedNotifier";
@@ -117,29 +115,11 @@ type Props = ReturnType<typeof mapStateToProps> &
   LightModalContextInterface;
 
 const styles = StyleSheet.create({
-  inLineSpace: {
-    lineHeight: 20
-  },
-  addDescription: {
-    lineHeight: 24,
-    fontSize: customVariables.fontSize1
-  },
   white: {
     color: IOColors.white
   },
-  container: {
-    flex: 1,
-    alignItems: "flex-start",
-    justifyContent: "center",
-    backgroundColor: "transparent"
-  },
   flex1: {
     flex: 1
-  },
-  flexRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between"
   },
   emptyListWrapper: {
     padding: customVariables.contentPadding,
@@ -155,18 +135,8 @@ const styles = StyleSheet.create({
     padding: customVariables.contentPadding,
     paddingBottom: 0
   },
-  center: {
-    alignSelf: "center"
-  },
-  end: {
-    alignSelf: "flex-end"
-  },
-
   centered: {
     textAlign: "center"
-  },
-  textStyleHelp: {
-    lineHeight: 18
   }
 });
 
@@ -203,6 +173,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
 
   private onFocus = () => {
     this.loadBonusVacanze();
+    this.loadBonusIDPay();
     this.setState({ hasFocus: true });
   };
 
@@ -229,6 +200,12 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     }
   };
 
+  private loadBonusIDPay = () => {
+    if (this.props.isIdPayEnabled) {
+      this.props.loadIdPayWalletData();
+    }
+  };
+
   public componentDidMount() {
     if (bonusVacanzeEnabled) {
       // eslint-disable-next-line functional/immutable-data
@@ -248,14 +225,8 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
 
     this.props.loadWallets();
 
-    // To maintain retro compatibility, if the opt-in payment methods feature flag is turned off,
     // load the bonus information on Wallet mount
-    if (
-      !this.props.bpdConfig?.opt_in_payment_methods ||
-      !bpdOptInPaymentMethodsEnabled
-    ) {
-      this.loadBonusBpd();
-    }
+    this.loadBonusBpd();
     // FIXME restore loadTransactions see https://www.pivotaltracker.com/story/show/176051000
 
     // eslint-disable-next-line functional/immutable-data
@@ -398,6 +369,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
                 this.loadBonusVacanze();
                 this.loadBonusBpd();
                 this.loadBonusCgn();
+                this.loadBonusIDPay();
               }
             }}
             activeBonuses={this.props.allActiveBonus}
@@ -406,11 +378,9 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
           />
         )}
 
-        {/* When the opt_in_payment_methods FF is active hide the BpdCardsInWalletContainer component */}
-        {!this.props.bpdConfig?.opt_in_payment_methods && bpdEnabled && (
-          <BpdCardsInWalletContainer />
-        )}
+        {bpdEnabled && <BpdCardsInWalletContainer />}
         <CgnCardInWalletContainer />
+        {idPayEnabled && <IDPayCardsInWalletContainer />}
       </View>
     );
   }
@@ -515,7 +485,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
         activeOpacity={1}
       >
         <IconFont name="io-qr" style={styles.white} />
-        <Text>{I18n.t("wallet.payNotice")}</Text>
+        <NBText>{I18n.t("wallet.payNotice")}</NBText>
       </ButtonDefaultOpacity>
     );
   }
@@ -610,12 +580,14 @@ const mapStateToProps = (state: GlobalState) => ({
   isCgnEnabled: isCGNEnabledSelector(state),
   bancomatListVisibleInWallet: bancomatListVisibleInWalletSelector(state),
   coBadgeListVisibleInWallet: cobadgeListVisibleInWalletSelector(state),
-  bpdConfig: bpdRemoteConfigSelector(state)
+  bpdConfig: bpdRemoteConfigSelector(state),
+  isIdPayEnabled: true // TODO add remote config to enable/disable idPay
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadBpdData: () => dispatch(bpdAllData.request()),
   loadCgnData: () => dispatch(cgnDetails.request()),
+  loadIdPayWalletData: () => dispatch(idPayWalletGet.request()),
   navigateToWalletAddPaymentMethod: (keyFrom?: string) =>
     navigateToWalletAddPaymentMethod({ inPayment: O.none, keyFrom }),
   navigateToPaymentScanQrCode: () => navigateToPaymentScanQrCode(),

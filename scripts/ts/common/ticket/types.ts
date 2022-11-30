@@ -35,6 +35,7 @@ const convertJiraTypeToGeneric = (
       return "epic";
     case "Sub-task":
     case "Sottotask":
+    case "Subtask":
       return "chore";
     case "Story":
       return "feat";

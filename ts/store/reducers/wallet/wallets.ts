@@ -36,13 +36,23 @@ import {
   Wallet
 } from "../../../types/pagopa";
 
+import { EnableableFunctionsEnum } from "../../../../definitions/pagopa/EnableableFunctions";
+import { TypeEnum } from "../../../../definitions/pagopa/walletv2/CardInfo";
+import { optInPaymentMethodsStart } from "../../../features/bonus/bpd/store/actions/optInPaymentMethods";
 import { PotFromActions } from "../../../types/utils";
+import { getErrorFromNetworkError } from "../../../utils/errors";
 import { isDefined } from "../../../utils/guards";
 import { enhancePaymentMethod } from "../../../utils/paymentMethod";
+import { hasPaymentFeature } from "../../../utils/paymentMethodCapabilities";
 import { hasFunctionEnabled } from "../../../utils/walletv2";
 import { sessionExpired, sessionInvalid } from "../../actions/authentication";
 import { clearCache } from "../../actions/profile";
 import { Action } from "../../actions/types";
+import {
+  DeleteAllByFunctionError,
+  DeleteAllByFunctionSuccess,
+  deleteAllPaymentMethodsByFunction
+} from "../../actions/wallet/delete";
 import { paymentUpdateWalletPsp } from "../../actions/wallet/payment";
 import {
   addWalletCreditCardFailure,
@@ -64,16 +74,6 @@ import {
 } from "../../actions/wallet/wallets";
 import { IndexedById, toIndexed } from "../../helpers/indexer";
 import { GlobalState } from "../types";
-import { TypeEnum } from "../../../../definitions/pagopa/walletv2/CardInfo";
-import { getErrorFromNetworkError } from "../../../utils/errors";
-import { hasPaymentFeature } from "../../../utils/paymentMethodCapabilities";
-import { EnableableFunctionsEnum } from "../../../../definitions/pagopa/EnableableFunctions";
-import {
-  DeleteAllByFunctionError,
-  DeleteAllByFunctionSuccess,
-  deleteAllPaymentMethodsByFunction
-} from "../../actions/wallet/delete";
-import { optInPaymentMethodsStart } from "../../../features/bonus/bpd/store/actions/optInPaymentMethods";
 
 export type WalletsState = Readonly<{
   walletById: PotFromActions<IndexedById<Wallet>, typeof fetchWalletsFailure>;
@@ -228,6 +228,30 @@ export const getBPDMethodsSelector = createSelector(
     )
 );
 
+/**
+ * return true if the payment method is visible in the wallet (the onboardingChannel
+ * is IO or WISP) or if the onboardingChannel is undefined.
+ * We choose to show cards with onboardingChannel undefined to ensure backward compatibility
+ * with cards inserted before the field was added.
+ * Explicitly handling the undefined is a conservative choice, as the field should be an enum (IO, WISP, EXT)
+ * but it is a string and therefore we cannot be sure that incorrect data will not arrive.
+ *
+ * @param pm
+ */
+const visibleOnboardingChannels = ["IO", "WISP", undefined];
+export const isVisibleInWallet = (pm: PaymentMethod): boolean =>
+  visibleOnboardingChannels.some(
+    oc => oc === pm.onboardingChannel?.toUpperCase().trim()
+  );
+
+// return those payment methods that have BPD as enabled function and are visible in Wallet
+export const getBPDMethodsVisibleInWalletSelector = createSelector(
+  getBPDMethodsSelector,
+  (
+    pms: ReturnType<typeof getBPDMethodsSelector>
+  ): ReadonlyArray<PaymentMethod> => pms.filter(isVisibleInWallet)
+);
+
 export const rawCreditCardListSelector = createSelector(
   [paymentMethodsSelector],
   (
@@ -332,22 +356,6 @@ export const bPayListSelector = createSelector(
   (paymentMethodPot): pot.Pot<ReadonlyArray<BPayPaymentMethod>, Error> =>
     pot.map(paymentMethodPot, paymentMethod => paymentMethod.filter(isBPay))
 );
-
-/**
- * return true if the payment method is visible in the wallet (the onboardingChannel
- * is IO or WISP) or if the onboardingChannel is undefined.
- * We choose to show cards with onboardingChannel undefined to ensure backward compatibility
- * with cards inserted before the field was added.
- * Explicitly handling the undefined is a conservative choice, as the field should be an enum (IO, WISP, EXT)
- * but it is a string and therefore we cannot be sure that incorrect data will not arrive.
- *
- * @param pm
- */
-const visibleOnboardingChannels = ["IO", "WISP", undefined];
-export const isVisibleInWallet = (pm: PaymentMethod): boolean =>
-  visibleOnboardingChannels.some(
-    oc => oc === pm.onboardingChannel?.toUpperCase().trim()
-  );
 
 /**
  * Return all the payment methods visible in wallet screen.

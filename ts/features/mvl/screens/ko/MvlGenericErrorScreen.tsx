@@ -30,7 +30,7 @@ export const MvlGenericErrorScreen = (props: Props): React.ReactElement => {
   return (
     <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
       <SafeAreaView style={IOStyles.flex} testID={"MvlGenericErrorScreen"}>
-        <ScrollView style={[IOStyles.horizontalContentPadding]}>
+        <ScrollView style={IOStyles.horizontalContentPadding}>
           <View spacer={true} extralarge={true} />
           <View spacer={true} extralarge={true} />
           <InfoScreenComponent

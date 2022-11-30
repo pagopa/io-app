@@ -1,5 +1,4 @@
-import { CompatNavigationProp } from "@react-navigation/compat";
-import { Content, Text } from "native-base";
+import { Content, Text as NBText } from "native-base";
 import * as React from "react";
 import { Alert } from "react-native";
 import { connect } from "react-redux";
@@ -8,7 +7,7 @@ import { ScreenContentHeader } from "../../components/screens/ScreenContentHeade
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import I18n from "../../i18n";
-import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { OnboardingParamsList } from "../../navigation/params/OnboardingParamsList";
 import {
   abortOnboarding,
@@ -50,11 +49,11 @@ function getBiometryIconName(biometryType: BiometricsValidType): string {
   }
 }
 
-type Props = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<OnboardingParamsList, "ONBOARDING_FINGERPRINT">
-  >;
-} & ReturnType<typeof mapDispatchToProps>;
+type Props = IOStackNavigationRouteProps<
+  OnboardingParamsList,
+  "ONBOARDING_FINGERPRINT"
+> &
+  ReturnType<typeof mapDispatchToProps>;
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "onboarding.contextualHelpTitle",
@@ -84,7 +83,7 @@ class FingerprintScreen extends React.PureComponent<Props> {
     );
 
   public render() {
-    const biometryType = this.props.navigation.getParam("biometryType");
+    const biometryType = this.props.route.params.biometryType;
 
     return (
       <TopScreenComponent
@@ -98,11 +97,11 @@ class FingerprintScreen extends React.PureComponent<Props> {
           iconFont={{ name: getBiometryIconName(biometryType) }}
         />
         <Content>
-          <Text>
+          <NBText>
             {I18n.t("onboarding.fingerprint.body.enrolledText", {
               biometryType: localizeBiometricsType(biometryType)
             })}
-          </Text>
+          </NBText>
         </Content>
         <FooterWithButtons
           type={"SingleButton"}
