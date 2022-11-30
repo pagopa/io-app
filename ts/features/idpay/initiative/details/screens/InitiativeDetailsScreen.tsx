@@ -4,7 +4,6 @@ import { List, Text, View } from "native-base";
 import React, { useEffect } from "react";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
-import { widthPercentageToDP } from "react-native-responsive-screen";
 import {
   InitiativeDTO,
   StatusEnum

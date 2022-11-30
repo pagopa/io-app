@@ -1,6 +1,6 @@
 import { Text, View } from "native-base";
 import * as React from "react";
-import { Image, ImageBackground, Platform, StyleSheet } from "react-native";
+import { Image, ImageBackground, StyleSheet } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 import { StatusEnum } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
 import { makeFontStyleObject } from "../../../../../components/core/fonts";
