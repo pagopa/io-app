@@ -1,5 +1,5 @@
-import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
-import { View } from "native-base";
+import { View, SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { View as NBView } from "native-base";
 import * as React from "react";
 import { useEffect } from "react";
 import { IOStyles } from "../../components/core/variables/IOStyles";
@@ -12,6 +12,7 @@ import { IconsShowroom } from "./core/IconsShowroom";
 import { SelectionShowroom } from "./core/SelectionShowroom";
 import { TypographyShowroom } from "./core/TypographyShowRoom";
 import { OthersShowroom } from "./OthersShowroom";
+import { ButtonsShowroom } from "./ButtonsShowroom";
 
 const styles = StyleSheet.create({
   body: {
@@ -41,12 +42,14 @@ export const Showroom = () => {
         <ScrollView>
           <View style={IOStyles.horizontalContentPadding}>
             <ColorsShowroom />
-            <View spacer={true} extralarge={true} />
+            <NBView spacer={true} extralarge={true} />
             <TypographyShowroom />
             <SelectionShowroom />
-            <View spacer={true} extralarge={true} />
+            <NBView spacer={true} extralarge={true} />
             <OthersShowroom />
-            <View spacer={true} extralarge={true} />
+            <NBView spacer={true} extralarge={true} />
+            <ButtonsShowroom />
+            <NBView spacer={true} extralarge={true} />
             <PictogramsShowroom />
             <IconsShowroom />
             <IllustrationsShowroom />
