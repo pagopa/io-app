@@ -39,9 +39,9 @@ export type ZendeskAskSeeReportsPermissionsNavigationParams = {
 };
 
 type ItemProps = {
-  fiscalCode: string;
-  nameSurname: string;
-  email: string;
+  fiscalCode?: string;
+  nameSurname?: string;
+  email?: string;
 };
 
 const iconProps = { width: 24, height: 24 };
@@ -82,12 +82,14 @@ type Props = IOStackNavigationRouteProps<
 const ZendeskAskSeeReportsPermissions = (props: Props) => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const assistanceForPayment = props.route.params.assistanceForPayment;
-  const notAvailable = I18n.t("global.remoteStates.notAvailable");
-  const fiscalCode = useIOSelector(profileFiscalCodeSelector) ?? notAvailable;
-  const nameSurname = useIOSelector(profileNameSurnameSelector) ?? notAvailable;
+  const fiscalCode = useIOSelector(profileFiscalCodeSelector);
+  const nameSurname = useIOSelector(profileNameSurnameSelector);
   const email = pipe(
     useIOSelector(profileEmailSelector),
-    O.getOrElse(() => notAvailable)
+    O.fold(
+      () => undefined,
+      e => e
+    )
   );
 
   const itemsProps: ItemProps = {
@@ -98,7 +100,7 @@ const ZendeskAskSeeReportsPermissions = (props: Props) => {
 
   const items = getItems(itemsProps)
     // remove these item whose have no value associated
-    .filter(it => it.value !== notAvailable);
+    .filter(it => it.value);
 
   const continueButtonProps = {
     testID: "continueButtonId",
