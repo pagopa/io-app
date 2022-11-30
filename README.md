@@ -49,7 +49,8 @@
   - [Connection monitoring](#connection-monitoring)
   - [Deep linking](#deep-linking)
   - [Fonts](#fonts)
-  - [Io-Icon-Font](#io-icon-font)
+  - [Vector graphics](#vector-graphics)
+  - [Io-Icon-Font](#io-icon-font) (⚠️ deprecated)
   - [Theming](#theming)
   - [Custom UI components](#custom-ui-components)
   - [End to end test](./TESTING_E2E.md)
@@ -508,7 +509,44 @@ while in iOS the code to be applied is:
 
 To manage fonts and variants more easily, we have created utility functions within the file [ts/theme/fonts.ts](ts/theme/fonts.ts).
 
+### Vector graphics
+Most of the images used in the app can be rendered as vector assets using SVG image format. Currently we have two main groups:
+- **Pictograms**: assets with an intended size greather than `56px`
+- **Icons**: assets with an intended size between `16px` and `56px`
+
+Once you understand which group you must put the asset in, you must take into consideration the following instructions for the best result in terms of quality and future maintenance:
+
+1. In your user interface design app (Figma/Sketch) make the vector path as simple as possible:
+    * Detach the symbol instance to avoid destructive actions to the original source component. Feel free to use a draft or disposable project document.
+    * Outline all the present strokes (unless required for dynamic stroke width, but we don't manage this case at the moment)
+    * Select all the different paths and flatten into one. Now you should have a single vector layer.
+    * Make sure your vector path is centered (both vertically and horizontally) in a square
+2. Export your SVG with `1×` preset
+3. Delete `width` and `height` attributes and leave the original `viewBox` attribute. You could easily process the image using online editors like [SVGOmg](https://jakearchibald.github.io/svgomg/) (enable `Prefer viewBox to width/height`)
+4. To easily preview the available SVG assets, include the original SVG in the `originals` subfolder **with the same filename of your corresponding React component**.
+5. If your asset is part of one of the subset, make sure to use the same prefix of the corresponding set. *E.g*: If you want to add a new pictogram related to a section, you should use the `PictogramSection…` prefix.
+6. Copy all the `<path>` elements into a new React component and replace the original `<path>` with the element `<Path>` (capital P) from the `react-native-svg` package
+7. Add the dynamic size and colour replacing the hardcoded values with the corresponding props:
+```jsx
+import { Svg, Path } from "react-native-svg";
+
+const IconSpid = ({ size, color }: SVGIconProps) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24">
+    <Path
+      d="M13.615 …"
+      fill={color}
+    />
+  </Svg>
+);
+```
+8. Add the key associated to the single pictogram/icon in the corresponding set. If you want to learn more, read the contextual documentation:
+    * [Pictograms](ts/components/core/pictograms)
+    * [Icons](ts/components/core/icons)
+
+9. There's no need to add the new pictogram/icon in the `UI Showroom` because it happens automatically.
+
 ### Io-Icon-Font
+**Note**: ⚠️ Deprecated
 
 The application uses a custom font-icon from the name 'io-icon-font'. Thanks to the library [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons) which is included in the project, it is possible to create new IconSets. In particular, among the various methods shown in the [appropriate section](https://github.com/oblador/react-native-vector-icons#custom-fonts) of the documentation, we decided to use the one that allows to export the font through IcoMoon. When exporting from [IcoMoon](https://icomoon.io/), you should use the configuration shown in the following picture.
 

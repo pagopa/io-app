@@ -4,18 +4,17 @@ import { IDPayConfigurationMachineProvider } from "../xstate/provider";
 import InitiativeConfigurationIntroScreen, {
   InitiativeConfigurationIntroScreenRouteParams
 } from "../screens/InitiativeConfigurationIntroScreen";
-import AssociationSuccessScreen from "../screens/AssociationSuccessScreen";
+import ConfigurationSuccessScreen from "../screens/ConfigurationSuccessScreen";
 
 export const IDPayConfigurationRoutes = {
   IDPAY_CONFIGURATION_MAIN: "IDPAY_CONFIGURATION_MAIN",
   IDPAY_CONFIGURATION_INTRO: "IDPAY_CONFIGURATION_INTRO",
-  IDPAY_CONFIGURATION_ASSOCIATION_SUCCES:
-    "IDPAY_CONFIGURATION_ASSOCIATION_SUCCES"
+  IDPAY_CONFIGURATION_SUCCESS: "IDPAY_CONFIGURATION_SUCCESS"
 } as const;
 
 export type IDPayConfigurationParamsList = {
   [IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO]: InitiativeConfigurationIntroScreenRouteParams;
-  [IDPayConfigurationRoutes.IDPAY_CONFIGURATION_ASSOCIATION_SUCCES]: undefined;
+  [IDPayConfigurationRoutes.IDPAY_CONFIGURATION_SUCCESS]: undefined;
 };
 
 const Stack = createStackNavigator<IDPayConfigurationParamsList>();
@@ -32,8 +31,8 @@ export const IDPayConfigurationNavigator = () => (
       />
 
       <Stack.Screen
-        name={IDPayConfigurationRoutes.IDPAY_CONFIGURATION_ASSOCIATION_SUCCES}
-        component={AssociationSuccessScreen}
+        name={IDPayConfigurationRoutes.IDPAY_CONFIGURATION_SUCCESS}
+        component={ConfigurationSuccessScreen}
       />
     </Stack.Navigator>
   </IDPayConfigurationMachineProvider>
