@@ -10,7 +10,7 @@ import {
 import { mvlPersistor, PersistedMvlState } from "../../../mvl";
 import { PersistedPnState, pnPersistor } from "../../../pn";
 import fciReducer, { FciState } from "../../../fci/store/reducers";
-import idPayReducer, { IDPayState } from "../../../idpay/wallet/store/reducers";
+import idPayReducer, { IDPayState } from "../../../idpay/common/store/reducers";
 
 export type FeaturesState = {
   euCovidCert: EuCovidCertState;

@@ -3260,6 +3260,44 @@ support:
     subTitle:
       category: "Aiutaci a capire meglio come possiamo aiutarti selezionando l’argomento del tuo problema: ti risponderemo il prima possibile, in orario lavorativo."
 idpay:
+  wallet:
+    preview:
+      validThrough: "Valido fino al {{endDate}}"
+  initiative:
+    configuration: 
+      bottomSheet:
+        header: Prima di continuare
+        bodyFirst: Il metodo sarà abilitato
+        bodyBold: " nelle prossime ore."
+        bodyLast: Riceverai una notifica push quando potrai iniziare ad utilizzarlo. Fino a quel momento eventuali transazioni verranno ignorate.
+        footer:
+          buttonActivate: Attiva
+          buttonCancel: Annulla
+      header: Scegli quali metodi di pagamento associare
+      subHeader: "Poi, usali per pagare e chiedi all’esercente di usare {{initiativeName}}."
+      footer: Modifica queste scelte o aggiunti altri metodi in qualsiasi momento dalla sezione Portafoglio
+      buttonFooter:
+        noneCta: Nessuno di questi
+        continueCta: Continua
+    details:
+      initiativeCard:
+        availableAmount: Disponibile
+        validUntil: Valido fino al
+        toRefund: da rimborsare
+      initiativeDetailsScreen:
+        notConfigured:
+          header: Configura l'iniziativa!
+          footer: Aggiungi almeno un metodo per iniziare ad utilizzare {{initiative}}.
+        configured:
+          yourOperations: Le tue Operazioni
+          yourOperationsSubtitle: Qui vedrai le transazioni effettuate con i metodi che hai associato.
+          yourOperationsLink: Come si fa?
+          settings:
+            header: Impostazioni
+            associatedPaymentMethods: Metodi di pagamento associati
+            methodsi18n: metodi 
+            selectedIBAN: IBAN per l'accredito
+          startConfigurationCTA: Inizia
   onboarding:
     headerTitle: "Adesione all'iniziativa"
     buttons: 
@@ -3281,9 +3319,6 @@ idpay:
           understoodCTA: Ho capito
       title: Possiedi i seguenti requisiti?
       subtitle: Verificheremo con alcuni Enti se sei in possesso dei requisiti per poter richiedere {{service}}. 
-  wallet:
-    preview:
-      validThrough: "Valido fino al {{endDate}}"
   configuration:
     headerTitle: "Configura l'iniziativa"
     intro: 
@@ -3297,4 +3332,8 @@ idpay:
         instrumentSubtitle: "Indica i metodi da abilitare all’iniziativa"
       buttons:
         continue: "Inizia la configurazione"
+    associationSuccess:
+      title: "Grazie!"
+      body: "Da domani potrai utilizzare l'iniziativa {{initiativeName}}. Puoi abilitare altri metodi aggiungendoli al Portafoglio."
+      button: "Vai all'iniziativa"
     
