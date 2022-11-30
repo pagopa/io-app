@@ -14,6 +14,7 @@ import TypedI18n from "../../../../../i18n";
 import { useIOSelector } from "../../../../../store/hooks";
 import { pagoPaCreditCardWalletV1Selector } from "../../../../../store/reducers/wallet/wallets";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
+import { useConfigurationMachineService } from "../xstate/provider";
 
 const styles = StyleSheet.create({
   ListItemMain: {
@@ -48,14 +49,15 @@ const CustomListItem = ({
   );
 };
 
-const PaymentMethodChoiceScreen = () => {
+const InstrumentsSelectionScreen = () => {
+  const configurationMachine = useConfigurationMachineService();
+  const { send } = configurationMachine;
   const cardsFromSelector = useIOSelector(pagoPaCreditCardWalletV1Selector);
   const cardsArray = pot.getOrElse(cardsFromSelector, []);
 
   const selectedCardRef = useRef<number | undefined>(undefined);
-  const sendEvent = (): void => {
-    // eslint-disable-next-line no-console
-    console.log("selectedCardRef.current", selectedCardRef.current);
+  const sendAddInstrument = (): void => {
+    send("ADD_INSTRUMENT", { walletId: selectedCardRef.current });
   };
 
   const onSwitchHandler = (idWallet: number | undefined) => {
@@ -81,7 +83,7 @@ const PaymentMethodChoiceScreen = () => {
       type="TwoButtonsInlineThird"
       rightButton={{
         onPress: () => {
-          sendEvent();
+          sendAddInstrument();
           dismiss();
         },
         block: true,
@@ -148,4 +150,4 @@ const PaymentMethodChoiceScreen = () => {
     </>
   );
 };
-export default PaymentMethodChoiceScreen;
+export default InstrumentsSelectionScreen;

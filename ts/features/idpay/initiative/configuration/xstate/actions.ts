@@ -11,7 +11,9 @@ const createActionsImplementation = (
   navigation: IOStackNavigationProp<AppParamsList, keyof AppParamsList>
 ) => {
   const navigateToInstrumentsSelectionScreen = () => {
-    // TODO navigate to instruments selection screen
+    navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
+      screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INSTRUMENTS_SELECTION
+    });
   };
 
   const navigateToConfigurationSuccessScreen = () => {
