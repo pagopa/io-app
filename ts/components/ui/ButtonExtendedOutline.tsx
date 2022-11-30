@@ -5,17 +5,17 @@ import {
   Pressable,
   GestureResponderEvent
 } from "react-native";
+import { Icon, IOIconType } from "../core/icons";
 import { IOStyles } from "../core/variables/IOStyles";
 import { IOColors } from "../core/variables/IOColors";
 import { H4 } from "../core/typography/H4";
 import { LabelSmall } from "../core/typography/LabelSmall";
-import IconFont from "./IconFont";
 
 type Props = {
   label: string;
   description?: string;
   onPress: (event: GestureResponderEvent) => void;
-  iconName?: string;
+  icon?: IOIconType;
 };
 
 const styles = StyleSheet.create({
@@ -34,11 +34,11 @@ const styles = StyleSheet.create({
   }
 });
 
-const ButtonExtendedOutline: React.FunctionComponent<Props> = ({
+export const ButtonExtendedOutline: React.FunctionComponent<Props> = ({
   label,
   description,
   onPress,
-  iconName = "io-info"
+  icon = "info"
 }: Props) => (
   <View>
     <Pressable
@@ -54,7 +54,7 @@ const ButtonExtendedOutline: React.FunctionComponent<Props> = ({
         styles.button
       ]}
     >
-      <View style={IOStyles.flex}>
+      <View>
         <H4>{label}</H4>
         {description && (
           <LabelSmall weight="Regular" color={"bluegreyDark"}>
@@ -62,14 +62,9 @@ const ButtonExtendedOutline: React.FunctionComponent<Props> = ({
           </LabelSmall>
         )}
       </View>
-      <IconFont
-        style={{ marginLeft: 8 }}
-        name={iconName}
-        color={IOColors.blue}
-        size={24}
-      />
+      <View style={{ marginLeft: 8 }}>
+        <Icon name={icon} color="blue" size={24} />
+      </View>
     </Pressable>
   </View>
 );
-
-export default ButtonExtendedOutline;
