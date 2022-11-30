@@ -38,24 +38,6 @@ export const OthersShowroom = () => (
         </Body>
       </InfoBox>
     </View>
-    <Label>{"Svg"}</Label>
-    <View spacer={true} />
-    <View spacer={true} />
-    <View style={[styles.content, IOStyles.horizontalContentPadding]}>
-      <Fingerprint width={32} height={32} />
-      <Fingerprint width={64} height={64} />
-      <Fingerprint width={128} height={128} />
-    </View>
-    <View style={[styles.content, IOStyles.horizontalContentPadding]}>
-      <AlphaChannel width={32} height={32} />
-      <AlphaChannel width={64} height={64} />
-      <AlphaChannel width={128} height={128} />
-    </View>
-    <View style={[styles.content, IOStyles.horizontalContentPadding]}>
-      <Analytics width={32} height={32} fill={IOColors.aqua} />
-      <Analytics width={64} height={64} fill={IOColors.red} />
-      <Analytics width={128} height={128} fill={IOColors.orange} />
-    </View>
     <View spacer={true} extralarge={true} />
     <Label>{"<IOAccordion />"}</Label>
     <View style={[IOStyles.flex, { width: "100%" }]}>
