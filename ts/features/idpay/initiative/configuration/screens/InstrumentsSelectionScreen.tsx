@@ -1,4 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { useSelector } from "@xstate/react";
 import { List, ListItem, Text, View } from "native-base";
 import React, { useRef } from "react";
 import { StyleSheet } from "react-native";
@@ -15,9 +16,10 @@ import { useIOSelector } from "../../../../../store/hooks";
 import { pagoPaCreditCardWalletV1Selector } from "../../../../../store/reducers/wallet/wallets";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { useConfigurationMachineService } from "../xstate/provider";
+import { selectorIDPayInstrumentsByIdWallet } from "../xstate/selectors";
 
 const styles = StyleSheet.create({
-  ListItemMain: {
+  listItemContainer: {
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-between"
@@ -41,7 +43,7 @@ const CustomListItem = ({
 
   return (
     <ListItem>
-      <View style={styles.ListItemMain}>
+      <View style={styles.listItemContainer}>
         <H4>{cardObject.creditCard?.pan}</H4>
         <Switch value={switchStatus} onChange={handleSwitch} />
       </View>
@@ -65,6 +67,14 @@ const InstrumentsSelectionScreen = () => {
     selectedCardRef.current = idWallet;
     present();
   };
+
+  const x = useSelector(
+    configurationMachine,
+    selectorIDPayInstrumentsByIdWallet
+  );
+
+  // eslint-disable-next-line no-console
+  console.log("x", x);
 
   const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
     <Body>
@@ -119,7 +129,7 @@ const InstrumentsSelectionScreen = () => {
           <List>
             {cardsArray.map((card, index) => (
               <CustomListItem
-                key={index}
+                key={card.idWallet}
                 onSwitchHandler={onSwitchHandler}
                 cardObject={card}
               />
