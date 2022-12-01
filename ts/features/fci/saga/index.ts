@@ -69,9 +69,9 @@ export function* watchFciSaga(bearerToken: SessionToken): SagaIterator {
 
   yield* fork(watchFciQtspClausesSaga);
 
-  yield* fork(watchFciStartingSaga);
+  yield* fork(watchFciStartSaga);
 
-  yield* fork(watchFciAbortingSaga);
+  yield* fork(watchFciAbortSaga);
 }
 
 function* watchFciQtspClausesSaga(): Iterator<ReduxSagaEffect> {
@@ -93,7 +93,7 @@ function* watchFciQtspClausesSaga(): Iterator<ReduxSagaEffect> {
 /**
  * Handle the FCI abort requests
  */
-function* watchFciAbortingSaga(): Iterator<ReduxSagaEffect> {
+function* watchFciAbortSaga(): Iterator<ReduxSagaEffect> {
   while (true) {
     yield* take(fciAbortRequest);
     NavigationService.dispatchNavigationAction(
@@ -105,7 +105,7 @@ function* watchFciAbortingSaga(): Iterator<ReduxSagaEffect> {
 /**
  * Handle the FCI start requests
  */
-function* watchFciStartingSaga(): Iterator<ReduxSagaEffect> {
+function* watchFciStartSaga(): Iterator<ReduxSagaEffect> {
   while (true) {
     yield* take(fciStartRequest);
     NavigationService.dispatchNavigationAction(
