@@ -175,6 +175,12 @@ export const privacyUrl: string = pipe(
   E.getOrElse(() => "https://io.italia.it/app-content/tos_privacy.html")
 );
 
+export const zendeskPrivacyUrl: string = pipe(
+  Config.ZENDESK_PRIVACY_URL,
+  t.string.decode,
+  E.getOrElse(() => "https://www.pagopa.it/it/privacy-policy-assistenza/")
+);
+
 export const localServicesWebUrl: string = pipe(
   Config.LOCAL_SERVICE_WEB_URL,
   t.string.decode,
