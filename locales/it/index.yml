@@ -1695,10 +1695,11 @@ messages:
         block1: Aggiungi un promemoria per il
         block2: alle
       expiringOrValidAlert:
-        block1: Questo avviso scade il giorno
+        block1: Scade il 
+        block2: alle ore 
       expiredAlert:
-        block1: L'avviso è scaduto alle
-        block2: del
+        block1: Scaduto il 
+        block2: alle ore 
     prescription:
       addMemo: Questa ricetta scade il
       expiringAlert: Questa ricetta scade oggi
@@ -3203,6 +3204,14 @@ features:
       generic:
         title: C’è un problema
         subTitle: Per procedere alla firma, verifica di aver aggiornato l’app IO all’ultima versione
+    abort:
+      title: "Annulla la firma"
+      content: "Vuoi annullare la firma dei documenti?"
+      cancel: "Torna indietro"
+      confirm: "Annulla"
+    signatureFields:
+      title: "Firma qui"
+      showOnDocument: "Vedi sul documento"
     title: "Firma con IO"
     documentsBar:
       titleLeft: Documento {{currentDoc}} di {{totalDocs}}
@@ -3331,4 +3340,8 @@ idpay:
         instrumentSubtitle: "Indica i metodi da abilitare all’iniziativa"
       buttons:
         continue: "Inizia la configurazione"
+    associationSuccess:
+      title: "Grazie!"
+      body: "Da domani potrai utilizzare l'iniziativa {{initiativeName}}. Puoi abilitare altri metodi aggiungendoli al Portafoglio."
+      button: "Vai all'iniziativa"
     

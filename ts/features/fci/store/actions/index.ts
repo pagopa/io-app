@@ -1,6 +1,11 @@
-import { ActionType, createAsyncAction } from "typesafe-actions";
+import {
+  ActionType,
+  createAsyncAction,
+  createStandardAction
+} from "typesafe-actions";
 import { CreateFilledDocumentBody } from "../../../../../definitions/fci/CreateFilledDocumentBody";
 import { CreateSignatureBody } from "../../../../../definitions/fci/CreateSignatureBody";
+import { DocumentSignature } from "../../../../../definitions/fci/DocumentSignature";
 import { FilledDocumentDetailView } from "../../../../../definitions/fci/FilledDocumentDetailView";
 import { QtspClausesMetadata } from "../../../../../definitions/fci/QtspClausesMetadata";
 import { SignatureRequestDetailView } from "../../../../../definitions/fci/SignatureRequestDetailView";
@@ -42,8 +47,30 @@ export const fciSigningRequest = createAsyncAction(
   "FCI_SIGNING_FAILURE"
 )<CreateSignatureBody, void, NetworkError>();
 
+/**
+ * update documentSignatures
+ */
+export const fciUpdateDocumentSignaturesRequest = createStandardAction(
+  "FCI_UPDATE_DOCUMENT_SIGNATURE"
+)<DocumentSignature>();
+
+/**
+ * clear the FCI store
+ */
+export const fciAbortRequest =
+  createStandardAction("FCI_ABORT_REQUEST")<void>();
+
+/**
+ * start the FCI action
+ */
+export const fciStartRequest =
+  createStandardAction("FCI_START_REQUEST")<void>();
+
 export type FciActions =
   | ActionType<typeof fciSignatureRequestFromId>
   | ActionType<typeof fciLoadQtspClauses>
   | ActionType<typeof fciLoadQtspFilledDocument>
-  | ActionType<typeof fciSigningRequest>;
+  | ActionType<typeof fciSigningRequest>
+  | ActionType<typeof fciAbortRequest>
+  | ActionType<typeof fciStartRequest>
+  | ActionType<typeof fciUpdateDocumentSignaturesRequest>;

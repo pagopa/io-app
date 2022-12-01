@@ -1675,10 +1675,11 @@ messages:
         block1: Add a reminder for the
         block2: at
       expiringOrValidAlert:
-        block1: This notice will expire on
+        block1: Expiring on 
+        block2: at
       expiredAlert:
-        block1: This notice expired at
-        block2: on
+        block1: Expired on
+        block2: at
     prescription:
       addMemo: This prescription expires the
       expiringAlert: This prescription expires today
@@ -3179,6 +3180,14 @@ features:
       generic:
         title: There is a problem
         subTitle: To proceed with the signature, check that you have updated the IO app to the latest version.
+    abort:
+      title: "Cancel signing flow"
+      content: "Do you want to cancel the documents signing process?"
+      cancel: "Back"
+      confirm: "Cancel"
+    signatureFields:
+      title: "Sign here"
+      showOnDocument: "See on document"
     title: "Firma con IO"
     documentsBar:
       titleLeft: Document {{currentDoc}} of {{totalDocs}}
@@ -3307,4 +3316,8 @@ idpay:
         instrumentSubtitle: "Indicate the methods to be enabled for the initiative"
       buttons:
         continue: "Start configuration"
+    associationSuccess:
+      title: "Grazie!"
+      body: "Da domani potrai utilizzare {{initiativeName}}. Puoi abilitare altri metodi aggiungendoli al Portafoglio."
+      button: "Vai all'iniziativa"
     
