@@ -113,7 +113,10 @@ function* watchFciStartingSaga(): Iterator<ReduxSagaEffect> {
         screen: FCI_ROUTES.DOCUMENTS
       })
     );
+    // when the user start signing flow
     // start a request to get the QTSP metadata
+    // this is needed to get the document_url
+    // that will be used to create the filled document
     yield* put(fciLoadQtspClauses.request());
   }
 }
