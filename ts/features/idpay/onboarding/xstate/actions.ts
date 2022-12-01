@@ -25,10 +25,15 @@ const createActionsImplementation = (
     });
   };
 
+  const exitOnboarding = () => {
+    navigation.pop();
+  };
+
   return {
     navigateToPDNDCriteriaScreen,
     navigateToSelfDeclarationsScreen,
-    navigateToCompletionScreen
+    navigateToCompletionScreen,
+    exitOnboarding
   };
 };
 

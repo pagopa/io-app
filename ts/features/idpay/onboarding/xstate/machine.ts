@@ -1,5 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import { assign, createMachine } from "xstate";
+import { ErrorDto } from "../../../../../definitions/idpay/onboarding/ErrorDto";
 import { InitiativeDto } from "../../../../../definitions/idpay/onboarding/InitiativeDto";
 import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/onboarding/RequiredCriteriaDTO";
 import {
@@ -13,6 +14,7 @@ export type Context = {
   serviceId?: string;
   initiative?: InitiativeDto;
   requiredCriteria?: O.Option<RequiredCriteriaDTO>;
+  error?: ErrorDto;
 };
 
 // Events types
@@ -33,11 +35,16 @@ type E_ACCEPT_REQUIRED_SELF_CRITERIA = {
   type: "ACCEPT_REQUIRED_SELF_CRITERIA";
 };
 
+type E_QUIT_ONBOARDING = {
+  type: "QUIT_ONBOARDING";
+};
+
 type Events =
   | E_SELECT_INITIATIVE
   | E_ACCEPT_TOS
   | E_ACCEPT_REQUIRED_PDND_CRITERIA
-  | E_ACCEPT_REQUIRED_SELF_CRITERIA;
+  | E_ACCEPT_REQUIRED_SELF_CRITERIA
+  | E_QUIT_ONBOARDING;
 
 // Services types
 type Services = {
@@ -114,6 +121,9 @@ const createIDPayOnboardingMachine = () =>
           on: {
             ACCEPT_TOS: {
               target: "ACCEPTING_TOS"
+            },
+            QUIT_ONBOARDING: {
+              target: "ONBOARDING_FINISHED"
             }
           }
         },
@@ -197,7 +207,16 @@ const createIDPayOnboardingMachine = () =>
           }
         },
         DISPLAYING_ONBOARDING_COMPLETED: {
-          type: "final"
+          entry: "navigateToCompletionScreen",
+          on: {
+            QUIT_ONBOARDING: {
+              target: "ONBOARDING_FINISHED"
+            }
+          }
+        },
+        ONBOARDING_FINISHED: {
+          type: "final",
+          entry: "exitOnboarding"
         }
       }
     },
