@@ -1,6 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Route, useNavigation, useRoute } from "@react-navigation/core";
-import { List, Text, View } from "native-base";
+import { List, ListItem, Text, View } from "native-base";
 import React, { useEffect } from "react";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
@@ -11,6 +11,7 @@ import {
 } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
 import EmptyInitiativeSvg from "../../../../../../img/features/idpay/empty_initiative.svg";
 import { H3 } from "../../../../../components/core/typography/H3";
+import { H4 } from "../../../../../components/core/typography/H4";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -19,7 +20,7 @@ import BaseScreenComponent from "../../../../../components/screens/BaseScreenCom
 import ListItemComponent from "../../../../../components/screens/ListItemComponent";
 import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
-import TypedI18n from "../../../../../i18n";
+import I18n from "../../../../../i18n";
 import {
   AppParamsList,
   IOStackNavigationProp
@@ -43,57 +44,102 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center"
   },
+  alignCenter: {
+    alignItems: "center"
+  },
   textCenter: {
     textAlign: "center"
   },
   flexGrow: {
     flexGrow: 1
+  },
+  listItem: {
+    flex: 1,
+    justifyContent: "space-between"
   }
 });
 
-const InitiativeSettings = (initiative: InitiativeDTO) => (
-  <>
-    <H3>
-      {TypedI18n.t(
-        "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperations"
-      )}
-    </H3>
-    <View spacer xsmall />
-    <LabelSmall weight="Regular" color="bluegreyDark">
-      {TypedI18n.t(
-        "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperationsSubtitle"
-      ) + " "}
-      <LabelSmall weight="SemiBold">
-        {TypedI18n.t(
-          "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperationsLink"
-        )}
-      </LabelSmall>
-    </LabelSmall>
-    <View spacer extralarge />
-    <H3>
-      {TypedI18n.t(
-        "idpay.initiative.details.initiativeDetailsScreen.configured.settings.header"
-      )}
-    </H3>
-    <View spacer small />
-    <List>
-      <ListItemComponent
-        title={TypedI18n.t(
-          "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
-        )}
-        subTitle={`${initiative.nInstr} ${TypedI18n.t(
-          "idpay.initiative.details.initiativeDetailsScreen.configured.settings.methodsi18n"
-        )}`}
-      />
-      <ListItemComponent
-        title={TypedI18n.t(
-          "idpay.initiative.details.initiativeDetailsScreen.configured.settings.selectedIBAN"
-        )}
-        subTitle={initiative.iban}
-      />
-    </List>
-  </>
+const CustomListItem = ({ transaction }: { transaction: unknown }) => (
+  <ListItem style={styles.listItem}>
+    <View style={[IOStyles.flex, IOStyles.row, styles.alignCenter]}>
+      <Text>LOGO</Text>
+      <View hspacer />
+      <View style={IOStyles.flex}>
+        <H4>Pagamento Pos</H4>
+        <LabelSmall weight="Regular" color="bluegrey">
+          27 apr 2022
+        </LabelSmall>
+      </View>
+    </View>
+    <H4> - {transaction}2,45$</H4>
+  </ListItem>
 );
+
+const TransactionsList = (timeline: TimelineDTO["operationList"]) => (
+  <List>
+    {timeline.map((item, index) => (
+      <CustomListItem transaction={item} key={index} />
+    ))}
+  </List>
+);
+const emptyTimelineContent = (
+  <LabelSmall weight="Regular" color="bluegreyDark">
+    {I18n.t(
+      "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperationsSubtitle"
+    ) + " "}
+    <LabelSmall weight="SemiBold">
+      {I18n.t(
+        "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperationsLink"
+      )}
+    </LabelSmall>
+  </LabelSmall>
+);
+type Operation = unknown;
+type OperationList = Array<Operation>;
+type TimelineDTO = { operationList: OperationList };
+
+const InitiativeConfiguredData = (
+  initiative: InitiativeDTO,
+  timeline: TimelineDTO["operationList"]
+) => {
+  const isTimelineEmpty = timeline.length === 0;
+  return (
+    <>
+      <H3>
+        {I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperations"
+        )}
+      </H3>
+      <View spacer />
+      {/* HERE GOES TRANSACTION LIST */}
+      {isTimelineEmpty ? emptyTimelineContent : TransactionsList(timeline)}
+      {/* END OF TRANSACTION LIST */}
+      <View spacer large />
+      <H3>
+        {I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.configured.settings.header"
+        )}
+      </H3>
+      <View spacer small />
+      <List>
+        <ListItemComponent
+          title={I18n.t(
+            "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
+          )}
+          subTitle={`${initiative.nInstr} ${I18n.t(
+            "idpay.initiative.details.initiativeDetailsScreen.configured.settings.methodsi18n"
+          )}`}
+        />
+        <ListItemComponent
+          title={I18n.t(
+            "idpay.initiative.details.initiativeDetailsScreen.configured.settings.selectedIBAN"
+          )}
+          subTitle={initiative.iban}
+        />
+      </List>
+    </>
+  );
+};
 
 export type InitiativeDetailsScreenParams = {
   initiativeId: string;
@@ -128,13 +174,13 @@ export const InitiativeDetailsScreen = () => {
       <View spacer />
       {/* eslint-disable-next-line react/no-unescaped-entities */}
       <H3>
-        {TypedI18n.t(
+        {I18n.t(
           "idpay.initiative.details.initiativeDetailsScreen.notConfigured.header"
         )}
       </H3>
       <View spacer />
       <Text style={styles.textCenter}>
-        {TypedI18n.t(
+        {I18n.t(
           "idpay.initiative.details.initiativeDetailsScreen.notConfigured.footer",
           { initiative: "18 app" }
         )}
@@ -198,7 +244,7 @@ export const InitiativeDetailsScreen = () => {
             <View spacer small />
             {initiativeNeedsConfiguration
               ? initiativeNotConfiguredContent
-              : InitiativeSettings(initiativeData)}
+              : InitiativeConfiguredData(initiativeData, [1, 2, 3])}
           </View>
         </ScrollView>
         {initiativeNeedsConfiguration && (
@@ -208,7 +254,7 @@ export const InitiativeDetailsScreen = () => {
               block: true,
               primary: true,
               onPress: navigateToConfiguration,
-              title: TypedI18n.t(
+              title: I18n.t(
                 "idpay.initiative.details.initiativeDetailsScreen.configured.startConfigurationCTA"
               )
             }}

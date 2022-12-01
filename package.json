@@ -25,6 +25,7 @@
   "pagopa_privative_configuration": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.20/pagopa/privative/definitions.yml",
   "idpay_onboarding": "https://raw.githubusercontent.com/pagopa/cstar-infrastructure/v1.70.0/src/domains/idpay-app/api/idpay_onboarding_workflow/openapi.onboarding.yml",
   "idpay_wallet": "https://raw.githubusercontent.com/pagopa/cstar-infrastructure/v1.70.0/src/domains/idpay-app/api/idpay_wallet/openapi.wallet.yml",
+  "idpay_timeline":"https://raw.githubusercontent.com/pagopa/cstar-infrastructure/codegen-fix-timeline/src/domains/idpay-app/api/idpay_timeline/openapi.timeline.yml",
   "private": true,
   "scripts": {
     "start": "react-native start",
@@ -82,6 +83,7 @@
     "generate:fci": "npm-run-all generate:fci-api",
     "generate:idpay-onboarding": "rimraf definitions/idpay/onboarding && mkdir -p definitions/idpay/onboarding && gen-api-models --api-spec $npm_package_idpay_onboarding --out-dir ./definitions/idpay/onboarding --no-strict --response-decoders --request-types --client",
     "generate:idpay-wallet": "rimraf definitions/idpay/wallet && mkdir -p definitions/idpay/wallet && gen-api-models --api-spec $npm_package_idpay_wallet --out-dir ./definitions/idpay/wallet --no-strict --response-decoders --request-types --client",
+    "generate:idpay-timeline": "rimraf definitions/idpay/timeline && mkdir -p definitions/idpay/timeline && gen-api-models --api-spec $npm_package_idpay_timeline --out-dir ./definitions/idpay/timeline --no-strict --response-decoders --request-types --client",
     "generate": "npm-run-all generate:*",
     "locales_unused": "ts-node --skip-project -O '{\"lib\":[\"es2015\"]}' scripts/unused-locales.ts",
     "generate-myportal-readme": "jsdoc2md ts/utils/webviewScripts/*.js > MYPORTAL_README.md",
