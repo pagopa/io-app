@@ -41,7 +41,8 @@ const testFiscalCodeByLocale = (locale: Locales, timeZone: string) => {
   const checkDate = formatFiscalCodeBirthdayAsShortFormat(testDate!);
   const checkDateForAccessibility =
     formatFiscalCodeBirthdayAsAccessibilityReadableFormat(testDate!);
+  const dayName = locale === "it" ? "domenica" : "Sunday";
   const monthName = locale === "it" ? "maggio" : "May";
-  expect(`22 ${monthName} 1977`).toBe(checkDateForAccessibility);
+  expect(`${dayName} 22 ${monthName} 1977`).toBe(checkDateForAccessibility);
   expect("22/05/1977").toBe(checkDate);
 };

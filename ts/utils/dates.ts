@@ -59,12 +59,16 @@ export const formatFiscalCodeBirthdayAsAccessibilityReadableFormat = (
       d => {
         const year = d.getUTCFullYear();
         const month = d.getUTCMonth() + 1;
-        const day = d.getUTCDate();
-        const translationKey = I18n.t(
+        const date = d.getUTCDate();
+        const day = d.getUTCDay();
+        const dayTranslationKey = I18n.t(
+          `date.day_names.${day}` as TranslationKeys
+        );
+        const monthTranslationKey = I18n.t(
           `date.month_names.${month}` as TranslationKeys
         );
 
-        return `${day} ${translationKey} ${year}`;
+        return `${dayTranslationKey} ${date} ${monthTranslationKey} ${year}`;
       }
     )
   );
