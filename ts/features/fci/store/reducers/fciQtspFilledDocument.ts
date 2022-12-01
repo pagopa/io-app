@@ -1,6 +1,6 @@
 import { getType } from "typesafe-actions";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { fciLoadQtspFilledDocument } from "../actions";
+import { fciLoadQtspFilledDocument, fciAbortRequest } from "../actions";
 import { Action } from "../../../../store/actions/types";
 import { NetworkError } from "../../../../utils/errors";
 import { FilledDocumentDetailView } from "../../../../../definitions/fci/FilledDocumentDetailView";
@@ -23,6 +23,8 @@ const reducer = (
       return pot.some(action.payload);
     case getType(fciLoadQtspFilledDocument.failure):
       return pot.toError(state, action.payload);
+    case getType(fciAbortRequest):
+      return emptyState;
   }
 
   return state;

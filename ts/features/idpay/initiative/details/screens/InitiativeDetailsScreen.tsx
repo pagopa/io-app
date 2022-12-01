@@ -4,7 +4,6 @@ import { List, Text, View } from "native-base";
 import React, { useEffect } from "react";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
-import { widthPercentageToDP } from "react-native-responsive-screen";
 import {
   InitiativeDTO,
   StatusEnum
@@ -31,14 +30,6 @@ import InitiativeCardComponent from "../components/InitiativeCardComponent";
 import { idpayInitiativeDetailsSelector, idpayInitiativeGet } from "../store";
 
 const styles = StyleSheet.create({
-  card: {
-    position: "absolute",
-    alignSelf: "center",
-    width: widthPercentageToDP(90),
-    maxWidth: 343,
-    height: 192,
-    top: 2
-  },
   newInitiativeMessageContainer: {
     alignItems: "center",
     justifyContent: "center"
@@ -48,6 +39,10 @@ const styles = StyleSheet.create({
   },
   flexGrow: {
     flexGrow: 1
+  },
+  paddedContent: {
+    flex: 1,
+    paddingTop: 80
   }
 });
 
@@ -173,15 +168,13 @@ export const InitiativeDetailsScreen = () => {
               style={[IOStyles.horizontalContentPadding, { height: 149 }]}
             />
           </LinearGradient>
-          <View style={styles.card}>
-            <InitiativeCardComponent
-              endDate={initiativeData.endDate}
-              status={initiativeData.status}
-              accrued={initiativeData.accrued}
-              amount={initiativeData.amount}
-              initiativeName={initiativeData.initiativeName}
-            />
-          </View>
+          <InitiativeCardComponent
+            endDate={initiativeData.endDate}
+            status={initiativeData.status}
+            accrued={initiativeData.accrued}
+            amount={initiativeData.amount}
+            initiativeName={initiativeData.initiativeName}
+          />
 
           <View
             style={[
@@ -194,11 +187,11 @@ export const InitiativeDetailsScreen = () => {
               }
             ]}
           >
-            <View spacer extralarge />
-            <View spacer small />
-            {initiativeNeedsConfiguration
-              ? initiativeNotConfiguredContent
-              : InitiativeSettings(initiativeData)}
+            <View style={styles.paddedContent}>
+              {initiativeNeedsConfiguration
+                ? initiativeNotConfiguredContent
+                : InitiativeSettings(initiativeData)}
+            </View>
           </View>
         </ScrollView>
         {initiativeNeedsConfiguration && (
