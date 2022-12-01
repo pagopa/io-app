@@ -27,6 +27,7 @@ const MessagesHomeTabNavigator = () => (
         height: 34
       }
     }}
+    lazy={true}
   >
     <Tab.Screen
       name={"MESSAGES_INBOX"}
