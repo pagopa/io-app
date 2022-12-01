@@ -2,8 +2,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { constNull } from "fp-ts/lib/function";
 import { List } from "native-base";
 import * as React from "react";
-import { SafeAreaView, StyleSheet, View } from "react-native";
-import { BaseTypography } from "../../../../components/core/typography/BaseTypography";
+import { SafeAreaView, StyleSheet, View, Text } from "react-native";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../../../components/screens/ListItemComponent";
@@ -28,6 +27,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1
   },
+  topSubtitle: {
+    fontSize: customVariables.fontSizeBase,
+    fontFamily: customVariables.fontFamily,
+    lineHeight: customVariables.lineHeightBase,
+    color: customVariables.textColor
+  },
   topScreenContainer: {
     flex: 1,
     justifyContent: "flex-end"
@@ -41,11 +46,15 @@ const styles = StyleSheet.create({
     paddingTop: customVariables.spacerHeight,
     paddingBottom: customVariables.spacerHeight
   },
-  paragraph: {
-    fontSize: 14,
-    textAlign: "left",
-    paddingLeft: customVariables.contentPadding,
-    paddingRight: customVariables.contentPadding
+  linkDecoration: {
+    textDecorationLine: "underline",
+    color: IOColors.blue
+  },
+  paddingTextLarge: {
+    paddingLeft: 14
+  },
+  paddingText: {
+    paddingLeft: 4
   }
 });
 
@@ -70,13 +79,13 @@ const FciDataSharingScreen = (): React.ReactElement => {
       ]}
     >
       <IconFont name={"io-notice"} size={iconSize} color={IOColors.bluegrey} />
-      <BaseTypography
-        weight="Regular"
-        color="bluegreyDark"
-        style={styles.paragraph}
-      >
+      <Text style={[styles.topSubtitle, styles.paddingTextLarge]}>
         {I18n.t("features.fci.shareDataScreen.alertText")}
-      </BaseTypography>
+        <View style={styles.paddingText} />
+        <Text style={styles.linkDecoration}>
+          {I18n.t("features.fci.shareDataScreen.alertLink")}
+        </Text>
+      </Text>
     </View>
   );
 
@@ -96,18 +105,9 @@ const FciDataSharingScreen = (): React.ReactElement => {
                   paddingBottom: customVariables.contentPadding
                 }}
               >
-                <BaseTypography
-                  weight={"Regular"}
-                  color={"bluegreyDark"}
-                  font={"TitilliumWeb"}
-                  style={{
-                    fontSize: 16
-                  }}
-                >
-                  {I18n.t("features.fci.shareDataScreen.content", {
-                    issuer: "Comune di Roma"
-                  })}
-                </BaseTypography>
+                <Text style={styles.topSubtitle}>
+                  {I18n.t("features.fci.shareDataScreen.content")}
+                </Text>
               </View>
               <List>
                 <ListItemComponent

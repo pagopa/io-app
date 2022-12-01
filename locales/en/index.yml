@@ -3194,10 +3194,11 @@ features:
       titleRight: Page {{currentPage}} of {{totalPages}}
     shareDataScreen:
       title: "Do you share this data?"
-      content: "To complete the signing process, you must share this data with {{Nome Issuer}}."
+      content: "To complete the signing process, you must share this data with the requesting institution."
       cancel: "Cancel"
       confirm: "Ok"
-      alertText: "Want to change or update your email address? Go here."
+      alertText: "Want to change or update your email address?"
+      alertLink: "Go here"
       name: "Name"
       familyName: "Family name"
       birthDate: "Date of birth"

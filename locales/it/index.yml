@@ -3218,10 +3218,11 @@ features:
       titleRight: Pagina {{currentPage}} di {{totalPages}}
     shareDataScreen:
       title: "Condividi questi dati?"
-      content: "Per completare la firma, devi condividere questi dati con {{issuer}}."
+      content: "Per completare la firma, devi condividere questi dati con l'ente richiedente."
       cancel: "Annulla"
       confirm: "Ok. va bene"
-      alertText: "Vuoi modificare o aggiornare il tuo indirizzo email? Vai qui."
+      alertText: "Vuoi modificare o aggiornare il tuo indirizzo email?"
+      alertLink: "Vai qui"
       name: "Nome"
       familyName: "Cognome"
       birthDate: "Data di nascita"
