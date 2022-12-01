@@ -6,34 +6,21 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../utils/errors";
 import { idPayWalletGet } from "../actions";
 
-export type IDPayState = {
-  wallet: pot.Pot<WalletDTO, NetworkError>;
-};
+export type IDPayWalletState = pot.Pot<WalletDTO, NetworkError>;
 
-const INITIAL_STATE: IDPayState = {
-  wallet: pot.none
-};
+const INITIAL_STATE: IDPayWalletState = pot.none;
 
 const reducer = (
-  state: IDPayState = INITIAL_STATE,
+  state: IDPayWalletState = INITIAL_STATE,
   action: Action
-): IDPayState => {
+): IDPayWalletState => {
   switch (action.type) {
     case getType(idPayWalletGet.request):
-      return {
-        ...state,
-        wallet: pot.toLoading(state.wallet)
-      };
+      return pot.toLoading(state);
     case getType(idPayWalletGet.success):
-      return {
-        ...state,
-        wallet: pot.some(action.payload)
-      };
+      return pot.some(action.payload);
     case getType(idPayWalletGet.failure):
-      return {
-        ...state,
-        wallet: pot.toError(state.wallet, action.payload)
-      };
+      return pot.toError(state, action.payload);
   }
   return state;
 };

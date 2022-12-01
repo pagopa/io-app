@@ -361,7 +361,7 @@ export const getTransactionFee = (
   );
 
 // try to extract IUV from transaction description
-// see https://docs.italia.it/pagopa/pagopa_docs/pagopa-codici-docs/it/v1.4.0/_docs/Capitolo3.html
+// see https://github.com/pagopa/pagopa-codici-docs/blob/master/_docs/Capitolo3.rst#3-formato-della-causale-di-versamento
 export const getTransactionIUV = (
   transactionDescription: string
 ): O.Option<string> => {
@@ -399,7 +399,7 @@ export const getIuv = (data: RptId): string => {
 };
 
 // return the notice code from the given rptId
-// see https://docs.italia.it/pagopa/pagopa_docs/pagopa-codici-docs/it/v1.4.0/_docs/Capitolo2.html#valore-0-del-componente-aux-digit
+// see https://docs.pagopa.it/saci/specifiche-attuative-dei-codici-identificativi-di-versamento-riversamento-e-rendicontazione/generazione-dellidentificativo-univoco-di-versamento#valore-0-del-componente-less-than-aux-digit-greater-than
 export const getCodiceAvviso = (rptId: RptId) => {
   const pnn = rptId.paymentNoticeNumber;
   switch (pnn.auxDigit) {
