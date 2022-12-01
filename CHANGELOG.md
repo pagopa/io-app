@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.21.0-rc.1](https://github.com/pagopa/io-app/compare/2.21.0-rc.0...2.21.0-rc.1) (2022-12-01)
+
+
+### Features
+
+* **Firma con IO:** [[SFEQS-1053](https://pagopa.atlassian.net/browse/SFEQS-1053)] Add signature fields screen with clause selection and box drawing ([#4199](https://github.com/pagopa/io-app/issues/4199)) ([e978488](https://github.com/pagopa/io-app/commit/e978488f65cdc4a618e625977b96e28507c5c0e4))
+* **IDPay:** [[IODPAY-63](https://pagopa.atlassian.net/browse/IODPAY-63)] Add machine steps to configure payment instruments  ([#4211](https://github.com/pagopa/io-app/issues/4211)) ([15949e7](https://github.com/pagopa/io-app/commit/15949e79eedca7956d8464b897af6e500c39a821))
+
+
+### Bug Fixes
+
+* [[IOAPPCOM-14](https://pagopa.atlassian.net/browse/IOAPPCOM-14)] Tests for iOS push notifications library integration ([#4208](https://github.com/pagopa/io-app/issues/4208)) ([7a63bff](https://github.com/pagopa/io-app/commit/7a63bffb1d7e10f52ca554b454b971383d6751dd))
+* **IDPay:** Fix IDPay initiative cards visualization on Android ([#4212](https://github.com/pagopa/io-app/issues/4212)) ([74da5b7](https://github.com/pagopa/io-app/commit/74da5b78f1931d4e6bd21dca976173b3a223f2dd))
+
+
+### Chores
+
+* [[IA-895](https://pagopa.atlassian.net/browse/IA-895)] Show consent screen when show ticket CTA is pressed ([#4028](https://github.com/pagopa/io-app/issues/4028)) ([a160016](https://github.com/pagopa/io-app/commit/a16001609bf213f76afbf587c5b1b1ac0caf043c))
+* [[IOAPPCOM-6](https://pagopa.atlassian.net/browse/IOAPPCOM-6)] Fix due date visibility on `DueDateBar` component. ([#4190](https://github.com/pagopa/io-app/issues/4190)) ([c3611b9](https://github.com/pagopa/io-app/commit/c3611b9f926a132a1bef2b47cc2fadc98992b56b))
+* **Design system:** [[IAI-236](https://pagopa.atlassian.net/browse/IAI-236)] Add `Icon…` components ([#4104](https://github.com/pagopa/io-app/issues/4104)) ([b415c98](https://github.com/pagopa/io-app/commit/b415c98ff32db5a354648e9fb369f21778b92cd8))
+
 ## [2.21.0-rc.0](https://github.com/pagopa/io-app/compare/2.20.0-rc.2...2.21.0-rc.0) (2022-11-29)
 
 
