@@ -25,8 +25,10 @@ import { InitializedProfile } from "../../definitions/backend/InitializedProfile
 import { Municipality } from "../../definitions/content/Municipality";
 import I18n from "../i18n";
 import customVariables from "../theme/variables";
-import { dateToAccessibilityReadableFormat } from "../utils/accessibility";
-import { dateForFiscalCode, formatDateAsShortFormat } from "../utils/dates";
+import {
+  formatFiscalCodeBirthdayAsShortFormat,
+  formatFiscalCodeBirthdayAsAccessibilityReadableFormat
+} from "../utils/dates";
 import { extractFiscalCodeData } from "../utils/profile";
 import { maybeNotNullyString } from "../utils/strings";
 import { IOColors } from "./core/variables/IOColors";
@@ -388,9 +390,8 @@ export default class FiscalCodeComponent extends React.Component<Props> {
     );
 
     const na = I18n.t("profile.fiscalCode.accessibility.unavailable");
-    const birthDate = dateForFiscalCode(
-      this.props.profile.date_of_birth ?? fiscalCodeData.birthDate
-    );
+    const birthDate =
+      this.props.profile.date_of_birth ?? fiscalCodeData.birthDate;
     // goBackSide === false
     return {
       accessibilityLabel: I18n.t(
@@ -401,7 +402,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
           family_name: this.props.profile.family_name,
           gender: fiscalCodeData.gender || na,
           birthDate: birthDate
-            ? dateToAccessibilityReadableFormat(birthDate)
+            ? formatFiscalCodeBirthdayAsAccessibilityReadableFormat(birthDate)
             : na,
           province: pipe(
             maybeNotNullyString(fiscalCodeData.siglaProvincia),
@@ -426,9 +427,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
   ) {
     const fiscalCode = profile.fiscal_code;
     const fiscalCodeData = extractFiscalCodeData(fiscalCode, municipality);
-    const birthDate = dateForFiscalCode(
-      profile.date_of_birth ?? fiscalCodeData.birthDate
-    );
+    const birthDate = profile.date_of_birth ?? fiscalCodeData.birthDate;
     return (
       <React.Fragment>
         {this.renderItem(
@@ -479,7 +478,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
 
         {birthDate &&
           this.renderItem(
-            formatDateAsShortFormat(birthDate),
+            formatFiscalCodeBirthdayAsShortFormat(birthDate),
             styles.fullDateText,
             styles.landscapeDateText,
             isLandscape

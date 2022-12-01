@@ -7,7 +7,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import { Errors } from "io-ts";
-import { Locales } from "../../locales/locales";
+import { Locales, TranslationKeys } from "../../locales/locales";
 import I18n from "../i18n";
 import { CreditCardExpirationMonth, CreditCardExpirationYear } from "./input";
 import { getLocalePrimary, localeDateFormat } from "./locale";
@@ -22,31 +22,49 @@ const locales: DFNSLocales = { it: dfns_it, en: dfns_en, de: dfns_de };
 
 export const pad = (n: number) => n.toString().padStart(2, "0");
 
-/**
+/*
  * This function is specific for the fiscal code birthday rendering.
  * The birthday is an ISO8601 format for midnight.
- * It returns the date without the timezone.
+ * It returns the date in short format.
+ *
+ * i.e. 1977-05-22T00:00:00.000Z -> 22/05/1977
  */
-export const dateForFiscalCode = (date: Date | undefined): Date | undefined =>
+export const formatFiscalCodeBirthdayAsShortFormat = (
+  date: Date | undefined
+): string =>
   pipe(
     date,
     O.fromNullable,
     O.chain(O.fromPredicate(d => !isNaN(d.getTime()))),
     O.fold(
-      () => undefined,
+      () => I18n.t("global.date.invalid"),
       d => {
         const year = d.getUTCFullYear();
         const month = pad(d.getUTCMonth() + 1);
         const day = pad(d.getUTCDate());
-        // use current date to handle daylight savings time (DST)
-        const localDate = new Date();
-        const hours = pad(localDate.getUTCHours());
-        const minutes = pad(localDate.getUTCMinutes());
-        const seconds = pad(localDate.getUTCSeconds());
+        return `${day}/${month}/${year}`;
+      }
+    )
+  );
 
-        return new Date(
-          `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.000`
+export const formatFiscalCodeBirthdayAsAccessibilityReadableFormat = (
+  date: Date | undefined
+): string =>
+  pipe(
+    date,
+    O.fromNullable,
+    O.chain(O.fromPredicate(d => !isNaN(d.getTime()))),
+    O.fold(
+      () => I18n.t("global.date.invalid"),
+      d => {
+        const year = d.getUTCFullYear();
+        const month = d.getUTCMonth() + 1;
+        const day = d.getUTCDate();
+        const translationKey = I18n.t(
+          `date.month_names.${month}` as TranslationKeys
         );
+
+        return `${day} ${translationKey} ${year}`;
       }
     )
   );
