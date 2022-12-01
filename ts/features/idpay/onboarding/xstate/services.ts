@@ -88,7 +88,7 @@ const createServicesImplementation = (
         _ => Promise.reject(new Error("Error accepting tos")),
         _ => {
           if (_.status !== 204) {
-            return Promise.reject(new Error("Error accepting tos"));
+            return Promise.reject(_.value);
           }
           return Promise.resolve(undefined);
         }
@@ -121,7 +121,7 @@ const createServicesImplementation = (
           if (_.status === 202) {
             return Promise.resolve(O.none);
           }
-          return Promise.reject("Error loading required criteria");
+          return Promise.reject(_.value);
         }
       )
     );

@@ -25,6 +25,12 @@ const createActionsImplementation = (
     });
   };
 
+  const navigateToFailureScreen = () => {
+    navigation.navigate(IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
+      screen: IDPayOnboardingRoutes.IDPAY_ONBOARDING_FAILURE
+    });
+  };
+
   const exitOnboarding = () => {
     navigation.pop();
   };
@@ -33,6 +39,7 @@ const createActionsImplementation = (
     navigateToPDNDCriteriaScreen,
     navigateToSelfDeclarationsScreen,
     navigateToCompletionScreen,
+    navigateToFailureScreen,
     exitOnboarding
   };
 };

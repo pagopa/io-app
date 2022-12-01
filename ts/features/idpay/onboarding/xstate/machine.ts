@@ -114,6 +114,12 @@ const createIDPayOnboardingMachine = () =>
                 target: "DISPLAYING_INITIATIVE",
                 actions: "loadInitiativeSuccess"
               }
+            ],
+            onError: [
+              {
+                target: "DISPLAYING_ONBOARDING_FAILURE",
+                actions: "loadInitiativeFailure"
+              }
             ]
           }
         },
@@ -136,6 +142,12 @@ const createIDPayOnboardingMachine = () =>
               {
                 target: "LOADING_REQUIRED_CRITERIA"
               }
+            ],
+            onError: [
+              {
+                target: "DISPLAYING_ONBOARDING_FAILURE",
+                actions: "acceptTosFailure"
+              }
             ]
           }
         },
@@ -148,6 +160,12 @@ const createIDPayOnboardingMachine = () =>
               {
                 target: "EVALUATING_REQUIRED_CRITERIA",
                 actions: "loadRequiredCriteriaSuccess"
+              }
+            ],
+            onError: [
+              {
+                target: "DISPLAYING_ONBOARDING_FAILURE",
+                actions: "loadRequiredCriteriaFailure"
               }
             ]
           }
@@ -214,6 +232,14 @@ const createIDPayOnboardingMachine = () =>
             }
           }
         },
+        DISPLAYING_ONBOARDING_FAILURE: {
+          entry: "navigateToFailureScreen",
+          on: {
+            QUIT_ONBOARDING: {
+              target: "ONBOARDING_FINISHED"
+            }
+          }
+        },
         ONBOARDING_FINISHED: {
           type: "final",
           entry: "exitOnboarding"
@@ -228,8 +254,17 @@ const createIDPayOnboardingMachine = () =>
         loadInitiativeSuccess: assign((_, event) => ({
           initiative: event.data
         })),
+        loadInitiativeFailure: assign((_, event) => ({
+          error: event.data as ErrorDto
+        })),
         loadRequiredCriteriaSuccess: assign((_, event) => ({
           requiredCriteria: event.data
+        })),
+        loadRequiredCriteriaFailure: assign((_, event) => ({
+          error: event.data as ErrorDto
+        })),
+        acceptTosFailure: assign((_, event) => ({
+          error: event.data as ErrorDto
         }))
       },
       guards: {
