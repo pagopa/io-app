@@ -39,12 +39,17 @@ type E_QUIT_ONBOARDING = {
   type: "QUIT_ONBOARDING";
 };
 
+type E_GO_BACK = {
+  type: "GO_BACK";
+};
+
 type Events =
   | E_SELECT_INITIATIVE
   | E_ACCEPT_TOS
   | E_ACCEPT_REQUIRED_PDND_CRITERIA
   | E_ACCEPT_REQUIRED_SELF_CRITERIA
-  | E_QUIT_ONBOARDING;
+  | E_QUIT_ONBOARDING
+  | E_GO_BACK;
 
 // Services types
 type Services = {
@@ -94,6 +99,11 @@ const createIDPayOnboardingMachine = () =>
       predictableActionArguments: true,
       id: "IDPAY_ONBOARDING",
       initial: "WAITING_INITIATIVE_SELECTION",
+      on: {
+        QUIT_ONBOARDING: {
+          actions: "exitOnboarding"
+        }
+      },
       states: {
         WAITING_INITIATIVE_SELECTION: {
           tags: [LOADING_TAG],
@@ -127,9 +137,6 @@ const createIDPayOnboardingMachine = () =>
           on: {
             ACCEPT_TOS: {
               target: "ACCEPTING_TOS"
-            },
-            QUIT_ONBOARDING: {
-              target: "ONBOARDING_FINISHED"
             }
           }
         },
@@ -199,6 +206,11 @@ const createIDPayOnboardingMachine = () =>
               {
                 target: "ACCEPTING_REQUIRED_CRITERIA"
               }
+            ],
+            GO_BACK: [
+              {
+                target: "DISPLAYING_INITIATIVE"
+              }
             ]
           }
         },
@@ -208,7 +220,16 @@ const createIDPayOnboardingMachine = () =>
           on: {
             ACCEPT_REQUIRED_SELF_CRITERIA: {
               target: "ACCEPTING_REQUIRED_CRITERIA"
-            }
+            },
+            GO_BACK: [
+              {
+                target: "DISPLAYING_REQUIRED_PDND_CRITERIA",
+                cond: "hasPDNDRequiredCriteria"
+              },
+              {
+                target: "DISPLAYING_INITIATIVE"
+              }
+            ]
           }
         },
         ACCEPTING_REQUIRED_CRITERIA: {
@@ -225,24 +246,10 @@ const createIDPayOnboardingMachine = () =>
           }
         },
         DISPLAYING_ONBOARDING_COMPLETED: {
-          entry: "navigateToCompletionScreen",
-          on: {
-            QUIT_ONBOARDING: {
-              target: "ONBOARDING_FINISHED"
-            }
-          }
+          entry: "navigateToCompletionScreen"
         },
         DISPLAYING_ONBOARDING_FAILURE: {
-          entry: "navigateToFailureScreen",
-          on: {
-            QUIT_ONBOARDING: {
-              target: "ONBOARDING_FINISHED"
-            }
-          }
-        },
-        ONBOARDING_FINISHED: {
-          type: "final",
-          entry: "exitOnboarding"
+          entry: "navigateToFailureScreen"
         }
       }
     },
