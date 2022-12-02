@@ -48,6 +48,7 @@ export const PDNDPrerequisites = () => {
   const [authority, setAuthority] = React.useState<string | undefined>();
 
   const continueOnPress = () => send({ type: "ACCEPT_REQUIRED_PDND_CRITERIA" });
+  const goBackOnPress = () => send({ type: "GO_BACK" });
 
   const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
     <Markdown>
@@ -120,7 +121,7 @@ export const PDNDPrerequisites = () => {
       </BaseScreenComponent>
       <FooterWithButtons
         type="TwoButtonsInlineHalf"
-        leftButton={secondaryButtonProps}
+        leftButton={{ onPress: goBackOnPress, ...secondaryButtonProps }}
         rightButton={{ onPress: continueOnPress, ...primaryButtonProps }}
       />
       {bottomSheet}

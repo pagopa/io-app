@@ -36,6 +36,7 @@ const InitiativeSelfDeclarationsScreen = () => {
   );
 
   const continueOnPress = () => send({ type: "ACCEPT_REQUIRED_SELF_CRITERIA" });
+  const goBackOnPress = () => send({ type: "GO_BACK" });
 
   return (
     <BaseScreenComponent
@@ -71,7 +72,8 @@ const InitiativeSelfDeclarationsScreen = () => {
             type={"TwoButtonsInlineHalf"}
             leftButton={{
               bordered: true,
-              title: "Indietro"
+              title: "Indietro",
+              onPress: goBackOnPress
             }}
             rightButton={{
               title: "Continua",
