@@ -1,11 +1,12 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
+import { Document } from "../../../../../definitions/fci/Document";
 import { SignatureRequestDetailView } from "../../../../../definitions/fci/SignatureRequestDetailView";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { NetworkError } from "../../../../utils/errors";
-import { fciSignatureRequestFromId } from "../actions";
+import { fciSignatureRequestFromId, fciAbortRequest } from "../actions";
 
 export type FciSignatureRequestState = pot.Pot<
   SignatureRequestDetailView,
@@ -25,6 +26,8 @@ const reducer = (
       return pot.some(action.payload);
     case getType(fciSignatureRequestFromId.failure):
       return pot.toError(state, action.payload);
+    case getType(fciAbortRequest):
+      return emptyState;
   }
 
   return state;
@@ -40,5 +43,20 @@ export const fciSignatureDetailDocumentsSelector = createSelector(
   signatureDetailView =>
     pot.isSome(signatureDetailView) ? signatureDetailView.value.documents : []
 );
+
+export const fciDocumentSignatureFieldsFieldsSelector = (
+  documentId: Document["id"]
+) =>
+  createSelector(fciSignatureRequestSelector, signatureDetailView =>
+    pot.getOrElse(
+      pot.map(
+        signatureDetailView,
+        signatureRequest =>
+          signatureRequest.documents.find(d => d.id === documentId)?.metadata
+            .signature_fields || []
+      ),
+      []
+    )
+  );
 
 export default reducer;
