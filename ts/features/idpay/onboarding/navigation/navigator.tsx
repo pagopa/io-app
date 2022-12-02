@@ -5,7 +5,7 @@ import InitiativeDetailsScreen, {
 } from "../screens/InitiativeDetailsScreen";
 import { IDPayOnboardingMachineProvider } from "../xstate/provider";
 import InitiativeSelfDeclarationsScreen from "../screens/InitiativeSelfDeclarationsScreen";
-import { PDNDPrerequisites } from "../screens/PDNDPrerequisites";
+import PDNDPrerequisitesScreen from "../screens/PDNDPrerequisitesScreen";
 import CompletionScreen from "../screens/CompletionScreen";
 import FailureScreen from "../screens/FailureScreen";
 
@@ -46,7 +46,7 @@ export const IDPayOnboardingNavigator = () => (
       />
       <Stack.Screen
         name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_PDNDACCEPTANCE}
-        component={PDNDPrerequisites}
+        component={PDNDPrerequisitesScreen}
       />
       <Stack.Screen
         name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_COMPLETION}

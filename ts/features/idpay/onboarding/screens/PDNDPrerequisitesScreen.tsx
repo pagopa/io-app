@@ -42,7 +42,7 @@ const subtitle = (service: string) =>
     service
   });
 
-export const PDNDPrerequisites = () => {
+const PDNDPrerequisitesScreen = () => {
   const machine = useOnboardingMachineService();
   const [state, send] = useActor(machine);
   const [authority, setAuthority] = React.useState<string | undefined>();
@@ -128,3 +128,5 @@ export const PDNDPrerequisites = () => {
     </SafeAreaView>
   );
 };
+
+export default PDNDPrerequisitesScreen;
