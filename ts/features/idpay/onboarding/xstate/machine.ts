@@ -1,6 +1,5 @@
 import * as O from "fp-ts/lib/Option";
 import { assign, createMachine } from "xstate";
-import { ErrorDto } from "../../../../../definitions/idpay/onboarding/ErrorDto";
 import { InitiativeDto } from "../../../../../definitions/idpay/onboarding/InitiativeDto";
 import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/onboarding/RequiredCriteriaDTO";
 import {
@@ -8,13 +7,14 @@ import {
   UPSERTING_TAG,
   WAITING_USER_INPUT_TAG
 } from "../../../../utils/xstate";
+import { OnboardingFailureType } from "./failure";
 
 // Context types
 export type Context = {
   serviceId?: string;
   initiative?: InitiativeDto;
   requiredCriteria?: O.Option<RequiredCriteriaDTO>;
-  error?: ErrorDto;
+  failure?: OnboardingFailureType;
 };
 
 // Events types
@@ -262,16 +262,16 @@ const createIDPayOnboardingMachine = () =>
           initiative: event.data
         })),
         loadInitiativeFailure: assign((_, event) => ({
-          error: event.data as ErrorDto
+          failure: event.data as OnboardingFailureType
         })),
         loadRequiredCriteriaSuccess: assign((_, event) => ({
           requiredCriteria: event.data
         })),
         loadRequiredCriteriaFailure: assign((_, event) => ({
-          error: event.data as ErrorDto
+          failure: event.data as OnboardingFailureType
         })),
         acceptTosFailure: assign((_, event) => ({
-          error: event.data as ErrorDto
+          failure: event.data as OnboardingFailureType
         }))
       },
       guards: {
