@@ -167,12 +167,12 @@ const InitiativeDetailsScreen = () => {
             type={"TwoButtonsInlineThird"}
             leftButton={{
               bordered: true,
-              title: I18n.t("idpay.onboarding.buttons.cancel"),
+              title: I18n.t("global.buttons.cancel"),
               onPress: handleGoBackPress,
               testID: "IDPayOnboardingCancel"
             }}
             rightButton={{
-              title: I18n.t("idpay.onboarding.buttons.continue"),
+              title: I18n.t("global.buttons.continue"),
               onPress: handleContinuePress,
               testID: "IDPayOnboardingContinue",
               isLoading: isAcceptingTos,

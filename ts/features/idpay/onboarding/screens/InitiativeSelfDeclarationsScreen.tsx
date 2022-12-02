@@ -41,7 +41,7 @@ const InitiativeSelfDeclarationsScreen = () => {
   return (
     <BaseScreenComponent
       headerTitle="Adesione all'iniziativa"
-      goBack={true}
+      goBack={goBackOnPress}
       contextualHelp={emptyContextualHelp}
     >
       <LoadingSpinnerOverlay isLoading={isLoading}>
@@ -54,7 +54,7 @@ const InitiativeSelfDeclarationsScreen = () => {
               <Link>Dpr 28 dicembre 2000 n. 445 art 46 e 47</Link>
               <View spacer={true} large={true} />
               {selfCriteriaBool.map((criteria, index) => (
-                <>
+                <View key={criteria.code}>
                   <ListItemComponent
                     key={index}
                     title={criteria.description}
@@ -64,7 +64,7 @@ const InitiativeSelfDeclarationsScreen = () => {
                     isLongPressEnabled={true}
                   />
                   <View spacer={true} />
-                </>
+                </View>
               ))}
             </View>
           </ScrollView>
