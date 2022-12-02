@@ -134,6 +134,7 @@ const createIDPayOnboardingMachine = () =>
           }
         },
         DISPLAYING_INITIATIVE: {
+          entry: "navigateToInitiativeDetailsScreen",
           on: {
             ACCEPT_TOS: {
               target: "ACCEPTING_TOS"

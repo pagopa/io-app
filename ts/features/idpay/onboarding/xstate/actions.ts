@@ -3,10 +3,24 @@ import {
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { IDPayOnboardingRoutes } from "../navigation/navigator";
+import { Context } from "./machine";
 
 const createActionsImplementation = (
   navigation: IOStackNavigationProp<AppParamsList, keyof AppParamsList>
 ) => {
+  const navigateToInitiativeDetailsScreen = (context: Context) => {
+    if (context.serviceId === undefined) {
+      throw new Error("serviceId is undefined");
+    }
+
+    navigation.navigate(IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
+      screen: IDPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS,
+      params: {
+        serviceId: context.serviceId
+      }
+    });
+  };
+
   const navigateToPDNDCriteriaScreen = () => {
     navigation.navigate(IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
       screen: IDPayOnboardingRoutes.IDPAY_ONBOARDING_PDNDACCEPTANCE
@@ -36,6 +50,7 @@ const createActionsImplementation = (
   };
 
   return {
+    navigateToInitiativeDetailsScreen,
     navigateToPDNDCriteriaScreen,
     navigateToSelfDeclarationsScreen,
     navigateToCompletionScreen,
