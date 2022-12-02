@@ -1,10 +1,19 @@
 import * as React from "react";
+import { useCallback } from "react";
 import {
   View,
   StyleSheet,
   Pressable,
   GestureResponderEvent
 } from "react-native";
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withSpring,
+  useDerivedValue,
+  interpolate,
+  Extrapolate
+} from "react-native-reanimated";
 import { Icon, IOIconType } from "../core/icons";
 import { IOStyles } from "../core/variables/IOStyles";
 import { IOColors } from "../core/variables/IOColors";
@@ -34,37 +43,67 @@ const styles = StyleSheet.create({
   }
 });
 
+const springConfig = {
+  damping: 20,
+  mass: 0.5,
+  stiffness: 300
+};
+
 export const ButtonExtendedOutline: React.FunctionComponent<Props> = ({
   label,
   description,
   onPress,
   icon = "info"
-}: Props) => (
-  <View>
-    <Pressable
-      onPress={onPress}
-      style={({ pressed }) => [
-        {
-          transform: [
-            {
-              scale: pressed ? 0.97 : 1
-            }
-          ]
-        },
-        styles.button
-      ]}
-    >
-      <View>
-        <H4>{label}</H4>
-        {description && (
-          <LabelSmall weight="Regular" color={"bluegreyDark"}>
-            {description}
-          </LabelSmall>
-        )}
-      </View>
-      <View style={{ marginLeft: 8 }}>
-        <Icon name={icon} color="blue" size={24} />
-      </View>
+}: Props) => {
+  const isPressed: Animated.SharedValue<number> = useSharedValue(0);
+
+  // Scaling transformation applied when the button is pressed
+  const animationScaleValue = 0.95;
+
+  const scaleTraversed = useDerivedValue(() =>
+    withSpring(isPressed.value, springConfig)
+  );
+
+  // Interpolate animation values from `isPressed` values
+  const animatedStyle = useAnimatedStyle(() => {
+    const scale = interpolate(
+      scaleTraversed.value,
+      [0, 1],
+      [1, animationScaleValue],
+      Extrapolate.CLAMP
+    );
+
+    return {
+      transform: [{ scale }]
+    };
+  });
+
+  const onPressIn = useCallback(() => {
+    // eslint-disable-next-line functional/immutable-data
+    isPressed.value = 1;
+  }, [isPressed]);
+  const onPressOut = useCallback(() => {
+    // eslint-disable-next-line functional/immutable-data
+    isPressed.value = 0;
+  }, [isPressed]);
+
+  return (
+    <Pressable onPress={onPress} onPressIn={onPressIn} onPressOut={onPressOut}>
+      <Animated.View style={[styles.button, animatedStyle]}>
+        <View style={IOStyles.flex}>
+          <H4>{label}</H4>
+          {description && (
+            <LabelSmall weight="Regular" color={"bluegreyDark"}>
+              {description}
+            </LabelSmall>
+          )}
+        </View>
+        <View style={{ marginLeft: 8 }}>
+          <Icon name={icon} color="blue" size={24} />
+        </View>
+      </Animated.View>
     </Pressable>
-  </View>
-);
+  );
+};
+
+export default ButtonExtendedOutline;
