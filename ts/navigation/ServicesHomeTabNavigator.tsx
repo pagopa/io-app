@@ -12,6 +12,7 @@ const Tab = createMaterialTopTabNavigator();
 const ServicesHomeTabNavigator = () => (
   <Tab.Navigator
     initialRouteName="SERVICES_NATIONAL"
+    lazy={true}
     tabBarPosition="top"
     tabBarOptions={{
       activeTintColor: IOColors.blue,
