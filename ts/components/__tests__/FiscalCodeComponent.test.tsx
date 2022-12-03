@@ -10,7 +10,7 @@ const municipality = pot.some(mockedMunicipality);
 // 02/03/1990
 const fiscalCode = "MRARSS90C02H501E" as FiscalCode;
 // 02/01/1990
-const dateOfBirth = new Date(1990, 0, 2);
+const dateOfBirth = new Date("1990-01-02T00:00:00.000Z");
 
 describe("FiscalCodeComponent", () => {
   jest.useFakeTimers();
