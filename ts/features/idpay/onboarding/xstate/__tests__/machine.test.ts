@@ -13,6 +13,7 @@ import {
   SelfDeclarationMultiDTO,
   _typeEnum as SelfDeclarationMultiDTOType
 } from "../../../../../../definitions/idpay/onboarding/SelfDeclarationMultiDTO";
+import { StatusEnum } from "../../../../../../definitions/idpay/onboarding/OnboardingStatusDTO";
 
 const T_SERVICE_ID = "T_SERVICE_ID";
 const T_INITIATIVE_ID = "T_INITIATIVE_ID";
@@ -52,6 +53,10 @@ const mockLoadInitiative = jest.fn(
   })
 );
 
+const mockLoadInitiativeStatus = jest.fn(
+  async (): Promise<undefined> => undefined
+);
+
 const mockAcceptTos = jest.fn(async (): Promise<undefined> => undefined);
 
 const mockLoadRequiredCriteria = jest.fn(
@@ -59,9 +64,12 @@ const mockLoadRequiredCriteria = jest.fn(
     O.some(T_REQUIRED_CRITERIA)
 );
 
+const navigateToInitiativeDetailsScreen = jest.fn();
 const mockNavigateToPDNDCriteriaScreen = jest.fn();
 const mockNavigateToSelfDeclarationsScreen = jest.fn();
 const mockNavigateToCompletionScreen = jest.fn();
+const navigateToFailureScreen = jest.fn();
+const exitOnboarding = jest.fn();
 
 const mockAcceptRequiredCriteria = jest.fn(
   async (): Promise<undefined> => undefined
@@ -81,14 +89,18 @@ describe("machine", () => {
     const machine = createIDPayOnboardingMachine().withConfig({
       services: {
         loadInitiative: mockLoadInitiative,
+        loadInitiativeStatus: mockLoadInitiativeStatus,
         acceptTos: mockAcceptTos,
         loadRequiredCriteria: mockLoadRequiredCriteria,
         acceptRequiredCriteria: mockAcceptRequiredCriteria
       },
       actions: {
+        navigateToInitiativeDetailsScreen,
         navigateToPDNDCriteriaScreen: mockNavigateToPDNDCriteriaScreen,
         navigateToSelfDeclarationsScreen: mockNavigateToSelfDeclarationsScreen,
-        navigateToCompletionScreen: mockNavigateToCompletionScreen
+        navigateToCompletionScreen: mockNavigateToCompletionScreen,
+        navigateToFailureScreen,
+        exitOnboarding
       }
     });
 

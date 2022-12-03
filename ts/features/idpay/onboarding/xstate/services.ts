@@ -3,6 +3,7 @@ import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { PreferredLanguage } from "../../../../../definitions/backend/PreferredLanguage";
+import { InitiativeDto } from "../../../../../definitions/idpay/onboarding/InitiativeDto";
 import { StatusEnum } from "../../../../../definitions/idpay/onboarding/OnboardingStatusDTO";
 import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/onboarding/RequiredCriteriaDTO";
 import { SelfConsentDTO } from "../../../../../definitions/idpay/onboarding/SelfConsentDTO";
@@ -46,30 +47,6 @@ const createServicesImplementation = (
     "Accept-Language": language
   };
 
-  const loadInitiativeStatus = async (initiativeId: string) => {
-    const statusResponse = await onboardingClient.onboardingStatus({
-      ...clientOptions,
-      initiativeId
-    });
-
-    return pipe(
-      statusResponse,
-      E.fold(
-        _ => Promise.reject(OnboardingFailureType.GENERIC),
-        _ => {
-          if (_.status === 404) {
-            // 404 means there is no status yet for the initiaitve
-            return Promise.resolve(undefined);
-          } else if (_.status !== 200) {
-            return Promise.reject(OnboardingFailureType.GENERIC);
-          }
-
-          return Promise.resolve(_.value.status);
-        }
-      )
-    );
-  };
-
   const loadInitiative = async (context: Context) => {
     if (context.serviceId === undefined) {
       throw new Error("serviceId is undefined");
@@ -80,7 +57,7 @@ const createServicesImplementation = (
       serviceId: context.serviceId
     });
 
-    return pipe(
+    const data: Promise<InitiativeDto> = pipe(
       dataResponse,
       E.fold(
         _ => Promise.reject(OnboardingFailureType.GENERIC),
@@ -91,23 +68,39 @@ const createServicesImplementation = (
           return Promise.resolve(_.value);
         }
       )
-    ).then(async initiative => {
-      const status = await loadInitiativeStatus(initiative.initiativeId);
+    );
 
-      if (status === undefined) {
-        return Promise.resolve(initiative);
-      }
+    return data;
+  };
 
-      if (status === StatusEnum.ONBOARDING_KO) {
-        // In this case the initiative onboarding had a problem
-        return Promise.reject(OnboardingFailureType.ONBOARDING_KO);
-      } else if (status !== StatusEnum.ACCEPTED_TC) {
-        // In this case the initiative onboarding was completed
-        return Promise.reject(OnboardingFailureType.ALREADY_COMPLETED);
-      }
+  const loadInitiativeStatus = async (context: Context) => {
+    if (context.initiative === undefined) {
+      throw new Error("initiative is undefined");
+    }
 
-      return Promise.resolve(initiative);
+    const statusResponse = await onboardingClient.onboardingStatus({
+      ...clientOptions,
+      initiativeId: context.initiative.initiativeId
     });
+
+    const data: Promise<StatusEnum | undefined> = pipe(
+      statusResponse,
+      E.fold(
+        _ => Promise.reject(OnboardingFailureType.GENERIC),
+        _ => {
+          if (_.status === 404) {
+            // 404 means initiative is yet to be started
+            return Promise.resolve(undefined);
+          } else if (_.status === 200) {
+            return Promise.resolve(_.value.status);
+          }
+
+          return Promise.reject(OnboardingFailureType.GENERIC);
+        }
+      )
+    );
+
+    return data;
   };
 
   const acceptTos = async (context: Context) => {
@@ -205,6 +198,7 @@ const createServicesImplementation = (
 
   return {
     loadInitiative,
+    loadInitiativeStatus,
     acceptTos,
     loadRequiredCriteria,
     acceptRequiredCriteria

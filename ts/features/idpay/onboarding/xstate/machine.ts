@@ -1,6 +1,7 @@
 import * as O from "fp-ts/lib/Option";
 import { assign, createMachine } from "xstate";
 import { InitiativeDto } from "../../../../../definitions/idpay/onboarding/InitiativeDto";
+import { StatusEnum } from "../../../../../definitions/idpay/onboarding/OnboardingStatusDTO";
 import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/onboarding/RequiredCriteriaDTO";
 import {
   LOADING_TAG,
@@ -13,6 +14,7 @@ import { OnboardingFailureType } from "./failure";
 export type Context = {
   serviceId?: string;
   initiative?: InitiativeDto;
+  initiativeStatus?: StatusEnum;
   requiredCriteria?: O.Option<RequiredCriteriaDTO>;
   failure?: OnboardingFailureType;
 };
@@ -56,6 +58,9 @@ type Services = {
   loadInitiative: {
     data: InitiativeDto;
   };
+  loadInitiativeStatus: {
+    data: StatusEnum | undefined;
+  };
   acceptTos: {
     data: undefined;
   };
@@ -65,6 +70,19 @@ type Services = {
   acceptRequiredCriteria: {
     data: undefined;
   };
+};
+
+const isOnboardingDone = (context: Context) => {
+  const initiativeStatus = context.initiativeStatus;
+  return (
+    initiativeStatus === StatusEnum.ONBOARDING_OK ||
+    initiativeStatus === StatusEnum.ON_EVALUATION
+  );
+};
+
+const isOnboardingFailed = (context: Context) => {
+  const initiativeStatus = context.initiativeStatus;
+  return initiativeStatus === StatusEnum.ONBOARDING_KO;
 };
 
 const hasPDNDRequiredCriteria = (context: Context) => {
@@ -121,7 +139,7 @@ const createIDPayOnboardingMachine = () =>
             id: "loadInitiative",
             onDone: [
               {
-                target: "DISPLAYING_INITIATIVE",
+                target: "LOADING_INITIATIVE_STATUS",
                 actions: "loadInitiativeSuccess"
               }
             ],
@@ -132,6 +150,42 @@ const createIDPayOnboardingMachine = () =>
               }
             ]
           }
+        },
+        LOADING_INITIATIVE_STATUS: {
+          tags: [LOADING_TAG],
+          invoke: {
+            src: "loadInitiativeStatus",
+            id: "loadInitiativeStatus",
+            onDone: [
+              {
+                target: "EVALUATING_INITIATIVE_STATUS",
+                actions: "loadInitiativeStatusSuccess"
+              }
+            ],
+            onError: [
+              {
+                target: "DISPLAYING_ONBOARDING_FAILURE",
+                actions: "loadInitiativeStatusFailure"
+              }
+            ]
+          }
+        },
+        EVALUATING_INITIATIVE_STATUS: {
+          always: [
+            {
+              target: "DISPLAYING_ONBOARDING_FAILURE",
+              cond: "isOnboardingDone",
+              actions: "onOnboardingDone"
+            },
+            {
+              target: "DISPLAYING_ONBOARDING_FAILURE",
+              cond: "isOnboardingFailed",
+              actions: "onOnboardingFailed"
+            },
+            {
+              target: "DISPLAYING_INITIATIVE"
+            }
+          ]
         },
         DISPLAYING_INITIATIVE: {
           entry: "navigateToInitiativeDetailsScreen",
@@ -265,6 +319,18 @@ const createIDPayOnboardingMachine = () =>
         loadInitiativeFailure: assign((_, event) => ({
           failure: event.data as OnboardingFailureType
         })),
+        loadInitiativeStatusSuccess: assign((_, event) => ({
+          initiativeStatus: event.data
+        })),
+        loadInitiativeStatusFailure: assign((_, event) => ({
+          failure: event.data as OnboardingFailureType
+        })),
+        onOnboardingDone: assign((_, __) => ({
+          failure: OnboardingFailureType.ALREADY_COMPLETED
+        })),
+        onOnboardingFailed: assign((_, __) => ({
+          failure: OnboardingFailureType.ONBOARDING_KO
+        })),
         loadRequiredCriteriaSuccess: assign((_, event) => ({
           requiredCriteria: event.data
         })),
@@ -276,6 +342,8 @@ const createIDPayOnboardingMachine = () =>
         }))
       },
       guards: {
+        isOnboardingDone,
+        isOnboardingFailed,
         hasPDNDRequiredCriteria,
         hasSelfRequiredCriteria
       }
