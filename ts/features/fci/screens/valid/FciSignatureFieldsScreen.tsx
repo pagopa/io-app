@@ -152,7 +152,7 @@ const FciSignatureFieldsScreen = (
         />
       )}
       renderSectionHeader={({ section: { title } }) => (
-        <H3>{clauseTypeMaping.get(title)}</H3>
+        <H3 color="bluegrey">{clauseTypeMaping.get(title)}</H3>
       )}
     />
   );

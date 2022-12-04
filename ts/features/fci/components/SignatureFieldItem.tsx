@@ -1,11 +1,12 @@
 import * as React from "react";
 import { View } from "native-base";
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet } from "react-native";
 import { H4 } from "../../../components/core/typography/H4";
 import IconFont from "../../../components/ui/IconFont";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
+import { Link } from "../../../components/core/typography/Link";
 import I18n from "../../../i18n";
 
 type Props = {
@@ -16,12 +17,10 @@ type Props = {
 };
 
 const styles = StyleSheet.create({
-  container: { paddingTop: 20, paddingBottom: 16 },
+  container: { paddingTop: 16, paddingBottom: 16 },
   details: {
-    color: IOColors.blue,
-    textDecorationColor: IOColors.blue,
-    textDecorationLine: "underline",
-    paddingTop: 16
+    paddingTop: 16,
+    paddingBottom: 16
   },
   borderBottom: {
     borderBottomColor: IOColors.greyLight,
@@ -51,13 +50,13 @@ const SignatureFieldItem = (props: Props) => {
       >
         <View style={IOStyles.column}>
           <H4 testID="SignatureFieldItemTitleTestID">{props.title}</H4>
-          <Text
+          <Link
             testID="SignatureFieldItemDetailTestID"
             style={styles.details}
             onPress={props.onPressDetail}
           >
             {I18n.t("features.fci.signatureFields.showOnDocument")}
-          </Text>
+          </Link>
         </View>
         <View style={IOStyles.flex} />
         <IconFont
