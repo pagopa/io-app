@@ -17,7 +17,7 @@ import Animated, {
 import { Icon, IOIconType } from "../core/icons";
 import { IOStyles } from "../core/variables/IOStyles";
 import { IOColors } from "../core/variables/IOColors";
-import { IOSpringValues } from "../core/variables/IOAnimations";
+import { IOSpringValues, IOScaleValues } from "../core/variables/IOAnimations";
 import { H4 } from "../core/typography/H4";
 import { LabelSmall } from "../core/typography/LabelSmall";
 
@@ -53,7 +53,7 @@ export const ButtonExtendedOutline: React.FunctionComponent<Props> = ({
   const isPressed: Animated.SharedValue<number> = useSharedValue(0);
 
   // Scaling transformation applied when the button is pressed
-  const animationScaleValue = 0.95;
+  const animationScaleValue = IOScaleValues?.button?.pressedState;
 
   const scaleTraversed = useDerivedValue(() =>
     withSpring(isPressed.value, IOSpringValues.button)

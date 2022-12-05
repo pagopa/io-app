@@ -11,3 +11,9 @@ export const IOSpringValues = {
     stiffness: 300
   }
 };
+
+export const IOScaleValues = {
+  button: {
+    pressedState: 0.95
+  }
+};
