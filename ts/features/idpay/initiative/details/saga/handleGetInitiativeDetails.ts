@@ -1,6 +1,6 @@
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
-import { all, call, put } from "typed-redux-saga/macro";
+import { call, put } from "typed-redux-saga/macro";
 import { PreferredLanguageEnum } from "../../../../../../definitions/backend/PreferredLanguage";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
@@ -8,8 +8,7 @@ import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { IDPayWalletClient } from "../../../wallet/api/client";
 import {
   idpayInitiativeGet,
-  IdPayInitiativeGetPayloadType,
-  idpayTimelineGet
+  IdPayInitiativeGetPayloadType
 } from "../store/actions";
 
 /**
@@ -44,14 +43,7 @@ export function* handleGetInitiativeDetails(
           ),
         response =>
           response.status === 200
-            ? all([
-                put(idpayInitiativeGet.success(response.value)),
-                put(
-                  idpayTimelineGet.request({
-                    initiativeId: payload.initiativeId
-                  })
-                )
-              ])
+            ? put(idpayInitiativeGet.success(response.value))
             : put(
                 idpayInitiativeGet.failure({
                   ...getGenericError(

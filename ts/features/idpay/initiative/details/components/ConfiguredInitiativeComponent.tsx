@@ -1,18 +1,24 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { List, ListItem, Text, View } from "native-base";
 import React from "react";
 import { StyleSheet } from "react-native";
+import { OperationTypeEnum as IbanOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/IbanOperationDTO";
+import { OperationTypeEnum as InstrumentOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/InstrumentOperationDTO";
 import { OperationTypeEnum as OnboardingOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/OnboardingOperationDTO";
 import { OperationListDTO } from "../../../../../../definitions/idpay/timeline/OperationListDTO";
 import { TimelineDTO } from "../../../../../../definitions/idpay/timeline/TimelineDTO";
-import { OperationTypeEnum as TransactionOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/TransactionOperationDTO";
-import { OperationTypeEnum as InstrumentOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/InstrumentOperationDTO";
-import { OperationTypeEnum as IbanOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/IbanOperationDTO";
+import {
+  CircuitTypeEnum,
+  OperationTypeEnum as TransactionOperationTypeEnum
+} from "../../../../../../definitions/idpay/timeline/TransactionOperationDTO";
 import { InitiativeDTO } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import ListItemComponent from "../../../../../components/screens/ListItemComponent";
 import I18n from "../../../../../i18n";
+import { useIOSelector } from "../../../../../store/hooks";
+import { idpayTimelineSelector } from "../store";
 import {
   IbanOnboardingCard,
   InstrumentOnboardingCard,
@@ -31,14 +37,57 @@ const styles = StyleSheet.create({
 });
 type configuredProps = {
   initiative: InitiativeDTO;
-  timelineList: TimelineDTO["operationList"];
 };
 
-const InitiativeConfiguredData = ({
-  initiative,
-  timelineList
-}: configuredProps) => {
+const InitiativeConfiguredData = ({ initiative }: configuredProps) => {
+  const timelineFromSelector = useIOSelector(idpayTimelineSelector);
+  const isTimelineLoading = pot.isLoading(timelineFromSelector);
+  const timelineList = pot.getOrElse(
+    pot.map(timelineFromSelector, timeline => timeline.operationList),
+    // placeholder, will be removed once it can be tested
+    [
+      {
+        amount: -10,
+        brandLogo: "",
+        circuitType: CircuitTypeEnum["00"],
+        maskedPan: "1234",
+        operationDate: new Date("2021-01-01T00:00:00.000Z"),
+        operationId: "1234567890",
+        operationType: TransactionOperationTypeEnum.TRANSACTION
+      },
+      {
+        operationType: OnboardingOperationTypeEnum.ONBOARDING,
+        operationDate: new Date("2021-01-01T00:00:00.000Z"),
+        operationId: "1234567890"
+      },
+      {
+        operationType: InstrumentOperationTypeEnum.ADD_INSTRUMENT,
+        brandLogo: "",
+        maskedPan: "1234",
+        channel: "1234",
+        operationDate: new Date("2021-01-01T00:00:00.000Z"),
+        operationId: "1234567890"
+      },
+      {
+        operationType: IbanOperationTypeEnum.ADD_IBAN,
+        channel: "1234",
+        iban: "IT1234567890123456789012345",
+        operationDate: new Date("2021-01-01T00:00:00.000Z"),
+        operationId: "1234567890"
+      }
+    ]
+  );
+
   const isTimelineEmpty = timelineList.length === 0;
+
+  const renderTimelineIfNotLoading = () => {
+    if (isTimelineLoading) {
+      return null;
+    }
+    return isTimelineEmpty
+      ? emptyTimelineContent
+      : TransactionsList(timelineList);
+  };
   return (
     <>
       <H3>
@@ -47,7 +96,7 @@ const InitiativeConfiguredData = ({
         )}
       </H3>
       <View spacer />
-      {isTimelineEmpty ? emptyTimelineContent : TransactionsList(timelineList)}
+      {renderTimelineIfNotLoading()}
       <View spacer large />
       <H3>
         {I18n.t(
@@ -98,7 +147,7 @@ const TransactionsList = (timeline: TimelineDTO["operationList"]) => (
 type TransactionProps = { transaction: OperationListDTO };
 
 const CustomListItem = ({ transaction }: TransactionProps) => {
-  const pickComponent = () => {
+  const pickTransactionItem = () => {
     switch (transaction.operationType) {
       case TransactionOperationTypeEnum.TRANSACTION:
         return <TimelineTransactionCard transaction={transaction} />;
@@ -115,11 +164,10 @@ const CustomListItem = ({ transaction }: TransactionProps) => {
   return (
     <ListItem style={styles.listItem}>
       <View style={[IOStyles.flex, IOStyles.row, styles.alignCenter]}>
-        {pickComponent()}
+        {pickTransactionItem()}
       </View>
     </ListItem>
   );
 };
-
 
 export default InitiativeConfiguredData;

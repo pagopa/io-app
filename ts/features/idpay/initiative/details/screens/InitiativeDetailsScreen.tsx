@@ -4,14 +4,7 @@ import { Text, View } from "native-base";
 import React, { useEffect } from "react";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
-import {
-  CircuitTypeEnum,
-  OperationTypeEnum as TransactionOperationTypeEnum
-} from "../../../../../../definitions/idpay/timeline/TransactionOperationDTO";
 
-import { OperationTypeEnum as OnboardingOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/OnboardingOperationDTO";
-import { OperationTypeEnum as InstrumentOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/InstrumentOperationDTO";
-import { OperationTypeEnum as IbanOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/IbanOperationDTO";
 import {
   InitiativeDTO,
   StatusEnum
@@ -34,11 +27,8 @@ import customVariables from "../../../../../theme/variables";
 import { IDPayConfigurationRoutes } from "../../configuration/navigation/navigator";
 import InitiativeConfiguredData from "../components/ConfiguredInitiativeComponent";
 import InitiativeCardComponent from "../components/InitiativeCardComponent";
-import {
-  idpayInitiativeDetailsSelector,
-  idpayTimelineSelector
-} from "../store";
-import { idpayInitiativeGet } from "../store/actions";
+import { idpayInitiativeDetailsSelector } from "../store";
+import { idpayInitiativeGet, idpayTimelineGet } from "../store/actions";
 
 const styles = StyleSheet.create({
   newInitiativeMessageContainer: {
@@ -76,42 +66,6 @@ export const InitiativeDetailsScreen = () => {
     dispatch(idpayInitiativeGet.request({ initiativeId }));
   }, [dispatch, initiativeId]);
 
-  const timelineFromSelector = useIOSelector(idpayTimelineSelector);
-  const timelineOperations = pot.getOrElse(
-    pot.map(timelineFromSelector, timeline => timeline.operationList),
-    [
-      {
-        amount: -10,
-        brandLogo: "",
-        circuitType: CircuitTypeEnum["00"],
-        maskedPan: "1234",
-        operationDate: new Date("2021-01-01T00:00:00.000Z"),
-        operationId: "1234567890",
-        operationType: TransactionOperationTypeEnum.TRANSACTION
-      },
-      {
-        operationType: OnboardingOperationTypeEnum.ONBOARDING,
-        operationDate: new Date("2021-01-01T00:00:00.000Z"),
-        operationId: "1234567890"
-      },
-      {
-        operationType: InstrumentOperationTypeEnum.ADD_INSTRUMENT,
-        brandLogo: "",
-        maskedPan: "1234",
-        channel: "1234",
-        operationDate: new Date("2021-01-01T00:00:00.000Z"),
-        operationId: "1234567890"
-      },
-      {
-        operationType: IbanOperationTypeEnum.ADD_IBAN,
-        channel: "1234",
-        iban: "IT1234567890123456789012345",
-        operationDate: new Date("2021-01-01T00:00:00.000Z"),
-        operationId: "1234567890"
-      }
-    ]
-  );
-
   const initiativeData: InitiativeDTO | undefined = pot.getOrElse(
     initiativeDetailsFromSelector,
     undefined
@@ -122,7 +76,6 @@ export const InitiativeDetailsScreen = () => {
     <View style={[styles.newInitiativeMessageContainer, IOStyles.flex]}>
       <EmptyInitiativeSvg width={130} height={130} />
       <View spacer />
-      {/* eslint-disable-next-line react/no-unescaped-entities */}
       <H3>
         {I18n.t(
           "idpay.initiative.details.initiativeDetailsScreen.notConfigured.header"
@@ -132,7 +85,7 @@ export const InitiativeDetailsScreen = () => {
       <Text style={styles.textCenter}>
         {I18n.t(
           "idpay.initiative.details.initiativeDetailsScreen.notConfigured.footer",
-          { initiative: "18 app" }
+          { initiative: initiativeData?.initiativeName ?? "" }
         )}
       </Text>
     </View>
@@ -152,6 +105,15 @@ export const InitiativeDetailsScreen = () => {
 
     const initiativeNeedsConfiguration =
       initiativeData.status === StatusEnum.NOT_REFUNDABLE;
+
+    const renderNeedsConfiguration = () => {
+      if (initiativeNeedsConfiguration) {
+        return initiativeNotConfiguredContent;
+      } else {
+        dispatch(idpayTimelineGet.request({ initiativeId }));
+        return <InitiativeConfiguredData initiative={initiativeData} />;
+      }
+    };
 
     return (
       <SafeAreaView style={IOStyles.flex}>
@@ -179,7 +141,6 @@ export const InitiativeDetailsScreen = () => {
 
           <View
             style={[
-              // styles.flexFull,
               IOStyles.flex,
               IOStyles.horizontalContentPadding,
               styles.flexGrow,
@@ -189,14 +150,7 @@ export const InitiativeDetailsScreen = () => {
             ]}
           >
             <View style={styles.paddedContent}>
-              {initiativeNeedsConfiguration ? (
-                initiativeNotConfiguredContent
-              ) : (
-                <InitiativeConfiguredData
-                  initiative={initiativeData}
-                  timelineList={timelineOperations}
-                />
-              )}
+              {renderNeedsConfiguration()}
             </View>
           </View>
         </ScrollView>
