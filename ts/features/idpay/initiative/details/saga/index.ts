@@ -53,19 +53,18 @@ export function* idpayInitiativeDetailsSaga(
       );
     }
   );
-  yield *
-    takeLatest(
-      idpayTimelineGet.request,
-      function* (action: { payload: IdPayInitiativeGetPayloadType }) {
-        // wait backoff time if there were previous errors
-        yield* fork(waitBackoffError, idpayTimelineGet.failure);
-        yield* call(
-          handleGetTimeline,
-          idPayTimelineClient.getTimeline,
-          token,
-          preferredLanguage,
-          action.payload
-        );
-      }
-    );
+  yield* takeLatest(
+    idpayTimelineGet.request,
+    function* (action: { payload: IdPayInitiativeGetPayloadType }) {
+      // wait backoff time if there were previous errors
+      yield* fork(waitBackoffError, idpayTimelineGet.failure);
+      yield* call(
+        handleGetTimeline,
+        idPayTimelineClient.getTimeline,
+        token,
+        preferredLanguage,
+        action.payload
+      );
+    }
+  );
 }
