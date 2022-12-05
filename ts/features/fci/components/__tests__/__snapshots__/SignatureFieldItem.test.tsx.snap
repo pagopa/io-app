@@ -56,12 +56,14 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
         fontStyle={
           Object {
             "fontSize": 16,
+            "lineHeight": 22,
           }
         }
         style={
           Array [
             Object {
               "fontSize": 16,
+              "lineHeight": 22,
             },
             Object {
               "color": "#17324D",

@@ -19,12 +19,14 @@ exports[`PspRadioItem match snapshot 1`] = `
     fontStyle={
       Object {
         "fontSize": 16,
+        "lineHeight": 22,
       }
     }
     style={
       Array [
         Object {
           "fontSize": 16,
+          "lineHeight": 22,
         },
         Object {
           "color": "#17324D",
@@ -189,12 +191,14 @@ exports[`PspRadioItem match snapshot 1`] = `
                   fontStyle={
                     Object {
                       "fontSize": 16,
+                      "lineHeight": 24,
                     }
                   }
                   style={
                     Array [
                       Object {
                         "fontSize": 16,
+                        "lineHeight": 24,
                       },
                       Object {
                         "color": "#17324D",
@@ -256,12 +260,14 @@ exports[`PspRadioItem match snapshot 1`] = `
                   fontStyle={
                     Object {
                       "fontSize": 16,
+                      "lineHeight": 24,
                     }
                   }
                   style={
                     Array [
                       Object {
                         "fontSize": 16,
+                        "lineHeight": 24,
                       },
                       Object {
                         "color": "#17324D",
