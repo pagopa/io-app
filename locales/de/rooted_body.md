@@ -1,4 +1,4 @@
-Es scheint, dass **Wurzel**-Berechtigungen auf Ihrem Gerät aktiviert sind.
+Es scheint, dass **Wurzel-Berechtigungen** auf Ihrem Gerät aktiviert sind.
 
 Dies geschieht, wenn das Betriebssystem verändert oder nicht ordnungsgemäß installiert wurde. Die Integrität des Betriebssystems kann beeinträchtigt sein, und die IO-App funktioniert möglicherweise nicht richtig.
 
