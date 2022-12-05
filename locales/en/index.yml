@@ -505,7 +505,7 @@ profile:
       title: Customize push notifications
       subtitle: Choose if you want to allow previews and receive reminders.
       titleExistingUser: Customize push notifications
-      subtitleExistingUser: Now you can instantly see who messaged you and receive reminders from important messages.
+      subtitleExistingUser: Now you can instantly see who messaged you and receive reminders from important messages, as in the example below.
       reminders:
         title: Allow reminders
         description: Upon request of the sender, receive push notifications close to deadlines or when you have unread messages
