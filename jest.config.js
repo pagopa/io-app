@@ -15,5 +15,6 @@ module.exports = {
     "@testing-library/jest-native/extend-expect",
     "./jestSetupAfterEnv.js"
   ],
-  collectCoverage: true
+  collectCoverage: true,
+  testPathIgnorePatterns: [".*fiscal-code.test.ts$"]
 };

@@ -1,7 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { Content } from "native-base";
 import React, { memo, useEffect, useState } from "react";
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import { useSelector } from "react-redux";
 import { PushNotificationsContentTypeEnum } from "../../../definitions/backend/PushNotificationsContentType";
 import { ReminderStatusEnum } from "../../../definitions/backend/ReminderStatus";
@@ -36,9 +35,6 @@ const styles = StyleSheet.create({
     padding: customVariables.contentPadding,
     paddingTop: 0
   },
-  flexGrow: {
-    flexGrow: 1
-  },
   separator: {
     backgroundColor: customVariables.itemSeparator,
     height: StyleSheet.hairlineWidth
@@ -54,7 +50,8 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     height: "100%",
     paddingLeft: customVariables.contentPadding,
-    paddingRight: customVariables.contentPadding
+    paddingRight: customVariables.contentPadding,
+    paddingBottom: customVariables.contentPadding
   },
   containerActionsBlueBg: {
     paddingTop: customVariables.contentPadding
@@ -179,11 +176,7 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
       primary={!isFirstOnboarding}
     >
       <SafeAreaView style={IOStyles.flex}>
-        <Content
-          noPadded={true}
-          contentContainerStyle={styles.flexGrow}
-          style={!isFirstOnboarding && styles.blueBg}
-        >
+        <ScrollView style={!isFirstOnboarding && styles.blueBg}>
           <Header isFirstOnboarding={isFirstOnboarding} />
           <NotificationsPreferencesPreview
             previewEnabled={previewEnabled}
@@ -244,7 +237,8 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
               </H5>
             </InfoBox>
           </View>
-        </Content>
+        </ScrollView>
+
         {bottomSheet}
         <FooterWithButtons
           type="SingleButton"

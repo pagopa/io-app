@@ -505,7 +505,7 @@ profile:
       title: Customize push notifications
       subtitle: Choose if you want to allow previews and receive reminders.
       titleExistingUser: Customize push notifications
-      subtitleExistingUser: Now you can instantly see who messaged you and receive reminders from important messages.
+      subtitleExistingUser: Now you can instantly see who messaged you and receive reminders from important messages, as in the example below.
       reminders:
         title: Allow reminders
         description: Upon request of the sender, receive push notifications close to deadlines or when you have unread messages
@@ -1675,10 +1675,11 @@ messages:
         block1: Add a reminder for the
         block2: at
       expiringOrValidAlert:
-        block1: This notice will expire on
+        block1: Expiring on 
+        block2: at
       expiredAlert:
-        block1: This notice expired at
-        block2: on
+        block1: Expired on
+        block2: at
     prescription:
       addMemo: This prescription expires the
       expiringAlert: This prescription expires today
@@ -3179,6 +3180,14 @@ features:
       generic:
         title: There is a problem
         subTitle: To proceed with the signature, check that you have updated the IO app to the latest version.
+    abort:
+      title: "Cancel signing flow"
+      content: "Do you want to cancel the documents signing process?"
+      cancel: "Back"
+      confirm: "Cancel"
+    signatureFields:
+      title: "Sign here"
+      showOnDocument: "See on document"
     title: "Firma con IO"
     documentsBar:
       titleLeft: Document {{currentDoc}} of {{totalDocs}}
@@ -3189,6 +3198,10 @@ webView:
     missingToken: Missing authorization to start this flow
     convertMessage: Unable to decode the message from the webview
 support:
+  ticketList:
+    noTicket:
+      title: "There are no ongoing requests"
+      body: "If you need help, submit a new request."
   helpCenter:
     header: "Support"
     cta:
@@ -3215,7 +3228,10 @@ support:
     stock: "Payment Notice details"
     stockValue: "Including the error you just received"
     header: "Submit a request"
+    listTitle: "Ongoing requests"
     title: "Do you give us your consent?"
+    listBody: "To retrieve your ongoing requests, we need to access to some data."
+    privacyLink: "Read the privacy policy"
     body: "In order to respond to the support request, we need access to some personal data. If you deny consent, you’ll have to send us a generic request via e-mail."
     listHeader: "If you consent, we'll access this data:"
     devicePerformance: "Device performance"

@@ -534,7 +534,7 @@ PODS:
     - React-Core
   - RNVectorIcons (7.0.0):
     - React
-  - RNZendeskChat (0.3.21):
+  - RNZendeskChat (0.3.23):
     - React
     - ZendeskAnswerBotSDK (~> 2.1.3)
     - ZendeskChatSDK (~> 2.11.1)
@@ -981,7 +981,7 @@ SPEC CHECKSUMS:
   RNShare: 807d6f8231b8ebcf6dd839294b877342eb93d4e5
   RNSVG: 302bfc9905bd8122f08966dc2ce2d07b7b52b9f8
   RNVectorIcons: da6fe858f5a65d7bbc3379540a889b0b12aa5976
-  RNZendeskChat: d22f866bc9cf8b426d5fa9d773a4a280889cc6c8
+  RNZendeskChat: ca87fe979b80836046e5632a88e5e5ed0ea75b87
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
   vision-camera-code-scanner: dda884a7f3ec8243a2a6d6489b91860648371bca
   VisionCamera: 51e731cb8cb61740f6cbd06dd9e818e2042a3d0e
