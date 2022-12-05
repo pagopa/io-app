@@ -505,7 +505,7 @@ profile:
       title: Personalizza le notifiche
       subtitle: Scegli se mostrare le anteprime e ricevere promemoria.
       titleExistingUser: Personalizza le notifiche
-      subtitleExistingUser: Ora puoi vedere subito chi ti ha scritto o ricevere promemoria da messaggi importanti.
+      subtitleExistingUser: Ora puoi vedere subito chi ti ha scritto o ricevere promemoria da messaggi importanti, come in questo esempio.
       reminders:
         title: Consenti promemoria
         description: Su richiesta dell'ente, ricevi notifiche push in prossimità di scadenze o quando hai dei messaggi non letti
