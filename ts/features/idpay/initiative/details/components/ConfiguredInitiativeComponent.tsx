@@ -15,10 +15,10 @@ import { InitiativeDTO } from "../../../../../../definitions/idpay/wallet/Initia
 import { H3 } from "../../../../../components/core/typography/H3";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import ListItemComponent from "../../../../../components/screens/ListItemComponent";
 import I18n from "../../../../../i18n";
 import { useIOSelector } from "../../../../../store/hooks";
 import { idpayTimelineSelector } from "../store";
+import PaymentDataComponent from "./PaymentDataComponent";
 import {
   IbanOnboardingCard,
   InstrumentOnboardingCard,
@@ -35,11 +35,16 @@ const styles = StyleSheet.create({
     justifyContent: "space-between"
   }
 });
-type configuredProps = {
+
+type configuredInitiativeProps = {
   initiative: InitiativeDTO;
 };
 
-const InitiativeConfiguredData = ({ initiative }: configuredProps) => {
+type TransactionProps = { transaction: OperationListDTO };
+
+const InitiativeConfiguredData = ({
+  initiative
+}: configuredInitiativeProps) => {
   const timelineFromSelector = useIOSelector(idpayTimelineSelector);
   const isTimelineLoading = pot.isLoading(timelineFromSelector);
   const timelineList = pot.getOrElse(
@@ -104,22 +109,7 @@ const InitiativeConfiguredData = ({ initiative }: configuredProps) => {
         )}
       </H3>
       <View spacer small />
-      <List>
-        <ListItemComponent
-          title={I18n.t(
-            "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
-          )}
-          subTitle={`${initiative.nInstr} ${I18n.t(
-            "idpay.initiative.details.initiativeDetailsScreen.configured.settings.methodsi18n"
-          )}`}
-        />
-        <ListItemComponent
-          title={I18n.t(
-            "idpay.initiative.details.initiativeDetailsScreen.configured.settings.selectedIBAN"
-          )}
-          subTitle={initiative.iban}
-        />
-      </List>
+      <PaymentDataComponent iban={initiative.iban} nInstr={initiative.nInstr} />
     </>
   );
 };
@@ -143,8 +133,6 @@ const TransactionsList = (timeline: TimelineDTO["operationList"]) => (
     ))}
   </List>
 );
-
-type TransactionProps = { transaction: OperationListDTO };
 
 const CustomListItem = ({ transaction }: TransactionProps) => {
   const pickTransactionItem = () => {
