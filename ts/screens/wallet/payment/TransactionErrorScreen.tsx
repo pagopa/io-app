@@ -26,12 +26,15 @@ import {
 } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { FooterStackButton } from "../../../features/bonus/bonusVacanze/components/buttons/FooterStackButtons";
 import { useHardwareBackButton } from "../../../features/bonus/bonusVacanze/components/hooks/useHardwareBackButton";
-import {
-  zendeskSelectedCategory,
-  zendeskSupportStart
-} from "../../../features/zendesk/store/actions";
+import { zendeskSelectedCategory } from "../../../features/zendesk/store/actions";
+import { zendeskConfigSelector } from "../../../features/zendesk/store/reducers";
+import { handleContactSupport } from "../../../features/zendesk/utils";
 import I18n from "../../../i18n";
-import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
+import {
+  AppParamsList,
+  IOStackNavigationProp,
+  IOStackNavigationRouteProps
+} from "../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
 import { navigateToPaymentManualDataInsertion } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
@@ -354,8 +357,14 @@ const TransactionErrorScreen = (props: Props) => {
     onCancel,
     choosenTool,
     () => {
-      props.zendeskSupportWorkunitStart();
+      // props.zendeskSupportWorkunitStart();
       props.zendeskSelectedCategory(zendeskPaymentCategory);
+      handleContactSupport(
+        props.navigation as IOStackNavigationProp<AppParamsList>,
+        true,
+        props.zendeskRemoteConfig
+      );
+      props.navigation.goBack();
     },
     props.canShowHelp,
     paymentHistory
@@ -384,6 +393,7 @@ const TransactionErrorScreen = (props: Props) => {
 const mapStateToProps = (state: GlobalState) => ({
   paymentsHistory: paymentsHistorySelector(state),
   assistanceToolConfig: assistanceToolConfigSelector(state),
+  zendeskRemoteConfig: zendeskConfigSelector(state),
   canShowHelp: canShowHelpSelector(state)
 });
 
@@ -391,10 +401,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToPaymentManualDataInsertion: (isInvalidAmount: boolean) =>
     navigateToPaymentManualDataInsertion({ isInvalidAmount }),
   backToEntrypointPayment: () => dispatch(backToEntrypointPayment()),
-  zendeskSupportWorkunitStart: () =>
-    dispatch(
-      zendeskSupportStart({ startingRoute: "n/a", assistanceForPayment: true })
-    ),
+  // zendeskSupportWorkunitStart: () =>
+  //   dispatch(
+  //     zendeskSupportStart({ startingRoute: "n/a", assistanceForPayment: true })
+  //   ),
   zendeskSelectedCategory: (category: ZendeskCategory) =>
     dispatch(zendeskSelectedCategory(category))
 });
