@@ -17,6 +17,7 @@ import workunitGenericFailure from "../components/error/WorkunitGenericFailure";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
 import {
   bpdEnabled,
+  fciEnabled,
   bpdOptInPaymentMethodsEnabled,
   fimsEnabled,
   myPortalEnabled,
@@ -34,10 +35,20 @@ import {
 import CGN_ROUTES from "../features/bonus/cgn/navigation/routes";
 import { svLinkingOptions } from "../features/bonus/siciliaVola/navigation/navigator";
 import {
+  fciLinkingOptions,
+  FciStackNavigator
+} from "../features/fci/navigation/FciStackNavigator";
+import { FCI_ROUTES } from "../features/fci/navigation/routes";
+import {
   fimsLinkingOptions,
   FimsNavigator
 } from "../features/fims/navigation/navigator";
 import FIMS_ROUTES from "../features/fims/navigation/routes";
+import { InitiativeDetailsScreen } from "../features/idpay/initiative/details/screens/InitiativeDetailsScreen";
+import {
+  IDPayConfigurationNavigator,
+  IDPayConfigurationRoutes
+} from "../features/idpay/initiative/configuration/navigation/navigator";
 import {
   IDPayOnboardingNavigator,
   IDPayOnboardingRoutes
@@ -58,6 +69,7 @@ import {
   bpdRemoteConfigSelector,
   isCdcEnabledSelector,
   isCGNEnabledSelector,
+  isFciEnabledSelector,
   isFIMSEnabledSelector
 } from "../store/reducers/backendStatus";
 import { isTestEnv } from "../utils/environment";
@@ -82,8 +94,9 @@ export const AppStackNavigator = (): React.ReactElement => {
   const cdcEnabled = useIOSelector(isCdcEnabledSelector);
   const fimsEnabledSelector = useIOSelector(isFIMSEnabledSelector);
   const cgnEnabled = useIOSelector(isCGNEnabledSelector);
-
+  const fciEnabledSelector = useIOSelector(isFciEnabledSelector);
   const isFimsEnabled = fimsEnabled && fimsEnabledSelector;
+  const isFciEnabled = fciEnabled && fciEnabledSelector;
 
   const maybeSessionToken = useIOSelector(sessionTokenSelector);
   const maybeSessionInfo = useIOSelector(sessionInfoSelector);
@@ -184,9 +197,22 @@ export const AppStackNavigator = (): React.ReactElement => {
         />
       )}
 
+      {isFciEnabled && (
+        <Stack.Screen name={FCI_ROUTES.MAIN} component={FciStackNavigator} />
+      )}
+
       <Stack.Screen
         name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN}
         component={IDPayOnboardingNavigator}
+      />
+      <Stack.Screen
+        name={ROUTES.IDPAY_INITIATIVE_DETAILS}
+        component={InitiativeDetailsScreen}
+      />
+
+      <Stack.Screen
+        name={IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN}
+        component={IDPayConfigurationNavigator}
       />
     </Stack.Navigator>
   );
@@ -206,6 +232,7 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
 
   const cgnEnabled = useIOSelector(isCGNEnabledSelector);
   const isFimsEnabled = useIOSelector(isFIMSEnabledSelector) && fimsEnabled;
+  const isFciEnabled = useIOSelector(isFciEnabledSelector) && fciEnabled;
 
   const bpdRemoteConfig = useIOSelector(bpdRemoteConfigSelector);
   const isOptInPaymentMethodsEnabled =
@@ -266,8 +293,9 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
             ...(svEnabled && svLinkingOptions)
           }
         },
-        ...(isFimsEnabled && fimsLinkingOptions),
-        ...(cgnEnabled && cgnLinkingOptions),
+        ...(isFimsEnabled ? fimsLinkingOptions : {}),
+        ...(cgnEnabled ? cgnLinkingOptions : {}),
+        ...(isFciEnabled ? fciLinkingOptions : {}),
         [UADONATION_ROUTES.WEBVIEW]: "uadonations-webview",
         [ROUTES.WORKUNIT_GENERIC_FAILURE]: "*"
       }

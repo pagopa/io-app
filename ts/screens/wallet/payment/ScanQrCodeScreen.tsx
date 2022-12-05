@@ -6,7 +6,7 @@ import { ITuple2 } from "@pagopa/ts-commons/lib/tuples";
 import * as AR from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Text, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import {
   Alert,
@@ -18,8 +18,8 @@ import {
 } from "react-native";
 import * as ImagePicker from "react-native-image-picker";
 import { ImageLibraryOptions } from "react-native-image-picker/src/types";
-import * as ReaderQR from "react-native-lewin-qrcode";
 import { connect } from "react-redux";
+import RNQRGenerator from "rn-qr-generator";
 import {
   BarcodeCamera,
   ScannedBarcode
@@ -163,7 +163,7 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
     return pipe(
       resultOrError,
       O.foldW(
-        () => this.onInvalidQrCode,
+        () => this.onInvalidQrCode(),
         _ => this.onValidQrCode(_, "qrcode_scan")
       )
     );
@@ -247,9 +247,13 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
         O.chain(assets => AR.head([...assets]))
       );
       if (O.isSome(maybePickedImage)) {
-        ReaderQR.readerQR(maybePickedImage.value.uri)
-          .then((data: string) => {
-            this.onQrCodeData(data);
+        RNQRGenerator.detect({ uri: maybePickedImage.value.uri })
+          .then(data => {
+            if (data.values.length === 0) {
+              this.onInvalidQrCode();
+              return;
+            }
+            this.onQrCodeData(data.values[0]);
           })
           .catch(() => {
             this.onInvalidQrCode();
@@ -348,13 +352,13 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
                 style={styles.button}
                 bordered={true}
               >
-                <Text>{I18n.t("wallet.QRtoPay.chooser")}</Text>
+                <NBText>{I18n.t("wallet.QRtoPay.chooser")}</NBText>
               </ButtonDefaultOpacity>
               <View style={styles.content}>
                 <View spacer={true} />
-                <Text style={[styles.padded, styles.bottomText]}>
+                <NBText style={[styles.padded, styles.bottomText]}>
                   {I18n.t("wallet.QRtoPay.cameraUsageInfo")}
-                </Text>
+                </NBText>
                 <View spacer={true} extralarge={true} />
               </View>
             </View>

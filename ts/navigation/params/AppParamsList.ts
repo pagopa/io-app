@@ -19,10 +19,17 @@ import { CdcBonusRequestParamsList } from "../../features/bonus/cdc/navigation/p
 import FIMS_ROUTES from "../../features/fims/navigation/routes";
 import { FimsParamsList } from "../../features/fims/navigation/params";
 import { UAWebviewScreenNavigationParams } from "../../features/uaDonations/screens/UAWebViewScreen";
+import { FCI_ROUTES } from "../../features/fci/navigation/routes";
+import { FciParamsList } from "../../features/fci/navigation/params";
 import {
   IDPayOnboardingParamsList,
   IDPayOnboardingRoutes
 } from "../../features/idpay/onboarding/navigation/navigator";
+import {
+  IDPayConfigurationParamsList,
+  IDPayConfigurationRoutes
+} from "../../features/idpay/initiative/configuration/navigation/navigator";
+import { InitiativeDetailsScreenParams } from "../../features/idpay/initiative/details/screens/InitiativeDetailsScreen";
 import { AuthenticationParamsList } from "./AuthenticationParamsList";
 import { MainTabParamsList } from "./MainTabParamsList";
 import { MessagesParamsList } from "./MessagesParamsList";
@@ -53,8 +60,11 @@ export type AppParamsList = {
   [UADONATION_ROUTES.WEBVIEW]: NavigatorScreenParams<UAWebviewScreenNavigationParams>;
   [CDC_ROUTES.BONUS_REQUEST_MAIN]: NavigatorScreenParams<CdcBonusRequestParamsList>;
   [FIMS_ROUTES.MAIN]: NavigatorScreenParams<FimsParamsList>;
+  [FCI_ROUTES.MAIN]: NavigatorScreenParams<FciParamsList>;
 
   [IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN]: NavigatorScreenParams<IDPayOnboardingParamsList>;
+  [IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN]: NavigatorScreenParams<IDPayConfigurationParamsList>;
+  [ROUTES.IDPAY_INITIATIVE_DETAILS]: InitiativeDetailsScreenParams;
 };
 
 /**

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Badge, View, Text } from "native-base";
+import { Badge, View, Text as NBText } from "native-base";
 import { Platform, StyleSheet } from "react-native";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
@@ -67,9 +67,9 @@ const RankPositionItem = (props: Props): React.ReactElement => (
           <H4 testID={"RankingLabel"}>{props.rankingLabel}</H4>
           {!props.hideBadge && (
             <Badge style={style.badgeBlue} testID={"SuperCashbackAmountBadge"}>
-              <Text style={style.badgeText} semibold={true}>
+              <NBText style={style.badgeText} semibold={true}>
                 {formatNumberWithNoDigits(props.superCashbackAmount, true)}
-              </Text>
+              </NBText>
             </Badge>
           )}
         </View>

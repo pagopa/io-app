@@ -17,6 +17,7 @@ import {
 } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 import { pipe } from "fp-ts/lib/function";
+import PushNotification from "react-native-push-notification";
 import { UserDataProcessingChoiceEnum } from "../../definitions/backend/UserDataProcessingChoice";
 import { UserDataProcessingStatusEnum } from "../../definitions/backend/UserDataProcessingStatus";
 import { BackendClient } from "../api/backend";
@@ -26,12 +27,14 @@ import {
   bpdEnabled,
   cdcEnabled,
   euCovidCertificateEnabled,
+  fciEnabled,
   mvlEnabled,
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest,
   pnEnabled,
   svEnabled,
-  zendeskEnabled
+  zendeskEnabled,
+  idPayEnabled
 } from "../config";
 import { watchBonusSaga } from "../features/bonus/bonusVacanze/store/sagas/bonusSaga";
 import { watchBonusBpdSaga } from "../features/bonus/bpd/saga";
@@ -40,6 +43,7 @@ import { watchBonusSvSaga } from "../features/bonus/siciliaVola/saga";
 import { watchEUCovidCertificateSaga } from "../features/euCovidCert/saga";
 import { watchMvlSaga } from "../features/mvl/saga";
 import { watchZendeskSupportSaga } from "../features/zendesk/saga";
+import { watchFciSaga } from "../features/fci/saga";
 import I18n from "../i18n";
 import { mixpanelTrack } from "../mixpanel";
 import NavigationService from "../navigation/NavigationService";
@@ -78,6 +82,8 @@ import { clearAllMvlAttachments } from "../features/mvl/saga/mvlAttachments";
 import { watchMessageAttachmentsSaga } from "../features/messages/saga/attachments";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
 import { startupLoadSuccess } from "../store/actions/startup";
+import { watchIDPayWalletSaga } from "../features/idpay/wallet/saga";
+import { idpayInitiativeDetailsSaga } from "../features/idpay/initiative/details/saga";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -161,6 +167,8 @@ export function* initializeApplicationSaga(): Generator<
   yield* call(initMixpanel);
   yield* call(waitForNavigatorServiceInitialization);
 
+  // remove all local notifications (see function comment)
+  yield* call(cancellAllLocalNotifications);
   yield* call(previousInstallationDataDeleteSaga);
   yield* put(previousInstallationDataDeleteSuccess());
 
@@ -220,10 +228,6 @@ export function* initializeApplicationSaga(): Generator<
     yield* put(sessionExpired());
     return;
   }
-
-  // Start the notification installation update as early as
-  // possible to begin receiving push notifications
-  yield* call(updateInstallationSaga, backendClient.createOrUpdateInstallation);
 
   // whether we asked the user to login again
   const isSessionRefreshed = previousSessionToken !== sessionToken;
@@ -376,6 +380,10 @@ export function* initializeApplicationSaga(): Generator<
     }
   }
 
+  // Start the notification installation update as early as
+  // possible to begin receiving push notifications
+  yield* call(updateInstallationSaga, backendClient.createOrUpdateInstallation);
+
   //
   // User is autenticated, session token is valid
   //
@@ -421,6 +429,16 @@ export function* initializeApplicationSaga(): Generator<
   if (mvlEnabled || pnEnabled) {
     // Start watching for message attachments actions
     yield* fork(watchMessageAttachmentsSaga, sessionToken);
+  }
+
+  if (idPayEnabled) {
+    // Start watching for IDPay wallet actions
+    yield* fork(watchIDPayWalletSaga, sessionToken);
+    yield* fork(idpayInitiativeDetailsSaga, sessionToken);
+  }
+
+  if (fciEnabled) {
+    yield* fork(watchFciSaga, sessionToken);
   }
 
   // Load the user metadata
@@ -605,6 +623,20 @@ function* waitForNavigatorServiceInitialization() {
   });
 }
 
+/**
+ * Remove all the local notifications related to authentication with spid.
+ *
+ * With the previous library version (7.3.1 - now 8.1.1), cancelLocalNotifications
+ * did not work. At the moment, the "first access spid" is the only kind of
+ * scheduled notification and for this reason it is safe to use
+ * PushNotification.cancelAllLocalNotifications();
+ * If we add more scheduled notifications, we need to investigate if
+ * cancelLocalNotifications works with the new library version
+ */
+function cancellAllLocalNotifications() {
+  PushNotification.cancelAllLocalNotifications();
+}
+
 export function* startupSaga(): IterableIterator<ReduxSagaEffect> {
   // Wait until the IngressScreen gets mounted
   yield* takeLatest(
@@ -615,4 +647,8 @@ export function* startupSaga(): IterableIterator<ReduxSagaEffect> {
 
 export const testWaitForNavigatorServiceInitialization = isTestEnv
   ? waitForNavigatorServiceInitialization
+  : undefined;
+
+export const testCancellAllLocalNotifications = isTestEnv
+  ? cancellAllLocalNotifications
   : undefined;

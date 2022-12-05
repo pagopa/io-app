@@ -1,5 +1,5 @@
 import { capitalize } from "lodash";
-import { Text, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import React from "react";
 import { StyleSheet } from "react-native";
 
@@ -91,18 +91,18 @@ const MedicalPrescriptionDueDateBar = ({
         />
 
         <View hspacer={true} small={true} />
-        <Text style={styles.text} white={true}>
+        <NBText style={styles.text} white={true}>
           {isPrescriptionExpiring &&
             I18n.t("messages.cta.prescription.expiringAlert")}
           {isPrescriptionExpired && (
             <>
               {I18n.t("messages.cta.prescription.expiredAlert.block1")}
-              <Text bold={true} white={true}>{` ${time} `}</Text>
+              <NBText bold={true} white={true}>{` ${time} `}</NBText>
               {I18n.t("messages.cta.prescription.expiredAlert.block2")}
-              <Text bold={true} white={true}>{` ${date}`}</Text>
+              <NBText bold={true} white={true}>{` ${date}`}</NBText>
             </>
           )}
-        </Text>
+        </NBText>
       </View>
     );
   }
@@ -112,10 +112,10 @@ const MedicalPrescriptionDueDateBar = ({
       testID={"MedicalPrescriptionDueDate_valid"}
       style={[styles.container, bannerStyle]}
     >
-      <Text style={styles.text} white={false}>
+      <NBText style={styles.text} white={false}>
         {I18n.t("messages.cta.prescription.addMemo")}
-        <Text bold={true}>{` ${date}`}</Text>
-      </Text>
+        <NBText bold={true}>{` ${date}`}</NBText>
+      </NBText>
       <View spacer={true} xsmall={true} />
       <View style={styles.row}>
         <CalendarIconComponent

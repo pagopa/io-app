@@ -20,7 +20,8 @@ const T_INITIATIVE_ID = "T_INITIATIVE_ID";
 const T_REQUIRED_PDND_CRITERIA: PDNDCriteriaDTO = {
   code: "T_CODE_PDBD",
   description: "T_DESCRIPTION",
-  authority: "T_AUTHORITY"
+  authority: "T_AUTHORITY",
+  value: "T_VALUE"
 };
 
 const T_REQUIRED_SELF_CRITERIA_BOOL: SelfDeclarationBoolDTO = {
@@ -60,6 +61,7 @@ const mockLoadRequiredCriteria = jest.fn(
 
 const mockNavigateToPDNDCriteriaScreen = jest.fn();
 const mockNavigateToSelfDeclarationsScreen = jest.fn();
+const mockNavigateToCompletionScreen = jest.fn();
 
 const mockAcceptRequiredCriteria = jest.fn(
   async (): Promise<undefined> => undefined
@@ -85,7 +87,8 @@ describe("machine", () => {
       },
       actions: {
         navigateToPDNDCriteriaScreen: mockNavigateToPDNDCriteriaScreen,
-        navigateToSelfDeclarationsScreen: mockNavigateToSelfDeclarationsScreen
+        navigateToSelfDeclarationsScreen: mockNavigateToSelfDeclarationsScreen,
+        navigateToCompletionScreen: mockNavigateToCompletionScreen
       }
     });
 
@@ -150,6 +153,10 @@ describe("machine", () => {
     onboardingService.send({
       type: "ACCEPT_REQUIRED_SELF_CRITERIA"
     });
+
+    await waitFor(() =>
+      expect(mockNavigateToCompletionScreen).toHaveBeenCalled()
+    );
 
     await waitFor(() =>
       expect(mockAcceptRequiredCriteria).toHaveBeenCalledWith(

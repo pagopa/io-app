@@ -4,7 +4,7 @@
  */
 
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { Button, Container, H2, Text, View } from "native-base";
+import { Button, Container, Text as NBText, View } from "native-base";
 import React, { FC, useCallback, useEffect, useState } from "react";
 import {
   BackHandler,
@@ -15,6 +15,7 @@ import {
   StyleSheet
 } from "react-native";
 import updateIcon from "../../../img/icons/update-icon.png";
+import { H1 } from "../../components/core/typography/H1";
 
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import SectionStatusComponent from "../../components/SectionStatus";
@@ -61,7 +62,7 @@ const IOSFooter: FC<FooterProps> = ({ onOpenAppStore }: FooterProps) => (
         onPress={onOpenAppStore}
         accessibilityRole={"button"}
       >
-        <Text>{I18n.t("btnUpdateApp")}</Text>
+        <NBText>{I18n.t("btnUpdateApp")}</NBText>
       </Button>
       <View spacer />
     </>
@@ -131,13 +132,13 @@ const UpdateAppModal: React.FC = () => {
       >
         <Container>
           <View style={styles.container}>
-            <H2>{I18n.t("titleUpdateApp")}</H2>
-            <Text style={styles.text}>{I18n.t("messageUpdateApp")}</Text>
+            <H1>{I18n.t("titleUpdateApp")}</H1>
+            <NBText style={styles.text}>{I18n.t("messageUpdateApp")}</NBText>
             <Image style={styles.img} source={updateIcon} />
             {error && (
-              <Text style={styles.textDanger}>
+              <NBText style={styles.textDanger}>
                 {I18n.t("msgErrorUpdateApp")}
-              </Text>
+              </NBText>
             )}
           </View>
         </Container>

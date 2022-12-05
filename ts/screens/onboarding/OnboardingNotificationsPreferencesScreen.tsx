@@ -1,35 +1,43 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { Content } from "native-base";
 import React, { memo, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { SafeAreaView, StyleSheet, View } from "react-native";
-import { PreferencesListItem } from "../../components/PreferencesListItem";
-import ScreenContent from "../../components/screens/ScreenContent";
-import I18n from "../../i18n";
-import { profilePreferencesSelector } from "../../store/reducers/profile";
-import { useIODispatch } from "../../store/hooks";
-import { profileUpsert } from "../../store/actions/profile";
+import { useSelector } from "react-redux";
+import { PushNotificationsContentTypeEnum } from "../../../definitions/backend/PushNotificationsContentType";
 import { ReminderStatusEnum } from "../../../definitions/backend/ReminderStatus";
-import { showToast } from "../../utils/showToast";
+import { InfoBox } from "../../components/box/InfoBox";
+import { IOBadge } from "../../components/core/IOBadge";
+import { Body } from "../../components/core/typography/Body";
+import { H1 } from "../../components/core/typography/H1";
+import { H5 } from "../../components/core/typography/H5";
+import { LabelSmall } from "../../components/core/typography/LabelSmall";
+import { IOColors } from "../../components/core/variables/IOColors";
+import { IOStyles } from "../../components/core/variables/IOStyles";
+import { PreferencesListItem } from "../../components/PreferencesListItem";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "../../components/screens/BaseScreenComponent";
+import { BlockButtonProps } from "../../components/ui/BlockButtons";
+import FooterWithButtons from "../../components/ui/FooterWithButtons";
+import Switch from "../../components/ui/Switch";
+import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { OnboardingParamsList } from "../../navigation/params/OnboardingParamsList";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
-import Switch from "../../components/ui/Switch";
-import FooterWithButtons from "../../components/ui/FooterWithButtons";
-import { BlockButtonProps } from "../../components/ui/BlockButtons";
-import { InfoBox } from "../../components/box/InfoBox";
-import { H5 } from "../../components/core/typography/H5";
-import { IOColors } from "../../components/core/variables/IOColors";
+import { profileUpsert } from "../../store/actions/profile";
+import { useIODispatch } from "../../store/hooks";
+import { profilePreferencesSelector } from "../../store/reducers/profile";
 import customVariables from "../../theme/variables";
-import { IOBadge } from "../../components/core/IOBadge";
-import { H1 } from "../../components/core/typography/H1";
-import { Body } from "../../components/core/typography/Body";
+import { usePreviewMoreInfo } from "../../utils/hooks/usePreviewMoreInfo";
+import { showToast } from "../../utils/showToast";
 import { NotificationsPreferencesPreview } from "./components/NotificationsPreferencesPreview";
 
 const styles = StyleSheet.create({
   contentHeader: {
     padding: customVariables.contentPadding,
     paddingTop: 0
+  },
+  flexGrow: {
+    flexGrow: 1
   },
   separator: {
     backgroundColor: customVariables.itemSeparator,
@@ -45,7 +53,6 @@ const styles = StyleSheet.create({
     backgroundColor: IOColors.white,
     borderRadius: 16,
     height: "100%",
-    flexGrow: 1,
     paddingLeft: customVariables.contentPadding,
     paddingRight: customVariables.contentPadding
   },
@@ -56,6 +63,11 @@ const styles = StyleSheet.create({
     padding: customVariables.contentPadding / 2
   }
 });
+
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "onboarding.notifications.contextualHelpTitle",
+  body: "onboarding.notifications.contextualHelpContent"
+};
 
 export type OnboardingNotificationsPreferencesScreenNavigationParams = {
   isFirstOnboarding: boolean;
@@ -125,9 +137,11 @@ const Header = memo(({ isFirstOnboarding }: { isFirstOnboarding: boolean }) => {
 const OnboardingNotificationsPreferencesScreen = (props: Props) => {
   const dispatch = useIODispatch();
 
+  const [previewEnabled, setPreviewEnabled] = useState(true);
   const [remindersEnabled, setRemindersEnabled] = useState(true);
 
   const preferences = useSelector(profilePreferencesSelector);
+  const { present, bottomSheet } = usePreviewMoreInfo();
 
   const isError = pot.isError(preferences);
   const isUpdating = pot.isUpdating(preferences);
@@ -145,7 +159,10 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
       profileUpsert.request({
         reminder_status: remindersEnabled
           ? ReminderStatusEnum.ENABLED
-          : ReminderStatusEnum.DISABLED
+          : ReminderStatusEnum.DISABLED,
+        push_notifications_content_type: previewEnabled
+          ? PushNotificationsContentTypeEnum.FULL
+          : PushNotificationsContentTypeEnum.ANONYMOUS
       })
     );
   };
@@ -158,49 +175,77 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
           ? I18n.t("onboarding.notifications.headerTitle")
           : undefined
       }
-      contextualHelp={emptyContextualHelp}
+      contextualHelpMarkdown={contextualHelpMarkdown}
       primary={!isFirstOnboarding}
     >
-      <ScreenContent
-        hideHeader={true}
-        {...(!isFirstOnboarding && {
-          contentStyle: styles.blueBg
-        })}
-      >
-        <Header isFirstOnboarding={isFirstOnboarding} />
-        <NotificationsPreferencesPreview
-          remindersEnabled={remindersEnabled}
-          isFirstOnboarding={isFirstOnboarding}
-        />
-        <View
-          style={[
-            styles.containerActions,
-            !isFirstOnboarding && styles.containerActionsBlueBg
-          ]}
+      <SafeAreaView style={IOStyles.flex}>
+        <Content
+          noPadded={true}
+          contentContainerStyle={styles.flexGrow}
+          style={!isFirstOnboarding && styles.blueBg}
         >
-          {isFirstOnboarding && <View style={styles.separator} />}
-          <PreferencesListItem
-            title={I18n.t("profile.preferences.notifications.reminders.title")}
-            description={I18n.t(
-              "profile.preferences.notifications.reminders.description"
-            )}
-            rightElement={
-              <Switch
-                value={remindersEnabled}
-                onValueChange={setRemindersEnabled}
-                disabled={isUpdating}
-              />
-            }
+          <Header isFirstOnboarding={isFirstOnboarding} />
+          <NotificationsPreferencesPreview
+            previewEnabled={previewEnabled}
+            remindersEnabled={remindersEnabled}
+            isFirstOnboarding={isFirstOnboarding}
           />
-          <View style={[styles.separator, styles.bottomSpacer]} />
-          <InfoBox iconName={"io-profilo"} iconColor={IOColors.bluegrey}>
-            <H5 color={"bluegrey"} weight={"Regular"}>
-              {I18n.t("profile.main.privacy.shareData.screen.profileSettings")}
-            </H5>
-          </InfoBox>
-        </View>
-      </ScreenContent>
-      <SafeAreaView>
+          <View
+            style={[
+              styles.containerActions,
+              !isFirstOnboarding && styles.containerActionsBlueBg
+            ]}
+          >
+            {isFirstOnboarding && <View style={styles.separator} />}
+            <PreferencesListItem
+              title={I18n.t("profile.preferences.notifications.preview.title")}
+              description={
+                <>
+                  {`${I18n.t(
+                    "profile.preferences.notifications.preview.description"
+                  )} `}
+                  <LabelSmall accessibilityRole="link" onPress={present}>
+                    {I18n.t("profile.preferences.notifications.preview.link")}
+                  </LabelSmall>
+                </>
+              }
+              rightElement={
+                <Switch
+                  value={previewEnabled}
+                  onValueChange={setPreviewEnabled}
+                  disabled={isUpdating}
+                  testID="previewsPreferenceSwitch"
+                />
+              }
+            />
+            <View style={styles.separator} />
+            <PreferencesListItem
+              title={I18n.t(
+                "profile.preferences.notifications.reminders.title"
+              )}
+              description={I18n.t(
+                "profile.preferences.notifications.reminders.description"
+              )}
+              rightElement={
+                <Switch
+                  value={remindersEnabled}
+                  onValueChange={setRemindersEnabled}
+                  disabled={isUpdating}
+                  testID="remindersPreferenceSwitch"
+                />
+              }
+            />
+            <View style={[styles.separator, styles.bottomSpacer]} />
+            <InfoBox iconName={"io-profilo"} iconColor={IOColors.bluegrey}>
+              <H5 color={"bluegrey"} weight={"Regular"}>
+                {I18n.t(
+                  "profile.main.privacy.shareData.screen.profileSettings"
+                )}
+              </H5>
+            </InfoBox>
+          </View>
+        </Content>
+        {bottomSheet}
         <FooterWithButtons
           type="SingleButton"
           leftButton={

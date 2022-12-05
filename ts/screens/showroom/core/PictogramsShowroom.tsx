@@ -9,6 +9,14 @@ import { ShowroomSection } from "../components/ShowroomSection";
 import { H2 } from "../../../components/core/typography/H2";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import IconFont from "../../../components/ui/IconFont";
+import {
+  Pictogram,
+  IOPictograms,
+  IOPictogramType,
+  PictogramSection,
+  IOSectionPictograms,
+  IOSectionPictogramType
+} from "../../../components/core/pictograms";
 
 /* PICTOGRAMS */
 import Fireworks from "../../../../img/pictograms/fireworks.png";
@@ -262,6 +270,44 @@ export const PictogramsShowroom = () => (
           <IconFont name={"io-home-servizi"} color={IOColors.white} size={48} />
         }
       />
+    </View>
+
+    <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
+      Pictograms (SVG Components)
+    </H2>
+    <View style={styles.itemsWrapper}>
+      {Object.entries(IOPictograms).map(([pictogramItemName]) => (
+        <AssetViewerBox
+          key={pictogramItemName}
+          name={pictogramItemName}
+          image={
+            <Pictogram
+              name={pictogramItemName as IOPictogramType}
+              size="100%"
+            />
+          }
+        />
+      ))}
+    </View>
+
+    <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
+      Sections (SVG Components)
+    </H2>
+    <View style={styles.itemsWrapper}>
+      {Object.entries(IOSectionPictograms).map(([pictogramItemName]) => (
+        <AssetViewerBox
+          colorMode="dark"
+          size="small"
+          key={pictogramItemName}
+          name={pictogramItemName}
+          image={
+            <PictogramSection
+              name={pictogramItemName as IOSectionPictogramType}
+              size="100%"
+            />
+          }
+        />
+      ))}
     </View>
   </ShowroomSection>
 );

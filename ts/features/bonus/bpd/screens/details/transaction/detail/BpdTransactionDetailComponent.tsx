@@ -1,4 +1,4 @@
-import { Badge, Text, View } from "native-base";
+import { Badge, Text as NBText, View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
 import CopyButtonComponent from "../../../../../../../components/CopyButtonComponent";
@@ -65,9 +65,9 @@ type IdBlockProps = {
 
 const CancelBadge = () => (
   <Badge style={styles.badge}>
-    <Text semibold={true} style={styles.badgeText}>
+    <NBText semibold={true} style={styles.badgeText}>
       {I18n.t("bonus.bpd.details.transaction.detail.canceled")}
-    </Text>
+    </NBText>
   </Badge>
 );
 

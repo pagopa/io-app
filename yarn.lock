@@ -3052,7 +3052,7 @@
     fp-ts "^2.12.1"
     io-ts "^2.2.16"
 
-"@pagopa/openapi-codegen-ts@^12.0.1":
+"@pagopa/openapi-codegen-ts@^12.0.2":
   version "12.0.2"
   resolved "https://registry.yarnpkg.com/@pagopa/openapi-codegen-ts/-/openapi-codegen-ts-12.0.2.tgz#1913ba4fefe3d28f5a4f8497d8f824cdd9844cd0"
   integrity sha512-waI+xROMPDgfYZnJ55GzjBsfVIrH+0C52BsQDJz2NjM66qssF8LLmixHfET8KrIBPdBZO8ogh2M3+mX36uE7+w==
@@ -3072,7 +3072,7 @@
   resolved "https://registry.yarnpkg.com/@pagopa/react-native-cie/-/react-native-cie-1.1.4.tgz#3b876851764264d8b34beb6fdec7d4b270512a0a"
   integrity sha512-QBYK8N9sAC8TtH+Lf4/DxXgLl7IAupa6+MSZm1NWG+uGJwXbZFMJJQWSjeHN+pPNV+MJhc2sg2tFY9L3oE0oVw==
 
-"@pagopa/ts-commons@^10.3.0", "@pagopa/ts-commons@^10.5.0":
+"@pagopa/ts-commons@^10.10.0", "@pagopa/ts-commons@^10.3.0", "@pagopa/ts-commons@^10.5.0":
   version "10.10.0"
   resolved "https://registry.yarnpkg.com/@pagopa/ts-commons/-/ts-commons-10.10.0.tgz#9eae84003956ac44aad710b91abd7614bb09665e"
   integrity sha512-/bIEHIvswrp9mi+NdBOJftPAP9YeI5Z1+mK1WV/RDTvy6nb5Zd7C9kwdBJbXjl4zW/eiQsb5PqLHEC6odQKlWg==
@@ -3085,6 +3085,20 @@
     json-set-map "^1.1.2"
     node-fetch "^2.6.0"
     validator "^13.7.0"
+
+"@pdf-lib/standard-fonts@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@pdf-lib/standard-fonts/-/standard-fonts-1.0.0.tgz#8ba691c4421f71662ed07c9a0294b44528af2d7f"
+  integrity sha512-hU30BK9IUN/su0Mn9VdlVKsWBS6GyhVfqjwl1FjZN4TxP6cCw0jP2w7V3Hf5uX7M0AZJ16vey9yE0ny7Sa59ZA==
+  dependencies:
+    pako "^1.0.6"
+
+"@pdf-lib/upng@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@pdf-lib/upng/-/upng-1.0.1.tgz#7dc9c636271aca007a9df4deaf2dd7e7960280cb"
+  integrity sha512-dQK2FUMQtowVP00mtIksrlZhdFXQZPC+taih1q4CvPZ5vqdxR/LKBaFg0oAfzd1GlHZXXSPdQfzQnt+ViGvEIQ==
+  dependencies:
+    pako "^1.0.10"
 
 "@react-native-async-storage/async-storage@^1.17.10":
   version "1.17.10"
@@ -9446,9 +9460,9 @@ invariant@*, invariant@2.2.4, invariant@^2.2.2, invariant@^2.2.4:
   dependencies:
     loose-envify "^1.0.0"
 
-"io-react-native-zendesk@https://github.com/pagopa/io-react-native-zendesk.git#0.3.21":
-  version "0.3.21"
-  resolved "https://github.com/pagopa/io-react-native-zendesk.git#6b8ab1aa5eb485feeb2dfe9f09aa0c37773e9a0c"
+"io-react-native-zendesk@https://github.com/pagopa/io-react-native-zendesk.git#0.3.23":
+  version "0.3.23"
+  resolved "https://github.com/pagopa/io-react-native-zendesk.git#6add356b2ebac9bed26297dd1f5fd6a29f6feea2"
 
 io-ts@^2.2.16:
   version "2.2.16"
@@ -13013,6 +13027,11 @@ package-json@^4.0.0:
     registry-url "^3.0.3"
     semver "^5.1.0"
 
+pako@^1.0.10, pako@^1.0.11, pako@^1.0.6:
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/pako/-/pako-1.0.11.tgz#6c9599d340d54dfd3946380252a35705a6b992bf"
+  integrity sha512-4hLB8Py4zZce5s4yd9XzopqwVv/yGNhV1Bl8NTmCq1763HeK2+EwVTv+leGeL13Dnh2wfbqowVPXCIO0z4taYw==
+
 parent-module@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/parent-module/-/parent-module-1.0.1.tgz#691d2709e78c79fae3a156622452d00762caaaa2"
@@ -13217,6 +13236,16 @@ path-type@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/path-type/-/path-type-4.0.0.tgz#84ed01c0a7ba380afe09d90a8c180dcd9d03043b"
   integrity sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==
+
+pdf-lib@^1.17.1:
+  version "1.17.1"
+  resolved "https://registry.yarnpkg.com/pdf-lib/-/pdf-lib-1.17.1.tgz#9e7dd21261a0c1fb17992580885b39e7d08f451f"
+  integrity sha512-V/mpyJAoTsN4cnP31vc0wfNA1+p20evqqnap0KLoRUN0Yk/p3wN52DOEsL4oBFcLdb76hlpKPtzJIgo67j/XLw==
+  dependencies:
+    "@pdf-lib/standard-fonts" "^1.0.0"
+    "@pdf-lib/upng" "^1.0.1"
+    pako "^1.0.11"
+    tslib "^1.11.1"
 
 performance-now@^2.1.0:
   version "2.1.0"
@@ -13693,10 +13722,10 @@ react-deep-force-update@^1.0.0:
   resolved "https://registry.yarnpkg.com/react-deep-force-update/-/react-deep-force-update-1.1.2.tgz#3d2ae45c2c9040cbb1772be52f8ea1ade6ca2ee1"
   integrity sha512-WUSQJ4P/wWcusaH+zZmbECOk7H5N2pOIl0vzheeornkIMhu+qrNdGFm0bDZLCb0hSF0jf/kH1SgkNGfBdTc4wA==
 
-react-devtools-core@4.13.0, react-devtools-core@4.24.0:
-  version "4.13.0"
-  resolved "https://registry.yarnpkg.com/react-devtools-core/-/react-devtools-core-4.13.0.tgz#fa80ee03b1a975c1d9898e24de841e45a4b22d30"
-  integrity sha512-KR+0pLw8wTjOVr+9AECe5ctmycaAjbmxN3bbdB0vmlwm0JkxNnKMxDzanf+4V8IuPBQWgm8qdWpbSOqhu1l14g==
+react-devtools-core@4.24.0:
+  version "4.24.0"
+  resolved "https://registry.yarnpkg.com/react-devtools-core/-/react-devtools-core-4.24.0.tgz#7daa196bdc64f3626b3f54f2ff2b96f7c4fdf017"
+  integrity sha512-Rw7FzYOOzcfyUPaAm9P3g0tFdGqGq2LLiAI+wjYcp6CsF3DeeMrRS3HZAho4s273C29G/DJhx0e8BpRE/QZNGg==
   dependencies:
     shell-quote "^1.6.1"
     ws "^7"
@@ -13895,11 +13924,6 @@ react-native-keychain@^4.0.5:
   version "4.0.5"
   resolved "https://registry.yarnpkg.com/react-native-keychain/-/react-native-keychain-4.0.5.tgz#6d3aef8f2789fc0dfa8149b8400d82ff77be361a"
   integrity sha512-TbiO8AO055EPjaxIuKxrCEOB4r81uQCVDFbtcs+e4pEOHxf6z3JgDC0UU0poJElKfCh37b+TFRxQhg6DbsYJBA==
-
-react-native-lewin-qrcode@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/react-native-lewin-qrcode/-/react-native-lewin-qrcode-1.1.0.tgz#a8a504b152825156d7eeb5c3bf29dcb851439869"
-  integrity sha512-k298Sc3UA3XG1IUEg4uBzvhg2fYA+tocF1a85CoWgFwH5SLAAdrTrR027YPYJnnzLNW0oaQHYvguMxxvoOQDPA==
 
 react-native-linear-gradient@^2.5.6:
   version "2.5.6"
@@ -14916,6 +14940,11 @@ rn-placeholder@^1.3.3:
   integrity sha512-QNW+t5UzAX9Syx9oROrrPusuDrU7flR/DTQoa3RCDJxzoNLWp1d1WqA0BdHGStuyA3f6sVaLNkl0vFDg/6bACw==
   dependencies:
     prop-types "15.6.2"
+
+rn-qr-generator@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/rn-qr-generator/-/rn-qr-generator-1.2.1.tgz#9456a61050e1a6aea8c9dc6f0d6e7ea9b356e7ea"
+  integrity sha512-eCL5NLnZknEwucgG4IwOU2gg5g+/yeTTSuQoKQd9rwtVMPmpPN8NohVFnEAPNykVSIiPYIdy5z33Jghvdq8NNg==
 
 rsvp@^4.8.4:
   version "4.8.5"
@@ -16177,6 +16206,11 @@ tsconfig-paths@^3.12.0:
     json5 "^1.0.1"
     minimist "^1.2.0"
     strip-bom "^3.0.0"
+
+tslib@^1.11.1:
+  version "1.14.1"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
+  integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
 
 tslib@^1.8.1, tslib@^1.9.3:
   version "1.13.0"

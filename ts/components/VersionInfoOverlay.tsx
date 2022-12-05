@@ -1,4 +1,4 @@
-import { Text, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import { Platform, StyleSheet } from "react-native";
 import DeviceInfo from "react-native-device-info";
@@ -58,17 +58,17 @@ const VersionInfoOverlay: React.FunctionComponent<Props> = (props: Props) => {
 
   return (
     <View style={styles.versionContainer} pointerEvents="box-none">
-      <Text
+      <NBText
         style={styles.versionText}
         onPress={() => setShowRootName(prevState => !prevState)}
-      >{`v: ${appVersion}`}</Text>
+      >{`v: ${appVersion}`}</NBText>
       {showRootName && (
-        <Text
+        <NBText
           style={styles.routeText}
           onPress={() => clipboardSetStringWithFeedback(props.screenNameDebug)}
         >
           {props.screenNameDebug}
-        </Text>
+        </NBText>
       )}
     </View>
   );
