@@ -5,6 +5,14 @@ import React, { useEffect } from "react";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import {
+  CircuitTypeEnum,
+  OperationTypeEnum as TransactionOperationTypeEnum
+} from "../../../../../../definitions/idpay/timeline/TransactionOperationDTO";
+
+import { OperationTypeEnum as OnboardingOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/OnboardingOperationDTO";
+import { OperationTypeEnum as InstrumentOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/InstrumentOperationDTO";
+import { OperationTypeEnum as IbanOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/IbanOperationDTO";
+import {
   InitiativeDTO,
   StatusEnum
 } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
@@ -68,14 +76,40 @@ export const InitiativeDetailsScreen = () => {
     dispatch(idpayInitiativeGet.request({ initiativeId }));
   }, [dispatch, initiativeId]);
 
-  useEffect(() => {
-    console.log("RERENDERING");
-  });
-
   const timelineFromSelector = useIOSelector(idpayTimelineSelector);
   const timelineOperations = pot.getOrElse(
     pot.map(timelineFromSelector, timeline => timeline.operationList),
-    []
+    [
+      {
+        amount: -10,
+        brandLogo: "",
+        circuitType: CircuitTypeEnum["00"],
+        maskedPan: "1234",
+        operationDate: new Date("2021-01-01T00:00:00.000Z"),
+        operationId: "1234567890",
+        operationType: TransactionOperationTypeEnum.TRANSACTION
+      },
+      {
+        operationType: OnboardingOperationTypeEnum.ONBOARDING,
+        operationDate: new Date("2021-01-01T00:00:00.000Z"),
+        operationId: "1234567890"
+      },
+      {
+        operationType: InstrumentOperationTypeEnum.ADD_INSTRUMENT,
+        brandLogo: "",
+        maskedPan: "1234",
+        channel: "1234",
+        operationDate: new Date("2021-01-01T00:00:00.000Z"),
+        operationId: "1234567890"
+      },
+      {
+        operationType: IbanOperationTypeEnum.ADD_IBAN,
+        channel: "1234",
+        iban: "IT1234567890123456789012345",
+        operationDate: new Date("2021-01-01T00:00:00.000Z"),
+        operationId: "1234567890"
+      }
+    ]
   );
 
   const initiativeData: InitiativeDTO | undefined = pot.getOrElse(
@@ -155,14 +189,14 @@ export const InitiativeDetailsScreen = () => {
             ]}
           >
             <View style={styles.paddedContent}>
-            {initiativeNeedsConfiguration ? (
-              initiativeNotConfiguredContent
-            ) : (
-              <InitiativeConfiguredData
-                initiative={initiativeData}
-                timelineList={timelineOperations}
-              />
-            )}
+              {initiativeNeedsConfiguration ? (
+                initiativeNotConfiguredContent
+              ) : (
+                <InitiativeConfiguredData
+                  initiative={initiativeData}
+                  timelineList={timelineOperations}
+                />
+              )}
             </View>
           </View>
         </ScrollView>
@@ -192,7 +226,7 @@ export const InitiativeDetailsScreen = () => {
       headerBackgroundColor={IOColors.bluegrey}
     >
       <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={100}>
-        {renderContent()}
+        {!isLoading && renderContent()}
       </LoadingSpinnerOverlay>
     </BaseScreenComponent>
   );
