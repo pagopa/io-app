@@ -42,15 +42,15 @@ export function* handleGetInitiativeDetails(
             })
           ),
         response =>
-          response.status === 200
-            ? put(idpayInitiativeGet.success(response.value))
-            : put(
-                idpayInitiativeGet.failure({
+          put(
+            response.status === 200
+              ? idpayInitiativeGet.success(response.value)
+              : idpayInitiativeGet.failure({
                   ...getGenericError(
                     new Error(`response status code ${response.status}`)
                   )
                 })
-              )
+          )
       )
     );
   } catch (e) {
