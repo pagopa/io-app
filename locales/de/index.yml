@@ -93,6 +93,8 @@ tablet:
   message: Die Oberfläche der IO-App ist für Smartphones optimiert, aber alle Funktionen, die mit Ihrem Gerät kompatibel sind, sind weiterhin verfügbar.
 rooted:
   title: Es sieht so aus, als ob die Sicherheit Ihres Geräts kompromittiert worden ist!
+  bodyiOS: !include jailbroken_body.md
+  bodyAndroid: !include rooted_body.md
   continueAlert:
     title: Weiter
     body: Sind Sie sicher, dass Sie die Risiken kennen und weitermachen wollen?
