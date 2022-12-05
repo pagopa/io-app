@@ -1,6 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { SagaIterator } from "redux-saga";
-import { ActionType, getType } from "typesafe-actions";
+import { getType } from "typesafe-actions";
 import { call, takeLatest, put, select } from "typed-redux-saga/macro";
 import { CommonActions } from "@react-navigation/native";
 import NavigationService from "../../../navigation/NavigationService";
@@ -34,13 +34,8 @@ export function* watchFciSaga(bearerToken: SessionToken): SagaIterator {
   // handle the request of getting FCI signatureRequestDetails
   yield* takeLatest(
     getType(fciSignatureRequestFromId.request),
-    function* (action: ActionType<typeof fciSignatureRequestFromId.request>) {
-      yield* call(
-        handleGetSignatureRequestById,
-        fciClient.getSignatureDetailViewById,
-        action
-      );
-    }
+    handleGetSignatureRequestById,
+    fciClient.getSignatureDetailViewById
   );
 
   // handle the request of getting QTSP metadata
