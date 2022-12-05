@@ -31,12 +31,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1
   },
-  topSubtitle: {
-    fontSize: customVariables.fontSizeBase,
-    fontFamily: customVariables.fontFamily,
-    lineHeight: customVariables.lineHeightBase,
-    color: customVariables.textColor
-  },
   topScreenContainer: {
     flex: 1,
     justifyContent: "flex-end"
@@ -92,10 +86,7 @@ const FciDataSharingScreen = (): React.ReactElement => {
       testID="FciDataSharingScreenAlertTextTestID"
     >
       <IconFont name={"io-notice"} size={iconSize} color={IOColors.bluegrey} />
-      <H4
-        weight="Regular"
-        style={[styles.topSubtitle, styles.paddingTextLarge]}
-      >
+      <H4 weight="Regular" style={styles.paddingTextLarge} color={"bluegrey"}>
         {I18n.t("features.fci.shareDataScreen.alertText")}
         <View style={styles.paddingText} />
         <Link>{I18n.t("features.fci.shareDataScreen.alertLink")}</Link>
@@ -114,7 +105,7 @@ const FciDataSharingScreen = (): React.ReactElement => {
           <ScreenContent title={I18n.t("features.fci.shareDataScreen.title")}>
             <View style={styles.padded}>
               <View style={styles.containerTitle}>
-                <H4 weight="Regular" style={styles.topSubtitle}>
+                <H4 weight="Regular" color={"bluegrey"}>
                   {I18n.t("features.fci.shareDataScreen.content")}
                 </H4>
               </View>
