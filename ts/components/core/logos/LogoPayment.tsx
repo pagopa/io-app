@@ -11,6 +11,7 @@ import LogoPaymentJCB from "./svg/LogoPaymentJCB";
 import LogoPaymentUnionPay from "./svg/LogoPaymentUnionPay";
 import LogoPaymentPayPal from "./svg/LogoPaymentPayPal";
 import LogoPaymentBancomatPay from "./svg/LogoPaymentBancomatPay";
+import LogoPaymentVPay from "./svg/LogoPaymentVPay";
 import LogoPaymentPagoBancomat from "./svg/LogoPaymentPagoBancomat";
 import LogoPaymentSatispay from "./svg/LogoPaymentSatispay";
 import LogoPaymentPostepay from "./svg/LogoPaymentPostepay";
@@ -28,6 +29,7 @@ export const IOPaymentLogos = {
   unionPay: LogoPaymentUnionPay,
   payPal: LogoPaymentPayPal,
   bancomatPay: LogoPaymentBancomatPay,
+  vPay: LogoPaymentVPay,
   pagoBancomat: LogoPaymentPagoBancomat,
   satispay: LogoPaymentSatispay,
   postepay: LogoPaymentPostepay,
