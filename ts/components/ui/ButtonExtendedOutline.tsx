@@ -17,6 +17,7 @@ import Animated, {
 import { Icon, IOIconType } from "../core/icons";
 import { IOStyles } from "../core/variables/IOStyles";
 import { IOColors } from "../core/variables/IOColors";
+import { IOSpringValues } from "../core/variables/IOAnimations";
 import { H4 } from "../core/typography/H4";
 import { LabelSmall } from "../core/typography/LabelSmall";
 
@@ -43,12 +44,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const springConfig = {
-  damping: 20,
-  mass: 0.5,
-  stiffness: 300
-};
-
 export const ButtonExtendedOutline: React.FunctionComponent<Props> = ({
   label,
   description,
@@ -61,7 +56,7 @@ export const ButtonExtendedOutline: React.FunctionComponent<Props> = ({
   const animationScaleValue = 0.95;
 
   const scaleTraversed = useDerivedValue(() =>
-    withSpring(isPressed.value, springConfig)
+    withSpring(isPressed.value, IOSpringValues.button)
   );
 
   // Interpolate animation values from `isPressed` values
