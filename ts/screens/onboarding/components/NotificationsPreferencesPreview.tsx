@@ -1,12 +1,11 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { Image, View, StyleSheet } from "react-native";
 import NotificationsBackground from "../../../../img/onboarding/notifications_background.svg";
 import NotificationsBackgroundBlue from "../../../../img/onboarding/notifications_background_blue.svg";
 import { H4 } from "../../../components/core/typography/H4";
 import { H5 } from "../../../components/core/typography/H5";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import customVariables from "../../../theme/variables";
-import AppLogo from "../../../../img/app-logo.svg";
 import I18n from "../../../i18n";
 import { TranslationKeys } from "../../../../locales/locales";
 
@@ -116,7 +115,9 @@ export const NotificationsPreferencesPreview = ({
         ]}
       >
         <View style={styles.box}>
-          <AppLogo style={{ width: 24, height: 24 }} />
+          <Image
+            source={require("../../../../img/onboarding/notification_icon.png")}
+          />
           <View style={styles.info}>
             <H4 weight="SemiBold" color="bluegreyDark">
               {I18n.t(titleKey)}
