@@ -88,7 +88,13 @@ export const ButtonExtendedOutline: React.FunctionComponent<Props> = ({
   }, [isPressed]);
 
   return (
-    <Pressable onPress={onPress} onPressIn={onPressIn} onPressOut={onPressOut}>
+    <Pressable
+      onPress={onPress}
+      onPressIn={onPressIn}
+      onPressOut={onPressOut}
+      accessible={true}
+      accessibilityRole={"button"}
+    >
       <Animated.View style={[styles.button, animatedStyle]}>
         <View style={IOStyles.flex}>
           <H4>{label}</H4>
