@@ -48,12 +48,17 @@ type E_COMPLETE_CONFIGURATION = {
   type: "COMPLETE_CONFIGURATION";
 };
 
+type E_GO_BACK = {
+  type: "GO_BACK";
+};
+
 type Events =
   | E_SELECT_INITIATIVE
   | E_START_CONFIGURATION
   | E_ADD_INSTRUMENT
   | E_CONFIRM_INSTRUMENTS
-  | E_COMPLETE_CONFIGURATION;
+  | E_COMPLETE_CONFIGURATION
+  | E_GO_BACK;
 
 type Services = {
   loadInitiative: {
@@ -120,6 +125,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
         },
         CONFIGURING_INITIATIVE: {
           tags: [WAITING_USER_INPUT_TAG],
+          entry: "navigateToConfigurationEntry",
           on: {
             START_CONFIGURATION: {
               target: "LOADING_INSTRUMENTS"
@@ -143,6 +149,9 @@ const createIDPayInitiativeConfigurationMachine = () =>
         DISPLAYING_INSTRUMENTS: {
           tags: [WAITING_USER_INPUT_TAG],
           on: {
+            GO_BACK: {
+              target: "CONFIGURING_INITIATIVE"
+            },
             ADD_INSTRUMENT: {
               target: "ADDING_INSTRUMENT",
               actions: "selectInstrument"

@@ -1,4 +1,4 @@
-import { useSelector } from "@xstate/react";
+import { useActor, useSelector } from "@xstate/react";
 import { Badge, List, ListItem, Text, View } from "native-base";
 import React, { useRef } from "react";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
@@ -84,6 +84,11 @@ const InstrumentEnrollmentSwitcher = ({
 const InstrumentsEnrollmentScreen = () => {
   const selectedCardRef = useRef<number | undefined>(undefined);
   const configurationMachine = useConfigurationMachineService();
+  const [_state, send] = useActor(configurationMachine);
+
+  const handleBackPress = () => {
+    send({ type: "GO_BACK" });
+  };
 
   const isLoadingInstruments = useSelector(
     configurationMachine,
@@ -212,7 +217,7 @@ const InstrumentsEnrollmentScreen = () => {
 
   return (
     <>
-      <BaseScreenComponent goBack={true} headerTitle="Iniziativa">
+      <BaseScreenComponent goBack={handleBackPress} headerTitle="Iniziativa">
         {renderContent()}
       </BaseScreenComponent>
 
