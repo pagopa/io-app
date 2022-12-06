@@ -6,7 +6,7 @@ import {
   StatusEnum
 } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
 import { InstrumentDTO } from "../../../../../../definitions/idpay/wallet/InstrumentDTO";
-import { Wallet } from "../../../../../../definitions/pagopa/Wallet";
+import { Wallet } from "../../../../../types/pagopa";
 import {
   LOADING_TAG,
   WAITING_USER_INPUT_TAG
