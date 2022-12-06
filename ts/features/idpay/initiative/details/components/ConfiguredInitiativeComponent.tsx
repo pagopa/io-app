@@ -7,11 +7,9 @@ import { OperationTypeEnum as InstrumentOperationTypeEnum } from "../../../../..
 import { OperationTypeEnum as OnboardingOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/OnboardingOperationDTO";
 import { OperationListDTO } from "../../../../../../definitions/idpay/timeline/OperationListDTO";
 import { TimelineDTO } from "../../../../../../definitions/idpay/timeline/TimelineDTO";
-import {
-  CircuitTypeEnum,
-  OperationTypeEnum as TransactionOperationTypeEnum
-} from "../../../../../../definitions/idpay/timeline/TransactionOperationDTO";
+import { OperationTypeEnum as TransactionOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/TransactionOperationDTO";
 import { InitiativeDTO } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
+import { Body } from "../../../../../components/core/typography/Body";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -95,12 +93,6 @@ const InitiativeConfiguredData = ({
   };
   return (
     <>
-      <H3>
-        {I18n.t(
-          "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperations"
-        )}
-      </H3>
-      <View spacer />
       {renderTimelineIfNotLoading()}
       <View spacer large />
       <H3>
@@ -114,24 +106,47 @@ const InitiativeConfiguredData = ({
   );
 };
 const emptyTimelineContent = (
-  <LabelSmall weight="Regular" color="bluegreyDark">
-    {I18n.t(
-      "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperationsSubtitle"
-    ) + " "}
-    <LabelSmall weight="SemiBold">
+  <>
+    <H3>
       {I18n.t(
-        "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperationsLink"
+        "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperations"
       )}
+    </H3>
+    <View spacer />
+    <LabelSmall weight="Regular" color="bluegreyDark">
+      {I18n.t(
+        "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperationsSubtitle"
+      ) + " "}
+      <LabelSmall weight="SemiBold">
+        {I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperationsLink"
+        )}
+      </LabelSmall>
     </LabelSmall>
-  </LabelSmall>
+  </>
 );
 
 const TransactionsList = (timeline: TimelineDTO["operationList"]) => (
-  <List>
-    {timeline.map((item, index) => (
-      <CustomListItem transaction={item} key={index} />
-    ))}
-  </List>
+  <>
+    <View style={[IOStyles.row, styles.listItem]}>
+      <H3>
+        {I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperations"
+        )}
+      </H3>
+      <Body weight="SemiBold" color="blue">
+        {I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.configured.settings.showMore"
+        )}
+      </Body>
+    </View>
+    <View spacer />
+    <List>
+      {timeline.map((item, index) => (
+        <CustomListItem transaction={item} key={index} />
+      ))}
+    </List>
+  </>
 );
 
 const CustomListItem = ({ transaction }: TransactionProps) => {

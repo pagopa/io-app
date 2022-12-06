@@ -3308,6 +3308,7 @@ idpay:
           yourOperationsSubtitle: Qui vedrai le transazioni effettuate con i metodi che hai associato.
           yourOperationsLink: Come si fa?
           settings:
+            showMore: Vedi tutte
             header: Impostazioni
             associatedPaymentMethods: Metodi di pagamento associati
             methodsi18n: metodi 
