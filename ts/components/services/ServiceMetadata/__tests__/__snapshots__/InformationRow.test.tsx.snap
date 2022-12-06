@@ -36,6 +36,7 @@ exports[`the InformationRow component should match the snapshot 1`] = `
       fontStyle={
         Object {
           "fontSize": 16,
+          "lineHeight": 22,
         }
       }
       numberOfLines={1}
@@ -46,6 +47,7 @@ exports[`the InformationRow component should match the snapshot 1`] = `
           },
           Object {
             "fontSize": 16,
+            "lineHeight": 22,
           },
           Object {
             "color": "#475A6D",
@@ -71,6 +73,7 @@ exports[`the InformationRow component should match the snapshot 1`] = `
       fontStyle={
         Object {
           "fontSize": 16,
+          "lineHeight": 22,
         }
       }
       numberOfLines={1}
@@ -86,6 +89,7 @@ exports[`the InformationRow component should match the snapshot 1`] = `
           ],
           Object {
             "fontSize": 16,
+            "lineHeight": 22,
           },
           Object {
             "color": "#0073E6",
