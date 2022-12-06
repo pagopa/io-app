@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export const ButtonExtendedOutline: React.FunctionComponent<Props> = ({
+export const ButtonExtendedOutline = ({
   label,
   description,
   onPress,
