@@ -1,7 +1,15 @@
-import { createFetchRequestForApi } from "@pagopa/ts-commons/lib/requests";
+import {
+  ApiHeaderJson,
+  composeHeaderProducers,
+  createFetchRequestForApi
+} from "@pagopa/ts-commons/lib/requests";
 import {
   getSignatureRequestByIdDefaultDecoder,
-  GetSignatureRequestByIdT
+  GetSignatureRequestByIdT,
+  CreateFilledDocumentT,
+  createFilledDocumentDefaultDecoder,
+  GetQtspClausesMetadataT,
+  getQtspClausesMetadataDefaultDecoder
 } from "../../../../definitions/fci/requestTypes";
 import { SessionToken } from "../../../types/SessionToken";
 import {
@@ -18,7 +26,25 @@ const getSignatureDetailViewById: GetSignatureRequestByIdT = {
   response_decoder: getSignatureRequestByIdDefaultDecoder()
 };
 
-// client for SignWithIO to handle API communications
+const getQtspClausesMetadata: GetQtspClausesMetadataT = {
+  method: "get",
+  url: () => `/api/v1/sign/qtsp/clauses`,
+  headers: tokenHeaderProducer,
+  query: _ => ({}),
+  response_decoder: getQtspClausesMetadataDefaultDecoder()
+};
+
+const postQtspFilledBody: CreateFilledDocumentT = {
+  method: "post",
+  url: () => `/api/v1/sign/qtsp/clauses/filled_document`,
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+  query: _ => ({}),
+  body: ({ body: { document_url } }) =>
+    JSON.stringify({ body: { document_url } }),
+  response_decoder: createFilledDocumentDefaultDecoder()
+};
+
+// client for FCI to handle API communications
 export const BackendFciClient = (
   baseUrl: string,
   token: SessionToken,
@@ -32,6 +58,12 @@ export const BackendFciClient = (
   return {
     getSignatureDetailViewById: withBearerToken(
       createFetchRequestForApi(getSignatureDetailViewById, options)
+    ),
+    getQtspClausesMetadata: withBearerToken(
+      createFetchRequestForApi(getQtspClausesMetadata, options)
+    ),
+    postQtspFilledBody: withBearerToken(
+      createFetchRequestForApi(postQtspFilledBody, options)
     )
   };
 };
