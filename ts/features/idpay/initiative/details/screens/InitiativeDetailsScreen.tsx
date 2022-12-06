@@ -117,10 +117,6 @@ export const InitiativeDetailsScreen = () => {
 
     return (
       <SafeAreaView style={IOStyles.flex}>
-        <FocusAwareStatusBar
-          backgroundColor={IOColors.bluegrey}
-          barStyle={"light-content"}
-        />
         <ScrollView
           style={IOStyles.flex}
           bounces={false}
@@ -179,6 +175,10 @@ export const InitiativeDetailsScreen = () => {
       headerTitle={initiativeData?.initiativeName ?? ""}
       headerBackgroundColor={IOColors.bluegrey}
     >
+      <FocusAwareStatusBar
+        backgroundColor={IOColors.bluegrey}
+        barStyle={"light-content"}
+      />
       <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={100}>
         {!isLoading && renderContent()}
       </LoadingSpinnerOverlay>
