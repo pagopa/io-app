@@ -1,6 +1,4 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { ImageSourcePropType } from "react-native";
 import { connect } from "react-redux";
@@ -53,23 +51,7 @@ const extractInfoFromPaymentMethod = (
       return {
         logo: bancomatPayLogo,
         title: paymentMethod.caption,
-        // phone number + bank name -> if both are defined
-        // phone number -> if bank is not defined
-        // bank -> if phone number is not defined
-        // empty -> if both are not defined
-        description: pipe(
-          paymentMethod.info.numberObfuscated,
-          O.fromNullable,
-          O.map(numb =>
-            pipe(
-              paymentMethod.info.bankName,
-              O.fromNullable,
-              O.map(bn => `${numb} · ${bn}`),
-              O.getOrElse(() => numb)
-            )
-          ),
-          O.getOrElse(() => paymentMethod.info.bankName ?? "")
-        )
+        description: paymentMethod.info.numberObfuscated ?? ""
       };
     case "Satispay":
       return {
