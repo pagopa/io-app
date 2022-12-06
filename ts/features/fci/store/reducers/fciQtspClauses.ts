@@ -4,6 +4,7 @@ import { fciLoadQtspClauses, fciAbortRequest } from "../actions";
 import { Action } from "../../../../store/actions/types";
 import { NetworkError } from "../../../../utils/errors";
 import { QtspClausesMetadata } from "../../../../../definitions/fci/QtspClausesMetadata";
+import { GlobalState } from "../../../../store/reducers/types";
 
 export type FciQtspClausesState = pot.Pot<QtspClausesMetadata, NetworkError>;
 
@@ -26,5 +27,10 @@ const reducer = (
 
   return state;
 };
+
+// Selectors
+export const fciQtspClausesSelector = (
+  state: GlobalState
+): FciQtspClausesState => state.features.fci.qtspClauses;
 
 export default reducer;
