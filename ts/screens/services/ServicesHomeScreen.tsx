@@ -24,7 +24,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Tab, Tabs, Text as NBText, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import {
   Animated,
@@ -46,9 +46,7 @@ import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { MIN_CHARACTER_SEARCH_TEXT } from "../../components/search/SearchButton";
 import { SearchNoResultMessage } from "../../components/search/SearchNoResultMessage";
 import SectionStatusComponent from "../../components/SectionStatus";
-import LocalServicesWebView from "../../components/services/LocalServicesWebView";
 import ServicesSearch from "../../components/services/ServicesSearch";
-import ServicesTab from "../../components/services/ServicesTab";
 import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
 import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
 import IconFont from "../../components/ui/IconFont";
@@ -58,6 +56,7 @@ import {
   AppParamsList,
   IOStackNavigationRouteProps
 } from "../../navigation/params/AppParamsList";
+import ServicesHomeTabNavigator from "../../navigation/ServicesHomeTabNavigator";
 import {
   navigateToServiceDetailsScreen,
   navigateToServicePreferenceScreen
@@ -94,7 +93,6 @@ import {
   UserMetadata,
   userMetadataSelector
 } from "../../store/reducers/userMetadata";
-import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
 import { HEADER_HEIGHT } from "../../utils/constants";
 import {
@@ -142,29 +140,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-end"
   },
-  tabBarContainer: {
-    elevation: 0,
-    height: 40
-  },
-  tabBarUnderline: {
-    borderBottomColor: customVariables.tabUnderlineColor,
-    borderBottomWidth: customVariables.tabUnderlineHeight
-  },
-  tabBarUnderlineActive: {
-    height: customVariables.tabUnderlineHeight,
-    // borders do not overlap eachother, but stack naturally
-    marginBottom: -customVariables.tabUnderlineHeight,
-    backgroundColor: customVariables.contentPrimaryBackground
-  },
-  activeTextStyle: {
-    ...makeFontStyleObject(Platform.select, "600"),
-    fontSize: Platform.OS === "android" ? 16 : undefined,
-    fontWeight: Platform.OS === "android" ? "normal" : "bold",
-    color: customVariables.brandPrimary
-  },
-  textStyle: {
-    color: customVariables.textColor
-  },
   center: {
     alignItems: "center"
   },
@@ -180,7 +155,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const AnimatedTabs = Animated.createAnimatedComponent(Tabs);
 const AnimatedScreenContentHeader =
   Animated.createAnimatedComponent(ScreenContentHeader);
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
@@ -445,70 +419,14 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     this.props.refreshVisibleServices();
   };
 
-  private handleOnScroll = (value: number) => {
-    const { currentTab, isLongPressEnabled } = this.state;
-    // Disable the long press option (if displayed) when the user changes tab
-    if (isLongPressEnabled && Math.abs(value - currentTab) > 0.5) {
-      this.setState({
-        isLongPressEnabled: false
-      });
-    }
-  };
-
-  private handleOnChangeTab = (evt: any) => {
-    const { currentTab, isLongPressEnabled } = this.state;
-    const nextTab: number = evt.i;
-    const isSameTab = currentTab === nextTab;
-    this.setState({
-      currentTab: nextTab,
-      isLongPressEnabled: isSameTab && isLongPressEnabled
-    });
-  };
-
   /**
    * Render Locals, Nationals and Other services tabs.
    */
-  private renderTabs = () => {
-    const { nationalTabSections, potUserMetadata, isLoadingServices } =
-      this.props;
-    const isRefreshing =
-      isLoadingServices ||
-      pot.isLoading(potUserMetadata) ||
-      pot.isUpdating(potUserMetadata);
-    return (
-      <View style={IOStyles.flex}>
-        <AnimatedTabs
-          locked={true}
-          tabContainerStyle={[styles.tabBarContainer, styles.tabBarUnderline]}
-          tabBarUnderlineStyle={styles.tabBarUnderlineActive}
-          onScroll={this.handleOnScroll}
-          onChangeTab={this.handleOnChangeTab}
-          initialPage={0}
-        >
-          <Tab
-            activeTextStyle={styles.activeTextStyle}
-            textStyle={styles.textStyle}
-            heading={I18n.t("services.tab.national")}
-          >
-            <ServicesTab
-              sections={nationalTabSections}
-              isRefreshing={isRefreshing}
-              onRefresh={this.refreshScreenContent}
-              onServiceSelect={this.onServiceSelect}
-              tabScrollOffset={this.animatedTabScrollPositions[1]}
-            />
-          </Tab>
-          <Tab
-            activeTextStyle={styles.activeTextStyle}
-            textStyle={styles.textStyle}
-            heading={I18n.t("services.tab.locals")}
-          >
-            <LocalServicesWebView onServiceSelect={this.onServiceSelect} />
-          </Tab>
-        </AnimatedTabs>
-      </View>
-    );
-  };
+  private renderTabs = () => (
+    <View style={IOStyles.flex}>
+      <ServicesHomeTabNavigator />
+    </View>
+  );
 }
 
 const mapStateToProps = (state: GlobalState) => {
