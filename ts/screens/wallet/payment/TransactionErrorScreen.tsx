@@ -30,7 +30,6 @@ import {
   zendeskSelectedCategory,
   zendeskSupportStart
 } from "../../../features/zendesk/store/actions";
-import { zendeskConfigSelector } from "../../../features/zendesk/store/reducers";
 import I18n from "../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
@@ -385,7 +384,6 @@ const TransactionErrorScreen = (props: Props) => {
 const mapStateToProps = (state: GlobalState) => ({
   paymentsHistory: paymentsHistorySelector(state),
   assistanceToolConfig: assistanceToolConfigSelector(state),
-  zendeskRemoteConfig: zendeskConfigSelector(state),
   canShowHelp: canShowHelpSelector(state)
 });
 
