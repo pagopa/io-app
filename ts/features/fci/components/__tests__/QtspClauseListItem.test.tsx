@@ -18,6 +18,7 @@ type Props = {
   clause: QtspClause;
   value?: boolean;
   onChange: (_: boolean) => void;
+  onLinkPress: (url: string) => void;
 };
 
 const MOCK_CLAUSE = mockQtspClausesMetadata.clauses[0];
@@ -33,7 +34,8 @@ describe("Test QtspClauseListItem component", () => {
 
     const props = {
       clause: MOCK_CLAUSE,
-      onChange: jest.fn()
+      onChange: jest.fn(),
+      onLinkPress: jest.fn()
     };
     const component = renderComponent({ ...props }, store);
     expect(component).toBeTruthy();
@@ -44,7 +46,8 @@ describe("Test QtspClauseListItem component", () => {
 
     const props = {
       clause: MOCK_CLAUSE,
-      onChange: jest.fn()
+      onChange: jest.fn(),
+      onLinkPress: jest.fn()
     };
     const component = renderComponent({ ...props }, store);
     expect(component).toBeTruthy();
@@ -58,7 +61,8 @@ describe("Test QtspClauseListItem component", () => {
 
     const props = {
       clause: MOCK_CLAUSE,
-      onChange: jest.fn()
+      onChange: jest.fn(),
+      onLinkPress: jest.fn()
     };
 
     store.dispatch(fciLoadQtspFilledDocument.success(qtspFilledDocument));
@@ -74,7 +78,8 @@ describe("Test QtspClauseListItem component", () => {
     const props = {
       clause: MOCK_CLAUSE,
       value: true,
-      onChange: jest.fn()
+      onChange: jest.fn(),
+      onLinkPress: jest.fn()
     };
     const component = renderComponent({ ...props }, store);
     expect(component).toBeTruthy();
@@ -91,7 +96,8 @@ describe("Test QtspClauseListItem component", () => {
     const props = {
       clause: MOCK_CLAUSE,
       value: true,
-      onChange: onPress
+      onChange: onPress,
+      onLinkPress: jest.fn()
     };
     const component = renderComponent({ ...props }, store);
     expect(component).toBeTruthy();
@@ -111,7 +117,8 @@ describe("Test QtspClauseListItem component", () => {
     const props = {
       clause: MOCK_CLAUSE,
       value: true,
-      onChange: jest.fn()
+      onChange: jest.fn(),
+      onLinkPress: jest.fn()
     };
     const component = renderComponent({ ...props }, store);
     expect(component).toBeTruthy();
