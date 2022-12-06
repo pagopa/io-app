@@ -9,6 +9,7 @@ import { ColorsShowroom } from "./core/ColorsShowroom";
 import { IllustrationsShowroom } from "./core/IllustrationsShowroom";
 import { PictogramsShowroom } from "./core/PictogramsShowroom";
 import { IconsShowroom } from "./core/IconsShowroom";
+import { LogosShowroom } from "./core/LogosShowroom";
 import { SelectionShowroom } from "./core/SelectionShowroom";
 import { TypographyShowroom } from "./core/TypographyShowRoom";
 import { OthersShowroom } from "./OthersShowroom";
@@ -42,16 +43,21 @@ export const Showroom = () => {
         <ScrollView>
           <View style={IOStyles.horizontalContentPadding}>
             <ColorsShowroom />
-            <NBView spacer={true} extralarge={true} />
+            <NBView spacer={true} large={true} />
             <TypographyShowroom />
+            <NBView spacer={true} large={true} />
             <SelectionShowroom />
-            <NBView spacer={true} extralarge={true} />
+            <NBView spacer={true} large={true} />
             <OthersShowroom />
-            <NBView spacer={true} extralarge={true} />
+            <NBView spacer={true} large={true} />
             <ButtonsShowroom />
-            <NBView spacer={true} extralarge={true} />
+            <NBView spacer={true} large={true} />
             <PictogramsShowroom />
+            <NBView spacer={true} large={true} />
             <IconsShowroom />
+            <NBView spacer={true} large={true} />
+            <LogosShowroom />
+            <NBView spacer={true} large={true} />
             <IllustrationsShowroom />
           </View>
         </ScrollView>

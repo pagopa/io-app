@@ -13,7 +13,7 @@ import BaseScreenComponent, {
 } from "../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import Markdown from "../../../../components/ui/Markdown";
-import TypedI18n from "../../../../i18n";
+import I18n from "../../../../i18n";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { useOnboardingMachineService } from "../xstate/provider";
 import ButtonExtendedOutline from "../../../../components/ui/ButtonExtendedOutline";
@@ -23,22 +23,22 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "profile.main.contextualHelpContent"
 };
 
-const title = TypedI18n.t("idpay.onboarding.PDNDPrerequisites.title");
-const headerString = TypedI18n.t("idpay.onboarding.navigation.header");
+const title = I18n.t("idpay.onboarding.PDNDPrerequisites.title");
+const headerString = I18n.t("idpay.onboarding.navigation.header");
 
 const secondaryButtonProps = {
   block: true,
   bordered: true,
-  title: TypedI18n.t("global.buttons.cancel")
+  title: I18n.t("global.buttons.back")
 };
 const primaryButtonProps = {
   block: true,
   bordered: false,
-  title: TypedI18n.t("global.buttons.continue")
+  title: I18n.t("global.buttons.continue")
 };
 
 const subtitle = (service: string) =>
-  TypedI18n.t("idpay.onboarding.PDNDPrerequisites.subtitle", {
+  I18n.t("idpay.onboarding.PDNDPrerequisites.subtitle", {
     service
   });
 
@@ -50,21 +50,21 @@ const styles = StyleSheet.create({
 
 const BOTTOM_SHEET_HEIGHT = 290;
 
-export const PDNDPrerequisites = () => {
+export const PDNDPrerequisitesScreen = () => {
   const machine = useOnboardingMachineService();
   const [state, send] = useActor(machine);
   const [authority, setAuthority] = React.useState<string | undefined>();
 
   const continueOnPress = () => send({ type: "ACCEPT_REQUIRED_PDND_CRITERIA" });
+  const goBackOnPress = () => send({ type: "GO_BACK" });
 
   const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
     <Markdown>
-      {TypedI18n.t(
-        "idpay.onboarding.PDNDPrerequisites.prerequisites.info.body",
-        { provider: authority }
-      )}
+      {I18n.t("idpay.onboarding.PDNDPrerequisites.prerequisites.info.body", {
+        provider: authority
+      })}
     </Markdown>,
-    TypedI18n.t("idpay.onboarding.PDNDPrerequisites.prerequisites.info.header"),
+    I18n.t("idpay.onboarding.PDNDPrerequisites.prerequisites.info.header"),
     BOTTOM_SHEET_HEIGHT,
 
     <FooterWithButtons
@@ -73,7 +73,7 @@ export const PDNDPrerequisites = () => {
         onPress: () => dismiss(),
         block: true,
         bordered: false,
-        title: TypedI18n.t(
+        title: I18n.t(
           "idpay.onboarding.PDNDPrerequisites.prerequisites.info.understoodCTA"
         )
       }}
@@ -93,7 +93,7 @@ export const PDNDPrerequisites = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <BaseScreenComponent
-        goBack={true}
+        goBack={goBackOnPress}
         headerTitle={headerString}
         contextualHelpMarkdown={contextualHelpMarkdown}
       >
@@ -125,10 +125,12 @@ export const PDNDPrerequisites = () => {
       </BaseScreenComponent>
       <FooterWithButtons
         type="TwoButtonsInlineHalf"
-        leftButton={secondaryButtonProps}
+        leftButton={{ onPress: goBackOnPress, ...secondaryButtonProps }}
         rightButton={{ onPress: continueOnPress, ...primaryButtonProps }}
       />
       {bottomSheet}
     </SafeAreaView>
   );
 };
+
+export default PDNDPrerequisitesScreen;

@@ -1,18 +1,22 @@
 import * as O from "fp-ts/lib/Option";
 import { assign, createMachine } from "xstate";
 import { InitiativeDto } from "../../../../../definitions/idpay/onboarding/InitiativeDto";
+import { StatusEnum } from "../../../../../definitions/idpay/onboarding/OnboardingStatusDTO";
 import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/onboarding/RequiredCriteriaDTO";
 import {
   LOADING_TAG,
   UPSERTING_TAG,
   WAITING_USER_INPUT_TAG
 } from "../../../../utils/xstate";
+import { OnboardingFailureType } from "./failure";
 
 // Context types
 export type Context = {
   serviceId?: string;
   initiative?: InitiativeDto;
+  initiativeStatus?: StatusEnum;
   requiredCriteria?: O.Option<RequiredCriteriaDTO>;
+  failure?: OnboardingFailureType;
 };
 
 // Events types
@@ -33,16 +37,29 @@ type E_ACCEPT_REQUIRED_SELF_CRITERIA = {
   type: "ACCEPT_REQUIRED_SELF_CRITERIA";
 };
 
+type E_QUIT_ONBOARDING = {
+  type: "QUIT_ONBOARDING";
+};
+
+type E_GO_BACK = {
+  type: "GO_BACK";
+};
+
 type Events =
   | E_SELECT_INITIATIVE
   | E_ACCEPT_TOS
   | E_ACCEPT_REQUIRED_PDND_CRITERIA
-  | E_ACCEPT_REQUIRED_SELF_CRITERIA;
+  | E_ACCEPT_REQUIRED_SELF_CRITERIA
+  | E_QUIT_ONBOARDING
+  | E_GO_BACK;
 
 // Services types
 type Services = {
   loadInitiative: {
     data: InitiativeDto;
+  };
+  loadInitiativeStatus: {
+    data: StatusEnum | undefined;
   };
   acceptTos: {
     data: undefined;
@@ -53,6 +70,19 @@ type Services = {
   acceptRequiredCriteria: {
     data: undefined;
   };
+};
+
+const isOnboardingDone = (context: Context) => {
+  const initiativeStatus = context.initiativeStatus;
+  return (
+    initiativeStatus === StatusEnum.ONBOARDING_OK ||
+    initiativeStatus === StatusEnum.ON_EVALUATION
+  );
+};
+
+const isOnboardingFailed = (context: Context) => {
+  const initiativeStatus = context.initiativeStatus;
+  return initiativeStatus === StatusEnum.ONBOARDING_KO;
 };
 
 const hasPDNDRequiredCriteria = (context: Context) => {
@@ -87,6 +117,11 @@ const createIDPayOnboardingMachine = () =>
       predictableActionArguments: true,
       id: "IDPAY_ONBOARDING",
       initial: "WAITING_INITIATIVE_SELECTION",
+      on: {
+        QUIT_ONBOARDING: {
+          actions: "exitOnboarding"
+        }
+      },
       states: {
         WAITING_INITIATIVE_SELECTION: {
           tags: [LOADING_TAG],
@@ -104,13 +139,56 @@ const createIDPayOnboardingMachine = () =>
             id: "loadInitiative",
             onDone: [
               {
-                target: "DISPLAYING_INITIATIVE",
+                target: "LOADING_INITIATIVE_STATUS",
                 actions: "loadInitiativeSuccess"
+              }
+            ],
+            onError: [
+              {
+                target: "DISPLAYING_ONBOARDING_FAILURE",
+                actions: "loadInitiativeFailure"
               }
             ]
           }
         },
+        LOADING_INITIATIVE_STATUS: {
+          tags: [LOADING_TAG],
+          invoke: {
+            src: "loadInitiativeStatus",
+            id: "loadInitiativeStatus",
+            onDone: [
+              {
+                target: "EVALUATING_INITIATIVE_STATUS",
+                actions: "loadInitiativeStatusSuccess"
+              }
+            ],
+            onError: [
+              {
+                target: "DISPLAYING_ONBOARDING_FAILURE",
+                actions: "loadInitiativeStatusFailure"
+              }
+            ]
+          }
+        },
+        EVALUATING_INITIATIVE_STATUS: {
+          always: [
+            {
+              target: "DISPLAYING_ONBOARDING_FAILURE",
+              cond: "isOnboardingDone",
+              actions: "onOnboardingDone"
+            },
+            {
+              target: "DISPLAYING_ONBOARDING_FAILURE",
+              cond: "isOnboardingFailed",
+              actions: "onOnboardingFailed"
+            },
+            {
+              target: "DISPLAYING_INITIATIVE"
+            }
+          ]
+        },
         DISPLAYING_INITIATIVE: {
+          entry: "navigateToInitiativeDetailsScreen",
           on: {
             ACCEPT_TOS: {
               target: "ACCEPTING_TOS"
@@ -126,6 +204,12 @@ const createIDPayOnboardingMachine = () =>
               {
                 target: "LOADING_REQUIRED_CRITERIA"
               }
+            ],
+            onError: [
+              {
+                target: "DISPLAYING_ONBOARDING_FAILURE",
+                actions: "acceptTosFailure"
+              }
             ]
           }
         },
@@ -138,6 +222,12 @@ const createIDPayOnboardingMachine = () =>
               {
                 target: "EVALUATING_REQUIRED_CRITERIA",
                 actions: "loadRequiredCriteriaSuccess"
+              }
+            ],
+            onError: [
+              {
+                target: "DISPLAYING_ONBOARDING_FAILURE",
+                actions: "loadRequiredCriteriaFailure"
               }
             ]
           }
@@ -171,6 +261,11 @@ const createIDPayOnboardingMachine = () =>
               {
                 target: "ACCEPTING_REQUIRED_CRITERIA"
               }
+            ],
+            GO_BACK: [
+              {
+                target: "DISPLAYING_INITIATIVE"
+              }
             ]
           }
         },
@@ -180,7 +275,16 @@ const createIDPayOnboardingMachine = () =>
           on: {
             ACCEPT_REQUIRED_SELF_CRITERIA: {
               target: "ACCEPTING_REQUIRED_CRITERIA"
-            }
+            },
+            GO_BACK: [
+              {
+                target: "DISPLAYING_REQUIRED_PDND_CRITERIA",
+                cond: "hasPDNDRequiredCriteria"
+              },
+              {
+                target: "DISPLAYING_INITIATIVE"
+              }
+            ]
           }
         },
         ACCEPTING_REQUIRED_CRITERIA: {
@@ -197,7 +301,10 @@ const createIDPayOnboardingMachine = () =>
           }
         },
         DISPLAYING_ONBOARDING_COMPLETED: {
-          type: "final"
+          entry: "navigateToCompletionScreen"
+        },
+        DISPLAYING_ONBOARDING_FAILURE: {
+          entry: "navigateToFailureScreen"
         }
       }
     },
@@ -209,11 +316,34 @@ const createIDPayOnboardingMachine = () =>
         loadInitiativeSuccess: assign((_, event) => ({
           initiative: event.data
         })),
+        loadInitiativeFailure: assign((_, event) => ({
+          failure: event.data as OnboardingFailureType
+        })),
+        loadInitiativeStatusSuccess: assign((_, event) => ({
+          initiativeStatus: event.data
+        })),
+        loadInitiativeStatusFailure: assign((_, event) => ({
+          failure: event.data as OnboardingFailureType
+        })),
+        onOnboardingDone: assign((_, __) => ({
+          failure: OnboardingFailureType.ALREADY_COMPLETED
+        })),
+        onOnboardingFailed: assign((_, __) => ({
+          failure: OnboardingFailureType.ONBOARDING_KO
+        })),
         loadRequiredCriteriaSuccess: assign((_, event) => ({
           requiredCriteria: event.data
+        })),
+        loadRequiredCriteriaFailure: assign((_, event) => ({
+          failure: event.data as OnboardingFailureType
+        })),
+        acceptTosFailure: assign((_, event) => ({
+          failure: event.data as OnboardingFailureType
         }))
       },
       guards: {
+        isOnboardingDone,
+        isOnboardingFailed,
         hasPDNDRequiredCriteria,
         hasSelfRequiredCriteria
       }
