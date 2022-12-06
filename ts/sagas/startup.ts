@@ -345,7 +345,7 @@ export function* initializeApplicationSaga(): Generator<
   } else {
     // TODO If the session was not valid, the code would have stopped before
     // reaching this point. Consider refactoring even more by removing the check
-    // on the session (IOAPPCIT-10)
+    // on the session (IOAPPCIT-10 https://pagopa.atlassian.net/browse/IOAPPCIT-10)
     storedPin = yield* call(checkConfiguredPinSaga);
 
     yield* call(checkAcknowledgedFingerprintSaga);
