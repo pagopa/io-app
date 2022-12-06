@@ -74,9 +74,7 @@ const extractInfoFromPaymentMethod = (
   }
 };
 
-const PickNotAvailablePaymentMethodListItem: React.FC<Props> = (
-  props: Props
-) => {
+const PickAvailablePaymentMethodListItem: React.FC<Props> = (props: Props) => {
   const { logo, title, description } = extractInfoFromPaymentMethod(
     props.paymentMethod,
     props.nameSurname ?? ""
@@ -107,4 +105,4 @@ const mapStateToProps = (state: GlobalState) => ({
   favoriteWalletId: getFavoriteWalletId(state),
   nameSurname: profileNameSurnameSelector(state)
 });
-export default connect(mapStateToProps)(PickNotAvailablePaymentMethodListItem);
+export default connect(mapStateToProps)(PickAvailablePaymentMethodListItem);
