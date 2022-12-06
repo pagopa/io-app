@@ -3301,9 +3301,6 @@ idpay:
           startConfigurationCTA: Inizia
   onboarding:
     headerTitle: "Adesione all'iniziativa"
-    buttons: 
-      cancel: "Annulla"
-      continue: "Continua"
     beforeContinue:
       text1: "Proseguendo accetti i "
       tosLink: "Termini e condizioni d'uso"
