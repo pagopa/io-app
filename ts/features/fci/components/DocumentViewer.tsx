@@ -153,9 +153,7 @@ export const DocumentViewer = (props: Props): React.ReactElement => {
     />
   );
 
-  if (pot.isError(fciDownloadSelector)) {
-    setIsError(true);
-  } else if (pot.isLoading(fciDownloadSelector)) {
+  if (pot.isLoading(fciDownloadSelector)) {
     return <LoadingComponent />;
   }
 
@@ -173,7 +171,7 @@ export const DocumentViewer = (props: Props): React.ReactElement => {
     </TouchableDefaultOpacity>
   );
 
-  return !isError ? (
+  return !pot.isError(fciDownloadSelector) ? (
     <BaseScreenComponent
       goBack={true}
       customGoBack={customGoBack}
@@ -184,17 +182,27 @@ export const DocumentViewer = (props: Props): React.ReactElement => {
         style={styles.container}
         testID={"FciDocumentPreviewScreenTestID"}
       >
-        {pipe(fciDownloadPath, S.isEmpty) === false ? (
-          <Pdf
-            source={{ uri: fciDownloadPath, cache: true }}
-            style={styles.pdf}
-            onLoadComplete={props.onLoadComplete}
-            onError={_ => {
-              props.onError?.();
-              setIsError(true);
-            }}
-          />
-        ) : (
+        {pipe(fciDownloadPath, S.isEmpty) === false && (
+          <>
+            <Pdf
+              source={{ uri: fciDownloadPath, cache: true }}
+              style={styles.pdf}
+              onLoadComplete={props.onLoadComplete}
+              onError={_ => {
+                props.onError?.();
+                setIsError(true);
+              }}
+            />
+            {renderFooter(
+              documentUrl,
+              fciDownloadPath,
+              props.onShare,
+              props.onOpen,
+              props.onDownload
+            )}
+          </>
+        )}
+        {isError && (
           <InfoScreenComponent
             image={renderInfoRasterImage(image)}
             title={I18n.t(
@@ -204,13 +212,6 @@ export const DocumentViewer = (props: Props): React.ReactElement => {
               "features.mvl.details.attachments.pdfPreview.errors.previewing.body"
             )}
           />
-        )}
-        {renderFooter(
-          documentUrl,
-          fciDownloadPath,
-          props.onShare,
-          props.onOpen,
-          props.onDownload
         )}
       </SafeAreaView>
     </BaseScreenComponent>
