@@ -1,5 +1,5 @@
-import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
-import { View } from "native-base";
+import { View, SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { View as NBView } from "native-base";
 import * as React from "react";
 import { useEffect } from "react";
 import { IOStyles } from "../../components/core/variables/IOStyles";
@@ -42,15 +42,19 @@ export const Showroom = () => {
         <ScrollView>
           <View style={IOStyles.horizontalContentPadding}>
             <ColorsShowroom />
-            <View spacer={true} extralarge={true} />
+            <NBView spacer={true} large={true} />
             <TypographyShowroom />
+            <NBView spacer={true} large={true} />
             <SelectionShowroom />
-            <View spacer={true} extralarge={true} />
+            <NBView spacer={true} large={true} />
             <OthersShowroom />
-            <View spacer={true} extralarge={true} />
+            <NBView spacer={true} large={true} />
             <PictogramsShowroom />
+            <NBView spacer={true} large={true} />
             <IconsShowroom />
+            <NBView spacer={true} large={true} />
             <LogosShowroom />
+            <NBView spacer={true} large={true} />
             <IllustrationsShowroom />
           </View>
         </ScrollView>
