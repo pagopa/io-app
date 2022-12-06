@@ -1,6 +1,8 @@
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
+import { ClausesTypeEnum } from "../../../../../definitions/fci/ClausesType";
 import { StatusEnum as DocumentStatusEnum } from "../../../../../definitions/fci/Document";
 import { DocumentDetailView } from "../../../../../definitions/fci/DocumentDetailView";
+import { SignatureField } from "../../../../../definitions/fci/SignatureField";
 import {
   SignatureRequestDetailView,
   StatusEnum as SignatureRequestStatus
@@ -16,7 +18,38 @@ export const mockDocuments: ReadonlyArray<DocumentDetailView> = [
     updated_at: new Date(),
     uploaded_at: new Date(),
     status: DocumentStatusEnum.READY,
-    metadata: {}
+    metadata: {
+      title: "Modulo 1" as NonEmptyString,
+      signature_fields: [
+        {
+          clause: {
+            title: "clause title 1",
+            type: ClausesTypeEnum.REQUIRED
+          },
+          attrs: {
+            unique_name: "unique_name_1"
+          }
+        },
+        {
+          clause: {
+            title: "clause title 2",
+            type: ClausesTypeEnum.OPTIONAL
+          },
+          attrs: {
+            unique_name: "unique_name_2"
+          }
+        },
+        {
+          clause: {
+            title: "clause title 3",
+            type: ClausesTypeEnum.UNFAIR
+          },
+          attrs: {
+            unique_name: "unique_name_3"
+          }
+        }
+      ] as ReadonlyArray<SignatureField>
+    }
   }
 ];
 

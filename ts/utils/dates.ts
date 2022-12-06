@@ -7,7 +7,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import { Errors } from "io-ts";
-import { Locales } from "../../locales/locales";
+import { Locales, TranslationKeys } from "../../locales/locales";
 import I18n from "../i18n";
 import { CreditCardExpirationMonth, CreditCardExpirationYear } from "./input";
 import { getLocalePrimary, localeDateFormat } from "./locale";
@@ -20,14 +20,59 @@ type DFNSLocales = Record<Locales, DateFnsLocale>;
 
 const locales: DFNSLocales = { it: dfns_it, en: dfns_en, de: dfns_de };
 
-// return a string representing the date dd/MM/YYYY (ex: 1 Jan 1970 -> 01/01/1970) without considering the timezone
-export const formatDateAsShortFormatUTC = (date: Date): string =>
-  isNaN(date.getTime())
-    ? I18n.t("global.date.invalid")
-    : I18n.strftime(
-        new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()),
-        I18n.t("global.dateFormats.shortFormat")
-      );
+export const pad = (n: number) => n.toString().padStart(2, "0");
+
+/*
+ * This function is specific for the fiscal code birthday rendering.
+ * The birthday is an ISO8601 format for midnight.
+ * It returns the date in short format.
+ *
+ * i.e. 1977-05-22T00:00:00.000Z -> 22/05/1977
+ */
+export const formatFiscalCodeBirthdayAsShortFormat = (
+  date: Date | undefined
+): string =>
+  pipe(
+    date,
+    O.fromNullable,
+    O.chain(O.fromPredicate(d => !isNaN(d.getTime()))),
+    O.fold(
+      () => I18n.t("global.date.invalid"),
+      d => {
+        const year = d.getUTCFullYear();
+        const month = pad(d.getUTCMonth() + 1);
+        const day = pad(d.getUTCDate());
+        return `${day}/${month}/${year}`;
+      }
+    )
+  );
+
+export const formatFiscalCodeBirthdayAsAccessibilityReadableFormat = (
+  date: Date | undefined
+): string =>
+  pipe(
+    date,
+    O.fromNullable,
+    O.chain(O.fromPredicate(d => !isNaN(d.getTime()))),
+    O.fold(
+      () => I18n.t("global.date.invalid"),
+      d => {
+        const year = d.getUTCFullYear();
+        const month = d.getUTCMonth() + 1;
+        const date = d.getUTCDate();
+        const day = d.getUTCDay();
+        const dayTranslationKey = I18n.t(
+          `date.day_names.${day}` as TranslationKeys
+        );
+        const monthTranslationKey = I18n.t(
+          `date.month_names.${month}` as TranslationKeys
+        );
+
+        return `${dayTranslationKey} ${date} ${monthTranslationKey} ${year}`;
+      }
+    )
+  );
+
 // return a string representing the date dd/MM/YYYY (ex: 1 Jan 1970 -> 01/01/1970)
 export const formatDateAsShortFormat = (date: Date): string =>
   isNaN(date.getTime())

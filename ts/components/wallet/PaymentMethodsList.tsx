@@ -226,7 +226,7 @@ const PaymentMethodsList: React.FunctionComponent<Props> = (props: Props) => (
         renderListItem(
           i,
           props.paymentMethods.filter(pm => pm.status !== "notImplemented")
-            .length - 1,
+            .length,
           props.sectionStatus
         )
       }

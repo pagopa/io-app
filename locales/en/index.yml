@@ -505,7 +505,7 @@ profile:
       title: Customize push notifications
       subtitle: Choose if you want to allow previews and receive reminders.
       titleExistingUser: Customize push notifications
-      subtitleExistingUser: Now you can instantly see who messaged you and receive reminders from important messages.
+      subtitleExistingUser: Now you can instantly see who messaged you and receive reminders from important messages, as in the example below.
       reminders:
         title: Allow reminders
         description: Upon request of the sender, receive push notifications close to deadlines or when you have unread messages
@@ -1675,10 +1675,11 @@ messages:
         block1: Add a reminder for the
         block2: at
       expiringOrValidAlert:
-        block1: This notice will expire on
+        block1: Expiring on 
+        block2: at
       expiredAlert:
-        block1: This notice expired at
-        block2: on
+        block1: Expired on
+        block2: at
     prescription:
       addMemo: This prescription expires the
       expiringAlert: This prescription expires today
@@ -3179,16 +3180,38 @@ features:
       generic:
         title: There is a problem
         subTitle: To proceed with the signature, check that you have updated the IO app to the latest version.
+    abort:
+      title: "Cancel signing flow"
+      content: "Do you want to cancel the documents signing process?"
+      cancel: "Back"
+      confirm: "Cancel"
+    signatureFields:
+      title: "Sign here"
+      showOnDocument: "See on document"
     title: "Firma con IO"
     documentsBar:
       titleLeft: Document {{currentDoc}} of {{totalDocs}}
       titleRight: Page {{currentPage}} of {{totalPages}}
+    shareDataScreen:
+      title: "Do you share this data?"
+      content: "To complete the signing process, you must share this data with the requesting institution."
+      cancel: "Cancel"
+      confirm: "Ok"
+      alertText: "Want to change or update your email address?"
+      alertLink: "Go here"
+      name: "Name"
+      familyName: "Family name"
+      birthDate: "Date of birth"
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
     missingToken: Missing authorization to start this flow
     convertMessage: Unable to decode the message from the webview
 support:
+  ticketList:
+    noTicket:
+      title: "There are no ongoing requests"
+      body: "If you need help, submit a new request."
   helpCenter:
     header: "Support"
     cta:
@@ -3215,7 +3238,10 @@ support:
     stock: "Payment Notice details"
     stockValue: "Including the error you just received"
     header: "Submit a request"
+    listTitle: "Ongoing requests"
     title: "Do you give us your consent?"
+    listBody: "To retrieve your ongoing requests, we need to access to some data."
+    privacyLink: "Read the privacy policy"
     body: "In order to respond to the support request, we need access to some personal data. If you deny consent, you’ll have to send us a generic request via e-mail."
     listHeader: "If you consent, we'll access this data:"
     devicePerformance: "Device performance"
@@ -3235,11 +3261,46 @@ support:
     subTitle:
       category: "Help us understand how we can help you by selecting the topic of your problem: we will reply as soon as possible, during business hours."
 idpay:
+  wallet:
+    preview:
+      validThrough: "Valid through {{endDate}}"
+  initiative:
+    configuration: 
+      bottomSheet:
+        header: Prima di continuare
+        bodyFirst: Il metodo sarà abilitato
+        bodyBold: " nelle prossime ore."
+        bodyLast: Riceverai una notifica push quando potrai iniziare ad utilizzarlo. Fino a quel momento eventuali transazioni verranno ignorate.
+        footer:
+          buttonActivate: Attiva
+          buttonCancel: Annulla
+      header: Scegli quali metodi di pagamento associare
+      subHeader: "Poi, usali per pagare e chiedi all’esercente di usare {{initiativeName}}."
+      footer: Modifica queste scelte o aggiunti altri metodi in qualsiasi momento dalla sezione Portafoglio
+      buttonFooter:
+        noneCta: Nessuno di questi
+        continueCta: Continua
+    details:
+      initiativeCard:
+        availableAmount: Disponibile
+        validUntil: Valido fino al
+        toRefund: da rimborsare
+      initiativeDetailsScreen:
+        notConfigured:
+          header: Configura l'iniziativa!
+          footer: Aggiungi almeno un metodo per iniziare ad utilizzare {{initiative}}.
+        configured:
+          yourOperations: Le tue Operazioni
+          yourOperationsSubtitle: Qui vedrai le transazioni effettuate con i metodi che hai associato.
+          yourOperationsLink: Come si fa?
+          settings:
+            header: Impostazioni
+            associatedPaymentMethods: Metodi di pagamento associati
+            methodsi18n: metodi 
+            selectedIBAN: IBAN per l'accredito
+          startConfigurationCTA: Inizia
   onboarding:
     headerTitle: "Adesione all'iniziativa"
-    buttons: 
-      cancel: "Annulla"
-      continue: "Continua"
     beforeContinue:
       text1: "Proseguendo accetti i "
       tosLink: "Termini e condizioni d'uso"
@@ -3256,9 +3317,6 @@ idpay:
           understoodCTA: Ho capito
       title: Possiedi i seguenti requisiti?
       subtitle: Verificheremo con alcuni Enti se sei in possesso dei requisiti per poter richiedere {{service}}. 
-  wallet:
-    preview:
-      validThrough: "Valid through {{endDate}}"
   configuration:
     headerTitle: "Configure the initiative"
     intro: 
@@ -3272,4 +3330,8 @@ idpay:
         instrumentSubtitle: "Indicate the methods to be enabled for the initiative"
       buttons:
         continue: "Start configuration"
+    associationSuccess:
+      title: "Grazie!"
+      body: "Da domani potrai utilizzare {{initiativeName}}. Puoi abilitare altri metodi aggiungendoli al Portafoglio."
+      button: "Vai all'iniziativa"
     

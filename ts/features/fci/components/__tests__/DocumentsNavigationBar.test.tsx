@@ -86,6 +86,46 @@ describe("Test DocumentsNavigationBar component", () => {
     fireEvent.press(rightButton);
     expect(onPress).toHaveBeenCalledTimes(2);
   });
+  it("should render a DocumentsNavigationBar Component with right arrow button disabled", () => {
+    const onPress = jest.fn();
+    const props = {
+      titleRight: "",
+      titleLeft: "",
+      disabled: true,
+      onPrevious: jest.fn(),
+      onNext: onPress
+    };
+    const component = renderComponent({ ...props });
+    expect(component).toBeTruthy();
+    const rightButton = component.getByTestId(
+      "DocumentsNavigationBarRightButtonTestID"
+    );
+    expect(rightButton).toBeTruthy();
+    expect(rightButton).toBeDisabled();
+    fireEvent.press(rightButton);
+    fireEvent.press(rightButton);
+    expect(onPress).toHaveBeenCalledTimes(0);
+  });
+  it("should render a DocumentsNavigationBar Component with left arrow button disabled", () => {
+    const onPress = jest.fn();
+    const props = {
+      titleRight: "",
+      titleLeft: "",
+      disabled: true,
+      onPrevious: jest.fn(),
+      onNext: onPress
+    };
+    const component = renderComponent({ ...props });
+    expect(component).toBeTruthy();
+    const leftButton = component.getByTestId(
+      "DocumentsNavigationBarLeftButtonTestID"
+    );
+    expect(leftButton).toBeTruthy();
+    expect(leftButton).toBeDisabled();
+    fireEvent.press(leftButton);
+    fireEvent.press(leftButton);
+    expect(onPress).toHaveBeenCalledTimes(0);
+  });
 });
 
 const renderComponent = (props: Props) =>
