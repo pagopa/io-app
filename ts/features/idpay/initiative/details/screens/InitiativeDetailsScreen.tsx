@@ -25,7 +25,7 @@ import {
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import customVariables from "../../../../../theme/variables";
 import { IDPayConfigurationRoutes } from "../../configuration/navigation/navigator";
-import InitiativeConfiguredData from "../components/ConfiguredInitiativeComponent";
+import InitiativeTimelineComponent from "../components/InitiativeTimelineComponent";
 import InitiativeCardComponent from "../components/InitiativeCardComponent";
 import { idpayInitiativeDetailsSelector } from "../store";
 import { idpayInitiativeGet, idpayTimelineGet } from "../store/actions";
@@ -111,7 +111,7 @@ export const InitiativeDetailsScreen = () => {
         return initiativeNotConfiguredContent;
       } else {
         dispatch(idpayTimelineGet.request({ initiativeId }));
-        return <InitiativeConfiguredData initiative={initiativeData} />;
+        return <InitiativeTimelineComponent initiative={initiativeData} />;
       }
     };
 

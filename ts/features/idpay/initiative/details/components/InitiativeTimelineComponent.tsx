@@ -7,7 +7,10 @@ import { OperationTypeEnum as InstrumentOperationTypeEnum } from "../../../../..
 import { OperationTypeEnum as OnboardingOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/OnboardingOperationDTO";
 import { OperationListDTO } from "../../../../../../definitions/idpay/timeline/OperationListDTO";
 import { TimelineDTO } from "../../../../../../definitions/idpay/timeline/TimelineDTO";
-import { OperationTypeEnum as TransactionOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/TransactionOperationDTO";
+import {
+  CircuitTypeEnum,
+  OperationTypeEnum as TransactionOperationTypeEnum
+} from "../../../../../../definitions/idpay/timeline/TransactionOperationDTO";
 import { InitiativeDTO } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H3 } from "../../../../../components/core/typography/H3";
@@ -40,7 +43,7 @@ type configuredInitiativeProps = {
 
 type TransactionProps = { transaction: OperationListDTO };
 
-const InitiativeConfiguredData = ({
+const ConfiguredInitiativeData = ({
   initiative
 }: configuredInitiativeProps) => {
   const timelineFromSelector = useIOSelector(idpayTimelineSelector);
@@ -89,7 +92,7 @@ const InitiativeConfiguredData = ({
     }
     return isTimelineEmpty
       ? emptyTimelineContent
-      : TransactionsList(timelineList);
+      : TimelineRenderer(timelineList);
   };
   return (
     <>
@@ -126,7 +129,7 @@ const emptyTimelineContent = (
   </>
 );
 
-const TransactionsList = (timeline: TimelineDTO["operationList"]) => (
+const TimelineRenderer = (timeline: TimelineDTO["operationList"]) => (
   <>
     <View style={[IOStyles.row, styles.listItem]}>
       <H3>
@@ -173,4 +176,4 @@ const CustomListItem = ({ transaction }: TransactionProps) => {
   );
 };
 
-export default InitiativeConfiguredData;
+export default ConfiguredInitiativeData;
