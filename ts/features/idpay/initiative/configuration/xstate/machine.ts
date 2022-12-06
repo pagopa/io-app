@@ -128,7 +128,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
         },
         LOADING_INSTRUMENTS: {
           tags: [LOADING_TAG],
-          entry: "navigateToInstrumentsSelectionScreen",
+          entry: "navigateToInstrumentsEnrollmentScreen",
           invoke: {
             src: "loadInstruments",
             id: "loadInstruments",

@@ -10,9 +10,10 @@ import { Context } from "./machine";
 const createActionsImplementation = (
   navigation: IOStackNavigationProp<AppParamsList, keyof AppParamsList>
 ) => {
-  const navigateToInstrumentsSelectionScreen = () => {
+  const navigateToInstrumentsEnrollmentScreen = () => {
     navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
-      screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INSTRUMENTS_SELECTION
+      screen:
+        IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT
     });
   };
 
@@ -33,7 +34,7 @@ const createActionsImplementation = (
   };
 
   return {
-    navigateToInstrumentsSelectionScreen,
+    navigateToInstrumentsEnrollmentScreen,
     navigateToConfigurationSuccessScreen,
     navigateToInitiativeDetailScreen
   };
