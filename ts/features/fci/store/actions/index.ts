@@ -48,6 +48,20 @@ export const fciSigningRequest = createAsyncAction(
 )<CreateSignatureBody, void, NetworkError>();
 
 /**
+ * asycn action to download file
+ */
+export const fciDownloadPreview = createAsyncAction(
+  "FCI_DOWNLOAD_PREVIEW_REQUEST",
+  "FCI_DOWNLOAD_PREVIEW_SUCCESS",
+  "FCI_DOWNLOAD_PREVIEW_FAILURE",
+  "FCI_DOWNLOAD_PREVIEW_CANCEL"
+)<{ url: string }, { path: string }, NetworkError, void>();
+
+export const fciDownloadPreviewCancel = createStandardAction(
+  "FCI_DOWNLOAD_PREVIEW_CANCEL"
+)<{ path: string }>();
+
+/**
  * update documentSignatures
  */
 export const fciUpdateDocumentSignaturesRequest = createStandardAction(
@@ -73,4 +87,5 @@ export type FciActions =
   | ActionType<typeof fciSigningRequest>
   | ActionType<typeof fciAbortRequest>
   | ActionType<typeof fciStartRequest>
-  | ActionType<typeof fciUpdateDocumentSignaturesRequest>;
+  | ActionType<typeof fciUpdateDocumentSignaturesRequest>
+  | ActionType<typeof fciDownloadPreview>;

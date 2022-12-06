@@ -3202,6 +3202,9 @@ features:
       name: "Name"
       familyName: "Family name"
       birthDate: "Date of birth"
+    qtspTos:
+      title: "Do you give your consent?"
+      show: "View"
 webView:
   error:
     missingParams: Not all information necessary to access this page are available

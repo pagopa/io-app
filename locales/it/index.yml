@@ -3226,6 +3226,9 @@ features:
       name: "Nome"
       familyName: "Cognome"
       birthDate: "Data di nascita"
+    qtspTos:
+      title: "Dai il tuo consenso?"
+      show: "Visualizza"
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina

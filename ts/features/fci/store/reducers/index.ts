@@ -11,6 +11,9 @@ import fciSignatureReducer, { FciSignatureState } from "./fciSignature";
 import fciSignatureRequestReducer, {
   FciSignatureRequestState
 } from "./fciSignatureRequest";
+import fciDownloadPreviewReducer, {
+  FciDownloadPreviewState
+} from "./fciDownloadPreview";
 
 export type FciState = {
   signatureRequest: FciSignatureRequestState;
@@ -18,6 +21,7 @@ export type FciState = {
   qstpFilledDocument: FciQtspFilledDocumentState;
   signature: FciSignatureState;
   documentSignatures: FciDocumentSignaturesState;
+  documentPreview: FciDownloadPreviewState;
 };
 
 const fciReducer = combineReducers<FciState, Action>({
@@ -25,7 +29,8 @@ const fciReducer = combineReducers<FciState, Action>({
   qtspClauses: fciQtspClausesReducer,
   qstpFilledDocument: fciLoadQtspFilledDocumentReducer,
   signature: fciSignatureReducer,
-  documentSignatures: fciDocumentSignaturesReducer
+  documentSignatures: fciDocumentSignaturesReducer,
+  documentPreview: fciDownloadPreviewReducer
 });
 
 export default fciReducer;
