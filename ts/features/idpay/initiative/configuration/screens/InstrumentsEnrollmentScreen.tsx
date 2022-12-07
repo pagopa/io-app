@@ -2,14 +2,12 @@ import { useActor, useSelector } from "@xstate/react";
 import { Badge, List, ListItem, Text, View } from "native-base";
 import React, { useRef } from "react";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
-import * as _ from "lodash";
 import { InstrumentDTO } from "../../../../../../definitions/idpay/wallet/InstrumentDTO";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
-import ActivityIndicator from "../../../../../components/ui/ActivityIndicator";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import Switch from "../../../../../components/ui/Switch";
 import I18n from "../../../../../i18n";
@@ -24,6 +22,8 @@ import {
 } from "../xstate/selectors";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
+import { instrumentStatusLabels } from "../../../common/labels";
+import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 
 const styles = StyleSheet.create({
   listItemContainer: {
@@ -73,7 +73,9 @@ const InstrumentEnrollmentSwitcher = ({
           />
         ) : (
           <Badge style={styles.badge}>
-            <LabelSmall color="white">{"In elaborazione"}</LabelSmall>
+            <LabelSmall color="white">
+              {instrumentStatusLabels[idPayStatus]}
+            </LabelSmall>
           </Badge>
         )}
       </View>
@@ -109,11 +111,18 @@ const InstrumentsEnrollmentScreen = () => {
     selectIsUpsertingInstrument
   );
 
-  const hasSelectedInstruments = _.size(idPayInstrumentsByIdWallet) > 0;
+  const hasSelectedInstruments =
+    Object.keys(idPayInstrumentsByIdWallet).length > 0;
 
   const sendAddInstrument = (): void => {
     configurationMachine.send("ADD_INSTRUMENT", {
       walletId: selectedCardRef.current
+    });
+  };
+
+  const handleContinueButton = () => {
+    configurationMachine.send({
+      type: "CONFIRM_INSTRUMENTS"
     });
   };
 
@@ -159,66 +168,61 @@ const InstrumentsEnrollmentScreen = () => {
     />
   );
 
-  const renderContent = () => {
-    if (isLoadingInstruments) {
-      return <ActivityIndicator />;
-    }
-
-    return (
-      <>
-        <View spacer />
-        <View style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
-          <H1>{I18n.t("idpay.initiative.configuration.header")}</H1>
-          <View spacer small />
-          <Text>
-            {I18n.t("idpay.initiative.configuration.subHeader", {
-              initiativeName: "18app"
-            })}
-          </Text>
-          <View spacer />
-          <ScrollView>
-            <List>
-              {pagoPAInstruments.map(pagoPAInstrument => (
-                <InstrumentEnrollmentSwitcher
-                  key={pagoPAInstrument.idWallet}
-                  instrument={pagoPAInstrument}
-                  idPayStatus={
-                    idPayInstrumentsByIdWallet[pagoPAInstrument.idWallet]
-                      ?.status
-                  }
-                  onSwitch={onSwitchHandler}
-                  isDisabled={isUpserting}
-                />
-              ))}
-            </List>
-            <Text>{I18n.t("idpay.initiative.configuration.footer")}</Text>
-          </ScrollView>
-        </View>
-        <SafeAreaView>
-          <FooterWithButtons
-            type="TwoButtonsInlineHalf"
-            leftButton={{
-              title: I18n.t(
-                "idpay.initiative.configuration.buttonFooter.noneCta"
-              ),
-              bordered: true
-            }}
-            rightButton={{
-              title: I18n.t(
-                "idpay.initiative.configuration.buttonFooter.continueCta"
-              ),
-              disabled: isUpserting || !hasSelectedInstruments
-            }}
-          />
-        </SafeAreaView>
-      </>
-    );
-  };
-
   return (
     <>
       <BaseScreenComponent goBack={handleBackPress} headerTitle="Iniziativa">
-        {renderContent()}
+        <LoadingSpinnerOverlay
+          isLoading={isLoadingInstruments}
+          loadingOpacity={1}
+        >
+          <View spacer />
+          <View style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
+            <H1>{I18n.t("idpay.initiative.configuration.header")}</H1>
+            <View spacer small />
+            <Text>
+              {I18n.t("idpay.initiative.configuration.subHeader", {
+                initiativeName: "18app"
+              })}
+            </Text>
+            <View spacer />
+            <ScrollView>
+              <List>
+                {pagoPAInstruments.map(pagoPAInstrument => (
+                  <InstrumentEnrollmentSwitcher
+                    key={pagoPAInstrument.idWallet}
+                    instrument={pagoPAInstrument}
+                    idPayStatus={
+                      idPayInstrumentsByIdWallet[pagoPAInstrument.idWallet]
+                        ?.status
+                    }
+                    onSwitch={onSwitchHandler}
+                    isDisabled={isUpserting}
+                  />
+                ))}
+              </List>
+              <Text>{I18n.t("idpay.initiative.configuration.footer")}</Text>
+            </ScrollView>
+          </View>
+          <SafeAreaView>
+            <FooterWithButtons
+              type="TwoButtonsInlineHalf"
+              leftButton={{
+                title: I18n.t(
+                  "idpay.initiative.configuration.buttonFooter.noneCta"
+                ),
+                bordered: true,
+                disabled: true
+              }}
+              rightButton={{
+                title: I18n.t(
+                  "idpay.initiative.configuration.buttonFooter.continueCta"
+                ),
+                disabled: isUpserting || !hasSelectedInstruments,
+                onPress: handleContinueButton
+              }}
+            />
+          </SafeAreaView>
+        </LoadingSpinnerOverlay>
       </BaseScreenComponent>
 
       {bottomSheet}

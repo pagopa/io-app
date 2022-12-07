@@ -24,11 +24,7 @@ const selectorPagoPAIntruments = createSelector(
   pagoPAInstruments => P.getOrElse(pagoPAInstruments, [])
 );
 
-const selectIDPayInstruments = (state: StateWithContext) => {
-  // eslint-disable-next-line no-console
-  console.log("selectIDPayInstruments", state.context);
-  return state.context.idPayInstruments;
-};
+const selectIDPayInstruments = (state: StateWithContext) => state.context.idPayInstruments;
 
 const selectorIDPayInstrumentsByIdWallet = createSelector(
   selectIDPayInstruments,
