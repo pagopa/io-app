@@ -1,5 +1,4 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useNavigation } from "@react-navigation/native";
 import { useActor } from "@xstate/react";
 import { Text, View } from "native-base";
 import React from "react";
@@ -9,19 +8,12 @@ import { Pictogram } from "../../../../../components/core/pictograms";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";
-import {
-  AppParamsList,
-  IOStackNavigationProp
-} from "../../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../../navigation/routes";
 import themeVariables from "../../../../../theme/variables";
 import { useConfigurationMachineService } from "../xstate/provider";
 
-const AssociationSuccessScreen = () => {
-  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
-
+const ConfigurationSuccessScreen = () => {
   const configurationMachine = useConfigurationMachineService();
-  const [state] = useActor(configurationMachine);
+  const [state, send] = useActor(configurationMachine);
 
   const initiativeDetails = pot.toUndefined(state.context.initiative);
 
@@ -29,12 +21,10 @@ const AssociationSuccessScreen = () => {
     return null;
   }
 
-  const { initiativeId, initiativeName } = initiativeDetails;
+  const { initiativeName } = initiativeDetails;
 
   const handleNavigateToInitiativePress = () => {
-    navigation.navigate(ROUTES.IDPAY_INITIATIVE_DETAILS, {
-      initiativeId
-    });
+    send({ type: "COMPLETE_CONFIGURATION" });
   };
 
   return (
@@ -80,4 +70,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default AssociationSuccessScreen;
+export default ConfigurationSuccessScreen;

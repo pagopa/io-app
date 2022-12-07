@@ -1,5 +1,5 @@
-import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
-import { View } from "native-base";
+import { View, SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { View as NBView } from "native-base";
 import * as React from "react";
 import { useEffect } from "react";
 import { IOStyles } from "../../components/core/variables/IOStyles";
@@ -8,9 +8,12 @@ import I18n from "../../i18n";
 import { ColorsShowroom } from "./core/ColorsShowroom";
 import { IllustrationsShowroom } from "./core/IllustrationsShowroom";
 import { PictogramsShowroom } from "./core/PictogramsShowroom";
+import { IconsShowroom } from "./core/IconsShowroom";
+import { LogosShowroom } from "./core/LogosShowroom";
 import { SelectionShowroom } from "./core/SelectionShowroom";
 import { TypographyShowroom } from "./core/TypographyShowRoom";
 import { OthersShowroom } from "./OthersShowroom";
+import { ButtonsShowroom } from "./ButtonsShowroom";
 
 const styles = StyleSheet.create({
   body: {
@@ -40,13 +43,21 @@ export const Showroom = () => {
         <ScrollView>
           <View style={IOStyles.horizontalContentPadding}>
             <ColorsShowroom />
-            <View spacer={true} extralarge={true} />
+            <NBView spacer={true} large={true} />
             <TypographyShowroom />
+            <NBView spacer={true} large={true} />
             <SelectionShowroom />
-            <View spacer={true} extralarge={true} />
+            <NBView spacer={true} large={true} />
             <OthersShowroom />
-            <View spacer={true} extralarge={true} />
+            <NBView spacer={true} large={true} />
+            <ButtonsShowroom />
+            <NBView spacer={true} large={true} />
             <PictogramsShowroom />
+            <NBView spacer={true} large={true} />
+            <IconsShowroom />
+            <NBView spacer={true} large={true} />
+            <LogosShowroom />
+            <NBView spacer={true} large={true} />
             <IllustrationsShowroom />
           </View>
         </ScrollView>

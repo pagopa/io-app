@@ -37,6 +37,7 @@ type Props = WithTestID<{
   titleLeft: string;
   iconRightColor?: string;
   iconLeftColor?: string;
+  disabled?: boolean;
   onPrevious: () => void;
   onNext: () => void;
 }>;
@@ -52,6 +53,7 @@ const DocumentsNavigationBar = (props: Props) => (
     <ButtonDefaultOpacity
       onPress={props.onPrevious}
       transparent={true}
+      disabled={props.disabled}
       testID={"DocumentsNavigationBarLeftButtonTestID"}
     >
       <View style={{ flexDirection: "row" }}>
@@ -74,6 +76,7 @@ const DocumentsNavigationBar = (props: Props) => (
     <ButtonDefaultOpacity
       onPress={props.onNext}
       transparent={true}
+      disabled={props.disabled}
       testID={"DocumentsNavigationBarRightButtonTestID"}
     >
       <View style={{ flexDirection: "row" }}>

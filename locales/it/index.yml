@@ -505,7 +505,7 @@ profile:
       title: Personalizza le notifiche
       subtitle: Scegli se mostrare le anteprime e ricevere promemoria.
       titleExistingUser: Personalizza le notifiche
-      subtitleExistingUser: Ora puoi vedere subito chi ti ha scritto o ricevere promemoria da messaggi importanti.
+      subtitleExistingUser: Ora puoi vedere subito chi ti ha scritto o ricevere promemoria da messaggi importanti, come in questo esempio.
       reminders:
         title: Consenti promemoria
         description: Su richiesta dell'ente, ricevi notifiche push in prossimità di scadenze o quando hai dei messaggi non letti
@@ -1695,10 +1695,11 @@ messages:
         block1: Aggiungi un promemoria per il
         block2: alle
       expiringOrValidAlert:
-        block1: Questo avviso scade il giorno
+        block1: Scade il 
+        block2: alle ore 
       expiredAlert:
-        block1: L'avviso è scaduto alle
-        block2: del
+        block1: Scaduto il 
+        block2: alle ore 
     prescription:
       addMemo: Questa ricetta scade il
       expiringAlert: Questa ricetta scade oggi
@@ -3203,16 +3204,38 @@ features:
       generic:
         title: C’è un problema
         subTitle: Per procedere alla firma, verifica di aver aggiornato l’app IO all’ultima versione
+    abort:
+      title: "Annulla la firma"
+      content: "Vuoi annullare la firma dei documenti?"
+      cancel: "Torna indietro"
+      confirm: "Annulla"
+    signatureFields:
+      title: "Firma qui"
+      showOnDocument: "Vedi sul documento"
     title: "Firma con IO"
     documentsBar:
       titleLeft: Documento {{currentDoc}} di {{totalDocs}}
       titleRight: Pagina {{currentPage}} di {{totalPages}}
+    shareDataScreen:
+      title: "Condividi questi dati?"
+      content: "Per completare la firma, devi condividere questi dati con l'ente richiedente."
+      cancel: "Annulla"
+      confirm: "Ok. va bene"
+      alertText: "Vuoi modificare o aggiornare il tuo indirizzo email?"
+      alertLink: "Vai qui"
+      name: "Nome"
+      familyName: "Cognome"
+      birthDate: "Data di nascita"
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
     missingToken: Non hai l'autorizzazione per avviare questo flusso
     convertMessage: Non è stato possibile decodificare il messaggio inviato all'app
 support:
+  ticketList:
+    noTicket:
+      title: "Non hai richieste in corso"
+      body: "Se hai bisogno d’aiuto, apri una nuova richiesta."
   helpCenter:
     header: "Assistenza"
     cta:
@@ -3243,7 +3266,10 @@ support:
     prominentDisclosure: "Accesso alla galleria del dispositivo"
     prominentDisclosureData: "Per caricare foto e screenshot"
     header: "Apri una richiesta"
+    listTitle: "Richieste in corso"
     title: "Ci dai il tuo consenso?"
+    listBody: "Per caricare le tue richieste in corso, abbiamo bisogno di accedere ad alcuni tuoi dati."
+    privacyLink: "Leggi l'informativa sulla privacy"
     body: "Per rispondere alla richiesta di assistenza, abbiamo bisogno di accedere ad alcuni tuoi dati. Se neghi il consenso, dovrai inviarci una richiesta generica via email."
     listHeader: "Se dai il consenso, riceveremo questi dati:"
     cta:
@@ -3299,9 +3325,6 @@ idpay:
           startConfigurationCTA: Inizia
   onboarding:
     headerTitle: "Adesione all'iniziativa"
-    buttons: 
-      cancel: "Annulla"
-      continue: "Continua"
     beforeContinue:
       text1: "Proseguendo accetti i "
       tosLink: "Termini e condizioni d'uso"

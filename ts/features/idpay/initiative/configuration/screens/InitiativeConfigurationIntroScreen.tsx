@@ -63,7 +63,7 @@ const InitiativeConfigurationIntroScreen = () => {
   const isLoading = state.tags.has(LOADING_TAG);
 
   const handleContinuePress = () => {
-    // TODO: navigate to next screen
+    send({ type: "START_CONFIGURATION" });
   };
 
   const customGoBack = (
