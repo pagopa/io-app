@@ -1,4 +1,5 @@
 import * as React from "react";
+import * as O from "fp-ts/lib/Option";
 import { H4 } from "../../../components/core/typography/H4";
 import { Link } from "../../../components/core/typography/Link";
 import { WithTestID } from "../../../types/WithTestID";
@@ -70,24 +71,20 @@ const LinkedText = (props: Props) => {
 
   return (
     <H4>
-      {textWithSeparator.split("$@").map((text, index) => {
-        if (arrayOfLinkedText[index] !== undefined) {
-          return (
-            <>
-              <H4 weight={"Regular"} color={"bluegreyDark"}>
-                {text}
-              </H4>
-              {arrayOfLinkedText[index]}
-            </>
-          );
-        } else {
-          return (
+      {textWithSeparator.split("$@").map((text, index) =>
+        O.isSome(O.fromNullable(arrayOfLinkedText[index])) ? (
+          <>
             <H4 weight={"Regular"} color={"bluegreyDark"}>
               {text}
             </H4>
-          );
-        }
-      })}
+            {arrayOfLinkedText[index]}
+          </>
+        ) : (
+          <H4 weight={"Regular"} color={"bluegreyDark"}>
+            {text}
+          </H4>
+        )
+      )}
     </H4>
   );
 };
