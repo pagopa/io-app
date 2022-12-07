@@ -28,10 +28,9 @@ const BpdOptInPaymentMethodsContainer = () => {
 
   useEffect(() => {
     if (
-      (isOptInPaymentMethodsEnabled &&
-        !showOptInChecked &&
-        !isReady(showOptInChoice)) ||
-      isError(showOptInChoice)
+      isOptInPaymentMethodsEnabled &&
+      !showOptInChecked &&
+      !isReady(showOptInChoice)
     ) {
       setShowOptInChecked(true);
       // Starts the optInShouldShowChoiceHandler saga
