@@ -7,12 +7,14 @@ exports[`Test LinkedText component should render a LinkedText component with pro
   fontStyle={
     Object {
       "fontSize": 16,
+      "lineHeight": 22,
     }
   }
   style={
     Array [
       Object {
         "fontSize": 16,
+        "lineHeight": 22,
       },
       Object {
         "color": "#17324D",
@@ -31,12 +33,14 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     fontStyle={
       Object {
         "fontSize": 16,
+        "lineHeight": 22,
       }
     }
     style={
       Array [
         Object {
           "fontSize": 16,
+          "lineHeight": 22,
         },
         Object {
           "color": "#17324D",
@@ -55,12 +59,14 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     fontStyle={
       Object {
         "fontSize": 16,
+        "lineHeight": 22,
       }
     }
     style={
       Array [
         Object {
           "fontSize": 16,
+          "lineHeight": 22,
         },
         Object {
           "color": "#17324D",
@@ -81,12 +87,14 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     fontStyle={
       Object {
         "fontSize": 16,
+        "lineHeight": 22,
       }
     }
     style={
       Array [
         Object {
           "fontSize": 16,
+          "lineHeight": 22,
         },
         Object {
           "color": "#17324D",
@@ -107,12 +115,14 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     fontStyle={
       Object {
         "fontSize": 16,
+        "lineHeight": 22,
       }
     }
     style={
       Array [
         Object {
           "fontSize": 16,
+          "lineHeight": 22,
         },
         Object {
           "color": "#17324D",
@@ -133,12 +143,14 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     fontStyle={
       Object {
         "fontSize": 16,
+        "lineHeight": 22,
       }
     }
     style={
       Array [
         Object {
           "fontSize": 16,
+          "lineHeight": 22,
         },
         Object {
           "color": "#17324D",
@@ -159,12 +171,14 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     fontStyle={
       Object {
         "fontSize": 16,
+        "lineHeight": 22,
       }
     }
     style={
       Array [
         Object {
           "fontSize": 16,
+          "lineHeight": 22,
         },
         Object {
           "color": "#17324D",
@@ -185,12 +199,14 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     fontStyle={
       Object {
         "fontSize": 16,
+        "lineHeight": 22,
       }
     }
     style={
       Array [
         Object {
           "fontSize": 16,
+          "lineHeight": 22,
         },
         Object {
           "color": "#17324D",
@@ -211,12 +227,14 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     fontStyle={
       Object {
         "fontSize": 16,
+        "lineHeight": 22,
       }
     }
     style={
       Array [
         Object {
           "fontSize": 16,
+          "lineHeight": 22,
         },
         Object {
           "color": "#17324D",
@@ -237,12 +255,14 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     fontStyle={
       Object {
         "fontSize": 16,
+        "lineHeight": 22,
       }
     }
     style={
       Array [
         Object {
           "fontSize": 16,
+          "lineHeight": 22,
         },
         Object {
           "color": "#17324D",
@@ -263,12 +283,14 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     fontStyle={
       Object {
         "fontSize": 16,
+        "lineHeight": 22,
       }
     }
     style={
       Array [
         Object {
           "fontSize": 16,
+          "lineHeight": 22,
         },
         Object {
           "color": "#17324D",
@@ -289,12 +311,14 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     fontStyle={
       Object {
         "fontSize": 16,
+        "lineHeight": 22,
       }
     }
     style={
       Array [
         Object {
           "fontSize": 16,
+          "lineHeight": 22,
         },
         Object {
           "color": "#17324D",
@@ -315,12 +339,14 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     fontStyle={
       Object {
         "fontSize": 16,
+        "lineHeight": 22,
       }
     }
     style={
       Array [
         Object {
           "fontSize": 16,
+          "lineHeight": 22,
         },
         Object {
           "color": "#17324D",
@@ -341,12 +367,14 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     fontStyle={
       Object {
         "fontSize": 16,
+        "lineHeight": 22,
       }
     }
     style={
       Array [
         Object {
           "fontSize": 16,
+          "lineHeight": 22,
         },
         Object {
           "color": "#17324D",
@@ -367,12 +395,14 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     fontStyle={
       Object {
         "fontSize": 16,
+        "lineHeight": 22,
       }
     }
     style={
       Array [
         Object {
           "fontSize": 16,
+          "lineHeight": 22,
         },
         Object {
           "color": "#17324D",
@@ -393,12 +423,14 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     fontStyle={
       Object {
         "fontSize": 16,
+        "lineHeight": 22,
       }
     }
     style={
       Array [
         Object {
           "fontSize": 16,
+          "lineHeight": 22,
         },
         Object {
           "color": "#17324D",
@@ -419,12 +451,14 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     fontStyle={
       Object {
         "fontSize": 16,
+        "lineHeight": 22,
       }
     }
     style={
       Array [
         Object {
           "fontSize": 16,
+          "lineHeight": 22,
         },
         Object {
           "color": "#17324D",
