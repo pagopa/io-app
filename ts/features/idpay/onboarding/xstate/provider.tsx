@@ -60,7 +60,7 @@ const IDPayOnboardingMachineProvider = (props: Props) => {
     fromLocaleToPreferredLanguage
   );
 
-  const onboardingClient = createOnboardingClient(IDPAY_API_UAT_BASEURL);
+  const onboardingClient = createOnboardingClient(IDPAY_API_UAT_BASEURL || "");
 
   const services = createServicesImplementation(
     onboardingClient,

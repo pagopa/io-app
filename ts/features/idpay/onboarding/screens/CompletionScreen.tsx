@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
 
 const CompletionScreen = () => {
   const onboardingMachineService = useOnboardingMachineService();
-  const [state] = useActor(onboardingMachineService);
+  const [state, send] = useActor(onboardingMachineService);
 
   const content = React.useMemo(() => {
     if (state.matches("ACCEPTING_REQUIRED_CRITERIA")) {
@@ -33,6 +33,10 @@ const CompletionScreen = () => {
     return null;
   }, [state]);
 
+  const handleClosePress = () => {
+    send({ type: "QUIT_ONBOARDING" });
+  };
+
   return (
     <SafeAreaView style={IOStyles.flex} testID={"onboardingCompletionScreen"}>
       <View style={styles.container}>{content}</View>
@@ -40,7 +44,8 @@ const CompletionScreen = () => {
         type="SingleButton"
         leftButton={{
           title: "Ho capito!",
-          testID: "closeButton"
+          testID: "closeButton",
+          onPress: handleClosePress
         }}
       />
     </SafeAreaView>
