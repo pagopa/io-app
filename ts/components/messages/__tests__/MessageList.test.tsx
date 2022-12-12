@@ -18,7 +18,7 @@ import {
 import MessageList from "../MessageList";
 
 jest.useFakeTimers();
-jest.mock("../../../../utils/showToast", () => ({
+jest.mock("../../../utils/showToast", () => ({
   showToast: jest.fn()
 }));
 

@@ -7,7 +7,7 @@ import { TagEnum as TagEnumPN } from "../../../../../definitions/backend/Message
 import { successReloadMessagesPayload } from "../../../../__mocks__/messages";
 import Item from "../Item";
 
-jest.mock("../../../../../config", () => ({
+jest.mock("../../../../config", () => ({
   mvlEnabled: true,
   pnEnabled: true
 }));
