@@ -10,8 +10,24 @@ import { Context } from "./machine";
 const createActionsImplementation = (
   navigation: IOStackNavigationProp<AppParamsList, keyof AppParamsList>
 ) => {
-  const navigateToInstrumentsSelectionScreen = () => {
-    // TODO navigate to instruments selection screen
+  const navigateToConfigurationEntry = (context: Context) => {
+    if (context.initiativeId === undefined) {
+      throw new Error("initiativeId is undefined");
+    }
+
+    navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
+      screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO,
+      params: {
+        initiativeId: context.initiativeId
+      }
+    });
+  };
+
+  const navigateToInstrumentsEnrollmentScreen = () => {
+    navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
+      screen:
+        IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT
+    });
   };
 
   const navigateToConfigurationSuccessScreen = () => {
@@ -31,7 +47,8 @@ const createActionsImplementation = (
   };
 
   return {
-    navigateToInstrumentsSelectionScreen,
+    navigateToConfigurationEntry,
+    navigateToInstrumentsEnrollmentScreen,
     navigateToConfigurationSuccessScreen,
     navigateToInitiativeDetailScreen
   };
