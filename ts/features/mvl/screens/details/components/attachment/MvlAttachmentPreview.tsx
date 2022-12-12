@@ -3,11 +3,11 @@ import { IOStackNavigationRouteProps } from "../../../../../../navigation/params
 import { UIMessageId } from "../../../../../../store/reducers/entities/messages/types";
 import { MessageAttachmentPreview } from "../../../../../messages/components/MessageAttachmentPreview";
 import { MvlParamsList } from "../../../../navigation/params";
-import { MvlAttachmentId } from "../../../../types/mvlData";
+import { UIAttachmentId } from "../../../../../../store/reducers/entities/messages/types";
 
 export type MvlAttachmentPreviewNavigationParams = Readonly<{
   messageId: UIMessageId;
-  attachmentId: MvlAttachmentId;
+  attachmentId: UIAttachmentId;
 }>;
 
 export const MvlAttachmentPreview = (

@@ -78,7 +78,7 @@ import { deletePin, getPin } from "../utils/keychain";
 import { UIMessageId } from "../store/reducers/entities/messages/types";
 import { watchBonusCdcSaga } from "../features/bonus/cdc/saga";
 import { differentProfileLoggedIn } from "../store/actions/crossSessions";
-import { clearAllMvlAttachments } from "../features/mvl/saga/mvlAttachments";
+import { clearAllAttachments } from "../features/messages/saga/clearAttachments";
 import { watchMessageAttachmentsSaga } from "../features/messages/saga/attachments";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
 import { watchIDPayWalletSaga } from "../features/idpay/wallet/saga";
@@ -180,7 +180,7 @@ export function* initializeApplicationSaga(): Generator<
 
   if (mvlEnabled) {
     // clear cached downloads when the logged user changes
-    yield* takeEvery(differentProfileLoggedIn, clearAllMvlAttachments);
+    yield* takeEvery(differentProfileLoggedIn, clearAllAttachments);
   }
 
   // Get last logged in Profile from the state

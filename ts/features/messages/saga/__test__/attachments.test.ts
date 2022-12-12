@@ -1,16 +1,16 @@
 import ReactNativeBlobUtil from "react-native-blob-util";
 import { expectSaga } from "redux-saga-test-plan";
 import { cancel, fork } from "typed-redux-saga/macro";
-import { mvlMockPdfAttachment } from "../../types/__mock__/mvlMock";
-import { downloadMvlAttachment } from "../networking/downloadMvlAttachment";
-import { mvlAttachmentDownload } from "../../store/actions/downloads";
+import { downloadAttachmentSaga } from "../networking/downloadAttachment";
 import { SessionToken } from "../../../../types/SessionToken";
+import { downloadAttachment } from "../../../../store/actions/messages";
+import { mockPdfAttachment } from "../../../../__mocks__/attachment";
 
 const savePath = "/tmp/attachment.pdf";
 
-describe("downloadMvlAttachment", () => {
+describe("downloadAttachment", () => {
   describe("given an attachment", () => {
-    const attachment = mvlMockPdfAttachment;
+    const attachment = mockPdfAttachment;
 
     describe("when a download request succeeds", () => {
       beforeAll(() => {
@@ -25,12 +25,12 @@ describe("downloadMvlAttachment", () => {
 
       it("then it puts a success action with the path of the saved attachment", () =>
         expectSaga(
-          downloadMvlAttachment,
+          downloadAttachmentSaga,
           "token" as SessionToken,
-          mvlAttachmentDownload.request(attachment)
+          downloadAttachment.request(attachment)
         )
           .put(
-            mvlAttachmentDownload.success({
+            downloadAttachment.success({
               attachment,
               path: savePath
             })
@@ -52,12 +52,12 @@ describe("downloadMvlAttachment", () => {
 
       it("then it puts a failure action with the error", () =>
         expectSaga(
-          downloadMvlAttachment,
+          downloadAttachmentSaga,
           "token" as SessionToken,
-          mvlAttachmentDownload.request(attachment)
+          downloadAttachment.request(attachment)
         )
           .put(
-            mvlAttachmentDownload.failure({
+            downloadAttachment.failure({
               attachment,
               error: new Error(
                 `error ${status} fetching ${attachment.resourceUrl.href}`
@@ -81,15 +81,15 @@ describe("downloadMvlAttachment", () => {
 
       function* saga() {
         const task = yield* fork(
-          downloadMvlAttachment,
+          downloadAttachmentSaga,
           "token" as SessionToken,
-          mvlAttachmentDownload.request(attachment)
+          downloadAttachment.request(attachment)
         );
         yield* cancel(task);
       }
 
       it("then it puts a cancel action", () =>
-        expectSaga(saga).put(mvlAttachmentDownload.cancel(attachment)).run());
+        expectSaga(saga).put(downloadAttachment.cancel(attachment)).run());
     });
   });
 });

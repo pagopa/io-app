@@ -1,45 +1,37 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { getType } from "typesafe-actions";
 import { createSelector } from "reselect";
-import { IndexedById } from "../../../../store/helpers/indexer";
-import { Action } from "../../../../store/actions/types";
+import { getType } from "typesafe-actions";
 import {
-  mvlAttachmentDownload,
-  mvlRemoveCachedAttachment
-} from "../actions/downloads";
-import {
-  toError,
-  toLoading,
-  toNone,
-  toSome
-} from "../../../../store/reducers/IndexedByIdPot";
-import { GlobalState } from "../../../../store/reducers/types";
-import { MvlAttachment, MvlAttachmentId } from "../../types/mvlData";
-import { UIMessageId } from "../../../../store/reducers/entities/messages/types";
+  downloadAttachment,
+  removeCachedAttachment
+} from "../../../actions/messages";
+import { Action } from "../../../actions/types";
+import { IndexedById } from "../../../helpers/indexer";
+import { toError, toLoading, toNone, toSome } from "../../IndexedByIdPot";
+import { GlobalState } from "../../types";
+import { UIAttachment, UIMessageId, UIAttachmentId } from "./types";
 
-export type MvlDownload = {
-  attachment: MvlAttachment;
+export type Download = {
+  attachment: UIAttachment;
   path: string;
 };
 
-export type MvlDownloads = Record<
+export type Downloads = Record<
   UIMessageId,
-  IndexedById<pot.Pot<MvlDownload, Error>>
+  IndexedById<pot.Pot<Download, Error>>
 >;
 
-export const initialState: MvlDownloads = {};
+export const INITIAL_STATE: Downloads = {};
 
 /**
- * Store download info for MVL attachments
- * @param state
- * @param action
+ * A reducer to store all downloads
  */
-export const mvlDownloadsReducer = (
-  state: MvlDownloads = initialState,
+export const downloadsReducer = (
+  state: Downloads = INITIAL_STATE,
   action: Action
-): MvlDownloads => {
+): Downloads => {
   switch (action.type) {
-    case getType(mvlAttachmentDownload.request):
+    case getType(downloadAttachment.request):
       return {
         ...state,
         [action.payload.messageId]: toLoading(
@@ -47,7 +39,7 @@ export const mvlDownloadsReducer = (
           state[action.payload.messageId] ?? {}
         )
       };
-    case getType(mvlAttachmentDownload.success):
+    case getType(downloadAttachment.success):
       return {
         ...state,
         [action.payload.attachment.messageId]: toSome(
@@ -59,7 +51,7 @@ export const mvlDownloadsReducer = (
           }
         )
       };
-    case getType(mvlAttachmentDownload.failure):
+    case getType(downloadAttachment.failure):
       return {
         ...state,
         [action.payload.attachment.messageId]: toError(
@@ -68,7 +60,7 @@ export const mvlDownloadsReducer = (
           action.payload.error
         )
       };
-    case getType(mvlAttachmentDownload.cancel):
+    case getType(downloadAttachment.cancel):
       // the download was cancelled, so it goes back to none
       return {
         ...state,
@@ -77,7 +69,7 @@ export const mvlDownloadsReducer = (
           state[action.payload.messageId] ?? {}
         )
       };
-    case getType(mvlRemoveCachedAttachment):
+    case getType(removeCachedAttachment):
       return {
         ...state,
         [action.payload.attachment.messageId]: toNone(
@@ -92,15 +84,15 @@ export const mvlDownloadsReducer = (
 /**
  * From attachment to the download pot
  */
-export const mvlDownloadFromAttachmentSelector = createSelector(
+export const downloadFromAttachmentSelector = createSelector(
   [
-    (state: GlobalState) => state.features.mvl.downloads,
+    (state: GlobalState) => state.entities.messages.downloads,
     (
       _: GlobalState,
-      attachment: { messageId: UIMessageId; id: MvlAttachmentId }
+      attachment: { messageId: UIMessageId; id: UIAttachmentId }
     ) => attachment
   ],
-  (downloads, attachment): pot.Pot<MvlDownload, Error> => {
+  (downloads, attachment): pot.Pot<Download, Error> => {
     const download = downloads[attachment.messageId];
     if (download) {
       return download[attachment.id] ?? pot.none;

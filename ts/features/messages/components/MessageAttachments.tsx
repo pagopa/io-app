@@ -3,25 +3,25 @@ import { View } from "native-base";
 import React from "react";
 import { ActivityIndicator, StyleSheet, TouchableOpacity } from "react-native";
 import Svg from "react-native-svg";
-import Default from "../../../../../../../img/features/mvl/attachmentsIcon/default.svg";
-import Pdf from "../../../../../../../img/features/mvl/attachmentsIcon/pdf.svg";
-import { H5 } from "../../../../../../components/core/typography/H5";
-import { IOColors } from "../../../../../../components/core/variables/IOColors";
-import ItemSeparatorComponent from "../../../../../../components/ItemSeparatorComponent";
-import IconFont from "../../../../../../components/ui/IconFont";
-import I18n from "../../../../../../i18n";
-import { ContentTypeValues } from "../../../../../../types/contentType";
-import { formatByte } from "../../../../../../types/digitalInformationUnit";
+import Default from "../../../../img/messages/attachments/default.svg";
+import Pdf from "../../../../img/messages/attachments/pdf.svg";
+import { H5 } from "../../../components/core/typography/H5";
+import { IOColors } from "../../../components/core/variables/IOColors";
+import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
+import IconFont from "../../../components/ui/IconFont";
+import I18n from "../../../i18n";
 import {
-  MvlAttachment,
-  MvlAttachmentId,
-  MvlData
-} from "../../../../types/mvlData";
-import { useMvlAttachmentDownload } from "./MvlAttachmentDownload";
+  UIAttachment,
+  UIAttachmentId
+} from "../../../store/reducers/entities/messages/types";
+import { ContentTypeValues } from "../../../types/contentType";
+import { formatByte } from "../../../types/digitalInformationUnit";
+import { MvlData } from "../../mvl/types/mvlData";
+import { useAttachmentDownload } from "../hooks/useAttachmentDownload";
 
 type Props = {
   attachments: MvlData["attachments"];
-  openPreview: (attachmentId: MvlAttachmentId) => void;
+  openPreview: (attachmentId: UIAttachmentId) => void;
 };
 
 const styles = StyleSheet.create({
@@ -61,7 +61,7 @@ const svgProps: React.ComponentProps<typeof Svg> = {
  * @constructor
  */
 const AttachmentIcon = (props: {
-  contentType: MvlAttachment["contentType"];
+  contentType: UIAttachment["contentType"];
 }) => {
   switch (props.contentType) {
     case ContentTypeValues.applicationPdf:
@@ -77,12 +77,12 @@ const AttachmentIcon = (props: {
  * @param props
  * @constructor
  */
-const MvlAttachmentItem = (props: {
-  attachment: MvlAttachment;
-  openPreview: (attachmentId: MvlAttachmentId) => void;
+const AttachmentItem = (props: {
+  attachment: UIAttachment;
+  openPreview: (attachmentId: UIAttachmentId) => void;
 }) => {
   const { downloadPot, onAttachmentSelect, bottomSheet } =
-    useMvlAttachmentDownload(props.attachment, props.openPreview);
+    useAttachmentDownload(props.attachment, props.openPreview);
 
   return (
     <>
@@ -135,12 +135,12 @@ const MvlAttachmentItem = (props: {
  * @constructor
  * @param props
  */
-export const MvlAttachments = (props: Props): React.ReactElement | null =>
+export const MessageAttachments = (props: Props): React.ReactElement | null =>
   props.attachments.length > 0 ? (
     <>
       {props.attachments.map((attachment, index) => (
         <View key={index}>
-          <MvlAttachmentItem
+          <AttachmentItem
             attachment={attachment}
             openPreview={props.openPreview}
           />

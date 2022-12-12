@@ -4,15 +4,12 @@ import { ActionType } from "typesafe-actions";
 import { SessionToken } from "../../../types/SessionToken";
 import { clearCache } from "../../../store/actions/profile";
 import { logoutSuccess } from "../../../store/actions/authentication";
+import { downloadAttachmentSaga } from "./networking/downloadAttachment";
+import { clearAllAttachments, clearAttachment } from "./clearAttachments";
 import {
-  mvlAttachmentDownload,
-  mvlRemoveCachedAttachment
-} from "../../mvl/store/actions/downloads";
-import { downloadMvlAttachment } from "../../mvl/saga/networking/downloadMvlAttachment";
-import {
-  clearAllMvlAttachments,
-  clearMvlAttachment
-} from "../../mvl/saga/mvlAttachments";
+  downloadAttachment,
+  removeCachedAttachment
+} from "../../../store/actions/messages";
 
 /**
  * Handle the message attachment requests
@@ -21,25 +18,25 @@ import {
 export function* watchMessageAttachmentsSaga(
   bearerToken: SessionToken
 ): SagaIterator {
-  // handle the request for a new mvlAttachmentDownload
+  // handle the request for a new downloadAttachment
   yield* takeLatest(
-    mvlAttachmentDownload.request,
-    function* (action: ActionType<typeof mvlAttachmentDownload.request>) {
-      yield* call(downloadMvlAttachment, bearerToken, action);
+    downloadAttachment.request,
+    function* (action: ActionType<typeof downloadAttachment.request>) {
+      yield* call(downloadAttachmentSaga, bearerToken, action);
     }
   );
 
   // handle the request for removing a downloaded attachment
   yield* takeEvery(
-    mvlRemoveCachedAttachment,
-    function* (action: ActionType<typeof mvlRemoveCachedAttachment>) {
-      yield* call(clearMvlAttachment, action);
+    removeCachedAttachment,
+    function* (action: ActionType<typeof removeCachedAttachment>) {
+      yield* call(clearAttachment, action);
     }
   );
 
   // handle the request for clearing user profile cache
   yield* takeEvery(clearCache, function* () {
-    yield* call(clearAllMvlAttachments);
+    yield* call(clearAllAttachments);
   });
 
   // clear cache when user explicitly logs out
@@ -47,7 +44,7 @@ export function* watchMessageAttachmentsSaga(
     logoutSuccess,
     function* (action: ActionType<typeof logoutSuccess>) {
       if (!action.payload.keepUserData) {
-        yield* call(clearAllMvlAttachments);
+        yield* call(clearAllAttachments);
       }
     }
   );
