@@ -505,7 +505,7 @@ profile:
       title: Personalizza le notifiche
       subtitle: Scegli se mostrare le anteprime e ricevere promemoria.
       titleExistingUser: Personalizza le notifiche
-      subtitleExistingUser: Ora puoi vedere subito chi ti ha scritto o ricevere promemoria da messaggi importanti.
+      subtitleExistingUser: Ora puoi vedere subito chi ti ha scritto o ricevere promemoria da messaggi importanti, come in questo esempio.
       reminders:
         title: Consenti promemoria
         description: Su richiesta dell'ente, ricevi notifiche push in prossimità di scadenze o quando hai dei messaggi non letti
@@ -3216,6 +3216,16 @@ features:
     documentsBar:
       titleLeft: Documento {{currentDoc}} di {{totalDocs}}
       titleRight: Pagina {{currentPage}} di {{totalPages}}
+    shareDataScreen:
+      title: "Condividi questi dati?"
+      content: "Per completare la firma, devi condividere questi dati con l'ente richiedente."
+      cancel: "Annulla"
+      confirm: "Ok. va bene"
+      alertText: "Vuoi modificare o aggiornare il tuo indirizzo email?"
+      alertLink: "Vai qui"
+      name: "Nome"
+      familyName: "Cognome"
+      birthDate: "Data di nascita"
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
@@ -3316,9 +3326,6 @@ idpay:
           startConfigurationCTA: Inizia
   onboarding:
     headerTitle: "Adesione all'iniziativa"
-    buttons: 
-      cancel: "Annulla"
-      continue: "Continua"
     beforeContinue:
       text1: "Proseguendo accetti i "
       tosLink: "Termini e condizioni d'uso"

@@ -1,5 +1,5 @@
-import { call } from "typed-redux-saga/macro";
 import { CommonActions } from "@react-navigation/native";
+import { call } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import NavigationService from "../../../../navigation/NavigationService";
 import {
@@ -23,7 +23,9 @@ function* zendeskSupportWorkUnit(
     startScreenNavigation: () => {
       NavigationService.dispatchNavigationAction(
         CommonActions.navigate(ZENDESK_ROUTES.MAIN, {
-          screen: ZENDESK_ROUTES.HELP_CENTER,
+          screen: zendeskStart.payload.assistanceForPayment
+            ? ZENDESK_ROUTES.ASK_PERMISSIONS
+            : ZENDESK_ROUTES.HELP_CENTER,
           params: zendeskStart.payload
         })
       );

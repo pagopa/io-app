@@ -2,10 +2,9 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import I18n from "../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
-import { useIOSelector } from "../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { zendeskTokenSelector } from "../../../store/reducers/authentication";
 import { isStrictSome } from "../../../utils/pot";
 import {
@@ -43,7 +42,7 @@ type Props = IOStackNavigationRouteProps<
  * @constructor
  */
 const ZendeskSeeReportsRouters = (props: Props) => {
-  const dispatch = useDispatch();
+  const dispatch = useIODispatch();
   const zendeskToken = useIOSelector(zendeskTokenSelector);
   const ticketNumber = useIOSelector(zendeskTicketNumberSelector);
   const assistanceForPayment = props.route.params.assistanceForPayment;

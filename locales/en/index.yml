@@ -505,7 +505,7 @@ profile:
       title: Customize push notifications
       subtitle: Choose if you want to allow previews and receive reminders.
       titleExistingUser: Customize push notifications
-      subtitleExistingUser: Now you can instantly see who messaged you and receive reminders from important messages.
+      subtitleExistingUser: Now you can instantly see who messaged you and receive reminders from important messages, as in the example below.
       reminders:
         title: Allow reminders
         description: Upon request of the sender, receive push notifications close to deadlines or when you have unread messages
@@ -3192,6 +3192,16 @@ features:
     documentsBar:
       titleLeft: Document {{currentDoc}} of {{totalDocs}}
       titleRight: Page {{currentPage}} of {{totalPages}}
+    shareDataScreen:
+      title: "Do you share this data?"
+      content: "To complete the signing process, you must share this data with the requesting institution."
+      cancel: "Cancel"
+      confirm: "Ok"
+      alertText: "Want to change or update your email address?"
+      alertLink: "Go here"
+      name: "Name"
+      familyName: "Family name"
+      birthDate: "Date of birth"
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
@@ -3292,9 +3302,6 @@ idpay:
           startConfigurationCTA: Inizia
   onboarding:
     headerTitle: "Adesione all'iniziativa"
-    buttons: 
-      cancel: "Annulla"
-      continue: "Continua"
     beforeContinue:
       text1: "Proseguendo accetti i "
       tosLink: "Termini e condizioni d'uso"
