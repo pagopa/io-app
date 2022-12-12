@@ -624,6 +624,16 @@ export const isReloadingInbox = createSelector(
 );
 
 /**
+ * True if the inbox state is loading or updating, regardless of the request
+ * that triggered the load/update.
+ * @param state
+ */
+export const isLoadingOrUpdatingInbox = createSelector(
+  allInboxSelector,
+  inboxPot => pot.isLoading(inboxPot) || pot.isUpdating(inboxPot)
+);
+
+/**
  * True if the archive state is loading and the last request is for all the messages
  * resulting in a complete reset.
  * @param state
