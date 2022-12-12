@@ -7,7 +7,7 @@ import { InfoScreenComponent } from "../../../../../components/infoScreen/InfoSc
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../i18n";
 import { cancelButtonProps } from "../../components/buttons/ButtonConfigurations";
-import { useHardwareBackButton } from "../../components/hooks/useHardwareBackButton";
+import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButton";
 import { bonusVacanzeStyle } from "../../components/Styles";
 import { cancelBonusVacanzeRequest } from "../../store/actions/bonusVacanze";
 

@@ -13,7 +13,7 @@ import { navigateBack } from "../../../../../store/actions/navigation";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { showToast } from "../../../../../utils/showToast";
-import { useHardwareBackButton } from "../../../bonusVacanze/components/hooks/useHardwareBackButton";
+import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButton";
 import BpdLastUpdateComponent from "../../components/BpdLastUpdateComponent";
 import { isError, isLoading, isReady } from "../../model/RemoteValue";
 import { navigateToBpdTransactions } from "../../navigation/actions";
