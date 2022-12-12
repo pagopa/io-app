@@ -18,7 +18,7 @@ export const ErrorLoadingComponent = () => (
   <View style={styles.view}>
     <View spacer={true} />
     <Image
-      source={require("../../../img/messages/empty-message-list-icon.png")}
+      source={require("../../../../img/messages/empty-message-list-icon.png")}
     />
     <NBText style={styles.title}>{I18n.t("messages.loadingErrorTitle")}</NBText>
   </View>
