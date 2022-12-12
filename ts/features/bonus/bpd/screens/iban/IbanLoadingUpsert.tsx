@@ -6,7 +6,7 @@ import { Dispatch } from "redux";
 import { Iban } from "../../../../../../definitions/backend/Iban";
 import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { useHardwareBackButton } from "../../../bonusVacanze/components/hooks/useHardwareBackButton";
+import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButton";
 import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import {
   bpdIbanInsertionCancel,

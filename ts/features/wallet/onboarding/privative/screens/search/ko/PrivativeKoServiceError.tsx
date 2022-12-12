@@ -6,7 +6,7 @@ import { SafeAreaView } from "react-native";
 import I18n from "../../../../../../../i18n";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import BaseScreenComponent from "../../../../../../../components/screens/BaseScreenComponent";
-import { useHardwareBackButton } from "../../../../../../bonus/bonusVacanze/components/hooks/useHardwareBackButton";
+import { useHardwareBackButton } from "../../../../../../../hooks/useHardwareBackButton";
 import { InfoScreenComponent } from "../../../../../../../components/infoScreen/InfoScreenComponent";
 import image from "../../../../../../../../img/wallet/errors/payment-unavailable-icon.png";
 import { emptyContextualHelp } from "../../../../../../../utils/emptyContextualHelp";
