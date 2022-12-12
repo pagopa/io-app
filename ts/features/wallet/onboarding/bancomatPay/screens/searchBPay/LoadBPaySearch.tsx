@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import I18n from "../../../../../../i18n";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { useHardwareBackButton } from "../../../../../bonus/bonusVacanze/components/hooks/useHardwareBackButton";
+import { useHardwareBackButton } from "../../../../../../hooks/useHardwareBackButton";
 import { LoadingErrorComponent } from "../../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { searchUserBPay, walletAddBPayCancel } from "../../store/actions";
 import { onboardingBPayAbiSelectedSelector } from "../../store/reducers/abiSelected";
