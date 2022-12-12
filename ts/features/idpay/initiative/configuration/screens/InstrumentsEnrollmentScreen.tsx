@@ -141,7 +141,7 @@ const InstrumentsEnrollmentScreen = () => {
       {I18n.t("idpay.initiative.configuration.bottomSheet.bodyLast")}
     </Body>,
 
-    "Prima di continuare",
+    I18n.t("idpay.initiative.configuration.bottomSheet.header"),
     270,
 
     <FooterWithButtons
