@@ -118,6 +118,7 @@ export const PDNDPrerequisitesScreen = () => {
                     present();
                   }}
                 />
+                <NBView spacer={true} />
               </React.Fragment>
             ))}
           </View>

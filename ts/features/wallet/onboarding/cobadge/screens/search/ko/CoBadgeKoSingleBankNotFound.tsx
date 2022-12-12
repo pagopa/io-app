@@ -18,7 +18,7 @@ import {
   cancelButtonProps,
   confirmButtonProps
 } from "../../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import { useHardwareBackButton } from "../../../../../../bonus/bonusVacanze/components/hooks/useHardwareBackButton";
+import { useHardwareBackButton } from "../../../../../../../hooks/useHardwareBackButton";
 import {
   searchUserCoBadge,
   walletAddCoBadgeCancel
