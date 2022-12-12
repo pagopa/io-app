@@ -18,9 +18,7 @@ import { handleGetInitiativeDetails } from "./handleGetInitiativeDetails";
  * Handle IDPAY initiative requests
  * @param bearerToken
  */
-export function* idpayInitiativeDetailsSaga(
-  bearerToken: string
-): SagaIterator {
+export function* idpayInitiativeDetailsSaga(bearerToken: string): SagaIterator {
   const idPayWalletClient = createIDPayWalletClient(IDPAY_API_UAT_BASEURL);
   const token = IDPAY_API_TEST_TOKEN ?? bearerToken;
   const language = yield* select(preferredLanguageSelector);
