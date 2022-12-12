@@ -10,7 +10,7 @@ import { View } from "native-base";
 import { BottomSheetFooterProps } from "@gorhom/bottom-sheet/lib/typescript/components/bottomSheetFooter";
 import { BlurredBackgroundComponent } from "../../components/bottomSheet/BlurredBackgroundComponent";
 import { BottomSheetHeader } from "../../components/bottomSheet/BottomSheetHeader";
-import { useHardwareBackButtonToDismiss } from "../../features/bonus/bonusVacanze/components/hooks/useHardwareBackButton";
+import { useHardwareBackButtonToDismiss } from "../../hooks/useHardwareBackButton";
 import { TestID } from "../../types/WithTestID";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { isScreenReaderEnabled } from "../accessibility";
