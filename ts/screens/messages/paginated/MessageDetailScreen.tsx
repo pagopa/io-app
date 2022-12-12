@@ -7,8 +7,9 @@ import { ActivityIndicator, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import WorkunitGenericFailure from "../../../components/error/WorkunitGenericFailure";
-import MessageDetailComponent from "../../../components/messages/paginated/MessageDetail";
+import MessageDetailComponent from "../../../components/messages/MessageDetail";
 
+import ErrorState from "../../../components/messages/MessageDetail/ErrorState";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
@@ -30,7 +31,6 @@ import {
 import { toUIService } from "../../../store/reducers/entities/services/transformers";
 import { GlobalState } from "../../../store/reducers/types";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
-import ErrorState from "../MessageDetailScreen/ErrorState";
 
 const styles = StyleSheet.create({
   notFullStateContainer: {

@@ -8,7 +8,7 @@ import { SafeAreaView, ScrollView } from "react-native";
 import { H2 } from "../../../../components/core/typography/H2";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
-import CtaBar from "../../../../components/messages/paginated/MessageDetail/common/CtaBar";
+import CtaBar from "../../../../components/messages/MessageDetail/common/CtaBar";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
 import { loadServiceDetail } from "../../../../store/actions/services";

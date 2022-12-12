@@ -1,6 +1,6 @@
 import * as React from "react";
-import { useMessageOpening } from "../../../components/messages/paginated/hooks/useMessageOpening";
-import MessagesInbox from "../../../components/messages/paginated/MessagesInbox";
+import { useMessageOpening } from "../../../components/messages/hooks/useMessageOpening";
+import MessagesInbox from "../../../components/messages/MessagesInbox";
 import { upsertMessageStatusAttributes } from "../../../store/actions/messages";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { allInboxMessagesSelector } from "../../../store/reducers/entities/messages/allPaginated";

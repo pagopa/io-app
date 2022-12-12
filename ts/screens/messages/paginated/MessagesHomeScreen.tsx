@@ -8,9 +8,9 @@ import { Dispatch } from "redux";
 
 import { createSelector } from "reselect";
 import { IOColors } from "../../../components/core/variables/IOColors";
-import { useMessageOpening } from "../../../components/messages/paginated/hooks/useMessageOpening";
-import MessageList from "../../../components/messages/paginated/MessageList";
-import MessagesSearch from "../../../components/messages/paginated/MessagesSearch";
+import { useMessageOpening } from "../../../components/messages/hooks/useMessageOpening";
+import MessageList from "../../../components/messages/MessageList";
+import MessagesSearch from "../../../components/messages/MessagesSearch";
 import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
