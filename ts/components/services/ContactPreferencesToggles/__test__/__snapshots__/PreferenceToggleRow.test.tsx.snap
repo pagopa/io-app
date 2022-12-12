@@ -25,12 +25,14 @@ exports[`PreferenceToggleRow component should match the snapshot 1`] = `
       fontStyle={
         Object {
           "fontSize": 16,
+          "lineHeight": 22,
         }
       }
       style={
         Array [
           Object {
             "fontSize": 16,
+            "lineHeight": 22,
           },
           Object {
             "color": "#17324D",

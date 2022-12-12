@@ -4,7 +4,7 @@ import { Dispatch } from "redux";
 import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { abortBonusRequest } from "../../components/alert/AbortBonusRequest";
-import { useHardwareBackButton } from "../../components/hooks/useHardwareBackButton";
+import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButton";
 import { LoadingErrorComponent } from "../../components/loadingErrorScreen/LoadingErrorComponent";
 import {
   activateBonusVacanze,

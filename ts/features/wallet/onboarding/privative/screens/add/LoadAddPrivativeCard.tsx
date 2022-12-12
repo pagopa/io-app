@@ -1,6 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { useHardwareBackButton } from "../../../../../bonus/bonusVacanze/components/hooks/useHardwareBackButton";
+import { useHardwareBackButton } from "../../../../../../hooks/useHardwareBackButton";
 import { LoadingErrorComponent } from "../../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import I18n from "../../../../../../i18n";
 import { WithTestID } from "../../../../../../types/WithTestID";

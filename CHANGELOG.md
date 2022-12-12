@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.21.0-rc.2](https://github.com/pagopa/io-app/compare/2.21.0-rc.1...2.21.0-rc.2) (2022-12-07)
+
+
+### Features
+
+* **Firma con IO:** [[SFEQS-1163](https://pagopa.atlassian.net/browse/SFEQS-1163)] Add user data sharing screen  ([#4213](https://github.com/pagopa/io-app/issues/4213)) ([5008f3c](https://github.com/pagopa/io-app/commit/5008f3c3e323e4449806ee8faba73f1a78522b21))
+* **IDPay:** [[IODPAY-60](https://pagopa.atlassian.net/browse/IODPAY-60)] UI Refinements to Interop requirements' page + Add new outline button ([#4217](https://github.com/pagopa/io-app/issues/4217)) ([b996ea7](https://github.com/pagopa/io-app/commit/b996ea7bac405815839f93d9e5c4d2632272b631))
+
+
+### Bug Fixes
+
+* [[IABT-1403](https://pagopa.atlassian.net/browse/IABT-1403),[IOAPPCIT-9](https://pagopa.atlassian.net/browse/IOAPPCIT-9)] Birth date is wrong in fiscal code component ([#4197](https://github.com/pagopa/io-app/issues/4197)) ([7662cc4](https://github.com/pagopa/io-app/commit/7662cc4767f4822ce46f72c5ef03842f2cd433d8))
+* [[IABT-1421](https://pagopa.atlassian.net/browse/IABT-1421)] Remove BPay bank references from the payment flow ([#4221](https://github.com/pagopa/io-app/issues/4221)) ([0ed1b85](https://github.com/pagopa/io-app/commit/0ed1b851be4a61160503fa0f3ec8fe693f40febf))
+* [[IOAPPCIT-17](https://pagopa.atlassian.net/browse/IOAPPCIT-17)] Fixes the support request flow from a payment ([#4220](https://github.com/pagopa/io-app/issues/4220)) ([76cf804](https://github.com/pagopa/io-app/commit/76cf804063063604a1a14499dc6cad05d8156f95))
+* [[IOAPPPEB-10](https://pagopa.atlassian.net/browse/IOAPPPEB-10)] Fix transaction success cases ([#4225](https://github.com/pagopa/io-app/issues/4225)) ([3a69897](https://github.com/pagopa/io-app/commit/3a698976b22afe3dfc621d58125df2e05798b1f1))
+
+
+### Chores
+
+* [[IAI-238](https://pagopa.atlassian.net/browse/IAI-238)] Add `LogoPayment…` components ([#4105](https://github.com/pagopa/io-app/issues/4105)) ([f86390f](https://github.com/pagopa/io-app/commit/f86390f50e75bf7eec46f5afc340925754cdcd9c))
+* [[IOAPPCOM-28](https://pagopa.atlassian.net/browse/IOAPPCOM-28),[IOAPPCOM-29](https://pagopa.atlassian.net/browse/IOAPPCOM-29),[IOAPPCOM-30](https://pagopa.atlassian.net/browse/IOAPPCOM-30),[IOAPPCOM-31](https://pagopa.atlassian.net/browse/IOAPPCOM-31)] Copy amendment and push notification opt-in screen margins and scroll ([#4214](https://github.com/pagopa/io-app/issues/4214)) ([a472453](https://github.com/pagopa/io-app/commit/a4724534c9fcf4e808337e032753735b7d7a17e2))
+* [[IOAPPCOM-7](https://pagopa.atlassian.net/browse/IOAPPCOM-7)] Replaces tabs with Navigation top tabs ([#4189](https://github.com/pagopa/io-app/issues/4189)) ([60d5f92](https://github.com/pagopa/io-app/commit/60d5f92bf1a4edc4ebdd88a79d97fe85d6842c2c))
+* **IDPay:** [[IODPAY-65](https://pagopa.atlassian.net/browse/IODPAY-65)] Add IDPay Onboarding machine error handling and back navigation ([#4216](https://github.com/pagopa/io-app/issues/4216)) ([1d4595e](https://github.com/pagopa/io-app/commit/1d4595e148af5d4e28a6a5298e959bc2ddc7ba6e))
+
 ## [2.21.0-rc.1](https://github.com/pagopa/io-app/compare/2.21.0-rc.0...2.21.0-rc.1) (2022-12-01)
 
 

@@ -27,7 +27,7 @@ import customVariables from "../../../../theme/variables";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useActionOnFocus } from "../../../../utils/hooks/useOnFocus";
 import { confirmButtonProps } from "../../bonusVacanze/components/buttons/ButtonConfigurations";
-import { useHardwareBackButton } from "../../bonusVacanze/components/hooks/useHardwareBackButton";
+import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
 import { availableBonusTypesSelectorFromId } from "../../bonusVacanze/store/reducers/availableBonusesTypes";
 import { ID_CGN_TYPE } from "../../bonusVacanze/utils/bonus";
 import { isLoading } from "../../bpd/model/RemoteValue";
