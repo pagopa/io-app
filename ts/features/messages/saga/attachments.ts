@@ -4,12 +4,12 @@ import { ActionType } from "typesafe-actions";
 import { SessionToken } from "../../../types/SessionToken";
 import { clearCache } from "../../../store/actions/profile";
 import { logoutSuccess } from "../../../store/actions/authentication";
-import { downloadAttachmentSaga } from "./networking/downloadAttachment";
-import { clearAllAttachments, clearAttachment } from "./clearAttachments";
 import {
   downloadAttachment,
   removeCachedAttachment
 } from "../../../store/actions/messages";
+import { downloadAttachmentSaga } from "./networking/downloadAttachment";
+import { clearAllAttachments, clearAttachment } from "./clearAttachments";
 
 /**
  * Handle the message attachment requests

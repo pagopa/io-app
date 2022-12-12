@@ -130,7 +130,7 @@ const renderComponent = (
       ...globalState.entities,
       messages: {
         ...globalState.entities.messages,
-        downloads: downloads
+        downloads
       }
     }
   } as any);

@@ -11,12 +11,12 @@ import { showToast } from "../../../utils/showToast";
 import { mvlPreferencesSetWarningForAttachments } from "../../mvl/store/actions";
 import { mvlPreferencesSelector } from "../../mvl/store/reducers/preferences";
 import { downloadAttachment } from "../../../store/actions/messages";
-import { downloadFromAttachmentSelector } from "../../../store/reducers/entities/messages/downloads";
-import { useDownloadAttachmentBottomSheet } from "./useDownloadAttachmentBottomSheet";
 import {
   UIAttachment,
   UIAttachmentId
 } from "../../../store/reducers/entities/messages/types";
+import { downloadFromAttachmentSelector } from "../../../store/reducers/entities/messages/downloads";
+import { useDownloadAttachmentBottomSheet } from "./useDownloadAttachmentBottomSheet";
 
 export const useAttachmentDownload = (
   attachment: UIAttachment,

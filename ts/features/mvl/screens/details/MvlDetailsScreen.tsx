@@ -19,6 +19,7 @@ import {
 } from "../../../../store/reducers/entities/services/servicesById";
 import { toUIService } from "../../../../store/reducers/entities/services/transformers";
 import { GlobalState } from "../../../../store/reducers/types";
+import { UIAttachmentId } from "../../../../store/reducers/entities/messages/types";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import MVL_ROUTES from "../../navigation/routes";
 import { Mvl } from "../../types/mvlData";
@@ -26,7 +27,6 @@ import { MessageAttachments } from "../../../messages/components/MessageAttachme
 import { MvlBody } from "./components/MvlBody";
 import { MvlDetailsHeader } from "./components/MvlDetailsHeader";
 import { MvlMetadataComponent } from "./components/MvlMetadata";
-import { UIAttachmentId } from "../../../../store/reducers/entities/messages/types";
 
 type Props = { mvl: Mvl };
 

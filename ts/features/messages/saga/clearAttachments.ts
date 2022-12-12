@@ -1,7 +1,7 @@
 import { ActionType } from "typesafe-actions";
 import RNFS from "react-native-fs";
-import { AttachmentsDirectoryPath } from "./networking/downloadAttachment";
 import { removeCachedAttachment } from "../../../store/actions/messages";
+import { AttachmentsDirectoryPath } from "./networking/downloadAttachment";
 
 /**
  * Clears cached file for the attachment

@@ -12,12 +12,12 @@ import {
 import {
   UIMessage,
   UIMessageDetails,
-  UIMessageId
+  UIMessageId,
+  UIAttachment
 } from "../reducers/entities/messages/types";
 import { Cursor } from "../reducers/entities/messages/allPaginated";
 import { MessagesStatus } from "../reducers/entities/messages/messagesStatus";
 import { loadThirdPartyMessage } from "../../features/messages/store/actions";
-import { UIAttachment } from "../reducers/entities/messages/types";
 
 /**
  * Load a single message given its ID

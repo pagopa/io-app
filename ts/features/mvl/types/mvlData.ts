@@ -1,9 +1,9 @@
 import { IUnitTag } from "@pagopa/ts-commons/lib/units";
 import { EmailAddress } from "../../../../definitions/backend/EmailAddress";
-import { UIAttachment } from "../../../store/reducers/entities/messages/types";
 import {
   UIMessageDetails,
-  WithUIMessageId
+  WithUIMessageId,
+  UIAttachment
 } from "../../../store/reducers/entities/messages/types";
 
 /**

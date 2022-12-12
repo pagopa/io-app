@@ -1,10 +1,10 @@
 import { Byte } from "../types/digitalInformationUnit";
-import { message_1 } from "./message";
 import {
+  UIMessageId,
   UIAttachment,
   UIAttachmentId
 } from "../store/reducers/entities/messages/types";
-import { UIMessageId } from "../store/reducers/entities/messages/types";
+import { message_1 } from "./message";
 
 export const mockPdfAttachment: UIAttachment = {
   messageId: message_1.id as UIMessageId,
