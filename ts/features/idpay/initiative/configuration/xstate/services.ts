@@ -3,10 +3,10 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { PreferredLanguageEnum } from "../../../../../../definitions/backend/PreferredLanguage";
 import { InitiativeDTO } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
-import { Wallet } from "../../../../../../definitions/pagopa/Wallet";
 import { PaymentManagerClient } from "../../../../../api/pagopa";
-import { PaymentManagerToken } from "../../../../../types/pagopa";
+import { PaymentManagerToken, Wallet } from "../../../../../types/pagopa";
 import { SessionManager } from "../../../../../utils/SessionManager";
+import { convertWalletV2toWalletV1 } from "../../../../../utils/walletv2";
 import { IDPayWalletClient } from "../../../wallet/api/client";
 import { Context } from "./machine";
 
@@ -60,6 +60,7 @@ const createServicesImplementation = (
     const data = pipe(
       pagoPAResponse.right.value.data,
       O.fromNullable,
+      O.map(_ => _.map(convertWalletV2toWalletV1)),
       O.getOrElse(() => [] as ReadonlyArray<Wallet>)
     );
 
@@ -93,12 +94,16 @@ const createServicesImplementation = (
       return Promise.reject("initiativeId is undefined");
     }
 
-    const [pagoPAInstruments, idPayInstruments] = await Promise.all([
-      loadPagoPAInstruments(),
-      loadIDPayInstruments(context.initiativeId)
-    ]);
+    try {
+      const [pagoPAInstruments, idPayInstruments] = await Promise.all([
+        loadPagoPAInstruments(),
+        loadIDPayInstruments(context.initiativeId)
+      ]);
 
-    return Promise.resolve({ pagoPAInstruments, idPayInstruments });
+      return Promise.resolve({ pagoPAInstruments, idPayInstruments });
+    } catch {
+      return Promise.reject("error loading instruments");
+    }
   };
 
   const addInstrument = async (context: Context) => {
