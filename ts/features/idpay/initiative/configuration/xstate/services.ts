@@ -94,13 +94,16 @@ const createServicesImplementation = (
       return Promise.reject("initiativeId is undefined");
     }
 
-    // TODO: Manage promise rejection
-    const [pagoPAInstruments, idPayInstruments] = await Promise.all([
-      loadPagoPAInstruments(),
-      loadIDPayInstruments(context.initiativeId)
-    ]);
+    try {
+      const [pagoPAInstruments, idPayInstruments] = await Promise.all([
+        loadPagoPAInstruments(),
+        loadIDPayInstruments(context.initiativeId)
+      ]);
 
-    return Promise.resolve({ pagoPAInstruments, idPayInstruments });
+      return Promise.resolve({ pagoPAInstruments, idPayInstruments });
+    } catch {
+      return Promise.reject("error loading instruments");
+    }
   };
 
   const addInstrument = async (context: Context) => {
