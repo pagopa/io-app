@@ -9,7 +9,6 @@ import {
 } from "../../../../config";
 import { idPayWalletGet } from "../store/actions";
 import { waitBackoffError } from "../../../../utils/backoffError";
-import { SessionToken } from "../../../../types/SessionToken";
 import { preferredLanguageSelector } from "../../../../store/reducers/persistedPreferences";
 import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
 import { fromLocaleToPreferredLanguage } from "../../../../utils/locale";
@@ -19,7 +18,7 @@ import { handleGetIDPayWallet } from "./handleGetIDPayWallet";
  * Handle the IDPay Wallet requests
  * @param bearerToken
  */
-export function* watchIDPayWalletSaga(bearerToken: SessionToken): SagaIterator {
+export function* watchIDPayWalletSaga(bearerToken: string): SagaIterator {
   const idPayWalletClient = createIDPayWalletClient(IDPAY_API_UAT_BASEURL);
   const token = IDPAY_API_TEST_TOKEN ?? bearerToken;
   const language = yield* select(preferredLanguageSelector);
