@@ -3,22 +3,14 @@ import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 
 import {
-  loadNextPageMessages,
-  loadPreviousPageMessages,
-  reloadAllMessages,
   upsertMessageStatusAttributes as action,
   UpsertMessageStatusAttributesPayload
 } from "../../../store/actions/messages";
-import { isLoadingOrUpdatingInbox } from "../../../store/reducers/entities/messages/allPaginated";
 import { UIMessageId } from "../../../store/reducers/entities/messages/types";
 import { successReloadMessagesPayload } from "../../../__mocks__/messages";
-import {
-  testTryUpsertMessageStatusAttributes,
-  testWaitForInboxLoadingOrUpdating
-} from "../watchUpsertMessageStatusAttribues";
+import { testTryUpsertMessageStatusAttributes } from "../watchUpsertMessageStatusAttribues";
 
 const tryUpsertMessageStatusAttributes = testTryUpsertMessageStatusAttributes!;
-const waitForInboxLoadingOrUpdating = testWaitForInboxLoadingOrUpdating!;
 
 describe("tryUpsertMessageStatusAttributes", () => {
   const actionPayload: UpsertMessageStatusAttributesPayload = {
@@ -48,8 +40,6 @@ describe("tryUpsertMessageStatusAttributes", () => {
         action.request(actionPayload)
       )
         .next()
-        .call(waitForInboxLoadingOrUpdating)
-        .next()
         .call(putMessage, callPayload)
         .next(E.right({ status: 200, value: {} }))
         .put(action.success(actionPayload))
@@ -65,8 +55,6 @@ describe("tryUpsertMessageStatusAttributes", () => {
         tryUpsertMessageStatusAttributes(putMessage),
         action.request(actionPayload)
       )
-        .next()
-        .call(waitForInboxLoadingOrUpdating)
         .next()
         .call(putMessage, callPayload)
         .next(
@@ -96,8 +84,6 @@ describe("tryUpsertMessageStatusAttributes", () => {
         action.request(actionPayload)
       )
         .next()
-        .call(waitForInboxLoadingOrUpdating)
-        .next()
         .call(putMessage, callPayload)
         .next()
         .put(
@@ -107,57 +93,6 @@ describe("tryUpsertMessageStatusAttributes", () => {
           })
         )
         .next()
-        .isDone();
-    });
-  });
-
-  describe("waitForInboxLoadingOrUpdating", () => {
-    it("is done if inbox is not loading nor updating", () => {
-      testSaga(waitForInboxLoadingOrUpdating)
-        .next()
-        .select(isLoadingOrUpdatingInbox)
-        .next(false)
-        .isDone();
-    });
-  });
-
-  describe("waitForInboxLoadingOrUpdating", () => {
-    it("listens for inbox actions if inbox is loading or updating", () => {
-      testSaga(waitForInboxLoadingOrUpdating)
-        .next()
-        .select(isLoadingOrUpdatingInbox)
-        .next(true)
-        .take([
-          loadPreviousPageMessages.failure,
-          loadPreviousPageMessages.success,
-          loadNextPageMessages.failure,
-          loadNextPageMessages.success,
-          reloadAllMessages.failure,
-          reloadAllMessages.success
-        ])
-        .next()
-        .select(isLoadingOrUpdatingInbox)
-        .next(true);
-    });
-  });
-
-  describe("waitForInboxLoadingOrUpdating", () => {
-    it("is done if inbox is not loading nor updating, after listening for inbox actions", () => {
-      testSaga(waitForInboxLoadingOrUpdating)
-        .next()
-        .select(isLoadingOrUpdatingInbox)
-        .next(true)
-        .take([
-          loadPreviousPageMessages.failure,
-          loadPreviousPageMessages.success,
-          loadNextPageMessages.failure,
-          loadNextPageMessages.success,
-          reloadAllMessages.failure,
-          reloadAllMessages.success
-        ])
-        .next()
-        .select(isLoadingOrUpdatingInbox)
-        .next(false)
         .isDone();
     });
   });
