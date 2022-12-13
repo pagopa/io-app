@@ -2,9 +2,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { View } from "native-base";
 import React from "react";
 import { ActivityIndicator, StyleSheet, TouchableOpacity } from "react-native";
-import Svg from "react-native-svg";
-import Default from "../../../../img/messages/attachments/default.svg";
-import Pdf from "../../../../img/messages/attachments/pdf.svg";
+import { Icon } from "../../../components/core/icons";
 import { H5 } from "../../../components/core/typography/H5";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
@@ -48,13 +46,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const svgProps: React.ComponentProps<typeof Svg> = {
-  width: 32,
-  height: 32,
-  fill: IOColors.blue,
-  style: styles.icon
-};
-
 /**
  * Custom icon for the attachment, based on the contentType (at the moment only the pdf have a custom representation)
  * @param props
@@ -65,9 +56,9 @@ const AttachmentIcon = (props: {
 }) => {
   switch (props.contentType) {
     case ContentTypeValues.applicationPdf:
-      return <Pdf {...svgProps} />;
+      return <Icon name="docAttachPDF" color="blue" size={32} />;
     default:
-      return <Default {...svgProps} />;
+      return <Icon name="docAttach" color="blue" size={32} />;
   }
 };
 
@@ -92,7 +83,9 @@ const AttachmentItem = (props: {
         disabled={pot.isLoading(downloadPot)}
       >
         <View style={styles.row}>
-          <AttachmentIcon contentType={props.attachment.contentType} />
+          <View style={styles.icon}>
+            <AttachmentIcon contentType={props.attachment.contentType} />
+          </View>
           <View style={styles.middleSection}>
             <H5
               color={"bluegrey"}
