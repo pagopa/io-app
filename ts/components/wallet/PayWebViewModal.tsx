@@ -10,7 +10,7 @@ import { v4 as uuid } from "uuid";
 import { InfoBox } from "../../components/box/InfoBox";
 import { Label } from "../../components/core/typography/Label";
 import { IOColors } from "../../components/core/variables/IOColors";
-import { useHardwareBackButton } from "../../features/bonus/bonusVacanze/components/hooks/useHardwareBackButton";
+import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
 import I18n from "../../i18n";
 import { WithTestID } from "../../types/WithTestID";
 import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
