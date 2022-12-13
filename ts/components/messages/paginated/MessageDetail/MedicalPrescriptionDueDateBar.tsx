@@ -5,12 +5,7 @@ import { StyleSheet } from "react-native";
 
 import I18n from "../../../../i18n";
 import customVariables from "../../../../theme/variables";
-import {
-  format,
-  formatDateAsDay,
-  formatDateAsLocal,
-  formatDateAsMonth
-} from "../../../../utils/dates";
+import { formatDateAsDay, formatDateAsMonth } from "../../../../utils/dates";
 import {
   isExpired,
   MessagePaymentExpirationInfo
@@ -19,6 +14,7 @@ import { UIMessageDetails } from "../../../../store/reducers/entities/messages/t
 import CalendarIconComponent from "../../CalendarIconComponent";
 import CalendarEventButton from "../../CalendarEventButton";
 import { IOColors } from "../../../core/variables/IOColors";
+import { localeDateFormat } from "../../../../utils/locale";
 
 type Props = {
   dueDate: Date;
@@ -59,8 +55,14 @@ const MedicalPrescriptionDueDateBar = ({
   const isPrescriptionExpired = paymentExpirationInfo
     ? isExpired(paymentExpirationInfo)
     : false;
-  const date = formatDateAsLocal(dueDate, true, true);
-  const time = format(dueDate, "HH.mm");
+  const time = localeDateFormat(
+    dueDate,
+    I18n.t("global.dateFormats.timeFormat")
+  );
+  const date = localeDateFormat(
+    dueDate,
+    I18n.t("global.dateFormats.shortFormat")
+  );
 
   const bannerStyle = isPrescriptionExpired
     ? { backgroundColor: IOColors.bluegrey }
