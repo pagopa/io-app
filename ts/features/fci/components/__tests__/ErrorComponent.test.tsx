@@ -2,13 +2,13 @@ import "react-native";
 import { Provider } from "react-redux";
 import React from "react";
 import configureMockStore from "redux-mock-store";
+import { constNull } from "fp-ts/lib/function";
 import ErrorComponent from "../ErrorComponent";
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import { FCI_ROUTES } from "../../navigation/routes";
-import { constNull } from "fp-ts/lib/function";
 
 const fakeTestID = "fakeTestID";
 
