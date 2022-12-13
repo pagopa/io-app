@@ -7,7 +7,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
-import { Text, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import { Alert, Image, SafeAreaView, StyleSheet } from "react-native";
 import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
@@ -58,13 +58,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignContent: "flex-start"
   },
-  boldH4: {
-    fontWeight: customVariables.textBoldWeight,
-    paddingTop: customVariables.spacerLargeHeight
-  },
-  horizontalPadding: {
-    paddingHorizontal: customVariables.contentPadding
-  },
   webViewContainer: {
     flex: 1
   },
@@ -79,22 +72,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginTop: 10
   },
-
-  errorBody: {
-    marginTop: 10,
-    marginBottom: 10,
-    textAlign: "center"
-  },
-
   errorButtonsContainer: {
     position: "absolute",
     bottom: 30,
     flex: 1,
     flexDirection: "row"
-  },
-  cancelButtonStyle: {
-    flex: 1,
-    marginEnd: 10
   }
 });
 
@@ -134,9 +116,9 @@ class TosScreen extends React.PureComponent<Props, State> {
     return (
       <View style={styles.errorContainer}>
         <Image source={brokenLinkImage} resizeMode="contain" />
-        <Text style={styles.errorTitle} bold={true}>
+        <NBText style={styles.errorTitle} bold={true}>
           {I18n.t("onboarding.tos.error")}
-        </Text>
+        </NBText>
 
         <View style={styles.errorButtonsContainer}>
           <ButtonDefaultOpacity
@@ -147,7 +129,7 @@ class TosScreen extends React.PureComponent<Props, State> {
             block={true}
             primary={true}
           >
-            <Text>{I18n.t("global.buttons.retry")}</Text>
+            <NBText>{I18n.t("global.buttons.retry")}</NBText>
           </ButtonDefaultOpacity>
         </View>
       </View>
@@ -188,11 +170,11 @@ class TosScreen extends React.PureComponent<Props, State> {
         <SafeAreaView style={styles.webViewContainer}>
           {!this.props.hasAcceptedCurrentTos && (
             <View style={styles.alert}>
-              <Text>
+              <NBText>
                 {this.props.hasAcceptedOldTosVersion
                   ? I18n.t("profile.main.privacy.privacyPolicy.updated")
                   : I18n.t("profile.main.privacy.privacyPolicy.infobox")}
-              </Text>
+              </NBText>
             </View>
           )}
           {this.renderError()}

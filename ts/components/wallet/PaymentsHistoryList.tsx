@@ -2,7 +2,7 @@
  * This component displays a list of payments
  */
 import * as O from "fp-ts/lib/Option";
-import { Content, Text, View } from "native-base";
+import { Content, Text as NBText, View } from "native-base";
 import * as React from "react";
 import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
 
@@ -52,7 +52,7 @@ export const getPaymentHistoryInfo = (
       () => ({
         text11: I18n.t("payment.details.state.incomplete"),
         text3: getIuv(paymentHistory.data),
-        color: customVariables.badgeYellow
+        color: IOColors.yellow
       }),
       success => {
         if (success) {
@@ -74,7 +74,7 @@ export const getPaymentHistoryInfo = (
                   )
               )
             ),
-            color: customVariables.brandHighlight
+            color: customVariables.colorHighlight
           };
         }
 
@@ -124,7 +124,7 @@ export default class PaymentHistoryList extends React.Component<Props> {
       <Content style={styles.whiteContent}>
         <View>
           <View style={styles.subHeaderContent}>
-            <Text>{I18n.t("payment.details.list.title")}</Text>
+            <NBText>{I18n.t("payment.details.list.title")}</NBText>
           </View>
         </View>
 

@@ -1,4 +1,4 @@
-import { Container, Content, Text, View } from "native-base";
+import { Container, Content, Text as NBText, View } from "native-base";
 import * as React from "react";
 import {
   Alert,
@@ -36,12 +36,6 @@ const styles = StyleSheet.create({
   title: {
     textAlign: "center",
     fontSize: 20
-  },
-  body: {
-    textAlign: "center"
-  },
-  bold: {
-    fontWeight: "bold"
   },
   image: {
     width: 66,
@@ -134,9 +128,9 @@ const RootedDeviceModal: React.FunctionComponent<Props> = (props: Props) => {
             <View style={styles.main}>
               <Image source={image} resizeMode="contain" style={styles.image} />
               <View spacer={true} large={true} />
-              <Text style={styles.title} bold={true} dark={true}>
+              <NBText style={styles.title} bold={true} dark={true}>
                 {I18n.t("rooted.title")}
-              </Text>
+              </NBText>
             </View>
             <View spacer={true} small={true} />
             <Markdown

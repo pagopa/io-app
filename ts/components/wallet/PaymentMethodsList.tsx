@@ -4,7 +4,7 @@
  */
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Badge, ListItem, Text, View } from "native-base";
+import { Badge, ListItem, Text as NBText, View } from "native-base";
 import * as React from "react";
 import { FC } from "react";
 import {
@@ -127,9 +127,9 @@ const getBadgeStatus = (
                 { backgroundColor: statusColorMap[section.level] }
               ]}
             >
-              <Text style={styles.badgeText} semibold={true}>
+              <NBText style={styles.badgeText} semibold={true}>
                 {badgeLabel}
-              </Text>
+              </NBText>
             </Badge>
           ),
           alert:
@@ -191,9 +191,9 @@ const renderListItem = (
           <View style={styles.flexColumn}>
             <View>
               <Badge style={styles.badgeContainer}>
-                <Text style={styles.badgeText} semibold={true}>
+                <NBText style={styles.badgeText} semibold={true}>
                   {I18n.t("wallet.methods.comingSoon")}
-                </Text>
+                </NBText>
               </Badge>
               <H3 color={"bluegrey"} weight={"SemiBold"}>
                 {itemInfo.item.name}
@@ -226,7 +226,7 @@ const PaymentMethodsList: React.FunctionComponent<Props> = (props: Props) => (
         renderListItem(
           i,
           props.paymentMethods.filter(pm => pm.status !== "notImplemented")
-            .length - 1,
+            .length,
           props.sectionStatus
         )
       }

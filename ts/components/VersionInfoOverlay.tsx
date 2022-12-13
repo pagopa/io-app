@@ -1,4 +1,4 @@
-import { Text, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import { Platform, StyleSheet } from "react-native";
 import DeviceInfo from "react-native-device-info";
@@ -12,8 +12,11 @@ import { currentRouteSelector } from "../store/reducers/navigation";
 import { GlobalState } from "../store/reducers/types";
 import { getAppVersion } from "../utils/appVersion";
 import { clipboardSetStringWithFeedback } from "../utils/clipboard";
+import { IOColors, hexToRgba } from "../components/core/variables/IOColors";
 
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps;
+
+const bgColor = hexToRgba(IOColors.white, 0.67);
 
 const styles = StyleSheet.create({
   versionContainer: {
@@ -33,19 +36,19 @@ const styles = StyleSheet.create({
 
   versionText: {
     padding: 2,
-    backgroundColor: "#ffffffaa",
+    backgroundColor: bgColor,
     fontSize: 16,
     lineHeight: 24,
-    color: "#000000"
+    color: IOColors.black
   },
 
   routeText: {
     maxWidth: widthPercentageToDP(80),
     padding: 2,
-    backgroundColor: "#ffffffaa",
+    backgroundColor: bgColor,
     fontSize: 14,
     lineHeight: 22,
-    color: "#000000"
+    color: IOColors.black
   }
 });
 
@@ -55,17 +58,17 @@ const VersionInfoOverlay: React.FunctionComponent<Props> = (props: Props) => {
 
   return (
     <View style={styles.versionContainer} pointerEvents="box-none">
-      <Text
+      <NBText
         style={styles.versionText}
         onPress={() => setShowRootName(prevState => !prevState)}
-      >{`v: ${appVersion}`}</Text>
+      >{`v: ${appVersion}`}</NBText>
       {showRootName && (
-        <Text
+        <NBText
           style={styles.routeText}
           onPress={() => clipboardSetStringWithFeedback(props.screenNameDebug)}
         >
           {props.screenNameDebug}
-        </Text>
+        </NBText>
       )}
     </View>
   );

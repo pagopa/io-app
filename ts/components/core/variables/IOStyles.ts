@@ -17,5 +17,12 @@ export const IOStyles = StyleSheet.create({
   },
   row: {
     flexDirection: "row"
+  },
+  column: {
+    flexDirection: "column"
+  },
+  rowSpaceBetween: {
+    flexDirection: "row",
+    justifyContent: "space-between"
   }
 });

@@ -1,16 +1,15 @@
-import { createStore, Store } from "redux";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RenderAPI } from "@testing-library/react-native";
+import { createStore, Store } from "redux";
 
-import { GlobalState } from "../../../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../../../utils/testWrapper";
-import ROUTES from "../../../../../../navigation/routes";
 import { CitizenOptInStatusEnum } from "../../../../../../../definitions/bpd/citizen_v2/CitizenOptInStatus";
-import { appReducer } from "../../../../../../store/reducers";
+import ROUTES from "../../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../../store/actions/application";
-import { bpdUpdateOptInStatusMethod } from "../../../store/actions/onboarding";
+import { appReducer } from "../../../../../../store/reducers";
+import { GlobalState } from "../../../../../../store/reducers/types";
 import * as showToast from "../../../../../../utils/showToast";
-import * as optInPaymentMethodsActions from "../../../store/actions/optInPaymentMethods";
+import { renderScreenFakeNavRedux } from "../../../../../../utils/testWrapper";
+import { bpdUpdateOptInStatusMethod } from "../../../store/actions/onboarding";
 import OptInPaymentMethodsThankYouKeepMethodsScreen from "../OptInPaymentMethodsThankYouKeepMethodsScreen";
 
 const loadingCases: ReadonlyArray<
@@ -63,10 +62,6 @@ describe("the OptInPaymentMethodsThankYouKeepMethodsScreen screen", () => {
   );
   it("Should call the showToast and the optInPaymentMethodsCompleted functions if the opt-in status is error", () => {
     const showToastSpy = jest.spyOn(showToast, "showToast");
-    const optInPaymentMethodsCompletedSpy = jest.spyOn(
-      optInPaymentMethodsActions,
-      "optInPaymentMethodsCompleted"
-    );
     const store: Store<GlobalState> = createStore(
       appReducer,
       globalState as any
@@ -75,7 +70,6 @@ describe("the OptInPaymentMethodsThankYouKeepMethodsScreen screen", () => {
     store.dispatch(bpdUpdateOptInStatusMethod.failure(new Error()));
     renderComponent(store);
     expect(showToastSpy).toBeCalledTimes(1);
-    expect(optInPaymentMethodsCompletedSpy).toBeCalledTimes(1);
   });
   it("Should render the ThankYouSuccessComponent if the opt-in status is some", () => {
     const store: Store<GlobalState> = createStore(

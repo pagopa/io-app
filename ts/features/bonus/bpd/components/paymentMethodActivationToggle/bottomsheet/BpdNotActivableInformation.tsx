@@ -7,6 +7,7 @@ import I18n from "../../../../../../i18n";
 import { PaymentMethodRepresentation } from "../../../../../../types/pagopa";
 import { PaymentMethodRepresentationComponent } from "../base/PaymentMethodRepresentationComponent";
 import { useIOBottomSheetModal } from "../../../../../../utils/hooks/bottomSheet";
+import { IOColors } from "../../../../../../components/core/variables/IOColors";
 
 // NotActivable: already activated by someone else
 // NotCompatible: missing bpd capability
@@ -20,7 +21,7 @@ type Props = {
 const styles = StyleSheet.create({
   body: {
     flex: 1,
-    backgroundColor: "white"
+    backgroundColor: IOColors.white
   }
 });
 

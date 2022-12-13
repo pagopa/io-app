@@ -2,7 +2,7 @@
  * This component renders the card displayed in the landing page carousel
  */
 
-import { Text, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import { Dimensions, Image, ScrollView, StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
@@ -40,11 +40,11 @@ export const LandingCardComponent: React.SFC<Props> = card => (
       <Grid>
         <Col size={1} />
         <Col size={7}>
-          <Text bold={true} alignCenter={true} style={styles.text}>
+          <NBText bold={true} alignCenter={true} style={styles.text}>
             {card.title}{" "}
-          </Text>
+          </NBText>
           <View spacer={true} />
-          <Text alignCenter={true}> {card.content} </Text>
+          <NBText alignCenter={true}> {card.content} </NBText>
           <View spacer={true} />
         </Col>
         <Col size={1} />

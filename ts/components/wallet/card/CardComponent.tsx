@@ -7,7 +7,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Text, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import { Alert, Image } from "react-native";
 import {
@@ -162,21 +162,21 @@ export default class CardComponent extends React.Component<Props> {
               <MenuOptions>
                 {onSetFavorite && isFavorite !== undefined && (
                   <MenuOption onSelect={this.handleFavoritePress}>
-                    <Text bold={true} style={styles.blueText}>
+                    <NBText bold={true} style={styles.blueText}>
                       {I18n.t(
                         pot.getOrElseWithUpdating(isFavorite, false)
                           ? "cardComponent.unsetFavorite"
                           : "cardComponent.setFavorite"
                       )}
-                    </Text>
+                    </NBText>
                   </MenuOption>
                 )}
 
                 {onDelete && (
                   <MenuOption onSelect={this.handleDeleteSelect}>
-                    <Text bold={true} style={styles.blueText}>
+                    <NBText bold={true} style={styles.blueText}>
                       {I18n.t("global.buttons.delete")}
-                    </Text>
+                    </NBText>
                   </MenuOption>
                 )}
               </MenuOptions>
@@ -252,9 +252,9 @@ export default class CardComponent extends React.Component<Props> {
           <H5 color={isCardExpired ? "red" : "bluegreyDark"} weight={"Regular"}>
             {`${I18n.t("cardComponent.validUntil")} ${expirationDate}`}
           </H5>
-          <Text style={[CreditCardStyles.textStyle, styles.marginTop]}>
+          <NBText style={[CreditCardStyles.textStyle, styles.marginTop]}>
             {creditCard.holder.toUpperCase()}
-          </Text>
+          </NBText>
         </View>
         {getBodyIcon()}
       </View>
@@ -287,7 +287,7 @@ export default class CardComponent extends React.Component<Props> {
         iconRight={true}
         onPress={this.handleOnCardPress}
       >
-        <Text style={footerTextStyle}>{text}</Text>
+        <NBText style={footerTextStyle}>{text}</NBText>
         <IconFont
           name={"io-right"}
           size={variables.iconSize2}
@@ -314,7 +314,7 @@ export default class CardComponent extends React.Component<Props> {
           isHeader && styles.cardHeader
         ]}
       >
-        <View style={[styles.cardInner]}>
+        <View style={styles.cardInner}>
           <View style={[styles.row, styles.spaced]}>
             <View style={styles.row}>
               <BlurredPan>

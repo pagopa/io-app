@@ -3,12 +3,13 @@
  * TODO: The contextualHelp will be added in https://www.pivotaltracker.com/n/projects/2048617/stories/169392558
  */
 
-import { Container, H2, Text, View } from "native-base";
+import { Container, Text as NBText, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
+import { H1 } from "../../components/core/typography/H1";
 import I18n from "../../i18n";
 import {
   AppParamsList,
@@ -63,10 +64,10 @@ class InvalidNfcConnectionScreen extends React.Component<Props, never> {
         <BaseScreenComponent goBack={true}>
           <Container>
             <View style={styles.container}>
-              <H2>{I18n.t("authentication.cie.nfc.noNfcConnectionTitle")}</H2>
-              <Text style={styles.textStyle}>
+              <H1>{I18n.t("authentication.cie.nfc.noNfcConnectionTitle")}</H1>
+              <NBText style={styles.textStyle}>
                 {I18n.t("authentication.cie.nfc.noNfcConnectionContent")}
-              </Text>
+              </NBText>
             </View>
           </Container>
         </BaseScreenComponent>

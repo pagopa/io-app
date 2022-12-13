@@ -23,6 +23,7 @@ import {
 } from "../profile";
 import {
   initializeApplicationSaga,
+  testCancellAllLocalNotifications,
   testWaitForNavigatorServiceInitialization
 } from "../startup";
 import { watchSessionExpiredSaga } from "../startup/watchSessionExpiredSaga";
@@ -57,6 +58,8 @@ describe("initializeApplicationSaga", () => {
       .next()
       .call(testWaitForNavigatorServiceInitialization!)
       .next()
+      .call(testCancellAllLocalNotifications!)
+      .next()
       .call(previousInstallationDataDeleteSaga)
       .next()
       .put(previousInstallationDataDeleteSuccess())
@@ -73,7 +76,6 @@ describe("initializeApplicationSaga", () => {
       .fork(watchSessionExpiredSaga)
       .next()
       .next(200) // checkSession
-      .next() // updateInstallationSaga
       .select(sessionInfoSelector)
       .next(O.none)
       .next(O.none) // loadSessionInformationSaga
@@ -88,6 +90,8 @@ describe("initializeApplicationSaga", () => {
       .call(initMixpanel)
       .next()
       .call(testWaitForNavigatorServiceInitialization!)
+      .next()
+      .call(testCancellAllLocalNotifications!)
       .next()
       .call(previousInstallationDataDeleteSaga)
       .next()
@@ -117,6 +121,8 @@ describe("initializeApplicationSaga", () => {
       .next()
       .call(testWaitForNavigatorServiceInitialization!)
       .next()
+      .call(testCancellAllLocalNotifications!)
+      .next()
       .call(previousInstallationDataDeleteSaga)
       .next()
       .put(previousInstallationDataDeleteSuccess())
@@ -133,7 +139,6 @@ describe("initializeApplicationSaga", () => {
       .fork(watchSessionExpiredSaga)
       .next()
       .next(200) // check session
-      .next() // updateInstallationSaga
       .select(sessionInfoSelector)
       .next(
         O.some({

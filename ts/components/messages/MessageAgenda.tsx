@@ -3,7 +3,7 @@ import { ITuple2 } from "@pagopa/ts-commons/lib/tuples";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import startCase from "lodash/startCase";
-import { Text, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import React, { ComponentProps } from "react";
 import {
   ActivityIndicator,
@@ -50,18 +50,6 @@ const styles = StyleSheet.create({
     padding: customVariables.contentPadding,
     alignItems: "center"
   },
-
-  // ListHeader
-  listHeaderWrapper: {
-    height: LIST_HEADER_HEIGHT,
-    paddingHorizontal: customVariables.contentPadding,
-    paddingTop: 24,
-    paddingBottom: 8
-  },
-  listHeaderButtonText: {
-    ...makeFontStyleObject(Platform.select)
-  },
-
   // SectionHeader
   sectionHeaderWrapper: {
     height: SECTION_HEADER_HEIGHT,
@@ -95,10 +83,6 @@ const styles = StyleSheet.create({
   },
   itemEmptyText: {
     color: customVariables.textColorDark
-  },
-  itemSeparator: {
-    height: ITEM_SEPARATOR_HEIGHT,
-    backgroundColor: IOColors.greyLight
   },
   button: {
     alignContent: "center",
@@ -265,7 +249,9 @@ const generateItemLayouts = (sections: Sections) => {
 
 const getEmpytReminderComponent = () => (
   <View style={styles.itemEmptyWrapper}>
-    <Text style={styles.itemEmptyText}>{I18n.t("reminders.emptyMonth")}</Text>
+    <NBText style={styles.itemEmptyText}>
+      {I18n.t("reminders.emptyMonth")}
+    </NBText>
   </View>
 );
 
@@ -379,7 +365,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
     return (
       <View style={styles.sectionHeaderWrapper}>
         <View style={styles.sectionHeaderContent}>
-          <Text
+          <NBText
             style={
               !isFake && sectionId === nextDeadlineId
                 ? styles.sectionHeaderHighlightText
@@ -396,7 +382,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
                 )
               )
             )}
-          </Text>
+          </NBText>
         </View>
       </View>
     );
@@ -493,7 +479,9 @@ class MessageAgenda extends React.PureComponent<Props, State> {
             style={styles.button}
             onPress={this.loadMoreData}
           >
-            <Text numberOfLines={1}>{I18n.t("reminders.loadMoreData")}</Text>
+            <NBText numberOfLines={1}>
+              {I18n.t("reminders.loadMoreData")}
+            </NBText>
           </ButtonDefaultOpacity>
         </View>
         <View spacer={true} />
@@ -561,7 +549,7 @@ class MessageAgenda extends React.PureComponent<Props, State> {
 
   public noOtherDeadlines = () => (
     <View style={styles.messageNoOthers}>
-      <Text bold={true}>{I18n.t("reminders.noOtherDeadlines")}</Text>
+      <NBText bold={true}>{I18n.t("reminders.noOtherDeadlines")}</NBText>
     </View>
   );
 

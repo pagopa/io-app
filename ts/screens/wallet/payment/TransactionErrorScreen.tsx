@@ -25,7 +25,7 @@ import {
   confirmButtonProps
 } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { FooterStackButton } from "../../../features/bonus/bonusVacanze/components/buttons/FooterStackButtons";
-import { useHardwareBackButton } from "../../../features/bonus/bonusVacanze/components/hooks/useHardwareBackButton";
+import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
 import {
   zendeskSelectedCategory,
   zendeskSupportStart

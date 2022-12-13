@@ -14,7 +14,14 @@ import { useRef } from "react";
 import { IOColors } from "../components/core/variables/IOColors";
 import workunitGenericFailure from "../components/error/WorkunitGenericFailure";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
-import { bpdEnabled, fimsEnabled, myPortalEnabled, svEnabled } from "../config";
+import {
+  bpdEnabled,
+  fciEnabled,
+  bpdOptInPaymentMethodsEnabled,
+  fimsEnabled,
+  myPortalEnabled,
+  svEnabled
+} from "../config";
 import BPD_ROUTES from "../features/bonus/bpd/navigation/routes";
 import { CdcStackNavigator } from "../features/bonus/cdc/navigation/CdcStackNavigator";
 import { CDC_ROUTES } from "../features/bonus/cdc/navigation/routes";
@@ -27,10 +34,24 @@ import {
 import CGN_ROUTES from "../features/bonus/cgn/navigation/routes";
 import { svLinkingOptions } from "../features/bonus/siciliaVola/navigation/navigator";
 import {
+  fciLinkingOptions,
+  FciStackNavigator
+} from "../features/fci/navigation/FciStackNavigator";
+import { FCI_ROUTES } from "../features/fci/navigation/routes";
+import {
   fimsLinkingOptions,
   FimsNavigator
 } from "../features/fims/navigation/navigator";
 import FIMS_ROUTES from "../features/fims/navigation/routes";
+import { InitiativeDetailsScreen } from "../features/idpay/initiative/details/screens/InitiativeDetailsScreen";
+import {
+  IDPayConfigurationNavigator,
+  IDPayConfigurationRoutes
+} from "../features/idpay/initiative/configuration/navigation/navigator";
+import {
+  IDPayOnboardingNavigator,
+  IDPayOnboardingRoutes
+} from "../features/idpay/onboarding/navigation/navigator";
 import UADONATION_ROUTES from "../features/uaDonations/navigation/routes";
 import { UAWebViewScreen } from "../features/uaDonations/screens/UAWebViewScreen";
 import { ZendeskStackNavigator } from "../features/zendesk/navigation/navigator";
@@ -40,8 +61,10 @@ import { setDebugCurrentRouteName } from "../store/actions/debug";
 import { useIODispatch, useIOSelector } from "../store/hooks";
 import { trackScreen } from "../store/middlewares/navigation";
 import {
+  bpdRemoteConfigSelector,
   isCdcEnabledSelector,
   isCGNEnabledSelector,
+  isFciEnabledSelector,
   isFIMSEnabledSelector
 } from "../store/reducers/backendStatus";
 import { isTestEnv } from "../utils/environment";
@@ -63,8 +86,10 @@ export const AppStackNavigator = () => {
   const cdcEnabled = useIOSelector(isCdcEnabledSelector);
   const fimsEnabledSelector = useIOSelector(isFIMSEnabledSelector);
   const cgnEnabled = useIOSelector(isCGNEnabledSelector);
+  const fciEnabledSelector = useIOSelector(isFciEnabledSelector);
 
   const isFimsEnabled = fimsEnabled && fimsEnabledSelector;
+  const isFciEnabled = fciEnabled && fciEnabledSelector;
   return (
     <Stack.Navigator
       initialRouteName={"INGRESS"}
@@ -141,6 +166,24 @@ export const AppStackNavigator = () => {
           component={CdcStackNavigator}
         />
       )}
+
+      {isFciEnabled && (
+        <Stack.Screen name={FCI_ROUTES.MAIN} component={FciStackNavigator} />
+      )}
+
+      <Stack.Screen
+        name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN}
+        component={IDPayOnboardingNavigator}
+      />
+      <Stack.Screen
+        name={ROUTES.IDPAY_INITIATIVE_DETAILS}
+        component={InitiativeDetailsScreen}
+      />
+
+      <Stack.Screen
+        name={IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN}
+        component={IDPayConfigurationNavigator}
+      />
     </Stack.Navigator>
   );
 };
@@ -159,6 +202,11 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
 
   const cgnEnabled = useIOSelector(isCGNEnabledSelector);
   const isFimsEnabled = useIOSelector(isFIMSEnabledSelector) && fimsEnabled;
+  const isFciEnabled = useIOSelector(isFciEnabledSelector) && fciEnabled;
+
+  const bpdRemoteConfig = useIOSelector(bpdRemoteConfigSelector);
+  const isOptInPaymentMethodsEnabled =
+    bpdRemoteConfig?.opt_in_payment_methods_v2 && bpdOptInPaymentMethodsEnabled;
 
   const linking: LinkingOptions = {
     enabled: false,
@@ -188,9 +236,17 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
             [ROUTES.PAYMENTS_HISTORY_SCREEN]: "payments-history",
             [ROUTES.CREDIT_CARD_ONBOARDING_ATTEMPTS_SCREEN]:
               "card-onboarding-attempts",
-            ...(bpdEnabled
-              ? { [BPD_ROUTES.CTA_BPD_IBAN_EDIT]: "bpd-iban-update" }
-              : {})
+            ...(bpdEnabled && {
+              [BPD_ROUTES.CTA_BPD_IBAN_EDIT]: "bpd-iban-update"
+            }),
+            ...(isOptInPaymentMethodsEnabled && {
+              [BPD_ROUTES.OPT_IN_PAYMENT_METHODS.MAIN]: {
+                path: "bpd-opt-in",
+                screens: {
+                  [BPD_ROUTES.OPT_IN_PAYMENT_METHODS.CHOICE]: "choice"
+                }
+              }
+            })
           }
         },
         [ROUTES.SERVICES_NAVIGATOR]: {
@@ -202,17 +258,19 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
                 activate: activate => activate === "true"
               }
             },
-            ...(myPortalEnabled ? { [ROUTES.SERVICE_WEBVIEW]: "webview" } : {}),
-            ...(svEnabled ? svLinkingOptions : {})
+            ...(myPortalEnabled && { [ROUTES.SERVICE_WEBVIEW]: "webview" }),
+            ...(svEnabled && svLinkingOptions)
           }
         },
         ...(isFimsEnabled ? fimsLinkingOptions : {}),
         ...(cgnEnabled ? cgnLinkingOptions : {}),
+        ...(isFciEnabled ? fciLinkingOptions : {}),
         [UADONATION_ROUTES.WEBVIEW]: "uadonations-webview",
         [ROUTES.WORKUNIT_GENERIC_FAILURE]: "*"
       }
     }
   };
+
   return (
     <NavigationContainer
       theme={IOTheme}

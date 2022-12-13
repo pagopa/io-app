@@ -1,25 +1,21 @@
 import { capitalize } from "lodash";
-import { Text, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import React from "react";
 import { StyleSheet, ViewStyle } from "react-native";
 
 import I18n from "../../../../i18n";
 import { navigateToWalletHome } from "../../../../store/actions/navigation";
 import customVariables from "../../../../theme/variables";
-import {
-  format,
-  formatDateAsDay,
-  formatDateAsLocal,
-  formatDateAsMonth
-} from "../../../../utils/dates";
+import { formatDateAsDay, formatDateAsMonth } from "../../../../utils/dates";
 import {
   isExpired,
   isExpiring,
   MessagePaymentExpirationInfo
 } from "../../../../utils/messages";
-import IconFont from "../../../ui/IconFont";
 import { IOColors } from "../../../core/variables/IOColors";
+import IconFont from "../../../ui/IconFont";
 
+import { localeDateFormat } from "../../../../utils/locale";
 import CalendarIconComponent from "../../CalendarIconComponent";
 
 type Props = {
@@ -43,14 +39,8 @@ const styles = StyleSheet.create({
   },
   text: {
     flex: 1,
-    paddingRight: 50,
+    paddingRight: 5,
     paddingLeft: 5
-  },
-  highlight: {
-    color: customVariables.brandHighlight
-  },
-  center: {
-    justifyContent: "center"
   },
   padded: {
     paddingHorizontal: customVariables.contentPadding
@@ -68,16 +58,22 @@ const TextContent: React.FunctionComponent<{
   dueDate: Date;
   onPaidPress: () => void;
 }> = ({ status, dueDate }) => {
-  const time = format(dueDate, "HH:mm");
-  const date = formatDateAsLocal(dueDate, true, true);
+  const time = localeDateFormat(
+    dueDate,
+    I18n.t("global.dateFormats.timeFormat")
+  );
+  const date = localeDateFormat(
+    dueDate,
+    I18n.t("global.dateFormats.shortFormat")
+  );
   switch (status) {
     case "expired":
       return (
         <>
           {I18n.t("messages.cta.payment.expiredAlert.block1")}
-          <Text bold={true} white={true}>{` ${time} `}</Text>
+          <NBText bold={true} white={true}>{` ${date} `}</NBText>
           {I18n.t("messages.cta.payment.expiredAlert.block2")}
-          <Text bold={true} white={true}>{` ${date}`}</Text>
+          <NBText bold={true} white={true}>{` ${time}`}</NBText>
         </>
       );
     case "valid":
@@ -85,7 +81,9 @@ const TextContent: React.FunctionComponent<{
       return (
         <>
           {I18n.t("messages.cta.payment.expiringOrValidAlert.block1")}
-          <Text bold={true}>{` ${date} `}</Text>
+          <NBText bold={true}>{` ${date} `}</NBText>
+          {I18n.t("messages.cta.payment.expiringOrValidAlert.block2")}
+          <NBText bold={true}>{` ${time}`}</NBText>
         </>
       );
   }
@@ -167,9 +165,9 @@ const DueDateBar: React.FunctionComponent<Props> = ({
     return (
       <View style={styles.messagePaidBg}>
         <IconFont name="io-complete" color={IOColors.bluegreyDark} />
-        <Text style={[styles.padded, { color: IOColors.bluegreyDark }]}>
+        <NBText style={[styles.padded, { color: IOColors.bluegreyDark }]}>
           {I18n.t("wallet.errors.DUPLICATED")}
-        </Text>
+        </NBText>
       </View>
     );
   }
@@ -183,7 +181,7 @@ const DueDateBar: React.FunctionComponent<Props> = ({
           <CalendarIcon status={paymentStatus} dueDate={dueDate} />
           <View hspacer={true} small={true} />
 
-          <Text
+          <NBText
             style={styles.text}
             white={paymentStatus === "expired"}
             testID={"DueDateBar_TextContent"}
@@ -193,7 +191,7 @@ const DueDateBar: React.FunctionComponent<Props> = ({
               dueDate={dueDate}
               onPaidPress={() => navigateToWalletHome()}
             />
-          </Text>
+          </NBText>
         </>
       </View>
       <View spacer={true} large={true} />

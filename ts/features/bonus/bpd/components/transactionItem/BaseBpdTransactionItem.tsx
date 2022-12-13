@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { H5 } from "../../../../../components/core/typography/H5";
+import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { ShadowBox } from "../../screens/details/components/summary/base/ShadowBox";
 
@@ -24,7 +25,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
-    backgroundColor: "white"
+    backgroundColor: IOColors.white
   },
   leftRow: {
     flex: 1,

@@ -1,4 +1,4 @@
-import { Content, Text, View } from "native-base";
+import { Content, Text as NBText, View } from "native-base";
 import * as React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { StyleSheet } from "react-native";
@@ -118,7 +118,7 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
               bordered={true}
               onPress={navigation.goBack}
             >
-              <Text>{I18n.t("global.buttons.cancel")}</Text>
+              <NBText>{I18n.t("global.buttons.cancel")}</NBText>
             </ButtonDefaultOpacity>
           </View>
           <View style={{ padding: variables.contentPadding }}>
