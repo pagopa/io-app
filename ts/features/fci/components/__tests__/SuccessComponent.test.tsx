@@ -14,7 +14,7 @@ import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { FCI_ROUTES } from "../../navigation/routes";
 import {
-  fciShowSignedDocumentsRequest,
+  fciShowSignedDocumentsStartRequest,
   fciStartRequest
 } from "../../store/actions";
 
@@ -72,7 +72,7 @@ describe("Test SuccessComponent", () => {
       component.getByTestId("WaitQtspSignatureRequestTestID")
     ).toBeTruthy();
   });
-  it("with a signature request status SIGNED should dispatch a fciShowSignedDocumentsRequest correctly", () => {
+  it("with a signature request status SIGNED should dispatch a fciShowSignedDocumentsStartRequest correctly", () => {
     const mockStore = configureMockStore<GlobalState>();
     const store: ReturnType<typeof mockStore> = mockStore(globalState);
 
@@ -85,7 +85,7 @@ describe("Test SuccessComponent", () => {
     };
     const component = renderComponent(props, store);
     expect(component).toBeTruthy();
-    expect(store.getActions()).toEqual([fciShowSignedDocumentsRequest()]);
+    expect(store.getActions()).toEqual([fciShowSignedDocumentsStartRequest()]);
   });
 });
 

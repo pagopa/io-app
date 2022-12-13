@@ -8,6 +8,7 @@ import { applicationChangeState } from "../../../../store/actions/application";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import { FCI_ROUTES } from "../../navigation/routes";
+import { constNull } from "fp-ts/lib/function";
 
 const fakeTestID = "fakeTestID";
 
@@ -61,7 +62,7 @@ const renderComponent = (props: Props) => {
 
   const Component = (
     <Provider store={store}>
-      <ErrorComponent {...props} testID={fakeTestID} />
+      <ErrorComponent {...props} testID={fakeTestID} onPress={constNull} />
     </Provider>
   );
 
