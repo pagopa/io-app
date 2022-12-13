@@ -179,7 +179,7 @@ const MessagesHomeScreen = ({
           ))
         )}
       {!isScreenReaderEnabled && statusComponent}
-      {bottomSheets.map(_ => _)}
+      {bottomSheets}
     </TopScreenComponent>
   );
 };
