@@ -23,7 +23,7 @@ import MessagesHomeScreen from "../MessagesHomeScreen";
 
 jest.useFakeTimers();
 
-jest.mock("../../../../config", () => ({
+jest.mock("../../../config", () => ({
   pnEnabled: true
 }));
 
