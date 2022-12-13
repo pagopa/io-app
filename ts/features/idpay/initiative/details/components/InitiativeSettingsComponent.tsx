@@ -24,7 +24,10 @@ export const InitiativeSettingsComponent = (props: Props) => {
   const navigateToInstrumentsConfiguration = () => {
     navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
       screen:
-        IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT
+        IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT,
+      params: {
+        initiativeId: initiative.initiativeId
+      }
     });
   };
 
