@@ -25,7 +25,7 @@ const migrations: MigrationManifest = {
     } as PersistedMvlState;
   },
   // version 3
-  // remove "downloads" section because moved to entities
+  // as the "downloads" section has been relocated to entities, remove it
   "3": (state: PersistedState): PersistedMvlState => {
     const mvl = state as PersistedMvlState;
     return {
