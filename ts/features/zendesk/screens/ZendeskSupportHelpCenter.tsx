@@ -21,7 +21,7 @@ import ActivityIndicator from "../../../components/ui/ActivityIndicator";
 import View from "../../../components/ui/TextWithIcon";
 import I18n from "../../../i18n";
 import { loadContextualHelpData } from "../../../store/actions/content";
-import { useIOSelector } from "../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { getContextualHelpDataFromRouteSelector } from "../../../store/reducers/content";
 import { FAQType, getFAQsFromCategories } from "../../../utils/faq";
 import { isStringNullyOrEmpty } from "../../../utils/strings";
@@ -163,7 +163,7 @@ const FaqManager = (props: FaqManagerProps) => {
  * @constructor
  */
 const ZendeskSupportHelpCenter = () => {
-  const dispatch = useDispatch();
+  const dispatch = useIODispatch();
   const workUnitCancel = () => dispatch(zendeskSupportCancel());
   const workUnitComplete = () => dispatch(zendeskSupportCompleted());
 

@@ -11,7 +11,7 @@ import {
   cancelButtonProps,
   confirmButtonProps
 } from "../../components/buttons/ButtonConfigurations";
-import { useHardwareBackButton } from "../../components/hooks/useHardwareBackButton";
+import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButton";
 import { bonusVacanzeStyle } from "../../components/Styles";
 import {
   cancelBonusVacanzeRequest,

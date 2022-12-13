@@ -11,7 +11,7 @@ import BaseScreenComponent from "../../../../../../../components/screens/BaseScr
 import I18n from "../../../../../../../i18n";
 import { navigateBack } from "../../../../../../../store/actions/navigation";
 import { GlobalState } from "../../../../../../../store/reducers/types";
-import { useHardwareBackButton } from "../../../../../../bonus/bonusVacanze/components/hooks/useHardwareBackButton";
+import { useHardwareBackButton } from "../../../../../../../hooks/useHardwareBackButton";
 import { FooterTwoButtons } from "../../../../../../bonus/bonusVacanze/components/markdown/FooterTwoButtons";
 import { walletAddPrivativeCancel } from "../../../store/actions";
 

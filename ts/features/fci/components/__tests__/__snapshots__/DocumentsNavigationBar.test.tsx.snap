@@ -122,6 +122,7 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
         fontStyle={
           Object {
             "fontSize": 16,
+            "lineHeight": 22,
           }
         }
         style={
@@ -131,6 +132,7 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
             },
             Object {
               "fontSize": 16,
+              "lineHeight": 22,
             },
             Object {
               "color": "#17324D",
@@ -211,6 +213,7 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
         fontStyle={
           Object {
             "fontSize": 16,
+            "lineHeight": 22,
           }
         }
         style={
@@ -220,6 +223,7 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
             },
             Object {
               "fontSize": 16,
+              "lineHeight": 22,
             },
             Object {
               "color": "#17324D",

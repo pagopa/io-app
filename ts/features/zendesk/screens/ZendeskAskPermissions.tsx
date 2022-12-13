@@ -4,7 +4,6 @@ import * as O from "fp-ts/lib/Option";
 import { View } from "native-base";
 import React, { useEffect } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
-import { useDispatch } from "react-redux";
 import BatteryIcon from "../../../../img/assistance/battery.svg";
 import EmailIcon from "../../../../img/assistance/email.svg";
 import FiscalCodeIcon from "../../../../img/assistance/fiscalCode.svg";
@@ -26,7 +25,7 @@ import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { zendeskPrivacyUrl } from "../../../config";
 import I18n from "../../../i18n";
 import { mixpanelTrack } from "../../../mixpanel";
-import { useIOSelector } from "../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import {
   idpSelector,
   isLoggedIn,
@@ -180,7 +179,7 @@ const ZendeskAskPermissions = () => {
 
   const assistanceForPayment = route.params.assistanceForPayment;
 
-  const dispatch = useDispatch();
+  const dispatch = useIODispatch();
   const workUnitCompleted = () => dispatch(zendeskSupportCompleted());
   const notAvailable = I18n.t("global.remoteStates.notAvailable");
   const isUserLoggedIn = useIOSelector(s => isLoggedIn(s.authentication));

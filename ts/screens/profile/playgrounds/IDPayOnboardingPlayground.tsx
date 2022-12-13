@@ -28,11 +28,7 @@ const IDPayOnboardingPlayground = () => {
     }
   };
 
-  const testIDs = [
-    "01GH187R1S8W4XG810STWXWBF3",
-    "01GH1879JD77Y9FB51DQH7DK05",
-    "01GH187HQ4JAGRGC7010GVBGCV"
-  ];
+  const testIDs = ["01GKPJXR35WKGMW8TH4NSP0RB9"];
 
   return (
     <BaseScreenComponent goBack={true} headerTitle={"Playground"}>
