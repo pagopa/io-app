@@ -30,7 +30,7 @@ type Services = {
 };
 
 const createIDPayInitiativeConfigurationMachine = () =>
-  /** @xstate-layout N4IgpgJg5mDOIC5QEkAiAFAggTQPrIDlkAVZTUgNQFFcBhAeQIDFkBxAVQCVzlGBiAIrsSAbQAMAXUSgADgHtYASwAuiuQDtpIAB6IAjAGYxADgB0YgJwB2AGwX7VgEw3jLgDQgAnvscBfXx5oWHiEJGSUNAzMbFw8jKYA6phhBKz4RKQ81LgAylQAMlS0pPx5hcXpYVlU4lJIIPJKqhpauggGACx6psYArHq9NnYWHdZGHR7eCDZWvaYWQ44dNnozYp1+ASBBOJWZEXSMLBzcJQSm+fSYqIRpofvI1HwQGmCmiuoAbnIA1m8ANnIAIYQZDqFSKIGqT5gWpaRoQlr1NrGDpzCx6DomVZ9AyuKyTRAzKymZY2RyDAYdDrjfyBDC7e7hR6RI4xU68c5UCiYfLsUipPbM7JRY6xM58OH1BHNTTI-Q0gymGwdVHGPSosRiFx6QnTEamKy2TGqyxLCybenBIXVQ7RE5xLk8vkCu4ZYWs+3izmSvR1WQKRFy0BtTEGJUqtUarHa9V6qzUnq9Ea9MSOYwmWa9OnbBkhd220Xsx2mIsnW42iJ8HLETCcYh2sUcxhSgNNNTBnSIRyWJVpgyp6lWCxiXqovU2ZOmAcphw2cbGHM7fNVA5l73xS7XCuEGucdgAWSoBGIOWer3eX1+AOBoPUsGUACcAK4AWzA6mUsFbDUDsta3aYiSMx6BaRoWKijgGHqowdKYhjpvY6yOBqGJLnmlYso2xZnKYNw5Og+Q4DuBB7oex6nnwrD0LgABCmC0AA0j+ModgBCBhhGqqqtGWo6hOiaOMaSx6JYHRQXo6HWkyhZsg6uH4YRxGCruxD7keJ5ntcqDpGRGnECxf5sfKHGKsq3Hqpqsa6l43a2KS2qONYXSdL0qpSYyBZrnJG7nIpRHYCRekUWeRacAeulqeRmmGe2SIhgq4bmVGVn8bZ7ROEmIxDrMYiYm5Hkrg8Io+c25zaUFUX6ee6hvB83x-KYIJ3g+L7vp+sVBuxAwmPBw5WAYFIoQYhjQelGqOPMvQjVYWrOC4CbZlsy6YSVXplXhyAEQFFbrmVuTsLQtBUDkoX0AehFUMQnpNo6nX-iZPYWH2UGDh0w6juO6UGJlfTZe9uX5R0-hbOocgQHAWgrTJ3nrY68JGfFXYIAAtDZUwWHMaIje9BgrL0yZOIVq03ThnKJMkrok7kBRFGcCNxZ2bTvRO9ikuJGYjNYI56JJy0YTDWF7SWW43CpXksgzXUmW5WPYxSvPkiMBLpTM6Ic3ojhLFYqwWMTgtrbduHcry-IkauQulfD0qI0z+hiKqyp5cmP1QeqmusxY7PpmJ3N5XzVqeRbhtk-Ee3m8VVBSw9CUcQmk0TZ0A1WMYIyrBOePTsmyxCRSvROFY+sSyH8nk6LlXqSF0fGbHUGzaYQkDp985oiMMFs391IiXoKdpkXwek6X8T+cpbrBZp1dI6GhhmD9g7anlsyzHqKE2PMTkJkYYhLxmS2B0VHrYUP5WoGLY9VRRk923HKGGqmo5ppYat6qBJKdPOmMjQsWIQf3kdH75Ta21R4AP2jkQ6x1TpX26k4bouUH5PWft9UYWUhy9CWOmKCNg-6H2FrhPBnJDgXUKNdVA0DHo-TEA3AaqYxwt2znqToZgbBiXEniMcKFC782ksXQegCCGMFwAQegDYCBUCoKgCR5DY491vvA1MiDl7pQTN0Tu4FnCuBGiDXwQA */
+  /** @xstate-layout N4IgpgJg5mDOIC5QCUDyqAqBiAigVQEkMBtABgF1FQAHAe1gEsAXB2gOypAA9EAOAVl4A6AMwAmUuICMvAOz8xvKbIA0IAJ6IpYgL461aTEIIARADIBRLAGUMAQWQYA+gGFUAOQBiBAOJ5kdhgEHmSUSCB0jCzsnDwIUiIiQgBspFL8srIAnKRZvKSKqhqIYuJCsmLJ-NX5ySIV9XoG6BjG7kQEdmYEAFqBwe5YEOxgQrBMAIZMo4atBO1BXb39IRSckcysHOFxUsoALEJSaXWS-MnJUln7apoIYhlCEiLapZnJWWL7sk0gs20dJZ9IIeIYjMaTaZCf7zQHdYEDYhSMI0eibGI7RAZW5aB5SISSLIJC4SZKVES-GELTrwlaDYZsUbjKYzFoAxa0kHuYhiFERNHRbagXYHI4nERnC5XG7Fe65cqSV78b4ifJZZKUtmwjnLLlCMyoOwmeY+JzazpBABqVgZowYbAAbrQANajAA2tAmEAIbE2UwYDrAoXWAq2sUQslIyRS5zEsmUvCq2iKdweSSysiqVTSidkvE1RmN1gACmY7ABNE1m9wYNBYdwWAAaJDW4Q2gvDCAzh2UMky8eq134OPipHOTxE-GuWRy+32Un2Bdabi8vn8VfmtmQeAAshYa9Z602W3z22HMV3ZD343JMukp-th7KM7IhI-rl8r5PSLxdPo-myK7eH4yAbu4W67vuGCHg2zZIqeoYYsKiDdkcN79veQ4jrwIiHJG1ykPG+w5n+zRGEBa6ge4pqbrWkEHlgABCdguAA0sGbaIUK3CIPO6a8PsIhEnGc6DskI5fk8ioZPO+xZhq-7-BRIFgRBe4McxbHwSGUTnshl7Xn2d6Do+I57Io5S8ES+xfDmZL5opgEeMB67UdWalQdY+qGsabm0du6nQWCjJCPaTqukIHpej64wAE4AK4ALZgGwTCwBxqK6UhPEII+0ZiOqAh1Jk3yCWZxyHFGDyXFcySyEJUhLkIymuTR4F0YFXlFqWFaqR1nlYEaJjuf1NYZfyWXcXE3yvvwLxXAU2hWd8I7WUcsbJHIU4ShSjnkc5lF9QFnlCENR30dgtqhY6LqjF63psHFSUpUw41ntl03jgVm3nPUV5fmZaSkCkuQ2RciY2YkTXdWWlZuS1ARck41h4C4LgWNYh5uDupYWBgFiuAdIF0m9XGdukZLlFmiSCQoWTVNhuEKlkIiXEJP4VFkTUI3STjuJgfMWBYJjC1g2O4-jhOrsTXKk5NnaPkkca4TZggXJGV4jhcwORi8lzvjOFR6P+bC0BAcCcLMOnolNiAALQLhJr6K9ocnKlZc0KWRczmBY1sdheK2ytVUkvIJ1zpJHTXmkCdL+3pOWTsIfb7HI9n09kKZaMkhz0-NCRzjndTR9Ssd6gaRpgYCVp+5x8uB1GRxyKnmaKBnGYjg8YhvnNCQJFGZJXD8e1zKXnIDOyFoENaTgVyLJjxx9KHyrh9Qs7VmZSJ3V4KvNOeqjn8bQwQJaw2BtaoIvtvxBI3e92I6S8DhewXGZEj8EcOd7DZVm-lG3NE1aiNY6B4r6dlwthSoMZ7KknpgoAB0sgH+Qul5Oe51OpgIvL+QGVkhBzWEgUZ+m0EEuSom1DyB4hAw16n5dqIDoKYP0nVYQv9iLiFIFGdIIhAaTgJAIPIpQZAFChiPZqgCyHAJQadEwvlyGjQwIwnKyYniFVKIPPYP4sirTjHg-Y9Mvg4WVIPY+p8aGmh5kjFGaMMbWEUSKIkb5PgLQEomB42E9jM1VImHC4hPgkMorzfmzgGzC2FnYvgYgtb1F3q8CQ+RSCLlERYgYhMcaWHxgvOuNtOxkjMnNJIFxZLTkPiIvQQA */
   createMachine(
     {
       context: INITIAL_CONTEXT,
@@ -53,47 +53,41 @@ const createIDPayInitiativeConfigurationMachine = () =>
           tags: [WAITING_USER_INPUT_TAG],
           on: {
             START_CONFIGURATION: {
-              target: "INITIALIZATION",
+              target: "LOADING_INITIATIVE",
               actions: "startConfiguration"
             }
           }
         },
-        INITIALIZATION: {
-          id: "INITIALIZATION",
-          initial: "LOADING_INITIATIVE",
-          states: {
-            LOADING_INITIATIVE: {
-              tags: [LOADING_TAG],
-              invoke: {
-                src: "loadInitiative",
-                id: "loadInitiative",
-                onDone: [
-                  {
-                    target: "INITIATIVE_LOADED",
-                    actions: "loadInitiativeSuccess"
-                  }
-                ]
+        LOADING_INITIATIVE: {
+          tags: [LOADING_TAG],
+          invoke: {
+            src: "loadInitiative",
+            id: "loadInitiative",
+            onDone: [
+              {
+                target: "EVALUATING_INITIATIVE",
+                actions: "loadInitiativeSuccess"
               }
-            },
-            INITIATIVE_LOADED: {
-              type: "final"
-            }
-          },
-          onDone: [
+            ]
+          }
+        },
+        EVALUATING_INITIATIVE: {
+          tags: [LOADING_TAG],
+          always: [
             {
               cond: "isInstrumentsOnlyMode",
-              target: "#ROOT.CONFIGURING_INSTRUMENTS"
+              target: "CONFIGURING_INSTRUMENTS"
             },
             {
               cond: "isInitiativeConfigurationNeeded",
-              target: "#ROOT.DISPLAYING_CONFIG_INTRO"
+              target: "DISPLAYING_INTRO"
             },
             {
-              target: "#ROOT.CONFIGURATION_NOT_NEEDED"
+              target: "CONFIGURATION_NOT_NEEDED"
             }
           ]
         },
-        DISPLAYING_CONFIG_INTRO: {
+        DISPLAYING_INTRO: {
           tags: [WAITING_USER_INPUT_TAG],
           entry: "navigateToConfigurationIntro",
           on: {
@@ -159,7 +153,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 actions: "exitConfiguration"
               },
               {
-                target: "#ROOT.DISPLAYING_CONFIG_INTRO"
+                target: "#ROOT.DISPLAYING_INTRO"
               }
             ]
           }
