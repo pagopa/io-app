@@ -124,7 +124,7 @@ class MedicalPrescriptionDueDateBar extends React.PureComponent<Props> {
           {I18n.t("messages.cta.prescription.expiringOrValidAlert.block2")}
           <NBText bold={true} white={false}>{` ${date}`}</NBText>
         </React.Fragment>
-      )
+      );
     }
   }
 
@@ -146,8 +146,8 @@ class MedicalPrescriptionDueDateBar extends React.PureComponent<Props> {
           const textColor = this.isPrescriptionExpiring
             ? customVariables.calendarExpirableColor
             : this.isPrescriptionExpired
-              ? IOColors.bluegrey
-              : IOColors.white;
+            ? IOColors.bluegrey
+            : IOColors.white;
 
           return (
             <CalendarIconComponent
