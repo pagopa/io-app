@@ -99,7 +99,7 @@ export const InitiativeDetailsScreen = () => {
 
   const navigateToConfiguration = () => {
     navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
-      screen: "IDPAY_CONFIGURATION_INTRO",
+      screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO,
       params: { initiativeId }
     });
   };
