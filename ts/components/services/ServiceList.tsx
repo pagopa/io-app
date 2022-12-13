@@ -1,7 +1,7 @@
 /**
  * A component to render a list of services grouped by organization.
  */
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import React from "react";
 import {
   Animated,
@@ -40,10 +40,6 @@ type OwnProps = {
 type Props = OwnProps & AnimatedProps;
 
 const styles = StyleSheet.create({
-  listItem: {
-    paddingLeft: customVariables.contentPadding,
-    paddingRight: customVariables.contentPadding
-  },
   padded: {
     marginLeft: customVariables.contentPadding,
     marginRight: customVariables.contentPadding

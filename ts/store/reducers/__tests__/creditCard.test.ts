@@ -1,6 +1,6 @@
-import { range } from "fp-ts/lib/Array";
+import * as AR from "fp-ts/lib/Array";
 import sha from "sha.js";
-import { some } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import { NullableWallet, WalletResponse } from "../../../types/pagopa";
 import {
   CreditCardExpirationMonth,
@@ -86,7 +86,7 @@ describe("credit card history", () => {
   });
 
   it("should limit the stored attempts to a maximum", () => {
-    const finalState = range(
+    const finalState = AR.range(
       1,
       MAX_HISTORY_LENGTH + 10
     ).reduce<CreditCardInsertionState>(
@@ -250,7 +250,7 @@ describe("credit card history", () => {
     const state = runReducer(
       [],
       addCCAction,
-      addCreditCardOutcomeCode(some(outComeCode))
+      addCreditCardOutcomeCode(O.some(outComeCode))
     );
     const [cardItem] = state;
     expect(cardItem.outcomeCode).toEqual(outComeCode);

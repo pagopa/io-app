@@ -1,4 +1,4 @@
-import { Either, left, right } from "fp-ts/lib/Either";
+import * as E from "fp-ts/lib/Either";
 import { call, put, take } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 import {
@@ -24,7 +24,7 @@ import {
  */
 export function* loadTransactionsRequiredData(
   periodId: AwardPeriodId
-): Generator<ReduxSagaEffect, Either<BpdTransactionsError, true>, any> {
+): Generator<ReduxSagaEffect, E.Either<BpdTransactionsError, true>, any> {
   // We check if there is a failure on the whole loadTransactionsRequiredData block
   yield* call(waitBackoffError, bpdTransactionsLoadRequiredData.failure);
 
@@ -44,7 +44,7 @@ export function* loadTransactionsRequiredData(
   if (
     milestoneResponse.type === getType(bpdTransactionsLoadMilestone.failure)
   ) {
-    return left({
+    return E.left({
       awardPeriodId: periodId,
       error: new Error("Failed to load bpd transactions milestone")
     });
@@ -66,7 +66,7 @@ export function* loadTransactionsRequiredData(
   if (
     countByDayResponse.type === getType(bpdTransactionsLoadCountByDay.failure)
   ) {
-    return left({
+    return E.left({
       awardPeriodId: periodId,
       error: new Error("Failed to load bpd transactions countByDay")
     });
@@ -82,12 +82,12 @@ export function* loadTransactionsRequiredData(
     >
   >([bpdTransactionsLoadPage.success, bpdTransactionsLoadPage.failure]);
   if (firstPageResponse.type === getType(bpdTransactionsLoadPage.failure)) {
-    return left({
+    return E.left({
       awardPeriodId: periodId,
       error: new Error("Failed to load the first transactions page")
     });
   }
-  return right(true);
+  return E.right(true);
 }
 
 /**
@@ -101,9 +101,9 @@ export function* handleTransactionsLoadRequiredData(
   const result: SagaCallReturnType<typeof loadTransactionsRequiredData> =
     yield* call(loadTransactionsRequiredData, action.payload);
 
-  if (result.isRight()) {
+  if (E.isRight(result)) {
     yield* put(bpdTransactionsLoadRequiredData.success(action.payload));
   } else {
-    yield* put(bpdTransactionsLoadRequiredData.failure(result.value));
+    yield* put(bpdTransactionsLoadRequiredData.failure(result.left));
   }
 }

@@ -1,7 +1,8 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { compareDesc } from "date-fns";
-import { index, reverse } from "fp-ts/lib/Array";
-import { fromNullable } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as AR from "fp-ts/lib/Array";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { View } from "native-base";
 import * as React from "react";
 import {
@@ -78,7 +79,7 @@ const getTransactionsByDaySections = (
     )
   ];
 
-  const transactionsAsc = reverse([...transactions]);
+  const transactionsAsc = AR.reverse([...transactions]);
 
   // accumulator to define when the user reached the cashback award amount
   // and tracing the sum of all the cashback value to check if any negative trx may cause a revoke of cashback award
@@ -120,14 +121,14 @@ const getTransactionsByDaySections = (
     }
   );
 
-  const maybeWinner = fromNullable(amountWinnerAccumulator.winner);
+  const maybeWinner = O.fromNullable(amountWinnerAccumulator.winner);
 
   // If the user reached the cashback amount within transactions we actualize all the cashback value starting from the index of winning transaction
   // if the winning transaction makes cashback value exceed the limit we set the amount to the difference of transaction cashback value, total amout at winnign transaction and cashback award limit.
   // all the following transactions will be set to 0 cashback value, since the limit has been reached (a dedicated item will be displayed)
   const updatedTransactions = [...transactionsAsc].map(
     (t, i): BpdTransactionDetailRepresentation => {
-      if (maybeWinner.isSome()) {
+      if (O.isSome(maybeWinner)) {
         if (
           i === maybeWinner.value.index &&
           maybeWinner.value.amount > cashbackAward
@@ -161,24 +162,30 @@ const getTransactionsByDaySections = (
       ),
       // we add the the data array an item to display the milestone reached
       // in order to display the milestone after the latest transaction summed in the total we add 1 ms so that the ordering will set it correctly
-      ...maybeWinner.fold([], w => {
-        if (
-          localeDateFormat(
-            w.date,
-            I18n.t("global.dateFormats.dayFullMonth")
-          ) === d
-        ) {
-          return [
-            {
-              totalCashBack: w.amount,
-              trxDate: new Date(
-                w.date.setMilliseconds(w.date.getMilliseconds() + 1)
-              )
+      ...pipe(
+        maybeWinner,
+        O.fold(
+          () => [],
+          w => {
+            if (
+              localeDateFormat(
+                w.date,
+                I18n.t("global.dateFormats.dayFullMonth")
+              ) === d
+            ) {
+              return [
+                {
+                  totalCashBack: w.amount,
+                  trxDate: new Date(
+                    w.date.setMilliseconds(w.date.getMilliseconds() + 1)
+                  )
+                }
+              ];
             }
-          ];
-        }
-        return [];
-      })
+            return [];
+          }
+        )
+      )
     ].sort((trx1, trx2) => compareDesc(trx1.trxDate, trx2.trxDate))
   }));
 };
@@ -224,8 +231,9 @@ const BpdAvailableTransactionsScreen: React.FunctionComponent<Props> =
       compareDesc(trx1.trxDate, trx2.trxDate)
     );
 
-    const maybeLastUpdateDate = index(0, [...trxSortByDate]).map(
-      t => t.trxDate
+    const maybeLastUpdateDate = pipe(
+      [...trxSortByDate].map(t => t.trxDate),
+      AR.lookup(0)
     );
 
     const renderTransactionItem: SectionListRenderItem<
@@ -234,9 +242,13 @@ const BpdAvailableTransactionsScreen: React.FunctionComponent<Props> =
       if (isTotalCashback(info.item)) {
         return (
           <BpdCashbackMilestoneComponent
-            cashbackValue={fromNullable(props.selectedPeriod).fold(
-              0,
-              p => p.maxPeriodCashback
+            cashbackValue={pipe(
+              props.selectedPeriod,
+              O.fromNullable,
+              O.fold(
+                () => 0,
+                p => p.maxPeriodCashback
+              )
             )}
           />
         );
@@ -258,10 +270,10 @@ const BpdAvailableTransactionsScreen: React.FunctionComponent<Props> =
           <View style={IOStyles.horizontalContentPadding}>
             <H1>{I18n.t("bonus.bpd.details.transaction.title")}</H1>
           </View>
-          <ScrollView style={[IOStyles.flex]}>
+          <ScrollView style={IOStyles.flex}>
             <View style={IOStyles.horizontalContentPadding}>
               <View spacer={true} />
-              {props.selectedPeriod && maybeLastUpdateDate.isSome() && (
+              {props.selectedPeriod && O.isSome(maybeLastUpdateDate) && (
                 <>
                   <BpdTransactionSummaryComponent
                     lastUpdateDate={localeDateFormat(

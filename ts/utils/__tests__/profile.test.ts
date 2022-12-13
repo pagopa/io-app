@@ -1,5 +1,6 @@
-import { none, some } from "italia-ts-commons/lib/pot";
-import { FiscalCode } from "italia-ts-commons/lib/strings";
+import { none, some } from "@pagopa/ts-commons/lib/pot";
+import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
+import { formatFiscalCodeBirthdayAsShortFormat } from "../dates";
 import { extractFiscalCodeData } from "../profile";
 import { mockedMunicipality } from "../__mocks__/municipality";
 
@@ -11,7 +12,9 @@ describe("extracting data from fiscal code", () => {
   const data = extractFiscalCodeData(goodCf, potGood);
   it("should return the extracted data", () => {
     expect(data.birthDate).toBeDefined();
-    expect(data.birthDate).toEqual("01/01/1980");
+    expect(formatFiscalCodeBirthdayAsShortFormat(data.birthDate!)).toEqual(
+      "01/01/1980"
+    );
     expect(data.gender).toEqual("M");
     expect(data.denominazione).toEqual("Roma");
     expect(data.siglaProvincia).toEqual("RM");
@@ -21,9 +24,9 @@ describe("extracting data from fiscal code", () => {
   const dataWrong1 = extractFiscalCodeData(wrongCf, potGood);
   it("should return the extracted data without birth information", () => {
     expect(dataWrong1.birthDate).not.toBeDefined();
-    expect(data.gender).toEqual("M");
-    expect(data.denominazione).toEqual("Roma");
-    expect(data.siglaProvincia).toEqual("RM");
+    expect(dataWrong1.gender).not.toBeDefined();
+    expect(dataWrong1.denominazione).toEqual("Roma");
+    expect(dataWrong1.siglaProvincia).toEqual("RM");
   });
 
   // giulia rossi / roma / rm / 12-07-1956
@@ -31,7 +34,9 @@ describe("extracting data from fiscal code", () => {
   const dataF = extractFiscalCodeData(goodCfF, potGood);
   it("should recognize the female sex", () => {
     expect(dataF.birthDate).toBeDefined();
-    expect(dataF.birthDate).toEqual("12/07/1956");
+    expect(formatFiscalCodeBirthdayAsShortFormat(dataF.birthDate!)).toEqual(
+      "12/07/1956"
+    );
     expect(dataF.gender).toEqual("F");
     expect(dataF.denominazione).toEqual("Roma");
     expect(dataF.siglaProvincia).toEqual("RM");
@@ -42,7 +47,9 @@ describe("extracting data from fiscal code", () => {
   const dataF2 = extractFiscalCodeData(goodCfF2, potGood);
   it("should recognize the 2003 as year of birth", () => {
     expect(dataF2.birthDate).toBeDefined();
-    expect(dataF2.birthDate).toEqual("12/07/2003");
+    expect(formatFiscalCodeBirthdayAsShortFormat(dataF2.birthDate!)).toEqual(
+      "12/07/2003"
+    );
     expect(dataF2.gender).toEqual("F");
     expect(dataF2.denominazione).toEqual("Roma");
     expect(dataF2.siglaProvincia).toEqual("RM");
@@ -52,7 +59,9 @@ describe("extracting data from fiscal code", () => {
   const dataNoM = extractFiscalCodeData(goodCfF2, none);
   it("should return birth place empty", () => {
     expect(dataNoM.birthDate).toBeDefined();
-    expect(dataNoM.birthDate).toEqual("12/07/2003");
+    expect(formatFiscalCodeBirthdayAsShortFormat(dataNoM.birthDate!)).toEqual(
+      "12/07/2003"
+    );
     expect(dataNoM.gender).toEqual("F");
     expect(dataNoM.denominazione).toEqual("");
     expect(dataNoM.siglaProvincia).toEqual("");

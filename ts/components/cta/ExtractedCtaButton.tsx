@@ -1,4 +1,4 @@
-import { Text } from "native-base";
+import { Text as NBText } from "native-base";
 import React from "react";
 import { StyleSheet } from "react-native";
 import { CTA } from "../../types/MessageCTA";
@@ -37,7 +37,7 @@ export const ExtractedCtaButton: React.FunctionComponent<Props> = (
       onPress={() => props.onCTAPress(cta)}
       style={{ flex: 1 }}
     >
-      <Text style={styles.marginTop1}>{cta.text}</Text>
+      <NBText style={styles.marginTop1}>{cta.text}</NBText>
     </ButtonDefaultOpacity>
   );
 };

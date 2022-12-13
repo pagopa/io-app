@@ -1,10 +1,12 @@
 /**
  * An handler for application internal links
  */
-import { fromNullable } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import URLParse from "url-parse";
 import {
   bpdEnabled,
+  fciEnabled,
   fimsEnabled,
   myPortalEnabled,
   svEnabled,
@@ -13,6 +15,7 @@ import {
 import BPD_ROUTES from "../../../../features/bonus/bpd/navigation/routes";
 import CGN_ROUTES from "../../../../features/bonus/cgn/navigation/routes";
 import SV_ROUTES from "../../../../features/bonus/siciliaVola/navigation/routes";
+import { FCI_ROUTES } from "../../../../features/fci/navigation/routes";
 import FIMS_ROUTES from "../../../../features/fims/navigation/routes";
 import UADONATION_ROUTES from "../../../../features/uaDonations/navigation/routes";
 import ROUTES from "../../../../navigation/routes";
@@ -75,6 +78,10 @@ const fimsRoutesToNavigationLink: Record<string, string> = {
   [FIMS_ROUTES.WEBVIEW]: "/fims/webview"
 };
 
+const fciRoutesToNavigationLink: Record<string, string> = {
+  [FCI_ROUTES.MAIN]: "/fci/main"
+};
+
 const allowedRoutes = {
   ...routesToNavigationLink,
   ...cgnRoutesToNavigationLink,
@@ -83,7 +90,8 @@ const allowedRoutes = {
   ...(bpdEnabled ? bpdRoutesToNavigationLink : {}),
   ...(svEnabled ? svRoutesToNavigationLink : {}),
   ...(uaDonationsEnabled ? uaDonationsRoutesToNavigationLink : {}),
-  ...(fimsEnabled ? fimsRoutesToNavigationLink : {})
+  ...(fimsEnabled ? fimsRoutesToNavigationLink : {}),
+  ...(fciEnabled ? fciRoutesToNavigationLink : {})
 };
 
 export const testableALLOWED_ROUTE_NAMES = isTestEnv
@@ -95,13 +103,17 @@ export function getInternalRoute(href: string): string {
   try {
     const url = new URLParse(href, true);
     if (url.protocol.toLowerCase() === IO_INTERNAL_LINK_PROTOCOL) {
-      return fromNullable(allowedRoutes[url.host.toUpperCase()]).fold(
-        href.replace(IO_INTERNAL_LINK_PREFIX, "/"),
-        internalUrl =>
-          href.replace(
-            `${IO_INTERNAL_LINK_PREFIX}${url.host.toUpperCase()}`,
-            internalUrl
-          )
+      return pipe(
+        allowedRoutes[url.host.toUpperCase()],
+        O.fromNullable,
+        O.fold(
+          () => href.replace(IO_INTERNAL_LINK_PREFIX, "/"),
+          internalUrl =>
+            href.replace(
+              `${IO_INTERNAL_LINK_PREFIX}${url.host.toUpperCase()}`,
+              internalUrl
+            )
+        )
       );
     }
     return href;

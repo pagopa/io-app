@@ -1,5 +1,6 @@
-import { fromNullable } from "fp-ts/lib/Option";
-import { Text, View } from "native-base";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import { FlatList, StyleSheet } from "react-native";
 import { SvgXml } from "react-native-svg";
@@ -29,11 +30,6 @@ const BARCODE_HEIGHT = 52;
 const styles = StyleSheet.create({
   padded: {
     paddingHorizontal: customVariables.contentPadding
-  },
-  image: {
-    width: 300,
-    height: BARCODE_HEIGHT,
-    resizeMode: "contain"
   },
   note: {
     lineHeight: 16
@@ -77,9 +73,15 @@ export default class MedicalPrescriptionAttachments extends React.PureComponent<
   // We should show the SvgXml and share the png version.
   // These two image are the same. They differ only for the mime_type
   private getImage = (att: MessageAttachment) =>
-    fromNullable(this.state.barCodeContents[att.name]).fold(
-      undefined,
-      content => <SvgXml xml={content} width={"100%"} height={BARCODE_HEIGHT} />
+    pipe(
+      this.state.barCodeContents[att.name],
+      O.fromNullable,
+      O.fold(
+        () => undefined,
+        content => (
+          <SvgXml xml={content} width={"100%"} height={BARCODE_HEIGHT} />
+        )
+      )
     );
 
   private renderItem = ({ item }: { item: MessageAttachment }) => {
@@ -90,18 +92,18 @@ export default class MedicalPrescriptionAttachments extends React.PureComponent<
     return (
       <View style={styles.padded}>
         <View spacer={true} small={true} />
-        <Text style={styles.label}>
+        <NBText style={styles.label}>
           {I18n.t(`messages.medical.${item.name}`, {
             defaultValue: I18n.t("messages.medical.not_available")
           }).toUpperCase()}
-        </Text>
+        </NBText>
         {this.getImage(item)}
-        {value.isSome() && (
-          <Text semibold={true} style={{ textAlign: "center" }}>
+        {O.isSome(value) && (
+          <NBText semibold={true} style={{ textAlign: "center" }}>
             {I18n.t("global.symbols.asterisk")}
             {value.value}
             {I18n.t("global.symbols.asterisk")}
-          </Text>
+          </NBText>
         )}
         <View spacer={true} />
       </View>
@@ -116,21 +118,21 @@ export default class MedicalPrescriptionAttachments extends React.PureComponent<
     <React.Fragment>
       <ItemSeparatorComponent />
       <View spacer={true} />
-      <Text style={[styles.note, styles.padded]}>
+      <NBText style={[styles.note, styles.padded]}>
         {I18n.t("messages.medical.note")}
-      </Text>
+      </NBText>
     </React.Fragment>
   );
 
   private headerItem = (
     <View style={styles.padded}>
-      <Text bold={true} style={styles.customHeader}>
+      <NBText bold={true} style={styles.customHeader}>
         {I18n.t("messages.medical.nationalService").toUpperCase()}
-      </Text>
+      </NBText>
       {this.props.organizationName && (
-        <Text style={styles.label}>
+        <NBText style={styles.label}>
           {this.props.organizationName.toUpperCase()}
-        </Text>
+        </NBText>
       )}
       <View spacer={true} xsmall={true} />
       <ItemSeparatorComponent noPadded={true} bold={true} />

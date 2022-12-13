@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { isSome } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { useRef } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
@@ -46,7 +46,7 @@ const SickSelectDestinationScreen = (
   };
 
   if (
-    isSome(props.selectedBeneficiaryCategory) &&
+    O.isSome(props.selectedBeneficiaryCategory) &&
     props.selectedBeneficiaryCategory.value !== "sick"
   ) {
     props.failure("The selected category is not Sick");
@@ -64,7 +64,7 @@ const SickSelectDestinationScreen = (
         testID={"SickSelectDestinationScreen"}
         ref={elementRef}
       >
-        <ScrollView style={[IOStyles.horizontalContentPadding]}>
+        <ScrollView style={IOStyles.horizontalContentPadding}>
           <H1>
             {I18n.t("bonus.sv.voucherGeneration.sick.selectDestination.title")}
           </H1>

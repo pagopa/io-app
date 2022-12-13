@@ -1,5 +1,6 @@
 /* eslint-disable no-fallthrough */
 // disabled in order to allows comments between the switch
+import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 import {
   loadAllBonusActivations,
@@ -7,15 +8,15 @@ import {
 } from "../../features/bonus/bonusVacanze/store/actions/bonusVacanze";
 
 import trackBpdAction from "../../features/bonus/bpd/analytics/index";
+import trackCdc from "../../features/bonus/cdc/analytics/index";
 import trackCgnAction from "../../features/bonus/cgn/analytics/index";
 import trackEuCovidCertificateActions from "../../features/euCovidCert/analytics/index";
 import trackBancomatAction from "../../features/wallet/onboarding/bancomat/analytics/index";
-import trackPaypalOnboarding from "../../features/wallet/onboarding/paypal/analytics/index";
 import { trackBPayAction } from "../../features/wallet/onboarding/bancomatPay/analytics";
 import { trackCoBadgeAction } from "../../features/wallet/onboarding/cobadge/analytics";
+import trackPaypalOnboarding from "../../features/wallet/onboarding/paypal/analytics/index";
 import { trackPrivativeAction } from "../../features/wallet/onboarding/privative/analytics";
 import trackZendesk from "../../features/zendesk/analytics/index";
-import trackCdc from "../../features/bonus/cdc/analytics/index";
 import { mixpanel } from "../../mixpanel";
 import { getNetworkErrorMessage } from "../../utils/errors";
 import {
@@ -47,10 +48,7 @@ import {
   identificationSuccess
 } from "../actions/identification";
 import {
-  DEPRECATED_loadMessage,
-  DEPRECATED_loadMessages as loadMessages,
   removeMessages,
-  DEPRECATED_setMessageReadState,
   migrateToPaginatedMessages
 } from "../actions/messages";
 import { setMixpanelEnabled } from "../actions/mixpanel";
@@ -160,10 +158,8 @@ const trackAction =
       case getType(fetchTransactionsSuccess):
         return mp.track(action.type, {
           count: action.payload.data.length,
-          total: action.payload.total.getOrElse(-1)
+          total: O.getOrElse(() => -1)(action.payload.total)
         });
-      // messages
-      case getType(loadMessages.success):
       // end pay webview Payment (payment + onboarding credit card) actions (with properties)
       case getType(addCreditCardWebViewEnd):
         return mp.track(action.type, {
@@ -171,12 +167,12 @@ const trackAction =
         });
       case getType(paymentOutcomeCode):
         return mp.track(action.type, {
-          outCome: action.payload.outcome.getOrElse(""),
+          outCome: O.getOrElse(() => "")(action.payload.outcome),
           paymentMethodType: action.payload.paymentMethodType
         });
       case getType(addCreditCardOutcomeCode):
         return mp.track(action.type, {
-          outCome: action.payload.getOrElse("")
+          outCome: O.getOrElse(() => "")(action.payload)
         });
       case getType(paymentWebViewEnd):
         return mp.track(action.type, {
@@ -246,9 +242,6 @@ const trackAction =
           messagesIdsToRemoveFromCache: action.payload
         });
       }
-      case getType(DEPRECATED_setMessageReadState): {
-        return mp.track(action.type, action.payload);
-      }
       case getType(migrateToPaginatedMessages.request): {
         return mp.track("MESSAGES_MIGRATION_START", {
           total: Object.keys(action.payload).length
@@ -268,7 +261,6 @@ const trackAction =
       // logout / load message / delete wallets / failure
       case getType(deleteAllPaymentMethodsByFunction.failure):
       case getType(upsertUserDataProcessing.failure):
-      case getType(DEPRECATED_loadMessage.failure):
       case getType(logoutFailure):
         return mp.track(action.type, {
           reason: action.payload.error.message
@@ -282,7 +274,6 @@ const trackAction =
       case getType(profileUpsert.failure):
       case getType(userMetadataUpsert.failure):
       case getType(userMetadataLoad.failure):
-      case getType(loadMessages.failure):
       case getType(refreshPMTokenWhileAddCreditCard.failure):
       case getType(deleteWalletFailure):
       case getType(setFavouriteWalletFailure):
@@ -351,7 +342,6 @@ const trackAction =
       case getType(userMetadataLoad.request):
       case getType(userMetadataLoad.success):
       // messages
-      case getType(loadMessages.request):
       case getType(searchMessagesEnabled):
       // wallet
       case getType(addWalletCreditCardInit):
@@ -384,7 +374,6 @@ const trackAction =
       //  profile First time Login
       case getType(profileFirstLogin):
       // other
-      case getType(DEPRECATED_loadMessage.success):
       case getType(updateNotificationsInstallationToken):
       case getType(notificationsInstallationTokenRegistered):
       case getType(loadAllBonusActivations.request):

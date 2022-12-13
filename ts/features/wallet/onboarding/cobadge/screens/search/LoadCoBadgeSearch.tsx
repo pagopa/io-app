@@ -4,7 +4,7 @@ import { Dispatch } from "redux";
 import I18n from "../../../../../../i18n";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { WithTestID } from "../../../../../../types/WithTestID";
-import { useHardwareBackButton } from "../../../../../bonus/bonusVacanze/components/hooks/useHardwareBackButton";
+import { useHardwareBackButton } from "../../../../../../hooks/useHardwareBackButton";
 import { LoadingErrorComponent } from "../../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { searchUserCoBadge, walletAddCoBadgeCancel } from "../../store/actions";
 import { onboardingCoBadgeAbiSelectedSelector } from "../../store/reducers/abiSelected";

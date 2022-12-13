@@ -1,14 +1,7 @@
 import { getMonth, getYear } from "date-fns";
-import { left, right } from "fp-ts/lib/Either";
+import * as E from "fp-ts/lib/Either";
 import MockDate from "mockdate";
-import { range } from "fp-ts/lib/Array";
-import I18n, { availableTranslations, setLocale } from "../../i18n";
-import {
-  formatDateAsShortFormat,
-  formatDateAsShortFormatUTC,
-  getExpireStatus,
-  isExpired
-} from "../dates";
+import { getExpireStatus, isExpired } from "../dates";
 
 describe("getExpireStatus", () => {
   it("should be VALID", () => {
@@ -27,84 +20,56 @@ describe("getExpireStatus", () => {
   });
 
   it("should be none since the input is not valid", () => {
-    expect(isExpired("AAA", "BBB")).toEqual(left(Error("invalid input")));
-    expect(isExpired("01", "BBB")).toEqual(left(Error("invalid input")));
-    expect(isExpired("AAA", "2021")).toEqual(left(Error("invalid input")));
+    expect(isExpired("AAA", "BBB")).toEqual(E.left(Error("invalid input")));
+    expect(isExpired("01", "BBB")).toEqual(E.left(Error("invalid input")));
+    expect(isExpired("AAA", "2021")).toEqual(E.left(Error("invalid input")));
   });
 
   it("should mark the date as expired since we're passing a valid past date with 4-digit year", () => {
     MockDate.set(new Date(2020, 1, 1));
-    expect(isExpired(2, 2004)).toEqual(right(true));
-    expect(isExpired("2", "2004")).toEqual(right(true));
-    expect(isExpired("2", 2004)).toEqual(right(true));
-    expect(isExpired(2, "2004")).toEqual(right(true));
-    expect(isExpired("2", "04")).toEqual(right(true));
+    expect(isExpired(2, 2004)).toEqual(E.right(true));
+    expect(isExpired("2", "2004")).toEqual(E.right(true));
+    expect(isExpired("2", 2004)).toEqual(E.right(true));
+    expect(isExpired(2, "2004")).toEqual(E.right(true));
+    expect(isExpired("2", "04")).toEqual(E.right(true));
   });
 
   it("shouldn't mark the date as expired when passing as argument the current month", () => {
     // 01/01/2020
     MockDate.set(new Date(2020, 0, 1));
-    expect(isExpired(1, 2020)).toEqual(right(false));
+    expect(isExpired(1, 2020)).toEqual(E.right(false));
     // 31/01/2020
     MockDate.set(new Date(2020, 0, 31));
-    expect(isExpired(1, 2020)).toEqual(right(false));
+    expect(isExpired(1, 2020)).toEqual(E.right(false));
 
     // now: 2022-02-01
     MockDate.set(new Date(2022, 1, 1));
     // card: 2023-01
-    expect(isExpired("1", "23")).toEqual(right(false));
+    expect(isExpired("1", "23")).toEqual(E.right(false));
 
     // now: 2022-12-31
     MockDate.set(new Date(2022, 11, 31));
     // card: 2023-01
-    expect(isExpired("1", "23")).toEqual(right(false));
+    expect(isExpired("1", "23")).toEqual(E.right(false));
   });
 
   it("should mark the date as expired when passing as argument the previous month", () => {
     // 01/01/2020
     const now = new Date(2020, 0, 1);
     MockDate.set(now);
-    expect(isExpired(12, 2019)).toEqual(right(true));
+    expect(isExpired(12, 2019)).toEqual(E.right(true));
   });
 
   it("should mark the card as valid, not expired", () => {
     const today = new Date();
     expect(isExpired(getMonth(today) + 1, getYear(today))).toEqual(
-      right(false)
+      E.right(false)
     );
     expect(
       isExpired(
         (getMonth(today) + 1).toString(),
         today.getFullYear().toString().substring(2, 4)
       )
-    ).toEqual(right(false));
-  });
-});
-
-describe("formatDateAsShortFormat", () => {
-  availableTranslations.forEach(locale => {
-    setLocale(locale);
-    const toTest: ReadonlyArray<[Date, string]> = [
-      [new Date(1970, 0, 1), "01/01/1970"],
-      [new Date(2020, 10, 30), "30/11/2020"],
-      [new Date(1900, 5, 5), "05/06/1900"],
-      [new Date(1900, 13, 55), "27/03/1901"], // handle the overflow,
-      [new Date("not a date"), I18n.t("global.date.invalid")] // handle invalid date
-    ];
-    toTest.forEach(tt => {
-      expect(formatDateAsShortFormat(tt[0])).toEqual(tt[1]);
-    });
-  });
-});
-
-describe("formatDateAsShortFormatUTC", () => {
-  const expected = "12/01/1983";
-  const toTest: ReadonlyArray<Date> = range(0, 23).map(
-    value =>
-      new Date(`1983-01-12T${value.toString().padStart(2, "0")}:00:00.000Z`)
-  );
-
-  toTest.forEach(tt => {
-    expect(formatDateAsShortFormatUTC(tt)).toEqual(expected);
+    ).toEqual(E.right(false));
   });
 });

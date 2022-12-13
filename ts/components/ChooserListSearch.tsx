@@ -1,6 +1,6 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Option } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
-import { Text, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import React, { ComponentProps } from "react";
 import { Image, ImageSourcePropType, StyleSheet } from "react-native";
 import I18n from "../i18n";
@@ -85,12 +85,14 @@ class ChooserListSearch<T> extends React.PureComponent<Props<T>, State<T>> {
       <View style={styles.emptyContentWrapper}>
         <View spacer={true} />
 
-        <Text style={styles.emptyTitle} bold={true}>
+        <NBText style={styles.emptyTitle} bold={true}>
           {I18n.t("global.search.noResultsTitle")}
-        </Text>
+        </NBText>
 
         {noSearchResultsSubtitle && (
-          <Text style={styles.emptySubtitle}>{noSearchResultsSubtitle}</Text>
+          <NBText style={styles.emptySubtitle}>
+            {noSearchResultsSubtitle}
+          </NBText>
         )}
 
         <Image

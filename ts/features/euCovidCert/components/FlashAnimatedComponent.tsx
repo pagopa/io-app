@@ -1,7 +1,17 @@
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import * as React from "react";
 import { useCallback } from "react";
 import { Animated, Easing, StyleSheet } from "react-native";
-import * as React from "react";
-import { Millisecond } from "italia-ts-commons/lib/units";
+import {
+  hexToRgba,
+  IOColors
+} from "../../../components/core/variables/IOColors";
+
+const whiteBgTransparent = hexToRgba(IOColors.white, 0);
+const whiteBg = hexToRgba(IOColors.white, 1);
+const defaultAnimationDuration = 240 as Millisecond;
+export type FlashAnimationState = "fadeIn" | "fadeOut" | undefined;
+
 const styles = StyleSheet.create({
   hover: {
     minWidth: "100%",
@@ -20,8 +30,6 @@ type Props = {
   onFadeInCompleted?: () => void;
   onFadeOutCompleted?: () => void;
 };
-const defaultAnimationDuration = 240 as Millisecond;
-export type FlashAnimationState = "fadeIn" | "fadeOut" | undefined;
 
 /* an overlay animated view. it is used when screenshot is captured, to simulate flash effect */
 export const FlashAnimatedComponent = (props: Props) => {
@@ -29,7 +37,7 @@ export const FlashAnimatedComponent = (props: Props) => {
   const animation = React.useRef<Animated.CompositeAnimation>();
   const backgroundInterpolation = backgroundAnimation.interpolate({
     inputRange: [0, 1],
-    outputRange: ["rgba(255,255,255,0)", "rgba(255,255,255,1)"]
+    outputRange: [whiteBgTransparent, whiteBg]
   });
   const { state, onFadeInCompleted, onFadeOutCompleted, animationDuration } =
     props;

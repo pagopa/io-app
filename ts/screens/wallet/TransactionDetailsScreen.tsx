@@ -1,10 +1,7 @@
-import {
-  CompatNavigationProp,
-  NavigationEvents
-} from "@react-navigation/compat";
-import { fromNullable } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
-import { Text, View } from "native-base";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import {
   BackHandler,
@@ -28,7 +25,7 @@ import { LightModalContextInterface } from "../../components/ui/LightModal";
 import { PaymentSummaryComponent } from "../../components/wallet/PaymentSummaryComponent";
 import { SlidedContentComponent } from "../../components/wallet/SlidedContentComponent";
 import I18n from "../../i18n";
-import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../navigation/params/WalletParamsList";
 import { Dispatch } from "../../store/actions/types";
 import { backToEntrypointPayment } from "../../store/actions/wallet/payment";
@@ -51,11 +48,10 @@ export type TransactionDetailsScreenNavigationParams = Readonly<{
   transaction: Transaction;
 }>;
 
-type OwnProps = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<WalletParamsList, "WALLET_TRANSACTION_DETAILS">
-  >;
-};
+type OwnProps = IOStackNavigationRouteProps<
+  WalletParamsList,
+  "WALLET_TRANSACTION_DETAILS"
+>;
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -68,13 +64,6 @@ type Props = ReturnType<typeof mapStateToProps> &
  */
 
 const styles = StyleSheet.create({
-  pspLogo: {
-    maxWidth: 80,
-    maxHeight: 32,
-    width: "100%",
-    height: "100%",
-    resizeMode: "contain"
-  },
   cardLogo: {
     alignSelf: "flex-end",
     height: 30,
@@ -84,11 +73,6 @@ const styles = StyleSheet.create({
     fontSize: 20
   },
   row: { flexDirection: "row", justifyContent: "space-between" },
-  cardIcon: {
-    alignSelf: "flex-end",
-    height: 30,
-    width: 48
-  },
   centered: { alignItems: "center" },
   flex: {
     flex: 1,
@@ -112,12 +96,18 @@ type State = {
  */
 class TransactionDetailsScreen extends React.Component<Props, State> {
   private subscription: NativeEventSubscription | undefined;
+  private navigationEventUnsubscribe!: () => void;
   constructor(props: Props) {
     super(props);
     this.state = { showFullReason: false };
   }
 
   public componentDidMount() {
+    // eslint-disable-next-line functional/immutable-data
+    this.navigationEventUnsubscribe = this.props.navigation.addListener(
+      "focus",
+      this.handleWillFocus
+    );
     // eslint-disable-next-line functional/immutable-data
     this.subscription = BackHandler.addEventListener(
       "hardwareBackPress",
@@ -127,6 +117,7 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
 
   public componentWillUnmount() {
     this.subscription?.remove();
+    this.navigationEventUnsubscribe();
   }
 
   private handleBackPress = () => {
@@ -135,7 +126,7 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
   };
 
   private handleWillFocus = () => {
-    const transaction = this.props.navigation.getParam("transaction");
+    const transaction = this.props.route.params.transaction;
     // Fetch psp only if the store not contains this psp
     if (transaction.idPsp !== undefined && this.props.psp === undefined) {
       this.props.fetchPsp(transaction.idPsp);
@@ -143,7 +134,7 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
   };
 
   private getData = () => {
-    const transaction = this.props.navigation.getParam("transaction");
+    const transaction = this.props.route.params.transaction;
     const amount = formatNumberCentsToAmount(transaction.amount.amount, true);
 
     // fee
@@ -162,20 +153,21 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
       .concat(" - ")
       .concat(transaction.created.toLocaleTimeString());
 
-    const paymentMethodIcon = fromNullable(
+    const paymentMethodIcon = pipe(
       transactionWallet &&
         transactionWallet.creditCard &&
-        transactionWallet.creditCard.brandLogo
-    )
-      .map(logo => (logo.trim().length > 0 ? logo.trim() : undefined))
-      .getOrElse(undefined);
+        transactionWallet.creditCard.brandLogo,
+      O.fromNullable,
+      O.map(logo => (logo.trim().length > 0 ? logo.trim() : undefined)),
+      O.toUndefined
+    );
 
     const paymentMethodBrand =
       transactionWallet &&
       transactionWallet.creditCard &&
       transactionWallet.creditCard.brand;
 
-    const iuv = getTransactionIUV(transaction.description).toUndefined();
+    const iuv = pipe(getTransactionIUV(transaction.description), O.toUndefined);
 
     const idTransaction = transaction.id;
     return {
@@ -196,15 +188,15 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
 
   public render(): React.ReactNode {
     const { psp } = this.props;
-    const transaction = this.props.navigation.getParam("transaction");
+    const transaction = this.props.route.params.transaction;
     const data = this.getData();
 
     const standardRow = (label: string, value: string) => (
       <View style={styles.row}>
-        <Text style={styles.flex}>{label}</Text>
-        <Text bold={true} dark={true} selectable={true}>
+        <NBText style={styles.flex}>{label}</NBText>
+        <NBText bold={true} dark={true} selectable={true}>
           {value}
-        </Text>
+        </NBText>
       </View>
     );
 
@@ -220,7 +212,6 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
           backgroundColor={IOColors.bluegrey}
           barStyle={"light-content"}
         />
-        <NavigationEvents onWillFocus={this.handleWillFocus} />
         <SlidedContentComponent hasFlatBottom={true}>
           <PaymentSummaryComponent
             title={I18n.t("wallet.receipt")}
@@ -240,14 +231,14 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
             {I18n.t("wallet.transactionFullReason")}
           </Link>
           {this.state.showFullReason && (
-            <Text
+            <NBText
               selectable={true}
               onLongPress={() =>
                 clipboardSetStringWithFeedback(data.fullReason)
               }
             >
               {data.fullReason}
-            </Text>
+            </NBText>
           )}
           <View spacer={true} large={true} />
           {data.iuv && standardRow(I18n.t("payment.IUV"), data.iuv)}
@@ -282,12 +273,16 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
 
           {/** Total amount (amount + fee) */}
           <View style={styles.row}>
-            <Text style={[styles.bigText, styles.flex]} bold={true} dark={true}>
+            <NBText
+              style={[styles.bigText, styles.flex]}
+              bold={true}
+              dark={true}
+            >
               {I18n.t("wallet.firstTransactionSummary.total")}
-            </Text>
-            <Text style={styles.bigText} bold={true} dark={true}>
+            </NBText>
+            <NBText style={styles.bigText} bold={true} dark={true}>
               {data.totalAmount}
-            </Text>
+            </NBText>
           </View>
 
           {(data.paymentMethodIcon || (psp && psp.logoPSP)) && (
@@ -303,7 +298,7 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
 
           {data.paymentMethodIcon ? (
             <View style={[styles.row, styles.centered]}>
-              <Text>{I18n.t("wallet.paymentMethod")}</Text>
+              <NBText>{I18n.t("wallet.paymentMethod")}</NBText>
               <Image
                 style={styles.cardLogo}
                 source={{ uri: data.paymentMethodIcon }}
@@ -311,7 +306,7 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
             </View>
           ) : (
             data.paymentMethodBrand && (
-              <Text bold={true}>{data.paymentMethodBrand}</Text>
+              <NBText bold={true}>{data.paymentMethodBrand}</NBText>
             )
           )}
 
@@ -321,11 +316,11 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
 
           {/** Transaction id */}
           <View>
-            <Text>
+            <NBText>
               {I18n.t("wallet.firstTransactionSummary.idTransaction")}
-            </Text>
+            </NBText>
             <View style={styles.row}>
-              <Text bold={true}>{data.idTransaction}</Text>
+              <NBText bold={true}>{data.idTransaction}</NBText>
               <CopyButtonComponent textToCopy={data.idTransaction.toString()} />
             </View>
           </View>
@@ -338,7 +333,7 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
             block={true}
             onPress={this.handleBackPress}
           >
-            <Text>{I18n.t("global.buttons.close")}</Text>
+            <NBText>{I18n.t("global.buttons.close")}</NBText>
           </ButtonDefaultOpacity>
           <View spacer={true} />
         </SlidedContentComponent>
@@ -353,11 +348,15 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
-  const transaction = ownProps.navigation.getParam("transaction");
+  const transaction = ownProps.route.params.transaction;
   const idPsp = String(transaction.idPsp);
 
-  const maybePotPspState = fromNullable(pspStateByIdSelector(idPsp)(state));
-  const potPsp = maybePotPspState.map(_ => _.psp).getOrElse(pot.none);
+  const potPsp = pipe(
+    pspStateByIdSelector(idPsp)(state),
+    O.fromNullable,
+    O.map(_ => _.psp),
+    O.getOrElseW(() => pot.none)
+  );
   const isLoading = pot.isLoading(potPsp);
 
   return {

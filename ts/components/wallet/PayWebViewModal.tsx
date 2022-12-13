@@ -1,22 +1,22 @@
-import WebView from "react-native-webview";
+import * as O from "fp-ts/lib/Option";
+import _ from "lodash";
 import React from "react";
 import { Modal, StyleSheet, View } from "react-native";
-import _ from "lodash";
-import { fromNullable, Option } from "fp-ts/lib/Option";
-import { v4 as uuid } from "uuid";
+import WebView from "react-native-webview";
 import { WebViewNavigation } from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";
+import { v4 as uuid } from "uuid";
 
-import BaseScreenComponent from "../screens/BaseScreenComponent";
-import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
-import { RefreshIndicator } from "../ui/RefreshIndicator";
-import { useHardwareBackButton } from "../../features/bonus/bonusVacanze/components/hooks/useHardwareBackButton";
-import { isTestEnv } from "../../utils/environment";
-import I18n from "../../i18n";
 import { InfoBox } from "../../components/box/InfoBox";
-import { IOColors } from "../../components/core/variables/IOColors";
 import { Label } from "../../components/core/typography/Label";
+import { IOColors } from "../../components/core/variables/IOColors";
+import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
+import I18n from "../../i18n";
 import { WithTestID } from "../../types/WithTestID";
+import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
+import { isTestEnv } from "../../utils/environment";
+import BaseScreenComponent from "../screens/BaseScreenComponent";
+import { RefreshIndicator } from "../ui/RefreshIndicator";
 
 type OwnProps = {
   // the uri to send the form data thought POST
@@ -38,7 +38,7 @@ type OwnProps = {
   // outcomeCode could be the outcome code detected during navigation
   // navigations urls is the list of urls browsed during navigation
   onFinish: (
-    outcomeCode: Option<string>,
+    outcomeCode: O.Option<string>,
     navigationUrls: ReadonlyArray<string>
   ) => void;
   onGoBack: () => void;
@@ -163,7 +163,7 @@ export const PayWebViewModal = (props: Props) => {
       }
       // found exit path
       if (isFinish) {
-        props.onFinish(fromNullable(outcome), navigationUrlsRef.current);
+        props.onFinish(O.fromNullable(outcome), navigationUrlsRef.current);
         return false;
       }
     }

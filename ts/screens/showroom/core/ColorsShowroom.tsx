@@ -5,11 +5,15 @@ import { H2 } from "../../../components/core/typography/H2";
 import { H5 } from "../../../components/core/typography/H5";
 import {
   IOColors,
-  IOColorGradients
+  IOColorGradients,
+  hexToRgba
 } from "../../../components/core/variables/IOColors";
 import { ShowroomSection } from "../components/ShowroomSection";
 
 const colorItemGutter = 16;
+const sectionTitleMargin = 16;
+const colorItemBorder = hexToRgba(IOColors.black, 0.1);
+const colorPillBg = hexToRgba(IOColors.black, 0.3);
 
 const styles = StyleSheet.create({
   itemsWrapper: {
@@ -32,7 +36,7 @@ const styles = StyleSheet.create({
     padding: 8,
     borderRadius: 4,
     alignItems: "flex-end",
-    borderColor: "rgba(0, 0, 0, 0.1)",
+    borderColor: colorItemBorder,
     borderWidth: 1
   },
   gradientItem: {
@@ -41,14 +45,14 @@ const styles = StyleSheet.create({
     padding: 12,
     alignItems: "flex-end",
     justifyContent: "space-between",
-    borderColor: "rgba(0, 0, 0, 0.1)",
+    borderColor: colorItemBorder,
     borderWidth: 1
   },
   colorPill: {
     overflow: "hidden",
-    color: "#FFFFFF",
+    color: IOColors.white,
     fontSize: 9,
-    backgroundColor: "rgba(0, 0, 0, 0.3)",
+    backgroundColor: colorPillBg,
     padding: 4,
     borderRadius: 4
   }
@@ -56,7 +60,11 @@ const styles = StyleSheet.create({
 
 export const ColorsShowroom = () => (
   <ShowroomSection title={"Color palette"}>
-    <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
+    <H2
+      color={"bluegrey"}
+      weight={"SemiBold"}
+      style={{ marginBottom: sectionTitleMargin }}
+    >
       Plain
     </H2>
     <View style={styles.itemsWrapper}>
@@ -68,7 +76,11 @@ export const ColorsShowroom = () => (
         />
       ))}
     </View>
-    <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
+    <H2
+      color={"bluegrey"}
+      weight={"SemiBold"}
+      style={{ marginBottom: sectionTitleMargin }}
+    >
       Gradients
     </H2>
     <View style={styles.itemsWrapper}>

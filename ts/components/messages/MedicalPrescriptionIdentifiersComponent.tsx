@@ -1,5 +1,6 @@
-import { fromNullable } from "fp-ts/lib/Option";
-import { Text, View } from "native-base";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { PrescriptionData } from "../../../definitions/backend/PrescriptionData";
@@ -33,11 +34,11 @@ const styles = StyleSheet.create({
 export default class MedicalPrescriptionIdentifiersComponent extends React.PureComponent<Props> {
   private renderItem = (label: string, value: string) => (
     <React.Fragment>
-      <Text>{label}</Text>
+      <NBText>{label}</NBText>
       <View style={styles.row}>
-        <Text style={styles.value} bold={true}>
+        <NBText style={styles.value} bold={true}>
           {value}
-        </Text>
+        </NBText>
         <CopyButtonComponent textToCopy={value} />
       </View>
     </React.Fragment>
@@ -45,13 +46,22 @@ export default class MedicalPrescriptionIdentifiersComponent extends React.PureC
 
   public render() {
     const { prescriptionData } = this.props;
-    const iup = fromNullable(prescriptionData.iup).fold(
-      I18n.t("messages.medical.not_available"),
-      s => s
+    const iup = pipe(
+      prescriptionData.iup,
+      O.fromNullable,
+      O.fold(
+        () => I18n.t("messages.medical.not_available"),
+        s => s
+      )
     );
-    const prescriberFiscalCode = fromNullable(
-      prescriptionData.prescriber_fiscal_code
-    ).fold(I18n.t("messages.medical.not_available"), s => s as string);
+    const prescriberFiscalCode = pipe(
+      prescriptionData.prescriber_fiscal_code,
+      O.fromNullable,
+      O.fold(
+        () => I18n.t("messages.medical.not_available"),
+        s => s as string
+      )
+    );
 
     return (
       <View style={styles.container}>

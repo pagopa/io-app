@@ -1,4 +1,4 @@
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
 import { Alert, StyleSheet } from "react-native";
@@ -38,9 +38,6 @@ type State = {
 };
 
 const styles = StyleSheet.create({
-  mainContent: {
-    flex: 1
-  },
   markdownContainer: {
     paddingLeft: themeVariables.contentPadding,
     paddingRight: themeVariables.contentPadding

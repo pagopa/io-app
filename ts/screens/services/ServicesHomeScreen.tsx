@@ -21,9 +21,10 @@
  * tabs are hidden and they are displayed renderServiceLoadingPlaceholder/renderErrorPlaceholder
  *
  */
-import { Option } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
-import { Tab, Tabs, Text, View } from "native-base";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import {
   Animated,
@@ -45,9 +46,7 @@ import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { MIN_CHARACTER_SEARCH_TEXT } from "../../components/search/SearchButton";
 import { SearchNoResultMessage } from "../../components/search/SearchNoResultMessage";
 import SectionStatusComponent from "../../components/SectionStatus";
-import LocalServicesWebView from "../../components/services/LocalServicesWebView";
 import ServicesSearch from "../../components/services/ServicesSearch";
-import ServicesTab from "../../components/services/ServicesTab";
 import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
 import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
 import IconFont from "../../components/ui/IconFont";
@@ -57,6 +56,7 @@ import {
   AppParamsList,
   IOStackNavigationRouteProps
 } from "../../navigation/params/AppParamsList";
+import ServicesHomeTabNavigator from "../../navigation/ServicesHomeTabNavigator";
 import {
   navigateToServiceDetailsScreen,
   navigateToServicePreferenceScreen
@@ -93,7 +93,6 @@ import {
   UserMetadata,
   userMetadataSelector
 } from "../../store/reducers/userMetadata";
-import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
 import { HEADER_HEIGHT } from "../../utils/constants";
 import {
@@ -107,7 +106,7 @@ type OwnProps = IOStackNavigationRouteProps<AppParamsList>;
 
 type ReduxMergedProps = Readonly<{
   updateOrganizationsOfInterestMetadata: (
-    selectedItemIds: Option<Set<string>>
+    selectedItemIds: O.Option<Set<string>>
   ) => void;
 }>;
 
@@ -131,6 +130,8 @@ type DataLoadFailure =
   | "userMetadaLoadFailure"
   | undefined;
 
+const customSpacerHeight = 64;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1
@@ -139,35 +140,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-end"
   },
-  tabBarContainer: {
-    elevation: 0,
-    height: 40
-  },
-  tabBarUnderline: {
-    borderBottomColor: customVariables.tabUnderlineColor,
-    borderBottomWidth: customVariables.tabUnderlineHeight
-  },
-  tabBarUnderlineActive: {
-    height: customVariables.tabUnderlineHeight,
-    // borders do not overlap eachother, but stack naturally
-    marginBottom: -customVariables.tabUnderlineHeight,
-    backgroundColor: customVariables.contentPrimaryBackground
-  },
-  searchDisableIcon: {
-    color: customVariables.headerFontColor
-  },
-  organizationLogo: {
-    marginBottom: 0
-  },
-  activeTextStyle: {
-    ...makeFontStyleObject(Platform.select, "600"),
-    fontSize: Platform.OS === "android" ? 16 : undefined,
-    fontWeight: Platform.OS === "android" ? "normal" : "bold",
-    color: customVariables.brandPrimary
-  },
-  textStyle: {
-    color: customVariables.textColor
-  },
   center: {
     alignItems: "center"
   },
@@ -175,46 +147,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: customVariables.contentPadding
   },
   customSpacer: {
-    height: customVariables.spacerHeight + customVariables.h1LineHeight
-  },
-  errorText: {
-    fontSize: customVariables.fontSize2,
-    paddingTop: customVariables.contentPadding
-  },
-  varBar: {
-    flexDirection: "row",
-    zIndex: 1,
-    justifyContent: "space-around",
-    backgroundColor: IOColors.white,
-    padding: 10
-  },
-  buttonBar: {
-    flex: 2,
-    marginEnd: 5
-  },
-  // TODO: remove this section after the resolution of https://www.pivotaltracker.com/story/show/172431153 */
-  helpButton: {
-    justifyContent: "center",
-    alignItems: "center",
-    alignSelf: "center",
-    paddingTop: 0,
-    paddingBottom: 0,
-    paddingLeft: 8,
-    height: 40,
-    backgroundColor: IOColors.white,
-    borderWidth: 1,
-    borderColor: customVariables.brandPrimary
-  },
-  helpButtonIcon: {
-    lineHeight: 24,
-    color: customVariables.brandPrimary
-  },
-  helpButtonText: {
-    paddingRight: 10,
-    paddingBottom: 0,
-    paddingLeft: 10,
-    lineHeight: 20,
-    color: customVariables.brandPrimary
+    height: customSpacerHeight
   },
   headerLinkContainer: {
     flexDirection: "row",
@@ -222,7 +155,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const AnimatedTabs = Animated.createAnimatedComponent(Tabs);
 const AnimatedScreenContentHeader =
   Animated.createAnimatedComponent(ScreenContentHeader);
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
@@ -315,8 +247,8 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           source={require("../../../img/services/icon-loading-services.png")}
         />
         <View spacer={true} extralarge={true} />
-        <Text bold={true}>{I18n.t("services.loading.title")}</Text>
-        <Text>{I18n.t("services.loading.subtitle")}</Text>
+        <NBText bold={true}>{I18n.t("services.loading.title")}</NBText>
+        <NBText>{I18n.t("services.loading.subtitle")}</NBText>
       </View>
     );
   }
@@ -453,8 +385,9 @@ class ServicesHomeScreen extends React.Component<Props, State> {
    * Render ServicesSearch component.
    */
   private renderSearch = () =>
-    this.props.searchText
-      .map(_ =>
+    pipe(
+      this.props.searchText,
+      O.map(_ =>
         _.length < MIN_CHARACTER_SEARCH_TEXT ? (
           <SearchNoResultMessage errorType={"InvalidSearchBarText"} />
         ) : (
@@ -465,8 +398,11 @@ class ServicesHomeScreen extends React.Component<Props, State> {
             searchText={_}
           />
         )
-      )
-      .getOrElse(<SearchNoResultMessage errorType={"InvalidSearchBarText"} />);
+      ),
+      O.getOrElse(() => (
+        <SearchNoResultMessage errorType={"InvalidSearchBarText"} />
+      ))
+    );
 
   private refreshServices = () => {
     this.setState({
@@ -483,70 +419,14 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     this.props.refreshVisibleServices();
   };
 
-  private handleOnScroll = (value: number) => {
-    const { currentTab, isLongPressEnabled } = this.state;
-    // Disable the long press option (if displayed) when the user changes tab
-    if (isLongPressEnabled && Math.abs(value - currentTab) > 0.5) {
-      this.setState({
-        isLongPressEnabled: false
-      });
-    }
-  };
-
-  private handleOnChangeTab = (evt: any) => {
-    const { currentTab, isLongPressEnabled } = this.state;
-    const nextTab: number = evt.i;
-    const isSameTab = currentTab === nextTab;
-    this.setState({
-      currentTab: nextTab,
-      isLongPressEnabled: isSameTab && isLongPressEnabled
-    });
-  };
-
   /**
    * Render Locals, Nationals and Other services tabs.
    */
-  private renderTabs = () => {
-    const { nationalTabSections, potUserMetadata, isLoadingServices } =
-      this.props;
-    const isRefreshing =
-      isLoadingServices ||
-      pot.isLoading(potUserMetadata) ||
-      pot.isUpdating(potUserMetadata);
-    return (
-      <View style={IOStyles.flex}>
-        <AnimatedTabs
-          locked={true}
-          tabContainerStyle={[styles.tabBarContainer, styles.tabBarUnderline]}
-          tabBarUnderlineStyle={styles.tabBarUnderlineActive}
-          onScroll={this.handleOnScroll}
-          onChangeTab={this.handleOnChangeTab}
-          initialPage={0}
-        >
-          <Tab
-            activeTextStyle={styles.activeTextStyle}
-            textStyle={styles.textStyle}
-            heading={I18n.t("services.tab.national")}
-          >
-            <ServicesTab
-              sections={nationalTabSections}
-              isRefreshing={isRefreshing}
-              onRefresh={this.refreshScreenContent}
-              onServiceSelect={this.onServiceSelect}
-              tabScrollOffset={this.animatedTabScrollPositions[1]}
-            />
-          </Tab>
-          <Tab
-            activeTextStyle={styles.activeTextStyle}
-            textStyle={styles.textStyle}
-            heading={I18n.t("services.tab.locals")}
-          >
-            <LocalServicesWebView onServiceSelect={this.onServiceSelect} />
-          </Tab>
-        </AnimatedTabs>
-      </View>
-    );
-  };
+  private renderTabs = () => (
+    <View style={IOStyles.flex}>
+      <ServicesHomeTabNavigator />
+    </View>
+  );
 }
 
 const mapStateToProps = (state: GlobalState) => {
@@ -682,9 +562,9 @@ const mergeProps = (
   // If the user updates the area of interest, the upsert of
   // the user metadata stored on backend is triggered
   const updateOrganizationsOfInterestMetadata = (
-    selectedItemIds: Option<Set<string>>
+    selectedItemIds: O.Option<Set<string>>
   ) => {
-    if (selectedItemIds.isSome() && stateProps.userMetadata) {
+    if (O.isSome(selectedItemIds) && stateProps.userMetadata) {
       const updatedAreasOfInterest = Array.from(selectedItemIds.value);
       dispatchProps.saveSelectedOrganizationItems(
         stateProps.userMetadata,

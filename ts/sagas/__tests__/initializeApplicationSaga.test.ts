@@ -1,5 +1,5 @@
-import { none, some } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { testSaga } from "redux-saga-test-plan";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import mockedProfile from "../../__mocks__/initializedProfile";
@@ -23,6 +23,7 @@ import {
 } from "../profile";
 import {
   initializeApplicationSaga,
+  testCancellAllLocalNotifications,
   testWaitForNavigatorServiceInitialization
 } from "../startup";
 import { watchSessionExpiredSaga } from "../startup/watchSessionExpiredSaga";
@@ -57,6 +58,8 @@ describe("initializeApplicationSaga", () => {
       .next()
       .call(testWaitForNavigatorServiceInitialization!)
       .next()
+      .call(testCancellAllLocalNotifications!)
+      .next()
       .call(previousInstallationDataDeleteSaga)
       .next()
       .put(previousInstallationDataDeleteSuccess())
@@ -64,7 +67,7 @@ describe("initializeApplicationSaga", () => {
       .next()
       .select(profileSelector)
       .next(pot.some(profile))
-      .fork(watchProfileEmailValidationChangedSaga, none)
+      .fork(watchProfileEmailValidationChangedSaga, O.none)
       .next()
       .put(resetProfileState())
       .next()
@@ -73,10 +76,9 @@ describe("initializeApplicationSaga", () => {
       .fork(watchSessionExpiredSaga)
       .next()
       .next(200) // checkSession
-      .next() // updateInstallationSaga
       .select(sessionInfoSelector)
-      .next(none)
-      .next(none) // loadSessionInformationSaga
+      .next(O.none)
+      .next(O.none) // loadSessionInformationSaga
       .put(startApplicationInitialization());
   });
 
@@ -89,6 +91,8 @@ describe("initializeApplicationSaga", () => {
       .next()
       .call(testWaitForNavigatorServiceInitialization!)
       .next()
+      .call(testCancellAllLocalNotifications!)
+      .next()
       .call(previousInstallationDataDeleteSaga)
       .next()
       .put(previousInstallationDataDeleteSuccess())
@@ -96,7 +100,7 @@ describe("initializeApplicationSaga", () => {
       .next()
       .select(profileSelector)
       .next(pot.some(profile))
-      .fork(watchProfileEmailValidationChangedSaga, none)
+      .fork(watchProfileEmailValidationChangedSaga, O.none)
       .next(pot.some(profile))
       .put(resetProfileState())
       .next()
@@ -117,6 +121,8 @@ describe("initializeApplicationSaga", () => {
       .next()
       .call(testWaitForNavigatorServiceInitialization!)
       .next()
+      .call(testCancellAllLocalNotifications!)
+      .next()
       .call(previousInstallationDataDeleteSaga)
       .next()
       .put(previousInstallationDataDeleteSuccess())
@@ -124,7 +130,7 @@ describe("initializeApplicationSaga", () => {
       .next()
       .select(profileSelector)
       .next(pot.some(profile))
-      .fork(watchProfileEmailValidationChangedSaga, none)
+      .fork(watchProfileEmailValidationChangedSaga, O.none)
       .next(pot.some(profile))
       .put(resetProfileState())
       .next()
@@ -133,10 +139,9 @@ describe("initializeApplicationSaga", () => {
       .fork(watchSessionExpiredSaga)
       .next()
       .next(200) // check session
-      .next() // updateInstallationSaga
       .select(sessionInfoSelector)
       .next(
-        some({
+        O.some({
           spidLevel: "https://www.spid.gov.it/SpidL2",
           walletToken: "wallet_token"
         })

@@ -1,5 +1,5 @@
-import { none } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
 import { View } from "native-base";
 import * as React from "react";
 import { useEffect, useState } from "react";
@@ -29,9 +29,6 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     justifyContent: "space-between"
-  },
-  addButton: {
-    width: "100%"
   }
 });
 
@@ -193,7 +190,7 @@ const WalletPaymentMethodBpdList: React.FunctionComponent<Props> = props => {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   addPaymentMethod: () => {
     addPaymentMethod(() =>
-      navigateToWalletAddPaymentMethod({ inPayment: none })
+      navigateToWalletAddPaymentMethod({ inPayment: O.none })
     );
   },
   loadWallets: () => dispatch(fetchWalletsRequestWithExpBackoff())

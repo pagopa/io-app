@@ -7,7 +7,7 @@
 
 /* eslint-disable no-invalid-this */
 
-import { Millisecond } from "italia-ts-commons/lib/units";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import materialVariables from "native-base/src/theme/variables/material";
 import { Platform } from "react-native";
 import { IOColors } from "../components/core/variables/IOColors";
@@ -32,7 +32,6 @@ const customVariables = Object.assign(materialVariables, {
   btnHeight: 40,
   btnWidgetHeight: 24,
   btnFontSize: 16,
-  btnIconSize: 24,
 
   btnXSmallHeight: 32,
   btnXSmallLineHeight: 18,
@@ -44,6 +43,8 @@ const customVariables = Object.assign(materialVariables, {
   btnSmallFontSize: 14,
   btnSmallIconSize: 20,
 
+  btnBorderRadius: 4,
+
   get btnLightTextColor(): ThemeSimpleValue {
     return this.textColor;
   },
@@ -52,25 +53,21 @@ const customVariables = Object.assign(materialVariables, {
   /* Don't put hardcoded color values here.
     Add them to IOColors object, instead.
   */
-  brandPrimary: "#0066CC",
-  brandPrimaryLight: "#99CCFF",
-  brandHighlight: "#00C5CA",
-  brandHighLighter: "#00CDD2",
-  brandSuccess: "#007005",
-  brandDanger: "#CC3333",
+  brandPrimary: IOColors.blue /* NB Theme variable, don't remove */,
+  colorHighlight: IOColors.aqua,
+  brandSuccess: IOColors.green /* NB Theme variable, don't remove */,
+  brandDanger: IOColors.red /* NB Theme variable, don't remove */,
 
   btnLightBorderColor: IOColors.grey,
 
   cardShadow: IOColors.black,
-  cardExpiredTextColor: "#FF0000",
   cardTextColor: IOColors.bluegreyDark,
 
-  calendarExpirableColor: "#D0021B",
+  calendarExpirableColor: IOColors.red,
 
   itemSeparator: IOColors.bluegreyLight,
 
-  toastColor: "#C1f4f2",
-  badgeYellow: "#ffc824",
+  toastColor: IOColors.aquaUltraLight,
 
   /* When the background is dark */
   headerIconDark: IOColors.milderGray,
@@ -80,77 +77,20 @@ const customVariables = Object.assign(materialVariables, {
   // Font
   ...makeFontStyleObject(Platform.select),
   fontSizeBase: 16,
-  get fontSizeSmaller(): number {
-    return this.fontSizeBase * 0.75;
-  },
-  get fontSizeXSmall(): number {
-    return this.fontSizeBase * 0.8125;
-  },
-  get fontSizeSmall(): number {
-    return this.fontSizeBase * 0.875;
-  },
-  get fontSize1(): number {
-    return this.fontSizeBase;
-  },
   get fontSize2(): number {
     return this.fontSizeBase * 1.25;
   },
-  get fontSize3(): number {
-    return this.fontSizeBase * 1.5;
-  },
-  get fontSize4(): number {
-    return this.fontSizeBase * 1.75;
-  },
-  get fontSize5(): number {
-    return this.fontSizeBase * 2;
-  },
-  get fontSize6(): number {
-    return this.fontSizeBase * 2.5;
-  },
   lineHeightBase: 24,
-  lineHeightSmall: 18,
-  lineHeightXSmall: 17,
-  get lineHeightFontSizeRatio(): number {
-    return this.lineHeightBase / this.fontSizeBase;
-  },
-  get lineHeight1(): number {
-    return this.lineHeightBase * this.lineHeightFontSizeRatio;
-  },
-  // LineHeigth = 26 for the icon font in message details component
-  get lineHeight2(): number {
-    return this.lineHeightBase * (26 / 24);
-  },
-  get lineHeightH1(): number {
-    return this.lineHeightBase * (48 / 24);
-  },
-  get lineHeightH2(): number {
-    return this.lineHeightBase * (40 / 24);
-  },
-  get lineHeightH3(): number {
-    return this.lineHeightBase * (32 / 24);
-  },
-  get lineHeightH4(): number {
-    return this.lineHeightBase * (28 / 24);
-  },
 
   // Icon
-  iconFamily: "Entypo",
+  iconFamily: "Entypo" /* NB Theme variable, don't remove */,
   iconSizeBase: 24,
 
-  get iconSize1(): number {
-    return this.iconSizeBase * (2 / 3);
-  },
   get iconSize2(): number {
     return this.iconSizeBase * (5 / 6);
   },
   get iconSize3(): number {
     return this.iconSizeBase * 1;
-  },
-  get iconSize4(): number {
-    return this.iconSizeBase * (7 / 6);
-  },
-  get iconSize5(): number {
-    return this.iconSizeBase * 1.5;
   },
   get iconSize6(): number {
     return this.iconSizeBase * 2;
@@ -158,8 +98,8 @@ const customVariables = Object.assign(materialVariables, {
   // Content
   contentPadding: 24,
   contentPaddingLarge: 48,
-  contentBackground: "#FFFFFF",
-  contentPrimaryBackground: "#0073E6",
+  contentBackground: IOColors.white,
+  contentPrimaryBackground: IOColors.blue,
 
   // Footer
   footerBackground: IOColors.white,
@@ -173,99 +113,34 @@ const customVariables = Object.assign(materialVariables, {
   footerShadowOffsetHeight: 50,
   footerShadowOpacity: 0.5,
   footerShadowRadius: 37,
-  footerBottomBorderWidth: 1,
 
   // Grid
   gridGutter: 10,
 
-  // H1
-  h1Color: "#17324D",
-  h1FontWeight: "700" as FontWeight,
-  h1LetterSpacing: -1,
-  get h1FontSize(): number {
-    return this.fontSize6;
-  },
-  get h1LineHeight(): number {
-    return this.lineHeightH1;
-  },
-
-  // H2
-  h2Color: "#17324D",
-  h2FontWeight: "700" as FontWeight,
-  get h2FontSize(): number {
-    return this.fontSize5;
-  },
-  get h2LineHeight(): number {
-    return this.lineHeightH2;
-  },
-
-  // H3
-  h3Color: "#17324D",
-  h3FontWeight: "700" as FontWeight,
-  get h3FontSize(): number {
-    return this.fontSize4;
-  },
-  get h3LineHeight(): number {
-    return this.lineHeightH3;
-  },
-
-  // H4
-  h4Color: "#17324D",
-  h4FontWeight: "600" as FontWeight,
-  get h4FontSize(): number {
-    return this.fontSize3;
-  },
-  get h4LineHeight(): number {
-    return this.lineHeightH4;
-  },
-
-  // H5
-  h5Color: "#17324D",
-  h5FontWeight: "600" as FontWeight,
-  get h5FontSize(): number {
-    return this.fontSize2;
-  },
-  get h5LineHeight(): number {
-    return this.lineHeightBase;
-  },
-
-  // H6
-  h6Color: "#17324D",
-  h6FontWeight: "600" as FontWeight,
-  get h6FontSize(): number {
-    return this.fontSize1;
-  },
-  get h6LineHeight(): number {
-    return this.lineHeightBase;
-  },
-
   // Header
+  toolbarDefaultBg: IOColors.white /* NB Theme variable, don't remove */,
   appHeaderHeight: 56,
   appHeaderPaddingHorizontal: 12,
   titleHeaderPaddingHorizontal: 24,
   headerBorderBottomWidth: 0,
   headerBodyFontSize: 14,
-  headerFontColor: "#000000",
   headerBodyFontWeight: "600" as FontWeight,
-  toolbarDefaultBg: "#FFFFFF",
+  get toolbarBtnColor(): ThemeSimpleValue {
+    /* NB Theme variable, don't remove */
+    return this.textColor;
+  },
   get toolbarTextColor(): ThemeSimpleValue {
     return this.textColor;
   },
-  get toolbarBtnColor(): ThemeSimpleValue {
-    return this.textColor;
-  },
-  androidStatusBarColor: "#FFFFFF",
-
-  // Modal
-  modalMargin: 0,
-  modalPadding: 24,
-  modalHeaderHeight: 75,
+  androidStatusBarColor: IOColors.white,
 
   // Text
   textColor: IOColors.bluegrey,
   textColorDark: IOColors.bluegreyDark,
-  textLinkColor: "#0073E6",
+  textLinkColor: IOColors.blue,
   textMessageDetailLinkColor: "#0073E6",
+  // TODO: Delete the following variables after refactor using
+  // the new Text component (not from NativeBase)
   textNormalWeight: "400" as FontWeight,
   textBoldWeight: "700" as FontWeight,
   textLinkWeight: "600" as FontWeight,
@@ -274,6 +149,8 @@ const customVariables = Object.assign(materialVariables, {
   colorSkeleton: IOColors.bluegreyLight,
 
   // Label
+  // TODO: Delete the following line after refactor using
+  // the new Label component (not from NativeBase)
   labelNormalWeight: "400" as FontWeight,
 
   // Input
@@ -291,14 +168,15 @@ const customVariables = Object.assign(materialVariables, {
   spacerLargeWidth: 24,
   spacerExtralargeWidth: 40,
 
+  // Border radius
   borderRadiusBase: 4,
 
   // Tabs
-  tabDefaultBg: "#FFFFFF",
+  tabDefaultBg: IOColors.white /* NB Theme variable, don't remove */,
+  topTabBarTextColor: IOColors.bluegrey /* NB Theme variable, don't remove */,
+  topTabBarActiveTextColor: IOColors.blue /* NB Theme variable, don't remove */,
   tabUnderlineColor: IOColors.greyUltraLight,
   tabUnderlineHeight: 2,
-  topTabBarTextColor: IOColors.bluegrey,
-  topTabBarActiveTextColor: "#0066CC",
 
   // Animations
   activeOpacity: 0.25,
@@ -307,11 +185,8 @@ const customVariables = Object.assign(materialVariables, {
   spacingBase: 8,
 
   // IconFont
-  selectedColor: "#0073E6",
-  unselectedColor: IOColors.bluegrey,
-
-  // Checkbox
-  checkboxDefaultColor: "transparent"
+  selectedColor: IOColors.blue,
+  unselectedColor: IOColors.bluegrey
 });
 
 export default customVariables;

@@ -1,14 +1,14 @@
-import configureMockStore from "redux-mock-store";
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import configureMockStore from "redux-mock-store";
 
+import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
+import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
-import PickPspScreen from "../PickPspScreen";
-import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
 import { Psp, Wallet } from "../../../../types/pagopa";
-import ROUTES from "../../../../navigation/routes";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import PickPspScreen from "../PickPspScreen";
 
 const rptId = {} as RptId;
 const initialAmount = "300" as AmountInEuroCents;
@@ -52,7 +52,7 @@ const renderComponent = () => {
   } as GlobalState);
 
   return {
-    component: renderScreenFakeNavRedux<GlobalState>(
+    component: renderScreenWithNavigationStoreContext<GlobalState>(
       PickPspScreen,
       ROUTES.PAYMENT_PICK_PSP,
       {

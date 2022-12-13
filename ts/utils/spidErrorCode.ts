@@ -1,4 +1,5 @@
-import { fromNullable } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 
 const spidErrorCodeTable = new Map<string, string>([
   ["1", "Autenticazione corretta"],
@@ -62,4 +63,8 @@ const spidErrorCodeTable = new Map<string, string>([
 ]);
 
 export const getSpidErrorCodeDescription = (errorCode: string) =>
-  fromNullable(spidErrorCodeTable.get(errorCode)).getOrElse("N/A");
+  pipe(
+    spidErrorCodeTable.get(errorCode),
+    O.fromNullable,
+    O.getOrElse(() => "N/A")
+  );

@@ -1,4 +1,4 @@
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { testSaga } from "redux-saga-test-plan";
 import { customEmailChannelSetEnabled } from "../../../store/actions/persistedPreferences";
 import { visibleServicesSelector } from "../../../store/reducers/entities/services/visibleServices";

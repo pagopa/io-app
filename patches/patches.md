@@ -10,12 +10,11 @@ Created on **15/12/2021**
     - `getMacAddress`
     - `getMacAddressSync`
 
-### @types/react-native+0.63.2
-Created on **29/07/2020**
+### @types/react-native+0.69.6
+Created on **30/08/2022**
 
 #### Reason:
 - Missing accessibility types.
-
 
 ### react-native-mixpanel+1.2.0
 
@@ -50,6 +49,12 @@ Created on **05/08/2020**
 #### Reason:
 - Removed minSdkVersion from gradle to allow the compilation on Android. 
 
+Updated on **29/08/2022**
+
+#### Reason:
+
+- This patch is going to fix a gradle issue that breaks the compile on android platform, due to gradle imcompatibility
+
 ### danger-plugin-digitalcitizenship+0.3.1
 Created on **06/08/2020**
 
@@ -68,13 +73,19 @@ Created on **16/08/2021**
 #### Reason:
 - implementation 'androidx.core:core:1.+' not compatible with the new gradle settings used by react-native 0.64.2
 
-### react-native+0.64.2
+### react-native+0.69.4
 Created on **20/08/2021**
 
 #### Reason:
 - As for known issue anytime a developer launch a pod install on his own machine the podfile would be updated with 
   different hashes: [here the issue](https://github.com/facebook/react-native/issues/31193)
   To be removed when updating to `react-native` *0.65*
+
+
+Updated on **29/08/2022**
+
+#### Reason:
+- Fixes deprecation of PropTypes for backward compatibility on libraries.
 
 ### react-native-qrcode-scanner+1.5.3
 Created on **16/09/2021**
@@ -107,3 +118,19 @@ Created on **24/03/2022**
 - This patch is going to add the customization of accessibility props on bottom sheet children components.
   A [PR has been opened](https://github.com/gorhom/react-native-bottom-sheet/pull/889) on the package repo in order to
   fix the issue on the dependency too.
+
+### react-native-flag-secure-android+1.0.3
+
+Created on **29/08/2022**
+
+#### Reason:
+
+- This patch is going to fix a gradle issue that breaks the compile on android platform, due to gradle imcompatibility
+
+### @react-navigation/material-top-tabs+5.3.1
+
+Created on **01/12/2022**
+
+#### Reason:
+
+- This patch is going to add a missing prop to component definition, it can be removed once updating the library.

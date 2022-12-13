@@ -1,37 +1,37 @@
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import { debounce } from "lodash";
+import { Item, View } from "native-base";
 import * as React from "react";
 import { useCallback, useMemo } from "react";
-import { connect } from "react-redux";
 import { Keyboard, SafeAreaView } from "react-native";
-import { Item, View } from "native-base";
-import { debounce } from "lodash";
-import { Millisecond } from "italia-ts-commons/lib/units";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { Dispatch } from "../../../../../store/actions/types";
-import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import I18n from "../../../../../i18n";
-import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import { navigateToCgnMerchantDetail } from "../../navigation/actions";
-import CgnMerchantsListView from "../../components/merchants/CgnMerchantsListView";
-import { H1 } from "../../../../../components/core/typography/H1";
-import { LabelledItem } from "../../../../../components/LabelledItem";
+import { connect } from "react-redux";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
-import {
-  cgnOfflineMerchantsSelector,
-  cgnOnlineMerchantsSelector
-} from "../../store/reducers/merchants";
 import { OfflineMerchant } from "../../../../../../definitions/cgn/merchants/OfflineMerchant";
 import { OnlineMerchant } from "../../../../../../definitions/cgn/merchants/OnlineMerchant";
-import {
-  cgnOfflineMerchants,
-  cgnOnlineMerchants
-} from "../../store/actions/merchants";
+import { H1 } from "../../../../../components/core/typography/H1";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import { LabelledItem } from "../../../../../components/LabelledItem";
+import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
+import I18n from "../../../../../i18n";
+import { Dispatch } from "../../../../../store/actions/types";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import {
   getValueOrElse,
   isLoading,
   isReady
 } from "../../../bpd/model/RemoteValue";
-import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import CgnMerchantsListView from "../../components/merchants/CgnMerchantsListView";
+import { navigateToCgnMerchantDetail } from "../../navigation/actions";
+import {
+  cgnOfflineMerchants,
+  cgnOnlineMerchants
+} from "../../store/actions/merchants";
+import {
+  cgnOfflineMerchantsSelector,
+  cgnOnlineMerchantsSelector
+} from "../../store/reducers/merchants";
 import { mixAndSortMerchants } from "../../utils/merchants";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -113,7 +113,7 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
       <SafeAreaView style={IOStyles.flex}>
         {isReady(props.onlineMerchants) || isReady(props.offlineMerchants) ? (
           <>
-            <View style={[IOStyles.horizontalContentPadding]}>
+            <View style={IOStyles.horizontalContentPadding}>
               <H1>{I18n.t("bonus.cgn.merchantsList.screenTitle")}</H1>
               <Item>
                 <LabelledItem

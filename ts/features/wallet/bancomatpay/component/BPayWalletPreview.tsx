@@ -1,6 +1,4 @@
-import { Option } from "fp-ts/lib/Option";
 import * as React from "react";
-import { Image, ImageStyle, StyleProp } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import bPayImage from "../../../../../img/wallet/cards-icons/bPay.png";
@@ -11,7 +9,6 @@ import { navigateToBPayDetailScreen } from "../../../../store/actions/navigation
 import { GlobalState } from "../../../../store/reducers/types";
 import { BPayPaymentMethod } from "../../../../types/pagopa";
 import { CardLogoPreview } from "../../component/card/CardLogoPreview";
-import { useImageResize } from "../../onboarding/bancomat/screens/hooks/useImageResize";
 
 type OwnProps = {
   bPay: BPayPaymentMethod;
@@ -21,40 +18,18 @@ type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
   OwnProps;
 
-const BASE_IMG_W = 160;
-const BASE_IMG_H = 20;
 /**
- * Render the image (if available) or the bank name (if available)
- * or the generic bancomatPay string (final fallback).
+ * Render the phone number.
  * @param props
- * @param size
  */
-const renderLeft = (props: Props, size: Option<[number, number]>) =>
-  size.fold(
-    <Body style={IOStyles.flex} numberOfLines={1} testID={"bankLogoFallback"}>
-      {props.bPay.caption}
-    </Body>,
-    imgDim => {
-      const imageUrl = props.bPay.abiInfo?.logoUrl;
-      const imageStyle: StyleProp<ImageStyle> = {
-        width: imgDim[0],
-        height: imgDim[1],
-        resizeMode: "contain"
-      };
-      return imageUrl ? (
-        <Image
-          source={{ uri: imageUrl }}
-          style={imageStyle}
-          testID={"bankLogo"}
-        />
-      ) : null;
-    }
-  );
+const renderLeft = (props: Props) => (
+  <Body style={IOStyles.flex} numberOfLines={1} testID={"phoneNumber"}>
+    {props.bPay?.info?.numberObfuscated}
+  </Body>
+);
 
-const getAccessibilityRepresentation = (bancomatPay: BPayPaymentMethod) => {
-  const cardRepresentation = I18n.t("wallet.accessibility.folded.bancomatPay", {
-    bankName: bancomatPay.caption
-  });
+const getAccessibilityRepresentation = () => {
+  const cardRepresentation = I18n.t("wallet.accessibility.folded.bancomatPay");
   const cta = I18n.t("wallet.accessibility.folded.cta");
   return `${cardRepresentation}, ${cta}`;
 };
@@ -64,21 +39,14 @@ const getAccessibilityRepresentation = (bancomatPay: BPayPaymentMethod) => {
  * @param props
  * @constructor
  */
-const BPayWalletPreview: React.FunctionComponent<Props> = props => {
-  const imgDimensions = useImageResize(
-    BASE_IMG_W,
-    BASE_IMG_H,
-    props.bPay.abiInfo?.logoUrl
-  );
-  return (
-    <CardLogoPreview
-      accessibilityLabel={getAccessibilityRepresentation(props.bPay)}
-      left={renderLeft(props, imgDimensions)}
-      image={bPayImage}
-      onPress={() => props.navigateToBPayDetails(props.bPay)}
-    />
-  );
-};
+const BPayWalletPreview: React.FunctionComponent<Props> = props => (
+  <CardLogoPreview
+    accessibilityLabel={getAccessibilityRepresentation()}
+    left={renderLeft(props)}
+    image={bPayImage}
+    onPress={() => props.navigateToBPayDetails(props.bPay)}
+  />
+);
 
 const mapDispatchToProps = (_: Dispatch) => ({
   navigateToBPayDetails: (bPay: BPayPaymentMethod) =>

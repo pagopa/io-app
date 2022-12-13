@@ -1,5 +1,5 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
-import * as pot from "italia-ts-commons/lib/pot";
 import * as React from "react";
 import { Alert } from "react-native";
 import { connect } from "react-redux";

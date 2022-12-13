@@ -1,4 +1,4 @@
-import { Text } from "native-base";
+import { Text as NBText } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
@@ -25,6 +25,6 @@ export const DevScreenButton: React.SFC<Props> = props => (
     transparent={true}
     style={styles.devButton}
   >
-    <Text>Dev</Text>
+    <NBText>Dev</NBText>
   </ButtonDefaultOpacity>
 );

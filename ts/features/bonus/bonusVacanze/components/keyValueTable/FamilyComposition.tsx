@@ -1,4 +1,4 @@
-import { Text, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import React from "react";
 import { Platform, StyleSheet } from "react-native";
 import { FamilyMembers } from "../../../../../../definitions/bonus_vacanze/FamilyMembers";
@@ -27,9 +27,9 @@ const styles = StyleSheet.create({
 });
 
 const header = (title: string) => (
-  <Text style={[keyValueTableStyle.baseRow]} bold={true}>
+  <NBText style={keyValueTableStyle.baseRow} bold={true}>
     {title}
-  </Text>
+  </NBText>
 );
 
 const getRow = (k: string, v: string): KeyValueRow => ({

@@ -1,7 +1,9 @@
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { readableReport } from "italia-ts-commons/lib/reporters";
-import { fromNullable } from "fp-ts/lib/Option";
+import { readableReport } from "@pagopa/ts-commons/lib/reporters";
+import * as O from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
 import {
   BpdPaymentMethodActivation,
   bpdPaymentMethodActivation,
@@ -31,9 +33,11 @@ const convertNetworkPayload = (
   networkPayload: PaymentInstrumentResource
 ): BpdPaymentMethodActivation => ({
   hPan: networkPayload.hpan as HPan,
-  activationStatus: fromNullable(
-    mapStatus.get(networkPayload.Status)
-  ).getOrElse("notActivable"),
+  activationStatus: pipe(
+    mapStatus.get(networkPayload.Status),
+    O.fromNullable,
+    O.getOrElseW(() => "notActivable" as const)
+  ),
   activationDate: networkPayload.activationDate,
   deactivationDate: networkPayload.deactivationDate
 });
@@ -57,21 +61,21 @@ export function* bpdLoadPaymentMethodActivationSaga(
     const findPaymentMethodResult: SagaCallReturnType<
       typeof findPaymentMethod
     > = yield* call(findPaymentMethod, { id: action.payload } as any);
-    if (findPaymentMethodResult.isRight()) {
-      if (findPaymentMethodResult.value.status === 200) {
+    if (E.isRight(findPaymentMethodResult)) {
+      if (findPaymentMethodResult.right.status === 200) {
         yield* put(
           bpdPaymentMethodActivation.success(
-            convertNetworkPayload(findPaymentMethodResult.value.value)
+            convertNetworkPayload(findPaymentMethodResult.right.value)
           )
         );
         return;
-      } else if (findPaymentMethodResult.value.status === 409) {
+      } else if (findPaymentMethodResult.right.status === 409) {
         // conflict means not activable
         yield* put(
           bpdPaymentMethodActivation.success(whenConflict(action.payload))
         );
         return;
-      } else if (findPaymentMethodResult.value.status === 404) {
+      } else if (findPaymentMethodResult.right.status === 404) {
         yield* put(
           bpdPaymentMethodActivation.success({
             hPan: action.payload,
@@ -81,10 +85,10 @@ export function* bpdLoadPaymentMethodActivationSaga(
         return;
       }
       throw new Error(
-        `response status ${findPaymentMethodResult.value.status}`
+        `response status ${findPaymentMethodResult.right.status}`
       );
     } else {
-      throw new Error(readableReport(findPaymentMethodResult.value));
+      throw new Error(readableReport(findPaymentMethodResult.left));
     }
   } catch (e) {
     yield* put(
@@ -120,9 +124,9 @@ function* enrollPaymentMethod(
     const enrollPaymentMethodResult: SagaCallReturnType<
       typeof enrollPaymentMethod
     > = yield* call(enrollPaymentMethod, { id: action.payload.hPan } as any);
-    if (enrollPaymentMethodResult.isRight()) {
-      if (enrollPaymentMethodResult.value.status === 200) {
-        const responsePayload = enrollPaymentMethodResult.value.value;
+    if (E.isRight(enrollPaymentMethodResult)) {
+      if (enrollPaymentMethodResult.right.status === 200) {
+        const responsePayload = enrollPaymentMethodResult.right.value;
         yield* put(
           bpdUpdatePaymentMethodActivation.success({
             hPan: action.payload.hPan,
@@ -131,7 +135,7 @@ function* enrollPaymentMethod(
           })
         );
         return;
-      } else if (enrollPaymentMethodResult.value.status === 409) {
+      } else if (enrollPaymentMethodResult.right.status === 409) {
         yield* put(
           bpdUpdatePaymentMethodActivation.success(
             whenConflict(action.payload.hPan)
@@ -140,10 +144,10 @@ function* enrollPaymentMethod(
         return;
       }
       throw new Error(
-        `response status ${enrollPaymentMethodResult.value.status}`
+        `response status ${enrollPaymentMethodResult.right.status}`
       );
     } else {
-      throw new Error(readableReport(enrollPaymentMethodResult.value));
+      throw new Error(readableReport(enrollPaymentMethodResult.left));
     }
   } catch (e) {
     yield* put(
@@ -163,8 +167,8 @@ function* deletePaymentMethod(
     const deletePaymentMethodResult: SagaCallReturnType<
       typeof deletePaymentMethod
     > = yield* call(deletePaymentMethod, { id: action.payload.hPan } as any);
-    if (deletePaymentMethodResult.isRight()) {
-      if (deletePaymentMethodResult.value.status === 204) {
+    if (E.isRight(deletePaymentMethodResult)) {
+      if (deletePaymentMethodResult.right.status === 204) {
         yield* put(
           bpdUpdatePaymentMethodActivation.success({
             hPan: action.payload.hPan,
@@ -174,10 +178,10 @@ function* deletePaymentMethod(
         return;
       }
       throw new Error(
-        `response status ${deletePaymentMethodResult.value.status}`
+        `response status ${deletePaymentMethodResult.right.status}`
       );
     } else {
-      throw new Error(readableReport(deletePaymentMethodResult.value));
+      throw new Error(readableReport(deletePaymentMethodResult.left));
     }
   } catch (e) {
     yield* put(

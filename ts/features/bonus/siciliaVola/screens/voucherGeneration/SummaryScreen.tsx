@@ -1,4 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
+import * as O from "fp-ts/lib/Option";
 import { View } from "native-base";
 import * as React from "react";
 import { useEffect } from "react";
@@ -77,7 +78,7 @@ const SummaryScreen = (props: Props): React.ReactElement | null => {
   } = props;
   useEffect(() => {
     if (
-      maybeVoucherRequest.isSome() &&
+      O.isSome(maybeVoucherRequest) &&
       isVoucherRequest(maybeVoucherRequest.value) &&
       maybeVoucherRequest.value.category !== "disabled"
     ) {
@@ -87,7 +88,7 @@ const SummaryScreen = (props: Props): React.ReactElement | null => {
     }
   }, [maybeVoucherRequest, requestAvailableDestinations]);
 
-  if (!maybeVoucherRequest.isSome()) {
+  if (!O.isSome(maybeVoucherRequest)) {
     props.failure();
     return null;
   }
@@ -151,7 +152,7 @@ const SummaryScreen = (props: Props): React.ReactElement | null => {
       headerTitle={I18n.t("bonus.sv.headerTitle")}
     >
       <SafeAreaView style={IOStyles.flex} testID={"SummaryScreen"}>
-        <ScrollView style={[IOStyles.horizontalContentPadding]}>
+        <ScrollView style={IOStyles.horizontalContentPadding}>
           <H1>{I18n.t("bonus.sv.voucherGeneration.summary.title")}</H1>
           <View spacer />
           <H4 weight={"Regular"}>

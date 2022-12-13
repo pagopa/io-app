@@ -1,5 +1,6 @@
-import { fromNullable } from "fp-ts/lib/Option";
-import { Text, View } from "native-base";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
 import { SvgXml } from "react-native-svg";
@@ -43,16 +44,18 @@ const styles = StyleSheet.create({
   bonusLogo: {
     height: 48,
     width: 48
-  },
-  icon: {
-    paddingRight: 0
   }
 });
 
 const renderQRCode = (base64: string) =>
-  fromNullable(base64).fold(null, s => (
-    <SvgXml xml={s} height={249} width={249} />
-  ));
+  pipe(
+    base64,
+    O.fromNullable,
+    O.fold(
+      () => null,
+      s => <SvgXml xml={s} height={249} width={249} />
+    )
+  );
 
 const QrModalBox: React.FunctionComponent<Props> = (props: Props) => {
   const { qrCode, codeToDisplay, codeToCopy } = props;
@@ -61,13 +64,13 @@ const QrModalBox: React.FunctionComponent<Props> = (props: Props) => {
     <View style={styles.modalBox}>
       <View style={styles.row}>
         <View>
-          <Text style={styles.uniqueCode}>
+          <NBText style={styles.uniqueCode}>
             {I18n.t("bonus.bonusVacanze.uniqueCode")}
-          </Text>
+          </NBText>
           <View style={styles.row}>
-            <Text style={styles.codeText} bold={true}>
+            <NBText style={styles.codeText} bold={true}>
               {codeToDisplay}
-            </Text>
+            </NBText>
             <View hspacer={true} />
             <CopyButtonComponent
               textToCopy={codeToCopy}

@@ -5,6 +5,8 @@ import ZendeskAskPermissions from "../screens/ZendeskAskPermissions";
 import ZendeskChooseCategory from "../screens/ZendeskChooseCategory";
 import ZendeskChooseSubCategory from "../screens/ZendeskChooseSubCategory";
 import ZendeskPanicMode from "../screens/ZendeskPanicMode";
+import ZendeskAskSeeReportsPermissions from "../screens/ZendeskAskSeeReportsPermissions";
+import ZendeskSeeReportsRouters from "../screens/ZendeskSeeReportsRouters";
 import ZendeskSupportHelpCenter from "../screens/ZendeskSupportHelpCenter";
 import { ZendeskParamsList } from "./params";
 import ZENDESK_ROUTES from "./routes";
@@ -32,6 +34,14 @@ export const ZendeskStackNavigator = () => (
     <Stack.Screen
       name={ZENDESK_ROUTES.CHOOSE_CATEGORY}
       component={ZendeskChooseCategory}
+    />
+    <Stack.Screen
+      name={ZENDESK_ROUTES.ASK_SEE_REPORTS_PERMISSIONS}
+      component={ZendeskAskSeeReportsPermissions}
+    />
+    <Stack.Screen
+      name={ZENDESK_ROUTES.SEE_REPORTS_ROUTERS}
+      component={ZendeskSeeReportsRouters}
     />
     <Stack.Screen
       name={ZENDESK_ROUTES.CHOOSE_SUB_CATEGORY}

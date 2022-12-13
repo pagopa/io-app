@@ -1,6 +1,6 @@
 /* eslint-disable functional/immutable-data */
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
-import * as pot from "italia-ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -50,14 +50,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     height: 48
-  },
-  cardIcon: {
-    width: 40,
-    height: 25,
-    overflow: "hidden",
-    resizeMode: "contain"
-  },
-  leftSection: { flexDirection: "row", flex: 1 }
+  }
 });
 
 /**

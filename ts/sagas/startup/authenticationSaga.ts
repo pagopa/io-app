@@ -1,5 +1,4 @@
 import { call, cancel, fork, put, take } from "typed-redux-saga/macro";
-import { removeScheduledNotificationAccessSpid } from "../../boot/scheduleLocalNotifications";
 import {
   analyticsAuthenticationCompleted,
   analyticsAuthenticationStarted
@@ -39,10 +38,6 @@ export function* authenticationSaga(): Generator<
 
   // stop cie manager from listening nfc
   yield* call(stopCieManager);
-
-  // User logged in successfully, remove all the scheduled local notifications
-  // to remind the user to authenticate with spid
-  yield* call(removeScheduledNotificationAccessSpid);
 
   // User logged in successfully dispatch an AUTHENTICATION_COMPLETED action.
   // FIXME: what's the difference between AUTHENTICATION_COMPLETED and

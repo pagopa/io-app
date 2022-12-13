@@ -1,4 +1,4 @@
-import { Text, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import { StyleSheet, Platform } from "react-native";
 import I18n from "../../i18n";
@@ -70,21 +70,21 @@ export default class PaymentHistoryItem extends React.PureComponent<Props> {
       >
         <View style={styles.spaced}>
           <BadgeComponent color={this.props.color} />
-          <Text style={styles.text11}>{this.props.text11}</Text>
+          <NBText style={styles.text11}>{this.props.text11}</NBText>
         </View>
 
         <View style={styles.viewStyle}>
-          <Text>{this.props.text2}</Text>
+          <NBText>{this.props.text2}</NBText>
         </View>
         <View style={styles.smallSpacer} />
         <View style={styles.text3Line}>
           <View style={styles.text3Container}>
-            <Text
+            <NBText
               numberOfLines={2}
               style={[styles.text3, styles.text3FontWeight]}
             >
               {`${I18n.t("payment.IUV")} ${this.props.text3}`}
-            </Text>
+            </NBText>
           </View>
           <View style={styles.icon}>
             <IconFont

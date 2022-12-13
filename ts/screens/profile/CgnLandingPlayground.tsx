@@ -1,7 +1,6 @@
 import { Content, View } from "native-base";
 import * as React from "react";
 import { SafeAreaView, StyleSheet, TextInput } from "react-native";
-import { heightPercentageToDP } from "react-native-responsive-screen";
 import { Label } from "../../components/core/typography/Label";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
@@ -13,18 +12,11 @@ import { IOColors } from "../../components/core/variables/IOColors";
 
 const styles = StyleSheet.create({
   textInput: { padding: 1, borderWidth: 1, height: 30, color: IOColors.black },
-  center: { alignItems: "center" },
   contentCenter: { justifyContent: "center" },
   row: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center"
-  },
-  debugArea: {
-    position: "absolute",
-    bottom: 0,
-    zIndex: 10,
-    height: heightPercentageToDP("15%")
   }
 });
 

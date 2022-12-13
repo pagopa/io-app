@@ -1,10 +1,11 @@
+import * as E from "fp-ts/lib/Either";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as TE from "fp-ts/lib/TaskEither";
 import { Linking } from "react-native";
+import { storeUrl, webStoreURL } from "./appVersion";
 import { clipboardSetStringWithFeedback } from "./clipboard";
 import { openMaps } from "./openMaps";
 import { splitAndTakeFirst } from "./strings";
-import { storeUrl, webStoreURL } from "./appVersion";
 
 /**
  * Generic utilities for url parsing
@@ -38,10 +39,11 @@ export const getUrlBasepath = (url: string): string => {
   if (ampIndex !== -1 && comesBeforeQm && comesBeforeSharp) {
     return url;
   }
-  return pipe<string, string, string>(
+  return pipe(
+    url,
     u => splitAndTakeFirst(u, "?"),
     u => splitAndTakeFirst(u, "#")
-  )(url);
+  );
 };
 
 export type ItemAction = "MAP" | "COPY" | "LINK";
@@ -90,11 +92,9 @@ const taskCanOpenUrl = (url: string) =>
  */
 export const openWebUrl = (url: string, onError: () => void = constNull) => {
   pipe(
-    () => taskCanOpenUrl(url),
-    te => te.chain(v => (v ? taskLinking(url) : TE.fromLeft("error")))
-  )({})
-    .run()
-    .then(ei => ei.fold(onError, constNull), onError);
+    taskCanOpenUrl(url),
+    TE.chainW(v => (v ? taskLinking(url) : TE.left("error")))
+  )().then(E.fold(onError, constNull), onError);
 };
 
 export const openAppStoreUrl = async (onError: () => void = constNull) => {

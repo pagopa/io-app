@@ -1,8 +1,9 @@
-import { CompatNavigationProp } from "@react-navigation/compat";
-import { fromNullable, none, Option } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
-import { Millisecond } from "italia-ts-commons/lib/units";
-import { Badge, Text, Toast, View } from "native-base";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import { Badge, Text as NBText, Toast, View } from "native-base";
 import * as React from "react";
 import { useCallback } from "react";
 import {
@@ -18,7 +19,10 @@ import { BonusActivationStatusEnum } from "../../../../../definitions/bonus_vaca
 import { BonusActivationWithQrCode } from "../../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { Label } from "../../../../components/core/typography/Label";
 import { Link } from "../../../../components/core/typography/Link";
-import { IOColors } from "../../../../components/core/variables/IOColors";
+import {
+  hexToRgba,
+  IOColors
+} from "../../../../components/core/variables/IOColors";
 import { withLightModalContext } from "../../../../components/helpers/withLightModalContext";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import { ContextualHelpPropsMarkdown } from "../../../../components/screens/BaseScreenComponent";
@@ -29,14 +33,14 @@ import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpac
 import IconFont from "../../../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../../../components/ui/LightModal";
 import I18n from "../../../../i18n";
-import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
 import { navigateBack } from "../../../../store/actions/navigation";
 import { Dispatch } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import variables from "../../../../theme/variables";
-import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { formatDateAsLocal } from "../../../../utils/dates";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { withBase64Uri } from "../../../../utils/image";
 import { getRemoteLocale } from "../../../../utils/messages";
 import {
@@ -83,12 +87,13 @@ export type ActiveBonusScreenNavigationParams = Readonly<{
 
 const QR_CODE_MIME_TYPE = "image/svg+xml";
 const PNG_IMAGE_TYPE = "image/png";
+const whiteBgTransparent = hexToRgba(IOColors.white, 0);
+const whiteBg = hexToRgba(IOColors.white, 1);
 
-type OwnProps = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<WalletParamsList, "BONUS_ACTIVE_DETAIL_SCREEN">
-  >;
-};
+type OwnProps = IOStackNavigationRouteProps<
+  WalletParamsList,
+  "BONUS_ACTIVE_DETAIL_SCREEN"
+>;
 
 type Props = OwnProps &
   ReturnType<typeof mapDispatchToProps> &
@@ -96,7 +101,6 @@ type Props = OwnProps &
   LightModalContextInterface;
 
 const styles = StyleSheet.create({
-  emptyHeader: { height: 90 },
   flex: {
     flex: 1
   },
@@ -109,7 +113,7 @@ const styles = StyleSheet.create({
     top: -144,
     height: 168,
     width: "100%",
-    shadowColor: "#000",
+    shadowColor: IOColors.black,
     shadowOffset: {
       width: 0,
       height: 3
@@ -122,12 +126,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     maxWidth: 327
   },
-  center: {
-    alignSelf: "center"
-  },
   validUntil: {
     color: variables.textColorDark,
-    lineHeight: variables.lineHeightSmall,
+    lineHeight: 18,
     paddingVertical: 8
   },
   rowBlock: {
@@ -137,7 +138,7 @@ const styles = StyleSheet.create({
   itemsCenter: {
     alignItems: "center"
   },
-  paddedIconLeft: {
+  icon: {
     paddingLeft: 12
   },
   paddedContentLeft: {
@@ -154,7 +155,7 @@ const styles = StyleSheet.create({
   statusBadgeRevoked: {
     height: 18,
     marginTop: 2,
-    backgroundColor: variables.brandHighLighter
+    backgroundColor: variables.colorHighlight
   },
   screenshotTime: {
     textAlign: "center",
@@ -172,12 +173,12 @@ const styles = StyleSheet.create({
     color: variables.textColor
   },
   sectionLabel: {
-    fontSize: variables.fontSize1,
+    fontSize: variables.fontSizeBase,
     lineHeight: 21
   },
   viewShot: {
     flex: 1,
-    backgroundColor: "white"
+    backgroundColor: IOColors.white
   },
   commonLabel: {
     lineHeight: 18
@@ -231,8 +232,11 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 };
 
 const shareQR = async (content: string, code: string) => {
-  const shared = await share(withBase64Uri(content, "png"), code).run();
-  shared.mapLeft(_ => showToastGenericError());
+  const shared = await share(withBase64Uri(content, "png"), code)();
+  pipe(
+    shared,
+    E.mapLeft(_ => showToastGenericError())
+  );
 };
 const showToastGenericError = () => showToast(I18n.t("global.genericError"));
 const startRefreshPollingAfter = 3000 as Millisecond;
@@ -285,7 +289,7 @@ const ActiveBonusFooterButtons: React.FunctionComponent<FooterProps> = (
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
-  const bonusFromNav = props.navigation.getParam("bonus");
+  const bonusFromNav = props.route.params.bonus;
   const bonus = pot.getOrElse(props.bonus, bonusFromNav);
   const screenShotRef = React.createRef<ViewShot>();
   const [qrCode, setQRCode] = React.useState<QRCodeContents>({});
@@ -295,7 +299,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
   const backgroundAnimation = React.useRef(new Animated.Value(0)).current;
   const backgroundInterpolation = backgroundAnimation.interpolate({
     inputRange: [0, 1],
-    outputRange: ["rgba(255,255,255,0)", "rgba(255,255,255,1)"]
+    outputRange: [whiteBgTransparent, whiteBg]
   });
 
   // TODO: this hooks doesn't follow the hooks rule but this functionality will be dismissed in December 2021. Otherwise rewrite this hook following all the rules.
@@ -321,8 +325,8 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
   // return an option containing the capture function
 
   const captureScreenshot = useCallback(
-    (): Option<() => Promise<string>> =>
-      fromNullable(
+    (): O.Option<() => Promise<string>> =>
+      O.fromNullable(
         screenShotRef && screenShotRef.current && screenShotRef.current.capture
       ),
     [screenShotRef]
@@ -332,22 +336,25 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
     if (screenShotState.isPrintable) {
       {
         // start capture screenshot
-        captureScreenshot().map(capture => {
-          capture()
-            .then(screenShotUri => {
-              setScreenShotState(prev => ({ ...prev, screenShotUri }));
-            })
-            .catch(() => {
-              showToastGenericError();
-              // animate fadeOut of flash light animation
-              Animated.timing(backgroundAnimation, {
-                duration: flashAnimation,
-                toValue: 0,
-                useNativeDriver: false,
-                easing: Easing.cubic
-              }).start();
-            });
-        });
+        pipe(
+          captureScreenshot(),
+          O.map(capture => {
+            capture()
+              .then(screenShotUri => {
+                setScreenShotState(prev => ({ ...prev, screenShotUri }));
+              })
+              .catch(() => {
+                showToastGenericError();
+                // animate fadeOut of flash light animation
+                Animated.timing(backgroundAnimation, {
+                  duration: flashAnimation,
+                  toValue: 0,
+                  useNativeDriver: false,
+                  easing: Easing.cubic
+                }).start();
+              });
+          })
+        );
         return;
       }
     }
@@ -357,14 +364,16 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
     // if the screenShotUri is defined start saving image and restore default style
     // show a toast error if something went wrong
     if (screenShotState.screenShotUri) {
-      saveImageToGallery(`file://${screenShotState.screenShotUri}`)
-        .run()
+      saveImageToGallery(`file://${screenShotState.screenShotUri}`)()
         .then(maybeSaved => {
-          maybeSaved.fold(showToastGenericError, () => {
-            Toast.show({
-              text: I18n.t("bonus.bonusVacanze.saveScreenShotOk")
-            });
-          });
+          E.foldW(
+            () => showToastGenericError,
+            () => {
+              Toast.show({
+                text: I18n.t("bonus.bonusVacanze.saveScreenShotOk")
+              });
+            }
+          )(maybeSaved);
         })
         .catch(showToastGenericError)
         .finally(() => {
@@ -391,7 +400,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
 
   // call this function to create a screenshot and save it into the device camera roll
   const saveScreenShot = () => {
-    if (captureScreenshot().isSome()) {
+    if (O.isSome(captureScreenshot())) {
       // start screen capturing when first flash light animation will be completed (screen becomes white)
       Animated.timing(backgroundAnimation, {
         duration: flashAnimation,
@@ -469,13 +478,13 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
       <>
         {/* show the time when the screenshot is captured */}
         {screenShotState.isPrintable && (
-          <Text style={styles.screenshotTime} bold={true}>
+          <NBText style={styles.screenshotTime} bold={true}>
             {`${I18n.t("bonus.bonusVacanze.savedOn")}${formatDateAsLocal(
               now,
               true,
               true
             )} - ${now.toLocaleTimeString()}`}
-          </Text>
+          </NBText>
         )}
         <View
           style={[
@@ -486,14 +495,18 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
         >
           <IconFont
             name={icon}
-            color={fromNullable(iconColor).getOrElse(variables.textColor)}
-            size={variables.fontSize3}
-            style={styles.paddedIconLeft}
+            color={pipe(
+              iconColor,
+              O.fromNullable,
+              O.getOrElse(() => variables.textColor)
+            )}
+            size={variables.iconSize3}
+            style={styles.icon}
           />
           <View hspacer={true} />
-          <Text style={[styles.flex, styles.validUntil]} bold={true}>
+          <NBText style={[styles.flex, styles.validUntil]} bold={true}>
             {text}
-          </Text>
+          </NBText>
         </View>
       </>
     );
@@ -505,8 +518,20 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
         return renderInformationBlock(
           "io-calendario",
           I18n.t("bonus.bonusVacanze.statusInfo.validBetween", {
-            from: bonusValidityInterval.fold("n/a", v => v.e1),
-            to: bonusValidityInterval.fold("n/a", v => v.e2)
+            from: pipe(
+              bonusValidityInterval,
+              O.fold(
+                () => "n/a",
+                v => v.e1
+              )
+            ),
+            to: pipe(
+              bonusValidityInterval,
+              O.fold(
+                () => "n/a",
+                v => v.e2
+              )
+            )
           })
         );
       case BonusActivationStatusEnum.REDEEMED:
@@ -514,7 +539,11 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
           "io-complete",
           I18n.t("bonus.bonusVacanze.statusInfo.redeemed", {
             date: formatDateAsLocal(
-              fromNullable(bonus.redeemed_at).getOrElse(bonus.created_at),
+              pipe(
+                bonus.redeemed_at,
+                O.fromNullable,
+                O.getOrElse(() => bonus.created_at)
+              ),
               true
             )
           }),
@@ -535,19 +564,29 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
       <TosBonusComponent tos_url={tos} onClose={props.hideModal} />
     );
 
-  const maybeBonusInfo = fromNullable(props.bonusInfo);
-  const bonusInfoFromLocale = maybeBonusInfo
-    .map(b => b[getRemoteLocale()])
-    .toUndefined();
-  const maybeBonusTos = fromNullable(bonusInfoFromLocale).fold(none, b =>
-    maybeNotNullyString(b.tos_url)
+  const maybeBonusInfo = O.fromNullable(props.bonusInfo);
+  const bonusInfoFromLocale = pipe(
+    maybeBonusInfo,
+    O.map(b => b[getRemoteLocale()]),
+    O.toUndefined
+  );
+  const maybeBonusTos = pipe(
+    bonusInfoFromLocale,
+    O.fromNullable,
+    O.chain(b => maybeNotNullyString(b.tos_url))
   );
 
-  const from = maybeBonusInfo.map(bi => bi.valid_from);
-  const to = maybeBonusInfo.map(bi => bi.valid_to);
+  const from = pipe(
+    maybeBonusInfo,
+    O.map(bi => bi.valid_from)
+  );
+  const to = pipe(
+    maybeBonusInfo,
+    O.map(bi => bi.valid_to)
+  );
   const bonusValidityInterval = validityInterval(
-    from.toUndefined(),
-    to.toUndefined()
+    O.toUndefined(from),
+    O.toUndefined(to)
   );
   return !props.isError && bonus ? (
     <>
@@ -609,14 +648,14 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
                 <View spacer={true} />
                 <ItemSeparatorComponent noPadded={true} />
                 <View spacer={true} />
-                {maybeStatusDescription.isSome() && (
+                {O.isSome(maybeStatusDescription) && (
                   <View style={styles.rowBlock}>
-                    <Text
+                    <NBText
                       semibold={true}
                       style={[styles.sectionLabel, styles.textColorDark]}
                     >
                       {I18n.t("bonus.bonusVacanze.status")}
-                    </Text>
+                    </NBText>
                     <Badge
                       style={
                         isBonusActive(bonus)
@@ -624,13 +663,13 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
                           : styles.statusBadgeRevoked
                       }
                     >
-                      <Text
+                      <NBText
                         style={styles.statusText}
                         semibold={true}
                         dark={!isBonusActive(bonus)}
                       >
                         {maybeStatusDescription.value}
-                      </Text>
+                      </NBText>
                     </Badge>
                   </View>
                 )}
@@ -638,25 +677,25 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
                 {!isBonusActive(bonus) && bonus.redeemed_at && (
                   <>
                     <View style={styles.rowBlock}>
-                      <Text style={[styles.colorGrey, styles.commonLabel]}>
+                      <NBText style={[styles.colorGrey, styles.commonLabel]}>
                         {I18n.t("bonus.bonusVacanze.consumedAt")}
-                      </Text>
-                      <Text style={[styles.colorGrey, styles.commonLabel]}>
+                      </NBText>
+                      <NBText style={[styles.colorGrey, styles.commonLabel]}>
                         {formatDateAsLocal(bonus.redeemed_at, true)}
-                      </Text>
+                      </NBText>
                     </View>
                     <View spacer={true} small={true} />
                   </>
                 )}
                 <View style={styles.rowBlock}>
-                  <Text style={[styles.colorGrey, styles.commonLabel]}>
+                  <NBText style={[styles.colorGrey, styles.commonLabel]}>
                     {I18n.t("bonus.bonusVacanze.requestedAt")}
-                  </Text>
-                  <Text style={[styles.colorGrey, styles.commonLabel]}>
+                  </NBText>
+                  <NBText style={[styles.colorGrey, styles.commonLabel]}>
                     {formatDateAsLocal(bonus.created_at, true)}
-                  </Text>
+                  </NBText>
                 </View>
-                {!screenShotState.isPrintable && maybeBonusTos.isSome() && (
+                {!screenShotState.isPrintable && O.isSome(maybeBonusTos) && (
                   <>
                     <View spacer={true} />
                     <ItemSeparatorComponent noPadded={true} />
@@ -699,7 +738,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
 };
 
 const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
-  const bonusFromNav = ownProps.navigation.getParam("bonus");
+  const bonusFromNav = ownProps.route.params.bonus;
   const bonus = bonusActiveDetailByIdSelector(bonusFromNav.id)(state);
 
   return {

@@ -1,8 +1,11 @@
 import { CommonActions } from "@react-navigation/native";
 import { fireEvent } from "@testing-library/react-native";
-import { none, some } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
+import { ToolEnum } from "../../../../../../definitions/content/AssistanceToolConfig";
+import { BackendStatus } from "../../../../../../definitions/content/BackendStatus";
+import { Config } from "../../../../../../definitions/content/Config";
 import I18n from "../../../../../i18n";
 import NavigationService from "../../../../../navigation/NavigationService";
 import ROUTES from "../../../../../navigation/routes";
@@ -11,13 +14,10 @@ import { PrivativePaymentMethod } from "../../../../../types/pagopa";
 import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
 import * as hooks from "../../../onboarding/bancomat/screens/hooks/useImageResize";
 import PrivativeWalletPreview from "../PrivativeWalletPreview";
-import { ToolEnum } from "../../../../../../definitions/content/AssistanceToolConfig";
-import { Config } from "../../../../../../definitions/content/Config";
-import { BackendStatus } from "../../../../../../definitions/content/BackendStatus";
 
 describe("PrivativeWalletPreview", () => {
   it("should show the caption", () => {
-    jest.spyOn(hooks, "useImageResize").mockReturnValue(none);
+    jest.spyOn(hooks, "useImageResize").mockReturnValue(O.none);
     const { component } = getComponent(mockPrivativeCard);
     const caption = component.queryByTestId("caption");
     expect(caption).not.toBeNull();
@@ -38,7 +38,7 @@ describe("PrivativeWalletPreview", () => {
     expect(a11yLabel).not.toBeNull();
   });
   it("should show the fallback gdo logo if useImageResize returns a size but there isn't the cardLogo", () => {
-    jest.spyOn(hooks, "useImageResize").mockReturnValue(some([15, 15]));
+    jest.spyOn(hooks, "useImageResize").mockReturnValue(O.some([15, 15]));
     const { component } = getComponent(mockPrivativeCard);
     const cardLogo = component.queryByTestId("loyaltyLogo");
     const cardLogoFallback = component.queryByTestId("unknownLoyaltyLogo");
@@ -47,7 +47,7 @@ describe("PrivativeWalletPreview", () => {
     expect(cardLogoFallback).not.toBeNull();
   });
   it("should show the gdo logo if useImageResize return a size", () => {
-    jest.spyOn(hooks, "useImageResize").mockReturnValue(some([15, 15]));
+    jest.spyOn(hooks, "useImageResize").mockReturnValue(O.some([15, 15]));
     const { component } = getComponent({
       ...mockPrivativeCard,
       icon: { uri: "aCardLogoUrl" }
@@ -59,7 +59,7 @@ describe("PrivativeWalletPreview", () => {
     expect(cardLogoFallback).toBeNull();
   });
   it("should call navigateToPrivativeDetailScreen when it is pressed", () => {
-    jest.spyOn(hooks, "useImageResize").mockReturnValue(none);
+    jest.spyOn(hooks, "useImageResize").mockReturnValue(O.none);
     const spy = jest.spyOn(NavigationService, "dispatchNavigationAction");
 
     const { component } = getComponent(mockPrivativeCard);
@@ -80,7 +80,7 @@ const getComponent = (privative: PrivativePaymentMethod) => {
   const mockStore = configureMockStore();
   const store = mockStore({
     backendStatus: {
-      status: some({
+      status: O.some({
         config: {
           assistanceTool: { tool: ToolEnum.none },
           cgn: { enabled: true },

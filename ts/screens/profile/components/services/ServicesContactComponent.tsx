@@ -75,7 +75,7 @@ const ServicesContactComponent = (props: Props): React.ReactElement => {
         >
           <View style={IOStyles.flex}>
             {props.showBadge && item.mode === ServicesPreferencesModeEnum.AUTO && (
-              <Badge style={[styles.badge]}>
+              <Badge style={styles.badge}>
                 <BaseTypography
                   weight={"SemiBold"}
                   color={"white"}

@@ -1,12 +1,14 @@
-import { format as dateFnsFormat } from "date-fns";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { BlockedInboxOrChannels } from "../../definitions/backend/BlockedInboxOrChannels";
 import { FiscalCode } from "../../definitions/backend/FiscalCode";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { ServiceId } from "../../definitions/backend/ServiceId";
 import { Municipality } from "../../definitions/content/Municipality";
 import { ProfileState } from "../store/reducers/profile";
-import { formatDateAsShortFormat } from "./dates";
+import { pad } from "./dates";
+
 type GenderType = "M" | "F" | undefined;
 
 /**
@@ -14,8 +16,7 @@ type GenderType = "M" | "F" | undefined;
  */
 type FiscalCodeDerivedData = Readonly<{
   gender?: GenderType;
-  birthday?: Date;
-  birthDate?: ReturnType<typeof dateFnsFormat>;
+  birthDate?: Date;
   denominazione: string;
   siglaProvincia: string;
 }>;
@@ -80,12 +81,11 @@ export function extractFiscalCodeData(
   const year =
     tempYear +
     (new Date().getFullYear() - (1900 + tempYear) >= 100 ? 2000 : 1900);
-  const birthday = new Date(year, month - 1, day);
-  const birthDate = formatDateAsShortFormat(birthday);
+
+  const birthDate = new Date(`${year}-${pad(month)}-${pad(day)}T00:00:00.000Z`);
 
   return {
     gender,
-    birthday,
     birthDate,
     siglaProvincia,
     denominazione
@@ -182,25 +182,26 @@ export function getEnabledChannelsForService(
   potProfile: ProfileState,
   serviceId: ServiceId
 ): EnabledChannels {
-  return pot
-    .toOption(potProfile)
-    .mapNullable(profile =>
+  return pipe(
+    pot.toOption(potProfile),
+    O.chainNullableK(profile =>
       InitializedProfile.is(profile) ? profile.blocked_inbox_or_channels : null
-    )
-    .mapNullable(blockedChannels => blockedChannels[serviceId])
-    .map(_ => ({
+    ),
+    O.chainNullableK(blockedChannels => blockedChannels[serviceId]),
+    O.map(_ => ({
       inbox: _.indexOf(INBOX_CHANNEL) === -1,
       email: _.indexOf(EMAIL_CHANNEL) === -1,
       push: _.indexOf(PUSH_CHANNEL) === -1,
       can_access_message_read_status:
         _.indexOf(SEND_READ_MESSAGE_STATUS_CHANNEL) === -1
-    }))
-    .getOrElse({
+    })),
+    O.getOrElseW(() => ({
       inbox: true,
       email: true,
       push: true,
       can_access_message_read_status: true
-    });
+    }))
+  );
 }
 
 /**

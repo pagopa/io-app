@@ -2,7 +2,7 @@
  * Generic utilities for services
  */
 
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { ImageURISource } from "react-native";
 import { ServicePublic } from "../../definitions/backend/ServicePublic";
 import { contentRepoUrl } from "../config";

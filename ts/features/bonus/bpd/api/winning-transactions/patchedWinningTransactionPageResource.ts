@@ -1,5 +1,5 @@
 import * as t from "io-ts";
-import { DateFromString } from "italia-ts-commons/lib/dates";
+import { DateFromString } from "@pagopa/ts-commons/lib/dates";
 import { DateFromISOString } from "../../../../../utils/dates";
 
 /**

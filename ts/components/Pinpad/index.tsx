@@ -1,18 +1,18 @@
-import { range } from "fp-ts/lib/Array";
-import { left, right } from "fp-ts/lib/Either";
-import { Tuple2 } from "italia-ts-commons/lib/tuples";
-import { Millisecond } from "italia-ts-commons/lib/units";
+import { Tuple2 } from "@pagopa/ts-commons/lib/tuples";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import * as E from "fp-ts/lib/Either";
+import * as NAR from "fp-ts/lib/NonEmptyArray";
 import { debounce, shuffle } from "lodash";
-import { Text, View } from "native-base";
+import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import { Alert, StyleSheet } from "react-native";
 import I18n from "../../i18n";
 import { PinString } from "../../types/PinString";
 import { ComponentProps } from "../../types/react";
+import { BiometricsValidType } from "../../utils/biometrics";
 import { PIN_LENGTH, PIN_LENGTH_SIX } from "../../utils/constants";
 import { ShakeAnimation } from "../animations/ShakeAnimation";
 import { Link } from "../core/typography/Link";
-import { BiometricsValidType } from "../../utils/biometrics";
 import InputPlaceHolder from "./InputPlaceholder";
 import { DigitRpr, KeyPad } from "./KeyPad";
 
@@ -44,10 +44,6 @@ interface State {
 }
 
 const styles = StyleSheet.create({
-  placeholderContainer: {
-    flexDirection: "row",
-    justifyContent: "center"
-  },
   mediumText: {
     fontSize: 18,
     lineHeight: 21,
@@ -78,7 +74,7 @@ class Pinpad extends React.PureComponent<Props, State> {
     switch (biometryPrintableSimpleType) {
       case "BIOMETRICS":
       case "TOUCH_ID":
-        return right({
+        return E.right({
           name: "io-fingerprint",
           size: ICON_WIDTH,
           accessibilityLabel: I18n.t(
@@ -86,7 +82,7 @@ class Pinpad extends React.PureComponent<Props, State> {
           )
         });
       case "FACE_ID":
-        return right({
+        return E.right({
           name: "io-face-id",
           size: ICON_WIDTH,
           accessibilityLabel: I18n.t(
@@ -119,35 +115,35 @@ class Pinpad extends React.PureComponent<Props, State> {
 
     return [
       [
-        Tuple2(left(pinPadValues[1]), () =>
+        Tuple2(E.left(pinPadValues[1]), () =>
           this.handlePinDigit(pinPadValues[1])
         ),
-        Tuple2(left(pinPadValues[2]), () =>
+        Tuple2(E.left(pinPadValues[2]), () =>
           this.handlePinDigit(pinPadValues[2])
         ),
-        Tuple2(left(pinPadValues[3]), () =>
+        Tuple2(E.left(pinPadValues[3]), () =>
           this.handlePinDigit(pinPadValues[3])
         )
       ],
       [
-        Tuple2(left(pinPadValues[4]), () =>
+        Tuple2(E.left(pinPadValues[4]), () =>
           this.handlePinDigit(pinPadValues[4])
         ),
-        Tuple2(left(pinPadValues[5]), () =>
+        Tuple2(E.left(pinPadValues[5]), () =>
           this.handlePinDigit(pinPadValues[5])
         ),
-        Tuple2(left(pinPadValues[6]), () =>
+        Tuple2(E.left(pinPadValues[6]), () =>
           this.handlePinDigit(pinPadValues[6])
         )
       ],
       [
-        Tuple2(left(pinPadValues[7]), () =>
+        Tuple2(E.left(pinPadValues[7]), () =>
           this.handlePinDigit(pinPadValues[7])
         ),
-        Tuple2(left(pinPadValues[8]), () =>
+        Tuple2(E.left(pinPadValues[8]), () =>
           this.handlePinDigit(pinPadValues[8])
         ),
-        Tuple2(left(pinPadValues[9]), () =>
+        Tuple2(E.left(pinPadValues[9]), () =>
           this.handlePinDigit(pinPadValues[9])
         )
       ],
@@ -160,11 +156,11 @@ class Pinpad extends React.PureComponent<Props, State> {
               this.props.onFingerPrintReq
             )
           : undefined,
-        Tuple2(left(pinPadValues[0]), () =>
+        Tuple2(E.left(pinPadValues[0]), () =>
           this.handlePinDigit(pinPadValues[0])
         ),
         Tuple2(
-          right({
+          E.right({
             name: "io-cancel",
             size: SMALL_ICON_WIDTH,
             accessibilityLabel: I18n.t(
@@ -205,7 +201,7 @@ class Pinpad extends React.PureComponent<Props, State> {
       value: "",
       isDisabled: false,
       pinLength: PIN_LENGTH,
-      pinPadValues: range(0, 9).map(s => s.toString())
+      pinPadValues: NAR.range(0, 9).map(s => s.toString())
     };
   }
 
@@ -300,23 +296,23 @@ class Pinpad extends React.PureComponent<Props, State> {
         <View spacer={true} />
         {this.props.onPinResetHandler !== undefined && (
           <React.Fragment>
-            <Text
+            <NBText
               white={this.props.buttonType === "primary"}
               onPress={this.confirmResetAlert}
               alignCenter={true}
               accessibilityRole="button"
             >
               {`${I18n.t("identification.unlockCode.reset.button")} `}
-              <Text
+              <NBText
                 underlined={true}
                 white={this.props.buttonType === "primary"}
               >
                 {I18n.t("identification.unlockCode.reset.code")}
-              </Text>
-              <Text white={this.props.buttonType === "primary"}>
+              </NBText>
+              <NBText white={this.props.buttonType === "primary"}>
                 {I18n.t("global.symbols.question")}
-              </Text>
-            </Text>
+              </NBText>
+            </NBText>
             <View spacer={true} />
           </React.Fragment>
         )}

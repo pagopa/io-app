@@ -1,4 +1,4 @@
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
 import { useEffect, useState } from "react";
@@ -21,9 +21,6 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     justifyContent: "center"
-  },
-  addButton: {
-    width: "100%"
   }
 });
 

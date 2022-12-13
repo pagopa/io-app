@@ -1,4 +1,4 @@
-import { IUnitTag } from "italia-ts-commons/lib/units";
+import { IUnitTag } from "@pagopa/ts-commons/lib/units";
 import { ActionType, createAsyncAction } from "typesafe-actions";
 import { TrxCountByDayResourceArray } from "../../../../../../definitions/bpd/winning_transactions_v2/TrxCountByDayResourceArray";
 import { WinningTransactionPageResource } from "../../../../../../definitions/bpd/winning_transactions_v2/WinningTransactionPageResource";

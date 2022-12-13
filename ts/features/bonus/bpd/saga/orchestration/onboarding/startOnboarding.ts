@@ -1,8 +1,9 @@
 import { StackActions } from "@react-navigation/compat";
-import { Either, right } from "fp-ts/lib/Either";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as E from "fp-ts/lib/Either";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { call, put, select, take, race } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
+import { pipe } from "fp-ts/lib/function";
 import NavigationService from "../../../../../../navigation/NavigationService";
 import { navigateBack } from "../../../../../../store/actions/navigation";
 import { fetchWalletsRequest } from "../../../../../../store/actions/wallet/wallets";
@@ -34,17 +35,20 @@ export function* getActivationStatus() {
 
 export function* isBpdEnabled(): Generator<
   ReduxSagaEffect,
-  Either<Error, boolean>,
+  E.Either<Error, boolean>,
   any
 > {
   const remoteActive: ReturnType<typeof bpdEnabledSelector> = yield* select(
     bpdEnabledSelector
   );
   if (pot.isSome(remoteActive)) {
-    return right<Error, boolean>(remoteActive.value);
+    return E.right<Error, boolean>(remoteActive.value);
   } else {
     const activationStatus = yield* call(getActivationStatus);
-    return activationStatus.map(citizen => citizen.enabled);
+    return pipe(
+      activationStatus,
+      E.map(citizen => citizen.enabled)
+    );
   }
 }
 
@@ -66,7 +70,7 @@ export function* bpdStartOnboardingWorker() {
     isBpdEnabled
   );
 
-  if (isBpdActive.isRight()) {
+  if (E.isRight(isBpdActive)) {
     // Refresh the wallets to prevent that added cards are not visible
     yield* put(fetchWalletsRequest());
 

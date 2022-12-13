@@ -1,5 +1,5 @@
-import { Millisecond } from "italia-ts-commons/lib/units";
-import { Text } from "native-base";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import { Text as NBText } from "native-base";
 import * as React from "react";
 import { Platform, StyleSheet } from "react-native";
 import I18n from "../i18n";
@@ -24,6 +24,8 @@ const styles = StyleSheet.create({
     alignSelf: "center"
   },
   text: {
+    fontSize: 14,
+    lineHeight: 18,
     ...makeFontStyleObject(Platform.select, customVariables.textNormalWeight),
     paddingLeft: 0,
     paddingRight: 0
@@ -64,14 +66,13 @@ const CopyButtonComponent: React.FunctionComponent<Props> = (props: Props) => {
       primary={isTap}
       onPressWithGestureHandler={props.onPressWithGestureHandler}
     >
-      <Text
+      <NBText
         style={[styles.text, isTap ? styles.colorWhite : styles.colorBlue]}
-        small={true}
       >
         {isTap
           ? I18n.t("clipboard.copyFeedbackButton")
           : I18n.t("clipboard.copyText")}
-      </Text>
+      </NBText>
     </ButtonDefaultOpacity>
   );
 };

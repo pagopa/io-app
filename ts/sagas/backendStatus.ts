@@ -1,14 +1,15 @@
 /**
  * this saga checks at regular intervals the backend status
  */
-import { Millisecond } from "italia-ts-commons/lib/units";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import * as E from "fp-ts/lib/Either";
 import { call, fork, put, select } from "typed-redux-saga/macro";
 import { CdnBackendStatusClient } from "../api/backendPublic";
+import { contentRepoUrl } from "../config";
 import { backendStatusLoadSuccess } from "../store/actions/backendStatus";
 import { backendServicesStatusSelector } from "../store/reducers/backendStatus";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { startTimer } from "../utils/timer";
-import { contentRepoUrl } from "../config";
 
 const BACKEND_SERVICES_STATUS_LOAD_INTERVAL = (60 * 1000) as Millisecond;
 const BACKEND_SERVICES_STATUS_FAILURE_INTERVAL = (10 * 1000) as Millisecond;
@@ -23,8 +24,8 @@ export function* backendStatusSaga(
 > {
   try {
     const response = yield* call(getServicesStatus, {});
-    if (response.isRight() && response.value.status === 200) {
-      yield* put(backendStatusLoadSuccess(response.value.value));
+    if (E.isRight(response) && response.right.status === 200) {
+      yield* put(backendStatusLoadSuccess(response.right.value));
       return true;
     }
     return false;

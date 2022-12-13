@@ -1,17 +1,17 @@
-import { left, right } from "fp-ts/lib/Either";
+import * as E from "fp-ts/lib/Either";
 import { deriveCustomHandledLink } from "../link";
 
 const loadingCases: ReadonlyArray<
   [input: string, expectedResult: ReturnType<typeof deriveCustomHandledLink>]
 > = [
-  ["", left(new Error(`"" is not recognized as a valid handled link`))],
+  ["", E.left(new Error(`"" is not recognized as a valid handled link`))],
   [
     "some text",
-    left(new Error(`"some text" is not recognized as a valid handled link`))
+    E.left(new Error(`"some text" is not recognized as a valid handled link`))
   ],
   [
     "iohandledlink://noprotocol:somevalue",
-    left(
+    E.left(
       new Error(
         `"iohandledlink://noprotocol:somevalue" is not recognized as a valid handled link`
       )
@@ -19,7 +19,7 @@ const loadingCases: ReadonlyArray<
   ],
   [
     "iohandledlink://http://www.google.com",
-    right({
+    E.right({
       schema: "http",
       url: "http://www.google.com",
       value: "//www.google.com"
@@ -27,7 +27,7 @@ const loadingCases: ReadonlyArray<
   ],
   [
     "iohandledlink://https://www.google.com",
-    right({
+    E.right({
       schema: "https",
       url: "https://www.google.com",
       value: "//www.google.com"
@@ -35,7 +35,7 @@ const loadingCases: ReadonlyArray<
   ],
   [
     "iohandledlink://copy:123text456",
-    right({
+    E.right({
       schema: "copy",
       url: "copy:123text456",
       value: "123text456"
@@ -43,7 +43,7 @@ const loadingCases: ReadonlyArray<
   ],
   [
     "iohandledlink://sms:123456",
-    right({
+    E.right({
       schema: "sms",
       url: "sms:123456",
       value: "123456"
@@ -51,7 +51,7 @@ const loadingCases: ReadonlyArray<
   ],
   [
     "iohandledlink://tel:123456",
-    right({
+    E.right({
       schema: "tel",
       url: "tel:123456",
       value: "123456"
@@ -59,7 +59,7 @@ const loadingCases: ReadonlyArray<
   ],
   [
     "iohandledlink://mailto:name.surname@email.com",
-    right({
+    E.right({
       schema: "mailto",
       url: "mailto:name.surname@email.com",
       value: "name.surname@email.com"

@@ -1,7 +1,6 @@
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import { CompatNavigationProp } from "@react-navigation/compat";
-import { Option } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
 import { Content, View } from "native-base";
 import * as React from "react";
 import { SafeAreaView } from "react-native";
@@ -32,7 +31,7 @@ import {
 import { walletAddPrivativeStart } from "../../features/wallet/onboarding/privative/store/actions";
 import { walletAddSatispayStart } from "../../features/wallet/onboarding/satispay/store/actions";
 import I18n from "../../i18n";
-import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../navigation/params/WalletParamsList";
 import {
   navigateBack,
@@ -49,7 +48,7 @@ import { AsyncAlert } from "../../utils/asyncAlert";
 import { isTestEnv } from "../../utils/environment";
 
 export type AddPaymentMethodScreenNavigationParams = Readonly<{
-  inPayment: Option<{
+  inPayment: O.Option<{
     rptId: RptId;
     initialAmount: AmountInEuroCents;
     verifica: PaymentRequestsGetResponse;
@@ -60,11 +59,10 @@ export type AddPaymentMethodScreenNavigationParams = Readonly<{
   keyFrom?: string;
 }>;
 
-type OwnProps = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<WalletParamsList, "WALLET_ADD_PAYMENT_METHOD">
-  >;
-};
+type OwnProps = IOStackNavigationRouteProps<
+  WalletParamsList,
+  "WALLET_ADD_PAYMENT_METHOD"
+>;
 
 type Props = OwnProps &
   ReturnType<typeof mapDispatchToProps> &
@@ -181,17 +179,16 @@ const getPaymentMethods = (
 const AddPaymentMethodScreen: React.FunctionComponent<Props> = (
   props: Props
 ) => {
-  const inPayment = props.navigation.getParam("inPayment");
-  const canAddOnlyPayablePaymentMethod = props.navigation.getParam(
-    "showOnlyPayablePaymentMethods"
-  );
+  const inPayment = props.route.params.inPayment;
+  const canAddOnlyPayablePaymentMethod =
+    props.route.params.showOnlyPayablePaymentMethods;
 
   const cancelButtonProps = {
     block: true,
     light: true,
     bordered: true,
     onPress: props.navigateBack,
-    title: inPayment.isSome()
+    title: O.isSome(inPayment)
       ? I18n.t("global.buttons.back")
       : I18n.t("global.buttons.cancel")
   };
@@ -202,13 +199,13 @@ const AddPaymentMethodScreen: React.FunctionComponent<Props> = (
       contextualHelpMarkdown={contextualHelpMarkdown}
       faqCategories={["wallet", "wallet_methods"]}
       headerTitle={
-        inPayment.isSome()
+        O.isSome(inPayment)
           ? I18n.t("wallet.payWith.header")
           : I18n.t("wallet.addPaymentMethodTitle")
       }
     >
       <SafeAreaView style={IOStyles.flex}>
-        {inPayment.isSome() ? (
+        {O.isSome(inPayment) ? (
           <Content noPadded={true}>
             <PaymentBannerComponent
               paymentReason={inPayment.value.verifica.causaleVersamento}
@@ -222,7 +219,7 @@ const AddPaymentMethodScreen: React.FunctionComponent<Props> = (
               <PaymentMethodsList
                 paymentMethods={getPaymentMethods(props, {
                   onlyPaymentMethodCanPay: true,
-                  isPaymentOnGoing: inPayment.isSome(),
+                  isPaymentOnGoing: O.isSome(inPayment),
                   isPaypalEnabled: props.isPaypalEnabled,
                   // can onboard bpay only when both FF are enabled
                   canOnboardBPay: props.canOnboardBPay && props.canPayWithBPay
@@ -236,7 +233,7 @@ const AddPaymentMethodScreen: React.FunctionComponent<Props> = (
               paymentMethods={getPaymentMethods(props, {
                 onlyPaymentMethodCanPay:
                   canAddOnlyPayablePaymentMethod === true,
-                isPaymentOnGoing: inPayment.isSome(),
+                isPaymentOnGoing: O.isSome(inPayment),
                 isPaypalEnabled: props.isPaypalEnabled,
                 canOnboardBPay: props.canOnboardBPay
               })}
@@ -262,8 +259,8 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
   startAddPrivative: () => dispatch(walletAddPrivativeStart()),
   navigateToAddCreditCard: () =>
     navigateToWalletAddCreditCard({
-      inPayment: props.navigation.getParam("inPayment"),
-      keyFrom: props.navigation.getParam("keyFrom")
+      inPayment: props.route.params.inPayment,
+      keyFrom: props.route.params.keyFrom
     })
 });
 

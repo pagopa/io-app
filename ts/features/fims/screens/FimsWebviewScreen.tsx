@@ -1,21 +1,22 @@
+import { Route, useNavigation, useRoute } from "@react-navigation/native";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { useCallback, useMemo } from "react";
 import { Alert, SafeAreaView, View } from "react-native";
 import URLParse from "url-parse";
-import { fromNullable, none, some } from "fp-ts/lib/Option";
-import { Route, useNavigation, useRoute } from "@react-navigation/native";
-import FimsWebView from "../components/FimsWebView";
-import { useIOSelector } from "../../../store/hooks";
-import { sessionTokenSelector } from "../../../store/reducers/authentication";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import I18n from "../../../i18n";
+import { useIOSelector } from "../../../store/hooks";
+import { sessionTokenSelector } from "../../../store/reducers/authentication";
+import { fimsDomainSelector } from "../../../store/reducers/backendStatus";
 import {
   ioClearCookie,
   IOCookie,
   setCookie
 } from "../../../utils/cookieManager";
-import { fimsDomainSelector } from "../../../store/reducers/backendStatus";
+import FimsWebView from "../components/FimsWebView";
 
 export type FimsWebviewScreenNavigationParams = Readonly<{
   url: string;
@@ -28,8 +29,8 @@ const FimsWebviewScreen = () => {
   const route =
     useRoute<Route<"FIMS_WEBVIEW", FimsWebviewScreenNavigationParams>>();
 
-  const maybeSessionToken = fromNullable(useIOSelector(sessionTokenSelector));
-  const maybeFimsDomain = fromNullable(useIOSelector(fimsDomainSelector));
+  const maybeSessionToken = O.fromNullable(useIOSelector(sessionTokenSelector));
+  const maybeFimsDomain = O.fromNullable(useIOSelector(fimsDomainSelector));
 
   const goBackAndResetInternalNavigationInfo = useCallback(() => {
     navigation.goBack();
@@ -51,10 +52,10 @@ const FimsWebviewScreen = () => {
       return;
     }
 
-    if (maybeSessionToken.isNone()) {
+    if (O.isNone(maybeSessionToken)) {
       Alert.alert(
         I18n.t("global.genericAlert"),
-        maybeSessionToken.isNone()
+        O.isNone(maybeSessionToken)
           ? I18n.t("webView.error.missingToken")
           : I18n.t("webView.error.missingParams"),
         [
@@ -68,14 +69,17 @@ const FimsWebviewScreen = () => {
       return;
     }
 
-    const maybeParsedUrl = maybeFimsDomain.chain(domain => {
-      const parsed = new URLParse(domain as string, true);
-      return parsed.protocol && parsed.protocol === "https:"
-        ? some(parsed)
-        : none;
-    });
+    const maybeParsedUrl = pipe(
+      maybeFimsDomain,
+      O.chain(domain => {
+        const parsed = new URLParse(domain as string, true);
+        return parsed.protocol && parsed.protocol === "https:"
+          ? O.some(parsed)
+          : O.none;
+      })
+    );
 
-    if (maybeFimsDomain.isNone() || maybeParsedUrl.isNone()) {
+    if (O.isNone(maybeFimsDomain) || O.isNone(maybeParsedUrl)) {
       Alert.alert(I18n.t("global.genericAlert"), "", [
         {
           text: I18n.t("global.buttons.exit"),
@@ -118,11 +122,11 @@ const FimsWebviewScreen = () => {
     <BaseScreenComponent goBack={handleGoBack}>
       <SafeAreaView style={IOStyles.flex}>
         <View style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
-          {showWebview && maybeSessionToken.isSome() && (
+          {showWebview && O.isSome(maybeSessionToken) && (
             <FimsWebView
               onWebviewClose={handleGoBack}
               uri={route.params.url}
-              fimsDomain={maybeFimsDomain.toUndefined()}
+              fimsDomain={O.toUndefined(maybeFimsDomain)}
             />
           )}
         </View>
