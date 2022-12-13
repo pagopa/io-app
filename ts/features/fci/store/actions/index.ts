@@ -57,8 +57,8 @@ export const fciDownloadPreview = createAsyncAction(
   "FCI_DOWNLOAD_PREVIEW_CANCEL"
 )<{ url: string }, { path: string }, NetworkError, void>();
 
-export const fciDownloadPreviewCancel = createStandardAction(
-  "FCI_DOWNLOAD_PREVIEW_CANCEL"
+export const fciDownloadPreviewClear = createStandardAction(
+  "FCI_DOWNLOAD_PREVIEW_CLEAR"
 )<{ path: string }>();
 
 /**
@@ -71,8 +71,9 @@ export const fciUpdateDocumentSignaturesRequest = createStandardAction(
 /**
  * clear the FCI store
  */
-export const fciAbortRequest =
-  createStandardAction("FCI_ABORT_REQUEST")<void>();
+export const fciClearStateRequest = createStandardAction(
+  "FCI_CLEAR_STATE_REQUEST"
+)<void>();
 
 /**
  * start the FCI action
@@ -80,12 +81,43 @@ export const fciAbortRequest =
 export const fciStartRequest =
   createStandardAction("FCI_START_REQUEST")<void>();
 
+/**
+ * start the FCI signing action
+ */
+export const fciStartSigningRequest = createStandardAction(
+  "FCI_START_SIGNING_REQUEST"
+)<void>();
+
+/**
+ * start the FCI signed start action
+ */
+export const fciShowSignedDocumentsStartRequest = createStandardAction(
+  "FCI_SIGNED_DOCUMENTS_START_REQUEST"
+)<void>();
+
+/**
+ * start the FCI signed end action
+ */
+export const fciShowSignedDocumentsEndRequest = createStandardAction(
+  "FCI_SIGNED_DOCUMENTS_END_REQUEST"
+)<void>();
+
+/**
+ * clear the FCI store
+ */
+export const fciEndRequest = createStandardAction("FCI_END_REQUEST")<void>();
+
 export type FciActions =
   | ActionType<typeof fciSignatureRequestFromId>
   | ActionType<typeof fciLoadQtspClauses>
   | ActionType<typeof fciLoadQtspFilledDocument>
   | ActionType<typeof fciSigningRequest>
-  | ActionType<typeof fciAbortRequest>
+  | ActionType<typeof fciClearStateRequest>
   | ActionType<typeof fciStartRequest>
   | ActionType<typeof fciUpdateDocumentSignaturesRequest>
-  | ActionType<typeof fciDownloadPreview>;
+  | ActionType<typeof fciStartSigningRequest>
+  | ActionType<typeof fciEndRequest>
+  | ActionType<typeof fciDownloadPreview>
+  | ActionType<typeof fciDownloadPreviewClear>
+  | ActionType<typeof fciShowSignedDocumentsStartRequest>
+  | ActionType<typeof fciShowSignedDocumentsEndRequest>;

@@ -9,7 +9,7 @@ import { IOColors } from "../../../components/core/variables/IOColors";
 import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
 import { errorButtonProps } from "../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import { fciAbortRequest } from "../store/actions";
+import { fciEndRequest } from "../store/actions";
 import { useIODispatch } from "../../../store/hooks";
 
 const styles = StyleSheet.create({
@@ -54,7 +54,7 @@ export const useFciAbortSignatureFlow = () => {
       rightButton={{
         ...errorButtonProps(() => {
           dismiss();
-          dispatch(fciAbortRequest());
+          dispatch(fciEndRequest());
         }, I18n.t("features.fci.abort.confirm")),
         onPressWithGestureHandler: true
       }}

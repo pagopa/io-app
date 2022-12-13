@@ -3202,6 +3202,10 @@ features:
       name: "Name"
       familyName: "Family name"
       birthDate: "Date of birth"
+    thankYouPage:
+      title: "Done!"
+      content: "You will shortly receive a message with the signed documents."
+      cta: "Close"
     qtspTos:
       title: "Do you give your consent?"
       show: "View"

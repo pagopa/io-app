@@ -9,7 +9,9 @@ import {
   CreateFilledDocumentT,
   createFilledDocumentDefaultDecoder,
   GetQtspClausesMetadataT,
-  getQtspClausesMetadataDefaultDecoder
+  getQtspClausesMetadataDefaultDecoder,
+  CreateSignatureT,
+  createSignatureDefaultDecoder
 } from "../../../../definitions/fci/requestTypes";
 import { SessionToken } from "../../../types/SessionToken";
 import {
@@ -44,6 +46,15 @@ const postQtspFilledBody: CreateFilledDocumentT = {
   response_decoder: createFilledDocumentDefaultDecoder()
 };
 
+const postSignature: CreateSignatureT = {
+  method: "post",
+  url: () => `/api/v1/sign/signatures`,
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+  query: _ => ({}),
+  body: ({ body }) => JSON.stringify({ body }),
+  response_decoder: createSignatureDefaultDecoder()
+};
+
 // client for FCI to handle API communications
 export const BackendFciClient = (
   baseUrl: string,
@@ -64,6 +75,9 @@ export const BackendFciClient = (
     ),
     postQtspFilledBody: withBearerToken(
       createFetchRequestForApi(postQtspFilledBody, options)
+    ),
+    postSignature: withBearerToken(
+      createFetchRequestForApi(postSignature, options)
     )
   };
 };

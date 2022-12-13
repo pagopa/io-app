@@ -4,7 +4,11 @@ import imageExpired from "../../../../img/wallet/errors/payment-expired-icon.png
 import hourglass from "../../../../img/pictograms/hourglass.png";
 import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
 import { useIODispatch } from "../../../store/hooks";
-import { fciStartRequest } from "../store/actions";
+import {
+  fciEndRequest,
+  fciShowSignedDocumentsStartRequest,
+  fciStartRequest
+} from "../store/actions";
 import ErrorComponent from "./ErrorComponent";
 import GenericErrorComponent from "./GenericErrorComponent";
 
@@ -25,6 +29,7 @@ const SuccessComponent = (props: {
       <ErrorComponent
         title={I18n.t("features.fci.errors.expired.title")}
         subTitle={I18n.t("features.fci.errors.expired.subTitle")}
+        onPress={() => dispatch(fciEndRequest())}
         image={imageExpired}
         testID={"ExpiredSignatureRequestTestID"}
       />
@@ -43,12 +48,13 @@ const SuccessComponent = (props: {
         <ErrorComponent
           title={I18n.t("features.fci.errors.waitForQtsp.title")}
           subTitle={I18n.t("features.fci.errors.waitForQtsp.subTitle")}
+          onPress={() => dispatch(fciEndRequest())}
           image={hourglass}
           testID={"WaitQtspSignatureRequestTestID"}
         />
       );
     case "SIGNED":
-      // TODO: make the path to the signed document dynamic
+      dispatch(fciShowSignedDocumentsStartRequest());
       return null;
     default:
       return <GenericErrorComponent />;

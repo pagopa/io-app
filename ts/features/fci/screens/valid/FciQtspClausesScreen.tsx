@@ -1,7 +1,6 @@
 import * as React from "react";
 import { SafeAreaView, FlatList, StyleSheet, View } from "react-native";
 import { useSelector } from "react-redux";
-import { constNull } from "fp-ts/lib/function";
 import { useNavigation } from "@react-navigation/native";
 import { H1 } from "../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
@@ -21,6 +20,8 @@ import QtspClauseListItem from "../../components/QtspClauseListItem";
 import { FCI_ROUTES } from "../../navigation/routes";
 import { H4 } from "../../../../components/core/typography/H4";
 import { Link } from "../../../../components/core/typography/Link";
+import { useIODispatch } from "../../../../store/hooks";
+import { fciStartSigningRequest } from "../../store/actions";
 
 const styles = StyleSheet.create({
   paddingText: {
@@ -33,6 +34,7 @@ const FciQtspClausesScreen = () => {
   const qtspPrivacyTextSelector = useSelector(fciQtspPrivacyTextSelector);
   const qtspPrivacyUrlSelector = useSelector(fciQtspPrivacyUrlSelector);
   const navigation = useNavigation();
+  const dispatch = useIODispatch();
 
   const { present, bottomSheet: fciAbortSignature } =
     useFciAbortSignatureFlow();
@@ -99,7 +101,7 @@ const FciQtspClausesScreen = () => {
     block: true,
     primary: true,
     disabled: isClausesChecked !== qtspClausesSelector.length,
-    onPress: constNull,
+    onPress: () => dispatch(fciStartSigningRequest()),
     title: I18n.t("global.buttons.continue")
   };
 

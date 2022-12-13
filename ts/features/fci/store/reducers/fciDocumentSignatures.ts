@@ -6,7 +6,7 @@ import { DocumentSignature } from "../../../../../definitions/fci/DocumentSignat
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import {
-  fciAbortRequest,
+  fciClearStateRequest,
   fciUpdateDocumentSignaturesRequest
 } from "../actions";
 
@@ -42,7 +42,7 @@ const reducer = (
           )
         )
       };
-    case getType(fciAbortRequest):
+    case getType(fciClearStateRequest):
       return emptyState;
   }
   return state;

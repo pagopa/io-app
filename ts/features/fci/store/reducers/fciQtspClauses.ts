@@ -1,7 +1,7 @@
 import { getType } from "typesafe-actions";
 import { createSelector } from "reselect";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { fciLoadQtspClauses, fciAbortRequest } from "../actions";
+import { fciLoadQtspClauses, fciClearStateRequest } from "../actions";
 import { Action } from "../../../../store/actions/types";
 import { NetworkError } from "../../../../utils/errors";
 import { QtspClausesMetadata } from "../../../../../definitions/fci/QtspClausesMetadata";
@@ -22,7 +22,7 @@ const reducer = (
       return pot.some(action.payload);
     case getType(fciLoadQtspClauses.failure):
       return pot.toError(state, action.payload);
-    case getType(fciAbortRequest):
+    case getType(fciClearStateRequest):
       return emptyState;
   }
 
