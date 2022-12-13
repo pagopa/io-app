@@ -18,7 +18,7 @@ import {
   confirmButtonProps
 } from "../../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { FooterStackButton } from "../../../../../../bonus/bonusVacanze/components/buttons/FooterStackButtons";
-import { useHardwareBackButton } from "../../../../../../bonus/bonusVacanze/components/hooks/useHardwareBackButton";
+import { useHardwareBackButton } from "../../../../../../../hooks/useHardwareBackButton";
 import TosBonusComponent from "../../../../../../bonus/bonusVacanze/components/TosBonusComponent";
 import { walletAddCoBadgeCancel } from "../../../store/actions";
 

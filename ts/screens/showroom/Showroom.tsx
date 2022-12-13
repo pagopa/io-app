@@ -13,6 +13,7 @@ import { LogosShowroom } from "./core/LogosShowroom";
 import { SelectionShowroom } from "./core/SelectionShowroom";
 import { TypographyShowroom } from "./core/TypographyShowRoom";
 import { OthersShowroom } from "./OthersShowroom";
+import { ButtonsShowroom } from "./ButtonsShowroom";
 
 const styles = StyleSheet.create({
   body: {
@@ -48,6 +49,8 @@ export const Showroom = () => {
             <SelectionShowroom />
             <NBView spacer={true} large={true} />
             <OthersShowroom />
+            <NBView spacer={true} large={true} />
+            <ButtonsShowroom />
             <NBView spacer={true} large={true} />
             <PictogramsShowroom />
             <NBView spacer={true} large={true} />

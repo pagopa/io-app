@@ -1,13 +1,12 @@
 import { useActor } from "@xstate/react";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { List, Text, View } from "native-base";
+import { View as NBView } from "native-base";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
+import { ScrollView, View, StyleSheet } from "react-native";
 import { H1 } from "../../../../components/core/typography/H1";
-import { H4 } from "../../../../components/core/typography/H4";
-import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
+import { Body } from "../../../../components/core/typography/Body";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
@@ -17,6 +16,7 @@ import Markdown from "../../../../components/ui/Markdown";
 import I18n from "../../../../i18n";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { useOnboardingMachineService } from "../xstate/provider";
+import ButtonExtendedOutline from "../../../../components/ui/ButtonExtendedOutline";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.main.contextualHelpTitle",
@@ -42,7 +42,15 @@ const subtitle = (service: string) =>
     service
   });
 
-const PDNDPrerequisitesScreen = () => {
+const styles = StyleSheet.create({
+  listContainer: {
+    marginTop: 24
+  }
+});
+
+const BOTTOM_SHEET_HEIGHT = 290;
+
+export const PDNDPrerequisitesScreen = () => {
   const machine = useOnboardingMachineService();
   const [state, send] = useActor(machine);
   const [authority, setAuthority] = React.useState<string | undefined>();
@@ -57,7 +65,7 @@ const PDNDPrerequisitesScreen = () => {
       })}
     </Markdown>,
     I18n.t("idpay.onboarding.PDNDPrerequisites.prerequisites.info.header"),
-    290,
+    BOTTOM_SHEET_HEIGHT,
 
     <FooterWithButtons
       type="SingleButton"
@@ -89,34 +97,32 @@ const PDNDPrerequisitesScreen = () => {
         headerTitle={headerString}
         contextualHelpMarkdown={contextualHelpMarkdown}
       >
-        <View style={IOStyles.horizontalContentPadding}>
-          <View spacer={true} />
-          <H1>{title}</H1>
-          <View spacer />
-          <Text>{subtitle("18App")}</Text>
-          {/* will get service name from store */}
-          <View large spacer />
-        </View>
-
-        <List withContentLateralPadding>
-          {pdndCriteria.map((requisite, index) => (
-            <React.Fragment key={index}>
-              <ButtonDefaultOpacity
-                bordered={true}
-                onPress={() => {
-                  setAuthority(requisite.authority);
-                  present();
-                }}
-              >
-                <H4>{requisite.code}</H4>
-                <LabelSmall weight="Regular" color="bluegreyDark">
-                  {requisite.description}
-                </LabelSmall>
-              </ButtonDefaultOpacity>
-              <View spacer={true} />
-            </React.Fragment>
-          ))}
-        </List>
+        <ScrollView>
+          <View style={IOStyles.horizontalContentPadding}>
+            <NBView spacer={true} />
+            <H1>{title}</H1>
+            <NBView spacer />
+            <Body>{subtitle("18App")}</Body>
+            {/* will get service name from store */}
+          </View>
+          <View
+            style={[IOStyles.horizontalContentPadding, styles.listContainer]}
+          >
+            {pdndCriteria.map((requisite, index) => (
+              <React.Fragment key={index}>
+                <ButtonExtendedOutline
+                  label={requisite.code}
+                  description={requisite.description}
+                  onPress={() => {
+                    setAuthority(requisite.authority);
+                    present();
+                  }}
+                />
+                <NBView spacer={true} />
+              </React.Fragment>
+            ))}
+          </View>
+        </ScrollView>
       </BaseScreenComponent>
       <FooterWithButtons
         type="TwoButtonsInlineHalf"
