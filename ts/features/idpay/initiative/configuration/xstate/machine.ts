@@ -52,13 +52,18 @@ type E_GO_BACK = {
   type: "GO_BACK";
 };
 
+type E_QUIT = {
+  type: "QUIT";
+};
+
 type Events =
   | E_SELECT_INITIATIVE
   | E_START_CONFIGURATION
   | E_ADD_INSTRUMENT
   | E_CONFIRM_INSTRUMENTS
   | E_COMPLETE_CONFIGURATION
-  | E_GO_BACK;
+  | E_GO_BACK
+  | E_QUIT;
 
 type Services = {
   loadInitiative: {
@@ -88,6 +93,11 @@ const createIDPayInitiativeConfigurationMachine = () =>
       id: "IDPAY_INITIATIVE_CONFIGURATION",
       predictableActionArguments: true,
       initial: "WAITING_INITIATIVE_SELECTION",
+      on: {
+        QUIT: {
+          actions: "exitConfiguration"
+        }
+      },
       states: {
         WAITING_INITIATIVE_SELECTION: {
           tags: [LOADING_TAG],

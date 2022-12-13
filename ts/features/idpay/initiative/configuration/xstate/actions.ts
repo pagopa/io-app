@@ -46,11 +46,16 @@ const createActionsImplementation = (
     });
   };
 
+  const exitConfiguration = () => {
+    navigation.pop();
+  };
+
   return {
     navigateToConfigurationEntry,
     navigateToInstrumentsEnrollmentScreen,
     navigateToConfigurationSuccessScreen,
-    navigateToInitiativeDetailScreen
+    navigateToInitiativeDetailScreen,
+    exitConfiguration
   };
 };
 
