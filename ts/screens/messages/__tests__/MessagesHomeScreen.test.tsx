@@ -2,23 +2,23 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { fireEvent } from "@testing-library/react-native";
 import * as O from "fp-ts/lib/Option";
 import configureMockStore from "redux-mock-store";
-import { TagEnum as TagEnumBase } from "../../../../../definitions/backend/MessageCategoryBase";
-import { TagEnum as TagEnumPayment } from "../../../../../definitions/backend/MessageCategoryPayment";
-import { TagEnum as TagEnumPN } from "../../../../../definitions/backend/MessageCategoryPN";
-import { PnPreferences } from "../../../../features/pn/store/reducers/preferences";
-import ROUTES from "../../../../navigation/routes";
-import { applicationChangeState } from "../../../../store/actions/application";
-import { appReducer } from "../../../../store/reducers";
-import { AllPaginated } from "../../../../store/reducers/entities/messages/allPaginated";
-import { UIMessage } from "../../../../store/reducers/entities/messages/types";
-import { GlobalState } from "../../../../store/reducers/types";
+import { TagEnum as TagEnumBase } from "../../../../definitions/backend/MessageCategoryBase";
+import { TagEnum as TagEnumPayment } from "../../../../definitions/backend/MessageCategoryPayment";
+import { TagEnum as TagEnumPN } from "../../../../definitions/backend/MessageCategoryPN";
+import { PnPreferences } from "../../../features/pn/store/reducers/preferences";
+import ROUTES from "../../../navigation/routes";
+import { applicationChangeState } from "../../../store/actions/application";
+import { appReducer } from "../../../store/reducers";
+import { AllPaginated } from "../../../store/reducers/entities/messages/allPaginated";
+import { UIMessage } from "../../../store/reducers/entities/messages/types";
+import { GlobalState } from "../../../store/reducers/types";
 import {
   baseBackendConfig,
   baseBackendState,
   baseRawBackendStatus
-} from "../../../../store/reducers/__mock__/backendStatus";
-import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import { successReloadMessagesPayload } from "../../../../__mocks__/messages";
+} from "../../../store/reducers/__mock__/backendStatus";
+import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
+import { successReloadMessagesPayload } from "../../../__mocks__/messages";
 import MessagesHomeScreen from "../MessagesHomeScreen";
 
 jest.useFakeTimers();

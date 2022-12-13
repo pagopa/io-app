@@ -6,45 +6,45 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
 import { pipe } from "fp-ts/lib/function";
-import { TagEnum as TagEnumBase } from "../../../../definitions/backend/MessageCategoryBase";
-import { TagEnum as TagEnumPN } from "../../../../definitions/backend/MessageCategoryPN";
+import { TagEnum as TagEnumBase } from "../../../definitions/backend/MessageCategoryBase";
+import { TagEnum as TagEnumPN } from "../../../definitions/backend/MessageCategoryPN";
 
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 
-import { euCovidCertificateEnabled, mvlEnabled } from "../../../config";
-import { LoadingErrorComponent } from "../../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
-import { navigateToEuCovidCertificateDetailScreen } from "../../../features/euCovidCert/navigation/actions";
-import { EUCovidCertificateAuthCode } from "../../../features/euCovidCert/types/EUCovidCertificate";
-import { navigateToMvlDetailsScreen } from "../../../features/mvl/navigation/actions";
-import { navigateToPnMessageDetailsScreen } from "../../../features/pn/navigation/actions";
-import I18n from "../../../i18n";
-import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
-import { MessagesParamsList } from "../../../navigation/params/MessagesParamsList";
-import ROUTES from "../../../navigation/routes";
+import { euCovidCertificateEnabled, mvlEnabled } from "../../config";
+import { LoadingErrorComponent } from "../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { navigateToEuCovidCertificateDetailScreen } from "../../features/euCovidCert/navigation/actions";
+import { EUCovidCertificateAuthCode } from "../../features/euCovidCert/types/EUCovidCertificate";
+import { navigateToMvlDetailsScreen } from "../../features/mvl/navigation/actions";
+import { navigateToPnMessageDetailsScreen } from "../../features/pn/navigation/actions";
+import I18n from "../../i18n";
+import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
+import { MessagesParamsList } from "../../navigation/params/MessagesParamsList";
+import ROUTES from "../../navigation/routes";
 import {
   loadMessageById,
   loadMessageDetails,
   upsertMessageStatusAttributes
-} from "../../../store/actions/messages";
+} from "../../store/actions/messages";
 import {
   navigateBack,
   navigateToPaginatedMessageDetailScreenAction
-} from "../../../store/actions/navigation";
-import { loadServiceDetail } from "../../../store/actions/services";
-import { useIOSelector } from "../../../store/hooks";
-import { isPnEnabledSelector } from "../../../store/reducers/backendStatus";
-import { getDetailsByMessageId } from "../../../store/reducers/entities/messages/detailsById";
-import { getMessageById } from "../../../store/reducers/entities/messages/paginatedById";
+} from "../../store/actions/navigation";
+import { loadServiceDetail } from "../../store/actions/services";
+import { useIOSelector } from "../../store/hooks";
+import { isPnEnabledSelector } from "../../store/reducers/backendStatus";
+import { getDetailsByMessageId } from "../../store/reducers/entities/messages/detailsById";
+import { getMessageById } from "../../store/reducers/entities/messages/paginatedById";
 import {
   UIMessage,
   UIMessageDetails,
   UIMessageId
-} from "../../../store/reducers/entities/messages/types";
-import { serviceByIdSelector } from "../../../store/reducers/entities/services/servicesById";
-import { GlobalState } from "../../../store/reducers/types";
-import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
-import { isStrictSome } from "../../../utils/pot";
-import { mixpanelTrack } from "../../../mixpanel";
+} from "../../store/reducers/entities/messages/types";
+import { serviceByIdSelector } from "../../store/reducers/entities/services/servicesById";
+import { GlobalState } from "../../store/reducers/types";
+import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
+import { isStrictSome } from "../../utils/pot";
+import { mixpanelTrack } from "../../mixpanel";
 
 export type MessageRouterScreenPaginatedNavigationParams = {
   messageId: UIMessageId;

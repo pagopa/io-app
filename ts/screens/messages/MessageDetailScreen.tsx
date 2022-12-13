@@ -5,32 +5,32 @@ import { Text as NBText, View } from "native-base";
 import React from "react";
 import { ActivityIndicator, StyleSheet } from "react-native";
 import { connect } from "react-redux";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
-import WorkunitGenericFailure from "../../../components/error/WorkunitGenericFailure";
-import MessageDetailComponent from "../../../components/messages/MessageDetail";
+import { ServiceId } from "../../../definitions/backend/ServiceId";
+import WorkunitGenericFailure from "../../components/error/WorkunitGenericFailure";
+import MessageDetailComponent from "../../components/messages/MessageDetail";
 
-import ErrorState from "../../../components/messages/MessageDetail/ErrorState";
+import ErrorState from "../../components/messages/MessageDetail/ErrorState";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
-} from "../../../components/screens/BaseScreenComponent";
-import I18n from "../../../i18n";
-import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
-import { MessagesParamsList } from "../../../navigation/params/MessagesParamsList";
-import { loadMessageDetails } from "../../../store/actions/messages";
-import { navigateToServiceDetailsScreen } from "../../../store/actions/navigation";
-import { loadServiceDetail } from "../../../store/actions/services";
-import { Dispatch, ReduxProps } from "../../../store/actions/types";
-import { getDetailsByMessageId } from "../../../store/reducers/entities/messages/detailsById";
-import { getMessageById } from "../../../store/reducers/entities/messages/paginatedById";
-import { UIMessageId } from "../../../store/reducers/entities/messages/types";
-import { isNoticePaid } from "../../../store/reducers/entities/payments";
+} from "../../components/screens/BaseScreenComponent";
+import I18n from "../../i18n";
+import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
+import { MessagesParamsList } from "../../navigation/params/MessagesParamsList";
+import { loadMessageDetails } from "../../store/actions/messages";
+import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
+import { loadServiceDetail } from "../../store/actions/services";
+import { Dispatch, ReduxProps } from "../../store/actions/types";
+import { getDetailsByMessageId } from "../../store/reducers/entities/messages/detailsById";
+import { getMessageById } from "../../store/reducers/entities/messages/paginatedById";
+import { UIMessageId } from "../../store/reducers/entities/messages/types";
+import { isNoticePaid } from "../../store/reducers/entities/payments";
 import {
   serviceByIdSelector,
   serviceMetadataByIdSelector
-} from "../../../store/reducers/entities/services/servicesById";
-import { toUIService } from "../../../store/reducers/entities/services/transformers";
-import { GlobalState } from "../../../store/reducers/types";
-import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+} from "../../store/reducers/entities/services/servicesById";
+import { toUIService } from "../../store/reducers/entities/services/transformers";
+import { GlobalState } from "../../store/reducers/types";
+import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 
 const styles = StyleSheet.create({
   notFullStateContainer: {
