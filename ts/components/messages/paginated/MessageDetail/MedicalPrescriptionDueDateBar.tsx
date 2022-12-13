@@ -13,7 +13,6 @@ import {
 } from "../../../../utils/dates";
 import {
   isExpired,
-  isExpiring,
   MessagePaymentExpirationInfo
 } from "../../../../utils/messages";
 import { UIMessageDetails } from "../../../../store/reducers/entities/messages/types";
@@ -60,48 +59,34 @@ const MedicalPrescriptionDueDateBar = ({
   const isPrescriptionExpired = paymentExpirationInfo
     ? isExpired(paymentExpirationInfo)
     : false;
-  const isPrescriptionExpiring = paymentExpirationInfo
-    ? isExpiring(paymentExpirationInfo)
-    : false;
-
   const date = formatDateAsLocal(dueDate, true, true);
   const time = format(dueDate, "HH.mm");
 
   const bannerStyle = isPrescriptionExpired
     ? { backgroundColor: IOColors.bluegrey }
-    : isPrescriptionExpiring
-    ? { backgroundColor: customVariables.calendarExpirableColor }
     : { backgroundColor: IOColors.greyUltraLight };
 
-  if (isPrescriptionExpiring || isPrescriptionExpired) {
+  if (isPrescriptionExpired) {
     return (
       <View
-        testID={"MedicalPrescriptionDueDate_expired_or_expiring"}
+        testID={"MedicalPrescriptionDueDate_expired"}
         style={[styles.container, styles.row, bannerStyle]}
       >
         <CalendarIconComponent
           month={capitalize(formatDateAsMonth(dueDate))}
           day={formatDateAsDay(dueDate)}
           backgroundColor={IOColors.white}
-          textColor={
-            isPrescriptionExpiring
-              ? customVariables.calendarExpirableColor
-              : IOColors.bluegrey
-          }
+          textColor={IOColors.bluegrey}
         />
 
         <View hspacer={true} small={true} />
         <NBText style={styles.text} white={true}>
-          {isPrescriptionExpiring &&
-            I18n.t("messages.cta.prescription.expiringAlert")}
-          {isPrescriptionExpired && (
-            <>
-              {I18n.t("messages.cta.prescription.expiredAlert.block1")}
-              <NBText bold={true} white={true}>{` ${time} `}</NBText>
-              {I18n.t("messages.cta.prescription.expiredAlert.block2")}
-              <NBText bold={true} white={true}>{` ${date}`}</NBText>
-            </>
-          )}
+          <>
+            {I18n.t("messages.cta.prescription.expiredAlert.block1")}
+            <NBText bold={true} white={true}>{` ${date} `}</NBText>
+            {I18n.t("messages.cta.prescription.expiredAlert.block2")}
+            <NBText bold={true} white={true}>{` ${time}`}</NBText>
+          </>
         </NBText>
       </View>
     );
@@ -113,8 +98,12 @@ const MedicalPrescriptionDueDateBar = ({
       style={[styles.container, bannerStyle]}
     >
       <NBText style={styles.text} white={false}>
-        {I18n.t("messages.cta.prescription.addMemo")}
-        <NBText bold={true}>{` ${date}`}</NBText>
+        <>
+          {I18n.t("messages.cta.prescription.expiringOrValidAlert.block1")}
+          <NBText bold={true} white={false}>{` ${date} `}</NBText>
+          {I18n.t("messages.cta.prescription.expiringOrValidAlert.block2")}
+          <NBText bold={true} white={false}>{` ${time}`}</NBText>
+        </>
       </NBText>
       <View spacer={true} xsmall={true} />
       <View style={styles.row}>
