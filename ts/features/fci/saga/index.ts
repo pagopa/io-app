@@ -160,12 +160,12 @@ function* clearFciDownloadPreview(
     yield RNFS.exists(path).then(exists =>
       exists ? RNFS.unlink(path) : Promise.resolve()
     );
-    yield* put(fciDownloadPreview.cancel());
-    yield* call(
-      NavigationService.dispatchNavigationAction,
-      CommonActions.goBack()
-    );
   }
+  yield* put(fciDownloadPreview.cancel());
+  yield* call(
+    NavigationService.dispatchNavigationAction,
+    CommonActions.goBack()
+  );
 }
 
 /**

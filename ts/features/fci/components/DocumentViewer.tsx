@@ -5,9 +5,9 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import Pdf from "react-native-pdf";
 import * as S from "fp-ts/lib/string";
-import image from "../../../../img/servicesStatus/error-detail-icon.png";
+import genericError from "../../../../img/wallet/errors/generic-error-icon.png";
+import errorDetail from "../../../../img/servicesStatus/error-detail-icon.png";
 import { IOColors } from "../../../components/core/variables/IOColors";
-import WorkunitGenericFailure from "../../../components/error/WorkunitGenericFailure";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import { isIos } from "../../../utils/platform";
@@ -15,7 +15,7 @@ import { share } from "../../../utils/share";
 import { showToast } from "../../../utils/showToast";
 import { confirmButtonProps } from "../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { fciDownloadPreview } from "../store/actions";
+import { fciDownloadPreview, fciDownloadPreviewClear } from "../store/actions";
 import {
   fciDownloadPathSelector,
   fciDownloadPreviewSelector
@@ -23,6 +23,7 @@ import {
 import { LoadingErrorComponent } from "../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
+import ErrorComponent from "./ErrorComponent";
 
 const styles = StyleSheet.create({
   pdf: {
@@ -174,7 +175,7 @@ export const DocumentViewer = (props: Props): React.ReactElement => {
       )}
       {isError && (
         <InfoScreenComponent
-          image={renderInfoRasterImage(image)}
+          image={renderInfoRasterImage(errorDetail)}
           title={I18n.t(
             "features.mvl.details.attachments.pdfPreview.errors.previewing.title"
           )}
@@ -185,6 +186,14 @@ export const DocumentViewer = (props: Props): React.ReactElement => {
       )}
     </>
   ) : (
-    <WorkunitGenericFailure />
+    <ErrorComponent
+      title={I18n.t("genericError")}
+      subTitle={I18n.t("global.jserror.title")}
+      onPress={() =>
+        dispatch(fciDownloadPreviewClear({ path: fciDownloadPath }))
+      }
+      image={genericError}
+      testID={"WaitQtspSignatureRequestTestID"}
+    />
   );
 };
