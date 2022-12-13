@@ -1,6 +1,6 @@
-import { none, Option, some } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import * as O from "fp-ts/lib/Option";
 import React, { useEffect, useRef, useState } from "react";
 import {
   ActivityIndicator,
@@ -46,36 +46,12 @@ import { EdgeBorderComponent } from "../../../screens/EdgeBorderComponent";
 import {
   EmptyComponent,
   generateItemLayout,
-  ITEM_HEIGHT,
   ItemSeparator,
   renderEmptyList,
   renderItem
 } from "./helpers";
 
 const styles = StyleSheet.create({
-  itemLoadingContainer: {
-    height: ITEM_HEIGHT,
-    paddingVertical: 16,
-    paddingHorizontal: customVariables.contentPadding,
-    flex: 1
-  },
-  itemLoadingHeaderWrapper: {
-    flexDirection: "row",
-    marginBottom: 4
-  },
-  itemLoadingHeaderCenter: {
-    flex: 1,
-    paddingRight: 55 // Includes right header space
-  },
-  itemLoadingContentWrapper: {
-    flexDirection: "row",
-    alignItems: "center",
-    height: 42
-  },
-  itemLoadingContentCenter: {
-    flex: 1,
-    paddingRight: 32
-  },
   padded: {
     paddingHorizontal: customVariables.contentPadding
   },
@@ -182,8 +158,9 @@ const MessageList = ({
 
   const flatListRef: React.RefObject<FlatList> = useRef(null);
 
-  const [longPressedItemIndex, setLongPressedItemIndex] =
-    useState<Option<number>>(none);
+  const [longPressedItemIndex, setLongPressedItemIndex] = useState<
+    O.Option<number>
+  >(O.none);
 
   const [isRefreshing, setIsRefreshing] = useState(false);
 
@@ -220,9 +197,9 @@ const MessageList = ({
   };
 
   const handleOnLayoutChange = () => {
-    if (longPressedItemIndex.isSome()) {
+    if (O.isSome(longPressedItemIndex)) {
       scrollTo(longPressedItemIndex.value, true);
-      setLongPressedItemIndex(none);
+      setLongPressedItemIndex(O.none);
     }
   };
 
@@ -235,7 +212,7 @@ const MessageList = ({
     const lastIndex = messages.length - 1;
     const lastMessageId = messages[lastIndex].id;
     if (id === lastMessageId) {
-      setLongPressedItemIndex(some(lastIndex));
+      setLongPressedItemIndex(O.some(lastIndex));
     }
   };
 

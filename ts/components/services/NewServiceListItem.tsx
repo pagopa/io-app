@@ -1,11 +1,10 @@
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 import ListItemComponent from "../screens/ListItemComponent";
-import { IOColors } from "../core/variables/IOColors";
 
 type Props = {
   item: pot.Pot<ServicePublic, Error>;
@@ -17,22 +16,6 @@ const styles = StyleSheet.create({
   listItem: {
     marginLeft: customVariables.contentPadding,
     marginRight: customVariables.contentPadding
-  },
-  fixCroppedItalic: {
-    // Leave a little bit of space in order to avoid cropped characters
-    // due to italic style.
-    paddingRight: customVariables.fontSizeBase / 3
-  },
-  serviceName: {
-    color: IOColors.bluegrey
-  },
-  headerWrapper: {
-    flexDirection: "row",
-    marginBottom: 4,
-    marginLeft: 10
-  },
-  badgeMargin: {
-    marginLeft: 4
   }
 });
 

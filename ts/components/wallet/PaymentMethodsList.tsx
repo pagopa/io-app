@@ -2,7 +2,9 @@
  * This component will display the payment methods that can be registered
  * on the app
  */
-import { Badge, ListItem, Text, View } from "native-base";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import { Badge, ListItem, Text as NBText, View } from "native-base";
 import * as React from "react";
 import { FC } from "react";
 import {
@@ -12,25 +14,24 @@ import {
   Platform,
   StyleSheet
 } from "react-native";
-import { connect } from "react-redux";
-import { Option } from "fp-ts/lib/Option";
 import { SvgProps } from "react-native-svg";
-import { H3 } from "../core/typography/H3";
-import { H5 } from "../core/typography/H5";
-import { IOColors } from "../core/variables/IOColors";
-import { withLightModalContext } from "../helpers/withLightModalContext";
-import IconFont from "../ui/IconFont";
-import { LightModalContextInterface } from "../ui/LightModal";
+import { connect } from "react-redux";
+import { BackendStatus } from "../../../definitions/content/BackendStatus";
+import { LevelEnum } from "../../../definitions/content/SectionStatus";
 import I18n from "../../i18n";
-import { GlobalState } from "../../store/reducers/types";
 import {
   backendStatusSelector,
   SectionStatusKey
 } from "../../store/reducers/backendStatus";
-import { statusColorMap } from "../SectionStatus";
+import { GlobalState } from "../../store/reducers/types";
 import { getFullLocale } from "../../utils/locale";
-import { BackendStatus } from "../../../definitions/content/BackendStatus";
-import { LevelEnum } from "../../../definitions/content/SectionStatus";
+import { H3 } from "../core/typography/H3";
+import { H5 } from "../core/typography/H5";
+import { IOColors } from "../core/variables/IOColors";
+import { withLightModalContext } from "../helpers/withLightModalContext";
+import { statusColorMap } from "../SectionStatus";
+import IconFont from "../ui/IconFont";
+import { LightModalContextInterface } from "../ui/LightModal";
 
 type OwnProps = Readonly<{
   paymentMethods: ReadonlyArray<IPaymentMethod>;
@@ -94,52 +95,57 @@ export const showPaymentMethodIncomingAlert = () =>
  */
 const getBadgeStatus = (
   paymentMethod: IPaymentMethod,
-  backendStatus: Option<BackendStatus>
+  backendStatus: O.Option<BackendStatus>
 ): null | { badge: React.ReactNode; alert?: () => void } => {
   const itemSection = paymentMethod.section;
   // no section
   if (itemSection === undefined) {
     return null;
   }
-  return backendStatus
-    .mapNullable(bs => bs.sections)
-    .fold(null, sections => {
-      const section = sections[itemSection];
-      // no badge if section is not visible or badge is not defined
-      if (
-        section === undefined ||
-        section.is_visible === false ||
-        section.badge === undefined
-      ) {
-        return null;
+  return pipe(
+    backendStatus,
+    O.chainNullableK(bs => bs.sections),
+    O.fold(
+      () => null,
+      sections => {
+        const section = sections[itemSection];
+        // no badge if section is not visible or badge is not defined
+        if (
+          section === undefined ||
+          section.is_visible === false ||
+          section.badge === undefined
+        ) {
+          return null;
+        }
+        const locale = getFullLocale();
+        const badgeLabel = section.badge[locale];
+        return {
+          badge: (
+            <Badge
+              style={[
+                styles.badgeContainer,
+                { backgroundColor: statusColorMap[section.level] }
+              ]}
+            >
+              <NBText style={styles.badgeText} semibold={true}>
+                {badgeLabel}
+              </NBText>
+            </Badge>
+          ),
+          alert:
+            section.level === LevelEnum.critical
+              ? () => Alert.alert(badgeLabel, section.message[locale])
+              : undefined
+        };
       }
-      const locale = getFullLocale();
-      const badgeLabel = section.badge[locale];
-      return {
-        badge: (
-          <Badge
-            style={[
-              styles.badgeContainer,
-              { backgroundColor: statusColorMap[section.level] }
-            ]}
-          >
-            <Text style={styles.badgeText} semibold={true}>
-              {badgeLabel}
-            </Text>
-          </Badge>
-        ),
-        alert:
-          section.level === LevelEnum.critical
-            ? () => Alert.alert(badgeLabel, section.message[locale])
-            : undefined
-      };
-    });
+    )
+  );
 };
 
 const renderListItem = (
   itemInfo: ListRenderItemInfo<IPaymentMethod>,
   paymentMethodsLength: number,
-  backendStatus: Option<BackendStatus>
+  backendStatus: O.Option<BackendStatus>
 ) => {
   switch (itemInfo.item.status) {
     case "implemented": {
@@ -185,9 +191,9 @@ const renderListItem = (
           <View style={styles.flexColumn}>
             <View>
               <Badge style={styles.badgeContainer}>
-                <Text style={styles.badgeText} semibold={true}>
+                <NBText style={styles.badgeText} semibold={true}>
                   {I18n.t("wallet.methods.comingSoon")}
-                </Text>
+                </NBText>
               </Badge>
               <H3 color={"bluegrey"} weight={"SemiBold"}>
                 {itemInfo.item.name}
@@ -220,7 +226,7 @@ const PaymentMethodsList: React.FunctionComponent<Props> = (props: Props) => (
         renderListItem(
           i,
           props.paymentMethods.filter(pm => pm.status !== "notImplemented")
-            .length - 1,
+            .length,
           props.sectionStatus
         )
       }

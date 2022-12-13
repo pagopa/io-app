@@ -19,7 +19,7 @@ type AllowedSemiBoldColors = Extract<
 // these colors are allowed only when the weight is Regular
 type AllowedRegularColors = Extract<
   IOColorType,
-  "bluegreyDark" | "bluegrey" | "bluegreyLight" | "white"
+  "bluegreyDark" | "bluegrey" | "bluegreyLight" | "white" | "black"
 >;
 
 // all the possible colors
@@ -55,6 +55,7 @@ type OwnProps = ExternalTypographyProps<BoldKindProps>;
 
 const fontName: IOFontFamily = "TitilliumWeb";
 export const h4FontSize = 16;
+export const h4LineHeight = 22;
 
 /**
  * A custom function to calculate the values if no weight or color is provided.
@@ -93,5 +94,5 @@ export const H4: React.FunctionComponent<OwnProps> = props =>
     ...props,
     weightColorFactory: calculateH4WeightColor,
     font: fontName,
-    fontStyle: { fontSize: h4FontSize }
+    fontStyle: { fontSize: h4FontSize, lineHeight: h4LineHeight }
   });

@@ -1,4 +1,4 @@
-import { FiscalCode } from "italia-ts-commons/lib/strings";
+import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
 
 import { TimeToLiveSeconds } from "../../definitions/backend/TimeToLiveSeconds";
 import { ServiceId } from "../../definitions/backend/ServiceId";

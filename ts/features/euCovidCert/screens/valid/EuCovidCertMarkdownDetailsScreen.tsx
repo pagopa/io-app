@@ -4,6 +4,7 @@ import { useState } from "react";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import { Label } from "../../../../components/core/typography/Label";
+import { IOColors } from "../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
@@ -28,7 +29,7 @@ export type EuCovidCertMarkdownDetailsScreenNavigationParams = Readonly<{
 const styles = StyleSheet.create({
   viewShot: {
     flex: 1,
-    backgroundColor: "white"
+    backgroundColor: IOColors.white
   },
   save: {
     width: "100%"

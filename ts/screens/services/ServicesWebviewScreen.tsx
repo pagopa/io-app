@@ -1,22 +1,23 @@
 import CookieManager, { Cookie } from "@react-native-cookies/cookies";
+import { Route, useRoute } from "@react-navigation/native";
+import * as O from "fp-ts/lib/Option";
 import { Content } from "native-base";
 import * as React from "react";
 import { Alert, SafeAreaView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import URLParse from "url-parse";
-import { Route, useRoute } from "@react-navigation/native";
-import I18n from "../../i18n";
+import { ServiceId } from "../../../definitions/backend/ServiceId";
 import RegionServiceWebView from "../../components/RegionServiceWebView";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import I18n from "../../i18n";
 import { navigateBack } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
+import { useIOSelector } from "../../store/hooks";
 import {
   tokenFromNameSelector,
   TokenName
 } from "../../store/reducers/authentication";
 import { serviceMetadataByIdSelector } from "../../store/reducers/entities/services/servicesById";
-import { useIOSelector } from "../../store/hooks";
-import { ServiceId } from "../../../definitions/backend/ServiceId";
 
 export type ServiceWebviewScreenNavigationParams = Readonly<{
   serviceId: ServiceId;
@@ -59,10 +60,10 @@ const ServicesWebviewScreen: React.FunctionComponent<Props> = (
   React.useEffect(() => {
     // if params can't be decoded or the service has not a valid token name in its metadata (token is none)
     // show an alert and go back
-    if (token.isNone()) {
+    if (O.isNone(token)) {
       Alert.alert(
         I18n.t("global.genericAlert"),
-        token.isNone()
+        O.isNone(token)
           ? I18n.t("webView.error.missingToken")
           : I18n.t("webView.error.missingParams"),
         [
@@ -96,7 +97,7 @@ const ServicesWebviewScreen: React.FunctionComponent<Props> = (
     <BaseScreenComponent goBack={handleGoBack}>
       <SafeAreaView style={styles.flex}>
         <Content contentContainerStyle={styles.flex}>
-          {!cookieError && isCookieAvailable && token.isSome() && (
+          {!cookieError && isCookieAvailable && O.isSome(token) && (
             <RegionServiceWebView
               uri={route.params.url}
               onWebviewClose={handleGoBack}

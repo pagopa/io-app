@@ -1,21 +1,21 @@
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { View } from "native-base";
 import * as React from "react";
 import { ActivityIndicator } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { BasePaymentFeatureListItem } from "../../features/wallet/component/features/BasePaymentFeatureListItem";
 import I18n from "../../i18n";
 import { setFavouriteWalletRequest } from "../../store/actions/wallet/wallets";
 import { GlobalState } from "../../store/reducers/types";
 import {
-  updatingFavouriteWalletSelector,
-  getFavoriteWalletId
+  getFavoriteWalletId,
+  updatingFavouriteWalletSelector
 } from "../../store/reducers/wallet/wallets";
 import { PaymentMethod } from "../../types/pagopa";
 import { isAndroid } from "../../utils/platform";
 import { handleSetFavourite } from "../../utils/wallet";
 import { IOStyleVariables } from "../core/variables/IOStyleVariables";
+import { PreferencesListItem } from "../PreferencesListItem";
 import Switch from "../ui/Switch";
 
 type OwnProps = {
@@ -75,7 +75,7 @@ const FavoritePaymentMethodSwitch = (props: Props) => {
     />
   );
   return (
-    <BasePaymentFeatureListItem
+    <PreferencesListItem
       testID={"FavoritePaymentMethodSwitch"}
       title={I18n.t("wallet.favourite.setFavoriteTitle")}
       description={I18n.t("wallet.favourite.setFavoriteSubtitle")}

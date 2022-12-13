@@ -1,5 +1,6 @@
 import CameraRoll from "@react-native-community/cameraroll";
-import { fromLeft, TaskEither, tryCatch } from "fp-ts/lib/TaskEither";
+import { pipe } from "fp-ts/lib/function";
+import * as TE from "fp-ts/lib/TaskEither";
 import { PermissionsAndroid, Platform } from "react-native";
 import Share from "react-native-share";
 import I18n from "../i18n";
@@ -15,7 +16,7 @@ export const share = (
   message?: string,
   failOnCancel: boolean = false
 ) =>
-  tryCatch(
+  TE.tryCatch(
     () =>
       Share.open({
         url,
@@ -44,8 +45,8 @@ export const isShareEnabled = () =>
 export const saveImageToGallery = (
   uri: string,
   album?: string
-): TaskEither<Error, string> => {
-  const hasPermission = tryCatch(
+): TE.TaskEither<Error, string> => {
+  const hasPermission = TE.tryCatch(
     () =>
       requestIOAndroidPermission(
         PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
@@ -57,15 +58,18 @@ export const saveImageToGallery = (
       ),
     errorMsg => new Error(String(errorMsg))
   );
-  const saveImage = tryCatch(
+  const saveImage = TE.tryCatch(
     () => CameraRoll.save(uri, { type: "photo", album }),
     errorMsg => new Error(String(errorMsg))
   );
 
-  return hasPermission.chain(hasP => {
-    if (hasP) {
-      return saveImage;
-    }
-    return fromLeft<Error, string>(Error("some error occurred"));
-  });
+  return pipe(
+    hasPermission,
+    TE.chain(hasP => {
+      if (hasP) {
+        return saveImage;
+      }
+      return TE.left(Error("some error occurred"));
+    })
+  );
 };

@@ -1,5 +1,7 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { readableReport } from "@pagopa/ts-commons/lib/reporters";
+import * as E from "fp-ts/lib/Either";
 import { SagaIterator } from "redux-saga";
-import { ActionType, getType } from "typesafe-actions";
 import {
   call,
   put,
@@ -7,14 +9,13 @@ import {
   takeEvery,
   takeLatest
 } from "typed-redux-saga/macro";
-import { readableReport } from "italia-ts-commons/lib/reporters";
-import * as pot from "italia-ts-commons/lib/pot";
+import { ActionType, getType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
 import { loadThirdPartyMessage } from "../../features/messages/store/actions";
-import { getError } from "../../utils/errors";
-import { mixpanelTrack } from "../../mixpanel";
 import { toPNMessage } from "../../features/pn/store/types/transformers";
+import { mixpanelTrack } from "../../mixpanel";
 import { getMessageById } from "../../store/reducers/entities/messages/paginatedById";
+import { getError } from "../../utils/errors";
 
 function* getThirdPartyMessage(
   client: ReturnType<typeof BackendClient>,
@@ -23,22 +24,22 @@ function* getThirdPartyMessage(
   const id = action.payload;
   try {
     const result = yield* call(client.getThirdPartyMessage, { id });
-    if (result.isLeft()) {
+    if (E.isLeft(result)) {
       yield* put(
         loadThirdPartyMessage.failure({
           id,
-          error: new Error(readableReport(result.value))
+          error: new Error(readableReport(result.left))
         })
       );
-    } else if (result.value.status === 200) {
+    } else if (result.right.status === 200) {
       yield* put(
-        loadThirdPartyMessage.success({ id, content: result.value.value })
+        loadThirdPartyMessage.success({ id, content: result.right.value })
       );
     } else {
       yield* put(
         loadThirdPartyMessage.failure({
           id,
-          error: new Error(`response status ${result.value.status}`)
+          error: new Error(`response status ${result.right.status}`)
         })
       );
     }

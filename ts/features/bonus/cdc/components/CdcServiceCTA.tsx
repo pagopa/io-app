@@ -1,30 +1,30 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { View } from "native-base";
 import * as React from "react";
-import * as pot from "italia-ts-commons/lib/pot";
 import { useCallback } from "react";
 import { View as RNView } from "react-native";
-import { View } from "native-base";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { Label } from "../../../../components/core/typography/Label";
+import { StatoBeneficiarioEnum } from "../../../../../definitions/cdc/StatoBeneficiario";
+import { BonusVisibilityEnum } from "../../../../../definitions/content/BonusVisibility";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
+import { Label } from "../../../../components/core/typography/Label";
+import { IOColors } from "../../../../components/core/variables/IOColors";
+import SectionStatusComponent from "../../../../components/SectionStatus";
+import StatusContent from "../../../../components/SectionStatus/StatusContent";
+import ActivityIndicator from "../../../../components/ui/ActivityIndicator";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import ActivityIndicator from "../../../../components/ui/ActivityIndicator";
-import { cdcRequestBonusList } from "../store/actions/cdcBonusRequest";
-import { cdcBonusRequestListSelector } from "../store/reducers/cdcBonusRequest";
-import { fold } from "../../bpd/model/RemoteValue";
-import { CdcBonusRequestList } from "../types/CdcBonusRequest";
-import { IOColors } from "../../../../components/core/variables/IOColors";
-import StatusContent from "../../../../components/SectionStatus/StatusContent";
-import { StatoBeneficiarioEnum } from "../../../../../definitions/cdc/StatoBeneficiario";
-import { CDC_ROUTES } from "../navigation/routes";
-import SectionStatusComponent from "../../../../components/SectionStatus";
 import { loadAvailableBonuses } from "../../bonusVacanze/store/actions/bonusVacanze";
 import {
   allAvailableBonusTypesSelector,
   availableBonusTypesSelectorFromId
 } from "../../bonusVacanze/store/reducers/availableBonusesTypes";
 import { ID_CDC_TYPE } from "../../bonusVacanze/utils/bonus";
-import { BonusVisibilityEnum } from "../../../../../definitions/content/BonusVisibility";
+import { fold } from "../../bpd/model/RemoteValue";
+import { CDC_ROUTES } from "../navigation/routes";
+import { cdcRequestBonusList } from "../store/actions/cdcBonusRequest";
+import { cdcBonusRequestListSelector } from "../store/reducers/cdcBonusRequest";
+import { CdcBonusRequestList } from "../types/CdcBonusRequest";
 
 type ReadyButtonProp = {
   bonusRequestList: CdcBonusRequestList;

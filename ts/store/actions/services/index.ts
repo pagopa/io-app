@@ -2,7 +2,7 @@
  * Action types and action creator related to Services.
  */
 
-import { ITuple2 } from "italia-ts-commons/lib/tuples";
+import { ITuple2 } from "@pagopa/ts-commons/lib/tuples";
 import {
   ActionType,
   createAsyncAction,

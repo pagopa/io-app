@@ -1,21 +1,21 @@
-import { CompatNavigationProp } from "@react-navigation/compat";
-import { Millisecond } from "italia-ts-commons/lib/units";
-import { Button, Content, H2, Text, View } from "native-base";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import { Button, Content, Text as NBText, View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
 import AnimatedRing from "../../components/animations/AnimatedRing";
+import { H1 } from "../../components/core/typography/H1";
 import ScreenHeader from "../../components/ScreenHeader";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
-import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { AuthenticationParamsList } from "../../navigation/params/AuthenticationParamsList";
 import customVariables from "../../theme/variables";
 
-type Props = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<AuthenticationParamsList, "AUTHENTICATION_CIE">
-  >;
-};
+type Props = IOStackNavigationRouteProps<
+  AuthenticationParamsList,
+  "AUTHENTICATION_CIE"
+>;
+
 // Image dimension
 const imgDimension = 180;
 const boxDimension = 245;
@@ -63,14 +63,14 @@ const CardSelectionScreen: React.SFC<Props> = props => (
     <Content noPadded={true} bounces={false}>
       <ScreenHeader
         heading={
-          <H2 style={styles.titleHeader}>
+          <H1 style={styles.titleHeader}>
             {I18n.t("authentication.cie.card.title")}
-          </H2>
+          </H1>
         }
       />
-      <Text style={styles.messageHeader}>
+      <NBText style={styles.messageHeader}>
         {I18n.t("authentication.cie.card.layCardMessageHeader")}
-      </Text>
+      </NBText>
       <View style={{ alignItems: "center", height: boxDimension }}>
         <AnimatedRing
           dimension={ringSettings.dimension}
@@ -96,13 +96,13 @@ const CardSelectionScreen: React.SFC<Props> = props => (
           style={styles.img}
         />
       </View>
-      <Text style={styles.messageFooter}>
+      <NBText style={styles.messageFooter}>
         {I18n.t("authentication.cie.card.layCardMessageFooter")}
-      </Text>
+      </NBText>
     </Content>
     <View footer={true}>
       <Button onPress={props.navigation.goBack} cancel={true} block={true}>
-        <Text>{I18n.t("global.buttons.cancel")}</Text>
+        <NBText>{I18n.t("global.buttons.cancel")}</NBText>
       </Button>
     </View>
   </BaseScreenComponent>

@@ -183,10 +183,6 @@ global:
     invalidSearchBarText: Enter at least {{minCharacter}} characters
     noResultsFound: "There are no results for this search: try something else."
     noResultsTitle: No results.
-  localNotifications:
-    spidLogin:
-      title: Sign in to start using the app
-      message: IO can only work if you have signed in at least once
   media:
     email: "Email"
     pec: "Certified email"
@@ -483,6 +479,9 @@ profile:
           title: Do you want to change the language to
           subtitle: You'll need to restart the application to make this happen
         not_selected: Not selected
+      notifications:
+        title: Push notifications
+        subtitle: Allow previews and reminders
     empty:
       default: No preference set
     unavailable:
@@ -499,6 +498,26 @@ profile:
       contextualHelpContent: !include profile/profile_preferences_calendar.md
       local_calendar: Local calendar
       birthday_calendar: Birthdays
+    notifications:
+      contextualHelpTitle: Push notifications
+      contextualHelpContent: !include profile/profile_preferences_notifications.md
+      header: Push notifications
+      title: Customize push notifications
+      subtitle: Choose if you want to allow previews and receive reminders.
+      titleExistingUser: Customize push notifications
+      subtitleExistingUser: Now you can instantly see who messaged you and receive reminders from important messages, as in the example below.
+      reminders:
+        title: Allow reminders
+        description: Upon request of the sender, receive push notifications close to deadlines or when you have unread messages
+      preview:
+        title: Show previews
+        description: Include the sender and subject of the message in the push notification · 
+        link: More info
+        bottomSheet:
+          title: Show previews
+          content: If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running.
+          cta: Ok!
+      error: An error occurred with your request
 userMetadata:
   errors:
     upsertVersion: Can't upsert user metadata with this version
@@ -539,7 +558,7 @@ authentication:
       body: !include cie/cieNotSupported.md
       android_desc: !include cie/cieNotSupported_android.md
       os_version_unsupported: an Android 6.0 or higher operating system
-      nfc_incompatible: a NFC chip 
+      nfc_incompatible: a NFC chip
     contentTitleCie: Don't have SPID or CIE?
     cie_information_request: !include cie.md
     spid_or_cie: To use IO you must have one of these digital tools, which certify your identity.
@@ -809,6 +828,31 @@ onboarding:
   thankYouPage:
     title: Setup completed!
     body: Now you can start using IO
+  notifications:
+    badge: New
+    headerTitle: IO Settings
+    continue: Continue
+    preview:
+      reminderOnPreviewOnTitle: You have a notice due soon
+      reminderOnPreviewOnMessage: Log in to pay the notice issued by ACI
+      reminderOffPreviewOnTitle: Comune di Ipazia
+      reminderOffPreviewOnMessage: Summer camp registration is now open
+      reminderOnPreviewOffTitle: You have a notice due soon
+      reminderOnPreviewOffMessage: Log in to pay for it
+      reminderOffPreviewOffTitle: You have a new message
+      reminderOffPreviewOffMessage: Open the app to read the content
+    contextualHelpTitle: Push notifications
+    contextualHelpContent: !include onboarding/onboarding_notifications.md
+  infoConsent:
+    headerTitle: IO Settings
+    title: Enable push notifications?
+    subTitle: "To receive push notifications from IO, enable them in the iOS Settings. Here's how:"
+    instruction1: 1. Press 'Notifications'
+    instruction2: 2. Enable 'Allow notifications'
+    openSettings: Open iOS settings
+    continue: Maybe later
+    contextualHelpTitle: Push notifications
+    contextualHelpContent: !include onboarding/onboarding_notifications_info_consent.md
 forms:
   validators:
     required: Required value
@@ -1631,10 +1675,11 @@ messages:
         block1: Add a reminder for the
         block2: at
       expiringOrValidAlert:
-        block1: This notice will expire on
+        block1: Expiring on 
+        block2: at
       expiredAlert:
-        block1: This notice expired at
-        block2: on
+        block1: Expired on
+        block2: at
     prescription:
       addMemo: This prescription expires the
       expiringAlert: This prescription expires today
@@ -2555,29 +2600,29 @@ bonus:
     optInPaymentMethods:
       cashbackUpdate:
         header: "News and updates"
-        title: "Update on the Cashback initiative"
-        subtitle: "Ministry of Economy and Finance"
+        title: "Choose to keep or delete your payment methods"
         body: !include bonus/bpd/optInPaymentMethods.md
       choice:
-        header: Configure IO
-        title: Do you want to keep your payment methods?
-        subtitle: If you keep them, you’ll be able to use them to take part in discounts, bonuses and future initiatives or for other features, such as in-app payments.
-        suggestedOption: Recommended
+        header: "Configura IO"
+        title: "Vuoi mantenere i tuoi metodi di pagamento?"
+        subtitle: Se li mantieni, potrai utilizzarli per aderire a sconti, bonus e iniziative future o per altre funzionalità, come pagare in app.
+        suggestedOption: Consigliato
+        toast: "You've already made your choice"
         options:
           keepAll:
-            title: Keep all payment methods in the Wallet
-            body: If supported, you’ll be able to use them to take part in discounts, bonuses and future initiatives or for other features, such as in-app payments. You can change your method preferences or delete them at any time.
+            title: Mantieni tutti i metodi nel Portafoglio
+            body: PagoPA S.p.A. tratterà i dati dei tuoi metodi di pagamento in qualità di titolare del trattamento. Per maggiori informazioni puoi consultare l’Informativa Privacy.
           deleteAll:
-            title: Delete all payment methods from the Wallet
-            body: All methods added in the Wallet so far will be permanently deleted. You can add them again at any time, but you’ll have to enter back the method details and have it authorized.
-        deleteAllButton: Delete all methods
+            title: Elimina tutti i metodi dal Portafoglio
+            body:  Potrai aggiungerli di nuovo in qualsiasi momento, ma dovrai reinserire i dati e ripetere le procedure di autorizzazione.
+        deleteAllButton: Elimina tutti i metodi
       deletePaymentMethodsBottomSheet:
-        title: "Do you really want to delete the following methods from the Wallet?"
-        subtitle: "You can add them again at any time, but you will have to re-enter the data and repeat the authorization procedures."
+        title: "Vuoi davvero eliminare i seguenti metodi dal Portafoglio?"
+        subtitle: "Potrai aggiungerli di nuovo in qualsiasi momento, ma dovrai reinserire i dati e ripetere le procedure di autorizzazione."
       thankYouPage:
         cta:
-          goToWallet: "Go to Wallet"
-          retry: "Try again"
+          goToWallet: "Vai al Portafoglio"
+          retry: "Riprova"
         success:
           title: "Done!"
           body: "We’ve saved your choice."
@@ -3121,12 +3166,52 @@ features:
         expand: mostra gli stati precedenti
         info: Puoi vedere il dettaglio di ciascuno stato, scaricare le ricevute e le attestazioni opponibili a terzi accedendo alla versione web del servizio   
         cta: Accedi alla versione web  
+  fci:
+    errors:
+      expired:
+        title: Document no longer available for signature
+        subTitle: The document is no longer available for signature. Contact the institution for more information.
+      waitForQtsp:
+        title: The document is being processed
+        subTitle: Please wait, you will soon receive the signed contract in the app.
+      unsupportedDevice:
+        title: There is a problem
+        subTitle: Your device does not support the "Firma con IO" feature.
+      generic:
+        title: There is a problem
+        subTitle: To proceed with the signature, check that you have updated the IO app to the latest version.
+    abort:
+      title: "Cancel signing flow"
+      content: "Do you want to cancel the documents signing process?"
+      cancel: "Back"
+      confirm: "Cancel"
+    signatureFields:
+      title: "Sign here"
+      showOnDocument: "See on document"
+    title: "Firma con IO"
+    documentsBar:
+      titleLeft: Document {{currentDoc}} of {{totalDocs}}
+      titleRight: Page {{currentPage}} of {{totalPages}}
+    shareDataScreen:
+      title: "Do you share this data?"
+      content: "To complete the signing process, you must share this data with the requesting institution."
+      cancel: "Cancel"
+      confirm: "Ok"
+      alertText: "Want to change or update your email address?"
+      alertLink: "Go here"
+      name: "Name"
+      familyName: "Family name"
+      birthDate: "Date of birth"
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
     missingToken: Missing authorization to start this flow
     convertMessage: Unable to decode the message from the webview
 support:
+  ticketList:
+    noTicket:
+      title: "There are no ongoing requests"
+      body: "If you need help, submit a new request."
   helpCenter:
     header: "Support"
     cta:
@@ -3153,7 +3238,10 @@ support:
     stock: "Payment Notice details"
     stockValue: "Including the error you just received"
     header: "Submit a request"
+    listTitle: "Ongoing requests"
     title: "Do you give us your consent?"
+    listBody: "To retrieve your ongoing requests, we need to access to some data."
+    privacyLink: "Read the privacy policy"
     body: "In order to respond to the support request, we need access to some personal data. If you deny consent, you’ll have to send us a generic request via e-mail."
     listHeader: "If you consent, we'll access this data:"
     devicePerformance: "Device performance"
@@ -3172,3 +3260,78 @@ support:
       subCategory: "Can you give us more details?"
     subTitle:
       category: "Help us understand how we can help you by selecting the topic of your problem: we will reply as soon as possible, during business hours."
+idpay:
+  wallet:
+    preview:
+      validThrough: "Valid through {{endDate}}"
+  initiative:
+    configuration: 
+      bottomSheet:
+        header: Prima di continuare
+        bodyFirst: Il metodo sarà abilitato
+        bodyBold: " nelle prossime ore."
+        bodyLast: Riceverai una notifica push quando potrai iniziare ad utilizzarlo. Fino a quel momento eventuali transazioni verranno ignorate.
+        footer:
+          buttonActivate: Attiva
+          buttonCancel: Annulla
+      header: Scegli quali metodi di pagamento associare
+      subHeader: "Poi, usali per pagare e chiedi all’esercente di usare {{initiativeName}}."
+      footer: Modifica queste scelte o aggiunti altri metodi in qualsiasi momento dalla sezione Portafoglio
+      buttonFooter:
+        noneCta: Nessuno di questi
+        continueCta: Continua
+    details:
+      initiativeCard:
+        availableAmount: Disponibile
+        validUntil: Valido fino al
+        toRefund: da rimborsare
+      initiativeDetailsScreen:
+        notConfigured:
+          header: Configura l'iniziativa!
+          footer: Aggiungi almeno un metodo per iniziare ad utilizzare {{initiative}}.
+        configured:
+          yourOperations: Le tue Operazioni
+          yourOperationsSubtitle: Qui vedrai le transazioni effettuate con i metodi che hai associato.
+          yourOperationsLink: Come si fa?
+          settings:
+            header: Impostazioni
+            associatedPaymentMethods: Metodi di pagamento associati
+            methodsi18n: metodi 
+            selectedIBAN: IBAN per l'accredito
+          startConfigurationCTA: Inizia
+  onboarding:
+    headerTitle: "Adesione all'iniziativa"
+    beforeContinue:
+      text1: "Proseguendo accetti i "
+      tosLink: "Termini e condizioni d'uso"
+      text2: " del servizio e confermi di avere letto l' "
+      privacyLink: "Informativa privacy"
+    navigation:
+      header: Adesione all'iniziativa
+    PDNDPrerequisites:
+      prerequisites:
+        info:
+          header: Come avviene la verifica?
+          body: Comunichiamo direttamente con l’Ente che detiene l’informazione necessaria a effettuare il controllo, in questo caso **{{provider}}**.
+            In questo modo non devi produrre alcuna autocertificazione. Comodo, no?
+          understoodCTA: Ho capito
+      title: Possiedi i seguenti requisiti?
+      subtitle: Verificheremo con alcuni Enti se sei in possesso dei requisiti per poter richiedere {{service}}. 
+  configuration:
+    headerTitle: "Configure the initiative"
+    intro: 
+      title: "We are almost there"
+      body: "In order to take advantage of the initiative, we need some more information."
+      requiredData: 
+        title: "Required informations:"
+        ibanTitle: "IBAN in your name"
+        ibanSubtitle: "In order to receive any refunds"
+        instrumentTitle: "At least one payment method"
+        instrumentSubtitle: "Indicate the methods to be enabled for the initiative"
+      buttons:
+        continue: "Start configuration"
+    associationSuccess:
+      title: "Grazie!"
+      body: "Da domani potrai utilizzare {{initiativeName}}. Puoi abilitare altri metodi aggiungendoli al Portafoglio."
+      button: "Vai all'iniziativa"
+    

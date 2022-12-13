@@ -23,8 +23,8 @@ declare module "native-base" {
 
 export default (): Theme => ({
   ".info": {
-    backgroundColor: variables.brandHighLighter,
-    bordercolor: variables.brandHighLighter
+    backgroundColor: variables.colorHighlight,
+    bordercolor: variables.colorHighlight
   },
 
   ".xsmall": {
@@ -186,7 +186,7 @@ export default (): Theme => ({
   justifyContent: "center",
   paddingHorizontal: 16,
 
-  borderRadius: variables.borderRadiusBase,
+  borderRadius: variables.btnBorderRadius,
   height: variables.btnHeight,
   elevation: 0,
   shadowOffset: { width: 0, height: 0 },

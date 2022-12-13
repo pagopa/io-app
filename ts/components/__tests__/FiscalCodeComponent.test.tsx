@@ -1,16 +1,16 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { render } from "@testing-library/react-native";
 import React from "react";
-import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
-import * as pot from "italia-ts-commons/lib/pot";
-import FiscalCodeComponent from "../FiscalCodeComponent";
 import { mockedMunicipality } from "../../utils/__mocks__/municipality";
 import mockedProfile from "../../__mocks__/initializedProfile";
+import FiscalCodeComponent from "../FiscalCodeComponent";
 
 const municipality = pot.some(mockedMunicipality);
 // 02/03/1990
 const fiscalCode = "MRARSS90C02H501E" as FiscalCode;
 // 02/01/1990
-const dateOfBirth = new Date(1990, 0, 2);
+const dateOfBirth = new Date("1990-01-02T00:00:00.000Z");
 
 describe("FiscalCodeComponent", () => {
   jest.useFakeTimers();

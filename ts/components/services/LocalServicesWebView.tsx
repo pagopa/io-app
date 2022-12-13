@@ -1,28 +1,33 @@
-import { StyleSheet, View } from "react-native";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import React from "react";
-import * as pot from "italia-ts-commons/lib/pot";
+import { StyleSheet, View } from "react-native";
 import WebView, { WebViewMessageEvent } from "react-native-webview";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { fromNullable } from "fp-ts/lib/Option";
-import { RefreshIndicator } from "../ui/RefreshIndicator";
+import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-import { withLightModalContext } from "../helpers/withLightModalContext";
-import { GlobalState } from "../../store/reducers/types";
+import { localServicesWebUrl } from "../../config";
+import I18n from "../../i18n";
 import { loadServiceDetail } from "../../store/actions/services";
 import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
+import { GlobalState } from "../../store/reducers/types";
 import { isStrictSome } from "../../utils/pot";
-import I18n from "../../i18n";
 import { showToast } from "../../utils/showToast";
-import { localServicesWebUrl } from "../../config";
-import GenericErrorComponent from "../screens/GenericErrorComponent";
 import { AVOID_ZOOM_JS, closeInjectedScript } from "../../utils/webview";
-import { ServiceId } from "../../../definitions/backend/ServiceId";
+import { hexToRgba, IOColors } from "../core/variables/IOColors";
+import { withLightModalContext } from "../helpers/withLightModalContext";
+import GenericErrorComponent from "../screens/GenericErrorComponent";
+import { RefreshIndicator } from "../ui/RefreshIndicator";
 
 type Props = {
   onServiceSelect: (service: ServicePublic) => void;
 } & ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
+
+const opaqueBgColor = hexToRgba(IOColors.white, 0.5);
 
 const styles = StyleSheet.create({
   refreshIndicatorContainer: {
@@ -31,7 +36,7 @@ const styles = StyleSheet.create({
     right: 0,
     top: 0,
     bottom: 0,
-    backgroundColor: "rgba(255,255,255,0.5)",
+    backgroundColor: opaqueBgColor,
     justifyContent: "center",
     alignItems: "center",
     zIndex: 1000
@@ -68,9 +73,11 @@ const LocalServicesWebView = (props: Props) => {
   const { servicesById, onServiceSelect } = props;
 
   React.useEffect(() => {
-    fromNullable(serviceIdToLoad)
-      .mapNullable(sid => servicesById[sid])
-      .map(servicePot => {
+    pipe(
+      serviceIdToLoad,
+      O.fromNullable,
+      O.chainNullableK(sid => servicesById[sid]),
+      O.map(servicePot => {
         // if service has been loaded
         if (isStrictSome(servicePot)) {
           onServiceSelect(servicePot.value);
@@ -80,7 +87,8 @@ const LocalServicesWebView = (props: Props) => {
         if (pot.isError(servicePot)) {
           showToast(I18n.t("global.genericError"));
         }
-      });
+      })
+    );
   }, [servicesById, onServiceSelect, serviceIdToLoad]);
 
   const reloadWebView = () => {
@@ -96,16 +104,23 @@ const LocalServicesWebView = (props: Props) => {
    * @param event
    */
   const handleWebviewMessage = (event: WebViewMessageEvent) => {
-    ServiceId.decode(event.nativeEvent.data).map(sId => {
-      setServiceIdToLoad(sId);
-      // request loading service
-      props.loadService(sId);
-    });
+    pipe(
+      event.nativeEvent.data,
+      ServiceId.decode,
+      E.map(sId => {
+        setServiceIdToLoad(sId);
+        // request loading service
+        props.loadService(sId);
+      })
+    );
   };
 
-  const isLoadingServiceLoading = fromNullable(serviceIdToLoad)
-    .mapNullable(sid => props.servicesById[sid])
-    .fold(false, pot.isLoading);
+  const isLoadingServiceLoading = pipe(
+    serviceIdToLoad,
+    O.fromNullable,
+    O.chainNullableK(sid => props.servicesById[sid]),
+    O.fold(() => false, pot.isLoading)
+  );
   return (
     <>
       {isLoadingServiceLoading && renderLoading()}

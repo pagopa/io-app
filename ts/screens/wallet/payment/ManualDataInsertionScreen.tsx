@@ -4,16 +4,13 @@ import {
   RptId
 } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import {
-  CompatNavigationProp,
-  NavigationEvents
-} from "@react-navigation/compat";
-import { Either, isRight } from "fp-ts/lib/Either";
-import { fromEither, none, Option, some } from "fp-ts/lib/Option";
-import {
   NonEmptyString,
   OrganizationFiscalCode
-} from "italia-ts-commons/lib/strings";
-import { Content, Form, Text, View } from "native-base";
+} from "@pagopa/ts-commons/lib/strings";
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import { Content, Form, Text as NBText, View } from "native-base";
 import * as React from "react";
 import { Keyboard, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
@@ -21,6 +18,7 @@ import { H1 } from "../../../components/core/typography/H1";
 import { Link } from "../../../components/core/typography/Link";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 
+import { IOColors } from "../../../components/core/variables/IOColors";
 import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
 import { LabelledItem } from "../../../components/LabelledItem";
 import BaseScreenComponent, {
@@ -30,7 +28,7 @@ import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import { cancelButtonProps } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import I18n from "../../../i18n";
-import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
 import {
   navigateBack,
@@ -43,18 +41,16 @@ import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
 import { withPaymentFeatureSelector } from "../../../store/reducers/wallet/wallets";
 import { alertNoPayablePaymentMethods } from "../../../utils/paymentMethod";
-import { IOColors } from "../../../components/core/variables/IOColors";
 import CodesPositionManualPaymentModal from "./CodesPositionManualPaymentModal";
 
 export type ManualDataInsertionScreenNavigationParams = {
   isInvalidAmount?: boolean;
 };
 
-type OwnProps = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<WalletParamsList, "PAYMENT_MANUAL_DATA_INSERTION">
-  >;
-};
+type OwnProps = IOStackNavigationRouteProps<
+  WalletParamsList,
+  "PAYMENT_MANUAL_DATA_INSERTION"
+>;
 
 type Props = OwnProps &
   ReturnType<typeof mapDispatchToProps> &
@@ -62,12 +58,13 @@ type Props = OwnProps &
   LightModalContextInterface;
 
 type State = Readonly<{
-  paymentNoticeNumber: Option<
+  paymentNoticeNumber: O.Option<
     ReturnType<typeof PaymentNoticeNumberFromString.decode>
   >;
-  organizationFiscalCode: Option<
+  organizationFiscalCode: O.Option<
     ReturnType<typeof OrganizationFiscalCode.decode>
   >;
+  inputValue: string;
 }>;
 
 const styles = StyleSheet.create({
@@ -76,9 +73,9 @@ const styles = StyleSheet.create({
   }
 });
 
-// helper to translate Option<Either> to true|false|void semantics
-const unwrapOptionalEither = (o: Option<Either<unknown, unknown>>) =>
-  o.map<boolean | undefined>(e => e.isRight()).getOrElse(undefined);
+// helper to translate O.Option<Either> to true|false|void semantics
+const unwrapOptionalEither = (o: O.Option<E.Either<unknown, unknown>>) =>
+  pipe(o, O.map(E.isRight), O.toUndefined);
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.insertManually.contextualHelpTitle",
@@ -98,8 +95,9 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      paymentNoticeNumber: none,
-      organizationFiscalCode: none
+      paymentNoticeNumber: O.none,
+      organizationFiscalCode: O.none,
+      inputValue: ""
     };
   }
 
@@ -110,8 +108,16 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
   }
 
   private isFormValid = () =>
-    this.state.paymentNoticeNumber.map(isRight).getOrElse(false) &&
-    this.state.organizationFiscalCode.map(isRight).getOrElse(false);
+    pipe(
+      this.state.paymentNoticeNumber,
+      O.map(E.isRight),
+      O.getOrElseW(() => false)
+    ) &&
+    pipe(
+      this.state.organizationFiscalCode,
+      O.map(E.isRight),
+      O.getOrElseW(() => false)
+    );
 
   /**
    * This method collects the data from the form and,
@@ -121,24 +127,31 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
   private proceedToSummary = () => {
     // first make sure all the elements have been entered correctly
 
-    this.state.paymentNoticeNumber
-      .chain(fromEither)
-      .chain(paymentNoticeNumber =>
-        this.state.organizationFiscalCode
-          .chain(fromEither)
-          .chain(organizationFiscalCode =>
-            fromEither(
-              RptId.decode({
+    pipe(
+      this.state.paymentNoticeNumber,
+      O.chain(O.fromEither),
+      O.chain(paymentNoticeNumber =>
+        pipe(
+          this.state.organizationFiscalCode,
+          O.chain(O.fromEither),
+          O.chain(organizationFiscalCode =>
+            pipe(
+              {
                 paymentNoticeNumber,
                 organizationFiscalCode
+              },
+              RptId.decode,
+              O.fromEither,
+              O.map(rptId => {
+                // Set the initial amount to a fixed value (1) because it is not used, waiting to be removed from the API
+                const initialAmount = "1" as AmountInEuroCents;
+                this.props.navigateToTransactionSummary(rptId, initialAmount);
               })
-            ).map(rptId => {
-              // Set the initial amount to a fixed value (1) because it is not used, waiting to be removed from the API
-              const initialAmount = "1" as AmountInEuroCents;
-              this.props.navigateToTransactionSummary(rptId, initialAmount);
-            })
+            )
           )
-      );
+        )
+      )
+    );
   };
 
   public render(): React.ReactNode {
@@ -158,14 +171,13 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
         faqCategories={["wallet_insert_notice_data"]}
       >
         <SafeAreaView style={IOStyles.flex}>
-          <NavigationEvents />
           <ScrollView
             style={styles.whiteBg}
             keyboardShouldPersistTaps="handled"
           >
             <Content scrollEnabled={false}>
               <H1>{I18n.t("wallet.insertManually.title")}</H1>
-              <Text>{I18n.t("wallet.insertManually.info")}</Text>
+              <NBText>{I18n.t("wallet.insertManually.info")}</NBText>
               <Link onPress={this.showModal}>
                 {I18n.t("wallet.insertManually.link")}
               </Link>
@@ -178,15 +190,23 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                     "wallet.insertManually.noticeCode"
                   )}
                   testID={"NoticeCode"}
-                  inputProps={{
+                  inputMaskProps={{
+                    type: "custom",
+                    options: { mask: "9999 9999 9999 9999 99" },
                     keyboardType: "numeric",
                     returnKeyType: "done",
-                    maxLength: 18,
+                    value: this.state.inputValue,
+                    // notice code structure:
+                    // <aux digit 1n 0-3>| IUV 17>>|<segregation code (2n)><local info system (2n)><payment number (11n)><check digit (2n)>
                     onChangeText: value => {
                       this.setState({
-                        paymentNoticeNumber: some(value)
-                          .filter(NonEmptyString.is)
-                          .map(_ => PaymentNoticeNumberFromString.decode(_))
+                        inputValue: value,
+                        paymentNoticeNumber: pipe(
+                          O.some(value),
+                          O.filter(NonEmptyString.is),
+                          O.map(_ => _.replace(/\s/g, "")),
+                          O.map(_ => PaymentNoticeNumberFromString.decode(_))
+                        )
                       });
                     }
                   }}
@@ -207,9 +227,11 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                     maxLength: 11,
                     onChangeText: value => {
                       this.setState({
-                        organizationFiscalCode: some(value)
-                          .filter(NonEmptyString.is)
-                          .map(_ => OrganizationFiscalCode.decode(_))
+                        organizationFiscalCode: pipe(
+                          O.some(value),
+                          O.filter(NonEmptyString.is),
+                          O.map(_ => OrganizationFiscalCode.decode(_))
+                        )
                       });
                     }
                   }}
@@ -244,7 +266,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToWalletHome: () => navigateToWalletHome(),
   navigateToWalletAddPaymentMethod: () =>
     navigateToWalletAddPaymentMethod({
-      inPayment: none,
+      inPayment: O.none,
       showOnlyPayablePaymentMethods: true
     }),
   navigateToTransactionSummary: (

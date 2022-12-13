@@ -1,5 +1,6 @@
-import { fromNullable } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { View } from "native-base";
 import * as React from "react";
 import { useEffect } from "react";
@@ -54,17 +55,21 @@ const RenderSectionHeaderBase = (
   // we need to pass props as argument because with the current react-redux version useSelect cannot be used
   props: HeaderProps
 ) =>
-  props
-    .bpdDaysInfoByIdSelector(props.info.section.dayInfoId)
-    .fold(null, daysInfo => (
-      <BaseDailyTransactionHeader
-        date={localeDateFormat(
-          daysInfo.trxDate,
-          I18n.t("global.dateFormats.dayFullMonth")
-        )}
-        transactionsNumber={daysInfo.count}
-      />
-    ));
+  pipe(
+    props.bpdDaysInfoByIdSelector(props.info.section.dayInfoId),
+    O.fold(
+      () => null,
+      daysInfo => (
+        <BaseDailyTransactionHeader
+          date={localeDateFormat(
+            daysInfo.trxDate,
+            I18n.t("global.dateFormats.dayFullMonth")
+          )}
+          transactionsNumber={daysInfo.count}
+        />
+      )
+    )
+  );
 
 /**
  * In order to optimize the rendering of the item, we use the dayInfo as unique identifier to avoid to redraw the component.
@@ -84,19 +89,29 @@ const RenderItemBase = (
   // we need to pass props as argument because with the current react-redux version useSelect cannot be used
   props: ItemProps
 ): React.ReactElement | null =>
-  props.bpdTransactionByIdSelector(props.trxId.item).fold(null, trx => (
-    <>
-      {trx.isPivot && (
-        <BpdCashbackMilestoneComponent
-          cashbackValue={fromNullable(props.selectedPeriod).fold(
-            0,
-            p => p.maxPeriodCashback
+  pipe(
+    props.bpdTransactionByIdSelector(props.trxId.item),
+    O.fold(
+      () => null,
+      trx => (
+        <>
+          {trx.isPivot && (
+            <BpdCashbackMilestoneComponent
+              cashbackValue={pipe(
+                props.selectedPeriod,
+                O.fromNullable,
+                O.fold(
+                  () => 0,
+                  p => p.maxPeriodCashback
+                )
+              )}
+            />
           )}
-        />
-      )}
-      <BpdTransactionItem transaction={trx} />
-    </>
-  ));
+          <BpdTransactionItem transaction={trx} />
+        </>
+      )
+    )
+  );
 
 /**
  * In order to optimize the rendering of the item, we use the keyId as unique identifier to avoid to redraw the component.

@@ -1,4 +1,5 @@
-import { Option } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import React from "react";
 import { FlatList, ListRenderItemInfo, RefreshControl } from "react-native";
 import { ComponentProps } from "../types/react";
@@ -12,7 +13,7 @@ type OwnProps<T> = {
   itemTitleExtractor: (item: T) => string;
   isRefreshing: boolean;
   onRefresh?: () => void;
-  selectedItemIds: Option<Set<string>>;
+  selectedItemIds: O.Option<Set<string>>;
 };
 
 type ChooserListItemProps = "itemIconComponent" | "onPressItem";
@@ -37,7 +38,11 @@ class ChooserList<T> extends React.Component<Props<T>> {
     } = this.props;
     const item = info.item;
     const itemId = keyExtractor(item);
-    const isSelected = selectedItemIds.map(_ => _.has(itemId)).getOrElse(false);
+    const isSelected = pipe(
+      selectedItemIds,
+      O.map(_ => _.has(itemId)),
+      O.getOrElse(() => false)
+    );
 
     return (
       <ChooserListItem

@@ -1,9 +1,10 @@
-import { reverse } from "fp-ts/lib/Array";
-import { Content, Text, View } from "native-base";
+import * as AR from "fp-ts/lib/Array";
+import { Content, Text as NBText, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { H2 } from "../../components/core/typography/H2";
+import { IOColors } from "../../components/core/variables/IOColors";
 import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
 import { withValidatedPagoPaVersion } from "../../components/helpers/withValidatedPagoPaVersion";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
@@ -22,7 +23,6 @@ import {
 } from "../../store/reducers/payments/history";
 import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
-import { IOColors } from "../../components/core/variables/IOColors";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -45,7 +45,7 @@ const ListEmptyComponent = (
   >
     <H2 color={"bluegrey"}>{I18n.t("payment.details.list.empty.title")}</H2>
     <View spacer={true} />
-    <Text>{I18n.t("payment.details.list.empty.description")}</Text>
+    <NBText>{I18n.t("payment.details.list.empty.description")}</NBText>
     <View spacer={true} large={true} />
     <EdgeBorderComponent />
   </Content>
@@ -65,7 +65,7 @@ class PaymentsHistoryScreen extends React.Component<Props, never> {
       >
         <PaymentHistoryList
           title={I18n.t("wallet.latestTransactions")}
-          payments={reverse([...historyPayments])}
+          payments={AR.reverse([...historyPayments])}
           ListEmptyComponent={ListEmptyComponent}
           navigateToPaymentHistoryDetail={(payment: PaymentHistory) =>
             this.props.navigateToPaymentHistoryDetail({

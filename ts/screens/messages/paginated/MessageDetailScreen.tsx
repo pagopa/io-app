@@ -1,5 +1,7 @@
-import * as pot from "italia-ts-commons/lib/pot";
-import { Text, View } from "native-base";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import { Text as NBText, View } from "native-base";
 import React from "react";
 import { ActivityIndicator, StyleSheet } from "react-native";
 import { connect } from "react-redux";
@@ -18,6 +20,7 @@ import { navigateToServiceDetailsScreen } from "../../../store/actions/navigatio
 import { loadServiceDetail } from "../../../store/actions/services";
 import { Dispatch, ReduxProps } from "../../../store/actions/types";
 import { getDetailsByMessageId } from "../../../store/reducers/entities/messages/detailsById";
+import { getMessageById } from "../../../store/reducers/entities/messages/paginatedById";
 import { UIMessageId } from "../../../store/reducers/entities/messages/types";
 import { isNoticePaid } from "../../../store/reducers/entities/payments";
 import {
@@ -28,7 +31,6 @@ import { toUIService } from "../../../store/reducers/entities/services/transform
 import { GlobalState } from "../../../store/reducers/types";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import ErrorState from "../MessageDetailScreen/ErrorState";
-import { getMessageById } from "../../../store/reducers/entities/messages/paginatedById";
 
 const styles = StyleSheet.create({
   notFullStateContainer: {
@@ -64,9 +66,9 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 
 const renderLoadingState = () => (
   <View style={styles.notFullStateContainer}>
-    <Text style={styles.notFullStateMessageText}>
+    <NBText style={styles.notFullStateMessageText}>
       {I18n.t("messageDetails.loadingText")}
-    </Text>
+    </NBText>
     <ActivityIndicator />
   </View>
 );
@@ -115,9 +117,9 @@ const MessageDetailScreen = ({
       messageDetails,
       () => (
         <View style={styles.notFullStateContainer}>
-          <Text style={styles.notFullStateMessageText}>
+          <NBText style={styles.notFullStateMessageText}>
             {I18n.t("messageDetails.emptyMessage")}
-          </Text>
+          </NBText>
         </View>
       ),
       () => renderLoadingState(),
@@ -156,10 +158,11 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   const message = pot.toUndefined(getMessageById(state, messageId));
   const messageDetails = getDetailsByMessageId(state, messageId);
   const goBack = () => ownProps.navigation.goBack();
-  const service = pot
-    .toOption(serviceByIdSelector(serviceId)(state) || pot.none)
-    .map(toUIService)
-    .toUndefined();
+  const service = pipe(
+    pot.toOption(serviceByIdSelector(serviceId)(state) || pot.none),
+    O.map(toUIService),
+    O.toUndefined
+  );
   // Map the potential message to the potential service
   const maybeServiceMetadata = serviceMetadataByIdSelector(serviceId)(state);
   const hasPaidBadge: boolean = message

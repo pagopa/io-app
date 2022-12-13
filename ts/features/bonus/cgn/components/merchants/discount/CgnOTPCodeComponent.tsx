@@ -24,8 +24,7 @@ const styles = StyleSheet.create({
   codeContainer: { alignItems: "center", justifyContent: "space-between" },
   codeText: {
     fontSize: 20
-  },
-  flexEnd: { alignSelf: "flex-end" }
+  }
 });
 
 const COPY_ICON_SIZE = 24;
@@ -76,7 +75,7 @@ const CgnOTPCodeContent = ({ onCodePress }: Props) => {
           accessibilityHint={I18n.t("bonus.cgn.accessibility.code")}
         >
           <View>
-            <H4 weight={"Regular"} style={[IOStyles.flex]}>
+            <H4 weight={"Regular"} style={IOStyles.flex}>
               {I18n.t("bonus.cgn.otp.error")}
             </H4>
 

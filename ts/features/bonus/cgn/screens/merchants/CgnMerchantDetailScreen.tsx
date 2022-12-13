@@ -1,5 +1,6 @@
 import { Route, useRoute } from "@react-navigation/native";
-import { fromNullable } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { View } from "native-base";
 import * as React from "react";
 import { useCallback, useEffect, useMemo } from "react";
@@ -110,7 +111,7 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
       <SafeAreaView style={IOStyles.flex}>
         {isReady(merchantDetail) ? (
           <>
-            <ScrollView style={[IOStyles.flex]} bounces={false}>
+            <ScrollView style={IOStyles.flex} bounces={false}>
               {merchantDetail.value.imageUrl && (
                 <View style={{ paddingHorizontal: 16 }}>
                   <Image
@@ -135,30 +136,34 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
                 <H4 weight={"Regular"}>{merchantDetail.value.description}</H4>
                 <View spacer />
                 <H2>{I18n.t("bonus.cgn.merchantDetail.title.addresses")}</H2>
-                {fromNullable(merchantDetail.value.websiteUrl).fold(
-                  undefined,
-                  url => (
-                    <TouchableDefaultOpacity
-                      style={[
-                        IOStyles.row,
-                        styles.spaced,
-                        { paddingVertical: 10 }
-                      ]}
-                      onPress={() =>
-                        openWebUrl(url, () =>
-                          showToast(I18n.t("bonus.cgn.generic.linkError"))
-                        )
-                      }
-                    >
-                      <H4 weight={"Regular"} style={IOStyles.flex}>
-                        {url}
-                      </H4>
-                      <OpenWeb
-                        height={COPY_ICON_SIZE}
-                        width={COPY_ICON_SIZE}
-                        fill={IOColors.blue}
-                      />
-                    </TouchableDefaultOpacity>
+                {pipe(
+                  merchantDetail.value.websiteUrl,
+                  O.fromNullable,
+                  O.fold(
+                    () => undefined,
+                    url => (
+                      <TouchableDefaultOpacity
+                        style={[
+                          IOStyles.row,
+                          styles.spaced,
+                          { paddingVertical: 10 }
+                        ]}
+                        onPress={() =>
+                          openWebUrl(url, () =>
+                            showToast(I18n.t("bonus.cgn.generic.linkError"))
+                          )
+                        }
+                      >
+                        <H4 weight={"Regular"} style={IOStyles.flex}>
+                          {url}
+                        </H4>
+                        <OpenWeb
+                          height={COPY_ICON_SIZE}
+                          width={COPY_ICON_SIZE}
+                          fill={IOColors.blue}
+                        />
+                      </TouchableDefaultOpacity>
+                    )
                   )
                 )}
                 {merchantDetail.value.addresses &&

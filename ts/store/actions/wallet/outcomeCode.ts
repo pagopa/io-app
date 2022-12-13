@@ -1,7 +1,7 @@
 /**
  * Action types and action creator related to OutcomeCodeState.
  */
-import { Option } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import { ActionType, createStandardAction } from "typesafe-actions";
 import { PaymentMethodType } from "./payment";
 
@@ -9,12 +9,12 @@ import { PaymentMethodType } from "./payment";
 // code when the add credit card workflow is finished
 export const addCreditCardOutcomeCode = createStandardAction(
   "CREDIT_CARD_PAYMENT_OUTCOME_CODE"
-)<Option<string>>();
+)<O.Option<string>>();
 
 // This action is supposed to be used to update the state with the outcome
 // code when the payment workflow is finished. It brings also the payment method type used to do the payment
 export const paymentOutcomeCode = createStandardAction("PAYMENT_OUTCOME_CODE")<{
-  outcome: Option<string>;
+  outcome: O.Option<string>;
   paymentMethodType: PaymentMethodType;
 }>();
 

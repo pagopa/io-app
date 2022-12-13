@@ -5,12 +5,14 @@
  * - it is displayed during the user onboarding
  * - it is displayed after the onboarding (navigation from the profile section)
  */
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { StackActions } from "@react-navigation/native";
-import * as pot from "italia-ts-commons/lib/pot";
-import { Text, View } from "native-base";
+import * as O from "fp-ts/lib/Option";
+import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import { Alert, Platform, SafeAreaView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
+import { H3 } from "../../components/core/typography/H3";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
@@ -69,14 +71,9 @@ const styles = StyleSheet.create({
   },
   spacerSmall: { height: 12 },
   spacerLarge: { height: 24 },
-  email: {
-    fontWeight: customVariables.h1FontWeight,
-    color: customVariables.h1Color,
-    fontSize: 18,
-    marginLeft: 8
-  },
   icon: {
-    marginTop: Platform.OS === "android" ? 3 : 0 // correct icon position to align it with baseline of email text}
+    marginTop: Platform.OS === "android" ? 3 : 0, // correct icon position to align it with baseline of email text
+    marginRight: 8
   }
 });
 
@@ -163,7 +160,7 @@ export class EmailReadScreen extends React.PureComponent<Props> {
             }
           >
             <View style={styles.content}>
-              <Text>{I18n.t("email.insert.label")}</Text>
+              <NBText>{I18n.t("email.insert.label")}</NBText>
               <View style={styles.spacerSmall} />
               <View style={styles.emailWithIcon}>
                 <IconFont
@@ -173,18 +170,16 @@ export class EmailReadScreen extends React.PureComponent<Props> {
                   size={24}
                   style={styles.icon}
                 />
-                {this.props.optionEmail.isSome() && (
-                  <Text style={styles.email}>
-                    {this.props.optionEmail.value}
-                  </Text>
+                {O.isSome(this.props.optionEmail) && (
+                  <H3>{this.props.optionEmail.value}</H3>
                 )}
               </View>
               <View style={styles.spacerLarge} />
-              <Text>
+              <NBText>
                 {isFromProfileSection
                   ? `${I18n.t("email.read.details")}`
                   : I18n.t("email.read.info")}
-              </Text>
+              </NBText>
             </View>
           </ScreenContent>
           <SectionStatusComponent sectionKey={"email_validation"} />

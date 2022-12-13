@@ -1,28 +1,29 @@
-import { fromNullable } from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { Body, Container, Content, Right, View } from "native-base";
 import * as React from "react";
 import { Alert, Image, StyleSheet } from "react-native";
-import { heightPercentageToDP } from "react-native-responsive-screen";
 import WebView, { WebViewMessageEvent } from "react-native-webview";
-import URLParse from "url-parse";
 import {
   WebViewErrorEvent,
   WebViewHttpErrorEvent
 } from "react-native-webview/lib/WebViewTypes";
+import URLParse from "url-parse";
 import brokenLinkImage from "../../img/broken-link.png";
 import I18n from "../i18n";
 import customVariables from "../theme/variables";
 import { WebviewMessage } from "../types/WebviewMessage";
+import { getRemoteLocale } from "../utils/messages";
 import { showToast } from "../utils/showToast";
 import {
-  closeInjectedScript,
+  APP_EVENT_HANDLER,
   AVOID_ZOOM_JS,
-  APP_EVENT_HANDLER
+  closeInjectedScript
 } from "../utils/webview";
-import { getRemoteLocale } from "../utils/messages";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
-import { Label } from "./core/typography/Label";
 import { Body as BodyText } from "./core/typography/Body";
+import { Label } from "./core/typography/Label";
 import { withLightModalContext } from "./helpers/withLightModalContext";
 import LoadingSpinnerOverlay from "./LoadingSpinnerOverlay";
 import AppHeader from "./ui/AppHeader";
@@ -36,23 +37,15 @@ type Props = {
 } & LightModalContextInterface;
 
 const styles = StyleSheet.create({
-  textInput: { padding: 1, borderWidth: 1, height: 30 },
-  contentPadding: { paddingHorizontal: customVariables.contentPadding },
   itemsCenter: { alignItems: "center" },
   selfCenter: { alignSelf: "center" },
   flex1: { flex: 1 },
-  webViewHeight: { height: heightPercentageToDP("100%") },
   errorContainer: {
     flex: 1,
     alignItems: "center"
   },
   errorTitle: {
     marginTop: 10
-  },
-  errorBody: {
-    marginTop: 10,
-    marginBottom: 10,
-    textAlign: "center"
   },
   errorButtonsContainer: {
     position: "absolute",
@@ -91,7 +84,7 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
         <IconFont
           name={"io-complete"}
           size={120}
-          color={customVariables.brandHighlight}
+          color={customVariables.colorHighlight}
           style={styles.selfCenter}
         />
         <View spacer={true} large={true} />
@@ -190,13 +183,13 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
 
     const maybeData = WebviewMessage.decode(JSON.parse(event.nativeEvent.data));
 
-    if (maybeData.isLeft()) {
+    if (E.isLeft(maybeData)) {
       showToast(I18n.t("webView.error.convertMessage"));
       return;
     }
 
     const locale = getRemoteLocale();
-    const message = maybeData.value;
+    const message = maybeData.right;
     switch (message.type) {
       case "CLOSE_MODAL":
         props.onWebviewClose();
@@ -210,7 +203,11 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
       case "SHOW_SUCCESS":
         props.showModal(
           showSuccessContent(
-            fromNullable(message[locale]).getOrElse(message.en),
+            pipe(
+              message[locale],
+              O.fromNullable,
+              O.getOrElse(() => message.en)
+            ),
             () => {
               props.hideModal();
               props.onWebviewClose();
@@ -221,13 +218,21 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
       case "SHOW_ERROR":
         props.showModal(
           showErrorContent(
-            fromNullable(message[locale]).getOrElse(message.en),
+            pipe(
+              message[locale],
+              O.fromNullable,
+              O.getOrElse(() => message.en)
+            ),
             props.hideModal
           )
         );
         return;
       case "SHOW_ALERT":
-        const value = fromNullable(message[locale]).getOrElse(message.en);
+        const value = pipe(
+          message[locale],
+          O.fromNullable,
+          O.getOrElse(() => message.en)
+        );
         Alert.alert(value.title, value.description);
         return;
       default:
@@ -236,8 +241,10 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
   };
 
   const injectJS = () => {
-    fromNullable(ref.current).map(wv =>
-      wv.injectJavaScript(injectedJavascript)
+    pipe(
+      ref.current,
+      O.fromNullable,
+      O.map(wv => wv.injectJavaScript(injectedJavascript))
     );
     setLoading(false);
   };

@@ -1,28 +1,29 @@
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import { Badge, Text as NBText, View } from "native-base";
 import React from "react";
 import { StyleSheet } from "react-native";
-import { Badge, Text, View } from "native-base";
-import * as O from "fp-ts/lib/Option";
-import LegalMessage from "../../../../../img/features/mvl/legalMessage.svg";
-import PnMessage from "../../../../../img/features/pn/pn_message_badge.svg";
-import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
 import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
 import { TagEnum as TagEnumBase } from "../../../../../definitions/backend/MessageCategoryBase";
 import { TagEnum as TagEnumPN } from "../../../../../definitions/backend/MessageCategoryPN";
+import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
+import LegalMessage from "../../../../../img/features/mvl/legalMessage.svg";
+import PnMessage from "../../../../../img/features/pn/pn_message_badge.svg";
+import QrCode from "../../../../../img/messages/qr-code.svg";
+import { mvlEnabled, pnEnabled } from "../../../../config";
 import I18n from "../../../../i18n";
+import { UIMessage } from "../../../../store/reducers/entities/messages/types";
+import customVariables from "../../../../theme/variables";
 import {
   convertDateToWordDistance,
   convertReceivedDateToAccessible
 } from "../../../../utils/convertDateToWordDistance";
-import { UIMessage } from "../../../../store/reducers/entities/messages/types";
-import TouchableDefaultOpacity from "../../../TouchableDefaultOpacity";
-import { H5 } from "../../../core/typography/H5";
 import { H3 } from "../../../core/typography/H3";
-import { BadgeComponent } from "../../../screens/BadgeComponent";
-import IconFont from "../../../ui/IconFont";
-import customVariables from "../../../../theme/variables";
+import { H5 } from "../../../core/typography/H5";
 import { IOColors } from "../../../core/variables/IOColors";
-import QrCode from "../../../../../img/messages/qr-code.svg";
-import { mvlEnabled, pnEnabled } from "../../../../config";
+import { BadgeComponent } from "../../../screens/BadgeComponent";
+import TouchableDefaultOpacity from "../../../TouchableDefaultOpacity";
+import IconFont from "../../../ui/IconFont";
 
 const ICON_WIDTH = 24;
 
@@ -233,7 +234,11 @@ const announceMessage = (
     serviceName: message.serviceName,
     subject: message.title,
     receivedAt: convertReceivedDateToAccessible(message.createdAt),
-    state: maybeItemBadge.map(itemBadgeToAccessibilityLabel).getOrElse("")
+    state: pipe(
+      maybeItemBadge,
+      O.map(itemBadgeToAccessibilityLabel),
+      O.getOrElse(() => "")
+    )
   });
 
 /**
@@ -270,7 +275,7 @@ const MessageListItem = ({
     <TouchableDefaultOpacity
       onPress={() => onPress(message)}
       onLongPress={onLongPress}
-      style={[styles.verticalPad]}
+      style={styles.verticalPad}
       accessible={true}
       accessibilityLabel={announceMessage(message, isRead, maybeItemBadge)}
       accessibilityRole="button"
@@ -282,14 +287,14 @@ const MessageListItem = ({
         </View>
         <View style={styles.titleIconAndDate}>
           {getTopIcon(category)}
-          <Text numberOfLines={1} style={styles.dateTime}>
+          <NBText numberOfLines={1} style={styles.dateTime}>
             {uiDate}
-          </Text>
+          </NBText>
         </View>
       </View>
 
       <View style={[styles.serviceName, showQrCode && styles.qrMargin]}>
-        <Text>{serviceName}</Text>
+        <NBText>{serviceName}</NBText>
       </View>
 
       <View style={styles.smallSpacer} />
@@ -319,7 +324,11 @@ const MessageListItem = ({
             />
           </View>
         ) : (
-          maybeItemBadge.map(itemBadgeToTagOrIcon).getOrElse(undefined)
+          pipe(
+            maybeItemBadge,
+            O.map(itemBadgeToTagOrIcon),
+            O.getOrElseW(() => undefined)
+          )
         )}
       </View>
     </TouchableDefaultOpacity>

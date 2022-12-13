@@ -1,21 +1,21 @@
-import * as React from "react";
-import * as pot from "italia-ts-commons/lib/pot";
-import { Image, StyleSheet } from "react-native";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { View } from "native-base";
+import * as React from "react";
+import { Image, StyleSheet } from "react-native";
 import { connect } from "react-redux";
-import BaseCardComponent from "../component/card/BaseCardComponent";
-import paypalLogoExt from "../../../../img/wallet/payment-methods/paypal-logo.png";
 import paypalLogoMin from "../../../../img/wallet/cards-icons/paypal_card.png";
+import paypalLogoExt from "../../../../img/wallet/payment-methods/paypal-logo.png";
 import { Body } from "../../../components/core/typography/Body";
-import { BrandImage } from "../component/card/BrandImage";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
+import IconFont from "../../../components/ui/IconFont";
+import I18n from "../../../i18n";
 import { GlobalState } from "../../../store/reducers/types";
 import { getFavoriteWalletId } from "../../../store/reducers/wallet/wallets";
-import IconFont from "../../../components/ui/IconFont";
 import variables from "../../../theme/variables";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { PayPalPaymentMethod } from "../../../types/pagopa";
 import { getPaypalAccountEmail } from "../../../utils/paypal";
-import I18n from "../../../i18n";
+import BaseCardComponent from "../component/card/BaseCardComponent";
+import { BrandImage } from "../component/card/BrandImage";
 
 type Props = {
   paypal: PayPalPaymentMethod;
@@ -26,10 +26,6 @@ const styles = StyleSheet.create({
     width: 132,
     height: 33,
     resizeMode: "contain"
-  },
-  row: {
-    flexDirection: "row",
-    justifyContent: "space-between"
   },
   bottomLeftStyle: {
     ...IOStyles.flex,
@@ -47,7 +43,7 @@ const getAccessibilityRepresentation = (email: string) => {
 };
 
 const topLeft = (isFavourite: boolean) => (
-  <View style={styles.row}>
+  <View style={IOStyles.rowSpaceBetween}>
     <View style={IOStyles.flex}>
       <Image source={paypalLogoExt} style={styles.paypalLogoExt} />
     </View>

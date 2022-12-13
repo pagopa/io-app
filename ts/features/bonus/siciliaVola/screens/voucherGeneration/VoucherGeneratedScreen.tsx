@@ -1,15 +1,24 @@
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import { View } from "native-base";
 import * as React from "react";
+import { useEffect } from "react";
+import { SafeAreaView, ScrollView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { SafeAreaView, ScrollView } from "react-native";
-import { View } from "native-base";
-import { useEffect } from "react";
-import { isNone } from "fp-ts/lib/Option";
-import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
-import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { H1 } from "../../../../../components/core/typography/H1";
+import { H5 } from "../../../../../components/core/typography/H5";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
+import { BlockButtonProps } from "../../../../../components/ui/BlockButtons";
+import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
+import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import { showToast } from "../../../../../utils/showToast";
+import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { fold, isLoading, isReady } from "../../../bpd/model/RemoteValue";
+import VoucherInformationComponent from "../../components/VoucherInformationComponent";
 import {
   svGenerateVoucherBack,
   svGenerateVoucherCompleted,
@@ -17,20 +26,12 @@ import {
   svGenerateVoucherGeneratedVoucher,
   svGetPdfVoucher
 } from "../../store/actions/voucherGeneration";
-import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
-import { VoucherRequest } from "../../types/SvVoucherRequest";
-import I18n from "../../../../../i18n";
-import { H5 } from "../../../../../components/core/typography/H5";
-import VoucherInformationComponent from "../../components/VoucherInformationComponent";
-import { isVoucherRequest } from "../../utils";
-import { voucherRequestSelector } from "../../store/reducers/voucherGeneration/voucherRequest";
-import { voucherGeneratedSelector } from "../../store/reducers/voucherGeneration/voucherGenerated";
-import { fold, isLoading, isReady } from "../../../bpd/model/RemoteValue";
-import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import { selectedPdfVoucherStateSelector } from "../../store/reducers/selectedVoucher";
-import { showToast } from "../../../../../utils/showToast";
+import { voucherGeneratedSelector } from "../../store/reducers/voucherGeneration/voucherGenerated";
+import { voucherRequestSelector } from "../../store/reducers/voucherGeneration/voucherRequest";
 import { SvVoucherId } from "../../types/SvVoucher";
-import { BlockButtonProps } from "../../../../../components/ui/BlockButtons";
+import { VoucherRequest } from "../../types/SvVoucherRequest";
+import { isVoucherRequest } from "../../utils";
 import SvGeneratedVoucherTimeoutScreen from "./ko/SvGeneratedVoucherTimeoutScreen";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -45,11 +46,14 @@ const VoucherGeneratedScreen = (props: Props): React.ReactElement | null => {
   } = props;
 
   useEffect(() => {
-    maybeVoucherRequest.map(vR => {
-      if (isVoucherRequest(vR)) {
-        generateVoucherRequest(vR);
-      }
-    });
+    pipe(
+      maybeVoucherRequest,
+      O.map(vR => {
+        if (isVoucherRequest(vR)) {
+          generateVoucherRequest(vR);
+        }
+      })
+    );
   }, [maybeVoucherRequest, generateVoucherRequest]);
 
   useEffect(() => {
@@ -62,7 +66,7 @@ const VoucherGeneratedScreen = (props: Props): React.ReactElement | null => {
     );
   }, [pdfVoucherState]);
 
-  if (isNone(maybeVoucherRequest)) {
+  if (O.isNone(maybeVoucherRequest)) {
     props.failure("Voucher request is None");
     return null;
   }
@@ -113,7 +117,7 @@ const VoucherGeneratedScreen = (props: Props): React.ReactElement | null => {
           headerTitle={I18n.t("bonus.sv.headerTitle")}
         >
           <SafeAreaView style={IOStyles.flex} testID={"VoucherGeneratedScreen"}>
-            <ScrollView style={[IOStyles.horizontalContentPadding]}>
+            <ScrollView style={IOStyles.horizontalContentPadding}>
               <H1>
                 {I18n.t("bonus.sv.voucherGeneration.voucherGenerated.title")}
               </H1>

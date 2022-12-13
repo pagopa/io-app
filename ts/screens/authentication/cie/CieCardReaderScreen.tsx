@@ -4,11 +4,11 @@
  * TODO: when 100% is reached, the animation end
  */
 import cieManager, { Event as CEvent } from "@pagopa/react-native-cie";
-import { CompatNavigationProp } from "@react-navigation/compat";
-import { fromNullable } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
-import { Millisecond } from "italia-ts-commons/lib/units";
-import { Content, Text, View } from "native-base";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import { Content, Text as NBText, View } from "native-base";
 import * as React from "react";
 import {
   AccessibilityInfo,
@@ -21,12 +21,12 @@ import CieNfcOverlay from "../../../components/cie/CieNfcOverlay";
 import CieReadingCardAnimation, {
   ReadingState
 } from "../../../components/cie/CieReadingCardAnimation";
-import { withConditionalView } from "../../../components/helpers/withConditionalView";
+import { IOColors } from "../../../components/core/variables/IOColors";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
-import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { AuthenticationParamsList } from "../../../navigation/params/AuthenticationParamsList";
 import ROUTES from "../../../navigation/routes";
 import {
@@ -55,16 +55,20 @@ export type CieCardReaderScreenNavigationParams = {
   authorizationUri: string;
 };
 
-type Props = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<AuthenticationParamsList, "CIE_CARD_READER_SCREEN">
-  >;
-} & ReduxProps &
-  ReturnType<typeof mapStateToProps>;
+type NavigationProps = IOStackNavigationRouteProps<
+  AuthenticationParamsList,
+  "CIE_CARD_READER_SCREEN"
+>;
+
+type Props = NavigationProps & ReduxProps & ReturnType<typeof mapStateToProps>;
 
 const styles = StyleSheet.create({
   padded: {
     paddingHorizontal: customVariables.contentPadding
+  },
+  container: {
+    flex: 1,
+    backgroundColor: IOColors.white
   }
 });
 
@@ -173,7 +177,7 @@ const getTextForState = (
  *  This screen shown while reading the card
  */
 class CieCardReaderScreen extends React.PureComponent<Props, State> {
-  private subTitleRef = React.createRef<Text>();
+  private subTitleRef = React.createRef<NBText>();
   private choosenTool = assistanceToolRemoteConfig(
     this.props.assistanceToolConfig
   );
@@ -196,11 +200,11 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
   }
 
   get ciePin(): string {
-    return this.props.navigation.getParam("ciePin");
+    return this.props.route.params.ciePin;
   }
 
   get cieAuthorizationUri(): string {
-    return this.props.navigation.getParam("authorizationUri");
+    return this.props.route.params.authorizationUri;
   }
 
   private setError = ({
@@ -210,7 +214,11 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
   }: setErrorParameter) => {
     const cieDescription =
       errorDescription ??
-      fromNullable(analyticActions.get(eventReason)).getOrElse("");
+      pipe(
+        analyticActions.get(eventReason),
+        O.fromNullable,
+        O.getOrElse(() => "")
+      );
 
     this.dispatchAnalyticEvent({
       reason: eventReason,
@@ -260,8 +268,8 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
         this.setError({
           eventReason: event.event,
           navigation: () =>
-            this.props.navigation.navigate({
-              routeName: ROUTES.CIE_PIN_TEMP_LOCKED_SCREEN
+            this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
+              screen: ROUTES.CIE_PIN_TEMP_LOCKED_SCREEN
             })
         });
         break;
@@ -271,8 +279,8 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
         this.setError({
           eventReason: event.event,
           navigation: () =>
-            this.props.navigation.navigate({
-              routeName: ROUTES.CIE_WRONG_PIN_SCREEN,
+            this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
+              screen: ROUTES.CIE_WRONG_PIN_SCREEN,
               params: {
                 remainingCount: event.attemptsLeft
               }
@@ -286,8 +294,8 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
         this.setError({
           eventReason: event.event,
           navigation: () =>
-            this.props.navigation.navigate({
-              routeName: ROUTES.CIE_EXPIRED_SCREEN
+            this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
+              screen: ROUTES.CIE_EXPIRED_SCREEN
             })
         });
         break;
@@ -359,8 +367,8 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       this.updateContent();
       setTimeout(
         async () => {
-          this.props.navigation.navigate({
-            routeName: ROUTES.CIE_CONSENT_DATA_USAGE,
+          this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
+            screen: ROUTES.CIE_CONSENT_DATA_USAGE,
             params: {
               cieConsentUri
             }
@@ -484,16 +492,16 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       >
         <ScreenContentHeader title={this.state.title} />
         <Content bounces={false} noPadded={true}>
-          <Text style={styles.padded} ref={this.subTitleRef}>
+          <NBText style={styles.padded} ref={this.subTitleRef}>
             {this.state.subtitle}
-          </Text>
+          </NBText>
           {!isIos && (
             <CieReadingCardAnimation readingState={this.state.readingState} />
           )}
           {isIos && <View spacer={true} />}
-          <Text style={styles.padded} accessible={true}>
+          <NBText style={styles.padded} accessible={true}>
             {this.state.content}
-          </Text>
+          </NBText>
         </Content>
         {this.state.readingState !== ReadingState.completed && // TODO: validate - the screen has the back button on top left so it includes cancel also on reading success
           this.getFooter()}
@@ -510,10 +518,14 @@ const mapStateToProps = (state: GlobalState) => {
   };
 };
 
-export default connect(mapStateToProps)(
-  withConditionalView(
-    CieCardReaderScreen,
-    (props: Props) => props.isNfcEnabled,
-    CieNfcOverlay
-  )
+const ReaderScreen = (props: Props) => (
+  <View style={styles.container}>
+    {props.isNfcEnabled ? (
+      <CieCardReaderScreen {...props} />
+    ) : (
+      <CieNfcOverlay {...props} />
+    )}
+  </View>
 );
+
+export default connect(mapStateToProps)(ReaderScreen);

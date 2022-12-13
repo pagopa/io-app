@@ -1,8 +1,9 @@
-import { fromNullable } from "fp-ts/lib/Option";
-import { Text, View } from "native-base";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import { Text as NBText, View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
 import { ComponentProps } from "react";
+import { StyleSheet } from "react-native";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
@@ -29,9 +30,6 @@ const styles = StyleSheet.create({
   headerIcon: {
     paddingHorizontal: 10,
     alignSelf: "center"
-  },
-  noBorder: {
-    borderWidth: 0
   },
   flex: {
     flex: 1
@@ -60,9 +58,9 @@ const Accordion: React.FunctionComponent<Props> = (props: Props) => {
       onPress={() => setExpanded(!expanded)}
     >
       <View style={styles.header}>
-        <Text bold={true} style={styles.flex}>
+        <NBText bold={true} style={styles.flex}>
           {title}
-        </Text>
+        </NBText>
         <IconFont
           name={"io-right"}
           color={customVariables.brandPrimary}
@@ -84,7 +82,11 @@ const Accordion: React.FunctionComponent<Props> = (props: Props) => {
       <Markdown
         shouldHandleLink={props.shouldHandleLink}
         onLinkClicked={(url: string) => {
-          fromNullable(props.onLinkClicked).map(s => s(url));
+          pipe(
+            props.onLinkClicked,
+            O.fromNullable,
+            O.map(s => s(url))
+          );
         }}
       >
         {content}

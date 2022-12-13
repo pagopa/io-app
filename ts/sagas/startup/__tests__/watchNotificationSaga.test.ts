@@ -1,6 +1,8 @@
 import { testSaga } from "redux-saga-test-plan";
-import { navigateToMessageRouterScreen } from "../../../store/actions/navigation";
+import NavigationService from "../../../navigation/NavigationService";
+import { navigateToPaginatedMessageRouterAction } from "../../../store/actions/navigation";
 import { clearNotificationPendingMessage } from "../../../store/actions/notifications";
+import { UIMessageId } from "../../../store/reducers/entities/messages/types";
 import {
   PendingMessageState,
   pendingMessageStateSelector
@@ -15,6 +17,8 @@ describe("watchNotificationSaga", () => {
   };
 
   it("make the app navigate to the message detail when the user press on a notification", () => {
+    const spy = jest.spyOn(NavigationService, "dispatchNavigationAction");
+
     testSaga(watchNotificationSaga, "inactive", "active")
       .next()
       .select(isPaymentOngoingSelector)
@@ -23,11 +27,14 @@ describe("watchNotificationSaga", () => {
       .next(mockedPendingMessageState)
       .put(clearNotificationPendingMessage())
       .next()
-      .call(navigateToMessageRouterScreen, {
-        messageId: mockedPendingMessageState.id
-      })
-      .next()
       .isDone();
+
+    expect(spy).toHaveBeenCalledWith(
+      navigateToPaginatedMessageRouterAction({
+        messageId: mockedPendingMessageState.id as UIMessageId,
+        fromNotification: true
+      })
+    );
   });
 
   it("does nothing if the app return active during a payment", () => {

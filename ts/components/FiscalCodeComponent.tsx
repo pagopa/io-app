@@ -7,8 +7,10 @@
  * The fac-simile back side can be rendered for both full and landscape modes,
  * and it includes the barcode of the fiscal code with the code 128 format
  */
-import * as pot from "italia-ts-commons/lib/pot";
-import { Text, View } from "native-base";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import {
   Dimensions,
@@ -23,10 +25,12 @@ import { InitializedProfile } from "../../definitions/backend/InitializedProfile
 import { Municipality } from "../../definitions/content/Municipality";
 import I18n from "../i18n";
 import customVariables from "../theme/variables";
-import { dateToAccessibilityReadableFormat } from "../utils/accessibility";
+import {
+  formatFiscalCodeBirthdayAsShortFormat,
+  formatFiscalCodeBirthdayAsAccessibilityReadableFormat
+} from "../utils/dates";
 import { extractFiscalCodeData } from "../utils/profile";
 import { maybeNotNullyString } from "../utils/strings";
-import { formatDateAsShortFormatUTC } from "../utils/dates";
 import { IOColors } from "./core/variables/IOColors";
 
 interface BaseProps {
@@ -336,21 +340,21 @@ export default class FiscalCodeComponent extends React.Component<Props> {
     selectable: boolean = false
   ) {
     return (
-      <Text
+      <NBText
         robotomono={true}
         bold={true}
-        style={[
+        style={
           isLandscape
             ? [styles.landscapeText, landscapeStyle]
             : [styles.fullText, fullStyle]
-        ]}
+        }
         selectable={selectable}
         accessible={true}
         accessibilityElementsHidden={true}
         importantForAccessibility={"no-hide-descendants"}
       >
         {content.toUpperCase()}
-      </Text>
+      </NBText>
     );
   }
 
@@ -387,7 +391,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
 
     const na = I18n.t("profile.fiscalCode.accessibility.unavailable");
     const birthDate =
-      this.props.profile.date_of_birth ?? fiscalCodeData.birthday;
+      this.props.profile.date_of_birth ?? fiscalCodeData.birthDate;
     // goBackSide === false
     return {
       accessibilityLabel: I18n.t(
@@ -398,14 +402,16 @@ export default class FiscalCodeComponent extends React.Component<Props> {
           family_name: this.props.profile.family_name,
           gender: fiscalCodeData.gender || na,
           birthDate: birthDate
-            ? dateToAccessibilityReadableFormat(birthDate)
+            ? formatFiscalCodeBirthdayAsAccessibilityReadableFormat(birthDate)
             : na,
-          province: maybeNotNullyString(
-            fiscalCodeData.siglaProvincia
-          ).getOrElse(na),
-          placeOfBirth: maybeNotNullyString(
-            fiscalCodeData.denominazione
-          ).getOrElse(na)
+          province: pipe(
+            maybeNotNullyString(fiscalCodeData.siglaProvincia),
+            O.getOrElse(() => na)
+          ),
+          placeOfBirth: pipe(
+            maybeNotNullyString(fiscalCodeData.denominazione),
+            O.getOrElse(() => na)
+          )
         }
       ),
       accessibilityHint: isLandScape
@@ -421,7 +427,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
   ) {
     const fiscalCode = profile.fiscal_code;
     const fiscalCodeData = extractFiscalCodeData(fiscalCode, municipality);
-    const birthDate = profile.date_of_birth ?? fiscalCodeData.birthday;
+    const birthDate = profile.date_of_birth ?? fiscalCodeData.birthDate;
     return (
       <React.Fragment>
         {this.renderItem(
@@ -472,7 +478,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
 
         {birthDate &&
           this.renderItem(
-            formatDateAsShortFormatUTC(birthDate),
+            formatFiscalCodeBirthdayAsShortFormat(birthDate),
             styles.fullDateText,
             styles.landscapeDateText,
             isLandscape
@@ -491,14 +497,14 @@ export default class FiscalCodeComponent extends React.Component<Props> {
           height={barCodeHeightL - 5}
           width={(barCodeWidthL - 5) / 211} // 211= 16*11 + 35: number of characters in the fiscal code barcode with CODE128
         />
-        <Text
+        <NBText
           robotomono={true}
           bold={true}
           alignCenter={true}
           style={styles.landscapeFacSimile}
         >
           {I18n.t("profile.fiscalCode.facSimile")}
-        </Text>
+        </NBText>
       </View>
     ) : (
       <View style={styles.fullBareCode}>
@@ -509,14 +515,14 @@ export default class FiscalCodeComponent extends React.Component<Props> {
           height={barCodeHeightF - 5}
           width={(barCodeWidthF - 5) / 211}
         />
-        <Text
+        <NBText
           robotomono={true}
           bold={true}
           alignCenter={true}
           style={styles.fullFacSimileText}
         >
           {I18n.t("profile.fiscalCode.facSimile")}
-        </Text>
+        </NBText>
       </View>
     );
   }

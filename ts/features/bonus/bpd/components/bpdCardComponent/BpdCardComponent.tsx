@@ -1,22 +1,26 @@
-import { Badge, Text, View } from "native-base";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import { Badge, Text as NBText, View } from "native-base";
 import * as React from "react";
 import { Image, ImageBackground, Platform, StyleSheet } from "react-native";
-import { fromNullable } from "fp-ts/lib/Option";
 import { widthPercentageToDP } from "react-native-responsive-screen";
-import { H2 } from "../../../../../components/core/typography/H2";
-import { H5 } from "../../../../../components/core/typography/H5";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
-import { BpdAmount } from "../../saga/networking/amount";
-import { BpdPeriod, BpdPeriodStatus } from "../../store/actions/periods";
-import { H4 } from "../../../../../components/core/typography/H4";
-import I18n from "../../../../../i18n";
-import bpdBonusLogo from "../../../../../../img/bonus/bpd/logo_BonusCashback_White.png";
 import bpdCardBgFull from "../../../../../../img/bonus/bpd/bonus_bg.png";
 import bpdCardBgPreview from "../../../../../../img/bonus/bpd/bonus_preview_bg.png";
-import { formatNumberAmount } from "../../../../../utils/stringBuilder";
-import IconFont from "../../../../../components/ui/IconFont";
+import bpdBonusLogo from "../../../../../../img/bonus/bpd/logo_BonusCashback_White.png";
+import { H2 } from "../../../../../components/core/typography/H2";
+import { H4 } from "../../../../../components/core/typography/H4";
+import { H5 } from "../../../../../components/core/typography/H5";
+import {
+  hexToRgba,
+  IOColors
+} from "../../../../../components/core/variables/IOColors";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
+import IconFont from "../../../../../components/ui/IconFont";
+import I18n from "../../../../../i18n";
 import { localeDateFormat } from "../../../../../utils/locale";
+import { formatNumberAmount } from "../../../../../utils/stringBuilder";
+import { BpdAmount } from "../../saga/networking/amount";
+import { BpdPeriod, BpdPeriodStatus } from "../../store/actions/periods";
 
 type Props = {
   period: BpdPeriod;
@@ -24,6 +28,8 @@ type Props = {
   preview?: boolean;
   onPress?: () => void;
 };
+
+const opaqueBorderColor = hexToRgba(IOColors.black, 0.1);
 
 const styles = StyleSheet.create({
   flex1: {
@@ -118,7 +124,7 @@ const styles = StyleSheet.create({
     marginBottom: -13,
     borderRadius: 8,
     borderTopWidth: 13,
-    borderTopColor: "rgba(0,0,0,0.1)",
+    borderTopColor: opaqueBorderColor,
     height: 17,
     width: "100%"
   },
@@ -126,7 +132,7 @@ const styles = StyleSheet.create({
     marginBottom: 6,
     borderRadius: 8,
     borderBottomWidth: 15,
-    borderBottomColor: "rgba(0,0,0,0.1)",
+    borderBottomColor: opaqueBorderColor,
     width: "100%"
   }
 });
@@ -249,9 +255,13 @@ const statusHandlersMap = new Map<
  * grace period is given adding the gracePeriod value of days to period.endDate
  */
 const calculateGraphicalState = (props: Props) =>
-  fromNullable(statusHandlersMap.get(props.period.status)).fold(
-    initialGraphicalState,
-    handler => handler(props)
+  pipe(
+    statusHandlersMap.get(props.period.status),
+    O.fromNullable,
+    O.fold(
+      () => initialGraphicalState,
+      handler => handler(props)
+    )
   );
 
 export const BpdCardComponent: React.FunctionComponent<Props> = (
@@ -289,15 +299,15 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
         </View>
         <View>
           <View style={[styles.row, { alignItems: "center" }]}>
-            <Text bold={true} white={true} style={[styles.amountTextBaseFull]}>
+            <NBText bold={true} white={true} style={styles.amountTextBaseFull}>
               {"€ "}
-              <Text white={true} style={styles.amountTextUpperFull}>
+              <NBText white={true} style={styles.amountTextUpperFull}>
                 {`${amount[0]}${I18n.t(
                   "global.localization.decimalSeparator"
                 )}`}
-              </Text>
+              </NBText>
               {amount[1]}
-            </Text>
+            </NBText>
             <View hspacer={true} small={true} />
             <IconFont name={iconName} size={16} color={IOColors.white} />
           </View>
@@ -307,10 +317,10 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
         </View>
       </View>
       <View style={[styles.column, styles.flex1, styles.spaced]}>
-        <Badge style={[styles.badgeBase]}>
-          <Text semibold={true} style={styles.badgeTextBase} dark={true}>
+        <Badge style={styles.badgeBase}>
+          <NBText semibold={true} style={styles.badgeTextBase} dark={true}>
             {statusBadge.label}
-          </Text>
+          </NBText>
         </Badge>
         <Image source={bpdBonusLogo} style={styles.fullLogo} />
       </View>
@@ -375,24 +385,28 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
             <View hspacer={true} small={true} />
             {isInGracePeriod || isPeriodInactive ? (
               <Badge style={styles.badgePreview}>
-                <Text semibold={true} style={styles.badgeTextBase} dark={true}>
+                <NBText
+                  semibold={true}
+                  style={styles.badgeTextBase}
+                  dark={true}
+                >
                   {statusBadge.label}
-                </Text>
+                </NBText>
               </Badge>
             ) : (
-              <Text
+              <NBText
                 bold={true}
                 white={true}
                 style={[styles.amountTextBasePreview, { textAlign: "right" }]}
               >
                 {"€ "}
-                <Text white={true} style={styles.amountTextUpperPreview}>
+                <NBText white={true} style={styles.amountTextUpperPreview}>
                   {`${amount[0]}${I18n.t(
                     "global.localization.decimalSeparator"
                   )}`}
-                </Text>
+                </NBText>
                 {amount[1]}
-              </Text>
+              </NBText>
             )}
           </View>
         </View>
@@ -413,7 +427,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
       )}
       <ImageBackground
         source={props.preview ? bpdCardBgPreview : bpdCardBgFull}
-        style={[props.preview ? styles.preview : styles.container]}
+        style={props.preview ? styles.preview : styles.container}
         imageStyle={props.preview ? styles.imagePreview : styles.imageFull}
       >
         {props.preview ? <PreviewCard /> : <FullCard />}

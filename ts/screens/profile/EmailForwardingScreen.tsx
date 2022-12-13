@@ -2,8 +2,10 @@
  * A screens to express the preferences related to email forwarding.
  * //TODO: magage errors (check toast etc.) + avoid useless updates
  */
-import * as pot from "italia-ts-commons/lib/pot";
-import { List, Text } from "native-base";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import { List, Text as NBText } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -120,11 +122,11 @@ class EmailForwardingScreen extends React.Component<Props, State> {
         goBack={() => this.props.navigation.goBack()}
       >
         <ScreenContent title={I18n.t("send_email_messages.title")}>
-          <Text style={{ paddingHorizontal: customVariables.contentPadding }}>
+          <NBText style={{ paddingHorizontal: customVariables.contentPadding }}>
             {I18n.t("send_email_messages.subtitle")}
-            <Text bold={true}>{` ${this.props.userEmail}`}</Text>
-            <Text>{I18n.t("global.symbols.question")}</Text>
-          </Text>
+            <NBText bold={true}>{` ${this.props.userEmail}`}</NBText>
+            <NBText>{I18n.t("global.symbols.question")}</NBText>
+          </NBText>
           <List withContentLateralPadding={true}>
             {/* ALL INACTIVE */}
             {renderListItem(
@@ -221,9 +223,12 @@ const mapStateToProps = (state: GlobalState) => {
   // : pot.getOrElse(potIsCustomEmailChannelEnabled, false);
 
   const potUserEmail = profileEmailSelector(state);
-  const userEmail = potUserEmail.fold(
-    I18n.t("global.remoteStates.notAvailable"),
-    (i: string) => i
+  const userEmail = pipe(
+    potUserEmail,
+    O.fold(
+      () => I18n.t("global.remoteStates.notAvailable"),
+      (i: string) => i
+    )
   );
 
   return {

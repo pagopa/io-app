@@ -1,10 +1,14 @@
-import { WithinRangeInteger } from "italia-ts-commons/lib/numbers";
+import { WithinRangeInteger } from "@pagopa/ts-commons/lib/numbers";
+
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
 import { View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
+import { H3 } from "../../../../../components/core/typography/H3";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { H5 } from "../../../../../components/core/typography/H5";
-import { H3 } from "../../../../../components/core/typography/H3";
+import { IOColors } from "../../../../../components/core/variables/IOColors";
 
 type ValueBoxProps = {
   value: number;
@@ -18,7 +22,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     width: 40,
     textAlign: "center",
-    backgroundColor: "#9B5897"
+    backgroundColor: IOColors.antiqueFuchsia
   },
   discountValueBox: {
     borderRadius: 6.5,
@@ -26,7 +30,7 @@ const styles = StyleSheet.create({
     width: 48,
     marginLeft: "auto",
     height: 48,
-    backgroundColor: "#9B5897"
+    backgroundColor: IOColors.antiqueFuchsia
   }
 });
 
@@ -34,10 +38,11 @@ const PERCENTAGE_SYMBOL = "%";
 const MINUS_SYMBOL = "-";
 
 const CgnDiscountValueBox = ({ value, small }: ValueBoxProps) => {
-  const normalizedValue = WithinRangeInteger(0, 100)
-    .decode(value)
-    .map(v => v.toString())
-    .getOrElse("-");
+  const normalizedValue = pipe(
+    WithinRangeInteger(0, 100).decode(value),
+    E.map(v => v.toString()),
+    E.getOrElse(() => "-")
+  );
   const percentage = (
     <H5 weight={"SemiBold"} color={"white"}>
       {PERCENTAGE_SYMBOL}

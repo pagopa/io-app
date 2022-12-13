@@ -17,8 +17,7 @@ import {
 } from "../store/actions/onboarding";
 import {
   optInPaymentMethodsDeletionChoice,
-  optInPaymentMethodsShowChoice,
-  optInPaymentMethodsStart
+  optInPaymentMethodsShowChoice
 } from "../store/actions/optInPaymentMethods";
 import {
   bpdPaymentMethodActivation,
@@ -52,7 +51,6 @@ import { handleBpdIbanInsertion } from "./orchestration/insertIban";
 import { handleBpdEnroll } from "./orchestration/onboarding/enrollToBpd";
 import { handleBpdStartOnboardingSaga } from "./orchestration/onboarding/startOnboarding";
 import { optInDeletionChoiceHandler } from "./orchestration/optInPaymentMethods/optInDeletionChoiceHandler";
-import { optInPaymentMethodsHandler } from "./orchestration/optInPaymentMethods/optInPaymentMethodsHandler";
 import { optInShouldShowChoiceHandler } from "./orchestration/optInPaymentMethods/optInShouldShowChoiceHandler";
 
 // watch all events about bpd
@@ -157,9 +155,6 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
   yield* takeLatest(getType(bpdIbanInsertionStart), handleBpdIbanInsertion);
 
   if (bpdOptInPaymentMethodsEnabled) {
-    // The user need to choice what to do with the payment methods added during the cashback
-    yield* takeLatest(optInPaymentMethodsStart, optInPaymentMethodsHandler);
-
     // The user choice to delete all the payment method with the BPD capability during the opt-in flow
     yield* takeLatest(
       optInPaymentMethodsDeletionChoice,

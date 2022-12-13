@@ -2,7 +2,9 @@
  * Implements the preferences screen where the user can see and update his
  * email, mobile number, preferred language, biometric recognition usage and digital address.
  */
-import * as pot from "italia-ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { List } from "native-base";
 import * as React from "react";
 import { Alert, PermissionsAndroid } from "react-native";
@@ -14,11 +16,13 @@ import ListItemComponent from "../../components/screens/ListItemComponent";
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
+import { remindersOptInEnabled } from "../../config";
 import I18n from "../../i18n";
 import {
   AppParamsList,
   IOStackNavigationRouteProps
 } from "../../navigation/params/AppParamsList";
+import ROUTES from "../../navigation/routes";
 import {
   navigateToCalendarPreferenceScreen,
   navigateToEmailForwardingPreferenceScreen,
@@ -69,9 +73,11 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  * it gets returned verbatim.
  */
 function translateLocale(locale: string): string {
-  return getLocalePrimary(locale)
-    .map(l => I18n.t(`locales.${l}`, { defaultValue: l }))
-    .getOrElse(locale);
+  return pipe(
+    getLocalePrimary(locale),
+    O.map(l => I18n.t(`locales.${l}`, { defaultValue: l })),
+    O.getOrElse(() => locale)
+  );
 }
 
 const getServicesPreferenceModeLabel = (
@@ -158,9 +164,12 @@ class PreferencesScreen extends React.Component<Props> {
   };
 
   public render() {
-    const language = this.props.preferredLanguage.fold(
-      translateLocale(getLocalePrimaryWithFallback()),
-      l => translateLocale(l)
+    const language = pipe(
+      this.props.preferredLanguage,
+      O.fold(
+        () => translateLocale(getLocalePrimaryWithFallback()),
+        l => translateLocale(l)
+      )
     );
 
     return (
@@ -174,6 +183,20 @@ class PreferencesScreen extends React.Component<Props> {
           subtitle={I18n.t("profile.preferences.subtitle")}
         >
           <List withContentLateralPadding={true}>
+            {remindersOptInEnabled && (
+              <ListItemComponent
+                onPress={() => {
+                  this.props.navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+                    screen: ROUTES.PROFILE_PREFERENCES_NOTIFICATIONS
+                  });
+                }}
+                title={I18n.t("profile.preferences.list.notifications.title")}
+                subTitle={I18n.t(
+                  "profile.preferences.list.notifications.subtitle"
+                )}
+              />
+            )}
+
             <ListItemComponent
               onPress={this.checkPermissionThenGoCalendar}
               title={I18n.t(

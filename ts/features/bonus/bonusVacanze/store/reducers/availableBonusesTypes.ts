@@ -1,5 +1,6 @@
-import { fromNullable, Option } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { BonusAvailable } from "../../../../../../definitions/content/BonusAvailable";
@@ -60,9 +61,11 @@ export const supportedAvailableBonusSelector = createSelector(
     pot.getOrElse(
       pot.map(availableBonusesState, bonuses =>
         bonuses.filter(b => {
-          const isFeatureFlagEnabled = fromNullable(
-            mapBonusIdFeatureFlag().get(b.id_type)
-          ).getOrElse(false);
+          const isFeatureFlagEnabled = pipe(
+            mapBonusIdFeatureFlag().get(b.id_type),
+            O.fromNullable,
+            O.getOrElse(() => false)
+          );
           return isFeatureFlagEnabled && experimentalAndVisibleBonus(b);
         })
       ),
@@ -110,12 +113,15 @@ export const serviceFromAvailableBonusSelector = (idBonusType: number) =>
   createSelector(
     supportedAvailableBonusSelector,
     servicesByIdSelector,
-    (supportedBonus, servicesById): Option<ServicePublic> =>
-      fromNullable(supportedBonus.find(sp => sp.id_type === idBonusType))
-        .mapNullable(bonus =>
+    (supportedBonus, servicesById): O.Option<ServicePublic> =>
+      pipe(
+        supportedBonus.find(sp => sp.id_type === idBonusType),
+        O.fromNullable,
+        O.chainNullableK(bonus =>
           bonus.service_id ? servicesById[bonus.service_id] : undefined
-        )
-        .mapNullable(pot.toUndefined)
+        ),
+        O.chainNullableK(pot.toUndefined)
+      )
   );
 
 /**
@@ -123,7 +129,15 @@ export const serviceFromAvailableBonusSelector = (idBonusType: number) =>
  */
 export const bonusVacanzeLogo = createSelector(
   availableBonusTypesSelectorFromId(ID_BONUS_VACANZE_TYPE),
-  bonus => fromNullable(bonus).fold(undefined, b => b.cover)
+  bonus =>
+    pipe(
+      bonus,
+      O.fromNullable,
+      O.fold(
+        () => undefined,
+        b => b.cover
+      )
+    )
 );
 
 export default reducer;

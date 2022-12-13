@@ -1,5 +1,5 @@
-import * as pot from "italia-ts-commons/lib/pot";
-import { FiscalCode } from "italia-ts-commons/lib/strings";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { BonusActivationStatusEnum } from "../../../../../../../definitions/bonus_vacanze/BonusActivationStatus";
 import { BonusCode } from "../../../../../../../definitions/bonus_vacanze/BonusCode";
 import mockedProfile from "../../../../../../__mocks__/initializedProfile";

@@ -1,4 +1,4 @@
-import { createFetchRequestForApi } from "italia-ts-commons/lib/requests";
+import { createFetchRequestForApi } from "@pagopa/ts-commons/lib/requests";
 import { Iban } from "../../../../../definitions/backend/Iban";
 import { InitializedProfile } from "../../../../../definitions/backend/InitializedProfile";
 import { PayoffInstrTypeEnum } from "../../../../../definitions/bpd/citizen/CitizenPatchDTO";

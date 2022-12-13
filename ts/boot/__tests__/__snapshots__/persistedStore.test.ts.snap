@@ -44,15 +44,12 @@ Object {
     "byMessageId": Object {},
   },
   "messages": Object {
-    "allIds": Object {
-      "kind": "PotNone",
-    },
     "allPaginated": Object {
       "archive": Object {
         "data": Object {
           "kind": "PotNone",
         },
-        "lastRequest": None {
+        "lastRequest": Object {
           "_tag": "None",
         },
       },
@@ -60,17 +57,15 @@ Object {
         "data": Object {
           "kind": "PotNone",
         },
-        "lastRequest": None {
+        "lastRequest": Object {
           "_tag": "None",
         },
       },
-      "migration": None {
+      "migration": Object {
         "_tag": "None",
       },
     },
-    "byId": Object {},
     "detailsById": Object {},
-    "idsByServiceId": Object {},
     "paginatedById": Object {},
     "thirdPartyById": Object {},
   },

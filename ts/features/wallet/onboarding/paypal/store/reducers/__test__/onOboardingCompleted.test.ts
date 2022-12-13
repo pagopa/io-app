@@ -1,4 +1,4 @@
-import { none, some } from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import { appReducer } from "../../../../../../../store/reducers";
 import { reproduceSequence } from "../../../../../../../utils/tests";
@@ -62,7 +62,7 @@ describe("onboardingCompletedReducer", () => {
       const state: GlobalState = reproduceSequence(
         {} as GlobalState,
         appReducer,
-        [walletAddPaypalOutcome(some("outcomeX"))]
+        [walletAddPaypalOutcome(O.some("outcomeX"))]
       );
       expect(paypalOnboardingOutcomeCodeSelector(state)).toEqual("outcomeX");
     });
@@ -73,7 +73,7 @@ describe("onboardingCompletedReducer", () => {
       const state: GlobalState = reproduceSequence(
         {} as GlobalState,
         appReducer,
-        [walletAddPaypalOutcome(none)]
+        [walletAddPaypalOutcome(O.none)]
       );
       expect(paypalOnboardingOutcomeCodeSelector(state)).toBeUndefined();
     });
@@ -86,7 +86,7 @@ describe("onboardingCompletedReducer", () => {
         appReducer,
         [
           walletAddPaypalStart("payment_method_details"),
-          walletAddPaypalOutcome(some("outcomeX"))
+          walletAddPaypalOutcome(O.some("outcomeX"))
         ]
       );
       expect(paypalOnboardingOutcomeCodeSelector(state)).toEqual("outcomeX");
@@ -103,7 +103,7 @@ describe("onboardingCompletedReducer", () => {
         appReducer,
         [
           walletAddPaypalStart("payment_method_details"),
-          walletAddPaypalOutcome(some("outcomeX")),
+          walletAddPaypalOutcome(O.some("outcomeX")),
           walletAddPaypalCompleted()
         ]
       );

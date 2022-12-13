@@ -1,11 +1,12 @@
-import { fromNullable } from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { Iban } from "../../../../../../definitions/backend/Iban";
 import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { useHardwareBackButton } from "../../../bonusVacanze/components/hooks/useHardwareBackButton";
+import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButton";
 import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import {
   bpdIbanInsertionCancel,
@@ -39,7 +40,9 @@ const IbanLoadingUpsert: React.FunctionComponent<Props> = props => {
       {...props}
       loadingCaption={loading}
       onAbort={props.onAbort}
-      onRetry={() => fromNullable(props.ibanValue.value).map(props.onRetry)}
+      onRetry={() =>
+        pipe(props.ibanValue.value, O.fromNullable, O.map(props.onRetry))
+      }
     />
   );
 };

@@ -1,11 +1,14 @@
-import * as pot from "italia-ts-commons/lib/pot";
-import { Text, View } from "native-base";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
+import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import { ReactElement, useEffect } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { H2 } from "../../components/core/typography/H2";
+import { IOColors } from "../../components/core/variables/IOColors";
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import FiscalCodeLandscapeOverlay from "../../components/FiscalCodeLandscapeOverlay";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
@@ -24,9 +27,8 @@ import { contentMunicipalityLoad } from "../../store/actions/content";
 import { municipalitySelector } from "../../store/reducers/content";
 import { profileSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
-import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
 import customVariables from "../../theme/variables";
-import { IOColors } from "../../components/core/variables/IOColors";
+import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
 
 type Props = ReturnType<typeof mapStateToProps> & {
   navigation: IOStackNavigationProp<ProfileParamsList, "PROFILE_FISCAL_CODE">;
@@ -36,9 +38,6 @@ type Props = ReturnType<typeof mapStateToProps> & {
 const styles = StyleSheet.create({
   darkBg: {
     backgroundColor: IOColors.bluegrey
-  },
-  white: {
-    color: IOColors.white
   },
   shadow: {
     // iOS
@@ -84,7 +83,10 @@ const FiscalCodeScreen: React.FunctionComponent<Props> = (props: Props) => {
       const maybeCodiceCatastale = CodiceCatastale.decode(
         profile.fiscal_code.substring(11, 15)
       );
-      maybeCodiceCatastale.map(code => loadMunicipality(code));
+      pipe(
+        maybeCodiceCatastale,
+        E.map(code => loadMunicipality(code))
+      );
     }
   }, [profile, loadMunicipality]);
 
@@ -120,7 +122,7 @@ const FiscalCodeScreen: React.FunctionComponent<Props> = (props: Props) => {
         customGoBack={customGoBack}
         headerBody={
           <TouchableDefaultOpacity onPress={() => props.navigation.goBack}>
-            <Text white={true}>{I18n.t("profile.fiscalCode.title")}</Text>
+            <NBText white={true}>{I18n.t("profile.fiscalCode.title")}</NBText>
           </TouchableDefaultOpacity>
         }
         contentStyle={styles.darkBg}
@@ -172,9 +174,9 @@ const FiscalCodeScreen: React.FunctionComponent<Props> = (props: Props) => {
 
               <View style={styles.largeSpacer} />
             </ScrollView>
-            <Text white={true} style={styles.text}>
+            <NBText white={true} style={styles.text}>
               {I18n.t("profile.fiscalCode.content")}
-            </Text>
+            </NBText>
           </React.Fragment>
         )}
       </DarkLayout>

@@ -1,17 +1,18 @@
+import { Millisecond, Second } from "@pagopa/ts-commons/lib/units";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import React, { useEffect, useRef, useState } from "react";
 import { Animated, Easing, StyleSheet, View, ViewStyle } from "react-native";
-import { Millisecond, Second } from "italia-ts-commons/lib/units";
-import { fromNullable } from "fp-ts/lib/Option";
 import { Otp } from "../../../../../../../definitions/cgn/Otp";
-import { IOColors } from "../../../../../../components/core/variables/IOColors";
-import { addEvery } from "../../../../../../utils/strings";
 import { BaseTypography } from "../../../../../../components/core/typography/BaseTypography";
-import IconFont from "../../../../../../components/ui/IconFont";
+import { H5 } from "../../../../../../components/core/typography/H5";
+import { IOColors } from "../../../../../../components/core/variables/IOColors";
 import TouchableDefaultOpacity from "../../../../../../components/TouchableDefaultOpacity";
+import IconFont from "../../../../../../components/ui/IconFont";
+import I18n from "../../../../../../i18n";
 import { clipboardSetStringWithFeedback } from "../../../../../../utils/clipboard";
 import { isTestEnv } from "../../../../../../utils/environment";
-import I18n from "../../../../../../i18n";
-import { H5 } from "../../../../../../components/core/typography/H5";
+import { addEvery } from "../../../../../../utils/strings";
 
 type ProgressConfig = {
   startPercentage: number;
@@ -94,8 +95,10 @@ const getOtpTTL = (otp: Otp): Millisecond => {
 const getRemainingTimeRepr = (
   expirationtime: ExpirationTime
 ): string | undefined =>
-  fromNullable(expirationtime)
-    .map<string | undefined>(rt => {
+  pipe(
+    expirationtime,
+    O.fromNullable,
+    O.map(rt => {
       const minutes =
         rt.minutes === 0
           ? ""
@@ -114,8 +117,9 @@ const getRemainingTimeRepr = (
         seconds: rt.seconds
       });
       return `${I18n.t("bonus.cgn.otp.code.validUntil")} ${minutes}${seconds}`;
-    })
-    .getOrElse(undefined);
+    }),
+    O.toUndefined
+  );
 
 export const OtpCodeComponent = (props: Props) => {
   const { startPercentage, endPercentage } = props.progressConfig ?? {

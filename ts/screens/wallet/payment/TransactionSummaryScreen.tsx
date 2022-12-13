@@ -3,15 +3,16 @@ import {
   PaymentNoticeNumberFromString,
   RptId
 } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import { CompatNavigationProp } from "@react-navigation/compat";
-import { fromNullable, none, Option, some } from "fp-ts/lib/Option";
-import * as pot from "italia-ts-commons/lib/pot";
-import { ActionSheet, Text, View } from "native-base";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import { ActionSheet, Text as NBText, View } from "native-base";
 import * as React from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
+import { IOColors } from "../../../components/core/variables/IOColors";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
@@ -25,7 +26,7 @@ import {
   isUndefined
 } from "../../../features/bonus/bpd/model/RemoteValue";
 import I18n from "../../../i18n";
-import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
 import {
   navigateToPaymentManualDataInsertion,
@@ -66,7 +67,6 @@ import {
   formatNumberAmount
 } from "../../../utils/stringBuilder";
 import { formatTextRecipient } from "../../../utils/strings";
-import { IOColors } from "../../../components/core/variables/IOColors";
 import { dispatchPickPspOrConfirm } from "./common";
 
 export type TransactionSummaryScreenNavigationParams = Readonly<{
@@ -76,11 +76,10 @@ export type TransactionSummaryScreenNavigationParams = Readonly<{
   messageId?: string;
 }>;
 
-type OwnProps = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<WalletParamsList, "PAYMENT_TRANSACTION_SUMMARY">
-  >;
-};
+type OwnProps = IOStackNavigationRouteProps<
+  WalletParamsList,
+  "PAYMENT_TRANSACTION_SUMMARY"
+>;
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -119,27 +118,29 @@ class TransactionSummaryScreen extends React.Component<Props> {
 
   public componentDidUpdate(prevProps: Props) {
     const { error, potVerifica } = this.props;
-    if (error.toUndefined() !== prevProps.error.toUndefined()) {
+    if (O.toUndefined(error) !== O.toUndefined(prevProps.error)) {
       // in case the verifica returns an error indicating the payment has been
       // already completed for this notice, we update the payment state so that
       // the notice result paid
-      error
-        .filter(_ => _ === "PAA_PAGAMENTO_DUPLICATO")
-        .map(_ => this.props.onDuplicatedPayment());
-      if (error.isSome()) {
+      pipe(
+        error,
+        O.filter(_ => _ === "PAA_PAGAMENTO_DUPLICATO"),
+        O.map(_ => this.props.onDuplicatedPayment())
+      );
+      if (O.isSome(error)) {
         this.props.navigateToPaymentTransactionError(error);
       }
     } else if (
       potVerifica !== prevProps.potVerifica &&
       pot.isError(potVerifica)
     ) {
-      this.props.navigateToPaymentTransactionError(some(potVerifica.error));
+      this.props.navigateToPaymentTransactionError(O.some(potVerifica.error));
     } else if (
       // this is the case when the component is already mounted (eg. process more payments)
       // we check if the rptId is different from the previous one, in that case fire the dispatchPaymentVerificaRequest
       pot.isNone(this.props.potVerifica) &&
-      this.props.navigation.getParam("rptId").paymentNoticeNumber !==
-        prevProps.navigation.getParam("rptId").paymentNoticeNumber
+      this.props.route.params.rptId.paymentNoticeNumber !==
+        prevProps.route.params.rptId.paymentNoticeNumber
     ) {
       this.props.dispatchPaymentVerificaRequest();
     }
@@ -234,31 +235,40 @@ class TransactionSummaryScreen extends React.Component<Props> {
   }
 
   private getFooterButtons = () =>
-    this.props.error.fold(this.renderFooterButtons(), error =>
-      error === "PAA_PAGAMENTO_DUPLICATO"
-        ? this.renderFooterSingleButton()
-        : this.renderFooterButtons()
+    pipe(
+      this.props.error,
+      O.fold(
+        () => this.renderFooterButtons(),
+        error =>
+          error === "PAA_PAGAMENTO_DUPLICATO"
+            ? this.renderFooterSingleButton()
+            : this.renderFooterButtons()
+      )
     );
 
   public render(): React.ReactNode {
-    const rptId: RptId = this.props.navigation.getParam("rptId");
+    const rptId: RptId = this.props.route.params.rptId;
 
     const { potVerifica } = this.props;
 
-    const recipient = pot
-      .toOption(potVerifica)
-      .mapNullable(_ => _.enteBeneficiario)
-      .map(formatTextRecipient);
+    const recipient = pipe(
+      pot.toOption(potVerifica),
+      O.chainNullableK(_ => _.enteBeneficiario),
+      O.map(formatTextRecipient)
+    );
 
     /**
      * try to show the organization fiscal code coming from the 'verifica' API
      * otherwise (it could be an issue with the API) it fallbacks on rptID coming from
      * static data: message, qrcode, manual insertion
      */
-    const organizationFiscalCode: string = pot
-      .toOption(potVerifica)
-      .mapNullable(_ => _.enteBeneficiario?.identificativoUnivocoBeneficiario)
-      .getOrElse(rptId.organizationFiscalCode);
+    const organizationFiscalCode: string = pipe(
+      pot.toOption(potVerifica),
+      O.chainNullableK(
+        _ => _.enteBeneficiario?.identificativoUnivocoBeneficiario
+      ),
+      O.getOrElse(() => rptId.organizationFiscalCode)
+    );
 
     const currentAmount: string = pot.getOrElse(
       pot.map(potVerifica, (verifica: PaymentRequestsGetResponse) =>
@@ -279,10 +289,10 @@ class TransactionSummaryScreen extends React.Component<Props> {
 
     const standardRow = (label: string, value: string) => (
       <View style={styles.row}>
-        <Text style={styles.bluegreyLight}>{label}</Text>
-        <Text bold={true} white={true}>
+        <NBText style={styles.bluegreyLight}>{label}</NBText>
+        <NBText bold={true} white={true}>
           {value}
-        </Text>
+        </NBText>
       </View>
     );
 
@@ -302,7 +312,13 @@ class TransactionSummaryScreen extends React.Component<Props> {
               dark={true}
               title={I18n.t("wallet.firstTransactionSummary.title")}
               description={transactionDescription}
-              recipient={recipient.fold("-", r => r)}
+              recipient={pipe(
+                recipient,
+                O.fold(
+                  () => "-",
+                  r => r
+                )
+              )}
             />
 
             <View spacer={true} large={true} />
@@ -312,20 +328,20 @@ class TransactionSummaryScreen extends React.Component<Props> {
             {/** Amount to pay */}
             <View style={styles.row}>
               <View style={styles.row}>
-                <Text style={[styles.title, styles.bluegreyLight]}>
+                <NBText style={[styles.title, styles.bluegreyLight]}>
                   {I18n.t("wallet.firstTransactionSummary.updatedAmount")}
-                </Text>
+                </NBText>
               </View>
-              <Text white={true} style={[styles.title]} bold={true}>
+              <NBText white={true} style={styles.title} bold={true}>
                 {currentAmount}
-              </Text>
+              </NBText>
             </View>
 
             <React.Fragment>
               <View spacer={true} small={true} />
-              <Text style={styles.bluegreyLight}>
+              <NBText style={styles.bluegreyLight}>
                 {I18n.t("wallet.firstTransactionSummary.amountInfo.message")}
-              </Text>
+              </NBText>
             </React.Fragment>
             <View spacer={true} large={true} />
 
@@ -362,32 +378,36 @@ const mapStateToProps = (state: GlobalState) => {
    * - payment method is Paypal & the relative feature flag is not enabled
    * - payment method is BPay & the relative feature flag is not enabled
    */
-  const maybeFavoriteWallet = fromNullable(favouriteWallet).filter(fw => {
-    switch (fw.paymentMethod?.kind) {
-      case "PayPal":
-        return isPaypalEnabled;
-      case "BPay":
-        return isBPayPaymentEnabled;
-      default:
-        return true;
-    }
-  });
+  const maybeFavoriteWallet = pipe(
+    favouriteWallet,
+    O.fromNullable,
+    O.filter(fw => {
+      switch (fw.paymentMethod?.kind) {
+        case "PayPal":
+          return isPaypalEnabled;
+        case "BPay":
+          return isBPayPaymentEnabled;
+        default:
+          return true;
+      }
+    })
+  );
   const psps = pspsV2.psps;
-  const error: Option<
+  const error: O.Option<
     PayloadForAction<
       | typeof paymentVerifica["failure"]
       | typeof paymentAttiva["failure"]
       | typeof paymentIdPolling["failure"]
     >
   > = pot.isError(verifica)
-    ? some(verifica.error)
+    ? O.some(verifica.error)
     : pot.isError(attiva)
-    ? some(attiva.error)
+    ? O.some(attiva.error)
     : pot.isError(paymentId)
-    ? some(paymentId.error)
+    ? O.some(paymentId.error)
     : pot.isError(check) || isError(psps)
-    ? some(undefined)
-    : none;
+    ? O.some(undefined)
+    : O.none;
 
   // we need to show the spinner when the data is in the loading state
   // and also while the logic is processing one step's response and
@@ -399,15 +419,15 @@ const mapStateToProps = (state: GlobalState) => {
     isLoadingWalletById ||
     isLoadingVerifica ||
     isLoadingAttiva ||
-    (error.isNone() && pot.isSome(attiva) && pot.isNone(paymentId)) ||
+    (O.isNone(error) && pot.isSome(attiva) && pot.isNone(paymentId)) ||
     pot.isLoading(paymentId) ||
-    (error.isNone() && pot.isSome(paymentId) && pot.isNone(check)) ||
+    (O.isNone(error) && pot.isSome(paymentId) && pot.isNone(check)) ||
     pot.isLoading(check) ||
-    (maybeFavoriteWallet.isSome() &&
-      error.isNone() &&
+    (O.isSome(maybeFavoriteWallet) &&
+      O.isNone(error) &&
       pot.isSome(check) &&
       isUndefined(psps)) ||
-    (maybeFavoriteWallet.isSome() && isRemoteLoading(psps));
+    (O.isSome(maybeFavoriteWallet) && isRemoteLoading(psps));
 
   const loadingCaption = isLoadingVerifica
     ? I18n.t("wallet.firstTransactionSummary.loadingMessage.verification")
@@ -432,9 +452,9 @@ const mapStateToProps = (state: GlobalState) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
-  const rptId = props.navigation.getParam("rptId");
-  const initialAmount = props.navigation.getParam("initialAmount");
-  const paymentStartOrigin = props.navigation.getParam("paymentStartOrigin");
+  const rptId = props.route.params.rptId;
+  const initialAmount = props.route.params.initialAmount;
+  const paymentStartOrigin = props.route.params.paymentStartOrigin;
   const isManualPaymentInsertion = paymentStartOrigin === "manual_insertion";
 
   const dispatchPaymentVerificaRequest = () =>
@@ -487,7 +507,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
     );
 
   const navigateToPaymentTransactionError = (
-    error: Option<
+    error: O.Option<
       PayloadForAction<
         | typeof paymentVerifica["failure"]
         | typeof paymentAttiva["failure"]
@@ -512,7 +532,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
     backToEntrypointPayment: () => dispatch(backToEntrypointPayment()),
     navigateToWalletAddPaymentMethod: () =>
       navigateToWalletAddPaymentMethod({
-        inPayment: none,
+        inPayment: O.none,
         showOnlyPayablePaymentMethods: true
       }),
     dispatchPaymentVerificaRequest,
@@ -530,7 +550,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
     onDuplicatedPayment: () =>
       dispatch(
         paymentCompletedSuccess({
-          rptId: props.navigation.getParam("rptId"),
+          rptId: props.route.params.rptId,
           kind: "DUPLICATED"
         })
       )

@@ -1,5 +1,6 @@
-import { Content, Text, View } from "native-base";
+import { Content, Text as NBText, View } from "native-base";
 import * as React from "react";
+import { useNavigation } from "@react-navigation/native";
 import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -19,11 +20,6 @@ import { idpsSelector, idpsStateSelector } from "../../store/reducers/content";
 import { SpidIdp } from "../../../definitions/content/SpidIdp";
 import { LocalIdpsFallback, testIdp } from "../../utils/idps";
 import { loadIdps } from "../../store/actions/content";
-import {
-  navigateBack,
-  navigateToSPIDLogin,
-  navigateToSPIDTestIDP
-} from "../../store/actions/navigation";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import { isLoading } from "../../features/bonus/bpd/model/RemoteValue";
 import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
@@ -31,6 +27,9 @@ import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
 } from "../../utils/supportAssistance";
+import ROUTES from "../../navigation/routes";
+import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
+import { AuthenticationParamsList } from "../../navigation/params/AuthenticationParamsList";
 import { IOColors } from "../../components/core/variables/IOColors";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -56,8 +55,16 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  */
 const IdpSelectionScreen = (props: Props): React.ReactElement => {
   const [counter, setCounter] = useState(0);
-  const { requestIdps, setSelectedIdp, navigateToIdpTest } = props;
+  const { requestIdps, setSelectedIdp } = props;
   const choosenTool = assistanceToolRemoteConfig(props.assistanceToolConfig);
+
+  const navigation =
+    useNavigation<
+      IOStackNavigationProp<
+        AuthenticationParamsList,
+        "AUTHENTICATION_IPD_SELECTION"
+      >
+    >();
 
   const onIdpSelected = (idp: LocalIdpsFallback) => {
     if (idp.isTestIdp === true && counter < TAPS_TO_OPEN_TESTIDP) {
@@ -66,7 +73,9 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
     } else {
       props.setSelectedIdp(idp);
       handleSendAssistanceLog(choosenTool, `IDP selected: ${idp.id}`);
-      props.navigateToIdpSelection();
+      navigation.navigate(ROUTES.AUTHENTICATION, {
+        screen: ROUTES.AUTHENTICATION_IDP_LOGIN
+      });
     }
   };
 
@@ -78,9 +87,11 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
     if (counter === TAPS_TO_OPEN_TESTIDP) {
       setCounter(0);
       setSelectedIdp(testIdp);
-      navigateToIdpTest();
+      navigation.navigate(ROUTES.AUTHENTICATION, {
+        screen: ROUTES.AUTHENTICATION_IDP_TEST
+      });
     }
-  }, [counter, setSelectedIdp, navigateToIdpTest]);
+  }, [counter, setSelectedIdp, navigation]);
 
   return (
     <BaseScreenComponent
@@ -105,9 +116,9 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
               block={true}
               light={true}
               bordered={true}
-              onPress={props.goBack}
+              onPress={navigation.goBack}
             >
-              <Text>{I18n.t("global.buttons.cancel")}</Text>
+              <NBText>{I18n.t("global.buttons.cancel")}</NBText>
             </ButtonDefaultOpacity>
           </View>
           <View style={{ padding: variables.contentPadding }}>
@@ -130,9 +141,6 @@ const mapStateToProps = (state: GlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateToIdpSelection: () => navigateToSPIDLogin(),
-  navigateToIdpTest: () => navigateToSPIDTestIDP(),
-  goBack: () => navigateBack(),
   requestIdps: () => dispatch(loadIdps.request()),
   setSelectedIdp: (idp: SpidIdp) => dispatch(idpSelected(idp))
 });

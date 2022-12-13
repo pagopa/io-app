@@ -1,6 +1,8 @@
 /**
  * This component allows to display a carousel with rounded indicators at the bottom
  */
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { View } from "native-base";
 import * as React from "react";
 import {
@@ -10,7 +12,6 @@ import {
   ScrollView,
   StyleSheet
 } from "react-native";
-import { fromNullable } from "fp-ts/lib/Option";
 import I18n from "../i18n";
 import variables from "../theme/variables";
 import { roundToThirdDecimal } from "../utils/number";
@@ -65,16 +66,20 @@ export const HorizontalScroll: React.FunctionComponent<Props> = (
   const { indexToScroll } = props;
 
   React.useEffect(() => {
-    fromNullable(indexToScroll).map(_ =>
-      setTimeout(() => {
-        if (scrollRef.current) {
-          scrollRef.current.scrollTo({
-            x: scrollOffset,
-            y: 0,
-            animated: false
-          });
-        }
-      }, 0)
+    pipe(
+      indexToScroll,
+      O.fromNullable,
+      O.map(_ =>
+        setTimeout(() => {
+          if (scrollRef.current) {
+            scrollRef.current.scrollTo({
+              x: scrollOffset,
+              y: 0,
+              animated: false
+            });
+          }
+        }, 0)
+      )
     );
   }, [scrollRef, scrollOffset, indexToScroll]);
 
@@ -126,8 +131,10 @@ export const HorizontalScroll: React.FunctionComponent<Props> = (
                 roundToThirdDecimal(Dimensions.get("window").width)
             )
           });
-          fromNullable(props.onCurrentElement).map(onCurrElement =>
-            onCurrElement(currentIndex)
+          pipe(
+            props.onCurrentElement,
+            O.fromNullable,
+            O.map(onCurrElement => onCurrElement(currentIndex))
           );
           Animated.event([{ nativeEvent: { contentOffset: { x: animVal } } }])(
             event

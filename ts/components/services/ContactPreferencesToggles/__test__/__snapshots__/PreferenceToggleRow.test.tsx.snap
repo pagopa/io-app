@@ -3,14 +3,12 @@
 exports[`PreferenceToggleRow component should match the snapshot 1`] = `
 <View
   style={
-    Array [
-      Object {
-        "flex": 1,
-        "flexDirection": "row",
-        "justifyContent": "space-between",
-        "paddingVertical": 12,
-      },
-    ]
+    Object {
+      "flex": 1,
+      "flexDirection": "row",
+      "justifyContent": "space-between",
+      "paddingVertical": 12,
+    }
   }
 >
   <View
@@ -27,12 +25,14 @@ exports[`PreferenceToggleRow component should match the snapshot 1`] = `
       fontStyle={
         Object {
           "fontSize": 16,
+          "lineHeight": 22,
         }
       }
       style={
         Array [
           Object {
             "fontSize": 16,
+            "lineHeight": 22,
           },
           Object {
             "color": "#17324D",

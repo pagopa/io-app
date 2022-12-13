@@ -1,9 +1,10 @@
-import { call, put } from "typed-redux-saga/macro";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
+import * as E from "fp-ts/lib/Either";
+import { call, put } from "typed-redux-saga/macro";
 import { ContentClient } from "../../../../api/content";
 import { SagaCallReturnType } from "../../../../types/utils";
-import { getZendeskConfig } from "../../store/actions";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
+import { getZendeskConfig } from "../../store/actions";
 
 // retrieve the zendesk config from the CDN
 export function* handleGetZendeskConfig(
@@ -13,23 +14,23 @@ export function* handleGetZendeskConfig(
     const getZendeskConfigResult: SagaCallReturnType<
       typeof getZendeskConfigClient
     > = yield* call(getZendeskConfigClient);
-    if (getZendeskConfigResult.isRight()) {
-      if (getZendeskConfigResult.value.status === 200) {
+    if (E.isRight(getZendeskConfigResult)) {
+      if (getZendeskConfigResult.right.status === 200) {
         yield* put(
-          getZendeskConfig.success(getZendeskConfigResult.value.value)
+          getZendeskConfig.success(getZendeskConfigResult.right.value)
         );
       } else {
         yield* put(
           getZendeskConfig.failure(
             getGenericError(
-              Error(`response status ${getZendeskConfigResult.value.status}`)
+              Error(`response status ${getZendeskConfigResult.right.status}`)
             )
           )
         );
       }
     } else {
       getZendeskConfig.failure(
-        getGenericError(Error(readableReport(getZendeskConfigResult.value)))
+        getGenericError(Error(readableReport(getZendeskConfigResult.left)))
       );
     }
   } catch (e) {

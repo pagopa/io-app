@@ -1,19 +1,16 @@
-import { CompatNavigationProp } from "@react-navigation/compat";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
-import { Millisecond } from "italia-ts-commons/lib/units";
-import { Tab, Tabs } from "native-base";
+import * as O from "fp-ts/lib/Option";
 import React, { useEffect } from "react";
-import { Animated, Platform, StyleSheet, View } from "react-native";
-import { connect, useDispatch } from "react-redux";
+import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
 import { createSelector } from "reselect";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
-import MessageList from "../../../components/messages/paginated/MessageList";
-import MessagesArchive from "../../../components/messages/paginated/MessagesArchive";
-import MessagesInbox from "../../../components/messages/paginated/MessagesInbox";
-import MessagesSearch from "../../../components/messages/paginated/MessagesSearch";
+import { IOColors } from "../../../components/core/variables/IOColors";
 import { useMessageOpening } from "../../../components/messages/paginated/hooks/useMessageOpening";
+import MessageList from "../../../components/messages/paginated/MessageList";
+import MessagesSearch from "../../../components/messages/paginated/MessagesSearch";
 import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
@@ -22,31 +19,26 @@ import { SearchNoResultMessage } from "../../../components/search/SearchNoResult
 import SectionStatusComponent from "../../../components/SectionStatus";
 import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
 import I18n from "../../../i18n";
-import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
-import { MainTabParamsList } from "../../../navigation/params/MainTabParamsList";
+import MessagesHomeTabNavigator from "../../../navigation/MessagesHomeTabNavigator";
 import {
   migrateToPaginatedMessages,
-  resetMigrationStatus,
-  upsertMessageStatusAttributes
+  resetMigrationStatus
 } from "../../../store/actions/messages";
 import { sectionStatusSelector } from "../../../store/reducers/backendStatus";
 import {
   allArchiveMessagesSelector,
   allInboxMessagesSelector,
-  allPaginatedSelector,
-  MessageOperation
+  allPaginatedSelector
 } from "../../../store/reducers/entities/messages/allPaginated";
 import {
   MessagesStatus,
   messagesStatusSelector
 } from "../../../store/reducers/entities/messages/messagesStatus";
-import { UIMessage } from "../../../store/reducers/entities/messages/types";
 import {
   isSearchMessagesEnabledSelector,
   searchTextSelector
 } from "../../../store/reducers/search";
 import { GlobalState } from "../../../store/reducers/types";
-import { makeFontStyleObject } from "../../../theme/fonts";
 import {
   setAccessibilityFocus,
   useScreenReaderEnabled
@@ -54,99 +46,16 @@ import {
 import { MESSAGE_ICON_HEIGHT } from "../../../utils/constants";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { showToast } from "../../../utils/showToast";
-import { IOColors } from "../../../components/core/variables/IOColors";
-import customVariables from "../../../theme/variables";
 
 import MigratingMessage from "./MigratingMessage";
 
-type Props = {
-  navigation: CompatNavigationProp<
-    IOStackNavigationProp<MainTabParamsList, "MESSAGES_HOME">
-  >;
-} & ReturnType<typeof mapStateToProps> &
+type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "messages.contextualHelpTitle",
   body: "messages.contextualHelpContent"
 };
-
-const styles = StyleSheet.create({
-  tabBarContainer: {
-    elevation: 0,
-    height: 40
-  },
-  tabBarUnderline: {
-    borderBottomColor: customVariables.tabUnderlineColor,
-    borderBottomWidth: customVariables.tabUnderlineHeight
-  },
-  tabBarUnderlineActive: {
-    height: customVariables.tabUnderlineHeight,
-    // borders do not overlap each other, but stack naturally
-    marginBottom: -customVariables.tabUnderlineHeight,
-    backgroundColor: customVariables.contentPrimaryBackground
-  },
-  activeTextStyle: {
-    ...makeFontStyleObject(Platform.select, "600"),
-    fontSize: Platform.OS === "android" ? 16 : undefined,
-    fontWeight: Platform.OS === "android" ? "normal" : "bold",
-    color: customVariables.brandPrimary
-  },
-  textStyle: {
-    color: customVariables.textColor
-  }
-});
-
-const AnimatedTabs = Animated.createAnimatedComponent(Tabs);
-
-type AllTabsProps = {
-  navigateToMessageDetail: (message: UIMessage) => void;
-  inbox: ReadonlyArray<UIMessage>;
-  archive: ReadonlyArray<UIMessage>;
-  setArchived: (
-    isArchived: boolean,
-    messages: ReadonlyArray<UIMessage>
-  ) => void;
-};
-
-const AllTabs = ({
-  navigateToMessageDetail,
-  inbox,
-  archive,
-  setArchived
-}: AllTabsProps) => (
-  <View style={IOStyles.flex}>
-    <AnimatedTabs
-      tabContainerStyle={[styles.tabBarContainer, styles.tabBarUnderline]}
-      tabBarUnderlineStyle={styles.tabBarUnderlineActive}
-      initialPage={0}
-    >
-      <Tab
-        activeTextStyle={styles.activeTextStyle}
-        textStyle={styles.textStyle}
-        heading={I18n.t("messages.tab.inbox")}
-      >
-        <MessagesInbox
-          messages={inbox}
-          navigateToMessageDetail={navigateToMessageDetail}
-          archiveMessages={messages => setArchived(true, messages)}
-        />
-      </Tab>
-
-      <Tab
-        activeTextStyle={styles.activeTextStyle}
-        textStyle={styles.textStyle}
-        heading={I18n.t("messages.tab.archive")}
-      >
-        <MessagesArchive
-          messages={archive}
-          navigateToMessageDetail={navigateToMessageDetail}
-          unarchiveMessages={messages => setArchived(false, messages)}
-        />
-      </Tab>
-    </AnimatedTabs>
-  </View>
-);
 
 /**
  * Screen to gather and organize the information for the Inbox and SearchMessage views.
@@ -156,8 +65,6 @@ const MessagesHomeScreen = ({
   messageSectionStatusActive,
   searchMessages,
   searchText,
-  allInboxMessages,
-  allArchiveMessages,
 
   // migration
   messagesStatus,
@@ -179,48 +86,27 @@ const MessagesHomeScreen = ({
       return;
     }
 
-    type toastData = {
-      operation: MessageOperation;
-      archive: string;
-      restore: string;
-      type: "success" | "danger";
-    };
-    pipe<typeof latestMessageOperation, toastData, void>(
-      lmo =>
-        lmo.fold<toastData>(
-          l => ({
-            operation: l.operation,
-            archive: I18n.t("messages.operations.archive.failure"),
-            restore: I18n.t("messages.operations.restore.failure"),
-            type: "danger"
-          }),
-          r => ({
-            operation: r,
-            archive: I18n.t("messages.operations.archive.success"),
-            restore: I18n.t("messages.operations.restore.success"),
-            type: "success"
-          })
-        ),
+    pipe(
+      latestMessageOperation,
+      E.foldW(
+        l => ({
+          operation: l.operation,
+          archive: I18n.t("messages.operations.archive.failure"),
+          restore: I18n.t("messages.operations.restore.failure"),
+          type: "danger" as const
+        }),
+        r => ({
+          operation: r,
+          archive: I18n.t("messages.operations.archive.success"),
+          restore: I18n.t("messages.operations.restore.success"),
+          type: "success" as const
+        })
+      ),
       lmo => showToast(lmo[lmo.operation], lmo.type)
-    )(latestMessageOperation);
+    );
   }, [latestMessageOperation]);
 
   const { openMessage, bottomSheets } = useMessageOpening();
-
-  const dispatch = useDispatch();
-
-  const setArchived = (
-    isArchived: boolean,
-    messages: ReadonlyArray<UIMessage>
-  ) =>
-    messages.forEach(message =>
-      dispatch(
-        upsertMessageStatusAttributes.request({
-          message,
-          update: { tag: "archiving", isArchived }
-        })
-      )
-    );
 
   const isScreenReaderEnabled = useScreenReaderEnabled();
 
@@ -263,19 +149,15 @@ const MessagesHomeScreen = ({
               onEnd={resetMigrationStatus}
             />
           ) : (
-            <AllTabs
-              inbox={allInboxMessages}
-              archive={allArchiveMessages}
-              navigateToMessageDetail={openMessage}
-              setArchived={setArchived}
-            />
+            <MessagesHomeTabNavigator />
           )}
         </React.Fragment>
       )}
 
       {isSearchEnabled &&
-        searchText
-          .map(_ =>
+        pipe(
+          searchText,
+          O.map(_ =>
             _.length < MIN_CHARACTER_SEARCH_TEXT ? (
               <SearchNoResultMessage errorType="InvalidSearchBarText" />
             ) : (
@@ -291,10 +173,11 @@ const MessagesHomeScreen = ({
                 )}
               />
             )
-          )
-          .getOrElse(
+          ),
+          O.getOrElse(() => (
             <SearchNoResultMessage errorType="InvalidSearchBarText" />
-          )}
+          ))
+        )}
       {!isScreenReaderEnabled && statusComponent}
       {bottomSheets.map(_ => _)}
     </TopScreenComponent>
@@ -309,8 +192,6 @@ const mapStateToProps = (state: GlobalState) => ({
     [allInboxMessagesSelector, allArchiveMessagesSelector],
     (inbox, archive) => inbox.concat(archive)
   )(state),
-  allInboxMessages: allInboxMessagesSelector(state),
-  allArchiveMessages: allArchiveMessagesSelector(state),
   messagesStatus: messagesStatusSelector(state),
   migrationStatus: allPaginatedSelector(state).migration,
   latestMessageOperation: allPaginatedSelector(state).latestMessageOperation

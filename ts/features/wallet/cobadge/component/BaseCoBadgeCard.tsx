@@ -1,3 +1,5 @@
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { Badge, View } from "native-base";
 import * as React from "react";
 import {
@@ -39,7 +41,6 @@ const styles = StyleSheet.create({
     height: 31,
     resizeMode: "contain"
   },
-  bankName: { textTransform: "capitalize" },
   badgeInfo: {
     borderWidth: 1,
     borderStyle: "solid",
@@ -86,13 +87,16 @@ const BaseCoBadgeCard: React.FunctionComponent<Props> = (props: Props) => {
     props.abi?.logoUrl
   );
 
-  const imageStyle: StyleProp<ImageStyle> | undefined = imgDimensions.fold(
-    undefined,
-    imgDim => ({
-      width: imgDim[0],
-      height: imgDim[1],
-      resizeMode: "contain"
-    })
+  const imageStyle: StyleProp<ImageStyle> | undefined = pipe(
+    imgDimensions,
+    O.fold(
+      () => undefined,
+      imgDim => ({
+        width: imgDim[0],
+        height: imgDim[1],
+        resizeMode: "contain"
+      })
+    )
   );
   return (
     <BaseCardComponent

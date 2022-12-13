@@ -1,8 +1,9 @@
-import { Either, fromNullable, toError } from "fp-ts/lib/Either";
-import { PatternString } from "italia-ts-commons/lib/strings";
+import * as E from "fp-ts/lib/Either";
+import { PatternString } from "@pagopa/ts-commons/lib/strings";
 import { Platform } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import semver, { SemVer } from "semver";
+import { pipe } from "fp-ts/lib/function";
 import { ioWebSiteUrl } from "./global";
 import { NumberFromString } from "./number";
 
@@ -19,14 +20,17 @@ export const webStoreURL = Platform.select({
 
 const VersionFormat = PatternString("^\\d+(.\\d+){0,3}$");
 
-const validateFormat = (value: string): Either<Error, SemVer> =>
-  VersionFormat.decode(value)
-    .mapLeft(toError)
-    .chain(v =>
-      fromNullable(new Error(`Cannot parse ${value} using semver.coerce`))(
+const validateFormat = (value: string): E.Either<Error, SemVer> =>
+  pipe(
+    value,
+    VersionFormat.decode,
+    E.mapLeft(E.toError),
+    E.chain(v =>
+      E.fromNullable(new Error(`Cannot parse ${value} using semver.coerce`))(
         semver.coerce(v)
       )
-    );
+    )
+  );
 
 /**
  * return true if appVersion >= minAppVersion
@@ -42,17 +46,17 @@ export const isVersionSupported = (
 
   // If the validation of one of the two versions fails, we cannot say anything ad we continue to support the version
   if (
-    minVersion.isLeft() ||
-    currentAppVersion.isLeft() ||
+    E.isLeft(minVersion) ||
+    E.isLeft(currentAppVersion) ||
     // If satisfies the semver check, the app is supported
-    semver.satisfies(minVersion.value, `<${currentAppVersion.value}`)
+    semver.satisfies(minVersion.right, `<${currentAppVersion.right}`)
   ) {
     return true;
   }
 
   const semSatisfies = semver.satisfies(
-    minVersion.value,
-    `=${currentAppVersion.value}`
+    minVersion.right,
+    `=${currentAppVersion.right}`
   );
   const minAppVersionSplitted = minAppVersion.split(".");
   const currentAppVersionSplitted = appVersion.split(".");
@@ -63,15 +67,19 @@ export const isVersionSupported = (
     currentAppVersionSplitted.length === 4
   ) {
     // if can't decode one of the two fourth digit, we assume true (can't say anything)
-    const forthDigitSatisfies = NumberFromString.decode(
-      minAppVersionSplitted[3]
-    )
-      .map(a =>
-        NumberFromString.decode(currentAppVersionSplitted[3])
-          .map(b => a <= b)
-          .getOrElse(true)
-      )
-      .getOrElse(true);
+    const forthDigitSatisfies = pipe(
+      minAppVersionSplitted[3],
+      NumberFromString.decode,
+      E.map(a =>
+        pipe(
+          currentAppVersionSplitted[3],
+          NumberFromString.decode,
+          E.map(b => a <= b),
+          E.getOrElse(() => true)
+        )
+      ),
+      E.getOrElse(() => true)
+    );
     return semSatisfies && forthDigitSatisfies;
   }
   return semSatisfies;
