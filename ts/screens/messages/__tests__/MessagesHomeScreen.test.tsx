@@ -43,7 +43,7 @@ jest.mock("@react-navigation/native", () => {
 
 const mockPresentPNBottomSheet = jest.fn();
 jest.mock(
-  "../../../../features/pn/components/PnOpenConfirmationBottomSheet",
+  "../../../features/pn/components/PnOpenConfirmationBottomSheet",
   () => ({
     usePnOpenConfirmationBottomSheet: () => ({
       present: mockPresentPNBottomSheet,
