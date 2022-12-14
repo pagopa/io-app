@@ -1,8 +1,8 @@
 diff --git a/node_modules/react-native-device-info/lib/typescript/internal/privateTypes.d.ts b/node_modules/react-native-device-info/lib/typescript/internal/privateTypes.d.ts
-index 7ca9a81..9c274ab 100644
+index f137e75..0f06706 100644
 --- a/node_modules/react-native-device-info/lib/typescript/internal/privateTypes.d.ts
 +++ b/node_modules/react-native-device-info/lib/typescript/internal/privateTypes.d.ts
-@@ -79,12 +79,8 @@ interface ExposedNativeMethods {
+@@ -78,12 +78,8 @@ interface ExposedNativeMethods {
      getInstallReferrerSync: () => string;
      getInstanceId: () => Promise<string>;
      getInstanceIdSync: () => string;
@@ -16,10 +16,10 @@ index 7ca9a81..9c274ab 100644
      getMaxMemorySync: () => number;
      getPhoneNumber: () => Promise<string>;
 diff --git a/node_modules/react-native-device-info/src/index.ts b/node_modules/react-native-device-info/src/index.ts
-index b298fd9..c611f04 100644
+index 4ec2138..2731038 100644
 --- a/node_modules/react-native-device-info/src/index.ts
 +++ b/node_modules/react-native-device-info/src/index.ts
-@@ -58,13 +58,6 @@ export const [getAndroidId, getAndroidIdSync] = getSupportedPlatformInfoFunction
+@@ -59,13 +59,6 @@ export const [getAndroidId, getAndroidIdSync] = getSupportedPlatformInfoFunction
    defaultValue: 'unknown',
  });
  
@@ -33,7 +33,7 @@ index b298fd9..c611f04 100644
  export const [isCameraPresent, isCameraPresentSync] = getSupportedPlatformInfoFunctions({
    supportedPlatforms: ['android', 'windows', 'web'],
    getter: () => RNDeviceInfo.isCameraPresent(),
-@@ -72,23 +65,6 @@ export const [isCameraPresent, isCameraPresentSync] = getSupportedPlatformInfoFu
+@@ -73,24 +66,6 @@ export const [isCameraPresent, isCameraPresentSync] = getSupportedPlatformInfoFu
    defaultValue: false,
  });
  
@@ -54,10 +54,11 @@ index b298fd9..c611f04 100644
 -  }
 -  return 'unknown';
 -}
- 
+-
  export const getDeviceId = () =>
    getSupportedPlatformInfoSync({
-@@ -823,12 +799,8 @@ const deviceInfoModule: DeviceInfoModule = {
+     defaultValue: 'unknown',
+@@ -895,12 +870,8 @@ const deviceInfoModule: DeviceInfoModule = {
    getInstallReferrerSync,
    getInstanceId,
    getInstanceIdSync,
@@ -71,10 +72,10 @@ index b298fd9..c611f04 100644
    getManufacturerSync,
    getMaxMemory,
 diff --git a/node_modules/react-native-device-info/src/internal/privateTypes.ts b/node_modules/react-native-device-info/src/internal/privateTypes.ts
-index c345201..3032eb8 100644
+index fb71735..0a9bb10 100644
 --- a/node_modules/react-native-device-info/src/internal/privateTypes.ts
 +++ b/node_modules/react-native-device-info/src/internal/privateTypes.ts
-@@ -84,12 +84,8 @@ interface ExposedNativeMethods {
+@@ -83,12 +83,8 @@ interface ExposedNativeMethods {
    getInstallReferrerSync: () => string;
    getInstanceId: () => Promise<string>;
    getInstanceIdSync: () => string;
