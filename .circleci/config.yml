@@ -510,34 +510,31 @@ jobs:
 
 workflows:
   version: 2
-  build:
-    jobs:
-      - compile-typescript
-          filters:
-            branches:
-              ignore: migrate-ci-to-githubactions
-      - run-danger:
-          filters:
-            branches:
-              ignore: master
+  # build:
+  #   jobs:
+  #     - compile-typescript
+  #     - run-danger:
+  #         filters:
+  #           branches:
+  #             ignore: master
 
-      - run-tests:
-          requires:
-            - compile-typescript
-      - run-eslint:
-          requires:
-            - compile-typescript
-      - run-prettier:
-          requires:
-            - compile-typescript
-      # TODO: Native Android e2e tests
-      # TODO: Slack integration
-      - run-e2e-test-IOS:
-          requires:
-            - compile-typescript
-          filters:
-            branches:
-              only: master
+  #     - run-tests:
+  #         requires:
+  #           - compile-typescript
+  #     - run-eslint:
+  #         requires:
+  #           - compile-typescript
+  #     - run-prettier:
+  #         requires:
+  #           - compile-typescript
+  #     # TODO: Native Android e2e tests
+  #     # TODO: Slack integration
+  #     - run-e2e-test-IOS:
+  #         requires:
+  #           - compile-typescript
+  #         filters:
+  #           branches:
+  #             only: master
 
   # Release workflow triggered only when a new release tag is pushed
   release:
