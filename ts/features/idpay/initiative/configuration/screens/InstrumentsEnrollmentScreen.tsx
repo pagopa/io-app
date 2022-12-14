@@ -22,7 +22,6 @@ import { IDPayConfigurationParamsList } from "../navigation/navigator";
 import { ConfigurationMode } from "../xstate/context";
 import { useConfigurationMachineService } from "../xstate/provider";
 import {
-  isIdleSelector,
   isLoadingSelector,
   selectIsUpsertingInstrument,
   selectorIDPayInstrumentsByIdWallet,
@@ -108,7 +107,6 @@ const InstrumentsEnrollmentScreen = () => {
     send({ type: "BACK" });
   };
 
-  const isIdle = useSelector(configurationMachine, isIdleSelector);
   const isLoading = useSelector(configurationMachine, isLoadingSelector);
 
   const pagoPAInstruments = useSelector(
@@ -129,13 +127,13 @@ const InstrumentsEnrollmentScreen = () => {
     Object.keys(idPayInstrumentsByIdWallet).length > 0;
 
   const sendAddInstrument = (): void => {
-    configurationMachine.send("ADD_INSTRUMENT", {
+    send("ADD_INSTRUMENT", {
       walletId: selectedCardRef.current
     });
   };
 
   const handleContinueButton = () => {
-    configurationMachine.send({
+    send({
       type: "NEXT"
     });
   };
@@ -147,14 +145,14 @@ const InstrumentsEnrollmentScreen = () => {
   };
 
   React.useEffect(() => {
-    if (isIdle && !!initiativeId) {
+    if (initiativeId) {
       send({
         type: "START_CONFIGURATION",
         initiativeId,
         mode: ConfigurationMode.INSTRUMENTS
       });
     }
-  }, [isIdle, send, initiativeId]);
+  }, [send, initiativeId]);
 
   const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
     <Body>
@@ -194,7 +192,10 @@ const InstrumentsEnrollmentScreen = () => {
 
   return (
     <>
-      <BaseScreenComponent goBack={handleBackPress} headerTitle="Iniziativa">
+      <BaseScreenComponent
+        goBack={handleBackPress}
+        headerTitle={I18n.t("idpay.configuration.headerTitle")}
+      >
         <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={1}>
           <View spacer />
           <View style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>

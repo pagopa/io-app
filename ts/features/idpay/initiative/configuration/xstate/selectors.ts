@@ -11,8 +11,6 @@ type IDPayInstrumentsByIdWallet = {
   [idWallet: string]: InstrumentDTO;
 };
 
-const isIdleSelector = (state: StateWithContext) => state.matches("IDLE");
-
 const isLoadingSelector = (state: StateWithContext) =>
   state.hasTag(LOADING_TAG as never);
 
@@ -49,7 +47,6 @@ const selectorIDPayInstrumentsByIdWallet = createSelector(
 );
 
 export {
-  isIdleSelector,
   isLoadingSelector,
   selectIsLoadingInstruments,
   selectIsUpsertingInstrument,

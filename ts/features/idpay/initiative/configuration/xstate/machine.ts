@@ -42,15 +42,15 @@ const createIDPayInitiativeConfigurationMachine = () =>
       },
       id: "ROOT",
       predictableActionArguments: true,
-      initial: "IDLE",
+      initial: "WAITING_START",
       on: {
         QUIT: {
           actions: "exitConfiguration"
         }
       },
       states: {
-        IDLE: {
-          tags: [WAITING_USER_INPUT_TAG],
+        WAITING_START: {
+          tags: [LOADING_TAG],
           on: {
             START_CONFIGURATION: {
               target: "LOADING_INITIATIVE",
@@ -65,13 +65,13 @@ const createIDPayInitiativeConfigurationMachine = () =>
             id: "loadInitiative",
             onDone: [
               {
-                target: "EVALUATING_INITIATIVE",
+                target: "EVALUATING_INITIATIVE_CONFIGURATION",
                 actions: "loadInitiativeSuccess"
               }
             ]
           }
         },
-        EVALUATING_INITIATIVE: {
+        EVALUATING_INITIATIVE_CONFIGURATION: {
           tags: [LOADING_TAG],
           always: [
             {
@@ -106,12 +106,10 @@ const createIDPayInitiativeConfigurationMachine = () =>
               invoke: {
                 src: "loadInstruments",
                 id: "loadInstruments",
-                onDone: [
-                  {
-                    target: "DISPLAYING_INSTRUMENTS",
-                    actions: "loadInstrumentsSuccess"
-                  }
-                ]
+                onDone: {
+                  target: "DISPLAYING_INSTRUMENTS",
+                  actions: "loadInstrumentsSuccess"
+                }
               }
             },
             DISPLAYING_INSTRUMENTS: {
@@ -120,6 +118,18 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 ADD_INSTRUMENT: {
                   target: "ADDING_INSTRUMENT",
                   actions: "selectInstrument"
+                },
+                BACK: [
+                  {
+                    cond: "isInstrumentsOnlyMode",
+                    actions: "exitConfiguration"
+                  },
+                  {
+                    target: "#ROOT.DISPLAYING_INTRO"
+                  }
+                ],
+                NEXT: {
+                  target: "INSTRUMENTS_COMPLETED"
                 }
               }
             },
@@ -128,35 +138,25 @@ const createIDPayInitiativeConfigurationMachine = () =>
               invoke: {
                 src: "addInstrument",
                 id: "addInstrument",
-                onDone: [
-                  {
-                    target: "DISPLAYING_INSTRUMENTS",
-                    actions: "addInstrumentSuccess"
-                  }
-                ]
+                onDone: {
+                  target: "DISPLAYING_INSTRUMENTS",
+                  actions: "addInstrumentSuccess"
+                }
               }
+            },
+            INSTRUMENTS_COMPLETED: {
+              type: "final"
             }
           },
-          on: {
-            NEXT: [
-              {
-                cond: "isInstrumentsOnlyMode",
-                target: "CONFIGURATION_COMPLETED"
-              },
-              {
-                target: "#ROOT.DISPLAYING_CONFIGURATION_SUCCESS"
-              }
-            ],
-            BACK: [
-              {
-                cond: "isInstrumentsOnlyMode",
-                actions: "exitConfiguration"
-              },
-              {
-                target: "#ROOT.DISPLAYING_INTRO"
-              }
-            ]
-          }
+          onDone: [
+            {
+              cond: "isInstrumentsOnlyMode",
+              target: "CONFIGURATION_COMPLETED"
+            },
+            {
+              target: "DISPLAYING_CONFIGURATION_SUCCESS"
+            }
+          ]
         },
         DISPLAYING_CONFIGURATION_SUCCESS: {
           tags: [WAITING_USER_INPUT_TAG],
