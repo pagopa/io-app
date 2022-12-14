@@ -3,7 +3,7 @@ on:
   pull_request
 jobs:
   setup:
-    uses: ./.github/workflows/setup.yml@v1
+    uses: ./.github/workflows/setup.yml
   compile:
     needs: setup
     runs-on: ubuntu-latest
