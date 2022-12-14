@@ -106,7 +106,7 @@ const MessagesHomeScreen = ({
     );
   }, [latestMessageOperation]);
 
-  const { openMessage, bottomSheets } = useMessageOpening();
+  const { openMessage, bottomSheet } = useMessageOpening();
 
   const isScreenReaderEnabled = useScreenReaderEnabled();
 
@@ -179,7 +179,7 @@ const MessagesHomeScreen = ({
           ))
         )}
       {!isScreenReaderEnabled && statusComponent}
-      {bottomSheets}
+      {bottomSheet}
     </TopScreenComponent>
   );
 };
