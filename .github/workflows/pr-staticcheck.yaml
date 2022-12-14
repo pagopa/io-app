@@ -3,7 +3,7 @@ on:
   pull_request
 jobs:
   setup:
-    uses: pagopa/io-app/.github/workflows/setup.yml
+    uses: pagopa/io-app/.github/workflows/setup.yml@v1
   compile:
     needs: setup
     runs-on: ubuntu-latest
