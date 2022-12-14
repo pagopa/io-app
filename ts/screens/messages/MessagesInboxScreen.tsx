@@ -8,7 +8,7 @@ import { UIMessage } from "../../store/reducers/entities/messages/types";
 
 const MessagesInboxScreen = () => {
   const inbox = useIOSelector(allInboxMessagesSelector);
-  const { openMessage } = useMessageOpening();
+  const { openMessage, bottomSheet } = useMessageOpening();
 
   const dispatch = useIODispatch();
 
@@ -26,11 +26,14 @@ const MessagesInboxScreen = () => {
     );
 
   return (
-    <MessagesInbox
-      messages={inbox}
-      navigateToMessageDetail={openMessage}
-      archiveMessages={messages => setArchived(true, messages)}
-    />
+    <>
+      <MessagesInbox
+        messages={inbox}
+        navigateToMessageDetail={openMessage}
+        archiveMessages={messages => setArchived(true, messages)}
+      />
+      {bottomSheet}
+    </>
   );
 };
 

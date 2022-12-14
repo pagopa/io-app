@@ -58,6 +58,6 @@ export const useMessageOpening = () => {
 
   return {
     openMessage,
-    bottomSheets: [pnBottomSheet.bottomSheet]
+    bottomSheet: pnBottomSheet.bottomSheet
   };
 };

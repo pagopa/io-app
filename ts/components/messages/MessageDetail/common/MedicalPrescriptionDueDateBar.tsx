@@ -96,9 +96,6 @@ class MedicalPrescriptionDueDateBar extends React.PureComponent<Props> {
     if (this.isPrescriptionExpired) {
       return { backgroundColor: IOColors.bluegrey };
     }
-    if (this.isPrescriptionExpiring) {
-      return { backgroundColor: customVariables.calendarExpirableColor };
-    }
     return { backgroundColor: IOColors.greyUltraLight };
   }
 
@@ -109,13 +106,6 @@ class MedicalPrescriptionDueDateBar extends React.PureComponent<Props> {
     }
     const date = formatDateAsLocal(dueDate.value, true, true);
     const time = format(dueDate.value, "HH.mm");
-    if (this.isPrescriptionExpiring) {
-      return (
-        <React.Fragment>
-          {I18n.t("messages.cta.prescription.expiringAlert")}
-        </React.Fragment>
-      );
-    }
 
     if (this.isPrescriptionExpired) {
       return (
@@ -126,14 +116,16 @@ class MedicalPrescriptionDueDateBar extends React.PureComponent<Props> {
           <NBText bold={true} white={true}>{` ${date}`}</NBText>
         </React.Fragment>
       );
+    } else {
+      return (
+        <React.Fragment>
+          {I18n.t("messages.cta.prescription.expiringOrValidAlert.block1")}
+          <NBText bold={true} white={false}>{` ${time} `}</NBText>
+          {I18n.t("messages.cta.prescription.expiringOrValidAlert.block2")}
+          <NBText bold={true} white={false}>{` ${date}`}</NBText>
+        </React.Fragment>
+      );
     }
-
-    return (
-      <React.Fragment>
-        {I18n.t("messages.cta.prescription.addMemo")}
-        <NBText bold={true}>{` ${date}`}</NBText>
-      </React.Fragment>
-    );
   }
 
   // The calendar icon is shown if:
