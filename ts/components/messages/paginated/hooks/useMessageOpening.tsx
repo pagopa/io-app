@@ -1,15 +1,15 @@
 import { useNavigation } from "@react-navigation/native";
 import { useCallback } from "react";
-import { UIMessage } from "../../../../store/reducers/entities/messages/types";
-import ROUTES from "../../../../navigation/routes";
 import { TagEnum } from "../../../../../definitions/backend/MessageCategoryPN";
 import { usePnOpenConfirmationBottomSheet } from "../../../../features/pn/components/PnOpenConfirmationBottomSheet";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import { isPnEnabledSelector } from "../../../../store/reducers/backendStatus";
+import ROUTES from "../../../../navigation/routes";
 import { useIOSelector } from "../../../../store/hooks";
+import { isPnEnabledSelector } from "../../../../store/reducers/backendStatus";
+import { UIMessage } from "../../../../store/reducers/entities/messages/types";
 
 export const useMessageOpening = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -58,6 +58,6 @@ export const useMessageOpening = () => {
 
   return {
     openMessage,
-    bottomSheets: [pnBottomSheet.bottomSheet]
+    bottomSheet: pnBottomSheet.bottomSheet
   };
 };
