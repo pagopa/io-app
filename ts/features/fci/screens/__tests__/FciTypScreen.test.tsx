@@ -77,7 +77,7 @@ describe("Test FciTypScreen screen", () => {
     expect(closeButton).toBeEnabled();
     fireEvent.press(closeButton, "onPress");
     expect(store.getState().features.fci.signature).toStrictEqual(
-      pot.some(undefined)
+      pot.some(mockSignatureDetailView)
     );
   });
 });
