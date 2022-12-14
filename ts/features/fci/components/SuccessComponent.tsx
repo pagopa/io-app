@@ -57,7 +57,9 @@ const SuccessComponent = (props: {
       dispatch(fciShowSignedDocumentsStartRequest());
       return null;
     default:
-      return <GenericErrorComponent />;
+      return (
+        <GenericErrorComponent onPress={() => dispatch(fciEndRequest())} />
+      );
   }
 };
 

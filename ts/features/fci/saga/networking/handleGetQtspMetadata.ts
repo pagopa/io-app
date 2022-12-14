@@ -35,6 +35,6 @@ export function* handleGetQtspMetadata(
       `response status ${getQtspClausesMetadataResponse.right.status}`
     );
   } catch (e) {
-    return fciLoadQtspClauses.failure(getNetworkError(e));
+    yield* put(fciLoadQtspClauses.failure(getNetworkError(e)));
   }
 }

@@ -1,4 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { SagaIterator } from "redux-saga";
 import { getType, ActionType } from "typesafe-actions";
 import RNFS from "react-native-fs";
@@ -124,13 +125,19 @@ function* watchFciQtspClausesSaga(): SagaIterator {
   );
 
   if (pot.isSome(potQtspClauses)) {
-    const documentUrl = potQtspClauses.value.document_url;
+    const documentUrl = potQtspClauses.value.document_url as NonEmptyString;
     yield* put(
       fciLoadQtspFilledDocument.request({ document_url: documentUrl })
     );
+  } else {
+    yield* call(
+      NavigationService.dispatchNavigationAction,
+      CommonActions.navigate(ROUTES.MAIN, {
+        screen: ROUTES.WORKUNIT_GENERIC_FAILURE
+      })
+    );
   }
 }
-
 /**
  * Handle the FCI start requests saga
  */
@@ -193,11 +200,9 @@ function* watchFciSigningRequestSaga(): SagaIterator {
     if (pot.isSome(potQtspClauses) && pot.isSome(potSignatureRequest)) {
       const createSignaturePayload: CreateSignatureBody = {
         signature_request_id: potSignatureRequest.value.id,
-        public_key_digest: "",
-        document_signatures: potSignatureRequest.value.documents.map(
+        documents_to_sign: potSignatureRequest.value.documents.map(
           document => ({
             document_id: document.id,
-            signature: "",
             signature_fields: pipe(
               document.metadata.signature_fields,
               O.fromNullable,
@@ -207,9 +212,8 @@ function* watchFciSigningRequestSaga(): SagaIterator {
         ),
         qtsp_clauses: {
           accepted_clauses: potQtspClauses.value.clauses,
-          filled_document_url: qtspFilledDocumentUrl,
-          signature: "",
-          nonce: ""
+          filled_document_url: qtspFilledDocumentUrl as NonEmptyString,
+          nonce: "" as NonEmptyString
         }
       };
 

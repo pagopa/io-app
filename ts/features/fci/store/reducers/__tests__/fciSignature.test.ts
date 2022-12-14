@@ -5,6 +5,7 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import { appReducer } from "../../../../../store/reducers";
 import { fciSigningRequest, fciClearStateRequest } from "../../actions";
 import { mockCreateSignatureBody } from "../../../types/__mocks__/CreateSignatureBody.mock";
+import { mockSignatureDetailView } from "../../../types/__mocks__/SignatureDetailView.mock";
 
 const genericError = getTimeoutError();
 
@@ -24,9 +25,9 @@ describe("FciSignatureReducer", () => {
   it("The signature should be pot.some if fciSigningRequest.success is dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
-    store.dispatch(fciSigningRequest.success());
+    store.dispatch(fciSigningRequest.success(mockSignatureDetailView));
     expect(store.getState().features.fci.signature).toStrictEqual(
-      pot.some(undefined)
+      pot.some(mockSignatureDetailView)
     );
   });
   it("The signature should be pot.noneError if the fciSigningRequest.failure is dispatched", () => {

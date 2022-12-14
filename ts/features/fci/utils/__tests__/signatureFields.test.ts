@@ -1,4 +1,4 @@
-import { ClausesTypeEnum } from "../../../../../definitions/fci/ClausesType";
+import { TypeEnum as ClausesTypeEnum } from "../../../../../definitions/fci/Clause";
 import { SignatureField } from "../../../../../definitions/fci/SignatureField";
 import {
   clausesByType,
@@ -12,28 +12,28 @@ const signatureFields: ReadonlyArray<SignatureField> = [
       title: "clause title 1",
       type: ClausesTypeEnum.REQUIRED
     },
-    attrs: {}
+    attrs: {} as SignatureField["attrs"]
   },
   {
     clause: {
       title: "clause title 2",
       type: ClausesTypeEnum.UNFAIR
     },
-    attrs: {}
+    attrs: {} as SignatureField["attrs"]
   },
   {
     clause: {
       title: "clause title 3",
       type: ClausesTypeEnum.OPTIONAL
     },
-    attrs: {}
+    attrs: {} as SignatureField["attrs"]
   },
   {
     clause: {
       title: "clause title 4",
       type: ClausesTypeEnum.OPTIONAL
     },
-    attrs: {}
+    attrs: {} as SignatureField["attrs"]
   }
 ];
 

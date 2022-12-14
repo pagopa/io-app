@@ -4,10 +4,13 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { fciLoadQtspClauses, fciClearStateRequest } from "../actions";
 import { Action } from "../../../../store/actions/types";
 import { NetworkError } from "../../../../utils/errors";
-import { QtspClausesMetadata } from "../../../../../definitions/fci/QtspClausesMetadata";
+import { QtspClausesMetadataDetailView } from "../../../../../definitions/fci/QtspClausesMetadataDetailView";
 import { GlobalState } from "../../../../store/reducers/types";
 
-export type FciQtspClausesState = pot.Pot<QtspClausesMetadata, NetworkError>;
+export type FciQtspClausesState = pot.Pot<
+  QtspClausesMetadataDetailView,
+  NetworkError
+>;
 
 const emptyState: FciQtspClausesState = pot.none;
 
