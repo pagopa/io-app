@@ -15,7 +15,7 @@ import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
-import TypedI18n from "../../../../../i18n";
+import I18n from "../../../../../i18n";
 import {
   AppParamsList,
   IOStackNavigationProp
@@ -49,13 +49,13 @@ const InitiativeNotConfiguredComponent = () => (
     <EmptyInitiativeSvg width={130} height={130} />
     <View spacer />
     <H3>
-      {TypedI18n.t(
+      {I18n.t(
         "idpay.initiative.details.initiativeDetailsScreen.notConfigured.header"
       )}
     </H3>
     <View spacer />
     <Text style={styles.textCenter}>
-      {TypedI18n.t(
+      {I18n.t(
         "idpay.initiative.details.initiativeDetailsScreen.notConfigured.footer",
         { initiative: "18 app" }
       )}
@@ -158,7 +158,7 @@ export const InitiativeDetailsScreen = () => {
               block: true,
               primary: true,
               onPress: navigateToConfiguration,
-              title: TypedI18n.t(
+              title: I18n.t(
                 "idpay.initiative.details.initiativeDetailsScreen.configured.startConfigurationCTA"
               )
             }}
