@@ -129,9 +129,15 @@ function* watchFciQtspClausesSaga(): SagaIterator {
     yield* put(
       fciLoadQtspFilledDocument.request({ document_url: documentUrl })
     );
+  } else {
+    yield* call(
+      NavigationService.dispatchNavigationAction,
+      CommonActions.navigate(ROUTES.MAIN, {
+        screen: ROUTES.WORKUNIT_GENERIC_FAILURE
+      })
+    );
   }
 }
-
 /**
  * Handle the FCI start requests saga
  */

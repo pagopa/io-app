@@ -52,7 +52,9 @@ const LinkedText = (props: Props) => {
       return (
         <Link
           key={index}
-          onPress={() => onPress(url !== "(@DOCUMENT_URL)" ? props.url : url)}
+          onPress={() =>
+            onPress(url === "(@DOCUMENT_URL)" && props.url ? props.url : url)
+          }
         >
           {textToBeLinked}
         </Link>

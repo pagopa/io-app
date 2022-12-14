@@ -30,6 +30,6 @@ export function* handleCreateSignature(
 
     throw Error(`response status ${postSignatureResponse.right.status}`);
   } catch (e) {
-    return fciSigningRequest.failure(getNetworkError(e));
+    yield* put(fciSigningRequest.failure(getNetworkError(e)));
   }
 }

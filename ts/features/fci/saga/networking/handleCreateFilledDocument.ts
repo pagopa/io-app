@@ -34,6 +34,6 @@ export function* handleCreateFilledDocument(
 
     throw Error(`response status ${postQtspFilledBodyResponse.right.status}`);
   } catch (e) {
-    return fciLoadQtspFilledDocument.failure(getNetworkError(e));
+    yield* put(fciLoadQtspFilledDocument.failure(getNetworkError(e)));
   }
 }

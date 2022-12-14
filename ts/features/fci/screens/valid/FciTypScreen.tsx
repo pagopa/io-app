@@ -59,11 +59,11 @@ const FciTypScreen = () => {
     () => <LoadingComponent />,
     () => <LoadingComponent />,
     () => <LoadingComponent />,
-    _ => <GenericErrorComponent />,
+    _ => <GenericErrorComponent onPress={() => dispatch(fciEndRequest())} />,
     _ => <SuccessComponent />,
     () => <LoadingComponent />,
     () => <LoadingComponent />,
-    _ => <GenericErrorComponent />
+    _ => <GenericErrorComponent onPress={() => dispatch(fciEndRequest())} />
   );
 };
 

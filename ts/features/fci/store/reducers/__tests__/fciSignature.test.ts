@@ -27,7 +27,7 @@ describe("FciSignatureReducer", () => {
     const store = createStore(appReducer, globalState as any);
     store.dispatch(fciSigningRequest.success(mockSignatureDetailView));
     expect(store.getState().features.fci.signature).toStrictEqual(
-      pot.some(undefined)
+      pot.some(mockSignatureDetailView)
     );
   });
   it("The signature should be pot.noneError if the fciSigningRequest.failure is dispatched", () => {
