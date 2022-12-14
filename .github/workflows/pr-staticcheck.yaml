@@ -27,20 +27,24 @@ jobs:
   compile:
     runs-on: ubuntu-latest
     steps:
+      - uses: build
       - id: compile-checks
         run: yarn tsc:noemit
   prettier-check:
     runs-on: ubuntu-latest
     steps:
+      - uses: build
       - id: prettier-checks
         run: yarn prettier:check
   lint:
     runs-on: ubuntu-latest
     steps:
+      - uses: build
       - id: lint
         run: yarn lint
   test:
     runs-on: ubuntu-latest
     steps:
+      - uses: build
       - id: jest-runner
         run: yarn test:ci
