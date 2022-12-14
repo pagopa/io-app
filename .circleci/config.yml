@@ -511,6 +511,9 @@ jobs:
 workflows:
   version: 2
   build:
+    filters:
+      branches:
+        ignore: migrate-ci-to-githubactions
     jobs:
       - compile-typescript
       - run-danger:

@@ -24,11 +24,23 @@ jobs:
         run: yarn install --frozen-lockfile
       - id: generate-api-client
         run: yarn generate
+  compile:
+    runs-on: ubuntu-latest
+    steps:
       - id: compile-checks
         run: yarn tsc:noemit
+  prettier-check:
+    runs-on: ubuntu-latest
+    steps:
       - id: prettier-checks
         run: yarn prettier:check
+  lint:
+    runs-on: ubuntu-latest
+    steps:
       - id: lint
         run: yarn lint
+  test:
+    runs-on: ubuntu-latest
+    steps:
       - id: jest-runner
         run: yarn test:ci
