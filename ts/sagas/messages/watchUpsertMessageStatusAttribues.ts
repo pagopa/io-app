@@ -1,6 +1,5 @@
 import { call, put, takeEvery } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
-
 import { MessageStatusArchivingChange } from "../../../definitions/backend/MessageStatusArchivingChange";
 import { MessageStatusBulkChange } from "../../../definitions/backend/MessageStatusBulkChange";
 import { MessageStatusChange } from "../../../definitions/backend/MessageStatusChange";
