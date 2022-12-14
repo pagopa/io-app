@@ -162,6 +162,7 @@ const FciDocumentsScreen = () => {
 
       await PDFDocument.load(pdfFromBase64(existingPdfBytes)).then(res => {
         const page = attrs.page;
+        // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
         setSignaturePage(page.valueOf() + 1);
         // The signature box is drawn using the coordinates of the signature field.
         res.getPage(page).drawRectangle({
