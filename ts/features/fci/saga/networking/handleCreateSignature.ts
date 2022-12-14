@@ -16,14 +16,14 @@ export function* handleCreateSignature(
 ): SagaIterator {
   try {
     const postSignatureResponse = yield* call(postSignature, {
-      body: action.payload
+      signatureToCreate: action.payload
     });
 
     if (E.isLeft(postSignatureResponse)) {
       throw Error(readablePrivacyReport(postSignatureResponse.left));
     }
 
-    if (postSignatureResponse.right.status === 201) {
+    if (postSignatureResponse.right.status === 200) {
       yield* put(fciSigningRequest.success(postSignatureResponse.right.value));
       return;
     }

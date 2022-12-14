@@ -193,7 +193,7 @@ export const DocumentViewer = (props: Props): React.ReactElement => {
         dispatch(fciDownloadPreviewClear({ path: fciDownloadPath }))
       }
       image={genericError}
-      testID={"WaitQtspSignatureRequestTestID"}
+      testID={"DocumentViewerErrorTestID"}
     />
   );
 };
