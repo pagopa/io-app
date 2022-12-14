@@ -224,6 +224,19 @@ export const ButtonsShowroom = () => (
       </ButtonDefaultOpacity>
     </ComponentViewerBox>
 
+    <ComponentViewerBox name="NativeBase Button (Cancel) · Custom style, not managed by props">
+      <ButtonDefaultOpacity
+        bordered={true}
+        block={true}
+        style={{ borderColor: IOColors.red }}
+        onPress={() => {
+          alert("Action triggered");
+        }}
+      >
+        <Label color={"red"}>Cancel Outline Button (Block)</Label>
+      </ButtonDefaultOpacity>
+    </ComponentViewerBox>
+
     <ComponentViewerBox name="NativeBase Button (Cancel)">
       <ButtonDefaultOpacity
         alert={true}
