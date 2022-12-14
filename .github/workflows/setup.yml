@@ -1,6 +1,6 @@
 name: setup
 on:
-  workflow_call
+  workflow_call:
 jobs:
   setup:
     runs-on: ubuntu-latest

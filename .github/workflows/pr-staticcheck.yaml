@@ -3,26 +3,26 @@ on:
   pull_request
 jobs:
   compile:
+    uses: pagopa/io-app/.github/workflows/setup.yml@setup
     runs-on: ubuntu-latest
     steps:
-      - uses: pagopa/io-app/.github/workflows/setup.yml@setup
       - id: compile-checks
         run: yarn tsc:noemit
   prettier-check:
+    uses: pagopa/io-app/.github/workflows/setup.yml@setup
     runs-on: ubuntu-latest
     steps:
-      - uses: pagopa/io-app/.github/workflows/setup.yml@setup
       - id: prettier-checks
         run: yarn prettier:check
   lint:
+    uses: pagopa/io-app/.github/workflows/setup.yml@setup
     runs-on: ubuntu-latest
     steps:
-      - uses: pagopa/io-app/.github/workflows/setup.yml@setup
       - id: lint
         run: yarn lint
   test:
+    uses: pagopa/io-app/.github/workflows/setup.yml@setup
     runs-on: ubuntu-latest
     steps:
-      - uses: pagopa/io-app/.github/workflows/setup.yml@setup
       - id: jest-runner
         run: yarn test:ci
