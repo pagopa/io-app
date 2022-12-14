@@ -22,5 +22,13 @@ jobs:
             ${{ runner.os }}-yarn-
       - id: install-packages
         run: yarn install --frozen-lockfile
-
-        
+      - id: generate-api-client
+        run: yarn generate
+      - id: compile-checks
+        run: yarn tsc:noemit
+      - id: prettier-checks
+        run: yarn prettier:check
+      - id: lint
+        run: yarn lint
+      - id: jest-runner
+        run: yarn test:ci
