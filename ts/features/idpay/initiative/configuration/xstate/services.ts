@@ -44,6 +44,20 @@ const createServicesImplementation = (
     return data;
   };
 
+  const loadIbans = async (context: Context) => {
+    if (context.initiativeId === undefined) {
+      return Promise.reject("initiativeId is undefined");
+    }
+    return Promise.resolve([]);
+  };
+
+  const addIban = async (context: Context) => {
+    if (context.initiativeId === undefined) {
+      return Promise.reject("initiativeId is undefined");
+    }
+    return Promise.resolve(true);
+  };
+
   const loadPagoPAInstruments = async () => {
     const pagoPAResponse = await pmSessionManager.withRefresh(
       paymentManagerClient.getWalletsV2
@@ -134,7 +148,7 @@ const createServicesImplementation = (
     return loadIDPayInstruments(context.initiativeId);
   };
 
-  return { loadInitiative, loadInstruments, addInstrument };
+  return { loadInitiative, loadIbans, addIban, loadInstruments, addInstrument };
 };
 
 export { createServicesImplementation };

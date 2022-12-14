@@ -23,6 +23,12 @@ const createActionsImplementation = (
     });
   };
 
+  const navigateToIbanAssociationScreen = () => {
+    navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
+      screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ASSOCIATION
+    });
+  };
+
   const navigateToInstrumentsEnrollmentScreen = () => {
     navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
       screen:
@@ -48,6 +54,7 @@ const createActionsImplementation = (
 
   return {
     navigateToConfigurationEntry,
+    navigateToIbanAssociationScreen,
     navigateToInstrumentsEnrollmentScreen,
     navigateToConfigurationSuccessScreen,
     navigateToInitiativeDetailScreen
