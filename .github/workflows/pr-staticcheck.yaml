@@ -2,26 +2,28 @@ name: pr-staticcheck
 on:
   pull_request
 jobs:
-  compile:
+  setup:
     uses: pagopa/io-app/.github/workflows/setup.yml@setup
+  compile:
+    needs: setup
     runs-on: ubuntu-latest
     steps:
       - id: compile-checks
         run: yarn tsc:noemit
   prettier-check:
-    uses: pagopa/io-app/.github/workflows/setup.yml@setup
+    needs: compile
     runs-on: ubuntu-latest
     steps:
       - id: prettier-checks
         run: yarn prettier:check
   lint:
-    uses: pagopa/io-app/.github/workflows/setup.yml@setup
+    needs: compile
     runs-on: ubuntu-latest
     steps:
       - id: lint
         run: yarn lint
   test:
-    uses: pagopa/io-app/.github/workflows/setup.yml@setup
+    needs: compile
     runs-on: ubuntu-latest
     steps:
       - id: jest-runner
