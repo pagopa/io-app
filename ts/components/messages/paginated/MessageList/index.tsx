@@ -162,11 +162,11 @@ const MessageList = ({
     O.Option<number>
   >(O.none);
 
-  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [isRefreshFromUser, setIsRefreshFromUser] = useState(false);
 
   useEffect(() => {
     if (!isLoadingPrevious && !isReloadingAll) {
-      setIsRefreshing(false);
+      setIsRefreshFromUser(false);
     }
   }, [isLoadingPrevious, isReloadingAll]);
 
@@ -190,8 +190,9 @@ const MessageList = ({
     }
   }, [error]);
 
+  const hasMessages = messages.length > 0;
   const scrollTo = (index: number, animated: boolean = false) => {
-    if (flatListRef.current && messages.length > 0) {
+    if (flatListRef.current && hasMessages) {
       flatListRef.current.scrollToIndex({ animated, index });
     }
   };
@@ -222,25 +223,33 @@ const MessageList = ({
     }
   };
 
+  const isLoadingPreviousOrAll = isLoadingPrevious || isReloadingAll;
+  const shouldShowFooterLoader =
+    isLoadingMore ||
+    (!hasMessages && !isRefreshFromUser && isLoadingPreviousOrAll);
+  const shouldShowTopRefreshControl =
+    isRefreshFromUser || (hasMessages && isLoadingPreviousOrAll);
+  const isLoadingOrRefreshingMessageList =
+    isLoadingMore || isLoadingPreviousOrAll;
+
   const refreshControl = shouldUseLoad ? (
     <RefreshControl
-      refreshing={isRefreshing}
+      refreshing={shouldShowTopRefreshControl}
       onRefresh={() => {
-        if (isRefreshing) {
+        if (isLoadingOrRefreshingMessageList) {
           return;
         }
-
-        setIsRefreshing(true);
+        setIsRefreshFromUser(true);
         reloadAll();
       }}
     />
   ) : undefined;
 
   const renderListFooter = () => {
-    if (isLoadingMore || (isReloadingAll && !didLoad)) {
+    if (shouldShowFooterLoader) {
       return <Loader />;
     }
-    if (messages.length > 0 && !nextCursor) {
+    if (hasMessages && !nextCursor) {
       return <EdgeBorderComponent />;
     }
     return <View style={styles.bottomSpacer} />;
@@ -260,7 +269,7 @@ const MessageList = ({
         keyExtractor={(message: UIMessage): string => message.id}
         ref={flatListRef}
         refreshControl={refreshControl}
-        refreshing={isRefreshing}
+        refreshing={isLoadingOrRefreshingMessageList}
         renderItem={renderItem({
           hasPaidBadge,
           onLongPress,
