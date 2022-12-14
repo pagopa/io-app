@@ -10,6 +10,7 @@ import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import { fciSigningRequest } from "../../store/actions";
 import { mockCreateSignatureBody } from "../../types/__mocks__/CreateSignatureBody.mock";
 import FciTypScreen from "../valid/FciTypScreen";
+import { mockSignatureDetailView } from "../../types/__mocks__/SignatureDetailView.mock";
 
 const mockedNavigation = jest.fn();
 
@@ -56,7 +57,7 @@ describe("Test FciTypScreen screen", () => {
       appReducer,
       globalState as any
     );
-    store.dispatch(fciSigningRequest.success());
+    store.dispatch(fciSigningRequest.success(mockSignatureDetailView));
     const component = renderComponent(store);
     expect(component).toBeTruthy();
     expect(component.queryByTestId("FciTypSuccessTestID")).toBeTruthy();
@@ -67,7 +68,7 @@ describe("Test FciTypScreen screen", () => {
       appReducer,
       globalState as any
     );
-    store.dispatch(fciSigningRequest.success());
+    store.dispatch(fciSigningRequest.success(mockSignatureDetailView));
     const component = renderComponent(store);
     expect(component).toBeTruthy();
     expect(component.queryByTestId("FciTypSuccessTestID")).toBeTruthy();
