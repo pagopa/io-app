@@ -404,5 +404,25 @@ export const ButtonsShowroom = () => (
     <ComponentViewerBox name="CopyButtonComponent">
       <CopyButtonComponent textToCopy={"Copied text by CopyButton"} />
     </ComponentViewerBox>
+
+    {/* 
+      The following components are using the legacy `IconFont`
+      component because replacing assets isn't the aim of
+      the buttons' inventory.
+      Future Button components, preferrably not based
+      on NativeBase, must use the new <Icon> component.
+    */}
+
+    <ComponentViewerBox name="Login buttons">
+      <ButtonDefaultOpacity block={true} primary={true}>
+        <IconFont name={"io-profilo"} color={IOColors.white} />
+        <NBText>Entra con SPID</NBText>
+      </ButtonDefaultOpacity>
+      <NBView spacer={true} />
+      <ButtonDefaultOpacity block={true} primary={true}>
+        <IconFont name={"io-cie"} color={IOColors.white} />
+        <NBText>Entra con CIE</NBText>
+      </ButtonDefaultOpacity>
+    </ComponentViewerBox>
   </ShowroomSection>
 );
