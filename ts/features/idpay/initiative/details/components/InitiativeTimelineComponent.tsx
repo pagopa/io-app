@@ -32,7 +32,6 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   listItem: {
-    flex: 1,
     justifyContent: "space-between"
   }
 });
@@ -51,7 +50,7 @@ const ConfiguredInitiativeData = ({
   const timelineList = pot.getOrElse(
     pot.map(timelineFromSelector, timeline => timeline.operationList),
     [
-      // placeholder, will be removed once it can be tested
+      // // placeholder, will be removed once it can be tested
       // {
       //   amount: -10,
       //   brandLogo: "",
@@ -143,7 +142,7 @@ const TimelineRenderer = (timeline: TimelineDTO["operationList"]) => (
         )}
       </Body>
     </View>
-    <View spacer />
+    <View spacer small />
     <List>
       {timeline.map((item, index) => (
         <CustomListItem transaction={item} key={index} />

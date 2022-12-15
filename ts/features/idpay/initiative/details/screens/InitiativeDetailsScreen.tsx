@@ -184,4 +184,4 @@ export const InitiativeDetailsScreen = () => {
       </LoadingSpinnerOverlay>
     </BaseScreenComponent>
   );
-};
+};;

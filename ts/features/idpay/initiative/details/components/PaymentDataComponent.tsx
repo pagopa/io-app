@@ -45,7 +45,7 @@ const IbanConfigured = (iban: IbanType) => {
 };
 
 const InstrumentConfigured = (nInstr: number) => {
-  if (nInstr === undefined) {
+  if (nInstr === 0) {
     return (
       <ListItem>
         <Text>ICON</Text>
