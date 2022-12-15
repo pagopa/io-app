@@ -1,5 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { constNull } from "fp-ts/lib/function";
+import { useNavigation } from "@react-navigation/native";
 import { List } from "native-base";
 import * as React from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
@@ -68,6 +68,7 @@ const FciDataSharingScreen = (): React.ReactElement => {
   const profile = useIOSelector(profileSelector);
   const name = useIOSelector(profileNameSelector);
   const fiscalCode = useIOSelector(profileFiscalCodeSelector);
+  const navigation = useNavigation();
   const familyName = pot.getOrElse(
     pot.map(profile, p => capitalize(p.family_name)),
     undefined
@@ -158,7 +159,7 @@ const FciDataSharingScreen = (): React.ReactElement => {
               I18n.t("features.fci.shareDataScreen.cancel")
             )}
             rightButton={confirmButtonProps(
-              () => constNull,
+              () => navigation.navigate("FCI_QTSP_TOS"),
               `${I18n.t("features.fci.shareDataScreen.confirm")}`
             )}
           />

@@ -1701,11 +1701,12 @@ messages:
         block1: Scaduto il 
         block2: alle ore 
     prescription:
-      addMemo: Questa ricetta scade il
-      expiringAlert: Questa ricetta scade oggi
+      expiringOrValidAlert: 
+        block1: Scade il 
+        block2: alle
       expiredAlert:
-        block1: La ricetta è scaduta alle ore
-        block2: del
+        block1: Scaduta il 
+        block2: alle
 
     pay: Paga € {{amount}}
     onlyPay: Paga
@@ -1760,7 +1761,6 @@ messages:
     iup: Identificativo Unico Prenotazione
     patient_fiscal_code: Codice Fiscale dell'assistito
     prescriber_fiscal_code: Codice fiscale del medico
-    deadline: Questa ricetta scade il {{date}}
     barcodes: Codici a barre
     nationalService: Servizio Sanitario Nazionale
     note: "Rilasciato ai sensi dell'art.11, comma 16 del DL 31 mag 2010, n.78 e dell’art.1, comma 4 del DM 2 nov 2011"
@@ -3226,6 +3226,9 @@ features:
       name: "Nome"
       familyName: "Cognome"
       birthDate: "Data di nascita"
+    qtspTos:
+      title: "Dai il tuo consenso?"
+      show: "Visualizza"
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina

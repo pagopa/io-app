@@ -3,9 +3,10 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { Text as NBText, View } from "native-base";
 import React from "react";
-import { ActivityIndicator, StyleSheet } from "react-native";
+import { ActivityIndicator, SafeAreaView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
 import WorkunitGenericFailure from "../../../components/error/WorkunitGenericFailure";
 import MessageDetailComponent from "../../../components/messages/paginated/MessageDetail";
 
@@ -133,14 +134,16 @@ const MessageDetailScreen = ({
           contextualHelpMarkdown={contextualHelpMarkdown}
           faqCategories={["messages_detail"]}
         >
-          <MessageDetailComponent
-            hasPaidBadge={hasPaidBadge}
-            message={message}
-            messageDetails={details}
-            service={service}
-            serviceMetadata={maybeServiceMetadata}
-            onServiceLinkPress={onServiceLinkPressHandler}
-          />
+          <SafeAreaView style={IOStyles.flex}>
+            <MessageDetailComponent
+              hasPaidBadge={hasPaidBadge}
+              message={message}
+              messageDetails={details}
+              service={service}
+              serviceMetadata={maybeServiceMetadata}
+              onServiceLinkPress={onServiceLinkPressHandler}
+            />
+          </SafeAreaView>
         </BaseScreenComponent>
       ),
       () => renderLoadingState(),
