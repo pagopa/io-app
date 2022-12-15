@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
 });
 
 export const getFileNameFromUrl = (url: string) =>
-  url.substring(url.lastIndexOf("/") + 1) + ".pdf";
+  url.substring(url.lastIndexOf("/") + 1).split("?")[0] + ".pdf";
 
 const renderFooter = (url: string, filePath: string) =>
   isIos ? (
