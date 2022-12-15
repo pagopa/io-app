@@ -6,7 +6,7 @@ import { WithTestID } from "../../../types/WithTestID";
 
 type Props = WithTestID<{
   text: string;
-  url: string;
+  replacementUrl: string;
   onPress: (holder: string) => void;
 }>;
 
@@ -48,12 +48,12 @@ const LinkedText = (props: Props) => {
       const splitted = matched.split(matchMarkdownLink);
       const textToBeLinked = splitted[1];
       const url = splitted[2];
-      // TODO: add support for other TAG links
+      // TODO: add support for other TAG links https://pagopa.atlassian.net/browse/SFEQS-1230
       return (
         <Link
           key={index}
           onPress={() =>
-            onPress(url === "(@DOCUMENT_URL)" && props.url ? props.url : url)
+            onPress(url !== "(@DOCUMENT_URL)" ? props.replacementUrl : url)
           }
         >
           {textToBeLinked}

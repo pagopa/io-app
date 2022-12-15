@@ -4,7 +4,7 @@ import LinkedText from "../LinkedText";
 
 type Props = {
   text: string;
-  url: string;
+  replacementUrl: string;
   onPress: (holder: string) => void;
 };
 
@@ -19,7 +19,7 @@ describe("Test LinkedText component", () => {
   it("should render a LinkedText component with props correctly", () => {
     const props = {
       text: "Clause title 1",
-      url: "https://fakeUrl.com",
+      replacementUrl: "https://fakeUrl.com",
       onPress: jest.fn()
     };
     const component = renderComponent({ ...props });
@@ -29,7 +29,7 @@ describe("Test LinkedText component", () => {
   it("should render a LinkedText component correctly with one link", () => {
     const props = {
       text: MOCK_TEXT_ONE_LINK,
-      url: "https://fakeUrl.com",
+      replacementUrl: "https://fakeUrl.com",
       onPress: jest.fn()
     };
     const component = renderComponent({ ...props });
@@ -39,7 +39,7 @@ describe("Test LinkedText component", () => {
   it("should render a LinkedText component correctly with text and multiple link", () => {
     const props = {
       text: MOCK_TEXT_MULTIPLE_LINK,
-      url: "https://fakeUrl.com",
+      replacementUrl: "https://fakeUrl.com",
       onPress: jest.fn()
     };
     const component = renderComponent({ ...props });
@@ -51,7 +51,7 @@ describe("Test LinkedText component", () => {
     const onPressDetail = jest.fn();
     const props = {
       text: MOCK_TEXT_CUSTOM_LINK,
-      url: "https://fakeUrl.com",
+      replacementUrl: "https://fakeUrl.com",
       onPress: onPressDetail
     };
     const component = renderComponent({ ...props });

@@ -11,7 +11,7 @@ import LinkedText from "./LinkedText";
 
 type Props = {
   clause: QtspClause;
-  value?: boolean;
+  checked?: boolean;
   onChange: (_: boolean) => void;
   onLinkPress: (url: string) => void;
 };
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
 });
 
 const QtspClauseListItem = (props: Props) => {
-  const [checked, setChecked] = React.useState(props.value || false);
+  const [checked, setChecked] = React.useState(props.checked || false);
   const qtspFilledDocumentUrl = useSelector(fciQtspFilledDocumentUrlSelector);
   const onChange = (value: boolean) => {
     setChecked(value);
@@ -42,7 +42,7 @@ const QtspClauseListItem = (props: Props) => {
         {
           <LinkedText
             text={props.clause.text}
-            url={qtspFilledDocumentUrl}
+            replacementUrl={qtspFilledDocumentUrl}
             onPress={onPressLinkedText}
           />
         }

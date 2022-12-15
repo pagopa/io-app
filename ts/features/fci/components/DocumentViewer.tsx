@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { StyleSheet } from "react-native";
-import { constNull, pipe } from "fp-ts/lib/function";
+import { constNull } from "fp-ts/lib/function";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import Pdf from "react-native-pdf";
@@ -35,18 +35,11 @@ const styles = StyleSheet.create({
 export const getFileNameFromUrl = (url: string) =>
   url.substring(url.lastIndexOf("/") + 1) + ".pdf";
 
-const renderFooter = (
-  url: string,
-  filePath: string,
-  onShare?: () => void,
-  onOpen?: () => void,
-  onDownload?: () => void
-) =>
+const renderFooter = (url: string, filePath: string) =>
   isIos ? (
     <FooterWithButtons
       type={"SingleButton"}
       leftButton={confirmButtonProps(() => {
-        onShare?.();
         ReactNativeBlobUtil.ios.presentOptionsMenu(filePath);
       }, I18n.t("features.mvl.details.attachments.pdfPreview.singleBtn"))}
     />
@@ -57,7 +50,6 @@ const renderFooter = (
         bordered: true,
         primary: false,
         onPress: () => {
-          onShare?.();
           share(`${url}`, undefined, false)().catch(_ => {
             showToast(
               I18n.t(
@@ -72,7 +64,6 @@ const renderFooter = (
         bordered: true,
         primary: false,
         onPress: () => {
-          onDownload?.();
           ReactNativeBlobUtil.MediaCollection.copyToMediaStore(
             {
               name: getFileNameFromUrl(url)
@@ -102,7 +93,6 @@ const renderFooter = (
         title: I18n.t("features.mvl.details.attachments.pdfPreview.save")
       }}
       rightButton={confirmButtonProps(() => {
-        onOpen?.();
         ReactNativeBlobUtil.android
           .actionViewIntent(url, "application/pdf")
           .catch(_ => {
@@ -120,12 +110,16 @@ type Props = {
   documentUrl: string;
   onLoadComplete?: (totalPages: number) => void;
   onPageChanged?: (page: number) => void;
-  onError?: () => void;
-  onShare?: () => void;
-  onOpen?: () => void;
-  onDownload?: () => void;
 };
 
+const LoadingComponent = () => (
+  <LoadingErrorComponent
+    isLoading={true}
+    loadingCaption={""}
+    onRetry={constNull}
+    testID={"FciRouterLoadingScreenTestID"}
+  />
+);
 export const DocumentViewer = (props: Props): React.ReactElement => {
   const [isError, setIsError] = useState(false);
   const documentUrl = props.documentUrl;
@@ -137,22 +131,13 @@ export const DocumentViewer = (props: Props): React.ReactElement => {
     dispatch(fciDownloadPreview.request({ url: documentUrl }));
   }, [documentUrl, dispatch]);
 
-  const LoadingComponent = () => (
-    <LoadingErrorComponent
-      isLoading={true}
-      loadingCaption={""}
-      onRetry={constNull}
-      testID={"FciRouterLoadingScreenTestID"}
-    />
-  );
-
   if (pot.isLoading(fciDownloadSelector)) {
     return <LoadingComponent />;
   }
 
   return !pot.isError(fciDownloadSelector) ? (
     <>
-      {pipe(fciDownloadPath, S.isEmpty) === false && (
+      {S.isEmpty(fciDownloadPath) === false && (
         <>
           <Pdf
             source={{ uri: fciDownloadPath, cache: true }}
@@ -160,17 +145,11 @@ export const DocumentViewer = (props: Props): React.ReactElement => {
             onLoadComplete={props.onLoadComplete}
             onPageChanged={props.onPageChanged}
             onError={_ => {
-              props.onError?.();
+              // props.onError?.();
               setIsError(true);
             }}
           />
-          {renderFooter(
-            documentUrl,
-            fciDownloadPath,
-            props.onShare,
-            props.onOpen,
-            props.onDownload
-          )}
+          {renderFooter(documentUrl, fciDownloadPath)}
         </>
       )}
       {isError && (
