@@ -223,6 +223,31 @@ const MessageList = ({
     }
   };
 
+  // This component has two different spinners: one on top and one
+  // on bottom. The former is the standard refresh control while the
+  // latter is set as a footer to the list, but only when it has to
+  // be shown.
+  // There are three data events that require one of them to be shown:
+  // the loading of the next message page (older messages), the
+  // loading of the previos message page (newer messager) or a global
+  // reloading of all messages.
+  // While next messages are only loaded when the end of the list has
+  // been reached by scrolling (and there are more messages to load),
+  // the other two loadings are triggered by using the refresh
+  // gesture or when the refresh interval is hit or when a push
+  // notification is received and selected with the app in foreground
+  // while showing this list or, lastly, at the first showing of this
+  // component.
+  // In order not to show both spinners, the footer one is shown only
+  // if loading the next message page (older messages) or if there
+  // are no messages in the list and the loading was triggered
+  // automatically (i.e., not from an user swipe-down-to-refresh).
+  // The top spinner, on the other hand, is shown only if the user
+  // request a loading by swiping-down-to-refresh or, when the
+  // loading was system initiated, if there were already messages in
+  // the list. Note that the top spinnmer is never shown when
+  // loading next page messages (since they are loaded when the list
+  // end has been reached. In that case, the footer spinner is shown)
   const isLoadingPreviousOrAll = isLoadingPrevious || isReloadingAll;
   const shouldShowFooterLoader =
     isLoadingMore ||
