@@ -8,6 +8,7 @@ import { IOColors } from "../../components/core/variables/IOColors";
 import { LabelSmall } from "../../components/core/typography/LabelSmall";
 import { Label } from "../../components/core/typography/Label";
 import GoBackButton from "../../components/GoBackButton";
+import BlockButtons from "../../components/ui/BlockButtons";
 import { ShowroomSection } from "./components/ShowroomSection";
 import { ComponentViewerBox } from "./components/ComponentViewerBox";
 
@@ -53,7 +54,7 @@ export const ButtonsShowroom = () => (
           alert("Action triggered");
         }}
       >
-        <NBText>Primary Button</NBText>
+        <NBText>Primary button</NBText>
       </ButtonDefaultOpacity>
     </ComponentViewerBox>
     <ComponentViewerBox name="NativeBase ButtonDefaultOpacity (Primary Block)">
@@ -64,7 +65,7 @@ export const ButtonsShowroom = () => (
           alert("Action triggered");
         }}
       >
-        <NBText>Primary Button (Block)</NBText>
+        <NBText>Primary button (Block)</NBText>
       </ButtonDefaultOpacity>
     </ComponentViewerBox>
     <ComponentViewerBox name="NativeBase ButtonDefaultOpacity (Primary Small)">
@@ -74,10 +75,9 @@ export const ButtonsShowroom = () => (
           alert("Action triggered");
         }}
       >
-        <NBText>Primary Button (Small)</NBText>
+        <NBText>Primary button (Small)</NBText>
       </ButtonDefaultOpacity>
     </ComponentViewerBox>
-
     <ComponentViewerBox name="NativeBase Button (XSmall)">
       <ButtonDefaultOpacity
         xsmall={true}
@@ -85,10 +85,9 @@ export const ButtonsShowroom = () => (
           alert("Action triggered");
         }}
       >
-        <NBText>XSmall Button</NBText>
+        <NBText>XSmall button</NBText>
       </ButtonDefaultOpacity>
     </ComponentViewerBox>
-
     <ComponentViewerBox name="NativeBase ButtonDefaultOpacity (Primary Disabled)">
       <ButtonDefaultOpacity
         disabled={true}
@@ -96,10 +95,9 @@ export const ButtonsShowroom = () => (
           alert("Action triggered");
         }}
       >
-        <NBText>Primary Button (Disabled)</NBText>
+        <NBText>Primary button (Disabled)</NBText>
       </ButtonDefaultOpacity>
     </ComponentViewerBox>
-
     <ComponentViewerBox name="NativeBase ButtonDefaultOpacity (Outline)">
       <ButtonDefaultOpacity
         bordered={true}
@@ -107,7 +105,7 @@ export const ButtonsShowroom = () => (
           alert("Action triggered");
         }}
       >
-        <NBText>Outline Button (Light)</NBText>
+        <NBText>Outline button (Light)</NBText>
       </ButtonDefaultOpacity>
     </ComponentViewerBox>
     <ComponentViewerBox name="NativeBase ButtonDefaultOpacity (Outline Block)">
@@ -118,7 +116,7 @@ export const ButtonsShowroom = () => (
           alert("Action triggered");
         }}
       >
-        <NBText>Outline Button (Block Light)</NBText>
+        <NBText>Outline button (Block Light)</NBText>
       </ButtonDefaultOpacity>
     </ComponentViewerBox>
     <ComponentViewerBox name="NativeBase ButtonDefaultOpacity (Outline Small)">
@@ -129,7 +127,7 @@ export const ButtonsShowroom = () => (
           alert("Action triggered");
         }}
       >
-        <NBText>Outline Button (Small Light)</NBText>
+        <NBText>Outline button (Small Light)</NBText>
       </ButtonDefaultOpacity>
     </ComponentViewerBox>
     <ComponentViewerBox name="NativeBase ButtonDefaultOpacity (Outline Disabled)">
@@ -140,7 +138,7 @@ export const ButtonsShowroom = () => (
           alert("Action triggered");
         }}
       >
-        <NBText>Outline Button (Disabled)</NBText>
+        <NBText>Outline button (disabled)</NBText>
       </ButtonDefaultOpacity>
     </ComponentViewerBox>
     <ComponentViewerBox name="NativeBase ButtonDefaultOpacity (Outline Light)">
@@ -151,7 +149,7 @@ export const ButtonsShowroom = () => (
           alert("Action triggered");
         }}
       >
-        <NBText>Outline Button (Light)</NBText>
+        <NBText>Outline button (light)</NBText>
       </ButtonDefaultOpacity>
     </ComponentViewerBox>
     <ComponentViewerBox name="NativeBase ButtonDefaultOpacity (Outline Block Light)">
@@ -163,7 +161,7 @@ export const ButtonsShowroom = () => (
           alert("Action triggered");
         }}
       >
-        <NBText>Outline Button (Block Light)</NBText>
+        <NBText>Outline button (block light)</NBText>
       </ButtonDefaultOpacity>
     </ComponentViewerBox>
     <ComponentViewerBox name="NativeBase ButtonDefaultOpacity (Outline Small Light)">
@@ -175,7 +173,7 @@ export const ButtonsShowroom = () => (
           alert("Action triggered");
         }}
       >
-        <NBText>Outline Button (Small Light)</NBText>
+        <NBText>Outline button (small light)</NBText>
       </ButtonDefaultOpacity>
     </ComponentViewerBox>
     <ComponentViewerBox name="NativeBase ButtonDefaultOpacity (Outline Light Disabled)">
@@ -187,7 +185,7 @@ export const ButtonsShowroom = () => (
           alert("Action triggered");
         }}
       >
-        <NBText>Outline Button (Light Disabled)</NBText>
+        <NBText>Outline button (light disabled)</NBText>
       </ButtonDefaultOpacity>
     </ComponentViewerBox>
     <ComponentViewerBox name="NativeBase ButtonDefaultOpacity (Dark)">
@@ -197,7 +195,7 @@ export const ButtonsShowroom = () => (
           alert("Action triggered");
         }}
       >
-        <NBText>Primary Button (Dark)</NBText>
+        <NBText>Primary button (dark)</NBText>
       </ButtonDefaultOpacity>
     </ComponentViewerBox>
     <ComponentViewerBox name="NativeBase ButtonDefaultOpacity (Outline Dark)">
@@ -208,10 +206,9 @@ export const ButtonsShowroom = () => (
           alert("Action triggered");
         }}
       >
-        <NBText>Outline Button (Dark)</NBText>
+        <NBText>Outline button (dark)</NBText>
       </ButtonDefaultOpacity>
     </ComponentViewerBox>
-
     <ComponentViewerBox name="NativeBase Button (Cancel) · Custom style, not managed by props">
       <ButtonDefaultOpacity
         bordered={true}
@@ -220,10 +217,9 @@ export const ButtonsShowroom = () => (
           alert("Action triggered");
         }}
       >
-        <Label color={"red"}>Cancel Outline Button</Label>
+        <Label color={"red"}>Cancel outline button</Label>
       </ButtonDefaultOpacity>
     </ComponentViewerBox>
-
     <ComponentViewerBox name="NativeBase Button (Cancel) · Custom style, not managed by props">
       <ButtonDefaultOpacity
         bordered={true}
@@ -233,10 +229,9 @@ export const ButtonsShowroom = () => (
           alert("Action triggered");
         }}
       >
-        <Label color={"red"}>Cancel Outline Button (Block)</Label>
+        <Label color={"red"}>Cancel outline button (block)</Label>
       </ButtonDefaultOpacity>
     </ComponentViewerBox>
-
     <ComponentViewerBox name="NativeBase Button (Cancel)">
       <ButtonDefaultOpacity
         alert={true}
@@ -244,10 +239,9 @@ export const ButtonsShowroom = () => (
           alert("Action triggered");
         }}
       >
-        <Label color={"white"}>Cancel Button</Label>
+        <Label color={"white"}>Cancel button</Label>
       </ButtonDefaultOpacity>
     </ComponentViewerBox>
-
     <ComponentViewerBox name="NativeBase Button (Cancel Block)">
       <ButtonDefaultOpacity
         alert={true}
@@ -256,10 +250,9 @@ export const ButtonsShowroom = () => (
           alert("Action triggered");
         }}
       >
-        <Label color={"white"}>Cancel Button (Block)</Label>
+        <Label color={"white"}>Cancel button (block)</Label>
       </ButtonDefaultOpacity>
     </ComponentViewerBox>
-
     <ComponentViewerBox name="NativeBase ButtonDefaultOpacity (Light Text)">
       <ButtonDefaultOpacity
         lightText={true}
@@ -267,10 +260,9 @@ export const ButtonsShowroom = () => (
           alert("Action triggered");
         }}
       >
-        <NBText>Button (Light Text)</NBText>
+        <NBText>Button (light text)</NBText>
       </ButtonDefaultOpacity>
     </ComponentViewerBox>
-
     <View
       style={{
         backgroundColor: IOColors.blue,
@@ -286,7 +278,7 @@ export const ButtonsShowroom = () => (
           }}
         >
           <LabelSmall color={"bluegrey"} weight={"Bold"}>
-            White Button
+            White button
           </LabelSmall>
         </ButtonDefaultOpacity>
       </ComponentViewerBox>
@@ -300,5 +292,64 @@ export const ButtonsShowroom = () => (
         />
       </ComponentViewerBox>
     </View>
+    <NBView spacer={true} large={true} />
+    <H2
+      color={"bluegrey"}
+      weight={"SemiBold"}
+      style={{ marginBottom: 16, marginTop: 16 }}
+    >
+      Block Buttons (NativeBase)
+    </H2>
+    <BlockButtons
+      type="SingleButton"
+      leftButton={{
+        block: true,
+        primary: true,
+        title: "Primary button"
+      }}
+    />
+    <NBView spacer={true} />
+    <BlockButtons
+      type="TwoButtonsInlineHalf"
+      leftButton={{ bordered: true, primary: true, title: "Left button" }}
+      rightButton={{
+        block: true,
+        primary: true,
+        title: "Right button"
+      }}
+    />
+    <NBView spacer={true} />
+    <BlockButtons
+      type="TwoButtonsInlineThird"
+      leftButton={{ bordered: true, primary: true, title: "Left button" }}
+      rightButton={{
+        block: true,
+        primary: true,
+        title: "Right button"
+      }}
+    />
+
+    <NBView spacer={true} />
+    <BlockButtons
+      type="TwoButtonsInlineThirdInverted"
+      leftButton={{ bordered: true, primary: true, title: "Left button" }}
+      rightButton={{
+        block: true,
+        primary: true,
+        title: "Right button"
+      }}
+    />
+
+    <NBView spacer={true} />
+    <BlockButtons
+      type="ThreeButtonsInLine"
+      leftButton={{ alert: true, title: "Left button" }}
+      midButton={{ bordered: true, title: "Middle" }}
+      rightButton={{
+        block: true,
+        primary: true,
+        title: "Right button"
+      }}
+    />
   </ShowroomSection>
 );
