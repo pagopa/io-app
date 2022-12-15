@@ -1,6 +1,7 @@
 import { View as NBView, Text as NBText } from "native-base";
 import { View } from "react-native";
 import * as React from "react";
+import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { ButtonExtendedOutline } from "../../components/ui/ButtonExtendedOutline";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { H2 } from "../../components/core/typography/H2";
@@ -9,6 +10,10 @@ import { LabelSmall } from "../../components/core/typography/LabelSmall";
 import { Label } from "../../components/core/typography/Label";
 import GoBackButton from "../../components/GoBackButton";
 import BlockButtons from "../../components/ui/BlockButtons";
+import { ViewEUCovidButton } from "../../features/euCovidCert/components/ViewEUCovidButton";
+import PaymentButton from "../../components/messages/PaymentButton";
+import { PaymentNoticeNumber } from "../../../definitions/backend/PaymentNoticeNumber";
+import IconFont from "../../components/ui/IconFont";
 import { ShowroomSection } from "./components/ShowroomSection";
 import { ComponentViewerBox } from "./components/ComponentViewerBox";
 
@@ -292,7 +297,9 @@ export const ButtonsShowroom = () => (
         />
       </ComponentViewerBox>
     </View>
+
     <NBView spacer={true} large={true} />
+
     <H2
       color={"bluegrey"}
       weight={"SemiBold"}
@@ -300,6 +307,7 @@ export const ButtonsShowroom = () => (
     >
       Block Buttons (NativeBase)
     </H2>
+
     <BlockButtons
       type="SingleButton"
       leftButton={{
@@ -351,5 +359,42 @@ export const ButtonsShowroom = () => (
         title: "Right button"
       }}
     />
+
+    <NBView spacer={true} large={true} />
+
+    <H2
+      color={"bluegrey"}
+      weight={"SemiBold"}
+      style={{ marginBottom: 16, marginTop: 16 }}
+    >
+      Specific buttons
+    </H2>
+    <ComponentViewerBox name="ViewEUCovidButton">
+      <ViewEUCovidButton
+        onPress={() => {
+          alert("Covid Certificate shown");
+        }}
+      />
+    </ComponentViewerBox>
+
+    <ComponentViewerBox name="PaymentButton">
+      <PaymentButton
+        amount={9999999999}
+        noticeNumber={"123112312312321321" as PaymentNoticeNumber}
+        organizationFiscalCode={"46545" as OrganizationFiscalCode}
+      />
+    </ComponentViewerBox>
+
+    <ComponentViewerBox name="CalendarEventButton">
+      <ButtonDefaultOpacity small={true} bordered={true}>
+        <IconFont name={"io-plus"} />
+        <NBText>Aggiungi promemoria</NBText>
+      </ButtonDefaultOpacity>
+      <NBView spacer={true} />
+      <ButtonDefaultOpacity small={true} bordered={true}>
+        <IconFont name={"io-tick-big"} />
+        <NBText>Aggiunto</NBText>
+      </ButtonDefaultOpacity>
+    </ComponentViewerBox>
   </ShowroomSection>
 );
