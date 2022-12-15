@@ -1,7 +1,8 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Route, useNavigation, useRoute } from "@react-navigation/core";
-import { Text, View } from "native-base";
-import React, { useEffect } from "react";
+import { useFocusEffect } from "@react-navigation/native";
+import { List, Text, View } from "native-base";
+import React, { useCallback, useEffect } from "react";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 
@@ -55,10 +56,27 @@ type RouteProps = Route<
 >;
 
 export const InitiativeDetailsScreen = () => {
+  const firstFocusRef = React.useRef<boolean>(true);
   const route = useRoute<RouteProps>();
   const { initiativeId } = route.params;
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const dispatch = useIODispatch();
+
+  useFocusEffect(
+    useCallback(() => {
+      if (firstFocusRef.current === true) {
+        // eslint-disable-next-line functional/immutable-data
+        firstFocusRef.current = false;
+      } else {
+        dispatch(idpayInitiativeGet.request({ initiativeId }));
+      }
+    }, [dispatch, initiativeId])
+  );
+
+  useEffect(() => {
+    dispatch(idpayInitiativeGet.request({ initiativeId }));
+  }, [dispatch, initiativeId]);
+
   const initiativeDetailsFromSelector = useIOSelector(
     idpayInitiativeDetailsSelector
   );

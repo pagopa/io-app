@@ -1,5 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import { RouteProp, useRoute } from "@react-navigation/native";
 import * as React from "react";
 import { View } from "native-base";
 import { pipe } from "fp-ts/lib/function";
@@ -96,7 +96,6 @@ const BeforeContinueBody = (props: BeforeContinueBodyProps) => {
 };
 
 const InitiativeDetailsScreen = () => {
-  const navigation = useNavigation();
   const route = useRoute<InitiativeDetailsRouteProps>();
 
   const { serviceId } = route.params;
@@ -115,12 +114,11 @@ const InitiativeDetailsScreen = () => {
   const isAcceptingTos = state.tags.has(UPSERTING_TAG);
 
   const handleGoBackPress = () => {
-    // TODO send back event to machine to handle back navigation
-    navigation.goBack();
+    send({ type: "QUIT_ONBOARDING" });
   };
 
   const handleContinuePress = () => {
-    send("ACCEPT_TOS");
+    send({ type: "ACCEPT_TOS" });
   };
 
   React.useEffect(() => {
@@ -169,12 +167,12 @@ const InitiativeDetailsScreen = () => {
             type={"TwoButtonsInlineThird"}
             leftButton={{
               bordered: true,
-              title: I18n.t("idpay.onboarding.buttons.cancel"),
+              title: I18n.t("global.buttons.cancel"),
               onPress: handleGoBackPress,
               testID: "IDPayOnboardingCancel"
             }}
             rightButton={{
-              title: I18n.t("idpay.onboarding.buttons.continue"),
+              title: I18n.t("global.buttons.continue"),
               onPress: handleContinuePress,
               testID: "IDPayOnboardingContinue",
               isLoading: isAcceptingTos,

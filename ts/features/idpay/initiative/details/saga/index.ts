@@ -8,7 +8,6 @@ import {
   IDPAY_API_UAT_BASEURL
 } from "../../../../../config";
 import { preferredLanguageSelector } from "../../../../../store/reducers/persistedPreferences";
-import { SessionToken } from "../../../../../types/SessionToken";
 import { waitBackoffError } from "../../../../../utils/backoffError";
 import { fromLocaleToPreferredLanguage } from "../../../../../utils/locale";
 import { createIDPayWalletClient } from "../../../wallet/api/client";
@@ -25,9 +24,7 @@ import { handleGetTimeline } from "./handleGetTimeline";
  * Handle IDPAY initiative requests
  * @param bearerToken
  */
-export function* idpayInitiativeDetailsSaga(
-  bearerToken: SessionToken
-): SagaIterator {
+export function* idpayInitiativeDetailsSaga(bearerToken: string): SagaIterator {
   const idPayWalletClient = createIDPayWalletClient(IDPAY_API_UAT_BASEURL);
   const idPayTimelineClient = createIDPayTimelineClient(IDPAY_API_UAT_BASEURL);
   const token = IDPAY_API_TEST_TOKEN ?? bearerToken;

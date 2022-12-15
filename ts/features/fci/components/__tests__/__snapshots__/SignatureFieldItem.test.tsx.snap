@@ -7,7 +7,7 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
       Object {},
       Object {
         "paddingBottom": 16,
-        "paddingTop": 20,
+        "paddingTop": 16,
       },
     ]
   }
@@ -56,12 +56,14 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
         fontStyle={
           Object {
             "fontSize": 16,
+            "lineHeight": 22,
           }
         }
         style={
           Array [
             Object {
               "fontSize": 16,
+              "lineHeight": 22,
             },
             Object {
               "color": "#17324D",
@@ -78,16 +80,38 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
         Clause title 1
       </Text>
       <Text
-        onPress={[MockFunction]}
-        style={
+        accessibilityRole="link"
+        color="blue"
+        defaultColor="blue"
+        defaultWeight="SemiBold"
+        font="TitilliumWeb"
+        fontStyle={
           Object {
-            "color": "#0073E6",
-            "paddingTop": 16,
-            "textDecorationColor": "#0073E6",
+            "fontSize": 16,
             "textDecorationLine": "underline",
           }
         }
+        onPress={[MockFunction]}
+        style={
+          Array [
+            Object {
+              "paddingBottom": 16,
+              "paddingTop": 16,
+            },
+            Object {
+              "fontSize": 16,
+              "textDecorationLine": "underline",
+            },
+            Object {
+              "color": "#0073E6",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "600",
+            },
+          ]
+        }
         testID="SignatureFieldItemDetailTestID"
+        weight="SemiBold"
       >
         See on document
       </Text>

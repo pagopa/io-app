@@ -322,10 +322,13 @@ export const Transaction = TransactionPagoPA;
 
 export const isCompletedTransaction = (tx: Transaction) => tx.idStatus === 3;
 
-const idStatusSuccessTransaction: ReadonlyArray<number> = [8, 9];
+const successTransactionIdStatusCases: ReadonlyArray<number> = [8, 9];
+
+const successTransactionAccountingStatusCases: ReadonlyArray<number> = [1, 5];
+
 /**
  * to determine if a transaction is successfully completed we have to consider 2 cases
- * 1. payed /w CREDIT CARD: accountingStatus is not undefined AND accountingStatus === 1 means the transaction has been
+ * 1. payed /w CREDIT CARD: accountingStatus is not undefined AND accountingStatus === 1 || accountingStatus === 5 means the transaction has been
  * confirmed and the payment has been successfully completed
  * 2.payed /w other methods: accountingStatus is undefined AND id_status = 8 (Confermato mod1) or id_status = 9 (Confermato mod2)
  * ref: https://www.pivotaltracker.com/story/show/173850410
@@ -339,8 +342,10 @@ export const isSuccessTransaction = (tx?: Transaction): boolean =>
         tsx.accountingStatus,
         O.fromNullable,
         O.fold(
-          () => idStatusSuccessTransaction.some(ids => ids === tsx.idStatus),
-          as => as === 1
+          () =>
+            successTransactionIdStatusCases.some(ids => ids === tsx.idStatus),
+          accountingStatus =>
+            successTransactionAccountingStatusCases.includes(accountingStatus)
         )
       )
     ),

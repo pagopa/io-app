@@ -5,15 +5,19 @@ import InitiativeConfigurationIntroScreen, {
   InitiativeConfigurationIntroScreenRouteParams
 } from "../screens/InitiativeConfigurationIntroScreen";
 import ConfigurationSuccessScreen from "../screens/ConfigurationSuccessScreen";
+import InstrumentsEnrollmentScreen from "../screens/InstrumentsEnrollmentScreen";
 
 export const IDPayConfigurationRoutes = {
   IDPAY_CONFIGURATION_MAIN: "IDPAY_CONFIGURATION_MAIN",
   IDPAY_CONFIGURATION_INTRO: "IDPAY_CONFIGURATION_INTRO",
+  IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT:
+    "IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT",
   IDPAY_CONFIGURATION_SUCCESS: "IDPAY_CONFIGURATION_SUCCESS"
 } as const;
 
 export type IDPayConfigurationParamsList = {
   [IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO]: InitiativeConfigurationIntroScreenRouteParams;
+  [IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT]: undefined;
   [IDPayConfigurationRoutes.IDPAY_CONFIGURATION_SUCCESS]: undefined;
 };
 
@@ -28,6 +32,13 @@ export const IDPayConfigurationNavigator = () => (
       <Stack.Screen
         name={IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO}
         component={InitiativeConfigurationIntroScreen}
+      />
+
+      <Stack.Screen
+        name={
+          IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT
+        }
+        component={InstrumentsEnrollmentScreen}
       />
 
       <Stack.Screen
