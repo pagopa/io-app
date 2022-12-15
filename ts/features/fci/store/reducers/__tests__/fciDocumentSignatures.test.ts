@@ -17,22 +17,22 @@ describe("FciDocumentSignaturesReducer", () => {
   it("The documentSignatures should be an array of size equal to one if the fciUpdateDocumentSignaturesRequest is dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
-    const docSignature: DocumentToSign = {
+    const docToSign: DocumentToSign = {
       document_id: "123" as NonEmptyString,
       signature_fields: []
     };
-    store.dispatch(fciUpdateDocumentSignaturesRequest(docSignature));
+    store.dispatch(fciUpdateDocumentSignaturesRequest(docToSign));
     expect(
       store.getState().features.fci.documentSignatures.documents.length
     ).toBe(1);
     expect(
       store.getState().features.fci.documentSignatures.documents
-    ).toStrictEqual([docSignature]);
+    ).toStrictEqual([docToSign]);
   });
   it("The documentSignatures should be an array of size equal to two if the fciUpdateDocumentSignaturesRequest is dispatched two times", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
-    const docSignatures: ReadonlyArray<DocumentToSign> = [
+    const docToSign: ReadonlyArray<DocumentToSign> = [
       {
         document_id: "1" as NonEmptyString,
         signature_fields: [
@@ -58,15 +58,15 @@ describe("FciDocumentSignaturesReducer", () => {
         ] as Array<SignatureField>
       }
     ];
-    docSignatures.map(docSignature => {
+    docToSign.map(docSignature => {
       store.dispatch(fciUpdateDocumentSignaturesRequest(docSignature));
     });
     expect(
       store.getState().features.fci.documentSignatures.documents.length
-    ).toBe(docSignatures.length);
+    ).toBe(docToSign.length);
     expect(
       store.getState().features.fci.documentSignatures.documents
-    ).toStrictEqual(docSignatures);
+    ).toStrictEqual(docToSign);
   });
   it("The documentSignatures should be an array of size equal to one and zero signatureFields if the fciUpdateDocumentSignaturesRequest is dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));

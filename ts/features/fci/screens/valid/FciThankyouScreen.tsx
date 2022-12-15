@@ -15,7 +15,7 @@ import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScree
 import { renderInfoRasterImage } from "../../../../components/infoScreen/imageRendering";
 import { fciEndRequest } from "../../store/actions";
 
-const FciTypScreen = () => {
+const FciThankyouScreen = () => {
   const fciCreateSignatureSelector = useIOSelector(fciSignatureSelector);
   const dispatch = useIODispatch();
 
@@ -67,4 +67,4 @@ const FciTypScreen = () => {
   );
 };
 
-export default FciTypScreen;
+export default FciThankyouScreen;

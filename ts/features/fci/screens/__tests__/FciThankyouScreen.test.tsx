@@ -9,7 +9,7 @@ import { FCI_ROUTES } from "../../navigation/routes";
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import { fciSigningRequest } from "../../store/actions";
 import { mockCreateSignatureBody } from "../../types/__mocks__/CreateSignatureBody.mock";
-import FciTypScreen from "../valid/FciTypScreen";
+import FciThankyouScreen from "../valid/FciThankyouScreen";
 import { mockSignatureDetailView } from "../../types/__mocks__/SignatureDetailView.mock";
 
 const mockedNavigation = jest.fn();
@@ -26,11 +26,11 @@ jest.mock("@react-navigation/native", () => {
   };
 });
 
-describe("Test FciTypScreen screen", () => {
+describe("Test FciThankyouScreen screen", () => {
   beforeEach(() => {
     jest.useFakeTimers();
   });
-  it("should render the FciTypScreen screen", () => {
+  it("should render the FciThankyouScreen screen", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store: Store<GlobalState> = createStore(
       appReducer,
@@ -40,7 +40,7 @@ describe("Test FciTypScreen screen", () => {
     const component = renderComponent(store);
     expect(component).toBeTruthy();
   });
-  it("should render the FciTypScreen screen and LoadingError component", () => {
+  it("should render the FciThankyouScreen screen and LoadingError component", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store: Store<GlobalState> = createStore(
       appReducer,
@@ -51,7 +51,7 @@ describe("Test FciTypScreen screen", () => {
     expect(component).toBeTruthy();
     expect(component.queryByTestId("FciTypLoadingScreenTestID")).toBeTruthy();
   });
-  it("should render the FciTypScreen screen and a Success component", () => {
+  it("should render the FciThankyouScreen screen and a Success component", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store: Store<GlobalState> = createStore(
       appReducer,
@@ -62,7 +62,7 @@ describe("Test FciTypScreen screen", () => {
     expect(component).toBeTruthy();
     expect(component.queryByTestId("FciTypSuccessTestID")).toBeTruthy();
   });
-  it("should render the FciTypScreen screen and Success component with close button clickable", () => {
+  it("should render the FciThankyouScreen screen and Success component with close button clickable", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store: Store<GlobalState> = createStore(
       appReducer,
@@ -84,7 +84,7 @@ describe("Test FciTypScreen screen", () => {
 
 const renderComponent = (store: Store) =>
   renderScreenFakeNavRedux<GlobalState>(
-    () => <FciTypScreen />,
+    () => <FciThankyouScreen />,
     FCI_ROUTES.TYP,
     {},
     store

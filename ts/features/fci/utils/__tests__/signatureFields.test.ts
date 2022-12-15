@@ -6,34 +6,36 @@ import {
   getSectionListData
 } from "../signatureFields";
 
+const emptyAttrs = {} as SignatureField["attrs"];
+
 const signatureFields: ReadonlyArray<SignatureField> = [
   {
     clause: {
       title: "clause title 1",
       type: ClausesTypeEnum.REQUIRED
     },
-    attrs: {} as SignatureField["attrs"]
+    attrs: emptyAttrs
   },
   {
     clause: {
       title: "clause title 2",
       type: ClausesTypeEnum.UNFAIR
     },
-    attrs: {} as SignatureField["attrs"]
+    attrs: emptyAttrs
   },
   {
     clause: {
       title: "clause title 3",
       type: ClausesTypeEnum.OPTIONAL
     },
-    attrs: {} as SignatureField["attrs"]
+    attrs: emptyAttrs
   },
   {
     clause: {
       title: "clause title 4",
       type: ClausesTypeEnum.OPTIONAL
     },
-    attrs: {} as SignatureField["attrs"]
+    attrs: emptyAttrs
   }
 ];
 

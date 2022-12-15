@@ -129,7 +129,7 @@ export const FciDocumentPreviewScreen = (
         testID={"FciDocumentPreviewScreenTestID"}
       >
         {showDocNavBar && renderDocumentsNavigationBar()}
-        {pipe(documentUrl, S.isEmpty) === false && (
+        {S.isEmpty(documentUrl) === false && (
           <DocumentViewer
             onLoadComplete={(pageCount: number) => {
               setTotalPages(pageCount);
@@ -137,13 +137,7 @@ export const FciDocumentPreviewScreen = (
             onPageChanged={(page: number) => {
               setCurrentPage(page);
             }}
-            documentUrl={
-              pipe(documentUrl, S.isEmpty) === false
-                ? documentUrl
-                : documents[currentDoc]
-                ? documents[currentDoc].url
-                : ""
-            }
+            documentUrl={documentUrl}
           />
         )}
       </SafeAreaView>

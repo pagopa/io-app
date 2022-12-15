@@ -7,7 +7,7 @@ import FciRouterScreen from "../screens/FciRouterScreen";
 import FciSignatureFieldsScreen from "../screens/valid/FciSignatureFieldsScreen";
 import FciDataSharingScreen from "../screens/valid/FciDataSharingScreen";
 import FciQtspClausesScreen from "../screens/valid/FciQtspClausesScreen";
-import FciTypScreen from "../screens/valid/FciTypScreen";
+import FciThankyouScreen from "../screens/valid/FciThankyouScreen";
 import { FciDocumentPreviewScreen } from "../screens/valid/FciDocumentPreviewScreen";
 import { FCI_ROUTES } from "./routes";
 import { FciParamsList } from "./params";
@@ -40,7 +40,7 @@ export const FciStackNavigator = () => (
       component={FciDataSharingScreen}
     />
     <Stack.Screen name={FCI_ROUTES.QTSP_TOS} component={FciQtspClausesScreen} />
-    <Stack.Screen name={FCI_ROUTES.TYP} component={FciTypScreen} />
+    <Stack.Screen name={FCI_ROUTES.TYP} component={FciThankyouScreen} />
     <Stack.Screen
       name={FCI_ROUTES.DOC_PREVIEW}
       component={FciDocumentPreviewScreen}
