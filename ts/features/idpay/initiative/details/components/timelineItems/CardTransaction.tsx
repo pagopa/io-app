@@ -77,7 +77,7 @@ export const IbanOnboardingCard = ({
   transaction
 }: TransactionProps<IbanOperationDTO>) => (
   <>
-    <Text>LOGO</Text>
+    <Text>IBANLOGO</Text>
     <View hspacer />
     <View style={IOStyles.flex}>
       <H4>{transaction.operationType}</H4>

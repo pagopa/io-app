@@ -3294,7 +3294,7 @@ idpay:
           footer: Aggiungi almeno un metodo per iniziare ad utilizzare {{initiative}}.
         configured:
           yourOperations: Le tue Operazioni
-          yourOperationsSubtitle: Qui vedrai le transazioni effettuate con i metodi che hai associato.
+          yourOperationsSubtitle: "Qui vedrai le transazioni effettuate con i metodi che hai associato. "
           yourOperationsLink: Come si fa?
           settings:
             showMore: Vedi tutte

@@ -84,7 +84,7 @@ const emptyTimelineContent = (
     <LabelSmall weight="Regular" color="bluegreyDark">
       {I18n.t(
         "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperationsSubtitle"
-      ) + " "}
+      )}
       <LabelSmall weight="SemiBold">
         {I18n.t(
           "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperationsLink"
