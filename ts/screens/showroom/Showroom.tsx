@@ -12,8 +12,8 @@ import { IconsShowroom } from "./core/IconsShowroom";
 import { LogosShowroom } from "./core/LogosShowroom";
 import { SelectionShowroom } from "./core/SelectionShowroom";
 import { TypographyShowroom } from "./core/TypographyShowRoom";
-import { OthersShowroom } from "./OthersShowroom";
-import { ButtonsShowroom } from "./ButtonsShowroom";
+import { OthersShowroom } from "./core/OthersShowroom";
+import { ButtonsShowroom } from "./core/ButtonsShowroom";
 
 const styles = StyleSheet.create({
   body: {
