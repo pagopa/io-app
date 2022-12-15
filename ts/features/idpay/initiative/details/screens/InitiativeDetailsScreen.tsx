@@ -2,7 +2,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Route, useNavigation, useRoute } from "@react-navigation/core";
 import { useFocusEffect } from "@react-navigation/native";
 import { Text, View } from "native-base";
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback } from "react";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 
@@ -194,4 +194,4 @@ export const InitiativeDetailsScreen = () => {
       </LoadingSpinnerOverlay>
     </BaseScreenComponent>
   );
-};;
+};

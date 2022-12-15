@@ -1,5 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { List, ListItem, Text, View } from "native-base";
+import { List, Text, View } from "native-base";
 import React from "react";
 import { StyleSheet } from "react-native";
 import { OperationTypeEnum as IbanOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/IbanOperationDTO";
@@ -71,15 +71,16 @@ const TimelineRenderer = (timeline: TimelineDTO["operationList"]) => (
     </View>
     <View spacer small />
     <List>
-      {timeline.map(item => (
-        <PickTransactionItem transaction={item} key={item.operationId} />
+      {timeline.map(transaction => (
+        <React.Fragment key={transaction.operationId}>
+          {pickTransactionCard(transaction)}
+        </React.Fragment>
       ))}
     </List>
   </>
 );
 
-type TransactionItemProps = { transaction: OperationListDTO };
-const PickTransactionItem = ({ transaction }: TransactionItemProps) => {
+const pickTransactionCard = (transaction: OperationListDTO) => {
   switch (transaction.operationType) {
     case TransactionOperationTypeEnum.TRANSACTION:
       return <TimelineTransactionCard transaction={transaction} />;
@@ -126,6 +127,5 @@ const ConfiguredInitiativeData = ({
     </>
   );
 };
-
 
 export default ConfiguredInitiativeData;
