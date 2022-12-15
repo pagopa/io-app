@@ -53,7 +53,6 @@
     "lint": "eslint . -c .eslintrc.js --ext .ts,.tsx",
     "lint-autofix": "eslint . -c .eslintrc.js --ext .ts,.tsx --fix",
     "check_urls": "python3 scripts/check_urls.py",
-    "ci": "npm-run-all tsc:noemit prettier:check lint test:ci",
     "cie-ios:prod": "mv node_modules/@pagopa/react-native-cie/.ios node_modules/@pagopa/react-native-cie/ios && mv node_modules/@pagopa/react-native-cie/.react-native-cie.podspec node_modules/@pagopa/react-native-cie/react-native-cie.podspec && cd ios && pod install",
     "cie-ios:dev": "mv node_modules/@pagopa/react-native-cie/ios node_modules/@pagopa/react-native-cie/.ios && mv node_modules/@pagopa/react-native-cie/react-native-cie.podspec node_modules/@pagopa/react-native-cie/.react-native-cie.podspec && cd ios && rm -rf Pods && pod install",
     "cie-ios:ci": "mv node_modules/@pagopa/react-native-cie/.ios node_modules/@pagopa/react-native-cie/ios && mv node_modules/@pagopa/react-native-cie/.react-native-cie.podspec node_modules/@pagopa/react-native-cie/react-native-cie.podspec",

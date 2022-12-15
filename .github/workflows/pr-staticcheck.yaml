@@ -4,6 +4,9 @@ on:
 jobs:
   compile:
     runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.workflow }}-pr-staticcheck-${{ github.head_ref || github.run_id }}
+      cancel-in-progress: true
     steps:
       - id: checkout
         uses: actions/checkout@v3.0.2
@@ -32,6 +35,7 @@ jobs:
       - id: run-ci-checks
         run: yarn tsc:noemit
   lint:
+    needs: compile
     runs-on: ubuntu-latest
     steps:
       - id: checkout
@@ -61,6 +65,7 @@ jobs:
       - id: run-ci-checks
         run: yarn lint
   prettier:
+    needs: compile
     runs-on: ubuntu-latest
     steps:
       - id: checkout
@@ -90,6 +95,7 @@ jobs:
       - id: run-ci-checks
         run: yarn prettier:check
   test:
+    needs: compile
     runs-on: ubuntu-latest
     steps:
       - id: checkout
