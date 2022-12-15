@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   }
 });
 const FciQtspClausesScreen = () => {
-  const [isClausesChecked, setIsClausesChecked] = React.useState(0);
+  const [clausesChecked, setClausesChecked] = React.useState(0);
   const qtspClausesSelector = useSelector(fciQtspClausesSelector);
   const qtspPrivacyTextSelector = useSelector(fciQtspPrivacyTextSelector);
   const qtspPrivacyUrlSelector = useSelector(fciQtspPrivacyUrlSelector);
@@ -60,8 +60,8 @@ const FciQtspClausesScreen = () => {
               clause={item}
               onChange={value =>
                 value
-                  ? setIsClausesChecked(isClausesChecked + 1)
-                  : setIsClausesChecked(isClausesChecked - 1)
+                  ? setClausesChecked(clausesChecked + 1)
+                  : setClausesChecked(clausesChecked - 1)
               }
               onLinkPress={openUrl}
             />
@@ -98,7 +98,7 @@ const FciQtspClausesScreen = () => {
   const continueButtonProps = {
     block: true,
     primary: true,
-    disabled: isClausesChecked !== qtspClausesSelector.length,
+    disabled: clausesChecked !== qtspClausesSelector.length,
     onPress: constNull,
     title: I18n.t("global.buttons.continue")
   };

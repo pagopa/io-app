@@ -58,7 +58,7 @@ export const fciDownloadPreview = createAsyncAction(
 )<{ url: string }, { path: string }, NetworkError, void>();
 
 export const fciDownloadPreviewCancel = createStandardAction(
-  "FCI_DOWNLOAD_PREVIEW_CANCEL"
+  "FCI_DOWNLOAD_PREVIEW_CLEAR"
 )<{ path: string }>();
 
 /**
