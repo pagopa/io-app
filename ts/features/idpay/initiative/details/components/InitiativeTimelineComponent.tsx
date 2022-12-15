@@ -7,10 +7,7 @@ import { OperationTypeEnum as InstrumentOperationTypeEnum } from "../../../../..
 import { OperationTypeEnum as OnboardingOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/OnboardingOperationDTO";
 import { OperationListDTO } from "../../../../../../definitions/idpay/timeline/OperationListDTO";
 import { TimelineDTO } from "../../../../../../definitions/idpay/timeline/TimelineDTO";
-import {
-  CircuitTypeEnum,
-  OperationTypeEnum as TransactionOperationTypeEnum
-} from "../../../../../../definitions/idpay/timeline/TransactionOperationDTO";
+import { OperationTypeEnum as TransactionOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/TransactionOperationDTO";
 import { InitiativeDTO } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H3 } from "../../../../../components/core/typography/H3";
@@ -49,38 +46,7 @@ const ConfiguredInitiativeData = ({
   const isTimelineLoading = pot.isLoading(timelineFromSelector);
   const timelineList = pot.getOrElse(
     pot.map(timelineFromSelector, timeline => timeline.operationList),
-    [
-      // // placeholder, will be removed once it can be tested
-      // {
-      //   amount: -10,
-      //   brandLogo: "",
-      //   circuitType: CircuitTypeEnum["00"],
-      //   maskedPan: "1234",
-      //   operationDate: new Date("2021-01-01T00:00:00.000Z"),
-      //   operationId: "1234567890",
-      //   operationType: TransactionOperationTypeEnum.TRANSACTION
-      // },
-      // {
-      //   operationType: OnboardingOperationTypeEnum.ONBOARDING,
-      //   operationDate: new Date("2021-01-01T00:00:00.000Z"),
-      //   operationId: "1234567890"
-      // },
-      // {
-      //   operationType: InstrumentOperationTypeEnum.ADD_INSTRUMENT,
-      //   brandLogo: "",
-      //   maskedPan: "1234",
-      //   channel: "1234",
-      //   operationDate: new Date("2021-01-01T00:00:00.000Z"),
-      //   operationId: "1234567890"
-      // },
-      // {
-      //   operationType: IbanOperationTypeEnum.ADD_IBAN,
-      //   channel: "1234",
-      //   iban: "IT1234567890123456789012345",
-      //   operationDate: new Date("2021-01-01T00:00:00.000Z"),
-      //   operationId: "1234567890"
-      // }
-    ]
+    []
   );
 
   const isTimelineEmpty = timelineList.length === 0;

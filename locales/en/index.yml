@@ -3302,6 +3302,7 @@ idpay:
             associatedPaymentMethods: Metodi di pagamento associati
             methodsi18n: metodi 
             selectedIBAN: IBAN per l'accredito
+            actionsRequired: Azioni richieste 
           startConfigurationCTA: Inizia
   onboarding:
     headerTitle: "Adesione all'iniziativa"

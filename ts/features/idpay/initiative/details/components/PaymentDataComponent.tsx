@@ -26,7 +26,9 @@ const IbanConfigured = (iban: IbanType) => {
             )}
           </H4>
           <LabelSmall weight="SemiBold" color="red">
-            {"Azioni richieste"}
+            {I18n.t(
+              "idpay.initiative.details.initiativeDetailsScreen.configured.settings.actionsRequired"
+            )}
           </LabelSmall>
         </View>
 
@@ -58,7 +60,9 @@ const InstrumentConfigured = (nInstr: number) => {
             )}
           </H4>
           <LabelSmall weight="SemiBold" color="red">
-            {"Azioni richieste"}
+            {I18n.t(
+              "idpay.initiative.details.initiativeDetailsScreen.configured.settings.actionsRequired"
+            )}
           </LabelSmall>
         </View>
 
