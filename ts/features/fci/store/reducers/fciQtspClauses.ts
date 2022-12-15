@@ -1,4 +1,5 @@
 import { getType } from "typesafe-actions";
+import { createSelector } from "reselect";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { fciLoadQtspClauses, fciAbortRequest } from "../actions";
 import { Action } from "../../../../store/actions/types";
@@ -29,8 +30,44 @@ const reducer = (
 };
 
 // Selectors
-export const fciQtspClausesSelector = (
+export const fciQtspClausesMetadataSelector = (
   state: GlobalState
 ): FciQtspClausesState => state.features.fci.qtspClauses;
+
+export const fciQtspClausesSelector = createSelector(
+  fciQtspClausesMetadataSelector,
+  qtspClausesMetadata =>
+    pot.isSome(qtspClausesMetadata) ? qtspClausesMetadata.value.clauses : []
+);
+
+export const fciQtspPrivacyTextSelector = createSelector(
+  fciQtspClausesMetadataSelector,
+  qtspClausesMetadata =>
+    pot.isSome(qtspClausesMetadata)
+      ? qtspClausesMetadata.value.privacy_text
+      : []
+);
+
+export const fciQtspPrivacyUrlSelector = createSelector(
+  fciQtspClausesMetadataSelector,
+  qtspClausesMetadata =>
+    pot.isSome(qtspClausesMetadata) ? qtspClausesMetadata.value.privacy_url : ""
+);
+
+export const fciQtspDocumentUrlSelector = createSelector(
+  fciQtspClausesMetadataSelector,
+  qtspClausesMetadata =>
+    pot.isSome(qtspClausesMetadata)
+      ? qtspClausesMetadata.value.document_url
+      : ""
+);
+
+export const fciQtspTosUrlSelector = createSelector(
+  fciQtspClausesMetadataSelector,
+  qtspClausesMetadata =>
+    pot.isSome(qtspClausesMetadata)
+      ? qtspClausesMetadata.value.terms_and_conditions_url
+      : ""
+);
 
 export default reducer;
