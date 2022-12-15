@@ -124,7 +124,7 @@ export const InitiativeDetailsScreen = () => {
     const initiativeNeedsConfiguration =
       initiativeData.status === StatusEnum.NOT_REFUNDABLE;
 
-    const renderNeedsConfiguration = () => {
+    const renderConditionalConfiguration = () => {
       if (initiativeNeedsConfiguration) {
         return initiativeNotConfiguredContent;
       } else {
@@ -164,7 +164,7 @@ export const InitiativeDetailsScreen = () => {
             ]}
           >
             <View style={styles.paddedContent}>
-              {renderNeedsConfiguration()}
+              {renderConditionalConfiguration()}
             </View>
           </View>
         </ScrollView>
@@ -202,4 +202,4 @@ export const InitiativeDetailsScreen = () => {
       </LoadingSpinnerOverlay>
     </BaseScreenComponent>
   );
-};
+};;
