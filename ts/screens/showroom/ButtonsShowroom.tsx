@@ -9,6 +9,7 @@ import { IOColors } from "../../components/core/variables/IOColors";
 import { LabelSmall } from "../../components/core/typography/LabelSmall";
 import { Label } from "../../components/core/typography/Label";
 import GoBackButton from "../../components/GoBackButton";
+import CopyButtonComponent from "../../components/CopyButtonComponent";
 import BlockButtons from "../../components/ui/BlockButtons";
 import { ViewEUCovidButton } from "../../features/euCovidCert/components/ViewEUCovidButton";
 import PaymentButton from "../../components/messages/PaymentButton";
@@ -16,7 +17,6 @@ import { PaymentNoticeNumber } from "../../../definitions/backend/PaymentNoticeN
 import IconFont from "../../components/ui/IconFont";
 import { ShowroomSection } from "./components/ShowroomSection";
 import { ComponentViewerBox } from "./components/ComponentViewerBox";
-import CopyButtonComponent from "../../components/CopyButtonComponent";
 
 export const ButtonsShowroom = () => (
   <ShowroomSection title={"Buttons"}>
