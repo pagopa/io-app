@@ -1,7 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Route, useNavigation, useRoute } from "@react-navigation/core";
 import { useFocusEffect } from "@react-navigation/native";
-import { List, Text, View } from "native-base";
+import { Text, View } from "native-base";
 import React, { useCallback, useEffect } from "react";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
@@ -26,8 +26,8 @@ import {
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import customVariables from "../../../../../theme/variables";
 import { IDPayConfigurationRoutes } from "../../configuration/navigation/navigator";
-import InitiativeTimelineComponent from "../components/InitiativeTimelineComponent";
 import InitiativeCardComponent from "../components/InitiativeCardComponent";
+import InitiativeTimelineComponent from "../components/InitiativeTimelineComponent";
 import { idpayInitiativeDetailsSelector } from "../store";
 import { idpayInitiativeGet, idpayTimelineGet } from "../store/actions";
 
@@ -202,4 +202,4 @@ export const InitiativeDetailsScreen = () => {
       </LoadingSpinnerOverlay>
     </BaseScreenComponent>
   );
-};;
+};
