@@ -167,10 +167,10 @@ const FciDocumentsScreen = () => {
         res.getPage(page).drawRectangle({
           x: attrs.bottom_left.x ?? 0,
           y: attrs.bottom_left.y ?? 0,
-          width: Math.abs(
+          height: Math.abs(
             (attrs.top_right.y ?? 0) - (attrs.bottom_left.y ?? 0)
           ),
-          height: Math.abs(
+          width: Math.abs(
             (attrs.top_right.x ?? 0) - (attrs.bottom_left.x ?? 0)
           ),
           color: rgb(0, 0.77, 0.79),
