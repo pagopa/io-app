@@ -318,8 +318,9 @@ export const ButtonsShowroom = () => (
       }}
     />
     <NBView spacer={true} />
+
     <BlockButtons
-      type="TwoButtonsInlineHalf"
+      type="TwoButtonsInlineThird"
       leftButton={{ bordered: true, primary: true, title: "Left button" }}
       rightButton={{
         block: true,
@@ -327,9 +328,11 @@ export const ButtonsShowroom = () => (
         title: "Right button"
       }}
     />
+
     <NBView spacer={true} />
+
     <BlockButtons
-      type="TwoButtonsInlineThird"
+      type="TwoButtonsInlineHalf"
       leftButton={{ bordered: true, primary: true, title: "Left button" }}
       rightButton={{
         block: true,
