@@ -73,4 +73,10 @@ export const fciQtspTosUrlSelector = createSelector(
       : ""
 );
 
+export const fciQtspNonceSelector = createSelector(
+  fciQtspClausesMetadataSelector,
+  qtspClausesMetadata =>
+    pot.isSome(qtspClausesMetadata) ? qtspClausesMetadata.value.nonce : ""
+);
+
 export default reducer;

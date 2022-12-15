@@ -5,8 +5,6 @@ import { getType, ActionType } from "typesafe-actions";
 import RNFS from "react-native-fs";
 import { call, takeLatest, put, select, take } from "typed-redux-saga/macro";
 import { CommonActions, StackActions } from "@react-navigation/native";
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
 import NavigationService from "../../../navigation/NavigationService";
 import { FCI_ROUTES } from "../navigation/routes";
 import ROUTES from "../../../navigation/routes";
@@ -40,8 +38,10 @@ import {
 } from "../store/actions";
 import {
   fciQtspClausesMetadataSelector,
-  FciQtspClausesState
+  FciQtspClausesState,
+  fciQtspNonceSelector
 } from "../store/reducers/fciQtspClauses";
+import { fciDocumentSignaturesSelector } from "../store/reducers/fciDocumentSignatures";
 import { handleGetSignatureRequestById } from "./networking/handleGetSignatureRequestById";
 import { handleGetQtspMetadata } from "./networking/handleGetQtspMetadata";
 import { handleCreateFilledDocument } from "./networking/handleCreateFilledDocument";
@@ -125,9 +125,13 @@ function* watchFciQtspClausesSaga(): SagaIterator {
   );
 
   if (pot.isSome(potQtspClauses)) {
-    const documentUrl = potQtspClauses.value.document_url as NonEmptyString;
+    const documentUrl = Buffer.from(
+      `${potQtspClauses.value.document_url}`
+    ).toString("base64");
     yield* put(
-      fciLoadQtspFilledDocument.request({ document_url: documentUrl })
+      fciLoadQtspFilledDocument.request({
+        document_url: documentUrl as NonEmptyString
+      })
     );
   } else {
     yield* call(
@@ -196,24 +200,24 @@ function* watchFciSigningRequestSaga(): SagaIterator {
     const qtspFilledDocumentUrl = yield* select(
       fciQtspFilledDocumentUrlSelector
     );
+    const qtspNonce = yield* select(fciQtspNonceSelector);
+    const documentSignatures = yield* select(fciDocumentSignaturesSelector);
 
-    if (pot.isSome(potQtspClauses) && pot.isSome(potSignatureRequest)) {
+    if (
+      pot.isSome(potQtspClauses) &&
+      pot.isSome(potSignatureRequest) &&
+      qtspFilledDocumentUrl &&
+      qtspNonce
+    ) {
       const createSignaturePayload: CreateSignatureBody = {
         signature_request_id: potSignatureRequest.value.id,
-        documents_to_sign: potSignatureRequest.value.documents.map(
-          document => ({
-            document_id: document.id,
-            signature_fields: pipe(
-              document.metadata.signature_fields,
-              O.fromNullable,
-              O.getOrElseW(() => [])
-            )
-          })
-        ),
+        documents_to_sign: documentSignatures,
         qtsp_clauses: {
           accepted_clauses: potQtspClauses.value.clauses,
-          filled_document_url: qtspFilledDocumentUrl as NonEmptyString,
-          nonce: "" as NonEmptyString
+          filled_document_url: Buffer.from(`${qtspFilledDocumentUrl}`).toString(
+            "base64"
+          ) as NonEmptyString,
+          nonce: qtspNonce as NonEmptyString
         }
       };
 

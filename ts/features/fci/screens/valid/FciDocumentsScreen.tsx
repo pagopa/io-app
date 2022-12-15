@@ -78,7 +78,6 @@ const FciDocumentsScreen = () => {
         RA.map(d => {
           const docSignature = {
             document_id: d.id,
-            signature: "",
             signature_fields: []
           } as DocumentToSign;
           dispatch(fciUpdateDocumentSignaturesRequest(docSignature));

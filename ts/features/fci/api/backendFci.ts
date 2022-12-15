@@ -42,7 +42,7 @@ const postQtspFilledBody: CreateFilledDocumentT = {
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   query: _ => ({}),
   body: ({ documentToFill: { document_url } }) =>
-    JSON.stringify({ body: { document_url } }),
+    JSON.stringify({ document_url }),
   response_decoder: createFilledDocumentDefaultDecoder()
 };
 
@@ -51,7 +51,7 @@ const postSignature: CreateSignatureT = {
   url: () => `/api/v1/sign/signatures`,
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   query: _ => ({}),
-  body: ({ signatureToCreate }) => JSON.stringify({ signatureToCreate }),
+  body: ({ signatureToCreate }) => JSON.stringify({ ...signatureToCreate }),
   response_decoder: createSignatureDefaultDecoder()
 };
 
