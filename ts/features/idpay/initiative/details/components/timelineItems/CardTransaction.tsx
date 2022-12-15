@@ -33,7 +33,7 @@ export const TimelineTransactionCard = ({
         )} · ${formatNumberAmount(Math.abs(transaction.amount), true)}`}
       </LabelSmall>
     </View>
-    <H4> {`${transaction.amount} €`}</H4>
+    <H4> {`${formatNumberAmount(transaction.amount, false)} €`}</H4>
   </>
 );
 

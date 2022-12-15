@@ -110,8 +110,8 @@ const TimelineRenderer = (timeline: TimelineDTO["operationList"]) => (
     </View>
     <View spacer small />
     <List>
-      {timeline.map((item, index) => (
-        <CustomListItem transaction={item} key={index} />
+      {timeline.map(item => (
+        <CustomListItem transaction={item} key={item.operationId} />
       ))}
     </List>
   </>

@@ -1,7 +1,7 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { SagaIterator } from "redux-saga";
-import { call, fork, select, takeLatest } from "typed-redux-saga/macro";
+import { call, select, takeLatest } from "typed-redux-saga/macro";
 import { PreferredLanguageEnum } from "../../../../../../definitions/backend/PreferredLanguage";
 import {
   IDPAY_API_TEST_TOKEN,
@@ -54,7 +54,7 @@ export function* idpayInitiativeDetailsSaga(bearerToken: string): SagaIterator {
     idpayTimelineGet.request,
     function* (action: { payload: IdPayInitiativeGetPayloadType }) {
       // wait backoff time if there were previous errors
-      yield* fork(waitBackoffError, idpayTimelineGet.failure);
+      yield* call(waitBackoffError, idpayTimelineGet.failure);
       yield* call(
         handleGetTimeline,
         idPayTimelineClient.getTimeline,
