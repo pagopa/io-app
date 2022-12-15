@@ -1,6 +1,8 @@
 import * as p from "@pagopa/ts-commons/lib/pot";
 
 import { assign, createMachine } from "xstate";
+import { IbanDTO } from "../../../../../../definitions/idpay/iban/IbanDTO";
+import { IbanListDTO } from "../../../../../../definitions/idpay/iban/IbanListDTO";
 import {
   InitiativeDTO,
   StatusEnum
@@ -15,13 +17,16 @@ import {
 export type Context = {
   initiativeId?: string;
   initiative: p.Pot<InitiativeDTO, Error>;
+  ibanList: p.Pot<ReadonlyArray<IbanDTO>, Error>;
   pagoPAInstruments: p.Pot<ReadonlyArray<Wallet>, Error>;
   idPayInstruments: p.Pot<ReadonlyArray<InstrumentDTO>, Error>;
   selectedInstrumentId?: string;
+  selectedIban?: IbanDTO;
 };
 
 const INITIAL_CONTEXT: Context = {
   initiative: p.none,
+  ibanList: p.none,
   pagoPAInstruments: p.none,
   idPayInstruments: p.none
 };
@@ -40,6 +45,11 @@ type E_ADD_INSTRUMENT = {
   walletId: string;
 };
 
+type E_ADD_IBAN = {
+  type: "ADD_IBAN";
+  iban: IbanDTO;
+};
+
 type E_CONFIRM_INSTRUMENTS = {
   type: "CONFIRM_INSTRUMENTS";
 };
@@ -55,6 +65,7 @@ type E_GO_BACK = {
 type Events =
   | E_SELECT_INITIATIVE
   | E_START_CONFIGURATION
+  | E_ADD_IBAN
   | E_ADD_INSTRUMENT
   | E_CONFIRM_INSTRUMENTS
   | E_COMPLETE_CONFIGURATION
@@ -63,6 +74,12 @@ type Events =
 type Services = {
   loadInitiative: {
     data: InitiativeDTO;
+  };
+  loadIbanList: {
+    data: IbanListDTO;
+  };
+  addIban: {
+    data: undefined;
   };
   loadInstruments: {
     data: {
@@ -128,8 +145,47 @@ const createIDPayInitiativeConfigurationMachine = () =>
           entry: "navigateToConfigurationEntry",
           on: {
             START_CONFIGURATION: {
-              target: "LOADING_INSTRUMENTS"
+              target: "LOADING_IBAN_LIST"
             }
+          }
+        },
+        LOADING_IBAN_LIST: {
+          tags: [LOADING_TAG],
+          entry: "navigateToIbanAssociationScreen",
+          invoke: {
+            src: "loadIbanList",
+            id: "loadIbanList",
+            onDone: [
+              {
+                target: "DISPLAYING_IBAN_LIST",
+                actions: "loadIbanListSuccess"
+              }
+            ]
+          }
+        },
+        DISPLAYING_IBAN_LIST: {
+          tags: [WAITING_USER_INPUT_TAG],
+          on: {
+            GO_BACK: {
+              target: "CONFIGURING_INITIATIVE"
+            },
+            ADD_IBAN: {
+              target: "ADDING_IBAN",
+              actions: "selectIban"
+            }
+          }
+        },
+        ADDING_IBAN: {
+          tags: [LOADING_TAG],
+          invoke: {
+            src: "addIban",
+            id: "addIban",
+            onDone: [
+              {
+                target: "DISPLAYING_INSTRUMENTS",
+                actions: "addIbanSuccess"
+              }
+            ]
           }
         },
         LOADING_INSTRUMENTS: {
@@ -150,7 +206,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
           tags: [WAITING_USER_INPUT_TAG],
           on: {
             GO_BACK: {
-              target: "CONFIGURING_INITIATIVE"
+              target: "LOADING_IBAN_LIST"
             },
             ADD_INSTRUMENT: {
               target: "ADDING_INSTRUMENT",
@@ -199,6 +255,15 @@ const createIDPayInitiativeConfigurationMachine = () =>
         })),
         loadInitiativeSuccess: assign((_, event) => ({
           initiative: p.some(event.data)
+        })),
+        loadIbanListSuccess: assign((_, event) => ({
+          ibanList: p.some(event.data.ibanList)
+        })),
+        selectIban: assign((_, event) => ({
+          selectedIban: event.iban
+        })),
+        addIbanSuccess: assign((_, _event) => ({
+          selectedIban: undefined
         })),
         loadInstrumentsSuccess: assign((_, event) => ({
           pagoPAInstruments: p.some(event.data.pagoPAInstruments),

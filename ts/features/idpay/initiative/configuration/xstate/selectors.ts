@@ -10,6 +10,15 @@ type IDPayInstrumentsByIdWallet = {
   [idWallet: string]: InstrumentDTO;
 };
 
+const selectIsLoadingIbanList = (state: StateWithContext) =>
+  state.matches("LOADING_IBAN_LIST");
+
+const selectIbanList = (state: StateWithContext) =>
+  P.getOrElse(state.context.ibanList, []);
+
+const selectIsUpsertingIban = (state: StateWithContext) =>
+  state.matches("ADDING_IBAN");
+
 const selectIsLoadingInstruments = (state: StateWithContext) =>
   state.matches("LOADING_INSTRUMENTS");
 
@@ -43,6 +52,9 @@ const selectorIDPayInstrumentsByIdWallet = createSelector(
 );
 
 export {
+  selectIsLoadingIbanList,
+  selectIbanList,
+  selectIsUpsertingIban,
   selectIsLoadingInstruments,
   selectIsUpsertingInstrument,
   selectorPagoPAIntruments,

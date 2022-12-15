@@ -29,6 +29,7 @@ import { defaultRetryingFetch } from "../../../../../utils/fetch";
 import { fromLocaleToPreferredLanguage } from "../../../../../utils/locale";
 import { SessionManager } from "../../../../../utils/SessionManager";
 import { createIDPayWalletClient } from "../../../wallet/api/client";
+import { createIDPayIbanClient } from "../api/client";
 import { createActionsImplementation } from "./actions";
 import {
   createIDPayInitiativeConfigurationMachine,
@@ -94,9 +95,11 @@ const IDPayConfigurationMachineProvider = (props: Props) => {
   const pmSessionManager = new SessionManager(getPaymentManagerSession);
 
   const walletClient = createIDPayWalletClient(IDPAY_API_UAT_BASEURL);
+  const ibanClient = createIDPayIbanClient(IDPAY_API_UAT_BASEURL);
 
   const services = createServicesImplementation(
     walletClient,
+    ibanClient,
     paymentManagerClient,
     pmSessionManager,
     idPayToken,

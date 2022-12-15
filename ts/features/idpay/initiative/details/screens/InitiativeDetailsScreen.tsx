@@ -47,10 +47,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const InitiativeSettings = (
-  initiative: InitiativeDTO,
-  navigateToIbanAssociationScreen: () => void
-) => (
+const InitiativeSettings = (initiative: InitiativeDTO) => (
   <>
     <H3>
       {TypedI18n.t(
@@ -89,7 +86,6 @@ const InitiativeSettings = (
           "idpay.initiative.details.initiativeDetailsScreen.configured.settings.selectedIBAN"
         )}
         subTitle={initiative.iban}
-        onPress={navigateToIbanAssociationScreen}
       />
     </List>
   </>
@@ -162,12 +158,6 @@ export const InitiativeDetailsScreen = () => {
     });
   };
 
-  const navigateToIbanAssociationScreen = () => {
-    navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
-      screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ASSOCIATION
-    });
-  };
-
   const renderContent = () => {
     if (initiativeData === undefined) {
       return null;
@@ -214,10 +204,7 @@ export const InitiativeDetailsScreen = () => {
             <View style={styles.paddedContent}>
               {initiativeNeedsConfiguration
                 ? initiativeNotConfiguredContent
-                : InitiativeSettings(
-                    initiativeData,
-                    navigateToIbanAssociationScreen
-                  )}
+                : InitiativeSettings(initiativeData)}
             </View>
           </View>
         </ScrollView>

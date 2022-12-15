@@ -1,8 +1,7 @@
-import { useNavigation } from "@react-navigation/native";
-import { useActor } from "@xstate/react";
-import { View, Text } from "native-base";
+import { useSelector } from "@xstate/react";
+import { Text, View } from "native-base";
 import React from "react";
-import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { Alert, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { IbanDTO } from "../../../../../../definitions/idpay/iban/IbanDTO";
 import IconProfileAlt from "../../../../../components/core/icons/svg/IconProfileAlt";
 import { Body } from "../../../../../components/core/typography/Body";
@@ -15,42 +14,40 @@ import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../i18n";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { useConfigurationMachineService } from "../xstate/provider";
-
-const ibanList: ReadonlyArray<IbanDTO> = [
-  {
-    iban: "IT60X0542811101000000123456",
-    checkIbanStatus: "VALID",
-    holderBank: "BANCA POPOLARE DI SONDRIO",
-    description: "IBAN di test",
-    channel: "WEB",
-    bicCode: "BPPIITRRXXX",
-    queueDate: "2020-12-01T00:00:00.000Z",
-    checkIbanResponseDate: new Date()
-  },
-  {
-    iban: "IT60X0542811101000000223456",
-    checkIbanStatus: "VALID",
-    holderBank: "BANCA POPOLARE DI SONDRIO",
-    description: "IBAN di test 2",
-    channel: "WEB",
-    bicCode: "BPPIITRRXXX",
-    queueDate: "2020-12-01T00:00:00.000Z",
-    checkIbanResponseDate: new Date()
-  }
-];
+import {
+  selectIbanList,
+  selectIsLoadingIbanList,
+  selectIsUpsertingIban
+} from "../xstate/selectors";
 
 const IbanAssociationScreen = () => {
-  const navigation = useNavigation();
-  const configurationMachine = useConfigurationMachineService();
-  const [_state, send] = useActor(configurationMachine);
-
   const [selectedIban, setSelectedIban] = React.useState<IbanDTO | undefined>();
+  const configurationMachine = useConfigurationMachineService();
 
-  const isLoadingIbanList = false;
+  const isLoadingIbanList = useSelector(
+    configurationMachine,
+    selectIsLoadingIbanList
+  );
+
+  const ibanList = useSelector(configurationMachine, selectIbanList);
+
+  const isUpsertingIban = useSelector(
+    configurationMachine,
+    selectIsUpsertingIban
+  );
 
   const handleBackPress = () => {
-    send({ type: "GO_BACK" });
-    navigation.goBack();
+    configurationMachine.send({ type: "GO_BACK" });
+  };
+
+  const handleContinuePress = () => {
+    if (selectedIban !== undefined) {
+      configurationMachine.send({ type: "ADD_IBAN", iban: selectedIban });
+    }
+  };
+
+  const handleAddNewIbanPress = () => {
+    Alert.alert("TODO: add new IBAN 🙂");
   };
 
   const renderIbanList = () =>
@@ -109,11 +106,14 @@ const IbanAssociationScreen = () => {
             type="TwoButtonsInlineHalf"
             leftButton={{
               title: "Aggiungi nuovo",
-              bordered: true
+              bordered: true,
+              onPress: handleAddNewIbanPress
             }}
             rightButton={{
               title: I18n.t("global.buttons.continue"),
-              disabled: !selectedIban
+              disabled: !selectedIban || isUpsertingIban,
+              isLoading: isUpsertingIban,
+              onPress: handleContinuePress
             }}
           />
         </SafeAreaView>
