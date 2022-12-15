@@ -1,5 +1,6 @@
-import { View, Text } from "native-base";
+import { ListItem, Text, View } from "native-base";
 import React from "react";
+import { StyleSheet } from "react-native";
 import { IbanOperationDTO } from "../../../../../../../definitions/idpay/timeline/IbanOperationDTO";
 import { InstrumentOperationDTO } from "../../../../../../../definitions/idpay/timeline/InstrumentOperationDTO";
 import { OnboardingOperationDTO } from "../../../../../../../definitions/idpay/timeline/OnboardingOperationDTO";
@@ -12,15 +13,32 @@ import { formatNumberAmount } from "../../../../../../utils/stringBuilder";
 
 type TransactionProps<T> = { transaction: T };
 
+const styles = StyleSheet.create({
+  alignCenter: {
+    alignItems: "center"
+  },
+  spaceBetween: {
+    justifyContent: "space-between"
+  }
+});
+
 const getHourAndMinuteFromDate = (date: Date) =>
   `${String(date.getHours()).padStart(2, "0")}:${String(
     date.getMinutes()
   ).padStart(2, "0")}`;
 
+type BaseTransactionCardProps = { children: React.ReactNode };
+const BaseTransactionCard = ({ children }: BaseTransactionCardProps) => (
+  <ListItem style={styles.spaceBetween}>
+    <View style={[IOStyles.flex, IOStyles.row, styles.alignCenter]}>
+      {children}
+    </View>
+  </ListItem>
+);
 export const TimelineTransactionCard = ({
   transaction
 }: TransactionProps<TransactionOperationDTO>) => (
-  <>
+  <BaseTransactionCard>
     <Text>LOGO</Text>
     <View hspacer />
     <View style={IOStyles.flex}>
@@ -34,13 +52,13 @@ export const TimelineTransactionCard = ({
       </LabelSmall>
     </View>
     <H4> {`${formatNumberAmount(transaction.amount, false)} €`}</H4>
-  </>
+  </BaseTransactionCard>
 );
 
 export const OnboardingTransactionCard = ({
   transaction
 }: TransactionProps<OnboardingOperationDTO>) => (
-  <>
+  <BaseTransactionCard>
     <Text>LOGO</Text>
     <View hspacer />
     <View style={IOStyles.flex}>
@@ -51,13 +69,13 @@ export const OnboardingTransactionCard = ({
         )}, ${getHourAndMinuteFromDate(transaction.operationDate)}`}
       </LabelSmall>
     </View>
-  </>
+  </BaseTransactionCard>
 );
 
 export const InstrumentOnboardingCard = ({
   transaction
 }: TransactionProps<InstrumentOperationDTO>) => (
-  <>
+  <BaseTransactionCard>
     <Text>LOGO</Text>
     <View hspacer />
     <View style={IOStyles.flex}>
@@ -70,13 +88,13 @@ export const InstrumentOnboardingCard = ({
         )}, ${getHourAndMinuteFromDate(transaction.operationDate)}`}
       </LabelSmall>
     </View>
-  </>
+  </BaseTransactionCard>
 );
 
 export const IbanOnboardingCard = ({
   transaction
 }: TransactionProps<IbanOperationDTO>) => (
-  <>
+  <BaseTransactionCard>
     <Text>IBANLOGO</Text>
     <View hspacer />
     <View style={IOStyles.flex}>
@@ -87,5 +105,5 @@ export const IbanOnboardingCard = ({
         )}, ${getHourAndMinuteFromDate(transaction.operationDate)}`}
       </LabelSmall>
     </View>
-  </>
+  </BaseTransactionCard>
 );

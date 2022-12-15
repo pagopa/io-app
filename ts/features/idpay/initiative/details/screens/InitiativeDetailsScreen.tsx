@@ -62,6 +62,13 @@ export const InitiativeDetailsScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const dispatch = useIODispatch();
 
+  const navigateToConfiguration = () => {
+    navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
+      screen: "IDPAY_CONFIGURATION_INTRO",
+      params: { initiativeId }
+    });
+  };
+
   useFocusEffect(
     useCallback(() => {
       if (firstFocusRef.current === true) {
@@ -73,17 +80,9 @@ export const InitiativeDetailsScreen = () => {
     }, [dispatch, initiativeId])
   );
 
-  useEffect(() => {
-    dispatch(idpayInitiativeGet.request({ initiativeId }));
-  }, [dispatch, initiativeId]);
-
   const initiativeDetailsFromSelector = useIOSelector(
     idpayInitiativeDetailsSelector
   );
-  useEffect(() => {
-    dispatch(idpayInitiativeGet.request({ initiativeId }));
-  }, [dispatch, initiativeId]);
-
   const initiativeData: InitiativeDTO | undefined = pot.getOrElse(
     initiativeDetailsFromSelector,
     undefined
@@ -108,13 +107,6 @@ export const InitiativeDetailsScreen = () => {
       </Text>
     </View>
   );
-
-  const navigateToConfiguration = () => {
-    navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
-      screen: "IDPAY_CONFIGURATION_INTRO",
-      params: { initiativeId }
-    });
-  };
 
   const renderContent = () => {
     if (initiativeData === undefined) {

@@ -25,10 +25,7 @@ import {
 } from "./timelineItems/CardTransaction";
 
 const styles = StyleSheet.create({
-  alignCenter: {
-    alignItems: "center"
-  },
-  listItem: {
+  spaceBetween: {
     justifyContent: "space-between"
   }
 });
@@ -37,42 +34,6 @@ type configuredInitiativeProps = {
   initiative: InitiativeDTO;
 };
 
-type TransactionProps = { transaction: OperationListDTO };
-
-const ConfiguredInitiativeData = ({
-  initiative
-}: configuredInitiativeProps) => {
-  const timelineFromSelector = useIOSelector(idpayTimelineSelector);
-  const isTimelineLoading = pot.isLoading(timelineFromSelector);
-  const timelineList = pot.getOrElse(
-    pot.map(timelineFromSelector, timeline => timeline.operationList),
-    []
-  );
-
-  const isTimelineEmpty = timelineList.length === 0;
-
-  const renderTimelineIfNotLoading = () => {
-    if (isTimelineLoading) {
-      return null;
-    }
-    return isTimelineEmpty
-      ? emptyTimelineContent
-      : TimelineRenderer(timelineList);
-  };
-  return (
-    <>
-      {renderTimelineIfNotLoading()}
-      <View spacer large />
-      <H3>
-        {I18n.t(
-          "idpay.initiative.details.initiativeDetailsScreen.configured.settings.header"
-        )}
-      </H3>
-      <View spacer small />
-      <PaymentDataComponent iban={initiative.iban} nInstr={initiative.nInstr} />
-    </>
-  );
-};
 const emptyTimelineContent = (
   <>
     <H3>
@@ -96,7 +57,7 @@ const emptyTimelineContent = (
 
 const TimelineRenderer = (timeline: TimelineDTO["operationList"]) => (
   <>
-    <View style={[IOStyles.row, styles.listItem]}>
+    <View style={[IOStyles.row, styles.spaceBetween]}>
       <H3>
         {I18n.t(
           "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperations"
@@ -111,34 +72,60 @@ const TimelineRenderer = (timeline: TimelineDTO["operationList"]) => (
     <View spacer small />
     <List>
       {timeline.map(item => (
-        <CustomListItem transaction={item} key={item.operationId} />
+        <PickTransactionItem transaction={item} key={item.operationId} />
       ))}
     </List>
   </>
 );
 
-const CustomListItem = ({ transaction }: TransactionProps) => {
-  const pickTransactionItem = () => {
-    switch (transaction.operationType) {
-      case TransactionOperationTypeEnum.TRANSACTION:
-        return <TimelineTransactionCard transaction={transaction} />;
-      case OnboardingOperationTypeEnum.ONBOARDING:
-        return <OnboardingTransactionCard transaction={transaction} />;
-      case InstrumentOperationTypeEnum.ADD_INSTRUMENT:
-        return <InstrumentOnboardingCard transaction={transaction} />;
-      case IbanOperationTypeEnum.ADD_IBAN:
-        return <IbanOnboardingCard transaction={transaction} />;
-      default:
-        return <Text>Error loading {transaction.operationType}</Text>;
+type TransactionItemProps = { transaction: OperationListDTO };
+const PickTransactionItem = ({ transaction }: TransactionItemProps) => {
+  switch (transaction.operationType) {
+    case TransactionOperationTypeEnum.TRANSACTION:
+      return <TimelineTransactionCard transaction={transaction} />;
+    case OnboardingOperationTypeEnum.ONBOARDING:
+      return <OnboardingTransactionCard transaction={transaction} />;
+    case InstrumentOperationTypeEnum.ADD_INSTRUMENT:
+      return <InstrumentOnboardingCard transaction={transaction} />;
+    case IbanOperationTypeEnum.ADD_IBAN:
+      return <IbanOnboardingCard transaction={transaction} />;
+    default:
+      return <Text>Error loading {transaction.operationType}</Text>;
+  }
+};
+const ConfiguredInitiativeData = ({
+  initiative
+}: configuredInitiativeProps) => {
+  const timelineFromSelector = useIOSelector(idpayTimelineSelector);
+
+  const renderTimelineIfNotLoading = () => {
+    const isTimelineLoading = pot.isLoading(timelineFromSelector);
+    if (isTimelineLoading) {
+      return null;
     }
+    const timelineList = pot.getOrElse(
+      pot.map(timelineFromSelector, timeline => timeline.operationList),
+      []
+    );
+    const isTimelineEmpty = timelineList.length === 0;
+    return isTimelineEmpty
+      ? emptyTimelineContent
+      : TimelineRenderer(timelineList);
   };
   return (
-    <ListItem style={styles.listItem}>
-      <View style={[IOStyles.flex, IOStyles.row, styles.alignCenter]}>
-        {pickTransactionItem()}
-      </View>
-    </ListItem>
+    <>
+      {renderTimelineIfNotLoading()}
+      <View spacer large />
+      <H3>
+        {I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.configured.settings.header"
+        )}
+      </H3>
+      <View spacer small />
+      <PaymentDataComponent iban={initiative.iban} nInstr={initiative.nInstr} />
+    </>
   );
 };
+
 
 export default ConfiguredInitiativeData;
