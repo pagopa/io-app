@@ -1,12 +1,12 @@
 import { createClient } from "../../../../../../definitions/idpay/iban/client";
 import { defaultRetryingFetch } from "../../../../../utils/fetch";
 
-const createIbanClient = (baseUrl: string) =>
+const createIDPayIbanClient = (baseUrl: string) =>
   createClient({
     baseUrl,
     fetchApi: defaultRetryingFetch()
   });
 
-export type IbanClient = ReturnType<typeof createIbanClient>;
+export type IDPayIbanClient = ReturnType<typeof createIDPayIbanClient>;
 
-export { createIbanClient };
+export { createIDPayIbanClient };
