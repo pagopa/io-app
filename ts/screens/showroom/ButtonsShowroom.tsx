@@ -16,6 +16,7 @@ import { PaymentNoticeNumber } from "../../../definitions/backend/PaymentNoticeN
 import IconFont from "../../components/ui/IconFont";
 import { ShowroomSection } from "./components/ShowroomSection";
 import { ComponentViewerBox } from "./components/ComponentViewerBox";
+import CopyButtonComponent from "../../components/CopyButtonComponent";
 
 export const ButtonsShowroom = () => (
   <ShowroomSection title={"Buttons"}>
@@ -395,6 +396,10 @@ export const ButtonsShowroom = () => (
         <IconFont name={"io-tick-big"} />
         <NBText>Aggiunto</NBText>
       </ButtonDefaultOpacity>
+    </ComponentViewerBox>
+
+    <ComponentViewerBox name="CopyButtonComponent">
+      <CopyButtonComponent textToCopy={"Copied text by CopyButton"} />
     </ComponentViewerBox>
   </ShowroomSection>
 );
