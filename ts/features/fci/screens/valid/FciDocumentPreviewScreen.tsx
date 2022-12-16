@@ -22,7 +22,7 @@ import {
 import { fciDownloadPathSelector } from "../../store/reducers/fciDownloadPreview";
 
 export type FciDocumentPreviewScreenNavigationParams = Readonly<{
-  documentUrl?: string;
+  documentUrl: string;
 }>;
 
 const styles = StyleSheet.create({
@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
 export const FciDocumentPreviewScreen = (
   props: IOStackNavigationRouteProps<FciParamsList, "FCI_DOC_PREVIEW">
 ): React.ReactElement => {
+  const docParamUrl = props.route.params?.documentUrl ?? "";
   const [documentUrl, setDocumentUrl] = React.useState("");
   const [showDocNavBar, setShowDocNavBar] = React.useState(false);
   const [totalPages, setTotalPages] = React.useState(0);
@@ -44,20 +45,14 @@ export const FciDocumentPreviewScreen = (
   const dispatch = useIODispatch();
 
   React.useEffect(() => {
-    const docUrl = pipe(
-      props.route.params,
-      O.fromNullable,
-      O.chainNullableK(p => p.documentUrl),
-      O.getOrElse(() => "")
-    );
-
-    if (docUrl.length > 0) {
-      setDocumentUrl(docUrl);
-    } else if (documents.length > 0) {
+    if (documents.length > 0 && S.isEmpty(docParamUrl) === true) {
       setShowDocNavBar(true);
       setDocumentUrl(documents[currentDoc].url);
+    } else {
+      setShowDocNavBar(false);
+      setDocumentUrl(docParamUrl);
     }
-  }, [currentDoc, documents, props.route.params]);
+  }, [currentDoc, documents, documentUrl, docParamUrl]);
 
   const customGoBack: React.ReactElement = (
     <TouchableDefaultOpacity
