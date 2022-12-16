@@ -143,7 +143,10 @@ export const MessageAttachmentPreview = (props: Props): React.ReactElement => {
       contextualHelp={emptyContextualHelp}
       headerTitle={I18n.t("features.mvl.details.attachments.pdfPreview.title")}
     >
-      <SafeAreaView style={styles.container} testID={"MvlDetailsScreen"}>
+      <SafeAreaView
+        style={styles.container}
+        testID={"message-attachment-preview"}
+      >
         {!isError && (
           <Pdf
             source={{ uri: download.path, cache: true }}
