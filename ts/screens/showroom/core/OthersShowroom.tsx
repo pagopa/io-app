@@ -1,9 +1,9 @@
 import { View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import AlphaChannel from "../../../img/test/alphaChannel.svg";
-import Fingerprint from "../../../img/test/fingerprint.svg";
-import Analytics from "../../../img/test/analytics.svg";
+import AlphaChannel from "../../../../img/test/alphaChannel.svg";
+import Fingerprint from "../../../../img/test/fingerprint.svg";
+import Analytics from "../../../../img/test/analytics.svg";
 import { InfoBox } from "../../../components/box/InfoBox";
 import { IOAccordion } from "../../../components/core/accordion/IOAccordion";
 import { RawAccordion } from "../../../components/core/accordion/RawAccordion";
