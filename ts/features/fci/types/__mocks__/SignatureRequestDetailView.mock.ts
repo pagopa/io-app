@@ -1,6 +1,5 @@
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
-import { ClausesTypeEnum } from "../../../../../definitions/fci/ClausesType";
-import { StatusEnum as DocumentStatusEnum } from "../../../../../definitions/fci/Document";
+import { TypeEnum as ClausesTypeEnum } from "../../../../../definitions/fci/Clause";
 import { DocumentDetailView } from "../../../../../definitions/fci/DocumentDetailView";
 import { SignatureField } from "../../../../../definitions/fci/SignatureField";
 import {
@@ -16,27 +15,25 @@ export const mockDocuments: ReadonlyArray<DocumentDetailView> = [
     created_at: new Date(),
     url: `http://127.0.0.1:3000/static_content/fci/modulo_1` as NonEmptyString,
     updated_at: new Date(),
-    uploaded_at: new Date(),
-    status: DocumentStatusEnum.READY,
     metadata: {
       title: "Modulo 1" as NonEmptyString,
       signature_fields: [
         {
           clause: {
-            title: "clause title 1",
+            title: "clause title 1" as NonEmptyString,
             type: ClausesTypeEnum.REQUIRED
           },
           attrs: {
-            unique_name: "unique_name_1"
+            unique_name: "unique_name_1" as NonEmptyString
           }
         },
         {
           clause: {
-            title: "clause title 2",
+            title: "clause title 2" as NonEmptyString,
             type: ClausesTypeEnum.OPTIONAL
           },
           attrs: {
-            unique_name: "unique_name_2"
+            unique_name: "unique_name_2" as NonEmptyString
           }
         },
         {
@@ -45,7 +42,7 @@ export const mockDocuments: ReadonlyArray<DocumentDetailView> = [
             type: ClausesTypeEnum.UNFAIR
           },
           attrs: {
-            unique_name: "unique_name_3"
+            unique_name: "unique_name_3" as NonEmptyString
           }
         }
       ] as ReadonlyArray<SignatureField>
@@ -54,13 +51,13 @@ export const mockDocuments: ReadonlyArray<DocumentDetailView> = [
 ];
 
 export const mockSignatureRequestDetailView: SignatureRequestDetailView = {
-  id: "mockId",
+  id: "mockId" as NonEmptyString,
   status: SignatureRequestStatus.WAIT_FOR_SIGNATURE,
   expires_at: new Date(now.setDate(now.getDate() + 30)),
   created_at: now,
-  dossier_id: "mockDossierId",
+  dossier_id: "mockDossierId" as NonEmptyString,
   qr_code_url: "mockQrCodeUrl",
-  signer_id: "mockSignerId",
+  signer_id: "mockSignerId" as NonEmptyString,
   updated_at: now,
   documents: mockDocuments
 };

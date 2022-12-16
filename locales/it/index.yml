@@ -3226,6 +3226,10 @@ features:
       name: "Nome"
       familyName: "Cognome"
       birthDate: "Data di nascita"
+    thankYouPage:
+      title: "Fatto!"
+      content: "A breve riceverai un messaggio con i documenti firmati."
+      cta: "Chiudi"
     qtspTos:
       title: "Dai il tuo consenso?"
       show: "Visualizza"
