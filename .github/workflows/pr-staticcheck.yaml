@@ -2,6 +2,13 @@ name: Pull request review
 on:
   pull_request
 jobs:
+  run-danger:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.workflow }}-pr-staticcheck-${{ github.head_ref || github.run_id }}
+      cancel-in-progress: true
+    steps:
+      - run: '[ -z "$DANGER_GITHUB_API_TOKEN" ] || yarn danger ci'
   compile:
     runs-on: ubuntu-latest
     concurrency:
@@ -36,6 +43,9 @@ jobs:
         run: yarn tsc:noemit
   lint:
     needs: compile
+    concurrency:
+      group: ${{ github.workflow }}-pr-staticcheck-${{ github.head_ref || github.run_id }}
+      cancel-in-progress: true
     runs-on: ubuntu-latest
     steps:
       - id: checkout
@@ -67,6 +77,9 @@ jobs:
   prettier:
     needs: compile
     runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.workflow }}-pr-staticcheck-${{ github.head_ref || github.run_id }}
+      cancel-in-progress: true
     steps:
       - id: checkout
         uses: actions/checkout@v3.0.2
@@ -97,6 +110,9 @@ jobs:
   test:
     needs: compile
     runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.workflow }}-pr-staticcheck-${{ github.head_ref || github.run_id }}
+      cancel-in-progress: true
     steps:
       - id: checkout
         uses: actions/checkout@v3.0.2
