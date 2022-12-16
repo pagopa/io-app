@@ -4,16 +4,16 @@ import { StyleSheet } from "react-native";
 import AlphaChannel from "../../../img/test/alphaChannel.svg";
 import Fingerprint from "../../../img/test/fingerprint.svg";
 import Analytics from "../../../img/test/analytics.svg";
-import { InfoBox } from "../../components/box/InfoBox";
-import { IOAccordion } from "../../components/core/accordion/IOAccordion";
-import { RawAccordion } from "../../components/core/accordion/RawAccordion";
-import { Body } from "../../components/core/typography/Body";
-import { H3 } from "../../components/core/typography/H3";
-import { H5 } from "../../components/core/typography/H5";
-import { Label } from "../../components/core/typography/Label";
-import { IOColors } from "../../components/core/variables/IOColors";
-import { IOStyles } from "../../components/core/variables/IOStyles";
-import { ShowroomSection } from "./components/ShowroomSection";
+import { InfoBox } from "../../../components/box/InfoBox";
+import { IOAccordion } from "../../../components/core/accordion/IOAccordion";
+import { RawAccordion } from "../../../components/core/accordion/RawAccordion";
+import { Body } from "../../../components/core/typography/Body";
+import { H3 } from "../../../components/core/typography/H3";
+import { H5 } from "../../../components/core/typography/H5";
+import { Label } from "../../../components/core/typography/Label";
+import { IOColors } from "../../../components/core/variables/IOColors";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
+import { ShowroomSection } from "../components/ShowroomSection";
 
 const styles = StyleSheet.create({
   content: {
