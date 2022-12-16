@@ -5,12 +5,10 @@ import { call, cancelled, put } from "typed-redux-saga/macro";
 import { fetchTimeout } from "../../../../config";
 import { getNetworkError } from "../../../../utils/errors";
 import { fciDownloadPreview } from "../../store/actions";
+import { getFileNameFromUrl } from "../../components/DocumentViewer";
 
 export const FciDownloadPreviewDirectoryPath =
   RNFS.CachesDirectoryPath + "/files";
-
-const getFileNameFromUrl = (url: string) =>
-  url.substring(url.lastIndexOf("/") + 1);
 
 /**
  * Builds the save path for the given attachment
