@@ -1,15 +1,16 @@
 import { testSaga } from "redux-saga-test-plan";
 import { ActionType } from "typesafe-actions";
 import { left, right } from "fp-ts/lib/Either";
+import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { getNetworkError } from "../../../../../utils/errors";
 import { qtspFilledDocument } from "../../../types/__mocks__/CreateFilledDocumentBody.mock";
 import { fciLoadQtspFilledDocument } from "../../../store/actions";
-import { CreateFilledDocumentBody } from "../../../../../../definitions/fci/CreateFilledDocumentBody";
+import { CreateFilledDocument } from "../../../../../../definitions/fci/CreateFilledDocument";
 import { handleCreateFilledDocument } from "../handleCreateFilledDocument";
 import { FilledDocumentDetailView } from "../../../../../../definitions/fci/FilledDocumentDetailView";
 
-const mockedPayload: CreateFilledDocumentBody = {
-  document_url: "https://mockedUrl"
+const mockedPayload: CreateFilledDocument = {
+  document_url: "https://mockedUrl" as NonEmptyString
 };
 
 const successResponse = {
@@ -31,7 +32,7 @@ describe("handleCreateFilledDocument", () => {
     testSaga(handleCreateFilledDocument, mockBackendFciClient, loadAction)
       .next()
       .call(mockBackendFciClient, {
-        body: loadAction.payload
+        documentToFill: loadAction.payload
       })
       .next(right(successResponse))
       .put(fciLoadQtspFilledDocument.success(successResponse.value))
@@ -41,7 +42,7 @@ describe("handleCreateFilledDocument", () => {
   it("Should dispatch fciLoadQtspFilledDocument.failure with the response status code as payload if the response is right and the status code is different from 200", () => {
     testSaga(handleCreateFilledDocument, mockBackendFciClient, loadAction)
       .next()
-      .call(mockBackendFciClient, { body: loadAction.payload })
+      .call(mockBackendFciClient, { documentToFill: loadAction.payload })
       .next(right(failureResponse))
       .next(
         fciLoadQtspFilledDocument.failure(
@@ -54,7 +55,7 @@ describe("handleCreateFilledDocument", () => {
   it("Should dispatch fciLoadQtspFilledDocument.failure with a fixed message as payload if the response left", () => {
     testSaga(handleCreateFilledDocument, mockBackendFciClient, loadAction)
       .next()
-      .call(mockBackendFciClient, { body: loadAction.payload })
+      .call(mockBackendFciClient, { documentToFill: loadAction.payload })
       .next(left(new Error()))
       .next(
         fciLoadQtspFilledDocument.failure(
@@ -70,7 +71,7 @@ describe("handleCreateFilledDocument", () => {
     const mockedError = new Error("mockedErrorMessage");
     testSaga(handleCreateFilledDocument, mockBackendFciClient, loadAction)
       .next()
-      .call(mockBackendFciClient, { body: loadAction.payload })
+      .call(mockBackendFciClient, { documentToFill: loadAction.payload })
       .throw(mockedError)
       .next(fciLoadQtspFilledDocument.failure(getNetworkError(mockedError)))
       .next()
