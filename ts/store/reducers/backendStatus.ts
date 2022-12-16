@@ -366,13 +366,7 @@ export const preferredPspsByOriginSelector = createSelector(
  */
 export const isFciEnabledSelector = createSelector(
   backendStatusSelector,
-  (backendStatus): boolean =>
-    fciEnabled &&
-    pipe(
-      backendStatus,
-      O.map(bs => bs.config.fci.enabled),
-      O.getOrElse(() => false)
-    )
+  (_): boolean => fciEnabled
 );
 
 // systems could be consider dead when we have no updates for at least DEAD_COUNTER_THRESHOLD times
