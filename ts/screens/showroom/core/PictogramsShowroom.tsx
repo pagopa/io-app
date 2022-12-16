@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
 
 export const PictogramsShowroom = () => (
   <ShowroomSection title={"Pictograms"}>
-    <View style={styles.itemsWrapper}>
+    {/* <View style={styles.itemsWrapper}>
       <AssetViewerBox
         type="raster"
         name={"Fireworks"}
@@ -202,8 +202,9 @@ export const PictogramsShowroom = () => (
         image={renderRasterImage(BrokenLink)}
       />
       <AssetViewerBox name={"Heart"} image={<Heart fill={IOColors.blue} />} />
-    </View>
-    <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
+    </View> */}
+
+    {/* <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
       EU Covid Certificate
     </H2>
     <View style={styles.itemsWrapper}>
@@ -228,9 +229,9 @@ export const PictogramsShowroom = () => (
         image={renderRasterImage(CertificateWrongFormat)}
       />
       {/* ↳ Duplicate of Question */}
-    </View>
+    {/* </View> */}
 
-    <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
+    {/* <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
       Sections
     </H2>
     <View style={styles.itemsWrapper}>
@@ -270,7 +271,7 @@ export const PictogramsShowroom = () => (
           <IconFont name={"io-home-servizi"} color={IOColors.white} size={48} />
         }
       />
-    </View>
+    </View> */}
 
     <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
       Pictograms (SVG Components)
