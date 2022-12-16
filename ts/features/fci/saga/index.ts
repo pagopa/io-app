@@ -236,7 +236,10 @@ function* watchFciSignedDocumentsStartSaga(): SagaIterator {
   yield* call(
     NavigationService.dispatchNavigationAction,
     StackActions.replace(FCI_ROUTES.MAIN, {
-      screen: FCI_ROUTES.DOC_PREVIEW
+      screen: FCI_ROUTES.DOC_PREVIEW,
+      params: {
+        documentUrl: ""
+      }
     })
   );
 }

@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
 export const FciDocumentPreviewScreen = (
   props: IOStackNavigationRouteProps<FciParamsList, "FCI_DOC_PREVIEW">
 ): React.ReactElement => {
-  const docParamUrl = props.route.params?.documentUrl ?? "";
+  const docParamUrl = props.route.params.documentUrl ?? "";
   const [documentUrl, setDocumentUrl] = React.useState("");
   const [showDocNavBar, setShowDocNavBar] = React.useState(false);
   const [totalPages, setTotalPages] = React.useState(0);
