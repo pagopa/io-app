@@ -1,6 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { SagaIterator } from "redux-saga";
-import { getType } from "typesafe-actions";
+import { getType, ActionType } from "typesafe-actions";
+import RNFS from "react-native-fs";
 import { call, takeLatest, put, select } from "typed-redux-saga/macro";
 import { CommonActions } from "@react-navigation/native";
 import NavigationService from "../../../navigation/NavigationService";
@@ -14,15 +15,18 @@ import {
   fciAbortRequest,
   fciStartRequest,
   fciLoadQtspClauses,
-  fciLoadQtspFilledDocument
+  fciLoadQtspFilledDocument,
+  fciDownloadPreview,
+  fciDownloadPreviewCancel
 } from "../store/actions";
 import {
-  fciQtspClausesSelector,
+  fciQtspClausesMetadataSelector,
   FciQtspClausesState
 } from "../store/reducers/fciQtspClauses";
 import { handleGetSignatureRequestById } from "./networking/handleGetSignatureRequestById";
 import { handleGetQtspMetadata } from "./networking/handleGetQtspMetadata";
 import { handleCreateFilledDocument } from "./networking/handleCreateFilledDocument";
+import { handleDownloadDocument } from "./networking/handleDownloadDocument";
 
 /**
  * Handle the FCI Signature requests
@@ -57,6 +61,13 @@ export function* watchFciSaga(bearerToken: SessionToken): SagaIterator {
     watchFciQtspClausesSaga
   );
   yield* takeLatest(getType(fciAbortRequest), watchFciAbortSaga);
+
+  yield* takeLatest(
+    getType(fciDownloadPreview.request),
+    handleDownloadDocument
+  );
+
+  yield* takeLatest(getType(fciDownloadPreviewCancel), clearFciDownloadPreview);
 }
 
 /**
@@ -64,7 +75,7 @@ export function* watchFciSaga(bearerToken: SessionToken): SagaIterator {
  */
 function* watchFciQtspClausesSaga(): SagaIterator {
   const potQtspClauses: FciQtspClausesState = yield* select(
-    fciQtspClausesSelector
+    fciQtspClausesMetadataSelector
   );
 
   if (pot.isSome(potQtspClauses)) {
@@ -100,5 +111,19 @@ function* watchFciStartSaga(): SagaIterator {
   // this is needed to get the document_url
   // that will be used to create the filled document
   yield* put(fciLoadQtspClauses.request());
-  // }
+}
+
+/**
+ * Clears cached file for the fci document preview
+ * and reset the state to empty.
+ */
+function* clearFciDownloadPreview(
+  action: ActionType<typeof fciDownloadPreviewCancel>
+) {
+  const path = action.payload.path;
+  if (path) {
+    yield RNFS.exists(path).then(exists =>
+      exists ? RNFS.unlink(path) : Promise.resolve()
+    );
+  }
 }
