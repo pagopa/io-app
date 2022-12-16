@@ -2,6 +2,7 @@ import "react-native";
 import { Provider } from "react-redux";
 import React from "react";
 import configureMockStore from "redux-mock-store";
+import { constNull } from "fp-ts/lib/function";
 import ErrorComponent from "../ErrorComponent";
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
@@ -61,7 +62,7 @@ const renderComponent = (props: Props) => {
 
   const Component = (
     <Provider store={store}>
-      <ErrorComponent {...props} testID={fakeTestID} />
+      <ErrorComponent {...props} testID={fakeTestID} onPress={constNull} />
     </Provider>
   );
 

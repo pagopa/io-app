@@ -16,7 +16,7 @@ import {
   fciDocumentSignatureFieldsFieldsSelector,
   fciSignatureDetailDocumentsSelector
 } from "../../store/reducers/fciSignatureRequest";
-import { Document } from "../../../../../definitions/fci/Document";
+import { DocumentDetailView } from "../../../../../definitions/fci/DocumentDetailView";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { FciParamsList } from "../../navigation/params";
 import SignatureFieldItem from "../../components/SignatureFieldItem";
@@ -30,8 +30,8 @@ import IconFont from "../../../../components/ui/IconFont";
 import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentSignatures";
 import { fciUpdateDocumentSignaturesRequest } from "../../store/actions";
 import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
-import { ClausesTypeEnum } from "../../../../../definitions/fci/ClausesType";
-import { DocumentSignature } from "../../../../../definitions/fci/DocumentSignature";
+import { TypeEnum as ClausesTypeEnum } from "../../../../../definitions/fci/Clause";
+import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
 import {
   clausesByType,
   clauseTypeMaping,
@@ -39,7 +39,7 @@ import {
 } from "../../utils/signatureFields";
 
 export type FciSignatureFieldsScreenNavigationParams = Readonly<{
-  documentId: Document["id"];
+  documentId: DocumentDetailView["id"];
   currentDoc: number;
 }>;
 
@@ -111,7 +111,7 @@ const FciSignatureFieldsScreen = (
     });
   };
 
-  const updateDocumentSignatures = (fn: (doc: DocumentSignature) => void) =>
+  const updateDocumentSignatures = (fn: (doc: DocumentToSign) => void) =>
     pipe(
       docSignatures,
       O.chain(document => O.fromNullable(document)),

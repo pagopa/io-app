@@ -5,7 +5,7 @@ import { SignatureRequestDetailView } from "../../../../definitions/fci/Signatur
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { FciParamsList } from "../navigation/params";
-import { fciSignatureRequestFromId } from "../store/actions";
+import { fciEndRequest, fciSignatureRequestFromId } from "../store/actions";
 import { fciSignatureRequestSelector } from "../store/reducers/fciSignatureRequest";
 import { LoadingErrorComponent } from "../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import SuccessComponent from "../components/SuccessComponent";
@@ -40,11 +40,11 @@ const FciSignatureScreen = (
     () => <LoadingComponent />,
     () => <LoadingComponent />,
     () => <LoadingComponent />,
-    _ => <GenericErrorComponent />,
+    _ => <GenericErrorComponent onPress={() => dispatch(fciEndRequest())} />,
     b => <SuccessComponent signatureRequest={b} />,
     () => <LoadingComponent />,
     () => <LoadingComponent />,
-    _ => <GenericErrorComponent />
+    _ => <GenericErrorComponent onPress={() => dispatch(fciEndRequest())} />
   );
 };
 
