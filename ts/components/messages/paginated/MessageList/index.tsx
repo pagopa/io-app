@@ -164,11 +164,12 @@ const MessageList = ({
 
   const [isRefreshFromUser, setIsRefreshFromUser] = useState(false);
 
+  const isLoadingPreviousOrAll = isLoadingPrevious || isReloadingAll;
   useEffect(() => {
-    if (!isLoadingPrevious && !isReloadingAll) {
+    if (!isLoadingPreviousOrAll) {
       setIsRefreshFromUser(false);
     }
-  }, [isLoadingPrevious, isReloadingAll]);
+  }, [isLoadingPreviousOrAll]);
 
   useOnFirstRender(
     () => {
@@ -248,7 +249,6 @@ const MessageList = ({
   // the list. Note that the top spinnmer is never shown when
   // loading next page messages (since they are loaded when the list
   // end has been reached. In that case, the footer spinner is shown)
-  const isLoadingPreviousOrAll = isLoadingPrevious || isReloadingAll;
   const shouldShowFooterLoader =
     isLoadingMore ||
     (!hasMessages && !isRefreshFromUser && isLoadingPreviousOrAll);
