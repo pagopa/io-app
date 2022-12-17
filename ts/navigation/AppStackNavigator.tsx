@@ -17,7 +17,6 @@ import workunitGenericFailure from "../components/error/WorkunitGenericFailure";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
 import {
   bpdEnabled,
-  fciEnabled,
   bpdOptInPaymentMethodsEnabled,
   fimsEnabled,
   myPortalEnabled,
@@ -124,7 +123,6 @@ export const AppStackNavigator = (): React.ReactElement => {
   if (!startupLoaded) {
     return <IngressScreen />;
   }
-
   return (
     <Stack.Navigator
       initialRouteName={ROUTES.MAIN}
@@ -232,7 +230,7 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
 
   const cgnEnabled = useIOSelector(isCGNEnabledSelector);
   const isFimsEnabled = useIOSelector(isFIMSEnabledSelector) && fimsEnabled;
-  const isFciEnabled = useIOSelector(isFciEnabledSelector) && fciEnabled;
+  const isFciEnabled = useIOSelector(isFciEnabledSelector);
 
   const bpdRemoteConfig = useIOSelector(bpdRemoteConfigSelector);
   const isOptInPaymentMethodsEnabled =
