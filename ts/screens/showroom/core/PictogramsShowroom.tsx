@@ -2,13 +2,13 @@ import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import {
   AssetViewerBox,
-  assetItemGutter,
-  renderRasterImage
+  assetItemGutter
+  // renderRasterImage
 } from "../components/AssetViewerBox";
 import { ShowroomSection } from "../components/ShowroomSection";
 import { H2 } from "../../../components/core/typography/H2";
-import { IOColors } from "../../../components/core/variables/IOColors";
-import IconFont from "../../../components/ui/IconFont";
+// import { IOColors } from "../../../components/core/variables/IOColors";
+// import IconFont from "../../../components/ui/IconFont";
 import {
   Pictogram,
   IOPictograms,
@@ -19,44 +19,44 @@ import {
 } from "../../../components/core/pictograms";
 
 /* PICTOGRAMS */
-import Fireworks from "../../../../img/pictograms/fireworks.png";
-import FireworksWhite from "../../../../img/bonus/bpd/fireworks.png";
-import Question from "../../../../img/pictograms/doubt.png";
-import Hourglass from "../../../../img/pictograms/hourglass.png";
-import AirBaloon from "../../../../img/bonus/siciliaVola/emptyVoucherList.svg";
-import AirBaloonRaster from "../../../../img/landing/session_expired.png";
-import AirBaloonArrow from "../../../../img/messages/empty-message-list-icon.png";
-import Timeout from "../../../../img/bonus/siciliaVola/generateVoucherTimeout.svg";
-import Airship from "../../../../img/messages/empty-archive-list-icon.png";
-import Baloons from "../../../../img/messages/empty-due-date-list-icon.png";
-import PiggyBank from "../../../../img/messages/empty-transaction-list-icon.png";
-import Error from "../../../../img/messages/error-message-detail-icon.png";
-import BeerMug from "../../../../img/search/beer-mug.png";
-import Search from "../../../../img/search/search-icon.png";
-import Puzzle from "../../../../img/services/icon-loading-services.png";
-import Pin from "../../../../img/services/icon-no-places.png";
-import Places from "../../../../img/services/icon-places.png";
-import Castle from "../../../../img/wallet/errors/domain-unknown-icon.png";
-import Abacus from "../../../../img/wallet/errors/invalid-amount-icon.png";
-import Vespa from "../../../../img/wallet/errors/payment-ongoing-icon.png";
-import NotAvailable from "../../../../img/wallet/errors/payment-unavailable-icon.png";
-import InProgress from "../../../../img/wallet/errors/missing-payment-id-icon.png";
-import Unrecognized from "../../../../img/wallet/errors/payment-unknown-icon.png";
-import Umbrella from "../../../../img/wallet/errors/generic-error-icon.png";
-import ABILogo from "../../../../img/wallet/cards-icons/abiLogoFallback.png";
-import CompletedRaster from "../../../../img/pictograms/payment-completed.png";
-import Completed from "../../../../img/pictograms/payment-completed.svg";
-import BrokenLink from "../../../../img/broken-link.png";
+// import Fireworks from "../../../../img/pictograms/fireworks.png";
+// import FireworksWhite from "../../../../img/bonus/bpd/fireworks.png";
+// import Question from "../../../../img/pictograms/doubt.png";
+// import Hourglass from "../../../../img/pictograms/hourglass.png";
+// import AirBaloon from "../../../../img/bonus/siciliaVola/emptyVoucherList.svg";
+// import AirBaloonRaster from "../../../../img/landing/session_expired.png";
+// import AirBaloonArrow from "../../../../img/messages/empty-message-list-icon.png";
+// import Timeout from "../../../../img/bonus/siciliaVola/generateVoucherTimeout.svg";
+// import Airship from "../../../../img/messages/empty-archive-list-icon.png";
+// import Baloons from "../../../../img/messages/empty-due-date-list-icon.png";
+// import PiggyBank from "../../../../img/messages/empty-transaction-list-icon.png";
+// import Error from "../../../../img/messages/error-message-detail-icon.png";
+// import BeerMug from "../../../../img/search/beer-mug.png";
+// import Search from "../../../../img/search/search-icon.png";
+// import Puzzle from "../../../../img/services/icon-loading-services.png";
+// import Pin from "../../../../img/services/icon-no-places.png";
+// import Places from "../../../../img/services/icon-places.png";
+// import Castle from "../../../../img/wallet/errors/domain-unknown-icon.png";
+// import Abacus from "../../../../img/wallet/errors/invalid-amount-icon.png";
+// import Vespa from "../../../../img/wallet/errors/payment-ongoing-icon.png";
+// import NotAvailable from "../../../../img/wallet/errors/payment-unavailable-icon.png";
+// import InProgress from "../../../../img/wallet/errors/missing-payment-id-icon.png";
+// import Unrecognized from "../../../../img/wallet/errors/payment-unknown-icon.png";
+// import Umbrella from "../../../../img/wallet/errors/generic-error-icon.png";
+// import ABILogo from "../../../../img/wallet/cards-icons/abiLogoFallback.png";
+// import CompletedRaster from "../../../../img/pictograms/payment-completed.png";
+// import Completed from "../../../../img/pictograms/payment-completed.svg";
+// import BrokenLink from "../../../../img/broken-link.png";
 /* EU Covid Certificate */
-import CertificateExpired from "../../../../img/features/euCovidCert/certificate_expired.png";
-import CertificateNotFound from "../../../../img/features/euCovidCert/certificate_not_found.png";
-import CertificateRevoked from "../../../../img/features/euCovidCert/certificate_revoked.png";
-import CertificateWrongFormat from "../../../../img/features/euCovidCert/certificate_wrong_format.png";
+// import CertificateExpired from "../../../../img/features/euCovidCert/certificate_expired.png";
+// import CertificateNotFound from "../../../../img/features/euCovidCert/certificate_not_found.png";
+// import CertificateRevoked from "../../../../img/features/euCovidCert/certificate_revoked.png";
+// import CertificateWrongFormat from "../../../../img/features/euCovidCert/certificate_wrong_format.png";
 /* Donations */
-import Heart from "../../../../img/features/uaDonations/heart.svg";
+// import Heart from "../../../../img/features/uaDonations/heart.svg";
 /* Sections */
-import Smile from "../../../../img/messages/smile.png";
-import Profile from "../../../../img/icons/profile-illustration.png";
+// import Smile from "../../../../img/messages/smile.png";
+// import Profile from "../../../../img/icons/profile-illustration.png";
 
 const styles = StyleSheet.create({
   itemsWrapper: {
