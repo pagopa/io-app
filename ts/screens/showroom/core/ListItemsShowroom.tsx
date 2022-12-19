@@ -20,6 +20,7 @@ import InfoIcon from "../../../../img/assistance/info.svg";
 import OrderOption from "../../../features/bonus/cgn/components/merchants/search/OrderOption";
 import ZendeskItemPermissionComponent from "../../../features/zendesk/components/ZendeskItemPermissionComponent";
 import { ProductCategoryEnum } from "../../../../definitions/cgn/merchants/ProductCategory";
+import CgnMerchantListItem from "../../../features/bonus/cgn/components/merchants/CgnMerchantListItem";
 
 export const ListItemsShowroom = () => (
   <ShowroomSection title={"List Items"}>
@@ -199,6 +200,18 @@ export const ListItemsShowroom = () => (
         }}
         operatorName={"Operator name"}
         merchantType={undefined}
+      />
+    </ComponentViewerBox>
+
+    <ComponentViewerBox name="CgnMerchantListItem">
+      <CgnMerchantListItem
+        categories={[
+          ProductCategoryEnum.cultureAndEntertainment,
+          ProductCategoryEnum.home
+        ]}
+        name={"Partner Name"}
+        onPress={() => alert("Action triggered")}
+        isNew={true}
       />
     </ComponentViewerBox>
   </ShowroomSection>
