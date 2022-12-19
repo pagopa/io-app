@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native";
 import I18n from "../../../i18n";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
@@ -14,31 +13,29 @@ type Props = WithTestID<{
   title: string;
   subTitle: string;
   image: number;
+  onPress: () => void;
 }>;
 
-const ErrorComponent = (props: Props) => {
-  const navigation = useNavigation();
-  return (
-    <BaseScreenComponent goBack={false}>
-      <SafeAreaView style={IOStyles.flex} testID={props.testID}>
-        <InfoScreenComponent
-          image={renderInfoRasterImage(props.image)}
-          title={props.title}
-          body={props.subTitle}
-        />
+const ErrorComponent = (props: Props) => (
+  <BaseScreenComponent goBack={false}>
+    <SafeAreaView style={IOStyles.flex} testID={props.testID}>
+      <InfoScreenComponent
+        image={renderInfoRasterImage(props.image)}
+        title={props.title}
+        body={props.subTitle}
+      />
 
-        <FooterWithButtons
-          type={"SingleButton"}
-          leftButton={cancelButtonProps(
-            navigation.goBack,
-            I18n.t("global.buttons.close"),
-            undefined,
-            "closeButton"
-          )}
-        />
-      </SafeAreaView>
-    </BaseScreenComponent>
-  );
-};
+      <FooterWithButtons
+        type={"SingleButton"}
+        leftButton={cancelButtonProps(
+          props.onPress,
+          I18n.t("global.buttons.close"),
+          undefined,
+          "closeButton"
+        )}
+      />
+    </SafeAreaView>
+  </BaseScreenComponent>
+);
 
 export default ErrorComponent;

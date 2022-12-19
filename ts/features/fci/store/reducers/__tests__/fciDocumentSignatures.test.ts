@@ -1,10 +1,11 @@
 import { createStore } from "redux";
+import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { fciUpdateDocumentSignaturesRequest } from "../../actions";
-import { DocumentSignature } from "../../../../../../definitions/fci/DocumentSignature";
+import { DocumentToSign } from "../../../../../../definitions/fci/DocumentToSign";
 import { SignatureField } from "../../../../../../definitions/fci/SignatureField";
-import { ClausesTypeEnum } from "../../../../../../definitions/fci/ClausesType";
+import { TypeEnum as ClausesTypeEnum } from "../../../../../../definitions/fci/Clause";
 
 describe("FciDocumentSignaturesReducer", () => {
   it("The initial state should be an ampty array", () => {
@@ -16,26 +17,24 @@ describe("FciDocumentSignaturesReducer", () => {
   it("The documentSignatures should be an array of size equal to one if the fciUpdateDocumentSignaturesRequest is dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
-    const docSignature: DocumentSignature = {
-      document_id: "123",
-      signature: "signature",
+    const docToSign: DocumentToSign = {
+      document_id: "123" as NonEmptyString,
       signature_fields: []
     };
-    store.dispatch(fciUpdateDocumentSignaturesRequest(docSignature));
+    store.dispatch(fciUpdateDocumentSignaturesRequest(docToSign));
     expect(
       store.getState().features.fci.documentSignatures.documents.length
     ).toBe(1);
     expect(
       store.getState().features.fci.documentSignatures.documents
-    ).toStrictEqual([docSignature]);
+    ).toStrictEqual([docToSign]);
   });
   it("The documentSignatures should be an array of size equal to two if the fciUpdateDocumentSignaturesRequest is dispatched two times", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
-    const docSignatures: ReadonlyArray<DocumentSignature> = [
+    const docToSign: ReadonlyArray<DocumentToSign> = [
       {
-        document_id: "1",
-        signature: "signature",
+        document_id: "1" as NonEmptyString,
         signature_fields: [
           {
             clause: {
@@ -47,8 +46,7 @@ describe("FciDocumentSignaturesReducer", () => {
         ] as Array<SignatureField>
       },
       {
-        document_id: "2",
-        signature: "signature",
+        document_id: "2" as NonEmptyString,
         signature_fields: [
           {
             clause: {
@@ -60,15 +58,15 @@ describe("FciDocumentSignaturesReducer", () => {
         ] as Array<SignatureField>
       }
     ];
-    docSignatures.map(docSignature => {
+    docToSign.map(docSignature => {
       store.dispatch(fciUpdateDocumentSignaturesRequest(docSignature));
     });
     expect(
       store.getState().features.fci.documentSignatures.documents.length
-    ).toBe(docSignatures.length);
+    ).toBe(docToSign.length);
     expect(
       store.getState().features.fci.documentSignatures.documents
-    ).toStrictEqual(docSignatures);
+    ).toStrictEqual(docToSign);
   });
   it("The documentSignatures should be an array of size equal to one and zero signatureFields if the fciUpdateDocumentSignaturesRequest is dispatched", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
@@ -78,12 +76,11 @@ describe("FciDocumentSignaturesReducer", () => {
         title: "clause title 1",
         type: ClausesTypeEnum.REQUIRED
       },
-      attrs: {}
+      attrs: {} as SignatureField["attrs"]
     };
 
     const docSignatures = {
-      document_id: "1",
-      signature: "signature",
+      document_id: "1" as NonEmptyString,
       signature_fields: [signatureField]
     };
 

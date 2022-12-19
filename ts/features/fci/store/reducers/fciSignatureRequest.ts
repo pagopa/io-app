@@ -1,12 +1,12 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-import { Document } from "../../../../../definitions/fci/Document";
+import { DocumentDetailView } from "../../../../../definitions/fci/DocumentDetailView";
 import { SignatureRequestDetailView } from "../../../../../definitions/fci/SignatureRequestDetailView";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { NetworkError } from "../../../../utils/errors";
-import { fciSignatureRequestFromId, fciAbortRequest } from "../actions";
+import { fciSignatureRequestFromId, fciClearStateRequest } from "../actions";
 
 export type FciSignatureRequestState = pot.Pot<
   SignatureRequestDetailView,
@@ -26,7 +26,7 @@ const reducer = (
       return pot.some(action.payload);
     case getType(fciSignatureRequestFromId.failure):
       return pot.toError(state, action.payload);
-    case getType(fciAbortRequest):
+    case getType(fciClearStateRequest):
       return emptyState;
   }
 
@@ -45,7 +45,7 @@ export const fciSignatureDetailDocumentsSelector = createSelector(
 );
 
 export const fciDocumentSignatureFieldsFieldsSelector = (
-  documentId: Document["id"]
+  documentId: DocumentDetailView["id"]
 ) =>
   createSelector(fciSignatureRequestSelector, signatureDetailView =>
     pot.getOrElse(
