@@ -11,13 +11,13 @@ type IDPayInstrumentsByIdWallet = {
 };
 
 const selectIsLoadingIbanList = (state: StateWithContext) =>
-  state.matches("LOADING_IBAN_LIST");
+  state.matches("CONFIGURING_IBAN.LOADING_IBAN_LIST");
 
 const selectIbanList = (state: StateWithContext) =>
   P.getOrElse(state.context.ibanList, []);
 
 const selectIsUpsertingIban = (state: StateWithContext) =>
-  state.matches("ADDING_IBAN");
+  state.matches("CONFIGURING_IBAN.ADDING_IBAN");
 
 const selectIsLoadingInstruments = (state: StateWithContext) =>
   state.matches("LOADING_INSTRUMENTS");
