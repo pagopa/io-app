@@ -162,13 +162,14 @@ const MessageList = ({
     O.Option<number>
   >(O.none);
 
-  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [isRefreshFromUser, setIsRefreshFromUser] = useState(false);
 
+  const isLoadingPreviousOrAll = isLoadingPrevious || isReloadingAll;
   useEffect(() => {
-    if (!isLoadingPrevious && !isReloadingAll) {
-      setIsRefreshing(false);
+    if (!isLoadingPreviousOrAll) {
+      setIsRefreshFromUser(false);
     }
-  }, [isLoadingPrevious, isReloadingAll]);
+  }, [isLoadingPreviousOrAll]);
 
   useOnFirstRender(
     () => {
@@ -190,8 +191,9 @@ const MessageList = ({
     }
   }, [error]);
 
+  const hasMessages = messages.length > 0;
   const scrollTo = (index: number, animated: boolean = false) => {
-    if (flatListRef.current && messages.length > 0) {
+    if (flatListRef.current && hasMessages) {
       flatListRef.current.scrollToIndex({ animated, index });
     }
   };
@@ -222,25 +224,57 @@ const MessageList = ({
     }
   };
 
+  // This component has two different spinners: one on top and one
+  // on bottom. The former is the standard refresh control while the
+  // latter is set as a footer to the list, but only when it has to
+  // be shown.
+  // There are three data events that require one of them to be shown:
+  // the loading of the next message page (older messages), the
+  // loading of the previos message page (newer messager) or a global
+  // reloading of all messages.
+  // While next messages are only loaded when the end of the list has
+  // been reached by scrolling (and there are more messages to load),
+  // the other two loadings are triggered by using the refresh
+  // gesture or when the refresh interval is hit or when a push
+  // notification is received and selected with the app in foreground
+  // while showing this list or, lastly, at the first showing of this
+  // component.
+  // In order not to show both spinners, the footer one is shown only
+  // if loading the next message page (older messages) or if there
+  // are no messages in the list and the loading was triggered
+  // automatically (i.e., not from an user swipe-down-to-refresh).
+  // The top spinner, on the other hand, is shown only if the user
+  // request a loading by swiping-down-to-refresh or, when the
+  // loading was system initiated, if there were already messages in
+  // the list. Note that the top spinnmer is never shown when
+  // loading next page messages (since they are loaded when the list
+  // end has been reached. In that case, the footer spinner is shown)
+  const shouldShowFooterLoader =
+    isLoadingMore ||
+    (!hasMessages && !isRefreshFromUser && isLoadingPreviousOrAll);
+  const shouldShowTopRefreshControl =
+    isRefreshFromUser || (hasMessages && isLoadingPreviousOrAll);
+  const isLoadingOrRefreshingMessageList =
+    isLoadingMore || isLoadingPreviousOrAll;
+
   const refreshControl = shouldUseLoad ? (
     <RefreshControl
-      refreshing={isRefreshing}
+      refreshing={shouldShowTopRefreshControl}
       onRefresh={() => {
-        if (isRefreshing) {
+        if (isLoadingOrRefreshingMessageList) {
           return;
         }
-
-        setIsRefreshing(true);
+        setIsRefreshFromUser(true);
         reloadAll();
       }}
     />
   ) : undefined;
 
   const renderListFooter = () => {
-    if (isLoadingMore || (isReloadingAll && !didLoad)) {
+    if (shouldShowFooterLoader) {
       return <Loader />;
     }
-    if (messages.length > 0 && !nextCursor) {
+    if (hasMessages && !nextCursor) {
       return <EdgeBorderComponent />;
     }
     return <View style={styles.bottomSpacer} />;
@@ -260,7 +294,7 @@ const MessageList = ({
         keyExtractor={(message: UIMessage): string => message.id}
         ref={flatListRef}
         refreshControl={refreshControl}
-        refreshing={isRefreshing}
+        refreshing={isLoadingOrRefreshingMessageList}
         renderItem={renderItem({
           hasPaidBadge,
           onLongPress,
