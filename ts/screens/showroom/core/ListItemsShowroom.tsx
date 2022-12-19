@@ -1,5 +1,7 @@
 // import { View as NBView, Text as NBText } from "native-base";
 import * as React from "react";
+import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
+
 import { H2 } from "../../../components/core/typography/H2";
 
 import { ShowroomSection } from "../components/ShowroomSection";
@@ -17,6 +19,7 @@ import InfoIcon from "../../../../img/assistance/info.svg";
 
 import OrderOption from "../../../features/bonus/cgn/components/merchants/search/OrderOption";
 import ZendeskItemPermissionComponent from "../../../features/zendesk/components/ZendeskItemPermissionComponent";
+import { ProductCategoryEnum } from "../../../../definitions/cgn/merchants/ProductCategory";
 
 export const ListItemsShowroom = () => (
   <ShowroomSection title={"List Items"}>
@@ -184,14 +187,14 @@ export const ListItemsShowroom = () => (
     <ComponentViewerBox name="CgnMerchantDiscountItem">
       <CgnMerchantDiscountItem
         discount={{
-          description: "Rerum sapiente nihil quaerat vero sint.",
+          name: "Small Rubber Chips" as NonEmptyString,
+          id: "28201" as NonEmptyString,
+          description: undefined,
           discount: 25,
-          discountUrl: "http://http://192.168.1.3:3000/merchant_landing",
+          discountUrl: "https://localhost",
           endDate: new Date(),
-          id: "28201",
           isNew: false,
-          name: "Small Rubber Chips",
-          productCategories: ["home"],
+          productCategories: [ProductCategoryEnum.cultureAndEntertainment],
           startDate: new Date()
         }}
         operatorName={"Operator name"}
