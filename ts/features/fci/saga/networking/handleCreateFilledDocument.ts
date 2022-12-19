@@ -16,7 +16,7 @@ export function* handleCreateFilledDocument(
 ): SagaIterator {
   try {
     const postQtspFilledBodyResponse = yield* call(postQtspFilledBody, {
-      body: action.payload
+      documentToFill: action.payload
     });
 
     if (E.isLeft(postQtspFilledBodyResponse)) {
@@ -34,6 +34,6 @@ export function* handleCreateFilledDocument(
 
     throw Error(`response status ${postQtspFilledBodyResponse.right.status}`);
   } catch (e) {
-    return fciLoadQtspFilledDocument.failure(getNetworkError(e));
+    yield* put(fciLoadQtspFilledDocument.failure(getNetworkError(e)));
   }
 }

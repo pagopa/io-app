@@ -2,16 +2,16 @@ import { pipe } from "fp-ts/lib/function";
 import { updateAt } from "fp-ts/lib/ReadonlyArray";
 import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
-import { DocumentSignature } from "../../../../../definitions/fci/DocumentSignature";
+import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import {
-  fciAbortRequest,
+  fciClearStateRequest,
   fciUpdateDocumentSignaturesRequest
 } from "../actions";
 
 export type FciDocumentSignaturesState = {
-  documents: ReadonlyArray<DocumentSignature>;
+  documents: ReadonlyArray<DocumentToSign>;
 };
 
 const emptyState: FciDocumentSignaturesState = {
@@ -38,11 +38,11 @@ const reducer = (
               [
                 ...state.documents,
                 action.payload
-              ] as ReadonlyArray<DocumentSignature>
+              ] as ReadonlyArray<DocumentToSign>
           )
         )
       };
-    case getType(fciAbortRequest):
+    case getType(fciClearStateRequest):
       return emptyState;
   }
   return state;
