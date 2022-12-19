@@ -134,7 +134,14 @@ const createServicesImplementation = (
     return loadIDPayInstruments(context.initiativeId);
   };
 
-  return { loadInitiative, loadInstruments, addInstrument };
+  const loadIbanList = async (context: Context) => {
+    if (context.initiativeId === undefined) {
+      return Promise.reject("initiativeId is undefined");
+    }
+    return Promise.resolve([]);
+  };
+
+  return { loadInitiative, loadInstruments, addInstrument, loadIbanList };
 };
 
 export { createServicesImplementation };

@@ -46,11 +46,24 @@ const createActionsImplementation = (
     });
   };
 
+  const navigateToIbanLandingScreen = () => {
+    navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
+      screen: IDPayConfigurationRoutes.IDPAY_IBAN_CONFIGURATION_LANDING
+    });
+  };
+  const navigateToIbanOnboardingScreen = () => {
+    navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
+      screen: IDPayConfigurationRoutes.IDPAY_IBAN_ONBOARDING
+    });
+  };
+
   return {
     navigateToConfigurationEntry,
     navigateToInstrumentsEnrollmentScreen,
     navigateToConfigurationSuccessScreen,
-    navigateToInitiativeDetailScreen
+    navigateToInitiativeDetailScreen,
+    navigateToIbanLandingScreen,
+    navigateToIbanOnboardingScreen
   };
 };
 
