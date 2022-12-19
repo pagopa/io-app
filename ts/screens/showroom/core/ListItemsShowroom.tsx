@@ -21,6 +21,7 @@ import OrderOption from "../../../features/bonus/cgn/components/merchants/search
 import ZendeskItemPermissionComponent from "../../../features/zendesk/components/ZendeskItemPermissionComponent";
 import { ProductCategoryEnum } from "../../../../definitions/cgn/merchants/ProductCategory";
 import CgnMerchantListItem from "../../../features/bonus/cgn/components/merchants/CgnMerchantListItem";
+import DetailedlistItemComponent from "../../../components/DetailedlistItemComponent";
 
 export const ListItemsShowroom = () => (
   <ShowroomSection title={"List Items"}>
@@ -174,6 +175,28 @@ export const ListItemsShowroom = () => (
         title="Storico versioni dell'app"
         value="Per capire se il problema dipende dall'ultimo aggiornamento"
         testId="TestID"
+      />
+    </ComponentViewerBox>
+
+    <H2
+      color={"bluegrey"}
+      weight={"SemiBold"}
+      style={{ marginBottom: 16, marginTop: 16 }}
+    >
+      Misc
+    </H2>
+
+    <ComponentViewerBox name="DetailedlistItemComponent">
+      <DetailedlistItemComponent
+        isNew={true}
+        text11={"Payment Recipient"}
+        text12={"+200,00 €"}
+        text2={"19/12/2022 - 1:25:23 PM"}
+        text3={"Transaction Name"}
+        onPressItem={() => alert("Action triggered")}
+        accessible={true}
+        accessibilityRole={"button"}
+        accessibilityLabel={"Accessibility Label"}
       />
     </ComponentViewerBox>
 
