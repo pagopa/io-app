@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.23.0-rc.0](https://github.com/pagopa/io-app/compare/2.22.0-rc.3...2.23.0-rc.0) (2022-12-20)
+
+
+### Features
+
+* **IDPay:** [[IODPAY-71](https://pagopa.atlassian.net/browse/IODPAY-71)] Add client and API definition for IDPay IBAN endpoints ([#4243](https://github.com/pagopa/io-app/issues/4243)) ([8b9a53b](https://github.com/pagopa/io-app/commit/8b9a53bb0ebc7093a2c12eb818ee43314d9955e5))
+
+
+### Bug Fixes
+
+* [[IOAPPCOM-16](https://pagopa.atlassian.net/browse/IOAPPCOM-16)] Message spinner from foreground push notification ([#4242](https://github.com/pagopa/io-app/issues/4242)) ([30e1e2a](https://github.com/pagopa/io-app/commit/30e1e2a61fc8d9919ef8eec52e78a71d4120bb24))
+
+
+### Chores
+
+* **Firma con IO:** [[SFEQS-1255](https://pagopa.atlassian.net/browse/SFEQS-1255)] Disable local feature flag ([#4245](https://github.com/pagopa/io-app/issues/4245)) ([cd51460](https://github.com/pagopa/io-app/commit/cd51460f4f415e1fd17dedad13c0654a879c9989))
+
 ## [2.22.0-rc.3](https://github.com/pagopa/io-app/compare/2.22.0-rc.2...2.22.0-rc.3) (2022-12-16)
 
 
