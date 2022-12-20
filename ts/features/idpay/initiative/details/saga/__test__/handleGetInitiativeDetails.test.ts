@@ -7,7 +7,7 @@ import {
   StatusEnum
 } from "../../../../../../../definitions/idpay/wallet/InitiativeDTO";
 import { appReducer } from "../../../../../../store/reducers";
-import { idpayInitiativeGet } from "../../store";
+import { idpayInitiativeGet } from "../../store/actions";
 import { handleGetInitiativeDetails } from "../handleGetInitiativeDetails";
 
 const mockResponseSuccess: InitiativeDTO = {
