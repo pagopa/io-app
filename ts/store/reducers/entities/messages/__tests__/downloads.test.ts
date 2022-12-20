@@ -1,23 +1,23 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { MvlDownloads, mvlDownloadsReducer } from "../downloads";
+import { mockPdfAttachment } from "../../../../../__mocks__/attachment";
 import {
-  mvlAttachmentDownload,
-  mvlRemoveCachedAttachment
-} from "../../actions/downloads";
-import { mvlMockPdfAttachment } from "../../../types/__mock__/mvlMock";
+  downloadAttachment,
+  removeCachedAttachment
+} from "../../../../actions/messages";
+import { Downloads, downloadsReducer } from "../downloads";
 
 const path = "/path/attachment.pdf";
 
-describe("mvlDownloadsReducer", () => {
+describe("downloadsReducer", () => {
   describe("given no download", () => {
     const initialState = {};
 
     describe("when requesting an attachment", () => {
-      const attachment = mvlMockPdfAttachment;
+      const attachment = mockPdfAttachment;
 
-      const afterRequestState = mvlDownloadsReducer(
+      const afterRequestState = downloadsReducer(
         initialState,
-        mvlAttachmentDownload.request(attachment)
+        downloadAttachment.request(attachment)
       );
 
       it("then it returns pot.loading", () => {
@@ -32,9 +32,9 @@ describe("mvlDownloadsReducer", () => {
         it("then it returns pot.some", () => {
           expect(
             pot.isSome(
-              mvlDownloadsReducer(
+              downloadsReducer(
                 afterRequestState,
-                mvlAttachmentDownload.success({
+                downloadAttachment.success({
                   attachment,
                   path
                 })
@@ -48,9 +48,9 @@ describe("mvlDownloadsReducer", () => {
         it("then it returns pot.error", () => {
           expect(
             pot.isError(
-              mvlDownloadsReducer(
+              downloadsReducer(
                 afterRequestState,
-                mvlAttachmentDownload.failure({
+                downloadAttachment.failure({
                   attachment,
                   error: new Error()
                 })
@@ -64,9 +64,9 @@ describe("mvlDownloadsReducer", () => {
         it("then it returns pot.none", () => {
           expect(
             pot.isNone(
-              mvlDownloadsReducer(
+              downloadsReducer(
                 afterRequestState,
-                mvlAttachmentDownload.cancel(attachment)
+                downloadAttachment.cancel(attachment)
               )[attachment.messageId][attachment.id] ?? pot.none
             )
           ).toBeTruthy();
@@ -76,8 +76,8 @@ describe("mvlDownloadsReducer", () => {
   });
 
   describe("given a downloaded attachment", () => {
-    const attachment = mvlMockPdfAttachment;
-    const initialState: MvlDownloads = {
+    const attachment = mockPdfAttachment;
+    const initialState: Downloads = {
       [attachment.messageId]: {
         [attachment.id]: pot.some({ attachment, path })
       }
@@ -87,9 +87,9 @@ describe("mvlDownloadsReducer", () => {
       it("then it returns pot.none", () => {
         expect(
           pot.isNone(
-            mvlDownloadsReducer(
+            downloadsReducer(
               initialState,
-              mvlRemoveCachedAttachment({ attachment, path })
+              removeCachedAttachment({ attachment, path })
             )[attachment.messageId][attachment.id] ?? pot.none
           )
         ).toBeTruthy();
