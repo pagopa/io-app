@@ -69,7 +69,6 @@ export const InitiativeDetailsScreen = () => {
     });
   };
 
-  // console.log("INHERE LOADING");
   useFocusEffect(
     useCallback(() => {
       if (firstFocusRef.current === true) {
