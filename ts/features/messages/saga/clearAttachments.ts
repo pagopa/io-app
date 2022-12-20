@@ -1,5 +1,6 @@
 import { ActionType } from "typesafe-actions";
 import RNFS from "react-native-fs";
+import { call } from "typed-redux-saga/macro";
 import { removeCachedAttachment } from "../../../store/actions/messages";
 import { AttachmentsDirectoryPath } from "./networking/downloadAttachment";
 
@@ -12,9 +13,11 @@ export function* clearAttachment(
 ) {
   const path = action.payload.path;
   if (path) {
-    yield RNFS.exists(path).then(exists =>
-      exists ? RNFS.unlink(path) : Promise.resolve()
-    );
+    const isPresent = yield* call(RNFS.exists, path);
+
+    if (isPresent) {
+      yield* call(RNFS.unlink, path);
+    }
   }
 }
 
@@ -22,7 +25,9 @@ export function* clearAttachment(
  * Clears cached files for all the attachments
  */
 export function* clearAllAttachments() {
-  yield RNFS.exists(AttachmentsDirectoryPath).then(exists =>
-    exists ? RNFS.unlink(AttachmentsDirectoryPath) : Promise.resolve()
-  );
+  const isPresent = yield* call(RNFS.exists, AttachmentsDirectoryPath);
+
+  if (isPresent) {
+    yield* call(RNFS.unlink, AttachmentsDirectoryPath);
+  }
 }
