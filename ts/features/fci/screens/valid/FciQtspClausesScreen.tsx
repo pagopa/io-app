@@ -1,5 +1,5 @@
 import * as React from "react";
-import { SafeAreaView, FlatList, StyleSheet, View } from "react-native";
+import { SafeAreaView, FlatList, View } from "react-native";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { H1 } from "../../../../components/core/typography/H1";
