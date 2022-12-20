@@ -2,21 +2,21 @@ import { ActionType } from "typesafe-actions";
 import RNFS from "react-native-fs";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import { call, cancelled, put } from "typed-redux-saga/macro";
-import { mvlAttachmentDownload } from "../../store/actions/downloads";
 import { fetchTimeout } from "../../../../config";
 import { SessionToken } from "../../../../types/SessionToken";
-import { MvlAttachment } from "../../types/mvlData";
 import { getError } from "../../../../utils/errors";
+import { downloadAttachment } from "../../../../store/actions/messages";
+import { UIAttachment } from "../../../../store/reducers/entities/messages/types";
 
-export const MvlAttachmentsDirectoryPath =
+export const AttachmentsDirectoryPath =
   RNFS.CachesDirectoryPath + "/attachments";
 
 /**
  * Builds the save path for the given attachment
  * @param attachment
  */
-const savePath = (attachment: MvlAttachment) =>
-  MvlAttachmentsDirectoryPath +
+const savePath = (attachment: UIAttachment) =>
+  AttachmentsDirectoryPath +
   "/" +
   attachment.messageId +
   "/" +
@@ -25,13 +25,13 @@ const savePath = (attachment: MvlAttachment) =>
   attachment.displayName;
 
 /**
- * Handles the download of an MVL attachment
+ * Handles the download of an attachment
  * @param bearerToken
  * @param action
  */
-export function* downloadMvlAttachment(
+export function* downloadAttachmentSaga(
   bearerToken: SessionToken,
-  action: ActionType<typeof mvlAttachmentDownload.request>
+  action: ActionType<typeof downloadAttachment.request>
 ) {
   const attachment = action.payload;
 
@@ -54,7 +54,7 @@ export function* downloadMvlAttachment(
         `error ${status} fetching ${attachment.resourceUrl.href}`
       );
       yield* put(
-        mvlAttachmentDownload.failure({
+        downloadAttachment.failure({
           attachment,
           error
         })
@@ -62,17 +62,17 @@ export function* downloadMvlAttachment(
       return;
     }
     const path = result.path();
-    yield* put(mvlAttachmentDownload.success({ attachment, path }));
+    yield* put(downloadAttachment.success({ attachment, path }));
   } catch (error) {
     yield* put(
-      mvlAttachmentDownload.failure({
+      downloadAttachment.failure({
         attachment,
         error: getError(error)
       })
     );
   } finally {
     if (yield* cancelled()) {
-      yield* put(mvlAttachmentDownload.cancel(attachment));
+      yield* put(downloadAttachment.cancel(attachment));
     }
   }
 }

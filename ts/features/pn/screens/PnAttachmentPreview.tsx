@@ -1,14 +1,16 @@
 import React from "react";
 import { PnParamsList } from "../navigation/params";
-import { MvlAttachmentId } from "../../mvl/types/mvlData";
+import {
+  UIMessageId,
+  UIAttachmentId
+} from "../../../store/reducers/entities/messages/types";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { MessageAttachmentPreview } from "../../messages/components/MessageAttachmentPreview";
 import { mixpanelTrack } from "../../../mixpanel";
-import { UIMessageId } from "../../../store/reducers/entities/messages/types";
 
 export type PnAttachmentPreviewNavigationParams = Readonly<{
   messageId: UIMessageId;
-  attachmentId: MvlAttachmentId;
+  attachmentId: UIAttachmentId;
 }>;
 
 export const PnAttachmentPreview = (
