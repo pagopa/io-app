@@ -12,6 +12,7 @@ import { IconsShowroom } from "./core/IconsShowroom";
 import { LogosShowroom } from "./core/LogosShowroom";
 import { SelectionShowroom } from "./core/SelectionShowroom";
 import { TypographyShowroom } from "./core/TypographyShowRoom";
+import { AdviceShowroom } from "./core/AdviceShowroom";
 import { OthersShowroom } from "./OthersShowroom";
 import { ButtonsShowroom } from "./ButtonsShowroom";
 
@@ -51,6 +52,8 @@ export const Showroom = () => {
             <OthersShowroom />
             <NBView spacer={true} large={true} />
             <ButtonsShowroom />
+            <NBView spacer={true} large={true} />
+            <AdviceShowroom />
             <NBView spacer={true} large={true} />
             <PictogramsShowroom />
             <NBView spacer={true} large={true} />
