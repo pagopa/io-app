@@ -1,4 +1,5 @@
 import { IUnitTag } from "@pagopa/ts-commons/lib/units";
+import { ValidUrl } from "@pagopa/ts-commons/lib/url";
 import { CreatedMessageWithContentAndAttachments } from "../../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { FiscalCode } from "../../../../../definitions/backend/FiscalCode";
 import { MessageBodyMarkdown } from "../../../../../definitions/backend/MessageBodyMarkdown";
@@ -11,6 +12,7 @@ import { TimeToLiveSeconds } from "../../../../../definitions/backend/TimeToLive
 import { getExpireStatus } from "../../../../utils/dates";
 import { MessagePaymentExpirationInfo } from "../../../../utils/messages";
 import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
+import { Byte } from "../../../../types/digitalInformationUnit";
 
 /**
  * The unique ID of a UIMessage and UIMessageDetails, used to avoid passing the wrong ID as parameters
@@ -79,6 +81,26 @@ export type Attachment = {
   name: string;
   content: string;
   mimeType: string;
+};
+
+export type UIAttachmentId = string & IUnitTag<"UIAttachmentId">;
+
+/**
+ * Represent an attachment with the metadata and resourceUrl to retrieve the attachment
+ */
+export type UIAttachment = {
+  // the message ID that contains the attachment
+  messageId: UIMessageId;
+  // the ID of the attachment (only guaranteed to be unique per message)
+  id: UIAttachmentId;
+  // a display name for the file
+  displayName: string;
+  // a generic content type for a file
+  contentType: string;
+  // size (in Byte) of the attachment, for display purpose
+  size?: Byte;
+  // The url that can be used to retrieve the resource
+  resourceUrl: ValidUrl;
 };
 
 export const getPaymentExpirationInfo = (
