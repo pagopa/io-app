@@ -69,14 +69,14 @@ export const InitiativeDetailsScreen = () => {
     });
   };
 
+  // console.log("INHERE LOADING");
   useFocusEffect(
     useCallback(() => {
       if (firstFocusRef.current === true) {
-        // eslint-disable-next-line functional/immutable-data
-        firstFocusRef.current = false;
-      } else {
         dispatch(idpayInitiativeGet.request({ initiativeId }));
       }
+      // eslint-disable-next-line functional/immutable-data
+      firstFocusRef.current = false;
     }, [dispatch, initiativeId])
   );
 
