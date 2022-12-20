@@ -9,10 +9,7 @@ import {
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { NetworkError } from "../../../../../../utils/errors";
-import {
-  CircuitTypeEnum,
-  OperationTypeEnum
-} from "../../../../../../../definitions/idpay/timeline/TransactionOperationDTO";
+import { OperationTypeEnum } from "../../../../../../../definitions/idpay/timeline/TransactionOperationDTO";
 import { TimelineDTO } from "../../../../../../../definitions/idpay/timeline/TimelineDTO";
 
 const mockResponseSuccess: InitiativeDTO = {
@@ -94,7 +91,7 @@ const mockTimelineResponseSuccess: TimelineDTO = {
       amount: 100,
       brandLogo: "https://www.google.com",
       maskedPan: "1234567890",
-      circuitType: CircuitTypeEnum[10]
+      circuitType: "CREDIT_CARD"
     }
   ]
 };

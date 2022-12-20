@@ -3,10 +3,7 @@ import { expectSaga } from "redux-saga-test-plan";
 import { PreferredLanguageEnum } from "../../../../../../../definitions/backend/PreferredLanguage";
 import { ErrorDTO } from "../../../../../../../definitions/idpay/timeline/ErrorDTO";
 import { TimelineDTO } from "../../../../../../../definitions/idpay/timeline/TimelineDTO";
-import {
-  CircuitTypeEnum,
-  OperationTypeEnum
-} from "../../../../../../../definitions/idpay/timeline/TransactionOperationDTO";
+import { OperationTypeEnum } from "../../../../../../../definitions/idpay/timeline/TransactionOperationDTO";
 import { appReducer } from "../../../../../../store/reducers";
 import { idpayTimelineGet } from "../../store/actions";
 import { handleGetTimeline } from "../handleGetTimeline";
@@ -22,7 +19,7 @@ const mockResponseSuccess: TimelineDTO = {
       amount: 100,
       brandLogo: "https://www.google.com",
       maskedPan: "1234567890",
-      circuitType: CircuitTypeEnum[10]
+      circuitType: "MASTERCARD"
     }
   ]
 };
