@@ -5,47 +5,46 @@ import { PreferredLanguageEnum } from "../../../../../../definitions/backend/Pre
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
-import { IDPayWalletClient } from "../../../wallet/api/client";
+import { IDPayTimelineClient } from "../api/client";
 import {
-  idpayInitiativeGet,
+  idpayTimelineGet,
   IdPayInitiativeGetPayloadType
 } from "../store/actions";
 
 /**
  * Handle the remote call to retrieve the IDPay initiative details
- * @param getInitiativeDetails
+ * @param getTimeline
  * @param action
  * @param initiativeId
  */
 
-export function* handleGetInitiativeDetails(
-  getInitiativeDetails: IDPayWalletClient["getWalletDetail"],
+export function* handleGetTimeline(
+  getTimeline: IDPayTimelineClient["getTimeline"],
   token: string,
   language: PreferredLanguageEnum,
   payload: IdPayInitiativeGetPayloadType
 ) {
   try {
-    const getInitiativeDetailsResult: SagaCallReturnType<
-      typeof getInitiativeDetails
-    > = yield* call(getInitiativeDetails, {
-      bearerAuth: token,
-      "Accept-Language": language,
-      initiativeId: payload.initiativeId
-    });
+    const getTimelineResult: SagaCallReturnType<typeof getTimeline> =
+      yield* call(getTimeline, {
+        bearerAuth: token,
+        "Accept-Language": language,
+        initiativeId: payload.initiativeId
+      });
     yield pipe(
-      getInitiativeDetailsResult,
+      getTimelineResult,
       E.fold(
         error =>
           put(
-            idpayInitiativeGet.failure({
+            idpayTimelineGet.failure({
               ...getGenericError(new Error(readablePrivacyReport(error)))
             })
           ),
         response =>
           put(
             response.status === 200
-              ? idpayInitiativeGet.success(response.value)
-              : idpayInitiativeGet.failure({
+              ? idpayTimelineGet.success(response.value)
+              : idpayTimelineGet.failure({
                   ...getGenericError(
                     new Error(`response status code ${response.status}`)
                   )
@@ -54,6 +53,6 @@ export function* handleGetInitiativeDetails(
       )
     );
   } catch (e) {
-    yield* put(idpayInitiativeGet.failure({ ...getNetworkError(e) }));
+    yield* put(idpayTimelineGet.failure({ ...getNetworkError(e) }));
   }
 }
