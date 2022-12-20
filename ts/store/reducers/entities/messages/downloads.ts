@@ -16,6 +16,11 @@ export type Download = {
   path: string;
 };
 
+export type DownloadError<T> = {
+  attachment: UIAttachment;
+  error: T;
+};
+
 export type Downloads = Record<
   UIMessageId,
   IndexedById<pot.Pot<Download, Error>>

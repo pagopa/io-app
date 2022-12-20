@@ -18,6 +18,10 @@ import {
 import { Cursor } from "../reducers/entities/messages/allPaginated";
 import { MessagesStatus } from "../reducers/entities/messages/messagesStatus";
 import { loadThirdPartyMessage } from "../../features/messages/store/actions";
+import {
+  Download,
+  DownloadError
+} from "../reducers/entities/messages/downloads";
 
 /**
  * Load a single message given its ID
@@ -150,19 +154,14 @@ export const downloadAttachment = createAsyncAction(
   "DOWNLOAD_ATTACHMENT_SUCCESS",
   "DOWNLOAD_ATTACHMENT_FAILURE",
   "DOWNLOAD_ATTACHMENT_CANCEL"
-)<
-  UIAttachment,
-  { attachment: UIAttachment; path: string },
-  { attachment: UIAttachment; error: Error },
-  UIAttachment
->();
+)<UIAttachment, Download, DownloadError<Error>, UIAttachment>();
 
 /**
  * This action removes any cached data in order to perform another download.
  */
 export const removeCachedAttachment = createStandardAction(
   "REMOVE_CACHED_ATTACHMENT"
-)<{ attachment: UIAttachment; path: string | undefined }>();
+)<Download>();
 
 export type MessagesActions = ActionType<
   | typeof reloadAllMessages

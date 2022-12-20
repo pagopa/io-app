@@ -7,6 +7,7 @@ import {
   PersistPartial,
   persistReducer
 } from "redux-persist";
+import _ from "lodash";
 import { Action } from "../../store/actions/types";
 import { PotTransform } from "../../store/transforms/potTransform";
 import { isDevEnv } from "../../utils/environment";
@@ -29,7 +30,7 @@ const migrations: MigrationManifest = {
   "3": (state: PersistedState): PersistedMvlState => {
     const mvl = state as PersistedMvlState;
     return {
-      ...mvl
+      ..._.omit(mvl, "downloads")
     };
   }
 };
