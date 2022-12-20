@@ -1,7 +1,8 @@
+import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { QtspClause } from "../../../../../definitions/fci/QtspClause";
-import { QtspClausesMetadata } from "../../../../../definitions/fci/QtspClausesMetadata";
+import { QtspClausesMetadataDetailView } from "../../../../../definitions/fci/QtspClausesMetadataDetailView";
 
-export const mockQtspClausesMetadata: QtspClausesMetadata = {
+export const mockQtspClausesMetadata: QtspClausesMetadataDetailView = {
   clauses: [
     {
       text: "(1) Io sottoscritto/a dichiaro quanto indicato nel [QUADRO E - AUTOCERTIFICAZIONE E SOTTOSCRIZIONE DA PARTE DEL TITOLARE.](@DOCUMENT_URL)"
@@ -15,9 +16,10 @@ export const mockQtspClausesMetadata: QtspClausesMetadata = {
   ],
   document_url:
     "https://pagopa.demo.bit4id.org/static/docs/modulo_richiesta_V1.pdf",
-  nonce: "",
+  nonce: "mockedBase64Nonce" as NonEmptyString,
   privacy_url: "https://docs.namirialtsp.com/documents/Mod_NAM_GDPR03D_ITA.pdf",
-  privacy_text: "Confermo di avere letto l'Informativa Privacy.",
+  privacy_text:
+    "Confermo di avere letto l'Informativa Privacy." as NonEmptyString,
   terms_and_conditions_url:
     "https://docs.namirialtsp.com/documents/Mod_NAM_CA01D_ITA.pdf"
 };

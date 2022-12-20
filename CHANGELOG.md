@@ -2,6 +2,81 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.23.0-rc.0](https://github.com/pagopa/io-app/compare/2.22.0-rc.3...2.23.0-rc.0) (2022-12-20)
+
+
+### Features
+
+* **IDPay:** [[IODPAY-71](https://pagopa.atlassian.net/browse/IODPAY-71)] Add client and API definition for IDPay IBAN endpoints ([#4243](https://github.com/pagopa/io-app/issues/4243)) ([8b9a53b](https://github.com/pagopa/io-app/commit/8b9a53bb0ebc7093a2c12eb818ee43314d9955e5))
+
+
+### Bug Fixes
+
+* [[IOAPPCOM-16](https://pagopa.atlassian.net/browse/IOAPPCOM-16)] Message spinner from foreground push notification ([#4242](https://github.com/pagopa/io-app/issues/4242)) ([30e1e2a](https://github.com/pagopa/io-app/commit/30e1e2a61fc8d9919ef8eec52e78a71d4120bb24))
+
+
+### Chores
+
+* **Firma con IO:** [[SFEQS-1255](https://pagopa.atlassian.net/browse/SFEQS-1255)] Disable local feature flag ([#4245](https://github.com/pagopa/io-app/issues/4245)) ([cd51460](https://github.com/pagopa/io-app/commit/cd51460f4f415e1fd17dedad13c0654a879c9989))
+
+## [2.22.0-rc.3](https://github.com/pagopa/io-app/compare/2.22.0-rc.2...2.22.0-rc.3) (2022-12-16)
+
+
+### Chores
+
+* **Firma con IO:** Activate FCI feature flag ([#4244](https://github.com/pagopa/io-app/issues/4244)) ([4c2eaea](https://github.com/pagopa/io-app/commit/4c2eaea6e240e195aa2c7a959ab249c295675ffd))
+
+## [2.22.0-rc.2](https://github.com/pagopa/io-app/compare/2.21.0-rc.2...2.22.0-rc.2) (2022-12-16)
+
+
+### Features
+
+* **Firma con IO:** [[SFEQS-1060](https://pagopa.atlassian.net/browse/SFEQS-1060)] Add qtsp clauses and document preview screens ([#4222](https://github.com/pagopa/io-app/issues/4222)) ([90f0d7d](https://github.com/pagopa/io-app/commit/90f0d7d30b71cfaff777de8149324a06778c5458))
+* **Firma con IO:** [[SFEQS-1165](https://pagopa.atlassian.net/browse/SFEQS-1165)] Add signing request with identification screen and thank you page ([#4239](https://github.com/pagopa/io-app/issues/4239)) ([1e02ce8](https://github.com/pagopa/io-app/commit/1e02ce8f28285aa0857a81ccc18a768717ad5e36))
+* [[IGP-68](https://pagopa.atlassian.net/browse/IGP-68),[IOAPPCOM-33](https://pagopa.atlassian.net/browse/IOAPPCOM-33)] Message read status from push notification on stopped/killed application ([#4235](https://github.com/pagopa/io-app/issues/4235)) ([dbbf28b](https://github.com/pagopa/io-app/commit/dbbf28b4abbb51684931fa618dc477bc13980ac0))
+* **IDPay:** [[IODPAY-61](https://pagopa.atlassian.net/browse/IODPAY-61)] Added paymentMethodChoice screen ([#4206](https://github.com/pagopa/io-app/issues/4206)) ([e49db68](https://github.com/pagopa/io-app/commit/e49db6866572ce2ea10bd3556c6c938cfa01fbd9))
+* **IDPay:** [[IODPAY-66](https://pagopa.atlassian.net/browse/IODPAY-66)] Added padding between items in PDNDPrerequisites page ([ceab39b](https://github.com/pagopa/io-app/commit/ceab39bf47520645f9397cf9248931149550243f))
+
+
+### Bug Fixes
+
+* [[IOAPPCOM-13](https://pagopa.atlassian.net/browse/IOAPPCOM-13)] On iPhone 14 the CTA inside the message detail screen does not respect the Safe Area ([#4231](https://github.com/pagopa/io-app/issues/4231)) ([a92bc54](https://github.com/pagopa/io-app/commit/a92bc5482f4a223d68671c14ddc2184d83ebee6a))
+* [[IOAPPCOM-35](https://pagopa.atlassian.net/browse/IOAPPCOM-35)] Fix bottom sheets not opening (on a PN message) ([#4237](https://github.com/pagopa/io-app/issues/4237)) ([d557142](https://github.com/pagopa/io-app/commit/d557142756ae1741e501e91d8430b53917fad8c3))
+* **Firma con IO:** Fix FCI specs ([#4232](https://github.com/pagopa/io-app/issues/4232)) ([f5c9d6a](https://github.com/pagopa/io-app/commit/f5c9d6ac9c2be2ff9e2ee14892a518f15404c7a6))
+
+
+### Chores
+
+* **release:** 2.22.0-rc.1 ([e40d9f2](https://github.com/pagopa/io-app/commit/e40d9f2701e086c91df4c9ffe395d02bf3423ce4))
+* [[IOAPPCOM-19](https://pagopa.atlassian.net/browse/IOAPPCOM-19)] Due date banner on prescription message detail is not aligned with the one on other messages' detail. ([#4236](https://github.com/pagopa/io-app/issues/4236)) ([b1c8fbf](https://github.com/pagopa/io-app/commit/b1c8fbfe2e2ecba2dddaaa33e122633afef2fcf9))
+* **deps:** bump certifi in /scripts/check_cie_button_exists ([#4229](https://github.com/pagopa/io-app/issues/4229)) ([964bd35](https://github.com/pagopa/io-app/commit/964bd35fa1ad3ee1074a06b2fba5762b5c7d3fda))
+* **deps:** bump certifi in /scripts/check_urls ([#4228](https://github.com/pagopa/io-app/issues/4228)) ([297e7ff](https://github.com/pagopa/io-app/commit/297e7ffc206bb432c69a7b26d5c32f56f53a92c3))
+* **deps:** bump decode-uri-component from 0.2.0 to 0.2.2 ([#4215](https://github.com/pagopa/io-app/issues/4215)) ([1c4caa6](https://github.com/pagopa/io-app/commit/1c4caa6d964c292e2bcad0a3d7b3453bba59acb5))
+* **deps:** bump express from 4.17.1 to 4.18.2 ([#4223](https://github.com/pagopa/io-app/issues/4223)) ([67b2c79](https://github.com/pagopa/io-app/commit/67b2c7913425313307bea5255ba281f0aec55b1b))
+* **deps:** bump qs from 6.5.2 to 6.5.3 ([#4224](https://github.com/pagopa/io-app/issues/4224)) ([1b6cffc](https://github.com/pagopa/io-app/commit/1b6cffcc2962de7cc4b21e7d0e1e0c2e6099c743))
+* **deps:** bump shell-quote from 1.7.2 to 1.7.4 ([#4140](https://github.com/pagopa/io-app/issues/4140)) ([22f8907](https://github.com/pagopa/io-app/commit/22f8907bc360e3025801bc841420157bd04d1f2d))
+* **deps:** bump vm2 from 3.9.7 to 3.9.11 ([#4125](https://github.com/pagopa/io-app/issues/4125)) ([bf786ed](https://github.com/pagopa/io-app/commit/bf786ed5a68b7d4bc03236b3906e598903a7d75e))
+* **release:** 2.22.0-rc.0 ([09f11de](https://github.com/pagopa/io-app/commit/09f11de4a50505c4d5e5542cd0cc33c51d9ad318))
+* [[IOAPPPEB-8](https://pagopa.atlassian.net/browse/IOAPPPEB-8)] Move useHardwareBackButton to common folder ([#4230](https://github.com/pagopa/io-app/issues/4230)) ([55db2b2](https://github.com/pagopa/io-app/commit/55db2b28506789d5d36ae2d2e72989b2a3ad9c1b))
+
+## [2.22.0-rc.1](https://github.com/pagopa/io-app/compare/2.22.0-rc.0...2.22.0-rc.1) (2022-12-15)
+
+
+### Features
+
+* **Firma con IO:** [[SFEQS-1060](https://pagopa.atlassian.net/browse/SFEQS-1060)] Add qtsp clauses and document preview screens ([#4222](https://github.com/pagopa/io-app/issues/4222)) ([90f0d7d](https://github.com/pagopa/io-app/commit/90f0d7d30b71cfaff777de8149324a06778c5458))
+* [[IGP-68](https://pagopa.atlassian.net/browse/IGP-68),[IOAPPCOM-33](https://pagopa.atlassian.net/browse/IOAPPCOM-33)] Message read status from push notification on stopped/killed application ([#4235](https://github.com/pagopa/io-app/issues/4235)) ([dbbf28b](https://github.com/pagopa/io-app/commit/dbbf28b4abbb51684931fa618dc477bc13980ac0))
+
+
+### Bug Fixes
+
+* [[IOAPPCOM-13](https://pagopa.atlassian.net/browse/IOAPPCOM-13)] On iPhone 14 the CTA inside the message detail screen does not respect the Safe Area ([#4231](https://github.com/pagopa/io-app/issues/4231)) ([a92bc54](https://github.com/pagopa/io-app/commit/a92bc5482f4a223d68671c14ddc2184d83ebee6a))
+
+
+### Chores
+
+* [[IOAPPCOM-19](https://pagopa.atlassian.net/browse/IOAPPCOM-19)] Due date banner on prescription message detail is not aligned with the one on other messages' detail. ([#4236](https://github.com/pagopa/io-app/issues/4236)) ([b1c8fbf](https://github.com/pagopa/io-app/commit/b1c8fbfe2e2ecba2dddaaa33e122633afef2fcf9))
+
 ## [2.22.0-rc.0](https://github.com/pagopa/io-app/compare/2.21.0-rc.2...2.22.0-rc.0) (2022-12-14)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "2.22.0-rc.0",
+  "version": "2.23.0-rc.0",
   "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v9.2.0-RELEASE/api_backend.yaml",
   "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v9.2.0-RELEASE/api_public.yaml",
   "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.20/definitions.yml",
@@ -13,7 +13,7 @@
   "io_bpd_award_periods": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.20/bonus/specs/bpd/award.json",
   "io_bpd_winning_transactions": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.20/bonus/specs/bpd/winning_transactions.json",
   "io_bpd_winning_transactions_v2": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.20/bonus/specs/bpd/winning_transactions_v2.json",
-  "api_fci": "https://raw.githubusercontent.com/pagopa/io-sign/efc488206d3635a9c41f8d7ff85734bc39d02ef9/docs/openapi-backend.yaml",
+  "api_fci": "https://raw.githubusercontent.com/pagopa/io-backend/v9.6.0/api_io_sign.yaml",
   "io_eu_covid_cert": "https://raw.githubusercontent.com/pagopa/io-backend/v9.2.0-RELEASE/api_eucovidcert.yaml",
   "io_sicilia_vola_token": "https://raw.githubusercontent.com/pagopa/io-backend/v9.2.0-RELEASE/api_mit_voucher.yaml",
   "io_pn_specs": "https://raw.githubusercontent.com/pagopa/io-backend/v9.2.0-RELEASE/api_pn.yaml",
@@ -26,6 +26,7 @@
   "idpay_onboarding": "https://raw.githubusercontent.com/pagopa/cstar-infrastructure/v1.70.0/src/domains/idpay-app/api/idpay_onboarding_workflow/openapi.onboarding.yml",
   "idpay_wallet": "https://raw.githubusercontent.com/pagopa/cstar-infrastructure/v1.70.0/src/domains/idpay-app/api/idpay_wallet/openapi.wallet.yml",
   "idpay_timeline":"https://raw.githubusercontent.com/pagopa/cstar-infrastructure/v1.87.0/src/domains/idpay-app/api/idpay_timeline/openapi.timeline.yml",
+  "idpay_iban": "https://raw.githubusercontent.com/pagopa/cstar-infrastructure/v1.81.2/src/domains/idpay-app/api/idpay_iban/openapi.iban.yml",
   "private": true,
   "scripts": {
     "start": "react-native start",
@@ -90,6 +91,7 @@
     "generate:idpay-onboarding": "rimraf definitions/idpay/onboarding && mkdir -p definitions/idpay/onboarding && gen-api-models --api-spec $npm_package_idpay_onboarding --out-dir ./definitions/idpay/onboarding --no-strict --response-decoders --request-types --client",
     "generate:idpay-wallet": "rimraf definitions/idpay/wallet && mkdir -p definitions/idpay/wallet && gen-api-models --api-spec $npm_package_idpay_wallet --out-dir ./definitions/idpay/wallet --no-strict --response-decoders --request-types --client",
     "generate:idpay-timeline": "rimraf definitions/idpay/timeline && mkdir -p definitions/idpay/timeline && gen-api-models --api-spec $npm_package_idpay_timeline --out-dir ./definitions/idpay/timeline --no-strict --response-decoders --request-types --client",
+    "generate:idpay-iban": "rimraf definitions/idpay/iban && mkdir -p definitions/idpay/iban && gen-api-models --api-spec $npm_package_idpay_iban --out-dir ./definitions/idpay/iban --no-strict --response-decoders --request-types --client",
     "generate": "npm-run-all generate:*",
     "locales_unused": "ts-node --skip-project -O '{\"lib\":[\"es2015\"]}' scripts/unused-locales.ts",
     "generate-myportal-readme": "jsdoc2md ts/utils/webviewScripts/*.js > MYPORTAL_README.md",
