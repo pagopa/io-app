@@ -11,8 +11,14 @@ import { preferredLanguageSelector } from "../../../../../store/reducers/persist
 import { waitBackoffError } from "../../../../../utils/backoffError";
 import { fromLocaleToPreferredLanguage } from "../../../../../utils/locale";
 import { createIDPayWalletClient } from "../../../wallet/api/client";
-import { idpayInitiativeGet, IdPayInitiativeGetPayloadType } from "../store";
+import { createIDPayTimelineClient } from "../api/client";
+import {
+  idpayInitiativeGet,
+  IdPayInitiativeGetPayloadType,
+  idpayTimelineGet
+} from "../store/actions";
 import { handleGetInitiativeDetails } from "./handleGetInitiativeDetails";
+import { handleGetTimeline } from "./handleGetTimeline";
 
 /**
  * Handle IDPAY initiative requests
@@ -20,6 +26,7 @@ import { handleGetInitiativeDetails } from "./handleGetInitiativeDetails";
  */
 export function* idpayInitiativeDetailsSaga(bearerToken: string): SagaIterator {
   const idPayWalletClient = createIDPayWalletClient(IDPAY_API_UAT_BASEURL);
+  const idPayTimelineClient = createIDPayTimelineClient(IDPAY_API_UAT_BASEURL);
   const token = IDPAY_API_TEST_TOKEN ?? bearerToken;
   const language = yield* select(preferredLanguageSelector);
 
@@ -37,6 +44,20 @@ export function* idpayInitiativeDetailsSaga(bearerToken: string): SagaIterator {
       yield* call(
         handleGetInitiativeDetails,
         idPayWalletClient.getWalletDetail,
+        token,
+        preferredLanguage,
+        action.payload
+      );
+    }
+  );
+  yield* takeLatest(
+    idpayTimelineGet.request,
+    function* (action: { payload: IdPayInitiativeGetPayloadType }) {
+      // wait backoff time if there were previous errors
+      yield* call(waitBackoffError, idpayTimelineGet.failure);
+      yield* call(
+        handleGetTimeline,
+        idPayTimelineClient.getTimeline,
         token,
         preferredLanguage,
         action.payload

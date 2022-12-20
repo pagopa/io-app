@@ -1681,11 +1681,12 @@ messages:
         block1: Expired on
         block2: at
     prescription:
-      addMemo: This prescription expires the
-      expiringAlert: This prescription expires today
+      expiringOrValidAlert:
+        block1: Expiring on
+        block2: at
       expiredAlert:
-        block1: The prescription expired at
-        block2: "on"
+        block1: Expired on
+        block2: at
     pay: Pay € {{amount}}
     onlyPay: Pay
     paid: Paid
@@ -1735,7 +1736,6 @@ messages:
     not_available: "n/a"
     prescription: Electronic prescription
     memo: Reminder for the recipient
-    deadline: this prescription expires {{date}}
     nre: Electronic prescription number
     iup: Unique booking identifier
     patient_fiscal_code: Patient's fiscal code
@@ -3202,6 +3202,13 @@ features:
       name: "Name"
       familyName: "Family name"
       birthDate: "Date of birth"
+    thankYouPage:
+      title: "Done!"
+      content: "You will shortly receive a message with the signed documents."
+      cta: "Close"
+    qtspTos:
+      title: "Do you give your consent?"
+      show: "View"
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
@@ -3291,13 +3298,15 @@ idpay:
           footer: Aggiungi almeno un metodo per iniziare ad utilizzare {{initiative}}.
         configured:
           yourOperations: Le tue Operazioni
-          yourOperationsSubtitle: Qui vedrai le transazioni effettuate con i metodi che hai associato.
+          yourOperationsSubtitle: "Qui vedrai le transazioni effettuate con i metodi che hai associato. "
           yourOperationsLink: Come si fa?
           settings:
+            showMore: Vedi tutte
             header: Impostazioni
             associatedPaymentMethods: Metodi di pagamento associati
             methodsi18n: metodi 
             selectedIBAN: IBAN per l'accredito
+            actionsRequired: Azioni richieste 
           startConfigurationCTA: Inizia
   onboarding:
     headerTitle: "Adesione all'iniziativa"

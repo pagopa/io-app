@@ -4,11 +4,11 @@ import { getNetworkError } from "../../../../../utils/errors";
 import { mockQtspClausesMetadata } from "../../../types/__mocks__/QtspClausesMetadata.mock";
 import { fciLoadQtspClauses } from "../../../store/actions";
 import { handleGetQtspMetadata } from "../handleGetQtspMetadata";
-import { QtspClausesMetadata } from "../../../../../../definitions/fci/QtspClausesMetadata";
+import { QtspClausesMetadataDetailView } from "../../../../../../definitions/fci/QtspClausesMetadataDetailView";
 
 const successResponse = {
   status: 200,
-  value: mockQtspClausesMetadata as QtspClausesMetadata
+  value: mockQtspClausesMetadata as QtspClausesMetadataDetailView
 };
 
 const failureResponse = {

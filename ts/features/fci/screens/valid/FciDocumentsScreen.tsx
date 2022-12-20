@@ -25,7 +25,7 @@ import { FCI_ROUTES } from "../../navigation/routes";
 import { SignatureField } from "../../../../../definitions/fci/SignatureField";
 import { FciParamsList } from "../../navigation/params";
 import { ExistingSignatureFieldAttrs } from "../../../../../definitions/fci/ExistingSignatureFieldAttrs";
-import { DocumentSignature } from "../../../../../definitions/fci/DocumentSignature";
+import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
 import { fciUpdateDocumentSignaturesRequest } from "../../store/actions";
 import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentSignatures";
 import { useIODispatch } from "../../../../store/hooks";
@@ -78,9 +78,8 @@ const FciDocumentsScreen = () => {
         RA.map(d => {
           const docSignature = {
             document_id: d.id,
-            signature: "",
             signature_fields: []
-          } as DocumentSignature;
+          } as DocumentToSign;
           dispatch(fciUpdateDocumentSignaturesRequest(docSignature));
         })
       );
@@ -162,13 +161,18 @@ const FciDocumentsScreen = () => {
 
       await PDFDocument.load(pdfFromBase64(existingPdfBytes)).then(res => {
         const page = attrs.page;
-        setSignaturePage(page);
+        // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+        setSignaturePage(page.valueOf() + 1);
         // The signature box is drawn using the coordinates of the signature field.
         res.getPage(page).drawRectangle({
-          x: attrs.coordinates.top_right.x,
-          y: attrs.coordinates.top_right.y,
-          width: attrs.coordinates.bottom_left.x,
-          height: attrs.coordinates.bottom_left.y,
+          x: attrs.bottom_left.x ?? 0,
+          y: attrs.bottom_left.y ?? 0,
+          height: Math.abs(
+            (attrs.top_right.y ?? 0) - (attrs.bottom_left.y ?? 0)
+          ),
+          width: Math.abs(
+            (attrs.top_right.x ?? 0) - (attrs.bottom_left.x ?? 0)
+          ),
           color: rgb(0, 0.77, 0.79),
           opacity: 0.5,
           borderOpacity: 0.75
