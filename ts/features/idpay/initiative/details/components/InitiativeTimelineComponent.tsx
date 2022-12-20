@@ -6,9 +6,7 @@ import { OperationTypeEnum as IbanOperationTypeEnum } from "../../../../../../de
 import { OperationTypeEnum as InstrumentOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/InstrumentOperationDTO";
 import { OperationTypeEnum as OnboardingOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/OnboardingOperationDTO";
 import { OperationListDTO } from "../../../../../../definitions/idpay/timeline/OperationListDTO";
-import { TimelineDTO } from "../../../../../../definitions/idpay/timeline/TimelineDTO";
 import { OperationTypeEnum as TransactionOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/TransactionOperationDTO";
-import { InitiativeDTO } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
@@ -16,7 +14,6 @@ import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";
 import { useIOSelector } from "../../../../../store/hooks";
 import { idpayTimelineSelector } from "../store";
-import PaymentDataComponent from "./PaymentDataComponent";
 import {
   IbanOnboardingCard,
   InstrumentOnboardingCard,
@@ -29,10 +26,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between"
   }
 });
-
-type configuredInitiativeProps = {
-  initiative: InitiativeDTO;
-};
 
 const emptyTimelineContent = (
   <>
@@ -55,31 +48,6 @@ const emptyTimelineContent = (
   </>
 );
 
-const TimelineRenderer = (timeline: TimelineDTO["operationList"]) => (
-  <>
-    <View style={[IOStyles.row, styles.spaceBetween]}>
-      <H3>
-        {I18n.t(
-          "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperations"
-        )}
-      </H3>
-      <Body weight="SemiBold" color="blue">
-        {I18n.t(
-          "idpay.initiative.details.initiativeDetailsScreen.configured.settings.showMore"
-        )}
-      </Body>
-    </View>
-    <View spacer small />
-    <List>
-      {timeline.map(transaction => (
-        <React.Fragment key={transaction.operationId}>
-          {pickTransactionCard(transaction)}
-        </React.Fragment>
-      ))}
-    </List>
-  </>
-);
-
 const pickTransactionCard = (transaction: OperationListDTO) => {
   switch (transaction.operationType) {
     case TransactionOperationTypeEnum.TRANSACTION:
@@ -94,36 +62,45 @@ const pickTransactionCard = (transaction: OperationListDTO) => {
       return <Text>Error loading {transaction.operationType}</Text>;
   }
 };
-const ConfiguredInitiativeData = ({
-  initiative
-}: configuredInitiativeProps) => {
+const ConfiguredInitiativeData = () => {
   const timelineFromSelector = useIOSelector(idpayTimelineSelector);
+  const isTimelineLoading = pot.isLoading(timelineFromSelector);
 
-  const renderTimelineIfNotLoading = () => {
-    const isTimelineLoading = pot.isLoading(timelineFromSelector);
-    if (isTimelineLoading) {
-      return null;
-    }
-    const timelineList = pot.getOrElse(
-      pot.map(timelineFromSelector, timeline => timeline.operationList),
-      []
-    );
-    const isTimelineEmpty = timelineList.length === 0;
-    return isTimelineEmpty
-      ? emptyTimelineContent
-      : TimelineRenderer(timelineList);
-  };
+  if (isTimelineLoading) {
+    return null;
+  }
+
+  const timelineList = pot.getOrElse(
+    pot.map(timelineFromSelector, timeline => timeline.operationList),
+    []
+  );
+
+  if (timelineList.length === 0) {
+    return emptyTimelineContent;
+  }
+
   return (
     <>
-      {renderTimelineIfNotLoading()}
-      <View spacer large />
-      <H3>
-        {I18n.t(
-          "idpay.initiative.details.initiativeDetailsScreen.configured.settings.header"
-        )}
-      </H3>
+      <View style={[IOStyles.row, styles.spaceBetween]}>
+        <H3>
+          {I18n.t(
+            "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperations"
+          )}
+        </H3>
+        <Body weight="SemiBold" color="blue">
+          {I18n.t(
+            "idpay.initiative.details.initiativeDetailsScreen.configured.settings.showMore"
+          )}
+        </Body>
+      </View>
       <View spacer small />
-      <PaymentDataComponent iban={initiative.iban} nInstr={initiative.nInstr} />
+      <List>
+        {timelineList.map(transaction => (
+          <React.Fragment key={transaction.operationId}>
+            {pickTransactionCard(transaction)}
+          </React.Fragment>
+        ))}
+      </List>
     </>
   );
 };

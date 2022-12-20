@@ -26,6 +26,7 @@ import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import customVariables from "../../../../../theme/variables";
 import { IDPayConfigurationRoutes } from "../../configuration/navigation/navigator";
 import InitiativeCardComponent from "../components/InitiativeCardComponent";
+import { InitiativeSettingsComponent } from "../components/InitiativeSettingsComponent";
 import InitiativeTimelineComponent from "../components/InitiativeTimelineComponent";
 import { idpayInitiativeDetailsSelector } from "../store";
 import { idpayInitiativeGet, idpayTimelineGet } from "../store/actions";
@@ -46,13 +47,34 @@ const styles = StyleSheet.create({
     paddingTop: 80
   }
 });
+
 export type InitiativeDetailsScreenParams = {
   initiativeId: string;
 };
+
 type RouteProps = Route<
   "IDPAY_INITIATIVE_DETAILS",
   InitiativeDetailsScreenParams
 >;
+
+const InitiativeNotConfiguredComponent = () => (
+  <View style={[styles.newInitiativeMessageContainer, IOStyles.flex]}>
+    <EmptyInitiativeSvg width={130} height={130} />
+    <View spacer />
+    <H3>
+      {I18n.t(
+        "idpay.initiative.details.initiativeDetailsScreen.notConfigured.header"
+      )}
+    </H3>
+    <View spacer />
+    <Text style={styles.textCenter}>
+      {I18n.t(
+        "idpay.initiative.details.initiativeDetailsScreen.notConfigured.footer",
+        { initiative: "18 app" }
+      )}
+    </Text>
+  </View>
+);
 
 export const InitiativeDetailsScreen = () => {
   const route = useRoute<RouteProps>();
@@ -71,35 +93,19 @@ export const InitiativeDetailsScreen = () => {
 
   useEffect(() => {
     dispatch(idpayInitiativeGet.request({ initiativeId }));
+    dispatch(idpayTimelineGet.request({ initiativeId }));
   }, [dispatch, initiativeId]);
 
   const initiativeDetailsFromSelector = useIOSelector(
     idpayInitiativeDetailsSelector
   );
+
   const initiativeData: InitiativeDTO | undefined = pot.getOrElse(
     initiativeDetailsFromSelector,
     undefined
   );
-  const isLoading = pot.isLoading(initiativeDetailsFromSelector);
 
-  const initiativeNotConfiguredContent = (
-    <View style={[styles.newInitiativeMessageContainer, IOStyles.flex]}>
-      <EmptyInitiativeSvg width={130} height={130} />
-      <View spacer />
-      <H3>
-        {I18n.t(
-          "idpay.initiative.details.initiativeDetailsScreen.notConfigured.header"
-        )}
-      </H3>
-      <View spacer />
-      <Text style={styles.textCenter}>
-        {I18n.t(
-          "idpay.initiative.details.initiativeDetailsScreen.notConfigured.footer",
-          { initiative: initiativeData?.initiativeName ?? "" }
-        )}
-      </Text>
-    </View>
-  );
+  const isLoading = pot.isLoading(initiativeDetailsFromSelector);
 
   const renderContent = () => {
     if (initiativeData === undefined) {
@@ -108,15 +114,6 @@ export const InitiativeDetailsScreen = () => {
 
     const initiativeNeedsConfiguration =
       initiativeData.status === StatusEnum.NOT_REFUNDABLE;
-
-    const renderConditionalConfiguration = () => {
-      if (initiativeNeedsConfiguration) {
-        return initiativeNotConfiguredContent;
-      } else {
-        dispatch(idpayTimelineGet.request({ initiativeId }));
-        return <InitiativeTimelineComponent initiative={initiativeData} />;
-      }
-    };
 
     return (
       <SafeAreaView style={IOStyles.flex}>
@@ -137,7 +134,6 @@ export const InitiativeDetailsScreen = () => {
             amount={initiativeData.amount}
             initiativeName={initiativeData.initiativeName}
           />
-
           <View
             style={[
               IOStyles.flex,
@@ -149,7 +145,16 @@ export const InitiativeDetailsScreen = () => {
             ]}
           >
             <View style={styles.paddedContent}>
-              {renderConditionalConfiguration()}
+              {initiativeNeedsConfiguration && (
+                <InitiativeNotConfiguredComponent />
+              )}
+              {!initiativeNeedsConfiguration && (
+                <>
+                  <InitiativeTimelineComponent />
+                  <View spacer large />
+                  <InitiativeSettingsComponent initiative={initiativeData} />
+                </>
+              )}
             </View>
           </View>
         </ScrollView>
@@ -183,7 +188,7 @@ export const InitiativeDetailsScreen = () => {
         barStyle={"light-content"}
       />
       <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={100}>
-        {!isLoading && renderContent()}
+        {renderContent()}
       </LoadingSpinnerOverlay>
     </BaseScreenComponent>
   );
