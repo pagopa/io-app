@@ -4,6 +4,7 @@ import { Text, View } from "native-base";
 import React, { useEffect } from "react";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
+
 import {
   InitiativeDTO,
   StatusEnum
@@ -14,6 +15,7 @@ import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
+import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../i18n";
 import {
@@ -24,8 +26,9 @@ import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import customVariables from "../../../../../theme/variables";
 import { IDPayConfigurationRoutes } from "../../configuration/navigation/navigator";
 import InitiativeCardComponent from "../components/InitiativeCardComponent";
-import { InitiativeSettingsComponent } from "../components/InitiativeSettingsComponent";
-import { idpayInitiativeDetailsSelector, idpayInitiativeGet } from "../store";
+import InitiativeTimelineComponent from "../components/InitiativeTimelineComponent";
+import { idpayInitiativeDetailsSelector } from "../store";
+import { idpayInitiativeGet, idpayTimelineGet } from "../store/actions";
 
 const styles = StyleSheet.create({
   newInitiativeMessageContainer: {
@@ -43,26 +46,6 @@ const styles = StyleSheet.create({
     paddingTop: 80
   }
 });
-
-const InitiativeNotConfiguredComponent = () => (
-  <View style={[styles.newInitiativeMessageContainer, IOStyles.flex]}>
-    <EmptyInitiativeSvg width={130} height={130} />
-    <View spacer />
-    <H3>
-      {I18n.t(
-        "idpay.initiative.details.initiativeDetailsScreen.notConfigured.header"
-      )}
-    </H3>
-    <View spacer />
-    <Text style={styles.textCenter}>
-      {I18n.t(
-        "idpay.initiative.details.initiativeDetailsScreen.notConfigured.footer",
-        { initiative: "18 app" }
-      )}
-    </Text>
-  </View>
-);
-
 export type InitiativeDetailsScreenParams = {
   initiativeId: string;
 };
@@ -79,9 +62,12 @@ export const InitiativeDetailsScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const dispatch = useIODispatch();
 
-  useEffect(() => {
-    dispatch(idpayInitiativeGet.request({ initiativeId }));
-  }, [dispatch, initiativeId]);
+  const navigateToConfiguration = () => {
+    navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
+      screen: "IDPAY_CONFIGURATION_INTRO",
+      params: { initiativeId }
+    });
+  };
 
   useEffect(() => {
     dispatch(idpayInitiativeGet.request({ initiativeId }));
@@ -90,19 +76,30 @@ export const InitiativeDetailsScreen = () => {
   const initiativeDetailsFromSelector = useIOSelector(
     idpayInitiativeDetailsSelector
   );
-
   const initiativeData: InitiativeDTO | undefined = pot.getOrElse(
     initiativeDetailsFromSelector,
     undefined
   );
   const isLoading = pot.isLoading(initiativeDetailsFromSelector);
 
-  const navigateToConfiguration = () => {
-    navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
-      screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO,
-      params: { initiativeId }
-    });
-  };
+  const initiativeNotConfiguredContent = (
+    <View style={[styles.newInitiativeMessageContainer, IOStyles.flex]}>
+      <EmptyInitiativeSvg width={130} height={130} />
+      <View spacer />
+      <H3>
+        {I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.notConfigured.header"
+        )}
+      </H3>
+      <View spacer />
+      <Text style={styles.textCenter}>
+        {I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.notConfigured.footer",
+          { initiative: initiativeData?.initiativeName ?? "" }
+        )}
+      </Text>
+    </View>
+  );
 
   const renderContent = () => {
     if (initiativeData === undefined) {
@@ -111,6 +108,15 @@ export const InitiativeDetailsScreen = () => {
 
     const initiativeNeedsConfiguration =
       initiativeData.status === StatusEnum.NOT_REFUNDABLE;
+
+    const renderConditionalConfiguration = () => {
+      if (initiativeNeedsConfiguration) {
+        return initiativeNotConfiguredContent;
+      } else {
+        dispatch(idpayTimelineGet.request({ initiativeId }));
+        return <InitiativeTimelineComponent initiative={initiativeData} />;
+      }
+    };
 
     return (
       <SafeAreaView style={IOStyles.flex}>
@@ -143,11 +149,7 @@ export const InitiativeDetailsScreen = () => {
             ]}
           >
             <View style={styles.paddedContent}>
-              {initiativeNeedsConfiguration ? (
-                <InitiativeNotConfiguredComponent />
-              ) : (
-                <InitiativeSettingsComponent initiative={initiativeData} />
-              )}
+              {renderConditionalConfiguration()}
             </View>
           </View>
         </ScrollView>
@@ -176,8 +178,12 @@ export const InitiativeDetailsScreen = () => {
       headerTitle={initiativeData?.initiativeName}
       headerBackgroundColor={IOColors.bluegrey}
     >
+      <FocusAwareStatusBar
+        backgroundColor={IOColors.bluegrey}
+        barStyle={"light-content"}
+      />
       <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={100}>
-        {renderContent()}
+        {!isLoading && renderContent()}
       </LoadingSpinnerOverlay>
     </BaseScreenComponent>
   );
