@@ -19,6 +19,7 @@ export type Context = {
   pagoPAInstruments: p.Pot<ReadonlyArray<Wallet>, Error>;
   idPayInstruments: p.Pot<ReadonlyArray<InstrumentDTO>, Error>;
   ibanList: p.Pot<ReadonlyArray<string>, Error>;
+  selectedIban?: string;
   selectedInstrumentId?: string;
 };
 
@@ -60,6 +61,7 @@ type E_START_IBAN_ONBOARDING = {
 };
 type E_CONFIRM_IBAN = {
   type: "CONFIRM_IBAN";
+  iban: string;
 };
 
 type Events =
@@ -159,7 +161,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
             onDone: [
               {
                 target: "ASSERTING_IBAN_CONFIGURATION_NEEDED",
-                actions: "loadIbanSuccess"
+                actions: "loadIbanListSuccess"
               }
             ]
           }
@@ -194,7 +196,8 @@ const createIDPayInitiativeConfigurationMachine = () =>
           entry: "navigateToIbanOnboardingScreen",
           on: {
             CONFIRM_IBAN: {
-              target: "CONFIRMING_IBAN"
+              target: "CONFIRMING_IBAN",
+              actions: "confirmIban"
             },
             GO_BACK: {
               target: "DISPLAYING_IBAN_ONBOARDING"
@@ -283,9 +286,15 @@ const createIDPayInitiativeConfigurationMachine = () =>
         loadInitiativeSuccess: assign((_, event) => ({
           initiative: p.some(event.data)
         })),
-        loadIbanSuccess: assign((_, event) => ({
-          ibanList: p.some(event.data)
+        confirmIban: assign((_, event) => ({
+          selectedIban: event.iban
         })),
+        loadIbanListSuccess: assign((_, event) => {
+          console.log(event);
+          return {
+            ibanList: p.some(event.data.ibanList)
+          };
+        }),
         loadInstrumentsSuccess: assign((_, event) => ({
           pagoPAInstruments: p.some(event.data.pagoPAInstruments),
           idPayInstruments: p.some(event.data.idPayInstruments)

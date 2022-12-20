@@ -138,7 +138,7 @@ const createServicesImplementation = (
     if (context.initiativeId === undefined) {
       return Promise.reject("initiativeId is undefined");
     }
-    return Promise.resolve([]);
+    return Promise.resolve({ ibanList: [] });
   };
 
   return { loadInitiative, loadInstruments, addInstrument, loadIbanList };

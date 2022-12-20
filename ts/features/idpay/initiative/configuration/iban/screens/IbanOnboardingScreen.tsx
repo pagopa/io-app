@@ -1,5 +1,7 @@
 import { useActor } from "@xstate/react";
 import * as E from "fp-ts/lib/Either";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { Content, Form, View } from "native-base";
 import React from "react";
 import { SafeAreaView } from "react-native";
@@ -13,13 +15,22 @@ import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons
 import I18n from "../../../../../../i18n";
 import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
 import { useConfigurationMachineService } from "../../xstate/provider";
+
 const IbanOnboardingScreen = () => {
   const configurationMachine = useConfigurationMachineService();
   const [_, send] = useActor(configurationMachine);
   const customGoBack = () => send({ type: "GO_BACK" });
-  const [iban, setIban] = React.useState<string>("");
+  const [iban, setIban] = React.useState<string | undefined>(undefined);
   const [ibanName, setIbanName] = React.useState<string>("");
-  const isValidIban = (iban: string) => E.isRight(Iban.decode(iban));
+  const isIbanValid = () =>
+    pipe(
+      iban,
+      O.fromNullable,
+      O.fold(
+        () => undefined,
+        iban => E.isRight(Iban.decode(iban))
+      )
+    ); // TODO:: is this really valid? validates on 5 chars (e.g. "IT12X")
   return (
     <BaseScreenComponent
       goBack={customGoBack}
@@ -36,7 +47,7 @@ const IbanOnboardingScreen = () => {
         <View spacer large />
         <Form>
           <LabelledItem
-            isValid={isValidIban(iban)}
+            isValid={isIbanValid()}
             label="IBAN"
             inputMaskProps={{
               type: "custom",
@@ -50,7 +61,6 @@ const IbanOnboardingScreen = () => {
           />
           <View spacer />
           <LabelledItem
-            // isValid={}
             label="Assegna un nome"
             inputProps={{
               keyboardType: "default",
@@ -67,7 +77,8 @@ const IbanOnboardingScreen = () => {
           type="SingleButton"
           leftButton={{
             title: "Continua",
-            onPress: () => send({ type: "START_IBAN_ONBOARDING" })
+            onPress: () => send({ type: "START_IBAN_ONBOARDING" }),
+            disabled: !isIbanValid()
           }}
         />
       </SafeAreaView>
@@ -75,3 +86,7 @@ const IbanOnboardingScreen = () => {
   );
 };
 export default IbanOnboardingScreen;
+function unwrapOptional(iban: string | undefined) {
+  throw new Error("Function not implemented.");
+}
+
