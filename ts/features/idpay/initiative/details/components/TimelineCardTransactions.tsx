@@ -1,15 +1,15 @@
 import { ListItem, Text, View } from "native-base";
 import React from "react";
 import { StyleSheet } from "react-native";
-import { IbanOperationDTO } from "../../../../../../../definitions/idpay/timeline/IbanOperationDTO";
-import { InstrumentOperationDTO } from "../../../../../../../definitions/idpay/timeline/InstrumentOperationDTO";
-import { OnboardingOperationDTO } from "../../../../../../../definitions/idpay/timeline/OnboardingOperationDTO";
-import { TransactionOperationDTO } from "../../../../../../../definitions/idpay/timeline/TransactionOperationDTO";
-import { H4 } from "../../../../../../components/core/typography/H4";
-import { LabelSmall } from "../../../../../../components/core/typography/LabelSmall";
-import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
-import { formatDateAsShortFormat } from "../../../../../../utils/dates";
-import { formatNumberAmount } from "../../../../../../utils/stringBuilder";
+import { IbanOperationDTO } from "../../../../../../definitions/idpay/timeline/IbanOperationDTO";
+import { InstrumentOperationDTO } from "../../../../../../definitions/idpay/timeline/InstrumentOperationDTO";
+import { OnboardingOperationDTO } from "../../../../../../definitions/idpay/timeline/OnboardingOperationDTO";
+import { TransactionOperationDTO } from "../../../../../../definitions/idpay/timeline/TransactionOperationDTO";
+import { H4 } from "../../../../../components/core/typography/H4";
+import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import { formatDateAsShortFormat } from "../../../../../utils/dates";
+import { formatNumberAmount } from "../../../../../utils/stringBuilder";
 
 type TransactionProps<T> = { transaction: T };
 

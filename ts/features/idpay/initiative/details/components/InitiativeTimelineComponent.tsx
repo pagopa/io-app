@@ -22,7 +22,7 @@ import {
   InstrumentOnboardingCard,
   OnboardingTransactionCard,
   TimelineTransactionCard
-} from "./timelineItems/CardTransaction";
+} from "./TimelineCardTransactions";
 
 const styles = StyleSheet.create({
   spaceBetween: {
