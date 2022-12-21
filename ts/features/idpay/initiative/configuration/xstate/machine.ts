@@ -86,6 +86,10 @@ const createIDPayInitiativeConfigurationMachine = () =>
               target: "CONFIGURING_INSTRUMENTS"
             },
             {
+              cond: "isIbanOnlyMode",
+              target: "CONFIGURING_IBAN"
+            },
+            {
               cond: "isInitiativeConfigurationNeeded",
               target: "DISPLAYING_INTRO"
             },
@@ -99,7 +103,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
           entry: "navigateToConfigurationIntro",
           on: {
             NEXT: {
-              target: "CONFIGURING_INSTRUMENTS"
+              target: "CONFIGURING_IBAN"
             }
           }
         },
@@ -134,9 +138,15 @@ const createIDPayInitiativeConfigurationMachine = () =>
             DISPLAYING_IBAN_LIST: {
               tags: [WAITING_USER_INPUT_TAG],
               on: {
-                BACK: {
-                  target: "#ROOT.DISPLAYING_INTRO"
-                },
+                BACK: [
+                  {
+                    cond: "isIbanOnlyMode",
+                    actions: "exitConfiguration"
+                  },
+                  {
+                    target: "#ROOT.DISPLAYING_INTRO"
+                  }
+                ],
                 ENROLL_IBAN: {
                   target: "ENROLLING_IBAN",
                   actions: "selectIban"
@@ -158,9 +168,15 @@ const createIDPayInitiativeConfigurationMachine = () =>
               type: "final"
             }
           },
-          onDone: {
-            target: "#ROOT.CONFIGURING_INSTRUMENTS"
-          }
+          onDone: [
+            {
+              cond: "isIbanOnlyMode",
+              target: "CONFIGURATION_COMPLETED"
+            },
+            {
+              target: "#ROOT.CONFIGURING_INSTRUMENTS"
+            }
+          ]
         },
         CONFIGURING_INSTRUMENTS: {
           id: "INSTRUMENTS",
@@ -191,7 +207,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
                     actions: "exitConfiguration"
                   },
                   {
-                    target: "#ROOT.DISPLAYING_INTRO"
+                    target: "#ROOT.CONFIGURING_IBAN"
                   }
                 ],
                 NEXT: {
@@ -290,6 +306,8 @@ const createIDPayInitiativeConfigurationMachine = () =>
 
         isInstrumentsOnlyMode: (context, _) =>
           context.mode === ConfigurationMode.INSTRUMENTS,
+
+        isIbanOnlyMode: (context, _) => context.mode === ConfigurationMode.IBAN,
 
         hasIbanList: (context, _) =>
           p.getOrElse(

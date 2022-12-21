@@ -1,3 +1,4 @@
+import { RouteProp, useRoute } from "@react-navigation/native";
 import { useSelector } from "@xstate/react";
 import { Text, View } from "native-base";
 import React from "react";
@@ -13,6 +14,8 @@ import ListItemComponent from "../../../../../components/screens/ListItemCompone
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../i18n";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import { IDPayConfigurationParamsList } from "../navigation/navigator";
+import { ConfigurationMode } from "../xstate/context";
 import { useConfigurationMachineService } from "../xstate/provider";
 import {
   ibanListSelector,
@@ -20,7 +23,19 @@ import {
   isUpsertingIbanSelector
 } from "../xstate/selectors";
 
+type IbanEnrollmentScreenRouteParams = {
+  initiativeId?: string;
+};
+
+type IbanEnrollmentScreenRouteProps = RouteProp<
+  IDPayConfigurationParamsList,
+  "IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT"
+>;
+
 const IbanEnrollmentScreen = () => {
+  const route = useRoute<IbanEnrollmentScreenRouteProps>();
+  const { initiativeId } = route.params;
+
   const [selectedIban, setSelectedIban] = React.useState<IbanDTO | undefined>();
   const configurationMachine = useConfigurationMachineService();
 
@@ -49,6 +64,16 @@ const IbanEnrollmentScreen = () => {
   const handleAddNewIbanPress = () => {
     Alert.alert("TODO: add new IBAN 🙂");
   };
+
+  React.useEffect(() => {
+    if (initiativeId) {
+      configurationMachine.send({
+        type: "START_CONFIGURATION",
+        initiativeId,
+        mode: ConfigurationMode.IBAN
+      });
+    }
+  }, [configurationMachine, initiativeId]);
 
   const renderIbanList = () =>
     ibanList.map(iban => {
@@ -128,5 +153,7 @@ const styles = StyleSheet.create({
     alignItems: "center"
   }
 });
+
+export type { IbanEnrollmentScreenRouteParams };
 
 export default IbanEnrollmentScreen;

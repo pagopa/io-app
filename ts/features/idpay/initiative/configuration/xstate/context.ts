@@ -7,6 +7,7 @@ import { Wallet } from "../../../../../types/pagopa";
 
 export enum ConfigurationMode {
   COMPLETE = "COMPLETE",
+  IBAN = "IBAN",
   INSTRUMENTS = "INSTRUMENTS"
 }
 

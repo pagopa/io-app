@@ -1,7 +1,9 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
 import ConfigurationSuccessScreen from "../screens/ConfigurationSuccessScreen";
-import IbanEnrollmentScreen from "../screens/IbanEnrollmentScreen";
+import IbanEnrollmentScreen, {
+  IbanEnrollmentScreenRouteParams
+} from "../screens/IbanEnrollmentScreen";
 import InitiativeConfigurationIntroScreen, {
   InitiativeConfigurationIntroScreenRouteParams
 } from "../screens/InitiativeConfigurationIntroScreen";
@@ -21,7 +23,7 @@ export const IDPayConfigurationRoutes = {
 
 export type IDPayConfigurationParamsList = {
   [IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO]: InitiativeConfigurationIntroScreenRouteParams;
-  [IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ENROLLMENT]: undefined;
+  [IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ENROLLMENT]: IbanEnrollmentScreenRouteParams;
   [IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT]: InstrumentsEnrollmentScreenRouteParams;
   [IDPayConfigurationRoutes.IDPAY_CONFIGURATION_SUCCESS]: undefined;
 };
