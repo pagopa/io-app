@@ -48,19 +48,6 @@ const createServicesImplementation = (
     return data;
   };
 
-  const testIbanList: ReadonlyArray<IbanDTO> = [
-    {
-      iban: "IT60X0542811101000000123456",
-      checkIbanStatus: "VALID",
-      holderBank: "BANCA POPOLARE DI SONDRIO",
-      description: "IBAN di test",
-      channel: "WEB",
-      bicCode: "BPPIITRRXXX",
-      queueDate: "2020-12-01T00:00:00.000Z",
-      checkIbanResponseDate: new Date()
-    }
-  ];
-
   const loadIbanList = async (_: Context) => {
     const response = await ibanClient.getIbanList({
       bearerAuth: bearerToken,
