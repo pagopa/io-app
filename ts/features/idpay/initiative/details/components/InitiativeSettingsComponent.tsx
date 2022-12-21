@@ -7,25 +7,58 @@ import {
   StatusEnum
 } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
 import { H3 } from "../../../../../components/core/typography/H3";
-import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
-import ListItemComponent from "../../../../../components/screens/ListItemComponent";
-
-import {
-  AppParamsList,
-  IOStackNavigationProp
-} from "../../../../../navigation/params/AppParamsList";
-import { IDPayConfigurationRoutes } from "../../configuration/navigation/navigator";
-
 import { H4 } from "../../../../../components/core/typography/H4";
+import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import IconFont from "../../../../../components/ui/IconFont";
 import I18n from "../../../../../i18n";
+import {
+  AppParamsList,
+  IOStackNavigationProp
+} from "../../../../../navigation/params/AppParamsList";
 import customVariables from "../../../../../theme/variables";
+import { IDPayConfigurationRoutes } from "../../configuration/navigation/navigator";
 
 type Props = {
   initiative: InitiativeDTO;
 };
+
+type SettingsButtonProps = {
+  title: string;
+  subTitle?: string;
+  onPress: () => void;
+  hasWarnings?: boolean;
+};
+
+const SettingsButtonComponent = (props: SettingsButtonProps) => (
+  <ListItem onPress={props.onPress} style={{ paddingEnd: 0 }}>
+    {props.hasWarnings && (
+      <>
+        <IconFont name={"io-warning"} color={IOColors.red} />
+        <View hspacer />
+      </>
+    )}
+    <View style={IOStyles.flex}>
+      <H4>{props.title}</H4>
+      {props.hasWarnings ? (
+        <LabelSmall weight="SemiBold" color="red">
+          {I18n.t(
+            "idpay.initiative.details.initiativeDetailsScreen.configured.settings.actionsRequired"
+          )}
+        </LabelSmall>
+      ) : (
+        <LabelSmall weight="Regular" color="bluegrey">
+          {props.subTitle}
+        </LabelSmall>
+      )}
+    </View>
+    <IconFont
+      name={"io-right"}
+      color={customVariables.contentPrimaryBackground}
+    />
+  </ListItem>
+);
 
 export const InitiativeSettingsComponent = (props: Props) => {
   const { initiative } = props;
@@ -42,83 +75,6 @@ export const InitiativeSettingsComponent = (props: Props) => {
     });
   };
 
-  const renderInstruments = () => {
-    if (initiative.status === StatusEnum.NOT_REFUNDABLE_ONLY_IBAN) {
-      return (
-        <ListItem onPress={navigateToInstrumentsConfiguration}>
-          <IconFont name={"io-warning"} color={IOColors.red} />
-
-          <View hspacer />
-          <View style={IOStyles.flex}>
-            <H4>
-              {I18n.t(
-                "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
-              )}
-            </H4>
-            <LabelSmall weight="SemiBold" color="red">
-              {I18n.t(
-                "idpay.initiative.details.initiativeDetailsScreen.configured.settings.actionsRequired"
-              )}
-            </LabelSmall>
-          </View>
-          <IconFont
-            name={"io-right"}
-            color={customVariables.contentPrimaryBackground}
-          />
-        </ListItem>
-      );
-    }
-
-    return (
-      <ListItemComponent
-        title={I18n.t(
-          "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
-        )}
-        subTitle={`${initiative.nInstr} ${I18n.t(
-          "idpay.initiative.details.initiativeDetailsScreen.configured.settings.methodsi18n"
-        )}`}
-        onPress={navigateToInstrumentsConfiguration}
-      />
-    );
-  };
-
-  const renderIban = () => {
-    if (initiative.status === StatusEnum.NOT_REFUNDABLE_ONLY_INSTRUMENT) {
-      return (
-        <ListItem>
-          <IconFont name={"io-warning"} color={IOColors.red} />
-
-          <View hspacer />
-          <View style={IOStyles.flex}>
-            <H4>
-              {I18n.t(
-                "idpay.initiative.details.initiativeDetailsScreen.configured.settings.selectedIBAN"
-              )}
-            </H4>
-            <LabelSmall weight="SemiBold" color="red">
-              {I18n.t(
-                "idpay.initiative.details.initiativeDetailsScreen.configured.settings.actionsRequired"
-              )}
-            </LabelSmall>
-          </View>
-          <IconFont
-            name={"io-right"}
-            color={customVariables.contentPrimaryBackground}
-          />
-        </ListItem>
-      );
-    }
-
-    return (
-      <ListItemComponent
-        title={I18n.t(
-          "idpay.initiative.details.initiativeDetailsScreen.configured.settings.selectedIBAN"
-        )}
-        subTitle={initiative.iban}
-      />
-    );
-  };
-
   return (
     <>
       <H3>
@@ -128,8 +84,28 @@ export const InitiativeSettingsComponent = (props: Props) => {
       </H3>
       <View spacer small />
       <List>
-        {renderInstruments()}
-        {renderIban()}
+        <SettingsButtonComponent
+          title={I18n.t(
+            "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
+          )}
+          subTitle={`${initiative.nInstr} ${I18n.t(
+            "idpay.initiative.details.initiativeDetailsScreen.configured.settings.methodsi18n"
+          )}`}
+          onPress={navigateToInstrumentsConfiguration}
+          hasWarnings={
+            initiative.status === StatusEnum.NOT_REFUNDABLE_ONLY_IBAN
+          }
+        />
+        <SettingsButtonComponent
+          title={I18n.t(
+            "idpay.initiative.details.initiativeDetailsScreen.configured.settings.selectedIBAN"
+          )}
+          subTitle={initiative.iban}
+          onPress={navigateToInstrumentsConfiguration}
+          hasWarnings={
+            initiative.status === StatusEnum.NOT_REFUNDABLE_ONLY_INSTRUMENT
+          }
+        />
       </List>
     </>
   );
