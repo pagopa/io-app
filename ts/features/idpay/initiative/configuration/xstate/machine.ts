@@ -125,8 +125,10 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 {
                   target: "DISPLAYING_IBAN_LIST",
                   cond: "hasIbanList"
+                },
+                {
+                  target: "DISPLAYING_IBAN_LIST" // TODO should go to add iban steps
                 }
-                /* TODO add iban steps */
               ]
             },
             DISPLAYING_IBAN_LIST: {
