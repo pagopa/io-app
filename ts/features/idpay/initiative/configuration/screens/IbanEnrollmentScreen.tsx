@@ -19,7 +19,7 @@ import { ConfigurationMode } from "../xstate/context";
 import { useConfigurationMachineService } from "../xstate/provider";
 import {
   ibanListSelector,
-  isLoadingIbanListSelector,
+  isLoadingSelector,
   isUpsertingIbanSelector
 } from "../xstate/selectors";
 
@@ -39,10 +39,7 @@ const IbanEnrollmentScreen = () => {
   const [selectedIban, setSelectedIban] = React.useState<IbanDTO | undefined>();
   const configurationMachine = useConfigurationMachineService();
 
-  const isLoadingIbanList = useSelector(
-    configurationMachine,
-    isLoadingIbanListSelector
-  );
+  const isLoading = useSelector(configurationMachine, isLoadingSelector);
 
   const ibanList = useSelector(configurationMachine, ibanListSelector);
 
@@ -100,7 +97,7 @@ const IbanEnrollmentScreen = () => {
       headerTitle={I18n.t("idpay.configuration.headerTitle")}
       contextualHelp={emptyContextualHelp}
     >
-      <LoadingSpinnerOverlay isLoading={isLoadingIbanList} loadingOpacity={1}>
+      <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={1}>
         <View style={IOStyles.flex}>
           <View spacer={true} large={true} />
           <View style={IOStyles.horizontalContentPadding}>
