@@ -22,7 +22,8 @@ import reducer, {
   isLoadingArchiveNextPage,
   isLoadingInboxPreviousPage,
   AllPaginated,
-  isLoadingInboxNextPage
+  isLoadingInboxNextPage,
+  isLoadingOrUpdatingInbox
 } from "../allPaginated";
 
 describe("allPaginated reducer", () => {
@@ -720,6 +721,77 @@ describe("isLoadingNextPage selector", () => {
       });
     }
   );
+});
+
+describe("isLoadingOrUpdatingInbox selector", () => {
+  [
+    {
+      inbox: pot.none,
+      expectedReturn: false
+    },
+    {
+      inbox: pot.noneError(""),
+      expectedReturn: false
+    },
+    {
+      inbox: pot.some({
+        page: []
+      }),
+      expectedReturn: false
+    },
+    {
+      inbox: pot.someError(
+        {
+          page: []
+        },
+        ""
+      ),
+      expectedReturn: false
+    },
+    {
+      inbox: pot.noneLoading,
+      expectedReturn: true
+    },
+    {
+      inbox: pot.noneUpdating({
+        page: []
+      }),
+      expectedReturn: true
+    },
+    {
+      inbox: pot.someLoading({
+        page: []
+      }),
+      expectedReturn: true
+    },
+    {
+      inbox: pot.someUpdating(
+        {
+          page: []
+        },
+        {
+          page: []
+        }
+      ),
+      expectedReturn: true
+    }
+  ].forEach(({ inbox, expectedReturn }) => {
+    describe(`given { inbox: ${inbox.kind} }`, () => {
+      it(`should return ${expectedReturn}`, () => {
+        expect(
+          isLoadingOrUpdatingInbox(
+            toGlobalState({
+              ...defaultState,
+              inbox: {
+                data: inbox,
+                lastRequest: O.none
+              }
+            })
+          )
+        ).toBe(expectedReturn);
+      });
+    });
+  });
 });
 
 describe("Message state upsert", () => {

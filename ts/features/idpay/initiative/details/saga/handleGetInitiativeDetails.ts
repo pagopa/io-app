@@ -6,7 +6,10 @@ import { SagaCallReturnType } from "../../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { IDPayWalletClient } from "../../../wallet/api/client";
-import { idpayInitiativeGet, IdPayInitiativeGetPayloadType } from "../store";
+import {
+  idpayInitiativeGet,
+  IdPayInitiativeGetPayloadType
+} from "../store/actions";
 
 /**
  * Handle the remote call to retrieve the IDPay initiative details

@@ -856,12 +856,6 @@ messages:
       addMemo:
           block1: Fügen Sie eine Erinnerung für die
           block2: auf
-    prescription:
-      addMemo: Diese Frist verfällt am
-      expiringAlert: Diese Zahlungsaufforderung verfällt heute
-      expiredAlert:
-          block1: Diese Zahlungsaufforderung verfällt um
-          block2: "des"
     pay: Bezahlen Sie € {{amount}}
     onlyPay: Bezahlen
     paid: Bezahlt
@@ -907,7 +901,6 @@ messages:
     not_available: "n/v"
     prescription: Elektronische Verschreibung
     memo: Erinnerung an den Empfänger
-    deadline: Dieses Rezept läuft ab {{date}}
     nre: Elektronische Verschreibungsnummer
     iup: Eindeutige Buchungsnummer
     patient_fiscal_code: Steuernummer des Patienten

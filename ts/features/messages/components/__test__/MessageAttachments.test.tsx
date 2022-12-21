@@ -1,28 +1,27 @@
 import React from "react";
-
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
-import { applicationChangeState } from "../../../../../../../store/actions/application";
-import { appReducer } from "../../../../../../../store/reducers";
-import { GlobalState } from "../../../../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../../../../utils/testWrapper";
-import MVL_ROUTES from "../../../../../navigation/routes";
-import { MvlDownloads } from "../../../../../store/reducers/downloads";
-import { MvlPreferences } from "../../../../../store/reducers/preferences";
-import { mvlMockPdfAttachment } from "../../../../../types/__mock__/mvlMock";
-import { MvlAttachments } from "../MvlAttachments";
+import { applicationChangeState } from "../../../../store/actions/application";
+import { appReducer } from "../../../../store/reducers";
+import { GlobalState } from "../../../../store/reducers/types";
+import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import MVL_ROUTES from "../../../mvl/navigation/routes";
+import { MvlPreferences } from "../../../mvl/store/reducers/preferences";
+import { MessageAttachments } from "../MessageAttachments";
+import { Downloads } from "../../../../store/reducers/entities/messages/downloads";
+import { mockPdfAttachment } from "../../../../__mocks__/attachment";
 
 const mockPresentBottomSheet = jest.fn();
 
-jest.mock("../../../../../../../utils/hooks/bottomSheet", () => ({
+jest.mock("../../../../utils/hooks/bottomSheet", () => ({
   useIOBottomSheetModal: () => ({
     present: mockPresentBottomSheet,
     bottomSheet: <></>
   })
 }));
 
-describe("MvlAttachments", () => {
+describe("MessageAttachments", () => {
   beforeEach(() => {
     mockPresentBottomSheet.mockReset();
   });
@@ -31,12 +30,11 @@ describe("MvlAttachments", () => {
     describe("when tapping on it for the first time", () => {
       it("it should present the bottom sheet", async () => {
         const res = renderComponent({
-          attachments: [mvlMockPdfAttachment],
+          attachments: [mockPdfAttachment],
           openPreview: jest.fn()
         });
-        const item = res.getByText(mvlMockPdfAttachment.displayName);
+        const item = res.getByText(mockPdfAttachment.displayName);
         await fireEvent(item, "onPress");
-
         expect(mockPresentBottomSheet).toHaveBeenCalled();
       });
     });
@@ -46,14 +44,13 @@ describe("MvlAttachments", () => {
         it("it should NOT present the bottom sheet", async () => {
           const res = renderComponent(
             {
-              attachments: [mvlMockPdfAttachment],
+              attachments: [mockPdfAttachment],
               openPreview: jest.fn()
             },
             { showAlertForAttachments: false }
           );
-          const item = res.getByText(mvlMockPdfAttachment.displayName);
+          const item = res.getByText(mockPdfAttachment.displayName);
           await fireEvent(item, "onPress");
-
           expect(mockPresentBottomSheet).not.toHaveBeenCalled();
         });
       });
@@ -63,17 +60,17 @@ describe("MvlAttachments", () => {
       it("it should show a loading indicator", async () => {
         [
           pot.noneLoading,
-          pot.someLoading({ path: "path", attachment: mvlMockPdfAttachment })
+          pot.someLoading({ path: "path", attachment: mockPdfAttachment })
         ].forEach(loadingPot => {
           const res = renderComponent(
             {
-              attachments: [mvlMockPdfAttachment],
+              attachments: [mockPdfAttachment],
               openPreview: jest.fn()
             },
             { showAlertForAttachments: false },
             {
-              [mvlMockPdfAttachment.messageId]: {
-                [mvlMockPdfAttachment.id]: loadingPot
+              [mockPdfAttachment.messageId]: {
+                [mockPdfAttachment.id]: loadingPot
               }
             }
           );
@@ -89,21 +86,21 @@ describe("MvlAttachments", () => {
         [
           pot.none,
           pot.noneError(new Error()),
-          pot.some({ path: "path", attachment: mvlMockPdfAttachment }),
+          pot.some({ path: "path", attachment: mockPdfAttachment }),
           pot.someError(
-            { path: "path", attachment: mvlMockPdfAttachment },
+            { path: "path", attachment: mockPdfAttachment },
             new Error()
           )
         ].forEach(notLoadingPot => {
           const res = renderComponent(
             {
-              attachments: [mvlMockPdfAttachment],
+              attachments: [mockPdfAttachment],
               openPreview: jest.fn()
             },
             { showAlertForAttachments: false },
             {
-              [mvlMockPdfAttachment.messageId]: {
-                [mvlMockPdfAttachment.id]: notLoadingPot
+              [mockPdfAttachment.messageId]: {
+                [mockPdfAttachment.id]: notLoadingPot
               }
             }
           );
@@ -115,9 +112,9 @@ describe("MvlAttachments", () => {
 });
 
 const renderComponent = (
-  props: React.ComponentProps<typeof MvlAttachments>,
+  props: React.ComponentProps<typeof MessageAttachments>,
   mvlPreferences: MvlPreferences = { showAlertForAttachments: true },
-  mvlDownloads: MvlDownloads = {}
+  downloads: Downloads = {}
 ) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(appReducer, {
@@ -126,13 +123,19 @@ const renderComponent = (
       ...globalState.features,
       mvl: {
         ...globalState.features.mvl,
-        preferences: mvlPreferences,
-        downloads: mvlDownloads
+        preferences: mvlPreferences
+      }
+    },
+    entities: {
+      ...globalState.entities,
+      messages: {
+        ...globalState.entities.messages,
+        downloads
       }
     }
   } as any);
   return renderScreenFakeNavRedux<GlobalState>(
-    () => <MvlAttachments {...props} />,
+    () => <MessageAttachments {...props} />,
     MVL_ROUTES.DETAILS,
     {},
     store
