@@ -884,7 +884,7 @@ SPEC CHECKSUMS:
   boost: a7c83b31436843459a1961bfd74b96033dc77234
   BVLinearGradient: e3aad03778a456d77928f594a649e96995f1c872
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
-  DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
+  DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
   FBLazyVector: 0045cf98ca4a48af3bf7108d85b1c243740fa289
   FBReactNativeSpec: 82e74141263f8c962e288f5cd6b5d149cdc8afe1
   Flipper: 53851f5b89559bb6e251572589dc166d1f8d6e2e
@@ -897,7 +897,7 @@ SPEC CHECKSUMS:
   Flipper-RSocket: d9d9ade67cbecf6ac10730304bf5607266dd2541
   FlipperKit: 51cf8b6f5b0931e251c57d4d60a15a1c2ba546aa
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
-  glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
+  glog: 3d02b25ca00c2d456734d0bcff864cbc62f6ae1a
   GoogleDataTransport: 629c20a4d363167143f30ea78320d5a7eb8bd940
   GoogleMLKit: 0d7f5aa2f8a2f2ea9d849a05abdbe80974b0ec83
   GoogleToolboxForMac: 8bef7c7c5cf7291c687cf5354f39f9db6399ad34
