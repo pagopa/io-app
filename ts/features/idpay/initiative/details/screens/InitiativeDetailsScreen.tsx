@@ -27,9 +27,10 @@ import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import customVariables from "../../../../../theme/variables";
 import { IDPayConfigurationRoutes } from "../../configuration/navigation/navigator";
 import InitiativeCardComponent from "../components/InitiativeCardComponent";
+import { InitiativeSettingsComponent } from "../components/InitiativeSettingsComponent";
 import InitiativeTimelineComponent from "../components/InitiativeTimelineComponent";
 import { idpayInitiativeDetailsSelector } from "../store";
-import { idpayInitiativeGet, idpayTimelineGet } from "../store/actions";
+import { idpayInitiativeGet } from "../store/actions";
 
 const styles = StyleSheet.create({
   newInitiativeMessageContainer: {
@@ -47,65 +48,66 @@ const styles = StyleSheet.create({
     paddingTop: 80
   }
 });
+
 export type InitiativeDetailsScreenParams = {
   initiativeId: string;
 };
+
 type RouteProps = Route<
   "IDPAY_INITIATIVE_DETAILS",
   InitiativeDetailsScreenParams
 >;
 
+const InitiativeNotConfiguredComponent = () => (
+  <View style={[styles.newInitiativeMessageContainer, IOStyles.flex]}>
+    <EmptyInitiativeSvg width={130} height={130} />
+    <View spacer />
+    <H3>
+      {I18n.t(
+        "idpay.initiative.details.initiativeDetailsScreen.notConfigured.header"
+      )}
+    </H3>
+    <View spacer />
+    <Text style={styles.textCenter}>
+      {I18n.t(
+        "idpay.initiative.details.initiativeDetailsScreen.notConfigured.footer",
+        { initiative: "18 app" }
+      )}
+    </Text>
+  </View>
+);
+
 export const InitiativeDetailsScreen = () => {
-  const firstFocusRef = React.useRef<boolean>(true);
   const route = useRoute<RouteProps>();
+
   const { initiativeId } = route.params;
+
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const dispatch = useIODispatch();
 
   const navigateToConfiguration = () => {
     navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
-      screen: "IDPAY_CONFIGURATION_INTRO",
+      screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO,
       params: { initiativeId }
     });
   };
 
   useFocusEffect(
     useCallback(() => {
-      if (firstFocusRef.current === true) {
-        dispatch(idpayInitiativeGet.request({ initiativeId }));
-      }
-      // eslint-disable-next-line functional/immutable-data
-      firstFocusRef.current = false;
+      dispatch(idpayInitiativeGet.request({ initiativeId }));
     }, [dispatch, initiativeId])
   );
 
   const initiativeDetailsFromSelector = useIOSelector(
     idpayInitiativeDetailsSelector
   );
+
   const initiativeData: InitiativeDTO | undefined = pot.getOrElse(
     initiativeDetailsFromSelector,
     undefined
   );
-  const isLoading = pot.isLoading(initiativeDetailsFromSelector);
 
-  const initiativeNotConfiguredContent = (
-    <View style={[styles.newInitiativeMessageContainer, IOStyles.flex]}>
-      <EmptyInitiativeSvg width={130} height={130} />
-      <View spacer />
-      <H3>
-        {I18n.t(
-          "idpay.initiative.details.initiativeDetailsScreen.notConfigured.header"
-        )}
-      </H3>
-      <View spacer />
-      <Text style={styles.textCenter}>
-        {I18n.t(
-          "idpay.initiative.details.initiativeDetailsScreen.notConfigured.footer",
-          { initiative: initiativeData?.initiativeName ?? "" }
-        )}
-      </Text>
-    </View>
-  );
+  const isLoading = pot.isLoading(initiativeDetailsFromSelector);
 
   const renderContent = () => {
     if (initiativeData === undefined) {
@@ -114,15 +116,6 @@ export const InitiativeDetailsScreen = () => {
 
     const initiativeNeedsConfiguration =
       initiativeData.status === StatusEnum.NOT_REFUNDABLE;
-
-    const renderConditionalConfiguration = () => {
-      if (initiativeNeedsConfiguration) {
-        return initiativeNotConfiguredContent;
-      } else {
-        dispatch(idpayTimelineGet.request({ initiativeId }));
-        return <InitiativeTimelineComponent initiative={initiativeData} />;
-      }
-    };
 
     return (
       <SafeAreaView style={IOStyles.flex}>
@@ -143,7 +136,6 @@ export const InitiativeDetailsScreen = () => {
             amount={initiativeData.amount}
             initiativeName={initiativeData.initiativeName}
           />
-
           <View
             style={[
               IOStyles.flex,
@@ -155,7 +147,18 @@ export const InitiativeDetailsScreen = () => {
             ]}
           >
             <View style={styles.paddedContent}>
-              {renderConditionalConfiguration()}
+              {initiativeNeedsConfiguration && (
+                <InitiativeNotConfiguredComponent />
+              )}
+              {!initiativeNeedsConfiguration && (
+                <>
+                  <InitiativeTimelineComponent
+                    initiativeId={initiativeData.initiativeId}
+                  />
+                  <View spacer large />
+                  <InitiativeSettingsComponent initiative={initiativeData} />
+                </>
+              )}
             </View>
           </View>
         </ScrollView>
@@ -181,7 +184,7 @@ export const InitiativeDetailsScreen = () => {
       dark={true}
       titleColor={"white"}
       goBack={true}
-      headerTitle={initiativeData?.initiativeName ?? ""}
+      headerTitle={initiativeData?.initiativeName}
       headerBackgroundColor={IOColors.bluegrey}
     >
       <FocusAwareStatusBar
@@ -189,7 +192,7 @@ export const InitiativeDetailsScreen = () => {
         barStyle={"light-content"}
       />
       <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={100}>
-        {!isLoading && renderContent()}
+        {renderContent()}
       </LoadingSpinnerOverlay>
     </BaseScreenComponent>
   );
