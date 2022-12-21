@@ -1,7 +1,6 @@
 import * as p from "@pagopa/ts-commons/lib/pot";
 
 import { assign, createMachine } from "xstate";
-import { IbanDTO } from "../../../../../../definitions/idpay/iban/IbanDTO";
 import { IbanListDTO } from "../../../../../../definitions/idpay/iban/IbanListDTO";
 import {
   InitiativeDTO,
@@ -13,63 +12,8 @@ import {
   LOADING_TAG,
   WAITING_USER_INPUT_TAG
 } from "../../../../../utils/xstate";
-
-export type Context = {
-  initiativeId?: string;
-  initiative: p.Pot<InitiativeDTO, Error>;
-  ibanList: p.Pot<ReadonlyArray<IbanDTO>, Error>;
-  pagoPAInstruments: p.Pot<ReadonlyArray<Wallet>, Error>;
-  idPayInstruments: p.Pot<ReadonlyArray<InstrumentDTO>, Error>;
-  selectedInstrumentId?: string;
-  selectedIban?: IbanDTO;
-};
-
-const INITIAL_CONTEXT: Context = {
-  initiative: p.none,
-  ibanList: p.none,
-  pagoPAInstruments: p.none,
-  idPayInstruments: p.none
-};
-
-type E_SELECT_INITIATIVE = {
-  type: "SELECT_INITIATIVE";
-  initiativeId: string;
-};
-
-type E_START_CONFIGURATION = {
-  type: "START_CONFIGURATION";
-};
-
-type E_ADD_INSTRUMENT = {
-  type: "ADD_INSTRUMENT";
-  walletId: string;
-};
-
-type E_ADD_IBAN = {
-  type: "ADD_IBAN";
-  iban: IbanDTO;
-};
-
-type E_CONFIRM_INSTRUMENTS = {
-  type: "CONFIRM_INSTRUMENTS";
-};
-
-type E_COMPLETE_CONFIGURATION = {
-  type: "COMPLETE_CONFIGURATION";
-};
-
-type E_GO_BACK = {
-  type: "GO_BACK";
-};
-
-type Events =
-  | E_SELECT_INITIATIVE
-  | E_START_CONFIGURATION
-  | E_ADD_IBAN
-  | E_ADD_INSTRUMENT
-  | E_CONFIRM_INSTRUMENTS
-  | E_COMPLETE_CONFIGURATION
-  | E_GO_BACK;
+import { ConfigurationMode, Context, INITIAL_CONTEXT } from "./context";
+import { Events } from "./events";
 
 type Services = {
   loadInitiative: {
@@ -93,7 +37,7 @@ type Services = {
 };
 
 const createIDPayInitiativeConfigurationMachine = () =>
-  /** @xstate-layout N4IgpgJg5mDOIC5QEkAiAFAggTQPrIDlkAVZTUgNQFFcBhAeQIDFkBxAVQCVzlGA6AOqYShVviKke1XAGUqAGSq1SjAMRzFy8SKlUA2gAYAuolAAHAPawAlgBdrFgHamQAD0QBmDwHY+AFgAmAEYADiCDPyCATgMAVm8QgBoQAE9EML5YgwMg8ICQ7Kio2I8AX1LktCw8Qh1KGgZmNi4efnl6TFRRbUl61QgnMD5rRwA3CwBrIYAbCwBDCGRHO2s5+1GwQxMkEEsbeycXdwQQjyj-EMjTqO94vw9Y5LSTjz5snICzoIA2CPzvcqVDA4Hpkep0RgsDjcFQEPhUCiYeTsUgEMS1XrIaSNKEtWGqLYuPYrQ47Y6RAJ8Dz3bwPIIeELeb7eCJPRB+Yp8H5BWLxb6BDm-b6AkBVEEYsFYhqQ5ow3hwhFIlHdCW6CFNaGtAgEoLbcxWEnOMnsoKU6k+OkMpksvxshCRIJ8KK5b6M2JRfLRekisU1CSS7EyzWwvg42Uq-26dTETCcYjq3FyxiEnbEg5G0DHcJBPx8AJ8j1+X6XMJ2rIhPghfIBGthGJFgEVUXAv11KUJ2Va0NBrgqgBCmG1A0cQ1gtjWQ19oLVYeD8u7Gt7aPwA4IKf1+wcGbciACRQr3kiMQKgRZAW+dtdFYdRYMzO+UQZUR9Len4NnePnH84-cHfHanS-gQuDyMgMjEP0gzDGMkwzPMiwAEZzI48jWGO667Aa6ZHIg3LfFyjLUvE2S-H4jypIgsR+AYmRnAYRSRIEBgeMKTZTqq749kmcLfkBfBdDI6DyDgQEgWBEGsPQuADrQADSGFpluOEINmub5kyhbFn4pYUQgT5vAk+axDytyxFWrFAtUb7tt+Xa8cuyCrvxYFCSJDmrmJ4GqJ0qAroOClYUpxoIAEES5lWHzaSEITfAEtJlh4lKxZ8h6-DW3zfGUbGvhxNlcXZXF8T5QGQSO0HjFMfALIhyEBZupKZrugTnHeNahTWHq-N4CW5qanzRf1oVRBZzZWblgaLtx-4dF0DkEOBnDsAAslQBDEDIpVDCMFVwQsSxjgATgArgAtmAji2LAdWGspNJct4w2ZRlURXJldq5KFVKhb80RhZcAQvmNkacZNXYCa52ARgty2retqiSdJmBydd2HBbEATvXuvi-MU3gJNpUQhMNgPisDeWgyG4PCZDc3Qyta0bT54h07DKNBY1CCPrEtH0jkJSxA+2nvaE3NxTFPgGCE6M3CTraYhNiZgy51NQ8Qi303DYacEtzNqzDDNsw1O6cw8PMeHzDyC0kum8zR1Gml8+b1lllmk22CudiGxW03rGubeVsFVRAiyOIdp3nbYhvbscHrcyUvM8pbL3W884TOnwLJxNEfgPd4+ay9ZHtzvwVNuWItmwrI7C0LQVAyBtDBLUJVDENKFPylHyk8sZTo+LyqXfGZ3hBO95t2x8jvuhEWVNo4FgQHALjsWTRefowRKBUbxwALQXrpu8F+NbeKyGQgiHN7s0BoSiwhv9XR+yGM23EbxnMEWTxNSESNq7csBsfnt5wAVmuiFeVA743TRtRPgrpaQ1hzPmHI3VdIZBKLHAwNZaQYLxofMBHZi4KkRMiVEoDL74LXgQCBqMObxDtNpfCDEWTcjij8QeuCyEVy-IVC+8twGpk3g-BALJXgDVpPSEoNZbS6SLOcZ03IGT5h+D-UabteHkKmvZdEq4qHs2Ng7CsUsczWiZETKIdCGSZASJLDB2R7gC3YWozh-BNF+ThMA0SoFwI6K3rhfI+FDE52ZCYooZZzwGTrBEAo-MggOP-uogqk0+KlxplowcnliDeMEaEH490fgxT8GRc2ZjdIC0pPEAoAQixE2yLcWJM58ohhcY5P83tUmUP4ffZSwQpYZ2iqcKiDwx5SOeBImB3weQ5ioi9QWdSQYny4Yk9yf5mnAScas+gTdFCt1QJkrpvxuY5jCCWc8fNyIjKok6XIWRk75AKbEWZ5N5ltBmqrdWsMZC7OCsyYWL8pY3FuPWVqI1l4cIafOZJrz9brU+RzDKNE0EGGHnje4MRkGpz3DRDBsVeR7mMj9B5q8pqtN1m8taMK9H0nOPyS4sVDyRASMLYeTpCi5GHl4LwANspA1Be3Euysy7xMrjIautd67kqzCLPMacMFFi-sxTGeN-A5HCP9R8tICUAIIQuJ56zNktyoDsjpkCaFotwmZV4MRebGTIhSYFOU8FrO1YAxguACD0HjAQKgBqDXisooq3kRZMqIvoTpZ41EKxyNpIySW+TiblFKEAA */
+  /** @xstate-layout N4IgpgJg5mDOIC5QCUDyqAqBiAigVQEkMBtABgF1FQAHAe1gEsAXB2gOypAA9EBGAJgBsggHQBWAMwB2KaQAspfgE4lADjFyANCACeffgF8D2tJhEB1AIJECAOQDiAfQDKGS8myv3GRwGFUtgBiBPZ4yJYYBAFklEggdIws7Jw8CPzpIhJiqqRiypKkvBLy2noIvKr8IjJScnK8UoLySrxKUkYm6BgiADKolgAidk52NhEEAGoAolgQ7GAiDGwAbrQA1gsANrQAhhAEbMwMOyzLYDGcCUfJcamNYplSqqpygpLPGrylfC8i-E+KQQSdISNSCDogUzdKYTSw9PDjByOUaRcbTPwBYKhcKRAJYC5xK5JDi3RByCSiMSNKRtIFCf5Kb4IQRyJQidQKVSgsSCXgCOQQqEiGFwhGRJEoghoqYYoIhMLjPHEXixGj0a4k0CpORCcTU2nAwQMpl836kVRqUhPWoVQSqQVdYWw+GIka2MaRdH+OXYxW2fH8VXxdXElJkil6wQ0xqG426RBiXgPARSPJiKnCMRWh1mIbOAAKPUsAE1hsjbBg0FhbFMABokCiXEOsTXcRBRuR-IqSIQvJTpxnx8qkXkiUhKfhZXm8Vn-CQ57rerFhMt2VzIPAAWSmFecs3mIlgTBOCyFS-lyFXtnXW53GGcBLViRbYeZUhNPIkY9qI-7FqUdTtMYkKOue2JXje267vubALEeJ4iGemIXhBla3ruypBkSL6kmk8i8NUVqkOOOTmlI0hMhaUgiBOqhPLwxHKBIvDgsBSE+iuErXmhUH3r0-RDFxkF3nucywYsKzrFsuz7GwR4AE4AK4ALZgGwTCwI+wbPjcWqIAAtH+IgCBIqjTnIHzZEyAEERIoLpP245WlIhhsaByHgUJPEiSIeaFiWqEbrxe6DAM5bCRWWnYbpbYIIZEYWnZAEUi805MqmVRFD+5r8EUdoCm5ZhgZxboRXxflFqWXlBSJWAAEKWL4ADSUXNjFqT6T+4hyFS5JGnIsi5eljR-C0ghKIUk5NOSC4iMVl7Veh5UEAWlWBUte4Nc1mFNjprapPwpDMYRsgkcRdEUUOAEPPUshSEmbQWQVnRFR5JXhd5u6+St-lVaVn33tWdYNlhbX7QZgGZABdqpsxSimV8V0tDR410XkXIWU8s3zetwUiKFuN3jBCxLKsGwiHsskKSpalMK1e2voZ2TGZOZl8hZ6hWUOLyqH8plqBZDEWmIs0VQFSLzX6Lh4L4vhTM4e7+JuhZTBgMqS7itj0xqr5UiavKkOIRoUoULyskBL2Lm9OJRLYji2Jg9tTFMAwu1gSsq2rsrLjb0SNoSYOvm0hsslSf7jXy6ZMomVR0ayFlAvUxFAcBbC0BAcCcFCu067h+kzvwvM6layiKMCrLWcmhSvOoNq8iLhXdFYNhIl4Hg56GuEDUyh2iOadkyKlzQUrNfSDFeHqTFMHc4XpCCvJ2Y1AuNE0cjyJqVOIdGTgyzyFEms0ii64pupPXrW36M-tXwzG84mvIAcRLHjoITJZA8lrPCZ0j8Dqos-WtLilZUBX3BmkfgWYxyHU5kdHq1oTRHV5i-f4PI7TMV5Nja2hNdygMZkUHIIhi4uQmjvCuQ5hCdjeA0YoJCXjZkbnNLBi08Zj0Ev9GqOCA4MzzkUYEhDDrELLr-QcZQJyiDePhMQbR1BKCNJgjiC12EbW+qtcWSjgq4Lzi5TsDF5AQJZECc0YhKIyChsCG0RQijmnkT7bBfECbMLvJoue+dC7USFr-WBsg8gSHSm8TITR4aKHIlmMyNiUKOK+muAGzgMTKx6KrF2zjYr6QkOSGi0hhAyBHLlLkxikYERBEUVknMGKuUtio36ZYNa22lrLeWzhkkHX+IbJMtR+yginEmExX5ySHXLmZOc84GE1ICPbR2NYXZJK4bnOeUi2SZP+DOXIzxyJMgsmyOillsi-23sMipoy7YewSWrAYTTEDSAeG4lyLFeSpgaB+aQmRig7KyOONJwyjBAA */
   createMachine(
     {
       context: INITIAL_CONTEXT,
@@ -103,16 +47,21 @@ const createIDPayInitiativeConfigurationMachine = () =>
         events: {} as Events,
         services: {} as Services
       },
-      id: "IDPAY_INITIATIVE_CONFIGURATION",
+      id: "ROOT",
       predictableActionArguments: true,
-      initial: "WAITING_INITIATIVE_SELECTION",
+      initial: "WAITING_START",
+      on: {
+        QUIT: {
+          actions: "exitConfiguration"
+        }
+      },
       states: {
-        WAITING_INITIATIVE_SELECTION: {
+        WAITING_START: {
           tags: [LOADING_TAG],
           on: {
-            SELECT_INITIATIVE: {
+            START_CONFIGURATION: {
               target: "LOADING_INITIATIVE",
-              actions: "selectInitiative"
+              actions: "startConfiguration"
             }
           }
         },
@@ -123,30 +72,34 @@ const createIDPayInitiativeConfigurationMachine = () =>
             id: "loadInitiative",
             onDone: [
               {
-                target: "EVALUTING_INITIATIVE_CONFIGURATION",
+                target: "EVALUATING_INITIATIVE_CONFIGURATION",
                 actions: "loadInitiativeSuccess"
               }
             ]
           }
         },
-        EVALUTING_INITIATIVE_CONFIGURATION: {
+        EVALUATING_INITIATIVE_CONFIGURATION: {
           tags: [LOADING_TAG],
           always: [
             {
+              cond: "isInstrumentsOnlyMode",
+              target: "CONFIGURING_INSTRUMENTS"
+            },
+            {
               cond: "isInitiativeConfigurationNeeded",
-              target: "CONFIGURING_INITIATIVE"
+              target: "DISPLAYING_INTRO"
             },
             {
               target: "CONFIGURATION_NOT_NEEDED"
             }
           ]
         },
-        CONFIGURING_INITIATIVE: {
+        DISPLAYING_INTRO: {
           tags: [WAITING_USER_INPUT_TAG],
-          entry: "navigateToConfigurationEntry",
+          entry: "navigateToConfigurationIntro",
           on: {
-            START_CONFIGURATION: {
-              target: "CONFIGURING_IBAN"
+            NEXT: {
+              target: "CONFIGURING_INSTRUMENTS"
             }
           }
         },
@@ -169,9 +122,8 @@ const createIDPayInitiativeConfigurationMachine = () =>
             DISPLAYING_IBAN_LIST: {
               tags: [WAITING_USER_INPUT_TAG],
               on: {
-                GO_BACK: {
-                  target:
-                    "#IDPAY_INITIATIVE_CONFIGURATION.CONFIGURING_INITIATIVE"
+                BACK: {
+                  target: "#ROOT.DISPLAYING_INTRO"
                 },
                 ADD_IBAN: {
                   target: "ADDING_IBAN",
@@ -195,52 +147,81 @@ const createIDPayInitiativeConfigurationMachine = () =>
             }
           },
           onDone: {
-            target: "#IDPAY_INITIATIVE_CONFIGURATION.LOADING_INSTRUMENTS"
+            target: "#ROOT.CONFIGURING_INSTRUMENTS"
           }
         },
-        LOADING_INSTRUMENTS: {
-          tags: [LOADING_TAG],
-          entry: "navigateToInstrumentsEnrollmentScreen",
-          invoke: {
-            src: "loadInstruments",
-            id: "loadInstruments",
-            onDone: [
-              {
-                target: "DISPLAYING_INSTRUMENTS",
-                actions: "loadInstrumentsSuccess"
+        CONFIGURING_INSTRUMENTS: {
+          id: "INSTRUMENTS",
+          initial: "LOADING_INSTRUMENTS",
+          states: {
+            LOADING_INSTRUMENTS: {
+              tags: [LOADING_TAG],
+              entry: "navigateToInstrumentsEnrollmentScreen",
+              invoke: {
+                src: "loadInstruments",
+                id: "loadInstruments",
+                onDone: {
+                  target: "DISPLAYING_INSTRUMENTS",
+                  actions: "loadInstrumentsSuccess"
+                }
               }
-            ]
-          }
-        },
-        DISPLAYING_INSTRUMENTS: {
-          tags: [WAITING_USER_INPUT_TAG],
-          on: {
-            GO_BACK: {
-              target: "CONFIGURING_IBAN"
             },
-            ADD_INSTRUMENT: {
-              target: "ADDING_INSTRUMENT",
-              actions: "selectInstrument"
+            DISPLAYING_INSTRUMENTS: {
+              tags: [WAITING_USER_INPUT_TAG],
+              on: {
+                ADD_INSTRUMENT: {
+                  target: "ADDING_INSTRUMENT",
+                  actions: "selectInstrument"
+                },
+                BACK: [
+                  {
+                    cond: "isInstrumentsOnlyMode",
+                    actions: "exitConfiguration"
+                  },
+                  {
+                    target: "#ROOT.DISPLAYING_INTRO"
+                  }
+                ],
+                NEXT: {
+                  target: "INSTRUMENTS_COMPLETED"
+                }
+              }
             },
-            CONFIRM_INSTRUMENTS: {
+            ADDING_INSTRUMENT: {
+              tags: [LOADING_TAG],
+              invoke: {
+                src: "addInstrument",
+                id: "addInstrument",
+                onDone: {
+                  target: "DISPLAYING_INSTRUMENTS",
+                  actions: "addInstrumentSuccess"
+                }
+              }
+            },
+            INSTRUMENTS_COMPLETED: {
+              type: "final"
+            }
+          },
+          onDone: [
+            {
+              cond: "isInstrumentsOnlyMode",
+              target: "CONFIGURATION_COMPLETED"
+            },
+            {
               target: "DISPLAYING_CONFIGURATION_SUCCESS"
+            }
+          ]
+        },
+        DISPLAYING_CONFIGURATION_SUCCESS: {
+          tags: [WAITING_USER_INPUT_TAG],
+          entry: "navigateToConfigurationSuccessScreen",
+          on: {
+            COMPLETE_CONFIGURATION: {
+              target: "CONFIGURATION_COMPLETED"
             }
           }
         },
-        ADDING_INSTRUMENT: {
-          tags: [LOADING_TAG],
-          invoke: {
-            src: "addInstrument",
-            id: "addInstrument",
-            onDone: [
-              {
-                target: "DISPLAYING_INSTRUMENTS",
-                actions: "addInstrumentSuccess"
-              }
-            ]
-          }
-        },
-        DISPLAYING_CONFIGURATION_SUCCESS: {
+        CONFIGURATION_NOT_NEEDED: {
           tags: [WAITING_USER_INPUT_TAG],
           entry: "navigateToConfigurationSuccessScreen",
           on: {
@@ -252,16 +233,14 @@ const createIDPayInitiativeConfigurationMachine = () =>
         CONFIGURATION_COMPLETED: {
           type: "final",
           entry: "navigateToInitiativeDetailScreen"
-        },
-        CONFIGURATION_NOT_NEEDED: {
-          type: "final"
         }
       }
     },
     {
       actions: {
-        selectInitiative: assign((_, event) => ({
-          initiativeId: event.initiativeId
+        startConfiguration: assign((_, event) => ({
+          initiativeId: event.initiativeId,
+          mode: event.mode
         })),
         loadInitiativeSuccess: assign((_, event) => ({
           initiative: p.some(event.data)
@@ -295,7 +274,10 @@ const createIDPayInitiativeConfigurationMachine = () =>
               i => i.status === StatusEnum.NOT_REFUNDABLE
             ),
             false
-          )
+          ),
+
+        isInstrumentsOnlyMode: (context, _) =>
+          context.mode === ConfigurationMode.INSTRUMENTS
       }
     }
   );
@@ -305,5 +287,4 @@ type IDPayInitiativeConfigurationMachineType = ReturnType<
 >;
 
 export type { IDPayInitiativeConfigurationMachineType };
-
 export { createIDPayInitiativeConfigurationMachine };
