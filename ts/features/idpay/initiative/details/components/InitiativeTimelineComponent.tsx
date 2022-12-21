@@ -1,6 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { List, Text, View } from "native-base";
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet } from "react-native";
 import { OperationTypeEnum as IbanOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/IbanOperationDTO";
 import { OperationTypeEnum as InstrumentOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/InstrumentOperationDTO";
@@ -12,8 +12,9 @@ import { H3 } from "../../../../../components/core/typography/H3";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";
-import { useIOSelector } from "../../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { idpayTimelineSelector } from "../store";
+import { idpayTimelineGet } from "../store/actions";
 import {
   IbanOnboardingCard,
   InstrumentOnboardingCard,
@@ -62,7 +63,20 @@ const pickTransactionCard = (transaction: OperationListDTO) => {
       return <Text>Error loading {transaction.operationType}</Text>;
   }
 };
-const ConfiguredInitiativeData = () => {
+
+type Props = {
+  initiativeId: string;
+};
+
+const ConfiguredInitiativeData = (props: Props) => {
+  const { initiativeId } = props;
+
+  const dispatch = useIODispatch();
+
+  useEffect(() => {
+    dispatch(idpayTimelineGet.request({ initiativeId }));
+  }, [dispatch, initiativeId]);
+
   const timelineFromSelector = useIOSelector(idpayTimelineSelector);
   const isTimelineLoading = pot.isLoading(timelineFromSelector);
 

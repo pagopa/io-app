@@ -150,7 +150,9 @@ export const InitiativeDetailsScreen = () => {
               )}
               {!initiativeNeedsConfiguration && (
                 <>
-                  <InitiativeTimelineComponent />
+                  <InitiativeTimelineComponent
+                    initiativeId={initiativeData.initiativeId}
+                  />
                   <View spacer large />
                   <InitiativeSettingsComponent initiative={initiativeData} />
                 </>
