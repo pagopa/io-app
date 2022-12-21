@@ -5,7 +5,7 @@ import { ShowroomSection } from "../components/ShowroomSection";
 import AdviceComponent from "../../../components/AdviceComponent";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
 import StatusContent from "../../../components/SectionStatus/StatusContent";
-import SectionStatus, {
+import {
   getStatusTextColor,
   statusColorMap,
   statusIconMap
@@ -19,6 +19,9 @@ import { ImportoEuroCents } from "../../../../definitions/backend/ImportoEuroCen
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { LevelEnum } from "../../../../definitions/content/SectionStatus";
 import { IOColors } from "../../../components/core/variables/IOColors";
+import { Icon } from "../../../components/core/icons";
+import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
+import { H5 } from "../../../components/core/typography/H5";
 
 const styles = StyleSheet.create({
   content: {
@@ -52,6 +55,28 @@ export const AdviceShowroom = () => {
           </Body>
         </InfoBox>
       </View>
+
+      <InfoBox
+        alignedCentral={true}
+        iconSize={24}
+        iconColor={IOColors.bluegreyDark}
+      >
+        <H5 weight={"Regular"}>
+          Per verificare la tua carta, tratteniamo € 0.02. Non preoccuparti: ti
+          restituiremo l'importo al più presto.
+        </H5>
+      </InfoBox>
+
+      <InfoScreenComponent
+        image={<Icon name="info" />}
+        title={"Title"}
+        body={
+          <Body style={{ textAlign: "center" }}>
+            Lorem ipsum dolor sit amet, consectetur adipisci elit, sed do
+            eiusmod tempor incidunt ut labore et dolore magna aliqua.
+          </Body>
+        }
+      />
 
       <NBView spacer={true} />
       <FullWidthComponent>
