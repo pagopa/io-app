@@ -3226,6 +3226,13 @@ features:
       name: "Nome"
       familyName: "Cognome"
       birthDate: "Data di nascita"
+    thankYouPage:
+      title: "Fatto!"
+      content: "A breve riceverai un messaggio con i documenti firmati."
+      cta: "Chiudi"
+    qtspTos:
+      title: "Dai il tuo consenso?"
+      show: "Visualizza"
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
@@ -3315,13 +3322,15 @@ idpay:
           footer: Aggiungi almeno un metodo per iniziare ad utilizzare {{initiative}}.
         configured:
           yourOperations: Le tue Operazioni
-          yourOperationsSubtitle: Qui vedrai le transazioni effettuate con i metodi che hai associato.
+          yourOperationsSubtitle: "Qui vedrai le transazioni effettuate con i metodi che hai associato. "
           yourOperationsLink: Come si fa?
           settings:
+            showMore: Vedi tutte
             header: Impostazioni
             associatedPaymentMethods: Metodi di pagamento associati
             methodsi18n: metodi 
             selectedIBAN: IBAN per l'accredito
+            actionsRequired: Azioni richieste 
           startConfigurationCTA: Inizia
   onboarding:
     headerTitle: "Adesione all'iniziativa"
