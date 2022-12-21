@@ -22,7 +22,7 @@ type Services = {
   loadIbanList: {
     data: IbanListDTO;
   };
-  addIban: {
+  enrollIban: {
     data: undefined;
   };
   loadInstruments: {
@@ -109,7 +109,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
           states: {
             LOADING_IBAN_LIST: {
               tags: [LOADING_TAG],
-              entry: "navigateToIbanAssociationScreen",
+              entry: "navigateToIbanEnrollmentScreen",
               invoke: {
                 src: "loadIbanList",
                 id: "loadIbanList",
@@ -119,26 +119,36 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 }
               }
             },
+            EVALUATING_IBAN_LIST: {
+              tags: [LOADING_TAG],
+              always: [
+                {
+                  target: "DISPLAYING_IBAN_LIST",
+                  cond: "hasIbanList"
+                }
+                /* TODO add iban steps */
+              ]
+            },
             DISPLAYING_IBAN_LIST: {
               tags: [WAITING_USER_INPUT_TAG],
               on: {
                 BACK: {
                   target: "#ROOT.DISPLAYING_INTRO"
                 },
-                ADD_IBAN: {
-                  target: "ADDING_IBAN",
+                ENROLL_IBAN: {
+                  target: "ENROLLING_IBAN",
                   actions: "selectIban"
                 }
               }
             },
-            ADDING_IBAN: {
+            ENROLLING_IBAN: {
               tags: [LOADING_TAG],
               invoke: {
-                src: "addIban",
-                id: "addIban",
+                src: "enrollIban",
+                id: "enrollIban",
                 onDone: {
                   target: "IBAN_CONFIGURATION_COMPLETED",
-                  actions: "addIbanSuccess"
+                  actions: "enrollIbanSuccess"
                 }
               }
             },
@@ -251,7 +261,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
         selectIban: assign((_, event) => ({
           selectedIban: event.iban
         })),
-        addIbanSuccess: assign((_, _event) => ({
+        enrollIbanSuccess: assign((_, _event) => ({
           selectedIban: undefined
         })),
         loadInstrumentsSuccess: assign((_, event) => ({
@@ -277,7 +287,13 @@ const createIDPayInitiativeConfigurationMachine = () =>
           ),
 
         isInstrumentsOnlyMode: (context, _) =>
-          context.mode === ConfigurationMode.INSTRUMENTS
+          context.mode === ConfigurationMode.INSTRUMENTS,
+
+        hasIbanList: (context, _) =>
+          p.getOrElse(
+            p.map(context.ibanList, list => list.length > 0),
+            false
+          )
       }
     }
   );

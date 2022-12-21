@@ -15,34 +15,34 @@ import I18n from "../../../../../i18n";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { useConfigurationMachineService } from "../xstate/provider";
 import {
-  selectIbanList,
-  selectIsLoadingIbanList,
-  selectIsUpsertingIban
+  ibanListSelector,
+  isLoadingIbanListSelector,
+  isUpsertingIbanSelector
 } from "../xstate/selectors";
 
-const IbanAssociationScreen = () => {
+const IbanEnrollmentScreen = () => {
   const [selectedIban, setSelectedIban] = React.useState<IbanDTO | undefined>();
   const configurationMachine = useConfigurationMachineService();
 
   const isLoadingIbanList = useSelector(
     configurationMachine,
-    selectIsLoadingIbanList
+    isLoadingIbanListSelector
   );
 
-  const ibanList = useSelector(configurationMachine, selectIbanList);
+  const ibanList = useSelector(configurationMachine, ibanListSelector);
 
   const isUpsertingIban = useSelector(
     configurationMachine,
-    selectIsUpsertingIban
+    isUpsertingIbanSelector
   );
 
   const handleBackPress = () => {
-    configurationMachine.send({ type: "GO_BACK" });
+    configurationMachine.send({ type: "BACK" });
   };
 
   const handleContinuePress = () => {
     if (selectedIban !== undefined) {
-      configurationMachine.send({ type: "ADD_IBAN", iban: selectedIban });
+      configurationMachine.send({ type: "ENROLL_IBAN", iban: selectedIban });
     }
   };
 
@@ -129,4 +129,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default IbanAssociationScreen;
+export default IbanEnrollmentScreen;

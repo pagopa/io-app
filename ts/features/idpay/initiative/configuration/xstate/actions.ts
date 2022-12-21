@@ -22,9 +22,9 @@ const createActionsImplementation = (
     });
   };
 
-  const navigateToIbanAssociationScreen = () => {
+  const navigateToIbanEnrollmentScreen = () => {
     navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
-      screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ASSOCIATION
+      screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ENROLLMENT
     });
   };
 
@@ -58,7 +58,7 @@ const createActionsImplementation = (
 
   return {
     navigateToConfigurationIntro,
-    navigateToIbanAssociationScreen,
+    navigateToIbanEnrollmentScreen,
     navigateToInstrumentsEnrollmentScreen,
     navigateToConfigurationSuccessScreen,
     navigateToInitiativeDetailScreen,

@@ -12,8 +12,8 @@ type E_ADD_INSTRUMENT = {
   walletId: string;
 };
 
-type E_ADD_IBAN = {
-  type: "ADD_IBAN";
+type E_ENROLL_IBAN = {
+  type: "ENROLL_IBAN";
   iban: IbanDTO;
 };
 
@@ -36,7 +36,7 @@ type E_QUIT = {
 export type Events =
   | E_START_CONFIGURATION
   | E_ADD_INSTRUMENT
-  | E_ADD_IBAN
+  | E_ENROLL_IBAN
   | E_COMPLETE_CONFIGURATION
   | E_NEXT
   | E_BACK

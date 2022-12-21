@@ -21,7 +21,7 @@ const ibanListSelector = (state: StateWithContext) =>
   P.getOrElse(state.context.ibanList, []);
 
 const isUpsertingIbanSelector = (state: StateWithContext) =>
-  state.matches("CONFIGURING_IBAN.ADDING_IBAN");
+  state.matches("CONFIGURING_IBAN.ENROLLING_IBAN");
 
 const selectIsLoadingInstruments = (state: StateWithContext) =>
   state.matches("CONFIGURING_INSTRUMENTS.LOADING_INSTRUMENTS");

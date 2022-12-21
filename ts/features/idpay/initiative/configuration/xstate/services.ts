@@ -76,11 +76,6 @@ const createServicesImplementation = (
             return Promise.reject("error loading iban list");
           }
 
-          // TODO remove this when the backend is ready
-          if (_.value.ibanList.length === 0) {
-            return Promise.resolve({ ibanList: testIbanList });
-          }
-
           return Promise.resolve(_.value);
         }
       )
@@ -89,7 +84,7 @@ const createServicesImplementation = (
     return data;
   };
 
-  const addIban = async (context: Context) => {
+  const enrollIban = async (context: Context) => {
     if (context.initiativeId === undefined) {
       return Promise.reject("initiativeId is undefined");
     }
@@ -212,7 +207,7 @@ const createServicesImplementation = (
   return {
     loadInitiative,
     loadIbanList,
-    addIban,
+    enrollIban,
     loadInstruments,
     addInstrument
   };

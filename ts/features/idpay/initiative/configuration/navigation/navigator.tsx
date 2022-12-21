@@ -1,7 +1,7 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
 import ConfigurationSuccessScreen from "../screens/ConfigurationSuccessScreen";
-import IbanAssociationScreen from "../screens/IbanAssociationScreen";
+import IbanEnrollmentScreen from "../screens/IbanEnrollmentScreen";
 import InitiativeConfigurationIntroScreen, {
   InitiativeConfigurationIntroScreenRouteParams
 } from "../screens/InitiativeConfigurationIntroScreen";
@@ -13,7 +13,7 @@ import { IDPayConfigurationMachineProvider } from "../xstate/provider";
 export const IDPayConfigurationRoutes = {
   IDPAY_CONFIGURATION_MAIN: "IDPAY_CONFIGURATION_MAIN",
   IDPAY_CONFIGURATION_INTRO: "IDPAY_CONFIGURATION_INTRO",
-  IDPAY_CONFIGURATION_IBAN_ASSOCIATION: "IDPAY_CONFIGURATION_IBAN_ASSOCIATION",
+  IDPAY_CONFIGURATION_IBAN_ENROLLMENT: "IDPAY_CONFIGURATION_IBAN_ENROLLMENT",
   IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT:
     "IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT",
   IDPAY_CONFIGURATION_SUCCESS: "IDPAY_CONFIGURATION_SUCCESS"
@@ -21,7 +21,7 @@ export const IDPayConfigurationRoutes = {
 
 export type IDPayConfigurationParamsList = {
   [IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO]: InitiativeConfigurationIntroScreenRouteParams;
-  [IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ASSOCIATION]: undefined;
+  [IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ENROLLMENT]: undefined;
   [IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT]: InstrumentsEnrollmentScreenRouteParams;
   [IDPayConfigurationRoutes.IDPAY_CONFIGURATION_SUCCESS]: undefined;
 };
@@ -40,8 +40,8 @@ export const IDPayConfigurationNavigator = () => (
       />
 
       <Stack.Screen
-        name={IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ASSOCIATION}
-        component={IbanAssociationScreen}
+        name={IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ENROLLMENT}
+        component={IbanEnrollmentScreen}
       />
 
       <Stack.Screen
