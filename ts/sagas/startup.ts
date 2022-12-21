@@ -316,68 +316,56 @@ export function* initializeApplicationSaga(): Generator<
   // Start watching for requests of abort the onboarding
   const watchAbortOnboardingSagaTask = yield* fork(watchAbortOnboardingSaga);
 
-  if (!previousSessionToken || O.isNone(maybeStoredPin)) {
-    // The user wasn't logged in when the application started or, for some
-    // reason, he was logged in but there is no unlock code set, thus we need
-    // to pass through the onboarding process.
+  const hasPreviousSessionAndPin =
+    previousSessionToken && O.isSome(maybeStoredPin);
+  if (hasPreviousSessionAndPin) {
+    // we ask the user to identify using the unlock code.
+    // FIXME: This is an unsafe cast caused by a wrongly described type.
+    const identificationResult: SagaCallReturnType<
+      typeof startAndReturnIdentificationResult
+    > = yield* call(startAndReturnIdentificationResult, maybeStoredPin.value);
 
-    // Ask to accept ToS if it is the first access on IO or if there is a new available version of ToS
-    yield* call(checkAcceptedTosSaga, userProfile);
+    if (identificationResult === IdentificationResult.pinreset) {
+      // If we are here the user had chosen to reset the unlock code
+      yield* put(startApplicationInitialization());
+      return;
+    }
+  }
 
-    // check if the user expressed preference about mixpanel, if not ask for it
-    yield* call(askMixpanelOptIn);
+  // Ask to accept ToS if there is a new available version
+  yield* call(checkAcceptedTosSaga, userProfile);
 
+  // check if the user expressed preference about mixpanel, if not ask for it
+  yield* call(askMixpanelOptIn);
+
+  if (hasPreviousSessionAndPin) {
+    // We have to retrieve the pin here and not on the previous if-condition (same guard)
+    // otherwise the typescript compiler will complain of an unassigned variable later on
+    storedPin = maybeStoredPin.value;
+  } else {
+    // TODO If the session was not valid, the code would have stopped before
+    // reaching this point. Consider refactoring even more by removing the check
+    // on the session (IOAPPCIT-10 https://pagopa.atlassian.net/browse/IOAPPCIT-10)
     storedPin = yield* call(checkConfiguredPinSaga);
 
     yield* call(checkAcknowledgedFingerprintSaga);
 
     yield* call(checkAcknowledgedEmailSaga, userProfile);
-
-    const isFirstOnboarding = isProfileFirstOnBoarding(userProfile);
-
-    // check if the user must set preferences for push notifications (e.g. reminders)
-    yield* call(checkNotificationsPreferencesSaga, userProfile);
-
-    yield* call(askServicesPreferencesModeOptin, isFirstOnboarding);
-
-    // Show the thank-you screen for the onboarding
-    if (isFirstOnboarding) {
-      yield* call(completeOnboardingSaga);
-    }
-
-    // Stop the watchAbortOnboardingSaga
-    yield* cancel(watchAbortOnboardingSagaTask);
-  } else {
-    storedPin = maybeStoredPin.value;
-    if (!isSessionRefreshed) {
-      // The user was previously logged in, so no onboarding is needed
-      // The session was valid so the user didn't event had to do a full login,
-      // in this case we ask the user to identify using the unlock code.
-      // FIXME: This is an unsafe cast caused by a wrongly described type.
-      const identificationResult: SagaCallReturnType<
-        typeof startAndReturnIdentificationResult
-      > = yield* call(startAndReturnIdentificationResult, storedPin);
-
-      if (identificationResult === IdentificationResult.pinreset) {
-        // If we are here the user had chosen to reset the unlock code
-        yield* put(startApplicationInitialization());
-        return;
-      }
-      // Ask to accept ToS if there is a new available version
-      yield* call(checkAcceptedTosSaga, userProfile);
-
-      // check if the user expressed preference about mixpanel, if not ask for it
-      yield* call(askMixpanelOptIn);
-
-      // check if the user must set preferences for push notifications (e.g. reminders)
-      yield* call(checkNotificationsPreferencesSaga, userProfile);
-
-      yield* call(askServicesPreferencesModeOptin, false);
-
-      // Stop the watchAbortOnboardingSaga
-      yield* cancel(watchAbortOnboardingSagaTask);
-    }
   }
+
+  // check if the user must set preferences for push notifications (e.g. reminders)
+  yield* call(checkNotificationsPreferencesSaga, userProfile);
+
+  const isFirstOnboarding = isProfileFirstOnBoarding(userProfile);
+  yield* call(askServicesPreferencesModeOptin, isFirstOnboarding);
+
+  if (isFirstOnboarding) {
+    // Show the thank-you screen for the onboarding
+    yield* call(completeOnboardingSaga);
+  }
+
+  // Stop the watchAbortOnboardingSaga
+  yield* cancel(watchAbortOnboardingSagaTask);
 
   // Start the notification installation update as early as
   // possible to begin receiving push notifications

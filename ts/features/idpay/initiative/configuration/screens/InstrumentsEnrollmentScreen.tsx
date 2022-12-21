@@ -1,3 +1,4 @@
+import { RouteProp, useRoute } from "@react-navigation/native";
 import { useActor, useSelector } from "@xstate/react";
 import { Badge, List, ListItem, Text, View } from "native-base";
 import React, { useRef } from "react";
@@ -6,24 +7,35 @@ import { InstrumentDTO } from "../../../../../../definitions/idpay/wallet/Instru
 import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { H4 } from "../../../../../components/core/typography/H4";
+import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
+import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import Switch from "../../../../../components/ui/Switch";
 import I18n from "../../../../../i18n";
 import { Wallet } from "../../../../../types/pagopa";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
+import { instrumentStatusLabels } from "../../../common/labels";
+import { IDPayConfigurationParamsList } from "../navigation/navigator";
+import { ConfigurationMode } from "../xstate/context";
 import { useConfigurationMachineService } from "../xstate/provider";
 import {
-  selectIsLoadingInstruments,
+  isLoadingSelector,
   selectIsUpsertingInstrument,
   selectorIDPayInstrumentsByIdWallet,
   selectorPagoPAIntruments
 } from "../xstate/selectors";
-import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
-import { instrumentStatusLabels } from "../../../common/labels";
-import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
+
+type InstrumentsEnrollmentScreenRouteParams = {
+  initiativeId?: string;
+};
+
+type InstrumentsEnrollmentScreenRouteProps = RouteProp<
+  IDPayConfigurationParamsList,
+  "IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT"
+>;
 
 const styles = StyleSheet.create({
   listItemContainer: {
@@ -84,18 +96,18 @@ const InstrumentEnrollmentSwitcher = ({
 };
 
 const InstrumentsEnrollmentScreen = () => {
+  const route = useRoute<InstrumentsEnrollmentScreenRouteProps>();
+  const { initiativeId } = route.params;
+
   const selectedCardRef = useRef<number | undefined>(undefined);
   const configurationMachine = useConfigurationMachineService();
-  const [_state, send] = useActor(configurationMachine);
+  const [_, send] = useActor(configurationMachine);
 
   const handleBackPress = () => {
-    send({ type: "GO_BACK" });
+    send({ type: "BACK" });
   };
 
-  const isLoadingInstruments = useSelector(
-    configurationMachine,
-    selectIsLoadingInstruments
-  );
+  const isLoading = useSelector(configurationMachine, isLoadingSelector);
 
   const pagoPAInstruments = useSelector(
     configurationMachine,
@@ -115,14 +127,14 @@ const InstrumentsEnrollmentScreen = () => {
     Object.keys(idPayInstrumentsByIdWallet).length > 0;
 
   const sendAddInstrument = (): void => {
-    configurationMachine.send("ADD_INSTRUMENT", {
+    send("ADD_INSTRUMENT", {
       walletId: selectedCardRef.current
     });
   };
 
   const handleContinueButton = () => {
-    configurationMachine.send({
-      type: "CONFIRM_INSTRUMENTS"
+    send({
+      type: "NEXT"
     });
   };
 
@@ -131,6 +143,16 @@ const InstrumentsEnrollmentScreen = () => {
     selectedCardRef.current = idWallet;
     present();
   };
+
+  React.useEffect(() => {
+    if (initiativeId) {
+      send({
+        type: "START_CONFIGURATION",
+        initiativeId,
+        mode: ConfigurationMode.INSTRUMENTS
+      });
+    }
+  }, [send, initiativeId]);
 
   const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
     <Body>
@@ -170,11 +192,11 @@ const InstrumentsEnrollmentScreen = () => {
 
   return (
     <>
-      <BaseScreenComponent goBack={handleBackPress} headerTitle="Iniziativa">
-        <LoadingSpinnerOverlay
-          isLoading={isLoadingInstruments}
-          loadingOpacity={1}
-        >
+      <BaseScreenComponent
+        goBack={handleBackPress}
+        headerTitle={I18n.t("idpay.configuration.headerTitle")}
+      >
+        <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={1}>
           <View spacer />
           <View style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
             <H1>{I18n.t("idpay.initiative.configuration.header")}</H1>
@@ -229,4 +251,6 @@ const InstrumentsEnrollmentScreen = () => {
     </>
   );
 };
+export type { InstrumentsEnrollmentScreenRouteParams };
+
 export default InstrumentsEnrollmentScreen;
