@@ -29,7 +29,7 @@ import InitiativeCardComponent from "../components/InitiativeCardComponent";
 import { InitiativeSettingsComponent } from "../components/InitiativeSettingsComponent";
 import InitiativeTimelineComponent from "../components/InitiativeTimelineComponent";
 import { idpayInitiativeDetailsSelector } from "../store";
-import { idpayInitiativeGet, idpayTimelineGet } from "../store/actions";
+import { idpayInitiativeGet } from "../store/actions";
 
 const styles = StyleSheet.create({
   newInitiativeMessageContainer: {
@@ -93,7 +93,6 @@ export const InitiativeDetailsScreen = () => {
 
   useEffect(() => {
     dispatch(idpayInitiativeGet.request({ initiativeId }));
-    dispatch(idpayTimelineGet.request({ initiativeId }));
   }, [dispatch, initiativeId]);
 
   const initiativeDetailsFromSelector = useIOSelector(
