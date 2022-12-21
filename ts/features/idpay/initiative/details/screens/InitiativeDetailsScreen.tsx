@@ -1,7 +1,8 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Route, useNavigation, useRoute } from "@react-navigation/core";
+import { useFocusEffect } from "@react-navigation/native";
 import { Text, View } from "native-base";
-import React, { useEffect } from "react";
+import React, { useCallback } from "react";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 
@@ -86,14 +87,16 @@ export const InitiativeDetailsScreen = () => {
 
   const navigateToConfiguration = () => {
     navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
-      screen: "IDPAY_CONFIGURATION_INTRO",
+      screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO,
       params: { initiativeId }
     });
   };
 
-  useEffect(() => {
-    dispatch(idpayInitiativeGet.request({ initiativeId }));
-  }, [dispatch, initiativeId]);
+  useFocusEffect(
+    useCallback(() => {
+      dispatch(idpayInitiativeGet.request({ initiativeId }));
+    }, [dispatch, initiativeId])
+  );
 
   const initiativeDetailsFromSelector = useIOSelector(
     idpayInitiativeDetailsSelector
