@@ -14,6 +14,7 @@ import { SelectionShowroom } from "./core/SelectionShowroom";
 import { TypographyShowroom } from "./core/TypographyShowRoom";
 import { OthersShowroom } from "./OthersShowroom";
 import { ButtonsShowroom } from "./ButtonsShowroom";
+import { TextFieldsShowroom } from "./core/TextFieldsShowroom";
 import { ToastNotificationsShowroom } from "./core/ToastNotificationsShowroom";
 
 const styles = StyleSheet.create({
@@ -52,6 +53,8 @@ export const Showroom = () => {
             <OthersShowroom />
             <NBView spacer={true} large={true} />
             <ButtonsShowroom />
+            <NBView spacer={true} large={true} />
+            <TextFieldsShowroom />
             <NBView spacer={true} large={true} />
             <ToastNotificationsShowroom />
             <NBView spacer={true} large={true} />
