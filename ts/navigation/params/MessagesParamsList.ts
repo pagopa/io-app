@@ -5,8 +5,8 @@ import { MvlParamsList } from "../../features/mvl/navigation/params";
 import MVL_ROUTES from "../../features/mvl/navigation/routes";
 import { PnParamsList } from "../../features/pn/navigation/params";
 import PN_ROUTES from "../../features/pn/navigation/routes";
-import { MessageDetailScreenPaginatedNavigationParams } from "../../screens/messages/paginated/MessageDetailScreen";
-import { MessageRouterScreenPaginatedNavigationParams } from "../../screens/messages/paginated/MessageRouterScreen";
+import { MessageDetailScreenPaginatedNavigationParams } from "../../screens/messages/MessageDetailScreen";
+import { MessageRouterScreenPaginatedNavigationParams } from "../../screens/messages/MessageRouterScreen";
 import ROUTES from "../routes";
 
 export type MessagesParamsList = {

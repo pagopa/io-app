@@ -4,13 +4,13 @@ import {
 } from "../../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../../navigation/routes";
 import { IDPayConfigurationRoutes } from "../navigation/navigator";
-import { Context } from "./machine";
+import { Context } from "./context";
 
 // TODO add actions implementatio
 const createActionsImplementation = (
   navigation: IOStackNavigationProp<AppParamsList, keyof AppParamsList>
 ) => {
-  const navigateToConfigurationEntry = (context: Context) => {
+  const navigateToConfigurationIntro = (context: Context) => {
     if (context.initiativeId === undefined) {
       throw new Error("initiativeId is undefined");
     }
@@ -26,7 +26,8 @@ const createActionsImplementation = (
   const navigateToInstrumentsEnrollmentScreen = () => {
     navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
       screen:
-        IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT
+        IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT,
+      params: {}
     });
   };
 
@@ -46,11 +47,16 @@ const createActionsImplementation = (
     });
   };
 
+  const exitConfiguration = () => {
+    navigation.pop();
+  };
+
   return {
-    navigateToConfigurationEntry,
+    navigateToConfigurationIntro,
     navigateToInstrumentsEnrollmentScreen,
     navigateToConfigurationSuccessScreen,
-    navigateToInitiativeDetailScreen
+    navigateToInitiativeDetailScreen,
+    exitConfiguration
   };
 };
 

@@ -9,7 +9,6 @@ import {
 } from "../../../../store/reducers/entities/messages/types";
 import { NetworkError } from "../../../../utils/errors";
 import { Mvl } from "../../types/mvlData";
-import { mvlAttachmentDownload, mvlRemoveCachedAttachment } from "./downloads";
 
 /**
  * The user requests the MVL details, starting from the MVLId
@@ -29,8 +28,5 @@ export const mvlPreferencesSetWarningForAttachments = createStandardAction(
 )<boolean>();
 
 export type MvlActions = ActionType<
-  | typeof mvlDetailsLoad
-  | typeof mvlAttachmentDownload
-  | typeof mvlRemoveCachedAttachment
-  | typeof mvlPreferencesSetWarningForAttachments
+  typeof mvlDetailsLoad | typeof mvlPreferencesSetWarningForAttachments
 >;

@@ -21,6 +21,7 @@ import { IDPayConfigurationParamsList } from "../navigation/navigator";
 import { useConfigurationMachineService } from "../xstate/provider";
 import { LOADING_TAG } from "../../../../../utils/xstate";
 import I18n from "../../../../../i18n";
+import { ConfigurationMode } from "../xstate/context";
 
 type InitiativeConfigurationIntroScreenRouteParams = {
   initiativeId: string;
@@ -63,7 +64,7 @@ const InitiativeConfigurationIntroScreen = () => {
   const isLoading = state.tags.has(LOADING_TAG);
 
   const handleContinuePress = () => {
-    send({ type: "START_CONFIGURATION" });
+    send({ type: "NEXT" });
   };
 
   const customGoBack = (
@@ -89,8 +90,9 @@ const InitiativeConfigurationIntroScreen = () => {
 
   React.useEffect(() => {
     send({
-      type: "SELECT_INITIATIVE",
-      initiativeId
+      type: "START_CONFIGURATION",
+      initiativeId,
+      mode: ConfigurationMode.COMPLETE
     });
   }, [send, initiativeId]);
 
