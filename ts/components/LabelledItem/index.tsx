@@ -126,8 +126,6 @@ export const LabelledItem: React.FC<Props> = ({
   const [hasFocus, setHasFocus] = useState(false);
 
   const accessibilityLabel = props.accessibilityLabel ?? "";
-  const isValid = props.isValid === undefined ? false : props.isValid;
-  const isNotValid = props.isValid === undefined ? false : !props.isValid;
 
   const {
     borderColor,
