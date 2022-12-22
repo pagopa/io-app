@@ -114,7 +114,7 @@ const IbanEnrollmentScreen = () => {
             {renderIbanList()}
             <View spacer={true} />
             <View style={styles.infoRow}>
-              <IconProfileAlt size={24} color={"gray"} />
+              <Icon name="profileAlt" color="grey" />
               <View hspacer={true} />
               <Text style={IOStyles.flex}>
                 Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento
