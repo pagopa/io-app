@@ -12,7 +12,7 @@ import GoBackButton from "../../../components/GoBackButton";
 import CopyButtonComponent from "../../../components/CopyButtonComponent";
 import BlockButtons from "../../../components/ui/BlockButtons";
 import { ViewEUCovidButton } from "../../../features/euCovidCert/components/ViewEUCovidButton";
-import PaymentButton from "../../../components/messages/PaymentButton";
+import PaymentButton from "../../../components/messages/MessageDetail/common/PaymentButton";
 import { PaymentNoticeNumber } from "../../../../definitions/backend/PaymentNoticeNumber";
 import IconFont from "../../../components/ui/IconFont";
 import { ShowroomSection } from "../components/ShowroomSection";
