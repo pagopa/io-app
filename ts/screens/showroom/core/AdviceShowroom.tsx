@@ -63,8 +63,9 @@ export const AdviceShowroom = () => {
         iconColor={IOColors.bluegreyDark}
       >
         <H5 weight={"Regular"}>
-          Per verificare la tua carta, tratteniamo € 0.02. Non preoccuparti: ti
-          restituiremo l'importo al più presto.
+          {
+            "Per verificare la tua carta, tratteniamo € 0.02. Non preoccuparti: ti restituiremo l'importo al più presto."
+          }
         </H5>
       </InfoBox>
       <InfoScreenComponent
