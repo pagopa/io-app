@@ -8,7 +8,7 @@ import { SafeAreaView, ScrollView } from "react-native";
 import { H2 } from "../../../../components/core/typography/H2";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
-import CtaBar from "../../../../components/messages/paginated/MessageDetail/common/CtaBar";
+import CtaBar from "../../../../components/messages/MessageDetail/common/CtaBar";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
 import { loadServiceDetail } from "../../../../store/actions/services";
@@ -19,10 +19,11 @@ import {
 } from "../../../../store/reducers/entities/services/servicesById";
 import { toUIService } from "../../../../store/reducers/entities/services/transformers";
 import { GlobalState } from "../../../../store/reducers/types";
+import { UIAttachmentId } from "../../../../store/reducers/entities/messages/types";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import MVL_ROUTES from "../../navigation/routes";
-import { Mvl, MvlAttachmentId } from "../../types/mvlData";
-import { MvlAttachments } from "./components/attachment/MvlAttachments";
+import { Mvl } from "../../types/mvlData";
+import { MessageAttachments } from "../../../messages/components/MessageAttachments";
 import { MvlBody } from "./components/MvlBody";
 import { MvlDetailsHeader } from "./components/MvlDetailsHeader";
 import { MvlMetadataComponent } from "./components/MvlMetadata";
@@ -56,7 +57,7 @@ export const MvlDetailsScreen = (props: Props): React.ReactElement => {
 
   const messageId = props.mvl.message.id;
   const openAttachment = useCallback(
-    (attachmentId: MvlAttachmentId) => {
+    (attachmentId: UIAttachmentId) => {
       navigation.navigate(MVL_ROUTES.ATTACHMENT, { messageId, attachmentId });
     },
     [messageId, navigation]
@@ -76,7 +77,7 @@ export const MvlDetailsScreen = (props: Props): React.ReactElement => {
           <ItemSeparatorComponent noPadded={true} />
           <View spacer={true} large={true} />
           <H2>{I18n.t("features.mvl.details.attachments.title")}</H2>
-          <MvlAttachments
+          <MessageAttachments
             attachments={props.mvl.legalMessage.attachments}
             openPreview={openAttachment}
           />
