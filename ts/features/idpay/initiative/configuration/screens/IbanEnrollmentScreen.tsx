@@ -4,7 +4,7 @@ import { Text, View } from "native-base";
 import React from "react";
 import { Alert, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { IbanDTO } from "../../../../../../definitions/idpay/iban/IbanDTO";
-import IconProfileAlt from "../../../../../components/core/icons/svg/IconProfileAlt";
+import { Icon } from "../../../../../components/core/icons";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
