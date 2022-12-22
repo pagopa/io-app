@@ -26,7 +26,8 @@ const styles = StyleSheet.create({
     borderBottomColor: IOColors.greyLight,
     borderBottomWidth: 1,
     paddingBottom: 14
-  }
+  },
+  titleMargin: { marginRight: 16 }
 });
 
 const SignatureFieldItem = (props: Props) => {
@@ -49,7 +50,9 @@ const SignatureFieldItem = (props: Props) => {
         }}
       >
         <View style={IOStyles.column}>
-          <H4 testID="SignatureFieldItemTitleTestID">{props.title}</H4>
+          <H4 style={styles.titleMargin} testID="SignatureFieldItemTitleTestID">
+            {props.title}
+          </H4>
           <Link
             testID="SignatureFieldItemDetailTestID"
             style={styles.details}
