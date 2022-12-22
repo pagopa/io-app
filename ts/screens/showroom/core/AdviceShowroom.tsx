@@ -5,7 +5,7 @@ import { ShowroomSection } from "../components/ShowroomSection";
 import AdviceComponent from "../../../components/AdviceComponent";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
 import StatusContent from "../../../components/SectionStatus/StatusContent";
-import {
+import SectionStatusComponent, {
   getStatusTextColor,
   statusColorMap,
   statusIconMap
@@ -22,6 +22,8 @@ import { IOColors } from "../../../components/core/variables/IOColors";
 import { Icon } from "../../../components/core/icons";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 import { H5 } from "../../../components/core/typography/H5";
+import { Label } from "../../../components/core/typography/Label";
+import { ActivateBonusReminder } from "../../../features/bonus/bonusVacanze/screens/activation/request/ActivateBonusReminder";
 
 const styles = StyleSheet.create({
   content: {
@@ -38,7 +40,7 @@ export const AdviceShowroom = () => {
   const viewRef = React.createRef<View>();
 
   return (
-    <ShowroomSection title={"Advice"}>
+    <ShowroomSection title={"Advice & Banners"}>
       <AdviceComponent
         text={
           "Dopo questo passaggio non sarà più possibile annullare il pagamento."
@@ -55,7 +57,6 @@ export const AdviceShowroom = () => {
           </Body>
         </InfoBox>
       </View>
-
       <InfoBox
         alignedCentral={true}
         iconSize={24}
@@ -66,7 +67,6 @@ export const AdviceShowroom = () => {
           restituiremo l'importo al più presto.
         </H5>
       </InfoBox>
-
       <InfoScreenComponent
         image={<Icon name="info" />}
         title={"Title"}
@@ -77,7 +77,6 @@ export const AdviceShowroom = () => {
           </Body>
         }
       />
-
       <NBView spacer={true} />
       <FullWidthComponent>
         <PaymentBannerComponent
@@ -103,6 +102,10 @@ export const AdviceShowroom = () => {
             "L’invio dei Certificati Verdi è in corso e potrebbe richiedere diversi giorni."
           }
         </StatusContent>
+      </FullWidthComponent>
+      <NBView spacer={true} />
+      <FullWidthComponent>
+        <SectionStatusComponent sectionKey={"favourite_language"} />
       </FullWidthComponent>
       <NBView spacer={true} />
       <FullWidthComponent>
@@ -138,6 +141,25 @@ export const AdviceShowroom = () => {
           }
         </StatusContent>
       </FullWidthComponent>
+
+      <NBView spacer={true} />
+
+      <ActivateBonusReminder
+        text={
+          "Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento visitando la sezione Profilo"
+        }
+      />
+
+      <NBView spacer={true} />
+
+      <View style={[styles.content, IOStyles.horizontalContentPadding]}>
+        <InfoBox iconName={"io-titolare"} iconColor={IOColors.bluegrey}>
+          <Label color={"bluegrey"} weight={"Regular"}>
+            Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento
+            visitando la sezione Profilo
+          </Label>
+        </InfoBox>
+      </View>
     </ShowroomSection>
   );
 };
