@@ -7,9 +7,13 @@ import React from "react";
 import { SafeAreaView } from "react-native";
 import { Iban } from "../../../../../../../definitions/backend/Iban";
 import { LabelledItem } from "../../../../../../components/LabelledItem";
+import IconProfileAlt from "../../../../../../components/core/icons/svg/IconProfileAlt";
 import { Body } from "../../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../../components/core/typography/H1";
+import { LabelSmall } from "../../../../../../components/core/typography/LabelSmall";
 import { Link } from "../../../../../../components/core/typography/Link";
+import { IOColors } from "../../../../../../components/core/variables/IOColors";
+import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../../i18n";
@@ -30,7 +34,7 @@ const IbanOnboardingScreen = () => {
         () => undefined,
         iban => E.isRight(Iban.decode(iban))
       )
-    ); // TODO:: is this really valid? validates on 5 chars (e.g. "IT12X")
+    );
   return (
     <BaseScreenComponent
       goBack={customGoBack}
@@ -70,6 +74,23 @@ const IbanOnboardingScreen = () => {
               onChangeText: val => setIbanName(val)
             }}
           />
+          <View spacer />
+          <View
+            style={[
+              IOStyles.row,
+              {
+                justifyContent: "center",
+                alignItems: "center"
+              }
+            ]}
+          >
+            <IconProfileAlt size={30} color={IOColors.bluegrey} />
+            <View hspacer />
+            <LabelSmall color="bluegrey" weight="Regular">
+              Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento
+              visitando la sezione Profilo
+            </LabelSmall>
+          </View>
         </Form>
       </Content>
       <SafeAreaView>
@@ -77,7 +98,12 @@ const IbanOnboardingScreen = () => {
           type="SingleButton"
           leftButton={{
             title: "Continua",
-            onPress: () => send({ type: "START_IBAN_ONBOARDING" }),
+            onPress: () =>
+              send({
+                type: "CONFIRM_IBAN",
+                ibanBody: { iban, description: ibanName }
+              }),
+
             disabled: !isIbanValid()
           }}
         />
@@ -86,7 +112,4 @@ const IbanOnboardingScreen = () => {
   );
 };
 export default IbanOnboardingScreen;
-function unwrapOptional(iban: string | undefined) {
-  throw new Error("Function not implemented.");
-}
 

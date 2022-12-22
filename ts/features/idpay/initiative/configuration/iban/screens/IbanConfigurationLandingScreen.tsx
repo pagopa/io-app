@@ -12,7 +12,6 @@ const IbanConfigurationLanding = () => {
   const configurationMachine = useConfigurationMachineService();
   const [_, send] = useActor(configurationMachine);
   const customGoBack = () => send({ type: "GO_BACK" });
-  console.log("");
   return (
     <BaseScreenComponent
       goBack={customGoBack}

@@ -1,17 +1,20 @@
 import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { PreferredLanguageEnum } from "../../../../../../definitions/backend/PreferredLanguage";
+import { IbanListDTO } from "../../../../../../definitions/idpay/iban/IbanListDTO";
 import { InitiativeDTO } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
 import { PaymentManagerClient } from "../../../../../api/pagopa";
 import { PaymentManagerToken, Wallet } from "../../../../../types/pagopa";
 import { SessionManager } from "../../../../../utils/SessionManager";
 import { convertWalletV2toWalletV1 } from "../../../../../utils/walletv2";
 import { IDPayWalletClient } from "../../../wallet/api/client";
+import { IDPayIbanClient } from "../iban/api/client";
 import { Context } from "./machine";
 
 const createServicesImplementation = (
   walletClient: IDPayWalletClient,
+  ibanClient: IDPayIbanClient,
   paymentManagerClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
   bearerToken: string,
@@ -138,10 +141,63 @@ const createServicesImplementation = (
     if (context.initiativeId === undefined) {
       return Promise.reject("initiativeId is undefined");
     }
-    return Promise.resolve({ ibanList: [] });
+
+    const res = await ibanClient.getIbanList({
+      "Accept-Language": language,
+      bearerAuth: bearerToken
+    });
+    return pipe(
+      res,
+      E.fold(
+        _ => Promise.reject("error loading iban list"),
+        response => {
+          if (response.status === 404) {
+            return Promise.resolve({ ibanList: [] } as IbanListDTO);
+          }
+          if (response.status !== 200) {
+            return Promise.reject("error loading iban list");
+          }
+          return Promise.resolve(response.value);
+        }
+      )
+    );
   };
 
-  return { loadInitiative, loadInstruments, addInstrument, loadIbanList };
+  const confirmIban = async (context: Context) => {
+    if (context.initiativeId === undefined) {
+      return Promise.reject("initiativeId is undefined");
+    }
+    try {
+      const res = await walletClient.enrollIban({
+        "Accept-Language": language,
+        bearerAuth: bearerToken,
+        initiativeId: context.initiativeId,
+        body: context.ibanBody
+      });
+      return pipe(
+        res,
+        E.fold(
+          _ => Promise.reject("error confirming iban"),
+          response => {
+            if (response.status !== 200) {
+              return Promise.reject("error confirming iban");
+            }
+            return Promise.resolve();
+          }
+        )
+      );
+    } catch (e) {
+      return Promise.reject("error calling backend");
+    }
+  };
+
+  return {
+    loadInitiative,
+    loadInstruments,
+    addInstrument,
+    loadIbanList,
+    confirmIban
+  };
 };
 
 export { createServicesImplementation };
