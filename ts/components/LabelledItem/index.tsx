@@ -11,7 +11,7 @@
  */
 import { NavigationEvents } from "@react-navigation/compat";
 import color from "color";
-import { Input as InputNativeBase, Item, View } from "native-base";
+import { Input as InputNativeBase, Item } from "native-base";
 import * as React from "react";
 import { useState } from "react";
 import {
@@ -19,7 +19,8 @@ import {
   NativeSyntheticEvent,
   StyleSheet,
   TextInputFocusEventData,
-  TextInputProps
+  TextInputProps,
+  View
 } from "react-native";
 import { TextInputMaskProps } from "react-native-masked-text";
 import I18n from "../../i18n";
@@ -29,6 +30,7 @@ import { isStringNullyOrEmpty } from "../../utils/strings";
 import { makeFontStyleObject } from "../core/fonts";
 import { H5 } from "../core/typography/H5";
 import { IOColors } from "../core/variables/IOColors";
+import { IOStyles } from "../core/variables/IOStyles";
 import TextInputMask from "../ui/MaskedInput";
 import { Icon, StyleType } from "./Icon";
 
@@ -170,22 +172,17 @@ export const LabelledItem: React.FC<Props> = ({
         </View>
       )}
 
-      <View
-        accessible={true}
-        accessibilityLabel={I18n.t("global.accessibility.textField", {
-          inputLabel: accessibilityLabel
-        })}
-        accessibilityHint={props.accessibilityHint}
-      >
-        <Item
+      <View>
+        {/* https://docs-v2.nativebase.io/docs/CheatSheet.html */}
+        <View
           style={{
+            ...IOStyles.flex,
+            ...IOStyles.row,
             ...styles.bottomLine,
             borderColor: props.overrideBorderColor
               ? props.overrideBorderColor
               : borderColor || props.focusBorderColor
           }}
-          error={isNotValid}
-          success={isValid}
           testID="Item"
         >
           {props.hasNavigationEvents && props.onPress && (
@@ -204,6 +201,11 @@ export const LabelledItem: React.FC<Props> = ({
 
           {props.inputMaskProps && (
             <TextInputMask
+              accessible={true}
+              accessibilityLabel={I18n.t("global.accessibility.textField", {
+                inputLabel: accessibilityLabel
+              })}
+              accessibilityHint={props.accessibilityHint}
               underlineColorAndroid="transparent"
               style={styles.textInputMask}
               {...props.inputMaskProps}
@@ -219,6 +221,11 @@ export const LabelledItem: React.FC<Props> = ({
 
           {props.inputProps && (
             <InputNativeBase
+              accessible={true}
+              accessibilityLabel={I18n.t("global.accessibility.textField", {
+                inputLabel: accessibilityLabel
+              })}
+              accessibilityHint={props.accessibilityHint}
               underlineColorAndroid="transparent"
               {...props.inputProps}
               onChangeText={(text: string) => {
@@ -242,7 +249,7 @@ export const LabelledItem: React.FC<Props> = ({
               onPress={props.onPress}
             />
           )}
-        </Item>
+        </View>
       </View>
       {props.description && (
         <View
