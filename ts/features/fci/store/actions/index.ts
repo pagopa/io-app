@@ -108,6 +108,12 @@ export const fciShowSignedDocumentsEndRequest = createStandardAction(
  */
 export const fciEndRequest = createStandardAction("FCI_END_REQUEST")<void>();
 
+export const fciPollFilledDocument = createAsyncAction(
+  "POLL_FILLED_DOCUMENT_REQUEST",
+  "POLL_FILLED_DOCUMENT_SUCCESS",
+  "POLL_FILLED_DOCUMENT_FAILURE"
+)<void, { isReady: boolean; retryTimes: number }, NetworkError>();
+
 export type FciActions =
   | ActionType<typeof fciSignatureRequestFromId>
   | ActionType<typeof fciLoadQtspClauses>
@@ -121,4 +127,5 @@ export type FciActions =
   | ActionType<typeof fciDownloadPreview>
   | ActionType<typeof fciDownloadPreviewClear>
   | ActionType<typeof fciShowSignedDocumentsStartRequest>
-  | ActionType<typeof fciShowSignedDocumentsEndRequest>;
+  | ActionType<typeof fciShowSignedDocumentsEndRequest>
+  | ActionType<typeof fciPollFilledDocument>;

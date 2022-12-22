@@ -4,7 +4,10 @@ import { ActionType } from "typesafe-actions";
 import * as E from "fp-ts/lib/Either";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { BackendFciClient } from "../../api/backendFci";
-import { fciLoadQtspFilledDocument } from "../../store/actions";
+import {
+  fciLoadQtspFilledDocument,
+  fciPollFilledDocument
+} from "../../store/actions";
 import { getNetworkError } from "../../../../utils/errors";
 
 /*
@@ -29,6 +32,9 @@ export function* handleCreateFilledDocument(
           postQtspFilledBodyResponse.right.value
         )
       );
+      // if the url is present, we need to poll the document
+      // to wait for the filled document ready
+      yield* put(fciPollFilledDocument.request());
       return;
     }
 
