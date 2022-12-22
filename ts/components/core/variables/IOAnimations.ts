@@ -14,6 +14,6 @@ export const IOSpringValues = {
 
 export const IOScaleValues = {
   button: {
-    pressedState: 0.95
+    pressedState: 0.97
   }
 };
