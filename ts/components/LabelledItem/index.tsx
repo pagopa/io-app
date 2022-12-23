@@ -192,6 +192,7 @@ export const LabelledItem: React.FC<Props> = ({
               icon={props.icon}
               iconColor={iconColor}
               iconStyle={props.iconStyle}
+              accessible={false}
               accessibilityLabelIcon={props.accessibilityLabelIcon}
               onPress={props.onPress}
             />
