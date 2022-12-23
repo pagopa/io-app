@@ -9,6 +9,9 @@ import { fciLoadQtspClauses, fciPollFilledDocument } from "../../store/actions";
 import FciQtspClausesScreen from "../valid/FciQtspClausesScreen";
 import { mockQtspClausesMetadata } from "../../types/__mocks__/QtspClausesMetadata.mock";
 import { MAX_POLLING_RETRY } from "../../store/reducers/fciPollFilledDocument";
+import { getNetworkError } from "../../../../utils/errors";
+
+const networkError = getNetworkError(new Error("network error"));
 
 describe("Test FciQtspClauses screen", () => {
   beforeEach(() => {
@@ -95,6 +98,19 @@ describe("Test FciQtspClauses screen", () => {
         retryTimes: MAX_POLLING_RETRY
       })
     );
+    const component = renderComponent(store);
+    expect(component).toBeTruthy();
+    expect(component.queryByTestId("FciLoadingScreenTestID")).toBeFalsy();
+    expect(component.queryByTestId("GenericErrorComponentTestID")).toBeTruthy();
+  });
+  it("should render the GenericErrorComponent when network error problem occurs", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const store: Store<GlobalState> = createStore(
+      appReducer,
+      globalState as any
+    );
+    store.dispatch(fciLoadQtspClauses.success(mockQtspClausesMetadata));
+    store.dispatch(fciPollFilledDocument.failure(networkError));
     const component = renderComponent(store);
     expect(component).toBeTruthy();
     expect(component.queryByTestId("FciLoadingScreenTestID")).toBeFalsy();
