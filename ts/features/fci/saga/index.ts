@@ -129,7 +129,6 @@ export function* watchFciSaga(bearerToken: SessionToken): SagaIterator {
 
   yield* takeLatest(getType(fciEndRequest), watchFciEndSaga);
 
-  // yield* throttle(500, fciPollFilledDocument.request, watchFciPollSaga);
   yield* takeLatest(getType(fciPollFilledDocument.request), watchFciPollSaga);
 }
 
