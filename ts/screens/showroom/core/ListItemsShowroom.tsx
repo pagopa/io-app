@@ -22,6 +22,8 @@ import ZendeskItemPermissionComponent from "../../../features/zendesk/components
 import { ProductCategoryEnum } from "../../../../definitions/cgn/merchants/ProductCategory";
 import CgnMerchantListItem from "../../../features/bonus/cgn/components/merchants/CgnMerchantListItem";
 import DetailedlistItemComponent from "../../../components/DetailedlistItemComponent";
+import { TimelineTransactionCard } from "../../../features/idpay/initiative/details/components/TimelineTransactionCards";
+import { OperationTypeEnum } from "../../../../definitions/idpay/timeline/TransactionOperationDTO";
 
 export const ListItemsShowroom = () => (
   <ShowroomSection title={"List Items"}>
@@ -197,6 +199,20 @@ export const ListItemsShowroom = () => (
         accessible={true}
         accessibilityRole={"button"}
         accessibilityLabel={"Accessibility Label"}
+      />
+    </ComponentViewerBox>
+
+    <ComponentViewerBox name="TimelineTransactionCard">
+      <TimelineTransactionCard
+        transaction={{
+          operationId: "213123",
+          operationType: "Pagamento Pos" as OperationTypeEnum,
+          operationDate: new Date(),
+          brandLogo: "",
+          maskedPan: "****",
+          amount: -100,
+          circuitType: "MasterCard"
+        }}
       />
     </ComponentViewerBox>
 
