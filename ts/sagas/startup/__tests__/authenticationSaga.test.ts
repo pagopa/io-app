@@ -31,8 +31,6 @@ describe("authenticationSaga", () => {
       .next(watchTestLoginRequest)
       .fork(watchCieAuthenticationSaga)
       .next(watchCieAuthentication)
-      .call(resetToAuthenticationRoute)
-      .next()
       .take(loginSuccess)
       .next(loginSuccess({ token: aSessionToken, idp: "idp" }))
       .cancel(watchCieAuthentication)
