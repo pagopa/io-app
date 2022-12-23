@@ -9,8 +9,8 @@ import { PaymentManagerToken, Wallet } from "../../../../../types/pagopa";
 import { SessionManager } from "../../../../../utils/SessionManager";
 import { convertWalletV2toWalletV1 } from "../../../../../utils/walletv2";
 import { IDPayWalletClient } from "../../../wallet/api/client";
+import { Context } from "./context";
 import { IDPayIbanClient } from "../iban/api/client";
-import { Context } from "./machine";
 
 const createServicesImplementation = (
   walletClient: IDPayWalletClient,

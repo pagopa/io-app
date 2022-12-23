@@ -7,12 +7,14 @@ import {
   PersistPartial,
   persistReducer
 } from "redux-persist";
+import _ from "lodash";
 import { Action } from "../../store/actions/types";
 import { PotTransform } from "../../store/transforms/potTransform";
 import { isDevEnv } from "../../utils/environment";
 import { mvlReducer as rootReducer, MvlState } from "./store/reducers";
 
-const CURRENT_REDUX_MVL_STORE_VERSION = 2;
+const CURRENT_REDUX_MVL_STORE_VERSION = 3;
+
 const migrations: MigrationManifest = {
   // version 2
   // reset "downloads" section because of changing how they are stored
@@ -21,6 +23,14 @@ const migrations: MigrationManifest = {
     return {
       ...mvl,
       downloads: {}
+    } as PersistedMvlState;
+  },
+  // version 3
+  // as the "downloads" section has been relocated to entities, remove it
+  "3": (state: PersistedState): PersistedMvlState => {
+    const mvl = state as PersistedMvlState;
+    return {
+      ..._.omit(mvl, "downloads")
     };
   }
 };
@@ -30,7 +40,7 @@ export const mvlPersistConfig: PersistConfig = {
   key: "mvl",
   storage: AsyncStorage,
   version: CURRENT_REDUX_MVL_STORE_VERSION,
-  whitelist: ["preferences", "downloads"],
+  whitelist: ["preferences"],
   migrate: createMigrate(migrations, { debug: isDevEnv }),
   transforms: [PotTransform]
 };

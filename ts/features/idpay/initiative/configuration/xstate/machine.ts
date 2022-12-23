@@ -13,26 +13,21 @@ import {
   WAITING_USER_INPUT_TAG
 } from "../../../../../utils/xstate";
 import { IbanListDTO } from "../../../../../../definitions/idpay/iban/IbanListDTO";
+import { ConfigurationMode, Context, INITIAL_CONTEXT } from "./context";
+import { Events } from "./events";
 
 export type Context = {
   initiativeId?: string;
   initiative: p.Pot<InitiativeDTO, Error>;
   pagoPAInstruments: p.Pot<ReadonlyArray<Wallet>, Error>;
   idPayInstruments: p.Pot<ReadonlyArray<InstrumentDTO>, Error>;
-  ibanList: p.Pot<IbanListDTO["ibanList"], Error>;
-  selectedIban?: string;
   selectedInstrumentId?: string;
-  ibanBody?: {
-    iban: string;
-    description: string;
-  };
 };
 
 const INITIAL_CONTEXT: Context = {
   initiative: p.none,
   pagoPAInstruments: p.none,
-  idPayInstruments: p.none,
-  ibanList: p.none
+  idPayInstruments: p.none
 };
 
 type E_SELECT_INITIATIVE = {
@@ -61,25 +56,12 @@ type E_GO_BACK = {
   type: "GO_BACK";
 };
 
-type E_START_IBAN_ONBOARDING = {
-  type: "START_IBAN_ONBOARDING";
-};
-type E_CONFIRM_IBAN = {
-  type: "CONFIRM_IBAN";
-  ibanBody: {
-    iban: string;
-    description: string;
-  };
-};
-
 type Events =
   | E_SELECT_INITIATIVE
   | E_START_CONFIGURATION
   | E_ADD_INSTRUMENT
   | E_CONFIRM_INSTRUMENTS
   | E_COMPLETE_CONFIGURATION
-  | E_START_IBAN_ONBOARDING
-  | E_CONFIRM_IBAN
   | E_GO_BACK;
 
 type Services = {
@@ -101,7 +83,6 @@ type Services = {
 };
 
 const createIDPayInitiativeConfigurationMachine = () =>
-  /** @xstate-layout N4IgpgJg5mDOIC5QEkAiAFAggTQPrIDlkAVZTUgNQFFcBhAeQIDFkBxAVQCVzlGA6AOqYShVviKke1XAGUqAGSq1SjAMRzFy8SKlUA2gAYAuolAAHAPawAlgBdrFgHamQAD0QAmAIwBWAOx8ABwGIYEAzAYAbNFeAJx+ADQgAJ6IwbF8XpEe4YEALH5+YWGBsQC+ZUloWHiEOpQ0DMxsXDz88vSYqKLakg2qEE5gfNaOAG4WANbDADYWAIYQyI521vP2Y2CGJkggljb2Ti7uCB5FPnw+gV7FeV4GXl75eUmpCNcGfNE5BrEPZ148uVKiBqjhemQGnRGCwONwVAQ+FQKJh5OxSAQxHU+shpE1Ya0Eapti59qsjrsTsViplnoFIgYgaVYq80mc+LE4iEfD4PFc-j4KlUMODsZDcY0YS14bxEcjUeiemLdNDmnC2gRiV4duYrOTnJTENSwrS8nl6YzYszWe8ikFYnkDOE-E8HYFBSCwbUJOK8VL1Qi+PjpUqfbp1MRMJxiKqCTLGCTdmTDgbQCdHQYPHw7ldAZEwvFYj4XilEHkeRyvC6fGE+WE4gUhaCRd76hLY9KNXwOl0lQAhTCawaOYajCbTPhzRbIABG80cid1BwcqbcZZuAUiPgMEXuQLNgRtsT+fAL5fptadJTyTa9EJVwYDsr4mBkcmj-cHHafjFwBCoVCoIBxLGKSeopscZYGMWXxhC6cHXPkvI2lyWZbkWNYGH42Q3GEt4tveUKPoSz6vu+GJYgOBDfiRv7-oBwF6NqYHLhSaZGn4Dp8NWwSZgyfhRJEKF-GhPgYRE2HeMU+E1IR7bEfGiLdDI6DyDgn7UYwfadJw3SYhGUYxsgVG4FpOl6awi57OBK6QQgYQ+JEeTZlEJT5JEgJ8kJpanFWJohE8XgeDkZrQXhnoEcqRH+rRSnICpanYBppkENpUYWaorD0LgA60AA0lZya2YaCBmpEm4eH8B6ZteKG-AEEQBbEES1kWMmimG0VqrFL6oBZ+BUaowacAAsgNg6FTZbFrqceTRNxvxPGEHlAhJNrBVhp5nDh3jNQJHrCrJUXyTFim9f1xmDpl2W5QVoFJlNq5Uh4W6XHkJRhOWAkulkKEeAWXyBBe8S8mcwKHR1bZ+t1Z3DSNGkDEMIzjFMwwAMZOAAZtYABOAC2s7zpNrFPYgVYCXw-2hCDwVAt5bxLc5VyRPk153PWN4RUdnUnTDXY9hdBAyMQnDsCNVAEMQMiIyOyPjrMCxLI4sC2DjACueNgI4tiwMT+p2TkcHZpVeR8oEfim5ydX+Jk-hYVhNzXDk7Wtji0Nxl2ymqepmLiMLovi5L0tZTlmD5XrEElREL2XPVgWPJELI+dkFzNduzOCXEkQu3J7udoGXuJaG-tixLUuqF0qB+yLpeSxHxXsacTmfGcfhgyzcRFjan0XNucS+LWNYFOWOfHXnP5xQlPtYkLNeB+XcPVwHZcyPX00nJVHgt0DTn3ED0FeDaPj3EE3gsyU9zLTk2dc5DbuSnzgaV8Xc9lzLo4oxOixKyr6ua9ra9SanEqoEQGsQqbbnLDWFCNIs4lAtlELyo8ebjx6oXaeNFFKyHYLQWgVA3xDXoCNVSVBiAPw9giQBdkMxZhzNcOaBZOLFnWn4C4W4txzT4uWF6HoQSOAsBAOALg7xj3IfnWULF9YlSyI5L4NwXrYWLCApObxgrZkHqbCI-gloeGQVDMRE9BDCAornGgGglAIkkZHRuTxsgchTjWBk0F-phBtOELM-gaxBQcrcUoej76YP5p0QW+irENxmv9Is3EtysLgn4ehHgSxvHSHwJ0vhfCm0dHufxvoDE9XlGiExojAmWIeiTA2RZQG+BCOVIKDxbhuNrJcWJ3iayfT8bfV2uSSnPgUqGUJZSpGNwclEu44RfheXrIeHy5YMjR0zMEYsP0b4Qy6Q+U6QTey+0ugQMJ68oL1lPBhRy25AhnCiDaROJot5zXNq3BkVYcnrMfqRN8VAPzbJMgpDUf4AJAVQHsoBjoaTFBCFvOIzpD4+V8K9P49wTZPEKEDJ5XUKHPnQUlT5X4zLpVEICuyBYganmPnERJy05qJB8lJE0y1SgCRev9ROKLeZov4M-LFuzBnWJmhEU2lMGz5kgaSpJngsifBuPEC2W5HLZM6aYnp-A4YaXxdIgSzkPK1nKhw5R60t4mn4m06+szmWoLOgLF+y8g4qsbjwgIdZvBAnuDcHcKFFmU2glcHIQUzTmhNXks6GKLW1yltaiJPwviFBrGcre7p-A2jKkEU2Zxiyckcn6hViJ2UzxLvPUNG9iy9yeEDHIVxfjMOhb8DkW8dxWn8JVesKzmzc30RmvggbfbfIRNg3B+CZB5qNPmLw-LShRGavkIo61eRfCHjka+wUHTps7b0jZXaGDEMUGQgFXLwnpjBrBTyPIdxA0nUOx0HDwifTNAuuVxSl2KpXbKP89AYz0X+f2+yg7h1-CueO1xPlzafCBoUFmYkMmsIqBUIAA */
   createMachine(
     {
       context: INITIAL_CONTEXT,
@@ -111,16 +92,21 @@ const createIDPayInitiativeConfigurationMachine = () =>
         events: {} as Events,
         services: {} as Services
       },
-      id: "IDPAY_INITIATIVE_CONFIGURATION",
+      id: "ROOT",
       predictableActionArguments: true,
-      initial: "WAITING_INITIATIVE_SELECTION",
+      initial: "WAITING_START",
+      on: {
+        QUIT: {
+          actions: "exitConfiguration"
+        }
+      },
       states: {
-        WAITING_INITIATIVE_SELECTION: {
+        WAITING_START: {
           tags: [LOADING_TAG],
           on: {
-            SELECT_INITIATIVE: {
+            START_CONFIGURATION: {
               target: "LOADING_INITIATIVE",
-              actions: "selectInitiative"
+              actions: "startConfiguration"
             }
           }
         },
@@ -131,58 +117,41 @@ const createIDPayInitiativeConfigurationMachine = () =>
             id: "loadInitiative",
             onDone: [
               {
-                target: "EVALUTING_INITIATIVE_CONFIGURATION",
+                target: "EVALUATING_INITIATIVE_CONFIGURATION",
                 actions: "loadInitiativeSuccess"
               }
             ]
           }
         },
-        EVALUTING_INITIATIVE_CONFIGURATION: {
+        EVALUATING_INITIATIVE_CONFIGURATION: {
           tags: [LOADING_TAG],
           always: [
             {
+              cond: "isInstrumentsOnlyMode",
+              target: "CONFIGURING_INSTRUMENTS"
+            },
+            {
               cond: "isInitiativeConfigurationNeeded",
-              target: "CONFIGURING_INITIATIVE"
+              target: "DISPLAYING_INTRO"
             },
             {
               target: "CONFIGURATION_NOT_NEEDED"
             }
           ]
         },
-        CONFIGURING_INITIATIVE: {
+        DISPLAYING_INTRO: {
           tags: [WAITING_USER_INPUT_TAG],
-          entry: "navigateToConfigurationEntry",
-          // TODO:: invoke IBAN call, if empty go to ADDING_IBAN, else go to CONFIRMING_IBAN
+          entry: "navigateToConfigurationIntro",
           on: {
+              target: "CONFIGURING_INSTRUMENTS"
+            }
             START_CONFIGURATION: {
               target: "LOADING_IBAN"
             }
-          }
-        },
-        LOADING_IBAN: {
-          tags: [LOADING_TAG],
-          invoke: {
-            src: "loadIbanList",
-            id: "loadIbanList",
-            onDone: [
-              {
-                target: "ASSERTING_IBAN_CONFIGURATION_NEEDED",
-                actions: "loadIbanListSuccess"
-              }
-            ]
-          }
-        },
-        ASSERTING_IBAN_CONFIGURATION_NEEDED: {
-          tags: [LOADING_TAG],
-          always: [
-            {
-              cond: "isIbanConfigurationNeeded",
-              target: "DISPLAYING_IBAN_ONBOARDING"
-            },
-            {
-              target: "LOADING_INSTRUMENTS"
-            }
-          ]
+            NEXT: {
+              target: "CONFIGURING_INSTRUMENTS"
+        }
+
         },
         //
         DISPLAYING_IBAN_ONBOARDING: {
@@ -238,39 +207,78 @@ const createIDPayInitiativeConfigurationMachine = () =>
               {
                 target: "DISPLAYING_INSTRUMENTS",
                 actions: "loadInstrumentsSuccess"
+        CONFIGURING_INSTRUMENTS: {
+          id: "INSTRUMENTS",
+          initial: "LOADING_INSTRUMENTS",
+          states: {
+            LOADING_INSTRUMENTS: {
+              tags: [LOADING_TAG],
+              entry: "navigateToInstrumentsEnrollmentScreen",
+              invoke: {
+                src: "loadInstruments",
+                id: "loadInstruments",
+                onDone: {
+                  target: "DISPLAYING_INSTRUMENTS",
+                  actions: "loadInstrumentsSuccess"
+                }
               }
-            ]
-          }
-        },
-        DISPLAYING_INSTRUMENTS: {
-          tags: [WAITING_USER_INPUT_TAG],
-          on: {
-            GO_BACK: {
-              target: "CONFIGURING_INITIATIVE"
             },
-            ADD_INSTRUMENT: {
-              target: "ADDING_INSTRUMENT",
-              actions: "selectInstrument"
+            DISPLAYING_INSTRUMENTS: {
+              tags: [WAITING_USER_INPUT_TAG],
+              on: {
+                ADD_INSTRUMENT: {
+                  target: "ADDING_INSTRUMENT",
+                  actions: "selectInstrument"
+                },
+                BACK: [
+                  {
+                    cond: "isInstrumentsOnlyMode",
+                    actions: "exitConfiguration"
+                  },
+                  {
+                    target: "#ROOT.DISPLAYING_INTRO"
+                  }
+                ],
+                NEXT: {
+                  target: "INSTRUMENTS_COMPLETED"
+                }
+              }
             },
-            CONFIRM_INSTRUMENTS: {
+            ADDING_INSTRUMENT: {
+              tags: [LOADING_TAG],
+              invoke: {
+                src: "addInstrument",
+                id: "addInstrument",
+                onDone: {
+                  target: "DISPLAYING_INSTRUMENTS",
+                  actions: "addInstrumentSuccess"
+                }
+              }
+            },
+            INSTRUMENTS_COMPLETED: {
+              type: "final"
+            }
+          },
+          onDone: [
+            {
+              cond: "isInstrumentsOnlyMode",
+              target: "CONFIGURATION_COMPLETED"
+            },
+            {
               target: "DISPLAYING_CONFIGURATION_SUCCESS"
+            }
+          ]
+        },
+        DISPLAYING_CONFIGURATION_SUCCESS: {
+          tags: [WAITING_USER_INPUT_TAG],
+          entry: "navigateToConfigurationSuccessScreen",
+          on: {
+            COMPLETE_CONFIGURATION: {
+              target: "CONFIGURATION_COMPLETED"
             }
           }
         },
-        ADDING_INSTRUMENT: {
-          tags: [LOADING_TAG],
-          invoke: {
-            src: "addInstrument",
-            id: "addInstrument",
-            onDone: [
-              {
-                target: "DISPLAYING_INSTRUMENTS",
-                actions: "addInstrumentSuccess"
-              }
-            ]
-          }
-        },
-        DISPLAYING_CONFIGURATION_SUCCESS: {
+        CONFIGURATION_NOT_NEEDED: {
           tags: [WAITING_USER_INPUT_TAG],
           entry: "navigateToConfigurationSuccessScreen",
           on: {
@@ -282,16 +290,14 @@ const createIDPayInitiativeConfigurationMachine = () =>
         CONFIGURATION_COMPLETED: {
           type: "final",
           entry: "navigateToInitiativeDetailScreen"
-        },
-        CONFIGURATION_NOT_NEEDED: {
-          type: "final"
         }
       }
     },
     {
       actions: {
-        selectInitiative: assign((_, event) => ({
-          initiativeId: event.initiativeId
+        startConfiguration: assign((_, event) => ({
+          initiativeId: event.initiativeId,
+          mode: event.mode
         })),
         loadInitiativeSuccess: assign((_, event) => ({
           initiative: p.some(event.data)
@@ -327,7 +333,10 @@ const createIDPayInitiativeConfigurationMachine = () =>
           p.getOrElse(
             p.map(context.ibanList, ibanList => ibanList.length === 0),
             true
-          )
+          ),
+
+        isInstrumentsOnlyMode: (context, _) =>
+          context.mode === ConfigurationMode.INSTRUMENTS
       }
     }
   );
@@ -337,5 +346,4 @@ type IDPayInitiativeConfigurationMachineType = ReturnType<
 >;
 
 export type { IDPayInitiativeConfigurationMachineType };
-
 export { createIDPayInitiativeConfigurationMachine };

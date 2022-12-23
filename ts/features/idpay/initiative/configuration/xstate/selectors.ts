@@ -2,6 +2,7 @@ import * as P from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { StateFrom } from "xstate";
 import { InstrumentDTO } from "../../../../../../definitions/idpay/wallet/InstrumentDTO";
+import { LOADING_TAG } from "../../../../../utils/xstate";
 import { IDPayInitiativeConfigurationMachineType } from "./machine";
 
 type StateWithContext = StateFrom<IDPayInitiativeConfigurationMachineType>;
@@ -10,11 +11,14 @@ type IDPayInstrumentsByIdWallet = {
   [idWallet: string]: InstrumentDTO;
 };
 
+const isLoadingSelector = (state: StateWithContext) =>
+  state.hasTag(LOADING_TAG as never);
+
 const selectIsLoadingInstruments = (state: StateWithContext) =>
-  state.matches("LOADING_INSTRUMENTS");
+  state.matches("CONFIGURING_INSTRUMENTS.LOADING_INSTRUMENTS");
 
 const selectIsUpsertingInstrument = (state: StateWithContext) =>
-  state.matches("ADDING_INSTRUMENT");
+  state.matches("CONFIGURING_INSTRUMENTS.ADDING_INSTRUMENT");
 
 const selectPagoPAInstruments = (state: StateWithContext) =>
   state.context.pagoPAInstruments;
@@ -43,6 +47,7 @@ const selectorIDPayInstrumentsByIdWallet = createSelector(
 );
 
 export {
+  isLoadingSelector,
   selectIsLoadingInstruments,
   selectIsUpsertingInstrument,
   selectorPagoPAIntruments,

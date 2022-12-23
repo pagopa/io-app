@@ -5,9 +5,11 @@ import InitiativeConfigurationIntroScreen, {
   InitiativeConfigurationIntroScreenRouteParams
 } from "../screens/InitiativeConfigurationIntroScreen";
 import ConfigurationSuccessScreen from "../screens/ConfigurationSuccessScreen";
-import InstrumentsEnrollmentScreen from "../screens/InstrumentsEnrollmentScreen";
 import IbanConfigurationLanding from "../iban/screens/IbanConfigurationLandingScreen";
 import IbanOnboardingScreen from "../iban/screens/IbanOnboardingScreen";
+import InstrumentsEnrollmentScreen, {
+  InstrumentsEnrollmentScreenRouteParams
+} from "../screens/InstrumentsEnrollmentScreen";
 
 export const IDPayConfigurationRoutes = {
   IDPAY_CONFIGURATION_MAIN: "IDPAY_CONFIGURATION_MAIN",
@@ -21,7 +23,7 @@ export const IDPayConfigurationRoutes = {
 
 export type IDPayConfigurationParamsList = {
   [IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO]: InitiativeConfigurationIntroScreenRouteParams;
-  [IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT]: undefined;
+  [IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT]: InstrumentsEnrollmentScreenRouteParams;
   [IDPayConfigurationRoutes.IDPAY_CONFIGURATION_SUCCESS]: undefined;
   [IDPayConfigurationRoutes.IDPAY_IBAN_CONFIGURATION_LANDING]: undefined;
   [IDPayConfigurationRoutes.IDPAY_IBAN_ONBOARDING]: undefined;
