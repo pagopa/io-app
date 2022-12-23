@@ -1,28 +1,46 @@
 ---
 global:
-  password: Passwort
-  username: Benutzername
-  disclaimer_beta: Wenn Sie Probleme bei der Anmeldung haben, lassen Sie es uns bitte wissen!
+  you: "Du"
+  id: "ID"
+  badges:
+    blocked: "Blockiert"
+    onGoing: "In Bearbeitung"
+  password: "Passwort"
+  username: "Benutzername"
+  disclaimer_beta: "Wenn Sie Probleme bei der Anmeldung haben, lassen Sie es uns bitte wissen!"
+  unknown: "Unbekannt"
+  sectionStatus:
+    moreInfo: "mehr Informationen"
   accessibility:
-    dateFormat: MMMM Do YYYY
-    expanded: Erweiterter Absatz
-    collapsed: Eingeklappter Absatz
-    active: State active
-    inactive: Aktiver Zustand
+    reload: "Neu laden"
+    switchLabel: "Zum Aktivieren auswählen"
+    inputLabel: "{{header}}, Überschrift"
+    textField: "{{inputLabel}}, Textfeld"
+    description: "Beschreibung"
+    dateField: "Zwei Ziffern für den Monat, zwei für das Jahr"
+    threeDigits: "3 Ziffern"
+    fourDigits: "4 Ziffern"
+    dateFormat: DD MMMM YYYY
+    expanded: "Erweiterter Absatz"
+    collapsed: "Eingeklappter Absatz"
+    active: "Aktiver Zustand"
+    inactive: "Inktiver Zustand"
+    linkHint: "Wenn Sie dieses Element aktivieren, werden Sie zum Browser des Geräts weitergeleitet"
+    alert: "Hinweis"
     activityIndicator:
-      label: Laden
-      hint: Warten auf das Laden des Inhalts
+      label: "Wird geladen"
+      hint: "Warten Sie auf das Laden des Inhalts"
     header:
-      label: Kopfzeile der Anwendung
+      label: "Kopfzeile der Anwendung"
     contextualHelp:
-      close: Schließen Sie die kontextbezogene Hilfe
+      close: "Schließen Sie die kontextbezogene Hilfe"
       open:
-        label: Kontextbezogene Hilfe
-        hint: Zugriff auf Informationen über den Inhalt des aktuellen Bildschirms
+        label: "Kontextbezogene Hilfe"
+        hint: "Zugriff auf Informationen über den Inhalt des aktuellen Bildschirms"
     chat:
-      description: "IO assistance messages"
-      unread_singular: "{{message}} new message"
-      unread_plural: "{{message}} new messages"
+      description: "IO Servicemitteilungen"
+      unread_singular: "{{message}} neue Mitteilung"
+      unread_plural: "{{message}} neue Mitteilungen"
   ioWebSite: https://io.italia.it
   symbols:
     question: "?"
@@ -31,68 +49,97 @@ global:
     delimiterSeparator: "."
     decimalSeparator: ","
   date:
+    invalid: "Ungültiges Datum"
     today: "heute"
     tomorrow: "morgen"
   dateFormats:
-    timeFormat: "%H.%M"
+    shortFormat: "%d.%m.%Y"
+    shortFormatWithTime: "%d.%m.%Y, %H:%M"
+    fullFormatShortMonthLiteral: "%d %b %Y"
+    fullFormatShortMonthLiteralWithTime: "%d %b %Y, %H:%M"
+    fullFormatShortMonthLiteralWithoutTime: "%d %b %Y"
+    fullFormatFullMonthLiteral: "%d %B %Y"
+    fullMonthLiteral: "%B"
+    fullMonthLiteralWithYear: "%B %Y"
+    numericMonthYear: "%m.%Y"
+    shortNumericMonthYear: "%m.%-y"
+    timeFormat: "%H:%M"
+    timeFormatWithTimezone: "%H:%M:%S (%z)"
+    dayMonthWithTime: "%d %b, %H:%M"
+    dayMonthWithoutTime: "%d %b"
+    dayFullMonth: "%d %B"
     monthYear: "MMMM YYYY"
     dayAndMonth: "dddd D MMMM"
-    dayMonth: "MM/DD"
+    dayMonth: "DD.MM."
     dayMonthYear: "D MMMM YYYY"
     weekdayDayMonthYear: "dddd D MMMM YYYY"
-  genericAlert: Warnung!
-  genericWaiting: Warten Sie ein paar Sekunden..
-  genericThanks: Danke
-  genericShare: Teilen
-  genericSave: Speichern
+    dateTimePicker: "gg.mm.yyyy"
+  genericError: "Es liegt ein vorübergehendes Problem vor, bitte versuchen Sie es erneut."
+  genericAlert: "Achtung!"
+  genericWaiting: "Warten Sie ein paar Sekunden..."
+  genericThanks: "Danke"
+  genericShare: "Teilen"
+  genericSave: "Speichern"
+  genericRetry: "Erneut versuchen"
   jserror:
-    title: Unerwarteter Fehler aufgetreten
-    message: Wir haben dies an unser Team gemeldet! Bitte schließen Sie die App und starten Sie diese erneut!
+    title: "Es ist ein unerwarteter Fehler aufgetreten"
+    message: "Wir haben dies unserem Team gemeldet! Bitte schließen Sie die App und starten Sie diese erneut!"
   markdown:
-    decodeError: Nachricht kann nicht entschlüsselt werden
+    decodeError: "Die Nachricht kann nicht entschlüsselt werden"
   buttons:
-    share: Teilen
-    delete: Löschen
-    cancel: Abbrechen
-    ok: OK
-    ok2: Ok
-    continue: Weiter
-    retry: Wiederholen
-    back: Zurück
-    confirm: Bestätigen
-    close: Schließen
-    exit: Beenden
-    saveSelection: Speichern Sie die Auswahl
-    search: Suche
+    share: "Teilen"
+    delete: "Löschen"
+    cancel: "Abbrechen"
+    settings: "Einstellungen"
+    ok: "OK"
+    ok2: "Ok"
+    continue: "Weiter"
+    retry: "Wiederholen"
+    back: "Zurück"
+    confirm: "Bestätigen"
+    close: "Schließen"
+    exit: "Beenden"
+    saveSelection: "Speichern Sie die Auswahl"
+    search: "Suche"
     skip: "Überspringen"
-    add: Hinzufügen
-    details: Details
+    add: "Hinzufügen"
+    edit: "Ändern"
+    info: "Info"
+    activate: "Aktivieren"
+    deactivate: "Deaktivieren"
+    show: "Anzeigen"
+    update: "Aktualisieren"
+    findOutMore: "Mehr erfahren"
+    details: "Details"
+    choose: "Auswählen"
   navigator:
-    messages: Mitteilungen
-    wallet: Konto
-    documents: Dokumente
-    profile: Profil
-    services: Dienste
+    messages: "Mitteilungen"
+    wallet: "Konto"
+    documents: "Dokumente"
+    profile: "Profil"
+    services: "Dienste"
   actions:
-    retry: Es ist ein Fehler aufgetreten, bitte versuchen Sie es erneu
-    search: Suchtext
+    retry: "Es ist ein Fehler aufgetreten, bitte versuchen Sie es erneut."
+    search: "Suchtext"
   remoteStates:
-    loading: Laden...
-    wait: Warten Sie ein paar Sekunden..
-    notAvailable: Nicht verfügbar
-  notImplemented: NICHT IMPLEMENTIERT
+    loading: "Wird geladen..."
+    wait: "Warten Sie ein paar Sekunden..."
+    notAvailable: "Nicht verfügbar"
+  notImplemented: "NICHT IMPLEMENTIERT"
   search:
-    invalidSearchBarText: Mindestens {{minCharacter}} Zeichen eingeben
+    invalidSearchBarText: "Mindestens {{minCharacter}} Zeichen eingeben"
     noResultsFound: "Es gibt keine Ergebnisse für diese Suche: versuchen Sie etwas anderes."
-    noResultsTitle: Keine Ergebnisse.
+    noResultsTitle: "Keine Ergebnisse"
   media:
     email: "E-Mail"
-    pec: PEC
-    phone: Telefon
+    pec: "PEC"
+    phone: "Telefon"
 tablet:
   message: Die Oberfläche der IO-App ist für Smartphones optimiert, aber alle Funktionen, die mit Ihrem Gerät kompatibel sind, sind weiterhin verfügbar.
 rooted:
   title: Es sieht so aus, als ob die Sicherheit Ihres Geräts kompromittiert worden ist!
+  bodyiOS: !include jailbroken_body.md
+  bodyAndroid: !include rooted_body.md
   continueAlert:
     title: Weiter
     body: Sind Sie sicher, dass Sie die Risiken kennen und weitermachen wollen?

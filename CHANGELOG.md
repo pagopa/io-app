@@ -2,6 +2,50 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.23.0-rc.1](https://github.com/pagopa/io-app/compare/2.23.0-rc.0...2.23.0-rc.1) (2022-12-23)
+
+
+### Features
+
+* **IDPay:** [[IODPAY-56](https://pagopa.atlassian.net/browse/IODPAY-56)] Addition of initiative transaction timeline ([#4218](https://github.com/pagopa/io-app/issues/4218)) ([8e375a2](https://github.com/pagopa/io-app/commit/8e375a20bc3eca4118721c8979da94181ca06bc5))
+
+
+### Bug Fixes
+
+* cancel message ([#4258](https://github.com/pagopa/io-app/issues/4258)) ([d1d4ac1](https://github.com/pagopa/io-app/commit/d1d4ac105dc37318e4d794ddbaa0fae9875db0a4))
+* **Firma con IO:** [[SFEQS-1264](https://pagopa.atlassian.net/browse/SFEQS-1264)] Update subtitle in data sharing screen ([#4249](https://github.com/pagopa/io-app/issues/4249)) ([b226d6f](https://github.com/pagopa/io-app/commit/b226d6f8e2287790008166bc105fddcb2f11036e))
+
+
+### Chores
+
+* **Firma con IO:** [[SFEQS-1230](https://pagopa.atlassian.net/browse/SFEQS-1230)] Add a new privacy tag link to support privacy url ([#4251](https://github.com/pagopa/io-app/issues/4251)) ([896cf6b](https://github.com/pagopa/io-app/commit/896cf6b37b9c7b56d0d671e4b21fd1f68df5806d))
+* **IDPay:** Remove isIdPayEnabled prop from WalletHomeScreen ([#4254](https://github.com/pagopa/io-app/issues/4254)) ([b5c527a](https://github.com/pagopa/io-app/commit/b5c527a1c1157015e229fe871b3861bb8eabc70d))
+* [[IA-854](https://pagopa.atlassian.net/browse/IA-854)] Added translations to jailbreak and root messages ([#4219](https://github.com/pagopa/io-app/issues/4219)) ([b86c42b](https://github.com/pagopa/io-app/commit/b86c42bd45d2f299ee3f043766e87d024ece77f8))
+* [[IAI-219](https://pagopa.atlassian.net/browse/IAI-219)] Text fields' inventory ([#4250](https://github.com/pagopa/io-app/issues/4250)) ([f246033](https://github.com/pagopa/io-app/commit/f246033b4162e7f2a1866216962bf971a804d32a))
+* [[IAI-252](https://pagopa.atlassian.net/browse/IAI-252)] Buttons' inventory ([#4241](https://github.com/pagopa/io-app/issues/4241)) ([6edb279](https://github.com/pagopa/io-app/commit/6edb279b4404b6abafbedaefa92d354068bac6aa))
+* [[IAI-254](https://pagopa.atlassian.net/browse/IAI-254)] Toast notifications' inventory ([#4248](https://github.com/pagopa/io-app/issues/4248)) ([48dea57](https://github.com/pagopa/io-app/commit/48dea57a26d7e7180ac3a2a1874224730052a291))
+* **IDPay:** IDPay initiative configuration machine refactoring ([#4240](https://github.com/pagopa/io-app/issues/4240)) ([c9f012e](https://github.com/pagopa/io-app/commit/c9f012e8861a0c104e7b38ce06170b8dd5c7b759))
+* [[IOAPPCOM-18](https://pagopa.atlassian.net/browse/IOAPPCOM-18)] Remove unchanged references to Non-Paginated messages component ([#4233](https://github.com/pagopa/io-app/issues/4233)) ([6b1fd6e](https://github.com/pagopa/io-app/commit/6b1fd6e4c48bf98c8bbef8c7255a2ea00b4d47f3))
+* [[IOAPPCOM-9](https://pagopa.atlassian.net/browse/IOAPPCOM-9)] Generalization of message attachments ([#4234](https://github.com/pagopa/io-app/issues/4234)) ([66e5898](https://github.com/pagopa/io-app/commit/66e58985b82ddc2e0acf6db00552d0475e1bb821))
+* [[IOAPPFD0-10](https://pagopa.atlassian.net/browse/IOAPPFD0-10)] Startup saga, onboarding refactoring ([#4168](https://github.com/pagopa/io-app/issues/4168)) ([2b28791](https://github.com/pagopa/io-app/commit/2b2879179f29dc035e50599c8e061526723f1e92))
+
+## [2.23.0-rc.0](https://github.com/pagopa/io-app/compare/2.22.0-rc.3...2.23.0-rc.0) (2022-12-20)
+
+
+### Features
+
+* **IDPay:** [[IODPAY-71](https://pagopa.atlassian.net/browse/IODPAY-71)] Add client and API definition for IDPay IBAN endpoints ([#4243](https://github.com/pagopa/io-app/issues/4243)) ([8b9a53b](https://github.com/pagopa/io-app/commit/8b9a53bb0ebc7093a2c12eb818ee43314d9955e5))
+
+
+### Bug Fixes
+
+* [[IOAPPCOM-16](https://pagopa.atlassian.net/browse/IOAPPCOM-16)] Message spinner from foreground push notification ([#4242](https://github.com/pagopa/io-app/issues/4242)) ([30e1e2a](https://github.com/pagopa/io-app/commit/30e1e2a61fc8d9919ef8eec52e78a71d4120bb24))
+
+
+### Chores
+
+* **Firma con IO:** [[SFEQS-1255](https://pagopa.atlassian.net/browse/SFEQS-1255)] Disable local feature flag ([#4245](https://github.com/pagopa/io-app/issues/4245)) ([cd51460](https://github.com/pagopa/io-app/commit/cd51460f4f415e1fd17dedad13c0654a879c9989))
+
 ## [2.22.0-rc.3](https://github.com/pagopa/io-app/compare/2.22.0-rc.2...2.22.0-rc.3) (2022-12-16)
 
 
