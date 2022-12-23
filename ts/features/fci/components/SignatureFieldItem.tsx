@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     paddingBottom: 14
   },
-  titleMargin: { marginRight: 16 }
+  titleMargin: { marginRight: 22 }
 });
 
 const SignatureFieldItem = (props: Props) => {
@@ -49,7 +49,7 @@ const SignatureFieldItem = (props: Props) => {
           setChecked(!checked);
         }}
       >
-        <View style={IOStyles.column}>
+        <View style={[IOStyles.column, { flex: 1 }]}>
           <H4 style={styles.titleMargin} testID="SignatureFieldItemTitleTestID">
             {props.title}
           </H4>
@@ -61,7 +61,6 @@ const SignatureFieldItem = (props: Props) => {
             {I18n.t("features.fci.signatureFields.showOnDocument")}
           </Link>
         </View>
-        <View style={IOStyles.flex} />
         <IconFont
           testID="SignatureFieldItemCheckboxTestID"
           name={checked ? "io-checkbox-on" : "io-checkbox-off"}
