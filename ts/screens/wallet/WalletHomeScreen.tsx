@@ -201,9 +201,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
   };
 
   private loadBonusIDPay = () => {
-    if (this.props.isIdPayEnabled) {
-      this.props.loadIdPayWalletData();
-    }
+    this.props.loadIdPayWalletData();
   };
 
   public componentDidMount() {
@@ -580,8 +578,7 @@ const mapStateToProps = (state: GlobalState) => ({
   isCgnEnabled: isCGNEnabledSelector(state),
   bancomatListVisibleInWallet: bancomatListVisibleInWalletSelector(state),
   coBadgeListVisibleInWallet: cobadgeListVisibleInWalletSelector(state),
-  bpdConfig: bpdRemoteConfigSelector(state),
-  isIdPayEnabled: false // TODO add remote config to enable/disable idPay
+  bpdConfig: bpdRemoteConfigSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
