@@ -59,7 +59,7 @@ const FciQtspClausesScreen = () => {
       isLoading={true}
       loadingCaption={""}
       onRetry={constNull}
-      testID={"FciTypLoadingScreenTestID"}
+      testID={"FciLoadingScreenTestID"}
     />
   );
 
