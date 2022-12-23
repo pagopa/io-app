@@ -48,7 +48,7 @@ export const fciQtspPrivacyTextSelector = createSelector(
   qtspClausesMetadata =>
     pot.isSome(qtspClausesMetadata)
       ? qtspClausesMetadata.value.privacy_text
-      : []
+      : ""
 );
 
 export const fciQtspPrivacyUrlSelector = createSelector(

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { SafeAreaView, FlatList, StyleSheet, View } from "react-native";
+import { SafeAreaView, FlatList, View } from "react-native";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { H1 } from "../../../../components/core/typography/H1";
@@ -18,16 +18,10 @@ import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponen
 import customVariables from "../../../../theme/variables";
 import QtspClauseListItem from "../../components/QtspClauseListItem";
 import { FCI_ROUTES } from "../../navigation/routes";
-import { H4 } from "../../../../components/core/typography/H4";
-import { Link } from "../../../../components/core/typography/Link";
 import { useIODispatch } from "../../../../store/hooks";
 import { fciStartSigningRequest } from "../../store/actions";
+import LinkedText from "../../components/LinkedText";
 
-const styles = StyleSheet.create({
-  paddingText: {
-    paddingLeft: 4
-  }
-});
 const FciQtspClausesScreen = () => {
   const [clausesChecked, setClausesChecked] = React.useState(0);
   const qtspClausesSelector = useSelector(fciQtspClausesSelector);
@@ -69,18 +63,11 @@ const FciQtspClausesScreen = () => {
             />
           )}
           ListFooterComponent={
-            <H4>
-              <H4 color={"bluegreyDark"} weight={"Regular"}>
-                {qtspPrivacyTextSelector}
-              </H4>
-              <View style={styles.paddingText} />
-              <Link
-                testID="FciQtspClausesPrivacyUrlTestID"
-                onPress={() => openUrl(qtspPrivacyUrlSelector)}
-              >
-                {I18n.t("features.fci.qtspTos.show")}
-              </Link>
-            </H4>
+            <LinkedText
+              text={qtspPrivacyTextSelector}
+              replacementUrl={qtspPrivacyUrlSelector}
+              onPress={openUrl}
+            />
           }
           keyboardShouldPersistTaps={"handled"}
           testID={"FciQtspClausesListTestID"}
