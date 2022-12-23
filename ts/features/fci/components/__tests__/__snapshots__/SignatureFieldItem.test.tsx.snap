@@ -47,6 +47,9 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
           Object {
             "flexDirection": "column",
           },
+          Object {
+            "flex": 1,
+          },
         ]
       }
     >
@@ -61,6 +64,9 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
         }
         style={
           Array [
+            Object {
+              "marginRight": 16,
+            },
             Object {
               "fontSize": 16,
               "lineHeight": 22,
@@ -116,16 +122,6 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
         See on document
       </Text>
     </View>
-    <View
-      style={
-        Array [
-          Object {},
-          Object {
-            "flex": 1,
-          },
-        ]
-      }
-    />
     <Text
       accessibilityElementsHidden={true}
       accessibilityLabel=""
