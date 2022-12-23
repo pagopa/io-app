@@ -1,4 +1,4 @@
-Es scheint, dass ein **Gefängnisausbruch** auf Ihrem Gerät durchgeführt wurde.
+Es scheint, dass ein **Jailbreak** auf Ihrem Gerät durchgeführt wurde.
 
 Dies geschieht, wenn das Betriebssystem verändert oder nicht ordnungsgemäß installiert wurde. Die Integrität des Betriebssystems kann beeinträchtigt sein, und die IO-App funktioniert möglicherweise nicht richtig.
 
