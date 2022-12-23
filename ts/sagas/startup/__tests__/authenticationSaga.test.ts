@@ -6,7 +6,6 @@ import {
   analyticsAuthenticationStarted
 } from "../../../store/actions/analytics";
 import { loginSuccess } from "../../../store/actions/authentication";
-import { resetToAuthenticationRoute } from "../../../store/actions/navigation";
 import { SessionToken } from "../../../types/SessionToken";
 import { stopCieManager, watchCieAuthenticationSaga } from "../../cie";
 import { watchTestLoginRequestSaga } from "../../testLoginSaga";
