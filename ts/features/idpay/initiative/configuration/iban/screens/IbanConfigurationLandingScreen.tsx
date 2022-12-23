@@ -11,7 +11,6 @@ import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import { H3 } from "../../../../../../components/core/typography/H3";
 import { Body } from "../../../../../../components/core/typography/Body";
 import { IOColors } from "../../../../../../components/core/variables/IOColors";
-import { Link } from "../../../../../../components/core/typography/Link";
 
 const styles = StyleSheet.create({
   greyCircle: {
@@ -32,7 +31,7 @@ const styles = StyleSheet.create({
 const IbanConfigurationLanding = () => {
   const configurationMachine = useConfigurationMachineService();
   const [_, send] = useActor(configurationMachine);
-  const customGoBack = () => send({ type: "GO_BACK" });
+  const customGoBack = () => send({ type: "BACK" });
   return (
     <BaseScreenComponent
       goBack={customGoBack}
@@ -68,7 +67,7 @@ const IbanConfigurationLanding = () => {
           type="SingleButton"
           leftButton={{
             title: "Continua",
-            onPress: () => send({ type: "START_IBAN_ONBOARDING" })
+            onPress: () => send({ type: "NEXT" })
           }}
         />
       </SafeAreaView>

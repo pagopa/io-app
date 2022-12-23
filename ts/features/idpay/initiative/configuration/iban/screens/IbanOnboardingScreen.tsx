@@ -23,7 +23,7 @@ import { useConfigurationMachineService } from "../../xstate/provider";
 const IbanOnboardingScreen = () => {
   const configurationMachine = useConfigurationMachineService();
   const [_, send] = useActor(configurationMachine);
-  const customGoBack = () => send({ type: "GO_BACK" });
+  const customGoBack = () => send({ type: "BACK" });
   const [iban, setIban] = React.useState<string | undefined>(undefined);
   const [ibanName, setIbanName] = React.useState<string>("");
   const isIbanValid = () =>
