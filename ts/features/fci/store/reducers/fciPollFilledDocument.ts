@@ -8,7 +8,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { NetworkError } from "../../../../utils/errors";
 
 export const POLLING_FREQ_TIMEOUT = 2000 as Millisecond;
-export const MAX_POLLING_RETRY = 10;
+export const MAX_POLLING_RETRY = 5;
 
 export type FciPollFilledDocumentState = pot.Pot<
   { isReady: boolean; retryTimes: number },
