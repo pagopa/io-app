@@ -39,13 +39,13 @@ export const useFciAbortSignatureFlow = () => {
         onPressWithGestureHandler: true,
         bordered: true,
         onPress: () => dismiss(),
-        title: I18n.t("features.fci.abort.cancel")
+        title: I18n.t("features.fci.abort.confirm")
       }}
       rightButton={{
         ...errorButtonProps(() => {
           dismiss();
           dispatch(fciEndRequest());
-        }, I18n.t("features.fci.abort.confirm")),
+        }, I18n.t("features.fci.abort.cancel")),
         onPressWithGestureHandler: true
       }}
     />
