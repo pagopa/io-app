@@ -65,7 +65,7 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
         style={
           Array [
             Object {
-              "marginRight": 16,
+              "marginRight": 22,
             },
             Object {
               "fontSize": 16,
