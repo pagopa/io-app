@@ -3207,8 +3207,8 @@ features:
     abort:
       title: "Annulla la firma"
       content: "Vuoi annullare la firma dei documenti?"
-      cancel: "Torna indietro"
-      confirm: "Annulla"
+      cancel: "Annulla la firma"
+      confirm: "Continua a firmare"
     signatureFields:
       title: "Firma qui"
       showOnDocument: "Vedi sul documento"
@@ -3218,9 +3218,9 @@ features:
       titleRight: Pagina {{currentPage}} di {{totalPages}}
     shareDataScreen:
       title: "Condividi questi dati?"
-      content: "Per completare la firma, devi condividere questi dati con l'ente richiedente."
+      content: "Per completare la firma, devi condividere questi dati con il provider di firma."
       cancel: "Annulla"
-      confirm: "Ok. va bene"
+      confirm: "Ok, va bene"
       alertText: "Vuoi modificare o aggiornare il tuo indirizzo email?"
       alertLink: "Vai qui"
       name: "Nome"

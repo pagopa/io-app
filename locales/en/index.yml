@@ -3183,8 +3183,8 @@ features:
     abort:
       title: "Cancel signing flow"
       content: "Do you want to cancel the documents signing process?"
-      cancel: "Back"
-      confirm: "Cancel"
+      cancel: "Cancel signing"
+      confirm: "Keep signing"
     signatureFields:
       title: "Sign here"
       showOnDocument: "See on document"
@@ -3194,7 +3194,7 @@ features:
       titleRight: Page {{currentPage}} of {{totalPages}}
     shareDataScreen:
       title: "Do you share this data?"
-      content: "To complete the signing process, you must share this data with the requesting institution."
+      content: "To complete the signing process, you must share this data with the signature provider."
       cancel: "Cancel"
       confirm: "Ok"
       alertText: "Want to change or update your email address?"
