@@ -171,7 +171,6 @@ export const LabelledItem: React.FC<Props> = ({
       )}
 
       <View>
-        {/* https://docs-v2.nativebase.io/docs/CheatSheet.html */}
         <View
           style={{
             ...IOStyles.flex,
