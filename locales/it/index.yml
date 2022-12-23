@@ -3207,8 +3207,8 @@ features:
     abort:
       title: "Annulla la firma"
       content: "Vuoi annullare la firma dei documenti?"
-      cancel: "Torna indietro"
-      confirm: "Annulla"
+      cancel: "Annulla la firma"
+      confirm: "Continua a firmare"
     signatureFields:
       title: "Firma qui"
       showOnDocument: "Vedi sul documento"
