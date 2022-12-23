@@ -95,7 +95,7 @@ export const AppStackNavigator = (): React.ReactElement => {
   const cgnEnabled = useIOSelector(isCGNEnabledSelector);
   const fciEnabledSelector = useIOSelector(isFciEnabledSelector);
   const isFimsEnabled = fimsEnabled && fimsEnabledSelector;
-  const isFciEnabled = fciEnabled && fciEnabledSelector;
+  const isFciEnabled = fciEnabledSelector;
 
   const maybeSessionToken = useIOSelector(sessionTokenSelector);
   const maybeSessionInfo = useIOSelector(sessionInfoSelector);
