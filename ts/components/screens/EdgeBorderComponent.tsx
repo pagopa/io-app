@@ -25,8 +25,6 @@ It should be considered a temporary trade-off
 and not a definitive solution.
 */
 
-export class EdgeBorderComponent extends React.PureComponent {
-  public render() {
-    return <View style={styles.emptyListWrapper} />;
-  }
-}
+export const EdgeBorderComponent = () => (
+  <View style={styles.emptyListWrapper} />
+);
