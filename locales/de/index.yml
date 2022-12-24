@@ -204,6 +204,7 @@ profile:
     menulabel: IO beenden
     alertTitle: "Möchten Sie wirklich beenden?"
     alertMessage: "Sind Sie sicher, dass Sie sich abmelden wollen? Wenn Sie sich das nächste Mal anmelden, benötigen Sie eine neue Anmeldung mit CIE oder SPID."
+    loading: Logout in corso...
     exit: Beenden
     cta:
       header: Wie wollen Sie die App verlassen?
@@ -224,6 +225,8 @@ profile:
     title: Profil
     logout: Logout/Beenden
     forgetCurrentSession: Aktuelle Sitzung löschen
+    clearAsyncStorage: Cancella contenuto di AsyncStorage
+    dumpAsyncStorage: Scarica contenuto di AsyncStorage
     contextualHelpTitle: Was Sie in Ihrem Profil machen können
     developerModeOn: Entwicklermodus aktiviert
     cache:
@@ -242,7 +245,38 @@ profile:
     privacy:
       title: Privacy und Nutzungsbestimmungen
       description: Ihre Rechte und Pflichten bei der Nutzung der IO-App
+      subtitle: Qui trovi informazioni sui tuoi diritti e obblighi e sul trattamento dei tuoi dati personali.
       loading: Warten Sie ein paar Sekunden, wir überprüfen Ihr Profil.
+      removeAccount:
+          title: Elimina il tuo account
+          description: Cancella in modo permanente il tuo account e i tuoi dati personali
+          error: Si è verificato un errore nella richiesta di rimozione dell'account, riprova.
+          alert:
+            activeBonusTitle: Bonus attivi
+            activeBonusDescription: Sembra che tu abbia dei Bonus attivi. Vogliamo informarti che la cancellazione del tuo profilo non equivale alla cancellazione dei bonus o alla disiscrizione da eventuali iniziative. Per gestire i tuoi bonus vai alla sezione Portafoglio, altrimenti scegli Continua
+            oldRequest: Hai già richiesto la cancellazione del tuo account.
+            oldRequestSubtitle: "Stiamo elaborando la tua richiesta.\n Se hai cambiato idea o hai richiesto l’eliminazione per sbaglio, clicca su “Annulla eliminazione” qui sotto."
+            cta:
+              manageBonus: Gestisci bonus
+              continue: Continua
+              return: Indietro
+              cancel: Annulla l'eliminazione
+          info:
+            body: "Puoi esercitare il tuo diritto alla cancellazione del tuo profilo IO in qualsiasi momento\n\nTi informiamo che l'eliminazione del tuo account è definitiva e avverrà entro 30 giorni dalla richiesta.\n\nSe decidi di proseguire non potrai più recuperare i messaggi o le preferenze che hai impostato nell'app.\nTi segnaliamo inoltre che eventuali bonus o sconti ottenuti tramite l'app IO non saranno più accessibili.\n\nPotrai iscriverti nuovamente all'App IO in ogni momento effettuando una nuova procedura di registrazione con SPID o CIE."
+            cta: Continua
+          details:
+            body: "Ci piacerebbe sapere perché stai eliminando il tuo account, per poter migliorare in futuro. Puoi anche proseguire direttamente con l’eliminazione cliccando sul pulsante qui sotto."
+            question: Qual è il motivo della cancellazione?
+            answer_1: Non ritengo più utile IO
+            answer_2: Non mi sento al sicuro su IO
+            answer_3: Non ho mai usato l'app
+            answer_4: Nessuno dei precedenti
+            labelOpenAnswer: Dicci di più
+            cta: Elimina Account
+          success:
+            title: Stiamo processando la tua richiesta.
+            body: "La tua richiesta è stata presa in carico e procederemo alla cancellazione del tuo account entro 30 giorni.\n\nPotrai iscriverti nuovamente all’App IO in ogni momento effettuando una nuova procedura di registrazione con SPID o CIE.\n\nPremendo 'Esci', la tua sessione verrà terminata.\n\nGrazie per aver utilizzato IO"
+            cta: Esci
       exportData:
           cta: Kopie Ihrer Daten anfordern
           title: Zugriff auf Ihre Daten
@@ -256,11 +290,53 @@ profile:
           error: Beim Absenden Ihrer Exportanfrage ist ein Fehler aufgetreten, bitte versuchen Sie es erneut!
       privacyPolicy:
         title: Datenschutzbestimmungen
+        description: Consulta l’Informativa Privacy e i Termini e condizioni d’uso di IO
         header: Siehe die Datenschutzbestimmungen und die Nutzungsbedingungen von IO
         updated: Wir haben unsere Allgemeinen Geschäftsbedingungen aktualisiert
         infobox: Es ist notwendig, die Allgemeinen Geschäftsbedingungen zu lesen und zu akzeptieren
         contextualHelpTitlePolicy: Was sind die Informationen über die Verarbeitung von personenbezogenen Daten
         contextualHelpTitle: Ihre Datenschutzeinstellungen
+      shareData:
+        title: "Privacy"
+        listItem:
+          title: "Condividi i dati di utilizzo"
+          description: "Aiuta il team di IO a monitorare il funzionamento dell’app"
+        screen:
+          title: "I tuoi dati di utilizzo"
+          description: "Aiuta il team di IO a monitorare il funzionamento dell’app e fornirti l’assistenza adeguata in caso di problemi."
+          why:
+            description:
+              one: "IO raccoglie solo le informazioni "
+              two: "necessarie "
+              three: "per il funzionamento dei servizi offerti."
+            cta: "Perché?"
+          security:
+            description:
+              one: "Adottiamo misure di sicurezza per proteggere i tuoi dati."
+            cta: "Scopri di più"
+          gdpr:
+            description:
+              one: "Il team di IO collabora con fornitori in conformità con le "
+              two: "norme previste dal GDPR."
+            cta: "Vedi elenco fornitori"
+          additionalInformation:
+            description: "Per maggiori informazioni, leggi "
+            cta: "l’Informativa Privacy e i Termini e Condizioni d’uso"
+          profileSettings: "Potrai modificare questa scelta in ogni momento in Profilo > Preferenze"
+          cta:
+            shareData: "Condividi dati"
+            dontShareData: "Non condividere dati"
+            dontShare: "Non condividere"
+          confirmToast: "Preferenze aggiornate!"
+        alert:
+          title: "Non stai dando il permesso a IO di raccogliere i tuoi dati di utilizzo"
+          body: "Se confermi quest’opzione, in caso di problemi tecnici, il team di supporto di IO potrebbe non avere tutti i dati necessari a risolverli."
+        whyBottomSheet:
+          title: "Per quali finalità raccogliamo informazioni?"
+          body: "**IO non raccoglie dati per finalità di marketing.**  \nUtilizziamo strumenti che ci permettono di registrare dati relativi al tuo utilizzo dell’app, per fornirti un servizio migliore e assisterti in caso di problemi."
+        securityBottomSheet:
+          title: "Cos’è la pseudonimizzazione?"
+          body: "È il trattamento dei dati personali in modo tale che i dati personali non possano più essere attribuiti a un interessato specifico senza l'utilizzo di informazioni aggiuntive, a condizione che tali informazioni aggiuntive siano conservate separatamente e soggette a misure tecniche e organizzative intese a garantire che tali dati personali non siano attribuiti a una persona fisica identificata o identificabile."
     appInfo:
       title: Über IO
       description: Erfahren Sie mehr über die IO-App
@@ -275,6 +351,8 @@ profile:
       alertConfirmTitle: Möchten Sie die pagoPA Testumgebung nutzen?
       alertConfirmMessage: Wenn Sie die pagoPA-Testumgebung aktivieren, sehen Sie die Historie Ihrer Transaktionen und Ihre gespeicherten Zahlungsmethoden nicht mehr und können nur noch ausdrücklich dafür angelegte Zahlungsmethoden verwenden. Wenn Sie nicht verstehen, was das bedeutet, aktivieren Sie diese Funktion nicht.
       alertMessage: Die Anwendung muss neu gestartet werden, damit die Änderungen wirksam werden.
+    pnEnvironment:
+        pnEnv: Ambiente PN di Test
     appVersion: App-Version
     backendVersion: Backend-Version
     debugMode: Debug-Modus
@@ -284,10 +362,15 @@ profile:
     subtitle: "Die von IO benutzten anagrafischen und Kontaktdaten einsehen"
     list:
       email: "E-Mail-Adresse"
+      need_validate: Da validare
       nameSurname: Name und Nachname
       spid:
         headerTitle: SPID Daten
         email: "SPID – E-Mail"
+    email:
+      contextualHelpTitle: Come gestire la tua mail
+    spid_email:
+      contextualHelpTitle: Questo dato è impostato nel tuo profilo SPID
   security:
     title: Sicherheit
     subtitle: Authentifizierungsmethode der App einstellen.
@@ -295,6 +378,7 @@ profile:
       biometric_recognition:
         title: Biometrische Erkennung
         subtitle: Fingerabdruck- oder Gesichts-erkennung benutzen
+        needed_to_disable: Riconoscimento richiesto per disabilitare
   preferences:
     title: Einstellungen
     subtitle: "Diese Einstellungen ermöglichen es, die IO-App zu personalisieren."
@@ -314,6 +398,9 @@ profile:
           title: Möchten Sie die Sprache ändern zu
           subtitle: Sie müssen die Anwendung neu starten, damit dies geschieht
         not_selected: Nicht ausgewählt
+      notifications:
+        title: Notifiche push
+        subtitle: Consenti anteprime e promemoria
     empty:
       default: Keine Präferenzen eingestellt
     unavailable:
@@ -327,6 +414,25 @@ profile:
       contextualHelpTitle: Was ist Ihr bevorzugter Kalender
       local_calendar: Lokaler Kalender
       birthday_calendar: Geburtstage
+    notifications:
+      contextualHelpTitle: Notifiche push
+      header: Notifiche push
+      title: Personalizza le notifiche
+      subtitle: Scegli se mostrare le anteprime e ricevere promemoria.
+      titleExistingUser: Personalizza le notifiche
+      subtitleExistingUser: Ora puoi vedere subito chi ti ha scritto o ricevere promemoria da messaggi importanti, come in questo esempio.
+      reminders:
+        title: Consenti promemoria
+        description: Su richiesta dell'ente, ricevi notifiche push in prossimità di scadenze o quando hai dei messaggi non letti
+      preview:
+        title: Mostra anteprime
+        description: Includi nella notifica push il mittente e l’oggetto del messaggio · 
+        link: Più info
+        bottomSheet:
+          title: Mostra anteprime
+          content: Se l’opzione è attiva le notifiche push mostrano il mittente e l’oggetto dei messaggi, anche quando lo schermo è bloccato. Queste informazioni vengono trattate dal gestore del tuo sistema operativo e da app di terze parti eventualmente in esecuzione.
+          cta: Ho capito!
+      error: Si è verificato un errore con la tua richiesta
 userMetadata:
   errors:
     upsertVersion: Benutzer-Metadaten können mit dieser Version nicht hochgeladen werden
