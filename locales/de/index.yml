@@ -183,127 +183,127 @@ inbox:
 profile:
   fiscalCode:
     accessibility:
-      unavailable: Nicht verfügbar
+      unavailable: "Nicht verfügbar"
       preview:
-        label: Vorschau auf Ihre Steuernummerkarte
-        hint: Aktivieren Sie diese Option, um ein Faksimile Ihre Steuernummerkarte anzuzeigen
+        label: "Vorschau auf deine Steuernummer"
+        hint: "Aktiviere diese Option, um ein Faksimile deiner Steuernummer anzuzeigen"
       front:
-        label: Vorderseite der Steuernummerkarte mit dem Code {{code}} von {{name}} {{Familienname}}, Geschlecht {{Geschlecht}}, geboren in {{Geburtsort}}, {{Provinz}} am {{Geburtsdatum}}
-        hint: Aktivieren, um die Querformatansicht anzuzeigen
+        label: "Vorderseite der Karte mit Steuernummer {{code}} von {{name}} {{Familienname}}, Geschlecht {{Geschlecht}}, geboren in {{Geburtsort}} ({{Provinz}}) am {{Geburtsdatum}}"
+        hint: "Aktiviere diese Option, um zur Vollbildansicht zu wechseln"
       rear:
-        label: Barcode Ihrer Steuernummerkarte
-        hint: Aktivieren, um die Querformatansicht anzuzeigen
-    title: Ihre persönlichen Dokumente
-    fiscalCode: Steuernummer
-    content: Das Faksimile der Steuernummerkarte ersetzt nicht das physische Dokument, aber es ermöglicht das Lesen von Daten und Barcodes
-    facSimile: FAC-SIMILE
+        label: "Barcode deiner Steuernummer"
+        hint: "Aktiviere diese Option, um zur Vollbildansicht zu wechseln"
+    title: "Deine persönlichen Dokumente"
+    fiscalCode: "Steuernummer"
+    content: "Das Faksimile der Steuernummer ersetzt nicht das physische Dokument, sondern ermöglicht es, die Daten oder den Barcode auf der Rückseite zu lesen"
+    facSimile: "Faksimile"
   sections:
-    spid: SPID PROFIL
-  unknown: Unbekannt
+    spid: "SPID PROFIL"
+  unknown: "Unbekannt"
   logout:
-    menulabel: IO beenden
-    alertTitle: "Möchten Sie wirklich beenden?"
-    alertMessage: "Sind Sie sicher, dass Sie sich abmelden wollen? Wenn Sie sich das nächste Mal anmelden, benötigen Sie eine neue Anmeldung mit CIE oder SPID."
-    loading: Logout in corso...
-    exit: Beenden
+    menulabel: "IO beenden"
+    alertTitle: "Möchtest du wirklich beenden?"
+    alertMessage: "Wenn du dich das nächste Mal anmeldest, musst du dich erneut mit CIE oder SPID authentifizieren."
+    loading: "Abmeldung läuft..."
+    exit: "Beenden"
     cta:
-      header: Wie wollen Sie die App verlassen?
+      header: "Wie willst du die App verlassen?"
       keepData:
-        title: Beenden und alle Daten behalten
-        description: Um die IO-App zu nutzen, müssen Sie sich erneut mit Ihrer digitalen Identität anmelden. Alle Einstellungsdaten bleiben erhalten und sind beim nächsten Start sofort verfügbar. Diese Wahl hat nichts mit einer Löschung der Sie betreffenden personenbezogenen Daten durch die App zu tun.
+        title: "Beenden und alle Daten behalten"
+        description: "Um die IO-App wieder zu benützen, musst du dich erneut mit deiner digitalen Identität anmelden, wobei alle Einstellungsdaten erhalten bleiben und beim nächsten Start sofort verfügbar sind. Diese Wahl bedeutet nicht, dass deine persönlichen Daten durch die App gelöscht werden."
       resetData:
-        title: Beenden und Zurücksetzen dieser App
-        description: "IO-App wird in den Ausgangszustand zurückversetzt, so als ob sie gerade installiert worden wäre. Diese Option hat nichts mit einer Löschung der Sie betreffenden personenbezogenen Daten durch die App zu tun."
+        title: "Beenden und Zurücksetzen der App"
+        description: "Die Einstellungen und Daten, die auf deinem Gerät gespeichert sind, werden zurückgesetzt. Diese Wahl bedeutet nicht, dass deine persönlichen Daten von der App gelöscht werden."
   errors:
-    load: Fehler beim Laden des Profils
-    upsert: Fehler beim Erstellen oder Aktualisieren des Profils
+    load: "Fehler beim Laden des Profils"
+    upsert: "Fehler beim Erstellen oder Aktualisieren des Profils"
   alerts:
     emailNotValidated:
-      title: Ungültige E-Mail
-      subtitle: Sie müssen Ihre E-Mail validieren, bevor Sie mit dem Vorgang fortfahren können. Gehen Sie dazu in den Profilbereich und wählen Sie Einstellungen.
+      title: "Nicht bestätigte E-Mail"
+      subtitle: "Du musst deine E-Mail-Adresse bestätigen, bevor du mit dem Vorgang fortfahren kannst. Gehe dazu in den Profilbereich und wähle Einstellungen."
   main:
-    title: Profil
-    logout: Logout/Beenden
-    forgetCurrentSession: Aktuelle Sitzung löschen
-    clearAsyncStorage: Cancella contenuto di AsyncStorage
-    dumpAsyncStorage: Scarica contenuto di AsyncStorage
-    contextualHelpTitle: Was Sie in Ihrem Profil machen können
-    developerModeOn: Entwicklermodus aktiviert
+    title: "Profil"
+    logout: "Abmelden/Beenden"
+    forgetCurrentSession: "Aktuelle Sitzung löschen"
+    clearAsyncStorage: "Inhalt von AsyncStorage löschen"
+    dumpAsyncStorage: "AsyncStorage-Inhalt herunterladen"
+    contextualHelpTitle: "Was du in deinem Profil machen kannst"
+    developerModeOn: "Entwicklermodus aktiviert"
     cache:
-      alert: Sind Sie sicher, dass Sie den Cache löschen wollen?
-      clear: Cache löschen
-      cleared: Der Cache wurde geleert.
+      alert: "Bist du sicher den Cache löschen zu wollen?"
+      clear: "Cache löschen"
+      cleared: "Der Cache wurde geleert."
     data:
-      title: Ihre Daten
-      description: Ihre Informationen aktualisieren
+      title: "Deine Daten"
+      description: "Deine Informationen überprüfen"
     preferences:
-      title: Voreinstellungen
-      description: App-interne Einstellungen verwalten
+      title: "Einstellungen"
+      description: "Einstellungen der App verwalten"
     security:
-      title: Sicherheit
-      description: "Biometrischen Zugang und PIN ändern"
+      title: "Sicherheit"
+      description: "Biometrischen Zugang und PIN verwalten"
     privacy:
-      title: Privacy und Nutzungsbestimmungen
-      description: Ihre Rechte und Pflichten bei der Nutzung der IO-App
-      subtitle: Qui trovi informazioni sui tuoi diritti e obblighi e sul trattamento dei tuoi dati personali.
-      loading: Warten Sie ein paar Sekunden, wir überprüfen Ihr Profil.
+      title: "Datenschutz und Nutzungsbedingungen"
+      description: "Deine Rechte und Pflichten bei der Nutzung der IO-App"
+      subtitle: "Hier findest du Informationen zu deinen Rechten und Pflichten sowie über die Verarbeitung deiner persönlichen Daten."
+      loading: "Warte ein paar Sekunden, wir überprüfen dein Profil..."
       removeAccount:
-          title: Elimina il tuo account
-          description: Cancella in modo permanente il tuo account e i tuoi dati personali
-          error: Si è verificato un errore nella richiesta di rimozione dell'account, riprova.
+          title: "Dein Konto löschen"
+          description: "Dein Konto und deine persönlichen Daten endgültig löschen"
+          error: "Bei der Anfrage zur Kontolöschung ist ein Fehler aufgetreten. Bitte versuche es erneut."
           alert:
-            activeBonusTitle: Bonus attivi
-            activeBonusDescription: Sembra che tu abbia dei Bonus attivi. Vogliamo informarti che la cancellazione del tuo profilo non equivale alla cancellazione dei bonus o alla disiscrizione da eventuali iniziative. Per gestire i tuoi bonus vai alla sezione Portafoglio, altrimenti scegli Continua
-            oldRequest: Hai già richiesto la cancellazione del tuo account.
+            activeBonusTitle: "Aktive Boni"
+            activeBonusDescription: "Sembra che tu abbia dei Bonus attivi. Vogliamo informarti che la cancellazione del tuo profilo non equivale alla cancellazione dei bonus o alla disiscrizione da eventuali iniziative. Per gestire i tuoi bonus vai alla sezione Portafoglio, altrimenti scegli Continua"
+            oldRequest: "Hai già richiesto la cancellazione del tuo account."
             oldRequestSubtitle: "Stiamo elaborando la tua richiesta.\n Se hai cambiato idea o hai richiesto l’eliminazione per sbaglio, clicca su “Annulla eliminazione” qui sotto."
             cta:
-              manageBonus: Gestisci bonus
-              continue: Continua
-              return: Indietro
-              cancel: Annulla l'eliminazione
+              manageBonus: "Boni verwalten"
+              continue: "Weiter"
+              return: "Zurück"
+              cancel: "Löschung abbrechen"
           info:
             body: "Puoi esercitare il tuo diritto alla cancellazione del tuo profilo IO in qualsiasi momento\n\nTi informiamo che l'eliminazione del tuo account è definitiva e avverrà entro 30 giorni dalla richiesta.\n\nSe decidi di proseguire non potrai più recuperare i messaggi o le preferenze che hai impostato nell'app.\nTi segnaliamo inoltre che eventuali bonus o sconti ottenuti tramite l'app IO non saranno più accessibili.\n\nPotrai iscriverti nuovamente all'App IO in ogni momento effettuando una nuova procedura di registrazione con SPID o CIE."
-            cta: Continua
+            cta: "Weiter"
           details:
             body: "Ci piacerebbe sapere perché stai eliminando il tuo account, per poter migliorare in futuro. Puoi anche proseguire direttamente con l’eliminazione cliccando sul pulsante qui sotto."
-            question: Qual è il motivo della cancellazione?
-            answer_1: Non ritengo più utile IO
-            answer_2: Non mi sento al sicuro su IO
-            answer_3: Non ho mai usato l'app
-            answer_4: Nessuno dei precedenti
-            labelOpenAnswer: Dicci di più
-            cta: Elimina Account
+            question: "Qual è il motivo della cancellazione?"
+            answer_1: "Non ritengo più utile IO"
+            answer_2: "Non mi sento al sicuro su IO"
+            answer_3: "Non ho mai usato l'app"
+            answer_4: "Nessuno dei precedenti"
+            labelOpenAnswer: "Dicci di più"
+            cta: "Konto löschen"
           success:
-            title: Stiamo processando la tua richiesta.
+            title: "Stiamo processando la tua richiesta."
             body: "La tua richiesta è stata presa in carico e procederemo alla cancellazione del tuo account entro 30 giorni.\n\nPotrai iscriverti nuovamente all’App IO in ogni momento effettuando una nuova procedura di registrazione con SPID o CIE.\n\nPremendo 'Esci', la tua sessione verrà terminata.\n\nGrazie per aver utilizzato IO"
-            cta: Esci
+            cta: "Beenden"
       exportData:
-          cta: Kopie Ihrer Daten anfordern
-          title: Zugriff auf Ihre Daten
-          description: Sie erhalten eine Kopie der mit Ihrem IO-Profil verbundenen Daten
+          cta: "Kopie deiner Daten anfordern"
+          title: "Zugriff auf deine Daten"
+          description: "Du erhälst eine Kopie der mit deinem IO-Profil verbundenen Daten"
           info:
-            title: Sie können Ihre IO-Profilinformationen jederzeit herunterladen.
+            title: "Du kannst deine IO-Profilinformationen jederzeit herunterladen."
           alert:
-            requestTitle: Sind Sie sicher, dass Sie alle Ihre Daten exportieren möchten?
-            oldRequest: Wir sind bereits dabei, alle Ihre Daten zu exportieren
-            confirmSubtitle: Nach der Bearbeitung erhalten Sie eine E-Mail mit allen Ihren Daten.
-          error: Beim Absenden Ihrer Exportanfrage ist ein Fehler aufgetreten, bitte versuchen Sie es erneut!
+            requestTitle: "Möchtest du wirklich all deine Daten exportieren?"
+            oldRequest: "Wir bearbeiten bereits eine Anfrage zum Datenexport"
+            confirmSubtitle: "Nach der Bearbeitung erhälst du eine E-Mail mit allen Informationen, die mit deinem Profil verbunden sind."
+          error: "Bei der Anfrage zum Datenexport ist ein Fehler aufgetreten, bitte versuche es erneut!"
       privacyPolicy:
-        title: Datenschutzbestimmungen
-        description: Consulta l’Informativa Privacy e i Termini e condizioni d’uso di IO
-        header: Siehe die Datenschutzbestimmungen und die Nutzungsbedingungen von IO
-        updated: Wir haben unsere Allgemeinen Geschäftsbedingungen aktualisiert
-        infobox: Es ist notwendig, die Allgemeinen Geschäftsbedingungen zu lesen und zu akzeptieren
-        contextualHelpTitlePolicy: Was sind die Informationen über die Verarbeitung von personenbezogenen Daten
-        contextualHelpTitle: Ihre Datenschutzeinstellungen
+        title: "Datenschutz und Nutzungsbedingungen"
+        description: "Sieh die Datenschutzbestimmungen und Nutzungsbedingungen der IO-App an"
+        header: "Informationen über die Verarbeitung persönlicher Daten der Nutzer der IO-App"
+        updated: "Wir haben unsere Datenschutzbestimmungen und unsere Nutzungsbedingungen aktualisiert"
+        infobox: "Es ist notwendig, die Datenschutzbestimmungen und die Nutzungsbedingungen zu lesen und zu akzeptieren"
+        contextualHelpTitlePolicy: "Informationen über die Datenschutzbestimmungen und die Nutzungsbedingungen des Dienstes"
+        contextualHelpTitle: "Deine Datenschutzeinstellungen"
       shareData:
-        title: "Privacy"
+        title: "Datenschutz"
         listItem:
-          title: "Condividi i dati di utilizzo"
-          description: "Aiuta il team di IO a monitorare il funzionamento dell’app"
+          title: "Freigabe von Nutzungsdaten"
+          description: "Unterstütze das IO-Teams bei der Überwachung der Funktionsweise der App"
         screen:
-          title: "I tuoi dati di utilizzo"
-          description: "Aiuta il team di IO a monitorare il funzionamento dell’app e fornirti l’assistenza adeguata in caso di problemi."
+          title: "Deine Nutzungsdaten"
+          description: "Unterstütze das IO-Teams bei der Überwachung der Funktionsweise der App und erlaube im Falle von Problemen, dir die entsprechende Unterstützung zukommen zu lassen."
           why:
             description:
               one: "IO raccoglie solo le informazioni "
@@ -324,12 +324,12 @@ profile:
             cta: "l’Informativa Privacy e i Termini e Condizioni d’uso"
           profileSettings: "Potrai modificare questa scelta in ogni momento in Profilo > Preferenze"
           cta:
-            shareData: "Condividi dati"
-            dontShareData: "Non condividere dati"
-            dontShare: "Non condividere"
-          confirmToast: "Preferenze aggiornate!"
+            shareData: "Daten freigeben"
+            dontShareData: "Daten nicht freigeben"
+            dontShare: "Nicht freigeben"
+          confirmToast: "Einstellungen aktualisiert!"
         alert:
-          title: "Non stai dando il permesso a IO di raccogliere i tuoi dati di utilizzo"
+          title: "Du gibst IO nicht die Erlaubnis, deine Nutzungsdaten zu sammeln."
           body: "Se confermi quest’opzione, in caso di problemi tecnici, il team di supporto di IO potrebbe non avere tutti i dati necessari a risolverli."
         whyBottomSheet:
           title: "Per quali finalità raccogliamo informazioni?"
@@ -338,101 +338,101 @@ profile:
           title: "Cos’è la pseudonimizzazione?"
           body: "È il trattamento dei dati personali in modo tale che i dati personali non possano più essere attribuiti a un interessato specifico senza l'utilizzo di informazioni aggiuntive, a condizione che tali informazioni aggiuntive siano conservate separatamente e soggette a misure tecniche e organizzative intese a garantire che tali dati personali non siano attribuiti a una persona fisica identificata o identificabile."
     appInfo:
-      title: Über IO
-      description: Erfahren Sie mehr über die IO-App
-    developersSectionHeader: Entwickler
+      title: "Über IO"
+      description: "Erfahren mehr über die IO-App"
+    developersSectionHeader: "Entwickler"
     experimentalFeatures:
-      confirmTitle: Experimentelle Merkmale
-      confirmMessage: Experimentelle Funktionen können die Anwendung instabil machen. Sind Sie sicher, dass Sie sie aktivieren möchten?
-      bannerMessage: Sie verwenden experimentelle Funktionen, die möglicherweise unvollständig oder instabil sind.
+      confirmTitle: "Experimentelle Funktionen"
+      confirmMessage: "Experimentelle Funktionen könnten die Anwendung instabil machen. Möchtest du sie wirklich aktivieren?"
+      bannerMessage: "Du verwendst experimentelle Funktionen, die unvollständig oder instabil sein können."
     pagoPaEnvironment:
-      pagoPaEnv: pagoPA Testumgebung
-      pagoPAEnvAlert: Diese Änderung erfordert einen Neustart der App
-      alertConfirmTitle: Möchten Sie die pagoPA Testumgebung nutzen?
-      alertConfirmMessage: Wenn Sie die pagoPA-Testumgebung aktivieren, sehen Sie die Historie Ihrer Transaktionen und Ihre gespeicherten Zahlungsmethoden nicht mehr und können nur noch ausdrücklich dafür angelegte Zahlungsmethoden verwenden. Wenn Sie nicht verstehen, was das bedeutet, aktivieren Sie diese Funktion nicht.
-      alertMessage: Die Anwendung muss neu gestartet werden, damit die Änderungen wirksam werden.
+      pagoPaEnv: "pagoPA Testumgebung"
+      pagoPAEnvAlert: "Diese Änderung erfordert einen Neustart der App"
+      alertConfirmTitle: "Möchtest du die pagoPA Testumgebung nutzen?"
+      alertConfirmMessage: "Wenn du die pagoPA Testumgebung aktivierst, siehst du deine Transaktionshistorie und gespeicherten Zahlungsmittel nicht mehr und kannst nur noch eigens dafür angelegte Zahlungsmittel nutzen. Wenn dir nicht klar ist, was dies bedeutet, solltest du diese Funktion nicht aktivieren."
+      alertMessage: "Die Anwendung muss neu gestartet werden, damit die Änderungen wirksam werden."
     pnEnvironment:
-        pnEnv: Ambiente PN di Test
-    appVersion: App-Version
-    backendVersion: Backend-Version
-    debugMode: Debug-Modus
-    showroom: UI Showroom
+        pnEnv: "PN Testumgebung"
+    appVersion: "App-Version"
+    backendVersion: "Backend-Version"
+    debugMode: "Debug-Modus"
+    showroom: "UI Showroom"
   data:
-    title: Ihre Daten
-    subtitle: "Die von IO benutzten anagrafischen und Kontaktdaten einsehen"
+    title: "Deine Daten"
+    subtitle: "Hier findest du deine anagrafischen Daten und Kontaktdaten, die von IO verwendet werden"
     list:
       email: "E-Mail-Adresse"
-      need_validate: Da validare
-      nameSurname: Name und Nachname
+      need_validate: "Noch zu bestätigen"
+      nameSurname: "Vor- und Nachname"
       spid:
-        headerTitle: SPID Daten
-        email: "SPID – E-Mail"
+        headerTitle: "SPID Daten"
+        email: "SPID – E-Mail-Adresse"
     email:
-      contextualHelpTitle: Come gestire la tua mail
+      contextualHelpTitle: "Wie verwalte ich meine E-Mail-Adresse?"
     spid_email:
-      contextualHelpTitle: Questo dato è impostato nel tuo profilo SPID
+      contextualHelpTitle: "Diese Daten sind in deinem SPID-Profil festgelegt"
   security:
-    title: Sicherheit
-    subtitle: Authentifizierungsmethode der App einstellen.
+    title: "Sicherheit"
+    subtitle: "Verwalte die Authentifizierungsmethoden in der App"
     list:
       biometric_recognition:
-        title: Biometrische Erkennung
-        subtitle: Fingerabdruck- oder Gesichts-erkennung benutzen
-        needed_to_disable: Riconoscimento richiesto per disabilitare
+        title: "Biometrische Erkennung"
+        subtitle: "Fingerabdruck- oder Gesichtserkennung benutzen"
+        needed_to_disable: "Bestätigung zur Deaktivierung erforderlich"
   preferences:
-    title: Einstellungen
+    title: "Einstellungen"
     subtitle: "Diese Einstellungen ermöglichen es, die IO-App zu personalisieren."
-    contextualHelpTitle: Ihre Vorlieben
+    contextualHelpTitle: "Deine Einstellungen"
     list:
-      wip: In Bearbeitung
-      language: Sprache
-      digitalDomicile: Digitales Domizil
-      service_contact: Dienst-management
+      wip: "In Bearbeitung"
+      language: "Sprache"
+      digitalDomicile: "Digitales Domizil"
+      service_contact: "Dienste verwalten"
       preferred_calendar:
-        title: Standard-Kalender
-        not_selected: Nicht ausgewählt
+        title: "Bevorzugter Kalender"
+        not_selected: "Nicht ausgewählt"
       preferred_language:
-        title: Bevorzugte Sprache
-        subtitle: In welcher Sprache möchten Sie die Anwendung nutzen?
+        title: "Bevorzugte Sprache"
+        subtitle: "In welcher Sprache möchtest du die Anwendung nutzen?"
         alert:
-          title: Möchten Sie die Sprache ändern zu
-          subtitle: Sie müssen die Anwendung neu starten, damit dies geschieht
-        not_selected: Nicht ausgewählt
+          title: "Möchtest du die Sprache ändern in"
+          subtitle: "Du musst die Anwendung neu starten, um die Änderung zu übernehmen"
+        not_selected: "Nicht ausgewählt"
       notifications:
-        title: Notifiche push
-        subtitle: Consenti anteprime e promemoria
+        title: "Push-Benachrichtigungen"
+        subtitle: "Vorschau und Erinnerung zulassen"
     empty:
-      default: Keine Präferenzen eingestellt
+      default: "Keine Präferenzen festgelegt"
     unavailable:
-      title: Diese Einstellung wird in Ihrem SPID-Profil eingerichtet
+      title: "Diese Einstellung wird von deinem SPID-Profil festgelegt"
     language:
-      contextualHelpTitle: Wie Sie Ihre Spracheinstellung verwalten
+      contextualHelpTitle: "Wie verwalte ich die Spracheinstellung?"
     email:
       forward:
-        contextualHelpTitle: Wie Sie die Nachrichtenweiterleitung handhaben
+        contextualHelpTitle: "Wie verwalte ich die Nachrichtenweiterleitung?"
     calendar:
-      contextualHelpTitle: Was ist Ihr bevorzugter Kalender
-      local_calendar: Lokaler Kalender
-      birthday_calendar: Geburtstage
+      contextualHelpTitle: "Was ist dein bevorzugter Kalender?"
+      local_calendar: "Lokaler Kalender"
+      birthday_calendar: "Geburtstage"
     notifications:
-      contextualHelpTitle: Notifiche push
-      header: Notifiche push
-      title: Personalizza le notifiche
-      subtitle: Scegli se mostrare le anteprime e ricevere promemoria.
-      titleExistingUser: Personalizza le notifiche
-      subtitleExistingUser: Ora puoi vedere subito chi ti ha scritto o ricevere promemoria da messaggi importanti, come in questo esempio.
+      contextualHelpTitle: "Push-Benachrichtigungen"
+      header: "Push-Benachrichtigungen"
+      title: "Push-Benachrichtigungen anpassen"
+      subtitle: "Wähle, ob du eine Vorschau anzeigen und Erinnerungen erhalten möchtest."
+      titleExistingUser: "Benachrichtigungen anpassen"
+      subtitleExistingUser: "Jetzt kannst du sofort sehen, wer dir geschrieben hat oder dich an wichtige Nachrichten erinnern lassen."
       reminders:
-        title: Consenti promemoria
-        description: Su richiesta dell'ente, ricevi notifiche push in prossimità di scadenze o quando hai dei messaggi non letti
+        title: "Erinnerungen zulassen"
+        description: "Auf Antrag der Körperschaft erhälst du Push-Benachrichtigungen kurz vor Fälligkeit oder wenn du die Nachrichten noch nicht gelesen hast"
       preview:
-        title: Mostra anteprime
-        description: Includi nella notifica push il mittente e l’oggetto del messaggio · 
-        link: Più info
+        title: "Vorschau anzeigen"
+        description: "Absender und Betreff in die Push-Benachrichtigung einfügen · "
+        link: "Weitere Informationen"
         bottomSheet:
-          title: Mostra anteprime
-          content: Se l’opzione è attiva le notifiche push mostrano il mittente e l’oggetto dei messaggi, anche quando lo schermo è bloccato. Queste informazioni vengono trattate dal gestore del tuo sistema operativo e da app di terze parti eventualmente in esecuzione.
-          cta: Ho capito!
-      error: Si è verificato un errore con la tua richiesta
+          title: "Vorschau anzeigen"
+          content: "Wenn diese Option aktiviert ist, werden bei Push-Benachrichtigungen der Absender und der Betreff von Nachrichten angezeigt, auch wenn der Bildschirm gesperrt ist. Diese Informationen werden vom Hersteller deines Betriebssystems und von den Anwendungen der Drittanbieter, die möglicherweise ausgeführt werden, verarbeitet."
+          cta: "Ich habe verstanden!"
+      error: "Bei deiner Anfrage ist ein Fehler aufgetreten"
 userMetadata:
   errors:
     upsertVersion: Benutzer-Metadaten können mit dieser Version nicht hochgeladen werden
