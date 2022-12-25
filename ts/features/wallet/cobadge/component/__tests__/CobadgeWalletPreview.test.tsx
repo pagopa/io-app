@@ -58,6 +58,9 @@ describe("CobadgeWalletPreview component", () => {
             fims: { enabled: true }
           } as Config
         } as BackendStatus)
+      },
+      startup: {
+        loaded: false
       }
     });
   });

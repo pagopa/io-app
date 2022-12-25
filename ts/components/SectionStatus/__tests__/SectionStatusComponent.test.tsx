@@ -44,6 +44,9 @@ const mockSectionStatusState = (
         fims: { enabled: true }
       } as Config
     } as BackendStatus)
+  },
+  startup: {
+    loaded: false
   }
 });
 const mockStore = configureMockStore();
@@ -168,7 +171,10 @@ describe("Section Status Component should return null", () => {
     const component = getComponent(
       "messages",
       mockStore({
-        backendStatus: { status: O.none }
+        backendStatus: { status: O.none },
+        startup: {
+          loaded: true
+        }
       })
     );
     expect(component.queryByTestId("SectionStatusComponentLabel")).toBeNull();

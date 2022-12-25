@@ -235,6 +235,7 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
   const bpdRemoteConfig = useIOSelector(bpdRemoteConfigSelector);
   const isOptInPaymentMethodsEnabled =
     bpdRemoteConfig?.opt_in_payment_methods_v2 && bpdOptInPaymentMethodsEnabled;
+  const startupLoaded = useIOSelector(isStartupLoaded);
 
   const linking: LinkingOptions = {
     enabled: true,
@@ -304,7 +305,7 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
     <NavigationContainer
       theme={IOTheme}
       ref={navigationRef}
-      linking={linking}
+      linking={startupLoaded ? linking : undefined}
       fallback={<LoadingSpinnerOverlay isLoading={true} />}
       onReady={() => {
         NavigationService.setNavigationReady();
