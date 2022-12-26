@@ -142,7 +142,7 @@ rooted:
   bodyAndroid: !include rooted_body.md
   continueAlert:
     title: "Weiter"
-    body: "Habst du die Risiken verstanden und möchtest fortfahren?"
+    body: "Hast du die Risiken verstanden und möchtest fortfahren?"
     confirmText: "Ja"
     cancelText: "Abbrechen"
   cancelAlert:
