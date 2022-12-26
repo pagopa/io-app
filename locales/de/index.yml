@@ -207,7 +207,7 @@ profile:
     loading: "Abmeldung läuft..."
     exit: "Beenden"
     cta:
-      header: "Wie willst du die App verlassen?"
+      header: "Wie möchtest du die App verlassen?"
       keepData:
         title: "Beenden und alle Daten behalten"
         description: "Um die IO-App wieder zu benützen, musst du dich erneut mit deiner digitalen Identität anmelden, wobei alle Einstellungsdaten erhalten bleiben und beim nächsten Start sofort verfügbar sind. Diese Wahl bedeutet nicht, dass deine persönlichen Daten durch die App gelöscht werden."
@@ -219,8 +219,8 @@ profile:
     upsert: "Fehler beim Erstellen oder Aktualisieren des Profils"
   alerts:
     emailNotValidated:
-      title: "Nicht bestätigte E-Mail"
-      subtitle: "Du musst deine E-Mail-Adresse bestätigen, bevor du mit dem Vorgang fortfahren kannst. Gehe dazu in den Profilbereich und wähle Einstellungen."
+      title: "Nicht bestätigte E-Mail-Adresse"
+      subtitle: "Du musst deine E-Mail-Adresse bestätigen, bevor du mit dem Vorgang fortfahren kannst. Gehe dazu in den Profilbereich und wähle “Dein Profil”."
   main:
     title: "Profil"
     logout: "Abmelden/Beenden"
@@ -253,29 +253,29 @@ profile:
           error: "Bei der Anfrage zur Kontolöschung ist ein Fehler aufgetreten. Bitte versuche es erneut."
           alert:
             activeBonusTitle: "Aktive Boni"
-            activeBonusDescription: "Sembra che tu abbia dei Bonus attivi. Vogliamo informarti che la cancellazione del tuo profilo non equivale alla cancellazione dei bonus o alla disiscrizione da eventuali iniziative. Per gestire i tuoi bonus vai alla sezione Portafoglio, altrimenti scegli Continua"
-            oldRequest: "Hai già richiesto la cancellazione del tuo account."
-            oldRequestSubtitle: "Stiamo elaborando la tua richiesta.\n Se hai cambiato idea o hai richiesto l’eliminazione per sbaglio, clicca su “Annulla eliminazione” qui sotto."
+            activeBonusDescription: "Es scheint, dass du aktive Boni hast. Wir möchten dich darauf hinweisen, dass die Löschung deines Profils nicht gleichbedeutend mit der Löschung von Boni oder der Abmeldung von Initiativen ist. Um deine Boni zu verwalten, gehe zum Abschnitt Konto, ansonsten wähle “Weiter”"
+            oldRequest: "Du hast bereits die Löschung deines Kontos beantragt."
+            oldRequestSubtitle: "Wir bearbeiten deinen Antrag.\n Wenn du deine Meinung geändert hast oder versehentlich die Löschung beantragt hast, klicke bitte unten auf “Löschung abbrechen”."
             cta:
               manageBonus: "Boni verwalten"
               continue: "Weiter"
               return: "Zurück"
               cancel: "Löschung abbrechen"
           info:
-            body: "Puoi esercitare il tuo diritto alla cancellazione del tuo profilo IO in qualsiasi momento\n\nTi informiamo che l'eliminazione del tuo account è definitiva e avverrà entro 30 giorni dalla richiesta.\n\nSe decidi di proseguire non potrai più recuperare i messaggi o le preferenze che hai impostato nell'app.\nTi segnaliamo inoltre che eventuali bonus o sconti ottenuti tramite l'app IO non saranno più accessibili.\n\nPotrai iscriverti nuovamente all'App IO in ogni momento effettuando una nuova procedura di registrazione con SPID o CIE."
+            body: "Du kannst jederzeit von deinem Recht auf Löschung deines IO-Profils Gebrauch machen.\n\nWir informieren dich darüber, dass die Löschung deines Kontos endgültig ist und innerhalb von 30 Tagen nach Anfrage erfolgt.\n\nWenn du dich entscheidest fortzufahren, kannst du die Nachrichten oder Einstellungen, die du in der App vorgenommen hast, nicht mehr wiederherstellen.\nBitte beachte auch, dass die über die IO-App erhaltene Boni oder Rabatte nicht mehr zugänglich sind.\n\nDu kannst dich jederzeit erneut für die IO-App registrieren, indem du eine neue Registrierung mittels SPID oder CIE durchführst."
             cta: "Weiter"
           details:
-            body: "Ci piacerebbe sapere perché stai eliminando il tuo account, per poter migliorare in futuro. Puoi anche proseguire direttamente con l’eliminazione cliccando sul pulsante qui sotto."
-            question: "Qual è il motivo della cancellazione?"
-            answer_1: "Non ritengo più utile IO"
-            answer_2: "Non mi sento al sicuro su IO"
-            answer_3: "Non ho mai usato l'app"
-            answer_4: "Nessuno dei precedenti"
-            labelOpenAnswer: "Dicci di più"
+            body: "Wir würden gerne wissen, warum du dein Konto löschst, damit wir uns in Zukunft verbessern können. Du kannst auch direkt mit der Löschung fortfahren, indem du auf die Schaltfläche unten klickst."
+            question: "Was ist der Grund für die Löschung?"
+            answer_1: "Ich halte IO nicht mehr für nützlich"
+            answer_2: "Ich fühle mich in IO nicht sicher"
+            answer_3: "Ich habe die App nie benutzt"
+            answer_4: "Keiner der oben genannten Punkte"
+            labelOpenAnswer: "Erzähle uns mehr"
             cta: "Konto löschen"
           success:
-            title: "Stiamo processando la tua richiesta."
-            body: "La tua richiesta è stata presa in carico e procederemo alla cancellazione del tuo account entro 30 giorni.\n\nPotrai iscriverti nuovamente all’App IO in ogni momento effettuando una nuova procedura di registrazione con SPID o CIE.\n\nPremendo 'Esci', la tua sessione verrà terminata.\n\nGrazie per aver utilizzato IO"
+            title: "Wir bearbeiten deine Anfrage."
+            body: "Deine Anfrage wird bearbeitet und wir werden dein Konto innerhalb von 30 Tagen löschen.\n\nDu kannst dich jederzeit erneut bei der IO-App anmelden, indem du eine neue Registrierung mittels SPID oder CIE durchführst.\n\nWenn du auf “Beenden” drückst, wird deine Sitzung beendet.\n\nVielen Dank für die Nutzung von IO."
             cta: "Beenden"
       exportData:
           cta: "Kopie deiner Daten anfordern"
@@ -306,23 +306,23 @@ profile:
           description: "Unterstütze das IO-Teams bei der Überwachung der Funktionsweise der App und erlaube im Falle von Problemen, dir die entsprechende Unterstützung zukommen zu lassen."
           why:
             description:
-              one: "IO raccoglie solo le informazioni "
-              two: "necessarie "
-              three: "per il funzionamento dei servizi offerti."
-            cta: "Perché?"
+              one: "IO sammelt nur die für das Funktionieren der angebotenen Dienste "
+              two: "notwendigen "
+              three: "Daten."
+            cta: "Warum?"
           security:
             description:
-              one: "Adottiamo misure di sicurezza per proteggere i tuoi dati."
-            cta: "Scopri di più"
+              one: "Wir ergreifen Sicherheitsmaßnahmen zum Schutz deiner Daten."
+            cta: "Erfahre mehr"
           gdpr:
             description:
-              one: "Il team di IO collabora con fornitori in conformità con le "
-              two: "norme previste dal GDPR."
-            cta: "Vedi elenco fornitori"
+              one: "Das IO-Team arbeitet mit Dienstleistern in "
+              two: "Übereinstimmung mit dem GDPR zusammen."
+            cta: "Siehe Liste der Dienstleister"
           additionalInformation:
-            description: "Per maggiori informazioni, leggi "
-            cta: "l’Informativa Privacy e i Termini e Condizioni d’uso"
-          profileSettings: "Potrai modificare questa scelta in ogni momento in Profilo > Preferenze"
+            description: "Für weitere Informationen lies bitte die "
+            cta: "Datenschutzbestimmungen und Nutzungsbedingungen"
+          profileSettings: "Du kannst diese Einstellung jederzeit unter Profil > Einstellungen ändern."
           cta:
             shareData: "Daten freigeben"
             dontShareData: "Daten nicht freigeben"
@@ -330,13 +330,13 @@ profile:
           confirmToast: "Einstellungen aktualisiert!"
         alert:
           title: "Du gibst IO nicht die Erlaubnis, deine Nutzungsdaten zu sammeln."
-          body: "Se confermi quest’opzione, in caso di problemi tecnici, il team di supporto di IO potrebbe non avere tutti i dati necessari a risolverli."
+          body: "Wenn du diese Option bestätigen, kann es sein, dass dem IO-Support-Team bei technischen Problemen nicht alle Daten zur Verfügung stehen, um diese zu lösen."
         whyBottomSheet:
-          title: "Per quali finalità raccogliamo informazioni?"
-          body: "**IO non raccoglie dati per finalità di marketing.**  \nUtilizziamo strumenti che ci permettono di registrare dati relativi al tuo utilizzo dell’app, per fornirti un servizio migliore e assisterti in caso di problemi."
+          title: "Für welche Zwecke sammeln wir Informationen?"
+          body: "**IO sammelt keine Daten für Marketingzwecke.** \nWir verwenden Tools, die es uns ermöglichen, Daten über deine Nutzung der App aufzuzeichnen, um dir einen besseren Service zu bieten und dich bei Problemen zu unterstützen."
         securityBottomSheet:
-          title: "Cos’è la pseudonimizzazione?"
-          body: "È il trattamento dei dati personali in modo tale che i dati personali non possano più essere attribuiti a un interessato specifico senza l'utilizzo di informazioni aggiuntive, a condizione che tali informazioni aggiuntive siano conservate separatamente e soggette a misure tecniche e organizzative intese a garantire che tali dati personali non siano attribuiti a una persona fisica identificata o identificabile."
+          title: "Was ist eine Pseudonymisierung?"
+          body: "Sie ist die Verarbeitung personenbezogener Daten in einer Weise, dass die personenbezogener Daten ohne Hinzuziehung zusätzlicher Informationen nicht mehr einer bestimmten betroffenen Person zugeordnet werden können, sofern diese zusätzlichen Informationen gesondert aufbewahrt werden und technischen und organisatorischen Maßnahmen unterliegen, die gewährleisten, dass diese personenbezogener Daten nicht einer identifizierten oder identifizierbaren natürlichen Person zugewiesen werden können."
     appInfo:
       title: "Über IO"
       description: "Erfahren mehr über die IO-App"
@@ -349,8 +349,8 @@ profile:
       pagoPaEnv: "pagoPA Testumgebung"
       pagoPAEnvAlert: "Diese Änderung erfordert einen Neustart der App"
       alertConfirmTitle: "Möchtest du die pagoPA Testumgebung nutzen?"
-      alertConfirmMessage: "Wenn du die pagoPA Testumgebung aktivierst, siehst du deine Transaktionshistorie und gespeicherten Zahlungsmittel nicht mehr und kannst nur noch eigens dafür angelegte Zahlungsmittel nutzen. Wenn dir nicht klar ist, was dies bedeutet, solltest du diese Funktion nicht aktivieren."
-      alertMessage: "Die Anwendung muss neu gestartet werden, damit die Änderungen wirksam werden."
+      alertConfirmMessage: "Wenn du die pagoPA Testumgebung aktivierst, siehst du deine Transaktionshistorie und deine gespeicherten Zahlungsmittel nicht mehr und kannst nur noch eigens dafür angelegte Zahlungsmittel nutzen. Wenn dir nicht klar ist, was dies bedeutet, solltest du diese Funktion nicht aktivieren."
+      alertMessage: "Die App muss neu gestartet werden, damit die Änderungen wirksam werden."
     pnEnvironment:
         pnEnv: "PN Testumgebung"
     appVersion: "App-Version"
@@ -393,10 +393,10 @@ profile:
         not_selected: "Nicht ausgewählt"
       preferred_language:
         title: "Bevorzugte Sprache"
-        subtitle: "In welcher Sprache möchtest du die Anwendung nutzen?"
+        subtitle: "In welcher Sprache möchtest du die App nutzen?"
         alert:
           title: "Möchtest du die Sprache ändern in"
-          subtitle: "Du musst die Anwendung neu starten, um die Änderung zu übernehmen"
+          subtitle: "Du musst die App neu starten, um die Änderung zu übernehmen"
         not_selected: "Nicht ausgewählt"
       notifications:
         title: "Push-Benachrichtigungen"
@@ -430,7 +430,7 @@ profile:
         link: "Weitere Informationen"
         bottomSheet:
           title: "Vorschau anzeigen"
-          content: "Wenn diese Option aktiviert ist, werden bei Push-Benachrichtigungen der Absender und der Betreff von Nachrichten angezeigt, auch wenn der Bildschirm gesperrt ist. Diese Informationen werden vom Hersteller deines Betriebssystems und von den Anwendungen der Drittanbieter, die möglicherweise ausgeführt werden, verarbeitet."
+          content: "Wenn diese Option aktiviert ist, werden bei Push-Benachrichtigungen der Absender und der Betreff von Nachrichten angezeigt, auch wenn der Bildschirm gesperrt ist. Diese Informationen werden vom Hersteller deines Betriebssystems und von den Apps der Drittanbieter, die möglicherweise ausgeführt werden, verarbeitet."
           cta: "Ich habe verstanden!"
       error: "Bei deiner Anfrage ist ein Fehler aufgetreten"
 userMetadata:
