@@ -434,15 +434,15 @@ authentication:
       readerCardHeader: "Wir lesen die Daten deiner Identitätskarte ein und überprüfen deren Gültigkeit."
       readerCardFooter: "Halte die Karte noch ein paar Sekunden in dieser Position"
       iosAlert:
-        readingInstructions: Appoggia la tua carta d’identità elettronica nella parte alta del telefono.
-        moreTags: Sono state individuate più carte. Per favore avvicina una carta alla volta.
-        readingInProgress: "LETTURA IN CORSO\nTieni ferma la carta per qualche secondo..."
-        readingSuccess: "Lettura avvenuta con successo.\nPuoi rimuovere la carta mentre completiamo la verifica dei dati."
-        invalidCard: La carta utilizzata non sembra essere una Carta di Identità Elettronica (CIE).
-        tagLost: Hai rimosso la carta troppo presto.
-        cardLocked: Carta CIE bloccata
-        wrongPin1AttemptLeft: PIN errato, hai ancora 1 tentativo
-        wrongPin2AttemptLeft: PIN errato, hai ancora 2 tentativi
+        readingInstructions: "Lege deine elektronische Identitätskarte oben auf das Telefon." 
+        moreTags: "Es wurden mehrere Karten identifiziert. Bitte lege eine Karte nach der anderen an."
+        readingInProgress: "WIRD GELESEN \nHalte die Karte einige Sekunden lang still..."
+        readingSuccess: "Das Auslesen war erfolgreich.\nDu kannst die Karte entfernen während wir die Datenüberprüfung abschließen."
+        invalidCard: "Die verwendete Karte scheint keine elektronische Identitätskarte (CIE) zu sein."
+        tagLost: "Du hast die Karte zu früh entfernt."
+        cardLocked: "Identitätskarte gesperrt"
+        wrongPin1AttemptLeft: "Falsche PIN, du hast noch einen Versuch"
+        wrongPin2AttemptLeft: "Falsche PIN, du hast noch zwei Versuche"
       error:
         readerCardLostTitle: Halten Sie die Karte erneut für einige Sekunden
         readerCardLostTitleiOS: Sie haben die Karte zu früh entfernt.
