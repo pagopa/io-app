@@ -526,13 +526,10 @@ email:
     upsert_ok: "Die Anfrag zur Änderung der E-Mail-Adresse wurde erfolgreich übermittelt"
     upsert_ko: "Fehler bei der Anfrage zur Änderung der E-Mail-Adresse, versuche es erneut"
   validate:
-    title: Erinnern Sie sich daran, Ihre E-Mail-Adresse zu bestätigen
-    header: E-Mail-Validierung
-    content1: "Wir haben eine E-Mail an <b>{{E-Mail}}</b> mit einem Link zur Validierung gesendet: klicken Sie einfach auf diesen Link.<br/>
-      Solange Sie Ihre E-Mail-Adresse nicht validieren, werden einige Funktionen der App (Zahlungen, Nachrichtenweiterleitung per E-Mail usw.)
-      nicht nutzbar sein, aber Sie können einige andere Funktionen trotzdem nutzen (z. B. Dienste, Nachrichten usw.)"
-    content2: "Für einige Funktionen der IO-App müssen Sie Ihre E-Mail-Adresse validieren. <br/> Wir haben eine E-Mail an <b>{{email}}</b> gesendet:
-    Öffnen Sie Ihr E-Mail-Programm und klicken Sie auf den Link."
+    title: "Erinnere dich, deine E-Mail-Adresse zu bestätigen!"
+    header: "E-Mail-Validierung"
+    content1: "Wir haben eine E-Mail an <b>{{E-Mail}}</b> mit einem Link zur Validierung gesendet: klicke einfach auf diesen Link.<br/>Solange deine E-Mail-Adresse nicht validiert ist, werden einige Funktionen der App (Zahlungen, Nachrichtenweiterleitung per E-Mail usw.) nicht nutzbar sein, aber du kannst einige andere Funktionen trotzdem nutzen (z. B. Dienste, Nachrichten usw.)"
+    content2: "Für einige Funktionen von IO musst du deine E-Mail-Adresse validieren. <br/> Wir haben eine E-Mail an <b>{{email}}</b> gesendet: Öffne deine E-Mails und klicke auf den Link."
     cta: Senden einer neuen Validierungs-E-Mail
     sent: E-Mail gesendet
     send_validation_ok: E-Mail-Validierung gesendet
