@@ -354,49 +354,52 @@ authentication:
   landing:
     accessibility:
       carousel:
-        label: IO Präsentation
-        hint: Karussell, das eine Einführungsanleitung zu den IO-Funktionalitäten enthält. Wählen Sie, um den Inhalt kennenzulernen.
+        label: "Vorstellung von IO"
+        hint: "Karussell mit einer einführenden Anleitung zur IO-Funktionalität. Wähle, um den Inhalt kennenzulernen."
     session_expired:
-      title: Ihre Sitzung ist abgelaufen
+      title: "Deine Sitzung ist abgelaufen"
+      body: "Aus Sicherheitsgründen bitten wir dich 30 Tage nach deiner letzten Anmeldung mit SPID oder CIE, deine Anmeldedaten erneut einzugeben, um IO zu benutzen."
     cie_unsupported:
-      title: Anmeldung mit CIE nicht möglich
-      os_version_unsupported: eine mit der CIE-Authentifizierung kompatible Betriebssystemversion (Android 6.0 oder höher)
-      nfc_incompatible: eine NFC-Antenne, die mit der Authentifizierung über CIE kompatibel ist
-    contentTitleCie: Sie haben keinen SPID oder CIE?
-    spid_or_cie: Um die IO-App nutzen zu können, müssen Sie über eines dieser digitalen Werkzeuge verfügen, die Ihre Identität bestätigen.
-    request_cie: CIE anfordern
-    request_spid: SPID anfordern
-    contextualHelpTitle: So registrieren Sie sich in der IO-App
-    loginSpid: Anmeldung mit SPID
-    loginCie: Anmeldung mit CIE
-    loginSpidCie: Anmeldung mittels SPID oder CIE
-    infoSpidCie: Einführung in SPID und CIE
-    loginSpidCieContent: Ab heute können Sie sich zusätzlich zu SPID mit Ihrer elektronischen Identitätskarte (CIE) anmelden
-    nospid: Sie haben keinen SPID? Finden Sie mehr heraus
-    nospid-nocie: Sie haben keinen SPID oder CIE?  Finden Sie mehr heraus
-    card1-title: Alle Mitteilungen an einem Ort
-    card1-content: Anzeige aller eingehenden Mitteilungen von öffentlichen Körperschaften
-    card2-title: Verwenden Sie Ihre bevorzugte Zahlungsmethode
-    card2-content: Sie können eine Steuer oder auch eine Strafe über Ihr Bankkonto oder mit Ihrer Bankkarte bezahlen
-    card3-title: Schnelles Bezahlen einer physischen Mitteilung
-    card3-content: Sie können eine Zahlungsmitteilung auch durch Scannen des QR-Codes bezahlen
-    card4-title: Sie können die App nur mittels SPID verwenden
-    card4-content: Der Zugriff ist nur über SPID (Public Service of Digital Identity) erlaubt,
-      um Ihre Online-Sicherheit zu gewährleisten
-    card5-title: Willkommen bei der öffentlichen Version von IO!
-    expiredCardHeaderTitle: Anmeldung mit CIE
-    expiredCardContent: "Die verwendete Karte ist nicht mehr gültig oder abgelaufen.\nWenn Sie sich anmelden und auf die IO-App zugreifen möchten, müssen Sie SPID verwenden."
-    expiredCardHelp: Wie erneuert man seine elektronische Identitätskarte?
+      title: "Anmeldung mit CIE nicht möglich"
+      os_version_unsupported: "ein Betriebssystem mit Android 6.0 oder höher"
+      nfc_incompatible: "ein kompatibler NFC-Sensor"
+    contentTitleCie: "Du hast keinen SPID oder CIE?"
+    spid_or_cie: "Um IO nutzen zu können, musst du über eine dieser digitalen Werkzeuge verfügen, die deine Identität in sicherer Weise bestätigen."
+    request_cie: "CIE anfordern"
+    request_spid: "SPID anfordern"
+    contextualHelpTitle: "Zugang zur IO-App"
+    loginSpid: "Anmeldung mit SPID"
+    loginCie: "Anmeldung mit CIE"
+    loginSpidCie: "Anmeldung mittels SPID oder CIE"
+    infoSpidCie: "Einführung in SPID und CIE"
+    loginSpidCieContent: "Ab heute kannst du dich zusätzlich zu SPID mit deiner elektronischen Identitätskarte (CIE) anmelden"
+    nospid: "Du hast keinen SPID? Erfahre mehr"
+    nospid-nocie: "Du hast keinen SPID und keine CIE? Erfahre mehr"
+    card1-title: "Alle Mitteilungen an einem Ort"
+    card1-content: "Zeige alle erhaltenen Mitteilungen von öffentlichen Körperschaften an"
+    card2-title: "Verwende deine bevorzugten Zahlungsmittel"
+    card2-content: "Du kannst eine Steuer oder eine Strafe über dein Bankkonto oder mit deiner Bankkarte bezahlen"
+    card3-title: "Bezahle schnell eine Aufforderung in Papierform"
+    card3-content: "Durch das Scannen des QR-Codes kannst du schnell und einfach eine Zahlungsaufforderung in Papierform bezahlen"
+    card4-title: "Du kannst dich nur mit SPID anmelden"
+    card4-content: "Das von dir verwendete Gerät unterstützt den Zugang mit einer elektronischen Identitätskarte (CIE) nicht"
+    card5-title: "Willkommen bei der ersten öffentlichen Version von IO!"
+    card5-content: "In der rechten oberen Ecke findest du das Symbol '?', mit dem du einen Chat mit dem IO-Team beginnen kannst, wenn etwas nicht so funktioniert, wie es sollte."
+    expiredCardTitle: "Karte abgelaufen oder nicht mehr gültig"
+    expiredCardHeaderTitle: "Anmeldung mit CIE"
+    expiredCardContent: "Die verwendete Karte ist nicht mehr gültig oder abgelaufen.\nWenn du dich anmelden und auf die IO zugreifen möchtest, musst du SPID verwenden."
+    expiredCardHelp: "Wie erneuert man seine elektronische Identitätskarte?"
   cie:
-    genericTitle: Anmeldung mit CIE
-    cie: CIE
-    noDataTitle: Um die IO-App zu verwenden, müssen Sie das Senden von Daten zulassen
+    genericTitle: "Anmeldung mit CIE"
+    cie: "CIE"
+    noDataTitle: "Um IO zu verwenden, musst du das Senden von Daten zulassen"
     nfc:
-      retry: Wiederholen
-      noNfcConnectionTitle: Sind Sie sicher, dass Sie die Karte abgelegt haben?
-      enableNfcTitle: NFC einschalten
-      enableNfcHeader: NFC prüfen
-      enableNfcContent: Damit die App Ihre elektronische Identitätskarte verifizieren kann, müssen Sie zunächst die NFC-Funktion Ihres Geräts aktivieren. Kommen Sie zu diesem Menüpunkt zurück, sobald Sie die Funktion aktiviert haben!
+      apduNotSupported: "Dein Betriebssystem unterstützt das Auslesen deiner elektronischen Identitätskarte nicht. Für weitere Informationen wende dich bitte an den Hersteller deines Geräts."
+      retry: "Erneut versuchen"
+      noNfcConnectionTitle: "Hast du die Karte berührt?"
+      enableNfcTitle: "NFC aktivieren"
+      enableNfcHeader: "NFC überprüfen"
+      enableNfcContent: "Damit die App deine elektronische Identitätskarte verifizieren kann, musst du zunächst die NFC-Funktion deines Geräts aktivieren. Komm hierher zurück, sobald du die Funktion aktiviert hast!"
     pin:
       accessibility:
         placeholderLabel: PIN der elektronischen Identitätskarte
