@@ -402,33 +402,47 @@ authentication:
       enableNfcContent: "Damit die App deine elektronische Identitätskarte verifizieren kann, musst du zunächst die NFC-Funktion deines Geräts aktivieren. Komm hierher zurück, sobald du die Funktion aktiviert hast!"
     pin:
       accessibility:
-        placeholderLabel: PIN der elektronischen Identitätskarte
-        label: Eingabefeld für die PIN der elektronischen Identitätskarte
-        hint: Geben Sie in diesem Feld den 8-stelligen Pin Ihrer elektronischen Identitätskarte ein.
-      pinCardTitle: Geben Sie die PIN Ihrer ID-Karte ein
-      pinCardHeader: Anmeldung mit CIE
-      pinCardContent: Der PIN-Code besteht aus 8 Ziffern. Vier Ziffern wurden Ihnen beim Meldeamt ausgehändigt und weitere vier Ziffern wurden Ihnen mit der Karte nach Hause geschickt. Setzen Sie diese in dieser Reihenfolge zusammen und tragen Sie sie bitte hier ein.
-      incorrectCiePinTitle: Falsche PIN, Sie haben noch {{remainingCount}} Versuche
-      incorrectCiePinHeaderTitle: Falsche PIN
-      incorrectCiePinContent1: Zu Ihrer Sicherheit können Sie die Karten-PIN maximal dreimal eingeben. Danach müssen Sie die Karte durch Eingabe des PUK-Codes entsperren.
-      incorrectCiePinContent2: Denken Sie daran, dass der PIN-Code Ihrer elektronischen Identitätskarte (CIE) aus 8 Ziffern besteht. Vier Ziffern, die Ihnen im Meldeamt ausgehändigt wurden und weitere vier Ziffern, die Ihnen zusammen mit der Karte nach Hause geschickt wurden.
-      alert: Sind Sie sicher, dass Sie zurückgehen wollen?
-      contextualHelpTitle: Wo kann ich meine PIN und meinen PUK finden?
+        placeholderLabel: "PIN der elektronischen Identitätskarte"
+        label: "Eingabefeld für die PIN der elektronischen Identitätskarte"
+        hint: "Gib in diesem Feld die 8-stellige PIN deiner elektronischen Identitätskarte ein."
+      pinCardTitle: "Gib die PIN deiner Identitätskarte ein"
+      pinCardHeader: "Anmeldung mit CIE"
+      pinCardContent: "Der PIN-Code besteht aus 8 Ziffern. Vier Ziffern wurden dir beim Meldeamt ausgehändigt und weitere vier Ziffern wurden dir mit der Karte nach Hause geschickt. Setze diese in dieser Reihenfolge zusammen und trage sie bitte hier ein."
+      incorrectCiePinTitle: "Falsche PIN, du hast noch {{remainingCount}} Versuche"
+      incorrectCiePinHeaderTitle: "Falsche PIN"
+      incorrectCiePinContent1: "Zu deiner Sicherheit kannst du die PIN der Identitätskarte maximal dreimal eingeben. Danach musst du die Karte durch Eingabe des PUK-Codes entsperren."
+      incorrectCiePinContent2: "Beachte, dass der PIN-Code deiner elektronischen Identitätskarte (CIE) aus 8 Ziffern besteht. Vier Ziffern, die dir im Meldeamt ausgehändigt wurden und weitere vier Ziffern, die dir zusammen mit der Karte nach Hause geschickt wurden."
+      alert: "Möchtest du wirklich zurückgehen?"
+      subtitleHelp: "Die PIN ist ein 8-stelliger Code."
+      subtitleCTA: "Wo finde ich ihn?"
+      bottomSheetCTA: "Hast du deine PIN vergessen?
+      contextualHelpTitle: "Wo kann ich meine PIN und meinen PUK finden?"
+      contextualHelpCTA: "Hast du deine PIN / deinen PUK vergessen?"
     pinTempLocked:
-      header: Anmeldung mit CIE
-      title: Karte vorübergehend gesperrt
-      button: "Load/open CieID"
+      header: "Anmeldung mit CIE"
+      title: "Karte vorübergehend gesperrt"
+      button: "Lade / Öffne CieID"
     card:
-      headerTitle: Anmeldung mit CIE
-      titleiOS: Bitte versuchen Sie es erneut
-      title: Halten Sie die Karte erneut
-      layCardMessageHeader: Halten Sie Ihre elektronische ID-Karte für einige Sekunden an die Rückseite Ihres Telefons.
-      layCardMessageHeaderiOS: Halten Sie Ihre elektronische Identitätskarte auf die obere Rückseite Ihres iPhones.
-      layCardMessageFooter: Wenn Sie nicht genau wissen, wo sich der NFC-Sensor befindet, bewegen Sie die Karte an verschiedene Stellen und warten Sie ein paar Sekunden, bis Sie eine Vibration spüren.
-      cieCardValid: Ok, Ihre Karte ist gültig! Sie können sie nun entfernen.
-      readerCardTitle: Halten Sie die Karte für ein paar Sekunden
-      readerCardHeader: Wir lesen die Daten Ihrer CIE ein und überprüfen deren Gültigkeit.
-      readerCardFooter: Halten Sie die Karte noch ein paar Sekunden in dieser Position
+      title: "Berühre die Karte"
+      titleiOS: "Halte die Karte still"
+      headerTitle: "Anmeldung mit CIE"
+      layCardMessageHeader: "Halte deine elektronische Identitätskarte für einige Sekunden an die Rückseite deines Telefons."
+      layCardMessageHeaderiOS: "Der Sensor befindet sich im oberen Teil des Geräts."
+      layCardMessageFooter: "Wenn du nicht genau weißt, wo sich der NFC-Sensor befindet, bewege die Karte an verschiedene Stellen und warte ein paar Sekunden, bis du eine Vibration spürst."
+      cieCardValid: "Ok, deine Identitätskarte ist gültig! Du kannst sie nun entfernen."
+      readerCardTitle: "Halte die Karte für ein paar Sekunden still"
+      readerCardHeader: "Wir lesen die Daten deiner Identitätskarte ein und überprüfen deren Gültigkeit."
+      readerCardFooter: "Halte die Karte noch ein paar Sekunden in dieser Position"
+      iosAlert:
+        readingInstructions: Appoggia la tua carta d’identità elettronica nella parte alta del telefono.
+        moreTags: Sono state individuate più carte. Per favore avvicina una carta alla volta.
+        readingInProgress: "LETTURA IN CORSO\nTieni ferma la carta per qualche secondo..."
+        readingSuccess: "Lettura avvenuta con successo.\nPuoi rimuovere la carta mentre completiamo la verifica dei dati."
+        invalidCard: La carta utilizzata non sembra essere una Carta di Identità Elettronica (CIE).
+        tagLost: Hai rimosso la carta troppo presto.
+        cardLocked: Carta CIE bloccata
+        wrongPin1AttemptLeft: PIN errato, hai ancora 1 tentativo
+        wrongPin2AttemptLeft: PIN errato, hai ancora 2 tentativi
       error:
         readerCardLostTitle: Halten Sie die Karte erneut für einige Sekunden
         readerCardLostTitleiOS: Sie haben die Karte zu früh entfernt.
