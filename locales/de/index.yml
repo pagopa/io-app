@@ -444,15 +444,18 @@ authentication:
         wrongPin1AttemptLeft: "Falsche PIN, du hast noch einen Versuch"
         wrongPin2AttemptLeft: "Falsche PIN, du hast noch zwei Versuche"
       error:
-        readerCardLostTitle: Halten Sie die Karte erneut für einige Sekunden
-        readerCardLostTitleiOS: Sie haben die Karte zu früh entfernt.
-        readerCardLostHeader: Das Auslesen der Kartendaten ist noch nicht abgeschlossen.
-        readerCardLostHeaderiOS: Wir haben das Einlesen der Kartendaten noch nicht abgeschlossen. Bitte versuchen Sie es erneut.
-        onTagLost: Sie haben die Karte zu früh entfernt. Halten Sie die Karte so nah wie möglich an die Rückseite des Geräts, bis eine Bestätigung auf dem Bildschirm erscheint. Dies dauert ein paar Sekunden.
-        tryAgain: Etwas hat nicht wie erwartet funktioniert, während wir Ihre CIE gelesen haben. Es handelt sich wahrscheinlich um ein temporäres Problem, bitte versuchen Sie es erneut!
-        unknownCardTitle: Unbekannte Karte
-        unknownCardContent: Die verwendete Karte scheint keine elektronische Identitätskarte (CIE) zu sein.
-        unknownCardHelpLink: Was ist eine elektronische Identitätskarte?
+        readerCardLostTitle: "Karte neu lesen"
+        readerCardLostTitleiOS: "Du hast die Karte zu früh entfernt."
+        readerCardLostHeader: "Wir haben den Lesevorgang der Karte noch nicht abgeschlossen."
+        readerCardLostHeaderiOS: "Wir haben den Lesevorgang der Karte noch nicht abgeschlossen. Versuche es erneut."
+        onTagLost: "Du hast die Karte zu früh entfernt. Halte die Karte an die Rückseite des Smartphones bis eine Bestätigung auf dem Bildschirm erscheint. Es dauert nur ein paar Sekunden."
+        tryAgain: "Bei der Verifizierung deiner Karte ist ein Fehler aufgetreten. Es handelt sich wahrscheinlich um einen temporäres Problem, bitte versuche es erneut!"
+        generic: "Bei der Verifizierung deiner Karte ist ein Fehler aufgetreten. Wenn du das Problem nicht lösen kannst, teile uns dies bitte über das Symbol '?' in der oberen rechten Ecke mit. Danke!"
+        unknownCardTitle: "Unbekannte Karte"
+        unknownCardContent: "Die verwendete Karte scheint keine elektronische Identitätskarte (CIE) zu sein."
+        unknownCardHelpLink: "Was ist eine elektronische Identitätskarte?"
+    dataUsageConsent:
+      retryCTA: "Weiter"
   spid: SPID
   spid_information_request:
     headerTitle: E-Mail Adresse einfügen
