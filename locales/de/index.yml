@@ -459,7 +459,7 @@ authentication:
   spid: "SPID"
   spid_information_request:
     headerTitle: "Du hast keinen SPID?"
-    contentTitle: "Was ist SPID?
+    contentTitle: "Was ist SPID?"
     paragraph1: "SPID, das öffentliche System der digitalen Identität, ermöglicht dir den Zugriff auf alle Dienste der öffentlichen Verwaltung mit einer einzigen digitalen Identität (Benutzername und Passwort)."
     paragraph2: "Wenn du möchtest, kannst du uns deine E-Mail-Adresse hinterlassen, um Erinnerungen und Updates zu dieser App zu erhalten"
     paragraph3: "Wenn du fortfährst, akzeptierst du die"
@@ -484,26 +484,27 @@ authentication:
     point4-content: "Vervollständige deine Anmeldung"
     knowMore: "Erfahre mehr auf spid.gov.it"
   idp_selection:
-    headerTitle: Home
-    contentTitle: Wählen Sie Ihren Identity Provider
-    contextualHelpTitle: Wer ist Ihr Identity Provider
+    headerTitle: "Home"
+    contentTitle: "Wähle deinen Identitätsanbieter"
+    contextualHelpTitle: "Wer ist dein Identitätsanbieter?"
   idp_login:
-    headerTitle: SPID Login
-    contextualHelpTitle: Wie lautet Ihr Passwort
-    contextualHelpTitle2: Benötigen Sie Unterstützung bei der Anmeldung mit SPID?
-    openTicket: Ticket erstellen
-    recoverUsername: Benutzernamens wiederherstellen
-    recoverDescription: Wenn Sie Ihr Passwort vergessen haben, können Sie es wiederherstellen, indem Sie auf die folgende Schaltfläche tippen.
-    dualRecoverDescription: Wenn Sie Ihre Anmeldeinformationen nicht haben, können Sie diese wiederherstellen, indem Sie auf folgenden Schaltflächen tippen.
-    recoverPassword: Wiederherstellung des Passworts
+    headerTitle: "Anmelden"
+    contextualHelpTitle: "Was ist dein Passwort"
+    contextualHelpTitle2: "Benötigst du Hilfe bei der Anmeldung mit SPID?"
+    openTicket: "Ticket erstellen"
+    recoverDescription: "Wenn du dein Passwort vergessen hast, klicke bitte auf die Schaltfläche unten."
+    dualRecoverDescription: "Wenn du deine Anmeldedaten vergessen habst, klicke bitte auf die unten stehenden Schaltflächen."
+    recoverUsername: "Benutzernamen wiederherstellen"
+    recoverPassword: "Passwort wiederherstellen"
   errors:
-    notoken: Die Sitzung ist nicht verfügbar oder ist ungültig
-    logout: Fehler beim Abmelden
+    notoken: "Die Sitzung ist nicht verfügbar oder ist ungültig"
+    logout: "Fehler beim Abmelden"
     network:
-      title: Zugriffsproblem
+      title: "Zugriffsproblem"
+      body: "Der von dir gewählte Identitätsanbieter ist im Moment nicht verfügbar. Du kannst es später noch einmal versuchen.\nWenn du eine andere SPID-Identität hast, wähle bitte einen anderen Anbieter.\nDu kannst das Problem über das Symbol '?' in der oberen rechten Ecke melden."
     login:
-      title: Login Fehler
-      body: Es gab einen Fehler bei der Anmeldung, bitte versuchen Sie es erneut!
+      title: "Fehler beim Anmelden"
+      body: "Es gab einen Fehler bei der Anmeldung, bitte versuchen es erneut!"
     spid:
       unknown: Unbekannter Fehler
       error_19: "Sie haben zu oft einen falschen Benutzernamen oder ein falsches Passwort eingegeben: Versuchen Sie es in ein paar Minuten erneut oder wenden Sie sich an Ihren SPID-Identitätsanbieter, um Ihre Anmeldedaten zu ändern."
