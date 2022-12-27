@@ -506,16 +506,16 @@ authentication:
       title: "Fehler beim Anmelden"
       body: "Es gab einen Fehler bei der Anmeldung, bitte versuchen es erneut!"
     spid:
-      unknown: Unbekannter Fehler
-      error_19: "Sie haben zu oft einen falschen Benutzernamen oder ein falsches Passwort eingegeben: Versuchen Sie es in ein paar Minuten erneut oder wenden Sie sich an Ihren SPID-Identitätsanbieter, um Ihre Anmeldedaten zu ändern."
-      error_20: "Aus Sicherheitsgründen erfordert die IO-App eine Anmeldung mittels der SPID-Sicherheitsstufe 2: Wenden Sie sich an Ihren SPID-Identitätsanbieter, um zu erfahren, wie Sie diesen verwenden können."
-      error_21: "Es ist zu viel Zeit vergangen, seit Sie mit dem Einloggen begonnen haben: Bitte beginnen Sie noch einmal von vorne."
-      error_22: "Um IO benutzen zu können, müssen Sie den Zugriff auf einige Ihrer Daten erlauben: Melden Sie sich erneut an und geben Sie Ihr Einverständnis zur Datenübermittlung."
-      error_23: "Ihre SPID-Identität ist gesperrt oder widerrufen. Um Ihr Konto zu reaktivieren, wenden Sie sich an Ihren SPID-Identitätsanbieter."
-      error_25: "Sie haben den Anmeldevorgang abgebrochen: Sie können es jederzeit erneut versuchen."
+      unknown: "Unbekannter Fehler"
+      error_19: "Du hast zu oft einen falschen Benutzernamen oder ein falsches Passwort eingegeben: Versuche es in ein paar Minuten erneut oder wende dich an deinen SPID-Identitätsanbieter um deine Anmeldedaten zu ändern."
+      error_20: "Aus Sicherheitsgründen erfordert die IO-App eine Anmeldung mittels der SPID-Sicherheitsstufe 2: Wende dich an deinen SPID-Identitätsanbieter um zu erfahren, wie du diesen verwenden kannst."
+      error_21: "Seit dem Beginn ist zu viel Zeit vergangen: Bitte beginne noch einmal von vorne."
+      error_22: "Um IO benutzen zu können, musst du die Übermittlung einiger deiner Daten erlauben: Melde dich erneut an und gib dein Einverständnis zur Datenübermittlung."
+      error_23: "Deine SPID-Identität ist gesperrt oder widerrufen. Um dein Konto zu reaktivieren, wende dich an deinen SPID-Identitätsanbieter."
+      error_25: "Du hast den Anmeldevorgang abgebrochen: Du kannst es jederzeit erneut versuchen."
   expiredSessionBanner:
-    title: Sicherheitshinweis
-    message: Um Ihre privaten Informationen zu schützen, melden Sie sich bitte erneut mit Ihren SPID-Anmeldedaten an, danke!
+    title: "Sicherheitshinweis"
+    message: "Um deine privaten Informationen zu schützen, melden dich bitte erneut mit deinen SPID-Anmeldedaten an, danke!"
 email:
   read:
     title: Ihre E-Mail-Adresse
