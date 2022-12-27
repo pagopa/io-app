@@ -528,18 +528,16 @@ email:
   validate:
     title: "Erinnere dich, deine E-Mail-Adresse zu bestätigen!"
     header: "E-Mail-Validierung"
-    content1: "Wir haben eine E-Mail an <b>{{E-Mail}}</b> mit einem Link zur Validierung gesendet: klicke einfach auf diesen Link.<br/>Solange deine E-Mail-Adresse nicht validiert ist, werden einige Funktionen der App (Zahlungen, Nachrichtenweiterleitung per E-Mail usw.) nicht nutzbar sein, aber du kannst einige andere Funktionen trotzdem nutzen (z. B. Dienste, Nachrichten usw.)"
-    content2: "Für einige Funktionen von IO musst du deine E-Mail-Adresse validieren. <br/> Wir haben eine E-Mail an <b>{{email}}</b> gesendet: Öffne deine E-Mails und klicke auf den Link."
-    cta: Senden einer neuen Validierungs-E-Mail
-    sent: E-Mail gesendet
-    send_validation_ok: E-Mail-Validierung gesendet
-    send_validation_ko: Beim Senden der E-Mail-Validierung ist ein Fehler aufgetreten. Versuchen Sie es erneut.
-    help: Ihr SPID-Profil übermittelt Ihre E-Mail an die IO-App. Wenn Sie feststellen,
-      dass die Adresse falsch ist oder Sie diese nicht mehr verwenden, können Sie sie
-      direkt in Ihrem SPID-Dienstanbieterkonto bearbeiten.
-    validation_ok: Ihre E-Mail-Adresse wurde validiert. Sie können nun alle Funktionalitäten der IO-App nutzen.
-    validated: E-Mail validiert!
-    validated_ok: Danke, jetzt können Sie alle Zahlungsfunktionen, Nachrichtenweiterleitung usw. nutzen.
+    content1: "Wir haben eine E-Mail an <b>{{E-Mail}}</b> mit einem Link zur Bestätigung gesendet: klicke einfach auf diesen Link.<br/>Solange deine E-Mail-Adresse nicht bestätigt ist, werden einige Funktionen der App (Zahlungen, Nachrichtenweiterleitung per E-Mail usw.) nicht nutzbar sein, aber du kannst einige andere Funktionen trotzdem nutzen (z. B. Dienste, Nachrichten usw.)"
+    content2: "Für einige Funktionen von IO musst du deine E-Mail-Adresse bestätigen. <br/> Wir haben eine E-Mail an <b>{{email}}</b> gesendet: Öffne deine E-Mails und klicke auf den Link."
+    cta: "Sende eine neue E-Mail zur Bestätigung"
+    sent: "E-Mail gesendet"
+    send_validation_ok: "E-Mail zur Bestätigung gesendet"
+    send_validation_ko: "Beim Senden der E-Mail ist ein Fehler aufgetreten. Versuche es erneut."
+    help: "Dein SPID-Profil übermittelt deine E-Mail-Adresse an IO. Sollte die Adresse falsch sein oder nicht mehr verwendet werden, kannst du sie direkt in deinem SPID-Konto bearbeiten."
+    validation_ok: "Deine E-Mail-Adresse wurde bestätigt. Du kannst nun alle Funktionen von IO benutzen."
+    validated: "E-Mail bestätigt!"
+    validated_ok: "Danke, jetzt kannst du alle Zahlungsfunktionen, Nachrichtenweiterleitung usw. nutzen."
 onboarding:
   contextualHelpTitle: Wie funktioniert die biometrische Erkennung
   tos:
