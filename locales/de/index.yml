@@ -377,7 +377,7 @@ authentication:
     nospid-nocie: "Du hast keinen SPID und keine CIE? Erfahre mehr"
     card1-title: "Alle Mitteilungen an einem Ort"
     card1-content: "Zeige alle erhaltenen Mitteilungen von öffentlichen Körperschaften an"
-    card2-title: "Verwende deine bevorzugten Zahlungsmittel"
+    card2-title: "Verwende deine bevorzugten Zahlungsmethoden"
     card2-content: "Du kannst eine Steuer oder eine Strafe über dein Bankkonto oder mit deiner Bankkarte bezahlen"
     card3-title: "Bezahle schnell eine Aufforderung in Papierform"
     card3-content: "Durch das Scannen des QR-Codes kannst du schnell und einfach eine Zahlungsaufforderung in Papierform bezahlen"
