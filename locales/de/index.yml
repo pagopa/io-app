@@ -456,40 +456,33 @@ authentication:
         unknownCardHelpLink: "Was ist eine elektronische Identitätskarte?"
     dataUsageConsent:
       retryCTA: "Weiter"
-  spid: SPID
+  spid: "SPID"
   spid_information_request:
-    headerTitle: E-Mail Adresse einfügen
-    contentTitle: Sie haben keinen SPID?
-    paragraph1: SPID, das öffentliche System der digitalen Identität, ermöglicht Ihnen den Zugriff auf
-      alle Dienste der öffentlichen Verwaltung mit einer einzigen digitalen Identität
-      (Benutzername und Passwort).
-    paragraph2: Wenn Sie möchten, können Sie uns Ihre E-Mail-Adresse hinterlassen, um Erinnerungen und
-      Updates zu dieser App zu erhalten
-    paragraph3: Wenn Sie weiterhin erklären, dass Sie die
-    tosLinkText: Regeln für die Verarbeitung von personenbezogenen Daten
-    continue: Weiter
+    headerTitle: "Du hast keinen SPID?"
+    contentTitle: "Was ist SPID?
+    paragraph1: "SPID, das öffentliche System der digitalen Identität, ermöglicht dir den Zugriff auf alle Dienste der öffentlichen Verwaltung mit einer einzigen digitalen Identität (Benutzername und Passwort)."
+    paragraph2: "Wenn du möchtest, kannst du uns deine E-Mail-Adresse hinterlassen, um Erinnerungen und Updates zu dieser App zu erhalten"
+    paragraph3: "Wenn du fortfährst, akzeptierst du die"
+    tosLinkText: "Regeln für die Verarbeitung von personenbezogenen Daten"
+    continue: "Weiter"
   spid_information:
-    headerTitle: Was ist SPID?
-    contentTitle: Sie haben keinen SPID?
-    moreLinkText: Mehr erfahren
-    subtitle: SPID ist sicher
-    paragraph1: SPID, das öffentliche System der digitalen Identität, ermöglicht Ihnen den Zugriff auf
-      alle Dienste der öffentlichen Verwaltung mit einer einzigen digitalen Identität
-      (Benutzername und Passwort).
-    paragraph2-part1: 'Mit SPID können Sie online tun, was bisher nur persönlich möglich war:
-      um sich bei SPID zu registrieren, müssen Sie also '
-    paragraph2-bold: Bescheinigen Sie Ihre Identität
-    paragraph2-part2: 'vervollständigen Sie Ihre Erkennung durch einen Identity Provider. Hier
-      what you shall do:'
-    point1-value: '1'
-    point1-content: "Wählen Sie Ihren Identity Provider"
-    point2-value: '2'
-    point2-content: "Geben Sie Ihre persönlichen Daten und Ihre Mobiltelefon ein"
-    point3-value: '3'
-    point3-content: "Laden Sie eine Kopie Ihrer Ausweispapiere hoch"
-    point4-value: '4'
-    point4-content: "Vervollständigen Sie Ihre Anmeldung"
-    knowMore: Erfahren Sie mehr auf spid.gov.it
+    headerTitle: "Du hast keinen SPID?"
+    contentTitle: "Was ist SPID?"
+    moreLinkText: "Mehr erfahren"
+    subtitle: "SPID ist sicher"
+    paragraph1: "SPID, das öffentliche System der digitalen Identität, ermöglicht dir den Zugriff auf alle Dienste der öffentlichen Verwaltung mit einer einzigen digitalen Identität (Benutzername und Passwort)."
+    paragraph2-part1: "Mit SPID kannst du Dinge online erledigen, die bisher nur persönlich erledigt werden konnten: Um sich für SPID zu registrieren, musst du "
+    paragraph2-bold: "deine Identität von einem anerkannten Anbieter bescheinigen "
+    paragraph2-part2: "lassen. Folge dieser Anleitung:"
+    point1-value: "1"
+    point1-content: "Wähle deinen Identitätsanbieter"
+    point2-value: "2"
+    point2-content: "Gib deine persönlichen Daten und deine Mobiltelefon ein"
+    point3-value: "3"
+    point3-content: "Lade eine Kopie deiner Identitätsdokumente hoch"
+    point4-value: "4"
+    point4-content: "Vervollständige deine Anmeldung"
+    knowMore: "Erfahre mehr auf spid.gov.it"
   idp_selection:
     headerTitle: Home
     contentTitle: Wählen Sie Ihren Identity Provider
