@@ -415,7 +415,7 @@ authentication:
       alert: "Möchtest du wirklich zurückgehen?"
       subtitleHelp: "Die PIN ist ein 8-stelliger Code."
       subtitleCTA: "Wo finde ich ihn?"
-      bottomSheetCTA: "Hast du deine PIN vergessen?
+      bottomSheetCTA: "Hast du deine PIN vergessen?"
       contextualHelpTitle: "Wo kann ich meine PIN und meinen PUK finden?"
       contextualHelpCTA: "Hast du deine PIN / deinen PUK vergessen?"
     pinTempLocked:
