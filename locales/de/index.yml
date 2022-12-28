@@ -554,17 +554,27 @@ email:
     validated: E-Mail validiert!
     validated_ok: Danke, jetzt können Sie alle Zahlungsfunktionen, Nachrichtenweiterleitung usw. nutzen.
 onboarding:
-  contextualHelpTitle: Wie funktioniert die biometrische Erkennung
+  contextualHelpTitle: "Wie funktioniert die biometrische Erkennung"
   tos:
-    headerTitle: Aktivierung
-    accept: Akzeptieren
-    error: Ladefehler
+    headerTitle: "Konfiguriere IO"
+    accept: "Akzeptieren"
+    error: "Ladefehler"
     alert:
-      title: Achtung
-      message: Bitte lesen Sie den vollständigen Inhalt der Nutzungsbedingungen und der Datenschutzrichtlinie, um fortzufahren
+      title: "Achtung"
+      message: "Bitte lies den vollständigen Inhalt der Nutzungsbedingungen und der Datenschutzbestimmungen um fortzufahren"
   unlockCode:
-    reset: Ändern Sie den Code
-    contextualHelpTitle: Wie lautet Ihr Freischaltcode?
+    reset: "Ändere den Code"
+    contextualHelpTitle: "Wie lautet dein Entsperrcode?"
+  pin:
+    headerTitle: "Konfiguriere IO"
+    title: "Entsperrcode"
+    subTitle: "Es ist ein 6-stelliger Code den du benötigst, um in IO einzusteigen und einige Operationen zu bestätigen."
+    pinLabel: "Lege einen Entsperrcode fest"
+    pinConfirmationLabel: "Wiederhole den Entsperrcode"
+    tutorial: "Du kannst den Code jederzeit unter Profil > Sicherheit abändern"
+    errors:
+      length: "Dein Code ist nicht 6 Ziffern lang"
+      match: "Der Code stimmt nicht überein"
   alert:
     title: Wollen Sie sich wirklich abmelden?
     description: Sie müssen sich erneut anmelden, um die App zu verwenden
