@@ -505,9 +505,9 @@ authentication:
 email:
   read:
     title: "Deine E-Mail-Adresse"
-    info: "Das ist die E-Mail-Adresse, die mit deinem SPID-Konto verknüpft ist. Wenn du magst, kannst du in IO eine andere E-Mail-Adresse verwenden. Um die neue E-Mail-Adresse zu aktivieren, musst du validieren, indem du auf den Link klickst, den du mittels E-Mail erhalten hast."
-    details: "Du kannst diese Adresse ändern, diese musst du dann mittels Link, den du als E-Mail erhälst, bestätigen. In der Zwischenzeit werden IO-Funktionen, die von E-Mails abhängig sind (Zahlungen, Weiterleitung von Nachrichten usw.), deaktiviert."
-    alert: "Achtung: dein pagoPA Konto ist mit deiner E-Mail-Adresse verknüpft. Wenn du diese änderst, wird IO deine registrierten Zahlungsmethoden und Transaktionen nicht mehr auflisten."
+    info: "Das ist die E-Mail-Adresse, die mit deinem SPID-Konto verknüpft ist. Wenn du magst, kannst du in IO eine andere E-Mail-Adresse verwenden. Um die neue E-Mail-Adresse zu aktivieren, musst du sie bestätigen, indem du auf den Link klickst, den du mittels E-Mail erhalten hast."
+    details: "Du kannst diese Adresse ändern, die du dann mittels Link, den du als E-Mail erhälst, bestätigen musst. In der Zwischenzeit werden IO-Funktionen, die von E-Mails abhängig sind (Zahlungen, Weiterleitung von Nachrichten usw.), deaktiviert."
+    alert: "Achtung: dein pagoPA Konto ist mit deiner E-Mail-Adresse verknüpft. Wenn du sie änderst, wird IO deine registrierten Zahlungsmethoden und Transaktionen nicht mehr auflisten."
     help: "Dein SPID-Profil übermittelt deine E-Mail-Adresse an die IO-App. Sollte die Adresse falsch sein oder nicht mehr verwendet werden, kannst du sie direkt in deinem SPID-Konto bearbeiten."
   insert:
     header: "Aktivierung"
@@ -523,11 +523,11 @@ email:
     validated: "Die zuvor angegebene und bestätigte E-Mail-Adresse lautet"
     label: "Neue persönliche E-Mail-Adresse"
     cta: "E-Mail bearbeiten"
-    upsert_ok: "Die Anfrag zur Änderung der E-Mail-Adresse wurde erfolgreich übermittelt"
+    upsert_ok: "Die Anfrage zur Änderung der E-Mail-Adresse wurde erfolgreich übermittelt"
     upsert_ko: "Fehler bei der Anfrage zur Änderung der E-Mail-Adresse, versuche es erneut"
   validate:
     title: "Erinnere dich, deine E-Mail-Adresse zu bestätigen!"
-    header: "E-Mail-Validierung"
+    header: "E-Mail-Bestätigung"
     content1: "Wir haben eine E-Mail an <b>{{E-Mail}}</b> mit einem Link zur Bestätigung gesendet: klicke einfach auf diesen Link.<br/>Solange deine E-Mail-Adresse nicht bestätigt ist, werden einige Funktionen der App (Zahlungen, Nachrichtenweiterleitung per E-Mail usw.) nicht nutzbar sein, aber du kannst einige andere Funktionen trotzdem nutzen (z. B. Dienste, Nachrichten usw.)"
     content2: "Für einige Funktionen von IO musst du deine E-Mail-Adresse bestätigen. <br/> Wir haben eine E-Mail an <b>{{email}}</b> gesendet: Öffne deine E-Mails und klicke auf den Link."
     cta: "Sende eine neue E-Mail zur Bestätigung"
