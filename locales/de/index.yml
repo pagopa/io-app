@@ -616,59 +616,71 @@ shareData:
     contextualHelpTitle: "Push-Benachrichtigungen"
 forms:
   validators:
-    required: Erforderlicher Wert
-    email: Ungültige E-Mail-Adresse
+    required: "Erforderlicher Wert"
+    email: "Unbestätigte E-Mail-Adresse"
   spidInformation:
     fields:
       email:
-        placeholder: E-Mail-Adresse
+        placeholder: "E-Mail-Adresse"
 lipsum:
-  medium: Etiam habebis sem dicantur magna mollis euismod. Contra legem facit qui
-    id facit quod lex prohibet. Integer legentibus erat a ante historiarum dapibus.
-    Excepteur sint obcaecat cupiditat non proident culpa. Petierunt uti sibi concilium
-    totius Galliae in diem certam indicere. Magna pars studiorum, prodita quaerimus.
-    Non equidem invideo, miror magis posuere velit aliquet. Inmensae subtilitatis,
-    obscuris et malesuada fames.
+  medium: "Etiam habebis sem dicantur magna mollis euismod. Contra legem facit qui id facit quod lex prohibet. Integer legentibus erat a ante historiarum dapibus. Excepteur sint obcaecat cupiditat non proident culpa. Petierunt uti sibi concilium totius Galliae in diem certam indicere. Magna pars studiorum, prodita quaerimus. Non equidem invideo, miror magis posuere velit aliquet. Inmensae subtilitatis, obscuris et malesuada fames."
 datetimes:
-  yesterday: gestern
-  todayAt: heute, bei
+  yesterday: "gestern"
+  todayAt: "heute um"
+  notValid: "Ungültiges Datum"
 payment:
   alertNoPaymentMethods:
-    title: Bitte hinzufügen Sie einen Zahlungsdienstleister, um aus der IO-App zu bezahlen
-    message: Die Zahlungsmethode wird in Ihrem Konto gespeichert, damit Sie nächster Mal schneller bezahlen können.
+    title: "Füge eine Zahlungsmethode für In-App-Zahlungen hinzu"
+    message: "Die Zahlungsmethode wird im Konto gespeichert, so dass du beim nächster Mal einfacher bezahlen kannst."
     buttons:
-      ok: Weiter
-      ko: Abbrechen
-  errorDetails: Details
-  noPsp: Sie müssen noch einen Zahlungsdienstleister auswählen
-  IUV: IUV
-  IUV_extended: Einheitlicher Zahlungscode (IUV)
-  notice: Hinweis
-  noticeCode: Hinweis-Code
-  recipientFiscalCode: Steuernummer des Empfängers
+      ok: "Weiter"
+      ko: "Abbrechen"
+  alertNoActivePaymentMethods:
+    title: "Um diese Funktion zu nutzen, aktiviere In-App-Zahlungen"
+    message: "Aktiviere mindestens eine Zahlungsmethode aus deinem Konto oder füge eine neue Zahlungsmethode hinzu."
+    buttons:
+      ok: "Gehe zum Konto"
+      ko: "Abbrechen"
+  abortWebView:
+    title: "Möchtest du die aktuelle Zahlung abbrechen?"
+    confirm: "Zahlung abbrechen"
+    cancel: "Mit der Zahlung fortfahren"
+    success: "Die Zahlung wurde ordnungsgemäß annulliert"
+  errorDetails: "Details"
+  currentPsp: "Die Zahlung wird durgeführt von"
+  noPsp: "Du hast noch keinen Zahlungsdienstleister ausgewählt"
+  changePsp: "Wähle den Anbieter"
+  IUV: "IUV"
+  IUV_extended: "Einheitlicher Zahlungskodex (IUV)"
+  notice: "Zahlungsmitteilung"
+  noticeCode: "Zahlungsmitteilungskodex"
+  recipientFiscalCode: "Steuernummer des Empfängers"
+  paidConfirm: "Du hast {{amount}} gezahlt"
   details:
     state:
-      successful: Erfolgreich
-      incomplete: Nicht beendet
-      failed: Gescheitert
+      successful: "Erfolgreich"
+      incomplete: "Nicht abgeschlossen"
+      failed: "Fehlgeschlagen"
     info:
       buttons:
-        copy: Kopieren
-        help: Support kontaktieren
-      title: Zahlungsdetail
-      enteCreditore: Gläubiger
-      causaleVersamento: Beschreibung
-      dateAndTime: Datum und Uhrzeit
-      paymentAmount: Zahlungsbetrag
-      transactionCosts: Transaktionskosten
-      transactionCode: Transaktions-Identifikationscode
-      help: Sollten Sie ein Problem mit dieser Zahlung haben, schreiben Sie uns für weitere Informationen und Details
+        copy: "Kopieren"
+        help: "Support kontaktieren"
+      title: "Details der Zahlung"
+      enteCreditore: "Gläubiger"
+      causaleVersamento: "Zahlungsgrund"
+      dateAndTime: "Datum und Uhrzeit"
+      outcomeCode: "Ergebniscode"
+      onlyDate: "Datum"
+      paymentAmount: "Zahlungsbetrag"
+      transactionCosts: "Transaktionskosten"
+      transactionCode: "Identifikationscode der Transaktion"
+      help: "Solltest du ein Problem mit dieser Zahlung haben, schreib uns für weitere Informationen und Details"
     list:
       empty:
-          title: Keine Zahlungsversuche
-          description: IO-App hat keine Zahlungsversuche gespeichert. Hier finden Sie Ihre letzten Zahlungsversuche
-      title: Zahlungsversuche
-      iuv: IUV Zahlungen {{iuv}}
+          title: "Keine Zahlungsversuche"
+          description: "IO hat keine Zahlungsversuche gespeichert. Hier findest du deine letzten Zahlungsversuche"
+      title: "Zahlungsversuche"
+      iuv: "Einheitlicher Zahlungskodex (IUV) {{iuv}}"
 wallet:
   wallet: Konto
   searchAbi:
