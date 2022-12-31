@@ -695,7 +695,7 @@ wallet:
     onboardingAttempts:
       title: "Versuche vom Hinzufügen von Zahlungsmethoden"
       emptyTitle: "Kein Versuch vom Hinzufügen von Zahlungsmethoden"
-      emptyBody: "IO hat keine Zahlungsversuche gespeichert. Hier findest du deine letzten Zahlungsversuche"
+      emptyBody: "IO hat keine Versuche Zahlungsmethoden hinzuzufügen gespeichert. Hier findest du deine letzten Versuche"
       lastAttemptsTitle: "Letzten Versuche"
       success: "Hinzugefügt"
       failure: "Fehlgeschlagen"
