@@ -556,7 +556,7 @@ email:
 onboarding:
   contextualHelpTitle: "Wie funktioniert die biometrische Erkennung"
   tos:
-    headerTitle: "Konfiguriere IO"
+    headerTitle: "IO einrichten"
     accept: "Akzeptieren"
     error: "Ladefehler"
     alert:
@@ -566,7 +566,7 @@ onboarding:
     reset: "Ändere den Code"
     contextualHelpTitle: "Wie lautet dein Entsperrcode?"
   pin:
-    headerTitle: "Konfiguriere IO"
+    headerTitle: "IO einrichten"
     title: "Entsperrcode"
     subTitle: "Es ist ein 6-stelliger Code den du benötigst, um in IO einzusteigen und einige Operationen zu bestätigen."
     pinLabel: "Lege einen Entsperrcode fest"
@@ -576,16 +576,44 @@ onboarding:
       length: "Dein Code ist nicht 6 Ziffern lang"
       match: "Der Code stimmt nicht überein"
   alert:
-    title: Wollen Sie sich wirklich abmelden?
-    description: Sie müssen sich erneut anmelden, um die App zu verwenden
+    title: "Möchtest du dich wirklich abmelden?"
+    description: "Du musst dich erneut anmelden, um die App wieder zu verwenden"
   fingerprint:
-    headerTitle: Aktivierung
-    title: Biometrische Authentifizierung
+    headerTitle: "Aktivierung"
+    title: "Biometrische Authentifizierung"
     body:
       enrolledType:
-        fingerprint: Ihr Fingerabdruck
-        faceId: Face ID
-        touchId: Touch ID
+        fingerprint: "Dein Fingerabdruck"
+        faceId: "Face ID"
+        touchId: "Touch ID"
+shareData:
+    title: "IO einrichten"
+  thankYouPage:
+    title: "Einrichtung abgeschlossen!"
+    body: "Jetzt kannst du IO benutzen"
+  notifications:
+    badge: "Neuigkeiten"
+    headerTitle: "IO einrichten"
+    continue: "Weiter"
+    preview:
+      reminderOnPreviewOnTitle: "Du hast eine fällige Zahlungsaufforderung"
+      reminderOnPreviewOnMessage: "Öffne die App und bezahle die Zahlungsaufforderung von ACI"
+      reminderOffPreviewOnTitle: "Gemeinde Ipazia"
+      reminderOffPreviewOnMessage: "Die Einschreibungen für die Sommerbetreuung sind offen"
+      reminderOnPreviewOffTitle: "Du hast eine fällige Zahlungsaufforderung"
+      reminderOnPreviewOffMessage: "Öffne die App um sie zu bezahlen"
+      reminderOffPreviewOffTitle: "Du hast eine neue Mitteilung"
+      reminderOffPreviewOffMessage: "Öffne die App um sie zu lesen"
+    contextualHelpTitle: "Push-Benachrichtigungen"
+  infoConsent:
+    headerTitle: "IO einrichten"
+    title: "Möchtest du Push-Benachrichtigungen aktivieren?"
+    subTitle: "Um Push-Benachrichtigungen von IO zu erhalten, musst du sie in den Einstellungen von iOS aktiveren. So geht's:"
+    instruction1: "1. Wähle “Benachrichtigungen”"
+    instruction2: "2. Aktiviere “Benachrichtigungen zulassen”"
+    openSettings: "Öffne die Einstellungen von iOS"
+    continue: "Jetzt nicht"
+    contextualHelpTitle: "Push-Benachrichtigungen"
 forms:
   validators:
     required: Erforderlicher Wert
