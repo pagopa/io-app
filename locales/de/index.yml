@@ -586,7 +586,7 @@ onboarding:
         fingerprint: "Dein Fingerabdruck"
         faceId: "Face ID"
         touchId: "Touch ID"
-shareData:
+  shareData:
     title: "IO einrichten"
   thankYouPage:
     title: "Einrichtung abgeschlossen!"
