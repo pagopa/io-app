@@ -682,7 +682,28 @@ payment:
       title: "Zahlungsversuche"
       iuv: "Einheitlicher Zahlungskodex (IUV) {{iuv}}"
 wallet:
-  wallet: Konto
+  wallet: "Konto"
+  refreshWallet: "Konto aktualisieren"
+  favourite:
+    setFavoriteTitle: "Als Favorit festlegen"
+    setFavoriteSubtitle: "Wenn du in der App bezahlst, wird dir IO automatisch diese Zahlungsmethode anzeigen"
+  incoming:
+    title: "Demnächst verfügbar"
+    message: "In einer zukünftigen Version von IO wird diese Zahlungsmethode ebenfalls zur Verfügung stehen"
+  featured: "Highlights"
+  creditCard:
+    onboardingAttempts:
+      title: "Versuche vom Hinzufügen von Zahlungsmethoden"
+      emptyTitle: "Kein Versuch vom Hinzufügen von Zahlungsmethoden"
+      emptyBody: "IO hat keine Zahlungsversuche gespeichert. Hier findest du deine letzten Zahlungsversuche"
+      lastAttemptsTitle: "Letzten Versuche"
+      success: "Hinzugefügt"
+      failure: "Fehlgeschlagen"
+      dateTime: "Datum und Uhrzeit"
+      detailTitle: "Details"
+      help: "Wenn du bei der Eingabe dieser Zahlungsmethode auf ein Problem gestoßen sein, dann schreib uns bitte für weitere Informationen und Details"
+    details:
+      header: "Details Zahlungsmethode"
   searchAbi:
     bankName: Name der Bank
     noName: Name nicht verfügbar
