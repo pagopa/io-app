@@ -48,6 +48,7 @@ import {
   IDPayConfigurationRoutes
 } from "../features/idpay/initiative/configuration/navigation/navigator";
 import {
+  idPayOnboardingLinkingOptions,
   IDPayOnboardingNavigator,
   IDPayOnboardingRoutes
 } from "../features/idpay/onboarding/navigation/navigator";
@@ -264,6 +265,7 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
         ...(isFimsEnabled ? fimsLinkingOptions : {}),
         ...(cgnEnabled ? cgnLinkingOptions : {}),
         ...(isFciEnabled ? fciLinkingOptions : {}),
+        ...idPayOnboardingLinkingOptions,
         [UADONATION_ROUTES.WEBVIEW]: "uadonations-webview",
         [ROUTES.WORKUNIT_GENERIC_FAILURE]: "*"
       }
