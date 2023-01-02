@@ -115,4 +115,3 @@ const IbanOnboardingScreen = () => {
   );
 };
 export default IbanOnboardingScreen;
-

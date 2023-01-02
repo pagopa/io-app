@@ -1,16 +1,16 @@
 import { useActor } from "@xstate/react";
-import { Text, View } from "native-base";
+import { View } from "native-base";
 import React from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
+import { Body } from "../../../../../../components/core/typography/Body";
+import { H3 } from "../../../../../../components/core/typography/H3";
+import { IOColors } from "../../../../../../components/core/variables/IOColors";
+import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../../i18n";
 import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
 import { useConfigurationMachineService } from "../../xstate/provider";
-import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
-import { H3 } from "../../../../../../components/core/typography/H3";
-import { Body } from "../../../../../../components/core/typography/Body";
-import { IOColors } from "../../../../../../components/core/variables/IOColors";
 
 const styles = StyleSheet.create({
   greyCircle: {
