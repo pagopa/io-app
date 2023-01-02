@@ -98,11 +98,14 @@ const IbanOnboardingScreen = () => {
           type="SingleButton"
           leftButton={{
             title: "Continua",
-            onPress: () =>
-              send({
-                type: "CONFIRM_IBAN",
-                ibanBody: { iban, description: ibanName }
-              }),
+            onPress: () => {
+              if (iban !== undefined) {
+                send({
+                  type: "CONFIRM_IBAN",
+                  ibanBody: { iban, description: ibanName }
+                });
+              }
+            },
 
             disabled: !isIbanValid()
           }}
