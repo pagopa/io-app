@@ -1,9 +1,11 @@
 import * as E from "fp-ts/lib/Either";
 import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
 import { apiUrlPrefix } from "../../../../config";
-import { UIMessageId } from "../../../../store/reducers/entities/messages/types";
+import {
+  UIAttachmentId,
+  UIMessageId
+} from "../../../../store/reducers/entities/messages/types";
 import { ContentTypeValues } from "../../../../types/contentType";
-import { MvlAttachmentId } from "../../../mvl/types/mvlData";
 import { PNMessage, FullReceivedNotification } from "./types";
 
 const generateAttachmentUrl = (messageId: string, attachmentUrl: string) =>
@@ -25,7 +27,7 @@ export const toPNMessage = (
       serviceId: messageFromApi.sender_service_id,
       attachments: messageFromApi.third_party_message.attachments?.map(_ => ({
         messageId: messageFromApi.id as UIMessageId,
-        id: _.id as string as MvlAttachmentId,
+        id: _.id as string as UIAttachmentId,
         displayName: _.name ?? _.id,
         contentType: _.content_type ?? ContentTypeValues.applicationOctetStream,
         resourceUrl: { href: generateAttachmentUrl(messageFromApi.id, _.url) }
