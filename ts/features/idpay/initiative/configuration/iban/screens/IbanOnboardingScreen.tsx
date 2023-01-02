@@ -1,4 +1,3 @@
-import { useActor } from "@xstate/react";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -22,10 +21,9 @@ import { useConfigurationMachineService } from "../../xstate/provider";
 
 const IbanOnboardingScreen = () => {
   const configurationMachine = useConfigurationMachineService();
-  const [_, send] = useActor(configurationMachine);
-  const customGoBack = () => send({ type: "BACK" });
+  const customGoBack = () => configurationMachine.send({ type: "BACK" });
   const [iban, setIban] = React.useState<string | undefined>(undefined);
-  const [ibanName, setIbanName] = React.useState<string>("");
+  const [ibanName, setIbanName] = React.useState<string | undefined>(undefined);
   const isIbanValid = () =>
     pipe(
       iban,
@@ -35,6 +33,17 @@ const IbanOnboardingScreen = () => {
         iban => E.isRight(Iban.decode(iban))
       )
     );
+
+  const isIbanNameValid = () =>
+    pipe(
+      ibanName,
+      O.fromNullable,
+      O.fold(
+        () => undefined,
+        ibanName => ibanName.length > 0
+      )
+    );
+
   return (
     <BaseScreenComponent
       goBack={customGoBack}
@@ -65,6 +74,7 @@ const IbanOnboardingScreen = () => {
             label={I18n.t(
               "idpay.configuration.iban.onboarding.nameAssignInput"
             )}
+            isValid={isIbanNameValid()}
             inputProps={{
               keyboardType: "default",
               returnKeyType: "done",
@@ -97,11 +107,15 @@ const IbanOnboardingScreen = () => {
           leftButton={{
             title: I18n.t("global.buttons.continue"),
             onPress: () => {
-              if (iban !== undefined) {
-                send({
+              if (isIbanValid() && isIbanNameValid()) {
+                configurationMachine.send({
+                  //linter throws error for "possible undefined iban/name" even though it is checked
+                  /* @ts-expect-error */
                   type: "CONFIRM_IBAN",
                   ibanBody: { iban, description: ibanName }
                 });
+              } else {
+                setIbanName(""); //force re-render to show error in the UI
               }
             },
 

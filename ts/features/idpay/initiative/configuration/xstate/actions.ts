@@ -51,12 +51,12 @@ const createActionsImplementation = (
   };
   const navigateToIbanLandingScreen = () => {
     navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
-      screen: IDPayConfigurationRoutes.IDPAY_IBAN_CONFIGURATION_LANDING
+      screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_LANDING
     });
   };
   const navigateToIbanOnboardingScreen = () => {
     navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
-      screen: IDPayConfigurationRoutes.IDPAY_IBAN_ONBOARDING
+      screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ONBOARDING
     });
   };
 
