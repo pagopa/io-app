@@ -80,7 +80,12 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
     (choice: UserDataProcessingChoiceEnum) => {
       const alertButton: Array<AlertButton> =
         choice === UserDataProcessingChoiceEnum.DOWNLOAD
-          ? []
+          ? [
+              {
+                text: I18n.t("global.buttons.ok"),
+                style: "default"
+              }
+            ]
           : [
               {
                 text: I18n.t(
@@ -150,11 +155,7 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
           showToast(errorMessage);
         }
         // if user ask for download/delete prompt an alert to get confirmation
-        else if (
-          requestProcess // &&
-          // prevUserDataProcessing &&
-          // pot.isNone(prevUserDataProcessing[choice])
-        ) {
+        else if (requestProcess && pot.isNone(prevUserDataProcessing[choice])) {
           setRequestProcess(false);
           handleUserDataRequestAlert(choice);
         }
