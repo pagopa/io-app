@@ -108,12 +108,13 @@ const IbanOnboardingScreen = () => {
             title: I18n.t("global.buttons.continue"),
             onPress: () => {
               if (isIbanValid() && isIbanNameValid()) {
+                // @ts-ignore-start
                 configurationMachine.send({
                   //linter throws error for "possible undefined iban/name" even though it is checked
-                  /* @ts-expect-error */
                   type: "CONFIRM_IBAN",
                   ibanBody: { iban, description: ibanName }
                 });
+                // @ts-ignore-end
               } else {
                 setIbanName(""); //force re-render to show error in the UI
               }
