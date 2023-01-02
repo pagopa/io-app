@@ -1,4 +1,5 @@
 import { format, subDays, subYears } from "date-fns";
+import MockDate from "mockdate";
 import {
   convertDateTimeToWordDistance,
   convertDateToWordDistance
@@ -43,6 +44,7 @@ describe("convertDateToWordDistance", () => {
   });
 
   it("should be the localized date with day and month", () => {
+    MockDate.set("2022-10-10");
     const twoDaysAgo = new Date();
     twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
 
