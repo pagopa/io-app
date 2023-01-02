@@ -10,7 +10,6 @@ import { InstrumentDTO } from "../../../../../../definitions/idpay/wallet/Instru
 import { Wallet } from "../../../../../types/pagopa";
 import {
   LOADING_TAG,
-  UPSERTING_TAG,
   WAITING_USER_INPUT_TAG
 } from "../../../../../utils/xstate";
 import { ConfigurationMode, Context, INITIAL_CONTEXT } from "./context";
@@ -100,15 +99,11 @@ const createIDPayInitiativeConfigurationMachine = () =>
           tags: [WAITING_USER_INPUT_TAG],
           entry: "navigateToConfigurationIntro",
           on: {
-            // START_CONFIGURATION: {
-            //   target: "LOADING_IBAN"
-            // },
             NEXT: {
               target: "LOADING_IBAN"
             }
           }
         },
-        //
         LOADING_IBAN: {
           tags: [LOADING_TAG],
           invoke: {
@@ -134,7 +129,6 @@ const createIDPayInitiativeConfigurationMachine = () =>
             }
           ]
         },
-        //
         DISPLAYING_IBAN_ONBOARDING: {
           tags: [WAITING_USER_INPUT_TAG],
           entry: "navigateToIbanLandingScreen",
@@ -148,7 +142,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
           }
         },
         ADDING_IBAN: {
-          tags: [UPSERTING_TAG],
+          tags: [WAITING_USER_INPUT_TAG],
           entry: "navigateToIbanOnboardingScreen",
           on: {
             CONFIRM_IBAN: {
@@ -305,7 +299,6 @@ const createIDPayInitiativeConfigurationMachine = () =>
             p.map(context.ibanList, ibanList => ibanList.length === 0),
             true
           ),
-
         isInstrumentsOnlyMode: (context, _) =>
           context.mode === ConfigurationMode.INSTRUMENTS,
         isIbanOnlyMode: (context, _) => context.mode === ConfigurationMode.IBAN

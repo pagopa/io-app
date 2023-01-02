@@ -6,7 +6,6 @@ import ROUTES from "../../../../../navigation/routes";
 import { IDPayConfigurationRoutes } from "../navigation/navigator";
 import { Context } from "./context";
 
-// TODO add actions implementatio
 const createActionsImplementation = (
   navigation: IOStackNavigationProp<AppParamsList, keyof AppParamsList>
 ) => {

@@ -19,7 +19,6 @@ export type Context = {
   idPayInstruments: p.Pot<ReadonlyArray<InstrumentDTO>, Error>;
   selectedInstrumentId?: string;
   ibanList: p.Pot<IbanListDTO["ibanList"], Error>;
-  selectedIban?: string;
   ibanBody?: {
     iban: string;
     description: string;
