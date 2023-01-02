@@ -1,4 +1,3 @@
-import { useActor } from "@xstate/react";
 import { View } from "native-base";
 import React from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
@@ -30,8 +29,7 @@ const styles = StyleSheet.create({
 
 const IbanConfigurationLanding = () => {
   const configurationMachine = useConfigurationMachineService();
-  const [_, send] = useActor(configurationMachine);
-  const customGoBack = () => send({ type: "BACK" });
+  const customGoBack = () => configurationMachine.send({ type: "BACK" });
   return (
     <BaseScreenComponent
       goBack={customGoBack}
@@ -66,7 +64,7 @@ const IbanConfigurationLanding = () => {
           type="SingleButton"
           leftButton={{
             title: I18n.t("global.buttons.continue"),
-            onPress: () => send({ type: "NEXT" })
+            onPress: () => configurationMachine.send({ type: "NEXT" })
           }}
         />
       </SafeAreaView>
