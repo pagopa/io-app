@@ -22,7 +22,8 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   icon: {
-    marginTop: 4
+    marginTop: 4,
+    alignSelf: "flex-start"
   }
 });
 
