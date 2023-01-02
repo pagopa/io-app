@@ -833,6 +833,7 @@ onboarding:
     headerTitle: IO Settings
     continue: Continue
     preview:
+      accessibilityLabelPrefix: "Here's an example:"
       reminderOnPreviewOnTitle: You have a notice due soon
       reminderOnPreviewOnMessage: Log in to pay the notice issued by ACI
       reminderOffPreviewOnTitle: Comune di Ipazia
