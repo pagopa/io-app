@@ -1,12 +1,12 @@
 import * as React from "react";
 import { SafeAreaView } from "react-native";
 import image from "../../../../../img/wallet/errors/payment-expired-icon.png";
-import { renderInfoRasterImage } from "../../../../components/infoScreen/imageRendering";
-import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
-import I18n from "../../../../i18n";
-import { cancelButtonProps } from "./buttons/ButtonConfigurations";
-import { FooterStackButton } from "./buttons/FooterStackButtons";
-import { bonusVacanzeStyle } from "./Styles";
+import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
+import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
+import I18n from "../../../i18n";
+import { cancelButtonProps } from "../bonusVacanze/components/buttons/ButtonConfigurations";
+import { FooterStackButton } from "../bonusVacanze/components/buttons/FooterStackButtons";
+import { bonusVacanzeStyle } from "../bonusVacanze/components/Styles";
 
 type Props = {
   title: string;
