@@ -43,7 +43,6 @@ const IbanOnboardingScreen = () => {
         ibanName => ibanName.length > 0
       )
     );
-
   return (
     <BaseScreenComponent
       goBack={customGoBack}
@@ -107,16 +106,17 @@ const IbanOnboardingScreen = () => {
           leftButton={{
             title: I18n.t("global.buttons.continue"),
             onPress: () => {
-              if (isIbanValid() && isIbanNameValid()) {
-                // @ts-ignore-start
+              const isDataSendable =
+                iban !== undefined &&
+                ibanName !== undefined &&
+                ibanName.length > 0;
+              if (isDataSendable) {
                 configurationMachine.send({
-                  //linter throws error for "possible undefined iban/name" even though it is checked
                   type: "CONFIRM_IBAN",
                   ibanBody: { iban, description: ibanName }
                 });
-                // @ts-ignore-end
               } else {
-                setIbanName(""); //force re-render to show error in the UI
+                setIbanName(""); // force re-render to show error in the UI
               }
             },
 
