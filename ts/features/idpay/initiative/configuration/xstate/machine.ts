@@ -297,7 +297,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
         isIbanConfigurationNeeded: (context, _) =>
           p.getOrElse(
             p.map(context.ibanList, ibanList => ibanList.length === 0),
-            true
+            false
           ),
         isInstrumentsOnlyMode: (context, _) =>
           context.mode === ConfigurationMode.INSTRUMENTS,

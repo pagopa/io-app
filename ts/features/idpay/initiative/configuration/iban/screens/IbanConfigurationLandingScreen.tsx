@@ -50,14 +50,13 @@ const IbanConfigurationLanding = () => {
         >
           <View style={styles.greyCircle}></View>
           <View spacer large />
-          <H3>Aggiungi un IBAN al tuo Profilo</H3>
+          <H3>{I18n.t("idpay.configuration.iban.landing.header")}</H3>
           <View spacer />
           <Body style={styles.textCenter}>
-            Salva i dati del tuo conto e ottieni più facilmente i rimborsi a te
-            previsti.
+            {I18n.t("idpay.configuration.iban.landing.body")}
           </Body>
           <Body color="blue" weight="SemiBold">
-            Scopri di più
+            {I18n.t("idpay.configuration.iban.landing.bodyLink")}
           </Body>
         </View>
       </View>
@@ -66,7 +65,7 @@ const IbanConfigurationLanding = () => {
         <FooterWithButtons
           type="SingleButton"
           leftButton={{
-            title: "Continua",
+            title: I18n.t("global.buttons.continue"),
             onPress: () => send({ type: "NEXT" })
           }}
         />

@@ -3367,4 +3367,14 @@ idpay:
       title: "Grazie!"
       body: "Da domani potrai utilizzare l'iniziativa {{initiativeName}}. Puoi abilitare altri metodi aggiungendoli al Portafoglio."
       button: "Vai all'iniziativa"
-    
+    iban:
+      landing:
+        header: Aggiungi un IBAN al tuo Profilo
+        body: Salva i dati del tuo conto e ottieni più facilmente i rimborsi a te previsti.
+        bodyLink: Scopri di più
+      onboarding:
+        header: Qual è il tuo IBAN?
+        body: Aggiungi un conto corrente a te intestato. L’autodichiarazione è resa ai sensi del
+        bodyLink: Dpr 28 dicembre 2000 n. 445 art 46 e 47 
+        nameAssignInput: Assegna un nome
+        bottomLabel: Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento visitando la sezione Profilo

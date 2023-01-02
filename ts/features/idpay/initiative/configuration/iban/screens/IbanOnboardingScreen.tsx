@@ -42,12 +42,9 @@ const IbanOnboardingScreen = () => {
       contextualHelp={emptyContextualHelp}
     >
       <Content scrollEnabled={false}>
-        <H1>Qual è il tuo IBAN?</H1>
-        <Body>
-          Aggiungi un conto corrente a te intestato. L’autodichiarazione è resa
-          ai sensi del
-        </Body>
-        <Link>Dpr 28 dicembre 2000 n. 445 art 46 e 47 </Link>
+        <H1>{I18n.t("idpay.configuration.iban.onboarding.header")}</H1>
+        <Body>{I18n.t("idpay.configuration.iban.onboarding.body")}</Body>
+        <Link>{I18n.t("idpay.configuration.iban.onboarding.bodyLink")}</Link>
         <View spacer large />
         <Form>
           <LabelledItem
@@ -65,7 +62,9 @@ const IbanOnboardingScreen = () => {
           />
           <View spacer />
           <LabelledItem
-            label="Assegna un nome"
+            label={I18n.t(
+              "idpay.configuration.iban.onboarding.nameAssignInput"
+            )}
             inputProps={{
               keyboardType: "default",
               returnKeyType: "done",
@@ -87,8 +86,7 @@ const IbanOnboardingScreen = () => {
             <IconProfileAlt size={30} color={IOColors.bluegrey} />
             <View hspacer />
             <LabelSmall color="bluegrey" weight="Regular">
-              Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento
-              visitando la sezione Profilo
+              {I18n.t("idpay.configuration.iban.onboarding.bottomLabel")}
             </LabelSmall>
           </View>
         </Form>
@@ -97,7 +95,7 @@ const IbanOnboardingScreen = () => {
         <FooterWithButtons
           type="SingleButton"
           leftButton={{
-            title: "Continua",
+            title: I18n.t("global.buttons.continue"),
             onPress: () => {
               if (iban !== undefined) {
                 send({
