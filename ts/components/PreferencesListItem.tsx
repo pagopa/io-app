@@ -1,3 +1,4 @@
+import I18n from "i18n-js";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { TestID } from "../types/WithTestID";
@@ -46,11 +47,14 @@ export const PreferencesListItem = (props: Props): React.ReactElement => (
         {props.description}
       </H5>
       {props.moreInfo && (
-        <H5 accessibilityRole="link" weight={"Regular"} color={"bluegrey"}>
-          <LabelSmall
-            accessibilityRole="link"
-            onPress={props.moreInfo.moreInfoTap}
-          >
+        <H5
+          weight={"Regular"}
+          color={"bluegrey"}
+          accessibilityRole="link"
+          accessibilityHint={I18n.t("accessibility.doubleTapToActivateHint")}
+          onPress={props.moreInfo.moreInfoTap}
+        >
+          <LabelSmall accessibilityRole="link">
             {props.moreInfo.moreInfoText}
           </LabelSmall>
         </H5>

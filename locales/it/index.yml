@@ -1,4 +1,6 @@
 ---
+accessibility:
+  doubleTapToActivateHint: "Tocca due volte per attivare"
 date:
   formats:
     default: "%d/%m/%Y"
