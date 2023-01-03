@@ -6,7 +6,6 @@ import ROUTES from "../../../../../navigation/routes";
 import { IDPayConfigurationRoutes } from "../navigation/navigator";
 import { Context } from "./context";
 
-// TODO add actions implementatio
 const createActionsImplementation = (
   navigation: IOStackNavigationProp<AppParamsList, keyof AppParamsList>
 ) => {
@@ -50,13 +49,25 @@ const createActionsImplementation = (
   const exitConfiguration = () => {
     navigation.pop();
   };
+  const navigateToIbanLandingScreen = () => {
+    navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
+      screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_LANDING
+    });
+  };
+  const navigateToIbanOnboardingScreen = () => {
+    navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
+      screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ONBOARDING
+    });
+  };
 
   return {
     navigateToConfigurationIntro,
     navigateToInstrumentsEnrollmentScreen,
     navigateToConfigurationSuccessScreen,
     navigateToInitiativeDetailScreen,
-    exitConfiguration
+    exitConfiguration,
+    navigateToIbanLandingScreen,
+    navigateToIbanOnboardingScreen
   };
 };
 
