@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
   },
   text: {
     marginLeft: 8,
-    paddingRight: 18,
     fontSize: themeVariables.fontSizeBase
   }
 });
