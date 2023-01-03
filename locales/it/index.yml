@@ -849,6 +849,7 @@ onboarding:
     headerTitle: Configura IO
     continue: Continua
     preview:
+      accessibilityLabelPrefix: "Ecco un esempio:"
       reminderOnPreviewOnTitle: Hai un avviso in scadenza
       reminderOnPreviewOnMessage: Entra nell’app e paga l’avviso emesso da ACI
       reminderOffPreviewOnTitle: Comune di Ipazia
