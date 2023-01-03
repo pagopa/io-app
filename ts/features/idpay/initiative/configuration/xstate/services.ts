@@ -62,7 +62,15 @@ const createServicesImplementation = (
             return Promise.reject("error loading iban list");
           }
 
-          return Promise.resolve(_.value);
+          // Every time we enroll an iban to an initiative, BE register it as a new iban
+          // so we need to filter the list to avoid duplicates
+          // This workaround will be removed when BE will fix the issue
+          const uniqueIbanList = _.value.ibanList.filter(
+            (iban, index, self) =>
+              index === self.findIndex(t => t.iban === iban.iban)
+          );
+
+          return Promise.resolve({ ibanList: uniqueIbanList });
         }
       )
     );
