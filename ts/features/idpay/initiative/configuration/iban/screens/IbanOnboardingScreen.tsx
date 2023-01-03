@@ -18,12 +18,16 @@ import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons
 import I18n from "../../../../../../i18n";
 import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
 import { useConfigurationMachineService } from "../../xstate/provider";
+import { useActor } from "@xstate/react";
+import { LOADING_TAG } from "../../../../../../utils/xstate";
 
 const IbanOnboardingScreen = () => {
   const configurationMachine = useConfigurationMachineService();
-  const customGoBack = () => configurationMachine.send({ type: "BACK" });
+  const [state, send] = useActor(configurationMachine);
+  const customGoBack = () => send({ type: "BACK" });
   const [iban, setIban] = React.useState<string | undefined>(undefined);
   const [ibanName, setIbanName] = React.useState<string | undefined>(undefined);
+  const isLoading = state.tags.has(LOADING_TAG);
   const isIbanValid = () =>
     pipe(
       iban,
@@ -105,13 +109,14 @@ const IbanOnboardingScreen = () => {
           type="SingleButton"
           leftButton={{
             title: I18n.t("global.buttons.continue"),
+            isLoading,
             onPress: () => {
               const isDataSendable =
                 iban !== undefined &&
                 ibanName !== undefined &&
                 ibanName.length > 0;
               if (isDataSendable) {
-                configurationMachine.send({
+                send({
                   type: "CONFIRM_IBAN",
                   ibanBody: { iban, description: ibanName }
                 });
@@ -120,7 +125,7 @@ const IbanOnboardingScreen = () => {
               }
             },
 
-            disabled: !isIbanValid()
+            disabled: isLoading || !isIbanValid()
           }}
         />
       </SafeAreaView>
