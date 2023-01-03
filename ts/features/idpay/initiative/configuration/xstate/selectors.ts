@@ -14,6 +14,9 @@ type IDPayInstrumentsByIdWallet = {
 const isLoadingSelector = (state: StateWithContext) =>
   state.hasTag(LOADING_TAG as never);
 
+const selectInitiativeDetails = (state: StateWithContext) =>
+  P.getOrElse(state.context.initiative, undefined);
+
 const isLoadingIbanListSelector = (state: StateWithContext) =>
   state.matches("CONFIGURING_IBAN.LOADING_IBAN_LIST");
 
@@ -31,6 +34,18 @@ const selectIsUpsertingInstrument = (state: StateWithContext) =>
 
 const selectPagoPAInstruments = (state: StateWithContext) =>
   state.context.pagoPAInstruments;
+
+const selectEnrolledIban = createSelector(
+  selectInitiativeDetails,
+  ibanListSelector,
+  (initiative, ibanList) => {
+    if (initiative?.iban === undefined) {
+      return undefined;
+    }
+
+    return ibanList.find(_ => _.iban === initiative.iban);
+  }
+);
 
 const selectorPagoPAIntruments = createSelector(
   selectPagoPAInstruments,
@@ -62,6 +77,7 @@ export {
   isUpsertingIbanSelector,
   selectIsLoadingInstruments,
   selectIsUpsertingInstrument,
+  selectEnrolledIban,
   selectorPagoPAIntruments,
   selectorIDPayInstrumentsByIdWallet
 };

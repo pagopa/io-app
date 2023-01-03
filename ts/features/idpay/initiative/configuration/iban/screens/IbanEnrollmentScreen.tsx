@@ -20,7 +20,8 @@ import { useConfigurationMachineService } from "../../xstate/provider";
 import {
   ibanListSelector,
   isLoadingSelector,
-  isUpsertingIbanSelector
+  isUpsertingIbanSelector,
+  selectEnrolledIban
 } from "../../xstate/selectors";
 
 type IbanEnrollmentScreenRouteParams = {
@@ -36,12 +37,16 @@ const IbanEnrollmentScreen = () => {
   const route = useRoute<IbanEnrollmentScreenRouteProps>();
   const { initiativeId } = route.params;
 
-  const [selectedIban, setSelectedIban] = React.useState<IbanDTO | undefined>();
   const configurationMachine = useConfigurationMachineService();
 
-  const isLoading = useSelector(configurationMachine, isLoadingSelector);
+  const enrolledIban = useSelector(configurationMachine, selectEnrolledIban);
 
+  const isLoading = useSelector(configurationMachine, isLoadingSelector);
   const ibanList = useSelector(configurationMachine, ibanListSelector);
+
+  const [selectedIban, setSelectedIban] = React.useState<IbanDTO | undefined>(
+    enrolledIban
+  );
 
   const isUpsertingIban = useSelector(
     configurationMachine,
