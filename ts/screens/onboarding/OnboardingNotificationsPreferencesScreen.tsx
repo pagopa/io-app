@@ -9,7 +9,6 @@ import { IOBadge } from "../../components/core/IOBadge";
 import { Body } from "../../components/core/typography/Body";
 import { H1 } from "../../components/core/typography/H1";
 import { H5 } from "../../components/core/typography/H5";
-import { LabelSmall } from "../../components/core/typography/LabelSmall";
 import { IOColors } from "../../components/core/variables/IOColors";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { PreferencesListItem } from "../../components/PreferencesListItem";

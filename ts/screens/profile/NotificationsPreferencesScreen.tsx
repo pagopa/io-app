@@ -15,7 +15,6 @@ import { PushNotificationsContentTypeEnum } from "../../../definitions/backend/P
 import { showToast } from "../../utils/showToast";
 import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
 import { usePreviewMoreInfo } from "../../utils/hooks/usePreviewMoreInfo";
-import { LabelSmall } from "../../components/core/typography/LabelSmall";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
