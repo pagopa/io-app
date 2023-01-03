@@ -1,6 +1,6 @@
-import I18n from "i18n-js";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
+import I18n from "../i18n";
 import { TestID } from "../types/WithTestID";
 import { H4 } from "./core/typography/H4";
 import { H5 } from "./core/typography/H5";
