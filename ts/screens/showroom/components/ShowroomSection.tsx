@@ -1,6 +1,5 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
-import { IOColors } from "../../../components/core/variables/IOColors";
 import { H1 } from "../../../components/core/typography/H1";
 
 const styles = StyleSheet.create({
@@ -8,9 +7,7 @@ const styles = StyleSheet.create({
     marginBottom: 54
   },
   title: {
-    marginBottom: 16,
-    borderBottomWidth: 2,
-    borderBottomColor: IOColors.greyLight
+    marginBottom: 16
   }
 });
 
