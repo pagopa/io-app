@@ -28,64 +28,65 @@ export const ShowroomNavigator = () => (
   >
     <Stack.Screen name={SHOWROOM_ROUTES.MAIN} component={Showroom} />
     <Stack.Screen
-      name={SHOWROOM_ROUTES.FOUNDATION.COLOR}
+      name={SHOWROOM_ROUTES.FOUNDATION.COLOR.id}
       component={ColorsShowroom}
+      initialParams={{ title: "Colors" }}
     />
     <Stack.Screen
-      name={SHOWROOM_ROUTES.FOUNDATION.TYPOGRAPHY}
+      name={SHOWROOM_ROUTES.FOUNDATION.TYPOGRAPHY.id}
       component={TypographyShowroom}
     />
     <Stack.Screen
-      name={SHOWROOM_ROUTES.FOUNDATION.ICONS}
+      name={SHOWROOM_ROUTES.FOUNDATION.ICONS.id}
       component={IconsShowroom}
     />
     <Stack.Screen
-      name={SHOWROOM_ROUTES.FOUNDATION.PICTOGRAMS}
+      name={SHOWROOM_ROUTES.FOUNDATION.PICTOGRAMS.id}
       component={PictogramsShowroom}
     />
     <Stack.Screen
-      name={SHOWROOM_ROUTES.FOUNDATION.LOGOS}
+      name={SHOWROOM_ROUTES.FOUNDATION.LOGOS.id}
       component={LogosShowroom}
     />
 
     {/* COMPONENTS */}
     <Stack.Screen
-      name={SHOWROOM_ROUTES.COMPONENTS.BUTTONS}
+      name={SHOWROOM_ROUTES.COMPONENTS.BUTTONS.id}
       component={ButtonsShowroom}
     />
 
     <Stack.Screen
-      name={SHOWROOM_ROUTES.COMPONENTS.SELECTION}
+      name={SHOWROOM_ROUTES.COMPONENTS.SELECTION.id}
       component={SelectionShowroom}
     />
 
     <Stack.Screen
-      name={SHOWROOM_ROUTES.COMPONENTS.TEXT_FIELDS}
+      name={SHOWROOM_ROUTES.COMPONENTS.TEXT_FIELDS.id}
       component={TextFieldsShowroom}
     />
 
     <Stack.Screen
-      name={SHOWROOM_ROUTES.COMPONENTS.TOASTS}
+      name={SHOWROOM_ROUTES.COMPONENTS.TOASTS.id}
       component={ToastNotificationsShowroom}
     />
 
     <Stack.Screen
-      name={SHOWROOM_ROUTES.COMPONENTS.ACCORDION}
+      name={SHOWROOM_ROUTES.COMPONENTS.ACCORDION.id}
       component={AccordionShowroom}
     />
 
     <Stack.Screen
-      name={SHOWROOM_ROUTES.COMPONENTS.ADVICE}
+      name={SHOWROOM_ROUTES.COMPONENTS.ADVICE.id}
       component={AdviceShowroom}
     />
 
     {/* LEGACY */}
     <Stack.Screen
-      name={SHOWROOM_ROUTES.LEGACY.PICTOGRAMS}
+      name={SHOWROOM_ROUTES.LEGACY.PICTOGRAMS.id}
       component={LegacyPictogramsShowroom}
     />
     <Stack.Screen
-      name={SHOWROOM_ROUTES.LEGACY.ILLUSTRATIONS}
+      name={SHOWROOM_ROUTES.LEGACY.ILLUSTRATIONS.id}
       component={LegacyIllustrationsShowroom}
     />
   </Stack.Navigator>

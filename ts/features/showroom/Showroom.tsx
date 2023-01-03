@@ -1,91 +1,72 @@
-import {
-  View,
-  SafeAreaView,
-  ScrollView,
-  FlatList,
-  ListRenderItemInfo
-} from "react-native";
+import { SafeAreaView, SectionList, Text } from "react-native";
+import { View as NBView } from "native-base";
 import * as React from "react";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import ListItemComponent from "../../components/screens/ListItemComponent";
+import { H1 } from "../../components/core/typography/H1";
+import { IOColors } from "../../components/core/variables/IOColors";
 import SHOWROOM_ROUTES from "./navigation/routes";
 import { ShowroomParamsList } from "./navigation/params";
-import { ShowroomSection } from "./components/ShowroomSection";
 
 type Props = IOStackNavigationRouteProps<ShowroomParamsList, "SHOWROOM_MAIN">;
 
-export const Showroom = (props: Props) => {
-  const renderItem = (info: ListRenderItemInfo<string>): React.ReactElement => {
-    const { item } = info;
+const DATA_ROUTES_FOUNDATION = Object.values(SHOWROOM_ROUTES.FOUNDATION);
+const DATA_ROUTES_COMPONENTS = Object.values(SHOWROOM_ROUTES.COMPONENTS);
+const DATA_ROUTES_LEGACY = Object.values(SHOWROOM_ROUTES.LEGACY);
 
-    return (
-      <ListItemComponent
-        title={item}
-        onPress={() => props.navigation.navigate(item)}
+export const Showroom = (props: Props) => (
+  <BaseScreenComponent
+    goBack={true}
+    headerTitle={I18n.t("profile.main.showroom")}
+  >
+    <SafeAreaView style={IOStyles.flex}>
+      <SectionList
+        contentContainerStyle={IOStyles.horizontalContentPadding}
+        stickySectionHeadersEnabled={false}
+        renderSectionHeader={({ section: { title, description } }) => (
+          <>
+            <H1>{title}</H1>
+            {description && (
+              <Text
+                style={{
+                  fontSize: 14,
+                  color: IOColors.bluegreyDark,
+                  lineHeight: 20
+                }}
+              >
+                {description}
+              </Text>
+            )}
+          </>
+        )}
+        renderSectionFooter={() => <NBView spacer={true} extralarge={true} />}
+        renderItem={({ item }) => (
+          <ListItemComponent
+            title={item.title}
+            onPress={() => props.navigation.navigate(item.id)}
+          />
+        )}
+        keyExtractor={(item, index) => `${item.id}-${index}`}
+        sections={[
+          {
+            title: "Foundation",
+            data: DATA_ROUTES_FOUNDATION
+          },
+          {
+            title: "Components",
+            data: DATA_ROUTES_COMPONENTS
+          },
+          {
+            title: "Legacy",
+            description:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nisi urna, maximus ac tempus eu, iaculis ut tortor.",
+            data: DATA_ROUTES_LEGACY
+          }
+        ]}
       />
-    );
-  };
-
-  return (
-    <BaseScreenComponent
-      goBack={true}
-      headerTitle={I18n.t("profile.main.showroom")}
-    >
-      <SafeAreaView style={IOStyles.flex}>
-        <ScrollView style={IOStyles.flex}>
-          <View style={IOStyles.horizontalContentPadding}>
-            <ShowroomSection title={"Foundation"}>
-              <FlatList
-                data={Object.values(SHOWROOM_ROUTES.FOUNDATION)}
-                renderItem={renderItem}
-              />
-            </ShowroomSection>
-
-            <ShowroomSection title={"Components"}>
-              <FlatList
-                data={Object.values(SHOWROOM_ROUTES.COMPONENTS)}
-                renderItem={renderItem}
-              />
-            </ShowroomSection>
-
-            <ShowroomSection title={"Legacy"}>
-              <FlatList
-                data={Object.values(SHOWROOM_ROUTES.LEGACY)}
-                renderItem={renderItem}
-              />
-            </ShowroomSection>
-
-            {/* <NBView spacer={true} large={true} />
-            <ColorsShowroom /> */}
-
-            {/* 
-            <TypographyShowroom />
-            <NBView spacer={true} large={true} />
-            <SelectionShowroom />
-            <NBView spacer={true} large={true} />
-            <OthersShowroom />
-            <NBView spacer={true} large={true} />
-            <ButtonsShowroom />
-            <NBView spacer={true} large={true} />
-            <TextFieldsShowroom />
-            <NBView spacer={true} large={true} />
-            <AdviceShowroom />
-            <NBView spacer={true} large={true} />
-            <ToastNotificationsShowroom />
-            <NBView spacer={true} large={true} />
-            <PictogramsShowroom />
-            <NBView spacer={true} large={true} />
-            <IconsShowroom />
-            <NBView spacer={true} large={true} />
-            <LogosShowroom />
-            <NBView spacer={true} large={true} />
-            <IllustrationsShowroom /> */}
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </BaseScreenComponent>
-  );
-};
+    </SafeAreaView>
+  </BaseScreenComponent>
+);

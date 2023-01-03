@@ -1,23 +1,29 @@
 const SHOWROOM_ROUTES = {
   MAIN: "SHOWROOM_MAIN",
   FOUNDATION: {
-    COLOR: "SHOWROOM_COLOR",
-    TYPOGRAPHY: "SHOWROOM_TYPOGRAPHY",
-    ICONS: "SHOWROOM_ICONS",
-    PICTOGRAMS: "SHOWROOM_PICTOGRAMS",
-    LOGOS: "SHOWROOM_LOGOS"
+    COLOR: { id: "SHOWROOM_COLOR", title: "Colors" },
+    TYPOGRAPHY: { id: "SHOWROOM_TYPOGRAPHY", title: "Typography" },
+    ICONS: { id: "SHOWROOM_ICONS", title: "Icons" },
+    PICTOGRAMS: { id: "SHOWROOM_PICTOGRAMS", title: "Pictograms" },
+    LOGOS: { id: "SHOWROOM_LOGOS", title: "Logos" }
   },
   COMPONENTS: {
-    BUTTONS: "SHOWROOM_BUTTONS",
-    TEXT_FIELDS: "SHOWROOM_TEXT_FIELDS",
-    TOASTS: "SHOWROOM_TOASTS",
-    SELECTION: "SHOWROOM_SELECTION",
-    ACCORDION: "SHOWROOM_ACCORDION",
-    ADVICE: "SHOWROOM_ADVICE"
+    BUTTONS: { id: "SHOWROOM_BUTTONS", title: "Buttons" },
+    TEXT_FIELDS: { id: "SHOWROOM_TEXT_FIELDS", title: "Text Fields" },
+    TOASTS: { id: "SHOWROOM_TOASTS", title: "Toasts" },
+    SELECTION: { id: "SHOWROOM_SELECTION", title: "Selection" },
+    ACCORDION: { id: "SHOWROOM_ACCORDION", title: "Accordion" },
+    ADVICE: { id: "SHOWROOM_ADVICE", title: "Advice" }
   },
   LEGACY: {
-    PICTOGRAMS: "SHOWROOM_LEGACY_PICTOGRAMS",
-    ILLUSTRATIONS: "SHOWROOM_LEGACY_ILLUSTRATIONS"
+    PICTOGRAMS: {
+      id: "SHOWROOM_LEGACY_PICTOGRAMS",
+      title: "Legacy Pictograms"
+    },
+    ILLUSTRATIONS: {
+      id: "SHOWROOM_LEGACY_ILLUSTRATIONS",
+      title: "Legacy Illustrations"
+    }
   } as const
 } as const;
 
