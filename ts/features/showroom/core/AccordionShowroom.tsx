@@ -11,10 +11,10 @@ import { H5 } from "../../../components/core/typography/H5";
 import { Label } from "../../../components/core/typography/Label";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
-import { ShowroomSection } from "../components/ShowroomSection";
+import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 export const AccordionShowroom = () => (
-  <ShowroomSection title={"Others"}>
+  <DesignSystemScreen title={"Accordion"}>
     <Label>{"<IOAccordion />"}</Label>
     <View style={[IOStyles.flex, { width: "100%" }]}>
       <IOAccordion title={"Animated Accordion"}>
@@ -70,5 +70,5 @@ export const AccordionShowroom = () => (
         </Body>
       </RawAccordion>
     </View>
-  </ShowroomSection>
+  </DesignSystemScreen>
 );

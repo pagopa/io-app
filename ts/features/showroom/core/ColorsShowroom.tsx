@@ -1,12 +1,5 @@
 import * as React from "react";
-import {
-  Text,
-  View,
-  ColorValue,
-  StyleSheet,
-  SafeAreaView,
-  ScrollView
-} from "react-native";
+import { Text, View, ColorValue, StyleSheet } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { H2 } from "../../../components/core/typography/H2";
 import { H5 } from "../../../components/core/typography/H5";
@@ -15,8 +8,7 @@ import {
   IOColorGradients,
   hexToRgba
 } from "../../../components/core/variables/IOColors";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 const colorItemGutter = 16;
 const sectionTitleMargin = 16;
@@ -67,46 +59,40 @@ const styles = StyleSheet.create({
 });
 
 export const ColorsShowroom = () => (
-  <BaseScreenComponent goBack={true} headerTitle={"Color palette"}>
-    <SafeAreaView style={IOStyles.flex}>
-      <ScrollView>
-        <View style={IOStyles.horizontalContentPadding}>
-          <H2
-            color={"bluegrey"}
-            weight={"SemiBold"}
-            style={{ marginBottom: sectionTitleMargin }}
-          >
-            Plain
-          </H2>
-          <View style={styles.itemsWrapper}>
-            {Object.entries(IOColors).map(colorEntry => (
-              <ColorBox
-                key={colorEntry[0]}
-                name={colorEntry[0]}
-                color={colorEntry[1]}
-              />
-            ))}
-          </View>
-          <H2
-            color={"bluegrey"}
-            weight={"SemiBold"}
-            style={{ marginBottom: sectionTitleMargin }}
-          >
-            Gradients
-          </H2>
-          <View style={styles.itemsWrapper}>
-            {Object.entries(IOColorGradients).map(colorEntry => (
-              <GradientBox
-                key={colorEntry[0]}
-                name={colorEntry[0]}
-                colors={colorEntry[1]}
-              />
-            ))}
-          </View>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  </BaseScreenComponent>
+  <DesignSystemScreen title={"Colors"}>
+    <H2
+      color={"bluegrey"}
+      weight={"SemiBold"}
+      style={{ marginBottom: sectionTitleMargin }}
+    >
+      Plain
+    </H2>
+    <View style={styles.itemsWrapper}>
+      {Object.entries(IOColors).map(colorEntry => (
+        <ColorBox
+          key={colorEntry[0]}
+          name={colorEntry[0]}
+          color={colorEntry[1]}
+        />
+      ))}
+    </View>
+    <H2
+      color={"bluegrey"}
+      weight={"SemiBold"}
+      style={{ marginBottom: sectionTitleMargin }}
+    >
+      Gradients
+    </H2>
+    <View style={styles.itemsWrapper}>
+      {Object.entries(IOColorGradients).map(colorEntry => (
+        <GradientBox
+          key={colorEntry[0]}
+          name={colorEntry[0]}
+          colors={colorEntry[1]}
+        />
+      ))}
+    </View>
+  </DesignSystemScreen>
 );
 
 type ColorBoxProps = {

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, StyleSheet, SafeAreaView, ScrollView } from "react-native";
+import { View, StyleSheet } from "react-native";
 import {
   AssetViewerBox,
   assetItemGutter,
@@ -48,8 +48,7 @@ import Heart from "../../../../img/features/uaDonations/heart.svg";
 /* Sections */
 import Smile from "../../../../img/messages/smile.png";
 import Profile from "../../../../img/icons/profile-illustration.png";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
+import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 const styles = StyleSheet.create({
   itemsWrapper: {
@@ -63,227 +62,206 @@ const styles = StyleSheet.create({
 });
 
 export const LegacyPictogramsShowroom = () => (
-  <BaseScreenComponent goBack={true} headerTitle={"Legacy Pictograms"}>
-    <SafeAreaView style={IOStyles.flex}>
-      <ScrollView>
-        <View style={IOStyles.horizontalContentPadding}>
-          <View style={styles.itemsWrapper}>
-            <AssetViewerBox
-              type="raster"
-              name={"Fireworks"}
-              image={renderRasterImage(Fireworks)}
-            />
-            <AssetViewerBox
-              type="raster"
-              name={"Fireworks (white)"}
-              image={renderRasterImage(FireworksWhite)}
-            />
-            <AssetViewerBox
-              type="raster"
-              name={"Question"}
-              image={renderRasterImage(Question)}
-            />
-            <AssetViewerBox
-              type="raster"
-              name={"Hourglass"}
-              image={renderRasterImage(Hourglass)}
-            />
-            <AssetViewerBox name={"Air Baloon"} image={<AirBaloon />} />
-            <AssetViewerBox
-              type="raster"
-              name={"Air Baloon (raster)"}
-              image={renderRasterImage(AirBaloonRaster)}
-            />
-            <AssetViewerBox
-              type="raster"
-              name={"Air Baloon (arrow)"}
-              image={renderRasterImage(AirBaloonArrow)}
-            />
-            <AssetViewerBox
-              type="raster"
-              name={"Airship"}
-              image={renderRasterImage(Airship)}
-            />
-            <AssetViewerBox
-              type="raster"
-              name={"Baloons"}
-              image={renderRasterImage(Baloons)}
-            />
-            <AssetViewerBox
-              type="raster"
-              name={"PiggyBank"}
-              image={renderRasterImage(PiggyBank)}
-            />
-            <AssetViewerBox
-              type="raster"
-              name={"Error"}
-              image={renderRasterImage(Error)}
-            />
-            <AssetViewerBox
-              type="raster"
-              name={"BeerMug"}
-              image={renderRasterImage(BeerMug)}
-            />
-            <AssetViewerBox
-              type="raster"
-              name={"Search"}
-              image={renderRasterImage(Search)}
-            />
-            <AssetViewerBox
-              type="raster"
-              name={"Puzzle"}
-              image={renderRasterImage(Puzzle)}
-            />
-            <AssetViewerBox
-              type="raster"
-              name={"Pin"}
-              image={renderRasterImage(Pin)}
-            />
-            <AssetViewerBox
-              type="raster"
-              name={"Places"}
-              image={renderRasterImage(Places)}
-            />
-            <AssetViewerBox
-              type="raster"
-              name={"ABILogo"}
-              image={renderRasterImage(ABILogo)}
-            />
-            <AssetViewerBox
-              type="raster"
-              name={"Castle"}
-              image={renderRasterImage(Castle)}
-            />
-            <AssetViewerBox
-              type="raster"
-              name={"Umbrella"}
-              image={renderRasterImage(Umbrella)}
-            />
-            <AssetViewerBox
-              type="raster"
-              name={"Abacus"}
-              image={renderRasterImage(Abacus)}
-            />
-            <AssetViewerBox
-              type="raster"
-              name={"Vespa"}
-              image={renderRasterImage(Vespa)}
-            />
-            <AssetViewerBox
-              type="raster"
-              name={"NotAvailable"}
-              image={renderRasterImage(NotAvailable)}
-            />
-            <AssetViewerBox
-              type="raster"
-              name={"InProgress"}
-              image={renderRasterImage(InProgress)}
-            />
-            <AssetViewerBox
-              type="raster"
-              name={"Unrecognized"}
-              image={renderRasterImage(Unrecognized)}
-            />
+  <DesignSystemScreen title={"Legacy Pictograms"}>
+    <View style={styles.itemsWrapper}>
+      <AssetViewerBox
+        type="raster"
+        name={"Fireworks"}
+        image={renderRasterImage(Fireworks)}
+      />
+      <AssetViewerBox
+        type="raster"
+        name={"Fireworks (white)"}
+        image={renderRasterImage(FireworksWhite)}
+      />
+      <AssetViewerBox
+        type="raster"
+        name={"Question"}
+        image={renderRasterImage(Question)}
+      />
+      <AssetViewerBox
+        type="raster"
+        name={"Hourglass"}
+        image={renderRasterImage(Hourglass)}
+      />
+      <AssetViewerBox name={"Air Baloon"} image={<AirBaloon />} />
+      <AssetViewerBox
+        type="raster"
+        name={"Air Baloon (raster)"}
+        image={renderRasterImage(AirBaloonRaster)}
+      />
+      <AssetViewerBox
+        type="raster"
+        name={"Air Baloon (arrow)"}
+        image={renderRasterImage(AirBaloonArrow)}
+      />
+      <AssetViewerBox
+        type="raster"
+        name={"Airship"}
+        image={renderRasterImage(Airship)}
+      />
+      <AssetViewerBox
+        type="raster"
+        name={"Baloons"}
+        image={renderRasterImage(Baloons)}
+      />
+      <AssetViewerBox
+        type="raster"
+        name={"PiggyBank"}
+        image={renderRasterImage(PiggyBank)}
+      />
+      <AssetViewerBox
+        type="raster"
+        name={"Error"}
+        image={renderRasterImage(Error)}
+      />
+      <AssetViewerBox
+        type="raster"
+        name={"BeerMug"}
+        image={renderRasterImage(BeerMug)}
+      />
+      <AssetViewerBox
+        type="raster"
+        name={"Search"}
+        image={renderRasterImage(Search)}
+      />
+      <AssetViewerBox
+        type="raster"
+        name={"Puzzle"}
+        image={renderRasterImage(Puzzle)}
+      />
+      <AssetViewerBox
+        type="raster"
+        name={"Pin"}
+        image={renderRasterImage(Pin)}
+      />
+      <AssetViewerBox
+        type="raster"
+        name={"Places"}
+        image={renderRasterImage(Places)}
+      />
+      <AssetViewerBox
+        type="raster"
+        name={"ABILogo"}
+        image={renderRasterImage(ABILogo)}
+      />
+      <AssetViewerBox
+        type="raster"
+        name={"Castle"}
+        image={renderRasterImage(Castle)}
+      />
+      <AssetViewerBox
+        type="raster"
+        name={"Umbrella"}
+        image={renderRasterImage(Umbrella)}
+      />
+      <AssetViewerBox
+        type="raster"
+        name={"Abacus"}
+        image={renderRasterImage(Abacus)}
+      />
+      <AssetViewerBox
+        type="raster"
+        name={"Vespa"}
+        image={renderRasterImage(Vespa)}
+      />
+      <AssetViewerBox
+        type="raster"
+        name={"NotAvailable"}
+        image={renderRasterImage(NotAvailable)}
+      />
+      <AssetViewerBox
+        type="raster"
+        name={"InProgress"}
+        image={renderRasterImage(InProgress)}
+      />
+      <AssetViewerBox
+        type="raster"
+        name={"Unrecognized"}
+        image={renderRasterImage(Unrecognized)}
+      />
 
-            <AssetViewerBox name={"Timeout"} image={<Timeout />} />
-            <AssetViewerBox
-              type="raster"
-              name={"Completed"}
-              image={renderRasterImage(CompletedRaster)}
-            />
-            <AssetViewerBox name={"Completed"} image={<Completed />} />
-            <AssetViewerBox
-              type="raster"
-              name={"BrokenLink"}
-              image={renderRasterImage(BrokenLink)}
-            />
-            <AssetViewerBox
-              name={"Heart"}
-              image={<Heart fill={IOColors.blue} />}
-            />
-          </View>
-          <H2
-            color={"bluegrey"}
-            weight={"SemiBold"}
-            style={{ marginBottom: 16 }}
-          >
-            EU Covid Certificate
-          </H2>
-          <View style={styles.itemsWrapper}>
-            <AssetViewerBox
-              type="raster"
-              name={"Certificate Expired"}
-              image={renderRasterImage(CertificateExpired)}
-            />
-            <AssetViewerBox
-              type="raster"
-              name={"Certificate not found"}
-              image={renderRasterImage(CertificateNotFound)}
-            />
-            <AssetViewerBox
-              type="raster"
-              name={"Certificate (revoked)"}
-              image={renderRasterImage(CertificateRevoked)}
-            />
-            <AssetViewerBox
-              type="raster"
-              name={"Certificate (wrong format)"}
-              image={renderRasterImage(CertificateWrongFormat)}
-            />
-            {/* ↳ Duplicate of Question */}
-          </View>
+      <AssetViewerBox name={"Timeout"} image={<Timeout />} />
+      <AssetViewerBox
+        type="raster"
+        name={"Completed"}
+        image={renderRasterImage(CompletedRaster)}
+      />
+      <AssetViewerBox name={"Completed"} image={<Completed />} />
+      <AssetViewerBox
+        type="raster"
+        name={"BrokenLink"}
+        image={renderRasterImage(BrokenLink)}
+      />
+      <AssetViewerBox name={"Heart"} image={<Heart fill={IOColors.blue} />} />
+    </View>
+    <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
+      EU Covid Certificate
+    </H2>
+    <View style={styles.itemsWrapper}>
+      <AssetViewerBox
+        type="raster"
+        name={"Certificate Expired"}
+        image={renderRasterImage(CertificateExpired)}
+      />
+      <AssetViewerBox
+        type="raster"
+        name={"Certificate not found"}
+        image={renderRasterImage(CertificateNotFound)}
+      />
+      <AssetViewerBox
+        type="raster"
+        name={"Certificate (revoked)"}
+        image={renderRasterImage(CertificateRevoked)}
+      />
+      <AssetViewerBox
+        type="raster"
+        name={"Certificate (wrong format)"}
+        image={renderRasterImage(CertificateWrongFormat)}
+      />
+      {/* ↳ Duplicate of Question */}
+    </View>
 
-          <H2
-            color={"bluegrey"}
-            weight={"SemiBold"}
-            style={{ marginBottom: 16 }}
-          >
-            Sections
-          </H2>
-          <View style={styles.itemsWrapper}>
-            <AssetViewerBox
-              size="small"
-              colorMode="dark"
-              type="raster"
-              name={"Smile"}
-              image={renderRasterImage(Smile)}
-            />
-            <AssetViewerBox
-              size="small"
-              colorMode="dark"
-              type="raster"
-              name={"Profile"}
-              image={renderRasterImage(Profile)}
-            />
-            <AssetViewerBox
-              size="small"
-              colorMode="dark"
-              type="iconFont"
-              name={"Messages"}
-              image={
-                <IconFont
-                  name={"io-home-messaggi"}
-                  color={IOColors.white}
-                  size={24}
-                />
-              }
-            />
-            <AssetViewerBox
-              size="small"
-              colorMode="dark"
-              type="iconFont"
-              name={"Services"}
-              image={
-                <IconFont
-                  name={"io-home-servizi"}
-                  color={IOColors.white}
-                  size={48}
-                />
-              }
-            />
-          </View>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  </BaseScreenComponent>
+    <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
+      Sections
+    </H2>
+    <View style={styles.itemsWrapper}>
+      <AssetViewerBox
+        size="small"
+        colorMode="dark"
+        type="raster"
+        name={"Smile"}
+        image={renderRasterImage(Smile)}
+      />
+      <AssetViewerBox
+        size="small"
+        colorMode="dark"
+        type="raster"
+        name={"Profile"}
+        image={renderRasterImage(Profile)}
+      />
+      <AssetViewerBox
+        size="small"
+        colorMode="dark"
+        type="iconFont"
+        name={"Messages"}
+        image={
+          <IconFont
+            name={"io-home-messaggi"}
+            color={IOColors.white}
+            size={24}
+          />
+        }
+      />
+      <AssetViewerBox
+        size="small"
+        colorMode="dark"
+        type="iconFont"
+        name={"Services"}
+        image={
+          <IconFont name={"io-home-servizi"} color={IOColors.white} size={48} />
+        }
+      />
+    </View>
+  </DesignSystemScreen>
 );

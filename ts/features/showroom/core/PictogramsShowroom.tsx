@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, StyleSheet, SafeAreaView, ScrollView } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { AssetViewerBox, assetItemGutter } from "../components/AssetViewerBox";
 import { H2 } from "../../../components/core/typography/H2";
 import {
@@ -10,8 +10,7 @@ import {
   IOSectionPictograms,
   IOSectionPictogramType
 } from "../../../components/core/pictograms";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
+import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 const styles = StyleSheet.create({
   itemsWrapper: {
@@ -25,57 +24,43 @@ const styles = StyleSheet.create({
 });
 
 export const PictogramsShowroom = () => (
-  <BaseScreenComponent goBack={true} headerTitle={"Pictograms"}>
-    <SafeAreaView style={IOStyles.flex}>
-      <ScrollView>
-        <View style={IOStyles.horizontalContentPadding}>
-          <H2
-            color={"bluegrey"}
-            weight={"SemiBold"}
-            style={{ marginBottom: 16 }}
-          >
-            Pictograms
-          </H2>
-          <View style={styles.itemsWrapper}>
-            {Object.entries(IOPictograms).map(([pictogramItemName]) => (
-              <AssetViewerBox
-                key={pictogramItemName}
-                name={pictogramItemName}
-                image={
-                  <Pictogram
-                    name={pictogramItemName as IOPictogramType}
-                    size="100%"
-                  />
-                }
-              />
-            ))}
-          </View>
+  <DesignSystemScreen title={"Pictograms"}>
+    <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
+      Pictograms
+    </H2>
+    <View style={styles.itemsWrapper}>
+      {Object.entries(IOPictograms).map(([pictogramItemName]) => (
+        <AssetViewerBox
+          key={pictogramItemName}
+          name={pictogramItemName}
+          image={
+            <Pictogram
+              name={pictogramItemName as IOPictogramType}
+              size="100%"
+            />
+          }
+        />
+      ))}
+    </View>
 
-          <H2
-            color={"bluegrey"}
-            weight={"SemiBold"}
-            style={{ marginBottom: 16 }}
-          >
-            Sections
-          </H2>
-          <View style={styles.itemsWrapper}>
-            {Object.entries(IOSectionPictograms).map(([pictogramItemName]) => (
-              <AssetViewerBox
-                colorMode="dark"
-                size="small"
-                key={pictogramItemName}
-                name={pictogramItemName}
-                image={
-                  <PictogramSection
-                    name={pictogramItemName as IOSectionPictogramType}
-                    size="100%"
-                  />
-                }
-              />
-            ))}
-          </View>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  </BaseScreenComponent>
+    <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
+      Sections
+    </H2>
+    <View style={styles.itemsWrapper}>
+      {Object.entries(IOSectionPictograms).map(([pictogramItemName]) => (
+        <AssetViewerBox
+          colorMode="dark"
+          size="small"
+          key={pictogramItemName}
+          name={pictogramItemName}
+          image={
+            <PictogramSection
+              name={pictogramItemName as IOSectionPictogramType}
+              size="100%"
+            />
+          }
+        />
+      ))}
+    </View>
+  </DesignSystemScreen>
 );
