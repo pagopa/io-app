@@ -12,9 +12,10 @@ import { IconsShowroom } from "./core/IconsShowroom";
 import { LogosShowroom } from "./core/LogosShowroom";
 import { SelectionShowroom } from "./core/SelectionShowroom";
 import { TypographyShowroom } from "./core/TypographyShowRoom";
-import { OthersShowroom } from "./OthersShowroom";
-import { ButtonsShowroom } from "./ButtonsShowroom";
+import { OthersShowroom } from "./core/OthersShowroom";
+import { ButtonsShowroom } from "./core/ButtonsShowroom";
 import { TextFieldsShowroom } from "./core/TextFieldsShowroom";
+import { AdviceShowroom } from "./core/AdviceShowroom";
 import { ToastNotificationsShowroom } from "./core/ToastNotificationsShowroom";
 
 const styles = StyleSheet.create({
@@ -55,6 +56,8 @@ export const Showroom = () => {
             <ButtonsShowroom />
             <NBView spacer={true} large={true} />
             <TextFieldsShowroom />
+            <NBView spacer={true} large={true} />
+            <AdviceShowroom />
             <NBView spacer={true} large={true} />
             <ToastNotificationsShowroom />
             <NBView spacer={true} large={true} />

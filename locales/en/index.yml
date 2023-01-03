@@ -833,6 +833,7 @@ onboarding:
     headerTitle: IO Settings
     continue: Continue
     preview:
+      accessibilityLabelPrefix: "Here's an example:"
       reminderOnPreviewOnTitle: You have a notice due soon
       reminderOnPreviewOnMessage: Log in to pay the notice issued by ACI
       reminderOffPreviewOnTitle: Comune di Ipazia
@@ -3183,8 +3184,8 @@ features:
     abort:
       title: "Cancel signing flow"
       content: "Do you want to cancel the documents signing process?"
-      cancel: "Back"
-      confirm: "Cancel"
+      cancel: "Cancel signing"
+      confirm: "Keep signing"
     signatureFields:
       title: "Sign here"
       showOnDocument: "See on document"
@@ -3194,7 +3195,7 @@ features:
       titleRight: Page {{currentPage}} of {{totalPages}}
     shareDataScreen:
       title: "Do you share this data?"
-      content: "To complete the signing process, you must share this data with the requesting institution."
+      content: "To complete the signing process, you must share this data with the signature provider."
       cancel: "Cancel"
       confirm: "Ok"
       alertText: "Want to change or update your email address?"
@@ -3343,4 +3344,15 @@ idpay:
       title: "Grazie!"
       body: "Da domani potrai utilizzare {{initiativeName}}. Puoi abilitare altri metodi aggiungendoli al Portafoglio."
       button: "Vai all'iniziativa"
+    iban:
+      landing:
+        header: Aggiungi un IBAN al tuo Profilo
+        body: Salva i dati del tuo conto e ottieni più facilmente i rimborsi a te previsti.
+        bodyLink: Scopri di più
+      onboarding:
+        header: Qual è il tuo IBAN?
+        body: Aggiungi un conto corrente a te intestato. L’autodichiarazione è resa ai sensi del
+        bodyLink: Dpr 28 dicembre 2000 n. 445 art 46 e 47 
+        nameAssignInput: Assegna un nome
+        bottomLabel: Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento visitando la sezione Profilo
     

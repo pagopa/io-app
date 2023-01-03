@@ -1,44 +1,20 @@
 import { View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
-import AlphaChannel from "../../../img/test/alphaChannel.svg";
-import Fingerprint from "../../../img/test/fingerprint.svg";
-import Analytics from "../../../img/test/analytics.svg";
-import { InfoBox } from "../../components/box/InfoBox";
-import { IOAccordion } from "../../components/core/accordion/IOAccordion";
-import { RawAccordion } from "../../components/core/accordion/RawAccordion";
-import { Body } from "../../components/core/typography/Body";
-import { H3 } from "../../components/core/typography/H3";
-import { H5 } from "../../components/core/typography/H5";
-import { Label } from "../../components/core/typography/Label";
-import { IOColors } from "../../components/core/variables/IOColors";
-import { IOStyles } from "../../components/core/variables/IOStyles";
-import { ShowroomSection } from "./components/ShowroomSection";
-
-const styles = StyleSheet.create({
-  content: {
-    flex: 1,
-    width: "100%",
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-evenly"
-  }
-});
+import AlphaChannel from "../../../../img/test/alphaChannel.svg";
+import Fingerprint from "../../../../img/test/fingerprint.svg";
+import Analytics from "../../../../img/test/analytics.svg";
+import { IOAccordion } from "../../../components/core/accordion/IOAccordion";
+import { RawAccordion } from "../../../components/core/accordion/RawAccordion";
+import { Body } from "../../../components/core/typography/Body";
+import { H3 } from "../../../components/core/typography/H3";
+import { H5 } from "../../../components/core/typography/H5";
+import { Label } from "../../../components/core/typography/Label";
+import { IOColors } from "../../../components/core/variables/IOColors";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
+import { ShowroomSection } from "../components/ShowroomSection";
 
 export const OthersShowroom = () => (
   <ShowroomSection title={"Others"}>
-    <Label>{"<InfoBox />"}</Label>
-    <View style={[styles.content, IOStyles.horizontalContentPadding]}>
-      <InfoBox>
-        <Body>
-          Lorem ipsum dolor sit amet, consectetur adipisci elit, sed do eiusmod
-          tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim
-          veniam, quis nostrum exercitationem ullamco laboriosam, nisi ut
-          aliquid ex ea commodi consequatur.
-        </Body>
-      </InfoBox>
-    </View>
-    <View spacer={true} extralarge={true} />
     <Label>{"<IOAccordion />"}</Label>
     <View style={[IOStyles.flex, { width: "100%" }]}>
       <IOAccordion title={"Animated Accordion"}>
