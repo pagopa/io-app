@@ -1,4 +1,10 @@
-import { SafeAreaView, SectionList, Text } from "react-native";
+import {
+  SafeAreaView,
+  SectionList,
+  SectionListData,
+  Text,
+  View
+} from "react-native";
 import { View as NBView } from "native-base";
 import * as React from "react";
 import { IOStyles } from "../../components/core/variables/IOStyles";
@@ -17,6 +23,23 @@ const DATA_ROUTES_FOUNDATION = Object.values(SHOWROOM_ROUTES.FOUNDATION);
 const DATA_ROUTES_COMPONENTS = Object.values(SHOWROOM_ROUTES.COMPONENTS);
 const DATA_ROUTES_LEGACY = Object.values(SHOWROOM_ROUTES.LEGACY);
 
+const DesignSystemSectionListData: SectionListData<string, Array> = [
+  {
+    title: "Foundation",
+    data: DATA_ROUTES_FOUNDATION
+  },
+  {
+    title: "Components",
+    data: DATA_ROUTES_COMPONENTS
+  },
+  {
+    title: "Legacy",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nisi urna, maximus ac tempus eu, iaculis ut tortor.",
+    data: DATA_ROUTES_LEGACY
+  }
+];
+
 export const Showroom = (props: Props) => (
   <BaseScreenComponent
     goBack={true}
@@ -27,7 +50,7 @@ export const Showroom = (props: Props) => (
         contentContainerStyle={IOStyles.horizontalContentPadding}
         stickySectionHeadersEnabled={false}
         renderSectionHeader={({ section: { title, description } }) => (
-          <>
+          <View style={{ marginBottom: 16 }}>
             <H1>{title}</H1>
             {description && (
               <Text
@@ -40,7 +63,7 @@ export const Showroom = (props: Props) => (
                 {description}
               </Text>
             )}
-          </>
+          </View>
         )}
         renderSectionFooter={() => <NBView spacer={true} extralarge={true} />}
         renderItem={({ item }) => (
@@ -50,22 +73,7 @@ export const Showroom = (props: Props) => (
           />
         )}
         keyExtractor={(item, index) => `${item.id}-${index}`}
-        sections={[
-          {
-            title: "Foundation",
-            data: DATA_ROUTES_FOUNDATION
-          },
-          {
-            title: "Components",
-            data: DATA_ROUTES_COMPONENTS
-          },
-          {
-            title: "Legacy",
-            description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nisi urna, maximus ac tempus eu, iaculis ut tortor.",
-            data: DATA_ROUTES_LEGACY
-          }
-        ]}
+        sections={DesignSystemSectionListData}
       />
     </SafeAreaView>
   </BaseScreenComponent>
