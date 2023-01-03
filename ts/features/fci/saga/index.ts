@@ -1,5 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { SagaIterator } from "redux-saga";
 import { getType, ActionType } from "typesafe-actions";
 import RNFS from "react-native-fs";
@@ -50,17 +51,16 @@ import {
   fciQtspNonceSelector
 } from "../store/reducers/fciQtspClauses";
 import { fciDocumentSignaturesSelector } from "../store/reducers/fciDocumentSignatures";
-import {
-  fciPollRetryTimesSelector,
-  MAX_POLLING_RETRY,
-  POLLING_FREQ_TIMEOUT
-} from "../store/reducers/fciPollFilledDocument";
+import { fciPollRetryTimesSelector } from "../store/reducers/fciPollFilledDocument";
 import { getNetworkError } from "../../../utils/errors";
 import { handleGetSignatureRequestById } from "./networking/handleGetSignatureRequestById";
 import { handleGetQtspMetadata } from "./networking/handleGetQtspMetadata";
 import { handleCreateFilledDocument } from "./networking/handleCreateFilledDocument";
 import { handleDownloadDocument } from "./networking/handleDownloadDocument";
 import { handleCreateSignature } from "./networking/handleCreateSignature";
+
+export const POLLING_FREQ_TIMEOUT = 2000 as Millisecond;
+export const MAX_POLLING_RETRY = 5;
 
 /**
  * Handle the FCI Signature requests

@@ -1,14 +1,10 @@
 import { getType } from "typesafe-actions";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { createSelector } from "reselect";
 import { Action } from "../../../../store/actions/types";
 import { fciClearStateRequest, fciPollFilledDocument } from "../actions";
 import { GlobalState } from "../../../../store/reducers/types";
 import { NetworkError } from "../../../../utils/errors";
-
-export const POLLING_FREQ_TIMEOUT = 2000 as Millisecond;
-export const MAX_POLLING_RETRY = 5;
 
 export type FciPollFilledDocumentState = pot.Pot<
   { isReady: boolean; retryTimes: number },
