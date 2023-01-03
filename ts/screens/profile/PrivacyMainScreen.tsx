@@ -2,7 +2,6 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { List } from "native-base";
 import React, { useCallback, useEffect, useState } from "react";
 import { Alert, AlertButton } from "react-native";
-import { useSelector } from "react-redux";
 import { UserDataProcessingChoiceEnum } from "../../../definitions/backend/UserDataProcessingChoice";
 import { UserDataProcessingStatusEnum } from "../../../definitions/backend/UserDataProcessingStatus";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
@@ -18,7 +17,7 @@ import {
   deleteUserDataProcessing,
   loadUserDataProcessing
 } from "../../store/actions/userDataProcessing";
-import { useIODispatch } from "../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { userDataProcessingSelector } from "../../store/reducers/userDataProcessing";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { usePrevious } from "../../utils/hooks/usePrevious";
@@ -52,7 +51,7 @@ const getRequestProcessingAlertSubtitle = () => ({
  */
 const PrivacyMainScreen = ({ navigation }: Props) => {
   const dispatch = useIODispatch();
-  const userDataProcessing = useSelector(userDataProcessingSelector);
+  const userDataProcessing = useIOSelector(userDataProcessingSelector);
   const prevUserDataProcessing = usePrevious(userDataProcessing);
   const [requestProcess, setRequestProcess] = useState(false);
 
