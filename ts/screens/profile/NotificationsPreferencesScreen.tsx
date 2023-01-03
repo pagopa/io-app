@@ -62,20 +62,15 @@ export const NotificationsPreferencesScreen = () => {
         <List withContentLateralPadding={true}>
           <PreferencesListItem
             title={I18n.t("profile.preferences.notifications.preview.title")}
-            description={
-              <>
-                {`${I18n.t(
-                  "profile.preferences.notifications.preview.description"
-                )} `}
-                <LabelSmall
-                  accessibilityRole="link"
-                  weight="SemiBold"
-                  onPress={present}
-                >
-                  {I18n.t("profile.preferences.notifications.preview.link")}
-                </LabelSmall>
-              </>
-            }
+            description={`${I18n.t(
+              "profile.preferences.notifications.preview.description"
+            )} `}
+            moreInfo={{
+              moreInfoText: I18n.t(
+                "profile.preferences.notifications.preview.link"
+              ),
+              moreInfoTap: present
+            }}
             rightElement={
               <RemoteSwitch
                 value={preview}
