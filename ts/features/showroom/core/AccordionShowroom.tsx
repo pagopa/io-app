@@ -13,7 +13,7 @@ import { IOColors } from "../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { ShowroomSection } from "../components/ShowroomSection";
 
-export const OthersShowroom = () => (
+export const AccordionShowroom = () => (
   <ShowroomSection title={"Others"}>
     <Label>{"<IOAccordion />"}</Label>
     <View style={[IOStyles.flex, { width: "100%" }]}>

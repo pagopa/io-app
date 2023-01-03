@@ -44,12 +44,20 @@ export const Showroom = (props: Props) => {
               />
             </ShowroomSection>
 
+            <ShowroomSection title={"Components"}>
+              <FlatList
+                data={Object.values(SHOWROOM_ROUTES.COMPONENTS)}
+                renderItem={renderItem}
+              />
+            </ShowroomSection>
+
             <ShowroomSection title={"Legacy"}>
               <FlatList
                 data={Object.values(SHOWROOM_ROUTES.LEGACY)}
                 renderItem={renderItem}
               />
             </ShowroomSection>
+
             {/* <NBView spacer={true} large={true} />
             <ColorsShowroom /> */}
 
