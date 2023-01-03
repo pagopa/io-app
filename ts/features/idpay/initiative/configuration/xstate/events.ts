@@ -12,6 +12,18 @@ type E_ADD_INSTRUMENT = {
   walletId: string;
 };
 
+type E_NEW_IBAN_ONBOARDING = {
+  type: "NEW_IBAN_ONBOARDING";
+};
+
+type E_CONFIRM_IBAN = {
+  type: "CONFIRM_IBAN";
+  ibanBody: {
+    iban: string;
+    description: string;
+  };
+};
+
 type E_ENROLL_IBAN = {
   type: "ENROLL_IBAN";
   iban: IbanDTO;
@@ -32,20 +44,14 @@ type E_BACK = {
 type E_QUIT = {
   type: "QUIT";
 };
-type E_CONFIRM_IBAN = {
-  type: "CONFIRM_IBAN";
-  ibanBody: {
-    iban: string;
-    description: string;
-  };
-};
 
 export type Events =
   | E_START_CONFIGURATION
   | E_ADD_INSTRUMENT
+  | E_NEW_IBAN_ONBOARDING
+  | E_CONFIRM_IBAN
   | E_ENROLL_IBAN
   | E_COMPLETE_CONFIGURATION
   | E_NEXT
   | E_BACK
-  | E_CONFIRM_IBAN
   | E_QUIT;

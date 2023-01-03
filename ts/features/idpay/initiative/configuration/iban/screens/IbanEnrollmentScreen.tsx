@@ -2,7 +2,7 @@ import { RouteProp, useRoute } from "@react-navigation/native";
 import { useSelector } from "@xstate/react";
 import { Text, View } from "native-base";
 import React from "react";
-import { Alert, SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { IbanDTO } from "../../../../../../../definitions/idpay/iban/IbanDTO";
 import { Icon } from "../../../../../../components/core/icons";
 import { Body } from "../../../../../../components/core/typography/Body";
@@ -59,7 +59,7 @@ const IbanEnrollmentScreen = () => {
   };
 
   const handleAddNewIbanPress = () => {
-    Alert.alert("TODO: add new IBAN 🙂");
+    configurationMachine.send({ type: "NEW_IBAN_ONBOARDING" });
   };
 
   React.useEffect(() => {

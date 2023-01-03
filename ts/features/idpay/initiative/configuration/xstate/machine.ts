@@ -113,7 +113,6 @@ const createIDPayInitiativeConfigurationMachine = () =>
           states: {
             LOADING_IBAN_LIST: {
               tags: [LOADING_TAG],
-              entry: "navigateToIbanEnrollmentScreen",
               invoke: {
                 src: "loadIbanList",
                 id: "loadIbanList",
@@ -140,7 +139,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
               entry: "navigateToIbanLandingScreen",
               on: {
                 NEXT: {
-                  target: "ADDING_IBAN"
+                  target: "DISPLAYING_IBAN_ONBOARDING_FORM"
                 },
                 BACK: [
                   {
@@ -153,7 +152,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 ]
               }
             },
-            ADDING_IBAN: {
+            DISPLAYING_IBAN_ONBOARDING_FORM: {
               tags: [WAITING_USER_INPUT_TAG],
               entry: "navigateToIbanOnboardingScreen",
               on: {
@@ -161,9 +160,15 @@ const createIDPayInitiativeConfigurationMachine = () =>
                   target: "CONFIRMING_IBAN",
                   actions: "confirmIbanOnboarding"
                 },
-                BACK: {
-                  target: "DISPLAYING_IBAN_ONBOARDING"
-                }
+                BACK: [
+                  {
+                    cond: "hasIbanList",
+                    target: "DISPLAYING_IBAN_LIST"
+                  },
+                  {
+                    target: "DISPLAYING_IBAN_ONBOARDING"
+                  }
+                ]
               }
             },
             CONFIRMING_IBAN: {
@@ -178,6 +183,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
             },
             DISPLAYING_IBAN_LIST: {
               tags: [WAITING_USER_INPUT_TAG],
+              entry: "navigateToIbanEnrollmentScreen",
               on: {
                 BACK: [
                   {
@@ -188,6 +194,9 @@ const createIDPayInitiativeConfigurationMachine = () =>
                     target: "#ROOT.DISPLAYING_INTRO"
                   }
                 ],
+                NEW_IBAN_ONBOARDING: {
+                  target: "DISPLAYING_IBAN_ONBOARDING_FORM"
+                },
                 ENROLL_IBAN: {
                   target: "ENROLLING_IBAN",
                   actions: "selectIban"
