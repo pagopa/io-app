@@ -1,11 +1,11 @@
+import { useActor } from "@xstate/react";
 import * as E from "fp-ts/lib/Either";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { Content, Form, View } from "native-base";
+import * as O from "fp-ts/lib/Option";
+import { View as NBView } from "native-base";
 import React from "react";
-import { SafeAreaView } from "react-native";
+import { SafeAreaView, View, ScrollView } from "react-native";
 import { Iban } from "../../../../../../../definitions/backend/Iban";
-import { LabelledItem } from "../../../../../../components/LabelledItem";
 import IconProfileAlt from "../../../../../../components/core/icons/svg/IconProfileAlt";
 import { Body } from "../../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../../components/core/typography/H1";
@@ -13,13 +13,13 @@ import { LabelSmall } from "../../../../../../components/core/typography/LabelSm
 import { Link } from "../../../../../../components/core/typography/Link";
 import { IOColors } from "../../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
+import { LabelledItem } from "../../../../../../components/LabelledItem";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../../i18n";
 import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
-import { useConfigurationMachineService } from "../../xstate/provider";
-import { useActor } from "@xstate/react";
 import { LOADING_TAG } from "../../../../../../utils/xstate";
+import { useConfigurationMachineService } from "../../xstate/provider";
 
 const IbanOnboardingScreen = () => {
   const configurationMachine = useConfigurationMachineService();
@@ -53,57 +53,55 @@ const IbanOnboardingScreen = () => {
       headerTitle={I18n.t("idpay.configuration.headerTitle")}
       contextualHelp={emptyContextualHelp}
     >
-      <Content scrollEnabled={false}>
+      <ScrollView style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
+        <NBView spacer />
         <H1>{I18n.t("idpay.configuration.iban.onboarding.header")}</H1>
+        <NBView spacer />
         <Body>{I18n.t("idpay.configuration.iban.onboarding.body")}</Body>
         <Link>{I18n.t("idpay.configuration.iban.onboarding.bodyLink")}</Link>
-        <View spacer large />
-        <Form>
-          <LabelledItem
-            isValid={isIbanValid()}
-            label="IBAN"
-            inputMaskProps={{
-              type: "custom",
-              options: {
-                mask: "AA99A9999999999999999999999"
-              },
-              keyboardType: "default",
-              value: iban,
-              onChangeText: val => setIban(val)
-            }}
-          />
-          <View spacer />
-          <LabelledItem
-            label={I18n.t(
-              "idpay.configuration.iban.onboarding.nameAssignInput"
-            )}
-            isValid={isIbanNameValid()}
-            inputProps={{
-              keyboardType: "default",
-              returnKeyType: "done",
-              value: ibanName,
-              maxLength: 35,
-              onChangeText: val => setIbanName(val)
-            }}
-          />
-          <View spacer />
-          <View
-            style={[
-              IOStyles.row,
-              {
-                justifyContent: "center",
-                alignItems: "center"
-              }
-            ]}
-          >
-            <IconProfileAlt size={30} color={IOColors.bluegrey} />
-            <View hspacer />
-            <LabelSmall color="bluegrey" weight="Regular">
-              {I18n.t("idpay.configuration.iban.onboarding.bottomLabel")}
-            </LabelSmall>
-          </View>
-        </Form>
-      </Content>
+        <NBView spacer large />
+        <LabelledItem
+          isValid={isIbanValid()}
+          label="IBAN"
+          inputMaskProps={{
+            type: "custom",
+            options: {
+              mask: "AA99A9999999999999999999999"
+            },
+            keyboardType: "default",
+            value: iban,
+            onChangeText: val => setIban(val)
+          }}
+        />
+        <NBView spacer />
+        <LabelledItem
+          label={I18n.t("idpay.configuration.iban.onboarding.nameAssignInput")}
+          isValid={isIbanNameValid()}
+          inputProps={{
+            keyboardType: "default",
+            returnKeyType: "done",
+            value: ibanName,
+            maxLength: 35,
+            onChangeText: val => setIbanName(val)
+          }}
+        />
+        <NBView spacer />
+        <View
+          style={[
+            IOStyles.row,
+            {
+              justifyContent: "center",
+              alignItems: "center"
+            }
+          ]}
+        >
+          <IconProfileAlt size={30} color={IOColors.bluegrey} />
+          <NBView hspacer />
+          <LabelSmall color="bluegrey" weight="Regular">
+            {I18n.t("idpay.configuration.iban.onboarding.bottomLabel")}
+          </LabelSmall>
+        </View>
+      </ScrollView>
       <SafeAreaView>
         <FooterWithButtons
           type="SingleButton"
@@ -132,4 +130,5 @@ const IbanOnboardingScreen = () => {
     </BaseScreenComponent>
   );
 };
+
 export default IbanOnboardingScreen;
