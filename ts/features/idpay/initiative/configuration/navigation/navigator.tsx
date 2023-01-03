@@ -1,12 +1,14 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
-import ConfigurationSuccessScreen from "../screens/ConfigurationSuccessScreen";
 import IbanEnrollmentScreen, {
   IbanEnrollmentScreenRouteParams
 } from "../screens/IbanEnrollmentScreen";
 import InitiativeConfigurationIntroScreen, {
   InitiativeConfigurationIntroScreenRouteParams
 } from "../screens/InitiativeConfigurationIntroScreen";
+import ConfigurationSuccessScreen from "../screens/ConfigurationSuccessScreen";
+import IbanConfigurationLanding from "../iban/screens/IbanConfigurationLandingScreen";
+import IbanOnboardingScreen from "../iban/screens/IbanOnboardingScreen";
 import InstrumentsEnrollmentScreen, {
   InstrumentsEnrollmentScreenRouteParams
 } from "../screens/InstrumentsEnrollmentScreen";
@@ -18,7 +20,9 @@ export const IDPayConfigurationRoutes = {
   IDPAY_CONFIGURATION_IBAN_ENROLLMENT: "IDPAY_CONFIGURATION_IBAN_ENROLLMENT",
   IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT:
     "IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT",
-  IDPAY_CONFIGURATION_SUCCESS: "IDPAY_CONFIGURATION_SUCCESS"
+  IDPAY_CONFIGURATION_SUCCESS: "IDPAY_CONFIGURATION_SUCCESS",
+  IDPAY_CONFIGURATION_IBAN_LANDING: "IDPAY_CONFIGURATION_IBAN_LANDING",
+  IDPAY_CONFIGURATION_IBAN_ONBOARDING: "IDPAY_CONFIGURATION_IBAN_ONBOARDING"
 } as const;
 
 export type IDPayConfigurationParamsList = {
@@ -26,6 +30,8 @@ export type IDPayConfigurationParamsList = {
   [IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ENROLLMENT]: IbanEnrollmentScreenRouteParams;
   [IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT]: InstrumentsEnrollmentScreenRouteParams;
   [IDPayConfigurationRoutes.IDPAY_CONFIGURATION_SUCCESS]: undefined;
+  [IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_LANDING]: undefined;
+  [IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ONBOARDING]: undefined;
 };
 
 const Stack = createStackNavigator<IDPayConfigurationParamsList>();
@@ -56,6 +62,14 @@ export const IDPayConfigurationNavigator = () => (
       <Stack.Screen
         name={IDPayConfigurationRoutes.IDPAY_CONFIGURATION_SUCCESS}
         component={ConfigurationSuccessScreen}
+      />
+      <Stack.Screen
+        name={IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_LANDING}
+        component={IbanConfigurationLanding}
+      />
+      <Stack.Screen
+        name={IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ONBOARDING}
+        component={IbanOnboardingScreen}
       />
     </Stack.Navigator>
   </IDPayConfigurationMachineProvider>

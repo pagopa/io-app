@@ -56,6 +56,16 @@ const createActionsImplementation = (
   const exitConfiguration = () => {
     navigation.pop();
   };
+  const navigateToIbanLandingScreen = () => {
+    navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
+      screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_LANDING
+    });
+  };
+  const navigateToIbanOnboardingScreen = () => {
+    navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
+      screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ONBOARDING
+    });
+  };
 
   return {
     navigateToConfigurationIntro,
@@ -63,7 +73,9 @@ const createActionsImplementation = (
     navigateToInstrumentsEnrollmentScreen,
     navigateToConfigurationSuccessScreen,
     navigateToInitiativeDetailScreen,
-    exitConfiguration
+    exitConfiguration,
+    navigateToIbanLandingScreen,
+    navigateToIbanOnboardingScreen
   };
 };
 

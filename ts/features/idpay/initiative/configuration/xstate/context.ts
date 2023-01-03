@@ -1,6 +1,5 @@
 import * as p from "@pagopa/ts-commons/lib/pot";
 import { IbanDTO } from "../../../../../../definitions/idpay/iban/IbanDTO";
-
 import { InitiativeDTO } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
 import { InstrumentDTO } from "../../../../../../definitions/idpay/wallet/InstrumentDTO";
 import { Wallet } from "../../../../../types/pagopa";
@@ -20,6 +19,10 @@ export type Context = {
   idPayInstruments: p.Pot<ReadonlyArray<InstrumentDTO>, Error>;
   selectedInstrumentId?: string;
   selectedIban?: IbanDTO;
+  ibanBody?: {
+    iban: string;
+    description: string;
+  };
 };
 
 export const INITIAL_CONTEXT: Context = {

@@ -32,6 +32,13 @@ type E_BACK = {
 type E_QUIT = {
   type: "QUIT";
 };
+type E_CONFIRM_IBAN = {
+  type: "CONFIRM_IBAN";
+  ibanBody: {
+    iban: string;
+    description: string;
+  };
+};
 
 export type Events =
   | E_START_CONFIGURATION
@@ -40,4 +47,5 @@ export type Events =
   | E_COMPLETE_CONFIGURATION
   | E_NEXT
   | E_BACK
+  | E_CONFIRM_IBAN
   | E_QUIT;

@@ -1,6 +1,6 @@
 import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { PreferredLanguageEnum } from "../../../../../../definitions/backend/PreferredLanguage";
 import { IbanListDTO } from "../../../../../../definitions/idpay/iban/IbanListDTO";
 import { InitiativeDTO } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
@@ -9,7 +9,7 @@ import { PaymentManagerToken, Wallet } from "../../../../../types/pagopa";
 import { SessionManager } from "../../../../../utils/SessionManager";
 import { convertWalletV2toWalletV1 } from "../../../../../utils/walletv2";
 import { IDPayWalletClient } from "../../../wallet/api/client";
-import { IDPayIbanClient } from "../api/client";
+import { IDPayIbanClient } from "../iban/api/client";
 import { Context } from "./context";
 
 const createServicesImplementation = (
@@ -68,6 +68,34 @@ const createServicesImplementation = (
     );
 
     return data;
+  };
+
+  const confirmIban = async (context: Context) => {
+    if (context.initiativeId === undefined) {
+      return Promise.reject("initiativeId is undefined");
+    }
+    try {
+      const res = await walletClient.enrollIban({
+        "Accept-Language": language,
+        bearerAuth: bearerToken,
+        initiativeId: context.initiativeId,
+        body: context.ibanBody
+      });
+      return pipe(
+        res,
+        E.fold(
+          _ => Promise.reject("error confirming iban"),
+          response => {
+            if (response.status !== 200) {
+              return Promise.reject("error confirming iban");
+            }
+            return Promise.resolve();
+          }
+        )
+      );
+    } catch (e) {
+      return Promise.reject("error calling backend");
+    }
   };
 
   const enrollIban = async (context: Context) => {
@@ -194,6 +222,7 @@ const createServicesImplementation = (
     loadInitiative,
     loadIbanList,
     enrollIban,
+    confirmIban,
     loadInstruments,
     addInstrument
   };

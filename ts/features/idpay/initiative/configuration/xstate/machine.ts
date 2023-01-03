@@ -37,7 +37,7 @@ type Services = {
 };
 
 const createIDPayInitiativeConfigurationMachine = () =>
-  /** @xstate-layout N4IgpgJg5mDOIC5QCUDyqAqBiAigVQEkMBtABgF1FQAHAe1gEsAXB2gOypAA9EBGAJgBsggHQBWAMwB2KaQAspfgE4lADjFyANCACeffgF8D2tJhEB1AIJECAOQDiAfQDKGS8myv3GRwGFUtgBiBPZ4yJYYBAFklEggdIws7Jw8CPzpIhJiqqRiypKkvBLy2noIvKr8IjJScnK8UoLySrxKUkYm6BgiADKolgAidk52NhEEAGoAolgQ7GAiDGwAbrQA1gsANrQAhhAEbMwMOyzLYDGcCUfJcamNYplSqqpygpLPGrylfC8i-E+KQQSdISNSCDogUzdKYTSw9PDjByOUaRcbTPwBYKhcKRAJYC5xK5JDi3RByCSiMSNKRtIFCf5Kb4IQRyJQidQKVSgsSCXgCOQQqEiGFwhGRJEoghoqYYoIhMLjPHEXixGj0a4k0CpORCcTU2nAwQMpl836kVRqUhPWoVQSqQVdYWw+GIka2MaRdH+OXYxW2fH8VXxdXElJkil6wQ0xqG426RBiXgPARSPJiKnCMRWh1mIbOAAKPUsAE1hsjbBg0FhbFMABokCiXEOsTXcRBRuR-IqSIQvJTpxnx8qkXkiUhKfhZXm8Vn-CQ57rerFhMt2VzIPAAWSmFecs3mIlgTBOCyFS-lyFXtnXW53GGcBLViRbYeZUhNPIkY9qI-7FqUdTtMYkKOue2JXje267vubALEeJ4iGemIXhBla3ruypBkSL6kmk8i8NUVqkOOOTmlI0hMhaUgiBOqhPLwxHKBIvDgsBSE+iuErXmhUH3r0-RDFxkF3nucywYsKzrFsuz7GwR4AE4AK4ALZgGwTCwI+wbPjcWqIAAtH+IgCBIqjTnIHzZEyAEERIoLpP245WlIhhsaByHgUJPEiSIeaFiWqEbrxe6DAM5bCRWWnYbpbYIIZEYWnZAEUi805MqmVRFD+5r8EUdoCm5ZhgZxboRXxflFqWXlBSJWAAEKWL4ADSUXNjFqT6T+4hyFS5JGnIsi5eljR-C0ghKIUk5NOSC4iMVl7Veh5UEAWlWBUte4Nc1mFNjprapPwpDMYRsgkcRdEUUOAEPPUshSEmbQWQVnRFR5JXhd5u6+St-lVaVn33tWdYNlhbX7QZgGZABdqpsxSimV8V0tDR410XkXIWU8s3zetwUiKFuN3jBCxLKsGwiHsskKSpalMK1e2voZ2TGZOZl8hZ6hWUOLyqH8plqBZDEWmIs0VQFSLzX6Lh4L4vhTM4e7+JuhZTBgMqS7itj0xqr5UiavKkOIRoUoULyskBL2Lm9OJRLYji2Jg9tTFMAwu1gSsq2rsrLjb0SNoSYOvm0hsslSf7jXy6ZMomVR0ayFlAvUxFAcBbC0BAcCcFCu067h+kzvwvM6layiKMCrLWcmhSvOoNq8iLhXdFYNhIl4Hg56GuEDUyh2iOadkyKlzQUrNfSDFeHqTFMHc4XpCCvJ2Y1AuNE0cjyJqVOIdGTgyzyFEms0ii64pupPXrW36M-tXwzG84mvIAcRLHjoITJZA8lrPCZ0j8Dqos-WtLilZUBX3BmkfgWYxyHU5kdHq1oTRHV5i-f4PI7TMV5Nja2hNdygMZkUHIIhi4uQmjvCuQ5hCdjeA0YoJCXjZkbnNLBi08Zj0Ev9GqOCA4MzzkUYEhDDrELLr-QcZQJyiDePhMQbR1BKCNJgjiC12EbW+qtcWSjgq4Lzi5TsDF5AQJZECc0YhKIyChsCG0RQijmnkT7bBfECbMLvJoue+dC7USFr-WBsg8gSHSm8TITR4aKHIlmMyNiUKOK+muAGzgMTKx6KrF2zjYr6QkOSGi0hhAyBHLlLkxikYERBEUVknMGKuUtio36ZYNa22lrLeWzhkkHX+IbJMtR+yginEmExX5ySHXLmZOc84GE1ICPbR2NYXZJK4bnOeUi2SZP+DOXIzxyJMgsmyOillsi-23sMipoy7YewSWrAYTTEDSAeG4lyLFeSpgaB+aQmRig7KyOONJwyjBAA */
+  /** @xstate-layout N4IgpgJg5mDOIC5QCUDyqAqBiAigVQEkMBtABgF1FQAHAe1gEsAXB2gOypAA9EBGAFgCc-AHQBmAKykATAA4AbBImzSY3gHYANCACefaQF8D2tJhEB1AIJECAOQDiAfQDKGS8myv3GRwGFUtgBiBPZ4yJYYBAFklEggdIws7Jw8CNLp4vxi6vKSYvK8srI52noIhdIisrzSEnLq0uq8ioJGJugYIgAyqJYAInZOdjYRBABqAKJYEOxgIgxsAG60ANZzADa0AIYQBGzMDFssi2AxnAkHyXGpORIitaSksvzSghK8pPz8pXzP4tK8QSkeSkGrqWQSMRtECmToTMaWLp4UYORzDSKjSZ+ALBULhSIBLBnOIXJIca6IfjqURiYG1YSgyGqH4IRTqEQFYrydRiYQCfLQ2EieGI5GRVHogiYibYoIhMKjQnEXixGj0S7k0CpfgSGl0iQM3hMsQst6iQTyWofOpiIpfQUdYUIpEooa2EaRLH+OV4xW2InSVXxdVklKIbKVfjFOqCIFAgq8FmFdSCKoW2SxyE6rKyB1mEUu8Vuj3jGXe3EKgn+4hiIOk1ia7iU6nifWG40s96iFPZBqCakKIp5zoDZwABS6lgAmoM0bYMGgsLYJgANEgUc4hhthtJZUjiW2kdQ5eRZD5aXSIaSPdl7tnAoqNdTD7q9AYSgBCln9MzYcwWyxrCImw7AQABGWxsF0DCwEwxJqok24UggEgXmU6RyPcpDCNIagQtyArGDCjqWM4zgTB4s4EF+tiyhW+JRLRy4TH0LFEhuJJblcWqUl8raWga-CMrSJqXuUjz7kCjyFM0BRiJIL6keRlGft+dHygxASOMxrF9ESKqboh3FNgg-Cnvx9JCUaIksuoqgiEolrqFI+S8o0L6jhO05UTRjgBB+vTIO+9hLqu651lxjapB8YiiLhzkZjJoJRqagiyCI2HKBIlqvM02UeQQ46TjOqm0f5gXBVgX6+AA0vBwZGVFfAyHF2TKIISUCLISYfPIIgdbUOqfCC8iCIYRFCv0wVojRoVrvV9bGdFVJiOIlryBmx4Zk8iZiXyGV0mZrw8ka43tGYU0+d+VWWLVC2RTuMWtQlHXVMl3V7VSHLKPJry2mNnwvuWBDIAAsldP6zPMSyrHMADG7AAGYMAATgAtuBkH3Y1O4RiIUbOa8cbArwu1lM0jwZTU7wWqhwK8kDOIg+DpVYGAKMo7QKMiNQ6xHIjXNoyICNsMj6OY2w2Marjlr49GRPYSTZNXjU+4GoeR7ZKN0jyIzPphFRtiuMgeCgxM87ONMUOwUccxCsDeKG8bpvmxgzhS6GyGAhoIgaEojl2XI0hJqhvC+-IuSAqoN4vHr9FOwuLsW1bf4iDbTB246DsGxKRuJ2bFvKhFONex17J+-73IyLIwdiRoAj9QNfJiACLcSHHGkJybBdu6+-Rd0nbsp-+MNASBuxsLBKMAK5o2AbBMLAHtITxCBvKmgJCfwNQqAUKV11XIjUtktNqDqAgd47ufOz3zgiJ5xUD7fWBTXON+u8vS2IGl+7b1Jo1SBrimJMUZKjvCtLTOyuRWgTSzkzK+bp34W3voVLyJVEH51dpbaqdUOIIWll7DQfUoG5GvGQg08gQ7AnxrUbkKgXiFFyJfHOGDu5YJQUVby19MHJxwUXQyBDV5R3Ls5Sugca5JljOlfI2VISSGyhtfgzDkBP3YQ-LhrDB6W2XPNPBDVBEmQEKNI+1QNrZGeHyJMDQw6nl4GoWkFojykHbrAsw2cVHcLYcgy6njB7D2hoBOYOwJ5T1nvPOCejFpNTXgaX2DJt5yBJvvcmqF0p2OcnGZo0YCqcPQepX0VYXB4F8L4CYZEsD+FBhOCYGAyzwMrIxT+0SrTEMjlGWM-ZsKiXJk0VaUZARKCjNhMyLjzqdHcX6bSmBtITBYmxSp1Tan5IadESJD0vaPHSg8UmIIAR00oWJcBDkcw1FwooBQUJoRsFoBAOAnBYQCM9qvAAtMrNeogBKgnkjtEEsYXxWBsKiLwHhHkrxMlSFk147hFEJglMyDRYovh6P3XOJZJigq-qZcyzxbTXm3hoCEEgkw11bI8AEp4qS6hgWMp0opXRzjRXU-WmlbAYuiZaTs0hRDZUJkeFM4I7E5LQYbBcqA2U7gBLUfGdijwPBBMUSRfwW5fGkv03UutXGdGRdNai35xXIVqPJI+agxofCKICQQkj+xHwjprR4sUzrEQumRCiRYZpqQmYUnSLF9WrwhWJJolRFACWpEyGQGqaXqLybqsqtgAruGCr6kydl2TZVoVJa8wDPrdgEFlWkpMdSOsmn0HVNEk3RTselDaAguXUnWkeU0Ql8aCF7OCIQ8kcgdzBhDctiAGghwzByJoRQ8IqGKLmTVIh3GqItr2lC+R+obQUECNQIIW5Jl5KIWQbVrz9iBG25RM7e7aqPc4OdyhzRLtGqoCm66D5KCPnIXNLckrUqdeM+pHjNG3w4cK3xt852kxbb7DCoCjyxgjkmEE7JnFOI+E8N4qFD3-vYT479rs525H3LQ8+jinhyBAW8fG287JvByFkN99tP2npEHYJBbtsRVK6DUn1nES5CNQqtCujRryPmEFY68VRnKjXbTXN4lzI2oMfqiT1jEiklLKWetjBjUgAh1A5bK27GjZGVVBoE4hhPCBbWJyEyjJm2Gmd6vomHsgZSyCmfsBpChKBZO0-GbUW5a2HbqMzhSFnMdqdZ5TTyTKNGAy2wEtIszggOSk9TIlwQKFI9kJRRgDBAA */
   createMachine(
     {
       context: INITIAL_CONTEXT,
@@ -107,6 +107,75 @@ const createIDPayInitiativeConfigurationMachine = () =>
             }
           }
         },
+        /*
+        LOADING_IBAN: {
+          tags: [LOADING_TAG],
+          invoke: {
+            src: "loadIbanList",
+            id: "loadIbanList",
+            onDone: [
+              {
+                target: "ASSERTING_IBAN_CONFIGURATION_NEEDED",
+                actions: "loadIbanListSuccess"
+              }
+            ]
+          }
+        },
+        ASSERTING_IBAN_CONFIGURATION_NEEDED: {
+          tags: [LOADING_TAG],
+          always: [
+            {
+              cond: "isIbanConfigurationNeeded",
+              target: "DISPLAYING_IBAN_ONBOARDING"
+            },
+            {
+              target: "CONFIGURING_INSTRUMENTS"
+            }
+          ]
+        },
+        DISPLAYING_IBAN_ONBOARDING: {
+          tags: [WAITING_USER_INPUT_TAG],
+          entry: "navigateToIbanLandingScreen",
+          on: {
+            NEXT: {
+              target: "ADDING_IBAN"
+            },
+            BACK: {
+              target: "DISPLAYING_INTRO"
+            }
+          }
+        },
+        ADDING_IBAN: {
+          tags: [WAITING_USER_INPUT_TAG],
+          entry: "navigateToIbanOnboardingScreen",
+          on: {
+            CONFIRM_IBAN: {
+              target: "CONFIRMING_IBAN",
+              actions: "confirmIbanOnboarding"
+            },
+            BACK: {
+              target: "DISPLAYING_IBAN_ONBOARDING"
+            }
+          }
+        },
+        CONFIRMING_IBAN: {
+          tags: [LOADING_TAG],
+          invoke: {
+            src: "confirmIban",
+            id: "confirmIban",
+            onDone: [
+              {
+                target: "CONFIGURING_INSTRUMENTS"
+              }
+            ],
+            onError: [
+              {
+                target: "DISPLAYING_INTRO"
+              }
+            ]
+          }
+        },
+        */
         CONFIGURING_IBAN: {
           id: "IBAN",
           initial: "LOADING_IBAN_LIST",
@@ -131,9 +200,51 @@ const createIDPayInitiativeConfigurationMachine = () =>
                   cond: "hasIbanList"
                 },
                 {
-                  target: "DISPLAYING_IBAN_LIST" // TODO should go to add iban steps
+                  target: "DISPLAYING_IBAN_ONBOARDING"
                 }
               ]
+            },
+            DISPLAYING_IBAN_ONBOARDING: {
+              tags: [WAITING_USER_INPUT_TAG],
+              entry: "navigateToIbanLandingScreen",
+              on: {
+                NEXT: {
+                  target: "ADDING_IBAN"
+                },
+                BACK: [
+                  {
+                    cond: "isIbanOnlyMode",
+                    actions: "exitConfiguration"
+                  },
+                  {
+                    target: "#ROOT.DISPLAYING_INTRO"
+                  }
+                ]
+              }
+            },
+            ADDING_IBAN: {
+              tags: [WAITING_USER_INPUT_TAG],
+              entry: "navigateToIbanOnboardingScreen",
+              on: {
+                CONFIRM_IBAN: {
+                  target: "CONFIRMING_IBAN",
+                  actions: "confirmIbanOnboarding"
+                },
+                BACK: {
+                  target: "DISPLAYING_IBAN_ONBOARDING"
+                }
+              }
+            },
+            CONFIRMING_IBAN: {
+              tags: [LOADING_TAG],
+              invoke: {
+                src: "confirmIban",
+                id: "confirmIban",
+                onDone: {
+                  target: "IBAN_CONFIGURATION_COMPLETED",
+                  actions: "enrollIbanSuccess"
+                }
+              }
             },
             DISPLAYING_IBAN_LIST: {
               tags: [WAITING_USER_INPUT_TAG],
@@ -235,6 +346,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
               cond: "isInstrumentsOnlyMode",
               target: "CONFIGURATION_COMPLETED"
             },
+
             {
               target: "DISPLAYING_CONFIGURATION_SUCCESS"
             }
@@ -292,6 +404,9 @@ const createIDPayInitiativeConfigurationMachine = () =>
         addInstrumentSuccess: assign((_, event) => ({
           idPayInstruments: p.some(event.data),
           selectedInstrumentId: undefined
+        })),
+        confirmIbanOnboarding: assign((_, event) => ({
+          ibanBody: event.ibanBody
         }))
       },
       guards: {
@@ -303,17 +418,14 @@ const createIDPayInitiativeConfigurationMachine = () =>
             ),
             false
           ),
-
-        isInstrumentsOnlyMode: (context, _) =>
-          context.mode === ConfigurationMode.INSTRUMENTS,
-
         isIbanOnlyMode: (context, _) => context.mode === ConfigurationMode.IBAN,
-
         hasIbanList: (context, _) =>
           p.getOrElse(
             p.map(context.ibanList, list => list.length > 0),
             false
-          )
+          ),
+        isInstrumentsOnlyMode: (context, _) =>
+          context.mode === ConfigurationMode.INSTRUMENTS
       }
     }
   );
