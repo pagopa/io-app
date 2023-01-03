@@ -39,14 +39,17 @@ const IbanEnrollmentScreen = () => {
 
   const configurationMachine = useConfigurationMachineService();
 
-  const enrolledIban = useSelector(configurationMachine, selectEnrolledIban);
-
   const isLoading = useSelector(configurationMachine, isLoadingSelector);
   const ibanList = useSelector(configurationMachine, ibanListSelector);
 
-  const [selectedIban, setSelectedIban] = React.useState<IbanDTO | undefined>(
-    enrolledIban
-  );
+  const enrolledIban = useSelector(configurationMachine, selectEnrolledIban);
+  const [selectedIban, setSelectedIban] = React.useState<IbanDTO | undefined>();
+
+  React.useEffect(() => {
+    if (enrolledIban) {
+      setSelectedIban(enrolledIban);
+    }
+  }, [enrolledIban]);
 
   const isUpsertingIban = useSelector(
     configurationMachine,
@@ -115,7 +118,6 @@ const IbanEnrollmentScreen = () => {
           </View>
           <View spacer={true} large={true} />
           <ScrollView style={IOStyles.horizontalContentPadding}>
-            {/* IBAN list */}
             {renderIbanList()}
             <View spacer={true} />
             <View style={styles.infoRow}>
