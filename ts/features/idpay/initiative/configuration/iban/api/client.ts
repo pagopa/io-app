@@ -1,5 +1,5 @@
-import { createClient } from "../../../../../../definitions/idpay/iban/client";
-import { defaultRetryingFetch } from "../../../../../utils/fetch";
+import { createClient } from "../../../../../../../definitions/idpay/iban/client";
+import { defaultRetryingFetch } from "../../../../../../utils/fetch";
 
 const createIDPayIbanClient = (baseUrl: string) =>
   createClient({
