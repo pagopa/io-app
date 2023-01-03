@@ -23,7 +23,7 @@ import { Icon } from "../../../components/core/icons";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 import { H5 } from "../../../components/core/typography/H5";
 import { Label } from "../../../components/core/typography/Label";
-import { ActivateBonusReminder } from "../../../features/bonus/bonusVacanze/screens/activation/request/ActivateBonusReminder";
+import { ActivateBonusReminder } from "../../bonus/bonusVacanze/screens/activation/request/ActivateBonusReminder";
 
 const styles = StyleSheet.create({
   content: {

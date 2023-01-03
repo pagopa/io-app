@@ -19,7 +19,7 @@ import {
 export const TextFieldsShowroom = () => {
   /*
   ALL THE FOLLOWING STATES are declared for
-  demo purposes in the UI Showroom
+  demo purposes in the Design System's section
   */
   const [creditCard, setCreditCard] = useState<CreditCardState>(
     INITIAL_CARD_FORM_STATE

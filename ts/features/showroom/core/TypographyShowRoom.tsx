@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Alert, StyleSheet } from "react-native";
+import { Alert, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { View } from "native-base";
 import { IOBadge } from "../../../components/core/IOBadge";
 import { Body } from "../../../components/core/typography/Body";
@@ -13,7 +13,8 @@ import { LabelSmall } from "../../../components/core/typography/LabelSmall";
 import { Link } from "../../../components/core/typography/Link";
 import { Monospace } from "../../../components/core/typography/Monospace";
 import { IOColors } from "../../../components/core/variables/IOColors";
-import { ShowroomSection } from "../components/ShowroomSection";
+import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
 
 const styles = StyleSheet.create({
   row: {
@@ -28,28 +29,33 @@ const styles = StyleSheet.create({
 const sectionTitleMargin = 16;
 
 export const TypographyShowroom = () => (
-  <ShowroomSection title={"Typography"}>
-    <H2
-      color={"bluegrey"}
-      weight={"SemiBold"}
-      style={{ marginBottom: sectionTitleMargin }}
-    >
-      Font family
-    </H2>
-    {/* <FontFamilyShowroom /> */}
-    {/*  <DarkBackgroundTypographicScale /> */}
-    <H1Row />
-    <H2Row />
-    <H3Row />
-    <H4Row />
-    <H5Row />
-    <Body>Body</Body>
-    <LabelSmallRow />
-    <LabelRow />
-    <Link onPress={() => Alert.alert("onPress link!")}>Link</Link>
-    <Monospace>MonoSpace</Monospace>
-    <IOBadgeRow />
-  </ShowroomSection>
+  <BaseScreenComponent goBack={true} headerTitle={"Typography"}>
+    <SafeAreaView style={IOStyles.flex}>
+      <ScrollView>
+        <View style={IOStyles.horizontalContentPadding}>
+          <H2
+            color={"bluegrey"}
+            weight={"SemiBold"}
+            style={{ marginBottom: sectionTitleMargin }}
+          >
+            Font family
+          </H2>
+          {/* <FontFamilyShowroom /> */}
+          {/*  <DarkBackgroundTypographicScale /> */}
+          <H1Row />
+          <H2Row />
+          <H3Row />
+          <H4Row />
+          <H5Row />
+          <Body>Body</Body>
+          <LabelSmallRow />
+          <LabelRow />
+          <Link onPress={() => Alert.alert("onPress link!")}>Link</Link>
+          <Monospace>MonoSpace</Monospace>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  </BaseScreenComponent>
 );
 
 /* export const FontFamilyShowroom = () => (

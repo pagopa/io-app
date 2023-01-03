@@ -11,7 +11,7 @@ import { Label } from "../../../components/core/typography/Label";
 import GoBackButton from "../../../components/GoBackButton";
 import CopyButtonComponent from "../../../components/CopyButtonComponent";
 import BlockButtons from "../../../components/ui/BlockButtons";
-import { ViewEUCovidButton } from "../../../features/euCovidCert/components/ViewEUCovidButton";
+import { ViewEUCovidButton } from "../../euCovidCert/components/ViewEUCovidButton";
 import PaymentButton from "../../../components/messages/MessageDetail/common/PaymentButton";
 import { PaymentNoticeNumber } from "../../../../definitions/backend/PaymentNoticeNumber";
 import IconFont from "../../../components/ui/IconFont";
