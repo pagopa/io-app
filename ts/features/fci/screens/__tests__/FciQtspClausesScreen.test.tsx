@@ -8,8 +8,8 @@ import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import { fciLoadQtspClauses, fciPollFilledDocument } from "../../store/actions";
 import FciQtspClausesScreen from "../valid/FciQtspClausesScreen";
 import { mockQtspClausesMetadata } from "../../types/__mocks__/QtspClausesMetadata.mock";
-import { MAX_POLLING_RETRY } from "../../store/reducers/fciPollFilledDocument";
 import { getNetworkError } from "../../../../utils/errors";
+import { MAX_POLLING_RETRY } from "../../saga";
 
 const networkError = getNetworkError(new Error("network error"));
 

@@ -25,11 +25,11 @@ import { LoadingErrorComponent } from "../../../bonus/bonusVacanze/components/lo
 import {
   fciPollFilledDocumentErrorSelector,
   fciPollFilledDocumentReadySelector,
-  fciPollRetryTimesSelector,
-  MAX_POLLING_RETRY
+  fciPollRetryTimesSelector
 } from "../../store/reducers/fciPollFilledDocument";
 import GenericErrorComponent from "../../components/GenericErrorComponent";
 import LinkedText from "../../components/LinkedText";
+import { MAX_POLLING_RETRY } from "../../saga";
 
 const FciQtspClausesScreen = () => {
   const [clausesChecked, setClausesChecked] = React.useState(0);
