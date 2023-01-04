@@ -150,7 +150,7 @@ export function createRootReducer(
     ) {
       // Purge the stored redux-persist state
       persistConfigs.forEach(persistConfig => purgeStoredState(persistConfig));
-      
+
       /**
        * We can't return undefined for nested persist reducer, we need to return
        * the basic redux persist content.
