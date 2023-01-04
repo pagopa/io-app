@@ -24,9 +24,10 @@ import CgnMerchantListItem from "../../bonus/cgn/components/merchants/CgnMerchan
 import DetailedlistItemComponent from "../../../components/DetailedlistItemComponent";
 import { TimelineTransactionCard } from "../../idpay/initiative/details/components/TimelineTransactionCards";
 import { OperationTypeEnum } from "../../../../definitions/idpay/timeline/TransactionOperationDTO";
+import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 export const ListItemsShowroom = () => (
-  <ShowroomSection title={"List Items"}>
+  <DesignSystemScreen title="List Items">
     <H2
       color={"bluegrey"}
       weight={"SemiBold"}
@@ -253,5 +254,5 @@ export const ListItemsShowroom = () => (
         isNew={true}
       />
     </ComponentViewerBox>
-  </ShowroomSection>
+  </DesignSystemScreen>
 );

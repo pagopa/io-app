@@ -1,10 +1,4 @@
-import {
-  SafeAreaView,
-  SectionList,
-  SectionListData,
-  Text,
-  View
-} from "react-native";
+import { SafeAreaView, SectionList, Text, View } from "react-native";
 import { View as NBView } from "native-base";
 import * as React from "react";
 import { IOStyles } from "../../components/core/variables/IOStyles";
@@ -19,11 +13,21 @@ import { ShowroomParamsList } from "./navigation/params";
 
 type Props = IOStackNavigationRouteProps<ShowroomParamsList, "SHOWROOM_MAIN">;
 
-const DATA_ROUTES_FOUNDATION = Object.values(SHOWROOM_ROUTES.FOUNDATION);
-const DATA_ROUTES_COMPONENTS = Object.values(SHOWROOM_ROUTES.COMPONENTS);
-const DATA_ROUTES_LEGACY = Object.values(SHOWROOM_ROUTES.LEGACY);
+type RoutesProps = Array<{
+  title: string;
+  description?: string;
+  route: string;
+}>;
 
-const DesignSystemSectionListData: SectionListData<string, Array> = [
+const DATA_ROUTES_FOUNDATION: RoutesProps = Object.values(
+  SHOWROOM_ROUTES.FOUNDATION
+);
+const DATA_ROUTES_COMPONENTS: RoutesProps = Object.values(
+  SHOWROOM_ROUTES.COMPONENTS
+);
+const DATA_ROUTES_LEGACY: RoutesProps = Object.values(SHOWROOM_ROUTES.LEGACY);
+
+const DESIGN_SYSTEM_SECTION_DATA = [
   {
     title: "Foundation",
     data: DATA_ROUTES_FOUNDATION
@@ -69,11 +73,11 @@ export const Showroom = (props: Props) => (
         renderItem={({ item }) => (
           <ListItemComponent
             title={item.title}
-            onPress={() => props.navigation.navigate(item.id)}
+            onPress={() => props.navigation.navigate(item.route)}
           />
         )}
-        keyExtractor={(item, index) => `${item.id}-${index}`}
-        sections={DesignSystemSectionListData}
+        keyExtractor={(item, index) => `${item.route}-${index}`}
+        sections={DESIGN_SYSTEM_SECTION_DATA}
       />
     </SafeAreaView>
   </BaseScreenComponent>
