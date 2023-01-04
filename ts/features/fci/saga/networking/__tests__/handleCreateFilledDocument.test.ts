@@ -4,12 +4,12 @@ import { left, right } from "fp-ts/lib/Either";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { getNetworkError } from "../../../../../utils/errors";
 import { qtspFilledDocument } from "../../../types/__mocks__/CreateFilledDocumentBody.mock";
-import {
-  fciLoadQtspFilledDocument,
-  fciPollFilledDocument
-} from "../../../store/actions";
+import { fciLoadQtspFilledDocument } from "../../../store/actions";
 import { CreateFilledDocument } from "../../../../../../definitions/fci/CreateFilledDocument";
-import { handleCreateFilledDocument } from "../handleCreateFilledDocument";
+import {
+  filledDocumentPollWatcher,
+  handleCreateFilledDocument
+} from "../handleCreateFilledDocument";
 import { FilledDocumentDetailView } from "../../../../../../definitions/fci/FilledDocumentDetailView";
 
 const mockedPayload: CreateFilledDocument = {
@@ -40,7 +40,7 @@ describe("handleCreateFilledDocument", () => {
       .next(right(successResponse))
       .put(fciLoadQtspFilledDocument.success(successResponse.value))
       .next()
-      .put(fciPollFilledDocument.request())
+      .call(filledDocumentPollWatcher)
       .next()
       .isDone();
   });

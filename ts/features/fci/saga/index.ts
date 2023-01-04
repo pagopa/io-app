@@ -1,17 +1,9 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
-import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { SagaIterator } from "redux-saga";
 import { getType, ActionType } from "typesafe-actions";
 import RNFS from "react-native-fs";
-import {
-  call,
-  takeLatest,
-  put,
-  select,
-  take,
-  delay
-} from "typed-redux-saga/macro";
+import { call, takeLatest, put, select, take } from "typed-redux-saga/macro";
 import { CommonActions, StackActions } from "@react-navigation/native";
 import NavigationService from "../../../navigation/NavigationService";
 import { FCI_ROUTES } from "../navigation/routes";
@@ -42,8 +34,7 @@ import {
   fciSigningRequest,
   fciEndRequest,
   fciShowSignedDocumentsStartRequest,
-  fciShowSignedDocumentsEndRequest,
-  fciPollFilledDocument
+  fciShowSignedDocumentsEndRequest
 } from "../store/actions";
 import {
   fciQtspClausesMetadataSelector,
@@ -51,16 +42,11 @@ import {
   fciQtspNonceSelector
 } from "../store/reducers/fciQtspClauses";
 import { fciDocumentSignaturesSelector } from "../store/reducers/fciDocumentSignatures";
-import { fciPollRetryTimesSelector } from "../store/reducers/fciPollFilledDocument";
-import { getNetworkError } from "../../../utils/errors";
 import { handleGetSignatureRequestById } from "./networking/handleGetSignatureRequestById";
 import { handleGetQtspMetadata } from "./networking/handleGetQtspMetadata";
 import { handleCreateFilledDocument } from "./networking/handleCreateFilledDocument";
 import { handleDownloadDocument } from "./networking/handleDownloadDocument";
 import { handleCreateSignature } from "./networking/handleCreateSignature";
-
-export const POLLING_FREQ_TIMEOUT = 2000 as Millisecond;
-export const MAX_POLLING_RETRY = 5;
 
 /**
  * Handle the FCI Signature requests
@@ -128,8 +114,6 @@ export function* watchFciSaga(bearerToken: SessionToken): SagaIterator {
   );
 
   yield* takeLatest(getType(fciEndRequest), watchFciEndSaga);
-
-  yield* takeLatest(getType(fciPollFilledDocument.request), watchFciPollSaga);
 }
 
 /**
@@ -158,6 +142,7 @@ function* watchFciQtspClausesSaga(): SagaIterator {
     );
   }
 }
+
 /**
  * Handle the FCI start requests saga
  */
@@ -277,42 +262,4 @@ function* watchFciEndSaga(): SagaIterator {
     NavigationService.dispatchNavigationAction,
     CommonActions.navigate(ROUTES.MAIN)
   );
-}
-
-/**
- * Handle the FCI polling saga
- * This saga is used to poll the QTSP filled_document to check if the
- * document is ready to be downloaded by the user. The polling is done
- * every POLLING_FREQ_TIMEOUT seconds and the polling is stopped when
- * the document is ready or when the polling is retried
- * MAX_POLLING_RETRY times.
- */
-function* watchFciPollSaga(): SagaIterator {
-  const qtspFilledDocumentUrl = yield* select(fciQtspFilledDocumentUrlSelector);
-  const pollRetryTimes = yield* select(fciPollRetryTimesSelector);
-  if (qtspFilledDocumentUrl) {
-    try {
-      const response = yield* call(fetch, qtspFilledDocumentUrl);
-      const responseStatus = response.status;
-      if (responseStatus === 200) {
-        yield* put(
-          fciPollFilledDocument.success({
-            isReady: true,
-            retryTimes: pollRetryTimes
-          })
-        );
-      } else if (pollRetryTimes < MAX_POLLING_RETRY) {
-        yield* put(
-          fciPollFilledDocument.success({
-            isReady: false,
-            retryTimes: pollRetryTimes + 1
-          })
-        );
-        yield* delay(POLLING_FREQ_TIMEOUT);
-        yield* put(fciPollFilledDocument.request());
-      }
-    } catch (e) {
-      yield* put(fciPollFilledDocument.failure(getNetworkError(e)));
-    }
-  }
 }

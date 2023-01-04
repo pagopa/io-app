@@ -24,12 +24,10 @@ import { fciEndRequest, fciStartSigningRequest } from "../../store/actions";
 import { LoadingErrorComponent } from "../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import {
   fciPollFilledDocumentErrorSelector,
-  fciPollFilledDocumentReadySelector,
-  fciPollRetryTimesSelector
+  fciPollFilledDocumentReadySelector
 } from "../../store/reducers/fciPollFilledDocument";
 import GenericErrorComponent from "../../components/GenericErrorComponent";
 import LinkedText from "../../components/LinkedText";
-import { MAX_POLLING_RETRY } from "../../saga";
 
 const FciQtspClausesScreen = () => {
   const [clausesChecked, setClausesChecked] = React.useState(0);
@@ -39,7 +37,6 @@ const FciQtspClausesScreen = () => {
   const isPollFilledDocumentReady = useSelector(
     fciPollFilledDocumentReadySelector
   );
-  const pollRetryTimes = useSelector(fciPollRetryTimesSelector);
   const fciPollFilledDocumentError = useSelector(
     fciPollFilledDocumentErrorSelector
   );
@@ -63,7 +60,7 @@ const FciQtspClausesScreen = () => {
     />
   );
 
-  if (pollRetryTimes >= MAX_POLLING_RETRY || fciPollFilledDocumentError) {
+  if (fciPollFilledDocumentError) {
     return <GenericErrorComponent onPress={() => dispatch(fciEndRequest())} />;
   } else if (!isPollFilledDocumentReady) {
     return <LoadingComponent />;
