@@ -75,6 +75,15 @@ export const InitiativeSettingsComponent = (props: Props) => {
     });
   };
 
+  const navigateToIbanConfiguration = () => {
+    navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
+      screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ENROLLMENT,
+      params: {
+        initiativeId: initiative.initiativeId
+      }
+    });
+  };
+
   return (
     <>
       <H3>
@@ -101,7 +110,7 @@ export const InitiativeSettingsComponent = (props: Props) => {
             "idpay.initiative.details.initiativeDetailsScreen.configured.settings.selectedIBAN"
           )}
           subTitle={initiative.iban}
-          onPress={navigateToInstrumentsConfiguration}
+          onPress={navigateToIbanConfiguration}
           hasWarnings={
             initiative.status === StatusEnum.NOT_REFUNDABLE_ONLY_INSTRUMENT
           }
