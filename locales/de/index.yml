@@ -855,108 +855,115 @@ wallet:
         privacyDisclaimer: "Wenn du fortfährst, verstehst und akzeptierst du die"
         privacyTerms: "Nutzungsbedingungen und Datenschutzbestimmungen"
     coBadge:
-      headerTitle: "Aggiungi circuito internazionale"
+      headerTitle: "Internationales Zahlungsnetz hinzufügen"
       start:
-        loading: "Stiamo caricando le impostazioni\n\nAttendi qualche secondo"
+        loading: "Wir laden die Einstellungen\n\nWarte ein paar Sekunden"
         koDisabled:
-          title: "La tua banca non offre ancora questa funzionalità"
-          body: "Siamo al lavoro per permetterti presto di poter aggiungere la tua carta con circuito internazionale."
+          title: "Deine Bank bietet diese Funktion noch nicht an"
+          body: "Wir arbeiten daran, dir bald die Möglichkeit zu geben, deine Karte mit internationalem Zahlungsnetz hinzuzufügen."
         koUnavailable:
-          title: "Non riusciamo a contattare la tua banca"
-          body: "Siamo al lavoro per risolvere il problema."
+          title: "Wir konnten deine Bank nicht kontaktieren"
+          body: "Wir arbeiten an der Lösung des Problems."
       search:
-        loading: "Stiamo recuperando la lista delle tue carte\n\nAttendi qualche secondo"
+        loading: "Wir laden die Liste deiner Karten\n\nWarte bitte ein paar Sekunden"
         koTimeout:
-          title: "Non riusciamo a recuperare le tue carte"
-          body: "Riprova per favore"
+          title: "Wir können deine Karten nicht abrufen"
+          body: "Bitte versuche es erneut"
         koNotFound:
-          title: "Non abbiamo trovato nessuna carta tra le banche aderenti al servizio"
-          body: "Non risultano carte con circuito internazionale intestate a te: contatta la tua Banca per ulteriori informazioni."
+          title: "Wir haben keine Karten bei Banken, die am Dienst teilnehmen, gefunden"
+          body: "Es gibt keine Karten mit internationalem Zahlungsnetz auf deinen Namen: Wende dich an deine Bank, um weitere Informationen zu erhalten."
         koSingleBankNotFound:
-          title: "Non abbiamo trovato nessuna carta su questa banca"
-          body: "Non risultano carte con circuito internazionale intestate a te. Se lo desideri, IO può effettuare una ricerca tra tutte le banche aderenti."
+          title: "Wir konnten keine Karten bei dieser Bank finden"
+          body: "Es gibt keine Karten mit internationalem Zahlungsnetz auf deinen Namen.\nWenn du magst, kann IO alle teilnehmenden Banken durchsuchen."
         koServiceError:
-          title: "Non riusciamo a recuperare le tue carte"
-          body: "Riprova più tardi per favore"
+          title: "Wir konnten keine Karten finden"
+          body: "Bitte versuche es später erneut"
       add:
-        screenTitle: "Vuoi aggiungere questa carta?"
-        label: "Carta con circuito internazionale {{current}} di {{length}}"
-        blocked: "Questa carta risulta bloccata e pertanto non può essere attivata per aderire alle iniziative disponibili su IO. Contatta la tua banca."
-        warning1: "In alcuni casi, i dati mostrati potrebbero essere diversi da quelli riportati sulla carta fisica: "
-        warning2: "se hai dubbi contatta la tua banca."
-        loading: "Stiamo aggiungendo la tua carta con circuito internazionale\n\nAttendi qualche secondo..."
+        screenTitle: "Möchtest du diese Karte hinzufügen?"
+        label: "Karte mit internationalem Zahlungsnetz {{current}} von {{length}}"
+        blocked: "Diese Karte ist gesperrt und kann daher nicht aktiviert werden, um an den auf IO verfügbaren Initiativen teilzunehmen. Wende dich an deine Bank."
+        warning1: "In einigen Fällen können die angezeigten Daten von denen auf der physischen Karte abweichen: "
+        warning2: "Bei Zweifeln wende dich an deine Bank."
+        loading: "Wir fügen die Karte mit internationalem Zahlungsnetz hinzu\n\nWarte ein paar Sekunden..."
       chooseType:
-        title: "La tua carta ti permette di acquistare online?"
-        description: "Questa domanda ci permette di capire meglio com’è fatta la tua carta e aiutarti ad aggiungerla al tuo Portafoglio."
+        title: "Kannst du mit deiner Karte auch online einkaufen?"
+        description: "Anhand dieser Frage können wir besser verstehen, wie deine Karte funktioniert und dir helfen, sie zu deinem Konto hinzuzufügen."
         path:
           enabled:
-            title: "Sì, è abilitata agli acquisti online"
-            description: "Verificheremo i dati della carta con la tua banca, di solito via sms o notifica push"
+            title: "Ja, sie ist für Online-Käufe aktiviert."
+            description: "Wir überprüfen die Kartendaten mit deiner Bank, normalerweise per SMS oder Push-Benachrichtigung"
           disabled:
-            title: "No, la uso solo nei negozi"
-            description: "Cercheremo tutte le carte intestate a te presso le banche aderenti al servizio"
+            title: "Nein, ich benutze sie nur in Geschäften"
+            description: "Wir durchsuchen alle auf deinem Namen lautenden Karten bei den am Dienst teilnehmenden Banken"
           unknown:
-            title: "Non lo so"
-            description: "Cercheremo tutte le carte intestate a te presso le banche aderenti al servizio"
+            title: "Ich weiß es nicht"
+            description: "Wir durchsuchen alle auf deinem Namen lautenden Karten bei den am Dienst teilnehmenden Banken"
     privative:
-      headerTitle: "Aggiungi carta supermercato"
+      headerTitle: "Supermarktkarte hinzufügen"
       choosePrivativeIssuer:
-        loading: "Stiamo caricando le impostazioni\n\nAttendi qualche secondo"
-        title: "Scegli il marchio della tua carta"
-        body: "Aggiungendo la carta al tuo Portafoglio, potrai aderire alle iniziative disponibili su IO."
+        loading: "Wir laden die Einstellungen\n\nWarte ein paar Sekunden"
+        title: "Wähle die Kette deiner Karte"
+        body: "Wenn du die Karte zu deinem Konto hinzufügst, kannst du dich den auf IO verfügbaren Initiativen anschließen."
         koDisabled:
-          title: "Questo supermercato non offre ancora questa funzionalità"
-          body: "Siamo al lavoro per permetterti presto di poter aggiungere la tua carta."
+          title: "Dieser Supermarkt bietet diese Funktion noch nicht an."
+          body: "Wir arbeiten daran, dass du deine Karte bald hinzufügen kannst."
         koUnavailable:
-          title: "Non riusciamo a contattare il server"
-          body: "Siamo al lavoro per risolvere il problema."
+          title: "Wir können den Server nicht kontaktieren"
+          body: "Wir arbeiten an der Lösung des Problems."
       addPrivativeCardNumber:
-        title: "Inserisci il numero carta"
-        body: "Digita le cifre riportate sul fronte. IO verificherà se la carta è associata al tuo codice fiscale."
+        title: "Gib die Kartennummer ein"
+        body: "Gib die Ziffern auf der Vorderseite ein. IO prüft, ob die Karte mit deiner Steuernummer verbunden ist."
         disclaimer:
-          text1: "Proseguendo accetti l’"
-          text2: "informativa sul trattamento dei dati personali"
+          text1: "Wenn du fortfährst, akzeptierst du die"
+          text2: "Datenschutzbestimmungen"
       search:
-        loading: "Stiamo verificando la tua carta\n\nAttendi qualche secondo"
+        loading: "Wir überprüfen deine Karte\n\nWarte ein paar Sekunden"
         koTimeout:
-          title: "Al momento è impossibile verificare la tua carta"
-          body: "Riprova per favore"
+          title: "Es ist derzeit nicht möglich, deine Karte zu überprüfen"
+          body: "Bitte versuche es erneut"
         koNotFound:
-          title: "C'è un problema con questa carta"
-          body: "Prova ad inserire nuovamente il numero oppure, in alternativa, chiedi aiuto al servizio clienti del tuo supermercato."
+          title: "Es gibt ein Problem mit dieser Karte"
+          body: "Versuche die Nummer erneut einzugeben oder wende dich an den Kundendienst deines Supermarktes."
           cta:
-            modifyCardNumber: "Modifica numero carta"
+            modifyCardNumber: "Kartennummer ändern"
         koServiceError:
-          title: "Al momento è impossibile recuperare la tua carta"
-          body: "Riprova più tardi per favore"
+          title: "Es ist derzeit nicht möglich deine Karte abzurufen"
+          body: "Bitte versuche es später erneut"
       add:
-        screenTitle: "Vuoi aggiungere questa carta?"
-        loading: "Stiamo aggiungendo la tua carta\n\nAttendi qualche secondo..."
-        blocked: "Questa carta risulta bloccata e pertanto non può essere attivata per aderire alle iniziative disponibili su IO. Contatta il tuo supermercato."
+        screenTitle: "Möchtest du diese Karte hinzufügen?"
+        loading: "Wir fügen deine Karte hinzu\n\nBitte warte ein paar Sekunden..."
+        blocked: "Diese Karte ist gesperrt und kann daher nicht aktiviert werden, um an den auf IO verfügbaren Initiativen teilzunehmen. Wende dich an deinen Supermarkt."
   alert:
+    supportedCardPageLinkError: "Beim Öffnen der Übersichtsseite für unterstützte Karten ist ein Fehler aufgetreten."
     msgErrorUpdateApp: "Beim Öffnen des App-Stores ist ein Fehler aufgetreten"
-    titlePagoPaUpdateApp: Update erforderlich
-    messagePagoPaUpdateApp: "IO führt häufig kleine Verbesserungen und neue Funktionen ein: Um Ihre Zahlungen weiterhin nutzen zu können, müssen Sie die App auf die neueste Version aktualisieren."
-    btnUpdateApp: Aktualisieren Sie die IO-App
-  contextualHelpTitle: Über diesen Abschnitt
-  creditcards: Kreditkarten
-  paymentMethods: Zahlungsmethoden
-  paymentMethod: Zahlungsmethode
-  walletLoadMessage: Zahlungsmethoden laden...
-  walletLoadFailure: Das Laden der Zahlungsmethoden ist fehlgeschlagen, bitte versuchen Sie es erneut.
-  transactionsLoadMessage: Laden der Transaktionen...
-  transactionsLoadFailure: Das Laden Ihrer Transaktionen ist fehlgeschlagen, bitte versuchen Sie es erneut.
-  transactionsLoadMore: Vorherige laden
-  transacionsLoadingMore: Vorheriges Laden...
-  transactionsShow: Zeige Transaktionen
+    titlePagoPaUpdateApp: "Update erforderlich"
+    messagePagoPaUpdateApp: "IO führt häufig kleine Verbesserungen und neue Funktionen ein: Um dein Konto weiterhin nutzen zu können, musst du die App auf die neueste Version aktualisieren."
+    btnUpdateApp: "Aktualisiere die IO-App"
+    avorite: "Um diese Option zu ändern, wähle eine andere Zahlungsmethode aus deinem Konto und lege diese als bevorzugt fest."
+    amex: "Zahlungen mit American Express-Karten für Beträge über 1000 € sind derzeit nicht möglich."
+  contextualHelpTitle: "Was du in deinem Konto machen kannst"
+  creditcards: "Kreditkarten"
+  paymentMethods: "Zahlungsmethoden"
+  paymentMethod: "Zahlungsmethode"
+  paymentMethodDesc: "Kredit-, Debit-, Prepaid-Karten, Paypal, und mehr"
+  walletLoadMessage: "Zahlungsmethoden laden..."
+  walletLoadFailure: "Das Laden der Zahlungsmethoden ist fehlgeschlagen, bitte versuche es erneut."
+  transactionsLoadMessage: "Laden der Transaktionenhistorie..."
+  transactionsLoadFailure: "Das Laden deiner Transaktionen ist fehlgeschlagen, bitte versuche es erneut."
+  transactionHelpMessage:
+    text1: "Probleme mit einer Zahlung oder dem Hinzufügen einer neuen Methode?"
+    text2: "Konsultiere die Hilfe rechts oben auf dieser Seite."
+  transactionsLoadMore: "Vorherige laden"
+  transacionsLoadingMore: "Lade vorherige..."
+  transactionsShow: "Zeige Transaktionen"
   pickPaymentMethod:
     unavailable:
-      title: Diese Zahlungsmethode ist zur Zeit nicht verfügbar
-      message: Diese Zahlungsmethode wird in einer zukünftigen Version verfügbar sein
-  add: hinzufügen
+      title: "Diese Zahlungsmethode ist noch nicht verfügbar"
+      message: "Diese Zahlungsmethode wird in einer zukünftigen Version verfügbar sein"
+  add: "hinzufügen"
   delete:
-    successful: Karte erfolgreich entfernt
-    failed: Die Karte konnte nicht entfernt werden
+    successful: "Zahlungsmethode von deinem Konto entfernt"
+    failed: "Die Zahlungsmethode konnte nicht von deinem Konto entfernt werden"
   newPaymentMethod:
     add: hinzufügen
     refresh: Aktualisieren
