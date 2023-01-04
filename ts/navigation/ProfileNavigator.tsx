@@ -25,7 +25,7 @@ import ServicesPreferenceScreen from "../screens/profile/ServicesPreferenceScree
 import ShareDataScreen from "../screens/profile/ShareDataScreen";
 import WebPlayground from "../screens/profile/WebPlayground";
 import { isGestureEnabled } from "../utils/navigation";
-import { ShowroomNavigator } from "../features/showroom/navigation/navigator";
+import { ShowroomNavigator } from "../features/design-system/navigation/navigator";
 import { ProfileParamsList } from "./params/ProfileParamsList";
 import ROUTES from "./routes";
 
