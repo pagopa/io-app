@@ -85,7 +85,7 @@ const fciRoutesToNavigationLink: Record<string, string> = {
 
 const idPayOnboardingRoutesToNavigationLink: Record<string, string> = {
   [IDPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS]:
-    "/idpay-onboarding/details"
+    "/idpay/onboarding"
 };
 
 const allowedRoutes = {

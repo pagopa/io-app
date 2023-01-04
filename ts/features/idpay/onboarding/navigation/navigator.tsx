@@ -31,9 +31,9 @@ const Stack = createStackNavigator<IDPayOnboardingParamsList>();
 
 export const idPayOnboardingLinkingOptions: PathConfigMap = {
   [IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN]: {
-    path: "idpay-onboarding",
+    path: "idpay",
     screens: {
-      [IDPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS]: "details"
+      [IDPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS]: "onboarding"
     }
   }
 };
