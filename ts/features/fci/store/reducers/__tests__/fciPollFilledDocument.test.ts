@@ -12,8 +12,7 @@ describe("FciPollFilledDocumentReducer", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     expect(globalState.features.fci.pollFilledDocument).toStrictEqual(
       pot.some({
-        isReady: false,
-        retryTimes: 0
+        isReady: false
       })
     );
   });
@@ -23,13 +22,12 @@ describe("FciPollFilledDocumentReducer", () => {
     store.dispatch(fciPollFilledDocument.request());
     expect(store.getState().features.fci.pollFilledDocument).toStrictEqual(
       pot.someLoading({
-        isReady: false,
-        retryTimes: 0
+        isReady: false
       })
     );
   });
   it("The pollFilledDocument should be pot.some with payload as value if the fciPollFilledDocument.success is dispatched", () => {
-    const payload = { isReady: true, retryTimes: 1 };
+    const payload = { isReady: true };
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
     store.dispatch(fciPollFilledDocument.success(payload));
@@ -44,8 +42,7 @@ describe("FciPollFilledDocumentReducer", () => {
     expect(store.getState().features.fci.pollFilledDocument).toEqual(
       pot.someError(
         {
-          isReady: false,
-          retryTimes: 0
+          isReady: false
         },
         genericError
       )
@@ -57,8 +54,7 @@ describe("FciPollFilledDocumentReducer", () => {
     store.dispatch(fciClearStateRequest());
     expect(store.getState().features.fci.pollFilledDocument).toStrictEqual(
       pot.some({
-        isReady: false,
-        retryTimes: 0
+        isReady: false
       })
     );
   });

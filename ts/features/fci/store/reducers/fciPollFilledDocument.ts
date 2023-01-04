@@ -7,13 +7,12 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { NetworkError } from "../../../../utils/errors";
 
 export type FciPollFilledDocumentState = pot.Pot<
-  { isReady: boolean; retryTimes: number },
+  { isReady: boolean },
   NetworkError
 >;
 
 const initialState: FciPollFilledDocumentState = pot.some({
-  isReady: false,
-  retryTimes: 0
+  isReady: false
 });
 
 const reducer = (
@@ -43,12 +42,6 @@ export const fciPollFilledDocumentReadySelector = createSelector(
   fciPollFilledDocumentSelector,
   pollFilledDocument =>
     pot.isSome(pollFilledDocument) ? pollFilledDocument.value.isReady : false
-);
-
-export const fciPollRetryTimesSelector = createSelector(
-  fciPollFilledDocumentSelector,
-  pollFilledDocument =>
-    pot.isSome(pollFilledDocument) ? pollFilledDocument.value.retryTimes : 0
 );
 
 export const fciPollFilledDocumentErrorSelector = createSelector(

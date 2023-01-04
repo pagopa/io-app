@@ -112,7 +112,11 @@ export const fciPollFilledDocument = createAsyncAction(
   "POLL_FILLED_DOCUMENT_REQUEST",
   "POLL_FILLED_DOCUMENT_SUCCESS",
   "POLL_FILLED_DOCUMENT_FAILURE"
-)<void, { isReady: boolean; retryTimes: number }, NetworkError>();
+)<void, { isReady: boolean }, NetworkError>();
+
+export const fciCancelPollingFilledDocument = createStandardAction(
+  "POLL_FILLED_DOCUMENT_CANCEL"
+)<void>();
 
 export type FciActions =
   | ActionType<typeof fciSignatureRequestFromId>
@@ -128,4 +132,5 @@ export type FciActions =
   | ActionType<typeof fciDownloadPreviewClear>
   | ActionType<typeof fciShowSignedDocumentsStartRequest>
   | ActionType<typeof fciShowSignedDocumentsEndRequest>
-  | ActionType<typeof fciPollFilledDocument>;
+  | ActionType<typeof fciPollFilledDocument>
+  | ActionType<typeof fciCancelPollingFilledDocument>;
