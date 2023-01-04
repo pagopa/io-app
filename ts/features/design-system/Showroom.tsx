@@ -10,7 +10,7 @@ import {
 } from "../../navigation/params/AppParamsList";
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import { H1 } from "../../components/core/typography/H1";
-import { IOColors } from "../../components/core/variables/IOColors";
+import { LabelSmall } from "../../components/core/typography/LabelSmall";
 import SHOWROOM_ROUTES from "./navigation/routes";
 import { ShowroomParamsList } from "./navigation/params";
 
@@ -42,7 +42,7 @@ const DESIGN_SYSTEM_SECTION_DATA = [
   {
     title: "Legacy",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nisi urna, maximus ac tempus eu, iaculis ut tortor.",
+      "You should not use the following components for present and future deployments. They're here just for reference.",
     data: DATA_ROUTES_LEGACY
   }
 ];
@@ -60,15 +60,9 @@ export const Showroom = (props: Props) => (
           <View style={{ marginBottom: 8 }}>
             <H1>{title}</H1>
             {description && (
-              <Text
-                style={{
-                  fontSize: 14,
-                  color: IOColors.bluegreyDark,
-                  lineHeight: 20
-                }}
-              >
+              <LabelSmall weight={"Regular"} color="bluegrey">
                 {description}
-              </Text>
+              </LabelSmall>
             )}
           </View>
         )}
