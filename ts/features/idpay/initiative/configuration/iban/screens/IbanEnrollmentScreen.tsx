@@ -70,6 +70,10 @@ const IbanEnrollmentScreen = () => {
     configurationMachine.send({ type: "NEW_IBAN_ONBOARDING" });
   };
 
+  /**
+   * If when navigating to this screen we have an initiativeId, we set the configuration machine to
+   * show only the IBAN related screens and not the whole configuration flow.
+   */
   React.useEffect(() => {
     if (initiativeId) {
       configurationMachine.send({
