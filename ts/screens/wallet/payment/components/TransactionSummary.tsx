@@ -24,8 +24,8 @@ import {
   centsToAmount,
   formatNumberAmount
 } from "../../../../utils/stringBuilder";
-import { formatTextRecipient } from "../../../../utils/strings";
 import { usePaymentAmountInfoBottomSheet } from "../hooks/usePaymentAmountInfoBottomSheet";
+import { EnteBeneficiario } from "../../../../../definitions/backend/EnteBeneficiario";
 
 const styles = StyleSheet.create({
   row: {
@@ -166,10 +166,20 @@ type Props = Readonly<{
 export const TransactionSummary = (props: Props): React.ReactElement => {
   const isLoading = pot.isLoading(props.paymentVerification);
 
+  const getRecepientName = (recipient: EnteBeneficiario) => {
+    const denomUnitOper = pipe(
+      recipient.denomUnitOperBeneficiario,
+      O.fromNullable,
+      O.map(d => ` - ${d}`),
+      O.getOrElse(() => "")
+    );
+    return `${recipient.denominazioneBeneficiario}${denomUnitOper}`.trim();
+  };
+
   const recipient = pipe(
     pot.toOption(props.paymentVerification),
     O.chainNullableK(_ => _.enteBeneficiario),
-    O.map(formatTextRecipient),
+    O.map(getRecepientName),
     O.toUndefined
   );
 
