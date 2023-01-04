@@ -17,7 +17,6 @@ import CGN_ROUTES from "../../../../features/bonus/cgn/navigation/routes";
 import SV_ROUTES from "../../../../features/bonus/siciliaVola/navigation/routes";
 import { FCI_ROUTES } from "../../../../features/fci/navigation/routes";
 import FIMS_ROUTES from "../../../../features/fims/navigation/routes";
-import { IDPayOnboardingRoutes } from "../../../../features/idpay/onboarding/navigation/navigator";
 import UADONATION_ROUTES from "../../../../features/uaDonations/navigation/routes";
 import ROUTES from "../../../../navigation/routes";
 import { isTestEnv } from "../../../../utils/environment";
@@ -83,11 +82,6 @@ const fciRoutesToNavigationLink: Record<string, string> = {
   [FCI_ROUTES.MAIN]: "/fci/main"
 };
 
-const idPayOnboardingRoutesToNavigationLink: Record<string, string> = {
-  [IDPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS]:
-    "/idpay/onboarding"
-};
-
 const allowedRoutes = {
   ...routesToNavigationLink,
   ...cgnRoutesToNavigationLink,
@@ -97,8 +91,7 @@ const allowedRoutes = {
   ...(svEnabled ? svRoutesToNavigationLink : {}),
   ...(uaDonationsEnabled ? uaDonationsRoutesToNavigationLink : {}),
   ...(fimsEnabled ? fimsRoutesToNavigationLink : {}),
-  ...(fciEnabled ? fciRoutesToNavigationLink : {}),
-  ...idPayOnboardingRoutesToNavigationLink
+  ...(fciEnabled ? fciRoutesToNavigationLink : {})
 };
 
 export const testableALLOWED_ROUTE_NAMES = isTestEnv
