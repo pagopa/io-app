@@ -4,7 +4,10 @@ import * as React from "react";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
-import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
+import {
+  AppParamsList,
+  IOStackNavigationRouteProps
+} from "../../navigation/params/AppParamsList";
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import { H1 } from "../../components/core/typography/H1";
 import { IOColors } from "../../components/core/variables/IOColors";
@@ -73,7 +76,9 @@ export const Showroom = (props: Props) => (
         renderItem={({ item }) => (
           <ListItemComponent
             title={item.title}
-            onPress={() => props.navigation.navigate(item.route)}
+            onPress={() =>
+              props.navigation.navigate(item.route as keyof AppParamsList)
+            }
           />
         )}
         keyExtractor={(item, index) => `${item.route}-${index}`}
