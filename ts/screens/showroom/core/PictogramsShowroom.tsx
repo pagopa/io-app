@@ -55,7 +55,6 @@ import {
 /* Donations */
 // import Heart from "../../../../img/features/uaDonations/heart.svg";
 /* Sections */
-import Profile from "../../../../img/icons/profile-illustration.png";
 
 const styles = StyleSheet.create({
   itemsWrapper: {
