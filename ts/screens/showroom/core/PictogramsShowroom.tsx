@@ -55,8 +55,7 @@ import {
 /* Donations */
 // import Heart from "../../../../img/features/uaDonations/heart.svg";
 /* Sections */
-// import Smile from "../../../../img/messages/smile.png";
-// import Profile from "../../../../img/icons/profile-illustration.png";
+import Profile from "../../../../img/icons/profile-illustration.png";
 
 const styles = StyleSheet.create({
   itemsWrapper: {
@@ -235,13 +234,6 @@ export const PictogramsShowroom = () => (
       Sections
     </H2>
     <View style={styles.itemsWrapper}>
-      <AssetViewerBox
-        size="small"
-        colorMode="dark"
-        type="raster"
-        name={"Smile"}
-        image={renderRasterImage(Smile)}
-      />
       <AssetViewerBox
         size="small"
         colorMode="dark"
