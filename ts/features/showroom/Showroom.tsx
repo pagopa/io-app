@@ -50,7 +50,7 @@ export const Showroom = (props: Props) => (
         contentContainerStyle={IOStyles.horizontalContentPadding}
         stickySectionHeadersEnabled={false}
         renderSectionHeader={({ section: { title, description } }) => (
-          <View style={{ marginBottom: 16 }}>
+          <View style={{ marginBottom: 8 }}>
             <H1>{title}</H1>
             {description && (
               <Text
