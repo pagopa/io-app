@@ -33,7 +33,8 @@ export const idPayOnboardingLinkingOptions: PathConfigMap = {
   [IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN]: {
     path: "idpay",
     screens: {
-      [IDPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS]: "onboarding"
+      [IDPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS]:
+        "onboarding/:serviceId"
     }
   }
 };
