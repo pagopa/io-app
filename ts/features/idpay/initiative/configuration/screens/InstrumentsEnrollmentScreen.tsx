@@ -1,5 +1,5 @@
 import { RouteProp, useRoute } from "@react-navigation/native";
-import { useActor, useSelector } from "@xstate/react";
+import { useSelector } from "@xstate/react";
 import { Badge, List, ListItem, Text, View } from "native-base";
 import React, { useRef } from "react";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
@@ -101,10 +101,9 @@ const InstrumentsEnrollmentScreen = () => {
 
   const selectedCardRef = useRef<number | undefined>(undefined);
   const configurationMachine = useConfigurationMachineService();
-  const [_, send] = useActor(configurationMachine);
 
   const handleBackPress = () => {
-    send({ type: "BACK" });
+    configurationMachine.send({ type: "BACK" });
   };
 
   const isLoading = useSelector(configurationMachine, isLoadingSelector);
@@ -127,13 +126,13 @@ const InstrumentsEnrollmentScreen = () => {
     Object.keys(idPayInstrumentsByIdWallet).length > 0;
 
   const sendAddInstrument = (): void => {
-    send("ADD_INSTRUMENT", {
+    configurationMachine.send("ADD_INSTRUMENT", {
       walletId: selectedCardRef.current
     });
   };
 
   const handleContinueButton = () => {
-    send({
+    configurationMachine.send({
       type: "NEXT"
     });
   };
@@ -146,13 +145,13 @@ const InstrumentsEnrollmentScreen = () => {
 
   React.useEffect(() => {
     if (initiativeId) {
-      send({
+      configurationMachine.send({
         type: "START_CONFIGURATION",
         initiativeId,
         mode: ConfigurationMode.INSTRUMENTS
       });
     }
-  }, [send, initiativeId]);
+  }, [configurationMachine, initiativeId]);
 
   const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
     <Body>
