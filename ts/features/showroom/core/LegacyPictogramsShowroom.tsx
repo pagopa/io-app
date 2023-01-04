@@ -46,7 +46,6 @@ import CertificateWrongFormat from "../../../../img/features/euCovidCert/certifi
 /* Donations */
 import Heart from "../../../../img/features/uaDonations/heart.svg";
 /* Sections */
-import Smile from "../../../../img/messages/smile.png";
 import Profile from "../../../../img/icons/profile-illustration.png";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
@@ -226,13 +225,6 @@ export const LegacyPictogramsShowroom = () => (
       Sections
     </H2>
     <View style={styles.itemsWrapper}>
-      <AssetViewerBox
-        size="small"
-        colorMode="dark"
-        type="raster"
-        name={"Smile"}
-        image={renderRasterImage(Smile)}
-      />
       <AssetViewerBox
         size="small"
         colorMode="dark"
