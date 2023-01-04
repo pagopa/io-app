@@ -27,7 +27,7 @@ import {
   confirmButtonProps,
   disablePrimaryButtonProps
 } from "../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import TosBonusComponent from "../../../../bonus/bonusVacanze/components/TosBonusComponent";
+import TosBonusComponent from "../../../../bonus/common/components/TosBonusComponent";
 import { navigateToOnboardingPrivativeSearchAvailable } from "../navigation/action";
 import {
   walletAddPrivativeCancel,
