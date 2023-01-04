@@ -4,7 +4,6 @@ import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 
 import { H2 } from "../../../components/core/typography/H2";
 
-import { ShowroomSection } from "../components/ShowroomSection";
 import { ComponentViewerBox } from "../components/ComponentViewerBox";
 
 import ListItemComponent from "../../../components/screens/ListItemComponent";
