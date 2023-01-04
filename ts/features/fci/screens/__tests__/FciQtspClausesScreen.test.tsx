@@ -76,24 +76,7 @@ describe("Test FciQtspClauses screen", () => {
     expect(component).toBeTruthy();
     expect(component.queryByTestId("FciLoadingScreenTestID")).toBeTruthy();
   });
-  it("should render the GenericErrorComponent when filled_document is not ready and max attempts reached", () => {
-    const globalState = appReducer(undefined, applicationChangeState("active"));
-    const store: Store<GlobalState> = createStore(
-      appReducer,
-      globalState as any
-    );
-    store.dispatch(fciLoadQtspClauses.success(mockQtspClausesMetadata));
-    store.dispatch(
-      fciPollFilledDocument.success({
-        isReady: false
-      })
-    );
-    const component = renderComponent(store);
-    expect(component).toBeTruthy();
-    expect(component.queryByTestId("FciLoadingScreenTestID")).toBeFalsy();
-    expect(component.queryByTestId("GenericErrorComponentTestID")).toBeTruthy();
-  });
-  it("should render the GenericErrorComponent when network error problem occurs", () => {
+  it("should render the GenericErrorComponent when network error problem occurs or polling is stopped if time limit reached", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store: Store<GlobalState> = createStore(
       appReducer,
