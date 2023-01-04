@@ -939,7 +939,7 @@ wallet:
     titlePagoPaUpdateApp: "Update erforderlich"
     messagePagoPaUpdateApp: "IO führt häufig kleine Verbesserungen und neue Funktionen ein: Um dein Konto weiterhin nutzen zu können, musst du die App auf die neueste Version aktualisieren."
     btnUpdateApp: "Aktualisiere die IO-App"
-    avorite: "Um diese Option zu ändern, wähle eine andere Zahlungsmethode aus deinem Konto und lege diese als bevorzugt fest."
+    favorite: "Um diese Option zu ändern, wähle eine andere Zahlungsmethode aus deinem Konto und lege diese als bevorzugt fest."
     amex: "Zahlungen mit American Express-Karten für Beträge über 1000 € sind derzeit nicht möglich."
   contextualHelpTitle: "Was du in deinem Konto machen kannst"
   creditcards: "Kreditkarten"
