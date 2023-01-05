@@ -1,10 +1,10 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import {
-  AssetViewerBox,
+  DSAssetViewerBox,
   assetItemGutter,
   renderRasterImage
-} from "../components/AssetViewerBox";
+} from "../components/DSAssetViewerBox";
 import { H2 } from "../../../components/core/typography/H2";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import IconFont from "../../../components/ui/IconFont";
@@ -63,157 +63,157 @@ const styles = StyleSheet.create({
 export const DSLegacyPictograms = () => (
   <DesignSystemScreen title={"Legacy Pictograms"}>
     <View style={styles.itemsWrapper}>
-      <AssetViewerBox
+      <DSAssetViewerBox
         type="raster"
         name={"Fireworks"}
         image={renderRasterImage(Fireworks)}
       />
-      <AssetViewerBox
+      <DSAssetViewerBox
         type="raster"
         name={"Fireworks (white)"}
         image={renderRasterImage(FireworksWhite)}
       />
-      <AssetViewerBox
+      <DSAssetViewerBox
         type="raster"
         name={"Question"}
         image={renderRasterImage(Question)}
       />
-      <AssetViewerBox
+      <DSAssetViewerBox
         type="raster"
         name={"Hourglass"}
         image={renderRasterImage(Hourglass)}
       />
-      <AssetViewerBox name={"Air Baloon"} image={<AirBaloon />} />
-      <AssetViewerBox
+      <DSAssetViewerBox name={"Air Baloon"} image={<AirBaloon />} />
+      <DSAssetViewerBox
         type="raster"
         name={"Air Baloon (raster)"}
         image={renderRasterImage(AirBaloonRaster)}
       />
-      <AssetViewerBox
+      <DSAssetViewerBox
         type="raster"
         name={"Air Baloon (arrow)"}
         image={renderRasterImage(AirBaloonArrow)}
       />
-      <AssetViewerBox
+      <DSAssetViewerBox
         type="raster"
         name={"Airship"}
         image={renderRasterImage(Airship)}
       />
-      <AssetViewerBox
+      <DSAssetViewerBox
         type="raster"
         name={"Baloons"}
         image={renderRasterImage(Baloons)}
       />
-      <AssetViewerBox
+      <DSAssetViewerBox
         type="raster"
         name={"PiggyBank"}
         image={renderRasterImage(PiggyBank)}
       />
-      <AssetViewerBox
+      <DSAssetViewerBox
         type="raster"
         name={"Error"}
         image={renderRasterImage(Error)}
       />
-      <AssetViewerBox
+      <DSAssetViewerBox
         type="raster"
         name={"BeerMug"}
         image={renderRasterImage(BeerMug)}
       />
-      <AssetViewerBox
+      <DSAssetViewerBox
         type="raster"
         name={"Search"}
         image={renderRasterImage(Search)}
       />
-      <AssetViewerBox
+      <DSAssetViewerBox
         type="raster"
         name={"Puzzle"}
         image={renderRasterImage(Puzzle)}
       />
-      <AssetViewerBox
+      <DSAssetViewerBox
         type="raster"
         name={"Pin"}
         image={renderRasterImage(Pin)}
       />
-      <AssetViewerBox
+      <DSAssetViewerBox
         type="raster"
         name={"Places"}
         image={renderRasterImage(Places)}
       />
-      <AssetViewerBox
+      <DSAssetViewerBox
         type="raster"
         name={"ABILogo"}
         image={renderRasterImage(ABILogo)}
       />
-      <AssetViewerBox
+      <DSAssetViewerBox
         type="raster"
         name={"Castle"}
         image={renderRasterImage(Castle)}
       />
-      <AssetViewerBox
+      <DSAssetViewerBox
         type="raster"
         name={"Umbrella"}
         image={renderRasterImage(Umbrella)}
       />
-      <AssetViewerBox
+      <DSAssetViewerBox
         type="raster"
         name={"Abacus"}
         image={renderRasterImage(Abacus)}
       />
-      <AssetViewerBox
+      <DSAssetViewerBox
         type="raster"
         name={"Vespa"}
         image={renderRasterImage(Vespa)}
       />
-      <AssetViewerBox
+      <DSAssetViewerBox
         type="raster"
         name={"NotAvailable"}
         image={renderRasterImage(NotAvailable)}
       />
-      <AssetViewerBox
+      <DSAssetViewerBox
         type="raster"
         name={"InProgress"}
         image={renderRasterImage(InProgress)}
       />
-      <AssetViewerBox
+      <DSAssetViewerBox
         type="raster"
         name={"Unrecognized"}
         image={renderRasterImage(Unrecognized)}
       />
 
-      <AssetViewerBox name={"Timeout"} image={<Timeout />} />
-      <AssetViewerBox
+      <DSAssetViewerBox name={"Timeout"} image={<Timeout />} />
+      <DSAssetViewerBox
         type="raster"
         name={"Completed"}
         image={renderRasterImage(CompletedRaster)}
       />
-      <AssetViewerBox name={"Completed"} image={<Completed />} />
-      <AssetViewerBox
+      <DSAssetViewerBox name={"Completed"} image={<Completed />} />
+      <DSAssetViewerBox
         type="raster"
         name={"BrokenLink"}
         image={renderRasterImage(BrokenLink)}
       />
-      <AssetViewerBox name={"Heart"} image={<Heart fill={IOColors.blue} />} />
+      <DSAssetViewerBox name={"Heart"} image={<Heart fill={IOColors.blue} />} />
     </View>
     <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
       EU Covid Certificate
     </H2>
     <View style={styles.itemsWrapper}>
-      <AssetViewerBox
+      <DSAssetViewerBox
         type="raster"
         name={"Certificate Expired"}
         image={renderRasterImage(CertificateExpired)}
       />
-      <AssetViewerBox
+      <DSAssetViewerBox
         type="raster"
         name={"Certificate not found"}
         image={renderRasterImage(CertificateNotFound)}
       />
-      <AssetViewerBox
+      <DSAssetViewerBox
         type="raster"
         name={"Certificate (revoked)"}
         image={renderRasterImage(CertificateRevoked)}
       />
-      <AssetViewerBox
+      <DSAssetViewerBox
         type="raster"
         name={"Certificate (wrong format)"}
         image={renderRasterImage(CertificateWrongFormat)}
@@ -225,14 +225,14 @@ export const DSLegacyPictograms = () => (
       Sections
     </H2>
     <View style={styles.itemsWrapper}>
-      <AssetViewerBox
+      <DSAssetViewerBox
         size="small"
         colorMode="dark"
         type="raster"
         name={"Profile"}
         image={renderRasterImage(Profile)}
       />
-      <AssetViewerBox
+      <DSAssetViewerBox
         size="small"
         colorMode="dark"
         type="iconFont"
@@ -245,7 +245,7 @@ export const DSLegacyPictograms = () => (
           />
         }
       />
-      <AssetViewerBox
+      <DSAssetViewerBox
         size="small"
         colorMode="dark"
         type="iconFont"

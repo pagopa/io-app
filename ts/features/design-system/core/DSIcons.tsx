@@ -1,6 +1,6 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
-import { IconViewerBox, iconItemGutter } from "../components/IconViewerBox";
+import { DSIconViewerBox, iconItemGutter } from "../components/DSIconViewerBox";
 import {
   Icon,
   IOIcons,
@@ -44,7 +44,7 @@ export const DSIcons = () => (
   <DesignSystemScreen title={"Icons"}>
     <View style={styles.itemsWrapper}>
       {Object.entries(IOIcons).map(([iconItemName]) => (
-        <IconViewerBox
+        <DSIconViewerBox
           key={iconItemName}
           name={iconItemName}
           size="small"
@@ -57,7 +57,7 @@ export const DSIcons = () => (
     </H2>
     <View style={styles.itemsWrapper}>
       {Object.entries(IONavIcons).map(([iconItemName]) => (
-        <IconViewerBox
+        <DSIconViewerBox
           key={iconItemName}
           name={iconItemName}
           size="medium"
@@ -70,7 +70,7 @@ export const DSIcons = () => (
     </H2>
     <View style={styles.itemsWrapper}>
       {Object.entries(IOBiometricIcons).map(([iconItemName]) => (
-        <IconViewerBox
+        <DSIconViewerBox
           key={iconItemName}
           name={iconItemName}
           size="large"
@@ -88,7 +88,7 @@ export const DSIcons = () => (
     </H2>
     <View style={styles.itemsWrapper}>
       {Object.entries(IOCategoryIcons).map(([iconItemName]) => (
-        <IconViewerBox
+        <DSIconViewerBox
           key={iconItemName}
           name={iconItemName}
           size="medium"
@@ -106,7 +106,7 @@ export const DSIcons = () => (
     </H2>
     <View style={styles.itemsWrapper}>
       {Object.entries(IOProductIcons).map(([iconItemName]) => (
-        <IconViewerBox
+        <DSIconViewerBox
           key={iconItemName}
           name={iconItemName}
           size="large"
@@ -123,7 +123,7 @@ export const DSIcons = () => (
       {/* If you want to render another icon in different sizes,
       just change the name below */}
       {IOIconSizes.map(size => (
-        <IconViewerBox
+        <DSIconViewerBox
           key={`iconSize-${size}`}
           name={`${size}`}
           image={<Icon name="creditCard" size={size} />}
@@ -135,7 +135,7 @@ export const DSIcons = () => (
     </H3>
     <View style={styles.itemsWrapper}>
       {IOIconColors.map(color => (
-        <IconViewerBox
+        <DSIconViewerBox
           key={`iconColor-${color}`}
           name={`${color}`}
           size="medium"

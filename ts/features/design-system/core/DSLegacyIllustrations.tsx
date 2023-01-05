@@ -2,10 +2,10 @@ import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import { H2 } from "../../../components/core/typography/H2";
 import {
-  AssetViewerBox,
+  DSAssetViewerBox,
   assetItemGutter,
   renderRasterImage
-} from "../components/AssetViewerBox";
+} from "../components/DSAssetViewerBox";
 
 /* ILLUSTRATIONS */
 /* Onboarding */
@@ -36,46 +36,46 @@ export const DSLegacyIllustrations = () => (
       Onboarding
     </H2>
     <View style={styles.itemsWrapper}>
-      <AssetViewerBox
+      <DSAssetViewerBox
         type="raster"
         name={"05"}
         image={renderRasterImage(Landing05)}
-      ></AssetViewerBox>
-      <AssetViewerBox
+      />
+      <DSAssetViewerBox
         type="raster"
         name={"01"}
         image={renderRasterImage(Landing01)}
-      ></AssetViewerBox>
-      <AssetViewerBox
+      />
+      <DSAssetViewerBox
         type="raster"
         name={"02"}
         image={renderRasterImage(Landing02)}
-      ></AssetViewerBox>
-      <AssetViewerBox
+      />
+      <DSAssetViewerBox
         type="raster"
         name={"03"}
         image={renderRasterImage(Landing03)}
-      ></AssetViewerBox>
-      <AssetViewerBox
+      />
+      <DSAssetViewerBox
         type="raster"
         name={"04"}
         image={renderRasterImage(Landing04)}
-      ></AssetViewerBox>
+      />
     </View>
     <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
       CIE
     </H2>
     <View style={styles.itemsWrapper}>
-      <AssetViewerBox
+      <DSAssetViewerBox
         type="raster"
         name={"CIE"}
         image={renderRasterImage(LandingCIE)}
-      ></AssetViewerBox>
-      <AssetViewerBox
+      />
+      <DSAssetViewerBox
         type="raster"
         name={"Placing Card"}
         image={renderRasterImage(PlacingCard)}
-      ></AssetViewerBox>
+      />
     </View>
   </DesignSystemScreen>
 );

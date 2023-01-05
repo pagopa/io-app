@@ -1,6 +1,9 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
-import { AssetViewerBox, assetItemGutter } from "../components/AssetViewerBox";
+import {
+  DSAssetViewerBox,
+  assetItemGutter
+} from "../components/DSAssetViewerBox";
 import { H2 } from "../../../components/core/typography/H2";
 import {
   Pictogram,
@@ -30,7 +33,7 @@ export const DSPictograms = () => (
     </H2>
     <View style={styles.itemsWrapper}>
       {Object.entries(IOPictograms).map(([pictogramItemName]) => (
-        <AssetViewerBox
+        <DSAssetViewerBox
           key={pictogramItemName}
           name={pictogramItemName}
           image={
@@ -48,7 +51,7 @@ export const DSPictograms = () => (
     </H2>
     <View style={styles.itemsWrapper}>
       {Object.entries(IOSectionPictograms).map(([pictogramItemName]) => (
-        <AssetViewerBox
+        <DSAssetViewerBox
           colorMode="dark"
           size="small"
           key={pictogramItemName}

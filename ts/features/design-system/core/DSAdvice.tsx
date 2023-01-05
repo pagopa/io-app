@@ -9,7 +9,7 @@ import SectionStatusComponent, {
   statusColorMap,
   statusIconMap
 } from "../../../components/SectionStatus";
-import { FullWidthComponent } from "../components/FullWidthComponent";
+import { DSFullWidthComponent } from "../components/DSFullWidthComponent";
 import { InfoBox } from "../../../components/box/InfoBox";
 import { Body } from "../../../components/core/typography/Body";
 
@@ -79,15 +79,15 @@ export const DSAdvice = () => {
         }
       />
       <NBView spacer={true} />
-      <FullWidthComponent>
+      <DSFullWidthComponent>
         <PaymentBannerComponent
           paymentReason={"Pagamento buoni pasto mensa scuola"}
           fee={100 as ImportoEuroCents}
           currentAmount={30000 as ImportoEuroCents}
         />
-      </FullWidthComponent>
+      </DSFullWidthComponent>
       <NBView spacer={true} />
-      <FullWidthComponent>
+      <DSFullWidthComponent>
         <StatusContent
           accessibilityLabel={`Accessibility text for the advice component`}
           backgroundColor={statusColorMap.normal}
@@ -103,13 +103,13 @@ export const DSAdvice = () => {
             "L’invio dei Certificati Verdi è in corso e potrebbe richiedere diversi giorni."
           }
         </StatusContent>
-      </FullWidthComponent>
+      </DSFullWidthComponent>
       <NBView spacer={true} />
-      <FullWidthComponent>
+      <DSFullWidthComponent>
         <SectionStatusComponent sectionKey={"favourite_language"} />
-      </FullWidthComponent>
+      </DSFullWidthComponent>
       <NBView spacer={true} />
-      <FullWidthComponent>
+      <DSFullWidthComponent>
         <StatusContent
           accessibilityLabel={`Accessibility text for the advice component`}
           backgroundColor={statusColorMap.warning}
@@ -123,9 +123,9 @@ export const DSAdvice = () => {
         >
           {"La sezione Messaggi è in manutenzione, tornerà operativa a breve"}
         </StatusContent>
-      </FullWidthComponent>
+      </DSFullWidthComponent>
       <NBView spacer={true} />
-      <FullWidthComponent>
+      <DSFullWidthComponent>
         <StatusContent
           accessibilityLabel={`Accessibility text for the advice component`}
           backgroundColor={statusColorMap.critical}
@@ -141,7 +141,7 @@ export const DSAdvice = () => {
             "I nostri sistemi potrebbero rispondere con lentezza, ci scusiamo per il disagio."
           }
         </StatusContent>
-      </FullWidthComponent>
+      </DSFullWidthComponent>
 
       <NBView spacer={true} />
 

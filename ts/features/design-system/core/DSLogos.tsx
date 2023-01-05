@@ -1,9 +1,9 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import {
-  LogoPaymentViewerBox,
+  DSLogoPaymentViewerBox,
   logoItemGutter
-} from "../components/LogoPaymentViewerBox";
+} from "../components/DSLogoPaymentViewerBox";
 import {
   LogoPayment,
   IOLogoPaymentType,
@@ -33,7 +33,7 @@ export const DSLogos = () => (
     </H2>
     <View style={styles.itemsWrapper}>
       {Object.entries(IOPaymentLogos).map(([logoItemName]) => (
-        <LogoPaymentViewerBox
+        <DSLogoPaymentViewerBox
           key={logoItemName}
           name={logoItemName}
           size="medium"
@@ -51,7 +51,7 @@ export const DSLogos = () => (
     </H2>
     <View style={styles.itemsWrapper}>
       {Object.entries(IOPaymentExtLogos).map(([logoItemName]) => (
-        <LogoPaymentViewerBox
+        <DSLogoPaymentViewerBox
           key={logoItemName}
           name={logoItemName}
           size="large"
