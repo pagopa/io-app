@@ -51,7 +51,7 @@ export const BaseTypography: React.FunctionComponent<OwnProps> = props => {
     : [props.fontStyle, fontStyle];
 
   return (
-    <Text {...props} style={style}>
+    <Text {...props} style={style} allowFontScaling>
       {props.children}
     </Text>
   );
