@@ -1,7 +1,7 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
 import { isGestureEnabled } from "../../../utils/navigation";
-import { Showroom } from "../Showroom";
+import { Showroom } from "../DesignSystem";
 import { ColorsShowroom } from "../core/ColorsShowroom";
 import { TypographyShowroom } from "../core/TypographyShowRoom";
 import { IconsShowroom } from "../core/IconsShowroom";
@@ -17,81 +17,81 @@ import { AdviceShowroom } from "../core/AdviceShowroom";
 import { AccordionShowroom } from "../core/AccordionShowroom";
 import { ListItemsShowroom } from "../core/ListItemsShowroom";
 import { ShowroomParamsList } from "./params";
-import SHOWROOM_ROUTES from "./routes";
+import DESIGN_SYSTEM_ROUTES from "./routes";
 
 const Stack = createStackNavigator<ShowroomParamsList>();
 
 export const ShowroomNavigator = () => (
   <Stack.Navigator
-    initialRouteName={SHOWROOM_ROUTES.MAIN}
+    initialRouteName={DESIGN_SYSTEM_ROUTES.MAIN}
     headerMode="none"
     screenOptions={{ gestureEnabled: isGestureEnabled }}
   >
-    <Stack.Screen name={SHOWROOM_ROUTES.MAIN} component={Showroom} />
+    <Stack.Screen name={DESIGN_SYSTEM_ROUTES.MAIN} component={Showroom} />
     <Stack.Screen
-      name={SHOWROOM_ROUTES.FOUNDATION.COLOR.route}
+      name={DESIGN_SYSTEM_ROUTES.FOUNDATION.COLOR.route}
       component={ColorsShowroom}
     />
     <Stack.Screen
-      name={SHOWROOM_ROUTES.FOUNDATION.TYPOGRAPHY.route}
+      name={DESIGN_SYSTEM_ROUTES.FOUNDATION.TYPOGRAPHY.route}
       component={TypographyShowroom}
     />
     <Stack.Screen
-      name={SHOWROOM_ROUTES.FOUNDATION.ICONS.route}
+      name={DESIGN_SYSTEM_ROUTES.FOUNDATION.ICONS.route}
       component={IconsShowroom}
     />
     <Stack.Screen
-      name={SHOWROOM_ROUTES.FOUNDATION.PICTOGRAMS.route}
+      name={DESIGN_SYSTEM_ROUTES.FOUNDATION.PICTOGRAMS.route}
       component={PictogramsShowroom}
     />
     <Stack.Screen
-      name={SHOWROOM_ROUTES.FOUNDATION.LOGOS.route}
+      name={DESIGN_SYSTEM_ROUTES.FOUNDATION.LOGOS.route}
       component={LogosShowroom}
     />
 
     {/* COMPONENTS */}
     <Stack.Screen
-      name={SHOWROOM_ROUTES.COMPONENTS.BUTTONS.route}
+      name={DESIGN_SYSTEM_ROUTES.COMPONENTS.BUTTONS.route}
       component={ButtonsShowroom}
     />
 
     <Stack.Screen
-      name={SHOWROOM_ROUTES.COMPONENTS.SELECTION.route}
+      name={DESIGN_SYSTEM_ROUTES.COMPONENTS.SELECTION.route}
       component={SelectionShowroom}
     />
 
     <Stack.Screen
-      name={SHOWROOM_ROUTES.COMPONENTS.TEXT_FIELDS.route}
+      name={DESIGN_SYSTEM_ROUTES.COMPONENTS.TEXT_FIELDS.route}
       component={TextFieldsShowroom}
     />
 
     <Stack.Screen
-      name={SHOWROOM_ROUTES.COMPONENTS.LIST_ITEMS.route}
+      name={DESIGN_SYSTEM_ROUTES.COMPONENTS.LIST_ITEMS.route}
       component={ListItemsShowroom}
     />
 
     <Stack.Screen
-      name={SHOWROOM_ROUTES.COMPONENTS.TOASTS.route}
+      name={DESIGN_SYSTEM_ROUTES.COMPONENTS.TOASTS.route}
       component={ToastNotificationsShowroom}
     />
 
     <Stack.Screen
-      name={SHOWROOM_ROUTES.COMPONENTS.ACCORDION.route}
+      name={DESIGN_SYSTEM_ROUTES.COMPONENTS.ACCORDION.route}
       component={AccordionShowroom}
     />
 
     <Stack.Screen
-      name={SHOWROOM_ROUTES.COMPONENTS.ADVICE.route}
+      name={DESIGN_SYSTEM_ROUTES.COMPONENTS.ADVICE.route}
       component={AdviceShowroom}
     />
 
     {/* LEGACY */}
     <Stack.Screen
-      name={SHOWROOM_ROUTES.LEGACY.PICTOGRAMS.route}
+      name={DESIGN_SYSTEM_ROUTES.LEGACY.PICTOGRAMS.route}
       component={LegacyPictogramsShowroom}
     />
     <Stack.Screen
-      name={SHOWROOM_ROUTES.LEGACY.ILLUSTRATIONS.route}
+      name={DESIGN_SYSTEM_ROUTES.LEGACY.ILLUSTRATIONS.route}
       component={LegacyIllustrationsShowroom}
     />
   </Stack.Navigator>

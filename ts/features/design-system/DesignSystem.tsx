@@ -11,10 +11,13 @@ import {
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import { H1 } from "../../components/core/typography/H1";
 import { LabelSmall } from "../../components/core/typography/LabelSmall";
-import SHOWROOM_ROUTES from "./navigation/routes";
+import DESIGN_SYSTEM_ROUTES from "./navigation/routes";
 import { ShowroomParamsList } from "./navigation/params";
 
-type Props = IOStackNavigationRouteProps<ShowroomParamsList, "SHOWROOM_MAIN">;
+type Props = IOStackNavigationRouteProps<
+  ShowroomParamsList,
+  "DESIGN_SYSTEM_MAIN"
+>;
 
 type RoutesProps = Array<{
   title: string;
@@ -23,12 +26,14 @@ type RoutesProps = Array<{
 }>;
 
 const DATA_ROUTES_FOUNDATION: RoutesProps = Object.values(
-  SHOWROOM_ROUTES.FOUNDATION
+  DESIGN_SYSTEM_ROUTES.FOUNDATION
 );
 const DATA_ROUTES_COMPONENTS: RoutesProps = Object.values(
-  SHOWROOM_ROUTES.COMPONENTS
+  DESIGN_SYSTEM_ROUTES.COMPONENTS
 );
-const DATA_ROUTES_LEGACY: RoutesProps = Object.values(SHOWROOM_ROUTES.LEGACY);
+const DATA_ROUTES_LEGACY: RoutesProps = Object.values(
+  DESIGN_SYSTEM_ROUTES.LEGACY
+);
 
 const DESIGN_SYSTEM_SECTION_DATA = [
   {
