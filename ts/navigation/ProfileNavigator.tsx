@@ -25,7 +25,7 @@ import ServicesPreferenceScreen from "../screens/profile/ServicesPreferenceScree
 import ShareDataScreen from "../screens/profile/ShareDataScreen";
 import WebPlayground from "../screens/profile/WebPlayground";
 import { isGestureEnabled } from "../utils/navigation";
-import { ShowroomNavigator } from "../features/design-system/navigation/navigator";
+import { DesignSystemNavigator } from "../features/design-system/navigation/navigator";
 import { ProfileParamsList } from "./params/ProfileParamsList";
 import ROUTES from "./routes";
 
@@ -89,7 +89,10 @@ const ProfileStackNavigator = () => (
       name={ROUTES.MARKDOWN_PLAYGROUND}
       component={MarkdownPlayground}
     />
-    <Stack.Screen name={ROUTES.SHOWROOM} component={ShowroomNavigator} />
+    <Stack.Screen
+      name={ROUTES.DESIGN_SYSTEM}
+      component={DesignSystemNavigator}
+    />
     <Stack.Screen name={ROUTES.WEB_PLAYGROUND} component={WebPlayground} />
     <Stack.Screen
       name={ROUTES.CGN_LANDING_PLAYGROUND}

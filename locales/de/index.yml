@@ -278,7 +278,7 @@ profile:
     appVersion: App-Version
     backendVersion: Backend-Version
     debugMode: Debug-Modus
-    showroom: Design System
+    designSystem: Design System
   data:
     title: Ihre Daten
     subtitle: "Die von IO benutzten anagrafischen und Kontaktdaten einsehen"

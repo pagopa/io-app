@@ -12,10 +12,10 @@ import ListItemComponent from "../../components/screens/ListItemComponent";
 import { H1 } from "../../components/core/typography/H1";
 import { LabelSmall } from "../../components/core/typography/LabelSmall";
 import DESIGN_SYSTEM_ROUTES from "./navigation/routes";
-import { ShowroomParamsList } from "./navigation/params";
+import { DesignSystemParamsList } from "./navigation/params";
 
 type Props = IOStackNavigationRouteProps<
-  ShowroomParamsList,
+  DesignSystemParamsList,
   "DESIGN_SYSTEM_MAIN"
 >;
 
@@ -52,10 +52,10 @@ const DESIGN_SYSTEM_SECTION_DATA = [
   }
 ];
 
-export const Showroom = (props: Props) => (
+export const DesignSystem = (props: Props) => (
   <BaseScreenComponent
     goBack={true}
-    headerTitle={I18n.t("profile.main.showroom")}
+    headerTitle={I18n.t("profile.main.designSystem")}
   >
     <SafeAreaView style={IOStyles.flex}>
       <SectionList

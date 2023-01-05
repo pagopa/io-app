@@ -1,7 +1,7 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
 import { isGestureEnabled } from "../../../utils/navigation";
-import { Showroom } from "../DesignSystem";
+import { DesignSystem } from "../DesignSystem";
 import { ColorsShowroom } from "../core/ColorsShowroom";
 import { TypographyShowroom } from "../core/TypographyShowRoom";
 import { IconsShowroom } from "../core/IconsShowroom";
@@ -16,18 +16,18 @@ import { SelectionShowroom } from "../core/SelectionShowroom";
 import { AdviceShowroom } from "../core/AdviceShowroom";
 import { AccordionShowroom } from "../core/AccordionShowroom";
 import { ListItemsShowroom } from "../core/ListItemsShowroom";
-import { ShowroomParamsList } from "./params";
+import { DesignSystemParamsList } from "./params";
 import DESIGN_SYSTEM_ROUTES from "./routes";
 
-const Stack = createStackNavigator<ShowroomParamsList>();
+const Stack = createStackNavigator<DesignSystemParamsList>();
 
-export const ShowroomNavigator = () => (
+export const DesignSystemNavigator = () => (
   <Stack.Navigator
     initialRouteName={DESIGN_SYSTEM_ROUTES.MAIN}
     headerMode="none"
     screenOptions={{ gestureEnabled: isGestureEnabled }}
   >
-    <Stack.Screen name={DESIGN_SYSTEM_ROUTES.MAIN} component={Showroom} />
+    <Stack.Screen name={DESIGN_SYSTEM_ROUTES.MAIN} component={DesignSystem} />
     <Stack.Screen
       name={DESIGN_SYSTEM_ROUTES.FOUNDATION.COLOR.route}
       component={ColorsShowroom}

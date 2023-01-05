@@ -5,7 +5,7 @@ type DesignSystemRoute = {
   title: string;
 };
 
-export type ShowroomParamsList = {
+export type DesignSystemParamsList = {
   [DESIGN_SYSTEM_ROUTES.MAIN]: undefined;
   [DESIGN_SYSTEM_ROUTES.FOUNDATION.COLOR.route]: DesignSystemRoute;
   [DESIGN_SYSTEM_ROUTES.FOUNDATION.TYPOGRAPHY.route]: DesignSystemRoute;
