@@ -1523,6 +1523,8 @@ wallet:
     GENERIC_ERROR: An unexpected error has occurred
     GENERIC_ERROR_SUBTITLE: You can try again, or contact us to get support.
     DUPLICATED: This notice has been already paid!
+    NOT_FOUND: We can't find the notice
+    NOT_FOUND_SUBTITLE: "The notice may have already been paid.\nFor assistance, contact the Credit Institution that issued it."
     INVALID_AMOUNT: The amount for this notice is incorrect, if you inserted the amount manually, please check that is correct and try again.
     PAYMENT_EXPIRED: This notice is expired and cannot be paid anymore.
     PAYMENT_UNAVAILABLE: The payment for this notice cannot be started at this time, please retry later.
