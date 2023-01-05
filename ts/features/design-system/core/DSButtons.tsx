@@ -18,7 +18,7 @@ import IconFont from "../../../components/ui/IconFont";
 import { ComponentViewerBox } from "../components/ComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
-export const ButtonsShowroom = () => (
+export const DSButtons = () => (
   <DesignSystemScreen title={"Buttons"}>
     {/* The title should be dynamic, got from the route object */}
     <ComponentViewerBox name="ButtonExtendedOutline (using Pressable API)">

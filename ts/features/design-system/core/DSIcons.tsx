@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export const IconsShowroom = () => (
+export const DSIcons = () => (
   <DesignSystemScreen title={"Icons"}>
     <View style={styles.itemsWrapper}>
       {Object.entries(IOIcons).map(([iconItemName]) => (

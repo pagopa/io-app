@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export const LegacyPictogramsShowroom = () => (
+export const DSLegacyPictograms = () => (
   <DesignSystemScreen title={"Legacy Pictograms"}>
     <View style={styles.itemsWrapper}>
       <AssetViewerBox

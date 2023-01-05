@@ -16,7 +16,7 @@ import {
 } from "../../../utils/input";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
-export const TextFieldsShowroom = () => {
+export const DSTextFields = () => {
   /*
   ALL THE FOLLOWING STATES are declared for
   demo purposes in the Design System's section
@@ -194,8 +194,7 @@ export const TextFieldsShowroom = () => {
           importantForAccessibility="no-hide-descendants"
         >
           <LabelSmall weight="Regular" color="red">
-            When there are two lines, this custom description breaks everything
-            ¯\_(ツ)_/¯
+            With two lines, this custom description breaks everything ¯\_(ツ)_/¯
           </LabelSmall>
         </View>
       </View>

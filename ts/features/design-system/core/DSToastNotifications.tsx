@@ -6,7 +6,7 @@ import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { showToast } from "../../../utils/showToast";
 import { H2 } from "../../../components/core/typography/H2";
 
-export const ToastNotificationsShowroom = () => (
+export const DSToastNotifications = () => (
   <DesignSystemScreen title={"Toast Notifications (NativeBase)"}>
     <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
       Type

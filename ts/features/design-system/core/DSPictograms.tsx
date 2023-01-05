@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export const PictogramsShowroom = () => (
+export const DSPictograms = () => (
   <DesignSystemScreen title={"Pictograms"}>
     <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
       Pictograms

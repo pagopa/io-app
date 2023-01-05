@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
 
 const sectionTitleMargin = 16;
 
-export const TypographyShowroom = () => (
+export const DSTypography = () => (
   <DesignSystemScreen title={"Typography"}>
     <H2
       color={"bluegrey"}

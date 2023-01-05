@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export const LogosShowroom = () => (
+export const DSLogos = () => (
   <DesignSystemScreen title={"Logos"}>
     <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 12 }}>
       Payment Networks (Small)

@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export const ColorsShowroom = () => (
+export const DSColors = () => (
   <DesignSystemScreen title={"Colors"}>
     <H2
       color={"bluegrey"}

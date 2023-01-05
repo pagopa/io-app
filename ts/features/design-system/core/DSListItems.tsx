@@ -25,7 +25,7 @@ import { TimelineTransactionCard } from "../../idpay/initiative/details/componen
 import { OperationTypeEnum } from "../../../../definitions/idpay/timeline/TransactionOperationDTO";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
-export const ListItemsShowroom = () => (
+export const DSListItems = () => (
   <DesignSystemScreen title="List Items">
     <H2
       color={"bluegrey"}

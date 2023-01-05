@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export const AdviceShowroom = () => {
+export const DSAdvice = () => {
   const viewRef = React.createRef<View>();
 
   return (

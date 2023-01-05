@@ -2,20 +2,20 @@ import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
 import { isGestureEnabled } from "../../../utils/navigation";
 import { DesignSystem } from "../DesignSystem";
-import { ColorsShowroom } from "../core/ColorsShowroom";
-import { TypographyShowroom } from "../core/TypographyShowRoom";
-import { IconsShowroom } from "../core/IconsShowroom";
-import { ButtonsShowroom } from "../core/ButtonsShowroom";
-import { TextFieldsShowroom } from "../core/TextFieldsShowroom";
-import { LegacyPictogramsShowroom } from "../core/LegacyPictogramsShowroom";
-import { LegacyIllustrationsShowroom } from "../core/LegacyIllustrationsShowroom";
-import { PictogramsShowroom } from "../core/PictogramsShowroom";
-import { LogosShowroom } from "../core/LogosShowroom";
-import { ToastNotificationsShowroom } from "../core/ToastNotificationsShowroom";
-import { SelectionShowroom } from "../core/SelectionShowroom";
-import { AdviceShowroom } from "../core/AdviceShowroom";
-import { AccordionShowroom } from "../core/AccordionShowroom";
-import { ListItemsShowroom } from "../core/ListItemsShowroom";
+import { DSColors } from "../core/DSColors";
+import { DSTypography } from "../core/DSTypography";
+import { DSIcons } from "../core/DSIcons";
+import { DSButtons } from "../core/DSButtons";
+import { DSTextFields } from "../core/DSTextFields";
+import { DSLegacyPictograms } from "../core/DSLegacyPictograms";
+import { DSLegacyIllustrations } from "../core/DSLegacyIllustrations";
+import { DSPictograms } from "../core/DSPictograms";
+import { DSLogos } from "../core/DSLogos";
+import { DSToastNotifications } from "../core/DSToastNotifications";
+import { DSSelection } from "../core/DSSelection";
+import { DSAdvice } from "../core/DSAdvice";
+import { DSAccordion } from "../core/DSAccordion";
+import { DSListItems } from "../core/DSListItems";
 import { DesignSystemParamsList } from "./params";
 import DESIGN_SYSTEM_ROUTES from "./routes";
 
@@ -30,69 +30,69 @@ export const DesignSystemNavigator = () => (
     <Stack.Screen name={DESIGN_SYSTEM_ROUTES.MAIN} component={DesignSystem} />
     <Stack.Screen
       name={DESIGN_SYSTEM_ROUTES.FOUNDATION.COLOR.route}
-      component={ColorsShowroom}
+      component={DSColors}
     />
     <Stack.Screen
       name={DESIGN_SYSTEM_ROUTES.FOUNDATION.TYPOGRAPHY.route}
-      component={TypographyShowroom}
+      component={DSTypography}
     />
     <Stack.Screen
       name={DESIGN_SYSTEM_ROUTES.FOUNDATION.ICONS.route}
-      component={IconsShowroom}
+      component={DSIcons}
     />
     <Stack.Screen
       name={DESIGN_SYSTEM_ROUTES.FOUNDATION.PICTOGRAMS.route}
-      component={PictogramsShowroom}
+      component={DSPictograms}
     />
     <Stack.Screen
       name={DESIGN_SYSTEM_ROUTES.FOUNDATION.LOGOS.route}
-      component={LogosShowroom}
+      component={DSLogos}
     />
 
     {/* COMPONENTS */}
     <Stack.Screen
       name={DESIGN_SYSTEM_ROUTES.COMPONENTS.BUTTONS.route}
-      component={ButtonsShowroom}
+      component={DSButtons}
     />
 
     <Stack.Screen
       name={DESIGN_SYSTEM_ROUTES.COMPONENTS.SELECTION.route}
-      component={SelectionShowroom}
+      component={DSSelection}
     />
 
     <Stack.Screen
       name={DESIGN_SYSTEM_ROUTES.COMPONENTS.TEXT_FIELDS.route}
-      component={TextFieldsShowroom}
+      component={DSTextFields}
     />
 
     <Stack.Screen
       name={DESIGN_SYSTEM_ROUTES.COMPONENTS.LIST_ITEMS.route}
-      component={ListItemsShowroom}
+      component={DSListItems}
     />
 
     <Stack.Screen
       name={DESIGN_SYSTEM_ROUTES.COMPONENTS.TOASTS.route}
-      component={ToastNotificationsShowroom}
+      component={DSToastNotifications}
     />
 
     <Stack.Screen
       name={DESIGN_SYSTEM_ROUTES.COMPONENTS.ACCORDION.route}
-      component={AccordionShowroom}
+      component={DSAccordion}
     />
 
     <Stack.Screen
       name={DESIGN_SYSTEM_ROUTES.COMPONENTS.ADVICE.route}
-      component={AdviceShowroom}
+      component={DSAdvice}
     />
 
     {/* LEGACY */}
     <Stack.Screen
       name={DESIGN_SYSTEM_ROUTES.LEGACY.PICTOGRAMS.route}
-      component={LegacyPictogramsShowroom}
+      component={DSLegacyPictograms}
     />
     <Stack.Screen
       name={DESIGN_SYSTEM_ROUTES.LEGACY.ILLUSTRATIONS.route}
-      component={LegacyIllustrationsShowroom}
+      component={DSLegacyIllustrations}
     />
   </Stack.Navigator>
 );

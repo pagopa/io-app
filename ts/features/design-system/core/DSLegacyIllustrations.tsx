@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export const LegacyIllustrationsShowroom = () => (
+export const DSLegacyIllustrations = () => (
   <DesignSystemScreen title={"Legacy Illustrations"}>
     <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
       Onboarding

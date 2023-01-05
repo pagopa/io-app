@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export const SelectionShowroom = () => (
+export const DSSelection = () => (
   <DesignSystemScreen title={"Selection"}>
     <Label>{"<CheckBox />"}</Label>
     <View style={styles.content}>

@@ -13,7 +13,7 @@ import { IOColors } from "../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
-export const AccordionShowroom = () => (
+export const DSAccordion = () => (
   <DesignSystemScreen title={"Accordion"}>
     <Label>{"<IOAccordion />"}</Label>
     <View style={[IOStyles.flex, { width: "100%" }]}>
