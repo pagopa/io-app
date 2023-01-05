@@ -283,8 +283,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
                   actions: "enrollInstrumentSuccess"
                 },
                 onError: {
-                  target: "DISPLAYING_INSTRUMENTS",
-                  actions: "enrollInstrumentFailure"
+                  target: "DISPLAYING_INSTRUMENTS"
                 }
               }
             },
@@ -298,8 +297,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
                   actions: "deleteInstrumentSuccess"
                 },
                 onError: {
-                  target: "DISPLAYING_INSTRUMENTS",
-                  actions: "deleteInstrumentFailure"
+                  target: "DISPLAYING_INSTRUMENTS"
                 }
               }
             },
