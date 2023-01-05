@@ -7,9 +7,14 @@ type E_START_CONFIGURATION = {
   mode: ConfigurationMode;
 };
 
-type E_ADD_INSTRUMENT = {
-  type: "ADD_INSTRUMENT";
-  walletId: string;
+type E_ENROLL_INSTRUMENT = {
+  type: "ENROLL_INSTRUMENT";
+  instrumentId: string;
+};
+
+type E_DELETE_INSTRUMENT = {
+  type: "DELETE_INSTRUMENT";
+  instrumentId: string;
 };
 
 type E_NEW_IBAN_ONBOARDING = {
@@ -47,7 +52,8 @@ type E_QUIT = {
 
 export type Events =
   | E_START_CONFIGURATION
-  | E_ADD_INSTRUMENT
+  | E_ENROLL_INSTRUMENT
+  | E_DELETE_INSTRUMENT
   | E_NEW_IBAN_ONBOARDING
   | E_CONFIRM_IBAN
   | E_ENROLL_IBAN

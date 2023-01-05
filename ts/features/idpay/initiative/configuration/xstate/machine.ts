@@ -10,6 +10,7 @@ import { InstrumentDTO } from "../../../../../../definitions/idpay/wallet/Instru
 import { Wallet } from "../../../../../types/pagopa";
 import {
   LOADING_TAG,
+  UPSERTING_TAG,
   WAITING_USER_INPUT_TAG
 } from "../../../../../utils/xstate";
 import { ConfigurationMode, Context, INITIAL_CONTEXT } from "./context";
@@ -31,7 +32,10 @@ type Services = {
       idPayInstruments: ReadonlyArray<InstrumentDTO>;
     };
   };
-  addInstrument: {
+  enrollInstrument: {
+    data: ReadonlyArray<InstrumentDTO>;
+  };
+  deleteInstrument: {
     data: ReadonlyArray<InstrumentDTO>;
   };
 };
@@ -247,8 +251,12 @@ const createIDPayInitiativeConfigurationMachine = () =>
             DISPLAYING_INSTRUMENTS: {
               tags: [WAITING_USER_INPUT_TAG],
               on: {
-                ADD_INSTRUMENT: {
-                  target: "ADDING_INSTRUMENT",
+                ENROLL_INSTRUMENT: {
+                  target: "ENROLLING_INSTRUMENT",
+                  actions: "selectInstrument"
+                },
+                DELETE_INSTRUMENT: {
+                  target: "DELETING_INSTRUMENT",
                   actions: "selectInstrument"
                 },
                 BACK: [
@@ -265,14 +273,25 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 }
               }
             },
-            ADDING_INSTRUMENT: {
-              tags: [LOADING_TAG],
+            ENROLLING_INSTRUMENT: {
+              tags: [UPSERTING_TAG],
               invoke: {
-                src: "addInstrument",
-                id: "addInstrument",
+                src: "enrollInstrument",
+                id: "enrollInstrument",
                 onDone: {
                   target: "DISPLAYING_INSTRUMENTS",
-                  actions: "addInstrumentSuccess"
+                  actions: "enrollInstrumentSuccess"
+                }
+              }
+            },
+            DELETING_INSTRUMENT: {
+              tags: [UPSERTING_TAG],
+              invoke: {
+                src: "deleteInstrument",
+                id: "deleteInstrument",
+                onDone: {
+                  target: "DISPLAYING_INSTRUMENTS",
+                  actions: "deleteInstrumentSuccess"
                 }
               }
             },
@@ -338,9 +357,13 @@ const createIDPayInitiativeConfigurationMachine = () =>
           idPayInstruments: p.some(event.data.idPayInstruments)
         })),
         selectInstrument: assign((_, event) => ({
-          selectedInstrumentId: event.walletId
+          selectedInstrumentId: event.instrumentId
         })),
-        addInstrumentSuccess: assign((_, event) => ({
+        enrollInstrumentSuccess: assign((_, event) => ({
+          idPayInstruments: p.some(event.data),
+          selectedInstrumentId: undefined
+        })),
+        deleteInstrumentSuccess: assign((_, event) => ({
           idPayInstruments: p.some(event.data),
           selectedInstrumentId: undefined
         })),
