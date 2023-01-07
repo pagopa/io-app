@@ -1016,7 +1016,7 @@ wallet:
     info2: "In dieser Liste findest du alle Dienstleister,"
     info2Bold: "die mit deiner Zahlungsmethode kompatibel sind, auch wenn du nicht deren Kunde bist."
     provider: "Dienstleister"
-    maxFee: "Transaktionsgebühr (€)"
+    maxFee: "Transaktionsgebühr"
     loadingPsps: "Dienstleister werden geladen..."
     onUpdateWalletPspFailure: "Vorgang ist fehlgeschlagen, bitte versuche es erneut"
     contextualHelpTitle: "Dienstleister auswählen"
