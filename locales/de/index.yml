@@ -965,62 +965,109 @@ wallet:
     successful: "Zahlungsmethode von deinem Konto entfernt"
     failed: "Die Zahlungsmethode konnte nicht von deinem Konto entfernt werden"
   newPaymentMethod:
-    add: hinzufügen
-    refresh: Aktualisieren
-    addButton: Eine neue Zahlungsmethode hinzufügen
-    addDescription: Fügen Sie eine Zahlungsmethode hinzu, um in Sekundenschnelle aus der IO-App zu bezahlen, oder fordern Sie die Aktivierung einer Bonus- oder Rabattkarte an.
-    walletAlert: "Sie verfügen über verschiedene Zahlungsmethoden, aber es wird noch keine von der IO-App unterstützt"
-    successful: Die Karte wurde erfolgreich hinzugefügt!
-    failed: Die Karte konnte nicht hinzugefügt werden
-    failedCardAlreadyExists: Die Karte, die Sie hinzufügen haben, existiert bereits
-    contextualHelpTitle: Wie man eine Zahlungsmethode hinzufügt
+    add: "Hinzufügen"
+    show: "Anzeigen"
+    refresh: "Aktualisieren"
+    addButton: "Eine Zahlungsmethode hinzufügen"
+    addDescription: "Füge eine Zahlungsmethode hinzu, um in Sekundenschnelle in IO zu bezahlen oder fordere die Aktivierung einer Bonus- oder Rabattkarte an."
+    walletAlert: "In deinem Konto sind Zahlungsmethoden registriert, aber keine davon ist mit IO kompatibel."
+    successful: "Die Karte wurde erfolgreich hinzugefügt!"
+    failed: "Die Karte konnte nicht hinzugefügt werden"
+    failedCardAlreadyExists: "Die Karte ist bereits in deinem Konto"
+    contextualHelpTitle: "Hinzufügen einer Zahlungsmethode"
     abort:
-      title: Möchten Sie das Hinzufügen einer neuen Zahlungsmethode abbrechen?
-      confirm: Vorgang abbrechen
-      cancel: Setzen Sie den Vorgang fort
-      success: Die Eingabe der Zahlungsmethode wurde erfolgreich abgebrochen
+      title: "Möchtest du das Hinzufügen einer neuen Zahlungsmethode abbrechen?"
+      confirm: "Vorgang abbrechen"
+      cancel: "Vorgang fortsetzen"
+      success: "Die Eingabe der Zahlungsmethode wurde erfolgreich abgebrochen"
   textMsg:
-    title: Text-Bestätigungscode
-    header: Bestätigungscode
-    newCode: Neuen Code anfordern
-    info: Geben Sie den Code ein, welcher per SMS an Ihr Mobiltelefon gesendet wurde
+    title: "Bestätigungscode"
+    header: "SMS-Bestätigungscode"
+    newCode: "Neuen Code anfordern"
+    info: "Gib den Code ein, den wir per SMS an deine Telefonnummer gesendet haben"
+  transactionDetails: "Transaktionsdetails"
+  transactionFullReason: "Vollständiger Grund"
   saveCard:
-    contextualHelpTitle: Eine Karte in IO speichern
-    header: Karte speichern
-    title: Möchten Sie diese Karte speichern?
-    infoTitle: Die Karte als bevorzugte Zahlungsmethode festlegen
-    info: Diese Zahlungsmethode wird automatisch für die nächste Zahlung vorgeschlagen
-    notice: Zur Verifizierung der Karte wird eine Transaktion von wenigen Cent auf Ihrer Karte abgebucht.
-    loadingAlert: Ihre Kartendaten werden überprüft...
+    contextualHelpTitle: "Eine Karte in IO speichern"
+    header: "Karte speichern"
+    title: "Ist alles richtig?"
+    subtitle: "Wenn du die Karte zu deinem Konto hinzufügst, kannst du In-App-Zahlungen vornehmen und an Initiativen teilnehmen, die auf IO verfügbar sind."
+    infoTitle: "Als bevorzugte Zahlungsmethode festlegen"
+    info: "Diese Zahlungsmethode wird automatisch für die nächste Zahlung in IO vorgeschlagen"
+    notice: "Um deine Karte zu überprüfen, behalten wir vorübergehend 0,02 € ein. Keine Sorge: Wir werden den betrag so schnell wie möglich zurückzahlen."
+    temporaryError: "Beim Speichern dieser Karte ist ein Fehler aufgetreten"
+    temporarySubError: "Wir haben keine Antwort von den Sicherheitssystemen erhalten. Wir entschuldigen uns für die Unannehmlichkeiten."
+    loadWalletsErrorTitle: "Die Systeme benötigen länger als erwartet"
+    loadWalletsErrorBody: "Wir haben keine Antwort von den Sicherheitssystemen erhalten, aber deine Karte könnte hinzugefügt worden sein. Bitte aktualisiere dein Konto, bevor du es erneut versuchst."
+    loadingAlert: "Deine Kartendaten werden überprüft..."
+  challenge3ds:
+    header: "Zahlung autorisieren"
+    description: "Der Kartenaussteller benötigt deine Bestätigung. Wenn du Probleme hast, wende dich bitte an deine Bank."
   saveCardInPayment:
-    header: Mit dieser Karte bezahlen
-    title: Möchten Sie mit dieser Karte bezahlen?
-    save: Bezahlen mit dieser Karte
+    header: "Mit dieser Karte bezahlen"
+    title: "Möchtest du mit dieser Karte bezahlen?"
+    save: "Mit dieser Karte bezahlen"
   thanks: "✓ Danke!"
-  endPayment: Ihre Zahlung wurde erfolgreich abgeschlossen
+  endPayment: "Deine Zahlung wurde erfolgreich abgeschlossen"
   pickPsp:
-    onUpdateWalletPspFailure: Vorgang ist fehlgeschlagen, bitte erneut versuchen
-    contextualHelpTitle: Wählen Sie einen Provider
+    headerTitle: "Dienstleister auswählen"
+    title: "Mit welchem Dienstleister möchtest du bezahlen?"
+    info: "Jeder Dienstleister schlägt eine Transaktionsgebühr vor."
+    info2: "In dieser Liste findest du alle Dienstleister,"
+    info2Bold: "die mit deiner Zahlungsmethode kompatibel sind, auch wenn du nicht deren Kunde bist."
+    provider: "Dienstleister"
+    maxFee: "Transaktionsgebühr (€)"
+    loadingPsps: "Dienstleister werden geladen..."
+    onUpdateWalletPspFailure: "Vorgang ist fehlgeschlagen, bitte versuche es erneut"
+    contextualHelpTitle: "Dienstleister auswählen"
   ConfirmPayment:
-    cancelPayment: Transaktion abbrechen
-    fee: Gebühr
-    identificationMessage: Bestätigen Sie die Transaktion mit Ihrem Freischaltcode
-    transactionSuccess: die Zahlung wurde abgeschlossen!
-    transactionFailure: Es gab einen Fehler mit der Zahlung, bitte versuchen Sie es erneut!
-    transactionTimeout: Die Bestätigung der Zahlung konnte ich nicht abrufen werden!
-    confirmCancelTitle: Möchten Sie diese Zahlung stornieren?
-    confirmCancelPayment: Diese Zahlung abbrechen
-    confirmContinuePayment: Mit der Zahlung fortfahren
-    cancelPaymentSuccess: Die Zahlung für diese Benachrichtigung wurde storniert, Sie können in wenigen Minuten erneut versuchen, sie zu bezahlen
+    header: "Zahlungsübersicht"
+    total: "Gesamt"
+    paymentInformations: "Zahlungsdaten"
+    payWith: "Zahle mit"
+    transactionCosts: "Transaktionsgebühr"
+    edit: "Bearbeiten"
+    providedBy: "Durchgeführt von"
+    pay: "Bezahlen"
+    cancelPayment: "Transaktion abbrechen"
+    fee: "Transaktionsgebühr"
+    identificationMessage: "Bestätige die Transaktion durch Eingabe deines Freischaltcodes"
+    transactionSuccess: "Die Zahlung wurde abgeschlossen!"
+    transactionFailure: "Bei der Zahlung ist ein Fehler aufgetreten, bitte versuche es erneut!"
+    transactionTimeout: "Die Bestätigung der Zahlung konnte nicht abrufen werden!"
+    confirmCancelTitle: "Möchtest du diese Zahlung abbrechen?"
+    confirmCancelPayment: "Diese Zahlung abbrechen"
+    confirmContinuePayment: "Mit der Zahlung fortfahren"
+    cancelPaymentSuccess: "Die Zahlung dieser Zahlungsaufforderung wurde abgebrochen, du kannst sie in wenigen Minuten erneut bezahlen"
+    accessibility:
+      edit: "zum Bearbeiten antippen"
+      transactionCosts: "{{cost}}, Transaktion {{psp}}"
   payWith:
     noWallets:
-      title: Keine Zahlungsmethoden gefunden
-      text: Fügen Sie eine neue Zahlungsmethode hinzu, um mit der Zahlung fortzufahren zu können
-    header: Zahlungsmethode wählen
-    title: Bezahlen mit
-    fetchPspFailure: Vorübergehender Fehler, bitte erneut versuchen
-    noPspsAvailable: Diese Zahlungsmethode kann nicht verwendet werden
-    contextualHelpTitle: Auswahl der Zahlungsmethode
+      title: "Keine Zahlungsmethoden gespeichert"
+      text: "Füge eine Zahlungsmethode hinzu, um mit der Zahlung fortzufahren"
+    header: "Zahlungsmethode auswählen"
+    title: "Bezahle mit"
+    text: "Wähle eine Zahlungsmethode von deinem Konto aus oder füge eine neue hinzu."
+    fetchPspFailure: "Temporärer Fehler, bitte versuche es erneut"
+    noPspsAvailable: "Diese Zahlungsmethode kann nicht verwendet werden"
+    contextualHelpTitle: "Auswahl der Zahlungsmethode"
+    pickPaymentMethod:
+      title: "Mit welcher Zahlungsmethode möchtest du bezahlen?"
+      description: "{{firstElement}} · {{secondElement}}"
+      disabled:
+        title: "Deaktivierte Zahlungsmethoden"
+      notAvailable:
+        title: "Inkompatible Zahlungsmethoden"
+        arriving:
+          bottomSheetTitle: "Wir arbeiten an der Unterstützung dieser Zahlungsmethode"
+          bottomSheetDescription: "Versuche in der Zwischenzeit, mit einer anderen Methode zu bezahlen. Du kannst pagoPA auch in deiner bevorzugten Zahlungs-App oder auf der Website deines Zahlungsempfängers nutzen."
+        unaccepted:
+          bottomSheetTitle: "Warum kann ich nicht mit dieser Karte bezahlen?"
+          bottomSheetDescription: "Das Zahlungsnetzwerk dieser Karte erlaubt es dir an physischen Verkaufsstellen zu bezahlen, aber nicht online. Wenn deine Karte für Online-Zahlungen aktiviert ist, füge sie als “Debit- oder Kreditkarte” zu deinem Konto hinzu."
+        payment_disabled:
+          bottomSheetTitle: "Warum kann ich nicht mit dieser Zahlungsmethode bezahlen?"
+          bottomSheetDescription: "Die Funktion “In-App-Zahlungen” ist möglicherweise deaktiviert. Bevor du versuchst, die Zahlung erneut vorzunehmen, gehe bitte wie folgt vor:\n\n1. gehe zum Bereich “Konto”;\n2. wähle die gewünschte Zahlungsmethode aus;\n3. aktiviere “In-App-Zahlungen”."
   firstTransactionSummary:
     title: Transaktionshinweis
     amount: Transaktionsbetrag
