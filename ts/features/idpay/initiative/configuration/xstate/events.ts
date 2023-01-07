@@ -1,3 +1,4 @@
+import { IbanDTO } from "../../../../../../definitions/idpay/iban/IbanDTO";
 import { ConfigurationMode } from "./context";
 
 type E_START_CONFIGURATION = {
@@ -9,6 +10,23 @@ type E_START_CONFIGURATION = {
 type E_ADD_INSTRUMENT = {
   type: "ADD_INSTRUMENT";
   walletId: string;
+};
+
+type E_NEW_IBAN_ONBOARDING = {
+  type: "NEW_IBAN_ONBOARDING";
+};
+
+type E_CONFIRM_IBAN = {
+  type: "CONFIRM_IBAN";
+  ibanBody: {
+    iban: string;
+    description: string;
+  };
+};
+
+type E_ENROLL_IBAN = {
+  type: "ENROLL_IBAN";
+  iban: IbanDTO;
 };
 
 type E_COMPLETE_CONFIGURATION = {
@@ -30,6 +48,9 @@ type E_QUIT = {
 export type Events =
   | E_START_CONFIGURATION
   | E_ADD_INSTRUMENT
+  | E_NEW_IBAN_ONBOARDING
+  | E_CONFIRM_IBAN
+  | E_ENROLL_IBAN
   | E_COMPLETE_CONFIGURATION
   | E_NEXT
   | E_BACK

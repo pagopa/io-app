@@ -17,7 +17,7 @@ import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import IconFont from "../../../../components/ui/IconFont";
 import I18n from "../../../../i18n";
 import { AVOID_ZOOM_JS, closeInjectedScript } from "../../../../utils/webview";
-import { bonusVacanzeStyle } from "./Styles";
+import { bonusVacanzeStyle } from "../../bonusVacanze/components/Styles";
 
 type Props = {
   onClose: () => void;

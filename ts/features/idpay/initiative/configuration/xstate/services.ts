@@ -1,17 +1,20 @@
 import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { PreferredLanguageEnum } from "../../../../../../definitions/backend/PreferredLanguage";
+import { IbanListDTO } from "../../../../../../definitions/idpay/iban/IbanListDTO";
 import { InitiativeDTO } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
 import { PaymentManagerClient } from "../../../../../api/pagopa";
 import { PaymentManagerToken, Wallet } from "../../../../../types/pagopa";
 import { SessionManager } from "../../../../../utils/SessionManager";
 import { convertWalletV2toWalletV1 } from "../../../../../utils/walletv2";
 import { IDPayWalletClient } from "../../../wallet/api/client";
+import { IDPayIbanClient } from "../iban/api/client";
 import { Context } from "./context";
 
 const createServicesImplementation = (
   walletClient: IDPayWalletClient,
+  ibanClient: IDPayIbanClient,
   paymentManagerClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
   bearerToken: string,
@@ -42,6 +45,95 @@ const createServicesImplementation = (
     );
 
     return data;
+  };
+
+  const loadIbanList = async (_: Context) => {
+    const response = await ibanClient.getIbanList({
+      bearerAuth: bearerToken,
+      "Accept-Language": language
+    });
+
+    const data: Promise<IbanListDTO> = pipe(
+      response,
+      E.fold(
+        _ => Promise.reject("error loading iban list"),
+        _ => {
+          if (_.status !== 200) {
+            return Promise.reject("error loading iban list");
+          }
+
+          // Every time we enroll an iban to an initiative, BE register it as a new iban
+          // so we need to filter the list to avoid duplicates
+          // This workaround will be removed when BE will fix the issue
+          const uniqueIbanList = _.value.ibanList.filter(
+            (iban, index, self) =>
+              index === self.findIndex(t => t.iban === iban.iban)
+          );
+
+          return Promise.resolve({ ibanList: uniqueIbanList });
+        }
+      )
+    );
+
+    return data;
+  };
+
+  const confirmIban = async (context: Context) => {
+    if (context.initiativeId === undefined) {
+      return Promise.reject("initiativeId is undefined");
+    }
+    try {
+      const res = await walletClient.enrollIban({
+        "Accept-Language": language,
+        bearerAuth: bearerToken,
+        initiativeId: context.initiativeId,
+        body: context.ibanBody
+      });
+      return pipe(
+        res,
+        E.fold(
+          _ => Promise.reject("error confirming iban"),
+          response => {
+            if (response.status !== 200) {
+              return Promise.reject("error confirming iban");
+            }
+            return Promise.resolve();
+          }
+        )
+      );
+    } catch (e) {
+      return Promise.reject("error calling backend");
+    }
+  };
+
+  const enrollIban = async (context: Context) => {
+    if (context.initiativeId === undefined) {
+      return Promise.reject("initiativeId is undefined");
+    }
+
+    if (context.selectedIban === undefined) {
+      return Promise.reject("selectedIban is undefined");
+    }
+
+    const response = await walletClient.enrollIban({
+      initiativeId: context.initiativeId,
+      body: {
+        iban: context.selectedIban.iban,
+        description: context.selectedIban.description
+      },
+      bearerAuth: bearerToken,
+      "Accept-Language": language
+    });
+
+    if (E.isLeft(response)) {
+      return Promise.reject("error enrolling iban");
+    }
+
+    if (response.right.status !== 200) {
+      return Promise.reject("error enrolling iban");
+    }
+
+    return Promise.resolve(undefined);
   };
 
   const loadPagoPAInstruments = async () => {
@@ -134,7 +226,14 @@ const createServicesImplementation = (
     return loadIDPayInstruments(context.initiativeId);
   };
 
-  return { loadInitiative, loadInstruments, addInstrument };
+  return {
+    loadInitiative,
+    loadIbanList,
+    enrollIban,
+    confirmIban,
+    loadInstruments,
+    addInstrument
+  };
 };
 
 export { createServicesImplementation };
