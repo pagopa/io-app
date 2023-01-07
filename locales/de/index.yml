@@ -1103,8 +1103,6 @@ wallet:
     contextualHelpTitle: Mitteilungsdaten manuell einfügen
   errorTransaction:
     submitBugText: Wenn Sie das Problem nicht lösen können, informieren Sie uns bitte über das Käfer-Symbol oben rechts. Danke!
-  transactionDetails: Transaktionsdetails
-  transactionFullReason: Vollständiger Grund
   total: Gesamtbetrag
   amount: Betrag €
   payAmount: Zu zahlender Betrag
