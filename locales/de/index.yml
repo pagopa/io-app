@@ -672,7 +672,7 @@ payment:
       outcomeCode: "Ergebniscode"
       onlyDate: "Datum"
       paymentAmount: "Zahlungsbetrag"
-      transactionCosts: "Transaktionskosten"
+      transactionCosts: "Transaktionsgebühr"
       transactionCode: "Identifikationscode der Transaktion"
       help: "Solltest du ein Problem mit dieser Zahlung haben, schreib uns für weitere Informationen und Details"
     list:
@@ -1069,64 +1069,75 @@ wallet:
           bottomSheetTitle: "Warum kann ich nicht mit dieser Zahlungsmethode bezahlen?"
           bottomSheetDescription: "Die Funktion “In-App-Zahlungen” ist möglicherweise deaktiviert. Bevor du versuchst, die Zahlung erneut vorzunehmen, gehe bitte wie folgt vor:\n\n1. gehe zum Bereich “Konto”;\n2. wähle die gewünschte Zahlungsmethode aus;\n3. aktiviere “In-App-Zahlungen”."
   firstTransactionSummary:
-    title: Transaktionshinweis
-    amount: Transaktionsbetrag
-    total: Insgesamt bezahlt
-    expireDate: Gültigkeitsdauer
-    tranche: Tranch
-    info: 'Mehr Infos unter:'
-    tel: 'Tel:'
-    email: 'E-Mail:'
-    PEC: 'PEC:'
-    recipient: Empfänger
-    object: Grund
-    date: Datum und Uhrzeit
-    iuv: IUV Code
-    entityCode: Mehrwertsteuernummer Gläubigerkörperschaft
-    fee: Gebühr
-    idTransaction: Transaktions-Identifikationscode
-    updatedAmount: Aktualisierter Betrag
+    title: "Zahlungsdetails"
+    amount: "Betrag"
+    total: "Insgesamt bezahlt"
+    expireDate: "Zahlungsfrist"
+    tranche: "Rate"
+    info: "Mehr Infos unter:"
+    tel: "Tel:"
+    email: "E-Mail:"
+    PEC: "PEC:"
+    recipient: "Zahlungsempfänger"
+    object: "Zahlungsgrund"
+    date: "Datum und Uhrzeit"
+    iuv: "IUV-Kode"
+    entityCode: "Steuernummer Körperschaft"
+    updatedAmount: "Aktualisierter Betrag"
+    fee: "Transaktionsgebühr"
+    idTransaction: "Identifikationscode der Transaktion"
     amountInfo:
-      message: pagoPa aktualisiert automatisch den Betrag, um sicherzustellen, dass Sie den richtigen Betrag zahlen und um Verzugs- oder Strafzinsen zu vermeiden
+      title: "Siehst du einen anderen Betrag?"
+      message: "pagoPA aktualisiert den Betrag automatisch, um sicherzustellen, dass du genau den Betrag bezahlst, den du schuldest und somit weitere Strafen oder Zinsen vermeidest"
+      cta: "Ok, verstanden"
     loadingMessage:
-      activation: Benachrichtige die Körperschaft, warten Sie ein paar Sekunden...
-      verification: Prüfe den Status und die Höhe Ihrer Zahlungsmitteilung...
-      generic: Schließe die Verifizierungsvorgang Ihrer Zahlungsmitteilung ab, warten Sie ein paar Sekunden...
-      wallet: Prüfe die Zahlungsmethode...
-    contextualHelpTitle: Zusammenfassung der Transaktion
-  insertManually:
-    header: Zahlungsmitteilungsdaten einfügen
-    noticeCode: Zahlungsmitteilungscode
-    entityCode: Steuernummer der Körperschaft
-    amount: Betrag (€)
-    proceed: Mit der Transaktion fortfahren
-    contextualHelpTitle: Mitteilungsdaten manuell einfügen
+      activation: "Wir benachrichtigen die Körperschaft, bitte warte ein paar Sekunden..."
+      verification: "Wir überprüfen deine Zahlungsangaben..."
+      generic: "Deine Zahlungsmitteilung wird überprüft, bitte warten ein paar Sekunden..."
+      wallet: "Deine gespeicherten Zahlungsmethoden werden überprüft..."
+    contextualHelpTitle: "Zusammenfassung der Transaktion"
+  errorDetails:
+      title: "Details zum Fehler"
+      errorCode: "Fehlercode"
+      messageId: "ID der Nachricht"
+      copyToClipboard: "Daten für die Assistenz kopieren"
   errorTransaction:
-    submitBugText: Wenn Sie das Problem nicht lösen können, informieren Sie uns bitte über das Käfer-Symbol oben rechts. Danke!
-  total: Gesamtbetrag
-  amount: Betrag €
-  payAmount: Zu zahlender Betrag
-  transactionFee: Transaktionsgebühr
-  why: Warum?
-  paymentReason: Begründung
-  date: Datum
-  time: Uhrzeit
-  psp: Zahlungsdienstleister
-  receipt: Transaktionsquittung
-  seeReceipt: Siehe Quittung
-  transactions: Transaktionen
-  transaction: Transaktion
-  noTransactions: Es liegen keine Transaktionen vor.
-  noNewTransactions: Es gibt keine neuen Transaktionen.
-  noneTransactions: Es gibt keine Transaktionen
-  noTransactionsInWalletHome: Sie haben noch keine Operation durchgeführt.
-  noTransactionsInTransactionsScreen: Mit dieser Zahlungsmethode haben Sie nie über der IO-App oder pagoPA bezahlt. In dieser Liste sehen Sie nur die Transaktionen, die mit dieser Zahlungsmethode durchgeführt wurden.
-  payNotice: Zahlungsmitteilung bezahlen
-  latestTransactions: Ihre letzten Transaktionen
-  creditDebitCards: Kredit-/Debitkarten
-  addPaymentMethodTitle: Zahlungsmethode hinzufügen
-  continue: Diese Zahlungsmitteilung bezahlen
-  backToPayments: Zurück zu den Zahlungen
+    submitBugText: "Wenn du das Problem nicht lösen kannst, teile uns dies bitte über das Symbol “?” in der oberen rechten Ecke mit. Danke!"
+  insertManually:
+    header: "Zahlungsmitteilungsdaten einfügen"
+    title: "Was möchtest du bezahlen?"
+    info: "Gib die Daten ein, die auf der Zahlungsmitteilung angegeben sind."
+    link: "Wo finde ich die Daten?"
+    noticeCode: "Zahlungsmitteilungskodex"
+    entityCode: "Steuernummer der Körperschaft"
+    amount: "Betrag (€)"
+    proceed: "Mit der Transaktion fortfahren"
+    contextualHelpTitle: "Manuelle Zahlungsdateneingabe"
+  total: "Insgesamt"
+  amount: "Betrag €"
+  payAmount: "Geschuldeter Betrag"
+  transactionFee: "Transaktionsgebühr"
+  why: "Warum?"
+  paymentReason: "Zahlungsgrund"
+  recipient: "Körperschaft"
+  date: "Datum"
+  time: "Uhrzeit"
+  psp: "Zahlungsdienstleister"
+  receipt: "Transaktionsquittung"
+  seeReceipt: "Siehe Quittung"
+  transactions: "Transaktionen"
+  transaction: "Transaktion"
+  noTransactions: "Es liegen keine Transaktionen vor."
+  noNewTransactions: "Es gibt keine neuen Transaktionen."
+  noneTransactions: "Es gibt keine Transaktionen"
+  noTransactionsInWalletHome: "Du hast noch keine Transaktion durchgeführt."
+  noTransactionsInTransactionsScreen: "Du hast mit dieser Zahlungsmethode noch nie über IO oder pagoPA bezahlt. In dieser Liste siehst du nur die Transaktionen, die mit dieser Zahlungsmethode durchgeführt wurden."
+  payNotice: "Zahlungsmitteilung bezahlen"
+  latestTransactions: "Deine Transaktionen"
+  creditDebitCards: "Kredit-/Debitkarten"
+  addPaymentMethodTitle: "Zahlungsmethode hinzufügen"
+  continue: "Weiter zur Zahlung"
+  backToPayments: "Zurück zu den Zahlungen"
   methods:
     comingSoon: eingehend
     newCome: Neu
