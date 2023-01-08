@@ -1224,37 +1224,59 @@ wallet:
       button:
         fieldError: "Um fortzufahren, korrigiere bitte das Feld {{field}}"
         missingFields: "Um fortzufahren, fülle bitte alle Felder aus"
-  acceptedCards: Akzeptierte Karten
-  missingDataCTA: Fehlen einige Daten?
-  chooseMethod: Wählen Sie die gewünschte Zahlungsmethode
+  acceptedCards: "Akzeptierte Karten"
+  missingDataCTA: "Fehlen einige Daten?"
+  openAcceptedCardsPageCTA: "Entdecke die akzeptierten Karten"
+  missingDataText:
+    body: "Wenn du den Sicherheitscode nicht findest, ist deine Karte möglicherweise nicht für Online-Zahlungen freigeschaltet."
+    cta: "Deine Karten suchen"
+  chooseMethod: "Wähle die bevorzugte Zahlungsmethode"
   QRtoPay:
-    chooser: Bild aus der Galerie wählen
-    wrongQrCode: QR-Code nicht gültig. Geben Sie die Daten manuell ein.
-    byCameraTitle: Hinweis QR-Code
-    setManually: Manuell eingeben
+    chooser: "Bild aus der Galerie wählen"
+    wrongQrCode: "QR-Code nicht gültig. Gib die Daten manuell ein."
+    byCameraTitle: "QR-Code scannen"
+    cameraUsageInfo: "Scanne den QR-Code der Zahlungsmitteilung oder gib die Daten (Zahlungsmitteilungskodex und Steuernummer Körperschaft) manuell ein"
+    setManually: "Manuell eingeben"
+    enroll_cta: "Um den QR-Code auf der Zahlungsmitteilung zu scannen, musst du IO zunächst erlauben, die Kamera zu verwenden. Du kannst dies über das Menü “Einstellungen” deines Geräts tun."
+    readStorageDisclosure:
+      title: "Zugriff auf die Galerie zulassen"
+      message: "Du kannst Screenshots und Zahlungsmitteilungen hochladen"
     settingsAlert:
-      title: Es scheint, dass der Zugriff auf die Fotogalerie verweigert wurde
+      title: "Offenbar wurde der Zugang zu der Galerie verweigert"
+      message: "IO benötigt Zugang zu deiner Galerie, um Boni und Zertifikate zu speichern oder Screenshots und Zahlungsmitteilungen hochzuladen"
       buttonText:
-          settings: Berechtigungen aktivieren
-          cancel: Abbrechen
-    contextualHelpTitle: Wie man eine Zahlungsmitteilung bezahlt
+          settings: "Berechtigungen aktivieren"
+          cancel: "Abbrechen"
+    contextualHelpTitle: "Wie man eine Zahlungsmitteilung bezahlen kann"
+  whyAFee:
+    title: "Warum Transaktionsgebühren?"
   errors:
-    DUPLICATED: Dieser Hinweis wurde bereits bezahlt!
-    INVALID_AMOUNT: Der eingegebene Betrag ist nicht korrekt. Wenn Sie den Betrag manuell eingegeben haben, überprüfen Sie bitte, ob er korrekt ist und versuchen Sie es erneut.
-    ONGOING: Eine weiterer Zahlungsversuch für diese Zahlungsmitteilung ist im Gange, eine neuer Zahlungsversuch kann zu diesem Zeitpunkt nicht gestartet werden.
-    PAYMENT_EXPIRED: Diese Zahlungsmitteilung ist bereits ungültig und kann nicht mehr bezahlt werden.
-    PAYMENT_UNAVAILABLE: Ihr Zahlungsversuch für diese Zahlungsmitteilung kann derzeit nicht gestartet werden, bitte versuchen Sie es später erneut.
-    PAYMENT_UNKNOWN: Diese Zahlungsmitteilung wird von der Körperschaft, die sie erstellt hat, nicht anerkannt, die Zahlung kann nicht ausgeführt werden.
-    DOMAIN_UNKNOWN: Diese Zahlungsmitteilung wurde von einer Körperschaft erstellt, die nicht an das pagoPA-Netzwerks angeschlossen ist, die Zahlung kann nicht durchgeführt werden.
-    GENERIC_ERROR: "Uuups, etwas hat nicht wie erwartet funktioniert! Es handelt sich wahrscheinlich um ein temporäres Problem, bitte versuchen Sie es später erneut!"
-    MISSING_PAYMENT_ID: Die Körperschaft, die diese Zahlungsmitteilung erstellt hat, bearbeitet ihn im Moment, bitte versuchen Sie es später erneut!
-    PAYMENT_ONGOING_NOCANCEL: Eine weiterer Zahlungsversuch für diese Zahlungsmitteilung läuft im Moment, bitte versuchen Sie es nach 30 Minuten erneut.
-    PAYMENT_ONGOING_NOCANCEL_TIMEOUT: Wenn Sie bereits 30 Minuten gewartet haben und die Zahlung immer noch gesperrt ist, verwenden Sie die Schaltfläche unten, um uns eine Nachricht zu senden.
-    PAYMENT_ONGOING_CANCELLED: Der vorherige Versuch, diese Zahlugsmitteilung zu bezahlen, wurde abgebrochen. Sie können sie nach {{verbleibendeMinuten}} Minuten erneut versuchen zu bezahlen.
-    PAYMENT_ONGOING_CANCELLED_TIMEOUT: Der Abbruch dieses Zahlungsversuchs wurde vor mehr als 15 Minuten gemacht, aber sie ist immer noch blockiert. Verwenden Sie die Schaltfläche unten, um uns eine Nachricht zu senden.
-    sendReport: Schreiben Sie uns
+    TECHNICAL: "Es gibt ein technisches Problem mit dieser Zahlungsmitteilung"
+    DATA: "Die Angaben in der Zahlungsmitteilung sind falsch"
+    EC: "Die Körperschaft hat Probleme bei der Beantwortung"
+    ONGOING: "Die Zahlung ist bereits im Gange, bitte versuche es in ein paar Minuten erneut."
+    ONGOING_SUBTITLE: "Wenn es zu lange her ist, lasse es uns wissen!"
+    REVOKED: "Die Körperschaft hat diese Zahlungsmitteilung zurückgezogen"
+    EXPIRED: "Die Zahlungsmitteilung ist abgelaufen und kann nicht mehr gezahlt werden"
+    GENERIC_ERROR: "Ein unerwarteter Fehler ist aufgetreten"
+    GENERIC_ERROR_SUBTITLE: "Bitte versuche es erneut oder kontaktiere uns."
+    DUPLICATED: "Dieser Hinweis wurde bereits bezahlt!"
+    INVALID_AMOUNT: "Der in der Zahlungsmitteilung angegebene Betrag ist falsch. Wenn du die Daten manuell eingegeben hast, überprüfe bitte, ob sie korrekt sind und versuchen es erneut."
+    PAYMENT_EXPIRED: "Die Zahlung für diese Zahlungsmitteilung ist nicht mehr möglich, da sie abgelaufen ist."
+    PAYMENT_UNAVAILABLE: "Die Zahlung für diese Zahlungsmitteilung ist zur Zeit nicht möglich. Bitte versuche es später noch einmal."
+    PAYMENT_UNKNOWN: "Diese Zahlungsmitteilung wird von der ausstellenden Körperschaft nicht anerkannt, die Zahlung kann nicht durchgeführt werden."
+    DOMAIN_UNKNOWN: "Dieser Zahlungsmitteilung wurde von einer nicht bei pagoPA akkreditierten Körperschaft ausgestellt, die Zahlung kann nicht durchgeführt werden."
+    MISSING_PAYMENT_ID: "Die Körperschaft, die diese Zahlungsmitteilung ausgestellt hat, hat zur Zeit Probleme mit der Zahlungsabwicklung. Versuche es erneut!"
+    PAYMENT_ONGOING_NOCANCEL: "Eine Zahlung für diese Zahlungsmitteilung ist bereits im Gange, bitte versuche es in 30 Minuten erneut."
+    PAYMENT_ONGOING_NOCANCEL_TIMEOUT: "Wenn du bereits 30 Minuten gewartet hast und die Zahlung immer noch blockiert ist, verwende bitte die Schaltfläche unten, um uns eine Nachricht zu senden."
+    PAYMENT_ONGOING_CANCELLED: "Dein vorheriger Zahlungsversuch wird abgebrochen, du kannst es in {{remainingMinutes}} Minuten erneut versuchen."
+    PAYMENT_ONGOING_CANCELLED_TIMEOUT: "Der Abbruch dieser Zahlung wurde vor mehr als 15 Minuten beantragt, ist aber immer noch blockiert. Bitte benutze die Schaltfläche unten, um uns eine Nachricht zu senden."
+    contactECsubtitle: "Wende dich für weitere Informationen an die Körperschaft."
+    assistanceLabel: "Verwende für die Unterstützung den Code:"
+    sendReport: "Schreib uns"
+    loadingData: "Fehler beim Laden, bitte versuche es erneut."
   walletCardTransaction:
-    contextualHelpTitle: Alle Transaktionen für diese Zahlungsmethode
+    contextualHelpTitle: "Mit dieser Zahlungsmethode durchgeführte Transaktionen"
 saveCard:
   saveCard: Speichern Sie die Karte
   header: Möchten Sie diese Karte speichern?
