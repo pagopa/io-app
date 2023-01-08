@@ -1096,7 +1096,7 @@ wallet:
       generic: "Deine Zahlungsmitteilung wird überprüft, bitte warten ein paar Sekunden..."
       wallet: "Deine gespeicherten Zahlungsmethoden werden überprüft..."
     contextualHelpTitle: "Zusammenfassung der Transaktion"
-  errorDetails:
+    errorDetails:
       title: "Details zum Fehler"
       errorCode: "Fehlercode"
       messageId: "ID der Nachricht"
@@ -1139,34 +1139,91 @@ wallet:
   continue: "Weiter zur Zahlung"
   backToPayments: "Zurück zu den Zahlungen"
   methods:
-    comingSoon: eingehend
-    newCome: Neu
+    comingSoon: "demnächst verfügbar"
+    newCome: "Neu"
+    card:
+      name: "Kredit-, Debit- oder Prepaid-Karten"
+      shortName: "Karte"
+      description: "Die Karte, die du online und in Geschäften benutzt"
+      pagoPaCapability:
+        title: "In-App-Zahlungen"
+        description: "Zahle die Mitteilungen mit pagoPA-Logo"
+        active: "Aktiv"
+        arriving: "demnächst verfügbar"
+        incompatible: "Nicht kompatibel"
+        bottomSheetTitle: "Warum kann ich nicht in der App bezahlen?"
+        bottomSheetBody: "Diese Zahlungsmethode ist nicht für Online-Zahlungen geeignet."
+        bottomSheetCTA: "Entdecke die unterstützten Zahlungsmethoden"
+    bonus:
+      name: "Rabatte, Boni und andere Initiativen"
+      description: "Initiativen von öffentlichen Verwaltungen zur Unterstützung von Ausgaben oder Dienstleistungen im Zusammenhang mit Zahlungen"
+    digital:
+      name: "Apps und digitale Zahlungsmittel"
+      description: "Deine bevorzugten digitalen Tools auf IO"
+    loyalty:
+      name: "Supermarkt-Zahlungskarte"
+      description: "Das Zahlungsnetzwerk, mit dem du deine Einkäufe bezahlst"
+    pagobancomat:
+      name: "PagoBANCOMAT-Karte"
+      description: "Das Zahlungsnetzwerk, mit dem du in Geschäften bezahlst"
     bank:
-      name: BANCOMAT pay
-      maxFee: Maximale Gebühr von 0,50€
+      name: "BANCOMAT Pay"
+      maxFee: "Maximale Gebühr von 0,50€"
+    satispay:
+      name: "Satispay"
+      description: "Die intelligente Zahlungs-App"
+    bancomatPay:
+      name: "BANCOMAT Pay"
+      description: "Bezahlen mit Karte oder verbundenem Kontokorrent"
     postepayApp:
-      name: Postepay
+      name: "Postepay"
+      description: "Deine Postepay-App"
     paypal:
-      name: PayPal
+      name: "PayPal"
+      description: "Bezahlen mit Karte oder verbundenem Kontokorrent"
     bancomat:
-      name: PagoBANCOMAT
-    notImplemented: Demnächst verfügbar
-  addCardTitle: Kartendetails
+      name: "PagoBANCOMAT"
+    cobadge:
+      name: "Internationales Zahlungsnetzwerk"
+    notImplemented: "Demnächst verfügbar"
+  addCardTitle: "Kartendetails"
   dummyCard:
     labels:
       holder:
-        label: Besitzer der Karte
+        label: "Karteninhaber"
         description:
-          base: "Bitte den Besitzer der Karte eingeben"
-          error: "Bitte den Besitzer der Karte richtig eingeben"
-      pan: Kartenummer
-      expirationDate: Fälligkeitsdatum
-      securityCode: Karten-Sicherheitscode
+          base: "Beachte die Reihenfolge auf der Karte"
+          error: "Keine Akzentbuchstaben oder Symbole verwenden"
+      pan: "Kartenummer"
+      expirationDate: "Verfallsdatum"
+      securityCode: "Sicherheitscode"
+      securityCode4D: "CID (4 Ziffern)"
     values:
-      holder: Max Mustermann
-      pan: 0000 0000 0000 0000
-      expirationDate: mm/yy
+      holder: "Max Mustermann"
+      pan: "0000 0000 0000 0000"
+      expirationDate: "mm/yy"
       securityCode: "•••"
+      securityCode4D: "••••"
+    accessibility:
+      holder:
+        base: "Karteninhaber, beachte die Reihenfolge auf der Karte"
+        error: "Karteninhaber, keine Akzentbuchstaben oder Symbole verwenden"
+      pan:
+        base: "Kartenummer"
+        error: "Kartenummer. Bitte gib mindestens {{minLength}} Ziffern ein"
+      expirationDate:
+        base: "Verfallsdatum, zwei Ziffern für den Monat, zwei für das Jahr"
+        error: "Verfallsdatum, zwei Ziffern für den Monat, zwei für das Jahr. Bitte gib ein gültiges Datum ein"
+      securityCode:
+        3D:
+          base: "Sicherheitscode, 3 Ziffern"
+          error: "Sicherheitscode. Bitte gib 3 Ziffern ein"
+        4D:
+          base: "CID, 4 Ziffern"
+          error: "CID. Bitte gib 4 Ziffern ein"
+      button:
+        fieldError: "Um fortzufahren, korrigiere bitte das Feld {{field}}"
+        missingFields: "Um fortzufahren, fülle bitte alle Felder aus"
   acceptedCards: Akzeptierte Karten
   missingDataCTA: Fehlen einige Daten?
   chooseMethod: Wählen Sie die gewünschte Zahlungsmethode
