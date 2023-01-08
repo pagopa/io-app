@@ -22,6 +22,25 @@ const createActionsImplementation = (
     });
   };
 
+  const navigateToIbanLandingScreen = () => {
+    navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
+      screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_LANDING
+    });
+  };
+
+  const navigateToIbanOnboardingScreen = () => {
+    navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
+      screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ONBOARDING
+    });
+  };
+
+  const navigateToIbanEnrollmentScreen = () => {
+    navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
+      screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ENROLLMENT,
+      params: {}
+    });
+  };
+
   const navigateToInstrumentsEnrollmentScreen = () => {
     navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
       screen:
@@ -49,25 +68,16 @@ const createActionsImplementation = (
   const exitConfiguration = () => {
     navigation.pop();
   };
-  const navigateToIbanLandingScreen = () => {
-    navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
-      screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_LANDING
-    });
-  };
-  const navigateToIbanOnboardingScreen = () => {
-    navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
-      screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ONBOARDING
-    });
-  };
 
   return {
     navigateToConfigurationIntro,
+    navigateToIbanLandingScreen,
+    navigateToIbanOnboardingScreen,
+    navigateToIbanEnrollmentScreen,
     navigateToInstrumentsEnrollmentScreen,
     navigateToConfigurationSuccessScreen,
     navigateToInitiativeDetailScreen,
-    exitConfiguration,
-    navigateToIbanLandingScreen,
-    navigateToIbanOnboardingScreen
+    exitConfiguration
   };
 };
 

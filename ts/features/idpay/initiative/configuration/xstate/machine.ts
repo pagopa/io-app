@@ -19,6 +19,12 @@ type Services = {
   loadInitiative: {
     data: InitiativeDTO;
   };
+  loadIbanList: {
+    data: IbanListDTO;
+  };
+  enrollIban: {
+    data: undefined;
+  };
   loadInstruments: {
     data: {
       pagoPAInstruments: ReadonlyArray<Wallet>;
@@ -28,13 +34,10 @@ type Services = {
   addInstrument: {
     data: ReadonlyArray<InstrumentDTO>;
   };
-  loadIbanList: {
-    data: IbanListDTO;
-  };
 };
 
 const createIDPayInitiativeConfigurationMachine = () =>
-  /** @xstate-layout N4IgpgJg5mDOIC5QCUDyqAqBiAigVQEkMBtABgF1FQAHAe1gEsAXB2gOypAA9EBGAFgCc-AHQBmAKykATAA4AbBImzSY3gHYANCACefaQF8D2tJhEB1AIJECAOQDiAfQDKGS8myv3GRwGFUtgBiBPZ4yJYYBAFklEggdIws7Jw8CNLp4vxi6vKSYvK8srI52noIhdIisrzSEnLq0uq8ioJGJugYIgAyqJYAInZOdjYRBABqAKJYEOxgIgxsAG60ANZzADa0AIYQBGzMDFssi2AxnAkHyXGpORIitaSksvzSghK8pPz8pXzP4tK8QSkeSkGrqWQSMRtECmToTMaWLp4UYORzDSKjSZ+ALBULhSIBLBnOIXJIca6IfjqURiYG1YSgyGqH4IRTqEQFYrydRiYQCfLQ2EieGI5GRVHogiYibYoIhMKjQnEXixGj0S7k0CpfgSGl0iQM3hMsQst6iQTyWofOpiIpfQUdYUIpEooa2EaRLH+OV4xW2InSVXxdVklKIbKVfjFOqCIFAgq8FmFdSCKoW2SxyE6rKyB1mEUu8Vuj3jGXe3EKgn+4hiIOk1ia7iU6nifWG40s96iFPZBqCakKIp5zoDZwABS6lgAmoM0bYMGgsLYJgANEgUc4hhthtJZUjiW2kdQ5eRZD5aXSIaSPdl7tnAoqNdTD7q9AYSgBCln9MzYcwWyxrCImw7AQABGWxsF0DCwEwxJqok24UggEgXmU6RyPcpDCNIagQtyArGDCjqWM4zgTB4s4EF+tiyhW+JRLRy4TH0LFEhuJJblcWqUl8raWga-CMrSJqXuUjz7kCjyFM0BRiJIL6keRlGft+dHygxASOMxrF9ESKqboh3FNgg-Cnvx9JCUaIksuoqgiEolrqFI+S8o0L6jhO05UTRjgBB+vTIO+9hLqu651lxjapB8YiiLhzkZjJoJRqagiyCI2HKBIlqvM02UeQQ46TjOqm0f5gXBVgX6+AA0vBwZGVFfAyHF2TKIISUCLISYfPIIgdbUOqfCC8iCIYRFCv0wVojRoVrvV9bGdFVJiOIlryBmx4Zk8iZiXyGV0mZrw8ka43tGYU0+d+VWWLVC2RTuMWtQlHXVMl3V7VSHLKPJry2mNnwvuWBDIAAsldP6zPMSyrHMADG7AAGYMAATgAtuBkH3Y1O4RiIUbOa8cbArwu1lM0jwZTU7wWqhwK8kDOIg+DpVYGAKMo7QKMiNQ6xHIjXNoyICNsMj6OY2w2Marjlr49GRPYSTZNXjU+4GoeR7ZKN0jyIzPphFRtiuMgeCgxM87ONMUOwUccxCsDeKG8bpvmxgzhS6GyGAhoIgaEojl2XI0hJqhvC+-IuSAqoN4vHr9FOwuLsW1bf4iDbTB246DsGxKRuJ2bFvKhFONex17J+-73IyLIwdiRoAj9QNfJiACLcSHHGkJybBdu6+-Rd0nbsp-+MNASBuxsLBKMAK5o2AbBMLAHtITxCBvKmgJCfwNQqAUKV11XIjUtktNqDqAgd47ufOz3zgiJ5xUD7fWBTXON+u8vS2IGl+7b1Jo1SBrimJMUZKjvCtLTOyuRWgTSzkzK+bp34W3voVLyJVEH51dpbaqdUOIIWll7DQfUoG5GvGQg08gQ7AnxrUbkKgXiFFyJfHOGDu5YJQUVby19MHJxwUXQyBDV5R3Ls5Sugca5JljOlfI2VISSGyhtfgzDkBP3YQ-LhrDB6W2XPNPBDVBEmQEKNI+1QNrZGeHyJMDQw6nl4GoWkFojykHbrAsw2cVHcLYcgy6njB7D2hoBOYOwJ5T1nvPOCejFpNTXgaX2DJt5yBJvvcmqF0p2OcnGZo0YCqcPQepX0VYXB4F8L4CYZEsD+FBhOCYGAyzwMrIxT+0SrTEMjlGWM-ZsKiXJk0VaUZARKCjNhMyLjzqdHcX6bSmBtITBYmxSp1Tan5IadESJD0vaPHSg8UmIIAR00oWJcBDkcw1FwooBQUJoRsFoBAOAnBYQCM9qvAAtMrNeogBKgnkjtEEsYXxWBsKiLwHhHkrxMlSFk147hFEJglMyDRYovh6P3XOJZJigq-qZcyzxbTXm3hoCEEgkw11bI8AEp4qS6hgWMp0opXRzjRXU-WmlbAYuiZaTs0hRDZUJkeFM4I7E5LQYbBcqA2U7gBLUfGdijwPBBMUSRfwW5fGkv03UutXGdGRdNai35xXIVqPJI+agxofCKICQQkj+xHwjprR4sUzrEQumRCiRYZpqQmYUnSLF9WrwhWJJolRFACWpEyGQGqaXqLybqsqtgAruGCr6kydl2TZVoVJa8wDPrdgEFlWkpMdSOsmn0HVNEk3RTselDaAguXUnWkeU0Ql8aCF7OCIQ8kcgdzBhDctiAGghwzByJoRQ8IqGKLmTVIh3GqItr2lC+R+obQUECNQIIW5Jl5KIWQbVrz9iBG25RM7e7aqPc4OdyhzRLtGqoCm66D5KCPnIXNLckrUqdeM+pHjNG3w4cK3xt852kxbb7DCoCjyxgjkmEE7JnFOI+E8N4qFD3-vYT479rs525H3LQ8+jinhyBAW8fG287JvByFkN99tP2npEHYJBbtsRVK6DUn1nES5CNQqtCujRryPmEFY68VRnKjXbTXN4lzI2oMfqiT1jEiklLKWetjBjUgAh1A5bK27GjZGVVBoE4hhPCBbWJyEyjJm2Gmd6vomHsgZSyCmfsBpChKBZO0-GbUW5a2HbqMzhSFnMdqdZ5TTyTKNGAy2wEtIszggOSk9TIlwQKFI9kJRRgDBAA */
+  /** @xstate-layout N4IgpgJg5mDOIC5QCUDyqAqBiAigVQEkMBtABgF1FQAHAe1gEsAXB2gOypAA9EAmUgKwCAdAGYA7AICM4gGziZADlG8ANCACeiKbwC+u9WkzCA6gEEiBAHIBxAPoBlDGeTYnLjHYDCqKwDECGzxkMwwCXzJKJBA6RhZ2Th4EXhSxeSkATllFABZFLMV1LQQpRV5hDLkhUl4M0lEMnPl9Q3QMYQAZVDMAEWt7a0tQggA1AFEsCHYwYQY2ADdaAGsZgBtaAEMIAjZmBg2WebBIzli9hOikquEc3kzFB-FxetkMou1cm6rRWXkH0VyLRARnaYxGZg6eGGtjsgzCw3G3l8ASCITCviwJ2iZ3iHEuiFusmEAkUAkq4ly2SkOSy7xKTSJWTJogaOVI8gEQJBwjBEKhYRhcIICLGSP8gWCwwxxCkURo9HOeNASRyP2JpPJlMU1Npmm0UgERLuskyFKkAOUUi5bR54Mh0IGViGYURPnFqKlVkxvDlMQVuMSBKa6rJTy1OtkdMNUmE8iZpEUCZq4lE1uMvPtAsdztGordKMl6K9xFEvpxrCV3CDRJJoYpTW1NMjeoQ0hEcdkpDk2V4-zT7T6DgACh0zABNfqwqwYNBYKxjAAaJAop39FcDCF+MdumRUQhy4jZbxb2VIwhkWXZOTZCaksn7wnzEuQk4IACEzF6pmwZrAmAcZm5J9UVfD8rCxeU4nXfEECeOljVEYRckUKkcn3UgZAfYDglAz9JmmYQ-wA4QgORZ9cPA2VVygi5lT4TtFGEDCSV4HI71IZjxDpA1SRuWQySEaRBGvcQsLIkDBTAzpuj6STPzsDoCCcfCf1mBZljWTZtgAIw2NgOgYP8IL9GjKySKR6gyJiuwef47xQnI6XyIlRFIDJSVVDIBGeUkxPdHC5KsW0+QdWEwIUpTsGM8taKrEpLOsilbNEezZEclt3KsuRaleUQBDyjjOQMYEbWwl9AuCzMKIi5SZTLNdYvMhKOKSuzsjS7jb2JdihFkCRkKK1pjDKijhEHEdx2q3w326ZBZJsOdF2XerTI3KQDXKAQuwKXIAVKbidHEbrO3cp5JEUOQ-ILcqBik8bRwnQK7Gm2b5qwD8vAAaWihqzO0WojsPWQUkEVzDU64NpFchNDXqMkrvIir7smp6XpcN6Pu+qjsV+jdeBNRjmLKNjO04g7ngqX58bkXJvIyBGJNuz9hF6eawrwp9kAAWXZ8CVxx1aYIshpEtsy12vS4odHym5nLqDJ1ryMoGYCpmgtZij3rML6fsFuj4pFlqxZSiXycJu9zTZNt+JyFWbt5x8yO5zXvxmOZFhWYQAGN2AAMwYAAnABbAhdLYXXFTW7zAfWwQ7x+XhJEl-6BByCpnOvFkLNYwaSuG8TVYd5HHrVmrsExiOAyF2oRFY4H+HywRm2KB4azJbUsnNVu9GK0j-Pt99meL6rFOUivscgyOYPxhMmJ41j2LJltSTPC8bYJy9bd70qC4Hu6lImkvebLrAxisNAOg6XnK+g-WDSeYQFAs6Q+uBpO6UqM8vNclC+sT0lFB21GmfC+ilAoqTdupT2YA2AB1oKsVYoc9I30anwGojF9y5BSKSWsycECVHKGhFKCgMiJy8ikIBgorBOGQHgLmZ8MAOAgYRf8TBAI737q+ahM46EMIcCgv6m4uIthSOtMQeQ-gYSaE8ShjoaG8OnEw12LDiJ92ulw+R9DFF1WolPfW3l4J5REG5B4GFhYNCtNvfOnCqGaL4dJXoGieFaMYcw92GlhDrC2DsP8AcACuQcYFMFgAIjcKg2RIUOjSNkdxeACG4ukJC4h+CkPxgIfgghZFTjsYosaB8HpONoS4phrNsnOIYaEmCKhgZMQPLwFK6SiHxJbNSbUlMBJCGfiJLJ1gcmMLycOAptjymKK1jrfmk8q761EGhRibFrw1H4sDfKzSpZbSNKQw0eQZC-DQj07hRT7HD2GYc0Z48Vp6Lirs4QaTXgsQTB1Fp2pGLIUPP-VyMirHtBGichR-TjlyJGa4+cS5KnTMkDGE0518ruXyo8qWyTygqAeHkDIrk4nan2X0hwLMehs16UCtxUCZhbG2GwXxASglgriuEs82pE7RJqNLbi3k5mlFpqqGQ9YHwArFNdT0jg8BeC8GMBwTCfBcxHGMDAeZd6empUkJZj8UwzPkInBoNRDEy3bgoEkCYUjXjtgKqwmA7DzjGD0C1WAJVSplXy588qJkmUuUkC68F1qIRmRdCkghnip30MVNgtAIBwE4CCXRUy4oAFopAfxEEQhMTxVXiDRaJL5pgLBZkcM4VwEbb5xQPPBdkNxG5VH4Ief16auiOKoTmcYebUEICaGnb+pQdwXRpMeKWZQKiN1eJUbytxSEPgzPyLhdbZX909A2wRwMoxxK+FkURygE6pnTby6wM5UAzrxsoFyELnj4wNO5OkvwiTJKyClCyvx6hrqGt83eFEd0wX4jGW5XkygPLwSmtOvY0o1HyvUy66aflqwcfi8Ko8MDPv1s8IkbkAT8BZCoDCognJtIpGlLaT84kHh6VJUdoVB5WDLjBuKiZyhIbvLcF+DFOopnEWii6AH2T3hA4+pG+SUalzRnNfoZHzJpIqKkjIncdCiYOgeSmJp67IpWfh5mGtAoCcQP2m5SyP38AcgddJx12IHlTs8O9ecH02LA5zLmT6BYuv+oeJiZRqR5WzqJwoLS4mIQZNSJoZImU93vY7MzRcuNH2I6R6zkbzJgyQnUZJ2QKQsjdRlB4c8AbIr6tqSx-nQMOxAagS+VnJn5vMnIRCaVSTZVIISa8H8KakKyIioQjRh3scC8R4QoWyoCptR0aVFqVPJDuGnGk9Tfikjyoebi+NCY0gBDUFIh5ShYqBQ4frvZSjdRJIdRoKYu3aFZHxTsDRy05WM2oxGgLTn9Orfig5fyVvhaK3wX+G36U-p2wk7y4iUIPD1UDNNWWOMXbuwMw+hS7v9ZmXZi6pCL2lFKM3bQnZAZoRRymB47kt4A9a7d4puKbt9NWwrGM9L+JdkEHCtDLSaQiDyjF2oXknj1KW5dnFBKWdIklT1mVPQIc4PPBhBWMnOwyG4skmMrKU3uXRaxTHJmQdDPsJ1osgrhWivu4VxtvZ42idSa8V4XZwYiJZGeHVtx6mxKyEa5XJrPDmstTzh7jbuxIVp0yRotxSR0hpGeId6WWOHkq1b8IJHuu9YdxrwRaK041BQyaInBiRHUiOg0Byh4OVFX0EAA */
   createMachine(
     {
       context: INITIAL_CONTEXT,
@@ -84,7 +87,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
             },
             {
               cond: "isIbanOnlyMode",
-              target: "DISPLAYING_IBAN_ONBOARDING"
+              target: "CONFIGURING_IBAN"
             },
             {
               cond: "isInitiativeConfigurationNeeded",
@@ -100,76 +103,130 @@ const createIDPayInitiativeConfigurationMachine = () =>
           entry: "navigateToConfigurationIntro",
           on: {
             NEXT: {
-              target: "LOADING_IBAN"
+              target: "CONFIGURING_IBAN"
             }
           }
         },
-        LOADING_IBAN: {
-          tags: [LOADING_TAG],
-          invoke: {
-            src: "loadIbanList",
-            id: "loadIbanList",
-            onDone: [
-              {
-                target: "ASSERTING_IBAN_CONFIGURATION_NEEDED",
-                actions: "loadIbanListSuccess"
+        CONFIGURING_IBAN: {
+          id: "IBAN",
+          initial: "LOADING_IBAN_LIST",
+          states: {
+            LOADING_IBAN_LIST: {
+              tags: [LOADING_TAG],
+              invoke: {
+                src: "loadIbanList",
+                id: "loadIbanList",
+                onDone: {
+                  target: "EVALUATING_IBAN_LIST",
+                  actions: "loadIbanListSuccess"
+                }
               }
-            ]
-          }
-        },
-        ASSERTING_IBAN_CONFIGURATION_NEEDED: {
-          tags: [LOADING_TAG],
-          always: [
+            },
+            EVALUATING_IBAN_LIST: {
+              tags: [LOADING_TAG],
+              always: [
+                {
+                  target: "DISPLAYING_IBAN_LIST",
+                  cond: "hasIbanList"
+                },
+                {
+                  target: "DISPLAYING_IBAN_ONBOARDING"
+                }
+              ]
+            },
+            DISPLAYING_IBAN_ONBOARDING: {
+              tags: [WAITING_USER_INPUT_TAG],
+              entry: "navigateToIbanLandingScreen",
+              on: {
+                NEXT: {
+                  target: "DISPLAYING_IBAN_ONBOARDING_FORM"
+                },
+                BACK: [
+                  {
+                    cond: "isIbanOnlyMode",
+                    actions: "exitConfiguration"
+                  },
+                  {
+                    target: "#ROOT.DISPLAYING_INTRO"
+                  }
+                ]
+              }
+            },
+            DISPLAYING_IBAN_ONBOARDING_FORM: {
+              tags: [WAITING_USER_INPUT_TAG],
+              entry: "navigateToIbanOnboardingScreen",
+              on: {
+                CONFIRM_IBAN: {
+                  target: "CONFIRMING_IBAN",
+                  actions: "confirmIbanOnboarding"
+                },
+                BACK: [
+                  {
+                    cond: "hasIbanList",
+                    target: "DISPLAYING_IBAN_LIST"
+                  },
+                  {
+                    target: "DISPLAYING_IBAN_ONBOARDING"
+                  }
+                ]
+              }
+            },
+            CONFIRMING_IBAN: {
+              tags: [LOADING_TAG],
+              invoke: {
+                src: "confirmIban",
+                id: "confirmIban",
+                onDone: {
+                  target: "IBAN_CONFIGURATION_COMPLETED"
+                }
+              }
+            },
+            DISPLAYING_IBAN_LIST: {
+              tags: [WAITING_USER_INPUT_TAG],
+              entry: "navigateToIbanEnrollmentScreen",
+              on: {
+                BACK: [
+                  {
+                    cond: "isIbanOnlyMode",
+                    actions: "exitConfiguration"
+                  },
+                  {
+                    target: "#ROOT.DISPLAYING_INTRO"
+                  }
+                ],
+                NEW_IBAN_ONBOARDING: {
+                  target: "DISPLAYING_IBAN_ONBOARDING_FORM"
+                },
+                ENROLL_IBAN: {
+                  target: "ENROLLING_IBAN",
+                  actions: "selectIban"
+                }
+              }
+            },
+            ENROLLING_IBAN: {
+              tags: [LOADING_TAG],
+              invoke: {
+                src: "enrollIban",
+                id: "enrollIban",
+                onDone: {
+                  target: "IBAN_CONFIGURATION_COMPLETED",
+                  actions: "enrollIbanSuccess"
+                }
+              }
+            },
+            IBAN_CONFIGURATION_COMPLETED: {
+              type: "final"
+            }
+          },
+          onDone: [
             {
-              cond: "isIbanConfigurationNeeded",
-              target: "DISPLAYING_IBAN_ONBOARDING"
+              cond: "isIbanOnlyMode",
+              target: "CONFIGURATION_COMPLETED"
             },
             {
-              target: "CONFIGURING_INSTRUMENTS"
+              target: "#ROOT.CONFIGURING_INSTRUMENTS"
             }
           ]
-        },
-        DISPLAYING_IBAN_ONBOARDING: {
-          tags: [WAITING_USER_INPUT_TAG],
-          entry: "navigateToIbanLandingScreen",
-          on: {
-            NEXT: {
-              target: "ADDING_IBAN"
-            },
-            BACK: {
-              target: "DISPLAYING_INTRO"
-            }
-          }
-        },
-        ADDING_IBAN: {
-          tags: [WAITING_USER_INPUT_TAG],
-          entry: "navigateToIbanOnboardingScreen",
-          on: {
-            CONFIRM_IBAN: {
-              target: "CONFIRMING_IBAN",
-              actions: "confirmIbanOnboarding"
-            },
-            BACK: {
-              target: "DISPLAYING_IBAN_ONBOARDING"
-            }
-          }
-        },
-        CONFIRMING_IBAN: {
-          tags: [LOADING_TAG],
-          invoke: {
-            src: "confirmIban",
-            id: "confirmIban",
-            onDone: [
-              {
-                target: "CONFIGURING_INSTRUMENTS"
-              }
-            ],
-            onError: [
-              {
-                target: "DISPLAYING_INTRO"
-              }
-            ]
-          }
         },
         CONFIGURING_INSTRUMENTS: {
           id: "INSTRUMENTS",
@@ -200,7 +257,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
                     actions: "exitConfiguration"
                   },
                   {
-                    target: "#ROOT.DISPLAYING_INTRO"
+                    target: "#ROOT.CONFIGURING_IBAN"
                   }
                 ],
                 NEXT: {
@@ -270,6 +327,12 @@ const createIDPayInitiativeConfigurationMachine = () =>
         loadIbanListSuccess: assign((_, event) => ({
           ibanList: p.some(event.data.ibanList)
         })),
+        selectIban: assign((_, event) => ({
+          selectedIban: event.iban
+        })),
+        enrollIbanSuccess: assign((_, _event) => ({
+          selectedIban: undefined
+        })),
         loadInstrumentsSuccess: assign((_, event) => ({
           pagoPAInstruments: p.some(event.data.pagoPAInstruments),
           idPayInstruments: p.some(event.data.idPayInstruments)
@@ -294,14 +357,14 @@ const createIDPayInitiativeConfigurationMachine = () =>
             ),
             false
           ),
-        isIbanConfigurationNeeded: (context, _) =>
+        isIbanOnlyMode: (context, _) => context.mode === ConfigurationMode.IBAN,
+        hasIbanList: (context, _) =>
           p.getOrElse(
-            p.map(context.ibanList, ibanList => ibanList.length === 0),
+            p.map(context.ibanList, list => list.length > 0),
             false
           ),
         isInstrumentsOnlyMode: (context, _) =>
-          context.mode === ConfigurationMode.INSTRUMENTS,
-        isIbanOnlyMode: (context, _) => context.mode === ConfigurationMode.IBAN
+          context.mode === ConfigurationMode.INSTRUMENTS
       }
     }
   );
