@@ -1354,7 +1354,7 @@ wallet:
     cancel: "Nein, fortfahren"
     success: "Probleme beim Hinzufügen? Wende dich an deine Bank."
 saveCard:
-  saveCard: "Karte speichern"
+  saveCard: Speichern Sie die Karte
   header: Möchten Sie diese Karte speichern?
   favoriteTitle: Die Karte als bevorzugte Zahlungsmethode festlegen
   favoriteText: Diese Zahlungsmethode wird automatisch bei der nächsten Zahlung vorgeschlagen
