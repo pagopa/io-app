@@ -1,7 +1,12 @@
 import * as React from "react";
 import { useMemo } from "react";
 import { StyleProp, Text, TextStyle } from "react-native";
-import { IOFontFamily, IOFontWeight, makeFontStyleObject } from "../fonts";
+import {
+  IOFontFamily,
+  IOFontWeight,
+  maxFontScaling,
+  makeFontStyleObject
+} from "../fonts";
 import { IOColors, IOColorType } from "../variables/IOColors";
 
 /**
@@ -51,7 +56,12 @@ export const BaseTypography: React.FunctionComponent<OwnProps> = props => {
     : [props.fontStyle, fontStyle];
 
   return (
-    <Text {...props} style={style} allowFontScaling>
+    <Text
+      {...props}
+      style={style}
+      allowFontScaling
+      maxFontSizeMultiplier={maxFontScaling}
+    >
       {props.children}
     </Text>
   );

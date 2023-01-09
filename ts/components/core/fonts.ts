@@ -53,6 +53,15 @@ type FontStyleObject = {
 };
 
 /**
+ * Set the largest possible scale a font can reach
+ * when `allowFontScaling` is enabled.
+ *
+ * https://reactnative.dev/docs/text#maxfontsizemultiplier
+ */
+
+export const maxFontScaling = 1.5;
+
+/**
  * Get the correct `fontFamily` name on both Android and iOS.
  * @param font
  * @param weight
