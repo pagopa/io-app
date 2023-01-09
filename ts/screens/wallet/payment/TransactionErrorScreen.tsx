@@ -87,6 +87,8 @@ type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
+const imageTimeout: IOPictogramType = "inProgress";
+const imageDefaultFallback: IOPictogramType = "error";
 const imageMapping: Record<ErrorTypes, IOPictogramType> = {
   DATA: "question",
   DUPLICATED: "fireworks",
@@ -96,6 +98,7 @@ const imageMapping: Record<ErrorTypes, IOPictogramType> = {
   REVOKED: "error",
   EXPIRED: "error",
   TECHNICAL: "error"
+  // NOT_FOUND: "unrecognized"
 };
 
 const requestZendeskAssistanceForPaymentFailure = (
@@ -207,7 +210,7 @@ export const errorTransactionUIElements = (
 
   if (errorORUndefined === "PAYMENT_ID_TIMEOUT") {
     return {
-      image: "inProgress",
+      image: imageTimeout,
       title: I18n.t("wallet.errors.MISSING_PAYMENT_ID"),
       footerButtons: [...closeButtonCancel]
     };
@@ -228,7 +231,7 @@ export const errorTransactionUIElements = (
     )
   );
 
-  const image = errorMacro ? imageMapping[errorMacro] : "error";
+  const image = errorMacro ? imageMapping[errorMacro] : imageDefaultFallback;
 
   switch (errorMacro) {
     case "TECHNICAL":
