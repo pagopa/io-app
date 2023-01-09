@@ -13,13 +13,12 @@ const styles = StyleSheet.create({
     flexDirection: "column"
   },
   touchable: {
+    display: "flex",
     flexDirection: "row",
-    marginVertical: 24
+    marginVertical: 16
   },
-  label: {
-    flex: 1
-  },
-  alignToRight: {
+  value: {
+    flexGrow: 1,
     textAlign: "right"
   }
 });
@@ -28,6 +27,7 @@ type Props = {
   value: string;
   label: TranslationKeys;
   onPress: () => void;
+  isLast?: boolean;
   accessibilityLabel?: string;
 };
 
@@ -35,6 +35,7 @@ const InformationRow = ({
   value,
   label,
   onPress,
+  isLast,
   accessibilityLabel
 }: Props) => (
   <View style={styles.row}>
@@ -44,19 +45,12 @@ const InformationRow = ({
       accessibilityRole={"button"}
       accessibilityLabel={accessibilityLabel}
     >
-      <H4
-        style={styles.label}
-        ellipsizeMode={"tail"}
-        numberOfLines={1}
-        color={"bluegrey"}
-        weight={"Regular"}
-      >
+      <H4 numberOfLines={1} color={"bluegrey"} weight={"Regular"}>
         {capitalize(I18n.t(label))}
       </H4>
       <NBView hspacer={true} />
       <H4
-        style={[styles.label, styles.alignToRight]}
-        ellipsizeMode={"tail"}
+        style={styles.value}
         numberOfLines={1}
         color={"blue"}
         weight={"SemiBold"}
@@ -64,7 +58,7 @@ const InformationRow = ({
         {value}
       </H4>
     </TouchableDefaultOpacity>
-    <ItemSeparatorComponent noPadded />
+    {!isLast && <ItemSeparatorComponent noPadded />}
   </View>
 );
 
