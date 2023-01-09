@@ -16,14 +16,14 @@ import Switch from "../../../../../components/ui/Switch";
 import I18n from "../../../../../i18n";
 import { Wallet } from "../../../../../types/pagopa";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
-
 import { instrumentStatusLabels } from "../../../common/labels";
-import { useConfigurationMachineService } from "../xstate/provider";
 
 type InstrumentEnrollmentSwitchProps = {
   wallet: Wallet;
   instrument?: InstrumentDTO;
   isDisabled?: boolean;
+  onEnrollInstrument: (walletId: number) => void;
+  onDeleteInstrument: (instrumentId: string) => void;
 };
 
 type InstrumentInfo = {
@@ -35,30 +35,19 @@ type InstrumentInfo = {
  * A component to enable/disable the enrollment of an instrument
  */
 const InstrumentEnrollmentSwitch = (props: InstrumentEnrollmentSwitchProps) => {
-  const configurationMachine = useConfigurationMachineService();
-
-  const { wallet, instrument, isDisabled } = props;
+  const {
+    wallet,
+    instrument,
+    isDisabled,
+    onEnrollInstrument,
+    onDeleteInstrument
+  } = props;
 
   const status = instrument?.status;
 
   const [switchStatus, setSwitchStatus] = React.useState(
     status === StatusEnum.ACTIVE
   );
-
-  const sendEnrollInstrument = (): void => {
-    configurationMachine.send("ENROLL_INSTRUMENT", {
-      instrumentId: wallet.idWallet
-    });
-  };
-
-  const sendDeleteInstrument = (): void => {
-    if (instrument === undefined) {
-      return;
-    }
-    configurationMachine.send("DELETE_INSTRUMENT", {
-      instrumentId: instrument.instrumentId
-    });
-  };
 
   const enrollmentBottomSheetModal = useIOBottomSheetModal(
     <Body>
@@ -76,7 +65,7 @@ const InstrumentEnrollmentSwitch = (props: InstrumentEnrollmentSwitchProps) => {
       type="TwoButtonsInlineThird"
       rightButton={{
         onPress: () => {
-          sendEnrollInstrument();
+          onEnrollInstrument(wallet.idWallet);
           enrollmentBottomSheetModal.dismiss();
         },
         block: true,
@@ -101,7 +90,9 @@ const InstrumentEnrollmentSwitch = (props: InstrumentEnrollmentSwitchProps) => {
 
   const handleSwitch = () => {
     if (switchStatus) {
-      sendDeleteInstrument();
+      if (instrument !== undefined) {
+        onDeleteInstrument(instrument.instrumentId);
+      }
     } else {
       setSwitchStatus(true);
       enrollmentBottomSheetModal.present();

@@ -65,6 +65,18 @@ const InstrumentsEnrollmentScreen = () => {
     });
   };
 
+  const sendEnrollInstrument = (idWallet: number): void => {
+    configurationMachine.send("ENROLL_INSTRUMENT", {
+      instrumentId: idWallet
+    });
+  };
+
+  const sendDeleteInstrument = (instrumentId: string): void => {
+    configurationMachine.send("DELETE_INSTRUMENT", {
+      instrumentId
+    });
+  };
+
   React.useEffect(() => {
     if (initiativeId) {
       configurationMachine.send({
@@ -101,6 +113,8 @@ const InstrumentsEnrollmentScreen = () => {
                     idPayInstrumentsByIdWallet[pagoPAInstrument.idWallet]
                   }
                   isDisabled={isUpserting}
+                  onEnrollInstrument={sendEnrollInstrument}
+                  onDeleteInstrument={sendDeleteInstrument}
                 />
               ))}
             </List>
