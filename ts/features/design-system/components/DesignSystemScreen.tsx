@@ -10,10 +10,8 @@ type Props = {
 
 export const DesignSystemScreen = ({ title, children }: Props) => (
   <BaseScreenComponent goBack={true} headerTitle={title}>
-    <SafeAreaView style={IOStyles.flex}>
-      <ScrollView>
-        <View style={IOStyles.horizontalContentPadding}>{children}</View>
-      </ScrollView>
-    </SafeAreaView>
+    <ScrollView>
+      <View style={IOStyles.horizontalContentPadding}>{children}</View>
+    </ScrollView>
   </BaseScreenComponent>
 );

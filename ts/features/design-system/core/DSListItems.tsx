@@ -1,5 +1,6 @@
 // import { View as NBView, Text as NBText } from "native-base";
 import * as React from "react";
+import { View as NBView } from "native-base";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 
 import { H2 } from "../../../components/core/typography/H2";
@@ -253,5 +254,7 @@ export const DSListItems = () => (
         isNew={true}
       />
     </DSComponentViewerBox>
+
+    <NBView spacer={true} extralarge={true} />
   </DesignSystemScreen>
 );

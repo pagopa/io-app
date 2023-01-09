@@ -120,5 +120,7 @@ export const DSToastNotifications = () => (
     >
       <NBText>Multi-line text</NBText>
     </ButtonDefaultOpacity>
+
+    <NBView spacer={true} extralarge={true} />
   </DesignSystemScreen>
 );

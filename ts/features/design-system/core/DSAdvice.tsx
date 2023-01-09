@@ -161,6 +161,8 @@ export const DSAdvice = () => {
           </Label>
         </InfoBox>
       </View>
+
+      <NBView spacer={true} extralarge={true} />
     </DesignSystemScreen>
   );
 };

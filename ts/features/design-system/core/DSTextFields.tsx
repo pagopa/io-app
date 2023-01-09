@@ -265,6 +265,8 @@ export const DSTextFields = () => {
         // accessibilityLabel={accessibilityLabels.pan}
         testID={"pan"}
       />
+
+      <NBView spacer={true} extralarge={true} />
     </DesignSystemScreen>
   );
 };

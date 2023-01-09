@@ -57,32 +57,30 @@ export const DesignSystem = (props: Props) => (
     goBack={true}
     headerTitle={I18n.t("profile.main.designSystem")}
   >
-    <SafeAreaView style={IOStyles.flex}>
-      <SectionList
-        contentContainerStyle={IOStyles.horizontalContentPadding}
-        stickySectionHeadersEnabled={false}
-        renderSectionHeader={({ section: { title, description } }) => (
-          <View style={{ marginBottom: 8 }}>
-            <H1>{title}</H1>
-            {description && (
-              <LabelSmall weight={"Regular"} color="bluegrey">
-                {description}
-              </LabelSmall>
-            )}
-          </View>
-        )}
-        renderSectionFooter={() => <NBView spacer={true} extralarge={true} />}
-        renderItem={({ item }) => (
-          <ListItemComponent
-            title={item.title}
-            onPress={() =>
-              props.navigation.navigate(item.route as keyof AppParamsList)
-            }
-          />
-        )}
-        keyExtractor={(item, index) => `${item.route}-${index}`}
-        sections={DESIGN_SYSTEM_SECTION_DATA}
-      />
-    </SafeAreaView>
+    <SectionList
+      contentContainerStyle={IOStyles.horizontalContentPadding}
+      stickySectionHeadersEnabled={false}
+      renderSectionHeader={({ section: { title, description } }) => (
+        <View style={{ marginBottom: 8 }}>
+          <H1>{title}</H1>
+          {description && (
+            <LabelSmall weight={"Regular"} color="bluegrey">
+              {description}
+            </LabelSmall>
+          )}
+        </View>
+      )}
+      renderSectionFooter={() => <NBView spacer={true} extralarge={true} />}
+      renderItem={({ item }) => (
+        <ListItemComponent
+          title={item.title}
+          onPress={() =>
+            props.navigation.navigate(item.route as keyof AppParamsList)
+          }
+        />
+      )}
+      keyExtractor={(item, index) => `${item.route}-${index}`}
+      sections={DESIGN_SYSTEM_SECTION_DATA}
+    />
   </BaseScreenComponent>
 );

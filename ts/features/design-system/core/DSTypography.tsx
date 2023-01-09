@@ -48,6 +48,7 @@ export const DSTypography = () => (
     <LabelRow />
     <Link onPress={() => Alert.alert("onPress link!")}>Link</Link>
     <Monospace>MonoSpace</Monospace>
+    <NBView spacer={true} extralarge={true} />
   </DesignSystemScreen>
 );
 
