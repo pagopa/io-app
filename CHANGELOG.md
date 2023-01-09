@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.23.0-rc.2](https://github.com/pagopa/io-app/compare/2.23.0-rc.1...2.23.0-rc.2) (2023-01-05)
+
+
+### Features
+
+* **IDPay:** [[IODPAY-67](https://pagopa.atlassian.net/browse/IODPAY-67)] Add IBAN enrollment to IDPay initiative configuration ([#4247](https://github.com/pagopa/io-app/issues/4247)) ([d76fd98](https://github.com/pagopa/io-app/commit/d76fd98bb407a8a828bb04ba8a54c32cdbae0eac))
+* **IDPay:** [[IODPAY-70](https://pagopa.atlassian.net/browse/IODPAY-70)] Introduction of "add new iban" IDPAY pages ([#4270](https://github.com/pagopa/io-app/issues/4270)) ([761ed3e](https://github.com/pagopa/io-app/commit/761ed3e9783825f942e74ac35ab16906ae112001))
+
+
+### Bug Fixes
+
+* **Firma con IO:** [[SFEQS-1274](https://pagopa.atlassian.net/browse/SFEQS-1274)] Add padding between signature field title and related checkbox ([#4262](https://github.com/pagopa/io-app/issues/4262)) ([f4957e7](https://github.com/pagopa/io-app/commit/f4957e769b25799390e6478d40730a53fa9d9702))
+* [[IABT-1415](https://pagopa.atlassian.net/browse/IABT-1415)] Not all accessibility information are spoken aloud to the user ([#4261](https://github.com/pagopa/io-app/issues/4261)) ([cd435d4](https://github.com/pagopa/io-app/commit/cd435d482d4b40cb9ebea9a835c84e780c10e6dc))
+* [[IOAPPCIT-18](https://pagopa.atlassian.net/browse/IOAPPCIT-18),[IABT-1407](https://pagopa.atlassian.net/browse/IABT-1407)] "More info" link is not accessible on iOS through VoiceOver ([#4276](https://github.com/pagopa/io-app/issues/4276)) ([1a9cd1f](https://github.com/pagopa/io-app/commit/1a9cd1f3ab95b14f2d8cde0723a4c391d94db20d))
+* [[IOAPPCIT-19](https://pagopa.atlassian.net/browse/IOAPPCIT-19),[IABT-1406](https://pagopa.atlassian.net/browse/IABT-1406)] It's not clear that the notification shown inside the onboarding push notification preference screen is only an example when read by accessibility tools ([#4274](https://github.com/pagopa/io-app/issues/4274)) ([1b54280](https://github.com/pagopa/io-app/commit/1b5428035843a905e08ce46a4f39f19288b82845))
+
+
+### Chores
+
+* [[IAI-255](https://pagopa.atlassian.net/browse/IAI-255)] Advice & Banners' inventory ([#4256](https://github.com/pagopa/io-app/issues/4256)) ([9dbe69a](https://github.com/pagopa/io-app/commit/9dbe69a726a5ccd06ec33c6cbf8a0e37613e1329))
+* [[IAI-256](https://pagopa.atlassian.net/browse/IAI-256)] Removal of the smile at the page bottom ([#4259](https://github.com/pagopa/io-app/issues/4259)) ([028051a](https://github.com/pagopa/io-app/commit/028051a9d8baa40e3c0dbaed7d78f22984666bf8))
+* [[IOAPPPEB-15](https://pagopa.atlassian.net/browse/IOAPPPEB-15)] Move common bonuses code to common folder ([#4269](https://github.com/pagopa/io-app/issues/4269)) ([74ad988](https://github.com/pagopa/io-app/commit/74ad98865430bdc58f9a0e8a31e73eb54f9b5c47))
+
 ## [2.23.0-rc.1](https://github.com/pagopa/io-app/compare/2.23.0-rc.0...2.23.0-rc.1) (2022-12-23)
 
 
