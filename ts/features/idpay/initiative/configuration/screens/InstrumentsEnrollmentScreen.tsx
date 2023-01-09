@@ -96,10 +96,9 @@ const InstrumentsEnrollmentScreen = () => {
               {pagoPAInstruments.map(pagoPAInstrument => (
                 <InstrumentEnrollmentSwitch
                   key={pagoPAInstrument.idWallet}
-                  instrument={pagoPAInstrument}
-                  status={
+                  wallet={pagoPAInstrument}
+                  instrument={
                     idPayInstrumentsByIdWallet[pagoPAInstrument.idWallet]
-                      ?.status
                   }
                   isDisabled={isUpserting}
                 />

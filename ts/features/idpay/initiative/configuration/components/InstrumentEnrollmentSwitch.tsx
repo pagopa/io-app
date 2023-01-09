@@ -1,3 +1,5 @@
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { Badge, ListItem, View } from "native-base";
 import { default as React } from "react";
 import { StyleSheet } from "react-native";
@@ -14,13 +16,19 @@ import Switch from "../../../../../components/ui/Switch";
 import I18n from "../../../../../i18n";
 import { Wallet } from "../../../../../types/pagopa";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
+
 import { instrumentStatusLabels } from "../../../common/labels";
 import { useConfigurationMachineService } from "../xstate/provider";
 
 type InstrumentEnrollmentSwitchProps = {
-  instrument: Wallet;
-  status: InstrumentDTO["status"];
+  wallet: Wallet;
+  instrument?: InstrumentDTO;
   isDisabled?: boolean;
+};
+
+type InstrumentInfo = {
+  logo: JSX.Element;
+  maskedPan: string;
 };
 
 /**
@@ -29,7 +37,9 @@ type InstrumentEnrollmentSwitchProps = {
 const InstrumentEnrollmentSwitch = (props: InstrumentEnrollmentSwitchProps) => {
   const configurationMachine = useConfigurationMachineService();
 
-  const { instrument, status, isDisabled } = props;
+  const { wallet, instrument, isDisabled } = props;
+
+  const status = instrument?.status;
 
   const [switchStatus, setSwitchStatus] = React.useState(
     status === StatusEnum.ACTIVE
@@ -37,13 +47,16 @@ const InstrumentEnrollmentSwitch = (props: InstrumentEnrollmentSwitchProps) => {
 
   const sendEnrollInstrument = (): void => {
     configurationMachine.send("ENROLL_INSTRUMENT", {
-      instrumentId: instrument.idWallet
+      instrumentId: wallet.idWallet
     });
   };
 
   const sendDeleteInstrument = (): void => {
+    if (instrument === undefined) {
+      return;
+    }
     configurationMachine.send("DELETE_INSTRUMENT", {
-      instrumentId: instrument.idWallet
+      instrumentId: instrument.instrumentId
     });
   };
 
@@ -95,6 +108,18 @@ const InstrumentEnrollmentSwitch = (props: InstrumentEnrollmentSwitchProps) => {
     }
   };
 
+  const getPaymentMethodInfo = (wallet: Wallet): O.Option<InstrumentInfo> => {
+    switch (wallet.type) {
+      case "CREDIT_CARD":
+        return O.some({
+          logo: <View />,
+          maskedPan: wallet.creditCard?.pan ?? ""
+        });
+      default:
+        return O.none;
+    }
+  };
+
   const renderControl = () => {
     if (
       status === StatusEnum.PENDING_ENROLLMENT_REQUEST ||
@@ -118,11 +143,19 @@ const InstrumentEnrollmentSwitch = (props: InstrumentEnrollmentSwitchProps) => {
     );
   };
 
+  const instrumentInfo = pipe(
+    getPaymentMethodInfo(wallet),
+    O.getOrElse(() => ({
+      logo: <View />,
+      maskedPan: ""
+    }))
+  );
+
   return (
     <>
       <ListItem>
         <View style={styles.listItemContainer}>
-          <H4>{instrument.idWallet}</H4>
+          <H4>{instrumentInfo.maskedPan}</H4>
           {renderControl()}
         </View>
       </ListItem>
