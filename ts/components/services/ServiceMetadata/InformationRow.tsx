@@ -9,16 +9,13 @@ import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
 import ItemSeparatorComponent from "../../ItemSeparatorComponent";
 
 const styles = StyleSheet.create({
-  row: {
-    flexDirection: "column"
-  },
   touchable: {
-    display: "flex",
     flexDirection: "row",
     marginVertical: 16
   },
   value: {
     flexGrow: 1,
+    flexShrink: 1,
     textAlign: "right"
   }
 });
@@ -38,7 +35,7 @@ const InformationRow = ({
   isLast,
   accessibilityLabel
 }: Props) => (
-  <View style={styles.row}>
+  <View>
     <TouchableDefaultOpacity
       onPress={onPress}
       style={styles.touchable}
@@ -52,6 +49,7 @@ const InformationRow = ({
       <H4
         style={styles.value}
         numberOfLines={1}
+        ellipsizeMode="tail"
         color={"blue"}
         weight={"SemiBold"}
       >
