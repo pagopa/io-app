@@ -54,17 +54,12 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
   const userDataProcessing = useIOSelector(userDataProcessingSelector);
   const prevUserDataProcessing = usePrevious(userDataProcessing);
   const [requestProcess, setRequestProcess] = useState(false);
-
-  // the state returns to pot.none to every get - we want to see the loader only during the load of the requests,
-  // not when the request is confirmed by the user
   const isLoading =
-    (pot.isNone(userDataProcessing.DELETE) &&
-      pot.isLoading(userDataProcessing.DELETE)) ||
-    (pot.isNone(userDataProcessing.DOWNLOAD) &&
-      pot.isLoading(userDataProcessing.DOWNLOAD));
+    pot.isLoading(userDataProcessing.DELETE) ||
+    pot.isLoading(userDataProcessing.DOWNLOAD);
 
   useOnFirstRender(() => {
-    // get a fresh info about DOWNLOAD/DELETE state
+    // get fresh info about DOWNLOAD/DELETE state
     // if any of these is WIP a relative badge will be displayed
     dispatch(
       loadUserDataProcessing.request(UserDataProcessingChoiceEnum.DELETE)
@@ -123,7 +118,7 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
           requestState.value.status === UserDataProcessingStatusEnum.CLOSED ||
           requestState.value.status === UserDataProcessingStatusEnum.ABORTED)
       ) {
-        // if user asks for download, navigate to a screen to inform about the process
+        // if the user asks for download, navigate to a screen to inform about the process
         // there he/she can request to download his/her data
         if (choice === UserDataProcessingChoiceEnum.DOWNLOAD) {
           navigation.navigate(ROUTES.PROFILE_DOWNLOAD_DATA);
@@ -138,7 +133,7 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
 
   useEffect(() => {
     // If the new request submission fails, show an alert and hide the 'in progress' badge
-    // if it is the get request (prev prop is pot.none), check if show the alert to submit the request
+    // if it is a get request after user click, check if shows the alert
     const checkUpdate = (
       errorMessage: string,
       choice: UserDataProcessingChoiceEnum
@@ -153,8 +148,8 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
         if (pot.isError(currentState)) {
           showToast(errorMessage);
         }
-        // if user ask for download/delete prompt an alert to get confirmation
-        else if (requestProcess && pot.isNone(prevUserDataProcessing[choice])) {
+        // if the user asks for download/delete prompt an alert
+        else if (requestProcess) {
           setRequestProcess(false);
           handleUserDataRequestAlert(choice);
         }
@@ -177,6 +172,7 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
   ]);
 
   const isRequestProcessing = (choice: UserDataProcessingChoiceEnum): boolean =>
+    !pot.isLoading(userDataProcessing[choice]) &&
     !pot.isError(userDataProcessing[choice]) &&
     pot.getOrElse(
       pot.map(

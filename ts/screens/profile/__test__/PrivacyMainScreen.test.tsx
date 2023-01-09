@@ -96,7 +96,7 @@ describe("PrivacyMainScreen", () => {
           choice: UserDataProcessingChoiceEnum.DELETE,
           version: 1
         }),
-        [UserDataProcessingChoiceEnum.DOWNLOAD]: pot.none
+        [UserDataProcessingChoiceEnum.DOWNLOAD]: pot.some(undefined)
       }
     });
 
