@@ -6,7 +6,7 @@ import { IOStyles } from "../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
 import { ColorsShowroom } from "./core/ColorsShowroom";
-import { IllustrationsShowroom } from "./core/IllustrationsShowroom";
+// import { IllustrationsShowroom } from "./core/IllustrationsShowroom";
 import { PictogramsShowroom } from "./core/PictogramsShowroom";
 import { IconsShowroom } from "./core/IconsShowroom";
 import { LogosShowroom } from "./core/LogosShowroom";
@@ -15,6 +15,7 @@ import { TypographyShowroom } from "./core/TypographyShowRoom";
 import { OthersShowroom } from "./core/OthersShowroom";
 import { ButtonsShowroom } from "./core/ButtonsShowroom";
 import { TextFieldsShowroom } from "./core/TextFieldsShowroom";
+import { ListItemsShowroom } from "./core/ListItemsShowroom";
 import { AdviceShowroom } from "./core/AdviceShowroom";
 import { ToastNotificationsShowroom } from "./core/ToastNotificationsShowroom";
 
@@ -57,6 +58,8 @@ export const Showroom = () => {
             <NBView spacer={true} large={true} />
             <TextFieldsShowroom />
             <NBView spacer={true} large={true} />
+            <ListItemsShowroom />
+            <NBView spacer={true} large={true} />
             <AdviceShowroom />
             <NBView spacer={true} large={true} />
             <ToastNotificationsShowroom />
@@ -66,8 +69,8 @@ export const Showroom = () => {
             <IconsShowroom />
             <NBView spacer={true} large={true} />
             <LogosShowroom />
-            <NBView spacer={true} large={true} />
-            <IllustrationsShowroom />
+            {/* <NBView spacer={true} large={true} />
+            <IllustrationsShowroom /> */}
           </View>
         </ScrollView>
       </SafeAreaView>
