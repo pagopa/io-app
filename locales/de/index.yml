@@ -631,7 +631,7 @@ datetimes:
 payment:
   alertNoPaymentMethods:
     title: "Füge eine Zahlungsmethode für In-App-Zahlungen hinzu"
-    message: "Die Zahlungsmethode wird im Konto gespeichert, so dass du beim nächster Mal einfacher bezahlen kannst."
+    message: "Die Zahlungsmethode wird im Konto gespeichert, so dass du beim nächsten Mal einfacher bezahlen kannst."
     buttons:
       ok: "Weiter"
       ko: "Abbrechen"
@@ -645,7 +645,7 @@ payment:
     title: "Möchtest du die aktuelle Zahlung abbrechen?"
     confirm: "Zahlung abbrechen"
     cancel: "Mit der Zahlung fortfahren"
-    success: "Die Zahlung wurde ordnungsgemäß annulliert"
+    success: "Die Zahlung wurde ordnungsgemäß abgebrochen"
   errorDetails: "Details"
   currentPsp: "Die Zahlung wird durgeführt von"
   noPsp: "Du hast noch keinen Zahlungsdienstleister ausgewählt"
@@ -701,7 +701,7 @@ wallet:
       failure: "Fehlgeschlagen"
       dateTime: "Datum und Uhrzeit"
       detailTitle: "Details"
-      help: "Wenn du bei der Eingabe dieser Zahlungsmethode auf ein Problem gestoßen sein, dann schreib uns bitte für weitere Informationen und Details"
+      help: "Wenn du bei der Eingabe dieser Zahlungsmethode auf ein Problem gestoßen bist, dann schreib uns bitte für weitere Informationen und Details"
     details:
       header: "Details Zahlungsmethode"
   searchAbi:
@@ -728,14 +728,14 @@ wallet:
         text4: "Datenschutzbestimmungen an."
     bankName: "Name der Bank"
     noName: "Name nicht verfügbar"
-    loading: "Bankliste wird geladen..."
+    loading: "Bankenliste wird geladen..."
   accessibility:
     sectionCardLabel: "Zahlungsmethoden aktualisieren"
     sectionCardHint: "Aktualisiere die Liste der Zahlungmethoden"
     folded:
-      creditCard: "Karte {{brand}}, die Kartennummer endet mit {{blurredNumber}}"
+      creditCard: "{{brand}}-Karte, die Kartennummer endet mit {{blurredNumber}}"
       bancomat: "BANCOMAT {{bankName}}"
-      coBadge: "Karte {{brand}}, {{bankName}}"
+      coBadge: "{{brand}}-Karte, {{bankName}}"
       bancomatPay: "BANCOMATPay {{bankName}}"
       privative: "Treuekarte, die Kartennummer endet mit {{blurredNumber}}"
       cta: "Details zur Zahlungsmethode anzeigen"
@@ -763,7 +763,7 @@ wallet:
         continue: "Weiter"
       koServicesError:
         title: "Wir konnten keine Karten finden: bitte wähle deine Bank aus"
-        body: "Teile uns deine Bank mit, die deine Karte ausgestellt hat, um die Liste der auf deinen Namen ausgestellten PagoBANCOMAT-Karten anzusehen."
+        body: "Teile uns die Bank mit, die deine Karte ausgestellt hat, um die Liste der auf deinen Namen ausgestellten PagoBANCOMAT-Karten anzusehen."
         chooseTheBank: "Bank auswählen"
       loadingSearch:
         title: "Wir sind dabei, die Liste deiner Karten zu erstellen.\n\nWarte ein paar Sekunden..."
@@ -839,7 +839,7 @@ wallet:
           body: "Es ist das Unternehmen – auch als PSP (Payment Service Provider) bezeichnet – das den Betrag im Namen des Zahlungsempfängers einnimmt und dafür eine Gebühr für die angebotene Dienstleistung erheben kann.\nBei jeder Zahlung kannst du den Zahlungsdienstleister wählen, der dir am besten passt – egal ob du Kunde dessen bist oder nicht."
       paypalAlreadyAdded:
         alert:
-          title: "Du hasst bereits ein PayPal-Konto in deinem Konto"
+          title: "Du hast bereits ein PayPal-Konto in deinem Konto"
           message: "Wenn du fortfährst, wird das neue Konto dein altes ersetzen."
       onBoardingCompleted:
         title: "Fertig!"
@@ -934,7 +934,7 @@ wallet:
         loading: "Wir fügen deine Karte hinzu\n\nBitte warte ein paar Sekunden..."
         blocked: "Diese Karte ist gesperrt und kann daher nicht aktiviert werden, um an den auf IO verfügbaren Initiativen teilzunehmen. Wende dich an deinen Supermarkt."
   alert:
-    supportedCardPageLinkError: "Beim Öffnen der Übersichtsseite für unterstützte Karten ist ein Fehler aufgetreten."
+    supportedCardPageLinkError: "Beim Öffnen der Übersichtsseite der unterstützten Karten ist ein Fehler aufgetreten."
     msgErrorUpdateApp: "Beim Öffnen des App-Stores ist ein Fehler aufgetreten"
     titlePagoPaUpdateApp: "Update erforderlich"
     messagePagoPaUpdateApp: "IO führt häufig kleine Verbesserungen und neue Funktionen ein: Um dein Konto weiterhin nutzen zu können, musst du die App auf die neueste Version aktualisieren."
@@ -994,7 +994,7 @@ wallet:
     subtitle: "Wenn du die Karte zu deinem Konto hinzufügst, kannst du In-App-Zahlungen vornehmen und an Initiativen teilnehmen, die auf IO verfügbar sind."
     infoTitle: "Als bevorzugte Zahlungsmethode festlegen"
     info: "Diese Zahlungsmethode wird automatisch für die nächste Zahlung in IO vorgeschlagen"
-    notice: "Um deine Karte zu überprüfen, behalten wir vorübergehend 0,02 € ein. Keine Sorge: Wir werden den betrag so schnell wie möglich zurückzahlen."
+    notice: "Um deine Karte zu überprüfen, behalten wir vorübergehend 0,02 € ein. Keine Sorge: Wir werden den Betrag so schnell wie möglich zurückzahlen."
     temporaryError: "Beim Speichern dieser Karte ist ein Fehler aufgetreten"
     temporarySubError: "Wir haben keine Antwort von den Sicherheitssystemen erhalten. Wir entschuldigen uns für die Unannehmlichkeiten."
     loadWalletsErrorTitle: "Die Systeme benötigen länger als erwartet"
@@ -1261,7 +1261,7 @@ wallet:
     GENERIC_ERROR: "Ein unerwarteter Fehler ist aufgetreten"
     GENERIC_ERROR_SUBTITLE: "Bitte versuche es erneut oder kontaktiere uns."
     DUPLICATED: "Dieser Hinweis wurde bereits bezahlt!"
-    INVALID_AMOUNT: "Der in der Zahlungsmitteilung angegebene Betrag ist falsch. Wenn du die Daten manuell eingegeben hast, überprüfe bitte, ob sie korrekt sind und versuchen es erneut."
+    INVALID_AMOUNT: "Der in der Zahlungsmitteilung angegebene Betrag ist falsch. Wenn du die Daten manuell eingegeben hast, überprüfe bitte, ob sie korrekt sind und versuche es erneut."
     PAYMENT_EXPIRED: "Die Zahlung für diese Zahlungsmitteilung ist nicht mehr möglich, da sie abgelaufen ist."
     PAYMENT_UNAVAILABLE: "Die Zahlung für diese Zahlungsmitteilung ist zur Zeit nicht möglich. Bitte versuche es später noch einmal."
     PAYMENT_UNKNOWN: "Diese Zahlungsmitteilung wird von der ausstellenden Körperschaft nicht anerkannt, die Zahlung kann nicht durchgeführt werden."
@@ -1339,7 +1339,7 @@ wallet:
       description: "Wenn das Problem weiterhin besteht, wende dich an den Support."
     code19:
       title: "Autorisierung verweigert"
-      description: "Möglicherweise hast du pagoPA von automatischen PayPal-Zahlungen ausgeschlossen. Lösche das PayPal-Konto aus deinem Konto, füge es wieder hinzu und versuche  erneut, die Zahlung vorzunehmen."
+      description: "Möglicherweise hast du pagoPA von automatischen PayPal-Zahlungen ausgeschlossen. Lösche das PayPal-Konto aus deinem Konto, füge es wieder hinzu und versuche erneut, die Zahlung vorzunehmen."
     addCreditCard:
       success:
         title: "Deine Karte wurde erfolgreich hinzugefügt!"
