@@ -1,4 +1,4 @@
-import { SafeAreaView, SectionList, View } from "react-native";
+import { SectionList, View } from "react-native";
 import { View as NBView } from "native-base";
 import * as React from "react";
 import { IOStyles } from "../../components/core/variables/IOStyles";
