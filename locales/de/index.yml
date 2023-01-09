@@ -1277,8 +1277,84 @@ wallet:
     loadingData: "Fehler beim Laden, bitte versuche es erneut."
   walletCardTransaction:
     contextualHelpTitle: "Mit dieser Zahlungsmethode durchgeführte Transaktionen"
+  bancomat:
+    details:
+      infobox:
+        one: "Mit PagoBANCOMAT-Karten "
+        two: "kann man nicht auf IO zahlen"
+        three: ", sondern nur in physischen Verkaufsstellen (POS)."
+      debit:
+        title: "Deine Karte hat mehr als ein Logo?"
+        body: "Wenn deine PagoBANCOMAT Karte andere internationale Zahlungsnetzwerke aufweist, kannst du diese hinzufügen, indem du nach allen Debit- oder Kreditkarten auf deinen Namen suchst."
+        addCta: "Zweites Zahlungsnetzwerk hinzufügen"
+  satispay:
+    details:
+      infobox:
+        one: "Satispay"
+        two: " erlaubt es noch nicht auf IO zu zahlen"
+        three: ": diese Funktion wird mit den nächsten Versionen der App aktiviert."
+  cobadge:
+    details:
+      card:
+        validUntil: "Gültig bis {{expiryDate}}"
+  newRemove:
+    title: "Möchtest du diese Zahlungsmethode entfernen?"
+    body: "Wir werden die Zahlungsmethode von deinem Konto entfernen. Alle Initiativen, mit denen sie verknüpft ist, werden innerhalb von 24 Stunden deaktiviert."
+    warningCapability: "Die Funktionen werden auch deaktiviert: "
+  capability:
+    title: "Verfügbare Initiativen"
+  outcomeMessage:
+    cta:
+      close: "Schließen"
+      learnMore: "Mehr erfahren"
+      visualizeCard: "Karte anzeigen"
+    fallback:
+      title: "Es ist ein unerwarteter Fehler aufgetreten"
+      description: "Wenn das Problem weiterhin besteht, wende dich an den Support."
+    code1:
+      title: "Es ist ein unerwarteter Fehler aufgetreten"
+      description: "Wenn das Problem weiterhin besteht, wende dich an den Support."
+    code2:
+      title: "Autorisierung verweigert"
+      description: "Deine Bank hat die Transaktion nicht genehmigt. Überprüfe, ob du die verschiedenen von deiner Bank geforderten Codes korrekt eingegeben hast."
+    code3:
+      title: "Die Daten der Karte sind fehlerhaft"
+      description: "Lösche die Karte aus deinem Konto und versuche, sie erneut hinzuzufügen. Vergewissere dich, dass die eingegebenen Daten genau mit denen auf der Karte übereinstimmen."
+    code4:
+      title: "Prüfe deine E-Mails"
+      description: "Es war nicht möglich, das Ergebnis der Zahlung zu überprüfen. Wenn sie erfolgreich war, erhälst du in Kürze eine E-Mail mit der Quittung. Solltest du die E-Mail nicht erhalten, wende dich bitte an den Support."
+    code7:
+      title: "Es liegt ein Problem mit deiner Karte vor"
+      description: "Es wurde kein Betrag abgebucht. Für weitere Informationen wende dich bitte an deine Bank."
+    code8:
+      title: "Die Transaktion wurde abgebrochen"
+    code10:
+      title: "Autorisierung verweigert"
+      description: "Du hast wahrscheinlich die Obergrenze deiner Zahlungsmethode überschritten. Erkundige dich bei deiner Bank, bevor du es erneut versuchst."
+    code15:
+      title: "Zahlungsmethode für In-App-Zahlungen aktivieren"
+      description: "Bevor du die Zahlung erneut versuchst, wähle die Zahlungsmethode in deinem Konto aus und aktiviere die Funktion “In-App-Zahlungen”."
+    code18:
+      title: "Es ist ein unerwarteter Fehler aufgetreten"
+      description: "Wenn das Problem weiterhin besteht, wende dich an den Support."
+    code19:
+      title: "Autorisierung verweigert"
+      description: "Möglicherweise hast du pagoPA von automatischen PayPal-Zahlungen ausgeschlossen. Lösche das PayPal-Konto aus deinem Konto, füge es wieder hinzu und versuche  erneut, die Zahlung vorzunehmen."
+    addCreditCard:
+      success:
+        title: "Deine Karte wurde erfolgreich hinzugefügt!"
+    payment:
+      success:
+        title: "Danke, die Transaktion war erfolgreich!"
+        description1: "Wir senden eine Quittung an"
+        description2: "Du kannst sie auch in deinem Konto finden."
+  abortWebView:
+    title: "Möchtest du die aktuelle Operation abbrechen?"
+    confirm: "Ja, beenden"
+    cancel: "Nein, fortfahren"
+    success: "Probleme beim Hinzufügen? Wende dich an deine Bank."
 saveCard:
-  saveCard: Speichern Sie die Karte
+  saveCard: "Karte speichern"
   header: Möchten Sie diese Karte speichern?
   favoriteTitle: Die Karte als bevorzugte Zahlungsmethode festlegen
   favoriteText: Diese Zahlungsmethode wird automatisch bei der nächsten Zahlung vorgeschlagen
