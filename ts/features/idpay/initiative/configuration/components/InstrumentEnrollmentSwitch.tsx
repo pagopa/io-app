@@ -20,10 +20,10 @@ import { instrumentStatusLabels } from "../../../common/labels";
 
 type InstrumentEnrollmentSwitchProps = {
   wallet: Wallet;
-  instrument?: InstrumentDTO;
+  status?: InstrumentDTO["status"];
   isDisabled?: boolean;
-  onEnrollInstrument: (walletId: number) => void;
-  onDeleteInstrument: (instrumentId: string) => void;
+  onEnrollInstrument?: (walletId: number) => void;
+  onDeleteInstrument?: (walletId: number) => void;
 };
 
 type InstrumentInfo = {
@@ -35,15 +35,8 @@ type InstrumentInfo = {
  * A component to enable/disable the enrollment of an instrument
  */
 const InstrumentEnrollmentSwitch = (props: InstrumentEnrollmentSwitchProps) => {
-  const {
-    wallet,
-    instrument,
-    isDisabled,
-    onEnrollInstrument,
-    onDeleteInstrument
-  } = props;
-
-  const status = instrument?.status;
+  const { wallet, status, isDisabled, onEnrollInstrument, onDeleteInstrument } =
+    props;
 
   const [switchStatus, setSwitchStatus] = React.useState(
     status === StatusEnum.ACTIVE
@@ -65,7 +58,9 @@ const InstrumentEnrollmentSwitch = (props: InstrumentEnrollmentSwitchProps) => {
       type="TwoButtonsInlineThird"
       rightButton={{
         onPress: () => {
-          onEnrollInstrument(wallet.idWallet);
+          if (onEnrollInstrument) {
+            onEnrollInstrument(wallet.idWallet);
+          }
           enrollmentBottomSheetModal.dismiss();
         },
         block: true,
@@ -88,10 +83,10 @@ const InstrumentEnrollmentSwitch = (props: InstrumentEnrollmentSwitchProps) => {
     />
   );
 
-  const handleSwitch = () => {
+  const handleChange = () => {
     if (switchStatus) {
-      if (instrument !== undefined) {
-        onDeleteInstrument(instrument.instrumentId);
+      if (onDeleteInstrument !== undefined) {
+        onDeleteInstrument(wallet.idWallet);
       }
     } else {
       setSwitchStatus(true);
@@ -128,7 +123,7 @@ const InstrumentEnrollmentSwitch = (props: InstrumentEnrollmentSwitchProps) => {
     return (
       <Switch
         value={switchStatus}
-        onChange={handleSwitch}
+        onChange={handleChange}
         disabled={isDisabled}
       />
     );

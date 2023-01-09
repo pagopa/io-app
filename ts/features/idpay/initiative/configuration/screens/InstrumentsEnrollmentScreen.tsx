@@ -65,15 +65,21 @@ const InstrumentsEnrollmentScreen = () => {
     });
   };
 
-  const sendEnrollInstrument = (idWallet: number): void => {
+  const sendEnrollInstrument = (walletId: number): void => {
     configurationMachine.send("ENROLL_INSTRUMENT", {
-      instrumentId: idWallet
+      instrumentId: walletId
     });
   };
 
-  const sendDeleteInstrument = (instrumentId: string): void => {
+  const sendDeleteInstrument = (walletId: number): void => {
+    const instrument = idPayInstrumentsByIdWallet[walletId];
+
+    if (instrument === undefined) {
+      return;
+    }
+
     configurationMachine.send("DELETE_INSTRUMENT", {
-      instrumentId
+      instrumentId: instrument.instrumentId
     });
   };
 
@@ -109,8 +115,9 @@ const InstrumentsEnrollmentScreen = () => {
                 <InstrumentEnrollmentSwitch
                   key={pagoPAInstrument.idWallet}
                   wallet={pagoPAInstrument}
-                  instrument={
+                  status={
                     idPayInstrumentsByIdWallet[pagoPAInstrument.idWallet]
+                      ?.status
                   }
                   isDisabled={isUpserting}
                   onEnrollInstrument={sendEnrollInstrument}
