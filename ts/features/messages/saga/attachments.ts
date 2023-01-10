@@ -42,10 +42,8 @@ export function* watchMessageAttachmentsSaga(
   // clear cache when user explicitly logs out
   yield* takeEvery(
     logoutSuccess,
-    function* (action: ActionType<typeof logoutSuccess>) {
-      if (!action.payload.keepUserData) {
-        yield* call(clearAllAttachments);
-      }
+    function* (_: ActionType<typeof logoutSuccess>) {
+      yield* call(clearAllAttachments);
     }
   );
 }
