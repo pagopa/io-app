@@ -18,7 +18,6 @@ import {
   bpdEnabled,
   bpdOptInPaymentMethodsEnabled,
   fimsEnabled,
-  idPayEnabled,
   myPortalEnabled,
   svEnabled,
   idPayEnabled
