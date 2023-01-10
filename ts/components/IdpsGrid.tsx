@@ -3,7 +3,14 @@
  * array property. When an Identity Provider is selected a callback function is called.
  */
 import * as React from "react";
-import { FlatList, Image, ListRenderItemInfo, StyleSheet } from "react-native";
+import {
+  FlatList,
+  Image,
+  ListRenderItemInfo,
+  StyleProp,
+  StyleSheet,
+  ViewStyle
+} from "react-native";
 
 import { Button } from "native-base";
 import { connect } from "react-redux";
@@ -14,6 +21,11 @@ import { LocalIdpsFallback } from "../utils/idps";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 
 type OwnProps = {
+  columnWrapperStyle?: StyleProp<ViewStyle>;
+  contentContainerStyle?: StyleProp<ViewStyle>;
+  footerComponent?: React.ReactNode;
+  headerComponentStyle?: StyleProp<ViewStyle>;
+  headerComponent?: React.ReactNode;
   // Array of Identity Provider to show in the grid.
   idps: ReadonlyArray<LocalIdpsFallback>;
   // A callback function called when an Identity Provider is selected
@@ -89,6 +101,11 @@ const IdpsGrid: React.FunctionComponent<Props> = (props: Props) => (
     numColumns={2}
     keyExtractor={keyExtractor}
     renderItem={renderItem(props)}
+    columnWrapperStyle={props.columnWrapperStyle}
+    contentContainerStyle={props.contentContainerStyle}
+    ListHeaderComponentStyle={props.headerComponentStyle}
+    ListHeaderComponent={props.headerComponent}
+    ListFooterComponent={props.footerComponent}
   />
 );
 
