@@ -15,13 +15,8 @@ import { SessionToken } from "../../types/SessionToken";
 import { SupportToken } from "../../../definitions/backend/SupportToken";
 import { SpidIdp } from "../../../definitions/content/SpidIdp";
 
-export type LogoutOption = {
-  keepUserData: boolean;
-};
-
 export type LogoutError = {
   error: Error;
-  options: LogoutOption;
 };
 
 export type CheckSessionResult = {
@@ -51,11 +46,9 @@ export const loginFailure = createStandardAction("LOGIN_FAILURE")<{
   idp: string;
 }>();
 
-export const logoutRequest =
-  createStandardAction("LOGOUT_REQUEST")<LogoutOption>();
+export const logoutRequest = createStandardAction("LOGOUT_REQUEST")();
 
-export const logoutSuccess =
-  createStandardAction("LOGOUT_SUCCESS")<LogoutOption>();
+export const logoutSuccess = createStandardAction("LOGOUT_SUCCESS")();
 
 export const logoutFailure = createAction(
   "LOGOUT_FAILURE",
