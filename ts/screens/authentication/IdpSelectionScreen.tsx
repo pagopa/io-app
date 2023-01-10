@@ -1,7 +1,7 @@
-import { Content, Text as NBText, View } from "native-base";
+import { Text as NBText } from "native-base";
 import * as React from "react";
 import { useNavigation } from "@react-navigation/native";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { useEffect, useState } from "react";
@@ -39,9 +39,26 @@ const TAPS_TO_OPEN_TESTIDP = 5;
 
 const styles = StyleSheet.create({
   gridContainer: {
-    padding: variables.contentPadding,
-    flex: 1,
+    flex: 1
+  },
+  footerAdviceContainer: {
+    backgroundColor: IOColors.white,
+    paddingHorizontal: variables.contentPadding,
+    paddingVertical: variables.spacerExtralargeHeight,
+    marginTop: variables.contentPadding
+  },
+  footerCancelButton: {
+    marginTop: variables.spacerHeight,
+    marginHorizontal: variables.contentPadding
+  },
+  ipdsGridColumnStyle: {
+    paddingHorizontal: variables.contentPadding
+  },
+  ipdsGridContentContainerStyle: {
     backgroundColor: IOColors.greyUltraLight
+  },
+  ipdsGridHeaderComponentStyle: {
+    marginTop: variables.contentPadding
   }
 });
 
@@ -93,6 +110,28 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
     }
   }, [counter, setSelectedIdp, navigation]);
 
+  const headerComponent = () => <View />;
+
+  const footerComponent = () => (
+    <View>
+      <ButtonDefaultOpacity
+        block={true}
+        light={true}
+        bordered={true}
+        onPress={navigation.goBack}
+        style={styles.footerCancelButton}
+      >
+        <NBText>{I18n.t("global.buttons.cancel")}</NBText>
+      </ButtonDefaultOpacity>
+      <View style={styles.footerAdviceContainer}>
+        <AdviceComponent
+          text={I18n.t("login.expiration_info")}
+          iconColor={"black"}
+        />
+      </View>
+    </View>
+  );
+
   return (
     <BaseScreenComponent
       contextualHelpMarkdown={contextualHelpMarkdown}
@@ -101,34 +140,20 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
       headerTitle={I18n.t("authentication.idp_selection.headerTitle")}
     >
       <LoadingSpinnerOverlay isLoading={props.isIdpsLoading}>
-        <Content noPadded={true} overScrollMode={"never"} bounces={false}>
-          <ScreenContentHeader
-            title={I18n.t("authentication.idp_selection.contentTitle")}
+        <ScreenContentHeader
+          title={I18n.t("authentication.idp_selection.contentTitle")}
+        />
+        <View style={styles.gridContainer}>
+          <IdpsGrid
+            idps={[...props.idps, testIdp]}
+            onIdpSelected={onIdpSelected}
+            columnWrapperStyle={styles.ipdsGridColumnStyle}
+            contentContainerStyle={styles.ipdsGridContentContainerStyle}
+            headerComponent={headerComponent}
+            headerComponentStyle={styles.ipdsGridHeaderComponentStyle}
+            footerComponent={footerComponent}
           />
-          <View style={styles.gridContainer} testID={"idps-view"}>
-            <IdpsGrid
-              idps={[...props.idps, testIdp]}
-              onIdpSelected={onIdpSelected}
-            />
-
-            <View spacer={true} />
-            <ButtonDefaultOpacity
-              block={true}
-              light={true}
-              bordered={true}
-              onPress={navigation.goBack}
-            >
-              <NBText>{I18n.t("global.buttons.cancel")}</NBText>
-            </ButtonDefaultOpacity>
-          </View>
-          <View style={{ padding: variables.contentPadding }}>
-            <View spacer={true} />
-            <AdviceComponent
-              text={I18n.t("login.expiration_info")}
-              iconColor={"black"}
-            />
-          </View>
-        </Content>
+        </View>
       </LoadingSpinnerOverlay>
     </BaseScreenComponent>
   );
