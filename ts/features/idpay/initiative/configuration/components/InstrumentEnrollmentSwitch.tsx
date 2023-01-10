@@ -1,29 +1,28 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { Badge, ListItem, View } from "native-base";
-import { default as React } from "react";
+import { default as React, forwardRef, useImperativeHandle } from "react";
 import { StyleSheet } from "react-native";
 import {
   InstrumentDTO,
   StatusEnum
 } from "../../../../../../definitions/idpay/wallet/InstrumentDTO";
-import { Body } from "../../../../../components/core/typography/Body";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
-import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import Switch from "../../../../../components/ui/Switch";
-import I18n from "../../../../../i18n";
 import { Wallet } from "../../../../../types/pagopa";
-import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { instrumentStatusLabels } from "../../../common/labels";
+
+export type InstrumentEnrollmentSwitchRef = {
+  setSwitchStatus: (status: boolean) => void;
+};
 
 type InstrumentEnrollmentSwitchProps = {
   wallet: Wallet;
   status?: InstrumentDTO["status"];
   isDisabled?: boolean;
-  onEnrollInstrument?: (walletId: number) => void;
-  onDeleteInstrument?: (walletId: number) => void;
+  onSwitch: (walletId: number, isEnrolling: boolean) => void;
 };
 
 type InstrumentInfo = {
@@ -34,64 +33,23 @@ type InstrumentInfo = {
 /**
  * A component to enable/disable the enrollment of an instrument
  */
-const InstrumentEnrollmentSwitch = (props: InstrumentEnrollmentSwitchProps) => {
-  const { wallet, status, isDisabled, onEnrollInstrument, onDeleteInstrument } =
-    props;
+const InstrumentEnrollmentSwitch = forwardRef<
+  InstrumentEnrollmentSwitchRef,
+  InstrumentEnrollmentSwitchProps
+>((props, ref) => {
+  const { wallet, status, isDisabled, onSwitch } = props;
 
   const [switchStatus, setSwitchStatus] = React.useState(
     status === StatusEnum.ACTIVE
   );
 
-  const enrollmentBottomSheetModal = useIOBottomSheetModal(
-    <Body>
-      {I18n.t("idpay.initiative.configuration.bottomSheet.bodyFirst")}
-      <Body weight="SemiBold">
-        {I18n.t("idpay.initiative.configuration.bottomSheet.bodyBold") + "\n"}
-      </Body>
-      {I18n.t("idpay.initiative.configuration.bottomSheet.bodyLast")}
-    </Body>,
-
-    I18n.t("idpay.initiative.configuration.bottomSheet.header"),
-    270,
-
-    <FooterWithButtons
-      type="TwoButtonsInlineThird"
-      rightButton={{
-        onPress: () => {
-          if (onEnrollInstrument) {
-            onEnrollInstrument(wallet.idWallet);
-          }
-          enrollmentBottomSheetModal.dismiss();
-        },
-        block: true,
-        bordered: false,
-        title: I18n.t(
-          "idpay.initiative.configuration.bottomSheet.footer.buttonActivate"
-        )
-      }}
-      leftButton={{
-        onPress: () => {
-          setSwitchStatus(false);
-          enrollmentBottomSheetModal.dismiss();
-        },
-        block: true,
-        bordered: true,
-        title: I18n.t(
-          "idpay.initiative.configuration.bottomSheet.footer.buttonCancel"
-        )
-      }}
-    />
-  );
+  useImperativeHandle(ref, () => ({
+    setSwitchStatus
+  }));
 
   const handleChange = () => {
-    if (switchStatus) {
-      if (onDeleteInstrument !== undefined) {
-        onDeleteInstrument(wallet.idWallet);
-      }
-    } else {
-      setSwitchStatus(true);
-      enrollmentBottomSheetModal.present();
-    }
+    setSwitchStatus(!switchStatus);
+    onSwitch(wallet.idWallet, !switchStatus);
   };
 
   const getPaymentMethodInfo = (wallet: Wallet): O.Option<InstrumentInfo> => {
@@ -138,17 +96,14 @@ const InstrumentEnrollmentSwitch = (props: InstrumentEnrollmentSwitchProps) => {
   );
 
   return (
-    <>
-      <ListItem>
-        <View style={styles.listItemContainer}>
-          <H4>{instrumentInfo.maskedPan}</H4>
-          {renderControl()}
-        </View>
-      </ListItem>
-      {enrollmentBottomSheetModal.bottomSheet}
-    </>
+    <ListItem>
+      <View style={styles.listItemContainer}>
+        <H4>{instrumentInfo.maskedPan}</H4>
+        {renderControl()}
+      </View>
+    </ListItem>
   );
-};
+});
 
 const styles = StyleSheet.create({
   listItemContainer: {
