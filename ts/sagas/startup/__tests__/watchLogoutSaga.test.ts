@@ -10,11 +10,10 @@ const logout = jest.fn();
 
 const takeCancellableAction = [logoutRequest, logoutSuccess, logoutFailure];
 
-const logoutRequestAct = logoutRequest({ keepUserData: true });
-const logoutSuccessAct = logoutSuccess({ keepUserData: true });
+const logoutRequestAct = logoutRequest();
+const logoutSuccessAct = logoutSuccess();
 const logoutFailureAct = logoutFailure({
-  error: new Error(),
-  options: { keepUserData: true }
+  error: new Error()
 });
 
 describe("watchLogoutSaga", () => {
