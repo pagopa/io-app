@@ -18,6 +18,7 @@ import {
   bpdEnabled,
   bpdOptInPaymentMethodsEnabled,
   fimsEnabled,
+  idPayEnabled,
   myPortalEnabled,
   svEnabled
 } from "../config";
@@ -265,7 +266,7 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
         ...(isFimsEnabled ? fimsLinkingOptions : {}),
         ...(cgnEnabled ? cgnLinkingOptions : {}),
         ...(isFciEnabled ? fciLinkingOptions : {}),
-        ...idPayOnboardingLinkingOptions,
+        ...(idPayEnabled ? idPayOnboardingLinkingOptions : {}),
         [UADONATION_ROUTES.WEBVIEW]: "uadonations-webview",
         [ROUTES.WORKUNIT_GENERIC_FAILURE]: "*"
       }
