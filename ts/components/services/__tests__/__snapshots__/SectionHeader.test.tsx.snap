@@ -49,6 +49,7 @@ exports[`SectionHeader component should match the snapshot 1`] = `
   </Text>
   <Text
     accessibilityRole="header"
+    allowFontScaling={true}
     color="bluegrey"
     font="TitilliumWeb"
     fontStyle={
@@ -56,6 +57,7 @@ exports[`SectionHeader component should match the snapshot 1`] = `
         "fontSize": 18,
       }
     }
+    maxFontSizeMultiplier={1.5}
     style={
       Array [
         Object {

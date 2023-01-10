@@ -2,6 +2,7 @@
 
 exports[`Test LinkedText component should render a LinkedText component with props correctly 1`] = `
 <Text
+  allowFontScaling={true}
   color="bluegreyDark"
   font="TitilliumWeb"
   fontStyle={
@@ -10,6 +11,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
       "lineHeight": 22,
     }
   }
+  maxFontSizeMultiplier={1.5}
   style={
     Array [
       Object {
@@ -28,6 +30,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
   weightColorFactory={[Function]}
 >
   <Text
+    allowFontScaling={true}
     color="bluegreyDark"
     font="TitilliumWeb"
     fontStyle={
@@ -36,6 +39,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
         "lineHeight": 22,
       }
     }
+    maxFontSizeMultiplier={1.5}
     style={
       Array [
         Object {
@@ -54,6 +58,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     weightColorFactory={[Function]}
   />
   <Text
+    allowFontScaling={true}
     color="bluegreyDark"
     font="TitilliumWeb"
     fontStyle={
@@ -62,6 +67,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
         "lineHeight": 22,
       }
     }
+    maxFontSizeMultiplier={1.5}
     style={
       Array [
         Object {
@@ -82,6 +88,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     C
   </Text>
   <Text
+    allowFontScaling={true}
     color="bluegreyDark"
     font="TitilliumWeb"
     fontStyle={
@@ -90,6 +97,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
         "lineHeight": 22,
       }
     }
+    maxFontSizeMultiplier={1.5}
     style={
       Array [
         Object {
@@ -110,6 +118,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     l
   </Text>
   <Text
+    allowFontScaling={true}
     color="bluegreyDark"
     font="TitilliumWeb"
     fontStyle={
@@ -118,6 +127,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
         "lineHeight": 22,
       }
     }
+    maxFontSizeMultiplier={1.5}
     style={
       Array [
         Object {
@@ -138,6 +148,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     a
   </Text>
   <Text
+    allowFontScaling={true}
     color="bluegreyDark"
     font="TitilliumWeb"
     fontStyle={
@@ -146,6 +157,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
         "lineHeight": 22,
       }
     }
+    maxFontSizeMultiplier={1.5}
     style={
       Array [
         Object {
@@ -166,6 +178,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     u
   </Text>
   <Text
+    allowFontScaling={true}
     color="bluegreyDark"
     font="TitilliumWeb"
     fontStyle={
@@ -174,6 +187,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
         "lineHeight": 22,
       }
     }
+    maxFontSizeMultiplier={1.5}
     style={
       Array [
         Object {
@@ -194,6 +208,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     s
   </Text>
   <Text
+    allowFontScaling={true}
     color="bluegreyDark"
     font="TitilliumWeb"
     fontStyle={
@@ -202,6 +217,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
         "lineHeight": 22,
       }
     }
+    maxFontSizeMultiplier={1.5}
     style={
       Array [
         Object {
@@ -222,6 +238,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     e
   </Text>
   <Text
+    allowFontScaling={true}
     color="bluegreyDark"
     font="TitilliumWeb"
     fontStyle={
@@ -230,6 +247,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
         "lineHeight": 22,
       }
     }
+    maxFontSizeMultiplier={1.5}
     style={
       Array [
         Object {
@@ -250,6 +268,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
      
   </Text>
   <Text
+    allowFontScaling={true}
     color="bluegreyDark"
     font="TitilliumWeb"
     fontStyle={
@@ -258,6 +277,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
         "lineHeight": 22,
       }
     }
+    maxFontSizeMultiplier={1.5}
     style={
       Array [
         Object {
@@ -278,6 +298,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     t
   </Text>
   <Text
+    allowFontScaling={true}
     color="bluegreyDark"
     font="TitilliumWeb"
     fontStyle={
@@ -286,6 +307,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
         "lineHeight": 22,
       }
     }
+    maxFontSizeMultiplier={1.5}
     style={
       Array [
         Object {
@@ -306,6 +328,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     i
   </Text>
   <Text
+    allowFontScaling={true}
     color="bluegreyDark"
     font="TitilliumWeb"
     fontStyle={
@@ -314,6 +337,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
         "lineHeight": 22,
       }
     }
+    maxFontSizeMultiplier={1.5}
     style={
       Array [
         Object {
@@ -334,6 +358,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     t
   </Text>
   <Text
+    allowFontScaling={true}
     color="bluegreyDark"
     font="TitilliumWeb"
     fontStyle={
@@ -342,6 +367,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
         "lineHeight": 22,
       }
     }
+    maxFontSizeMultiplier={1.5}
     style={
       Array [
         Object {
@@ -362,6 +388,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     l
   </Text>
   <Text
+    allowFontScaling={true}
     color="bluegreyDark"
     font="TitilliumWeb"
     fontStyle={
@@ -370,6 +397,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
         "lineHeight": 22,
       }
     }
+    maxFontSizeMultiplier={1.5}
     style={
       Array [
         Object {
@@ -390,6 +418,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     e
   </Text>
   <Text
+    allowFontScaling={true}
     color="bluegreyDark"
     font="TitilliumWeb"
     fontStyle={
@@ -398,6 +427,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
         "lineHeight": 22,
       }
     }
+    maxFontSizeMultiplier={1.5}
     style={
       Array [
         Object {
@@ -418,6 +448,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
      
   </Text>
   <Text
+    allowFontScaling={true}
     color="bluegreyDark"
     font="TitilliumWeb"
     fontStyle={
@@ -426,6 +457,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
         "lineHeight": 22,
       }
     }
+    maxFontSizeMultiplier={1.5}
     style={
       Array [
         Object {
@@ -446,6 +478,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
     1
   </Text>
   <Text
+    allowFontScaling={true}
     color="bluegreyDark"
     font="TitilliumWeb"
     fontStyle={
@@ -454,6 +487,7 @@ exports[`Test LinkedText component should render a LinkedText component with pro
         "lineHeight": 22,
       }
     }
+    maxFontSizeMultiplier={1.5}
     style={
       Array [
         Object {

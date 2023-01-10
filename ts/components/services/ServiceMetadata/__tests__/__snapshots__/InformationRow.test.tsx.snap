@@ -30,6 +30,7 @@ exports[`the InformationRow component should match the snapshot 1`] = `
     }
   >
     <Text
+      allowFontScaling={true}
       color="bluegrey"
       ellipsizeMode="tail"
       font="TitilliumWeb"
@@ -39,6 +40,7 @@ exports[`the InformationRow component should match the snapshot 1`] = `
           "lineHeight": 22,
         }
       }
+      maxFontSizeMultiplier={1.5}
       numberOfLines={1}
       style={
         Array [
@@ -67,6 +69,7 @@ exports[`the InformationRow component should match the snapshot 1`] = `
       style={Object {}}
     />
     <Text
+      allowFontScaling={true}
       color="blue"
       ellipsizeMode="tail"
       font="TitilliumWeb"
@@ -76,6 +79,7 @@ exports[`the InformationRow component should match the snapshot 1`] = `
           "lineHeight": 22,
         }
       }
+      maxFontSizeMultiplier={1.5}
       numberOfLines={1}
       style={
         Array [

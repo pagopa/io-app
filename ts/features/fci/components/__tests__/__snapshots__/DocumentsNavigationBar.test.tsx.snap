@@ -117,6 +117,7 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
         v
       </Text>
       <Text
+        allowFontScaling={true}
         color="bluegreyDark"
         font="TitilliumWeb"
         fontStyle={
@@ -125,6 +126,7 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
             "lineHeight": 22,
           }
         }
+        maxFontSizeMultiplier={1.5}
         style={
           Array [
             Object {
@@ -208,6 +210,7 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
       }
     >
       <Text
+        allowFontScaling={true}
         color="bluegreyDark"
         font="TitilliumWeb"
         fontStyle={
@@ -216,6 +219,7 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
             "lineHeight": 22,
           }
         }
+        maxFontSizeMultiplier={1.5}
         style={
           Array [
             Object {

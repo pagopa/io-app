@@ -47,6 +47,7 @@ exports[`when rendering on match snapshot for OTP discount 1`] = `
     <Text
       accessibilityRole="header"
       accessible={true}
+      allowFontScaling={true}
       color="bluegreyDark"
       font="TitilliumWeb"
       fontStyle={
@@ -54,6 +55,7 @@ exports[`when rendering on match snapshot for OTP discount 1`] = `
           "fontSize": 18,
         }
       }
+      maxFontSizeMultiplier={1.5}
       style={
         Array [
           Object {
@@ -98,8 +100,10 @@ exports[`when rendering on match snapshot for OTP discount 1`] = `
       }
     >
       <Text
+        allowFontScaling={true}
         color="bluegreyDark"
         font="RobotoMono"
+        maxFontSizeMultiplier={1.5}
         style={
           Array [
             Object {
@@ -132,6 +136,7 @@ exports[`when rendering on match snapshot for OTP discount 1`] = `
   <Text
     accessibilityRole="header"
     accessible={true}
+    allowFontScaling={true}
     color="bluegreyDark"
     font="TitilliumWeb"
     fontStyle={
@@ -139,6 +144,7 @@ exports[`when rendering on match snapshot for OTP discount 1`] = `
         "fontSize": 18,
       }
     }
+    maxFontSizeMultiplier={1.5}
     style={
       Array [
         Object {
@@ -158,6 +164,7 @@ exports[`when rendering on match snapshot for OTP discount 1`] = `
     Validity
   </Text>
   <Text
+    allowFontScaling={true}
     color="bluegreyDark"
     font="TitilliumWeb"
     fontStyle={
@@ -166,6 +173,7 @@ exports[`when rendering on match snapshot for OTP discount 1`] = `
         "lineHeight": 22,
       }
     }
+    maxFontSizeMultiplier={1.5}
     style={
       Array [
         Object {
@@ -230,6 +238,7 @@ exports[`when rendering on match snapshot for bucket discount 1`] = `
   <Text
     accessibilityRole="header"
     accessible={true}
+    allowFontScaling={true}
     color="bluegreyDark"
     font="TitilliumWeb"
     fontStyle={
@@ -237,6 +246,7 @@ exports[`when rendering on match snapshot for bucket discount 1`] = `
         "fontSize": 18,
       }
     }
+    maxFontSizeMultiplier={1.5}
     style={
       Array [
         Object {
@@ -256,6 +266,7 @@ exports[`when rendering on match snapshot for bucket discount 1`] = `
     Validity
   </Text>
   <Text
+    allowFontScaling={true}
     color="bluegreyDark"
     font="TitilliumWeb"
     fontStyle={
@@ -264,6 +275,7 @@ exports[`when rendering on match snapshot for bucket discount 1`] = `
         "lineHeight": 22,
       }
     }
+    maxFontSizeMultiplier={1.5}
     style={
       Array [
         Object {
@@ -328,6 +340,7 @@ exports[`when rendering on match snapshot for landing page discount 1`] = `
   <Text
     accessibilityRole="header"
     accessible={true}
+    allowFontScaling={true}
     color="bluegreyDark"
     font="TitilliumWeb"
     fontStyle={
@@ -335,6 +348,7 @@ exports[`when rendering on match snapshot for landing page discount 1`] = `
         "fontSize": 18,
       }
     }
+    maxFontSizeMultiplier={1.5}
     style={
       Array [
         Object {
@@ -354,6 +368,7 @@ exports[`when rendering on match snapshot for landing page discount 1`] = `
     Validity
   </Text>
   <Text
+    allowFontScaling={true}
     color="bluegreyDark"
     font="TitilliumWeb"
     fontStyle={
@@ -362,6 +377,7 @@ exports[`when rendering on match snapshot for landing page discount 1`] = `
         "lineHeight": 22,
       }
     }
+    maxFontSizeMultiplier={1.5}
     style={
       Array [
         Object {
@@ -431,6 +447,7 @@ exports[`when rendering on match snapshot for static code 1`] = `
   <Text
     accessibilityRole="header"
     accessible={true}
+    allowFontScaling={true}
     color="bluegreyDark"
     font="TitilliumWeb"
     fontStyle={
@@ -438,6 +455,7 @@ exports[`when rendering on match snapshot for static code 1`] = `
         "fontSize": 18,
       }
     }
+    maxFontSizeMultiplier={1.5}
     style={
       Array [
         Object {
@@ -483,8 +501,10 @@ exports[`when rendering on match snapshot for static code 1`] = `
     testID="static-code-component"
   >
     <Text
+      allowFontScaling={true}
       color="bluegreyDark"
       font="RobotoMono"
+      maxFontSizeMultiplier={1.5}
       style={
         Array [
           Object {
@@ -516,6 +536,7 @@ exports[`when rendering on match snapshot for static code 1`] = `
   <Text
     accessibilityRole="header"
     accessible={true}
+    allowFontScaling={true}
     color="bluegreyDark"
     font="TitilliumWeb"
     fontStyle={
@@ -523,6 +544,7 @@ exports[`when rendering on match snapshot for static code 1`] = `
         "fontSize": 18,
       }
     }
+    maxFontSizeMultiplier={1.5}
     style={
       Array [
         Object {
@@ -542,6 +564,7 @@ exports[`when rendering on match snapshot for static code 1`] = `
     Validity
   </Text>
   <Text
+    allowFontScaling={true}
     color="bluegreyDark"
     font="TitilliumWeb"
     fontStyle={
@@ -550,6 +573,7 @@ exports[`when rendering on match snapshot for static code 1`] = `
         "lineHeight": 22,
       }
     }
+    maxFontSizeMultiplier={1.5}
     style={
       Array [
         Object {

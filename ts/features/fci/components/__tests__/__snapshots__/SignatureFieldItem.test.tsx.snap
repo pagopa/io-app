@@ -54,6 +54,7 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
       }
     >
       <Text
+        allowFontScaling={true}
         color="bluegreyDark"
         font="TitilliumWeb"
         fontStyle={
@@ -62,6 +63,7 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
             "lineHeight": 22,
           }
         }
+        maxFontSizeMultiplier={1.5}
         style={
           Array [
             Object {
@@ -87,6 +89,7 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
       </Text>
       <Text
         accessibilityRole="link"
+        allowFontScaling={true}
         color="blue"
         defaultColor="blue"
         defaultWeight="SemiBold"
@@ -97,6 +100,7 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
             "textDecorationLine": "underline",
           }
         }
+        maxFontSizeMultiplier={1.5}
         onPress={[MockFunction]}
         style={
           Array [

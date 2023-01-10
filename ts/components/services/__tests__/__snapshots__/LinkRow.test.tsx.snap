@@ -4,6 +4,7 @@ exports[`LinkRow component should match the snapshot 1`] = `
 Array [
   <Text
     accessibilityRole="link"
+    allowFontScaling={true}
     color="blue"
     defaultColor="blue"
     defaultWeight="SemiBold"
@@ -15,6 +16,7 @@ Array [
         "textDecorationLine": "underline",
       }
     }
+    maxFontSizeMultiplier={1.5}
     numberOfLines={1}
     onPress={[Function]}
     style={

@@ -19,6 +19,7 @@ exports[`OrganizationHeader should match the snapshot 1`] = `
     }
   >
     <Text
+      allowFontScaling={true}
       color="bluegreyDark"
       defaultColor="bluegreyDark"
       defaultWeight="Bold"
@@ -29,6 +30,7 @@ exports[`OrganizationHeader should match the snapshot 1`] = `
           "lineHeight": 24,
         }
       }
+      maxFontSizeMultiplier={1.5}
       style={
         Array [
           Object {

@@ -2,6 +2,7 @@
 
 exports[`Test Typography Components Body Snapshot 1`] = `
 <Text
+  allowFontScaling={true}
   color="bluegreyDark"
   defaultColor="bluegreyDark"
   defaultWeight="Regular"
@@ -12,6 +13,7 @@ exports[`Test Typography Components Body Snapshot 1`] = `
       "lineHeight": 24,
     }
   }
+  maxFontSizeMultiplier={1.5}
   style={
     Array [
       Object {
@@ -34,6 +36,7 @@ exports[`Test Typography Components Body Snapshot 1`] = `
 
 exports[`Test Typography Components H1 Snapshot 1`] = `
 <Text
+  allowFontScaling={true}
   color="bluegreyDark"
   defaultColor="bluegreyDark"
   defaultWeight="Bold"
@@ -44,6 +47,7 @@ exports[`Test Typography Components H1 Snapshot 1`] = `
       "lineHeight": 32,
     }
   }
+  maxFontSizeMultiplier={1.5}
   style={
     Array [
       Object {
@@ -66,6 +70,7 @@ exports[`Test Typography Components H1 Snapshot 1`] = `
 
 exports[`Test Typography Components H1 Snapshot 2`] = `
 <Text
+  allowFontScaling={true}
   color="white"
   defaultColor="bluegreyDark"
   defaultWeight="Bold"
@@ -76,6 +81,7 @@ exports[`Test Typography Components H1 Snapshot 2`] = `
       "lineHeight": 32,
     }
   }
+  maxFontSizeMultiplier={1.5}
   style={
     Array [
       Object {
@@ -98,6 +104,7 @@ exports[`Test Typography Components H1 Snapshot 2`] = `
 
 exports[`Test Typography Components H2 Snapshot 1`] = `
 <Text
+  allowFontScaling={true}
   color="bluegreyDark"
   defaultColor="bluegreyDark"
   defaultWeight="Bold"
@@ -108,6 +115,7 @@ exports[`Test Typography Components H2 Snapshot 1`] = `
       "lineHeight": 24,
     }
   }
+  maxFontSizeMultiplier={1.5}
   style={
     Array [
       Object {
@@ -130,6 +138,7 @@ exports[`Test Typography Components H2 Snapshot 1`] = `
 
 exports[`Test Typography Components H3 Snapshot 1`] = `
 <Text
+  allowFontScaling={true}
   color="bluegreyDark"
   font="TitilliumWeb"
   fontStyle={
@@ -137,6 +146,7 @@ exports[`Test Typography Components H3 Snapshot 1`] = `
       "fontSize": 18,
     }
   }
+  maxFontSizeMultiplier={1.5}
   style={
     Array [
       Object {
@@ -159,6 +169,7 @@ exports[`Test Typography Components H3 Snapshot 1`] = `
 
 exports[`Test Typography Components H3 Snapshot 2`] = `
 <Text
+  allowFontScaling={true}
   color="bluegreyLight"
   font="TitilliumWeb"
   fontStyle={
@@ -166,6 +177,7 @@ exports[`Test Typography Components H3 Snapshot 2`] = `
       "fontSize": 18,
     }
   }
+  maxFontSizeMultiplier={1.5}
   style={
     Array [
       Object {
@@ -188,6 +200,7 @@ exports[`Test Typography Components H3 Snapshot 2`] = `
 
 exports[`Test Typography Components H3 Snapshot 3`] = `
 <Text
+  allowFontScaling={true}
   color="white"
   font="TitilliumWeb"
   fontStyle={
@@ -195,6 +208,7 @@ exports[`Test Typography Components H3 Snapshot 3`] = `
       "fontSize": 18,
     }
   }
+  maxFontSizeMultiplier={1.5}
   style={
     Array [
       Object {
@@ -217,6 +231,7 @@ exports[`Test Typography Components H3 Snapshot 3`] = `
 
 exports[`Test Typography Components H3 Snapshot 4`] = `
 <Text
+  allowFontScaling={true}
   color="white"
   font="TitilliumWeb"
   fontStyle={
@@ -224,6 +239,7 @@ exports[`Test Typography Components H3 Snapshot 4`] = `
       "fontSize": 18,
     }
   }
+  maxFontSizeMultiplier={1.5}
   style={
     Array [
       Object {
@@ -246,6 +262,7 @@ exports[`Test Typography Components H3 Snapshot 4`] = `
 
 exports[`Test Typography Components H3 Snapshot 5`] = `
 <Text
+  allowFontScaling={true}
   color="white"
   font="TitilliumWeb"
   fontStyle={
@@ -253,6 +270,7 @@ exports[`Test Typography Components H3 Snapshot 5`] = `
       "fontSize": 18,
     }
   }
+  maxFontSizeMultiplier={1.5}
   style={
     Array [
       Object {
@@ -275,6 +293,7 @@ exports[`Test Typography Components H3 Snapshot 5`] = `
 
 exports[`Test Typography Components H4 Snapshot 1`] = `
 <Text
+  allowFontScaling={true}
   color="bluegreyDark"
   font="TitilliumWeb"
   fontStyle={
@@ -283,6 +302,7 @@ exports[`Test Typography Components H4 Snapshot 1`] = `
       "lineHeight": 22,
     }
   }
+  maxFontSizeMultiplier={1.5}
   style={
     Array [
       Object {
@@ -306,6 +326,7 @@ exports[`Test Typography Components H4 Snapshot 1`] = `
 
 exports[`Test Typography Components H4 Snapshot 2`] = `
 <Text
+  allowFontScaling={true}
   color="blue"
   font="TitilliumWeb"
   fontStyle={
@@ -314,6 +335,7 @@ exports[`Test Typography Components H4 Snapshot 2`] = `
       "lineHeight": 22,
     }
   }
+  maxFontSizeMultiplier={1.5}
   style={
     Array [
       Object {
@@ -337,6 +359,7 @@ exports[`Test Typography Components H4 Snapshot 2`] = `
 
 exports[`Test Typography Components H4 Snapshot 3`] = `
 <Text
+  allowFontScaling={true}
   color="white"
   font="TitilliumWeb"
   fontStyle={
@@ -345,6 +368,7 @@ exports[`Test Typography Components H4 Snapshot 3`] = `
       "lineHeight": 22,
     }
   }
+  maxFontSizeMultiplier={1.5}
   style={
     Array [
       Object {
@@ -368,6 +392,7 @@ exports[`Test Typography Components H4 Snapshot 3`] = `
 
 exports[`Test Typography Components H4 Snapshot 4`] = `
 <Text
+  allowFontScaling={true}
   color="white"
   font="TitilliumWeb"
   fontStyle={
@@ -376,6 +401,7 @@ exports[`Test Typography Components H4 Snapshot 4`] = `
       "lineHeight": 22,
     }
   }
+  maxFontSizeMultiplier={1.5}
   style={
     Array [
       Object {
@@ -399,6 +425,7 @@ exports[`Test Typography Components H4 Snapshot 4`] = `
 
 exports[`Test Typography Components H4 Snapshot 5`] = `
 <Text
+  allowFontScaling={true}
   color="white"
   font="TitilliumWeb"
   fontStyle={
@@ -407,6 +434,7 @@ exports[`Test Typography Components H4 Snapshot 5`] = `
       "lineHeight": 22,
     }
   }
+  maxFontSizeMultiplier={1.5}
   style={
     Array [
       Object {
@@ -430,6 +458,7 @@ exports[`Test Typography Components H4 Snapshot 5`] = `
 
 exports[`Test Typography Components H4 Snapshot 6`] = `
 <Text
+  allowFontScaling={true}
   color="bluegreyDark"
   font="TitilliumWeb"
   fontStyle={
@@ -438,6 +467,7 @@ exports[`Test Typography Components H4 Snapshot 6`] = `
       "lineHeight": 22,
     }
   }
+  maxFontSizeMultiplier={1.5}
   style={
     Array [
       Object {
@@ -461,6 +491,7 @@ exports[`Test Typography Components H4 Snapshot 6`] = `
 
 exports[`Test Typography Components H4 Snapshot 7`] = `
 <Text
+  allowFontScaling={true}
   color="bluegrey"
   font="TitilliumWeb"
   fontStyle={
@@ -469,6 +500,7 @@ exports[`Test Typography Components H4 Snapshot 7`] = `
       "lineHeight": 22,
     }
   }
+  maxFontSizeMultiplier={1.5}
   style={
     Array [
       Object {
@@ -492,6 +524,7 @@ exports[`Test Typography Components H4 Snapshot 7`] = `
 
 exports[`Test Typography Components H4 Snapshot 8`] = `
 <Text
+  allowFontScaling={true}
   color="bluegreyLight"
   font="TitilliumWeb"
   fontStyle={
@@ -500,6 +533,7 @@ exports[`Test Typography Components H4 Snapshot 8`] = `
       "lineHeight": 22,
     }
   }
+  maxFontSizeMultiplier={1.5}
   style={
     Array [
       Object {
@@ -523,6 +557,7 @@ exports[`Test Typography Components H4 Snapshot 8`] = `
 
 exports[`Test Typography Components H4 Snapshot 9`] = `
 <Text
+  allowFontScaling={true}
   color="white"
   font="TitilliumWeb"
   fontStyle={
@@ -531,6 +566,7 @@ exports[`Test Typography Components H4 Snapshot 9`] = `
       "lineHeight": 22,
     }
   }
+  maxFontSizeMultiplier={1.5}
   style={
     Array [
       Object {
@@ -554,6 +590,7 @@ exports[`Test Typography Components H4 Snapshot 9`] = `
 
 exports[`Test Typography Components H5 Snapshot 1`] = `
 <Text
+  allowFontScaling={true}
   color="bluegreyDark"
   defaultColor="bluegreyDark"
   defaultWeight="SemiBold"
@@ -563,6 +600,7 @@ exports[`Test Typography Components H5 Snapshot 1`] = `
       "fontSize": 14,
     }
   }
+  maxFontSizeMultiplier={1.5}
   style={
     Array [
       Object {
@@ -584,6 +622,7 @@ exports[`Test Typography Components H5 Snapshot 1`] = `
 
 exports[`Test Typography Components H5 Snapshot 2`] = `
 <Text
+  allowFontScaling={true}
   color="bluegrey"
   defaultColor="bluegreyDark"
   defaultWeight="SemiBold"
@@ -593,6 +632,7 @@ exports[`Test Typography Components H5 Snapshot 2`] = `
       "fontSize": 14,
     }
   }
+  maxFontSizeMultiplier={1.5}
   style={
     Array [
       Object {
@@ -614,6 +654,7 @@ exports[`Test Typography Components H5 Snapshot 2`] = `
 
 exports[`Test Typography Components H5 Snapshot 3`] = `
 <Text
+  allowFontScaling={true}
   color="blue"
   defaultColor="bluegreyDark"
   defaultWeight="SemiBold"
@@ -623,6 +664,7 @@ exports[`Test Typography Components H5 Snapshot 3`] = `
       "fontSize": 14,
     }
   }
+  maxFontSizeMultiplier={1.5}
   style={
     Array [
       Object {
@@ -644,6 +686,7 @@ exports[`Test Typography Components H5 Snapshot 3`] = `
 
 exports[`Test Typography Components H5 Snapshot 4`] = `
 <Text
+  allowFontScaling={true}
   color="white"
   defaultColor="bluegreyDark"
   defaultWeight="SemiBold"
@@ -653,6 +696,7 @@ exports[`Test Typography Components H5 Snapshot 4`] = `
       "fontSize": 14,
     }
   }
+  maxFontSizeMultiplier={1.5}
   style={
     Array [
       Object {
@@ -674,6 +718,7 @@ exports[`Test Typography Components H5 Snapshot 4`] = `
 
 exports[`Test Typography Components H5 Snapshot 5`] = `
 <Text
+  allowFontScaling={true}
   color="bluegreyDark"
   defaultColor="bluegreyDark"
   defaultWeight="SemiBold"
@@ -683,6 +728,7 @@ exports[`Test Typography Components H5 Snapshot 5`] = `
       "fontSize": 14,
     }
   }
+  maxFontSizeMultiplier={1.5}
   style={
     Array [
       Object {
@@ -704,6 +750,7 @@ exports[`Test Typography Components H5 Snapshot 5`] = `
 
 exports[`Test Typography Components H5 Snapshot 6`] = `
 <Text
+  allowFontScaling={true}
   color="bluegrey"
   defaultColor="bluegreyDark"
   defaultWeight="SemiBold"
@@ -713,6 +760,7 @@ exports[`Test Typography Components H5 Snapshot 6`] = `
       "fontSize": 14,
     }
   }
+  maxFontSizeMultiplier={1.5}
   style={
     Array [
       Object {
@@ -734,6 +782,7 @@ exports[`Test Typography Components H5 Snapshot 6`] = `
 
 exports[`Test Typography Components H5 Snapshot 7`] = `
 <Text
+  allowFontScaling={true}
   color="blue"
   defaultColor="bluegreyDark"
   defaultWeight="SemiBold"
@@ -743,6 +792,7 @@ exports[`Test Typography Components H5 Snapshot 7`] = `
       "fontSize": 14,
     }
   }
+  maxFontSizeMultiplier={1.5}
   style={
     Array [
       Object {
@@ -764,6 +814,7 @@ exports[`Test Typography Components H5 Snapshot 7`] = `
 
 exports[`Test Typography Components Label Snapshot 1`] = `
 <Text
+  allowFontScaling={true}
   color="blue"
   defaultColor="blue"
   defaultWeight="Bold"
@@ -773,6 +824,7 @@ exports[`Test Typography Components Label Snapshot 1`] = `
       "fontSize": 16,
     }
   }
+  maxFontSizeMultiplier={1.5}
   style={
     Array [
       Object {
@@ -794,6 +846,7 @@ exports[`Test Typography Components Label Snapshot 1`] = `
 
 exports[`Test Typography Components Label Snapshot 2`] = `
 <Text
+  allowFontScaling={true}
   color="blue"
   defaultColor="blue"
   defaultWeight="Bold"
@@ -803,6 +856,7 @@ exports[`Test Typography Components Label Snapshot 2`] = `
       "fontSize": 16,
     }
   }
+  maxFontSizeMultiplier={1.5}
   style={
     Array [
       Object {
@@ -824,6 +878,7 @@ exports[`Test Typography Components Label Snapshot 2`] = `
 
 exports[`Test Typography Components Label Snapshot 3`] = `
 <Text
+  allowFontScaling={true}
   color="bluegrey"
   defaultColor="blue"
   defaultWeight="Bold"
@@ -833,6 +888,7 @@ exports[`Test Typography Components Label Snapshot 3`] = `
       "fontSize": 16,
     }
   }
+  maxFontSizeMultiplier={1.5}
   style={
     Array [
       Object {
@@ -854,6 +910,7 @@ exports[`Test Typography Components Label Snapshot 3`] = `
 
 exports[`Test Typography Components Label Snapshot 4`] = `
 <Text
+  allowFontScaling={true}
   color="white"
   defaultColor="blue"
   defaultWeight="Bold"
@@ -863,6 +920,7 @@ exports[`Test Typography Components Label Snapshot 4`] = `
       "fontSize": 16,
     }
   }
+  maxFontSizeMultiplier={1.5}
   style={
     Array [
       Object {
@@ -884,6 +942,7 @@ exports[`Test Typography Components Label Snapshot 4`] = `
 
 exports[`Test Typography Components LabelSmall Snapshot 1`] = `
 <Text
+  allowFontScaling={true}
   color="blue"
   defaultColor="blue"
   defaultWeight="Bold"
@@ -893,6 +952,7 @@ exports[`Test Typography Components LabelSmall Snapshot 1`] = `
       "fontSize": 14,
     }
   }
+  maxFontSizeMultiplier={1.5}
   style={
     Array [
       Object {
@@ -914,6 +974,7 @@ exports[`Test Typography Components LabelSmall Snapshot 1`] = `
 
 exports[`Test Typography Components LabelSmall Snapshot 2`] = `
 <Text
+  allowFontScaling={true}
   color="blue"
   defaultColor="blue"
   defaultWeight="Bold"
@@ -923,6 +984,7 @@ exports[`Test Typography Components LabelSmall Snapshot 2`] = `
       "fontSize": 14,
     }
   }
+  maxFontSizeMultiplier={1.5}
   style={
     Array [
       Object {
@@ -944,6 +1006,7 @@ exports[`Test Typography Components LabelSmall Snapshot 2`] = `
 
 exports[`Test Typography Components LabelSmall Snapshot 3`] = `
 <Text
+  allowFontScaling={true}
   color="bluegrey"
   defaultColor="blue"
   defaultWeight="Bold"
@@ -953,6 +1016,7 @@ exports[`Test Typography Components LabelSmall Snapshot 3`] = `
       "fontSize": 14,
     }
   }
+  maxFontSizeMultiplier={1.5}
   style={
     Array [
       Object {
@@ -974,6 +1038,7 @@ exports[`Test Typography Components LabelSmall Snapshot 3`] = `
 
 exports[`Test Typography Components LabelSmall Snapshot 4`] = `
 <Text
+  allowFontScaling={true}
   color="red"
   defaultColor="blue"
   defaultWeight="Bold"
@@ -983,6 +1048,7 @@ exports[`Test Typography Components LabelSmall Snapshot 4`] = `
       "fontSize": 14,
     }
   }
+  maxFontSizeMultiplier={1.5}
   style={
     Array [
       Object {
@@ -1004,6 +1070,7 @@ exports[`Test Typography Components LabelSmall Snapshot 4`] = `
 
 exports[`Test Typography Components LabelSmall Snapshot 5`] = `
 <Text
+  allowFontScaling={true}
   color="white"
   defaultColor="blue"
   defaultWeight="Bold"
@@ -1013,6 +1080,7 @@ exports[`Test Typography Components LabelSmall Snapshot 5`] = `
       "fontSize": 14,
     }
   }
+  maxFontSizeMultiplier={1.5}
   style={
     Array [
       Object {
@@ -1034,6 +1102,7 @@ exports[`Test Typography Components LabelSmall Snapshot 5`] = `
 
 exports[`Test Typography Components Link Snapshot 1`] = `
 <Text
+  allowFontScaling={true}
   color="blue"
   defaultColor="blue"
   defaultWeight="SemiBold"
@@ -1044,6 +1113,7 @@ exports[`Test Typography Components Link Snapshot 1`] = `
       "textDecorationLine": "underline",
     }
   }
+  maxFontSizeMultiplier={1.5}
   style={
     Array [
       Object {
@@ -1066,6 +1136,7 @@ exports[`Test Typography Components Link Snapshot 1`] = `
 
 exports[`Test Typography Components Monospace Snapshot 1`] = `
 <Text
+  allowFontScaling={true}
   color="bluegrey"
   defaultColor="bluegrey"
   defaultWeight="Regular"
@@ -1075,6 +1146,7 @@ exports[`Test Typography Components Monospace Snapshot 1`] = `
       "fontSize": 16,
     }
   }
+  maxFontSizeMultiplier={1.5}
   style={
     Array [
       Object {

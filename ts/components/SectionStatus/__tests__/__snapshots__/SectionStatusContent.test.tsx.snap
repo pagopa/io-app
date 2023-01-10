@@ -62,6 +62,7 @@ exports[`StatusContent should match the snapshot 1`] = `
     
   </Text>
   <Text
+    allowFontScaling={true}
     color="bluegreyDark"
     defaultColor="blue"
     defaultWeight="Bold"
@@ -71,6 +72,7 @@ exports[`StatusContent should match the snapshot 1`] = `
         "fontSize": 16,
       }
     }
+    maxFontSizeMultiplier={1.5}
     style={
       Array [
         Array [

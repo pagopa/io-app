@@ -109,6 +109,7 @@ exports[`MessageDetailData component when service's contact detail are not defin
     </Text>
     <Text
       accessibilityRole="link"
+      allowFontScaling={true}
       color="blue"
       defaultColor="blue"
       defaultWeight="SemiBold"
@@ -119,6 +120,7 @@ exports[`MessageDetailData component when service's contact detail are not defin
           "textDecorationLine": "underline",
         }
       }
+      maxFontSizeMultiplier={1.5}
       onPress={[Function]}
       style={
         Array [

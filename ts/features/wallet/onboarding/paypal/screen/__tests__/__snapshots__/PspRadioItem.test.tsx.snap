@@ -14,6 +14,7 @@ exports[`PspRadioItem match snapshot 1`] = `
   }
 >
   <Text
+    allowFontScaling={true}
     color="bluegreyDark"
     font="TitilliumWeb"
     fontStyle={
@@ -22,6 +23,7 @@ exports[`PspRadioItem match snapshot 1`] = `
         "lineHeight": 22,
       }
     }
+    maxFontSizeMultiplier={1.5}
     style={
       Array [
         Object {
@@ -184,6 +186,7 @@ exports[`PspRadioItem match snapshot 1`] = `
                 }
               >
                 <Text
+                  allowFontScaling={true}
                   color="bluegreyDark"
                   defaultColor="bluegreyDark"
                   defaultWeight="Regular"
@@ -194,6 +197,7 @@ exports[`PspRadioItem match snapshot 1`] = `
                       "lineHeight": 24,
                     }
                   }
+                  maxFontSizeMultiplier={1.5}
                   style={
                     Array [
                       Object {
@@ -253,6 +257,7 @@ exports[`PspRadioItem match snapshot 1`] = `
                 }
               >
                 <Text
+                  allowFontScaling={true}
                   color="bluegreyDark"
                   defaultColor="bluegreyDark"
                   defaultWeight="Regular"
@@ -263,6 +268,7 @@ exports[`PspRadioItem match snapshot 1`] = `
                       "lineHeight": 24,
                     }
                   }
+                  maxFontSizeMultiplier={1.5}
                   style={
                     Array [
                       Object {
@@ -281,6 +287,7 @@ exports[`PspRadioItem match snapshot 1`] = `
                 >
                   When you pay a notice, this PSP can apply a maximum fee of 
                   <Text
+                    allowFontScaling={true}
                     color="bluegreyDark"
                     defaultColor="blue"
                     defaultWeight="Bold"
@@ -290,6 +297,7 @@ exports[`PspRadioItem match snapshot 1`] = `
                         "fontSize": 16,
                       }
                     }
+                    maxFontSizeMultiplier={1.5}
                     style={
                       Array [
                         Object {
@@ -354,6 +362,7 @@ exports[`PspRadioItem match snapshot 1`] = `
                 >
                   <Text
                     accessible={true}
+                    allowFontScaling={true}
                     color="blue"
                     defaultColor="blue"
                     defaultWeight="SemiBold"
@@ -365,6 +374,7 @@ exports[`PspRadioItem match snapshot 1`] = `
                         "textDecorationLine": "underline",
                       }
                     }
+                    maxFontSizeMultiplier={1.5}
                     onClick={[Function]}
                     onResponderGrant={[Function]}
                     onResponderMove={[Function]}

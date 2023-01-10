@@ -498,6 +498,7 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                                         />
                                         <Text
                                           accessible={true}
+                                          allowFontScaling={true}
                                           color="bluegreyDark"
                                           defaultColor="bluegreyDark"
                                           defaultWeight="Bold"
@@ -508,6 +509,7 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                                               "lineHeight": 24,
                                             }
                                           }
+                                          maxFontSizeMultiplier={1.5}
                                           style={
                                             Array [
                                               Object {
@@ -535,6 +537,7 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                                           style={Object {}}
                                         />
                                         <Text
+                                          allowFontScaling={true}
                                           color="bluegreyDark"
                                           defaultColor="bluegreyDark"
                                           defaultWeight="Regular"
@@ -545,6 +548,7 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                                               "lineHeight": 24,
                                             }
                                           }
+                                          maxFontSizeMultiplier={1.5}
                                           style={
                                             Array [
                                               Object {

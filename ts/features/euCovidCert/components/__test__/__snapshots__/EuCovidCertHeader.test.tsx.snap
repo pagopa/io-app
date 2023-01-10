@@ -24,6 +24,7 @@ exports[`EuCovidCertHeader it should match the snapshot 1`] = `
     }
   >
     <Text
+      allowFontScaling={true}
       color="bluegreyDark"
       defaultColor="bluegreyDark"
       defaultWeight="Bold"
@@ -34,6 +35,7 @@ exports[`EuCovidCertHeader it should match the snapshot 1`] = `
           "lineHeight": 32,
         }
       }
+      maxFontSizeMultiplier={1.5}
       style={
         Array [
           Object {
@@ -54,6 +56,7 @@ exports[`EuCovidCertHeader it should match the snapshot 1`] = `
       title
     </Text>
     <Text
+      allowFontScaling={true}
       color="bluegreyDark"
       defaultColor="bluegreyDark"
       defaultWeight="Bold"
@@ -64,6 +67,7 @@ exports[`EuCovidCertHeader it should match the snapshot 1`] = `
           "lineHeight": 24,
         }
       }
+      maxFontSizeMultiplier={1.5}
       style={
         Array [
           Object {
