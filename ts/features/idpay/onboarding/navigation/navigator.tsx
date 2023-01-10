@@ -1,13 +1,14 @@
-import React from "react";
+import { PathConfigMap } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import React from "react";
+import CompletionScreen from "../screens/CompletionScreen";
+import FailureScreen from "../screens/FailureScreen";
 import InitiativeDetailsScreen, {
   InitiativeDetailsScreenRouteParams
 } from "../screens/InitiativeDetailsScreen";
-import { IDPayOnboardingMachineProvider } from "../xstate/provider";
 import InitiativeSelfDeclarationsScreen from "../screens/InitiativeSelfDeclarationsScreen";
 import PDNDPrerequisitesScreen from "../screens/PDNDPrerequisitesScreen";
-import CompletionScreen from "../screens/CompletionScreen";
-import FailureScreen from "../screens/FailureScreen";
+import { IDPayOnboardingMachineProvider } from "../xstate/provider";
 
 export const IDPayOnboardingRoutes = {
   IDPAY_ONBOARDING_MAIN: "IDPAY_ONBOARDING_MAIN",
@@ -27,6 +28,16 @@ export type IDPayOnboardingParamsList = {
 };
 
 const Stack = createStackNavigator<IDPayOnboardingParamsList>();
+
+export const idPayOnboardingLinkingOptions: PathConfigMap = {
+  [IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN]: {
+    path: "idpay",
+    screens: {
+      [IDPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS]:
+        "onboarding/:serviceId"
+    }
+  }
+};
 
 export const IDPayOnboardingNavigator = () => (
   <IDPayOnboardingMachineProvider>
