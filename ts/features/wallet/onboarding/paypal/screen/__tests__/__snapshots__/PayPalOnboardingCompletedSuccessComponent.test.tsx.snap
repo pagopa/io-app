@@ -464,15 +464,12 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                                     >
                                       <View
                                         style={
-                                          Array [
-                                            Object {},
-                                            Object {
-                                              "alignItems": "center",
-                                              "flex": 1,
-                                              "justifyContent": "center",
-                                              "padding": 24,
-                                            },
-                                          ]
+                                          Object {
+                                            "alignItems": "center",
+                                            "flex": 1,
+                                            "justifyContent": "center",
+                                            "padding": 24,
+                                          }
                                         }
                                         testID="InfoScreenComponent"
                                       >
