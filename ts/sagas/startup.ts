@@ -138,6 +138,7 @@ import { watchLoadMessageById } from "./messages/watchLoadMessageById";
 import { watchThirdPartyMessageSaga } from "./messages/watchThirdPartyMessageSaga";
 import { checkNotificationsPreferencesSaga } from "./startup/checkNotificationsPreferencesSaga";
 import { generateCryptoKeyPair } from "./startup/generateCryptoKeyPair";
+import { isLollipopEnabledSelector } from "../store/reducers/backendStatus";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -176,7 +177,10 @@ export function* initializeApplicationSaga(): Generator<
   yield* takeLatest(setMixpanelEnabled, handleSetMixpanelEnabled);
 
   // generate crypto key
-  yield* call(generateCryptoKeyPair);
+  const isLollipopEnabled = yield* select(isLollipopEnabledSelector);
+  if (isLollipopEnabled) {
+    yield* call(generateCryptoKeyPair);
+  }
 
   if (zendeskEnabled) {
     yield* fork(watchZendeskSupportSaga);

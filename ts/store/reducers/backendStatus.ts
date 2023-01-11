@@ -1,3 +1,4 @@
+import { LollipopConfig } from "./../../../definitions/content/LollipopConfig";
 /**
  * Implements the reducers for BackendServicesState.
  */
@@ -208,6 +209,20 @@ export const bancomatPayConfigSelector = createSelector(
         payment: false
       }))
     )
+);
+
+/**
+ * return the remote config about LolliPOP enabled/disabled
+ * if there is no data, false is the default value -> (LolliPOP disabled)
+ */
+export const isLollipopEnabledSelector = createSelector(
+  backendStatusSelector,
+  (backendStatus): boolean =>
+    pipe(
+      backendStatus,
+      O.map(bs => bs.config.lollipop.enabled),
+      O.toUndefined
+    ) ?? false
 );
 
 /**
