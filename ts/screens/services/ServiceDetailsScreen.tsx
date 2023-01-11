@@ -154,8 +154,6 @@ const ServiceDetailsScreen = (props: Props) => {
               />
 
               <EdgeBorderComponent />
-
-              <View spacer={true} extralarge={true} />
             </>
           )}
         </Content>
