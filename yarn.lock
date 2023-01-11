@@ -9474,6 +9474,10 @@ invariant@*, invariant@2.2.4, invariant@^2.2.2, invariant@^2.2.4:
   dependencies:
     loose-envify "^1.0.0"
 
+"io-react-native-crypto@https://github.com/pagopa/io-react-native-crypto.git#0.2.0":
+  version "0.2.0"
+  resolved "https://github.com/pagopa/io-react-native-crypto.git#1e32ad03cbce5b537d537de130ef6e5e3c2e456d"
+
 "io-react-native-zendesk@https://github.com/pagopa/io-react-native-zendesk.git#0.3.23":
   version "0.3.23"
   resolved "https://github.com/pagopa/io-react-native-zendesk.git#6add356b2ebac9bed26297dd1f5fd6a29f6feea2"
