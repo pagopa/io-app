@@ -137,6 +137,7 @@ import { completeOnboardingSaga } from "./startup/completeOnboardingSaga";
 import { watchLoadMessageById } from "./messages/watchLoadMessageById";
 import { watchThirdPartyMessageSaga } from "./messages/watchThirdPartyMessageSaga";
 import { checkNotificationsPreferencesSaga } from "./startup/checkNotificationsPreferencesSaga";
+import { generateCryptoKeyPair } from "./startup/generateCryptoKeyPair";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -173,6 +174,9 @@ export function* initializeApplicationSaga(): Generator<
 
   // listen for mixpanel enabling events
   yield* takeLatest(setMixpanelEnabled, handleSetMixpanelEnabled);
+
+  // generate crypto key
+  yield* call(generateCryptoKeyPair);
 
   if (zendeskEnabled) {
     yield* fork(watchZendeskSupportSaga);
