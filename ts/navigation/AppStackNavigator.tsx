@@ -70,6 +70,7 @@ import {
 } from "../store/reducers/backendStatus";
 import { isTestEnv } from "../utils/environment";
 import { IO_INTERNAL_LINK_PREFIX } from "../utils/navigation";
+import { OperationsListScreen } from "../features/idpay/initiative/details/screens/OperationsListScreen";
 import authenticationNavigator from "./AuthenticationNavigator";
 import { MessagesStackNavigator } from "./MessagesNavigator";
 import NavigationService, { navigationRef } from "./NavigationService";
@@ -179,6 +180,10 @@ export const AppStackNavigator = () => {
       <Stack.Screen
         name={ROUTES.IDPAY_INITIATIVE_DETAILS}
         component={InitiativeDetailsScreen}
+      />
+      <Stack.Screen
+        name={ROUTES.IDPAY_OPERATIONS_LIST}
+        component={OperationsListScreen}
       />
 
       <Stack.Screen

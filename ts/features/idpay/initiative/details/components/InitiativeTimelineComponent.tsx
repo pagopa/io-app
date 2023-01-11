@@ -1,26 +1,21 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { List, Text, View } from "native-base";
+import { useNavigation } from "@react-navigation/native";
+import { List, View } from "native-base";
 import React, { useEffect } from "react";
 import { StyleSheet } from "react-native";
-import { OperationTypeEnum as IbanOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/IbanOperationDTO";
-import { OperationTypeEnum as InstrumentOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/InstrumentOperationDTO";
-import { OperationTypeEnum as OnboardingOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/OnboardingOperationDTO";
-import { OperationListDTO } from "../../../../../../definitions/idpay/timeline/OperationListDTO";
-import { OperationTypeEnum as TransactionOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/TransactionOperationDTO";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";
+import {
+  AppParamsList,
+  IOStackNavigationProp
+} from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { idpayTimelineSelector } from "../store";
 import { idpayTimelineGet } from "../store/actions";
-import {
-  IbanOnboardingCard,
-  InstrumentOnboardingCard,
-  OnboardingTransactionCard,
-  TimelineTransactionCard
-} from "./TimelineTransactionCards";
+import { pickTransactionCard } from "./TimelineTransactionCards";
 
 const styles = StyleSheet.create({
   spaceBetween: {
@@ -49,21 +44,6 @@ const emptyTimelineContent = (
   </>
 );
 
-const pickTransactionCard = (transaction: OperationListDTO) => {
-  switch (transaction.operationType) {
-    case TransactionOperationTypeEnum.TRANSACTION:
-      return <TimelineTransactionCard transaction={transaction} />;
-    case OnboardingOperationTypeEnum.ONBOARDING:
-      return <OnboardingTransactionCard transaction={transaction} />;
-    case InstrumentOperationTypeEnum.ADD_INSTRUMENT:
-      return <InstrumentOnboardingCard transaction={transaction} />;
-    case IbanOperationTypeEnum.ADD_IBAN:
-      return <IbanOnboardingCard transaction={transaction} />;
-    default:
-      return <Text>Error loading {transaction.operationType}</Text>;
-  }
-};
-
 type Props = {
   initiativeId: string;
 };
@@ -71,6 +51,7 @@ type Props = {
 const ConfiguredInitiativeData = (props: Props) => {
   const { initiativeId } = props;
 
+  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const dispatch = useIODispatch();
 
   useEffect(() => {
@@ -79,7 +60,6 @@ const ConfiguredInitiativeData = (props: Props) => {
 
   const timelineFromSelector = useIOSelector(idpayTimelineSelector);
   const isTimelineLoading = pot.isLoading(timelineFromSelector);
-
   if (isTimelineLoading) {
     return null;
   }
@@ -93,6 +73,11 @@ const ConfiguredInitiativeData = (props: Props) => {
     return emptyTimelineContent;
   }
 
+  const navigateToOperationsList = () => {
+    navigation.navigate("IDPAY_OPERATIONS_LIST", {
+      initiativeId
+    });
+  };
   return (
     <>
       <View style={[IOStyles.row, styles.spaceBetween]}>
@@ -101,7 +86,7 @@ const ConfiguredInitiativeData = (props: Props) => {
             "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperations"
           )}
         </H3>
-        <Body weight="SemiBold" color="blue">
+        <Body weight="SemiBold" color="blue" onPress={navigateToOperationsList}>
           {I18n.t(
             "idpay.initiative.details.initiativeDetailsScreen.configured.settings.showMore"
           )}
