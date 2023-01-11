@@ -198,7 +198,7 @@ const createServicesImplementation = (
     }
   };
 
-  const addInstrument = async (context: Context) => {
+  const enrollInstrument = async (context: Context) => {
     if (context.initiativeId === undefined) {
       return Promise.reject("initiativeId is undefined");
     }
@@ -222,7 +222,35 @@ const createServicesImplementation = (
       return Promise.reject("error enrolling instruments");
     }
 
-    // After updating the list of instruments, we need to reload the list of enrloled instruments
+    // After updating the list of instruments, we need to reload the list of enrolled instruments
+    return loadIDPayInstruments(context.initiativeId);
+  };
+
+  const deleteInstrument = async (context: Context) => {
+    if (context.initiativeId === undefined) {
+      return Promise.reject("initiativeId is undefined");
+    }
+
+    if (context.selectedInstrumentId === undefined) {
+      return Promise.reject("selectedInstrumentId is undefined");
+    }
+
+    const response = await walletClient.deleteInstrument({
+      initiativeId: context.initiativeId,
+      instrumentId: context.selectedInstrumentId,
+      bearerAuth: bearerToken,
+      "Accept-Language": language
+    });
+
+    if (E.isLeft(response)) {
+      return Promise.reject("error deleting instrument");
+    }
+
+    if (response.right.status !== 200) {
+      return Promise.reject("error deleting instrument");
+    }
+
+    // After updating the list of instruments, we need to reload the list of enrolled instruments
     return loadIDPayInstruments(context.initiativeId);
   };
 
@@ -232,7 +260,8 @@ const createServicesImplementation = (
     enrollIban,
     confirmIban,
     loadInstruments,
-    addInstrument
+    enrollInstrument,
+    deleteInstrument
   };
 };
 
