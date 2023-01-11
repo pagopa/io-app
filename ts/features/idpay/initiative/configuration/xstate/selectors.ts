@@ -30,7 +30,8 @@ const selectIsLoadingInstruments = (state: StateWithContext) =>
   state.matches("CONFIGURING_INSTRUMENTS.LOADING_INSTRUMENTS");
 
 const selectIsUpsertingInstrument = (state: StateWithContext) =>
-  state.matches("CONFIGURING_INSTRUMENTS.ADDING_INSTRUMENT");
+  state.matches("CONFIGURING_INSTRUMENTS.ENROLLING_INSTRUMENT") ||
+  state.matches("CONFIGURING_INSTRUMENTS.DELETING_INSTRUMENT");
 
 const selectPagoPAInstruments = (state: StateWithContext) =>
   state.context.pagoPAInstruments;
