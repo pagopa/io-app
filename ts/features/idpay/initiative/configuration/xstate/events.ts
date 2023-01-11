@@ -7,6 +7,10 @@ type E_START_CONFIGURATION = {
   mode: ConfigurationMode;
 };
 
+type E_NEW_INSTRUMENT_ONBOARDING = {
+  type: "NEW_INSTRUMENT_ONBOARDING";
+};
+
 type E_ENROLL_INSTRUMENT = {
   type: "ENROLL_INSTRUMENT";
   instrumentId: string;
@@ -52,6 +56,7 @@ type E_QUIT = {
 
 export type Events =
   | E_START_CONFIGURATION
+  | E_NEW_INSTRUMENT_ONBOARDING
   | E_ENROLL_INSTRUMENT
   | E_DELETE_INSTRUMENT
   | E_NEW_IBAN_ONBOARDING

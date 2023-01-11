@@ -41,6 +41,10 @@ const createActionsImplementation = (
     });
   };
 
+  const navigateToInstrumentsOnboardingScreen = () => {
+    navigation.pop();
+  };
+
   const navigateToInstrumentsEnrollmentScreen = () => {
     navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
       screen:
@@ -74,6 +78,7 @@ const createActionsImplementation = (
     navigateToIbanLandingScreen,
     navigateToIbanOnboardingScreen,
     navigateToIbanEnrollmentScreen,
+    navigateToInstrumentsOnboardingScreen,
     navigateToInstrumentsEnrollmentScreen,
     navigateToConfigurationSuccessScreen,
     navigateToInitiativeDetailScreen,

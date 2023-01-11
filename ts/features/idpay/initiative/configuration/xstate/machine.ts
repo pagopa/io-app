@@ -248,6 +248,22 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 }
               }
             },
+            EVALUATING_INSTRUMENTS: {
+              tags: [LOADING_TAG],
+              always: [
+                {
+                  target: "DISPLAYING_INSTRUMENTS",
+                  cond: "hasInstruments"
+                },
+                {
+                  target: "DISPLAYING_INSTRUMENT_ONBOARDING"
+                }
+              ]
+            },
+            DISPLAYING_INSTRUMENT_ONBOARDING: {
+              tags: [WAITING_USER_INPUT_TAG],
+              entry: "navigateToInstrumentsOnboardingScreen"
+            },
             DISPLAYING_INSTRUMENTS: {
               tags: [WAITING_USER_INPUT_TAG],
               on: {
@@ -258,6 +274,9 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 DELETE_INSTRUMENT: {
                   target: "DELETING_INSTRUMENT",
                   actions: "selectInstrument"
+                },
+                NEW_INSTRUMENT_ONBOARDING: {
+                  target: "DISPLAYING_INSTRUMENT_ONBOARDING"
                 },
                 BACK: [
                   {
@@ -393,7 +412,12 @@ const createIDPayInitiativeConfigurationMachine = () =>
             false
           ),
         isInstrumentsOnlyMode: (context, _) =>
-          context.mode === ConfigurationMode.INSTRUMENTS
+          context.mode === ConfigurationMode.INSTRUMENTS,
+        hasInstruments: (context, _) =>
+          p.getOrElse(
+            p.map(context.idPayInstruments, list => list.length > 0),
+            false
+          )
       }
     }
   );

@@ -81,6 +81,12 @@ const InstrumentsEnrollmentScreen = () => {
     configurationMachine.send({ type: "BACK" });
   };
 
+  const handleAddInstrumentButton = () => {
+    configurationMachine.send({
+      type: "NEW_INSTRUMENT_ONBOARDING"
+    });
+  };
+
   const handleContinueButton = () => {
     configurationMachine.send({
       type: "NEXT"
@@ -225,7 +231,8 @@ const InstrumentsEnrollmentScreen = () => {
                   "idpay.initiative.configuration.buttonFooter.noneCta"
                 ),
                 bordered: true,
-                disabled: true
+                disabled: isUpserting,
+                onPress: handleAddInstrumentButton
               }}
               rightButton={{
                 title: I18n.t(
