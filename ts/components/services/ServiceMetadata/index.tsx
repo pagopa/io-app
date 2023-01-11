@@ -129,6 +129,7 @@ const ServiceMetadataComponent: React.FC<Props> = ({
             pec,
             I18n.t("messageDetails.sendEmail")
           )}
+          isLast
         />
       )}
       {isDebugModeEnabled && serviceId && (
