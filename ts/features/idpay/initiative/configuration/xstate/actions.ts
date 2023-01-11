@@ -1,3 +1,4 @@
+import * as O from "fp-ts/lib/Option";
 import {
   AppParamsList,
   IOStackNavigationProp
@@ -42,7 +43,10 @@ const createActionsImplementation = (
   };
 
   const navigateToInstrumentsOnboardingScreen = () => {
-    navigation.pop();
+    navigation.push(ROUTES.WALLET_NAVIGATOR, {
+      screen: ROUTES.WALLET_ADD_PAYMENT_METHOD,
+      params: { inPayment: O.none }
+    });
   };
 
   const navigateToInstrumentsEnrollmentScreen = () => {

@@ -29,6 +29,9 @@ const isUpsertingIbanSelector = (state: StateWithContext) =>
 const selectIsLoadingInstruments = (state: StateWithContext) =>
   state.matches("CONFIGURING_INSTRUMENTS.LOADING_INSTRUMENTS");
 
+const selectIsOnboardingInstrument = (state: StateWithContext) =>
+  state.matches("CONFIGURING_INSTRUMENTS.DISPLAYING_INSTRUMENT_ONBOARDING");
+
 const selectIsUpsertingInstrument = (state: StateWithContext) =>
   state.matches("CONFIGURING_INSTRUMENTS.ENROLLING_INSTRUMENT") ||
   state.matches("CONFIGURING_INSTRUMENTS.DELETING_INSTRUMENT");
@@ -77,6 +80,7 @@ export {
   ibanListSelector,
   isUpsertingIbanSelector,
   selectIsLoadingInstruments,
+  selectIsOnboardingInstrument,
   selectIsUpsertingInstrument,
   selectEnrolledIban,
   selectorPagoPAIntruments,

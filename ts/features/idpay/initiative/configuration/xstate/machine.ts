@@ -262,7 +262,12 @@ const createIDPayInitiativeConfigurationMachine = () =>
             },
             DISPLAYING_INSTRUMENT_ONBOARDING: {
               tags: [WAITING_USER_INPUT_TAG],
-              entry: "navigateToInstrumentsOnboardingScreen"
+              entry: "navigateToInstrumentsOnboardingScreen",
+              on: {
+                RELOAD_INSTRUMENTS: {
+                  target: "LOADING_INSTRUMENTS"
+                }
+              }
             },
             DISPLAYING_INSTRUMENTS: {
               tags: [WAITING_USER_INPUT_TAG],

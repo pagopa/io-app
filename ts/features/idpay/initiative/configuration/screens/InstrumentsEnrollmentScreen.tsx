@@ -1,7 +1,7 @@
-import { RouteProp, useRoute } from "@react-navigation/native";
+import { RouteProp, useFocusEffect, useRoute } from "@react-navigation/native";
 import { useSelector } from "@xstate/react";
 import { List, Text, View } from "native-base";
-import React, { useRef } from "react";
+import React from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
@@ -20,6 +20,7 @@ import { ConfigurationMode } from "../xstate/context";
 import { useConfigurationMachineService } from "../xstate/provider";
 import {
   isLoadingSelector,
+  selectIsOnboardingInstrument,
   selectIsUpsertingInstrument,
   selectorIDPayInstrumentsByIdWallet,
   selectorPagoPAIntruments
@@ -41,9 +42,9 @@ const InstrumentsEnrollmentScreen = () => {
   const configurationMachine = useConfigurationMachineService();
 
   // See more in the docs: https://beta.reactjs.org/learn/manipulating-the-dom-with-refs#how-to-manage-a-list-of-refs-using-a-ref-callback
-  const instrumentItemsRef = useRef<Map<number, InstrumentEnrollmentSwitchRef>>(
-    new Map<number, InstrumentEnrollmentSwitchRef>()
-  );
+  const instrumentItemsRef = React.useRef<
+    Map<number, InstrumentEnrollmentSwitchRef>
+  >(new Map<number, InstrumentEnrollmentSwitchRef>());
   const getInstrumentItemsMap = () => {
     if (!instrumentItemsRef.current) {
       // eslint-disable-next-line functional/immutable-data
@@ -55,9 +56,13 @@ const InstrumentsEnrollmentScreen = () => {
     return instrumentItemsRef.current;
   };
 
-  const selectedInstrumentIdRef = useRef<number | undefined>(undefined);
+  const selectedInstrumentIdRef = React.useRef<number | undefined>(undefined);
 
   const isLoading = useSelector(configurationMachine, isLoadingSelector);
+  const isOnboardingInstrument = useSelector(
+    configurationMachine,
+    selectIsOnboardingInstrument
+  );
 
   const pagoPAInstruments = useSelector(
     configurationMachine,
@@ -120,6 +125,14 @@ const InstrumentsEnrollmentScreen = () => {
       });
     }
   }, [configurationMachine, initiativeId]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      if (isOnboardingInstrument) {
+        configurationMachine.send("RELOAD_INSTRUMENTS");
+      }
+    }, [isOnboardingInstrument, configurationMachine])
+  );
 
   const enrollmentBottomSheetModal = useIOBottomSheetModal(
     <Body>
