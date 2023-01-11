@@ -1,23 +1,20 @@
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { useSelector } from "@xstate/react";
-import { Badge, List, ListItem, Text, View } from "native-base";
+import { List, Text, View } from "native-base";
 import React, { useRef } from "react";
-import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
-import { InstrumentDTO } from "../../../../../../definitions/idpay/wallet/InstrumentDTO";
+import { SafeAreaView, ScrollView } from "react-native";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
-import { H4 } from "../../../../../components/core/typography/H4";
-import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
-import Switch from "../../../../../components/ui/Switch";
 import I18n from "../../../../../i18n";
-import { Wallet } from "../../../../../types/pagopa";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
-import { instrumentStatusLabels } from "../../../common/labels";
+import {
+  InstrumentEnrollmentSwitch,
+  InstrumentEnrollmentSwitchRef
+} from "../components/InstrumentEnrollmentSwitch";
 import { IDPayConfigurationParamsList } from "../navigation/navigator";
 import { ConfigurationMode } from "../xstate/context";
 import { useConfigurationMachineService } from "../xstate/provider";
@@ -37,74 +34,28 @@ type InstrumentsEnrollmentScreenRouteProps = RouteProp<
   "IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT"
 >;
 
-const styles = StyleSheet.create({
-  listItemContainer: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between"
-  },
-  badge: {
-    height: 24,
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: IOColors.blue
-  }
-});
-
-type InstrumentEnrollmentSwitcher = {
-  instrument: Wallet;
-  idPayStatus: InstrumentDTO["status"];
-  onSwitch: (idWallet: number) => void;
-  isDisabled?: boolean;
-};
-
-/**
- * A component to enable/disable the enrollment of an instrument
- */
-const InstrumentEnrollmentSwitcher = ({
-  instrument,
-  idPayStatus,
-  onSwitch,
-  isDisabled
-}: InstrumentEnrollmentSwitcher) => {
-  const [switchStatus, setSwitchStatus] = React.useState(false);
-  const handleSwitch = () => {
-    setSwitchStatus(_ => !_);
-    onSwitch(instrument.idWallet);
-  };
-
-  return (
-    <ListItem>
-      <View style={styles.listItemContainer}>
-        <H4>{instrument.idWallet}</H4>
-        {idPayStatus === undefined ? (
-          <Switch
-            value={switchStatus}
-            onChange={handleSwitch}
-            disabled={isDisabled}
-          />
-        ) : (
-          <Badge style={styles.badge}>
-            <LabelSmall color="white">
-              {instrumentStatusLabels[idPayStatus]}
-            </LabelSmall>
-          </Badge>
-        )}
-      </View>
-    </ListItem>
-  );
-};
-
 const InstrumentsEnrollmentScreen = () => {
   const route = useRoute<InstrumentsEnrollmentScreenRouteProps>();
   const { initiativeId } = route.params;
 
-  const selectedCardRef = useRef<number | undefined>(undefined);
   const configurationMachine = useConfigurationMachineService();
 
-  const handleBackPress = () => {
-    configurationMachine.send({ type: "BACK" });
+  // See more in the docs: https://beta.reactjs.org/learn/manipulating-the-dom-with-refs#how-to-manage-a-list-of-refs-using-a-ref-callback
+  const instrumentItemsRef = useRef<Map<number, InstrumentEnrollmentSwitchRef>>(
+    new Map<number, InstrumentEnrollmentSwitchRef>()
+  );
+  const getInstrumentItemsMap = () => {
+    if (!instrumentItemsRef.current) {
+      // eslint-disable-next-line functional/immutable-data
+      instrumentItemsRef.current = new Map<
+        number,
+        InstrumentEnrollmentSwitchRef
+      >();
+    }
+    return instrumentItemsRef.current;
   };
+
+  const selectedInstrumentIdRef = useRef<number | undefined>(undefined);
 
   const isLoading = useSelector(configurationMachine, isLoadingSelector);
 
@@ -112,6 +63,7 @@ const InstrumentsEnrollmentScreen = () => {
     configurationMachine,
     selectorPagoPAIntruments
   );
+
   const idPayInstrumentsByIdWallet = useSelector(
     configurationMachine,
     selectorIDPayInstrumentsByIdWallet
@@ -125,10 +77,8 @@ const InstrumentsEnrollmentScreen = () => {
   const hasSelectedInstruments =
     Object.keys(idPayInstrumentsByIdWallet).length > 0;
 
-  const sendAddInstrument = (): void => {
-    configurationMachine.send("ADD_INSTRUMENT", {
-      walletId: selectedCardRef.current
-    });
+  const handleBackPress = () => {
+    configurationMachine.send({ type: "BACK" });
   };
 
   const handleContinueButton = () => {
@@ -137,10 +87,22 @@ const InstrumentsEnrollmentScreen = () => {
     });
   };
 
-  const onSwitchHandler = (idWallet: number | undefined) => {
-    // eslint-disable-next-line functional/immutable-data
-    selectedCardRef.current = idWallet;
-    present();
+  const sendEnrollInstrument = (walletId: number): void => {
+    configurationMachine.send("ENROLL_INSTRUMENT", {
+      instrumentId: walletId
+    });
+  };
+
+  const sendDeleteInstrument = (walletId: number): void => {
+    const instrument = idPayInstrumentsByIdWallet[walletId];
+
+    if (instrument === undefined) {
+      return;
+    }
+
+    configurationMachine.send("DELETE_INSTRUMENT", {
+      instrumentId: instrument.instrumentId
+    });
   };
 
   React.useEffect(() => {
@@ -153,7 +115,7 @@ const InstrumentsEnrollmentScreen = () => {
     }
   }, [configurationMachine, initiativeId]);
 
-  const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
+  const enrollmentBottomSheetModal = useIOBottomSheetModal(
     <Body>
       {I18n.t("idpay.initiative.configuration.bottomSheet.bodyFirst")}
       <Body weight="SemiBold">
@@ -169,8 +131,8 @@ const InstrumentsEnrollmentScreen = () => {
       type="TwoButtonsInlineThird"
       rightButton={{
         onPress: () => {
-          sendAddInstrument();
-          dismiss();
+          sendEnrollInstrument(selectedInstrumentIdRef.current as number);
+          enrollmentBottomSheetModal.dismiss();
         },
         block: true,
         bordered: false,
@@ -179,7 +141,10 @@ const InstrumentsEnrollmentScreen = () => {
         )
       }}
       leftButton={{
-        onPress: () => dismiss(),
+        onPress: () => {
+          revertInstrumentSwitch(selectedInstrumentIdRef.current as number);
+          enrollmentBottomSheetModal.dismiss();
+        },
         block: true,
         bordered: true,
         title: I18n.t(
@@ -188,6 +153,26 @@ const InstrumentsEnrollmentScreen = () => {
       }}
     />
   );
+
+  const revertInstrumentSwitch = (walletId: number): void => {
+    const node = getInstrumentItemsMap().get(walletId);
+    if (node) {
+      node.setSwitchStatus(false);
+    }
+  };
+
+  const handleInstrumentSwitch = (
+    walletId: number,
+    isEnrolling: boolean
+  ): void => {
+    if (isEnrolling) {
+      // eslint-disable-next-line functional/immutable-data
+      selectedInstrumentIdRef.current = walletId;
+      enrollmentBottomSheetModal.present();
+    } else {
+      sendDeleteInstrument(walletId);
+    }
+  };
 
   return (
     <>
@@ -209,15 +194,23 @@ const InstrumentsEnrollmentScreen = () => {
             <ScrollView>
               <List>
                 {pagoPAInstruments.map(pagoPAInstrument => (
-                  <InstrumentEnrollmentSwitcher
+                  <InstrumentEnrollmentSwitch
+                    ref={node => {
+                      const map = getInstrumentItemsMap();
+                      if (node) {
+                        map.set(pagoPAInstrument.idWallet, node);
+                      } else {
+                        map.delete(pagoPAInstrument.idWallet);
+                      }
+                    }}
                     key={pagoPAInstrument.idWallet}
-                    instrument={pagoPAInstrument}
-                    idPayStatus={
+                    wallet={pagoPAInstrument}
+                    status={
                       idPayInstrumentsByIdWallet[pagoPAInstrument.idWallet]
                         ?.status
                     }
-                    onSwitch={onSwitchHandler}
                     isDisabled={isUpserting}
+                    onSwitch={handleInstrumentSwitch}
                   />
                 ))}
               </List>
@@ -245,8 +238,7 @@ const InstrumentsEnrollmentScreen = () => {
           </SafeAreaView>
         </LoadingSpinnerOverlay>
       </BaseScreenComponent>
-
-      {bottomSheet}
+      {enrollmentBottomSheetModal.bottomSheet}
     </>
   );
 };
