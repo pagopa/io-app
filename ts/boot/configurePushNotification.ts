@@ -29,6 +29,7 @@ import {
 import { getCursors } from "../store/reducers/entities/messages/allPaginated";
 import { isDevEnv } from "../utils/environment";
 import { readablePrivacyReport } from "../utils/reporters";
+import { trackMessageNotificationTap } from "../utils/analytics";
 import { store } from "./configureStoreAndPersistor";
 
 /**
@@ -124,8 +125,10 @@ function configurePushNotifications() {
           )
         ),
         O.map(messageId => {
+          const isForeground = notification.foreground;
+          trackMessageNotificationTap(isForeground);
           // We just received a push notification about a new message
-          if (notification.foreground) {
+          if (isForeground) {
             // The App is in foreground so just refresh the messages list
             handleMessageReload();
           } else {

@@ -35,7 +35,7 @@ export function* watchNotificationSaga(
 
       // Remove the pending message from the notification state
       yield* put(clearNotificationPendingMessage());
-
+      
       // Navigate to message details screen
       NavigationService.dispatchNavigationAction(
         navigateToPaginatedMessageRouterAction({
