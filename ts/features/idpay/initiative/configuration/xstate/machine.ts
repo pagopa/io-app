@@ -256,18 +256,10 @@ const createIDPayInitiativeConfigurationMachine = () =>
                   cond: "hasInstruments"
                 },
                 {
-                  target: "DISPLAYING_INSTRUMENT_ONBOARDING"
+                  target:
+                    "#ROOT.DISPLAYING_CONFIGURATION_SUCCESS_NO_INSTRUMENTS"
                 }
               ]
-            },
-            DISPLAYING_INSTRUMENT_ONBOARDING: {
-              tags: [WAITING_USER_INPUT_TAG],
-              entry: "navigateToInstrumentsOnboardingScreen",
-              on: {
-                RELOAD_INSTRUMENTS: {
-                  target: "LOADING_INSTRUMENTS"
-                }
-              }
             },
             DISPLAYING_INSTRUMENTS: {
               tags: [WAITING_USER_INPUT_TAG],
@@ -280,9 +272,6 @@ const createIDPayInitiativeConfigurationMachine = () =>
                   target: "DELETING_INSTRUMENT",
                   actions: "selectInstrument"
                 },
-                NEW_INSTRUMENT_ONBOARDING: {
-                  target: "DISPLAYING_INSTRUMENT_ONBOARDING"
-                },
                 BACK: [
                   {
                     cond: "isInstrumentsOnlyMode",
@@ -294,6 +283,10 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 ],
                 NEXT: {
                   target: "INSTRUMENTS_COMPLETED"
+                },
+                SKIP: {
+                  target:
+                    "#ROOT.DISPLAYING_CONFIGURATION_SUCCESS_NO_INSTRUMENTS"
                 }
               }
             },
@@ -346,6 +339,18 @@ const createIDPayInitiativeConfigurationMachine = () =>
           on: {
             COMPLETE_CONFIGURATION: {
               target: "CONFIGURATION_COMPLETED"
+            }
+          }
+        },
+        DISPLAYING_CONFIGURATION_SUCCESS_NO_INSTRUMENTS: {
+          tags: [WAITING_USER_INPUT_TAG],
+          entry: "navigateToConfigurationSuccessScreen",
+          on: {
+            COMPLETE_CONFIGURATION: {
+              target: "CONFIGURATION_COMPLETED"
+            },
+            ADD_PAYMENT_METHOD: {
+              actions: "navigateToAddPaymentMethodScreen"
             }
           }
         },

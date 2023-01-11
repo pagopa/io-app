@@ -1,4 +1,4 @@
-import { RouteProp, useFocusEffect, useRoute } from "@react-navigation/native";
+import { RouteProp, useRoute } from "@react-navigation/native";
 import { useSelector } from "@xstate/react";
 import { List, Text, View } from "native-base";
 import React from "react";
@@ -20,7 +20,6 @@ import { ConfigurationMode } from "../xstate/context";
 import { useConfigurationMachineService } from "../xstate/provider";
 import {
   isLoadingSelector,
-  selectIsOnboardingInstrument,
   selectIsUpsertingInstrument,
   selectorIDPayInstrumentsByIdWallet,
   selectorPagoPAIntruments
@@ -59,10 +58,6 @@ const InstrumentsEnrollmentScreen = () => {
   const selectedInstrumentIdRef = React.useRef<number | undefined>(undefined);
 
   const isLoading = useSelector(configurationMachine, isLoadingSelector);
-  const isOnboardingInstrument = useSelector(
-    configurationMachine,
-    selectIsOnboardingInstrument
-  );
 
   const pagoPAInstruments = useSelector(
     configurationMachine,
@@ -86,16 +81,12 @@ const InstrumentsEnrollmentScreen = () => {
     configurationMachine.send({ type: "BACK" });
   };
 
-  const handleAddInstrumentButton = () => {
-    configurationMachine.send({
-      type: "NEW_INSTRUMENT_ONBOARDING"
-    });
+  const handleSkipButton = () => {
+    configurationMachine.send({ type: "SKIP" });
   };
 
   const handleContinueButton = () => {
-    configurationMachine.send({
-      type: "NEXT"
-    });
+    configurationMachine.send({ type: "NEXT" });
   };
 
   const sendEnrollInstrument = (walletId: number): void => {
@@ -125,14 +116,6 @@ const InstrumentsEnrollmentScreen = () => {
       });
     }
   }, [configurationMachine, initiativeId]);
-
-  useFocusEffect(
-    React.useCallback(() => {
-      if (isOnboardingInstrument) {
-        configurationMachine.send("RELOAD_INSTRUMENTS");
-      }
-    }, [isOnboardingInstrument, configurationMachine])
-  );
 
   const enrollmentBottomSheetModal = useIOBottomSheetModal(
     <Body>
@@ -245,7 +228,7 @@ const InstrumentsEnrollmentScreen = () => {
                 ),
                 bordered: true,
                 disabled: isUpserting,
-                onPress: handleAddInstrumentButton
+                onPress: handleSkipButton
               }}
               rightButton={{
                 title: I18n.t(

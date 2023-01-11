@@ -42,8 +42,8 @@ const createActionsImplementation = (
     });
   };
 
-  const navigateToInstrumentsOnboardingScreen = () => {
-    navigation.push(ROUTES.WALLET_NAVIGATOR, {
+  const navigateToAddPaymentMethodScreen = () => {
+    navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
       screen: ROUTES.WALLET_ADD_PAYMENT_METHOD,
       params: { inPayment: O.none }
     });
@@ -82,10 +82,10 @@ const createActionsImplementation = (
     navigateToIbanLandingScreen,
     navigateToIbanOnboardingScreen,
     navigateToIbanEnrollmentScreen,
-    navigateToInstrumentsOnboardingScreen,
     navigateToInstrumentsEnrollmentScreen,
-    navigateToConfigurationSuccessScreen,
+    navigateToAddPaymentMethodScreen,
     navigateToInitiativeDetailScreen,
+    navigateToConfigurationSuccessScreen,
     exitConfiguration
   };
 };

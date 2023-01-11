@@ -3344,8 +3344,12 @@ idpay:
         continue: "Start configuration"
     associationSuccess:
       title: "Grazie!"
-      body: "Da domani potrai utilizzare {{initiativeName}}. Puoi abilitare altri metodi aggiungendoli al Portafoglio."
-      button: "Vai all'iniziativa"
+      body: "Da domani potrai utilizzare l'iniziativa {{initiativeName}}. Puoi abilitare altri metodi aggiungendoli al Portafoglio."
+      noInstrumentsBody: "Per terminare la configurazione devi aggiungere almeno un metodo di pagamento al Portafoglio e abilitarlo all’iniziativa."
+      buttons:
+        continue: "Vai all'iniziativa"
+        skip: "Più tardi"
+        addPaymentMethod: "Aggiungi un metodo di pagamento"
     iban:
       landing:
         header: Aggiungi un IBAN al tuo Profilo

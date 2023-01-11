@@ -7,10 +7,6 @@ type E_START_CONFIGURATION = {
   mode: ConfigurationMode;
 };
 
-type E_NEW_INSTRUMENT_ONBOARDING = {
-  type: "NEW_INSTRUMENT_ONBOARDING";
-};
-
 type E_ENROLL_INSTRUMENT = {
   type: "ENROLL_INSTRUMENT";
   instrumentId: string;
@@ -21,8 +17,8 @@ type E_DELETE_INSTRUMENT = {
   instrumentId: string;
 };
 
-type E_RELOAD_INSTRUMENTS = {
-  type: "RELOAD_INSTRUMENTS";
+type E_ADD_PAYMENT_METHOD = {
+  type: "ADD_PAYMENT_METHOD";
 };
 
 type E_NEW_IBAN_ONBOARDING = {
@@ -46,6 +42,10 @@ type E_COMPLETE_CONFIGURATION = {
   type: "COMPLETE_CONFIGURATION";
 };
 
+type E_SKIP = {
+  type: "SKIP";
+};
+
 type E_NEXT = {
   type: "NEXT";
 };
@@ -60,14 +60,14 @@ type E_QUIT = {
 
 export type Events =
   | E_START_CONFIGURATION
-  | E_NEW_INSTRUMENT_ONBOARDING
   | E_ENROLL_INSTRUMENT
   | E_DELETE_INSTRUMENT
-  | E_RELOAD_INSTRUMENTS
+  | E_ADD_PAYMENT_METHOD
   | E_NEW_IBAN_ONBOARDING
   | E_CONFIRM_IBAN
   | E_ENROLL_IBAN
   | E_COMPLETE_CONFIGURATION
+  | E_SKIP
   | E_NEXT
   | E_BACK
   | E_QUIT;
