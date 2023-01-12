@@ -274,6 +274,9 @@ export const baseRawBackendStatus: BackendStatus = {
         ios: "0.0.0.0"
       }
     },
+    lollipop: {
+      enabled: false
+    },
     pn: {
       enabled: false,
       frontend_url: ""
@@ -342,6 +345,9 @@ export const baseBackendConfig: Config = {
       android: "0.0.0.0",
       ios: "0.0.0.0"
     }
+  },
+  lollipop: {
+    enabled: false
   },
   pn: {
     enabled: false,
