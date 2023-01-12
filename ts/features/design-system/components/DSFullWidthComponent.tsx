@@ -13,6 +13,6 @@ const styles = StyleSheet.create({
   }
 });
 
-export const FullWidthComponent = ({ children }: Props) => (
+export const DSFullWidthComponent = ({ children }: Props) => (
   <View style={styles.container}>{children}</View>
 );
