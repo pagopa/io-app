@@ -436,7 +436,7 @@ profile:
     appVersion: Versione App
     backendVersion: Versione Backend
     debugMode: Modalità debug
-    showroom: UI Showroom
+    designSystem: Design System
   data:
     title: I tuoi dati
     subtitle: Qui trovi i tuoi dati anagrafici e di contatto utilizzati da app IO
@@ -1541,6 +1541,8 @@ wallet:
     GENERIC_ERROR: Si è verificato un errore imprevisto
     GENERIC_ERROR_SUBTITLE: Riprova o contattaci per ricevere assistenza.
     DUPLICATED: Questo avviso è stato già pagato!
+    NOT_FOUND: Non riusciamo a trovare l'avviso
+    NOT_FOUND_SUBTITLE: "L’avviso potrebbe essere stato già pagato.\nPer ricevere assistenza, contatta l’Ente Creditore che lo ha emesso."
     INVALID_AMOUNT: L'ammontare specificato nell'avviso non è corretto, se hai inserito i dati manualmente, controlla che siano corretti e riprova.
     PAYMENT_EXPIRED: Il pagamento per questo avviso non è più disponibile poiché questo avviso è scaduto.
     PAYMENT_UNAVAILABLE: Il pagamento per questo avviso non è disponibile in questo momento, riprova più tardi.
