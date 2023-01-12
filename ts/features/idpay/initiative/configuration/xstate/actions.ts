@@ -43,7 +43,7 @@ const createActionsImplementation = (
   };
 
   const navigateToAddPaymentMethodScreen = () => {
-    navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
+    navigation.replace(ROUTES.WALLET_NAVIGATOR, {
       screen: ROUTES.WALLET_ADD_PAYMENT_METHOD,
       params: { inPayment: O.none }
     });
