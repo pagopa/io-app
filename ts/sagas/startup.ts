@@ -176,12 +176,6 @@ export function* initializeApplicationSaga(): Generator<
   // listen for mixpanel enabling events
   yield* takeLatest(setMixpanelEnabled, handleSetMixpanelEnabled);
 
-  // generate crypto key
-  const isLollipopEnabled = yield* select(isLollipopEnabledSelector);
-  if (isLollipopEnabled) {
-    yield* call(generateCryptoKeyPair);
-  }
-
   if (zendeskEnabled) {
     yield* fork(watchZendeskSupportSaga);
   }
@@ -345,6 +339,12 @@ export function* initializeApplicationSaga(): Generator<
 
   // check if the user expressed preference about mixpanel, if not ask for it
   yield* call(askMixpanelOptIn);
+
+  // generate crypto key
+  const isLollipopEnabled = yield* select(isLollipopEnabledSelector);
+  if (isLollipopEnabled) {
+    yield* call(generateCryptoKeyPair);
+  }
 
   if (hasPreviousSessionAndPin) {
     // We have to retrieve the pin here and not on the previous if-condition (same guard)
