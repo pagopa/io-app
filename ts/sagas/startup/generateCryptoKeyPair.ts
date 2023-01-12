@@ -1,4 +1,3 @@
-import { mixpanelTrack } from "./../../mixpanel";
 import { generate, deleteKey, CryptoError } from "io-react-native-crypto";
 import { call } from "typed-redux-saga/macro";
 import {
@@ -6,6 +5,7 @@ import {
   isKeyAlreadyGenerated,
   setKeyAlreadyGenerated
 } from "../../utils/crypto";
+import { mixpanelTrack } from "./../../mixpanel";
 
 const KEY_NAME = "lp-temp-key";
 
@@ -17,7 +17,9 @@ export function* generateCryptoKeyPair() {
 
     if (generateKey) {
       const key = yield* call(generate, KEY_NAME);
-      void mixpanelTrack("LOLLIPOP_KEY_GENERATION_SUCCESS");
+      void mixpanelTrack("LOLLIPOP_KEY_GENERATION_SUCCESS", {
+        kty: key.kty
+      });
       yield* call(setKeyAlreadyGenerated, KEY_NAME, key.kty);
       yield* call(deleteKey, KEY_NAME);
     }
