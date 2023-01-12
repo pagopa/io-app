@@ -545,7 +545,7 @@ const IconSpid = ({ size, color }: SVGIconProps) => (
     * [Icons](ts/components/core/icons)
     * [Logos](ts/components/core/logos)
 
-9. There's no need to add the new pictogram/icon in the `UI Showroom` because it happens automatically.
+9. There's no need to add the new pictogram/icon in the `Design System` specific page because it happens automatically.
 
 ### Io-Icon-Font
 **Note**: ⚠️ Deprecated

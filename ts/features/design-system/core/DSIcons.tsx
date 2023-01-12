@@ -1,7 +1,6 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
-import { IconViewerBox, iconItemGutter } from "../components/IconViewerBox";
-import { ShowroomSection } from "../components/ShowroomSection";
+import { DSIconViewerBox, iconItemGutter } from "../components/DSIconViewerBox";
 import {
   Icon,
   IOIcons,
@@ -22,6 +21,7 @@ import {
 import { H2 } from "../../../components/core/typography/H2";
 import { H3 } from "../../../components/core/typography/H3";
 import { IOColorType } from "../../../components/core/variables/IOColors";
+import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 // Just for demo purposes
 // Once we defined a general set of icon sizes,
@@ -40,11 +40,11 @@ const styles = StyleSheet.create({
   }
 });
 
-export const IconsShowroom = () => (
-  <ShowroomSection title={"Icons"}>
+export const DSIcons = () => (
+  <DesignSystemScreen title={"Icons"}>
     <View style={styles.itemsWrapper}>
       {Object.entries(IOIcons).map(([iconItemName]) => (
-        <IconViewerBox
+        <DSIconViewerBox
           key={iconItemName}
           name={iconItemName}
           size="small"
@@ -57,7 +57,7 @@ export const IconsShowroom = () => (
     </H2>
     <View style={styles.itemsWrapper}>
       {Object.entries(IONavIcons).map(([iconItemName]) => (
-        <IconViewerBox
+        <DSIconViewerBox
           key={iconItemName}
           name={iconItemName}
           size="medium"
@@ -70,7 +70,7 @@ export const IconsShowroom = () => (
     </H2>
     <View style={styles.itemsWrapper}>
       {Object.entries(IOBiometricIcons).map(([iconItemName]) => (
-        <IconViewerBox
+        <DSIconViewerBox
           key={iconItemName}
           name={iconItemName}
           size="large"
@@ -88,7 +88,7 @@ export const IconsShowroom = () => (
     </H2>
     <View style={styles.itemsWrapper}>
       {Object.entries(IOCategoryIcons).map(([iconItemName]) => (
-        <IconViewerBox
+        <DSIconViewerBox
           key={iconItemName}
           name={iconItemName}
           size="medium"
@@ -106,7 +106,7 @@ export const IconsShowroom = () => (
     </H2>
     <View style={styles.itemsWrapper}>
       {Object.entries(IOProductIcons).map(([iconItemName]) => (
-        <IconViewerBox
+        <DSIconViewerBox
           key={iconItemName}
           name={iconItemName}
           size="large"
@@ -123,7 +123,7 @@ export const IconsShowroom = () => (
       {/* If you want to render another icon in different sizes,
       just change the name below */}
       {IOIconSizes.map(size => (
-        <IconViewerBox
+        <DSIconViewerBox
           key={`iconSize-${size}`}
           name={`${size}`}
           image={<Icon name="creditCard" size={size} />}
@@ -135,7 +135,7 @@ export const IconsShowroom = () => (
     </H3>
     <View style={styles.itemsWrapper}>
       {IOIconColors.map(color => (
-        <IconViewerBox
+        <DSIconViewerBox
           key={`iconColor-${color}`}
           name={`${color}`}
           size="medium"
@@ -145,5 +145,5 @@ export const IconsShowroom = () => (
         />
       ))}
     </View>
-  </ShowroomSection>
+  </DesignSystemScreen>
 );

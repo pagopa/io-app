@@ -1,6 +1,6 @@
 import * as React from "react";
-import { Alert, StyleSheet } from "react-native";
-import { View } from "native-base";
+import { Alert, StyleSheet, View } from "react-native";
+import { View as NBView } from "native-base";
 import { IOBadge } from "../../../components/core/IOBadge";
 import { Body } from "../../../components/core/typography/Body";
 import { H1 } from "../../../components/core/typography/H1";
@@ -13,7 +13,7 @@ import { LabelSmall } from "../../../components/core/typography/LabelSmall";
 import { Link } from "../../../components/core/typography/Link";
 import { Monospace } from "../../../components/core/typography/Monospace";
 import { IOColors } from "../../../components/core/variables/IOColors";
-import { ShowroomSection } from "../components/ShowroomSection";
+import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 const styles = StyleSheet.create({
   row: {
@@ -27,8 +27,8 @@ const styles = StyleSheet.create({
 
 const sectionTitleMargin = 16;
 
-export const TypographyShowroom = () => (
-  <ShowroomSection title={"Typography"}>
+export const DSTypography = () => (
+  <DesignSystemScreen title={"Typography"}>
     <H2
       color={"bluegrey"}
       weight={"SemiBold"}
@@ -48,14 +48,14 @@ export const TypographyShowroom = () => (
     <LabelRow />
     <Link onPress={() => Alert.alert("onPress link!")}>Link</Link>
     <Monospace>MonoSpace</Monospace>
-    <IOBadgeRow />
-  </ShowroomSection>
+    <NBView spacer={true} extralarge={true} />
+  </DesignSystemScreen>
 );
 
 /* export const FontFamilyShowroom = () => (
   <>
     <View style={styles.row}>
-      <View hspacer={true} />
+      <NBView hspacer={true} />
     </View>
   </>
 ); */
@@ -67,7 +67,7 @@ const getLongerTitle = (element: string) =>
 export const DarkBackgroundTypographicScale = () => (
   <View style={{ backgroundColor: IOColors.bluegrey }}>
     <H1 color={"white"}>Header H1</H1>
-    <View hspacer={true} />
+    <NBView hspacer={true} />
   </View>
 );
 
@@ -77,7 +77,7 @@ export const H1Row = () => (
       <H1>{getTitle("H1")}</H1>
       <H1 style={styles.distancedTitle}>{getLongerTitle("H1")}</H1>
     </View>
-    <View spacer={true} extralarge={true} />
+    <NBView spacer={true} extralarge={true} />
   </>
 );
 
@@ -90,7 +90,7 @@ export const H2Row = () => (
         {getTitle("H2 Semibold")}
       </H2>
     </View>
-    <View spacer={true} extralarge={true} />
+    <NBView spacer={true} extralarge={true} />
   </>
 );
 
@@ -98,14 +98,14 @@ export const H3Row = () => (
   <>
     <View style={styles.row}>
       <H3>Header H3 SB</H3>
-      <View hspacer={true} />
+      <NBView hspacer={true} />
       <H3 color={"bluegreyLight"}>Header H3 SB</H3>
-      <View hspacer={true} />
+      <NBView hspacer={true} />
       <View style={{ backgroundColor: IOColors.bluegrey }}>
         <H3 color={"white"}>Header H3 SB</H3>
       </View>
     </View>
-    <View spacer={true} />
+    <NBView spacer={true} />
     <View style={styles.row}>
       <View style={{ backgroundColor: IOColors.bluegrey }}>
         <H3 color={"white"} weight={"Bold"}>
@@ -113,7 +113,7 @@ export const H3Row = () => (
         </H3>
       </View>
     </View>
-    <View spacer={true} extralarge={true} />
+    <NBView spacer={true} extralarge={true} />
   </>
 );
 
@@ -122,14 +122,14 @@ export const H4Row = () => (
     <View style={styles.row}>
       {/* Bold */}
       <H4>Header H4 Bold</H4>
-      <View hspacer={true} />
+      <NBView hspacer={true} />
       <H4 color={"blue"}>Header H4 Bold</H4>
-      <View hspacer={true} />
+      <NBView hspacer={true} />
       <View style={{ backgroundColor: IOColors.bluegrey }}>
         <H4 color={"white"}>Header H4 Bold</H4>
       </View>
     </View>
-    <View spacer={true} />
+    <NBView spacer={true} />
     <View style={styles.row}>
       {/* SemiBold */}
       <View style={{ backgroundColor: IOColors.bluegrey }}>
@@ -138,28 +138,28 @@ export const H4Row = () => (
         </H4>
       </View>
     </View>
-    <View spacer={true} />
+    <NBView spacer={true} />
     <View style={styles.row}>
       {/* Regular */}
       <H4 weight={"Regular"} color={"bluegreyDark"}>
         Header H4
       </H4>
-      <View hspacer={true} />
+      <NBView hspacer={true} />
       <H4 weight={"Regular"} color={"bluegrey"}>
         Header H4
       </H4>
-      <View hspacer={true} />
+      <NBView hspacer={true} />
       <H4 weight={"Regular"} color={"bluegreyLight"}>
         Header H4
       </H4>
-      <View hspacer={true} />
+      <NBView hspacer={true} />
       <View style={{ backgroundColor: IOColors.bluegrey }}>
         <H4 weight={"Regular"} color={"white"}>
           Header H4
         </H4>
       </View>
     </View>
-    <View spacer={true} extralarge={true} />
+    <NBView spacer={true} extralarge={true} />
   </>
 );
 
@@ -167,28 +167,28 @@ export const H5Row = () => (
   <>
     <View style={styles.row}>
       <H5>Header H5 SB</H5>
-      <View hspacer={true} />
+      <NBView hspacer={true} />
       <H5 color={"bluegrey"}>Header H5 SB</H5>
-      <View hspacer={true} />
+      <NBView hspacer={true} />
       <H5 color={"blue"}>Header H5 SB</H5>
-      <View hspacer={true} />
+      <NBView hspacer={true} />
       <View style={{ backgroundColor: IOColors.bluegrey }}>
         <H5 color={"white"}>Header H5 SB</H5>
       </View>
     </View>
-    <View spacer={true} />
+    <NBView spacer={true} />
     <View style={styles.row}>
       <H5 weight={"Regular"}>Header H5</H5>
-      <View hspacer={true} />
+      <NBView hspacer={true} />
       <H5 weight={"Regular"} color={"bluegrey"}>
         Header H5
       </H5>
-      <View hspacer={true} />
+      <NBView hspacer={true} />
       <H5 weight={"Regular"} color={"blue"}>
         Header H5
       </H5>
     </View>
-    <View spacer={true} extralarge={true} />
+    <NBView spacer={true} extralarge={true} />
   </>
 );
 
@@ -196,16 +196,16 @@ export const LabelSmallRow = () => (
   <>
     <View style={styles.row}>
       <LabelSmall>Label small</LabelSmall>
-      <View hspacer={true} />
+      <NBView hspacer={true} />
       <LabelSmall color={"bluegrey"}>Label small</LabelSmall>
-      <View hspacer={true} />
+      <NBView hspacer={true} />
       <LabelSmall color={"red"}>Label small</LabelSmall>
-      <View hspacer={true} />
+      <NBView hspacer={true} />
       <View style={{ backgroundColor: IOColors.bluegrey }}>
         <LabelSmall color={"white"}>Label small</LabelSmall>
       </View>
     </View>
-    <View spacer={true} extralarge={true} />
+    <NBView spacer={true} extralarge={true} />
   </>
 );
 
@@ -213,42 +213,42 @@ export const LabelRow = () => (
   <>
     <View style={styles.row}>
       <Label>Label</Label>
-      <View hspacer={true} />
+      <NBView hspacer={true} />
       <Label color={"bluegrey"}>Label</Label>
-      <View hspacer={true} />
+      <NBView hspacer={true} />
       <View style={{ backgroundColor: IOColors.bluegrey }}>
         <Label color={"white"}>Label</Label>
       </View>
     </View>
-    <View spacer={true} extralarge={true} />
+    <NBView spacer={true} extralarge={true} />
   </>
 );
 
 export const IOBadgeRow = () => (
   <>
     <Label>{"<IOBadge />"}</Label>
-    <View spacer={true} />
+    <NBView spacer={true} />
     <View style={styles.row}>
       <IOBadge text={"Badge"} small={true} labelColor={"white"} />
-      <View hspacer={true} />
+      <NBView hspacer={true} />
       <IOBadge text={"Badge"} small={true} labelColor={"bluegreyDark"} />
-      <View hspacer={true} />
+      <NBView hspacer={true} />
       <IOBadge text={"Badge"} small={true} labelColor={"blue"} />
-      <View hspacer={true} />
+      <NBView hspacer={true} />
       <IOBadge text={"Badge"} small={true} labelColor={"red"} />
-      <View hspacer={true} />
+      <NBView hspacer={true} />
     </View>
-    <View spacer={true} />
+    <NBView spacer={true} />
     <View style={styles.row}>
       <IOBadge text={"Badge"} labelColor={"white"} />
-      <View hspacer={true} />
+      <NBView hspacer={true} />
       <IOBadge text={"Badge"} labelColor={"bluegreyDark"} />
-      <View hspacer={true} />
+      <NBView hspacer={true} />
       <IOBadge text={"Badge"} labelColor={"blue"} />
-      <View hspacer={true} />
+      <NBView hspacer={true} />
       <IOBadge text={"Badge"} labelColor={"red"} />
-      <View hspacer={true} />
+      <NBView hspacer={true} />
     </View>
-    <View spacer={true} extralarge={true} />
+    <NBView spacer={true} extralarge={true} />
   </>
 );

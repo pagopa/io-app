@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
   }
 });
 
-type IconViewerBoxProps = {
+type DSIconViewerBoxProps = {
   name: string;
   image: React.ReactNode;
   size?: "small" | "medium" | "large" | undefined;
@@ -84,7 +84,11 @@ const sizeMap = {
   }
 };
 
-export const IconViewerBox = ({ name, image, size }: IconViewerBoxProps) => (
+export const DSIconViewerBox = ({
+  name,
+  image,
+  size
+}: DSIconViewerBoxProps) => (
   <View
     style={[
       styles.iconWrapper,
