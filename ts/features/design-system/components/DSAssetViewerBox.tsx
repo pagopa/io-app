@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
   }
 });
 
-type AssetViewerBoxProps = {
+type DSAssetViewerBoxProps = {
   name: string;
   image: React.ReactNode;
   type?: "vector" | "raster" | "iconFont";
@@ -107,13 +107,13 @@ const pillMap = {
   }
 };
 
-export const AssetViewerBox = ({
+export const DSAssetViewerBox = ({
   name,
   image,
   type = "vector",
   size = "medium",
   colorMode = "light"
-}: AssetViewerBoxProps) => (
+}: DSAssetViewerBoxProps) => (
   <View
     style={[
       styles.assetWrapper,
