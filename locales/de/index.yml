@@ -1181,7 +1181,7 @@ titleUpdateApp: "Aktualisiere IO!"
 msgErrorUpdateApp: "Beim Öffnen des App-Stores ist ein Fehler aufgetreten"
 messageUpdateApp: "IO führt häufig kleine Verbesserungen und neue Funktionen ein: Um die App weiterhin nutzen zu können, musst du sie auf die neueste Version aktualisieren."
 titleUpdateAppAlert: "Um fortzufahren, aktualisiere IO"
-messageUpdateAppAlert: "Es ist eine neue Version von IO auf {{storeName}} verfügbar, aktualisiere sie um diese Funktion zu nutzen."
+messageUpdateAppAlert: "Es ist eine neue Version von IO auf {{storeName}} verfügbar, aktualisiere sie, um diese Funktion zu nutzen."
 openStore: "Öffne {{storeName}}"
 btnUpdateApp: "Aktualisiere IO"
 systemsOff:
