@@ -18,8 +18,6 @@ import {
   fciPollFilledDocument
 } from "../../store/actions";
 import { getNetworkError } from "../../../../utils/errors";
-import { fciQtspFilledDocumentUrlSelector } from "../../store/reducers/fciQtspFilledDocument";
-import { startTimer } from "../../../../utils/timer";
 import { FilledDocumentDetailView } from "../../../../../definitions/fci/FilledDocumentDetailView";
 
 // Polling frequency timeout
