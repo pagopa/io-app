@@ -29,8 +29,8 @@ const isUpsertingIbanSelector = (state: StateWithContext) =>
 const selectIsLoadingInstruments = (state: StateWithContext) =>
   state.matches("CONFIGURING_INSTRUMENTS.LOADING_INSTRUMENTS");
 
-const selectIsSuccessWithoutInstruments = (state: StateWithContext) =>
-  state.matches("DISPLAYING_CONFIGURATION_SUCCESS_NO_INSTRUMENTS");
+const selectAreInstrumentsSkipped = (state: StateWithContext) =>
+  state.context.areInstrumentsSkipped ?? false;
 
 const selectIsUpsertingInstrument = (state: StateWithContext) =>
   state.matches("CONFIGURING_INSTRUMENTS.ENROLLING_INSTRUMENT") ||
@@ -82,7 +82,7 @@ export {
   selectInitiativeDetails,
   selectIsLoadingInstruments,
   selectIsUpsertingInstrument,
-  selectIsSuccessWithoutInstruments,
+  selectAreInstrumentsSkipped,
   selectEnrolledIban,
   selectorPagoPAIntruments,
   selectorIDPayInstrumentsByIdWallet

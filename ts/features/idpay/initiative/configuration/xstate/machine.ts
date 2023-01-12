@@ -256,8 +256,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
                   cond: "hasInstruments"
                 },
                 {
-                  target:
-                    "#ROOT.DISPLAYING_CONFIGURATION_SUCCESS_NO_INSTRUMENTS"
+                  target: "#ROOT.DISPLAYING_CONFIGURATION_SUCCESS"
                 }
               ]
             },
@@ -285,8 +284,8 @@ const createIDPayInitiativeConfigurationMachine = () =>
                   target: "INSTRUMENTS_COMPLETED"
                 },
                 SKIP: {
-                  target:
-                    "#ROOT.DISPLAYING_CONFIGURATION_SUCCESS_NO_INSTRUMENTS"
+                  target: "INSTRUMENTS_COMPLETED",
+                  actions: "skipInstruments"
                 }
               }
             },
@@ -339,15 +338,6 @@ const createIDPayInitiativeConfigurationMachine = () =>
           on: {
             COMPLETE_CONFIGURATION: {
               target: "CONFIGURATION_COMPLETED"
-            }
-          }
-        },
-        DISPLAYING_CONFIGURATION_SUCCESS_NO_INSTRUMENTS: {
-          tags: [WAITING_USER_INPUT_TAG],
-          entry: "navigateToConfigurationSuccessScreen",
-          on: {
-            COMPLETE_CONFIGURATION: {
-              target: "CONFIGURATION_COMPLETED"
             },
             ADD_PAYMENT_METHOD: {
               actions: "navigateToAddPaymentMethodScreen"
@@ -393,6 +383,9 @@ const createIDPayInitiativeConfigurationMachine = () =>
         })),
         selectInstrument: assign((_, event) => ({
           selectedInstrumentId: event.instrumentId
+        })),
+        skipInstruments: assign((_, __) => ({
+          areInstrumentsSkipped: true
         })),
         enrollInstrumentSuccess: assign((_, event) => ({
           idPayInstruments: p.some(event.data),

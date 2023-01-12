@@ -11,7 +11,7 @@ import themeVariables from "../../../../../theme/variables";
 import { useConfigurationMachineService } from "../xstate/provider";
 import {
   selectInitiativeDetails,
-  selectIsSuccessWithoutInstruments
+  selectAreInstrumentsSkipped
 } from "../xstate/selectors";
 
 const ConfigurationSuccessScreen = () => {
@@ -22,9 +22,9 @@ const ConfigurationSuccessScreen = () => {
     selectInitiativeDetails
   );
 
-  const isWithoutInstruments = useSelector(
+  const areInstrumentsSkipped = useSelector(
     configurationMachine,
-    selectIsSuccessWithoutInstruments
+    selectAreInstrumentsSkipped
   );
 
   if (initiativeDetails === undefined) {
@@ -42,7 +42,7 @@ const ConfigurationSuccessScreen = () => {
   };
 
   const renderButtons = () => {
-    if (isWithoutInstruments) {
+    if (areInstrumentsSkipped) {
       return (
         <View>
           <ButtonDefaultOpacity
@@ -91,7 +91,7 @@ const ConfigurationSuccessScreen = () => {
           <NBView spacer={true} />
           <NBText style={styles.body}>
             {I18n.t(
-              isWithoutInstruments
+              areInstrumentsSkipped
                 ? "idpay.configuration.associationSuccess.noInstrumentsBody"
                 : "idpay.configuration.associationSuccess.body",
               {
