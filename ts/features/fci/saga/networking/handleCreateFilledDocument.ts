@@ -96,10 +96,10 @@ export function* watchFciPollSaga(
       yield* put(fciCancelPollingFilledDocument());
     } finally {
       if (yield* cancelled()) {
-        const filledDocumentSelector: ReturnType<
+        const isFilledDocumentReady: ReturnType<
           typeof fciPollFilledDocumentReadySelector
         > = yield* select(fciPollFilledDocumentReadySelector);
-        if (!filledDocumentSelector) {
+        if (!isFilledDocumentReady) {
           yield* put(
             fciPollFilledDocument.failure(
               getNetworkError(new Error("Polling cancelled"))
