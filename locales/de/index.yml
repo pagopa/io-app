@@ -1014,83 +1014,124 @@ messageDetails:
   id: "ID:"
 notifications:
   installation:
-    errorTitle: Push-Benachrichtigungen
-    errorMessage: Bei der Registrierung mit dem Push-Benachrichtigungsdienst wurde ein Fehler festgestellt
+    errorTitle: "Push-Benachrichtigungen"
+    errorMessage: "Bei der Registrierung des Push-Benachrichtigungsdienstes ist ein Fehler unterlaufen"
+biometric_recognition:
+  contextualHelpTitle: "So funktioniert die biometrische Erkennung"
+  switchLabel: "Biometrische Erkennung aktiveren"
+  enroll_cta: "Die biometrische Erkennung ist auf diesem Gerät vorhanden, aber nicht konfiguriert. Wechsle zu den Einstellungen deines Geräts und aktiviere dort den Dienst, um diese Funktion zu nutzen."
+  enroll_btnLabel: "Zu den Einstellungen"
+  needed_to_disable: "Bestätigung zur Deaktivierung erforderlich"
 send_email_messages:
-  title: Mitteilungen per E-Mail weiterleiten
-  subtitle: Möchten Sie, dass die IO-App den Inhalt von Mitteilungen per E-Mail weiterleitet an
+  title: "Mitteilungen mittels E-Mail weiterleiten"
+  subtitle: "Möchtest du, dass IO den Inhalt von Mitteilungen per E-Mail weiterleitet an"
   options:
     disable_all:
-      label: Für alle Dienste deaktivieren
-      info: Sie erhalten keine E-Mail mehr
+      label: "Für alle Dienste deaktivieren"
+      info: "Du erhälst keine Mitteilung mittels E-Mail mehr"
     enable_all:
-      label: Für alle aktiven Dienste freigeben
-      info: Jede Mitteilung wird an Ihre E-Mail weitergeleitet, wenn der Dienst dies zulässt
+      label: "Für alle aktiven Dienste aktivieren"
+      info: "Jede Mitteilung wird an deine E-Mail-Adresse weitergeleitet, wenn der Dienst dies zulässt"
     by_service:
-      label: Dienst nach Dienst auswählen
-      info: Sie können im Einstellungsfenster jedes Dienstes auswählen, ob Sie dessen Mitteilungen auch per E-Mail erhalten möchten
+      label: "Dienst für Dienst auswählen"
+      info: "Du kannst auf der Registerkarte jedes Dienstes wählen, ob du dessen Mitteilungen auch per E-Mail erhalten möchtest"
 services:
-  title: Dienste
-  subTitle: Aktivieren oder deaktivieren Sie die Dienste, die Ihnen Mitteilungen senden dürfen
-  contextualHelpTitle: Über diesen Bereich
-  serviceIsEnabled: In der App kontaktieren
-  serviceNotEnabled: Der Dienst ist nicht aktiv
-  pushNotifications: Push-Mitteilungen schicken
-  emailForwarding: E-Mail zuschicken
-  tosAndPrivacy: Nutzungsbedingungen und Datenschutzbestimmungen
-  tosLink: Bedingungen und Konditionen
-  privacyLink: Informationen zum Datenschutz
-  otherAppsInfo: Sie finden diesen Dienst auch
-  otherAppWeb: Online auf
-  otherAppIos: Mit der IO-App
-  otherAppAndroid: Mit der Android-App
-  contactsAndInfo: Kontakte und Informationen
-  visitWebsite: Website
-  askForAssistance: Hilfe anfragen
-  contactAddress: Adresse
-  contactPhone: Telefon
-  contactSupport: Support
+  accessibility:
+    edit: "Ändere die Einstellung der Dienste"
+  optIn:
+    preferences:
+      completed:
+        title: "Einstellungen gespeichert!"
+        body: "Du kannst die Liste der verfügbaren Dienste jederzeit im Abschnitt Dienste einsehen."
+        cta: "Verfügbare Dienste anzeigen"
+      oldUsersBadge: "Aktuelle Einstellungen"
+      choiceLabel: "Deine Wahl:"
+      unavailable: "Nicht ausgewählt"
+      title: "Wie möchtest du die Dienste auf IO konfigurieren?"
+      body: "IO ist einfach, weil du nichts tun musst: wenn ein Dienst dir etwas Wichtiges mitzuteilen hat, kann er dir eine Mitteilung senden."
+      quickConfig:
+        value: "Schnelleinrichtung"
+        label: "Alle Dienste, die du nicht deaktiviert hast, können dich kontaktieren."
+        title: "Schnelleinrichtung benutzen"
+        body:
+          text1: "Nur Dienste, die dir etwas Wichtiges mitzuteilen haben, werden dich kontaktieren."
+          text2: "Du kannst die Mitteilungen von Diensten, die dich nicht interessieren, jederzeit deaktivieren."
+      manualConfig:
+        value: "Manuelle Konfiguration"
+        label: "Nur die Dienste, die du aktiviert hast, können dich kontaktieren."
+        title: "Manuell konfigurieren"
+        body:
+          text1: "Kein Dienst wird dich kontaktieren können. Um Mitteilungen zu empfangen, musst du sie einzeln konfigurieren."
+        bottomSheet:
+          title: "Wenn du bestätigst, erhälst du keine Mitteilungen"
+          body: "Bei einer manuellen Konfiguration können dir weder aktuelle noch zukünftige IO-Dienste Mitteilungen senden. Damit Dienste, an denen du interessiert bist, dich kontaktieren können, musst du sie einzeln konfigurieren, indem du den Punkt “In der App kontaktieren” auf jeder Registerkarte des Dienstes aktivierst."
+  title: "Dienste"
+  subTitle: "Aktiviere oder deaktiviere die Dienste, die dir Mitteilungen senden dürfen"
+  contextualHelpTitle: "Was du in deinen Diensten machen kannst"
+  serviceIsEnabled: "In der App kontaktieren"
+  serviceNotEnabled: "Der Dienst ist nicht aktiv"
+  pushNotifications: "Push-Benachrichtigungen senden"
+  messageReadStatus: "Lesebestätigungen erhalten"
+  emailForwarding: "E-Mails senden"
+  tosAndPrivacy: "Nutzungsbedingungen und Datenschutzbestimmungen"
+  tosLink: "Nutzungsbedingungen"
+  privacyLink: "Informationen zum Datenschutz"
+  otherAppsInfo: "Du findest diesen Dienst auch"
+  otherAppWeb: "online auf"
+  otherAppIos: "iOS-App"
+  otherAppAndroid: "Android-App"
+  contactsAndInfo: "Kontakte und Informationen"
+  visitWebsite: "Website"
+  askForAssistance: "Hilfe anfordern"
+  contactAddress: "Adresse"
+  contactPhone: "Telefon"
+  contactSupport: "Support"
   areasOfInterest:
-    selectMessage: Wählen Sie den geographischen Bereich (Gemeinden, Regionen usw.), in dem Sie wohnen oder den Sie normalerweise besuchen, um die entsprechenden Dienste hier zu sehen. Sie können sie jederzeit ändern.
-    selectMessageEmptyOrgs: Im Moment ist es nicht möglich, einen Standort zu hinterlegen. Bitte ziehen Sie den Bildschirm nach unten, um die Daten zu aktualisieren und versuchen Sie es erneut.
-    addButton: Fügen Sie Ihre gewünschten Themenbereiche hinzu
-    editButton: Ändern Sie Ihre Themenbereiche.
-    searchEmpty: Wenn Sie Ihr Themenfeld nicht finden, bedeutet dies, dass die Körperschaft dieses Gebiets noch keine Dienste über die IO-App bereitstellen.
+    selectMessage: "Wähle den geographischen Bereich (Gemeinden, Regionen usw.), in dem du wohnst oder in denen du dich gewöhnlich aufhälst, um die entsprechenden Dienste hier zu sehen. Du kannst sie jederzeit ändern."
+    selectMessageEmptyOrgs: "Es ist derzeit nicht möglich, einen Standort hinzuzufügen. Bitte ziehe den Bildschirm nach unten, um die Daten zu aktualisieren und versuche erneut, einen Bereich auszuwählen."
+    addButton: "Füge deine gewünschten Interessengebiete hinzu"
+    editButton: "Ändere deine Interessengebiete"
+    searchEmpty: "Wenn du dein Interessengebiet nicht findest, bedeutet dies, dass die Körperschaften dieses Gebiets noch keine Dienste auf IO bereitstellen."
   tab:
-    locals: Lokal
-    national: National
-    all: Alles
+    locals: "Lokal"
+    national: "National"
+    all: "Alle"
   loading:
-    title: Laden der Dienstleistungsliste
-    subtitle: nur einige Sekunden...
-  enableAll: Schnell Konfiguration verwenden
-  disableAll: Manuelle Konfiguration verwenden
-  updatingServiceMode: Bitte warten...
-  disableAllTitle: "Wollen Sie wirklich alle Dienste deaktivieren?"
-  disableAllMsg: "Beachten Sie, dass Sie auf der IO-App nur Mitteilungen von Diensten erhalten, welche Ihnen persönlichen Mitteilungen zustellen. Sie werden keine Spam-Mitteilungen bekommen. Wenn Sie alle Dienste deaktivieren, können Sie für diese nicht mehr kontaktiert werden (bis diese nicht wieder aktivieren). Sie können diese Dienste auch über andere Kanäle nutzen (Front Office, Website usw.)"
-  close: Schließen
-  emptyListMessage: Zurzeit sind keine Dienste verfügbar, zum Aktualisieren wischen Sie auf dem Bildschirm nach unten
+    title: "Lade die Liste der Dienste"
+    subtitle: "Warte ein paar Sekunden..."
+  enableAll: "Schnelleinrichtung verwenden"
+  disableAll: "Manuelle Konfiguration verwenden"
+  updatingServiceMode: "Bitte warten..."
+  disableAllTitle: "Möchtest du wirklich alle Dienste deaktivieren?"
+  disableAllMsg: "Bedenke, dass du nur von Diensten angeschrieben wirst, die tatsächlich über persönliche Informationen verfügen, die sie dir mitteilen möchten. Du wirst keine Spam-Mitteilungen erhalten. Wenn du alle Dienste deaktivierst, können diese dich nicht mehr über IO kontaktieren (bis du sie wieder aktivierst). Du kannst die Dienste weiterhin über andere Kanäle nutzen (Schalter, Website usw.)."
+  close: "Schließen"
+  emptyListMessage: "Zurzeit sind keine Dienste verfügbar, zum Aktualisieren ziehe auf dem Bildschirm nach unten"
 serviceDetail:
   fiscalCode: "Steuernr. Körperschaft"
+  fiscalCodeAccessibility: "Steuernummer Körperschaft"
   contacts:
     title: "Dieser Dienst kann:"
-  headerTitle: "Service Details"
-  onUpdateEnabledChannelsFailure: "Es gab ein kurzzeitiges Problem beim Speichern der Einstellungen, bitte versuchen Sie es erneut."
-  disableTitle: "Wollen Sie den Dienst wirklich deaktivieren?"
-  disableMsg: "Beachten Sie, dass Sie auf der IO-App nur Mitteilungen von Diensten erhalten, welche Ihnen persönlichen Mitteilungen zustellen. Sie werden keine Spam-Mitteilungen bekommen. Wenn Sie alle Dienste deaktivieren, können Sie für diese nicht mehr kontaktiert werden (bis diese nicht wieder aktivieren). Sie können diese Dienste auch über andere Kanäle nutzen (Front Office, Website usw.)"
-  lockedMailAlert: "Die E-Mail-Weiterleitung von Mitteilungen ist allgemein {{enabled}}:"
-  updatePreferences: Aktualisieren Sie Ihre Einstellungen
-  goTo: Gehen Sie zu den Einstellungen
-  enabled: aktiviert
-  disabled: deaktiviert
-  notValidated: Um die E-Mail-Weiterleitung zu aktivieren, müssen Sie Ihre E-Mail-Adresse validieren.
+  headerTitle: "Details zum Dienst"
+  onUpdateEnabledChannelsFailure: "Beim Speichern der Einstellungen ist ein temporärer Fehler aufgetreten. Bitte versuche es erneut."
+  disableTitle: "Möchtest du den Dienst wirklich deaktivieren?"
+  disableMsg: "Bedenke, dass du nur von Diensten angeschrieben wirst, die tatsächlich über persönliche Informationen verfügen, die sie dir mitteilen möchten. Du wirst keine Spam-Mitteilungen erhalten. Wenn du diesen Dienst deaktivierst, kann dieser dich nicht mehr über IO kontaktieren (bis du ihn wieder aktivierst). Du kannst diesen Dienst weiterhin über andere Kanäle nutzen (Schalter, Website usw.)."
+  lockedMailAlert: "Die E-Mail-Weiterleitung von Mitteilungen ist global {{enabled}}:"
+  updatePreferences: "Einstellungen ändern"
+  goTo: "Geh zu den Einstellungen"
+  enabled: "aktiviert"
+  disabled: "deaktiviert"
+  notValidated: "Um die E-Mail-Weiterleitung zu aktivieren, musst du deine E-Mail-Adresse bestätigen."
 identification:
-  title: Hallo!
-  titleProfileName: Hallo {{profileName}}!
-  titleValidation: Bestätigen Sie den Vorgang
-  subtitleCode: Geben Sie den Freischaltcode ein
-  subtitleCodeFingerprint: den Fingerabdruck oder den Entsperrcode verwenden
-  subtitleCodeFaceId: Verwenden Sie die FaceID oder geben Sie den Entsperrcode ein
+  title: "Hallo!"
+  titleProfileName: "Hallo {{profileName}}!"
+  titleValidation: "Bestätige den Vorgang"
+  logout: "Abmelden"
+  logoutProfileName: "Du bist nicht {{profileName}}?"
+  logoutDescription: "Du kannst dich mit deinem SPID oder deiner CIE anmelden. Diese Sitzung wird abgemeldet."
+  logoutDescriptionProfileName: "Du kannst dich mit deinem SPID oder deiner CIE anmelden. Die Sitzung von {{profileName}} wird abgemeldet."
+  subtitleCode: "Gib deinen Entsperrcode ein"
+  subtitleCodeFingerprint: "Verwende den Fingerabdruck oder den Entsperrcode"
+  subtitleCodeFaceId: "Verwende FaceID oder gib den Entsperrcode ein"
   biometric:
     fingerprintType: Fingerabdruck
     title: Biometrische Identifikation
