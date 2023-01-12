@@ -269,7 +269,11 @@ export const baseRawBackendStatus: BackendStatus = {
       dataMatrixPosteEnabled: false
     },
     fci: {
-      enabled: false
+      enabled: false,
+      min_app_version: {
+        ios: "1.2.3",
+        android: "1.2.3"
+      }
     },
     lollipop: {
       enabled: false
@@ -338,7 +342,11 @@ export const baseBackendConfig: Config = {
     dataMatrixPosteEnabled: false
   },
   fci: {
-    enabled: false
+    enabled: false,
+    min_app_version: {
+      ios: "1.2.3",
+      android: "1.2.3"
+    }
   },
   lollipop: {
     enabled: false
