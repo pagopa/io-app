@@ -16,8 +16,15 @@ export const idpayTimelineGet = createAsyncAction(
   "IDPAY_TIMELINE_FAILURE"
 )<IdPayInitiativeGetPayloadType, TimelineDTO, NetworkError>();
 
+export const idpayTimelinePaginationGet = createAsyncAction(
+  "IDPAY_PAGINATION_REQUEST",
+  "IDPAY_PAGINATION_SUCCESS",
+  "IDPAY_PAGINATION_FAILURE"
+)<IdPayInitiativeGetPayloadType, TimelineDTO, NetworkError>();
+
 export type IDPayTimelineActions = ActionType<typeof idpayTimelineGet>;
 
 export type IDPayInitiativeActions =
   | ActionType<typeof idpayInitiativeGet>
-  | ActionType<typeof idpayTimelineGet>;
+  | ActionType<typeof idpayTimelineGet>
+  | ActionType<typeof idpayTimelinePaginationGet>;

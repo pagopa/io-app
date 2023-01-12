@@ -15,10 +15,12 @@ import { createIDPayTimelineClient } from "../api/client";
 import {
   idpayInitiativeGet,
   IdPayInitiativeGetPayloadType,
-  idpayTimelineGet
+  idpayTimelineGet,
+  idpayTimelinePaginationGet
 } from "../store/actions";
 import { handleGetInitiativeDetails } from "./handleGetInitiativeDetails";
 import { handleGetTimeline } from "./handleGetTimeline";
+import { handleGetTimelinePagination } from "./handleGetTimelinePagination";
 
 /**
  * Handle IDPAY initiative requests
@@ -64,4 +66,19 @@ export function* idpayInitiativeDetailsSaga(bearerToken: string): SagaIterator {
       );
     }
   );
+  yield *
+    takeLatest(
+      idpayTimelinePaginationGet.request,
+      function* (action: { payload: IdPayInitiativeGetPayloadType }) {
+        // wait backoff time if there were previous errors
+        yield* call(waitBackoffError, idpayTimelinePaginationGet.failure);
+        yield* call(
+          handleGetTimelinePagination,
+          idPayTimelineClient.getTimeline,
+          token,
+          preferredLanguage,
+          action.payload
+        );
+      }
+    );
 }

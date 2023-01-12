@@ -58,7 +58,11 @@ type RouteProps = Route<
   InitiativeDetailsScreenParams
 >;
 
-const InitiativeNotConfiguredComponent = () => (
+const InitiativeNotConfiguredComponent = ({
+  initiativeName
+}: {
+  initiativeName: string;
+}) => (
   <View style={[styles.newInitiativeMessageContainer, IOStyles.flex]}>
     <EmptyInitiativeSvg width={130} height={130} />
     <View spacer />
@@ -71,7 +75,7 @@ const InitiativeNotConfiguredComponent = () => (
     <Text style={styles.textCenter}>
       {I18n.t(
         "idpay.initiative.details.initiativeDetailsScreen.notConfigured.footer",
-        { initiative: "18 app" }
+        { initiative: initiativeName }
       )}
     </Text>
   </View>
@@ -148,7 +152,9 @@ export const InitiativeDetailsScreen = () => {
           >
             <View style={styles.paddedContent}>
               {initiativeNeedsConfiguration && (
-                <InitiativeNotConfiguredComponent />
+                <InitiativeNotConfiguredComponent
+                  initiativeName={initiativeData.initiativeName ?? ""}
+                />
               )}
               {!initiativeNeedsConfiguration && (
                 <>

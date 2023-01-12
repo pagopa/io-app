@@ -5,16 +5,22 @@ import { InitiativeDTO } from "../../../../../../definitions/idpay/wallet/Initia
 import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../utils/errors";
-import { idpayInitiativeGet, idpayTimelineGet } from "./actions";
+import {
+  idpayInitiativeGet,
+  idpayTimelineGet,
+  idpayTimelinePaginationGet
+} from "./actions";
 
 export type IDPayInitiativeState = {
   details: pot.Pot<InitiativeDTO, NetworkError>;
   timeline: pot.Pot<TimelineDTO, NetworkError>;
+  timelinePage: pot.Pot<number, NetworkError>;
 };
 
 const INITIAL_STATE: IDPayInitiativeState = {
   details: pot.none,
-  timeline: pot.none
+  timeline: pot.none,
+  timelinePage: pot.some(1)
 };
 
 const reducer = (
@@ -41,7 +47,8 @@ const reducer = (
     case getType(idpayTimelineGet.request):
       return {
         ...state,
-        timeline: pot.toLoading(state.timeline)
+        timeline: pot.toLoading(state.timeline),
+        timelinePage: pot.some(1)
       };
     case getType(idpayTimelineGet.success):
       return {
@@ -53,6 +60,24 @@ const reducer = (
         ...state,
         timeline: pot.toError(state.timeline, action.payload)
       };
+    // TIMELINE PAGINATION ACTIONS
+    case getType(idpayTimelinePaginationGet.request):
+      return {
+        ...state,
+        timelinePage: pot.toLoading(state.timelinePage)
+      };
+    case getType(idpayTimelinePaginationGet.success):
+      const currentPage = pot.getOrElse(state.timelinePage, 0);
+      return {
+        ...state,
+        timeline: pot.some(action.payload),
+        timelinePage: pot.some(currentPage + 1)
+      };
+    case getType(idpayTimelinePaginationGet.failure):
+      return {
+        ...state,
+        timelinePage: pot.toError(state.timelinePage, action.payload)
+      };
   }
   return state;
 };
@@ -61,5 +86,7 @@ export const idpayInitiativeDetailsSelector = (state: GlobalState) =>
   state.features.idPay.initiative.details;
 export const idpayTimelineSelector = (state: GlobalState) =>
   state.features.idPay.initiative.timeline;
+export const idpayTimelinePageSelector = (state: GlobalState) =>
+  state.features.idPay.initiative.timelinePage;
 
 export default reducer;
