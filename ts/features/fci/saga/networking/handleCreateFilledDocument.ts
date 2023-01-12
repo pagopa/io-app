@@ -6,7 +6,8 @@ import {
   race,
   cancelled,
   take,
-  delay
+  delay,
+  select
 } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import * as E from "fp-ts/lib/Either";
@@ -19,13 +20,14 @@ import {
 } from "../../store/actions";
 import { getNetworkError } from "../../../../utils/errors";
 import { FilledDocumentDetailView } from "../../../../../definitions/fci/FilledDocumentDetailView";
+import { fciPollFilledDocumentReadySelector } from "../../store/reducers/fciPollFilledDocument";
 
 // Polling frequency timeout
 const POLLING_FREQ_TIMEOUT = 2000 as Millisecond;
 
 // Polling time threshold (10 seconds)
 // If the polling time exceeds this threshold, the polling is stopped
-const POLLING_TIME_THRESHOLD = (10 * 1000) as Millisecond;
+const POLLING_TIME_THRESHOLD = (10 * 2000) as Millisecond;
 
 /*
  * A saga to post filled Document.
@@ -94,11 +96,16 @@ export function* watchFciPollSaga(
       yield* put(fciCancelPollingFilledDocument());
     } finally {
       if (yield* cancelled()) {
-        yield* put(
-          fciPollFilledDocument.failure(
-            getNetworkError(new Error("Polling cancelled"))
-          )
-        );
+        const filledDocumentSelector: ReturnType<
+          typeof fciPollFilledDocumentReadySelector
+        > = yield* select(fciPollFilledDocumentReadySelector);
+        if (!filledDocumentSelector) {
+          yield* put(
+            fciPollFilledDocument.failure(
+              getNetworkError(new Error("Polling cancelled"))
+            )
+          );
+        }
       }
     }
   }
