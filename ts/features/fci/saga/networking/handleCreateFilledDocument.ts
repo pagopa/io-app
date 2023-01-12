@@ -94,7 +94,11 @@ export function* watchFciPollSaga(
       yield* put(fciCancelPollingFilledDocument());
     } finally {
       if (yield* cancelled()) {
-        yield* put(fciCancelPollingFilledDocument());
+        yield* put(
+          fciPollFilledDocument.failure(
+            getNetworkError(new Error("Polling cancelled"))
+          )
+        );
       }
     }
   }

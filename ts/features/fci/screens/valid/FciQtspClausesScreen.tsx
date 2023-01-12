@@ -60,7 +60,7 @@ const FciQtspClausesScreen = () => {
     />
   );
 
-  if (fciPollFilledDocumentError) {
+  if (fciPollFilledDocumentError && !isPollFilledDocumentReady) {
     return <GenericErrorComponent onPress={() => dispatch(fciEndRequest())} />;
   } else if (!isPollFilledDocumentReady) {
     return <LoadingComponent />;
