@@ -7,7 +7,10 @@ import NavigationService from "../../navigation/NavigationService";
 import ROUTES from "../../navigation/routes";
 import { profileUpsert } from "../../store/actions/profile";
 import { isProfileFirstOnBoarding } from "../../store/reducers/profile";
-import { trackNotificationsOptInPreviewStatus, trackNotificationsOptInReminderStatus } from "../../utils/analytics";
+import {
+  trackNotificationsOptInPreviewStatus,
+  trackNotificationsOptInReminderStatus
+} from "../../utils/analytics";
 import { requestNotificationPermissions } from "../../utils/notification";
 import { checkNotificationsPermissionsSaga } from "./checkNotificationsPermissionsSaga";
 
