@@ -5,7 +5,7 @@ import { IOSpacer, IOSpacerType } from "../variables/IOSpacing";
 type SpacerOrientation = "vertical" | "horizontal";
 
 type SpacerProps = {
-  orientation: SpacerOrientation;
+  orientation?: SpacerOrientation;
   size?: IOSpacerType;
 };
 

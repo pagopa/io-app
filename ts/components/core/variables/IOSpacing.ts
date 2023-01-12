@@ -10,17 +10,21 @@ export const IOSpacingScale = [
 
 type IOSpacingScaleType = typeof IOSpacingScale[number];
 
-type IOSpacerValuesType = Record<string, IOSpacingScaleType>;
+function asIOSpacer<T extends { [key: string]: IOSpacingScaleType }>(
+  arg: T
+): T {
+  return arg;
+}
 
 /*
 Values used in the new `<Spacer>` component
 */
-export const IOSpacer: IOSpacerValuesType = {
+export const IOSpacer = asIOSpacer({
   xsm: 4,
   sm: 8,
   md: 16,
   lg: 24,
   xlg: 40
-};
+});
 
 export type IOSpacerType = keyof typeof IOSpacer;
