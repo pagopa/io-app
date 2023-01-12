@@ -1,8 +1,8 @@
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { useSelector } from "@xstate/react";
-import { List, Text, View } from "native-base";
+import { List as NBList, Text as NBText, View as NBView } from "native-base";
 import React from "react";
-import { SafeAreaView, ScrollView } from "react-native";
+import { View, SafeAreaView, ScrollView } from "react-native";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -10,6 +10,7 @@ import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverl
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../i18n";
+import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import {
   InstrumentEnrollmentSwitch,
@@ -20,6 +21,8 @@ import { ConfigurationMode } from "../xstate/context";
 import { useConfigurationMachineService } from "../xstate/provider";
 import {
   isLoadingSelector,
+  selectInitiativeDetails,
+  selectIsInstrumentsOnlyMode,
   selectIsUpsertingInstrument,
   selectorIDPayInstrumentsByIdWallet,
   selectorPagoPAIntruments
@@ -58,6 +61,14 @@ const InstrumentsEnrollmentScreen = () => {
   const selectedInstrumentIdRef = React.useRef<number | undefined>(undefined);
 
   const isLoading = useSelector(configurationMachine, isLoadingSelector);
+  const initiativeDetails = useSelector(
+    configurationMachine,
+    selectInitiativeDetails
+  );
+  const isInstrumentsOnlyMode = useSelector(
+    configurationMachine,
+    selectIsInstrumentsOnlyMode
+  );
 
   const pagoPAInstruments = useSelector(
     configurationMachine,
@@ -87,6 +98,10 @@ const InstrumentsEnrollmentScreen = () => {
 
   const handleContinueButton = () => {
     configurationMachine.send({ type: "NEXT" });
+  };
+
+  const handleAddPaymentMethodButton = () => {
+    configurationMachine.send({ type: "ADD_PAYMENT_METHOD" });
   };
 
   const sendEnrollInstrument = (walletId: number): void => {
@@ -119,14 +134,15 @@ const InstrumentsEnrollmentScreen = () => {
 
   const enrollmentBottomSheetModal = useIOBottomSheetModal(
     <Body>
-      {I18n.t("idpay.initiative.configuration.bottomSheet.bodyFirst")}
+      {I18n.t("idpay.configuration.instruments.enrollmentSheet.bodyFirst")}
       <Body weight="SemiBold">
-        {I18n.t("idpay.initiative.configuration.bottomSheet.bodyBold") + "\n"}
+        {I18n.t("idpay.configuration.instruments.enrollmentSheet.bodyBold") +
+          "\n"}
       </Body>
-      {I18n.t("idpay.initiative.configuration.bottomSheet.bodyLast")}
+      {I18n.t("idpay.configuration.instruments.enrollmentSheet.bodyLast")}
     </Body>,
 
-    I18n.t("idpay.initiative.configuration.bottomSheet.header"),
+    I18n.t("idpay.configuration.instruments.enrollmentSheet.header"),
     270,
 
     <FooterWithButtons
@@ -139,7 +155,7 @@ const InstrumentsEnrollmentScreen = () => {
         block: true,
         bordered: false,
         title: I18n.t(
-          "idpay.initiative.configuration.bottomSheet.footer.buttonActivate"
+          "idpay.configuration.instruments.enrollmentSheet.buttons.activate"
         )
       }}
       leftButton={{
@@ -150,7 +166,7 @@ const InstrumentsEnrollmentScreen = () => {
         block: true,
         bordered: true,
         title: I18n.t(
-          "idpay.initiative.configuration.bottomSheet.footer.buttonCancel"
+          "idpay.configuration.instruments.enrollmentSheet.buttons.cancel"
         )
       }}
     />
@@ -176,25 +192,62 @@ const InstrumentsEnrollmentScreen = () => {
     }
   };
 
+  const renderFooterButtons = () => {
+    if (isInstrumentsOnlyMode) {
+      return (
+        <FooterWithButtons
+          type="SingleButton"
+          leftButton={{
+            title: I18n.t("idpay.configuration.instruments.buttons.addMethod"),
+            disabled: isUpserting,
+            onPress: handleAddPaymentMethodButton
+          }}
+        />
+      );
+    }
+
+    return (
+      <FooterWithButtons
+        type="TwoButtonsInlineHalf"
+        leftButton={{
+          title: I18n.t("idpay.configuration.instruments.buttons.skip"),
+          bordered: true,
+          disabled: isUpserting,
+          onPress: handleSkipButton
+        }}
+        rightButton={{
+          title: I18n.t("idpay.configuration.instruments.buttons.continue"),
+          disabled: isUpserting || !hasSelectedInstruments,
+          onPress: handleContinueButton
+        }}
+      />
+    );
+  };
+
   return (
     <>
       <BaseScreenComponent
         goBack={handleBackPress}
-        headerTitle={I18n.t("idpay.configuration.headerTitle")}
+        headerTitle={I18n.t(
+          isInstrumentsOnlyMode
+            ? "idpay.configuration.instruments.title"
+            : "idpay.configuration.headerTitle"
+        )}
+        contextualHelp={emptyContextualHelp}
       >
         <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={1}>
-          <View spacer />
+          <NBView spacer={true} />
           <View style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
-            <H1>{I18n.t("idpay.initiative.configuration.header")}</H1>
-            <View spacer small />
-            <Text>
-              {I18n.t("idpay.initiative.configuration.subHeader", {
-                initiativeName: "18app"
+            <H1>{I18n.t("idpay.configuration.instruments.header")}</H1>
+            <NBView spacer={true} small={true} />
+            <NBText>
+              {I18n.t("idpay.configuration.instruments.body", {
+                initiativeName: initiativeDetails?.initiativeName ?? ""
               })}
-            </Text>
-            <View spacer />
+            </NBText>
+            <NBView spacer={true} />
             <ScrollView>
-              <List>
+              <NBList>
                 {pagoPAInstruments.map(pagoPAInstrument => (
                   <InstrumentEnrollmentSwitch
                     ref={node => {
@@ -215,30 +268,14 @@ const InstrumentsEnrollmentScreen = () => {
                     onSwitch={handleInstrumentSwitch}
                   />
                 ))}
-              </List>
-              <Text>{I18n.t("idpay.initiative.configuration.footer")}</Text>
+              </NBList>
+              <NBView spacer={true} />
+              <NBText>
+                {I18n.t("idpay.configuration.instruments.footer")}
+              </NBText>
             </ScrollView>
           </View>
-          <SafeAreaView>
-            <FooterWithButtons
-              type="TwoButtonsInlineHalf"
-              leftButton={{
-                title: I18n.t(
-                  "idpay.initiative.configuration.buttonFooter.noneCta"
-                ),
-                bordered: true,
-                disabled: isUpserting,
-                onPress: handleSkipButton
-              }}
-              rightButton={{
-                title: I18n.t(
-                  "idpay.initiative.configuration.buttonFooter.continueCta"
-                ),
-                disabled: isUpserting || !hasSelectedInstruments,
-                onPress: handleContinueButton
-              }}
-            />
-          </SafeAreaView>
+          <SafeAreaView>{renderFooterButtons()}</SafeAreaView>
         </LoadingSpinnerOverlay>
       </BaseScreenComponent>
       {enrollmentBottomSheetModal.bottomSheet}

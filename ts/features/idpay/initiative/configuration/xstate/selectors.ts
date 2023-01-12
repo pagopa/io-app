@@ -3,6 +3,7 @@ import { createSelector } from "reselect";
 import { StateFrom } from "xstate";
 import { InstrumentDTO } from "../../../../../../definitions/idpay/wallet/InstrumentDTO";
 import { LOADING_TAG } from "../../../../../utils/xstate";
+import { ConfigurationMode } from "./context";
 import { IDPayInitiativeConfigurationMachineType } from "./machine";
 
 type StateWithContext = StateFrom<IDPayInitiativeConfigurationMachineType>;
@@ -16,6 +17,9 @@ const isLoadingSelector = (state: StateWithContext) =>
 
 const selectInitiativeDetails = (state: StateWithContext) =>
   P.getOrElse(state.context.initiative, undefined);
+
+const selectIsInstrumentsOnlyMode = (state: StateWithContext) =>
+  state.context.mode === ConfigurationMode.INSTRUMENTS;
 
 const isLoadingIbanListSelector = (state: StateWithContext) =>
   state.matches("CONFIGURING_IBAN.LOADING_IBAN_LIST");
@@ -80,6 +84,7 @@ export {
   ibanListSelector,
   isUpsertingIbanSelector,
   selectInitiativeDetails,
+  selectIsInstrumentsOnlyMode,
   selectIsLoadingInstruments,
   selectIsUpsertingInstrument,
   selectAreInstrumentsSkipped,

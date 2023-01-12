@@ -271,6 +271,9 @@ const createIDPayInitiativeConfigurationMachine = () =>
                   target: "DELETING_INSTRUMENT",
                   actions: "selectInstrument"
                 },
+                ADD_PAYMENT_METHOD: {
+                  actions: "navigateToAddPaymentMethodScreen"
+                },
                 BACK: [
                   {
                     cond: "isInstrumentsOnlyMode",
