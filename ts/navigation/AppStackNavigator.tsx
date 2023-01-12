@@ -179,9 +179,9 @@ export const AppStackNavigator = () => {
             name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN}
             component={IDPayOnboardingNavigator}
           />
-          <Stack.screen
-          name={ROUTES.IDPAY_OPERATIONS_LIST}
-          component={OperationsListScreen}
+          <Stack.Screen
+            name={ROUTES.IDPAY_OPERATIONS_LIST}
+            component={OperationsListScreen}
           />
           <Stack.Screen
             name={ROUTES.IDPAY_INITIATIVE_DETAILS}
