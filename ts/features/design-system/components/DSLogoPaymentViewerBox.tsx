@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
   }
 });
 
-type LogoPaymentViewerBoxProps = {
+type DSLogoPaymentViewerBoxProps = {
   name: string;
   image: React.ReactNode;
   size: "medium" | "large";
@@ -71,11 +71,11 @@ const sizeMap = {
   }
 };
 
-export const LogoPaymentViewerBox = ({
+export const DSLogoPaymentViewerBox = ({
   name,
   image,
   size
-}: LogoPaymentViewerBoxProps) => (
+}: DSLogoPaymentViewerBoxProps) => (
   <View style={[styles.logoWrapper, sizeMap[size].wrapper]}>
     <View style={[styles.logoItem, sizeMap[size].item]}>
       <ImageBackground
