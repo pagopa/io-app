@@ -31,5 +31,5 @@ You can add the recently added icon with the following declaration:
 
 ## View all the available icons
 There are two ways:
-- In the app, go to the `Profile → UI Showroom` (you must enable `Debug Mode`)
+- In the app, go to the `Profile → Design System → Icons` (you must enable `Debug Mode`)
 - In the repository, go to the `svg/originals` subfolder

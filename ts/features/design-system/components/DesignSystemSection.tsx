@@ -15,7 +15,7 @@ type OwnProps = {
   title: string;
 };
 
-export const ShowroomSection: React.FunctionComponent<OwnProps> = props => (
+export const DesignSystemSection: React.FunctionComponent<OwnProps> = props => (
   <View style={styles.content}>
     <H1 style={styles.title}>{props.title}</H1>
     {props.children}

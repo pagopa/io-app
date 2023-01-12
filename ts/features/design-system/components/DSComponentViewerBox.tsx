@@ -23,17 +23,17 @@ const styles = StyleSheet.create({
   }
 });
 
-type ComponentViewerBoxProps = {
+type DSComponentViewerBoxProps = {
   name: string;
   colorMode?: "dark" | "light";
   children: React.ReactNode;
 };
 
-export const ComponentViewerBox = ({
+export const DSComponentViewerBox = ({
   name,
   colorMode = "light",
   children
-}: ComponentViewerBoxProps) => (
+}: DSComponentViewerBoxProps) => (
   <View style={styles.componentWrapper}>
     {children}
     <View style={styles.labelWrapper}>
