@@ -33,13 +33,11 @@ const ConfigurationSuccessScreen = () => {
 
   const { initiativeName } = initiativeDetails;
 
-  const handleNavigateToInitiativePress = () => {
+  const handleNavigateToInitiativePress = () =>
     configurationMachine.send({ type: "COMPLETE_CONFIGURATION" });
-  };
 
-  const handleAddPaymentMethodButtonPress = () => {
+  const handleAddPaymentMethodButtonPress = () =>
     configurationMachine.send({ type: "ADD_PAYMENT_METHOD" });
-  };
 
   const renderButtons = () => {
     if (areInstrumentsSkipped) {
