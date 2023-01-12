@@ -1,7 +1,6 @@
 import * as React from "react";
 import { View as NBView } from "native-base";
 import { View, StyleSheet } from "react-native";
-import { ShowroomSection } from "../components/ShowroomSection";
 import AdviceComponent from "../../../components/AdviceComponent";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
 import StatusContent from "../../../components/SectionStatus/StatusContent";
@@ -10,7 +9,7 @@ import SectionStatusComponent, {
   statusColorMap,
   statusIconMap
 } from "../../../components/SectionStatus";
-import { FullWidthComponent } from "../components/FullWidthComponent";
+import { DSFullWidthComponent } from "../components/DSFullWidthComponent";
 import { InfoBox } from "../../../components/box/InfoBox";
 import { Body } from "../../../components/core/typography/Body";
 
@@ -23,7 +22,8 @@ import { Icon } from "../../../components/core/icons";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 import { H5 } from "../../../components/core/typography/H5";
 import { Label } from "../../../components/core/typography/Label";
-import { ActivateBonusReminder } from "../../../features/bonus/bonusVacanze/screens/activation/request/ActivateBonusReminder";
+import { ActivateBonusReminder } from "../../bonus/bonusVacanze/screens/activation/request/ActivateBonusReminder";
+import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 const styles = StyleSheet.create({
   content: {
@@ -36,11 +36,11 @@ const styles = StyleSheet.create({
   }
 });
 
-export const AdviceShowroom = () => {
+export const DSAdvice = () => {
   const viewRef = React.createRef<View>();
 
   return (
-    <ShowroomSection title={"Advice & Banners"}>
+    <DesignSystemScreen title={"Advice & Banners"}>
       <AdviceComponent
         text={
           "Dopo questo passaggio non sarà più possibile annullare il pagamento."
@@ -79,15 +79,15 @@ export const AdviceShowroom = () => {
         }
       />
       <NBView spacer={true} />
-      <FullWidthComponent>
+      <DSFullWidthComponent>
         <PaymentBannerComponent
           paymentReason={"Pagamento buoni pasto mensa scuola"}
           fee={100 as ImportoEuroCents}
           currentAmount={30000 as ImportoEuroCents}
         />
-      </FullWidthComponent>
+      </DSFullWidthComponent>
       <NBView spacer={true} />
-      <FullWidthComponent>
+      <DSFullWidthComponent>
         <StatusContent
           accessibilityLabel={`Accessibility text for the advice component`}
           backgroundColor={statusColorMap.normal}
@@ -103,13 +103,13 @@ export const AdviceShowroom = () => {
             "L’invio dei Certificati Verdi è in corso e potrebbe richiedere diversi giorni."
           }
         </StatusContent>
-      </FullWidthComponent>
+      </DSFullWidthComponent>
       <NBView spacer={true} />
-      <FullWidthComponent>
+      <DSFullWidthComponent>
         <SectionStatusComponent sectionKey={"favourite_language"} />
-      </FullWidthComponent>
+      </DSFullWidthComponent>
       <NBView spacer={true} />
-      <FullWidthComponent>
+      <DSFullWidthComponent>
         <StatusContent
           accessibilityLabel={`Accessibility text for the advice component`}
           backgroundColor={statusColorMap.warning}
@@ -123,9 +123,9 @@ export const AdviceShowroom = () => {
         >
           {"La sezione Messaggi è in manutenzione, tornerà operativa a breve"}
         </StatusContent>
-      </FullWidthComponent>
+      </DSFullWidthComponent>
       <NBView spacer={true} />
-      <FullWidthComponent>
+      <DSFullWidthComponent>
         <StatusContent
           accessibilityLabel={`Accessibility text for the advice component`}
           backgroundColor={statusColorMap.critical}
@@ -141,7 +141,7 @@ export const AdviceShowroom = () => {
             "I nostri sistemi potrebbero rispondere con lentezza, ci scusiamo per il disagio."
           }
         </StatusContent>
-      </FullWidthComponent>
+      </DSFullWidthComponent>
 
       <NBView spacer={true} />
 
@@ -161,6 +161,8 @@ export const AdviceShowroom = () => {
           </Label>
         </InfoBox>
       </View>
-    </ShowroomSection>
+
+      <NBView spacer={true} extralarge={true} />
+    </DesignSystemScreen>
   );
 };

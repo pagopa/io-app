@@ -17,7 +17,7 @@ export type ProfileParamsList = {
   [ROUTES.INSERT_EMAIL_SCREEN]: undefined;
   [ROUTES.PROFILE_DOWNLOAD_DATA]: undefined;
   [ROUTES.MARKDOWN_PLAYGROUND]: undefined;
-  [ROUTES.SHOWROOM]: undefined;
+  [ROUTES.DESIGN_SYSTEM]: undefined;
   [ROUTES.WEB_PLAYGROUND]: undefined;
   [ROUTES.PROFILE_REMOVE_ACCOUNT_INFO]: undefined;
   [ROUTES.PROFILE_REMOVE_ACCOUNT_DETAILS]: undefined;

@@ -8,7 +8,7 @@ import {
   IOColorGradients,
   hexToRgba
 } from "../../../components/core/variables/IOColors";
-import { ShowroomSection } from "../components/ShowroomSection";
+import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 const colorItemGutter = 16;
 const sectionTitleMargin = 16;
@@ -58,8 +58,8 @@ const styles = StyleSheet.create({
   }
 });
 
-export const ColorsShowroom = () => (
-  <ShowroomSection title={"Color palette"}>
+export const DSColors = () => (
+  <DesignSystemScreen title={"Colors"}>
     <H2
       color={"bluegrey"}
       weight={"SemiBold"}
@@ -92,7 +92,7 @@ export const ColorsShowroom = () => (
         />
       ))}
     </View>
-  </ShowroomSection>
+  </DesignSystemScreen>
 );
 
 type ColorBoxProps = {
