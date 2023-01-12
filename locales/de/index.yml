@@ -1130,60 +1130,63 @@ identification:
   logoutDescription: "Du kannst dich mit deinem SPID oder deiner CIE anmelden. Diese Sitzung wird abgemeldet."
   logoutDescriptionProfileName: "Du kannst dich mit deinem SPID oder deiner CIE anmelden. Die Sitzung von {{profileName}} wird abgemeldet."
   subtitleCode: "Gib deinen Entsperrcode ein"
-  subtitleCodeFingerprint: "Verwende den Fingerabdruck oder den Entsperrcode"
+  subtitleCodeFingerprint: "Verwende den Fingerabdruck oder gib den Entsperrcode ein"
   subtitleCodeFaceId: "Verwende FaceID oder gib den Entsperrcode ein"
   biometric:
-    fingerprintType: Fingerabdruck
-    title: Biometrische Identifikation
+    fingerprintType: "Fingerabdruck"
+    title: "Biometrische Identifikation"
     popup:
-      reason: Identifikation durch TouchID fehlgeschlagen
-      title: Identifikation erforderlich
-      sensorDescription: Berührungssensor
+      reason: "Identifikation durch TouchID fehlgeschlagen"
+      title: "Identifikation erforderlich"
+      sensorDescription: "Berührungssensor"
   fail:
-    remainingAttempts: Sie haben noch {{attempts}} Versuche übrig.
-    remainingAttemptSingle: Sie haben noch {{attempts}} Versuche übrig.
-    tooManyAttempts: Zu viele Versuche.
-    waitMessage: "Versuchen Sie es erneut in:"
+    remainingAttempts: "Du hast noch {{attempts}} Versuche übrig."
+    remainingAttemptSingle: "Du hast noch einen Versuch übrig."
+    tooManyAttempts: "Zu viele falsche Versuche."
+    waitMessage: "Versuche es erneut in:"
   unlockCode:
     accessibility:
-      unlockHint: Sie haben {{number}} Zeichen von {{length}} eingegeben
-      fingerprint: Anmeldung mit Ihrem Fingerabdruck
-      faceId: Anmeldung mit FaceID
-      delete: Letzte eingefügte Ziffer entfernen
+      unlockHint: "Du hast {{number}} von {{length}} Ziffern eingegeben"
+      fingerprint: "Anmeldung mit dem Fingerabdruck"
+      faceId: "Anmeldung mit FaceID"
+      delete: "Letzte eingefügte Ziffer löschen"
     reset:
-      button: Haben Sie vergessen, den
-      code: Freischaltcode
-      button_short: Ändern des Freischaltcodes
-      subtitle: Einen neuen 6-stelligen Code einrichten
-    confirmValid: Korrekter Freischaltcode
+      button: "Hast du deinen"
+      code: "Entsperrcode vergessen"
+      button_short: "Entsperrcode ändern"
+      subtitle: "Einen neuen 6-stelligen Code festlegen"
+    confirmValid: "Entsperrcode korrekt"
   unlock_screen:
     help:
-      title: Zugriff mit Freischaltcode
+      title: "Zugriff mit Entsperrcode"
   forgetCode:
-    confirmTitle: Haben Sie den Freischaltcode vergessen?
-    confirmMsg: Um einen neuen Freischaltcode einstellen zu können, müssen Sie sich erneut anmelden.
-    confirmMsgWithTask: Um einen neuen Freischaltcode einstellen zu können, müssen Sie den aktuellen Vorgang abbrechen und sich neu anmelden.
+    confirmTitle: "Hast du den Entsperrcode vergessen?"
+    confirmMsg: "Um einen neuen Entsperrcode festlegen zu können, musst du dich erneut anmelden."
+    confirmMsgWithTask: "Um einen neuen Entsperrcode festlegen zu können, musst du den aktuellen Vorgang abbrechen und dich neu anmelden."
 calendarEvents:
-  calendarSelect: In welchen Kalender wollen Sie den Termin eintragen?
+  calendarSelect: "In welchen Kalender möchtest du den Termin eintragen?"
   removeRequest:
-    title: Sind Sie sicher, dass Sie diesen Termin entfernen möchten?
-    ok: Termin entfernen
-    cancel: Vorgang abbrechen
+    title: "Möchtest du wirklich den Termin entfernen?"
+    ok: "Termin entfernen"
+    cancel: "Vorgang abbrechen"
 reminders:
-  emptyMonth: Keine Fälligkeiten für diesen Monat
-  loadMoreData: Bisherige Termine
-  noOtherDeadlines: Es gibt keine weiteren Fristen
+  emptyMonth: "Keine Fälligkeiten für diesen Monat"
+  loadMoreData: "Bisherige Fälligkeiten"
+  noOtherDeadlines: "Es gibt keine weiteren Fälligkeiten"
 openMaps:
-  genericError: Beim Öffnen der Karte ist ein Fehler aufgetreten
-genericError: Ein Fehler ist aufgetreten
-titleUpdateApp: Aktualisieren Sie die IO-App!
+  genericError: "Beim Öffnen der Karte ist ein Fehler aufgetreten"
+  openAddressOnMap: "Adresse auf der Karte öffnen"
+genericError: "Ein Fehler ist aufgetreten"
+titleUpdateApp: "Aktualisiere IO!"
 msgErrorUpdateApp: "Beim Öffnen des App-Stores ist ein Fehler aufgetreten"
-messageUpdateApp: "Die IO-App führt häufig kleine Verbesserungen und neue Funktionen ein: Um die App weiterhin nutzen zu können,
-  müssen Sie sie auf die neueste Version aktualisieren."
-btnUpdateApp: Aktualisieren Sie die IO-App
+messageUpdateApp: "IO führt häufig kleine Verbesserungen und neue Funktionen ein: Um die App weiterhin nutzen zu können, musst du sie auf die neueste Version aktualisieren."
+titleUpdateAppAlert: "Um fortzufahren, aktualisiere IO"
+messageUpdateAppAlert: "Es ist eine neue Version von IO auf {{storeName}} verfügbar, aktualisiere sie um diese Funktion zu nutzen."
+openStore: "Öffne {{storeName}}"
+btnUpdateApp: "Aktualisiere IO"
 systemsOff:
-  title: IO-App kann nicht gestartet werden
-  closeApp: Schließen Sie die Anwendung und versuchen Sie es erneut
+  title: "IO kann nicht verwendet werden"
+  closeApp: "Schließe die App und versuche es erneut"
 contextualHelp:
   title: Die IO-App hilft Ihnen
 features:
