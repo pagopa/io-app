@@ -328,12 +328,12 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
           </>
         )}
 
-        {/* Showroom */}
+        {/* Design System */}
         <ListItemComponent
-          title={I18n.t("profile.main.showroom")}
+          title={I18n.t("profile.main.designSystem")}
           onPress={() =>
             navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-              screen: ROUTES.SHOWROOM
+              screen: ROUTES.DESIGN_SYSTEM
             })
           }
           isFirstItem={true}

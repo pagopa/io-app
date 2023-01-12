@@ -11,16 +11,17 @@ import { Label } from "../../../components/core/typography/Label";
 import GoBackButton from "../../../components/GoBackButton";
 import CopyButtonComponent from "../../../components/CopyButtonComponent";
 import BlockButtons from "../../../components/ui/BlockButtons";
-import { ViewEUCovidButton } from "../../../features/euCovidCert/components/ViewEUCovidButton";
+import { ViewEUCovidButton } from "../../euCovidCert/components/ViewEUCovidButton";
 import PaymentButton from "../../../components/messages/MessageDetail/common/PaymentButton";
 import { PaymentNoticeNumber } from "../../../../definitions/backend/PaymentNoticeNumber";
 import IconFont from "../../../components/ui/IconFont";
-import { ShowroomSection } from "../components/ShowroomSection";
-import { ComponentViewerBox } from "../components/ComponentViewerBox";
+import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
+import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
-export const ButtonsShowroom = () => (
-  <ShowroomSection title={"Buttons"}>
-    <ComponentViewerBox name="ButtonExtendedOutline (using Pressable API)">
+export const DSButtons = () => (
+  <DesignSystemScreen title={"Buttons"}>
+    {/* The title should be dynamic, got from the route object */}
+    <DSComponentViewerBox name="ButtonExtendedOutline (using Pressable API)">
       <View>
         <ButtonExtendedOutline
           label={"Label name"}
@@ -40,7 +41,7 @@ export const ButtonsShowroom = () => (
           }}
         />
       </View>
-    </ComponentViewerBox>
+    </DSComponentViewerBox>
     <H2
       color={"bluegrey"}
       weight={"SemiBold"}
@@ -48,12 +49,12 @@ export const ButtonsShowroom = () => (
     >
       NativeBase
     </H2>
-    <ComponentViewerBox name="NativeBase ButtonDefaultOpacity (Primary)">
+    <DSComponentViewerBox name="NativeBase ButtonDefaultOpacity (Primary)">
       {/* The following props render the button with the same
-      graphical attributes:
-          - Active
-          - Input Button
-      */}
+              graphical attributes:
+                  - Active
+                  - Input Button
+            */}
       <ButtonDefaultOpacity
         primary={true}
         onPress={() => {
@@ -62,8 +63,8 @@ export const ButtonsShowroom = () => (
       >
         <NBText>Primary button</NBText>
       </ButtonDefaultOpacity>
-    </ComponentViewerBox>
-    <ComponentViewerBox name="NativeBase ButtonDefaultOpacity (Primary Block)">
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="NativeBase ButtonDefaultOpacity (Primary Block)">
       <ButtonDefaultOpacity
         primary={true}
         block={true}
@@ -73,8 +74,8 @@ export const ButtonsShowroom = () => (
       >
         <NBText>Primary button (Block)</NBText>
       </ButtonDefaultOpacity>
-    </ComponentViewerBox>
-    <ComponentViewerBox name="NativeBase ButtonDefaultOpacity (Primary Small)">
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="NativeBase ButtonDefaultOpacity (Primary Small)">
       <ButtonDefaultOpacity
         small={true}
         onPress={() => {
@@ -83,8 +84,8 @@ export const ButtonsShowroom = () => (
       >
         <NBText>Primary button (Small)</NBText>
       </ButtonDefaultOpacity>
-    </ComponentViewerBox>
-    <ComponentViewerBox name="NativeBase Button (XSmall)">
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="NativeBase Button (XSmall)">
       <ButtonDefaultOpacity
         xsmall={true}
         onPress={() => {
@@ -93,8 +94,8 @@ export const ButtonsShowroom = () => (
       >
         <NBText>XSmall button</NBText>
       </ButtonDefaultOpacity>
-    </ComponentViewerBox>
-    <ComponentViewerBox name="NativeBase ButtonDefaultOpacity (Primary Disabled)">
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="NativeBase ButtonDefaultOpacity (Primary Disabled)">
       <ButtonDefaultOpacity
         disabled={true}
         onPress={() => {
@@ -103,8 +104,8 @@ export const ButtonsShowroom = () => (
       >
         <NBText>Primary button (Disabled)</NBText>
       </ButtonDefaultOpacity>
-    </ComponentViewerBox>
-    <ComponentViewerBox name="NativeBase ButtonDefaultOpacity (Outline)">
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="NativeBase ButtonDefaultOpacity (Outline)">
       <ButtonDefaultOpacity
         bordered={true}
         onPress={() => {
@@ -113,8 +114,8 @@ export const ButtonsShowroom = () => (
       >
         <NBText>Outline button (Light)</NBText>
       </ButtonDefaultOpacity>
-    </ComponentViewerBox>
-    <ComponentViewerBox name="NativeBase ButtonDefaultOpacity (Outline Block)">
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="NativeBase ButtonDefaultOpacity (Outline Block)">
       <ButtonDefaultOpacity
         bordered={true}
         block={true}
@@ -124,8 +125,8 @@ export const ButtonsShowroom = () => (
       >
         <NBText>Outline button (Block Light)</NBText>
       </ButtonDefaultOpacity>
-    </ComponentViewerBox>
-    <ComponentViewerBox name="NativeBase ButtonDefaultOpacity (Outline Small)">
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="NativeBase ButtonDefaultOpacity (Outline Small)">
       <ButtonDefaultOpacity
         bordered={true}
         small={true}
@@ -135,8 +136,8 @@ export const ButtonsShowroom = () => (
       >
         <NBText>Outline button (Small Light)</NBText>
       </ButtonDefaultOpacity>
-    </ComponentViewerBox>
-    <ComponentViewerBox name="NativeBase ButtonDefaultOpacity (Outline Disabled)">
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="NativeBase ButtonDefaultOpacity (Outline Disabled)">
       <ButtonDefaultOpacity
         bordered={true}
         disabled={true}
@@ -146,8 +147,8 @@ export const ButtonsShowroom = () => (
       >
         <NBText>Outline button (disabled)</NBText>
       </ButtonDefaultOpacity>
-    </ComponentViewerBox>
-    <ComponentViewerBox name="NativeBase ButtonDefaultOpacity (Outline Light)">
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="NativeBase ButtonDefaultOpacity (Outline Light)">
       <ButtonDefaultOpacity
         bordered={true}
         light={true}
@@ -157,8 +158,8 @@ export const ButtonsShowroom = () => (
       >
         <NBText>Outline button (light)</NBText>
       </ButtonDefaultOpacity>
-    </ComponentViewerBox>
-    <ComponentViewerBox name="NativeBase ButtonDefaultOpacity (Outline Block Light)">
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="NativeBase ButtonDefaultOpacity (Outline Block Light)">
       <ButtonDefaultOpacity
         bordered={true}
         block={true}
@@ -169,8 +170,8 @@ export const ButtonsShowroom = () => (
       >
         <NBText>Outline button (block light)</NBText>
       </ButtonDefaultOpacity>
-    </ComponentViewerBox>
-    <ComponentViewerBox name="NativeBase ButtonDefaultOpacity (Outline Small Light)">
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="NativeBase ButtonDefaultOpacity (Outline Small Light)">
       <ButtonDefaultOpacity
         bordered={true}
         small={true}
@@ -181,8 +182,8 @@ export const ButtonsShowroom = () => (
       >
         <NBText>Outline button (small light)</NBText>
       </ButtonDefaultOpacity>
-    </ComponentViewerBox>
-    <ComponentViewerBox name="NativeBase ButtonDefaultOpacity (Outline Light Disabled)">
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="NativeBase ButtonDefaultOpacity (Outline Light Disabled)">
       <ButtonDefaultOpacity
         bordered={true}
         light={true}
@@ -193,8 +194,8 @@ export const ButtonsShowroom = () => (
       >
         <NBText>Outline button (light disabled)</NBText>
       </ButtonDefaultOpacity>
-    </ComponentViewerBox>
-    <ComponentViewerBox name="NativeBase ButtonDefaultOpacity (Dark)">
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="NativeBase ButtonDefaultOpacity (Dark)">
       <ButtonDefaultOpacity
         dark={true}
         onPress={() => {
@@ -203,8 +204,8 @@ export const ButtonsShowroom = () => (
       >
         <NBText>Primary button (dark)</NBText>
       </ButtonDefaultOpacity>
-    </ComponentViewerBox>
-    <ComponentViewerBox name="NativeBase ButtonDefaultOpacity (Outline Dark)">
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="NativeBase ButtonDefaultOpacity (Outline Dark)">
       <ButtonDefaultOpacity
         dark={true}
         bordered={true}
@@ -214,8 +215,8 @@ export const ButtonsShowroom = () => (
       >
         <NBText>Outline button (dark)</NBText>
       </ButtonDefaultOpacity>
-    </ComponentViewerBox>
-    <ComponentViewerBox name="NativeBase Button (Cancel) · Custom style, not managed by props">
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="NativeBase Button (Cancel) · Custom style, not managed by props">
       <ButtonDefaultOpacity
         bordered={true}
         style={{ borderColor: IOColors.red }}
@@ -225,8 +226,8 @@ export const ButtonsShowroom = () => (
       >
         <Label color={"red"}>Cancel outline button</Label>
       </ButtonDefaultOpacity>
-    </ComponentViewerBox>
-    <ComponentViewerBox name="NativeBase Button (Cancel) · Custom style, not managed by props">
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="NativeBase Button (Cancel) · Custom style, not managed by props">
       <ButtonDefaultOpacity
         bordered={true}
         block={true}
@@ -237,8 +238,8 @@ export const ButtonsShowroom = () => (
       >
         <Label color={"red"}>Cancel outline button (block)</Label>
       </ButtonDefaultOpacity>
-    </ComponentViewerBox>
-    <ComponentViewerBox name="NativeBase Button (Cancel)">
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="NativeBase Button (Cancel)">
       <ButtonDefaultOpacity
         alert={true}
         onPress={() => {
@@ -247,8 +248,8 @@ export const ButtonsShowroom = () => (
       >
         <Label color={"white"}>Cancel button</Label>
       </ButtonDefaultOpacity>
-    </ComponentViewerBox>
-    <ComponentViewerBox name="NativeBase Button (Cancel Block)">
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="NativeBase Button (Cancel Block)">
       <ButtonDefaultOpacity
         alert={true}
         block={true}
@@ -258,8 +259,8 @@ export const ButtonsShowroom = () => (
       >
         <Label color={"white"}>Cancel button (block)</Label>
       </ButtonDefaultOpacity>
-    </ComponentViewerBox>
-    <ComponentViewerBox name="NativeBase ButtonDefaultOpacity (Light Text)">
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="NativeBase ButtonDefaultOpacity (Light Text)">
       <ButtonDefaultOpacity
         lightText={true}
         onPress={() => {
@@ -268,7 +269,7 @@ export const ButtonsShowroom = () => (
       >
         <NBText>Button (light text)</NBText>
       </ButtonDefaultOpacity>
-    </ComponentViewerBox>
+    </DSComponentViewerBox>
     <View
       style={{
         backgroundColor: IOColors.blue,
@@ -276,7 +277,7 @@ export const ButtonsShowroom = () => (
         borderRadius: 8
       }}
     >
-      <ComponentViewerBox name="NativeBase Button (White)" colorMode="dark">
+      <DSComponentViewerBox name="NativeBase Button (White)" colorMode="dark">
         <ButtonDefaultOpacity
           white={true}
           onPress={() => {
@@ -287,16 +288,16 @@ export const ButtonsShowroom = () => (
             White button
           </LabelSmall>
         </ButtonDefaultOpacity>
-      </ComponentViewerBox>
+      </DSComponentViewerBox>
 
-      <ComponentViewerBox name="NativeBase Button (White)" colorMode="dark">
+      <DSComponentViewerBox name="NativeBase Button (White)" colorMode="dark">
         <GoBackButton
           onPress={() => {
             alert("Going back");
           }}
           white={true}
         />
-      </ComponentViewerBox>
+      </DSComponentViewerBox>
     </View>
 
     <NBView spacer={true} large={true} />
@@ -373,23 +374,23 @@ export const ButtonsShowroom = () => (
     >
       Specific buttons
     </H2>
-    <ComponentViewerBox name="ViewEUCovidButton">
+    <DSComponentViewerBox name="ViewEUCovidButton">
       <ViewEUCovidButton
         onPress={() => {
           alert("Covid Certificate shown");
         }}
       />
-    </ComponentViewerBox>
+    </DSComponentViewerBox>
 
-    <ComponentViewerBox name="PaymentButton">
+    <DSComponentViewerBox name="PaymentButton">
       <PaymentButton
         amount={9999999999}
         noticeNumber={"123112312312321321" as PaymentNoticeNumber}
         organizationFiscalCode={"46545" as OrganizationFiscalCode}
       />
-    </ComponentViewerBox>
+    </DSComponentViewerBox>
 
-    <ComponentViewerBox name="CalendarEventButton">
+    <DSComponentViewerBox name="CalendarEventButton">
       <ButtonDefaultOpacity small={true} bordered={true}>
         <IconFont name={"io-plus"} />
         <NBText>Aggiungi promemoria</NBText>
@@ -399,11 +400,11 @@ export const ButtonsShowroom = () => (
         <IconFont name={"io-tick-big"} />
         <NBText>Aggiunto</NBText>
       </ButtonDefaultOpacity>
-    </ComponentViewerBox>
+    </DSComponentViewerBox>
 
-    <ComponentViewerBox name="CopyButtonComponent">
+    <DSComponentViewerBox name="CopyButtonComponent">
       <CopyButtonComponent textToCopy={"Copied text by CopyButton"} />
-    </ComponentViewerBox>
+    </DSComponentViewerBox>
 
     {/* 
       The following components are using the legacy `IconFont`
@@ -413,7 +414,7 @@ export const ButtonsShowroom = () => (
       on NativeBase, must use the new <Icon> component.
     */}
 
-    <ComponentViewerBox name="Login buttons">
+    <DSComponentViewerBox name="Login buttons">
       <ButtonDefaultOpacity block={true} primary={true}>
         <IconFont name={"io-profilo"} color={IOColors.white} />
         <NBText>Entra con SPID</NBText>
@@ -423,6 +424,6 @@ export const ButtonsShowroom = () => (
         <IconFont name={"io-cie"} color={IOColors.white} />
         <NBText>Entra con CIE</NBText>
       </ButtonDefaultOpacity>
-    </ComponentViewerBox>
-  </ShowroomSection>
+    </DSComponentViewerBox>
+  </DesignSystemScreen>
 );
