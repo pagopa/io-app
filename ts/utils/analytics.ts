@@ -17,15 +17,11 @@ export const noAnalyticsRoutes = new Set<string>(
 // Premium events
 
 export function trackMessageNotificationTap(isForeground: boolean) {
-  // eslint-disable-next-line no-console
-  console.log(`*** *** *** === === trackMessageNotificationTap`);
   const key = isForeground ? "NOTIFICATIONS_MESSAGE_FOREGROUND_TAP" : "NOTIFICATIONS_MESSAGE_BACKGROUND_TAP";
   void mixpanelTrack(key);
 };
 
 export function trackOpenMessageFromNotification() {
-  // eslint-disable-next-line no-console
-  console.log(`*** *** *** === === trackOpenMessageFromNotification`);
   void mixpanelTrack("NOTIFICATION_OPEN_MESSAGE");
 };
 

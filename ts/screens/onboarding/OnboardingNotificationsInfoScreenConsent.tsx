@@ -113,7 +113,7 @@ const OnboardingNotificationsInfoScreenConsent = () => {
 
     if (pot.isSome(optInPreferencesPot)) {
       const optInPreferences = optInPreferencesPot.value;
-      if (optInPreferences.reminder) {
+      if (optInPreferences.preview || optInPreferences.reminder) {
         trackConflictingNotificationSettings();
       }
     }
