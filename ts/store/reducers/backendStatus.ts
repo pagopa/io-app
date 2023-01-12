@@ -1,4 +1,3 @@
-import { LollipopConfig } from "./../../../definitions/content/LollipopConfig";
 /**
  * Implements the reducers for BackendServicesState.
  */

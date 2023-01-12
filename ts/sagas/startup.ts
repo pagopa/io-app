@@ -83,6 +83,7 @@ import { watchMessageAttachmentsSaga } from "../features/messages/saga/attachmen
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
 import { watchIDPayWalletSaga } from "../features/idpay/wallet/saga";
 import { idpayInitiativeDetailsSaga } from "../features/idpay/initiative/details/saga";
+import { isLollipopEnabledSelector } from "../store/reducers/backendStatus";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -138,7 +139,6 @@ import { watchLoadMessageById } from "./messages/watchLoadMessageById";
 import { watchThirdPartyMessageSaga } from "./messages/watchThirdPartyMessageSaga";
 import { checkNotificationsPreferencesSaga } from "./startup/checkNotificationsPreferencesSaga";
 import { generateCryptoKeyPair } from "./startup/generateCryptoKeyPair";
-import { isLollipopEnabledSelector } from "../store/reducers/backendStatus";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;

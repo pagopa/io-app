@@ -271,6 +271,9 @@ export const baseRawBackendStatus: BackendStatus = {
     fci: {
       enabled: false
     },
+    lollipop: {
+      enabled: false
+    },
     pn: {
       enabled: false,
       frontend_url: ""
@@ -335,6 +338,9 @@ export const baseBackendConfig: Config = {
     dataMatrixPosteEnabled: false
   },
   fci: {
+    enabled: false
+  },
+  lollipop: {
     enabled: false
   },
   pn: {
