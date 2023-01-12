@@ -40,7 +40,7 @@ describe("handleCreateFilledDocument", () => {
       .next(right(successResponse))
       .put(fciLoadQtspFilledDocument.success(successResponse.value))
       .next()
-      .call(filledDocumentPollWatcher)
+      .call(filledDocumentPollWatcher, qtspFilledDocument.filled_document_url)
       .next()
       .isDone();
   });

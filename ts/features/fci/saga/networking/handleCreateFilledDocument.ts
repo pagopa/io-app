@@ -1,6 +1,13 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { SagaIterator } from "redux-saga";
-import { call, put, race, select, take } from "typed-redux-saga/macro";
+import {
+  call,
+  put,
+  race,
+  cancelled,
+  take,
+  delay
+} from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import * as E from "fp-ts/lib/Either";
 import { readablePrivacyReport } from "../../../../utils/reporters";
@@ -13,6 +20,7 @@ import {
 import { getNetworkError } from "../../../../utils/errors";
 import { fciQtspFilledDocumentUrlSelector } from "../../store/reducers/fciQtspFilledDocument";
 import { startTimer } from "../../../../utils/timer";
+import { FilledDocumentDetailView } from "../../../../../definitions/fci/FilledDocumentDetailView";
 
 // Polling frequency timeout
 const POLLING_FREQ_TIMEOUT = 2000 as Millisecond;
@@ -43,9 +51,13 @@ export function* handleCreateFilledDocument(
           postQtspFilledBodyResponse.right.value
         )
       );
+      const qtspFilledDocumentUrl =
+        postQtspFilledBodyResponse.right.value.filled_document_url;
       // if the url is present, we need to poll the document
       // to wait for the filled document ready
-      yield* call(filledDocumentPollWatcher);
+      if (qtspFilledDocumentUrl) {
+        yield* call(filledDocumentPollWatcher, qtspFilledDocumentUrl);
+      }
       return;
     }
 
@@ -63,38 +75,39 @@ export function* handleCreateFilledDocument(
  * the document is ready or when the polling is stopped if
  * the polling time exceeds POLLING_TIME_THRESHOLD.
  */
-export function* watchFciPollSaga(): SagaIterator {
-  const qtspFilledDocumentUrl = yield* select(fciQtspFilledDocumentUrlSelector);
-  if (qtspFilledDocumentUrl) {
-    const startPollingTime = new Date().getTime();
-    while (true) {
-      try {
-        const response = yield* call(fetch, qtspFilledDocumentUrl);
-        const responseStatus = response.status;
-        if (responseStatus === 200) {
-          yield* put(
-            fciPollFilledDocument.success({
-              isReady: true
-            })
-          );
-          yield* put(fciCancelPollingFilledDocument());
-        }
-        yield* call(startTimer, POLLING_FREQ_TIMEOUT);
-        const now = new Date().getTime();
-        if (now - startPollingTime >= POLLING_TIME_THRESHOLD) {
-          throw Error("Polling time exceeded");
-        }
-      } catch (e) {
-        yield* put(fciPollFilledDocument.failure(getNetworkError(e)));
+export function* watchFciPollSaga(
+  qtspFilledDocumentUrl: FilledDocumentDetailView["filled_document_url"]
+) {
+  while (true) {
+    try {
+      const response = yield* call(fetch, qtspFilledDocumentUrl);
+      const responseStatus = response.status;
+      if (responseStatus === 200) {
+        yield* put(
+          fciPollFilledDocument.success({
+            isReady: true
+          })
+        );
+        yield* put(fciCancelPollingFilledDocument());
+      }
+      yield* delay(POLLING_FREQ_TIMEOUT);
+    } catch (e) {
+      yield* put(fciPollFilledDocument.failure(getNetworkError(e)));
+      yield* put(fciCancelPollingFilledDocument());
+    } finally {
+      if (yield* cancelled()) {
         yield* put(fciCancelPollingFilledDocument());
       }
     }
   }
 }
 
-export function* filledDocumentPollWatcher() {
+export function* filledDocumentPollWatcher(
+  filledDocumentUrl: FilledDocumentDetailView["filled_document_url"]
+) {
   yield* race({
-    task: call(watchFciPollSaga),
-    cancel: take(fciCancelPollingFilledDocument)
+    task: call(watchFciPollSaga, filledDocumentUrl),
+    cancel: take(fciCancelPollingFilledDocument),
+    delay: delay(POLLING_TIME_THRESHOLD)
   });
 }
