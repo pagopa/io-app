@@ -35,5 +35,5 @@ You can add the recently added pictogram with the following declaration:
 
 ## View all the available pictograms
 There are two ways:
-- In the app, go to the `Profile → UI Showroom` (you must enable `Debug Mode`)
+- In the app, go to the `Profile → Design System → Pictograms` (you must enable `Debug Mode`)
 - In the repository, go to the `svg/originals` subfolder

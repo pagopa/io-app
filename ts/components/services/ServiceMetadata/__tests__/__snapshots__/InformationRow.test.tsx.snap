@@ -1,13 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`the InformationRow component should match the snapshot 1`] = `
-<View
-  style={
-    Object {
-      "flexDirection": "column",
-    }
-  }
->
+<View>
   <View
     accessibilityLabel="Label"
     accessibilityRole="button"
@@ -24,7 +18,7 @@ exports[`the InformationRow component should match the snapshot 1`] = `
     style={
       Object {
         "flexDirection": "row",
-        "marginVertical": 24,
+        "marginVertical": 16,
         "opacity": 1,
       }
     }
@@ -32,7 +26,6 @@ exports[`the InformationRow component should match the snapshot 1`] = `
     <Text
       allowFontScaling={true}
       color="bluegrey"
-      ellipsizeMode="tail"
       font="TitilliumWeb"
       fontStyle={
         Object {
@@ -44,9 +37,6 @@ exports[`the InformationRow component should match the snapshot 1`] = `
       numberOfLines={1}
       style={
         Array [
-          Object {
-            "flex": 1,
-          },
           Object {
             "fontSize": 16,
             "lineHeight": 22,
@@ -83,14 +73,11 @@ exports[`the InformationRow component should match the snapshot 1`] = `
       numberOfLines={1}
       style={
         Array [
-          Array [
-            Object {
-              "flex": 1,
-            },
-            Object {
-              "textAlign": "right",
-            },
-          ],
+          Object {
+            "flexGrow": 1,
+            "flexShrink": 1,
+            "textAlign": "right",
+          },
           Object {
             "fontSize": 16,
             "lineHeight": 22,

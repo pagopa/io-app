@@ -4,7 +4,7 @@ import { Alert, StyleSheet, View } from "react-native";
 import { CheckBox } from "../../../components/core/selection/checkbox/CheckBox";
 import { RemoteSwitch } from "../../../components/core/selection/RemoteSwitch";
 import { Label } from "../../../components/core/typography/Label";
-import { ShowroomSection } from "../components/ShowroomSection";
+import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 const styles = StyleSheet.create({
   content: {
@@ -17,8 +17,8 @@ const styles = StyleSheet.create({
   }
 });
 
-export const SelectionShowroom = () => (
-  <ShowroomSection title={"Selection"}>
+export const DSSelection = () => (
+  <DesignSystemScreen title={"Selection"}>
     <Label>{"<CheckBox />"}</Label>
     <View style={styles.content}>
       <CheckBox />
@@ -36,5 +36,5 @@ export const SelectionShowroom = () => (
       <RemoteSwitch value={pot.some(false)} />
       <RemoteSwitch value={pot.someUpdating(true, false)} />
     </View>
-  </ShowroomSection>
+  </DesignSystemScreen>
 );
