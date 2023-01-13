@@ -39,7 +39,7 @@ export const DSSpacerViewerBox = ({
 }: DSSpacerViewerBoxProps) => (
   <>
     {orientation === "vertical" ? (
-      <View style={{ flexDirection: "column", marginBottom: 20 }}>
+      <View style={{ flexDirection: "column" }}>
         <View style={styles.spacerWrapper}>
           <VSpacer size={size} />
         </View>
@@ -50,7 +50,7 @@ export const DSSpacerViewerBox = ({
         )}
       </View>
     ) : (
-      <View style={{ flexDirection: "row", marginRight: 16 }}>
+      <View style={{ flexDirection: "row" }}>
         <View style={[styles.spacerWrapper, { height: 75 }]}>
           <HSpacer size={size} />
         </View>
