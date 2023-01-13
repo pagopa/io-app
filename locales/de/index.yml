@@ -633,56 +633,40 @@ authentication:
     message: "Um deine privaten Informationen zu schützen, melden dich bitte erneut mit deinen SPID-Anmeldedaten an, danke!"
 email:
   read:
-    title: Ihre E-Mail-Adresse
-    info: Dies ist die E-Mail-Adresse, die mit Ihrem SPID-Konto verknüpft ist. Sie können
-      Sie können in der IO-App eine andere E-Mail-Adresse verwenden, wenn Sie dies wünschen. Um die neue E-Mail-Adresse in Betrieb zu nehmen,
-      müssen Sie sie validieren, indem Sie auf den Link klicken,
-      den Sie per E-Mail erhalten.
-    details: Sie können diese Adresse ändern, dann sollten Sie sie validieren, indem Sie auf den Link klicken,
-      den wir an Ihre E-Mail-Adresse senden. In der Zwischenzeit werden
-      die Funktionalitäten von IO, die von der E-Mail abhängen (Zahlungen, Weiterleitung von Nachrichten
-      usw.), deaktiviert.
-    alert: "Achtung: Ihr pagoPA Konto ist mit Ihrer E-Mail-Adresse verknüpft.
-      Wenn Sie diese ändern, wird IO Ihre registrierten Zahlungsmethoden und Transaktionen nicht
-      mehr auflisten."
-    help: Ihr SPID-Profil übermittelt Ihre E-Mail an die IO-App. Wenn Sie feststellen,
-      dass die Adresse falsch ist oder Sie diese nicht mehr verwenden, können Sie sie direkt in Ihrem
-      SPID-Dienstanbieterkonto bearbeiten.
+    title: "Deine E-Mail-Adresse"
+    info: "Das ist die E-Mail-Adresse, die mit deinem SPID-Konto verknüpft ist. Wenn du magst, kannst du in IO eine andere E-Mail-Adresse verwenden. Um die neue E-Mail-Adresse zu aktivieren, musst du sie bestätigen, indem du auf den Link klickst, den du mittels E-Mail erhalten hast."
+    details: "Du kannst diese Adresse ändern, die du dann mittels Link, den du als E-Mail erhälst, bestätigen musst. In der Zwischenzeit werden IO-Funktionen, die von E-Mails abhängig sind (Zahlungen, Weiterleitung von Nachrichten usw.), deaktiviert."
+    alert: "Achtung: dein pagoPA Konto ist mit deiner E-Mail-Adresse verknüpft. Wenn du sie änderst, wird IO deine registrierten Zahlungsmethoden und Transaktionen nicht mehr auflisten."
+    help: "Dein SPID-Profil übermittelt deine E-Mail-Adresse an die IO-App. Sollte die Adresse falsch sein oder nicht mehr verwendet werden, kannst du sie direkt in deinem SPID-Konto bearbeiten."
   insert:
-    header: Aktivierung
-    title: E-Mail eingeben
-    subtitle: Einige Funktionen der IO-App benötigen Ihre E-Mail-Adresse.
-    label: Persönliche E-Mail-Adresse
-    alert: Sie verwenden bereits diese E-Mail
+    header: "Aktivierung"
+    title: "E-Mail-Adresse eingeben"
+    subtitle: "Einige Funktionen der IO-App benötigen deine E-Mail-Adresse."
+    label: "Persönliche E-Mail-Adresse"
+    alert: "Du verwendest bereits diese E-Mail-Adresse"
     help:
-      title: E-Mail
+      title: "E-Mail"
   edit:
-    title: E-Mail bearbeiten
-    subtitle: Die von Ihnen eingefügte E-Mail-Adresse lautet
-    validated: Die von Ihnen eingefügte und bestätigte E-Mail lautet
-    label: Neue persönliche E-Mail-Adresse
-    cta: E-Mail bearbeiten
-    upsert_ok: Die E-Mail-Update-Anforderung wurde erfolgreich versendet
-    upsert_ko: Fehler in der E-Mail-Update-Anforderung, versuchen Sie es erneut
+    title: "E-Mail-Adresse bearbeiten"
+    subtitle: "Die zuvor angegebene E-Mail-Adresse lautet"
+    validated: "Die zuvor angegebene und bestätigte E-Mail-Adresse lautet"
+    label: "Neue persönliche E-Mail-Adresse"
+    cta: "E-Mail bearbeiten"
+    upsert_ok: "Die Anfrage zur Änderung der E-Mail-Adresse wurde erfolgreich übermittelt"
+    upsert_ko: "Fehler bei der Anfrage zur Änderung der E-Mail-Adresse, versuche es erneut"
   validate:
-    title: Erinnern Sie sich daran, Ihre E-Mail-Adresse zu bestätigen
-    header: E-Mail-Validierung
-    content1: "Wir haben eine E-Mail an <b>{{E-Mail}}</b> mit einem Link zur Validierung gesendet: klicken Sie einfach auf diesen Link.<br/>
-      Solange Sie Ihre E-Mail-Adresse nicht validieren, werden einige Funktionen der App (Zahlungen, Nachrichtenweiterleitung per E-Mail usw.)
-      nicht nutzbar sein, aber Sie können einige andere Funktionen trotzdem nutzen (z. B. Dienste, Nachrichten usw.)"
-    content2: 
-      "Für einige Funktionen der IO-App müssen Sie Ihre E-Mail-Adresse validieren. <br/> Wir haben eine E-Mail an <b>{{email}}</b> gesendet:
-      Öffnen Sie Ihr E-Mail-Programm und klicken Sie auf den Link."
-    cta: Senden einer neuen Validierungs-E-Mail
-    sent: E-Mail gesendet
-    send_validation_ok: E-Mail-Validierung gesendet
-    send_validation_ko: Beim Senden der E-Mail-Validierung ist ein Fehler aufgetreten. Versuchen Sie es erneut.
-    help: Ihr SPID-Profil übermittelt Ihre E-Mail an die IO-App. Wenn Sie feststellen,
-      dass die Adresse falsch ist oder Sie diese nicht mehr verwenden, können Sie sie
-      direkt in Ihrem SPID-Dienstanbieterkonto bearbeiten.
-    validation_ok: Ihre E-Mail-Adresse wurde validiert. Sie können nun alle Funktionalitäten der IO-App nutzen.
-    validated: E-Mail validiert!
-    validated_ok: Danke, jetzt können Sie alle Zahlungsfunktionen, Nachrichtenweiterleitung usw. nutzen.
+    title: "Erinnere dich, deine E-Mail-Adresse zu bestätigen!"
+    header: "E-Mail-Bestätigung"
+    content1: "Wir haben eine E-Mail an <b>{{E-Mail}}</b> mit einem Link zur Bestätigung gesendet: klicke einfach auf diesen Link.<br/>Solange deine E-Mail-Adresse nicht bestätigt ist, werden einige Funktionen der App (Zahlungen, Nachrichtenweiterleitung per E-Mail usw.) nicht nutzbar sein, aber du kannst einige andere Funktionen trotzdem nutzen (z. B. Dienste, Nachrichten usw.)"
+    content2: "Für einige Funktionen von IO musst du deine E-Mail-Adresse bestätigen. <br/> Wir haben eine E-Mail an <b>{{email}}</b> gesendet: Öffne deine E-Mails und klicke auf den Link."
+    cta: "Sende eine neue E-Mail zur Bestätigung"
+    sent: "E-Mail gesendet"
+    send_validation_ok: "E-Mail zur Bestätigung gesendet"
+    send_validation_ko: "Beim Senden der E-Mail ist ein Fehler aufgetreten. Versuche es erneut."
+    help: "Dein SPID-Profil übermittelt deine E-Mail-Adresse an IO. Sollte die Adresse falsch sein oder nicht mehr verwendet werden, kannst du sie direkt in deinem SPID-Konto bearbeiten."
+    validation_ok: "Deine E-Mail-Adresse wurde bestätigt. Du kannst nun alle Funktionen von IO benutzen."
+    validated: "E-Mail bestätigt!"
+    validated_ok: "Danke, jetzt kannst du alle Zahlungsfunktionen, Nachrichtenweiterleitung usw. nutzen."
 onboarding:
   contextualHelpTitle: "Wie funktioniert die biometrische Erkennung"
   tos:
