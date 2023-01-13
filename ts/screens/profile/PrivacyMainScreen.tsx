@@ -1,18 +1,10 @@
-/**
- * A screen to show the main screen of the Privacy section.
- * Here the user can:
- * - display the accepted privacypolicy (or Term of Service)
- * - send a request to delete his profile
- * - send a request to export all his data (receiving them by email)
- */
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { List } from "native-base";
-import * as React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Alert, AlertButton } from "react-native";
-import { connect } from "react-redux";
 import { UserDataProcessingChoiceEnum } from "../../../definitions/backend/UserDataProcessingChoice";
 import { UserDataProcessingStatusEnum } from "../../../definitions/backend/UserDataProcessingStatus";
-import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
+import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import ScreenContent from "../../components/screens/ScreenContent";
@@ -21,26 +13,18 @@ import I18n from "../../i18n";
 import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
 import { ProfileParamsList } from "../../navigation/params/ProfileParamsList";
 import ROUTES from "../../navigation/routes";
-import { Dispatch } from "../../store/actions/types";
 import {
   deleteUserDataProcessing,
-  loadUserDataProcessing,
-  resetUserDataProcessingRequest,
-  upsertUserDataProcessing
+  loadUserDataProcessing
 } from "../../store/actions/userDataProcessing";
-import { isProfileEmailValidatedSelector } from "../../store/reducers/profile";
-import { GlobalState } from "../../store/reducers/types";
+import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { userDataProcessingSelector } from "../../store/reducers/userDataProcessing";
+import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
+import { usePrevious } from "../../utils/hooks/usePrevious";
 import { showToast } from "../../utils/showToast";
 
 type Props = {
   navigation: IOStackNavigationProp<ProfileParamsList, "PROFILE_PRIVACY_MAIN">;
-} & ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps>;
-
-type State = {
-  // flag to know if we are loading data from an user choice
-  requestProcess: boolean;
 };
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
@@ -58,96 +42,116 @@ const getRequestProcessingAlertSubtitle = () => ({
   DELETE: I18n.t("profile.main.privacy.removeAccount.alert.oldRequestSubtitle")
 });
 
-class PrivacyMainScreen extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = { requestProcess: false };
-  }
+/**
+ * A screen to show the main screen of the Privacy section.
+ * Here the user can:
+ * - display the accepted privacy policy (or Term of Service)
+ * - send a request to delete his profile
+ * - send a request to export all his data
+ */
+const PrivacyMainScreen = ({ navigation }: Props) => {
+  const dispatch = useIODispatch();
+  const userDataProcessing = useIOSelector(userDataProcessingSelector);
+  const prevUserDataProcessing = usePrevious(userDataProcessing);
+  const [requestProcess, setRequestProcess] = useState(false);
+  const isLoading =
+    pot.isLoading(userDataProcessing.DELETE) ||
+    pot.isLoading(userDataProcessing.DOWNLOAD);
 
-  public componentDidMount() {
-    // get a fresh info about DOWNLOAD/DELETE state
+  useOnFirstRender(() => {
+    // get fresh info about DOWNLOAD/DELETE state
     // if any of these is WIP a relative badge will be displayed
-    this.props.loadUserDataRequest(UserDataProcessingChoiceEnum.DELETE);
-    this.props.loadUserDataRequest(UserDataProcessingChoiceEnum.DOWNLOAD);
-  }
-
-  // Show an alert reporting the request has been submitted
-  private handleUserDataRequestAlert = (
-    choice: UserDataProcessingChoiceEnum
-  ) => {
-    const requestState = this.props.userDataProcessing[choice];
-    if (
-      pot.isSome(requestState) &&
-      (requestState.value === undefined ||
-        requestState.value.status === UserDataProcessingStatusEnum.CLOSED ||
-        requestState.value.status === UserDataProcessingStatusEnum.ABORTED)
-    ) {
-      // if user asks for download, navigate to a screen to inform about the process
-      // there he/she can request to download his/her data
-      if (choice === UserDataProcessingChoiceEnum.DOWNLOAD) {
-        this.props.navigation.navigate(ROUTES.PROFILE_DOWNLOAD_DATA);
-        return;
-      }
-    } else {
-      this.handleAlreadyProcessingAlert(choice);
-    }
-  };
+    dispatch(
+      loadUserDataProcessing.request(UserDataProcessingChoiceEnum.DELETE)
+    );
+    dispatch(
+      loadUserDataProcessing.request(UserDataProcessingChoiceEnum.DOWNLOAD)
+    );
+  });
 
   // show an alert to confirm the request submission
-  private handleAlreadyProcessingAlert = (
-    choice: UserDataProcessingChoiceEnum
-  ) => {
-    const alertButton: Array<AlertButton> =
-      choice === UserDataProcessingChoiceEnum.DOWNLOAD
-        ? []
-        : [
-            {
-              text: I18n.t(
-                "profile.main.privacy.removeAccount.alert.cta.return"
-              ),
-              style: "default"
-            },
-            {
-              text: I18n.t(
-                "profile.main.privacy.removeAccount.alert.cta.cancel"
-              ),
-              style: "cancel",
-              onPress: () => {
-                this.props.abortUserDataProcessing(choice);
+  const handleAlreadyProcessingAlert = useCallback(
+    (choice: UserDataProcessingChoiceEnum) => {
+      const alertButton: Array<AlertButton> =
+        choice === UserDataProcessingChoiceEnum.DOWNLOAD
+          ? [
+              {
+                text: I18n.t("global.buttons.ok"),
+                style: "default"
               }
-            }
-          ];
+            ]
+          : [
+              {
+                text: I18n.t(
+                  "profile.main.privacy.removeAccount.alert.cta.return"
+                ),
+                style: "default"
+              },
+              {
+                text: I18n.t(
+                  "profile.main.privacy.removeAccount.alert.cta.cancel"
+                ),
+                style: "cancel",
+                onPress: () => {
+                  dispatch(deleteUserDataProcessing.request(choice));
+                }
+              }
+            ];
 
-    Alert.alert(
-      getRequestProcessingAlertTitle()[choice],
-      getRequestProcessingAlertSubtitle()[choice],
-      alertButton
-    );
-  };
+      Alert.alert(
+        getRequestProcessingAlertTitle()[choice],
+        getRequestProcessingAlertSubtitle()[choice],
+        alertButton
+      );
+    },
+    [dispatch]
+  );
 
-  public componentDidUpdate(prevProps: Props) {
+  // Show an alert reporting the request has been submitted
+  const handleUserDataRequestAlert = useCallback(
+    (choice: UserDataProcessingChoiceEnum) => {
+      const requestState = userDataProcessing[choice];
+
+      if (
+        pot.isSome(requestState) &&
+        (requestState.value === undefined ||
+          requestState.value.status === UserDataProcessingStatusEnum.CLOSED ||
+          requestState.value.status === UserDataProcessingStatusEnum.ABORTED)
+      ) {
+        // if the user asks for download, navigate to a screen to inform about the process
+        // there he/she can request to download his/her data
+        if (choice === UserDataProcessingChoiceEnum.DOWNLOAD) {
+          navigation.navigate(ROUTES.PROFILE_DOWNLOAD_DATA);
+          return;
+        }
+      } else {
+        handleAlreadyProcessingAlert(choice);
+      }
+    },
+    [handleAlreadyProcessingAlert, navigation, userDataProcessing]
+  );
+
+  useEffect(() => {
     // If the new request submission fails, show an alert and hide the 'in progress' badge
-    // if it is the get request (prev prop is pot.none), check if show the alert to submit the request
+    // if it is a get request after user click, check if shows the alert
     const checkUpdate = (
       errorMessage: string,
       choice: UserDataProcessingChoiceEnum
     ) => {
-      const currentState = this.props.userDataProcessing[choice];
+      const currentState = userDataProcessing[choice];
+
       if (
-        pot.isLoading(prevProps.userDataProcessing[choice]) &&
+        prevUserDataProcessing &&
+        pot.isLoading(prevUserDataProcessing[choice]) &&
         !pot.isLoading(currentState)
       ) {
         if (pot.isError(currentState)) {
           showToast(errorMessage);
         }
-        // if user ask for download/delete prompt an alert to get confirmation
-        else if (
-          this.state.requestProcess &&
-          pot.isNone(prevProps.userDataProcessing[choice])
-        ) {
-          this.setState({ requestProcess: false }, () => {
-            this.handleUserDataRequestAlert(choice);
-          });
+        // if the user asks for download/delete prompt an alert
+        else if (requestProcess) {
+          setRequestProcess(false);
+          handleUserDataRequestAlert(choice);
         }
       }
     };
@@ -160,15 +164,19 @@ class PrivacyMainScreen extends React.Component<Props, State> {
       I18n.t("profile.main.privacy.removeAccount.error"),
       UserDataProcessingChoiceEnum.DELETE
     );
-  }
+  }, [
+    userDataProcessing,
+    prevUserDataProcessing,
+    requestProcess,
+    handleUserDataRequestAlert
+  ]);
 
-  private isRequestProcessing = (
-    choice: UserDataProcessingChoiceEnum
-  ): boolean =>
-    !pot.isError(this.props.userDataProcessing[choice]) &&
+  const isRequestProcessing = (choice: UserDataProcessingChoiceEnum): boolean =>
+    !pot.isLoading(userDataProcessing[choice]) &&
+    !pot.isError(userDataProcessing[choice]) &&
     pot.getOrElse(
       pot.map(
-        this.props.userDataProcessing[choice],
+        userDataProcessing[choice],
         v =>
           v !== undefined &&
           v.status !== UserDataProcessingStatusEnum.CLOSED &&
@@ -177,17 +185,20 @@ class PrivacyMainScreen extends React.Component<Props, State> {
       false
     );
 
-  public render() {
-    const ContentComponent = withLoadingSpinner(() => (
+  return (
+    <LoadingSpinnerOverlay
+      isLoading={isLoading}
+      loadingOpacity={0.9}
+      loadingCaption={I18n.t("profile.main.privacy.loading")}
+    >
       <TopScreenComponent
-        goBack={() => this.props.navigation.goBack()}
+        goBack={() => navigation.goBack()}
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["privacy"]}
       >
         <ScreenContent
           title={I18n.t("profile.main.privacy.title")}
           subtitle={I18n.t("profile.main.privacy.subtitle")}
-          bounces={false}
         >
           <List withContentLateralPadding={true}>
             {/* Privacy Policy */}
@@ -196,9 +207,7 @@ class PrivacyMainScreen extends React.Component<Props, State> {
               subTitle={I18n.t(
                 "profile.main.privacy.privacyPolicy.description"
               )}
-              onPress={() =>
-                this.props.navigation.navigate(ROUTES.PROFILE_PRIVACY)
-              }
+              onPress={() => navigation.navigate(ROUTES.PROFILE_PRIVACY)}
               useExtendedSubTitle={true}
             />
             {/* Share data */}
@@ -208,30 +217,29 @@ class PrivacyMainScreen extends React.Component<Props, State> {
                 "profile.main.privacy.shareData.listItem.description"
               )}
               onPress={() =>
-                this.props.navigation.navigate(
-                  ROUTES.PROFILE_PRIVACY_SHARE_DATA
-                )
+                navigation.navigate(ROUTES.PROFILE_PRIVACY_SHARE_DATA)
               }
               useExtendedSubTitle={true}
             />
-
             {/* Export your data */}
             <ListItemComponent
               title={I18n.t("profile.main.privacy.exportData.title")}
               subTitle={I18n.t("profile.main.privacy.exportData.description")}
-              onPress={() =>
-                this.setState({ requestProcess: true }, () =>
-                  this.props.loadUserDataRequest(
+              onPress={() => {
+                setRequestProcess(true);
+                dispatch(
+                  loadUserDataProcessing.request(
                     UserDataProcessingChoiceEnum.DOWNLOAD
                   )
-                )
-              }
+                );
+              }}
               useExtendedSubTitle={true}
               titleBadge={
-                this.isRequestProcessing(UserDataProcessingChoiceEnum.DOWNLOAD)
+                isRequestProcessing(UserDataProcessingChoiceEnum.DOWNLOAD)
                   ? I18n.t("profile.preferences.list.wip")
                   : undefined
               }
+              testID="profile-export-data"
             />
             {/* Remove account */}
             <ListItemComponent
@@ -240,65 +248,27 @@ class PrivacyMainScreen extends React.Component<Props, State> {
                 "profile.main.privacy.removeAccount.description"
               )}
               onPress={() => {
-                if (
-                  this.isRequestProcessing(UserDataProcessingChoiceEnum.DELETE)
-                ) {
-                  this.handleUserDataRequestAlert(
+                if (isRequestProcessing(UserDataProcessingChoiceEnum.DELETE)) {
+                  handleUserDataRequestAlert(
                     UserDataProcessingChoiceEnum.DELETE
                   );
                 } else {
-                  this.props.navigation.navigate(
-                    ROUTES.PROFILE_REMOVE_ACCOUNT_INFO
-                  );
+                  navigation.navigate(ROUTES.PROFILE_REMOVE_ACCOUNT_INFO);
                 }
               }}
               useExtendedSubTitle={true}
               titleBadge={
-                this.isRequestProcessing(UserDataProcessingChoiceEnum.DELETE)
+                isRequestProcessing(UserDataProcessingChoiceEnum.DELETE)
                   ? I18n.t("profile.preferences.list.wip")
                   : undefined
               }
+              testID="profile-delete"
             />
           </List>
         </ScreenContent>
       </TopScreenComponent>
-    ));
-    return (
-      <ContentComponent
-        loadingCaption={I18n.t("profile.main.privacy.loading")}
-        loadingOpacity={0.9}
-        isLoading={this.props.isLoading && this.state.requestProcess}
-      />
-    );
-  }
-}
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loadUserDataRequest: (choice: UserDataProcessingChoiceEnum) =>
-    dispatch(loadUserDataProcessing.request(choice)),
-  upsertUserDataProcessing: (choice: UserDataProcessingChoiceEnum) =>
-    dispatch(upsertUserDataProcessing.request(choice)),
-  abortUserDataProcessing: (choice: UserDataProcessingChoiceEnum) =>
-    dispatch(deleteUserDataProcessing.request(choice)),
-  resetRequest: (choice: UserDataProcessingChoiceEnum) =>
-    dispatch(resetUserDataProcessingRequest(choice))
-});
-
-const mapStateToProps = (state: GlobalState) => {
-  const userDataProcessing = userDataProcessingSelector(state);
-
-  // the state returns to pot.none to every get - we want to see the loader only during the load of the requests,
-  // not when the request is confirmed by the user
-  const isLoading =
-    (pot.isNone(userDataProcessing.DELETE) &&
-      pot.isLoading(userDataProcessing.DELETE)) ||
-    (pot.isNone(userDataProcessing.DOWNLOAD) &&
-      pot.isLoading(userDataProcessing.DOWNLOAD));
-  return {
-    userDataProcessing,
-    isLoading,
-    isEmailValidated: isProfileEmailValidatedSelector(state)
-  };
+    </LoadingSpinnerOverlay>
+  );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PrivacyMainScreen);
+export default PrivacyMainScreen;

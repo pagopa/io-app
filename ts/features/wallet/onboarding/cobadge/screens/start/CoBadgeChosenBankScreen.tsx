@@ -6,7 +6,7 @@ import { Abi } from "../../../../../../../definitions/pagopa/walletv2/Abi";
 import { LightModalContext } from "../../../../../../components/ui/LightModal";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { WithTestID } from "../../../../../../types/WithTestID";
-import TosBonusComponent from "../../../../../bonus/bonusVacanze/components/TosBonusComponent";
+import TosBonusComponent from "../../../../../bonus/common/components/TosBonusComponent";
 import SearchStartScreen from "../../../common/searchBank/SearchStartScreen";
 import { abiListSelector, abiSelector } from "../../../store/abi";
 import { navigateToOnboardingCoBadgeSearchAvailable } from "../../navigation/action";
