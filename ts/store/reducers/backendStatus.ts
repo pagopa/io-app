@@ -220,8 +220,8 @@ export const isLollipopEnabledSelector = createSelector(
     pipe(
       backendStatus,
       O.map(bs => bs.config.lollipop.enabled),
-      O.toUndefined
-    ) ?? false
+      O.getOrElse(() => false)
+    )
 );
 
 /**
