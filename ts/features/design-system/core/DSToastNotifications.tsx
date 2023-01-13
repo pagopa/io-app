@@ -1,13 +1,13 @@
 import * as React from "react";
 import { Text as NBText, View as NBView, Toast as NBToast } from "native-base";
 
-import { ShowroomSection } from "../components/ShowroomSection";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
+import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { showToast } from "../../../utils/showToast";
 import { H2 } from "../../../components/core/typography/H2";
 
-export const ToastNotificationsShowroom = () => (
-  <ShowroomSection title={"Toast Notifications (NativeBase)"}>
+export const DSToastNotifications = () => (
+  <DesignSystemScreen title={"Toast Notifications (NativeBase)"}>
     <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
       Type
     </H2>
@@ -120,5 +120,7 @@ export const ToastNotificationsShowroom = () => (
     >
       <NBText>Multi-line text</NBText>
     </ButtonDefaultOpacity>
-  </ShowroomSection>
+
+    <NBView spacer={true} extralarge={true} />
+  </DesignSystemScreen>
 );

@@ -98,7 +98,7 @@ const imageMapping: Record<ErrorTypes, IOPictogramType> = {
   REVOKED: "error",
   EXPIRED: "error",
   TECHNICAL: "error"
-  // NOT_FOUND: "unrecognized"
+  NOT_FOUND: "unrecognized"
 };
 
 const requestZendeskAssistanceForPaymentFailure = (
@@ -313,6 +313,21 @@ export const errorTransactionUIElements = (
           </H4>
         ),
         footerButtons: [...closeButtonCancel]
+      };
+    case "NOT_FOUND":
+      return {
+        image,
+        title: I18n.t("wallet.errors.NOT_FOUND"),
+        subtitle: (
+          <H4
+            weight={"Regular"}
+            style={{ textAlign: "center" }}
+            testID={"not-found-subtitle"}
+          >
+            {I18n.t("wallet.errors.NOT_FOUND_SUBTITLE")}
+          </H4>
+        ),
+        footerButtons: [...closeButtonConfirm]
       };
     case "UNCOVERED":
     default:

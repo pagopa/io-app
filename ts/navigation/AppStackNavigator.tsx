@@ -18,9 +18,9 @@ import {
   bpdEnabled,
   bpdOptInPaymentMethodsEnabled,
   fimsEnabled,
-  idPayEnabled,
   myPortalEnabled,
-  svEnabled
+  svEnabled,
+  idPayEnabled
 } from "../config";
 import BPD_ROUTES from "../features/bonus/bpd/navigation/routes";
 import { CdcStackNavigator } from "../features/bonus/cdc/navigation/CdcStackNavigator";
@@ -172,19 +172,22 @@ export const AppStackNavigator = () => {
         <Stack.Screen name={FCI_ROUTES.MAIN} component={FciStackNavigator} />
       )}
 
-      <Stack.Screen
-        name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN}
-        component={IDPayOnboardingNavigator}
-      />
-      <Stack.Screen
-        name={ROUTES.IDPAY_INITIATIVE_DETAILS}
-        component={InitiativeDetailsScreen}
-      />
-
-      <Stack.Screen
-        name={IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN}
-        component={IDPayConfigurationNavigator}
-      />
+      {idPayEnabled && (
+        <>
+          <Stack.Screen
+            name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN}
+            component={IDPayOnboardingNavigator}
+          />
+          <Stack.Screen
+            name={ROUTES.IDPAY_INITIATIVE_DETAILS}
+            component={InitiativeDetailsScreen}
+          />
+          <Stack.Screen
+            name={IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN}
+            component={IDPayConfigurationNavigator}
+          />
+        </>
+      )}
     </Stack.Navigator>
   );
 };
