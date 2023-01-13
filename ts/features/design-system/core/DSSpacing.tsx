@@ -6,13 +6,14 @@ import { H2 } from "../../../components/core/typography/H2";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { Spacer } from "../../../components/core/spacer/Spacer";
+import { DSSpacerViewerBox } from "../components/DSSpacerViewerBox";
+import { IOSpacer } from "../../../components/core/variables/IOSpacing";
 
 export const DSSpacing = () => (
   <DesignSystemScreen title={"Spacing"}>
     <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
-      NativeBase
+      Spacer (NativeBase)
     </H2>
-
     <View style={{ backgroundColor: IOColors.bluegreyLight }}>
       <NBView spacer={true} xsmall={true} />
     </View>
@@ -32,84 +33,54 @@ export const DSSpacing = () => (
     <View style={{ backgroundColor: IOColors.bluegreyLight }}>
       <NBView spacer={true} extralarge={true} />
     </View>
-
+    <NBView spacer={true} />
     <View style={{ flexDirection: "row" }}>
-      <View style={{ backgroundColor: IOColors.bluegreyLight }}>
-        <NBView hspacer={true} xsmall={true} />
-      </View>
-      <NBView
-        hspacer={true}
-        style={{ backgroundColor: IOColors.bluegreyLight }}
-      />
-      <View style={{ backgroundColor: IOColors.bluegreyLight }}>
+      <View style={{ backgroundColor: IOColors.bluegreyLight, height: 50 }}>
         <NBView hspacer={true} small={true} />
       </View>
       <NBView hspacer={true} />
-      <View style={{ backgroundColor: IOColors.bluegreyLight }}>
+      <View style={{ backgroundColor: IOColors.bluegreyLight, height: 50 }}>
         <NBView hspacer={true} />
       </View>
       <NBView hspacer={true} />
-      <View style={{ backgroundColor: IOColors.bluegreyLight }}>
+      <View style={{ backgroundColor: IOColors.bluegreyLight, height: 50 }}>
         <NBView hspacer={true} large={true} />
       </View>
       <NBView hspacer={true} />
-      <View style={{ backgroundColor: IOColors.bluegreyLight }}>
+      <View style={{ backgroundColor: IOColors.bluegreyLight, height: 50 }}>
         <NBView hspacer={true} extralarge={true} />
       </View>
     </View>
 
-    <H2
-      color={"bluegrey"}
-      weight={"SemiBold"}
-      style={{ marginTop: 16, marginBottom: 16 }}
-    >
-      Native
-    </H2>
-    <View style={{ backgroundColor: IOColors.blueUltraLight }}>
-      <Spacer size="xsm" />
-    </View>
-    <Spacer />
-    <View style={{ backgroundColor: IOColors.blueUltraLight }}>
-      <Spacer size="sm" />
-    </View>
-    <Spacer />
-    <View style={{ backgroundColor: IOColors.blueUltraLight }}>
-      <Spacer />
-    </View>
-    <Spacer />
-    <View style={{ backgroundColor: IOColors.blueUltraLight }}>
-      <Spacer size="lg" />
-    </View>
-    <Spacer />
-    <View style={{ backgroundColor: IOColors.blueUltraLight }}>
-      <Spacer size="xlg" />
-    </View>
+    <Spacer size={24} />
 
     <H2
       color={"bluegrey"}
       weight={"SemiBold"}
       style={{ marginTop: 16, marginBottom: 16 }}
     >
-      Native
+      Spacer (Native)
     </H2>
-    <View style={{ backgroundColor: IOColors.blueUltraLight }}>
-      <Spacer orientation="horizontal" size="xsm" />
+
+    {/* Vertical */}
+    {IOSpacer.map(spacerEntry => (
+      <DSSpacerViewerBox key={`${spacerEntry}-vertical`} size={spacerEntry} />
+    ))}
+
+    <Spacer />
+
+    {/* Horizontal */}
+    <View style={{ flexDirection: "row" }}>
+      {IOSpacer.map(spacerEntry => (
+        <DSSpacerViewerBox
+          key={`${spacerEntry}-horizontal`}
+          orientation="horizontal"
+          size={spacerEntry}
+        />
+      ))}
     </View>
-    <Spacer orientation="horizontal" />
-    <View style={{ backgroundColor: IOColors.blueUltraLight }}>
-      <Spacer orientation="horizontal" size="sm" />
-    </View>
-    <Spacer orientation="horizontal" />
-    <View style={{ backgroundColor: IOColors.blueUltraLight }}>
-      <Spacer orientation="horizontal" />
-    </View>
-    <Spacer orientation="horizontal" />
-    <View style={{ backgroundColor: IOColors.blueUltraLight }}>
-      <Spacer orientation="horizontal" size="lg" />
-    </View>
-    <Spacer orientation="horizontal" />
-    <View style={{ backgroundColor: IOColors.blueUltraLight }}>
-      <Spacer orientation="horizontal" size="xlg" />
-    </View>
+
+    <Spacer size={40} />
+    <Spacer size={8} />
   </DesignSystemScreen>
 );

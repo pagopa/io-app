@@ -1,26 +1,31 @@
 import React from "react";
 import { View } from "react-native";
-import { IOSpacer, IOSpacerType } from "../variables/IOSpacing";
+import type { IOSpacer } from "../variables/IOSpacing";
 
-type SpacerOrientation = "vertical" | "horizontal";
+export type SpacerOrientation = "vertical" | "horizontal";
 
 type SpacerProps = {
   orientation?: SpacerOrientation;
-  size?: IOSpacerType;
+  size?: IOSpacer;
 };
 
-/* Add documentation to improve DX */
+/**
+Native `Spacer` component that replaces the legacy one, managed through NativeBase.
+
+@param  {SpacerOrientation} orientation 
+@param {IOSpacerType} size
+ */
 export const Spacer = ({
   orientation = "vertical",
-  size = "md"
+  size = 16
 }: SpacerProps) => (
   <View
     style={{
       ...(orientation === "vertical" && {
-        height: IOSpacer[size]
+        height: size
       }),
       ...(orientation === "horizontal" && {
-        width: IOSpacer[size]
+        width: size
       })
     }}
   />

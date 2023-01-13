@@ -8,23 +8,10 @@ export const IOSpacingScale = [
   4, 8, 12, 16, 20, 24, 28, 36, 40, 48, 56, 64, 72
 ] as const;
 
-type IOSpacingScaleType = typeof IOSpacingScale[number];
-
-function asIOSpacer<T extends { [key: string]: IOSpacingScaleType }>(
-  arg: T
-): T {
-  return arg;
-}
+type IOSpacingScale = typeof IOSpacingScale[number];
 
 /*
 Values used in the new `<Spacer>` component
 */
-export const IOSpacer = asIOSpacer({
-  xsm: 4,
-  sm: 8,
-  md: 16,
-  lg: 24,
-  xlg: 40
-});
-
-export type IOSpacerType = keyof typeof IOSpacer;
+export type IOSpacer = Extract<IOSpacingScale, 4 | 8 | 16 | 24 | 40>;
+export const IOSpacer: ReadonlyArray<IOSpacer> = [4, 8, 16, 24, 40] as const;
