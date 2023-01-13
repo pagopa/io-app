@@ -469,154 +469,168 @@ authentication:
   landing:
     accessibility:
       carousel:
-        label: IO Präsentation
-        hint: Karussell, das eine Einführungsanleitung zu den IO-Funktionalitäten enthält. Wählen Sie, um den Inhalt kennenzulernen.
+        label: "Vorstellung von IO"
+        hint: "Karussell mit einer einführenden Anleitung zur IO-Funktionalität. Wähle, um den Inhalt kennenzulernen."
     session_expired:
-      title: Ihre Sitzung ist abgelaufen
+      title: "Deine Sitzung ist abgelaufen"
+      body: "Aus Sicherheitsgründen bitten wir dich 30 Tage nach deiner letzten Anmeldung mit SPID oder CIE, deine Anmeldedaten erneut einzugeben, um IO zu benutzen."
     cie_unsupported:
-      title: Anmeldung mit CIE nicht möglich
-      os_version_unsupported: eine mit der CIE-Authentifizierung kompatible Betriebssystemversion (Android 6.0 oder höher)
-      nfc_incompatible: eine NFC-Antenne, die mit der Authentifizierung über CIE kompatibel ist
-    contentTitleCie: Sie haben keinen SPID oder CIE?
-    spid_or_cie: Um die IO-App nutzen zu können, müssen Sie über eines dieser digitalen Werkzeuge verfügen, die Ihre Identität bestätigen.
-    request_cie: CIE anfordern
-    request_spid: SPID anfordern
-    contextualHelpTitle: So registrieren Sie sich in der IO-App
-    loginSpid: Anmeldung mit SPID
-    loginCie: Anmeldung mit CIE
-    loginSpidCie: Anmeldung mittels SPID oder CIE
-    infoSpidCie: Einführung in SPID und CIE
-    loginSpidCieContent: Ab heute können Sie sich zusätzlich zu SPID mit Ihrer elektronischen Identitätskarte (CIE) anmelden
-    nospid: Sie haben keinen SPID? Finden Sie mehr heraus
-    nospid-nocie: Sie haben keinen SPID oder CIE?  Finden Sie mehr heraus
-    card1-title: Alle Mitteilungen an einem Ort
-    card1-content: Anzeige aller eingehenden Mitteilungen von öffentlichen Körperschaften
-    card2-title: Verwenden Sie Ihre bevorzugte Zahlungsmethode
-    card2-content: Sie können eine Steuer oder auch eine Strafe über Ihr Bankkonto oder mit Ihrer Bankkarte bezahlen
-    card3-title: Schnelles Bezahlen einer physischen Mitteilung
-    card3-content: Sie können eine Zahlungsmitteilung auch durch Scannen des QR-Codes bezahlen
-    card4-title: Sie können die App nur mittels SPID verwenden
-    card4-content: Der Zugriff ist nur über SPID (Public Service of Digital Identity) erlaubt,
-      um Ihre Online-Sicherheit zu gewährleisten
-    card5-title: Willkommen bei der öffentlichen Version von IO!
-    expiredCardHeaderTitle: Anmeldung mit CIE
-    expiredCardContent: "Die verwendete Karte ist nicht mehr gültig oder abgelaufen.\nWenn Sie sich anmelden und auf die IO-App zugreifen möchten, müssen Sie SPID verwenden."
-    expiredCardHelp: Wie erneuert man seine elektronische Identitätskarte?
+      title: "Anmeldung mit CIE nicht möglich"
+      os_version_unsupported: "ein Betriebssystem mit Android 6.0 oder höher"
+      nfc_incompatible: "ein kompatibler NFC-Sensor"
+    contentTitleCie: "Du hast keinen SPID oder CIE?"
+    spid_or_cie: "Um IO nutzen zu können, musst du über eine dieser digitalen Werkzeuge verfügen, die deine Identität in sicherer Weise bestätigen."
+    request_cie: "CIE anfordern"
+    request_spid: "SPID anfordern"
+    contextualHelpTitle: "Zugang zur IO-App"
+    loginSpid: "Anmeldung mit SPID"
+    loginCie: "Anmeldung mit CIE"
+    loginSpidCie: "Anmeldung mit SPID oder CIE"
+    infoSpidCie: "Einführung in SPID und CIE"
+    loginSpidCieContent: "Ab heute kannst du dich zusätzlich zu SPID mit deiner elektronischen Identitätskarte (CIE) anmelden"
+    nospid: "Du hast keinen SPID? Erfahre mehr"
+    nospid-nocie: "Du hast keinen SPID und keine CIE? Erfahre mehr"
+    card1-title: "Alle Mitteilungen an einem Ort"
+    card1-content: "Zeige alle erhaltenen Mitteilungen von öffentlichen Körperschaften an"
+    card2-title: "Verwende deine bevorzugten Zahlungsmethoden"
+    card2-content: "Du kannst eine Steuer oder eine Strafe über dein Bankkonto oder mit deiner Bankkarte bezahlen"
+    card3-title: "Bezahle schnell eine Aufforderung in Papierform"
+    card3-content: "Durch das Scannen des QR-Codes kannst du schnell und einfach eine Zahlungsaufforderung in Papierform bezahlen"
+    card4-title: "Du kannst dich nur mit SPID anmelden"
+    card4-content: "Das von dir verwendete Gerät unterstützt den Zugang mit einer elektronischen Identitätskarte (CIE) nicht"
+    card5-title: "Willkommen bei der ersten öffentlichen Version von IO!"
+    card5-content: "In der rechten oberen Ecke findest du das Symbol '?', mit dem du einen Chat mit dem IO-Team beginnen kannst, wenn etwas nicht so funktioniert, wie es sollte."
+    expiredCardTitle: "Karte abgelaufen oder nicht mehr gültig"
+    expiredCardHeaderTitle: "Anmeldung mit CIE"
+    expiredCardContent: "Die verwendete Karte ist nicht mehr gültig oder abgelaufen.\nWenn du dich anmelden und auf die IO zugreifen möchtest, musst du SPID verwenden."
+    expiredCardHelp: "Wie erneuert man seine elektronische Identitätskarte?"
   cie:
-    genericTitle: Anmeldung mit CIE
-    cie: CIE
-    noDataTitle: Um die IO-App zu verwenden, müssen Sie das Senden von Daten zulassen
+    genericTitle: "Anmeldung mit CIE"
+    cie: "CIE"
+    noDataTitle: "Um IO zu verwenden, musst du das Senden von Daten zulassen"
     nfc:
-      retry: Wiederholen
-      noNfcConnectionTitle: Sind Sie sicher, dass Sie die Karte abgelegt haben?
-      enableNfcTitle: NFC einschalten
-      enableNfcHeader: NFC prüfen
-      enableNfcContent: Damit die App Ihre elektronische Identitätskarte verifizieren kann, müssen Sie zunächst die NFC-Funktion Ihres Geräts aktivieren. Kommen Sie zu diesem Menüpunkt zurück, sobald Sie die Funktion aktiviert haben!
+      apduNotSupported: "Dein Betriebssystem unterstützt das Auslesen deiner elektronischen Identitätskarte nicht. Für weitere Informationen wende dich bitte an den Hersteller deines Geräts."
+      retry: "Erneut versuchen"
+      noNfcConnectionTitle: "Hast du die Karte berührt?"
+      enableNfcTitle: "NFC aktivieren"
+      enableNfcHeader: "NFC überprüfen"
+      enableNfcContent: "Damit die App deine elektronische Identitätskarte verifizieren kann, musst du zunächst die NFC-Funktion deines Geräts aktivieren. Komm hierher zurück, sobald du die Funktion aktiviert hast!"
     pin:
       accessibility:
-        placeholderLabel: PIN der elektronischen Identitätskarte
-        label: Eingabefeld für die PIN der elektronischen Identitätskarte
-        hint: Geben Sie in diesem Feld den 8-stelligen Pin Ihrer elektronischen Identitätskarte ein.
-      pinCardTitle: Geben Sie die PIN Ihrer ID-Karte ein
-      pinCardHeader: Anmeldung mit CIE
-      pinCardContent: Der PIN-Code besteht aus 8 Ziffern. Vier Ziffern wurden Ihnen beim Meldeamt ausgehändigt und weitere vier Ziffern wurden Ihnen mit der Karte nach Hause geschickt. Setzen Sie diese in dieser Reihenfolge zusammen und tragen Sie sie bitte hier ein.
-      incorrectCiePinTitle: Falsche PIN, Sie haben noch {{remainingCount}} Versuche
-      incorrectCiePinHeaderTitle: Falsche PIN
-      incorrectCiePinContent1: Zu Ihrer Sicherheit können Sie die Karten-PIN maximal dreimal eingeben. Danach müssen Sie die Karte durch Eingabe des PUK-Codes entsperren.
-      incorrectCiePinContent2: Denken Sie daran, dass der PIN-Code Ihrer elektronischen Identitätskarte (CIE) aus 8 Ziffern besteht. Vier Ziffern, die Ihnen im Meldeamt ausgehändigt wurden und weitere vier Ziffern, die Ihnen zusammen mit der Karte nach Hause geschickt wurden.
-      alert: Sind Sie sicher, dass Sie zurückgehen wollen?
-      contextualHelpTitle: Wo kann ich meine PIN und meinen PUK finden?
+        placeholderLabel: "PIN der elektronischen Identitätskarte"
+        label: "Eingabefeld für die PIN der elektronischen Identitätskarte"
+        hint: "Gib in diesem Feld die 8-stellige PIN deiner elektronischen Identitätskarte ein."
+      pinCardTitle: "Gib die PIN deiner Identitätskarte ein"
+      pinCardHeader: "Anmeldung mit CIE"
+      pinCardContent: "Der PIN-Code besteht aus 8 Ziffern. Vier Ziffern wurden dir beim Meldeamt ausgehändigt und weitere vier Ziffern wurden dir mit der Karte nach Hause geschickt. Setze diese in dieser Reihenfolge zusammen und trage sie bitte hier ein."
+      incorrectCiePinTitle: "Falsche PIN, du hast noch {{remainingCount}} Versuche"
+      incorrectCiePinHeaderTitle: "Falsche PIN"
+      incorrectCiePinContent1: "Zu deiner Sicherheit kannst du die PIN der Identitätskarte maximal dreimal eingeben. Danach musst du die Karte durch Eingabe des PUK-Codes entsperren."
+      incorrectCiePinContent2: "Beachte, dass der PIN-Code deiner elektronischen Identitätskarte (CIE) aus 8 Ziffern besteht. Vier Ziffern, die dir im Meldeamt ausgehändigt wurden und weitere vier Ziffern, die dir zusammen mit der Karte nach Hause geschickt wurden."
+      alert: "Möchtest du wirklich zurückgehen?"
+      subtitleHelp: "Die PIN ist ein 8-stelliger Code."
+      subtitleCTA: "Wo finde ich ihn?"
+      bottomSheetCTA: "Hast du deine PIN vergessen?"
+      contextualHelpTitle: "Wo kann ich meine PIN und meinen PUK finden?"
+      contextualHelpCTA: "Hast du deine PIN / deinen PUK vergessen?"
     pinTempLocked:
-      header: Anmeldung mit CIE
-      title: Karte vorübergehend gesperrt
-      button: "Load/open CieID"
+      header: "Anmeldung mit CIE"
+      title: "Karte vorübergehend gesperrt"
+      button: "Lade / Öffne CieID"
     card:
-      headerTitle: Anmeldung mit CIE
-      titleiOS: Bitte versuchen Sie es erneut
-      title: Halten Sie die Karte erneut
-      layCardMessageHeader: Halten Sie Ihre elektronische ID-Karte für einige Sekunden an die Rückseite Ihres Telefons.
-      layCardMessageHeaderiOS: Halten Sie Ihre elektronische Identitätskarte auf die obere Rückseite Ihres iPhones.
-      layCardMessageFooter: Wenn Sie nicht genau wissen, wo sich der NFC-Sensor befindet, bewegen Sie die Karte an verschiedene Stellen und warten Sie ein paar Sekunden, bis Sie eine Vibration spüren.
-      cieCardValid: Ok, Ihre Karte ist gültig! Sie können sie nun entfernen.
-      readerCardTitle: Halten Sie die Karte für ein paar Sekunden
-      readerCardHeader: Wir lesen die Daten Ihrer CIE ein und überprüfen deren Gültigkeit.
-      readerCardFooter: Halten Sie die Karte noch ein paar Sekunden in dieser Position
+      title: "Berühre die Karte"
+      titleiOS: "Halte die Karte still"
+      headerTitle: "Anmeldung mit CIE"
+      layCardMessageHeader: "Halte deine elektronische Identitätskarte für einige Sekunden an die Rückseite deines Telefons."
+      layCardMessageHeaderiOS: "Der Sensor befindet sich im oberen Teil des Geräts."
+      layCardMessageFooter: "Wenn du nicht genau weißt, wo sich der NFC-Sensor befindet, bewege die Karte an verschiedene Stellen und warte ein paar Sekunden, bis du eine Vibration spürst."
+      cieCardValid: "Ok, deine Identitätskarte ist gültig! Du kannst sie nun entfernen."
+      readerCardTitle: "Halte die Karte für ein paar Sekunden still"
+      readerCardHeader: "Wir lesen die Daten deiner Identitätskarte ein und überprüfen deren Gültigkeit."
+      readerCardFooter: "Halte die Karte noch ein paar Sekunden in dieser Position"
+      iosAlert:
+        readingInstructions: "Lege deine elektronische Identitätskarte oben auf das Telefon." 
+        moreTags: "Es wurden mehrere Karten identifiziert. Bitte lege eine Karte nach der anderen an."
+        readingInProgress: "WIRD GELESEN \nHalte die Karte einige Sekunden lang still..."
+        readingSuccess: "Das Auslesen war erfolgreich.\nDu kannst die Karte entfernen während wir die Datenüberprüfung abschließen."
+        invalidCard: "Die verwendete Karte scheint keine elektronische Identitätskarte (CIE) zu sein."
+        tagLost: "Du hast die Karte zu früh entfernt."
+        cardLocked: "Identitätskarte gesperrt"
+        wrongPin1AttemptLeft: "Falsche PIN, du hast noch einen Versuch"
+        wrongPin2AttemptLeft: "Falsche PIN, du hast noch zwei Versuche"
       error:
-        readerCardLostTitle: Halten Sie die Karte erneut für einige Sekunden
-        readerCardLostTitleiOS: Sie haben die Karte zu früh entfernt.
-        readerCardLostHeader: Das Auslesen der Kartendaten ist noch nicht abgeschlossen.
-        readerCardLostHeaderiOS: Wir haben das Einlesen der Kartendaten noch nicht abgeschlossen. Bitte versuchen Sie es erneut.
-        onTagLost: Sie haben die Karte zu früh entfernt. Halten Sie die Karte so nah wie möglich an die Rückseite des Geräts, bis eine Bestätigung auf dem Bildschirm erscheint. Dies dauert ein paar Sekunden.
-        tryAgain: Etwas hat nicht wie erwartet funktioniert, während wir Ihre CIE gelesen haben. Es handelt sich wahrscheinlich um ein temporäres Problem, bitte versuchen Sie es erneut!
-        unknownCardTitle: Unbekannte Karte
-        unknownCardContent: Die verwendete Karte scheint keine elektronische Identitätskarte (CIE) zu sein.
-        unknownCardHelpLink: Was ist eine elektronische Identitätskarte?
-  spid: SPID
+        readerCardLostTitle: "Karte neu lesen"
+        readerCardLostTitleiOS: "Du hast die Karte zu früh entfernt."
+        readerCardLostHeader: "Wir haben den Lesevorgang der Karte noch nicht abgeschlossen."
+        readerCardLostHeaderiOS: "Wir haben den Lesevorgang der Karte noch nicht abgeschlossen. Versuche es erneut."
+        onTagLost: "Du hast die Karte zu früh entfernt. Halte die Karte an die Rückseite des Smartphones bis eine Bestätigung auf dem Bildschirm erscheint. Es dauert nur ein paar Sekunden."
+        tryAgain: "Bei der Verifizierung deiner Karte ist ein Fehler aufgetreten. Es handelt sich wahrscheinlich um einen temporäres Problem, bitte versuche es erneut!"
+        generic: "Bei der Verifizierung deiner Karte ist ein Fehler aufgetreten. Wenn du das Problem nicht lösen kannst, teile uns dies bitte über das Symbol '?' in der oberen rechten Ecke mit. Danke!"
+        unknownCardTitle: "Unbekannte Karte"
+        unknownCardContent: "Die verwendete Karte scheint keine elektronische Identitätskarte (CIE) zu sein."
+        unknownCardHelpLink: "Was ist eine elektronische Identitätskarte?"
+    dataUsageConsent:
+      retryCTA: "Weiter"
+  spid: "SPID"
   spid_information_request:
-    headerTitle: E-Mail Adresse einfügen
-    contentTitle: Sie haben keinen SPID?
-    paragraph1: SPID, das öffentliche System der digitalen Identität, ermöglicht Ihnen den Zugriff auf
-      alle Dienste der öffentlichen Verwaltung mit einer einzigen digitalen Identität
-      (Benutzername und Passwort).
-    paragraph2: Wenn Sie möchten, können Sie uns Ihre E-Mail-Adresse hinterlassen, um Erinnerungen und
-      Updates zu dieser App zu erhalten
-    paragraph3: Wenn Sie weiterhin erklären, dass Sie die
-    tosLinkText: Regeln für die Verarbeitung von personenbezogenen Daten
-    continue: Weiter
+    headerTitle: "Du hast keinen SPID?"
+    contentTitle: "Was ist SPID?"
+    paragraph1: "SPID, das öffentliche System der digitalen Identität, ermöglicht dir den Zugriff auf alle Dienste der öffentlichen Verwaltung mit einer einzigen digitalen Identität (Benutzername und Passwort)."
+    paragraph2: "Wenn du möchtest, kannst du uns deine E-Mail-Adresse hinterlassen, um Erinnerungen und Updates dieser App zu erhalten"
+    paragraph3: "Wenn du fortfährst, akzeptierst du die"
+    tosLinkText: "Regeln für die Verarbeitung von personenbezogenen Daten"
+    continue: "Weiter"
   spid_information:
-    headerTitle: Was ist SPID?
-    contentTitle: Sie haben keinen SPID?
-    moreLinkText: Mehr erfahren
-    subtitle: SPID ist sicher
-    paragraph1: SPID, das öffentliche System der digitalen Identität, ermöglicht Ihnen den Zugriff auf
-      alle Dienste der öffentlichen Verwaltung mit einer einzigen digitalen Identität
-      (Benutzername und Passwort).
-    paragraph2-part1: 'Mit SPID können Sie online tun, was bisher nur persönlich möglich war:
-      um sich bei SPID zu registrieren, müssen Sie also '
-    paragraph2-bold: Bescheinigen Sie Ihre Identität
-    paragraph2-part2: 'vervollständigen Sie Ihre Erkennung durch einen Identity Provider. Hier
-      what you shall do:'
-    point1-value: '1'
-    point1-content: "Wählen Sie Ihren Identity Provider"
-    point2-value: '2'
-    point2-content: "Geben Sie Ihre persönlichen Daten und Ihre Mobiltelefon ein"
-    point3-value: '3'
-    point3-content: "Laden Sie eine Kopie Ihrer Ausweispapiere hoch"
-    point4-value: '4'
-    point4-content: "Vervollständigen Sie Ihre Anmeldung"
-    knowMore: Erfahren Sie mehr auf spid.gov.it
+    headerTitle: "Du hast keinen SPID?"
+    contentTitle: "Was ist SPID?"
+    moreLinkText: "Mehr erfahren"
+    subtitle: "SPID ist sicher"
+    paragraph1: "SPID, das öffentliche System der digitalen Identität, ermöglicht dir den Zugriff auf alle Dienste der öffentlichen Verwaltung mit einer einzigen digitalen Identität (Benutzername und Passwort)."
+    paragraph2-part1: "Mit SPID kannst du Dinge online erledigen, die bisher nur persönlich erledigt werden konnten: Um dich für SPID zu registrieren, musst du "
+    paragraph2-bold: "deine Identität von einem anerkannten Anbieter bescheinigen "
+    paragraph2-part2: "lassen. Folge dieser Anleitung:"
+    point1-value: "1"
+    point1-content: "Wähle deinen Identitätsanbieter"
+    point2-value: "2"
+    point2-content: "Gib deine persönlichen Daten und deine Mobiltelefon ein"
+    point3-value: "3"
+    point3-content: "Lade eine Kopie deiner Identitätsdokumente hoch"
+    point4-value: "4"
+    point4-content: "Vervollständige deine Anmeldung"
+    knowMore: "Erfahre mehr auf spid.gov.it"
   idp_selection:
-    headerTitle: Home
-    contentTitle: Wählen Sie Ihren Identity Provider
-    contextualHelpTitle: Wer ist Ihr Identity Provider
+    headerTitle: "Home"
+    contentTitle: "Wähle deinen Identitätsanbieter"
+    contextualHelpTitle: "Wer ist dein Identitätsanbieter?"
   idp_login:
-    headerTitle: SPID Login
-    contextualHelpTitle: Wie lautet Ihr Passwort
-    contextualHelpTitle2: Benötigen Sie Unterstützung bei der Anmeldung mit SPID?
-    openTicket: Ticket erstellen
-    recoverUsername: Benutzernamens wiederherstellen
-    recoverDescription: Wenn Sie Ihr Passwort vergessen haben, können Sie es wiederherstellen, indem Sie auf die folgende Schaltfläche tippen.
-    dualRecoverDescription: Wenn Sie Ihre Anmeldeinformationen nicht haben, können Sie diese wiederherstellen, indem Sie auf folgenden Schaltflächen tippen.
-    recoverPassword: Wiederherstellung des Passworts
+    headerTitle: "Anmelden"
+    contextualHelpTitle: "Wie lautet dein Passwort"
+    contextualHelpTitle2: "Benötigst du Hilfe bei der Anmeldung mit SPID?"
+    openTicket: "Ticket erstellen"
+    recoverDescription: "Wenn du dein Passwort vergessen hast, klicke bitte auf die Schaltfläche unten."
+    dualRecoverDescription: "Wenn du deine Anmeldedaten vergessen hast, klicke bitte auf die unten stehenden Schaltflächen."
+    recoverUsername: "Benutzername wiederherstellen"
+    recoverPassword: "Passwort wiederherstellen"
   errors:
-    notoken: Die Sitzung ist nicht verfügbar oder ist ungültig
-    logout: Fehler beim Abmelden
+    notoken: "Die Sitzung ist nicht verfügbar oder ist ungültig"
+    logout: "Fehler beim Abmelden"
     network:
-      title: Zugriffsproblem
+      title: "Zugriffsproblem"
+      body: "Der von dir gewählte Identitätsanbieter ist im Moment nicht verfügbar. Du kannst es später noch einmal versuchen.\nWenn du eine andere SPID-Identität hast, wähle bitte einen anderen Anbieter.\nDu kannst das Problem über das Symbol '?' in der oberen rechten Ecke melden."
     login:
-      title: Login Fehler
-      body: Es gab einen Fehler bei der Anmeldung, bitte versuchen Sie es erneut!
+      title: "Fehler beim Anmelden"
+      body: "Es gab einen Fehler bei der Anmeldung, bitte versuche es erneut!"
     spid:
-      unknown: Unbekannter Fehler
-      error_19: "Sie haben zu oft einen falschen Benutzernamen oder ein falsches Passwort eingegeben: Versuchen Sie es in ein paar Minuten erneut oder wenden Sie sich an Ihren SPID-Identitätsanbieter, um Ihre Anmeldedaten zu ändern."
-      error_20: "Aus Sicherheitsgründen erfordert die IO-App eine Anmeldung mittels der SPID-Sicherheitsstufe 2: Wenden Sie sich an Ihren SPID-Identitätsanbieter, um zu erfahren, wie Sie diesen verwenden können."
-      error_21: "Es ist zu viel Zeit vergangen, seit Sie mit dem Einloggen begonnen haben: Bitte beginnen Sie noch einmal von vorne."
-      error_22: "Um IO benutzen zu können, müssen Sie den Zugriff auf einige Ihrer Daten erlauben: Melden Sie sich erneut an und geben Sie Ihr Einverständnis zur Datenübermittlung."
-      error_23: "Ihre SPID-Identität ist gesperrt oder widerrufen. Um Ihr Konto zu reaktivieren, wenden Sie sich an Ihren SPID-Identitätsanbieter."
-      error_25: "Sie haben den Anmeldevorgang abgebrochen: Sie können es jederzeit erneut versuchen."
+      unknown: "Unbekannter Fehler"
+      error_19: "Du hast zu oft einen falschen Benutzernamen oder ein falsches Passwort eingegeben: Versuche es in ein paar Minuten erneut oder wende dich an deinen SPID-Identitätsanbieter um deine Anmeldedaten zu ändern."
+      error_20: "Aus Sicherheitsgründen erfordert die IO-App eine Anmeldung mittels der SPID-Sicherheitsstufe 2: Wende dich an deinen SPID-Identitätsanbieter um zu erfahren, wie du diesen verwenden kannst."
+      error_21: "Seit dem Beginn des Anmeldevorgangs ist zu viel Zeit vergangen: Bitte beginne noch einmal von vorne."
+      error_22: "Um IO benutzen zu können, musst du die Übermittlung einiger deiner Daten erlauben: Melde dich erneut an und gib dein Einverständnis zur Datenübermittlung."
+      error_23: "Deine SPID-Identität ist gesperrt oder widerrufen. Um dein Konto zu reaktivieren, wende dich an deinen SPID-Identitätsanbieter."
+      error_25: "Du hast den Anmeldevorgang abgebrochen: Du kannst es jederzeit erneut versuchen."
   expiredSessionBanner:
-    title: Sicherheitshinweis
-    message: Um Ihre privaten Informationen zu schützen, melden Sie sich bitte erneut mit Ihren SPID-Anmeldedaten an, danke!
+    title: "Sicherheitshinweis"
+    message: "Um deine privaten Informationen zu schützen, melden dich bitte erneut mit deinen SPID-Anmeldedaten an, danke!"
 email:
   read:
     title: Ihre E-Mail-Adresse
