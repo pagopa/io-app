@@ -1,13 +1,65 @@
 ---
+date:
+  formats:
+    default: "%d.%m.%Y"
+    short: "%d %B"
+    long: "%d %B %Y"
+  day_names:
+    - "Sonntag"
+    - "Montag"
+    - "Dienstag"
+    - "Mittwoch"
+    - "Donnerstag"
+    - "Freitag"
+    - "Samstag"
+  abbr_day_names:
+    - "So."
+    - "Mo."
+    - "Di."
+    - "Mi."
+    - "Do."
+    - "Fr."
+    - "Sa."
+  month_names:
+    - ""
+    - "Januar"
+    - "Februar"
+    - "März"
+    - "April"
+    - "Mai"
+    - "Juni"
+    - "Juli"
+    - "August"
+    - "September"
+    - "Oktober"
+    - "November"
+    - "Dezember"
+  abbr_month_names:
+    - ""
+    - "Jan."
+    - "Feb."
+    - "März"
+    - "Apr."
+    - "Mai"
+    - "Jun."
+    - "Jul."
+    - "Aug."
+    - "Sept."
+    - "Okt."
+    - "Nov."
+    - "Dez."
+  meridian:
+    - "am"
+    - "pm"
 global:
-  you: "Du"
+  you: "DU"
   id: "ID"
   badges:
     blocked: "Blockiert"
     onGoing: "In Bearbeitung"
   password: "Passwort"
   username: "Benutzername"
-  disclaimer_beta: "Wenn Sie Probleme bei der Anmeldung haben, lassen Sie es uns bitte wissen!"
+  disclaimer_beta: "Wenn du Probleme bei der Anmeldung hast, lass es uns bitte wissen!"
   unknown: "Unbekannt"
   sectionStatus:
     moreInfo: "mehr Informationen"
@@ -25,23 +77,23 @@ global:
     collapsed: "Eingeklappter Absatz"
     active: "Aktiver Zustand"
     inactive: "Inktiver Zustand"
-    linkHint: "Wenn Sie dieses Element aktivieren, werden Sie zum Browser des Geräts weitergeleitet"
+    linkHint: "Wenn du dieses Element aktivierst, wirst du zum Browser des Geräts weitergeleitet"
     alert: "Hinweis"
     activityIndicator:
       label: "Wird geladen"
-      hint: "Warten Sie auf das Laden des Inhalts"
+      hint: "Warte, bis der Inhalt geladen ist"
     header:
       label: "Kopfzeile der Anwendung"
     contextualHelp:
-      close: "Schließen Sie die kontextbezogene Hilfe"
+      close: "Schließe die kontextbezogene Hilfe"
       open:
         label: "Kontextbezogene Hilfe"
-        hint: "Zugriff auf Informationen über den Inhalt des aktuellen Bildschirms"
+        hint: "Greif auf Informationen über den Inhalt des aktuellen Bildschirms zu"
     chat:
       description: "IO Servicemitteilungen"
       unread_singular: "{{message}} neue Mitteilung"
       unread_plural: "{{message}} neue Mitteilungen"
-  ioWebSite: https://io.italia.it
+  ioWebSite: "https://io.italia.it"
   symbols:
     question: "?"
     asterisk: "*"
@@ -74,16 +126,16 @@ global:
     dayMonthYear: "D MMMM YYYY"
     weekdayDayMonthYear: "dddd D MMMM YYYY"
     dateTimePicker: "gg.mm.yyyy"
-  genericError: "Es liegt ein vorübergehendes Problem vor, bitte versuchen Sie es erneut."
+  genericError: "Es liegt ein vorübergehendes Problem vor, bitte versuche es erneut."
   genericAlert: "Achtung!"
-  genericWaiting: "Warten Sie ein paar Sekunden..."
+  genericWaiting: "Warte ein paar Sekunden..."
   genericThanks: "Danke"
   genericShare: "Teilen"
   genericSave: "Speichern"
   genericRetry: "Erneut versuchen"
   jserror:
     title: "Es ist ein unerwarteter Fehler aufgetreten"
-    message: "Wir haben dies unserem Team gemeldet! Bitte schließen Sie die App und starten Sie diese erneut!"
+    message: "Wir haben dies unserem Team gemeldet! Bitte schließe die App und starte diese erneut!"
   markdown:
     decodeError: "Die Nachricht kann nicht entschlüsselt werden"
   buttons:
@@ -119,16 +171,16 @@ global:
     profile: "Profil"
     services: "Dienste"
   actions:
-    retry: "Es ist ein Fehler aufgetreten, bitte versuchen Sie es erneut."
+    retry: "Es ist ein Fehler aufgetreten, bitte versuche es erneut."
     search: "Suchtext"
   remoteStates:
     loading: "Wird geladen..."
-    wait: "Warten Sie ein paar Sekunden..."
+    wait: "Warten ein paar Sekunden..."
     notAvailable: "Nicht verfügbar"
   notImplemented: "NICHT IMPLEMENTIERT"
   search:
     invalidSearchBarText: "Mindestens {{minCharacter}} Zeichen eingeben"
-    noResultsFound: "Es gibt keine Ergebnisse für diese Suche: versuchen Sie etwas anderes."
+    noResultsFound: "Es gibt keine Ergebnisse für diese Suche: versuche etwas anderes."
     noResultsTitle: "Keine Ergebnisse"
   media:
     email: "E-Mail"
