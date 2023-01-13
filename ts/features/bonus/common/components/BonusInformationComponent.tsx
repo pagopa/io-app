@@ -27,7 +27,7 @@ import { useScreenReaderEnabled } from "../../../../utils/accessibility";
 import { getRemoteLocale } from "../../../../utils/messages";
 import { maybeNotNullyString } from "../../../../utils/strings";
 import { confirmButtonProps } from "../../bonusVacanze/components/buttons/ButtonConfigurations";
-import TosBonusComponent from "../../bonusVacanze/components/TosBonusComponent";
+import TosBonusComponent from "./TosBonusComponent";
 
 type OwnProps = {
   onBack?: () => void;

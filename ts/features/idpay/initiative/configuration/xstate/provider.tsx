@@ -1,16 +1,16 @@
 import { useNavigation } from "@react-navigation/native";
 import { useInterpret } from "@xstate/react";
 import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { InterpreterFrom } from "xstate";
 import { PreferredLanguageEnum } from "../../../../../../definitions/backend/PreferredLanguage";
 import { PaymentManagerClient } from "../../../../../api/pagopa";
 import {
-  fetchPaymentManagerLongTimeout,
   IDPAY_API_TEST_TOKEN,
   IDPAY_API_UAT_BASEURL,
+  fetchPaymentManagerLongTimeout,
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest
 } from "../../../../../config";
@@ -25,14 +25,15 @@ import {
   isPagoPATestEnabledSelector,
   preferredLanguageSelector
 } from "../../../../../store/reducers/persistedPreferences";
+import { SessionManager } from "../../../../../utils/SessionManager";
 import { defaultRetryingFetch } from "../../../../../utils/fetch";
 import { fromLocaleToPreferredLanguage } from "../../../../../utils/locale";
-import { SessionManager } from "../../../../../utils/SessionManager";
 import { createIDPayWalletClient } from "../../../wallet/api/client";
+import { createIDPayIbanClient } from "../iban/api/client";
 import { createActionsImplementation } from "./actions";
 import {
-  createIDPayInitiativeConfigurationMachine,
-  IDPayInitiativeConfigurationMachineType
+  IDPayInitiativeConfigurationMachineType,
+  createIDPayInitiativeConfigurationMachine
 } from "./machine";
 import { createServicesImplementation } from "./services";
 
@@ -94,9 +95,11 @@ const IDPayConfigurationMachineProvider = (props: Props) => {
   const pmSessionManager = new SessionManager(getPaymentManagerSession);
 
   const walletClient = createIDPayWalletClient(IDPAY_API_UAT_BASEURL);
+  const ibanClient = createIDPayIbanClient(IDPAY_API_UAT_BASEURL);
 
   const services = createServicesImplementation(
     walletClient,
+    ibanClient,
     paymentManagerClient,
     pmSessionManager,
     idPayToken,

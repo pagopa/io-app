@@ -40,7 +40,7 @@ import { getRemoteLocale } from "../../../../utils/messages";
 import { showToast } from "../../../../utils/showToast";
 import { bpdOnboardingStart } from "../../bpd/store/actions/onboarding";
 import { cgnActivationStart } from "../../cgn/store/actions/activation";
-import { actionWithAlert } from "../components/alert/ActionWithAlert";
+import { actionWithAlert } from "../../common/components/alert/ActionWithAlert";
 import {
   AvailableBonusItem,
   AvailableBonusItemState

@@ -54,7 +54,7 @@ import BonusCardComponent from "../components/BonusCardComponent";
 import { BonusCompositionDetails } from "../components/keyValueTable/BonusCompositionDetails";
 import { FamilyComposition } from "../components/keyValueTable/FamilyComposition";
 import QrModalBox from "../components/QrModalBox";
-import TosBonusComponent from "../components/TosBonusComponent";
+import TosBonusComponent from "../../common/components/TosBonusComponent";
 import {
   cancelLoadBonusFromIdPolling,
   startLoadBonusFromIdPolling
