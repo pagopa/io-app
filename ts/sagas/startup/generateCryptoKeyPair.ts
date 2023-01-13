@@ -11,11 +11,19 @@ const KEY_NAME = "lp-temp-key";
 
 export function* generateCryptoKeyPair() {
   try {
-    const keyExistsOnKeystore = yield* call(checkPublicKeyExists, KEY_NAME);
-    const keyAlreadyExists = yield* call(isKeyAlreadyGenerated, KEY_NAME);
-    const generateKey = !(keyAlreadyExists || keyExistsOnKeystore);
+    const keyAlreadyExistsOnKeystore = yield* call(
+      checkPublicKeyExists,
+      KEY_NAME
+    );
+    const keyHasBeenAlreadyGenerated = yield* call(
+      isKeyAlreadyGenerated,
+      KEY_NAME
+    );
+    const shouldWeGenerateKey = !(
+      keyHasBeenAlreadyGenerated || keyAlreadyExistsOnKeystore
+    );
 
-    if (generateKey) {
+    if (shouldWeGenerateKey) {
       const key = yield* call(generate, KEY_NAME);
       void mixpanelTrack("LOLLIPOP_KEY_GENERATION_SUCCESS", {
         kty: key.kty
