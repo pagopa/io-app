@@ -5,7 +5,7 @@ import { View as NBView } from "native-base";
 import { H2 } from "../../../components/core/typography/H2";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
-import { Spacer } from "../../../components/core/spacer/Spacer";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { DSSpacerViewerBox } from "../components/DSSpacerViewerBox";
 import { IOSpacer } from "../../../components/core/variables/IOSpacing";
 
@@ -52,7 +52,7 @@ export const DSSpacing = () => (
       </View>
     </View>
 
-    <Spacer size={24} />
+    <VSpacer size={24} />
 
     <H2
       color={"bluegrey"}
@@ -67,7 +67,7 @@ export const DSSpacing = () => (
       <DSSpacerViewerBox key={`${spacerEntry}-vertical`} size={spacerEntry} />
     ))}
 
-    <Spacer />
+    <VSpacer size={24} />
 
     {/* Horizontal */}
     <View style={{ flexDirection: "row" }}>
@@ -80,7 +80,7 @@ export const DSSpacing = () => (
       ))}
     </View>
 
-    <Spacer size={40} />
-    <Spacer size={8} />
+    <VSpacer size={40} />
+    <VSpacer size={8} />
   </DesignSystemScreen>
 );

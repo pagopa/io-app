@@ -1,7 +1,8 @@
 import * as React from "react";
 import { View, StyleSheet, Text } from "react-native";
 import {
-  Spacer,
+  VSpacer,
+  HSpacer,
   SpacerOrientation
 } from "../../../components/core/spacer/Spacer";
 import { IOColors } from "../../../components/core/variables/IOColors";
@@ -22,41 +23,43 @@ type DSSpacerViewerBoxProps = {
   orientation?: SpacerOrientation;
 };
 
+type DSSpacerLabelProps = {
+  value: IOSpacer;
+};
+
+const DSSpacerLabel = ({ value }: DSSpacerLabelProps) => (
+  <Text numberOfLines={1} ellipsizeMode="tail" style={styles.componentLabel}>
+    {value}
+  </Text>
+);
+
 export const DSSpacerViewerBox = ({
   size,
   orientation = "vertical"
 }: DSSpacerViewerBoxProps) => (
-  <View
-    style={
-      orientation === "horizontal"
-        ? { flexDirection: "row", marginRight: 16 }
-        : { flexDirection: "column", marginBottom: 20 }
-    }
-  >
-    <View
-      style={[
-        styles.spacerWrapper,
-        orientation === "horizontal" ? { height: 75 } : {}
-      ]}
-    >
-      <Spacer size={size} orientation={orientation} />
-    </View>
-    {size && (
-      <View
-        style={
-          orientation === "horizontal"
-            ? { flexDirection: "column", marginLeft: 4 }
-            : { flexDirection: "row", marginTop: 4 }
-        }
-      >
-        <Text
-          numberOfLines={1}
-          ellipsizeMode="tail"
-          style={styles.componentLabel}
-        >
-          {size}
-        </Text>
+  <>
+    {orientation === "vertical" ? (
+      <View style={{ flexDirection: "column", marginBottom: 20 }}>
+        <View style={styles.spacerWrapper}>
+          <VSpacer size={size} />
+        </View>
+        {size && (
+          <View style={{ flexDirection: "row", marginTop: 4 }}>
+            <DSSpacerLabel value={size} />
+          </View>
+        )}
+      </View>
+    ) : (
+      <View style={{ flexDirection: "row", marginRight: 16 }}>
+        <View style={[styles.spacerWrapper, { height: 75 }]}>
+          <HSpacer size={size} />
+        </View>
+        {size && (
+          <View style={{ flexDirection: "column", marginLeft: 4 }}>
+            <DSSpacerLabel value={size} />
+          </View>
+        )}
       </View>
     )}
-  </View>
+  </>
 );

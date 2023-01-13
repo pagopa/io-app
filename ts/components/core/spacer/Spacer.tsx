@@ -4,21 +4,22 @@ import type { IOSpacer } from "../variables/IOSpacing";
 
 export type SpacerOrientation = "vertical" | "horizontal";
 
+type BaseSpacerProps = {
+  orientation: SpacerOrientation;
+  size: IOSpacer;
+};
+
 type SpacerProps = {
-  orientation?: SpacerOrientation;
   size?: IOSpacer;
 };
 
+const DEFAULT_SIZE = 16;
 /**
-Native `Spacer` component that replaces the legacy one, managed through NativeBase.
-
+Native `Spacer` component that replaces the legacy one, managed through NativeBase
 @param  {SpacerOrientation} orientation 
-@param {IOSpacerType} size
+@param {IOSpacer} size
  */
-export const Spacer = ({
-  orientation = "vertical",
-  size = 16
-}: SpacerProps) => (
+const Spacer = ({ orientation, size }: BaseSpacerProps) => (
   <View
     style={{
       ...(orientation === "vertical" && {
@@ -29,4 +30,19 @@ export const Spacer = ({
       })
     }}
   />
+);
+
+/**
+Horizontal spacer component
+@param {IOSpacer} size
+ */
+export const HSpacer = ({ size = DEFAULT_SIZE }: SpacerProps) => (
+  <Spacer orientation="horizontal" size={size} />
+);
+/**
+Vertical spacer component
+@param {IOSpacer} size
+ */
+export const VSpacer = ({ size = DEFAULT_SIZE }: SpacerProps) => (
+  <Spacer orientation="vertical" size={size} />
 );
