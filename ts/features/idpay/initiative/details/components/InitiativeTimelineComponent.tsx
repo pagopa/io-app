@@ -13,6 +13,7 @@ import {
   IOStackNavigationProp
 } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { IDPayDetailsRoutes } from "../navigation";
 import { idpayTimelineSelector } from "../store";
 import { idpayTimelineGet } from "../store/actions";
 import { renderTimelineOperationCard } from "./TimelineTransactionCards";
@@ -75,8 +76,11 @@ const ConfiguredInitiativeData = (props: Props) => {
   }
 
   const navigateToOperationsList = () => {
-    navigation.navigate("IDPAY_OPERATIONS_LIST", {
-      initiativeId
+    navigation.navigate(IDPayDetailsRoutes.IDPAY_DETAILS_MAIN, {
+      screen: IDPayDetailsRoutes.IDPAY_DETAILS_TIMELINE,
+      params: {
+        initiativeId
+      }
     });
   };
   return (

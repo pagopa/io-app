@@ -1,6 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { Route, useNavigation, useRoute } from "@react-navigation/core";
-import { useFocusEffect } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/core";
+import { RouteProp, useFocusEffect } from "@react-navigation/native";
 import { Text, View } from "native-base";
 import React, { useCallback } from "react";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
@@ -31,6 +31,7 @@ import { InitiativeSettingsComponent } from "../components/InitiativeSettingsCom
 import InitiativeTimelineComponent from "../components/InitiativeTimelineComponent";
 import { idpayInitiativeDetailsSelector } from "../store";
 import { idpayInitiativeGet } from "../store/actions";
+import { IDPayDetailsParamsList } from "../navigation";
 
 const styles = StyleSheet.create({
   newInitiativeMessageContainer: {
@@ -53,9 +54,9 @@ export type InitiativeDetailsScreenParams = {
   initiativeId: string;
 };
 
-type RouteProps = Route<
-  "IDPAY_INITIATIVE_DETAILS",
-  InitiativeDetailsScreenParams
+type InitiativeDetailsScreenRouteProps = RouteProp<
+  IDPayDetailsParamsList,
+  "IDPAY_DETAILS_HOME"
 >;
 
 const InitiativeNotConfiguredComponent = ({
@@ -82,7 +83,7 @@ const InitiativeNotConfiguredComponent = ({
 );
 
 export const InitiativeDetailsScreen = () => {
-  const route = useRoute<RouteProps>();
+  const route = useRoute<InitiativeDetailsScreenRouteProps>();
 
   const { initiativeId } = route.params;
 

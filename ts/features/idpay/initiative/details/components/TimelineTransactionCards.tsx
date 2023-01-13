@@ -61,7 +61,11 @@ export const renderTimelineOperationCard = (transaction: OperationListDTO) => {
         )}
         <View hspacer />
         <View style={IOStyles.flex}>
-          <H4>{transaction.operationType}</H4>
+          <H4>
+            {operationTypeMap[transaction.operationType](
+              "maskedPan" in transaction ? transaction.maskedPan : ""
+            )}
+          </H4>
           <LabelSmall weight="Regular" color="bluegrey">
             {`${formatDateAsShortFormat(
               transaction.operationDate
@@ -78,4 +82,18 @@ export const renderTimelineOperationCard = (transaction: OperationListDTO) => {
       </View>
     </ListItem>
   );
+};
+
+const operationTypeMap = {
+  ONBOARDING: () => "Hai aderito all'iniziativa",
+  ADD_IBAN: () => "Aggiunto IBAN",
+  ADD_INSTRUMENT: (x: string) => `Hai aggiunto ···· ${x}`,
+  TRANSACTION: () => "Pagamento Pos",
+  REVERSAL: () => "Ricarica saldo disponibile",
+  DELETE_INSTRUMENT: () => "Hai eliminato un metodo di pagamento",
+  REJECTED_ADD_INSTRUMENT: () => "Hai rifiutato un metodo di pagamento",
+  REJECTED_DELETE_INSTRUMENT: () =>
+    "Hai rifiutato di eliminare un metodo di pagamento",
+  PAID_REFUND: () => "Rimborso",
+  REJECTED_REFUND: () => "Rifiuto rimborso"
 };

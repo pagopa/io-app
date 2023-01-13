@@ -1,5 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { Route, useRoute } from "@react-navigation/core";
+import { useRoute } from "@react-navigation/core";
+import { RouteProp } from "@react-navigation/native";
 import { View as NBView } from "native-base";
 import React from "react";
 import {
@@ -19,11 +20,15 @@ import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import customVariables from "../../../../../theme/variables";
 import { formatDateAsLocal } from "../../../../../utils/dates";
 import { renderTimelineOperationCard } from "../components/TimelineTransactionCards";
+import { IDPayDetailsParamsList } from "../navigation";
 import { idpayTimelineSelector } from "../store";
 import { idpayTimelinePageGet } from "../store/actions";
 
-export type OperationListRouteParams = { initiativeId: string };
-type RouteProps = Route<"IDPAY_OPERATIONS_LIST", OperationListRouteParams>;
+export type OperationsListScreenParams = { initiativeId: string };
+type OperationsListScreenRouteProps = RouteProp<
+  IDPayDetailsParamsList,
+  "IDPAY_DETAILS_TIMELINE"
+>;
 
 const styles = StyleSheet.create({
   activityIndicator: {
@@ -75,7 +80,7 @@ const useTimelineFetcher = (initiativeId: string) => {
 };
 
 export const OperationsListScreen = () => {
-  const route = useRoute<RouteProps>();
+  const route = useRoute<OperationsListScreenRouteProps>();
   const { initiativeId } = route.params;
 
   const { isLoading, timeline, nextPage } = useTimelineFetcher(initiativeId);
