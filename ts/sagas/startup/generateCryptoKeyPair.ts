@@ -28,7 +28,5 @@ export function* generateCryptoKeyPair() {
     void mixpanelTrack("LOLLIPOP_KEY_GENERATION_FAILURE", {
       reason: errorMessage
     });
-    // eslint-disable-next-line no-console
-    console.log(e);
   }
 }
