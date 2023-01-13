@@ -93,7 +93,8 @@ export const useIOBottomSheetModal = (
   component: React.ReactNode,
   title: string | React.ReactNode,
   snapPoint: number,
-  footer?: React.ReactElement
+  footer?: React.ReactElement,
+  onDismiss?: () => void
 ): IOBottomSheetModal => {
   const { dismissAll } = useBottomSheetModal();
   const bottomSheetModalRef = React.useRef<BottomSheetModal>(null);
@@ -141,6 +142,7 @@ export const useIOBottomSheetModal = (
         accessible: false
       }}
       importantForAccessibility={"yes"}
+      onDismiss={onDismiss}
     >
       {screenReaderEnabled && Platform.OS === "android" ? (
         <Modal>
