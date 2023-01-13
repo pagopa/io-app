@@ -4,7 +4,7 @@ import { Dispatch } from "redux";
 import { withLightModalContext } from "../../../../../../components/helpers/withLightModalContext";
 import { LightModalContextInterface } from "../../../../../../components/ui/LightModal";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import TosBonusComponent from "../../../../../bonus/bonusVacanze/components/TosBonusComponent";
+import TosBonusComponent from "../../../../../bonus/common/components/TosBonusComponent";
 import { isError, isLoading } from "../../../../../bonus/bpd/model/RemoteValue";
 import { abiSelector } from "../../../store/abi";
 import SearchStartScreen from "../../../common/searchBank/SearchStartScreen";

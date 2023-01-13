@@ -8,7 +8,7 @@
  * footer with a button for starting a new payment
  */
 
-import { Content, Text, View } from "native-base";
+import { Content, Text as NBText, View } from "native-base";
 import * as React from "react";
 import { Animated, StyleProp, StyleSheet, ViewStyle } from "react-native";
 import I18n from "../../i18n";
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
 
   shadow: {
     // iOS
-    shadowColor: "#000",
+    shadowColor: IOColors.black,
     shadowOffset: {
       width: 0,
       height: 2
@@ -84,7 +84,7 @@ export default class WalletLayout extends React.Component<Props> {
         <View spacer={true} />
         <View style={styles.subHeaderContent}>
           <H2 color={"bluegrey"}>{I18n.t("wallet.latestTransactions")}</H2>
-          <Text>{I18n.t("wallet.amount")}</Text>
+          <NBText>{I18n.t("wallet.amount")}</NBText>
         </View>
         <View spacer={true} />
       </View>

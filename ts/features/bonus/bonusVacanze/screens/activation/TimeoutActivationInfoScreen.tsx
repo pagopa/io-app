@@ -2,8 +2,8 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import I18n from "../../../../../i18n";
-import { BaseTimeoutScreen } from "../../components/BaseTimeoutScreen";
-import { useHardwareBackButton } from "../../components/hooks/useHardwareBackButton";
+import { BaseTimeoutScreen } from "../../../common/BaseTimeoutScreen";
+import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButton";
 import { cancelBonusVacanzeRequest } from "../../store/actions/bonusVacanze";
 
 type Props = ReturnType<typeof mapDispatchToProps>;

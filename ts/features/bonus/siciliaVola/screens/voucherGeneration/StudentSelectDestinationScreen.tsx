@@ -64,7 +64,7 @@ const StudentSelectDestinationScreen = (
         testID={"StudentSelectDestinationScreen"}
         ref={elementRef}
       >
-        <ScrollView style={[IOStyles.horizontalContentPadding]}>
+        <ScrollView style={IOStyles.horizontalContentPadding}>
           <H1>
             {I18n.t(
               "bonus.sv.voucherGeneration.student.selectDestination.title"

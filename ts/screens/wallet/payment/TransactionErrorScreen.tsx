@@ -25,7 +25,7 @@ import {
   confirmButtonProps
 } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { FooterStackButton } from "../../../features/bonus/bonusVacanze/components/buttons/FooterStackButtons";
-import { useHardwareBackButton } from "../../../features/bonus/bonusVacanze/components/hooks/useHardwareBackButton";
+import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
 import {
   zendeskSelectedCategory,
   zendeskSupportStart
@@ -96,7 +96,8 @@ const imageMapping: Record<ErrorTypes, ImageSourcePropType> = {
   ONGOING: require(baseIconPath + "pictograms/hourglass.png"),
   REVOKED: require(baseIconPath + "servicesStatus/error-detail-icon.png"),
   UNCOVERED: require(baseIconPath + "/wallet/errors/generic-error-icon.png"),
-  TECHNICAL: require(baseIconPath + "servicesStatus/error-detail-icon.png")
+  TECHNICAL: require(baseIconPath + "servicesStatus/error-detail-icon.png"),
+  NOT_FOUND: require(baseIconPath + "pictograms/payment-unrecognized.png")
 };
 
 const requestZendeskAssistanceForPaymentFailure = (
@@ -314,6 +315,21 @@ export const errorTransactionUIElements = (
           </H4>
         ),
         footerButtons: [...closeButtonCancel]
+      };
+    case "NOT_FOUND":
+      return {
+        image,
+        title: I18n.t("wallet.errors.NOT_FOUND"),
+        subtitle: (
+          <H4
+            weight={"Regular"}
+            style={{ textAlign: "center" }}
+            testID={"not-found-subtitle"}
+          >
+            {I18n.t("wallet.errors.NOT_FOUND_SUBTITLE")}
+          </H4>
+        ),
+        footerButtons: [...closeButtonConfirm]
       };
     case "UNCOVERED":
     default:

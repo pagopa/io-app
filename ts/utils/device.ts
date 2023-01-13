@@ -4,7 +4,7 @@
  */
 import DeviceInfo from "react-native-device-info";
 
-export const getDeviceId = (): string => DeviceInfo.getUniqueId();
+export const getDeviceId = (): string => DeviceInfo.getUniqueIdSync();
 
 export const getFontScale = (): Promise<number> => DeviceInfo.getFontScale();
 

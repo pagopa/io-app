@@ -1,4 +1,4 @@
-import { Col, Grid, Text } from "native-base";
+import { Col, Grid, Text as NBText } from "native-base";
 import * as React from "react";
 import { ImageURISource, StyleSheet } from "react-native";
 import { MultiImage } from "./ui/MultiImage";
@@ -33,7 +33,7 @@ const OrganizationHeader = ({
   <Grid>
     <Col style={styles.leftColumnStyle}>
       <H2>{organizationName}</H2>
-      <Text>{serviceName}</Text>
+      <NBText>{serviceName}</NBText>
     </Col>
     <Col style={styles.serviceCol}>
       <MultiImage style={styles.serviceMultiImage} source={logoURLs} />

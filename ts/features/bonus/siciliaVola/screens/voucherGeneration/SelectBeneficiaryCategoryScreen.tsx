@@ -133,7 +133,7 @@ const SelectBeneficiaryCategoryScreen = (props: Props): React.ReactElement => {
         testID={"SelectBeneficiaryCategory"}
         ref={elementRef}
       >
-        <ScrollView style={[IOStyles.horizontalContentPadding]}>
+        <ScrollView style={IOStyles.horizontalContentPadding}>
           <H1>
             {I18n.t(
               "bonus.sv.voucherGeneration.selectBeneficiaryCategory.title"

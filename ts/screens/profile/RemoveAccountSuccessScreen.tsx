@@ -15,7 +15,7 @@ import {
 import { Dispatch } from "../../store/actions/types";
 import { logoutRequest } from "../../store/actions/authentication";
 import expiredIcon from "../../../img/wallet/errors/payment-expired-icon.png";
-import { useHardwareBackButton } from "../../features/bonus/bonusVacanze/components/hooks/useHardwareBackButton";
+import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
 
 type Props = IOStackNavigationRouteProps<AppParamsList> &
   ReturnType<typeof mapDispatchToProps>;
@@ -66,7 +66,7 @@ const RemoveAccountSuccess: React.FunctionComponent<Props> = props => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   // hard-logout
-  logout: () => dispatch(logoutRequest({ keepUserData: false }))
+  logout: () => dispatch(logoutRequest())
 });
 
 export default connect(undefined, mapDispatchToProps)(RemoveAccountSuccess);

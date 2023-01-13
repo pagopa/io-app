@@ -1,4 +1,6 @@
 ---
+accessibility:
+  doubleTapToActivateHint: "Tocca due volte per attivare"
 date:
   formats:
     default: "%d/%m/%Y"
@@ -182,11 +184,7 @@ global:
   search:
     invalidSearchBarText: "Inserisci almeno {{minCharacter}} caratteri"
     noResultsFound: "Non ci sono risultati per questa ricerca: prova qualcos'altro."
-    noResultsTitle: "Nessun risultato."
-  localNotifications:
-    spidLogin:
-      title: "Accedi per iniziare a usare l'app"
-      message: "IO funziona solo se hai effettuato l'accesso almeno una volta"
+    noResultsTitle: Nessun risultato.
   media:
     email: "Email"
     pec: "PEC"
@@ -435,11 +433,11 @@ profile:
       alertConfirmMessage: "Se abiliti l'ambiente di test pagoPA non vedrai più lo storico delle tue transazioni e i tuoi metodi di pagamento salvati, e potrai usare solo metodi di pagamento espressamente creati per questo scopo. Se non ti è chiaro cosa questo significa non abilitare questa funzione."
       alertMessage: "È necessario il riavvio dell'applicazione affinché le modifiche abbiano effetto."
     pnEnvironment:
-      pnEnv: "Ambiente PN di Test"
-    appVersion: "Versione App"
-    backendVersion: "Versione Backend"
-    debugMode: "Modalità debug"
-    showroom: "UI Showroom"
+      pnEnv: Ambiente PN di Test
+    appVersion: Versione App
+    backendVersion: Versione Backend
+    debugMode: Modalità debug
+    designSystem: Design System
   data:
     title: "I tuoi dati"
     subtitle: "Qui trovi i tuoi dati anagrafici e di contatto utilizzati da app IO"
@@ -481,9 +479,12 @@ profile:
         title: "Lingua preferita"
         subtitle: "In quale lingua vuoi usare l'applicazione?"
         alert:
-          title: "Vuoi cambiare la lingua in"
-          subtitle: "Dovrai riavviare l'applicazione per applicare il cambiamento"
-        not_selected: "Non selezionato"
+          title: Vuoi cambiare la lingua in
+          subtitle: Dovrai riavviare l'applicazione per applicare il cambiamento
+        not_selected: Non selezionato
+      notifications:
+        title: Notifiche push
+        subtitle: Consenti anteprime e promemoria
     empty:
       default: "Nessuna preferenza impostata"
     unavailable:
@@ -498,8 +499,28 @@ profile:
     calendar:
       contextualHelpTitle: "Cos'è il tuo calendario preferito"
       contextualHelpContent: !include profile/profile_preferences_calendar.md
-      local_calendar: "Calendario locale"
-      birthday_calendar: "Compleanni"
+      local_calendar: Calendario locale
+      birthday_calendar: Compleanni
+    notifications:
+      contextualHelpTitle: Notifiche push
+      contextualHelpContent: !include profile/profile_preferences_notifications.md
+      header: Notifiche push
+      title: Personalizza le notifiche
+      subtitle: Scegli se mostrare le anteprime e ricevere promemoria.
+      titleExistingUser: Personalizza le notifiche
+      subtitleExistingUser: Ora puoi vedere subito chi ti ha scritto o ricevere promemoria da messaggi importanti, come in questo esempio.
+      reminders:
+        title: Consenti promemoria
+        description: Su richiesta dell'ente, ricevi notifiche push in prossimità di scadenze o quando hai dei messaggi non letti
+      preview:
+        title: Mostra anteprime
+        description: Includi nella notifica push il mittente e l’oggetto del messaggio · 
+        link: Più info
+        bottomSheet:
+          title: Mostra anteprime
+          content: Se l’opzione è attiva le notifiche push mostrano il mittente e l’oggetto dei messaggi, anche quando lo schermo è bloccato. Queste informazioni vengono trattate dal gestore del tuo sistema operativo e da app di terze parti eventualmente in esecuzione.
+          cta: Ho capito!
+      error: Si è verificato un errore con la tua richiesta
 userMetadata:
   errors:
     upsertVersion: "Impossibile creare o aggiornare i metadata utente con questa versione"
@@ -780,8 +801,34 @@ onboarding:
   shareData:
     title: "Configura IO"
   thankYouPage:
-    title: "Configurazione terminata!"
-    body: "Ora puoi iniziare a usare IO"
+    title: Configurazione terminata!
+    body: Ora puoi iniziare a usare IO
+  notifications:
+    badge: Novità
+    headerTitle: Configura IO
+    continue: Continua
+    preview:
+      accessibilityLabelPrefix: "Ecco un esempio:"
+      reminderOnPreviewOnTitle: Hai un avviso in scadenza
+      reminderOnPreviewOnMessage: Entra nell’app e paga l’avviso emesso da ACI
+      reminderOffPreviewOnTitle: Comune di Ipazia
+      reminderOffPreviewOnMessage: Sono aperte le iscrizioni per il centro estivo
+      reminderOnPreviewOffTitle: Hai un avviso in scadenza
+      reminderOnPreviewOffMessage: Entra nell'app per pagarlo
+      reminderOffPreviewOffTitle: Hai un nuovo messaggio
+      reminderOffPreviewOffMessage: Entra nell'app per leggerlo
+    contextualHelpTitle: Notifiche push
+    contextualHelpContent: !include onboarding/onboarding_notifications.md
+  infoConsent:
+    headerTitle: Configura IO
+    title: Vuoi attivare le notifiche?
+    subTitle: "Per ricevere notifiche push da IO, devi attivarle nelle Impostazioni di iOS. Ecco come fare:"
+    instruction1: 1. Seleziona 'Notifiche'
+    instruction2: 2. Attiva 'Consenti Notifiche'
+    openSettings: Apri Impostazioni di iOS
+    continue: Non ora
+    contextualHelpTitle: Notifiche push
+    contextualHelpContent: !include onboarding/onboarding_notifications_info_consent.md
 forms:
   validators:
     required: "Valore richiesto"
@@ -1433,27 +1480,29 @@ wallet:
     title: "Perché i costi di transazione?"
     text: !include wallet/why_a_fee.md
   errors:
-    TECHNICAL: "C’è un problema tecnico con questo avviso"
-    DATA: "I dati dell’avviso non sono corretti"
-    EC: "L’Ente Creditore sta avendo problemi nella risposta"
-    ONGOING: "Il pagamento è già in corso, riprova tra qualche minuto"
-    ONGOING_SUBTITLE: "Se è passato troppo tempo, segnalacelo!"
-    REVOKED: "L’Ente Creditore ha revocato questo avviso"
-    EXPIRED: "L’avviso è scaduto e non è più possibile pagarlo"
-    GENERIC_ERROR: "Si è verificato un errore imprevisto"
-    GENERIC_ERROR_SUBTITLE: "Riprova o contattaci per ricevere assistenza."
-    DUPLICATED: "Questo avviso è stato già pagato!"
-    INVALID_AMOUNT: "L'ammontare specificato nell'avviso non è corretto, se hai inserito i dati manualmente, controlla che siano corretti e riprova."
-    PAYMENT_EXPIRED: "Il pagamento per questo avviso non è più disponibile poiché questo avviso è scaduto."
-    PAYMENT_UNAVAILABLE: "Il pagamento per questo avviso non è disponibile in questo momento, riprova più tardi."
-    PAYMENT_UNKNOWN: "Questo avviso di pagamento non è riconosciuto dall'ente che lo ha emesso, il pagamento non può essere effettuato."
-    DOMAIN_UNKNOWN: "Questo avviso è stato emesso da un ente non accreditato su pagoPA, il pagamento non può essere effettuato."
-    MISSING_PAYMENT_ID: "L'ente che ha emesso questo avviso ha qualche problema a gestirne il pagamento in questo momento, riprova!"
-    PAYMENT_ONGOING_NOCANCEL: "Un pagamento per questo avviso è già in corso, riprova tra 30 minuti."
-    PAYMENT_ONGOING_NOCANCEL_TIMEOUT: "Se hai già atteso 30 minuti e il pagamento risulta ancora bloccato utilizza il pulsante qui sotto per inviarci una segnalazione."
-    PAYMENT_ONGOING_CANCELLED: "È in corso l'annullamento del tuo tentativo di pagamento precedente, potrai riprovare a pagare l'avviso tra {{remainingMinutes}} minuti."
-    PAYMENT_ONGOING_CANCELLED_TIMEOUT: "L'annullamento di questo pagamento è stato richiesto più di 15 minuti fa ma risulta ancora bloccato. Utilizza il pulsante qui sotto per inviarci una segnalazione."
-    contactECsubtitle: "Contatta l’Ente per maggiori informazioni."
+    TECHNICAL: C’è un problema tecnico con questo avviso
+    DATA: I dati dell’avviso non sono corretti
+    EC: L’Ente Creditore sta avendo problemi nella risposta
+    ONGOING: Il pagamento è già in corso, riprova tra qualche minuto
+    ONGOING_SUBTITLE: Se è passato troppo tempo, segnalacelo!
+    REVOKED: L’Ente Creditore ha revocato questo avviso
+    EXPIRED: L’avviso è scaduto e non è più possibile pagarlo
+    GENERIC_ERROR: Si è verificato un errore imprevisto
+    GENERIC_ERROR_SUBTITLE: Riprova o contattaci per ricevere assistenza.
+    DUPLICATED: Questo avviso è stato già pagato!
+    NOT_FOUND: Non riusciamo a trovare l'avviso
+    NOT_FOUND_SUBTITLE: "L’avviso potrebbe essere stato già pagato.\nPer ricevere assistenza, contatta l’Ente Creditore che lo ha emesso."
+    INVALID_AMOUNT: L'ammontare specificato nell'avviso non è corretto, se hai inserito i dati manualmente, controlla che siano corretti e riprova.
+    PAYMENT_EXPIRED: Il pagamento per questo avviso non è più disponibile poiché questo avviso è scaduto.
+    PAYMENT_UNAVAILABLE: Il pagamento per questo avviso non è disponibile in questo momento, riprova più tardi.
+    PAYMENT_UNKNOWN: Questo avviso di pagamento non è riconosciuto dall'ente che lo ha emesso, il pagamento non può essere effettuato.
+    DOMAIN_UNKNOWN: Questo avviso è stato emesso da un ente non accreditato su pagoPA, il pagamento non può essere effettuato.
+    MISSING_PAYMENT_ID: L'ente che ha emesso questo avviso ha qualche problema a gestirne il pagamento in questo momento, riprova!
+    PAYMENT_ONGOING_NOCANCEL: Un pagamento per questo avviso è già in corso, riprova tra 30 minuti.
+    PAYMENT_ONGOING_NOCANCEL_TIMEOUT: Se hai già atteso 30 minuti e il pagamento risulta ancora bloccato utilizza il pulsante qui sotto per inviarci una segnalazione.
+    PAYMENT_ONGOING_CANCELLED: È in corso l'annullamento del tuo tentativo di pagamento precedente, potrai riprovare a pagare l'avviso tra {{remainingMinutes}} minuti.
+    PAYMENT_ONGOING_CANCELLED_TIMEOUT: L'annullamento di questo pagamento è stato richiesto più di 15 minuti fa ma risulta ancora bloccato. Utilizza il pulsante qui sotto per inviarci una segnalazione.
+    contactECsubtitle: Contatta l’Ente per maggiori informazioni.
     assistanceLabel: "Per ricevere assistenza usa il codice:"
     sendReport: "Invia segnalazione"
     loadingData: "errore durante il caricamento, riprova."
@@ -1598,23 +1647,26 @@ messages:
         block1: "Aggiungi un promemoria per il"
         block2: "alle"
       expiringOrValidAlert:
-        block1: "Questo avviso scade il giorno"
+        block1: Scade il 
+        block2: alle ore 
       expiredAlert:
-        block1: "L'avviso è scaduto alle"
-        block2: "del"
+        block1: Scaduto il 
+        block2: alle ore 
     prescription:
-      addMemo: "Questa ricetta scade il"
-      expiringAlert: "Questa ricetta scade oggi"
+      expiringOrValidAlert: 
+        block1: Scade il 
+        block2: alle
       expiredAlert:
-        block1: "La ricetta è scaduta alle ore"
-        block2: "del"
-    pay: "Paga € {{amount}}"
-    onlyPay: "Paga"
-    paid: "Pagato"
-    seeNotice: "Vedi Avviso"
-    reminder: "Promemoria"
-    reminderShort: "Memo"
-    reminderCalendarSelect: "In quale calendario vuoi aggiungere il promemoria?"
+        block1: Scaduta il 
+        block2: alle
+
+    pay: Paga € {{amount}}
+    onlyPay: Paga
+    paid: Pagato
+    seeNotice: Vedi Avviso
+    reminder: Promemoria
+    reminderShort: Memo
+    reminderCalendarSelect: In quale calendario vuoi aggiungere il promemoria?
     reminderTitle: "Promemoria per: {{title}}"
     reminderAlertTitle: "Esiste già un evento"
     reminderAlertDescription: "Esiste già un evento corrispondente al messaggio selezionato nel calendario. Vuoi mantenere quello precedente o aggiungerne uno nuovo?"
@@ -1655,15 +1707,14 @@ messages:
       subtitle: "Usa il pulsante qui sopra per vedere le scadenze già trascorse."
   medical:
     not_available: "n/a"
-    prescription: "Ricetta elettronica"
-    memo: "Promemoria per l'assistito"
-    nre: "Numero Ricetta Elettronica"
-    iup: "Identificativo Unico Prenotazione"
-    patient_fiscal_code: "Codice Fiscale dell'assistito"
-    prescriber_fiscal_code: "Codice fiscale del medico"
-    deadline: "Questa ricetta scade il {{date}}"
-    barcodes: "Codici a barre"
-    nationalService: "Servizio Sanitario Nazionale"
+    prescription: Ricetta elettronica
+    memo: Promemoria per l'assistito
+    nre: Numero Ricetta Elettronica
+    iup: Identificativo Unico Prenotazione
+    patient_fiscal_code: Codice Fiscale dell'assistito
+    prescriber_fiscal_code: Codice fiscale del medico
+    barcodes: Codici a barre
+    nationalService: Servizio Sanitario Nazionale
     note: "Rilasciato ai sensi dell'art.11, comma 16 del DL 31 mag 2010, n.78 e dell’art.1, comma 4 del DM 2 nov 2011"
   pagination:
     migration:
@@ -2509,22 +2560,22 @@ bonus:
     optInPaymentMethods:
       cashbackUpdate:
         header: "Novità e aggiornamenti"
-        title: "Aggiornamenti sul Cashback"
-        subtitle: "Ministero dell’Economia e delle Finanze"
+        title: "Vuoi mantenere i tuoi metodi di pagamento?"
         body: !include bonus/bpd/optInPaymentMethods.md
       choice:
         header: "Configura IO"
         title: "Vuoi mantenere i tuoi metodi di pagamento?"
-        subtitle: "Se li mantieni, potrai utilizzarli per aderire a sconti, bonus e iniziative future o per altre funzionalità, come pagare in app."
-        suggestedOption: "Consigliato"
+        subtitle: Se li mantieni, potrai utilizzarli per aderire a sconti, bonus e iniziative future o per altre funzionalità, come pagare in app.
+        suggestedOption: Consigliato
+        toast: "Hai già fatto la tua scelta"
         options:
           keepAll:
-            title: "Mantieni tutti i metodi nel Portafoglio"
-            body: "Se compatibili, puoi utilizzarli per aderire a sconti, bonus e iniziative future o per altre funzionalità, come effettuare pagamenti in app. Potrai modificare le preferenze dei tuoi metodi o eliminarli in qualsiasi momento."
+            title: Mantieni tutti i metodi nel Portafoglio
+            body: PagoPA S.p.A. tratterà i dati dei tuoi metodi di pagamento in qualità di titolare del trattamento. Per maggiori informazioni puoi consultare l’Informativa Privacy.
           deleteAll:
-            title: "Elimina tutti i metodi dal Portafoglio"
-            body: "Tutti i metodi che hai aggiunto finora verranno rimossi in modo definitivo. Potrai aggiungerli di nuovo in qualsiasi momento, ma dovrai reinserire i dati e ripetere le procedure di autorizzazione."
-        deleteAllButton: "Elimina tutti i metodi"
+            title: Elimina tutti i metodi dal Portafoglio
+            body: Potrai aggiungerli di nuovo in qualsiasi momento, ma dovrai reinserire i dati e ripetere le procedure di autorizzazione.
+        deleteAllButton: Elimina tutti i metodi
       deletePaymentMethodsBottomSheet:
         title: "Vuoi davvero eliminare i seguenti metodi dal Portafoglio?"
         subtitle: "Potrai aggiungerli di nuovo in qualsiasi momento, ma dovrai reinserire i dati e ripetere le procedure di autorizzazione."
@@ -3062,24 +3113,71 @@ features:
       timeline:
         title: "STATO DELLA NOTIFICA"
         status:
-          DELIVERED: "Consegnata"
-          DELIVERING: "Invio in corso"
-          UNREACHABLE: "Destinatario irreperibile"
-          PAID: "Pagata"
-          ACCEPTED: "Depositata"
-          EFFECTIVE_DATE: "Perfezionata per decorrenza termini"
-          VIEWED: "Perfezionata per visione"
-          REFUSED: "Rifiutata"
-          CANCELLED: "Annullata"
-        expand: "mostra gli stati precedenti"
-        info: "Puoi vedere il dettaglio di ciascuno stato, scaricare le ricevute e le attestazioni opponibili a terzi accedendo alla versione web del servizio   "
-        cta: "Accedi alla versione web   "
+          DELIVERED: Consegnata
+          DELIVERING: Invio in corso
+          UNREACHABLE: Destinatario irreperibile
+          PAID: Pagata
+          ACCEPTED: Depositata
+          EFFECTIVE_DATE: Perfezionata per decorrenza termini
+          VIEWED: Perfezionata per visione
+          REFUSED: REFUSED
+          CANCELLED: Annullata
+        expand: mostra gli stati precedenti
+        info: Puoi vedere il dettaglio di ciascuno stato, scaricare le ricevute e le attestazioni opponibili a terzi accedendo alla versione web del servizio   
+        cta: Accedi alla versione web   
+  fci:
+    errors:
+      expired:
+        title: Documento non più disponibile per la firma
+        subTitle: Il documento non è più disponibile per la firma. Contatta l’ente per maggiori informazioni
+      waitForQtsp:
+        title: Il documento è in elaborazione
+        subTitle: Ti preghiamo di attendere, presto riceverai il contratto firmato in app.
+      unsupportedDevice:
+        title: C’è un problema
+        subTitle: Il tuo device non supporta la funzionalità Firma con IO.
+      generic:
+        title: C’è un problema
+        subTitle: Per procedere alla firma, verifica di aver aggiornato l’app IO all’ultima versione
+    abort:
+      title: "Annulla la firma"
+      content: "Vuoi annullare la firma dei documenti?"
+      cancel: "Annulla la firma"
+      confirm: "Continua a firmare"
+    signatureFields:
+      title: "Firma qui"
+      showOnDocument: "Vedi sul documento"
+    title: "Firma con IO"
+    documentsBar:
+      titleLeft: Documento {{currentDoc}} di {{totalDocs}}
+      titleRight: Pagina {{currentPage}} di {{totalPages}}
+    shareDataScreen:
+      title: "Condividi questi dati?"
+      content: "Per completare la firma, devi condividere questi dati con il provider di firma."
+      cancel: "Annulla"
+      confirm: "Ok, va bene"
+      alertText: "Vuoi modificare o aggiornare il tuo indirizzo email?"
+      alertLink: "Vai qui"
+      name: "Nome"
+      familyName: "Cognome"
+      birthDate: "Data di nascita"
+    thankYouPage:
+      title: "Fatto!"
+      content: "A breve riceverai un messaggio con i documenti firmati."
+      cta: "Chiudi"
+    qtspTos:
+      title: "Dai il tuo consenso?"
+      show: "Visualizza"
 webView:
   error:
     missingParams: "Non sono presenti le informazioni necessarie per accedere a questa pagina"
     missingToken: "Non hai l'autorizzazione per avviare questo flusso"
     convertMessage: "Non è stato possibile decodificare il messaggio inviato all'app"
 support:
+  ticketList:
+    noTicket:
+      title: "Non hai richieste in corso"
+      body: "Se hai bisogno d’aiuto, apri una nuova richiesta."
   helpCenter:
     header: "Assistenza"
     cta:
@@ -3110,7 +3208,10 @@ support:
     prominentDisclosure: "Accesso alla galleria del dispositivo"
     prominentDisclosureData: "Per caricare foto e screenshot"
     header: "Apri una richiesta"
+    listTitle: "Richieste in corso"
     title: "Ci dai il tuo consenso?"
+    listBody: "Per caricare le tue richieste in corso, abbiamo bisogno di accedere ad alcuni tuoi dati."
+    privacyLink: "Leggi l'informativa sulla privacy"
     body: "Per rispondere alla richiesta di assistenza, abbiamo bisogno di accedere ad alcuni tuoi dati. Se neghi il consenso, dovrai inviarci una richiesta generica via email."
     listHeader: "Se dai il consenso, riceveremo questi dati:"
     cta:
@@ -3125,3 +3226,90 @@ support:
       subCategory: "Puoi darci più dettagli?"
     subTitle:
       category: "Aiutaci a capire meglio come possiamo aiutarti selezionando l’argomento del tuo problema: ti risponderemo il prima possibile, in orario lavorativo."
+idpay:
+  wallet:
+    preview:
+      validThrough: "Valido fino al {{endDate}}"
+  initiative:
+    configuration: 
+      bottomSheet:
+        header: Prima di continuare
+        bodyFirst: Il metodo sarà abilitato
+        bodyBold: " nelle prossime ore."
+        bodyLast: Riceverai una notifica push quando potrai iniziare ad utilizzarlo. Fino a quel momento eventuali transazioni verranno ignorate.
+        footer:
+          buttonActivate: Attiva
+          buttonCancel: Annulla
+      header: Scegli quali metodi di pagamento associare
+      subHeader: "Poi, usali per pagare e chiedi all’esercente di usare {{initiativeName}}."
+      footer: Modifica queste scelte o aggiunti altri metodi in qualsiasi momento dalla sezione Portafoglio
+      buttonFooter:
+        noneCta: Nessuno di questi
+        continueCta: Continua
+    details:
+      initiativeCard:
+        availableAmount: Disponibile
+        validUntil: Valido fino al
+        toRefund: da rimborsare
+      initiativeDetailsScreen:
+        notConfigured:
+          header: Configura l'iniziativa!
+          footer: Aggiungi almeno un metodo per iniziare ad utilizzare {{initiative}}.
+        configured:
+          yourOperations: Le tue Operazioni
+          yourOperationsSubtitle: "Qui vedrai le transazioni effettuate con i metodi che hai associato. "
+          yourOperationsLink: Come si fa?
+          settings:
+            showMore: Vedi tutte
+            header: Impostazioni
+            associatedPaymentMethods: Metodi di pagamento associati
+            methodsi18n: metodi 
+            selectedIBAN: IBAN per l'accredito
+            actionsRequired: Azioni richieste 
+          startConfigurationCTA: Inizia
+  onboarding:
+    headerTitle: "Adesione all'iniziativa"
+    beforeContinue:
+      text1: "Proseguendo accetti i "
+      tosLink: "Termini e condizioni d'uso"
+      text2: " del servizio e confermi di avere letto l' "
+      privacyLink: "Informativa privacy"
+    navigation:
+      header: Adesione all'iniziativa
+    PDNDPrerequisites:
+      prerequisites:
+        info:
+          header: Come avviene la verifica?
+          body: Comunichiamo direttamente con l’Ente che detiene l’informazione necessaria a effettuare il controllo, in questo caso **{{provider}}**.
+            In questo modo non devi produrre alcuna autocertificazione. Comodo, no?
+          understoodCTA: Ho capito
+      title: Possiedi i seguenti requisiti?
+      subtitle: Verificheremo con alcuni Enti se sei in possesso dei requisiti per poter richiedere {{service}}. 
+  configuration:
+    headerTitle: "Configura l'iniziativa"
+    intro: 
+      title: "Ci siamo quasi"
+      body: "Per poter usufruire dell’iniziativa, abbiamo bisogno di qualche informazione in più."
+      requiredData: 
+        title: "Dati richiesti:"
+        ibanTitle: "IBAN a te intestato"
+        ibanSubtitle: "Per poter ricevere eventuali rimborsi"
+        instrumentTitle: "Almeno un metodo di pagamento"
+        instrumentSubtitle: "Indica i metodi da abilitare all’iniziativa"
+      buttons:
+        continue: "Inizia la configurazione"
+    associationSuccess:
+      title: "Grazie!"
+      body: "Da domani potrai utilizzare l'iniziativa {{initiativeName}}. Puoi abilitare altri metodi aggiungendoli al Portafoglio."
+      button: "Vai all'iniziativa"
+    iban:
+      landing:
+        header: Aggiungi un IBAN al tuo Profilo
+        body: Salva i dati del tuo conto e ottieni più facilmente i rimborsi a te previsti.
+        bodyLink: Scopri di più
+      onboarding:
+        header: Qual è il tuo IBAN?
+        body: Aggiungi un conto corrente a te intestato. L’autodichiarazione è resa ai sensi del
+        bodyLink: Dpr 28 dicembre 2000 n. 445 art 46 e 47 
+        nameAssignInput: Assegna un nome
+        bottomLabel: Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento visitando la sezione Profilo

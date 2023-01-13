@@ -9,12 +9,14 @@ exports[`Test Typography Components Body Snapshot 1`] = `
   fontStyle={
     Object {
       "fontSize": 16,
+      "lineHeight": 24,
     }
   }
   style={
     Array [
       Object {
         "fontSize": 16,
+        "lineHeight": 24,
       },
       Object {
         "color": "#17324D",
@@ -38,15 +40,15 @@ exports[`Test Typography Components H1 Snapshot 1`] = `
   font="TitilliumWeb"
   fontStyle={
     Object {
-      "fontSize": 28,
-      "lineHeight": 34.44,
+      "fontSize": 26,
+      "lineHeight": 32,
     }
   }
   style={
     Array [
       Object {
-        "fontSize": 28,
-        "lineHeight": 34.44,
+        "fontSize": 26,
+        "lineHeight": 32,
       },
       Object {
         "color": "#17324D",
@@ -70,15 +72,15 @@ exports[`Test Typography Components H1 Snapshot 2`] = `
   font="TitilliumWeb"
   fontStyle={
     Object {
-      "fontSize": 28,
-      "lineHeight": 34.44,
+      "fontSize": 26,
+      "lineHeight": 32,
     }
   }
   style={
     Array [
       Object {
-        "fontSize": 28,
-        "lineHeight": 34.44,
+        "fontSize": 26,
+        "lineHeight": 32,
       },
       Object {
         "color": "#FFFFFF",
@@ -103,12 +105,14 @@ exports[`Test Typography Components H2 Snapshot 1`] = `
   fontStyle={
     Object {
       "fontSize": 20,
+      "lineHeight": 24,
     }
   }
   style={
     Array [
       Object {
         "fontSize": 20,
+        "lineHeight": 24,
       },
       Object {
         "color": "#17324D",
@@ -276,12 +280,14 @@ exports[`Test Typography Components H4 Snapshot 1`] = `
   fontStyle={
     Object {
       "fontSize": 16,
+      "lineHeight": 22,
     }
   }
   style={
     Array [
       Object {
         "fontSize": 16,
+        "lineHeight": 22,
       },
       Object {
         "color": "#17324D",
@@ -305,12 +311,14 @@ exports[`Test Typography Components H4 Snapshot 2`] = `
   fontStyle={
     Object {
       "fontSize": 16,
+      "lineHeight": 22,
     }
   }
   style={
     Array [
       Object {
         "fontSize": 16,
+        "lineHeight": 22,
       },
       Object {
         "color": "#0073E6",
@@ -334,12 +342,14 @@ exports[`Test Typography Components H4 Snapshot 3`] = `
   fontStyle={
     Object {
       "fontSize": 16,
+      "lineHeight": 22,
     }
   }
   style={
     Array [
       Object {
         "fontSize": 16,
+        "lineHeight": 22,
       },
       Object {
         "color": "#FFFFFF",
@@ -363,12 +373,14 @@ exports[`Test Typography Components H4 Snapshot 4`] = `
   fontStyle={
     Object {
       "fontSize": 16,
+      "lineHeight": 22,
     }
   }
   style={
     Array [
       Object {
         "fontSize": 16,
+        "lineHeight": 22,
       },
       Object {
         "color": "#FFFFFF",
@@ -392,12 +404,14 @@ exports[`Test Typography Components H4 Snapshot 5`] = `
   fontStyle={
     Object {
       "fontSize": 16,
+      "lineHeight": 22,
     }
   }
   style={
     Array [
       Object {
         "fontSize": 16,
+        "lineHeight": 22,
       },
       Object {
         "color": "#FFFFFF",
@@ -421,12 +435,14 @@ exports[`Test Typography Components H4 Snapshot 6`] = `
   fontStyle={
     Object {
       "fontSize": 16,
+      "lineHeight": 22,
     }
   }
   style={
     Array [
       Object {
         "fontSize": 16,
+        "lineHeight": 22,
       },
       Object {
         "color": "#17324D",
@@ -450,12 +466,14 @@ exports[`Test Typography Components H4 Snapshot 7`] = `
   fontStyle={
     Object {
       "fontSize": 16,
+      "lineHeight": 22,
     }
   }
   style={
     Array [
       Object {
         "fontSize": 16,
+        "lineHeight": 22,
       },
       Object {
         "color": "#475A6D",
@@ -479,12 +497,14 @@ exports[`Test Typography Components H4 Snapshot 8`] = `
   fontStyle={
     Object {
       "fontSize": 16,
+      "lineHeight": 22,
     }
   }
   style={
     Array [
       Object {
         "fontSize": 16,
+        "lineHeight": 22,
       },
       Object {
         "color": "#CCD4DC",
@@ -508,12 +528,14 @@ exports[`Test Typography Components H4 Snapshot 9`] = `
   fontStyle={
     Object {
       "fontSize": 16,
+      "lineHeight": 22,
     }
   }
   style={
     Array [
       Object {
         "fontSize": 16,
+        "lineHeight": 22,
       },
       Object {
         "color": "#FFFFFF",

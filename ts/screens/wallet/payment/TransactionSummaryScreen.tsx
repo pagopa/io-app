@@ -6,7 +6,7 @@ import {
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { ActionSheet, Text, View } from "native-base";
+import { ActionSheet, Text as NBText, View } from "native-base";
 import * as React from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
@@ -289,10 +289,10 @@ class TransactionSummaryScreen extends React.Component<Props> {
 
     const standardRow = (label: string, value: string) => (
       <View style={styles.row}>
-        <Text style={styles.bluegreyLight}>{label}</Text>
-        <Text bold={true} white={true}>
+        <NBText style={styles.bluegreyLight}>{label}</NBText>
+        <NBText bold={true} white={true}>
           {value}
-        </Text>
+        </NBText>
       </View>
     );
 
@@ -328,20 +328,20 @@ class TransactionSummaryScreen extends React.Component<Props> {
             {/** Amount to pay */}
             <View style={styles.row}>
               <View style={styles.row}>
-                <Text style={[styles.title, styles.bluegreyLight]}>
+                <NBText style={[styles.title, styles.bluegreyLight]}>
                   {I18n.t("wallet.firstTransactionSummary.updatedAmount")}
-                </Text>
+                </NBText>
               </View>
-              <Text white={true} style={[styles.title]} bold={true}>
+              <NBText white={true} style={styles.title} bold={true}>
                 {currentAmount}
-              </Text>
+              </NBText>
             </View>
 
             <React.Fragment>
               <View spacer={true} small={true} />
-              <Text style={styles.bluegreyLight}>
+              <NBText style={styles.bluegreyLight}>
                 {I18n.t("wallet.firstTransactionSummary.amountInfo.message")}
-              </Text>
+              </NBText>
             </React.Fragment>
             <View spacer={true} large={true} />
 

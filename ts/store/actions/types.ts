@@ -25,6 +25,8 @@ import { ZendeskSupportActions } from "../../features/zendesk/store/actions";
 import { GlobalState } from "../reducers/types";
 import { CdcActions } from "../../features/bonus/cdc/store/actions";
 import { PnActions } from "../../features/pn/store/actions";
+import { FciActions } from "../../features/fci/store/actions";
+import { IDPayActions } from "../../features/idpay/common/actions";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { AuthenticationActions } from "./authentication";
@@ -98,7 +100,9 @@ export type Action =
   | MvlActions
   | ZendeskSupportActions
   | CdcActions
-  | PnActions;
+  | PnActions
+  | FciActions
+  | IDPayActions;
 
 export type Dispatch = DispatchAPI<Action>;
 

@@ -1,7 +1,7 @@
 import * as AR from "fp-ts/lib/Array";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Content, Text, View } from "native-base";
+import { Content, Text as NBText, View } from "native-base";
 import * as React from "react";
 import { ComponentProps } from "react";
 import { Image, SafeAreaView, StyleSheet } from "react-native";
@@ -9,8 +9,9 @@ import { widthPercentageToDP } from "react-native-responsive-screen";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
+import { H1 } from "../../../../components/core/typography/H1";
+import { H3 } from "../../../../components/core/typography/H3";
 import { Link } from "../../../../components/core/typography/Link";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { withLightModalContext } from "../../../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../../../components/helpers/withLoadingSpinner";
@@ -26,7 +27,7 @@ import { useScreenReaderEnabled } from "../../../../utils/accessibility";
 import { getRemoteLocale } from "../../../../utils/messages";
 import { maybeNotNullyString } from "../../../../utils/strings";
 import { confirmButtonProps } from "../../bonusVacanze/components/buttons/ButtonConfigurations";
-import TosBonusComponent from "../../bonusVacanze/components/TosBonusComponent";
+import TosBonusComponent from "./TosBonusComponent";
 
 type OwnProps = {
   onBack?: () => void;
@@ -45,7 +46,7 @@ type Props = OwnProps &
 
 const CSS_STYLE = `
 body {
-  font-size: ${customVariables.fontSize1}px;
+  font-size: ${customVariables.fontSizeBase}px;
   color: ${customVariables.textColorDark}
 }
 
@@ -55,13 +56,6 @@ h4 {
 `;
 const coverImageWidth = Math.min(48, widthPercentageToDP("30%"));
 const styles = StyleSheet.create({
-  noPadded: {
-    paddingLeft: 0,
-    paddingRight: 0
-  },
-  mainContent: {
-    flex: 1
-  },
   flexEnd: {
     alignSelf: "flex-start"
   },
@@ -78,15 +72,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between"
-  },
-  orgName: {
-    fontSize: 18,
-    lineHeight: customVariables.lineHeight2
-  },
-  title: {
-    fontSize: customVariables.fontSize3,
-    lineHeight: customVariables.lineHeightH3,
-    color: IOColors.black
   },
   urlButton: { flex: 1, textAlign: "center" }
 });
@@ -117,7 +102,9 @@ const getTosFooter = (
                 <View spacer={true} extralarge={true} />
                 <ItemSeparatorComponent noPadded={true} />
                 <View spacer={true} extralarge={true} />
-                <Text dark={true}>{I18n.t("bonus.bonusVacanze.advice")}</Text>
+                <NBText dark={true}>
+                  {I18n.t("bonus.bonusVacanze.advice")}
+                </NBText>
                 <Link
                   weight={"SemiBold"}
                   numberOfLines={1}
@@ -204,7 +191,7 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
           bordered={true}
           onPress={() => handleModalPress(url.url)}
         >
-          <Text style={styles.urlButton}>{url.name}</Text>
+          <NBText style={styles.urlButton}>{url.name}</NBText>
         </ButtonDefaultOpacity>
         {idx !== urls.length - 1 && <View spacer={true} small={true} />}
       </View>
@@ -240,14 +227,10 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
           <View style={styles.row}>
             <View style={styles.flexStart}>
               {O.isSome(maybeSponsorshipDescription) && (
-                <Text dark={true} style={styles.orgName} semibold={true}>
-                  {maybeSponsorshipDescription.value}
-                </Text>
+                <H3>{maybeSponsorshipDescription.value}</H3>
               )}
 
-              <Text bold={true} dark={true} style={styles.title}>
-                {bonusTypeLocalizedContent.title}
-              </Text>
+              <H1>{bonusTypeLocalizedContent.title}</H1>
             </View>
             <View style={styles.flexEnd}>
               {O.isSome(maybeCover) && (
@@ -259,7 +242,7 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
             </View>
           </View>
           <View spacer={true} large={true} />
-          <Text dark={true}>{bonusTypeLocalizedContent.subtitle}</Text>
+          <NBText dark={true}>{bonusTypeLocalizedContent.subtitle}</NBText>
 
           <View spacer={true} />
           <ItemSeparatorComponent noPadded={true} />

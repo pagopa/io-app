@@ -53,7 +53,8 @@ const reducer = (
         ...state,
         zendeskConfig: remoteUndefined,
         selectedCategory: undefined,
-        selectedSubcategory: undefined
+        selectedSubcategory: undefined,
+        ticketNumber: pot.none
       };
     case getType(getZendeskConfig.request):
       return {

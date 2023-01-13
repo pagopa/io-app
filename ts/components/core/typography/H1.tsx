@@ -4,7 +4,7 @@ import { IOColorType } from "../variables/IOColors";
 import { ExternalTypographyProps, TypographyProps } from "./common";
 import { useTypographyFactory } from "./Factory";
 
-type AllowedColors = Extract<IOColorType, "bluegreyDark" | "white">;
+type AllowedColors = Extract<IOColorType, "bluegreyDark" | "white" | "blue">;
 type AllowedWeight = Extract<IOFontWeight, "Bold">;
 
 type OwnProps = ExternalTypographyProps<
@@ -12,8 +12,8 @@ type OwnProps = ExternalTypographyProps<
 >;
 
 const fontName: IOFontFamily = "TitilliumWeb";
-export const h1FontSize = 28;
-export const h1LineHeight = h1FontSize * 1.23;
+export const h1FontSize = 26;
+export const h1LineHeight = 32;
 export const h1DefaultColor: AllowedColors = "bluegreyDark";
 export const h1DefaultWeight: AllowedWeight = "Bold";
 

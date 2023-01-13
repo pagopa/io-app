@@ -106,11 +106,17 @@ export const scanAdditionalBarcodesEnabled =
 export const newTransactionSummaryEnabled =
   Config.NEW_TRANSACTION_SUMMARY_ENABLED === "YES";
 
+// FCI (Firma con IO) Feature Flag
+export const fciEnabled = Config.FCI_ENABLED === "YES";
+
 // PN (Piattaforma Notifiche) Feature Flag
 export const pnEnabled = Config.PN_ENABLED === "YES";
 
+// Opt-in for reminder push notifications
+export const remindersOptInEnabled = Config.REMINDERS_OPT_IN_ENABLED === "YES";
+
 // version of ToS
-export const tosVersion: NonNegativeNumber = 4.0 as NonNegativeNumber;
+export const tosVersion: NonNegativeNumber = 4.1 as NonNegativeNumber;
 
 export const fetchTimeout = pipe(
   parseInt(Config.FETCH_TIMEOUT_MS, 10),
@@ -169,6 +175,12 @@ export const privacyUrl: string = pipe(
   E.getOrElse(() => "https://io.italia.it/app-content/tos_privacy.html")
 );
 
+export const zendeskPrivacyUrl: string = pipe(
+  Config.ZENDESK_PRIVACY_URL,
+  t.string.decode,
+  E.getOrElse(() => "https://www.pagopa.it/it/privacy-policy-assistenza/")
+);
+
 export const localServicesWebUrl: string = pipe(
   Config.LOCAL_SERVICE_WEB_URL,
   t.string.decode,
@@ -198,3 +210,14 @@ export const POSTE_DATAMATRIX_SCAN_PREFERRED_PSPS:
   ),
   O.toUndefined
 );
+
+/**
+ * IDPay
+ */
+
+export const IDPAY_API_TEST_TOKEN =
+  Config.IDPAY_API_TEST_TOKEN !== "" ? Config.IDPAY_API_TEST_TOKEN : undefined;
+
+export const IDPAY_API_UAT_BASEURL = Config.IDPAY_API_UAT_BASEURL;
+
+export const idPayEnabled = Config.IDPAY_ENABLED === "YES";

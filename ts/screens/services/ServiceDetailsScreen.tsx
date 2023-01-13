@@ -4,7 +4,7 @@ import * as O from "fp-ts/lib/Option";
 import { Content, Grid, View } from "native-base";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { SafeAreaView, StyleSheet } from "react-native";
+import { SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { SpecialServiceMetadata } from "../../../definitions/backend/SpecialServiceMetadata";
@@ -36,11 +36,9 @@ import {
   profileSelector
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
-import customVariables from "../../theme/variables";
 import { getServiceCTA } from "../../utils/messages";
 import { logosForService } from "../../utils/services";
 import { handleItemOnPress } from "../../utils/url";
-import { IOColors } from "../../components/core/variables/IOColors";
 
 export type ServiceDetailsScreenNavigationParams = Readonly<{
   serviceId: ServiceId;
@@ -58,45 +56,6 @@ type OwnProps = IOStackNavigationRouteProps<
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
   OwnProps;
-
-const styles = StyleSheet.create({
-  infoHeader: {
-    marginTop: customVariables.spacerLargeHeight
-  },
-  infoItem: {
-    flexDirection: "column",
-    marginTop: customVariables.spacerHeight
-  },
-  badgeLogo: {
-    width: 150,
-    height: 50,
-    alignSelf: "flex-start"
-  },
-  switchRow: {
-    justifyContent: "space-between",
-    paddingVertical: 12
-  },
-  otherSwitchRow: {
-    borderTopColor: customVariables.itemSeparator,
-    borderTopWidth: 1 / 3
-  },
-  flexRow: {
-    flexDirection: "row"
-  },
-  disabledColor: {
-    /* Disabled state */
-    color: IOColors.grey
-  },
-  info: {
-    marginTop: -5
-  },
-  imageHeight: {
-    height: 60
-  },
-  imageWidth: {
-    width: 60
-  }
-});
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "serviceDetail.headerTitle",
@@ -195,8 +154,6 @@ const ServiceDetailsScreen = (props: Props) => {
               />
 
               <EdgeBorderComponent />
-
-              <View spacer={true} extralarge={true} />
             </>
           )}
         </Content>
@@ -204,7 +161,7 @@ const ServiceDetailsScreen = (props: Props) => {
         {showCTA && (
           <FooterTopShadow>
             {O.isSome(maybeCTA) && (
-              <View style={[styles.flexRow]}>
+              <View style={IOStyles.row}>
                 <ExtractedCTABar
                   ctas={maybeCTA.value}
                   xsmall={false}

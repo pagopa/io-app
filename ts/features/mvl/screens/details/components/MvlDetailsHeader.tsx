@@ -7,7 +7,7 @@ import LegalMessage from "../../../../../../img/features/mvl/legalMessage.svg";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { H5 } from "../../../../../components/core/typography/H5";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
-import { HeaderDueDateBar } from "../../../../../components/messages/paginated/MessageDetail/common/HeaderDueDateBar";
+import { HeaderDueDateBar } from "../../../../../components/messages/MessageDetail/common/HeaderDueDateBar";
 import OrganizationHeader from "../../../../../components/OrganizationHeader";
 import I18n from "../../../../../i18n";
 import { UIService } from "../../../../../store/reducers/entities/services/types";
@@ -51,7 +51,7 @@ const headerImageProps: React.ComponentProps<typeof Svg> = {
 const HeaderItem = (props: { text: string; image: React.ReactElement }) => (
   <View style={styles.row}>
     {props.image}
-    <H5 weight={"Regular"} color={"bluegrey"} style={[styles.rightElement]}>
+    <H5 weight={"Regular"} color={"bluegrey"} style={styles.rightElement}>
       {props.text}
     </H5>
   </View>

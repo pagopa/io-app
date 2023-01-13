@@ -16,7 +16,6 @@ import {
   confirmButtonProps
 } from "../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { abiListSelector } from "../../../store/abi";
-import { Abi } from "../../../../../../../definitions/pagopa/walletv2/Abi";
 import { BPay } from "../../../../../../../definitions/pagopa/BPay";
 import BPayCard from "../../../../bancomatpay/component/BPayCard";
 
@@ -38,67 +37,51 @@ const styles = StyleSheet.create({
   flexStart: { alignSelf: "flex-start" }
 });
 
-const AddBPayComponent: React.FunctionComponent<Props> = (props: Props) => {
-  const [abiInfo, setAbiInfo] = React.useState<Abi>({});
-  const { account, abiList } = props;
-
-  React.useEffect(() => {
-    const abi: Abi | undefined = abiList.find(
-      elem => elem.abi === account.instituteCode
-    );
-    setAbiInfo(abi ?? {});
-  }, [account, abiList]);
-
-  return (
-    <BaseScreenComponent
-      customGoBack={<View hspacer={true} spacer={true} />}
-      headerTitle={I18n.t("wallet.onboarding.bPay.headerTitle")}
-      contextualHelp={props.contextualHelp}
-    >
-      <SafeAreaView style={IOStyles.flex}>
-        <ScrollView style={IOStyles.flex}>
-          <View spacer={true} />
-          <View
-            style={[
-              styles.container,
-              IOStyles.flex,
-              IOStyles.horizontalContentPadding
-            ]}
-          >
-            <H1 style={styles.title}>
-              {I18n.t("wallet.onboarding.bPay.add.screenTitle")}
-            </H1>
-            <View spacer small />
-            <H4 weight={"Regular"} style={styles.flexStart}>
-              {I18n.t("wallet.onboarding.bPay.add.label", {
-                current: props.currentIndex + 1,
-                length: props.accountsNumber
-              })}
-            </H4>
-            <View spacer={true} large={true} />
-            <BPayCard
-              phone={props.account.numberObfuscated}
-              abiLogo={abiInfo.logoUrl}
-              bankName={props.account.bankName ?? ""} // This should never be undefined
-            />
-          </View>
-          <View spacer={true} />
-        </ScrollView>
-        <FooterWithButtons
-          type={"TwoButtonsInlineThird"}
-          leftButton={cancelButtonProps(
-            props.handleSkip,
-            I18n.t("global.buttons.skip")
-          )}
-          rightButton={confirmButtonProps(
-            props.handleContinue,
-            I18n.t("global.buttons.add")
-          )}
-        />
-      </SafeAreaView>
-    </BaseScreenComponent>
-  );
-};
+const AddBPayComponent: React.FunctionComponent<Props> = (props: Props) => (
+  <BaseScreenComponent
+    customGoBack={<View hspacer={true} spacer={true} />}
+    headerTitle={I18n.t("wallet.onboarding.bPay.headerTitle")}
+    contextualHelp={props.contextualHelp}
+  >
+    <SafeAreaView style={IOStyles.flex}>
+      <ScrollView style={IOStyles.flex}>
+        <View spacer={true} />
+        <View
+          style={[
+            styles.container,
+            IOStyles.flex,
+            IOStyles.horizontalContentPadding
+          ]}
+        >
+          <H1 style={styles.title}>
+            {I18n.t("wallet.onboarding.bPay.add.screenTitle")}
+          </H1>
+          <View spacer small />
+          <H4 weight={"Regular"} style={styles.flexStart}>
+            {I18n.t("wallet.onboarding.bPay.add.label", {
+              current: props.currentIndex + 1,
+              length: props.accountsNumber
+            })}
+          </H4>
+          <View spacer={true} large={true} />
+          <BPayCard phone={props.account.numberObfuscated} />
+        </View>
+        <View spacer={true} />
+      </ScrollView>
+      <FooterWithButtons
+        type={"TwoButtonsInlineThird"}
+        leftButton={cancelButtonProps(
+          props.handleSkip,
+          I18n.t("global.buttons.skip")
+        )}
+        rightButton={confirmButtonProps(
+          props.handleContinue,
+          I18n.t("global.buttons.add")
+        )}
+      />
+    </SafeAreaView>
+  </BaseScreenComponent>
+);
 
 const mapStateToProps = (state: GlobalState) => ({
   abiList: abiListSelector(state)

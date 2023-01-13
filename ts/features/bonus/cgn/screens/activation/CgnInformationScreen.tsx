@@ -12,7 +12,7 @@ import {
   cgnActivationCancel,
   cgnRequestActivation
 } from "../../store/actions/activation";
-import { useHardwareBackButton } from "../../../bonusVacanze/components/hooks/useHardwareBackButton";
+import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButton";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;

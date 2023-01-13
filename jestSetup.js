@@ -3,10 +3,10 @@
  * Set up of the testing environment
  */
 
-import { NativeModules } from "react-native";
-import mockAsyncStorage from "@react-native-community/async-storage/jest/async-storage-mock";
+import mockAsyncStorage from "@react-native-async-storage/async-storage/jest/async-storage-mock";
 import mockClipboard from "@react-native-clipboard/clipboard/jest/clipboard-mock.js";
 import nodeFetch from "node-fetch";
+import { NativeModules } from "react-native";
 import mockRNDeviceInfo from "react-native-device-info/jest/react-native-device-info-mock";
 
 // eslint-disable-next-line functional/immutable-data
@@ -20,7 +20,7 @@ NativeModules.RNGestureHandlerModule = {
   Directions: {}
 };
 
-jest.mock("@react-native-community/async-storage", () => mockAsyncStorage);
+jest.mock("@react-native-async-storage/async-storage", () => mockAsyncStorage);
 jest.mock("@react-native-community/push-notification-ios", jest.fn());
 jest.mock("@react-native-cookies/cookies", jest.fn());
 jest.mock("react-native-share", () => jest.fn());
@@ -95,3 +95,5 @@ jest.mock("@gorhom/bottom-sheet", () => {
 });
 
 jest.mock("react-native-device-info", () => mockRNDeviceInfo);
+
+jest.mock('react-native-pdf', () => jest.fn());

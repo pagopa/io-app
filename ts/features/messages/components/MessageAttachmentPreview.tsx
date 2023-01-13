@@ -12,17 +12,19 @@ import BaseScreenComponent from "../../../components/screens/BaseScreenComponent
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import { useIOSelector } from "../../../store/hooks";
-import { UIMessageId } from "../../../store/reducers/entities/messages/types";
+import {
+  Download,
+  downloadFromAttachmentSelector
+} from "../../../store/reducers/entities/messages/downloads";
+import {
+  UIAttachmentId,
+  UIMessageId
+} from "../../../store/reducers/entities/messages/types";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { isIos } from "../../../utils/platform";
 import { share } from "../../../utils/share";
 import { showToast } from "../../../utils/showToast";
 import { confirmButtonProps } from "../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import {
-  MvlDownload,
-  mvlDownloadFromAttachmentSelector
-} from "../../mvl/store/reducers/downloads";
-import { MvlAttachmentId } from "../../mvl/types/mvlData";
 
 const styles = StyleSheet.create({
   container: {
@@ -35,7 +37,7 @@ const styles = StyleSheet.create({
 });
 
 const renderFooter = (
-  { attachment, path }: MvlDownload,
+  { attachment, path }: Download,
   onShare?: () => void,
   onOpen?: () => void,
   onDownload?: () => void
@@ -118,7 +120,7 @@ const renderFooter = (
 
 type Props = {
   messageId: UIMessageId;
-  attachmentId: MvlAttachmentId;
+  attachmentId: UIAttachmentId;
   onLoadComplete?: () => void;
   onError?: () => void;
   onShare?: () => void;
@@ -128,20 +130,23 @@ type Props = {
 
 export const MessageAttachmentPreview = (props: Props): React.ReactElement => {
   const [isError, setIsError] = useState(false);
-
   const messageId = props.messageId;
   const attachmentId = props.attachmentId;
   const downloadPot = useIOSelector(state =>
-    mvlDownloadFromAttachmentSelector(state, { messageId, id: attachmentId })
+    downloadFromAttachmentSelector(state, { messageId, id: attachmentId })
   );
   const download = pot.toUndefined(downloadPot);
+
   return download ? (
     <BaseScreenComponent
       goBack={true}
       contextualHelp={emptyContextualHelp}
       headerTitle={I18n.t("features.mvl.details.attachments.pdfPreview.title")}
     >
-      <SafeAreaView style={styles.container} testID={"MvlDetailsScreen"}>
+      <SafeAreaView
+        style={styles.container}
+        testID={"message-attachment-preview"}
+      >
         {!isError && (
           <Pdf
             source={{ uri: download.path, cache: true }}

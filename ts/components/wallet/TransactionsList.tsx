@@ -2,7 +2,7 @@
  * This component displays a list of transactions
  */
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { Content, Text, View } from "native-base";
+import { Content, Text as NBText, View } from "native-base";
 import * as React from "react";
 import {
   Dimensions,
@@ -23,11 +23,11 @@ import { cleanTransactionDescription } from "../../utils/payment";
 import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import { H3 } from "../core/typography/H3";
+import { IOColors } from "../core/variables/IOColors";
 import DetailedlistItemComponent from "../DetailedlistItemComponent";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 import BoxedRefreshIndicator from "../ui/BoxedRefreshIndicator";
-import { IOColors } from "../core/variables/IOColors";
 
 type State = {
   loadingMore: boolean;
@@ -150,14 +150,14 @@ export default class TransactionsList extends React.Component<Props, State> {
             );
           }}
         >
-          <Text>
+          <NBText>
             {I18n.t(
               // change the button text if we are loading another slice of transactions
               this.state.loadingMore
                 ? "wallet.transacionsLoadingMore"
                 : "wallet.transactionsLoadMore"
             )}
-          </Text>
+          </NBText>
         </ButtonDefaultOpacity>
         <EdgeBorderComponent />
       </View>
@@ -171,7 +171,7 @@ export default class TransactionsList extends React.Component<Props, State> {
       return (
         <BoxedRefreshIndicator
           white={true}
-          caption={<Text>{I18n.t("wallet.transactionsLoadMessage")}</Text>}
+          caption={<NBText>{I18n.t("wallet.transactionsLoadMessage")}</NBText>}
         />
       );
     }
@@ -190,7 +190,7 @@ export default class TransactionsList extends React.Component<Props, State> {
             <H3 weight={"SemiBold"} color={"bluegreyDark"}>
               {I18n.t("wallet.latestTransactions")}
             </H3>
-            <Text>{I18n.t("wallet.amount")}</Text>
+            <NBText>{I18n.t("wallet.amount")}</NBText>
           </View>
         </View>
         {this.props.helpMessage}
