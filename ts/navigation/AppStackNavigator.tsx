@@ -19,7 +19,8 @@ import {
   bpdOptInPaymentMethodsEnabled,
   fimsEnabled,
   myPortalEnabled,
-  svEnabled
+  svEnabled,
+  idPayEnabled
 } from "../config";
 import BPD_ROUTES from "../features/bonus/bpd/navigation/routes";
 import { CdcStackNavigator } from "../features/bonus/cdc/navigation/CdcStackNavigator";
@@ -48,6 +49,7 @@ import {
   IDPayConfigurationRoutes
 } from "../features/idpay/initiative/configuration/navigation/navigator";
 import {
+  idPayOnboardingLinkingOptions,
   IDPayOnboardingNavigator,
   IDPayOnboardingRoutes
 } from "../features/idpay/onboarding/navigation/navigator";
@@ -170,19 +172,22 @@ export const AppStackNavigator = () => {
         <Stack.Screen name={FCI_ROUTES.MAIN} component={FciStackNavigator} />
       )}
 
-      <Stack.Screen
-        name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN}
-        component={IDPayOnboardingNavigator}
-      />
-      <Stack.Screen
-        name={ROUTES.IDPAY_INITIATIVE_DETAILS}
-        component={InitiativeDetailsScreen}
-      />
-
-      <Stack.Screen
-        name={IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN}
-        component={IDPayConfigurationNavigator}
-      />
+      {idPayEnabled && (
+        <>
+          <Stack.Screen
+            name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN}
+            component={IDPayOnboardingNavigator}
+          />
+          <Stack.Screen
+            name={ROUTES.IDPAY_INITIATIVE_DETAILS}
+            component={InitiativeDetailsScreen}
+          />
+          <Stack.Screen
+            name={IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN}
+            component={IDPayConfigurationNavigator}
+          />
+        </>
+      )}
     </Stack.Navigator>
   );
 };
@@ -264,6 +269,7 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
         ...(isFimsEnabled ? fimsLinkingOptions : {}),
         ...(cgnEnabled ? cgnLinkingOptions : {}),
         ...(isFciEnabled ? fciLinkingOptions : {}),
+        ...(idPayEnabled ? idPayOnboardingLinkingOptions : {}),
         [UADONATION_ROUTES.WEBVIEW]: "uadonations-webview",
         [ROUTES.WORKUNIT_GENERIC_FAILURE]: "*"
       }
