@@ -362,8 +362,6 @@ profile:
       alertConfirmTitle: "Möchtest du die pagoPA Testumgebung nutzen?"
       alertConfirmMessage: "Wenn du die pagoPA Testumgebung aktivierst, siehst du deine Transaktionshistorie und deine gespeicherten Zahlungsmethoden nicht mehr und kannst nur noch eigens dafür angelegte Zahlungsmethoden nutzen. Wenn dir nicht klar ist, was dies bedeutet, solltest du diese Funktion nicht aktivieren."
       alertMessage: "Die App muss neu gestartet werden, damit die Änderungen wirksam werden."
-    pnEnvironment:
-        pnEnv: "PN Testumgebung"
     appVersion: "App-Version"
     backendVersion: "Backend-Version"
     debugMode: "Debug-Modus"
