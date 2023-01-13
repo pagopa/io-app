@@ -387,7 +387,7 @@ profile:
             description:
               one: "IO raccoglie solo le informazioni "
               two: "necessarie "
-              three: "per il funzionamento dei servizi offerti."
+              three: "per il funzionamento e il miglioramento dei servizi offerti."
             cta: "Perché?"
           security:
             description:
