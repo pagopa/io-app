@@ -8,19 +8,17 @@ import { NetworkError } from "../../../../../utils/errors";
 import {
   idpayInitiativeGet,
   idpayTimelineGet,
-  idpayTimelinePaginationGet
+  idpayTimelinePageGet
 } from "./actions";
 
 export type IDPayInitiativeState = {
   details: pot.Pot<InitiativeDTO, NetworkError>;
   timeline: pot.Pot<TimelineDTO, NetworkError>;
-  timelinePage: pot.Pot<number, NetworkError>;
 };
 
 const INITIAL_STATE: IDPayInitiativeState = {
   details: pot.none,
-  timeline: pot.none,
-  timelinePage: pot.some(1)
+  timeline: pot.none
 };
 
 const reducer = (
@@ -47,8 +45,7 @@ const reducer = (
     case getType(idpayTimelineGet.request):
       return {
         ...state,
-        timeline: pot.toLoading(state.timeline),
-        timelinePage: pot.some(1)
+        timeline: pot.toLoading(state.timeline)
       };
     case getType(idpayTimelineGet.success):
       return {
@@ -61,22 +58,32 @@ const reducer = (
         timeline: pot.toError(state.timeline, action.payload)
       };
     // TIMELINE PAGINATION ACTIONS
-    case getType(idpayTimelinePaginationGet.request):
+    // eslint-disable-next-line sonarjs/no-duplicated-branches
+    case getType(idpayTimelinePageGet.request):
       return {
         ...state,
-        timelinePage: pot.toLoading(state.timelinePage)
+        timeline: pot.toLoading(state.timeline)
       };
-    case getType(idpayTimelinePaginationGet.success):
-      const currentPage = pot.getOrElse(state.timelinePage, 0);
+    case getType(idpayTimelinePageGet.success):
+      const currentTimeline = pot.getOrElse(state.timeline, {
+        lastUpdate: action.payload.lastUpdate,
+        operationList: []
+      });
       return {
         ...state,
-        timeline: pot.some(action.payload),
-        timelinePage: pot.some(currentPage + 1)
+        timeline: pot.some({
+          lastUpdate: currentTimeline.lastUpdate,
+          operationList: [
+            ...currentTimeline.operationList,
+            ...action.payload.operationList
+          ]
+        })
       };
-    case getType(idpayTimelinePaginationGet.failure):
+    // eslint-disable-next-line sonarjs/no-duplicated-branches
+    case getType(idpayTimelinePageGet.failure):
       return {
         ...state,
-        timelinePage: pot.toError(state.timelinePage, action.payload)
+        timeline: pot.toError(state.timeline, action.payload)
       };
   }
   return state;
@@ -86,7 +93,5 @@ export const idpayInitiativeDetailsSelector = (state: GlobalState) =>
   state.features.idPay.initiative.details;
 export const idpayTimelineSelector = (state: GlobalState) =>
   state.features.idPay.initiative.timeline;
-export const idpayTimelinePageSelector = (state: GlobalState) =>
-  state.features.idPay.initiative.timelinePage;
 
 export default reducer;

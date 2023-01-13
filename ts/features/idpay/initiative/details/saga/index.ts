@@ -16,7 +16,8 @@ import {
   idpayInitiativeGet,
   IdPayInitiativeGetPayloadType,
   idpayTimelineGet,
-  idpayTimelinePaginationGet
+  idpayTimelinePageGet,
+  IdpayTimelinePageGetPayloadType
 } from "../store/actions";
 import { handleGetInitiativeDetails } from "./handleGetInitiativeDetails";
 import { handleGetTimeline } from "./handleGetTimeline";
@@ -68,10 +69,10 @@ export function* idpayInitiativeDetailsSaga(bearerToken: string): SagaIterator {
   );
   yield *
     takeLatest(
-      idpayTimelinePaginationGet.request,
-      function* (action: { payload: IdPayInitiativeGetPayloadType }) {
+      idpayTimelinePageGet.request,
+      function* (action: { payload: IdpayTimelinePageGetPayloadType }) {
         // wait backoff time if there were previous errors
-        yield* call(waitBackoffError, idpayTimelinePaginationGet.failure);
+        yield* call(waitBackoffError, idpayTimelinePageGet.failure);
         yield* call(
           handleGetTimelinePagination,
           idPayTimelineClient.getTimeline,

@@ -15,7 +15,7 @@ import {
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { idpayTimelineSelector } from "../store";
 import { idpayTimelineGet } from "../store/actions";
-import { pickTransactionCard } from "./TimelineTransactionCards";
+import { renderTimelineOperationCard } from "./TimelineTransactionCards";
 
 const styles = StyleSheet.create({
   spaceBetween: {
@@ -65,10 +65,11 @@ const ConfiguredInitiativeData = (props: Props) => {
   }
 
   const timelineList = pot.getOrElse(
-    pot.map(timelineFromSelector, timeline => timeline.operationList),
+    pot.map(timelineFromSelector, timeline =>
+      timeline.operationList.slice(0, 3)
+    ),
     []
   );
-
   if (timelineList.length === 0) {
     return emptyTimelineContent;
   }
@@ -96,7 +97,7 @@ const ConfiguredInitiativeData = (props: Props) => {
       <List>
         {timelineList.map(transaction => (
           <React.Fragment key={transaction.operationId}>
-            {pickTransactionCard(transaction)}
+            {renderTimelineOperationCard(transaction)}
           </React.Fragment>
         ))}
       </List>

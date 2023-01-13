@@ -3337,6 +3337,10 @@ idpay:
             selectedIBAN: IBAN per l'accredito
             actionsRequired: Azioni richieste 
           startConfigurationCTA: Inizia
+          operationsList:
+            header: Tutte le operazioni
+            title: Lista operazioni
+            lastUpdated: "Ultimo aggiornamento: "
   onboarding:
     headerTitle: "Adesione all'iniziativa"
     beforeContinue:
