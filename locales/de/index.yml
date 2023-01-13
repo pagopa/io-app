@@ -368,15 +368,6 @@ profile:
     backendVersion: "Backend-Version"
     debugMode: "Debug-Modus"
     designSystem: "Design System"
-      pagoPaEnv: pagoPA Testumgebung
-      pagoPAEnvAlert: Diese Änderung erfordert einen Neustart der App
-      alertConfirmTitle: Möchten Sie die pagoPA Testumgebung nutzen?
-      alertConfirmMessage: Wenn Sie die pagoPA-Testumgebung aktivieren, sehen Sie die Historie Ihrer Transaktionen und Ihre gespeicherten Zahlungsmethoden nicht mehr und können nur noch ausdrücklich dafür angelegte Zahlungsmethoden verwenden. Wenn Sie nicht verstehen, was das bedeutet, aktivieren Sie diese Funktion nicht.
-      alertMessage: Die Anwendung muss neu gestartet werden, damit die Änderungen wirksam werden.
-    appVersion: App-Version
-    backendVersion: Backend-Version
-    debugMode: Debug-Modus
-    designSystem: Design System
   data:
     title: "Deine Daten"
     subtitle: "Hier findest du deine anagrafischen Daten und Kontaktdaten, die von IO verwendet werden"
