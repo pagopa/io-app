@@ -97,7 +97,7 @@ const imageMapping: Record<ErrorTypes, IOPictogramType> = {
   UNCOVERED: "umbrella",
   REVOKED: "error",
   EXPIRED: "error",
-  TECHNICAL: "error"
+  TECHNICAL: "error",
   NOT_FOUND: "unrecognized"
 };
 
