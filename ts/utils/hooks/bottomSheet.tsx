@@ -88,6 +88,7 @@ export const bottomSheetContent = (
  * @param title
  * @param snapPoint
  * @param footer
+ * @param onDismiss callback to be called when the bottom sheet is dismissed
  */
 export const useIOBottomSheetModal = (
   component: React.ReactNode,
