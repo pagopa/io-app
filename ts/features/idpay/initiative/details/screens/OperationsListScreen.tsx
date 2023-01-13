@@ -115,7 +115,7 @@ export const OperationsListScreen = () => {
               keyExtractor={item => item.operationId}
               renderItem={({ item }) => renderTimelineOperationCard(item)}
               onEndReached={nextPage}
-              onEndReachedThreshold={0.2}
+              onEndReachedThreshold={0.5}
               ListFooterComponent={() => renderLoader(isLoading)}
             />
           </View>

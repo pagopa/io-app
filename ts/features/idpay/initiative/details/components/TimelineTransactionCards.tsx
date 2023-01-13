@@ -2,6 +2,7 @@ import { ListItem, View } from "native-base";
 import React from "react";
 import { Image, StyleSheet } from "react-native";
 import { OperationTypeEnum as IbanOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/IbanOperationDTO";
+import { OperationTypeEnum as RefundOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/RefundOperationDTO";
 import { OperationTypeEnum as OnboardingOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/OnboardingOperationDTO";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
@@ -29,16 +30,6 @@ const getHourAndMinuteFromDate = (date: Date) =>
     date.getMinutes()
   ).padStart(2, "0")}`;
 
-const pickIcon = (operationType: OperationListDTO["operationType"]) => {
-  switch (operationType) {
-    case OnboardingOperationTypeEnum.ONBOARDING:
-      return <Icon name={"bonus"} color="blue" />;
-    case IbanOperationTypeEnum.ADD_IBAN:
-      return <Icon name={"amount"} color="bluegreyLight" />;
-    default:
-      return <Icon name={"spid"} color="bluegreyLight" />;
-  }
-};
 export const renderTimelineOperationCard = (transaction: OperationListDTO) => {
   const hasAmount = "amount" in transaction;
   return (
@@ -57,7 +48,7 @@ export const renderTimelineOperationCard = (transaction: OperationListDTO) => {
             source={{ uri: transaction.brandLogo }}
           />
         ) : (
-          pickIcon(transaction.operationType)
+          iconMap[transaction.operationType]
         )}
         <View hspacer />
         <View style={IOStyles.flex}>
@@ -82,6 +73,17 @@ export const renderTimelineOperationCard = (transaction: OperationListDTO) => {
       </View>
     </ListItem>
   );
+};
+
+type TypesForIcons =
+  | IbanOperationTypeEnum
+  | OnboardingOperationTypeEnum
+  | RefundOperationTypeEnum;
+const iconMap: Record<TypesForIcons, React.ReactNode> = {
+  ONBOARDING: <Icon name={"bonus"} color="blue" />,
+  ADD_IBAN: <Icon name={"amount"} color="bluegreyLight" />,
+  PAID_REFUND: <Icon name={"reload"} color="bluegreyLight" />,
+  REJECTED_REFUND: <Icon name={"error"} color="bluegreyLight" />
 };
 
 const operationTypeMap = {
