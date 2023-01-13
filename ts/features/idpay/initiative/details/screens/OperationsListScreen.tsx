@@ -19,7 +19,7 @@ import I18n from "../../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import customVariables from "../../../../../theme/variables";
 import { formatDateAsLocal } from "../../../../../utils/dates";
-import { renderTimelineOperationCard } from "../components/TimelineTransactionCards";
+import { TimelineOperationCard } from "../components/TimelineTransactionCards";
 import { IDPayDetailsParamsList } from "../navigation";
 import { idpayTimelineSelector } from "../store";
 import { idpayTimelinePageGet } from "../store/actions";
@@ -117,7 +117,9 @@ export const OperationsListScreen = () => {
               style={{}}
               data={timeline.operationList}
               keyExtractor={item => item.operationId}
-              renderItem={({ item }) => renderTimelineOperationCard(item)}
+              renderItem={({ item }) =>
+                TimelineOperationCard({ transaction: item })
+              }
               onEndReached={nextPage}
               onEndReachedThreshold={0.5}
               ListFooterComponent={() => renderLoader(isLoading)}

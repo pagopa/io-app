@@ -30,7 +30,11 @@ const getHourAndMinuteFromDate = (date: Date) =>
     date.getMinutes()
   ).padStart(2, "0")}`;
 
-export const renderTimelineOperationCard = (transaction: OperationListDTO) => {
+export const TimelineOperationCard = ({
+  transaction
+}: {
+  transaction: OperationListDTO;
+}) => {
   const hasAmount = "amount" in transaction;
   return (
     <ListItem style={styles.spaceBetween}>
