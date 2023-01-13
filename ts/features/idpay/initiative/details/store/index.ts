@@ -42,6 +42,7 @@ const reducer = (
         details: pot.toError(state.details, action.payload)
       };
     // TIMELINE ACTIONS
+    case getType(idpayTimelinePageGet.request):
     case getType(idpayTimelineGet.request):
       return {
         ...state,
@@ -52,17 +53,11 @@ const reducer = (
         ...state,
         timeline: pot.some(action.payload)
       };
+    case getType(idpayTimelinePageGet.failure):
     case getType(idpayTimelineGet.failure):
       return {
         ...state,
         timeline: pot.toError(state.timeline, action.payload)
-      };
-    // TIMELINE PAGINATION ACTIONS
-    // eslint-disable-next-line sonarjs/no-duplicated-branches
-    case getType(idpayTimelinePageGet.request):
-      return {
-        ...state,
-        timeline: pot.toLoading(state.timeline)
       };
     case getType(idpayTimelinePageGet.success):
       const currentTimeline = pot.getOrElse(state.timeline, {
@@ -78,12 +73,6 @@ const reducer = (
             ...action.payload.operationList
           ]
         })
-      };
-    // eslint-disable-next-line sonarjs/no-duplicated-branches
-    case getType(idpayTimelinePageGet.failure):
-      return {
-        ...state,
-        timeline: pot.toError(state.timeline, action.payload)
       };
   }
   return state;

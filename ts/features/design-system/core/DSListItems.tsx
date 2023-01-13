@@ -22,7 +22,7 @@ import ZendeskItemPermissionComponent from "../../zendesk/components/ZendeskItem
 import { ProductCategoryEnum } from "../../../../definitions/cgn/merchants/ProductCategory";
 import CgnMerchantListItem from "../../bonus/cgn/components/merchants/CgnMerchantListItem";
 import DetailedlistItemComponent from "../../../components/DetailedlistItemComponent";
-import { TimelineTransactionCard } from "../../idpay/initiative/details/components/TimelineTransactionCards";
+import { renderTimelineOperationCard } from "../../idpay/initiative/details/components/TimelineTransactionCards";
 import { OperationTypeEnum } from "../../../../definitions/idpay/timeline/TransactionOperationDTO";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
@@ -204,17 +204,15 @@ export const DSListItems = () => (
     </DSComponentViewerBox>
 
     <DSComponentViewerBox name="TimelineTransactionCard">
-      <TimelineTransactionCard
-        transaction={{
-          operationId: "213123",
-          operationType: "Pagamento Pos" as OperationTypeEnum,
-          operationDate: new Date(),
-          brandLogo: "",
-          maskedPan: "****",
-          amount: -100,
-          circuitType: "MasterCard"
-        }}
-      />
+      {renderTimelineOperationCard({
+        operationId: "213123",
+        operationType: "Pagamento Pos" as OperationTypeEnum,
+        operationDate: new Date(),
+        brandLogo: "",
+        maskedPan: "****",
+        amount: -100,
+        circuitType: "MasterCard"
+      })}
     </DSComponentViewerBox>
 
     <H2
