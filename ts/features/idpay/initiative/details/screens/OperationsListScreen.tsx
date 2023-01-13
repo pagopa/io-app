@@ -75,7 +75,7 @@ const useTimelineFetcher = (initiativeId: string) => {
   return {
     isLoading,
     timeline,
-    nextPage: () => setPage(current => current + 1)
+    fetchNextPage: () => setPage(current => current + 1)
   } as const;
 };
 
@@ -83,7 +83,11 @@ export const OperationsListScreen = () => {
   const route = useRoute<OperationsListScreenRouteProps>();
   const { initiativeId } = route.params;
 
-  const { isLoading, timeline, nextPage } = useTimelineFetcher(initiativeId);
+  const {
+    isLoading,
+    timeline,
+    fetchNextPage: nextPage
+  } = useTimelineFetcher(initiativeId);
 
   return (
     <BaseScreenComponent

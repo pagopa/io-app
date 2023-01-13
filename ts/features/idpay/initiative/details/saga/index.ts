@@ -67,19 +67,18 @@ export function* idpayInitiativeDetailsSaga(bearerToken: string): SagaIterator {
       );
     }
   );
-  yield *
-    takeLatest(
-      idpayTimelinePageGet.request,
-      function* (action: { payload: IdpayTimelinePageGetPayloadType }) {
-        // wait backoff time if there were previous errors
-        yield* call(waitBackoffError, idpayTimelinePageGet.failure);
-        yield* call(
-          handleGetTimelinePagination,
-          idPayTimelineClient.getTimeline,
-          token,
-          preferredLanguage,
-          action.payload
-        );
-      }
-    );
+  yield* takeLatest(
+    idpayTimelinePageGet.request,
+    function* (action: { payload: IdpayTimelinePageGetPayloadType }) {
+      // wait backoff time if there were previous errors
+      yield* call(waitBackoffError, idpayTimelinePageGet.failure);
+      yield* call(
+        handleGetTimelinePagination,
+        idPayTimelineClient.getTimeline,
+        token,
+        preferredLanguage,
+        action.payload
+      );
+    }
+  );
 }

@@ -8,7 +8,6 @@ import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { IDPayTimelineClient } from "../api/client";
 import {
   IdpayTimelinePageGetPayloadType,
-  idpayTimelineGet,
   idpayTimelinePageGet
 } from "../store/actions";
 
@@ -27,8 +26,7 @@ export function* handleGetTimelinePagination(
 ) {
   try {
     const getTimelineResult: SagaCallReturnType<typeof getTimeline> =
-      yield *
-      call(getTimeline, {
+      yield* call(getTimeline, {
         bearerAuth: token,
         "Accept-Language": language,
         initiativeId: payload.initiativeId,
@@ -60,6 +58,6 @@ export function* handleGetTimelinePagination(
       )
     );
   } catch (e) {
-    yield * put(idpayTimelineGet.failure({ ...getNetworkError(e) }));
+    yield* put(idpayTimelinePageGet.failure({ ...getNetworkError(e) }));
   }
 }
