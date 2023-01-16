@@ -3278,7 +3278,7 @@ idpay:
       validThrough: "Valid through {{endDate}}"
   initiative:
     configuration: 
-      cardLabels:
+      instrumentStatus:
         active: Active
         pendingActivation: Pending activation
         pendingDeactivation: Pending deactivation

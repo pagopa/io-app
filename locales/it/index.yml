@@ -3302,7 +3302,7 @@ idpay:
       validThrough: "Valido fino al {{endDate}}"
   initiative:
     configuration: 
-      cardLabels:
+      instrumentStatus:
         active: Attivo 
         pendingActivation: In attivazione
         pendingDeactivation: In disattivazione
