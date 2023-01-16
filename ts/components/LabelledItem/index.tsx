@@ -173,7 +173,6 @@ export const LabelledItem: React.FC<Props> = ({
       <View>
         <View
           style={{
-            ...IOStyles.flex,
             ...IOStyles.row,
             ...styles.bottomLine,
             borderColor: props.overrideBorderColor
