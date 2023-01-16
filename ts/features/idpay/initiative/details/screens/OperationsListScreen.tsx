@@ -9,7 +9,6 @@ import {
   StyleSheet,
   View
 } from "react-native";
-import { heightPercentageToDP } from "react-native-responsive-screen";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -32,10 +31,11 @@ const styles = StyleSheet.create({
   activityIndicator: {
     padding: 12
   },
-  flatListContainer: {
-    height: heightPercentageToDP(70) // forces the list to not overflow
+  listContainer: {
+    paddingBottom: 120
   }
 });
+
 const renderLoader = (isLoading: boolean) =>
   isLoading ? (
     <ActivityIndicator
@@ -85,19 +85,18 @@ export const OperationsListScreen = () => {
             </Body>
           </View>
           <NBView spacer large />
-          <View style={styles.flatListContainer}>
-            <FlatList
-              style={IOStyles.horizontalContentPadding}
-              data={timeline.operationList}
-              keyExtractor={item => item.operationId}
-              renderItem={({ item }) =>
-                TimelineOperationCard({ transaction: item })
-              }
-              onEndReached={() => fetchNextPage()}
-              onEndReachedThreshold={0.5}
-              ListFooterComponent={() => renderLoader(isLoading)}
-            />
-          </View>
+          <FlatList
+            style={IOStyles.horizontalContentPadding}
+            contentContainerStyle={styles.listContainer}
+            data={timeline.operationList}
+            keyExtractor={item => item.operationId}
+            renderItem={({ item }) =>
+              TimelineOperationCard({ transaction: item })
+            }
+            onEndReached={() => fetchNextPage()}
+            onEndReachedThreshold={0.5}
+            ListFooterComponent={() => renderLoader(isLoading)}
+          />
         </SafeAreaView>
       </LoadingSpinnerOverlay>
     </BaseScreenComponent>
