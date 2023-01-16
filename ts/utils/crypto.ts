@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { pipe } from "fp-ts/lib/function";
 import * as T from "fp-ts/lib/Task";
 import * as TE from "fp-ts/lib/TaskEither";
-import { getPublicKey } from "io-react-native-crypto";
+import { getPublicKey } from "@pagopa/io-react-native-crypto";
 
 export const setKeyAlreadyGenerated = async (keyTag: string, value: string) =>
   pipe(

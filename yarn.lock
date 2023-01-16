@@ -3052,6 +3052,11 @@
     fp-ts "^2.12.1"
     io-ts "^2.2.16"
 
+"@pagopa/io-react-native-crypto@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-crypto/-/io-react-native-crypto-0.2.1.tgz#3d62b0f0cf45b2a878e4ee0652239ea69089988e"
+  integrity sha512-J+VP1kLXl1lQSJJYFMa+ljW9fWgMIYQskBJZFaVKPrtrZr8MJyrhNzlFUf2/EGwxm3kA+7o7budq6fPqdfVvvg==
+
 "@pagopa/openapi-codegen-ts@^12.0.2":
   version "12.0.2"
   resolved "https://registry.yarnpkg.com/@pagopa/openapi-codegen-ts/-/openapi-codegen-ts-12.0.2.tgz#1913ba4fefe3d28f5a4f8497d8f824cdd9844cd0"
@@ -9473,10 +9478,6 @@ invariant@*, invariant@2.2.4, invariant@^2.2.2, invariant@^2.2.4:
   integrity sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==
   dependencies:
     loose-envify "^1.0.0"
-
-"io-react-native-crypto@https://github.com/pagopa/io-react-native-crypto.git#0.2.0":
-  version "0.2.0"
-  resolved "https://github.com/pagopa/io-react-native-crypto.git#1e32ad03cbce5b537d537de130ef6e5e3c2e456d"
 
 "io-react-native-zendesk@https://github.com/pagopa/io-react-native-zendesk.git#0.3.23":
   version "0.3.23"

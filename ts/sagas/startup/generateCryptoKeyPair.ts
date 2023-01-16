@@ -1,4 +1,8 @@
-import { generate, deleteKey, CryptoError } from "io-react-native-crypto";
+import {
+  generate,
+  deleteKey,
+  CryptoError
+} from "@pagopa/io-react-native-crypto";
 import { call } from "typed-redux-saga/macro";
 import {
   checkPublicKeyExists,
