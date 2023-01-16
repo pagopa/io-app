@@ -5,11 +5,7 @@ import { InitiativeDTO } from "../../../../../../definitions/idpay/wallet/Initia
 import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../utils/errors";
-import {
-  idpayInitiativeGet,
-  idpayTimelineGet,
-  idpayTimelinePageGet
-} from "./actions";
+import { idpayInitiativeGet, idpayTimelinePageGet } from "./actions";
 
 export type IDPayInitiativeState = {
   details: pot.Pot<InitiativeDTO, NetworkError>;
@@ -43,21 +39,15 @@ const reducer = (
       };
     // TIMELINE ACTIONS
     case getType(idpayTimelinePageGet.request):
-    case getType(idpayTimelineGet.request):
+      if (action.payload.page === 0) {
+        return {
+          ...state,
+          timeline: pot.toLoading(pot.none)
+        };
+      }
       return {
         ...state,
         timeline: pot.toLoading(state.timeline)
-      };
-    case getType(idpayTimelineGet.success):
-      return {
-        ...state,
-        timeline: pot.some(action.payload)
-      };
-    case getType(idpayTimelinePageGet.failure):
-    case getType(idpayTimelineGet.failure):
-      return {
-        ...state,
-        timeline: pot.toError(state.timeline, action.payload)
       };
     case getType(idpayTimelinePageGet.success):
       const currentTimeline = pot.getOrElse(state.timeline, {
@@ -73,6 +63,11 @@ const reducer = (
             ...action.payload.operationList
           ]
         })
+      };
+    case getType(idpayTimelinePageGet.failure):
+      return {
+        ...state,
+        timeline: pot.toError(state.timeline, action.payload)
       };
   }
   return state;

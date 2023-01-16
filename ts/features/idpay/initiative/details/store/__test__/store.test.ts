@@ -1,11 +1,7 @@
 import { pot } from "@pagopa/ts-commons";
 import { createStore } from "redux";
 import { idpayInitiativeDetailsSelector, idpayTimelineSelector } from "..";
-import {
-  idpayInitiativeGet,
-  idpayTimelineGet,
-  idpayTimelinePageGet
-} from "../actions";
+import { idpayInitiativeGet, idpayTimelinePageGet } from "../actions";
 import {
   InitiativeDTO,
   StatusEnum
@@ -112,7 +108,7 @@ describe("test idpay timeline reducer and selectors", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
     store.dispatch(
-      idpayTimelineGet.request({ initiativeId: "6364fd4570fc881452fdaa2d" })
+      idpayTimelinePageGet.request({ initiativeId: "6364fd4570fc881452fdaa2d" })
     );
 
     expect(store.getState().features.idPay.initiative.timeline).toStrictEqual(
@@ -126,9 +122,9 @@ describe("test idpay timeline reducer and selectors", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
     store.dispatch(
-      idpayTimelineGet.request({ initiativeId: "6364fd4570fc881452fdaa2d" })
+      idpayTimelinePageGet.request({ initiativeId: "6364fd4570fc881452fdaa2d" })
     );
-    store.dispatch(idpayTimelineGet.success(mockTimelineResponseSuccess));
+    store.dispatch(idpayTimelinePageGet.success(mockTimelineResponseSuccess));
 
     expect(store.getState().features.idPay.initiative.timeline).toStrictEqual(
       pot.some(mockTimelineResponseSuccess)
@@ -142,9 +138,9 @@ describe("test idpay timeline reducer and selectors", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
     store.dispatch(
-      idpayTimelineGet.request({ initiativeId: "6364fd4570fc881452fdaa2d" })
+      idpayTimelinePageGet.request({ initiativeId: "6364fd4570fc881452fdaa2d" })
     );
-    store.dispatch(idpayTimelineGet.failure(mockFailure));
+    store.dispatch(idpayTimelinePageGet.failure(mockFailure));
 
     expect(store.getState().features.idPay.initiative.timeline).toStrictEqual(
       pot.noneError(mockFailure)
@@ -176,7 +172,7 @@ describe("test idpay timeline pagination reducer and selectors", () => {
   it("should merge the response with the previous one, after the success action", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
-    store.dispatch(idpayTimelineGet.success(mockTimelineResponseSuccess));
+    store.dispatch(idpayTimelinePageGet.success(mockTimelineResponseSuccess));
     store.dispatch(
       idpayTimelinePageGet.request({
         initiativeId: "6364fd4570fc881452fdaa2d",
@@ -200,7 +196,7 @@ describe("test idpay timeline pagination reducer and selectors", () => {
   it("should reset the timeline after the idpayTimelineGet.request action", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
-    store.dispatch(idpayTimelineGet.success(mockTimelineResponseSuccess));
+
     store.dispatch(
       idpayTimelinePageGet.request({
         initiativeId: "6364fd4570fc881452fdaa2d",
@@ -208,10 +204,15 @@ describe("test idpay timeline pagination reducer and selectors", () => {
       })
     );
     store.dispatch(idpayTimelinePageGet.success(mockTimelineResponseSuccess));
-    store.dispatch(idpayTimelineGet.success(mockTimelineResponseSuccess)); // resets the timeline
+    store.dispatch(
+      idpayTimelinePageGet.request({
+        initiativeId: "6364fd4570fc881452fdaa2d",
+        page: 0
+      })
+    );
 
     expect(store.getState().features.idPay.initiative.timeline).toStrictEqual(
-      pot.some(mockTimelineResponseSuccess)
+      pot.noneLoading
     );
   });
 

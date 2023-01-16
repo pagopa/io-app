@@ -15,7 +15,7 @@ import {
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { IDPayDetailsRoutes } from "../navigation";
 import { idpayTimelineSelector } from "../store";
-import { idpayTimelineGet } from "../store/actions";
+import { idpayTimelinePageGet } from "../store/actions";
 import { TimelineOperationCard } from "./TimelineTransactionCards";
 
 const styles = StyleSheet.create({
@@ -56,7 +56,7 @@ const ConfiguredInitiativeData = (props: Props) => {
   const dispatch = useIODispatch();
 
   useEffect(() => {
-    dispatch(idpayTimelineGet.request({ initiativeId }));
+    dispatch(idpayTimelinePageGet.request({ initiativeId, page: 0 }));
   }, [dispatch, initiativeId]);
 
   const timelineFromSelector = useIOSelector(idpayTimelineSelector);
