@@ -1,7 +1,8 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { List, Text, View } from "native-base";
 import React, { useEffect } from "react";
-import { StyleSheet } from "react-native";
+import { Pressable, StyleSheet } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import { OperationTypeEnum as IbanOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/IbanOperationDTO";
 import { OperationTypeEnum as InstrumentOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/InstrumentOperationDTO";
 import { OperationTypeEnum as OnboardingOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/OnboardingOperationDTO";
@@ -15,6 +16,7 @@ import I18n from "../../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { idpayTimelineSelector } from "../store";
 import { idpayTimelineGet } from "../store/actions";
+import { useOperationDetailsBottomSheet } from "./OperationDetailsBottomSheet";
 import {
   IbanOnboardingCard,
   InstrumentOnboardingCard,
@@ -80,6 +82,8 @@ const ConfiguredInitiativeData = (props: Props) => {
   const timelineFromSelector = useIOSelector(idpayTimelineSelector);
   const isTimelineLoading = pot.isLoading(timelineFromSelector);
 
+  const operationDetailsBottomSheet = useOperationDetailsBottomSheet();
+
   if (isTimelineLoading) {
     return null;
   }
@@ -110,11 +114,15 @@ const ConfiguredInitiativeData = (props: Props) => {
       <View spacer small />
       <List>
         {timelineList.map(transaction => (
-          <React.Fragment key={transaction.operationId}>
+          <TouchableOpacity
+            key={transaction.operationId}
+            onPress={() => operationDetailsBottomSheet.present(transaction)}
+          >
             {pickTransactionCard(transaction)}
-          </React.Fragment>
+          </TouchableOpacity>
         ))}
       </List>
+      {operationDetailsBottomSheet.bottomSheet}
     </>
   );
 };
