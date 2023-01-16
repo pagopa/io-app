@@ -11,6 +11,7 @@ import {
   StatusEnum
 } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
 import EmptyInitiativeSvg from "../../../../../../img/features/idpay/empty_initiative.svg";
+import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -61,13 +62,13 @@ type RouteProps = Route<
 const InitiativeNotConfiguredComponent = () => (
   <View style={[styles.newInitiativeMessageContainer, IOStyles.flex]}>
     <EmptyInitiativeSvg width={130} height={130} />
-    <View spacer />
+    <VSpacer size={16} />
     <H3>
       {I18n.t(
         "idpay.initiative.details.initiativeDetailsScreen.notConfigured.header"
       )}
     </H3>
-    <View spacer />
+    <VSpacer size={16} />
     <Text style={styles.textCenter}>
       {I18n.t(
         "idpay.initiative.details.initiativeDetailsScreen.notConfigured.footer",

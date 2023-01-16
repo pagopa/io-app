@@ -1,5 +1,4 @@
 import I18n from "i18n-js";
-import { View } from "native-base";
 import * as React from "react";
 import { Idp } from "../../../definitions/content/Idp";
 import { handleItemOnPress } from "../../utils/url";

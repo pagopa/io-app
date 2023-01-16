@@ -1,5 +1,4 @@
 import { useNavigation } from "@react-navigation/native";
-import { View } from "native-base";
 import React from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { connect } from "react-redux";

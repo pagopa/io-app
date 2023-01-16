@@ -11,6 +11,7 @@ import EuCovidCertLearnMoreLink from "../components/EuCovidCertLearnMoreLink";
 import { MarkdownHandleCustomLink } from "../components/MarkdownHandleCustomLink";
 import { WithEUCovidCertificateHeaderData } from "../types/EUCovidCertificate";
 import { EuCovidCertHeader } from "../components/EuCovidCertHeader";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { BaseEuCovidCertificateLayout } from "./BaseEuCovidCertificateLayout";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -34,7 +35,7 @@ const EuCovidCertRevokedContentComponent = (props: Props) => (
       title={I18n.t("features.euCovidCertificate.revoked.title")}
       body={<EuCovidCertLearnMoreLink />}
     />
-    <View spacer />
+    <VSpacer size={16} />
     {props.revokeInfo && (
       <MarkdownHandleCustomLink extraBodyHeight={60}>
         {props.revokeInfo}

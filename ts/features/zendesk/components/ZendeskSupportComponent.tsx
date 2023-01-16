@@ -1,7 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
-import { View } from "react-native";
 import * as React from "react";
 import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
 import AdviceComponent from "../../../components/AdviceComponent";

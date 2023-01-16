@@ -4,7 +4,7 @@
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
-import { Content, View } from "native-base";
+import { Content } from "native-base";
 import * as React from "react";
 import { FlatList, SafeAreaView } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
@@ -123,7 +123,7 @@ const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
                   removeClippedSubviews={false}
                   data={methodsCanPay}
                   keyExtractor={item => item.idWallet.toString()}
-                  ListFooterComponent={<View spacer />}
+                  ListFooterComponent={<VSpacer size={16} />}
                   renderItem={i => (
                     <PickAvailablePaymentMethodListItem
                       isFirst={i.index === 0}
@@ -162,7 +162,7 @@ const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
                   removeClippedSubviews={false}
                   data={methodsCanPayButDisabled}
                   keyExtractor={item => `disabled_payment_${item.idWallet}`}
-                  ListFooterComponent={<View spacer />}
+                  ListFooterComponent={<VSpacer size={16} />}
                   renderItem={i => (
                     <PickAvailablePaymentMethodListItem
                       rightElement={
@@ -191,7 +191,7 @@ const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
                   removeClippedSubviews={false}
                   data={methodsCantPay}
                   keyExtractor={item => item.idWallet.toString()}
-                  ListFooterComponent={<View spacer />}
+                  ListFooterComponent={<VSpacer size={16} />}
                   renderItem={i => (
                     <PickNotAvailablePaymentMethodListItem
                       isFirst={i.index === 0}

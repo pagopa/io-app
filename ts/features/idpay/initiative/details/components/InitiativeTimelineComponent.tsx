@@ -1,12 +1,13 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { List, Text, View } from "native-base";
+import { List, Text } from "native-base";
 import React, { useEffect } from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { OperationTypeEnum as IbanOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/IbanOperationDTO";
 import { OperationTypeEnum as InstrumentOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/InstrumentOperationDTO";
 import { OperationTypeEnum as OnboardingOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/OnboardingOperationDTO";
 import { OperationListDTO } from "../../../../../../definitions/idpay/timeline/OperationListDTO";
 import { OperationTypeEnum as TransactionOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/TransactionOperationDTO";
+import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
@@ -35,7 +36,7 @@ const emptyTimelineContent = (
         "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperations"
       )}
     </H3>
-    <View spacer />
+    <VSpacer size={16} />
     <LabelSmall weight="Regular" color="bluegreyDark">
       {I18n.t(
         "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperationsSubtitle"
@@ -107,7 +108,7 @@ const ConfiguredInitiativeData = (props: Props) => {
           )}
         </Body>
       </View>
-      <View spacer small />
+      <VSpacer size={8} />
       <List>
         {timelineList.map(transaction => (
           <React.Fragment key={transaction.operationId}>

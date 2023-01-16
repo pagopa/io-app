@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { View, SafeAreaView, ScrollView } from "react-native";
+import { SafeAreaView, ScrollView } from "react-native";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
 import { IOBadge } from "../../../../../components/core/IOBadge";
 import {

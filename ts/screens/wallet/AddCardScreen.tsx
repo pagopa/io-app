@@ -9,13 +9,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { Content } from "native-base";
 import React, { useState } from "react";
-import {
-  View,
-  Keyboard,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet
-} from "react-native";
+import { Keyboard, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 import { connect } from "react-redux";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";

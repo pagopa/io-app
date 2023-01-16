@@ -225,7 +225,7 @@ const ZendeskSupportHelpCenter = () => {
             contentLoaded={markdownContentLoaded}
             startingRoute={startingRoute}
           />
-          <View spacer />
+          <VSpacer size={16} />
           <ZendeskSupportComponent
             assistanceForPayment={assistanceForPayment}
           />
