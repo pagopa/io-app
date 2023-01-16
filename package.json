@@ -26,7 +26,7 @@
   "idpay_onboarding": "https://raw.githubusercontent.com/pagopa/cstar-infrastructure/v1.70.0/src/domains/idpay-app/api/idpay_onboarding_workflow/openapi.onboarding.yml",
   "idpay_wallet": "https://raw.githubusercontent.com/pagopa/cstar-infrastructure/v1.70.0/src/domains/idpay-app/api/idpay_wallet/openapi.wallet.yml",
   "idpay_timeline": "https://raw.githubusercontent.com/pagopa/cstar-infrastructure/v1.87.0/src/domains/idpay-app/api/idpay_timeline/openapi.timeline.yml",
-  "idpay_iban": "https://raw.githubusercontent.com/pagopa/cstar-infrastructure/v1.81.2/src/domains/idpay-app/api/idpay_iban/openapi.iban.yml",
+  "idpay_iban": "https://raw.githubusercontent.com/pagopa/cstar-infrastructure/v1.101.0/src/domains/idpay-app/api/idpay_iban/openapi.iban.yml",
   "private": true,
   "scripts": {
     "start": "react-native start",
