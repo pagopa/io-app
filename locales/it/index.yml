@@ -3200,6 +3200,9 @@ features:
       expired:
         title: Documento non più disponibile per la firma
         subTitle: Il documento non è più disponibile per la firma. Contatta l’ente per maggiori informazioni
+      expiredAfterSigned:
+        title: La richiesta di firma è scaduta
+        subTitle: Per assistenza contattare l'ente
       waitForQtsp:
         title: Il documento è in elaborazione
         subTitle: Ti preghiamo di attendere, presto riceverai il contratto firmato in app.
