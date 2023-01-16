@@ -31,13 +31,11 @@ const getHourAndMinuteFromDate = (date: Date) =>
   ).padStart(2, "0")}`;
 
 type TimelineOperationCardProps = {
-  transaction: OperationListDTO;
+  operation: OperationListDTO;
 };
 
-export const TimelineOperationCard = ({
-  transaction
-}: TimelineOperationCardProps) => {
-  const hasAmount = "amount" in transaction;
+export const TimelineOperationCard = ({ operation }: TimelineOperationCardProps) => {
+  const hasAmount = "amount" in operation;
   return (
     <ListItem style={styles.spaceBetween}>
       <View
@@ -48,33 +46,33 @@ export const TimelineOperationCard = ({
           styles.sidePadding
         ]}
       >
-        {"brandLogo" in transaction ? (
+        {"brandLogo" in operation ? (
           <Image
             style={styles.imageSize}
-            source={{ uri: transaction.brandLogo }}
+            source={{ uri: operation.brandLogo }}
           />
         ) : (
-          RenderCorrectIcon(transaction.operationType)
+          RenderCorrectIcon(operation.operationType)
         )}
         <View hspacer />
         <View style={IOStyles.flex}>
           <H4>
-            {operationDescriptionsMap[transaction.operationType](
-              "maskedPan" in transaction ? transaction.maskedPan : ""
+            {operationDescriptionsMap[operation.operationType](
+              "maskedPan" in operation ? operation.maskedPan : ""
             )}
           </H4>
           <LabelSmall weight="Regular" color="bluegrey">
             {`${formatDateAsShortFormat(
-              transaction.operationDate
-            )}, ${getHourAndMinuteFromDate(transaction.operationDate)} ${
+              operation.operationDate
+            )}, ${getHourAndMinuteFromDate(operation.operationDate)} ${
               hasAmount
-                ? "· " + formatNumberAmount(Math.abs(transaction.amount), true)
+                ? "· " + formatNumberAmount(Math.abs(operation.amount), true)
                 : ""
             }`}
           </LabelSmall>
         </View>
         {hasAmount ? (
-          <H4> {`${formatNumberAmount(transaction.amount, false)} €`}</H4>
+          <H4> {`${formatNumberAmount(operation.amount, false)} €`}</H4>
         ) : null}
       </View>
     </ListItem>
