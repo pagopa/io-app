@@ -1,8 +1,8 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
-import { List, View } from "native-base";
+import { List as NBList, View as NBView } from "native-base";
 import React, { useEffect } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
@@ -16,7 +16,7 @@ import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { IDPayDetailsRoutes } from "../navigation";
 import { idpayTimelineSelector } from "../store";
 import { idpayTimelinePageGet } from "../store/actions";
-import { TimelineOperationCard } from "./TimelineTransactionCards";
+import { TimelineOperationCard } from "./TimelineOperationListItem";
 
 const styles = StyleSheet.create({
   spaceBetween: {
@@ -31,7 +31,7 @@ const emptyTimelineContent = (
         "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperations"
       )}
     </H3>
-    <View spacer />
+    <NBView spacer />
     <LabelSmall weight="Regular" color="bluegreyDark">
       {I18n.t(
         "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperationsSubtitle"
@@ -97,14 +97,14 @@ const ConfiguredInitiativeData = (props: Props) => {
           )}
         </Body>
       </View>
-      <View spacer small />
-      <List>
+      <NBView spacer small />
+      <NBList>
         {timelineList.map(transaction => (
           <React.Fragment key={transaction.operationId}>
             {TimelineOperationCard({ transaction })}
           </React.Fragment>
         ))}
-      </List>
+      </NBList>
     </>
   );
 };

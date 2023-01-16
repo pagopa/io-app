@@ -22,7 +22,7 @@ import ZendeskItemPermissionComponent from "../../zendesk/components/ZendeskItem
 import { ProductCategoryEnum } from "../../../../definitions/cgn/merchants/ProductCategory";
 import CgnMerchantListItem from "../../bonus/cgn/components/merchants/CgnMerchantListItem";
 import DetailedlistItemComponent from "../../../components/DetailedlistItemComponent";
-import { TimelineOperationCard } from "../../idpay/initiative/details/components/TimelineTransactionCards";
+import { TimelineOperationCard } from "../../idpay/initiative/details/components/TimelineOperationListItem";
 import { OperationTypeEnum } from "../../../../definitions/idpay/timeline/TransactionOperationDTO";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 

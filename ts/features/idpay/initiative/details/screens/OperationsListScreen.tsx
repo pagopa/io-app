@@ -17,7 +17,7 @@ import BaseScreenComponent from "../../../../../components/screens/BaseScreenCom
 import I18n from "../../../../../i18n";
 import customVariables from "../../../../../theme/variables";
 import { formatDateAsLocal } from "../../../../../utils/dates";
-import { TimelineOperationCard } from "../components/TimelineTransactionCards";
+import { TimelineOperationCard } from "../components/TimelineOperationListItem";
 import { IDPayDetailsParamsList } from "../navigation";
 import { useInitiativeTimelineFetcher } from "../utils/hooks";
 
@@ -60,6 +60,37 @@ export const OperationsListScreen = () => {
   const { isLoading, isFirstLoading, timeline, fetchNextPage } =
     useInitiativeTimelineFetcher(initiativeId, 10);
 
+  const pageContent = (
+    <SafeAreaView>
+      <View style={IOStyles.horizontalContentPadding}>
+        <H1>
+          {I18n.t(
+            "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.title"
+          )}
+        </H1>
+        <Body>
+          {I18n.t(
+            "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.lastUpdated"
+          )}
+          <Body weight="SemiBold">
+            {formatDateAsLocal(timeline.lastUpdate, true)}
+          </Body>
+        </Body>
+      </View>
+      <NBView spacer large />
+      <FlatList
+        style={IOStyles.horizontalContentPadding}
+        contentContainerStyle={styles.listContainer}
+        data={timeline.operationList}
+        keyExtractor={item => item.operationId}
+        renderItem={({ item }) => TimelineOperationCard({ transaction: item })}
+        onEndReached={() => fetchNextPage()}
+        onEndReachedThreshold={0.5}
+        ListFooterComponent={() => renderLoader(isLoading)}
+      />
+    </SafeAreaView>
+  );
+
   return (
     <BaseScreenComponent
       headerTitle={I18n.t(
@@ -68,36 +99,7 @@ export const OperationsListScreen = () => {
       goBack={true}
     >
       <LoadingSpinnerOverlay isLoading={isFirstLoading} loadingOpacity={100}>
-        <SafeAreaView>
-          <View style={IOStyles.horizontalContentPadding}>
-            <H1>
-              {I18n.t(
-                "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.title"
-              )}
-            </H1>
-            <Body>
-              {I18n.t(
-                "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.lastUpdated"
-              )}
-              <Body weight="SemiBold">
-                {formatDateAsLocal(timeline.lastUpdate, true)}
-              </Body>
-            </Body>
-          </View>
-          <NBView spacer large />
-          <FlatList
-            style={IOStyles.horizontalContentPadding}
-            contentContainerStyle={styles.listContainer}
-            data={timeline.operationList}
-            keyExtractor={item => item.operationId}
-            renderItem={({ item }) =>
-              TimelineOperationCard({ transaction: item })
-            }
-            onEndReached={() => fetchNextPage()}
-            onEndReachedThreshold={0.5}
-            ListFooterComponent={() => renderLoader(isLoading)}
-          />
-        </SafeAreaView>
+        {isFirstLoading ? null : pageContent}
       </LoadingSpinnerOverlay>
     </BaseScreenComponent>
   );

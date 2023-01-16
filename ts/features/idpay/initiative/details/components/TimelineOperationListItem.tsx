@@ -30,11 +30,13 @@ const getHourAndMinuteFromDate = (date: Date) =>
     date.getMinutes()
   ).padStart(2, "0")}`;
 
+type TimelineOperationCardProps = {
+  transaction: OperationListDTO;
+};
+
 export const TimelineOperationCard = ({
   transaction
-}: {
-  transaction: OperationListDTO;
-}) => {
+}: TimelineOperationCardProps) => {
   const hasAmount = "amount" in transaction;
   return (
     <ListItem style={styles.spaceBetween}>
@@ -52,12 +54,12 @@ export const TimelineOperationCard = ({
             source={{ uri: transaction.brandLogo }}
           />
         ) : (
-          iconMap[transaction.operationType]
+          RenderCorrectIcon(transaction.operationType)
         )}
         <View hspacer />
         <View style={IOStyles.flex}>
           <H4>
-            {operationTypeMap[transaction.operationType](
+            {operationDescriptionsMap[transaction.operationType](
               "maskedPan" in transaction ? transaction.maskedPan : ""
             )}
           </H4>
@@ -83,17 +85,25 @@ type TypesForIcons =
   | IbanOperationTypeEnum
   | OnboardingOperationTypeEnum
   | RefundOperationTypeEnum;
-const iconMap: Record<TypesForIcons, React.ReactNode> = {
-  ONBOARDING: <Icon name={"bonus"} color="blue" />,
-  ADD_IBAN: <Icon name={"amount"} color="bluegreyLight" />,
-  PAID_REFUND: <Icon name={"reload"} color="bluegreyLight" />,
-  REJECTED_REFUND: <Icon name={"error"} color="bluegreyLight" />
+const RenderCorrectIcon = (type: TypesForIcons) => {
+  switch (type) {
+    case OnboardingOperationTypeEnum.ONBOARDING:
+      return <Icon name={"bonus"} color="blue" />;
+    case IbanOperationTypeEnum.ADD_IBAN:
+      return <Icon name={"amount"} color="bluegreyLight" />;
+    case RefundOperationTypeEnum.PAID_REFUND:
+      return <Icon name={"reload"} color="bluegreyLight" />;
+    case RefundOperationTypeEnum.REJECTED_REFUND:
+      return <Icon name={"error"} color="bluegreyLight" />;
+    default:
+      return null;
+  }
 };
 
-const operationTypeMap = {
+const operationDescriptionsMap = {
   ONBOARDING: () => "Hai aderito all'iniziativa",
   ADD_IBAN: () => "Aggiunto IBAN",
-  ADD_INSTRUMENT: (x: string) => `Hai aggiunto ···· ${x}`,
+  ADD_INSTRUMENT: (maskedPan: string) => `Hai aggiunto ···· ${maskedPan}`,
   TRANSACTION: () => "Pagamento Pos",
   REVERSAL: () => "Ricarica saldo disponibile",
   DELETE_INSTRUMENT: () => "Hai eliminato un metodo di pagamento",
