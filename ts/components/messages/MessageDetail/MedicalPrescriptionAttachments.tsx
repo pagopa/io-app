@@ -13,7 +13,7 @@ import ItemSeparatorComponent from "../../ItemSeparatorComponent";
 
 type Props = Readonly<{
   prescriptionData?: PrescriptionData;
-  attachments: ReadonlyArray<Attachment>;
+  prescriptionAttachments: ReadonlyArray<Attachment>;
   organizationName?: string;
 }>;
 
@@ -70,7 +70,7 @@ const Item = ({
 };
 
 const MedicalPrescriptionAttachments = ({
-  attachments,
+  prescriptionAttachments,
   organizationName,
   prescriptionData
 }: Props) => (
@@ -86,13 +86,13 @@ const MedicalPrescriptionAttachments = ({
       <ItemSeparatorComponent noPadded={true} bold={true} />
     </View>
 
-    {attachments
+    {prescriptionAttachments
       .filter(_ => _.mimeType === svgXml)
-      .map((attachment, index) => (
+      .map((prescriptionAttachment, index) => (
         <View key={index}>
           <Item
             prescriptionData={prescriptionData}
-            item={attachment}
+            item={prescriptionAttachment}
             idx={index}
           />
           <ItemSeparatorComponent />

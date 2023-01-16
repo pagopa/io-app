@@ -1787,6 +1787,10 @@ messageDetails:
   sendEmail: Send email
   write: Write
   id: "ID:"
+  attachmentsUnavailable:
+    firstPart: "Gli allegati non sono più disponibili. "
+    secondPart: "Contatta l'ente mittente"
+    thirdPart: " per maggiori informazioni."
 notifications:
   installation:
     errorTitle: Push notifications

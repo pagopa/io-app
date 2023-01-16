@@ -14,11 +14,10 @@ import {
 } from "../../../store/reducers/entities/messages/types";
 import { ContentTypeValues } from "../../../types/contentType";
 import { formatByte } from "../../../types/digitalInformationUnit";
-import { MvlData } from "../../mvl/types/mvlData";
 import { useAttachmentDownload } from "../hooks/useAttachmentDownload";
 
 type Props = {
-  attachments: MvlData["attachments"];
+  attachments: ReadonlyArray<UIAttachment>;
   openPreview: (attachmentId: UIAttachmentId) => void;
 };
 

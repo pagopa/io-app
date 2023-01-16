@@ -4,12 +4,17 @@ import { MessageCategory } from "../../../../../definitions/backend/MessageCateg
 import { TagEnum } from "../../../../../definitions/backend/MessageCategoryBase";
 import { MessageStatusAttributes } from "../../../../../definitions/backend/MessageStatusAttributes";
 import { PublicMessage } from "../../../../../definitions/backend/PublicMessage";
+import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
+import { apiUrlPrefix } from "../../../../config";
+import { ContentTypeValues } from "../../../../types/contentType";
 
 import {
   Attachment,
   EUCovidCertificate,
   PaymentData,
   PrescriptionData,
+  UIAttachment,
+  UIAttachmentId,
   UIMessage,
   UIMessageDetails,
   UIMessageId
@@ -45,7 +50,7 @@ export const toUIMessage = (
   };
 };
 
-const getAttachments = ({
+const getPrescriptionAttachments = ({
   attachments
 }: CreatedMessageWithContentAndAttachments["content"]):
   | ReadonlyArray<Attachment>
@@ -115,7 +120,7 @@ export const toUIMessageDetails = (
   return {
     id: id as UIMessageId,
     prescriptionData: getPrescriptionData(content),
-    attachments: getAttachments(content),
+    prescriptionAttachments: getPrescriptionAttachments(content),
     markdown: content.markdown,
     dueDate,
 
@@ -123,6 +128,27 @@ export const toUIMessageDetails = (
     euCovidCertificate: getEUCovidCertificate(content),
     subject: content.subject,
     serviceId: messageFromApi.sender_service_id,
+    hasThirdPartyDataAttachments:
+      content.third_party_data?.has_attachments ?? false,
     raw: messageFromApi
   };
+};
+
+const generateAttachmentUrl = (messageId: string, attachmentUrl: string) =>
+  `${apiUrlPrefix}/api/v1/third-party-messages/${messageId}/attachments/${attachmentUrl.replace(
+    /^\//g, // note that attachmentUrl might contains a / at the beginning, so let's strip it
+    ""
+  )}`;
+
+export const attachmentsFromThirdPartyMessage = (
+  messageFromApi: ThirdPartyMessageWithContent
+): Array<UIAttachment> | undefined => {
+  const attachments = messageFromApi.third_party_message.attachments;
+  return attachments?.map(_ => ({
+    messageId: messageFromApi.id as UIMessageId,
+    id: _.id as string as UIAttachmentId,
+    displayName: _.name ?? _.id,
+    contentType: _.content_type ?? ContentTypeValues.applicationOctetStream,
+    resourceUrl: { href: generateAttachmentUrl(messageFromApi.id, _.url) }
+  }));
 };

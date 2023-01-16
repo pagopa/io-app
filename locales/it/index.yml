@@ -1808,6 +1808,10 @@ messageDetails:
   sendEmail: Manda email
   write: Scrivi
   id: "ID:"
+  attachmentsUnavailable:
+    firstPart: "Gli allegati non sono più disponibili. "
+    secondPart: "Contatta l'ente mittente"
+    thirdPart: " per maggiori informazioni."
 notifications:
   installation:
     errorTitle: Notifiche push

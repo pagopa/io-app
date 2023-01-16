@@ -49,13 +49,12 @@ export type UIMessageDetails = WithUIMessageId<{
   subject: string;
   serviceId: ServiceId;
   prescriptionData?: PrescriptionData;
-  attachments?: ReadonlyArray<Attachment>;
+  prescriptionAttachments?: ReadonlyArray<Attachment>;
   markdown: MessageBodyMarkdown;
   dueDate?: Date;
   paymentData?: PaymentData;
-
   euCovidCertificate?: EUCovidCertificate;
-
+  hasThirdPartyDataAttachments: boolean;
   // @deprecated please use it only for backward compatibility
   raw: CreatedMessageWithContentAndAttachments;
 }>;
