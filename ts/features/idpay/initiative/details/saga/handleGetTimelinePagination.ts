@@ -30,7 +30,8 @@ export function* handleGetTimelinePagination(
         bearerAuth: token,
         "Accept-Language": language,
         initiativeId: payload.initiativeId,
-        page: payload.page
+        page: payload.page,
+        size: 10
       });
 
     yield pipe(

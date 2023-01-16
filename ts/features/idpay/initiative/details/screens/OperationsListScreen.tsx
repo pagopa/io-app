@@ -56,26 +56,31 @@ const renderLoader = (isLoading: boolean) =>
   ) : null;
 
 const useTimelineFetcher = (initiativeId: string) => {
-  const [page, setPage] = React.useState(1);
   const dispatch = useIODispatch();
   const timelineFromSelector = useIOSelector(idpayTimelineSelector);
+
   const isLoading = pot.isLoading(timelineFromSelector);
+  const isError = pot.isError(timelineFromSelector);
+
   const timeline = pot.getOrElse(timelineFromSelector, {
     lastUpdate: new Date(),
     operationList: []
   });
+  const page = React.useRef(0);
 
-  const isError = pot.isError(timelineFromSelector);
-  React.useEffect(() => {
+  const fetchNextPage = () => {
     if (!isError && !isLoading) {
-      dispatch(idpayTimelinePageGet.request({ initiativeId, page }));
+      page.current = page.current + 1;
+      dispatch(
+        idpayTimelinePageGet.request({ initiativeId, page: page.current })
+      );
     }
-  }, [page, isError, initiativeId, dispatch, isLoading]);
+  };
 
   return {
     isLoading,
     timeline,
-    fetchNextPage: () => setPage(current => current + 1)
+    fetchNextPage
   } as const;
 };
 
@@ -111,20 +116,20 @@ export const OperationsListScreen = () => {
               {formatDateAsLocal(timeline.lastUpdate, true)}
             </Body>
           </Body>
-          <NBView spacer large />
-          <View style={styles.flatListContainer}>
-            <FlatList
-              style={{}}
-              data={timeline.operationList}
-              keyExtractor={item => item.operationId}
-              renderItem={({ item }) =>
-                TimelineOperationCard({ transaction: item })
-              }
-              onEndReached={nextPage}
-              onEndReachedThreshold={0.5}
-              ListFooterComponent={() => renderLoader(isLoading)}
-            />
-          </View>
+        </View>
+        <NBView spacer large />
+        <View style={styles.flatListContainer}>
+          <FlatList
+            style={IOStyles.horizontalContentPadding}
+            data={timeline.operationList}
+            keyExtractor={item => item.operationId}
+            renderItem={({ item }) =>
+              TimelineOperationCard({ transaction: item })
+            }
+            onEndReached={nextPage}
+            onEndReachedThreshold={0.5}
+            ListFooterComponent={() => renderLoader(isLoading)}
+          />
         </View>
       </SafeAreaView>
     </BaseScreenComponent>
