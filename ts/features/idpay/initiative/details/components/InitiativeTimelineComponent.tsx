@@ -16,7 +16,7 @@ import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { IDPayDetailsRoutes } from "../navigation";
 import { idpayTimelineSelector } from "../store";
 import { idpayTimelinePageGet } from "../store/actions";
-import { TimelineOperationCard } from "./TimelineOperationListItem";
+import { TimelineOperationListItem } from "./TimelineOperationListItem";
 
 const styles = StyleSheet.create({
   spaceBetween: {
@@ -101,7 +101,7 @@ const ConfiguredInitiativeData = (props: Props) => {
       <NBList>
         {timelineList.map(transaction => (
           <React.Fragment key={transaction.operationId}>
-            {TimelineOperationCard({ transaction })}
+            {TimelineOperationListItem({ operation: transaction })}
           </React.Fragment>
         ))}
       </NBList>

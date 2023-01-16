@@ -34,7 +34,9 @@ type TimelineOperationCardProps = {
   operation: OperationListDTO;
 };
 
-export const TimelineOperationCard = ({ operation }: TimelineOperationCardProps) => {
+export const TimelineOperationListItem = ({
+  operation
+}: TimelineOperationCardProps) => {
   const hasAmount = "amount" in operation;
   return (
     <ListItem style={styles.spaceBetween}>
@@ -46,14 +48,7 @@ export const TimelineOperationCard = ({ operation }: TimelineOperationCardProps)
           styles.sidePadding
         ]}
       >
-        {"brandLogo" in operation ? (
-          <Image
-            style={styles.imageSize}
-            source={{ uri: operation.brandLogo }}
-          />
-        ) : (
-          RenderCorrectIcon(operation.operationType)
-        )}
+        {RenderOperationIcon(operation)}
         <View hspacer />
         <View style={IOStyles.flex}>
           <H4>
@@ -79,12 +74,13 @@ export const TimelineOperationCard = ({ operation }: TimelineOperationCardProps)
   );
 };
 
-type TypesForIcons =
-  | IbanOperationTypeEnum
-  | OnboardingOperationTypeEnum
-  | RefundOperationTypeEnum;
-const RenderCorrectIcon = (type: TypesForIcons) => {
-  switch (type) {
+const RenderOperationIcon = (operation: OperationListDTO) => {
+  if ("brandLogo" in operation) {
+    return (
+      <Image style={styles.imageSize} source={{ uri: operation.brandLogo }} />
+    );
+  }
+  switch (operation.operationType) {
     case OnboardingOperationTypeEnum.ONBOARDING:
       return <Icon name={"bonus"} color="blue" />;
     case IbanOperationTypeEnum.ADD_IBAN:

@@ -17,7 +17,7 @@ import BaseScreenComponent from "../../../../../components/screens/BaseScreenCom
 import I18n from "../../../../../i18n";
 import customVariables from "../../../../../theme/variables";
 import { formatDateAsLocal } from "../../../../../utils/dates";
-import { TimelineOperationCard } from "../components/TimelineOperationListItem";
+import { TimelineOperationListItem } from "../components/TimelineOperationListItem";
 import { IDPayDetailsParamsList } from "../navigation";
 import { useInitiativeTimelineFetcher } from "../utils/hooks";
 
@@ -83,7 +83,9 @@ export const OperationsListScreen = () => {
         contentContainerStyle={styles.listContainer}
         data={timeline.operationList}
         keyExtractor={item => item.operationId}
-        renderItem={({ item }) => TimelineOperationCard({ transaction: item })}
+        renderItem={({ item }) =>
+          TimelineOperationListItem({ operation: item })
+        }
         onEndReached={() => fetchNextPage()}
         onEndReachedThreshold={0.5}
         ListFooterComponent={() => renderLoader(isLoading)}
