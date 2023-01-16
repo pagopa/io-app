@@ -28,7 +28,7 @@ import BonusIcon from "../../../../../img/features/cdc/bonus.svg";
 import { ResidentChoice } from "../types/CdcBonusRequest";
 import { cdcSelectedBonus as cdcSelectedBonusAction } from "../store/actions/cdcBonusRequest";
 import { compareSelectedBonusByYear } from "../utils/bonusRequest";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
+import { HSpacer, VSpacer } from "../../../../components/core/spacer/Spacer";
 
 const getCheckResidencyItems = (): ReadonlyArray<RadioItem<ResidentChoice>> => [
   {
@@ -73,7 +73,7 @@ const CdcBonusRequestSelectResidence = () => {
 
           {[...cdcSelectedBonus].sort(compareSelectedBonusByYear).map(b => (
             <>
-              <View spacer large />
+              <VSpacer size={24} />
               <View
                 style={{
                   flex: 1,
@@ -82,7 +82,7 @@ const CdcBonusRequestSelectResidence = () => {
                 }}
               >
                 <BonusIcon width={20} height={20} />
-                <View hspacer />
+                <HSpacer size={16} />
                 <H3 weight={"SemiBold"} color={"bluegrey"}>
                   {b.year}
                 </H3>

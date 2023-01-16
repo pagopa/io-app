@@ -1,4 +1,4 @@
-import { View } from "native-base";
+import { View } from "react-native";
 import * as React from "react";
 import { connect } from "react-redux";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
@@ -73,7 +73,7 @@ const SuperCashbackBottomSheet: React.FunctionComponent<Props> = (
   <>
     <VSpacer size={16} />
     <RankingItems {...props} />
-    <View spacer={true} small />
+    <VSpacer size={8} />
     <ItemSeparatorComponent noPadded={true} />
     <VSpacer size={16} />
     <H3>{I18n.t("bonus.bpd.details.superCashback.howItWorks.title")}</H3>
@@ -88,7 +88,7 @@ const SuperCashbackBottomSheet: React.FunctionComponent<Props> = (
             )
           })}
         </Markdown>
-        <View spacer />
+        <VSpacer size={16} />
         {props.selectedPeriod.status === "Active" ||
         isInGracePeriod(
           props.selectedPeriod.endDate,

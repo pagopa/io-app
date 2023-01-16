@@ -1,7 +1,7 @@
-import { View } from "native-base";
 import * as React from "react";
 import { useContext, useState } from "react";
 import {
+  View,
   Dimensions,
   Image,
   StyleProp,
@@ -162,8 +162,7 @@ const addBottomSheetItem = (config: {
         <IconFont name={"io-right"} color={IOColors.blue} size={24} />
       </View>
     </View>
-    <View spacer={true} large={true} />
-    <View spacer={true} large={true} />
+    <VSpacer size={40} />
   </ButtonDefaultOpacity>
 );
 
@@ -270,11 +269,11 @@ const EuCovidCertValidScreen = (props: Props): React.ReactElement => {
           style={[IOStyles.flex, { backgroundColor: IOColors.white }]}
         >
           {/* add extra space (top,sides,bottom) and padding while capturing the screenshot */}
-          {isCapturingScreenShoot && <View spacer={true} large={true} />}
+          {isCapturingScreenShoot && <VSpacer size={24} />}
           {isCapturingScreenShoot && (
             <View style={IOStyles.horizontalContentPadding}>{header}</View>
           )}
-          {isCapturingScreenShoot && <View spacer={true} large={true} />}
+          {isCapturingScreenShoot && <VSpacer size={24} />}
           <EuCovidCertValidComponent
             messageId={currentCert?.messageId}
             {...props}
@@ -284,7 +283,7 @@ const EuCovidCertValidScreen = (props: Props): React.ReactElement => {
                 : undefined
             }
           />
-          {isCapturingScreenShoot && <View spacer={true} large={true} />}
+          {isCapturingScreenShoot && <VSpacer size={24} />}
         </View>
       }
       footer={

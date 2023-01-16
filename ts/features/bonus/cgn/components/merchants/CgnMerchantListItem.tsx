@@ -1,11 +1,12 @@
 import * as AR from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { View as NBView } from "native-base";
+import { View, StyleSheet } from "react-native";
 import { ProductCategory } from "../../../../../../definitions/cgn/merchants/ProductCategory";
 import { IOBadge } from "../../../../../components/core/IOBadge";
+import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H2 } from "../../../../../components/core/typography/H2";
 import { H5 } from "../../../../../components/core/typography/H5";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
@@ -40,7 +41,7 @@ export const renderCategoryElement = (category: ProductCategory) =>
       c => (
         <View style={styles.row}>
           {c.icon({ height: 22, width: 22, fill: IOColors.bluegrey })}
-          <View hspacer small />
+          <HSpacer size={8} />
           <H5 weight={"SemiBold"} color={"bluegrey"}>
             {I18n.t(c.nameKey).toLocaleUpperCase()}
           </H5>
@@ -62,7 +63,7 @@ const CategoriesRow = ({ categories }: Pick<Props, "categories">) => (
             c => (
               <>
                 {renderCategoryElement(c)}
-                <View
+                <NBView
                   hspacer
                   small
                   style={{
@@ -70,7 +71,7 @@ const CategoriesRow = ({ categories }: Pick<Props, "categories">) => (
                     borderRightWidth: 1
                   }}
                 />
-                <View hspacer small />
+                <HSpacer size={8} />
                 <H5 color={"bluegrey"} weight={"SemiBold"}>
                   {I18n.t("bonus.cgn.merchantDetail.categories.counting", {
                     count: categories.length - 1
@@ -85,7 +86,7 @@ const CategoriesRow = ({ categories }: Pick<Props, "categories">) => (
             {renderCategoryElement(category)}
             {categories.indexOf(category) !== categories.length - 1 && (
               <>
-                <View
+                <NBView
                   hspacer
                   small
                   style={{
@@ -93,7 +94,7 @@ const CategoriesRow = ({ categories }: Pick<Props, "categories">) => (
                     borderRightWidth: 1
                   }}
                 />
-                <View hspacer small />
+                <HSpacer size={8} />
               </>
             )}
           </View>
@@ -120,7 +121,7 @@ const CgnMerchantListItem: React.FunctionComponent<Props> = (props: Props) => (
         </View>
       )}
     </View>
-    <View spacer small />
+    <VSpacer size={8} />
     <CategoriesRow categories={props.categories} />
   </TouchableDefaultOpacity>
 );

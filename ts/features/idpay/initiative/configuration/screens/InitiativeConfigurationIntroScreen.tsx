@@ -1,7 +1,7 @@
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
-import { ListItem, View } from "native-base";
+import { ListItem } from "native-base";
 import React from "react";
-import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { View, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { useActor } from "@xstate/react";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
@@ -110,13 +110,13 @@ const InitiativeConfigurationIntroScreen = () => {
             <View style={IOStyles.horizontalContentPadding}>
               <VSpacer size={16} />
               <H1>{I18n.t("idpay.configuration.intro.title")}</H1>
-              <View spacer={true} small={true} />
+              <VSpacer size={8} />
               <Body>{I18n.t("idpay.configuration.intro.body")}</Body>
-              <View spacer={true} large={true} />
+              <VSpacer size={24} />
               <H3 color="bluegrey">
                 {I18n.t("idpay.configuration.intro.requiredData.title")}
               </H3>
-              <View spacer={true} small={true} />
+              <VSpacer size={8} />
               {requiredDataItems.map((item, index) => (
                 <RequiredDataItem key={index} {...item} />
               ))}

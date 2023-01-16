@@ -2,7 +2,6 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { View } from "native-base";
 import React, { useCallback, useEffect } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { H2 } from "../../../../components/core/typography/H2";
@@ -24,6 +23,7 @@ import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import MVL_ROUTES from "../../navigation/routes";
 import { Mvl } from "../../types/mvlData";
 import { MessageAttachments } from "../../../messages/components/MessageAttachments";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { MvlBody } from "./components/MvlBody";
 import { MvlDetailsHeader } from "./components/MvlDetailsHeader";
 import { MvlMetadataComponent } from "./components/MvlMetadata";
@@ -73,9 +73,9 @@ export const MvlDetailsScreen = (props: Props): React.ReactElement => {
             service={service}
           />
           <MvlBody body={props.mvl.legalMessage.body} />
-          <View spacer={true} large={true} />
+          <VSpacer size={24} />
           <ItemSeparatorComponent noPadded={true} />
-          <View spacer={true} large={true} />
+          <VSpacer size={24} />
           <H2>{I18n.t("features.mvl.details.attachments.title")}</H2>
           <MessageAttachments
             attachments={props.mvl.legalMessage.attachments}
