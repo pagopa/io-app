@@ -25,7 +25,7 @@ import {
   formatNumberAmount
 } from "../../../../utils/stringBuilder";
 import { usePaymentAmountInfoBottomSheet } from "../hooks/usePaymentAmountInfoBottomSheet";
-import { EnteBeneficiario } from "../../../../../definitions/backend/EnteBeneficiario";
+import { getRecepientName } from "../../../../utils/strings";
 
 const styles = StyleSheet.create({
   row: {
@@ -165,16 +165,6 @@ type Props = Readonly<{
 
 export const TransactionSummary = (props: Props): React.ReactElement => {
   const isLoading = pot.isLoading(props.paymentVerification);
-
-  const getRecepientName = (recipient: EnteBeneficiario) => {
-    const denomUnitOper = pipe(
-      recipient.denomUnitOperBeneficiario,
-      O.fromNullable,
-      O.map(d => ` - ${d}`),
-      O.getOrElse(() => "")
-    );
-    return `${recipient.denominazioneBeneficiario}${denomUnitOper}`.trim();
-  };
 
   const recipient = pipe(
     pot.toOption(props.paymentVerification),
