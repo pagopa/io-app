@@ -11,6 +11,7 @@ import { formatDateAsShortFormat } from "../../../../../utils/dates";
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
 import { OperationListDTO } from "../../../../../../definitions/idpay/timeline/OperationListDTO";
 import { Icon } from "../../../../../components/core/icons";
+import I18n from "../../../../../i18n";
 
 const styles = StyleSheet.create({
   alignCenter: {
@@ -52,9 +53,14 @@ export const TimelineOperationListItem = ({
         <View hspacer />
         <View style={IOStyles.flex}>
           <H4>
-            {operationDescriptionsMap[operation.operationType](
-              "maskedPan" in operation ? operation.maskedPan : ""
-            )}
+            {"maskedPan" in operation
+              ? I18n.t(
+                  `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.${operation.operationType}`,
+                  { maskedPan: operation.maskedPan }
+                )
+              : I18n.t(
+                  `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.${operation.operationType}`
+                )}
           </H4>
           <LabelSmall weight="Regular" color="bluegrey">
             {`${formatDateAsShortFormat(
@@ -94,16 +100,3 @@ const renderOperationIcon = (operation: OperationListDTO) => {
   }
 };
 
-const operationDescriptionsMap = {
-  ONBOARDING: () => "Hai aderito all'iniziativa",
-  ADD_IBAN: () => "Aggiunto IBAN",
-  ADD_INSTRUMENT: (maskedPan: string) => `Hai aggiunto ···· ${maskedPan}`,
-  TRANSACTION: () => "Pagamento Pos",
-  REVERSAL: () => "Ricarica saldo disponibile",
-  DELETE_INSTRUMENT: () => "Hai eliminato un metodo di pagamento",
-  REJECTED_ADD_INSTRUMENT: () => "Hai rifiutato un metodo di pagamento",
-  REJECTED_DELETE_INSTRUMENT: () =>
-    "Hai rifiutato di eliminare un metodo di pagamento",
-  PAID_REFUND: () => "Rimborso",
-  REJECTED_REFUND: () => "Rifiuto rimborso"
-};
