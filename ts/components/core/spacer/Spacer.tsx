@@ -1,5 +1,6 @@
 import React from "react";
 import { View } from "react-native";
+import { hexToRgba, IOColors } from "../variables/IOColors";
 import type { IOSpacer } from "../variables/IOSpacing";
 
 export type SpacerOrientation = "vertical" | "horizontal";
@@ -14,6 +15,11 @@ type SpacerProps = {
 };
 
 const DEFAULT_SIZE = 16;
+
+/* Debug Mode */
+const DEBUG_MODE = false;
+const debugBg = hexToRgba(IOColors.red, 0.2);
+
 /**
 Native `Spacer` component that replaces the legacy one, managed through NativeBase
 @param  {SpacerOrientation} orientation 
@@ -21,14 +27,19 @@ Native `Spacer` component that replaces the legacy one, managed through NativeBa
  */
 const Spacer = ({ orientation, size }: BaseSpacerProps) => (
   <View
-    style={{
-      ...(orientation === "vertical" && {
-        height: size
-      }),
-      ...(orientation === "horizontal" && {
-        width: size
-      })
-    }}
+    style={[
+      {
+        ...(orientation === "vertical" && {
+          height: size
+        }),
+        ...(orientation === "horizontal" && {
+          width: size
+        })
+      },
+      DEBUG_MODE && {
+        backgroundColor: debugBg
+      }
+    ]}
   />
 );
 
