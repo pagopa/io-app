@@ -7,6 +7,7 @@ export type IdPayInitiativeGetPayloadType = { initiativeId: string };
 export type IdpayTimelinePageGetPayloadType = {
   initiativeId: string;
   page?: number;
+  pageSize?: number;
 };
 export const idpayInitiativeGet = createAsyncAction(
   "IDPAY_INITIATIVE_DETAILS_REQUEST",

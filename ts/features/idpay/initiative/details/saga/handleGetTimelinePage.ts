@@ -31,7 +31,7 @@ export function* handleGetTimelinePage(
         "Accept-Language": language,
         initiativeId: payload.initiativeId,
         page: payload.page,
-        size: 10
+        size: payload.pageSize
       });
 
     yield pipe(
