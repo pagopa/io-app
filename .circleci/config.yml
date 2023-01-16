@@ -21,7 +21,7 @@ release_tag: &release_tag /^[0-9]+\.[0-9]+\.[0-9]+(-rc\.[0-9]+)?$/
 defaults_js: &defaults_js
   <<: *defaults
   docker:
-    - image: cimg/node:16.16.0
+    - image: cimg/node:16.19.0
 
 # android builds
 defaults_android: &defaults_android
@@ -435,8 +435,8 @@ jobs:
           name: Configure Node
           command: |
             brew uninstall node yarn
-            nvm install 16.16.0
-            nvm alias default 16.16.0
+            nvm install 16.19.0
+            nvm alias default 16.19.0
             npm install -g yarn
 
       - run:
