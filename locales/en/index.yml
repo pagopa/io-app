@@ -3278,6 +3278,10 @@ idpay:
       validThrough: "Valid through {{endDate}}"
   initiative:
     configuration: 
+      cardLabels:
+        active: Active
+        pendingActivation: Pending activation
+        pendingDeactivation: Pending deactivation
       bottomSheet:
         header: Prima di continuare
         bodyFirst: Il metodo sarà abilitato
