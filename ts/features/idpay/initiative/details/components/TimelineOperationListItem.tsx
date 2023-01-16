@@ -48,7 +48,7 @@ export const TimelineOperationListItem = ({
           styles.sidePadding
         ]}
       >
-        {RenderOperationIcon(operation)}
+        {renderOperationIcon(operation)}
         <View hspacer />
         <View style={IOStyles.flex}>
           <H4>
@@ -74,7 +74,7 @@ export const TimelineOperationListItem = ({
   );
 };
 
-const RenderOperationIcon = (operation: OperationListDTO) => {
+const renderOperationIcon = (operation: OperationListDTO) => {
   if ("brandLogo" in operation) {
     return (
       <Image style={styles.imageSize} source={{ uri: operation.brandLogo }} />
