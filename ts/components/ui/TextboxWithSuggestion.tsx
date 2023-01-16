@@ -9,6 +9,7 @@ import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import { IOStyles } from "../core/variables/IOStyles";
 import { LabelledItem } from "../LabelledItem";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
+import { VSpacer } from "../core/spacer/Spacer";
 import AppHeader from "./AppHeader";
 import { LightModalContext } from "./LightModal";
 import IconFont from "./IconFont";
@@ -123,7 +124,7 @@ const TextboxWithSuggestion = (props: Props) => {
           <H5 color={"bluegreyDark"}>{props.label}</H5>
           <View hspacer={true} />
         </View>
-        <View spacer={true} />
+        <VSpacer size={16} />
         <TouchableDefaultOpacity
           style={styles.inputContainer}
           disabled={props.disabled}

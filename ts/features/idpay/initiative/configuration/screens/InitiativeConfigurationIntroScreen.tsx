@@ -22,6 +22,7 @@ import { useConfigurationMachineService } from "../xstate/provider";
 import { LOADING_TAG } from "../../../../../utils/xstate";
 import I18n from "../../../../../i18n";
 import { ConfigurationMode } from "../xstate/context";
+import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 
 type InitiativeConfigurationIntroScreenRouteParams = {
   initiativeId: string;
@@ -107,7 +108,7 @@ const InitiativeConfigurationIntroScreen = () => {
         <SafeAreaView style={IOStyles.flex}>
           <ScrollView style={IOStyles.flex}>
             <View style={IOStyles.horizontalContentPadding}>
-              <View spacer={true} />
+              <VSpacer size={16} />
               <H1>{I18n.t("idpay.configuration.intro.title")}</H1>
               <View spacer={true} small={true} />
               <Body>{I18n.t("idpay.configuration.intro.body")}</Body>

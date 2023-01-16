@@ -16,6 +16,7 @@ import IconFont from "../../components/ui/IconFont";
 import { LabelledItem } from "../../components/LabelledItem";
 import { showToast } from "../../utils/showToast";
 import { IOColors } from "../../components/core/variables/IOColors";
+import { VSpacer } from "../../components/core/spacer/Spacer";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
@@ -94,7 +95,7 @@ const WebPlayground: React.FunctionComponent<Props> = (props: Props) => {
               />
             </ButtonDefaultOpacity>
           </View>
-          <View spacer={true} />
+          <VSpacer size={16} />
           <View style={styles.row}>
             <ButtonDefaultOpacity
               style={styles.contentCenter}
@@ -109,17 +110,17 @@ const WebPlayground: React.FunctionComponent<Props> = (props: Props) => {
               <Label color={"white"}>Clear cookies</Label>
             </ButtonDefaultOpacity>
           </View>
-          <View spacer={true} />
+          <VSpacer size={16} />
           <View style={styles.row}>
             <Label color={"bluegrey"}>{"Show debug"}</Label>
             <Switch value={showDebug} onValueChange={setShowDebug} />
           </View>
-          <View spacer={true} />
+          <VSpacer size={16} />
           <View style={styles.row}>
             <Label color={"bluegrey"}>{"Save a cookie"}</Label>
             <Switch value={saveCookie} onValueChange={setSaveCookie} />
           </View>
-          <View spacer={true} />
+          <VSpacer size={16} />
           <View style={{ flex: 1 }}>
             {saveCookie && (
               <>

@@ -46,6 +46,7 @@ import { captureScreenshot, screenshotOptions } from "../../utils/screenshot";
 import { BaseEuCovidCertificateLayout } from "../BaseEuCovidCertificateLayout";
 import { EUCovidContext } from "../EuCovidCertificateRouterScreen";
 import { EuCovidCertHeader } from "../../components/EuCovidCertHeader";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
 
 type OwnProps = {
   validCertificate: ValidCertificate;
@@ -90,7 +91,7 @@ const EuCovidCertValidComponent = (
   <View>
     {props.validCertificate.qrCode.mimeType === "image/png" && (
       <>
-        <View spacer={true} />
+        <VSpacer size={16} />
         <TouchableOpacity
           testID={"QRCode"}
           accessible={true}
@@ -119,7 +120,7 @@ const EuCovidCertValidComponent = (
             }}
           />
         </TouchableOpacity>
-        <View spacer={true} />
+        <VSpacer size={16} />
       </>
     )}
     {props.validCertificate.markdownInfo && (
@@ -130,7 +131,7 @@ const EuCovidCertValidComponent = (
         >
           {props.validCertificate.markdownInfo}
         </MarkdownHandleCustomLink>
-        <View spacer={true} />
+        <VSpacer size={16} />
       </View>
     )}
   </View>
@@ -194,8 +195,8 @@ const Footer = (props: FooterProps): React.ReactElement => {
       <H5 color={"bluegrey"} weight={"Regular"}>
         {I18n.t("features.euCovidCertificate.save.bottomSheet.subTitle")}
       </H5>
-      <View spacer={true} />
-      <View spacer={true} />
+      <VSpacer size={16} />
+      <VSpacer size={16} />
     </View>,
     320
   );

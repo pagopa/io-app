@@ -28,6 +28,7 @@ import BonusIcon from "../../../../../img/features/cdc/bonus.svg";
 import { ResidentChoice } from "../types/CdcBonusRequest";
 import { cdcSelectedBonus as cdcSelectedBonusAction } from "../store/actions/cdcBonusRequest";
 import { compareSelectedBonusByYear } from "../utils/bonusRequest";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
 
 const getCheckResidencyItems = (): ReadonlyArray<RadioItem<ResidentChoice>> => [
   {
@@ -65,7 +66,7 @@ const CdcBonusRequestSelectResidence = () => {
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView style={IOStyles.horizontalContentPadding}>
           <H1>{I18n.t("bonus.cdc.bonusRequest.selectResidence.header")}</H1>
-          <View spacer={true} />
+          <VSpacer size={16} />
           <H4 weight={"Regular"}>
             {I18n.t("bonus.cdc.bonusRequest.selectResidence.info")}
           </H4>

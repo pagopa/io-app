@@ -5,6 +5,7 @@ import React from "react";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { IbanDTO } from "../../../../../../../definitions/idpay/iban/IbanDTO";
 import { Icon } from "../../../../../../components/core/icons";
+import { VSpacer } from "../../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
@@ -123,7 +124,7 @@ const IbanEnrollmentScreen = () => {
           <View spacer={true} large={true} />
           <ScrollView style={IOStyles.horizontalContentPadding}>
             {renderIbanList()}
-            <View spacer={true} />
+            <VSpacer size={16} />
             <View style={styles.infoRow}>
               <Icon name="profileAlt" color="grey" />
               <View hspacer={true} />

@@ -149,19 +149,19 @@ const InitiativeDetailsScreen = () => {
                 <InitiativeOrganizationHeader {...toUIService(service)} />
               )}
               {content && <Text>{content}</Text>}
-              <View spacer={true} />
+              <VSpacer size={16} />
               {!!state.context.initiative?.description && (
                 <Markdown>{state.context.initiative.description}</Markdown>
               )}
-              <View spacer={true} />
+              <VSpacer size={16} />
               <ItemSeparatorComponent noPadded={true} />
-              <View spacer={true} />
+              <VSpacer size={16} />
               <BeforeContinueBody
                 tosUrl={service?.service_metadata?.tos_url}
                 privacyUrl={service?.service_metadata?.privacy_url}
               />
             </View>
-            <View spacer={true} />
+            <VSpacer size={16} />
           </ScrollView>
           <FooterWithButtons
             type={"TwoButtonsInlineThird"}

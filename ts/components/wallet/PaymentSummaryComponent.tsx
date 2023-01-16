@@ -6,6 +6,7 @@ import { isStringNullyOrEmpty } from "../../utils/strings";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import { BadgeComponent } from "../screens/BadgeComponent";
 import { IOColors } from "../core/variables/IOColors";
+import { VSpacer } from "../core/spacer/Spacer";
 
 type Props = Readonly<{
   title: string;
@@ -69,7 +70,7 @@ export const PaymentSummaryComponent = (props: Props) => {
         >
           {value}
         </NBText>
-        <View spacer={true} />
+        <VSpacer size={16} />
       </React.Fragment>
     );
   };
@@ -81,7 +82,7 @@ export const PaymentSummaryComponent = (props: Props) => {
         <View hspacer={true} small={true} />
         <NBText>{props.paymentStatus.description}</NBText>
       </View>
-      <View spacer={true} />
+      <VSpacer size={16} />
     </React.Fragment>
   );
 
@@ -95,7 +96,7 @@ export const PaymentSummaryComponent = (props: Props) => {
       </NBText>
 
       {/** screen title */}
-      <View spacer={true} />
+      <VSpacer size={16} />
       <ItemSeparatorComponent noPadded={true} />
       <View spacer={true} large={true} />
 

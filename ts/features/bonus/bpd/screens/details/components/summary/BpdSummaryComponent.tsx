@@ -59,7 +59,7 @@ const Content = (sd: SummaryData) => (
         ) : null}
       </View>
     ) : null}
-    <View spacer={true} />
+    <VSpacer size={16} />
     <TextualSummary period={sd.period} name={sd.name} />
   </View>
 );

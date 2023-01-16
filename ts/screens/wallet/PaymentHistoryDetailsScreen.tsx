@@ -1,9 +1,9 @@
 import { RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Text as NBText, View } from "native-base";
+import { Text as NBText } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { EnteBeneficiario } from "../../../definitions/backend/EnteBeneficiario";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
@@ -11,6 +11,7 @@ import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
 import { ZendeskCategory } from "../../../definitions/content/ZendeskCategory";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import CopyButtonComponent from "../../components/CopyButtonComponent";
+import { VSpacer } from "../../components/core/spacer/Spacer";
 import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import IconFont from "../../components/ui/IconFont";
@@ -98,7 +99,7 @@ const renderItem = (label: string, value?: string) => {
       <NBText bold={true} white={false}>
         {value}
       </NBText>
-      <View spacer={true} />
+      <VSpacer size={16} />
     </React.Fragment>
   );
 };
@@ -257,9 +258,9 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
 
   private renderSeparator = () => (
     <React.Fragment>
-      <View spacer={true} large={true} />
+      <VSpacer size={24} />
       <ItemSeparatorComponent noPadded={true} />
-      <View spacer={true} large={true} />
+      <VSpacer size={24} />
     </React.Fragment>
   );
 
@@ -271,7 +272,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
       <NBText alignCenter={true} style={styles.padded}>
         {I18n.t("payment.details.info.help")}
       </NBText>
-      <View spacer={true} />
+      <VSpacer size={16} />
       <ButtonDefaultOpacity
         onPress={this.handleAskAssistance}
         bordered={true}
@@ -324,12 +325,12 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
               )}
             </React.Fragment>
           )}
-          <View spacer={true} xsmall={true} />
+          <VSpacer size={4} />
           {this.standardRow(
             I18n.t("payment.details.info.outcomeCode"),
             data.outcomeCode
           )}
-          <View spacer={true} xsmall={true} />
+          <VSpacer size={4} />
           {this.standardRow(
             I18n.t("payment.details.info.dateAndTime"),
             data.dateTime
@@ -353,7 +354,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
                     data.fee
                   )}
 
-                <View spacer={true} />
+                <VSpacer size={16} />
 
                 {/** total amount */}
                 <View style={styles.row}>
@@ -385,7 +386,7 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
                     />
                   </View>
                 </View>
-                <View spacer={true} extralarge={true} />
+                <VSpacer size={40} />
               </React.Fragment>
             )}
           {/* This check is redundant, since if the help can't be shown the user can't get there */}

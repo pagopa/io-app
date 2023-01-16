@@ -89,7 +89,7 @@ const CheckIncomeComponent = (props: Props): React.ReactElement => {
       <SafeAreaView style={IOStyles.flex} testID={"CheckIncomeComponent"}>
         <ScrollView style={IOStyles.horizontalContentPadding}>
           <H1>{I18n.t("bonus.sv.voucherGeneration.checkIncome.title")}</H1>
-          <View spacer={true} />
+          <VSpacer size={16} />
           <RadioButtonList<boolean>
             key="check_income"
             items={getCheckIncomeUnderThresholdItems()}

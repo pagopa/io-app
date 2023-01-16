@@ -16,6 +16,7 @@ import { H1 } from "../../components/core/typography/H1";
 
 import variables from "../../theme/variables";
 import { IOColors } from "../core/variables/IOColors";
+import { VSpacer } from "../core/spacer/Spacer";
 
 type Props = Readonly<{
   title?: string;
@@ -102,7 +103,7 @@ export class ScreenContentHeader extends React.PureComponent<Props> {
             }
           } // if the condition "!== undefined" is not specified, once dynamicHeight.value = 0, dynamicHeight is assumend as false
         >
-          <View spacer={true} />
+          <VSpacer size={16} />
           <ScreenHeader
             heading={
               <H1

@@ -1,11 +1,12 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
-import { View } from "native-base";
+import { View } from "react-native";
 import * as React from "react";
 import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
 import AdviceComponent from "../../../components/AdviceComponent";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { H3 } from "../../../components/core/typography/H3";
 import { H4 } from "../../../components/core/typography/H4";
 import { Label } from "../../../components/core/typography/Label";
@@ -57,7 +58,7 @@ const ZendeskSupportComponent = (props: Props) => {
   return (
     <>
       <H3>{I18n.t("support.helpCenter.supportComponent.title")}</H3>
-      <View spacer={true} />
+      <VSpacer size={16} />
       <H4 weight={"Regular"}>
         {I18n.t("support.helpCenter.supportComponent.subtitle")}{" "}
         <Link
@@ -70,11 +71,11 @@ const ZendeskSupportComponent = (props: Props) => {
           {I18n.t("support.askPermissions.privacyLink")}
         </Link>
       </H4>
-      <View spacer={true} large={true} />
+      <VSpacer size={24} />
       <AdviceComponent
         text={I18n.t("support.helpCenter.supportComponent.adviceMessage")}
       />
-      <View spacer={true} />
+      <VSpacer size={16} />
 
       <ButtonDefaultOpacity
         onPress={() => {
@@ -100,7 +101,7 @@ const ZendeskSupportComponent = (props: Props) => {
       >
         <Label>{I18n.t("support.helpCenter.cta.seeReports")}</Label>
       </ButtonDefaultOpacity>
-      <View spacer={true} />
+      <VSpacer size={16} />
 
       <ButtonDefaultOpacity
         style={{

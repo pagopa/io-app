@@ -81,7 +81,7 @@ export const MvlDetailsScreen = (props: Props): React.ReactElement => {
             attachments={props.mvl.legalMessage.attachments}
             openPreview={openAttachment}
           />
-          <View spacer={true} />
+          <VSpacer size={16} />
           <MvlMetadataComponent metadata={props.mvl.legalMessage.metadata} />
         </ScrollView>
         {/* TODO: TMP, how is calculated isPaid without using the paginated data? https://pagopa.atlassian.net/browse/IAMVL-22 */}

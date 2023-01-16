@@ -2,6 +2,7 @@ import { Badge, Text as NBText, View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
 import CopyButtonComponent from "../../../../../../../components/CopyButtonComponent";
+import { VSpacer } from "../../../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../../../components/core/typography/Body";
 import { H4 } from "../../../../../../../components/core/typography/H4";
 import { H5 } from "../../../../../../../components/core/typography/H5";
@@ -167,9 +168,9 @@ export const BpdTransactionDetailComponent: React.FunctionComponent<Props> =
 
     return (
       <View>
-        <View spacer={true} />
+        <VSpacer size={16} />
         <Body>{paymentMethod}</Body>
-        <View spacer={true} />
+        <VSpacer size={16} />
         <View style={IOStyles.row}>
           <Image
             source={props.transaction.image}
@@ -179,13 +180,13 @@ export const BpdTransactionDetailComponent: React.FunctionComponent<Props> =
           <View hspacer={true} small={true} />
           <H4>{props.transaction.title}</H4>
         </View>
-        <View spacer={true} />
+        <VSpacer size={16} />
         {/* using the keyvaluetable with custom style in order to be quick */}
         <Table transaction={props.transaction} />
         <BpdTransactionWarning transaction={props.transaction} />
-        <View spacer={true} />
+        <VSpacer size={16} />
         <IdBlock title={acquirerId} value={props.transaction.idTrxAcquirer} />
-        <View spacer={true} />
+        <VSpacer size={16} />
         <IdBlock title={issuerId} value={props.transaction.idTrxIssuer} />
       </View>
     );

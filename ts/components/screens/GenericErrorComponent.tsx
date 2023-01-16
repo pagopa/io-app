@@ -8,6 +8,7 @@ import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 import { WithTestID } from "../../types/WithTestID";
 import { setAccessibilityFocus } from "../../utils/accessibility";
+import { VSpacer } from "../core/spacer/Spacer";
 import { SingleButton, TwoButtonsInlineHalf } from "../ui/BlockButtons";
 import FooterWithButtons from "../ui/FooterWithButtons";
 
@@ -100,7 +101,7 @@ export default class GenericErrorComponent extends React.PureComponent<Props> {
                 require("../../../img/wallet/errors/generic-error-icon.png")
               }
             />
-            <View spacer={true} />
+            <VSpacer size={16} />
             <NBText
               bold={true}
               alignCenter={true}

@@ -6,6 +6,7 @@ import { SafeAreaView, StyleSheet, TextInput } from "react-native";
 import { CreatedMessageWithContent } from "../../../../definitions/backend/CreatedMessageWithContent";
 import { MessageBodyMarkdown } from "../../../../definitions/backend/MessageBodyMarkdown";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { Label } from "../../../components/core/typography/Label";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { ExtractedCtaButton } from "../../../components/cta/ExtractedCtaButton";
@@ -87,7 +88,7 @@ const MarkdownPlayground = () => {
               {"clear"}
             </Label>
           </View>
-          <View spacer={true} />
+          <VSpacer size={16} />
           {isMarkdownSet && <Label color={"bluegrey"}>{ctaMessage}</Label>}
 
           {O.isSome(maybeCTA) && (
@@ -101,7 +102,7 @@ const MarkdownPlayground = () => {
           )}
           {O.isSome(maybeCTA) && maybeCTA.value.cta_2 && (
             <>
-              <View spacer={true} />
+              <VSpacer size={16} />
               <View style={styles.row}>
                 <ExtractedCtaButton
                   cta={maybeCTA.value.cta_2}
@@ -113,7 +114,7 @@ const MarkdownPlayground = () => {
           )}
           {isMarkdownSet && (
             <>
-              <View spacer={true} />
+              <VSpacer size={16} />
               <Markdown extraBodyHeight={60}>
                 {cleanMarkdownFromCTAs(markdownText as MessageBodyMarkdown)}
               </Markdown>

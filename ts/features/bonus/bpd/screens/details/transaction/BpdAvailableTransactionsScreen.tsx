@@ -15,6 +15,7 @@ import {
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { InfoBox } from "../../../../../../components/box/InfoBox";
+import { VSpacer } from "../../../../../../components/core/spacer/Spacer";
 import { H1 } from "../../../../../../components/core/typography/H1";
 import { H4 } from "../../../../../../components/core/typography/H4";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
@@ -266,13 +267,13 @@ const BpdAvailableTransactionsScreen: React.FunctionComponent<Props> =
           style={IOStyles.flex}
           testID={"BpdAvailableTransactionsScreen"}
         >
-          <View spacer={true} />
+          <VSpacer size={16} />
           <View style={IOStyles.horizontalContentPadding}>
             <H1>{I18n.t("bonus.bpd.details.transaction.title")}</H1>
           </View>
           <ScrollView style={IOStyles.flex}>
             <View style={IOStyles.horizontalContentPadding}>
-              <View spacer={true} />
+              <VSpacer size={16} />
               {props.selectedPeriod && O.isSome(maybeLastUpdateDate) && (
                 <>
                   <BpdTransactionSummaryComponent
@@ -283,7 +284,7 @@ const BpdAvailableTransactionsScreen: React.FunctionComponent<Props> =
                     period={props.selectedPeriod}
                     totalAmount={props.selectedPeriod.amount}
                   />
-                  <View spacer={true} />
+                  <VSpacer size={16} />
                 </>
               )}
             </View>

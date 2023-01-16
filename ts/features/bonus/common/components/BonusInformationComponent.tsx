@@ -9,6 +9,7 @@ import { widthPercentageToDP } from "react-native-responsive-screen";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { H1 } from "../../../../components/core/typography/H1";
 import { H3 } from "../../../../components/core/typography/H3";
 import { Link } from "../../../../components/core/typography/Link";
@@ -244,7 +245,7 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
           <View spacer={true} large={true} />
           <NBText dark={true}>{bonusTypeLocalizedContent.subtitle}</NBText>
 
-          <View spacer={true} />
+          <VSpacer size={16} />
           <ItemSeparatorComponent noPadded={true} />
           <Markdown
             cssStyle={CSS_STYLE}

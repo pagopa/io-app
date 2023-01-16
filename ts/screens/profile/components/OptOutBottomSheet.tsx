@@ -1,5 +1,6 @@
-import { View } from "native-base";
+import { View } from "react-native";
 import * as React from "react";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { Body } from "../../../components/core/typography/Body";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
@@ -12,7 +13,7 @@ import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 
 const ConfirmOptOut = (): React.ReactElement => (
   <View>
-    <View spacer={true} />
+    <VSpacer size={16} />
     <View style={IOStyles.flex}>
       <Body>{I18n.t("profile.main.privacy.shareData.alert.body")}</Body>
     </View>

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Platform } from "react-native";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
+import { VSpacer } from "../core/spacer/Spacer";
 import IconFont from "../ui/IconFont";
 import Markdown from "../ui/Markdown";
 
@@ -29,7 +30,7 @@ const CieNotSupported: React.FunctionComponent<Props> = props => {
 
       {Platform.OS === "android" && (
         <React.Fragment>
-          <View spacer={true} />
+          <VSpacer size={16} />
           <Markdown onLoadEnd={handleMarkdownLoaded}>
             {I18n.t("authentication.landing.cie_unsupported.android_desc")}
           </Markdown>

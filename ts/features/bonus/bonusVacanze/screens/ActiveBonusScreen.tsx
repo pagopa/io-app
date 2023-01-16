@@ -73,6 +73,7 @@ import {
   isBonusActive,
   validityInterval
 } from "../utils/bonus";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { ActivateBonusDiscrepancies } from "./activation/request/ActivateBonusDiscrepancies";
 
 type QRCodeContents = {
@@ -620,7 +621,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
                 </View>
                 <View spacer={true} extralarge={true} />
                 {switchInformationText()}
-                <View spacer={true} />
+                <VSpacer size={16} />
               </View>
               {props.hasMoreOwnedActiveBonus && (
                 <ActivateBonusDiscrepancies
@@ -634,20 +635,20 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
                 style={[styles.paddedContentLeft, styles.paddedContentRight]}
               >
                 <ItemSeparatorComponent noPadded={true} />
-                <View spacer={true} />
+                <VSpacer size={16} />
                 <BonusCompositionDetails
                   bonusAmount={bonus.dsu_request.max_amount}
                   taxBenefit={bonus.dsu_request.max_tax_benefit}
                 />
-                <View spacer={true} />
+                <VSpacer size={16} />
                 <ItemSeparatorComponent noPadded={true} />
-                <View spacer={true} />
+                <VSpacer size={16} />
                 <FamilyComposition
                   familyMembers={bonus.dsu_request.family_members}
                 />
-                <View spacer={true} />
+                <VSpacer size={16} />
                 <ItemSeparatorComponent noPadded={true} />
-                <View spacer={true} />
+                <VSpacer size={16} />
                 {O.isSome(maybeStatusDescription) && (
                   <View style={styles.rowBlock}>
                     <NBText
@@ -673,7 +674,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
                     </Badge>
                   </View>
                 )}
-                <View spacer={true} />
+                <VSpacer size={16} />
                 {!isBonusActive(bonus) && bonus.redeemed_at && (
                   <>
                     <View style={styles.rowBlock}>
@@ -697,7 +698,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
                 </View>
                 {!screenShotState.isPrintable && O.isSome(maybeBonusTos) && (
                   <>
-                    <View spacer={true} />
+                    <VSpacer size={16} />
                     <ItemSeparatorComponent noPadded={true} />
                     <View spacer={true} large={true} />
                     <Link
@@ -711,8 +712,8 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
                 {/* add extra bottom space when capturing screenshot */}
                 {screenShotState.isPrintable && (
                   <>
-                    <View spacer={true} />
-                    <View spacer={true} />
+                    <VSpacer size={16} />
+                    <VSpacer size={16} />
                   </>
                 )}
                 {!screenShotState.isPrintable && <EdgeBorderComponent />}

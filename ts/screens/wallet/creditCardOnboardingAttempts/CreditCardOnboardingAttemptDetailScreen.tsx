@@ -5,6 +5,7 @@ import { StyleSheet } from "react-native";
 import { useDispatch } from "react-redux";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { Body } from "../../../components/core/typography/Body";
 import { H3 } from "../../../components/core/typography/H3";
 import { Label } from "../../../components/core/typography/Label";
@@ -119,7 +120,7 @@ const CreditCardOnboardingAttemptDetailScreen = (props: Props) => {
       <Label color={"bluegrey"} weight={"Regular"} style={styles.padded}>
         {I18n.t("wallet.creditCard.onboardingAttempts.help")}
       </Label>
-      <View spacer={true} />
+      <VSpacer size={16} />
       <ButtonDefaultOpacity
         onPress={handleAskAssistance}
         bordered={true}
@@ -169,13 +170,13 @@ const CreditCardOnboardingAttemptDetailScreen = (props: Props) => {
             {conditionalData.header}
           </Label>
         </View>
-        <View spacer={true} />
+        <VSpacer size={16} />
         {
           <Label color={"bluegrey"} weight={"Regular"}>
             {getPanDescription(attempt)}
           </Label>
         }
-        <View spacer={true} />
+        <VSpacer size={16} />
         {attempt.failureReason && (
           <>
             <Label color={"bluegrey"} weight={"Regular"}>
@@ -183,7 +184,7 @@ const CreditCardOnboardingAttemptDetailScreen = (props: Props) => {
                 ? attempt.failureReason.reason
                 : attempt.failureReason.kind}
             </Label>
-            <View spacer={true} />
+            <VSpacer size={16} />
           </>
         )}
         {errorDescription && O.isSome(errorDescription) && (
@@ -191,7 +192,7 @@ const CreditCardOnboardingAttemptDetailScreen = (props: Props) => {
             <Label color={"bluegrey"} weight={"Regular"}>
               {errorDescription.value}
             </Label>
-            <View spacer={true} />
+            <VSpacer size={16} />
           </>
         )}
         {renderRow(

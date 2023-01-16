@@ -18,6 +18,7 @@ import {
 } from "../../../../utils/stringBuilder";
 import { BpdAmount } from "../saga/networking/amount";
 import { BpdPeriod } from "../store/actions/periods";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
 
 type Props = {
   lastUpdateDate: string;
@@ -115,7 +116,7 @@ const BpdTransactionSummaryComponent: React.FunctionComponent<Props> = (
         </InfoBox>
       </View>
 
-      <View spacer={true} />
+      <VSpacer size={16} />
 
       <Body>
         {I18n.t("bonus.bpd.details.transaction.detail.summary.body.text1")}

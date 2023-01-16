@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import wrongFormatImage from "../../../../../img/features/euCovidCert/certificate_wrong_format.png";
 import CopyButtonComponent from "../../../../components/CopyButtonComponent";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { H4 } from "../../../../components/core/typography/H4";
 import WorkunitGenericFailure from "../../../../components/error/WorkunitGenericFailure";
 import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
@@ -72,13 +73,13 @@ const EuCovidCertWrongFormatKoComponent: React.FC<{
     <H4 weight={"Regular"}>
       {I18n.t("features.euCovidCertificate.ko.wrongFormat.subtitle")}
     </H4>
-    <View spacer={true} />
+    <VSpacer size={16} />
     <CopyWithTitleItem
       title={I18n.t("features.euCovidCertificate.common.authorizationCode")}
       toCopy={currentAuthCode}
       testId={"authorizationCode"}
     />
-    <View spacer={true} />
+    <VSpacer size={16} />
     <CopyWithTitleItem
       title={I18n.t("features.euCovidCertificate.common.messageIdentifier")}
       toCopy={messageId}

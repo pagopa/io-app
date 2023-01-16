@@ -22,6 +22,7 @@ import {
   closeInjectedScript
 } from "../utils/webview";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
+import { VSpacer } from "./core/spacer/Spacer";
 import { Body as BodyText } from "./core/typography/Body";
 import { Label } from "./core/typography/Label";
 import { withLightModalContext } from "./helpers/withLightModalContext";
@@ -114,7 +115,7 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
           color={customVariables.brandDanger}
           style={styles.selfCenter}
         />
-        <View spacer={true} />
+        <VSpacer size={16} />
 
         <View style={styles.itemsCenter}>
           <Label weight={"Bold"}>{text}</Label>

@@ -10,6 +10,7 @@ import {
   formatNumberWithNoDigits
 } from "../../../../../utils/stringBuilder";
 import I18n from "../../../../../i18n";
+import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 
 type Props = {
   transactionsNumber: number;
@@ -84,7 +85,7 @@ const RankPositionItem = (props: Props): React.ReactElement => (
         </H5>
       </View>
     </View>
-    <View spacer={true} />
+    <VSpacer size={16} />
   </>
 );
 

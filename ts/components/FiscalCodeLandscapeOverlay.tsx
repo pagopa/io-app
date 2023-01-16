@@ -14,6 +14,7 @@ import { useMaxBrightness } from "../utils/brightness";
 import FiscalCodeComponent from "./FiscalCodeComponent";
 import AppHeader from "./ui/AppHeader";
 import { IOColors } from "./core/variables/IOColors";
+import { VSpacer } from "./core/spacer/Spacer";
 
 export type Props = Readonly<{
   onCancel: () => void;
@@ -100,7 +101,7 @@ const FiscalCodeLandscapeOverlay: React.FunctionComponent<Props> = (
         ref={ScrollViewRef}
         style={styles.content}
       >
-        <View spacer={true} />
+        <VSpacer size={16} />
         <View>
           <FiscalCodeComponent
             type={"Landscape"}
@@ -110,7 +111,7 @@ const FiscalCodeLandscapeOverlay: React.FunctionComponent<Props> = (
           />
         </View>
 
-        <View spacer={true} />
+        <VSpacer size={16} />
 
         <FiscalCodeComponent
           type={"Landscape"}

@@ -129,6 +129,7 @@ const styles = StyleSheet.create({
 import bonusVacanzeBg from "../../../../../img/bonus/bonusVacanze/bonus_bg.png";
 import bonusVacanzePreviewBg from "../../../../../img/bonus/bonusVacanze/bonus_preview_bg.png";
 import bonusVacanzeWhiteLogo from "../../../../../img/bonus/bonusVacanze/logo_BonusVacanze_White.png";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
 // eslint-disable-next-line sonarjs/cognitive-complexity
 const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
   const { bonus } = props;
@@ -189,7 +190,7 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
               </Badge>
             )}
           </View>
-          <View spacer={true} />
+          <VSpacer size={16} />
           <NBText style={styles.colorWhite}>
             {I18n.t("bonus.bonusVacanze.code")}
           </NBText>

@@ -9,6 +9,7 @@ import I18n from "../../../i18n";
 import { Attachment } from "../../../store/reducers/entities/messages/types";
 import customVariables from "../../../theme/variables";
 import { getPrescriptionDataFromName } from "../../../utils/messages";
+import { VSpacer } from "../../core/spacer/Spacer";
 import ItemSeparatorComponent from "../../ItemSeparatorComponent";
 
 type Props = Readonly<{
@@ -64,7 +65,7 @@ const Item = ({
           {I18n.t("global.symbols.asterisk")}
         </NBText>
       )}
-      <View spacer={true} />
+      <VSpacer size={16} />
     </View>
   );
 };
@@ -101,7 +102,7 @@ const MedicalPrescriptionAttachments = ({
 
     <ItemSeparatorComponent />
 
-    <View spacer={true} />
+    <VSpacer size={16} />
     <NBText style={[styles.note, styles.padded]}>
       {I18n.t("messages.medical.note")}
     </NBText>
