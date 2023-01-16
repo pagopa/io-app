@@ -3358,6 +3358,10 @@ idpay:
       header: Scegli quali metodi di pagamento associare
       body: "Poi, usali per pagare e chiedi all’esercente di usare {{initiativeName}}."
       footer: Modifica queste scelte o aggiunti altri metodi in qualsiasi momento dalla sezione Portafoglio
+      instrumentStatus:
+        active: Attivo 
+        pendingActivation: In attivazione
+        pendingDeactivation: In disattivazione
       buttons:
         skip: Nessuno di questi
         continue: Continua
