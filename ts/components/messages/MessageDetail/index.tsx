@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: variables.spacerLargeHeight,
     marginBottom: variables.spacerHeight
   },
-  errorViewFooter: {
+  viewFooter: {
     marginBottom: 32
   }
 });
@@ -66,6 +66,46 @@ const OrganizationTitle = ({ name, organizationName, logoURLs }: UIService) => (
     logoURLs={logoURLs}
   />
 );
+
+const renderThirdPartyAttachmentsError = () => (
+  <>
+    <AttachmentsUnavailableComponent />
+    <View style={styles.viewFooter} />
+  </>
+);
+
+const renderThirdPartyAttachmentsLoading = () => (
+  <>
+    <ActivityIndicator
+      size={"large"}
+      color={variables.brandPrimary}
+      accessible={true}
+      accessibilityHint={I18n.t("global.accessibility.activityIndicator.hint")}
+      accessibilityLabel={I18n.t(
+        "global.accessibility.activityIndicator.label"
+      )}
+      importantForAccessibility={"no-hide-descendants"}
+    />
+    <View style={styles.viewFooter} />
+  </>
+);
+
+const renderThirdPartyAttachments = (
+  thirdPartyMessage: ThirdPartyMessageWithContent
+): React.ReactNode => {
+  const thirdPartyMessageAttachments =
+    attachmentsFromThirdPartyMessage(thirdPartyMessage);
+  return thirdPartyMessageAttachments ? (
+    <View style={styles.padded}>
+      <MessageAttachments
+        attachments={thirdPartyMessageAttachments}
+        openPreview={_ => _}
+      />
+    </View>
+  ) : (
+    renderThirdPartyAttachmentsError()
+  );
+};
 
 /**
  * Render a single message with all of its details
@@ -90,48 +130,6 @@ const MessageDetailsComponent = ({
   const thirdPartyDataPot = useIOSelector(state =>
     thirdPartyFromIdSelector(state, messageId)
   );
-
-  const renderThirdPartyAttachmentsError = () => (
-    <>
-      <AttachmentsUnavailableComponent />
-      <View style={styles.errorViewFooter} />
-    </>
-  );
-
-  const renderThirdPartyAttachmentsLoading = () => (
-    <>
-      <ActivityIndicator
-        size={"large"}
-        color={variables.brandPrimary}
-        accessible={true}
-        accessibilityHint={I18n.t(
-          "global.accessibility.activityIndicator.hint"
-        )}
-        accessibilityLabel={I18n.t(
-          "global.accessibility.activityIndicator.label"
-        )}
-        importantForAccessibility={"no-hide-descendants"}
-      />
-      <View style={styles.errorViewFooter} />
-    </>
-  );
-
-  const renderThirdPartyAttachments = (
-    thirdPartyMessage: ThirdPartyMessageWithContent
-  ): React.ReactNode => {
-    const thirdPartyMessageAttachments =
-      attachmentsFromThirdPartyMessage(thirdPartyMessage);
-    return thirdPartyMessageAttachments ? (
-      <View style={styles.padded}>
-        <MessageAttachments
-          attachments={thirdPartyMessageAttachments}
-          openPreview={_ => _}
-        />
-      </View>
-    ) : (
-      renderThirdPartyAttachmentsError()
-    );
-  };
 
   useEffect(() => {
     if (hasThirdPartyDataAttachments && pot.isNone(thirdPartyDataPot)) {
