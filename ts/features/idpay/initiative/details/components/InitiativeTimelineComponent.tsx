@@ -100,9 +100,10 @@ const ConfiguredInitiativeData = (props: Props) => {
       <NBView spacer small />
       <NBList>
         {timelineList.map(transaction => (
-          <React.Fragment key={transaction.operationId}>
-            {TimelineOperationListItem({ operation: transaction })}
-          </React.Fragment>
+          <TimelineOperationListItem
+            key={transaction.operationId}
+            operation={transaction}
+          />
         ))}
       </NBList>
     </>
