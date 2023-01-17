@@ -4,7 +4,6 @@ import { pipe } from "fp-ts/lib/function";
 import { View } from "react-native";
 import { View as NBView } from "native-base";
 
-import { ShowroomSection } from "../components/ShowroomSection";
 import { LabelledItem } from "../../../components/LabelledItem";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { LabelSmall } from "../../../components/core/typography/LabelSmall";
@@ -15,11 +14,12 @@ import {
   CreditCardStateKeys,
   INITIAL_CARD_FORM_STATE
 } from "../../../utils/input";
+import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
-export const TextFieldsShowroom = () => {
+export const DSTextFields = () => {
   /*
   ALL THE FOLLOWING STATES are declared for
-  demo purposes in the UI Showroom
+  demo purposes in the Design System's section
   */
   const [creditCard, setCreditCard] = useState<CreditCardState>(
     INITIAL_CARD_FORM_STATE
@@ -37,7 +37,7 @@ export const TextFieldsShowroom = () => {
   };
 
   return (
-    <ShowroomSection title={"Text Fields"}>
+    <DesignSystemScreen title={"Text Fields"}>
       <LabelledItem
         label={"Default text field"}
         isValid={undefined}
@@ -194,8 +194,7 @@ export const TextFieldsShowroom = () => {
           importantForAccessibility="no-hide-descendants"
         >
           <LabelSmall weight="Regular" color="red">
-            When there are two lines, this custom description breaks everything
-            ¯\_(ツ)_/¯
+            With two lines, this custom description breaks everything ¯\_(ツ)_/¯
           </LabelSmall>
         </View>
       </View>
@@ -266,6 +265,8 @@ export const TextFieldsShowroom = () => {
         // accessibilityLabel={accessibilityLabels.pan}
         testID={"pan"}
       />
-    </ShowroomSection>
+
+      <NBView spacer={true} extralarge={true} />
+    </DesignSystemScreen>
   );
 };

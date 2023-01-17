@@ -35,7 +35,10 @@ import entitiesReducer, {
   entitiesPersistConfig,
   EntitiesState
 } from "./entities";
-import identificationReducer, { IdentificationState } from "./identification";
+import identificationReducer, {
+  IdentificationState,
+  INITIAL_STATE as identificationInitialState
+} from "./identification";
 import installationReducer from "./installation";
 import { navigationReducer } from "./navigation";
 import notificationsReducer from "./notifications";
@@ -52,6 +55,7 @@ import { GlobalState } from "./types";
 import userDataProcessingReducer from "./userDataProcessing";
 import userMetadataReducer from "./userMetadata";
 import walletReducer from "./wallet";
+import { WALLETS_INITIAL_STATE as walletsInitialState } from "./wallet/wallets";
 
 // A custom configuration to store the authentication into the Keychain
 export const authenticationPersistConfig: PersistConfig = {
@@ -155,48 +159,71 @@ export function createRootReducer(
        */
       // for retro-compatibility
       // eslint-disable-next-line no-param-reassign
-      state =
-        state &&
-        ((isActionOf(logoutSuccess, action) && !action.payload.keepUserData) ||
-          (isActionOf(logoutFailure, action) &&
-            !action.payload.options.keepUserData))
-          ? ({
-              authentication: {
-                ...autenticationInitialState,
+      state = state
+        ? ({
+            authentication: {
+              ...autenticationInitialState,
+              // eslint-disable-next-line no-underscore-dangle
+              _persist: state.authentication._persist
+            },
+            // backend status must be kept
+            backendStatus: state.backendStatus,
+            // keep servicesMetadata from content section
+            content: {
+              ...contentInitialContentState
+            },
+            // keep hashed fiscal code
+            crossSessions: state.crossSessions,
+            // data should be kept across multiple sessions
+            entities: {
+              services: state.entities.services,
+              organizations: state.entities.organizations,
+              messagesStatus: state.entities.messagesStatus,
+              paymentByRptId: state.entities.paymentByRptId,
+              calendarEvents: state.entities.calendarEvents,
+              transactionsRead: state.entities.transactionsRead,
+              // eslint-disable-next-line no-underscore-dangle
+              _persist: state.entities._persist
+            },
+            features: {
+              mvl: {
                 // eslint-disable-next-line no-underscore-dangle
-                _persist: state.authentication._persist
+                _persist: state.features.mvl._persist
               },
-              // data should be kept across multiple sessions
-              entities: {
-                services: state.entities.services,
-                organizations: state.entities.organizations,
-                messagesStatus: state.entities.messagesStatus,
-                paymentByRptId: state.entities.paymentByRptId,
-                calendarEvents: state.entities.calendarEvents,
-                transactionsRead: state.entities.transactionsRead
+              pn: {
+                // eslint-disable-next-line no-underscore-dangle
+                _persist: state.features.pn._persist
               },
-              // backend status must be kept
-              backendStatus: state.backendStatus,
-              crossSessions: state.crossSessions,
-              // keep servicesMetadata from content section
-              content: {
-                ...contentInitialContentState
-              },
-              // isMixpanelEnabled must be kept
-              persistedPreferences: {
-                ...initialPreferencesState,
-                isMixpanelEnabled: state.persistedPreferences.isMixpanelEnabled
-              },
-              // notifications must be kept
-              notifications: {
-                ...state.notifications
-              },
-              // payments must be kept
-              payments: {
-                ...state.payments
+              // eslint-disable-next-line no-underscore-dangle
+              _persist: state.features._persist
+            },
+            identification: {
+              ...identificationInitialState,
+              // eslint-disable-next-line no-underscore-dangle
+              _persist: state.identification._persist
+            },
+            // notifications must be kept
+            notifications: {
+              ...state.notifications
+            },
+            // payments must be kept
+            payments: {
+              ...state.payments
+            },
+            // isMixpanelEnabled must be kept
+            persistedPreferences: {
+              ...initialPreferencesState,
+              isMixpanelEnabled: state.persistedPreferences.isMixpanelEnabled
+            },
+            wallet: {
+              wallets: {
+                ...walletsInitialState,
+                // eslint-disable-next-line no-underscore-dangle
+                _persist: state.wallet.wallets._persist
               }
-            } as GlobalState)
-          : state;
+            }
+          } as GlobalState)
+        : state;
     }
 
     return appReducer(state, action);
