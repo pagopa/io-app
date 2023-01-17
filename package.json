@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "2.23.0-rc.2",
+  "version": "2.24.0-rc.0",
   "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v9.2.0-RELEASE/api_backend.yaml",
   "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v9.2.0-RELEASE/api_public.yaml",
   "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.20/definitions.yml",
@@ -26,7 +26,7 @@
   "idpay_onboarding": "https://raw.githubusercontent.com/pagopa/cstar-infrastructure/v1.70.0/src/domains/idpay-app/api/idpay_onboarding_workflow/openapi.onboarding.yml",
   "idpay_wallet": "https://raw.githubusercontent.com/pagopa/cstar-infrastructure/v1.70.0/src/domains/idpay-app/api/idpay_wallet/openapi.wallet.yml",
   "idpay_timeline": "https://raw.githubusercontent.com/pagopa/cstar-infrastructure/v1.87.0/src/domains/idpay-app/api/idpay_timeline/openapi.timeline.yml",
-  "idpay_iban": "https://raw.githubusercontent.com/pagopa/cstar-infrastructure/v1.81.2/src/domains/idpay-app/api/idpay_iban/openapi.iban.yml",
+  "idpay_iban": "https://raw.githubusercontent.com/pagopa/cstar-infrastructure/v1.101.0/src/domains/idpay-app/api/idpay_iban/openapi.iban.yml",
   "private": true,
   "scripts": {
     "start": "react-native start",

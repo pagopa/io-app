@@ -387,7 +387,7 @@ profile:
             description:
               one: "IO raccoglie solo le informazioni "
               two: "necessarie "
-              three: "per il funzionamento dei servizi offerti."
+              three: "per il funzionamento e il miglioramento dei servizi offerti."
             cta: "Perché?"
           security:
             description:
@@ -3302,6 +3302,10 @@ idpay:
       validThrough: "Valido fino al {{endDate}}"
   initiative:
     configuration: 
+      instrumentStatus:
+        active: Attivo 
+        pendingActivation: In attivazione
+        pendingDeactivation: In disattivazione
       bottomSheet:
         header: Prima di continuare
         bodyFirst: Il metodo sarà abilitato
