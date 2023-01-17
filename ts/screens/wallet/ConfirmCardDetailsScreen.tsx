@@ -6,16 +6,16 @@ import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Content, View } from "native-base";
+import { Content } from "native-base";
 import * as React from "react";
-import { Alert, SafeAreaView, StyleSheet } from "react-native";
+import { View, Alert, SafeAreaView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import image from "../../../img/wallet/errors/payment-unavailable-icon.png";
 import { InfoBox } from "../../components/box/InfoBox";
-import { VSpacer } from "../../components/core/spacer/Spacer";
+import { HSpacer, VSpacer } from "../../components/core/spacer/Spacer";
 import { H1 } from "../../components/core/typography/H1";
 import { H4 } from "../../components/core/typography/H4";
 import { H5 } from "../../components/core/typography/H5";
@@ -289,7 +289,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
                 {I18n.t("wallet.saveCard.info")}
               </H5>
             </View>
-            <View hspacer={true} />
+            <HSpacer size={16} />
             <View style={{ paddingTop: 7 }}>
               <Switch
                 value={this.state.setAsFavourite}

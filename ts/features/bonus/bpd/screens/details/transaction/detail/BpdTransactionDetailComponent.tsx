@@ -2,7 +2,10 @@ import { Badge, Text as NBText, View } from "native-base";
 import * as React from "react";
 import { Image, StyleSheet } from "react-native";
 import CopyButtonComponent from "../../../../../../../components/CopyButtonComponent";
-import { VSpacer } from "../../../../../../../components/core/spacer/Spacer";
+import {
+  HSpacer,
+  VSpacer
+} from "../../../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../../../components/core/typography/Body";
 import { H4 } from "../../../../../../../components/core/typography/H4";
 import { H5 } from "../../../../../../../components/core/typography/H5";
@@ -120,7 +123,7 @@ const Table = (props: Props) => {
           {props.transaction.amount < 0 && (
             <>
               <CancelBadge />
-              <View hspacer={true} />
+              <HSpacer size={16} />
             </>
           )}
           <H4 weight={"SemiBold"} color={"bluegreyDark"}>

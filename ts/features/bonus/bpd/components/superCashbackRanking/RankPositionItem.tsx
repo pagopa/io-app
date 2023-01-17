@@ -1,6 +1,6 @@
 import * as React from "react";
-import { Badge, View, Text as NBText } from "native-base";
-import { Platform, StyleSheet } from "react-native";
+import { Badge, Text as NBText } from "native-base";
+import { View, Platform, StyleSheet } from "react-native";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { H5 } from "../../../../../components/core/typography/H5";
@@ -10,7 +10,7 @@ import {
   formatNumberWithNoDigits
 } from "../../../../../utils/stringBuilder";
 import I18n from "../../../../../i18n";
-import { VSpacer } from "../../../../../components/core/spacer/Spacer";
+import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
 
 type Props = {
   transactionsNumber: number;
@@ -62,7 +62,7 @@ const RankPositionItem = (props: Props): React.ReactElement => (
           {props.boxedLabel}
         </H4>
       </View>
-      <View hspacer={true} />
+      <HSpacer size={16} />
       <View style={IOStyles.flex}>
         <View style={[IOStyles.row, { justifyContent: "space-between" }]}>
           <H4 testID={"RankingLabel"}>{props.rankingLabel}</H4>

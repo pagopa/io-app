@@ -1,7 +1,7 @@
-import { Content, View } from "native-base";
+import { Content } from "native-base";
 import URLParse from "url-parse";
 import * as React from "react";
-import { SafeAreaView, StyleSheet, TextInput } from "react-native";
+import { View, SafeAreaView, StyleSheet, TextInput } from "react-native";
 import { connect } from "react-redux";
 import CookieManager, { Cookie } from "@react-native-cookies/cookies";
 import { Label } from "../../components/core/typography/Label";
@@ -16,7 +16,7 @@ import IconFont from "../../components/ui/IconFont";
 import { LabelledItem } from "../../components/LabelledItem";
 import { showToast } from "../../utils/showToast";
 import { IOColors } from "../../components/core/variables/IOColors";
-import { VSpacer } from "../../components/core/spacer/Spacer";
+import { HSpacer, VSpacer } from "../../components/core/spacer/Spacer";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
@@ -82,7 +82,7 @@ const WebPlayground: React.FunctionComponent<Props> = (props: Props) => {
               onChangeText={handleUriInput}
               value={navigationURI}
             />
-            <View hspacer={true} />
+            <HSpacer size={16} />
             <ButtonDefaultOpacity
               style={styles.contentCenter}
               onPress={() => setLoadUri(navigationURI)}

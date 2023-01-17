@@ -1,12 +1,12 @@
 import { useLinkTo } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
-import { Content, View } from "native-base";
+import { Content } from "native-base";
 import React, { useCallback } from "react";
-import { SafeAreaView, StyleSheet, TextInput } from "react-native";
+import { View, SafeAreaView, StyleSheet, TextInput } from "react-native";
 import { CreatedMessageWithContent } from "../../../../definitions/backend/CreatedMessageWithContent";
 import { MessageBodyMarkdown } from "../../../../definitions/backend/MessageBodyMarkdown";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
+import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";
 import { Label } from "../../../components/core/typography/Label";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { ExtractedCtaButton } from "../../../components/cta/ExtractedCtaButton";
@@ -64,7 +64,7 @@ const MarkdownPlayground = () => {
               onChangeText={setInputText}
               value={inputText}
             />
-            <View hspacer={true} />
+            <HSpacer size={16} />
             <View>
               <ButtonDefaultOpacity
                 style={styles.contentCenter}

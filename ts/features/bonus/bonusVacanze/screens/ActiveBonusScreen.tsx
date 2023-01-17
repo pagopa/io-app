@@ -3,10 +3,11 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Badge, Text as NBText, Toast, View } from "native-base";
+import { Badge, Text as NBText, Toast } from "native-base";
 import * as React from "react";
 import { useCallback } from "react";
 import {
+  View,
   Animated,
   Easing,
   SafeAreaView,
@@ -73,7 +74,7 @@ import {
   isBonusActive,
   validityInterval
 } from "../utils/bonus";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
+import { HSpacer, VSpacer } from "../../../../components/core/spacer/Spacer";
 import { ActivateBonusDiscrepancies } from "./activation/request/ActivateBonusDiscrepancies";
 
 type QRCodeContents = {
@@ -504,7 +505,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
             size={variables.iconSize3}
             style={styles.icon}
           />
-          <View hspacer={true} />
+          <HSpacer size={16} />
           <NBText style={[styles.flex, styles.validUntil]} bold={true}>
             {text}
           </NBText>
