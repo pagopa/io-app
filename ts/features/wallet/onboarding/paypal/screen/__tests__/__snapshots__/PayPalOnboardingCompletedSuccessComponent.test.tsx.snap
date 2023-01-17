@@ -611,12 +611,9 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                                         >
                                           <View
                                             style={
-                                              Array [
-                                                Object {},
-                                                Object {
-                                                  "flexDirection": "row",
-                                                },
-                                              ]
+                                              Object {
+                                                "flexDirection": "row",
+                                              }
                                             }
                                           >
                                             <View

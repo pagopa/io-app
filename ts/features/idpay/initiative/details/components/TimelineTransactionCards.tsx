@@ -1,10 +1,11 @@
-import { ListItem, Text, View } from "native-base";
+import { ListItem, Text } from "native-base";
 import React from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { IbanOperationDTO } from "../../../../../../definitions/idpay/timeline/IbanOperationDTO";
 import { InstrumentOperationDTO } from "../../../../../../definitions/idpay/timeline/InstrumentOperationDTO";
 import { OnboardingOperationDTO } from "../../../../../../definitions/idpay/timeline/OnboardingOperationDTO";
 import { TransactionOperationDTO } from "../../../../../../definitions/idpay/timeline/TransactionOperationDTO";
+import { HSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -40,7 +41,7 @@ export const TimelineTransactionCard = ({
 }: TransactionProps<TransactionOperationDTO>) => (
   <BaseTransactionCard>
     <Text>LOGO</Text>
-    <View hspacer />
+    <HSpacer size={16} />
     <View style={IOStyles.flex}>
       <H4>{transaction.operationType}</H4>
       <LabelSmall weight="Regular" color="bluegrey">
@@ -60,7 +61,7 @@ export const OnboardingTransactionCard = ({
 }: TransactionProps<OnboardingOperationDTO>) => (
   <BaseTransactionCard>
     <Text>LOGO</Text>
-    <View hspacer />
+    <HSpacer size={16} />
     <View style={IOStyles.flex}>
       <H4>{transaction.operationType}</H4>
       <LabelSmall weight="Regular" color="bluegrey">
@@ -77,7 +78,7 @@ export const InstrumentOnboardingCard = ({
 }: TransactionProps<InstrumentOperationDTO>) => (
   <BaseTransactionCard>
     <Text>LOGO</Text>
-    <View hspacer />
+    <HSpacer size={16} />
     <View style={IOStyles.flex}>
       <H4>
         {transaction.operationType} {transaction.maskedPan}
@@ -96,7 +97,7 @@ export const IbanOnboardingCard = ({
 }: TransactionProps<IbanOperationDTO>) => (
   <BaseTransactionCard>
     <Text>IBANLOGO</Text>
-    <View hspacer />
+    <HSpacer size={16} />
     <View style={IOStyles.flex}>
       <H4>{transaction.operationType}</H4>
       <LabelSmall weight="Regular" color="bluegrey">

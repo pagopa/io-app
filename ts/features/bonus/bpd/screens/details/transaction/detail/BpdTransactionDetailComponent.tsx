@@ -180,7 +180,7 @@ export const BpdTransactionDetailComponent: React.FunctionComponent<Props> =
             style={styles.image}
             resizeMode={"contain"}
           />
-          <View hspacer={true} small={true} />
+          <HSpacer size={8} />
           <H4>{props.transaction.title}</H4>
         </View>
         <VSpacer size={16} />
