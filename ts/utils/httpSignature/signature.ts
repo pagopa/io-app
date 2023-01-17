@@ -1,4 +1,5 @@
 import { getError } from "../errors";
+import { SignatureAlgorithm } from "./types/SignatureAlgorithms";
 import { Config } from "./types/Config";
 import { constants } from "./constants";
 
@@ -140,7 +141,10 @@ function generateSignatureInput(
     signatureInputPayload += `"${param}" `;
   });
 
-  return generateSignatureInputValue(signatureInputPayload);
+  return generateSignatureInputValue(
+    signatureInputPayload,
+    config.signAlgorithm
+  );
 }
 
 /**
@@ -152,12 +156,13 @@ function generateSignatureInput(
  */
 function generateSignatureInputValue(
   payload: string,
+  signAlgorithm: SignatureAlgorithm,
   signatureOrdinal: number = 1
 ): string {
   const unixTimestamp = getUnixTimestamp();
   return `${constants.SIGNATURE_PREFIX(
     signatureOrdinal
-  )}(${payload.trim()});created=${unixTimestamp}`;
+  )}(${payload.trim()});created=${unixTimestamp};alg=${signAlgorithm}`;
 }
 
 /**
