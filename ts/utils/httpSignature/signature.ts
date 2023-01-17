@@ -8,6 +8,7 @@ import { constants } from "./constants";
  * @param {string} headerParameter - The name of the header parameter.
  * @param {Config} config - The config.
  * @returns {string} The string value of the header parameter.
+ * @throws {Error} if an unknown header parameter is found.
  */
 function getHttpSignatureHeaderParameterFromConfig(
   headerParameter: string,
@@ -48,8 +49,12 @@ function getHttpSignatureHeaderParameterFromConfig(
  * @param {ReadOnlyRecord<string, string>} headers The HTTP request headers.
  * @param {Config} config The config.
  * @returns {string} baseString The base string.
+ * @throws {Error} if needed data is missing or unknown.
  */
-function generateBase(headers: Record<string, string>, config: Config): string {
+function generateSignatureBase(
+  headers: Record<string, string>,
+  config: Config
+): string {
   try {
     // eslint-disable-next-line functional/no-let
     let baseString: string = "";
@@ -63,9 +68,7 @@ function generateBase(headers: Record<string, string>, config: Config): string {
         return;
       }
 
-      baseString += '"';
-      baseString += headerParameter.toLowerCase();
-      baseString += '": ';
+      baseString += `"${headerParameter.toLowerCase()}": `;
 
       if (headerParameter.startsWith("@")) {
         baseString += getHttpSignatureHeaderParameterFromConfig(
@@ -96,9 +99,7 @@ function generateBase(headers: Record<string, string>, config: Config): string {
     // eslint-disable-next-line functional/no-let
     for (let i = 0; i < signatureParams.length; i++) {
       const param = signatureParams[i];
-      signatureInputBuf += '"';
-      signatureInputBuf += param;
-      signatureInputBuf += '"';
+      signatureInputBuf += `"${param}"`;
       if (i < signatureParams.length - 1) {
         signatureInputBuf += " ";
       }
@@ -112,7 +113,7 @@ function generateBase(headers: Record<string, string>, config: Config): string {
 
     return baseString;
   } catch (e) {
-    throw new Error(`Error calculating signature base: ${getError(e).message}`);
+    throw new Error(`Error creating signature base: ${getError(e).message}`);
   }
 }
 
@@ -159,4 +160,4 @@ function getUnixTimestamp(): number {
   return Math.floor(Date.now() / 1000);
 }
 
-export { generateBase, getUnixTimestamp, generateSignatureInput };
+export { generateSignatureBase, getUnixTimestamp, generateSignatureInput };

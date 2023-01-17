@@ -1,6 +1,6 @@
 import MockDate from "mockdate";
 import { constants } from "../constants";
-import { generateSignatureInput } from "../signature";
+import { generateSignatureInput, generateSignatureBase } from "../signature";
 
 // eslint-disable-next-line functional/no-let
 const testHeaders: Record<any, string> = {
@@ -45,5 +45,31 @@ describe(`Test signature input generation with "${constants.HEADERS.CONTENT_DIGE
     expect(signatureInput).toBe(
       'sig1=("content-digest" "@method" "@path" "@authority");created=1623029400'
     );
+  });
+});
+
+describe(`Test generate signature base`, () => {
+  it(`without "${constants.HEADERS.CONTENT_DIGEST}" for config ${testConfig}`, () => {
+    const signatureBase = generateSignatureBase(testHeaders, testConfig);
+    const expectedBase = `"@method": POST
+"@path": /hello
+"@authority": example.com
+"@signature-params": ("content-digest" "@method" "@path" "@authority");created=1623029400`;
+    expect(signatureBase).toBe(expectedBase);
+  });
+});
+
+describe(`Test generate signature base`, () => {
+  it(`with "${constants.HEADERS.CONTENT_DIGEST}" for config ${testConfig}`, () => {
+    const signatureBase = generateSignatureBase(
+      testHeadersWithContentDigest,
+      testConfig
+    );
+    const expectedBase = `"content-digest": sha-256=:eNJnazvTtWDD2IoIlFZca3TDmPd3BpaM2GDcn4/bnSk=:
+"@method": POST
+"@path": /hello
+"@authority": example.com
+"@signature-params": ("content-digest" "@method" "@path" "@authority");created=1623029400`;
+    expect(signatureBase).toBe(expectedBase);
   });
 });
