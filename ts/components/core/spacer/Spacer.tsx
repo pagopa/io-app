@@ -17,7 +17,7 @@ type SpacerProps = {
 const DEFAULT_SIZE = 16;
 
 /* Debug Mode */
-const DEBUG_MODE = false;
+const debugMode = false;
 const debugBg = hexToRgba(IOColors.red, 0.2);
 
 /**
@@ -36,7 +36,7 @@ const Spacer = ({ orientation, size }: BaseSpacerProps) => (
           width: size
         })
       },
-      DEBUG_MODE && {
+      debugMode && {
         backgroundColor: debugBg
       }
     ]}
