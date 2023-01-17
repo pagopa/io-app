@@ -54,11 +54,14 @@ describe(`Test signature input generation with "${constants.HEADERS.CONTENT_DIGE
 
 describe(`Test generate signature base`, () => {
   it(`without "${constants.HEADERS.CONTENT_DIGEST}" for config ${testConfig}`, () => {
-    const signatureBase = generateSignatureBase(testHeaders, testConfig);
+    const signatureBase = generateSignatureBase(
+      testHeaders,
+      testConfig
+    ).signatureBase;
     const expectedBase = `"@method": POST
 "@path": /hello
 "@authority": example.com
-"@signature-params": ("content-digest" "@method" "@path" "@authority");created=1623029400`;
+"@signature-params": ("@method" "@path" "@authority");created=1623029400`;
     expect(signatureBase).toBe(expectedBase);
   });
 });
@@ -68,7 +71,7 @@ describe(`Test generate signature base`, () => {
     const signatureBase = generateSignatureBase(
       testHeadersWithContentDigest,
       testConfig
-    );
+    ).signatureBase;
     const expectedBase = `"content-digest": sha-256=:eNJnazvTtWDD2IoIlFZca3TDmPd3BpaM2GDcn4/bnSk=:
 "@method": POST
 "@path": /hello

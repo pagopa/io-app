@@ -43,19 +43,24 @@ function getHttpSignatureHeaderParameterFromConfig(
   return returnString;
 }
 
+export type SignatureBaseResult = {
+  signatureBase: string;
+  signatureInput: string;
+};
+
 /**
  * Generates the base string.
  * https://www.ietf.org/archive/id/draft-ietf-httpbis-message-signatures-15.html#name-creating-the-signature-base
  *
  * @param {ReadOnlyRecord<string, string>} headers - The HTTP request headers.
  * @param {Config} config - The config.
- * @returns {string} baseString The base string.
+ * @returns {SignatureBaseResult} signature base and input strings.
  * @throws {Error} if needed data is missing or unknown.
  */
 function generateSignatureBase(
   headers: Record<string, string>,
   config: Config
-): string {
+): SignatureBaseResult {
   try {
     // eslint-disable-next-line functional/no-let
     let baseString: string = "";
@@ -91,22 +96,20 @@ function generateSignatureBase(
 
     baseString += '"@signature-params": ';
 
-    // eslint-disable-next-line functional/no-let
-    let signatureInput: string = "(";
-
-    // eslint-disable-next-line functional/no-let
-    for (let i = 0; i < signatureParams.length; i++) {
-      const param = signatureParams[i];
-      signatureInput += `"${param}"${
-        i < signatureParams.length - 1 ? " " : ""
-      }`;
-    }
-
-    signatureInput += `);created=${getUnixTimestamp()}`;
-
+    /**
+     * https://www.ietf.org/archive/id/draft-ietf-httpbis-message-signatures-15.html#name-verifying-a-signature
+     *
+     * The value of the @signature-params input is the value of the Signature-Input
+     * field for this signature serialized according to the rules described in Section 2.3.
+     * Note that this does not include the signature's label from the Signature-Input field.
+     */
+    const signatureInput = generateSignatureInput(headers, config).replace(
+      constants.SIGNATURE_PREFIX(),
+      ""
+    );
     baseString = baseString + signatureInput;
 
-    return baseString;
+    return { signatureBase: baseString, signatureInput };
   } catch (e) {
     throw new Error(`Error creating signature base: ${getError(e).message}`);
   }
@@ -170,7 +173,7 @@ function generateSignature(
   config: Config,
   keyTag: string
 ): string {
-  const baseString = generateSignatureBase(headers, config);
+  const baseString = generateSignatureBase(headers, config).signatureBase;
   const privateKey = keyTag; // TODO: to be used with io-react-native-crypto
 
   return generateSignatureValue(baseString, privateKey);
