@@ -92,23 +92,17 @@ function generateSignatureBase(
     baseString += '"@signature-params": ';
 
     // eslint-disable-next-line functional/no-let
-    let signatureInput: string = "";
-    // eslint-disable-next-line functional/no-let
-    let signatureInputBuf: string = "";
-    signatureInputBuf += "(";
+    let signatureInput: string = "(";
 
     // eslint-disable-next-line functional/no-let
     for (let i = 0; i < signatureParams.length; i++) {
       const param = signatureParams[i];
-      signatureInputBuf += `"${param}"`;
-      if (i < signatureParams.length - 1) {
-        signatureInputBuf += " ";
-      }
+      signatureInput += `"${param}"${
+        i < signatureParams.length - 1 ? " " : ""
+      }`;
     }
 
-    signatureInputBuf += ");created=";
-    signatureInputBuf += getUnixTimestamp().toString();
-    signatureInput = signatureInputBuf.toString();
+    signatureInput += `);created=${getUnixTimestamp()}`;
 
     baseString = baseString + signatureInput;
 
