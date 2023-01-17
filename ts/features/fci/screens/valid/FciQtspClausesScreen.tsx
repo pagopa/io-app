@@ -2,6 +2,7 @@ import * as React from "react";
 import { SafeAreaView, FlatList, View } from "react-native";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
+import { constNull } from "fp-ts/lib/function";
 import { H1 } from "../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
@@ -19,7 +20,13 @@ import customVariables from "../../../../theme/variables";
 import QtspClauseListItem from "../../components/QtspClauseListItem";
 import { FCI_ROUTES } from "../../navigation/routes";
 import { useIODispatch } from "../../../../store/hooks";
-import { fciStartSigningRequest } from "../../store/actions";
+import { fciEndRequest, fciStartSigningRequest } from "../../store/actions";
+import { LoadingErrorComponent } from "../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import {
+  fciPollFilledDocumentErrorSelector,
+  fciPollFilledDocumentReadySelector
+} from "../../store/reducers/fciPollFilledDocument";
+import GenericErrorComponent from "../../components/GenericErrorComponent";
 import LinkedText from "../../components/LinkedText";
 
 const FciQtspClausesScreen = () => {
@@ -27,6 +34,13 @@ const FciQtspClausesScreen = () => {
   const qtspClausesSelector = useSelector(fciQtspClausesSelector);
   const qtspPrivacyTextSelector = useSelector(fciQtspPrivacyTextSelector);
   const qtspPrivacyUrlSelector = useSelector(fciQtspPrivacyUrlSelector);
+  const isPollFilledDocumentReady = useSelector(
+    fciPollFilledDocumentReadySelector
+  );
+  const fciPollFilledDocumentError = useSelector(
+    fciPollFilledDocumentErrorSelector
+  );
+
   const navigation = useNavigation();
   const dispatch = useIODispatch();
 
@@ -36,6 +50,21 @@ const FciQtspClausesScreen = () => {
   const openUrl = (url: string) => {
     navigation.navigate(FCI_ROUTES.DOC_PREVIEW, { documentUrl: url });
   };
+
+  const LoadingComponent = () => (
+    <LoadingErrorComponent
+      isLoading={true}
+      loadingCaption={""}
+      onRetry={constNull}
+      testID={"FciLoadingScreenTestID"}
+    />
+  );
+
+  if (fciPollFilledDocumentError && !isPollFilledDocumentReady) {
+    return <GenericErrorComponent onPress={() => dispatch(fciEndRequest())} />;
+  } else if (!isPollFilledDocumentReady) {
+    return <LoadingComponent />;
+  }
 
   const renderClausesFields = () => (
     <View style={{ flex: 1 }}>
