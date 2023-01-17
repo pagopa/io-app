@@ -39,6 +39,36 @@ export const TimelineOperationListItem = ({
   operation
 }: TimelineOperationCardProps) => {
   const hasAmount = "amount" in operation;
+  const renderOperationIcon = (operation: OperationListDTO) => {
+    if ("brandLogo" in operation) {
+      return (
+        <Image style={styles.imageSize} source={{ uri: operation.brandLogo }} />
+      );
+    }
+    switch (operation.operationType) {
+      case OnboardingOperationTypeEnum.ONBOARDING:
+        return <Icon name={"bonus"} color="blue" />;
+      case IbanOperationTypeEnum.ADD_IBAN:
+        return <Icon name={"amount"} color="bluegreyLight" />;
+      case RefundOperationTypeEnum.PAID_REFUND:
+        return <Icon name={"reload"} color="bluegreyLight" />;
+      case RefundOperationTypeEnum.REJECTED_REFUND:
+        return <Icon name={"error"} color="bluegreyLight" />;
+      default:
+        return null;
+    }
+  };
+
+  const renderOperationTitle = () =>
+    "maskedPan" in operation
+      ? I18n.t(
+          `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.${operation.operationType}`,
+          { maskedPan: operation.maskedPan }
+        )
+      : I18n.t(
+          `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.${operation.operationType}`
+        );
+
   return (
     <ListItem style={styles.spaceBetween}>
       <View
@@ -52,16 +82,7 @@ export const TimelineOperationListItem = ({
         {renderOperationIcon(operation)}
         <View hspacer />
         <View style={IOStyles.flex}>
-          <H4>
-            {"maskedPan" in operation
-              ? I18n.t(
-                  `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.${operation.operationType}`,
-                  { maskedPan: operation.maskedPan }
-                )
-              : I18n.t(
-                  `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.${operation.operationType}`
-                )}
-          </H4>
+          <H4>{renderOperationTitle()}</H4>
           <LabelSmall weight="Regular" color="bluegrey">
             {`${formatDateAsShortFormat(
               operation.operationDate
@@ -78,24 +99,4 @@ export const TimelineOperationListItem = ({
       </View>
     </ListItem>
   );
-};
-
-const renderOperationIcon = (operation: OperationListDTO) => {
-  if ("brandLogo" in operation) {
-    return (
-      <Image style={styles.imageSize} source={{ uri: operation.brandLogo }} />
-    );
-  }
-  switch (operation.operationType) {
-    case OnboardingOperationTypeEnum.ONBOARDING:
-      return <Icon name={"bonus"} color="blue" />;
-    case IbanOperationTypeEnum.ADD_IBAN:
-      return <Icon name={"amount"} color="bluegreyLight" />;
-    case RefundOperationTypeEnum.PAID_REFUND:
-      return <Icon name={"reload"} color="bluegreyLight" />;
-    case RefundOperationTypeEnum.REJECTED_REFUND:
-      return <Icon name={"error"} color="bluegreyLight" />;
-    default:
-      return null;
-  }
 };
