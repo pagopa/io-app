@@ -3341,6 +3341,8 @@ idpay:
             selectedIBAN: IBAN per l'accredito
             actionsRequired: Azioni richieste 
           startConfigurationCTA: Inizia
+    operationDetails:
+      title: Dettaglio dell'operazione
   onboarding:
     headerTitle: "Adesione all'iniziativa"
     beforeContinue:
