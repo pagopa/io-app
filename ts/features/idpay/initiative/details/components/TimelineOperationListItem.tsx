@@ -99,4 +99,3 @@ const renderOperationIcon = (operation: OperationListDTO) => {
       return null;
   }
 };
-
