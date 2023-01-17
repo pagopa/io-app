@@ -56,7 +56,7 @@ export type InitiativeDetailsScreenParams = {
 
 type InitiativeDetailsScreenRouteProps = RouteProp<
   IDPayDetailsParamsList,
-  "IDPAY_DETAILS_HOME"
+  "IDPAY_DETAILS_MONITORING"
 >;
 
 const InitiativeNotConfiguredComponent = ({

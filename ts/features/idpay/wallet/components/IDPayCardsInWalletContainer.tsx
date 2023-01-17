@@ -21,7 +21,7 @@ const IDPayCardsList = (props: Props) => {
 
   const handleCardPress = (initiativeId: string) => {
     navigation.navigate(IDPayDetailsRoutes.IDPAY_DETAILS_MAIN, {
-      screen: IDPayDetailsRoutes.IDPAY_DETAILS_HOME,
+      screen: IDPayDetailsRoutes.IDPAY_DETAILS_MONITORING,
       params: { initiativeId }
     });
   };
