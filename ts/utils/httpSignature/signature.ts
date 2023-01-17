@@ -45,9 +45,10 @@ function getHttpSignatureHeaderParameterFromConfig(
 
 /**
  * Generates the base string.
+ * https://www.ietf.org/archive/id/draft-ietf-httpbis-message-signatures-15.html#name-creating-the-signature-base
  *
- * @param {ReadOnlyRecord<string, string>} headers The HTTP request headers.
- * @param {Config} config The config.
+ * @param {ReadOnlyRecord<string, string>} headers - The HTTP request headers.
+ * @param {Config} config - The config.
  * @returns {string} baseString The base string.
  * @throws {Error} if needed data is missing or unknown.
  */
@@ -118,23 +119,19 @@ function generateSignatureBase(
 }
 
 /**
- * Generates the Signature-Input header value for the input payload.
+ * Generates the 'Signature-Input' header value for provided config and headers.
+ * https://www.ietf.org/archive/id/draft-ietf-httpbis-message-signatures-15.html#name-the-signature-input-http-fi
  *
- * @param {Record<string, string>} headers The HTTP headers.
- * @param {Config} config The input config.
- * @returns {string} the 'Signature-Input' header value.
+ * @param {Record<string, string>} headers - The HTTP headers.
+ * @param {Config} config - The input config.
+ * @returns {string} - the 'Signature-Input' header value.
  */
 function generateSignatureInput(
   headers: Record<string, string>,
-  config: Config,
-  signatureOrdinal: number = 1
+  config: Config
 ): string {
-  const unixTimestamp = getUnixTimestamp();
   // eslint-disable-next-line functional/no-let
-  let signatureInput: string = `${constants.SIGNATURE_PREFIX(
-    signatureOrdinal
-  )}(`;
-
+  let signatureInputPayload: string = "";
   config.signatureParams.forEach(param => {
     if (
       param === constants.HEADERS.CONTENT_DIGEST &&
@@ -143,12 +140,69 @@ function generateSignatureInput(
       return;
     }
 
-    signatureInput += `"${param}" `;
+    signatureInputPayload += `"${param}" `;
   });
 
-  signatureInput = signatureInput.trim() + `);created=${unixTimestamp}`;
+  return generateSignatureInputValue(signatureInputPayload);
+}
 
-  return signatureInput;
+/**
+ * Generates the 'Signature-Input' header value for a string payload.
+ *
+ * @param {string} payload
+ * @param {number} signatureOrdinal
+ * @returns the 'Signature-Input' header value.
+ */
+function generateSignatureInputValue(
+  payload: string,
+  signatureOrdinal: number = 1
+): string {
+  const unixTimestamp = getUnixTimestamp();
+  return `${constants.SIGNATURE_PREFIX(
+    signatureOrdinal
+  )}(${payload.trim()});created=${unixTimestamp}`;
+}
+
+/**
+ * Generates the 'Signature' header value for provided config and headers.
+ * https://www.ietf.org/archive/id/draft-ietf-httpbis-message-signatures-15.html#name-http-message-signatures
+ *
+ * @param {Record<string, string>} headers The HTTP headers.
+ * @param {Config} config The input config.
+ * @returns {string} the signature header value.
+ */
+function generateSignature(
+  headers: Record<string, string>,
+  config: Config,
+  keyTag: string
+): string {
+  const baseString = generateSignatureBase(headers, config);
+  const privateKey = keyTag; // TODO: to be used with io-react-native-crypto
+
+  return generateSignatureValue(baseString, privateKey);
+}
+
+/**
+ * Generate the 'Signature' header value for a string payload.
+ *
+ * @param {string} payload - the string payload to sign.
+ * @param {string} keyTag - the tag name of the private key to be used to sign the payload.
+ * @param {number} signatureOrdinal - the signature ordinal.
+ * @returns the signature header value.
+ */
+function generateSignatureValue(
+  payload: string,
+  keyTag: string,
+  signatureOrdinal: number = 1
+): string {
+  const signature: string = `TODO: signMessage(${payload}, ${keyTag})`;
+
+  return (
+    constants.SIGNATURE_PREFIX(signatureOrdinal) +
+    constants.COLON +
+    signature +
+    constants.COLON
+  );
 }
 
 /**
@@ -160,4 +214,9 @@ function getUnixTimestamp(): number {
   return Math.floor(Date.now() / 1000);
 }
 
-export { generateSignatureBase, getUnixTimestamp, generateSignatureInput };
+export {
+  generateSignatureBase,
+  getUnixTimestamp,
+  generateSignatureInput,
+  generateSignature
+};

@@ -28,7 +28,9 @@ const testConfig = {
 MockDate.set("2021-06-07T01:30:00.000Z");
 
 describe(`Test signature input generation`, () => {
-  it(`without "${constants.HEADERS.CONTENT_DIGEST}" for config ${testConfig}`, () => {
+  it(`without "${constants.HEADERS.CONTENT_DIGEST}" for config ${JSON.stringify(
+    testConfig
+  )}`, () => {
     const signatureInput = generateSignatureInput(testHeaders, testConfig);
     expect(signatureInput).toBe(
       'sig1=("@method" "@path" "@authority");created=1623029400'
@@ -37,7 +39,9 @@ describe(`Test signature input generation`, () => {
 });
 
 describe(`Test signature input generation with "${constants.HEADERS.CONTENT_DIGEST}"`, () => {
-  it(`with "${constants.HEADERS.CONTENT_DIGEST}" for config ${testConfig}`, () => {
+  it(`with "${constants.HEADERS.CONTENT_DIGEST}" for config ${JSON.stringify(
+    testConfig
+  )}`, () => {
     const signatureInput = generateSignatureInput(
       testHeadersWithContentDigest,
       testConfig
