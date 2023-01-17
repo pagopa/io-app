@@ -1,4 +1,6 @@
 ---
+accessibility:
+  doubleTapToActivateHint: "Double tap to activate"
 date:
   formats:
     default: "%d/%m/%Y"
@@ -385,7 +387,7 @@ profile:
             description:
               one: "IO collects only the information "
               two: "necessary "
-              three: "to monitor the performance of the services provided to you."
+              three: "to monitor and improve the provided services."
             cta: "Why?"
           security:
             description:
@@ -434,7 +436,7 @@ profile:
     appVersion: App Version
     backendVersion: Backend Version
     debugMode: Debug mode
-    showroom: UI Showroom
+    designSystem: Design System
   data:
     title: Your data
     subtitle: Here you will find your personal and contact data used by the IO app.
@@ -1521,6 +1523,8 @@ wallet:
     GENERIC_ERROR: An unexpected error has occurred
     GENERIC_ERROR_SUBTITLE: You can try again, or contact us to get support.
     DUPLICATED: This notice has been already paid!
+    NOT_FOUND: We can't find the notice
+    NOT_FOUND_SUBTITLE: "The notice may have already been paid.\nContact the Institution that issued it to get support."
     INVALID_AMOUNT: The amount for this notice is incorrect, if you inserted the amount manually, please check that is correct and try again.
     PAYMENT_EXPIRED: This notice is expired and cannot be paid anymore.
     PAYMENT_UNAVAILABLE: The payment for this notice cannot be started at this time, please retry later.
@@ -3274,6 +3278,10 @@ idpay:
       validThrough: "Valid through {{endDate}}"
   initiative:
     configuration: 
+      instrumentStatus:
+        active: Active
+        pendingActivation: Pending activation
+        pendingDeactivation: Pending deactivation
       bottomSheet:
         header: Prima di continuare
         bodyFirst: Il metodo sarà abilitato

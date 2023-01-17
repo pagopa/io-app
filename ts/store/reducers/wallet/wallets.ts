@@ -90,7 +90,7 @@ export type WalletsState = Readonly<{
 
 export type PersistedWalletsState = WalletsState & PersistPartial;
 
-const WALLETS_INITIAL_STATE: WalletsState = {
+export const WALLETS_INITIAL_STATE: WalletsState = {
   walletById: pot.none,
   creditCardAddWallet: pot.none,
   deleteAllByFunction: remoteUndefined,

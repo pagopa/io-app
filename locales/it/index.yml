@@ -1,4 +1,6 @@
 ---
+accessibility:
+  doubleTapToActivateHint: "Tocca due volte per attivare"
 date:
   formats:
     default: "%d/%m/%Y"
@@ -385,7 +387,7 @@ profile:
             description:
               one: "IO raccoglie solo le informazioni "
               two: "necessarie "
-              three: "per il funzionamento dei servizi offerti."
+              three: "per il funzionamento e il miglioramento dei servizi offerti."
             cta: "Perché?"
           security:
             description:
@@ -434,7 +436,7 @@ profile:
     appVersion: Versione App
     backendVersion: Versione Backend
     debugMode: Modalità debug
-    showroom: UI Showroom
+    designSystem: Design System
   data:
     title: I tuoi dati
     subtitle: Qui trovi i tuoi dati anagrafici e di contatto utilizzati da app IO
@@ -1539,6 +1541,8 @@ wallet:
     GENERIC_ERROR: Si è verificato un errore imprevisto
     GENERIC_ERROR_SUBTITLE: Riprova o contattaci per ricevere assistenza.
     DUPLICATED: Questo avviso è stato già pagato!
+    NOT_FOUND: Non riusciamo a trovare l'avviso
+    NOT_FOUND_SUBTITLE: "L’avviso potrebbe essere stato già pagato.\nPer ricevere assistenza, contatta l’Ente Creditore che lo ha emesso."
     INVALID_AMOUNT: L'ammontare specificato nell'avviso non è corretto, se hai inserito i dati manualmente, controlla che siano corretti e riprova.
     PAYMENT_EXPIRED: Il pagamento per questo avviso non è più disponibile poiché questo avviso è scaduto.
     PAYMENT_UNAVAILABLE: Il pagamento per questo avviso non è disponibile in questo momento, riprova più tardi.
@@ -3298,6 +3302,10 @@ idpay:
       validThrough: "Valido fino al {{endDate}}"
   initiative:
     configuration: 
+      instrumentStatus:
+        active: Attivo 
+        pendingActivation: In attivazione
+        pendingDeactivation: In disattivazione
       bottomSheet:
         header: Prima di continuare
         bodyFirst: Il metodo sarà abilitato
