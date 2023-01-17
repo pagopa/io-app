@@ -83,7 +83,7 @@ const MedicalPrescriptionAttachments = ({
       {organizationName && (
         <NBText style={styles.label}>{organizationName.toUpperCase()}</NBText>
       )}
-      <View spacer={true} xsmall={true} />
+      <VSpacer size={4} />
       <ItemSeparatorComponent noPadded={true} bold={true} />
     </View>
 

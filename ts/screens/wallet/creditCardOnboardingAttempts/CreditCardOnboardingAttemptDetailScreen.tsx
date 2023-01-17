@@ -159,7 +159,7 @@ const CreditCardOnboardingAttemptDetailScreen = (props: Props) => {
       headerTitle={I18n.t("wallet.creditCard.onboardingAttempts.title")}
     >
       <SlidedContentComponent hasFlatBottom={true}>
-        <View spacer={true} xsmall={true} />
+        <VSpacer size={4} />
         <H3 color={"bluegreyDark"}>
           {I18n.t("wallet.creditCard.onboardingAttempts.detailTitle")}
         </H3>
@@ -199,7 +199,7 @@ const CreditCardOnboardingAttemptDetailScreen = (props: Props) => {
           I18n.t("payment.details.info.outcomeCode"),
           attempt.outcomeCode ?? "-"
         )}
-        <View spacer={true} xsmall={true} />
+        <VSpacer size={4} />
         {renderRow(
           I18n.t("wallet.creditCard.onboardingAttempts.dateTime"),
           when

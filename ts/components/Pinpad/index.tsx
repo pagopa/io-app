@@ -3,7 +3,7 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as E from "fp-ts/lib/Either";
 import * as NAR from "fp-ts/lib/NonEmptyArray";
 import { debounce, shuffle } from "lodash";
-import { Text as NBText, View } from "native-base";
+import { Text as NBText } from "native-base";
 import * as React from "react";
 import { Alert, StyleSheet } from "react-native";
 import I18n from "../../i18n";

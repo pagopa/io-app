@@ -1,5 +1,5 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { Button, Content, Text as NBText, View } from "native-base";
+import { Button, Content, Text as NBText } from "native-base";
 import * as React from "react";
 import { Image, Linking, StyleSheet } from "react-native";
 import I18n from "../i18n";

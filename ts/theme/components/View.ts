@@ -41,21 +41,16 @@ export default (): Theme => ({
     ".xsmall": {
       height: customVariables.spacerExtrasmallHeight
     },
-    ".small": {
-      height: customVariables.spacerSmallHeight
-    },
-    ".large": {
-      height: customVariables.spacerLargeHeight
-    },
     ".extrasmall": {
       height: customVariables.spacerExtrasmallHeight
+    },
+    ".small": {
+      height: customVariables.spacerSmallHeight
     },
 
     ".extralarge": {
       height: customVariables.spacerExtralargeHeight
-    },
-
-    height: customVariables.spacerHeight
+    }
   },
 
   // horizontal spacer

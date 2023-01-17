@@ -1,4 +1,4 @@
-import { Body, List, ListItem, Text as NBText, View } from "native-base";
+import { Body, List, ListItem, Text as NBText } from "native-base";
 import * as React from "react";
 import { useState } from "react";
 import { Platform } from "react-native";
