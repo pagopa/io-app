@@ -51,7 +51,7 @@ const Item = ({
   const xml = Buffer.from(item.content, "base64").toString("ascii");
   return (
     <View style={styles.padded} key={`attachment-${idx}`}>
-      <View spacer={true} small={true} />
+      <VSpacer size={8} />
       <NBText style={styles.label}>
         {I18n.t(`messages.medical.${item.name}`, {
           defaultValue: I18n.t("messages.medical.not_available")

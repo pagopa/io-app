@@ -685,7 +685,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
                         {formatDateAsLocal(bonus.redeemed_at, true)}
                       </NBText>
                     </View>
-                    <View spacer={true} small={true} />
+                    <VSpacer size={8} />
                   </>
                 )}
                 <View style={styles.rowBlock}>
@@ -700,7 +700,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
                   <>
                     <VSpacer size={16} />
                     <ItemSeparatorComponent noPadded={true} />
-                    <View spacer={true} large={true} />
+                    <VSpacer size={24} />
                     <Link
                       onPress={() => handleModalPress(maybeBonusTos.value)}
                       numberOfLines={1}

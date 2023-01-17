@@ -215,7 +215,7 @@ export const NoPaymentMethodAreActiveWarning = () => (
         {I18n.t("bonus.bpd.details.transaction.noPaymentMethod.text3")}
       </H4>
     </InfoBox>
-    <View spacer={true} small={true} />
+    <VSpacer size={8} />
   </View>
 );
 

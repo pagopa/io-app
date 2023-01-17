@@ -194,7 +194,7 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
         >
           <NBText style={styles.urlButton}>{url.name}</NBText>
         </ButtonDefaultOpacity>
-        {idx !== urls.length - 1 && <View spacer={true} small={true} />}
+        {idx !== urls.length - 1 && <VSpacer size={8} />}
       </View>
     ));
     return <>{buttons}</>;
@@ -242,7 +242,7 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
               )}
             </View>
           </View>
-          <View spacer={true} large={true} />
+          <VSpacer size={24} />
           <NBText dark={true}>{bonusTypeLocalizedContent.subtitle}</NBText>
 
           <VSpacer size={16} />

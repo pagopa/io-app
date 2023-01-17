@@ -330,7 +330,7 @@ class Pinpad extends React.PureComponent<Props, State> {
         </ShakeAnimation>
         {this.props.onCancel && (
           <React.Fragment>
-            <View spacer={true} large={true} />
+            <VSpacer size={24} />
             <Link style={styles.mediumText} onPress={this.props.onCancel}>
               {I18n.t("global.buttons.cancel")}
             </Link>

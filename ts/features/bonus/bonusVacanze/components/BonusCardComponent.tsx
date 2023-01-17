@@ -156,11 +156,11 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
         })}
       >
         <View style={{ flexDirection: "column" }}>
-          <View spacer={true} small={true} />
+          <VSpacer size={8} />
           <NBText bold={true} style={[styles.colorWhite, styles.fontLarge]}>
             {I18n.t("bonus.bonusVacanze.name")}
           </NBText>
-          <View spacer={true} small={true} />
+          <VSpacer size={8} />
           <View style={styles.row}>
             <NBText
               bold={true}

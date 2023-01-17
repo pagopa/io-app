@@ -100,7 +100,7 @@ const Table = (props: Props) => {
               )}
         </H4>
       </View>
-      <View spacer={true} small={true} />
+      <VSpacer size={8} />
       <View style={styles.rowId}>
         <H5 weight={"Regular"} color={"bluegrey"}>
           {I18n.t("bonus.bpd.details.transaction.detail.paymentCircuit")}
@@ -111,7 +111,7 @@ const Table = (props: Props) => {
             : props.transaction.circuitType}
         </H4>
       </View>
-      <View spacer={true} small={true} />
+      <VSpacer size={8} />
       <View style={styles.rowId}>
         <H5 weight={"Regular"} color={"bluegrey"}>
           {I18n.t("bonus.bpd.details.transaction.detail.transactionAmount")}
@@ -128,7 +128,7 @@ const Table = (props: Props) => {
           </H4>
         </View>
       </View>
-      <View spacer={true} small={true} />
+      <VSpacer size={8} />
       <View style={styles.rowId}>
         <H5 weight={"Regular"} color={"bluegrey"}>
           {I18n.t("bonus.bpd.details.transaction.detail.cashbackAmount")}

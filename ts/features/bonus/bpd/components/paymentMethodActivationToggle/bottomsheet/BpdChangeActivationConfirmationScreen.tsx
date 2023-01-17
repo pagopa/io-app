@@ -51,7 +51,7 @@ export const BpdChangeActivationConfirmationScreen: React.FunctionComponent<Prop
         <Markdown>{body}</Markdown>
         {props.type === "Activation" && (
           <>
-            <View spacer={true} large={true} />
+            <VSpacer size={24} />
             <InfoBox>
               <Body>
                 {I18n.t(

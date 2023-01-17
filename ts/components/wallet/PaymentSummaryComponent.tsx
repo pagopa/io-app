@@ -98,7 +98,7 @@ export const PaymentSummaryComponent = (props: Props) => {
       {/** screen title */}
       <VSpacer size={16} />
       <ItemSeparatorComponent noPadded={true} />
-      <View spacer={true} large={true} />
+      <VSpacer size={24} />
 
       {paymentStatus}
 

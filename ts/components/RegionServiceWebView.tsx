@@ -88,7 +88,7 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
           color={customVariables.colorHighlight}
           style={styles.selfCenter}
         />
-        <View spacer={true} large={true} />
+        <VSpacer size={24} />
 
         <View style={styles.itemsCenter}>
           <Label>{`${I18n.t("global.genericThanks")},`}</Label>

@@ -127,7 +127,7 @@ export class ScreenContentHeader extends React.PureComponent<Props> {
                 {subtitle}
               </NBText>
               {subtitleLink}
-              <View spacer={true} large={true} />
+              <VSpacer size={24} />
             </View>
           )}
         </Animated.View>

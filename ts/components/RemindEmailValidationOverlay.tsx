@@ -413,7 +413,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
               </NBText>
             </View>
           )}
-          <View spacer={true} large={true} />
+          <VSpacer size={24} />
         </Content>
 
         {this.state.displayError && this.renderErrorBanner}

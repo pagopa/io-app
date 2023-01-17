@@ -58,7 +58,7 @@ const NoPaymentMethodAreActiveWarning = () => (
     <InfoBox>
       <Body>{I18n.t("bonus.bpd.details.paymentMethods.noActiveMethod")}</Body>
     </InfoBox>
-    <View spacer={true} small={true} />
+    <VSpacer size={8} />
   </View>
 );
 

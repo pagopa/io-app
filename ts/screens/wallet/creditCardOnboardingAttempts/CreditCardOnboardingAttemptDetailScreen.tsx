@@ -109,9 +109,9 @@ const CreditCardOnboardingAttemptDetailScreen = (props: Props) => {
 
   const renderSeparator = () => (
     <React.Fragment>
-      <View spacer={true} large={true} />
+      <VSpacer size={24} />
       <ItemSeparatorComponent noPadded={true} />
-      <View spacer={true} large={true} />
+      <VSpacer size={24} />
     </React.Fragment>
   );
 

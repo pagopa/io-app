@@ -51,7 +51,7 @@ export const InfoScreenComponent: React.FunctionComponent<Props> = props => {
     <View style={styles.main} testID="InfoScreenComponent">
       <NavigationEvents onWillFocus={() => setAccessibilityFocus(elementRef)} />
       {props.image}
-      <View spacer={true} large={true} />
+      <VSpacer size={24} />
       <H2
         testID="infoScreenTitle"
         accessible

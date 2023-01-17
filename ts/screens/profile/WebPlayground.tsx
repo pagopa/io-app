@@ -140,7 +140,7 @@ const WebPlayground: React.FunctionComponent<Props> = (props: Props) => {
                     onChangeText: setCookieValue
                   }}
                 />
-                <View spacer={true} small={true} />
+                <VSpacer size={8} />
                 <ButtonDefaultOpacity
                   style={styles.contentCenter}
                   onPress={() => setCookieOnDomain()}

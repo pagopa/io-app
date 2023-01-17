@@ -77,7 +77,7 @@ const BpdTransactionSummaryComponent: React.FunctionComponent<Props> = (
 ) => {
   const { present, bottomSheet } = useIOBottomSheetModal(
     <>
-      <View spacer={true} large={true} />
+      <VSpacer size={24} />
       <InfoBox iconName={"io-calendar"} iconSize={32}>
         <H4 weight={"Regular"}>
           {I18n.t(
@@ -94,7 +94,7 @@ const BpdTransactionSummaryComponent: React.FunctionComponent<Props> = (
           )}
         </H4>
       </InfoBox>
-      <View spacer={true} large={true} />
+      <VSpacer size={24} />
 
       <BottomSheetBpdTransactionsBody />
     </>,

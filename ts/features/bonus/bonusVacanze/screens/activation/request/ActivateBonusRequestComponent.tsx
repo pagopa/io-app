@@ -89,13 +89,13 @@ export const ActivateBonusRequestComponent: React.FunctionComponent<Props> =
         <SafeAreaView style={bonusVacanzeStyle.flex}>
           <ScrollView>
             <View style={bonusVacanzeStyle.horizontalPadding}>
-              <View spacer={true} large={true} />
+              <VSpacer size={24} />
               <ActivateBonusTitle
                 title={title}
                 description={description}
                 image={props.logo}
               />
-              <View spacer={true} large={true} />
+              <VSpacer size={24} />
               <BonusCompositionDetails
                 bonusAmount={props.bonusAmount}
                 taxBenefit={props.taxBenefit}

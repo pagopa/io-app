@@ -8,6 +8,7 @@ import { SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { SpecialServiceMetadata } from "../../../definitions/backend/SpecialServiceMetadata";
+import { VSpacer } from "../../components/core/spacer/Spacer";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import ExtractedCTABar from "../../components/cta/ExtractedCTABar";
 import OrganizationHeader from "../../components/OrganizationHeader";
@@ -111,7 +112,7 @@ const ServiceDetailsScreen = (props: Props) => {
               logoURLs={logosForService(service)}
             />
           </Grid>
-          <View spacer={true} small={true} />
+          <VSpacer size={8} />
 
           {metadata?.description && (
             <>
@@ -122,7 +123,7 @@ const ServiceDetailsScreen = (props: Props) => {
               >
                 {metadata.description}
               </Markdown>
-              <View spacer={true} large={true} />
+              <VSpacer size={24} />
             </>
           )}
 
@@ -134,7 +135,7 @@ const ServiceDetailsScreen = (props: Props) => {
                     tosUrl={metadata.tos_url}
                     privacyUrl={metadata.privacy_url}
                   />
-                  <View spacer={true} large={true} />
+                  <VSpacer size={24} />
                 </>
               )}
 
@@ -143,7 +144,7 @@ const ServiceDetailsScreen = (props: Props) => {
                 channels={service.available_notification_channels}
                 isSpecialService={SpecialServiceMetadata.is(metadata)}
               />
-              <View spacer={true} large={true} />
+              <VSpacer size={24} />
 
               <ServiceMetadataComponent
                 servicesMetadata={service.service_metadata}
