@@ -6,10 +6,10 @@ import FingerprintScreen from "../screens/onboarding/FingerprintScreen";
 import OnboardingCompletedScreen from "../screens/onboarding/OnboardingCompletedScreen";
 import OnboardingNotificationsInfoScreenConsent from "../screens/onboarding/OnboardingNotificationsInfoScreenConsent";
 import OnboardingNotificationsPreferencesScreen from "../screens/onboarding/OnboardingNotificationsPreferencesScreen";
+import OnboardingPinScreen from "../screens/onboarding/OnboardingPinScreen";
 import OnboardingServicesPreferenceScreen from "../screens/onboarding/OnboardingServicesPreferenceScreen";
 import OnboardingShareDataScreen from "../screens/onboarding/OnboardingShareDataScreen";
 import OnboardingTosScreen from "../screens/onboarding/OnboardingTosScreen";
-import PinScreen from "../screens/onboarding/PinScreen";
 import ServicePreferenceCompleteScreen from "../screens/onboarding/ServicePreferenceCompleteScreen";
 import { isGestureEnabled } from "../utils/navigation";
 import { OnboardingParamsList } from "./params/OnboardingParamsList";
@@ -41,7 +41,10 @@ const navigator = () => (
       name={ROUTES.ONBOARDING_TOS}
       component={OnboardingTosScreen}
     />
-    <Stack.Screen name={ROUTES.ONBOARDING_PIN} component={PinScreen} />
+    <Stack.Screen
+      name={ROUTES.ONBOARDING_PIN}
+      component={OnboardingPinScreen}
+    />
     <Stack.Screen
       name={ROUTES.ONBOARDING_FINGERPRINT}
       component={FingerprintScreen}
