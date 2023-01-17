@@ -125,11 +125,14 @@ function generateBase(headers: Record<string, string>, config: Config): string {
  */
 function generateSignatureInput(
   headers: Record<string, string>,
-  config: Config
+  config: Config,
+  signatureOrdinal: number = 1
 ): string {
   const unixTimestamp = getUnixTimestamp();
   // eslint-disable-next-line functional/no-let
-  let signatureInput: string = `sig1=(`;
+  let signatureInput: string = `${constants.SIGNATURE_PREFIX(
+    signatureOrdinal
+  )}(`;
 
   config.signatureParams.forEach(param => {
     if (

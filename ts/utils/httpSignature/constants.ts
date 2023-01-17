@@ -12,7 +12,7 @@ export const constants = {
     SIGNATURE: "signature"
   },
   SHA_256: "sha256",
-  SIGNATURE_PREFIX: (d: number = 1) => `sig${d}=:`,
+  SIGNATURE_PREFIX: (d: number = 1) => `sig${d}=`,
   UTF8: "utf8",
   X_PAGOPA_LOLLIPOP_NONCE: `${X_PAGOPA_LOLLIPOP_PREFIX}-nonce`,
   X_PAGOPA_LOLLIPOP_METHOD: `${X_PAGOPA_LOLLIPOP_PREFIX}-method`,
