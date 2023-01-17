@@ -1,4 +1,4 @@
-import { View as NBView } from "native-base";
+import { View } from "react-native";
 import * as React from "react";
 import { InfoBox } from "../../../../../../components/box/InfoBox";
 import { VSpacer } from "../../../../../../components/core/spacer/Spacer";
@@ -13,7 +13,9 @@ const BpdEmptyTransactionsList: React.FunctionComponent = () => (
       <H4>{I18n.t("bonus.bpd.details.transaction.detail.empty.text1")}</H4>
       <Body>{I18n.t("bonus.bpd.details.transaction.detail.empty.text2")}</Body>
     </InfoBox>
-    <NBView spacer={true} testID={"BpdEmptyTransactionsList"} />
+
+    <VSpacer size={16} />
+    <View testID={"BpdEmptyTransactionsList"} />
     <InfoBox iconName={"io-calendar"} iconSize={32}>
       <H4 weight={"Regular"}>
         {I18n.t(

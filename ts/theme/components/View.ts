@@ -6,12 +6,6 @@ declare module "native-base" {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace NativeBase {
     interface View extends ReactNative.ViewProperties {
-      spacer?: boolean;
-      hspacer?: boolean;
-      xsmall?: boolean;
-      small?: boolean;
-      large?: boolean;
-      extralarge?: boolean;
       modal?: boolean;
       footer?: boolean;
       header?: boolean;
@@ -34,17 +28,6 @@ declare module "native-base" {
  */
 
 export default (): Theme => ({
-  // horizontal spacer
-  ".hspacer": {
-    ".large": {
-      width: customVariables.spacerLargeWidth
-    },
-    ".extralarge": {
-      width: customVariables.spacerExtralargeWidth
-    },
-    width: customVariables.spacerWidth
-  },
-
   ".modal": {
     flex: 1,
     backgroundColor: customVariables.contentBackground

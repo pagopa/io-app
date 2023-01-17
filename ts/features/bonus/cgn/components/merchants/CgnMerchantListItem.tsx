@@ -2,7 +2,6 @@ import * as AR from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
-import { View as NBView } from "native-base";
 import { View, StyleSheet } from "react-native";
 import { ProductCategory } from "../../../../../../definitions/cgn/merchants/ProductCategory";
 import { IOBadge } from "../../../../../components/core/IOBadge";
@@ -63,9 +62,10 @@ const CategoriesRow = ({ categories }: Pick<Props, "categories">) => (
             c => (
               <>
                 {renderCategoryElement(c)}
-                <NBView
-                  hspacer
-                  small
+                <HSpacer size={8} />
+                {/* Using a View for the border
+                to replace an improper styled spacer */}
+                <View
                   style={{
                     borderRightColor: IOColors.bluegrey,
                     borderRightWidth: 1
@@ -86,9 +86,8 @@ const CategoriesRow = ({ categories }: Pick<Props, "categories">) => (
             {renderCategoryElement(category)}
             {categories.indexOf(category) !== categories.length - 1 && (
               <>
-                <NBView
-                  hspacer
-                  small
+                <HSpacer size={8} />
+                <View
                   style={{
                     borderRightColor: IOColors.bluegrey,
                     borderRightWidth: 1

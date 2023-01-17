@@ -1,9 +1,7 @@
 import * as React from "react";
 import { View } from "react-native";
-import { View as NBView } from "native-base";
 
 import { H2 } from "../../../components/core/typography/H2";
-import { IOColors } from "../../../components/core/variables/IOColors";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";
 import { DSSpacerViewerBox } from "../components/DSSpacerViewerBox";
@@ -11,24 +9,6 @@ import { IOSpacer } from "../../../components/core/variables/IOSpacing";
 
 export const DSSpacing = () => (
   <DesignSystemScreen title={"Spacing"}>
-    <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
-      Spacer (NativeBase)
-    </H2>
-    <VSpacer size={16} />
-    <View style={{ flexDirection: "row" }}>
-      <View style={{ backgroundColor: IOColors.bluegreyLight, height: 50 }}>
-        <HSpacer size={16} />
-      </View>
-      <HSpacer size={16} />
-      <View style={{ backgroundColor: IOColors.bluegreyLight, height: 50 }}>
-        <NBView hspacer={true} large={true} />
-      </View>
-      <HSpacer size={16} />
-      <View style={{ backgroundColor: IOColors.bluegreyLight, height: 50 }}>
-        <NBView hspacer={true} extralarge={true} />
-      </View>
-    </View>
-
     <H2
       color={"bluegrey"}
       weight={"SemiBold"}
