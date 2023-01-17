@@ -14,13 +14,6 @@ export const DSSpacing = () => (
     <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
       Spacer (NativeBase)
     </H2>
-    <View style={{ backgroundColor: IOColors.bluegreyLight }}>
-      <NBView spacer={true} xsmall={true} />
-    </View>
-    <VSpacer size={16} />
-    <View style={{ backgroundColor: IOColors.bluegreyLight }}>
-      <VSpacer size={16} />
-    </View>
     <VSpacer size={16} />
     <View style={{ flexDirection: "row" }}>
       <View style={{ backgroundColor: IOColors.bluegreyLight, height: 50 }}>

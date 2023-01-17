@@ -34,21 +34,6 @@ declare module "native-base" {
  */
 
 export default (): Theme => ({
-  ".spacer": {
-    xsmall: {
-      height: customVariables.spacerExtrasmallHeight
-    },
-    ".xsmall": {
-      height: customVariables.spacerExtrasmallHeight
-    },
-    ".extrasmall": {
-      height: customVariables.spacerExtrasmallHeight
-    },
-    ".small": {
-      height: customVariables.spacerSmallHeight
-    }
-  },
-
   // horizontal spacer
   ".hspacer": {
     ".small": {
