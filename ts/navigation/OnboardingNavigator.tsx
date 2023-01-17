@@ -8,9 +8,9 @@ import OnboardingNotificationsInfoScreenConsent from "../screens/onboarding/Onbo
 import OnboardingNotificationsPreferencesScreen from "../screens/onboarding/OnboardingNotificationsPreferencesScreen";
 import OnboardingServicesPreferenceScreen from "../screens/onboarding/OnboardingServicesPreferenceScreen";
 import OnboardingShareDataScreen from "../screens/onboarding/OnboardingShareDataScreen";
+import OnboardingTosScreen from "../screens/onboarding/OnboardingTosScreen";
 import PinScreen from "../screens/onboarding/PinScreen";
 import ServicePreferenceCompleteScreen from "../screens/onboarding/ServicePreferenceCompleteScreen";
-import TosScreen from "../screens/onboarding/TosScreen";
 import { isGestureEnabled } from "../utils/navigation";
 import { OnboardingParamsList } from "./params/OnboardingParamsList";
 import ROUTES from "./routes";
@@ -37,7 +37,10 @@ const navigator = () => (
       name={ROUTES.ONBOARDING_SERVICES_PREFERENCE_COMPLETE}
       component={ServicePreferenceCompleteScreen}
     />
-    <Stack.Screen name={ROUTES.ONBOARDING_TOS} component={TosScreen} />
+    <Stack.Screen
+      name={ROUTES.ONBOARDING_TOS}
+      component={OnboardingTosScreen}
+    />
     <Stack.Screen name={ROUTES.ONBOARDING_PIN} component={PinScreen} />
     <Stack.Screen
       name={ROUTES.ONBOARDING_FINGERPRINT}
