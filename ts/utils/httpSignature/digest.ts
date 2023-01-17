@@ -1,4 +1,4 @@
-import crypto from "crypto";
+import sha from "sha.js";
 import { constants } from "./constants";
 
 /**
@@ -17,10 +17,7 @@ function generateDigestHeader(body: string): string {
   }
 
   // Calculate the SHA-256 digest
-  const hash = crypto
-    .createHash(constants.SHA_256)
-    .update(body)
-    .digest(constants.BASE64);
+  const hash = sha(constants.SHA_256).update(body).digest(constants.BASE64);
 
   const algo: string = constants.CONTENT_DIGEST_SHA256;
 
