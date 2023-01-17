@@ -19,15 +19,7 @@ export const DSSpacing = () => (
     </View>
     <VSpacer size={16} />
     <View style={{ backgroundColor: IOColors.bluegreyLight }}>
-      <NBView spacer={true} small={true} />
-    </View>
-    <VSpacer size={16} />
-    <View style={{ backgroundColor: IOColors.bluegreyLight }}>
       <VSpacer size={16} />
-    </View>
-    <VSpacer size={16} />
-    <View style={{ backgroundColor: IOColors.bluegreyLight }}>
-      <NBView spacer={true} extralarge={true} />
     </View>
     <VSpacer size={16} />
     <View style={{ flexDirection: "row" }}>

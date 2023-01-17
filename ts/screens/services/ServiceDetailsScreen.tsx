@@ -1,10 +1,10 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Content, Grid, View } from "native-base";
+import { Content, Grid } from "native-base";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { SafeAreaView } from "react-native";
+import { View, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { SpecialServiceMetadata } from "../../../definitions/backend/SpecialServiceMetadata";
@@ -174,7 +174,7 @@ const ServiceDetailsScreen = (props: Props) => {
             )}
             {SpecialServiceMetadata.is(metadata) && (
               <>
-                <View spacer small />
+                <VSpacer size={8} />
                 <SpecialServicesCTA
                   serviceId={props.serviceId}
                   customSpecialFlow={metadata.custom_special_flow}

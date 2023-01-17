@@ -1,6 +1,5 @@
 // import { View as NBView, Text as NBText } from "native-base";
 import * as React from "react";
-import { View as NBView } from "native-base";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 
 import { H2 } from "../../../components/core/typography/H2";
@@ -25,6 +24,7 @@ import DetailedlistItemComponent from "../../../components/DetailedlistItemCompo
 import { TimelineTransactionCard } from "../../idpay/initiative/details/components/TimelineTransactionCards";
 import { OperationTypeEnum } from "../../../../definitions/idpay/timeline/TransactionOperationDTO";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 
 export const DSListItems = () => (
   <DesignSystemScreen title="List Items">
@@ -255,6 +255,6 @@ export const DSListItems = () => (
       />
     </DSComponentViewerBox>
 
-    <NBView spacer={true} extralarge={true} />
+    <VSpacer size={40} />
   </DesignSystemScreen>
 );

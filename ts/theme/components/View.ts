@@ -46,10 +46,6 @@ export default (): Theme => ({
     },
     ".small": {
       height: customVariables.spacerSmallHeight
-    },
-
-    ".extralarge": {
-      height: customVariables.spacerExtralargeHeight
     }
   },
 
