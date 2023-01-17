@@ -31,22 +31,16 @@ exports[`when rendering on match snapshot for OTP discount 1`] = `
   />
   <View
     style={
-      Array [
-        Object {
-          "height": 16,
-        },
-        false,
-      ]
+      Object {
+        "height": 16,
+      }
     }
   />
   <View
     style={
-      Array [
-        Object {
-          "height": 8,
-        },
-        false,
-      ]
+      Object {
+        "height": 8,
+      }
     }
   />
   <View
@@ -136,12 +130,9 @@ exports[`when rendering on match snapshot for OTP discount 1`] = `
   </View>
   <View
     style={
-      Array [
-        Object {
-          "height": 16,
-        },
-        false,
-      ]
+      Object {
+        "height": 16,
+      }
     }
   />
   <Text
@@ -202,12 +193,9 @@ exports[`when rendering on match snapshot for OTP discount 1`] = `
   </Text>
   <View
     style={
-      Array [
-        Object {
-          "height": 16,
-        },
-        false,
-      ]
+      Object {
+        "height": 16,
+      }
     }
   />
 </View>
@@ -244,12 +232,9 @@ exports[`when rendering on match snapshot for bucket discount 1`] = `
   />
   <View
     style={
-      Array [
-        Object {
-          "height": 16,
-        },
-        false,
-      ]
+      Object {
+        "height": 16,
+      }
     }
   />
   <Text
@@ -310,12 +295,9 @@ exports[`when rendering on match snapshot for bucket discount 1`] = `
   </Text>
   <View
     style={
-      Array [
-        Object {
-          "height": 16,
-        },
-        false,
-      ]
+      Object {
+        "height": 16,
+      }
     }
   />
 </View>
@@ -352,12 +334,9 @@ exports[`when rendering on match snapshot for landing page discount 1`] = `
   />
   <View
     style={
-      Array [
-        Object {
-          "height": 16,
-        },
-        false,
-      ]
+      Object {
+        "height": 16,
+      }
     }
   />
   <Text
@@ -418,12 +397,9 @@ exports[`when rendering on match snapshot for landing page discount 1`] = `
   </Text>
   <View
     style={
-      Array [
-        Object {
-          "height": 16,
-        },
-        false,
-      ]
+      Object {
+        "height": 16,
+      }
     }
   />
 </View>
@@ -460,22 +436,16 @@ exports[`when rendering on match snapshot for static code 1`] = `
   />
   <View
     style={
-      Array [
-        Object {
-          "height": 16,
-        },
-        false,
-      ]
+      Object {
+        "height": 16,
+      }
     }
   />
   <View
     style={
-      Array [
-        Object {
-          "height": 8,
-        },
-        false,
-      ]
+      Object {
+        "height": 8,
+      }
     }
   />
   <Text
@@ -561,12 +531,9 @@ exports[`when rendering on match snapshot for static code 1`] = `
   </View>
   <View
     style={
-      Array [
-        Object {
-          "height": 16,
-        },
-        false,
-      ]
+      Object {
+        "height": 16,
+      }
     }
   />
   <Text
@@ -627,12 +594,9 @@ exports[`when rendering on match snapshot for static code 1`] = `
   </Text>
   <View
     style={
-      Array [
-        Object {
-          "height": 16,
-        },
-        false,
-      ]
+      Object {
+        "height": 16,
+      }
     }
   />
 </View>

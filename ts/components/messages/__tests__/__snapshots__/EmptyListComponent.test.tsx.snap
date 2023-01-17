@@ -11,12 +11,9 @@ exports[`EmptyListComponent matches the snapshot 1`] = `
 >
   <View
     style={
-      Array [
-        Object {
-          "height": 16,
-        },
-        false,
-      ]
+      Object {
+        "height": 16,
+      }
     }
   />
   <Image

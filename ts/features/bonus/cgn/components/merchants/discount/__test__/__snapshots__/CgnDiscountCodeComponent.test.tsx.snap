@@ -4,12 +4,9 @@ exports[`when rendering should match the snapshot 1`] = `
 Array [
   <View
     style={
-      Array [
-        Object {
-          "height": 8,
-        },
-        false,
-      ]
+      Object {
+        "height": 8,
+      }
     }
   />,
   <Text
@@ -95,12 +92,9 @@ Array [
   </View>,
   <View
     style={
-      Array [
-        Object {
-          "height": 16,
-        },
-        false,
-      ]
+      Object {
+        "height": 16,
+      }
     }
   />,
 ]

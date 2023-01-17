@@ -493,12 +493,9 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                                         />
                                         <View
                                           style={
-                                            Array [
-                                              Object {
-                                                "height": 24,
-                                              },
-                                              false,
-                                            ]
+                                            Object {
+                                              "height": 24,
+                                            }
                                           }
                                         />
                                         <Text
@@ -537,12 +534,9 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                                         </Text>
                                         <View
                                           style={
-                                            Array [
-                                              Object {
-                                                "height": 16,
-                                              },
-                                              false,
-                                            ]
+                                            Object {
+                                              "height": 16,
+                                            }
                                           }
                                         />
                                         <Text

@@ -142,12 +142,9 @@ Array [
     </RNSVGSvgView>
     <View
       style={
-        Array [
-          Object {
-            "width": 8,
-          },
-          false,
-        ]
+        Object {
+          "width": 8,
+        }
       }
     />
     <Text
@@ -203,12 +200,9 @@ Array [
   </View>,
   <View
     style={
-      Array [
-        Object {
-          "height": 24,
-        },
-        false,
-      ]
+      Object {
+        "height": 24,
+      }
     }
   />,
 ]
@@ -356,12 +350,9 @@ Array [
     </RNSVGSvgView>
     <View
       style={
-        Array [
-          Object {
-            "width": 8,
-          },
-          false,
-        ]
+        Object {
+          "width": 8,
+        }
       }
     />
     <Text
@@ -417,12 +408,9 @@ Array [
   </View>,
   <View
     style={
-      Array [
-        Object {
-          "height": 24,
-        },
-        false,
-      ]
+      Object {
+        "height": 24,
+      }
     }
   />,
 ]
@@ -570,12 +558,9 @@ Array [
     </RNSVGSvgView>
     <View
       style={
-        Array [
-          Object {
-            "width": 8,
-          },
-          false,
-        ]
+        Object {
+          "width": 8,
+        }
       }
     />
     <Text
@@ -629,12 +614,9 @@ Array [
   </View>,
   <View
     style={
-      Array [
-        Object {
-          "height": 24,
-        },
-        false,
-      ]
+      Object {
+        "height": 24,
+      }
     }
   />,
 ]
@@ -782,12 +764,9 @@ Array [
     </RNSVGSvgView>
     <View
       style={
-        Array [
-          Object {
-            "width": 8,
-          },
-          false,
-        ]
+        Object {
+          "width": 8,
+        }
       }
     />
     <Text
@@ -841,12 +820,9 @@ Array [
   </View>,
   <View
     style={
-      Array [
-        Object {
-          "height": 24,
-        },
-        false,
-      ]
+      Object {
+        "height": 24,
+      }
     }
   />,
 ]
@@ -994,12 +970,9 @@ Array [
     </RNSVGSvgView>
     <View
       style={
-        Array [
-          Object {
-            "width": 8,
-          },
-          false,
-        ]
+        Object {
+          "width": 8,
+        }
       }
     />
     <Text
@@ -1055,12 +1028,9 @@ Array [
   </View>,
   <View
     style={
-      Array [
-        Object {
-          "height": 24,
-        },
-        false,
-      ]
+      Object {
+        "height": 24,
+      }
     }
   />,
 ]
@@ -1208,12 +1178,9 @@ Array [
     </RNSVGSvgView>
     <View
       style={
-        Array [
-          Object {
-            "width": 8,
-          },
-          false,
-        ]
+        Object {
+          "width": 8,
+        }
       }
     />
     <Text
@@ -1269,12 +1236,9 @@ Array [
   </View>,
   <View
     style={
-      Array [
-        Object {
-          "height": 24,
-        },
-        false,
-      ]
+      Object {
+        "height": 24,
+      }
     }
   />,
 ]
@@ -1422,12 +1386,9 @@ Array [
     </RNSVGSvgView>
     <View
       style={
-        Array [
-          Object {
-            "width": 8,
-          },
-          false,
-        ]
+        Object {
+          "width": 8,
+        }
       }
     />
     <Text
@@ -1483,12 +1444,9 @@ Array [
   </View>,
   <View
     style={
-      Array [
-        Object {
-          "height": 24,
-        },
-        false,
-      ]
+      Object {
+        "height": 24,
+      }
     }
   />,
 ]
@@ -1636,12 +1594,9 @@ Array [
     </RNSVGSvgView>
     <View
       style={
-        Array [
-          Object {
-            "width": 8,
-          },
-          false,
-        ]
+        Object {
+          "width": 8,
+        }
       }
     />
     <Text
@@ -1697,12 +1652,9 @@ Array [
   </View>,
   <View
     style={
-      Array [
-        Object {
-          "height": 24,
-        },
-        false,
-      ]
+      Object {
+        "height": 24,
+      }
     }
   />,
 ]
@@ -1850,12 +1802,9 @@ Array [
     </RNSVGSvgView>
     <View
       style={
-        Array [
-          Object {
-            "width": 8,
-          },
-          false,
-        ]
+        Object {
+          "width": 8,
+        }
       }
     />
     <Text
@@ -1911,12 +1860,9 @@ Array [
   </View>,
   <View
     style={
-      Array [
-        Object {
-          "height": 24,
-        },
-        false,
-      ]
+      Object {
+        "height": 24,
+      }
     }
   />,
 ]
@@ -2064,12 +2010,9 @@ Array [
     </RNSVGSvgView>
     <View
       style={
-        Array [
-          Object {
-            "width": 8,
-          },
-          false,
-        ]
+        Object {
+          "width": 8,
+        }
       }
     />
     <Text
@@ -2125,12 +2068,9 @@ Array [
   </View>,
   <View
     style={
-      Array [
-        Object {
-          "height": 24,
-        },
-        false,
-      ]
+      Object {
+        "height": 24,
+      }
     }
   />,
 ]
@@ -2278,12 +2218,9 @@ Array [
     </RNSVGSvgView>
     <View
       style={
-        Array [
-          Object {
-            "width": 8,
-          },
-          false,
-        ]
+        Object {
+          "width": 8,
+        }
       }
     />
     <Text
@@ -2339,12 +2276,9 @@ Array [
   </View>,
   <View
     style={
-      Array [
-        Object {
-          "height": 24,
-        },
-        false,
-      ]
+      Object {
+        "height": 24,
+      }
     }
   />,
 ]
@@ -2492,12 +2426,9 @@ Array [
     </RNSVGSvgView>
     <View
       style={
-        Array [
-          Object {
-            "width": 8,
-          },
-          false,
-        ]
+        Object {
+          "width": 8,
+        }
       }
     />
     <Text
@@ -2553,12 +2484,9 @@ Array [
   </View>,
   <View
     style={
-      Array [
-        Object {
-          "height": 24,
-        },
-        false,
-      ]
+      Object {
+        "height": 24,
+      }
     }
   />,
 ]
@@ -2706,12 +2634,9 @@ Array [
     </RNSVGSvgView>
     <View
       style={
-        Array [
-          Object {
-            "width": 8,
-          },
-          false,
-        ]
+        Object {
+          "width": 8,
+        }
       }
     />
     <Text
@@ -2765,12 +2690,9 @@ Array [
   </View>,
   <View
     style={
-      Array [
-        Object {
-          "height": 24,
-        },
-        false,
-      ]
+      Object {
+        "height": 24,
+      }
     }
   />,
 ]
@@ -2918,12 +2840,9 @@ Array [
     </RNSVGSvgView>
     <View
       style={
-        Array [
-          Object {
-            "width": 8,
-          },
-          false,
-        ]
+        Object {
+          "width": 8,
+        }
       }
     />
     <Text
@@ -2977,12 +2896,9 @@ Array [
   </View>,
   <View
     style={
-      Array [
-        Object {
-          "height": 24,
-        },
-        false,
-      ]
+      Object {
+        "height": 24,
+      }
     }
   />,
 ]
@@ -3130,12 +3046,9 @@ Array [
     </RNSVGSvgView>
     <View
       style={
-        Array [
-          Object {
-            "width": 8,
-          },
-          false,
-        ]
+        Object {
+          "width": 8,
+        }
       }
     />
     <Text
@@ -3191,12 +3104,9 @@ Array [
   </View>,
   <View
     style={
-      Array [
-        Object {
-          "height": 24,
-        },
-        false,
-      ]
+      Object {
+        "height": 24,
+      }
     }
   />,
 ]
@@ -3344,12 +3254,9 @@ Array [
     </RNSVGSvgView>
     <View
       style={
-        Array [
-          Object {
-            "width": 8,
-          },
-          false,
-        ]
+        Object {
+          "width": 8,
+        }
       }
     />
     <Text
@@ -3405,12 +3312,9 @@ Array [
   </View>,
   <View
     style={
-      Array [
-        Object {
-          "height": 24,
-        },
-        false,
-      ]
+      Object {
+        "height": 24,
+      }
     }
   />,
 ]
@@ -3558,12 +3462,9 @@ Array [
     </RNSVGSvgView>
     <View
       style={
-        Array [
-          Object {
-            "width": 8,
-          },
-          false,
-        ]
+        Object {
+          "width": 8,
+        }
       }
     />
     <Text
@@ -3617,12 +3518,9 @@ Array [
   </View>,
   <View
     style={
-      Array [
-        Object {
-          "height": 24,
-        },
-        false,
-      ]
+      Object {
+        "height": 24,
+      }
     }
   />,
 ]
@@ -3770,12 +3668,9 @@ Array [
     </RNSVGSvgView>
     <View
       style={
-        Array [
-          Object {
-            "width": 8,
-          },
-          false,
-        ]
+        Object {
+          "width": 8,
+        }
       }
     />
     <Text
@@ -3829,12 +3724,9 @@ Array [
   </View>,
   <View
     style={
-      Array [
-        Object {
-          "height": 24,
-        },
-        false,
-      ]
+      Object {
+        "height": 24,
+      }
     }
   />,
 ]
@@ -3982,12 +3874,9 @@ Array [
     </RNSVGSvgView>
     <View
       style={
-        Array [
-          Object {
-            "width": 8,
-          },
-          false,
-        ]
+        Object {
+          "width": 8,
+        }
       }
     />
     <Text
@@ -4043,12 +3932,9 @@ Array [
   </View>,
   <View
     style={
-      Array [
-        Object {
-          "height": 24,
-        },
-        false,
-      ]
+      Object {
+        "height": 24,
+      }
     }
   />,
 ]
@@ -4196,12 +4082,9 @@ Array [
     </RNSVGSvgView>
     <View
       style={
-        Array [
-          Object {
-            "width": 8,
-          },
-          false,
-        ]
+        Object {
+          "width": 8,
+        }
       }
     />
     <Text
@@ -4257,12 +4140,9 @@ Array [
   </View>,
   <View
     style={
-      Array [
-        Object {
-          "height": 24,
-        },
-        false,
-      ]
+      Object {
+        "height": 24,
+      }
     }
   />,
 ]
@@ -4410,12 +4290,9 @@ Array [
     </RNSVGSvgView>
     <View
       style={
-        Array [
-          Object {
-            "width": 8,
-          },
-          false,
-        ]
+        Object {
+          "width": 8,
+        }
       }
     />
     <Text
@@ -4471,12 +4348,9 @@ Array [
   </View>,
   <View
     style={
-      Array [
-        Object {
-          "height": 24,
-        },
-        false,
-      ]
+      Object {
+        "height": 24,
+      }
     }
   />,
 ]
@@ -4624,12 +4498,9 @@ Array [
     </RNSVGSvgView>
     <View
       style={
-        Array [
-          Object {
-            "width": 8,
-          },
-          false,
-        ]
+        Object {
+          "width": 8,
+        }
       }
     />
     <Text
@@ -4685,12 +4556,9 @@ Array [
   </View>,
   <View
     style={
-      Array [
-        Object {
-          "height": 24,
-        },
-        false,
-      ]
+      Object {
+        "height": 24,
+      }
     }
   />,
 ]
@@ -4838,12 +4706,9 @@ Array [
     </RNSVGSvgView>
     <View
       style={
-        Array [
-          Object {
-            "width": 8,
-          },
-          false,
-        ]
+        Object {
+          "width": 8,
+        }
       }
     />
     <Text
@@ -4899,12 +4764,9 @@ Array [
   </View>,
   <View
     style={
-      Array [
-        Object {
-          "height": 24,
-        },
-        false,
-      ]
+      Object {
+        "height": 24,
+      }
     }
   />,
 ]
@@ -5052,12 +4914,9 @@ Array [
     </RNSVGSvgView>
     <View
       style={
-        Array [
-          Object {
-            "width": 8,
-          },
-          false,
-        ]
+        Object {
+          "width": 8,
+        }
       }
     />
     <Text
@@ -5113,12 +4972,9 @@ Array [
   </View>,
   <View
     style={
-      Array [
-        Object {
-          "height": 24,
-        },
-        false,
-      ]
+      Object {
+        "height": 24,
+      }
     }
   />,
 ]
@@ -5266,12 +5122,9 @@ Array [
     </RNSVGSvgView>
     <View
       style={
-        Array [
-          Object {
-            "width": 8,
-          },
-          false,
-        ]
+        Object {
+          "width": 8,
+        }
       }
     />
     <Text
@@ -5327,12 +5180,9 @@ Array [
   </View>,
   <View
     style={
-      Array [
-        Object {
-          "height": 24,
-        },
-        false,
-      ]
+      Object {
+        "height": 24,
+      }
     }
   />,
 ]
@@ -5480,12 +5330,9 @@ Array [
     </RNSVGSvgView>
     <View
       style={
-        Array [
-          Object {
-            "width": 8,
-          },
-          false,
-        ]
+        Object {
+          "width": 8,
+        }
       }
     />
     <Text
@@ -5541,12 +5388,9 @@ Array [
   </View>,
   <View
     style={
-      Array [
-        Object {
-          "height": 24,
-        },
-        false,
-      ]
+      Object {
+        "height": 24,
+      }
     }
   />,
 ]
@@ -5694,12 +5538,9 @@ Array [
     </RNSVGSvgView>
     <View
       style={
-        Array [
-          Object {
-            "width": 8,
-          },
-          false,
-        ]
+        Object {
+          "width": 8,
+        }
       }
     />
     <Text
@@ -5753,12 +5594,9 @@ Array [
   </View>,
   <View
     style={
-      Array [
-        Object {
-          "height": 24,
-        },
-        false,
-      ]
+      Object {
+        "height": 24,
+      }
     }
   />,
 ]
@@ -5906,12 +5744,9 @@ Array [
     </RNSVGSvgView>
     <View
       style={
-        Array [
-          Object {
-            "width": 8,
-          },
-          false,
-        ]
+        Object {
+          "width": 8,
+        }
       }
     />
     <Text
@@ -5965,12 +5800,9 @@ Array [
   </View>,
   <View
     style={
-      Array [
-        Object {
-          "height": 24,
-        },
-        false,
-      ]
+      Object {
+        "height": 24,
+      }
     }
   />,
 ]
@@ -6118,12 +5950,9 @@ Array [
     </RNSVGSvgView>
     <View
       style={
-        Array [
-          Object {
-            "width": 8,
-          },
-          false,
-        ]
+        Object {
+          "width": 8,
+        }
       }
     />
     <Text
@@ -6179,12 +6008,9 @@ Array [
   </View>,
   <View
     style={
-      Array [
-        Object {
-          "height": 24,
-        },
-        false,
-      ]
+      Object {
+        "height": 24,
+      }
     }
   />,
 ]
@@ -6332,12 +6158,9 @@ Array [
     </RNSVGSvgView>
     <View
       style={
-        Array [
-          Object {
-            "width": 8,
-          },
-          false,
-        ]
+        Object {
+          "width": 8,
+        }
       }
     />
     <Text
@@ -6391,12 +6214,9 @@ Array [
   </View>,
   <View
     style={
-      Array [
-        Object {
-          "height": 24,
-        },
-        false,
-      ]
+      Object {
+        "height": 24,
+      }
     }
   />,
 ]
@@ -6544,12 +6364,9 @@ Array [
     </RNSVGSvgView>
     <View
       style={
-        Array [
-          Object {
-            "width": 8,
-          },
-          false,
-        ]
+        Object {
+          "width": 8,
+        }
       }
     />
     <Text
@@ -6603,12 +6420,9 @@ Array [
   </View>,
   <View
     style={
-      Array [
-        Object {
-          "height": 24,
-        },
-        false,
-      ]
+      Object {
+        "height": 24,
+      }
     }
   />,
 ]
