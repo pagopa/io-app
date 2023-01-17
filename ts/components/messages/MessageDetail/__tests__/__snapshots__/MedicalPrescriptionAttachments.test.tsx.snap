@@ -83,9 +83,14 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
       }
     >
       <View
-        small={true}
-        spacer={true}
-        style={Object {}}
+        style={
+          Array [
+            Object {
+              "height": 8,
+            },
+            false,
+          ]
+        }
       />
       <Text
         style={
@@ -153,8 +158,14 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
         </RNSVGGroup>
       </RNSVGSvgView>
       <View
-        spacer={true}
-        style={Object {}}
+        style={
+          Array [
+            Object {
+              "height": 16,
+            },
+            false,
+          ]
+        }
       />
     </View>
     <View
@@ -193,8 +204,14 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
     }
   />
   <View
-    spacer={true}
-    style={Object {}}
+    style={
+      Array [
+        Object {
+          "height": 16,
+        },
+        false,
+      ]
+    }
   />
   <Text
     style={
@@ -307,8 +324,14 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
     }
   />
   <View
-    spacer={true}
-    style={Object {}}
+    style={
+      Array [
+        Object {
+          "height": 16,
+        },
+        false,
+      ]
+    }
   />
   <Text
     style={
@@ -421,8 +444,14 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
     }
   />
   <View
-    spacer={true}
-    style={Object {}}
+    style={
+      Array [
+        Object {
+          "height": 16,
+        },
+        false,
+      ]
+    }
   />
   <Text
     style={
@@ -535,8 +564,14 @@ exports[`MedicalPrescriptionAttachments component when the organization name is 
     }
   />
   <View
-    spacer={true}
-    style={Object {}}
+    style={
+      Array [
+        Object {
+          "height": 16,
+        },
+        false,
+      ]
+    }
   />
   <Text
     style={
@@ -632,8 +667,14 @@ exports[`MedicalPrescriptionAttachments component with default properties should
     }
   />
   <View
-    spacer={true}
-    style={Object {}}
+    style={
+      Array [
+        Object {
+          "height": 16,
+        },
+        false,
+      ]
+    }
   />
   <Text
     style={

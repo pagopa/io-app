@@ -3,9 +3,14 @@
 exports[`when rendering should match the snapshot 1`] = `
 Array [
   <View
-    small={true}
-    spacer={true}
-    style={Object {}}
+    style={
+      Array [
+        Object {
+          "height": 8,
+        },
+        false,
+      ]
+    }
   />,
   <Text
     accessibilityRole="header"
@@ -89,8 +94,14 @@ Array [
     />
   </View>,
   <View
-    spacer={true}
-    style={Object {}}
+    style={
+      Array [
+        Object {
+          "height": 16,
+        },
+        false,
+      ]
+    }
   />,
 ]
 `;

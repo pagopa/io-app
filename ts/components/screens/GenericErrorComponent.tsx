@@ -94,7 +94,7 @@ export default class GenericErrorComponent extends React.PureComponent<Props> {
           contentContainerStyle={styles.contentContainerStyle}
         >
           <View style={styles.center}>
-            <View spacer={true} extralarge={true} />
+            <VSpacer size={40} />
             <Image
               source={
                 this.props.image ||
@@ -118,7 +118,7 @@ export default class GenericErrorComponent extends React.PureComponent<Props> {
                 ? this.props.subText
                 : I18n.t("wallet.errorTransaction.submitBugText")}
             </NBText>
-            <View spacer={true} extralarge={true} />
+            <VSpacer size={40} />
           </View>
         </Content>
         {this.renderFooterButtons()}

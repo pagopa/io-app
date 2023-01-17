@@ -619,7 +619,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
                     share={handleShare}
                   />
                 </View>
-                <View spacer={true} extralarge={true} />
+                <VSpacer size={40} />
                 {switchInformationText()}
                 <VSpacer size={16} />
               </View>

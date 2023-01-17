@@ -100,9 +100,9 @@ const getTosFooter = (
               // if tos is defined and the regolation url is not defined
               // return the link (BONUS VACANZE)
               <>
-                <View spacer={true} extralarge={true} />
+                <VSpacer size={40} />
                 <ItemSeparatorComponent noPadded={true} />
-                <View spacer={true} extralarge={true} />
+                <VSpacer size={40} />
                 <NBText dark={true}>
                   {I18n.t("bonus.bonusVacanze.advice")}
                 </NBText>
@@ -119,9 +119,9 @@ const getTosFooter = (
             // return a markdown footer including both links reference (BPD)
             rU => (
               <>
-                <View spacer={true} extralarge={true} />
+                <VSpacer size={40} />
                 <ItemSeparatorComponent noPadded={true} />
-                <View spacer={true} extralarge={true} />
+                <VSpacer size={40} />
                 <Markdown
                   cssStyle={CSS_STYLE}
                   extraBodyHeight={extraMarkdownBodyHeight}
@@ -254,7 +254,7 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
           >
             {bonusTypeLocalizedContent.content}
           </Markdown>
-          <View spacer={true} extralarge={true} />
+          <VSpacer size={40} />
           {isMarkdownLoaded && renderUrls()}
           {getTosFooter(
             maybeBonusTos,

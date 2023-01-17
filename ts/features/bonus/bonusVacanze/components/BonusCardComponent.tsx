@@ -243,7 +243,7 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
               </MenuOptions>
             </Menu>
           </View>
-          <View spacer={true} extralarge={true} />
+          <VSpacer size={40} />
           <Image source={bonusVacanzeWhiteLogo} style={styles.logo} />
         </View>
       </View>

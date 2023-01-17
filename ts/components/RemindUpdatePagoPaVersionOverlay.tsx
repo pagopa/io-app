@@ -80,7 +80,7 @@ class RemindUpdatePagoPaVersionOverlay extends React.PureComponent<
             style={styles.imageChecked}
             source={require("../../img/icons/update-icon.png")}
           />
-          <View spacer={true} extralarge={true} />
+          <VSpacer size={40} />
         </React.Fragment>
         <H1 style={styles.title}>
           {I18n.t("wallet.alert.titlePagoPaUpdateApp")}

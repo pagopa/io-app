@@ -34,7 +34,7 @@ const CieNotSupported: React.FunctionComponent<Props> = props => {
           <Markdown onLoadEnd={handleMarkdownLoaded}>
             {I18n.t("authentication.landing.cie_unsupported.android_desc")}
           </Markdown>
-          <View spacer={true} extralarge={true} />
+          <VSpacer size={40} />
           {markdownLoaded === markDownElements && (
             <List>
               <ListItem>
