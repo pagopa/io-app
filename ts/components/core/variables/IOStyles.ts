@@ -24,5 +24,8 @@ export const IOStyles = StyleSheet.create({
   rowSpaceBetween: {
     flexDirection: "row",
     justifyContent: "space-between"
+  },
+  centerJustified: {
+    justifyContent: "center"
   }
 });

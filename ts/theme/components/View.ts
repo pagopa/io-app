@@ -6,12 +6,9 @@ declare module "native-base" {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace NativeBase {
     interface View extends ReactNative.ViewProperties {
-      modal?: boolean;
       footer?: boolean;
-      header?: boolean;
       content?: boolean;
       padded?: boolean;
-      centerJustified?: boolean;
     }
   }
 }
@@ -28,11 +25,6 @@ declare module "native-base" {
  */
 
 export default (): Theme => ({
-  ".modal": {
-    flex: 1,
-    backgroundColor: customVariables.contentBackground
-  },
-
   ".padded": {
     paddingBottom: 15
   },
@@ -58,9 +50,5 @@ export default (): Theme => ({
     padding: customVariables.contentPadding,
     backgroundColor: customVariables.contentBackground,
     flex: 1
-  },
-  ".centerJustified": {
-    flex: 1,
-    justifyContent: "center"
   }
 });
