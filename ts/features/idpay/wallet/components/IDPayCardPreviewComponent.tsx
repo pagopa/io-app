@@ -1,8 +1,14 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { View, Text as NBText } from "native-base";
+import { Text as NBText } from "native-base";
 import React from "react";
-import { Image, ImageBackground, Platform, StyleSheet } from "react-native";
+import {
+  View,
+  Image,
+  ImageBackground,
+  Platform,
+  StyleSheet
+} from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 import { H4 } from "../../../../components/core/typography/H4";
 import { H5 } from "../../../../components/core/typography/H5";

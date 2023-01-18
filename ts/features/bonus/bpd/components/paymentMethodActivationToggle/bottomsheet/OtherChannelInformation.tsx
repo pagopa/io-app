@@ -1,5 +1,5 @@
 import { none } from "fp-ts/lib/Option";
-import { View } from "native-base";
+import { View } from "react-native";
 import * as React from "react";
 import { VSpacer } from "../../../../../../components/core/spacer/Spacer";
 import BlockButtons from "../../../../../../components/ui/BlockButtons";

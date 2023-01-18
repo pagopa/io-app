@@ -2,7 +2,7 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { NavigationEvents } from "@react-navigation/compat";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Body, Left, Right, Text as NBText, View as NBView } from "native-base";
+import { Body, Left, Right, Text as NBText } from "native-base";
 import * as React from "react";
 import { FC, Ref } from "react";
 import { View, AccessibilityInfo, ColorValue, StyleSheet } from "react-native";
@@ -101,7 +101,7 @@ const setAccessibilityTimeout = 0 as Millisecond;
 const noReferenceTimeout = 150 as Millisecond;
 /** A component representing the properties common to all the screens (and the most of modal/overlay displayed) */
 class BaseHeaderComponent extends React.PureComponent<Props, State> {
-  private firstElementRef = React.createRef<NBText>();
+  private firstElementRef = React.createRef<any>(); // Could be NBText or View
 
   public constructor(props: Props) {
     super(props);
@@ -228,9 +228,9 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
                 this.firstElementRef
               )
             ) : (
-              <NBView ref={this.firstElementRef} accessible={true}>
+              <View ref={this.firstElementRef} accessible={true}>
                 {body ? body : headerTitle && this.renderBodyLabel(headerTitle)}
-              </NBView>
+              </View>
             )}
           </Body>
         )}

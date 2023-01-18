@@ -1,5 +1,5 @@
 import { fireEvent, render } from "@testing-library/react-native";
-import { View } from "native-base";
+import { View } from "react-native";
 import * as React from "react";
 import { CardLogoPreview } from "../card/CardLogoPreview";
 import anImage from "../../../../../img/wallet/cards-icons/bPay.png";

@@ -1,6 +1,5 @@
-import { View } from "native-base";
 import * as React from "react";
-import { Platform, StyleSheet } from "react-native";
+import { View, Platform, StyleSheet } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 import customVariables from "../../../../theme/variables";
 import { TestID } from "../../../../types/WithTestID";

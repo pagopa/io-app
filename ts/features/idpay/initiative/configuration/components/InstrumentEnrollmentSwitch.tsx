@@ -1,8 +1,8 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Badge, ListItem, View } from "native-base";
+import { Badge, ListItem } from "native-base";
 import { default as React, forwardRef, useImperativeHandle } from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import {
   InstrumentDTO,
   StatusEnum

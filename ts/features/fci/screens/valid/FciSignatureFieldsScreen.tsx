@@ -1,6 +1,5 @@
 import * as React from "react";
-import { View } from "native-base";
-import { SafeAreaView, SectionList } from "react-native";
+import { View, SafeAreaView, SectionList } from "react-native";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import * as RA from "fp-ts/lib/ReadonlyArray";

@@ -1,8 +1,8 @@
 import * as React from "react";
 import { useContext, useState } from "react";
 import { connect } from "react-redux";
-import { Platform, SafeAreaView, StyleSheet } from "react-native";
-import { Tab, Tabs, View } from "native-base";
+import { View, Platform, SafeAreaView, StyleSheet } from "react-native";
+import { Tab, Tabs } from "native-base";
 import { constNull } from "fp-ts/lib/function";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { Dispatch } from "../../../../../store/actions/types";

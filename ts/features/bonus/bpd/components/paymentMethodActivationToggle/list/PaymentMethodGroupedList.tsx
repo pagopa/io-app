@@ -1,6 +1,5 @@
-import { View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { Body } from "../../../../../../components/core/typography/Body";
 import { H4 } from "../../../../../../components/core/typography/H4";
 import { Link } from "../../../../../../components/core/typography/Link";

@@ -1,6 +1,6 @@
-import { Badge, View } from "native-base";
+import { Badge } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import { H5 } from "../../../../components/core/typography/H5";
 import { Link } from "../../../../components/core/typography/Link";

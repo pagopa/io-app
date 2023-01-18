@@ -1,7 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { View } from "native-base";
 import * as React from "react";
-import { Image, StyleSheet } from "react-native";
+import { View, Image, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import paypalLogoMin from "../../../../img/wallet/cards-icons/paypal_card.png";
 import paypalLogoExt from "../../../../img/wallet/payment-methods/paypal-logo.png";

@@ -1,6 +1,6 @@
-import { Button, View } from "native-base";
+import { Button } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { InfoBox } from "../../../../../../../components/box/InfoBox";
 import { VSpacer } from "../../../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../../../components/core/typography/Body";

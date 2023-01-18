@@ -1,9 +1,13 @@
 import { useLinkTo } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { View } from "native-base";
 import * as React from "react";
-import { Platform, StyleSheet, TouchableWithoutFeedback } from "react-native";
+import {
+  View,
+  Platform,
+  StyleSheet,
+  TouchableWithoutFeedback
+} from "react-native";
 import Heart from "../../../../img/features/uaDonations/heart.svg";
 import { H5 } from "../../../components/core/typography/H5";
 import { IOColors } from "../../../components/core/variables/IOColors";

@@ -1,5 +1,5 @@
 import { fireEvent, render } from "@testing-library/react-native";
-import { View } from "native-base";
+import { View } from "react-native";
 import * as React from "react";
 import Fingerprint from "../../../../../img/test/fingerprint.svg";
 import I18n from "../../../../i18n";

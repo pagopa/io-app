@@ -1,6 +1,5 @@
 import * as React from "react";
-import { View } from "native-base";
-import { FlatList, ListRenderItemInfo, Platform } from "react-native";
+import { View, FlatList, ListRenderItemInfo, Platform } from "react-native";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import ItemSeparatorComponent from "../../../../../components/ItemSeparatorComponent";
 import { EdgeBorderComponent } from "../../../../../components/screens/EdgeBorderComponent";

@@ -1,7 +1,7 @@
 import { useActor } from "@xstate/react";
-import { Text, View } from "native-base";
+import { Text } from "native-base";
 import React from "react";
-import { SafeAreaView, StyleSheet } from "react-native";
+import { View, SafeAreaView, StyleSheet } from "react-native";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import themeVariables from "../../../../theme/variables";

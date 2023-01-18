@@ -1,8 +1,7 @@
 import * as React from "react";
 import { ComponentProps } from "react";
 import LinearGradient from "react-native-linear-gradient";
-import { StyleSheet } from "react-native";
-import { View } from "native-base";
+import { View, StyleSheet } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 import customVariables from "../../../../../theme/variables";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";

@@ -1,6 +1,5 @@
-import { View } from "native-base";
 import * as React from "react";
-import { Image, StyleSheet } from "react-native";
+import { View, Image, StyleSheet } from "react-native";
 import { IOColors } from "../../../../../../components/core/variables/IOColors";
 import fireworksIcon from "../../../../../../../img/bonus/bpd/fireworks.png";
 import { formatNumberAmount } from "../../../../../../utils/stringBuilder";

@@ -1,6 +1,5 @@
 import * as React from "react";
-import { View } from "native-base";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { H4 } from "../../../components/core/typography/H4";
 import IconFont from "../../../components/ui/IconFont";
 import { IOStyles } from "../../../components/core/variables/IOStyles";

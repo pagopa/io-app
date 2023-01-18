@@ -7,9 +7,14 @@ import {
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { Route, useNavigation, useRoute } from "@react-navigation/native";
 import * as E from "fp-ts/lib/Either";
-import { View } from "native-base";
 import React, { useEffect, useState } from "react";
-import { Linking, Platform, SafeAreaView, StyleSheet } from "react-native";
+import {
+  View,
+  Linking,
+  Platform,
+  SafeAreaView,
+  StyleSheet
+} from "react-native";
 import WebView from "react-native-webview";
 import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";

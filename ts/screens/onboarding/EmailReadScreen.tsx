@@ -8,9 +8,9 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { StackActions } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
-import { Text as NBText, View } from "native-base";
+import { Text as NBText } from "native-base";
 import * as React from "react";
-import { Alert, Platform, SafeAreaView, StyleSheet } from "react-native";
+import { View, Alert, Platform, SafeAreaView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { H3 } from "../../components/core/typography/H3";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";

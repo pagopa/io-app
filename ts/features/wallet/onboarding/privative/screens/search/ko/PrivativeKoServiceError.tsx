@@ -1,8 +1,7 @@
-import { View } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { SafeAreaView } from "react-native";
+import { View, SafeAreaView } from "react-native";
 import I18n from "../../../../../../../i18n";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import BaseScreenComponent from "../../../../../../../components/screens/BaseScreenComponent";

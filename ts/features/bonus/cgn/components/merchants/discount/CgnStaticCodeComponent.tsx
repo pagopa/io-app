@@ -1,9 +1,8 @@
 import { TouchableWithoutFeedback } from "@gorhom/bottom-sheet";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { View } from "native-base";
 import * as React from "react";
 import { useCallback } from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { Discount } from "../../../../../../../definitions/cgn/merchants/Discount";
 import Eye from "../../../../../../../img/icons/Eye.svg";
 import { BaseTypography } from "../../../../../../components/core/typography/BaseTypography";

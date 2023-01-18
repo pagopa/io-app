@@ -1,6 +1,5 @@
-import { View } from "native-base";
 import * as React from "react";
-import { SafeAreaView } from "react-native";
+import { View, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import image from "../../../../../../../../img/wallet/errors/payment-unavailable-icon.png";

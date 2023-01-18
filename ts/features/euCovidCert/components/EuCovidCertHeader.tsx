@@ -1,6 +1,5 @@
 import * as React from "react";
-import { Image, StyleSheet } from "react-native";
-import { View } from "native-base";
+import { View, Image, StyleSheet } from "react-native";
 import { WithEUCovidCertificateHeaderData } from "../types/EUCovidCertificate";
 import { H1 } from "../../../components/core/typography/H1";
 import { H2 } from "../../../components/core/typography/H2";

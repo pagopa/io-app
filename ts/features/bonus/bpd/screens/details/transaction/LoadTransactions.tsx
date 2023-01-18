@@ -1,6 +1,5 @@
-import { View } from "native-base";
 import * as React from "react";
-import { ActivityIndicator } from "react-native";
+import { View, ActivityIndicator } from "react-native";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import { InfoScreenComponent } from "../../../../../../components/infoScreen/InfoScreenComponent";
 import I18n from "../../../../../../i18n";

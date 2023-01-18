@@ -19,7 +19,7 @@ export type LoadingErrorProps = WithTestID<{
 }>;
 
 const errorRef = React.createRef<GenericErrorComponent>();
-const loadingRef = React.createRef<React.Component>();
+const loadingRef = React.createRef<any>();
 
 const renderError = (props: LoadingErrorProps) => (
   <GenericErrorComponent
