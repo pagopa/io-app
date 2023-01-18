@@ -1,6 +1,7 @@
 import { ListItem } from "native-base";
 import React from "react";
 import {
+  View,
   FlatList,
   ListRenderItemInfo,
   SafeAreaView,
@@ -14,7 +15,6 @@ import { H4 } from "../../../components/core/typography/H4";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import IconFont from "../../../components/ui/IconFont";
-import View from "../../../components/ui/TextWithIcon";
 import I18n from "../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { toArray } from "../../../store/helpers/indexer";

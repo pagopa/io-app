@@ -1,5 +1,5 @@
 import * as React from "react";
-import { SafeAreaView } from "react-native";
+import { View, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import image from "../../../../../../../../img/servicesStatus/error-detail-icon.png";
@@ -7,7 +7,6 @@ import { IOStyles } from "../../../../../../../components/core/variables/IOStyle
 import { renderInfoRasterImage } from "../../../../../../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../../../../../../components/infoScreen/InfoScreenComponent";
 import BaseScreenComponent from "../../../../../../../components/screens/BaseScreenComponent";
-import View from "../../../../../../../components/ui/TextWithIcon";
 import I18n from "../../../../../../../i18n";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../../../utils/emptyContextualHelp";
