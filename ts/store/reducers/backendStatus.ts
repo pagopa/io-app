@@ -400,7 +400,8 @@ export const isIdPayEnabledSelector = createSelector(
         )
       ),
       O.getOrElse(() => false)
-
+    )
+);
 
 // systems could be consider dead when we have no updates for at least DEAD_COUNTER_THRESHOLD times
 export const DEAD_COUNTER_THRESHOLD = 2;
