@@ -21,6 +21,7 @@ import {
   cdcEnabled,
   cgnMerchantsV2Enabled,
   fciEnabled,
+  idPayEnabled,
   pnEnabled,
   premiumMessagesOptInEnabled,
   scanAdditionalBarcodesEnabled,
@@ -383,6 +384,23 @@ export const isFciEnabledSelector = createSelector(
       O.getOrElse(() => false)
     )
 );
+
+export const isIdPayEnabledSelector = createSelector(
+  backendStatusSelector,
+  (backendStatus): boolean =>
+    idPayEnabled &&
+    pipe(
+      backendStatus,
+      O.map(bs =>
+        isVersionSupported(
+          Platform.OS === "ios"
+            ? bs.config.idPay.min_app_version.ios
+            : bs.config.idPay.min_app_version.android,
+          getAppVersion()
+        )
+      ),
+      O.getOrElse(() => false)
+
 
 // systems could be consider dead when we have no updates for at least DEAD_COUNTER_THRESHOLD times
 export const DEAD_COUNTER_THRESHOLD = 2;
