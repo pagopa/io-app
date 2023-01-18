@@ -28,7 +28,7 @@ const SuccessComponent = (props: {
   const status = props.signatureRequest.status;
   const dispatch = useIODispatch();
 
-  // if the user (signer) has not signed the request and the request is expired
+  // if the user (signer) has not signed and the request is expired
   // the user can no longer sign anymore
   if (
     (status === SignatureRequestDetailStatus.WAIT_FOR_SIGNATURE ||
