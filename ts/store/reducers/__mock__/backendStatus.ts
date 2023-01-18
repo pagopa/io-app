@@ -276,7 +276,6 @@ export const baseRawBackendStatus: BackendStatus = {
       }
     },
     idPay: {
-      enabled: false,
       min_app_version: {
         android: "0.0.0.0",
         ios: "0.0.0.0"
@@ -356,7 +355,6 @@ export const baseBackendConfig: Config = {
     }
   },
   idPay: {
-    enabled: false,
     min_app_version: {
       android: "0.0.0.0",
       ios: "0.0.0.0"
