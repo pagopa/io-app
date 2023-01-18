@@ -56,9 +56,7 @@ class ModalRemindEmailValidationOverlay extends React.Component<ModalProps> {
             this.hideModal();
           }}
           onWillFocus={() => {
-            this.props.showModal(
-              <RemindEmailValidationOverlay onClose={this.hideModal} />
-            );
+            this.props.showModal(<RemindEmailValidationOverlay />);
           }}
         />
       </View>

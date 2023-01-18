@@ -5,8 +5,8 @@ import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { H2 } from "../../components/core/typography/H2";
 import { IOColors } from "../../components/core/variables/IOColors";
-import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
 import { withValidatedPagoPaVersion } from "../../components/helpers/withValidatedPagoPaVersion";
+import RemindEmailValidationOverlay from "../../components/RemindEmailValidationOverlay";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import PaymentHistoryList from "../../components/wallet/PaymentsHistoryList";
@@ -59,21 +59,23 @@ class PaymentsHistoryScreen extends React.Component<Props, never> {
   public render(): React.ReactNode {
     const { historyPayments } = this.props;
     return (
-      <BaseScreenComponent
-        goBack={() => this.props.navigation.goBack()}
-        headerTitle={I18n.t("payment.details.list.title")}
-      >
-        <PaymentHistoryList
-          title={I18n.t("wallet.latestTransactions")}
-          payments={AR.reverse([...historyPayments])}
-          ListEmptyComponent={ListEmptyComponent}
-          navigateToPaymentHistoryDetail={(payment: PaymentHistory) =>
-            this.props.navigateToPaymentHistoryDetail({
-              payment
-            })
-          }
-        />
-      </BaseScreenComponent>
+      <RemindEmailValidationOverlay>
+        <BaseScreenComponent
+          goBack={() => this.props.navigation.goBack()}
+          headerTitle={I18n.t("payment.details.list.title")}
+        >
+          <PaymentHistoryList
+            title={I18n.t("wallet.latestTransactions")}
+            payments={AR.reverse([...historyPayments])}
+            ListEmptyComponent={ListEmptyComponent}
+            navigateToPaymentHistoryDetail={(payment: PaymentHistory) =>
+              this.props.navigateToPaymentHistoryDetail({
+                payment
+              })
+            }
+          />
+        </BaseScreenComponent>
+      </RemindEmailValidationOverlay>
     );
   }
 }
@@ -88,7 +90,5 @@ const mapDispatchToProps = (_: Dispatch) => ({
 });
 
 export default withValidatedPagoPaVersion(
-  withValidatedEmail(
-    connect(mapStateToProps, mapDispatchToProps)(PaymentsHistoryScreen)
-  )
+  connect(mapStateToProps, mapDispatchToProps)(PaymentsHistoryScreen)
 );

@@ -16,8 +16,8 @@ import { Body } from "../../components/core/typography/Body";
 import { H3 } from "../../components/core/typography/H3";
 import { IOColors } from "../../components/core/variables/IOColors";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
-import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
 import { withValidatedPagoPaVersion } from "../../components/helpers/withValidatedPagoPaVersion";
+import RemindEmailValidationOverlay from "../../components/RemindEmailValidationOverlay";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import SectionStatusComponent from "../../components/SectionStatus";
@@ -518,29 +518,33 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
       : undefined;
 
     return (
-      <WalletLayout
-        accessibilityLabel={I18n.t("wallet.wallet")}
-        title={I18n.t("wallet.wallet")}
-        allowGoBack={false}
-        appLogo={true}
-        hideHeader={true}
-        topContentHeight={this.getHeaderHeight()}
-        hasDynamicSubHeader={false}
-        topContent={headerContent}
-        footerContent={footerContent}
-        contextualHelpMarkdown={contextualHelpMarkdown}
-        faqCategories={["wallet", "wallet_methods"]}
-        gradientHeader={true}
-        headerPaddingMin={true}
-        footerFullWidth={<SectionStatusComponent sectionKey={"wallets"} />}
-      >
-        <BpdOptInPaymentMethodsContainer />
-        <>
-          {(bpdEnabled || this.props.isCgnEnabled) && <FeaturedCardCarousel />}
-          {transactionContent}
-        </>
-        <NewPaymentMethodAddedNotifier />
-      </WalletLayout>
+      <RemindEmailValidationOverlay>
+        <WalletLayout
+          accessibilityLabel={I18n.t("wallet.wallet")}
+          title={I18n.t("wallet.wallet")}
+          allowGoBack={false}
+          appLogo={true}
+          hideHeader={true}
+          topContentHeight={this.getHeaderHeight()}
+          hasDynamicSubHeader={false}
+          topContent={headerContent}
+          footerContent={footerContent}
+          contextualHelpMarkdown={contextualHelpMarkdown}
+          faqCategories={["wallet", "wallet_methods"]}
+          gradientHeader={true}
+          headerPaddingMin={true}
+          footerFullWidth={<SectionStatusComponent sectionKey={"wallets"} />}
+        >
+          <BpdOptInPaymentMethodsContainer />
+          <>
+            {(bpdEnabled || this.props.isCgnEnabled) && (
+              <FeaturedCardCarousel />
+            )}
+            {transactionContent}
+          </>
+          <NewPaymentMethodAddedNotifier />
+        </WalletLayout>
+      </RemindEmailValidationOverlay>
     );
   }
 
@@ -614,10 +618,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 export default withValidatedPagoPaVersion(
-  withValidatedEmail(
-    connect(
-      mapStateToProps,
-      mapDispatchToProps
-    )(withLightModalContext(WalletHomeScreen))
-  )
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(withLightModalContext(WalletHomeScreen))
 );

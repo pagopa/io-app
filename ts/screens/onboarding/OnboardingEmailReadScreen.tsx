@@ -10,8 +10,8 @@ import { StackActions } from "@react-navigation/native";
 import * as React from "react";
 import { Alert } from "react-native";
 import EmailReadScreenComponent from "../../components/EmailReadScreenComponent";
-import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
+import RemindEmailValidationOverlay from "../../components/RemindEmailValidationOverlay";
 import { TwoButtonsInlineHalf } from "../../components/ui/BlockButtons";
 import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
@@ -26,7 +26,7 @@ import { userMetadataSelector } from "../../store/reducers/userMetadata";
 
 type Props = IOStackNavigationRouteProps<
   OnboardingParamsList,
-  "READ_EMAIL_SCREEN"
+  "ONBOARDING_READ_EMAIL_SCREEN"
 >;
 
 const OnboardingEmailReadScreen = (props: Props) => {
@@ -77,12 +77,14 @@ const OnboardingEmailReadScreen = (props: Props) => {
 
   return (
     <LoadingSpinnerOverlay isLoading={isLoading}>
-      <EmailReadScreenComponent
-        handleGoBack={handleGoBack}
-        footerProps={footerProps}
-      />
+      <RemindEmailValidationOverlay isOnboarding={true}>
+        <EmailReadScreenComponent
+          handleGoBack={handleGoBack}
+          footerProps={footerProps}
+        />
+      </RemindEmailValidationOverlay>
     </LoadingSpinnerOverlay>
   );
 };
 
-export default withValidatedEmail(OnboardingEmailReadScreen);
+export default OnboardingEmailReadScreen;

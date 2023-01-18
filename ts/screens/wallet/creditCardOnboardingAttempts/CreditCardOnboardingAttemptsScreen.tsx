@@ -4,8 +4,9 @@ import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Body } from "../../../components/core/typography/Body";
 import { H2 } from "../../../components/core/typography/H2";
-import { withValidatedEmail } from "../../../components/helpers/withValidatedEmail";
+import { IOColors } from "../../../components/core/variables/IOColors";
 import { withValidatedPagoPaVersion } from "../../../components/helpers/withValidatedPagoPaVersion";
+import RemindEmailValidationOverlay from "../../../components/RemindEmailValidationOverlay";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../../components/screens/EdgeBorderComponent";
 import { CreditCardAttemptsList } from "../../../components/wallet/creditCardOnboardingAttempts/CreditCardAttemptsList";
@@ -22,7 +23,6 @@ import {
   CreditCardInsertion
 } from "../../../store/reducers/wallet/creditCard";
 import variables from "../../../theme/variables";
-import { IOColors } from "../../../components/core/variables/IOColors";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -60,23 +60,25 @@ class CreditCardOnboardingAttemptsScreen extends React.Component<Props, never> {
   public render(): React.ReactNode {
     const { creditCardOnboardingAttempts } = this.props;
     return (
-      <BaseScreenComponent
-        goBack={() => this.props.navigation.goBack()}
-        headerTitle={I18n.t("wallet.creditCard.onboardingAttempts.title")}
-      >
-        <CreditCardAttemptsList
-          title={I18n.t(
-            "wallet.creditCard.onboardingAttempts.lastAttemptsTitle"
-          )}
-          creditCardAttempts={creditCardOnboardingAttempts}
-          ListEmptyComponent={ListEmptyComponent}
-          onAttemptPress={(attempt: CreditCardInsertion) =>
-            this.props.navigateToCreditCardAttemptDetail({
-              attempt
-            })
-          }
-        />
-      </BaseScreenComponent>
+      <RemindEmailValidationOverlay>
+        <BaseScreenComponent
+          goBack={() => this.props.navigation.goBack()}
+          headerTitle={I18n.t("wallet.creditCard.onboardingAttempts.title")}
+        >
+          <CreditCardAttemptsList
+            title={I18n.t(
+              "wallet.creditCard.onboardingAttempts.lastAttemptsTitle"
+            )}
+            creditCardAttempts={creditCardOnboardingAttempts}
+            ListEmptyComponent={ListEmptyComponent}
+            onAttemptPress={(attempt: CreditCardInsertion) =>
+              this.props.navigateToCreditCardAttemptDetail({
+                attempt
+              })
+            }
+          />
+        </BaseScreenComponent>
+      </RemindEmailValidationOverlay>
     );
   }
 }
@@ -92,10 +94,8 @@ const mapDispatchToProps = (_: Dispatch) => ({
 });
 
 export default withValidatedPagoPaVersion(
-  withValidatedEmail(
-    connect(
-      mapStateToProps,
-      mapDispatchToProps
-    )(CreditCardOnboardingAttemptsScreen)
-  )
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(CreditCardOnboardingAttemptsScreen)
 );

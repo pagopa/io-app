@@ -7,7 +7,7 @@
  */
 import * as React from "react";
 import EmailReadScreenComponent from "../../components/EmailReadScreenComponent";
-import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
+import RemindEmailValidationOverlay from "../../components/RemindEmailValidationOverlay";
 import { SingleButton } from "../../components/ui/BlockButtons";
 import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
@@ -16,7 +16,7 @@ import { navigateToEmailInsertScreen } from "../../store/actions/navigation";
 
 type Props = IOStackNavigationRouteProps<
   OnboardingParamsList,
-  "READ_EMAIL_SCREEN"
+  "ONBOARDING_READ_EMAIL_SCREEN"
 >;
 
 const EmailReadScreen = (props: Props) => {
@@ -35,11 +35,13 @@ const EmailReadScreen = (props: Props) => {
   };
 
   return (
-    <EmailReadScreenComponent
-      handleGoBack={handleGoBack}
-      footerProps={footerProps}
-    />
+    <RemindEmailValidationOverlay>
+      <EmailReadScreenComponent
+        handleGoBack={handleGoBack}
+        footerProps={footerProps}
+      />
+    </RemindEmailValidationOverlay>
   );
 };
 
-export default withValidatedEmail(EmailReadScreen);
+export default EmailReadScreen;
