@@ -23,7 +23,6 @@ import { TimelineOperationListItem } from "../components/TimelineOperationListIt
 import { IDPayDetailsParamsList } from "../navigation";
 import { useInitiativeTimelineFetcher } from "../utils/hooks";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
-import { constantPollingFetch } from "../../../../../utils/fetch";
 export type OperationsListScreenParams = { initiativeId: string };
 type OperationsListScreenRouteProps = RouteProp<
   IDPayDetailsParamsList,
