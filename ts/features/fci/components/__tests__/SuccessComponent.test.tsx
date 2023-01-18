@@ -22,8 +22,6 @@ type Props = {
   signatureRequest: SignatureRequestDetailView;
 };
 
-const now = new Date();
-
 describe("Test SuccessComponent", () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   beforeEach(() => {
@@ -41,6 +39,7 @@ describe("Test SuccessComponent", () => {
     expect(store.getActions()).toEqual([fciStartRequest()]);
   });
   it("with a signature request EXPIRED and a signature status equal to WAIT_FOR_SIGNATURE should render the right Error component", () => {
+    const now = new Date();
     const store: Store<GlobalState> = createStore(
       appReducer,
       globalState as any
@@ -57,6 +56,7 @@ describe("Test SuccessComponent", () => {
     expect(component.getByTestId("ExpiredSignatureRequestTestID")).toBeTruthy();
   });
   it("with a signature request EXPIRED and a signature status equal to REJECTED should render the right Error component", () => {
+    const now = new Date();
     const store: Store<GlobalState> = createStore(
       appReducer,
       globalState as any
@@ -90,13 +90,14 @@ describe("Test SuccessComponent", () => {
     ).toBeTruthy();
   });
   it("with a signature request SIGNED and after 90 days from signature should render the right Error component", () => {
+    const now = new Date();
     const store: Store<GlobalState> = createStore(
       appReducer,
       globalState as any
     );
     const expiredSignatureRequest = {
       ...mockSignatureRequestDetailView,
-      updated_at: new Date(now.setDate(now.getDate() - 30)),
+      updated_at: new Date(now.setDate(now.getDate() - 90)),
       status: SignatureRequestDetailViewStatusEnum.SIGNED
     };
     const props = {

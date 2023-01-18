@@ -18,5 +18,17 @@ describe("Test dates utils", () => {
         daysBetweenDate(new Date(), new Date(date.setDate(date.getDate() + 2)))
       ).toBe(2);
     });
+    it("should return 3 if the two dates are three days apart", () => {
+      const date = new Date();
+      expect(
+        daysBetweenDate(new Date(), new Date(date.setDate(date.getDate() + 3)))
+      ).toBe(3);
+    });
+    it("should return 30 if the two dates are 30 days apart", () => {
+      const date = new Date();
+      expect(
+        daysBetweenDate(new Date(), new Date(date.setDate(date.getDate() + 30)))
+      ).toBe(30);
+    });
   });
 });
