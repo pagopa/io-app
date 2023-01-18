@@ -3,14 +3,11 @@
 exports[`PspRadioItem match snapshot 1`] = `
 <View
   style={
-    Array [
-      Object {},
-      Object {
-        "alignItems": "flex-start",
-        "flexDirection": "row",
-        "justifyContent": "space-between",
-      },
-    ]
+    Object {
+      "alignItems": "flex-start",
+      "flexDirection": "row",
+      "justifyContent": "space-between",
+    }
   }
 >
   <Text
@@ -44,14 +41,11 @@ exports[`PspRadioItem match snapshot 1`] = `
   </Text>
   <View
     style={
-      Array [
-        Object {},
-        Object {
-          "alignItems": "flex-end",
-          "flex": 1,
-          "flexDirection": "column",
-        },
-      ]
+      Object {
+        "alignItems": "flex-end",
+        "flex": 1,
+        "flexDirection": "column",
+      }
     }
   >
     <View
@@ -139,30 +133,23 @@ exports[`PspRadioItem match snapshot 1`] = `
       <RCTScrollView>
         <View>
           <View
-            style={Object {}}
             testID="PspInfoBottomSheetContentTestID"
           >
             <View
               style={
-                Array [
-                  Object {},
-                  Object {
-                    "flex": 1,
-                    "flexDirection": "row",
-                    "marginTop": 12,
-                  },
-                ]
+                Object {
+                  "flex": 1,
+                  "flexDirection": "row",
+                  "marginTop": 12,
+                }
               }
             >
               <View
                 style={
-                  Array [
-                    Object {},
-                    Object {
-                      "marginRight": 16,
-                      "marginTop": 6,
-                    },
-                  ]
+                  Object {
+                    "marginRight": 16,
+                    "marginTop": 6,
+                  }
                 }
               >
                 <SvgMock
@@ -172,12 +159,9 @@ exports[`PspRadioItem match snapshot 1`] = `
               </View>
               <View
                 style={
-                  Array [
-                    Object {},
-                    Object {
-                      "flex": 1,
-                    },
-                  ]
+                  Object {
+                    "flex": 1,
+                  }
                 }
               >
                 <Text
@@ -213,25 +197,19 @@ exports[`PspRadioItem match snapshot 1`] = `
             </View>
             <View
               style={
-                Array [
-                  Object {},
-                  Object {
-                    "flex": 1,
-                    "flexDirection": "row",
-                    "marginTop": 12,
-                  },
-                ]
+                Object {
+                  "flex": 1,
+                  "flexDirection": "row",
+                  "marginTop": 12,
+                }
               }
             >
               <View
                 style={
-                  Array [
-                    Object {},
-                    Object {
-                      "marginRight": 16,
-                      "marginTop": 6,
-                    },
-                  ]
+                  Object {
+                    "marginRight": 16,
+                    "marginTop": 6,
+                  }
                 }
               >
                 <SvgMock
@@ -241,12 +219,9 @@ exports[`PspRadioItem match snapshot 1`] = `
               </View>
               <View
                 style={
-                  Array [
-                    Object {},
-                    Object {
-                      "flex": 1,
-                    },
-                  ]
+                  Object {
+                    "flex": 1,
+                  }
                 }
               >
                 <Text
@@ -310,25 +285,19 @@ exports[`PspRadioItem match snapshot 1`] = `
             </View>
             <View
               style={
-                Array [
-                  Object {},
-                  Object {
-                    "flex": 1,
-                    "flexDirection": "row",
-                    "marginTop": 12,
-                  },
-                ]
+                Object {
+                  "flex": 1,
+                  "flexDirection": "row",
+                  "marginTop": 12,
+                }
               }
             >
               <View
                 style={
-                  Array [
-                    Object {},
-                    Object {
-                      "marginRight": 16,
-                      "marginTop": 6,
-                    },
-                  ]
+                  Object {
+                    "marginRight": 16,
+                    "marginTop": 6,
+                  }
                 }
               >
                 <SvgMock
@@ -338,17 +307,12 @@ exports[`PspRadioItem match snapshot 1`] = `
               </View>
               <View
                 style={
-                  Array [
-                    Object {},
-                    Object {
-                      "flex": 1,
-                    },
-                  ]
+                  Object {
+                    "flex": 1,
+                  }
                 }
               >
-                <View
-                  style={Object {}}
-                >
+                <View>
                   <Text
                     accessible={true}
                     color="blue"

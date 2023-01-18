@@ -26,26 +26,20 @@ exports[`MessageList Item component when \`isRead\` is true should match the sna
 >
   <View
     style={
-      Array [
-        Object {},
-        Object {
-          "alignItems": "center",
-          "flex": 1,
-          "flexDirection": "row",
-        },
-      ]
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "flexDirection": "row",
+      }
     }
   >
     <View
       style={
-        Array [
-          Object {},
-          Object {
-            "flexBasis": "100%",
-            "flexGrow": 1,
-            "flexShrink": 1,
-          },
-        ]
+        Object {
+          "flexBasis": "100%",
+          "flexGrow": 1,
+          "flexShrink": 1,
+        }
       }
     >
       <Text
@@ -79,15 +73,12 @@ exports[`MessageList Item component when \`isRead\` is true should match the sna
     </View>
     <View
       style={
-        Array [
-          Object {},
-          Object {
-            "flexBasis": "auto",
-            "flexDirection": "row",
-            "flexGrow": 0,
-            "flexShrink": 0,
-          },
-        ]
+        Object {
+          "flexBasis": "auto",
+          "flexDirection": "row",
+          "flexGrow": 0,
+          "flexShrink": 0,
+        }
       }
     >
       <Text
@@ -117,7 +108,6 @@ exports[`MessageList Item component when \`isRead\` is true should match the sna
   <View
     style={
       Array [
-        Object {},
         Object {
           "flexDirection": "row",
         },
@@ -140,30 +130,23 @@ exports[`MessageList Item component when \`isRead\` is true should match the sna
   </View>
   <View
     style={
-      Array [
-        Object {},
-        Object {
-          "height": 4,
-          "width": "100%",
-        },
-      ]
+      Object {
+        "height": 4,
+        "width": "100%",
+      }
     }
   />
   <View
     style={
-      Array [
-        Object {},
-        Object {
-          "flex": 1,
-          "flexDirection": "row",
-        },
-      ]
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+      }
     }
   >
     <View
       style={
         Array [
-          Object {},
           Object {
             "flex": 1,
             "flexBasis": "100%",
@@ -178,14 +161,11 @@ exports[`MessageList Item component when \`isRead\` is true should match the sna
     >
       <View
         style={
-          Array [
-            Object {},
-            Object {
-              "flexBasis": "100%",
-              "flexGrow": 1,
-              "flexShrink": 1,
-            },
-          ]
+          Object {
+            "flexBasis": "100%",
+            "flexGrow": 1,
+            "flexShrink": 1,
+          }
         }
       >
         <Text
@@ -247,26 +227,20 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
 >
   <View
     style={
-      Array [
-        Object {},
-        Object {
-          "alignItems": "center",
-          "flex": 1,
-          "flexDirection": "row",
-        },
-      ]
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "flexDirection": "row",
+      }
     }
   >
     <View
       style={
-        Array [
-          Object {},
-          Object {
-            "flexBasis": "100%",
-            "flexGrow": 1,
-            "flexShrink": 1,
-          },
-        ]
+        Object {
+          "flexBasis": "100%",
+          "flexGrow": 1,
+          "flexShrink": 1,
+        }
       }
     >
       <Text
@@ -300,15 +274,12 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
     </View>
     <View
       style={
-        Array [
-          Object {},
-          Object {
-            "flexBasis": "auto",
-            "flexDirection": "row",
-            "flexGrow": 0,
-            "flexShrink": 0,
-          },
-        ]
+        Object {
+          "flexBasis": "auto",
+          "flexDirection": "row",
+          "flexGrow": 0,
+          "flexShrink": 0,
+        }
       }
     >
       <Text
@@ -338,7 +309,6 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
   <View
     style={
       Array [
-        Object {},
         Object {
           "flexDirection": "row",
         },
@@ -361,30 +331,23 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
   </View>
   <View
     style={
-      Array [
-        Object {},
-        Object {
-          "height": 4,
-          "width": "100%",
-        },
-      ]
+      Object {
+        "height": 4,
+        "width": "100%",
+      }
     }
   />
   <View
     style={
-      Array [
-        Object {},
-        Object {
-          "flex": 1,
-          "flexDirection": "row",
-        },
-      ]
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+      }
     }
   >
     <View
       style={
         Array [
-          Object {},
           Object {
             "flex": 1,
             "flexBasis": "100%",
@@ -399,18 +362,15 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
     >
       <View
         style={
-          Array [
-            Object {},
-            Object {
-              "alignSelf": "flex-start",
-              "flex": 0,
-              "flexBasis": "auto",
-              "flexGrow": 0,
-              "flexShrink": 0,
-              "paddingRight": 8,
-              "paddingTop": 6.5,
-            },
-          ]
+          Object {
+            "alignSelf": "flex-start",
+            "flex": 0,
+            "flexBasis": "auto",
+            "flexGrow": 0,
+            "flexShrink": 0,
+            "paddingRight": 8,
+            "paddingTop": 6.5,
+          }
         }
       >
         <RNSVGSvgView
@@ -450,14 +410,11 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
       </View>
       <View
         style={
-          Array [
-            Object {},
-            Object {
-              "flexBasis": "100%",
-              "flexGrow": 1,
-              "flexShrink": 1,
-            },
-          ]
+          Object {
+            "flexBasis": "100%",
+            "flexGrow": 1,
+            "flexShrink": 1,
+          }
         }
       >
         <Text
@@ -492,7 +449,6 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
     <View
       style={
         Array [
-          Object {},
           Object {
             "alignSelf": "center",
             "flexGrow": 0,
@@ -565,26 +521,20 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
 >
   <View
     style={
-      Array [
-        Object {},
-        Object {
-          "alignItems": "center",
-          "flex": 1,
-          "flexDirection": "row",
-        },
-      ]
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "flexDirection": "row",
+      }
     }
   >
     <View
       style={
-        Array [
-          Object {},
-          Object {
-            "flexBasis": "100%",
-            "flexGrow": 1,
-            "flexShrink": 1,
-          },
-        ]
+        Object {
+          "flexBasis": "100%",
+          "flexGrow": 1,
+          "flexShrink": 1,
+        }
       }
     >
       <Text
@@ -618,15 +568,12 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
     </View>
     <View
       style={
-        Array [
-          Object {},
-          Object {
-            "flexBasis": "auto",
-            "flexDirection": "row",
-            "flexGrow": 0,
-            "flexShrink": 0,
-          },
-        ]
+        Object {
+          "flexBasis": "auto",
+          "flexDirection": "row",
+          "flexGrow": 0,
+          "flexShrink": 0,
+        }
       }
     >
       <Text
@@ -656,7 +603,6 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
   <View
     style={
       Array [
-        Object {},
         Object {
           "flexDirection": "row",
         },
@@ -679,30 +625,23 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
   </View>
   <View
     style={
-      Array [
-        Object {},
-        Object {
-          "height": 4,
-          "width": "100%",
-        },
-      ]
+      Object {
+        "height": 4,
+        "width": "100%",
+      }
     }
   />
   <View
     style={
-      Array [
-        Object {},
-        Object {
-          "flex": 1,
-          "flexDirection": "row",
-        },
-      ]
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+      }
     }
   >
     <View
       style={
         Array [
-          Object {},
           Object {
             "flex": 1,
             "flexBasis": "100%",
@@ -717,18 +656,15 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
     >
       <View
         style={
-          Array [
-            Object {},
-            Object {
-              "alignSelf": "flex-start",
-              "flex": 0,
-              "flexBasis": "auto",
-              "flexGrow": 0,
-              "flexShrink": 0,
-              "paddingRight": 8,
-              "paddingTop": 6.5,
-            },
-          ]
+          Object {
+            "alignSelf": "flex-start",
+            "flex": 0,
+            "flexBasis": "auto",
+            "flexGrow": 0,
+            "flexShrink": 0,
+            "paddingRight": 8,
+            "paddingTop": 6.5,
+          }
         }
       >
         <RNSVGSvgView
@@ -768,14 +704,11 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
       </View>
       <View
         style={
-          Array [
-            Object {},
-            Object {
-              "flexBasis": "100%",
-              "flexGrow": 1,
-              "flexShrink": 1,
-            },
-          ]
+          Object {
+            "flexBasis": "100%",
+            "flexGrow": 1,
+            "flexShrink": 1,
+          }
         }
       >
         <Text
@@ -810,7 +743,6 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
     <View
       style={
         Array [
-          Object {},
           Object {
             "alignSelf": "center",
             "flexGrow": 0,
@@ -883,26 +815,20 @@ exports[`MessageList Item component when category is LEGAL_MESSAGE should match 
 >
   <View
     style={
-      Array [
-        Object {},
-        Object {
-          "alignItems": "center",
-          "flex": 1,
-          "flexDirection": "row",
-        },
-      ]
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "flexDirection": "row",
+      }
     }
   >
     <View
       style={
-        Array [
-          Object {},
-          Object {
-            "flexBasis": "100%",
-            "flexGrow": 1,
-            "flexShrink": 1,
-          },
-        ]
+        Object {
+          "flexBasis": "100%",
+          "flexGrow": 1,
+          "flexShrink": 1,
+        }
       }
     >
       <Text
@@ -936,15 +862,12 @@ exports[`MessageList Item component when category is LEGAL_MESSAGE should match 
     </View>
     <View
       style={
-        Array [
-          Object {},
-          Object {
-            "flexBasis": "auto",
-            "flexDirection": "row",
-            "flexGrow": 0,
-            "flexShrink": 0,
-          },
-        ]
+        Object {
+          "flexBasis": "auto",
+          "flexDirection": "row",
+          "flexGrow": 0,
+          "flexShrink": 0,
+        }
       }
     >
       <SvgMock
@@ -979,7 +902,6 @@ exports[`MessageList Item component when category is LEGAL_MESSAGE should match 
   <View
     style={
       Array [
-        Object {},
         Object {
           "flexDirection": "row",
         },
@@ -1002,30 +924,23 @@ exports[`MessageList Item component when category is LEGAL_MESSAGE should match 
   </View>
   <View
     style={
-      Array [
-        Object {},
-        Object {
-          "height": 4,
-          "width": "100%",
-        },
-      ]
+      Object {
+        "height": 4,
+        "width": "100%",
+      }
     }
   />
   <View
     style={
-      Array [
-        Object {},
-        Object {
-          "flex": 1,
-          "flexDirection": "row",
-        },
-      ]
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+      }
     }
   >
     <View
       style={
         Array [
-          Object {},
           Object {
             "flex": 1,
             "flexBasis": "100%",
@@ -1040,18 +955,15 @@ exports[`MessageList Item component when category is LEGAL_MESSAGE should match 
     >
       <View
         style={
-          Array [
-            Object {},
-            Object {
-              "alignSelf": "flex-start",
-              "flex": 0,
-              "flexBasis": "auto",
-              "flexGrow": 0,
-              "flexShrink": 0,
-              "paddingRight": 8,
-              "paddingTop": 6.5,
-            },
-          ]
+          Object {
+            "alignSelf": "flex-start",
+            "flex": 0,
+            "flexBasis": "auto",
+            "flexGrow": 0,
+            "flexShrink": 0,
+            "paddingRight": 8,
+            "paddingTop": 6.5,
+          }
         }
       >
         <RNSVGSvgView
@@ -1091,14 +1003,11 @@ exports[`MessageList Item component when category is LEGAL_MESSAGE should match 
       </View>
       <View
         style={
-          Array [
-            Object {},
-            Object {
-              "flexBasis": "100%",
-              "flexGrow": 1,
-              "flexShrink": 1,
-            },
-          ]
+          Object {
+            "flexBasis": "100%",
+            "flexGrow": 1,
+            "flexShrink": 1,
+          }
         }
       >
         <Text
@@ -1160,26 +1069,20 @@ exports[`MessageList Item component when category is PN should match the snapsho
 >
   <View
     style={
-      Array [
-        Object {},
-        Object {
-          "alignItems": "center",
-          "flex": 1,
-          "flexDirection": "row",
-        },
-      ]
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "flexDirection": "row",
+      }
     }
   >
     <View
       style={
-        Array [
-          Object {},
-          Object {
-            "flexBasis": "100%",
-            "flexGrow": 1,
-            "flexShrink": 1,
-          },
-        ]
+        Object {
+          "flexBasis": "100%",
+          "flexGrow": 1,
+          "flexShrink": 1,
+        }
       }
     >
       <Text
@@ -1213,15 +1116,12 @@ exports[`MessageList Item component when category is PN should match the snapsho
     </View>
     <View
       style={
-        Array [
-          Object {},
-          Object {
-            "flexBasis": "auto",
-            "flexDirection": "row",
-            "flexGrow": 0,
-            "flexShrink": 0,
-          },
-        ]
+        Object {
+          "flexBasis": "auto",
+          "flexDirection": "row",
+          "flexGrow": 0,
+          "flexShrink": 0,
+        }
       }
     >
       <SvgMock
@@ -1256,7 +1156,6 @@ exports[`MessageList Item component when category is PN should match the snapsho
   <View
     style={
       Array [
-        Object {},
         Object {
           "flexDirection": "row",
         },
@@ -1279,30 +1178,23 @@ exports[`MessageList Item component when category is PN should match the snapsho
   </View>
   <View
     style={
-      Array [
-        Object {},
-        Object {
-          "height": 4,
-          "width": "100%",
-        },
-      ]
+      Object {
+        "height": 4,
+        "width": "100%",
+      }
     }
   />
   <View
     style={
-      Array [
-        Object {},
-        Object {
-          "flex": 1,
-          "flexDirection": "row",
-        },
-      ]
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+      }
     }
   >
     <View
       style={
         Array [
-          Object {},
           Object {
             "flex": 1,
             "flexBasis": "100%",
@@ -1317,18 +1209,15 @@ exports[`MessageList Item component when category is PN should match the snapsho
     >
       <View
         style={
-          Array [
-            Object {},
-            Object {
-              "alignSelf": "flex-start",
-              "flex": 0,
-              "flexBasis": "auto",
-              "flexGrow": 0,
-              "flexShrink": 0,
-              "paddingRight": 8,
-              "paddingTop": 6.5,
-            },
-          ]
+          Object {
+            "alignSelf": "flex-start",
+            "flex": 0,
+            "flexBasis": "auto",
+            "flexGrow": 0,
+            "flexShrink": 0,
+            "paddingRight": 8,
+            "paddingTop": 6.5,
+          }
         }
       >
         <RNSVGSvgView
@@ -1368,14 +1257,11 @@ exports[`MessageList Item component when category is PN should match the snapsho
       </View>
       <View
         style={
-          Array [
-            Object {},
-            Object {
-              "flexBasis": "100%",
-              "flexGrow": 1,
-              "flexShrink": 1,
-            },
-          ]
+          Object {
+            "flexBasis": "100%",
+            "flexGrow": 1,
+            "flexShrink": 1,
+          }
         }
       >
         <Text
@@ -1437,26 +1323,20 @@ exports[`MessageList Item component when hasPaidBadge=false category=EU_COVID_CE
 >
   <View
     style={
-      Array [
-        Object {},
-        Object {
-          "alignItems": "center",
-          "flex": 1,
-          "flexDirection": "row",
-        },
-      ]
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "flexDirection": "row",
+      }
     }
   >
     <View
       style={
-        Array [
-          Object {},
-          Object {
-            "flexBasis": "100%",
-            "flexGrow": 1,
-            "flexShrink": 1,
-          },
-        ]
+        Object {
+          "flexBasis": "100%",
+          "flexGrow": 1,
+          "flexShrink": 1,
+        }
       }
     >
       <Text
@@ -1490,15 +1370,12 @@ exports[`MessageList Item component when hasPaidBadge=false category=EU_COVID_CE
     </View>
     <View
       style={
-        Array [
-          Object {},
-          Object {
-            "flexBasis": "auto",
-            "flexDirection": "row",
-            "flexGrow": 0,
-            "flexShrink": 0,
-          },
-        ]
+        Object {
+          "flexBasis": "auto",
+          "flexDirection": "row",
+          "flexGrow": 0,
+          "flexShrink": 0,
+        }
       }
     >
       <Text
@@ -1528,7 +1405,6 @@ exports[`MessageList Item component when hasPaidBadge=false category=EU_COVID_CE
   <View
     style={
       Array [
-        Object {},
         Object {
           "flexDirection": "row",
         },
@@ -1553,30 +1429,23 @@ exports[`MessageList Item component when hasPaidBadge=false category=EU_COVID_CE
   </View>
   <View
     style={
-      Array [
-        Object {},
-        Object {
-          "height": 4,
-          "width": "100%",
-        },
-      ]
+      Object {
+        "height": 4,
+        "width": "100%",
+      }
     }
   />
   <View
     style={
-      Array [
-        Object {},
-        Object {
-          "flex": 1,
-          "flexDirection": "row",
-        },
-      ]
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+      }
     }
   >
     <View
       style={
         Array [
-          Object {},
           Object {
             "flex": 1,
             "flexBasis": "100%",
@@ -1593,18 +1462,15 @@ exports[`MessageList Item component when hasPaidBadge=false category=EU_COVID_CE
     >
       <View
         style={
-          Array [
-            Object {},
-            Object {
-              "alignSelf": "flex-start",
-              "flex": 0,
-              "flexBasis": "auto",
-              "flexGrow": 0,
-              "flexShrink": 0,
-              "paddingRight": 8,
-              "paddingTop": 6.5,
-            },
-          ]
+          Object {
+            "alignSelf": "flex-start",
+            "flex": 0,
+            "flexBasis": "auto",
+            "flexGrow": 0,
+            "flexShrink": 0,
+            "paddingRight": 8,
+            "paddingTop": 6.5,
+          }
         }
       >
         <RNSVGSvgView
@@ -1644,14 +1510,11 @@ exports[`MessageList Item component when hasPaidBadge=false category=EU_COVID_CE
       </View>
       <View
         style={
-          Array [
-            Object {},
-            Object {
-              "flexBasis": "100%",
-              "flexGrow": 1,
-              "flexShrink": 1,
-            },
-          ]
+          Object {
+            "flexBasis": "100%",
+            "flexGrow": 1,
+            "flexShrink": 1,
+          }
         }
       >
         <Text
@@ -1685,21 +1548,18 @@ exports[`MessageList Item component when hasPaidBadge=false category=EU_COVID_CE
     </View>
     <View
       style={
-        Array [
-          Object {},
-          Object {
-            "alignItems": "center",
-            "backgroundColor": "#0073E6",
-            "borderRadius": 24,
-            "bottom": 0,
-            "color": "#FFFFFF",
-            "height": 48,
-            "justifyContent": "center",
-            "position": "absolute",
-            "right": 0,
-            "width": 48,
-          },
-        ]
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#0073E6",
+          "borderRadius": 24,
+          "bottom": 0,
+          "color": "#FFFFFF",
+          "height": 48,
+          "justifyContent": "center",
+          "position": "absolute",
+          "right": 0,
+          "width": 48,
+        }
       }
     >
       <SvgMock
@@ -1738,26 +1598,20 @@ exports[`MessageList Item component when hasPaidBadge=false category=GENERIC sho
 >
   <View
     style={
-      Array [
-        Object {},
-        Object {
-          "alignItems": "center",
-          "flex": 1,
-          "flexDirection": "row",
-        },
-      ]
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "flexDirection": "row",
+      }
     }
   >
     <View
       style={
-        Array [
-          Object {},
-          Object {
-            "flexBasis": "100%",
-            "flexGrow": 1,
-            "flexShrink": 1,
-          },
-        ]
+        Object {
+          "flexBasis": "100%",
+          "flexGrow": 1,
+          "flexShrink": 1,
+        }
       }
     >
       <Text
@@ -1791,15 +1645,12 @@ exports[`MessageList Item component when hasPaidBadge=false category=GENERIC sho
     </View>
     <View
       style={
-        Array [
-          Object {},
-          Object {
-            "flexBasis": "auto",
-            "flexDirection": "row",
-            "flexGrow": 0,
-            "flexShrink": 0,
-          },
-        ]
+        Object {
+          "flexBasis": "auto",
+          "flexDirection": "row",
+          "flexGrow": 0,
+          "flexShrink": 0,
+        }
       }
     >
       <Text
@@ -1829,7 +1680,6 @@ exports[`MessageList Item component when hasPaidBadge=false category=GENERIC sho
   <View
     style={
       Array [
-        Object {},
         Object {
           "flexDirection": "row",
         },
@@ -1852,30 +1702,23 @@ exports[`MessageList Item component when hasPaidBadge=false category=GENERIC sho
   </View>
   <View
     style={
-      Array [
-        Object {},
-        Object {
-          "height": 4,
-          "width": "100%",
-        },
-      ]
+      Object {
+        "height": 4,
+        "width": "100%",
+      }
     }
   />
   <View
     style={
-      Array [
-        Object {},
-        Object {
-          "flex": 1,
-          "flexDirection": "row",
-        },
-      ]
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+      }
     }
   >
     <View
       style={
         Array [
-          Object {},
           Object {
             "flex": 1,
             "flexBasis": "100%",
@@ -1890,18 +1733,15 @@ exports[`MessageList Item component when hasPaidBadge=false category=GENERIC sho
     >
       <View
         style={
-          Array [
-            Object {},
-            Object {
-              "alignSelf": "flex-start",
-              "flex": 0,
-              "flexBasis": "auto",
-              "flexGrow": 0,
-              "flexShrink": 0,
-              "paddingRight": 8,
-              "paddingTop": 6.5,
-            },
-          ]
+          Object {
+            "alignSelf": "flex-start",
+            "flex": 0,
+            "flexBasis": "auto",
+            "flexGrow": 0,
+            "flexShrink": 0,
+            "paddingRight": 8,
+            "paddingTop": 6.5,
+          }
         }
       >
         <RNSVGSvgView
@@ -1941,14 +1781,11 @@ exports[`MessageList Item component when hasPaidBadge=false category=GENERIC sho
       </View>
       <View
         style={
-          Array [
-            Object {},
-            Object {
-              "flexBasis": "100%",
-              "flexGrow": 1,
-              "flexShrink": 1,
-            },
-          ]
+          Object {
+            "flexBasis": "100%",
+            "flexGrow": 1,
+            "flexShrink": 1,
+          }
         }
       >
         <Text
@@ -2010,26 +1847,20 @@ exports[`MessageList Item component when hasPaidBadge=true category=EU_COVID_CER
 >
   <View
     style={
-      Array [
-        Object {},
-        Object {
-          "alignItems": "center",
-          "flex": 1,
-          "flexDirection": "row",
-        },
-      ]
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "flexDirection": "row",
+      }
     }
   >
     <View
       style={
-        Array [
-          Object {},
-          Object {
-            "flexBasis": "100%",
-            "flexGrow": 1,
-            "flexShrink": 1,
-          },
-        ]
+        Object {
+          "flexBasis": "100%",
+          "flexGrow": 1,
+          "flexShrink": 1,
+        }
       }
     >
       <Text
@@ -2063,15 +1894,12 @@ exports[`MessageList Item component when hasPaidBadge=true category=EU_COVID_CER
     </View>
     <View
       style={
-        Array [
-          Object {},
-          Object {
-            "flexBasis": "auto",
-            "flexDirection": "row",
-            "flexGrow": 0,
-            "flexShrink": 0,
-          },
-        ]
+        Object {
+          "flexBasis": "auto",
+          "flexDirection": "row",
+          "flexGrow": 0,
+          "flexShrink": 0,
+        }
       }
     >
       <Text
@@ -2101,7 +1929,6 @@ exports[`MessageList Item component when hasPaidBadge=true category=EU_COVID_CER
   <View
     style={
       Array [
-        Object {},
         Object {
           "flexDirection": "row",
         },
@@ -2126,30 +1953,23 @@ exports[`MessageList Item component when hasPaidBadge=true category=EU_COVID_CER
   </View>
   <View
     style={
-      Array [
-        Object {},
-        Object {
-          "height": 4,
-          "width": "100%",
-        },
-      ]
+      Object {
+        "height": 4,
+        "width": "100%",
+      }
     }
   />
   <View
     style={
-      Array [
-        Object {},
-        Object {
-          "flex": 1,
-          "flexDirection": "row",
-        },
-      ]
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+      }
     }
   >
     <View
       style={
         Array [
-          Object {},
           Object {
             "flex": 1,
             "flexBasis": "100%",
@@ -2166,18 +1986,15 @@ exports[`MessageList Item component when hasPaidBadge=true category=EU_COVID_CER
     >
       <View
         style={
-          Array [
-            Object {},
-            Object {
-              "alignSelf": "flex-start",
-              "flex": 0,
-              "flexBasis": "auto",
-              "flexGrow": 0,
-              "flexShrink": 0,
-              "paddingRight": 8,
-              "paddingTop": 6.5,
-            },
-          ]
+          Object {
+            "alignSelf": "flex-start",
+            "flex": 0,
+            "flexBasis": "auto",
+            "flexGrow": 0,
+            "flexShrink": 0,
+            "paddingRight": 8,
+            "paddingTop": 6.5,
+          }
         }
       >
         <RNSVGSvgView
@@ -2217,14 +2034,11 @@ exports[`MessageList Item component when hasPaidBadge=true category=EU_COVID_CER
       </View>
       <View
         style={
-          Array [
-            Object {},
-            Object {
-              "flexBasis": "100%",
-              "flexGrow": 1,
-              "flexShrink": 1,
-            },
-          ]
+          Object {
+            "flexBasis": "100%",
+            "flexGrow": 1,
+            "flexShrink": 1,
+          }
         }
       >
         <Text
@@ -2343,26 +2157,20 @@ exports[`MessageList Item component when hasPaidBadge=true category=GENERIC shou
 >
   <View
     style={
-      Array [
-        Object {},
-        Object {
-          "alignItems": "center",
-          "flex": 1,
-          "flexDirection": "row",
-        },
-      ]
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "flexDirection": "row",
+      }
     }
   >
     <View
       style={
-        Array [
-          Object {},
-          Object {
-            "flexBasis": "100%",
-            "flexGrow": 1,
-            "flexShrink": 1,
-          },
-        ]
+        Object {
+          "flexBasis": "100%",
+          "flexGrow": 1,
+          "flexShrink": 1,
+        }
       }
     >
       <Text
@@ -2396,15 +2204,12 @@ exports[`MessageList Item component when hasPaidBadge=true category=GENERIC shou
     </View>
     <View
       style={
-        Array [
-          Object {},
-          Object {
-            "flexBasis": "auto",
-            "flexDirection": "row",
-            "flexGrow": 0,
-            "flexShrink": 0,
-          },
-        ]
+        Object {
+          "flexBasis": "auto",
+          "flexDirection": "row",
+          "flexGrow": 0,
+          "flexShrink": 0,
+        }
       }
     >
       <Text
@@ -2434,7 +2239,6 @@ exports[`MessageList Item component when hasPaidBadge=true category=GENERIC shou
   <View
     style={
       Array [
-        Object {},
         Object {
           "flexDirection": "row",
         },
@@ -2457,30 +2261,23 @@ exports[`MessageList Item component when hasPaidBadge=true category=GENERIC shou
   </View>
   <View
     style={
-      Array [
-        Object {},
-        Object {
-          "height": 4,
-          "width": "100%",
-        },
-      ]
+      Object {
+        "height": 4,
+        "width": "100%",
+      }
     }
   />
   <View
     style={
-      Array [
-        Object {},
-        Object {
-          "flex": 1,
-          "flexDirection": "row",
-        },
-      ]
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+      }
     }
   >
     <View
       style={
         Array [
-          Object {},
           Object {
             "flex": 1,
             "flexBasis": "100%",
@@ -2495,18 +2292,15 @@ exports[`MessageList Item component when hasPaidBadge=true category=GENERIC shou
     >
       <View
         style={
-          Array [
-            Object {},
-            Object {
-              "alignSelf": "flex-start",
-              "flex": 0,
-              "flexBasis": "auto",
-              "flexGrow": 0,
-              "flexShrink": 0,
-              "paddingRight": 8,
-              "paddingTop": 6.5,
-            },
-          ]
+          Object {
+            "alignSelf": "flex-start",
+            "flex": 0,
+            "flexBasis": "auto",
+            "flexGrow": 0,
+            "flexShrink": 0,
+            "paddingRight": 8,
+            "paddingTop": 6.5,
+          }
         }
       >
         <RNSVGSvgView
@@ -2546,14 +2340,11 @@ exports[`MessageList Item component when hasPaidBadge=true category=GENERIC shou
       </View>
       <View
         style={
-          Array [
-            Object {},
-            Object {
-              "flexBasis": "100%",
-              "flexGrow": 1,
-              "flexShrink": 1,
-            },
-          ]
+          Object {
+            "flexBasis": "100%",
+            "flexGrow": 1,
+            "flexShrink": 1,
+          }
         }
       >
         <Text
@@ -2672,26 +2463,20 @@ exports[`MessageList Item component with all the flags set to false should match
 >
   <View
     style={
-      Array [
-        Object {},
-        Object {
-          "alignItems": "center",
-          "flex": 1,
-          "flexDirection": "row",
-        },
-      ]
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "flexDirection": "row",
+      }
     }
   >
     <View
       style={
-        Array [
-          Object {},
-          Object {
-            "flexBasis": "100%",
-            "flexGrow": 1,
-            "flexShrink": 1,
-          },
-        ]
+        Object {
+          "flexBasis": "100%",
+          "flexGrow": 1,
+          "flexShrink": 1,
+        }
       }
     >
       <Text
@@ -2725,15 +2510,12 @@ exports[`MessageList Item component with all the flags set to false should match
     </View>
     <View
       style={
-        Array [
-          Object {},
-          Object {
-            "flexBasis": "auto",
-            "flexDirection": "row",
-            "flexGrow": 0,
-            "flexShrink": 0,
-          },
-        ]
+        Object {
+          "flexBasis": "auto",
+          "flexDirection": "row",
+          "flexGrow": 0,
+          "flexShrink": 0,
+        }
       }
     >
       <Text
@@ -2763,7 +2545,6 @@ exports[`MessageList Item component with all the flags set to false should match
   <View
     style={
       Array [
-        Object {},
         Object {
           "flexDirection": "row",
         },
@@ -2786,30 +2567,23 @@ exports[`MessageList Item component with all the flags set to false should match
   </View>
   <View
     style={
-      Array [
-        Object {},
-        Object {
-          "height": 4,
-          "width": "100%",
-        },
-      ]
+      Object {
+        "height": 4,
+        "width": "100%",
+      }
     }
   />
   <View
     style={
-      Array [
-        Object {},
-        Object {
-          "flex": 1,
-          "flexDirection": "row",
-        },
-      ]
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+      }
     }
   >
     <View
       style={
         Array [
-          Object {},
           Object {
             "flex": 1,
             "flexBasis": "100%",
@@ -2824,18 +2598,15 @@ exports[`MessageList Item component with all the flags set to false should match
     >
       <View
         style={
-          Array [
-            Object {},
-            Object {
-              "alignSelf": "flex-start",
-              "flex": 0,
-              "flexBasis": "auto",
-              "flexGrow": 0,
-              "flexShrink": 0,
-              "paddingRight": 8,
-              "paddingTop": 6.5,
-            },
-          ]
+          Object {
+            "alignSelf": "flex-start",
+            "flex": 0,
+            "flexBasis": "auto",
+            "flexGrow": 0,
+            "flexShrink": 0,
+            "paddingRight": 8,
+            "paddingTop": 6.5,
+          }
         }
       >
         <RNSVGSvgView
@@ -2875,14 +2646,11 @@ exports[`MessageList Item component with all the flags set to false should match
       </View>
       <View
         style={
-          Array [
-            Object {},
-            Object {
-              "flexBasis": "100%",
-              "flexGrow": 1,
-              "flexShrink": 1,
-            },
-          ]
+          Object {
+            "flexBasis": "100%",
+            "flexGrow": 1,
+            "flexShrink": 1,
+          }
         }
       >
         <Text

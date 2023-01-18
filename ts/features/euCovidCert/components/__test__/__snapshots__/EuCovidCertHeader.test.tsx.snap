@@ -3,24 +3,18 @@
 exports[`EuCovidCertHeader it should match the snapshot 1`] = `
 <View
   style={
-    Array [
-      Object {},
-      Object {
-        "flexDirection": "row",
-        "justifyContent": "space-between",
-      },
-    ]
+    Object {
+      "flexDirection": "row",
+      "justifyContent": "space-between",
+    }
   }
 >
   <View
     style={
-      Array [
-        Object {},
-        Object {
-          "flex": 1,
-          "flexDirection": "column",
-        },
-      ]
+      Object {
+        "flex": 1,
+        "flexDirection": "column",
+      }
     }
   >
     <Text

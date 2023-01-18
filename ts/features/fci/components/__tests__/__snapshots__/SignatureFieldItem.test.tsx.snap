@@ -3,13 +3,10 @@
 exports[`Test SignatureFieldItem component should render a SignatureFieldItem component with props correctly 1`] = `
 <View
   style={
-    Array [
-      Object {},
-      Object {
-        "paddingBottom": 16,
-        "paddingTop": 16,
-      },
-    ]
+    Object {
+      "paddingBottom": 16,
+      "paddingTop": 16,
+    }
   }
 >
   <View
@@ -43,7 +40,6 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
     <View
       style={
         Array [
-          Object {},
           Object {
             "flexDirection": "column",
           },
