@@ -9,36 +9,26 @@ import {
   StyleSheet,
   View
 } from "react-native";
-import { OperationListDTO } from "../../../../../../definitions/idpay/timeline/OperationListDTO";
-import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../i18n";
 import customVariables from "../../../../../theme/variables";
 import { formatDateAsLocal } from "../../../../../utils/dates";
+import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { showToast } from "../../../../../utils/showToast";
 import { TimelineOperationListItem } from "../components/TimelineOperationListItem";
 import { IDPayDetailsParamsList } from "../navigation";
 import { useInitiativeTimelineFetcher } from "../utils/hooks";
-import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 export type OperationsListScreenParams = { initiativeId: string };
 type OperationsListScreenRouteProps = RouteProp<
   IDPayDetailsParamsList,
   "IDPAY_DETAILS_TIMELINE"
 >;
 
-const styles = StyleSheet.create({
-  activityIndicator: {
-    padding: 12
-  },
-  listContainer: {
-    paddingBottom: 120
-  }
-});
-
-const loader = () => (
+const TimelineLoader = () => (
   <ActivityIndicator
     animating={true}
     size={"large"}
@@ -51,46 +41,41 @@ const loader = () => (
     testID={"activityIndicator"}
   />
 );
-const renderItem = ({ item }: { item: OperationListDTO }) =>
-  TimelineOperationListItem({ operation: item });
-
-const keyExtractor = (operation: OperationListDTO) => operation.operationId;
-const toast = () => showToast("Errore nel caricamento, riprova.");
 
 export const OperationsListScreen = () => {
   const route = useRoute<OperationsListScreenRouteProps>();
   const { initiativeId } = route.params;
 
-  const [isRefreshing, setIsRefreshing] = React.useState(false);
-  const isFirstRenderDispatchedRef = React.useRef(false);
-  const { isLoading, timeline, fetchNextPage, resetTimeline, currentPage } =
-    useInitiativeTimelineFetcher(initiativeId, 10, toast);
+  const handleOnError = () => {
+    showToast("Errore nel caricamento, riprova.");
+  };
+
+  const {
+    isLoading,
+    timeline,
+    fetchNextPage,
+    fetchPage,
+    refresh,
+    isRefreshing,
+    lastUpdate
+  } = useInitiativeTimelineFetcher(initiativeId, 10, handleOnError);
 
   const shouldRenderLoader = isLoading && !isRefreshing;
-  const isFirstLoading = isFirstRenderDispatchedRef.current
-    ? timeline.operationsRecord.length === 0 && shouldRenderLoader
-    : true;
 
-  const refreshTimeline = () => {
-    if (isRefreshing) {
-      return;
-    }
-    setIsRefreshing(true);
-    resetTimeline();
-  };
-  const renderLoader = () => (shouldRenderLoader ? loader() : null);
+  // We need to know if this is the first rendering in order to show the loading spinner overlay
+  const isFirstRenderDispatchedRef = React.useRef(false);
 
   useOnFirstRender(() => {
-    resetTimeline();
+    fetchPage(0);
     // eslint-disable-next-line functional/immutable-data
     isFirstRenderDispatchedRef.current = true;
   });
-  React.useEffect(() => {
-    if (currentPage >= 0 && isRefreshing) {
-      setIsRefreshing(false);
-    }
-  }, [currentPage, isRefreshing]);
-  const pageContent = (
+
+  const isFirstLoading = isFirstRenderDispatchedRef.current
+    ? timeline.length === 0 && shouldRenderLoader
+    : true;
+
+  const renderContent = () => (
     <SafeAreaView>
       <View style={IOStyles.horizontalContentPadding}>
         <H1>
@@ -104,7 +89,7 @@ export const OperationsListScreen = () => {
               "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.lastUpdated"
             )}
             <Body weight="SemiBold">
-              {formatDateAsLocal(timeline.lastUpdate, true)}
+              {lastUpdate && formatDateAsLocal(lastUpdate, true)}
             </Body>
           </Body>
         )}
@@ -113,14 +98,16 @@ export const OperationsListScreen = () => {
       <FlatList
         style={IOStyles.horizontalContentPadding}
         contentContainerStyle={styles.listContainer}
-        data={timeline.operationsRecord}
-        keyExtractor={keyExtractor}
-        renderItem={renderItem}
+        data={timeline}
+        keyExtractor={operation => operation.operationId}
+        renderItem={({ item }) => (
+          <TimelineOperationListItem operation={item} />
+        )}
         onEndReached={fetchNextPage}
         onEndReachedThreshold={0.5}
-        onRefresh={refreshTimeline}
+        onRefresh={refresh}
         refreshing={isRefreshing}
-        ListFooterComponent={renderLoader}
+        ListFooterComponent={shouldRenderLoader ? <TimelineLoader /> : null}
       />
     </SafeAreaView>
   );
@@ -133,8 +120,17 @@ export const OperationsListScreen = () => {
       goBack={true}
     >
       <LoadingSpinnerOverlay isLoading={isFirstLoading} loadingOpacity={100}>
-        {isFirstLoading ? null : pageContent}
+        {isFirstLoading ? null : renderContent()}
       </LoadingSpinnerOverlay>
     </BaseScreenComponent>
   );
 };
+
+const styles = StyleSheet.create({
+  activityIndicator: {
+    padding: 12
+  },
+  listContainer: {
+    paddingBottom: 120
+  }
+});

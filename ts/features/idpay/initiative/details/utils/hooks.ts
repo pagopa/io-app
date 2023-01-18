@@ -1,9 +1,11 @@
+import * as React from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import {
-  idpayIsLastTimelinePageSelector,
-  idpayMergedTimelineSelector,
-  idpayTimelineLastPageSelector,
+  idpayPaginatedTimelineSelector,
+  idpayTimelineCurrentPageSelector,
+  idpayTimelineIsLastPageSelector,
+  idpayTimelineLastUpdateSelector,
   idpayTimelineSelector
 } from "../store";
 import { idpayTimelinePageGet } from "../store/actions";
@@ -11,52 +13,62 @@ import { idpayTimelinePageGet } from "../store/actions";
 export const useInitiativeTimelineFetcher = (
   initiativeId: string,
   pageSize: number,
-  showErrorToast: () => void
+  onError: () => void
 ) => {
   const dispatch = useIODispatch();
-  const timelineFromSelector = useIOSelector(idpayTimelineSelector);
 
-  const isLoading = pot.isLoading(timelineFromSelector);
+  const paginatedTimelinePot = useIOSelector(idpayPaginatedTimelineSelector);
+  const isLastPage = useIOSelector(idpayTimelineIsLastPageSelector);
+  const currentPage = useIOSelector(idpayTimelineCurrentPageSelector);
+  const lastUpdate = useIOSelector(idpayTimelineLastUpdateSelector);
 
-  const isLastPage = useIOSelector(idpayIsLastTimelinePageSelector);
-  const mergedTimeline = useIOSelector(idpayMergedTimelineSelector);
-  const currentPage = useIOSelector(idpayTimelineLastPageSelector);
+  const timeline = useIOSelector(idpayTimelineSelector);
 
-  const resetTimeline = () => {
-    dispatch(
-      idpayTimelinePageGet.request({
-        initiativeId,
-        page: 0,
-        pageSize
-      })
-    );
+  const isLoading = pot.isLoading(paginatedTimelinePot);
+  const isError = pot.isError(paginatedTimelinePot);
+
+  const [isRefreshing, setIsRefreshing] = React.useState(false);
+
+  React.useEffect(() => {
+    if (currentPage >= 0 && isRefreshing) {
+      setIsRefreshing(false);
+    }
+  }, [currentPage, isRefreshing]);
+
+  const refresh = () => {
+    if (!isRefreshing) {
+      setIsRefreshing(true);
+      fetchPage(0);
+    }
   };
 
-  const fetchGivenPage = (page: number) =>
+  const fetchPage = (page: number) =>
     dispatch(idpayTimelinePageGet.request({ initiativeId, page, pageSize }));
 
   const fetchNextPage = () => {
     if (isLastPage || isLoading) {
       return;
     }
-    if (pot.isError(timelineFromSelector)) {
-      showErrorToast();
+    if (isError) {
+      onError();
     } else {
-      fetchGivenPage(currentPage + 1);
+      fetchPage(currentPage + 1);
     }
   };
 
   const retryFetchLastPage = () => {
-    fetchGivenPage(currentPage);
+    fetchPage(currentPage);
   };
 
   return {
     isLoading,
-    timeline: mergedTimeline,
-    fetchPage: fetchGivenPage,
-    resetTimeline,
+    isRefreshing,
+    timeline,
+    fetchPage,
+    refresh,
     fetchNextPage,
     retryFetchLastPage,
-    currentPage
+    currentPage,
+    lastUpdate
   } as const;
 };

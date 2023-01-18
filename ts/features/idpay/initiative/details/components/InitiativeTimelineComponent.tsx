@@ -14,7 +14,10 @@ import {
 } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { IDPayDetailsRoutes } from "../navigation";
-import { idpayMergedTimelineSelector, idpayTimelineSelector } from "../store";
+import {
+  idpayPaginatedTimelineSelector,
+  idpayTimelineSelector
+} from "../store";
 import { idpayTimelinePageGet } from "../store/actions";
 import { TimelineOperationListItem } from "./TimelineOperationListItem";
 
@@ -59,14 +62,16 @@ const ConfiguredInitiativeData = (props: Props) => {
     dispatch(idpayTimelinePageGet.request({ initiativeId, page: 0 }));
   }, [dispatch, initiativeId]);
 
-  const timelineList = useIOSelector(idpayMergedTimelineSelector);
-  const timelineFromSelector = useIOSelector(idpayTimelineSelector);
-  const isTimelineLoading = pot.isLoading(timelineFromSelector);
-  if (isTimelineLoading) {
+  const paginatedTimelinePot = useIOSelector(idpayPaginatedTimelineSelector);
+  const timeline = useIOSelector(idpayTimelineSelector);
+
+  const isLoading = pot.isLoading(paginatedTimelinePot);
+
+  if (isLoading) {
     return null;
   }
 
-  if (timelineList.operationsRecord.length === 0) {
+  if (timeline.length === 0) {
     return emptyTimelineContent;
   }
 
@@ -94,10 +99,10 @@ const ConfiguredInitiativeData = (props: Props) => {
       </View>
       <NBView spacer small />
       <NBList>
-        {timelineList.operationsRecord.slice(0, 3).map(transaction => (
+        {timeline.slice(0, 3).map(operation => (
           <TimelineOperationListItem
-            key={transaction.operationId}
-            operation={transaction}
+            key={operation.operationId}
+            operation={operation}
           />
         ))}
       </NBList>
