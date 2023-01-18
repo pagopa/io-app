@@ -6,7 +6,10 @@ import { getNetworkError } from "../../../../../utils/errors";
 import { qtspFilledDocument } from "../../../types/__mocks__/CreateFilledDocumentBody.mock";
 import { fciLoadQtspFilledDocument } from "../../../store/actions";
 import { CreateFilledDocument } from "../../../../../../definitions/fci/CreateFilledDocument";
-import { handleCreateFilledDocument } from "../handleCreateFilledDocument";
+import {
+  filledDocumentPollWatcher,
+  handleCreateFilledDocument
+} from "../handleCreateFilledDocument";
 import { FilledDocumentDetailView } from "../../../../../../definitions/fci/FilledDocumentDetailView";
 
 const mockedPayload: CreateFilledDocument = {
@@ -36,6 +39,8 @@ describe("handleCreateFilledDocument", () => {
       })
       .next(right(successResponse))
       .put(fciLoadQtspFilledDocument.success(successResponse.value))
+      .next()
+      .call(filledDocumentPollWatcher, qtspFilledDocument.filled_document_url)
       .next()
       .isDone();
   });

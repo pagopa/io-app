@@ -2,6 +2,7 @@
  * Implements the reducers for BackendServicesState.
  */
 
+import { Platform } from "react-native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
@@ -27,6 +28,7 @@ import {
 } from "../../config";
 import { LocalizedMessageKeys } from "../../i18n";
 import { isStringNullyOrEmpty } from "../../utils/strings";
+import { getAppVersion, isVersionSupported } from "../../utils/appVersion";
 import { backendStatusLoadSuccess } from "../actions/backendStatus";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
@@ -370,7 +372,14 @@ export const isFciEnabledSelector = createSelector(
     fciEnabled &&
     pipe(
       backendStatus,
-      O.map(bs => bs.config.fci.enabled),
+      O.map(bs =>
+        isVersionSupported(
+          Platform.OS === "ios"
+            ? bs.config.fci.min_app_version.ios
+            : bs.config.fci.min_app_version.android,
+          getAppVersion()
+        )
+      ),
       O.getOrElse(() => false)
     )
 );

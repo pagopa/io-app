@@ -3305,6 +3305,10 @@ idpay:
       validThrough: "Valido fino al {{endDate}}"
   initiative:
     configuration: 
+      instrumentStatus:
+        active: Attivo 
+        pendingActivation: In attivazione
+        pendingDeactivation: In disattivazione
       bottomSheet:
         header: Prima di continuare
         bodyFirst: Il metodo sarà abilitato
