@@ -2,9 +2,10 @@
  * This component displays a list of transactions
  */
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { Content, Text as NBText, View } from "native-base";
+import { Content, Text as NBText } from "native-base";
 import * as React from "react";
 import {
+  View,
   Dimensions,
   FlatList,
   ListRenderItemInfo,

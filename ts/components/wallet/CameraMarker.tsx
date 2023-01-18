@@ -1,7 +1,7 @@
-import { Col, Grid, Row, View } from "native-base";
+import { Col, Grid, Row } from "native-base";
 import * as React from "react";
 
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import IconFont from "../ui/IconFont";
 
 import variables from "../../theme/variables";

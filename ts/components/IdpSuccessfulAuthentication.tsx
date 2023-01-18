@@ -1,9 +1,8 @@
 /**
  * A component to display a white tick on a blue background
  */
-import { View } from "native-base";
 import * as React from "react";
-import { StatusBar, StyleSheet } from "react-native";
+import { View, StatusBar, StyleSheet } from "react-native";
 
 import variables from "../theme/variables";
 import IconFont from "./ui/IconFont";

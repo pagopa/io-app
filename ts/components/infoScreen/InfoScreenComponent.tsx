@@ -1,7 +1,6 @@
 import { NavigationEvents } from "@react-navigation/compat";
-import { View } from "native-base";
 import * as React from "react";
-import { StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 import themeVariables from "../../theme/variables";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { VSpacer } from "../core/spacer/Spacer";

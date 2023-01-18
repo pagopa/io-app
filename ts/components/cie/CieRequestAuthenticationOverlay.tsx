@@ -1,7 +1,6 @@
-import { View } from "native-base";
 import * as React from "react";
 import { createRef, useEffect, useReducer } from "react";
-import { Platform } from "react-native";
+import { View, Platform } from "react-native";
 import WebView from "react-native-webview";
 import {
   WebViewErrorEvent,

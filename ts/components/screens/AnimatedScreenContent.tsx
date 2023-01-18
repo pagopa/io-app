@@ -4,9 +4,9 @@
  * - provide a dynanic subheader appearing on scroll
  */
 import { NavigationEvents } from "@react-navigation/compat";
-import { View } from "native-base";
 import * as React from "react";
 import {
+  View,
   Animated,
   LayoutChangeEvent,
   Platform,

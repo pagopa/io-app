@@ -1,8 +1,7 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { View } from "native-base";
 import * as React from "react";
 import { useEffect } from "react";
-import { ActivityIndicator, SafeAreaView } from "react-native";
+import { View, ActivityIndicator, SafeAreaView } from "react-native";
 import { InfoScreenComponent } from "../../../../../components/infoScreen/InfoScreenComponent";
 import GenericErrorComponent from "../../../../../components/screens/GenericErrorComponent";
 import { WithTestID } from "../../../../../types/WithTestID";

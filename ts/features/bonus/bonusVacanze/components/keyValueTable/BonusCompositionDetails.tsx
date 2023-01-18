@@ -1,6 +1,5 @@
-import { View } from "native-base";
 import React from "react";
-import { StyleProp, StyleSheet, TextStyle } from "react-native";
+import { View, StyleProp, StyleSheet, TextStyle } from "react-native";
 import I18n from "../../../../../i18n";
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
 import { Body } from "../../../../../components/core/typography/Body";

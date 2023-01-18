@@ -1,6 +1,6 @@
-import { Content, View } from "native-base";
+import { Content } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { FOOTER_SAFE_AREA } from "../../utils/constants";
 import { IOColors } from "../core/variables/IOColors";
 

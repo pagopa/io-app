@@ -1,6 +1,5 @@
-import { View } from "native-base";
 import * as React from "react";
-import { StyleSheet, TextInput } from "react-native";
+import { View, StyleSheet, TextInput } from "react-native";
 import I18n from "../../i18n";
 import InputPlaceHolder from "../Pinpad/InputPlaceholder";
 import { INPUT_PLACEHOLDER_HEIGHT } from "../Pinpad/Placeholders";

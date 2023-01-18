@@ -1,7 +1,6 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { View } from "native-base";
 import * as React from "react";
-import { Animated, Easing, Image, StyleSheet } from "react-native";
+import { View, Animated, Easing, Image, StyleSheet } from "react-native";
 import ProgressCircle from "react-native-progress-circle";
 import customVariables from "../../theme/variables";
 import AnimatedRing from "../animations/AnimatedRing";

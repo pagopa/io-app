@@ -1,6 +1,6 @@
-import { Text as NBText, View } from "native-base";
+import { Text as NBText } from "native-base";
 import React from "react";
-import { StyleProp, StyleSheet, TextStyle } from "react-native";
+import { View, StyleProp, StyleSheet, TextStyle } from "react-native";
 import themeVariables from "../../../../../theme/variables";
 
 type Props = {

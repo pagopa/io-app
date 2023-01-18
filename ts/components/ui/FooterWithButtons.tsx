@@ -1,7 +1,6 @@
-import { View } from "native-base";
 import * as React from "react";
 
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import variables from "../../theme/variables";
 import BlockButtons, { BlockButtonsProps } from "./BlockButtons";
 

@@ -1,6 +1,6 @@
-import { ListItem, View } from "native-base";
+import { ListItem } from "native-base";
 import * as React from "react";
-import { Dimensions } from "react-native";
+import { View, Dimensions } from "react-native";
 import { useSelector } from "react-redux";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H3 } from "../../../../../components/core/typography/H3";

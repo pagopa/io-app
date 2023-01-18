@@ -1,6 +1,5 @@
-import { View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import variables from "../../../../theme/variables";
 
 // TODO: after bonus vacanze,create a common style for footer, atm duplicated in FooterWithButtons

@@ -1,6 +1,5 @@
-import { View } from "native-base";
 import * as React from "react";
-import { Image, StyleSheet } from "react-native";
+import { View, Image, StyleSheet } from "react-native";
 import { H2 } from "../../../../../../components/core/typography/H2";
 import { H1 } from "../../../../../../components/core/typography/H1";
 

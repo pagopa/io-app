@@ -2,10 +2,10 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { NavigationEvents } from "@react-navigation/compat";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Body, Left, Right, Text as NBText, View } from "native-base";
+import { Body, Left, Right, Text as NBText, View as NBView } from "native-base";
 import * as React from "react";
 import { FC, Ref } from "react";
-import { AccessibilityInfo, ColorValue, StyleSheet } from "react-native";
+import { View, AccessibilityInfo, ColorValue, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
@@ -228,9 +228,9 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
                 this.firstElementRef
               )
             ) : (
-              <View ref={this.firstElementRef} accessible={true}>
+              <NBView ref={this.firstElementRef} accessible={true}>
                 {body ? body : headerTitle && this.renderBodyLabel(headerTitle)}
-              </View>
+              </NBView>
             )}
           </Body>
         )}

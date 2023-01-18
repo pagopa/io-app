@@ -1,6 +1,7 @@
-import { Badge, ListItem, Text as NBText, View } from "native-base";
+import { Badge, ListItem, Text as NBText } from "native-base";
 import * as React from "react";
 import {
+  View,
   AccessibilityRole,
   Platform,
   StyleProp,

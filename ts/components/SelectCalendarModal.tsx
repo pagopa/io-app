@@ -1,6 +1,11 @@
-import { Container, Content, Text as NBText, View } from "native-base";
+import { Container, Content, Text as NBText } from "native-base";
 import React from "react";
-import { BackHandler, NativeEventSubscription, StyleSheet } from "react-native";
+import {
+  View,
+  BackHandler,
+  NativeEventSubscription,
+  StyleSheet
+} from "react-native";
 import { Calendar } from "react-native-calendar-events";
 
 import { connect } from "react-redux";

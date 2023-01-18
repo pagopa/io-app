@@ -1,7 +1,7 @@
-import { View } from "native-base";
 import * as React from "react";
 import { useEffect, useRef, useState } from "react";
 import {
+  View,
   AccessibilityProps,
   Animated,
   Easing,

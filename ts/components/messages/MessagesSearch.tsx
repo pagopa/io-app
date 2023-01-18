@@ -1,6 +1,5 @@
-import { View } from "native-base";
 import React from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 
 import { UIMessage } from "../../store/reducers/entities/messages/types";
 import { isTextIncludedCaseInsensitive } from "../../utils/strings";

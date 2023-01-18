@@ -1,6 +1,6 @@
 import * as React from "react";
-import { ListItem, View } from "native-base";
-import { Image, ImageSourcePropType, StyleSheet } from "react-native";
+import { ListItem } from "native-base";
+import { View, Image, ImageSourcePropType, StyleSheet } from "react-native";
 import { H4 } from "../../core/typography/H4";
 import { H5 } from "../../core/typography/H5";
 import { IOColors } from "../../core/variables/IOColors";

@@ -2,9 +2,15 @@
  * A component to show the fiscal code fac-simile in Landscape
  */
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { Body, Button, Container, Right, View } from "native-base";
+import { Body, Button, Container, Right } from "native-base";
 import * as React from "react";
-import { BackHandler, ScrollView, StatusBar, StyleSheet } from "react-native";
+import {
+  View,
+  BackHandler,
+  ScrollView,
+  StatusBar,
+  StyleSheet
+} from "react-native";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { Municipality } from "../../definitions/content/Municipality";
 import IconFont from "../components/ui/IconFont";

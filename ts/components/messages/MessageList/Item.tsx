@@ -1,8 +1,8 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Badge, Text as NBText, View } from "native-base";
+import { Badge, Text as NBText } from "native-base";
 import React from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { MessageCategory } from "../../../../definitions/backend/MessageCategory";
 import { TagEnum as TagEnumBase } from "../../../../definitions/backend/MessageCategoryBase";
 import { TagEnum as TagEnumPN } from "../../../../definitions/backend/MessageCategoryPN";

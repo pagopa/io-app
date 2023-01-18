@@ -2,9 +2,9 @@
  * This component displays a list of payments
  */
 import * as O from "fp-ts/lib/Option";
-import { Content, Text as NBText, View } from "native-base";
+import { Content, Text as NBText } from "native-base";
 import * as React from "react";
-import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
+import { View, FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
 
 import { pipe } from "fp-ts/lib/function";
 import I18n from "../../i18n";

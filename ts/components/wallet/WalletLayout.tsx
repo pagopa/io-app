@@ -8,9 +8,9 @@
  * footer with a button for starting a new payment
  */
 
-import { Content, Text as NBText, View } from "native-base";
+import { Content, Text as NBText } from "native-base";
 import * as React from "react";
-import { Animated, StyleProp, StyleSheet, ViewStyle } from "react-native";
+import { View, Animated, StyleProp, StyleSheet, ViewStyle } from "react-native";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 import { FAQsCategoriesType } from "../../utils/faq";

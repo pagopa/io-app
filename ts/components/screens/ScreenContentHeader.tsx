@@ -3,9 +3,9 @@
  * - an image, displayed on the right of the title
  * - a subtitle, displayed below the title
  */
-import { Text as NBText, View } from "native-base";
+import { Text as NBText } from "native-base";
 import * as React from "react";
-import { Animated, ImageSourcePropType, StyleSheet } from "react-native";
+import { View, Animated, ImageSourcePropType, StyleSheet } from "react-native";
 import { IconProps } from "react-native-vector-icons/Icon";
 import {
   HEADER_ANIMATION_DURATION,

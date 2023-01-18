@@ -1,10 +1,11 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as O from "fp-ts/lib/Option";
 import { debounce } from "lodash";
-import { Body, Content, Right, View } from "native-base";
+import { Body, Content, Right } from "native-base";
 import * as React from "react";
 import { ComponentProps } from "react";
 import {
+  View,
   BackHandler,
   ImageSourcePropType,
   KeyboardAvoidingView,

@@ -1,7 +1,6 @@
 import * as O from "fp-ts/lib/Option";
-import { View } from "native-base";
 import React, { useCallback } from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 
 import { pipe } from "fp-ts/lib/function";
 import I18n from "../../i18n";

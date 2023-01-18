@@ -1,6 +1,6 @@
-import { Text as NBText, View } from "native-base";
+import { Text as NBText } from "native-base";
 import React from "react";
-import { Platform, StyleSheet } from "react-native";
+import { View, Platform, StyleSheet } from "react-native";
 import { FamilyMembers } from "../../../../../../definitions/bonus_vacanze/FamilyMembers";
 import I18n from "../../../../../i18n";
 import { makeFontStyleObject } from "../../../../../theme/fonts";

@@ -1,8 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { View } from "native-base";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { H4 } from "../../../../components/core/typography/H4";

@@ -1,9 +1,9 @@
 /**
  * A customized Header component.
  */
-import { Header, NativeBase, View } from "native-base";
+import { Header, NativeBase } from "native-base";
 import * as React from "react";
-import { ColorValue, ViewProps } from "react-native";
+import { View, ColorValue, ViewProps } from "react-native";
 import variables from "../../theme/variables";
 
 type Props = NativeBase.Header & ViewProps & { backgroundColor?: ColorValue };
