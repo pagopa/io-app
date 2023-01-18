@@ -142,6 +142,7 @@ function* watchFciQtspClausesSaga(): SagaIterator {
     );
   }
 }
+
 /**
  * Handle the FCI start requests saga
  */

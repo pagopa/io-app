@@ -387,7 +387,7 @@ profile:
             description:
               one: "IO collects only the information "
               two: "necessary "
-              three: "to monitor the performance of the services provided to you."
+              three: "to monitor and improve the provided services."
             cta: "Why?"
           security:
             description:
@@ -3278,6 +3278,10 @@ idpay:
       validThrough: "Valid through {{endDate}}"
   initiative:
     configuration: 
+      instrumentStatus:
+        active: Active
+        pendingActivation: Pending activation
+        pendingDeactivation: Pending deactivation
       bottomSheet:
         header: Prima di continuare
         bodyFirst: Il metodo sarà abilitato
