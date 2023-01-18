@@ -126,7 +126,7 @@ function configurePushNotifications() {
         ),
         O.map(messageId => {
           const isForeground = notification.foreground;
-          trackMessageNotificationTap(isForeground);
+          trackMessageNotificationTap(messageId, isForeground);
           // We just received a push notification about a new message
           if (isForeground) {
             // The App is in foreground so just refresh the messages list

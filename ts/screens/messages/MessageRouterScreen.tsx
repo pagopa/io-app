@@ -99,7 +99,7 @@ const navigateToScreenHandler =
       );
     } else {
       if (fromNotification) {
-        trackOpenMessageFromNotification();
+        trackOpenMessageFromNotification(message.id);
       }
       navigateBack();
       dispatch(

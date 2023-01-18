@@ -1,8 +1,10 @@
+import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import EUCOVIDCERT_ROUTES from "../features/euCovidCert/navigation/routes";
 import { euCovidCertificateEnabled } from "../config";
 import { PushNotificationsContentTypeEnum } from "../../definitions/backend/PushNotificationsContentType";
 import { mixpanelTrack } from "../mixpanel";
 import { ReminderStatusEnum } from "../../definitions/backend/ReminderStatus";
+import { UIMessageId } from "../store/reducers/entities/messages/types";
 
 const blackListRoutes: ReadonlyArray<string> = [];
 
@@ -16,19 +18,22 @@ export const noAnalyticsRoutes = new Set<string>(
 
 // Premium events
 
-export function trackMessageNotificationTap(isForeground: boolean) {
+export function trackMessageNotificationTap(
+  messageId: NonEmptyString,
+  isForeground: boolean
+) {
   const key = isForeground
     ? "NOTIFICATIONS_MESSAGE_FOREGROUND_TAP"
     : "NOTIFICATIONS_MESSAGE_BACKGROUND_TAP";
-  void mixpanelTrack(key);
+  void mixpanelTrack(key, {
+    messageId
+  });
 }
 
-export function trackOpenMessageFromNotification() {
-  void mixpanelTrack("NOTIFICATION_OPEN_MESSAGE");
-}
-
-export function trackIdentificationRequest() {
-  void mixpanelTrack("IDENTIFICATION_REQUEST");
+export function trackOpenMessageFromNotification(messageId: UIMessageId) {
+  void mixpanelTrack("NOTIFICATION_OPEN_MESSAGE", {
+    messageId
+  });
 }
 
 export function trackNotificationsOptInPreviewStatus(
