@@ -1,8 +1,8 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
-import EmailInsertScreen from "../screens/onboarding/EmailInsertScreen";
 import FingerprintScreen from "../screens/onboarding/FingerprintScreen";
 import OnboardingCompletedScreen from "../screens/onboarding/OnboardingCompletedScreen";
+import OnboardingEmailInsertScreen from "../screens/onboarding/OnboardingEmailInsertScreen";
 import OnboardingEmailReadScreen from "../screens/onboarding/OnboardingEmailReadScreen";
 import OnboardingNotificationsInfoScreenConsent from "../screens/onboarding/OnboardingNotificationsInfoScreenConsent";
 import OnboardingNotificationsPreferencesScreen from "../screens/onboarding/OnboardingNotificationsPreferencesScreen";
@@ -50,11 +50,11 @@ const navigator = () => (
       component={FingerprintScreen}
     />
     <Stack.Screen
-      name={ROUTES.INSERT_EMAIL_SCREEN}
-      component={EmailInsertScreen}
+      name={ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN}
+      component={OnboardingEmailInsertScreen}
     />
     <Stack.Screen
-      name={ROUTES.READ_EMAIL_SCREEN}
+      name={ROUTES.ONBOARDING_READ_EMAIL_SCREEN}
       component={OnboardingEmailReadScreen}
     />
     <Stack.Screen

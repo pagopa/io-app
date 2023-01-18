@@ -1,7 +1,7 @@
-import I18n from "i18n-js";
 import * as React from "react";
 import { useContext } from "react";
 import { SafeAreaView } from "react-native";
+import I18n from "../i18n";
 import {
   AppParamsList,
   IOStackNavigationRouteProps
