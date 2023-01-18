@@ -45,13 +45,16 @@ export function* handleGetTimelinePage(
           ),
         response => {
           if (response.status === 200) {
-            return put(idpayTimelinePageGet.success(response.value));
+            return put(
+              idpayTimelinePageGet.success({
+                timeline: response.value,
+                page: payload.page ?? 0
+              })
+            );
           } else {
             return put(
               idpayTimelinePageGet.failure({
-                ...getGenericError(
-                  new Error(`response status code ${response.status}`)
-                )
+                ...getGenericError(new Error(String(response.status)))
               })
             );
           }

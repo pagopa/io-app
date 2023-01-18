@@ -1,15 +1,24 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
+import _ from "lodash";
 import { TimelineDTO } from "../../../../../../definitions/idpay/timeline/TimelineDTO";
 import { InitiativeDTO } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
 import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { NetworkError } from "../../../../../utils/errors";
+import {
+  NetworkError,
+  getErrorFromNetworkError
+} from "../../../../../utils/errors";
 import { idpayInitiativeGet, idpayTimelinePageGet } from "./actions";
+
+type PaginatedTimelineDTO = {
+  lastUpdate: Date;
+  operationsRecord: Record<number, TimelineDTO["operationList"]>;
+};
 
 export type IDPayInitiativeState = {
   details: pot.Pot<InitiativeDTO, NetworkError>;
-  timeline: pot.Pot<TimelineDTO, NetworkError>;
+  timeline: pot.Pot<PaginatedTimelineDTO, NetworkError>;
 };
 
 const INITIAL_STATE: IDPayInitiativeState = {
@@ -51,17 +60,18 @@ const reducer = (
       };
     case getType(idpayTimelinePageGet.success):
       const currentTimeline = pot.getOrElse(state.timeline, {
-        lastUpdate: action.payload.lastUpdate,
-        operationList: []
+        lastUpdate: action.payload.timeline.lastUpdate,
+        operationsRecord: []
       });
+      const newOperationsRecord = {
+        ...currentTimeline.operationsRecord,
+        [action.payload.page]: action.payload.timeline.operationList
+      };
       return {
         ...state,
         timeline: pot.some({
           lastUpdate: currentTimeline.lastUpdate,
-          operationList: [
-            ...currentTimeline.operationList,
-            ...action.payload.operationList
-          ]
+          operationsRecord: newOperationsRecord
         })
       };
     case getType(idpayTimelinePageGet.failure):
@@ -77,5 +87,31 @@ export const idpayInitiativeDetailsSelector = (state: GlobalState) =>
   state.features.idPay.initiative.details;
 export const idpayTimelineSelector = (state: GlobalState) =>
   state.features.idPay.initiative.timeline;
+export const idpayIsLastTimelinePageSelector = (state: GlobalState) => {
+  if (pot.isError(state.features.idPay.initiative.timeline)) {
+    const err = getErrorFromNetworkError(
+      state.features.idPay.initiative.timeline.error
+    );
+    return err.message === "404";
+  }
+  return false;
+};
+export const idpayMergedTimelineSelector = (state: GlobalState) =>
+  pot.getOrElse(
+    pot.map(state.features.idPay.initiative.timeline, timeline => ({
+      lastUpdate: timeline.lastUpdate,
+      operationsRecord: _.valuesIn(timeline.operationsRecord).flat()
+    })),
+    { operationsRecord: [], lastUpdate: new Date() }
+  );
+export const idpayTimelineLastPageSelector = (state: GlobalState) =>
+  pot.getOrElse(
+    pot.map(
+      state.features.idPay.initiative.timeline,
+      timeline => _.valuesIn(timeline.operationsRecord).length - 1
+    ),
+    -1
+  );
+
 
 export default reducer;

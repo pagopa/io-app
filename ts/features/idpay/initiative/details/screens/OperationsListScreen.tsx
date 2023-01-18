@@ -9,18 +9,21 @@ import {
   StyleSheet,
   View
 } from "react-native";
+import { OperationListDTO } from "../../../../../../definitions/idpay/timeline/OperationListDTO";
+import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../i18n";
 import customVariables from "../../../../../theme/variables";
 import { formatDateAsLocal } from "../../../../../utils/dates";
+import { showToast } from "../../../../../utils/showToast";
 import { TimelineOperationListItem } from "../components/TimelineOperationListItem";
 import { IDPayDetailsParamsList } from "../navigation";
 import { useInitiativeTimelineFetcher } from "../utils/hooks";
-
+import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
+import { constantPollingFetch } from "../../../../../utils/fetch";
 export type OperationsListScreenParams = { initiativeId: string };
 type OperationsListScreenRouteProps = RouteProp<
   IDPayDetailsParamsList,
@@ -36,30 +39,58 @@ const styles = StyleSheet.create({
   }
 });
 
-const renderLoader = (isLoading: boolean) =>
-  isLoading ? (
-    <ActivityIndicator
-      animating={true}
-      size={"large"}
-      style={styles.activityIndicator}
-      color={customVariables.brandPrimary}
-      accessible={true}
-      accessibilityHint={I18n.t("global.accessibility.activityIndicator.hint")}
-      accessibilityLabel={I18n.t(
-        "global.accessibility.activityIndicator.label"
-      )}
-      importantForAccessibility={"no-hide-descendants"}
-      testID={"activityIndicator"}
-    />
-  ) : null;
+const loader = () => (
+  <ActivityIndicator
+    animating={true}
+    size={"large"}
+    style={styles.activityIndicator}
+    color={customVariables.brandPrimary}
+    accessible={true}
+    accessibilityHint={I18n.t("global.accessibility.activityIndicator.hint")}
+    accessibilityLabel={I18n.t("global.accessibility.activityIndicator.label")}
+    importantForAccessibility={"no-hide-descendants"}
+    testID={"activityIndicator"}
+  />
+);
+const renderItem = ({ item }: { item: OperationListDTO }) =>
+  TimelineOperationListItem({ operation: item });
+
+const keyExtractor = (operation: OperationListDTO) => operation.operationId;
+const toast = () => showToast("Errore nel caricamento, riprova.");
 
 export const OperationsListScreen = () => {
   const route = useRoute<OperationsListScreenRouteProps>();
   const { initiativeId } = route.params;
 
-  const { isLoading, isFirstLoading, timeline, fetchNextPage } =
-    useInitiativeTimelineFetcher(initiativeId, 10);
+  const [isRefreshing, setIsRefreshing] = React.useState(false);
+  const isFirstRenderDispatchedRef = React.useRef(false);
+  const { isLoading, timeline, fetchNextPage, resetTimeline, currentPage } =
+    useInitiativeTimelineFetcher(initiativeId, 10, toast);
 
+  const shouldRenderLoader = isLoading && !isRefreshing;
+  const isFirstLoading = isFirstRenderDispatchedRef.current
+    ? timeline.operationsRecord.length === 0 && shouldRenderLoader
+    : true;
+
+  const refreshTimeline = () => {
+    if (isRefreshing) {
+      return;
+    }
+    setIsRefreshing(true);
+    resetTimeline();
+  };
+  const renderLoader = () => (shouldRenderLoader ? loader() : null);
+
+  useOnFirstRender(() => {
+    resetTimeline();
+    // eslint-disable-next-line functional/immutable-data
+    isFirstRenderDispatchedRef.current = true;
+  });
+  React.useEffect(() => {
+    if (currentPage >= 0 && isRefreshing) {
+      setIsRefreshing(false);
+    }
+  }, [currentPage, isRefreshing]);
   const pageContent = (
     <SafeAreaView>
       <View style={IOStyles.horizontalContentPadding}>
@@ -68,27 +99,29 @@ export const OperationsListScreen = () => {
             "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.title"
           )}
         </H1>
-        <Body>
-          {I18n.t(
-            "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.lastUpdated"
-          )}
-          <Body weight="SemiBold">
-            {formatDateAsLocal(timeline.lastUpdate, true)}
+        {isRefreshing ? null : (
+          <Body>
+            {I18n.t(
+              "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.lastUpdated"
+            )}
+            <Body weight="SemiBold">
+              {formatDateAsLocal(timeline.lastUpdate, true)}
+            </Body>
           </Body>
-        </Body>
+        )}
       </View>
       <NBView spacer large />
       <FlatList
         style={IOStyles.horizontalContentPadding}
         contentContainerStyle={styles.listContainer}
-        data={timeline.operationList}
-        keyExtractor={item => item.operationId}
-        renderItem={({ item }) =>
-          TimelineOperationListItem({ operation: item })
-        }
-        onEndReached={() => fetchNextPage()}
+        data={timeline.operationsRecord}
+        keyExtractor={keyExtractor}
+        renderItem={renderItem}
+        onEndReached={fetchNextPage}
         onEndReachedThreshold={0.5}
-        ListFooterComponent={() => renderLoader(isLoading)}
+        onRefresh={refreshTimeline}
+        refreshing={isRefreshing}
+        ListFooterComponent={renderLoader}
       />
     </SafeAreaView>
   );

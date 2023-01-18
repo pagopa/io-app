@@ -1,17 +1,18 @@
+import { format } from "date-fns";
 import { ListItem, View } from "native-base";
 import React from "react";
 import { Image, StyleSheet } from "react-native";
 import { OperationTypeEnum as IbanOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/IbanOperationDTO";
-import { OperationTypeEnum as RefundOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/RefundOperationDTO";
 import { OperationTypeEnum as OnboardingOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/OnboardingOperationDTO";
+import { OperationListDTO } from "../../../../../../definitions/idpay/timeline/OperationListDTO";
+import { OperationTypeEnum as RefundOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/RefundOperationDTO";
+import { Icon } from "../../../../../components/core/icons";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import I18n from "../../../../../i18n";
 import { formatDateAsShortFormat } from "../../../../../utils/dates";
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
-import { OperationListDTO } from "../../../../../../definitions/idpay/timeline/OperationListDTO";
-import { Icon } from "../../../../../components/core/icons";
-import I18n from "../../../../../i18n";
 
 const styles = StyleSheet.create({
   alignCenter: {
@@ -26,18 +27,15 @@ const styles = StyleSheet.create({
   imageSize: { height: 16, width: 24 }
 });
 
-const getHourAndMinuteFromDate = (date: Date) =>
-  `${String(date.getHours()).padStart(2, "0")}:${String(
-    date.getMinutes()
-  ).padStart(2, "0")}`;
+const getHourAndMinuteFromDate = (date: Date) => format(date, "HH:mm");
 
-type TimelineOperationCardProps = {
+type TimelineOperationListItemProps = {
   operation: OperationListDTO;
 };
 
 export const TimelineOperationListItem = ({
   operation
-}: TimelineOperationCardProps) => {
+}: TimelineOperationListItemProps) => {
   const hasAmount = "amount" in operation;
   const renderOperationIcon = (operation: OperationListDTO) => {
     if ("brandLogo" in operation) {
