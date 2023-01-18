@@ -271,8 +271,8 @@ export const baseRawBackendStatus: BackendStatus = {
     fci: {
       enabled: false,
       min_app_version: {
-        ios: "1.2.3",
-        android: "1.2.3"
+        android: "0.0.0.0",
+        ios: "0.0.0.0"
       }
     },
     lollipop: {
@@ -344,8 +344,8 @@ export const baseBackendConfig: Config = {
   fci: {
     enabled: false,
     min_app_version: {
-      ios: "1.2.3",
-      android: "1.2.3"
+      android: "0.0.0.0",
+      ios: "0.0.0.0"
     }
   },
   lollipop: {
