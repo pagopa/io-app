@@ -1,5 +1,4 @@
 import * as O from "fp-ts/lib/Option";
-import { View as NBView } from "native-base";
 import React from "react";
 import { View, Platform, StyleSheet } from "react-native";
 import DeviceInfo from "react-native-device-info";
@@ -21,6 +20,7 @@ import {
   MessagePaymentExpirationInfo
 } from "../../../../utils/messages";
 import { HSpacer } from "../../../core/spacer/Spacer";
+import { IOStyles } from "../../../core/variables/IOStyles";
 import ExtractedCTABar from "../../../cta/ExtractedCTABar";
 import CalendarEventButton from "./CalendarEventButton";
 import PaymentButton from "./PaymentButton";
@@ -116,11 +116,11 @@ const CtaBar = ({
   const footer1 = (paymentButton || calendarButton) && (
     // Added a wrapper to enable the usage of the component outside the Container of Native Base
     <View style={styles.footerContainer} pointerEvents={"box-none"}>
-      <NBView footer={true} style={footerStyle}>
+      <View style={[IOStyles.footer, footerStyle]}>
         {calendarButton}
         {paymentButton && calendarButton && <HSpacer size={16} />}
         {paymentButton}
-      </NBView>
+      </View>
     </View>
   );
   const maybeCtas = getMessageCTA(
@@ -131,7 +131,7 @@ const CtaBar = ({
   const footer2 = O.isSome(maybeCtas) && (
     // Added a wrapper to enable the usage of the component outside the Container of Native Base
     <View style={styles.footerContainer} pointerEvents={"box-none"}>
-      <NBView testID={"CtaBar_withCTA"} footer={true} style={footerStyle}>
+      <View testID={"CtaBar_withCTA"} style={[IOStyles.footer, footerStyle]}>
         <ExtractedCTABar
           ctas={maybeCtas.value}
           xsmall={false}
@@ -139,7 +139,7 @@ const CtaBar = ({
           serviceMetadata={serviceMetadata}
           service={service?.raw}
         />
-      </NBView>
+      </View>
     </View>
   );
   return (
