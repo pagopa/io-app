@@ -187,7 +187,7 @@ describe("test idpay timeline pagination reducer and selectors", () => {
       ...mockTimelineResponseSuccess.operationList
     ]);
   });
-  it("should reset the timeline after the idpayTimelineGet.request action", () => {
+  it("should reset the timeline after the idpayTimelineGet.request action for page 0 ", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
 
@@ -231,7 +231,7 @@ describe("test idpay timeline pagination reducer and selectors", () => {
     );
   });
 
-  it("should return isLastPage based on the status error", () => {
+  it("should return isLastPage===true if the timeline has a 404 error", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
     store.dispatch(idpayTimelinePageGet.failure(mock404));
