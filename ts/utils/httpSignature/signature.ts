@@ -86,7 +86,10 @@ function generateSignatureBase(
         const header = headerParameter;
         if (!headers[header]) {
           throw new Error(
-            "Header " + header + " not present in the HTTP request"
+            "Header " +
+              header +
+              " not present in the HTTP request. Headers: " +
+              JSON.stringify(headers)
           );
         }
         baseString += headers[headerParameter];
@@ -138,7 +141,7 @@ function generateSignatureInput(
       return;
     }
 
-    signatureInputPayload += `"${param}" `;
+    signatureInputPayload += `"${param.toLowerCase()}" `;
   });
 
   return generateSignatureInputValue(signatureInputPayload, config);

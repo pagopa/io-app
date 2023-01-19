@@ -9,14 +9,23 @@ import { SignatureConfig } from "../types/SignatureConfig";
 import { brokenMockSigner, mockSigner } from "../__mocks__/mockSigners";
 import { getError } from "./../../errors";
 
-// eslint-disable-next-line functional/no-let
 const testHeaders: Record<any, string> = {
   "": ""
 };
-// eslint-disable-next-line functional/no-let
 const testHeadersWithContentDigest: Record<any, string> = {
-  "content-digest": "sha-256=:eNJnazvTtWDD2IoIlFZca3TDmPd3BpaM2GDcn4/bnSk=:",
+  "Content-Digest": "sha-256=:eNJnazvTtWDD2IoIlFZca3TDmPd3BpaM2GDcn4/bnSk=:",
   ...testHeaders
+};
+
+const testCustomHeaders = {
+  "X-PagoPA-LolliPOP-Nonce": "xyz",
+  "X-PagoPA-LolliPOP-Method": "GET",
+  "X-PagoPA-LolliPOP-Authority": "api-app.io.pagopa.it",
+  "X-PagoPA-LolliPOP-Original-URL": "/api/v1/profile"
+};
+const testCustomHeadersWithContentDigest = {
+  "Content-Digest": "sha-256=:eNJnazvTtWDD2IoIlFZca3TDmPd3BpaM2GDcn4/bnSk=:",
+  ...testCustomHeaders
 };
 
 const testConfig: SignatureConfig = {
@@ -31,7 +40,28 @@ const testConfig: SignatureConfig = {
     scheme: "https",
     targetUri: "https://example.com/hello?name=world"
   },
-  signatureParams: ["content-digest", "@method", "@path", "@authority"]
+  signatureParams: ["Content-Digest", "@method", "@path", "@authority"]
+};
+
+const testCustomHeadersConfig: SignatureConfig = {
+  signAlgorithm: "ecdsa-p256-sha256",
+  signKeyTag: "lp-temp-key",
+  signKeyId: "AF2G87coad7/KJl9800==",
+  signatureComponents: {
+    method: "POST",
+    authority: "example.com",
+    path: "/hello",
+    requestTarget: "/hello?name=world",
+    scheme: "https",
+    targetUri: "https://example.com/hello?name=world"
+  },
+  signatureParams: [
+    "Content-Digest",
+    "X-PagoPA-LolliPOP-Nonce",
+    "X-PagoPA-LolliPOP-Method",
+    "X-PagoPA-LolliPOP-Authority",
+    "X-PagoPA-LolliPOP-Original-URL"
+  ]
 };
 
 MockDate.set("2021-06-07T01:30:00.000Z");
@@ -62,7 +92,9 @@ describe(`Test signature input generation with "${constants.HEADERS.CONTENT_DIGE
 });
 
 describe(`Test generate signature base`, () => {
-  it(`without "${constants.HEADERS.CONTENT_DIGEST}" for config ${testConfig}`, () => {
+  it(`without "${constants.HEADERS.CONTENT_DIGEST}" for config ${JSON.stringify(
+    testConfig
+  )}`, () => {
     const signatureBase = generateSignatureBase(
       testHeaders,
       testConfig
@@ -76,7 +108,9 @@ describe(`Test generate signature base`, () => {
 });
 
 describe(`Test generate signature base`, () => {
-  it(`with "${constants.HEADERS.CONTENT_DIGEST}" for config ${testConfig}`, () => {
+  it(`with "${constants.HEADERS.CONTENT_DIGEST}" for config ${JSON.stringify(
+    testConfig
+  )}`, () => {
     const signatureBase = generateSignatureBase(
       testHeadersWithContentDigest,
       testConfig
@@ -90,8 +124,28 @@ describe(`Test generate signature base`, () => {
   });
 });
 
+describe(`Test generate signature base`, () => {
+  it(`with "${constants.HEADERS.CONTENT_DIGEST}" for config ${JSON.stringify(
+    testCustomHeadersConfig
+  )}`, () => {
+    const signatureBase = generateSignatureBase(
+      testCustomHeadersWithContentDigest,
+      testCustomHeadersConfig
+    ).signatureBase;
+    const expectedBase = `"content-digest": sha-256=:eNJnazvTtWDD2IoIlFZca3TDmPd3BpaM2GDcn4/bnSk=:
+"x-pagopa-lollipop-nonce": xyz
+"x-pagopa-lollipop-method": GET
+"x-pagopa-lollipop-authority": api-app.io.pagopa.it
+"x-pagopa-lollipop-original-url": /api/v1/profile
+"@signature-params": ("content-digest" "x-pagopa-lollipop-nonce" "x-pagopa-lollipop-method" "x-pagopa-lollipop-authority" "x-pagopa-lollipop-original-url");created=1623029400;alg="ecdsa-p256-sha256";keyid="AF2G87coad7/KJl9800=="`;
+    expect(signatureBase).toBe(expectedBase);
+  });
+});
+
 describe(`Test generate signature`, () => {
-  it(`with "${constants.HEADERS.CONTENT_DIGEST}" for config ${testConfig}`, async () => {
+  it(`with "${constants.HEADERS.CONTENT_DIGEST}" for config ${JSON.stringify(
+    testConfig
+  )}`, async () => {
     const signer = mockSigner;
     const signature = await generateSignature(testHeaders, testConfig, signer);
     expect(signature.length).toBeGreaterThan(0);
@@ -99,7 +153,9 @@ describe(`Test generate signature`, () => {
 });
 
 describe(`Test generate signature`, () => {
-  it(`with "${constants.HEADERS.CONTENT_DIGEST}" for config ${testConfig}`, async () => {
+  it(`with "${constants.HEADERS.CONTENT_DIGEST}" for config ${JSON.stringify(
+    testConfig
+  )}`, async () => {
     const signer = brokenMockSigner;
     try {
       await generateSignature(testHeaders, testConfig, signer);
