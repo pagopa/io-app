@@ -63,10 +63,10 @@ export const InfoAltScreenComponent = ({ image, title, body }: Props) => {
         {title}
       </H2>
       {body && (
-        <React.Fragment>
+        <>
           <NBView spacer={true} />
           {renderNode(body)}
-        </React.Fragment>
+        </>
       )}
     </View>
   );
