@@ -36,15 +36,13 @@ const styles = StyleSheet.create({
   },
   emptyTitle: {
     fontSize: customVariables.fontSizeBase,
-    paddingRight: customVariables.contentPadding,
-    paddingLeft: customVariables.contentPadding,
+    paddingHorizontal: customVariables.contentPadding,
     paddingTop: customVariables.contentPadding,
     textAlign: "center"
   },
   emptySubtitle: {
     fontSize: customVariables.fontSizeBase,
-    paddingRight: customVariables.contentPadding,
-    paddingLeft: customVariables.contentPadding,
+    paddingHorizontal: customVariables.contentPadding,
     paddingBottom: customVariables.contentPadding,
     textAlign: "center"
   }

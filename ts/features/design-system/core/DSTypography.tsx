@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Alert, StyleSheet, View } from "react-native";
+import { Text as NBText } from "native-base";
 import { IOBadge } from "../../../components/core/IOBadge";
 import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";
 import { Body } from "../../../components/core/typography/Body";
@@ -48,6 +49,16 @@ export const DSTypography = () => (
     <LabelRow />
     <Link onPress={() => Alert.alert("onPress link!")}>Link</Link>
     <Monospace>MonoSpace</Monospace>
+    <VSpacer size={40} />
+    <H2
+      color={"bluegrey"}
+      weight={"SemiBold"}
+      style={{ marginBottom: sectionTitleMargin }}
+    >
+      NativeBase
+    </H2>
+    <NBText>This is a default text</NBText>
+    <VSpacer size={40} />
     <VSpacer size={40} />
   </DesignSystemScreen>
 );

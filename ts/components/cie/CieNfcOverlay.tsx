@@ -2,25 +2,19 @@
  * A screen to check if the NFC in enabled on the device.
  * If not, alert/guide the user to activate it from device settings
  */
-import { Content, Text as NBText } from "native-base";
+import { Content } from "native-base";
 import * as React from "react";
-import { Alert, StyleSheet } from "react-native";
+import { Alert } from "react-native";
 import I18n from "../../i18n";
 import { resetToAuthenticationRoute } from "../../store/actions/navigation";
 import { ReduxProps } from "../../store/actions/types";
-import variables from "../../theme/variables";
 import { openNFCSettings } from "../../utils/cie";
+import { Body } from "../core/typography/Body";
 import { ScreenContentHeader } from "../screens/ScreenContentHeader";
 import TopScreenComponent from "../screens/TopScreenComponent";
 import FooterWithButtons from "../ui/FooterWithButtons";
 
 type Props = ReduxProps;
-
-const styles = StyleSheet.create({
-  text: {
-    fontSize: variables.fontSizeBase
-  }
-});
 
 export default class CieNfcOverlay extends React.PureComponent<Props> {
   private handleOnPressActivateNFC = async () => {
@@ -56,9 +50,7 @@ export default class CieNfcOverlay extends React.PureComponent<Props> {
           icon={require("../../../img/icons/nfc-icon.png")}
         />
         <Content>
-          <NBText style={styles.text}>
-            {I18n.t("authentication.cie.nfc.enableNfcContent")}
-          </NBText>
+          <Body>{I18n.t("authentication.cie.nfc.enableNfcContent")}</Body>
         </Content>
         <FooterWithButtons
           type={"SingleButton"}

@@ -6,6 +6,7 @@ import I18n from "../i18n";
 import customVariables from "../theme/variables";
 import { storeUrl } from "../utils/appVersion";
 import { VSpacer } from "./core/spacer/Spacer";
+import { Body } from "./core/typography/Body";
 import { H1 } from "./core/typography/H1";
 
 type State = { hasError: boolean };
@@ -86,7 +87,7 @@ class RemindUpdatePagoPaVersionOverlay extends React.PureComponent<
           {I18n.t("wallet.alert.titlePagoPaUpdateApp")}
         </H1>
         <VSpacer size={16} />
-        <NBText>{I18n.t("wallet.alert.messagePagoPaUpdateApp")}</NBText>
+        <Body>{I18n.t("wallet.alert.messagePagoPaUpdateApp")}</Body>
         <VSpacer size={16} />
 
         <Button

@@ -1,10 +1,11 @@
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
-import { Text as NBText } from "native-base";
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import customVariables from "../theme/variables";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
+import { VSpacer } from "./core/spacer/Spacer";
+import { H3 } from "./core/typography/H3";
 import TouchableDefaultOpacity from "./TouchableDefaultOpacity";
 import IconFont from "./ui/IconFont";
 
@@ -34,12 +35,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     height: 50
-  },
-  title: {
-    fontSize: 18,
-    lineHeight: 22,
-    marginTop: 4,
-    color: customVariables.textColorDark
   }
 });
 
@@ -68,9 +63,10 @@ export default class ChooserListItem extends React.Component<Props> {
         <View style={styles.container}>
           {icon && <View>{icon}</View>}
           <View style={styles.content}>
-            <NBText numberOfLines={2} bold={true} style={styles.title}>
+            <VSpacer size={4} />
+            <H3 weight="Bold" color="bluegreyDark" numberOfLines={2}>
               {itemTitle}
-            </NBText>
+            </H3>
           </View>
           <ButtonDefaultOpacity onPress={this.handleOnPress} transparent={true}>
             <IconFont name={iconName} color={iconColor} />

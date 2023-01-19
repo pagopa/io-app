@@ -11,6 +11,12 @@ export const IOStyles = StyleSheet.create({
   flex: {
     flex: 1
   },
+  selfCenter: {
+    alignSelf: "center"
+  },
+  alignCenter: {
+    alignItems: "center"
+  },
   horizontalContentPadding: {
     paddingLeft: themeVariables.contentPadding,
     paddingRight: themeVariables.contentPadding

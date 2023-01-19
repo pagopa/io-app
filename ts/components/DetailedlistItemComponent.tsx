@@ -9,6 +9,7 @@ import TouchableDefaultOpacity from "./TouchableDefaultOpacity";
 import IconFont from "./ui/IconFont";
 import { H5 } from "./core/typography/H5";
 import { H3 } from "./core/typography/H3";
+import { Body } from "./core/typography/Body";
 
 type OwnProps = Readonly<{
   text11: string;
@@ -152,7 +153,7 @@ export default class DetailedlistItemComponent extends React.Component<Props> {
         </View>
 
         <View style={styles.viewStyle}>
-          <NBText>{this.props.text2}</NBText>
+          <Body>{this.props.text2}</Body>
         </View>
         <View style={styles.smallSpacer} />
         <View style={styles.text3Line}>
