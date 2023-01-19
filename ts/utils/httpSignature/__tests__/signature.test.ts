@@ -1,7 +1,7 @@
 import MockDate from "mockdate";
 import { constants } from "../constants";
 import { generateSignatureInput, generateSignatureBase } from "../signature";
-import { Config } from "../types/Config";
+import { SignatureConfig } from "../types/SignatureConfig";
 
 // eslint-disable-next-line functional/no-let
 const testHeaders: Record<any, string> = {
@@ -13,9 +13,10 @@ const testHeadersWithContentDigest: Record<any, string> = {
   ...testHeaders
 };
 
-const testConfig: Config = {
+const testConfig: SignatureConfig = {
   digestAlgorithm: "",
   signAlgorithm: "ecdsa-p256-sha256",
+  signKeyId: "AF2G87coad7/KJl9800==",
   signatureComponents: {
     method: "POST",
     authority: "example.com",
@@ -35,7 +36,7 @@ describe(`Test signature input generation`, () => {
   )}`, () => {
     const signatureInput = generateSignatureInput(testHeaders, testConfig);
     expect(signatureInput).toBe(
-      'sig1=("@method" "@path" "@authority");created=1623029400;alg=ecdsa-p256-sha256'
+      'sig1=("@method" "@path" "@authority");created=1623029400;alg="ecdsa-p256-sha256";keyid="AF2G87coad7/KJl9800=="'
     );
   });
 });
@@ -49,7 +50,7 @@ describe(`Test signature input generation with "${constants.HEADERS.CONTENT_DIGE
       testConfig
     );
     expect(signatureInput).toBe(
-      'sig1=("content-digest" "@method" "@path" "@authority");created=1623029400;alg=ecdsa-p256-sha256'
+      'sig1=("content-digest" "@method" "@path" "@authority");created=1623029400;alg="ecdsa-p256-sha256";keyid="AF2G87coad7/KJl9800=="'
     );
   });
 });
@@ -63,7 +64,7 @@ describe(`Test generate signature base`, () => {
     const expectedBase = `"@method": POST
 "@path": /hello
 "@authority": example.com
-"@signature-params": ("@method" "@path" "@authority");created=1623029400;alg=ecdsa-p256-sha256`;
+"@signature-params": ("@method" "@path" "@authority");created=1623029400;alg="ecdsa-p256-sha256";keyid="AF2G87coad7/KJl9800=="`;
     expect(signatureBase).toBe(expectedBase);
   });
 });
@@ -78,7 +79,7 @@ describe(`Test generate signature base`, () => {
 "@method": POST
 "@path": /hello
 "@authority": example.com
-"@signature-params": ("content-digest" "@method" "@path" "@authority");created=1623029400;alg=ecdsa-p256-sha256`;
+"@signature-params": ("content-digest" "@method" "@path" "@authority");created=1623029400;alg="ecdsa-p256-sha256";keyid="AF2G87coad7/KJl9800=="`;
     expect(signatureBase).toBe(expectedBase);
   });
 });

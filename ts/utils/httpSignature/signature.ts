@@ -1,19 +1,18 @@
 import { getError } from "../errors";
-import { SignatureAlgorithm } from "./types/SignatureAlgorithms";
-import { Config } from "./types/Config";
+import { SignatureConfig } from "./types/SignatureConfig";
 import { constants } from "./constants";
 
 /**
  * Extract the header parameter value from config
  *
  * @param {string} headerParameter - The name of the header parameter.
- * @param {Config} config - The config.
+ * @param {SignatureConfig} config - The config.
  * @returns {string} The string value of the header parameter.
  * @throws {Error} if an unknown header parameter is found.
  */
 function getHttpSignatureHeaderParameterFromConfig(
   headerParameter: string,
-  config: Config
+  config: SignatureConfig
 ): string {
   // eslint-disable-next-line functional/no-let
   let returnString = "";
@@ -54,13 +53,13 @@ export type SignatureBaseResult = {
  * https://www.ietf.org/archive/id/draft-ietf-httpbis-message-signatures-15.html#name-creating-the-signature-base
  *
  * @param {ReadOnlyRecord<string, string>} headers - The HTTP request headers.
- * @param {Config} config - The config.
+ * @param {SignatureConfig} config - The config.
  * @returns {SignatureBaseResult} signature base and input strings.
  * @throws {Error} if needed data is missing or unknown.
  */
 function generateSignatureBase(
   headers: Record<string, string>,
-  config: Config
+  config: SignatureConfig
 ): SignatureBaseResult {
   try {
     // eslint-disable-next-line functional/no-let
@@ -121,12 +120,12 @@ function generateSignatureBase(
  * https://www.ietf.org/archive/id/draft-ietf-httpbis-message-signatures-15.html#name-the-signature-input-http-fi
  *
  * @param {Record<string, string>} headers - The HTTP headers.
- * @param {Config} config - The input config.
+ * @param {SignatureConfig} config - The input config.
  * @returns {string} - the 'Signature-Input' header value.
  */
 function generateSignatureInput(
   headers: Record<string, string>,
-  config: Config
+  config: SignatureConfig
 ): string {
   // eslint-disable-next-line functional/no-let
   let signatureInputPayload: string = "";
@@ -141,10 +140,7 @@ function generateSignatureInput(
     signatureInputPayload += `"${param}" `;
   });
 
-  return generateSignatureInputValue(
-    signatureInputPayload,
-    config.signAlgorithm
-  );
+  return generateSignatureInputValue(signatureInputPayload, config);
 }
 
 /**
@@ -156,13 +152,15 @@ function generateSignatureInput(
  */
 function generateSignatureInputValue(
   payload: string,
-  signAlgorithm: SignatureAlgorithm,
+  config: SignatureConfig,
   signatureOrdinal: number = 1
 ): string {
   const unixTimestamp = getUnixTimestamp();
   return `${constants.SIGNATURE_PREFIX(
     signatureOrdinal
-  )}(${payload.trim()});created=${unixTimestamp};alg=${signAlgorithm}`;
+  )}(${payload.trim()});created=${unixTimestamp};alg="${
+    config.signAlgorithm
+  }";keyid="${config.signKeyId}"`;
 }
 
 /**
@@ -170,12 +168,12 @@ function generateSignatureInputValue(
  * https://www.ietf.org/archive/id/draft-ietf-httpbis-message-signatures-15.html#name-http-message-signatures
  *
  * @param {Record<string, string>} headers The HTTP headers.
- * @param {Config} config The input config.
+ * @param {SignatureConfig} config The input config.
  * @returns {string} the signature header value.
  */
 function generateSignature(
   headers: Record<string, string>,
-  config: Config,
+  config: SignatureConfig,
   keyTag: string
 ): string {
   const baseString = generateSignatureBase(headers, config).signatureBase;
