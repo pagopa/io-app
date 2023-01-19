@@ -3197,10 +3197,10 @@ features:
         cta: Accedi alla versione web   
   fci:
     errors:
-      expired:
+      expiredAfterSigned:
         title: Documento non più disponibile per la firma
         subTitle: Il documento non è più disponibile per la firma. Contatta l’ente per maggiori informazioni
-      expiredAfterSigned:
+      expired:
         title: La richiesta di firma è scaduta
         subTitle: Per assistenza contattare l'ente
       waitForQtsp:

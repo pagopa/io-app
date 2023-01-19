@@ -37,8 +37,8 @@ const SuccessComponent = (props: {
   ) {
     return (
       <ErrorComponent
-        title={I18n.t("features.fci.errors.expiredAfterSigned.title")}
-        subTitle={I18n.t("features.fci.errors.expiredAfterSigned.subTitle")}
+        title={I18n.t("features.fci.errors.expired.title")}
+        subTitle={I18n.t("features.fci.errors.expired.subTitle")}
         onPress={() => dispatch(fciEndRequest())}
         image={imageExpired}
         testID={"ExpiredSignatureRequestTestID"}
@@ -54,8 +54,8 @@ const SuccessComponent = (props: {
   ) {
     return (
       <ErrorComponent
-        title={I18n.t("features.fci.errors.expired.title")}
-        subTitle={I18n.t("features.fci.errors.expired.subTitle")}
+        title={I18n.t("features.fci.errors.expiredAfterSigned.title")}
+        subTitle={I18n.t("features.fci.errors.expiredAfterSigned.subTitle")}
         onPress={() => dispatch(fciEndRequest())}
         image={imageExpired}
         testID={"ExpiredSignedSignatureRequestTestID"}

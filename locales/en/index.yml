@@ -3173,10 +3173,10 @@ features:
         cta: Accedi alla versione web  
   fci:
     errors:
-      expired:
+      expiredAfterSigned:
         title: Document no longer available for signature
         subTitle: The document is no longer available for signature. Contact the institution for more information.
-      expiredAfterSigned:
+      expired:
         title: The signature request is expired
         subTitle: If you need help contact the issuer
       waitForQtsp:
