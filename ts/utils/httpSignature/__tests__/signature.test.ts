@@ -1,7 +1,13 @@
 import MockDate from "mockdate";
 import { constants } from "../constants";
-import { generateSignatureInput, generateSignatureBase } from "../signature";
+import {
+  generateSignatureInput,
+  generateSignatureBase,
+  generateSignature
+} from "../signature";
 import { SignatureConfig } from "../types/SignatureConfig";
+import { brokenMockSigner, mockSigner } from "../__mocks__/mockSigners";
+import { getError } from "./../../errors";
 
 // eslint-disable-next-line functional/no-let
 const testHeaders: Record<any, string> = {
@@ -15,6 +21,7 @@ const testHeadersWithContentDigest: Record<any, string> = {
 
 const testConfig: SignatureConfig = {
   signAlgorithm: "ecdsa-p256-sha256",
+  signKeyTag: "lp-temp-key",
   signKeyId: "AF2G87coad7/KJl9800==",
   signatureComponents: {
     method: "POST",
@@ -80,5 +87,29 @@ describe(`Test generate signature base`, () => {
 "@authority": example.com
 "@signature-params": ("content-digest" "@method" "@path" "@authority");created=1623029400;alg="ecdsa-p256-sha256";keyid="AF2G87coad7/KJl9800=="`;
     expect(signatureBase).toBe(expectedBase);
+  });
+});
+
+describe(`Test generate signature`, () => {
+  it(`with "${constants.HEADERS.CONTENT_DIGEST}" for config ${testConfig}`, async () => {
+    const signer = mockSigner;
+    const signature = await generateSignature(testHeaders, testConfig, signer);
+    expect(signature.length).toBeGreaterThan(0);
+  });
+});
+
+describe(`Test generate signature`, () => {
+  it(`with "${constants.HEADERS.CONTENT_DIGEST}" for config ${testConfig}`, async () => {
+    const signer = brokenMockSigner;
+    try {
+      await generateSignature(testHeaders, testConfig, signer);
+    } catch (e) {
+      const message = getError(e).message;
+      // brokenMockSigner reject every sign request
+      expect(message.length).toBeGreaterThan(0);
+      return;
+    }
+    // This should not happen.
+    expect(false).toBe(true);
   });
 });

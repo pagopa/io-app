@@ -1,6 +1,7 @@
 import { getError } from "../errors";
 import { SignatureConfig } from "./types/SignatureConfig";
 import { constants } from "./constants";
+import { Signer } from "./types/Signer";
 
 /**
  * Extract the header parameter value from config
@@ -169,17 +170,23 @@ function generateSignatureInputValue(
  *
  * @param {Record<string, string>} headers The HTTP headers.
  * @param {SignatureConfig} config The input config.
- * @returns {string} the signature header value.
+ * @returns {Promise<string>} a promise that resolve to signature header value.
  */
-function generateSignature(
+async function generateSignature(
   headers: Record<string, string>,
   config: SignatureConfig,
-  keyTag: string
-): string {
+  signer: Signer,
+  signatureOrdinal: number = 1
+): Promise<string> {
   const baseString = generateSignatureBase(headers, config).signatureBase;
-  const privateKey = keyTag; // TODO: to be used with io-react-native-crypto
+  const keyTag = config.signKeyTag;
 
-  return generateSignatureValue(baseString, privateKey);
+  return await generateSignatureValue(
+    baseString,
+    keyTag,
+    signer,
+    signatureOrdinal
+  );
 }
 
 /**
@@ -188,14 +195,15 @@ function generateSignature(
  * @param {string} payload - the string payload to sign.
  * @param {string} keyTag - the tag name of the private key to be used to sign the payload.
  * @param {number} signatureOrdinal - the signature ordinal.
- * @returns the signature header value.
+ * @returns a Promise that resolves to the signature header value.
  */
-function generateSignatureValue(
+async function generateSignatureValue(
   payload: string,
   keyTag: string,
+  signer: Signer,
   signatureOrdinal: number = 1
-): string {
-  const signature: string = `TODO: signMessage(${payload}, ${keyTag})`;
+): Promise<string> {
+  const signature: string = await signer.sign(payload, keyTag);
 
   return (
     constants.SIGNATURE_PREFIX(signatureOrdinal) +
