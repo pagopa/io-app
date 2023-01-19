@@ -58,6 +58,7 @@ class LoadingSpinnerOverlay extends React.Component<Props> {
                     cancel={true}
                     style={styles.cancelButtonStyle}
                   >
+                    {/* ButtonText */}
                     <NBText>{I18n.t("global.buttons.cancel")}</NBText>
                   </ButtonDefaultOpacity>
                 )

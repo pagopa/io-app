@@ -1,6 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
-import { Content, Text as NBText } from "native-base";
+import { Content, Text as NBButtonText } from "native-base";
 import * as React from "react";
 import {
   View,
@@ -423,6 +423,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
             this.props.loadTransactions(this.props.transactionsLoadedLength)
           }
         >
+          {/* ButtonText */}
           <Body color={"blue"}>{I18n.t("wallet.transactionsShow")}</Body>
         </ButtonDefaultOpacity>
         <EdgeBorderComponent />
@@ -485,7 +486,8 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
         activeOpacity={1}
       >
         <IconFont name="io-qr" style={styles.white} />
-        <NBText>{I18n.t("wallet.payNotice")}</NBText>
+        {/* ButtonText */}
+        <NBButtonText>{I18n.t("wallet.payNotice")}</NBButtonText>
       </ButtonDefaultOpacity>
     );
   }

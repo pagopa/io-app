@@ -329,6 +329,7 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
             block={true}
             onPress={this.handleBackPress}
           >
+            {/* <ButtonText> */}
             <NBText>{I18n.t("global.buttons.close")}</NBText>
           </ButtonDefaultOpacity>
           <VSpacer size={16} />
