@@ -19,8 +19,7 @@ import {
   bpdOptInPaymentMethodsEnabled,
   fimsEnabled,
   myPortalEnabled,
-  svEnabled,
-  idPayEnabled
+  svEnabled
 } from "../config";
 import BPD_ROUTES from "../features/bonus/bpd/navigation/routes";
 import { CdcStackNavigator } from "../features/bonus/cdc/navigation/CdcStackNavigator";
@@ -66,6 +65,7 @@ import {
   isCdcEnabledSelector,
   isCGNEnabledSelector,
   isFciEnabledSelector,
+  isIdPayEnabledSelector,
   isFIMSEnabledSelector
 } from "../store/reducers/backendStatus";
 import { isTestEnv } from "../utils/environment";
@@ -88,6 +88,7 @@ export const AppStackNavigator = () => {
   const fimsEnabledSelector = useIOSelector(isFIMSEnabledSelector);
   const cgnEnabled = useIOSelector(isCGNEnabledSelector);
   const fciEnabledSelector = useIOSelector(isFciEnabledSelector);
+  const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
 
   const isFimsEnabled = fimsEnabled && fimsEnabledSelector;
   const isFciEnabled = fciEnabledSelector;
@@ -172,7 +173,7 @@ export const AppStackNavigator = () => {
         <Stack.Screen name={FCI_ROUTES.MAIN} component={FciStackNavigator} />
       )}
 
-      {idPayEnabled && (
+      {isIdPayEnabled && (
         <>
           <Stack.Screen
             name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN}
@@ -207,6 +208,7 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
   const cgnEnabled = useIOSelector(isCGNEnabledSelector);
   const isFimsEnabled = useIOSelector(isFIMSEnabledSelector) && fimsEnabled;
   const isFciEnabled = useIOSelector(isFciEnabledSelector);
+  const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
 
   const bpdRemoteConfig = useIOSelector(bpdRemoteConfigSelector);
   const isOptInPaymentMethodsEnabled =
@@ -269,7 +271,7 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
         ...(isFimsEnabled ? fimsLinkingOptions : {}),
         ...(cgnEnabled ? cgnLinkingOptions : {}),
         ...(isFciEnabled ? fciLinkingOptions : {}),
-        ...(idPayEnabled ? idPayOnboardingLinkingOptions : {}),
+        ...(isIdPayEnabled ? idPayOnboardingLinkingOptions : {}),
         [UADONATION_ROUTES.WEBVIEW]: "uadonations-webview",
         [ROUTES.WORKUNIT_GENERIC_FAILURE]: "*"
       }

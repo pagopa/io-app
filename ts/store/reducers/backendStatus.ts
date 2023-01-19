@@ -21,6 +21,7 @@ import {
   cdcEnabled,
   cgnMerchantsV2Enabled,
   fciEnabled,
+  idPayEnabled,
   pnEnabled,
   premiumMessagesOptInEnabled,
   scanAdditionalBarcodesEnabled,
@@ -213,6 +214,20 @@ export const bancomatPayConfigSelector = createSelector(
 );
 
 /**
+ * return the remote config about LolliPOP enabled/disabled
+ * if there is no data, false is the default value -> (LolliPOP disabled)
+ */
+export const isLollipopEnabledSelector = createSelector(
+  backendStatusSelector,
+  (backendStatus): boolean =>
+    pipe(
+      backendStatus,
+      O.map(bs => bs.config.lollipop.enabled),
+      O.getOrElse(() => false)
+    )
+);
+
+/**
  * return the remote config about CGN enabled/disabled
  * if there is no data, false is the default value -> (CGN disabled)
  */
@@ -377,6 +392,24 @@ export const isFciEnabledSelector = createSelector(
           Platform.OS === "ios"
             ? bs.config.fci.min_app_version.ios
             : bs.config.fci.min_app_version.android,
+          getAppVersion()
+        )
+      ),
+      O.getOrElse(() => false)
+    )
+);
+
+export const isIdPayEnabledSelector = createSelector(
+  backendStatusSelector,
+  (backendStatus): boolean =>
+    idPayEnabled &&
+    pipe(
+      backendStatus,
+      O.map(bs =>
+        isVersionSupported(
+          Platform.OS === "ios"
+            ? bs.config.idPay.min_app_version.ios
+            : bs.config.idPay.min_app_version.android,
           getAppVersion()
         )
       ),
