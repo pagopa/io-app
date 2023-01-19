@@ -1,9 +1,10 @@
 import { useSelector } from "@xstate/react";
-import { Text as NBText, View as NBView } from "native-base";
+import { Text as NBText } from "native-base";
 import React from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
 import { Pictogram } from "../../../../../components/core/pictograms";
+import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";
@@ -53,7 +54,7 @@ const ConfigurationSuccessScreen = () => {
               )}
             </NBText>
           </ButtonDefaultOpacity>
-          <NBView spacer={true} />
+          <VSpacer />
           <ButtonDefaultOpacity
             block={true}
             onPress={handleNavigateToInitiativePress}
@@ -84,9 +85,9 @@ const ConfigurationSuccessScreen = () => {
       <View style={[IOStyles.horizontalContentPadding, styles.container]}>
         <View style={styles.content}>
           <Pictogram name="completed" size={80} />
-          <NBView spacer={true} />
+          <VSpacer />
           <H3>{I18n.t("idpay.configuration.associationSuccess.title")}</H3>
-          <NBView spacer={true} />
+          <VSpacer />
           <NBText style={styles.body}>
             {I18n.t(
               areInstrumentsSkipped

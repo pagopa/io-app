@@ -1,8 +1,9 @@
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { useSelector } from "@xstate/react";
-import { List as NBList, Text as NBText, View as NBView } from "native-base";
+import { List as NBList, Text as NBText } from "native-base";
 import React from "react";
 import { View, SafeAreaView, ScrollView } from "react-native";
+import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -236,16 +237,16 @@ const InstrumentsEnrollmentScreen = () => {
         contextualHelp={emptyContextualHelp}
       >
         <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={1}>
-          <NBView spacer={true} />
+          <VSpacer />
           <View style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
             <H1>{I18n.t("idpay.configuration.instruments.header")}</H1>
-            <NBView spacer={true} small={true} />
+            <VSpacer size={8} />
             <NBText>
               {I18n.t("idpay.configuration.instruments.body", {
                 initiativeName: initiativeDetails?.initiativeName ?? ""
               })}
             </NBText>
-            <NBView spacer={true} />
+            <VSpacer />
             <ScrollView>
               <NBList>
                 {pagoPAInstruments.map(pagoPAInstrument => (
@@ -269,7 +270,7 @@ const InstrumentsEnrollmentScreen = () => {
                   />
                 ))}
               </NBList>
-              <NBView spacer={true} />
+              <VSpacer />
               <NBText>
                 {I18n.t("idpay.configuration.instruments.footer")}
               </NBText>
