@@ -46,7 +46,6 @@ import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
 import { isStrictSome } from "../../utils/pot";
 import { mixpanelTrack } from "../../mixpanel";
 import { isLoadingOrUpdatingInbox } from "../../store/reducers/entities/messages/allPaginated";
-import { trackOpenMessageFromNotification } from "../../utils/analytics";
 
 export type MessageRouterScreenPaginatedNavigationParams = {
   messageId: UIMessageId;
@@ -72,8 +71,7 @@ const navigateToScreenHandler =
   (
     message: UIMessage,
     messageDetails: UIMessageDetails,
-    isPnEnabled: boolean,
-    fromNotification: boolean
+    isPnEnabled: boolean
   ) =>
   (dispatch: Props["navigation"]["dispatch"]) => {
     if (euCovidCertificateEnabled && messageDetails.euCovidCertificate) {
@@ -98,9 +96,6 @@ const navigateToScreenHandler =
         })
       );
     } else {
-      if (fromNotification) {
-        trackOpenMessageFromNotification(message.id);
-      }
       navigateBack();
       dispatch(
         navigateToPaginatedMessageDetailScreenAction({
@@ -196,8 +191,7 @@ const MessageRouterScreen = ({
         navigateToScreenHandler(
           maybeMessage,
           maybeMessageDetails.value,
-          isPnEnabled,
-          fromNotification
+          isPnEnabled
         )(navigation.dispatch);
         setDidNavigateToScreenHandler(true);
       }

@@ -4,7 +4,6 @@ import { euCovidCertificateEnabled } from "../config";
 import { PushNotificationsContentTypeEnum } from "../../definitions/backend/PushNotificationsContentType";
 import { mixpanelTrack } from "../mixpanel";
 import { ReminderStatusEnum } from "../../definitions/backend/ReminderStatus";
-import { UIMessageId } from "../store/reducers/entities/messages/types";
 
 const blackListRoutes: ReadonlyArray<string> = [];
 
@@ -18,20 +17,8 @@ export const noAnalyticsRoutes = new Set<string>(
 
 // Premium events
 
-export function trackMessageNotificationTap(
-  messageId: NonEmptyString,
-  isForeground: boolean
-) {
-  const key = isForeground
-    ? "NOTIFICATIONS_MESSAGE_FOREGROUND_TAP"
-    : "NOTIFICATIONS_MESSAGE_BACKGROUND_TAP";
-  void mixpanelTrack(key, {
-    messageId
-  });
-}
-
-export function trackOpenMessageFromNotification(messageId: UIMessageId) {
-  void mixpanelTrack("NOTIFICATION_OPEN_MESSAGE", {
+export function trackMessageNotificationTap(messageId: NonEmptyString) {
+  void mixpanelTrack("NOTIFICATIONS_MESSAGE_TAP", {
     messageId
   });
 }
