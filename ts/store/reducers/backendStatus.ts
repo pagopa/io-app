@@ -214,6 +214,20 @@ export const bancomatPayConfigSelector = createSelector(
 );
 
 /**
+ * return the remote config about LolliPOP enabled/disabled
+ * if there is no data, false is the default value -> (LolliPOP disabled)
+ */
+export const isLollipopEnabledSelector = createSelector(
+  backendStatusSelector,
+  (backendStatus): boolean =>
+    pipe(
+      backendStatus,
+      O.map(bs => bs.config.lollipop.enabled),
+      O.getOrElse(() => false)
+    )
+);
+
+/**
  * return the remote config about CGN enabled/disabled
  * if there is no data, false is the default value -> (CGN disabled)
  */
