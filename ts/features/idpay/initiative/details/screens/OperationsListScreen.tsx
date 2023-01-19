@@ -22,6 +22,7 @@ import { showToast } from "../../../../../utils/showToast";
 import { TimelineOperationListItem } from "../components/TimelineOperationListItem";
 import { IDPayDetailsParamsList } from "../navigation";
 import { useInitiativeTimelineFetcher } from "../utils/hooks";
+import { OperationListDTO } from "../../../../../../definitions/idpay/timeline/OperationListDTO";
 export type OperationsListScreenParams = { initiativeId: string };
 type OperationsListScreenRouteProps = RouteProp<
   IDPayDetailsParamsList,
@@ -41,6 +42,12 @@ const TimelineLoader = () => (
     testID={"activityIndicator"}
   />
 );
+
+const renderItem = ({ item }: { item: OperationListDTO }) => (
+  <TimelineOperationListItem operation={item} />
+);
+
+const keyExtractor = (operation: OperationListDTO) => operation.operationId;
 
 export const OperationsListScreen = () => {
   const route = useRoute<OperationsListScreenRouteProps>();
@@ -99,10 +106,8 @@ export const OperationsListScreen = () => {
         style={IOStyles.horizontalContentPadding}
         contentContainerStyle={styles.listContainer}
         data={timeline}
-        keyExtractor={operation => operation.operationId}
-        renderItem={({ item }) => (
-          <TimelineOperationListItem operation={item} />
-        )}
+        keyExtractor={keyExtractor}
+        renderItem={renderItem}
         onEndReached={fetchNextPage}
         onEndReachedThreshold={0.5}
         onRefresh={refresh}
