@@ -80,7 +80,8 @@ import {
 } from "../../store/actions/wallet/wallets";
 import {
   bpdRemoteConfigSelector,
-  isCGNEnabledSelector
+  isCGNEnabledSelector,
+  isIdPayEnabledSelector
 } from "../../store/reducers/backendStatus";
 import { transactionsReadSelector } from "../../store/reducers/entities";
 import { paymentsHistorySelector } from "../../store/reducers/payments/history";
@@ -203,7 +204,9 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
   };
 
   private loadBonusIDPay = () => {
-    this.props.loadIdPayWalletData();
+    if (this.props.isIdPayEnabled) {
+      this.props.loadIdPayWalletData();
+    }
   };
 
   public componentDidMount() {
@@ -580,7 +583,8 @@ const mapStateToProps = (state: GlobalState) => ({
   isCgnEnabled: isCGNEnabledSelector(state),
   bancomatListVisibleInWallet: bancomatListVisibleInWalletSelector(state),
   coBadgeListVisibleInWallet: cobadgeListVisibleInWalletSelector(state),
-  bpdConfig: bpdRemoteConfigSelector(state)
+  bpdConfig: bpdRemoteConfigSelector(state),
+  isIdPayEnabled: isIdPayEnabledSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
