@@ -2678,7 +2678,7 @@ bonus:
         error:
           noCode: Codes for this discount are temporary over, please try again later
       title:
-        deals: Benefits
+        deals: Opportunities
         description: Description
         services: Services
         addresses: Addresses
