@@ -127,10 +127,7 @@ const FciQtspClausesScreen = () => {
       headerTitle={I18n.t("features.fci.signatureFields.title")}
       contextualHelp={emptyContextualHelp}
     >
-      <SafeAreaView
-        style={[IOStyles.flex, IOStyles.horizontalContentPadding]}
-        testID={"FciQtspClausesTestID"}
-      >
+      <SafeAreaView style={IOStyles.flex} testID={"FciQtspClausesTestID"}>
         <View style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
           <H1>{I18n.t("features.fci.qtspTos.title")}</H1>
           {renderClausesFields()}
