@@ -68,30 +68,6 @@ export const MultiValuePrerequisitesScreen = () => {
   );
   const continueOnPress = () => null;
 
-  // import { useOnboardingMachineService } from "../xstate/provider";
-  // import { useActor } from "@xstate/react";
-  // import { boolean } from "io-ts";
-  // import * as O from "fp-ts/lib/Option";
-  // import { pipe } from "fp-ts/lib/function";
-
-  //   const machine = useOnboardingMachineService();
-  //   const [state, send] = useActor(machine);
-
-  //   const goBackOnPress = () => send({ type: "GO_BACK" });
-  //   const multiPrerequisites = pipe(
-  //     state.context.requiredCriteria,
-  //     O.fromNullable,
-  //     O.flatten,
-  //     O.fold(
-  //       () => [],
-  //       criteria =>
-  //         // eslint-disable-next-line no-underscore-dangle
-  //         criteria.selfDeclarationList.filter(c => c._type === _typeEnum.multi)
-  //     )
-  //   );
-  //   const a: string = multiPrerequisites[0];
-  // send back an array with {type, code, value}
-
   const multiPrerequisites: SelfDeclarationMultiDTO = {
     _type: _typeEnum.multi,
     code: "multi",
