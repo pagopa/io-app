@@ -3,6 +3,7 @@ import * as O from "fp-ts/lib/Option";
 import { SagaIterator } from "redux-saga";
 import { call, select, takeLatest } from "typed-redux-saga/macro";
 import { PreferredLanguageEnum } from "../../../../../../definitions/backend/PreferredLanguage";
+import { OperationListDTO } from "../../../../../../definitions/idpay/timeline/OperationListDTO";
 import {
   IDPAY_API_TEST_TOKEN,
   IDPAY_API_UAT_BASEURL
@@ -15,10 +16,12 @@ import { createIDPayTimelineClient } from "../api/client";
 import {
   idpayInitiativeGet,
   IdPayInitiativeGetPayloadType,
+  idpayTimelineDetailsGet,
   idpayTimelineGet
 } from "../store/actions";
 import { handleGetInitiativeDetails } from "./handleGetInitiativeDetails";
 import { handleGetTimeline } from "./handleGetTimeline";
+import { handleGetTimelineDetails } from "./handleGetTimelineDetails";
 
 /**
  * Handle IDPAY initiative requests
@@ -58,6 +61,20 @@ export function* idpayInitiativeDetailsSaga(bearerToken: string): SagaIterator {
       yield* call(
         handleGetTimeline,
         idPayTimelineClient.getTimeline,
+        token,
+        preferredLanguage,
+        action.payload
+      );
+    }
+  );
+  yield* takeLatest(
+    idpayTimelineDetailsGet.request,
+    function* (action: { payload: OperationListDTO["operationId"] }) {
+      // wait backoff time if there were previous errors
+      yield* call(waitBackoffError, idpayTimelineGet.failure);
+      yield* call(
+        handleGetTimelineDetails,
+        idPayTimelineClient.getTimelineDetail,
         token,
         preferredLanguage,
         action.payload

@@ -3,14 +3,11 @@ import { List, Text, View } from "native-base";
 import React, { useEffect } from "react";
 import { StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { OperationListDTO } from "../../../../../../definitions/idpay/timeline/OperationListDTO";
 import { OperationTypeEnum as IbanOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/IbanOperationDTO";
 import { OperationTypeEnum as InstrumentOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/InstrumentOperationDTO";
 import { OperationTypeEnum as OnboardingOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/OnboardingOperationDTO";
-import { OperationListDTO } from "../../../../../../definitions/idpay/timeline/OperationListDTO";
-import {
-  OperationTypeEnum as TransactionOperationType,
-  OperationTypeEnum as TransactionOperationTypeEnum
-} from "../../../../../../definitions/idpay/timeline/TransactionOperationDTO";
+import { OperationTypeEnum as TransactionOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/TransactionOperationDTO";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
@@ -19,7 +16,7 @@ import I18n from "../../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { idpayTimelineSelector } from "../store";
 import { idpayTimelineGet } from "../store/actions";
-import { useOperationDetailsBottomSheet } from "./OperationDetailsBottomSheet";
+import { useTimelineDetailsBottomSheet } from "./TimelineDetailsBottomSheet";
 import {
   IbanOnboardingCard,
   InstrumentOnboardingCard,
@@ -32,17 +29,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between"
   }
 });
-
-const mockTransaction: OperationListDTO = {
-  operationType: TransactionOperationType.TRANSACTION,
-  operationDate: new Date(),
-  amount: 100,
-  brandLogo:
-    "https://uat.wisp2.pagopa.gov.it/wallet/assets/img/creditcard/carta_visa.png",
-  circuitType: "01",
-  maskedPan: "1234",
-  operationId: "1"
-};
 
 const emptyTimelineContent = (
   <>
@@ -96,7 +82,7 @@ const ConfiguredInitiativeData = (props: Props) => {
   const timelineFromSelector = useIOSelector(idpayTimelineSelector);
   const isTimelineLoading = pot.isLoading(timelineFromSelector);
 
-  const operationDetailsBottomSheet = useOperationDetailsBottomSheet();
+  const detailsBottomSheet = useTimelineDetailsBottomSheet();
 
   if (isTimelineLoading) {
     return null;
@@ -130,13 +116,13 @@ const ConfiguredInitiativeData = (props: Props) => {
         {timelineList.map(transaction => (
           <TouchableOpacity
             key={transaction.operationId}
-            onPress={() => operationDetailsBottomSheet.present(mockTransaction)}
+            onPress={() => detailsBottomSheet.present(transaction.operationId)}
           >
             {pickTransactionCard(transaction)}
           </TouchableOpacity>
         ))}
       </List>
-      {operationDetailsBottomSheet.bottomSheet}
+      {detailsBottomSheet.bottomSheet}
     </>
   );
 };
