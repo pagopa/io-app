@@ -9,11 +9,13 @@ import InitiativeDetailsScreen, {
 import InitiativeSelfDeclarationsScreen from "../screens/InitiativeSelfDeclarationsScreen";
 import PDNDPrerequisitesScreen from "../screens/PDNDPrerequisitesScreen";
 import { IDPayOnboardingMachineProvider } from "../xstate/provider";
+import { MultiValuePrerequisitesScreen } from "../screens/MultiValuePrerequisitesScreen";
 
 export const IDPayOnboardingRoutes = {
   IDPAY_ONBOARDING_MAIN: "IDPAY_ONBOARDING_MAIN",
   IDPAY_ONBOARDING_INITIATIVE_DETAILS: "IDPAY_ONBOARDING_INITIATIVE_DETAILS",
   IDPAY_ONBOARDING_PDNDACCEPTANCE: "IDPAY_ONBOARDING_PDNDACCEPTANCE",
+  IDPAY_ONBOARDING_MULTIVALUE: "IDPAY_ONBOARDING_MULTIVALUE",
   IDPAY_ONBOARDING_SELF_DECLARATIONS: "IDPAY_ONBOARDING_SELF_DECLARATIONS",
   IDPAY_ONBOARDING_COMPLETION: "IDPAY_ONBOARDING_COMPLETION",
   IDPAY_ONBOARDING_FAILURE: "IDPAY_ONBOARDING_FAILURE"
@@ -23,6 +25,7 @@ export type IDPayOnboardingParamsList = {
   [IDPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS]: InitiativeDetailsScreenRouteParams;
   [IDPayOnboardingRoutes.IDPAY_ONBOARDING_SELF_DECLARATIONS]: undefined;
   [IDPayOnboardingRoutes.IDPAY_ONBOARDING_PDNDACCEPTANCE]: undefined;
+  [IDPayOnboardingRoutes.IDPAY_ONBOARDING_MULTIVALUE]: undefined;
   [IDPayOnboardingRoutes.IDPAY_ONBOARDING_COMPLETION]: undefined;
   [IDPayOnboardingRoutes.IDPAY_ONBOARDING_FAILURE]: undefined;
 };
@@ -58,6 +61,10 @@ export const IDPayOnboardingNavigator = () => (
       <Stack.Screen
         name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_PDNDACCEPTANCE}
         component={PDNDPrerequisitesScreen}
+      />
+      <Stack.Screen
+        name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_MULTIVALUE}
+        component={MultiValuePrerequisitesScreen}
       />
       <Stack.Screen
         name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_COMPLETION}
