@@ -3198,8 +3198,8 @@ features:
   fci:
     errors:
       expiredAfterSigned:
-        title: Documento non più disponibile per la firma
-        subTitle: Il documento non è più disponibile per la firma. Contatta l’ente per maggiori informazioni
+        title: I documenti non sono più disponibili
+        subTitle: Se hai bisogno di una copia conttatta l'ente
       expired:
         title: La richiesta di firma è scaduta
         subTitle: Per assistenza contattare l'ente
