@@ -14,7 +14,6 @@ const testHeadersWithContentDigest: Record<any, string> = {
 };
 
 const testConfig: SignatureConfig = {
-  digestAlgorithm: "",
   signAlgorithm: "ecdsa-p256-sha256",
   signKeyId: "AF2G87coad7/KJl9800==",
   signatureComponents: {
