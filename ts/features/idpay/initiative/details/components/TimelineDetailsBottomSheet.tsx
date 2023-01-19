@@ -1,11 +1,12 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { Text as NBText, View as NBView } from "native-base";
+import { Text as NBText } from "native-base";
 import React from "react";
 import { Image, StyleSheet, View } from "react-native";
 import { OperationListDTO } from "../../../../../../definitions/idpay/timeline/OperationListDTO";
 import { TransactionDetailDTO } from "../../../../../../definitions/idpay/timeline/TransactionDetailDTO";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
 import CopyButtonComponent from "../../../../../components/CopyButtonComponent";
+import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -43,7 +44,7 @@ const renderTimelineDetails = (transaction: TransactionDetailDTO) => (
           style={styles.brandLogo}
           source={{ uri: transaction.brandLogo }}
         />
-        <NBView hspacer={true} small={true} />
+        <VSpacer size={8} />
         <Body weight="SemiBold">{transaction.maskedPan}</Body>
       </View>
     </View>
@@ -56,7 +57,7 @@ const renderTimelineDetails = (transaction: TransactionDetailDTO) => (
       <Body weight="SemiBold">{transaction.accrued}</Body>
     </View>
     <ItemSeparatorComponent noPadded={true} />
-    <NBView spacer={true} large={true} />
+    <VSpacer size={24} />
     <H4>Informazioni sulla transazione</H4>
     <View style={styles.detailRow}>
       <Body>Data</Body>
@@ -74,7 +75,7 @@ const renderTimelineDetails = (transaction: TransactionDetailDTO) => (
       <Body>ID transazione Acquirer</Body>
       <View style={IOStyles.row}>
         <Body weight="SemiBold">{transaction.operationId}</Body>
-        <NBView hspacer={true} small={true} />
+        <VSpacer size={8} />
         <CopyButtonComponent textToCopy={transaction.idTrxAcquirer} />
       </View>
     </View>
@@ -82,7 +83,7 @@ const renderTimelineDetails = (transaction: TransactionDetailDTO) => (
       <Body>ID transazione Issuer</Body>
       <View style={IOStyles.row}>
         <Body weight="SemiBold">{transaction.idTrxIssuer}</Body>
-        <NBView hspacer={true} small={true} />
+        <HSpacer size={8} />
         <CopyButtonComponent textToCopy={transaction.operationId} />
       </View>
     </View>
