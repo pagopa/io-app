@@ -135,6 +135,8 @@ PODS:
   - nanopb/decode (2.30908.0)
   - nanopb/encode (2.30908.0)
   - OpenSSL-Universal (1.1.1100)
+  - pagopa-io-react-native-crypto (0.2.1):
+    - React-Core
   - PromisesObjC (2.0.0)
   - Protobuf (3.19.1)
   - RCT-Folly (2021.06.28.00-v2):
@@ -609,6 +611,7 @@ DEPENDENCIES:
   - jail-monkey (from `../node_modules/jail-monkey`)
   - libevent (~> 2.1.12)
   - OpenSSL-Universal (= 1.1.1100)
+  - "pagopa-io-react-native-crypto (from `../node_modules/@pagopa/io-react-native-crypto`)"
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
   - RCTTypeSafety (from `../node_modules/react-native/Libraries/TypeSafety`)
@@ -741,6 +744,8 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native/sdks/hermes/hermes-engine.podspec"
   jail-monkey:
     :path: "../node_modules/jail-monkey"
+  pagopa-io-react-native-crypto:
+    :path: "../node_modules/@pagopa/io-react-native-crypto"
   RCT-Folly:
     :podspec: "../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec"
   RCTRequired:
@@ -914,6 +919,7 @@ SPEC CHECKSUMS:
   MLKitVision: e87dc3f2e456a6ab32361ebd985e078dd2746143
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
+  pagopa-io-react-native-crypto: 644fece16966f2e1ea1f872344ee5a3c6c8761a1
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
   Protobuf: 3724efa50cb2846d7ccebc8691c574e85fd74471
   RCT-Folly: b9d9fe1fc70114b751c076104e52f3b1b5e5a95a
