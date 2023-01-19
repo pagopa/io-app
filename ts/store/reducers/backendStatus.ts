@@ -2,6 +2,7 @@
  * Implements the reducers for BackendServicesState.
  */
 
+import { Platform } from "react-native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
@@ -27,6 +28,7 @@ import {
 } from "../../config";
 import { LocalizedMessageKeys } from "../../i18n";
 import { isStringNullyOrEmpty } from "../../utils/strings";
+import { getAppVersion, isVersionSupported } from "../../utils/appVersion";
 import { backendStatusLoadSuccess } from "../actions/backendStatus";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
@@ -211,6 +213,20 @@ export const bancomatPayConfigSelector = createSelector(
 );
 
 /**
+ * return the remote config about LolliPOP enabled/disabled
+ * if there is no data, false is the default value -> (LolliPOP disabled)
+ */
+export const isLollipopEnabledSelector = createSelector(
+  backendStatusSelector,
+  (backendStatus): boolean =>
+    pipe(
+      backendStatus,
+      O.map(bs => bs.config.lollipop.enabled),
+      O.getOrElse(() => false)
+    )
+);
+
+/**
  * return the remote config about CGN enabled/disabled
  * if there is no data, false is the default value -> (CGN disabled)
  */
@@ -370,7 +386,14 @@ export const isFciEnabledSelector = createSelector(
     fciEnabled &&
     pipe(
       backendStatus,
-      O.map(bs => bs.config.fci.enabled),
+      O.map(bs =>
+        isVersionSupported(
+          Platform.OS === "ios"
+            ? bs.config.fci.min_app_version.ios
+            : bs.config.fci.min_app_version.android,
+          getAppVersion()
+        )
+      ),
       O.getOrElse(() => false)
     )
 );
