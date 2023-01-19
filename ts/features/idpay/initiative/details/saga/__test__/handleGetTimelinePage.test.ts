@@ -47,7 +47,9 @@ describe("Test IDPay timeline pagination saga", () => {
       }
     )
       .withReducer(appReducer)
-      .put(idpayTimelinePageGet.success(mockResponseSuccess))
+      .put(
+        idpayTimelinePageGet.success({ timeline: mockResponseSuccess, page: 2 })
+      )
       .run();
   });
   it("should call the failure handler on failure", async () => {
@@ -69,7 +71,7 @@ describe("Test IDPay timeline pagination saga", () => {
       .put(
         idpayTimelinePageGet.failure({
           kind: "generic",
-          value: new Error("response status code 401")
+          value: new Error("401")
         })
       )
       .run();
