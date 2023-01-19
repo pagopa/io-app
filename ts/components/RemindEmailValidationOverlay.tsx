@@ -302,9 +302,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     }
     // show two buttons where the left one is a CTA
     // to edit again the email
-    return this.props.isEmailValidated ? (
-      this.props.children
-    ) : (
+    return (
       <>
         <SectionStatusComponent sectionKey={"email_validation"} />
         <View footer={true}>
@@ -369,7 +367,9 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
       ? I18n.t("email.validate.validated")
       : I18n.t("email.validate.title");
 
-    return (
+    return this.props.isEmailValidated ? (
+      this.props.children
+    ) : (
       <TopScreenComponent
         {...(!this.props.isOnboarding
           ? this.onMainProps
