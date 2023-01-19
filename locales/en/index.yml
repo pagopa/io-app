@@ -2646,12 +2646,12 @@ bonus:
       news: new
       online: Online
       places: Places
-      navigationTitle: Benefits
-      screenTitle: Select the operator and discover the benefits
+      navigationTitle: Opportunities
+      screenTitle: Select the operator and discover the opportunities
       cta:
         filter: Filter
       categoriesList:
-        title: Select a category and discover the benefits
+        title: Select a category and discover the opportunities
       filter:
         title: Filter operators
         searchTitle: Find by name
@@ -2709,7 +2709,7 @@ bonus:
       goToDetail: View your Carta Giovani
     detail:
       cta:
-        buyers: Discover the benefits
+        buyers: Discover the opportunities
         otp: Generate code
         eyca:
           copy: Copy EYCA's card number

@@ -2670,12 +2670,12 @@ bonus:
       news: novità
       online: Online
       places: Luoghi
-      navigationTitle: Agevolazioni
-      screenTitle: Seleziona un operatore e scopri le agevolazioni
+      navigationTitle: Opportunità
+      screenTitle: Seleziona un operatore e scopri le opportunità
       cta:
         filter: Filtra
       categoriesList:
-        title: Seleziona una categoria e scopri le agevolazioni
+        title: Seleziona una categoria e scopri le opportunità
       filter:
         title: Filtra esercenti
         searchTitle: Cerca per nome
@@ -2733,7 +2733,7 @@ bonus:
       goToDetail: Visualizza la Carta
     detail:
       cta:
-        buyers: Scopri le agevolazioni
+        buyers: Scopri le opportunità
         otp: Genera codice
         eyca:
           copy: Copia numero carta EYCA
