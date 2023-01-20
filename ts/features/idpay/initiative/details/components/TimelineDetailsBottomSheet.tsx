@@ -20,7 +20,7 @@ import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverl
 import I18n from "../../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import themeVariables from "../../../../../theme/variables";
-import { formatDateAsLocal } from "../../../../../utils/dates";
+import { format } from "../../../../../utils/dates";
 import {
   IOBottomSheetModal,
   useIOBottomSheetModal
@@ -56,8 +56,12 @@ type InstrumentDetailsComponentProps = Pick<
 const InstrumentDetailsComponent = (props: InstrumentDetailsComponentProps) => (
   <View style={styles.centerRow}>
     <Image style={styles.brandLogo} source={{ uri: props.brandLogo }} />
-    <VSpacer size={8} />
-    <Body weight="SemiBold">{props.maskedPan}</Body>
+    <HSpacer size={8} />
+    <Body weight="SemiBold">
+      {I18n.t("idpay.initiative.operationDetails.maskedPan", {
+        lastDigits: props.maskedPan
+      })}
+    </Body>
   </View>
 );
 
@@ -95,21 +99,21 @@ const TimelineDetailsComponent = (props: TransactionDetailsProps) => {
           </View>
           <View style={styles.detailRow}>
             <Body>
-              {I18n.t("idpay.initiative.operationDetails.amountLabel", {
-                amount: details.amount
-              })}
+              {I18n.t("idpay.initiative.operationDetails.amountLabel")}
             </Body>
             <Body weight="SemiBold">
-              {I18n.t("idpay.initiative.operationDetails.amountLabel")}
+              {I18n.t("idpay.initiative.operationDetails.amount", {
+                amount: details.amount.toFixed(2)
+              })}
             </Body>
           </View>
           <View style={styles.detailRow}>
             <Body>
               {I18n.t("idpay.initiative.operationDetails.accruedAmountLabel")}
             </Body>
-            <Body>
-              {I18n.t("idpay.initiative.operationDetails.amountLabel", {
-                amount: details.accrued
+            <Body weight="SemiBold">
+              {I18n.t("idpay.initiative.operationDetails.amount", {
+                amount: details.accrued.toFixed(2)
               })}
             </Body>
           </View>
@@ -119,7 +123,7 @@ const TimelineDetailsComponent = (props: TransactionDetailsProps) => {
           <View style={styles.detailRow}>
             <Body>Data</Body>
             <Body weight="SemiBold">
-              {formatDateAsLocal(details.operationDate)}
+              {format(details.operationDate, "DD MMM YYYY, HH:mm")}
             </Body>
           </View>
           <View style={styles.detailRow}>
@@ -134,7 +138,7 @@ const TimelineDetailsComponent = (props: TransactionDetailsProps) => {
             </Body>
             <View style={IOStyles.row}>
               <Body weight="SemiBold">{details.operationId}</Body>
-              <VSpacer size={8} />
+              <HSpacer size={8} />
               <CopyButtonComponent textToCopy={details.idTrxAcquirer} />
             </View>
           </View>

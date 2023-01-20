@@ -18,13 +18,13 @@ import { TransactionDetailDTO } from "../../../../../../definitions/idpay/timeli
 const mockTransaction: TransactionDetailDTO = {
   operationType: TransactionOperationType.TRANSACTION,
   operationDate: new Date(),
-  amount: 100,
+  amount: 100.34,
   brandLogo:
     "https://uat.wisp2.pagopa.gov.it/wallet/assets/img/creditcard/carta_visa.png",
   circuitType: "01",
   maskedPan: "1234",
   operationId: "1",
-  accrued: 100,
+  accrued: 100.0,
   idTrxAcquirer: "1",
   idTrxIssuer: "1"
 };
@@ -56,7 +56,7 @@ export function* handleGetTimelineDetails(
         response =>
           put(
             response.status === 200
-              ? idpayTimelineDetailsGet.success(response.value)
+              ? idpayTimelineDetailsGet.success(mockTransaction)
               : idpayTimelineDetailsGet.failure({
                   ...getGenericError(
                     new Error(`response status code ${response.status}`)

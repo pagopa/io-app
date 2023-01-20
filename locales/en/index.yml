@@ -3320,6 +3320,7 @@ idpay:
     operationDetails:
       title: Dettaglio dell'operazione
       instrument: Metodo di pagamento
+      maskedPan: •••• {{lastDigits}}
       amountLabel: Importo transazione
       accruedAmountLabel: Importo rimborsabile
       amount: € {{amount}}
