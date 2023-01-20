@@ -1,16 +1,25 @@
 import { pot } from "@pagopa/ts-commons";
 import { createStore } from "redux";
-import { idpayInitiativeDetailsSelector, idpayTimelineSelector } from "..";
-import { idpayInitiativeGet, idpayTimelineGet } from "../actions";
+import {
+  idpayInitiativeDetailsSelector,
+  idpayTimelineDetailsSelector,
+  idpayTimelineSelector
+} from "..";
+import { TimelineDTO } from "../../../../../../../definitions/idpay/timeline/TimelineDTO";
+import { OperationTypeEnum as TransactionOperationType } from "../../../../../../../definitions/idpay/timeline/TransactionOperationDTO";
 import {
   InitiativeDTO,
   StatusEnum
 } from "../../../../../../../definitions/idpay/wallet/InitiativeDTO";
+import { TransactionDetailDTO } from "../../../../../../../InstrumentOperationDTO/../definitions/idpay/timeline/TransactionDetailDTO";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { NetworkError } from "../../../../../../utils/errors";
-import { OperationTypeEnum } from "../../../../../../../definitions/idpay/timeline/TransactionOperationDTO";
-import { TimelineDTO } from "../../../../../../../definitions/idpay/timeline/TimelineDTO";
+import {
+  idpayInitiativeGet,
+  idpayTimelineDetailsGet,
+  idpayTimelineGet
+} from "../actions";
 
 const mockResponseSuccess: InitiativeDTO = {
   initiativeId: "123",
@@ -22,6 +31,20 @@ const mockResponseSuccess: InitiativeDTO = {
 const mockFailure: NetworkError = {
   kind: "generic",
   value: new Error("response status code 401")
+};
+
+const mockTransactionDetail: TransactionDetailDTO = {
+  operationType: TransactionOperationType.TRANSACTION,
+  operationDate: new Date(),
+  amount: 100,
+  brandLogo:
+    "https://uat.wisp2.pagopa.gov.it/wallet/assets/img/creditcard/carta_visa.png",
+  circuitType: "01",
+  maskedPan: "1234",
+  operationId: "1",
+  accrued: 100,
+  idTrxAcquirer: "1",
+  idTrxIssuer: "1"
 };
 
 describe("Test IDPay initiative details reducers and selectors", () => {
@@ -86,7 +109,7 @@ const mockTimelineResponseSuccess: TimelineDTO = {
   operationList: [
     {
       operationId: "1234567890",
-      operationType: OperationTypeEnum.TRANSACTION,
+      operationType: TransactionOperationType.TRANSACTION,
       operationDate: new Date("2020-05-20T09:00:00.000Z"),
       amount: 100,
       brandLogo: "https://www.google.com",
@@ -146,6 +169,72 @@ describe("test idpay timeline reducer and selectors", () => {
       pot.noneError(mockFailure)
     );
     expect(idpayTimelineSelector(store.getState())).toStrictEqual(
+      pot.noneError(mockFailure)
+    );
+  });
+});
+
+describe("Test timeline operation details reducer", () => {
+  it("should be pot.none before the first loading action", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    expect(globalState.features.idPay.initiative.timelineDetails).toStrictEqual(
+      pot.none
+    );
+    expect(idpayTimelineDetailsSelector(globalState)).toStrictEqual(pot.none);
+  });
+
+  it("should be pot.noneLoading after the first loading action dispatched", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const store = createStore(appReducer, globalState as any);
+    store.dispatch(
+      idpayTimelineDetailsGet.request({
+        initiativeId: "6364fd4570fc881452fdaa2d",
+        operationId: "1234567890"
+      })
+    );
+
+    expect(
+      store.getState().features.idPay.initiative.timelineDetails
+    ).toStrictEqual(pot.noneLoading);
+    expect(idpayTimelineDetailsSelector(store.getState())).toStrictEqual(
+      pot.noneLoading
+    );
+  });
+
+  it("should be pot.some with the response, after the success action", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const store = createStore(appReducer, globalState as any);
+    store.dispatch(
+      idpayTimelineDetailsGet.request({
+        initiativeId: "6364fd4570fc881452fdaa2d",
+        operationId: "1234567890"
+      })
+    );
+    store.dispatch(idpayTimelineDetailsGet.success(mockTransactionDetail));
+
+    expect(
+      store.getState().features.idPay.initiative.timelineDetails
+    ).toStrictEqual(pot.some(mockTransactionDetail));
+    expect(idpayTimelineDetailsSelector(store.getState())).toStrictEqual(
+      pot.some(mockTransactionDetail)
+    );
+  });
+
+  it("should be pot.noneError with the error, after the failure action", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const store = createStore(appReducer, globalState as any);
+    store.dispatch(
+      idpayTimelineDetailsGet.request({
+        initiativeId: "6364fd4570fc881452fdaa2d",
+        operationId: "1234567890"
+      })
+    );
+    store.dispatch(idpayTimelineDetailsGet.failure(mockFailure));
+
+    expect(
+      store.getState().features.idPay.initiative.timelineDetails
+    ).toStrictEqual(pot.noneError(mockFailure));
+    expect(idpayTimelineDetailsSelector(store.getState())).toStrictEqual(
       pot.noneError(mockFailure)
     );
   });
