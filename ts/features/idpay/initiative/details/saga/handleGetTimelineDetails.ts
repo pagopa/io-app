@@ -2,7 +2,6 @@ import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import { call, put } from "typed-redux-saga/macro";
 import { PreferredLanguageEnum } from "../../../../../../definitions/backend/PreferredLanguage";
-import { OperationListDTO } from "../../../../../../definitions/idpay/timeline/OperationListDTO";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
@@ -11,23 +10,6 @@ import {
   idpayTimelineDetailsGet,
   IdPayTimelineDetailsGetPayloadType
 } from "../store/actions";
-
-import { OperationTypeEnum as TransactionOperationType } from "../../../../../../definitions/idpay/timeline/TransactionOperationDTO";
-import { TransactionDetailDTO } from "../../../../../../definitions/idpay/timeline/TransactionDetailDTO";
-
-const mockTransaction: TransactionDetailDTO = {
-  operationType: TransactionOperationType.TRANSACTION,
-  operationDate: new Date(),
-  amount: 100.34,
-  brandLogo:
-    "https://uat.wisp2.pagopa.gov.it/wallet/assets/img/creditcard/carta_visa.png",
-  circuitType: "01",
-  maskedPan: "1234",
-  operationId: "1",
-  accrued: 100.0,
-  idTrxAcquirer: "1",
-  idTrxIssuer: "1"
-};
 
 export function* handleGetTimelineDetails(
   getTimelineDetail: IDPayTimelineClient["getTimelineDetail"],
@@ -56,7 +38,7 @@ export function* handleGetTimelineDetails(
         response =>
           put(
             response.status === 200
-              ? idpayTimelineDetailsGet.success(mockTransaction)
+              ? idpayTimelineDetailsGet.success(response.value)
               : idpayTimelineDetailsGet.failure({
                   ...getGenericError(
                     new Error(`response status code ${response.status}`)
