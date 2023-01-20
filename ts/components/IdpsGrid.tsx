@@ -12,7 +12,6 @@ import {
   ViewStyle
 } from "react-native";
 
-import { Button } from "native-base";
 import { connect } from "react-redux";
 import variables from "../theme/variables";
 import { GlobalState } from "../store/reducers/types";
@@ -63,17 +62,7 @@ const renderItem =
     const { item } = info;
 
     const onPress = () => onIdpSelected(item);
-    if (item.isTestIdp === true) {
-      return (
-        // render transparent button if idp is testIdp (see https://www.pivotaltracker.com/story/show/172082895)
-        <Button
-          transparent={true}
-          onPress={onPress}
-          style={styles.gridItem}
-          accessible={false} // ignore cause it serves only for debug mode (stores reviewers)
-        />
-      );
-    }
+
     return (
       <ButtonDefaultOpacity
         key={item.id}
