@@ -1,7 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Text as NBText } from "native-base";
+import { Text as NBButtonText } from "native-base";
 import * as React from "react";
 import {
   View,
@@ -330,7 +330,7 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
             onPress={this.handleBackPress}
           >
             {/* <ButtonText> */}
-            <NBText>{I18n.t("global.buttons.close")}</NBText>
+            <NBButtonText>{I18n.t("global.buttons.close")}</NBButtonText>
           </ButtonDefaultOpacity>
           <VSpacer size={16} />
         </SlidedContentComponent>

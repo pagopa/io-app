@@ -8,7 +8,7 @@ import { StackActions } from "@react-navigation/native";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Content, Form, Text as NBText } from "native-base";
+import { Content, Form } from "native-base";
 import * as React from "react";
 import {
   View,
@@ -20,7 +20,9 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { VSpacer } from "../../components/core/spacer/Spacer";
+import { Body } from "../../components/core/typography/Body";
 import { H1 } from "../../components/core/typography/H1";
+import { IOStyles } from "../../components/core/variables/IOStyles";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { LabelledItem } from "../../components/LabelledItem";
 import BaseScreenComponent, {
@@ -44,7 +46,6 @@ import {
   profileSelector
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
-import customVariables from "../../theme/variables";
 import { withKeyboard } from "../../utils/keyboard";
 import { isOnboardingCompleted } from "../../utils/navigation";
 import { areStringsEqual } from "../../utils/options";
@@ -63,14 +64,8 @@ const styles = StyleSheet.create({
   flex: {
     flex: 1
   },
-  horizontalPadding: {
-    paddingHorizontal: customVariables.contentPadding
-  },
   icon: {
     marginTop: Platform.OS === "android" ? 4 : 6 // adjust icon position to align it with baseline of email text}
-  },
-  textColorDark: {
-    color: customVariables.textColorDark
   }
 });
 
@@ -263,35 +258,30 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
       >
         <SafeAreaView style={styles.flex}>
           <Content noPadded={true} style={styles.flex} scrollEnabled={false}>
-            <H1
-              color={"bluegreyDark"}
-              weight={"Bold"}
-              style={styles.horizontalPadding}
-            >
-              {isFromProfileSection
-                ? I18n.t("email.edit.title")
-                : I18n.t("email.insert.title")}
-            </H1>
-            <VSpacer size={16} />
-            <View style={styles.horizontalPadding}>
-              <NBText>
+            <View style={IOStyles.horizontalContentPadding}>
+              <H1 color={"bluegreyDark"} weight={"Bold"}>
+                {isFromProfileSection
+                  ? I18n.t("email.edit.title")
+                  : I18n.t("email.insert.title")}
+              </H1>
+              <VSpacer size={16} />
+              <Body>
                 {isFromProfileSection
                   ? this.props.isEmailValidated
                     ? I18n.t("email.edit.validated")
                     : I18n.t("email.edit.subtitle")
                   : I18n.t("email.insert.subtitle")}
                 {isFromProfileSection && (
-                  <NBText style={styles.textColorDark}>
+                  <Body weight="SemiBold">
                     {` ${pipe(
                       this.props.optionEmail,
                       O.getOrElse(() => "")
                     )}`}
-                  </NBText>
+                  </Body>
                 )}
-              </NBText>
-            </View>
-            <VSpacer size={16} />
-            <View style={styles.horizontalPadding}>
+              </Body>
+              <VSpacer size={16} />
+
               <Form>
                 <LabelledItem
                   label={

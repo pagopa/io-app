@@ -18,8 +18,7 @@ export const IOStyles = StyleSheet.create({
     alignItems: "center"
   },
   horizontalContentPadding: {
-    paddingLeft: themeVariables.contentPadding,
-    paddingRight: themeVariables.contentPadding
+    paddingHorizontal: themeVariables.contentPadding
   },
   row: {
     flexDirection: "row"

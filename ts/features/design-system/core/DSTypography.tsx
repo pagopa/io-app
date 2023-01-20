@@ -57,7 +57,11 @@ export const DSTypography = () => (
     >
       NativeBase
     </H2>
-    <NBText>This is a default text</NBText>
+    <Body>This is a Body text</Body>
+    <NBText>This is a NBText</NBText>
+    <VSpacer size={16} />
+    <Body weight="SemiBold">This is a Body SemiBold text</Body>
+    <NBText bold={true}>This is a NBText bold</NBText>
     <VSpacer size={40} />
     <VSpacer size={40} />
   </DesignSystemScreen>

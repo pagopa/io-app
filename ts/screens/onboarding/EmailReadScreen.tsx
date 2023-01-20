@@ -8,10 +8,11 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { StackActions } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
-import { Text as NBText } from "native-base";
 import * as React from "react";
 import { View, Alert, Platform, SafeAreaView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
+import { VSpacer } from "../../components/core/spacer/Spacer";
+import { Body } from "../../components/core/typography/Body";
 import { H3 } from "../../components/core/typography/H3";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
@@ -69,8 +70,6 @@ const styles = StyleSheet.create({
     backgroundColor: customVariables.contentBackground,
     flex: 1
   },
-  spacerSmall: { height: 12 },
-  spacerLarge: { height: 24 },
   icon: {
     marginTop: Platform.OS === "android" ? 3 : 0, // correct icon position to align it with baseline of email text
     marginRight: 8
@@ -160,8 +159,8 @@ export class EmailReadScreen extends React.PureComponent<Props> {
             }
           >
             <View style={styles.content}>
-              <NBText>{I18n.t("email.insert.label")}</NBText>
-              <View style={styles.spacerSmall} />
+              <Body>{I18n.t("email.insert.label")}</Body>
+              <VSpacer size={8} />
               <View style={styles.emailWithIcon}>
                 <IconFont
                   name="io-envelope"
@@ -174,12 +173,12 @@ export class EmailReadScreen extends React.PureComponent<Props> {
                   <H3>{this.props.optionEmail.value}</H3>
                 )}
               </View>
-              <View style={styles.spacerLarge} />
-              <NBText>
+              <VSpacer size={24} />
+              <Body color="bluegrey">
                 {isFromProfileSection
                   ? `${I18n.t("email.read.details")}`
                   : I18n.t("email.read.info")}
-              </NBText>
+              </Body>
             </View>
           </ScreenContent>
           <SectionStatusComponent sectionKey={"email_validation"} />
