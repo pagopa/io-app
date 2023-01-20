@@ -130,6 +130,19 @@ const FciSignatureFieldsScreen = (
       )
     );
 
+  const renderSectionHeader = (info: {
+    section: { title: string };
+  }): React.ReactNode => (
+    <View
+      style={{
+        backgroundColor: IOColors.white,
+        flexDirection: "row"
+      }}
+    >
+      <H3 color="bluegrey">{clauseTypeMaping.get(info.section.title)}</H3>
+    </View>
+  );
+
   const renderSignatureFields = () => (
     <SectionList
       style={IOStyles.horizontalContentPadding}
@@ -151,9 +164,7 @@ const FciSignatureFieldsScreen = (
           onPressDetail={() => onPressDetail(item)}
         />
       )}
-      renderSectionHeader={({ section: { title } }) => (
-        <H3 color="bluegrey">{clauseTypeMaping.get(title)}</H3>
-      )}
+      renderSectionHeader={renderSectionHeader}
     />
   );
 
