@@ -1,4 +1,4 @@
-import { Text as NBText } from "native-base";
+import { Text as NBButtonText } from "native-base";
 import * as React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Pressable, StyleSheet, View } from "react-native";
@@ -10,7 +10,6 @@ import IdpsGrid from "../../components/IdpsGrid";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
-import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import I18n from "../../i18n";
 import { idpSelected } from "../../store/actions/authentication";
 import variables from "../../theme/variables";
@@ -33,6 +32,7 @@ import { IOColors } from "../../components/core/variables/IOColors";
 import { H1 } from "../../components/core/typography/H1";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { IOStyles } from "../../components/core/variables/IOStyles";
+import { VSpacer } from "../../components/core/spacer/Spacer";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -45,21 +45,7 @@ const styles = StyleSheet.create({
   },
   footerAdviceContainer: {
     backgroundColor: IOColors.white,
-    paddingHorizontal: variables.contentPadding,
     paddingVertical: variables.spacerLargeHeight,
-    marginTop: variables.contentPadding
-  },
-  footerCancelButton: {
-    marginTop: variables.spacerHeight,
-    marginHorizontal: variables.contentPadding
-  },
-  ipdsGridColumnStyle: {
-    paddingHorizontal: variables.contentPadding
-  },
-  ipdsGridContentContainerStyle: {
-    backgroundColor: IOColors.greyUltraLight
-  },
-  ipdsGridHeaderComponentStyle: {
     marginTop: variables.contentPadding
   }
 });
@@ -86,16 +72,11 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
     >();
 
   const onIdpSelected = (idp: LocalIdpsFallback) => {
-    // if (idp.isTestIdp === true && counter < TAPS_TO_OPEN_TESTIDP) {
-    //   const newValue = (counter + 1) % (TAPS_TO_OPEN_TESTIDP + 1);
-    //   setCounter(newValue);
-    // } else {
     setSelectedIdp(idp);
     handleSendAssistanceLog(choosenTool, `IDP selected: ${idp.id}`);
     navigation.navigate(ROUTES.AUTHENTICATION, {
       screen: ROUTES.AUTHENTICATION_IDP_LOGIN
     });
-    // }
   };
 
   const evokeLoginScreenCounter = () => {
@@ -118,20 +99,27 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
     }
   }, [counter, setSelectedIdp, navigation]);
 
-  const headerComponent = () => <View />;
+  const headerComponent = () => <VSpacer size={24} />;
 
   const footerComponent = () => (
     <View>
-      <ButtonDefaultOpacity
-        block={true}
-        light={true}
-        bordered={true}
-        onPress={navigation.goBack}
-        style={styles.footerCancelButton}
+      <VSpacer size={24} />
+      <View style={IOStyles.horizontalContentPadding}>
+        <ButtonDefaultOpacity
+          block={true}
+          light={true}
+          bordered={true}
+          onPress={navigation.goBack}
+        >
+          <NBButtonText>{I18n.t("global.buttons.cancel")}</NBButtonText>
+        </ButtonDefaultOpacity>
+      </View>
+      <View
+        style={[
+          styles.footerAdviceContainer,
+          IOStyles.horizontalContentPadding
+        ]}
       >
-        <NBText>{I18n.t("global.buttons.cancel")}</NBText>
-      </ButtonDefaultOpacity>
-      <View style={styles.footerAdviceContainer}>
         <AdviceComponent
           text={I18n.t("login.expiration_info")}
           iconColor={"black"}
@@ -148,15 +136,9 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
       headerTitle={I18n.t("authentication.idp_selection.headerTitle")}
     >
       <LoadingSpinnerOverlay isLoading={props.isIdpsLoading}>
-        {/* <ScreenContentHeader
-          title=
-        /> */}
-        <View
-          style={[
-            IOStyles.horizontalContentPadding,
-            { marginBottom: variables.contentPadding }
-          ]}
-        >
+        {/* Custom ScreenContentHeader with secret login */}
+        <View style={IOStyles.horizontalContentPadding}>
+          <VSpacer size={16} />
           <Pressable accessible={false} onPress={evokeLoginScreenCounter}>
             {/* Add `accessible=false` 'cause it useful only
             for debug mode (stores reviewers).
@@ -171,16 +153,14 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
               {I18n.t("authentication.idp_selection.contentTitle")}
             </H1>
           </Pressable>
+          <VSpacer size={24} />
         </View>
 
         <View style={styles.gridContainer}>
           <IdpsGrid
             idps={[...props.idps]}
             onIdpSelected={onIdpSelected}
-            columnWrapperStyle={styles.ipdsGridColumnStyle}
-            contentContainerStyle={styles.ipdsGridContentContainerStyle}
             headerComponent={headerComponent}
-            headerComponentStyle={styles.ipdsGridHeaderComponentStyle}
             footerComponent={footerComponent}
           />
         </View>
