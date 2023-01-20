@@ -48,6 +48,11 @@ type InstrumentDetailsComponentProps = Pick<
   "brandLogo" | "maskedPan"
 >;
 
+/**
+ * Displays the info of the instrument used for the transaction, with the logo of the brand and the masked pan
+ * @param {InstrumentDetailsComponentProps} props
+ * @returns
+ */
 const InstrumentDetailsComponent = (props: InstrumentDetailsComponentProps) => (
   <View style={styles.centerRow}>
     <Image style={styles.brandLogo} source={{ uri: props.brandLogo }} />
