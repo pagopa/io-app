@@ -1,9 +1,9 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { Text as NBText } from "native-base";
 import React from "react";
 import { Image, StyleSheet, View } from "react-native";
+import { OperationDTO } from "../../../../../../definitions/idpay/timeline/OperationDTO";
 import { OperationListDTO } from "../../../../../../definitions/idpay/timeline/OperationListDTO";
-import { TransactionDetailDTO } from "../../../../../../definitions/idpay/timeline/TransactionDetailDTO";
+import { OperationTypeEnum as TransactionDetailOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/TransactionDetailDTO";
 import { InitiativeDTO } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
 import CopyButtonComponent from "../../../../../components/CopyButtonComponent";
@@ -18,7 +18,10 @@ import I18n from "../../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import themeVariables from "../../../../../theme/variables";
 import { formatDateAsLocal } from "../../../../../utils/dates";
-import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
+import {
+  IOBottomSheetModal,
+  useIOBottomSheetModal
+} from "../../../../../utils/hooks/bottomSheet";
 import { idpayTimelineDetailsSelector } from "../store";
 import { idpayTimelineDetailsGet } from "../store/actions";
 
@@ -37,79 +40,92 @@ const operationCircuitTypeMap: Record<string, string> = {
   "10": "PrivateCircuit"
 };
 
-const TransactionDetailsErrorComponent = () => (
+/**
+ * Displays a generic error message
+ * @returns {React.ReactElement}
+ */
+const TimelineDetailsErrorComponent = () => (
   <View>
     <Pictogram name="error" />
   </View>
 );
 
 type TransactionDetailsProps = {
-  details: TransactionDetailDTO;
+  details: OperationDTO;
 };
 
 /**
- *  This component is used to render the details of a transaction type operation
+ *  This component is used to render the details of an operation
  * @param {TransactionDetailsProps} props
  * @returns {React.ReactElement}
  */
-const TransactionDetailsComponent = (props: TransactionDetailsProps) => {
+const TimelineDetailsComponent = (props: TransactionDetailsProps) => {
   const { details } = props;
 
-  return (
-    <View style={styles.container}>
-      <View style={styles.detailRow}>
-        <Body>Metodo di pagamento</Body>
-        <View style={styles.centerRow}>
-          <Image style={styles.brandLogo} source={{ uri: details.brandLogo }} />
-          <VSpacer size={8} />
-          <Body weight="SemiBold">{details.maskedPan}</Body>
+  switch (details.operationType) {
+    case TransactionDetailOperationTypeEnum.TRANSACTION:
+      return (
+        <View style={styles.container}>
+          <View style={styles.detailRow}>
+            <Body>Metodo di pagamento</Body>
+            <View style={styles.centerRow}>
+              <Image
+                style={styles.brandLogo}
+                source={{ uri: details.brandLogo }}
+              />
+              <VSpacer size={8} />
+              <Body weight="SemiBold">{details.maskedPan}</Body>
+            </View>
+          </View>
+          <View style={styles.detailRow}>
+            <Body>Importo transazione</Body>
+            <Body weight="SemiBold">{details.amount}</Body>
+          </View>
+          <View style={styles.detailRow}>
+            <Body>Importo rimborsabile</Body>
+            <Body weight="SemiBold">{details.accrued}</Body>
+          </View>
+          <ItemSeparatorComponent noPadded={true} />
+          <VSpacer size={24} />
+          <H4>Informazioni sulla transazione</H4>
+          <View style={styles.detailRow}>
+            <Body>Data</Body>
+            <Body weight="SemiBold">
+              {formatDateAsLocal(details.operationDate)}
+            </Body>
+          </View>
+          <View style={styles.detailRow}>
+            <Body>Circuito di pagamento</Body>
+            <Body weight="SemiBold">
+              {operationCircuitTypeMap[details.circuitType]}
+            </Body>
+          </View>
+          <View style={styles.detailRow}>
+            <Body>ID transazione Acquirer</Body>
+            <View style={IOStyles.row}>
+              <Body weight="SemiBold">{details.operationId}</Body>
+              <VSpacer size={8} />
+              <CopyButtonComponent textToCopy={details.idTrxAcquirer} />
+            </View>
+          </View>
+          <View style={styles.detailRow}>
+            <Body>ID transazione Issuer</Body>
+            <View style={IOStyles.row}>
+              <Body weight="SemiBold">{details.idTrxIssuer}</Body>
+              <HSpacer size={8} />
+              <CopyButtonComponent textToCopy={details.operationId} />
+            </View>
+          </View>
         </View>
-      </View>
-      <View style={styles.detailRow}>
-        <Body>Importo transazione</Body>
-        <Body weight="SemiBold">{details.amount}</Body>
-      </View>
-      <View style={styles.detailRow}>
-        <Body>Importo rimborsabile</Body>
-        <Body weight="SemiBold">{details.accrued}</Body>
-      </View>
-      <ItemSeparatorComponent noPadded={true} />
-      <VSpacer size={24} />
-      <H4>Informazioni sulla transazione</H4>
-      <View style={styles.detailRow}>
-        <Body>Data</Body>
-        <Body weight="SemiBold">
-          {formatDateAsLocal(details.operationDate)}
-        </Body>
-      </View>
-      <View style={styles.detailRow}>
-        <Body>Circuito di pagamento</Body>
-        <Body weight="SemiBold">
-          {operationCircuitTypeMap[details.circuitType]}
-        </Body>
-      </View>
-      <View style={styles.detailRow}>
-        <Body>ID transazione Acquirer</Body>
-        <View style={IOStyles.row}>
-          <Body weight="SemiBold">{details.operationId}</Body>
-          <VSpacer size={8} />
-          <CopyButtonComponent textToCopy={details.idTrxAcquirer} />
-        </View>
-      </View>
-      <View style={styles.detailRow}>
-        <Body>ID transazione Issuer</Body>
-        <View style={IOStyles.row}>
-          <Body weight="SemiBold">{details.idTrxIssuer}</Body>
-          <HSpacer size={8} />
-          <CopyButtonComponent textToCopy={details.operationId} />
-        </View>
-      </View>
-    </View>
-  );
+      );
+    default:
+      return null;
+  }
 };
 
 /**
- * Component displayed in the bottom sheet to show the details of a timeline operation
+ * Component displayed in the bottom sheet to show the details of a timeline operation.
+ * The content of this component is retrieved from the store via selector.
  * @returns {React.ReactElement}
  */
 const TimelineDetailsBottomSheet = () => {
@@ -118,9 +134,9 @@ const TimelineDetailsBottomSheet = () => {
 
   const renderContent = () => {
     if (pot.isError(detailsPot)) {
-      return <TransactionDetailsErrorComponent />;
+      return <TimelineDetailsErrorComponent />;
     } else if (pot.isSome(detailsPot)) {
-      return <TransactionDetailsComponent details={detailsPot.value} />;
+      return <TimelineDetailsComponent details={detailsPot.value} />;
     }
     return null;
   };
@@ -132,13 +148,21 @@ const TimelineDetailsBottomSheet = () => {
   );
 };
 
+export type TimelineDetailsBottomSheetModal = Omit<
+  IOBottomSheetModal,
+  "present"
+> & {
+  present: (operationId: OperationListDTO["operationId"]) => void;
+};
+
 /**
  * This hook is used to show the bottom sheet with the details of a timeline operation
  * @param {InitiativeDTO["initiativeId"]} initiativeId
+ * @returns {TimelineDetailsBottomSheetModal}
  */
 export const useTimelineDetailsBottomSheet = (
   initiativeId: InitiativeDTO["initiativeId"]
-) => {
+): TimelineDetailsBottomSheetModal => {
   const dispatch = useIODispatch();
 
   const bottomSheetFooter = (
@@ -148,7 +172,7 @@ export const useTimelineDetailsBottomSheet = (
         bordered={true}
         onPress={() => modal.dismiss()}
       >
-        <NBText>{I18n.t("global.buttons.close")}</NBText>
+        <H4 color="blue">{I18n.t("global.buttons.close")}</H4>
       </ButtonDefaultOpacity>
     </View>
   );

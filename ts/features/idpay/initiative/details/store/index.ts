@@ -1,21 +1,21 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
+import { OperationDTO } from "../../../../../../definitions/idpay/timeline/OperationDTO";
 import { TimelineDTO } from "../../../../../../definitions/idpay/timeline/TimelineDTO";
-import { TransactionDetailDTO } from "../../../../../../definitions/idpay/timeline/TransactionDetailDTO";
 import { InitiativeDTO } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
 import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../utils/errors";
 import {
   idpayInitiativeGet,
-  idpayTimelineGet,
-  idpayTimelineDetailsGet
+  idpayTimelineDetailsGet,
+  idpayTimelineGet
 } from "./actions";
 
 export type IDPayInitiativeState = {
   details: pot.Pot<InitiativeDTO, NetworkError>;
   timeline: pot.Pot<TimelineDTO, NetworkError>;
-  timelineDetails: pot.Pot<TransactionDetailDTO, NetworkError>;
+  timelineDetails: pot.Pot<OperationDTO, NetworkError>;
 };
 
 const INITIAL_STATE: IDPayInitiativeState = {
