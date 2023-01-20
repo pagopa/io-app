@@ -19,11 +19,16 @@ export const idpayTimelineGet = createAsyncAction(
   "IDPAY_TIMELINE_FAILURE"
 )<IdPayInitiativeGetPayloadType, TimelineDTO, NetworkError>();
 
+export type IdPayTimelineDetailsGetPayloadType = {
+  initiativeId: InitiativeDTO["initiativeId"];
+  operationId: OperationListDTO["operationId"];
+};
+
 export const idpayTimelineDetailsGet = createAsyncAction(
   "IDPAY_TIMELINE_DETAILS_REQUEST",
   "IDPAY_TIMELINE_DETAILS_SUCCESS",
   "IDPAY_TIMELINE_DETAILS_FAILURE"
-)<OperationListDTO["operationId"], TransactionDetailDTO, NetworkError>();
+)<IdPayTimelineDetailsGetPayloadType, TransactionDetailDTO, NetworkError>();
 
 export type IDPayInitiativeActions =
   | ActionType<typeof idpayInitiativeGet>

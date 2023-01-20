@@ -7,7 +7,10 @@ import { SagaCallReturnType } from "../../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { IDPayTimelineClient } from "../api/client";
-import { idpayTimelineDetailsGet } from "../store/actions";
+import {
+  idpayTimelineDetailsGet,
+  IdPayTimelineDetailsGetPayloadType
+} from "../store/actions";
 
 import { OperationTypeEnum as TransactionOperationType } from "../../../../../../definitions/idpay/timeline/TransactionOperationDTO";
 import { TransactionDetailDTO } from "../../../../../../definitions/idpay/timeline/TransactionDetailDTO";
@@ -30,7 +33,7 @@ export function* handleGetTimelineDetails(
   getTimelineDetail: IDPayTimelineClient["getTimelineDetail"],
   token: string,
   language: PreferredLanguageEnum,
-  operationId: OperationListDTO["operationId"]
+  payload: IdPayTimelineDetailsGetPayloadType
 ) {
   try {
     const getTimelineDetailResult: SagaCallReturnType<
@@ -38,10 +41,10 @@ export function* handleGetTimelineDetails(
     > = yield* call(getTimelineDetail, {
       bearerAuth: token,
       "Accept-Language": language,
-      operationId
+      initiativeId: payload.initiativeId,
+      operationId: payload.operationId
     });
-    yield* put(idpayTimelineDetailsGet.success(mockTransaction));
-    /*  yield pipe(
+    yield pipe(
       getTimelineDetailResult,
       E.fold(
         error =>
@@ -61,7 +64,7 @@ export function* handleGetTimelineDetails(
                 })
           )
       )
-    ); */
+    );
   } catch (e) {
     yield* put(idpayTimelineDetailsGet.failure({ ...getNetworkError(e) }));
   }

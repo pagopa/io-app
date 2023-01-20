@@ -15,13 +15,13 @@ import {
 export type IDPayInitiativeState = {
   details: pot.Pot<InitiativeDTO, NetworkError>;
   timeline: pot.Pot<TimelineDTO, NetworkError>;
-  timelineDetail: pot.Pot<TransactionDetailDTO, NetworkError>;
+  timelineDetails: pot.Pot<TransactionDetailDTO, NetworkError>;
 };
 
 const INITIAL_STATE: IDPayInitiativeState = {
   details: pot.none,
   timeline: pot.none,
-  timelineDetail: pot.none
+  timelineDetails: pot.none
 };
 
 const reducer = (
@@ -63,17 +63,17 @@ const reducer = (
     case getType(idpayTimelineDetailsGet.request):
       return {
         ...state,
-        timelineDetail: pot.toLoading(pot.none)
+        timelineDetails: pot.toLoading(pot.none)
       };
     case getType(idpayTimelineDetailsGet.success):
       return {
         ...state,
-        timelineDetail: pot.some(action.payload)
+        timelineDetails: pot.some(action.payload)
       };
     case getType(idpayTimelineDetailsGet.failure):
       return {
         ...state,
-        timelineDetail: pot.toError(state.timelineDetail, action.payload)
+        timelineDetails: pot.toError(state.timelineDetails, action.payload)
       };
   }
   return state;
@@ -85,6 +85,6 @@ export const idpayTimelineSelector = (state: GlobalState) =>
   state.features.idPay.initiative.timeline;
 
 export const idpayTimelineDetailsSelector = (state: GlobalState) =>
-  state.features.idPay.initiative.timelineDetail;
+  state.features.idPay.initiative.timelineDetails;
 
 export default reducer;

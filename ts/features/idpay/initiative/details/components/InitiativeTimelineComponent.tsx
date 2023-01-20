@@ -82,7 +82,7 @@ const ConfiguredInitiativeData = (props: Props) => {
   const timelineFromSelector = useIOSelector(idpayTimelineSelector);
   const isTimelineLoading = pot.isLoading(timelineFromSelector);
 
-  const detailsBottomSheet = useTimelineDetailsBottomSheet();
+  const detailsBottomSheet = useTimelineDetailsBottomSheet(initiativeId);
 
   if (isTimelineLoading) {
     return null;
