@@ -17,6 +17,7 @@ import {
   idpayInitiativeGet,
   IdPayInitiativeGetPayloadType,
   idpayTimelineDetailsGet,
+  IdPayTimelineDetailsGetPayloadType,
   idpayTimelineGet
 } from "../store/actions";
 import { handleGetInitiativeDetails } from "./handleGetInitiativeDetails";
@@ -69,7 +70,7 @@ export function* idpayInitiativeDetailsSaga(bearerToken: string): SagaIterator {
   );
   yield* takeLatest(
     idpayTimelineDetailsGet.request,
-    function* (action: { payload: OperationListDTO["operationId"] }) {
+    function* (action: { payload: IdPayTimelineDetailsGetPayloadType }) {
       // wait backoff time if there were previous errors
       yield* call(waitBackoffError, idpayTimelineGet.failure);
       yield* call(
