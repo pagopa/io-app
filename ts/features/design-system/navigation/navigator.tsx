@@ -16,6 +16,7 @@ import { DSSelection } from "../core/DSSelection";
 import { DSAdvice } from "../core/DSAdvice";
 import { DSAccordion } from "../core/DSAccordion";
 import { DSListItems } from "../core/DSListItems";
+import { DSSpacing } from "../core/DSSpacing";
 import { DesignSystemParamsList } from "./params";
 import DESIGN_SYSTEM_ROUTES from "./routes";
 
@@ -35,6 +36,10 @@ export const DesignSystemNavigator = () => (
     <Stack.Screen
       name={DESIGN_SYSTEM_ROUTES.FOUNDATION.TYPOGRAPHY.route}
       component={DSTypography}
+    />
+    <Stack.Screen
+      name={DESIGN_SYSTEM_ROUTES.FOUNDATION.SPACING.route}
+      component={DSSpacing}
     />
     <Stack.Screen
       name={DESIGN_SYSTEM_ROUTES.FOUNDATION.ICONS.route}
