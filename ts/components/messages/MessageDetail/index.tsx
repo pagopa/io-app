@@ -2,10 +2,11 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import _ from "lodash";
 import { Content as NBContent, View as NBView } from "native-base";
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ActivityIndicator, StyleSheet, View } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import I18n from "i18n-js";
+import { useNavigation } from "@react-navigation/native";
 import { OrganizationFiscalCode } from "../../../../definitions/backend/OrganizationFiscalCode";
 
 import { ServiceMetadata } from "../../../../definitions/backend/ServiceMetadata";
@@ -15,6 +16,7 @@ import { loadThirdPartyMessage } from "../../../features/messages/store/actions"
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { thirdPartyFromIdSelector } from "../../../store/reducers/entities/messages/thirdPartyById";
 import {
+  UIAttachmentId,
   UIMessage,
   UIMessageDetails
 } from "../../../store/reducers/entities/messages/types";
@@ -24,6 +26,11 @@ import variables from "../../../theme/variables";
 import { cleanMarkdownFromCTAs } from "../../../utils/messages";
 import OrganizationHeader from "../../OrganizationHeader";
 import { H2 } from "../../core/typography/H2";
+import {
+  AppParamsList,
+  IOStackNavigationProp
+} from "../../../navigation/params/AppParamsList";
+import ROUTES from "../../../navigation/routes";
 import CtaBar from "./common/CtaBar";
 import { HeaderDueDateBar } from "./common/HeaderDueDateBar";
 import { MessageTitle } from "./common/MessageTitle";
@@ -90,23 +97,6 @@ const renderThirdPartyAttachmentsLoading = () => (
   </>
 );
 
-const renderThirdPartyAttachments = (
-  thirdPartyMessage: ThirdPartyMessageWithContent
-): React.ReactNode => {
-  const thirdPartyMessageAttachments =
-    attachmentsFromThirdPartyMessage(thirdPartyMessage);
-  return thirdPartyMessageAttachments ? (
-    <View style={styles.padded}>
-      <MessageAttachments
-        attachments={thirdPartyMessageAttachments}
-        openPreview={_ => _}
-      />
-    </View>
-  ) : (
-    renderThirdPartyAttachmentsError()
-  );
-};
-
 /**
  * Render a single message with all of its details
  */
@@ -119,6 +109,7 @@ const MessageDetailsComponent = ({
   serviceMetadata
 }: Props) => {
   const dispatch = useIODispatch();
+  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const [isContentLoadCompleted, setIsContentLoadCompleted] = useState(false);
   const { prescriptionAttachments, markdown, prescriptionData } =
     messageDetails;
@@ -129,6 +120,37 @@ const MessageDetailsComponent = ({
     messageDetails.hasThirdPartyDataAttachments;
   const thirdPartyDataPot = useIOSelector(state =>
     thirdPartyFromIdSelector(state, messageId)
+  );
+
+  const openAttachment = useCallback(
+    (attachmentId: UIAttachmentId) => {
+      navigation.navigate(ROUTES.MESSAGES_NAVIGATOR, {
+        screen: ROUTES.MESSAGE_DETAIL_ATTACHMENT,
+        params: {
+          messageId,
+          attachmentId
+        }
+      });
+    },
+    [messageId, navigation]
+  );
+
+  const renderThirdPartyAttachments = useCallback(
+    (thirdPartyMessage: ThirdPartyMessageWithContent): React.ReactNode => {
+      const thirdPartyMessageAttachments =
+        attachmentsFromThirdPartyMessage(thirdPartyMessage);
+      return thirdPartyMessageAttachments ? (
+        <View style={styles.padded}>
+          <MessageAttachments
+            attachments={thirdPartyMessageAttachments}
+            openPreview={openAttachment}
+          />
+        </View>
+      ) : (
+        renderThirdPartyAttachmentsError()
+      );
+    },
+    [openAttachment]
   );
 
   useEffect(() => {
