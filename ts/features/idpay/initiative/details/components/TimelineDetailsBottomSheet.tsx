@@ -3,7 +3,10 @@ import React from "react";
 import { Image, StyleSheet, View } from "react-native";
 import { OperationDTO } from "../../../../../../definitions/idpay/timeline/OperationDTO";
 import { OperationListDTO } from "../../../../../../definitions/idpay/timeline/OperationListDTO";
-import { OperationTypeEnum as TransactionDetailOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/TransactionDetailDTO";
+import {
+  OperationTypeEnum as TransactionDetailOperationTypeEnum,
+  TransactionDetailDTO
+} from "../../../../../../definitions/idpay/timeline/TransactionDetailDTO";
 import { InitiativeDTO } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
 import CopyButtonComponent from "../../../../../components/CopyButtonComponent";
@@ -40,6 +43,19 @@ const operationCircuitTypeMap: Record<string, string> = {
   "10": "PrivateCircuit"
 };
 
+type InstrumentDetailsComponentProps = Pick<
+  TransactionDetailDTO,
+  "brandLogo" | "maskedPan"
+>;
+
+const InstrumentDetailsComponent = (props: InstrumentDetailsComponentProps) => (
+  <View style={styles.centerRow}>
+    <Image style={styles.brandLogo} source={{ uri: props.brandLogo }} />
+    <VSpacer size={8} />
+    <Body weight="SemiBold">{props.maskedPan}</Body>
+  </View>
+);
+
 /**
  * Displays a generic error message
  * @returns {React.ReactElement}
@@ -67,27 +83,34 @@ const TimelineDetailsComponent = (props: TransactionDetailsProps) => {
       return (
         <View style={styles.container}>
           <View style={styles.detailRow}>
-            <Body>Metodo di pagamento</Body>
-            <View style={styles.centerRow}>
-              <Image
-                style={styles.brandLogo}
-                source={{ uri: details.brandLogo }}
-              />
-              <VSpacer size={8} />
-              <Body weight="SemiBold">{details.maskedPan}</Body>
-            </View>
+            <Body>
+              {I18n.t("idpay.initiative.operationDetails.instrument")}
+            </Body>
+            <InstrumentDetailsComponent {...details} />
           </View>
           <View style={styles.detailRow}>
-            <Body>Importo transazione</Body>
-            <Body weight="SemiBold">{details.amount}</Body>
+            <Body>
+              {I18n.t("idpay.initiative.operationDetails.amountLabel", {
+                amount: details.amount
+              })}
+            </Body>
+            <Body weight="SemiBold">
+              {I18n.t("idpay.initiative.operationDetails.amountLabel")}
+            </Body>
           </View>
           <View style={styles.detailRow}>
-            <Body>Importo rimborsabile</Body>
-            <Body weight="SemiBold">{details.accrued}</Body>
+            <Body>
+              {I18n.t("idpay.initiative.operationDetails.accruedAmountLabel")}
+            </Body>
+            <Body>
+              {I18n.t("idpay.initiative.operationDetails.amountLabel", {
+                amount: details.accrued
+              })}
+            </Body>
           </View>
           <ItemSeparatorComponent noPadded={true} />
           <VSpacer size={24} />
-          <H4>Informazioni sulla transazione</H4>
+          <H4>{I18n.t("idpay.initiative.operationDetails.infoTitle")}</H4>
           <View style={styles.detailRow}>
             <Body>Data</Body>
             <Body weight="SemiBold">
@@ -95,13 +118,15 @@ const TimelineDetailsComponent = (props: TransactionDetailsProps) => {
             </Body>
           </View>
           <View style={styles.detailRow}>
-            <Body>Circuito di pagamento</Body>
+            <Body>{I18n.t("idpay.initiative.operationDetails.circuit")}</Body>
             <Body weight="SemiBold">
               {operationCircuitTypeMap[details.circuitType]}
             </Body>
           </View>
           <View style={styles.detailRow}>
-            <Body>ID transazione Acquirer</Body>
+            <Body>
+              {I18n.t("idpay.initiative.operationDetails.acquirerId")}
+            </Body>
             <View style={IOStyles.row}>
               <Body weight="SemiBold">{details.operationId}</Body>
               <VSpacer size={8} />
@@ -109,7 +134,7 @@ const TimelineDetailsComponent = (props: TransactionDetailsProps) => {
             </View>
           </View>
           <View style={styles.detailRow}>
-            <Body>ID transazione Issuer</Body>
+            <Body>{I18n.t("idpay.initiative.operationDetails.issuerId")}</Body>
             <View style={IOStyles.row}>
               <Body weight="SemiBold">{details.idTrxIssuer}</Body>
               <HSpacer size={8} />
@@ -119,6 +144,7 @@ const TimelineDetailsComponent = (props: TransactionDetailsProps) => {
         </View>
       );
     default:
+      // We don't show additional info for other operation types
       return null;
   }
 };

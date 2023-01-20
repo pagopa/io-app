@@ -3319,6 +3319,15 @@ idpay:
           startConfigurationCTA: Inizia
     operationDetails:
       title: Dettaglio dell'operazione
+      instrument: Metodo di pagamento
+      amountLabel: Importo transazione
+      accruedAmountLabel: Importo rimborsabile
+      amount: € {{amount}}
+      infoTitle: Informazioni sull transazione
+      date: Data
+      circuit: Circuito di pagamento
+      acquirerId: ID transazione Acquirer
+      issuerId: ID transazione Issuer
   onboarding:
     headerTitle: "Adesione all'iniziativa"
     beforeContinue:
