@@ -238,8 +238,8 @@ startup:
   profileEnabled: "Benutzerprofil aktiviert"
   userDeletePendingAlert:
     title: "Profil wird gelöscht"
-    message: "Wenn du deine Meinung geändert hast, kannst du deine Antrag im Abschnitt Datenschutz deines Profils zurückziehen."
-    cta_1: "Gehe zu Datenschutz"
+    message: "Wenn du deine Meinung geändert hast, kannst du deinen Antrag im Abschnitt Datenschutz deines Profils zurückziehen."
+    cta_1: "Gehe zum Datenschutz"
     cta_2: "Ignorieren"
   contextualHelp:
     title: "Initialisierungsprobleme?"
@@ -524,7 +524,7 @@ spid:
   login: "LOGIN"
   loginButton: "LOGIN MIT"
   selectIdp: "Um mit der Anmeldung fortzufahren, wähle deinen SPID-Anbieter."
-  selectDemoIdp: "Wenn du noch keine eigene SPID-Identität habst, verwende die App im Demo-Modus"
+  selectDemoIdp: "Wenn du noch keine eigene SPID-Identität hast, verwende die App im Demo-Modus"
   loginErrorAlert:
     title: "Fehler bei der Anmeldung"
     message: "Entschuldigung, es ist einen Fehler bei der Anmeldung aufgetreten. Bitte versuche es erneut."
@@ -1362,7 +1362,7 @@ wallet:
       description: "Deine Postepay-App"
     postepay:
       name: "BancoPosta oder Postepay-Karte"
-      description: "Die Karten vonPoste Italiane"
+      description: "Die Karten von Poste Italiane"
     paypal:
       name: "PayPal"
       description: "Bezahlen mit Karte oder verbundenem Kontokorrent"
