@@ -3,7 +3,6 @@ import * as O from "fp-ts/lib/Option";
 import { SagaIterator } from "redux-saga";
 import { call, select, takeLatest } from "typed-redux-saga/macro";
 import { PreferredLanguageEnum } from "../../../../../../definitions/backend/PreferredLanguage";
-import { OperationListDTO } from "../../../../../../definitions/idpay/timeline/OperationListDTO";
 import {
   IDPAY_API_TEST_TOKEN,
   IDPAY_API_UAT_BASEURL
