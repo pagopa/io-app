@@ -10,6 +10,7 @@ import ContextualInfo from "../../components/ContextualInfo";
 import { VSpacer } from "../../components/core/spacer/Spacer";
 import { Body } from "../../components/core/typography/Body";
 import { IOColors } from "../../components/core/variables/IOColors";
+import { IOStyles } from "../../components/core/variables/IOStyles";
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
@@ -74,10 +75,6 @@ const styles = StyleSheet.create({
   developerSectionItemRight: {
     flex: 0
   },
-  whiteBg: {
-    backgroundColor: IOColors.white
-  },
-
   noRightPadding: {
     paddingRight: 0
   }
@@ -459,7 +456,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     };
 
     const screenContent = () => (
-      <ScrollView style={styles.whiteBg}>
+      <ScrollView style={IOStyles.bgWhite}>
         <VSpacer size={16} />
         <List withContentLateralPadding={true}>
           {/* Data */}

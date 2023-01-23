@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import themeVariables from "../../../theme/variables";
+import { IOColors } from "./IOColors";
 
 /**
  * A collection of default styles used within IO App.
@@ -52,5 +53,8 @@ export const IOStyles = StyleSheet.create({
     shadowRadius: themeVariables.footerShadowRadius,
     // Android shadow
     elevation: themeVariables.footerElevation
+  },
+  bgWhite: {
+    backgroundColor: IOColors.white
   }
 });

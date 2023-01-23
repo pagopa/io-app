@@ -15,6 +15,7 @@ import { Link } from "../../../components/core/typography/Link";
 import { Monospace } from "../../../components/core/typography/Monospace";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
 
 const styles = StyleSheet.create({
   row: {
@@ -62,6 +63,10 @@ export const DSTypography = () => (
     <VSpacer size={16} />
     <Body weight="SemiBold">This is a Body SemiBold text</Body>
     <NBText bold={true}>This is a NBText bold</NBText>
+    <VSpacer size={16} />
+    <View style={IOStyles.alignCenter}>
+      <Body weight="SemiBold">This is a centered text</Body>
+    </View>
     <VSpacer size={40} />
     <VSpacer size={40} />
   </DesignSystemScreen>

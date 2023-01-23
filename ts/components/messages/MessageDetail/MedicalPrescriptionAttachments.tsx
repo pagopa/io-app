@@ -1,5 +1,4 @@
 import * as O from "fp-ts/lib/Option";
-import { Text as NBText } from "native-base";
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import { SvgXml } from "react-native-svg";
@@ -7,9 +6,10 @@ import { SvgXml } from "react-native-svg";
 import { PrescriptionData } from "../../../../definitions/backend/PrescriptionData";
 import I18n from "../../../i18n";
 import { Attachment } from "../../../store/reducers/entities/messages/types";
-import customVariables from "../../../theme/variables";
 import { getPrescriptionDataFromName } from "../../../utils/messages";
 import { VSpacer } from "../../core/spacer/Spacer";
+import { Body } from "../../core/typography/Body";
+import { IOStyles } from "../../core/variables/IOStyles";
 import ItemSeparatorComponent from "../../ItemSeparatorComponent";
 
 type Props = Readonly<{
@@ -21,16 +21,6 @@ type Props = Readonly<{
 const BARCODE_HEIGHT = 52;
 
 const styles = StyleSheet.create({
-  padded: {
-    paddingHorizontal: customVariables.contentPadding
-  },
-  note: {
-    lineHeight: 16,
-    paddingTop: 4
-  },
-  label: {
-    lineHeight: 22
-  },
   customHeader: {
     marginBottom: -4
   }
@@ -50,20 +40,22 @@ const Item = ({
   const value = getPrescriptionDataFromName(prescriptionData, item.name);
   const xml = Buffer.from(item.content, "base64").toString("ascii");
   return (
-    <View style={styles.padded} key={`attachment-${idx}`}>
+    <View style={IOStyles.horizontalContentPadding} key={`attachment-${idx}`}>
       <VSpacer size={8} />
-      <NBText style={styles.label}>
+      <Body>
         {I18n.t(`messages.medical.${item.name}`, {
           defaultValue: I18n.t("messages.medical.not_available")
         }).toUpperCase()}
-      </NBText>
+      </Body>
       {xml && <SvgXml xml={xml} width={"100%"} height={BARCODE_HEIGHT} />}
       {O.isSome(value) && (
-        <NBText semibold={true} style={{ textAlign: "center" }}>
-          {I18n.t("global.symbols.asterisk")}
-          {value.value}
-          {I18n.t("global.symbols.asterisk")}
-        </NBText>
+        <View style={IOStyles.alignCenter}>
+          <Body weight="SemiBold">
+            {I18n.t("global.symbols.asterisk")}
+            {value.value}
+            {I18n.t("global.symbols.asterisk")}
+          </Body>
+        </View>
       )}
       <VSpacer size={16} />
     </View>
@@ -76,13 +68,13 @@ const MedicalPrescriptionAttachments = ({
   prescriptionData
 }: Props) => (
   <View>
-    <View style={styles.padded}>
-      <NBText bold={true} style={styles.customHeader}>
-        {I18n.t("messages.medical.nationalService").toUpperCase()}
-      </NBText>
-      {organizationName && (
-        <NBText style={styles.label}>{organizationName.toUpperCase()}</NBText>
-      )}
+    <View style={IOStyles.horizontalContentPadding}>
+      <View style={styles.customHeader}>
+        <Body weight="SemiBold">
+          {I18n.t("messages.medical.nationalService").toUpperCase()}
+        </Body>
+      </View>
+      {organizationName && <Body>{organizationName.toUpperCase()}</Body>}
       <VSpacer size={4} />
       <ItemSeparatorComponent noPadded={true} bold={true} />
     </View>
@@ -103,9 +95,10 @@ const MedicalPrescriptionAttachments = ({
     <ItemSeparatorComponent />
 
     <VSpacer size={16} />
-    <NBText style={[styles.note, styles.padded]}>
-      {I18n.t("messages.medical.note")}
-    </NBText>
+    <View style={IOStyles.horizontalContentPadding}>
+      <VSpacer size={4} />
+      <Body>{I18n.t("messages.medical.note")}</Body>
+    </View>
   </View>
 );
 

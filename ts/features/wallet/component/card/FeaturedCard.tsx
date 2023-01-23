@@ -7,6 +7,7 @@ import { widthPercentageToDP } from "react-native-responsive-screen";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { H3 } from "../../../../components/core/typography/H3";
 import { IOColors } from "../../../../components/core/variables/IOColors";
+import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import TouchableDefaultOpacity, {
   TouchableDefaultOpacityProps
 } from "../../../../components/TouchableDefaultOpacity";
@@ -39,10 +40,6 @@ const styles = StyleSheet.create({
     elevation: 2,
     marginRight: widthPercentageToDP("2.93%")
   },
-  row: {
-    flexDirection: "row",
-    justifyContent: "space-between"
-  },
   image: {
     width: 40,
     height: 40,
@@ -58,7 +55,7 @@ const FeaturedCard: React.FunctionComponent<Props> = (props: Props) => (
     onPress={props.onPress}
     testID={props.testID}
   >
-    <View style={styles.row}>
+    <View style={IOStyles.rowSpaceBetween}>
       {pipe(
         props.image,
         O.fromNullable,
@@ -75,6 +72,7 @@ const FeaturedCard: React.FunctionComponent<Props> = (props: Props) => (
         )
       )}
       {props.isNew && (
+        // IOBadge
         <Badge style={styles.badgeContainer}>
           <NBText style={styles.badgeText} semibold={true}>
             {I18n.t("wallet.methods.newCome")}
