@@ -8,14 +8,15 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Content, Text as NBText } from "native-base";
+import { Content } from "native-base";
 import * as React from "react";
 import {
   View,
   AccessibilityInfo,
   Platform,
   StyleSheet,
-  Vibration
+  Vibration,
+  Text
 } from "react-native";
 import { connect } from "react-redux";
 import CieNfcOverlay from "../../../components/cie/CieNfcOverlay";
@@ -23,7 +24,9 @@ import CieReadingCardAnimation, {
   ReadingState
 } from "../../../components/cie/CieReadingCardAnimation";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
+import { Body } from "../../../components/core/typography/Body";
 import { IOColors } from "../../../components/core/variables/IOColors";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
@@ -41,7 +44,6 @@ import { ReduxProps } from "../../../store/actions/types";
 import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
 import { isNfcEnabledSelector } from "../../../store/reducers/cie";
 import { GlobalState } from "../../../store/reducers/types";
-import customVariables from "../../../theme/variables";
 import {
   isScreenReaderEnabled,
   setAccessibilityFocus
@@ -65,9 +67,6 @@ type NavigationProps = IOStackNavigationRouteProps<
 type Props = NavigationProps & ReduxProps & ReturnType<typeof mapStateToProps>;
 
 const styles = StyleSheet.create({
-  padded: {
-    paddingHorizontal: customVariables.contentPadding
-  },
   container: {
     flex: 1,
     backgroundColor: IOColors.white
@@ -179,7 +178,7 @@ const getTextForState = (
  *  This screen shown while reading the card
  */
 class CieCardReaderScreen extends React.PureComponent<Props, State> {
-  private subTitleRef = React.createRef<NBText>();
+  private subTitleRef = React.createRef<Text>();
   private choosenTool = assistanceToolRemoteConfig(
     this.props.assistanceToolConfig
   );
@@ -494,16 +493,16 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       >
         <ScreenContentHeader title={this.state.title} />
         <Content bounces={false} noPadded={true}>
-          <NBText style={styles.padded} ref={this.subTitleRef}>
-            {this.state.subtitle}
-          </NBText>
+          <View style={IOStyles.horizontalContentPadding}>
+            <Body ref={this.subTitleRef}>{this.state.subtitle}</Body>
+          </View>
           {!isIos && (
             <CieReadingCardAnimation readingState={this.state.readingState} />
           )}
           {isIos && <VSpacer size={16} />}
-          <NBText style={styles.padded} accessible={true}>
-            {this.state.content}
-          </NBText>
+          <View style={IOStyles.horizontalContentPadding}>
+            <Body accessible={true}>{this.state.content}</Body>
+          </View>
         </Content>
         {this.state.readingState !== ReadingState.completed && // TODO: validate - the screen has the back button on top left so it includes cancel also on reading success
           this.getFooter()}

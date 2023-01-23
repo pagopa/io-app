@@ -1,8 +1,8 @@
-import { Text as NBText } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import image from "../../../../../../../img/servicesStatus/error-detail-icon.png";
+import { Body } from "../../../../../../components/core/typography/Body";
 import { Link } from "../../../../../../components/core/typography/Link";
 import { openLink } from "../../../../../../components/ui/Markdown/handlers/link";
 import I18n from "../../../../../../i18n";
@@ -14,11 +14,11 @@ type Props = ReturnType<typeof mapDispatchToProps>;
 const dsuUrl = "https://servizi2.inps.it/servizi/Iseeriforma/FrmSimHome.aspx";
 
 const renderBody = (first: string, second: string, third: string) => (
-  <NBText>
+  <Body>
     {first}
     <Link onPress={() => openLink(dsuUrl)}>{second}</Link>
     {third}
-  </NBText>
+  </Body>
 );
 
 /**

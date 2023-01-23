@@ -1,7 +1,8 @@
-import { Content, Text as NBText } from "native-base";
+import { Content } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
+import { Body } from "../../../components/core/typography/Body";
 import { Link } from "../../../components/core/typography/Link";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
@@ -32,7 +33,7 @@ class CieExpiredOrInvalidScreen extends React.PureComponent<Props> {
           title={I18n.t("authentication.landing.expiredCardTitle")}
         />
         <Content>
-          <NBText>{I18n.t("authentication.landing.expiredCardContent")}</NBText>
+          <Body>{I18n.t("authentication.landing.expiredCardContent")}</Body>
           <VSpacer size={16} />
           <Link onPress={browseToLink}>
             {I18n.t("authentication.landing.expiredCardHelp")}

@@ -4,6 +4,7 @@ import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import { BonusActivationWithQrCode } from "../../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
+import { Body } from "../../../../components/core/typography/Body";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import IconFont from "../../../../components/ui/IconFont";
@@ -59,9 +60,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     minHeight: 24
   },
-  textWhite: {
-    color: IOColors.white
-  },
   containerColor: {
     padding: customVariables.appHeaderPaddingHorizontal,
     backgroundColor: IOColors.cobalt,
@@ -86,9 +84,9 @@ const ActiveBonus: React.FunctionComponent<Props> = (props: Props) => {
     >
       <View style={styles.spaced}>
         {O.isSome(bonusValidityInterval) && (
-          <NBText>{`${I18n.t("bonus.bonusVacanze.validity")} ${
+          <Body>{`${I18n.t("bonus.bonusVacanze.validity")} ${
             bonusValidityInterval.value.e1
-          } - ${bonusValidityInterval.value.e2}`}</NBText>
+          } - ${bonusValidityInterval.value.e2}`}</Body>
         )}
         <NBText bold={true} style={styles.text12}>
           {formatNumberAmount(props.bonus.dsu_request.max_amount, true)}
@@ -96,9 +94,7 @@ const ActiveBonus: React.FunctionComponent<Props> = (props: Props) => {
       </View>
       <VSpacer size={8} />
       <View style={styles.spaced}>
-        <NBText style={styles.textWhite}>
-          {I18n.t("bonus.bonusVacanze.taxBenefit")}
-        </NBText>
+        <Body color="white">{I18n.t("bonus.bonusVacanze.taxBenefit")}</Body>
         <NBText bold={true} style={styles.text12}>
           {formatNumberAmount(props.bonus.dsu_request.max_tax_benefit, true)}
         </NBText>

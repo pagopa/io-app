@@ -22,7 +22,7 @@ export const bodyDefaultWeight: AllowedWeight = "Regular";
 
 /**
  * Typography component to render `Body` text with font size {@link fontSize} and fontFamily {@link fontName}.
- * default values(if not defined) are weight: `Regular`, color: `bluegreyDark`
+ * default values(if not defined) are weight: `Regular`, color: `bluegrey`
  * @param props`
  * @constructor
  */

@@ -1,4 +1,4 @@
-import { Container, Content, Text as NBText } from "native-base";
+import { Container, Content } from "native-base";
 import * as React from "react";
 import {
   View,
@@ -11,6 +11,8 @@ import {
 } from "react-native";
 import image from "../../../img/rooted/broken-phone.png";
 import { VSpacer } from "../../components/core/spacer/Spacer";
+import { H2 } from "../../components/core/typography/H2";
+import { IOStyles } from "../../components/core/variables/IOStyles";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import { BlockButtonProps } from "../../components/ui/BlockButtons";
@@ -34,10 +36,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center"
-  },
-  title: {
-    textAlign: "center",
-    fontSize: 20
   },
   image: {
     width: 66,
@@ -130,9 +128,9 @@ const RootedDeviceModal: React.FunctionComponent<Props> = (props: Props) => {
             <View style={styles.main}>
               <Image source={image} resizeMode="contain" style={styles.image} />
               <VSpacer size={24} />
-              <NBText style={styles.title} bold={true} dark={true}>
-                {I18n.t("rooted.title")}
-              </NBText>
+              <View style={IOStyles.alignCenter}>
+                <H2>{I18n.t("rooted.title")}</H2>
+              </View>
             </View>
             <VSpacer size={8} />
             <Markdown

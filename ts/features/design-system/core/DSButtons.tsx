@@ -1,4 +1,4 @@
-import { Text as NBText } from "native-base";
+import { Text as NBButtonText } from "native-base";
 import { View } from "react-native";
 import * as React from "react";
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
@@ -62,7 +62,7 @@ export const DSButtons = () => (
           alert("Action triggered");
         }}
       >
-        <NBText>Primary button</NBText>
+        <NBButtonText>Primary button</NBButtonText>
       </ButtonDefaultOpacity>
     </DSComponentViewerBox>
     <DSComponentViewerBox name="NativeBase ButtonDefaultOpacity (Primary Block)">
@@ -73,7 +73,7 @@ export const DSButtons = () => (
           alert("Action triggered");
         }}
       >
-        <NBText>Primary button (Block)</NBText>
+        <NBButtonText>Primary button (Block)</NBButtonText>
       </ButtonDefaultOpacity>
     </DSComponentViewerBox>
     <DSComponentViewerBox name="NativeBase ButtonDefaultOpacity (Primary Small)">
@@ -83,7 +83,7 @@ export const DSButtons = () => (
           alert("Action triggered");
         }}
       >
-        <NBText>Primary button (Small)</NBText>
+        <NBButtonText>Primary button (Small)</NBButtonText>
       </ButtonDefaultOpacity>
     </DSComponentViewerBox>
     <DSComponentViewerBox name="NativeBase Button (XSmall)">
@@ -93,7 +93,7 @@ export const DSButtons = () => (
           alert("Action triggered");
         }}
       >
-        <NBText>XSmall button</NBText>
+        <NBButtonText>XSmall button</NBButtonText>
       </ButtonDefaultOpacity>
     </DSComponentViewerBox>
     <DSComponentViewerBox name="NativeBase ButtonDefaultOpacity (Primary Disabled)">
@@ -103,7 +103,7 @@ export const DSButtons = () => (
           alert("Action triggered");
         }}
       >
-        <NBText>Primary button (Disabled)</NBText>
+        <NBButtonText>Primary button (Disabled)</NBButtonText>
       </ButtonDefaultOpacity>
     </DSComponentViewerBox>
     <DSComponentViewerBox name="NativeBase ButtonDefaultOpacity (Outline)">
@@ -113,7 +113,7 @@ export const DSButtons = () => (
           alert("Action triggered");
         }}
       >
-        <NBText>Outline button (Light)</NBText>
+        <NBButtonText>Outline button (Light)</NBButtonText>
       </ButtonDefaultOpacity>
     </DSComponentViewerBox>
     <DSComponentViewerBox name="NativeBase ButtonDefaultOpacity (Outline Block)">
@@ -124,7 +124,7 @@ export const DSButtons = () => (
           alert("Action triggered");
         }}
       >
-        <NBText>Outline button (Block Light)</NBText>
+        <NBButtonText>Outline button (Block Light)</NBButtonText>
       </ButtonDefaultOpacity>
     </DSComponentViewerBox>
     <DSComponentViewerBox name="NativeBase ButtonDefaultOpacity (Outline Small)">
@@ -135,7 +135,7 @@ export const DSButtons = () => (
           alert("Action triggered");
         }}
       >
-        <NBText>Outline button (Small Light)</NBText>
+        <NBButtonText>Outline button (Small Light)</NBButtonText>
       </ButtonDefaultOpacity>
     </DSComponentViewerBox>
     <DSComponentViewerBox name="NativeBase ButtonDefaultOpacity (Outline Disabled)">
@@ -146,7 +146,7 @@ export const DSButtons = () => (
           alert("Action triggered");
         }}
       >
-        <NBText>Outline button (disabled)</NBText>
+        <NBButtonText>Outline button (disabled)</NBButtonText>
       </ButtonDefaultOpacity>
     </DSComponentViewerBox>
     <DSComponentViewerBox name="NativeBase ButtonDefaultOpacity (Outline Light)">
@@ -157,7 +157,7 @@ export const DSButtons = () => (
           alert("Action triggered");
         }}
       >
-        <NBText>Outline button (light)</NBText>
+        <NBButtonText>Outline button (light)</NBButtonText>
       </ButtonDefaultOpacity>
     </DSComponentViewerBox>
     <DSComponentViewerBox name="NativeBase ButtonDefaultOpacity (Outline Block Light)">
@@ -169,7 +169,7 @@ export const DSButtons = () => (
           alert("Action triggered");
         }}
       >
-        <NBText>Outline button (block light)</NBText>
+        <NBButtonText>Outline button (block light)</NBButtonText>
       </ButtonDefaultOpacity>
     </DSComponentViewerBox>
     <DSComponentViewerBox name="NativeBase ButtonDefaultOpacity (Outline Small Light)">
@@ -181,7 +181,7 @@ export const DSButtons = () => (
           alert("Action triggered");
         }}
       >
-        <NBText>Outline button (small light)</NBText>
+        <NBButtonText>Outline button (small light)</NBButtonText>
       </ButtonDefaultOpacity>
     </DSComponentViewerBox>
     <DSComponentViewerBox name="NativeBase ButtonDefaultOpacity (Outline Light Disabled)">
@@ -193,7 +193,7 @@ export const DSButtons = () => (
           alert("Action triggered");
         }}
       >
-        <NBText>Outline button (light disabled)</NBText>
+        <NBButtonText>Outline button (light disabled)</NBButtonText>
       </ButtonDefaultOpacity>
     </DSComponentViewerBox>
     <DSComponentViewerBox name="NativeBase ButtonDefaultOpacity (Dark)">
@@ -203,7 +203,7 @@ export const DSButtons = () => (
           alert("Action triggered");
         }}
       >
-        <NBText>Primary button (dark)</NBText>
+        <NBButtonText>Primary button (dark)</NBButtonText>
       </ButtonDefaultOpacity>
     </DSComponentViewerBox>
     <DSComponentViewerBox name="NativeBase ButtonDefaultOpacity (Outline Dark)">
@@ -214,7 +214,7 @@ export const DSButtons = () => (
           alert("Action triggered");
         }}
       >
-        <NBText>Outline button (dark)</NBText>
+        <NBButtonText>Outline button (dark)</NBButtonText>
       </ButtonDefaultOpacity>
     </DSComponentViewerBox>
     <DSComponentViewerBox name="NativeBase Button (Cancel) · Custom style, not managed by props">
@@ -268,7 +268,7 @@ export const DSButtons = () => (
           alert("Action triggered");
         }}
       >
-        <NBText>Button (light text)</NBText>
+        <NBButtonText>Button (light text)</NBButtonText>
       </ButtonDefaultOpacity>
     </DSComponentViewerBox>
     <View
@@ -394,12 +394,12 @@ export const DSButtons = () => (
     <DSComponentViewerBox name="CalendarEventButton">
       <ButtonDefaultOpacity small={true} bordered={true}>
         <IconFont name={"io-plus"} />
-        <NBText>Aggiungi promemoria</NBText>
+        <NBButtonText>Aggiungi promemoria</NBButtonText>
       </ButtonDefaultOpacity>
       <VSpacer size={16} />
       <ButtonDefaultOpacity small={true} bordered={true}>
         <IconFont name={"io-tick-big"} />
-        <NBText>Aggiunto</NBText>
+        <NBButtonText>Aggiunto</NBButtonText>
       </ButtonDefaultOpacity>
     </DSComponentViewerBox>
 
@@ -418,12 +418,12 @@ export const DSButtons = () => (
     <DSComponentViewerBox name="Login buttons">
       <ButtonDefaultOpacity block={true} primary={true}>
         <IconFont name={"io-profilo"} color={IOColors.white} />
-        <NBText>Entra con SPID</NBText>
+        <NBButtonText>Entra con SPID</NBButtonText>
       </ButtonDefaultOpacity>
       <VSpacer size={16} />
       <ButtonDefaultOpacity block={true} primary={true}>
         <IconFont name={"io-cie"} color={IOColors.white} />
-        <NBText>Entra con CIE</NBText>
+        <NBButtonText>Entra con CIE</NBButtonText>
       </ButtonDefaultOpacity>
     </DSComponentViewerBox>
   </DesignSystemScreen>

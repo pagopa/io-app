@@ -2,10 +2,13 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { format } from "date-fns";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Text as NBText } from "native-base";
 import * as React from "react";
 import { View, Image, Modal, StyleSheet } from "react-native";
 import errorIcon from "../../../img/messages/error-message-detail-icon.png";
+import { VSpacer } from "../../components/core/spacer/Spacer";
+import { H1 } from "../../components/core/typography/H1";
+import { H3 } from "../../components/core/typography/H3";
+import { IOStyles } from "../../components/core/variables/IOStyles";
 import I18n from "../../i18n";
 
 type Props = {
@@ -14,14 +17,6 @@ type Props = {
 };
 
 const styles = StyleSheet.create({
-  title: {
-    paddingVertical: 24,
-    fontSize: 24
-  },
-  text: {
-    fontSize: 18,
-    textAlign: "center"
-  },
   imageContainer: {
     paddingTop: 96
   },
@@ -62,17 +57,16 @@ export const IdentificationLockModal: React.FunctionComponent<Props> =
           <View style={styles.imageContainer}>
             <Image source={errorIcon} />
           </View>
-
-          <NBText bold={true} style={styles.title}>
-            {wrongCodeText}
-          </NBText>
-          <NBText style={styles.text}>{tooManyAttemptsText}</NBText>
-          <NBText bold={true} style={styles.text}>
-            {waitMessageText}
-          </NBText>
-          <NBText bold={true} style={styles.title}>
-            {minuteSeconds}
-          </NBText>
+          <VSpacer size={24} />
+          <H1>{wrongCodeText}</H1>
+          <VSpacer size={24} />
+          <View style={IOStyles.alignCenter}>
+            <H3>{tooManyAttemptsText}</H3>
+            <H3 weight="Bold">{waitMessageText}</H3>
+          </View>
+          <VSpacer size={24} />
+          <H1>{minuteSeconds}</H1>
+          <VSpacer size={24} />
         </View>
       </Modal>
     );

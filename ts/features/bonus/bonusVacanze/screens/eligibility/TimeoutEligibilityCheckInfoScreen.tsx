@@ -1,4 +1,3 @@
-import { Text as NBText } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -6,6 +5,7 @@ import I18n from "../../../../../i18n";
 import { BaseTimeoutScreen } from "../../../common/BaseTimeoutScreen";
 import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButton";
 import { cancelBonusVacanzeRequest } from "../../store/actions/bonusVacanze";
+import { Body } from "../../../../../components/core/typography/Body";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
@@ -16,11 +16,11 @@ type Props = ReturnType<typeof mapDispatchToProps>;
  */
 
 const renderBody = (first: string, second: string, third: string) => (
-  <NBText>
+  <Body>
     {first}
-    <NBText style={{ fontWeight: "bold" }}>{second}</NBText>
+    <Body weight="SemiBold">{second}</Body>
     {third}
-  </NBText>
+  </Body>
 );
 
 const TimeoutEligibilityCheckInfoScreen: React.FunctionComponent<Props> =

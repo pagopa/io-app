@@ -1,4 +1,3 @@
-import { Text as NBText } from "native-base";
 import React from "react";
 import {
   BackHandler,
@@ -6,7 +5,8 @@ import {
   StyleSheet,
   View
 } from "react-native";
-import variables from "../../theme/variables";
+import themeVariables from "../../theme/variables";
+import { Body } from "../core/typography/Body";
 import { IOColors, hexToRgba } from "../core/variables/IOColors";
 import { Overlay } from "./Overlay";
 
@@ -20,13 +20,8 @@ const styles = StyleSheet.create({
     height: "auto",
     width: "auto",
     backgroundColor: IOColors.white,
-    padding: variables.contentPadding,
-    marginLeft: variables.contentPadding,
-    marginRight: variables.contentPadding,
+    padding: themeVariables.contentPadding,
     borderRadius: 8
-  },
-  message: {
-    color: IOColors.black
   }
 });
 
@@ -65,7 +60,7 @@ export class AlertModal extends React.PureComponent<Props> {
         backgroundColor={opaqueBgColor}
         foreground={
           <View style={styles.container}>
-            <NBText style={styles.message}>{this.props.message}</NBText>
+            <Body color="bluegreyDark">{this.props.message}</Body>
           </View>
         }
       />

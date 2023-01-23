@@ -1,7 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Text as NBText } from "native-base";
+import { Text as NBButtonText } from "native-base";
 import * as React from "react";
 import { View, Image, Linking, StyleSheet } from "react-native";
 import { WebView } from "react-native-webview";
@@ -12,6 +12,10 @@ import {
 import { connect } from "react-redux";
 import brokenLinkImage from "../../../img/broken-link.png";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
+import { VSpacer } from "../../components/core/spacer/Spacer";
+import { Body } from "../../components/core/typography/Body";
+import { H2 } from "../../components/core/typography/H2";
+import { IOStyles } from "../../components/core/variables/IOStyles";
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
@@ -86,15 +90,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center"
-  },
-  errorTitle: {
-    fontSize: 20,
-    marginTop: 10
-  },
-  errorBody: {
-    marginTop: 10,
-    marginBottom: 10,
-    textAlign: "center"
   },
   errorButtonsContainer: {
     position: "absolute",
@@ -236,20 +231,29 @@ class IdpLoginScreen extends React.Component<Props, State> {
       return (
         <View style={styles.errorContainer}>
           <Image source={brokenLinkImage} resizeMode="contain" />
-          <NBText style={styles.errorTitle} bold={true}>
-            {I18n.t(
-              errorType === ErrorType.LOADING_ERROR
-                ? "authentication.errors.network.title"
-                : "authentication.errors.login.title"
-            )}
-          </NBText>
+          <View>
+            <VSpacer size={8} />
+            <H2 weight="Bold">
+              {I18n.t(
+                errorType === ErrorType.LOADING_ERROR
+                  ? "authentication.errors.network.title"
+                  : "authentication.errors.login.title"
+              )}
+            </H2>
+          </View>
 
           {errorType === ErrorType.LOGIN_ERROR && (
-            <NBText style={styles.errorBody}>
-              {I18n.t(errorTranslationKey, {
-                defaultValue: I18n.t("authentication.errors.spid.unknown")
-              })}
-            </NBText>
+            <View>
+              <VSpacer size={8} />
+              <View style={IOStyles.alignCenter}>
+                <Body>
+                  {I18n.t(errorTranslationKey, {
+                    defaultValue: I18n.t("authentication.errors.spid.unknown")
+                  })}
+                </Body>
+              </View>
+              <VSpacer size={8} />
+            </View>
           )}
 
           <View style={styles.errorButtonsContainer}>
@@ -260,7 +264,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
               light={true}
               bordered={true}
             >
-              <NBText>{I18n.t("global.buttons.cancel")}</NBText>
+              <NBButtonText>{I18n.t("global.buttons.cancel")}</NBButtonText>
             </ButtonDefaultOpacity>
             <ButtonDefaultOpacity
               onPress={this.setRequestStateToLoading}
@@ -268,7 +272,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
               block={true}
               primary={true}
             >
-              <NBText>{I18n.t("global.buttons.retry")}</NBText>
+              <NBButtonText>{I18n.t("global.buttons.retry")}</NBButtonText>
             </ButtonDefaultOpacity>
           </View>
         </View>

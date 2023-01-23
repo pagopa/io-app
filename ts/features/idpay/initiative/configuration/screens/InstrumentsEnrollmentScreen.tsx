@@ -1,6 +1,6 @@
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { useSelector } from "@xstate/react";
-import { List, Text as NBText } from "native-base";
+import { List } from "native-base";
 import React, { useRef } from "react";
 import { View, SafeAreaView, ScrollView } from "react-native";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
@@ -186,11 +186,11 @@ const InstrumentsEnrollmentScreen = () => {
           <View style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
             <H1>{I18n.t("idpay.initiative.configuration.header")}</H1>
             <VSpacer size={8} />
-            <NBText>
+            <Body>
               {I18n.t("idpay.initiative.configuration.subHeader", {
                 initiativeName: "18app"
               })}
-            </NBText>
+            </Body>
             <VSpacer size={16} />
             <ScrollView>
               <List>
@@ -215,7 +215,7 @@ const InstrumentsEnrollmentScreen = () => {
                   />
                 ))}
               </List>
-              <NBText>{I18n.t("idpay.initiative.configuration.footer")}</NBText>
+              <Body>{I18n.t("idpay.initiative.configuration.footer")}</Body>
             </ScrollView>
           </View>
           <SafeAreaView>
