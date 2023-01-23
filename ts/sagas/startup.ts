@@ -83,6 +83,7 @@ import { watchMessageAttachmentsSaga } from "../features/messages/saga/attachmen
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
 import { watchIDPayWalletSaga } from "../features/idpay/wallet/saga";
 import { idpayInitiativeDetailsSaga } from "../features/idpay/initiative/details/saga";
+import { isLollipopEnabledSelector } from "../store/reducers/backendStatus";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -137,6 +138,7 @@ import { completeOnboardingSaga } from "./startup/completeOnboardingSaga";
 import { watchLoadMessageById } from "./messages/watchLoadMessageById";
 import { watchThirdPartyMessageSaga } from "./messages/watchThirdPartyMessageSaga";
 import { checkNotificationsPreferencesSaga } from "./startup/checkNotificationsPreferencesSaga";
+import { generateCryptoKeyPair } from "./startup/generateCryptoKeyPair";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -337,6 +339,12 @@ export function* initializeApplicationSaga(): Generator<
 
   // check if the user expressed preference about mixpanel, if not ask for it
   yield* call(askMixpanelOptIn);
+
+  // generate crypto key
+  const isLollipopEnabled = yield* select(isLollipopEnabledSelector);
+  if (isLollipopEnabled) {
+    yield* call(generateCryptoKeyPair);
+  }
 
   if (hasPreviousSessionAndPin) {
     // We have to retrieve the pin here and not on the previous if-condition (same guard)

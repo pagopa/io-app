@@ -99,7 +99,7 @@ describe("Payment", () => {
 
       await element(by.text(I18n.t("wallet.QRtoPay.setManually"))).tap();
 
-      const matchNoticeCodeInput = by.id("NoticeCodeInput");
+      const matchNoticeCodeInput = by.id("NoticeCodeInputMask");
       await waitFor(element(matchNoticeCodeInput))
         .toExist()
         .withTimeout(e2eWaitRenderTimeout);

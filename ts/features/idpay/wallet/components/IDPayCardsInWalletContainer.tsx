@@ -7,9 +7,9 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../navigation/routes";
 import { useIOSelector } from "../../../../store/hooks";
 import { idPayWalletInitiativeListSelector } from "../store/reducers";
+import { IDPayDetailsRoutes } from "../../initiative/details/navigation";
 import IDPayCardPreviewComponent from "./IDPayCardPreviewComponent";
 
 type Props = {
@@ -20,8 +20,9 @@ const IDPayCardsList = (props: Props) => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
   const handleCardPress = (initiativeId: string) => {
-    navigation.navigate(ROUTES.IDPAY_INITIATIVE_DETAILS, {
-      initiativeId
+    navigation.navigate(IDPayDetailsRoutes.IDPAY_DETAILS_MAIN, {
+      screen: IDPayDetailsRoutes.IDPAY_DETAILS_MONITORING,
+      params: { initiativeId }
     });
   };
 
