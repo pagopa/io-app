@@ -30,6 +30,7 @@ import { HSpacer, VSpacer } from "../core/spacer/Spacer";
 import { H3 } from "../core/typography/H3";
 import { H5 } from "../core/typography/H5";
 import { IOColors } from "../core/variables/IOColors";
+import { IOStyles } from "../core/variables/IOStyles";
 import { withLightModalContext } from "../helpers/withLightModalContext";
 import { statusColorMap } from "../SectionStatus";
 import IconFont from "../ui/IconFont";
@@ -217,7 +218,7 @@ const renderListItem = (
 };
 
 const PaymentMethodsList: React.FunctionComponent<Props> = (props: Props) => (
-  <>
+  <View style={IOStyles.horizontalContentPadding}>
     <VSpacer size={24} />
     <FlatList
       removeClippedSubviews={false}
@@ -233,7 +234,7 @@ const PaymentMethodsList: React.FunctionComponent<Props> = (props: Props) => (
         )
       }
     />
-  </>
+  </View>
 );
 const mapStateToProps = (state: GlobalState) => ({
   sectionStatus: backendStatusSelector(state)
