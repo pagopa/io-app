@@ -1,47 +1,57 @@
 import * as O from "fp-ts/lib/Option";
 import { View } from "native-base";
 import React, { useCallback } from "react";
-import { StyleSheet } from "react-native";
-
 import { pipe } from "fp-ts/lib/function";
 import I18n from "../../i18n";
 import { UIMessage } from "../../store/reducers/entities/messages/types";
-
 import { useItemsSelection } from "../../utils/hooks/useItemsSelection";
 import ListSelectionBar from "../ListSelectionBar";
+import {
+  allArchiveSelector,
+  isLoadingArchiveNextPage,
+  isLoadingArchivePreviousPage,
+  isReloadingArchive
+} from "../../store/reducers/entities/messages/allPaginated";
+import { IOStyles } from "../core/variables/IOStyles";
 import { EmptyListComponent } from "./EmptyListComponent";
 import MessageList from "./MessageList";
-
-const styles = StyleSheet.create({
-  listWrapper: {
-    flex: 1
-  },
-  listContainer: {
-    flex: 1
-  }
-});
+import { useMessagesFetcher } from "./hooks/useMessagesFetcher";
 
 type Props = {
-  messages: ReadonlyArray<UIMessage>;
   navigateToMessageDetail: (message: UIMessage) => void;
   unarchiveMessages: (messages: ReadonlyArray<UIMessage>) => void;
 };
 
 /**
  * Container for the message archive.
- * It looks redundant at the moment but will be used later on once we bring back
- * states and filtering in the Messages.
  *
- * @param messages used for handling messages selection
  * @param navigateToMessageDetail
  * @param unarchiveMessages a function called when the user taps on the unarchive CTA
  * @constructor
  */
 const MessagesArchive = ({
-  messages,
   navigateToMessageDetail,
   unarchiveMessages
 }: Props) => {
+  const {
+    isSome,
+    isError,
+    messages,
+    nextCursor,
+    previousCursor,
+    isLoading,
+    isRefreshing,
+    refresh,
+    fetchNextPage,
+    fetchPreviousPage
+  } = useMessagesFetcher(
+    true,
+    allArchiveSelector,
+    isLoadingArchiveNextPage,
+    isLoadingArchivePreviousPage,
+    isReloadingArchive
+  );
+
   const { selectedItems, toggleItem, resetSelection } = useItemsSelection();
 
   const isSelecting = O.isSome(selectedItems);
@@ -65,17 +75,28 @@ const MessagesArchive = ({
 
   const ListEmptyComponent = () => (
     <EmptyListComponent
-      image={require("../../../img/messages/empty-message-list-icon.png")}
+      picture="airBaloon"
       title={I18n.t("messages.inbox.emptyMessage.title")}
       subtitle={I18n.t("messages.inbox.emptyMessage.subtitle")}
     />
   );
 
   return (
-    <View style={styles.listWrapper}>
-      <View style={styles.listContainer}>
+    <View style={IOStyles.flex}>
+      <View style={IOStyles.flex}>
         <MessageList
-          filter={{ getArchived: true }}
+          variant="paginated"
+          testID="MessageList_archive"
+          messages={messages}
+          isSome={isSome}
+          isError={isError}
+          isLoading={isLoading}
+          isRefreshing={isRefreshing}
+          nextCursor={nextCursor}
+          previousCursor={previousCursor}
+          refresh={refresh}
+          fetchNextPage={fetchNextPage}
+          fetchPreviousPage={fetchPreviousPage}
           onPressItem={onPressItem}
           onLongPressItem={onLongPressItem}
           selectedMessageIds={O.toUndefined(selectedItems)}

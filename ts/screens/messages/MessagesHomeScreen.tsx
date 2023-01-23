@@ -166,8 +166,8 @@ const MessagesHomeScreen = ({
                 searchText={_}
                 renderSearchResults={results => (
                   <MessageList
-                    filter={{}}
-                    filteredMessages={results}
+                    variant="not-paginated"
+                    messages={results}
                     onPressItem={openMessage}
                   />
                 )}

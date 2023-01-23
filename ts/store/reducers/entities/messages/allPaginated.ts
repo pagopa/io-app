@@ -22,7 +22,7 @@ import { UIMessage } from "./types";
 
 export type Cursor = string;
 
-type Collection = {
+export type Collection = {
   data: pot.Pot<
     {
       page: ReadonlyArray<UIMessage>;
@@ -545,7 +545,7 @@ export const allInboxSelector = (
   state.entities.messages.allPaginated.inbox.data;
 
 /**
- * Return the inbox in the Inbox
+ * Return the archive in the Archive
  * @param state
  */
 export const allArchiveSelector = (

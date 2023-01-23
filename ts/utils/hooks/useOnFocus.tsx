@@ -1,5 +1,5 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 
 /**
@@ -13,9 +13,8 @@ export const useActionOnFocus = (
   dontExecuteBefore: Millisecond | undefined = undefined
 ) => {
   const [lastUpdate, setLastUpdate] = useState<Date | undefined>(undefined);
+  const isFocused = useIsFocused();
 
-  const navigation = useNavigation();
-  const isFocused = navigation.isFocused();
   useEffect(() => {
     const now = new Date();
     const shouldRefreshDelay =
@@ -23,7 +22,7 @@ export const useActionOnFocus = (
       lastUpdate === undefined ||
       now.getTime() - lastUpdate.getTime() > dontExecuteBefore;
 
-    if (navigation.isFocused() && shouldRefreshDelay) {
+    if (isFocused && shouldRefreshDelay) {
       loadAction();
       setLastUpdate(now);
     }

@@ -2,12 +2,10 @@ import * as React from "react";
 import { useMessageOpening } from "../../components/messages/hooks/useMessageOpening";
 import MessagesInbox from "../../components/messages/MessagesInbox";
 import { upsertMessageStatusAttributes } from "../../store/actions/messages";
-import { useIODispatch, useIOSelector } from "../../store/hooks";
-import { allInboxMessagesSelector } from "../../store/reducers/entities/messages/allPaginated";
+import { useIODispatch } from "../../store/hooks";
 import { UIMessage } from "../../store/reducers/entities/messages/types";
 
 const MessagesInboxScreen = () => {
-  const inbox = useIOSelector(allInboxMessagesSelector);
   const { openMessage, bottomSheet } = useMessageOpening();
 
   const dispatch = useIODispatch();
@@ -28,7 +26,6 @@ const MessagesInboxScreen = () => {
   return (
     <>
       <MessagesInbox
-        messages={inbox}
         navigateToMessageDetail={openMessage}
         archiveMessages={messages => setArchived(true, messages)}
       />
