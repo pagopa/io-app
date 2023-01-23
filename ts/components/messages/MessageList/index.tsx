@@ -86,12 +86,9 @@ const animated = {
 const minimumRefreshInterval = 60000 as Millisecond; // 1 minute
 
 /**
- * A smart-component connected to the store and dispatching actions.
- * Takes care of mapping pagination to the pull/scroll semantics and track the loading and error states.
- *
- * By default renders all the available Messages in the store, but this behavior can be overruled
- * via the optional parameter `filteredMessages`.
- * Please note that once we filter on the BE the `filteredMessages` parameter will be removed.
+ * A component to load more data dynamically (infinite list)
+ * The variant prop changes the behavior of the component:
+ * if it's not-paginated so load more data is prevented
  *
  * @param ListEmptyComponent
  * @param animated
