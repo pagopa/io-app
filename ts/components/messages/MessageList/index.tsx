@@ -135,10 +135,10 @@ const MessageList = ({
   }, minimumRefreshInterval);
 
   useEffect(() => {
-    if (!isRefreshing /* && isRefreshFromUser */) {
+    if (!isRefreshing && isRefreshFromUser) {
       setIsRefreshFromUser(false);
     }
-  }, [isRefreshing]);
+  }, [isRefreshing, isRefreshFromUser]);
 
   const scrollTo = (index: number, animated: boolean = false) => {
     if (flatListRef.current && messages.length > 0) {
