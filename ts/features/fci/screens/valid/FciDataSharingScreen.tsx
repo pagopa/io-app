@@ -3,6 +3,8 @@ import { useNavigation } from "@react-navigation/native";
 import { List } from "native-base";
 import * as React from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { H4 } from "../../../../components/core/typography/H4";
 import { Link } from "../../../../components/core/typography/Link";
 import { IOColors } from "../../../../components/core/variables/IOColors";
@@ -14,6 +16,7 @@ import IconFont from "../../../../components/ui/IconFont";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import {
+  profileEmailSelector,
   profileFiscalCodeSelector,
   profileNameSelector,
   profileSelector
@@ -57,8 +60,8 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   containerTitle: {
-    paddingTop: customVariables.contentPadding,
-    paddingBottom: customVariables.contentPadding
+    paddingTop: 8,
+    paddingBottom: 7
   },
   bottomPadding: { paddingBottom: 20 }
 });
@@ -78,6 +81,7 @@ const FciDataSharingScreen = (): React.ReactElement => {
     pot.map(profile, p => p.date_of_birth),
     undefined
   );
+  const email = useIOSelector(profileEmailSelector);
 
   const { present, bottomSheet: fciAbortSignature } =
     useFciAbortSignatureFlow();
@@ -149,6 +153,14 @@ const FciDataSharingScreen = (): React.ReactElement => {
                     testID="FciDataSharingScreenFiscalCodeTestID"
                     title={I18n.t("profile.fiscalCode.fiscalCode")}
                     subTitle={fiscalCode}
+                    hideIcon
+                  />
+                )}
+                {O.isSome(email) && (
+                  <ListItemComponent
+                    testID="FciDataSharingScreenEmailTestID"
+                    title={I18n.t("profile.data.list.email")}
+                    subTitle={email.value}
                     hideIcon
                   />
                 )}
