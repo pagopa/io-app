@@ -13,11 +13,26 @@ export const idpayInitiativeGet = createAsyncAction(
   "IDPAY_INITIATIVE_DETAILS_FAILURE"
 )<IdPayInitiativeGetPayloadType, InitiativeDTO, NetworkError>();
 
-export const idpayTimelineGet = createAsyncAction(
-  "IDPAY_TIMELINE_REQUEST",
-  "IDPAY_TIMELINE_SUCCESS",
-  "IDPAY_TIMELINE_FAILURE"
-)<IdPayInitiativeGetPayloadType, TimelineDTO, NetworkError>();
+export type IdpayTimelinePageGetPayloadType = {
+  initiativeId: string;
+  page?: number;
+  pageSize?: number;
+};
+
+type IdPayTimelinePageGetSuccessPayloadType = {
+  timeline: TimelineDTO;
+  page: number;
+};
+
+export const idpayTimelinePageGet = createAsyncAction(
+  "IDPAY_TIMELINE_PAGE_REQUEST",
+  "IDPAY_TIMELINE_PAGE_SUCCESS",
+  "IDPAY_TIMELINE_PAGE_FAILURE"
+)<
+  IdpayTimelinePageGetPayloadType,
+  IdPayTimelinePageGetSuccessPayloadType,
+  NetworkError
+>();
 
 export type IdPayTimelineDetailsGetPayloadType = {
   initiativeId: InitiativeDTO["initiativeId"];
@@ -32,5 +47,5 @@ export const idpayTimelineDetailsGet = createAsyncAction(
 
 export type IDPayInitiativeActions =
   | ActionType<typeof idpayInitiativeGet>
-  | ActionType<typeof idpayTimelineGet>
+  | ActionType<typeof idpayTimelinePageGet>
   | ActionType<typeof idpayTimelineDetailsGet>;
