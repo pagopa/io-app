@@ -26,6 +26,7 @@ import {
   confirmButtonProps
 } from "../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
+import ROUTES from "../../../../navigation/routes";
 
 const styles = StyleSheet.create({
   container: {
@@ -90,7 +91,15 @@ const FciDataSharingScreen = (): React.ReactElement => {
       <H4 weight="Regular" style={styles.paddingTextLarge} color={"bluegrey"}>
         {I18n.t("features.fci.shareDataScreen.alertText")}
         <View style={styles.paddingText} />
-        <Link>{I18n.t("features.fci.shareDataScreen.alertLink")}</Link>
+        <Link
+          onPress={() =>
+            navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+              screen: ROUTES.INSERT_EMAIL_SCREEN
+            })
+          }
+        >
+          {I18n.t("features.fci.shareDataScreen.alertLink")}
+        </Link>
       </H4>
     </View>
   );
