@@ -1,4 +1,4 @@
-import { Text as NBText } from "native-base";
+import { Text as NBButtonText } from "native-base";
 import * as React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, View } from "react-native";
@@ -121,7 +121,7 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
         onPress={navigation.goBack}
         style={styles.footerCancelButton}
       >
-        <NBText>{I18n.t("global.buttons.cancel")}</NBText>
+        <NBButtonText>{I18n.t("global.buttons.cancel")}</NBButtonText>
       </ButtonDefaultOpacity>
       <View style={styles.footerAdviceContainer}>
         <AdviceComponent

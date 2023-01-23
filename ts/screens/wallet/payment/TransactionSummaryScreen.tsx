@@ -6,14 +6,17 @@ import {
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { ActionSheet, Text as NBText } from "native-base";
+import { ActionSheet } from "native-base";
 import * as React from "react";
-import { View, SafeAreaView, StyleSheet } from "react-native";
+import { View, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
+import { Body } from "../../../components/core/typography/Body";
+import { H2 } from "../../../components/core/typography/H2";
 import { IOColors } from "../../../components/core/variables/IOColors";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
@@ -85,22 +88,6 @@ type OwnProps = IOStackNavigationRouteProps<
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
   OwnProps;
-
-const styles = StyleSheet.create({
-  bluegreyLight: {
-    color: IOColors.bluegreyLight
-  },
-  row: {
-    flexDirection: "row",
-    justifyContent: "space-between"
-  },
-  title: {
-    fontSize: 20
-  },
-  flex: {
-    flex: 1
-  }
-});
 
 /**
  * This screen shows the transaction details once the payment has been verified
@@ -289,11 +276,11 @@ class TransactionSummaryScreen extends React.Component<Props> {
     );
 
     const standardRow = (label: string, value: string) => (
-      <View style={styles.row}>
-        <NBText style={styles.bluegreyLight}>{label}</NBText>
-        <NBText bold={true} white={true}>
+      <View style={IOStyles.rowSpaceBetween}>
+        <Body color="white">{label}</Body>
+        <Body weight="SemiBold" color="white">
           {value}
-        </NBText>
+        </Body>
       </View>
     );
 
@@ -307,7 +294,7 @@ class TransactionSummaryScreen extends React.Component<Props> {
           backgroundColor={IOColors.milderGray}
           barStyle={"light-content"}
         />
-        <SafeAreaView style={styles.flex}>
+        <SafeAreaView style={IOStyles.flex}>
           <SlidedContentComponent dark={true}>
             <PaymentSummaryComponent
               dark={true}
@@ -327,22 +314,22 @@ class TransactionSummaryScreen extends React.Component<Props> {
             <VSpacer size={24} />
 
             {/** Amount to pay */}
-            <View style={styles.row}>
-              <View style={styles.row}>
-                <NBText style={[styles.title, styles.bluegreyLight]}>
+            <View style={IOStyles.rowSpaceBetween}>
+              <View style={IOStyles.rowSpaceBetween}>
+                <H2 color="white" weight="SemiBold">
                   {I18n.t("wallet.firstTransactionSummary.updatedAmount")}
-                </NBText>
+                </H2>
               </View>
-              <NBText white={true} style={styles.title} bold={true}>
+              <H2 color="white" weight="Bold">
                 {currentAmount}
-              </NBText>
+              </H2>
             </View>
 
             <React.Fragment>
               <VSpacer size={8} />
-              <NBText style={styles.bluegreyLight}>
+              <Body color="white">
                 {I18n.t("wallet.firstTransactionSummary.amountInfo.message")}
-              </NBText>
+              </Body>
             </React.Fragment>
             <VSpacer size={24} />
 

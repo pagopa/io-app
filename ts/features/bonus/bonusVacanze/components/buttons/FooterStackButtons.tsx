@@ -1,6 +1,6 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Text as NBText } from "native-base";
+import { Text as NBButtonText } from "native-base";
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
@@ -26,7 +26,7 @@ const renderButton = (props: BlockButtonProps) => (
   <>
     <ButtonDefaultOpacity style={styles.button} {...props}>
       {props.iconName && <IconFont name={props.iconName} />}
-      <NBText
+      <NBButtonText
         style={pipe(
           props.buttonFontSize,
           O.fromNullable,
@@ -39,7 +39,7 @@ const renderButton = (props: BlockButtonProps) => (
         )}
       >
         {props.title}
-      </NBText>
+      </NBButtonText>
     </ButtonDefaultOpacity>
   </>
 );
