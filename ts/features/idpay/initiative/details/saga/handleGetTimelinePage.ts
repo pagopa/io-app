@@ -7,8 +7,8 @@ import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { IDPayTimelineClient } from "../api/client";
 import {
-  idpayTimelineGet,
-  IdPayInitiativeGetPayloadType
+  IdpayTimelinePageGetPayloadType,
+  idpayTimelinePageGet
 } from "../store/actions";
 
 /**
@@ -18,41 +18,50 @@ import {
  * @param initiativeId
  */
 
-export function* handleGetTimeline(
+export function* handleGetTimelinePage(
   getTimeline: IDPayTimelineClient["getTimeline"],
   token: string,
   language: PreferredLanguageEnum,
-  payload: IdPayInitiativeGetPayloadType
+  payload: IdpayTimelinePageGetPayloadType
 ) {
   try {
     const getTimelineResult: SagaCallReturnType<typeof getTimeline> =
       yield* call(getTimeline, {
         bearerAuth: token,
         "Accept-Language": language,
-        initiativeId: payload.initiativeId
+        initiativeId: payload.initiativeId,
+        page: payload.page,
+        size: payload.pageSize
       });
+
     yield pipe(
       getTimelineResult,
       E.fold(
         error =>
           put(
-            idpayTimelineGet.failure({
+            idpayTimelinePageGet.failure({
               ...getGenericError(new Error(readablePrivacyReport(error)))
             })
           ),
-        response =>
-          put(
-            response.status === 200
-              ? idpayTimelineGet.success(response.value)
-              : idpayTimelineGet.failure({
-                  ...getGenericError(
-                    new Error(`response status code ${response.status}`)
-                  )
-                })
-          )
+        response => {
+          if (response.status === 200) {
+            return put(
+              idpayTimelinePageGet.success({
+                timeline: response.value,
+                page: payload.page ?? 0
+              })
+            );
+          } else {
+            return put(
+              idpayTimelinePageGet.failure({
+                ...getGenericError(new Error(String(response.status)))
+              })
+            );
+          }
+        }
       )
     );
   } catch (e) {
-    yield* put(idpayTimelineGet.failure({ ...getNetworkError(e) }));
+    yield* put(idpayTimelinePageGet.failure({ ...getNetworkError(e) }));
   }
 }
