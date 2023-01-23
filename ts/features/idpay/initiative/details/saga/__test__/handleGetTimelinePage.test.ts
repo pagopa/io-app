@@ -5,8 +5,8 @@ import { ErrorDTO } from "../../../../../../../definitions/idpay/timeline/ErrorD
 import { TimelineDTO } from "../../../../../../../definitions/idpay/timeline/TimelineDTO";
 import { OperationTypeEnum } from "../../../../../../../definitions/idpay/timeline/TransactionOperationDTO";
 import { appReducer } from "../../../../../../store/reducers";
-import { idpayTimelineGet } from "../../store/actions";
-import { handleGetTimeline } from "../handleGetTimeline";
+import { idpayTimelinePageGet } from "../../store/actions";
+import { handleGetTimelinePage } from "../handleGetTimelinePage";
 
 const mockResponseSuccess: TimelineDTO = {
   // mock TimelineDTO
@@ -30,18 +30,26 @@ const mockFailure: ErrorDTO = {
 const mockToken = "mock";
 const mockLanguage = PreferredLanguageEnum.it_IT;
 
-describe("Test IDPay timeline saga", () => {
+describe("Test IDPay timeline pagination saga", () => {
   it("should call the success handler on success", async () => {
     const getTimeline = jest.fn();
     getTimeline.mockImplementation(() =>
       E.right({ status: 200, value: mockResponseSuccess })
     );
-
-    await expectSaga(handleGetTimeline, getTimeline, mockToken, mockLanguage, {
-      initiativeId: "123"
-    })
+    await expectSaga(
+      handleGetTimelinePage,
+      getTimeline,
+      mockToken,
+      mockLanguage,
+      {
+        initiativeId: "123",
+        page: 2
+      }
+    )
       .withReducer(appReducer)
-      .put(idpayTimelineGet.success(mockResponseSuccess))
+      .put(
+        idpayTimelinePageGet.success({ timeline: mockResponseSuccess, page: 2 })
+      )
       .run();
   });
   it("should call the failure handler on failure", async () => {
@@ -49,31 +57,21 @@ describe("Test IDPay timeline saga", () => {
     getTimeline.mockImplementation(() =>
       E.right({ status: 401, value: mockFailure })
     );
-
-    await expectSaga(handleGetTimeline, getTimeline, mockToken, mockLanguage, {
-      initiativeId: "123"
-    })
+    await expectSaga(
+      handleGetTimelinePage,
+      getTimeline,
+      mockToken,
+      mockLanguage,
+      {
+        initiativeId: "123",
+        page: 5
+      }
+    )
       .withReducer(appReducer)
       .put(
-        idpayTimelineGet.failure({
+        idpayTimelinePageGet.failure({
           kind: "generic",
-          value: new Error("response status code 401")
-        })
-      )
-      .run();
-  });
-  it('should behave gracefully on "generic" error', async () => {
-    const getTimeline = jest.fn();
-    getTimeline.mockImplementation(() => E.left([]));
-
-    await expectSaga(handleGetTimeline, getTimeline, mockToken, mockLanguage, {
-      initiativeId: "123"
-    })
-      .withReducer(appReducer)
-      .put(
-        idpayTimelineGet.failure({
-          kind: "generic",
-          value: new Error("")
+          value: new Error("401")
         })
       )
       .run();

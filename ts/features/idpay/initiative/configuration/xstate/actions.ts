@@ -3,7 +3,7 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../../navigation/routes";
+import { IDPayDetailsRoutes } from "../../details/navigation";
 import { IDPayConfigurationRoutes } from "../navigation/navigator";
 import { Context } from "./context";
 
@@ -68,8 +68,9 @@ const createActionsImplementation = (
       return;
     }
 
-    navigation.navigate(ROUTES.IDPAY_INITIATIVE_DETAILS, {
-      initiativeId: context.initiativeId
+    navigation.navigate(IDPayDetailsRoutes.IDPAY_DETAILS_MAIN, {
+      screen: IDPayDetailsRoutes.IDPAY_DETAILS_MONITORING,
+      params: { initiativeId: context.initiativeId }
     });
   };
 
