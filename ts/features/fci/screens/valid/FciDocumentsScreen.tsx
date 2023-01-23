@@ -59,6 +59,7 @@ const FciDocumentsScreen = () => {
   const [currentDoc, setCurrentDoc] = React.useState(0);
   const [signaturePage, setSignaturePage] = React.useState(0);
   const [pdfString, setPdfString] = React.useState<string>("");
+  const [isPdfLoaded, setIsPdfLoaded] = React.useState(false);
   const documents = useSelector(fciSignatureDetailDocumentsSelector);
   const navigation = useNavigation();
   const route = useRoute<RouteProp<FciParamsList, "FCI_DOCUMENTS">>();
@@ -104,6 +105,8 @@ const FciDocumentsScreen = () => {
       const existingPdfBytes = await ReactNativeBlobUtil.fetch("GET", url).then(
         res => res.base64()
       );
+
+      setIsPdfLoaded(false);
 
       await PDFDocument.load(pdfFromBase64(existingPdfBytes)).then(res => {
         // get the signature field by unique name
@@ -158,6 +161,8 @@ const FciDocumentsScreen = () => {
       const existingPdfBytes = await ReactNativeBlobUtil.fetch("GET", url).then(
         res => res.base64()
       );
+
+      setIsPdfLoaded(false);
 
       await PDFDocument.load(pdfFromBase64(existingPdfBytes)).then(res => {
         const page = attrs.page;
@@ -218,6 +223,16 @@ const FciDocumentsScreen = () => {
     );
   }, [attrs, cDoc, onSignatureDetail]);
 
+  React.useEffect(() => {
+    if (isPdfLoaded) {
+      pipe(
+        pdfRef.current,
+        O.fromNullable,
+        O.map(_ => _.setPage(signaturePage))
+      );
+    }
+  }, [pdfRef, signaturePage, isPdfLoaded]);
+
   const { present, bottomSheet: fciAbortSignature } =
     useFciAbortSignatureFlow();
 
@@ -270,13 +285,10 @@ const FciDocumentsScreen = () => {
       source={{
         uri: S.isEmpty(pdfString) ? `${documents[currentDoc].url}` : pdfString
       }}
+      onLoadProgress={() => setIsPdfLoaded(false)}
       onLoadComplete={(numberOfPages, _) => {
         setTotalPages(numberOfPages);
-        pipe(
-          pdfRef.current,
-          O.fromNullable,
-          O.map(_ => _.setPage(signaturePage))
-        );
+        setIsPdfLoaded(true);
       }}
       onPageChanged={(page, _) => {
         setCurrentPage(page);
@@ -359,6 +371,7 @@ const FciDocumentsScreen = () => {
         {documents.length > 0 && (
           <>
             {renderPager()}
+
             <FooterWithButtons
               type={"TwoButtonsInlineThird"}
               leftButton={cancelButtonProps}
