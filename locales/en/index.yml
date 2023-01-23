@@ -3320,6 +3320,22 @@ idpay:
             selectedIBAN: IBAN per l'accredito
             actionsRequired: Azioni richieste 
           startConfigurationCTA: Inizia
+          operationsList:
+            header: Tutte le operazioni
+            title: Lista operazioni
+            lastUpdated: "Ultimo aggiornamento: "
+            operationDescriptions:
+              ONBOARDING:  "Hai aderito all'iniziativa"
+              ADD_IBAN:  "Aggiunto IBAN"
+              ADD_INSTRUMENT: "Hai aggiunto ···· {{maskedPan}}"
+              TRANSACTION:  "Pagamento Pos"
+              REVERSAL:  "Ricarica saldo disponibile"
+              DELETE_INSTRUMENT:  "Hai eliminato un metodo di pagamento"
+              REJECTED_ADD_INSTRUMENT:  "Hai rifiutato un metodo di pagamento"
+              REJECTED_DELETE_INSTRUMENT: 
+                "Hai rifiutato di eliminare un metodo di pagamento"
+              PAID_REFUND:  "Rimborso"
+              REJECTED_REFUND:  "Rifiuto rimborso"
   onboarding:
     headerTitle: "Adesione all'iniziativa"
     beforeContinue:
