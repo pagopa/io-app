@@ -42,7 +42,6 @@ import {
   FimsNavigator
 } from "../features/fims/navigation/navigator";
 import FIMS_ROUTES from "../features/fims/navigation/routes";
-import { InitiativeDetailsScreen } from "../features/idpay/initiative/details/screens/InitiativeDetailsScreen";
 import {
   IDPayConfigurationNavigator,
   IDPayConfigurationRoutes
@@ -70,6 +69,10 @@ import {
 } from "../store/reducers/backendStatus";
 import { isTestEnv } from "../utils/environment";
 import { IO_INTERNAL_LINK_PREFIX } from "../utils/navigation";
+import {
+  IDPayDetailsRoutes,
+  IDpayDetailsNavigator
+} from "../features/idpay/initiative/details/navigation";
 import authenticationNavigator from "./AuthenticationNavigator";
 import { MessagesStackNavigator } from "./MessagesNavigator";
 import NavigationService, { navigationRef } from "./NavigationService";
@@ -180,8 +183,8 @@ export const AppStackNavigator = () => {
             component={IDPayOnboardingNavigator}
           />
           <Stack.Screen
-            name={ROUTES.IDPAY_INITIATIVE_DETAILS}
-            component={InitiativeDetailsScreen}
+            name={IDPayDetailsRoutes.IDPAY_DETAILS_MAIN}
+            component={IDpayDetailsNavigator}
           />
           <Stack.Screen
             name={IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN}
