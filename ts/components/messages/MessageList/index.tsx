@@ -71,6 +71,8 @@ const Loader = () => (
   />
 );
 
+const keyExtractor = (message: UIMessage) => message.id;
+
 const animated = {
   onScroll: Animated.event([
     {
@@ -166,6 +168,15 @@ const MessageList = ({
     }
   };
 
+  const renderItem = ({ item }: ListRenderItemInfo<UIMessage>) => (
+    <RenderItem
+      message={item}
+      onLongPress={onLongPress}
+      onPress={onPressItem}
+      selectedMessageIds={selectedMessageIds}
+    />
+  );
+
   const refreshControl = (
     <RefreshControl
       refreshing={isRefreshFromUser || isRefreshing}
@@ -193,17 +204,10 @@ const MessageList = ({
       })}
       data={messages}
       initialNumToRender={pageSize}
-      keyExtractor={(message: UIMessage): string => message.id}
+      keyExtractor={keyExtractor}
       ref={flatListRef}
       refreshControl={shouldUseLoad ? refreshControl : undefined}
-      renderItem={({ item }: ListRenderItemInfo<UIMessage>) => (
-        <RenderItem
-          message={item}
-          onLongPress={onLongPress}
-          onPress={onPressItem}
-          selectedMessageIds={selectedMessageIds}
-        />
-      )}
+      renderItem={renderItem}
       scrollEnabled={true}
       scrollEventThrottle={animated?.scrollEventThrottle}
       style={styles.padded}
