@@ -59,7 +59,8 @@ describe("MessageList component", () => {
       const { component } = renderComponent({
         ListEmptyComponent,
         variant: "paginated",
-        messages
+        messages,
+        isSome: true
       });
       expect(component.queryByText("empty")).toBeNull();
     });
@@ -68,7 +69,8 @@ describe("MessageList component", () => {
       const { component } = renderComponent({
         ListEmptyComponent,
         variant: "paginated",
-        messages
+        messages,
+        isSome: true
       });
       expect(
         component.queryByText(I18n.t("messages.loadingErrorTitle"))
@@ -79,7 +81,8 @@ describe("MessageList component", () => {
       const { component } = renderComponent({
         ListEmptyComponent,
         variant: "paginated",
-        messages
+        messages,
+        isSome: true
       });
       expect(component.queryByText(messages[0].title)).toBeDefined();
     });
