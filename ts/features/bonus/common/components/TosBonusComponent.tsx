@@ -11,13 +11,13 @@ import { BackHandler, Image, SafeAreaView, StyleSheet } from "react-native";
 import WebView from "react-native-webview";
 import brokenLinkImage from "../../../../../img/broken-link.png";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
+import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { withLoadingSpinner } from "../../../../components/helpers/withLoadingSpinner";
 import AppHeader from "../../../../components/ui/AppHeader";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import IconFont from "../../../../components/ui/IconFont";
 import I18n from "../../../../i18n";
 import { AVOID_ZOOM_JS, closeInjectedScript } from "../../../../utils/webview";
-import { bonusVacanzeStyle } from "../../bonusVacanze/components/Styles";
 
 type Props = {
   onClose: () => void;
@@ -118,7 +118,7 @@ const TosBonusComponent: React.FunctionComponent<Props> = props => {
           </ButtonDefaultOpacity>
         </Right>
       </AppHeader>
-      <SafeAreaView style={bonusVacanzeStyle.flex}>
+      <SafeAreaView style={IOStyles.flex}>
         <Content contentContainerStyle={styles.flex1} noPadded={true}>
           {renderError()}
           {!hasError && (

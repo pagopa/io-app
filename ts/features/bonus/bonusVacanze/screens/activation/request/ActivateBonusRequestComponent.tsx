@@ -2,6 +2,7 @@ import * as React from "react";
 import { View, SafeAreaView, ScrollView } from "react-native";
 import { FamilyMember } from "../../../../../../../definitions/bonus_vacanze/FamilyMember";
 import { VSpacer } from "../../../../../../components/core/spacer/Spacer";
+import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import ItemSeparatorComponent from "../../../../../../components/ItemSeparatorComponent";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
@@ -11,7 +12,6 @@ import I18n from "../../../../../../i18n";
 import { BonusCompositionDetails } from "../../../components/keyValueTable/BonusCompositionDetails";
 import { FamilyComposition } from "../../../components/keyValueTable/FamilyComposition";
 import { FooterTwoButtons } from "../../../components/markdown/FooterTwoButtons";
-import { bonusVacanzeStyle } from "../../../components/Styles";
 import { ActivateBonusDiscrepancies } from "./ActivateBonusDiscrepancies";
 import { ActivateBonusReminder } from "./ActivateBonusReminder";
 import { ActivateBonusTitle } from "./ActivateBonusTitle";
@@ -85,9 +85,9 @@ export const ActivateBonusRequestComponent: React.FunctionComponent<Props> =
         }
         contextualHelpMarkdown={contextualHelpMarkdown}
       >
-        <SafeAreaView style={bonusVacanzeStyle.flex}>
+        <SafeAreaView style={IOStyles.flex}>
           <ScrollView>
-            <View style={bonusVacanzeStyle.horizontalPadding}>
+            <View style={IOStyles.horizontalContentPadding}>
               <VSpacer size={24} />
               <ActivateBonusTitle
                 title={title}
@@ -110,7 +110,7 @@ export const ActivateBonusRequestComponent: React.FunctionComponent<Props> =
             ) : (
               <ItemSeparatorComponent />
             )}
-            <View style={bonusVacanzeStyle.horizontalPadding}>
+            <View style={IOStyles.horizontalContentPadding}>
               <VSpacer size={16} />
               {props.familyMembers.length > 0 && (
                 <>

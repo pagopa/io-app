@@ -2,13 +2,13 @@ import * as React from "react";
 import { SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { renderInfoRasterImage } from "../../../../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../../../../components/infoScreen/InfoScreenComponent";
 import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { confirmButtonProps } from "../../components/buttons/ButtonConfigurations";
 import { FooterStackButton } from "../../components/buttons/FooterStackButtons";
-import { bonusVacanzeStyle } from "../../components/Styles";
 import { completeBonusVacanzeActivation } from "../../store/actions/bonusVacanze";
 import { bonusVacanzeLogo } from "../../store/reducers/availableBonusesTypes";
 
@@ -29,7 +29,7 @@ const ActivateBonusCompletedScreen: React.FunctionComponent<Props> = props => {
   const goToBonusDetail = I18n.t("bonus.bonusVacanze.activation.goToDetails");
 
   return (
-    <SafeAreaView style={bonusVacanzeStyle.flex}>
+    <SafeAreaView style={IOStyles.flex}>
       <InfoScreenComponent
         image={
           props.logo ? renderInfoRasterImage({ uri: props.logo }) : undefined

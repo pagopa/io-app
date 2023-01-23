@@ -11,7 +11,7 @@ import {
   confirmButtonProps
 } from "../../../components/buttons/ButtonConfigurations";
 import { useHardwareBackButton } from "../../../../../../hooks/useHardwareBackButton";
-import { bonusVacanzeStyle } from "../../../components/Styles";
+import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 
 const inpsDsuHomeUrl =
   "https://www.inps.it/nuovoportaleinps/default.aspx?itemdir=49961";
@@ -39,7 +39,7 @@ export const BaseIseeErrorComponent: React.FunctionComponent<Props> = props => {
   });
 
   return (
-    <SafeAreaView style={bonusVacanzeStyle.flex}>
+    <SafeAreaView style={IOStyles.flex}>
       <InfoScreenComponent
         image={renderInfoRasterImage(props.image)}
         title={props.title}

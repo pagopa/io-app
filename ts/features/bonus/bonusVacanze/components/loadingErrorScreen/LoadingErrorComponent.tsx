@@ -2,11 +2,11 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as React from "react";
 import { useEffect } from "react";
 import { View, ActivityIndicator, SafeAreaView } from "react-native";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { InfoScreenComponent } from "../../../../../components/infoScreen/InfoScreenComponent";
 import GenericErrorComponent from "../../../../../components/screens/GenericErrorComponent";
 import { WithTestID } from "../../../../../types/WithTestID";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
-import { bonusVacanzeStyle } from "../Styles";
 
 export type LoadingErrorProps = WithTestID<{
   isLoading: boolean;
@@ -73,7 +73,7 @@ export const LoadingErrorComponent: React.FunctionComponent<LoadingErrorProps> =
     }, [props.isLoading]);
 
     return (
-      <SafeAreaView style={bonusVacanzeStyle.flex} testID={props.testID}>
+      <SafeAreaView style={IOStyles.flex} testID={props.testID}>
         {props.isLoading
           ? renderLoading(props.loadingCaption, props.loadingSubtitle)
           : renderError(props)}

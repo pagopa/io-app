@@ -1,12 +1,12 @@
 import * as React from "react";
 import { SafeAreaView } from "react-native";
 import image from "../../../../img/wallet/errors/payment-expired-icon.png";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 import I18n from "../../../i18n";
 import { cancelButtonProps } from "../bonusVacanze/components/buttons/ButtonConfigurations";
 import { FooterStackButton } from "../bonusVacanze/components/buttons/FooterStackButtons";
-import { bonusVacanzeStyle } from "../bonusVacanze/components/Styles";
 
 type Props = {
   title: string;
@@ -24,7 +24,7 @@ type Props = {
 export const BaseTimeoutScreen: React.FunctionComponent<Props> = props => {
   const confirmText = I18n.t("global.buttons.exit");
   return (
-    <SafeAreaView style={bonusVacanzeStyle.flex}>
+    <SafeAreaView style={IOStyles.flex}>
       <InfoScreenComponent
         image={renderInfoRasterImage(image)}
         title={props.title}
