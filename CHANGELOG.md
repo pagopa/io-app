@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.24.0-rc.2](https://github.com/pagopa/io-app/compare/2.24.0-rc.1...2.24.0-rc.2) (2023-01-20)
+
+
+### Chores
+
+* **Firma con IO:** Enable FCI feature flag ([#4312](https://github.com/pagopa/io-app/issues/4312)) ([a84787b](https://github.com/pagopa/io-app/commit/a84787b9bfac41dbe2ec7884fb4fb2dd1f1044e2))
+
 ## [2.24.0-rc.1](https://github.com/pagopa/io-app/compare/2.24.0-rc.0...2.24.0-rc.1) (2023-01-20)
 
 
