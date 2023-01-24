@@ -1,15 +1,22 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as _ from "lodash";
+import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { TimelineDTO } from "../../../../../../definitions/idpay/timeline/TimelineDTO";
 import { InitiativeDTO } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
 import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { NetworkError } from "../../../../../utils/errors";
-import { idpayInitiativeGet, idpayTimelineGet } from "./actions";
+import {
+  getErrorFromNetworkError,
+  NetworkError
+} from "../../../../../utils/errors";
+import { idpayInitiativeGet, idpayTimelinePageGet } from "./actions";
+
+type PaginatedTimelineDTO = Record<number, TimelineDTO>;
 
 export type IDPayInitiativeState = {
   details: pot.Pot<InitiativeDTO, NetworkError>;
-  timeline: pot.Pot<TimelineDTO, NetworkError>;
+  timeline: pot.Pot<PaginatedTimelineDTO, NetworkError>;
 };
 
 const INITIAL_STATE: IDPayInitiativeState = {
@@ -38,17 +45,28 @@ const reducer = (
         details: pot.toError(state.details, action.payload)
       };
     // TIMELINE ACTIONS
-    case getType(idpayTimelineGet.request):
+    case getType(idpayTimelinePageGet.request):
+      if (action.payload.page === 0) {
+        return {
+          ...state,
+          timeline: pot.toLoading(pot.none)
+        };
+      }
       return {
         ...state,
         timeline: pot.toLoading(state.timeline)
       };
-    case getType(idpayTimelineGet.success):
+    case getType(idpayTimelinePageGet.success):
+      const currentTimeline = pot.getOrElse(state.timeline, []);
+
       return {
         ...state,
-        timeline: pot.some(action.payload)
+        timeline: pot.some({
+          ...currentTimeline,
+          [action.payload.page]: action.payload.timeline
+        })
       };
-    case getType(idpayTimelineGet.failure):
+    case getType(idpayTimelinePageGet.failure):
       return {
         ...state,
         timeline: pot.toError(state.timeline, action.payload)
@@ -57,9 +75,68 @@ const reducer = (
   return state;
 };
 
-export const idpayInitiativeDetailsSelector = (state: GlobalState) =>
-  state.features.idPay.initiative.details;
-export const idpayTimelineSelector = (state: GlobalState) =>
-  state.features.idPay.initiative.timeline;
+const idpayInitativeSelector = (state: GlobalState) =>
+  state.features.idPay.initiative;
+
+export const idpayInitiativeDetailsSelector = createSelector(
+  idpayInitativeSelector,
+  initiative => initiative.details
+);
+
+export const idpayPaginatedTimelineSelector = createSelector(
+  idpayInitativeSelector,
+  initiative => initiative.timeline
+);
+
+export const idpayTimelineSelector = createSelector(
+  idpayPaginatedTimelineSelector,
+  paginatedTimelinePot =>
+    pot.getOrElse(
+      pot.map(paginatedTimelinePot, (paginatedTimeline: PaginatedTimelineDTO) =>
+        _.flatMap(
+          Object.values(paginatedTimeline),
+          timeline => timeline.operationList
+        )
+      ),
+      []
+    )
+);
+
+export const idpayTimelineCurrentPageSelector = createSelector(
+  idpayPaginatedTimelineSelector,
+  paginatedTimelinePot =>
+    pot.getOrElse(
+      pot.map(
+        paginatedTimelinePot,
+        (timeline: PaginatedTimelineDTO) => Object.keys(timeline).length - 1
+      ),
+      -1
+    )
+);
+
+export const idpayTimelineLastUpdateSelector = createSelector(
+  idpayPaginatedTimelineSelector,
+  paginatedTimelinePot =>
+    pot.getOrElse(
+      pot.map(
+        paginatedTimelinePot,
+        // lastUpdate is the same for all the pages
+        (paginatedTimeline: PaginatedTimelineDTO) =>
+          paginatedTimeline[0].lastUpdate
+      ),
+      undefined
+    )
+);
+
+export const idpayTimelineIsLastPageSelector = createSelector(
+  idpayPaginatedTimelineSelector,
+  paginatedTimeline => {
+    if (pot.isError(paginatedTimeline)) {
+      const err = getErrorFromNetworkError(paginatedTimeline.error);
+      return err.message === "404";
+    }
+    return false;
+  }
+);
 
 export default reducer;

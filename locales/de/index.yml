@@ -1,4 +1,6 @@
 ---
+accessibility:
+  doubleTapToActivateHint: "Doppeltippen zum Aktivieren"
 date:
   formats:
     default: "%d.%m.%Y"
@@ -234,6 +236,14 @@ startup:
   sessionInfo: "SPID-Attribute geladen"
   profileInfo: "Benutzerprofil geladen"
   profileEnabled: "Benutzerprofil aktiviert"
+  userDeletePendingAlert:
+    title: "Profil wird gelöscht"
+    message: "Wenn du deine Meinung geändert hast, kannst du deinen Antrag im Abschnitt Datenschutz deines Profils zurückziehen."
+    cta_1: "Gehe zum Datenschutz"
+    cta_2: "Ignorieren"
+  contextualHelp:
+    title: "Initialisierungsprobleme?"
+    body: "Wenn du Probleme beim Zugriff auf die App hast, melde dies bitte unserem Team und wir werden das Problem so schnell wie möglich lösen."
 login:
   welcome:
     line1: "Willkommen in deiner"
@@ -414,6 +424,8 @@ profile:
       alertConfirmTitle: "Möchtest du die pagoPA Testumgebung nutzen?"
       alertConfirmMessage: "Wenn du die pagoPA Testumgebung aktivierst, siehst du deine Transaktionshistorie und deine gespeicherten Zahlungsmethoden nicht mehr und kannst nur noch eigens dafür angelegte Zahlungsmethoden nutzen. Wenn dir nicht klar ist, was dies bedeutet, solltest du diese Funktion nicht aktivieren."
       alertMessage: "Die App muss neu gestartet werden, damit die Änderungen wirksam werden."
+    pnEnvironment:
+      pnEnv: "PN-Testumgebung"
     appVersion: "App-Version"
     backendVersion: "Backend-Version"
     debugMode: "Debug-Modus"
@@ -496,27 +508,29 @@ profile:
       error: "Bei deiner Anfrage ist ein Fehler aufgetreten"
 userMetadata:
   errors:
-    upsertVersion: Benutzer-Metadaten können mit dieser Version nicht hochgeladen werden
+    upsertVersion: "Mit dieser Version können keine Benutzer-Metadaten erstellt oder aktualisiert werden"
 navigation:
-  messages: Mitteilungen
-  profile: Profil
+  messages: "Mitteilungen"
+  profile: "Profil"
   accessibility: "Abschnitt {{section}}, Panel, {{order}} von 4"
+  accessibilityWithBadge: "Abschnitt {{section}}, {{unread}} neue Elemente, Panel, {{order}} von 4"
+  selected: "Ausgewählt ist"
 cie:
-  title: Berühren Sie die Karte
-  layCardMessageHeader: Legen Sie für einige Sekunden Ihre elektronische ID-Karte auf der Rückseite Ihres Telefons.
-  layCardMessageFooter: Wenn Sie nicht genau wissen, wo sich der NFC-Sensor befindet, bewegen Sie Ihre Karte an verschiedene Stellen und warten Sie ein paar Sekunden, bis Sie einen Ton hören.
-  booking_url: https://www.cartaidentita.interno.gov.it/cittadini/sistema-di-prenotazione-della-cie/
+  title: "Karte berühren"
+  layCardMessageHeader: "Halte deine elektronische Identitätskarte für einige Sekunden auf die Rückseite deines Telefons."
+  layCardMessageFooter: "Wenn du nicht genau weißt, wo sich der NFC-Sensor befindet, halte deine Karte an verschiedene Stellen und warte ein paar Sekunden, bis du einen Ton hörst."
+  booking_url: "https://www.prenotazionicie.interno.gov.it/?locale=de"
 spid:
-  login: LOGIN
-  loginButton: LOGIN MIT
-  selectIdp: Um mit der Anmeldung fortzufahren, wählen Sie Ihren SPID-Anbieter.
-  selectDemoIdp: Wenn Sie noch keine eigene SPID-Identität haben, durchsuchen Sie die App in demo mode
+  login: "LOGIN"
+  loginButton: "LOGIN MIT"
+  selectIdp: "Um mit der Anmeldung fortzufahren, wähle deinen SPID-Anbieter."
+  selectDemoIdp: "Wenn du noch keine eigene SPID-Identität hast, verwende die App im Demo-Modus"
   loginErrorAlert:
-    title: Fehler bei der Anmeldung
-    message: Entschuldigung, es gab einen Fehler bei der Anmeldung. Bitte versuchen Sie es noch einmal.
+    title: "Fehler bei der Anmeldung"
+    message: "Entschuldigung, es ist einen Fehler bei der Anmeldung aufgetreten. Bitte versuche es erneut."
   subscription:
-    line1: SPID ist die digitale Identität für den Zugriff auf Online-Dienste der öffentlichen Verwaltung.
-    line2: Geben Sie Ihre E-Mail-Adresse ein, um sie zu aktivieren.
+    line1: "SPID ist die digitale Identität für den Zugang zu den Online-Diensten der italienischen öffentlichen Verwaltung."
+    line2: "Gib deine E-Mail-Adresse ein, um sie zu aktivieren."
 authentication:
   landing:
     accessibility:
@@ -680,6 +694,7 @@ authentication:
       error_22: "Um IO benutzen zu können, musst du die Übermittlung einiger deiner Daten erlauben: Melde dich erneut an und gib dein Einverständnis zur Datenübermittlung."
       error_23: "Deine SPID-Identität ist gesperrt oder widerrufen. Um dein Konto zu reaktivieren, wende dich an deinen SPID-Identitätsanbieter."
       error_25: "Du hast den Anmeldevorgang abgebrochen: Du kannst es jederzeit erneut versuchen."
+      error_1001: "Zugang verweigert: Du hast nicht das Mindestalter für die Nutzung von IO"
   expiredSessionBanner:
     title: "Sicherheitshinweis"
     message: "Um deine privaten Informationen zu schützen, melden dich bitte erneut mit deinen SPID-Anmeldedaten an, danke!"
@@ -762,6 +777,7 @@ onboarding:
     headerTitle: "IO einrichten"
     continue: "Weiter"
     preview:
+      accessibilityLabelPrefix: "Hier ein Beispiel:"
       reminderOnPreviewOnTitle: "Du hast eine fällige Zahlungsaufforderung"
       reminderOnPreviewOnMessage: "Öffne die App und bezahle die Zahlungsaufforderung von ACI"
       reminderOffPreviewOnTitle: "Gemeinde Ipazia"
@@ -1344,6 +1360,9 @@ wallet:
     postepayApp:
       name: "Postepay"
       description: "Deine Postepay-App"
+    postepay:
+      name: "BancoPosta oder Postepay-Karte"
+      description: "Die Karten von Poste Italiane"
     paypal:
       name: "PayPal"
       description: "Bezahlen mit Karte oder verbundenem Kontokorrent"
@@ -1427,6 +1446,8 @@ wallet:
     GENERIC_ERROR: "Ein unerwarteter Fehler ist aufgetreten"
     GENERIC_ERROR_SUBTITLE: "Bitte versuche es erneut oder kontaktiere uns."
     DUPLICATED: "Dieser Hinweis wurde bereits bezahlt!"
+    NOT_FOUND: "Wir können die Zahlungsmitteilung nicht finden"
+    NOT_FOUND_SUBTITLE: "Möglicherweise wurde die Zahlungsmitteilung bereits bezahlt. Wende dich bitte an die Körperschaft, die sie ausgestellt hat."
     INVALID_AMOUNT: "Der in der Zahlungsmitteilung angegebene Betrag ist falsch. Wenn du die Daten manuell eingegeben hast, überprüfe bitte, ob sie korrekt sind und versuche es erneut."
     PAYMENT_EXPIRED: "Die Zahlung für diese Zahlungsmitteilung ist nicht mehr möglich, da sie abgelaufen ist."
     PAYMENT_UNAVAILABLE: "Die Zahlung für diese Zahlungsmitteilung ist zur Zeit nicht möglich. Bitte versuche es später noch einmal."
@@ -1533,6 +1554,7 @@ cardComponent:
   unsetFavorite: "Aus Favoriten entfernen"
   deleteTitle: "Möchtest du diese Zahlungsmethode entfernen?"
   deleteMsg: "Diese Zahlungsmethode wird entfernt"
+  deleteLoading: "Zahlungsmethode wird gerade gelöscht"
   neverUsed: "Nie verwendet"
   lastUsage: "Letzte Verwendung"
   detailsAndTransactions: "Details und Transaktionen"
