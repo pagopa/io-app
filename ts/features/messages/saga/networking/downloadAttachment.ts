@@ -1,3 +1,4 @@
+import I18n from "i18n-js";
 import { ActionType } from "typesafe-actions";
 import RNFS from "react-native-fs";
 import ReactNativeBlobUtil from "react-native-blob-util";
@@ -49,20 +50,18 @@ export function* downloadAttachmentSaga(
       }
     );
     const { status } = result.info();
-    if (status !== 200) {
-      const error = new Error(
-        `error ${status} fetching ${attachment.resourceUrl.href}`
-      );
-      yield* put(
-        downloadAttachment.failure({
-          attachment,
-          error
-        })
-      );
+    if (status === 200) {
+      const path = result.path();
+      yield* put(downloadAttachment.success({ attachment, path }));
+    } else {
+      const errorKey =
+        status === 415
+          ? "messageDetails.attachments.badFormat"
+          : "messageDetails.attachments.downloadFailed";
+      const error = new Error(I18n.t(errorKey));
+      yield* put(downloadAttachment.failure({ attachment, error }));
       return;
     }
-    const path = result.path();
-    yield* put(downloadAttachment.success({ attachment, path }));
   } catch (error) {
     yield* put(
       downloadAttachment.failure({

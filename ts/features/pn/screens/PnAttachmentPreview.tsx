@@ -26,7 +26,7 @@ export const PnAttachmentPreview = (
     <MessageAttachmentPreview
       messageId={messageId}
       attachment={attachment}
-      onError={() => {
+      onPDFError={() => {
         void mixpanelTrack("PN_ATTACHMENT_PREVIEW_STATUS", {
           previewStatus: "error"
         });

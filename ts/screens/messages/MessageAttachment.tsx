@@ -1,4 +1,5 @@
 import React from "react";
+import I18n from "i18n-js";
 import {
   UIMessageId,
   UIAttachment
@@ -6,6 +7,7 @@ import {
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { MessageAttachmentPreview } from "../../features/messages/components/MessageAttachmentPreview";
 import { MessagesParamsList } from "../../navigation/params/MessagesParamsList";
+import { showToast } from "../../utils/showToast";
 
 export type MessageDetailAttachmentNavigationParams = Readonly<{
   messageId: UIMessageId;
@@ -25,8 +27,9 @@ export const MessageDetailAttachment = (
     <MessageAttachmentPreview
       messageId={messageId}
       attachment={attachment}
-      onError={() => {
-        // TODO
+      onPDFError={() => {
+        showToast(I18n.t("messageDetails.attachments.corruptedFile"));
+        // TODO mixpanel?
       }}
       onLoadComplete={() => {
         // TODO

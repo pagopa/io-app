@@ -1808,10 +1808,14 @@ messageDetails:
   sendEmail: Manda email
   write: Scrivi
   id: "ID:"
-  attachmentsUnavailable:
-    firstPart: "Gli allegati non sono più disponibili. "
-    secondPart: "Contatta l'ente mittente"
-    thirdPart: " per maggiori informazioni."
+  attachments:
+    badFormat: "Il formato dell'allegato non è supportato. Contatta l'ente mittente"
+    corruptedFile: "L'allegato è danneggato e non può essere aperto. Contatta l'ente mittente"
+    downloadFailed: "L'allegato non si è aperto. Riprova"
+    unavailable:
+      firstPart: "Gli allegati non sono più disponibili. "
+      secondPart: "Contatta l'ente mittente"
+      thirdPart: " per maggiori informazioni."
 notifications:
   installation:
     errorTitle: Notifiche push

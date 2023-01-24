@@ -27,11 +27,11 @@ const AttachmentsUnavailableComponent = () => (
   <View style={styles.container}>
     <IconFont name={"io-notice"} color={IOColors.white} size={24} />
     <Text style={styles.message}>
-      {I18n.t("messageDetails.attachmentsUnavailable.firstPart")}
+      {I18n.t("messageDetails.attachments.unavailable.firstPart")}
       <Text style={styles.messageBold}>
-        {I18n.t("messageDetails.attachmentsUnavailable.secondPart")}
+        {I18n.t("messageDetails.attachments.unavailable.secondPart")}
       </Text>
-      {I18n.t("messageDetails.attachmentsUnavailable.thirdPart")}
+      {I18n.t("messageDetails.attachments.unavailable.thirdPart")}
     </Text>
   </View>
 );

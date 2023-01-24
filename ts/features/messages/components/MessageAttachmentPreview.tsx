@@ -1,10 +1,11 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { useNavigation } from "@react-navigation/native";
 import React, { useCallback, useEffect, useState } from "react";
 import { ActivityIndicator, SafeAreaView, StyleSheet } from "react-native";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import Pdf from "react-native-pdf";
 import image from "../../../../img/servicesStatus/error-detail-icon.png";
-import { Body } from "../../../components/core/typography/Body";
+import { H1 } from "../../../components/core/typography/H1";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
@@ -30,7 +31,7 @@ type Props = {
   messageId: UIMessageId;
   attachment: UIAttachment;
   onLoadComplete?: () => void;
-  onError?: () => void;
+  onPDFError?: () => void;
   onShare?: () => void;
   onOpen?: () => void;
   onDownload?: () => void;
@@ -60,9 +61,9 @@ const renderDownloadFeedback = () => (
       )}
       importantForAccessibility={"no-hide-descendants"}
     />
-    <Body style={styles.loadingBody}>
+    <H1 style={styles.loadingBody}>
       {I18n.t("features.messages.loading.subtitle")}
-    </Body>
+    </H1>
   </>
 );
 
@@ -78,7 +79,7 @@ const renderPDF = (
   isPDFError: boolean,
   downloadPath: string,
   props: Props,
-  onPDFError: () => void
+  onPDFLoadingError: () => void
 ) => (
   <>
     {isPDFError ? (
@@ -95,7 +96,7 @@ const renderPDF = (
         source={{ uri: downloadPath, cache: true }}
         style={styles.pdf}
         onLoadComplete={props.onLoadComplete}
-        onError={onPDFError}
+        onError={onPDFLoadingError}
       />
     )}
     {renderFooter(
@@ -194,6 +195,7 @@ const renderFooter = (
 export const MessageAttachmentPreview = (props: Props): React.ReactElement => {
   const ioDispatch = useIODispatch();
   const [isPDFError, setIsPDFError] = useState(false);
+  const navigation = useNavigation();
   const messageId = props.messageId;
   const attachment = props.attachment;
   const attachmentId = attachment.id;
@@ -207,21 +209,32 @@ export const MessageAttachmentPreview = (props: Props): React.ReactElement => {
   const shouldDownloadAttachment =
     isGenericAttachment && isStrictNone(downloadPot);
 
-  const onError = props.onError;
-  const onPDFError = useCallback(() => {
+  const onPDFError = props.onPDFError;
+  const internalOnPDFError = useCallback(() => {
     setIsPDFError(true);
-    onError?.();
-  }, [onError]);
+    onPDFError?.();
+  }, [onPDFError]);
 
   useEffect(() => {
     if (shouldDownloadAttachment) {
       ioDispatch(downloadAttachment.request(attachment));
+    } else if (isGenericAttachment && pot.isError(downloadPot)) {
+      const error = downloadPot.error;
+      showToast(error.message);
+      navigation.goBack();
     }
-  }, [attachment, ioDispatch, shouldDownloadAttachment]);
+  }, [
+    attachment,
+    downloadPot,
+    ioDispatch,
+    isGenericAttachment,
+    navigation,
+    shouldDownloadAttachment
+  ]);
 
-  const shouldDisplayDownloadError = pot.isError(downloadPot);
   const shouldDisplayDownloadProgress = pot.isLoading(downloadPot);
-  const shouldDisplayPDFPreview = pot.isSome(downloadPot);
+  const shouldDisplayPDFPreview =
+    pot.isSome(downloadPot) && !pot.isError(downloadPot);
   return (
     <BaseScreenComponent
       goBack={true}
@@ -232,16 +245,14 @@ export const MessageAttachmentPreview = (props: Props): React.ReactElement => {
         style={styles.container}
         testID={"message-attachment-preview"}
       >
-        {shouldDisplayDownloadError &&
-          renderError(
-            I18n.t("global.jserror.title"),
-            I18n.t(
-              "features.mvl.details.attachments.bottomSheet.failing.details"
-            )
-          )}
         {shouldDisplayDownloadProgress && renderDownloadFeedback()}
         {shouldDisplayPDFPreview &&
-          renderPDF(isPDFError, downloadPot.value.path, props, onPDFError)}
+          renderPDF(
+            isPDFError,
+            downloadPot.value.path,
+            props,
+            internalOnPDFError
+          )}
       </SafeAreaView>
     </BaseScreenComponent>
   );
