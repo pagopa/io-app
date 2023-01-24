@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.25.0-rc.0](https://github.com/pagopa/io-app/compare/2.24.0-rc.2...2.25.0-rc.0) (2023-01-24)
+
+
+### Features
+
+* **IDPay:** [[IODPAY-77](https://pagopa.atlassian.net/browse/IODPAY-77)] Addition of paginated operation list ([#4294](https://github.com/pagopa/io-app/issues/4294)) ([94213a5](https://github.com/pagopa/io-app/commit/94213a57c20c09caa07491ce3fffebcf69a1e9d5))
+
+
+### Chores
+
+* **deps:** bump fast-json-patch from 3.0.0-1 to 3.1.1 ([#4267](https://github.com/pagopa/io-app/issues/4267)) ([488aeb3](https://github.com/pagopa/io-app/commit/488aeb3421d81885e6b193bea3bd70d13d915cfa))
+* **deps:** bump json5 from 1.0.1 to 1.0.2 ([#4281](https://github.com/pagopa/io-app/issues/4281)) ([00f0558](https://github.com/pagopa/io-app/commit/00f0558120908be3b6c2665f842ebf94c459d4c5))
+* [IOAPPFD0-18,IOAPPFD0-23] Fix e2e tests ([#4318](https://github.com/pagopa/io-app/issues/4318)) ([884ea94](https://github.com/pagopa/io-app/commit/884ea949ef02cea6957b839bb04c0d555af00ba6)), closes [/github.com/pagopa/io-app/blob/7938ce2ffe15c9ec294f37650ff867fc16ddf9b4/.circleci/config.yml#L535](https://github.com/pagopa//github.com/pagopa/io-app/blob/7938ce2ffe15c9ec294f37650ff867fc16ddf9b4/.circleci/config.yml/issues/L535)
+* **deps:** bump activesupport from 6.1.6.1 to 6.1.7.1 ([#4309](https://github.com/pagopa/io-app/issues/4309)) ([8aa8464](https://github.com/pagopa/io-app/commit/8aa846439c31070d695c46a2b4adfcf31bbf2487))
+
 ## [2.24.0-rc.2](https://github.com/pagopa/io-app/compare/2.24.0-rc.1...2.24.0-rc.2) (2023-01-20)
 
 
