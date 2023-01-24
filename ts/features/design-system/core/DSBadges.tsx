@@ -41,7 +41,8 @@ export const DSBadges = () => (
       <HSpacer size={16} />
     </View>
     <VSpacer size={40} />
-    <H2>Tab Badge</H2>
+
+    <H2>Notifications</H2>
     <VSpacer size={16} />
     <View style={IOStyles.row}>
       <View style={styles.fakeNavItem}>

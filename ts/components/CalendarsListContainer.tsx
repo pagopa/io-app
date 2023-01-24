@@ -1,5 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { Button, Text as NBButtonText  } from "native-base";
+import { Button, Text as NBButtonText } from "native-base";
 import * as React from "react";
 
 import { View, ListRenderItemInfo, SectionList } from "react-native";
