@@ -195,7 +195,6 @@ const createServicesImplementation = (
 
     return dataPromise;
   };
-
   return {
     loadInitiative,
     loadInitiativeStatus,

@@ -29,7 +29,13 @@ const createActionsImplementation = (
 
   const navigateToSelfDeclarationsScreen = () => {
     navigation.navigate(IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
-      screen: IDPayOnboardingRoutes.IDPAY_ONBOARDING_SELF_DECLARATIONS
+      screen: IDPayOnboardingRoutes.IDPAY_ONBOARDING_BOOL_SELF_DECLARATIONS
+    });
+  };
+
+  const pushMultiPage = () => {
+    navigation.push(IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
+      screen: IDPayOnboardingRoutes.IDPAY_ONBOARDING_BOOL_SELF_DECLARATIONS
     });
   };
 
@@ -55,7 +61,8 @@ const createActionsImplementation = (
     navigateToSelfDeclarationsScreen,
     navigateToCompletionScreen,
     navigateToFailureScreen,
-    exitOnboarding
+    exitOnboarding,
+    pushNextMultiPage: pushMultiPage
   };
 };
 

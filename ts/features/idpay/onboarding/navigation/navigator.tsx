@@ -15,19 +15,21 @@ export const IDPayOnboardingRoutes = {
   IDPAY_ONBOARDING_MAIN: "IDPAY_ONBOARDING_MAIN",
   IDPAY_ONBOARDING_INITIATIVE_DETAILS: "IDPAY_ONBOARDING_INITIATIVE_DETAILS",
   IDPAY_ONBOARDING_PDNDACCEPTANCE: "IDPAY_ONBOARDING_PDNDACCEPTANCE",
-  IDPAY_ONBOARDING_MULTIVALUE: "IDPAY_ONBOARDING_MULTIVALUE",
-  IDPAY_ONBOARDING_SELF_DECLARATIONS: "IDPAY_ONBOARDING_SELF_DECLARATIONS",
+  IDPAY_ONBOARDING_BOOL_SELF_DECLARATIONS: "IDPAY_ONBOARDING_SELF_DECLARATIONS",
   IDPAY_ONBOARDING_COMPLETION: "IDPAY_ONBOARDING_COMPLETION",
-  IDPAY_ONBOARDING_FAILURE: "IDPAY_ONBOARDING_FAILURE"
+  IDPAY_ONBOARDING_FAILURE: "IDPAY_ONBOARDING_FAILURE",
+  IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS:
+    "IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS"
 } as const;
 
 export type IDPayOnboardingParamsList = {
   [IDPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS]: InitiativeDetailsScreenRouteParams;
-  [IDPayOnboardingRoutes.IDPAY_ONBOARDING_SELF_DECLARATIONS]: undefined;
+  [IDPayOnboardingRoutes.IDPAY_ONBOARDING_BOOL_SELF_DECLARATIONS]: undefined;
   [IDPayOnboardingRoutes.IDPAY_ONBOARDING_PDNDACCEPTANCE]: undefined;
   [IDPayOnboardingRoutes.IDPAY_ONBOARDING_MULTIVALUE]: undefined;
   [IDPayOnboardingRoutes.IDPAY_ONBOARDING_COMPLETION]: undefined;
   [IDPayOnboardingRoutes.IDPAY_ONBOARDING_FAILURE]: undefined;
+  [IDPayOnboardingRoutes.IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS]: undefined;
 };
 
 const Stack = createStackNavigator<IDPayOnboardingParamsList>();
@@ -55,16 +57,16 @@ export const IDPayOnboardingNavigator = () => (
         component={InitiativeDetailsScreen}
       />
       <Stack.Screen
-        name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_SELF_DECLARATIONS}
+        name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_BOOL_SELF_DECLARATIONS}
         component={InitiativeSelfDeclarationsScreen}
+      />
+      <Stack.Screen
+        name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS}
+        component={MultiValuePrerequisitesScreen}
       />
       <Stack.Screen
         name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_PDNDACCEPTANCE}
         component={PDNDPrerequisitesScreen}
-      />
-      <Stack.Screen
-        name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_MULTIVALUE}
-        component={MultiValuePrerequisitesScreen}
       />
       <Stack.Screen
         name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_COMPLETION}
