@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: Platform.select({
       ios:
-        20 + (isIphoneX() || DeviceInfo.hasNotch() ? getStatusBarHeight() : 0),
+        8 + (isIphoneX() || DeviceInfo.hasNotch() ? getStatusBarHeight() : 0),
       android: 0
     }),
     left: 0,
@@ -38,16 +38,16 @@ const styles = StyleSheet.create({
   versionText: {
     borderColor: itemBorderColor,
     borderWidth: 1,
-    paddingHorizontal: 4,
-    borderRadius: themeVariables.borderRadiusBase,
+    paddingHorizontal: 8,
+    borderRadius: 8,
     backgroundColor: bgColor
   },
   routeText: {
     borderColor: itemBorderColor,
     borderWidth: 1,
-    borderRadius: themeVariables.borderRadiusBase,
+    borderRadius: 8,
     maxWidth: widthPercentageToDP(80),
-    paddingHorizontal: 4,
+    paddingHorizontal: 8,
     backgroundColor: bgColor,
     marginTop: 4
   }

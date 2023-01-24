@@ -5,7 +5,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Content, Text as NBText } from "native-base";
+import { Content } from "native-base";
 import * as React from "react";
 import {
   View,
@@ -43,6 +43,7 @@ import { GlobalState } from "../store/reducers/types";
 import customVariables from "../theme/variables";
 import { isOnboardingCompleted } from "../utils/navigation";
 import { VSpacer } from "./core/spacer/Spacer";
+import { Body } from "./core/typography/Body";
 import { IOStyles } from "./core/variables/IOStyles";
 import { ContextualHelpPropsMarkdown } from "./screens/BaseScreenComponent";
 import TopScreenComponent, {
@@ -73,19 +74,12 @@ type State = {
 };
 
 const styles = StyleSheet.create({
-  center: {
-    alignSelf: "center"
-  },
   error: {
     backgroundColor: customVariables.brandDanger,
     paddingHorizontal: customVariables.contentPadding,
     paddingVertical: 11,
     flexDirection: "row",
     justifyContent: "space-between"
-  },
-  validated: {
-    paddingTop: 8,
-    paddingHorizontal: 30
   }
 });
 
@@ -223,7 +217,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
 
   private renderErrorBanner = (
     <View style={styles.error}>
-      <NBText white={true}>{I18n.t("global.actions.retry")}</NBText>
+      <Body color="white">{I18n.t("global.actions.retry")}</Body>
       <View>
         <IconFont
           name={"io-close"}
@@ -393,12 +387,12 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
             name={icon}
             size={VALIDATION_ICON_WIDTH}
             color={customVariables.colorHighlight}
-            style={styles.center}
+            style={IOStyles.selfCenter}
           />
           <VSpacer size={40} />
-          <NBText alignCenter={true} bold={true}>
-            {title}
-          </NBText>
+          <View style={IOStyles.alignCenter}>
+            <Body weight="SemiBold">{title}</Body>
+          </View>
           {!this.state.emailHasBeenValidate ? (
             <Markdown
               onLoadEnd={this.handleOnContentLoadEnd}
@@ -409,10 +403,11 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
                 : I18n.t("email.validate.content1", { email })}
             </Markdown>
           ) : (
-            <View style={styles.validated}>
-              <NBText alignCenter={true}>
-                {I18n.t("email.validate.validated_ok")}
-              </NBText>
+            <View
+              style={[IOStyles.alignCenter, IOStyles.horizontalContentPadding]}
+            >
+              <VSpacer size={8} />
+              <Body>{I18n.t("email.validate.validated_ok")}</Body>
             </View>
           )}
           <VSpacer size={24} />
