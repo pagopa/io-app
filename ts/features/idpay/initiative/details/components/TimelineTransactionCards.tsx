@@ -1,4 +1,4 @@
-import { ListItem, Text } from "native-base";
+import { ListItem } from "native-base";
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import { IbanOperationDTO } from "../../../../../../definitions/idpay/timeline/IbanOperationDTO";
@@ -6,6 +6,7 @@ import { InstrumentOperationDTO } from "../../../../../../definitions/idpay/time
 import { OnboardingOperationDTO } from "../../../../../../definitions/idpay/timeline/OnboardingOperationDTO";
 import { TransactionOperationDTO } from "../../../../../../definitions/idpay/timeline/TransactionOperationDTO";
 import { HSpacer } from "../../../../../components/core/spacer/Spacer";
+import { Body } from "../../../../../components/core/typography/Body";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -40,7 +41,7 @@ export const TimelineTransactionCard = ({
   transaction
 }: TransactionProps<TransactionOperationDTO>) => (
   <BaseTransactionCard>
-    <Text>LOGO</Text>
+    <Body>LOGO</Body>
     <HSpacer size={16} />
     <View style={IOStyles.flex}>
       <H4>{transaction.operationType}</H4>
@@ -60,7 +61,7 @@ export const OnboardingTransactionCard = ({
   transaction
 }: TransactionProps<OnboardingOperationDTO>) => (
   <BaseTransactionCard>
-    <Text>LOGO</Text>
+    <Body>LOGO</Body>
     <HSpacer size={16} />
     <View style={IOStyles.flex}>
       <H4>{transaction.operationType}</H4>
@@ -77,7 +78,7 @@ export const InstrumentOnboardingCard = ({
   transaction
 }: TransactionProps<InstrumentOperationDTO>) => (
   <BaseTransactionCard>
-    <Text>LOGO</Text>
+    <Body>LOGO</Body>
     <HSpacer size={16} />
     <View style={IOStyles.flex}>
       <H4>
@@ -96,7 +97,7 @@ export const IbanOnboardingCard = ({
   transaction
 }: TransactionProps<IbanOperationDTO>) => (
   <BaseTransactionCard>
-    <Text>IBANLOGO</Text>
+    <Body>IBANLOGO</Body>
     <HSpacer size={16} />
     <View style={IOStyles.flex}>
       <H4>{transaction.operationType}</H4>

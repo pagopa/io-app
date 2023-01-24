@@ -1,4 +1,3 @@
-import { Text } from "native-base";
 import * as React from "react";
 import { View, Image, ImageBackground, StyleSheet } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
@@ -14,6 +13,8 @@ import { formatNumberAmount } from "../../../../../utils/stringBuilder";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import cardBg from "../../../../../../img/features/idpay/card_full.png";
 import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
+import { Body } from "../../../../../components/core/typography/Body";
+import { H1 } from "../../../../../components/core/typography/H1";
 
 type Props = {
   status: StatusEnum;
@@ -89,21 +90,23 @@ const InitiativeCardComponent = (props: Props) => {
             <VSpacer size={8} />
 
             <H2 color="white">{props.initiativeName}</H2>
-            <Text style={{ color: IOColors.white }}>{`${TypedI18n.t(
-              "idpay.initiative.details.initiativeCard.validUntil"
-            )} ${formatDateAsLocal(props.endDate, true)}`}</Text>
+            <Body color="white">
+              {`${TypedI18n.t(
+                "idpay.initiative.details.initiativeCard.validUntil"
+              )} ${formatDateAsLocal(props.endDate, true)}`}
+            </Body>
           </View>
           <View style={styles.row}>
             <View>
-              <Text
-                bold={true}
-                style={[
-                  !isInitiativeConfigured ? styles.consumedOpacity : {},
-                  styles.amount
-                ]}
+              <View
+                style={!isInitiativeConfigured ? styles.consumedOpacity : {}}
               >
-                {formatNumberAmount(props.amount || 0, true)}
-              </Text>
+                {/* Using H1 here seems wrong. We need a custom
+                typographic component for the wallet cards. */}
+                <H1 color="white">
+                  {formatNumberAmount(props.amount || 0, true)}
+                </H1>
+              </View>
               <H5 color="white">
                 {TypedI18n.t(
                   "idpay.initiative.details.initiativeCard.availableAmount"
@@ -114,15 +117,13 @@ const InitiativeCardComponent = (props: Props) => {
             <HSpacer size={8} />
 
             <View>
-              <Text
-                bold={true}
-                style={[
-                  !isInitiativeConfigured ? styles.consumedOpacity : {},
-                  styles.amount
-                ]}
+              <View
+                style={!isInitiativeConfigured ? styles.consumedOpacity : {}}
               >
-                {formatNumberAmount(props.accrued || 0, true)}
-              </Text>
+                <H1 color="white">
+                  {formatNumberAmount(props.accrued || 0, true)}
+                </H1>
+              </View>
 
               <H5 color="white">
                 {TypedI18n.t(

@@ -1,5 +1,5 @@
 import { useActor } from "@xstate/react";
-import { Text } from "native-base";
+import { Text as NBButtonText } from "native-base";
 import React from "react";
 import { View, SafeAreaView, StyleSheet } from "react-native";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
@@ -29,7 +29,7 @@ const FailureScreen = () => {
           bordered={true}
           onPress={handleClosePress}
         >
-          <Text>{"Chiudi"}</Text>
+          <NBButtonText>{"Chiudi"}</NBButtonText>
         </ButtonDefaultOpacity>
       </View>
     </SafeAreaView>

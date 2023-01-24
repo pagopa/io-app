@@ -1,7 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Route, useNavigation, useRoute } from "@react-navigation/core";
 import { useFocusEffect } from "@react-navigation/native";
-import { Text } from "native-base";
 import React, { useCallback } from "react";
 import { View, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
@@ -11,6 +10,7 @@ import {
 } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
 import EmptyInitiativeSvg from "../../../../../../img/features/idpay/empty_initiative.svg";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
+import { Body } from "../../../../../components/core/typography/Body";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -36,9 +36,6 @@ const styles = StyleSheet.create({
   newInitiativeMessageContainer: {
     alignItems: "center",
     justifyContent: "center"
-  },
-  textCenter: {
-    textAlign: "center"
   },
   flexGrow: {
     flexGrow: 1
@@ -68,12 +65,14 @@ const InitiativeNotConfiguredComponent = () => (
       )}
     </H3>
     <VSpacer size={16} />
-    <Text style={styles.textCenter}>
-      {I18n.t(
-        "idpay.initiative.details.initiativeDetailsScreen.notConfigured.footer",
-        { initiative: "18 app" }
-      )}
-    </Text>
+    <View style={IOStyles.alignCenter}>
+      <Body>
+        {I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.notConfigured.footer",
+          { initiative: "18 app" }
+        )}
+      </Body>
+    </View>
   </View>
 );
 

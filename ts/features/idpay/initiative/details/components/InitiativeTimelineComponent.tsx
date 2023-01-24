@@ -1,5 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { List, Text } from "native-base";
+import { List } from "native-base";
 import React, { useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import { OperationTypeEnum as IbanOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/IbanOperationDTO";
@@ -61,7 +61,7 @@ const pickTransactionCard = (transaction: OperationListDTO) => {
     case IbanOperationTypeEnum.ADD_IBAN:
       return <IbanOnboardingCard transaction={transaction} />;
     default:
-      return <Text>Error loading {transaction.operationType}</Text>;
+      return <Body>Error loading {transaction.operationType}</Body>;
   }
 };
 

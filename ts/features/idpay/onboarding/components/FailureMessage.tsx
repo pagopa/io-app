@@ -1,12 +1,13 @@
-import { Text } from "native-base";
 import React from "react";
-import { StyleSheet } from "react-native";
+import { View } from "react-native";
 import {
   IOPictogramType,
   Pictogram
 } from "../../../../components/core/pictograms";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
+import { Body } from "../../../../components/core/typography/Body";
 import { H3 } from "../../../../components/core/typography/H3";
+import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { OnboardingFailureType } from "../xstate/failure";
 
 type Props = {
@@ -54,17 +55,13 @@ const FailureMessage = (props: Props) => {
     <>
       <Pictogram name={failure.picture} size={80} />
       <VSpacer size={16} />
-      <H3 style={styles.title}>{failure.title}</H3>
-      <VSpacer size={16} />
-      <Text alignCenter={true}>{failure.subtitle}</Text>
+      <View style={IOStyles.alignCenter}>
+        <H3>{failure.title}</H3>
+        <VSpacer size={16} />
+        <Body>{failure.subtitle}</Body>
+      </View>
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  title: {
-    textAlign: "center"
-  }
-});
 
 export default FailureMessage;

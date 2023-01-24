@@ -1,6 +1,5 @@
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { useSelector } from "@xstate/react";
-import { Text } from "native-base";
 import React from "react";
 import { View, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { IbanDTO } from "../../../../../../../definitions/idpay/iban/IbanDTO";
@@ -131,10 +130,12 @@ const IbanEnrollmentScreen = () => {
             <View style={styles.infoRow}>
               <Icon name="profileAlt" color="grey" />
               <HSpacer size={16} />
-              <Text style={IOStyles.flex}>
-                Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento
-                visitando la sezione Profilo
-              </Text>
+              <View style={IOStyles.flex}>
+                <Body>
+                  Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento
+                  visitando la sezione Profilo
+                </Body>
+              </View>
             </View>
           </ScrollView>
         </View>
