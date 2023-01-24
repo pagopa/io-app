@@ -748,6 +748,7 @@ onboarding:
     headerTitle: "Aktivierung"
     title: "Biometrische Authentifizierung"
     body:
+      enrolledText: !include onboarding/tos_fingerprint_enrolled.md
       enrolledType:
         fingerprint: "deinen Fingerabdruck"
         faceId: "Face ID"
