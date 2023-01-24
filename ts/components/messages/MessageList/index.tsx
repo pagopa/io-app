@@ -36,26 +36,44 @@ const styles = StyleSheet.create({
   }
 });
 
-type Props = {
-  variant: "paginated" | "not-paginated";
+type CommonProps = {
   messages: ReadonlyArray<UIMessage>;
-  nextCursor?: string;
-  previousCursor?: string;
   ListEmptyComponent?: EmptyComponent;
   ListHeaderComponent?: React.ReactElement;
   onLongPressItem?: (id: string) => void;
   onPressItem?: (message: UIMessage) => void;
   /** An optional list of messages to mark as selected */
   selectedMessageIds?: ReadonlySet<string>;
+  testID?: string;
+};
+
+type PaginatedProps = {
+  variant: "paginated";
+  nextCursor?: string;
+  previousCursor?: string;
   refresh?: () => void;
   fetchNextPage?: () => void;
   fetchPreviousPage?: (cursor: Cursor) => void;
-  testID?: string;
   isSome?: boolean;
   isError?: boolean;
   isLoading?: boolean;
   isRefreshing?: boolean;
 };
+
+type NotPaginatedProps = {
+  variant: "not-paginated";
+  nextCursor?: never;
+  previousCursor?: never;
+  refresh?: never;
+  fetchNextPage?: never;
+  fetchPreviousPage?: never;
+  isSome?: never;
+  isError?: never;
+  isLoading?: never;
+  isRefreshing?: never;
+};
+
+type Props = CommonProps & (PaginatedProps | NotPaginatedProps);
 
 const Loader = () => (
   <ActivityIndicator
@@ -91,14 +109,6 @@ const minimumRefreshInterval = 60000 as Millisecond; // 1 minute
  * A component to load more data dynamically (infinite list)
  * The variant prop changes the behavior of the component:
  * if it's not-paginated so load more data is prevented
- *
- * @param ListEmptyComponent
- * @param animated
- * @param filteredMessages This list is used instead of the messages from the store
- * @param onLongPressItem
- * @param onPressItem
- * @param selectedMessageIds An optional list of messages to mark as selected
- * @constructor
  */
 const MessageList = ({
   variant,
