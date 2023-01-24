@@ -1,7 +1,7 @@
 import { Text as NBText } from "native-base";
 import * as React from "react";
 import { useNavigation } from "@react-navigation/native";
-import { StyleSheet, View } from "react-native";
+import { NativeModules, StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { useEffect, useState } from "react";
@@ -31,9 +31,21 @@ import ROUTES from "../../navigation/routes";
 import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
 import { AuthenticationParamsList } from "../../navigation/params/AuthenticationParamsList";
 import { IOColors } from "../../components/core/variables/IOColors";
+import { getMajorIosVersion, isIos } from "../../utils/platform";
+import { IO_INTERNAL_LINK } from "../../utils/navigation";
+import {
+  getIdpLoginUri,
+  LOGIN_FAILURE_PAGE,
+  LOGIN_SUCCESS_PAGE
+} from "../../utils/login";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
+
+type profileOrErrorUrlType = { profileOrErrorUrl: string; loginUri?: never };
+type loginUri = { loginUri: string; profileOrErrorUrl?: never };
+
+export type navigationLoginUri = profileOrErrorUrlType | loginUri;
 
 const TAPS_TO_OPEN_TESTIDP = 5;
 
@@ -83,6 +95,24 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
       >
     >();
 
+  const navigationTypedParams = (url: string): navigationLoginUri =>
+    url.includes(IO_INTERNAL_LINK)
+      ? {
+          profileOrErrorUrl: url
+        }
+      : {
+          loginUri: url
+        };
+  const navigate = (profileOrErrorUrlOrLoginUri: string) => {
+    const parameters: navigationLoginUri = navigationTypedParams(
+      profileOrErrorUrlOrLoginUri
+    );
+    navigation.navigate(ROUTES.AUTHENTICATION, {
+      screen: ROUTES.AUTHENTICATION_IDP_LOGIN,
+      params: parameters
+    });
+  };
+
   const onIdpSelected = (idp: LocalIdpsFallback) => {
     if (idp.isTestIdp === true && counter < TAPS_TO_OPEN_TESTIDP) {
       const newValue = (counter + 1) % (TAPS_TO_OPEN_TESTIDP + 1);
@@ -90,9 +120,32 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
     } else {
       props.setSelectedIdp(idp);
       handleSendAssistanceLog(choosenTool, `IDP selected: ${idp.id}`);
-      navigation.navigate(ROUTES.AUTHENTICATION, {
-        screen: ROUTES.AUTHENTICATION_IDP_LOGIN
-      });
+
+      const loginUri = getIdpLoginUri(idp.id);
+
+      if (isIos && getMajorIosVersion() >= 13) {
+        NativeModules.secureLogin.signIn(
+          loginUri,
+          IO_INTERNAL_LINK,
+          (responseUrl: string) => {
+            // if user press "Cancel", don't navigate
+            if (responseUrl.includes("com.apple")) {
+              return;
+            } else if (
+              responseUrl.includes(LOGIN_SUCCESS_PAGE) ||
+              responseUrl.includes(LOGIN_FAILURE_PAGE)
+            ) {
+              // responseUrl is always a string, if includes a known parameter, let the old page handle it
+              navigate(responseUrl);
+            } else {
+              // this is the case when something goes wrong with the authentication session module. It returns an error code (string) in "responseUrl".
+              return;
+            }
+          }
+        );
+      } else {
+        navigate(loginUri);
+      }
     }
   };
 

@@ -15,6 +15,7 @@ export const isOnboardingCompleted = () => {
 };
 
 // Prefix to match deeplink uri like `ioit://PROFILE_MAIN`
+export const IO_INTERNAL_LINK = "ioit";
 export const IO_INTERNAL_LINK_PROTOCOL = "ioit:";
 export const IO_INTERNAL_LINK_PREFIX = IO_INTERNAL_LINK_PROTOCOL + "//";
 

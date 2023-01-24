@@ -31,6 +31,7 @@
 		9975E38DE95949D28D07A275 /* RobotoMono-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B7088D9B42BA4275A767BEFF /* RobotoMono-Bold.ttf */; };
 		9AA4918716C04270861750C9 /* io-icon-font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FB6C250A30844C039ED2913E /* io-icon-font.ttf */; };
 		A87A3CD6B126B5D47C610EFC /* libPods-ItaliaApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 76292B57C7589DC2DB43BB9F /* libPods-ItaliaApp.a */; };
+		BDE8DCA1297E863700F26850 /* secureLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = BDE8DCA0297E863700F26850 /* secureLogin.m */; };
 		BE1A42156484487BABBC4DED /* TitilliumWeb-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 309BA0207AA24FE9A0EBE61C /* TitilliumWeb-Bold.ttf */; };
 		C2CF038002D24FEEAB41B336 /* RobotoMono-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 640E574519CA4183B230AF22 /* RobotoMono-LightItalic.ttf */; };
 		D18E075B28304466B6CA2381 /* TitilliumWeb-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B65D221FCB5A461FBC44285D /* TitilliumWeb-LightItalic.ttf */; };
@@ -101,6 +102,7 @@
 		B021D4CC17ED4D54B7944FED /* TitilliumWeb-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TitilliumWeb-SemiBold.ttf"; path = "../assets/fonts/TitilliumWeb/TitilliumWeb-SemiBold.ttf"; sourceTree = "<group>"; };
 		B65D221FCB5A461FBC44285D /* TitilliumWeb-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TitilliumWeb-LightItalic.ttf"; path = "../assets/fonts/TitilliumWeb/TitilliumWeb-LightItalic.ttf"; sourceTree = "<group>"; };
 		B7088D9B42BA4275A767BEFF /* RobotoMono-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "RobotoMono-Bold.ttf"; path = "../assets/fonts/RobotoMono/RobotoMono-Bold.ttf"; sourceTree = "<group>"; };
+		BDE8DCA0297E863700F26850 /* secureLogin.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = secureLogin.m; sourceTree = "<group>"; };
 		C576763326D1F8C31CF3ABC8 /* libPods-ItaliaApp-ItaliaAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ItaliaApp-ItaliaAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CED8B1FF1E254583BB3F285F /* TitilliumWeb-SemiBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TitilliumWeb-SemiBoldItalic.ttf"; path = "../assets/fonts/TitilliumWeb/TitilliumWeb-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -173,6 +175,7 @@
 				F09FEB0D231818E3007071DB /* Localizable.strings */,
 				13B07FB71A68108700A75B9A /* main.m */,
 				2AFAC65324C9B7C300E85199 /* ItaliaApp-Bridging-Header.h */,
+				BDE8DCA0297E863700F26850 /* secureLogin.m */,
 			);
 			name = ItaliaApp;
 			sourceTree = "<group>";
@@ -764,6 +767,7 @@
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				BDE8DCA1297E863700F26850 /* secureLogin.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -37,11 +37,7 @@ import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus
 import { idpContextualHelpDataFromIdSelector } from "../../store/reducers/content";
 import { GlobalState } from "../../store/reducers/types";
 import { SessionToken } from "../../types/SessionToken";
-import {
-  getIdpLoginUri,
-  getIntentFallbackUrl,
-  onLoginUriChanged
-} from "../../utils/login";
+import { getIntentFallbackUrl, onLoginUriChanged } from "../../utils/login";
 import { getSpidErrorCodeDescription } from "../../utils/spidErrorCode";
 import {
   assistanceToolRemoteConfig,
@@ -222,7 +218,7 @@ class IdpLoginScreen extends React.Component<Props, State> {
     return !isLoginUrlWithToken;
   };
 
-  private renderMask = () => {
+  private renderMask = (profileOrErrorUrl: string | undefined) => {
     if (pot.isLoading(this.state.requestState)) {
       return (
         <View style={styles.refreshIndicatorContainer}>
@@ -259,17 +255,25 @@ class IdpLoginScreen extends React.Component<Props, State> {
               block={true}
               light={true}
               bordered={true}
+              primary={!!profileOrErrorUrl}
             >
-              <NBText>{I18n.t("global.buttons.cancel")}</NBText>
+              {!profileOrErrorUrl && (
+                <NBText>{I18n.t("global.buttons.cancel")}</NBText>
+              )}
+              {profileOrErrorUrl && (
+                <NBText>{I18n.t("global.buttons.retry")}</NBText>
+              )}
             </ButtonDefaultOpacity>
-            <ButtonDefaultOpacity
-              onPress={this.setRequestStateToLoading}
-              style={styles.flex2}
-              block={true}
-              primary={true}
-            >
-              <NBText>{I18n.t("global.buttons.retry")}</NBText>
-            </ButtonDefaultOpacity>
+            {!profileOrErrorUrl && (
+              <ButtonDefaultOpacity
+                onPress={this.setRequestStateToLoading}
+                style={styles.flex2}
+                block={true}
+                primary={true}
+              >
+                <NBText>{I18n.t("global.buttons.retry")}</NBText>
+              </ButtonDefaultOpacity>
+            )}
           </View>
         </View>
       );
@@ -308,7 +312,18 @@ class IdpLoginScreen extends React.Component<Props, State> {
       // before the redux state is updated successfully)
       return <LoadingSpinnerOverlay isLoading={true} />;
     }
-    const loginUri = getIdpLoginUri(loggedOutWithIdpAuth.idp.id);
+
+    const profileOrErrorUrl = this.props.route.params.profileOrErrorUrl;
+    const loginUri = this.props.route.params.loginUri;
+
+    const urlToLoad = profileOrErrorUrl || loginUri || "";
+
+    // create a WebViewNavigation event to reproduce the flow of a standard login call
+    if (profileOrErrorUrl && !hasError) {
+      const event: WebViewNavigation = { url: urlToLoad } as WebViewNavigation;
+      this.handleShouldStartLoading(event);
+    }
+
     return (
       <BaseScreenComponent
         goBack={true}
@@ -319,21 +334,21 @@ class IdpLoginScreen extends React.Component<Props, State> {
         }`}
       >
         <View style={styles.webViewWrapper}>
-          {!hasError && (
+          {!hasError && loginUri && (
             <WebView
               cacheEnabled={false}
               androidCameraAccessDisabled={true}
               androidMicrophoneAccessDisabled={true}
               textZoom={100}
               originWhitelist={originSchemasWhiteList}
-              source={{ uri: loginUri }}
+              source={{ uri: urlToLoad }}
               onError={this.handleLoadingError}
               javaScriptEnabled={true}
               onNavigationStateChange={this.handleNavigationStateChange}
               onShouldStartLoadWithRequest={this.handleShouldStartLoading}
             />
           )}
-          {this.renderMask()}
+          {this.renderMask(profileOrErrorUrl)}
         </View>
       </BaseScreenComponent>
     );

@@ -1,13 +1,14 @@
 import { CieCardReaderScreenNavigationParams } from "../../screens/authentication/cie/CieCardReaderScreen";
 import { CieConsentDataUsageScreenNavigationParams } from "../../screens/authentication/cie/CieConsentDataUsageScreen";
 import { CieWrongCiePinScreenNavigationParams } from "../../screens/authentication/cie/CieWrongCiePinScreen";
+import { navigationLoginUri } from "../../screens/authentication/IdpSelectionScreen";
 import ROUTES from "../routes";
 
 export type AuthenticationParamsList = {
   [ROUTES.AUTHENTICATION_LANDING]: undefined;
   [ROUTES.AUTHENTICATION_IDP_SELECTION]: undefined;
   [ROUTES.AUTHENTICATION_CIE]: undefined;
-  [ROUTES.AUTHENTICATION_IDP_LOGIN]: undefined;
+  [ROUTES.AUTHENTICATION_IDP_LOGIN]: navigationLoginUri;
   [ROUTES.AUTHENTICATION_IDP_TEST]: undefined;
   [ROUTES.AUTHENTICATION_SPID_INFORMATION]: undefined;
   [ROUTES.AUTHENTICATION_SPID_CIE_INFORMATION]: undefined;
