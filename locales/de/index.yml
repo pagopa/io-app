@@ -1862,7 +1862,8 @@ systemsOff:
   closeApp: "Schließe die App und versuche es erneut"
 contextualHelp:
   title: Die IO-App hilft Ihnen
-requestLabel: "Boni und Rabatte"
+bonus:
+  requestLabel: "Boni und Rabatte"
 features:
   euCovidCertificate:
     save:
