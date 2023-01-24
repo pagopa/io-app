@@ -1,6 +1,6 @@
 import * as React from "react";
-import { Alert, StyleSheet, View, Platform } from "react-native";
-import { Badge, Text as NBText } from "native-base";
+import { Alert, StyleSheet, View } from "react-native";
+import { Text as NBText } from "native-base";
 import { IOBadge } from "../../../components/core/IOBadge";
 import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";
 import { Body } from "../../../components/core/typography/Body";
@@ -66,9 +66,8 @@ export const DSTypography = () => (
     <VSpacer size={16} />
     <View style={IOStyles.alignCenter}>
       <Body weight="SemiBold">This is a centered text</Body>
+      <Body weight="SemiBold">Another centered text</Body>
     </View>
-    <VSpacer size={40} />
-    <IOBadgeRow />
     <VSpacer size={40} />
   </DesignSystemScreen>
 );
