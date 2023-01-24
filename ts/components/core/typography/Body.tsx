@@ -6,7 +6,7 @@ import { useTypographyFactory } from "./Factory";
 
 type AllowedColors = Extract<
   IOColorType,
-  "bluegreyDark" | "white" | "blue" | "bluegrey"
+  "bluegreyDark" | "white" | "blue" | "bluegrey" | "bluegreyLight"
 >;
 type AllowedWeight = Extract<IOFontWeight, "Regular" | "SemiBold">;
 

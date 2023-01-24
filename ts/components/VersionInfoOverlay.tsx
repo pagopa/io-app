@@ -1,6 +1,5 @@
-import { Text as NBText } from "native-base";
 import * as React from "react";
-import { View, Platform, StyleSheet } from "react-native";
+import { View, Platform, StyleSheet, Pressable } from "react-native";
 import DeviceInfo from "react-native-device-info";
 
 import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
@@ -13,10 +12,13 @@ import { GlobalState } from "../store/reducers/types";
 import { getAppVersion } from "../utils/appVersion";
 import { clipboardSetStringWithFeedback } from "../utils/clipboard";
 import { IOColors, hexToRgba } from "../components/core/variables/IOColors";
+import themeVariables from "../theme/variables";
+import { H5 } from "./core/typography/H5";
 
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps;
 
-const bgColor = hexToRgba(IOColors.white, 0.67);
+const bgColor = hexToRgba(IOColors.white, 0.4);
+const itemBorderColor = hexToRgba(IOColors.black, 0.1);
 
 const styles = StyleSheet.create({
   versionContainer: {
@@ -33,22 +35,21 @@ const styles = StyleSheet.create({
     alignItems: "center",
     zIndex: 1000
   },
-
   versionText: {
-    padding: 2,
-    backgroundColor: bgColor,
-    fontSize: 16,
-    lineHeight: 24,
-    color: IOColors.black
+    borderColor: itemBorderColor,
+    borderWidth: 1,
+    paddingHorizontal: 4,
+    borderRadius: themeVariables.borderRadiusBase,
+    backgroundColor: bgColor
   },
-
   routeText: {
+    borderColor: itemBorderColor,
+    borderWidth: 1,
+    borderRadius: themeVariables.borderRadiusBase,
     maxWidth: widthPercentageToDP(80),
-    padding: 2,
+    paddingHorizontal: 4,
     backgroundColor: bgColor,
-    fontSize: 14,
-    lineHeight: 22,
-    color: IOColors.black
+    marginTop: 4
   }
 });
 
@@ -58,17 +59,21 @@ const VersionInfoOverlay: React.FunctionComponent<Props> = (props: Props) => {
 
   return (
     <View style={styles.versionContainer} pointerEvents="box-none">
-      <NBText
+      <Pressable
         style={styles.versionText}
         onPress={() => setShowRootName(prevState => !prevState)}
-      >{`v: ${appVersion}`}</NBText>
+      >
+        <H5 weight="SemiBold" color="bluegreyDark">{`v: ${appVersion}`}</H5>
+      </Pressable>
       {showRootName && (
-        <NBText
+        <Pressable
           style={styles.routeText}
           onPress={() => clipboardSetStringWithFeedback(props.screenNameDebug)}
         >
-          {props.screenNameDebug}
-        </NBText>
+          <H5 weight="Regular" color="bluegreyDark">
+            {props.screenNameDebug}
+          </H5>
+        </Pressable>
       )}
     </View>
   );
