@@ -1884,6 +1884,10 @@ systemsOff:
   closeApp: "Schließe die App und versuche es erneut"
 contextualHelp:
   title: Die IO-App hilft Ihnen
+bottomSheets:
+  ciePin:
+    title: "Wo finde ich meine PIN?"
+    content: !include bottomsheets/ciePin.md
 bonus:
   requestLabel: "Boni und Rabatte"
 features:
