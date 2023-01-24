@@ -19,6 +19,7 @@ import {
 } from "@pagopa/ts-commons/lib/tasks";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { pipe } from "fp-ts/lib/function";
+import URLParse from "url-parse";
 import { fetchMaxRetries, fetchTimeout } from "../config";
 
 // FIXME: This is a temporary type created to avoid
@@ -42,7 +43,8 @@ type FixedFetch = (
  */
 export function defaultRetryingFetch(
   timeout: Millisecond = fetchTimeout,
-  maxRetries: number = fetchMaxRetries
+  maxRetries: number = fetchMaxRetries,
+  signHttpRequest: boolean = true // TODO: set default to `false`
 ): typeof fetch {
   const fetchApi = (global as any).fetch;
   const abortableFetch = AbortableFetch(fetchApi);
@@ -60,7 +62,66 @@ export function defaultRetryingFetch(
     _ => _.status === 429,
     retryLogic
   );
-  return retriableFetch(retryWithTransient429s)(timeoutFetch);
+  return retriableFetch(retryWithTransient429s)(
+    (input: RequestInfo | URL, init?: RequestInit) => {
+      if (signHttpRequest) {
+        return signFetchWithLollipop(input, init, timeoutFetch);
+      } else {
+        return timeoutFetch(input, init);
+      }
+    }
+  );
+}
+
+/**
+ * Decorates the current fetch with LolliPOP headers and http-signature
+ */
+function signFetchWithLollipop(
+  input: RequestInfo | URL,
+  init: RequestInit | undefined,
+  wrappableFetch: FixedFetch
+) {
+  // eslint-disable-next-line functional/no-let
+  let newInit = init;
+  if (!JSON.stringify(input).includes("backend.json")) {
+    // eslint-disable-next-line no-console
+    console.log(typeof input === "string");
+    // eslint-disable-next-line no-console
+    console.log(input instanceof URL);
+    // eslint-disable-next-line no-console
+    console.log(JSON.stringify(input));
+    if (
+      typeof input === "string" &&
+      init &&
+      "headers" in init &&
+      init.headers &&
+      "method" in init &&
+      init.method
+    ) {
+      const inputUrl = new URLParse(input, true);
+      const queryString: string | undefined = inputUrl.href.split("?")[1];
+      // eslint-disable-next-line no-console
+      console.log(JSON.stringify(inputUrl));
+      newInit = {
+        ...init,
+        headers: {
+          ...init.headers,
+          "X-PagoPA-LolliPOP-Nonce": "xyz",
+          "X-PagoPA-LolliPOP-Method": init.method.toUpperCase(),
+          "X-PagoPA-LolliPOP-Authority": inputUrl.hostname,
+          "X-PagoPA-LolliPOP-Original-URL":
+            inputUrl.pathname + (queryString ? "?" + queryString : "")
+        }
+      };
+    }
+    // eslint-disable-next-line no-console
+    console.log("input: " + JSON.stringify(input));
+    // eslint-disable-next-line no-console
+    console.log("init: " + JSON.stringify(init));
+    // eslint-disable-next-line no-console
+    console.log("newInit: " + JSON.stringify(newInit));
+  }
+  return wrappableFetch(input, newInit);
 }
 
 /**
