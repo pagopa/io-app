@@ -749,7 +749,7 @@ onboarding:
     title: "Biometrische Authentifizierung"
     body:
       enrolledType:
-        fingerprint: "Dein Fingerabdruck"
+        fingerprint: "deinen Fingerabdruck"
         faceId: "Face ID"
         touchId: "Touch ID"
   shareData:
