@@ -1197,7 +1197,7 @@ wallet:
     pay: "Bezahle"
     cancelPayment: "Transaktion abbrechen"
     fee: "Transaktionsgebühr"
-    identificationMessage: "Bestätige die Transaktion durch Eingabe deines Freischaltcodes"
+    identificationMessage: "Bestätige die Transaktion durch Eingabe deines Entsperrcodes"
     transactionSuccess: "Die Zahlung wurde abgeschlossen!"
     transactionFailure: "Bei der Zahlung ist ein Fehler aufgetreten, bitte versuche es erneut!"
     transactionTimeout: "Die Bestätigung der Zahlung konnte nicht abrufen werden!"
