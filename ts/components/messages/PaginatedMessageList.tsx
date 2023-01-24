@@ -17,15 +17,15 @@ const styles = StyleSheet.create({
 });
 
 type OwnProps = {
+  isSome: boolean;
+  isError: boolean;
+  isLoading: boolean;
+  isRefreshing: boolean;
   nextCursor?: string;
   previousCursor?: string;
-  refresh?: () => void;
-  fetchNextPage?: () => void;
-  fetchPreviousPage?: (cursor: Cursor) => void;
-  isSome?: boolean;
-  isError?: boolean;
-  isLoading?: boolean;
-  isRefreshing?: boolean;
+  refresh: () => void;
+  fetchNextPage: () => void;
+  fetchPreviousPage: (cursor: Cursor) => void;
 };
 
 type Props = OwnProps & React.ComponentProps<typeof MessageList>;
@@ -67,7 +67,7 @@ const PaginatedMessageList = ({
   useActionOnFocus(() => {
     // check if there are new messages when the component becomes focused
     if (previousCursor) {
-      fetchPreviousPage?.(previousCursor);
+      fetchPreviousPage(previousCursor);
     }
   }, minimumRefreshInterval);
 
@@ -82,7 +82,7 @@ const PaginatedMessageList = ({
       refreshing={isRefreshFromUser || isRefreshing}
       onRefresh={() => {
         setIsRefreshFromUser(true);
-        refresh?.();
+        refresh();
       }}
     />
   );

@@ -14,14 +14,22 @@ const messages = successReloadMessagesPayload.messages;
 
 const ListEmptyComponent = () => <Text>{"empty"}</Text>;
 
+const defaultProps = {
+  ListEmptyComponent,
+  messages: [],
+  isSome: false,
+  isError: false,
+  isLoading: false,
+  isRefreshing: false,
+  refresh: jest.fn(),
+  fetchNextPage: jest.fn(),
+  fetchPreviousPage: jest.fn()
+};
+
 describe("MessageList component", () => {
   describe("when messages aren't loaded yet", () => {
     it("should not render the empty component", () => {
-      const { component } = renderComponent({
-        ListEmptyComponent,
-        messages: [],
-        isSome: false
-      });
+      const { component } = renderComponent(defaultProps);
       expect(component.queryByText("empty")).toBeNull();
     });
   });
@@ -29,8 +37,7 @@ describe("MessageList component", () => {
   describe("when there are no messages", () => {
     it("should render the empty component", () => {
       const { component } = renderComponent({
-        ListEmptyComponent,
-        messages: [],
+        ...defaultProps,
         isSome: true
       });
       expect(component.getByText("empty")).toBeDefined();
@@ -40,8 +47,7 @@ describe("MessageList component", () => {
   describe("when the messages state contains an error", () => {
     it("should render the error component", () => {
       const { component } = renderComponent({
-        ListEmptyComponent,
-        messages: [],
+        ...defaultProps,
         isError: true
       });
       expect(
@@ -54,7 +60,7 @@ describe("MessageList component", () => {
     // eslint-disable-next-line sonarjs/no-identical-functions
     it("should not render the empty component", () => {
       const { component } = renderComponent({
-        ListEmptyComponent,
+        ...defaultProps,
         messages,
         isSome: true
       });
@@ -63,7 +69,7 @@ describe("MessageList component", () => {
 
     it("should not render the error component", () => {
       const { component } = renderComponent({
-        ListEmptyComponent,
+        ...defaultProps,
         messages,
         isSome: true
       });
@@ -74,7 +80,7 @@ describe("MessageList component", () => {
 
     it("should render the first message in the state", () => {
       const { component } = renderComponent({
-        ListEmptyComponent,
+        ...defaultProps,
         messages,
         isSome: true
       });
