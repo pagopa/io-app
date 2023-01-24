@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "2.24.0-rc.0",
+  "version": "2.24.0-rc.2",
   "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v9.2.0-RELEASE/api_backend.yaml",
   "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v9.2.0-RELEASE/api_public.yaml",
   "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.23/definitions.yml",
@@ -126,7 +126,7 @@
     "color": "^3.0.0",
     "date-fns": "^1.29.0",
     "deprecated-react-native-prop-types": "^2.3.0",
-    "detox": "^19.7.0",
+    "detox": "^19.9.2",
     "eslint-plugin-react-native": "^4.0.0",
     "fbjs": "^3.0.2",
     "fp-ts": "^2.12.1",
