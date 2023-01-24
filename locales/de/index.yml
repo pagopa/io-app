@@ -875,16 +875,16 @@ wallet:
     bancomat:
       title: "Suche deine PagoBANCOMAT-Karten"
       description:
-        text1: "Indem du PagoBANCOMAT zu deinem Konto hinzufügst, kannst du an den auf IO verfügbaren Initiativen teilnehmen.\nWenn du fortfährst, akzeptierst du die"
+        text1: "Indem du PagoBANCOMAT zu deinem Konto hinzufügst, kannst du an den auf IO verfügbaren Initiativen teilnehmen.\nWenn du fortfährst, akzeptierst du die "
         text2: "Datenschutzbestimmungen."
-        text3: "Wenn du möchtest, kannst du die Bank wählen, bei der du eine aktive PagoBANCOMAT-Karte hast."
+        text3: "Wenn du möchtest, kannst du die Bank wählen, bei der du eine aktive PagoBANCOMAT-Karte hast. "
         text4: "Liste der verfügbaren Banken"
     bpay:
       title: "Zahle auf IO mit BANCOMAT Pay"
       description:
         text1: "Füge BANCOMAT Pay hinzu, um pagoPA-Zahlungsaufforderungen einfacher zu bezahlen sowie an den auf IO verfügbaren Initiativen teilzunehmen.\nWenn du fortfährst, akzeptierst du die "
         text2: "Datenschutzbestimmungen."
-        text3: "Drücke auf “Weiter”, um nach Konten, die auf dich lauten, zu suchen oder suche die Bank, bei der du ein aktives BANCOMAT Pay Konto hast."
+        text3: "Drücke auf “Weiter”, um nach Konten, die auf dich lauten, zu suchen oder suche die Bank, bei der du ein aktives BANCOMAT Pay Konto hast. "
         text4: "Liste der verfügbaren Banken"
     cobadge:
       title: "Suche deine Karten im internationalen Zahlungsnetzwerk"
@@ -1080,7 +1080,7 @@ wallet:
         title: "Gib die Kartennummer ein"
         body: "Gib die Ziffern auf der Vorderseite ein. IO prüft, ob die Karte mit deiner Steuernummer verbunden ist."
         disclaimer:
-          text1: "Wenn du fortfährst, akzeptierst du die"
+          text1: "Wenn du fortfährst, akzeptierst du die "
           text2: "Datenschutzbestimmungen"
       search:
         loading: "Wir überprüfen deine Karte\n\nWarte ein paar Sekunden"
@@ -1194,7 +1194,7 @@ wallet:
     transactionCosts: "Transaktionsgebühr"
     edit: "Bearbeiten"
     providedBy: "Durchgeführt von"
-    pay: "Bezahlen"
+    pay: "Bezahle"
     cancelPayment: "Transaktion abbrechen"
     fee: "Transaktionsgebühr"
     identificationMessage: "Bestätige die Transaktion durch Eingabe deines Freischaltcodes"
