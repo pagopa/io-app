@@ -83,6 +83,7 @@ export type Attachment = {
 };
 
 export type UIAttachmentId = string & IUnitTag<"UIAttachmentId">;
+export type AttachmentType = "GENERIC" | "PN" | "MVL";
 
 /**
  * Represent an attachment with the metadata and resourceUrl to retrieve the attachment
@@ -100,6 +101,8 @@ export type UIAttachment = {
   size?: Byte;
   // The url that can be used to retrieve the resource
   resourceUrl: ValidUrl;
+  // This category is needed to differentiate between generic and PN attachments
+  category: AttachmentType;
 };
 
 export const getPaymentExpirationInfo = (

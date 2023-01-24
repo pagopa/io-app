@@ -16,7 +16,7 @@ import { loadThirdPartyMessage } from "../../../features/messages/store/actions"
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { thirdPartyFromIdSelector } from "../../../store/reducers/entities/messages/thirdPartyById";
 import {
-  UIAttachmentId,
+  UIAttachment,
   UIMessage,
   UIMessageDetails
 } from "../../../store/reducers/entities/messages/types";
@@ -123,12 +123,12 @@ const MessageDetailsComponent = ({
   );
 
   const openAttachment = useCallback(
-    (attachmentId: UIAttachmentId) => {
+    (attachment: UIAttachment) => {
       navigation.navigate(ROUTES.MESSAGES_NAVIGATOR, {
         screen: ROUTES.MESSAGE_DETAIL_ATTACHMENT,
         params: {
           messageId,
-          attachmentId
+          attachment
         }
       });
     },
@@ -137,8 +137,10 @@ const MessageDetailsComponent = ({
 
   const renderThirdPartyAttachments = useCallback(
     (thirdPartyMessage: ThirdPartyMessageWithContent): React.ReactNode => {
-      const thirdPartyMessageAttachments =
-        attachmentsFromThirdPartyMessage(thirdPartyMessage);
+      const thirdPartyMessageAttachments = attachmentsFromThirdPartyMessage(
+        thirdPartyMessage,
+        "GENERIC"
+      );
       return thirdPartyMessageAttachments ? (
         <View style={styles.padded}>
           <MessageAttachments

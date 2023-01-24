@@ -8,17 +8,14 @@ import { IOColors } from "../../../components/core/variables/IOColors";
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
 import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
-import {
-  UIAttachment,
-  UIAttachmentId
-} from "../../../store/reducers/entities/messages/types";
+import { UIAttachment } from "../../../store/reducers/entities/messages/types";
 import { ContentTypeValues } from "../../../types/contentType";
 import { formatByte } from "../../../types/digitalInformationUnit";
 import { useAttachmentDownload } from "../hooks/useAttachmentDownload";
 
 type Props = {
   attachments: ReadonlyArray<UIAttachment>;
-  openPreview: (attachmentId: UIAttachmentId) => void;
+  openPreview: (attachment: UIAttachment) => void;
 };
 
 const styles = StyleSheet.create({
@@ -69,7 +66,7 @@ const AttachmentIcon = (props: {
  */
 const AttachmentItem = (props: {
   attachment: UIAttachment;
-  openPreview: (attachmentId: UIAttachmentId) => void;
+  openPreview: (attachment: UIAttachment) => void;
 }) => {
   const { downloadPot, onAttachmentSelect, bottomSheet } =
     useAttachmentDownload(props.attachment, props.openPreview);

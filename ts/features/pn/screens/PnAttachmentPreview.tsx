@@ -2,7 +2,7 @@ import React from "react";
 import { PnParamsList } from "../navigation/params";
 import {
   UIMessageId,
-  UIAttachmentId
+  UIAttachment
 } from "../../../store/reducers/entities/messages/types";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { MessageAttachmentPreview } from "../../messages/components/MessageAttachmentPreview";
@@ -10,7 +10,7 @@ import { mixpanelTrack } from "../../../mixpanel";
 
 export type PnAttachmentPreviewNavigationParams = Readonly<{
   messageId: UIMessageId;
-  attachmentId: UIAttachmentId;
+  attachment: UIAttachment;
 }>;
 
 export const PnAttachmentPreview = (
@@ -20,12 +20,12 @@ export const PnAttachmentPreview = (
   >
 ): React.ReactElement => {
   const messageId = props.route.params.messageId;
-  const attachmentId = props.route.params.attachmentId;
+  const attachment = props.route.params.attachment;
 
   return (
     <MessageAttachmentPreview
       messageId={messageId}
-      attachmentId={attachmentId}
+      attachment={attachment}
       onError={() => {
         void mixpanelTrack("PN_ATTACHMENT_PREVIEW_STATUS", {
           previewStatus: "error"

@@ -6,6 +6,9 @@ interface Some<T> {
   readonly value: T;
 }
 
+export const isStrictNone = <T, E>(p: pot.Pot<T, E>): boolean =>
+  pot.isNone(p) && !pot.isLoading(p) && !pot.isUpdating(p) && !pot.isError(p);
+
 // return true if pot is some and not someError and not someLoading
 export const isStrictSome = <T, E>(p: pot.Pot<T, E>): p is Some<T> =>
   p.kind === "PotSome";

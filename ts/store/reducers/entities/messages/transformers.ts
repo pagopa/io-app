@@ -10,6 +10,7 @@ import { ContentTypeValues } from "../../../../types/contentType";
 
 import {
   Attachment,
+  AttachmentType,
   EUCovidCertificate,
   PaymentData,
   PrescriptionData,
@@ -141,7 +142,8 @@ const generateAttachmentUrl = (messageId: string, attachmentUrl: string) =>
   )}`;
 
 export const attachmentsFromThirdPartyMessage = (
-  messageFromApi: ThirdPartyMessageWithContent
+  messageFromApi: ThirdPartyMessageWithContent,
+  category: AttachmentType
 ): Array<UIAttachment> | undefined => {
   const attachments = messageFromApi.third_party_message.attachments;
   return attachments?.map(_ => ({
@@ -149,6 +151,7 @@ export const attachmentsFromThirdPartyMessage = (
     id: _.id as string as UIAttachmentId,
     displayName: _.name ?? _.id,
     contentType: _.content_type ?? ContentTypeValues.applicationOctetStream,
-    resourceUrl: { href: generateAttachmentUrl(messageFromApi.id, _.url) }
+    resourceUrl: { href: generateAttachmentUrl(messageFromApi.id, _.url) },
+    category
   }));
 };

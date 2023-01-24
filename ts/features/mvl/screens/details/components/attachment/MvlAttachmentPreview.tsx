@@ -2,25 +2,22 @@ import React from "react";
 import { IOStackNavigationRouteProps } from "../../../../../../navigation/params/AppParamsList";
 import {
   UIMessageId,
-  UIAttachmentId
+  UIAttachment
 } from "../../../../../../store/reducers/entities/messages/types";
 import { MessageAttachmentPreview } from "../../../../../messages/components/MessageAttachmentPreview";
 import { MvlParamsList } from "../../../../navigation/params";
 
 export type MvlAttachmentPreviewNavigationParams = Readonly<{
   messageId: UIMessageId;
-  attachmentId: UIAttachmentId;
+  attachment: UIAttachment;
 }>;
 
 export const MvlAttachmentPreview = (
   props: IOStackNavigationRouteProps<MvlParamsList, "MVL_ATTACHMENT">
 ): React.ReactElement => {
   const messageId = props.route.params.messageId;
-  const attachmentId = props.route.params.attachmentId;
+  const attachment = props.route.params.attachment;
   return (
-    <MessageAttachmentPreview
-      messageId={messageId}
-      attachmentId={attachmentId}
-    />
+    <MessageAttachmentPreview messageId={messageId} attachment={attachment} />
   );
 };

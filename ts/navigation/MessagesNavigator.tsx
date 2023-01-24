@@ -12,7 +12,7 @@ import PN_ROUTES from "../features/pn/navigation/routes";
 import { useIOSelector } from "../store/hooks";
 import { isGestureEnabled } from "../utils/navigation";
 import { isPnEnabledSelector } from "../store/reducers/backendStatus";
-import { PnAttachmentPreview } from "../features/pn/screens/PnAttachmentPreview";
+import { MessageDetailAttachment } from "../screens/messages/MessageAttachment";
 import { MessagesParamsList } from "./params/MessagesParamsList";
 import ROUTES from "./routes";
 
@@ -39,7 +39,7 @@ export const MessagesStackNavigator = () => {
 
       <Stack.Screen
         name={ROUTES.MESSAGE_DETAIL_ATTACHMENT}
-        component={PnAttachmentPreview}
+        component={MessageDetailAttachment}
       />
 
       <Stack.Screen

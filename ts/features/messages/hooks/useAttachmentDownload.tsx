@@ -11,16 +11,13 @@ import { showToast } from "../../../utils/showToast";
 import { mvlPreferencesSetWarningForAttachments } from "../../mvl/store/actions";
 import { mvlPreferencesSelector } from "../../mvl/store/reducers/preferences";
 import { downloadAttachment } from "../../../store/actions/messages";
-import {
-  UIAttachment,
-  UIAttachmentId
-} from "../../../store/reducers/entities/messages/types";
-import { downloadFromAttachmentSelector } from "../../../store/reducers/entities/messages/downloads";
+import { UIAttachment } from "../../../store/reducers/entities/messages/types";
+import { downloadPotForMessageAttachmentSelector } from "../../../store/reducers/entities/messages/downloads";
 import { useDownloadAttachmentBottomSheet } from "./useDownloadAttachmentBottomSheet";
 
 export const useAttachmentDownload = (
   attachment: UIAttachment,
-  openPreview: (attachmentId: UIAttachmentId) => void
+  openPreview: (attachment: UIAttachment) => void
 ) => {
   const [isLoading, setIsLoading] = useState(false);
 
@@ -29,7 +26,7 @@ export const useAttachmentDownload = (
   const { showAlertForAttachments } = useIOSelector(mvlPreferencesSelector);
 
   const downloadPot = useIOSelector(state =>
-    downloadFromAttachmentSelector(state, attachment)
+    downloadPotForMessageAttachmentSelector(state, attachment)
   );
 
   const openAttachment = useCallback(async () => {
@@ -44,7 +41,7 @@ export const useAttachmentDownload = (
       const path = download.path;
       const attachment = download.attachment;
       if (attachment.contentType === ContentTypeValues.applicationPdf) {
-        openPreview(attachment.id);
+        openPreview(attachment);
       } else {
         if (isIos) {
           ReactNativeBlobUtil.ios.presentOptionsMenu(path);
@@ -92,6 +89,11 @@ export const useAttachmentDownload = (
 
   const downloadAttachmentIfNeeded = async () => {
     if (pot.isLoading(downloadPot)) {
+      return;
+    }
+
+    if (attachment.category === "GENERIC") {
+      openPreview(attachment);
       return;
     }
 

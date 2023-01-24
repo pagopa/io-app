@@ -14,7 +14,7 @@ export const toPNMessage = (
     return {
       ...maybeNotification.right,
       serviceId: messageFromApi.sender_service_id,
-      attachments: attachmentsFromThirdPartyMessage(messageFromApi)
+      attachments: attachmentsFromThirdPartyMessage(messageFromApi, "PN")
     };
   }
   return undefined;

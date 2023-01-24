@@ -1,30 +1,40 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import React, { useState } from "react";
-import { SafeAreaView, StyleSheet } from "react-native";
+import React, { useCallback, useEffect, useState } from "react";
+import { ActivityIndicator, SafeAreaView, StyleSheet } from "react-native";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import Pdf from "react-native-pdf";
 import image from "../../../../img/servicesStatus/error-detail-icon.png";
+import { Body } from "../../../components/core/typography/Body";
 import { IOColors } from "../../../components/core/variables/IOColors";
-import WorkunitGenericFailure from "../../../components/error/WorkunitGenericFailure";
 import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
-import { useIOSelector } from "../../../store/hooks";
+import { downloadAttachment } from "../../../store/actions/messages";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { downloadPotForMessageAttachmentSelector } from "../../../store/reducers/entities/messages/downloads";
 import {
-  Download,
-  downloadFromAttachmentSelector
-} from "../../../store/reducers/entities/messages/downloads";
-import {
-  UIAttachmentId,
+  UIAttachment,
   UIMessageId
 } from "../../../store/reducers/entities/messages/types";
+import variables from "../../../theme/variables";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { isIos } from "../../../utils/platform";
+import { isStrictNone } from "../../../utils/pot";
 import { share } from "../../../utils/share";
 import { showToast } from "../../../utils/showToast";
 import { confirmButtonProps } from "../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+
+type Props = {
+  messageId: UIMessageId;
+  attachment: UIAttachment;
+  onLoadComplete?: () => void;
+  onError?: () => void;
+  onShare?: () => void;
+  onOpen?: () => void;
+  onDownload?: () => void;
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -33,11 +43,74 @@ const styles = StyleSheet.create({
   pdf: {
     flex: 1,
     backgroundColor: IOColors.bluegrey
+  },
+  loadingBody: {
+    marginTop: variables.spacerLargeHeight
   }
 });
 
+const renderDownloadFeedback = () => (
+  <>
+    <ActivityIndicator
+      size={"large"}
+      accessible={true}
+      accessibilityHint={I18n.t("global.accessibility.activityIndicator.hint")}
+      accessibilityLabel={I18n.t(
+        "global.accessibility.activityIndicator.label"
+      )}
+      importantForAccessibility={"no-hide-descendants"}
+    />
+    <Body style={styles.loadingBody}>
+      {I18n.t("features.messages.loading.subtitle")}
+    </Body>
+  </>
+);
+
+const renderError = (title: string, body: string) => (
+  <InfoScreenComponent
+    image={renderInfoRasterImage(image)}
+    title={title}
+    body={body}
+  />
+);
+
+const renderPDF = (
+  isPDFError: boolean,
+  downloadPath: string,
+  props: Props,
+  onPDFError: () => void
+) => (
+  <>
+    {isPDFError ? (
+      renderError(
+        I18n.t(
+          "features.mvl.details.attachments.pdfPreview.errors.previewing.title"
+        ),
+        I18n.t(
+          "features.mvl.details.attachments.pdfPreview.errors.previewing.body"
+        )
+      )
+    ) : (
+      <Pdf
+        source={{ uri: downloadPath, cache: true }}
+        style={styles.pdf}
+        onLoadComplete={props.onLoadComplete}
+        onError={onPDFError}
+      />
+    )}
+    {renderFooter(
+      props.attachment,
+      downloadPath,
+      props.onShare,
+      props.onOpen,
+      props.onDownload
+    )}
+  </>
+);
+
 const renderFooter = (
-  { attachment, path }: Download,
+  attachment: UIAttachment,
+  downloadPath: string,
   onShare?: () => void,
   onOpen?: () => void,
   onDownload?: () => void
@@ -47,7 +120,7 @@ const renderFooter = (
       type={"SingleButton"}
       leftButton={confirmButtonProps(() => {
         onShare?.();
-        ReactNativeBlobUtil.ios.presentOptionsMenu(path);
+        ReactNativeBlobUtil.ios.presentOptionsMenu(downloadPath);
       }, I18n.t("features.mvl.details.attachments.pdfPreview.singleBtn"))}
     />
   ) : (
@@ -58,7 +131,7 @@ const renderFooter = (
         primary: false,
         onPress: () => {
           onShare?.();
-          share(`file://${path}`, undefined, false)().catch(_ => {
+          share(`file://${downloadPath}`, undefined, false)().catch(_ => {
             showToast(
               I18n.t(
                 "features.mvl.details.attachments.pdfPreview.errors.sharing"
@@ -80,7 +153,7 @@ const renderFooter = (
               mimeType: attachment.contentType
             },
             "Download",
-            path
+            downloadPath
           )
             .then(_ => {
               showToast(
@@ -106,7 +179,7 @@ const renderFooter = (
       rightButton={confirmButtonProps(() => {
         onOpen?.();
         ReactNativeBlobUtil.android
-          .actionViewIntent(path, attachment.contentType)
+          .actionViewIntent(downloadPath, attachment.contentType)
           .catch(_ => {
             showToast(
               I18n.t(
@@ -118,26 +191,38 @@ const renderFooter = (
     />
   );
 
-type Props = {
-  messageId: UIMessageId;
-  attachmentId: UIAttachmentId;
-  onLoadComplete?: () => void;
-  onError?: () => void;
-  onShare?: () => void;
-  onOpen?: () => void;
-  onDownload?: () => void;
-};
-
 export const MessageAttachmentPreview = (props: Props): React.ReactElement => {
-  const [isError, setIsError] = useState(false);
+  const ioDispatch = useIODispatch();
+  const [isPDFError, setIsPDFError] = useState(false);
   const messageId = props.messageId;
-  const attachmentId = props.attachmentId;
+  const attachment = props.attachment;
+  const attachmentId = attachment.id;
   const downloadPot = useIOSelector(state =>
-    downloadFromAttachmentSelector(state, { messageId, id: attachmentId })
+    downloadPotForMessageAttachmentSelector(state, {
+      messageId,
+      id: attachmentId
+    })
   );
-  const download = pot.toUndefined(downloadPot);
+  const isGenericAttachment = attachment.category === "GENERIC";
+  const shouldDownloadAttachment =
+    isGenericAttachment && isStrictNone(downloadPot);
 
-  return download ? (
+  const onError = props.onError;
+  const onPDFError = useCallback(() => {
+    setIsPDFError(true);
+    onError?.();
+  }, [onError]);
+
+  useEffect(() => {
+    if (shouldDownloadAttachment) {
+      ioDispatch(downloadAttachment.request(attachment));
+    }
+  }, [attachment, ioDispatch, shouldDownloadAttachment]);
+
+  const shouldDisplayDownloadError = pot.isError(downloadPot);
+  const shouldDisplayDownloadProgress = pot.isLoading(downloadPot);
+  const shouldDisplayPDFPreview = pot.isSome(downloadPot);
+  return (
     <BaseScreenComponent
       goBack={true}
       contextualHelp={emptyContextualHelp}
@@ -147,32 +232,17 @@ export const MessageAttachmentPreview = (props: Props): React.ReactElement => {
         style={styles.container}
         testID={"message-attachment-preview"}
       >
-        {!isError && (
-          <Pdf
-            source={{ uri: download.path, cache: true }}
-            style={styles.pdf}
-            onLoadComplete={props.onLoadComplete}
-            onError={_ => {
-              props.onError?.();
-              setIsError(true);
-            }}
-          />
-        )}
-        {isError && (
-          <InfoScreenComponent
-            image={renderInfoRasterImage(image)}
-            title={I18n.t(
-              "features.mvl.details.attachments.pdfPreview.errors.previewing.title"
-            )}
-            body={I18n.t(
-              "features.mvl.details.attachments.pdfPreview.errors.previewing.body"
-            )}
-          />
-        )}
-        {renderFooter(download, props.onShare, props.onOpen, props.onDownload)}
+        {shouldDisplayDownloadError &&
+          renderError(
+            I18n.t("global.jserror.title"),
+            I18n.t(
+              "features.mvl.details.attachments.bottomSheet.failing.details"
+            )
+          )}
+        {shouldDisplayDownloadProgress && renderDownloadFeedback()}
+        {shouldDisplayPDFPreview &&
+          renderPDF(isPDFError, downloadPot.value.path, props, onPDFError)}
       </SafeAreaView>
     </BaseScreenComponent>
-  ) : (
-    <WorkunitGenericFailure />
   );
 };
