@@ -1,6 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { Route, useNavigation, useRoute } from "@react-navigation/core";
-import { useFocusEffect } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/core";
+import { RouteProp, useFocusEffect } from "@react-navigation/native";
 import React, { useCallback } from "react";
 import { View, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
@@ -31,6 +31,7 @@ import { InitiativeSettingsComponent } from "../components/InitiativeSettingsCom
 import InitiativeTimelineComponent from "../components/InitiativeTimelineComponent";
 import { idpayInitiativeDetailsSelector } from "../store";
 import { idpayInitiativeGet } from "../store/actions";
+import { IDPayDetailsParamsList } from "../navigation";
 
 const styles = StyleSheet.create({
   newInitiativeMessageContainer: {
@@ -50,12 +51,16 @@ export type InitiativeDetailsScreenParams = {
   initiativeId: string;
 };
 
-type RouteProps = Route<
-  "IDPAY_INITIATIVE_DETAILS",
-  InitiativeDetailsScreenParams
+type InitiativeDetailsScreenRouteProps = RouteProp<
+  IDPayDetailsParamsList,
+  "IDPAY_DETAILS_MONITORING"
 >;
 
-const InitiativeNotConfiguredComponent = () => (
+const InitiativeNotConfiguredComponent = ({
+  initiativeName
+}: {
+  initiativeName: string;
+}) => (
   <View style={[styles.newInitiativeMessageContainer, IOStyles.flex]}>
     <EmptyInitiativeSvg width={130} height={130} />
     <VSpacer size={16} />
@@ -69,7 +74,7 @@ const InitiativeNotConfiguredComponent = () => (
       <Body>
         {I18n.t(
           "idpay.initiative.details.initiativeDetailsScreen.notConfigured.footer",
-          { initiative: "18 app" }
+          { initiative: initiativeName }
         )}
       </Body>
     </View>
@@ -77,7 +82,7 @@ const InitiativeNotConfiguredComponent = () => (
 );
 
 export const InitiativeDetailsScreen = () => {
-  const route = useRoute<RouteProps>();
+  const route = useRoute<InitiativeDetailsScreenRouteProps>();
 
   const { initiativeId } = route.params;
 
@@ -147,7 +152,9 @@ export const InitiativeDetailsScreen = () => {
           >
             <View style={styles.paddedContent}>
               {initiativeNeedsConfiguration && (
-                <InitiativeNotConfiguredComponent />
+                <InitiativeNotConfiguredComponent
+                  initiativeName={initiativeData.initiativeName ?? ""}
+                />
               )}
               {!initiativeNeedsConfiguration && (
                 <>

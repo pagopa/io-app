@@ -4,20 +4,33 @@ import { InitiativeDTO } from "../../../../../../../definitions/idpay/wallet/Ini
 import { NetworkError } from "../../../../../../utils/errors";
 
 export type IdPayInitiativeGetPayloadType = { initiativeId: string };
+export type IdpayTimelinePageGetPayloadType = {
+  initiativeId: string;
+  page?: number;
+  pageSize?: number;
+};
+
+type IdPayTimelinePageGetSuccessPayloadType = {
+  timeline: TimelineDTO;
+  page: number;
+};
+
 export const idpayInitiativeGet = createAsyncAction(
   "IDPAY_INITIATIVE_DETAILS_REQUEST",
   "IDPAY_INITIATIVE_DETAILS_SUCCESS",
   "IDPAY_INITIATIVE_DETAILS_FAILURE"
 )<IdPayInitiativeGetPayloadType, InitiativeDTO, NetworkError>();
 
-export const idpayTimelineGet = createAsyncAction(
-  "IDPAY_TIMELINE_REQUEST",
-  "IDPAY_TIMELINE_SUCCESS",
-  "IDPAY_TIMELINE_FAILURE"
-)<IdPayInitiativeGetPayloadType, TimelineDTO, NetworkError>();
-
-export type IDPayTimelineActions = ActionType<typeof idpayTimelineGet>;
+export const idpayTimelinePageGet = createAsyncAction(
+  "IDPAY_TIMELINE_PAGE_REQUEST",
+  "IDPAY_TIMELINE_PAGE_SUCCESS",
+  "IDPAY_TIMELINE_PAGE_FAILURE"
+)<
+  IdpayTimelinePageGetPayloadType,
+  IdPayTimelinePageGetSuccessPayloadType,
+  NetworkError
+>();
 
 export type IDPayInitiativeActions =
   | ActionType<typeof idpayInitiativeGet>
-  | ActionType<typeof idpayTimelineGet>;
+  | ActionType<typeof idpayTimelinePageGet>;
