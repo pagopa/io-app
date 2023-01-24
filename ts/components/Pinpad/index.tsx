@@ -280,14 +280,6 @@ class Pinpad extends React.PureComponent<Props, State> {
       `${this.state.value}${digit}`.substr(0, this.state.pinLength)
     );
 
-  private getTextColor = () => {
-    if (this.props.buttonType === "primary") {
-      return "white";
-    } else {
-      return "bluegrey";
-    }
-  };
-
   public debounceClear = debounce(() => {
     this.setState({ value: "" });
   }, 100);

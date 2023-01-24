@@ -2,7 +2,7 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { NavigationEvents } from "@react-navigation/compat";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Body, Left, Right, Text as NBText } from "native-base";
+import { Body as NBBody, Left, Right } from "native-base";
 import * as React from "react";
 import { FC, Ref } from "react";
 import { View, AccessibilityInfo, ColorValue, StyleSheet } from "react-native";
@@ -19,6 +19,7 @@ import variables from "../../theme/variables";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { isStringNullyOrEmpty, maybeNotNullyString } from "../../utils/strings";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
+import { Body } from "../core/typography/Body";
 import { IOColors, IOColorType } from "../core/variables/IOColors";
 import GoBackButton from "../GoBackButton";
 import SearchButton, { SearchType } from "../search/SearchButton";
@@ -170,7 +171,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
     }, noReferenceTimeout);
   }
 
-  private renderBodyLabel = (label?: string, ref?: Ref<NBText>) =>
+  private renderBodyLabel = (label?: string, ref?: Ref<View>) =>
     pipe(
       maybeNotNullyString(label),
       O.fold(
@@ -178,17 +179,19 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
         l => {
           const { titleColor } = this.props;
           return (
-            <NBText
-              ref={ref}
-              numberOfLines={1}
-              accessible={true}
-              accessibilityRole={"header"}
-              style={{
-                color: titleColor ? IOColors[titleColor] : IOColors.bluegrey
-              }}
-            >
-              {l}
-            </NBText>
+            <View ref={ref}>
+              {/* TODO: titleColor prop is pretty useless because
+              we have two colors: dark (bluegrey) and light (white).
+              We don't have any color values other than these two. */}
+              <Body
+                numberOfLines={1}
+                accessible={true}
+                accessibilityRole={"header"}
+                color={titleColor === "white" ? "white" : "bluegrey"}
+              >
+                {l}
+              </Body>
+            </View>
           );
         }
       )
@@ -220,7 +223,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
           as placeholder where force focus
         */}
         {!isSearchEnabled && (
-          <Body style={goBack || customGoBack ? styles.body : styles.noLeft}>
+          <NBBody style={goBack || customGoBack ? styles.body : styles.noLeft}>
             {this.state.isScreenReaderActive &&
             O.isSome(maybeAccessibilityLabel) ? (
               this.renderBodyLabel(
@@ -232,7 +235,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
                 {body ? body : headerTitle && this.renderBodyLabel(headerTitle)}
               </View>
             )}
-          </Body>
+          </NBBody>
         )}
 
         {this.renderRight()}

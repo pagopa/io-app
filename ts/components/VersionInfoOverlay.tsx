@@ -12,7 +12,6 @@ import { GlobalState } from "../store/reducers/types";
 import { getAppVersion } from "../utils/appVersion";
 import { clipboardSetStringWithFeedback } from "../utils/clipboard";
 import { IOColors, hexToRgba } from "../components/core/variables/IOColors";
-import themeVariables from "../theme/variables";
 import { H5 } from "./core/typography/H5";
 
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps;

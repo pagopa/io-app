@@ -2,10 +2,8 @@ import * as React from "react";
 import { View, Image, ImageBackground, StyleSheet } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 import { StatusEnum } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
-import { makeFontStyleObject } from "../../../../../components/core/fonts";
 import { H2 } from "../../../../../components/core/typography/H2";
 import { H5 } from "../../../../../components/core/typography/H5";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
 import TypedI18n from "../../../../../i18n";
 import { formatDateAsLocal } from "../../../../../utils/dates";
 import bonusVacanzeWhiteLogo from "../../../../../../img/bonus/bonusVacanze/logo_BonusVacanze_White.png";
@@ -56,12 +54,6 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     position: "absolute"
-  },
-  amount: {
-    lineHeight: 32,
-    fontSize: 24,
-    color: IOColors.white,
-    ...makeFontStyleObject("Bold", undefined, "TitilliumWeb")
   },
   logo: {
     resizeMode: "contain",
