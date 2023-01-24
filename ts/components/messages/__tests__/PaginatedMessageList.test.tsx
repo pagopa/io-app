@@ -8,7 +8,7 @@ import { appReducer } from "../../../store/reducers";
 import { GlobalState } from "../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
 import { successReloadMessagesPayload } from "../../../__mocks__/messages";
-import MessageList from "../MessageList";
+import PaginatedMessageList from "../PaginatedMessageList";
 
 const messages = successReloadMessagesPayload.messages;
 
@@ -19,7 +19,6 @@ describe("MessageList component", () => {
     it("should not render the empty component", () => {
       const { component } = renderComponent({
         ListEmptyComponent,
-        variant: "paginated",
         messages: [],
         isSome: false
       });
@@ -31,7 +30,6 @@ describe("MessageList component", () => {
     it("should render the empty component", () => {
       const { component } = renderComponent({
         ListEmptyComponent,
-        variant: "paginated",
         messages: [],
         isSome: true
       });
@@ -43,7 +41,6 @@ describe("MessageList component", () => {
     it("should render the error component", () => {
       const { component } = renderComponent({
         ListEmptyComponent,
-        variant: "paginated",
         messages: [],
         isError: true
       });
@@ -58,7 +55,6 @@ describe("MessageList component", () => {
     it("should not render the empty component", () => {
       const { component } = renderComponent({
         ListEmptyComponent,
-        variant: "paginated",
         messages,
         isSome: true
       });
@@ -68,7 +64,6 @@ describe("MessageList component", () => {
     it("should not render the error component", () => {
       const { component } = renderComponent({
         ListEmptyComponent,
-        variant: "paginated",
         messages,
         isSome: true
       });
@@ -80,7 +75,6 @@ describe("MessageList component", () => {
     it("should render the first message in the state", () => {
       const { component } = renderComponent({
         ListEmptyComponent,
-        variant: "paginated",
         messages,
         isSome: true
       });
@@ -89,14 +83,16 @@ describe("MessageList component", () => {
   });
 });
 
-const renderComponent = (props: React.ComponentProps<typeof MessageList>) => {
+const renderComponent = (
+  props: React.ComponentProps<typeof PaginatedMessageList>
+) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const mockStore = configureMockStore<GlobalState>();
   const store: ReturnType<typeof mockStore> = mockStore(globalState);
 
   return {
     component: renderScreenFakeNavRedux<GlobalState>(
-      () => <MessageList {...props} />,
+      () => <PaginatedMessageList {...props} />,
       ROUTES.MESSAGES_HOME,
       {},
       store

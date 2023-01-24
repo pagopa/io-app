@@ -15,7 +15,7 @@ import {
 } from "../../store/reducers/entities/messages/allPaginated";
 import { IOStyles } from "../core/variables/IOStyles";
 import { EmptyListComponent } from "./EmptyListComponent";
-import MessageList from "./MessageList";
+import PaginatedMessageList from "./PaginatedMessageList";
 import { useMessagesFetcher } from "./hooks/useMessagesFetcher";
 
 type Props = {
@@ -82,8 +82,7 @@ const MessagesInbox = ({ navigateToMessageDetail, archiveMessages }: Props) => {
   return (
     <View style={IOStyles.flex}>
       <View style={IOStyles.flex}>
-        <MessageList
-          variant="paginated"
+        <PaginatedMessageList
           testID="MessageList_inbox"
           messages={messages}
           isSome={isSome}
