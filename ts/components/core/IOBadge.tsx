@@ -13,6 +13,7 @@ export type IOBadgeCommonProps = {
 
 const commonBadgeStyles = StyleSheet.create({
   badge: {
+    elevation: 0.1,
     paddingLeft: 8,
     paddingRight: 8
   },
