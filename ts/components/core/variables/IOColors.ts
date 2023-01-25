@@ -51,7 +51,6 @@ export const IOColors = asIOColors({
   /* ↳ ALIAS TOKEN: unselectedColor → bluegrey */
   bluegreyDark: "#17324D",
   /* ↳ ALIAS TOKEN: textColorDark → bluegreyDark */
-  /* ↳ ALIAS TOKEN: cardTextColor → bluegreyDark */
   black: "#000000",
   /* ↳ ALIAS TOKEN: footerShadowColor → black */
   noCieButton:

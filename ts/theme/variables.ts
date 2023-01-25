@@ -61,7 +61,6 @@ const customVariables = Object.assign(materialVariables, {
   btnLightBorderColor: IOColors.grey,
 
   cardShadow: IOColors.black,
-  cardTextColor: IOColors.bluegreyDark,
 
   calendarExpirableColor: IOColors.red,
 
