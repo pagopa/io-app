@@ -82,7 +82,6 @@ const CustomBadge = (props: Props) => {
       >
         {badge}
       </Text>
-      {/* <NBText badge={true} style={styles.textStyle}></NBText> */}
     </View>
   );
 };
