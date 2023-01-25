@@ -23,7 +23,6 @@ export type Context = {
   requiredCriteria?: O.Option<RequiredCriteriaDTO>;
   failure?: OnboardingFailureType;
   multiConsents: Array<SelfConsentDTO>;
-  // multiCriteriaPage: number;
 };
 
 // Events types
@@ -99,7 +98,6 @@ const getMultiRequiredCriteria = (context: Context) => {
         () => [],
         some =>
           some.selfDeclarationList.filter(
-            // eslint-disable-next-line no-underscore-dangle
             val => val._type === multiSelfCriteriaTypeEnum.multi
           )
       )
@@ -116,7 +114,6 @@ export const getBoolRequiredCriteria = (context: Context) => {
         () => [],
         some =>
           some.selfDeclarationList.filter(
-            // eslint-disable-next-line no-underscore-dangle
             val => val._type === boolSelfDeclarationTypeEnum.boolean
           )
       )
@@ -346,9 +343,6 @@ const createIDPayOnboardingMachine = () =>
           tags: [WAITING_USER_INPUT_TAG],
           initial: "EVALUATING_SELF_CRITERIA",
           on: {
-            // ACCEPT_REQUIRED_SELF_CRITERIA: {
-            //   target: "ACCEPTING_REQUIRED_CRITERIA"
-            // },
             GO_BACK: [
               {
                 target: "DISPLAYING_REQUIRED_PDND_CRITERIA",

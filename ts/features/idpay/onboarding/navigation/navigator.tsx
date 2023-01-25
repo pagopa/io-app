@@ -6,7 +6,7 @@ import FailureScreen from "../screens/FailureScreen";
 import InitiativeDetailsScreen, {
   InitiativeDetailsScreenRouteParams
 } from "../screens/InitiativeDetailsScreen";
-import InitiativeSelfDeclarationsScreen from "../screens/InitiativeSelfDeclarationsScreen";
+import BoolValuePrerequisitesScreen from "../screens/BoolValuePrerequisitesScreen";
 import PDNDPrerequisitesScreen from "../screens/PDNDPrerequisitesScreen";
 import { IDPayOnboardingMachineProvider } from "../xstate/provider";
 import { MultiValuePrerequisitesScreen } from "../screens/MultiValuePrerequisitesScreen";
@@ -57,7 +57,7 @@ export const IDPayOnboardingNavigator = () => (
       />
       <Stack.Screen
         name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_BOOL_SELF_DECLARATIONS}
-        component={InitiativeSelfDeclarationsScreen}
+        component={BoolValuePrerequisitesScreen}
       />
       <Stack.Screen
         name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS}

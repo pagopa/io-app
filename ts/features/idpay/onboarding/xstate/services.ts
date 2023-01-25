@@ -11,11 +11,6 @@ import { OnboardingClient } from "../api/client";
 import { OnboardingFailureType } from "./failure";
 import { Context, getBoolRequiredCriteria } from "./machine";
 
-/**
- * Temporary function to convert the required criteria to the self consents
- *
- * TODO: Process inputs from the citizen
- */
 
 const createServicesImplementation = (
   onboardingClient: OnboardingClient,

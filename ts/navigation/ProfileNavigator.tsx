@@ -28,7 +28,6 @@ import { isGestureEnabled } from "../utils/navigation";
 import { DesignSystemNavigator } from "../features/design-system/navigation/navigator";
 import { ProfileParamsList } from "./params/ProfileParamsList";
 import ROUTES from "./routes";
-import { MultiValuePrerequisitesScreen } from "../features/idpay/onboarding/screens/MultiValuePrerequisitesScreen";
 
 const Stack = createStackNavigator<ProfileParamsList>();
 
@@ -88,7 +87,7 @@ const ProfileStackNavigator = () => (
     />
     <Stack.Screen
       name={ROUTES.MARKDOWN_PLAYGROUND}
-      component={MultiValuePrerequisitesScreen}
+      component={MarkdownPlayground}
     />
     <Stack.Screen
       name={ROUTES.DESIGN_SYSTEM}

@@ -27,13 +27,13 @@ const createActionsImplementation = (
     });
   };
 
-  const navigateToSelfDeclarationsScreen = () => {
+  const navigateToBoolSelfDeclarationsScreen = () => {
     navigation.navigate(IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
       screen: IDPayOnboardingRoutes.IDPAY_ONBOARDING_BOOL_SELF_DECLARATIONS
     });
   };
 
-  const pushMultiPage = () => {
+  const pushMultiSelfDeclarationPage = () => {
     navigation.push(IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
       screen: IDPayOnboardingRoutes.IDPAY_ONBOARDING_BOOL_SELF_DECLARATIONS
     });
@@ -58,11 +58,11 @@ const createActionsImplementation = (
   return {
     navigateToInitiativeDetailsScreen,
     navigateToPDNDCriteriaScreen,
-    navigateToSelfDeclarationsScreen,
+    navigateToBoolSelfDeclarationsScreen,
     navigateToCompletionScreen,
     navigateToFailureScreen,
     exitOnboarding,
-    pushNextMultiPage: pushMultiPage
+    pushMultiSelfDeclarationPage
   };
 };
 
