@@ -1,8 +1,8 @@
 import I18n from "i18n-js";
-import { View } from "native-base";
 import * as React from "react";
 import { Idp } from "../../../definitions/content/Idp";
 import { handleItemOnPress } from "../../utils/url";
+import { VSpacer } from "../core/spacer/Spacer";
 import BlockButtons from "../ui/BlockButtons";
 import Markdown from "../ui/Markdown";
 import EmailCallCTA from "./EmailCallCTA";
@@ -31,7 +31,7 @@ const IdpCustomContextualHelpBody: React.FunctionComponent<Props> = props => {
           : I18n.t("authentication.idp_login.recoverDescription")}
       </Markdown>
 
-      <View spacer={true} />
+      <VSpacer size={16} />
       {isMarkdown1Loaded && (
         <React.Fragment>
           {idpTextData.recover_username && (
@@ -44,7 +44,7 @@ const IdpCustomContextualHelpBody: React.FunctionComponent<Props> = props => {
                   small: true
                 }}
               />
-              <View spacer={true} />
+              <VSpacer size={16} />
             </React.Fragment>
           )}
           <BlockButtons
@@ -59,15 +59,15 @@ const IdpCustomContextualHelpBody: React.FunctionComponent<Props> = props => {
       )}
 
       {/** Idp contacts */}
-      <View spacer={true} />
+      <VSpacer size={16} />
       <Markdown onLoadEnd={() => setIsMarkdown2Loaded(true)}>
         {idpTextData.description}
       </Markdown>
-      <View spacer={true} />
+      <VSpacer size={16} />
       {isMarkdown2Loaded && (
         <React.Fragment>
           <EmailCallCTA phone={idpTextData.phone} email={idpTextData.email} />
-          <View spacer={true} />
+          <VSpacer size={16} />
           {idpTextData.helpdesk_form && (
             <React.Fragment>
               <BlockButtons
@@ -80,7 +80,7 @@ const IdpCustomContextualHelpBody: React.FunctionComponent<Props> = props => {
                   small: true
                 }}
               />
-              <View spacer={true} />
+              <VSpacer size={16} />
             </React.Fragment>
           )}
         </React.Fragment>

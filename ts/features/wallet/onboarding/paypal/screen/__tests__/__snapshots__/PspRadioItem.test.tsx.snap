@@ -129,6 +129,7 @@ exports[`PspRadioItem match snapshot 1`] = `
   >
     <View
       style={
+<<<<<<< IOAPPCIT-33-teamsystem-spid
         Array [
           Object {},
           Object {
@@ -136,6 +137,13 @@ exports[`PspRadioItem match snapshot 1`] = `
             "paddingHorizontal": 24,
           },
         ]
+=======
+        Object {
+          "flex": 1,
+          "paddingLeft": 24,
+          "paddingRight": 24,
+        }
+>>>>>>> master
       }
     >
       <RCTScrollView>

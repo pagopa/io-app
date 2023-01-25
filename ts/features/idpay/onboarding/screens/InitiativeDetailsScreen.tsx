@@ -1,11 +1,10 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import * as React from "react";
-import { View } from "native-base";
 import { pipe } from "fp-ts/lib/function";
 import { useActor } from "@xstate/react";
 import * as O from "fp-ts/lib/Option";
-import { SafeAreaView, ScrollView, Text } from "react-native";
+import { View, SafeAreaView, ScrollView, Text } from "react-native";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import OrganizationHeader from "../../../../components/OrganizationHeader";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
@@ -27,6 +26,7 @@ import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay"
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { LOADING_TAG, UPSERTING_TAG } from "../../../../utils/xstate";
 import I18n from "../../../../i18n";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
 
 type InitiativeDetailsScreenRouteParams = {
   serviceId: string;
@@ -149,19 +149,19 @@ const InitiativeDetailsScreen = () => {
                 <InitiativeOrganizationHeader {...toUIService(service)} />
               )}
               {content && <Text>{content}</Text>}
-              <View spacer={true} />
+              <VSpacer size={16} />
               {!!state.context.initiative?.description && (
                 <Markdown>{state.context.initiative.description}</Markdown>
               )}
-              <View spacer={true} />
+              <VSpacer size={16} />
               <ItemSeparatorComponent noPadded={true} />
-              <View spacer={true} />
+              <VSpacer size={16} />
               <BeforeContinueBody
                 tosUrl={service?.service_metadata?.tos_url}
                 privacyUrl={service?.service_metadata?.privacy_url}
               />
             </View>
-            <View spacer={true} />
+            <VSpacer size={16} />
           </ScrollView>
           <FooterWithButtons
             type={"TwoButtonsInlineThird"}

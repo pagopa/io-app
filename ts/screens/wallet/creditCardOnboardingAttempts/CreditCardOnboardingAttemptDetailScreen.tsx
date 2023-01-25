@@ -5,6 +5,7 @@ import { StyleSheet } from "react-native";
 import { useDispatch } from "react-redux";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { Body } from "../../../components/core/typography/Body";
 import { H3 } from "../../../components/core/typography/H3";
 import { Label } from "../../../components/core/typography/Label";
@@ -108,9 +109,9 @@ const CreditCardOnboardingAttemptDetailScreen = (props: Props) => {
 
   const renderSeparator = () => (
     <React.Fragment>
-      <View spacer={true} large={true} />
+      <VSpacer size={24} />
       <ItemSeparatorComponent noPadded={true} />
-      <View spacer={true} large={true} />
+      <VSpacer size={24} />
     </React.Fragment>
   );
 
@@ -119,7 +120,7 @@ const CreditCardOnboardingAttemptDetailScreen = (props: Props) => {
       <Label color={"bluegrey"} weight={"Regular"} style={styles.padded}>
         {I18n.t("wallet.creditCard.onboardingAttempts.help")}
       </Label>
-      <View spacer={true} />
+      <VSpacer size={16} />
       <ButtonDefaultOpacity
         onPress={handleAskAssistance}
         bordered={true}
@@ -158,7 +159,7 @@ const CreditCardOnboardingAttemptDetailScreen = (props: Props) => {
       headerTitle={I18n.t("wallet.creditCard.onboardingAttempts.title")}
     >
       <SlidedContentComponent hasFlatBottom={true}>
-        <View spacer={true} xsmall={true} />
+        <VSpacer size={4} />
         <H3 color={"bluegreyDark"}>
           {I18n.t("wallet.creditCard.onboardingAttempts.detailTitle")}
         </H3>
@@ -169,13 +170,13 @@ const CreditCardOnboardingAttemptDetailScreen = (props: Props) => {
             {conditionalData.header}
           </Label>
         </View>
-        <View spacer={true} />
+        <VSpacer size={16} />
         {
           <Label color={"bluegrey"} weight={"Regular"}>
             {getPanDescription(attempt)}
           </Label>
         }
-        <View spacer={true} />
+        <VSpacer size={16} />
         {attempt.failureReason && (
           <>
             <Label color={"bluegrey"} weight={"Regular"}>
@@ -183,7 +184,7 @@ const CreditCardOnboardingAttemptDetailScreen = (props: Props) => {
                 ? attempt.failureReason.reason
                 : attempt.failureReason.kind}
             </Label>
-            <View spacer={true} />
+            <VSpacer size={16} />
           </>
         )}
         {errorDescription && O.isSome(errorDescription) && (
@@ -191,14 +192,14 @@ const CreditCardOnboardingAttemptDetailScreen = (props: Props) => {
             <Label color={"bluegrey"} weight={"Regular"}>
               {errorDescription.value}
             </Label>
-            <View spacer={true} />
+            <VSpacer size={16} />
           </>
         )}
         {renderRow(
           I18n.t("payment.details.info.outcomeCode"),
           attempt.outcomeCode ?? "-"
         )}
-        <View spacer={true} xsmall={true} />
+        <VSpacer size={4} />
         {renderRow(
           I18n.t("wallet.creditCard.onboardingAttempts.dateTime"),
           when

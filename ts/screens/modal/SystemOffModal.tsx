@@ -5,10 +5,11 @@
  */
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Container, Text as NBText, View } from "native-base";
+import { Container, Text as NBText } from "native-base";
 import * as React from "react";
-import { Image, Modal, StyleSheet } from "react-native";
+import { View, Image, Modal, StyleSheet } from "react-native";
 import { connect } from "react-redux";
+import { VSpacer } from "../../components/core/spacer/Spacer";
 import { H1 } from "../../components/core/typography/H1";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
@@ -60,10 +61,10 @@ class SystemOffModal extends React.PureComponent<Props> {
                   style={styles.image}
                   source={require("../../../img/servicesStatus/error-detail-icon.png")}
                 />
-                <View spacer={true} extralarge={true} />
+                <VSpacer size={40} />
               </React.Fragment>
               <H1 style={styles.title}>{I18n.t("systemsOff.title")}</H1>
-              <View spacer={true} />
+              <VSpacer size={16} />
               {message && <NBText style={styles.subTitle}>{message}</NBText>}
               <NBText style={styles.subTitle} bold={true}>
                 {I18n.t("systemsOff.closeApp")}

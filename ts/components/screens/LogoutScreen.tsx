@@ -2,11 +2,11 @@ import { connect } from "react-redux";
 import * as React from "react";
 import { constNull } from "fp-ts/lib/function";
 import { useEffect } from "react";
-import { View } from "native-base";
 import { Dispatch } from "../../store/actions/types";
 import { logoutRequest } from "../../store/actions/authentication";
 import I18n from "../../i18n";
 import { LoadingErrorComponent } from "../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { HSpacer } from "../core/spacer/Spacer";
 import BaseScreenComponent from "./BaseScreenComponent";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
@@ -27,7 +27,7 @@ const LogoutScreen = (props: Props) => {
 
   return (
     <BaseScreenComponent
-      customGoBack={<View hspacer={true} spacer={true} />}
+      customGoBack={<HSpacer size={16} />}
       headerTitle={I18n.t("profile.logout.menulabel")}
     >
       <LoadingErrorComponent
