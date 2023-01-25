@@ -1,4 +1,3 @@
-import { View } from "native-base";
 import React, { ReactElement, useMemo } from "react";
 import { Dispatch } from "redux";
 import { useLinkTo } from "@react-navigation/native";
@@ -6,6 +5,7 @@ import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { CTA, CTAS } from "../../types/MessageCTA";
 import { handleCtaAction, isCtaActionValid } from "../../utils/messages";
 import { ServiceMetadata } from "../../../definitions/backend/ServiceMetadata";
+import { HSpacer } from "../core/spacer/Spacer";
 import { ExtractedCtaButton } from "./ExtractedCtaButton";
 
 type Props = {
@@ -64,7 +64,7 @@ const ExtractedCTABar: React.FunctionComponent<Props> = (
   return (
     <>
       {cta2}
-      {cta2 && <View hspacer={true} small={true} />}
+      {cta2 && <HSpacer size={8} />}
       {cta1}
     </>
   );

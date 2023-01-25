@@ -1,10 +1,10 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { View } from "native-base";
 import * as React from "react";
 import { useEffect } from "react";
 import {
+  View,
   ActivityIndicator,
   SectionList,
   SectionListData,
@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { VSpacer } from "../../../../../../../components/core/spacer/Spacer";
 import { IOStyles } from "../../../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../../../i18n";
 import { GlobalState } from "../../../../../../../store/reducers/types";
@@ -131,7 +132,7 @@ const TransactionsHeader = (
   props: Pick<Props, "selectedPeriod" | "maybeLastUpdateDate">
 ) => (
   <View style={IOStyles.horizontalContentPadding}>
-    <View spacer={true} />
+    <VSpacer size={16} />
     {props.selectedPeriod &&
       pot.isSome(props.maybeLastUpdateDate) &&
       props.selectedPeriod.amount.transactionNumber > 0 && (
@@ -144,7 +145,7 @@ const TransactionsHeader = (
             period={props.selectedPeriod}
             totalAmount={props.selectedPeriod.amount}
           />
-          <View spacer={true} />
+          <VSpacer size={16} />
         </>
       )}
   </View>
@@ -175,7 +176,7 @@ const TransactionsEmpty = (
  */
 const FooterLoading = () => (
   <>
-    <View spacer={true} />
+    <VSpacer size={16} />
     <ActivityIndicator
       color={"black"}
       accessible={false}

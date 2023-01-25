@@ -1,4 +1,4 @@
-import { View as NBView, Text as NBText } from "native-base";
+import { Text as NBText } from "native-base";
 import { View } from "react-native";
 import * as React from "react";
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
@@ -17,6 +17,7 @@ import { PaymentNoticeNumber } from "../../../../definitions/backend/PaymentNoti
 import IconFont from "../../../components/ui/IconFont";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 
 export const DSButtons = () => (
   <DesignSystemScreen title={"Buttons"}>
@@ -31,7 +32,7 @@ export const DSButtons = () => (
           }}
         />
       </View>
-      <NBView spacer={true} />
+      <VSpacer size={16} />
       <View>
         <ButtonExtendedOutline
           icon="arrowRight"
@@ -300,7 +301,7 @@ export const DSButtons = () => (
       </DSComponentViewerBox>
     </View>
 
-    <NBView spacer={true} large={true} />
+    <VSpacer size={24} />
 
     <H2
       color={"bluegrey"}
@@ -318,7 +319,7 @@ export const DSButtons = () => (
         title: "Primary button"
       }}
     />
-    <NBView spacer={true} />
+    <VSpacer size={16} />
 
     <BlockButtons
       type="TwoButtonsInlineThird"
@@ -330,7 +331,7 @@ export const DSButtons = () => (
       }}
     />
 
-    <NBView spacer={true} />
+    <VSpacer size={16} />
 
     <BlockButtons
       type="TwoButtonsInlineHalf"
@@ -342,7 +343,7 @@ export const DSButtons = () => (
       }}
     />
 
-    <NBView spacer={true} />
+    <VSpacer size={16} />
     <BlockButtons
       type="TwoButtonsInlineThirdInverted"
       leftButton={{ bordered: true, primary: true, title: "Left button" }}
@@ -353,7 +354,7 @@ export const DSButtons = () => (
       }}
     />
 
-    <NBView spacer={true} />
+    <VSpacer size={16} />
     <BlockButtons
       type="ThreeButtonsInLine"
       leftButton={{ alert: true, title: "Left button" }}
@@ -365,7 +366,7 @@ export const DSButtons = () => (
       }}
     />
 
-    <NBView spacer={true} large={true} />
+    <VSpacer size={24} />
 
     <H2
       color={"bluegrey"}
@@ -395,7 +396,7 @@ export const DSButtons = () => (
         <IconFont name={"io-plus"} />
         <NBText>Aggiungi promemoria</NBText>
       </ButtonDefaultOpacity>
-      <NBView spacer={true} />
+      <VSpacer size={16} />
       <ButtonDefaultOpacity small={true} bordered={true}>
         <IconFont name={"io-tick-big"} />
         <NBText>Aggiunto</NBText>
@@ -419,7 +420,7 @@ export const DSButtons = () => (
         <IconFont name={"io-profilo"} color={IOColors.white} />
         <NBText>Entra con SPID</NBText>
       </ButtonDefaultOpacity>
-      <NBView spacer={true} />
+      <VSpacer size={16} />
       <ButtonDefaultOpacity block={true} primary={true}>
         <IconFont name={"io-cie"} color={IOColors.white} />
         <NBText>Entra con CIE</NBText>
