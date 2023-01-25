@@ -40,13 +40,11 @@ export const LandingCardComponent: React.SFC<Props> = card => (
       <Grid>
         <Col size={1} />
         <Col size={7}>
-          <View style={IOStyles.alignCenter}>
-            <H2 weight="Bold">{card.title}</H2>
-          </View>
+          <H2 style={{ textAlign: "center" }} weight="Bold">
+            {card.title}
+          </H2>
           <VSpacer size={16} />
-          <View style={IOStyles.alignCenter}>
-            <Body>{card.content}</Body>
-          </View>
+          <Body style={{ textAlign: "center" }}>{card.content}</Body>
           <VSpacer size={16} />
         </Col>
         <Col size={1} />
