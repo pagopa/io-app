@@ -1,6 +1,5 @@
 import * as React from "react";
-import { View } from "native-base";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { H4 } from "../../../../../../components/core/typography/H4";
 import I18n from "../../../../../../i18n";
 import IconFont from "../../../../../../components/ui/IconFont";
@@ -10,6 +9,7 @@ import { Label } from "../../../../../../components/core/typography/Label";
 import { InfoBox } from "../../../../../../components/box/InfoBox";
 import { openWebUrl } from "../../../../../../utils/url";
 import { showToast } from "../../../../../../utils/showToast";
+import { VSpacer } from "../../../../../../components/core/spacer/Spacer";
 
 type Props = {
   openBottomSheet: () => void;
@@ -42,13 +42,13 @@ const EycaStatusDetailsComponent = (props: Props) => (
         onPress={props.openBottomSheet}
       />
     </View>
-    <View spacer />
+    <VSpacer size={16} />
     <InfoBox iconName={"io-info"} alignedCentral iconSize={32}>
       <H4 weight={"Regular"}>
         {I18n.t("bonus.cgn.detail.status.eycaPending")}
       </H4>
     </InfoBox>
-    <View spacer />
+    <VSpacer size={16} />
     <ButtonDefaultOpacity
       bordered
       style={{ width: "100%" }}

@@ -1,9 +1,10 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Badge, Text as NBText, View } from "native-base";
+import { Badge, Text as NBText } from "native-base";
 import * as React from "react";
-import { Image, ImageSourcePropType, StyleSheet } from "react-native";
+import { View, Image, ImageSourcePropType, StyleSheet } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { H3 } from "../../../../components/core/typography/H3";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import TouchableDefaultOpacity, {
@@ -81,7 +82,7 @@ const FeaturedCard: React.FunctionComponent<Props> = (props: Props) => (
         </Badge>
       )}
     </View>
-    <View spacer small />
+    <VSpacer size={8} />
     <H3 weight={"SemiBold"} color={"blue"}>
       {props.title}
     </H3>

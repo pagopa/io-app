@@ -1,8 +1,9 @@
-import { Toast, View } from "native-base";
+import { Toast } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import LegalMessage from "../../../../../../img/features/mvl/legalMessage.svg";
 import { RawAccordion } from "../../../../../components/core/accordion/RawAccordion";
+import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { H4 } from "../../../../../components/core/typography/H4";
@@ -37,7 +38,7 @@ const styles = StyleSheet.create({
 const Header = (): React.ReactElement => (
   <View style={[IOStyles.row, IOStyles.flex]}>
     <LegalMessage width={24} height={24} fill={IOColors.blue} />
-    <View hspacer={true} />
+    <HSpacer size={16} />
     <H3 numberOfLines={1} style={IOStyles.flex}>
       {I18n.t("features.mvl.details.metadata.title")}
     </H3>
@@ -148,7 +149,7 @@ export const MvlMetadataComponent = (props: Props): React.ReactElement => (
     >
       <View style={IOStyles.horizontalContentPadding}>
         <Description {...props} />
-        <View spacer={true} />
+        <VSpacer size={16} />
         <Links {...props} />
       </View>
     </RawAccordion>

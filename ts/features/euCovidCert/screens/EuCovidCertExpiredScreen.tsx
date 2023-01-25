@@ -1,4 +1,3 @@
-import { View } from "native-base";
 import * as React from "react";
 import { Image } from "react-native";
 import { connect } from "react-redux";
@@ -11,6 +10,7 @@ import EuCovidCertLearnMoreLink from "../components/EuCovidCertLearnMoreLink";
 import { MarkdownHandleCustomLink } from "../components/MarkdownHandleCustomLink";
 import { EuCovidCertHeader } from "../components/EuCovidCertHeader";
 import { WithEUCovidCertificateHeaderData } from "../types/EUCovidCertificate";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { BaseEuCovidCertificateLayout } from "./BaseEuCovidCertificateLayout";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -20,8 +20,8 @@ type Props = ReturnType<typeof mapDispatchToProps> &
 
 const EuCovidCertExpiredContentComponent = (props: Props) => (
   <>
-    <View spacer extralarge />
-    <View spacer extralarge />
+    <VSpacer size={40} />
+    <VSpacer size={40} />
     <InfoScreenComponent
       image={
         <Image
@@ -34,7 +34,7 @@ const EuCovidCertExpiredContentComponent = (props: Props) => (
       title={I18n.t("features.euCovidCertificate.expired.title")}
       body={<EuCovidCertLearnMoreLink />}
     />
-    <View spacer />
+    <VSpacer size={16} />
     {props.expiredInfo && (
       <MarkdownHandleCustomLink extraBodyHeight={60}>
         {props.expiredInfo}

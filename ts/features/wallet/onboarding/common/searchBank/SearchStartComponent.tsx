@@ -1,4 +1,3 @@
-import { View } from "native-base";
 import * as React from "react";
 import I18n from "../../../../../i18n";
 import { Body } from "../../../../../components/core/typography/Body";
@@ -6,6 +5,7 @@ import { H1 } from "../../../../../components/core/typography/H1";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { Link } from "../../../../../components/core/typography/Link";
 import InternationalCircuitIconsBar from "../../../../../components/wallet/InternationalCircuitIconsBar";
+import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 
 type Props = {
   openTosModal: () => void;
@@ -58,12 +58,12 @@ export const SearchStartComponent: React.FunctionComponent<Props> = (
       <H1>{locales.title}</H1>
       {props.showCircuitLogo && (
         <>
-          <View spacer={true} large={true} />
+          <VSpacer size={24} />
           <InternationalCircuitIconsBar />
         </>
       )}
 
-      <View spacer={true} large={true} />
+      <VSpacer size={24} />
       <Body>
         <H4 weight={"Regular"} color={"bluegreyDark"}>
           {locales.text1}
@@ -84,7 +84,7 @@ export const SearchStartComponent: React.FunctionComponent<Props> = (
         )}
       </Body>
 
-      <View spacer={true} large={true} />
+      <VSpacer size={24} />
       <Body accessibilityRole="link">
         <H4 weight={"Regular"} color={"bluegreyDark"}>
           {locales.text3}

@@ -4,9 +4,10 @@
  */
 
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { Button, Container, Text as NBText, View } from "native-base";
+import { Button, Container, Text as NBText, View as NBView } from "native-base";
 import React, { FC, useCallback, useEffect, useState } from "react";
 import {
+  View,
   BackHandler,
   Image,
   Linking,
@@ -15,6 +16,7 @@ import {
   StyleSheet
 } from "react-native";
 import updateIcon from "../../../img/icons/update-icon.png";
+import { VSpacer } from "../../components/core/spacer/Spacer";
 import { H1 } from "../../components/core/typography/H1";
 
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
@@ -54,7 +56,7 @@ const styles = StyleSheet.create({
 type FooterProps = { onOpenAppStore: () => void };
 
 const IOSFooter: FC<FooterProps> = ({ onOpenAppStore }: FooterProps) => (
-  <View footer>
+  <NBView footer>
     <>
       <Button
         block={true}
@@ -64,9 +66,9 @@ const IOSFooter: FC<FooterProps> = ({ onOpenAppStore }: FooterProps) => (
       >
         <NBText>{I18n.t("btnUpdateApp")}</NBText>
       </Button>
-      <View spacer />
+      <VSpacer size={16} />
     </>
-  </View>
+  </NBView>
 );
 
 const AndroidFooter: FC<FooterProps> = ({ onOpenAppStore }: FooterProps) => {

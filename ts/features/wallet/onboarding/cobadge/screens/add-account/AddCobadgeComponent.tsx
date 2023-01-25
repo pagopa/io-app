@@ -1,6 +1,5 @@
-import { View } from "native-base";
 import * as React from "react";
-import { SafeAreaView, StyleSheet } from "react-native";
+import { View, SafeAreaView, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { connect } from "react-redux";
 import { InitializedProfile } from "../../../../../../../definitions/backend/InitializedProfile";
@@ -24,6 +23,10 @@ import { Abi } from "../../../../../../../definitions/pagopa/walletv2/Abi";
 import PreviewCoBadgeCard from "../../../../cobadge/component/PreviewCoBadgeCard";
 import { IOColors } from "../../../../../../components/core/variables/IOColors";
 import { isCoBadgeOrPrivativeBlocked } from "../../../../../../utils/paymentMethod";
+import {
+  HSpacer,
+  VSpacer
+} from "../../../../../../components/core/spacer/Spacer";
 
 type Props = {
   pan: PaymentInstrument;
@@ -67,13 +70,13 @@ const AddCobadgeComponent: React.FunctionComponent<Props> = (props: Props) => {
 
   return (
     <BaseScreenComponent
-      customGoBack={<View hspacer={true} spacer={true} />}
+      customGoBack={<HSpacer size={16} />}
       headerTitle={headerTitle}
       contextualHelp={props.contextualHelp}
     >
       <SafeAreaView style={IOStyles.flex} testID={"AddCobadgeComponent"}>
         <ScrollView style={IOStyles.flex}>
-          <View spacer={true} />
+          <VSpacer size={16} />
           <View
             style={[
               styles.container,
@@ -82,13 +85,13 @@ const AddCobadgeComponent: React.FunctionComponent<Props> = (props: Props) => {
             ]}
           >
             <H1 style={styles.title}>{screenTitle}</H1>
-            <View spacer small />
+            <VSpacer size={8} />
             <H4 weight={"Regular"} style={styles.flexStart}>
               {label}
             </H4>
-            <View spacer={true} large={true} />
+            <VSpacer size={24} />
             <PreviewCoBadgeCard coBadge={props.pan} abi={abiInfo} />
-            <View spacer={true} large={true} />
+            <VSpacer size={24} />
             {isCoBadgeOrPrivativeBlocked(props.pan) ? (
               <InfoBox iconColor={IOColors.red} iconName={"io-error"}>
                 <Body>{blockedCard}</Body>
@@ -101,7 +104,7 @@ const AddCobadgeComponent: React.FunctionComponent<Props> = (props: Props) => {
               </InfoBox>
             )}
           </View>
-          <View spacer />
+          <VSpacer size={16} />
         </ScrollView>
         {isCoBadgeOrPrivativeBlocked(props.pan) ? (
           <FooterWithButtons

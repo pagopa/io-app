@@ -1,6 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import _ from "lodash";
-import { Content as NBContent, View as NBView } from "native-base";
+import { Content as NBContent } from "native-base";
 import * as React from "react";
 import { useCallback, useEffect, useState } from "react";
 import { ActivityIndicator, StyleSheet, View } from "react-native";
@@ -24,6 +24,7 @@ import { attachmentsFromThirdPartyMessage } from "../../../store/reducers/entiti
 import { UIService } from "../../../store/reducers/entities/services/types";
 import variables from "../../../theme/variables";
 import { cleanMarkdownFromCTAs } from "../../../utils/messages";
+import { VSpacer } from "../../core/spacer/Spacer";
 import OrganizationHeader from "../../OrganizationHeader";
 import { H2 } from "../../core/typography/H2";
 import {
@@ -165,15 +166,15 @@ const MessageDetailsComponent = ({
     <>
       <NBContent noPadded={true}>
         <View style={styles.padded}>
-          <NBView spacer={true} />
+          <VSpacer size={16} />
 
           {service && <OrganizationTitle {...service} />}
 
-          <NBView spacer={true} large={true} />
+          <VSpacer size={24} />
 
           <MessageTitle title={message.title} isPrescription={isPrescription} />
 
-          <NBView spacer={true} />
+          <VSpacer size={16} />
         </View>
         <HeaderDueDateBar
           hasPaidBadge={hasPaidBadge}
@@ -187,7 +188,8 @@ const MessageDetailsComponent = ({
         >
           {cleanMarkdownFromCTAs(markdown)}
         </MessageMarkdown>
-        <NBView spacer={true} large={true} />
+
+        <VSpacer size={24} />
         {prescriptionAttachments &&
           !hasThirdPartyDataAttachments &&
           isContentLoadCompleted && (
@@ -197,7 +199,7 @@ const MessageDetailsComponent = ({
                 prescriptionAttachments={prescriptionAttachments}
                 organizationName={message.organizationName}
               />
-              <NBView spacer={true} large={true} />
+              <VSpacer size={24} />
             </>
           )}
         {hasThirdPartyDataAttachments && isContentLoadCompleted && (
@@ -236,8 +238,8 @@ const MessageDetailsComponent = ({
       <>
         {DeviceInfo.hasNotch() && (
           <React.Fragment>
-            <NBView spacer={true} large={true} />
-            <NBView spacer={true} small={true} />
+            <VSpacer size={24} />
+            <VSpacer size={8} />
           </React.Fragment>
         )}
 
