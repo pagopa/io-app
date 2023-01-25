@@ -48,14 +48,31 @@ exports[`OrganizationHeader should match the snapshot 1`] = `
       Universala Esperanto-Asocio
     </Text>
     <Text
-      style={
+      color="bluegrey"
+      defaultColor="bluegrey"
+      defaultWeight="Regular"
+      font="TitilliumWeb"
+      fontStyle={
         Object {
-          "color": "#000",
-          "fontFamily": "System",
           "fontSize": 16,
+          "lineHeight": 24,
         }
       }
-      uppercase={false}
+      style={
+        Array [
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          },
+          Object {
+            "color": "#475A6D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "400",
+          },
+        ]
+      }
+      weight="Regular"
     >
       Avviso
     </Text>

@@ -147,56 +147,108 @@ Array [
         }
       }
     />
-    <Text
+    <View
       style={
         Array [
           Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
+            "paddingHorizontal": 4,
           },
           Object {
             "flex": 1,
-            "paddingLeft": 5,
-            "paddingRight": 5,
           },
         ]
       }
-      testID="DueDateBar_TextContent"
-      uppercase={false}
-      white={true}
     >
-      Expired on
       <Text
-        bold={true}
-        style={
+        color="white"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
           Object {
-            "color": "#000",
-            "fontFamily": "System",
             "fontSize": 16,
+            "lineHeight": 24,
           }
         }
-        uppercase={false}
-        white={true}
-      >
-         31/01/2022 
-      </Text>
-      at
-      <Text
-        bold={true}
         style={
-          Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
-          }
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#FFFFFF",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
         }
-        uppercase={false}
-        white={true}
+        testID="DueDateBar_TextContent"
+        weight="Regular"
       >
-         22:59
+        Expired on
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           31/01/2022 
+        </Text>
+        at
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           22:59
+        </Text>
       </Text>
-    </Text>
+    </View>
   </View>,
   <View
     style={
@@ -355,56 +407,108 @@ Array [
         }
       }
     />
-    <Text
+    <View
       style={
         Array [
           Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
+            "paddingHorizontal": 4,
           },
           Object {
             "flex": 1,
-            "paddingLeft": 5,
-            "paddingRight": 5,
           },
         ]
       }
-      testID="DueDateBar_TextContent"
-      uppercase={false}
-      white={true}
     >
-      Expired on
       <Text
-        bold={true}
-        style={
+        color="white"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
           Object {
-            "color": "#000",
-            "fontFamily": "System",
             "fontSize": 16,
+            "lineHeight": 24,
           }
         }
-        uppercase={false}
-        white={true}
-      >
-         28/02/2022 
-      </Text>
-      at
-      <Text
-        bold={true}
         style={
-          Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
-          }
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#FFFFFF",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
         }
-        uppercase={false}
-        white={true}
+        testID="DueDateBar_TextContent"
+        weight="Regular"
       >
-         22:59
+        Expired on
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           28/02/2022 
+        </Text>
+        at
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           22:59
+        </Text>
       </Text>
-    </Text>
+    </View>
   </View>,
   <View
     style={
@@ -563,54 +667,108 @@ Array [
         }
       }
     />
-    <Text
+    <View
       style={
         Array [
           Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
+            "paddingHorizontal": 4,
           },
           Object {
             "flex": 1,
-            "paddingLeft": 5,
-            "paddingRight": 5,
           },
         ]
       }
-      testID="DueDateBar_TextContent"
-      uppercase={false}
-      white={false}
     >
-      Expiring on
       <Text
-        bold={true}
-        style={
+        color="bluegrey"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
           Object {
-            "color": "#000",
-            "fontFamily": "System",
             "fontSize": 16,
+            "lineHeight": 24,
           }
         }
-        uppercase={false}
-      >
-         28/02/2023 
-      </Text>
-      at
-      <Text
-        bold={true}
         style={
-          Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
-          }
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#475A6D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
         }
-        uppercase={false}
+        testID="DueDateBar_TextContent"
+        weight="Regular"
       >
-         22:59
+        Expiring on
+        <Text
+          color="bluegrey"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#475A6D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           28/02/2023 
+        </Text>
+        at
+        <Text
+          color="bluegrey"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#475A6D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           22:59
+        </Text>
       </Text>
-    </Text>
+    </View>
   </View>,
   <View
     style={
@@ -769,54 +927,108 @@ Array [
         }
       }
     />
-    <Text
+    <View
       style={
         Array [
           Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
+            "paddingHorizontal": 4,
           },
           Object {
             "flex": 1,
-            "paddingLeft": 5,
-            "paddingRight": 5,
           },
         ]
       }
-      testID="DueDateBar_TextContent"
-      uppercase={false}
-      white={false}
     >
-      Expiring on
       <Text
-        bold={true}
-        style={
+        color="bluegrey"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
           Object {
-            "color": "#000",
-            "fontFamily": "System",
             "fontSize": 16,
+            "lineHeight": 24,
           }
         }
-        uppercase={false}
-      >
-         29/02/2024 
-      </Text>
-      at
-      <Text
-        bold={true}
         style={
-          Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
-          }
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#475A6D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
         }
-        uppercase={false}
+        testID="DueDateBar_TextContent"
+        weight="Regular"
       >
-         22:59
+        Expiring on
+        <Text
+          color="bluegrey"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#475A6D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           29/02/2024 
+        </Text>
+        at
+        <Text
+          color="bluegrey"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#475A6D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           22:59
+        </Text>
       </Text>
-    </Text>
+    </View>
   </View>,
   <View
     style={
@@ -975,56 +1187,108 @@ Array [
         }
       }
     />
-    <Text
+    <View
       style={
         Array [
           Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
+            "paddingHorizontal": 4,
           },
           Object {
             "flex": 1,
-            "paddingLeft": 5,
-            "paddingRight": 5,
           },
         ]
       }
-      testID="DueDateBar_TextContent"
-      uppercase={false}
-      white={true}
     >
-      Expired on
       <Text
-        bold={true}
-        style={
+        color="white"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
           Object {
-            "color": "#000",
-            "fontFamily": "System",
             "fontSize": 16,
+            "lineHeight": 24,
           }
         }
-        uppercase={false}
-        white={true}
-      >
-         31/03/2022 
-      </Text>
-      at
-      <Text
-        bold={true}
         style={
-          Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
-          }
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#FFFFFF",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
         }
-        uppercase={false}
-        white={true}
+        testID="DueDateBar_TextContent"
+        weight="Regular"
       >
-         22:59
+        Expired on
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           31/03/2022 
+        </Text>
+        at
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           22:59
+        </Text>
       </Text>
-    </Text>
+    </View>
   </View>,
   <View
     style={
@@ -1183,56 +1447,108 @@ Array [
         }
       }
     />
-    <Text
+    <View
       style={
         Array [
           Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
+            "paddingHorizontal": 4,
           },
           Object {
             "flex": 1,
-            "paddingLeft": 5,
-            "paddingRight": 5,
           },
         ]
       }
-      testID="DueDateBar_TextContent"
-      uppercase={false}
-      white={true}
     >
-      Expired on
       <Text
-        bold={true}
-        style={
+        color="white"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
           Object {
-            "color": "#000",
-            "fontFamily": "System",
             "fontSize": 16,
+            "lineHeight": 24,
           }
         }
-        uppercase={false}
-        white={true}
-      >
-         30/04/2022 
-      </Text>
-      at
-      <Text
-        bold={true}
         style={
-          Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
-          }
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#FFFFFF",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
         }
-        uppercase={false}
-        white={true}
+        testID="DueDateBar_TextContent"
+        weight="Regular"
       >
-         22:59
+        Expired on
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           30/04/2022 
+        </Text>
+        at
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           22:59
+        </Text>
       </Text>
-    </Text>
+    </View>
   </View>,
   <View
     style={
@@ -1391,56 +1707,108 @@ Array [
         }
       }
     />
-    <Text
+    <View
       style={
         Array [
           Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
+            "paddingHorizontal": 4,
           },
           Object {
             "flex": 1,
-            "paddingLeft": 5,
-            "paddingRight": 5,
           },
         ]
       }
-      testID="DueDateBar_TextContent"
-      uppercase={false}
-      white={true}
     >
-      Expired on
       <Text
-        bold={true}
-        style={
+        color="white"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
           Object {
-            "color": "#000",
-            "fontFamily": "System",
             "fontSize": 16,
+            "lineHeight": 24,
           }
         }
-        uppercase={false}
-        white={true}
-      >
-         31/05/2022 
-      </Text>
-      at
-      <Text
-        bold={true}
         style={
-          Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
-          }
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#FFFFFF",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
         }
-        uppercase={false}
-        white={true}
+        testID="DueDateBar_TextContent"
+        weight="Regular"
       >
-         22:59
+        Expired on
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           31/05/2022 
+        </Text>
+        at
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           22:59
+        </Text>
       </Text>
-    </Text>
+    </View>
   </View>,
   <View
     style={
@@ -1599,56 +1967,108 @@ Array [
         }
       }
     />
-    <Text
+    <View
       style={
         Array [
           Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
+            "paddingHorizontal": 4,
           },
           Object {
             "flex": 1,
-            "paddingLeft": 5,
-            "paddingRight": 5,
           },
         ]
       }
-      testID="DueDateBar_TextContent"
-      uppercase={false}
-      white={true}
     >
-      Expired on
       <Text
-        bold={true}
-        style={
+        color="white"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
           Object {
-            "color": "#000",
-            "fontFamily": "System",
             "fontSize": 16,
+            "lineHeight": 24,
           }
         }
-        uppercase={false}
-        white={true}
-      >
-         30/06/2022 
-      </Text>
-      at
-      <Text
-        bold={true}
         style={
-          Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
-          }
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#FFFFFF",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
         }
-        uppercase={false}
-        white={true}
+        testID="DueDateBar_TextContent"
+        weight="Regular"
       >
-         22:59
+        Expired on
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           30/06/2022 
+        </Text>
+        at
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           22:59
+        </Text>
       </Text>
-    </Text>
+    </View>
   </View>,
   <View
     style={
@@ -1807,56 +2227,108 @@ Array [
         }
       }
     />
-    <Text
+    <View
       style={
         Array [
           Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
+            "paddingHorizontal": 4,
           },
           Object {
             "flex": 1,
-            "paddingLeft": 5,
-            "paddingRight": 5,
           },
         ]
       }
-      testID="DueDateBar_TextContent"
-      uppercase={false}
-      white={true}
     >
-      Expired on
       <Text
-        bold={true}
-        style={
+        color="white"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
           Object {
-            "color": "#000",
-            "fontFamily": "System",
             "fontSize": 16,
+            "lineHeight": 24,
           }
         }
-        uppercase={false}
-        white={true}
-      >
-         31/07/2022 
-      </Text>
-      at
-      <Text
-        bold={true}
         style={
-          Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
-          }
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#FFFFFF",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
         }
-        uppercase={false}
-        white={true}
+        testID="DueDateBar_TextContent"
+        weight="Regular"
       >
-         22:59
+        Expired on
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           31/07/2022 
+        </Text>
+        at
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           22:59
+        </Text>
       </Text>
-    </Text>
+    </View>
   </View>,
   <View
     style={
@@ -2015,56 +2487,108 @@ Array [
         }
       }
     />
-    <Text
+    <View
       style={
         Array [
           Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
+            "paddingHorizontal": 4,
           },
           Object {
             "flex": 1,
-            "paddingLeft": 5,
-            "paddingRight": 5,
           },
         ]
       }
-      testID="DueDateBar_TextContent"
-      uppercase={false}
-      white={true}
     >
-      Expired on
       <Text
-        bold={true}
-        style={
+        color="white"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
           Object {
-            "color": "#000",
-            "fontFamily": "System",
             "fontSize": 16,
+            "lineHeight": 24,
           }
         }
-        uppercase={false}
-        white={true}
-      >
-         31/08/2022 
-      </Text>
-      at
-      <Text
-        bold={true}
         style={
-          Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
-          }
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#FFFFFF",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
         }
-        uppercase={false}
-        white={true}
+        testID="DueDateBar_TextContent"
+        weight="Regular"
       >
-         22:59
+        Expired on
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           31/08/2022 
+        </Text>
+        at
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           22:59
+        </Text>
       </Text>
-    </Text>
+    </View>
   </View>,
   <View
     style={
@@ -2223,56 +2747,108 @@ Array [
         }
       }
     />
-    <Text
+    <View
       style={
         Array [
           Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
+            "paddingHorizontal": 4,
           },
           Object {
             "flex": 1,
-            "paddingLeft": 5,
-            "paddingRight": 5,
           },
         ]
       }
-      testID="DueDateBar_TextContent"
-      uppercase={false}
-      white={true}
     >
-      Expired on
       <Text
-        bold={true}
-        style={
+        color="white"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
           Object {
-            "color": "#000",
-            "fontFamily": "System",
             "fontSize": 16,
+            "lineHeight": 24,
           }
         }
-        uppercase={false}
-        white={true}
-      >
-         30/09/2022 
-      </Text>
-      at
-      <Text
-        bold={true}
         style={
-          Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
-          }
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#FFFFFF",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
         }
-        uppercase={false}
-        white={true}
+        testID="DueDateBar_TextContent"
+        weight="Regular"
       >
-         22:59
+        Expired on
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           30/09/2022 
+        </Text>
+        at
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           22:59
+        </Text>
       </Text>
-    </Text>
+    </View>
   </View>,
   <View
     style={
@@ -2431,56 +3007,108 @@ Array [
         }
       }
     />
-    <Text
+    <View
       style={
         Array [
           Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
+            "paddingHorizontal": 4,
           },
           Object {
             "flex": 1,
-            "paddingLeft": 5,
-            "paddingRight": 5,
           },
         ]
       }
-      testID="DueDateBar_TextContent"
-      uppercase={false}
-      white={true}
     >
-      Expired on
       <Text
-        bold={true}
-        style={
+        color="white"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
           Object {
-            "color": "#000",
-            "fontFamily": "System",
             "fontSize": 16,
+            "lineHeight": 24,
           }
         }
-        uppercase={false}
-        white={true}
-      >
-         31/10/2022 
-      </Text>
-      at
-      <Text
-        bold={true}
         style={
-          Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
-          }
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#FFFFFF",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
         }
-        uppercase={false}
-        white={true}
+        testID="DueDateBar_TextContent"
+        weight="Regular"
       >
-         22:59
+        Expired on
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           31/10/2022 
+        </Text>
+        at
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           22:59
+        </Text>
       </Text>
-    </Text>
+    </View>
   </View>,
   <View
     style={
@@ -2639,54 +3267,108 @@ Array [
         }
       }
     />
-    <Text
+    <View
       style={
         Array [
           Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
+            "paddingHorizontal": 4,
           },
           Object {
             "flex": 1,
-            "paddingLeft": 5,
-            "paddingRight": 5,
           },
         ]
       }
-      testID="DueDateBar_TextContent"
-      uppercase={false}
-      white={false}
     >
-      Expiring on
       <Text
-        bold={true}
-        style={
+        color="bluegrey"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
           Object {
-            "color": "#000",
-            "fontFamily": "System",
             "fontSize": 16,
+            "lineHeight": 24,
           }
         }
-        uppercase={false}
-      >
-         01/12/2022 
-      </Text>
-      at
-      <Text
-        bold={true}
         style={
-          Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
-          }
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#475A6D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
         }
-        uppercase={false}
+        testID="DueDateBar_TextContent"
+        weight="Regular"
       >
-         22:59
+        Expiring on
+        <Text
+          color="bluegrey"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#475A6D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           01/12/2022 
+        </Text>
+        at
+        <Text
+          color="bluegrey"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#475A6D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           22:59
+        </Text>
       </Text>
-    </Text>
+    </View>
   </View>,
   <View
     style={
@@ -2845,54 +3527,108 @@ Array [
         }
       }
     />
-    <Text
+    <View
       style={
         Array [
           Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
+            "paddingHorizontal": 4,
           },
           Object {
             "flex": 1,
-            "paddingLeft": 5,
-            "paddingRight": 5,
           },
         ]
       }
-      testID="DueDateBar_TextContent"
-      uppercase={false}
-      white={false}
     >
-      Expiring on
       <Text
-        bold={true}
-        style={
+        color="bluegrey"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
           Object {
-            "color": "#000",
-            "fontFamily": "System",
             "fontSize": 16,
+            "lineHeight": 24,
           }
         }
-        uppercase={false}
-      >
-         31/12/2022 
-      </Text>
-      at
-      <Text
-        bold={true}
         style={
-          Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
-          }
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#475A6D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
         }
-        uppercase={false}
+        testID="DueDateBar_TextContent"
+        weight="Regular"
       >
-         22:59
+        Expiring on
+        <Text
+          color="bluegrey"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#475A6D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           31/12/2022 
+        </Text>
+        at
+        <Text
+          color="bluegrey"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#475A6D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           22:59
+        </Text>
       </Text>
-    </Text>
+    </View>
   </View>,
   <View
     style={
@@ -3051,56 +3787,108 @@ Array [
         }
       }
     />
-    <Text
+    <View
       style={
         Array [
           Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
+            "paddingHorizontal": 4,
           },
           Object {
             "flex": 1,
-            "paddingLeft": 5,
-            "paddingRight": 5,
           },
         ]
       }
-      testID="DueDateBar_TextContent"
-      uppercase={false}
-      white={true}
     >
-      Scaduto il
       <Text
-        bold={true}
-        style={
+        color="white"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
           Object {
-            "color": "#000",
-            "fontFamily": "System",
             "fontSize": 16,
+            "lineHeight": 24,
           }
         }
-        uppercase={false}
-        white={true}
-      >
-         31/01/2022 
-      </Text>
-      alle ore
-      <Text
-        bold={true}
         style={
-          Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
-          }
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#FFFFFF",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
         }
-        uppercase={false}
-        white={true}
+        testID="DueDateBar_TextContent"
+        weight="Regular"
       >
-         23:59
+        Scaduto il
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           31/01/2022 
+        </Text>
+        alle ore
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           23:59
+        </Text>
       </Text>
-    </Text>
+    </View>
   </View>,
   <View
     style={
@@ -3259,56 +4047,108 @@ Array [
         }
       }
     />
-    <Text
+    <View
       style={
         Array [
           Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
+            "paddingHorizontal": 4,
           },
           Object {
             "flex": 1,
-            "paddingLeft": 5,
-            "paddingRight": 5,
           },
         ]
       }
-      testID="DueDateBar_TextContent"
-      uppercase={false}
-      white={true}
     >
-      Scaduto il
       <Text
-        bold={true}
-        style={
+        color="white"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
           Object {
-            "color": "#000",
-            "fontFamily": "System",
             "fontSize": 16,
+            "lineHeight": 24,
           }
         }
-        uppercase={false}
-        white={true}
-      >
-         28/02/2022 
-      </Text>
-      alle ore
-      <Text
-        bold={true}
         style={
-          Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
-          }
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#FFFFFF",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
         }
-        uppercase={false}
-        white={true}
+        testID="DueDateBar_TextContent"
+        weight="Regular"
       >
-         23:59
+        Scaduto il
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           28/02/2022 
+        </Text>
+        alle ore
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           23:59
+        </Text>
       </Text>
-    </Text>
+    </View>
   </View>,
   <View
     style={
@@ -3467,54 +4307,108 @@ Array [
         }
       }
     />
-    <Text
+    <View
       style={
         Array [
           Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
+            "paddingHorizontal": 4,
           },
           Object {
             "flex": 1,
-            "paddingLeft": 5,
-            "paddingRight": 5,
           },
         ]
       }
-      testID="DueDateBar_TextContent"
-      uppercase={false}
-      white={false}
     >
-      Scade il
       <Text
-        bold={true}
-        style={
+        color="bluegrey"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
           Object {
-            "color": "#000",
-            "fontFamily": "System",
             "fontSize": 16,
+            "lineHeight": 24,
           }
         }
-        uppercase={false}
-      >
-         28/02/2023 
-      </Text>
-      alle ore
-      <Text
-        bold={true}
         style={
-          Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
-          }
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#475A6D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
         }
-        uppercase={false}
+        testID="DueDateBar_TextContent"
+        weight="Regular"
       >
-         23:59
+        Scade il
+        <Text
+          color="bluegrey"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#475A6D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           28/02/2023 
+        </Text>
+        alle ore
+        <Text
+          color="bluegrey"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#475A6D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           23:59
+        </Text>
       </Text>
-    </Text>
+    </View>
   </View>,
   <View
     style={
@@ -3673,54 +4567,108 @@ Array [
         }
       }
     />
-    <Text
+    <View
       style={
         Array [
           Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
+            "paddingHorizontal": 4,
           },
           Object {
             "flex": 1,
-            "paddingLeft": 5,
-            "paddingRight": 5,
           },
         ]
       }
-      testID="DueDateBar_TextContent"
-      uppercase={false}
-      white={false}
     >
-      Scade il
       <Text
-        bold={true}
-        style={
+        color="bluegrey"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
           Object {
-            "color": "#000",
-            "fontFamily": "System",
             "fontSize": 16,
+            "lineHeight": 24,
           }
         }
-        uppercase={false}
-      >
-         29/02/2024 
-      </Text>
-      alle ore
-      <Text
-        bold={true}
         style={
-          Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
-          }
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#475A6D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
         }
-        uppercase={false}
+        testID="DueDateBar_TextContent"
+        weight="Regular"
       >
-         23:59
+        Scade il
+        <Text
+          color="bluegrey"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#475A6D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           29/02/2024 
+        </Text>
+        alle ore
+        <Text
+          color="bluegrey"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#475A6D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           23:59
+        </Text>
       </Text>
-    </Text>
+    </View>
   </View>,
   <View
     style={
@@ -3879,56 +4827,108 @@ Array [
         }
       }
     />
-    <Text
+    <View
       style={
         Array [
           Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
+            "paddingHorizontal": 4,
           },
           Object {
             "flex": 1,
-            "paddingLeft": 5,
-            "paddingRight": 5,
           },
         ]
       }
-      testID="DueDateBar_TextContent"
-      uppercase={false}
-      white={true}
     >
-      Scaduto il
       <Text
-        bold={true}
-        style={
+        color="white"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
           Object {
-            "color": "#000",
-            "fontFamily": "System",
             "fontSize": 16,
+            "lineHeight": 24,
           }
         }
-        uppercase={false}
-        white={true}
-      >
-         31/03/2022 
-      </Text>
-      alle ore
-      <Text
-        bold={true}
         style={
-          Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
-          }
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#FFFFFF",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
         }
-        uppercase={false}
-        white={true}
+        testID="DueDateBar_TextContent"
+        weight="Regular"
       >
-         23:59
+        Scaduto il
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           31/03/2022 
+        </Text>
+        alle ore
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           23:59
+        </Text>
       </Text>
-    </Text>
+    </View>
   </View>,
   <View
     style={
@@ -4087,56 +5087,108 @@ Array [
         }
       }
     />
-    <Text
+    <View
       style={
         Array [
           Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
+            "paddingHorizontal": 4,
           },
           Object {
             "flex": 1,
-            "paddingLeft": 5,
-            "paddingRight": 5,
           },
         ]
       }
-      testID="DueDateBar_TextContent"
-      uppercase={false}
-      white={true}
     >
-      Scaduto il
       <Text
-        bold={true}
-        style={
+        color="white"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
           Object {
-            "color": "#000",
-            "fontFamily": "System",
             "fontSize": 16,
+            "lineHeight": 24,
           }
         }
-        uppercase={false}
-        white={true}
-      >
-         30/04/2022 
-      </Text>
-      alle ore
-      <Text
-        bold={true}
         style={
-          Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
-          }
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#FFFFFF",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
         }
-        uppercase={false}
-        white={true}
+        testID="DueDateBar_TextContent"
+        weight="Regular"
       >
-         23:59
+        Scaduto il
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           30/04/2022 
+        </Text>
+        alle ore
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           23:59
+        </Text>
       </Text>
-    </Text>
+    </View>
   </View>,
   <View
     style={
@@ -4295,56 +5347,108 @@ Array [
         }
       }
     />
-    <Text
+    <View
       style={
         Array [
           Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
+            "paddingHorizontal": 4,
           },
           Object {
             "flex": 1,
-            "paddingLeft": 5,
-            "paddingRight": 5,
           },
         ]
       }
-      testID="DueDateBar_TextContent"
-      uppercase={false}
-      white={true}
     >
-      Scaduto il
       <Text
-        bold={true}
-        style={
+        color="white"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
           Object {
-            "color": "#000",
-            "fontFamily": "System",
             "fontSize": 16,
+            "lineHeight": 24,
           }
         }
-        uppercase={false}
-        white={true}
-      >
-         31/05/2022 
-      </Text>
-      alle ore
-      <Text
-        bold={true}
         style={
-          Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
-          }
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#FFFFFF",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
         }
-        uppercase={false}
-        white={true}
+        testID="DueDateBar_TextContent"
+        weight="Regular"
       >
-         23:59
+        Scaduto il
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           31/05/2022 
+        </Text>
+        alle ore
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           23:59
+        </Text>
       </Text>
-    </Text>
+    </View>
   </View>,
   <View
     style={
@@ -4503,56 +5607,108 @@ Array [
         }
       }
     />
-    <Text
+    <View
       style={
         Array [
           Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
+            "paddingHorizontal": 4,
           },
           Object {
             "flex": 1,
-            "paddingLeft": 5,
-            "paddingRight": 5,
           },
         ]
       }
-      testID="DueDateBar_TextContent"
-      uppercase={false}
-      white={true}
     >
-      Scaduto il
       <Text
-        bold={true}
-        style={
+        color="white"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
           Object {
-            "color": "#000",
-            "fontFamily": "System",
             "fontSize": 16,
+            "lineHeight": 24,
           }
         }
-        uppercase={false}
-        white={true}
-      >
-         30/06/2022 
-      </Text>
-      alle ore
-      <Text
-        bold={true}
         style={
-          Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
-          }
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#FFFFFF",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
         }
-        uppercase={false}
-        white={true}
+        testID="DueDateBar_TextContent"
+        weight="Regular"
       >
-         23:59
+        Scaduto il
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           30/06/2022 
+        </Text>
+        alle ore
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           23:59
+        </Text>
       </Text>
-    </Text>
+    </View>
   </View>,
   <View
     style={
@@ -4711,56 +5867,108 @@ Array [
         }
       }
     />
-    <Text
+    <View
       style={
         Array [
           Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
+            "paddingHorizontal": 4,
           },
           Object {
             "flex": 1,
-            "paddingLeft": 5,
-            "paddingRight": 5,
           },
         ]
       }
-      testID="DueDateBar_TextContent"
-      uppercase={false}
-      white={true}
     >
-      Scaduto il
       <Text
-        bold={true}
-        style={
+        color="white"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
           Object {
-            "color": "#000",
-            "fontFamily": "System",
             "fontSize": 16,
+            "lineHeight": 24,
           }
         }
-        uppercase={false}
-        white={true}
-      >
-         31/07/2022 
-      </Text>
-      alle ore
-      <Text
-        bold={true}
         style={
-          Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
-          }
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#FFFFFF",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
         }
-        uppercase={false}
-        white={true}
+        testID="DueDateBar_TextContent"
+        weight="Regular"
       >
-         23:59
+        Scaduto il
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           31/07/2022 
+        </Text>
+        alle ore
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           23:59
+        </Text>
       </Text>
-    </Text>
+    </View>
   </View>,
   <View
     style={
@@ -4919,56 +6127,108 @@ Array [
         }
       }
     />
-    <Text
+    <View
       style={
         Array [
           Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
+            "paddingHorizontal": 4,
           },
           Object {
             "flex": 1,
-            "paddingLeft": 5,
-            "paddingRight": 5,
           },
         ]
       }
-      testID="DueDateBar_TextContent"
-      uppercase={false}
-      white={true}
     >
-      Scaduto il
       <Text
-        bold={true}
-        style={
+        color="white"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
           Object {
-            "color": "#000",
-            "fontFamily": "System",
             "fontSize": 16,
+            "lineHeight": 24,
           }
         }
-        uppercase={false}
-        white={true}
-      >
-         31/08/2022 
-      </Text>
-      alle ore
-      <Text
-        bold={true}
         style={
-          Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
-          }
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#FFFFFF",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
         }
-        uppercase={false}
-        white={true}
+        testID="DueDateBar_TextContent"
+        weight="Regular"
       >
-         23:59
+        Scaduto il
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           31/08/2022 
+        </Text>
+        alle ore
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           23:59
+        </Text>
       </Text>
-    </Text>
+    </View>
   </View>,
   <View
     style={
@@ -5127,56 +6387,108 @@ Array [
         }
       }
     />
-    <Text
+    <View
       style={
         Array [
           Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
+            "paddingHorizontal": 4,
           },
           Object {
             "flex": 1,
-            "paddingLeft": 5,
-            "paddingRight": 5,
           },
         ]
       }
-      testID="DueDateBar_TextContent"
-      uppercase={false}
-      white={true}
     >
-      Scaduto il
       <Text
-        bold={true}
-        style={
+        color="white"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
           Object {
-            "color": "#000",
-            "fontFamily": "System",
             "fontSize": 16,
+            "lineHeight": 24,
           }
         }
-        uppercase={false}
-        white={true}
-      >
-         30/09/2022 
-      </Text>
-      alle ore
-      <Text
-        bold={true}
         style={
-          Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
-          }
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#FFFFFF",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
         }
-        uppercase={false}
-        white={true}
+        testID="DueDateBar_TextContent"
+        weight="Regular"
       >
-         23:59
+        Scaduto il
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           30/09/2022 
+        </Text>
+        alle ore
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           23:59
+        </Text>
       </Text>
-    </Text>
+    </View>
   </View>,
   <View
     style={
@@ -5335,56 +6647,108 @@ Array [
         }
       }
     />
-    <Text
+    <View
       style={
         Array [
           Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
+            "paddingHorizontal": 4,
           },
           Object {
             "flex": 1,
-            "paddingLeft": 5,
-            "paddingRight": 5,
           },
         ]
       }
-      testID="DueDateBar_TextContent"
-      uppercase={false}
-      white={true}
     >
-      Scaduto il
       <Text
-        bold={true}
-        style={
+        color="white"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
           Object {
-            "color": "#000",
-            "fontFamily": "System",
             "fontSize": 16,
+            "lineHeight": 24,
           }
         }
-        uppercase={false}
-        white={true}
-      >
-         31/10/2022 
-      </Text>
-      alle ore
-      <Text
-        bold={true}
         style={
-          Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
-          }
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#FFFFFF",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
         }
-        uppercase={false}
-        white={true}
+        testID="DueDateBar_TextContent"
+        weight="Regular"
       >
-         23:59
+        Scaduto il
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           31/10/2022 
+        </Text>
+        alle ore
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           23:59
+        </Text>
       </Text>
-    </Text>
+    </View>
   </View>,
   <View
     style={
@@ -5543,54 +6907,108 @@ Array [
         }
       }
     />
-    <Text
+    <View
       style={
         Array [
           Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
+            "paddingHorizontal": 4,
           },
           Object {
             "flex": 1,
-            "paddingLeft": 5,
-            "paddingRight": 5,
           },
         ]
       }
-      testID="DueDateBar_TextContent"
-      uppercase={false}
-      white={false}
     >
-      Scade il
       <Text
-        bold={true}
-        style={
+        color="bluegrey"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
           Object {
-            "color": "#000",
-            "fontFamily": "System",
             "fontSize": 16,
+            "lineHeight": 24,
           }
         }
-        uppercase={false}
-      >
-         01/12/2022 
-      </Text>
-      alle ore
-      <Text
-        bold={true}
         style={
-          Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
-          }
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#475A6D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
         }
-        uppercase={false}
+        testID="DueDateBar_TextContent"
+        weight="Regular"
       >
-         23:59
+        Scade il
+        <Text
+          color="bluegrey"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#475A6D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           01/12/2022 
+        </Text>
+        alle ore
+        <Text
+          color="bluegrey"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#475A6D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           23:59
+        </Text>
       </Text>
-    </Text>
+    </View>
   </View>,
   <View
     style={
@@ -5749,54 +7167,108 @@ Array [
         }
       }
     />
-    <Text
+    <View
       style={
         Array [
           Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
+            "paddingHorizontal": 4,
           },
           Object {
             "flex": 1,
-            "paddingLeft": 5,
-            "paddingRight": 5,
           },
         ]
       }
-      testID="DueDateBar_TextContent"
-      uppercase={false}
-      white={false}
     >
-      Scade il
       <Text
-        bold={true}
-        style={
+        color="bluegrey"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
           Object {
-            "color": "#000",
-            "fontFamily": "System",
             "fontSize": 16,
+            "lineHeight": 24,
           }
         }
-        uppercase={false}
-      >
-         31/12/2022 
-      </Text>
-      alle ore
-      <Text
-        bold={true}
         style={
-          Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
-          }
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#475A6D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
         }
-        uppercase={false}
+        testID="DueDateBar_TextContent"
+        weight="Regular"
       >
-         23:59
+        Scade il
+        <Text
+          color="bluegrey"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#475A6D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           31/12/2022 
+        </Text>
+        alle ore
+        <Text
+          color="bluegrey"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#475A6D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           23:59
+        </Text>
       </Text>
-    </Text>
+    </View>
   </View>,
   <View
     style={
@@ -5955,56 +7427,108 @@ Array [
         }
       }
     />
-    <Text
+    <View
       style={
         Array [
           Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
+            "paddingHorizontal": 4,
           },
           Object {
             "flex": 1,
-            "paddingLeft": 5,
-            "paddingRight": 5,
           },
         ]
       }
-      testID="DueDateBar_TextContent"
-      uppercase={false}
-      white={true}
     >
-      Expired on
       <Text
-        bold={true}
-        style={
+        color="white"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
           Object {
-            "color": "#000",
-            "fontFamily": "System",
             "fontSize": 16,
+            "lineHeight": 24,
           }
         }
-        uppercase={false}
-        white={true}
-      >
-         01/12/2021 
-      </Text>
-      at
-      <Text
-        bold={true}
         style={
-          Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
-          }
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#FFFFFF",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
         }
-        uppercase={false}
-        white={true}
+        testID="DueDateBar_TextContent"
+        weight="Regular"
       >
-         13:29
+        Expired on
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           01/12/2021 
+        </Text>
+        at
+        <Text
+          color="white"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           13:29
+        </Text>
       </Text>
-    </Text>
+    </View>
   </View>,
   <View
     style={
@@ -6163,54 +7687,108 @@ Array [
         }
       }
     />
-    <Text
+    <View
       style={
         Array [
           Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
+            "paddingHorizontal": 4,
           },
           Object {
             "flex": 1,
-            "paddingLeft": 5,
-            "paddingRight": 5,
           },
         ]
       }
-      testID="DueDateBar_TextContent"
-      uppercase={false}
-      white={false}
     >
-      Expiring on
       <Text
-        bold={true}
-        style={
+        color="bluegrey"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
           Object {
-            "color": "#000",
-            "fontFamily": "System",
             "fontSize": 16,
+            "lineHeight": 24,
           }
         }
-        uppercase={false}
-      >
-         01/12/2021 
-      </Text>
-      at
-      <Text
-        bold={true}
         style={
-          Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
-          }
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#475A6D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
         }
-        uppercase={false}
+        testID="DueDateBar_TextContent"
+        weight="Regular"
       >
-         13:29
+        Expiring on
+        <Text
+          color="bluegrey"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#475A6D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           01/12/2021 
+        </Text>
+        at
+        <Text
+          color="bluegrey"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#475A6D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           13:29
+        </Text>
       </Text>
-    </Text>
+    </View>
   </View>,
   <View
     style={
@@ -6369,54 +7947,108 @@ Array [
         }
       }
     />
-    <Text
+    <View
       style={
         Array [
           Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
+            "paddingHorizontal": 4,
           },
           Object {
             "flex": 1,
-            "paddingLeft": 5,
-            "paddingRight": 5,
           },
         ]
       }
-      testID="DueDateBar_TextContent"
-      uppercase={false}
-      white={false}
     >
-      Expiring on
       <Text
-        bold={true}
-        style={
+        color="bluegrey"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
           Object {
-            "color": "#000",
-            "fontFamily": "System",
             "fontSize": 16,
+            "lineHeight": 24,
           }
         }
-        uppercase={false}
-      >
-         01/12/2021 
-      </Text>
-      at
-      <Text
-        bold={true}
         style={
-          Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
-          }
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#475A6D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
         }
-        uppercase={false}
+        testID="DueDateBar_TextContent"
+        weight="Regular"
       >
-         13:29
+        Expiring on
+        <Text
+          color="bluegrey"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#475A6D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           01/12/2021 
+        </Text>
+        at
+        <Text
+          color="bluegrey"
+          defaultColor="bluegrey"
+          defaultWeight="Regular"
+          font="TitilliumWeb"
+          fontStyle={
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 16,
+                "lineHeight": 24,
+              },
+              Object {
+                "color": "#475A6D",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+           13:29
+        </Text>
       </Text>
-    </Text>
+    </View>
   </View>,
   <View
     style={
@@ -6469,25 +8101,42 @@ exports[`the \`DueDateBar\` component when \`isPaid\` is true  should match the 
   >
     
   </Text>
-  <Text
+  <View
     style={
-      Array [
-        Object {
-          "color": "#000",
-          "fontFamily": "System",
-          "fontSize": 16,
-        },
-        Object {
-          "paddingHorizontal": 24,
-        },
-        Object {
-          "color": "#17324D",
-        },
-      ]
+      Object {
+        "paddingHorizontal": 24,
+      }
     }
-    uppercase={false}
   >
-    This notice has been already paid!
-  </Text>
+    <Text
+      color="bluegreyDark"
+      defaultColor="bluegrey"
+      defaultWeight="Regular"
+      font="TitilliumWeb"
+      fontStyle={
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        }
+      }
+      style={
+        Array [
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          },
+          Object {
+            "color": "#17324D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "400",
+          },
+        ]
+      }
+      weight="Regular"
+    >
+      This notice has been already paid!
+    </Text>
+  </View>
 </View>
 `;
