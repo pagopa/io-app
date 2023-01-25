@@ -19,21 +19,22 @@ const styles = StyleSheet.create({
     ...makeFontStyleObject("Bold")
   },
   badgeStyle: {
+    width: BADGE_SIZE,
+    height: BADGE_SIZE,
+    borderRadius: BADGE_SIZE / 2,
+    alignSelf: "flex-start",
+    justifyContent: "center",
+    alignContent: "center",
     backgroundColor: variables.brandPrimary,
     borderColor: IOColors.white,
     borderWidth: 2,
     position: "absolute",
     elevation: 0.1,
     shadowColor: IOColors.white,
-    width: BADGE_SIZE,
-    height: BADGE_SIZE,
-    borderRadius: BADGE_SIZE / 2,
     left: 12,
     bottom: 10,
     paddingLeft: 0,
-    paddingRight: 0,
-    justifyContent: "center",
-    alignContent: "center"
+    paddingRight: 0
   }
 });
 
