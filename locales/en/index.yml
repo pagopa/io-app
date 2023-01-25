@@ -1788,13 +1788,13 @@ messageDetails:
   write: Write
   id: "ID:"
   attachments:
-    badFormat: "Il formato dell'allegato non è supportato. Contatta l'ente mittente"
-    corruptedFile: "L'allegato è danneggato e non può essere aperto. Contatta l'ente mittente"
-    downloadFailed: "L'allegato non si è aperto. Riprova"
+    badFormat: "The attachment format is not supported. Please contact the sender"
+    corruptedFile: "The attachment is corrupt and can't be opened. Please contact the sender"
+    downloadFailed: "We couldn't open the attachment. Try again"
     unavailable:
-      firstPart: "Gli allegati non sono più disponibili. "
-      secondPart: "Contatta l'ente mittente"
-      thirdPart: " per maggiori informazioni."
+      firstPart: "The attachments are no longer available. "
+      secondPart: "Please contact the sender"
+      thirdPart: " for more information."
 notifications:
   installation:
     errorTitle: Push notifications
