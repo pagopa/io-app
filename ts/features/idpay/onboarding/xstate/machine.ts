@@ -7,7 +7,10 @@ import { StatusEnum } from "../../../../../definitions/idpay/onboarding/Onboardi
 import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/onboarding/RequiredCriteriaDTO";
 import { SelfConsentDTO } from "../../../../../definitions/idpay/onboarding/SelfConsentDTO";
 import { _typeEnum as boolSelfDeclarationTypeEnum } from "../../../../../definitions/idpay/onboarding/SelfDeclarationBoolDTO";
-import { _typeEnum as multiSelfCriteriaTypeEnum } from "../../../../../definitions/idpay/onboarding/SelfDeclarationMultiDTO";
+import {
+  SelfDeclarationMultiDTO,
+  _typeEnum as multiSelfCriteriaTypeEnum
+} from "../../../../../definitions/idpay/onboarding/SelfDeclarationMultiDTO";
 import {
   LOADING_TAG,
   UPSERTING_TAG,
@@ -101,7 +104,7 @@ const getMultiRequiredCriteria = (context: Context) => {
             val => val._type === multiSelfCriteriaTypeEnum.multi
           )
       )
-    );
+    ) as Array<SelfDeclarationMultiDTO>;
   }
   return [];
 };

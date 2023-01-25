@@ -1,10 +1,7 @@
+import { useSelector } from "@xstate/react";
 import { ListItem as NBListItem, View as NBView } from "native-base";
 import React from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
-import {
-  SelfDeclarationMultiDTO,
-  _typeEnum
-} from "../../../../../definitions/idpay/onboarding/SelfDeclarationMultiDTO";
 import { Body } from "../../../../components/core/typography/Body";
 import { H1 } from "../../../../components/core/typography/H1";
 import { H4 } from "../../../../components/core/typography/H4";
@@ -15,6 +12,8 @@ import BaseScreenComponent from "../../../../components/screens/BaseScreenCompon
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import IconFont from "../../../../components/ui/IconFont";
 import I18n from "../../../../i18n";
+import { useOnboardingMachineService } from "../xstate/provider";
+import { multiRequiredCriteriaPageToDisplaySelector } from "../xstate/selectors";
 
 const styles = StyleSheet.create({
   maxheight: {
@@ -67,15 +66,20 @@ const MultiValuePrerequisitesScreen = () => {
     undefined
   );
   const continueOnPress = () => null;
-
-  const multiPrerequisites: SelfDeclarationMultiDTO = {
-    _type: _typeEnum.multi,
-    code: "multi",
-    description:
-      "Testo dove viene descritto il criterio con opzioni di scelta multipla:",
-    value: ["test1", "test2", "test3"]
-  };
+  const machine = useOnboardingMachineService();
+  const currentPage = useSelector(
+    machine,
+    multiRequiredCriteriaPageToDisplaySelector
+  );
+  // const multiPrerequisites: SelfDeclarationMultiDTO = {
+  //   _type: _typeEnum.multi,
+  //   code: "multi",
+  //   description:
+  //     "Testo dove viene descritto il criterio con opzioni di scelta multipla:",
+  //   value: ["test1", "test2", "test3"]
+  // };
   const goBack = () => null;
+
   return (
     <SafeAreaView style={IOStyles.flex}>
       <BaseScreenComponent
@@ -88,9 +92,9 @@ const MultiValuePrerequisitesScreen = () => {
           <Body>{I18n.t("idpay.onboarding.multiPrerequisites.body")}</Body>
           <Link>{I18n.t("idpay.onboarding.multiPrerequisites.link")}</Link>
           <NBView spacer large />
-          <H4>{multiPrerequisites.description}</H4>
+          <H4>{currentPage.description}</H4>
           <ScrollView style={styles.maxheight}>
-            {multiPrerequisites.value.map((requisite, index) => (
+            {currentPage.value.map((requisite, index) => (
               <CustomListItem
                 key={index}
                 text={requisite}
