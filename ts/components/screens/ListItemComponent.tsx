@@ -107,7 +107,6 @@ export default class ListItemComponent extends React.Component<Props> {
                 weight="SemiBold"
                 color={this.props.isItemDisabled ? "grey" : "bluegreyDark"}
                 numberOfLines={2}
-                style={{ alignSelf: "flex-start" }}
               >
                 {this.props.title}
               </H3>

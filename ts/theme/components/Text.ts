@@ -16,12 +16,8 @@ declare module "native-base" {
     interface Text extends TextProperties {
       bold?: boolean;
       semibold?: boolean;
-      leftAlign?: boolean;
-      rightAlign?: boolean;
       white?: boolean;
       dark?: boolean;
-      primary?: boolean;
-      robotomono?: boolean;
     }
   }
 }
@@ -38,20 +34,6 @@ export default (): Theme => ({
   },
   ".dark": {
     color: variables.textColorDark
-  },
-  ".primary": {
-    color: variables.brandPrimary
-  },
-  ".robotomono": {
-    ...makeFontStyleObject(Platform.select, undefined, undefined, "RobotoMono"),
-    ".bold": {
-      ...makeFontStyleObject(
-        Platform.select,
-        variables.textBoldWeight,
-        undefined,
-        "RobotoMono"
-      )
-    }
   },
   lineHeight: variables.lineHeightBase,
   fontSize: variables.fontSizeBase

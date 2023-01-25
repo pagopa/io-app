@@ -1,6 +1,5 @@
 import * as React from "react";
 import { Alert, StyleSheet, View } from "react-native";
-import { Text as NBText } from "native-base";
 import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";
 import { Body } from "../../../components/core/typography/Body";
 import { H1 } from "../../../components/core/typography/H1";
@@ -58,10 +57,8 @@ export const DSTypography = () => (
       NativeBase
     </H2>
     <Body>This is a Body text</Body>
-    <NBText>This is a NBText</NBText>
     <VSpacer size={16} />
     <Body weight="SemiBold">This is a Body SemiBold text</Body>
-    <NBText bold={true}>This is a NBText bold</NBText>
     <VSpacer size={16} />
     <View style={IOStyles.alignCenter}>
       <Body weight="SemiBold">This is a centered text</Body>
