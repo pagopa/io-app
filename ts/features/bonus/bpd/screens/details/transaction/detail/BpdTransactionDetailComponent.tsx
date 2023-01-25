@@ -1,7 +1,7 @@
-import { Badge, Text as NBText } from "native-base";
 import * as React from "react";
 import { View, Image, StyleSheet } from "react-native";
 import CopyButtonComponent from "../../../../../../../components/CopyButtonComponent";
+import { IOBadge } from "../../../../../../../components/core/IOBadge";
 import {
   HSpacer,
   VSpacer
@@ -10,7 +10,6 @@ import { Body } from "../../../../../../../components/core/typography/Body";
 import { H4 } from "../../../../../../../components/core/typography/H4";
 import { H5 } from "../../../../../../../components/core/typography/H5";
 import { Monospace } from "../../../../../../../components/core/typography/Monospace";
-import { IOColors } from "../../../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../../../i18n";
 import { localeDateFormat } from "../../../../../../../utils/locale";
@@ -40,16 +39,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between"
   },
-  badgeText: {
-    color: IOColors.red,
-    fontSize: 12
-  },
-  badge: {
-    backgroundColor: IOColors.white,
-    borderColor: IOColors.red,
-    borderWidth: 1,
-    height: 25
-  },
   copyText: {
     flex: 1,
     paddingRight: 16
@@ -68,11 +57,10 @@ type IdBlockProps = {
 };
 
 const CancelBadge = () => (
-  <Badge style={styles.badge}>
-    <NBText semibold={true} style={styles.badgeText}>
-      {I18n.t("bonus.bpd.details.transaction.detail.canceled")}
-    </NBText>
-  </Badge>
+  <IOBadge
+    text={I18n.t("bonus.bpd.details.transaction.detail.canceled")}
+    labelColor={"red"}
+  />
 );
 
 const Table = (props: Props) => {
