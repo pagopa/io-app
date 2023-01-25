@@ -21,12 +21,7 @@ describe("LolliPOP remote flag test", () => {
       backendStatus: {
         status: O.some({
           ...status,
-          config: {
-            ...status.config,
-            lollipop: {
-              enabled: false
-            }
-          }
+          config: {}
         })
       }
     } as unknown as GlobalState;

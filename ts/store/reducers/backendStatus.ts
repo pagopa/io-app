@@ -223,10 +223,9 @@ export const isLollipopEnabledSelector = createSelector(
   (backendStatus): boolean =>
     pipe(
       backendStatus,
-      O.map(bs => bs.config.lollipop),
-      O.chain(lp => O.fromNullable(lp)),
-      O.map(lp => lp.min_app_version),
-      O.chain(av => O.fromNullable(av)),
+      O.chainNullableK(bs => bs.config),
+      O.chainNullableK(cf => cf.lollipop),
+      O.chainNullableK(lp => lp.min_app_version),
       O.map(av =>
         isVersionSupported(
           Platform.OS === "ios" ? av.ios : av.android,
