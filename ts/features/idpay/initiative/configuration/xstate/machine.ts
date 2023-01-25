@@ -8,6 +8,7 @@ import {
 } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
 import { InstrumentDTO } from "../../../../../../definitions/idpay/wallet/InstrumentDTO";
 import { Wallet } from "../../../../../types/pagopa";
+import { showToast } from "../../../../../utils/showToast";
 import {
   LOADING_TAG,
   UPSERTING_TAG,
@@ -123,6 +124,16 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 onDone: {
                   target: "EVALUATING_IBAN_LIST",
                   actions: "loadIbanListSuccess"
+                },
+                onError: {
+                  actions: [
+                    () =>
+                      showToast(
+                        "Errore nel caricamento della lista IBAN",
+                        "danger"
+                      ),
+                    "exitConfiguration"
+                  ]
                 }
               }
             },
@@ -245,7 +256,21 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 onDone: {
                   target: "DISPLAYING_INSTRUMENTS",
                   actions: "loadInstrumentsSuccess"
-                }
+                },
+                onError: [
+                  {
+                    cond: "isInstrumentsOnlyMode",
+
+                    actions: [
+                      "showInstrumentsLoadingErrorToast",
+                      "exitConfiguration"
+                    ]
+                  },
+                  {
+                    target: "#ROOT.CONFIGURING_IBAN",
+                    actions: "showInstrumentsLoadingErrorToast"
+                  }
+                ]
               }
             },
             DISPLAYING_INSTRUMENTS: {
@@ -375,7 +400,9 @@ const createIDPayInitiativeConfigurationMachine = () =>
         })),
         confirmIbanOnboarding: assign((_, event) => ({
           ibanBody: event.ibanBody
-        }))
+        })),
+        showInstrumentsLoadingErrorToast: () =>
+          showToast("Errore nel caricamento degli strumenti", "danger")
       },
       guards: {
         isInitiativeConfigurationNeeded: (context, _) =>
