@@ -16,6 +16,51 @@ describe("LolliPOP remote flag test", () => {
     ...baseRawBackendStatus
   };
 
+  function checkLollipopFlagWithBrokenStatus(expectedValue: boolean) {
+    const customStoreWithMissingMinAppVersionInLollipopConfig = {
+      backendStatus: {
+        status: O.some({
+          ...status,
+          config: {
+            ...status.config,
+            lollipop: {
+              enabled: false
+            }
+          }
+        })
+      }
+    } as unknown as GlobalState;
+    const isLollipopEnabled = isLollipopEnabledSelector(
+      customStoreWithMissingMinAppVersionInLollipopConfig
+    );
+    expect(isLollipopEnabled).toBe(expectedValue);
+  }
+
+  function checkBrokenLollipopFlagTest(
+    minAppVersion: string | undefined,
+    currentAppVersion: string,
+    expectedValue: boolean
+  ) {
+    const testTitle = `LolliPOP${
+      expectedValue ? "" : " NOT"
+    } enabled with min version ${minAppVersion} for actual version ${currentAppVersion}`;
+    it(testTitle, () => {
+      checkLollipopFlagWithBrokenStatus(expectedValue);
+    });
+  }
+
+  [
+    Tuple2("0.0.0.0", false),
+    Tuple2("1.2.3.0", false),
+    Tuple2("-1", false),
+    Tuple2("1.2.3.5", false),
+    Tuple2("", false),
+    Tuple2(undefined, false),
+    Tuple2("?$&&/!@", false)
+  ].forEach((t: ITuple2<string | undefined, boolean>) =>
+    checkBrokenLollipopFlagTest(t.e1, currentAppVersion, t.e2)
+  );
+
   function checkIfLollipopFlagIsEnableForThisAppVersion(
     minAppVersion: string | undefined,
     expectedValue: boolean
