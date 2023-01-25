@@ -102,7 +102,7 @@ const setAccessibilityTimeout = 0 as Millisecond;
 const noReferenceTimeout = 150 as Millisecond;
 /** A component representing the properties common to all the screens (and the most of modal/overlay displayed) */
 class BaseHeaderComponent extends React.PureComponent<Props, State> {
-  private firstElementRef = React.createRef<any>(); // Could be NBText or View
+  private firstElementRef = React.createRef<any>(); // Could be Text or View
 
   public constructor(props: Props) {
     super(props);
