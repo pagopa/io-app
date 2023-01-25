@@ -306,6 +306,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
         </View>
         <View>
           <View style={[styles.row, { alignItems: "center" }]}>
+            {/* NBCard Text component */}
             <NBText bold={true} white={true} style={styles.amountTextBaseFull}>
               {"€ "}
               <NBText white={true} style={styles.amountTextUpperFull}>
@@ -324,6 +325,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
         </View>
       </View>
       <View style={[styles.column, styles.flex1, styles.spaced]}>
+        {/* IOBadge - White version not available yet */}
         <Badge style={styles.badgeBase}>
           <NBText semibold={true} style={styles.badgeTextBase} dark={true}>
             {statusBadge.label}

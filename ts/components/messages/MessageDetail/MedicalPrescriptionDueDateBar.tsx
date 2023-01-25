@@ -1,5 +1,4 @@
 import { capitalize } from "lodash";
-import { Text as NBText } from "native-base";
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import I18n from "../../../i18n";
@@ -13,6 +12,8 @@ import { UIMessageDetails } from "../../../store/reducers/entities/messages/type
 import { IOColors } from "../../core/variables/IOColors";
 import { localeDateFormat } from "../../../utils/locale";
 import { HSpacer, VSpacer } from "../../core/spacer/Spacer";
+import { IOStyles } from "../../core/variables/IOStyles";
+import { Label } from "../../core/typography/Label";
 import CalendarIconComponent from "./common/CalendarIconComponent";
 import CalendarEventButton from "./common/CalendarEventButton";
 
@@ -27,15 +28,7 @@ type Props = {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: customVariables.contentPadding,
     paddingVertical: customVariables.appHeaderPaddingHorizontal
-  },
-  text: {
-    flex: 1
-  },
-  row: {
-    flexDirection: "row",
-    alignItems: "center"
   }
 });
 
@@ -72,7 +65,13 @@ const MedicalPrescriptionDueDateBar = ({
     return (
       <View
         testID={"MedicalPrescriptionDueDate_expired"}
-        style={[styles.container, styles.row, bannerStyle]}
+        style={[
+          styles.container,
+          IOStyles.horizontalContentPadding,
+          IOStyles.row,
+          IOStyles.alignCenter,
+          bannerStyle
+        ]}
       >
         <CalendarIconComponent
           month={capitalize(formatDateAsMonth(dueDate))}
@@ -82,14 +81,16 @@ const MedicalPrescriptionDueDateBar = ({
         />
 
         <HSpacer size={8} />
-        <NBText style={styles.text} white={true}>
-          <>
-            {I18n.t("messages.cta.prescription.expiredAlert.block1")}
-            <NBText bold={true} white={true}>{` ${date} `}</NBText>
-            {I18n.t("messages.cta.prescription.expiredAlert.block2")}
-            <NBText bold={true} white={true}>{` ${time}`}</NBText>
-          </>
-        </NBText>
+        <View style={IOStyles.flex}>
+          <Label weight="Bold" color="white">
+            <>
+              {I18n.t("messages.cta.prescription.expiredAlert.block1")}
+              <Label weight="Bold" color="white">{` ${date} `}</Label>
+              {I18n.t("messages.cta.prescription.expiredAlert.block2")}
+              <Label weight="Bold" color="white">{` ${time}`}</Label>
+            </>
+          </Label>
+        </View>
       </View>
     );
   }
@@ -97,18 +98,20 @@ const MedicalPrescriptionDueDateBar = ({
   return (
     <View
       testID={"MedicalPrescriptionDueDate_valid"}
-      style={[styles.container, bannerStyle]}
+      style={[styles.container, IOStyles.horizontalContentPadding, bannerStyle]}
     >
-      <NBText style={styles.text} white={false}>
-        <>
-          {I18n.t("messages.cta.prescription.expiringOrValidAlert.block1")}
-          <NBText bold={true} white={false}>{` ${date} `}</NBText>
-          {I18n.t("messages.cta.prescription.expiringOrValidAlert.block2")}
-          <NBText bold={true} white={false}>{` ${time}`}</NBText>
-        </>
-      </NBText>
+      <View style={IOStyles.flex}>
+        <Label weight="Bold" color="white">
+          <>
+            {I18n.t("messages.cta.prescription.expiringOrValidAlert.block1")}
+            <Label weight="Bold">{` ${date} `}</Label>
+            {I18n.t("messages.cta.prescription.expiringOrValidAlert.block2")}
+            <Label weight="Bold">{` ${time}`}</Label>
+          </>
+        </Label>
+      </View>
       <VSpacer size={4} />
-      <View style={styles.row}>
+      <View style={[IOStyles.row, IOStyles.alignCenter]}>
         <CalendarIconComponent
           month={capitalize(formatDateAsMonth(dueDate))}
           day={formatDateAsDay(dueDate)}
