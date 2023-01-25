@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Alert, StyleSheet, View } from "react-native";
 import { Text as NBText } from "native-base";
-import { IOBadge } from "../../../components/core/IOBadge";
 import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";
 import { Body } from "../../../components/core/typography/Body";
 import { H1 } from "../../../components/core/typography/H1";
@@ -231,35 +230,6 @@ export const LabelRow = () => (
       <View style={{ backgroundColor: IOColors.bluegrey }}>
         <Label color={"white"}>Label</Label>
       </View>
-    </View>
-    <VSpacer size={40} />
-  </>
-);
-
-export const IOBadgeRow = () => (
-  <>
-    <Label>{"<IOBadge />"}</Label>
-    <VSpacer size={16} />
-    <View style={styles.row}>
-      <IOBadge text={"Badge"} small={true} labelColor={"white"} />
-      <HSpacer size={16} />
-      <IOBadge text={"Badge"} small={true} labelColor={"bluegreyDark"} />
-      <HSpacer size={16} />
-      <IOBadge text={"Badge"} small={true} labelColor={"blue"} />
-      <HSpacer size={16} />
-      <IOBadge text={"Badge"} small={true} labelColor={"red"} />
-      <HSpacer size={16} />
-    </View>
-    <VSpacer size={16} />
-    <View style={styles.row}>
-      <IOBadge text={"Badge"} labelColor={"white"} />
-      <HSpacer size={16} />
-      <IOBadge text={"Badge"} labelColor={"bluegreyDark"} />
-      <HSpacer size={16} />
-      <IOBadge text={"Badge"} labelColor={"blue"} />
-      <HSpacer size={16} />
-      <IOBadge text={"Badge"} labelColor={"red"} />
-      <HSpacer size={16} />
     </View>
     <VSpacer size={40} />
   </>
