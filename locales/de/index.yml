@@ -1974,7 +1974,7 @@ support:
     listBody: "Um deine offenen Tickets laden zu können, benötigen wir Zugriff auf einige deiner Daten."
     privacyLink: "Lies die Datenschutzbestimmungen"
     body: "Um dein Ticket beantworten zu können, benötigen wir Zugriff auf einige deiner Daten. Wenn du deine Zustimmung verweigerst, musst du uns eine allgemeine Anfrage per E-Mail senden."
-    listHeader: "Wenn du eine Zustimmung gibst, erhalten wir diese Daten:"
+    listHeader: "Wenn du deine Zustimmung gibst, erhalten wir diese Daten:"
     cta:
       allow: "Zustimmen"
       denies: "Ablehnen"
