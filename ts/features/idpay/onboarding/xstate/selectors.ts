@@ -26,12 +26,14 @@ const multiRequiredCriteriaSelector = (state: StateWithContext) => {
   return [];
 };
 
-const currentMultiRequiredCriteriaPageSelector = (state: StateWithContext) => {
+const multiRequiredCriteriaPageToDisplaySelector = (
+  state: StateWithContext
+) => {
   const criteria = multiRequiredCriteriaSelector(state);
-  const currentPage = state.context.selfConsents.length - 1;
-  if (currentPage >= 0) {
+  const nextPage = state.context.multiConsents.length;
+  if (nextPage >= 0) {
     // should always be true
-    return criteria[currentPage];
+    return criteria[nextPage];
   }
   return [];
 };
@@ -55,4 +57,8 @@ const boolRequiredCriteriaSelector = (state: StateWithContext) => {
   return [];
 };
 
-export { multiRequiredCriteriaSelector, boolRequiredCriteriaSelector };
+export {
+  multiRequiredCriteriaSelector,
+  boolRequiredCriteriaSelector,
+  multiRequiredCriteriaPageToDisplaySelector
+};

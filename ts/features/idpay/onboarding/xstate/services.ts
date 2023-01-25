@@ -1,41 +1,21 @@
 /* eslint-disable no-underscore-dangle */
 import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { PreferredLanguage } from "../../../../../definitions/backend/PreferredLanguage";
 import { InitiativeDto } from "../../../../../definitions/idpay/onboarding/InitiativeDto";
 import { StatusEnum } from "../../../../../definitions/idpay/onboarding/OnboardingStatusDTO";
 import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/onboarding/RequiredCriteriaDTO";
-import { SelfConsentDTO } from "../../../../../definitions/idpay/onboarding/SelfConsentDTO";
+import { _typeEnum as boolSelfDeclarationTypeEnum } from "../../../../../definitions/idpay/onboarding/SelfDeclarationBoolDTO";
 import { OnboardingClient } from "../api/client";
 import { OnboardingFailureType } from "./failure";
-import { Context } from "./machine";
+import { Context, getBoolRequiredCriteria } from "./machine";
 
 /**
  * Temporary function to convert the required criteria to the self consents
  *
  * TODO: Process inputs from the citizen
  */
-const createSelfConsents = (requiredCriteria: RequiredCriteriaDTO) => {
-  const selfConsents: Array<SelfConsentDTO> =
-    requiredCriteria.selfDeclarationList.map(_ => {
-      if (_._type === "boolean") {
-        return {
-          _type: _._type,
-          code: _.code,
-          accepted: true
-        };
-      } else {
-        return {
-          _type: _._type,
-          code: _.code,
-          value: _.value[0]
-        };
-      }
-    });
-
-  return selfConsents;
-};
 
 const createServicesImplementation = (
   onboardingClient: OnboardingClient,
@@ -65,7 +45,7 @@ const createServicesImplementation = (
           if (_.status !== 200) {
             return Promise.reject(OnboardingFailureType.GENERIC);
           }
-          return Promise.resolve(_.value);
+          return Promise.resolve({ initiativeId: "63d105e454f2c82a13f8b0c7" });
         }
       )
     );
@@ -162,7 +142,11 @@ const createServicesImplementation = (
   };
 
   const acceptRequiredCriteria = async (context: Context) => {
-    const { initiative, requiredCriteria } = context;
+    const {
+      initiative,
+      requiredCriteria,
+      multiConsents: selfConsents
+    } = context;
     if (initiative === undefined || requiredCriteria === undefined) {
       throw new Error("initative or requiredCriteria is undefined");
     }
@@ -171,12 +155,20 @@ const createServicesImplementation = (
       throw new Error("requiredCriteria is none");
     }
 
+    const consentsArray = [
+      ...getBoolRequiredCriteria(context).map(_ => ({
+        _type: boolSelfDeclarationTypeEnum.boolean,
+        code: _.code,
+        accepted: true
+      })),
+      ...selfConsents
+    ];
     const response = await onboardingClient.consentOnboarding({
       ...clientOptions,
       body: {
         initiativeId: initiative.initiativeId,
         pdndAccept: true,
-        selfDeclarationList: createSelfConsents(requiredCriteria.value)
+        selfDeclarationList: consentsArray
       }
     });
 

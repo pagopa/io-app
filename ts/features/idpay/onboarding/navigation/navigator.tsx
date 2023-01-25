@@ -26,7 +26,6 @@ export type IDPayOnboardingParamsList = {
   [IDPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS]: InitiativeDetailsScreenRouteParams;
   [IDPayOnboardingRoutes.IDPAY_ONBOARDING_BOOL_SELF_DECLARATIONS]: undefined;
   [IDPayOnboardingRoutes.IDPAY_ONBOARDING_PDNDACCEPTANCE]: undefined;
-  [IDPayOnboardingRoutes.IDPAY_ONBOARDING_MULTIVALUE]: undefined;
   [IDPayOnboardingRoutes.IDPAY_ONBOARDING_COMPLETION]: undefined;
   [IDPayOnboardingRoutes.IDPAY_ONBOARDING_FAILURE]: undefined;
   [IDPayOnboardingRoutes.IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS]: undefined;
