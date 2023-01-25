@@ -57,6 +57,7 @@ const InstrumentsEnrollmentScreen = () => {
   };
 
   const selectedInstrumentIdRef = useRef<number | undefined>(undefined);
+  const selectedInstrumentWasSetRef = useRef<boolean>(false);
 
   const isLoading = useSelector(configurationMachine, isLoadingSelector);
 
@@ -89,6 +90,8 @@ const InstrumentsEnrollmentScreen = () => {
   };
 
   const sendEnrollInstrument = (walletId: number): void => {
+    // eslint-disable-next-line functional/immutable-data
+    selectedInstrumentWasSetRef.current = true;
     configurationMachine.send("ENROLL_INSTRUMENT", {
       instrumentId: walletId
     });
@@ -143,7 +146,6 @@ const InstrumentsEnrollmentScreen = () => {
       }}
       leftButton={{
         onPress: () => {
-          revertInstrumentSwitch(selectedInstrumentIdRef.current as number);
           enrollmentBottomSheetModal.dismiss();
         },
         block: true,
@@ -152,12 +154,16 @@ const InstrumentsEnrollmentScreen = () => {
           "idpay.initiative.configuration.bottomSheet.footer.buttonCancel"
         )
       }}
-    />
+    />,
+    () => {
+      revertInstrumentSwitch(selectedInstrumentIdRef.current as number);
+    }
   );
 
   const revertInstrumentSwitch = (walletId: number): void => {
+    const wasSet = selectedInstrumentWasSetRef.current;
     const node = getInstrumentItemsMap().get(walletId);
-    if (node) {
+    if (node && !wasSet) {
       node.setSwitchStatus(false);
     }
   };
@@ -169,6 +175,8 @@ const InstrumentsEnrollmentScreen = () => {
     if (isEnrolling) {
       // eslint-disable-next-line functional/immutable-data
       selectedInstrumentIdRef.current = walletId;
+      // eslint-disable-next-line functional/immutable-data
+      selectedInstrumentWasSetRef.current = false;
       enrollmentBottomSheetModal.present();
     } else {
       sendDeleteInstrument(walletId);
