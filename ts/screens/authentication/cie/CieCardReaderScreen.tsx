@@ -8,9 +8,10 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Content, Text as NBText, View } from "native-base";
+import { Content, Text as NBText } from "native-base";
 import * as React from "react";
 import {
+  View,
   AccessibilityInfo,
   Platform,
   StyleSheet,
@@ -21,6 +22,7 @@ import CieNfcOverlay from "../../../components/cie/CieNfcOverlay";
 import CieReadingCardAnimation, {
   ReadingState
 } from "../../../components/cie/CieReadingCardAnimation";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
@@ -498,7 +500,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
           {!isIos && (
             <CieReadingCardAnimation readingState={this.state.readingState} />
           )}
-          {isIos && <View spacer={true} />}
+          {isIos && <VSpacer size={16} />}
           <NBText style={styles.padded} accessible={true}>
             {this.state.content}
           </NBText>

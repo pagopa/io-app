@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { Badge, View } from "native-base";
-import { FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
+import { Badge } from "native-base";
+import { View, FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
 import { constNull } from "fp-ts/lib/function";
 import { GlobalState } from "../../../../store/reducers/types";
 import { Dispatch } from "../../../../store/actions/types";
@@ -17,6 +17,7 @@ import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpac
 import I18n from "../../../../i18n";
 import { BaseTypography } from "../../../../components/core/typography/BaseTypography";
 import { ServicesPreferencesModeEnum } from "../../../../../definitions/backend/ServicesPreferencesMode";
+import { HSpacer, VSpacer } from "../../../../components/core/spacer/Spacer";
 
 type Props = {
   onSelectMode: (mode: ServicesPreferencesModeEnum) => void;
@@ -91,7 +92,7 @@ const ServicesContactComponent = (props: Props): React.ReactElement => {
               {item.description2 && <H5>{` ${item.description2}`}</H5>}
             </H5>
           </View>
-          <View hspacer large />
+          <HSpacer size={24} />
           <IconFont
             name={isSelected ? "io-radio-on" : "io-radio-off"}
             color={IOColors.blue}
@@ -99,9 +100,9 @@ const ServicesContactComponent = (props: Props): React.ReactElement => {
             style={{ alignSelf: "flex-start" }}
           />
         </TouchableDefaultOpacity>
-        <View spacer />
+        <VSpacer size={16} />
         <ItemSeparatorComponent noPadded />
-        <View spacer />
+        <VSpacer size={16} />
       </>
     );
   };
@@ -109,9 +110,9 @@ const ServicesContactComponent = (props: Props): React.ReactElement => {
   return (
     <>
       <H1>{I18n.t("services.optIn.preferences.title")}</H1>
-      <View spacer small />
+      <VSpacer size={8} />
       <Body>{I18n.t("services.optIn.preferences.body")}</Body>
-      <View spacer large />
+      <VSpacer size={24} />
       <FlatList
         style={{ flexGrow: 0 }}
         scrollEnabled={false}

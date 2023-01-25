@@ -1,11 +1,11 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { View } from "native-base";
 import * as React from "react";
 import { useEffect } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { H5 } from "../../../../../components/core/typography/H5";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -121,17 +121,17 @@ const VoucherGeneratedScreen = (props: Props): React.ReactElement | null => {
               <H1>
                 {I18n.t("bonus.sv.voucherGeneration.voucherGenerated.title")}
               </H1>
-              <View spacer />
+              <VSpacer size={16} />
               <H5 weight={"Regular"}>
                 {I18n.t("bonus.sv.voucherGeneration.voucherGenerated.subtitle")}
               </H5>
-              <View spacer />
+              <VSpacer size={16} />
               <VoucherInformationComponent
                 voucherCode={voucherGenerated.value.id.toString()}
                 qrCode={voucherGenerated.value.qrCode}
                 barCode={voucherGenerated.value.barCode}
               />
-              <View spacer large={true} />
+              <VSpacer size={24} />
             </ScrollView>
             <FooterWithButtons
               type={"TwoButtonsInlineHalf"}

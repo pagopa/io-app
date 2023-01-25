@@ -1,8 +1,9 @@
-import { View } from "native-base";
+import { View } from "react-native";
 import * as React from "react";
 import I18n from "../../../../../../../../i18n";
 import Markdown from "../../../../../../../../components/ui/Markdown";
 import { useIOBottomSheetModal } from "../../../../../../../../utils/hooks/bottomSheet";
+import { VSpacer } from "../../../../../../../../components/core/spacer/Spacer";
 
 /**
  * Display information about the current period
@@ -10,7 +11,7 @@ import { useIOBottomSheetModal } from "../../../../../../../../utils/hooks/botto
  */
 const RankingNotReady = (): React.ReactElement => (
   <View>
-    <View spacer={true} />
+    <VSpacer size={16} />
     <View style={{ flex: 1 }}>
       <Markdown>
         {I18n.t("bonus.bpd.details.components.ranking.notReady.body")}

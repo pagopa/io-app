@@ -6,15 +6,16 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import JailMonkey from "jail-monkey";
-import { Content, Text as NBText, View } from "native-base";
+import { Content, Text as NBText, View as NBView } from "native-base";
 import * as React from "react";
-import { Alert, StyleSheet } from "react-native";
+import { View, Alert, StyleSheet } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import { connect } from "react-redux";
 import sessionExpiredImg from "../../../img/landing/session_expired.png";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import CieNotSupported from "../../components/cie/CieNotSupported";
 import ContextualInfo from "../../components/ContextualInfo";
+import { VSpacer } from "../../components/core/spacer/Spacer";
 import { Link } from "../../components/core/typography/Link";
 import { IOColors } from "../../components/core/variables/IOColors";
 import { DevScreenButton } from "../../components/DevScreenButton";
@@ -257,7 +258,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
         )}
 
         <SectionStatusComponent sectionKey={"login"} />
-        <View footer={true}>
+        <NBView footer={true}>
           <ButtonDefaultOpacity
             block={true}
             primary={true}
@@ -283,7 +284,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
                 : I18n.t("authentication.landing.loginSpid")}
             </NBText>
           </ButtonDefaultOpacity>
-          <View spacer={true} />
+          <VSpacer size={16} />
           <ButtonDefaultOpacity
             style={secondButtonStyle}
             block={true}
@@ -310,7 +311,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
                 : I18n.t("authentication.landing.loginCie")}
             </NBText>
           </ButtonDefaultOpacity>
-          <View spacer={true} />
+          <VSpacer size={16} />
           <Link
             style={styles.link}
             onPress={this.navigateToSpidCieInformationRequest}
@@ -319,7 +320,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
               ? I18n.t("authentication.landing.nospid-nocie")
               : I18n.t("authentication.landing.nospid")}
           </Link>
-        </View>
+        </NBView>
       </BaseScreenComponent>
     );
   };

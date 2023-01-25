@@ -1,10 +1,11 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { Button, Content, Text as NBText, View } from "native-base";
+import { Button, Content, Text as NBText } from "native-base";
 import * as React from "react";
 import { Image, Linking, StyleSheet } from "react-native";
 import I18n from "../i18n";
 import customVariables from "../theme/variables";
 import { storeUrl } from "../utils/appVersion";
+import { VSpacer } from "./core/spacer/Spacer";
 import { H1 } from "./core/typography/H1";
 
 type State = { hasError: boolean };
@@ -79,14 +80,14 @@ class RemindUpdatePagoPaVersionOverlay extends React.PureComponent<
             style={styles.imageChecked}
             source={require("../../img/icons/update-icon.png")}
           />
-          <View spacer={true} extralarge={true} />
+          <VSpacer size={40} />
         </React.Fragment>
         <H1 style={styles.title}>
           {I18n.t("wallet.alert.titlePagoPaUpdateApp")}
         </H1>
-        <View spacer={true} />
+        <VSpacer size={16} />
         <NBText>{I18n.t("wallet.alert.messagePagoPaUpdateApp")}</NBText>
-        <View spacer={true} />
+        <VSpacer size={16} />
 
         <Button
           block={true}
@@ -97,10 +98,10 @@ class RemindUpdatePagoPaVersionOverlay extends React.PureComponent<
           <NBText>{I18n.t("wallet.alert.btnUpdateApp")}</NBText>
         </Button>
 
-        <View spacer={true} />
+        <VSpacer size={16} />
         {this.state.hasError && (
           <React.Fragment>
-            <View spacer={true} />
+            <VSpacer size={16} />
             <NBText style={styles.textDanger}>
               {I18n.t("wallet.alert.msgErrorUpdateApp")}
             </NBText>

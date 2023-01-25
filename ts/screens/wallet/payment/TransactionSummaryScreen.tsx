@@ -6,12 +6,13 @@ import {
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { ActionSheet, Text as NBText, View } from "native-base";
+import { ActionSheet, Text as NBText } from "native-base";
 import * as React from "react";
-import { SafeAreaView, StyleSheet } from "react-native";
+import { View, SafeAreaView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
@@ -321,9 +322,9 @@ class TransactionSummaryScreen extends React.Component<Props> {
               )}
             />
 
-            <View spacer={true} large={true} />
+            <VSpacer size={24} />
             <ItemSeparatorComponent noPadded={true} />
-            <View spacer={true} large={true} />
+            <VSpacer size={24} />
 
             {/** Amount to pay */}
             <View style={styles.row}>
@@ -338,26 +339,26 @@ class TransactionSummaryScreen extends React.Component<Props> {
             </View>
 
             <React.Fragment>
-              <View spacer={true} small={true} />
+              <VSpacer size={8} />
               <NBText style={styles.bluegreyLight}>
                 {I18n.t("wallet.firstTransactionSummary.amountInfo.message")}
               </NBText>
             </React.Fragment>
-            <View spacer={true} large={true} />
+            <VSpacer size={24} />
 
             <ItemSeparatorComponent noPadded={true} />
-            <View spacer={true} large={true} />
+            <VSpacer size={24} />
 
             {standardRow(
               I18n.t("wallet.firstTransactionSummary.entityCode"),
               organizationFiscalCode
             )}
-            <View spacer={true} small={true} />
+            <VSpacer size={8} />
             {standardRow(
               I18n.t("payment.noticeCode"),
               PaymentNoticeNumberFromString.encode(rptId.paymentNoticeNumber)
             )}
-            <View spacer={true} large={true} />
+            <VSpacer size={24} />
           </SlidedContentComponent>
           {this.getFooterButtons()}
         </SafeAreaView>
