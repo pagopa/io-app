@@ -56,7 +56,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
       initial: "WAITING_START",
       on: {
         QUIT: {
-          actions: "exitConfiguration"
+          target: "#ROOT.CONFIGURATION_CLOSED"
         }
       },
       states: {
@@ -148,7 +148,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 BACK: [
                   {
                     cond: "isIbanOnlyMode",
-                    actions: "exitConfiguration"
+                    target: "#ROOT.CONFIGURATION_CLOSED"
                   },
                   {
                     target: "#ROOT.DISPLAYING_INTRO"
@@ -192,7 +192,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 BACK: [
                   {
                     cond: "isIbanOnlyMode",
-                    actions: "exitConfiguration"
+                    target: "#ROOT.CONFIGURATION_CLOSED"
                   },
                   {
                     target: "#ROOT.DISPLAYING_INTRO"
@@ -262,7 +262,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 BACK: [
                   {
                     cond: "isInstrumentsOnlyMode",
-                    actions: "exitConfiguration"
+                    target: "#ROOT.CONFIGURATION_CLOSED"
                   },
                   {
                     target: "#ROOT.CONFIGURING_IBAN"
@@ -337,6 +337,10 @@ const createIDPayInitiativeConfigurationMachine = () =>
         CONFIGURATION_COMPLETED: {
           type: "final",
           entry: "navigateToInitiativeDetailScreen"
+        },
+        CONFIGURATION_CLOSED: {
+          type: "final",
+          entry: "exitConfiguration"
         }
       }
     },
