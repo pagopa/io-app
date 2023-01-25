@@ -62,7 +62,7 @@ const buttonProps = {
   }
 };
 
-export const MultiValuePrerequisitesScreen = () => {
+const MultiValuePrerequisitesScreen = () => {
   const [selectedIndex, setSelectedIndex] = React.useState<number | undefined>(
     undefined
   );
@@ -117,3 +117,5 @@ export const MultiValuePrerequisitesScreen = () => {
     </SafeAreaView>
   );
 };
+
+export default MultiValuePrerequisitesScreen;

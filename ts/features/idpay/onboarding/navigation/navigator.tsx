@@ -1,15 +1,15 @@
 import { PathConfigMap } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
+import BoolValuePrerequisitesScreen from "../screens/BoolValuePrerequisitesScreen";
 import CompletionScreen from "../screens/CompletionScreen";
 import FailureScreen from "../screens/FailureScreen";
 import InitiativeDetailsScreen, {
   InitiativeDetailsScreenRouteParams
 } from "../screens/InitiativeDetailsScreen";
-import BoolValuePrerequisitesScreen from "../screens/BoolValuePrerequisitesScreen";
+import MultiValuePrerequisitesScreen from "../screens/MultiValuePrerequisitesScreen";
 import PDNDPrerequisitesScreen from "../screens/PDNDPrerequisitesScreen";
 import { IDPayOnboardingMachineProvider } from "../xstate/provider";
-import { MultiValuePrerequisitesScreen } from "../screens/MultiValuePrerequisitesScreen";
 
 export const IDPayOnboardingRoutes = {
   IDPAY_ONBOARDING_MAIN: "IDPAY_ONBOARDING_MAIN",
