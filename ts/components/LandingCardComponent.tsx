@@ -8,7 +8,6 @@ import { Col, Grid } from "react-native-easy-grid";
 import { VSpacer } from "./core/spacer/Spacer";
 import { Body } from "./core/typography/Body";
 import { H2 } from "./core/typography/H2";
-import { IOStyles } from "./core/variables/IOStyles";
 
 type Props = {
   id: number;
