@@ -3,12 +3,7 @@
  */
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
-import {
-  Container,
-  List,
-  ListItem,
-  Spinner,
-} from "native-base";
+import { Container, List, ListItem, Spinner } from "native-base";
 import * as React from "react";
 import { StatusBar, StyleSheet, View } from "react-native";
 import { connect } from "react-redux";

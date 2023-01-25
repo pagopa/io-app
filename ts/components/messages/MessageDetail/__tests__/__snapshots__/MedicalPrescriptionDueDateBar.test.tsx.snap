@@ -466,12 +466,16 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is expired sh
                                         style={
                                           Array [
                                             Object {
-                                              "paddingHorizontal": 24,
                                               "paddingVertical": 12,
                                             },
                                             Object {
-                                              "alignItems": "center",
+                                              "paddingHorizontal": 24,
+                                            },
+                                            Object {
                                               "flexDirection": "row",
+                                            },
+                                            Object {
+                                              "alignItems": "center",
                                             },
                                             Object {
                                               "backgroundColor": "#475A6D",
@@ -609,53 +613,96 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is expired sh
                                             }
                                           }
                                         />
-                                        <Text
+                                        <View
                                           style={
-                                            Array [
-                                              Object {
-                                                "color": "#000",
-                                                "fontFamily": "System",
-                                                "fontSize": 16,
-                                              },
-                                              Object {
-                                                "flex": 1,
-                                              },
-                                            ]
+                                            Object {
+                                              "flex": 1,
+                                            }
                                           }
-                                          uppercase={false}
-                                          white={true}
                                         >
-                                          Expired on
                                           <Text
-                                            bold={true}
-                                            style={
+                                            color="white"
+                                            defaultColor="blue"
+                                            defaultWeight="Bold"
+                                            font="TitilliumWeb"
+                                            fontStyle={
                                               Object {
-                                                "color": "#000",
-                                                "fontFamily": "System",
                                                 "fontSize": 16,
                                               }
                                             }
-                                            uppercase={false}
-                                            white={true}
-                                          >
-                                             01/12/2021 
-                                          </Text>
-                                          at
-                                          <Text
-                                            bold={true}
                                             style={
-                                              Object {
-                                                "color": "#000",
-                                                "fontFamily": "System",
-                                                "fontSize": 16,
-                                              }
+                                              Array [
+                                                Object {
+                                                  "fontSize": 16,
+                                                },
+                                                Object {
+                                                  "color": "#FFFFFF",
+                                                  "fontFamily": "Titillium Web",
+                                                  "fontStyle": "normal",
+                                                  "fontWeight": "700",
+                                                },
+                                              ]
                                             }
-                                            uppercase={false}
-                                            white={true}
+                                            weight="Bold"
                                           >
-                                             13:29
+                                            Expired on
+                                            <Text
+                                              color="white"
+                                              defaultColor="blue"
+                                              defaultWeight="Bold"
+                                              font="TitilliumWeb"
+                                              fontStyle={
+                                                Object {
+                                                  "fontSize": 16,
+                                                }
+                                              }
+                                              style={
+                                                Array [
+                                                  Object {
+                                                    "fontSize": 16,
+                                                  },
+                                                  Object {
+                                                    "color": "#FFFFFF",
+                                                    "fontFamily": "Titillium Web",
+                                                    "fontStyle": "normal",
+                                                    "fontWeight": "700",
+                                                  },
+                                                ]
+                                              }
+                                              weight="Bold"
+                                            >
+                                               01/12/2021 
+                                            </Text>
+                                            at
+                                            <Text
+                                              color="white"
+                                              defaultColor="blue"
+                                              defaultWeight="Bold"
+                                              font="TitilliumWeb"
+                                              fontStyle={
+                                                Object {
+                                                  "fontSize": 16,
+                                                }
+                                              }
+                                              style={
+                                                Array [
+                                                  Object {
+                                                    "fontSize": 16,
+                                                  },
+                                                  Object {
+                                                    "color": "#FFFFFF",
+                                                    "fontFamily": "Titillium Web",
+                                                    "fontStyle": "normal",
+                                                    "fontWeight": "700",
+                                                  },
+                                                ]
+                                              }
+                                              weight="Bold"
+                                            >
+                                               13:29
+                                            </Text>
                                           </Text>
-                                        </Text>
+                                        </View>
                                       </View>
                                     </View>
                                   </View>
@@ -1144,8 +1191,10 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is expiring s
                                         style={
                                           Array [
                                             Object {
-                                              "paddingHorizontal": 24,
                                               "paddingVertical": 12,
+                                            },
+                                            Object {
+                                              "paddingHorizontal": 24,
                                             },
                                             Object {
                                               "backgroundColor": "#F5F6F7",
@@ -1154,53 +1203,96 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is expiring s
                                         }
                                         testID="MedicalPrescriptionDueDate_valid"
                                       >
-                                        <Text
+                                        <View
                                           style={
-                                            Array [
-                                              Object {
-                                                "color": "#000",
-                                                "fontFamily": "System",
-                                                "fontSize": 16,
-                                              },
-                                              Object {
-                                                "flex": 1,
-                                              },
-                                            ]
+                                            Object {
+                                              "flex": 1,
+                                            }
                                           }
-                                          uppercase={false}
-                                          white={false}
                                         >
-                                          Expiring on
                                           <Text
-                                            bold={true}
-                                            style={
+                                            color="white"
+                                            defaultColor="blue"
+                                            defaultWeight="Bold"
+                                            font="TitilliumWeb"
+                                            fontStyle={
                                               Object {
-                                                "color": "#000",
-                                                "fontFamily": "System",
                                                 "fontSize": 16,
                                               }
                                             }
-                                            uppercase={false}
-                                            white={false}
-                                          >
-                                             01/12/2021 
-                                          </Text>
-                                          at
-                                          <Text
-                                            bold={true}
                                             style={
-                                              Object {
-                                                "color": "#000",
-                                                "fontFamily": "System",
-                                                "fontSize": 16,
-                                              }
+                                              Array [
+                                                Object {
+                                                  "fontSize": 16,
+                                                },
+                                                Object {
+                                                  "color": "#FFFFFF",
+                                                  "fontFamily": "Titillium Web",
+                                                  "fontStyle": "normal",
+                                                  "fontWeight": "700",
+                                                },
+                                              ]
                                             }
-                                            uppercase={false}
-                                            white={false}
+                                            weight="Bold"
                                           >
-                                             13:29
+                                            Expiring on
+                                            <Text
+                                              color="blue"
+                                              defaultColor="blue"
+                                              defaultWeight="Bold"
+                                              font="TitilliumWeb"
+                                              fontStyle={
+                                                Object {
+                                                  "fontSize": 16,
+                                                }
+                                              }
+                                              style={
+                                                Array [
+                                                  Object {
+                                                    "fontSize": 16,
+                                                  },
+                                                  Object {
+                                                    "color": "#0073E6",
+                                                    "fontFamily": "Titillium Web",
+                                                    "fontStyle": "normal",
+                                                    "fontWeight": "700",
+                                                  },
+                                                ]
+                                              }
+                                              weight="Bold"
+                                            >
+                                               01/12/2021 
+                                            </Text>
+                                            at
+                                            <Text
+                                              color="blue"
+                                              defaultColor="blue"
+                                              defaultWeight="Bold"
+                                              font="TitilliumWeb"
+                                              fontStyle={
+                                                Object {
+                                                  "fontSize": 16,
+                                                }
+                                              }
+                                              style={
+                                                Array [
+                                                  Object {
+                                                    "fontSize": 16,
+                                                  },
+                                                  Object {
+                                                    "color": "#0073E6",
+                                                    "fontFamily": "Titillium Web",
+                                                    "fontStyle": "normal",
+                                                    "fontWeight": "700",
+                                                  },
+                                                ]
+                                              }
+                                              weight="Bold"
+                                            >
+                                               13:29
+                                            </Text>
                                           </Text>
-                                        </Text>
+                                        </View>
                                         <View
                                           style={
                                             Object {
@@ -1210,10 +1302,14 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is expiring s
                                         />
                                         <View
                                           style={
-                                            Object {
-                                              "alignItems": "center",
-                                              "flexDirection": "row",
-                                            }
+                                            Array [
+                                              Object {
+                                                "flexDirection": "row",
+                                              },
+                                              Object {
+                                                "alignItems": "center",
+                                              },
+                                            ]
                                           }
                                         >
                                           <RNSVGSvgView
@@ -1936,8 +2032,10 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is not expira
                                         style={
                                           Array [
                                             Object {
-                                              "paddingHorizontal": 24,
                                               "paddingVertical": 12,
+                                            },
+                                            Object {
+                                              "paddingHorizontal": 24,
                                             },
                                             Object {
                                               "backgroundColor": "#F5F6F7",
@@ -1946,53 +2044,96 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is not expira
                                         }
                                         testID="MedicalPrescriptionDueDate_valid"
                                       >
-                                        <Text
+                                        <View
                                           style={
-                                            Array [
-                                              Object {
-                                                "color": "#000",
-                                                "fontFamily": "System",
-                                                "fontSize": 16,
-                                              },
-                                              Object {
-                                                "flex": 1,
-                                              },
-                                            ]
+                                            Object {
+                                              "flex": 1,
+                                            }
                                           }
-                                          uppercase={false}
-                                          white={false}
                                         >
-                                          Expiring on
                                           <Text
-                                            bold={true}
-                                            style={
+                                            color="white"
+                                            defaultColor="blue"
+                                            defaultWeight="Bold"
+                                            font="TitilliumWeb"
+                                            fontStyle={
                                               Object {
-                                                "color": "#000",
-                                                "fontFamily": "System",
                                                 "fontSize": 16,
                                               }
                                             }
-                                            uppercase={false}
-                                            white={false}
-                                          >
-                                             01/12/2021 
-                                          </Text>
-                                          at
-                                          <Text
-                                            bold={true}
                                             style={
-                                              Object {
-                                                "color": "#000",
-                                                "fontFamily": "System",
-                                                "fontSize": 16,
-                                              }
+                                              Array [
+                                                Object {
+                                                  "fontSize": 16,
+                                                },
+                                                Object {
+                                                  "color": "#FFFFFF",
+                                                  "fontFamily": "Titillium Web",
+                                                  "fontStyle": "normal",
+                                                  "fontWeight": "700",
+                                                },
+                                              ]
                                             }
-                                            uppercase={false}
-                                            white={false}
+                                            weight="Bold"
                                           >
-                                             13:29
+                                            Expiring on
+                                            <Text
+                                              color="blue"
+                                              defaultColor="blue"
+                                              defaultWeight="Bold"
+                                              font="TitilliumWeb"
+                                              fontStyle={
+                                                Object {
+                                                  "fontSize": 16,
+                                                }
+                                              }
+                                              style={
+                                                Array [
+                                                  Object {
+                                                    "fontSize": 16,
+                                                  },
+                                                  Object {
+                                                    "color": "#0073E6",
+                                                    "fontFamily": "Titillium Web",
+                                                    "fontStyle": "normal",
+                                                    "fontWeight": "700",
+                                                  },
+                                                ]
+                                              }
+                                              weight="Bold"
+                                            >
+                                               01/12/2021 
+                                            </Text>
+                                            at
+                                            <Text
+                                              color="blue"
+                                              defaultColor="blue"
+                                              defaultWeight="Bold"
+                                              font="TitilliumWeb"
+                                              fontStyle={
+                                                Object {
+                                                  "fontSize": 16,
+                                                }
+                                              }
+                                              style={
+                                                Array [
+                                                  Object {
+                                                    "fontSize": 16,
+                                                  },
+                                                  Object {
+                                                    "color": "#0073E6",
+                                                    "fontFamily": "Titillium Web",
+                                                    "fontStyle": "normal",
+                                                    "fontWeight": "700",
+                                                  },
+                                                ]
+                                              }
+                                              weight="Bold"
+                                            >
+                                               13:29
+                                            </Text>
                                           </Text>
-                                        </Text>
+                                        </View>
                                         <View
                                           style={
                                             Object {
@@ -2002,10 +2143,14 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is not expira
                                         />
                                         <View
                                           style={
-                                            Object {
-                                              "alignItems": "center",
-                                              "flexDirection": "row",
-                                            }
+                                            Array [
+                                              Object {
+                                                "flexDirection": "row",
+                                              },
+                                              Object {
+                                                "alignItems": "center",
+                                              },
+                                            ]
                                           }
                                         >
                                           <RNSVGSvgView
@@ -2728,8 +2873,10 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is valid shou
                                         style={
                                           Array [
                                             Object {
-                                              "paddingHorizontal": 24,
                                               "paddingVertical": 12,
+                                            },
+                                            Object {
+                                              "paddingHorizontal": 24,
                                             },
                                             Object {
                                               "backgroundColor": "#F5F6F7",
@@ -2738,53 +2885,96 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is valid shou
                                         }
                                         testID="MedicalPrescriptionDueDate_valid"
                                       >
-                                        <Text
+                                        <View
                                           style={
-                                            Array [
-                                              Object {
-                                                "color": "#000",
-                                                "fontFamily": "System",
-                                                "fontSize": 16,
-                                              },
-                                              Object {
-                                                "flex": 1,
-                                              },
-                                            ]
+                                            Object {
+                                              "flex": 1,
+                                            }
                                           }
-                                          uppercase={false}
-                                          white={false}
                                         >
-                                          Expiring on
                                           <Text
-                                            bold={true}
-                                            style={
+                                            color="white"
+                                            defaultColor="blue"
+                                            defaultWeight="Bold"
+                                            font="TitilliumWeb"
+                                            fontStyle={
                                               Object {
-                                                "color": "#000",
-                                                "fontFamily": "System",
                                                 "fontSize": 16,
                                               }
                                             }
-                                            uppercase={false}
-                                            white={false}
-                                          >
-                                             01/12/2021 
-                                          </Text>
-                                          at
-                                          <Text
-                                            bold={true}
                                             style={
-                                              Object {
-                                                "color": "#000",
-                                                "fontFamily": "System",
-                                                "fontSize": 16,
-                                              }
+                                              Array [
+                                                Object {
+                                                  "fontSize": 16,
+                                                },
+                                                Object {
+                                                  "color": "#FFFFFF",
+                                                  "fontFamily": "Titillium Web",
+                                                  "fontStyle": "normal",
+                                                  "fontWeight": "700",
+                                                },
+                                              ]
                                             }
-                                            uppercase={false}
-                                            white={false}
+                                            weight="Bold"
                                           >
-                                             13:29
+                                            Expiring on
+                                            <Text
+                                              color="blue"
+                                              defaultColor="blue"
+                                              defaultWeight="Bold"
+                                              font="TitilliumWeb"
+                                              fontStyle={
+                                                Object {
+                                                  "fontSize": 16,
+                                                }
+                                              }
+                                              style={
+                                                Array [
+                                                  Object {
+                                                    "fontSize": 16,
+                                                  },
+                                                  Object {
+                                                    "color": "#0073E6",
+                                                    "fontFamily": "Titillium Web",
+                                                    "fontStyle": "normal",
+                                                    "fontWeight": "700",
+                                                  },
+                                                ]
+                                              }
+                                              weight="Bold"
+                                            >
+                                               01/12/2021 
+                                            </Text>
+                                            at
+                                            <Text
+                                              color="blue"
+                                              defaultColor="blue"
+                                              defaultWeight="Bold"
+                                              font="TitilliumWeb"
+                                              fontStyle={
+                                                Object {
+                                                  "fontSize": 16,
+                                                }
+                                              }
+                                              style={
+                                                Array [
+                                                  Object {
+                                                    "fontSize": 16,
+                                                  },
+                                                  Object {
+                                                    "color": "#0073E6",
+                                                    "fontFamily": "Titillium Web",
+                                                    "fontStyle": "normal",
+                                                    "fontWeight": "700",
+                                                  },
+                                                ]
+                                              }
+                                              weight="Bold"
+                                            >
+                                               13:29
+                                            </Text>
                                           </Text>
-                                        </Text>
+                                        </View>
                                         <View
                                           style={
                                             Object {
@@ -2794,10 +2984,14 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is valid shou
                                         />
                                         <View
                                           style={
-                                            Object {
-                                              "alignItems": "center",
-                                              "flexDirection": "row",
-                                            }
+                                            Array [
+                                              Object {
+                                                "flexDirection": "row",
+                                              },
+                                              Object {
+                                                "alignItems": "center",
+                                              },
+                                            ]
                                           }
                                         >
                                           <RNSVGSvgView
