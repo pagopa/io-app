@@ -23,6 +23,7 @@ import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
 import { fciSignatureDetailDocumentsSelector } from "../../store/reducers/fciSignatureRequest";
 import { FCI_ROUTES } from "../../navigation/routes";
 import { SignatureField } from "../../../../../definitions/fci/SignatureField";
+import { TypeEnum as ClauseType } from "../../../../../definitions/fci/Clause";
 import { FciParamsList } from "../../navigation/params";
 import { ExistingSignatureFieldAttrs } from "../../../../../definitions/fci/ExistingSignatureFieldAttrs";
 import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
@@ -79,7 +80,9 @@ const FciDocumentsScreen = () => {
         RA.map(d => {
           const docSignature = {
             document_id: d.id,
-            signature_fields: []
+            signature_fields: d.metadata.signature_fields.filter(
+              s => s.clause.type === ClauseType.REQUIRED
+            )
           } as DocumentToSign;
           dispatch(fciUpdateDocumentSignaturesRequest(docSignature));
         })
