@@ -125,16 +125,17 @@ const createIDPayInitiativeConfigurationMachine = () =>
                   target: "EVALUATING_IBAN_LIST",
                   actions: "loadIbanListSuccess"
                 },
-                onError: {
-                  actions: [
-                    () =>
-                      showToast(
-                        "Errore nel caricamento della lista IBAN",
-                        "danger"
-                      ),
-                    "exitConfiguration"
-                  ]
-                }
+                onError: [
+                  {
+                    cond: "isIbanOnlyMode",
+                    actions: ["showIbanLoadingErrorToast", "exitConfiguration"]
+                  },
+
+                  {
+                    target: "#ROOT.DISPLAYING_INTRO",
+                    actions: "showIbanLoadingErrorToast"
+                  }
+                ]
               }
             },
             EVALUATING_IBAN_LIST: {
@@ -402,7 +403,9 @@ const createIDPayInitiativeConfigurationMachine = () =>
           ibanBody: event.ibanBody
         })),
         showInstrumentsLoadingErrorToast: () =>
-          showToast("Errore nel caricamento degli strumenti", "danger")
+          showToast("Errore nel caricamento degli strumenti", "danger"),
+        showIbanLoadingErrorToast: () =>
+          showToast("Errore nel caricamento degli IBAN", "danger")
       },
       guards: {
         isInitiativeConfigurationNeeded: (context, _) =>
