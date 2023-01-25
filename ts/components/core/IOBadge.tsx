@@ -4,7 +4,7 @@ import { ColorValue, StyleSheet } from "react-native";
 import { LabelSmall } from "./typography/LabelSmall";
 import { IOColors, IOColorType } from "./variables/IOColors";
 
-type IOBadgeCommonProps = {
+export type IOBadgeCommonProps = {
   text: string;
   small?: boolean;
   labelColor?: Extract<IOColorType, "bluegreyDark" | "blue" | "white" | "red">;

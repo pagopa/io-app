@@ -1,22 +1,13 @@
-import { Text as NBText } from "native-base";
 import * as React from "react";
 import { View, Image, StyleSheet } from "react-native";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 import I18n from "../../i18n";
-import customVariables from "../../theme/variables";
 import { VSpacer } from "../core/spacer/Spacer";
+import { Body } from "../core/typography/Body";
+import { IOStyles } from "../core/variables/IOStyles";
 import { MIN_CHARACTER_SEARCH_TEXT } from "./SearchButton";
 
 const styles = StyleSheet.create({
-  contentWrapper: {
-    flex: 1,
-    alignItems: "center"
-  },
-  message: {
-    fontSize: customVariables.fontSizeBase,
-    padding: customVariables.contentPadding,
-    textAlign: "center"
-  },
   invalidSearchBarText: {
     height: hp("15%")
   },
@@ -77,14 +68,16 @@ export class SearchNoResultMessage extends React.PureComponent<Props> {
   public render() {
     const { errorType } = this.props;
     return (
-      <View style={styles.contentWrapper}>
+      <View style={[IOStyles.flex, IOStyles.alignCenter]}>
         <VSpacer size={40} />
 
         {renderIconErrorSearch(errorType)}
 
-        <NBText style={styles.message}>
-          {renderMessageErrorSearch(errorType)}
-        </NBText>
+        <View style={[IOStyles.horizontalContentPadding, IOStyles.alignCenter]}>
+          <VSpacer size={24} />
+          <Body>{renderMessageErrorSearch(errorType)}</Body>
+          <VSpacer size={24} />
+        </View>
       </View>
     );
   }

@@ -1,6 +1,6 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Button, Text as NBText } from "native-base";
+import { Button, Text as NBButtonText } from "native-base";
 import * as React from "react";
 import { View, ActivityIndicator, StyleSheet } from "react-native";
 import I18n from "../../i18n";
@@ -167,7 +167,7 @@ export default class BlockButtons extends React.Component<Props, never> {
           )}
         />
       )}
-      <NBText
+      <NBButtonText
         style={[
           pipe(
             props.buttonFontSize,
@@ -192,7 +192,7 @@ export default class BlockButtons extends React.Component<Props, never> {
         ]}
       >
         {props.title}
-      </NBText>
+      </NBButtonText>
     </ButtonDefaultOpacity>
   );
 
