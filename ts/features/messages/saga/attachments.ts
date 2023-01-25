@@ -1,5 +1,11 @@
 import { SagaIterator } from "redux-saga";
-import { call, takeEvery, takeLatest } from "typed-redux-saga/macro";
+import {
+  call,
+  race,
+  take,
+  takeEvery,
+  takeLatest
+} from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { SessionToken } from "../../../types/SessionToken";
 import { clearCache } from "../../../store/actions/profile";
@@ -22,7 +28,10 @@ export function* watchMessageAttachmentsSaga(
   yield* takeLatest(
     downloadAttachment.request,
     function* (action: ActionType<typeof downloadAttachment.request>) {
-      yield* call(downloadAttachmentSaga, bearerToken, action);
+      yield* race({
+        task: call(downloadAttachmentSaga, bearerToken, action),
+        cancel: take(downloadAttachment.cancel)
+      });
     }
   );
 

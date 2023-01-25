@@ -1,11 +1,11 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { ActivityIndicator, SafeAreaView, StyleSheet } from "react-native";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import Pdf from "react-native-pdf";
 import image from "../../../../img/servicesStatus/error-detail-icon.png";
-import { H1 } from "../../../components/core/typography/H1";
+import { H2 } from "../../../components/core/typography/H2";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
@@ -39,14 +39,16 @@ type Props = {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    justifyContent: "center"
   },
   pdf: {
     flex: 1,
     backgroundColor: IOColors.bluegrey
   },
   loadingBody: {
-    marginTop: variables.spacerLargeHeight
+    marginTop: variables.spacerExtralargeWidth,
+    textAlign: "center"
   }
 });
 
@@ -61,9 +63,9 @@ const renderDownloadFeedback = () => (
       )}
       importantForAccessibility={"no-hide-descendants"}
     />
-    <H1 style={styles.loadingBody}>
+    <H2 style={styles.loadingBody}>
       {I18n.t("features.messages.loading.subtitle")}
-    </H1>
+    </H2>
   </>
 );
 
@@ -195,6 +197,7 @@ const renderFooter = (
 export const MessageAttachmentPreview = (props: Props): React.ReactElement => {
   const ioDispatch = useIODispatch();
   const [isPDFError, setIsPDFError] = useState(false);
+  const isFirstRendering = useRef(true);
   const navigation = useNavigation();
   const messageId = props.messageId;
   const attachment = props.attachment;
@@ -207,7 +210,9 @@ export const MessageAttachmentPreview = (props: Props): React.ReactElement => {
   );
   const isGenericAttachment = attachment.category === "GENERIC";
   const shouldDownloadAttachment =
-    isGenericAttachment && isStrictNone(downloadPot);
+    isGenericAttachment &&
+    isFirstRendering.current &&
+    (isStrictNone(downloadPot) || pot.isError(downloadPot));
 
   const onPDFError = props.onPDFError;
   const internalOnPDFError = useCallback(() => {
@@ -215,7 +220,19 @@ export const MessageAttachmentPreview = (props: Props): React.ReactElement => {
     onPDFError?.();
   }, [onPDFError]);
 
+  const customGoBack = useCallback(() => {
+    if (
+      isGenericAttachment &&
+      (pot.isLoading(downloadPot) || pot.isUpdating(downloadPot))
+    ) {
+      ioDispatch(downloadAttachment.cancel(attachment));
+    }
+    navigation.goBack();
+  }, [attachment, downloadPot, ioDispatch, isGenericAttachment, navigation]);
+
   useEffect(() => {
+    // eslint-disable-next-line functional/immutable-data
+    isFirstRendering.current = false;
     if (shouldDownloadAttachment) {
       ioDispatch(downloadAttachment.request(attachment));
     } else if (isGenericAttachment && pot.isError(downloadPot)) {
@@ -237,7 +254,7 @@ export const MessageAttachmentPreview = (props: Props): React.ReactElement => {
     pot.isSome(downloadPot) && !pot.isError(downloadPot);
   return (
     <BaseScreenComponent
-      goBack={true}
+      goBack={customGoBack}
       contextualHelp={emptyContextualHelp}
       headerTitle={I18n.t("features.mvl.details.attachments.pdfPreview.title")}
     >

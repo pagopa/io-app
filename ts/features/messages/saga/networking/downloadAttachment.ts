@@ -2,7 +2,7 @@ import I18n from "i18n-js";
 import { ActionType } from "typesafe-actions";
 import RNFS from "react-native-fs";
 import ReactNativeBlobUtil from "react-native-blob-util";
-import { call, cancelled, put } from "typed-redux-saga/macro";
+import { call, put } from "typed-redux-saga/macro";
 import { fetchTimeout } from "../../../../config";
 import { SessionToken } from "../../../../types/SessionToken";
 import { getError } from "../../../../utils/errors";
@@ -41,6 +41,7 @@ export function* downloadAttachmentSaga(
       path: savePath(attachment),
       timeout: fetchTimeout
     });
+
     const result = yield* call(
       config.fetch,
       "GET",
@@ -69,9 +70,5 @@ export function* downloadAttachmentSaga(
         error: getError(error)
       })
     );
-  } finally {
-    if (yield* cancelled()) {
-      yield* put(downloadAttachment.cancel(attachment));
-    }
   }
 }

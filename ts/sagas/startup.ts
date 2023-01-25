@@ -421,10 +421,8 @@ export function* initializeApplicationSaga(): Generator<
     yield* fork(watchPnSaga, sessionToken);
   }
 
-  if (mvlEnabled || pnEnabled) {
-    // Start watching for message attachments actions
-    yield* fork(watchMessageAttachmentsSaga, sessionToken);
-  }
+  // Start watching for message attachments actions
+  yield* fork(watchMessageAttachmentsSaga, sessionToken);
 
   if (idPayEnabled) {
     // Start watching for IDPay wallet actions
