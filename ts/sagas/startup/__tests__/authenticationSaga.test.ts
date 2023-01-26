@@ -33,6 +33,7 @@ describe("authenticationSaga", () => {
       .next(watchCieAuthentication)
       .call(resetToAuthenticationRoute)
       .next()
+      .next() // generate key pair
       .take(loginSuccess)
       .next(loginSuccess({ token: aSessionToken, idp: "idp" }))
       .cancel(watchCieAuthentication)
