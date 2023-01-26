@@ -12,8 +12,7 @@ export const IOStyles = StyleSheet.create({
     flex: 1
   },
   horizontalContentPadding: {
-    paddingLeft: themeVariables.contentPadding,
-    paddingRight: themeVariables.contentPadding
+    paddingHorizontal: themeVariables.contentPadding
   },
   row: {
     flexDirection: "row"
