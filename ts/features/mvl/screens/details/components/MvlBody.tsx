@@ -1,6 +1,5 @@
-import { View } from "native-base";
 import React, { useState } from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { IORenderHtml } from "../../../../../components/core/IORenderHtml";
 import { Body } from "../../../../../components/core/typography/Body";
@@ -9,6 +8,7 @@ import { Link } from "../../../../../components/core/typography/Link";
 import I18n from "../../../../../i18n";
 import { isStringNullyOrEmpty } from "../../../../../utils/strings";
 import { MvlData } from "../../../types/mvlData";
+import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 
 type Props = {
   body: MvlData["body"];
@@ -102,7 +102,7 @@ export const MvlBody = (props: Props): React.ReactElement => {
   return (
     <>
       <Content mode={mode} body={props.body} />
-      <View spacer={true} small={true} />
+      <VSpacer size={8} />
       {showSelector && (
         <Selector currentValue={mode} onValueChanged={setMode} />
       )}

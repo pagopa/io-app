@@ -1,5 +1,6 @@
 import * as React from "react";
 import {
+  View,
   Image,
   ImageSourcePropType,
   SafeAreaView,
@@ -7,7 +8,6 @@ import {
   StyleSheet
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { View } from "native-base";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
@@ -24,6 +24,7 @@ import { ID_CDC_TYPE } from "../../bonusVacanze/utils/bonus";
 import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
 import { getRemoteLocale } from "../../../../utils/messages";
 import { H4 } from "../../../../components/core/typography/H4";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
 
 const styles = StyleSheet.create({
   logo: {
@@ -87,7 +88,7 @@ const CdcBonusRequestInformationTos = () => {
             </View>
             {cdcLogo && <Image source={cdcLogo} style={styles.logo} />}
           </View>
-          <View spacer />
+          <VSpacer size={16} />
           <IORenderHtml
             source={{
               html: bonusTypeLocalizedContent.content
@@ -108,7 +109,7 @@ const CdcBonusRequestInformationTos = () => {
               }
             }}
           />
-          <View spacer />
+          <VSpacer size={16} />
         </ScrollView>
         <FooterWithButtons
           type={"TwoButtonsInlineThird"}

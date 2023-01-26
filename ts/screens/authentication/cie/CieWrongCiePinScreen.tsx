@@ -1,10 +1,11 @@
 /**
  * A screen to alert the user about the number of attempts remains
  */
-import { Content, Text as NBText, View } from "native-base";
+import { Content, Text as NBText } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
@@ -75,11 +76,11 @@ class CieWrongCiePinScreen extends React.PureComponent<Props> {
           <NBText>
             {I18n.t("authentication.cie.pin.incorrectCiePinContent1")}
           </NBText>
-          <View spacer={true} />
+          <VSpacer size={16} />
           <NBText>
             {I18n.t("authentication.cie.pin.incorrectCiePinContent2")}
           </NBText>
-          <View spacer={true} />
+          <VSpacer size={16} />
         </Content>
 
         {this.renderFooterButtons()}

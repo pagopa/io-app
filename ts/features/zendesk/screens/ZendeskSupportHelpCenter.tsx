@@ -5,6 +5,7 @@ import * as O from "fp-ts/lib/Option";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { useDispatch } from "react-redux";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { H3 } from "../../../components/core/typography/H3";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
@@ -132,13 +133,13 @@ const FaqManager = (props: FaqManagerProps) => {
           {!isStringNullyOrEmpty(contextualHelpData.title) && (
             <>
               <H3 accessible={true}>{contextualHelpData.title}</H3>
-              <View spacer={true} />
+              <VSpacer size={16} />
             </>
           )}
           {contextualHelpData.content && (
             <>
               {contextualHelpData.content}
-              <View spacer={true} />
+              <VSpacer size={16} />
             </>
           )}
           {contextualHelpData.faqs && isContentLoaded && (
@@ -224,7 +225,7 @@ const ZendeskSupportHelpCenter = () => {
             contentLoaded={markdownContentLoaded}
             startingRoute={startingRoute}
           />
-          <View spacer />
+          <VSpacer size={16} />
           <ZendeskSupportComponent
             assistanceForPayment={assistanceForPayment}
           />

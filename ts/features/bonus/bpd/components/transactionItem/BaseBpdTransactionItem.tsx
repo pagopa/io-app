@@ -1,12 +1,13 @@
-import { View } from "native-base";
 import * as React from "react";
 import {
+  View,
   Image,
   ImageSourcePropType,
   StyleSheet,
   TouchableOpacity,
   TouchableWithoutFeedbackProps
 } from "react-native";
+import { HSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { H5 } from "../../../../../components/core/typography/H5";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
@@ -58,7 +59,7 @@ export const BaseBpdTransactionItem: React.FunctionComponent<Props> = props => (
         {/* The left side of the row (icon, space, top text, bottom text */}
         <View style={styles.leftRow}>
           <Image source={props.image} style={styles.cardIcon} />
-          <View hspacer={true} />
+          <HSpacer size={16} />
           <View style={IOStyles.flex}>
             <H4
               weight={"SemiBold"}

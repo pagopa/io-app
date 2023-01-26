@@ -1,9 +1,9 @@
 import * as NAR from "fp-ts/lib/NonEmptyArray";
-import { View } from "native-base";
 import * as React from "react";
-import { Dimensions, StyleSheet, ViewStyle } from "react-native";
+import { View, Dimensions, StyleSheet, ViewStyle } from "react-native";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
+import { HSpacer } from "../core/spacer/Spacer";
 import { Baseline, Bullet } from "./Placeholders";
 
 type Props = Readonly<{
@@ -59,7 +59,7 @@ const InputPlaceHolder: React.FunctionComponent<Props> = (props: Props) => {
             scalableDimension={scalableDimension}
           />
         )}
-        {i < digits && <View hspacer={true} />}
+        {i < digits && <HSpacer size={16} />}
       </React.Fragment>
     );
   };

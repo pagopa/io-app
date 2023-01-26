@@ -1,5 +1,4 @@
 import { useNavigation } from "@react-navigation/native";
-import { View } from "native-base";
 import React from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { connect } from "react-redux";
@@ -8,6 +7,7 @@ import {
   RadioButtonList,
   RadioItem
 } from "../../../../components/core/selection/RadioButtonList";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../components/core/typography/Body";
 import { H1 } from "../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
@@ -66,7 +66,7 @@ const CheckResidenceComponent = (props: Props): React.ReactElement => {
       <SafeAreaView style={IOStyles.flex} testID={"CheckResidenceComponent"}>
         <ScrollView style={IOStyles.horizontalContentPadding}>
           <H1>{I18n.t("bonus.sv.voucherGeneration.checkResidence.title")}</H1>
-          <View spacer={true} />
+          <VSpacer size={16} />
 
           <RadioButtonList<boolean>
             key="check_income"
@@ -74,7 +74,7 @@ const CheckResidenceComponent = (props: Props): React.ReactElement => {
             selectedItem={isResidentInSicily}
             onPress={setIsResidentInSicily}
           />
-          <View spacer={true} />
+          <VSpacer size={16} />
           <Body>
             {I18n.t("bonus.sv.voucherGeneration.checkResidence.info")}
           </Body>
