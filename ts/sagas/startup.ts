@@ -333,14 +333,14 @@ export function* initializeApplicationSaga(): Generator<
     }
   }
 
-  // Track crypto key generation info
-  yield* call(trackMixpanelCryptoKeyPairEvents);
-
   // Ask to accept ToS if there is a new available version
   yield* call(checkAcceptedTosSaga, userProfile);
 
   // check if the user expressed preference about mixpanel, if not ask for it
   yield* call(askMixpanelOptIn);
+
+  // Track crypto key generation info
+  yield* call(trackMixpanelCryptoKeyPairEvents);
 
   if (hasPreviousSessionAndPin) {
     // We have to retrieve the pin here and not on the previous if-condition (same guard)
