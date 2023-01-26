@@ -39,6 +39,7 @@ import MessageContent from "./Content";
 import MedicalPrescriptionAttachments from "./MedicalPrescriptionAttachments";
 import MessageMarkdown from "./MessageMarkdown";
 import AttachmentsUnavailableComponent from "./AttachmentsUnavailable";
+import { isStrictNone } from "../../../utils/pot";
 
 const styles = StyleSheet.create({
   padded: {
@@ -112,6 +113,7 @@ const MessageDetailsComponent = ({
   const dispatch = useIODispatch();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const [isContentLoadCompleted, setIsContentLoadCompleted] = useState(false);
+  const isFirstRendering = React.useRef(true);
   const { prescriptionAttachments, markdown, prescriptionData } =
     messageDetails;
   const isPrescription = prescriptionData !== undefined;
@@ -122,6 +124,10 @@ const MessageDetailsComponent = ({
   const thirdPartyDataPot = useIOSelector(state =>
     thirdPartyFromIdSelector(state, messageId)
   );
+  const shouldDownloadThirdPartyDataAttachmentList =
+    hasThirdPartyDataAttachments &&
+    isFirstRendering.current &&
+    (isStrictNone(thirdPartyDataPot) || pot.isError(thirdPartyDataPot));
 
   const openAttachment = useCallback(
     (attachment: UIAttachment) => {
@@ -157,10 +163,12 @@ const MessageDetailsComponent = ({
   );
 
   useEffect(() => {
-    if (hasThirdPartyDataAttachments && pot.isNone(thirdPartyDataPot)) {
+    // eslint-disable-next-line functional/immutable-data
+    isFirstRendering.current = false;
+    if (shouldDownloadThirdPartyDataAttachmentList) {
       dispatch(loadThirdPartyMessage.request(messageId));
     }
-  }, [dispatch, hasThirdPartyDataAttachments, messageId, thirdPartyDataPot]);
+  }, [dispatch, messageId, shouldDownloadThirdPartyDataAttachmentList]);
 
   return (
     <>
