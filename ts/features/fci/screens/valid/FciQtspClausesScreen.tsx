@@ -28,6 +28,7 @@ import {
 } from "../../store/reducers/fciPollFilledDocument";
 import GenericErrorComponent from "../../components/GenericErrorComponent";
 import LinkedText from "../../components/LinkedText";
+import { H4 } from "../../../../components/core/typography/H4";
 
 const FciQtspClausesScreen = () => {
   const [clausesChecked, setClausesChecked] = React.useState(0);
@@ -130,6 +131,9 @@ const FciQtspClausesScreen = () => {
       <SafeAreaView style={IOStyles.flex} testID={"FciQtspClausesTestID"}>
         <View style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
           <H1>{I18n.t("features.fci.qtspTos.title")}</H1>
+          <H4 weight="Regular" color={"bluegreyDark"}>
+            {I18n.t("features.fci.qtspTos.subTitle")}
+          </H4>
           {renderClausesFields()}
         </View>
 
