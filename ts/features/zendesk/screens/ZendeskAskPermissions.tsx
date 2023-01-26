@@ -1,9 +1,8 @@
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { View } from "native-base";
 import React, { useEffect } from "react";
-import { SafeAreaView, ScrollView } from "react-native";
+import { View, SafeAreaView, ScrollView } from "react-native";
 import BatteryIcon from "../../../../img/assistance/battery.svg";
 import EmailIcon from "../../../../img/assistance/email.svg";
 import FiscalCodeIcon from "../../../../img/assistance/fiscalCode.svg";
@@ -15,6 +14,7 @@ import LoginIcon from "../../../../img/assistance/login.svg";
 import NameSurnameIcon from "../../../../img/assistance/nameSurname.svg";
 import DeviceIcon from "../../../../img/assistance/telefonia.svg";
 import WebSiteIcon from "../../../../img/assistance/website.svg";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { H1 } from "../../../components/core/typography/H1";
 import { H3 } from "../../../components/core/typography/H3";
 import { H4 } from "../../../components/core/typography/H4";
@@ -348,9 +348,9 @@ const ZendeskAskPermissions = () => {
         <ScrollView>
           <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
             <H1>{I18n.t("support.askPermissions.title")}</H1>
-            <View spacer />
+            <VSpacer size={16} />
             <H4 weight={"Regular"}>{I18n.t("support.askPermissions.body")}</H4>
-            <View spacer xsmall={true} />
+            <VSpacer size={4} />
             <Link
               onPress={() => {
                 openWebUrl(zendeskPrivacyUrl, () =>
@@ -360,7 +360,7 @@ const ZendeskAskPermissions = () => {
             >
               {I18n.t("support.askPermissions.privacyLink")}
             </Link>
-            <View spacer small={true} />
+            <VSpacer size={8} />
             <H3>{I18n.t("support.askPermissions.listHeader")}</H3>
 
             {items.map((item, idx) => (

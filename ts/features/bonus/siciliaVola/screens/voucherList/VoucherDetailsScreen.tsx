@@ -1,12 +1,18 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { View } from "native-base";
 import * as React from "react";
 import { useEffect } from "react";
-import { Alert, SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import {
+  View,
+  Alert,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet
+} from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import CopyButtonComponent from "../../../../../components/CopyButtonComponent";
+import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { H4 } from "../../../../../components/core/typography/H4";
@@ -222,7 +228,7 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
       <SafeAreaView style={IOStyles.flex} testID={"VoucherGeneratedScreen"}>
         <ScrollView style={IOStyles.horizontalContentPadding}>
           <H1>{I18n.t("bonus.sv.voucherList.details.title")}</H1>
-          <View spacer large />
+          <VSpacer size={24} />
           <View style={styles.itemRow}>
             <H4>{I18n.t("bonus.sv.voucherList.details.fields.uniqueCode")}</H4>
 
@@ -232,16 +238,16 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
               }}
             >
               <H3 color={"bluegreyDark"}>{voucherId}</H3>
-              <View hspacer />
+              <HSpacer size={16} />
               <CopyButtonComponent textToCopy={voucherId} />
             </View>
           </View>
-          <View spacer large />
+          <VSpacer size={24} />
           <View style={styles.itemRow}>
             <H4 weight={"Regular"}>
               {I18n.t("bonus.sv.voucherList.details.fields.beneficiary")}
             </H4>
-            <View hspacer />
+            <HSpacer size={16} />
             <H4 style={{ flexShrink: 1 }}>{selectedVoucher.beneficiary}</H4>
           </View>
           <View style={styles.itemRow}>
@@ -262,7 +268,7 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
           {fromVoucherToDestinationLabels(selectedVoucher).map(d => (
             <View style={styles.itemRow} key={d.value}>
               <H4 weight={"Regular"}>{d.label}</H4>
-              <View hspacer />
+              <HSpacer size={16} />
               <H4 style={{ flexShrink: 1 }}>{d.value}</H4>
             </View>
           ))}
@@ -274,7 +280,7 @@ const VoucherDetailsScreen = (props: Props): React.ReactElement | null => {
               {formatDateAsLocal(selectedVoucher.departureDate, true, true)}
             </H4>
           </View>
-          <View spacer large />
+          <VSpacer size={24} />
           <View style={styles.itemRow}>
             <H4 weight={"Regular"}>
               {I18n.t(

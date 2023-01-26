@@ -1,6 +1,5 @@
 import { useRoute } from "@react-navigation/core";
 import { RouteProp } from "@react-navigation/native";
-import { View as NBView } from "native-base";
 import React from "react";
 import {
   ActivityIndicator,
@@ -23,6 +22,7 @@ import { TimelineOperationListItem } from "../components/TimelineOperationListIt
 import { IDPayDetailsParamsList } from "../navigation";
 import { useInitiativeTimelineFetcher } from "../utils/hooks";
 import { OperationListDTO } from "../../../../../../definitions/idpay/timeline/OperationListDTO";
+import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 export type OperationsListScreenParams = { initiativeId: string };
 type OperationsListScreenRouteProps = RouteProp<
   IDPayDetailsParamsList,
@@ -101,7 +101,7 @@ export const OperationsListScreen = () => {
           </Body>
         )}
       </View>
-      <NBView spacer large />
+      <VSpacer size={24} />
       <FlatList
         style={IOStyles.horizontalContentPadding}
         contentContainerStyle={styles.listContainer}

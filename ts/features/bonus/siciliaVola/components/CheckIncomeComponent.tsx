@@ -1,5 +1,4 @@
 import { useNavigation } from "@react-navigation/native";
-import { View } from "native-base";
 import * as React from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { connect } from "react-redux";
@@ -8,6 +7,7 @@ import {
   RadioButtonList,
   RadioItem
 } from "../../../../components/core/selection/RadioButtonList";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { H1 } from "../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
@@ -89,7 +89,7 @@ const CheckIncomeComponent = (props: Props): React.ReactElement => {
       <SafeAreaView style={IOStyles.flex} testID={"CheckIncomeComponent"}>
         <ScrollView style={IOStyles.horizontalContentPadding}>
           <H1>{I18n.t("bonus.sv.voucherGeneration.checkIncome.title")}</H1>
-          <View spacer={true} />
+          <VSpacer size={16} />
           <RadioButtonList<boolean>
             key="check_income"
             items={getCheckIncomeUnderThresholdItems()}

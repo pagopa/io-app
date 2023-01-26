@@ -1,7 +1,6 @@
 import { useActor } from "@xstate/react";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { View as NBView } from "native-base";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ScrollView, View, StyleSheet } from "react-native";
@@ -17,6 +16,7 @@ import I18n from "../../../../i18n";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { useOnboardingMachineService } from "../xstate/provider";
 import ButtonExtendedOutline from "../../../../components/ui/ButtonExtendedOutline";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.main.contextualHelpTitle",
@@ -99,9 +99,9 @@ export const PDNDPrerequisitesScreen = () => {
       >
         <ScrollView>
           <View style={IOStyles.horizontalContentPadding}>
-            <NBView spacer={true} />
+            <VSpacer size={16} />
             <H1>{title}</H1>
-            <NBView spacer />
+            <VSpacer size={16} />
             <Body>{subtitle("18App")}</Body>
             {/* will get service name from store */}
           </View>
@@ -118,7 +118,7 @@ export const PDNDPrerequisitesScreen = () => {
                     present();
                   }}
                 />
-                <NBView spacer={true} />
+                <VSpacer size={16} />
               </React.Fragment>
             ))}
           </View>
