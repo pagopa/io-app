@@ -32,6 +32,7 @@ import {
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
 import ROUTES from "../../../navigation/routes";
+import { isStrictNone } from "../../../utils/pot";
 import CtaBar from "./common/CtaBar";
 import { HeaderDueDateBar } from "./common/HeaderDueDateBar";
 import { MessageTitle } from "./common/MessageTitle";
@@ -39,7 +40,6 @@ import MessageContent from "./Content";
 import MedicalPrescriptionAttachments from "./MedicalPrescriptionAttachments";
 import MessageMarkdown from "./MessageMarkdown";
 import AttachmentsUnavailableComponent from "./AttachmentsUnavailable";
-import { isStrictNone } from "../../../utils/pot";
 
 const styles = StyleSheet.create({
   padded: {
