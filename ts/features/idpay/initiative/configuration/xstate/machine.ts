@@ -215,6 +215,9 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 onDone: {
                   target: "IBAN_CONFIGURATION_COMPLETED",
                   actions: "enrollIbanSuccess"
+                },
+                onError: {
+                  target: "DISPLAYING_IBAN_LIST"
                 }
               }
             },
