@@ -1,4 +1,8 @@
-import { generate, CryptoError } from "@pagopa/io-react-native-crypto";
+import {
+  generate,
+  CryptoError,
+  deleteKey
+} from "@pagopa/io-react-native-crypto";
 import { call, select } from "typed-redux-saga/macro";
 import { isLollipopEnabledSelector } from "../../store/reducers/backendStatus";
 import {
@@ -37,27 +41,41 @@ export function* trackMixpanelCryptoKeyPairEvents() {
 
 function* generateCryptoKeyPair() {
   try {
+    // Key is persisted even after uninstalling the application.
     const keyAlreadyExistsOnKeystore = yield* call(
       checkPublicKeyExists,
       KEY_NAME
     );
 
-    const shouldWeGenerateKey = !keyAlreadyExistsOnKeystore;
-    if (shouldWeGenerateKey) {
-      const key = yield* call(generate, KEY_NAME);
-      const keyGenerationInfo: KeyGenerationInfo = {
-        keyTag: KEY_NAME,
-        keyType: key.kty
-      };
-      yield* call(setKeyGenerationInfo, KEY_NAME, keyGenerationInfo);
+    // Every new fresh login we need to regenerate a new key pair.
+    if (keyAlreadyExistsOnKeystore) {
+      try {
+        yield* call(deleteKey, KEY_NAME);
+      } catch (e) {
+        yield* saveKeyGenerationFailureInfo(e);
+        // We couldn't proceed eny further.
+        // If we proceed any further.
+        return;
+      }
     }
-  } catch (e) {
-    const { message: errorCode, userInfo } = e as CryptoError;
+
+    const key = yield* call(generate, KEY_NAME);
     const keyGenerationInfo: KeyGenerationInfo = {
       keyTag: KEY_NAME,
-      errorCode,
-      userInfo
+      keyType: key.kty
     };
     yield* call(setKeyGenerationInfo, KEY_NAME, keyGenerationInfo);
+  } catch (e) {
+    yield* saveKeyGenerationFailureInfo(e);
   }
+}
+
+function* saveKeyGenerationFailureInfo(e: unknown) {
+  const { message: errorCode, userInfo } = e as CryptoError;
+  const keyGenerationInfo: KeyGenerationInfo = {
+    keyTag: KEY_NAME,
+    errorCode,
+    userInfo
+  };
+  yield* call(setKeyGenerationInfo, KEY_NAME, keyGenerationInfo);
 }
