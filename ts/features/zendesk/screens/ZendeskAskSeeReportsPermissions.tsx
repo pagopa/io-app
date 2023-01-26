@@ -1,12 +1,12 @@
 import { useNavigation } from "@react-navigation/native";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { View } from "native-base";
 import React from "react";
-import { SafeAreaView, ScrollView } from "react-native";
+import { View, SafeAreaView, ScrollView } from "react-native";
 import EmailIcon from "../../../../img/assistance/email.svg";
 import FiscalCodeIcon from "../../../../img/assistance/fiscalCode.svg";
 import NameSurnameIcon from "../../../../img/assistance/nameSurname.svg";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { H1 } from "../../../components/core/typography/H1";
 import { H3 } from "../../../components/core/typography/H3";
 import { H4 } from "../../../components/core/typography/H4";
@@ -129,11 +129,11 @@ const ZendeskAskSeeReportsPermissions = (props: Props) => {
         <ScrollView>
           <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
             <H1>{I18n.t("support.askPermissions.title")}</H1>
-            <View spacer />
+            <VSpacer size={16} />
             <H4 weight={"Regular"}>
               {I18n.t("support.askPermissions.listBody")}
             </H4>
-            <View spacer xsmall={true} />
+            <VSpacer size={4} />
             <Link
               onPress={() => {
                 openWebUrl(zendeskPrivacyUrl, () =>
@@ -143,7 +143,7 @@ const ZendeskAskSeeReportsPermissions = (props: Props) => {
             >
               {I18n.t("support.askPermissions.privacyLink")}
             </Link>
-            <View spacer small={true} />
+            <VSpacer size={8} />
             <H3>{I18n.t("support.askPermissions.listHeader")}</H3>
 
             {items.map((item, idx) => (

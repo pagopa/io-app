@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/core";
-
-import { List, ListItem, View } from "native-base";
+import { View } from "react-native";
+import { List, ListItem } from "native-base";
 import React from "react";
 import {
   InitiativeDTO,
@@ -19,6 +19,7 @@ import {
 } from "../../../../../navigation/params/AppParamsList";
 import customVariables from "../../../../../theme/variables";
 import { IDPayConfigurationRoutes } from "../../configuration/navigation/navigator";
+import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
 
 type Props = {
   initiative: InitiativeDTO;
@@ -36,7 +37,7 @@ const SettingsButtonComponent = (props: SettingsButtonProps) => (
     {props.hasWarnings && (
       <>
         <IconFont name={"io-warning"} color={IOColors.red} />
-        <View hspacer />
+        <HSpacer size={16} />
       </>
     )}
     <View style={IOStyles.flex}>
@@ -91,7 +92,7 @@ export const InitiativeSettingsComponent = (props: Props) => {
           "idpay.initiative.details.initiativeDetailsScreen.configured.settings.header"
         )}
       </H3>
-      <View spacer small />
+      <VSpacer size={8} />
       <List>
         <SettingsButtonComponent
           title={I18n.t(

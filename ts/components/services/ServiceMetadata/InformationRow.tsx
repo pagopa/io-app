@@ -1,12 +1,12 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import { View as NBView } from "native-base";
 import { TranslationKeys } from "../../../../locales/locales";
 import { capitalize } from "../../../utils/strings";
 import I18n from "../../../i18n";
 import { H4 } from "../../core/typography/H4";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
 import ItemSeparatorComponent from "../../ItemSeparatorComponent";
+import { HSpacer } from "../../core/spacer/Spacer";
 
 const styles = StyleSheet.create({
   touchable: {
@@ -45,7 +45,7 @@ const InformationRow = ({
       <H4 numberOfLines={1} color={"bluegrey"} weight={"Regular"}>
         {capitalize(I18n.t(label))}
       </H4>
-      <NBView hspacer={true} />
+      <HSpacer size={16} />
       <H4
         style={styles.value}
         numberOfLines={1}

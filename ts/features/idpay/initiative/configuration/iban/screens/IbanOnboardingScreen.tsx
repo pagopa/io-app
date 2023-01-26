@@ -2,11 +2,14 @@ import { useActor } from "@xstate/react";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { View as NBView } from "native-base";
 import React from "react";
-import { SafeAreaView, View, ScrollView } from "react-native";
+import { View, SafeAreaView, ScrollView } from "react-native";
 import { Iban } from "../../../../../../../definitions/backend/Iban";
 import IconProfileAlt from "../../../../../../components/core/icons/svg/IconProfileAlt";
+import {
+  VSpacer,
+  HSpacer
+} from "../../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../../components/core/typography/H1";
 import { LabelSmall } from "../../../../../../components/core/typography/LabelSmall";
@@ -54,12 +57,12 @@ const IbanOnboardingScreen = () => {
       contextualHelp={emptyContextualHelp}
     >
       <ScrollView style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
-        <NBView spacer />
+        <VSpacer size={16} />
         <H1>{I18n.t("idpay.configuration.iban.onboarding.header")}</H1>
-        <NBView spacer />
+        <VSpacer size={16} />
         <Body>{I18n.t("idpay.configuration.iban.onboarding.body")}</Body>
         <Link>{I18n.t("idpay.configuration.iban.onboarding.bodyLink")}</Link>
-        <NBView spacer large />
+        <VSpacer size={24} />
         <LabelledItem
           isValid={isIbanValid()}
           label="IBAN"
@@ -73,7 +76,7 @@ const IbanOnboardingScreen = () => {
             onChangeText: val => setIban(val)
           }}
         />
-        <NBView spacer />
+        <VSpacer size={16} />
         <LabelledItem
           label={I18n.t("idpay.configuration.iban.onboarding.nameAssignInput")}
           isValid={isIbanNameValid()}
@@ -85,7 +88,7 @@ const IbanOnboardingScreen = () => {
             onChangeText: val => setIbanName(val)
           }}
         />
-        <NBView spacer />
+        <VSpacer size={16} />
         <View
           style={[
             IOStyles.row,
@@ -96,7 +99,7 @@ const IbanOnboardingScreen = () => {
           ]}
         >
           <IconProfileAlt size={30} color={IOColors.bluegrey} />
-          <NBView hspacer />
+          <HSpacer size={16} />
           <LabelSmall color="bluegrey" weight="Regular">
             {I18n.t("idpay.configuration.iban.onboarding.bottomLabel")}
           </LabelSmall>

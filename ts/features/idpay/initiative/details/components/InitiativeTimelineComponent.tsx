@@ -1,26 +1,26 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { List, Text, View } from "native-base";
+import { useNavigation } from "@react-navigation/native";
+import { List as NBList } from "native-base";
 import React, { useEffect } from "react";
-import { StyleSheet } from "react-native";
-import { OperationTypeEnum as IbanOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/IbanOperationDTO";
-import { OperationTypeEnum as InstrumentOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/InstrumentOperationDTO";
-import { OperationTypeEnum as OnboardingOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/OnboardingOperationDTO";
-import { OperationListDTO } from "../../../../../../definitions/idpay/timeline/OperationListDTO";
-import { OperationTypeEnum as TransactionOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/TransactionOperationDTO";
+import { StyleSheet, View } from "react-native";
+import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";
-import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import { idpayTimelineSelector } from "../store";
-import { idpayTimelineGet } from "../store/actions";
 import {
-  IbanOnboardingCard,
-  InstrumentOnboardingCard,
-  OnboardingTransactionCard,
-  TimelineTransactionCard
-} from "./TimelineTransactionCards";
+  AppParamsList,
+  IOStackNavigationProp
+} from "../../../../../navigation/params/AppParamsList";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { IDPayDetailsRoutes } from "../navigation";
+import {
+  idpayPaginatedTimelineSelector,
+  idpayTimelineSelector
+} from "../store";
+import { idpayTimelinePageGet } from "../store/actions";
+import { TimelineOperationListItem } from "./TimelineOperationListItem";
 
 const styles = StyleSheet.create({
   spaceBetween: {
@@ -35,7 +35,7 @@ const emptyTimelineContent = (
         "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperations"
       )}
     </H3>
-    <View spacer />
+    <VSpacer size={16} />
     <LabelSmall weight="Regular" color="bluegreyDark">
       {I18n.t(
         "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperationsSubtitle"
@@ -49,21 +49,6 @@ const emptyTimelineContent = (
   </>
 );
 
-const pickTransactionCard = (transaction: OperationListDTO) => {
-  switch (transaction.operationType) {
-    case TransactionOperationTypeEnum.TRANSACTION:
-      return <TimelineTransactionCard transaction={transaction} />;
-    case OnboardingOperationTypeEnum.ONBOARDING:
-      return <OnboardingTransactionCard transaction={transaction} />;
-    case InstrumentOperationTypeEnum.ADD_INSTRUMENT:
-      return <InstrumentOnboardingCard transaction={transaction} />;
-    case IbanOperationTypeEnum.ADD_IBAN:
-      return <IbanOnboardingCard transaction={transaction} />;
-    default:
-      return <Text>Error loading {transaction.operationType}</Text>;
-  }
-};
-
 type Props = {
   initiativeId: string;
 };
@@ -71,28 +56,34 @@ type Props = {
 const ConfiguredInitiativeData = (props: Props) => {
   const { initiativeId } = props;
 
+  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const dispatch = useIODispatch();
 
   useEffect(() => {
-    dispatch(idpayTimelineGet.request({ initiativeId }));
+    dispatch(idpayTimelinePageGet.request({ initiativeId, page: 0 }));
   }, [dispatch, initiativeId]);
 
-  const timelineFromSelector = useIOSelector(idpayTimelineSelector);
-  const isTimelineLoading = pot.isLoading(timelineFromSelector);
+  const paginatedTimelinePot = useIOSelector(idpayPaginatedTimelineSelector);
+  const timeline = useIOSelector(idpayTimelineSelector);
 
-  if (isTimelineLoading) {
+  const isLoading = pot.isLoading(paginatedTimelinePot);
+
+  if (isLoading) {
     return null;
   }
 
-  const timelineList = pot.getOrElse(
-    pot.map(timelineFromSelector, timeline => timeline.operationList),
-    []
-  );
-
-  if (timelineList.length === 0) {
+  if (timeline.length === 0) {
     return emptyTimelineContent;
   }
 
+  const navigateToOperationsList = () => {
+    navigation.navigate(IDPayDetailsRoutes.IDPAY_DETAILS_MAIN, {
+      screen: IDPayDetailsRoutes.IDPAY_DETAILS_TIMELINE,
+      params: {
+        initiativeId
+      }
+    });
+  };
   return (
     <>
       <View style={[IOStyles.row, styles.spaceBetween]}>
@@ -101,20 +92,21 @@ const ConfiguredInitiativeData = (props: Props) => {
             "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperations"
           )}
         </H3>
-        <Body weight="SemiBold" color="blue">
+        <Body weight="SemiBold" color="blue" onPress={navigateToOperationsList}>
           {I18n.t(
             "idpay.initiative.details.initiativeDetailsScreen.configured.settings.showMore"
           )}
         </Body>
       </View>
-      <View spacer small />
-      <List>
-        {timelineList.map(transaction => (
-          <React.Fragment key={transaction.operationId}>
-            {pickTransactionCard(transaction)}
-          </React.Fragment>
+      <VSpacer size={8} />
+      <NBList>
+        {timeline.slice(0, 3).map(operation => (
+          <TimelineOperationListItem
+            key={operation.operationId}
+            operation={operation}
+          />
         ))}
-      </List>
+      </NBList>
     </>
   );
 };

@@ -1,13 +1,13 @@
 import { useNavigation } from "@react-navigation/native";
-import { View } from "native-base";
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { View, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { connect, useDispatch } from "react-redux";
 import { Dispatch } from "redux";
 import {
   RadioButtonList,
   RadioItem
 } from "../../../../../components/core/selection/RadioButtonList";
+import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { H4 } from "../../../../../components/core/typography/H4";
@@ -148,9 +148,9 @@ const PayPalPspSelectionScreen = (props: Props): React.ReactElement | null => {
       {isReady(props.pspList) ? (
         <SafeAreaView style={IOStyles.flex} testID={"PayPalPpsSelectionScreen"}>
           <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
-            <View spacer={true} small={true} />
+            <VSpacer size={8} />
             <H1>{locales.title}</H1>
-            <View spacer={true} small={true} />
+            <VSpacer size={8} />
             <ScrollView>
               <Body>{locales.body}</Body>
               <Link
@@ -159,12 +159,12 @@ const PayPalPspSelectionScreen = (props: Props): React.ReactElement | null => {
               >
                 {locales.link}
               </Link>
-              <View spacer={true} large={true} />
+              <VSpacer size={24} />
               <RadioListHeader
                 leftColumnTitle={locales.leftColumnTitle}
                 rightColumnTitle={locales.rightColumnTitle}
               />
-              <View spacer={true} small={true} />
+              <VSpacer size={8} />
               <RadioButtonList<IOPayPalPsp["id"]>
                 key="paypal_psp_selection"
                 items={getPspListRadioItems(pspList)}

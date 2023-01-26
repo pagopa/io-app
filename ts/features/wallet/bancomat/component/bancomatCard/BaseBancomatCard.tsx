@@ -1,8 +1,9 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Badge, View } from "native-base";
+import { Badge } from "native-base";
 import * as React from "react";
 import {
+  View,
   Image,
   ImageStyle,
   Platform,
@@ -12,6 +13,7 @@ import {
 import { widthPercentageToDP } from "react-native-responsive-screen";
 import { Abi } from "../../../../../../definitions/pagopa/walletv2/Abi";
 import pagoBancomatLogo from "../../../../../../img/wallet/cards-icons/pagobancomat.png";
+import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H5 } from "../../../../../components/core/typography/H5";
 import {
@@ -181,7 +183,7 @@ const BaseBancomatCard: React.FunctionComponent<Props> = (props: Props) => {
               </Badge>
             )}
           </View>
-          <View spacer={true} />
+          <VSpacer size={16} />
           {props.expiringDate && (
             <H5
               color={props.isExpired ? "red" : "bluegreyDark"}

@@ -1,7 +1,8 @@
 import { useNavigation } from "@react-navigation/native";
-import { ListItem, View } from "native-base";
+import { ListItem } from "native-base";
 import React from "react";
 import { Button, SafeAreaView, ScrollView } from "react-native";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { H4 } from "../../../components/core/typography/H4";
 import { Monospace } from "../../../components/core/typography/Monospace";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
@@ -44,12 +45,12 @@ const IDPayOnboardingPlayground = () => {
               value: serviceId
             }}
           />
-          <View spacer={true} />
+          <VSpacer size={16} />
           <Button
             onPress={navigateToIDPayOnboarding}
             title="Start onboarding"
           />
-          <View spacer={true} large={true} />
+          <VSpacer size={24} />
           <H4>Test service IDs:</H4>
           {testIDs.map(id => (
             <ListItem key={id} onPress={() => setServiceId(id)}>

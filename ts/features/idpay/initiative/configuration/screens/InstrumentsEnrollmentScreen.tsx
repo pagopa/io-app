@@ -1,8 +1,9 @@
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { useSelector } from "@xstate/react";
-import { List, Text, View } from "native-base";
+import { List, Text as NBText } from "native-base";
 import React, { useRef } from "react";
-import { SafeAreaView, ScrollView } from "react-native";
+import { View, SafeAreaView, ScrollView } from "react-native";
+import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -56,6 +57,7 @@ const InstrumentsEnrollmentScreen = () => {
   };
 
   const selectedInstrumentIdRef = useRef<number | undefined>(undefined);
+  const selectedInstrumentWasSetRef = useRef<boolean>(false);
 
   const isLoading = useSelector(configurationMachine, isLoadingSelector);
 
@@ -88,6 +90,8 @@ const InstrumentsEnrollmentScreen = () => {
   };
 
   const sendEnrollInstrument = (walletId: number): void => {
+    // eslint-disable-next-line functional/immutable-data
+    selectedInstrumentWasSetRef.current = true;
     configurationMachine.send("ENROLL_INSTRUMENT", {
       instrumentId: walletId
     });
@@ -142,7 +146,6 @@ const InstrumentsEnrollmentScreen = () => {
       }}
       leftButton={{
         onPress: () => {
-          revertInstrumentSwitch(selectedInstrumentIdRef.current as number);
           enrollmentBottomSheetModal.dismiss();
         },
         block: true,
@@ -151,12 +154,16 @@ const InstrumentsEnrollmentScreen = () => {
           "idpay.initiative.configuration.bottomSheet.footer.buttonCancel"
         )
       }}
-    />
+    />,
+    () => {
+      revertInstrumentSwitch(selectedInstrumentIdRef.current as number);
+    }
   );
 
   const revertInstrumentSwitch = (walletId: number): void => {
+    const wasSet = selectedInstrumentWasSetRef.current;
     const node = getInstrumentItemsMap().get(walletId);
-    if (node) {
+    if (node && !wasSet) {
       node.setSwitchStatus(false);
     }
   };
@@ -168,6 +175,8 @@ const InstrumentsEnrollmentScreen = () => {
     if (isEnrolling) {
       // eslint-disable-next-line functional/immutable-data
       selectedInstrumentIdRef.current = walletId;
+      // eslint-disable-next-line functional/immutable-data
+      selectedInstrumentWasSetRef.current = false;
       enrollmentBottomSheetModal.present();
     } else {
       sendDeleteInstrument(walletId);
@@ -181,16 +190,16 @@ const InstrumentsEnrollmentScreen = () => {
         headerTitle={I18n.t("idpay.configuration.headerTitle")}
       >
         <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={1}>
-          <View spacer />
+          <VSpacer size={16} />
           <View style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
             <H1>{I18n.t("idpay.initiative.configuration.header")}</H1>
-            <View spacer small />
-            <Text>
+            <VSpacer size={8} />
+            <NBText>
               {I18n.t("idpay.initiative.configuration.subHeader", {
                 initiativeName: "18app"
               })}
-            </Text>
-            <View spacer />
+            </NBText>
+            <VSpacer size={16} />
             <ScrollView>
               <List>
                 {pagoPAInstruments.map(pagoPAInstrument => (
@@ -214,7 +223,7 @@ const InstrumentsEnrollmentScreen = () => {
                   />
                 ))}
               </List>
-              <Text>{I18n.t("idpay.initiative.configuration.footer")}</Text>
+              <NBText>{I18n.t("idpay.initiative.configuration.footer")}</NBText>
             </ScrollView>
           </View>
           <SafeAreaView>
