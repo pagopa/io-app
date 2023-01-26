@@ -9,7 +9,7 @@ import * as O from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import * as React from "react";
 import { ComponentProps } from "react";
-import { View, Image, ImageSourcePropType, SafeAreaView } from "react-native";
+import { View, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJson";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";

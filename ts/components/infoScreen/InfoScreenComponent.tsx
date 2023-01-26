@@ -1,5 +1,4 @@
 import { NavigationEvents } from "@react-navigation/compat";
-import { View as NBView } from "native-base";
 import * as React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import themeVariables from "../../theme/variables";
