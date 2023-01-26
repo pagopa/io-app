@@ -1,7 +1,7 @@
 import * as O from "fp-ts/lib/Option";
 import { View as NBView } from "native-base";
 import React from "react";
-import { Platform, StyleSheet } from "react-native";
+import { View, Platform, StyleSheet } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import { CommonServiceMetadata } from "../../../../../definitions/backend/CommonServiceMetadata";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
@@ -20,6 +20,7 @@ import {
   isExpired,
   MessagePaymentExpirationInfo
 } from "../../../../utils/messages";
+import { HSpacer } from "../../../core/spacer/Spacer";
 import ExtractedCTABar from "../../../cta/ExtractedCTABar";
 import CalendarEventButton from "./CalendarEventButton";
 import PaymentButton from "./PaymentButton";
@@ -114,13 +115,13 @@ const CtaBar = ({
 
   const footer1 = (paymentButton || calendarButton) && (
     // Added a wrapper to enable the usage of the component outside the Container of Native Base
-    <NBView style={styles.footerContainer} pointerEvents={"box-none"}>
+    <View style={styles.footerContainer} pointerEvents={"box-none"}>
       <NBView footer={true} style={footerStyle}>
         {calendarButton}
-        {paymentButton && calendarButton && <NBView hspacer={true} />}
+        {paymentButton && calendarButton && <HSpacer size={16} />}
         {paymentButton}
       </NBView>
-    </NBView>
+    </View>
   );
   const maybeCtas = getMessageCTA(
     markdown,
@@ -129,7 +130,7 @@ const CtaBar = ({
   );
   const footer2 = O.isSome(maybeCtas) && (
     // Added a wrapper to enable the usage of the component outside the Container of Native Base
-    <NBView style={styles.footerContainer} pointerEvents={"box-none"}>
+    <View style={styles.footerContainer} pointerEvents={"box-none"}>
       <NBView testID={"CtaBar_withCTA"} footer={true} style={footerStyle}>
         <ExtractedCTABar
           ctas={maybeCtas.value}
@@ -139,13 +140,13 @@ const CtaBar = ({
           service={service?.raw}
         />
       </NBView>
-    </NBView>
+    </View>
   );
   return (
-    <NBView testID={"CtaBar_withFooter"}>
+    <View testID={"CtaBar_withFooter"}>
       {footer2}
       {footer1}
-    </NBView>
+    </View>
   );
 };
 

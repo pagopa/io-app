@@ -1,12 +1,12 @@
 import { TouchableWithoutFeedback } from "@gorhom/bottom-sheet";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { View } from "native-base";
 import * as React from "react";
 import { useEffect, useRef } from "react";
-import { Alert, StyleSheet } from "react-native";
+import { View, Alert, StyleSheet } from "react-native";
 import { Discount } from "../../../../../../../definitions/cgn/merchants/Discount";
 import Eye from "../../../../../../../img/icons/Eye.svg";
 import { InfoBox } from "../../../../../../components/box/InfoBox";
+import { VSpacer } from "../../../../../../components/core/spacer/Spacer";
 import { BaseTypography } from "../../../../../../components/core/typography/BaseTypography";
 import { H3 } from "../../../../../../components/core/typography/H3";
 import { H4 } from "../../../../../../components/core/typography/H4";
@@ -199,7 +199,7 @@ const CgnBucketCodeComponent = ({ discountId, onCodePress }: Props) => {
       <H3 accessible={true} accessibilityRole={"header"}>
         {I18n.t("bonus.cgn.merchantDetail.title.discountCode")}
       </H3>
-      <View spacer small />
+      <VSpacer size={8} />
       <CgnBucketCodeContent onRequestBucket={requestBucketCode} />
     </View>
   );

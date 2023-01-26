@@ -1,9 +1,10 @@
 /**
  * A component to render a list of services organized in sections, one for each organization.
  */
-import { Text as NBText, View } from "native-base";
+import { Text as NBText } from "native-base";
 import React from "react";
 import {
+  View,
   Image,
   NativeScrollEvent,
   NativeSyntheticEvent,
@@ -13,6 +14,7 @@ import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import { ServicesSectionState } from "../../store/reducers/entities/services";
 import customVariables from "../../theme/variables";
+import { VSpacer } from "../core/spacer/Spacer";
 import ServiceList from "./ServiceList";
 
 type AnimatedProps = {
@@ -51,7 +53,7 @@ const styles = StyleSheet.create({
 // component used when the list is empty
 const emptyListComponent = () => (
   <View style={styles.headerContentWrapper}>
-    <View spacer={true} large={true} />
+    <VSpacer size={24} />
     <Image
       source={require("../../../img/services/icon-loading-services.png")}
     />

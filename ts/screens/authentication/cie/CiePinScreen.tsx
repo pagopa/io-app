@@ -1,6 +1,5 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useNavigation } from "@react-navigation/native";
-import { View } from "native-base";
 import React, {
   useCallback,
   useContext,
@@ -9,6 +8,7 @@ import React, {
   useState
 } from "react";
 import {
+  View,
   Keyboard,
   KeyboardAvoidingView,
   Platform,
@@ -20,6 +20,7 @@ import AdviceComponent from "../../../components/AdviceComponent";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { CieRequestAuthenticationOverlay } from "../../../components/cie/CieRequestAuthenticationOverlay";
 import CiePinpad from "../../../components/CiePinpad";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { Link } from "../../../components/core/typography/Link";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
@@ -164,7 +165,7 @@ const CiePinScreen: React.FC<Props> = props => {
           }
         />
 
-        <View spacer={true} />
+        <VSpacer size={16} />
         <View style={styles.container} accessible={true} ref={pinPadViewRef}>
           <CiePinpad
             pin={pin}
@@ -172,7 +173,7 @@ const CiePinScreen: React.FC<Props> = props => {
             onPinChanged={setPin}
             onSubmit={showModal}
           />
-          <View spacer={true} />
+          <VSpacer size={16} />
           <AdviceComponent
             text={I18n.t("login.expiration_info")}
             iconColor={"black"}

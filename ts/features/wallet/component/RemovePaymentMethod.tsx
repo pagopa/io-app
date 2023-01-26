@@ -1,4 +1,4 @@
-import { View } from "native-base";
+import { View } from "react-native";
 import * as React from "react";
 import { Body } from "../../../components/core/typography/Body";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
@@ -10,6 +10,7 @@ import {
   errorButtonProps
 } from "../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { PaymentMethodRepresentationComponent } from "../../bonus/bpd/components/paymentMethodActivationToggle/base/PaymentMethodRepresentationComponent";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 
 type Props = {
   representation: PaymentMethodRepresentation;
@@ -22,9 +23,9 @@ type Props = {
  */
 const RemovePaymentMethod: React.FunctionComponent<Props> = props => (
   <View>
-    <View spacer={true} />
+    <VSpacer size={16} />
     <PaymentMethodRepresentationComponent {...props.representation} />
-    <View spacer={true} />
+    <VSpacer size={16} />
     <Body>{I18n.t("wallet.newRemove.body")}</Body>
   </View>
 );

@@ -1,10 +1,10 @@
 import { useNavigation } from "@react-navigation/native";
-import { View } from "native-base";
 import * as React from "react";
 import { useState } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { Link } from "../../../../../components/core/typography/Link";
@@ -73,7 +73,7 @@ const DisabledAdditionalInfoScreen = (props: Props): React.ReactElement => {
       >
         <ScrollView style={IOStyles.horizontalContentPadding}>
           <H1>{title}</H1>
-          <View spacer={true} extralarge={true} />
+          <VSpacer size={40} />
           <DeclarationEntry
             text={
               <Body>

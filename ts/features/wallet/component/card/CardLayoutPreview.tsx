@@ -1,11 +1,11 @@
-import { View } from "native-base";
 import * as React from "react";
-import { AccessibilityProps, Platform, StyleSheet } from "react-native";
+import { View, AccessibilityProps, Platform, StyleSheet } from "react-native";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import {
   IOColors,
   hexToRgba
 } from "../../../../components/core/variables/IOColors";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
 
 type Props = {
   left: React.ReactNode;
@@ -83,7 +83,7 @@ export const CardLayoutPreview: React.FunctionComponent<Props> = props => (
             {props.left}
             {props.right}
           </View>
-          <View spacer={true} />
+          <VSpacer size={16} />
         </View>
       </View>
     </TouchableDefaultOpacity>

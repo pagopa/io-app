@@ -6,9 +6,10 @@ import { ITuple2 } from "@pagopa/ts-commons/lib/tuples";
 import * as AR from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Text as NBText, View } from "native-base";
+import { Text as NBText } from "native-base";
 import * as React from "react";
 import {
+  View,
   Alert,
   Dimensions,
   SafeAreaView,
@@ -25,6 +26,7 @@ import {
   ScannedBarcode
 } from "../../../components/BarcodeCamera";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent, {
@@ -355,11 +357,11 @@ class ScanQrCodeScreen extends React.Component<Props, State> {
                 <NBText>{I18n.t("wallet.QRtoPay.chooser")}</NBText>
               </ButtonDefaultOpacity>
               <View style={styles.content}>
-                <View spacer={true} />
+                <VSpacer size={16} />
                 <NBText style={[styles.padded, styles.bottomText]}>
                   {I18n.t("wallet.QRtoPay.cameraUsageInfo")}
                 </NBText>
-                <View spacer={true} extralarge={true} />
+                <VSpacer size={40} />
               </View>
             </View>
           </ScrollView>
