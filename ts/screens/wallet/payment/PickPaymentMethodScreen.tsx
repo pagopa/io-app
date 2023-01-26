@@ -4,7 +4,7 @@
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
-import { Content, View } from "native-base";
+import { Content } from "native-base";
 import * as React from "react";
 import { FlatList, SafeAreaView } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
@@ -61,6 +61,7 @@ import {
 } from "../../../utils/paymentMethodCapabilities";
 import { showToast } from "../../../utils/showToast";
 import { convertWalletV2toWalletV1 } from "../../../utils/walletv2";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { dispatchPickPspOrConfirm } from "./common";
 
 export type PickPaymentMethodScreenNavigationParams = Readonly<{
@@ -111,7 +112,7 @@ const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
         <ScrollView style={IOStyles.flex}>
           <Content>
             <H1>{I18n.t("wallet.payWith.pickPaymentMethod.title")}</H1>
-            <View spacer={true} />
+            <VSpacer size={16} />
             {methodsCanPay.length > 0 ? (
               <>
                 <H4 weight={"Regular"} color={"bluegreyDark"}>
@@ -122,7 +123,7 @@ const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
                   removeClippedSubviews={false}
                   data={methodsCanPay}
                   keyExtractor={item => item.idWallet.toString()}
-                  ListFooterComponent={<View spacer />}
+                  ListFooterComponent={<VSpacer size={16} />}
                   renderItem={i => (
                     <PickAvailablePaymentMethodListItem
                       isFirst={i.index === 0}
@@ -137,7 +138,7 @@ const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
                     />
                   )}
                 />
-                <View spacer={true} />
+                <VSpacer size={16} />
               </>
             ) : (
               <H4
@@ -151,17 +152,17 @@ const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
 
             {methodsCanPayButDisabled.length > 0 && (
               <>
-                <View spacer={true} />
+                <VSpacer size={16} />
                 <H4 color={"bluegreyDark"}>
                   {I18n.t("wallet.payWith.pickPaymentMethod.disabled.title")}
                 </H4>
-                <View spacer={true} />
+                <VSpacer size={16} />
                 <FlatList
                   testID={"DisabledPaymentMethodList"}
                   removeClippedSubviews={false}
                   data={methodsCanPayButDisabled}
                   keyExtractor={item => `disabled_payment_${item.idWallet}`}
-                  ListFooterComponent={<View spacer />}
+                  ListFooterComponent={<VSpacer size={16} />}
                   renderItem={i => (
                     <PickAvailablePaymentMethodListItem
                       rightElement={
@@ -178,19 +179,19 @@ const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
 
             {methodsCantPay.length > 0 && (
               <>
-                <View spacer={true} />
+                <VSpacer size={16} />
                 <H4 color={"bluegreyDark"}>
                   {I18n.t(
                     "wallet.payWith.pickPaymentMethod.notAvailable.title"
                   )}
                 </H4>
-                <View spacer={true} />
+                <VSpacer size={16} />
                 <FlatList
                   testID={"notPayablePaymentMethodList"}
                   removeClippedSubviews={false}
                   data={methodsCantPay}
                   keyExtractor={item => item.idWallet.toString()}
-                  ListFooterComponent={<View spacer />}
+                  ListFooterComponent={<VSpacer size={16} />}
                   renderItem={i => (
                     <PickNotAvailablePaymentMethodListItem
                       isFirst={i.index === 0}

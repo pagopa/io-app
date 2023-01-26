@@ -1,10 +1,11 @@
-import { Text, View } from "native-base";
+import { Text } from "native-base";
 import React from "react";
 import { StyleSheet } from "react-native";
 import {
   IOPictogramType,
   Pictogram
 } from "../../../../components/core/pictograms";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { H3 } from "../../../../components/core/typography/H3";
 import { OnboardingFailureType } from "../xstate/failure";
 
@@ -52,9 +53,9 @@ const FailureMessage = (props: Props) => {
   return (
     <>
       <Pictogram name={failure.picture} size={80} />
-      <View spacer={true} />
+      <VSpacer size={16} />
       <H3 style={styles.title}>{failure.title}</H3>
-      <View spacer={true} />
+      <VSpacer size={16} />
       <Text alignCenter={true}>{failure.subtitle}</Text>
     </>
   );

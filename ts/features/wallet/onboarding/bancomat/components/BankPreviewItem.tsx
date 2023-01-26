@@ -1,10 +1,11 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { ListItem, View } from "native-base";
+import { ListItem } from "native-base";
 import * as React from "react";
-import { Image, ImageStyle, StyleProp, StyleSheet } from "react-native";
+import { View, Image, ImageStyle, StyleProp, StyleSheet } from "react-native";
 import { Abi } from "../../../../../../definitions/pagopa/walletv2/Abi";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
+import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import IconFont from "../../../../../components/ui/IconFont";
@@ -84,13 +85,13 @@ export const BankPreviewItem: React.FunctionComponent<Props> = (
   return props.inList ? (
     <ListItem style={styles.flexRow} onPress={onItemPress}>
       <View style={styles.listItem}>
-        <View spacer={true} />
+        <VSpacer size={16} />
         {bankLogo}
-        <View spacer={true} small={true} />
+        <VSpacer size={8} />
         <LabelSmall color={"bluegrey"} weight={"Bold"}>
           {bankName}
         </LabelSmall>
-        <View spacer={true} />
+        <VSpacer size={16} />
       </View>
       <IconFont name={"io-right"} color={IOColors.blue} />
     </ListItem>
@@ -101,7 +102,7 @@ export const BankPreviewItem: React.FunctionComponent<Props> = (
       onPress={onItemPress}
     >
       {bankLogo}
-      <View spacer={true} />
+      <VSpacer size={16} />
       <LabelSmall color={"bluegrey"} weight={"Bold"}>
         {bankName}
       </LabelSmall>

@@ -1,5 +1,4 @@
 import { SectionList, View } from "react-native";
-import { View as NBView } from "native-base";
 import * as React from "react";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
@@ -11,6 +10,7 @@ import {
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import { H1 } from "../../components/core/typography/H1";
 import { LabelSmall } from "../../components/core/typography/LabelSmall";
+import { VSpacer } from "../../components/core/spacer/Spacer";
 import DESIGN_SYSTEM_ROUTES from "./navigation/routes";
 import { DesignSystemParamsList } from "./navigation/params";
 
@@ -70,7 +70,7 @@ export const DesignSystem = (props: Props) => (
           )}
         </View>
       )}
-      renderSectionFooter={() => <NBView spacer={true} extralarge={true} />}
+      renderSectionFooter={() => <VSpacer size={40} />}
       renderItem={({ item }) => (
         <ListItemComponent
           title={item.title}

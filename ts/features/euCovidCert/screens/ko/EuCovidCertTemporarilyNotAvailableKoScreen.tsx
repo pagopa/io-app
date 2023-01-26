@@ -1,21 +1,21 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { View } from "native-base";
 import { Image } from "react-native";
 import { GlobalState } from "../../../../store/reducers/types";
 import { BaseEuCovidCertificateLayout } from "../BaseEuCovidCertificateLayout";
 import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
 import unavailableImage from "../../../../../img/wallet/errors/payment-expired-icon.png";
 import I18n from "../../../../i18n";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 const EuCovidCertTemporarilyNotAvailableComponent = (): React.ReactElement => (
   <>
-    <View spacer extralarge />
-    <View spacer extralarge />
+    <VSpacer size={40} />
+    <VSpacer size={40} />
     <InfoScreenComponent
       image={
         <Image

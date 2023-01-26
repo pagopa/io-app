@@ -1,5 +1,4 @@
 import * as React from "react";
-import { View as NBView } from "native-base";
 import { View, StyleSheet } from "react-native";
 import AdviceComponent from "../../../components/AdviceComponent";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
@@ -24,6 +23,7 @@ import { H5 } from "../../../components/core/typography/H5";
 import { Label } from "../../../components/core/typography/Label";
 import { ActivateBonusReminder } from "../../bonus/bonusVacanze/screens/activation/request/ActivateBonusReminder";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 
 const styles = StyleSheet.create({
   content: {
@@ -46,7 +46,7 @@ export const DSAdvice = () => {
           "Dopo questo passaggio non sarà più possibile annullare il pagamento."
         }
       />
-      <NBView spacer={true} />
+      <VSpacer size={16} />
       <View style={[styles.content, IOStyles.horizontalContentPadding]}>
         <InfoBox>
           <Body>
@@ -78,7 +78,7 @@ export const DSAdvice = () => {
           </Body>
         }
       />
-      <NBView spacer={true} />
+      <VSpacer size={16} />
       <DSFullWidthComponent>
         <PaymentBannerComponent
           paymentReason={"Pagamento buoni pasto mensa scuola"}
@@ -86,7 +86,7 @@ export const DSAdvice = () => {
           currentAmount={30000 as ImportoEuroCents}
         />
       </DSFullWidthComponent>
-      <NBView spacer={true} />
+      <VSpacer size={16} />
       <DSFullWidthComponent>
         <StatusContent
           accessibilityLabel={`Accessibility text for the advice component`}
@@ -104,11 +104,11 @@ export const DSAdvice = () => {
           }
         </StatusContent>
       </DSFullWidthComponent>
-      <NBView spacer={true} />
+      <VSpacer size={16} />
       <DSFullWidthComponent>
         <SectionStatusComponent sectionKey={"favourite_language"} />
       </DSFullWidthComponent>
-      <NBView spacer={true} />
+      <VSpacer size={16} />
       <DSFullWidthComponent>
         <StatusContent
           accessibilityLabel={`Accessibility text for the advice component`}
@@ -124,7 +124,7 @@ export const DSAdvice = () => {
           {"La sezione Messaggi è in manutenzione, tornerà operativa a breve"}
         </StatusContent>
       </DSFullWidthComponent>
-      <NBView spacer={true} />
+      <VSpacer size={16} />
       <DSFullWidthComponent>
         <StatusContent
           accessibilityLabel={`Accessibility text for the advice component`}
@@ -143,7 +143,7 @@ export const DSAdvice = () => {
         </StatusContent>
       </DSFullWidthComponent>
 
-      <NBView spacer={true} />
+      <VSpacer size={16} />
 
       <ActivateBonusReminder
         text={
@@ -151,7 +151,7 @@ export const DSAdvice = () => {
         }
       />
 
-      <NBView spacer={true} />
+      <VSpacer size={16} />
 
       <View style={[styles.content, IOStyles.horizontalContentPadding]}>
         <InfoBox iconName={"io-titolare"} iconColor={IOColors.bluegrey}>
@@ -162,7 +162,7 @@ export const DSAdvice = () => {
         </InfoBox>
       </View>
 
-      <NBView spacer={true} extralarge={true} />
+      <VSpacer size={40} />
     </DesignSystemScreen>
   );
 };

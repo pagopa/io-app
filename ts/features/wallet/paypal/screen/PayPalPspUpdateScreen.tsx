@@ -1,10 +1,17 @@
 import { useNavigation } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { ListItem, View } from "native-base";
+import { ListItem } from "native-base";
 import React, { useEffect } from "react";
-import { Image, SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import {
+  View,
+  Image,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet
+} from "react-native";
 import { useDispatch } from "react-redux";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../components/core/typography/Body";
 import { H1 } from "../../../../components/core/typography/H1";
 import { H4 } from "../../../../components/core/typography/H4";
@@ -185,17 +192,17 @@ const PayPalPspUpdateScreen: React.FunctionComponent<Props> = (
       {isReady(pspList) ? (
         <SafeAreaView style={IOStyles.flex} testID={"PayPalPspUpdateScreen"}>
           <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
-            <View spacer={true} small={true} />
+            <VSpacer size={8} />
             <H1>{locales.title}</H1>
-            <View spacer={true} small={true} />
+            <VSpacer size={8} />
             <ScrollView>
               <Body>{locales.body}</Body>
-              <View spacer={true} large={true} />
+              <VSpacer size={24} />
               <PspListHeader
                 leftColumnTitle={locales.leftColumnTitle}
                 rightColumnTitle={locales.rightColumnTitle}
               />
-              <View spacer={true} small={true} />
+              <VSpacer size={8} />
               {pspList.value.map(psp => {
                 const paypalPsp = convertPspData(psp);
                 return (

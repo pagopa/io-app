@@ -1,8 +1,7 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { View } from "native-base";
 import * as React from "react";
-import { Image, StyleSheet } from "react-native";
+import { View, Image, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import bancomatLogoMin from "../../../../../img/wallet/payment-methods/bancomatpay-logo.png";
 import { H4 } from "../../../../components/core/typography/H4";
@@ -12,6 +11,7 @@ import { profileNameSurnameSelector } from "../../../../store/reducers/profile";
 import { GlobalState } from "../../../../store/reducers/types";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseCardComponent from "../../component/card/BaseCardComponent";
+import { HSpacer } from "../../../../components/core/spacer/Spacer";
 
 type Props = {
   phone?: string;
@@ -50,7 +50,7 @@ const topLeft = (phone: string) => (
     {phone && (
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         <IconFont name={"io-phone"} size={22} />
-        <View hspacer small />
+        <HSpacer size={8} />
         <H4 weight={"Regular"} testID="phone">
           {phone}
         </H4>

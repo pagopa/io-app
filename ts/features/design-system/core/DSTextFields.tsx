@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { View } from "react-native";
-import { View as NBView } from "native-base";
 
 import { LabelledItem } from "../../../components/LabelledItem";
 import { IOColors } from "../../../components/core/variables/IOColors";
@@ -15,6 +14,7 @@ import {
   INITIAL_CARD_FORM_STATE
 } from "../../../utils/input";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 
 export const DSTextFields = () => {
   /*
@@ -50,7 +50,7 @@ export const DSTextFields = () => {
         }}
       />
 
-      <NBView spacer={true} large={true} />
+      <VSpacer size={24} />
 
       <LabelledItem
         label={"Default text field with placeholder"}
@@ -65,7 +65,7 @@ export const DSTextFields = () => {
         }}
       />
 
-      <NBView spacer={true} large={true} />
+      <VSpacer size={24} />
 
       <LabelledItem
         label={"Text field with description"}
@@ -80,7 +80,7 @@ export const DSTextFields = () => {
         }}
       />
 
-      <NBView spacer={true} large={true} />
+      <VSpacer size={24} />
 
       <LabelledItem
         label={"Text field disabled"}
@@ -95,7 +95,7 @@ export const DSTextFields = () => {
         }}
       />
 
-      <NBView spacer={true} large={true} />
+      <VSpacer size={24} />
 
       <LabelledItem
         isValid={true}
@@ -110,7 +110,7 @@ export const DSTextFields = () => {
         overrideBorderColor={IOColors.green}
       />
 
-      <NBView spacer={true} large={true} />
+      <VSpacer size={24} />
 
       <LabelledItem
         isValid={false}
@@ -125,7 +125,7 @@ export const DSTextFields = () => {
         overrideBorderColor={IOColors.red}
       />
 
-      <NBView spacer={true} large={true} />
+      <VSpacer size={24} />
 
       <LabelledItem
         label={"Text field with icon"}
@@ -138,7 +138,7 @@ export const DSTextFields = () => {
         }}
       />
 
-      <NBView spacer={true} large={true} />
+      <VSpacer size={24} />
 
       <LabelledItem
         label={"Insert password"}
@@ -152,7 +152,7 @@ export const DSTextFields = () => {
         testID="PasswordField"
       />
 
-      <NBView spacer={true} large={true} />
+      <VSpacer size={24} />
 
       <LabelledItem
         label={"Insert PIN code"}
@@ -168,7 +168,7 @@ export const DSTextFields = () => {
         testID="PinField"
       />
 
-      <NBView spacer={true} large={true} />
+      <VSpacer size={24} />
 
       <View>
         <LabelledItem
@@ -216,7 +216,7 @@ export const DSTextFields = () => {
         }}
       />
 
-      <NBView spacer={true} />
+      <VSpacer size={16} />
 
       <LabelledItem
         label={"Password"}
@@ -266,7 +266,7 @@ export const DSTextFields = () => {
         testID={"pan"}
       />
 
-      <NBView spacer={true} extralarge={true} />
+      <VSpacer size={40} />
     </DesignSystemScreen>
   );
 };

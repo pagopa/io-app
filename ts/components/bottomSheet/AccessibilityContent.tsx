@@ -1,6 +1,6 @@
-import { View } from "native-base";
 import * as React from "react";
-import { Modal } from "react-native";
+import { View, Modal } from "react-native";
+import { VSpacer } from "../core/spacer/Spacer";
 import { IOStyles } from "../core/variables/IOStyles";
 
 type Props = {
@@ -14,7 +14,7 @@ type Props = {
  */
 export const AccessibilityContent = ({ header, content }: Props) => (
   <Modal>
-    <View spacer={true} extralarge={true} />
+    <VSpacer size={40} />
     {header}
     <View style={IOStyles.horizontalContentPadding}>{content}</View>
   </Modal>

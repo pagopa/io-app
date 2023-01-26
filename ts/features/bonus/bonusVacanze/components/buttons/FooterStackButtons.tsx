@@ -4,6 +4,7 @@ import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
+import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { BlockButtonProps } from "../../../../../components/ui/BlockButtons";
 import IconFont from "../../../../../components/ui/IconFont";
 import { FooterTopShadow } from "../FooterTopShadow";
@@ -46,7 +47,7 @@ const renderButton = (props: BlockButtonProps) => (
 const withSpacer = (base: JSX.Element, idx: number) => (
   <React.Fragment key={`stack_spacer_${idx}`}>
     {base}
-    <View spacer={true} />
+    <VSpacer size={16} />
   </React.Fragment>
 );
 

@@ -1,7 +1,8 @@
-import { Badge, View } from "native-base";
+import { Badge } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { Card } from "../../../../../../definitions/cgn/Card";
+import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { H5 } from "../../../../../components/core/typography/H5";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
@@ -44,7 +45,7 @@ const renderRowBlock = (
       {left}
       {right}
     </View>
-    <View spacer />
+    <VSpacer size={16} />
   </>
 );
 
@@ -230,7 +231,7 @@ const CgnStatusDetail: React.FunctionComponent<Props> = (props: Props) => {
         <H4>{I18n.t("bonus.cgn.detail.status.title")}</H4>
         {badge}
       </View>
-      <View spacer />
+      <VSpacer size={16} />
       {dateInformation}
     </>
   );
