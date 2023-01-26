@@ -7,6 +7,7 @@ import {
   StatusEnum
 } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
 import { InstrumentDTO } from "../../../../../../definitions/idpay/wallet/InstrumentDTO";
+import I18n from "../../../../../i18n";
 import { Wallet } from "../../../../../types/pagopa";
 import { showToast } from "../../../../../utils/showToast";
 import {
@@ -16,6 +17,7 @@ import {
 } from "../../../../../utils/xstate";
 import { ConfigurationMode, Context, INITIAL_CONTEXT } from "./context";
 import { Events } from "./events";
+import { InitiativeFailureType } from "./failure";
 
 type Services = {
   loadInitiative: {
@@ -128,12 +130,13 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 onError: [
                   {
                     cond: "isIbanOnlyMode",
-                    actions: ["showIbanLoadingErrorToast", "exitConfiguration"]
+                    actions: "loadingFailure",
+                    target: "#ROOT.CONFIGURATION_FAILURE"
                   },
 
                   {
                     target: "#ROOT.DISPLAYING_INTRO",
-                    actions: "showIbanLoadingErrorToast"
+                    actions: ["loadingFailure", "showFailureToast"]
                   }
                 ]
               }
@@ -261,15 +264,12 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 onError: [
                   {
                     cond: "isInstrumentsOnlyMode",
-
-                    actions: [
-                      "showInstrumentsLoadingErrorToast",
-                      "exitConfiguration"
-                    ]
+                    target: "#ROOT.CONFIGURATION_FAILURE",
+                    actions: "loadingFailure"
                   },
                   {
                     target: "#ROOT.CONFIGURING_IBAN",
-                    actions: "showInstrumentsLoadingErrorToast"
+                    actions: ["loadingFailure", "showFailureToast"]
                   }
                 ]
               }
@@ -363,6 +363,10 @@ const createIDPayInitiativeConfigurationMachine = () =>
         CONFIGURATION_COMPLETED: {
           type: "final",
           entry: "navigateToInitiativeDetailScreen"
+        },
+        CONFIGURATION_FAILURE: {
+          type: "final",
+          entry: ["showFailureToast", "exitConfiguration"]
         }
       }
     },
@@ -377,6 +381,9 @@ const createIDPayInitiativeConfigurationMachine = () =>
         })),
         loadIbanListSuccess: assign((_, event) => ({
           ibanList: p.some(event.data.ibanList)
+        })),
+        loadingFailure: assign((_, event) => ({
+          errorState: event.data as InitiativeFailureType
         })),
         selectIban: assign((_, event) => ({
           selectedIban: event.iban
@@ -402,10 +409,13 @@ const createIDPayInitiativeConfigurationMachine = () =>
         confirmIbanOnboarding: assign((_, event) => ({
           ibanBody: event.ibanBody
         })),
-        showInstrumentsLoadingErrorToast: () =>
-          showToast("Errore nel caricamento degli strumenti", "danger"),
-        showIbanLoadingErrorToast: () =>
-          showToast("Errore nel caricamento degli IBAN", "danger")
+        showFailureToast: _ =>
+          _.errorState !== undefined
+            ? showToast(
+                I18n.t(`idpay.configuration.failureStates.${_.errorState}`),
+                "danger"
+              )
+            : null
       },
       guards: {
         isInitiativeConfigurationNeeded: (context, _) =>
@@ -434,3 +444,4 @@ type IDPayInitiativeConfigurationMachineType = ReturnType<
 
 export type { IDPayInitiativeConfigurationMachineType };
 export { createIDPayInitiativeConfigurationMachine };
+

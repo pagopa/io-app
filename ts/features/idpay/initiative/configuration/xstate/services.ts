@@ -11,6 +11,7 @@ import { convertWalletV2toWalletV1 } from "../../../../../utils/walletv2";
 import { IDPayWalletClient } from "../../../wallet/api/client";
 import { IDPayIbanClient } from "../iban/api/client";
 import { Context } from "./context";
+import { InitiativeFailureType } from "./failure";
 
 const createServicesImplementation = (
   walletClient: IDPayWalletClient,
@@ -56,10 +57,10 @@ const createServicesImplementation = (
     const data: Promise<IbanListDTO> = pipe(
       response,
       E.fold(
-        _ => Promise.reject("error loading iban list"),
+        _ => Promise.reject(InitiativeFailureType.IBAN_LIST_LOAD_FAILURE),
         _ => {
           if (_.status !== 200) {
-            return Promise.reject("error loading iban list");
+            return Promise.reject(InitiativeFailureType.IBAN_LIST_LOAD_FAILURE);
           }
 
           // Every time we enroll an iban to an initiative, BE register it as a new iban
@@ -167,7 +168,9 @@ const createServicesImplementation = (
     });
 
     if (E.isLeft(idPayResponse)) {
-      return Promise.reject("error loading idPay instruments");
+      return Promise.reject(
+        InitiativeFailureType.INSTRUMENTS_LIST_LOAD_FAILURE
+      );
     }
 
     if (idPayResponse.right.status === 404) {
@@ -175,7 +178,9 @@ const createServicesImplementation = (
     }
 
     if (idPayResponse.right.status !== 200) {
-      return Promise.reject("error loading idPay instruments");
+      return Promise.reject(
+        InitiativeFailureType.INSTRUMENTS_LIST_LOAD_FAILURE
+      );
     }
 
     return Promise.resolve(idPayResponse.right.value.instrumentList);
@@ -194,7 +199,9 @@ const createServicesImplementation = (
 
       return Promise.resolve({ pagoPAInstruments, idPayInstruments });
     } catch {
-      return Promise.reject("error loading instruments");
+      return Promise.reject(
+        InitiativeFailureType.INSTRUMENTS_LIST_LOAD_FAILURE
+      );
     }
   };
 
