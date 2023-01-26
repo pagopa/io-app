@@ -9,6 +9,7 @@ import { SessionToken } from "../../types/SessionToken";
 import { ReduxSagaEffect } from "../../types/utils";
 import { stopCieManager, watchCieAuthenticationSaga } from "../cie";
 import { watchTestLoginRequestSaga } from "../testLoginSaga";
+import { cryptoKeyGenerationSaga } from "./generateCryptoKeyPair";
 
 /**
  * A saga that makes the user go through the authentication process until
@@ -28,6 +29,9 @@ export function* authenticationSaga(): Generator<
 
   // Reset the navigation stack and navigate to the authentication screen
   yield* call(resetToAuthenticationRoute);
+
+  // Generate key for lollipop
+  yield* cryptoKeyGenerationSaga();
 
   // Wait until the user has successfully logged in with SPID
   // FIXME: show an error on LOGIN_FAILED?

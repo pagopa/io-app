@@ -36,7 +36,6 @@ import {
   zendeskEnabled,
   idPayEnabled
 } from "../config";
-import { backendStatusLoadSuccess } from "../store/actions/backendStatus";
 import { watchBonusSaga } from "../features/bonus/bonusVacanze/store/sagas/bonusSaga";
 import { watchBonusBpdSaga } from "../features/bonus/bpd/saga";
 import { watchBonusCgnSaga } from "../features/bonus/cgn/saga";
@@ -138,10 +137,7 @@ import { completeOnboardingSaga } from "./startup/completeOnboardingSaga";
 import { watchLoadMessageById } from "./messages/watchLoadMessageById";
 import { watchThirdPartyMessageSaga } from "./messages/watchThirdPartyMessageSaga";
 import { checkNotificationsPreferencesSaga } from "./startup/checkNotificationsPreferencesSaga";
-import {
-  cryptoKeyGenerationSaga,
-  trackMixpanelCryptoKeyPairEvents
-} from "./startup/generateCryptoKeyPair";
+import { trackMixpanelCryptoKeyPairEvents } from "./startup/generateCryptoKeyPair";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -202,13 +198,6 @@ export function* initializeApplicationSaga(): Generator<
   // Reset the profile cached in redux: at each startup we want to load a fresh
   // user profile.
   yield* put(resetProfileState());
-
-  // Here we come after a successful backendStatus API call.
-  // But backendStatus saga and startupSaga run in parallel, so we cannot be sure
-  // that when we reach this point we have read the lollipop remote flag from server.
-  // yield* cryptoKeyGenerationSaga();
-  // So we spawn a saga to check this flag at every successful backend status API call.
-  // yield* takeLatest(backendStatusLoadSuccess, cryptoKeyGenerationSaga);
 
   // Whether the user is currently logged in.
   const previousSessionToken: ReturnType<typeof sessionTokenSelector> =
