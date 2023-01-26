@@ -1,12 +1,13 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { List, ListItem, Text as NBText, Toast, View } from "native-base";
+import { List, ListItem, Text as NBText, Toast } from "native-base";
 import * as React from "react";
-import { Alert, ScrollView, StyleSheet } from "react-native";
+import { View, Alert, ScrollView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { TranslationKeys } from "../../../locales/locales";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import ContextualInfo from "../../components/ContextualInfo";
+import { VSpacer } from "../../components/core/spacer/Spacer";
 import { IOColors } from "../../components/core/variables/IOColors";
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
@@ -460,7 +461,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
 
     const screenContent = () => (
       <ScrollView style={styles.whiteBg}>
-        <View spacer={true} />
+        <VSpacer size={16} />
         <List withContentLateralPadding={true}>
           {/* Data */}
           <ListItemComponent

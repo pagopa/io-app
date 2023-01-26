@@ -7,10 +7,9 @@ import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as t from "io-ts";
-import { View } from "native-base";
 import * as React from "react";
 import { ComponentProps } from "react";
-import { SafeAreaView } from "react-native";
+import { View, Image, ImageSourcePropType, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJson";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
@@ -65,6 +64,7 @@ import {
 } from "../../../utils/supportAssistance";
 import { IOPictogramType } from "../../../components/core/pictograms/Pictogram";
 import { InfoAltScreenComponent } from "../../../components/InfoAltScreenComponent/InfoAltScreenComponent";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 
 export type TransactionErrorScreenNavigationParams = {
   error: O.Option<
@@ -138,7 +138,7 @@ const ErrorCodeCopyComponent = ({
     <H4 weight={"Bold"} testID={"error-code"} style={{ textAlign: "center" }}>
       {error}
     </H4>
-    <View spacer />
+    <VSpacer size={16} />
     <CopyButtonComponent textToCopy={error} />
   </View>
 );

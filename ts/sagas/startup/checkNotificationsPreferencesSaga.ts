@@ -7,6 +7,10 @@ import NavigationService from "../../navigation/NavigationService";
 import ROUTES from "../../navigation/routes";
 import { profileUpsert } from "../../store/actions/profile";
 import { isProfileFirstOnBoarding } from "../../store/reducers/profile";
+import {
+  trackNotificationsOptInPreviewStatus,
+  trackNotificationsOptInReminderStatus
+} from "../../utils/analytics";
 import { requestNotificationPermissions } from "../../utils/notification";
 import { checkNotificationsPermissionsSaga } from "./checkNotificationsPermissionsSaga";
 
@@ -56,10 +60,11 @@ export function* checkNotificationsPreferencesSaga(
       profileUpsert.success
     );
 
-    if (
-      action.payload.newValue.reminder_status !== undefined &&
-      action.payload.newValue.push_notifications_content_type !== undefined
-    ) {
+    const contentType = action.payload.newValue.push_notifications_content_type;
+    const reminderStatus = action.payload.newValue.reminder_status;
+    if (reminderStatus !== undefined && contentType !== undefined) {
+      trackNotificationsOptInPreviewStatus(contentType);
+      trackNotificationsOptInReminderStatus(reminderStatus);
       break;
     }
   }

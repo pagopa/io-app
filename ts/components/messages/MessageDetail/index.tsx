@@ -1,4 +1,4 @@
-import { Content as NBContent, View as NBView } from "native-base";
+import { Content as NBContent } from "native-base";
 import * as React from "react";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
@@ -13,6 +13,7 @@ import {
 import { UIService } from "../../../store/reducers/entities/services/types";
 import variables from "../../../theme/variables";
 import { cleanMarkdownFromCTAs } from "../../../utils/messages";
+import { VSpacer } from "../../core/spacer/Spacer";
 import OrganizationHeader from "../../OrganizationHeader";
 import CtaBar from "./common/CtaBar";
 import { HeaderDueDateBar } from "./common/HeaderDueDateBar";
@@ -68,15 +69,15 @@ const MessageDetailsComponent = ({
     <>
       <NBContent noPadded={true}>
         <View style={styles.padded}>
-          <NBView spacer={true} />
+          <VSpacer size={16} />
 
           {service && <OrganizationTitle {...service} />}
 
-          <NBView spacer={true} large={true} />
+          <VSpacer size={24} />
 
           <MessageTitle title={message.title} isPrescription={isPrescription} />
 
-          <NBView spacer={true} />
+          <VSpacer size={16} />
         </View>
 
         <HeaderDueDateBar
@@ -93,7 +94,7 @@ const MessageDetailsComponent = ({
           {cleanMarkdownFromCTAs(markdown)}
         </MessageMarkdown>
 
-        <NBView spacer={true} large={true} />
+        <VSpacer size={24} />
 
         {attachments && isContentLoadCompleted && (
           <>
@@ -102,7 +103,7 @@ const MessageDetailsComponent = ({
               attachments={attachments}
               organizationName={message.organizationName}
             />
-            <NBView spacer={true} large={true} />
+            <VSpacer size={24} />
           </>
         )}
 
@@ -121,8 +122,8 @@ const MessageDetailsComponent = ({
       <>
         {DeviceInfo.hasNotch() && (
           <React.Fragment>
-            <NBView spacer={true} large={true} />
-            <NBView spacer={true} small={true} />
+            <VSpacer size={24} />
+            <VSpacer size={8} />
           </React.Fragment>
         )}
 
