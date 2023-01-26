@@ -78,8 +78,9 @@ const renderError = (title: string, body: string) => (
 );
 
 const renderPDF = (
-  isPDFError: boolean,
   downloadPath: string,
+  isGenericAttachment: boolean,
+  isPDFError: boolean,
   props: Props,
   onPDFLoadingError: () => void
 ) => (
@@ -104,6 +105,7 @@ const renderPDF = (
     {renderFooter(
       props.attachment,
       downloadPath,
+      isGenericAttachment,
       props.onShare,
       props.onOpen,
       props.onDownload
@@ -114,6 +116,7 @@ const renderPDF = (
 const renderFooter = (
   attachment: UIAttachment,
   downloadPath: string,
+  isGenericAttachment: boolean,
   onShare?: () => void,
   onOpen?: () => void,
   onDownload?: () => void
@@ -124,7 +127,7 @@ const renderFooter = (
       leftButton={confirmButtonProps(() => {
         onShare?.();
         ReactNativeBlobUtil.ios.presentOptionsMenu(downloadPath);
-      }, I18n.t("features.mvl.details.attachments.pdfPreview.singleBtn"))}
+      }, I18n.t(isGenericAttachment ? "features.mvl.details.attachments.pdfPreview.open" : "features.mvl.details.attachments.pdfPreview.singleBtn"))}
     />
   ) : (
     <FooterWithButtons
@@ -265,8 +268,9 @@ export const MessageAttachmentPreview = (props: Props): React.ReactElement => {
         {shouldDisplayDownloadProgress && renderDownloadFeedback()}
         {shouldDisplayPDFPreview &&
           renderPDF(
-            isPDFError,
             downloadPot.value.path,
+            isGenericAttachment,
+            isPDFError,
             props,
             internalOnPDFError
           )}

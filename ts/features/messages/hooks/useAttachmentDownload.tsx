@@ -87,12 +87,13 @@ export const useAttachmentDownload = (
     setIsLoading(isStillLoading);
   }, [downloadPot, isLoading, setIsLoading, openAttachment]);
 
+  const isGenericAttachment = attachment.category === "GENERIC";
   const downloadAttachmentIfNeeded = async () => {
     if (pot.isLoading(downloadPot)) {
       return;
     }
 
-    if (attachment.category === "GENERIC") {
+    if (isGenericAttachment) {
       openPreview(attachment);
       return;
     }
@@ -107,6 +108,7 @@ export const useAttachmentDownload = (
   };
 
   const { present, bottomSheet, dismiss } = useDownloadAttachmentBottomSheet({
+    isGenericAttachment,
     onConfirm: dontAskAgain => {
       void mixpanelTrack("PN_ATTACHMENTDISCLAIMER_ACCEPTED");
       dispatch(mvlPreferencesSetWarningForAttachments(!dontAskAgain));
