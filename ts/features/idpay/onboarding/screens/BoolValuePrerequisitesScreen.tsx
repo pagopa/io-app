@@ -35,7 +35,7 @@ const InitiativeSelfDeclarationsScreen = () => {
     )
   );
 
-  const continueOnPress = () => send({ type: "ACCEPT_REQUIRED_SELF_CRITERIA" });
+  const continueOnPress = () => send({ type: "ACCEPT_REQUIRED_BOOL_CRITERIA" });
   const goBackOnPress = () => send({ type: "GO_BACK" });
 
   return (

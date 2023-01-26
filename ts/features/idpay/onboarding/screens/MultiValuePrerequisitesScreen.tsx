@@ -1,4 +1,5 @@
-import { useSelector } from "@xstate/react";
+/* eslint-disable no-underscore-dangle */
+import { useActor, useSelector } from "@xstate/react";
 import { ListItem as NBListItem, View as NBView } from "native-base";
 import React from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
@@ -14,6 +15,7 @@ import IconFont from "../../../../components/ui/IconFont";
 import I18n from "../../../../i18n";
 import { useOnboardingMachineService } from "../xstate/provider";
 import { multiRequiredCriteriaPageToDisplaySelector } from "../xstate/selectors";
+import { useRoute } from "@react-navigation/native";
 
 const styles = StyleSheet.create({
   maxheight: {
@@ -65,19 +67,27 @@ const MultiValuePrerequisitesScreen = () => {
   const [selectedIndex, setSelectedIndex] = React.useState<number | undefined>(
     undefined
   );
-  const continueOnPress = () => null;
+  const { params } = useRoute();
+  console.log(params.page);
   const machine = useOnboardingMachineService();
+  const continueOnPress = () => {
+    if (selectedIndex === undefined) {
+      return null;
+    }
+    machine.send("ADD_SELF_CONSENT", {
+      data: {
+        _type: currentPage._type,
+        value: currentPage.value[selectedIndex],
+        code: currentPage.code
+      }
+    });
+    return null;
+  };
   const currentPage = useSelector(
     machine,
     multiRequiredCriteriaPageToDisplaySelector
   );
-  // const multiPrerequisites: SelfDeclarationMultiDTO = {
-  //   _type: _typeEnum.multi,
-  //   code: "multi",
-  //   description:
-  //     "Testo dove viene descritto il criterio con opzioni di scelta multipla:",
-  //   value: ["test1", "test2", "test3"]
-  // };
+
   const goBack = () => null;
 
   return (
