@@ -36,6 +36,7 @@ import {
   zendeskEnabled,
   idPayEnabled
 } from "../config";
+import { backendStatusLoadSuccess } from "../store/actions/backendStatus";
 import { watchBonusSaga } from "../features/bonus/bonusVacanze/store/sagas/bonusSaga";
 import { watchBonusBpdSaga } from "../features/bonus/bpd/saga";
 import { watchBonusCgnSaga } from "../features/bonus/cgn/saga";
@@ -83,7 +84,6 @@ import { watchMessageAttachmentsSaga } from "../features/messages/saga/attachmen
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
 import { watchIDPayWalletSaga } from "../features/idpay/wallet/saga";
 import { idpayInitiativeDetailsSaga } from "../features/idpay/initiative/details/saga";
-import { isLollipopEnabledSelector } from "../store/reducers/backendStatus";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -138,7 +138,10 @@ import { completeOnboardingSaga } from "./startup/completeOnboardingSaga";
 import { watchLoadMessageById } from "./messages/watchLoadMessageById";
 import { watchThirdPartyMessageSaga } from "./messages/watchThirdPartyMessageSaga";
 import { checkNotificationsPreferencesSaga } from "./startup/checkNotificationsPreferencesSaga";
-import { generateCryptoKeyPair } from "./startup/generateCryptoKeyPair";
+import {
+  cryptoKeyGenerationSaga,
+  trackMixpanelCryptoKeyPairEvents
+} from "./startup/generateCryptoKeyPair";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -199,6 +202,13 @@ export function* initializeApplicationSaga(): Generator<
   // Reset the profile cached in redux: at each startup we want to load a fresh
   // user profile.
   yield* put(resetProfileState());
+
+  // Here we come after a successful backendStatus API call.
+  // But backendStatus saga and startupSaga run in parallel, so we cannot be sure
+  // that when we reach this point we have read the lollipop remote flag from server.
+  yield* cryptoKeyGenerationSaga();
+  // So we spawn a saga to check this flag at every successful backend status API call.
+  yield* takeLatest(backendStatusLoadSuccess, cryptoKeyGenerationSaga);
 
   // Whether the user is currently logged in.
   const previousSessionToken: ReturnType<typeof sessionTokenSelector> =
@@ -334,17 +344,14 @@ export function* initializeApplicationSaga(): Generator<
     }
   }
 
+  // Track crypto key generation info
+  yield* call(trackMixpanelCryptoKeyPairEvents);
+
   // Ask to accept ToS if there is a new available version
   yield* call(checkAcceptedTosSaga, userProfile);
 
   // check if the user expressed preference about mixpanel, if not ask for it
   yield* call(askMixpanelOptIn);
-
-  // generate crypto key
-  const isLollipopEnabled = yield* select(isLollipopEnabledSelector);
-  if (isLollipopEnabled) {
-    yield* call(generateCryptoKeyPair);
-  }
 
   if (hasPreviousSessionAndPin) {
     // We have to retrieve the pin here and not on the previous if-condition (same guard)
