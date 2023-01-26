@@ -7,8 +7,7 @@ import { IOStyles } from "../core/variables/IOStyles";
 
 const styles = StyleSheet.create({
   view: {
-    padding: customVariables.contentPadding,
-    alignItems: "center"
+    padding: customVariables.contentPadding
   }
 });
 
@@ -19,7 +18,7 @@ type Props = Readonly<{
 }>;
 
 export const EmptyListComponent = (props: Props) => (
-  <View style={styles.view}>
+  <View style={[styles.view, IOStyles.alignCenter]}>
     <VSpacer size={16} />
     <Image source={props.image} />
     <VSpacer size={24} />

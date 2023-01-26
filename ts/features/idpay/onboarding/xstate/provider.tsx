@@ -5,8 +5,9 @@ import * as O from "fp-ts/lib/Option";
 import React from "react";
 import { InterpreterFrom } from "xstate";
 import {
-  IDPAY_API_TEST_TOKEN,
-  IDPAY_API_UAT_BASEURL
+  idPayTestToken,
+  idPayApiUatBaseUrl,
+  idPayApiBaseUrl
 } from "../../../../config";
 import { useXStateMachine } from "../../../../hooks/useXStateMachine";
 import {
@@ -15,7 +16,10 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { sessionInfoSelector } from "../../../../store/reducers/authentication";
-import { preferredLanguageSelector } from "../../../../store/reducers/persistedPreferences";
+import {
+  isPagoPATestEnabledSelector,
+  preferredLanguageSelector
+} from "../../../../store/reducers/persistedPreferences";
 import {
   fromLocaleToPreferredLanguage,
   getLocalePrimaryWithFallback
@@ -40,6 +44,8 @@ type Props = {
 
 const IDPayOnboardingMachineProvider = (props: Props) => {
   const [machine] = useXStateMachine(createIDPayOnboardingMachine);
+  const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
+  const baseUrl = isPagoPATestEnabled ? idPayApiUatBaseUrl : idPayApiBaseUrl;
 
   const sessionInfo = useIOSelector(sessionInfoSelector);
 
@@ -49,10 +55,9 @@ const IDPayOnboardingMachineProvider = (props: Props) => {
     throw new Error("Session info is undefined");
   }
 
-  const token =
-    IDPAY_API_TEST_TOKEN !== undefined
-      ? IDPAY_API_TEST_TOKEN
-      : sessionInfo.value.bpdToken;
+  const { bpdToken } = sessionInfo.value;
+
+  const token = idPayTestToken !== undefined ? idPayTestToken : bpdToken;
 
   const language = pipe(
     useIOSelector(preferredLanguageSelector),
@@ -60,7 +65,7 @@ const IDPayOnboardingMachineProvider = (props: Props) => {
     fromLocaleToPreferredLanguage
   );
 
-  const onboardingClient = createOnboardingClient(IDPAY_API_UAT_BASEURL || "");
+  const onboardingClient = createOnboardingClient(baseUrl);
 
   const services = createServicesImplementation(
     onboardingClient,

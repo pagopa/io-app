@@ -80,7 +80,9 @@ const renderItem = (label: string, value?: string) => {
   return (
     <React.Fragment>
       <Body>{label}</Body>
-      <Label color="bluegrey">{value}</Label>
+      <Label weight="Bold" color="bluegrey">
+        {value}
+      </Label>
       <VSpacer size={16} />
     </React.Fragment>
   );
