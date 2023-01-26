@@ -20,7 +20,7 @@ import ZendeskItemPermissionComponent from "../../zendesk/components/ZendeskItem
 import { ProductCategoryEnum } from "../../../../definitions/cgn/merchants/ProductCategory";
 import CgnMerchantListItem from "../../bonus/cgn/components/merchants/CgnMerchantListItem";
 import DetailedlistItemComponent from "../../../components/DetailedlistItemComponent";
-import { TimelineTransactionCard } from "../../idpay/initiative/details/components/TimelineTransactionCards";
+import { TimelineOperationListItem } from "../../idpay/initiative/details/components/TimelineOperationListItem";
 import { OperationTypeEnum } from "../../../../definitions/idpay/timeline/TransactionOperationDTO";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
@@ -203,8 +203,8 @@ export const DSListItems = () => (
     </DSComponentViewerBox>
 
     <DSComponentViewerBox name="TimelineTransactionCard">
-      <TimelineTransactionCard
-        transaction={{
+      <TimelineOperationListItem
+        operation={{
           operationId: "213123",
           operationType: "Pagamento Pos" as OperationTypeEnum,
           operationDate: new Date(),
