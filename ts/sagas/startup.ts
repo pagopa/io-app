@@ -206,9 +206,9 @@ export function* initializeApplicationSaga(): Generator<
   // Here we come after a successful backendStatus API call.
   // But backendStatus saga and startupSaga run in parallel, so we cannot be sure
   // that when we reach this point we have read the lollipop remote flag from server.
-  yield* cryptoKeyGenerationSaga();
+  // yield* cryptoKeyGenerationSaga();
   // So we spawn a saga to check this flag at every successful backend status API call.
-  yield* takeLatest(backendStatusLoadSuccess, cryptoKeyGenerationSaga);
+  // yield* takeLatest(backendStatusLoadSuccess, cryptoKeyGenerationSaga);
 
   // Whether the user is currently logged in.
   const previousSessionToken: ReturnType<typeof sessionTokenSelector> =
