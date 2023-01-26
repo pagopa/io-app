@@ -113,6 +113,8 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
     });
   };
 
+  const [secureLoginNativeModuleIsLoading,setSecureLoginNativeModuleIsLoading] = useState(false);
+
   const onIdpSelected = (idp: LocalIdpsFallback) => {
     if (idp.isTestIdp === true && counter < TAPS_TO_OPEN_TESTIDP) {
       const newValue = (counter + 1) % (TAPS_TO_OPEN_TESTIDP + 1);
@@ -124,30 +126,41 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
       const loginUri = getIdpLoginUri(idp.id);
 
       if (isIos && getMajorIosVersion() >= 13) {
-        NativeModules.secureLogin.signIn(
-          loginUri,
-          IO_INTERNAL_LINK,
-          (responseUrl: string) => {
-            // if user press "Cancel", don't navigate
-            if (responseUrl.includes("com.apple")) {
-              return;
-            } else if (
-              responseUrl.includes(LOGIN_SUCCESS_PAGE) ||
-              responseUrl.includes(LOGIN_FAILURE_PAGE)
-            ) {
-              // responseUrl is always a string, if includes a known parameter, let the old page handle it
-              navigate(responseUrl);
-            } else {
-              // this is the case when something goes wrong with the authentication session module. It returns an error code (string) in "responseUrl".
-              return;
+        try{
+          setSecureLoginNativeModuleIsLoading(true)
+          NativeModules.secureLogin.signIn(
+            loginUri,
+            IO_INTERNAL_LINK,
+            (responseUrl: string) => {
+              setSecureLoginNativeModuleIsLoading(false)
+              // if user press "Cancel", don't navigate
+              if (responseUrl.includes("com.apple")) {
+                return;
+              } else if (
+                responseUrl.includes(LOGIN_SUCCESS_PAGE) ||
+                responseUrl.includes(LOGIN_FAILURE_PAGE)
+              ) {
+                // responseUrl is always a string, if includes a known parameter, let the old page handle it
+                navigate(responseUrl);
+              } else {
+                // this is the case when something goes wrong with the authentication session module. It returns an error code (string) in "responseUrl".
+                navigate(loginUri);
+                return;
+              }
             }
-          }
-        );
+          );
+        }
+        catch(e){
+          setSecureLoginNativeModuleIsLoading(false)
+          navigate(loginUri);  
+        }
       } else {
         navigate(loginUri);
       }
     }
   };
+
+  
 
   useEffect(() => {
     requestIdps();
@@ -192,7 +205,7 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
       goBack={true}
       headerTitle={I18n.t("authentication.idp_selection.headerTitle")}
     >
-      <LoadingSpinnerOverlay isLoading={props.isIdpsLoading}>
+      <LoadingSpinnerOverlay isLoading={props.isIdpsLoading || secureLoginNativeModuleIsLoading}>
         <ScreenContentHeader
           title={I18n.t("authentication.idp_selection.contentTitle")}
         />
