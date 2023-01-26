@@ -444,4 +444,3 @@ type IDPayInitiativeConfigurationMachineType = ReturnType<
 
 export type { IDPayInitiativeConfigurationMachineType };
 export { createIDPayInitiativeConfigurationMachine };
-

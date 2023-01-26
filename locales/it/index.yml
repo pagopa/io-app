@@ -3376,9 +3376,9 @@ idpay:
       subtitle: Verificheremo con alcuni Enti se sei in possesso dei requisiti per poter richiedere {{service}}. 
   configuration:
     failureStates:
-      GENERIC: C'è stato un problema, riprova
-      IBAN_LIST_LOAD_FAILURE: "Errore nel caricamento della lista degli IBAN"
-      INSTRUMENTS_LIST_LOAD_FAILURE: "Errore nel caricamento della lista degli strumenti"
+      GENERIC: "C'è stato un problema, riprova"
+      IBAN_LIST_LOAD_FAILURE: "Errore nel caricamento della lista IBAN"
+      INSTRUMENTS_LIST_LOAD_FAILURE: "Errore nel caricamento della lista strumenti"
     headerTitle: "Configura l'iniziativa"
     intro: 
       title: "Ci siamo quasi"
