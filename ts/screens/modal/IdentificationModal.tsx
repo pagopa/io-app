@@ -1,9 +1,9 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Content, Text as NBText, View } from "native-base";
+import { Content, Text as NBText } from "native-base";
 import * as React from "react";
-import { Alert, Modal, StatusBar, StyleSheet } from "react-native";
+import { View, Alert, Modal, StatusBar, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { Link } from "../../components/core/typography/Link";
@@ -41,6 +41,7 @@ import { maybeNotNullyString } from "../../utils/strings";
 import { IOColors } from "../../components/core/variables/IOColors";
 import customVariables from "../../theme/variables";
 
+import { VSpacer } from "../../components/core/spacer/Spacer";
 import { IdentificationLockModal } from "./IdentificationLockModal";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -577,7 +578,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
               }
               remainingAttempts={displayRemainingAttempts}
             />
-            <View spacer={true} large={true} />
+            <VSpacer size={24} />
             {!isValidatingTask && (
               <View style={styles.bottomContainer}>
                 <Link onPress={this.onLogout} weight="Bold" color="white">

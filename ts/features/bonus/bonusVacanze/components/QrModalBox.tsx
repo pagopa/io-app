@@ -1,10 +1,11 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Text as NBText, View } from "native-base";
+import { Text as NBText } from "native-base";
 import * as React from "react";
-import { Image, StyleSheet } from "react-native";
+import { View, Image, StyleSheet } from "react-native";
 import { SvgXml } from "react-native-svg";
 import CopyButtonComponent from "../../../../components/CopyButtonComponent";
+import { HSpacer, VSpacer } from "../../../../components/core/spacer/Spacer";
 import I18n from "../../../../i18n";
 import customVariables from "../../../../theme/variables";
 
@@ -71,7 +72,7 @@ const QrModalBox: React.FunctionComponent<Props> = (props: Props) => {
             <NBText style={styles.codeText} bold={true}>
               {codeToDisplay}
             </NBText>
-            <View hspacer={true} />
+            <HSpacer size={16} />
             <CopyButtonComponent
               textToCopy={codeToCopy}
               onPressWithGestureHandler={true}
@@ -86,7 +87,7 @@ const QrModalBox: React.FunctionComponent<Props> = (props: Props) => {
           />
         )}
       </View>
-      <View spacer={true} extralarge={true} />
+      <VSpacer size={40} />
       <View style={styles.image}>{renderQRCode(qrCode)}</View>
     </View>
   );

@@ -9,6 +9,7 @@ import I18n from "../../../i18n";
 import { Attachment } from "../../../store/reducers/entities/messages/types";
 import customVariables from "../../../theme/variables";
 import { getPrescriptionDataFromName } from "../../../utils/messages";
+import { VSpacer } from "../../core/spacer/Spacer";
 import ItemSeparatorComponent from "../../ItemSeparatorComponent";
 
 type Props = Readonly<{
@@ -50,7 +51,7 @@ const Item = ({
   const xml = Buffer.from(item.content, "base64").toString("ascii");
   return (
     <View style={styles.padded} key={`attachment-${idx}`}>
-      <View spacer={true} small={true} />
+      <VSpacer size={8} />
       <NBText style={styles.label}>
         {I18n.t(`messages.medical.${item.name}`, {
           defaultValue: I18n.t("messages.medical.not_available")
@@ -64,7 +65,7 @@ const Item = ({
           {I18n.t("global.symbols.asterisk")}
         </NBText>
       )}
-      <View spacer={true} />
+      <VSpacer size={16} />
     </View>
   );
 };
@@ -82,7 +83,7 @@ const MedicalPrescriptionAttachments = ({
       {organizationName && (
         <NBText style={styles.label}>{organizationName.toUpperCase()}</NBText>
       )}
-      <View spacer={true} xsmall={true} />
+      <VSpacer size={4} />
       <ItemSeparatorComponent noPadded={true} bold={true} />
     </View>
 
@@ -101,7 +102,7 @@ const MedicalPrescriptionAttachments = ({
 
     <ItemSeparatorComponent />
 
-    <View spacer={true} />
+    <VSpacer size={16} />
     <NBText style={[styles.note, styles.padded]}>
       {I18n.t("messages.medical.note")}
     </NBText>

@@ -1,6 +1,6 @@
-import { View } from "native-base";
 import * as React from "react";
 import { InfoBox } from "../../../../../../../components/box/InfoBox";
+import { VSpacer } from "../../../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../../../components/core/typography/Body";
 import I18n from "../../../../../../../i18n";
 import { BpdTransactionDetailRepresentation } from "./BpdTransactionDetailComponent";
@@ -9,7 +9,7 @@ type Props = { transaction: BpdTransactionDetailRepresentation };
 
 const TransactionWarning = (props: { text: string }) => (
   <>
-    <View spacer={true} />
+    <VSpacer size={16} />
     <InfoBox>
       <Body>{props.text}</Body>
     </InfoBox>

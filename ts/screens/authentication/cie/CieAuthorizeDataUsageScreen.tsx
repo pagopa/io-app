@@ -1,9 +1,10 @@
 /**
  * A screen displayed while the backend manage the opening of the session for the CIE authentication
  */
-import { Content, View } from "native-base";
+import { Content } from "native-base";
 import * as React from "react";
-import { Alert, StyleSheet } from "react-native";
+import { View, Alert, StyleSheet } from "react-native";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { H1 } from "../../../components/core/typography/H1";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
@@ -61,7 +62,7 @@ class CieAuthorizeDataUsageScreen extends React.PureComponent<Props, State> {
         <Content contentContainerStyle={styles.flex} noPadded={true}>
           <View style={styles.contentContainerStyle}>
             <H1>{I18n.t("authentication.cie.noDataTitle")}</H1>
-            <View spacer={true} />
+            <VSpacer size={16} />
             <Markdown onLoadEnd={this.handleMarkdownLoadingCompleted}>
               {I18n.t("authentication.cie.authToSendData")}
             </Markdown>

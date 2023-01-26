@@ -129,14 +129,10 @@ exports[`PspRadioItem match snapshot 1`] = `
   >
     <View
       style={
-        Array [
-          Object {},
-          Object {
-            "flex": 1,
-            "paddingLeft": 24,
-            "paddingRight": 24,
-          },
-        ]
+        Object {
+          "flex": 1,
+          "paddingHorizontal": 24,
+        }
       }
     >
       <RCTScrollView>
