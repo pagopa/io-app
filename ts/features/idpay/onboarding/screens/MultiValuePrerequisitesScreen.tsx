@@ -1,8 +1,13 @@
 /* eslint-disable no-underscore-dangle */
-import { useActor, useSelector } from "@xstate/react";
+import { RouteProp, useRoute } from "@react-navigation/native";
+import { useSelector } from "@xstate/react";
 import { ListItem as NBListItem, View as NBView } from "native-base";
 import React from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
+import {
+  SelfConsentMultiDTO,
+  _typeEnum
+} from "../../../../../definitions/idpay/onboarding/SelfConsentMultiDTO";
 import { Body } from "../../../../components/core/typography/Body";
 import { H1 } from "../../../../components/core/typography/H1";
 import { H4 } from "../../../../components/core/typography/H4";
@@ -13,9 +18,13 @@ import BaseScreenComponent from "../../../../components/screens/BaseScreenCompon
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import IconFont from "../../../../components/ui/IconFont";
 import I18n from "../../../../i18n";
+import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
+import { IDPayOnboardingParamsList } from "../navigation/navigator";
 import { useOnboardingMachineService } from "../xstate/provider";
-import { multiRequiredCriteriaPageToDisplaySelector } from "../xstate/selectors";
-import { useRoute } from "@react-navigation/native";
+import {
+  multiRequiredCriteriaSelector,
+  pickedCriteriaSelector
+} from "../xstate/selectors";
 
 const styles = StyleSheet.create({
   maxheight: {
@@ -63,32 +72,93 @@ const buttonProps = {
   }
 };
 
-const MultiValuePrerequisitesScreen = () => {
+type NavigationType = IOStackNavigationProp<
+  IDPayOnboardingParamsList,
+  "IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS"
+>;
+export type MultiValuePrerequisitesScreenRouteParams = {
+  page: number;
+};
+
+type MultiValuePrerequisitesScreenRouteProps = RouteProp<
+  IDPayOnboardingParamsList,
+  "IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS"
+>;
+
+type NavigationProps = {
+  navigation: NavigationType;
+};
+const useMultiPrerequisitesPagination = (
+  navigation: NavigationType,
+  machine: ReturnType<typeof useOnboardingMachineService>,
+  page: number
+) => {
+  const multiPrerequisites = useSelector(
+    machine,
+    multiRequiredCriteriaSelector
+  );
+  const currentPage = multiPrerequisites[page];
+  const isNextPageAvailable = multiPrerequisites[page + 1] !== undefined;
+  const pickedCriteria = useSelector(machine, pickedCriteriaSelector);
+
+  const navigateToPage = (targetPage: number) =>
+    navigation.push("IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS", {
+      page: targetPage
+    });
+  const confirmChoice = (choice: SelfConsentMultiDTO) => {
+    machine.send("ADD_SELF_CONSENT", {
+      data: choice,
+      page
+    });
+    if (isNextPageAvailable) {
+      navigateToPage(page + 1);
+    } else {
+      if (shouldEndCycle()) {
+        machine.send("ALL_CRITERIA_ACCEPTED");
+      } else {
+        // should never happen, but better safe than sorry
+        navigateToPage(pickedCriteria.findIndex(item => item === undefined));
+      }
+    }
+  };
+  const goBack = () => {
+    if (page > 0) {
+      navigation.pop();
+    } else {
+      navigation.goBack();
+    }
+  };
+
+  const shouldEndCycle = () => !pickedCriteria.includes(undefined);
+  return {
+    currentPage,
+    confirmChoice,
+    goBack
+  };
+};
+
+const MultiValuePrerequisitesScreen = ({ navigation }: NavigationProps) => {
   const [selectedIndex, setSelectedIndex] = React.useState<number | undefined>(
     undefined
   );
-  const { params } = useRoute();
-  console.log(params.page);
+  const { params } = useRoute<MultiValuePrerequisitesScreenRouteProps>();
   const machine = useOnboardingMachineService();
+
+  const { currentPage, confirmChoice, goBack } =
+    useMultiPrerequisitesPagination(navigation, machine, params.page);
+
   const continueOnPress = () => {
     if (selectedIndex === undefined) {
       return null;
     }
-    machine.send("ADD_SELF_CONSENT", {
-      data: {
-        _type: currentPage._type,
-        value: currentPage.value[selectedIndex],
-        code: currentPage.code
-      }
-    });
+    confirmChoice({
+      _type: currentPage._type,
+      value: currentPage.value[selectedIndex],
+      code: currentPage.code
+    } as SelfConsentMultiDTO);
+
     return null;
   };
-  const currentPage = useSelector(
-    machine,
-    multiRequiredCriteriaPageToDisplaySelector
-  );
-
-  const goBack = () => null;
 
   return (
     <SafeAreaView style={IOStyles.flex}>

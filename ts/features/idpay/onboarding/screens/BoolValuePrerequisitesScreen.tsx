@@ -1,6 +1,4 @@
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import { useActor } from "@xstate/react";
+import { useActor, useSelector } from "@xstate/react";
 import React from "react";
 import { View } from "native-base";
 import { SafeAreaView } from "react-native";
@@ -16,7 +14,7 @@ import { Link } from "../../../../components/core/typography/Link";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import ListItemComponent from "../../../../components/screens/ListItemComponent";
 import { LOADING_TAG } from "../../../../utils/xstate";
-import { SelfDeclarationBoolDTO } from "../../../../../definitions/idpay/onboarding/SelfDeclarationBoolDTO";
+import { boolRequiredCriteriaSelector } from "../xstate/selectors";
 
 const InitiativeSelfDeclarationsScreen = () => {
   const machine = useOnboardingMachineService();
@@ -24,16 +22,7 @@ const InitiativeSelfDeclarationsScreen = () => {
 
   const isLoading = state.tags.has(LOADING_TAG);
 
-  const selfCriteriaBool: Array<SelfDeclarationBoolDTO> = pipe(
-    state.context.requiredCriteria,
-    O.fromNullable,
-    O.flatten,
-    O.fold(
-      () => [],
-      // eslint-disable-next-line no-underscore-dangle
-      _ => _.selfDeclarationList.filter(SelfDeclarationBoolDTO.is)
-    )
-  );
+  const selfCriteriaBool = useSelector(machine, boolRequiredCriteriaSelector);
 
   const continueOnPress = () => send({ type: "ACCEPT_REQUIRED_BOOL_CRITERIA" });
   const goBackOnPress = () => send({ type: "GO_BACK" });

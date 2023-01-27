@@ -7,7 +7,9 @@ import FailureScreen from "../screens/FailureScreen";
 import InitiativeDetailsScreen, {
   InitiativeDetailsScreenRouteParams
 } from "../screens/InitiativeDetailsScreen";
-import MultiValuePrerequisitesScreen from "../screens/MultiValuePrerequisitesScreen";
+import MultiValuePrerequisitesScreen, {
+  MultiValuePrerequisitesScreenRouteParams
+} from "../screens/MultiValuePrerequisitesScreen";
 import PDNDPrerequisitesScreen from "../screens/PDNDPrerequisitesScreen";
 import { IDPayOnboardingMachineProvider } from "../xstate/provider";
 
@@ -28,9 +30,7 @@ export type IDPayOnboardingParamsList = {
   [IDPayOnboardingRoutes.IDPAY_ONBOARDING_PDNDACCEPTANCE]: undefined;
   [IDPayOnboardingRoutes.IDPAY_ONBOARDING_COMPLETION]: undefined;
   [IDPayOnboardingRoutes.IDPAY_ONBOARDING_FAILURE]: undefined;
-  [IDPayOnboardingRoutes.IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS]: {
-    page: number;
-  };
+  [IDPayOnboardingRoutes.IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS]: MultiValuePrerequisitesScreenRouteParams;
 };
 
 const Stack = createStackNavigator<IDPayOnboardingParamsList>();

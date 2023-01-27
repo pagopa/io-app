@@ -32,12 +32,13 @@ const createActionsImplementation = (
       screen: IDPayOnboardingRoutes.IDPAY_ONBOARDING_BOOL_SELF_DECLARATIONS
     });
   };
-
-  const pushMultiSelfDeclarationPage = (context: Context) => {
-    navigation.push(
-      IDPayOnboardingRoutes.IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS,
-      { page: context.multiConsents?.length ?? 0 }
-    );
+  const navigateToMultiSelfDeclarationsScreen = () => {
+    navigation.navigate(IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
+      screen: IDPayOnboardingRoutes.IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS,
+      params: {
+        page: 0
+      }
+    });
   };
 
   const navigateToCompletionScreen = () => {
@@ -63,7 +64,7 @@ const createActionsImplementation = (
     navigateToCompletionScreen,
     navigateToFailureScreen,
     exitOnboarding,
-    pushMultiSelfDeclarationPage
+    navigateToMultiSelfDeclarationsScreen
   };
 };
 
