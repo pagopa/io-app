@@ -5,13 +5,14 @@ import IconFont from "../../../components/ui/IconFont";
 import { H4 } from "../../../components/core/typography/H4";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { WithTestID } from "../../../types/WithTestID";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: IOColors.white,
     flexDirection: "row",
     borderColor: IOColors.bluegreyLight,
-    justifyContent: "space-between",
+    alignItems: "center",
     paddingTop: 12,
     paddingBottom: 12
   },
@@ -49,6 +50,8 @@ type Props = WithTestID<{
  */
 const DocumentsNavigationBar = (props: Props) => (
   <View style={[styles.shadow, styles.container]}>
+    <H4 style={IOStyles.horizontalContentPadding}>{props.titleLeft}</H4>
+    <View style={{ flex: 1 }} />
     {/* button left */}
     <ButtonDefaultOpacity
       onPress={props.onPrevious}
@@ -56,22 +59,13 @@ const DocumentsNavigationBar = (props: Props) => (
       disabled={props.disabled}
       testID={"DocumentsNavigationBarLeftButtonTestID"}
     >
-      <View style={{ flexDirection: "row" }}>
-        <IconFont
-          name={"io-back"}
-          color={props.iconLeftColor ?? IOColors.blue}
-          accessible={true}
-        />
-        <H4
-          style={{
-            textAlign: "center"
-          }}
-        >
-          {props.titleLeft}
-        </H4>
-      </View>
+      <IconFont
+        name={"io-back"}
+        color={props.iconLeftColor ?? IOColors.blue}
+        accessible={true}
+      />
     </ButtonDefaultOpacity>
-
+    <H4>{props.titleRight}</H4>
     {/* button right */}
     <ButtonDefaultOpacity
       onPress={props.onNext}
@@ -79,21 +73,11 @@ const DocumentsNavigationBar = (props: Props) => (
       disabled={props.disabled}
       testID={"DocumentsNavigationBarRightButtonTestID"}
     >
-      <View style={{ flexDirection: "row" }}>
-        <H4
-          style={{
-            textAlign: "center"
-          }}
-        >
-          {props.titleRight}
-        </H4>
-
-        <IconFont
-          name={"io-right"}
-          color={props.iconRightColor ?? IOColors.blue}
-          accessible={true}
-        />
-      </View>
+      <IconFont
+        name={"io-right"}
+        color={props.iconRightColor ?? IOColors.blue}
+        accessible={true}
+      />
     </ButtonDefaultOpacity>
   </View>
 );

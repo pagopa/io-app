@@ -259,16 +259,18 @@ const FciDocumentsScreen = () => {
     title: I18n.t("global.buttons.continue")
   };
 
+  const pointToPage = (page: number) =>
+    pipe(
+      pdfRef.current,
+      O.fromNullable,
+      O.map(_ => _.setPage(page))
+    );
+
   const keepReadingButtonProps = {
     block: true,
     light: true,
     bordered: true,
-    onPress: () =>
-      pipe(
-        pdfRef.current,
-        O.fromNullable,
-        O.map(_ => _.setPage(totalPages))
-      ),
+    onPress: () => pointToPage(totalPages),
     title: I18n.t("global.buttons.continue")
   };
 
@@ -301,19 +303,25 @@ const FciDocumentsScreen = () => {
 
   const onPrevious = () => {
     pipe(
-      currentDoc,
+      currentPage,
       O.fromNullable,
-      O.chain(doc => (doc > 0 ? O.some(doc - 1) : O.none)),
-      O.map(setCurrentDoc)
+      O.chain(page => (page > 1 ? O.some(page - 1) : O.none)),
+      O.map(page => {
+        setCurrentPage(page);
+        pointToPage(page);
+      })
     );
   };
 
   const onNext = () => {
     pipe(
-      currentDoc,
+      currentPage,
       O.fromNullable,
-      O.chain(doc => (doc < documents.length - 1 ? O.some(doc + 1) : O.none)),
-      O.map(setCurrentDoc)
+      O.chain(page => (page < totalPages ? O.some(page + 1) : O.none)),
+      O.map(page => {
+        setCurrentPage(page);
+        pointToPage(page);
+      })
     );
   };
 
@@ -355,16 +363,14 @@ const FciDocumentsScreen = () => {
           totalPages
         })}
         iconLeftColor={
-          currentDoc === 0 ? IOColors.bluegreyLight : IOColors.blue
+          currentPage === 1 ? IOColors.bluegreyLight : IOColors.blue
         }
         iconRightColor={
-          currentDoc === documents.length - 1
-            ? IOColors.bluegreyLight
-            : IOColors.blue
+          currentPage === totalPages ? IOColors.bluegreyLight : IOColors.blue
         }
         onPrevious={onPrevious}
         onNext={onNext}
-        disabled={true}
+        disabled={false}
         testID={"FciDocumentsNavBarTestID"}
       />
       <SafeAreaView style={IOStyles.flex} testID={"FciDocumentsScreenTestID"}>
