@@ -76,12 +76,14 @@ const createIDPayInitiativeConfigurationMachine = () =>
           invoke: {
             src: "loadInitiative",
             id: "loadInitiative",
-            onDone: [
-              {
-                target: "EVALUATING_INITIATIVE_CONFIGURATION",
-                actions: "loadInitiativeSuccess"
-              }
-            ]
+            onDone: {
+              target: "EVALUATING_INITIATIVE_CONFIGURATION",
+              actions: "loadInitiativeSuccess"
+            },
+            onError: {
+              target: "CONFIGURATION_FAILURE",
+              actions: "setFailure"
+            }
           }
         },
         EVALUATING_INITIATIVE_CONFIGURATION: {
@@ -129,13 +131,12 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 onError: [
                   {
                     cond: "isIbanOnlyMode",
-                    actions: "loadingFailure",
-                    target: "#ROOT.CONFIGURATION_FAILURE"
+                    target: "#ROOT.CONFIGURATION_FAILURE",
+                    actions: "setFailure"
                   },
-
                   {
                     target: "#ROOT.DISPLAYING_INTRO",
-                    actions: ["loadingFailure", "showFailureToast"]
+                    actions: ["setFailure", "showFailureToast"]
                   }
                 ]
               }
@@ -196,6 +197,10 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 id: "confirmIban",
                 onDone: {
                   target: "IBAN_CONFIGURATION_COMPLETED"
+                },
+                onError: {
+                  target: "DISPLAYING_IBAN_ONBOARDING_FORM",
+                  actions: ["setFailure", "showFailureToast"]
                 }
               }
             },
@@ -229,6 +234,9 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 onDone: {
                   target: "IBAN_CONFIGURATION_COMPLETED",
                   actions: "enrollIbanSuccess"
+                },
+                onError: {
+                  actions: ["setFailure", "showFailureToast"]
                 }
               }
             },
@@ -264,11 +272,11 @@ const createIDPayInitiativeConfigurationMachine = () =>
                   {
                     cond: "isInstrumentsOnlyMode",
                     target: "#ROOT.CONFIGURATION_FAILURE",
-                    actions: "loadingFailure"
+                    actions: "setFailure"
                   },
                   {
                     target: "#ROOT.CONFIGURING_IBAN",
-                    actions: ["loadingFailure", "showFailureToast"]
+                    actions: ["setFailure", "showFailureToast"]
                   }
                 ]
               }
@@ -308,7 +316,8 @@ const createIDPayInitiativeConfigurationMachine = () =>
                   actions: "enrollInstrumentSuccess"
                 },
                 onError: {
-                  target: "DISPLAYING_INSTRUMENTS"
+                  target: "DISPLAYING_INSTRUMENTS",
+                  actions: ["setFailure", "showFailureToast"]
                 }
               }
             },
@@ -322,7 +331,8 @@ const createIDPayInitiativeConfigurationMachine = () =>
                   actions: "deleteInstrumentSuccess"
                 },
                 onError: {
-                  target: "DISPLAYING_INSTRUMENTS"
+                  target: "DISPLAYING_INSTRUMENTS",
+                  actions: ["setFailure", "showFailureToast"]
                 }
               }
             },
@@ -381,7 +391,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
         loadIbanListSuccess: assign((_, event) => ({
           ibanList: p.some(event.data.ibanList)
         })),
-        loadingFailure: assign((_, event) => ({
+        setFailure: assign((_, event) => ({
           failure: event.data as InitiativeFailureType
         })),
         selectIban: assign((_, event) => ({
