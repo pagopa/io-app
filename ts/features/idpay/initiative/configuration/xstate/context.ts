@@ -24,7 +24,7 @@ export type Context = {
     iban: string;
     description: string;
   };
-  errorState?: InitiativeFailureType;
+  failure?: InitiativeFailureType;
 };
 
 export const INITIAL_CONTEXT: Context = {

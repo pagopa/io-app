@@ -7,9 +7,8 @@ import {
   StatusEnum
 } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
 import { InstrumentDTO } from "../../../../../../definitions/idpay/wallet/InstrumentDTO";
-import I18n from "../../../../../i18n";
+
 import { Wallet } from "../../../../../types/pagopa";
-import { showToast } from "../../../../../utils/showToast";
 import {
   LOADING_TAG,
   UPSERTING_TAG,
@@ -383,7 +382,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
           ibanList: p.some(event.data.ibanList)
         })),
         loadingFailure: assign((_, event) => ({
-          errorState: event.data as InitiativeFailureType
+          failure: event.data as InitiativeFailureType
         })),
         selectIban: assign((_, event) => ({
           selectedIban: event.iban
@@ -408,14 +407,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
         })),
         confirmIbanOnboarding: assign((_, event) => ({
           ibanBody: event.ibanBody
-        })),
-        showFailureToast: _ =>
-          _.errorState !== undefined
-            ? showToast(
-                I18n.t(`idpay.configuration.failureStates.${_.errorState}`),
-                "danger"
-              )
-            : null
+        }))
       },
       guards: {
         isInitiativeConfigurationNeeded: (context, _) =>
