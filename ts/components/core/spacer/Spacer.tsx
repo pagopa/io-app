@@ -27,19 +27,17 @@ Native `Spacer` component that replaces the legacy one, managed through NativeBa
  */
 const Spacer = ({ orientation, size }: BaseSpacerProps) => (
   <View
-    style={[
-      {
-        ...(orientation === "vertical" && {
-          height: size
-        }),
-        ...(orientation === "horizontal" && {
-          width: size
-        })
-      },
-      debugMode && {
+    style={{
+      ...(orientation === "vertical" && {
+        height: size
+      }),
+      ...(orientation === "horizontal" && {
+        width: size
+      }),
+      ...((debugMode as boolean) && {
         backgroundColor: debugBg
-      }
-    ]}
+      })
+    }}
   />
 );
 

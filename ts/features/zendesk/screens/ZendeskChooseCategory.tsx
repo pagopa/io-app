@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { useDispatch } from "react-redux";
 import { ZendeskCategory } from "../../../../definitions/content/ZendeskCategory";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { H1 } from "../../../components/core/typography/H1";
 import { H4 } from "../../../components/core/typography/H4";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
@@ -141,11 +142,11 @@ const ZendeskChooseCategory = (props: Props) => {
       <SafeAreaView style={IOStyles.flex} testID={"ZendeskChooseCategory"}>
         <ScrollView style={IOStyles.horizontalContentPadding}>
           <H1>{I18n.t("support.chooseCategory.title.category")}</H1>
-          <View spacer />
+          <VSpacer size={16} />
           <H4 weight={"Regular"}>
             {I18n.t("support.chooseCategory.subTitle.category")}
           </H4>
-          <View spacer />
+          <VSpacer size={16} />
           <FlatList
             data={categories}
             keyExtractor={c => c.value}

@@ -14,6 +14,7 @@ import { IconProps } from "react-native-vector-icons/Icon";
 import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
 import customVariables from "../../theme/variables";
 import { FAQsCategoriesType } from "../../utils/faq";
+import { VSpacer } from "../core/spacer/Spacer";
 import { IOColors, getGradientColorValues } from "../core/variables/IOColors";
 import AnimatedScreenContent from "./AnimatedScreenContent";
 import {
@@ -87,7 +88,7 @@ export default class DarkLayout extends React.Component<Props> {
       <React.Fragment>
         {wrapper(
           <React.Fragment>
-            <View spacer={true} />
+            <VSpacer size={16} />
             {this.props.topContent}
           </React.Fragment>
         )}

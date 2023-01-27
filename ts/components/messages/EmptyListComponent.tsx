@@ -1,8 +1,8 @@
+import { Text as NBText } from "native-base";
 import * as React from "react";
-import { Text as NBText, View } from "native-base";
-import { StyleSheet } from "react-native";
+import { View, Image, ImageSourcePropType, StyleSheet } from "react-native";
 import customVariables from "../../theme/variables";
-import { IOPictogramType, Pictogram } from "../core/pictograms";
+import { VSpacer } from "../core/spacer/Spacer";
 
 const styles = StyleSheet.create({
   view: {
@@ -19,16 +19,18 @@ const styles = StyleSheet.create({
 });
 
 type Props = Readonly<{
-  picture: IOPictogramType;
+  image: ImageSourcePropType;
   title: string;
   subtitle?: string;
 }>;
 
-export const EmptyListComponent = ({ picture, title, subtitle }: Props) => (
+export const EmptyListComponent = (props: Props) => (
   <View style={styles.view}>
-    <View spacer={true} />
-    <Pictogram name={picture} size={120} />
-    <NBText style={styles.title}>{title}</NBText>
-    {subtitle && <NBText style={styles.subtitle}>{subtitle}</NBText>}
+    <VSpacer size={16} />
+    <Image source={props.image} />
+    <NBText style={styles.title}>{props.title}</NBText>
+    {props.subtitle && (
+      <NBText style={styles.subtitle}>{props.subtitle}</NBText>
+    )}
   </View>
 );

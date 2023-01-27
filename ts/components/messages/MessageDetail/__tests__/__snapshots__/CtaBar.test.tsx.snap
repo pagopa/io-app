@@ -463,7 +463,6 @@ exports[`the \`CtaBar\` component when neither \`paymentData\` nor \`dueDate\` a
                                       }
                                     >
                                       <View
-                                        style={Object {}}
                                         testID="CtaBar_withFooter"
                                       />
                                     </View>

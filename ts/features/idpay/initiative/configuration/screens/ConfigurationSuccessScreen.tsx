@@ -1,10 +1,11 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useActor } from "@xstate/react";
-import { Text, View } from "native-base";
+import { Text } from "native-base";
 import React from "react";
-import { SafeAreaView, StyleSheet } from "react-native";
+import { View, SafeAreaView, StyleSheet } from "react-native";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
 import { Pictogram } from "../../../../../components/core/pictograms";
+import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";
@@ -32,9 +33,9 @@ const ConfigurationSuccessScreen = () => {
       <View style={[IOStyles.horizontalContentPadding, styles.container]}>
         <View style={styles.content}>
           <Pictogram name="completed" size={80} />
-          <View spacer={true} />
+          <VSpacer size={16} />
           <H3>{I18n.t("idpay.configuration.associationSuccess.title")}</H3>
-          <View spacer={true} />
+          <VSpacer size={16} />
           <Text style={styles.body}>
             {I18n.t("idpay.configuration.associationSuccess.body", {
               initiativeName

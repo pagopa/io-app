@@ -18,6 +18,7 @@ import {
 } from "../../../../utils/stringBuilder";
 import { BpdAmount } from "../saga/networking/amount";
 import { BpdPeriod } from "../store/actions/periods";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
 
 type Props = {
   lastUpdateDate: string;
@@ -76,7 +77,7 @@ const BpdTransactionSummaryComponent: React.FunctionComponent<Props> = (
 ) => {
   const { present, bottomSheet } = useIOBottomSheetModal(
     <>
-      <View spacer={true} large={true} />
+      <VSpacer size={24} />
       <InfoBox iconName={"io-calendar"} iconSize={32}>
         <H4 weight={"Regular"}>
           {I18n.t(
@@ -93,7 +94,7 @@ const BpdTransactionSummaryComponent: React.FunctionComponent<Props> = (
           )}
         </H4>
       </InfoBox>
-      <View spacer={true} large={true} />
+      <VSpacer size={24} />
 
       <BottomSheetBpdTransactionsBody />
     </>,
@@ -115,7 +116,7 @@ const BpdTransactionSummaryComponent: React.FunctionComponent<Props> = (
         </InfoBox>
       </View>
 
-      <View spacer={true} />
+      <VSpacer size={16} />
 
       <Body>
         {I18n.t("bonus.bpd.details.transaction.detail.summary.body.text1")}

@@ -1,8 +1,9 @@
 import * as O from "fp-ts/lib/Option";
-import { Text as NBText, View } from "native-base";
+import { Text as NBText } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { BonusActivationWithQrCode } from "../../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import IconFont from "../../../../components/ui/IconFont";
@@ -93,7 +94,7 @@ const ActiveBonus: React.FunctionComponent<Props> = (props: Props) => {
           {formatNumberAmount(props.bonus.dsu_request.max_amount, true)}
         </NBText>
       </View>
-      <View small={true} />
+      <VSpacer size={8} />
       <View style={styles.spaced}>
         <NBText style={styles.textWhite}>
           {I18n.t("bonus.bonusVacanze.taxBenefit")}
