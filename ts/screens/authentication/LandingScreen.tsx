@@ -80,7 +80,7 @@ const getCards = (
     content: I18n.t("authentication.landing.card5-content"),
     accessibilityLabel: I18n.t(
       "authentication.landing.accessibility.carousel.label"
-    ) + I18n.t("authentication.landing.card5-title") + I18n.t("authentication.landing.card5-content"),
+    ) + I18n.t("authentication.landing.card5-title") + I18n.t("authentication.landing.card5-content-accessibility"),
     accessibilityHint: I18n.t(
       "authentication.landing.accessibility.carousel.hint"
     )
