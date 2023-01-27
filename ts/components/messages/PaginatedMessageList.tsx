@@ -88,7 +88,7 @@ const PaginatedMessageList = ({
   );
 
   const renderListFooter = () => {
-    if (isLoading && !isRefreshFromUser) {
+    if (isLoading) {
       return <Loader />;
     }
     return <EdgeBorderComponent />;

@@ -47,7 +47,8 @@ export const useMessagesFetcher = (
   // in the list and the loading was triggered automatically
   const isLoading =
     isLoadingNextPage ||
-    (messages.length === 0 && (isLoadingPreviousPage || isReloadingAll));
+    (isReloadingAll && !isSome) ||
+    (isLoadingPreviousPage && messages.length === 0);
 
   // the top spinner is shown only if the user request a loading
   // by swiping-down-to-refresh or, when the loading was system initiated
