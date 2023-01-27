@@ -5,7 +5,6 @@ import { ConfigurationMode } from "../context";
 import { createIDPayInitiativeConfigurationMachine } from "../machine";
 import {
   mockActions,
-  MockActionsType,
   mockExitConfiguration,
   mockNavigateToConfigurationIntro,
   mockNavigateToConfigurationSuccessScreen,
@@ -566,7 +565,6 @@ describe("IDPay configuration machine in INSTRUMENTS mode", () => {
 
 type MockMachineConfigType = {
   services?: Partial<MockServicesType>;
-  actions?: Partial<MockActionsType>;
 };
 
 const configureMockMachine = (config?: MockMachineConfigType) =>
@@ -575,8 +573,5 @@ const configureMockMachine = (config?: MockMachineConfigType) =>
       ...mockServices,
       ...config?.services
     },
-    actions: {
-      ...mockActions,
-      ...config?.actions
-    }
+    actions: mockActions
   });
