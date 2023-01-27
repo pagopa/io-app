@@ -1791,7 +1791,7 @@ messageDetails:
     badFormat: "The attachment format is not supported. Please contact the sender"
     corruptedFile: "The attachment is corrupt and can't be opened. Please contact the sender"
     downloadFailed: "We couldn't open the attachment. Try again"
-    showPreview: "View preview"
+    showPreview: "See preview"
     unavailable:
       firstPart: "The attachments are no longer available. "
       secondPart: "Please contact the sender"
