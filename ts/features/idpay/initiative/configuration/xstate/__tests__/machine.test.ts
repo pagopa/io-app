@@ -1,6 +1,6 @@
 /* eslint-disable functional/no-let */
 import { waitFor } from "@testing-library/react-native";
-import { interpret } from "xstate";
+import { interpret, StateValue } from "xstate";
 import { ConfigurationMode } from "../context";
 import { createIDPayInitiativeConfigurationMachine } from "../machine";
 import { mockActions, MockActionsType } from "../__mocks__/actions";
@@ -32,13 +32,13 @@ describe("IDPay configuration machine in COMPLETE mode", () => {
   });
 
   it("should not allow the citizen to configure an initiative if it's already configured", async () => {
-    let currentState;
-
     const machine = configureMockMachine({
       services: {
         loadInitiative: mockLoadInitiativeSuccessRefundable
       }
     });
+
+    let currentState: StateValue = machine.initialState.value;
 
     const service = interpret(machine).onTransition(state => {
       currentState = state.value;
@@ -60,8 +60,6 @@ describe("IDPay configuration machine in COMPLETE mode", () => {
   });
 
   it("should allow the citizen to configure an initiative", async () => {
-    let currentState;
-
     const machine = configureMockMachine({
       services: {
         loadInitiative: mockLoadInitiativeSuccessNotRefundable,
@@ -72,6 +70,8 @@ describe("IDPay configuration machine in COMPLETE mode", () => {
         deleteInstrument: mockDeleteInstrumentSuccess
       }
     });
+
+    let currentState: StateValue = machine.initialState.value;
 
     const service = interpret(machine).onTransition(state => {
       currentState = state.value;
@@ -153,8 +153,6 @@ describe("IDPay configuration machine in COMPLETE mode", () => {
   });
 
   it("should allow the citizen to configure an initiative (without IBANs)", async () => {
-    let currentState;
-
     const machine = configureMockMachine({
       services: {
         loadInitiative: mockLoadInitiativeSuccessNotRefundable,
@@ -162,6 +160,8 @@ describe("IDPay configuration machine in COMPLETE mode", () => {
         confirmIban: mockConfirmIbanSuccess
       }
     });
+
+    let currentState: StateValue = machine.initialState.value;
 
     const service = interpret(machine).onTransition(state => {
       currentState = state.value;
@@ -226,8 +226,6 @@ describe("IDPay configuration machine in IBAN mode", () => {
   });
 
   it("should allow the citizen to enroll an IBAN to the initiative", async () => {
-    let currentState;
-
     const machine = configureMockMachine({
       services: {
         loadInitiative: mockLoadInitiativeSuccessRefundable,
@@ -235,6 +233,8 @@ describe("IDPay configuration machine in IBAN mode", () => {
         enrollIban: mockEnrollIbanSuccess
       }
     });
+
+    let currentState: StateValue = machine.initialState.value;
 
     const service = interpret(machine).onTransition(state => {
       currentState = state.value;
@@ -272,6 +272,46 @@ describe("IDPay configuration machine in IBAN mode", () => {
 
     expect(currentState).toMatch("CONFIGURATION_COMPLETED");
   });
+
+  it("should exit configuration on BACK event", async () => {
+    const machine = configureMockMachine({
+      services: {
+        loadInitiative: mockLoadInitiativeSuccessRefundable,
+        loadIbanList: mockLoadIbanListSuccess,
+        enrollIban: mockEnrollIbanSuccess
+      }
+    });
+
+    let currentState: StateValue = machine.initialState.value;
+
+    const service = interpret(machine).onTransition(state => {
+      currentState = state.value;
+    });
+
+    service.start();
+
+    service.send({
+      type: "START_CONFIGURATION",
+      initiativeId: T_INITIATIVE_ID,
+      mode: ConfigurationMode.IBAN
+    });
+
+    await waitFor(() =>
+      expect(mockLoadInitiativeSuccessRefundable).toHaveBeenCalled()
+    );
+
+    await waitFor(() => expect(mockLoadIbanListSuccess).toHaveBeenCalled());
+
+    expect(currentState).toMatchObject({
+      CONFIGURING_IBAN: "DISPLAYING_IBAN_LIST"
+    });
+
+    service.send({
+      type: "BACK"
+    });
+
+    expect(currentState).toMatch("CONFIGURATION_CLOSED");
+  });
 });
 
 describe("IDPay configuration machine in INSTRUMENTS mode", () => {
@@ -285,18 +325,16 @@ describe("IDPay configuration machine in INSTRUMENTS mode", () => {
   });
 
   it("should allow the citizen to enroll/delete an Instrument to the initiative", async () => {
-    let currentState;
-
     const machine = configureMockMachine({
       services: {
         loadInitiative: mockLoadInitiativeSuccessRefundable,
-        loadIbanList: mockLoadIbanListSuccess,
-        enrollIban: mockEnrollIbanSuccess,
         loadInstruments: mockLoadInstrumentsSuccess,
         enrollInstrument: mockEnrollInstrumentSuccess,
         deleteInstrument: mockDeleteInstrumentSuccess
       }
     });
+
+    let currentState: StateValue = machine.initialState.value;
 
     const service = interpret(machine).onTransition(state => {
       currentState = state.value;
@@ -347,6 +385,45 @@ describe("IDPay configuration machine in INSTRUMENTS mode", () => {
     });
 
     expect(currentState).toMatch("CONFIGURATION_COMPLETED");
+  });
+
+  it("should exit configuration on BACK event", async () => {
+    const machine = configureMockMachine({
+      services: {
+        loadInitiative: mockLoadInitiativeSuccessRefundable,
+        loadInstruments: mockLoadInstrumentsSuccess
+      }
+    });
+
+    let currentState: StateValue = machine.initialState.value;
+
+    const service = interpret(machine).onTransition(state => {
+      currentState = state.value;
+    });
+
+    service.start();
+
+    service.send({
+      type: "START_CONFIGURATION",
+      initiativeId: T_INITIATIVE_ID,
+      mode: ConfigurationMode.INSTRUMENTS
+    });
+
+    await waitFor(() =>
+      expect(mockLoadInitiativeSuccessRefundable).toHaveBeenCalled()
+    );
+
+    await waitFor(() => expect(mockLoadInstrumentsSuccess).toHaveBeenCalled());
+
+    expect(currentState).toMatchObject({
+      CONFIGURING_INSTRUMENTS: "DISPLAYING_INSTRUMENTS"
+    });
+
+    service.send({
+      type: "BACK"
+    });
+
+    expect(currentState).toMatch("CONFIGURATION_CLOSED");
   });
 });
 
