@@ -3,7 +3,18 @@ import { waitFor } from "@testing-library/react-native";
 import { interpret, StateValue } from "xstate";
 import { ConfigurationMode } from "../context";
 import { createIDPayInitiativeConfigurationMachine } from "../machine";
-import { mockActions, MockActionsType } from "../__mocks__/actions";
+import {
+  mockActions,
+  MockActionsType,
+  mockExitConfiguration,
+  mockNavigateToConfigurationIntro,
+  mockNavigateToConfigurationSuccessScreen,
+  mockNavigateToIbanEnrollmentScreen,
+  mockNavigateToIbanLandingScreen,
+  mockNavigateToIbanOnboardingScreen,
+  mockNavigateToInitiativeDetailScreen,
+  mockNavigateToInstrumentsEnrollmentScreen
+} from "../__mocks__/actions";
 import {
   mockConfirmIbanSuccess,
   mockDeleteInstrumentSuccess,
@@ -46,6 +57,8 @@ describe("IDPay configuration machine in COMPLETE mode", () => {
 
     service.start();
 
+    expect(currentState).toEqual("WAITING_START");
+
     service.send({
       type: "START_CONFIGURATION",
       initiativeId: T_INITIATIVE_ID,
@@ -53,10 +66,24 @@ describe("IDPay configuration machine in COMPLETE mode", () => {
     });
 
     await waitFor(() =>
-      expect(mockLoadInitiativeSuccessRefundable).toHaveBeenCalled()
+      expect(mockLoadInitiativeSuccessRefundable).toHaveBeenCalledTimes(1)
+    );
+
+    await waitFor(() =>
+      expect(mockNavigateToConfigurationSuccessScreen).toHaveBeenCalledTimes(1)
     );
 
     expect(currentState).toMatch("CONFIGURATION_NOT_NEEDED");
+
+    service.send({
+      type: "COMPLETE_CONFIGURATION"
+    });
+
+    expect(currentState).toMatch("CONFIGURATION_COMPLETED");
+
+    await waitFor(() =>
+      expect(mockNavigateToInitiativeDetailScreen).toHaveBeenCalledTimes(1)
+    );
   });
 
   it("should allow the citizen to configure an initiative", async () => {
@@ -79,6 +106,8 @@ describe("IDPay configuration machine in COMPLETE mode", () => {
 
     service.start();
 
+    expect(currentState).toEqual("WAITING_START");
+
     service.send({
       type: "START_CONFIGURATION",
       initiativeId: T_INITIATIVE_ID,
@@ -86,18 +115,28 @@ describe("IDPay configuration machine in COMPLETE mode", () => {
     });
 
     await waitFor(() =>
-      expect(mockLoadInitiativeSuccessNotRefundable).toHaveBeenCalled()
+      expect(mockLoadInitiativeSuccessNotRefundable).toHaveBeenCalledTimes(1)
     );
 
     expect(currentState).toMatch("DISPLAYING_INTRO");
 
+    await waitFor(() =>
+      expect(mockNavigateToConfigurationIntro).toHaveBeenCalledTimes(1)
+    );
+
     service.send({ type: "NEXT" });
 
-    await waitFor(() => expect(mockLoadIbanListSuccess).toHaveBeenCalled());
+    await waitFor(() =>
+      expect(mockLoadIbanListSuccess).toHaveBeenCalledTimes(1)
+    );
 
     expect(currentState).toMatchObject({
       CONFIGURING_IBAN: "DISPLAYING_IBAN_LIST"
     });
+
+    await waitFor(() =>
+      expect(mockNavigateToIbanEnrollmentScreen).toHaveBeenCalledTimes(1)
+    );
 
     service.send({
       type: "ENROLL_IBAN",
@@ -109,35 +148,53 @@ describe("IDPay configuration machine in COMPLETE mode", () => {
       }
     });
 
-    await waitFor(() => expect(mockEnrollIbanSuccess).toHaveBeenCalled());
+    await waitFor(() => expect(mockEnrollIbanSuccess).toHaveBeenCalledTimes(1));
 
-    await waitFor(() => expect(mockLoadInstrumentsSuccess).toHaveBeenCalled());
+    await waitFor(() =>
+      expect(mockLoadInstrumentsSuccess).toHaveBeenCalledTimes(1)
+    );
 
     expect(currentState).toMatchObject({
       CONFIGURING_INSTRUMENTS: "DISPLAYING_INSTRUMENTS"
     });
+
+    await waitFor(() =>
+      expect(mockNavigateToInstrumentsEnrollmentScreen).toHaveBeenCalledTimes(1)
+    );
 
     service.send({
       type: "ENROLL_INSTRUMENT",
       instrumentId: T_INSTRUMENT_ID
     });
 
-    await waitFor(() => expect(mockEnrollInstrumentSuccess).toHaveBeenCalled());
+    await waitFor(() =>
+      expect(mockEnrollInstrumentSuccess).toHaveBeenCalledTimes(1)
+    );
 
     expect(currentState).toMatchObject({
       CONFIGURING_INSTRUMENTS: "DISPLAYING_INSTRUMENTS"
     });
+
+    await waitFor(() =>
+      expect(mockNavigateToInstrumentsEnrollmentScreen).toHaveBeenCalledTimes(1)
+    );
 
     service.send({
       type: "DELETE_INSTRUMENT",
       instrumentId: T_INSTRUMENT_ID
     });
 
-    await waitFor(() => expect(mockDeleteInstrumentSuccess).toHaveBeenCalled());
+    await waitFor(() =>
+      expect(mockDeleteInstrumentSuccess).toHaveBeenCalledTimes(1)
+    );
 
     expect(currentState).toMatchObject({
       CONFIGURING_INSTRUMENTS: "DISPLAYING_INSTRUMENTS"
     });
+
+    await waitFor(() =>
+      expect(mockNavigateToInstrumentsEnrollmentScreen).toHaveBeenCalledTimes(1)
+    );
 
     service.send({
       type: "NEXT"
@@ -145,11 +202,19 @@ describe("IDPay configuration machine in COMPLETE mode", () => {
 
     expect(currentState).toMatch("DISPLAYING_CONFIGURATION_SUCCESS");
 
+    await waitFor(() =>
+      expect(mockNavigateToConfigurationSuccessScreen).toHaveBeenCalledTimes(1)
+    );
+
     service.send({
       type: "COMPLETE_CONFIGURATION"
     });
 
     expect(currentState).toMatch("CONFIGURATION_COMPLETED");
+
+    await waitFor(() =>
+      expect(mockNavigateToInitiativeDetailScreen).toHaveBeenCalledTimes(1)
+    );
   });
 
   it("should allow the citizen to configure an initiative (without IBANs)", async () => {
@@ -169,6 +234,8 @@ describe("IDPay configuration machine in COMPLETE mode", () => {
 
     service.start();
 
+    expect(currentState).toEqual("WAITING_START");
+
     service.send({
       type: "START_CONFIGURATION",
       initiativeId: T_INITIATIVE_ID,
@@ -176,26 +243,38 @@ describe("IDPay configuration machine in COMPLETE mode", () => {
     });
 
     await waitFor(() =>
-      expect(mockLoadInitiativeSuccessNotRefundable).toHaveBeenCalled()
+      expect(mockLoadInitiativeSuccessNotRefundable).toHaveBeenCalledTimes(1)
     );
 
     expect(currentState).toMatch("DISPLAYING_INTRO");
 
+    await waitFor(() =>
+      expect(mockNavigateToConfigurationIntro).toHaveBeenCalledTimes(1)
+    );
+
     service.send({ type: "NEXT" });
 
     await waitFor(() =>
-      expect(mockLoadIbanListSuccessEmpty).toHaveBeenCalled()
+      expect(mockLoadIbanListSuccessEmpty).toHaveBeenCalledTimes(1)
     );
 
     expect(currentState).toMatchObject({
       CONFIGURING_IBAN: "DISPLAYING_IBAN_ONBOARDING"
     });
 
+    await waitFor(() =>
+      expect(mockNavigateToIbanLandingScreen).toHaveBeenCalledTimes(1)
+    );
+
     service.send({ type: "NEXT" });
 
     expect(currentState).toMatchObject({
       CONFIGURING_IBAN: "DISPLAYING_IBAN_ONBOARDING_FORM"
     });
+
+    await waitFor(() =>
+      expect(mockNavigateToIbanOnboardingScreen).toHaveBeenCalledTimes(1)
+    );
 
     service.send({
       type: "CONFIRM_IBAN",
@@ -205,7 +284,9 @@ describe("IDPay configuration machine in COMPLETE mode", () => {
       }
     });
 
-    await waitFor(() => expect(mockConfirmIbanSuccess).toHaveBeenCalled());
+    await waitFor(() =>
+      expect(mockConfirmIbanSuccess).toHaveBeenCalledTimes(1)
+    );
 
     expect(currentState).toMatchObject({
       CONFIGURING_INSTRUMENTS: "LOADING_INSTRUMENTS"
@@ -242,6 +323,8 @@ describe("IDPay configuration machine in IBAN mode", () => {
 
     service.start();
 
+    expect(currentState).toEqual("WAITING_START");
+
     service.send({
       type: "START_CONFIGURATION",
       initiativeId: T_INITIATIVE_ID,
@@ -249,14 +332,20 @@ describe("IDPay configuration machine in IBAN mode", () => {
     });
 
     await waitFor(() =>
-      expect(mockLoadInitiativeSuccessRefundable).toHaveBeenCalled()
+      expect(mockLoadInitiativeSuccessRefundable).toHaveBeenCalledTimes(1)
     );
 
-    await waitFor(() => expect(mockLoadIbanListSuccess).toHaveBeenCalled());
+    await waitFor(() =>
+      expect(mockLoadIbanListSuccess).toHaveBeenCalledTimes(1)
+    );
 
     expect(currentState).toMatchObject({
       CONFIGURING_IBAN: "DISPLAYING_IBAN_LIST"
     });
+
+    await waitFor(() =>
+      expect(mockNavigateToIbanEnrollmentScreen).toHaveBeenCalledTimes(1)
+    );
 
     service.send({
       type: "ENROLL_IBAN",
@@ -268,9 +357,13 @@ describe("IDPay configuration machine in IBAN mode", () => {
       }
     });
 
-    await waitFor(() => expect(mockEnrollIbanSuccess).toHaveBeenCalled());
+    await waitFor(() => expect(mockEnrollIbanSuccess).toHaveBeenCalledTimes(1));
 
     expect(currentState).toMatch("CONFIGURATION_COMPLETED");
+
+    await waitFor(() =>
+      expect(mockNavigateToInitiativeDetailScreen).toHaveBeenCalledTimes(1)
+    );
   });
 
   it("should exit configuration on BACK event", async () => {
@@ -290,6 +383,8 @@ describe("IDPay configuration machine in IBAN mode", () => {
 
     service.start();
 
+    expect(currentState).toEqual("WAITING_START");
+
     service.send({
       type: "START_CONFIGURATION",
       initiativeId: T_INITIATIVE_ID,
@@ -300,17 +395,25 @@ describe("IDPay configuration machine in IBAN mode", () => {
       expect(mockLoadInitiativeSuccessRefundable).toHaveBeenCalled()
     );
 
-    await waitFor(() => expect(mockLoadIbanListSuccess).toHaveBeenCalled());
+    await waitFor(() =>
+      expect(mockLoadIbanListSuccess).toHaveBeenCalledTimes(1)
+    );
 
     expect(currentState).toMatchObject({
       CONFIGURING_IBAN: "DISPLAYING_IBAN_LIST"
     });
+
+    await waitFor(() =>
+      expect(mockNavigateToIbanEnrollmentScreen).toHaveBeenCalledTimes(1)
+    );
 
     service.send({
       type: "BACK"
     });
 
     expect(currentState).toMatch("CONFIGURATION_CLOSED");
+
+    await waitFor(() => expect(mockExitConfiguration).toHaveBeenCalledTimes(1));
   });
 });
 
@@ -342,6 +445,8 @@ describe("IDPay configuration machine in INSTRUMENTS mode", () => {
 
     service.start();
 
+    expect(currentState).toMatch("WAITING_START");
+
     service.send({
       type: "START_CONFIGURATION",
       initiativeId: T_INITIATIVE_ID,
@@ -349,42 +454,64 @@ describe("IDPay configuration machine in INSTRUMENTS mode", () => {
     });
 
     await waitFor(() =>
-      expect(mockLoadInitiativeSuccessRefundable).toHaveBeenCalled()
+      expect(mockLoadInitiativeSuccessRefundable).toHaveBeenCalledTimes(1)
     );
 
-    await waitFor(() => expect(mockLoadInstrumentsSuccess).toHaveBeenCalled());
+    await waitFor(() =>
+      expect(mockLoadInstrumentsSuccess).toHaveBeenCalledTimes(1)
+    );
 
     expect(currentState).toMatchObject({
       CONFIGURING_INSTRUMENTS: "DISPLAYING_INSTRUMENTS"
     });
+
+    await waitFor(() =>
+      expect(mockNavigateToInstrumentsEnrollmentScreen).toHaveBeenCalledTimes(1)
+    );
 
     service.send({
       type: "ENROLL_INSTRUMENT",
       instrumentId: T_INSTRUMENT_ID
     });
 
-    await waitFor(() => expect(mockEnrollInstrumentSuccess).toHaveBeenCalled());
+    await waitFor(() =>
+      expect(mockEnrollInstrumentSuccess).toHaveBeenCalledTimes(1)
+    );
 
     expect(currentState).toMatchObject({
       CONFIGURING_INSTRUMENTS: "DISPLAYING_INSTRUMENTS"
     });
+
+    await waitFor(() =>
+      expect(mockNavigateToInstrumentsEnrollmentScreen).toHaveBeenCalledTimes(1)
+    );
 
     service.send({
       type: "DELETE_INSTRUMENT",
       instrumentId: T_INSTRUMENT_ID
     });
 
-    await waitFor(() => expect(mockDeleteInstrumentSuccess).toHaveBeenCalled());
+    await waitFor(() =>
+      expect(mockDeleteInstrumentSuccess).toHaveBeenCalledTimes(1)
+    );
 
     expect(currentState).toMatchObject({
       CONFIGURING_INSTRUMENTS: "DISPLAYING_INSTRUMENTS"
     });
+
+    await waitFor(() =>
+      expect(mockNavigateToInstrumentsEnrollmentScreen).toHaveBeenCalledTimes(1)
+    );
 
     service.send({
       type: "NEXT"
     });
 
     expect(currentState).toMatch("CONFIGURATION_COMPLETED");
+
+    await waitFor(() =>
+      expect(mockNavigateToInitiativeDetailScreen).toHaveBeenCalledTimes(1)
+    );
   });
 
   it("should exit configuration on BACK event", async () => {
@@ -403,6 +530,8 @@ describe("IDPay configuration machine in INSTRUMENTS mode", () => {
 
     service.start();
 
+    expect(currentState).toMatch("WAITING_START");
+
     service.send({
       type: "START_CONFIGURATION",
       initiativeId: T_INITIATIVE_ID,
@@ -410,20 +539,28 @@ describe("IDPay configuration machine in INSTRUMENTS mode", () => {
     });
 
     await waitFor(() =>
-      expect(mockLoadInitiativeSuccessRefundable).toHaveBeenCalled()
+      expect(mockLoadInitiativeSuccessRefundable).toHaveBeenCalledTimes(1)
     );
 
-    await waitFor(() => expect(mockLoadInstrumentsSuccess).toHaveBeenCalled());
+    await waitFor(() =>
+      expect(mockLoadInstrumentsSuccess).toHaveBeenCalledTimes(1)
+    );
 
     expect(currentState).toMatchObject({
       CONFIGURING_INSTRUMENTS: "DISPLAYING_INSTRUMENTS"
     });
+
+    await waitFor(() =>
+      expect(mockNavigateToInstrumentsEnrollmentScreen).toHaveBeenCalledTimes(1)
+    );
 
     service.send({
       type: "BACK"
     });
 
     expect(currentState).toMatch("CONFIGURATION_CLOSED");
+
+    await waitFor(() => expect(mockExitConfiguration).toHaveBeenCalledTimes(1));
   });
 });
 
