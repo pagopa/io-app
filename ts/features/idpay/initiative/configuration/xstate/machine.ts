@@ -313,7 +313,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 id: "enrollInstrument",
                 onDone: {
                   target: "DISPLAYING_INSTRUMENTS",
-                  actions: "enrollInstrumentSuccess"
+                  actions: "toggleInstrumentSuccess"
                 },
                 onError: {
                   target: "DISPLAYING_INSTRUMENTS",
@@ -328,7 +328,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 id: "deleteInstrument",
                 onDone: {
                   target: "DISPLAYING_INSTRUMENTS",
-                  actions: "deleteInstrumentSuccess"
+                  actions: "toggleInstrumentSuccess"
                 },
                 onError: {
                   target: "DISPLAYING_INSTRUMENTS",
@@ -386,37 +386,41 @@ const createIDPayInitiativeConfigurationMachine = () =>
           mode: event.mode
         })),
         loadInitiativeSuccess: assign((_, event) => ({
-          initiative: p.some(event.data)
+          initiative: p.some(event.data),
+          failure: undefined
         })),
         loadIbanListSuccess: assign((_, event) => ({
-          ibanList: p.some(event.data.ibanList)
-        })),
-        setFailure: assign((_, event) => ({
-          failure: event.data as InitiativeFailureType
+          ibanList: p.some(event.data.ibanList),
+          failure: undefined
         })),
         selectIban: assign((_, event) => ({
-          selectedIban: event.iban
+          selectedIban: event.iban,
+          failure: undefined
         })),
         enrollIbanSuccess: assign((_, _event) => ({
-          selectedIban: undefined
+          selectedIban: undefined,
+          failure: undefined
         })),
         loadInstrumentsSuccess: assign((_, event) => ({
           pagoPAInstruments: p.some(event.data.pagoPAInstruments),
-          idPayInstruments: p.some(event.data.idPayInstruments)
+          idPayInstruments: p.some(event.data.idPayInstruments),
+          failure: undefined
         })),
         selectInstrument: assign((_, event) => ({
-          selectedInstrumentId: event.instrumentId
+          selectedInstrumentId: event.instrumentId,
+          failure: undefined
         })),
-        enrollInstrumentSuccess: assign((_, event) => ({
+        toggleInstrumentSuccess: assign((_, event) => ({
           idPayInstruments: p.some(event.data),
-          selectedInstrumentId: undefined
-        })),
-        deleteInstrumentSuccess: assign((_, event) => ({
-          idPayInstruments: p.some(event.data),
-          selectedInstrumentId: undefined
+          selectedInstrumentId: undefined,
+          failure: undefined
         })),
         confirmIbanOnboarding: assign((_, event) => ({
-          ibanBody: event.ibanBody
+          ibanBody: event.ibanBody,
+          failure: undefined
+        })),
+        setFailure: assign((_, event) => ({
+          failure: event.data as InitiativeFailureType
         }))
       },
       guards: {

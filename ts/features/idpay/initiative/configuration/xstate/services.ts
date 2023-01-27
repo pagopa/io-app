@@ -23,7 +23,7 @@ const createServicesImplementation = (
 ) => {
   const loadInitiative = async (context: Context) => {
     if (context.initiativeId === undefined) {
-      return Promise.reject("initiativeId is undefined");
+      return Promise.reject(InitiativeFailureType.GENERIC);
     }
 
     const response = await walletClient.getWalletDetail({
@@ -35,10 +35,10 @@ const createServicesImplementation = (
     const data: Promise<InitiativeDTO> = pipe(
       response,
       E.fold(
-        _ => Promise.reject("error loading wallet"),
+        _ => Promise.reject(InitiativeFailureType.INITIATIVE_ERROR),
         _ => {
           if (_.status !== 200) {
-            return Promise.reject("error loading wallet");
+            return Promise.reject(InitiativeFailureType.INITIATIVE_ERROR);
           }
           return Promise.resolve(_.value);
         }
@@ -81,7 +81,7 @@ const createServicesImplementation = (
 
   const confirmIban = async (context: Context) => {
     if (context.initiativeId === undefined) {
-      return Promise.reject("initiativeId is undefined");
+      return Promise.reject(InitiativeFailureType.GENERIC);
     }
     try {
       const res = await walletClient.enrollIban({
@@ -93,27 +93,27 @@ const createServicesImplementation = (
       return pipe(
         res,
         E.fold(
-          _ => Promise.reject("error confirming iban"),
+          _ => Promise.reject(InitiativeFailureType.IBAN_ENROLL_FAILURE),
           response => {
             if (response.status !== 200) {
-              return Promise.reject("error confirming iban");
+              return Promise.reject(InitiativeFailureType.IBAN_ENROLL_FAILURE);
             }
             return Promise.resolve();
           }
         )
       );
     } catch (e) {
-      return Promise.reject("error calling backend");
+      return Promise.reject(InitiativeFailureType.IBAN_ENROLL_FAILURE);
     }
   };
 
   const enrollIban = async (context: Context) => {
     if (context.initiativeId === undefined) {
-      return Promise.reject("initiativeId is undefined");
+      return Promise.reject(InitiativeFailureType.GENERIC);
     }
 
     if (context.selectedIban === undefined) {
-      return Promise.reject("selectedIban is undefined");
+      return Promise.reject(InitiativeFailureType.GENERIC);
     }
 
     const response = await walletClient.enrollIban({
@@ -127,11 +127,11 @@ const createServicesImplementation = (
     });
 
     if (E.isLeft(response)) {
-      return Promise.reject("error enrolling iban");
+      return Promise.reject(InitiativeFailureType.IBAN_ENROLL_FAILURE);
     }
 
     if (response.right.status !== 200) {
-      return Promise.reject("error enrolling iban");
+      return Promise.reject(InitiativeFailureType.IBAN_ENROLL_FAILURE);
     }
 
     return Promise.resolve(undefined);
@@ -188,7 +188,7 @@ const createServicesImplementation = (
 
   const loadInstruments = async (context: Context) => {
     if (context.initiativeId === undefined) {
-      return Promise.reject("initiativeId is undefined");
+      return Promise.reject(InitiativeFailureType.GENERIC);
     }
 
     try {
@@ -207,11 +207,11 @@ const createServicesImplementation = (
 
   const enrollInstrument = async (context: Context) => {
     if (context.initiativeId === undefined) {
-      return Promise.reject("initiativeId is undefined");
+      return Promise.reject(InitiativeFailureType.GENERIC);
     }
 
     if (context.selectedInstrumentId === undefined) {
-      return Promise.reject("selectedInstrumentId is undefined");
+      return Promise.reject(InitiativeFailureType.GENERIC);
     }
 
     const response = await walletClient.enrollInstrument({
@@ -222,11 +222,11 @@ const createServicesImplementation = (
     });
 
     if (E.isLeft(response)) {
-      return Promise.reject("error enrolling instruments");
+      return Promise.reject(InitiativeFailureType.INSTRUMENT_ENROLL_FAILURE);
     }
 
     if (response.right.status !== 200) {
-      return Promise.reject("error enrolling instruments");
+      return Promise.reject(InitiativeFailureType.INSTRUMENT_ENROLL_FAILURE);
     }
 
     // After updating the list of instruments, we need to reload the list of enrolled instruments
@@ -235,11 +235,11 @@ const createServicesImplementation = (
 
   const deleteInstrument = async (context: Context) => {
     if (context.initiativeId === undefined) {
-      return Promise.reject("initiativeId is undefined");
+      return Promise.reject(InitiativeFailureType.GENERIC);
     }
 
     if (context.selectedInstrumentId === undefined) {
-      return Promise.reject("selectedInstrumentId is undefined");
+      return Promise.reject(InitiativeFailureType.GENERIC);
     }
 
     const response = await walletClient.deleteInstrument({
@@ -250,11 +250,11 @@ const createServicesImplementation = (
     });
 
     if (E.isLeft(response)) {
-      return Promise.reject("error deleting instrument");
+      return Promise.reject(InitiativeFailureType.INSTRUMENT_DELETE_FAILURE);
     }
 
     if (response.right.status !== 200) {
-      return Promise.reject("error deleting instrument");
+      return Promise.reject(InitiativeFailureType.INSTRUMENT_DELETE_FAILURE);
     }
 
     // After updating the list of instruments, we need to reload the list of enrolled instruments
