@@ -141,13 +141,6 @@ export const HorizontalScroll: React.FunctionComponent<Props> = (
             event
           );
         }}
-        accessible={true}
-        accessibilityLabel={I18n.t(
-          "authentication.landing.accessibility.carousel.label"
-        )}
-        accessibilityHint={I18n.t(
-          "authentication.landing.accessibility.carousel.hint"
-        )}
       >
         {props.cards}
       </ScrollView>
