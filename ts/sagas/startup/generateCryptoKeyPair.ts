@@ -1,9 +1,13 @@
+import { LollipopState } from "./../../store/reducers/lollipop";
+import { lollipopSelector } from "./../../store/actions/lollipop";
 import {
   generate,
   CryptoError,
   deleteKey
 } from "@pagopa/io-react-native-crypto";
-import { call, select } from "typed-redux-saga/macro";
+import { call, select, takeEvery } from "typed-redux-saga/macro";
+import { ActionType } from "typesafe-actions";
+import { logoutSuccess } from "../../store/actions/authentication";
 import { isLollipopEnabledSelector } from "../../store/reducers/backendStatus";
 import {
   checkPublicKeyExists,
@@ -37,24 +41,25 @@ export function* trackMixpanelCryptoKeyPairEvents(keyTag: string) {
   }
 }
 
+function* deleteCryptoKeyPair(keyTag: string) {
+  // Key is persisted even after uninstalling the application on iOS.
+  const keyAlreadyExistsOnKeystore = yield* call(checkPublicKeyExists, keyTag);
+
+  if (keyAlreadyExistsOnKeystore) {
+    try {
+      yield* call(deleteKey, keyTag);
+    } catch (e) {
+      yield* saveKeyGenerationFailureInfo(keyTag, e);
+      // We couldn't proceed eny further.
+      return;
+    }
+  }
+}
+
 function* generateCryptoKeyPair(keyTag: string) {
   try {
-    // Key is persisted even after uninstalling the application.
-    const keyAlreadyExistsOnKeystore = yield* call(
-      checkPublicKeyExists,
-      keyTag
-    );
-
     // Every new fresh login we need to regenerate a new key pair.
-    if (keyAlreadyExistsOnKeystore) {
-      try {
-        yield* call(deleteKey, keyTag);
-      } catch (e) {
-        yield* saveKeyGenerationFailureInfo(keyTag, e);
-        // We couldn't proceed eny further.
-        return;
-      }
-    }
+    deleteCryptoKeyPair(keyTag);
 
     const key = yield* call(generate, keyTag);
     const keyGenerationInfo: KeyGenerationInfo = {
