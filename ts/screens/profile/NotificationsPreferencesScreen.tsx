@@ -16,6 +16,10 @@ import { showToast } from "../../utils/showToast";
 import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
 import { usePreviewMoreInfo } from "../../utils/hooks/usePreviewMoreInfo";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
+import {
+  trackNotificationsPreferencesPreviewStatus,
+  trackNotificationsPreferencesReminderStatus
+} from "../../utils/analytics";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.preferences.notifications.contextualHelpTitle",
@@ -73,14 +77,15 @@ export const NotificationsPreferencesScreen = () => {
             rightElement={
               <RemoteSwitch
                 value={preview}
-                onValueChange={(value: boolean) =>
+                onValueChange={(value: boolean) => {
+                  trackNotificationsPreferencesPreviewStatus(value);
                   togglePreference<PushNotificationsContentTypeEnum>(
                     "push_notifications_content_type",
                     value
                       ? PushNotificationsContentTypeEnum.FULL
                       : PushNotificationsContentTypeEnum.ANONYMOUS
-                  )
-                }
+                  );
+                }}
                 testID="previewPreferenceSwitch"
               />
             }
@@ -94,14 +99,15 @@ export const NotificationsPreferencesScreen = () => {
             rightElement={
               <RemoteSwitch
                 value={reminder}
-                onValueChange={(value: boolean) =>
+                onValueChange={(value: boolean) => {
+                  trackNotificationsPreferencesReminderStatus(value);
                   togglePreference<ReminderStatusEnum>(
                     "reminder_status",
                     value
                       ? ReminderStatusEnum.ENABLED
                       : ReminderStatusEnum.DISABLED
-                  )
-                }
+                  );
+                }}
                 testID="remindersPreferenceSwitch"
               />
             }
