@@ -6,11 +6,11 @@ import { PreferredLanguage } from "../../../../../definitions/backend/PreferredL
 import { InitiativeDto } from "../../../../../definitions/idpay/onboarding/InitiativeDto";
 import { StatusEnum } from "../../../../../definitions/idpay/onboarding/OnboardingStatusDTO";
 import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/onboarding/RequiredCriteriaDTO";
-import { _typeEnum as boolSelfDeclarationTypeEnum } from "../../../../../definitions/idpay/onboarding/SelfDeclarationBoolDTO";
+import { SelfConsentDTO } from "../../../../../definitions/idpay/onboarding/SelfConsentDTO";
 import { OnboardingClient } from "../api/client";
 import { OnboardingFailureType } from "./failure";
-import { Context, getBoolRequiredCriteria } from "./machine";
-
+import { Context } from "./machine";
+import { getBoolRequiredCriteriaFromContext } from "./selectors";
 
 const createServicesImplementation = (
   onboardingClient: OnboardingClient,
@@ -40,7 +40,7 @@ const createServicesImplementation = (
           if (_.status !== 200) {
             return Promise.reject(OnboardingFailureType.GENERIC);
           }
-          return Promise.resolve({ initiativeId: "63d105e454f2c82a13f8b0c7" });
+          return Promise.resolve(_.value);
         }
       )
     );
@@ -82,6 +82,7 @@ const createServicesImplementation = (
     if (context.initiative === undefined) {
       throw new Error("initative is undefined");
     }
+
     const response = await onboardingClient.onboardingCitizen({
       ...clientOptions,
       body: {
@@ -151,13 +152,14 @@ const createServicesImplementation = (
     }
 
     const consentsArray = [
-      ...getBoolRequiredCriteria(context).map(_ => ({
-        _type: boolSelfDeclarationTypeEnum.boolean,
+      ...getBoolRequiredCriteriaFromContext(context).map(_ => ({
+        _type: _._type,
         code: _.code,
         accepted: true
       })),
-      ...selfConsents
-    ];
+      ...(selfConsents ?? [])
+    ] as Array<SelfConsentDTO>;
+
     const response = await onboardingClient.consentOnboarding({
       ...clientOptions,
       body: {

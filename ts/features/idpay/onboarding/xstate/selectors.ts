@@ -7,15 +7,14 @@ import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/onboarding
 import { SelfDeclarationBoolDTO } from "../../../../../definitions/idpay/onboarding/SelfDeclarationBoolDTO";
 import { SelfDeclarationDTO } from "../../../../../definitions/idpay/onboarding/SelfDeclarationDTO";
 import { SelfDeclarationMultiDTO } from "../../../../../definitions/idpay/onboarding/SelfDeclarationMultiDTO";
-import { IDPayOnboardingMachineType } from "./machine";
+import { Context, IDPayOnboardingMachineType } from "./machine";
 
 type StateWithContext = StateFrom<IDPayOnboardingMachineType>;
 const selectRequiredCriteria = (state: StateWithContext) =>
   state.context.requiredCriteria;
-type FilterType = typeof SelfDeclarationDTO.is;
-const discernCriteria = (
+const discernCriteria = <T extends SelfDeclarationDTO>(
   criteria: O.Option<RequiredCriteriaDTO> | undefined,
-  filterFunc: FilterType
+  filterFunc: typeof SelfDeclarationMultiDTO | typeof SelfDeclarationBoolDTO
 ) =>
   pipe(
     criteria,
@@ -23,17 +22,17 @@ const discernCriteria = (
     O.flatten,
     O.fold(
       () => [],
-      some => some.selfDeclarationList.filter(filterFunc)
+      some => some.selfDeclarationList.filter(filterFunc.is)
     )
-  );
+  ) as Array<T>;
 
 const multiRequiredCriteriaSelector = createSelector(
   selectRequiredCriteria,
   requiredCriteria =>
-    discernCriteria(
+    discernCriteria<SelfDeclarationMultiDTO>(
       requiredCriteria,
-      SelfDeclarationMultiDTO.is
-    ) as Array<SelfDeclarationMultiDTO>
+      SelfDeclarationMultiDTO
+    )
 );
 
 const pickedCriteriaSelector = createSelector(
@@ -44,14 +43,28 @@ const pickedCriteriaSelector = createSelector(
 const boolRequiredCriteriaSelector = createSelector(
   selectRequiredCriteria,
   requiredCriteria =>
-    discernCriteria(
+    discernCriteria<SelfDeclarationBoolDTO>(
       requiredCriteria,
-      SelfDeclarationBoolDTO.is
-    ) as Array<SelfDeclarationBoolDTO>
+      SelfDeclarationBoolDTO
+    )
 );
+const getMultiRequiredCriteriaFromContext = (context: Context) =>
+  discernCriteria<SelfDeclarationMultiDTO>(
+    context.requiredCriteria,
+    SelfDeclarationMultiDTO
+  );
+
+const getBoolRequiredCriteriaFromContext = (context: Context) =>
+  discernCriteria<SelfDeclarationBoolDTO>(
+    context.requiredCriteria,
+    SelfDeclarationBoolDTO
+  );
 
 export {
   multiRequiredCriteriaSelector,
   boolRequiredCriteriaSelector,
-  pickedCriteriaSelector
+  pickedCriteriaSelector,
+  discernCriteria,
+  getMultiRequiredCriteriaFromContext,
+  getBoolRequiredCriteriaFromContext
 };

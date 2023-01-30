@@ -66,9 +66,10 @@ const mockLoadRequiredCriteria = jest.fn(
 
 const mockNavigateToInitiativeDetailsScreen = jest.fn();
 const mockNavigateToPDNDCriteriaScreen = jest.fn();
-const mockNavigateToSelfDeclarationsScreen = jest.fn();
+const mockNavigateToBoolSelfDeclarationsScreen = jest.fn();
 const mockNavigateToCompletionScreen = jest.fn();
 const mockNavigateToFailureScreen = jest.fn();
+const mockNavigateToMultiSelfDeclarationsScreen = jest.fn();
 const mockExitOnboarding = jest.fn();
 
 const mockAcceptRequiredCriteria = jest.fn(
@@ -98,7 +99,10 @@ describe("machine", () => {
         navigateToInitiativeDetailsScreen:
           mockNavigateToInitiativeDetailsScreen,
         navigateToPDNDCriteriaScreen: mockNavigateToPDNDCriteriaScreen,
-        navigateToSelfDeclarationsScreen: mockNavigateToSelfDeclarationsScreen,
+        navigateToBoolSelfDeclarationsScreen:
+          mockNavigateToBoolSelfDeclarationsScreen,
+        navigateToMultiSelfDeclarationsScreen:
+          mockNavigateToMultiSelfDeclarationsScreen,
         navigateToCompletionScreen: mockNavigateToCompletionScreen,
         navigateToFailureScreen: mockNavigateToFailureScreen,
         exitOnboarding: mockExitOnboarding
@@ -185,11 +189,17 @@ describe("machine", () => {
     });
 
     await waitFor(() =>
-      expect(mockNavigateToSelfDeclarationsScreen).toHaveBeenCalled()
+      expect(mockNavigateToBoolSelfDeclarationsScreen).toHaveBeenCalled()
     );
 
     onboardingService.send({
-      type: "ACCEPT_REQUIRED_SELF_CRITERIA"
+      type: "ACCEPT_REQUIRED_BOOL_CRITERIA"
+    });
+    await waitFor(() =>
+      expect(mockNavigateToMultiSelfDeclarationsScreen).toHaveBeenCalled()
+    );
+    onboardingService.send({
+      type: "ALL_CRITERIA_ACCEPTED"
     });
 
     await waitFor(() =>
@@ -229,7 +239,8 @@ describe("machine", () => {
       actions: {
         navigateToInitiativeDetailsScreen: jest.fn(),
         navigateToPDNDCriteriaScreen: jest.fn(),
-        navigateToSelfDeclarationsScreen: jest.fn(),
+        navigateToBoolSelfDeclarationsScreen: jest.fn(),
+        navigateToMultiSelfDeclarationsScreen: jest.fn(),
         navigateToCompletionScreen: jest.fn(),
         navigateToFailureScreen: jest.fn(),
         exitOnboarding: mockExitOnboarding
@@ -263,10 +274,11 @@ describe("machine", () => {
       actions: {
         navigateToInitiativeDetailsScreen: jest.fn(),
         navigateToPDNDCriteriaScreen: jest.fn(),
-        navigateToSelfDeclarationsScreen: jest.fn(),
+        navigateToBoolSelfDeclarationsScreen: jest.fn(),
         navigateToCompletionScreen: jest.fn(),
         navigateToFailureScreen: mockNavigateToFailureScreen,
-        exitOnboarding: jest.fn()
+        exitOnboarding: jest.fn(),
+        navigateToMultiSelfDeclarationsScreen: jest.fn()
       }
     });
 
@@ -302,7 +314,8 @@ describe("machine", () => {
       actions: {
         navigateToInitiativeDetailsScreen: jest.fn(),
         navigateToPDNDCriteriaScreen: jest.fn(),
-        navigateToSelfDeclarationsScreen: jest.fn(),
+        navigateToBoolSelfDeclarationsScreen: jest.fn(),
+        navigateToMultiSelfDeclarationsScreen: jest.fn(),
         navigateToCompletionScreen: jest.fn(),
         navigateToFailureScreen: mockNavigateToFailureScreen,
         exitOnboarding: jest.fn()

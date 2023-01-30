@@ -1,13 +1,8 @@
 /* eslint-disable no-underscore-dangle */
 import { RouteProp, useRoute } from "@react-navigation/native";
-import { useSelector } from "@xstate/react";
 import { ListItem as NBListItem, View as NBView } from "native-base";
 import React from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
-import {
-  SelfConsentMultiDTO,
-  _typeEnum
-} from "../../../../../definitions/idpay/onboarding/SelfConsentMultiDTO";
 import { Body } from "../../../../components/core/typography/Body";
 import { H1 } from "../../../../components/core/typography/H1";
 import { H4 } from "../../../../components/core/typography/H4";
@@ -20,11 +15,8 @@ import IconFont from "../../../../components/ui/IconFont";
 import I18n from "../../../../i18n";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { IDPayOnboardingParamsList } from "../navigation/navigator";
+import { useMultiPrerequisitesPagination } from "../utils/hooks";
 import { useOnboardingMachineService } from "../xstate/provider";
-import {
-  multiRequiredCriteriaSelector,
-  pickedCriteriaSelector
-} from "../xstate/selectors";
 
 const styles = StyleSheet.create({
   maxheight: {
@@ -72,11 +64,11 @@ const buttonProps = {
   }
 };
 
-type NavigationType = IOStackNavigationProp<
+type MultiValueScreenNavigationType = IOStackNavigationProp<
   IDPayOnboardingParamsList,
   "IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS"
 >;
-export type MultiValuePrerequisitesScreenRouteParams = {
+type MultiValuePrerequisitesScreenRouteParams = {
   page: number;
 };
 
@@ -86,57 +78,8 @@ type MultiValuePrerequisitesScreenRouteProps = RouteProp<
 >;
 
 type NavigationProps = {
-  navigation: NavigationType;
+  navigation: MultiValueScreenNavigationType;
 };
-const useMultiPrerequisitesPagination = (
-  navigation: NavigationType,
-  machine: ReturnType<typeof useOnboardingMachineService>,
-  page: number
-) => {
-  const multiPrerequisites = useSelector(
-    machine,
-    multiRequiredCriteriaSelector
-  );
-  const currentPage = multiPrerequisites[page];
-  const isNextPageAvailable = multiPrerequisites[page + 1] !== undefined;
-  const pickedCriteria = useSelector(machine, pickedCriteriaSelector);
-
-  const navigateToPage = (targetPage: number) =>
-    navigation.push("IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS", {
-      page: targetPage
-    });
-  const confirmChoice = (choice: SelfConsentMultiDTO) => {
-    machine.send("ADD_SELF_CONSENT", {
-      data: choice,
-      page
-    });
-    if (isNextPageAvailable) {
-      navigateToPage(page + 1);
-    } else {
-      if (shouldEndCycle()) {
-        machine.send("ALL_CRITERIA_ACCEPTED");
-      } else {
-        // should never happen, but better safe than sorry
-        navigateToPage(pickedCriteria.findIndex(item => item === undefined));
-      }
-    }
-  };
-  const goBack = () => {
-    if (page > 0) {
-      navigation.pop();
-    } else {
-      navigation.goBack();
-    }
-  };
-
-  const shouldEndCycle = () => !pickedCriteria.includes(undefined);
-  return {
-    currentPage,
-    confirmChoice,
-    goBack
-  };
-};
-
 const MultiValuePrerequisitesScreen = ({ navigation }: NavigationProps) => {
   const [selectedIndex, setSelectedIndex] = React.useState<number | undefined>(
     undefined
@@ -155,7 +98,7 @@ const MultiValuePrerequisitesScreen = ({ navigation }: NavigationProps) => {
       _type: currentPage._type,
       value: currentPage.value[selectedIndex],
       code: currentPage.code
-    } as SelfConsentMultiDTO);
+    });
 
     return null;
   };
@@ -203,3 +146,7 @@ const MultiValuePrerequisitesScreen = ({ navigation }: NavigationProps) => {
 };
 
 export default MultiValuePrerequisitesScreen;
+export type {
+  MultiValuePrerequisitesScreenRouteParams,
+  MultiValueScreenNavigationType
+};
