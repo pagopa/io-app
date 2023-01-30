@@ -55,6 +55,7 @@ import { UserDataProcessingActions } from "./userDataProcessing";
 import { UserMetadataActions } from "./userMetadata";
 import { WalletActions } from "./wallet";
 import { OutcomeCodeActions } from "./wallet/outcomeCode";
+import { LollipopActions } from "./lollipop";
 
 export type Action =
   | AnalyticsActions
@@ -102,7 +103,8 @@ export type Action =
   | CdcActions
   | PnActions
   | FciActions
-  | IDPayActions;
+  | IDPayActions
+  | LollipopActions;
 
 export type Dispatch = DispatchAPI<Action>;
 
