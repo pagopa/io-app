@@ -1,9 +1,9 @@
-import { LollipopState } from "./lollipop";
 import { PersistPartial } from "redux-persist";
 import { VersionInfoState } from "../../common/versionInfo/store/reducers/versionInfo";
 
 import { BonusState } from "../../features/bonus/bonusVacanze/store/reducers";
 import { PersistedFeaturesState } from "../../features/common/store/reducers";
+import { LollipopState } from "./lollipop";
 import { AppState } from "./appState";
 import { AssistanceToolsState } from "./assistanceTools";
 import { PersistedAuthenticationState } from "./authentication";
