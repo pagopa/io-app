@@ -46,7 +46,7 @@ export const useMultiPrerequisitesPagination = (
     if (page > 0) {
       navigation.pop();
     } else {
-      navigation.goBack();
+      machine.send("GO_BACK");
     }
   };
 

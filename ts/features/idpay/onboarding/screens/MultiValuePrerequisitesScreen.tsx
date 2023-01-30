@@ -125,7 +125,7 @@ const MultiValuePrerequisitesScreen = ({ navigation }: NavigationProps) => {
       <FooterWithButtons
         type="TwoButtonsInlineHalf"
         leftButton={{
-          onPress: () => null,
+          onPress: goBack,
           ...buttonProps.leftButton
         }}
         rightButton={{
