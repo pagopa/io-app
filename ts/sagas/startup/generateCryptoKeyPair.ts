@@ -12,14 +12,22 @@ import {
   KeyGenerationInfo
 } from "../../utils/crypto";
 import { mixpanelTrack } from "./../../mixpanel";
+import { lollipopSelector } from "./../../store/actions/lollipop";
 
+/**
+ * Generates a new crypto key pair.
+ */
 export function* cryptoKeyGenerationSaga(keyTag: string) {
   const isLollipopEnabled = yield* select(isLollipopEnabledSelector);
   if (isLollipopEnabled) {
+    yield* deletePreviousCryptoKeyPair();
     yield* call(generateCryptoKeyPair, keyTag);
   }
 }
 
+/**
+ * Sends to mixpanel the crypto key pair generation events.
+ */
 export function* trackMixpanelCryptoKeyPairEvents(keyTag: string) {
   const keyInfo = yield* call(getKeyGenerationInfo, keyTag);
 
@@ -37,6 +45,19 @@ export function* trackMixpanelCryptoKeyPairEvents(keyTag: string) {
   }
 }
 
+/**
+ * Deletes a previous save crypto key pair.
+ */
+export function* deletePreviousCryptoKeyPair() {
+  const maybeOldKeyTag = (yield* select(lollipopSelector)).keyTag;
+  if (maybeOldKeyTag) {
+    yield* deleteCryptoKeyPair(maybeOldKeyTag);
+  }
+}
+
+/**
+ * Deletes the crypto key pair corresponding to the provided `keyTag`.
+ */
 function* deleteCryptoKeyPair(keyTag: string) {
   // Key is persisted even after uninstalling the application on iOS.
   const keyAlreadyExistsOnKeystore = yield* call(checkPublicKeyExists, keyTag);
@@ -52,6 +73,9 @@ function* deleteCryptoKeyPair(keyTag: string) {
   }
 }
 
+/**
+ * Generates a new crypto key pair.
+ */
 function* generateCryptoKeyPair(keyTag: string) {
   try {
     // Every new fresh login we need to regenerate a new key pair.
@@ -68,6 +92,9 @@ function* generateCryptoKeyPair(keyTag: string) {
   }
 }
 
+/**
+ * Persists the crypto key pair generation information data.
+ */
 function* saveKeyGenerationFailureInfo(keyTag: string, e: unknown) {
   const { message: errorCode, userInfo } = e as CryptoError;
   const keyGenerationInfo: KeyGenerationInfo = {
