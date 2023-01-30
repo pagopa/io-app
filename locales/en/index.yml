@@ -3314,6 +3314,18 @@ idpay:
                 "Hai rifiutato di eliminare un metodo di pagamento"
               PAID_REFUND:  "Rimborso"
               REJECTED_REFUND:  "Rifiuto rimborso"
+    operationDetails:
+      title: Dettaglio dell'operazione
+      instrument: Metodo di pagamento
+      maskedPan: •••• {{lastDigits}}
+      amountLabel: Importo transazione
+      accruedAmountLabel: Importo rimborsabile
+      amount: € {{amount}}
+      infoTitle: Informazioni sull transazione
+      date: Data
+      circuit: Circuito di pagamento
+      acquirerId: ID transazione Acquirer
+      issuerId: ID transazione Issuer
   onboarding:
     headerTitle: "Adesione all'iniziativa"
     beforeContinue:
