@@ -119,7 +119,7 @@ export const PnMessageDetails = (props: Props) => {
     (attachment: UIAttachment) => {
       navigation.navigate(PN_ROUTES.MESSAGE_ATTACHMENT, {
         messageId,
-        attachment
+        attachmentId: attachment.id
       });
     },
     [messageId, navigation]

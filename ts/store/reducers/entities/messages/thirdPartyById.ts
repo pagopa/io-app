@@ -1,17 +1,22 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
 import { loadThirdPartyMessage } from "../../../../features/messages/store/actions";
 import { Action } from "../../../../store/actions/types";
 import { IndexedById } from "../../../../store/helpers/indexer";
-import { UIMessageId } from "../../../../store/reducers/entities/messages/types";
+import {
+  AttachmentType,
+  UIMessageId
+} from "../../../../store/reducers/entities/messages/types";
 import {
   toError,
   toLoading,
   toSome
 } from "../../../../store/reducers/IndexedByIdPot";
 import { GlobalState } from "../../../../store/reducers/types";
+import { attachmentFromThirdPartyMessage } from "./transformers";
 
 export type ThirdPartyById = IndexedById<
   pot.Pot<ThirdPartyMessageWithContent, Error>
@@ -39,14 +44,64 @@ export const thirdPartyByIdReducer = (
   return state;
 };
 
+const thirdPartyKeyValueContainer = (state: GlobalState) =>
+  state.entities.messages.thirdPartyById;
+
 /**
  * From UIMessageId to the third party content pot
  */
 export const thirdPartyFromIdSelector = createSelector(
   [
-    (state: GlobalState) => state.entities.messages.thirdPartyById,
-    (_: GlobalState, id: UIMessageId) => id
+    thirdPartyKeyValueContainer,
+    (_: GlobalState, ioMessageId: UIMessageId) => ioMessageId
   ],
-  (byId, id): pot.Pot<ThirdPartyMessageWithContent, Error> =>
-    byId[id] ?? pot.none
+  (
+    thirdPartyKeyValueContainer,
+    ioMessageId
+  ): pot.Pot<ThirdPartyMessageWithContent, Error> =>
+    thirdPartyKeyValueContainer[ioMessageId] ?? pot.none
+);
+
+export const thirdPartyMessageUIAttachment = createSelector(
+  [
+    thirdPartyKeyValueContainer,
+    (_: GlobalState, ioMessageId: UIMessageId) => ioMessageId,
+    (
+      _: GlobalState,
+      _ioMessageId: UIMessageId,
+      thirdPartyMessageAttachmentId: NonEmptyString
+    ) => thirdPartyMessageAttachmentId,
+    (
+      _: GlobalState,
+      _ioMessageId: UIMessageId,
+      _thirdPartyMessageAttachmentId: NonEmptyString,
+      thirdPartyMessageAttachmentCategory: AttachmentType
+    ) => thirdPartyMessageAttachmentCategory
+  ],
+  (
+    thirdPartyKeyValueContainer,
+    ioMessageId,
+    thirdPartyMessageAttachmentId,
+    thirdPartyMessageAttachmentCategory
+  ) => {
+    const thirdPartyMessagePot = thirdPartyKeyValueContainer[ioMessageId];
+    if (!thirdPartyMessagePot || pot.isNone(thirdPartyMessagePot)) {
+      return undefined;
+    }
+    const thirdPartyMessage = thirdPartyMessagePot.value;
+    const thirdPartyMessageAttachments =
+      thirdPartyMessage.third_party_message.attachments;
+    const thirdPartyMessageAttachment = thirdPartyMessageAttachments?.find(
+      thirdPartyMessageAttachment =>
+        thirdPartyMessageAttachment.id === thirdPartyMessageAttachmentId
+    );
+    if (!thirdPartyMessageAttachment) {
+      return undefined;
+    }
+    return attachmentFromThirdPartyMessage(
+      ioMessageId,
+      thirdPartyMessageAttachment,
+      thirdPartyMessageAttachmentCategory
+    );
+  }
 );

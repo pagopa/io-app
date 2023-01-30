@@ -4,6 +4,7 @@ import { MessageCategory } from "../../../../../definitions/backend/MessageCateg
 import { TagEnum } from "../../../../../definitions/backend/MessageCategoryBase";
 import { MessageStatusAttributes } from "../../../../../definitions/backend/MessageStatusAttributes";
 import { PublicMessage } from "../../../../../definitions/backend/PublicMessage";
+import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
 import { apiUrlPrefix } from "../../../../config";
 import { ContentTypeValues } from "../../../../types/contentType";
@@ -155,3 +156,23 @@ export const attachmentsFromThirdPartyMessage = (
     category
   }));
 };
+
+export const attachmentFromThirdPartyMessage = (
+  thirdPartyMessageId: string,
+  thirPartyMessageAttachment: ThirdPartyAttachment,
+  category: AttachmentType
+): UIAttachment => ({
+  messageId: thirdPartyMessageId as UIMessageId,
+  id: thirPartyMessageAttachment.id as string as UIAttachmentId,
+  displayName: thirPartyMessageAttachment.name ?? thirPartyMessageAttachment.id,
+  contentType:
+    thirPartyMessageAttachment.content_type ??
+    ContentTypeValues.applicationOctetStream,
+  resourceUrl: {
+    href: generateAttachmentUrl(
+      thirdPartyMessageId,
+      thirPartyMessageAttachment.url
+    )
+  },
+  category
+});
