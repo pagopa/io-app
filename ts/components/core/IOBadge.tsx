@@ -1,58 +1,109 @@
-import { Badge } from "native-base";
 import React from "react";
-import { ColorValue, StyleSheet } from "react-native";
-import { LabelSmall } from "./typography/LabelSmall";
+import { View, Text, ColorValue, StyleSheet } from "react-native";
+import { makeFontStyleObject } from "./fonts";
 import { IOColors, IOColorType } from "./variables/IOColors";
 
-export type IOBadgeCommonProps = {
+type IOBadgeOutlineColors = Extract<IOColorType, "blue" | "white" | "red">;
+type IOBadgeSolidColors = Extract<IOColorType, "blue" | "white" | "aqua">;
+type AllowedBadgeColors = IOBadgeOutlineColors | IOBadgeSolidColors;
+
+export type IOBadgeProps = {
   text: string;
   small?: boolean;
-  labelColor?: Extract<IOColorType, "bluegreyDark" | "blue" | "white" | "red">;
+  variant?: "solid" | "outline";
+  color?: AllowedBadgeColors;
   testID?: string;
 };
 
-const commonBadgeStyles = StyleSheet.create({
-  badge: {
-    elevation: 0.1,
-    paddingLeft: 8,
-    paddingRight: 8
-  },
-  badgeSmall: {
-    height: 18
-  }
-});
-
-const mapForegroundBackgroundColor: Record<
-  NonNullable<IOBadgeCommonProps["labelColor"]>,
-  ColorValue
-> = {
-  white: IOColors.blue,
-  blue: IOColors.white,
-  bluegreyDark: IOColors.aqua,
-  red: IOColors.white
+type SolidVariantProps = {
+  background: ColorValue;
+  text: ColorValue;
 };
 
-const mapForegroundBorderColor: Record<
-  NonNullable<IOBadgeCommonProps["labelColor"]>,
-  ColorValue | null
-> = {
-  white: null,
+/*
+  Before: <IOBadge text={"Badge"} small={true} labelColor={"white"} />
+  After: <IOBadge text={"Badge"} variant="solid" color="blue" small />
+
+  Before: <IOBadge text={"Badge"} small={true} labelColor={"bluegreyDark"} />
+  After: <IOBadge text={"Badge"} variant="solid" color="aqua" small />
+
+  Before: <IOBadge text={"Badge"} small={true} labelColor={"blue"} />
+  After: <IOBadge text={"Badge"} variant="outline" color="blue" small />
+
+  Before: <IOBadge text={"Badge"} small={true} labelColor={"red"} />
+  After: <IOBadge text={"Badge"} variant="outline" color="red" small />
+
+  NEW!
+  <IOBadge text={"Badge"} variant="solid" color="white" small />
+  --> LabelColor: bluegrey
+  <IOBadge text={"Badge"} variant="outline" color="white" small />
+  --> LabelColor: white
+
+*/
+
+const mapOutlineColor: Record<NonNullable<IOBadgeOutlineColors>, ColorValue> = {
   blue: IOColors.blue,
-  bluegreyDark: null,
+  white: IOColors.white,
   red: IOColors.red
 };
 
-const borderStyle = (color: NonNullable<IOBadgeCommonProps["labelColor"]>) => {
-  const borderColor = mapForegroundBorderColor[color];
-  if (borderColor === null) {
-    return null;
-  } else {
-    return {
-      borderColor,
-      borderWidth: 1
-    };
+const mapSolidColor: Record<
+  NonNullable<IOBadgeSolidColors>,
+  SolidVariantProps
+> = {
+  blue: {
+    background: IOColors.blue,
+    text: IOColors.white
+  },
+  white: {
+    background: IOColors.white,
+    text: IOColors.bluegrey
+  },
+  aqua: {
+    background: IOColors.aqua,
+    text: IOColors.bluegreyDark
   }
 };
+
+const BADGE_SMALL_SIZE = 20;
+const BADGE_DEFAULT_SIZE = 27;
+
+const defaultVariant: IOBadgeProps["variant"] = "solid";
+const defaultColor: IOBadgeProps["color"] = "blue";
+
+const styles = StyleSheet.create({
+  badge: {
+    alignSelf: "flex-start",
+    alignItems: "center",
+    textAlignVertical: "center", // Android
+    justifyContent: "center",
+    elevation: 0.1
+  },
+  badgeSizeDefault: {
+    // paddingHorizontal are different between sizes
+    // to keep space uniform
+    paddingHorizontal: 10,
+    height: BADGE_DEFAULT_SIZE,
+    borderRadius: BADGE_DEFAULT_SIZE / 2
+  },
+  badgeSizeSmall: {
+    paddingHorizontal: 8,
+    height: BADGE_SMALL_SIZE,
+    borderRadius: BADGE_SMALL_SIZE / 2
+  },
+  label: {
+    alignSelf: "center",
+    ...makeFontStyleObject("SemiBold", undefined, "TitilliumWeb")
+  },
+  labelSizeDefault: {
+    fontSize: 14,
+    lineHeight: 20
+  },
+  labelSizeSmall: {
+    fontSize: 11,
+    lineHeight: 16
+  }
+});
 
 /**
  * A badge component styled with the
@@ -60,33 +111,38 @@ const borderStyle = (color: NonNullable<IOBadgeCommonProps["labelColor"]>) => {
  */
 export const IOBadge = ({
   text,
+  variant = defaultVariant,
+  color = defaultColor,
   small,
-  labelColor,
   testID
-}: IOBadgeCommonProps) => {
-  const lColor = labelColor ?? "white";
-
-  return (
-    <Badge
+}: IOBadgeProps) => (
+  <View
+    testID={testID}
+    style={[
+      styles.badge,
+      small ? styles.badgeSizeSmall : styles.badgeSizeDefault,
+      variant === "outline" && {
+        borderColor: mapOutlineColor[color as IOBadgeOutlineColors],
+        borderWidth: 1
+      },
+      variant === "solid" && {
+        backgroundColor: mapSolidColor[color as IOBadgeSolidColors]?.background
+      }
+    ]}
+  >
+    <Text
       style={[
-        commonBadgeStyles.badge,
-        {
-          backgroundColor: lColor
-            ? mapForegroundBackgroundColor[lColor]
-            : IOColors.blue
+        styles.label,
+        small ? styles.labelSizeSmall : styles.labelSizeDefault,
+        variant === "outline" && {
+          color: mapOutlineColor[color as IOBadgeOutlineColors]
         },
-        borderStyle(lColor ?? "white"),
-        small ? commonBadgeStyles.badgeSmall : {}
+        variant === "solid" && {
+          color: mapSolidColor[color as IOBadgeSolidColors]?.text
+        }
       ]}
-      testID={testID}
     >
-      <LabelSmall
-        color={lColor}
-        fontSize={small ? "small" : "regular"}
-        weight={"SemiBold"}
-      >
-        {text}
-      </LabelSmall>
-    </Badge>
-  );
-};
+      {text}
+    </Text>
+  </View>
+);

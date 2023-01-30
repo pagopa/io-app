@@ -21,25 +21,49 @@ export const DSBadges = () => (
   <DesignSystemScreen title={"Badge"}>
     <VSpacer size={16} />
     <View style={IOStyles.row}>
-      <IOBadge text={"Badge"} small={true} labelColor={"white"} />
+      <IOBadge small text={"Badge"} variant="solid" color="blue" />
       <HSpacer size={16} />
-      <IOBadge text={"Badge"} small={true} labelColor={"bluegreyDark"} />
+      <IOBadge small text={"Badge"} variant="solid" color="aqua" />
       <HSpacer size={16} />
-      <IOBadge text={"Badge"} small={true} labelColor={"blue"} />
+      <IOBadge small text={"Badge"} variant="outline" color="blue" />
       <HSpacer size={16} />
-      <IOBadge text={"Badge"} small={true} labelColor={"red"} />
+      <IOBadge small text={"Badge"} variant="outline" color="red" />
       <HSpacer size={16} />
     </View>
     <VSpacer size={16} />
     <View style={IOStyles.row}>
-      <IOBadge text={"Badge"} labelColor={"white"} />
+      <IOBadge text={"Badge"} variant="solid" color="blue" />
       <HSpacer size={16} />
-      <IOBadge text={"Badge"} labelColor={"bluegreyDark"} />
+      <IOBadge text={"Badge"} variant="solid" color="aqua" />
       <HSpacer size={16} />
-      <IOBadge text={"Badge"} labelColor={"blue"} />
+      <IOBadge text={"Badge"} variant="outline" color="blue" />
       <HSpacer size={16} />
-      <IOBadge text={"Badge"} labelColor={"red"} />
+      <IOBadge text={"Badge"} variant="outline" color="red" />
       <HSpacer size={16} />
+    </View>
+    <VSpacer size={16} />
+    <View
+      style={{
+        backgroundColor: IOColors.bluegrey,
+        padding: 16,
+        borderRadius: 8
+      }}
+    >
+      <View style={IOStyles.row}>
+        <IOBadge small text={"Badge"} variant="solid" color="aqua" />
+        <HSpacer size={16} />
+        <IOBadge small text={"Badge"} variant="solid" color="white" />
+        <HSpacer size={16} />
+        <IOBadge small text={"Badge"} variant="outline" color="white" />
+      </View>
+      <VSpacer size={16} />
+      <View style={IOStyles.row}>
+        <IOBadge text={"Badge"} variant="solid" color="aqua" />
+        <HSpacer size={16} />
+        <IOBadge text={"Badge"} variant="solid" color="white" />
+        <HSpacer size={16} />
+        <IOBadge text={"Badge"} variant="outline" color="white" />
+      </View>
     </View>
     <VSpacer size={40} />
 
