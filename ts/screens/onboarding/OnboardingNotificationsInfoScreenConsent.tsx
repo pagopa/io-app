@@ -19,7 +19,11 @@ import customVariables from "../../theme/variables";
 import { H4 } from "../../components/core/typography/H4";
 import { checkNotificationPermissions } from "../../utils/notification";
 import { profilePreferencesSelector } from "../../store/reducers/profile";
-import { mixpanelTrack } from "../../mixpanel";
+import {
+  trackConflictingNotificationSettings,
+  trackOpenSystemNotificationSettings,
+  trackSkipSystemNotificationPermissions
+} from "../../utils/analytics";
 
 const styles = StyleSheet.create({
   container: {
@@ -105,11 +109,12 @@ const OnboardingNotificationsInfoScreenConsent = () => {
     // When this code executes, we know for sure that system notifications permissions are disabled,
     // otherwise the component would either have been skipped by the saga or it would have automatically
     // handled the given permission using the AppState listener (registered on the useEffect)
+    trackSkipSystemNotificationPermissions();
 
     if (pot.isSome(optInPreferencesPot)) {
       const optInPreferences = optInPreferencesPot.value;
-      if (optInPreferences.reminder) {
-        void mixpanelTrack("NOTIFICATIONS_OPTIN_REMINDER_ON_PERMISSIONS_OFF");
+      if (optInPreferences.preview || optInPreferences.reminder) {
+        trackConflictingNotificationSettings();
       }
     }
 
@@ -117,6 +122,7 @@ const OnboardingNotificationsInfoScreenConsent = () => {
   };
 
   const openSettings = () => {
+    trackOpenSystemNotificationSettings();
     openAppSettings();
   };
 

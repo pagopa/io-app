@@ -1,10 +1,11 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
-import { List as NBList, View as NBView } from "native-base";
+import { List as NBList } from "native-base";
 import React, { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { OperationListDTO } from "../../../../../../definitions/idpay/timeline/OperationListDTO";
 import { OperationTypeEnum as TransactionOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/TransactionOperationDTO";
+import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
@@ -37,7 +38,7 @@ const emptyTimelineContent = (
         "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperations"
       )}
     </H3>
-    <NBView spacer />
+    <VSpacer size={16} />
     <LabelSmall weight="Regular" color="bluegreyDark">
       {I18n.t(
         "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperationsSubtitle"
@@ -109,7 +110,7 @@ const ConfiguredInitiativeData = (props: Props) => {
           )}
         </Body>
       </View>
-      <NBView spacer small />
+      <VSpacer size={8} />
       <NBList>
         {timeline.slice(0, 3).map(operation => (
           <TimelineOperationListItem

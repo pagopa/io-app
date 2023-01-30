@@ -1,13 +1,16 @@
-import { View } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { profileNameSelector } from "../../../../../../../store/reducers/profile";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import { BpdPeriod } from "../../../../store/actions/periods";
 import { BpdPeriodWithInfo } from "../../../../store/reducers/details/periods";
 import { bpdSelectedPeriodSelector } from "../../../../store/reducers/details/selectedPeriod";
+import {
+  HSpacer,
+  VSpacer
+} from "../../../../../../../components/core/spacer/Spacer";
 import SuperCashbackRankingSummary from "./ranking/SuperCashbackRankingSummary";
 import { TextualSummary } from "./textualSummary/TextualSummary";
 import TransactionsGraphicalSummary from "./TransactionsGraphicalSummary";
@@ -53,13 +56,13 @@ const Content = (sd: SummaryData) => (
         />
         {isSuperCashbackVisible(sd.period) ? (
           <>
-            <View hspacer={true} />
+            <HSpacer size={16} />
             <SuperCashbackRankingSummary period={sd.period} />
           </>
         ) : null}
       </View>
     ) : null}
-    <View spacer={true} />
+    <VSpacer size={16} />
     <TextualSummary period={sd.period} name={sd.name} />
   </View>
 );

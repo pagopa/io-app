@@ -1,7 +1,7 @@
-import { View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { connect } from "react-redux";
+import { VSpacer } from "../../../../../../components/core/spacer/Spacer";
 import { H4 } from "../../../../../../components/core/typography/H4";
 import { Monospace } from "../../../../../../components/core/typography/Monospace";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
@@ -36,11 +36,11 @@ const IbanKoBody: React.FunctionComponent<Props> = props => {
       <H4 color={"bluegrey"} weight={"Regular"} style={styles.text}>
         {props.text1}
       </H4>
-      <View spacer={true} small={true} />
+      <VSpacer size={8} />
       <Monospace selectable={true} style={styles.text} weight={"Bold"}>
         {iban}
       </Monospace>
-      <View spacer={true} small={true} />
+      <VSpacer size={8} />
       <H4 color={"bluegrey"} weight={"Regular"} style={styles.text}>
         {props.text2}
       </H4>

@@ -1,6 +1,6 @@
-import { Content, View } from "native-base";
+import { Content } from "native-base";
 import * as React from "react";
-import { SafeAreaView, StyleSheet, TextInput } from "react-native";
+import { View, SafeAreaView, StyleSheet, TextInput } from "react-native";
 import { Label } from "../../components/core/typography/Label";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
@@ -9,6 +9,7 @@ import { IOStyles } from "../../components/core/variables/IOStyles";
 import { H5 } from "../../components/core/typography/H5";
 import WebviewComponent from "../../components/WebviewComponent";
 import { IOColors } from "../../components/core/variables/IOColors";
+import { VSpacer } from "../../components/core/spacer/Spacer";
 
 const styles = StyleSheet.create({
   textInput: { padding: 1, borderWidth: 1, height: 30, color: IOColors.black },
@@ -40,7 +41,7 @@ const CgnLandingPlayground = () => {
               autoCapitalize="none"
               autoCorrect={false}
             />
-            <View spacer={true} />
+            <VSpacer size={16} />
             <H5>{"Referer"}</H5>
             <TextInput
               style={styles.textInput}
@@ -48,7 +49,7 @@ const CgnLandingPlayground = () => {
               value={refererValue}
             />
           </View>
-          <View spacer={true} />
+          <VSpacer size={16} />
           <View style={styles.row}>
             <ButtonDefaultOpacity
               style={styles.contentCenter}
@@ -70,7 +71,7 @@ const CgnLandingPlayground = () => {
               />
             </ButtonDefaultOpacity>
           </View>
-          <View spacer={true} />
+          <VSpacer size={16} />
           <View style={IOStyles.flex}>
             {loadUri !== "" && (
               <WebviewComponent

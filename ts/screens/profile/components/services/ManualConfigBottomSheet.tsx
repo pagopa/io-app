@@ -1,5 +1,4 @@
 import * as React from "react";
-import { View } from "native-base";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import {
   cancelButtonProps,
@@ -8,10 +7,11 @@ import {
 import Markdown from "../../../../components/ui/Markdown";
 import I18n from "../../../../i18n";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
 
 const ManualConfigConfirm = (): React.ReactElement => (
   <>
-    <View spacer />
+    <VSpacer size={16} />
     <Markdown>
       {I18n.t("services.optIn.preferences.manualConfig.bottomSheet.body")}
     </Markdown>
