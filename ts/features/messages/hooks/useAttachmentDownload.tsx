@@ -13,6 +13,10 @@ import { mvlPreferencesSelector } from "../../mvl/store/reducers/preferences";
 import { downloadAttachment } from "../../../store/actions/messages";
 import { UIAttachment } from "../../../store/reducers/entities/messages/types";
 import { downloadPotForMessageAttachmentSelector } from "../../../store/reducers/entities/messages/downloads";
+import {
+  trackThirdPartyMessageAttachmentCancel,
+  trackThirdPartyMessageAttachmentShowPreview
+} from "../../../utils/analytics";
 import { useDownloadAttachmentBottomSheet } from "./useDownloadAttachmentBottomSheet";
 
 // This hook has a different behaviour if the attachment is a PN
@@ -120,13 +124,21 @@ export const useAttachmentDownload = (
   const { present, bottomSheet, dismiss } = useDownloadAttachmentBottomSheet({
     isGenericAttachment,
     onConfirm: dontAskAgain => {
-      void mixpanelTrack("PN_ATTACHMENTDISCLAIMER_ACCEPTED");
+      if (isGenericAttachment) {
+        trackThirdPartyMessageAttachmentShowPreview();
+      } else {
+        void mixpanelTrack("PN_ATTACHMENTDISCLAIMER_ACCEPTED");
+      }
       dispatch(mvlPreferencesSetWarningForAttachments(!dontAskAgain));
       void downloadAttachmentIfNeeded();
       dismiss();
     },
     onCancel: () => {
-      void mixpanelTrack("PN_ATTACHMENTDISCLAIMER_REJECTED");
+      if (isGenericAttachment) {
+        trackThirdPartyMessageAttachmentCancel();
+      } else {
+        void mixpanelTrack("PN_ATTACHMENTDISCLAIMER_REJECTED");
+      }
       dismiss();
     }
   });

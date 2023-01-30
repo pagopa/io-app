@@ -11,6 +11,7 @@ import {
   cancelButtonProps,
   confirmButtonProps
 } from "../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { trackThirdPartyMessageAttachmentDoNotShow } from "../../../utils/analytics";
 
 const BOTTOM_SHEET_HEIGHT = 375;
 
@@ -19,6 +20,15 @@ type BottomSheetProps = Readonly<{
   onConfirm: (dontAskAgain: boolean) => void;
   onCancel: () => void;
 }>;
+
+function trackDoNotAskAgain(
+  isGenericAttachment: boolean,
+  afterTapValue: boolean
+) {
+  if (isGenericAttachment && afterTapValue) {
+    trackThirdPartyMessageAttachmentDoNotShow();
+  }
+}
 
 export const useDownloadAttachmentBottomSheet = ({
   isGenericAttachment,
@@ -37,11 +47,17 @@ export const useDownloadAttachmentBottomSheet = ({
       <View style={IOStyles.row}>
         <RawCheckBox
           checked={dontAskAgain}
-          onPress={() => setDontAskAgain(!dontAskAgain)}
+          onPress={() => {
+            trackDoNotAskAgain(isGenericAttachment, !dontAskAgain);
+            setDontAskAgain(!dontAskAgain);
+          }}
         />
         <Body
           style={{ paddingLeft: 8 }}
-          onPress={() => setDontAskAgain(!dontAskAgain)}
+          onPress={() => {
+            trackDoNotAskAgain(isGenericAttachment, !dontAskAgain);
+            setDontAskAgain(!dontAskAgain);
+          }}
         >
           {i18n.t("features.mvl.details.attachments.bottomSheet.checkBox")}
         </Body>

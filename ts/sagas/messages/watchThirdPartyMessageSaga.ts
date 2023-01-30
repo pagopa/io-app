@@ -15,6 +15,7 @@ import { loadThirdPartyMessage } from "../../features/messages/store/actions";
 import { toPNMessage } from "../../features/pn/store/types/transformers";
 import { mixpanelTrack } from "../../mixpanel";
 import { getMessageById } from "../../store/reducers/entities/messages/paginatedById";
+import { trackThirdPartyMessageAttachmentCount } from "../../utils/analytics";
 import { getError } from "../../utils/errors";
 
 function* getThirdPartyMessage(
@@ -72,6 +73,10 @@ function* trackSuccess(
         hasAttachments: (pnMessage.attachments?.length ?? 0) > 0
       });
     }
+  } else {
+    const attachments = messageFromApi.third_party_message.attachments;
+    const attachmentCount = attachments?.length ?? 0;
+    trackThirdPartyMessageAttachmentCount(attachmentCount);
   }
 }
 
