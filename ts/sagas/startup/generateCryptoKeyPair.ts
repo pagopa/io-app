@@ -1,13 +1,9 @@
-import { LollipopState } from "./../../store/reducers/lollipop";
-import { lollipopSelector } from "./../../store/actions/lollipop";
 import {
   generate,
   CryptoError,
   deleteKey
 } from "@pagopa/io-react-native-crypto";
-import { call, select, takeEvery } from "typed-redux-saga/macro";
-import { ActionType } from "typesafe-actions";
-import { logoutSuccess } from "../../store/actions/authentication";
+import { call, select } from "typed-redux-saga/macro";
 import { isLollipopEnabledSelector } from "../../store/reducers/backendStatus";
 import {
   checkPublicKeyExists,

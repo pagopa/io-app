@@ -34,10 +34,8 @@ export function* authenticationSaga(): Generator<
 
   // Generate key for lollipop
   const newKeyTag = uuid();
-  const newKeyTagAction = yield* put(
-    lollipopKeyTagSaveSuccess({ keyTag: newKeyTag })
-  );
-  yield* cryptoKeyGenerationSaga(newKeyTagAction.payload.keyTag);
+  yield* put(lollipopKeyTagSaveSuccess({ keyTag: newKeyTag }));
+  yield* cryptoKeyGenerationSaga(newKeyTag);
 
   // Wait until the user has successfully logged in with SPID
   // FIXME: show an error on LOGIN_FAILED?

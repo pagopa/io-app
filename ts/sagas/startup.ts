@@ -345,7 +345,6 @@ export function* initializeApplicationSaga(): Generator<
   const keyTag = lollipopState.keyTag;
   if (keyTag) {
     yield* call(trackMixpanelCryptoKeyPairEvents, keyTag);
-    console.log("🔑 " + keyTag);
   }
 
   if (hasPreviousSessionAndPin) {
