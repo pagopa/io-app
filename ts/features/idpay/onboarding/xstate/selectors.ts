@@ -64,7 +64,6 @@ export {
   multiRequiredCriteriaSelector,
   boolRequiredCriteriaSelector,
   pickedCriteriaSelector,
-  filterCriteria as discernCriteria,
   getMultiRequiredCriteriaFromContext,
   getBoolRequiredCriteriaFromContext
 };
