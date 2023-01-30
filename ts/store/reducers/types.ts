@@ -1,3 +1,4 @@
+import { LollipopState } from "./lollipop";
 import { PersistPartial } from "redux-persist";
 import { VersionInfoState } from "../../common/versionInfo/store/reducers/versionInfo";
 
@@ -56,6 +57,7 @@ export type GlobalState = Readonly<{
   features: PersistedFeaturesState;
   crossSessions: CrossSessionsState;
   assistanceTools: AssistanceToolsState;
+  lollipop: LollipopState;
 }>;
 
 export type PersistedGlobalState = GlobalState & PersistPartial;

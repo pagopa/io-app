@@ -40,6 +40,7 @@ import identificationReducer, {
   INITIAL_STATE as identificationInitialState
 } from "./identification";
 import installationReducer from "./installation";
+import lollipopReducer, { initialLollipopState } from "./lollipop";
 import { navigationReducer } from "./navigation";
 import notificationsReducer from "./notifications";
 import onboardingReducer from "./onboarding";
@@ -131,7 +132,8 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
   payments: paymentsReducer,
   content: contentReducer,
   emailValidation: emailValidationReducer,
-  crossSessions: crossSessionsReducer
+  crossSessions: crossSessionsReducer,
+  lollipop: lollipopReducer
 });
 
 export function createRootReducer(
@@ -219,6 +221,10 @@ export function createRootReducer(
                 // eslint-disable-next-line no-underscore-dangle
                 _persist: state.wallet.wallets._persist
               }
+            },
+            lollipop: {
+              ...initialLollipopState,
+              keyTag: state.lollipop.keyTag
             }
           } as GlobalState)
         : state;
