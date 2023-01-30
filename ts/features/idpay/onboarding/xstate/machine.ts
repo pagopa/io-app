@@ -457,4 +457,3 @@ type IDPayOnboardingMachineType = ReturnType<
 
 export type { IDPayOnboardingMachineType };
 export { createIDPayOnboardingMachine };
-

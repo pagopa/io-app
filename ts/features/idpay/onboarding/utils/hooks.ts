@@ -1,7 +1,11 @@
 import { useSelector } from "@xstate/react";
 import { MultiValueScreenNavigationType } from "../screens/MultiValuePrerequisitesScreen";
 import { useOnboardingMachineService } from "../xstate/provider";
-import { multiRequiredCriteriaSelector, pickedCriteriaSelector } from "../xstate/selectors";
+import {
+  multiRequiredCriteriaSelector,
+  pickedCriteriaSelector
+} from "../xstate/selectors";
+
 import { SelfConsentMultiDTO } from "../../../../../definitions/idpay/onboarding/SelfConsentMultiDTO";
 
 export const useMultiPrerequisitesPagination = (
