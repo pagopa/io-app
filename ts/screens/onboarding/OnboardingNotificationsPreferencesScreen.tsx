@@ -100,7 +100,8 @@ const CustomGoBack = memo(
       {!isFirstOnboarding && (
         <IOBadge
           text={I18n.t("onboarding.notifications.badge")}
-          labelColor={"bluegreyDark"}
+          variant="solid"
+          color="aqua"
         />
       )}
     </View>

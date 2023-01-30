@@ -116,7 +116,7 @@ const CgnMerchantListItem: React.FunctionComponent<Props> = (props: Props) => (
       <H2 style={IOStyles.flex}>{props.name}</H2>
       {props.isNew && (
         <View style={styles.badgePosition}>
-          <IOBadge text={I18n.t("bonus.cgn.merchantsList.news")} small />
+          <IOBadge small text={I18n.t("bonus.cgn.merchantsList.news")} />
         </View>
       )}
     </View>

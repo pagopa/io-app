@@ -148,7 +148,8 @@ const itemBadgeToTagOrIcon = (itemBadge: ItemBadge): React.ReactNode => {
       return (
         <IOBadge
           text={I18n.t("messages.badge.paid")}
-          labelColor={"bluegreyDark"}
+          variant="solid"
+          color="aqua"
         />
       );
 

@@ -25,7 +25,7 @@ import {
 } from "../../store/reducers/backendStatus";
 import { GlobalState } from "../../store/reducers/types";
 import { getFullLocale } from "../../utils/locale";
-import { IOBadge, IOBadgeCommonProps } from "../core/IOBadge";
+import { IOBadge, IOBadgeProps } from "../core/IOBadge";
 import { HSpacer, VSpacer } from "../core/spacer/Spacer";
 import { H3 } from "../core/typography/H3";
 import { H5 } from "../core/typography/H5";
@@ -94,8 +94,8 @@ const getBadgeStatus = (
 ): null | { badge: React.ReactNode; alert?: () => void } => {
   const itemSection = paymentMethod.section;
 
-  const badgeColorMap: Record<LevelEnum, IOBadgeCommonProps["labelColor"]> = {
-    [LevelEnum.normal]: "bluegreyDark",
+  const badgeColorMap: Record<LevelEnum, IOBadgeProps["color"]> = {
+    [LevelEnum.normal]: "blue",
     [LevelEnum.critical]: "red",
     // We use a `blue outline` variant for warning
     // status because we don't have a specific
@@ -191,9 +191,10 @@ const renderListItem = (
           <View style={styles.flexColumn}>
             <View>
               <IOBadge
+                small
                 text={I18n.t("wallet.methods.comingSoon")}
-                small={true}
-                labelColor={"white"}
+                variant="solid"
+                color="blue"
               />
               <H3 color={"bluegrey"} weight={"SemiBold"}>
                 {itemInfo.item.name}

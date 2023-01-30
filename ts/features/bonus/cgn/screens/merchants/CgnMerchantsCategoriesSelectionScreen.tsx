@@ -73,7 +73,8 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
                 text={`${info.item.newDiscounts} ${I18n.t(
                   "bonus.cgn.merchantsList.news"
                 )}`}
-                labelColor={"blue"}
+                variant="outline"
+                color="blue"
               />
             </View>
           }
@@ -101,7 +102,8 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
                     text={`${info.item.newDiscounts} ${I18n.t(
                       "bonus.cgn.merchantsList.news"
                     )}`}
-                    labelColor={"blue"}
+                    variant="outline"
+                    color="blue"
                   />
                 </View>
               )}

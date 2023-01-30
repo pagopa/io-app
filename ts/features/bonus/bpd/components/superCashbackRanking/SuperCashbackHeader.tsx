@@ -43,9 +43,10 @@ const SuperCashbackHeader: React.FunctionComponent<Props> = (props: Props) => (
       <>
         <VSpacer size={4} />
         <IOBadge
+          small
           text={I18n.t("global.badges.onGoing")}
-          small={true}
-          labelColor={"bluegreyDark"}
+          variant="solid"
+          color="aqua"
         />
       </>
     )}

@@ -153,7 +153,8 @@ export default class DetailedlistItemComponent extends React.Component<Props> {
             {this.props.isPaid && (
               <IOBadge
                 text={I18n.t("messages.badge.paid")}
-                labelColor={"bluegreyDark"}
+                variant="solid"
+                color="aqua"
               />
             )}
 

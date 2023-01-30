@@ -71,9 +71,10 @@ const FeaturedCard: React.FunctionComponent<Props> = (props: Props) => (
       )}
       {props.isNew && (
         <IOBadge
+          small
           text={I18n.t("wallet.methods.newCome")}
-          small={true}
-          labelColor={"white"}
+          variant="solid"
+          color="blue"
         />
       )}
     </View>

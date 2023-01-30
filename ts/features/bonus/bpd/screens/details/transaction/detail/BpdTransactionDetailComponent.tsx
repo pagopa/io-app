@@ -59,7 +59,8 @@ type IdBlockProps = {
 const CancelBadge = () => (
   <IOBadge
     text={I18n.t("bonus.bpd.details.transaction.detail.canceled")}
-    labelColor={"red"}
+    variant="outline"
+    color="red"
   />
 );
 
