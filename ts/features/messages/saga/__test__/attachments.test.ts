@@ -11,7 +11,7 @@ const savePath = "/tmp/attachment.pdf";
 const serviceId = "service0000001" as ServiceId;
 
 jest.mock("../../../../store/reducers/entities/messages/paginatedById", () => ({
-  getServiceByMessageId: jest.fn().mockReturnValue(serviceId),
+  getServiceByMessageId: jest.fn().mockReturnValue(serviceId)
 }));
 
 describe("downloadAttachment", () => {
