@@ -18,8 +18,10 @@ import {
 } from "../components/InstrumentEnrollmentSwitch";
 import { IDPayConfigurationParamsList } from "../navigation/navigator";
 import { ConfigurationMode } from "../xstate/context";
+import { InitiativeFailureType } from "../xstate/failure";
 import { useConfigurationMachineService } from "../xstate/provider";
 import {
+  failureSelector,
   isLoadingSelector,
   selectIsUpsertingInstrument,
   selectorIDPayInstrumentsByIdWallet,
@@ -60,6 +62,7 @@ const InstrumentsEnrollmentScreen = () => {
   const selectedInstrumentWasSetRef = useRef<boolean>(false);
 
   const isLoading = useSelector(configurationMachine, isLoadingSelector);
+  const failure = useSelector(configurationMachine, failureSelector);
 
   const pagoPAInstruments = useSelector(
     configurationMachine,
@@ -156,17 +159,33 @@ const InstrumentsEnrollmentScreen = () => {
       }}
     />,
     () => {
-      revertInstrumentSwitch(selectedInstrumentIdRef.current as number);
+      if (!selectedInstrumentWasSetRef.current) {
+        // Resets the state of the switch only if the modal was closed without continuing
+        revertInstrumentSwitch(selectedInstrumentIdRef.current as number);
+      }
     }
   );
 
-  const revertInstrumentSwitch = (walletId: number): void => {
-    const wasSet = selectedInstrumentWasSetRef.current;
+  /** Resets the switch linked to the given walletId to its previous state */
+  const revertInstrumentSwitch = React.useCallback((walletId: number): void => {
     const node = getInstrumentItemsMap().get(walletId);
-    if (node && !wasSet) {
-      node.setSwitchStatus(false);
+    if (node) {
+      node.setSwitchStatus(!node.switchStatus);
     }
-  };
+  }, []);
+
+  React.useEffect(() => {
+    if (
+      failure === InitiativeFailureType.INSTRUMENT_ENROLL_FAILURE ||
+      failure === InitiativeFailureType.INSTRUMENT_DELETE_FAILURE
+    ) {
+      const walletId = selectedInstrumentIdRef.current as number;
+      revertInstrumentSwitch(walletId);
+
+      // eslint-disable-next-line functional/immutable-data
+      selectedInstrumentWasSetRef.current = false;
+    }
+  }, [failure, revertInstrumentSwitch]);
 
   const handleInstrumentSwitch = (
     walletId: number,

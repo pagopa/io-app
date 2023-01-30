@@ -71,6 +71,8 @@ const selectorIDPayInstrumentsByIdWallet = createSelector(
     )
 );
 
+const failureSelector = (state: StateWithContext) => state.context.failure;
+
 export {
   isLoadingSelector,
   isLoadingIbanListSelector,
@@ -80,5 +82,6 @@ export {
   selectIsUpsertingInstrument,
   selectEnrolledIban,
   selectorPagoPAIntruments,
-  selectorIDPayInstrumentsByIdWallet
+  selectorIDPayInstrumentsByIdWallet,
+  failureSelector
 };
