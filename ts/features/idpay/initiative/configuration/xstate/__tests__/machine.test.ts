@@ -6,6 +6,7 @@ import { createIDPayInitiativeConfigurationMachine } from "../machine";
 import {
   mockActions,
   mockExitConfiguration,
+  mockNavigateToAddPaymentMethodScreen,
   mockNavigateToConfigurationIntro,
   mockNavigateToConfigurationSuccessScreen,
   mockNavigateToIbanEnrollmentScreen,
@@ -24,6 +25,7 @@ import {
   mockLoadInitiativeSuccessNotRefundable,
   mockLoadInitiativeSuccessRefundable,
   mockLoadInstrumentsSuccess,
+  mockLoadInstrumentsSuccessEmpty,
   mockServices,
   MockServicesType,
   T_IBAN,
@@ -216,7 +218,7 @@ describe("IDPay configuration machine in COMPLETE mode", () => {
     );
   });
 
-  it("should allow the citizen to configure an initiative (without IBANs)", async () => {
+  it("should allow a citizen without any IBAN to configure an initiative", async () => {
     const machine = configureMockMachine({
       services: {
         loadInitiative: mockLoadInitiativeSuccessNotRefundable,
@@ -292,6 +294,194 @@ describe("IDPay configuration machine in COMPLETE mode", () => {
     });
 
     // From here same as previous test case
+  });
+
+  it("should allow a citizen without any instrument to configure an initiative", async () => {
+    const machine = configureMockMachine({
+      services: {
+        loadInitiative: mockLoadInitiativeSuccessNotRefundable,
+        loadIbanList: mockLoadIbanListSuccess,
+        enrollIban: mockEnrollIbanSuccess,
+        loadInstruments: mockLoadInstrumentsSuccessEmpty,
+        enrollInstrument: mockEnrollInstrumentSuccess,
+        deleteInstrument: mockDeleteInstrumentSuccess
+      }
+    });
+
+    let currentState: StateValue = machine.initialState.value;
+
+    const service = interpret(machine).onTransition(state => {
+      currentState = state.value;
+    });
+
+    service.start();
+
+    expect(currentState).toEqual("WAITING_START");
+
+    service.send({
+      type: "START_CONFIGURATION",
+      initiativeId: T_INITIATIVE_ID,
+      mode: ConfigurationMode.COMPLETE
+    });
+
+    await waitFor(() =>
+      expect(mockLoadInitiativeSuccessNotRefundable).toHaveBeenCalledTimes(1)
+    );
+
+    expect(currentState).toMatch("DISPLAYING_INTRO");
+
+    await waitFor(() =>
+      expect(mockNavigateToConfigurationIntro).toHaveBeenCalledTimes(1)
+    );
+
+    service.send({ type: "NEXT" });
+
+    await waitFor(() =>
+      expect(mockLoadIbanListSuccess).toHaveBeenCalledTimes(1)
+    );
+
+    expect(currentState).toMatchObject({
+      CONFIGURING_IBAN: "DISPLAYING_IBAN_LIST"
+    });
+
+    await waitFor(() =>
+      expect(mockNavigateToIbanEnrollmentScreen).toHaveBeenCalledTimes(1)
+    );
+
+    service.send({
+      type: "ENROLL_IBAN",
+      iban: {
+        channel: "IO",
+        checkIbanStatus: "",
+        description: "Test",
+        iban: T_IBAN
+      }
+    });
+
+    await waitFor(() => expect(mockEnrollIbanSuccess).toHaveBeenCalledTimes(1));
+
+    await waitFor(() =>
+      expect(mockLoadInstrumentsSuccessEmpty).toHaveBeenCalledTimes(1)
+    );
+
+    expect(currentState).toMatch("DISPLAYING_CONFIGURATION_SUCCESS");
+
+    service.send({
+      type: "ADD_PAYMENT_METHOD"
+    });
+
+    await waitFor(() =>
+      expect(mockNavigateToAddPaymentMethodScreen).toHaveBeenCalledTimes(1)
+    );
+
+    expect(currentState).toMatch("DISPLAYING_CONFIGURATION_SUCCESS");
+
+    service.send({
+      type: "COMPLETE_CONFIGURATION"
+    });
+
+    expect(currentState).toMatch("CONFIGURATION_COMPLETED");
+
+    await waitFor(() =>
+      expect(mockNavigateToInitiativeDetailScreen).toHaveBeenCalledTimes(1)
+    );
+  });
+
+  it("should allow the citizen to configure an initiative skipping the instrument step", async () => {
+    const machine = configureMockMachine({
+      services: {
+        loadInitiative: mockLoadInitiativeSuccessNotRefundable,
+        loadIbanList: mockLoadIbanListSuccess,
+        enrollIban: mockEnrollIbanSuccess,
+        loadInstruments: mockLoadInstrumentsSuccess,
+        enrollInstrument: mockEnrollInstrumentSuccess,
+        deleteInstrument: mockDeleteInstrumentSuccess
+      }
+    });
+
+    let currentState: StateValue = machine.initialState.value;
+
+    const service = interpret(machine).onTransition(state => {
+      currentState = state.value;
+    });
+
+    service.start();
+
+    expect(currentState).toEqual("WAITING_START");
+
+    service.send({
+      type: "START_CONFIGURATION",
+      initiativeId: T_INITIATIVE_ID,
+      mode: ConfigurationMode.COMPLETE
+    });
+
+    await waitFor(() =>
+      expect(mockLoadInitiativeSuccessNotRefundable).toHaveBeenCalledTimes(1)
+    );
+
+    expect(currentState).toMatch("DISPLAYING_INTRO");
+
+    await waitFor(() =>
+      expect(mockNavigateToConfigurationIntro).toHaveBeenCalledTimes(1)
+    );
+
+    service.send({ type: "NEXT" });
+
+    await waitFor(() =>
+      expect(mockLoadIbanListSuccess).toHaveBeenCalledTimes(1)
+    );
+
+    expect(currentState).toMatchObject({
+      CONFIGURING_IBAN: "DISPLAYING_IBAN_LIST"
+    });
+
+    await waitFor(() =>
+      expect(mockNavigateToIbanEnrollmentScreen).toHaveBeenCalledTimes(1)
+    );
+
+    service.send({
+      type: "ENROLL_IBAN",
+      iban: {
+        channel: "IO",
+        checkIbanStatus: "",
+        description: "Test",
+        iban: T_IBAN
+      }
+    });
+
+    await waitFor(() => expect(mockEnrollIbanSuccess).toHaveBeenCalledTimes(1));
+
+    await waitFor(() =>
+      expect(mockLoadInstrumentsSuccess).toHaveBeenCalledTimes(1)
+    );
+
+    expect(currentState).toMatchObject({
+      CONFIGURING_INSTRUMENTS: "DISPLAYING_INSTRUMENTS"
+    });
+
+    await waitFor(() =>
+      expect(mockNavigateToInstrumentsEnrollmentScreen).toHaveBeenCalledTimes(1)
+    );
+
+    service.send({
+      type: "SKIP"
+    });
+
+    expect(currentState).toMatch("DISPLAYING_CONFIGURATION_SUCCESS");
+
+    await waitFor(() =>
+      expect(mockNavigateToConfigurationSuccessScreen).toHaveBeenCalledTimes(1)
+    );
+
+    service.send({
+      type: "COMPLETE_CONFIGURATION"
+    });
+
+    expect(currentState).toMatch("CONFIGURATION_COMPLETED");
+
+    await waitFor(() =>
+      expect(mockNavigateToInitiativeDetailScreen).toHaveBeenCalledTimes(1)
+    );
   });
 });
 
