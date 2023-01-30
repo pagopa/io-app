@@ -16,6 +16,10 @@ export const mockNavigateToInitiativeDetailScreen = jest.fn();
 
 export const mockExitConfiguration = jest.fn();
 
+export const mockNavigateToAddPaymentMethodScreen = jest.fn();
+
+export const mockShowFailureToast = jest.fn();
+
 export type MockActionsType = ReturnType<typeof createActionsImplementation>;
 
 export const mockActions: MockActionsType = {
@@ -28,5 +32,7 @@ export const mockActions: MockActionsType = {
   navigateToIbanLandingScreen: mockNavigateToIbanLandingScreen,
   navigateToInitiativeDetailScreen: mockNavigateToInitiativeDetailScreen,
   navigateToInstrumentsEnrollmentScreen:
-    mockNavigateToInstrumentsEnrollmentScreen
+    mockNavigateToInstrumentsEnrollmentScreen,
+  navigateToAddPaymentMethodScreen: mockNavigateToAddPaymentMethodScreen,
+  showFailureToast: mockShowFailureToast
 };
