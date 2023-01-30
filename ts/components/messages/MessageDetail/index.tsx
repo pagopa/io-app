@@ -112,8 +112,15 @@ const MessageDetailsComponent = ({
 }: Props) => {
   const dispatch = useIODispatch();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  // This is used to make sure that no attachments are shown before the
+  // markdown content has rendered. Note that the third party attachment
+  // request is run in parallel with the markdown rendering.
   const [isContentLoadCompleted, setIsContentLoadCompleted] = useState(false);
   const isFirstRendering = React.useRef(true);
+  // Note that it is not possibile for a message to have both medical
+  // prescription attachments and third party data. That is why, later in the
+  // code, the UI rendering is guarded by opposite checks on prescription and
+  // third party attachments
   const { prescriptionAttachments, markdown, prescriptionData } =
     messageDetails;
   const isPrescription = prescriptionData !== undefined;
@@ -124,6 +131,9 @@ const MessageDetailsComponent = ({
   const thirdPartyDataPot = useIOSelector(state =>
     thirdPartyFromIdSelector(state, messageId)
   );
+  // Third party attachments are retrieved from the third party service upon
+  // first rendering of this component. We want to send the request only if
+  // we have never retrieved data or if there was an error
   const shouldDownloadThirdPartyDataAttachmentList =
     hasThirdPartyDataAttachments &&
     isFirstRendering.current &&
@@ -144,6 +154,11 @@ const MessageDetailsComponent = ({
 
   const renderThirdPartyAttachments = useCallback(
     (thirdPartyMessage: ThirdPartyMessageWithContent): React.ReactNode => {
+      // In order not to break or refactor existing PN code, the backend
+      // model for third party attachments is converted into in-app
+      // model for attachments when the user generates the request. This
+      // is not a speed intensive operation nor a memory consuming task,
+      // since the attachment count should be negligible
       const thirdPartyMessageAttachments = attachmentsFromThirdPartyMessage(
         thirdPartyMessage,
         "GENERIC"
@@ -165,6 +180,8 @@ const MessageDetailsComponent = ({
   useEffect(() => {
     // eslint-disable-next-line functional/immutable-data
     isFirstRendering.current = false;
+    // Third party attachments, if available, are downloaded upon
+    // first rendering of this component
     if (shouldDownloadThirdPartyDataAttachmentList) {
       dispatch(loadThirdPartyMessage.request(messageId));
     }

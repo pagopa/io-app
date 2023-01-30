@@ -102,6 +102,7 @@ export type UIAttachment = {
   // The url that can be used to retrieve the resource
   resourceUrl: ValidUrl;
   // This category is needed to differentiate between generic and PN attachments
+  // which has a different download handling
   category: AttachmentType;
 };
 

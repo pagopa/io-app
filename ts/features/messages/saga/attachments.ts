@@ -24,7 +24,13 @@ import { clearAllAttachments, clearAttachment } from "./clearAttachments";
 export function* watchMessageAttachmentsSaga(
   bearerToken: SessionToken
 ): SagaIterator {
-  // handle the request for a new downloadAttachment
+  // handle the request for a new downloadAttachment. We need to race
+  // both download and cancellation since the user can cancel the
+  // download and then re-start it. This must cause the original
+  // downloadAttachmentSaga to cancel. Relying on downloadAttachmentSaga
+  // to send the downloadAttachment.cancel event upon cancellation will
+  // cause a cancel action to dispatch after the renewed
+  // downloadAttachment.request action had been launched
   yield* takeLatest(
     downloadAttachment.request,
     function* (action: ActionType<typeof downloadAttachment.request>) {

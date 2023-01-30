@@ -55,6 +55,8 @@ export function* downloadAttachmentSaga(
       const path = result.path();
       yield* put(downloadAttachment.success({ attachment, path }));
     } else {
+      // In this case we produce a taking error that can be
+      // shown directly to the user
       const errorKey =
         status === 415
           ? "messageDetails.attachments.badFormat"

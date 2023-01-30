@@ -15,6 +15,15 @@ import { UIAttachment } from "../../../store/reducers/entities/messages/types";
 import { downloadPotForMessageAttachmentSelector } from "../../../store/reducers/entities/messages/downloads";
 import { useDownloadAttachmentBottomSheet } from "./useDownloadAttachmentBottomSheet";
 
+// This hook has a different behaviour if the attachment is a PN
+// one or a generic third-party attachment. This has been done to
+// preserve the PN flow and use the bottom sheet to warn the user
+// when selecting an attachment (if the skip-bottom-sheet preference
+// is not set). When selecting a PN attachment, this hook takes care
+// of downloading the attachment before going into the attachment
+// preview component. If the attachment is from a third-party message
+// (generic attachment) then the download is delegated to another
+// part of the application and this hook just displays the bootom sheet
 export const useAttachmentDownload = (
   attachment: UIAttachment,
   openPreview: (attachment: UIAttachment) => void
@@ -93,6 +102,7 @@ export const useAttachmentDownload = (
       return;
     }
 
+    // Do not download the attachment for generic third party message
     if (isGenericAttachment) {
       openPreview(attachment);
       return;

@@ -29,19 +29,6 @@ export const MessageDetailAttachment = (
       attachment={attachment}
       onPDFError={() => {
         showToast(I18n.t("messageDetails.attachments.corruptedFile"));
-        // TODO mixpanel?
-      }}
-      onLoadComplete={() => {
-        // TODO
-      }}
-      onShare={() => {
-        // TODO
-      }}
-      onOpen={() => {
-        // TODO
-      }}
-      onDownload={() => {
-        // TODO
       }}
     />
   );

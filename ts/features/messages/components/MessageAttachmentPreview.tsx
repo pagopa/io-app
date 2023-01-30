@@ -211,6 +211,12 @@ export const MessageAttachmentPreview = (props: Props): React.ReactElement => {
       id: attachmentId
     })
   );
+  // This component handles the attachment blob download only if
+  // it is a generic attachment (not a PN one, since that flow
+  // has already downloaded the attachmnet before navigating to
+  // this screen), upon first rendering and only if no attachment
+  // blob data is present or if there was a previous error in
+  // downloading the data
   const isGenericAttachment = attachment.category === "GENERIC";
   const shouldDownloadAttachment =
     isGenericAttachment &&
@@ -223,6 +229,11 @@ export const MessageAttachmentPreview = (props: Props): React.ReactElement => {
     onPDFError?.();
   }, [onPDFError]);
 
+  // The go-back callback has to be customized since, for a general
+  // attachment, we are handling the download request from this
+  // component and thus, it has to be cancelled if the user chooses
+  // not to wait for it to finish (but only for generic attachments,
+  // since PN attachments are downloaded before entering this component)
   const customGoBack = useCallback(() => {
     if (
       isGenericAttachment &&

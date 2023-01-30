@@ -421,7 +421,8 @@ export function* initializeApplicationSaga(): Generator<
     yield* fork(watchPnSaga, sessionToken);
   }
 
-  // Start watching for message attachments actions
+  // Start watching for message attachments actions (general
+  // third-party message attachments, PN attachments and MVL ones)
   yield* fork(watchMessageAttachmentsSaga, sessionToken);
 
   if (idPayEnabled) {
