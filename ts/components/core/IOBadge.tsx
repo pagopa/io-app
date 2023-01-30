@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, ColorValue, StyleSheet } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { makeFontStyleObject } from "./fonts";
 import { IOColors, IOColorType } from "./variables/IOColors";
 
@@ -13,11 +13,6 @@ export type IOBadgeProps = {
   variant?: "solid" | "outline";
   color?: AllowedBadgeColors;
   testID?: string;
-};
-
-type SolidVariantProps = {
-  background: ColorValue;
-  text: ColorValue;
 };
 
 /*
@@ -41,10 +36,18 @@ type SolidVariantProps = {
 
 */
 
-const mapOutlineColor: Record<NonNullable<IOBadgeOutlineColors>, ColorValue> = {
-  blue: IOColors.blue,
-  white: IOColors.white,
-  red: IOColors.red
+type SolidVariantProps = {
+  background: IOColorType;
+  text: IOColorType;
+};
+
+const mapOutlineColor: Record<
+  NonNullable<IOBadgeOutlineColors>,
+  IOColorType
+> = {
+  blue: "blue",
+  white: "white",
+  red: "red"
 };
 
 const mapSolidColor: Record<
@@ -52,21 +55,21 @@ const mapSolidColor: Record<
   SolidVariantProps
 > = {
   blue: {
-    background: IOColors.blue,
-    text: IOColors.white
+    background: "blue",
+    text: "white"
   },
   white: {
-    background: IOColors.white,
-    text: IOColors.bluegrey
+    background: "white",
+    text: "bluegrey"
   },
   aqua: {
-    background: IOColors.aqua,
-    text: IOColors.bluegreyDark
+    background: "aqua",
+    text: "bluegreyDark"
   }
 };
 
 const BADGE_SMALL_SIZE = 20;
-const BADGE_DEFAULT_SIZE = 27;
+const BADGE_DEFAULT_SIZE = 28;
 
 const defaultVariant: IOBadgeProps["variant"] = "solid";
 const defaultColor: IOBadgeProps["color"] = "blue";
@@ -122,11 +125,12 @@ export const IOBadge = ({
       styles.badge,
       small ? styles.badgeSizeSmall : styles.badgeSizeDefault,
       variant === "outline" && {
-        borderColor: mapOutlineColor[color as IOBadgeOutlineColors],
+        borderColor: IOColors[mapOutlineColor[color as IOBadgeOutlineColors]],
         borderWidth: 1
       },
       variant === "solid" && {
-        backgroundColor: mapSolidColor[color as IOBadgeSolidColors]?.background
+        backgroundColor:
+          IOColors[mapSolidColor[color as IOBadgeSolidColors]?.background]
       }
     ]}
   >
@@ -135,10 +139,10 @@ export const IOBadge = ({
         styles.label,
         small ? styles.labelSizeSmall : styles.labelSizeDefault,
         variant === "outline" && {
-          color: mapOutlineColor[color as IOBadgeOutlineColors]
+          color: IOColors[mapOutlineColor[color as IOBadgeOutlineColors]]
         },
         variant === "solid" && {
-          color: mapSolidColor[color as IOBadgeSolidColors]?.text
+          color: IOColors[mapSolidColor[color as IOBadgeSolidColors]?.text]
         }
       ]}
     >
