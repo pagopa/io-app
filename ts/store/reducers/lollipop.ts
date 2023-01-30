@@ -3,7 +3,7 @@
  */
 import { isActionOf } from "typesafe-actions";
 import { Action } from "../actions/types";
-import { lollipopKeyTagSaveSuccess } from "../actions/lollipop";
+import { lollipopKeyTagSave } from "../actions/lollipop";
 
 export type LollipopState = Readonly<{
   keyTag?: string;
@@ -17,7 +17,7 @@ export default function lollipopReducer(
   state: LollipopState = initialLollipopState,
   action: Action
 ): LollipopState {
-  if (isActionOf(lollipopKeyTagSaveSuccess, action)) {
+  if (isActionOf(lollipopKeyTagSave, action)) {
     return {
       ...state,
       keyTag: action.payload.keyTag

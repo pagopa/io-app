@@ -11,7 +11,7 @@ import { ReduxSagaEffect } from "../../types/utils";
 import { stopCieManager, watchCieAuthenticationSaga } from "../cie";
 import { watchTestLoginRequestSaga } from "../testLoginSaga";
 import { cryptoKeyGenerationSaga } from "./generateCryptoKeyPair";
-import { lollipopKeyTagSaveSuccess } from "./../../store/actions/lollipop";
+import { lollipopKeyTagSave } from "./../../store/actions/lollipop";
 
 /**
  * A saga that makes the user go through the authentication process until
@@ -34,7 +34,7 @@ export function* authenticationSaga(): Generator<
 
   // Generate key for lollipop
   const newKeyTag = uuid();
-  yield* put(lollipopKeyTagSaveSuccess({ keyTag: newKeyTag }));
+  yield* put(lollipopKeyTagSave({ keyTag: newKeyTag }));
   yield* cryptoKeyGenerationSaga(newKeyTag);
 
   // Wait until the user has successfully logged in with SPID
