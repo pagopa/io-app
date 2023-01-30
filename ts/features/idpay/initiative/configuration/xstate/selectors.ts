@@ -3,6 +3,7 @@ import { createSelector } from "reselect";
 import { StateFrom } from "xstate";
 import { InstrumentDTO } from "../../../../../../definitions/idpay/wallet/InstrumentDTO";
 import { LOADING_TAG } from "../../../../../utils/xstate";
+import { ConfigurationMode } from "./context";
 import { IDPayInitiativeConfigurationMachineType } from "./machine";
 
 type StateWithContext = StateFrom<IDPayInitiativeConfigurationMachineType>;
@@ -17,6 +18,9 @@ const isLoadingSelector = (state: StateWithContext) =>
 const selectInitiativeDetails = (state: StateWithContext) =>
   P.getOrElse(state.context.initiative, undefined);
 
+const selectIsInstrumentsOnlyMode = (state: StateWithContext) =>
+  state.context.mode === ConfigurationMode.INSTRUMENTS;
+
 const isLoadingIbanListSelector = (state: StateWithContext) =>
   state.matches("CONFIGURING_IBAN.LOADING_IBAN_LIST");
 
@@ -28,6 +32,9 @@ const isUpsertingIbanSelector = (state: StateWithContext) =>
 
 const selectIsLoadingInstruments = (state: StateWithContext) =>
   state.matches("CONFIGURING_INSTRUMENTS.LOADING_INSTRUMENTS");
+
+const selectAreInstrumentsSkipped = (state: StateWithContext) =>
+  state.context.areInstrumentsSkipped ?? false;
 
 const selectIsUpsertingInstrument = (state: StateWithContext) =>
   state.matches("CONFIGURING_INSTRUMENTS.ENROLLING_INSTRUMENT") ||
@@ -71,14 +78,20 @@ const selectorIDPayInstrumentsByIdWallet = createSelector(
     )
 );
 
+const failureSelector = (state: StateWithContext) => state.context.failure;
+
 export {
   isLoadingSelector,
   isLoadingIbanListSelector,
   ibanListSelector,
   isUpsertingIbanSelector,
+  selectInitiativeDetails,
+  selectIsInstrumentsOnlyMode,
   selectIsLoadingInstruments,
   selectIsUpsertingInstrument,
+  selectAreInstrumentsSkipped,
   selectEnrolledIban,
   selectorPagoPAIntruments,
-  selectorIDPayInstrumentsByIdWallet
+  selectorIDPayInstrumentsByIdWallet,
+  failureSelector
 };
