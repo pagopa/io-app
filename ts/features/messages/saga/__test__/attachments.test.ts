@@ -1,6 +1,6 @@
 import ReactNativeBlobUtil from "react-native-blob-util";
 import { expectSaga } from "redux-saga-test-plan";
-import I18n from "i18n-js";
+import I18n from "../../../../i18n";
 import { downloadAttachmentSaga } from "../networking/downloadAttachment";
 import { SessionToken } from "../../../../types/SessionToken";
 import { downloadAttachment } from "../../../../store/actions/messages";
