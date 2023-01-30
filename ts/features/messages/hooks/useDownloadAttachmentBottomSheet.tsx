@@ -1,6 +1,7 @@
-import { View } from "native-base";
+import { View } from "react-native";
 import React, { useState } from "react";
 import { RawCheckBox } from "../../../components/core/selection/checkbox/RawCheckBox";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { Body } from "../../../components/core/typography/Body";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
@@ -26,11 +27,11 @@ export const useDownloadAttachmentBottomSheet = ({
 
   return useIOBottomSheetModal(
     <View>
-      <View spacer={true} />
+      <VSpacer size={16} />
       <Body>
         {i18n.t("features.mvl.details.attachments.bottomSheet.warning.body")}
       </Body>
-      <View spacer={true} />
+      <VSpacer size={16} />
       <View style={IOStyles.row}>
         <RawCheckBox
           checked={dontAskAgain}

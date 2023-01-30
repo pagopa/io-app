@@ -4,10 +4,14 @@ import { SagaIterator } from "redux-saga";
 import { call, select, takeLatest } from "typed-redux-saga/macro";
 import { PreferredLanguageEnum } from "../../../../../../definitions/backend/PreferredLanguage";
 import {
-  IDPAY_API_TEST_TOKEN,
-  IDPAY_API_UAT_BASEURL
+  idPayTestToken,
+  idPayApiUatBaseUrl,
+  idPayApiBaseUrl
 } from "../../../../../config";
-import { preferredLanguageSelector } from "../../../../../store/reducers/persistedPreferences";
+import {
+  isPagoPATestEnabledSelector,
+  preferredLanguageSelector
+} from "../../../../../store/reducers/persistedPreferences";
 import { waitBackoffError } from "../../../../../utils/backoffError";
 import { fromLocaleToPreferredLanguage } from "../../../../../utils/locale";
 import { createIDPayWalletClient } from "../../../wallet/api/client";
@@ -15,10 +19,13 @@ import { createIDPayTimelineClient } from "../api/client";
 import {
   idpayInitiativeGet,
   IdPayInitiativeGetPayloadType,
+  idpayTimelineDetailsGet,
+  IdPayTimelineDetailsGetPayloadType,
   idpayTimelinePageGet,
   IdpayTimelinePageGetPayloadType
 } from "../store/actions";
 import { handleGetInitiativeDetails } from "./handleGetInitiativeDetails";
+import { handleGetTimelineDetails } from "./handleGetTimelineDetails";
 import { handleGetTimelinePage } from "./handleGetTimelinePage";
 
 /**
@@ -26,9 +33,13 @@ import { handleGetTimelinePage } from "./handleGetTimelinePage";
  * @param bearerToken
  */
 export function* idpayInitiativeDetailsSaga(bearerToken: string): SagaIterator {
-  const idPayWalletClient = createIDPayWalletClient(IDPAY_API_UAT_BASEURL);
-  const idPayTimelineClient = createIDPayTimelineClient(IDPAY_API_UAT_BASEURL);
-  const token = IDPAY_API_TEST_TOKEN ?? bearerToken;
+  const isPagoPATestEnabled = yield* select(isPagoPATestEnabledSelector);
+  const baseUrl = isPagoPATestEnabled ? idPayApiUatBaseUrl : idPayApiBaseUrl;
+  const token = idPayTestToken ?? bearerToken;
+
+  const idPayWalletClient = createIDPayWalletClient(baseUrl);
+  const idPayTimelineClient = createIDPayTimelineClient(baseUrl);
+
   const language = yield* select(preferredLanguageSelector);
 
   const preferredLanguage = pipe(
@@ -59,6 +70,20 @@ export function* idpayInitiativeDetailsSaga(bearerToken: string): SagaIterator {
       yield* call(
         handleGetTimelinePage,
         idPayTimelineClient.getTimeline,
+        token,
+        preferredLanguage,
+        action.payload
+      );
+    }
+  );
+  yield* takeLatest(
+    idpayTimelineDetailsGet.request,
+    function* (action: { payload: IdPayTimelineDetailsGetPayloadType }) {
+      // wait backoff time if there were previous errors
+      yield* call(waitBackoffError, idpayTimelineDetailsGet.failure);
+      yield* call(
+        handleGetTimelineDetails,
+        idPayTimelineClient.getTimelineDetail,
         token,
         preferredLanguage,
         action.payload

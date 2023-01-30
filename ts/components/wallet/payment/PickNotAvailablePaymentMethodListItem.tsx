@@ -1,5 +1,4 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { View } from "native-base";
 import * as React from "react";
 import { ImageSourcePropType } from "react-native";
 import { connect } from "react-redux";
@@ -14,6 +13,7 @@ import { PaymentMethod } from "../../../types/pagopa";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { getPickPaymentMethodDescription } from "../../../utils/payment";
 import { getPaypalAccountEmail } from "../../../utils/paypal";
+import { VSpacer } from "../../core/spacer/Spacer";
 import { H4 } from "../../core/typography/H4";
 import { IOColors } from "../../core/variables/IOColors";
 import IconFont from "../../ui/IconFont";
@@ -31,13 +31,13 @@ const unacceptedBottomSheetTitle = () =>
   );
 const unacceptedBottomSheetBody = () => (
   <>
-    <View spacer={true} large={true} />
+    <VSpacer size={24} />
     <H4 weight={"Regular"}>
       {I18n.t(
         "wallet.payWith.pickPaymentMethod.notAvailable.unaccepted.bottomSheetDescription"
       )}
     </H4>
-    <View spacer={true} large={true} />
+    <VSpacer size={24} />
   </>
 );
 
@@ -47,13 +47,13 @@ const paymentDisabledBottomSheetTitle = () =>
   );
 const paymentDisabledBottomSheetBody = () => (
   <>
-    <View spacer={true} large={true} />
+    <VSpacer size={24} />
     <H4 weight={"Regular"}>
       {I18n.t(
         "wallet.payWith.pickPaymentMethod.notAvailable.payment_disabled.bottomSheetDescription"
       )}
     </H4>
-    <View spacer={true} large={true} />
+    <VSpacer size={24} />
   </>
 );
 
@@ -63,13 +63,13 @@ const arrivingBottomSheetTitle = () =>
   );
 const arrivingBottomSheetBody = () => (
   <>
-    <View spacer={true} large={true} />
+    <VSpacer size={24} />
     <H4 weight={"Regular"}>
       {I18n.t(
         "wallet.payWith.pickPaymentMethod.notAvailable.arriving.bottomSheetDescription"
       )}
     </H4>
-    <View spacer={true} large={true} />
+    <VSpacer size={24} />
   </>
 );
 

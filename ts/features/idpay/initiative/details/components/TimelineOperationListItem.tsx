@@ -1,12 +1,13 @@
 import { format } from "date-fns";
-import { ListItem, View } from "native-base";
+import { ListItem } from "native-base";
 import React from "react";
-import { Image, StyleSheet } from "react-native";
+import { View, Image, StyleSheet } from "react-native";
 import { OperationTypeEnum as IbanOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/IbanOperationDTO";
 import { OperationTypeEnum as OnboardingOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/OnboardingOperationDTO";
 import { OperationListDTO } from "../../../../../../definitions/idpay/timeline/OperationListDTO";
 import { OperationTypeEnum as RefundOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/RefundOperationDTO";
 import { Icon } from "../../../../../components/core/icons";
+import { HSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -31,12 +32,15 @@ const getHourAndMinuteFromDate = (date: Date) => format(date, "HH:mm");
 
 type TimelineOperationListItemProps = {
   operation: OperationListDTO;
+  onPress?: () => void;
 };
 
-export const TimelineOperationListItem = ({
-  operation
-}: TimelineOperationListItemProps) => {
+export const TimelineOperationListItem = (
+  props: TimelineOperationListItemProps
+) => {
+  const { operation, onPress } = props;
   const hasAmount = "amount" in operation;
+
   const renderOperationIcon = (operation: OperationListDTO) => {
     if ("brandLogo" in operation) {
       return (
@@ -68,7 +72,7 @@ export const TimelineOperationListItem = ({
         );
 
   return (
-    <ListItem style={styles.spaceBetween}>
+    <ListItem style={styles.spaceBetween} onPress={onPress}>
       <View
         style={[
           IOStyles.flex,
@@ -78,7 +82,7 @@ export const TimelineOperationListItem = ({
         ]}
       >
         {renderOperationIcon(operation)}
-        <View hspacer />
+        <HSpacer size={16} />
         <View style={IOStyles.flex}>
           <H4>{renderOperationTitle()}</H4>
           <LabelSmall weight="Regular" color="bluegrey">
