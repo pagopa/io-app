@@ -15,6 +15,7 @@ import { Wallet } from "../../../../../types/pagopa";
 import { instrumentStatusLabels } from "../../../common/labels";
 
 export type InstrumentEnrollmentSwitchRef = {
+  switchStatus: boolean;
   setSwitchStatus: (status: boolean) => void;
 };
 
@@ -44,6 +45,7 @@ const InstrumentEnrollmentSwitch = forwardRef<
   );
 
   useImperativeHandle(ref, () => ({
+    switchStatus,
     setSwitchStatus
   }));
 
