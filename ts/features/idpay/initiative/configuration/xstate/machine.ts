@@ -236,6 +236,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
                   actions: "enrollIbanSuccess"
                 },
                 onError: {
+                  target: "DISPLAYING_IBAN_LIST",
                   actions: ["setFailure", "showFailureToast"]
                 }
               }
