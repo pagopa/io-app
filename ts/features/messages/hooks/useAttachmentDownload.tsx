@@ -144,9 +144,13 @@ export const useAttachmentDownload = (
   });
 
   const onAttachmentSelect = () => {
-    void mixpanelTrack("PN_ATTACHMENT_OPEN");
+    if (!isGenericAttachment) {
+      void mixpanelTrack("PN_ATTACHMENT_OPEN");
+    }
     if (showAlertForAttachments) {
-      void mixpanelTrack("PN_ATTACHMENTDISCLAIMER_SHOW_SUCCESS");
+      if (!isGenericAttachment) {
+        void mixpanelTrack("PN_ATTACHMENTDISCLAIMER_SHOW_SUCCESS");
+      }
       present();
     } else {
       void downloadAttachmentIfNeeded();
