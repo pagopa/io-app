@@ -13,17 +13,25 @@ import {
   mockNavigateToIbanLandingScreen,
   mockNavigateToIbanOnboardingScreen,
   mockNavigateToInitiativeDetailScreen,
-  mockNavigateToInstrumentsEnrollmentScreen
+  mockNavigateToInstrumentsEnrollmentScreen,
+  mockShowFailureToast
 } from "../__mocks__/actions";
 import {
+  mockConfirmIbanFailure,
   mockConfirmIbanSuccess,
+  mockDeleteInstrumentFailure,
   mockDeleteInstrumentSuccess,
+  mockEnrollIbanFailure,
   mockEnrollIbanSuccess,
+  mockEnrollInstrumentFailure,
   mockEnrollInstrumentSuccess,
+  mockLoadIbanListFailure,
   mockLoadIbanListSuccess,
   mockLoadIbanListSuccessEmpty,
+  mockLoadInitiativeFailure,
   mockLoadInitiativeSuccessNotRefundable,
   mockLoadInitiativeSuccessRefundable,
+  mockLoadInstrumentsFailure,
   mockLoadInstrumentsSuccess,
   mockLoadInstrumentsSuccessEmpty,
   mockServices,
@@ -483,16 +491,416 @@ describe("IDPay configuration machine in COMPLETE mode", () => {
       expect(mockNavigateToInitiativeDetailScreen).toHaveBeenCalledTimes(1)
     );
   });
+
+  it("should go to CONFIGURATION_FAILURE if initiative fails to load", async () => {
+    const machine = configureMockMachine({
+      services: {
+        loadInitiative: mockLoadInitiativeFailure
+      }
+    });
+
+    let currentState: StateValue = machine.initialState.value;
+
+    const service = interpret(machine).onTransition(state => {
+      currentState = state.value;
+    });
+
+    service.start();
+
+    expect(currentState).toEqual("WAITING_START");
+
+    service.send({
+      type: "START_CONFIGURATION",
+      initiativeId: T_INITIATIVE_ID,
+      mode: ConfigurationMode.COMPLETE
+    });
+
+    await waitFor(() =>
+      expect(mockLoadInitiativeFailure).toHaveBeenCalledTimes(1)
+    );
+
+    expect(currentState).toEqual("CONFIGURATION_FAILURE");
+  });
+
+  it("should show a failure toast if IBAN list fails to load", async () => {
+    const machine = configureMockMachine({
+      services: {
+        loadInitiative: mockLoadInitiativeSuccessNotRefundable,
+        loadIbanList: mockLoadIbanListFailure
+      }
+    });
+
+    let currentState: StateValue = machine.initialState.value;
+
+    const service = interpret(machine).onTransition(state => {
+      currentState = state.value;
+    });
+
+    service.start();
+
+    expect(currentState).toEqual("WAITING_START");
+
+    service.send({
+      type: "START_CONFIGURATION",
+      initiativeId: T_INITIATIVE_ID,
+      mode: ConfigurationMode.COMPLETE
+    });
+
+    await waitFor(() =>
+      expect(mockLoadInitiativeSuccessNotRefundable).toHaveBeenCalledTimes(1)
+    );
+
+    expect(currentState).toMatch("DISPLAYING_INTRO");
+
+    await waitFor(() =>
+      expect(mockNavigateToConfigurationIntro).toHaveBeenCalledTimes(1)
+    );
+
+    service.send({ type: "NEXT" });
+
+    await waitFor(() =>
+      expect(mockLoadIbanListFailure).toHaveBeenCalledTimes(1)
+    );
+
+    await waitFor(() => expect(mockShowFailureToast).toHaveBeenCalledTimes(1));
+
+    expect(currentState).toMatch("DISPLAYING_INTRO");
+  });
+
+  it("should show a failure toast if IBAN fails to enroll", async () => {
+    const machine = configureMockMachine({
+      services: {
+        loadInitiative: mockLoadInitiativeSuccessNotRefundable,
+        loadIbanList: mockLoadIbanListSuccess,
+        enrollIban: mockEnrollIbanFailure
+      }
+    });
+
+    let currentState: StateValue = machine.initialState.value;
+
+    const service = interpret(machine).onTransition(state => {
+      currentState = state.value;
+    });
+
+    service.start();
+
+    expect(currentState).toEqual("WAITING_START");
+
+    service.send({
+      type: "START_CONFIGURATION",
+      initiativeId: T_INITIATIVE_ID,
+      mode: ConfigurationMode.COMPLETE
+    });
+
+    await waitFor(() =>
+      expect(mockLoadInitiativeSuccessNotRefundable).toHaveBeenCalledTimes(1)
+    );
+
+    expect(currentState).toMatch("DISPLAYING_INTRO");
+
+    await waitFor(() =>
+      expect(mockNavigateToConfigurationIntro).toHaveBeenCalledTimes(1)
+    );
+
+    service.send({ type: "NEXT" });
+
+    await waitFor(() =>
+      expect(mockLoadIbanListSuccess).toHaveBeenCalledTimes(1)
+    );
+
+    expect(currentState).toMatchObject({
+      CONFIGURING_IBAN: "DISPLAYING_IBAN_LIST"
+    });
+
+    await waitFor(() =>
+      expect(mockNavigateToIbanEnrollmentScreen).toHaveBeenCalledTimes(1)
+    );
+
+    service.send({
+      type: "ENROLL_IBAN",
+      iban: {
+        channel: "IO",
+        checkIbanStatus: "",
+        description: "Test",
+        iban: T_IBAN
+      }
+    });
+
+    await waitFor(() => expect(mockEnrollIbanFailure).toHaveBeenCalledTimes(1));
+
+    await waitFor(() => expect(mockShowFailureToast).toHaveBeenCalledTimes(1));
+
+    expect(currentState).toMatchObject({
+      CONFIGURING_IBAN: "DISPLAYING_IBAN_LIST"
+    });
+  });
+
+  it("should show a failure toast if IBAN fails to add", async () => {
+    const machine = configureMockMachine({
+      services: {
+        loadInitiative: mockLoadInitiativeSuccessNotRefundable,
+        loadIbanList: mockLoadIbanListSuccessEmpty,
+        confirmIban: mockConfirmIbanFailure
+      }
+    });
+
+    let currentState: StateValue = machine.initialState.value;
+
+    const service = interpret(machine).onTransition(state => {
+      currentState = state.value;
+    });
+
+    service.start();
+
+    expect(currentState).toEqual("WAITING_START");
+
+    service.send({
+      type: "START_CONFIGURATION",
+      initiativeId: T_INITIATIVE_ID,
+      mode: ConfigurationMode.COMPLETE
+    });
+
+    await waitFor(() =>
+      expect(mockLoadInitiativeSuccessNotRefundable).toHaveBeenCalledTimes(1)
+    );
+
+    expect(currentState).toMatch("DISPLAYING_INTRO");
+
+    await waitFor(() =>
+      expect(mockNavigateToConfigurationIntro).toHaveBeenCalledTimes(1)
+    );
+
+    service.send({ type: "NEXT" });
+
+    await waitFor(() =>
+      expect(mockLoadIbanListSuccessEmpty).toHaveBeenCalledTimes(1)
+    );
+
+    expect(currentState).toMatchObject({
+      CONFIGURING_IBAN: "DISPLAYING_IBAN_ONBOARDING"
+    });
+
+    await waitFor(() =>
+      expect(mockNavigateToIbanLandingScreen).toHaveBeenCalledTimes(1)
+    );
+
+    service.send({ type: "NEXT" });
+
+    expect(currentState).toMatchObject({
+      CONFIGURING_IBAN: "DISPLAYING_IBAN_ONBOARDING_FORM"
+    });
+
+    await waitFor(() =>
+      expect(mockNavigateToIbanOnboardingScreen).toHaveBeenCalledTimes(1)
+    );
+
+    service.send({
+      type: "CONFIRM_IBAN",
+      ibanBody: {
+        description: "Test",
+        iban: T_IBAN
+      }
+    });
+
+    await waitFor(() =>
+      expect(mockConfirmIbanFailure).toHaveBeenCalledTimes(1)
+    );
+
+    await waitFor(() => expect(mockShowFailureToast).toHaveBeenCalledTimes(1));
+
+    expect(currentState).toMatchObject({
+      CONFIGURING_IBAN: "DISPLAYING_IBAN_ONBOARDING_FORM"
+    });
+  });
+
+  it("should show a failure toast if instrument list fails to load", async () => {
+    const machine = configureMockMachine({
+      services: {
+        loadInitiative: mockLoadInitiativeSuccessNotRefundable,
+        loadIbanList: mockLoadIbanListSuccess,
+        enrollIban: mockEnrollIbanSuccess,
+        loadInstruments: mockLoadInstrumentsFailure
+      }
+    });
+
+    let currentState: StateValue = machine.initialState.value;
+
+    const service = interpret(machine).onTransition(state => {
+      currentState = state.value;
+    });
+
+    service.start();
+
+    expect(currentState).toEqual("WAITING_START");
+
+    service.send({
+      type: "START_CONFIGURATION",
+      initiativeId: T_INITIATIVE_ID,
+      mode: ConfigurationMode.COMPLETE
+    });
+
+    await waitFor(() =>
+      expect(mockLoadInitiativeSuccessNotRefundable).toHaveBeenCalledTimes(1)
+    );
+
+    expect(currentState).toMatch("DISPLAYING_INTRO");
+
+    await waitFor(() =>
+      expect(mockNavigateToConfigurationIntro).toHaveBeenCalledTimes(1)
+    );
+
+    service.send({ type: "NEXT" });
+
+    await waitFor(() =>
+      expect(mockLoadIbanListSuccess).toHaveBeenCalledTimes(1)
+    );
+
+    expect(currentState).toMatchObject({
+      CONFIGURING_IBAN: "DISPLAYING_IBAN_LIST"
+    });
+
+    await waitFor(() =>
+      expect(mockNavigateToIbanEnrollmentScreen).toHaveBeenCalledTimes(1)
+    );
+
+    service.send({
+      type: "ENROLL_IBAN",
+      iban: {
+        channel: "IO",
+        checkIbanStatus: "",
+        description: "Test",
+        iban: T_IBAN
+      }
+    });
+
+    await waitFor(() => expect(mockEnrollIbanSuccess).toHaveBeenCalledTimes(1));
+
+    await waitFor(() =>
+      expect(mockLoadInstrumentsFailure).toHaveBeenCalledTimes(1)
+    );
+
+    await waitFor(() => expect(mockShowFailureToast).toHaveBeenCalledTimes(1));
+
+    expect(currentState).toMatchObject({
+      CONFIGURING_IBAN: "DISPLAYING_IBAN_LIST"
+    });
+  });
+
+  it("should show a failure toast if instruments fails to enroll/delete", async () => {
+    const machine = configureMockMachine({
+      services: {
+        loadInitiative: mockLoadInitiativeSuccessNotRefundable,
+        loadIbanList: mockLoadIbanListSuccess,
+        enrollIban: mockEnrollIbanSuccess,
+        loadInstruments: mockLoadInstrumentsSuccess,
+        enrollInstrument: mockEnrollInstrumentFailure,
+        deleteInstrument: mockDeleteInstrumentFailure
+      }
+    });
+
+    let currentState: StateValue = machine.initialState.value;
+
+    const service = interpret(machine).onTransition(state => {
+      currentState = state.value;
+    });
+
+    service.start();
+
+    expect(currentState).toEqual("WAITING_START");
+
+    service.send({
+      type: "START_CONFIGURATION",
+      initiativeId: T_INITIATIVE_ID,
+      mode: ConfigurationMode.COMPLETE
+    });
+
+    await waitFor(() =>
+      expect(mockLoadInitiativeSuccessNotRefundable).toHaveBeenCalledTimes(1)
+    );
+
+    expect(currentState).toMatch("DISPLAYING_INTRO");
+
+    await waitFor(() =>
+      expect(mockNavigateToConfigurationIntro).toHaveBeenCalledTimes(1)
+    );
+
+    service.send({ type: "NEXT" });
+
+    await waitFor(() =>
+      expect(mockLoadIbanListSuccess).toHaveBeenCalledTimes(1)
+    );
+
+    expect(currentState).toMatchObject({
+      CONFIGURING_IBAN: "DISPLAYING_IBAN_LIST"
+    });
+
+    await waitFor(() =>
+      expect(mockNavigateToIbanEnrollmentScreen).toHaveBeenCalledTimes(1)
+    );
+
+    service.send({
+      type: "ENROLL_IBAN",
+      iban: {
+        channel: "IO",
+        checkIbanStatus: "",
+        description: "Test",
+        iban: T_IBAN
+      }
+    });
+
+    await waitFor(() => expect(mockEnrollIbanSuccess).toHaveBeenCalledTimes(1));
+
+    await waitFor(() =>
+      expect(mockLoadInstrumentsSuccess).toHaveBeenCalledTimes(1)
+    );
+
+    expect(currentState).toMatchObject({
+      CONFIGURING_INSTRUMENTS: "DISPLAYING_INSTRUMENTS"
+    });
+
+    await waitFor(() =>
+      expect(mockNavigateToInstrumentsEnrollmentScreen).toHaveBeenCalledTimes(1)
+    );
+
+    service.send({
+      type: "ENROLL_INSTRUMENT",
+      instrumentId: T_INSTRUMENT_ID
+    });
+
+    await waitFor(() =>
+      expect(mockEnrollInstrumentFailure).toHaveBeenCalledTimes(1)
+    );
+
+    await waitFor(() => expect(mockShowFailureToast).toHaveBeenCalledTimes(1));
+
+    expect(currentState).toMatchObject({
+      CONFIGURING_INSTRUMENTS: "DISPLAYING_INSTRUMENTS"
+    });
+
+    await waitFor(() =>
+      expect(mockNavigateToInstrumentsEnrollmentScreen).toHaveBeenCalledTimes(1)
+    );
+
+    service.send({
+      type: "DELETE_INSTRUMENT",
+      instrumentId: T_INSTRUMENT_ID
+    });
+
+    await waitFor(() =>
+      expect(mockDeleteInstrumentFailure).toHaveBeenCalledTimes(1)
+    );
+
+    await waitFor(() => expect(mockShowFailureToast).toHaveBeenCalledTimes(2));
+
+    expect(currentState).toMatchObject({
+      CONFIGURING_INSTRUMENTS: "DISPLAYING_INSTRUMENTS"
+    });
+  });
 });
 
 describe("IDPay configuration machine in IBAN mode", () => {
   beforeEach(() => {
     jest.clearAllMocks();
-  });
-
-  it("should have the default state of WAITING_START", () => {
-    const machine = createIDPayInitiativeConfigurationMachine();
-    expect(machine.initialState.value).toEqual("WAITING_START");
   });
 
   it("should allow the citizen to enroll an IBAN to the initiative", async () => {
@@ -604,16 +1012,46 @@ describe("IDPay configuration machine in IBAN mode", () => {
 
     await waitFor(() => expect(mockExitConfiguration).toHaveBeenCalledTimes(1));
   });
+
+  it("should go to CONFIGURATION_FAILURE if IBAN list fails to load", async () => {
+    const machine = configureMockMachine({
+      services: {
+        loadInitiative: mockLoadInitiativeSuccessRefundable,
+        loadIbanList: mockLoadIbanListFailure
+      }
+    });
+
+    let currentState: StateValue = machine.initialState.value;
+
+    const service = interpret(machine).onTransition(state => {
+      currentState = state.value;
+    });
+
+    service.start();
+
+    expect(currentState).toEqual("WAITING_START");
+
+    service.send({
+      type: "START_CONFIGURATION",
+      initiativeId: T_INITIATIVE_ID,
+      mode: ConfigurationMode.IBAN
+    });
+
+    await waitFor(() =>
+      expect(mockLoadInitiativeSuccessRefundable).toHaveBeenCalledTimes(1)
+    );
+
+    await waitFor(() =>
+      expect(mockLoadIbanListFailure).toHaveBeenCalledTimes(1)
+    );
+
+    expect(currentState).toMatch("CONFIGURATION_FAILURE");
+  });
 });
 
 describe("IDPay configuration machine in INSTRUMENTS mode", () => {
   beforeEach(() => {
     jest.clearAllMocks();
-  });
-
-  it("should have the default state of WAITING_START", () => {
-    const machine = createIDPayInitiativeConfigurationMachine();
-    expect(machine.initialState.value).toEqual("WAITING_START");
   });
 
   it("should allow the citizen to enroll/delete an Instrument to the initiative", async () => {
@@ -693,6 +1131,18 @@ describe("IDPay configuration machine in INSTRUMENTS mode", () => {
     );
 
     service.send({
+      type: "ADD_PAYMENT_METHOD"
+    });
+
+    await waitFor(() =>
+      expect(mockNavigateToAddPaymentMethodScreen).toHaveBeenCalledTimes(1)
+    );
+
+    expect(currentState).toMatchObject({
+      CONFIGURING_INSTRUMENTS: "DISPLAYING_INSTRUMENTS"
+    });
+
+    service.send({
       type: "NEXT"
     });
 
@@ -750,6 +1200,41 @@ describe("IDPay configuration machine in INSTRUMENTS mode", () => {
     expect(currentState).toMatch("CONFIGURATION_CLOSED");
 
     await waitFor(() => expect(mockExitConfiguration).toHaveBeenCalledTimes(1));
+  });
+
+  it("should go to CONFIGURATION_FAILURE if instrument list fails to load", async () => {
+    const machine = configureMockMachine({
+      services: {
+        loadInitiative: mockLoadInitiativeSuccessRefundable,
+        loadInstruments: mockLoadInstrumentsFailure
+      }
+    });
+
+    let currentState: StateValue = machine.initialState.value;
+
+    const service = interpret(machine).onTransition(state => {
+      currentState = state.value;
+    });
+
+    service.start();
+
+    expect(currentState).toMatch("WAITING_START");
+
+    service.send({
+      type: "START_CONFIGURATION",
+      initiativeId: T_INITIATIVE_ID,
+      mode: ConfigurationMode.INSTRUMENTS
+    });
+
+    await waitFor(() =>
+      expect(mockLoadInitiativeSuccessRefundable).toHaveBeenCalledTimes(1)
+    );
+
+    await waitFor(() =>
+      expect(mockLoadInstrumentsFailure).toHaveBeenCalledTimes(1)
+    );
+
+    expect(currentState).toMatch("CONFIGURATION_FAILURE");
   });
 });
 
