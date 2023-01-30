@@ -77,14 +77,14 @@ export const mockLoadInstrumentsSuccess = jest.fn(
   async (): Promise<{
     pagoPAInstruments: ReadonlyArray<Wallet>;
     idPayInstruments: ReadonlyArray<InstrumentDTO>;
-  }> => Promise.resolve({ pagoPAInstruments: [], idPayInstruments: [] })
+  }> => Promise.resolve({ pagoPAInstruments: [T_WALLET], idPayInstruments: [] })
 );
 
 export const mockLoadInstrumentsSuccessEmpty = jest.fn(
   async (): Promise<{
     pagoPAInstruments: ReadonlyArray<Wallet>;
     idPayInstruments: ReadonlyArray<InstrumentDTO>;
-  }> => Promise.resolve({ pagoPAInstruments: [T_WALLET], idPayInstruments: [] })
+  }> => Promise.resolve({ pagoPAInstruments: [], idPayInstruments: [] })
 );
 
 export const mockEnrollInstrumentSuccess = jest.fn(async () =>
