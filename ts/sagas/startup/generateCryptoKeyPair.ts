@@ -13,17 +13,15 @@ import {
 } from "../../utils/crypto";
 import { mixpanelTrack } from "./../../mixpanel";
 
-const KEY_NAME = "lp-key";
-
-export function* cryptoKeyGenerationSaga() {
+export function* cryptoKeyGenerationSaga(keyTag: string) {
   const isLollipopEnabled = yield* select(isLollipopEnabledSelector);
   if (isLollipopEnabled) {
-    yield* call(generateCryptoKeyPair);
+    yield* call(generateCryptoKeyPair, keyTag);
   }
 }
 
-export function* trackMixpanelCryptoKeyPairEvents() {
-  const keyInfo = yield* call(getKeyGenerationInfo, KEY_NAME);
+export function* trackMixpanelCryptoKeyPairEvents(keyTag: string) {
+  const keyInfo = yield* call(getKeyGenerationInfo, keyTag);
 
   if (keyInfo && !keyInfo.errorCode) {
     void mixpanelTrack("LOLLIPOP_KEY_GENERATION_SUCCESS", {
@@ -39,43 +37,42 @@ export function* trackMixpanelCryptoKeyPairEvents() {
   }
 }
 
-function* generateCryptoKeyPair() {
+function* generateCryptoKeyPair(keyTag: string) {
   try {
     // Key is persisted even after uninstalling the application.
     const keyAlreadyExistsOnKeystore = yield* call(
       checkPublicKeyExists,
-      KEY_NAME
+      keyTag
     );
 
     // Every new fresh login we need to regenerate a new key pair.
     if (keyAlreadyExistsOnKeystore) {
       try {
-        yield* call(deleteKey, KEY_NAME);
+        yield* call(deleteKey, keyTag);
       } catch (e) {
-        yield* saveKeyGenerationFailureInfo(e);
+        yield* saveKeyGenerationFailureInfo(keyTag, e);
         // We couldn't proceed eny further.
-        // If we proceed any further.
         return;
       }
     }
 
-    const key = yield* call(generate, KEY_NAME);
+    const key = yield* call(generate, keyTag);
     const keyGenerationInfo: KeyGenerationInfo = {
-      keyTag: KEY_NAME,
+      keyTag,
       keyType: key.kty
     };
-    yield* call(setKeyGenerationInfo, KEY_NAME, keyGenerationInfo);
+    yield* call(setKeyGenerationInfo, keyTag, keyGenerationInfo);
   } catch (e) {
-    yield* saveKeyGenerationFailureInfo(e);
+    yield* saveKeyGenerationFailureInfo(keyTag, e);
   }
 }
 
-function* saveKeyGenerationFailureInfo(e: unknown) {
+function* saveKeyGenerationFailureInfo(keyTag: string, e: unknown) {
   const { message: errorCode, userInfo } = e as CryptoError;
   const keyGenerationInfo: KeyGenerationInfo = {
-    keyTag: KEY_NAME,
+    keyTag,
     errorCode,
     userInfo
   };
-  yield* call(setKeyGenerationInfo, KEY_NAME, keyGenerationInfo);
+  yield* call(setKeyGenerationInfo, keyTag, keyGenerationInfo);
 }

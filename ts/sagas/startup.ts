@@ -138,6 +138,7 @@ import { watchLoadMessageById } from "./messages/watchLoadMessageById";
 import { watchThirdPartyMessageSaga } from "./messages/watchThirdPartyMessageSaga";
 import { checkNotificationsPreferencesSaga } from "./startup/checkNotificationsPreferencesSaga";
 import { trackMixpanelCryptoKeyPairEvents } from "./startup/generateCryptoKeyPair";
+import { lollipopSelector } from "./../store/actions/lollipop";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -340,7 +341,11 @@ export function* initializeApplicationSaga(): Generator<
   yield* call(askMixpanelOptIn);
 
   // Track crypto key generation info
-  yield* call(trackMixpanelCryptoKeyPairEvents);
+  const lollipopState = yield* select(lollipopSelector);
+  const keyTag = lollipopState.keyTag;
+  if (keyTag) {
+    yield* call(trackMixpanelCryptoKeyPairEvents, keyTag);
+  }
 
   if (hasPreviousSessionAndPin) {
     // We have to retrieve the pin here and not on the previous if-condition (same guard)

@@ -1,3 +1,4 @@
+import { v4 as uuid } from "uuid";
 import { call, cancel, fork, put, take } from "typed-redux-saga/macro";
 import {
   analyticsAuthenticationCompleted,
@@ -10,6 +11,7 @@ import { ReduxSagaEffect } from "../../types/utils";
 import { stopCieManager, watchCieAuthenticationSaga } from "../cie";
 import { watchTestLoginRequestSaga } from "../testLoginSaga";
 import { cryptoKeyGenerationSaga } from "./generateCryptoKeyPair";
+import { lollipopKeyTagSaveSuccess } from "./../../store/actions/lollipop";
 
 /**
  * A saga that makes the user go through the authentication process until
@@ -31,7 +33,11 @@ export function* authenticationSaga(): Generator<
   yield* call(resetToAuthenticationRoute);
 
   // Generate key for lollipop
-  yield* cryptoKeyGenerationSaga();
+  const newKeyTag = uuid();
+  const newKeyTagAction = yield* put(
+    lollipopKeyTagSaveSuccess({ keyTag: newKeyTag })
+  );
+  yield* cryptoKeyGenerationSaga(newKeyTagAction.payload.keyTag);
 
   // Wait until the user has successfully logged in with SPID
   // FIXME: show an error on LOGIN_FAILED?
