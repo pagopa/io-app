@@ -77,6 +77,9 @@ const AttachmentItem = (props: {
         style={styles.container}
         onPress={onAttachmentSelect}
         disabled={pot.isLoading(downloadPot)}
+        accessible={true}
+        accessibilityLabel={props.attachment.displayName}
+        accessibilityRole="button"
       >
         <View style={styles.row}>
           <View style={styles.icon}>
