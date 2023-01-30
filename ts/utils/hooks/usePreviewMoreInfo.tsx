@@ -2,6 +2,7 @@ import * as React from "react";
 import I18n from "../../i18n";
 import { Body } from "../../components/core/typography/Body";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
+import { confirmButtonProps } from "../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { IOBottomSheetModal, useIOBottomSheetModal } from "./bottomSheet";
 
 /**
@@ -18,14 +19,9 @@ export const usePreviewMoreInfo = (): IOBottomSheetModal => {
     400,
     <FooterWithButtons
       type="SingleButton"
-      leftButton={{
-        block: true,
-        primary: true,
-        onPress: () => dismiss(),
-        title: I18n.t(
-          "profile.preferences.notifications.preview.bottomSheet.cta"
-        )
-      }}
+      leftButton={confirmButtonProps(() => {
+        dismiss();
+      }, I18n.t("profile.preferences.notifications.preview.bottomSheet.cta"))}
     />
   );
 
