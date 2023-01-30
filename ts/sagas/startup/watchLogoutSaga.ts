@@ -14,7 +14,6 @@ import { resetToAuthenticationRoute } from "../../store/actions/navigation";
 import { SagaCallReturnType } from "../../types/utils";
 import { convertUnknownToError } from "../../utils/errors";
 import { resetAssistanceData } from "../../utils/supportAssistance";
-import { deletePreviousCryptoKeyPair } from "./generateCryptoKeyPair";
 
 export function* logoutSaga(
   logout: ReturnType<typeof BackendClient>["logout"],
