@@ -26,24 +26,18 @@ const styles = StyleSheet.create({
 
 type ListItemProps = {
   text: string;
-  onPressProps: number;
   checked: boolean;
-  onPress: (value: number) => void;
+  onPress: () => void;
 };
 
-const CustomListItem = ({
-  text,
-  onPressProps,
-  onPress,
-  checked
-}: ListItemProps) => (
+const CustomListItem = ({ text, onPress, checked }: ListItemProps) => (
   <NBListItem
     style={{
       flexDirection: "row",
       justifyContent: "space-between",
       paddingVertical: 12
     }}
-    onPress={() => onPress(onPressProps)}
+    onPress={onPress}
   >
     <H4 weight={checked ? "SemiBold" : "Regular"} color={"bluegreyDark"}>
       {text}
@@ -121,9 +115,8 @@ const MultiValuePrerequisitesScreen = ({ navigation }: NavigationProps) => {
               <CustomListItem
                 key={index}
                 text={requisite}
-                onPressProps={index}
                 checked={index === selectedIndex}
-                onPress={setSelectedIndex}
+                onPress={() => setSelectedIndex(index)}
               />
             ))}
           </ScrollView>
