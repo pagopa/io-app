@@ -20,6 +20,7 @@ import { lollipopSelector } from "./../../store/actions/lollipop";
 export function* cryptoKeyGenerationSaga(keyTag: string) {
   const isLollipopEnabled = yield* select(isLollipopEnabledSelector);
   if (isLollipopEnabled) {
+    // Every new fresh login we need to regenerate a new key pair.
     yield* deletePreviousCryptoKeyPair();
     yield* call(generateCryptoKeyPair, keyTag);
   }
@@ -46,7 +47,7 @@ export function* trackMixpanelCryptoKeyPairEvents(keyTag: string) {
 }
 
 /**
- * Deletes a previous save crypto key pair.
+ * Deletes a previous saved crypto key pair.
  */
 export function* deletePreviousCryptoKeyPair() {
   const maybeOldKeyTag = (yield* select(lollipopSelector)).keyTag;
@@ -67,8 +68,6 @@ function* deleteCryptoKeyPair(keyTag: string) {
       yield* call(deleteKey, keyTag);
     } catch (e) {
       yield* saveKeyGenerationFailureInfo(keyTag, e);
-      // We couldn't proceed eny further.
-      return;
     }
   }
 }
@@ -78,7 +77,7 @@ function* deleteCryptoKeyPair(keyTag: string) {
  */
 function* generateCryptoKeyPair(keyTag: string) {
   try {
-    // Every new fresh login we need to regenerate a new key pair.
+    // Remove an already existing key with the same tag.
     deleteCryptoKeyPair(keyTag);
 
     const key = yield* call(generate, keyTag);
