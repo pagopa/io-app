@@ -266,7 +266,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 src: "loadInstruments",
                 id: "loadInstruments",
                 onDone: {
-                  target: "DISPLAYING_INSTRUMENTS",
+                  target: "EVALUATING_INSTRUMENTS",
                   actions: "loadInstrumentsSuccess"
                 },
                 onError: [
@@ -472,7 +472,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
           context.mode === ConfigurationMode.INSTRUMENTS,
         hasInstruments: (context, _) =>
           p.getOrElse(
-            p.map(context.idPayInstruments, list => list.length > 0),
+            p.map(context.pagoPAInstruments, list => list.length > 0),
             false
           )
       }
