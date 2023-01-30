@@ -49,8 +49,6 @@ export function* logoutSaga(
     };
     yield* put(logoutFailure(logoutError));
   } finally {
-    // clean up any crypto key pair linked to this session
-    yield* call(deletePreviousCryptoKeyPair);
     // clean up any assistance data
     resetAssistanceData();
     // startApplicationInitialization is dispatched
