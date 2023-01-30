@@ -198,7 +198,7 @@ const renderFooter = (
   );
 
 export const MessageAttachmentPreview = (props: Props): React.ReactElement => {
-  const ioDispatch = useIODispatch();
+  const dispatch = useIODispatch();
   const [isPDFError, setIsPDFError] = useState(false);
   const isFirstRendering = useRef(true);
   const navigation = useNavigation();
@@ -239,16 +239,16 @@ export const MessageAttachmentPreview = (props: Props): React.ReactElement => {
       isGenericAttachment &&
       (pot.isLoading(downloadPot) || pot.isUpdating(downloadPot))
     ) {
-      ioDispatch(downloadAttachment.cancel(attachment));
+      dispatch(downloadAttachment.cancel(attachment));
     }
     navigation.goBack();
-  }, [attachment, downloadPot, ioDispatch, isGenericAttachment, navigation]);
+  }, [attachment, downloadPot, dispatch, isGenericAttachment, navigation]);
 
   useEffect(() => {
     // eslint-disable-next-line functional/immutable-data
     isFirstRendering.current = false;
     if (shouldDownloadAttachment) {
-      ioDispatch(downloadAttachment.request(attachment));
+      dispatch(downloadAttachment.request(attachment));
     } else if (isGenericAttachment && pot.isError(downloadPot)) {
       const error = downloadPot.error;
       showToast(error.message);
@@ -257,7 +257,7 @@ export const MessageAttachmentPreview = (props: Props): React.ReactElement => {
   }, [
     attachment,
     downloadPot,
-    ioDispatch,
+    dispatch,
     isGenericAttachment,
     navigation,
     shouldDownloadAttachment
