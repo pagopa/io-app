@@ -3,6 +3,7 @@ import { IbanDTO } from "../../../../../../definitions/idpay/iban/IbanDTO";
 import { InitiativeDTO } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
 import { InstrumentDTO } from "../../../../../../definitions/idpay/wallet/InstrumentDTO";
 import { Wallet } from "../../../../../types/pagopa";
+import { InitiativeFailureType } from "./failure";
 
 export enum ConfigurationMode {
   COMPLETE = "COMPLETE",
@@ -24,6 +25,7 @@ export type Context = {
     iban: string;
     description: string;
   };
+  failure?: InitiativeFailureType;
 };
 
 export const INITIAL_CONTEXT: Context = {
