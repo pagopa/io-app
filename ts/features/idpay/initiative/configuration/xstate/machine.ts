@@ -286,8 +286,12 @@ const createIDPayInitiativeConfigurationMachine = () =>
               tags: [LOADING_TAG],
               always: [
                 {
-                  target: "DISPLAYING_INSTRUMENTS",
-                  cond: "hasInstruments"
+                  cond: "hasInstruments",
+                  target: "DISPLAYING_INSTRUMENTS"
+                },
+                {
+                  cond: "isInstrumentsOnlyMode",
+                  target: "DISPLAYING_INSTRUMENTS"
                 },
                 {
                   target: "#ROOT.DISPLAYING_CONFIGURATION_SUCCESS"
