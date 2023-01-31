@@ -27,6 +27,7 @@ import { handleContactSupport } from "../utils";
 
 type Props = {
   assistanceForPayment: boolean;
+  assistanceForCard: boolean;
 };
 
 /**
@@ -37,8 +38,10 @@ type Props = {
  * If the panic mode is active in the remote Zendesk config pressing the open a ticket button, the user will be sent to the ZendeskPanicMode
  * @constructor
  */
-const ZendeskSupportComponent = (props: Props) => {
-  const { assistanceForPayment } = props;
+const ZendeskSupportComponent = ({
+  assistanceForPayment,
+  assistanceForCard
+}: Props) => {
   const profile = useIOSelector(profileSelector);
   const maybeProfile: O.Option<InitializedProfile> = pot.toOption(profile);
   const zendeskRemoteConfig = useIOSelector(zendeskConfigSelector);
@@ -49,9 +52,10 @@ const ZendeskSupportComponent = (props: Props) => {
       handleContactSupport(
         navigation,
         assistanceForPayment,
+        assistanceForCard,
         zendeskRemoteConfig
       ),
-    [navigation, assistanceForPayment, zendeskRemoteConfig]
+    [navigation, assistanceForPayment, assistanceForCard, zendeskRemoteConfig]
   );
 
   return (
@@ -82,12 +86,12 @@ const ZendeskSupportComponent = (props: Props) => {
           if (O.isNone(maybeProfile)) {
             navigation.navigate(ZENDESK_ROUTES.MAIN, {
               screen: ZENDESK_ROUTES.SEE_REPORTS_ROUTERS,
-              params: { assistanceForPayment }
+              params: { assistanceForPayment, assistanceForCard }
             });
           } else {
             navigation.navigate(ZENDESK_ROUTES.MAIN, {
               screen: ZENDESK_ROUTES.ASK_SEE_REPORTS_PERMISSIONS,
-              params: { assistanceForPayment }
+              params: { assistanceForPayment, assistanceForCard }
             });
           }
         }}
