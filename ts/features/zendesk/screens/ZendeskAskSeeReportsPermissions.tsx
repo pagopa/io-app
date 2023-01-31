@@ -2,9 +2,9 @@ import { useNavigation } from "@react-navigation/native";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
-import { View, SafeAreaView, ScrollView } from "react-native";
+import { SafeAreaView, ScrollView, View } from "react-native";
+import CardIcon from "../../../../img/assistance/card.svg";
 import EmailIcon from "../../../../img/assistance/email.svg";
-import FiscalCodeIcon from "../../../../img/assistance/fiscalCode.svg";
 import NameSurnameIcon from "../../../../img/assistance/nameSurname.svg";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { H1 } from "../../../components/core/typography/H1";
@@ -36,6 +36,7 @@ import { ZendeskParamsList } from "../navigation/params";
 
 export type ZendeskAskSeeReportsPermissionsNavigationParams = {
   assistanceForPayment: boolean;
+  assistanceForCard: boolean;
 };
 
 type ItemProps = {
@@ -56,7 +57,7 @@ const getItems = (props: ItemProps): ReadonlyArray<ItemPermissionProps> => [
   },
   {
     id: "profileFiscalCode",
-    icon: <FiscalCodeIcon {...iconProps} />,
+    icon: <CardIcon {...iconProps} />,
     title: I18n.t("support.askPermissions.fiscalCode"),
     value: props.fiscalCode,
     testId: "profileFiscalCode"
@@ -81,7 +82,7 @@ type Props = IOStackNavigationRouteProps<
  */
 const ZendeskAskSeeReportsPermissions = (props: Props) => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
-  const assistanceForPayment = props.route.params.assistanceForPayment;
+  const { assistanceForPayment, assistanceForCard } = props.route.params;
   const fiscalCode = useIOSelector(profileFiscalCodeSelector);
   const nameSurname = useIOSelector(profileNameSurnameSelector);
   const email = pipe(
@@ -108,7 +109,7 @@ const ZendeskAskSeeReportsPermissions = (props: Props) => {
     onPress: () => {
       navigation.navigate("ZENDESK_MAIN", {
         screen: "ZENDESK_SEE_REPORTS_ROUTERS",
-        params: { assistanceForPayment }
+        params: { assistanceForPayment, assistanceForCard }
       });
     },
     title: I18n.t("support.askPermissions.cta.allow")

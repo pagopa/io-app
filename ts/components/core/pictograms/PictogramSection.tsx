@@ -9,7 +9,6 @@ import PictogramSectionDocuments from "./svg/PictogramSectionDocuments";
 import PictogramSectionServices from "./svg/PictogramSectionServices";
 import PictogramSectionProfile from "./svg/PictogramSectionProfile";
 import PictogramSectionSettings from "./svg/PictogramSectionSettings";
-import PictogramSectionSmile from "./svg/PictogramSectionSmile";
 
 export const IOSectionPictograms = {
   messages: PictogramSectionMessages /* io-home-messaggi */,
@@ -17,8 +16,7 @@ export const IOSectionPictograms = {
   documents: PictogramSectionDocuments,
   services: PictogramSectionServices /* io-home-servizi */,
   profile: PictogramSectionProfile,
-  settings: PictogramSectionSettings,
-  smile: PictogramSectionSmile
+  settings: PictogramSectionSettings
 };
 
 export type IOSectionPictogramType = keyof typeof IOSectionPictograms;

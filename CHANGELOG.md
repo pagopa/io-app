@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.25.0-rc.1](https://github.com/pagopa/io-app/compare/2.25.0-rc.0...2.25.0-rc.1) (2023-01-27)
+
+
+### Features
+
+* **IDPay:** [[IODPAY-95](https://pagopa.atlassian.net/browse/IODPAY-95)] Add IDPay test/env switch ([#4329](https://github.com/pagopa/io-app/issues/4329)) ([1b25653](https://github.com/pagopa/io-app/commit/1b2565332a03c506e528d6310bfe3ff5adf2461a))
+* [[IOAPPCIT-33](https://pagopa.atlassian.net/browse/IOAPPCIT-33)] Refactor `IdpsGrid` to enable TeamSystem ID ([#4314](https://github.com/pagopa/io-app/issues/4314)) ([39236e7](https://github.com/pagopa/io-app/commit/39236e703e4525e8cfec562f9beea04251d449f6))
+* **IDPay:** [[IODPAY-83](https://pagopa.atlassian.net/browse/IODPAY-83)] Revert instrument state if enrollment modal is dismissed ([#4316](https://github.com/pagopa/io-app/issues/4316)) ([c5c88a0](https://github.com/pagopa/io-app/commit/c5c88a009e9209610607af77fe986b766fb94da0))
+
+
+### Chores
+
+* [[IAI-263](https://pagopa.atlassian.net/browse/IAI-263)] Removal of the NativeBase's `Spacer` ([#4302](https://github.com/pagopa/io-app/issues/4302)) ([e18a303](https://github.com/pagopa/io-app/commit/e18a303c25122d35f57c13d525bb25e024e689bc))
+* [[IOAPPCOM-42](https://pagopa.atlassian.net/browse/IOAPPCOM-42)] Add mixpanel events for Premium ([#4293](https://github.com/pagopa/io-app/issues/4293)) ([4f59094](https://github.com/pagopa/io-app/commit/4f5909470c7af1a71b62c920e9a2fb889d4f9f46))
+
 ## [2.25.0-rc.0](https://github.com/pagopa/io-app/compare/2.24.0-rc.2...2.25.0-rc.0) (2023-01-24)
 
 
