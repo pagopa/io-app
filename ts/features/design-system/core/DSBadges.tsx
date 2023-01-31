@@ -33,6 +33,7 @@ export const DSBadges = () => (
       <HSpacer size={16} />
       <IOBadge small text={"Badge"} variant="outline" color="red" />
       <HSpacer size={16} />
+      <IOBadge small text={"Badge"} variant="outline" color="orange" />
     </View>
     <VSpacer size={16} />
     <View style={IOStyles.row}>
@@ -48,6 +49,7 @@ export const DSBadges = () => (
       <HSpacer size={16} />
       <IOBadge text={"Badge"} variant="outline" color="red" />
       <HSpacer size={16} />
+      <IOBadge text={"Badge"} variant="outline" color="orange" />
     </View>
     <VSpacer size={16} />
     <View

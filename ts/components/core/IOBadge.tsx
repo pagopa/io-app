@@ -3,8 +3,11 @@ import { View, Text, StyleSheet } from "react-native";
 import { makeFontStyleObject } from "./fonts";
 import { IOColors, IOColorType } from "./variables/IOColors";
 
-type IOBadgeOutlineColors = Extract<IOColorType, "blue" | "white" | "red">;
-type IOBadgeSolidColors = Extract<
+export type IOBadgeOutlineColors = Extract<
+  IOColorType,
+  "blue" | "white" | "red" | "orange"
+>;
+export type IOBadgeSolidColors = Extract<
   IOColorType,
   "blue" | "white" | "grey" | "aqua"
 >;
@@ -59,7 +62,8 @@ const mapOutlineColor: Record<
 > = {
   blue: "blue",
   white: "white",
-  red: "red"
+  red: "red",
+  orange: "orange"
 };
 
 const mapSolidColor: Record<
