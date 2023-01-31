@@ -3304,25 +3304,6 @@ idpay:
     preview:
       validThrough: "Valido fino al {{endDate}}"
   initiative:
-    configuration: 
-      instrumentStatus:
-        active: Attivo 
-        pendingActivation: In attivazione
-        pendingDeactivation: In disattivazione
-      bottomSheet:
-        header: Prima di continuare
-        bodyFirst: Il metodo sarà abilitato
-        bodyBold: " nelle prossime ore."
-        bodyLast: Riceverai una notifica push quando potrai iniziare ad utilizzarlo. Fino a quel momento eventuali transazioni verranno ignorate.
-        footer:
-          buttonActivate: Attiva
-          buttonCancel: Annulla
-      header: Scegli quali metodi di pagamento associare
-      subHeader: "Poi, usali per pagare e chiedi all’esercente di usare {{initiativeName}}."
-      footer: Modifica queste scelte o aggiunti altri metodi in qualsiasi momento dalla sezione Portafoglio
-      buttonFooter:
-        noneCta: Nessuno di questi
-        continueCta: Continua
     details:
       initiativeCard:
         availableAmount: Disponibile
@@ -3359,6 +3340,18 @@ idpay:
               REJECTED_DELETE_INSTRUMENT: "Hai rifiutato di eliminare un metodo di pagamento"
               PAID_REFUND:  "Rimborso"
               REJECTED_REFUND:  "Rifiuto rimborso"
+    operationDetails:
+      title: Dettaglio dell'operazione
+      instrument: Metodo di pagamento
+      maskedPan: •••• {{lastDigits}}
+      amountLabel: Importo transazione
+      accruedAmountLabel: Importo rimborsabile
+      amount: € {{amount}}
+      infoTitle: Informazioni sull transazione
+      date: Data
+      circuit: Circuito di pagamento
+      acquirerId: ID transazione Acquirer
+      issuerId: ID transazione Issuer
   onboarding:
     headerTitle: "Adesione all'iniziativa"
     beforeContinue:
@@ -3378,6 +3371,14 @@ idpay:
       title: Possiedi i seguenti requisiti?
       subtitle: Verificheremo con alcuni Enti se sei in possesso dei requisiti per poter richiedere {{service}}. 
   configuration:
+    failureStates:
+      GENERIC: "C'è stato un problema, riprova"
+      INITIATIVE_ERROR: "Errore nel caricamento dell'iniziativa"
+      IBAN_LIST_LOAD_FAILURE: "Errore nel caricamento della lista IBAN"
+      IBAN_ENROLL_FAILURE: "Errore durante l'aggiunta dell'IBAN"
+      INSTRUMENTS_LIST_LOAD_FAILURE: "Errore nel caricamento della lista strumenti"
+      INSTRUMENT_ENROLL_FAILURE: "Errore durante l'aggiunta del metodo di pagamento"
+      INSTRUMENT_DELETE_FAILURE: "Errore durante la rimozione del metodo di pagamento"
     headerTitle: "Configura l'iniziativa"
     intro: 
       title: "Ci siamo quasi"
@@ -3390,10 +3391,35 @@ idpay:
         instrumentSubtitle: "Indica i metodi da abilitare all’iniziativa"
       buttons:
         continue: "Inizia la configurazione"
+    instruments: 
+      title: "Metodi di pagamento"
+      header: Scegli quali metodi di pagamento associare
+      body: "Poi, usali per pagare e chiedi all’esercente di usare {{initiativeName}}."
+      footer: Modifica queste scelte o aggiunti altri metodi in qualsiasi momento dalla sezione Portafoglio
+      instrumentStatus:
+        active: Attivo 
+        pendingActivation: In attivazione
+        pendingDeactivation: In disattivazione
+      buttons:
+        skip: Nessuno di questi
+        continue: Continua
+        addMethod: Aggiungi metodo
+      enrollmentSheet:
+        header: Prima di continuare
+        bodyFirst: Il metodo sarà abilitato
+        bodyBold: " nelle prossime ore."
+        bodyLast: Riceverai una notifica push quando potrai iniziare ad utilizzarlo. Fino a quel momento eventuali transazioni verranno ignorate.
+        buttons:
+          activate: Attiva
+          cancel: Annulla
     associationSuccess:
       title: "Grazie!"
       body: "Da domani potrai utilizzare l'iniziativa {{initiativeName}}. Puoi abilitare altri metodi aggiungendoli al Portafoglio."
-      button: "Vai all'iniziativa"
+      noInstrumentsBody: "Per terminare la configurazione devi aggiungere almeno un metodo di pagamento al Portafoglio e abilitarlo all’iniziativa."
+      buttons:
+        continue: "Vai all'iniziativa"
+        skip: "Più tardi"
+        addPaymentMethod: "Aggiungi un metodo di pagamento"
     iban:
       landing:
         header: Aggiungi un IBAN al tuo Profilo

@@ -2,6 +2,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as _ from "lodash";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
+import { OperationDTO } from "../../../../../../definitions/idpay/timeline/OperationDTO";
 import { TimelineDTO } from "../../../../../../definitions/idpay/timeline/TimelineDTO";
 import { InitiativeDTO } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
 import { Action } from "../../../../../store/actions/types";
@@ -10,18 +11,24 @@ import {
   getErrorFromNetworkError,
   NetworkError
 } from "../../../../../utils/errors";
-import { idpayInitiativeGet, idpayTimelinePageGet } from "./actions";
+import {
+  idpayInitiativeGet,
+  idpayTimelineDetailsGet,
+  idpayTimelinePageGet
+} from "./actions";
 
 type PaginatedTimelineDTO = Record<number, TimelineDTO>;
 
 export type IDPayInitiativeState = {
   details: pot.Pot<InitiativeDTO, NetworkError>;
   timeline: pot.Pot<PaginatedTimelineDTO, NetworkError>;
+  timelineDetails: pot.Pot<OperationDTO, NetworkError>;
 };
 
 const INITIAL_STATE: IDPayInitiativeState = {
   details: pot.none,
-  timeline: pot.none
+  timeline: pot.none,
+  timelineDetails: pot.none
 };
 
 const reducer = (
@@ -70,6 +77,21 @@ const reducer = (
       return {
         ...state,
         timeline: pot.toError(state.timeline, action.payload)
+      };
+    case getType(idpayTimelineDetailsGet.request):
+      return {
+        ...state,
+        timelineDetails: pot.toLoading(pot.none)
+      };
+    case getType(idpayTimelineDetailsGet.success):
+      return {
+        ...state,
+        timelineDetails: pot.some(action.payload)
+      };
+    case getType(idpayTimelineDetailsGet.failure):
+      return {
+        ...state,
+        timelineDetails: pot.toError(state.timelineDetails, action.payload)
       };
   }
   return state;
@@ -137,6 +159,11 @@ export const idpayTimelineIsLastPageSelector = createSelector(
     }
     return false;
   }
+);
+
+export const idpayTimelineDetailsSelector = createSelector(
+  idpayInitativeSelector,
+  initiative => initiative.timelineDetails
 );
 
 export default reducer;
