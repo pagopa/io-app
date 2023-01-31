@@ -53,7 +53,7 @@ exports[`AttachmentsUnavailable component should match the snapshot 1`] = `
       }
     }
   >
-    [missing "en.messageDetails.attachments.unavailable.firstPart" translation]
+    The attachments are no longer available. 
     <Text
       style={
         Object {
@@ -61,9 +61,9 @@ exports[`AttachmentsUnavailable component should match the snapshot 1`] = `
         }
       }
     >
-      [missing "en.messageDetails.attachments.unavailable.secondPart" translation]
+      Please contact the sender
     </Text>
-    [missing "en.messageDetails.attachments.unavailable.thirdPart" translation]
+     for more information.
   </Text>
 </View>
 `;
