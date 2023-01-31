@@ -145,7 +145,7 @@ const MessageDetailsComponent = ({
         screen: ROUTES.MESSAGE_DETAIL_ATTACHMENT,
         params: {
           messageId,
-          attachment
+          attachmentId: attachment.id
         }
       });
     },

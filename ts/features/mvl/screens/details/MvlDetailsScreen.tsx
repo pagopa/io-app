@@ -58,7 +58,10 @@ export const MvlDetailsScreen = (props: Props): React.ReactElement => {
   const messageId = props.mvl.message.id;
   const openAttachment = useCallback(
     (attachment: UIAttachment) => {
-      navigation.navigate(MVL_ROUTES.ATTACHMENT, { messageId, attachment });
+      navigation.navigate(MVL_ROUTES.ATTACHMENT, {
+        messageId,
+        attachmentId: attachment.id
+      });
     },
     [messageId, navigation]
   );

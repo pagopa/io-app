@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
+import { useNavigation } from "@react-navigation/native";
 import I18n from "../../i18n";
 import {
-  UIMessageId,
-  UIAttachment
+  UIAttachmentId,
+  UIMessageId
 } from "../../store/reducers/entities/messages/types";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { MessageAttachmentPreview } from "../../features/messages/components/MessageAttachmentPreview";
@@ -15,10 +16,11 @@ import {
   trackThirdPartyMessageAttachmentPreviewSuccess,
   trackThirdPartyMessageAttachmentUserAction
 } from "../../utils/analytics";
+import { thirdPartyMessageUIAttachment } from "../../store/reducers/entities/messages/thirdPartyById";
 
 export type MessageDetailAttachmentNavigationParams = Readonly<{
   messageId: UIMessageId;
-  attachment: UIAttachment;
+  attachmentId: UIAttachmentId;
 }>;
 
 export const MessageDetailAttachment = (
@@ -27,16 +29,38 @@ export const MessageDetailAttachment = (
     "MESSAGE_DETAIL_ATTACHMENT"
   >
 ): React.ReactElement => {
+  const navigation = useNavigation();
   const messageId = props.route.params.messageId;
-  const attachment = props.route.params.attachment;
+  const attachmentId = props.route.params.attachmentId;
+  // This ref is needed otherwise the auto back on the useEffect will fire multiple
+  // times, since its dependencies change during the back navigation
+  const autoBackOnErrorHandled = useRef(false);
   const serviceId = useIOSelector(state =>
     getServiceByMessageId(state, messageId)
   );
 
-  return (
+  const thirdPartyMessageUIAttachmentResult = useIOSelector(state =>
+    thirdPartyMessageUIAttachment(state)(messageId)(attachmentId)
+  );
+
+  useEffect(() => {
+    // This condition happens only if this screen is shown without having
+    // first retrieved the third party message (so it should never happen)
+    if (
+      !autoBackOnErrorHandled.current &&
+      !thirdPartyMessageUIAttachmentResult
+    ) {
+      // eslint-disable-next-line functional/immutable-data
+      autoBackOnErrorHandled.current = true;
+      showToast(I18n.t("messageDetails.attachments.downloadFailed"));
+      navigation.goBack();
+    }
+  }, [navigation, thirdPartyMessageUIAttachmentResult]);
+
+  return thirdPartyMessageUIAttachmentResult ? (
     <MessageAttachmentPreview
       messageId={messageId}
-      attachment={attachment}
+      attachment={thirdPartyMessageUIAttachmentResult}
       onPDFError={() => {
         trackThirdPartyMessageAttachmentCorruptedFile(messageId, serviceId);
         showToast(I18n.t("messageDetails.attachments.corruptedFile"));
@@ -54,5 +78,7 @@ export const MessageDetailAttachment = (
         trackThirdPartyMessageAttachmentUserAction("share");
       }}
     />
+  ) : (
+    <></>
   );
 };

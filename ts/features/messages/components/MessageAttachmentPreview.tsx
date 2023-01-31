@@ -201,6 +201,9 @@ export const MessageAttachmentPreview = (props: Props): React.ReactElement => {
   const dispatch = useIODispatch();
   const [isPDFError, setIsPDFError] = useState(false);
   const isFirstRendering = useRef(true);
+  // This ref is needed otherwise the auto back on the useEffect will fire multiple
+  // times, since its dependencies change during the back navigation
+  const autoBackOnErrorHandled = useRef(false);
   const navigation = useNavigation();
   const messageId = props.messageId;
   const attachment = props.attachment;
@@ -241,6 +244,8 @@ export const MessageAttachmentPreview = (props: Props): React.ReactElement => {
     ) {
       dispatch(downloadAttachment.cancel(attachment));
     }
+    // eslint-disable-next-line functional/immutable-data
+    autoBackOnErrorHandled.current = true;
     navigation.goBack();
   }, [attachment, downloadPot, dispatch, isGenericAttachment, navigation]);
 
@@ -249,7 +254,13 @@ export const MessageAttachmentPreview = (props: Props): React.ReactElement => {
     isFirstRendering.current = false;
     if (shouldDownloadAttachment) {
       dispatch(downloadAttachment.request(attachment));
-    } else if (isGenericAttachment && pot.isError(downloadPot)) {
+    } else if (
+      !autoBackOnErrorHandled.current &&
+      isGenericAttachment &&
+      pot.isError(downloadPot)
+    ) {
+      // eslint-disable-next-line functional/immutable-data
+      autoBackOnErrorHandled.current = true;
       const error = downloadPot.error;
       showToast(error.message);
       navigation.goBack();
