@@ -2,12 +2,14 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
 import { loadThirdPartyMessage } from "../../../../features/messages/store/actions";
 import { Action } from "../../../../store/actions/types";
 import { IndexedById } from "../../../../store/helpers/indexer";
 import {
-  AttachmentType,
+  UIAttachmentId,
   UIMessageId
 } from "../../../../store/reducers/entities/messages/types";
 import {
@@ -62,46 +64,31 @@ export const thirdPartyFromIdSelector = createSelector(
     thirdPartyKeyValueContainer[ioMessageId] ?? pot.none
 );
 
-export const thirdPartyMessageUIAttachment = createSelector(
-  [
-    thirdPartyKeyValueContainer,
-    (_: GlobalState, ioMessageId: UIMessageId) => ioMessageId,
-    (
-      _: GlobalState,
-      _ioMessageId: UIMessageId,
-      thirdPartyMessageAttachmentId: NonEmptyString
-    ) => thirdPartyMessageAttachmentId,
-    (
-      _: GlobalState,
-      _ioMessageId: UIMessageId,
-      _thirdPartyMessageAttachmentId: NonEmptyString,
-      thirdPartyMessageAttachmentCategory: AttachmentType
-    ) => thirdPartyMessageAttachmentCategory
-  ],
-  (
-    thirdPartyKeyValueContainer,
-    ioMessageId,
-    thirdPartyMessageAttachmentId,
-    thirdPartyMessageAttachmentCategory
-  ) => {
-    const thirdPartyMessagePot = thirdPartyKeyValueContainer[ioMessageId];
-    if (!thirdPartyMessagePot || pot.isNone(thirdPartyMessagePot)) {
-      return undefined;
-    }
-    const thirdPartyMessage = thirdPartyMessagePot.value;
-    const thirdPartyMessageAttachments =
-      thirdPartyMessage.third_party_message.attachments;
-    const thirdPartyMessageAttachment = thirdPartyMessageAttachments?.find(
-      thirdPartyMessageAttachment =>
-        thirdPartyMessageAttachment.id === thirdPartyMessageAttachmentId
+export const thirdPartyMessageUIAttachment =
+  (state: GlobalState) =>
+  (ioMessageId: UIMessageId) =>
+  (thirdPartyMessageAttachmentId: UIAttachmentId) =>
+    pipe(
+      thirdPartyFromIdSelector(state, ioMessageId),
+      pot.toOption,
+      O.map(
+        thirdPartyMessage => thirdPartyMessage.third_party_message.attachments
+      ),
+      O.map(thirdPartyMessageAttachments =>
+        thirdPartyMessageAttachments?.find(
+          thirdPartyMessageAttachment =>
+            thirdPartyMessageAttachment.id ===
+            (thirdPartyMessageAttachmentId as string as NonEmptyString)
+        )
+      ),
+      O.map(thirdPartyMessageAttachment =>
+        thirdPartyMessageAttachment
+          ? attachmentFromThirdPartyMessage(
+              ioMessageId,
+              thirdPartyMessageAttachment,
+              "GENERIC"
+            )
+          : null
+      ),
+      O.toUndefined
     );
-    if (!thirdPartyMessageAttachment) {
-      return undefined;
-    }
-    return attachmentFromThirdPartyMessage(
-      ioMessageId,
-      thirdPartyMessageAttachment,
-      thirdPartyMessageAttachmentCategory
-    );
-  }
-);

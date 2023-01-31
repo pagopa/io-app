@@ -1,5 +1,4 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { IOStackNavigationRouteProps } from "../../../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../../../store/hooks";
 import {
@@ -8,7 +7,7 @@ import {
 } from "../../../../../../store/reducers/entities/messages/types";
 import { MessageAttachmentPreview } from "../../../../../messages/components/MessageAttachmentPreview";
 import { MvlParamsList } from "../../../../navigation/params";
-import { mvlFromIdSelector } from "../../../../store/reducers/byId";
+import { mvlMessageAttachmentSelector } from "../../../../store/reducers/byId";
 
 export type MvlAttachmentPreviewNavigationParams = Readonly<{
   messageId: UIMessageId;
@@ -21,25 +20,28 @@ export const MvlAttachmentPreview = (
   const navigation = props.navigation;
   const messageId = props.route.params.messageId;
   const attachmentId = props.route.params.attachmentId;
-  const mvlMessagePot = useIOSelector(state =>
-    mvlFromIdSelector(state, messageId)
+  // This ref is needed otherwise the auto back on the useEffect will fire multiple
+  // times, since its dependencies change during the back navigation
+  const autoBackOnErrorHandled = useRef(false);
+  const mvlMessageAttachment = useIOSelector(state =>
+    mvlMessageAttachmentSelector(state)(messageId)(attachmentId)
   );
-  const attachment = pot.isSome(mvlMessagePot)
-    ? mvlMessagePot.value?.legalMessage?.attachments?.find(
-        a => a.id === attachmentId
-      )
-    : undefined;
 
   useEffect(() => {
     // This condition happens only if this screen is shown without having
     // first retrieved the third party message (so it should never happen)
-    if (!attachment) {
+    if (!autoBackOnErrorHandled.current && !mvlMessageAttachment) {
+      // eslint-disable-next-line functional/immutable-data
+      autoBackOnErrorHandled.current = true;
       navigation.goBack();
     }
-  }, [attachment, navigation]);
+  }, [mvlMessageAttachment, navigation]);
 
-  return attachment ? (
-    <MessageAttachmentPreview messageId={messageId} attachment={attachment} />
+  return mvlMessageAttachment ? (
+    <MessageAttachmentPreview
+      messageId={messageId}
+      attachment={mvlMessageAttachment}
+    />
   ) : (
     <></>
   );

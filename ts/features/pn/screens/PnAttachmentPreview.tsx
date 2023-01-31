@@ -1,5 +1,4 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { PnParamsList } from "../navigation/params";
 import {
   UIMessageId,
@@ -9,7 +8,7 @@ import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParam
 import { MessageAttachmentPreview } from "../../messages/components/MessageAttachmentPreview";
 import { mixpanelTrack } from "../../../mixpanel";
 import { useIOSelector } from "../../../store/hooks";
-import { pnMessageFromIdSelector } from "../store/reducers";
+import { pnMessageAttachmentSelector } from "../store/reducers";
 
 export type PnAttachmentPreviewNavigationParams = Readonly<{
   messageId: UIMessageId;
@@ -25,25 +24,27 @@ export const PnAttachmentPreview = (
   const navigation = props.navigation;
   const messageId = props.route.params.messageId;
   const attachmentId = props.route.params.attachmentId;
-  const pnMessagePot = useIOSelector(state =>
-    pnMessageFromIdSelector(state, messageId)
+  // This ref is needed otherwise the auto back on the useEffect will fire multiple
+  // times, since its dependencies change during the back navigation
+  const autoBackOnErrorHandled = useRef(false);
+  const pnMessageAttachment = useIOSelector(state =>
+    pnMessageAttachmentSelector(state)(messageId)(attachmentId)
   );
-  const attachment = pot.isSome(pnMessagePot)
-    ? pnMessagePot.value?.attachments?.find(a => a.id === attachmentId)
-    : undefined;
 
   useEffect(() => {
     // This condition happens only if this screen is shown without having
     // first retrieved the third party message (so it should never happen)
-    if (!attachment) {
+    if (!autoBackOnErrorHandled.current && !pnMessageAttachment) {
+      // eslint-disable-next-line functional/immutable-data
+      autoBackOnErrorHandled.current = true;
       navigation.goBack();
     }
-  }, [attachment, navigation]);
+  }, [pnMessageAttachment, navigation]);
 
-  return attachment ? (
+  return pnMessageAttachment ? (
     <MessageAttachmentPreview
       messageId={messageId}
-      attachment={attachment}
+      attachment={pnMessageAttachment}
       onPDFError={() => {
         void mixpanelTrack("PN_ATTACHMENT_PREVIEW_STATUS", {
           previewStatus: "error"

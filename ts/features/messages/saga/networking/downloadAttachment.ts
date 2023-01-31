@@ -45,7 +45,7 @@ function trackFailureEvent(
   if (category !== "GENERIC") {
     return;
   }
-  if (httpStatusCode === 404) {
+  if (httpStatusCode === 500) {
     trackThirdPartyMessageAttachmentUnavailable(messageId, serviceId);
   } else if (httpStatusCode === 415) {
     trackThirdPartyMessageAttachmentBadFormat(messageId, serviceId);

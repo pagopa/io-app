@@ -1,6 +1,6 @@
-import I18n from "i18n-js";
 import * as React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import I18n from "../../../i18n";
 import variables from "../../../theme/variables";
 import { IOColors } from "../../core/variables/IOColors";
 import IconFont from "../../ui/IconFont";
