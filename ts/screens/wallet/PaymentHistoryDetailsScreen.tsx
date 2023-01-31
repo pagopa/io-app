@@ -3,7 +3,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { Text as NBText } from "native-base";
 import * as React from "react";
-import { View, StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
 import { EnteBeneficiario } from "../../../definitions/backend/EnteBeneficiario";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
@@ -406,7 +406,11 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   // Start the assistance without FAQ ("n/a" is a placeholder)
   zendeskSupportWorkunitStart: () =>
     dispatch(
-      zendeskSupportStart({ startingRoute: "n/a", assistanceForPayment: true })
+      zendeskSupportStart({
+        startingRoute: "n/a",
+        assistanceForPayment: true,
+        assistanceForCard: false
+      })
     ),
   zendeskSelectedCategory: (category: ZendeskCategory) =>
     dispatch(zendeskSelectedCategory(category))
