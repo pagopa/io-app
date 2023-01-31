@@ -3215,7 +3215,8 @@ features:
       content: "You will shortly receive a message with the signed documents."
       cta: "Close"
     qtspTos:
-      title: "Do you give your consent?"
+      title: "We are almost there!"
+      subTitle: "To sign, you must accept the terms and conditions of the service and confirm that you have read the privacy policy of the signature provider."
       show: "View"
 webView:
   error:

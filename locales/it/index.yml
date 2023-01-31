@@ -3239,7 +3239,8 @@ features:
       content: "A breve riceverai un messaggio con i documenti firmati."
       cta: "Chiudi"
     qtspTos:
-      title: "Dai il tuo consenso?"
+      title: "Ci siamo quasi!"
+      subTitle: "Per firmare, devi accettare i termini e condizioni del servizio e confermare di avere letto l’informativa privacy del fornitore della firma."
       show: "Visualizza"
 webView:
   error:
