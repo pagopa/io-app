@@ -7,6 +7,7 @@ import { H4 } from "../../../components/core/typography/H4";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import CustomBadge from "../../../components/ui/CustomBadge";
+import CgnDiscountValueBox from "../../bonus/cgn/components/merchants/CgnDiscountValueBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 const styles = StyleSheet.create({
@@ -75,6 +76,17 @@ export const DSBadges = () => (
         <IOBadge text={"Badge"} variant="outline" color="white" />
       </View>
     </View>
+    <VSpacer size={24} />
+    <H4 weight="SemiBold" color="bluegreyDark">
+      DiscountValueBox (CGN)
+    </H4>
+    <VSpacer size={16} />
+    <View style={IOStyles.row}>
+      <CgnDiscountValueBox value={25} small />
+      <HSpacer size={16} />
+      <CgnDiscountValueBox value={25} />
+    </View>
+
     <VSpacer size={40} />
 
     <H2>Notifications</H2>
