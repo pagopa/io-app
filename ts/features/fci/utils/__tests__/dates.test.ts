@@ -30,5 +30,17 @@ describe("Test dates utils", () => {
         daysBetweenDate(new Date(), new Date(date.setDate(date.getDate() + 30)))
       ).toBe(30);
     });
+    it("should return 1 with 28th February and 29th February ", () => {
+      const secondDay = new Date("2020-02-29");
+      const firstDay = new Date("2020-02-28");
+      expect(daysBetweenDate(firstDay, secondDay)).toBe(1);
+      expect(daysBetweenDate(secondDay, firstDay)).toBe(1);
+    });
+    it("should return 14 days with two dates in a leap year between 20 February and 5 March", () => {
+      const secondDay = new Date("2020-02-20");
+      const firstDay = new Date("2020-03-5");
+      expect(daysBetweenDate(firstDay, secondDay)).toBe(14);
+      expect(daysBetweenDate(secondDay, firstDay)).toBe(14);
+    });
   });
 });
