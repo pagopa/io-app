@@ -41,6 +41,7 @@ const EycaStatusDetailsComponent = (props: Props) => {
         return (
           <IOBadge
             testID={"eyca-status-badge"}
+            labelTestID={"eyca-status-label"}
             text={I18n.t("bonus.cgn.detail.status.badge.active")}
             variant="solid"
             color="aqua"
@@ -50,6 +51,7 @@ const EycaStatusDetailsComponent = (props: Props) => {
         return (
           <IOBadge
             testID={"eyca-status-badge"}
+            labelTestID={"eyca-status-label"}
             text={I18n.t("bonus.cgn.detail.status.badge.revoked")}
             variant="solid"
             color="grey"
@@ -59,6 +61,7 @@ const EycaStatusDetailsComponent = (props: Props) => {
         return (
           <IOBadge
             testID={"eyca-status-badge"}
+            labelTestID={"eyca-status-label"}
             text={I18n.t("bonus.cgn.detail.status.badge.expired")}
             variant="solid"
             color="grey"

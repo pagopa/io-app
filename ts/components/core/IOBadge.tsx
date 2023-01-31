@@ -16,6 +16,7 @@ type IOBadgeCommonProps = {
   text: string;
   small?: boolean;
   testID?: string;
+  labelTestID?: string;
 };
 
 type IOBadgeConditionalProps =
@@ -137,7 +138,8 @@ export const IOBadge = ({
   variant = defaultVariant,
   color = defaultColor,
   small,
-  testID
+  testID,
+  labelTestID
 }: IOBadgeProps) => (
   <View
     testID={testID}
@@ -155,6 +157,7 @@ export const IOBadge = ({
     ]}
   >
     <Text
+      testID={labelTestID}
       style={[
         styles.label,
         small ? styles.labelSizeSmall : styles.labelSizeDefault,
