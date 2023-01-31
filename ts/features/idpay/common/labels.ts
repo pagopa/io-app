@@ -7,13 +7,13 @@ type InstrumentStatusLabels = {
 
 const instrumentStatusLabels: InstrumentStatusLabels = {
   [StatusEnum.ACTIVE]: I18n.t(
-    "idpay.initiative.configuration.instrumentStatus.active"
+    "idpay.configuration.instruments.instrumentStatus.active"
   ),
   [StatusEnum.PENDING_ENROLLMENT_REQUEST]: I18n.t(
-    "idpay.initiative.configuration.instrumentStatus.pendingActivation"
+    "idpay.configuration.instruments.instrumentStatus.pendingActivation"
   ),
   [StatusEnum.PENDING_DEACTIVATION_REQUEST]: I18n.t(
-    "idpay.initiative.configuration.instrumentStatus.pendingDeactivation"
+    "idpay.configuration.instruments.instrumentStatus.pendingDeactivation"
   )
 };
 
