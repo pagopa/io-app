@@ -3,7 +3,7 @@ import _ from "lodash";
 import { Content as NBContent } from "native-base";
 import * as React from "react";
 import { useCallback, useEffect, useState } from "react";
-import { ActivityIndicator, StyleSheet, View } from "react-native";
+import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import I18n from "i18n-js";
 import { useNavigation } from "@react-navigation/native";
@@ -33,13 +33,14 @@ import {
 } from "../../../navigation/params/AppParamsList";
 import ROUTES from "../../../navigation/routes";
 import { isStrictNone } from "../../../utils/pot";
+import StatusContent from "../../SectionStatus/StatusContent";
+import { IOColors } from "../../core/variables/IOColors";
 import CtaBar from "./common/CtaBar";
 import { HeaderDueDateBar } from "./common/HeaderDueDateBar";
 import { MessageTitle } from "./common/MessageTitle";
 import MessageContent from "./Content";
 import MedicalPrescriptionAttachments from "./MedicalPrescriptionAttachments";
 import MessageMarkdown from "./MessageMarkdown";
-import AttachmentsUnavailableComponent from "./AttachmentsUnavailable";
 
 const styles = StyleSheet.create({
   padded: {
@@ -55,6 +56,15 @@ const styles = StyleSheet.create({
   },
   viewFooter: {
     marginBottom: 32
+  },
+  message: {
+    paddingStart: variables.spacerWidth,
+    color: IOColors.white,
+    font: "TitilliumWeb",
+    fontSize: variables.headerBodyFontSize
+  },
+  messageBold: {
+    fontWeight: "bold"
   }
 });
 
@@ -76,9 +86,24 @@ const OrganizationTitle = ({ name, organizationName, logoURLs }: UIService) => (
   />
 );
 
-const renderThirdPartyAttachmentsError = () => (
+const renderThirdPartyAttachmentsError = (viewRef: React.RefObject<View>) => (
   <>
-    <AttachmentsUnavailableComponent />
+    <StatusContent
+      backgroundColor={"orange"}
+      iconColor={IOColors.white}
+      iconName={"io-notice"}
+      labelColor={"white"}
+      viewRef={viewRef}
+      labelPaddingVertical={16}
+    >
+      <Text style={styles.message}>
+        {I18n.t("messageDetails.attachments.unavailable.firstPart")}
+        <Text style={styles.messageBold}>
+          {I18n.t("messageDetails.attachments.unavailable.secondPart")}
+        </Text>
+        {I18n.t("messageDetails.attachments.unavailable.thirdPart")}
+      </Text>
+    </StatusContent>
     <View style={styles.viewFooter} />
   </>
 );
@@ -95,7 +120,7 @@ const renderThirdPartyAttachmentsLoading = () => (
       )}
       importantForAccessibility={"no-hide-descendants"}
     />
-    <View style={styles.viewFooter} />
+    <VSpacer size={24} />
   </>
 );
 
@@ -112,6 +137,7 @@ const MessageDetailsComponent = ({
 }: Props) => {
   const dispatch = useIODispatch();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const viewRef = React.createRef<View>();
   // This is used to make sure that no attachments are shown before the
   // markdown content has rendered. Note that the third party attachment
   // request is run in parallel with the markdown rendering.
@@ -171,10 +197,10 @@ const MessageDetailsComponent = ({
           />
         </View>
       ) : (
-        renderThirdPartyAttachmentsError()
+        renderThirdPartyAttachmentsError(viewRef)
       );
     },
-    [openAttachment]
+    [openAttachment, viewRef]
   );
 
   useEffect(() => {
@@ -239,12 +265,12 @@ const MessageDetailsComponent = ({
               ),
               () => renderThirdPartyAttachmentsLoading(),
               _ => renderThirdPartyAttachmentsLoading(),
-              _ => renderThirdPartyAttachmentsError(),
+              _ => renderThirdPartyAttachmentsError(viewRef),
               thirdPartyMessage =>
                 renderThirdPartyAttachments(thirdPartyMessage),
               _ => renderThirdPartyAttachmentsLoading(),
               _ => renderThirdPartyAttachmentsLoading(),
-              _ => renderThirdPartyAttachmentsError()
+              _ => renderThirdPartyAttachmentsError(viewRef)
             )}
           </>
         )}
