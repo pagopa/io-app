@@ -312,17 +312,6 @@ const createIDPayOnboardingMachine = () =>
         DISPLAYING_REQUIRED_SELF_CRITERIA: {
           tags: [WAITING_USER_INPUT_TAG],
           initial: "EVALUATING_SELF_CRITERIA",
-          on: {
-            GO_BACK: [
-              {
-                target: "DISPLAYING_REQUIRED_PDND_CRITERIA",
-                cond: "hasPDNDRequiredCriteria"
-              },
-              {
-                target: "DISPLAYING_INITIATIVE"
-              }
-            ]
-          },
           onDone: {
             target: "ACCEPTING_REQUIRED_CRITERIA"
             // triggered by the 'final' substate
@@ -345,6 +334,16 @@ const createIDPayOnboardingMachine = () =>
               tags: [WAITING_USER_INPUT_TAG],
               entry: "navigateToBoolSelfDeclarationsScreen",
               on: {
+                GO_BACK: [
+                  {
+                    target:
+                      "#IDPAY_ONBOARDING.DISPLAYING_REQUIRED_PDND_CRITERIA",
+                    cond: "hasPDNDRequiredCriteria"
+                  },
+                  {
+                    target: "#IDPAY_ONBOARDING.DISPLAYING_INITIATIVE"
+                  }
+                ],
                 ACCEPT_REQUIRED_BOOL_CRITERIA: [
                   {
                     target: "CYCLING_MULTI_CRITERIA",
@@ -366,9 +365,20 @@ const createIDPayOnboardingMachine = () =>
                 ALL_CRITERIA_ACCEPTED: {
                   target: "MULTI_PREREQUISITES_CYCLE_OVER"
                 },
-                GO_BACK: {
-                  target: "DISPLAYING_BOOL_CRITERIA"
-                }
+                GO_BACK: [
+                  {
+                    target: "DISPLAYING_BOOL_CRITERIA",
+                    cond: "hasBoolRequiredCriteria"
+                  },
+                  {
+                    target:
+                      "#IDPAY_ONBOARDING.DISPLAYING_REQUIRED_PDND_CRITERIA",
+                    cond: "hasPDNDRequiredCriteria"
+                  },
+                  {
+                    target: "#IDPAY_ONBOARDING.DISPLAYING_INITIATIVE"
+                  }
+                ]
               }
             },
             MULTI_PREREQUISITES_CYCLE_OVER: {
