@@ -1,8 +1,10 @@
+import * as O from "fp-ts/lib/Option";
 import I18n from "../../../../../i18n";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../../navigation/params/AppParamsList";
+import ROUTES from "../../../../../navigation/routes";
 import { showToast } from "../../../../../utils/showToast";
 import { IDPayDetailsRoutes } from "../../details/navigation";
 import { IDPayConfigurationRoutes } from "../navigation/navigator";
@@ -40,6 +42,13 @@ const createActionsImplementation = (
     navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
       screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ENROLLMENT,
       params: {}
+    });
+  };
+
+  const navigateToAddPaymentMethodScreen = () => {
+    navigation.replace(ROUTES.WALLET_NAVIGATOR, {
+      screen: ROUTES.WALLET_ADD_PAYMENT_METHOD,
+      params: { inPayment: O.none }
     });
   };
 
@@ -89,8 +98,9 @@ const createActionsImplementation = (
     navigateToIbanOnboardingScreen,
     navigateToIbanEnrollmentScreen,
     navigateToInstrumentsEnrollmentScreen,
-    navigateToConfigurationSuccessScreen,
+    navigateToAddPaymentMethodScreen,
     navigateToInitiativeDetailScreen,
+    navigateToConfigurationSuccessScreen,
     showFailureToast,
     exitConfiguration
   };

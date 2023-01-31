@@ -19,6 +19,7 @@ export type Context = {
   pagoPAInstruments: p.Pot<ReadonlyArray<Wallet>, Error>;
   idPayInstruments: p.Pot<ReadonlyArray<InstrumentDTO>, Error>;
   selectedInstrumentId?: string;
+  areInstrumentsSkipped?: boolean;
   selectedIban?: IbanDTO;
   ibanBody?: {
     iban: string;
