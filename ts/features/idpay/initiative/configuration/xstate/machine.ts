@@ -282,6 +282,18 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 ]
               }
             },
+            EVALUATING_INSTRUMENTS: {
+              tags: [LOADING_TAG],
+              always: [
+                {
+                  target: "DISPLAYING_INSTRUMENTS",
+                  cond: "hasInstruments"
+                },
+                {
+                  target: "#ROOT.DISPLAYING_CONFIGURATION_SUCCESS"
+                }
+              ]
+            },
             DISPLAYING_INSTRUMENTS: {
               tags: [WAITING_USER_INPUT_TAG],
               on: {
@@ -292,6 +304,9 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 DELETE_INSTRUMENT: {
                   target: "DELETING_INSTRUMENT",
                   actions: "selectInstrument"
+                },
+                ADD_PAYMENT_METHOD: {
+                  actions: "navigateToAddPaymentMethodScreen"
                 },
                 BACK: [
                   {
@@ -304,6 +319,10 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 ],
                 NEXT: {
                   target: "INSTRUMENTS_COMPLETED"
+                },
+                SKIP: {
+                  target: "INSTRUMENTS_COMPLETED",
+                  actions: "skipInstruments"
                 }
               }
             },
@@ -358,6 +377,9 @@ const createIDPayInitiativeConfigurationMachine = () =>
           on: {
             COMPLETE_CONFIGURATION: {
               target: "CONFIGURATION_COMPLETED"
+            },
+            ADD_PAYMENT_METHOD: {
+              actions: "navigateToAddPaymentMethodScreen"
             }
           }
         },
@@ -411,6 +433,9 @@ const createIDPayInitiativeConfigurationMachine = () =>
           selectedInstrumentId: event.instrumentId,
           failure: undefined
         })),
+        skipInstruments: assign((_, __) => ({
+          areInstrumentsSkipped: true
+        })),
         toggleInstrumentSuccess: assign((_, event) => ({
           idPayInstruments: p.some(event.data),
           selectedInstrumentId: undefined,
@@ -440,7 +465,12 @@ const createIDPayInitiativeConfigurationMachine = () =>
             false
           ),
         isInstrumentsOnlyMode: (context, _) =>
-          context.mode === ConfigurationMode.INSTRUMENTS
+          context.mode === ConfigurationMode.INSTRUMENTS,
+        hasInstruments: (context, _) =>
+          p.getOrElse(
+            p.map(context.idPayInstruments, list => list.length > 0),
+            false
+          )
       }
     }
   );
