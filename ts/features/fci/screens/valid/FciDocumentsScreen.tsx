@@ -249,14 +249,14 @@ const FciDocumentsScreen = () => {
     light: false,
     bordered: true,
     onPress: onCancelPress,
-    title: I18n.t("global.buttons.cancel")
+    title: I18n.t("features.fci.documents.footer.cancel")
   };
 
   const continueButtonProps = {
     block: true,
     primary: true,
     onPress: onContinuePress,
-    title: I18n.t("global.buttons.continue")
+    title: I18n.t("features.fci.documents.footer.continue")
   };
 
   const keepReadingButtonProps = {
@@ -276,7 +276,7 @@ const FciDocumentsScreen = () => {
     block: true,
     primary: true,
     onPress: onContinuePress,
-    title: "Procedi alla firma"
+    title: I18n.t("features.fci.documents.footer.confirm")
   };
 
   const renderPager = () => (
@@ -371,7 +371,6 @@ const FciDocumentsScreen = () => {
         {documents.length > 0 && (
           <>
             {renderPager()}
-
             <FooterWithButtons
               type={"TwoButtonsInlineThird"}
               leftButton={cancelButtonProps}
