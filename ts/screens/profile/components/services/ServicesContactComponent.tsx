@@ -1,7 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { Badge } from "native-base";
-import { View, FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
+import { View, FlatList, ListRenderItemInfo } from "react-native";
 import { constNull } from "fp-ts/lib/function";
 import { GlobalState } from "../../../../store/reducers/types";
 import { Dispatch } from "../../../../store/actions/types";
@@ -15,9 +14,9 @@ import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponen
 import { H5 } from "../../../../components/core/typography/H5";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import I18n from "../../../../i18n";
-import { BaseTypography } from "../../../../components/core/typography/BaseTypography";
 import { ServicesPreferencesModeEnum } from "../../../../../definitions/backend/ServicesPreferencesMode";
 import { HSpacer, VSpacer } from "../../../../components/core/spacer/Spacer";
+import { IOBadge } from "../../../../components/core/IOBadge";
 
 type Props = {
   onSelectMode: (mode: ServicesPreferencesModeEnum) => void;
@@ -32,14 +31,6 @@ type ContactOption = {
   description1: string;
   description2?: string;
 };
-
-const styles = StyleSheet.create({
-  badge: {
-    alignSelf: "flex-start",
-    backgroundColor: IOColors.blue,
-    height: 18
-  }
-});
 
 const options = (): ReadonlyArray<ContactOption> => [
   {
@@ -75,17 +66,15 @@ const ServicesContactComponent = (props: Props): React.ReactElement => {
           }
         >
           <View style={IOStyles.flex}>
-            {props.showBadge && item.mode === ServicesPreferencesModeEnum.AUTO && (
-              <Badge style={styles.badge}>
-                <BaseTypography
-                  weight={"SemiBold"}
-                  color={"white"}
-                  style={{ fontSize: 12 }}
-                >
-                  {I18n.t("services.optIn.preferences.oldUsersBadge")}
-                </BaseTypography>
-              </Badge>
-            )}
+            {props.showBadge &&
+              item.mode === ServicesPreferencesModeEnum.AUTO && (
+                <IOBadge
+                  small
+                  variant="solid"
+                  color="blue"
+                  text={I18n.t("services.optIn.preferences.oldUsersBadge")}
+                />
+              )}
             <H4>{item.title}</H4>
             <H5 weight={"Regular"}>
               {item.description1}

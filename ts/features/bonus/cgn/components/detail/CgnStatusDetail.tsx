@@ -1,35 +1,17 @@
-import { Badge } from "native-base";
 import * as React from "react";
-import { View, StyleSheet } from "react-native";
+import { View } from "react-native";
 import { Card } from "../../../../../../definitions/cgn/Card";
+import { IOBadge } from "../../../../../components/core/IOBadge";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { H5 } from "../../../../../components/core/typography/H5";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";
 import { localeDateFormat } from "../../../../../utils/locale";
 
 type Props = {
   cgnDetail: Card;
 };
-
-const styles = StyleSheet.create({
-  rowBlock: {
-    flexDirection: "row",
-    justifyContent: "space-between"
-  },
-  statusBadgeActive: {
-    height: 20,
-    marginTop: 2,
-    backgroundColor: IOColors.aqua
-  },
-  statusBadgeRevoked: {
-    height: 20,
-    marginTop: 2,
-    backgroundColor: IOColors.bluegrey
-  },
-  statusText: { paddingHorizontal: 8 }
-});
 
 type StatusElements = {
   badge: React.ReactNode;
@@ -41,7 +23,7 @@ const renderRowBlock = (
   right: React.ReactNode
 ): React.ReactNode => (
   <>
-    <View style={styles.rowBlock}>
+    <View style={IOStyles.rowSpaceBetween}>
       {left}
       {right}
     </View>
@@ -54,15 +36,12 @@ const elementsFromStatus = ({ cgnDetail }: Props): StatusElements => {
     case "ACTIVATED":
       return {
         badge: (
-          <Badge style={styles.statusBadgeActive} testID={"status-badge"}>
-            <H5
-              color={"bluegreyDark"}
-              style={styles.statusText}
-              weight={"SemiBold"}
-            >
-              {I18n.t("bonus.cgn.detail.status.badge.active")}
-            </H5>
-          </Badge>
+          <IOBadge
+            testID={"status-badge"}
+            text={I18n.t("bonus.cgn.detail.status.badge.active")}
+            variant="solid"
+            color="aqua"
+          />
         ),
         dateInformation: (
           <>
@@ -110,11 +89,12 @@ const elementsFromStatus = ({ cgnDetail }: Props): StatusElements => {
     case "EXPIRED":
       return {
         badge: (
-          <Badge style={styles.statusBadgeRevoked} testID={"status-badge"}>
-            <H5 color={"white"} style={styles.statusText} weight={"SemiBold"}>
-              {I18n.t("bonus.cgn.detail.status.badge.expired")}
-            </H5>
-          </Badge>
+          <IOBadge
+            testID={"status-badge"}
+            text={I18n.t("bonus.cgn.detail.status.badge.expired")}
+            variant="solid"
+            color="grey"
+          />
         ),
         dateInformation: (
           <>
@@ -162,15 +142,12 @@ const elementsFromStatus = ({ cgnDetail }: Props): StatusElements => {
     case "REVOKED":
       return {
         badge: (
-          <Badge style={styles.statusBadgeRevoked} testID={"status-badge"}>
-            <H5
-              color={"white"}
-              weight={"SemiBold"}
-              style={{ paddingHorizontal: 8 }}
-            >
-              {I18n.t("bonus.cgn.detail.status.badge.revoked")}
-            </H5>
-          </Badge>
+          <IOBadge
+            testID={"status-badge"}
+            text={I18n.t("bonus.cgn.detail.status.badge.revoked")}
+            variant="solid"
+            color="grey"
+          />
         ),
         dateInformation: (
           <>
@@ -227,7 +204,7 @@ const CgnStatusDetail: React.FunctionComponent<Props> = (props: Props) => {
   const { badge, dateInformation } = elementsFromStatus(props);
   return (
     <>
-      <View style={styles.rowBlock}>
+      <View style={IOStyles.rowSpaceBetween}>
         <H4>{I18n.t("bonus.cgn.detail.status.title")}</H4>
         {badge}
       </View>

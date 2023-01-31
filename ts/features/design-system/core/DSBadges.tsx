@@ -1,6 +1,5 @@
-import { Badge, Text as NBBadgeText } from "native-base";
 import * as React from "react";
-import { View, StyleSheet, Platform } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { IOBadge } from "../../../components/core/IOBadge";
 import { VSpacer, HSpacer } from "../../../components/core/spacer/Spacer";
 import { H2 } from "../../../components/core/typography/H2";

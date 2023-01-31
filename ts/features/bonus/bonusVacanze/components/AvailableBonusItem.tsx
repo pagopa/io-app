@@ -1,16 +1,16 @@
-import { Badge, ListItem, Text as NBBadgeText } from "native-base";
+import { ListItem } from "native-base";
 import * as React from "react";
-import { View, Image, Platform, StyleSheet } from "react-native";
+import { View, Image, StyleSheet } from "react-native";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
 import I18n from "../../../../i18n";
 import { getRemoteLocale } from "../../../../utils/messages";
 
-import { IOColors } from "../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { HSpacer } from "../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../components/core/typography/Body";
 import { H3 } from "../../../../components/core/typography/H3";
+import { IOBadge } from "../../../../components/core/IOBadge";
 
 export type AvailableBonusItemState = "incoming" | "active" | "completed";
 
@@ -43,21 +43,11 @@ const styles = StyleSheet.create({
     flex: 0.3,
     alignItems: "flex-end",
     alignContent: "center"
-  },
-  badge: {
-    height: 18,
-    backgroundColor: IOColors.grey
-  },
-  badgeText: {
-    lineHeight: Platform.OS === "ios" ? 20 : 21
   }
 });
 
 const BonusBadge = (props: { caption: string }) => (
-  // IOBadge (new style to be added)
-  <Badge style={styles.badge}>
-    <NBBadgeText style={styles.badgeText}>{props.caption}</NBBadgeText>
-  </Badge>
+  <IOBadge small text={props.caption} variant="solid" color="grey" />
 );
 
 const renderBadge = (state: AvailableBonusItemState) => {

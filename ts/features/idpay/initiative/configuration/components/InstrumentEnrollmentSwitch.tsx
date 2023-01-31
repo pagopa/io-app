@@ -1,15 +1,14 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Badge, ListItem } from "native-base";
+import { ListItem } from "native-base";
 import { default as React, forwardRef, useImperativeHandle } from "react";
 import { View, StyleSheet } from "react-native";
 import {
   InstrumentDTO,
   StatusEnum
 } from "../../../../../../definitions/idpay/wallet/InstrumentDTO";
+import { IOBadge } from "../../../../../components/core/IOBadge";
 import { H4 } from "../../../../../components/core/typography/H4";
-import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
 import Switch from "../../../../../components/ui/Switch";
 import { Wallet } from "../../../../../types/pagopa";
 import { instrumentStatusLabels } from "../../../common/labels";
@@ -70,11 +69,11 @@ const InstrumentEnrollmentSwitch = forwardRef<
       status === StatusEnum.PENDING_DEACTIVATION_REQUEST
     ) {
       return (
-        <Badge style={styles.badge}>
-          <LabelSmall color="white">
-            {instrumentStatusLabels[status]}
-          </LabelSmall>
-        </Badge>
+        <IOBadge
+          variant="solid"
+          color="blue"
+          text={instrumentStatusLabels[status]}
+        />
       );
     }
 
@@ -110,12 +109,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-between"
-  },
-  badge: {
-    height: 24,
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: IOColors.blue
   }
 });
 
