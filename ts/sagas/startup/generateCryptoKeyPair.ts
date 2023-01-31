@@ -20,7 +20,7 @@ import { lollipopSelector } from "./../../store/actions/lollipop";
 export function* cryptoKeyGenerationSaga(keyTag: string) {
   const isLollipopEnabled = yield* select(isLollipopEnabledSelector);
   if (isLollipopEnabled) {
-    // Every new fresh login we need to regenerate a new key pair.
+    // Every new login we need to regenerate a brand new key pair.
     yield* deletePreviousCryptoKeyPair();
     yield* call(generateCryptoKeyPair, keyTag);
   }
