@@ -1,0 +1,11 @@
+{
+  "ios": {
+    "workspace": "ios/ItaliaApp.xcworkspace",
+    "scheme": "ItaliaApp",
+    "configuration": "Release",
+    "device": "iPhone SE (3rd generation)"
+  },
+  "android": {
+    "packageName": "it.pagopa.io.app"
+  }
+}
