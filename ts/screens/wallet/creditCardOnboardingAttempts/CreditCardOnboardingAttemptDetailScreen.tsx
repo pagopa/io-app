@@ -94,7 +94,11 @@ const CreditCardOnboardingAttemptDetailScreen = (props: Props) => {
     // Append the attempt in the log
     appendLog(JSON.stringify(attempt));
     dispatch(
-      zendeskSupportStart({ startingRoute: "n/a", assistanceForPayment: true })
+      zendeskSupportStart({
+        startingRoute: "n/a",
+        assistanceForPayment: false,
+        assistanceForCard: true
+      })
     );
     dispatch(zendeskSelectedCategory(zendeskPaymentMethodCategory));
   };
