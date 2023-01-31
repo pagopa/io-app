@@ -14,6 +14,7 @@ import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import ListItemComponent from "../../../../components/screens/ListItemComponent";
 import { LOADING_TAG } from "../../../../utils/xstate";
 import { boolRequiredCriteriaSelector } from "../xstate/selectors";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
 
 const InitiativeSelfDeclarationsScreen = () => {
   const machine = useOnboardingMachineService();

@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import { RouteProp, useRoute } from "@react-navigation/native";
-import { ListItem as NBListItem, View as NBView } from "native-base";
+import { ListItem as NBListItem } from "native-base";
 import React from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import { Body } from "../../../../components/core/typography/Body";
@@ -17,6 +17,7 @@ import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsLi
 import { IDPayOnboardingParamsList } from "../navigation/navigator";
 import { useMultiPrerequisitesPagination } from "../utils/hooks";
 import { useOnboardingMachineService } from "../xstate/provider";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
 
 const styles = StyleSheet.create({
   maxheight: {
@@ -105,10 +106,10 @@ const MultiValuePrerequisitesScreen = ({ navigation }: NavigationProps) => {
       >
         <View style={IOStyles.horizontalContentPadding}>
           <H1>{I18n.t("idpay.onboarding.multiPrerequisites.header")}</H1>
-          <NBView spacer={true} />
+          <VSpacer size={16} />
           <Body>{I18n.t("idpay.onboarding.multiPrerequisites.body")}</Body>
           <Link>{I18n.t("idpay.onboarding.multiPrerequisites.link")}</Link>
-          <NBView spacer large />
+          <VSpacer size={24} />
           <H4>{currentPage.description}</H4>
           <ScrollView style={styles.maxheight}>
             {currentPage.value.map((requisite, index) => (

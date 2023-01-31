@@ -366,8 +366,8 @@ const createIDPayOnboardingMachine = () =>
                 ALL_CRITERIA_ACCEPTED: {
                   target: "MULTI_PREREQUISITES_CYCLE_OVER"
                 },
-                GO_BACK:{
-                  target: "DISPLAYING_BOOL_CRITERIA",
+                GO_BACK: {
+                  target: "DISPLAYING_BOOL_CRITERIA"
                 }
               }
             },
