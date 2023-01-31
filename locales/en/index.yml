@@ -3251,7 +3251,7 @@ support:
     stock: "Payment Notice details"
     stockValue: "Including the error you just received"
     card: "Payment methods details"
-    cardValue: "Number (encrypted), expiration, circuit"
+    cardValue: "Number (encrypted), expiration, network"
     header: "Submit a request"
     listTitle: "Ongoing requests"
     title: "Do you give us your consent?"
