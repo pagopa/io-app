@@ -3212,7 +3212,8 @@ features:
       content: "You will shortly receive a message with the signed documents."
       cta: "Close"
     qtspTos:
-      title: "Do you give your consent?"
+      title: "We are almost there!"
+      subTitle: "To sign, you must accept the terms and conditions of the service and confirm that you have read the privacy policy of the signature provider."
       show: "View"
 webView:
   error:
@@ -3242,6 +3243,7 @@ support:
     emailAddress: "Email address"
     deviceAndOS: "Device and Operating System"
     ipAddress: "IP address"
+    ipAddressValue: "Including the assumed geographic location"
     appVersionsHistory: "App version history"
     appVersionsHistoryValue: "To determine if the issue is due to the most recent update"
     identityProvider: "Identity Provider"
@@ -3249,6 +3251,8 @@ support:
     navigationDataValue: "Such as the the last screen or message displayed in IO."
     stock: "Payment Notice details"
     stockValue: "Including the error you just received"
+    card: "Payment methods details"
+    cardValue: "Number (encrypted), expiration, network"
     header: "Submit a request"
     listTitle: "Ongoing requests"
     title: "Do you give us your consent?"

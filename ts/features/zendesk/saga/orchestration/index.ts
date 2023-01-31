@@ -23,9 +23,11 @@ function* zendeskSupportWorkUnit(
     startScreenNavigation: () => {
       NavigationService.dispatchNavigationAction(
         CommonActions.navigate(ZENDESK_ROUTES.MAIN, {
-          screen: zendeskStart.payload.assistanceForPayment
-            ? ZENDESK_ROUTES.ASK_PERMISSIONS
-            : ZENDESK_ROUTES.HELP_CENTER,
+          screen:
+            zendeskStart.payload.assistanceForPayment ||
+            zendeskStart.payload.assistanceForCard
+              ? ZENDESK_ROUTES.ASK_PERMISSIONS
+              : ZENDESK_ROUTES.HELP_CENTER,
           params: zendeskStart.payload
         })
       );
