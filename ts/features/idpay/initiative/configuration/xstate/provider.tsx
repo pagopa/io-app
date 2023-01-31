@@ -8,11 +8,12 @@ import { InterpreterFrom } from "xstate";
 import { PreferredLanguageEnum } from "../../../../../../definitions/backend/PreferredLanguage";
 import { PaymentManagerClient } from "../../../../../api/pagopa";
 import {
-  IDPAY_API_TEST_TOKEN,
-  IDPAY_API_UAT_BASEURL,
+  idPayTestToken,
+  idPayApiUatBaseUrl,
   fetchPaymentManagerLongTimeout,
   pagoPaApiUrlPrefix,
-  pagoPaApiUrlPrefixTest
+  pagoPaApiUrlPrefixTest,
+  idPayApiBaseUrl
 } from "../../../../../config";
 import { useXStateMachine } from "../../../../../hooks/useXStateMachine";
 import {
@@ -69,8 +70,7 @@ const IDPayConfigurationMachineProvider = (props: Props) => {
 
   const { bpdToken, walletToken } = sessionInfo.value;
 
-  const idPayToken =
-    IDPAY_API_TEST_TOKEN !== undefined ? IDPAY_API_TEST_TOKEN : bpdToken;
+  const idPayToken = idPayTestToken !== undefined ? idPayTestToken : bpdToken;
 
   const paymentManagerClient = PaymentManagerClient(
     isPagoPATestEnabled ? pagoPaApiUrlPrefixTest : pagoPaApiUrlPrefix,
@@ -94,8 +94,10 @@ const IDPayConfigurationMachineProvider = (props: Props) => {
 
   const pmSessionManager = new SessionManager(getPaymentManagerSession);
 
-  const walletClient = createIDPayWalletClient(IDPAY_API_UAT_BASEURL);
-  const ibanClient = createIDPayIbanClient(IDPAY_API_UAT_BASEURL);
+  const walletClient = createIDPayWalletClient(
+    isPagoPATestEnabled ? idPayApiUatBaseUrl : idPayApiBaseUrl
+  );
+  const ibanClient = createIDPayIbanClient(idPayApiUatBaseUrl);
 
   const services = createServicesImplementation(
     walletClient,

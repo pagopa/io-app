@@ -1,7 +1,6 @@
 import { useActor, useSelector } from "@xstate/react";
 import React from "react";
-import { View } from "native-base";
-import { SafeAreaView } from "react-native";
+import { View, SafeAreaView } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { H1 } from "../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
@@ -15,6 +14,7 @@ import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import ListItemComponent from "../../../../components/screens/ListItemComponent";
 import { LOADING_TAG } from "../../../../utils/xstate";
 import { boolRequiredCriteriaSelector } from "../xstate/selectors";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
 
 const InitiativeSelfDeclarationsScreen = () => {
   const machine = useOnboardingMachineService();
@@ -38,10 +38,10 @@ const InitiativeSelfDeclarationsScreen = () => {
           <ScrollView style={IOStyles.flex}>
             <View style={IOStyles.horizontalContentPadding}>
               <H1>Per aderire, dichiari di:</H1>
-              <View spacer={true} />
+              <VSpacer size={16} />
               <Body>L’autodichiarazione è resa ai sensi del</Body>
               <Link>Dpr 28 dicembre 2000 n. 445 art 46 e 47</Link>
-              <View spacer={true} large={true} />
+              <VSpacer size={24} />
               {selfCriteriaBool.map((criteria, index) => (
                 <View key={criteria.code}>
                   <ListItemComponent
@@ -52,7 +52,7 @@ const InitiativeSelfDeclarationsScreen = () => {
                     accessibilityState={{ checked: false }}
                     isLongPressEnabled={true}
                   />
-                  <View spacer={true} />
+                  <VSpacer size={16} />
                 </View>
               ))}
             </View>

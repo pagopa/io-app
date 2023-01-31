@@ -1,9 +1,10 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { Button, View } from "native-base";
+import { Button } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { Label } from "../../../components/core/typography/Label";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
@@ -96,14 +97,14 @@ const BasePaymentMethodScreen = (props: Props): React.ReactElement => {
       hideHeader={true}
     >
       <View style={styles.cardContainer}>{card}</View>
-      <View spacer={true} extralarge={true} />
+      <VSpacer size={40} />
       <View style={IOStyles.horizontalContentPadding}>
-        <View spacer={true} />
+        <VSpacer size={16} />
         {content}
-        <View spacer={true} large={true} />
+        <VSpacer size={24} />
         <DeleteButton onPress={present} />
       </View>
-      <View spacer={true} extralarge={true} />
+      <VSpacer size={40} />
       {removePaymentMethodBottomSheet}
     </DarkLayout>
   );
