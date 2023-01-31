@@ -3,7 +3,7 @@ import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
 import { SafeAreaView, ScrollView, View } from "react-native";
-import Card from "../../../../img/assistance/card.svg";
+import CardIcon from "../../../../img/assistance/card.svg";
 import EmailIcon from "../../../../img/assistance/email.svg";
 import NameSurnameIcon from "../../../../img/assistance/nameSurname.svg";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
@@ -57,7 +57,7 @@ const getItems = (props: ItemProps): ReadonlyArray<ItemPermissionProps> => [
   },
   {
     id: "profileFiscalCode",
-    icon: <Card {...iconProps} />,
+    icon: <CardIcon {...iconProps} />,
     title: I18n.t("support.askPermissions.fiscalCode"),
     value: props.fiscalCode,
     testId: "profileFiscalCode"
