@@ -32,12 +32,15 @@ const getHourAndMinuteFromDate = (date: Date) => format(date, "HH:mm");
 
 type TimelineOperationListItemProps = {
   operation: OperationListDTO;
+  onPress?: () => void;
 };
 
-export const TimelineOperationListItem = ({
-  operation
-}: TimelineOperationListItemProps) => {
+export const TimelineOperationListItem = (
+  props: TimelineOperationListItemProps
+) => {
+  const { operation, onPress } = props;
   const hasAmount = "amount" in operation;
+
   const renderOperationIcon = (operation: OperationListDTO) => {
     if ("brandLogo" in operation) {
       return (
@@ -69,7 +72,7 @@ export const TimelineOperationListItem = ({
         );
 
   return (
-    <ListItem style={styles.spaceBetween}>
+    <ListItem style={styles.spaceBetween} onPress={onPress}>
       <View
         style={[
           IOStyles.flex,
