@@ -1,5 +1,6 @@
+import { Badge, Text as NBBadgeText } from "native-base";
 import * as React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Platform } from "react-native";
 import { IOBadge } from "../../../components/core/IOBadge";
 import { VSpacer, HSpacer } from "../../../components/core/spacer/Spacer";
 import { H2 } from "../../../components/core/typography/H2";
@@ -25,6 +26,10 @@ export const DSBadges = () => (
       <HSpacer size={16} />
       <IOBadge small text={"Badge"} variant="solid" color="aqua" />
       <HSpacer size={16} />
+      <IOBadge small text={"Badge"} variant="solid" color="grey" />
+    </View>
+    <VSpacer size={16} />
+    <View style={IOStyles.row}>
       <IOBadge small text={"Badge"} variant="outline" color="blue" />
       <HSpacer size={16} />
       <IOBadge small text={"Badge"} variant="outline" color="red" />
@@ -36,6 +41,10 @@ export const DSBadges = () => (
       <HSpacer size={16} />
       <IOBadge text={"Badge"} variant="solid" color="aqua" />
       <HSpacer size={16} />
+      <IOBadge text={"Badge"} variant="solid" color="grey" />
+    </View>
+    <VSpacer size={16} />
+    <View style={IOStyles.row}>
       <IOBadge text={"Badge"} variant="outline" color="blue" />
       <HSpacer size={16} />
       <IOBadge text={"Badge"} variant="outline" color="red" />

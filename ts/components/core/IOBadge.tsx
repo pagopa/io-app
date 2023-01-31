@@ -4,16 +4,28 @@ import { makeFontStyleObject } from "./fonts";
 import { IOColors, IOColorType } from "./variables/IOColors";
 
 type IOBadgeOutlineColors = Extract<IOColorType, "blue" | "white" | "red">;
-type IOBadgeSolidColors = Extract<IOColorType, "blue" | "white" | "aqua">;
-type AllowedBadgeColors = IOBadgeOutlineColors | IOBadgeSolidColors;
+type IOBadgeSolidColors = Extract<
+  IOColorType,
+  "blue" | "white" | "grey" | "aqua"
+>;
 
-export type IOBadgeProps = {
+type IOBadgeCommonProps = {
   text: string;
   small?: boolean;
-  variant?: "solid" | "outline";
-  color?: AllowedBadgeColors;
   testID?: string;
 };
+
+type IOBadgeConditionalProps =
+  | {
+      variant?: "solid";
+      color?: IOBadgeSolidColors;
+    }
+  | {
+      variant?: "outline";
+      color?: IOBadgeOutlineColors;
+    };
+
+export type IOBadgeProps = IOBadgeCommonProps & IOBadgeConditionalProps;
 
 /*
   Before: <IOBadge text={"Badge"} small={true} labelColor={"white"} />
@@ -65,11 +77,15 @@ const mapSolidColor: Record<
   aqua: {
     background: "aqua",
     text: "bluegreyDark"
+  },
+  grey: {
+    background: "grey",
+    text: "white"
   }
 };
 
 const BADGE_SMALL_SIZE = 20;
-const BADGE_DEFAULT_SIZE = 28;
+const BADGE_DEFAULT_SIZE = 24;
 
 const defaultVariant: IOBadgeProps["variant"] = "solid";
 const defaultColor: IOBadgeProps["color"] = "blue";
