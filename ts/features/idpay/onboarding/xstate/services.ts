@@ -49,7 +49,7 @@ const createServicesImplementation = (
 
   const loadInitiative = async (context: Context) => {
     if (context.serviceId === undefined) {
-      throw new Error("serviceId is undefined");
+      return Promise.reject(OnboardingFailureType.GENERIC);
     }
 
     const dataResponse = await onboardingClient.getInitiativeData({
@@ -75,7 +75,7 @@ const createServicesImplementation = (
 
   const loadInitiativeStatus = async (context: Context) => {
     if (context.initiative === undefined) {
-      throw new Error("initiative is undefined");
+      return Promise.reject(OnboardingFailureType.GENERIC);
     }
 
     const statusResponse = await onboardingClient.onboardingStatus({
@@ -105,7 +105,7 @@ const createServicesImplementation = (
 
   const acceptTos = async (context: Context) => {
     if (context.initiative === undefined) {
-      throw new Error("initative is undefined");
+      return Promise.reject(OnboardingFailureType.GENERIC);
     }
     const response = await onboardingClient.onboardingCitizen({
       ...clientOptions,
@@ -132,7 +132,7 @@ const createServicesImplementation = (
 
   const loadRequiredCriteria = async (context: Context) => {
     if (context.initiative === undefined) {
-      throw new Error("initative is undefined");
+      return Promise.reject(OnboardingFailureType.GENERIC);
     }
 
     const response = await onboardingClient.checkPrerequisites({
@@ -164,11 +164,11 @@ const createServicesImplementation = (
   const acceptRequiredCriteria = async (context: Context) => {
     const { initiative, requiredCriteria } = context;
     if (initiative === undefined || requiredCriteria === undefined) {
-      throw new Error("initative or requiredCriteria is undefined");
+      return Promise.reject(OnboardingFailureType.GENERIC);
     }
 
     if (O.isNone(requiredCriteria)) {
-      throw new Error("requiredCriteria is none");
+      return Promise.reject(OnboardingFailureType.GENERIC);
     }
 
     const response = await onboardingClient.consentOnboarding({

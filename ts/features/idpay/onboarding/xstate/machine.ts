@@ -72,19 +72,6 @@ type Services = {
   };
 };
 
-const isOnboardingDone = (context: Context) => {
-  const initiativeStatus = context.initiativeStatus;
-  return (
-    initiativeStatus === StatusEnum.ONBOARDING_OK ||
-    initiativeStatus === StatusEnum.ON_EVALUATION
-  );
-};
-
-const isOnboardingFailed = (context: Context) => {
-  const initiativeStatus = context.initiativeStatus;
-  return initiativeStatus === StatusEnum.ONBOARDING_KO;
-};
-
 const hasPDNDRequiredCriteria = (context: Context) => {
   const requiredCriteria = context.requiredCriteria;
   if (requiredCriteria !== undefined && O.isSome(requiredCriteria)) {
@@ -146,7 +133,7 @@ const createIDPayOnboardingMachine = () =>
             onError: [
               {
                 target: "DISPLAYING_ONBOARDING_FAILURE",
-                actions: "loadInitiativeFailure"
+                actions: "setFailure"
               }
             ]
           }
@@ -158,34 +145,17 @@ const createIDPayOnboardingMachine = () =>
             id: "loadInitiativeStatus",
             onDone: [
               {
-                target: "EVALUATING_INITIATIVE_STATUS",
+                target: "DISPLAYING_INITIATIVE",
                 actions: "loadInitiativeStatusSuccess"
               }
             ],
             onError: [
               {
                 target: "DISPLAYING_ONBOARDING_FAILURE",
-                actions: "loadInitiativeStatusFailure"
+                actions: "setFailure"
               }
             ]
           }
-        },
-        EVALUATING_INITIATIVE_STATUS: {
-          always: [
-            {
-              target: "DISPLAYING_ONBOARDING_FAILURE",
-              cond: "isOnboardingDone",
-              actions: "onOnboardingDone"
-            },
-            {
-              target: "DISPLAYING_ONBOARDING_FAILURE",
-              cond: "isOnboardingFailed",
-              actions: "onOnboardingFailed"
-            },
-            {
-              target: "DISPLAYING_INITIATIVE"
-            }
-          ]
         },
         DISPLAYING_INITIATIVE: {
           entry: "navigateToInitiativeDetailsScreen",
@@ -208,7 +178,7 @@ const createIDPayOnboardingMachine = () =>
             onError: [
               {
                 target: "DISPLAYING_ONBOARDING_FAILURE",
-                actions: "acceptTosFailure"
+                actions: "setFailure"
               }
             ]
           }
@@ -227,7 +197,7 @@ const createIDPayOnboardingMachine = () =>
             onError: [
               {
                 target: "DISPLAYING_ONBOARDING_FAILURE",
-                actions: "loadRequiredCriteriaFailure"
+                actions: "setFailure"
               }
             ]
           }
@@ -316,34 +286,17 @@ const createIDPayOnboardingMachine = () =>
         loadInitiativeSuccess: assign((_, event) => ({
           initiative: event.data
         })),
-        loadInitiativeFailure: assign((_, event) => ({
-          failure: event.data as OnboardingFailureType
-        })),
         loadInitiativeStatusSuccess: assign((_, event) => ({
           initiativeStatus: event.data
-        })),
-        loadInitiativeStatusFailure: assign((_, event) => ({
-          failure: event.data as OnboardingFailureType
-        })),
-        onOnboardingDone: assign((_, __) => ({
-          failure: OnboardingFailureType.ALREADY_COMPLETED
-        })),
-        onOnboardingFailed: assign((_, __) => ({
-          failure: OnboardingFailureType.ONBOARDING_KO
         })),
         loadRequiredCriteriaSuccess: assign((_, event) => ({
           requiredCriteria: event.data
         })),
-        loadRequiredCriteriaFailure: assign((_, event) => ({
-          failure: event.data as OnboardingFailureType
-        })),
-        acceptTosFailure: assign((_, event) => ({
+        setFailure: assign((_, event) => ({
           failure: event.data as OnboardingFailureType
         }))
       },
       guards: {
-        isOnboardingDone,
-        isOnboardingFailed,
         hasPDNDRequiredCriteria,
         hasSelfRequiredCriteria
       }
