@@ -3392,7 +3392,7 @@ idpay:
           understoodCTA: Ho capito
       title: Possiedi i seguenti requisiti?
       subtitle: Verificheremo con alcuni Enti se sei in possesso dei requisiti per poter richiedere {{service}}. 
-    BoolPrerequisites:
+    boolPrerequisites:
       header: "Per aderire, dichiari di:"
       body: L’autodichiarazione è resa ai sensi del
       link: Dpr 28 dicembre 2000 n. 445 art 46 e 47 
