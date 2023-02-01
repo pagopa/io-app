@@ -4,14 +4,14 @@ import {
   createStandardAction
 } from "typesafe-actions";
 import { Zendesk } from "../../../../../definitions/content/Zendesk";
-import { NetworkError } from "../../../../utils/errors";
 import { ZendeskCategory } from "../../../../../definitions/content/ZendeskCategory";
-import { FAQsCategoriesType } from "../../../../utils/faq";
+import { ZendeskSubCategory } from "../../../../../definitions/content/ZendeskSubCategory";
 import {
   ContextualHelpProps,
   ContextualHelpPropsMarkdown
 } from "../../../../components/screens/BaseScreenComponent";
-import { ZendeskSubCategory } from "../../../../../definitions/content/ZendeskSubCategory";
+import { NetworkError } from "../../../../utils/errors";
+import { FAQsCategoriesType } from "../../../../utils/faq";
 
 export type ZendeskStartPayload = {
   contextualHelp?: ContextualHelpProps;
@@ -19,6 +19,7 @@ export type ZendeskStartPayload = {
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
   startingRoute: string;
   assistanceForPayment: boolean;
+  assistanceForCard: boolean;
 };
 /**
  * The user chooses to start the workflow to open a support request
