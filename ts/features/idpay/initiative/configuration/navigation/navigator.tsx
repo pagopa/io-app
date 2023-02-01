@@ -60,16 +60,18 @@ export const IDPayConfigurationNavigator = () => (
       />
 
       <Stack.Screen
-        name={IDPayConfigurationRoutes.IDPAY_CONFIGURATION_SUCCESS}
-        component={ConfigurationSuccessScreen}
-      />
-      <Stack.Screen
         name={IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_LANDING}
         component={IbanConfigurationLanding}
       />
+
       <Stack.Screen
         name={IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ONBOARDING}
         component={IbanOnboardingScreen}
+      />
+
+      <Stack.Screen
+        name={IDPayConfigurationRoutes.IDPAY_CONFIGURATION_SUCCESS}
+        component={ConfigurationSuccessScreen}
       />
     </Stack.Navigator>
   </IDPayConfigurationMachineProvider>

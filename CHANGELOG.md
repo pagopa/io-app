@@ -2,6 +2,68 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.25.0-rc.1](https://github.com/pagopa/io-app/compare/2.25.0-rc.0...2.25.0-rc.1) (2023-01-27)
+
+
+### Features
+
+* **IDPay:** [[IODPAY-95](https://pagopa.atlassian.net/browse/IODPAY-95)] Add IDPay test/env switch ([#4329](https://github.com/pagopa/io-app/issues/4329)) ([1b25653](https://github.com/pagopa/io-app/commit/1b2565332a03c506e528d6310bfe3ff5adf2461a))
+* [[IOAPPCIT-33](https://pagopa.atlassian.net/browse/IOAPPCIT-33)] Refactor `IdpsGrid` to enable TeamSystem ID ([#4314](https://github.com/pagopa/io-app/issues/4314)) ([39236e7](https://github.com/pagopa/io-app/commit/39236e703e4525e8cfec562f9beea04251d449f6))
+* **IDPay:** [[IODPAY-83](https://pagopa.atlassian.net/browse/IODPAY-83)] Revert instrument state if enrollment modal is dismissed ([#4316](https://github.com/pagopa/io-app/issues/4316)) ([c5c88a0](https://github.com/pagopa/io-app/commit/c5c88a009e9209610607af77fe986b766fb94da0))
+
+
+### Chores
+
+* [[IAI-263](https://pagopa.atlassian.net/browse/IAI-263)] Removal of the NativeBase's `Spacer` ([#4302](https://github.com/pagopa/io-app/issues/4302)) ([e18a303](https://github.com/pagopa/io-app/commit/e18a303c25122d35f57c13d525bb25e024e689bc))
+* [[IOAPPCOM-42](https://pagopa.atlassian.net/browse/IOAPPCOM-42)] Add mixpanel events for Premium ([#4293](https://github.com/pagopa/io-app/issues/4293)) ([4f59094](https://github.com/pagopa/io-app/commit/4f5909470c7af1a71b62c920e9a2fb889d4f9f46))
+
+## [2.25.0-rc.0](https://github.com/pagopa/io-app/compare/2.24.0-rc.2...2.25.0-rc.0) (2023-01-24)
+
+
+### Features
+
+* **IDPay:** [[IODPAY-77](https://pagopa.atlassian.net/browse/IODPAY-77)] Addition of paginated operation list ([#4294](https://github.com/pagopa/io-app/issues/4294)) ([94213a5](https://github.com/pagopa/io-app/commit/94213a57c20c09caa07491ce3fffebcf69a1e9d5))
+
+
+### Chores
+
+* **deps:** bump fast-json-patch from 3.0.0-1 to 3.1.1 ([#4267](https://github.com/pagopa/io-app/issues/4267)) ([488aeb3](https://github.com/pagopa/io-app/commit/488aeb3421d81885e6b193bea3bd70d13d915cfa))
+* **deps:** bump json5 from 1.0.1 to 1.0.2 ([#4281](https://github.com/pagopa/io-app/issues/4281)) ([00f0558](https://github.com/pagopa/io-app/commit/00f0558120908be3b6c2665f842ebf94c459d4c5))
+* [IOAPPFD0-18,IOAPPFD0-23] Fix e2e tests ([#4318](https://github.com/pagopa/io-app/issues/4318)) ([884ea94](https://github.com/pagopa/io-app/commit/884ea949ef02cea6957b839bb04c0d555af00ba6)), closes [/github.com/pagopa/io-app/blob/7938ce2ffe15c9ec294f37650ff867fc16ddf9b4/.circleci/config.yml#L535](https://github.com/pagopa//github.com/pagopa/io-app/blob/7938ce2ffe15c9ec294f37650ff867fc16ddf9b4/.circleci/config.yml/issues/L535)
+* **deps:** bump activesupport from 6.1.6.1 to 6.1.7.1 ([#4309](https://github.com/pagopa/io-app/issues/4309)) ([8aa8464](https://github.com/pagopa/io-app/commit/8aa846439c31070d695c46a2b4adfcf31bbf2487))
+
+## [2.24.0-rc.2](https://github.com/pagopa/io-app/compare/2.24.0-rc.1...2.24.0-rc.2) (2023-01-20)
+
+
+### Chores
+
+* **Firma con IO:** Enable FCI feature flag ([#4312](https://github.com/pagopa/io-app/issues/4312)) ([a84787b](https://github.com/pagopa/io-app/commit/a84787b9bfac41dbe2ec7884fb4fb2dd1f1044e2))
+
+## [2.24.0-rc.1](https://github.com/pagopa/io-app/compare/2.24.0-rc.0...2.24.0-rc.1) (2023-01-20)
+
+
+### Features
+
+* **Firma con IO:** [[SFEQS-1301](https://pagopa.atlassian.net/browse/SFEQS-1301)] Using a new remote flag based on min app version supported by the feature ([#4291](https://github.com/pagopa/io-app/issues/4291)) ([b5ec480](https://github.com/pagopa/io-app/commit/b5ec4803fd9c1386715fe5ec87a59cddd3a129f0))
+
+
+### Bug Fixes
+
+* **Firma con IO:** [[SFEQS-1252](https://pagopa.atlassian.net/browse/SFEQS-1252)] Update section header component in signature section list ([#4297](https://github.com/pagopa/io-app/issues/4297)) ([3a8a1dd](https://github.com/pagopa/io-app/commit/3a8a1dd1c291ebe181e32c5d799172f57a72d666))
+* **Firma con IO:** [[SFEQS-1271](https://pagopa.atlassian.net/browse/SFEQS-1271)] Introducing URL polling to wait availability of filled document ([#4260](https://github.com/pagopa/io-app/issues/4260)) ([58cd02d](https://github.com/pagopa/io-app/commit/58cd02d4061a419bcb401d177a49acd564643145))
+* **Firma con IO:** [[SFEQS-1281](https://pagopa.atlassian.net/browse/SFEQS-1281)] Add a flag to track PDF load completion ([#4273](https://github.com/pagopa/io-app/issues/4273)) ([4a1b4d6](https://github.com/pagopa/io-app/commit/4a1b4d6092a67176200547faac790dcd3d13cfb4))
+* [[IABT-1394](https://pagopa.atlassian.net/browse/IABT-1394)] Removal of surplus info in transaction summary ([#4279](https://github.com/pagopa/io-app/issues/4279)) ([81b50d7](https://github.com/pagopa/io-app/commit/81b50d72ee2e33a102ae155d5931bb820e4563e2))
+* **IDPay:** [[IODPAY-89](https://pagopa.atlassian.net/browse/IODPAY-89)] Updated iban yaml version ([#4301](https://github.com/pagopa/io-app/issues/4301)) ([7f85e21](https://github.com/pagopa/io-app/commit/7f85e21cc80e4f86ab11c0b6ec4d3d63c68a5080))
+
+
+### Chores
+
+* [[IAI-261](https://pagopa.atlassian.net/browse/IAI-261)] Add new `Spacer` component ([#4292](https://github.com/pagopa/io-app/issues/4292)) ([fe1d40f](https://github.com/pagopa/io-app/commit/fe1d40f00e56271e0309ca7ec41031ee0102301b))
+* **IDPay:** [[IODPAY-90](https://pagopa.atlassian.net/browse/IODPAY-90)] Add `IdPayConfig` remote feature flag ([#4305](https://github.com/pagopa/io-app/issues/4305)) ([a5ee66c](https://github.com/pagopa/io-app/commit/a5ee66c0b8d3af03ed97584691c121d1baa6047d))
+* [[IOAPPCIT-24](https://pagopa.atlassian.net/browse/IOAPPCIT-24)] Add a crypto key pair generation test at application startup. ([#4295](https://github.com/pagopa/io-app/issues/4295)) ([7938ce2](https://github.com/pagopa/io-app/commit/7938ce2ffe15c9ec294f37650ff867fc16ddf9b4)), closes [/github.com/pagopa/io-dev-api-server/blob/c9485701686abc0f47c4272f05d6fd5246a6cd7e/src/payloads/backend.ts#L78](https://github.com/pagopa//github.com/pagopa/io-dev-api-server/blob/c9485701686abc0f47c4272f05d6fd5246a6cd7e/src/payloads/backend.ts/issues/L78)
+* **IDPay:** [[IODPAY-88](https://pagopa.atlassian.net/browse/IODPAY-88)] Add I18n for card activation status ([#4300](https://github.com/pagopa/io-app/issues/4300)) ([997c29d](https://github.com/pagopa/io-app/commit/997c29d11706ca3d4afda8006c6c82f9a84bcea7))
+* [[IAI-262](https://pagopa.atlassian.net/browse/IAI-262)] Add `onDismiss` handler parameter to `useIOBottomSheetModal` ([#4298](https://github.com/pagopa/io-app/issues/4298)) ([1ecac3e](https://github.com/pagopa/io-app/commit/1ecac3e033aacb856cd03194ad426828d1678f65))
+
 ## [2.24.0-rc.0](https://github.com/pagopa/io-app/compare/2.23.0-rc.2...2.24.0-rc.0) (2023-01-13)
 
 

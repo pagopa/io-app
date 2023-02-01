@@ -55,8 +55,11 @@ exports[`the InformationRow component should match the snapshot 1`] = `
       Organization's Fiscal Code
     </Text>
     <View
-      hspacer={true}
-      style={Object {}}
+      style={
+        Object {
+          "width": 16,
+        }
+      }
     />
     <Text
       allowFontScaling={true}

@@ -1,6 +1,6 @@
-import { View } from "native-base";
 import React from "react";
-import { SafeAreaView, StyleSheet } from "react-native";
+import { View, SafeAreaView, StyleSheet } from "react-native";
+import { VSpacer } from "../../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../../components/core/typography/Body";
 import { H3 } from "../../../../../../components/core/typography/H3";
 import { IOColors } from "../../../../../../components/core/variables/IOColors";
@@ -47,9 +47,9 @@ const IbanConfigurationLanding = () => {
           style={[IOStyles.horizontalContentPadding, styles.adjustCenterHeight]}
         >
           <View style={styles.greyCircle}></View>
-          <View spacer large />
+          <VSpacer size={24} />
           <H3>{I18n.t("idpay.configuration.iban.landing.header")}</H3>
-          <View spacer />
+          <VSpacer size={16} />
           <Body style={styles.textCenter}>
             {I18n.t("idpay.configuration.iban.landing.body")}
           </Body>

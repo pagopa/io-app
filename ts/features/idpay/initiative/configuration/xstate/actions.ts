@@ -1,8 +1,12 @@
+import * as O from "fp-ts/lib/Option";
+import I18n from "../../../../../i18n";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../../navigation/routes";
+import { showToast } from "../../../../../utils/showToast";
+import { IDPayDetailsRoutes } from "../../details/navigation";
 import { IDPayConfigurationRoutes } from "../navigation/navigator";
 import { Context } from "./context";
 
@@ -41,6 +45,13 @@ const createActionsImplementation = (
     });
   };
 
+  const navigateToAddPaymentMethodScreen = () => {
+    navigation.replace(ROUTES.WALLET_NAVIGATOR, {
+      screen: ROUTES.WALLET_ADD_PAYMENT_METHOD,
+      params: { inPayment: O.none }
+    });
+  };
+
   const navigateToInstrumentsEnrollmentScreen = () => {
     navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
       screen:
@@ -60,9 +71,21 @@ const createActionsImplementation = (
       return;
     }
 
-    navigation.navigate(ROUTES.IDPAY_INITIATIVE_DETAILS, {
-      initiativeId: context.initiativeId
+    navigation.navigate(IDPayDetailsRoutes.IDPAY_DETAILS_MAIN, {
+      screen: IDPayDetailsRoutes.IDPAY_DETAILS_MONITORING,
+      params: { initiativeId: context.initiativeId }
     });
+  };
+
+  const showFailureToast = (context: Context) => {
+    if (context.failure === undefined) {
+      return;
+    }
+
+    showToast(
+      I18n.t(`idpay.configuration.failureStates.${context.failure}`),
+      "danger"
+    );
   };
 
   const exitConfiguration = () => {
@@ -75,8 +98,10 @@ const createActionsImplementation = (
     navigateToIbanOnboardingScreen,
     navigateToIbanEnrollmentScreen,
     navigateToInstrumentsEnrollmentScreen,
-    navigateToConfigurationSuccessScreen,
+    navigateToAddPaymentMethodScreen,
     navigateToInitiativeDetailScreen,
+    navigateToConfigurationSuccessScreen,
+    showFailureToast,
     exitConfiguration
   };
 };

@@ -1,6 +1,6 @@
-import { View } from "native-base";
+import { View, SafeAreaView } from "react-native";
 import * as React from "react";
-import { SafeAreaView } from "react-native";
+import { VSpacer } from "../../../../../../../components/core/spacer/Spacer";
 import { H1 } from "../../../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../../../components/screens/BaseScreenComponent";
@@ -18,7 +18,7 @@ export const BpdAvailableTransactionsScreenV2 = (): React.ReactElement => (
       style={IOStyles.flex}
       testID={"BpdAvailableTransactionsScreenV2"}
     >
-      <View spacer={true} />
+      <VSpacer size={16} />
       <View style={IOStyles.horizontalContentPadding}>
         <H1>{I18n.t("bonus.bpd.details.transaction.title")}</H1>
       </View>

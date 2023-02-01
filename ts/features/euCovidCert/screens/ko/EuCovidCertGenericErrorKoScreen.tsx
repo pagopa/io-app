@@ -1,9 +1,9 @@
-import { View } from "native-base";
 import * as React from "react";
 import { useContext } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import image from "../../../../../img/servicesStatus/error-detail-icon.png";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../components/core/typography/Body";
 import WorkunitGenericFailure from "../../../../components/error/WorkunitGenericFailure";
 import { renderInfoRasterImage } from "../../../../components/infoScreen/imageRendering";
@@ -22,8 +22,8 @@ type Props = ReturnType<typeof mapDispatchToProps> &
 
 const EuCovidCertGenericErrorKoComponent = () => (
   <>
-    <View spacer={true} extralarge={true} />
-    <View spacer={true} extralarge={true} />
+    <VSpacer size={40} />
+    <VSpacer size={40} />
     <InfoScreenComponent
       image={renderInfoRasterImage(image)}
       title={I18n.t("features.euCovidCertificate.ko.genericError.title")}

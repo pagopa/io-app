@@ -1,8 +1,8 @@
-import { View } from "native-base";
 import * as React from "react";
 import { useState } from "react";
-import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { View, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { Label } from "../../../../components/core/typography/Label";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
@@ -106,7 +106,7 @@ export const EuCovidCertMarkdownDetailsScreen = (
           >
             {/* add an extra top and bottom (as extra height in the markdown component)
             margin while capturing the screenshot  */}
-            {isCapturingScreenShoot && <View large={true} spacer={true} />}
+            {isCapturingScreenShoot && <VSpacer size={24} />}
             <MarkdownHandleCustomLink
               extraBodyHeight={60}
               onLoadEnd={() => setLoadMarkdownComplete(true)}
@@ -115,7 +115,7 @@ export const EuCovidCertMarkdownDetailsScreen = (
             </MarkdownHandleCustomLink>
             {canShowButton && (
               <>
-                <View spacer={true} />
+                <VSpacer size={16} />
                 <ButtonDefaultOpacity
                   style={styles.save}
                   onPress={() => {
@@ -129,7 +129,7 @@ export const EuCovidCertMarkdownDetailsScreen = (
                     )}
                   </Label>
                 </ButtonDefaultOpacity>
-                <View spacer={true} />
+                <VSpacer size={16} />
               </>
             )}
           </View>

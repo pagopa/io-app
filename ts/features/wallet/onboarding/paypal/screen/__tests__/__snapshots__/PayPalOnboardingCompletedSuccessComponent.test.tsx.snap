@@ -492,9 +492,11 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                                           testID="rasterImage"
                                         />
                                         <View
-                                          large={true}
-                                          spacer={true}
-                                          style={Object {}}
+                                          style={
+                                            Object {
+                                              "height": 24,
+                                            }
+                                          }
                                         />
                                         <Text
                                           accessible={true}
@@ -533,8 +535,11 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                                           Fatto!
                                         </Text>
                                         <View
-                                          spacer={true}
-                                          style={Object {}}
+                                          style={
+                                            Object {
+                                              "height": 16,
+                                            }
+                                          }
                                         />
                                         <Text
                                           allowFontScaling={true}
@@ -610,12 +615,9 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                                         >
                                           <View
                                             style={
-                                              Array [
-                                                Object {},
-                                                Object {
-                                                  "flexDirection": "row",
-                                                },
-                                              ]
+                                              Object {
+                                                "flexDirection": "row",
+                                              }
                                             }
                                           >
                                             <View

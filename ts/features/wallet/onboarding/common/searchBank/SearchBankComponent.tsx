@@ -1,4 +1,3 @@
-import { View } from "native-base";
 import * as React from "react";
 import {
   FlatList,
@@ -12,6 +11,7 @@ import { Abi } from "../../../../../../definitions/pagopa/walletv2/Abi";
 import { BankPreviewItem } from "../../bancomat/components/BankPreviewItem";
 import { sortAbiByName } from "../../bancomat/utils/abi";
 import { LabelledItem } from "../../../../../components/LabelledItem";
+import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 
 type Props = {
   bankList: ReadonlyArray<Abi>;
@@ -81,10 +81,10 @@ export const SearchBankComponent: React.FunctionComponent<Props> = (
         }}
         icon={isLoading ? undefined : "io-search"}
       />
-      <View spacer={true} />
+      <VSpacer size={16} />
       {isLoading ? (
         <>
-          <View spacer={true} large={true} />
+          <VSpacer size={24} />
           <ActivityIndicator
             color={"black"}
             size={"large"}

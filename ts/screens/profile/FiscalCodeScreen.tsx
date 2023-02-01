@@ -1,12 +1,13 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
-import { Text as NBText, View } from "native-base";
+import { Text as NBText } from "native-base";
 import * as React from "react";
 import { ReactElement, useEffect } from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import { View, ScrollView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { HSpacer, VSpacer } from "../../components/core/spacer/Spacer";
 import { H2 } from "../../components/core/typography/H2";
 import { IOColors } from "../../components/core/variables/IOColors";
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
@@ -51,12 +52,6 @@ const styles = StyleSheet.create({
     shadowRadius: 4.65,
     // Android
     elevation: 8
-  },
-  spacer: {
-    width: 8
-  },
-  largeSpacer: {
-    width: customVariables.contentPadding
   },
   text: {
     paddingHorizontal: customVariables.contentPadding,
@@ -131,9 +126,9 @@ const FiscalCodeScreen: React.FunctionComponent<Props> = (props: Props) => {
         hideHeader={true}
         topContent={
           <React.Fragment>
-            <View spacer={true} />
+            <VSpacer size={16} />
             <H2 color={"white"}>{I18n.t("profile.fiscalCode.fiscalCode")}</H2>
-            <View spacer={true} />
+            <VSpacer size={16} />
           </React.Fragment>
         }
       >
@@ -143,7 +138,7 @@ const FiscalCodeScreen: React.FunctionComponent<Props> = (props: Props) => {
               horizontal={true}
               showsHorizontalScrollIndicator={false}
             >
-              <View style={styles.largeSpacer} />
+              <HSpacer size={24} />
               <TouchableDefaultOpacity
                 onPress={() => showModal()}
                 accessibilityRole={"button"}
@@ -157,7 +152,7 @@ const FiscalCodeScreen: React.FunctionComponent<Props> = (props: Props) => {
                   />
                 </View>
               </TouchableDefaultOpacity>
-              <View style={styles.spacer} />
+              <HSpacer size={8} />
               <TouchableDefaultOpacity
                 onPress={() => showModal(true)}
                 accessibilityRole={"button"}
@@ -171,8 +166,7 @@ const FiscalCodeScreen: React.FunctionComponent<Props> = (props: Props) => {
                   />
                 </View>
               </TouchableDefaultOpacity>
-
-              <View style={styles.largeSpacer} />
+              <HSpacer size={24} />
             </ScrollView>
             <NBText white={true} style={styles.text}>
               {I18n.t("profile.fiscalCode.content")}

@@ -10,6 +10,7 @@ import variables from "../../theme/variables";
 import { formatDateAsLocal } from "../../utils/dates";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import I18n from "../../i18n";
+import { VSpacer } from "../core/spacer/Spacer";
 import IconFont from "./IconFont";
 
 type Props = {
@@ -53,7 +54,7 @@ const DateTimePicker: React.FunctionComponent<Props> = (props: Props) => {
   return (
     <View style={styles.container}>
       {props.label && <H5 color={"bluegreyDark"}>{props.label}</H5>}
-      <View spacer={true} />
+      <VSpacer size={16} />
       <TouchableDefaultOpacity style={styles.inputContainer} onPress={onPress}>
         <H4
           weight={"Regular"}
