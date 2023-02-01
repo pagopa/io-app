@@ -15,7 +15,6 @@ type Props = {
 };
 
 const FailureMessage = (props: Props) => {
-
   const failureIcons: { [key in OnboardingFailureType]: IOPictogramType } = {
     [OnboardingFailureType.NO_PERMISSION]: "question",
     [OnboardingFailureType.GENERIC]: "umbrella",

@@ -49,10 +49,10 @@ const InitiativeSelfDeclarationsScreen = () => {
         <SafeAreaView style={IOStyles.flex}>
           <ScrollView style={IOStyles.flex}>
             <View style={IOStyles.horizontalContentPadding}>
-              <H1>{I18n.t("idpay.onboarding.BoolPrerequisites.header")}</H1>
+              <H1>{I18n.t("idpay.onboarding.boolPrerequisites.header")}</H1>
               <VSpacer size={16} />
-              <Body>{I18n.t("idpay.onboarding.BoolPrerequisites.body")}</Body>
-              <Link>{I18n.t("idpay.onboarding.BoolPrerequisites.link")}</Link>
+              <Body>{I18n.t("idpay.onboarding.boolPrerequisites.body")}</Body>
+              <Link>{I18n.t("idpay.onboarding.boolPrerequisites.link")}</Link>
               <VSpacer size={24} />
               {selfCriteriaBool.map((criteria, index) => (
                 <View key={criteria.code}>
