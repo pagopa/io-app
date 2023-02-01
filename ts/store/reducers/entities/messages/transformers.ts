@@ -1,3 +1,5 @@
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { CreatedMessageWithContentAndAttachments } from "../../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { EnrichedMessage } from "../../../../../definitions/backend/EnrichedMessage";
 import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
@@ -145,16 +147,16 @@ const generateAttachmentUrl = (messageId: string, attachmentUrl: string) =>
 export const attachmentsFromThirdPartyMessage = (
   messageFromApi: ThirdPartyMessageWithContent,
   category: AttachmentType
-): Array<UIAttachment> | undefined => {
-  const attachments = messageFromApi.third_party_message.attachments;
-  return attachments?.map(thirdPartyMessageAttachment =>
-    attachmentFromThirdPartyMessage(
-      messageFromApi.id,
-      thirdPartyMessageAttachment,
-      category
+): O.Option<Array<UIAttachment>> =>
+  pipe(
+    messageFromApi.third_party_message.attachments,
+    O.fromNullable,
+    O.map(thirdPartyMessageAttachmentArray =>
+      thirdPartyMessageAttachmentArray.map(thirdPartyMessageAttachment =>
+        attachmentFromThirdPartyMessage(messageFromApi.id, thirdPartyMessageAttachment, category)
+      )
     )
   );
-};
 
 export const attachmentFromThirdPartyMessage = (
   thirdPartyMessageId: string,

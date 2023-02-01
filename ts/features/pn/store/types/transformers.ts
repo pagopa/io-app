@@ -7,15 +7,17 @@ import { PNMessage, FullReceivedNotification } from "./types";
 
 export const toPNMessage = (
   messageFromApi: ThirdPartyMessageWithContent
-): O.Option<PNMessage> => {
-  const pnMessageEither = pipe(
+): O.Option<PNMessage> =>
+  pipe(
     messageFromApi.third_party_message.details,
     FullReceivedNotification.decode,
     E.map(notification => ({
       ...notification,
       serviceId: messageFromApi.sender_service_id,
-      attachments: attachmentsFromThirdPartyMessage(messageFromApi, "PN")
-    }))
+      attachments: pipe(
+        attachmentsFromThirdPartyMessage(messageFromApi, "PN"),
+        O.toUndefined
+      )
+    })),
+    O.fromEither
   );
-  return O.fromEither(pnMessageEither);
-};
