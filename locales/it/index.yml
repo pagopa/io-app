@@ -3197,9 +3197,12 @@ features:
         cta: Accedi alla versione web   
   fci:
     errors:
+      expiredAfterSigned:
+        title: I documenti non sono più disponibili
+        subTitle: Se hai bisogno di una copia conttatta l'ente
       expired:
-        title: Documento non più disponibile per la firma
-        subTitle: Il documento non è più disponibile per la firma. Contatta l’ente per maggiori informazioni
+        title: La richiesta di firma è scaduta
+        subTitle: Per assistenza contattare l'ente
       waitForQtsp:
         title: Il documento è in elaborazione
         subTitle: Ti preghiamo di attendere, presto riceverai il contratto firmato in app.
@@ -3236,7 +3239,8 @@ features:
       content: "A breve riceverai un messaggio con i documenti firmati."
       cta: "Chiudi"
     qtspTos:
-      title: "Dai il tuo consenso?"
+      title: "Ci siamo quasi!"
+      subTitle: "Per firmare, devi accettare i termini e condizioni del servizio e confermare di avere letto l’informativa privacy del fornitore della firma."
       show: "Visualizza"
 webView:
   error:
@@ -3266,6 +3270,7 @@ support:
     emailAddress: "Indirizzo email"
     deviceAndOS: "Dispositivo e sistema operativo"
     ipAddress: "Indirizzo IP"
+    ipAddressValue: "Inclusa la posizione geografica desunta"
     appVersionsHistory: "Storico versioni dell’app"
     appVersionsHistoryValue: "Per capire se il problema dipende dall’ultimo aggiornamento"
     identityProvider: "Identity Provider"
@@ -3275,6 +3280,8 @@ support:
     devicePerformanceData: "Livello di memoria e batteria"
     stock: "Dati dell’avviso di pagamento"
     stockValue: "Incluso l’errore che hai appena ricevuto"
+    card: "Dati del metodo di pagamento"
+    cardValue: "Numero (cifrato), scadenza, circuito"
     prominentDisclosure: "Accesso alla galleria del dispositivo"
     prominentDisclosureData: "Per caricare foto e screenshot"
     header: "Apri una richiesta"
