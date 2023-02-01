@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { useNavigation } from "@react-navigation/native";
+import * as O from "fp-ts/lib/Option";
 import I18n from "../../i18n";
 import {
   UIAttachmentId,
@@ -39,7 +40,7 @@ export const MessageDetailAttachment = (
     getServiceByMessageId(state, messageId)
   );
 
-  const thirdPartyMessageUIAttachmentResult = useIOSelector(state =>
+  const thirdPartyMessageUIAttachmentOption = useIOSelector(state =>
     thirdPartyMessageUIAttachment(state)(messageId)(attachmentId)
   );
 
@@ -48,19 +49,19 @@ export const MessageDetailAttachment = (
     // first retrieved the third party message (so it should never happen)
     if (
       !autoBackOnErrorHandled.current &&
-      !thirdPartyMessageUIAttachmentResult
+      O.isNone(thirdPartyMessageUIAttachmentOption)
     ) {
       // eslint-disable-next-line functional/immutable-data
       autoBackOnErrorHandled.current = true;
       showToast(I18n.t("messageDetails.attachments.downloadFailed"));
       navigation.goBack();
     }
-  }, [navigation, thirdPartyMessageUIAttachmentResult]);
+  }, [navigation, thirdPartyMessageUIAttachmentOption]);
 
-  return thirdPartyMessageUIAttachmentResult ? (
+  return O.isSome(thirdPartyMessageUIAttachmentOption) ? (
     <MessageAttachmentPreview
       messageId={messageId}
-      attachment={thirdPartyMessageUIAttachmentResult}
+      attachment={thirdPartyMessageUIAttachmentOption.value}
       onPDFError={() => {
         trackThirdPartyMessageAttachmentCorruptedFile(messageId, serviceId);
         showToast(I18n.t("messageDetails.attachments.corruptedFile"));

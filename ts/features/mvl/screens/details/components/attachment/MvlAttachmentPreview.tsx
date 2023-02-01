@@ -1,3 +1,4 @@
+import * as O from "fp-ts/lib/Option";
 import React, { useEffect, useRef } from "react";
 import { IOStackNavigationRouteProps } from "../../../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../../../store/hooks";
@@ -23,24 +24,27 @@ export const MvlAttachmentPreview = (
   // This ref is needed otherwise the auto back on the useEffect will fire multiple
   // times, since its dependencies change during the back navigation
   const autoBackOnErrorHandled = useRef(false);
-  const mvlMessageAttachment = useIOSelector(state =>
+  const mvlMessageAttachmentOption = useIOSelector(state =>
     mvlMessageAttachmentSelector(state)(messageId)(attachmentId)
   );
 
   useEffect(() => {
     // This condition happens only if this screen is shown without having
     // first retrieved the third party message (so it should never happen)
-    if (!autoBackOnErrorHandled.current && !mvlMessageAttachment) {
+    if (
+      !autoBackOnErrorHandled.current &&
+      O.isNone(mvlMessageAttachmentOption)
+    ) {
       // eslint-disable-next-line functional/immutable-data
       autoBackOnErrorHandled.current = true;
       navigation.goBack();
     }
-  }, [mvlMessageAttachment, navigation]);
+  }, [mvlMessageAttachmentOption, navigation]);
 
-  return mvlMessageAttachment ? (
+  return O.isSome(mvlMessageAttachmentOption) ? (
     <MessageAttachmentPreview
       messageId={messageId}
-      attachment={mvlMessageAttachment}
+      attachment={mvlMessageAttachmentOption.value}
     />
   ) : (
     <></>

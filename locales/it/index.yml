@@ -3206,9 +3206,12 @@ features:
         cta: Accedi alla versione web   
   fci:
     errors:
+      expiredAfterSigned:
+        title: I documenti non sono più disponibili
+        subTitle: Se hai bisogno di una copia conttatta l'ente
       expired:
-        title: Documento non più disponibile per la firma
-        subTitle: Il documento non è più disponibile per la firma. Contatta l’ente per maggiori informazioni
+        title: La richiesta di firma è scaduta
+        subTitle: Per assistenza contattare l'ente
       waitForQtsp:
         title: Il documento è in elaborazione
         subTitle: Ti preghiamo di attendere, presto riceverai il contratto firmato in app.
@@ -3363,6 +3366,24 @@ idpay:
       acquirerId: ID transazione Acquirer
       issuerId: ID transazione Issuer
   onboarding:
+    success:
+      understoodCta: Ho capito!
+      pleaseWait: Un attimo di pazienza...
+      requestSent: La tua richiesta è stata inviata!
+    failure:
+      NO_PERMISSION:
+        title: "Non hai i requisiti per aderire a questa iniziativa"
+        subtitle: "Non puoi richiedere il bonus!"
+      GENERIC:
+        title: "C’è un problema sui nostri sistemi"
+        subtitle:
+          "Ci scusiamo per il disagio.\nTi invitiamo a riprovare più tardi."
+      ALREADY_COMPLETED:
+        title: "Onboarding concluso"
+        subtitle: "Hai già fatto l'onboarding per questa iniziativa"
+      ONBOARDING_KO:
+        title: "Onboarding fallito"
+        subtitle: "L'adesione non è andata a buon fine"
     headerTitle: "Adesione all'iniziativa"
     beforeContinue:
       text1: "Proseguendo accetti i "
@@ -3380,6 +3401,10 @@ idpay:
           understoodCTA: Ho capito
       title: Possiedi i seguenti requisiti?
       subtitle: Verificheremo con alcuni Enti se sei in possesso dei requisiti per poter richiedere {{service}}. 
+    boolPrerequisites:
+      header: "Per aderire, dichiari di:"
+      body: L’autodichiarazione è resa ai sensi del
+      link: Dpr 28 dicembre 2000 n. 445 art 46 e 47 
   configuration:
     failureStates:
       GENERIC: "C'è stato un problema, riprova"

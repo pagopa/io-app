@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import * as O from "fp-ts/lib/Option";
 import { PnParamsList } from "../navigation/params";
 import {
   UIMessageId,
@@ -27,24 +28,27 @@ export const PnAttachmentPreview = (
   // This ref is needed otherwise the auto back on the useEffect will fire multiple
   // times, since its dependencies change during the back navigation
   const autoBackOnErrorHandled = useRef(false);
-  const pnMessageAttachment = useIOSelector(state =>
+  const pnMessageAttachmentOption = useIOSelector(state =>
     pnMessageAttachmentSelector(state)(messageId)(attachmentId)
   );
 
   useEffect(() => {
     // This condition happens only if this screen is shown without having
     // first retrieved the third party message (so it should never happen)
-    if (!autoBackOnErrorHandled.current && !pnMessageAttachment) {
+    if (
+      !autoBackOnErrorHandled.current &&
+      O.isNone(pnMessageAttachmentOption)
+    ) {
       // eslint-disable-next-line functional/immutable-data
       autoBackOnErrorHandled.current = true;
       navigation.goBack();
     }
-  }, [pnMessageAttachment, navigation]);
+  }, [pnMessageAttachmentOption, navigation]);
 
-  return pnMessageAttachment ? (
+  return O.isSome(pnMessageAttachmentOption) ? (
     <MessageAttachmentPreview
       messageId={messageId}
-      attachment={pnMessageAttachment}
+      attachment={pnMessageAttachmentOption.value}
       onPDFError={() => {
         void mixpanelTrack("PN_ATTACHMENT_PREVIEW_STATUS", {
           previewStatus: "error"

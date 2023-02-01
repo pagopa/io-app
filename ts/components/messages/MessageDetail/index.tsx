@@ -2,11 +2,12 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import _ from "lodash";
 import { Content as NBContent } from "native-base";
 import * as React from "react";
+import * as O from "fp-ts/lib/Option";
 import { useCallback, useEffect, useState } from "react";
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import DeviceInfo from "react-native-device-info";
-import I18n from "i18n-js";
 import { useNavigation } from "@react-navigation/native";
+import I18n from "../../../i18n";
 import { OrganizationFiscalCode } from "../../../../definitions/backend/OrganizationFiscalCode";
 
 import { ServiceMetadata } from "../../../../definitions/backend/ServiceMetadata";
@@ -185,14 +186,12 @@ const MessageDetailsComponent = ({
       // model for attachments when the user generates the request. This
       // is not a speed intensive operation nor a memory consuming task,
       // since the attachment count should be negligible
-      const thirdPartyMessageAttachments = attachmentsFromThirdPartyMessage(
-        thirdPartyMessage,
-        "GENERIC"
-      );
-      return thirdPartyMessageAttachments ? (
+      const thirdPartyMessageAttachmentsOption =
+        attachmentsFromThirdPartyMessage(thirdPartyMessage, "GENERIC");
+      return O.isSome(thirdPartyMessageAttachmentsOption) ? (
         <View style={styles.padded}>
           <MessageAttachments
-            attachments={thirdPartyMessageAttachments}
+            attachments={thirdPartyMessageAttachmentsOption.value}
             openPreview={openAttachment}
           />
         </View>

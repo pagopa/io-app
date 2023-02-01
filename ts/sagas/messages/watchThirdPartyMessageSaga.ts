@@ -1,6 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
+import * as O from "fp-ts/lib/Option";
 import { SagaIterator } from "redux-saga";
 import {
   call,
@@ -58,19 +59,20 @@ function* trackSuccess(
   const message = pot.toUndefined(yield* select(getMessageById, messageId));
 
   if (message?.category.tag === "PN") {
-    const pnMessage = toPNMessage(messageFromApi);
+    const pnMessageOption = toPNMessage(messageFromApi);
 
-    if (pnMessage === undefined) {
-      void mixpanelTrack("PN_NOTIFICATION_LOAD_ERROR", {
-        jsonDecodeFailed: true
-      });
-    } else {
+    if (O.isSome(pnMessageOption)) {
+      const pnMessage = pnMessageOption.value;
       void mixpanelTrack("PN_NOTIFICATION_LOAD_SUCCESS", {
         notificationLastStatus:
           pnMessage.notificationStatusHistory[
             pnMessage.notificationStatusHistory.length - 1
           ].status,
         hasAttachments: (pnMessage.attachments?.length ?? 0) > 0
+      });
+    } else {
+      void mixpanelTrack("PN_NOTIFICATION_LOAD_ERROR", {
+        jsonDecodeFailed: true
       });
     }
   } else {

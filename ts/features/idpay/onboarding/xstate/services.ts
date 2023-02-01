@@ -183,10 +183,10 @@ const createServicesImplementation = (
     const dataPromise: Promise<undefined> = pipe(
       response,
       E.fold(
-        _ => Promise.reject("Error accepting required criteria"),
+        _ => Promise.reject(OnboardingFailureType.GENERIC),
         _ => {
           if (_.status !== 202) {
-            return Promise.reject("Error accepting required criteria");
+            return Promise.reject(OnboardingFailureType.GENERIC);
           }
           return Promise.resolve(undefined);
         }
