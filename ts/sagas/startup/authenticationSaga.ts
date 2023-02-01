@@ -10,11 +10,9 @@ import { SessionToken } from "../../types/SessionToken";
 import { ReduxSagaEffect } from "../../types/utils";
 import { stopCieManager, watchCieAuthenticationSaga } from "../cie";
 import { watchTestLoginRequestSaga } from "../testLoginSaga";
+import { lollipopKeyTagSave } from "../../features/lollipop/store/actions/lollipop";
+import { lollipopSelector } from "../../features/lollipop/store/reducers/lollipop";
 import { cryptoKeyGenerationSaga } from "./generateCryptoKeyPair";
-import {
-  lollipopKeyTagSave,
-  lollipopSelector
-} from "./../../store/actions/lollipop";
 
 /**
  * A saga that makes the user go through the authentication process until

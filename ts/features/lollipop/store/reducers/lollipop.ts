@@ -2,8 +2,9 @@
  * A reducer for lollipop.
  */
 import { isActionOf } from "typesafe-actions";
-import { Action } from "../actions/types";
+import { Action } from "../../../../store/actions/types";
 import { lollipopKeyTagSave } from "../actions/lollipop";
+import { GlobalState } from "../../../../store/reducers/types";
 
 export type LollipopState = Readonly<{
   keyTag?: string;
@@ -25,3 +26,5 @@ export default function lollipopReducer(
   }
   return state;
 }
+
+export const lollipopSelector = (state: GlobalState) => state.lollipop;

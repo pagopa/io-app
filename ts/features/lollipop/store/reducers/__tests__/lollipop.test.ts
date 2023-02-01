@@ -1,10 +1,10 @@
 import * as O from "fp-ts/lib/Option";
 import { Tuple2, ITuple2 } from "@pagopa/ts-commons/lib/tuples";
-import { BackendStatus } from "../../../../definitions/content/BackendStatus";
-import { baseRawBackendStatus } from "../__mock__/backendStatus";
-import { isLollipopEnabledSelector } from "../backendStatus";
-import { GlobalState } from "../types";
-import { getAppVersion } from "../../../utils/appVersion";
+import { BackendStatus } from "../../../../../../definitions/content/BackendStatus";
+import { baseRawBackendStatus } from "../../../../../store/reducers/__mock__/backendStatus";
+import { isLollipopEnabledSelector } from "../../../../../store/reducers/backendStatus";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { getAppVersion } from "../../../../../utils/appVersion";
 
 jest.mock("react-native-device-info", () => ({
   getReadableVersion: jest.fn().mockReturnValue("1.2.3.4"),

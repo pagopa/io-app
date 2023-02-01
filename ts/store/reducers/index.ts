@@ -16,6 +16,9 @@ import {
 import { Action } from "../actions/types";
 import createSecureStorage from "../storages/keychain";
 import { DateISO8601Transform } from "../transforms/dateISO8601Tranform";
+import lollipopReducer, {
+  initialLollipopState
+} from "../../features/lollipop/store/reducers/lollipop";
 import appStateReducer from "./appState";
 import assistanceToolsReducer from "./assistanceTools";
 import authenticationReducer, {
@@ -40,7 +43,6 @@ import identificationReducer, {
   INITIAL_STATE as identificationInitialState
 } from "./identification";
 import installationReducer from "./installation";
-import lollipopReducer, { initialLollipopState } from "./lollipop";
 import { navigationReducer } from "./navigation";
 import notificationsReducer from "./notifications";
 import onboardingReducer from "./onboarding";
