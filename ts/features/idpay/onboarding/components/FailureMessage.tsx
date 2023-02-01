@@ -24,10 +24,16 @@ const FailureMessage = (props: Props) => {
   if (OnboardingFailureType[props.type] === undefined) {
     return null;
   }
+
+  const failureIcons: { [key in OnboardingFailureType]: IOPictogramType } = {
+    [OnboardingFailureType.NO_PERMISSION]: "question",
+    [OnboardingFailureType.GENERIC]: "umbrella",
+    [OnboardingFailureType.ALREADY_COMPLETED]: "inProgress",
+    [OnboardingFailureType.ONBOARDING_KO]: "question"
+  };
+
   const failure: OnboardingFailure = {
-    picture: I18n.t(
-      `idpay.onboarding.failure.${props.type}.picture`
-    ) as IOPictogramType,
+    picture: failureIcons[props.type],
     title: I18n.t(`idpay.onboarding.failure.${props.type}.title`),
     subtitle: I18n.t(`idpay.onboarding.failure.${props.type}.subtitle`)
   };
