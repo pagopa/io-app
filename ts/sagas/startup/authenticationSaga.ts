@@ -36,7 +36,7 @@ export function* authenticationSaga(): Generator<
   yield* call(resetToAuthenticationRoute);
 
   // Generate key for lollipop
-  const maybeOldKeyTag = (yield* select(lollipopSelector)).keyTag;
+  const maybeOldKeyTag = (yield* select(lollipopSelector))?.keyTag;
   const newKeyTag = uuid();
   yield* put(lollipopKeyTagSave({ keyTag: newKeyTag }));
   yield* cryptoKeyGenerationSaga(newKeyTag, maybeOldKeyTag);
