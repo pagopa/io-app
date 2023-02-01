@@ -7,7 +7,7 @@ import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Content, View } from "native-base";
+import { Content } from "native-base";
 import React, { useState } from "react";
 import { Keyboard, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
@@ -57,6 +57,7 @@ import {
 } from "../../utils/input";
 import { showToast } from "../../utils/showToast";
 import { openWebUrl } from "../../utils/url";
+import { VSpacer } from "../../components/core/spacer/Spacer";
 
 export type AddCardScreenNavigationParams = Readonly<{
   inPayment: O.Option<{
@@ -244,7 +245,7 @@ const AddCardScreen: React.FC<Props> = props => {
   const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
     <>
       <Body>{I18n.t("wallet.missingDataText.body")}</Body>
-      <View spacer={true} large />
+      <VSpacer size={24} />
       <ButtonDefaultOpacity
         style={styles.button}
         bordered={true}
@@ -358,7 +359,7 @@ const AddCardScreen: React.FC<Props> = props => {
               testID={"cardHolder"}
             />
 
-            <View spacer={true} />
+            <VSpacer size={16} />
 
             <LabelledItem
               label={I18n.t("wallet.dummyCard.labels.pan")}
@@ -393,7 +394,7 @@ const AddCardScreen: React.FC<Props> = props => {
               testID={"pan"}
             />
 
-            <View spacer={true} />
+            <VSpacer size={16} />
             <Grid>
               <Col>
                 <LabelledItem
@@ -460,7 +461,7 @@ const AddCardScreen: React.FC<Props> = props => {
 
             {!O.isSome(inPayment) && (
               <>
-                <View spacer={true} />
+                <VSpacer size={16} />
                 <Link
                   accessibilityRole="link"
                   accessibilityLabel={I18n.t("wallet.missingDataCTA")}
@@ -470,7 +471,7 @@ const AddCardScreen: React.FC<Props> = props => {
                 </Link>
               </>
             )}
-            <View spacer />
+            <VSpacer size={16} />
 
             <Link
               accessibilityRole="link"

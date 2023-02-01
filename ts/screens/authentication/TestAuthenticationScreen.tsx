@@ -1,11 +1,12 @@
 import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
-import { Content, View } from "native-base";
+import { Content } from "native-base";
 import * as React from "react";
 import { SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { PasswordLogin } from "../../../definitions/backend/PasswordLogin";
+import { VSpacer } from "../../components/core/spacer/Spacer";
 import { LabelledItem } from "../../components/LabelledItem";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import { BlockButtonProps } from "../../components/ui/BlockButtons";
@@ -55,7 +56,7 @@ const TestAuthenticationScreen: React.FunctionComponent<Props> = (
             }}
           />
 
-          <View spacer={true} />
+          <VSpacer size={16} />
 
           <LabelledItem
             label={I18n.t("global.password")}

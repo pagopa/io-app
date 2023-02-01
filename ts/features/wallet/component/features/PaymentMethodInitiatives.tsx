@@ -1,6 +1,5 @@
-import { View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { BpdConfig } from "../../../../../definitions/content/BpdConfig";
@@ -18,6 +17,7 @@ import {
   EnableableFunctions,
   EnableableFunctionsEnum
 } from "../../../../../definitions/pagopa/EnableableFunctions";
+import { HSpacer } from "../../../../components/core/spacer/Spacer";
 
 type OwnProps = {
   paymentMethod: PaymentMethod;
@@ -95,7 +95,7 @@ const PaymentMethodInitiatives = (props: Props): React.ReactElement | null => {
           stroke={IOColors.bluegreyDark}
           style={styles.icon}
         />
-        <View hspacer={true} />
+        <HSpacer size={16} />
         <H3 color={"bluegrey"}>{I18n.t("wallet.capability.title")}</H3>
       </View>
       {capabilityItems}

@@ -7,6 +7,7 @@ import {
   StatusEnum
 } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
 import { InstrumentDTO } from "../../../../../../definitions/idpay/wallet/InstrumentDTO";
+
 import { Wallet } from "../../../../../types/pagopa";
 import {
   LOADING_TAG,
@@ -15,6 +16,7 @@ import {
 } from "../../../../../utils/xstate";
 import { ConfigurationMode, Context, INITIAL_CONTEXT } from "./context";
 import { Events } from "./events";
+import { InitiativeFailureType } from "./failure";
 
 type Services = {
   loadInitiative: {
@@ -74,12 +76,14 @@ const createIDPayInitiativeConfigurationMachine = () =>
           invoke: {
             src: "loadInitiative",
             id: "loadInitiative",
-            onDone: [
-              {
-                target: "EVALUATING_INITIATIVE_CONFIGURATION",
-                actions: "loadInitiativeSuccess"
-              }
-            ]
+            onDone: {
+              target: "EVALUATING_INITIATIVE_CONFIGURATION",
+              actions: "loadInitiativeSuccess"
+            },
+            onError: {
+              target: "CONFIGURATION_FAILURE",
+              actions: "setFailure"
+            }
           }
         },
         EVALUATING_INITIATIVE_CONFIGURATION: {
@@ -123,7 +127,18 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 onDone: {
                   target: "EVALUATING_IBAN_LIST",
                   actions: "loadIbanListSuccess"
-                }
+                },
+                onError: [
+                  {
+                    cond: "isIbanOnlyMode",
+                    target: "#ROOT.CONFIGURATION_FAILURE",
+                    actions: "setFailure"
+                  },
+                  {
+                    target: "#ROOT.DISPLAYING_INTRO",
+                    actions: ["setFailure", "showFailureToast"]
+                  }
+                ]
               }
             },
             EVALUATING_IBAN_LIST: {
@@ -182,6 +197,10 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 id: "confirmIban",
                 onDone: {
                   target: "IBAN_CONFIGURATION_COMPLETED"
+                },
+                onError: {
+                  target: "DISPLAYING_IBAN_ONBOARDING_FORM",
+                  actions: ["setFailure", "showFailureToast"]
                 }
               }
             },
@@ -215,6 +234,10 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 onDone: {
                   target: "IBAN_CONFIGURATION_COMPLETED",
                   actions: "enrollIbanSuccess"
+                },
+                onError: {
+                  target: "DISPLAYING_IBAN_LIST",
+                  actions: ["setFailure", "showFailureToast"]
                 }
               }
             },
@@ -245,8 +268,31 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 onDone: {
                   target: "DISPLAYING_INSTRUMENTS",
                   actions: "loadInstrumentsSuccess"
-                }
+                },
+                onError: [
+                  {
+                    cond: "isInstrumentsOnlyMode",
+                    target: "#ROOT.CONFIGURATION_FAILURE",
+                    actions: "setFailure"
+                  },
+                  {
+                    target: "#ROOT.CONFIGURING_IBAN",
+                    actions: ["setFailure", "showFailureToast"]
+                  }
+                ]
               }
+            },
+            EVALUATING_INSTRUMENTS: {
+              tags: [LOADING_TAG],
+              always: [
+                {
+                  target: "DISPLAYING_INSTRUMENTS",
+                  cond: "hasInstruments"
+                },
+                {
+                  target: "#ROOT.DISPLAYING_CONFIGURATION_SUCCESS"
+                }
+              ]
             },
             DISPLAYING_INSTRUMENTS: {
               tags: [WAITING_USER_INPUT_TAG],
@@ -259,6 +305,9 @@ const createIDPayInitiativeConfigurationMachine = () =>
                   target: "DELETING_INSTRUMENT",
                   actions: "selectInstrument"
                 },
+                ADD_PAYMENT_METHOD: {
+                  actions: "navigateToAddPaymentMethodScreen"
+                },
                 BACK: [
                   {
                     cond: "isInstrumentsOnlyMode",
@@ -270,6 +319,10 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 ],
                 NEXT: {
                   target: "INSTRUMENTS_COMPLETED"
+                },
+                SKIP: {
+                  target: "INSTRUMENTS_COMPLETED",
+                  actions: "skipInstruments"
                 }
               }
             },
@@ -280,10 +333,11 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 id: "enrollInstrument",
                 onDone: {
                   target: "DISPLAYING_INSTRUMENTS",
-                  actions: "enrollInstrumentSuccess"
+                  actions: "toggleInstrumentSuccess"
                 },
                 onError: {
-                  target: "DISPLAYING_INSTRUMENTS"
+                  target: "DISPLAYING_INSTRUMENTS",
+                  actions: ["setFailure", "showFailureToast"]
                 }
               }
             },
@@ -294,10 +348,11 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 id: "deleteInstrument",
                 onDone: {
                   target: "DISPLAYING_INSTRUMENTS",
-                  actions: "deleteInstrumentSuccess"
+                  actions: "toggleInstrumentSuccess"
                 },
                 onError: {
-                  target: "DISPLAYING_INSTRUMENTS"
+                  target: "DISPLAYING_INSTRUMENTS",
+                  actions: ["setFailure", "showFailureToast"]
                 }
               }
             },
@@ -322,6 +377,9 @@ const createIDPayInitiativeConfigurationMachine = () =>
           on: {
             COMPLETE_CONFIGURATION: {
               target: "CONFIGURATION_COMPLETED"
+            },
+            ADD_PAYMENT_METHOD: {
+              actions: "navigateToAddPaymentMethodScreen"
             }
           }
         },
@@ -337,6 +395,10 @@ const createIDPayInitiativeConfigurationMachine = () =>
         CONFIGURATION_COMPLETED: {
           type: "final",
           entry: "navigateToInitiativeDetailScreen"
+        },
+        CONFIGURATION_FAILURE: {
+          type: "final",
+          entry: ["showFailureToast", "exitConfiguration"]
         }
       }
     },
@@ -347,34 +409,44 @@ const createIDPayInitiativeConfigurationMachine = () =>
           mode: event.mode
         })),
         loadInitiativeSuccess: assign((_, event) => ({
-          initiative: p.some(event.data)
+          initiative: p.some(event.data),
+          failure: undefined
         })),
         loadIbanListSuccess: assign((_, event) => ({
-          ibanList: p.some(event.data.ibanList)
+          ibanList: p.some(event.data.ibanList),
+          failure: undefined
         })),
         selectIban: assign((_, event) => ({
-          selectedIban: event.iban
+          selectedIban: event.iban,
+          failure: undefined
         })),
         enrollIbanSuccess: assign((_, _event) => ({
-          selectedIban: undefined
+          selectedIban: undefined,
+          failure: undefined
         })),
         loadInstrumentsSuccess: assign((_, event) => ({
           pagoPAInstruments: p.some(event.data.pagoPAInstruments),
-          idPayInstruments: p.some(event.data.idPayInstruments)
+          idPayInstruments: p.some(event.data.idPayInstruments),
+          failure: undefined
         })),
         selectInstrument: assign((_, event) => ({
-          selectedInstrumentId: event.instrumentId
+          selectedInstrumentId: event.instrumentId,
+          failure: undefined
         })),
-        enrollInstrumentSuccess: assign((_, event) => ({
-          idPayInstruments: p.some(event.data),
-          selectedInstrumentId: undefined
+        skipInstruments: assign((_, __) => ({
+          areInstrumentsSkipped: true
         })),
-        deleteInstrumentSuccess: assign((_, event) => ({
+        toggleInstrumentSuccess: assign((_, event) => ({
           idPayInstruments: p.some(event.data),
-          selectedInstrumentId: undefined
+          selectedInstrumentId: undefined,
+          failure: undefined
         })),
         confirmIbanOnboarding: assign((_, event) => ({
-          ibanBody: event.ibanBody
+          ibanBody: event.ibanBody,
+          failure: undefined
+        })),
+        setFailure: assign((_, event) => ({
+          failure: event.data as InitiativeFailureType
         }))
       },
       guards: {
@@ -393,7 +465,12 @@ const createIDPayInitiativeConfigurationMachine = () =>
             false
           ),
         isInstrumentsOnlyMode: (context, _) =>
-          context.mode === ConfigurationMode.INSTRUMENTS
+          context.mode === ConfigurationMode.INSTRUMENTS,
+        hasInstruments: (context, _) =>
+          p.getOrElse(
+            p.map(context.idPayInstruments, list => list.length > 0),
+            false
+          )
       }
     }
   );

@@ -1,9 +1,9 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { View } from "native-base";
 import * as React from "react";
-import { SafeAreaView, ScrollView } from "react-native";
+import { View, SafeAreaView, ScrollView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -91,13 +91,13 @@ const EnrollPaymentMethodsScreen: React.FunctionComponent<Props> = props => {
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView>
           <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
-            <View spacer={true} large={true} />
+            <VSpacer size={24} />
             <H1>{title}</H1>
-            <View spacer={true} extralarge={true} />
+            <VSpacer size={40} />
             <Body>{body1}</Body>
-            <View spacer={true} large={true} />
+            <VSpacer size={24} />
             {renderPaymentMethod(props.potWallets)}
-            <View spacer={true} large={true} />
+            <VSpacer size={24} />
             <Body>{body2}</Body>
           </View>
         </ScrollView>
