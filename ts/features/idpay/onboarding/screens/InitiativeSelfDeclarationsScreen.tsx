@@ -17,6 +17,7 @@ import ListItemComponent from "../../../../components/screens/ListItemComponent"
 import { LOADING_TAG } from "../../../../utils/xstate";
 import { SelfDeclarationBoolDTO } from "../../../../../definitions/idpay/onboarding/SelfDeclarationBoolDTO";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
+import I18n from "../../../../i18n";
 
 const InitiativeSelfDeclarationsScreen = () => {
   const machine = useOnboardingMachineService();
@@ -40,7 +41,7 @@ const InitiativeSelfDeclarationsScreen = () => {
 
   return (
     <BaseScreenComponent
-      headerTitle="Adesione all'iniziativa"
+      headerTitle={I18n.t("idpay.onboarding.navigation.header")}
       goBack={goBackOnPress}
       contextualHelp={emptyContextualHelp}
     >
@@ -48,10 +49,10 @@ const InitiativeSelfDeclarationsScreen = () => {
         <SafeAreaView style={IOStyles.flex}>
           <ScrollView style={IOStyles.flex}>
             <View style={IOStyles.horizontalContentPadding}>
-              <H1>Per aderire, dichiari di:</H1>
+              <H1>{I18n.t("idpay.onboarding.boolPrerequisites.header")}</H1>
               <VSpacer size={16} />
-              <Body>L’autodichiarazione è resa ai sensi del</Body>
-              <Link>Dpr 28 dicembre 2000 n. 445 art 46 e 47</Link>
+              <Body>{I18n.t("idpay.onboarding.boolPrerequisites.body")}</Body>
+              <Link>{I18n.t("idpay.onboarding.boolPrerequisites.link")}</Link>
               <VSpacer size={24} />
               {selfCriteriaBool.map((criteria, index) => (
                 <View key={criteria.code}>
@@ -72,11 +73,11 @@ const InitiativeSelfDeclarationsScreen = () => {
             type={"TwoButtonsInlineHalf"}
             leftButton={{
               bordered: true,
-              title: "Indietro",
+              title: I18n.t("global.buttons.back"),
               onPress: goBackOnPress
             }}
             rightButton={{
-              title: "Continua",
+              title: I18n.t("global.buttons.continue"),
               onPress: continueOnPress
             }}
           />
