@@ -17,6 +17,10 @@ type E_DELETE_INSTRUMENT = {
   instrumentId: string;
 };
 
+type E_ADD_PAYMENT_METHOD = {
+  type: "ADD_PAYMENT_METHOD";
+};
+
 type E_NEW_IBAN_ONBOARDING = {
   type: "NEW_IBAN_ONBOARDING";
 };
@@ -38,6 +42,10 @@ type E_COMPLETE_CONFIGURATION = {
   type: "COMPLETE_CONFIGURATION";
 };
 
+type E_SKIP = {
+  type: "SKIP";
+};
+
 type E_NEXT = {
   type: "NEXT";
 };
@@ -54,10 +62,12 @@ export type Events =
   | E_START_CONFIGURATION
   | E_ENROLL_INSTRUMENT
   | E_DELETE_INSTRUMENT
+  | E_ADD_PAYMENT_METHOD
   | E_NEW_IBAN_ONBOARDING
   | E_CONFIRM_IBAN
   | E_ENROLL_IBAN
   | E_COMPLETE_CONFIGURATION
+  | E_SKIP
   | E_NEXT
   | E_BACK
   | E_QUIT;
