@@ -12,16 +12,18 @@ import {
   KeyGenerationInfo
 } from "../../utils/crypto";
 import { mixpanelTrack } from "./../../mixpanel";
-import { lollipopSelector } from "./../../store/actions/lollipop";
 
 /**
  * Generates a new crypto key pair.
  */
-export function* cryptoKeyGenerationSaga(keyTag: string) {
+export function* cryptoKeyGenerationSaga(
+  keyTag: string,
+  previousKeyTag?: string
+) {
   const isLollipopEnabled = yield* select(isLollipopEnabledSelector);
   if (isLollipopEnabled) {
     // Every new login we need to regenerate a brand new key pair.
-    yield* deletePreviousCryptoKeyPair();
+    yield* deletePreviousCryptoKeyPair(previousKeyTag);
     yield* call(generateCryptoKeyPair, keyTag);
   }
 }
@@ -49,10 +51,9 @@ export function* trackMixpanelCryptoKeyPairEvents(keyTag: string) {
 /**
  * Deletes a previous saved crypto key pair.
  */
-export function* deletePreviousCryptoKeyPair() {
-  const maybeOldKeyTag = (yield* select(lollipopSelector)).keyTag;
-  if (maybeOldKeyTag) {
-    yield* deleteCryptoKeyPair(maybeOldKeyTag);
+export function* deletePreviousCryptoKeyPair(keyTag?: string) {
+  if (keyTag) {
+    yield* deleteCryptoKeyPair(keyTag);
   }
 }
 
