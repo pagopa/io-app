@@ -115,13 +115,13 @@ global:
     fullFormatFullMonthLiteral: "%d %B %Y"
     fullMonthLiteral: "%B"
     fullMonthLiteralWithYear: "%B %Y"
-    numericMonthYear: "%m.%Y"
-    shortNumericMonthYear: "%m.%-y"
     timeFormat: "%H:%M"
     timeFormatWithTimezone: "%H:%M:%S (%z)"
     dayMonthWithTime: "%d %b, %H:%M"
     dayMonthWithoutTime: "%d %b"
     dayFullMonth: "%d %B"
+    numericMonthYear: "%m/%Y"
+    shortNumericMonthYear: "%m/%-y"
     monthYear: "MMMM YYYY"
     dayAndMonth: "dddd D MMMM"
     dayMonth: "DD.MM."
@@ -763,8 +763,9 @@ onboarding:
     headerTitle: "Aktivierung"
     title: "Biometrische Authentifizierung"
     body:
+      enrolledText: !include onboarding/tos_fingerprint_enrolled.md
       enrolledType:
-        fingerprint: "Dein Fingerabdruck"
+        fingerprint: "deinen Fingerabdruck"
         faceId: "Face ID"
         touchId: "Touch ID"
   shareData:
@@ -891,16 +892,16 @@ wallet:
     bancomat:
       title: "Suche deine PagoBANCOMAT-Karten"
       description:
-        text1: "Indem du PagoBANCOMAT zu deinem Konto hinzufügst, kannst du an den auf IO verfügbaren Initiativen teilnehmen.\nWenn du fortfährst, akzeptierst du die"
+        text1: "Indem du PagoBANCOMAT zu deinem Konto hinzufügst, kannst du an den auf IO verfügbaren Initiativen teilnehmen.\nWenn du fortfährst, akzeptierst du die "
         text2: "Datenschutzbestimmungen."
-        text3: "Wenn du möchtest, kannst du die Bank wählen, bei der du eine aktive PagoBANCOMAT-Karte hast."
+        text3: "Wenn du möchtest, kannst du die Bank wählen, bei der du eine aktive PagoBANCOMAT-Karte hast. "
         text4: "Liste der verfügbaren Banken"
     bpay:
       title: "Zahle auf IO mit BANCOMAT Pay"
       description:
         text1: "Füge BANCOMAT Pay hinzu, um pagoPA-Zahlungsaufforderungen einfacher zu bezahlen sowie an den auf IO verfügbaren Initiativen teilzunehmen.\nWenn du fortfährst, akzeptierst du die "
         text2: "Datenschutzbestimmungen."
-        text3: "Drücke auf “Weiter”, um nach Konten, die auf dich lauten, zu suchen oder suche die Bank, bei der du ein aktives BANCOMAT Pay Konto hast."
+        text3: "Drücke auf “Weiter”, um nach Konten, die auf dich lauten, zu suchen oder suche die Bank, bei der du ein aktives BANCOMAT Pay Konto hast. "
         text4: "Liste der verfügbaren Banken"
     cobadge:
       title: "Suche deine Karten im internationalen Zahlungsnetzwerk"
@@ -1096,7 +1097,7 @@ wallet:
         title: "Gib die Kartennummer ein"
         body: "Gib die Ziffern auf der Vorderseite ein. IO prüft, ob die Karte mit deiner Steuernummer verbunden ist."
         disclaimer:
-          text1: "Wenn du fortfährst, akzeptierst du die"
+          text1: "Wenn du fortfährst, akzeptierst du die "
           text2: "Datenschutzbestimmungen"
       search:
         loading: "Wir überprüfen deine Karte\n\nWarte ein paar Sekunden"
@@ -1150,7 +1151,7 @@ wallet:
     add: "Hinzufügen"
     show: "Anzeigen"
     refresh: "Aktualisieren"
-    addButton: "Eine Zahlungsmethode hinzufügen"
+    addButton: "Neue Zahlungsmethode"
     addDescription: "Füge eine Zahlungsmethode hinzu, um in Sekundenschnelle in IO zu bezahlen oder fordere die Aktivierung einer Bonus- oder Rabattkarte an."
     walletAlert: "In deinem Konto sind Zahlungsmethoden registriert, aber keine davon ist mit IO kompatibel."
     successful: "Die Karte wurde erfolgreich hinzugefügt!"
@@ -1210,10 +1211,10 @@ wallet:
     transactionCosts: "Transaktionsgebühr"
     edit: "Bearbeiten"
     providedBy: "Durchgeführt von"
-    pay: "Bezahlen"
+    pay: "Bezahle"
     cancelPayment: "Transaktion abbrechen"
     fee: "Transaktionsgebühr"
-    identificationMessage: "Bestätige die Transaktion durch Eingabe deines Freischaltcodes"
+    identificationMessage: "Bestätige die Transaktion durch Eingabe deines Entsperrcodes"
     transactionSuccess: "Die Zahlung wurde abgeschlossen!"
     transactionFailure: "Bei der Zahlung ist ein Fehler aufgetreten, bitte versuche es erneut!"
     transactionTimeout: "Die Bestätigung der Zahlung konnte nicht abrufen werden!"
@@ -1883,6 +1884,12 @@ systemsOff:
   closeApp: "Schließe die App und versuche es erneut"
 contextualHelp:
   title: Die IO-App hilft Ihnen
+bottomSheets:
+  ciePin:
+    title: "Wo finde ich meine PIN?"
+    content: !include bottomsheets/ciePin.md
+bonus:
+  requestLabel: "Boni und Rabatte"
 features:
   euCovidCertificate:
     save:
