@@ -15,6 +15,7 @@ import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJso
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { ZendeskCategory } from "../../../../definitions/content/ZendeskCategory";
 import CopyButtonComponent from "../../../components/CopyButtonComponent";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { H4 } from "../../../components/core/typography/H4";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
@@ -23,11 +24,11 @@ import {
   confirmButtonProps
 } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { FooterStackButton } from "../../../features/bonus/bonusVacanze/components/buttons/FooterStackButtons";
-import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
 import {
   zendeskSelectedCategory,
   zendeskSupportStart
 } from "../../../features/zendesk/store/actions";
+import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
 import I18n from "../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
@@ -403,7 +404,11 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   backToEntrypointPayment: () => dispatch(backToEntrypointPayment()),
   zendeskSupportWorkunitStart: () =>
     dispatch(
-      zendeskSupportStart({ startingRoute: "n/a", assistanceForPayment: true })
+      zendeskSupportStart({
+        startingRoute: "n/a",
+        assistanceForPayment: true,
+        assistanceForCard: false
+      })
     ),
   zendeskSelectedCategory: (category: ZendeskCategory) =>
     dispatch(zendeskSelectedCategory(category))
