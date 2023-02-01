@@ -126,6 +126,8 @@ export const IOBadge = ({
     {/* TODO: Enable bolder text using `isBoldTextEnabled` RN API
     (not yet released at the time I am writing this comment. */}
     <Text
+      // Disable temporarily the following props
+      // to avoid layout breaking changes
       // allowFontScaling
       // maxFontSizeMultiplier={1.5}
       testID={labelTestID}
