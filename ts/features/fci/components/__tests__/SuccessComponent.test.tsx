@@ -97,7 +97,7 @@ describe("Test SuccessComponent", () => {
     );
     const expiredSignatureRequest = {
       ...mockSignatureRequestDetailView,
-      updated_at: new Date(now.setDate(now.getDate() - 90)),
+      updated_at: new Date(now.setDate(now.getDate() - 91)),
       status: SignatureRequestDetailViewStatusEnum.SIGNED
     };
     const props = {
