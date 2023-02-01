@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, PixelRatio } from "react-native";
 import { makeFontStyleObject } from "./fonts";
 import { IOColors, IOColorType } from "./variables/IOColors";
 
@@ -30,27 +30,6 @@ type IOBadgeConditionalProps =
     };
 
 export type IOBadgeProps = IOBadgeCommonProps & IOBadgeConditionalProps;
-
-/*
-  Before: <IOBadge text={"Badge"} small={true} labelColor={"white"} />
-  After: <IOBadge text={"Badge"} variant="solid" color="blue" small />
-
-  Before: <IOBadge text={"Badge"} small={true} labelColor={"bluegreyDark"} />
-  After: <IOBadge text={"Badge"} variant="solid" color="aqua" small />
-
-  Before: <IOBadge text={"Badge"} small={true} labelColor={"blue"} />
-  After: <IOBadge text={"Badge"} variant="outline" color="blue" small />
-
-  Before: <IOBadge text={"Badge"} small={true} labelColor={"red"} />
-  After: <IOBadge text={"Badge"} variant="outline" color="red" small />
-
-  NEW!
-  <IOBadge text={"Badge"} variant="solid" color="white" small />
-  --> LabelColor: bluegrey
-  <IOBadge text={"Badge"} variant="outline" color="white" small />
-  --> LabelColor: white
-
-*/
 
 type SolidVariantProps = {
   background: IOColorType;
@@ -89,9 +68,6 @@ const mapSolidColor: Record<
   }
 };
 
-const BADGE_SMALL_SIZE = 20;
-const BADGE_DEFAULT_SIZE = 24;
-
 const defaultVariant: IOBadgeProps["variant"] = "solid";
 const defaultColor: IOBadgeProps["color"] = "blue";
 
@@ -101,19 +77,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     textAlignVertical: "center", // Android
     justifyContent: "center",
-    elevation: 0.1
-  },
-  badgeSizeDefault: {
-    // paddingHorizontal are different between sizes
-    // to keep space uniform
-    paddingHorizontal: 10,
-    height: BADGE_DEFAULT_SIZE,
-    borderRadius: BADGE_DEFAULT_SIZE / 2
-  },
-  badgeSizeSmall: {
-    paddingHorizontal: 8,
-    height: BADGE_SMALL_SIZE,
-    borderRadius: BADGE_SMALL_SIZE / 2
+    // Visual parameters based on the FontScale
+    // ~20 = Small size height
+    // ~24 = Default size height
+    paddingVertical: PixelRatio.getFontScale() * 1.25,
+    paddingHorizontal: PixelRatio.getFontScale() * 10,
+    borderRadius: PixelRatio.getFontScale() * 25
   },
   label: {
     alignSelf: "center",
@@ -130,8 +99,7 @@ const styles = StyleSheet.create({
 });
 
 /**
- * A badge component styled with the
- * IO primary color.
+ * Official badge component
  */
 export const IOBadge = ({
   text,
@@ -145,7 +113,6 @@ export const IOBadge = ({
     testID={testID}
     style={[
       styles.badge,
-      small ? styles.badgeSizeSmall : styles.badgeSizeDefault,
       variant === "outline" && {
         borderColor: IOColors[mapOutlineColor[color as IOBadgeOutlineColors]],
         borderWidth: 1
@@ -156,7 +123,11 @@ export const IOBadge = ({
       }
     ]}
   >
+    {/* TODO: Enable bolder text using `isBoldTextEnabled` RN API
+    (not yet released at the time I am writing this comment. */}
     <Text
+      // allowFontScaling
+      // maxFontSizeMultiplier={1.5}
       testID={labelTestID}
       style={[
         styles.label,
