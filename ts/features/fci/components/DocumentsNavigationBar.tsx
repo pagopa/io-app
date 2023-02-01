@@ -43,6 +43,45 @@ type Props = WithTestID<{
   onNext: () => void;
 }>;
 
+const renderNavigationComponent = ({
+  onPrevious,
+  onNext,
+  disabled,
+  iconLeftColor,
+  iconRightColor,
+  titleRight
+}: Props) => (
+  <>
+    {/* button left */}
+    <ButtonDefaultOpacity
+      onPress={onPrevious}
+      transparent={true}
+      disabled={disabled}
+      testID={"DocumentsNavigationBarLeftButtonTestID"}
+    >
+      <IconFont
+        name={"io-back"}
+        color={iconLeftColor ?? IOColors.blue}
+        accessible={true}
+      />
+    </ButtonDefaultOpacity>
+    <H4>{titleRight}</H4>
+    {/* button right */}
+    <ButtonDefaultOpacity
+      onPress={onNext}
+      transparent={true}
+      disabled={disabled}
+      testID={"DocumentsNavigationBarRightButtonTestID"}
+    >
+      <IconFont
+        name={"io-right"}
+        color={iconRightColor ?? IOColors.blue}
+        accessible={true}
+      />
+    </ButtonDefaultOpacity>
+  </>
+);
+
 /**
  * A component to render a documents navigation bar with two buttons
  * @param props
@@ -52,33 +91,7 @@ const DocumentsNavigationBar = (props: Props) => (
   <View style={[styles.shadow, styles.container]}>
     <H4 style={IOStyles.horizontalContentPadding}>{props.titleLeft}</H4>
     <View style={{ flex: 1 }} />
-    {/* button left */}
-    <ButtonDefaultOpacity
-      onPress={props.onPrevious}
-      transparent={true}
-      disabled={props.disabled}
-      testID={"DocumentsNavigationBarLeftButtonTestID"}
-    >
-      <IconFont
-        name={"io-back"}
-        color={props.iconLeftColor ?? IOColors.blue}
-        accessible={true}
-      />
-    </ButtonDefaultOpacity>
-    <H4>{props.titleRight}</H4>
-    {/* button right */}
-    <ButtonDefaultOpacity
-      onPress={props.onNext}
-      transparent={true}
-      disabled={props.disabled}
-      testID={"DocumentsNavigationBarRightButtonTestID"}
-    >
-      <IconFont
-        name={"io-right"}
-        color={props.iconRightColor ?? IOColors.blue}
-        accessible={true}
-      />
-    </ButtonDefaultOpacity>
+    {renderNavigationComponent(props)}
   </View>
 );
 
