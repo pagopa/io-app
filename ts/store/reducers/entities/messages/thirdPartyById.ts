@@ -71,24 +71,21 @@ export const thirdPartyMessageUIAttachment =
     pipe(
       thirdPartyFromIdSelector(state, ioMessageId),
       pot.toOption,
-      O.map(
+      O.chainNullableK(
         thirdPartyMessage => thirdPartyMessage.third_party_message.attachments
       ),
-      O.map(thirdPartyMessageAttachments =>
-        thirdPartyMessageAttachments?.find(
+      O.chainNullableK(thirdPartyMessageAttachments =>
+        thirdPartyMessageAttachments.find(
           thirdPartyMessageAttachment =>
             thirdPartyMessageAttachment.id ===
             (thirdPartyMessageAttachmentId as string as NonEmptyString)
         )
       ),
       O.map(thirdPartyMessageAttachment =>
-        thirdPartyMessageAttachment
-          ? attachmentFromThirdPartyMessage(
-              ioMessageId,
-              thirdPartyMessageAttachment,
-              "GENERIC"
-            )
-          : null
-      ),
-      O.toUndefined
+        attachmentFromThirdPartyMessage(
+          ioMessageId,
+          thirdPartyMessageAttachment,
+          "GENERIC"
+        )
+      )
     );

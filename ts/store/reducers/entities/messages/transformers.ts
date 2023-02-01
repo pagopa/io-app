@@ -147,14 +147,13 @@ export const attachmentsFromThirdPartyMessage = (
   category: AttachmentType
 ): Array<UIAttachment> | undefined => {
   const attachments = messageFromApi.third_party_message.attachments;
-  return attachments?.map(_ => ({
-    messageId: messageFromApi.id as UIMessageId,
-    id: _.id as string as UIAttachmentId,
-    displayName: _.name ?? _.id,
-    contentType: _.content_type ?? ContentTypeValues.applicationOctetStream,
-    resourceUrl: { href: generateAttachmentUrl(messageFromApi.id, _.url) },
-    category
-  }));
+  return attachments?.map(thirdPartyMessageAttachment =>
+    attachmentFromThirdPartyMessage(
+      messageFromApi.id,
+      thirdPartyMessageAttachment,
+      category
+    )
+  );
 };
 
 export const attachmentFromThirdPartyMessage = (

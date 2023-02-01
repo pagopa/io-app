@@ -36,12 +36,12 @@ export const pnMessageAttachmentSelector =
     pipe(
       pnMessageFromIdSelector(state, ioMessageId),
       pot.toOption,
-      O.map(pnMessage => pnMessage?.attachments),
-      O.map(pnMessageAttachments =>
-        pnMessageAttachments?.find(
+      O.flatten,
+      O.chainNullableK(pnMessage => pnMessage.attachments),
+      O.chainNullableK(pnMessageAttachments =>
+        pnMessageAttachments.find(
           pnMessageAttachment =>
             pnMessageAttachment.id === pnMessageAttachmentId
         )
-      ),
-      O.toUndefined
+      )
     );

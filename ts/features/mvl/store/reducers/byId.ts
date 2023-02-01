@@ -65,11 +65,10 @@ export const mvlMessageAttachmentSelector =
       mvlFromIdSelector(state, messageId),
       pot.toOption,
       O.map(mvlMessage => mvlMessage.legalMessage.attachments),
-      O.map(mvlLegalMessageAttachment =>
-        mvlLegalMessageAttachment?.find(
+      O.chainNullableK(mvlLegalMessageAttachment =>
+        mvlLegalMessageAttachment.find(
           mvlMessageAttachment =>
             mvlMessageAttachment.id === mvlMessageAttachmentId
         )
-      ),
-      O.toUndefined
+      )
     );
