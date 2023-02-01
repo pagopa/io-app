@@ -153,7 +153,11 @@ export const attachmentsFromThirdPartyMessage = (
     O.fromNullable,
     O.map(thirdPartyMessageAttachmentArray =>
       thirdPartyMessageAttachmentArray.map(thirdPartyMessageAttachment =>
-        attachmentFromThirdPartyMessage(messageFromApi.id, thirdPartyMessageAttachment, category)
+        attachmentFromThirdPartyMessage(
+          messageFromApi.id,
+          thirdPartyMessageAttachment,
+          category
+        )
       )
     )
   );
