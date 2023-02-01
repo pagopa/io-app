@@ -3,6 +3,8 @@ import { useNavigation } from "@react-navigation/native";
 import { List as NBList } from "native-base";
 import React, { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
+import { OperationListDTO } from "../../../../../../definitions/idpay/timeline/OperationListDTO";
+import { OperationTypeEnum as TransactionOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/TransactionOperationDTO";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H3 } from "../../../../../components/core/typography/H3";
@@ -20,6 +22,7 @@ import {
   idpayTimelineSelector
 } from "../store";
 import { idpayTimelinePageGet } from "../store/actions";
+import { useTimelineDetailsBottomSheet } from "./TimelineDetailsBottomSheet";
 import { TimelineOperationListItem } from "./TimelineOperationListItem";
 
 const styles = StyleSheet.create({
@@ -63,9 +66,10 @@ const ConfiguredInitiativeData = (props: Props) => {
     dispatch(idpayTimelinePageGet.request({ initiativeId, page: 0 }));
   }, [dispatch, initiativeId]);
 
+  const detailsBottomSheet = useTimelineDetailsBottomSheet(initiativeId);
+
   const paginatedTimelinePot = useIOSelector(idpayPaginatedTimelineSelector);
   const timeline = useIOSelector(idpayTimelineSelector);
-
   const isLoading = pot.isLoading(paginatedTimelinePot);
 
   if (isLoading) {
@@ -84,6 +88,14 @@ const ConfiguredInitiativeData = (props: Props) => {
       }
     });
   };
+
+  const showOperationDetailsBottomSheet = (operation: OperationListDTO) => {
+    if (operation.operationType === TransactionOperationTypeEnum.TRANSACTION) {
+      // Currently we only show details for transaction operations
+      detailsBottomSheet.present(operation.operationId);
+    }
+  };
+
   return (
     <>
       <View style={[IOStyles.row, styles.spaceBetween]}>
@@ -104,9 +116,11 @@ const ConfiguredInitiativeData = (props: Props) => {
           <TimelineOperationListItem
             key={operation.operationId}
             operation={operation}
+            onPress={() => showOperationDetailsBottomSheet(operation)}
           />
         ))}
       </NBList>
+      {detailsBottomSheet.bottomSheet}
     </>
   );
 };
