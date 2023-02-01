@@ -65,7 +65,6 @@ import {
 } from "../../../utils/supportAssistance";
 import { IOPictogramType } from "../../../components/core/pictograms/Pictogram";
 import { InfoAltScreenComponent } from "../../../components/InfoAltScreenComponent/InfoAltScreenComponent";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
 
 export type TransactionErrorScreenNavigationParams = {
   error: O.Option<
