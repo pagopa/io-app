@@ -96,7 +96,7 @@
     "locales_unused": "ts-node --skip-project -O '{\"lib\":[\"es2015\"]}' scripts/unused-locales.ts",
     "generate-myportal-readme": "jsdoc2md ts/utils/webviewScripts/*.js > MYPORTAL_README.md",
     "generate:xstate-types": "xstate typegen \"ts/**/*.ts?(x)\"",
-    "owl:build:ios": "owl build --platform ios",
+    "owl:build:ios": "RN_SRC_EXT=e2e.ts yarn owl build --platform ios",
     "owl:test:ios": "owl test --platform ios",
     "owl:test:ios:update": "owl test --platform ios --update"
   },
