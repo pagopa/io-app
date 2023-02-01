@@ -1,6 +1,6 @@
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { useSelector } from "@xstate/react";
-import { List as NBList, Text as NBText } from "native-base";
+import { List as NBList } from "native-base";
 import React from "react";
 import { View, SafeAreaView, ScrollView } from "react-native";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
@@ -299,9 +299,7 @@ const InstrumentsEnrollmentScreen = () => {
                 ))}
               </NBList>
               <VSpacer />
-              <Body>
-                {I18n.t("idpay.configuration.instruments.footer")}
-              </Body>
+              <Body>{I18n.t("idpay.configuration.instruments.footer")}</Body>
             </ScrollView>
           </View>
           <SafeAreaView>{renderFooterButtons()}</SafeAreaView>
