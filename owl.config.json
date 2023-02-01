@@ -6,6 +6,7 @@
     "device": "iPhone SE (3rd generation)"
   },
   "android": {
-    "packageName": "it.pagopa.io.app"
+    "packageName": "it.pagopa.io.app",
+    "buildType": "Debug"
   }
 }
