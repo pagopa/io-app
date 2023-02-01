@@ -14,12 +14,6 @@ type Props = {
   type: OnboardingFailureType;
 };
 
-type OnboardingFailure = {
-  picture: IOPictogramType;
-  title: string;
-  subtitle: string;
-};
-
 const FailureMessage = (props: Props) => {
   if (OnboardingFailureType[props.type] === undefined) {
     return null;
@@ -31,20 +25,17 @@ const FailureMessage = (props: Props) => {
     [OnboardingFailureType.ALREADY_COMPLETED]: "inProgress",
     [OnboardingFailureType.ONBOARDING_KO]: "question"
   };
-
-  const failure: OnboardingFailure = {
-    picture: failureIcons[props.type],
-    title: I18n.t(`idpay.onboarding.failure.${props.type}.title`),
-    subtitle: I18n.t(`idpay.onboarding.failure.${props.type}.subtitle`)
-  };
-
   return (
     <>
-      <Pictogram name={failure.picture} size={80} />
+      <Pictogram name={failureIcons[props.type]} size={80} />
       <VSpacer size={16} />
-      <H3 style={styles.title}>{failure.title}</H3>
+      <H3 style={styles.title}>
+        {I18n.t(`idpay.onboarding.failure.${props.type}.title`)}
+      </H3>
       <VSpacer size={16} />
-      <Text alignCenter={true}>{failure.subtitle}</Text>
+      <Text alignCenter={true}>
+        {I18n.t(`idpay.onboarding.failure.${props.type}.subtitle`)}
+      </Text>
     </>
   );
 };
