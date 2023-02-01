@@ -33,28 +33,30 @@ const styles = StyleSheet.create({
   }
 });
 
+export type IndicatorPositionEnum = "left" | "right";
+
 type Props = WithTestID<{
   titleRight: string;
   titleLeft: string;
   iconRightColor?: string;
   iconLeftColor?: string;
   disabled?: boolean;
+  indicatorPosition: IndicatorPositionEnum;
   onPrevious: () => void;
   onNext: () => void;
 }>;
 
-const renderNavigationComponent = ({
-  onPrevious,
-  onNext,
-  disabled,
-  iconLeftColor,
-  iconRightColor,
-  titleRight
-}: Props) => (
+const renderNavigationComponent = (
+  { onPrevious, onNext, disabled, iconLeftColor, iconRightColor }: Props,
+  title: string
+) => (
   <>
     {/* button left */}
     <ButtonDefaultOpacity
       onPress={onPrevious}
+      style={{
+        flex: 1
+      }}
       transparent={true}
       disabled={disabled}
       testID={"DocumentsNavigationBarLeftButtonTestID"}
@@ -65,10 +67,11 @@ const renderNavigationComponent = ({
         accessible={true}
       />
     </ButtonDefaultOpacity>
-    <H4>{titleRight}</H4>
+    <H4>{title}</H4>
     {/* button right */}
     <ButtonDefaultOpacity
       onPress={onNext}
+      style={{ flex: 1 }}
       transparent={true}
       disabled={disabled}
       testID={"DocumentsNavigationBarRightButtonTestID"}
@@ -89,9 +92,20 @@ const renderNavigationComponent = ({
  */
 const DocumentsNavigationBar = (props: Props) => (
   <View style={[styles.shadow, styles.container]}>
-    <H4 style={IOStyles.horizontalContentPadding}>{props.titleLeft}</H4>
-    <View style={{ flex: 1 }} />
-    {renderNavigationComponent(props)}
+    {props.indicatorPosition === "left" && (
+      <>
+        {renderNavigationComponent(props, props.titleLeft)}
+        <View style={{ flex: 1 }} />
+        <H4 style={IOStyles.horizontalContentPadding}>{props.titleRight}</H4>
+      </>
+    )}
+    {props.indicatorPosition === "right" && (
+      <>
+        <H4 style={IOStyles.horizontalContentPadding}>{props.titleLeft}</H4>
+        <View style={{ flex: 1 }} />
+        {renderNavigationComponent(props, props.titleRight)}
+      </>
+    )}
   </View>
 );
 

@@ -354,6 +354,7 @@ const FciDocumentsScreen = () => {
       contextualHelp={emptyContextualHelp}
     >
       <DocumentsNavigationBar
+        indicatorPosition={"right"}
         titleLeft={I18n.t("features.fci.documentsBar.titleLeft", {
           currentDoc: currentDoc + 1,
           totalDocs: documents.length
