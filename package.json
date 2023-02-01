@@ -103,7 +103,7 @@
     "@pagopa/io-pagopa-commons": "^3.1.0",
     "@pagopa/io-react-native-crypto": "^0.2.1",
     "@pagopa/react-native-cie": "^1.1.4",
-    "@pagopa/ts-commons": "^10.10.0",
+    "@pagopa/ts-commons": "^10.13.0",
     "@react-native-async-storage/async-storage": "^1.17.10",
     "@react-native-clipboard/clipboard": "^1.10.0",
     "@react-native-community/cameraroll": "^4.0.0",
@@ -212,8 +212,10 @@
     "uuid": "^8.3.2",
     "validator": "^13.7.0",
     "vision-camera-code-scanner": "^0.2.0",
+    "xml2js": "^0.4.23",
     "xss": "1.0.10",
-    "xstate": "^4.33.6"
+    "xstate": "^4.33.6",
+    "zlib": "^1.0.5"
   },
   "devDependencies": {
     "@babel/core": "^7.15.0",
