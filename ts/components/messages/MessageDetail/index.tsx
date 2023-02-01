@@ -55,9 +55,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: variables.spacerLargeHeight,
     marginBottom: variables.spacerHeight
   },
-  viewFooter: {
-    marginBottom: 32
-  },
   message: {
     paddingStart: variables.spacerWidth,
     color: IOColors.white,
@@ -105,7 +102,7 @@ const renderThirdPartyAttachmentsError = (viewRef: React.RefObject<View>) => (
         {I18n.t("messageDetails.attachments.unavailable.thirdPart")}
       </Text>
     </StatusContent>
-    <View style={styles.viewFooter} />
+    <VSpacer size={24} />
   </>
 );
 
