@@ -63,6 +63,9 @@ LogBox.ignoreLogs([
   "currentlyFocusedField"
 ]);
 
+// Ignore all log notifications:
+// LogBox.ignoreAllLogs();
+
 // Disable allowFontScaling for Text/TextInput component
 Text.defaultProps = Text.defaultProps || {};
 Text.defaultProps.allowFontScaling = false;
