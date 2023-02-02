@@ -1787,6 +1787,15 @@ messageDetails:
   sendEmail: Send email
   write: Write
   id: "ID:"
+  attachments:
+    badFormat: "The attachment format is not supported. Please contact the sender"
+    corruptedFile: "The attachment is corrupt and can't be opened. Please contact the sender"
+    downloadFailed: "We couldn't open the attachment. Try again"
+    showPreview: "See preview"
+    unavailable:
+      firstPart: "The attachments are no longer available. "
+      secondPart: "Please contact the sender"
+      thirdPart: " for more information."
 notifications:
   installation:
     errorTitle: Push notifications

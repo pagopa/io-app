@@ -18,7 +18,7 @@ import {
 } from "../../../../store/reducers/entities/services/servicesById";
 import { toUIService } from "../../../../store/reducers/entities/services/transformers";
 import { GlobalState } from "../../../../store/reducers/types";
-import { UIAttachmentId } from "../../../../store/reducers/entities/messages/types";
+import { UIAttachment } from "../../../../store/reducers/entities/messages/types";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import MVL_ROUTES from "../../navigation/routes";
 import { Mvl } from "../../types/mvlData";
@@ -57,8 +57,11 @@ export const MvlDetailsScreen = (props: Props): React.ReactElement => {
 
   const messageId = props.mvl.message.id;
   const openAttachment = useCallback(
-    (attachmentId: UIAttachmentId) => {
-      navigation.navigate(MVL_ROUTES.ATTACHMENT, { messageId, attachmentId });
+    (attachment: UIAttachment) => {
+      navigation.navigate(MVL_ROUTES.ATTACHMENT, {
+        messageId,
+        attachmentId: attachment.id
+      });
     },
     [messageId, navigation]
   );
