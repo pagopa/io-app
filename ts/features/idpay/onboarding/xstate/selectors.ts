@@ -1,19 +1,18 @@
 import { pipe } from "fp-ts/lib/function";
 import { StateFrom } from "xstate";
 import * as O from "fp-ts/lib/Option";
-import { LOADING_TAG } from "../../../../utils/xstate";
 import { IDPayOnboardingMachineType } from "./machine";
-import { OnboardingFailureType } from "./failure";
+import { OnboardingFailure } from "./failure";
 
 type StateWithContext = StateFrom<IDPayOnboardingMachineType>;
 
-const isLoadingSelector = (state: StateWithContext) =>
-  state.hasTag(LOADING_TAG as never);
+const selectInitiativeStatus = (state: StateWithContext) =>
+  state.context.initiativeStatus;
 
-const failureSelector = (state: StateWithContext) =>
+const selectOnboardingFailure = (state: StateWithContext) =>
   pipe(
     state.context.failure,
-    O.filter(_ => _ in OnboardingFailureType)
+    O.filter(_ => _ in OnboardingFailure)
   );
 
-export { isLoadingSelector, failureSelector };
+export { selectInitiativeStatus, selectOnboardingFailure };

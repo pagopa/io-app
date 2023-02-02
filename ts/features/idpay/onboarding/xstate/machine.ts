@@ -8,18 +8,19 @@ import {
   UPSERTING_TAG,
   WAITING_USER_INPUT_TAG
 } from "../../../../utils/xstate";
-import { OnboardingFailureType } from "./failure";
+import { OnboardingFailure } from "./failure";
 
 // Context types
 export type Context = {
   serviceId?: string;
   initiative?: InitiativeDto;
-  initiativeStatus?: StatusEnum;
+  initiativeStatus: O.Option<StatusEnum>;
   requiredCriteria?: O.Option<RequiredCriteriaDTO>;
-  failure: O.Option<OnboardingFailureType>;
+  failure: O.Option<OnboardingFailure>;
 };
 
 const INITIAL_CONTEXT: Context = {
+  initiativeStatus: O.none,
   failure: O.none
 };
 
@@ -63,7 +64,7 @@ type Services = {
     data: InitiativeDto;
   };
   loadInitiativeStatus: {
-    data: StatusEnum | undefined;
+    data: O.Option<StatusEnum>;
   };
   acceptTos: {
     data: undefined;
@@ -297,7 +298,7 @@ const createIDPayOnboardingMachine = () =>
           requiredCriteria: event.data
         })),
         setFailure: assign((_, event) => ({
-          failure: O.some(event.data as OnboardingFailureType)
+          failure: O.some(event.data as OnboardingFailure)
         }))
       },
       guards: {

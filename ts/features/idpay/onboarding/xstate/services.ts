@@ -8,7 +8,7 @@ import { StatusEnum } from "../../../../../definitions/idpay/onboarding/Onboardi
 import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/onboarding/RequiredCriteriaDTO";
 import { SelfConsentDTO } from "../../../../../definitions/idpay/onboarding/SelfConsentDTO";
 import { OnboardingClient } from "../api/client";
-import { OnboardingFailureType } from "./failure";
+import { OnboardingFailure } from "./failure";
 import { Context } from "./machine";
 
 /**
@@ -49,7 +49,7 @@ const createServicesImplementation = (
 
   const loadInitiative = async (context: Context) => {
     if (context.serviceId === undefined) {
-      return Promise.reject(OnboardingFailureType.GENERIC);
+      return Promise.reject(OnboardingFailure.GENERIC);
     }
 
     const dataResponse = await onboardingClient.getInitiativeData({
@@ -60,10 +60,10 @@ const createServicesImplementation = (
     const data: Promise<InitiativeDto> = pipe(
       dataResponse,
       E.fold(
-        _ => Promise.reject(OnboardingFailureType.GENERIC),
+        _ => Promise.reject(OnboardingFailure.GENERIC),
         _ => {
           if (_.status !== 200) {
-            return Promise.reject(OnboardingFailureType.GENERIC);
+            return Promise.reject(OnboardingFailure.GENERIC);
           }
           return Promise.resolve(_.value);
         }
@@ -75,7 +75,7 @@ const createServicesImplementation = (
 
   const loadInitiativeStatus = async (context: Context) => {
     if (context.initiative === undefined) {
-      return Promise.reject(OnboardingFailureType.GENERIC);
+      return Promise.reject(OnboardingFailure.GENERIC);
     }
 
     const statusResponse = await onboardingClient.onboardingStatus({
@@ -83,19 +83,33 @@ const createServicesImplementation = (
       initiativeId: context.initiative.initiativeId
     });
 
-    const data: Promise<StatusEnum | undefined> = pipe(
+    const data: Promise<O.Option<StatusEnum>> = pipe(
       statusResponse,
       E.fold(
-        _ => Promise.reject(OnboardingFailureType.GENERIC),
+        _ => Promise.reject(OnboardingFailure.GENERIC),
         _ => {
-          if (_.status === 404) {
-            // 404 means initiative is yet to be started
-            return Promise.resolve(undefined);
-          } else if (_.status === 200) {
-            return Promise.resolve(_.value.status);
+          if (_.status === 200) {
+            switch (_.value.status) {
+              case StatusEnum.ELIGIBILE_KO:
+                return Promise.reject(OnboardingFailure.NOT_ELIGIBLE);
+              case StatusEnum.ONBOARDING_KO:
+                return Promise.reject(OnboardingFailure.NO_REQUIREMENTS);
+              case StatusEnum.ONBOARDING_OK:
+                return Promise.reject(OnboardingFailure.ONBOARDED);
+              case StatusEnum.UNSUBSCRIBED:
+                return Promise.reject(OnboardingFailure.UNSUBSCRIBED);
+              case StatusEnum.ELIGIBLE:
+              case StatusEnum.ON_EVALUATION:
+                return Promise.reject(OnboardingFailure.ON_EVALUATION);
+              default:
+                return Promise.resolve(O.some(_.value.status));
+            }
+          } else if (_.status === 404) {
+            // Initiative not yet started by the citizen
+            return Promise.resolve(O.none);
           }
 
-          return Promise.reject(OnboardingFailureType.GENERIC);
+          return Promise.reject(OnboardingFailure.GENERIC);
         }
       )
     );
@@ -105,7 +119,7 @@ const createServicesImplementation = (
 
   const acceptTos = async (context: Context) => {
     if (context.initiative === undefined) {
-      return Promise.reject(OnboardingFailureType.GENERIC);
+      return Promise.reject(OnboardingFailure.GENERIC);
     }
     const response = await onboardingClient.onboardingCitizen({
       ...clientOptions,
@@ -117,12 +131,13 @@ const createServicesImplementation = (
     const dataPromise: Promise<undefined> = pipe(
       response,
       E.fold(
-        _ => Promise.reject(OnboardingFailureType.GENERIC),
+        _ => Promise.reject(OnboardingFailure.GENERIC),
         _ => {
-          if (_.status !== 204) {
-            return Promise.reject(OnboardingFailureType.GENERIC);
+          if (_.status === 204) {
+            return Promise.resolve(undefined);
           }
-          return Promise.resolve(undefined);
+
+          return Promise.reject(OnboardingFailure.GENERIC);
         }
       )
     );
@@ -132,7 +147,7 @@ const createServicesImplementation = (
 
   const loadRequiredCriteria = async (context: Context) => {
     if (context.initiative === undefined) {
-      return Promise.reject(OnboardingFailureType.GENERIC);
+      return Promise.reject(OnboardingFailure.GENERIC);
     }
 
     const response = await onboardingClient.checkPrerequisites({
@@ -145,15 +160,17 @@ const createServicesImplementation = (
     const dataPromise: Promise<O.Option<RequiredCriteriaDTO>> = pipe(
       response,
       E.fold(
-        _ => Promise.reject(OnboardingFailureType.GENERIC),
+        _ => Promise.reject(OnboardingFailure.GENERIC),
         _ => {
           if (_.status === 200) {
             return Promise.resolve(O.some(_.value));
-          }
-          if (_.status === 202) {
+          } else if (_.status === 202) {
             return Promise.resolve(O.none);
+          } else if (_.status === 403) {
+            // TODO error mapping
+            return Promise.reject(OnboardingFailure.NOT_STARTED);
           }
-          return Promise.reject(OnboardingFailureType.GENERIC);
+          return Promise.reject(OnboardingFailure.GENERIC);
         }
       )
     );
@@ -163,12 +180,13 @@ const createServicesImplementation = (
 
   const acceptRequiredCriteria = async (context: Context) => {
     const { initiative, requiredCriteria } = context;
+
     if (initiative === undefined || requiredCriteria === undefined) {
-      return Promise.reject(OnboardingFailureType.GENERIC);
+      return Promise.reject(OnboardingFailure.GENERIC);
     }
 
     if (O.isNone(requiredCriteria)) {
-      return Promise.reject(OnboardingFailureType.GENERIC);
+      return Promise.reject(OnboardingFailure.GENERIC);
     }
 
     const response = await onboardingClient.consentOnboarding({
@@ -183,12 +201,12 @@ const createServicesImplementation = (
     const dataPromise: Promise<undefined> = pipe(
       response,
       E.fold(
-        _ => Promise.reject(OnboardingFailureType.GENERIC),
+        _ => Promise.reject(OnboardingFailure.GENERIC),
         _ => {
-          if (_.status !== 202) {
-            return Promise.reject(OnboardingFailureType.GENERIC);
+          if (_.status === 202) {
+            return Promise.resolve(undefined);
           }
-          return Promise.resolve(undefined);
+          return Promise.reject(OnboardingFailure.GENERIC);
         }
       )
     );
