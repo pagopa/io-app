@@ -23,8 +23,11 @@ describe("SPID screen", () => {
   });
 });
 
-describe("SPID screen", () => {
+describe("Share data screen", () => {
   it("Check screen UI", async () => {
     await loginWithPosteID();
+
+    const screen = await takeScreenshot("share-data-screen");
+    expect(screen).toMatchBaseline();
   });
 });
