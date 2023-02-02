@@ -117,9 +117,6 @@ const createIDPayOnboardingMachine = () =>
       on: {
         QUIT_ONBOARDING: {
           actions: "exitOnboarding"
-        },
-        SHOW_INITIATIVE_DETAILS: {
-          actions: "navigateToInitiativeDetails"
         }
       },
       states: {
@@ -287,7 +284,12 @@ const createIDPayOnboardingMachine = () =>
           entry: "navigateToCompletionScreen"
         },
         DISPLAYING_ONBOARDING_FAILURE: {
-          entry: "navigateToFailureScreen"
+          entry: "navigateToFailureScreen",
+          on: {
+            SHOW_INITIATIVE_DETAILS: {
+              actions: "navigateToInitiativeDetails"
+            }
+          }
         }
       }
     },
