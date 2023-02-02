@@ -27,9 +27,7 @@ const FailureMessage = (props: Props) => {
       <Pictogram name={failureIcons[props.type]} size={80} />
       <VSpacer size={16} />
       <View style={IOStyles.alignCenter}>
-        <H3>
-          {I18n.t(`idpay.onboarding.failure.${props.type}.title`)}
-         </H3>
+        <H3>{I18n.t(`idpay.onboarding.failure.${props.type}.title`)}</H3>
         <VSpacer size={16} />
         <Body style={{ textAlign: "center" }}>
           {I18n.t(`idpay.onboarding.failure.${props.type}.subtitle`)}
