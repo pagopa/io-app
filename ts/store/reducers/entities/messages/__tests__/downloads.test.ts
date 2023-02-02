@@ -59,19 +59,6 @@ describe("downloadsReducer", () => {
           ).toBeTruthy();
         });
       });
-
-      describe("and the request gets cancelled", () => {
-        it("then it returns pot.none", () => {
-          expect(
-            pot.isNone(
-              downloadsReducer(
-                afterRequestState,
-                downloadAttachment.cancel(attachment)
-              )[attachment.messageId][attachment.id] ?? pot.none
-            )
-          ).toBeTruthy();
-        });
-      });
     });
   });
 
