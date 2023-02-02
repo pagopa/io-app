@@ -1,6 +1,7 @@
 import I18n from "i18n-js";
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import I18n from "../../../i18n";
 import { UIMessage } from "../../../store/reducers/entities/messages/types";
 import customVariables from "../../../theme/variables";
 import { convertDateTimeToWordDistance } from "../../../utils/convertDateToWordDistance";
