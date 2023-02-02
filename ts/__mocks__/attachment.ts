@@ -12,7 +12,8 @@ export const mockPdfAttachment: UIAttachment = {
   displayName: "invoice.pdf",
   contentType: "application/pdf",
   size: 1959520 as Byte,
-  resourceUrl: { href: "https://www.invoicepdf.com/invoice.pdf" }
+  resourceUrl: { href: "https://www.invoicepdf.com/invoice.pdf" },
+  category: "PN"
 };
 
 export const mockOtherAttachment: UIAttachment = {
@@ -21,5 +22,6 @@ export const mockOtherAttachment: UIAttachment = {
   displayName: "image.png",
   contentType: "other",
   size: 125952 as Byte,
-  resourceUrl: { href: "htts://www.randomImage.com/image.png" }
+  resourceUrl: { href: "htts://www.randomImage.com/image.png" },
+  category: "PN"
 };
