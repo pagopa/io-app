@@ -1,9 +1,9 @@
-import { View } from "native-base";
 import * as React from "react";
-import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { View, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { Satispay } from "../../../../../../../definitions/pagopa/walletv2/Satispay";
+import { VSpacer } from "../../../../../../components/core/spacer/Spacer";
 import { H1 } from "../../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
@@ -55,9 +55,9 @@ const DisplayFoundSatispay = (props: Props) => {
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView>
           <View style={IOStyles.horizontalContentPadding}>
-            <View spacer={true} />
+            <VSpacer size={16} />
             <H1>{title}</H1>
-            <View spacer={true} extralarge={true} />
+            <VSpacer size={40} />
             <View style={styles.center}>
               <SatispayCard />
             </View>
