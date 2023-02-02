@@ -80,10 +80,11 @@ import com.android.build.OutputFile
  * ]
  */
 
+def bundleInDebugPropertyName = "bundleInDebug"
 def bundleDebug = false
-if (project.hasProperty("bundleInDebug")) {
-    println 'bundleInDebug'
-    bundleDebug = project.getProperty("bundleInDebug")
+if (project.hasProperty(bundleInDebugPropertyName)) {
+    println bundleInDebugPropertyName + ': ' + bundleInDebug
+    bundleDebug = project.getProperty(bundleInDebugPropertyName)
 } 
 
 project.ext.react = [
