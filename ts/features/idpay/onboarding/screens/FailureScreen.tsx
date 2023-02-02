@@ -13,25 +13,25 @@ import { H3 } from "../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
 import themeVariables from "../../../../theme/variables";
-import { OnboardingFailureType } from "../xstate/failure";
+import { OnboardingFailure } from "../xstate/failure";
 import { useOnboardingMachineService } from "../xstate/provider";
-import { failureSelector } from "../xstate/selectors";
+import { selectOnboardingFailure } from "../xstate/selectors";
 
-const failurePictures: Record<OnboardingFailureType, IOPictogramType> = {
-  [OnboardingFailureType.GENERIC]: "umbrella",
-  [OnboardingFailureType.NOT_STARTED]: "hourglass",
-  [OnboardingFailureType.ENDED]: "timeout",
-  [OnboardingFailureType.NO_BUDGET]: "timeout",
-  [OnboardingFailureType.SUSPENDED]: "timeout",
-  [OnboardingFailureType.NO_PERMISSION]: "error",
-  [OnboardingFailureType.ON_EVALUATION]: "hourglass",
-  [OnboardingFailureType.NOT_ELIGIBLE]: "error",
-  [OnboardingFailureType.ONBOARDED]: "fireworks",
-  [OnboardingFailureType.WITHDRAWED]: "error"
+const failurePictures: Record<OnboardingFailure, IOPictogramType> = {
+  [OnboardingFailure.GENERIC]: "umbrella",
+  [OnboardingFailure.NOT_STARTED]: "hourglass",
+  [OnboardingFailure.ENDED]: "timeout",
+  [OnboardingFailure.NO_BUDGET]: "timeout",
+  [OnboardingFailure.SUSPENDED]: "timeout",
+  [OnboardingFailure.NO_REQUIREMENTS]: "error",
+  [OnboardingFailure.ON_EVALUATION]: "hourglass",
+  [OnboardingFailure.NOT_ELIGIBLE]: "error",
+  [OnboardingFailure.ONBOARDED]: "fireworks",
+  [OnboardingFailure.UNSUBSCRIBED]: "error"
 };
 
 type FailureMessageProps = {
-  failure: OnboardingFailureType;
+  failure: OnboardingFailure;
 };
 
 const FailureMessageComponent = (props: FailureMessageProps) => (
@@ -50,7 +50,7 @@ const FailureMessageComponent = (props: FailureMessageProps) => (
 
 const FailureScreen = () => {
   const machine = useOnboardingMachineService();
-  const failure = useSelector(machine, failureSelector);
+  const failure = useSelector(machine, selectOnboardingFailure);
 
   const handleClosePress = () => {
     machine.send({ type: "QUIT_ONBOARDING" });
@@ -69,7 +69,7 @@ const FailureScreen = () => {
           bordered={true}
           onPress={handleClosePress}
         >
-          <Text>{"Chiudi"}</Text>
+          <Text>{I18n.t("global.buttons.close")}</Text>
         </ButtonDefaultOpacity>
       </View>
     </SafeAreaView>

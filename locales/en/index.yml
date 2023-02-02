@@ -3354,7 +3354,7 @@ idpay:
       SUSPENDED:
         title: "L’iniziativa è sospesa."
         subtitle: "Testo generico di errore dove spieghiamo che il l’iniziativa è stata sospesa."
-      NO_PERMISSION:
+      NO_REQUIREMENTS:
         title: "Non hai i requisiti per aderire a questa iniziativa."
         subtitle: "O non sei stato invitato oppure i controlli hanno dato esito KO. Se sta roba non ti torna, chiedi aiuto."
       ON_EVALUATION:
@@ -3366,7 +3366,7 @@ idpay:
       ONBOARDED:
         title: "Evviva, hai già aderito"
         subtitle: "Vatte a vedè l’iniziativa"
-      WITHDRAWED:
+      UNSUBSCRIBED:
         title: "Hai fatto il recesso"
         subtitle: "TBD"
     headerTitle: "Adesione all'iniziativa"
