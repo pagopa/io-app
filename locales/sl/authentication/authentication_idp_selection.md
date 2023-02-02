@@ -1,0 +1,1 @@
+**Ponudnik identitete je upravitelj tvoje digitalne identitete.** Potek preverjanja pristnosti lahko začneš šele, ko izbereš ponudnika identitete (Identity Provider), ki je izdal tvojo identiteto SPID.
