@@ -1,8 +1,18 @@
-import { toExist } from "react-native-owl";
+import { press, toExist } from "react-native-owl";
 
 const loginButtonId = "landing-button-login-spid";
+const posteIdpButtonId = "idp-posteid-button";
 
 /**
- * Complete the login with SPID
+ * Wait for Login Screen
  */
 export const waitForLoginScreen = async () => await toExist(loginButtonId);
+
+/**
+ * Wait for SPID IdPs Screen
+ */
+export const waitForSpidScreen = async () => {
+  await waitForLoginScreen();
+  await press(loginButtonId);
+  await toExist(posteIdpButtonId);
+};
