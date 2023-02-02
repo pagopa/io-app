@@ -287,7 +287,7 @@ const createIDPayOnboardingMachine = () =>
           entry: "navigateToFailureScreen",
           on: {
             SHOW_INITIATIVE_DETAILS: {
-              actions: "navigateToInitiativeDetails"
+              actions: "navigateToInitiativeMonitoringScreen"
             }
           }
         }

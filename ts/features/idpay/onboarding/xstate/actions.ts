@@ -46,7 +46,7 @@ const createActionsImplementation = (
     });
   };
 
-  const navigateToInitiativeDetails = (context: Context) => {
+  const navigateToInitiativeMonitoringScreen = (context: Context) => {
     if (context.initiative === undefined) {
       throw new Error("initiative is undefined");
     }
@@ -69,7 +69,7 @@ const createActionsImplementation = (
     navigateToSelfDeclarationsScreen,
     navigateToCompletionScreen,
     navigateToFailureScreen,
-    navigateToInitiativeDetails,
+    navigateToInitiativeMonitoringScreen,
     exitOnboarding
   };
 };
