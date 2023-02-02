@@ -19,9 +19,15 @@ import { failureSelector } from "../xstate/selectors";
 
 const failurePictures: Record<OnboardingFailureType, IOPictogramType> = {
   [OnboardingFailureType.GENERIC]: "umbrella",
-  [OnboardingFailureType.NO_PERMISSION]: "question",
-  [OnboardingFailureType.ALREADY_COMPLETED]: "inProgress",
-  [OnboardingFailureType.ONBOARDING_KO]: "question"
+  [OnboardingFailureType.NOT_STARTED]: "hourglass",
+  [OnboardingFailureType.ENDED]: "timeout",
+  [OnboardingFailureType.NO_BUDGET]: "timeout",
+  [OnboardingFailureType.SUSPENDED]: "timeout",
+  [OnboardingFailureType.NO_PERMISSION]: "error",
+  [OnboardingFailureType.ON_EVALUATION]: "hourglass",
+  [OnboardingFailureType.NOT_ELIGIBLE]: "error",
+  [OnboardingFailureType.ONBOARDED]: "fireworks",
+  [OnboardingFailureType.WITHDRAWED]: "error"
 };
 
 type FailureMessageProps = {
