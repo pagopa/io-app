@@ -1,5 +1,9 @@
 import { takeScreenshot } from "react-native-owl";
-import { waitForLoginScreen, waitForSpidScreen } from "./utils";
+import {
+  loginWithPosteID,
+  waitForLoginScreen,
+  waitForSpidScreen
+} from "./utils";
 
 describe("Login screen", () => {
   it("Check screen UI", async () => {
@@ -16,5 +20,11 @@ describe("SPID screen", () => {
 
     const screen = await takeScreenshot("spid-screen");
     expect(screen).toMatchBaseline();
+  });
+});
+
+describe("SPID screen", () => {
+  it("Check screen UI", async () => {
+    await loginWithPosteID();
   });
 });

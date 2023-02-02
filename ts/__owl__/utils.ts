@@ -16,3 +16,11 @@ export const waitForSpidScreen = async () => {
   await press(loginButtonId);
   await toExist(posteIdpButtonId);
 };
+
+/**
+ * Login with PosteID
+ */
+export const loginWithPosteID = async () => {
+  await waitForSpidScreen();
+  await press(posteIdpButtonId);
+};
