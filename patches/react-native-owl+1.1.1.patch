@@ -1,0 +1,13 @@
+diff --git a/node_modules/react-native-owl/dist/cli/build.js b/node_modules/react-native-owl/dist/cli/build.js
+index 00132bb..b2db063 100644
+--- a/node_modules/react-native-owl/dist/cli/build.js
++++ b/node_modules/react-native-owl/dist/cli/build.js
+@@ -89,7 +89,7 @@ var buildAndroid = function (config, logger) { return __awaiter(void 0, void 0,
+                     : [
+                         "./gradlew",
+                         ((_c = config.android) === null || _c === void 0 ? void 0 : _c.buildType) === 'Debug'
+-                            ? "assembleDebug"
++                            ? "assembleDebug -PbundleInDebug=true"
+                             : 'assembleRelease',
+                         '--console plain',
+                     ];
