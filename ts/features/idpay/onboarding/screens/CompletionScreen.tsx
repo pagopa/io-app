@@ -44,7 +44,7 @@ const CompletionScreen = () => {
       <FooterWithButtons
         type="SingleButton"
         leftButton={{
-          title: I18n.t("idpay.onboarding.success.understoodCta"),
+          title: I18n.t("idpay.onboarding.success.button.continue"),
           testID: "closeButton",
           onPress: handleClosePress
         }}
