@@ -2,6 +2,7 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
+import { IDPayDetailsRoutes } from "../../initiative/details/navigation";
 import { IDPayOnboardingRoutes } from "../navigation/navigator";
 import { Context } from "./machine";
 
@@ -45,6 +46,19 @@ const createActionsImplementation = (
     });
   };
 
+  const navigateToInitiativeDetails = (context: Context) => {
+    if (context.initiative === undefined) {
+      throw new Error("initiative is undefined");
+    }
+
+    navigation.replace(IDPayDetailsRoutes.IDPAY_DETAILS_MAIN, {
+      screen: IDPayDetailsRoutes.IDPAY_DETAILS_MONITORING,
+      params: {
+        initiativeId: context.initiative.initiativeId
+      }
+    });
+  };
+
   const exitOnboarding = () => {
     navigation.pop();
   };
@@ -55,6 +69,7 @@ const createActionsImplementation = (
     navigateToSelfDeclarationsScreen,
     navigateToCompletionScreen,
     navigateToFailureScreen,
+    navigateToInitiativeDetails,
     exitOnboarding
   };
 };

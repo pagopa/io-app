@@ -46,6 +46,10 @@ type E_QUIT_ONBOARDING = {
   type: "QUIT_ONBOARDING";
 };
 
+type E_SHOW_INITIATIVE_DETAILS = {
+  type: "SHOW_INITIATIVE_DETAILS";
+};
+
 type E_GO_BACK = {
   type: "GO_BACK";
 };
@@ -56,6 +60,7 @@ type Events =
   | E_ACCEPT_REQUIRED_PDND_CRITERIA
   | E_ACCEPT_REQUIRED_SELF_CRITERIA
   | E_QUIT_ONBOARDING
+  | E_SHOW_INITIATIVE_DETAILS
   | E_GO_BACK;
 
 // Services types
@@ -112,6 +117,9 @@ const createIDPayOnboardingMachine = () =>
       on: {
         QUIT_ONBOARDING: {
           actions: "exitOnboarding"
+        },
+        SHOW_INITIATIVE_DETAILS: {
+          actions: "navigateToInitiativeDetails"
         }
       },
       states: {
