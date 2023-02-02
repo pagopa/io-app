@@ -6,6 +6,7 @@ import { H4 } from "../../../components/core/typography/H4";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { WithTestID } from "../../../types/WithTestID";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
+import { HSpacer } from "../../../components/core/spacer/Spacer";
 
 const styles = StyleSheet.create({
   container: {
@@ -95,14 +96,15 @@ const DocumentsNavigationBar = (props: Props) => (
     {props.indicatorPosition === "left" && (
       <>
         {renderNavigationComponent(props, props.titleLeft)}
-        <View style={{ flex: 1 }} />
+        <View style={{ flex: 2 }} />
         <H4 style={IOStyles.horizontalContentPadding}>{props.titleRight}</H4>
       </>
     )}
     {props.indicatorPosition === "right" && (
       <>
-        <H4 style={IOStyles.horizontalContentPadding}>{props.titleLeft}</H4>
-        <View style={{ flex: 1 }} />
+        <HSpacer />
+        <H4>{props.titleLeft}</H4>
+        <View style={{ flex: 2 }} />
         {renderNavigationComponent(props, props.titleRight)}
       </>
     )}

@@ -225,7 +225,7 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
   <View
     style={
       Object {
-        "flex": 1,
+        "flex": 2,
       }
     }
   />
