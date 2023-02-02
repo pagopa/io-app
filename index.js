@@ -63,6 +63,8 @@ LogBox.ignoreLogs([
   "currentlyFocusedField"
 ]);
 
+// DO NOT REMOVE THIS COMMENTED LINES BLOCK
+// IT IS NEEDED FOR UI REGRESSION TESTS
 // Ignore all log notifications:
 // LogBox.ignoreAllLogs();
 
