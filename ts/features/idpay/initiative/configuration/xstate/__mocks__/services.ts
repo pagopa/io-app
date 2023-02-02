@@ -28,22 +28,26 @@ export const T_WALLET: Wallet = {
   paymentMethod: undefined
 };
 
+export const T_NOT_REFUNDABLE_INITIATIVE_DTO: InitiativeDTO = {
+  initiativeId: T_INITIATIVE_ID,
+  status: StatusEnum.NOT_REFUNDABLE,
+  endDate: new Date("2023-01-25T13:00:25.477Z"),
+  nInstr: 1
+};
+
+export const T_REFUNDABLE_INITIATIVE_DTO: InitiativeDTO = {
+  initiativeId: T_INITIATIVE_ID,
+  status: StatusEnum.REFUNDABLE,
+  endDate: new Date("2023-01-25T13:00:25.477Z"),
+  nInstr: 1
+};
+
 export const mockLoadInitiativeSuccessNotRefundable = jest.fn(
-  async (): Promise<InitiativeDTO> => ({
-    initiativeId: T_INITIATIVE_ID,
-    status: StatusEnum.NOT_REFUNDABLE,
-    endDate: new Date("2023-01-25T13:00:25.477Z"),
-    nInstr: 1
-  })
+  async (): Promise<InitiativeDTO> => T_NOT_REFUNDABLE_INITIATIVE_DTO
 );
 
 export const mockLoadInitiativeSuccessRefundable = jest.fn(
-  async (): Promise<InitiativeDTO> => ({
-    initiativeId: T_INITIATIVE_ID,
-    status: StatusEnum.REFUNDABLE,
-    endDate: new Date("2023-01-25T13:00:25.477Z"),
-    nInstr: 1
-  })
+  async (): Promise<InitiativeDTO> => T_REFUNDABLE_INITIATIVE_DTO
 );
 
 export const mockLoadInitiativeFailure = jest.fn(
@@ -51,12 +55,12 @@ export const mockLoadInitiativeFailure = jest.fn(
     Promise.reject(InitiativeFailureType.INITIATIVE_ERROR)
 );
 
+export const T_IBAN_LIST: IbanListDTO["ibanList"] = [
+  { channel: "IO", checkIbanStatus: "", description: "Test", iban: T_IBAN }
+];
+
 export const mockLoadIbanListSuccess = jest.fn(
-  async (): Promise<IbanListDTO> => ({
-    ibanList: [
-      { channel: "IO", checkIbanStatus: "", description: "Test", iban: T_IBAN }
-    ]
-  })
+  async (): Promise<IbanListDTO> => ({ ibanList: T_IBAN_LIST })
 );
 
 export const mockLoadIbanListSuccessEmpty = jest.fn(
@@ -85,11 +89,17 @@ export const mockConfirmIbanFailure = jest.fn(
     Promise.reject(InitiativeFailureType.IBAN_ENROLL_FAILURE)
 );
 
+export const T_PAGOPA_INSTRUMENTS = [T_WALLET];
+
 export const mockLoadInstrumentsSuccess = jest.fn(
   async (): Promise<{
     pagoPAInstruments: ReadonlyArray<Wallet>;
     idPayInstruments: ReadonlyArray<InstrumentDTO>;
-  }> => Promise.resolve({ pagoPAInstruments: [T_WALLET], idPayInstruments: [] })
+  }> =>
+    Promise.resolve({
+      pagoPAInstruments: T_PAGOPA_INSTRUMENTS,
+      idPayInstruments: []
+    })
 );
 
 export const mockLoadInstrumentsFailure = jest.fn(async () =>

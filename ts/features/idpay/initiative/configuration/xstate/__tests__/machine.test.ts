@@ -4,6 +4,11 @@ import { interpret, StateValue } from "xstate";
 import { ConfigurationMode } from "../context";
 import { createIDPayInitiativeConfigurationMachine } from "../machine";
 import {
+  ibanListSelector,
+  selectInitiativeDetails,
+  selectorPagoPAIntruments
+} from "../selectors";
+import {
   mockActions,
   mockExitConfiguration,
   mockNavigateToAddPaymentMethodScreen,
@@ -37,8 +42,12 @@ import {
   mockServices,
   MockServicesType,
   T_IBAN,
+  T_IBAN_LIST,
   T_INITIATIVE_ID,
-  T_INSTRUMENT_ID
+  T_INSTRUMENT_ID,
+  T_NOT_REFUNDABLE_INITIATIVE_DTO,
+  T_PAGOPA_INSTRUMENTS,
+  T_REFUNDABLE_INITIATIVE_DTO
 } from "../__mocks__/services";
 
 describe("IDPay configuration machine in COMPLETE mode", () => {
@@ -58,15 +67,15 @@ describe("IDPay configuration machine in COMPLETE mode", () => {
       }
     });
 
-    let currentState: StateValue = machine.initialState.value;
+    let currentState = machine.initialState;
 
     const service = interpret(machine).onTransition(state => {
-      currentState = state.value;
+      currentState = state;
     });
 
     service.start();
 
-    expect(currentState).toEqual("WAITING_START");
+    expect(currentState.value).toEqual("WAITING_START");
 
     service.send({
       type: "START_CONFIGURATION",
@@ -78,17 +87,21 @@ describe("IDPay configuration machine in COMPLETE mode", () => {
       expect(mockLoadInitiativeSuccessRefundable).toHaveBeenCalledTimes(1)
     );
 
+    expect(selectInitiativeDetails(currentState as never)).toStrictEqual(
+      T_REFUNDABLE_INITIATIVE_DTO
+    );
+
     await waitFor(() =>
       expect(mockNavigateToConfigurationSuccessScreen).toHaveBeenCalledTimes(1)
     );
 
-    expect(currentState).toMatch("CONFIGURATION_NOT_NEEDED");
+    expect(currentState.value).toMatch("CONFIGURATION_NOT_NEEDED");
 
     service.send({
       type: "COMPLETE_CONFIGURATION"
     });
 
-    expect(currentState).toMatch("CONFIGURATION_COMPLETED");
+    expect(currentState.value).toMatch("CONFIGURATION_COMPLETED");
 
     await waitFor(() =>
       expect(mockNavigateToInitiativeDetailScreen).toHaveBeenCalledTimes(1)
@@ -107,15 +120,15 @@ describe("IDPay configuration machine in COMPLETE mode", () => {
       }
     });
 
-    let currentState: StateValue = machine.initialState.value;
+    let currentState = machine.initialState;
 
     const service = interpret(machine).onTransition(state => {
-      currentState = state.value;
+      currentState = state;
     });
 
     service.start();
 
-    expect(currentState).toEqual("WAITING_START");
+    expect(currentState.value).toEqual("WAITING_START");
 
     service.send({
       type: "START_CONFIGURATION",
@@ -127,7 +140,11 @@ describe("IDPay configuration machine in COMPLETE mode", () => {
       expect(mockLoadInitiativeSuccessNotRefundable).toHaveBeenCalledTimes(1)
     );
 
-    expect(currentState).toMatch("DISPLAYING_INTRO");
+    expect(selectInitiativeDetails(currentState as never)).toStrictEqual(
+      T_NOT_REFUNDABLE_INITIATIVE_DTO
+    );
+
+    expect(currentState.value).toMatch("DISPLAYING_INTRO");
 
     await waitFor(() =>
       expect(mockNavigateToConfigurationIntro).toHaveBeenCalledTimes(1)
@@ -139,7 +156,9 @@ describe("IDPay configuration machine in COMPLETE mode", () => {
       expect(mockLoadIbanListSuccess).toHaveBeenCalledTimes(1)
     );
 
-    expect(currentState).toMatchObject({
+    expect(ibanListSelector(currentState as never)).toStrictEqual(T_IBAN_LIST);
+
+    expect(currentState.value).toMatchObject({
       CONFIGURING_IBAN: "DISPLAYING_IBAN_LIST"
     });
 
@@ -163,7 +182,11 @@ describe("IDPay configuration machine in COMPLETE mode", () => {
       expect(mockLoadInstrumentsSuccess).toHaveBeenCalledTimes(1)
     );
 
-    expect(currentState).toMatchObject({
+    expect(selectorPagoPAIntruments(currentState as never)).toStrictEqual(
+      T_PAGOPA_INSTRUMENTS
+    );
+
+    expect(currentState.value).toMatchObject({
       CONFIGURING_INSTRUMENTS: "DISPLAYING_INSTRUMENTS"
     });
 
@@ -180,7 +203,7 @@ describe("IDPay configuration machine in COMPLETE mode", () => {
       expect(mockEnrollInstrumentSuccess).toHaveBeenCalledTimes(1)
     );
 
-    expect(currentState).toMatchObject({
+    expect(currentState.value).toMatchObject({
       CONFIGURING_INSTRUMENTS: "DISPLAYING_INSTRUMENTS"
     });
 
@@ -197,7 +220,7 @@ describe("IDPay configuration machine in COMPLETE mode", () => {
       expect(mockDeleteInstrumentSuccess).toHaveBeenCalledTimes(1)
     );
 
-    expect(currentState).toMatchObject({
+    expect(currentState.value).toMatchObject({
       CONFIGURING_INSTRUMENTS: "DISPLAYING_INSTRUMENTS"
     });
 
@@ -209,7 +232,7 @@ describe("IDPay configuration machine in COMPLETE mode", () => {
       type: "NEXT"
     });
 
-    expect(currentState).toMatch("DISPLAYING_CONFIGURATION_SUCCESS");
+    expect(currentState.value).toMatch("DISPLAYING_CONFIGURATION_SUCCESS");
 
     await waitFor(() =>
       expect(mockNavigateToConfigurationSuccessScreen).toHaveBeenCalledTimes(1)
@@ -219,7 +242,7 @@ describe("IDPay configuration machine in COMPLETE mode", () => {
       type: "COMPLETE_CONFIGURATION"
     });
 
-    expect(currentState).toMatch("CONFIGURATION_COMPLETED");
+    expect(currentState.value).toMatch("CONFIGURATION_COMPLETED");
 
     await waitFor(() =>
       expect(mockNavigateToInitiativeDetailScreen).toHaveBeenCalledTimes(1)
