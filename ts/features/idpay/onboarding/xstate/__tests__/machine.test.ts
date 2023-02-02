@@ -54,7 +54,7 @@ const mockLoadInitiative = jest.fn(
 );
 
 const mockLoadInitiativeStatus = jest.fn(
-  async (): Promise<StatusEnum | undefined> => undefined
+  async (): Promise<O.Option<StatusEnum>> => O.none
 );
 
 const mockAcceptTos = jest.fn(async (): Promise<undefined> => undefined);
@@ -69,6 +69,7 @@ const mockNavigateToPDNDCriteriaScreen = jest.fn();
 const mockNavigateToSelfDeclarationsScreen = jest.fn();
 const mockNavigateToCompletionScreen = jest.fn();
 const mockNavigateToFailureScreen = jest.fn();
+const mockNavigateToInitiativeMonitoringScreen = jest.fn();
 const mockExitOnboarding = jest.fn();
 
 const mockAcceptRequiredCriteria = jest.fn(
@@ -101,6 +102,7 @@ describe("machine", () => {
         navigateToSelfDeclarationsScreen: mockNavigateToSelfDeclarationsScreen,
         navigateToCompletionScreen: mockNavigateToCompletionScreen,
         navigateToFailureScreen: mockNavigateToFailureScreen,
+        navigateToInitiativeMonitoringScreen: jest.fn(),
         exitOnboarding: mockExitOnboarding
       }
     });
@@ -232,6 +234,7 @@ describe("machine", () => {
         navigateToSelfDeclarationsScreen: jest.fn(),
         navigateToCompletionScreen: jest.fn(),
         navigateToFailureScreen: jest.fn(),
+        navigateToInitiativeMonitoringScreen: jest.fn(),
         exitOnboarding: mockExitOnboarding
       }
     });
@@ -248,8 +251,8 @@ describe("machine", () => {
   });
 
   it("should not allow the citizen to complete the onboarding multiple times", async () => {
-    const mockLoadInitiativeStatus = jest.fn(
-      async () => StatusEnum.ONBOARDING_OK
+    const mockLoadInitiativeStatus = jest.fn(async () =>
+      O.some(StatusEnum.ONBOARDING_OK)
     );
 
     const machine = createIDPayOnboardingMachine().withConfig({
@@ -266,6 +269,7 @@ describe("machine", () => {
         navigateToSelfDeclarationsScreen: jest.fn(),
         navigateToCompletionScreen: jest.fn(),
         navigateToFailureScreen: mockNavigateToFailureScreen,
+        navigateToInitiativeMonitoringScreen: jest.fn(),
         exitOnboarding: jest.fn()
       }
     });
@@ -287,8 +291,8 @@ describe("machine", () => {
   });
 
   it("should not allow the citizen to complete the onboarding if rejected", async () => {
-    const mockLoadInitiativeStatus = jest.fn(
-      async () => StatusEnum.ONBOARDING_KO
+    const mockLoadInitiativeStatus = jest.fn(async () =>
+      O.some(StatusEnum.ONBOARDING_KO)
     );
 
     const machine = createIDPayOnboardingMachine().withConfig({
@@ -305,6 +309,7 @@ describe("machine", () => {
         navigateToSelfDeclarationsScreen: jest.fn(),
         navigateToCompletionScreen: jest.fn(),
         navigateToFailureScreen: mockNavigateToFailureScreen,
+        navigateToInitiativeMonitoringScreen: jest.fn(),
         exitOnboarding: jest.fn()
       }
     });
