@@ -99,8 +99,8 @@
     "owl:build:ios": "RN_SRC_EXT=e2e.ts yarn owl build --platform ios",
     "owl:test:ios": "owl test --platform ios",
     "owl:test:ios:update": "owl test --platform ios --update",
-    "owl:warmup:android": "sed -i \"\" 's/\\/\\/ LogBox.ignoreAllLogs/LogBox.ignoreAllLogs/gi' index.js",
-    "owl:cooldown:android": "sed -i \"\" 's/LogBox.ignoreAllLogs/\\/\\/ LogBox.ignoreAllLogs/gi' index.js",    
+    "owl:warmup:android": "cp .env.local .env && sed -i \"\" 's/127.0.0.1/10.0.2.2/gi' .env && sed -i \"\" 's/\\/\\/ LogBox.ignoreAllLogs/LogBox.ignoreAllLogs/gi' index.js",
+    "owl:cooldown:android": "cp .env.local .env && sed -i \"\" 's/LogBox.ignoreAllLogs/\\/\\/ LogBox.ignoreAllLogs/gi' index.js",    
     "owl:build:android": "yarn owl:warmup:android && yarn owl build --platform android && yarn owl:cooldown:android",
     "owl:test:android": "cd android/app/build/outputs/apk/debug && cp -f app-universal-debug.apk app-debug.apk && cd - && adb uninstall it.pagopa.io.app && yarn owl test --platform android",
     "owl:test:android:update": "yarn owl:test:android --update"
