@@ -1,9 +1,14 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { Action } from "../../../../store/actions/types";
 import { IndexedById } from "../../../../store/helpers/indexer";
-import { UIMessageId } from "../../../../store/reducers/entities/messages/types";
+import {
+  UIAttachmentId,
+  UIMessageId
+} from "../../../../store/reducers/entities/messages/types";
 import {
   toError,
   toLoading,
@@ -51,3 +56,19 @@ export const mvlFromIdSelector = createSelector(
   ],
   (byId, id): pot.Pot<Mvl, Error> => byId[id] ?? pot.none
 );
+
+export const mvlMessageAttachmentSelector =
+  (state: GlobalState) =>
+  (messageId: UIMessageId) =>
+  (mvlMessageAttachmentId: UIAttachmentId) =>
+    pipe(
+      mvlFromIdSelector(state, messageId),
+      pot.toOption,
+      O.map(mvlMessage => mvlMessage.legalMessage.attachments),
+      O.chainNullableK(mvlLegalMessageAttachment =>
+        mvlLegalMessageAttachment.find(
+          mvlMessageAttachment =>
+            mvlMessageAttachment.id === mvlMessageAttachmentId
+        )
+      )
+    );
