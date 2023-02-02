@@ -2396,14 +2396,11 @@ exports[`MessageList Item component when hasPaidBadge=true category=EU_COVID_CER
           Object {
             "alignItems": "center",
             "alignSelf": "flex-start",
-            "elevation": 0.1,
+            "borderRadius": 50,
             "justifyContent": "center",
+            "paddingHorizontal": 20,
+            "paddingVertical": 2.5,
             "textAlignVertical": "center",
-          },
-          Object {
-            "borderRadius": 12,
-            "height": 24,
-            "paddingHorizontal": 10,
           },
           false,
           Object {
@@ -2730,14 +2727,11 @@ exports[`MessageList Item component when hasPaidBadge=true category=GENERIC shou
           Object {
             "alignItems": "center",
             "alignSelf": "flex-start",
-            "elevation": 0.1,
+            "borderRadius": 50,
             "justifyContent": "center",
+            "paddingHorizontal": 20,
+            "paddingVertical": 2.5,
             "textAlignVertical": "center",
-          },
-          Object {
-            "borderRadius": 12,
-            "height": 24,
-            "paddingHorizontal": 10,
           },
           false,
           Object {
