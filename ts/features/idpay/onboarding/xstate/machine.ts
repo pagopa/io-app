@@ -320,7 +320,7 @@ const createIDPayOnboardingMachine = () =>
                   cond: "hasBoolRequiredCriteria"
                 },
                 {
-                  target: "CYCLING_MULTI_CRITERIA",
+                  target: "DISPLAYING_MULTI_CRITERIA",
                   cond: "hasMultiRequiredCriteria"
                 }
               ]
@@ -341,7 +341,7 @@ const createIDPayOnboardingMachine = () =>
                 ],
                 ACCEPT_REQUIRED_BOOL_CRITERIA: [
                   {
-                    target: "CYCLING_MULTI_CRITERIA",
+                    target: "DISPLAYING_MULTI_CRITERIA",
                     cond: "hasMultiRequiredCriteria"
                   },
                   {
@@ -350,7 +350,7 @@ const createIDPayOnboardingMachine = () =>
                 ]
               }
             },
-            CYCLING_MULTI_CRITERIA: {
+            DISPLAYING_MULTI_CRITERIA: {
               tags: [WAITING_USER_INPUT_TAG],
               entry: "navigateToMultiSelfDeclarationsScreen",
               on: {
