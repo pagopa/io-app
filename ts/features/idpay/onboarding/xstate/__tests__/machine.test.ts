@@ -69,7 +69,6 @@ const mockNavigateToPDNDCriteriaScreen = jest.fn();
 const mockNavigateToSelfDeclarationsScreen = jest.fn();
 const mockNavigateToCompletionScreen = jest.fn();
 const mockNavigateToFailureScreen = jest.fn();
-const mockNavigateToInitiativeMonitoringScreen = jest.fn();
 const mockExitOnboarding = jest.fn();
 
 const mockAcceptRequiredCriteria = jest.fn(
