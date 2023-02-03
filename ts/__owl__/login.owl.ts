@@ -1,7 +1,9 @@
-import { takeScreenshot } from "react-native-owl";
+import { reload, takeScreenshot, toExist } from "react-native-owl";
 import {
+  confirmPinButtonId,
   loginWithPosteID,
   RNOWL_JEST_TIMOUT,
+  setPinAnGoAhead,
   waitForLoginScreen,
   waitForPinScreen,
   waitForSpidScreen
@@ -39,9 +41,13 @@ describe("Onboarding", () => {
   describe("Pin screen", () => {
     it("Pin screen UI", async () => {
       await waitForPinScreen();
+      await reload(); // same testID views seems to presists...
+      await toExist(confirmPinButtonId);
 
       const screen = await takeScreenshot("pin-screen");
       expect(screen).toMatchBaseline();
+
+      await setPinAnGoAhead();
     });
   });
 });

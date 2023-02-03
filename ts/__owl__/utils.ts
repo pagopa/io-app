@@ -1,10 +1,17 @@
-import { press, toExist } from "react-native-owl";
+import { changeText, press, toExist } from "react-native-owl";
 
-const loginButtonId = "landing-button-login-spid";
-const posteIdpButtonId = "idp-posteid-button";
-const confirmShareDataButtonId = "rightButton";
+export const loginButtonId = "landing-button-login-spid";
+export const posteIdpButtonId = "idp-posteid-button";
+export const confirmShareDataButtonId = "rightButton";
+export const confirmPinButtonId = "leftButton";
+export const pinFieldId = "PinFieldInput";
+export const pinConfirmationFieldId = "PinConfirmationFieldInput";
 
-export const RNOWL_JEST_TIMOUT = 10 * 1000;
+export const RNOWL_JEST_TIMOUT = 15 * 1000;
+
+export function sleep(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 /**
  * Wait for Login Screen
@@ -15,7 +22,6 @@ export const waitForLoginScreen = async () => await toExist(loginButtonId);
  * Wait for SPID IdPs Screen
  */
 export const waitForSpidScreen = async () => {
-  await waitForLoginScreen();
   await press(loginButtonId);
   await toExist(posteIdpButtonId);
 };
@@ -24,12 +30,18 @@ export const waitForSpidScreen = async () => {
  * Login with PosteID
  */
 export const loginWithPosteID = async () => {
-  await waitForSpidScreen();
   await press(posteIdpButtonId);
   await toExist(confirmShareDataButtonId);
 };
 
 export const waitForPinScreen = async () => {
-  await loginWithPosteID();
   await press(confirmShareDataButtonId);
+  await toExist(confirmPinButtonId);
+};
+
+export const setPinAnGoAhead = async () => {
+  await changeText(pinFieldId, "111111");
+  await changeText(pinConfirmationFieldId, "111111");
+  await sleep(2000); // wait for button to be enabled.
+  await press(confirmPinButtonId);
 };
