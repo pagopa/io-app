@@ -4,6 +4,8 @@ import { euCovidCertificateEnabled } from "../config";
 import { PushNotificationsContentTypeEnum } from "../../definitions/backend/PushNotificationsContentType";
 import { mixpanelTrack } from "../mixpanel";
 import { ReminderStatusEnum } from "../../definitions/backend/ReminderStatus";
+import { UIMessageId } from "../store/reducers/entities/messages/types";
+import { ServiceId } from "../../definitions/backend/ServiceId";
 
 const blackListRoutes: ReadonlyArray<string> = [];
 
@@ -57,10 +59,81 @@ export function trackNotificationsPreferencesPreviewStatus(enabled: boolean) {
   });
 }
 
-export const trackNotificationsPreferencesReminderStatus = (
-  enabled: boolean
-) => {
+export function trackNotificationsPreferencesReminderStatus(enabled: boolean) {
   void mixpanelTrack("NOTIFICATIONS_PREFERENCES_REMINDER_STATUS", {
     enabled
   });
-};
+}
+
+export function trackThirdPartyMessageAttachmentCount(attachmentCount: number) {
+  void mixpanelTrack("THIRD_PARTY_MESSAGE_ATTACHMENT_COUNT", {
+    attachmentCount
+  });
+}
+
+export function trackThirdPartyMessageAttachmentUnavailable(
+  messageId: UIMessageId,
+  serviceId: ServiceId | undefined
+) {
+  void mixpanelTrack("THIRD_PARTY_MESSAGE_ATTACHMENT_UNAVAILABLE", {
+    messageId,
+    serviceId: serviceId ?? ""
+  });
+}
+
+export function trackThirdPartyMessageAttachmentDownloadFailed(
+  messageId: UIMessageId,
+  serviceId: ServiceId | undefined
+) {
+  void mixpanelTrack("THIRD_PARTY_MESSAGE_ATTACHMENT_DOWNLOAD_FAILED", {
+    messageId,
+    serviceId: serviceId ?? ""
+  });
+}
+
+export function trackThirdPartyMessageAttachmentBadFormat(
+  messageId: UIMessageId,
+  serviceId: ServiceId | undefined
+) {
+  void mixpanelTrack("THIRD_PARTY_MESSAGE_ATTACHMENT_BAD_FORMAT", {
+    messageId,
+    serviceId: serviceId ?? ""
+  });
+}
+
+export function trackThirdPartyMessageAttachmentCorruptedFile(
+  messageId: UIMessageId,
+  serviceId: ServiceId | undefined
+) {
+  void mixpanelTrack("THIRD_PARTY_MESSAGE_ATTACHMENT_CORRUPTED_FILE", {
+    messageId,
+    serviceId: serviceId ?? ""
+  });
+}
+
+export function trackThirdPartyMessageAttachmentPreviewSuccess() {
+  void mixpanelTrack("THIRD_PARTY_MESSAGE_ATTACHMENT_PREVIEW_SUCCESS");
+}
+
+export function trackThirdPartyMessageAttachmentShowPreview() {
+  void mixpanelTrack("THIRD_PARTY_MESSAGE_ATTACHMENT_SHOW_PREVIEW");
+}
+
+export function trackThirdPartyMessageAttachmentCancel() {
+  void mixpanelTrack("THIRD_PARTY_MESSAGE_ATTACHMENT_CANCEL");
+}
+
+export function trackThirdPartyMessageAttachmentDoNotShow() {
+  void mixpanelTrack("THIRD_PARTY_MESSAGE_ATTACHMENT_DO_NOT_SHOW");
+}
+
+type ThirdPartyMessageAttachmentUserAction = "download" | "open" | "share";
+export function trackThirdPartyMessageAttachmentUserAction(
+  userAction: ThirdPartyMessageAttachmentUserAction
+) {
+  void mixpanelTrack("THIRD_PARTY_MESSAGE_ATTACHMENT_USER_ACTION", {
+    userAction
+  });
+}
+
+// End of premium events
