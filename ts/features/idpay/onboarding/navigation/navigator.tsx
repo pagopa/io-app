@@ -69,7 +69,6 @@ export const IDPayOnboardingNavigator = () => (
       <Stack.Screen
         name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS}
         component={MultiValuePrerequisitesScreen}
-        options={{ animationTypeForReplace: "pop" }}
       />
       <Stack.Screen
         name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_PDNDACCEPTANCE}

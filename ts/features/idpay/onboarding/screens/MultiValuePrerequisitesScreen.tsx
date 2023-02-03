@@ -77,7 +77,7 @@ const MultiValuePrerequisitesScreen = () => {
     if (selectedIndex === undefined) {
       return null;
     }
-    machine.send("ADD_MULTI_CONSENT", {
+    machine.send("SELECT_MULTI_CONSENT", {
       data: {
         _type: currentPrerequisite._type,
         value: currentPrerequisite.value[selectedIndex],

@@ -58,12 +58,10 @@ type E_GO_BACK = {
   type: "GO_BACK";
 };
 
-type E_ADD_MULTI_CONSENT = {
-  type: "ADD_MULTI_CONSENT";
+type E_SELECT_MULTI_CONSENT = {
+  // select multi consent TODO:: rename
+  type: "SELECT_MULTI_CONSENT";
   data: SelfConsentMultiDTO;
-};
-type E_ALL_CRITERIA_ACCEPTED = {
-  type: "ALL_CRITERIA_ACCEPTED";
 };
 
 type Events =
@@ -72,9 +70,8 @@ type Events =
   | E_ACCEPT_REQUIRED_PDND_CRITERIA
   | E_QUIT_ONBOARDING
   | E_GO_BACK
-  | E_ADD_MULTI_CONSENT
-  | E_ACCEPT_REQUIRED_BOOL_CRITERIA
-  | E_ALL_CRITERIA_ACCEPTED;
+  | E_SELECT_MULTI_CONSENT
+  | E_ACCEPT_REQUIRED_BOOL_CRITERIA;
 
 // Services types
 type Services = {
@@ -373,8 +370,11 @@ const createIDPayOnboardingMachine = () =>
               tags: [WAITING_USER_INPUT_TAG],
               entry: "navigateToMultiSelfDeclarationsScreen",
               on: {
-                ADD_MULTI_CONSENT: [
+                SELECT_MULTI_CONSENT: [
                   {
+                    // this is an edge case where for some reason
+                    // an entry in the consents record is missing
+                    // at the end of the flow
                     cond: "shouldRedoUndefinedPrerequisites",
                     actions: [
                       "addMultiConsent",
@@ -399,7 +399,7 @@ const createIDPayOnboardingMachine = () =>
                   {
                     actions: [
                       "decreaseMultiConsentIndex",
-                      "navigateBackInMultiSelfDeclarationsScreen"
+                      "navigateToMultiSelfDeclarationsScreen"
                     ],
                     cond: "isNotFirstMultiConsent"
                   },

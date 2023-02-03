@@ -53,7 +53,7 @@ const boolRequiredCriteriaSelector = createSelector(
 const criteriaToDisplaySelector = createSelector(
   multiRequiredCriteriaSelector,
   selectCurrentPage,
-  (criterias, currentPage) => criterias[currentPage]
+  (criteria, currentPage) => criteria[currentPage]
 );
 
 const prerequisiteAnswerIndexSelector = createSelector(

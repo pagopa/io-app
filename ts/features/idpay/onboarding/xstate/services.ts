@@ -138,11 +138,8 @@ const createServicesImplementation = (
   };
 
   const acceptRequiredCriteria = async (context: Context) => {
-    const {
-      initiative,
-      requiredCriteria,
-      multiConsents: selfConsents
-    } = context;
+    const { initiative, requiredCriteria, multiConsentsAnswers } = context;
+
     if (initiative === undefined || requiredCriteria === undefined) {
       throw new Error("initative or requiredCriteria is undefined");
     }
@@ -157,7 +154,7 @@ const createServicesImplementation = (
         code: _.code,
         accepted: true
       })),
-      ...(selfConsents ?? [])
+      ...Object.entries(multiConsentsAnswers)
     ] as Array<SelfConsentDTO>;
 
     const response = await onboardingClient.consentOnboarding({
