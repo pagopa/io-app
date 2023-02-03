@@ -175,7 +175,12 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
   private versionListItem(title: string, onPress: () => void) {
     return (
       <ListItem style={styles.noRightPadding}>
-        <NBText numberOfLines={1} semibold={true} onPress={onPress}>
+        <NBText
+          testID="versionSection"
+          numberOfLines={1}
+          semibold={true}
+          onPress={onPress}
+        >
           {title}
         </NBText>
       </ListItem>
@@ -331,6 +336,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
 
         {/* Design System */}
         <ListItemComponent
+          testID="designSystemSection"
           title={I18n.t("profile.main.designSystem")}
           onPress={() =>
             navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
