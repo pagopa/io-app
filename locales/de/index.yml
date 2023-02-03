@@ -1941,3 +1941,59 @@ features:
         title: "Dieses Zertifikat kann nicht wiederhergestellt werden: Kontaktieren Sie den Support"
         subtitle: "Nützliche Informationen um Support zu erhalten:"
         cta: "Support kontaktieren"
+support:
+  ticketList:
+    noTicket:
+      title: "Du hast keine offenen Tickets"
+      body: "Wenn du Hilfe benötigst, erstelle bitte ein neues Ticket."
+  helpCenter:
+    header: "Hilfe"
+    cta:
+      contactSupport: "Erstelle ein Ticket"
+      seeReports: "Offene Tickets"
+    supportComponent:
+      title: "Benötigst du Hilfe?"
+      subtitle: "Wirf einen Blick in die FAQ: Wenn du die gesuchte Antwort nicht findest, erstelle ein Ticket. Wenn du bereits eine Ticket eröffnet hast und dessen Status überprüfen oder Details hinzufügen möchtest, wähle bitte “Offene Tickets”."
+      adviceMessage: "Wenn dein Problem den Inhalt einer Nachricht oder den Dienst einer Körperschaft betrifft, wende dich bitte an die Körperschaft: du findest die entsprechenden Kontakte in der Nachricht oder in den Details des Dienstes."
+  panicMode:
+    title: "Leider können wir dir zur Zeit nicht helfen"
+    body: "Wir wissen, dass es ein Problem gibt, und wir arbeiten daran, es zu lösen. Wenn das Problem weiterhin besteht oder wenn du in einer anderen Angelegenheit Hilfe benötigst, versuche bitte, uns später erneut zu kontaktieren."
+  askPermissions:
+    nameSurname: "Vor- und Nachname"
+    fiscalCode: "Steuernummer"
+    emailAddress: "E-Mail-Adresse"
+    deviceAndOS: "Gerät und Betriebssystem"
+    ipAddress: "IP-Adresse"
+    ipAddressValue: "Einschließlich der geschätzten geografischen Position"
+    appVersionsHistory: "Versionsverlauf der App"
+    appVersionsHistoryValue: "Um herauszufinden, ob das Problem von der letzten Aktualisierung abhängt"
+    identityProvider: "Identitätsanbieter"
+    navigationData: "IO-App Navigationsdaten"
+    navigationDataValue: "z.B. der letzte Bildschirm oder die letzte in der IO-App angezeigte Nachricht"
+    devicePerformance: "Leistung des Geräts"
+    devicePerformanceData: "Speicher und Akkustand"
+    stock: "Daten zur Zahlungsaufforderung"
+    stockValue: "Einschließlich des Fehlers, den du gerade erhalten hast"
+    card: "Angaben zur Zahlungsmethode"
+    cardValue: "Nummer (verschlüsselt), Ablaufdatum, Zahlungsnetzwerk"
+    prominentDisclosure: "Zugriff auf die Galerie des Geräts"
+    prominentDisclosureData: "Zum Hochladen von Fotos und Screenshots"
+    header: "Erstelle ein Ticket"
+    listTitle: "Offene Tickets"
+    title: "Gibst du uns deine Zustimmung?"
+    listBody: "Um deine offenen Tickets laden zu können, benötigen wir Zugriff auf einige deiner Daten."
+    privacyLink: "Lies die Datenschutzbestimmungen"
+    body: "Um dein Ticket beantworten zu können, benötigen wir Zugriff auf einige deiner Daten. Wenn du deine Zustimmung verweigerst, musst du uns eine allgemeine Anfrage per E-Mail senden."
+    listHeader: "Wenn du deine Zustimmung gibst, erhalten wir diese Daten:"
+    cta:
+      allow: "Zustimmen"
+      denies: "Ablehnen"
+    toast:
+      emailClientNotFound: "Wenn du Hilfe benötigst, schreib uns an: {{emailAddress}}"
+  chooseCategory:
+    header: "Erstelle ein Ticket"
+    title:
+      category: "Wähle einen Bereich aus"
+      subCategory: "Kannst du uns mehr Details nennen?"
+    subTitle:
+      category: "Hilf uns, besser zu verstehen, wie wir dir helfen können, indem du den Bereich deines Problems auswählst: Wir werden uns so schnell wie möglich während der Geschäftszeiten bei dir melden."
