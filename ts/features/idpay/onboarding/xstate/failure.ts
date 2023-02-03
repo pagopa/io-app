@@ -1,4 +1,7 @@
-export enum OnboardingFailure {
+import { enumType } from "@pagopa/ts-commons/lib/types";
+import * as t from "io-ts";
+
+export enum OnboardingFailureEnum {
   GENERIC = "GENERIC",
   NOT_STARTED = "NOT_STARTED",
   ENDED = "ENDED",
@@ -10,3 +13,9 @@ export enum OnboardingFailure {
   ONBOARDED = "ONBOARDED",
   UNSUBSCRIBED = "UNSUBSCRIBED"
 }
+
+export type OnboardingFailure = t.TypeOf<typeof OnboardingFailure>;
+export const OnboardingFailure = enumType<OnboardingFailureEnum>(
+  OnboardingFailureEnum,
+  "OnboardingFailureEnum"
+);

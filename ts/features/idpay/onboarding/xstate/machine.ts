@@ -1,3 +1,4 @@
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { assign, createMachine } from "xstate";
 import { InitiativeDto } from "../../../../../definitions/idpay/onboarding/InitiativeDto";
@@ -308,7 +309,7 @@ const createIDPayOnboardingMachine = () =>
           requiredCriteria: event.data
         })),
         setFailure: assign((_, event) => ({
-          failure: O.some(event.data as OnboardingFailure)
+          failure: pipe(event.data as any, O.filter(OnboardingFailure.is))
         }))
       },
       guards: {

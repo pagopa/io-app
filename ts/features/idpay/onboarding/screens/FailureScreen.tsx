@@ -14,21 +14,21 @@ import { H3 } from "../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
 import themeVariables from "../../../../theme/variables";
-import { OnboardingFailure } from "../xstate/failure";
+import { OnboardingFailureEnum } from "../xstate/failure";
 import { useOnboardingMachineService } from "../xstate/provider";
 import { selectOnboardingFailure } from "../xstate/selectors";
 
-const failurePictures: Record<OnboardingFailure, IOPictogramType> = {
-  [OnboardingFailure.GENERIC]: "umbrella",
-  [OnboardingFailure.NOT_STARTED]: "hourglass",
-  [OnboardingFailure.ENDED]: "timeout",
-  [OnboardingFailure.NO_BUDGET]: "timeout",
-  [OnboardingFailure.SUSPENDED]: "timeout",
-  [OnboardingFailure.NO_REQUIREMENTS]: "error",
-  [OnboardingFailure.ON_EVALUATION]: "hourglass",
-  [OnboardingFailure.NOT_ELIGIBLE]: "error",
-  [OnboardingFailure.ONBOARDED]: "fireworks",
-  [OnboardingFailure.UNSUBSCRIBED]: "error"
+const failurePictures: Record<OnboardingFailureEnum, IOPictogramType> = {
+  [OnboardingFailureEnum.GENERIC]: "umbrella",
+  [OnboardingFailureEnum.NOT_STARTED]: "hourglass",
+  [OnboardingFailureEnum.ENDED]: "timeout",
+  [OnboardingFailureEnum.NO_BUDGET]: "timeout",
+  [OnboardingFailureEnum.SUSPENDED]: "timeout",
+  [OnboardingFailureEnum.NO_REQUIREMENTS]: "error",
+  [OnboardingFailureEnum.ON_EVALUATION]: "hourglass",
+  [OnboardingFailureEnum.NOT_ELIGIBLE]: "error",
+  [OnboardingFailureEnum.ONBOARDED]: "fireworks",
+  [OnboardingFailureEnum.UNSUBSCRIBED]: "error"
 };
 
 const FailureScreen = () => {
@@ -37,10 +37,10 @@ const FailureScreen = () => {
 
   const failure = pipe(
     failureOption,
-    O.getOrElse(() => OnboardingFailure.GENERIC)
+    O.getOrElse(() => OnboardingFailureEnum.GENERIC)
   );
 
-  const isAlreadyOnboarded = failure === OnboardingFailure.ONBOARDED;
+  const isAlreadyOnboarded = failure === OnboardingFailureEnum.ONBOARDED;
 
   const handleClosePress = () => {
     machine.send({ type: "QUIT_ONBOARDING" });
