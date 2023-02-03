@@ -23,5 +23,5 @@ export const waitForSpidScreen = async () => {
 export const loginWithPosteID = async () => {
   await waitForSpidScreen();
   await press(posteIdpButtonId);
-  //await toExist("buttonRight");
+  // await toExist("buttonRight");
 };
