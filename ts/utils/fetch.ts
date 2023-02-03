@@ -154,6 +154,14 @@ function signFetchWithLollipop(
       // TODO: - sign signature base with private key and add related headers:
       // - signature -> sign(signatureBase)
       // - signature-input -> signatureInput
+      newInit = {
+        ...newInit,
+        headers: {
+          ...newInit.headers,
+          signature: "TODO: BASE64 of the digital signature of signatureBase",
+          "signature-input": signatureInput
+        }
+      };
       // TODO: - put all this in an utility function
     }
     // eslint-disable-next-line no-console
