@@ -1,7 +1,5 @@
 import React from "react";
-import { Animated, FlatList } from "react-native";
-
-import { MessageCategory } from "../../../../definitions/backend/MessageCategory";
+import { FlatList } from "react-native";
 import { useIOSelector } from "../../../store/hooks";
 import { UIMessage } from "../../../store/reducers/entities/messages/types";
 import ItemSeparatorComponent from "../../ItemSeparatorComponent";
@@ -31,11 +29,8 @@ export const generateItemLayout =
 
 export const ItemSeparator = () => <ItemSeparatorComponent noPadded={true} />;
 
-export const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
-
 type RenderItemProps = {
   message: UIMessage;
-  hasPaidBadge?: (id: MessageCategory) => boolean;
   onLongPress: (message: UIMessage) => void;
   onPress: (message: UIMessage) => void;
   selectedMessageIds?: ReadonlySet<string>;
