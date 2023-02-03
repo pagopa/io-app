@@ -20,14 +20,12 @@ import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
 import { UIMessage } from "./types";
 
-export type Cursor = string;
-
 export type Collection = {
   data: pot.Pot<
     {
       page: ReadonlyArray<UIMessage>;
-      previous?: Cursor;
-      next?: Cursor;
+      previous?: string;
+      next?: string;
     },
     string
   >;

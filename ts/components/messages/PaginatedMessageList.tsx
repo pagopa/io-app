@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { ActivityIndicator, RefreshControl, StyleSheet } from "react-native";
 import { pageSize } from "../../config";
 import I18n from "../../i18n";
-import { Cursor } from "../../store/reducers/entities/messages/allPaginated";
 import customVariables from "../../theme/variables";
 import { useActionOnFocus } from "../../utils/hooks/useOnFocus";
 import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
@@ -25,7 +24,7 @@ type OwnProps = {
   previousCursor?: string;
   refresh: () => void;
   fetchNextPage: () => void;
-  fetchPreviousPage: (cursor: Cursor) => void;
+  fetchPreviousPage: (cursor: string) => void;
 };
 
 type Props = OwnProps & React.ComponentProps<typeof MessageList>;

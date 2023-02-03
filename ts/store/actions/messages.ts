@@ -15,7 +15,6 @@ import {
   UIMessageId,
   UIAttachment
 } from "../reducers/entities/messages/types";
-import { Cursor } from "../reducers/entities/messages/allPaginated";
 import { MessagesStatus } from "../reducers/entities/messages/messagesStatus";
 import { loadThirdPartyMessage } from "../../features/messages/store/actions";
 import {
@@ -50,7 +49,7 @@ export type MessagesFailurePayload = {
 
 export type LoadMessagesRequestPayload = {
   pageSize: number;
-  cursor?: Cursor;
+  cursor?: string;
   filter: Filter;
 };
 
