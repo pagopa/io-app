@@ -71,6 +71,7 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
   const computedConfirmButtonProps = React.useMemo(
     () => ({
       ...confirmButtonProps(() => null, I18n.t("global.buttons.continue")),
+      testID: "confirmPinButton",
       disabled: !isFormValid,
       onPress: handleSubmit
     }),

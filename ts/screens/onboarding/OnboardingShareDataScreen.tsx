@@ -71,11 +71,15 @@ const OnboardingShareDataScreen = (props: Props): React.ReactElement => {
           type={"TwoButtonsInlineHalf"}
           leftButton={cancelButtonProps(
             present,
-            I18n.t("profile.main.privacy.shareData.screen.cta.dontShare")
+            I18n.t("profile.main.privacy.shareData.screen.cta.dontShare"),
+            undefined,
+            "cancelButton"
           )}
           rightButton={confirmButtonProps(
             () => props.setMixpanelEnabled(true),
-            I18n.t("profile.main.privacy.shareData.screen.cta.shareData")
+            I18n.t("profile.main.privacy.shareData.screen.cta.shareData"),
+            undefined,
+            "confirmButton"
           )}
         />
         {bottomSheet}

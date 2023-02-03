@@ -1,9 +1,11 @@
-import { reload, takeScreenshot, toExist } from "react-native-owl";
+import * as reactNativeOwl from "react-native-owl";
 import {
   confirmPinButtonId,
   loginWithPosteID,
+  pinConfirmationFieldId,
+  pinFieldId,
   RNOWL_JEST_TIMOUT,
-  setPinAnGoAhead,
+  sleep,
   waitForLoginScreen,
   waitForPinScreen,
   waitForSpidScreen
@@ -15,7 +17,7 @@ describe("Onboarding", () => {
     it("Check screen UI", async () => {
       await waitForLoginScreen();
 
-      const screen = await takeScreenshot("login-screen");
+      const screen = await reactNativeOwl.takeScreenshot("login-screen");
       expect(screen).toMatchBaseline();
     });
   });
@@ -24,7 +26,7 @@ describe("Onboarding", () => {
     it("Check screen UI", async () => {
       await waitForSpidScreen();
 
-      const screen = await takeScreenshot("spid-screen");
+      const screen = await reactNativeOwl.takeScreenshot("spid-screen");
       expect(screen).toMatchBaseline();
     });
   });
@@ -33,7 +35,7 @@ describe("Onboarding", () => {
     it("Check screen UI", async () => {
       await loginWithPosteID();
 
-      const screen = await takeScreenshot("share-data-screen");
+      const screen = await reactNativeOwl.takeScreenshot("share-data-screen");
       expect(screen).toMatchBaseline();
     });
   });
@@ -41,13 +43,20 @@ describe("Onboarding", () => {
   describe("Pin screen", () => {
     it("Pin screen UI", async () => {
       await waitForPinScreen();
-      await reload(); // same testID views seems to presists...
-      await toExist(confirmPinButtonId);
 
-      const screen = await takeScreenshot("pin-screen");
+      const screen = await reactNativeOwl.takeScreenshot("pin-screen");
       expect(screen).toMatchBaseline();
 
-      await setPinAnGoAhead();
+      await reactNativeOwl.changeText(pinFieldId, "111111");
+      await reactNativeOwl.changeText(pinConfirmationFieldId, "111111");
+      await sleep(5000); // wait for button to be enabled.
+
+      const screenEnabled = await reactNativeOwl.takeScreenshot(
+        "pin-screen-enabled"
+      );
+      expect(screenEnabled).toMatchBaseline();
+
+      await reactNativeOwl.press(confirmPinButtonId);
     });
   });
 });

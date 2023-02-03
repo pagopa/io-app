@@ -1,9 +1,9 @@
-import { changeText, press, toExist } from "react-native-owl";
+import { press, toExist } from "react-native-owl";
 
 export const loginButtonId = "landing-button-login-spid";
 export const posteIdpButtonId = "idp-posteid-button";
-export const confirmShareDataButtonId = "rightButton";
-export const confirmPinButtonId = "leftButton";
+export const confirmShareDataButtonId = "confirmButton";
+export const confirmPinButtonId = "confirmPinButton";
 export const pinFieldId = "PinFieldInput";
 export const pinConfirmationFieldId = "PinConfirmationFieldInput";
 
@@ -37,11 +37,4 @@ export const loginWithPosteID = async () => {
 export const waitForPinScreen = async () => {
   await press(confirmShareDataButtonId);
   await toExist(confirmPinButtonId);
-};
-
-export const setPinAnGoAhead = async () => {
-  await changeText(pinFieldId, "111111");
-  await changeText(pinConfirmationFieldId, "111111");
-  await sleep(2000); // wait for button to be enabled.
-  await press(confirmPinButtonId);
 };
