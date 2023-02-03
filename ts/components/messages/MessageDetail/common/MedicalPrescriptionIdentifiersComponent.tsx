@@ -7,6 +7,7 @@ import { PrescriptionData } from "../../../../../definitions/backend/Prescriptio
 import I18n from "../../../../i18n";
 import customVariables from "../../../../theme/variables";
 import CopyButtonComponent from "../../../CopyButtonComponent";
+import { VSpacer } from "../../../core/spacer/Spacer";
 import { IOColors } from "../../../core/variables/IOColors";
 
 type Props = Readonly<{
@@ -65,16 +66,16 @@ export default class MedicalPrescriptionIdentifiersComponent extends React.PureC
 
     return (
       <View style={styles.container}>
-        <View spacer={true} />
+        <VSpacer size={16} />
         {this.renderItem(I18n.t("messages.medical.nre"), prescriptionData.nre)}
-        <View spacer={true} />
+        <VSpacer size={16} />
         {this.renderItem(I18n.t("messages.medical.iup"), iup)}
-        <View spacer={true} />
+        <VSpacer size={16} />
         {this.renderItem(
           I18n.t("messages.medical.patient_fiscal_code"),
           prescriberFiscalCode
         )}
-        <View spacer={true} />
+        <VSpacer size={16} />
       </View>
     );
   }

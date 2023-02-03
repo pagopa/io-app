@@ -10,6 +10,7 @@ import { useWhyOtherCardsBottomSheet } from "../../../screens/details/components
 import { PaymentMethodWithActivation } from "../../../store/reducers/details/combiner";
 import { useOtherChannelInformationBottomSheet } from "../bottomsheet/OtherChannelInformation";
 import { EnableableFunctionsEnum } from "../../../../../../../definitions/pagopa/EnableableFunctions";
+import { VSpacer } from "../../../../../../components/core/spacer/Spacer";
 import { PaymentMethodRawList } from "./PaymentMethodRawList";
 
 type Props = { paymentList: ReadonlyArray<PaymentMethodWithActivation> };
@@ -52,7 +53,7 @@ const OtherChannelsSection = (props: {
 
   return (
     <View>
-      <View spacer={true} />
+      <VSpacer size={16} />
       <View style={styles.row}>
         <Body>
           {I18n.t(
@@ -68,9 +69,9 @@ const OtherChannelsSection = (props: {
           {I18n.t("global.buttons.info").toLowerCase()}
         </Link>
       </View>
-      <View spacer={true} />
+      <VSpacer size={16} />
       <PaymentMethodRawList paymentList={props.paymentMethods} />
-      <View spacer={true} />
+      <VSpacer size={16} />
       <Link onPress={presentWhyOthersCard}>
         {I18n.t(
           "bonus.bpd.details.paymentMethods.activateOnOthersChannel.whyOtherCards.title"
@@ -86,13 +87,13 @@ const NotActivablesSection = (props: {
   paymentMethods: ReadonlyArray<PaymentMethodWithActivation>;
 }) => (
   <View>
-    <View spacer={true} />
+    <VSpacer size={16} />
     <View style={styles.row}>
       <Body>
         {I18n.t("bonus.bpd.details.paymentMethods.notActivable.header")}
       </Body>
     </View>
-    <View spacer={true} />
+    <VSpacer size={16} />
     <PaymentMethodRawList paymentList={props.paymentMethods} />
   </View>
 );

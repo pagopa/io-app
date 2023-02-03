@@ -1,6 +1,6 @@
-import { Text, View } from "native-base";
+import { Text } from "native-base";
 import * as React from "react";
-import { Image, ImageBackground, StyleSheet } from "react-native";
+import { View, Image, ImageBackground, StyleSheet } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 import { StatusEnum } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
 import { makeFontStyleObject } from "../../../../../components/core/fonts";
@@ -13,6 +13,7 @@ import bonusVacanzeWhiteLogo from "../../../../../../img/bonus/bonusVacanze/logo
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import cardBg from "../../../../../../img/features/idpay/card_full.png";
+import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
 
 type Props = {
   status: StatusEnum;
@@ -85,7 +86,7 @@ const InitiativeCardComponent = (props: Props) => {
           ]}
         >
           <View>
-            <View spacer={true} small={true} />
+            <VSpacer size={8} />
 
             <H2 color="white">{props.initiativeName}</H2>
             <Text style={{ color: IOColors.white }}>{`${TypedI18n.t(
@@ -110,7 +111,7 @@ const InitiativeCardComponent = (props: Props) => {
               </H5>
             </View>
 
-            <View small hspacer />
+            <HSpacer size={8} />
 
             <View>
               <Text

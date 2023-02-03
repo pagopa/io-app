@@ -1,6 +1,5 @@
 // import { View as NBView, Text as NBText } from "native-base";
 import * as React from "react";
-import { View as NBView } from "native-base";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 
 import { H2 } from "../../../components/core/typography/H2";
@@ -22,9 +21,10 @@ import ZendeskItemPermissionComponent from "../../zendesk/components/ZendeskItem
 import { ProductCategoryEnum } from "../../../../definitions/cgn/merchants/ProductCategory";
 import CgnMerchantListItem from "../../bonus/cgn/components/merchants/CgnMerchantListItem";
 import DetailedlistItemComponent from "../../../components/DetailedlistItemComponent";
-import { TimelineTransactionCard } from "../../idpay/initiative/details/components/TimelineTransactionCards";
+import { TimelineOperationListItem } from "../../idpay/initiative/details/components/TimelineOperationListItem";
 import { OperationTypeEnum } from "../../../../definitions/idpay/timeline/TransactionOperationDTO";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 
 export const DSListItems = () => (
   <DesignSystemScreen title="List Items">
@@ -204,8 +204,8 @@ export const DSListItems = () => (
     </DSComponentViewerBox>
 
     <DSComponentViewerBox name="TimelineTransactionCard">
-      <TimelineTransactionCard
-        transaction={{
+      <TimelineOperationListItem
+        operation={{
           operationId: "213123",
           operationType: "Pagamento Pos" as OperationTypeEnum,
           operationDate: new Date(),
@@ -255,6 +255,6 @@ export const DSListItems = () => (
       />
     </DSComponentViewerBox>
 
-    <NBView spacer={true} extralarge={true} />
+    <VSpacer size={40} />
   </DesignSystemScreen>
 );
