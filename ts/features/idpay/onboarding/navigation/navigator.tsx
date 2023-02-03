@@ -1,5 +1,12 @@
-import { PathConfigMap } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
+import {
+  ParamListBase,
+  PathConfigMap,
+  RouteProp
+} from "@react-navigation/native";
+import {
+  StackNavigationProp,
+  createStackNavigator
+} from "@react-navigation/stack";
 import React from "react";
 import BoolValuePrerequisitesScreen from "../screens/BoolValuePrerequisitesScreen";
 import CompletionScreen from "../screens/CompletionScreen";
@@ -7,9 +14,7 @@ import FailureScreen from "../screens/FailureScreen";
 import InitiativeDetailsScreen, {
   InitiativeDetailsScreenRouteParams
 } from "../screens/InitiativeDetailsScreen";
-import MultiValuePrerequisitesScreen, {
-  MultiValuePrerequisitesScreenRouteParams
-} from "../screens/MultiValuePrerequisitesScreen";
+import MultiValuePrerequisitesScreen from "../screens/MultiValuePrerequisitesScreen";
 import PDNDPrerequisitesScreen from "../screens/PDNDPrerequisitesScreen";
 import { IDPayOnboardingMachineProvider } from "../xstate/provider";
 
@@ -30,7 +35,7 @@ export type IDPayOnboardingParamsList = {
   [IDPayOnboardingRoutes.IDPAY_ONBOARDING_PDNDACCEPTANCE]: undefined;
   [IDPayOnboardingRoutes.IDPAY_ONBOARDING_COMPLETION]: undefined;
   [IDPayOnboardingRoutes.IDPAY_ONBOARDING_FAILURE]: undefined;
-  [IDPayOnboardingRoutes.IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS]: MultiValuePrerequisitesScreenRouteParams;
+  [IDPayOnboardingRoutes.IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS]: undefined;
 };
 
 const Stack = createStackNavigator<IDPayOnboardingParamsList>();
@@ -64,6 +69,7 @@ export const IDPayOnboardingNavigator = () => (
       <Stack.Screen
         name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS}
         component={MultiValuePrerequisitesScreen}
+        options={{ animationTypeForReplace: "pop" }}
       />
       <Stack.Screen
         name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_PDNDACCEPTANCE}
@@ -81,3 +87,15 @@ export const IDPayOnboardingNavigator = () => (
     </Stack.Navigator>
   </IDPayOnboardingMachineProvider>
 );
+export type IDPayOnboardingStackNavigationRouteProps<
+  ParamList extends ParamListBase,
+  RouteName extends keyof ParamList = string
+> = {
+  navigation: IDPayOnboardingStackNavigationProp<ParamList, RouteName>;
+  route: RouteProp<ParamList, RouteName>;
+};
+
+export type IDPayOnboardingStackNavigationProp<
+  ParamList extends ParamListBase,
+  RouteName extends keyof ParamList = string
+> = StackNavigationProp<IDPayOnboardingParamsList & ParamList, RouteName>;

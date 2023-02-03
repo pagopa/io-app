@@ -1,8 +1,9 @@
 /* eslint-disable no-underscore-dangle */
-import { RouteProp, useRoute } from "@react-navigation/native";
+import { useSelector } from "@xstate/react";
 import { ListItem as NBListItem } from "native-base";
 import React from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../components/core/typography/Body";
 import { H1 } from "../../../../components/core/typography/H1";
 import { H4 } from "../../../../components/core/typography/H4";
@@ -13,11 +14,11 @@ import BaseScreenComponent from "../../../../components/screens/BaseScreenCompon
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import IconFont from "../../../../components/ui/IconFont";
 import I18n from "../../../../i18n";
-import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
-import { IDPayOnboardingParamsList } from "../navigation/navigator";
-import { useMultiPrerequisitesPagination } from "../utils/hooks";
 import { useOnboardingMachineService } from "../xstate/provider";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
+import {
+  criteriaToDisplaySelector,
+  prerequisiteAnswerIndexSelector
+} from "../xstate/selectors";
 
 const styles = StyleSheet.create({
   maxheight: {
@@ -59,45 +60,34 @@ const buttonProps = {
   }
 };
 
-type MultiValueScreenNavigationType = IOStackNavigationProp<
-  IDPayOnboardingParamsList,
-  "IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS"
->;
-type MultiValuePrerequisitesScreenRouteParams = {
-  page: number;
-};
-
-type MultiValuePrerequisitesScreenRouteProps = RouteProp<
-  IDPayOnboardingParamsList,
-  "IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS"
->;
-
-type NavigationProps = {
-  navigation: MultiValueScreenNavigationType;
-};
-const MultiValuePrerequisitesScreen = ({ navigation }: NavigationProps) => {
-  const [selectedIndex, setSelectedIndex] = React.useState<number | undefined>(
-    undefined
-  );
-  const { params } = useRoute<MultiValuePrerequisitesScreenRouteProps>();
+const MultiValuePrerequisitesScreen = () => {
   const machine = useOnboardingMachineService();
 
-  const { currentPage, confirmChoice, goBack } =
-    useMultiPrerequisitesPagination(navigation, machine, params.page);
+  const currentPrerequisite = useSelector(machine, criteriaToDisplaySelector);
+  const possiblySelectedIndex = useSelector(
+    machine,
+    prerequisiteAnswerIndexSelector
+  );
+
+  const [selectedIndex, setSelectedIndex] = React.useState<number | undefined>(
+    possiblySelectedIndex
+  );
 
   const continueOnPress = () => {
     if (selectedIndex === undefined) {
       return null;
     }
-    confirmChoice({
-      _type: currentPage._type,
-      value: currentPage.value[selectedIndex],
-      code: currentPage.code
+    machine.send("ADD_MULTI_CONSENT", {
+      data: {
+        _type: currentPrerequisite._type,
+        value: currentPrerequisite.value[selectedIndex],
+        code: currentPrerequisite.code
+      }
     });
 
     return null;
   };
-
+  const goBack = () => machine.send("GO_BACK");
   return (
     <SafeAreaView style={IOStyles.flex}>
       <BaseScreenComponent
@@ -110,12 +100,12 @@ const MultiValuePrerequisitesScreen = ({ navigation }: NavigationProps) => {
           <Body>{I18n.t("idpay.onboarding.multiPrerequisites.body")}</Body>
           <Link>{I18n.t("idpay.onboarding.multiPrerequisites.link")}</Link>
           <VSpacer size={24} />
-          <H4>{currentPage.description}</H4>
+          <H4>{currentPrerequisite.description}</H4>
           <ScrollView style={styles.maxheight}>
-            {currentPage.value.map((requisite, index) => (
+            {currentPrerequisite.value.map((answer, index) => (
               <CustomListItem
                 key={index}
-                text={requisite}
+                text={answer}
                 checked={index === selectedIndex}
                 onPress={() => setSelectedIndex(index)}
               />
@@ -140,7 +130,3 @@ const MultiValuePrerequisitesScreen = ({ navigation }: NavigationProps) => {
 };
 
 export default MultiValuePrerequisitesScreen;
-export type {
-  MultiValuePrerequisitesScreenRouteParams,
-  MultiValueScreenNavigationType
-};

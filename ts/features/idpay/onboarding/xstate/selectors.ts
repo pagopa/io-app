@@ -10,8 +10,14 @@ import { SelfDeclarationMultiDTO } from "../../../../../definitions/idpay/onboar
 import { Context, IDPayOnboardingMachineType } from "./machine";
 
 type StateWithContext = StateFrom<IDPayOnboardingMachineType>;
+
 const selectRequiredCriteria = (state: StateWithContext) =>
   state.context.requiredCriteria;
+const selectMultiConsents = (state: StateWithContext) =>
+  state.context.multiConsentsAnswers;
+const selectCurrentPage = (state: StateWithContext) =>
+  state.context.multiConsentsPage;
+
 const filterCriteria = <T extends SelfDeclarationDTO>(
   criteria: O.Option<RequiredCriteriaDTO> | undefined,
   filterFunc: typeof SelfDeclarationMultiDTO | typeof SelfDeclarationBoolDTO
@@ -35,11 +41,6 @@ const multiRequiredCriteriaSelector = createSelector(
     )
 );
 
-const pickedCriteriaSelector = createSelector(
-  (state: StateWithContext) => state.context.multiConsents,
-  val => val ?? []
-);
-
 const boolRequiredCriteriaSelector = createSelector(
   selectRequiredCriteria,
   requiredCriteria =>
@@ -48,6 +49,23 @@ const boolRequiredCriteriaSelector = createSelector(
       SelfDeclarationBoolDTO
     )
 );
+
+const criteriaToDisplaySelector = createSelector(
+  multiRequiredCriteriaSelector,
+  selectCurrentPage,
+  (criterias, currentPage) => criterias[currentPage]
+);
+
+const prerequisiteAnswerIndexSelector = createSelector(
+  criteriaToDisplaySelector,
+  selectMultiConsents,
+  selectCurrentPage,
+  (currentCriteria, multiConsents, currentPage) =>
+    multiConsents[currentPage]?.value === undefined
+      ? undefined
+      : currentCriteria.value.indexOf(multiConsents[currentPage]?.value)
+);
+
 const getMultiRequiredCriteriaFromContext = (context: Context) =>
   filterCriteria<SelfDeclarationMultiDTO>(
     context.requiredCriteria,
@@ -63,7 +81,8 @@ const getBoolRequiredCriteriaFromContext = (context: Context) =>
 export {
   multiRequiredCriteriaSelector,
   boolRequiredCriteriaSelector,
-  pickedCriteriaSelector,
   getMultiRequiredCriteriaFromContext,
-  getBoolRequiredCriteriaFromContext
+  getBoolRequiredCriteriaFromContext,
+  criteriaToDisplaySelector,
+  prerequisiteAnswerIndexSelector
 };
