@@ -39,6 +39,8 @@ const NewServiceListItem = (props: Props): React.ReactElement => {
 
   return (
     <ListItemComponent
+      accessible={true}
+      accessibilityLabel={serviceName}
       accessibilityRole={"button"}
       title={serviceName}
       hasBadge={false} // disabled for these reasons https://www.pivotaltracker.com/story/show/176919053
