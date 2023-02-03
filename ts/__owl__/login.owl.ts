@@ -1,12 +1,14 @@
 import { takeScreenshot } from "react-native-owl";
 import {
   loginWithPosteID,
+  RNOWL_JEST_TIMOUT,
   waitForLoginScreen,
+  waitForPinScreen,
   waitForSpidScreen
 } from "./utils";
 
 describe("Onboarding", () => {
-  beforeAll(() => jest.setTimeout(10 * 1000));
+  beforeAll(() => jest.setTimeout(RNOWL_JEST_TIMOUT));
   describe("Login screen", () => {
     it("Check screen UI", async () => {
       await waitForLoginScreen();
@@ -30,6 +32,15 @@ describe("Onboarding", () => {
       await loginWithPosteID();
 
       const screen = await takeScreenshot("share-data-screen");
+      expect(screen).toMatchBaseline();
+    });
+  });
+
+  describe("Pin screen", () => {
+    it("Pin screen UI", async () => {
+      await waitForPinScreen();
+
+      const screen = await takeScreenshot("pin-screen");
       expect(screen).toMatchBaseline();
     });
   });

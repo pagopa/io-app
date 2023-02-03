@@ -2,6 +2,9 @@ import { press, toExist } from "react-native-owl";
 
 const loginButtonId = "landing-button-login-spid";
 const posteIdpButtonId = "idp-posteid-button";
+const confirmShareDataButtonId = "rightButton";
+
+export const RNOWL_JEST_TIMOUT = 10 * 1000;
 
 /**
  * Wait for Login Screen
@@ -23,5 +26,10 @@ export const waitForSpidScreen = async () => {
 export const loginWithPosteID = async () => {
   await waitForSpidScreen();
   await press(posteIdpButtonId);
-  await toExist("rightButton");
+  await toExist(confirmShareDataButtonId);
+};
+
+export const waitForPinScreen = async () => {
+  await loginWithPosteID();
+  await press(confirmShareDataButtonId);
 };
