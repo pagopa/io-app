@@ -4,7 +4,9 @@ export const constants = {
   CONTENT_DIGEST_SHA256: "sha-256=:",
   CONTENT_DIGEST_VALIDATION_REGEX: "(.+)=:(.+):",
   HEADERS: {
-    CONTENT_DIGEST: "Content-Digest"
+    CONTENT_DIGEST: "Content-Digest",
+    CONTENT_TYPE: "Content-Type",
+    CONTENT_LENGTH: "Content-Length"
   },
   SHA_256: "sha256",
   SIGNATURE_PREFIX: (d: number = 1) => `sig${d}=`,

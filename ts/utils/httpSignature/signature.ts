@@ -68,10 +68,7 @@ function generateSignatureBase(
     const signatureParams: Array<string> = config.signatureParams;
 
     signatureParams.forEach(headerParameter => {
-      if (
-        headerParameter === constants.HEADERS.CONTENT_DIGEST &&
-        !headers[constants.HEADERS.CONTENT_DIGEST]
-      ) {
+      if (contentRelatedHeaderParameterMissing(headerParameter, headers)) {
         return;
       }
 
@@ -119,6 +116,20 @@ function generateSignatureBase(
   }
 }
 
+function contentRelatedHeaderParameterMissing(
+  headerParameter: string,
+  headers: Record<string, string>
+) {
+  return (
+    (headerParameter === constants.HEADERS.CONTENT_DIGEST &&
+      !headers[constants.HEADERS.CONTENT_DIGEST]) ||
+    (headerParameter === constants.HEADERS.CONTENT_TYPE &&
+      !headers[constants.HEADERS.CONTENT_TYPE]) ||
+    (headerParameter === constants.HEADERS.CONTENT_LENGTH &&
+      !headers[constants.HEADERS.CONTENT_LENGTH])
+  );
+}
+
 /**
  * Generates the 'Signature-Input' header value for provided config and headers.
  * https://www.ietf.org/archive/id/draft-ietf-httpbis-message-signatures-15.html#name-the-signature-input-http-fi
@@ -134,10 +145,7 @@ function generateSignatureInput(
   // eslint-disable-next-line functional/no-let
   let signatureInputPayload: string = "";
   config.signatureParams.forEach(param => {
-    if (
-      param === constants.HEADERS.CONTENT_DIGEST &&
-      !headers[constants.HEADERS.CONTENT_DIGEST]
-    ) {
+    if (contentRelatedHeaderParameterMissing(param, headers)) {
       return;
     }
 

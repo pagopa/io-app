@@ -21,6 +21,8 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { pipe } from "fp-ts/lib/function";
 import URLParse from "url-parse";
 import { fetchMaxRetries, fetchTimeout } from "../config";
+import { SignatureConfig } from "./httpSignature/types/SignatureConfig";
+import { generateSignatureBase } from "./httpSignature/signature";
 
 // FIXME: This is a temporary type created to avoid
 // a compilation error caused by the `toFetch` function
@@ -100,17 +102,49 @@ function signFetchWithLollipop(
     ) {
       const inputUrl = new URLParse(input, true);
       const queryString: string | undefined = inputUrl.href.split("?")[1];
+      const method = init.method.toUpperCase();
+      const originalUrl =
+        inputUrl.pathname + (queryString ? "?" + queryString : "");
+      const signatureConfig: SignatureConfig = {
+        signAlgorithm: "ecdsa-p256-sha256",
+        signKeyTag: "lp-temp-key",
+        signKeyId: "AF2G87coad7/KJl9800==",
+        nonce: "xyz",
+        signatureComponents: {
+          method,
+          authority: inputUrl.hostname,
+          path: inputUrl.pathname,
+          requestTarget: originalUrl,
+          scheme: inputUrl.protocol,
+          targetUri: `${inputUrl.protocol}://${inputUrl.hostname}/${originalUrl}`
+        },
+        signatureParams: [
+          "Content-Digest",
+          "Content-Type",
+          "Content-Length",
+          "x-pagopa-lollipop-original-method",
+          "x-pagopa-lollipop-original-url"
+        ]
+      };
       // eslint-disable-next-line no-console
-      console.log(JSON.stringify(inputUrl));
+      console.log("signatureConfig: " + JSON.stringify(signatureConfig));
+      // eslint-disable-next-line no-console
+      console.log("inputURL: " + JSON.stringify(inputUrl));
       newInit = {
         ...init,
         headers: {
           ...init.headers,
-          "x-pagopa-lollipop-original-method": init.method.toUpperCase(),
-          "x-pagopa-lollipop-original-url":
-            inputUrl.pathname + (queryString ? "?" + queryString : "")
+          "x-pagopa-lollipop-original-method": method,
+          "x-pagopa-lollipop-original-url": originalUrl
         }
       };
+      const newInitHeaders = (newInit.headers as Record<string, string>) ?? {};
+      const signatureBase = generateSignatureBase(
+        newInitHeaders,
+        signatureConfig
+      );
+      // eslint-disable-next-line no-console
+      console.log("signatureBase --> " + JSON.stringify(signatureBase));
     }
     // eslint-disable-next-line no-console
     console.log("input: " + JSON.stringify(input));
