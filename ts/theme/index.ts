@@ -16,9 +16,7 @@ import labelTheme from "./components/Label";
 import listTheme from "./components/List";
 import listItemTheme from "./components/ListItem";
 import maskedInputTheme from "./components/MaskedInput";
-import messageDetailsInfoComponentTheme from "./components/MessageDetailsInfoComponent";
 import preferenceItemTheme from "./components/PreferenceItem";
-import screenHeaderTheme from "./components/ScreenHeader";
 import textTheme from "./components/Text";
 import { Theme } from "./types";
 import variables from "./variables";
@@ -50,14 +48,8 @@ const theme = (): Theme => {
     "UIComponent.IconFont": {
       ...iconFontTheme()
     },
-    "UIComponent.MessageDetailsInfoComponent": {
-      ...messageDetailsInfoComponentTheme()
-    },
     "UIComponent.PreferenceItem": {
       ...preferenceItemTheme()
-    },
-    "UIComponent.ScreenHeader": {
-      ...screenHeaderTheme()
     },
     "NativeBase.List": {
       ...listTheme()
