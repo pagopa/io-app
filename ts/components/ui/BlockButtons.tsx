@@ -105,7 +105,11 @@ export default class BlockButtons extends React.Component<Props, never> {
     return (
       <React.Fragment>
         <HSpacer size={16} />
-        {this.renderButton(this.props.rightButton, rightButtonStyle)}
+        {this.renderButton(
+          this.props.rightButton,
+          rightButtonStyle,
+          "rightButton"
+        )}
       </React.Fragment>
     );
   };
@@ -118,7 +122,7 @@ export default class BlockButtons extends React.Component<Props, never> {
     return (
       <React.Fragment>
         <HSpacer size={16} />
-        {this.renderButton(this.props.midButton, styles.button)}
+        {this.renderButton(this.props.midButton, styles.button, "midButton")}
       </React.Fragment>
     );
   };
@@ -129,14 +133,19 @@ export default class BlockButtons extends React.Component<Props, never> {
         ? styles.buttonTwoThirds
         : styles.button;
 
-    return this.renderButton(this.props.leftButton, leftButtonStyle);
+    return this.renderButton(
+      this.props.leftButton,
+      leftButtonStyle,
+      "leftButton"
+    );
   };
 
   private renderButton = (
     props: BlockButtonProps,
-    style: ComponentProps<typeof ButtonDefaultOpacity>["style"]
+    style: ComponentProps<typeof ButtonDefaultOpacity>["style"],
+    testID: string
   ) => (
-    <ButtonDefaultOpacity style={style} {...props}>
+    <ButtonDefaultOpacity style={style} {...props} testID={testID}>
       {props.isLoading && (
         <ActivityIndicator
           animating={true}
