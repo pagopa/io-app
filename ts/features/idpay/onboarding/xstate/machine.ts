@@ -59,7 +59,6 @@ type E_GO_BACK = {
 };
 
 type E_SELECT_MULTI_CONSENT = {
-  // select multi consent TODO:: rename
   type: "SELECT_MULTI_CONSENT";
   data: SelfConsentMultiDTO;
 };
