@@ -33,7 +33,8 @@ type LocaleInfo = { locale: string; timezone: string };
 const locales: Record<Locales, LocaleInfo> = {
   it: { locale: "it-IT", timezone: "Europe/Rome" },
   en: { locale: "en-GB", timezone: "Europe/London" },
-  de: { locale: "de-DE", timezone: "Europe/Berlin" }
+  de: { locale: "de-DE", timezone: "Europe/Berlin" },
+  sl: { locale: "sl-SI", timezone: "Europe/Ljubljana" }
 };
 
 describe("the `DueDateBar` component", () => {
