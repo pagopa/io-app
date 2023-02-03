@@ -16,6 +16,7 @@ import {
   setJSExceptionHandler,
   setNativeExceptionHandler
 } from "react-native-exception-handler";
+import "text-encoding-polyfill";
 
 import { App } from "./ts/App";
 import { mixpanel } from "./ts/mixpanel";

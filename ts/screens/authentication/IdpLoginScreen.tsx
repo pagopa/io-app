@@ -3,12 +3,13 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { Text as NBText, View } from "native-base";
 import * as React from "react";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Image, Linking, StyleSheet } from "react-native";
 import { WebView } from "react-native-webview";
 import {
   WebViewErrorEvent,
-  WebViewNavigation
+  WebViewNavigation,
+  WebViewSource
 } from "react-native-webview/lib/WebViewTypes";
 import { connect } from "react-redux";
 import URLParse from "url-parse";
@@ -20,7 +21,9 @@ import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import IdpCustomContextualHelpContent from "../../components/screens/IdpCustomContextualHelpContent";
 import Markdown from "../../components/ui/Markdown";
 import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
-import { usePublicKey } from "../../features/lollipop/hooks/usePublicKey";
+import { useLollipopLoginSource } from "../../features/lollipop/hooks/useLollipopLoginSource";
+import { useLollipopPublicKey } from "../../features/lollipop/hooks/useLollipopPublicKey";
+import { lollipopSamlVerify } from "../../features/lollipop/utils/login";
 import I18n from "../../i18n";
 import { mixpanelTrack } from "../../mixpanel";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
@@ -40,11 +43,7 @@ import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus
 import { idpContextualHelpDataFromIdSelector } from "../../store/reducers/content";
 import { GlobalState } from "../../store/reducers/types";
 import { SessionToken } from "../../types/SessionToken";
-import {
-  getIdpLoginUri,
-  getIntentFallbackUrl,
-  onLoginUriChanged
-} from "../../utils/login";
+import { getIntentFallbackUrl, onLoginUriChanged } from "../../utils/login";
 import { getSpidErrorCodeDescription } from "../../utils/spidErrorCode";
 import {
   assistanceToolRemoteConfig,
@@ -108,7 +107,6 @@ const styles = StyleSheet.create({
   },
   webViewWrapper: { flex: 1 }
 });
-
 /**
  * A screen that allows the user to login with an IDP.
  * The IDP page is opened in a WebView
@@ -120,25 +118,27 @@ const IdpLoginScreen = (props: Props) => {
   const [errorCode, setErrorCode] = useState<string | undefined>(undefined);
   const [loginTrace, setLoginTrace] = useState<string | undefined>(undefined);
 
-  const publicKey = usePublicKey();
-
-  const headers = useMemo(
-    () =>
-      publicKey
-        ? {
-            "x-pagopa-lollipop-pub-key": encodeURIComponent(
-              JSON.stringify(publicKey)
-            ),
-            "x-pagopa-lollipop-pub-key-hash": "sha256"
-          }
-        : {},
-    [publicKey]
+  const [webviewSource, setWebviewSource] = useState<WebViewSource | undefined>(
+    undefined
   );
+  const [lollipopCheck, setLollipopCheck] = useState(false);
+
+  const loginSource = useLollipopLoginSource({
+    loggedOutWithIdpAuth: props.loggedOutWithIdpAuth
+  });
+
+  const publicKey = useLollipopPublicKey();
 
   const choosenTool = useMemo(
     () => assistanceToolRemoteConfig(props.assistanceToolConfig),
     [props.assistanceToolConfig]
   );
+
+  useEffect(() => {
+    if (loginSource.kind === "ready") {
+      setWebviewSource(loginSource.value);
+    }
+  }, [loginSource]);
 
   const idp = useMemo(
     () => props.loggedOutWithIdpAuth?.idp.id ?? "n/a",
@@ -161,25 +161,30 @@ const IdpLoginScreen = (props: Props) => {
     setRequestState(pot.noneError(ErrorType.LOADING_ERROR));
   };
 
-  const handleLoginFailure = (code?: string) => {
-    props.dispatchLoginFailure(
-      new Error(`login failure with code ${code || "n/a"}`),
-      idp
-    );
-    const logText = pipe(
-      code,
-      O.fromNullable,
-      O.fold(
-        () => "login failed with no error code available",
-        ec =>
-          `login failed with code (${ec}) : ${getSpidErrorCodeDescription(ec)}`
-      )
-    );
+  const handleLoginFailure = useCallback(
+    (code?: string) => {
+      props.dispatchLoginFailure(
+        new Error(`login failure with code ${code || "n/a"}`),
+        idp
+      );
+      const logText = pipe(
+        code,
+        O.fromNullable,
+        O.fold(
+          () => "login failed with no error code available",
+          ec =>
+            `login failed with code (${ec}) : ${getSpidErrorCodeDescription(
+              ec
+            )}`
+        )
+      );
 
-    handleSendAssistanceLog(choosenTool, logText);
-    setRequestState(pot.noneError(ErrorType.LOGIN_ERROR));
-    setErrorCode(code);
-  };
+      handleSendAssistanceLog(choosenTool, logText);
+      setRequestState(pot.noneError(ErrorType.LOGIN_ERROR));
+      setErrorCode(code);
+    },
+    [choosenTool, idp, props]
+  );
 
   const handleLoginSuccess = (token: SessionToken) => {
     handleSendAssistanceLog(choosenTool, `login success`);
@@ -189,7 +194,7 @@ const IdpLoginScreen = (props: Props) => {
   const setRequestStateToLoading = (): void => setRequestState(pot.noneLoading);
 
   const handleNavigationStateChange = useCallback(
-    async (event: WebViewNavigation) => {
+    (event: WebViewNavigation) => {
       if (event.url) {
         const urlChanged = getUrlBasepath(event.url);
         if (urlChanged !== loginTrace) {
@@ -198,11 +203,22 @@ const IdpLoginScreen = (props: Props) => {
         }
       }
 
-      if (publicKey) {
+      if (publicKey && !lollipopCheck) {
         const queryParam = new URLParse(event.url, true).query;
-
         if (queryParam && queryParam.SAMLRequest) {
+          setWebviewSource(undefined);
           const decodeSaml = decodeURIComponent(queryParam.SAMLRequest);
+          lollipopSamlVerify(
+            decodeSaml,
+            publicKey,
+            () => {
+              setLollipopCheck(true);
+              setWebviewSource({ uri: event.url });
+            },
+            () => {
+              setRequestState(pot.some(true));
+            }
+          );
         }
       }
       const isAssertion = pipe(
@@ -217,7 +233,7 @@ const IdpLoginScreen = (props: Props) => {
         event.loading || isAssertion ? pot.noneLoading : pot.some(true)
       );
     },
-    [loginTrace, props]
+    [publicKey, lollipopCheck, loginTrace, props]
   );
 
   const handleShouldStartLoading = (event: WebViewNavigation): boolean => {
@@ -319,13 +335,11 @@ const IdpLoginScreen = (props: Props) => {
     return <IdpSuccessfulAuthentication />;
   }
 
-  if (!loggedOutWithIdpAuth) {
+  if (!loggedOutWithIdpAuth || !webviewSource) {
     // This condition will be true only temporarily (if the navigation occurs
     // before the redux state is updated successfully)
     return <LoadingSpinnerOverlay isLoading={true} />;
   }
-
-  const loginUri = getIdpLoginUri(loggedOutWithIdpAuth.idp.id);
 
   return (
     <BaseScreenComponent
@@ -344,7 +358,7 @@ const IdpLoginScreen = (props: Props) => {
             androidMicrophoneAccessDisabled={true}
             textZoom={100}
             originWhitelist={originSchemasWhiteList}
-            source={{ uri: loginUri, headers }}
+            source={webviewSource}
             onError={handleLoadingError}
             javaScriptEnabled={true}
             onNavigationStateChange={handleNavigationStateChange}
