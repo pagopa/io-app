@@ -73,6 +73,7 @@ export const DesignSystem = (props: Props) => (
       renderSectionFooter={() => <VSpacer size={40} />}
       renderItem={({ item }) => (
         <ListItemComponent
+          testID={item.title + "ID"}
           title={item.title}
           onPress={() =>
             props.navigation.navigate(item.route as keyof AppParamsList)

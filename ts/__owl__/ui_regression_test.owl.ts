@@ -10,7 +10,7 @@ import {
   waitForSpidScreen
 } from "./utils";
 
-describe("Onboarding", () => {
+describe("00. Onboarding", () => {
   beforeAll(() => jest.setTimeout(RNOWL_JEST_TIMOUT));
   describe("Login screen", () => {
     it("Check screen UI", async () => {
@@ -55,6 +55,40 @@ describe("Onboarding", () => {
       expect(screenEnabled).toMatchBaseline();
 
       await reactNativeOwl.press(confirmPinButtonId);
+    });
+  });
+
+  describe("Main Screen", () => {
+    it("Main then Buttons", async () => {
+      await reactNativeOwl.toExist("profileTab");
+
+      const homeScreen = await reactNativeOwl.takeScreenshot("home-screen");
+      expect(homeScreen).toMatchBaseline();
+
+      await reactNativeOwl.press("profileTab");
+
+      const profileScreen = await reactNativeOwl.takeScreenshot(
+        "profile-screen"
+      );
+      expect(profileScreen).toMatchBaseline();
+
+      await reactNativeOwl.toExist("versionSection");
+      await reactNativeOwl.press("versionSection");
+      await reactNativeOwl.press("versionSection");
+      await reactNativeOwl.press("versionSection");
+      await reactNativeOwl.press("versionSection");
+      await reactNativeOwl.press("versionSection");
+
+      await reactNativeOwl.toExist("designSystemSection");
+      await reactNativeOwl.press("designSystemSection");
+
+      await reactNativeOwl.toExist("ButtonsID");
+      await reactNativeOwl.press("ButtonsID");
+
+      const firstPartButtonsScreen = await reactNativeOwl.takeScreenshot(
+        "first-part-button-screen"
+      );
+      expect(firstPartButtonsScreen).toMatchBaseline();
     });
   });
 });

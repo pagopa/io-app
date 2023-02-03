@@ -7,7 +7,7 @@ export const confirmPinButtonId = "confirmPinButton";
 export const pinFieldId = "PinFieldInput";
 export const pinConfirmationFieldId = "PinConfirmationFieldInput";
 
-export const RNOWL_JEST_TIMOUT = 15 * 1000;
+export const RNOWL_JEST_TIMOUT = 30 * 1000;
 
 export function sleep(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
