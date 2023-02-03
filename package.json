@@ -105,7 +105,7 @@
     "owl:test:ios:update": "owl test --platform ios --update",
     "owl:warmup:android": "yarn env:local && sed -i \"\" 's/127.0.0.1/10.0.2.2/gi' .env && sed -i \"\" 's/\\/\\/ LogBox.ignoreAllLogs/LogBox.ignoreAllLogs/gi' index.js",
     "owl:cooldown:android": "cp .env.local .env && sed -i \"\" 's/LogBox.ignoreAllLogs/\\/\\/ LogBox.ignoreAllLogs/gi' index.js",    
-    "owl:build:android": "yarn owl:warmup:android && yarn owl build --platform android && yarn owl:cooldown:android",
+    "owl:build:android": "yarn owl:warmup:android && RN_SRC_EXT=rno.ts yarn owl build --platform android && yarn owl:cooldown:android",
     "owl:test:android": "cd android/app/build/outputs/apk/debug && cp -f app-universal-debug.apk app-debug.apk && cd - && yarn uninstall:app:android | yarn owl test --platform android",
     "owl:test:android:update": "yarn owl:test:android --update"
   },
