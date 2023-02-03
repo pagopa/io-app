@@ -12,7 +12,6 @@ import {
   ScrollView,
   StyleSheet
 } from "react-native";
-import I18n from "../i18n";
 import variables from "../theme/variables";
 import { roundToThirdDecimal } from "../utils/number";
 import { VSpacer } from "./core/spacer/Spacer";
