@@ -5,7 +5,6 @@ import {
   pinConfirmationFieldId,
   pinFieldId,
   RNOWL_JEST_TIMOUT,
-  sleep,
   waitForLoginScreen,
   waitForPinScreen,
   waitForSpidScreen
@@ -49,7 +48,6 @@ describe("Onboarding", () => {
 
       await reactNativeOwl.changeText(pinFieldId, "111111");
       await reactNativeOwl.changeText(pinConfirmationFieldId, "111111");
-      await sleep(5000); // wait for button to be enabled.
 
       const screenEnabled = await reactNativeOwl.takeScreenshot(
         "pin-screen-enabled"

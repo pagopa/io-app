@@ -7,6 +7,9 @@ module.exports = (async () => {
   const withE2ESourceExts = process.env.RN_SRC_EXT
     ? process.env.RN_SRC_EXT.split(",").concat(sourceExts)
     : sourceExts;
+  const withOWLSourceExts = process.env.RN_OWL_EXT
+    ? process.env.RN_OWL_EXT.split(",").concat(sourceExts)
+    : sourceExts;
   return {
     transformer: {
       babelTransformerPath: require.resolve("react-native-svg-transformer"),
@@ -15,7 +18,7 @@ module.exports = (async () => {
     },
     resolver: {
       assetExts: assetExts.filter(ext => ext !== "svg"),
-      sourceExts: [...withE2ESourceExts, "svg"]
+      sourceExts: [...withE2ESourceExts, ...withOWLSourceExts, "svg"]
     }
   };
 })();

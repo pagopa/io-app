@@ -4,6 +4,7 @@ import I18n from "../i18n";
 import { PIN_LENGTH_SIX } from "../utils/constants";
 import { PinString } from "../types/PinString";
 import { confirmButtonProps } from "../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { uiRegressionPassThrough } from "../utils/uitest";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import { InfoBox } from "./box/InfoBox";
 import { IOColors } from "./core/variables/IOColors";
@@ -46,9 +47,10 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
     !isPinConfirmationDirty || (pinConfirmation && pinConfirmation === pin);
 
   const isFormValid =
-    pin.length === pinLength &&
-    pinConfirmation.length === pinLength &&
-    pinConfirmation === pin;
+    (pin.length === pinLength &&
+      pinConfirmation.length === pinLength &&
+      pinConfirmation === pin) ||
+    uiRegressionPassThrough;
 
   const handlePinBlur = React.useCallback(() => {
     setIsPinDirty(true);

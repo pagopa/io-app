@@ -100,7 +100,7 @@
     "uninstall:app:ios": "xcrun simctl uninstall booted it.pagopa.app.io",
     "grant:privacy:all:ios": "xcrun simctl privacy booted grant all it.pagopa.app.io",
     "uninstall:app:android": "adb uninstall it.pagopa.io.app 2>&1",
-    "owl:build:ios": "yarn env:local && RN_SRC_EXT=e2e.ts yarn owl build --platform ios",
+    "owl:build:ios": "yarn env:local && RN_SRC_EXT=rno.ts yarn owl build --platform ios",
     "owl:test:ios": "yarn uninstall:app:ios && yarn owl test --platform ios",
     "owl:test:ios:update": "owl test --platform ios --update",
     "owl:warmup:android": "yarn env:local && sed -i \"\" 's/127.0.0.1/10.0.2.2/gi' .env && sed -i \"\" 's/\\/\\/ LogBox.ignoreAllLogs/LogBox.ignoreAllLogs/gi' index.js",
