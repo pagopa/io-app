@@ -104,11 +104,12 @@ function generateSignatureBase(
      * field for this signature serialized according to the rules described in Section 2.3.
      * Note that this does not include the signature's label from the Signature-Input field.
      */
-    const signatureInput = generateSignatureInput(headers, config).replace(
+    const signatureInput = generateSignatureInput(headers, config);
+    const signatureParamsString = signatureInput.replace(
       constants.SIGNATURE_PREFIX(),
       ""
     );
-    baseString = baseString + signatureInput;
+    baseString = baseString + signatureParamsString;
 
     return { signatureBase: baseString, signatureInput };
   } catch (e) {

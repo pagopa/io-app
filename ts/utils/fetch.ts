@@ -130,6 +130,10 @@ function signFetchWithLollipop(
       console.log("signatureConfig: " + JSON.stringify(signatureConfig));
       // eslint-disable-next-line no-console
       console.log("inputURL: " + JSON.stringify(inputUrl));
+      // TODO: if we have a body we need to add all three content releated headers:
+      // - content-digest -> sign(sha256(body))
+      // - content-length -> body lenght in bytes
+      // - content-type -> e.g. application/json
       newInit = {
         ...init,
         headers: {
@@ -139,12 +143,18 @@ function signFetchWithLollipop(
         }
       };
       const newInitHeaders = (newInit.headers as Record<string, string>) ?? {};
-      const signatureBase = generateSignatureBase(
+      const { signatureBase, signatureInput } = generateSignatureBase(
         newInitHeaders,
         signatureConfig
       );
       // eslint-disable-next-line no-console
       console.log("signatureBase --> " + JSON.stringify(signatureBase));
+      // eslint-disable-next-line no-console
+      console.log("signatureInput --> " + JSON.stringify(signatureInput));
+      // TODO: - sign signature base with private key and add related headers:
+      // - signature -> sign(signatureBase)
+      // - signature-input -> signatureInput
+      // TODO: - put all this in an utility function
     }
     // eslint-disable-next-line no-console
     console.log("input: " + JSON.stringify(input));
