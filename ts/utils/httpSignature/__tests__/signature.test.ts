@@ -18,13 +18,13 @@ const testHeadersWithContentDigest: Record<any, string> = {
 };
 
 const testCustomHeaders = {
-  "X-PagoPA-LolliPOP-Nonce": "xyz",
-  "X-PagoPA-LolliPOP-Method": "GET",
-  "X-PagoPA-LolliPOP-Authority": "api-app.io.pagopa.it",
-  "X-PagoPA-LolliPOP-Original-URL": "/api/v1/profile"
+  "x-pagopa-lollipop-original-method": "GET",
+  "x-pagopa-lollipop-original-url": "/api/v1/profile"
 };
 const testCustomHeadersWithContentDigest = {
   "Content-Digest": "sha-256=:eNJnazvTtWDD2IoIlFZca3TDmPd3BpaM2GDcn4/bnSk=:",
+  "Content-Type": "application/json",
+  "Content-Length": "18",
   ...testCustomHeaders
 };
 
@@ -32,6 +32,7 @@ const testConfig: SignatureConfig = {
   signAlgorithm: "ecdsa-p256-sha256",
   signKeyTag: "lp-temp-key",
   signKeyId: "AF2G87coad7/KJl9800==",
+  nonce: "xyz",
   signatureComponents: {
     method: "POST",
     authority: "example.com",
@@ -47,6 +48,7 @@ const testCustomHeadersConfig: SignatureConfig = {
   signAlgorithm: "ecdsa-p256-sha256",
   signKeyTag: "lp-temp-key",
   signKeyId: "AF2G87coad7/KJl9800==",
+  nonce: "xyz",
   signatureComponents: {
     method: "POST",
     authority: "example.com",
@@ -57,10 +59,10 @@ const testCustomHeadersConfig: SignatureConfig = {
   },
   signatureParams: [
     "Content-Digest",
-    "X-PagoPA-LolliPOP-Nonce",
-    "X-PagoPA-LolliPOP-Method",
-    "X-PagoPA-LolliPOP-Authority",
-    "X-PagoPA-LolliPOP-Original-URL"
+    "Content-Type",
+    "Content-Length",
+    "x-pagopa-lollipop-original-method",
+    "x-pagopa-lollipop-original-url"
   ]
 };
 
@@ -72,7 +74,7 @@ describe(`Test signature input generation`, () => {
   )}`, () => {
     const signatureInput = generateSignatureInput(testHeaders, testConfig);
     expect(signatureInput).toBe(
-      'sig1=("@method" "@path" "@authority");created=1623029400;alg="ecdsa-p256-sha256";keyid="AF2G87coad7/KJl9800=="'
+      'sig1=("@method" "@path" "@authority");created=1623029400;nonce="xyz";alg="ecdsa-p256-sha256";keyid="AF2G87coad7/KJl9800=="'
     );
   });
 });
@@ -86,7 +88,7 @@ describe(`Test signature input generation with "${constants.HEADERS.CONTENT_DIGE
       testConfig
     );
     expect(signatureInput).toBe(
-      'sig1=("content-digest" "@method" "@path" "@authority");created=1623029400;alg="ecdsa-p256-sha256";keyid="AF2G87coad7/KJl9800=="'
+      'sig1=("content-digest" "@method" "@path" "@authority");created=1623029400;nonce="xyz";alg="ecdsa-p256-sha256";keyid="AF2G87coad7/KJl9800=="'
     );
   });
 });
@@ -102,7 +104,7 @@ describe(`Test generate signature base`, () => {
     const expectedBase = `"@method": POST
 "@path": /hello
 "@authority": example.com
-"@signature-params": ("@method" "@path" "@authority");created=1623029400;alg="ecdsa-p256-sha256";keyid="AF2G87coad7/KJl9800=="`;
+"@signature-params": ("@method" "@path" "@authority");created=1623029400;nonce="xyz";alg="ecdsa-p256-sha256";keyid="AF2G87coad7/KJl9800=="`;
     expect(signatureBase).toBe(expectedBase);
   });
 });
@@ -119,7 +121,7 @@ describe(`Test generate signature base`, () => {
 "@method": POST
 "@path": /hello
 "@authority": example.com
-"@signature-params": ("content-digest" "@method" "@path" "@authority");created=1623029400;alg="ecdsa-p256-sha256";keyid="AF2G87coad7/KJl9800=="`;
+"@signature-params": ("content-digest" "@method" "@path" "@authority");created=1623029400;nonce="xyz";alg="ecdsa-p256-sha256";keyid="AF2G87coad7/KJl9800=="`;
     expect(signatureBase).toBe(expectedBase);
   });
 });
@@ -133,11 +135,11 @@ describe(`Test generate signature base`, () => {
       testCustomHeadersConfig
     ).signatureBase;
     const expectedBase = `"content-digest": sha-256=:eNJnazvTtWDD2IoIlFZca3TDmPd3BpaM2GDcn4/bnSk=:
-"x-pagopa-lollipop-nonce": xyz
-"x-pagopa-lollipop-method": GET
-"x-pagopa-lollipop-authority": api-app.io.pagopa.it
+"content-type": application/json
+"content-length": 18
+"x-pagopa-lollipop-original-method": GET
 "x-pagopa-lollipop-original-url": /api/v1/profile
-"@signature-params": ("content-digest" "x-pagopa-lollipop-nonce" "x-pagopa-lollipop-method" "x-pagopa-lollipop-authority" "x-pagopa-lollipop-original-url");created=1623029400;alg="ecdsa-p256-sha256";keyid="AF2G87coad7/KJl9800=="`;
+"@signature-params": ("content-digest" "content-type" "content-length" "x-pagopa-lollipop-original-method" "x-pagopa-lollipop-original-url");created=1623029400;nonce="xyz";alg="ecdsa-p256-sha256";keyid="AF2G87coad7/KJl9800=="`;
     expect(signatureBase).toBe(expectedBase);
   });
 });

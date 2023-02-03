@@ -106,10 +106,8 @@ function signFetchWithLollipop(
         ...init,
         headers: {
           ...init.headers,
-          "X-PagoPA-LolliPOP-Nonce": "xyz",
-          "X-PagoPA-LolliPOP-Method": init.method.toUpperCase(),
-          "X-PagoPA-LolliPOP-Authority": inputUrl.hostname,
-          "X-PagoPA-LolliPOP-Original-URL":
+          "x-pagopa-lollipop-original-method": init.method.toUpperCase(),
+          "x-pagopa-lollipop-original-url":
             inputUrl.pathname + (queryString ? "?" + queryString : "")
         }
       };

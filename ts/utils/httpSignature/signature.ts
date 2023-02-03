@@ -159,10 +159,11 @@ function generateSignatureInputValue(
   config: SignatureConfig,
   signatureOrdinal: number = 1
 ): string {
+  // https://github.com/pagopa/io-backend/pull/973
   const unixTimestamp = getUnixTimestamp();
   return `${constants.SIGNATURE_PREFIX(
     signatureOrdinal
-  )}(${payload.trim()});created=${unixTimestamp};alg="${
+  )}(${payload.trim()});created=${unixTimestamp};nonce="${config.nonce}";alg="${
     config.signAlgorithm
   }";keyid="${config.signKeyId}"`;
 }

@@ -1,5 +1,3 @@
-const X_PAGOPA_LOLLIPOP_PREFIX = "X-PagoPA-LolliPOP";
-
 export const constants = {
   BASE64: "base64",
   COLON: ":",
@@ -11,8 +9,6 @@ export const constants = {
   SHA_256: "sha256",
   SIGNATURE_PREFIX: (d: number = 1) => `sig${d}=`,
   UTF8: "utf8",
-  X_PAGOPA_LOLLIPOP_NONCE: `${X_PAGOPA_LOLLIPOP_PREFIX}-Nonce`,
-  X_PAGOPA_LOLLIPOP_METHOD: `${X_PAGOPA_LOLLIPOP_PREFIX}-Method`,
-  X_PAGOPA_LOLLIPOP_ORIGINAL_URL: `${X_PAGOPA_LOLLIPOP_PREFIX}-Original-URl`,
-  X_PAGOPA_LOLLIPOP_ORIGINAL_AUTHORITY: `${X_PAGOPA_LOLLIPOP_PREFIX}-Authority`
+  X_PAGOPA_LOLLIPOP_METHOD: "x-pagopa-lollipop-original-method",
+  X_PAGOPA_LOLLIPOP_ORIGINAL_URL: "x-pagopa-lollipop-original-url"
 } as const;

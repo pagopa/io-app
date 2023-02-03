@@ -5,6 +5,7 @@ export interface SignatureConfig {
   signAlgorithm: SignatureAlgorithm;
   signKeyTag: string;
   signKeyId: string;
+  nonce: string;
   signatureComponents: SignatureComponents;
   signatureParams: Array<string>;
 }
