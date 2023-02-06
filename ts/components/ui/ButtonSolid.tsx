@@ -38,8 +38,11 @@ const fontSizeSmall: TextStyle["fontSize"] = 14;
 // -- Primary Button
 const colorPrimaryButtonDefault: ColorValue = IOColors.blue;
 const colorPrimaryButtonPressed: ColorValue = IOColors.blueUltraLight;
-const colorPrimaryButtonDisabled: ColorValue = IOColors.bluegreyLight;
 // -- Danger Button
+const colorDangerButtonDefault: ColorValue = IOColors.red;
+const colorDangerButtonPressed: ColorValue = IOColors.red;
+// -- Disabled state
+const colorPrimaryButtonDisabled: ColorValue = IOColors.bluegreyLight;
 
 const styles = StyleSheet.create({
   button: {
@@ -53,10 +56,10 @@ const styles = StyleSheet.create({
     borderRadius: PixelRatio.getFontScale() * 8
   },
   /* Color styles */
-  colorDefaultState: {
+  colorDefault: {
     backgroundColor: colorPrimaryButtonDefault
   },
-  colorDisabledState: {
+  colorDisabled: {
     backgroundColor: colorPrimaryButtonDisabled
   },
   /* Font Size */
@@ -138,13 +141,13 @@ export const ButtonSolid = ({
       accessible={true}
       disabled={disabled}
       accessibilityRole={"button"}
+      style={fullWidth ? styles.dimensionsFullWidth : styles.dimensionsDefault}
     >
       <Animated.View
         style={[
           styles.button,
           animatedStyle,
-          disabled ? styles.colorDisabledState : styles.colorDefaultState,
-          fullWidth ? styles.dimensionsFullWidth : styles.dimensionsDefault
+          disabled ? styles.colorDisabled : styles.colorDefault
         ]}
       >
         <BaseTypography
