@@ -80,7 +80,7 @@ const getCards = (
     content: I18n.t("authentication.landing.card5-content"),
     accessibilityLabel: `${I18n.t(
       "authentication.landing.accessibility.carousel.label"
-    )}.${I18n.t("authentication.landing.card5-title")}.${I18n.t(
+    )}. ${I18n.t("authentication.landing.card5-title")}. ${I18n.t(
       "authentication.landing.card5-content-accessibility"
     )}`,
     accessibilityHint: I18n.t(
@@ -94,7 +94,7 @@ const getCards = (
     content: I18n.t("authentication.landing.card1-content"),
     accessibilityLabel: `${I18n.t(
       "authentication.landing.card1-title"
-    )}.${I18n.t("authentication.landing.card1-content")}`
+    )}. ${I18n.t("authentication.landing.card1-content")}`
   },
   {
     id: 2,
@@ -103,7 +103,7 @@ const getCards = (
     content: I18n.t("authentication.landing.card2-content"),
     accessibilityLabel: `${I18n.t(
       "authentication.landing.card2-title"
-    )}.${I18n.t("authentication.landing.card2-content")}`
+    )}. ${I18n.t("authentication.landing.card2-content")}`
   },
   {
     id: 3,
@@ -112,7 +112,7 @@ const getCards = (
     content: I18n.t("authentication.landing.card3-content"),
     accessibilityLabel: `${I18n.t(
       "authentication.landing.card3-title"
-    )}.${I18n.t("authentication.landing.card3-content")}`
+    )}. ${I18n.t("authentication.landing.card3-content")}`
   },
   {
     id: 4,
@@ -127,7 +127,7 @@ const getCards = (
       : I18n.t("authentication.landing.card4-content"),
     accessibilityLabel: `${I18n.t(
       "authentication.landing.card4-title"
-    )}.${I18n.t("authentication.landing.card4-content")}`
+    )}. ${I18n.t("authentication.landing.card4-content")}`
   }
 ];
 
