@@ -243,8 +243,7 @@ describe("IDPay Onboarding machine services", () => {
 
         await expect(
           services.loadInitiativeStatus({
-            failure: O.none,
-            initiativeStatus: O.none,
+            ...T_CONTEXT,
             serviceId: T_SERVICE_ID,
             initiative: T_INITIATIVE_DTO
           })
@@ -271,8 +270,7 @@ describe("IDPay Onboarding machine services", () => {
 
         await expect(
           services.loadInitiativeStatus({
-            failure: O.none,
-            initiativeStatus: O.none,
+            ...T_CONTEXT,
             serviceId: T_SERVICE_ID,
             initiative: T_INITIATIVE_DTO
           })
@@ -419,8 +417,7 @@ describe("IDPay Onboarding machine services", () => {
 
       await expect(
         services.loadRequiredCriteria({
-          failure: O.none,
-          initiativeStatus: O.none,
+          ...T_CONTEXT,
           serviceId: T_SERVICE_ID,
           initiative: T_INITIATIVE_DTO
         })
