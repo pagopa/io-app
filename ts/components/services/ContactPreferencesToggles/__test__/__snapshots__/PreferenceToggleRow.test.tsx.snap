@@ -50,7 +50,7 @@ exports[`PreferenceToggleRow component should match the snapshot 1`] = `
     </Text>
   </View>
   <RCTSwitch
-    accessibilityLabel="Select to activate"
+    accessibilityLabel="Push Notifications"
     accessibilityRole="switch"
     accessibilityState={
       Object {
