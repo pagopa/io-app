@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { PreferredLanguage } from "../../../../../definitions/backend/PreferredLanguage";
 import { InitiativeDto } from "../../../../../definitions/idpay/onboarding/InitiativeDto";
 import { StatusEnum } from "../../../../../definitions/idpay/onboarding/OnboardingStatusDTO";
@@ -10,32 +10,7 @@ import { SelfConsentDTO } from "../../../../../definitions/idpay/onboarding/Self
 import { OnboardingClient } from "../api/client";
 import { OnboardingFailureEnum } from "./failure";
 import { Context } from "./machine";
-
-/**
- * Temporary function to convert the required criteria to the self consents
- *
- * TODO: Process inputs from the citizen
- */
-const createSelfConsents = (requiredCriteria: RequiredCriteriaDTO) => {
-  const selfConsents: Array<SelfConsentDTO> =
-    requiredCriteria.selfDeclarationList.map(_ => {
-      if (_._type === "boolean") {
-        return {
-          _type: _._type,
-          code: _.code,
-          accepted: true
-        };
-      } else {
-        return {
-          _type: _._type,
-          code: _.code,
-          value: _.value[0]
-        };
-      }
-    });
-
-  return selfConsents;
-};
+import { getBoolRequiredCriteriaFromContext } from "./selectors";
 
 const createServicesImplementation = (
   onboardingClient: OnboardingClient,
@@ -121,6 +96,7 @@ const createServicesImplementation = (
     if (context.initiative === undefined) {
       return Promise.reject(OnboardingFailureEnum.GENERIC);
     }
+
     const response = await onboardingClient.onboardingCitizen({
       ...clientOptions,
       body: {
@@ -179,7 +155,7 @@ const createServicesImplementation = (
   };
 
   const acceptRequiredCriteria = async (context: Context) => {
-    const { initiative, requiredCriteria } = context;
+    const { initiative, requiredCriteria, multiConsentsAnswers } = context;
 
     if (initiative === undefined || requiredCriteria === undefined) {
       return Promise.reject(OnboardingFailureEnum.GENERIC);
@@ -189,12 +165,21 @@ const createServicesImplementation = (
       return Promise.reject(OnboardingFailureEnum.GENERIC);
     }
 
+    const consentsArray = [
+      ...getBoolRequiredCriteriaFromContext(context).map(_ => ({
+        _type: _._type,
+        code: _.code,
+        accepted: true
+      })),
+      ...Object.entries(multiConsentsAnswers)
+    ] as Array<SelfConsentDTO>;
+
     const response = await onboardingClient.consentOnboarding({
       ...clientOptions,
       body: {
         initiativeId: initiative.initiativeId,
         pdndAccept: true,
-        selfDeclarationList: createSelfConsents(requiredCriteria.value)
+        selfDeclarationList: consentsArray
       }
     });
 
@@ -213,7 +198,6 @@ const createServicesImplementation = (
 
     return dataPromise;
   };
-
   return {
     loadInitiative,
     loadInitiativeStatus,

@@ -14,6 +14,7 @@ import {
   _typeEnum as SelfDeclarationMultiDTOType
 } from "../../../../../../definitions/idpay/onboarding/SelfDeclarationMultiDTO";
 import { StatusEnum } from "../../../../../../definitions/idpay/onboarding/OnboardingStatusDTO";
+import { SelfConsentMultiDTO } from "../../../../../../definitions/idpay/onboarding/SelfConsentMultiDTO";
 
 const T_SERVICE_ID = "T_SERVICE_ID";
 const T_INITIATIVE_ID = "T_INITIATIVE_ID";
@@ -30,6 +31,12 @@ const T_REQUIRED_SELF_CRITERIA_BOOL: SelfDeclarationBoolDTO = {
   code: "T_CODE_SELF_BOOL",
   description: "T_DESCRIPTION",
   value: true
+};
+
+const T_SELF_CONSENT_MULTI: SelfConsentMultiDTO = {
+  _type: SelfDeclarationMultiDTOType.multi,
+  code: "T_CODE_SELF_MULTI",
+  value: "T_VALUE_1"
 };
 
 const T_REQUIRED_SELF_CRITERIA_MULTI: SelfDeclarationMultiDTO = {
@@ -66,9 +73,10 @@ const mockLoadRequiredCriteria = jest.fn(
 
 const mockNavigateToInitiativeDetailsScreen = jest.fn();
 const mockNavigateToPDNDCriteriaScreen = jest.fn();
-const mockNavigateToSelfDeclarationsScreen = jest.fn();
+const mockNavigateToBoolSelfDeclarationsScreen = jest.fn();
 const mockNavigateToCompletionScreen = jest.fn();
 const mockNavigateToFailureScreen = jest.fn();
+const mockNavigateToMultiSelfDeclarationsScreen = jest.fn();
 const mockExitOnboarding = jest.fn();
 
 const mockAcceptRequiredCriteria = jest.fn(
@@ -98,7 +106,10 @@ describe("machine", () => {
         navigateToInitiativeDetailsScreen:
           mockNavigateToInitiativeDetailsScreen,
         navigateToPDNDCriteriaScreen: mockNavigateToPDNDCriteriaScreen,
-        navigateToSelfDeclarationsScreen: mockNavigateToSelfDeclarationsScreen,
+        navigateToBoolSelfDeclarationsScreen:
+          mockNavigateToBoolSelfDeclarationsScreen,
+        navigateToMultiSelfDeclarationsScreen:
+          mockNavigateToMultiSelfDeclarationsScreen,
         navigateToCompletionScreen: mockNavigateToCompletionScreen,
         navigateToFailureScreen: mockNavigateToFailureScreen,
         navigateToInitiativeMonitoringScreen: jest.fn(),
@@ -186,11 +197,18 @@ describe("machine", () => {
     });
 
     await waitFor(() =>
-      expect(mockNavigateToSelfDeclarationsScreen).toHaveBeenCalled()
+      expect(mockNavigateToBoolSelfDeclarationsScreen).toHaveBeenCalled()
     );
 
     onboardingService.send({
-      type: "ACCEPT_REQUIRED_SELF_CRITERIA"
+      type: "ACCEPT_REQUIRED_BOOL_CRITERIA"
+    });
+    await waitFor(() =>
+      expect(mockNavigateToMultiSelfDeclarationsScreen).toHaveBeenCalled()
+    );
+    onboardingService.send({
+      type: "SELECT_MULTI_CONSENT",
+      data: T_SELF_CONSENT_MULTI
     });
 
     await waitFor(() =>
@@ -230,7 +248,8 @@ describe("machine", () => {
       actions: {
         navigateToInitiativeDetailsScreen: jest.fn(),
         navigateToPDNDCriteriaScreen: jest.fn(),
-        navigateToSelfDeclarationsScreen: jest.fn(),
+        navigateToBoolSelfDeclarationsScreen: jest.fn(),
+        navigateToMultiSelfDeclarationsScreen: jest.fn(),
         navigateToCompletionScreen: jest.fn(),
         navigateToFailureScreen: jest.fn(),
         navigateToInitiativeMonitoringScreen: jest.fn(),
@@ -265,11 +284,12 @@ describe("machine", () => {
       actions: {
         navigateToInitiativeDetailsScreen: jest.fn(),
         navigateToPDNDCriteriaScreen: jest.fn(),
-        navigateToSelfDeclarationsScreen: jest.fn(),
+        navigateToBoolSelfDeclarationsScreen: jest.fn(),
         navigateToCompletionScreen: jest.fn(),
         navigateToFailureScreen: mockNavigateToFailureScreen,
         navigateToInitiativeMonitoringScreen: jest.fn(),
-        exitOnboarding: jest.fn()
+        exitOnboarding: jest.fn(),
+        navigateToMultiSelfDeclarationsScreen: jest.fn()
       }
     });
 
@@ -305,7 +325,8 @@ describe("machine", () => {
       actions: {
         navigateToInitiativeDetailsScreen: jest.fn(),
         navigateToPDNDCriteriaScreen: jest.fn(),
-        navigateToSelfDeclarationsScreen: jest.fn(),
+        navigateToBoolSelfDeclarationsScreen: jest.fn(),
+        navigateToMultiSelfDeclarationsScreen: jest.fn(),
         navigateToCompletionScreen: jest.fn(),
         navigateToFailureScreen: mockNavigateToFailureScreen,
         navigateToInitiativeMonitoringScreen: jest.fn(),
