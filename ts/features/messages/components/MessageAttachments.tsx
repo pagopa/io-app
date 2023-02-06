@@ -8,18 +8,14 @@ import { IOColors } from "../../../components/core/variables/IOColors";
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
 import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
-import {
-  UIAttachment,
-  UIAttachmentId
-} from "../../../store/reducers/entities/messages/types";
+import { UIAttachment } from "../../../store/reducers/entities/messages/types";
 import { ContentTypeValues } from "../../../types/contentType";
 import { formatByte } from "../../../types/digitalInformationUnit";
-import { MvlData } from "../../mvl/types/mvlData";
 import { useAttachmentDownload } from "../hooks/useAttachmentDownload";
 
 type Props = {
-  attachments: MvlData["attachments"];
-  openPreview: (attachmentId: UIAttachmentId) => void;
+  attachments: ReadonlyArray<UIAttachment>;
+  openPreview: (attachment: UIAttachment) => void;
 };
 
 const styles = StyleSheet.create({
@@ -70,7 +66,7 @@ const AttachmentIcon = (props: {
  */
 const AttachmentItem = (props: {
   attachment: UIAttachment;
-  openPreview: (attachmentId: UIAttachmentId) => void;
+  openPreview: (attachment: UIAttachment) => void;
 }) => {
   const { downloadPot, onAttachmentSelect, bottomSheet } =
     useAttachmentDownload(props.attachment, props.openPreview);
@@ -81,6 +77,9 @@ const AttachmentItem = (props: {
         style={styles.container}
         onPress={onAttachmentSelect}
         disabled={pot.isLoading(downloadPot)}
+        accessible={true}
+        accessibilityLabel={props.attachment.displayName}
+        accessibilityRole="button"
       >
         <View style={styles.row}>
           <View style={styles.icon}>

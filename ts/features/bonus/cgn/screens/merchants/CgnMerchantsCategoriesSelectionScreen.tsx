@@ -2,12 +2,12 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { View } from "native-base";
 import * as React from "react";
 import { useEffect, useMemo, useRef } from "react";
-import { FlatList, ListRenderItemInfo, Platform } from "react-native";
+import { View, FlatList, ListRenderItemInfo, Platform } from "react-native";
 import { ProductCategoryWithNewDiscountsCount } from "../../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
 import { IOBadge } from "../../../../../components/core/IOBadge";
+import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H1 } from "../../../../../components/core/typography/H1";
 import {
   IOColors,
@@ -67,7 +67,7 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
           onPress={() => navigation.navigate(CGN_ROUTES.DETAILS.MERCHANTS.LIST)}
           child={
             <View style={[{ alignItems: "flex-end" }, IOStyles.flex]}>
-              <View spacer />
+              <VSpacer size={16} />
               <IOBadge
                 small
                 text={`${info.item.newDiscounts} ${I18n.t(
@@ -157,7 +157,7 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
     >
       <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
         <H1>{I18n.t("bonus.cgn.merchantsList.categoriesList.title")}</H1>
-        <View spacer large />
+        <VSpacer size={24} />
         <FlatList
           showsVerticalScrollIndicator={Platform.OS !== "ios"}
           columnWrapperStyle={{ justifyContent: "space-between" }}

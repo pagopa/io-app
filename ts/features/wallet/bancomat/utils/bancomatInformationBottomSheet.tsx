@@ -1,6 +1,5 @@
 import * as React from "react";
-import { StyleSheet } from "react-native";
-import { View } from "native-base";
+import { View, StyleSheet } from "react-native";
 import I18n from "../../../../i18n";
 import InternationalCircuitIconsBar from "../../../../components/wallet/InternationalCircuitIconsBar";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
@@ -8,6 +7,7 @@ import { Label } from "../../../../components/core/typography/Label";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import { H4 } from "../../../../components/core/typography/H4";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
 
 const styles = StyleSheet.create({
   button: {
@@ -25,11 +25,11 @@ export default (onAdd?: () => void) => {
   const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
     <View>
       <InternationalCircuitIconsBar />
-      <View spacer={true} />
+      <VSpacer size={16} />
       <H4 weight={"Regular"} color={"bluegreyDark"}>
         {I18n.t("wallet.bancomat.details.debit.body")}
       </H4>
-      <View spacer={true} />
+      <VSpacer size={16} />
       <ButtonDefaultOpacity
         style={styles.button}
         bordered={true}

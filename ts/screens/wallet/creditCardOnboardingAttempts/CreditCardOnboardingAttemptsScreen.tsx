@@ -1,10 +1,11 @@
-import { Content, View } from "native-base";
+import { Content } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Body } from "../../../components/core/typography/Body";
 import { H2 } from "../../../components/core/typography/H2";
 import { IOColors } from "../../../components/core/variables/IOColors";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { withValidatedPagoPaVersion } from "../../../components/helpers/withValidatedPagoPaVersion";
 import RemindEmailValidationOverlay from "../../../components/RemindEmailValidationOverlay";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
@@ -46,9 +47,9 @@ const ListEmptyComponent = (
     <H2 color={"bluegreyDark"}>
       {I18n.t("wallet.creditCard.onboardingAttempts.emptyTitle")}
     </H2>
-    <View spacer={true} />
+    <VSpacer size={16} />
     <Body>{I18n.t("wallet.creditCard.onboardingAttempts.emptyBody")}</Body>
-    <View spacer={true} large={true} />
+    <VSpacer size={24} />
     <EdgeBorderComponent />
   </Content>
 );

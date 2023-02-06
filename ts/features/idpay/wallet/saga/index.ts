@@ -4,12 +4,16 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { createIDPayWalletClient } from "../api/client";
 import {
-  IDPAY_API_TEST_TOKEN,
-  IDPAY_API_UAT_BASEURL
+  idPayTestToken,
+  idPayApiUatBaseUrl,
+  idPayApiBaseUrl
 } from "../../../../config";
 import { idPayWalletGet } from "../store/actions";
 import { waitBackoffError } from "../../../../utils/backoffError";
-import { preferredLanguageSelector } from "../../../../store/reducers/persistedPreferences";
+import {
+  isPagoPATestEnabledSelector,
+  preferredLanguageSelector
+} from "../../../../store/reducers/persistedPreferences";
 import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
 import { fromLocaleToPreferredLanguage } from "../../../../utils/locale";
 import { handleGetIDPayWallet } from "./handleGetIDPayWallet";
@@ -19,8 +23,11 @@ import { handleGetIDPayWallet } from "./handleGetIDPayWallet";
  * @param bearerToken
  */
 export function* watchIDPayWalletSaga(bearerToken: string): SagaIterator {
-  const idPayWalletClient = createIDPayWalletClient(IDPAY_API_UAT_BASEURL);
-  const token = IDPAY_API_TEST_TOKEN ?? bearerToken;
+  const isPagoPATestEnabled = yield* select(isPagoPATestEnabledSelector);
+  const baseUrl = isPagoPATestEnabled ? idPayApiUatBaseUrl : idPayApiBaseUrl;
+  const token = idPayTestToken ?? bearerToken;
+
+  const idPayWalletClient = createIDPayWalletClient(baseUrl);
   const language = yield* select(preferredLanguageSelector);
 
   const preferredLanguage = pipe(

@@ -1,6 +1,6 @@
 import * as React from "react";
-import { Badge, View } from "native-base";
-import { StyleProp, StyleSheet, ViewStyle } from "react-native";
+import { Badge } from "native-base";
+import { View, ViewStyle, StyleProp, StyleSheet } from "react-native";
 import { EycaCardActivated } from "../../../../../../../definitions/cgn/EycaCardActivated";
 import { H4 } from "../../../../../../components/core/typography/H4";
 import I18n from "../../../../../../i18n";
@@ -15,6 +15,10 @@ import { localeDateFormat } from "../../../../../../utils/locale";
 import ButtonDefaultOpacity from "../../../../../../components/ButtonDefaultOpacity";
 import { Label } from "../../../../../../components/core/typography/Label";
 import { clipboardSetStringWithFeedback } from "../../../../../../utils/clipboard";
+import {
+  HSpacer,
+  VSpacer
+} from "../../../../../../components/core/spacer/Spacer";
 
 type Props = {
   eycaCard: EycaCardActivated | EycaCardExpired | EycaCardRevoked;
@@ -99,7 +103,7 @@ const EycaStatusDetailsComponent = (props: Props) => {
       <View style={[styles.rowBlock, styles.spaced]}>
         <View style={styles.rowBlock}>
           <H4>{I18n.t("bonus.cgn.detail.status.eyca")}</H4>
-          <View hspacer small />
+          <HSpacer size={8} />
           <IconFont
             name={"io-info"}
             size={ICON_SIZE}
@@ -109,7 +113,7 @@ const EycaStatusDetailsComponent = (props: Props) => {
         </View>
         {badgeByStatus()}
       </View>
-      <View spacer />
+      <VSpacer size={16} />
       <View style={[styles.rowBlock, styles.spaced]}>
         <H5 weight={"Regular"} color={"bluegrey"} style={IOStyles.flex}>
           {I18n.t("bonus.cgn.detail.status.eycaNumber")}
@@ -118,7 +122,7 @@ const EycaStatusDetailsComponent = (props: Props) => {
           {props.eycaCard.card_number}
         </Monospace>
       </View>
-      <View spacer small />
+      <VSpacer size={8} />
       <View style={[styles.rowBlock, styles.spaced]}>
         <H5 weight={"Regular"} color={"bluegrey"} style={IOStyles.flex}>
           {I18n.t("bonus.cgn.detail.status.expiration.eyca")}
@@ -130,7 +134,7 @@ const EycaStatusDetailsComponent = (props: Props) => {
           )}
         </H5>
       </View>
-      <View spacer />
+      <VSpacer size={16} />
       <ButtonDefaultOpacity
         bordered
         style={{ width: "100%" }}

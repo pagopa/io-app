@@ -588,6 +588,8 @@ authentication:
     card5-content: In this version you can find in the upper-right corner
       the icons to report bugs or start a chat with the development team.
       We're waiting for your feedback!
+    card5-content-accessibility: Seleziona elemento precedente per aprire
+      una chat con il team di IO se qualcosa non funziona come dovrebbe.
     expiredCardTitle: Card expired or no longer valid
     expiredCardHeaderTitle: Login with CIE
     expiredCardContent: "The card used is no longer valid or has expired.\nIf you want to log in and access IO you must use SPID."
@@ -1787,6 +1789,15 @@ messageDetails:
   sendEmail: Send email
   write: Write
   id: "ID:"
+  attachments:
+    badFormat: "The attachment format is not supported. Please contact the sender"
+    corruptedFile: "The attachment is corrupt and can't be opened. Please contact the sender"
+    downloadFailed: "We couldn't open the attachment. Try again"
+    showPreview: "See preview"
+    unavailable:
+      firstPart: "The attachments are no longer available. "
+      secondPart: "Please contact the sender"
+      thirdPart: " for more information."
 notifications:
   installation:
     errorTitle: Push notifications
@@ -3173,9 +3184,12 @@ features:
         cta: Accedi alla versione web  
   fci:
     errors:
+      expiredAfterSigned:
+        title: The documents are no longer available
+        subTitle: If you need a copy, contact the issuer
       expired:
-        title: Document no longer available for signature
-        subTitle: The document is no longer available for signature. Contact the institution for more information.
+        title: The signature request is expired
+        subTitle: If you need help contact the issuer
       waitForQtsp:
         title: The document is being processed
         subTitle: Please wait, you will soon receive the signed contract in the app.
@@ -3212,7 +3226,8 @@ features:
       content: "You will shortly receive a message with the signed documents."
       cta: "Close"
     qtspTos:
-      title: "Do you give your consent?"
+      title: "We are almost there!"
+      subTitle: "To sign, you must accept the terms and conditions of the service and confirm that you have read the privacy policy of the signature provider."
       show: "View"
 webView:
   error:
@@ -3242,6 +3257,7 @@ support:
     emailAddress: "Email address"
     deviceAndOS: "Device and Operating System"
     ipAddress: "IP address"
+    ipAddressValue: "Including the assumed geographic location"
     appVersionsHistory: "App version history"
     appVersionsHistoryValue: "To determine if the issue is due to the most recent update"
     identityProvider: "Identity Provider"
@@ -3249,6 +3265,8 @@ support:
     navigationDataValue: "Such as the the last screen or message displayed in IO."
     stock: "Payment Notice details"
     stockValue: "Including the error you just received"
+    card: "Payment methods details"
+    cardValue: "Number (encrypted), expiration, network"
     header: "Submit a request"
     listTitle: "Ongoing requests"
     title: "Do you give us your consent?"
@@ -3277,25 +3295,6 @@ idpay:
     preview:
       validThrough: "Valid through {{endDate}}"
   initiative:
-    configuration: 
-      instrumentStatus:
-        active: Active
-        pendingActivation: Pending activation
-        pendingDeactivation: Pending deactivation
-      bottomSheet:
-        header: Prima di continuare
-        bodyFirst: Il metodo sarà abilitato
-        bodyBold: " nelle prossime ore."
-        bodyLast: Riceverai una notifica push quando potrai iniziare ad utilizzarlo. Fino a quel momento eventuali transazioni verranno ignorate.
-        footer:
-          buttonActivate: Attiva
-          buttonCancel: Annulla
-      header: Scegli quali metodi di pagamento associare
-      subHeader: "Poi, usali per pagare e chiedi all’esercente di usare {{initiativeName}}."
-      footer: Modifica queste scelte o aggiunti altri metodi in qualsiasi momento dalla sezione Portafoglio
-      buttonFooter:
-        noneCta: Nessuno di questi
-        continueCta: Continua
     details:
       initiativeCard:
         availableAmount: Disponibile
@@ -3333,7 +3332,37 @@ idpay:
                 "Hai rifiutato di eliminare un metodo di pagamento"
               PAID_REFUND:  "Rimborso"
               REJECTED_REFUND:  "Rifiuto rimborso"
+    operationDetails:
+      title: Dettaglio dell'operazione
+      instrument: Metodo di pagamento
+      maskedPan: •••• {{lastDigits}}
+      amountLabel: Importo transazione
+      accruedAmountLabel: Importo rimborsabile
+      amount: € {{amount}}
+      infoTitle: Informazioni sull transazione
+      date: Data
+      circuit: Circuito di pagamento
+      acquirerId: ID transazione Acquirer
+      issuerId: ID transazione Issuer
   onboarding:
+    success:
+      understoodCta: Ho capito!
+      pleaseWait: Un attimo di pazienza...
+      requestSent: La tua richiesta è stata inviata!
+    failure:
+      NO_PERMISSION:
+        title: "Non hai i requisiti per aderire a questa iniziativa"
+        subtitle: "Non puoi richiedere il bonus!"
+      GENERIC:
+        title: "C’è un problema sui nostri sistemi"
+        subtitle:
+          "Ci scusiamo per il disagio.\nTi invitiamo a riprovare più tardi."
+      ALREADY_COMPLETED:
+        title: "Onboarding concluso"
+        subtitle: "Hai già fatto l'onboarding per questa iniziativa"
+      ONBOARDING_KO:
+        title: "Onboarding fallito"
+        subtitle: "L'adesione non è andata a buon fine"
     headerTitle: "Adesione all'iniziativa"
     beforeContinue:
       text1: "Proseguendo accetti i "
@@ -3351,7 +3380,23 @@ idpay:
           understoodCTA: Ho capito
       title: Possiedi i seguenti requisiti?
       subtitle: Verificheremo con alcuni Enti se sei in possesso dei requisiti per poter richiedere {{service}}. 
+    multiPrerequisites:
+      header: "Dichiari inoltre di:"
+      body: L’autodichiarazione è resa ai sensi del
+      link: Dpr 28 dicembre 2000 n. 445 art 46 e 47
+    boolPrerequisites:
+      header: "Per aderire, dichiari di:"
+      body: L’autodichiarazione è resa ai sensi del
+      link: Dpr 28 dicembre 2000 n. 445 art 46 e 47 
   configuration:
+    failureStates:
+      GENERIC: "C'è stato un problema, riprova"
+      INITIATIVE_ERROR: "Errore nel caricamento dell'iniziativa"
+      IBAN_LIST_LOAD_FAILURE: "Errore nel caricamento della lista IBAN"
+      IBAN_ENROLL_FAILURE: "Errore durante l'aggiunta dell'IBAN"
+      INSTRUMENTS_LIST_LOAD_FAILURE: "Errore nel caricamento della lista strumenti"
+      INSTRUMENT_ENROLL_FAILURE: "Errore durante l'aggiunta del metodo di pagamento"
+      INSTRUMENT_DELETE_FAILURE: "Errore durante la rimozione del metodo di pagamento"
     headerTitle: "Configure the initiative"
     intro: 
       title: "We are almost there"
@@ -3364,10 +3409,35 @@ idpay:
         instrumentSubtitle: "Indicate the methods to be enabled for the initiative"
       buttons:
         continue: "Start configuration"
+    instruments: 
+      title: "Metodi di pagamento"
+      header: Scegli quali metodi di pagamento associare
+      body: "Poi, usali per pagare e chiedi all’esercente di usare {{initiativeName}}."
+      footer: Modifica queste scelte o aggiunti altri metodi in qualsiasi momento dalla sezione Portafoglio
+      instrumentStatus:
+        active: Active
+        pendingActivation: Pending activation
+        pendingDeactivation: Pending deactivation
+      buttons:
+        skip: Nessuno di questi
+        continue: Continua
+        addMethod: Aggiungi metodo
+      enrollmentSheet:
+        header: Prima di continuare
+        bodyFirst: Il metodo sarà abilitato
+        bodyBold: " nelle prossime ore."
+        bodyLast: Riceverai una notifica push quando potrai iniziare ad utilizzarlo. Fino a quel momento eventuali transazioni verranno ignorate.
+        buttons:
+          activate: Attiva
+          cancel: Annulla
     associationSuccess:
       title: "Grazie!"
-      body: "Da domani potrai utilizzare {{initiativeName}}. Puoi abilitare altri metodi aggiungendoli al Portafoglio."
-      button: "Vai all'iniziativa"
+      body: "Da domani potrai utilizzare l'iniziativa {{initiativeName}}. Puoi abilitare altri metodi aggiungendoli al Portafoglio."
+      noInstrumentsBody: "Per terminare la configurazione devi aggiungere almeno un metodo di pagamento al Portafoglio e abilitarlo all’iniziativa."
+      buttons:
+        continue: "Vai all'iniziativa"
+        skip: "Più tardi"
+        addPaymentMethod: "Aggiungi un metodo di pagamento"
     iban:
       landing:
         header: Aggiungi un IBAN al tuo Profilo

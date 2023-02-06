@@ -50,9 +50,11 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
       WHO
     </Text>
     <View
-      spacer={true}
-      style={Object {}}
-      xsmall={true}
+      style={
+        Object {
+          "height": 4,
+        }
+      }
     />
     <View
       style={
@@ -83,9 +85,11 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
       }
     >
       <View
-        small={true}
-        spacer={true}
-        style={Object {}}
+        style={
+          Object {
+            "height": 8,
+          }
+        }
       />
       <Text
         style={
@@ -153,8 +157,11 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
         </RNSVGGroup>
       </RNSVGSvgView>
       <View
-        spacer={true}
-        style={Object {}}
+        style={
+          Object {
+            "height": 16,
+          }
+        }
       />
     </View>
     <View
@@ -193,8 +200,11 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
     }
   />
   <View
-    spacer={true}
-    style={Object {}}
+    style={
+      Object {
+        "height": 16,
+      }
+    }
   />
   <Text
     style={
@@ -270,9 +280,11 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
       WHO
     </Text>
     <View
-      spacer={true}
-      style={Object {}}
-      xsmall={true}
+      style={
+        Object {
+          "height": 4,
+        }
+      }
     />
     <View
       style={
@@ -307,8 +319,11 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
     }
   />
   <View
-    spacer={true}
-    style={Object {}}
+    style={
+      Object {
+        "height": 16,
+      }
+    }
   />
   <Text
     style={
@@ -384,9 +399,11 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
       WHO
     </Text>
     <View
-      spacer={true}
-      style={Object {}}
-      xsmall={true}
+      style={
+        Object {
+          "height": 4,
+        }
+      }
     />
     <View
       style={
@@ -421,8 +438,11 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
     }
   />
   <View
-    spacer={true}
-    style={Object {}}
+    style={
+      Object {
+        "height": 16,
+      }
+    }
   />
   <Text
     style={
@@ -498,9 +518,11 @@ exports[`MedicalPrescriptionAttachments component when the organization name is 
       WHO
     </Text>
     <View
-      spacer={true}
-      style={Object {}}
-      xsmall={true}
+      style={
+        Object {
+          "height": 4,
+        }
+      }
     />
     <View
       style={
@@ -535,8 +557,11 @@ exports[`MedicalPrescriptionAttachments component when the organization name is 
     }
   />
   <View
-    spacer={true}
-    style={Object {}}
+    style={
+      Object {
+        "height": 16,
+      }
+    }
   />
   <Text
     style={
@@ -595,9 +620,11 @@ exports[`MedicalPrescriptionAttachments component with default properties should
       NATIONAL HEALTH SERVICE
     </Text>
     <View
-      spacer={true}
-      style={Object {}}
-      xsmall={true}
+      style={
+        Object {
+          "height": 4,
+        }
+      }
     />
     <View
       style={
@@ -632,8 +659,11 @@ exports[`MedicalPrescriptionAttachments component with default properties should
     }
   />
   <View
-    spacer={true}
-    style={Object {}}
+    style={
+      Object {
+        "height": 16,
+      }
+    }
   />
   <Text
     style={

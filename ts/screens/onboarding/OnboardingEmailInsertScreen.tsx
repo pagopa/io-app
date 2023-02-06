@@ -8,10 +8,11 @@ import { StackActions } from "@react-navigation/native";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Content, Form, Text as NBText, View } from "native-base";
+import { Content, Form, Text as NBText } from "native-base";
 import * as React from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
+  View,
   Alert,
   Keyboard,
   Platform,
@@ -19,6 +20,7 @@ import {
   StyleSheet
 } from "react-native";
 import { H1 } from "../../components/core/typography/H1";
+import { VSpacer } from "../../components/core/spacer/Spacer";
 import { LabelledItem } from "../../components/LabelledItem";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import BaseScreenComponent, {
@@ -274,11 +276,11 @@ const OnboardingEmailInsertScreen = (props: Props) => {
             >
               {I18n.t("email.insert.title")}
             </H1>
-            <View spacer={true} />
+            <VSpacer size={16} />
             <View style={styles.horizontalPadding}>
               <NBText>{I18n.t("email.insert.subtitle")}</NBText>
             </View>
-            <View spacer={true} />
+            <VSpacer size={16} />
             <View style={styles.horizontalPadding}>
               <Form>
                 <LabelledItem

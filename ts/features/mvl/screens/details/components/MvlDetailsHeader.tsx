@@ -1,9 +1,9 @@
-import { View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import Svg from "react-native-svg";
 import Attachment from "../../../../../../img/features/mvl/attachment.svg";
 import LegalMessage from "../../../../../../img/features/mvl/legalMessage.svg";
+import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { H5 } from "../../../../../components/core/typography/H5";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
@@ -99,14 +99,17 @@ export const MvlDetailsHeader = (props: Props) => (
         logoURLs={props.service.logoURLs}
       />
     )}
-    <View spacer={true} large={true} />
+    <VSpacer size={24} />
 
     <H1>{props.mvl.legalMessage.metadata.subject}</H1>
-    <View spacer={true} small={true} />
-    <View spacer={true} xsmall={true} />
+
+    {/* <VSpacer size={12} /> */}
+    <VSpacer size={8} />
+    <VSpacer size={4} />
+
     <LegalMessageHeader hasAttachments={props.hasAttachments} />
 
-    <View spacer={true} />
+    <VSpacer size={16} />
 
     <View style={styles.withoutHorizontalContentPadding}>
       {/* TODO: TMP, how is calculated hasPaidBadge without using the paginated data? https://pagopa.atlassian.net/browse/IAMVL-22 */}

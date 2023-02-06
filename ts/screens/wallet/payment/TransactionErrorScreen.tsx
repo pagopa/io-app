@@ -7,15 +7,15 @@ import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as t from "io-ts";
-import { View } from "native-base";
 import * as React from "react";
 import { ComponentProps } from "react";
-import { Image, ImageSourcePropType, SafeAreaView } from "react-native";
+import { Image, ImageSourcePropType, SafeAreaView, View } from "react-native";
 import { connect } from "react-redux";
 import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJson";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { ZendeskCategory } from "../../../../definitions/content/ZendeskCategory";
 import CopyButtonComponent from "../../../components/CopyButtonComponent";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { H4 } from "../../../components/core/typography/H4";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
@@ -25,11 +25,11 @@ import {
   confirmButtonProps
 } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { FooterStackButton } from "../../../features/bonus/bonusVacanze/components/buttons/FooterStackButtons";
-import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
 import {
   zendeskSelectedCategory,
   zendeskSupportStart
 } from "../../../features/zendesk/store/actions";
+import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
 import I18n from "../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
@@ -137,7 +137,7 @@ const ErrorCodeCopyComponent = ({
     <H4 weight={"Bold"} testID={"error-code"} style={{ textAlign: "center" }}>
       {error}
     </H4>
-    <View spacer />
+    <VSpacer size={16} />
     <CopyButtonComponent textToCopy={error} />
   </View>
 );
@@ -409,7 +409,11 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   backToEntrypointPayment: () => dispatch(backToEntrypointPayment()),
   zendeskSupportWorkunitStart: () =>
     dispatch(
-      zendeskSupportStart({ startingRoute: "n/a", assistanceForPayment: true })
+      zendeskSupportStart({
+        startingRoute: "n/a",
+        assistanceForPayment: true,
+        assistanceForCard: false
+      })
     ),
   zendeskSelectedCategory: (category: ZendeskCategory) =>
     dispatch(zendeskSelectedCategory(category))
