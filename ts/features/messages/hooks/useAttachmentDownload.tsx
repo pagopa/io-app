@@ -11,16 +11,26 @@ import { showToast } from "../../../utils/showToast";
 import { mvlPreferencesSetWarningForAttachments } from "../../mvl/store/actions";
 import { mvlPreferencesSelector } from "../../mvl/store/reducers/preferences";
 import { downloadAttachment } from "../../../store/actions/messages";
+import { UIAttachment } from "../../../store/reducers/entities/messages/types";
+import { downloadPotForMessageAttachmentSelector } from "../../../store/reducers/entities/messages/downloads";
 import {
-  UIAttachment,
-  UIAttachmentId
-} from "../../../store/reducers/entities/messages/types";
-import { downloadFromAttachmentSelector } from "../../../store/reducers/entities/messages/downloads";
+  trackThirdPartyMessageAttachmentCancel,
+  trackThirdPartyMessageAttachmentShowPreview
+} from "../../../utils/analytics";
 import { useDownloadAttachmentBottomSheet } from "./useDownloadAttachmentBottomSheet";
 
+// This hook has a different behaviour if the attachment is a PN
+// one or a generic third-party attachment. This has been done to
+// preserve the PN flow and use the bottom sheet to warn the user
+// when selecting an attachment (if the skip-bottom-sheet preference
+// is not set). When selecting a PN attachment, this hook takes care
+// of downloading the attachment before going into the attachment
+// preview component. If the attachment is from a third-party message
+// (generic attachment) then the download is delegated to another
+// part of the application and this hook just displays the bootom sheet
 export const useAttachmentDownload = (
   attachment: UIAttachment,
-  openPreview: (attachmentId: UIAttachmentId) => void
+  openPreview: (attachment: UIAttachment) => void
 ) => {
   const [isLoading, setIsLoading] = useState(false);
 
@@ -29,7 +39,7 @@ export const useAttachmentDownload = (
   const { showAlertForAttachments } = useIOSelector(mvlPreferencesSelector);
 
   const downloadPot = useIOSelector(state =>
-    downloadFromAttachmentSelector(state, attachment)
+    downloadPotForMessageAttachmentSelector(state, attachment)
   );
 
   const openAttachment = useCallback(async () => {
@@ -44,7 +54,7 @@ export const useAttachmentDownload = (
       const path = download.path;
       const attachment = download.attachment;
       if (attachment.contentType === ContentTypeValues.applicationPdf) {
-        openPreview(attachment.id);
+        openPreview(attachment);
       } else {
         if (isIos) {
           ReactNativeBlobUtil.ios.presentOptionsMenu(path);
@@ -90,8 +100,15 @@ export const useAttachmentDownload = (
     setIsLoading(isStillLoading);
   }, [downloadPot, isLoading, setIsLoading, openAttachment]);
 
+  const isGenericAttachment = attachment.category === "GENERIC";
   const downloadAttachmentIfNeeded = async () => {
     if (pot.isLoading(downloadPot)) {
+      return;
+    }
+
+    // Do not download the attachment for generic third party message
+    if (isGenericAttachment) {
+      openPreview(attachment);
       return;
     }
 
@@ -105,22 +122,35 @@ export const useAttachmentDownload = (
   };
 
   const { present, bottomSheet, dismiss } = useDownloadAttachmentBottomSheet({
+    isGenericAttachment,
     onConfirm: dontAskAgain => {
-      void mixpanelTrack("PN_ATTACHMENTDISCLAIMER_ACCEPTED");
+      if (isGenericAttachment) {
+        trackThirdPartyMessageAttachmentShowPreview();
+      } else {
+        void mixpanelTrack("PN_ATTACHMENTDISCLAIMER_ACCEPTED");
+      }
       dispatch(mvlPreferencesSetWarningForAttachments(!dontAskAgain));
       void downloadAttachmentIfNeeded();
       dismiss();
     },
     onCancel: () => {
-      void mixpanelTrack("PN_ATTACHMENTDISCLAIMER_REJECTED");
+      if (isGenericAttachment) {
+        trackThirdPartyMessageAttachmentCancel();
+      } else {
+        void mixpanelTrack("PN_ATTACHMENTDISCLAIMER_REJECTED");
+      }
       dismiss();
     }
   });
 
   const onAttachmentSelect = () => {
-    void mixpanelTrack("PN_ATTACHMENT_OPEN");
+    if (!isGenericAttachment) {
+      void mixpanelTrack("PN_ATTACHMENT_OPEN");
+    }
     if (showAlertForAttachments) {
-      void mixpanelTrack("PN_ATTACHMENTDISCLAIMER_SHOW_SUCCESS");
+      if (!isGenericAttachment) {
+        void mixpanelTrack("PN_ATTACHMENTDISCLAIMER_SHOW_SUCCESS");
+      }
       present();
     } else {
       void downloadAttachmentIfNeeded();

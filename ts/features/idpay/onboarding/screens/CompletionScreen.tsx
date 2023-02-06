@@ -5,6 +5,7 @@ import { useOnboardingMachineService } from "../xstate/provider";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import themeVariables from "../../../../theme/variables";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
+import I18n from "../../../../i18n";
 
 type CompletionScreenRouteRaparms = undefined;
 
@@ -23,11 +24,11 @@ const CompletionScreen = () => {
 
   const content = React.useMemo(() => {
     if (state.matches("ACCEPTING_REQUIRED_CRITERIA")) {
-      return <Text>Un attimo di pazienza...</Text>;
+      return <Text>{I18n.t("idpay.onboarding.success.pleaseWait")}</Text>;
     }
 
     if (state.matches("DISPLAYING_ONBOARDING_COMPLETED")) {
-      return <Text>La tua richiesta è stata inviata!</Text>;
+      return <Text>{I18n.t("idpay.onboarding.success.requestSent")}</Text>;
     }
 
     return null;
@@ -43,7 +44,7 @@ const CompletionScreen = () => {
       <FooterWithButtons
         type="SingleButton"
         leftButton={{
-          title: "Ho capito!",
+          title: I18n.t("idpay.onboarding.success.understoodCta"),
           testID: "closeButton",
           onPress: handleClosePress
         }}
