@@ -1,4 +1,3 @@
-import { isOfType } from "typesafe-actions";
 import {
   AppParamsList,
   IOStackNavigationProp
@@ -79,11 +78,11 @@ const createActionsImplementation = (
     navigateToInitiativeDetailsScreen,
     navigateToPDNDCriteriaScreen,
     navigateToBoolSelfDeclarationsScreen,
+    navigateToMultiSelfDeclarationsScreen,
     navigateToCompletionScreen,
     navigateToFailureScreen,
     navigateToInitiativeMonitoringScreen,
-    exitOnboarding,
-    navigateToMultiSelfDeclarationsScreen
+    exitOnboarding
   };
 };
 

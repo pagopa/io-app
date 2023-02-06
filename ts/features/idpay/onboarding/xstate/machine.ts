@@ -209,24 +209,6 @@ const createIDPayOnboardingMachine = () =>
           }
         },
 
-        EVALUATING_INITIATIVE_STATUS: {
-          always: [
-            {
-              target: "DISPLAYING_ONBOARDING_FAILURE",
-              cond: "isOnboardingDone",
-              actions: "onOnboardingDone"
-            },
-            {
-              target: "DISPLAYING_ONBOARDING_FAILURE",
-              cond: "isOnboardingFailed",
-              actions: "onOnboardingFailed"
-            },
-            {
-              target: "DISPLAYING_INITIATIVE"
-            }
-          ]
-        },
-
         DISPLAYING_INITIATIVE: {
           entry: "navigateToInitiativeDetailsScreen",
           on: {
