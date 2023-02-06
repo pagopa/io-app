@@ -11,12 +11,23 @@ import {
 import { RequiredCriteriaDTO } from "../../../../../../definitions/idpay/onboarding/RequiredCriteriaDTO";
 import { _typeEnum as BoolTypeEnum } from "../../../../../../definitions/idpay/onboarding/SelfConsentBoolDTO";
 import { SelfConsentDTO } from "../../../../../../definitions/idpay/onboarding/SelfConsentDTO";
-import { _typeEnum as MultiTypeEnum } from "../../../../../../definitions/idpay/onboarding/SelfConsentMultiDTO";
+import {
+  SelfConsentMultiDTO,
+  _typeEnum as MultiTypeEnum
+} from "../../../../../../definitions/idpay/onboarding/SelfConsentMultiDTO";
 import { OnboardingFailureEnum } from "../failure";
+import { Context } from "../machine";
 import { createServicesImplementation } from "../services";
 
 const T_PREFERRED_LANGUAGE = PreferredLanguageEnum.it_IT;
 const T_AUTH_TOKEN = "abc123";
+
+const T_CONTEXT: Context = {
+  failure: O.none,
+  initiativeStatus: O.none,
+  multiConsentsAnswers: {},
+  multiConsentsPage: 0
+};
 
 const T_SERVICE_ID = "efg456";
 
@@ -55,23 +66,27 @@ const T_REQUIRED_CRITERIA_DTO: RequiredCriteriaDTO = {
   ]
 };
 
-const T_ACCEPTED_SELF_DECLARATION_LIST: Array<SelfConsentDTO> = [
-  {
+const T_MULTI_CONSENTS_ANSWERS: Record<number, SelfConsentMultiDTO> = {
+  1: {
     _type: MultiTypeEnum.multi,
     code: "1",
     value: "A"
   },
-  {
+  2: {
     _type: MultiTypeEnum.multi,
     code: "2",
     value: "D"
-  },
+  }
+};
+
+const T_ACCEPTED_SELF_DECLARATION_LIST: Array<SelfConsentDTO> = [
   {
     _type: BoolTypeEnum.boolean,
     code: "3",
     accepted: true
-  }
-];
+  },
+  ...Object.entries(T_MULTI_CONSENTS_ANSWERS)
+] as Array<SelfConsentDTO>;
 
 const mockOnboardingClient = {
   getInitiativeData: jest.fn(),
@@ -94,12 +109,9 @@ describe("IDPay Onboarding machine services", () => {
 
   describe("loadInitiative", () => {
     it("should fail if not service id is provided in context", async () => {
-      await expect(
-        services.loadInitiative({
-          failure: O.none,
-          initiativeStatus: O.none
-        })
-      ).rejects.toMatch(OnboardingFailureEnum.GENERIC);
+      await expect(services.loadInitiative(T_CONTEXT)).rejects.toMatch(
+        OnboardingFailureEnum.GENERIC
+      );
 
       expect(mockOnboardingClient.getInitiativeData).toHaveBeenCalledTimes(0);
     });
@@ -112,8 +124,7 @@ describe("IDPay Onboarding machine services", () => {
 
       await expect(
         services.loadInitiative({
-          failure: O.none,
-          initiativeStatus: O.none,
+          ...T_CONTEXT,
           serviceId: T_SERVICE_ID
         })
       ).rejects.toMatch(OnboardingFailureEnum.GENERIC);
@@ -137,8 +148,7 @@ describe("IDPay Onboarding machine services", () => {
 
       await expect(
         services.loadInitiative({
-          failure: O.none,
-          initiativeStatus: O.none,
+          ...T_CONTEXT,
           serviceId: T_SERVICE_ID
         })
       ).resolves.toMatchObject(T_INITIATIVE_DTO);
@@ -155,12 +165,9 @@ describe("IDPay Onboarding machine services", () => {
 
   describe("loadInitiativeStatus", () => {
     it("should fail if initiative is not provided with context", async () => {
-      await expect(
-        services.loadInitiativeStatus({
-          failure: O.none,
-          initiativeStatus: O.none
-        })
-      ).rejects.toMatch(OnboardingFailureEnum.GENERIC);
+      await expect(services.loadInitiativeStatus(T_CONTEXT)).rejects.toMatch(
+        OnboardingFailureEnum.GENERIC
+      );
 
       expect(mockOnboardingClient.onboardingStatus).toHaveBeenCalledTimes(0);
     });
@@ -173,8 +180,7 @@ describe("IDPay Onboarding machine services", () => {
 
       await expect(
         services.loadInitiativeStatus({
-          failure: O.none,
-          initiativeStatus: O.none,
+          ...T_CONTEXT,
           serviceId: T_SERVICE_ID,
           initiative: T_INITIATIVE_DTO
         })
@@ -197,8 +203,7 @@ describe("IDPay Onboarding machine services", () => {
 
       await expect(
         services.loadInitiativeStatus({
-          failure: O.none,
-          initiativeStatus: O.none,
+          ...T_CONTEXT,
           serviceId: T_SERVICE_ID,
           initiative: T_INITIATIVE_DTO
         })
@@ -278,12 +283,9 @@ describe("IDPay Onboarding machine services", () => {
 
   describe("acceptTos", () => {
     it("should fail if initiative is not provided with context", async () => {
-      await expect(
-        services.acceptTos({
-          failure: O.none,
-          initiativeStatus: O.none
-        })
-      ).rejects.toMatch(OnboardingFailureEnum.GENERIC);
+      await expect(services.acceptTos(T_CONTEXT)).rejects.toMatch(
+        OnboardingFailureEnum.GENERIC
+      );
 
       expect(mockOnboardingClient.onboardingCitizen).toHaveBeenCalledTimes(0);
     });
@@ -296,8 +298,7 @@ describe("IDPay Onboarding machine services", () => {
 
       await expect(
         services.acceptTos({
-          failure: O.none,
-          initiativeStatus: O.none,
+          ...T_CONTEXT,
           serviceId: T_SERVICE_ID,
           initiative: T_INITIATIVE_DTO
         })
@@ -322,8 +323,7 @@ describe("IDPay Onboarding machine services", () => {
 
       await expect(
         services.acceptTos({
-          failure: O.none,
-          initiativeStatus: O.none,
+          ...T_CONTEXT,
           serviceId: T_SERVICE_ID,
           initiative: T_INITIATIVE_DTO
         })
@@ -343,12 +343,9 @@ describe("IDPay Onboarding machine services", () => {
 
   describe("loadRequiredCriteria", () => {
     it("should fail if initiative is not provided with context", async () => {
-      await expect(
-        services.loadRequiredCriteria({
-          failure: O.none,
-          initiativeStatus: O.none
-        })
-      ).rejects.toMatch(OnboardingFailureEnum.GENERIC);
+      await expect(services.loadRequiredCriteria(T_CONTEXT)).rejects.toMatch(
+        OnboardingFailureEnum.GENERIC
+      );
 
       expect(mockOnboardingClient.checkPrerequisites).toHaveBeenCalledTimes(0);
     });
@@ -363,8 +360,7 @@ describe("IDPay Onboarding machine services", () => {
 
       await expect(
         services.loadRequiredCriteria({
-          failure: O.none,
-          initiativeStatus: O.none,
+          ...T_CONTEXT,
           serviceId: T_SERVICE_ID,
           initiative: T_INITIATIVE_DTO
         })
@@ -391,8 +387,7 @@ describe("IDPay Onboarding machine services", () => {
 
       await expect(
         services.loadRequiredCriteria({
-          failure: O.none,
-          initiativeStatus: O.none,
+          ...T_CONTEXT,
           serviceId: T_SERVICE_ID,
           initiative: T_INITIATIVE_DTO
         })
@@ -445,12 +440,9 @@ describe("IDPay Onboarding machine services", () => {
 
   describe("acceptRequiredCriteria", () => {
     it("should fail if initiative or required criterias are not provided with context", async () => {
-      await expect(
-        services.acceptRequiredCriteria({
-          failure: O.none,
-          initiativeStatus: O.none
-        })
-      ).rejects.toMatch(OnboardingFailureEnum.GENERIC);
+      await expect(services.acceptRequiredCriteria(T_CONTEXT)).rejects.toMatch(
+        OnboardingFailureEnum.GENERIC
+      );
 
       expect(mockOnboardingClient.consentOnboarding).toHaveBeenCalledTimes(0);
     });
@@ -458,8 +450,7 @@ describe("IDPay Onboarding machine services", () => {
     it("should fail if required criteria in context is none", async () => {
       await expect(
         services.acceptRequiredCriteria({
-          failure: O.none,
-          initiativeStatus: O.none,
+          ...T_CONTEXT,
           requiredCriteria: O.none
         })
       ).rejects.toMatch(OnboardingFailureEnum.GENERIC);
@@ -475,11 +466,11 @@ describe("IDPay Onboarding machine services", () => {
 
       await expect(
         services.acceptRequiredCriteria({
-          failure: O.none,
-          initiativeStatus: O.none,
+          ...T_CONTEXT,
           serviceId: T_SERVICE_ID,
           initiative: T_INITIATIVE_DTO,
-          requiredCriteria: O.some(T_REQUIRED_CRITERIA_DTO)
+          requiredCriteria: O.some(T_REQUIRED_CRITERIA_DTO),
+          multiConsentsAnswers: T_MULTI_CONSENTS_ANSWERS
         })
       ).rejects.toMatch(OnboardingFailureEnum.GENERIC);
 
@@ -504,11 +495,11 @@ describe("IDPay Onboarding machine services", () => {
 
       await expect(
         services.acceptRequiredCriteria({
-          failure: O.none,
-          initiativeStatus: O.none,
+          ...T_CONTEXT,
           serviceId: T_SERVICE_ID,
           initiative: T_INITIATIVE_DTO,
-          requiredCriteria: O.some(T_REQUIRED_CRITERIA_DTO)
+          requiredCriteria: O.some(T_REQUIRED_CRITERIA_DTO),
+          multiConsentsAnswers: T_MULTI_CONSENTS_ANSWERS
         })
       ).resolves.toBeUndefined();
 
