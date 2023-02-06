@@ -51,8 +51,8 @@
   - [Fonts](#fonts)
   - [Vector graphics](#vector-graphics)
   - [Io-Icon-Font](#io-icon-font) (⚠️ deprecated)
-  - [Theming](#theming)
-  - [Custom UI components](#custom-ui-components)
+  - [Theming](#theming) (⚠️ deprecated)
+  - [Custom UI components](#custom-ui-components) (⚠️ deprecated)
   - [End to end test](./TESTING_E2E.md)
   - [Troubleshooting](#troubleshooting)
 
@@ -568,7 +568,8 @@ $ react-native-asset
 
 This last command deals in particular with copying the asset within a specific folder of the Android sub-project.
 
-### Theming (⚠️ deprecated)
+### Theming
+**Note**: ⚠️ Deprecated
 
 The application uses [native-base](https://nativebase.io/) and its components for the graphical interface. In particular, we  decided to use as a basis the theme material provided by the library. Although native-base allows to customize part of the theme through the use of variables, it was nevertheless necessary to implement ad-hoc functions that allow to go to modify the theme of the individual components.
 
@@ -693,7 +694,8 @@ export default (): Theme => {
 
 In this case, what is defined within the attribute `NativeBase.Text` will be used only if the button has associated a property with a name `small`.
 
-### Custom UI components (⚠️ deprecated)
+### Custom UI components
+**Note**: ⚠️ Deprecated
 
 #### TextWithIcon
 
