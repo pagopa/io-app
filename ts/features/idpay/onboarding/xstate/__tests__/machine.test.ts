@@ -205,7 +205,8 @@ describe("machine", () => {
     await waitFor(() =>
       expect(mockNavigateToMultiSelfDeclarationsScreen).toHaveBeenCalled()
     );
-    onboardingService.send("SELECT_MULTI_CONSENT", {
+    onboardingService.send({
+      type: "SELECT_MULTI_CONSENT",
       data: T_SELF_CONSENT_MULTI
     });
 
