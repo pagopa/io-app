@@ -14,6 +14,7 @@ import {
   _typeEnum as SelfDeclarationMultiDTOType
 } from "../../../../../../definitions/idpay/onboarding/SelfDeclarationMultiDTO";
 import { StatusEnum } from "../../../../../../definitions/idpay/onboarding/OnboardingStatusDTO";
+import { SelfConsentMultiDTO } from "../../../../../../definitions/idpay/onboarding/SelfConsentMultiDTO";
 
 const T_SERVICE_ID = "T_SERVICE_ID";
 const T_INITIATIVE_ID = "T_INITIATIVE_ID";
@@ -30,6 +31,12 @@ const T_REQUIRED_SELF_CRITERIA_BOOL: SelfDeclarationBoolDTO = {
   code: "T_CODE_SELF_BOOL",
   description: "T_DESCRIPTION",
   value: true
+};
+
+const T_SELF_CONSENT_MULTI: SelfConsentMultiDTO = {
+  _type: SelfDeclarationMultiDTOType.multi,
+  code: "T_CODE_SELF_MULTI",
+  value: "T_VALUE_1"
 };
 
 const T_REQUIRED_SELF_CRITERIA_MULTI: SelfDeclarationMultiDTO = {
@@ -198,8 +205,8 @@ describe("machine", () => {
     await waitFor(() =>
       expect(mockNavigateToMultiSelfDeclarationsScreen).toHaveBeenCalled()
     );
-    onboardingService.send({
-      type: "ALL_CRITERIA_ACCEPTED"
+    onboardingService.send("SELECT_MULTI_CONSENT", {
+      data: T_SELF_CONSENT_MULTI
     });
 
     await waitFor(() =>
