@@ -38,6 +38,7 @@ const fontSizeSmall: TextStyle["fontSize"] = 14;
 // -- Primary Button
 const colorPrimaryButtonDefault: ColorValue = IOColors.blue;
 const colorPrimaryButtonPressed: ColorValue = IOColors.blueUltraLight;
+const colorPrimaryButtonDisabled: ColorValue = IOColors.bluegreyLight;
 // -- Danger Button
 
 const styles = StyleSheet.create({
@@ -45,18 +46,29 @@ const styles = StyleSheet.create({
     alignItems: "center",
     textAlignVertical: "center", // Android
     justifyContent: "center",
-    backgroundColor: colorPrimaryButtonDefault,
+
     // Visual parameters based on the FontScale
     paddingVertical: PixelRatio.getFontScale() * 10,
     paddingHorizontal: PixelRatio.getFontScale() * 16,
     borderRadius: PixelRatio.getFontScale() * 8
   },
+  /* Color styles */
+  colorDefaultState: {
+    backgroundColor: colorPrimaryButtonDefault
+  },
+  colorDisabledState: {
+    backgroundColor: colorPrimaryButtonDisabled
+  },
   /* Font Size */
   label: {
     alignSelf: "center"
   },
-  labelSizeDefault: { fontSize: fontSizeDefault },
-  labelSizeSmall: { fontSize: fontSizeSmall },
+  labelSizeDefault: {
+    fontSize: fontSizeDefault
+  },
+  labelSizeSmall: {
+    fontSize: fontSizeSmall
+  },
   /* Dimensions */
   dimensionsDefault: {
     alignSelf: "flex-start"
@@ -131,6 +143,7 @@ export const ButtonSolid = ({
         style={[
           styles.button,
           animatedStyle,
+          disabled ? styles.colorDisabledState : styles.colorDefaultState,
           fullWidth ? styles.dimensionsFullWidth : styles.dimensionsDefault
         ]}
       >
