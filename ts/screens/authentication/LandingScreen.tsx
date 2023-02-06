@@ -288,6 +288,13 @@ class LandingScreen extends React.PureComponent<Props, State> {
                 ? this.navigateToCiePinScreen
                 : this.navigateToIdpSelection
             }
+            accessibilityRole="button"
+            accessible={true}
+            accessibilityLabel={
+              isCieSupported
+                ? I18n.t("authentication.landing.loginCie")
+                : I18n.t("authentication.landing.loginSpid")
+            }
             testID={
               isCieSupported
                 ? "landing-button-login-cie"
@@ -306,6 +313,13 @@ class LandingScreen extends React.PureComponent<Props, State> {
           </ButtonDefaultOpacity>
           <VSpacer size={16} />
           <ButtonDefaultOpacity
+            accessibilityLabel={
+              this.isCieSupported()
+                ? I18n.t("authentication.landing.loginSpid")
+                : I18n.t("authentication.landing.loginCie")
+            }
+            accessibilityRole="button"
+            accessible={true}
             style={secondButtonStyle}
             block={true}
             primary={true}
