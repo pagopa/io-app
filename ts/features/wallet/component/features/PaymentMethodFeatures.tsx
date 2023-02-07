@@ -27,14 +27,14 @@ const styles = StyleSheet.create({
  * @constructor
  */
 const PaymentMethodFeatures: React.FunctionComponent<Props> = props => (
-    <>
-      <PaymentMethodInitiatives
-        paymentMethod={props.paymentMethod}
-        style={styles.initiatives}
-      />
-      <PaymentMethodSettings paymentMethod={props.paymentMethod} />
-    </>
-  );
+  <>
+    <PaymentMethodInitiatives
+      paymentMethod={props.paymentMethod}
+      style={styles.initiatives}
+    />
+    <PaymentMethodSettings paymentMethod={props.paymentMethod} />
+  </>
+);
 
 const mapDispatchToProps = (_: Dispatch) => ({});
 
