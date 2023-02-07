@@ -1997,3 +1997,161 @@ support:
       subCategory: "Kannst du uns mehr Details nennen?"
     subTitle:
       category: "Hilf uns, besser zu verstehen, wie wir dir helfen können, indem du den Bereich deines Problems auswählst: Wir werden uns so schnell wie möglich während der Geschäftszeiten bei dir melden."
+idpay:
+  wallet:
+    preview:
+      validThrough: "Gültig bis {{endDate}}"
+  initiative:
+    details:
+      initiativeCard:
+        availableAmount: "Verfügbar"
+        validUntil: "Gültig bis"
+        toRefund: "Zu erstatten"
+      initiativeDetailsScreen:
+        notConfigured:
+          header: "Starte die Initiative!"
+          footer: "Füge mindestens eine Methode hinzu, um mit der {{initiative}} zu beginnen"
+        configured:
+          yourOperations: Le tue Operazioni
+          yourOperationsSubtitle: "Qui vedrai le transazioni effettuate con i metodi che hai associato. "
+          yourOperationsLink: Come si fa?
+          settings:
+            showMore: Vedi tutte
+            header: Impostazioni
+            associatedPaymentMethods: Metodi di pagamento associati
+            methodsi18n: metodi 
+            selectedIBAN: IBAN per l'accredito
+            actionsRequired: Azioni richieste 
+          startConfigurationCTA: Inizia
+          operationsList:
+            header: Tutte le operazioni
+            title: Lista operazioni
+            lastUpdated: "Ultimo aggiornamento: "
+            operationDescriptions:
+              ONBOARDING:  "Hai aderito all'iniziativa"
+              ADD_IBAN:  "Aggiunto IBAN"
+              ADD_INSTRUMENT: "Hai aggiunto ···· {{maskedPan}}"
+              TRANSACTION:  "Pagamento Pos"
+              REVERSAL:  "Ricarica saldo disponibile"
+              DELETE_INSTRUMENT:  "Hai eliminato un metodo di pagamento"
+              REJECTED_ADD_INSTRUMENT:  "Hai rifiutato un metodo di pagamento"
+              REJECTED_DELETE_INSTRUMENT: "Hai rifiutato di eliminare un metodo di pagamento"
+              PAID_REFUND:  "Rimborso"
+              REJECTED_REFUND:  "Rifiuto rimborso"
+    operationDetails:
+      title: Dettaglio dell'operazione
+      instrument: Metodo di pagamento
+      maskedPan: •••• {{lastDigits}}
+      amountLabel: Importo transazione
+      accruedAmountLabel: Importo rimborsabile
+      amount: € {{amount}}
+      infoTitle: Informazioni sull transazione
+      date: Data
+      circuit: Circuito di pagamento
+      acquirerId: ID transazione Acquirer
+      issuerId: ID transazione Issuer
+  onboarding:
+    success:
+      understoodCta: Ho capito!
+      pleaseWait: Un attimo di pazienza...
+      requestSent: La tua richiesta è stata inviata!
+    failure:
+      NO_PERMISSION:
+        title: "Non hai i requisiti per aderire a questa iniziativa"
+        subtitle: "Non puoi richiedere il bonus!"
+      GENERIC:
+        title: "C’è un problema sui nostri sistemi"
+        subtitle:
+          "Ci scusiamo per il disagio.\nTi invitiamo a riprovare più tardi."
+      ALREADY_COMPLETED:
+        title: "Onboarding concluso"
+        subtitle: "Hai già fatto l'onboarding per questa iniziativa"
+      ONBOARDING_KO:
+        title: "Onboarding fallito"
+        subtitle: "L'adesione non è andata a buon fine"
+    headerTitle: "Adesione all'iniziativa"
+    beforeContinue:
+      text1: "Proseguendo accetti i "
+      tosLink: "Termini e condizioni d'uso"
+      text2: " del servizio e confermi di avere letto l' "
+      privacyLink: "Informativa privacy"
+    navigation:
+      header: Adesione all'iniziativa
+    PDNDPrerequisites:
+      prerequisites:
+        info:
+          header: Come avviene la verifica?
+          body: Comunichiamo direttamente con l’Ente che detiene l’informazione necessaria a effettuare il controllo, in questo caso **{{provider}}**.
+            In questo modo non devi produrre alcuna autocertificazione. Comodo, no?
+          understoodCTA: Ho capito
+      title: Possiedi i seguenti requisiti?
+      subtitle: Verificheremo con alcuni Enti se sei in possesso dei requisiti per poter richiedere {{service}}. 
+    multiPrerequisites:
+      header: "Dichiari inoltre di:"
+      body: L’autodichiarazione è resa ai sensi del
+      link: Dpr 28 dicembre 2000 n. 445 art 46 e 47
+    boolPrerequisites:
+      header: "Per aderire, dichiari di:"
+      body: L’autodichiarazione è resa ai sensi del
+      link: Dpr 28 dicembre 2000 n. 445 art 46 e 47 
+  configuration:
+    failureStates:
+      GENERIC: "C'è stato un problema, riprova"
+      INITIATIVE_ERROR: "Errore nel caricamento dell'iniziativa"
+      IBAN_LIST_LOAD_FAILURE: "Errore nel caricamento della lista IBAN"
+      IBAN_ENROLL_FAILURE: "Errore durante l'aggiunta dell'IBAN"
+      INSTRUMENTS_LIST_LOAD_FAILURE: "Errore nel caricamento della lista strumenti"
+      INSTRUMENT_ENROLL_FAILURE: "Errore durante l'aggiunta del metodo di pagamento"
+      INSTRUMENT_DELETE_FAILURE: "Errore durante la rimozione del metodo di pagamento"
+    headerTitle: "Configura l'iniziativa"
+    intro: 
+      title: "Ci siamo quasi"
+      body: "Per poter usufruire dell’iniziativa, abbiamo bisogno di qualche informazione in più."
+      requiredData: 
+        title: "Dati richiesti:"
+        ibanTitle: "IBAN a te intestato"
+        ibanSubtitle: "Per poter ricevere eventuali rimborsi"
+        instrumentTitle: "Almeno un metodo di pagamento"
+        instrumentSubtitle: "Indica i metodi da abilitare all’iniziativa"
+      buttons:
+        continue: "Inizia la configurazione"
+    instruments: 
+      title: "Metodi di pagamento"
+      header: Scegli quali metodi di pagamento associare
+      body: "Poi, usali per pagare e chiedi all’esercente di usare {{initiativeName}}."
+      footer: Modifica queste scelte o aggiunti altri metodi in qualsiasi momento dalla sezione Portafoglio
+      instrumentStatus:
+        active: Attivo 
+        pendingActivation: In attivazione
+        pendingDeactivation: In disattivazione
+      buttons:
+        skip: Nessuno di questi
+        continue: Continua
+        addMethod: Aggiungi metodo
+      enrollmentSheet:
+        header: Prima di continuare
+        bodyFirst: Il metodo sarà abilitato
+        bodyBold: " nelle prossime ore."
+        bodyLast: Riceverai una notifica push quando potrai iniziare ad utilizzarlo. Fino a quel momento eventuali transazioni verranno ignorate.
+        buttons:
+          activate: Attiva
+          cancel: Annulla
+    associationSuccess:
+      title: "Grazie!"
+      body: "Da domani potrai utilizzare l'iniziativa {{initiativeName}}. Puoi abilitare altri metodi aggiungendoli al Portafoglio."
+      noInstrumentsBody: "Per terminare la configurazione devi aggiungere almeno un metodo di pagamento al Portafoglio e abilitarlo all’iniziativa."
+      buttons:
+        continue: "Vai all'iniziativa"
+        skip: "Più tardi"
+        addPaymentMethod: "Aggiungi un metodo di pagamento"
+    iban:
+      landing:
+        header: Aggiungi un IBAN al tuo Profilo
+        body: Salva i dati del tuo conto e ottieni più facilmente i rimborsi a te previsti.
+        bodyLink: Scopri di più
+      onboarding:
+        header: Qual è il tuo IBAN?
+        body: Aggiungi un conto corrente a te intestato. L’autodichiarazione è resa ai sensi del
+        bodyLink: Dpr 28 dicembre 2000 n. 445 art 46 e 47 
+        nameAssignInput: Assegna un nome
+        bottomLabel: Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento visitando la sezione Profilo
