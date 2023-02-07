@@ -129,6 +129,7 @@ const InitiativeDetailsScreen = () => {
     requiresScrolling ? scrollToEnd() : send({ type: "ACCEPT_TOS" });
 
   const onScrollViewSizeChange = (_: number, height: number) => {
+    // this method is called multiple times during the loading of the markdown
     if (!markdDownIsLoadingRef.current) {
       setRequiresScrolling(height >= screenHeight);
     }
