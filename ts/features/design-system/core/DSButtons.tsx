@@ -188,11 +188,14 @@ export const DSButtons = () => (
         borderRadius: 8
       }}
     >
-      <DSComponentViewerBox name="ButtonSolid · White variant" colorMode="dark">
+      <DSComponentViewerBox
+        name="ButtonSolid · Contrast variant"
+        colorMode="dark"
+      >
         <View>
           <ButtonSolid
-            color="white"
-            label={"White button"}
+            color="contrast"
+            label={"Contrast button"}
             onPress={() => {
               alert("Action triggered");
             }}
@@ -203,9 +206,9 @@ export const DSButtons = () => (
         <View>
           <ButtonSolid
             small
-            color="white"
+            color="contrast"
             accessibilityLabel="Tap to trigger test alert"
-            label={"White button (Small)"}
+            label={"Contrast button (Small)"}
             onPress={() => {
               alert("Action triggered");
             }}
@@ -214,14 +217,14 @@ export const DSButtons = () => (
       </DSComponentViewerBox>
 
       <DSComponentViewerBox
-        name="ButtonSolid · White, full width"
+        name="ButtonSolid · Contrast, full width"
         colorMode="dark"
       >
         <View>
           <ButtonSolid
             fullWidth
-            color="white"
-            label={"White button"}
+            color="contrast"
+            label={"Contrast button"}
             onPress={() => {
               alert("Action triggered");
             }}
@@ -233,9 +236,9 @@ export const DSButtons = () => (
           <ButtonSolid
             small
             fullWidth
-            color="white"
+            color="contrast"
             accessibilityLabel="Tap to trigger test alert"
-            label={"White button (Small)"}
+            label={"Contrast button (Small)"}
             onPress={() => {
               alert("Action triggered");
             }}
@@ -244,14 +247,14 @@ export const DSButtons = () => (
       </DSComponentViewerBox>
 
       <DSComponentViewerBox
-        name="ButtonSolid · White, disabled"
+        name="ButtonSolid · Contrast, disabled"
         colorMode="dark"
       >
         <View>
           <ButtonSolid
             disabled
-            color="white"
-            label={"White button, disabled"}
+            color="contrast"
+            label={"Contrast button, disabled"}
             onPress={() => {
               alert("Action triggered");
             }}
@@ -264,9 +267,9 @@ export const DSButtons = () => (
             small
             fullWidth
             disabled
-            color="white"
+            color="contrast"
             accessibilityLabel="Tap to trigger test alert"
-            label={"White button (small, full, disabled)"}
+            label={"Contrast button (small, full, disabled)"}
             onPress={() => {
               alert("Action triggered");
             }}

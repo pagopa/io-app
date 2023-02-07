@@ -22,7 +22,7 @@ import { BaseTypography } from "../core/typography/BaseTypography";
 import { IOButtonStyles } from "../core/variables/IOStyles";
 
 type Props = {
-  color?: "primary" | "danger" | "white";
+  color?: "primary" | "danger" | "contrast";
   label: string;
   small?: boolean;
   fullWidth?: boolean;
@@ -62,8 +62,8 @@ const mapColorStates: Record<NonNullable<Props["color"]>, ColorStates> = {
       disabled: "white"
     }
   },
-  // White button
-  white: {
+  // Inverse button
+  contrast: {
     default: IOColors.white,
     pressed: IOColors.white,
     label: {
