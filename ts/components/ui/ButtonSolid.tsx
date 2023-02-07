@@ -32,6 +32,11 @@ type Props = {
   onPress: (event: GestureResponderEvent) => void;
 };
 
+type ColorStates = {
+  default: string;
+  pressed: string;
+};
+
 // Button visual props
 const fontSizeDefault: TextStyle["fontSize"] = 16;
 const fontSizeSmall: TextStyle["fontSize"] = 14;
@@ -40,25 +45,32 @@ const colorPrimaryButtonDefault: ColorValue = IOColors.blue;
 const colorPrimaryButtonPressed: ColorValue = IOColors.blueUltraLight;
 // -- Danger Button
 const colorDangerButtonDefault: ColorValue = IOColors.red;
-const colorDangerButtonPressed: ColorValue = IOColors.red;
+const colorDangerButtonPressed: ColorValue = IOColors.orange;
 // -- Disabled state
 const colorPrimaryButtonDisabled: ColorValue = IOColors.bluegreyLight;
+
+const mapColorStates: Record<NonNullable<Props["color"]>, ColorStates> = {
+  primary: {
+    default: colorPrimaryButtonDefault,
+    pressed: colorPrimaryButtonPressed
+  },
+  danger: {
+    default: colorDangerButtonDefault,
+    pressed: colorDangerButtonPressed
+  }
+};
 
 const styles = StyleSheet.create({
   button: {
     alignItems: "center",
     textAlignVertical: "center", // Android
     justifyContent: "center",
-
     // Visual parameters based on the FontScale
     paddingVertical: PixelRatio.getFontScale() * 10,
     paddingHorizontal: PixelRatio.getFontScale() * 16,
     borderRadius: PixelRatio.getFontScale() * 8
   },
-  /* Color styles */
-  colorDefault: {
-    backgroundColor: colorPrimaryButtonDefault
-  },
+  /* Color States */
   colorDisabled: {
     backgroundColor: colorPrimaryButtonDisabled
   },
@@ -97,20 +109,20 @@ export const ButtonSolid = ({
   // Scaling transformation applied when the button is pressed
   const animationScaleValue = IOScaleValues?.basicButton?.pressedState;
 
-  const scaleTraversed = useDerivedValue(() =>
+  const progressPressed = useDerivedValue(() =>
     withSpring(isPressed.value, IOSpringValues.button)
   );
 
   // Interpolate animation values from `isPressed` values
-  const animatedStyle = useAnimatedStyle(() => {
+  const pressedAnimationStyle = useAnimatedStyle(() => {
     const bgColor = interpolateColor(
-      scaleTraversed.value,
+      progressPressed.value,
       [0, 1],
-      [colorPrimaryButtonDefault, colorPrimaryButtonPressed]
+      [mapColorStates[color].default, mapColorStates[color].pressed]
     );
 
     const scale = interpolate(
-      scaleTraversed.value,
+      progressPressed.value,
       [0, 1],
       [1, animationScaleValue],
       Extrapolate.CLAMP
@@ -146,8 +158,11 @@ export const ButtonSolid = ({
       <Animated.View
         style={[
           styles.button,
-          animatedStyle,
-          disabled ? styles.colorDisabled : styles.colorDefault
+          disabled
+            ? styles.colorDisabled
+            : { backgroundColor: mapColorStates[color].default },
+          // Avoid background color overrides with Reanimated
+          !disabled && pressedAnimationStyle
         ]}
       >
         <BaseTypography
