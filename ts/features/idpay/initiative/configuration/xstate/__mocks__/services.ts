@@ -3,12 +3,9 @@ import {
   InitiativeDTO,
   StatusEnum
 } from "../../../../../../../definitions/idpay/wallet/InitiativeDTO";
-import { InstrumentDTO } from "../../../../../../../definitions/idpay/wallet/InstrumentDTO";
 
 import { TypeEnum as WalletTypeEnumV1 } from "../../../../../../../definitions/pagopa/Wallet";
 import { Wallet } from "../../../../../../types/pagopa";
-import { InitiativeFailureType } from "../failure";
-import { createServicesImplementation } from "../services";
 
 export const T_INITIATIVE_ID = "123456";
 export const T_IBAN = "IT60X0542811101000000123456";
@@ -42,96 +39,13 @@ export const T_REFUNDABLE_INITIATIVE_DTO: InitiativeDTO = {
   nInstr: 1
 };
 
-export const mockLoadInitiativeSuccessNotRefundable = jest.fn(
-  async (): Promise<InitiativeDTO> => T_NOT_REFUNDABLE_INITIATIVE_DTO
-);
-
-export const mockLoadInitiativeSuccessRefundable = jest.fn(
-  async (): Promise<InitiativeDTO> => T_REFUNDABLE_INITIATIVE_DTO
-);
-
-export const mockLoadInitiativeFailure = jest.fn(
-  async (): Promise<InitiativeDTO> =>
-    Promise.reject(InitiativeFailureType.INITIATIVE_ERROR)
-);
-
 export const T_IBAN_LIST: IbanListDTO["ibanList"] = [
   { channel: "IO", checkIbanStatus: "", description: "Test", iban: T_IBAN }
 ];
 
-export const mockLoadIbanListSuccess = jest.fn(
-  async (): Promise<IbanListDTO> => ({ ibanList: T_IBAN_LIST })
-);
-
-export const mockLoadIbanListSuccessEmpty = jest.fn(
-  async (): Promise<IbanListDTO> => ({ ibanList: [] })
-);
-
-export const mockLoadIbanListFailure = jest.fn(
-  async (): Promise<IbanListDTO> =>
-    Promise.reject(InitiativeFailureType.IBAN_LIST_LOAD_FAILURE)
-);
-
-export const mockEnrollIbanSuccess = jest.fn(async () =>
-  Promise.resolve(undefined)
-);
-
-export const mockEnrollIbanFailure = jest.fn(async () =>
-  Promise.reject(InitiativeFailureType.IBAN_ENROLL_FAILURE)
-);
-
-export const mockConfirmIbanSuccess = jest.fn(
-  async (): Promise<void> => Promise.resolve()
-);
-
-export const mockConfirmIbanFailure = jest.fn(
-  async (): Promise<void> =>
-    Promise.reject(InitiativeFailureType.IBAN_ENROLL_FAILURE)
-);
-
 export const T_PAGOPA_INSTRUMENTS = [T_WALLET];
 
-export const mockLoadInstrumentsSuccess = jest.fn(
-  async (): Promise<{
-    pagoPAInstruments: ReadonlyArray<Wallet>;
-    idPayInstruments: ReadonlyArray<InstrumentDTO>;
-  }> =>
-    Promise.resolve({
-      pagoPAInstruments: T_PAGOPA_INSTRUMENTS,
-      idPayInstruments: []
-    })
-);
-
-export const mockLoadInstrumentsFailure = jest.fn(async () =>
-  Promise.reject(InitiativeFailureType.INSTRUMENTS_LIST_LOAD_FAILURE)
-);
-
-export const mockLoadInstrumentsSuccessEmpty = jest.fn(
-  async (): Promise<{
-    pagoPAInstruments: ReadonlyArray<Wallet>;
-    idPayInstruments: ReadonlyArray<InstrumentDTO>;
-  }> => Promise.resolve({ pagoPAInstruments: [], idPayInstruments: [] })
-);
-
-export const mockEnrollInstrumentSuccess = jest.fn(async () =>
-  Promise.resolve([])
-);
-
-export const mockDeleteInstrumentSuccess = jest.fn(async () =>
-  Promise.resolve([])
-);
-
-export const mockEnrollInstrumentFailure = jest.fn(async () =>
-  Promise.reject(InitiativeFailureType.INSTRUMENT_ENROLL_FAILURE)
-);
-
-export const mockDeleteInstrumentFailure = jest.fn(async () =>
-  Promise.reject(InitiativeFailureType.INSTRUMENT_DELETE_FAILURE)
-);
-
-export type MockServicesType = ReturnType<typeof createServicesImplementation>;
-
-export const mockServices: MockServicesType = {
+export const mockServices = {
   loadInitiative: jest.fn(),
   loadIbanList: jest.fn(),
   confirmIban: jest.fn(),
