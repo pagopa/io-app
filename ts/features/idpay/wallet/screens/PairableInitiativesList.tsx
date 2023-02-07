@@ -39,10 +39,10 @@ type Props = IOStackNavigationRouteProps<
 >;
 
 export const IdPayInitiativeListScreen = (props: Props) => {
-  const { initiatives } = props.route.params;
+  const { initiatives, idWallet } = props.route.params;
   return (
     <BaseScreenComponent
-      headerTitle={`Attiva iniziative IDPay sul portafoglio ${props.route.params.idWallet}`}
+      headerTitle={`Attiva iniziative IDPay sul portafoglio ${idWallet}`}
       goBack={true}
     >
       <ScrollView style={IOStyles.horizontalContentPadding}>
