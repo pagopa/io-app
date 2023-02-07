@@ -16,7 +16,8 @@ import {
 } from "../../../../../../definitions/idpay/onboarding/SelfDeclarationMultiDTO";
 import { OnboardingFailureEnum } from "../failure";
 import { createIDPayOnboardingMachine } from "../machine";
-import { mockActions, mockServices } from "../__mocks__/machine";
+import { mockActions } from "../__mocks__/actions";
+import { mockServices } from "../__mocks__/services";
 
 const T_SERVICE_ID = "T_SERVICE_ID";
 const T_INITIATIVE_ID = "T_INITIATIVE_ID";
