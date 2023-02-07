@@ -1,7 +1,9 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { useNavigation } from "@react-navigation/native";
 import { BpdConfig } from "../../../../../definitions/content/BpdConfig";
 import Initiative from "../../../../../img/wallet/initiatives.svg";
 import { H3 } from "../../../../components/core/typography/H3";
@@ -9,7 +11,10 @@ import { IOColors } from "../../../../components/core/variables/IOColors";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import { bpdEnabled } from "../../../../config";
 import I18n from "../../../../i18n";
-import { bpdRemoteConfigSelector } from "../../../../store/reducers/backendStatus";
+import {
+  bpdRemoteConfigSelector,
+  isIdPayEnabledSelector
+} from "../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../store/reducers/types";
 import { PaymentMethod } from "../../../../types/pagopa";
 import BpdPaymentMethodCapability from "../../../bonus/bpd/components/BpdPaymentMethodCapability";
@@ -18,6 +23,11 @@ import {
   EnableableFunctionsEnum
 } from "../../../../../definitions/pagopa/EnableableFunctions";
 import { HSpacer } from "../../../../components/core/spacer/Spacer";
+import { idPayWalletInitiativeListSelector } from "../../../idpay/wallet/store/reducers";
+import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
+import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
+import ROUTES from "../../../../navigation/routes";
+import ListItemComponent from "../../../../components/screens/ListItemComponent";
 
 type OwnProps = {
   paymentMethod: PaymentMethod;
@@ -86,6 +96,19 @@ const PaymentMethodInitiatives = (props: Props): React.ReactElement | null => {
     props.paymentMethod,
     props.bpdRemoteConfig
   );
+  const { isIdPayEnabled, initiativeListPot } = props;
+  const navigation = useNavigation<IOStackNavigationProp<WalletParamsList>>();
+  const namedInitiativesList = pot
+    .getOrElse(initiativeListPot, [])
+    .filter(initiative => initiative.initiativeName !== undefined);
+
+  const shouldRenderIdPay = isIdPayEnabled && namedInitiativesList.length > 0;
+  const navigateToPairableInitiativesList = () =>
+    navigation.navigate(ROUTES.WALLET_IDPAY_INITIATIVE_LIST, {
+      initiatives: namedInitiativesList,
+      idWallet: props.paymentMethod.idWallet
+    });
+
   return capabilityItems.length > 0 ? (
     <View style={props.style}>
       <View style={styles.row}>
@@ -98,6 +121,13 @@ const PaymentMethodInitiatives = (props: Props): React.ReactElement | null => {
         <HSpacer size={16} />
         <H3 color={"bluegrey"}>{I18n.t("wallet.capability.title")}</H3>
       </View>
+      {shouldRenderIdPay ? (
+        <ListItemComponent
+          title="IDPay"
+          subTitle="Configura iniziative"
+          onPress={navigateToPairableInitiativesList}
+        />
+      ) : null}
       {capabilityItems}
     </View>
   ) : null;
@@ -105,7 +135,9 @@ const PaymentMethodInitiatives = (props: Props): React.ReactElement | null => {
 
 const mapDispatchToProps = (_: Dispatch) => ({});
 const mapStateToProps = (state: GlobalState) => ({
-  bpdRemoteConfig: bpdRemoteConfigSelector(state)
+  bpdRemoteConfig: bpdRemoteConfigSelector(state),
+  isIdPayEnabled: isIdPayEnabledSelector(state),
+  initiativeListPot: idPayWalletInitiativeListSelector(state)
 });
 
 export default connect(
