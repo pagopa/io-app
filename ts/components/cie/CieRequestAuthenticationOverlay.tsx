@@ -157,6 +157,7 @@ const CieWebView = (props: Props) => {
           source={{
             uri: getIdpLoginUri(CIE_IDP_ID)
           }}
+          onNavigationStateChange={handleNavigationStateChange}
           key={key}
         />
       )}
@@ -171,6 +172,12 @@ const CieWebView = (props: Props) => {
       onCancel={props.onClose}
     />
   );
+};
+
+const handleNavigationStateChange = (event: WebViewNavigation): void => {
+  if (event.url) {
+    // TODO: - act the same way as https://github.com/pagopa/io-app/pull/4351
+  }
 };
 
 const ErrorComponent = (
