@@ -13,6 +13,8 @@ type Props = {
   image: NodeRequire;
   title: string;
   content: string;
+  accessibilityLabel?: string;
+  accessibilityHint?: string;
 };
 
 const screenWidth = Dimensions.get("screen").width;
@@ -35,7 +37,12 @@ const styles = StyleSheet.create({
 
 export const LandingCardComponent: React.SFC<Props> = card => (
   <ScrollView>
-    <View style={styles.card}>
+    <View
+      style={styles.card}
+      accessible={true}
+      accessibilityLabel={card.accessibilityLabel}
+      accessibilityHint={card.accessibilityHint}
+    >
       <Image source={card.image} style={styles.image} />
       <VSpacer size={16} />
       <Grid>
