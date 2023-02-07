@@ -10,10 +10,6 @@ import {
   idPayApiBaseUrl
 } from "../../../../config";
 import { useXStateMachine } from "../../../../hooks/useXStateMachine";
-import {
-  AppParamsList,
-  IOStackNavigationProp
-} from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { sessionInfoSelector } from "../../../../store/reducers/authentication";
 import {
@@ -25,6 +21,10 @@ import {
   getLocalePrimaryWithFallback
 } from "../../../../utils/locale";
 import { createOnboardingClient } from "../api/client";
+import {
+  IDPayOnboardingParamsList,
+  IDPayOnboardingStackNavigationProp
+} from "../navigation/navigator";
 import { createActionsImplementation } from "./actions";
 import {
   createIDPayOnboardingMachine,
@@ -49,7 +49,10 @@ const IDPayOnboardingMachineProvider = (props: Props) => {
 
   const sessionInfo = useIOSelector(sessionInfoSelector);
 
-  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const navigation =
+    useNavigation<
+      IDPayOnboardingStackNavigationProp<IDPayOnboardingParamsList>
+    >();
 
   if (O.isNone(sessionInfo)) {
     throw new Error("Session info is undefined");
