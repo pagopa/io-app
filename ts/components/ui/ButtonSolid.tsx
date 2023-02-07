@@ -17,6 +17,7 @@ import Animated, {
   Extrapolate,
   interpolateColor
 } from "react-native-reanimated";
+import themeVariables from "../../theme/variables";
 import { IOColors } from "../core/variables/IOColors";
 import { IOSpringValues, IOScaleValues } from "../core/variables/IOAnimations";
 import { BaseTypography } from "../core/typography/BaseTypography";
@@ -65,10 +66,24 @@ const styles = StyleSheet.create({
     alignItems: "center",
     textAlignVertical: "center", // Android
     justifyContent: "center",
+    // Legacy visual properties
+    borderRadius: themeVariables.btnBorderRadius,
+    paddingHorizontal: 16,
+    // Reset default visual parameters
+    elevation: 0,
+    shadowOffset: { width: 0, height: 0 },
+    shadowRadius: 0,
+    shadowOpacity: 0
     // Visual parameters based on the FontScale
-    paddingVertical: PixelRatio.getFontScale() * 10,
-    paddingHorizontal: PixelRatio.getFontScale() * 16,
-    borderRadius: PixelRatio.getFontScale() * 8
+    // paddingVertical: PixelRatio.getFontScale() * 10,
+    // paddingHorizontal: PixelRatio.getFontScale() * 16,
+    // borderRadius: PixelRatio.getFontScale() * 8
+  },
+  buttonSizeDefault: {
+    height: themeVariables.btnHeight
+  },
+  buttonSizeSmall: {
+    height: themeVariables.btnSmallHeight
   },
   /* Color States */
   colorDisabled: {
@@ -158,6 +173,7 @@ export const ButtonSolid = ({
       <Animated.View
         style={[
           styles.button,
+          small ? styles.buttonSizeSmall : styles.buttonSizeDefault,
           disabled
             ? styles.colorDisabled
             : { backgroundColor: mapColorStates[color].default },
@@ -174,8 +190,8 @@ export const ButtonSolid = ({
           ]}
           numberOfLines={1}
           ellipsizeMode="tail"
-          allowFontScaling
-          maxFontSizeMultiplier={1.3}
+          // allowFontScaling
+          // maxFontSizeMultiplier={1.3}
         >
           {label}
         </BaseTypography>
