@@ -3,10 +3,8 @@ import { useCallback } from "react";
 import {
   StyleSheet,
   Pressable,
-  GestureResponderEvent,
-  PixelRatio,
-  ColorValue,
-  TextStyle
+  GestureResponderEvent
+  // PixelRatio
 } from "react-native";
 import Animated, {
   useSharedValue,
@@ -18,12 +16,13 @@ import Animated, {
   interpolateColor
 } from "react-native-reanimated";
 import themeVariables from "../../theme/variables";
-import { IOColors } from "../core/variables/IOColors";
+import { IOColors, IOColorType } from "../core/variables/IOColors";
 import { IOSpringValues, IOScaleValues } from "../core/variables/IOAnimations";
 import { BaseTypography } from "../core/typography/BaseTypography";
+import { IOButtonStyles } from "../core/variables/IOStyles";
 
 type Props = {
-  color?: "primary" | "danger";
+  color?: "primary" | "danger" | "white";
   label: string;
   small?: boolean;
   fullWidth?: boolean;
@@ -36,28 +35,46 @@ type Props = {
 type ColorStates = {
   default: string;
   pressed: string;
+  label: IOColorType;
+  labelDisabled: IOColorType;
 };
 
-// Button visual props
-const fontSizeDefault: TextStyle["fontSize"] = 16;
-const fontSizeSmall: TextStyle["fontSize"] = 14;
-// -- Primary Button
-const colorPrimaryButtonDefault: ColorValue = IOColors.blue;
-const colorPrimaryButtonPressed: ColorValue = IOColors.blueUltraLight;
-// -- Danger Button
-const colorDangerButtonDefault: ColorValue = IOColors.red;
-const colorDangerButtonPressed: ColorValue = IOColors.orange;
+// -- Primary button
+const colorPrimaryButtonDefault: IOColorType = "blue";
+const colorPrimaryButtonPressed: IOColorType = "blueUltraLight";
+const colorPrimaryButtonText: IOColorType = "white";
+const colorPrimaryButtonTextDisabled: IOColorType = "white";
+// -- Danger button
+const colorDangerButtonDefault: IOColorType = "red";
+const colorDangerButtonPressed: IOColorType = "red";
+const colorDangerButtonText: IOColorType = "white";
+const colorDangerButtonTextDisabled: IOColorType = "white";
+// -- White button
+const colorWhiteButtonDefault: IOColorType = "white";
+const colorWhiteButtonPressed: IOColorType = "greyLight";
+const colorWhiteButtonText: IOColorType = "blue";
+const colorWhiteButtonTextDisabled: IOColorType = "white";
 // -- Disabled state
-const colorPrimaryButtonDisabled: ColorValue = IOColors.bluegreyLight;
+const colorPrimaryButtonDisabled: IOColorType = "bluegreyLight";
 
 const mapColorStates: Record<NonNullable<Props["color"]>, ColorStates> = {
   primary: {
-    default: colorPrimaryButtonDefault,
-    pressed: colorPrimaryButtonPressed
+    default: IOColors[colorPrimaryButtonDefault],
+    pressed: IOColors[colorPrimaryButtonPressed],
+    label: colorPrimaryButtonText,
+    labelDisabled: colorPrimaryButtonTextDisabled
   },
   danger: {
-    default: colorDangerButtonDefault,
-    pressed: colorDangerButtonPressed
+    default: IOColors[colorDangerButtonDefault],
+    pressed: IOColors[colorDangerButtonPressed],
+    label: colorDangerButtonText,
+    labelDisabled: colorDangerButtonTextDisabled
+  },
+  white: {
+    default: IOColors[colorWhiteButtonDefault],
+    pressed: IOColors[colorWhiteButtonPressed],
+    label: colorWhiteButtonText,
+    labelDisabled: colorWhiteButtonTextDisabled
   }
 };
 
@@ -79,33 +96,9 @@ const styles = StyleSheet.create({
     // paddingHorizontal: PixelRatio.getFontScale() * 16,
     // borderRadius: PixelRatio.getFontScale() * 8
   },
-  buttonSizeDefault: {
-    height: themeVariables.btnHeight
-  },
-  buttonSizeSmall: {
-    height: themeVariables.btnSmallHeight
-  },
   /* Color States */
   colorDisabled: {
-    backgroundColor: colorPrimaryButtonDisabled
-  },
-  /* Font Size */
-  label: {
-    alignSelf: "center"
-  },
-  labelSizeDefault: {
-    fontSize: fontSizeDefault
-  },
-  labelSizeSmall: {
-    fontSize: fontSizeSmall
-  },
-  /* Dimensions */
-  dimensionsDefault: {
-    alignSelf: "flex-start"
-  },
-  dimensionsFullWidth: {
-    flex: 1,
-    alignSelf: "auto"
+    backgroundColor: IOColors[colorPrimaryButtonDisabled]
   }
 });
 
@@ -162,18 +155,24 @@ export const ButtonSolid = ({
     <Pressable
       accessibilityLabel={accessibilityLabel}
       accessibilityHint={accessibilityHint}
+      accessibilityRole={"button"}
       onPress={onPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
       accessible={true}
       disabled={disabled}
-      accessibilityRole={"button"}
-      style={fullWidth ? styles.dimensionsFullWidth : styles.dimensionsDefault}
+      style={
+        fullWidth
+          ? IOButtonStyles.dimensionsFullWidth
+          : IOButtonStyles.dimensionsDefault
+      }
     >
       <Animated.View
         style={[
           styles.button,
-          small ? styles.buttonSizeSmall : styles.buttonSizeDefault,
+          small
+            ? IOButtonStyles.buttonSizeSmall
+            : IOButtonStyles.buttonSizeDefault,
           disabled
             ? styles.colorDisabled
             : { backgroundColor: mapColorStates[color].default },
@@ -183,10 +182,16 @@ export const ButtonSolid = ({
       >
         <BaseTypography
           weight={"Bold"}
-          color={"white"}
+          color={
+            disabled
+              ? mapColorStates[color].labelDisabled
+              : mapColorStates[color].label
+          }
           style={[
-            styles.label,
-            small ? styles.labelSizeSmall : styles.labelSizeDefault
+            IOButtonStyles.label,
+            small
+              ? IOButtonStyles.labelSizeSmall
+              : IOButtonStyles.labelSizeDefault
           ]}
           numberOfLines={1}
           ellipsizeMode="tail"
