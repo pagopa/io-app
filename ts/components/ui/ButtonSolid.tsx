@@ -35,55 +35,54 @@ type Props = {
 type ColorStates = {
   default: string;
   pressed: string;
-  label: IOColorType;
-  labelDisabled: IOColorType;
+  label: {
+    default: IOColorType;
+    disabled: IOColorType;
+  };
 };
 
-// -- Primary button
-const colorPrimaryButtonDefault: IOColorType = "blue";
-const colorPrimaryButtonPressed: IOColorType = "blueUltraLight";
-const colorPrimaryButtonText: IOColorType = "white";
-const colorPrimaryButtonTextDisabled: IOColorType = "white";
-// -- Danger button
-const colorDangerButtonDefault: IOColorType = "red";
-const colorDangerButtonPressed: IOColorType = "red";
-const colorDangerButtonText: IOColorType = "white";
-const colorDangerButtonTextDisabled: IOColorType = "white";
-// -- White button
-const colorWhiteButtonDefault: IOColorType = "white";
-const colorWhiteButtonPressed: IOColorType = "greyLight";
-const colorWhiteButtonText: IOColorType = "blue";
-const colorWhiteButtonTextDisabled: IOColorType = "white";
-// -- Disabled state
-const colorPrimaryButtonDisabled: IOColorType = "bluegreyLight";
+// COMPONENT CONFIGURATION
 
 const mapColorStates: Record<NonNullable<Props["color"]>, ColorStates> = {
+  // Primary button
   primary: {
-    default: IOColors[colorPrimaryButtonDefault],
-    pressed: IOColors[colorPrimaryButtonPressed],
-    label: colorPrimaryButtonText,
-    labelDisabled: colorPrimaryButtonTextDisabled
+    default: IOColors.blue,
+    pressed: IOColors.blueUltraLight,
+    label: {
+      default: "white",
+      disabled: "white"
+    }
   },
+  // Danger button
   danger: {
-    default: IOColors[colorDangerButtonDefault],
-    pressed: IOColors[colorDangerButtonPressed],
-    label: colorDangerButtonText,
-    labelDisabled: colorDangerButtonTextDisabled
+    default: IOColors.red,
+    pressed: IOColors.red,
+    label: {
+      default: "white",
+      disabled: "white"
+    }
   },
+  // White button
   white: {
-    default: IOColors[colorWhiteButtonDefault],
-    pressed: IOColors[colorWhiteButtonPressed],
-    label: colorWhiteButtonText,
-    labelDisabled: colorWhiteButtonTextDisabled
+    default: IOColors.white,
+    pressed: IOColors.white,
+    label: {
+      default: "blue",
+      disabled: "white"
+    }
   }
 };
+
+// Disabled state
+const colorPrimaryButtonDisabled: IOColorType = "bluegreyLight";
 
 const styles = StyleSheet.create({
   button: {
     alignItems: "center",
     textAlignVertical: "center", // Android
     justifyContent: "center",
-    // Legacy visual properties
+    /* Legacy visual properties. They will be replaced with
+    dynamic ones once NativeBase is gone */
     borderRadius: themeVariables.btnBorderRadius,
     paddingHorizontal: 16,
     // Reset default visual parameters
@@ -96,8 +95,7 @@ const styles = StyleSheet.create({
     // paddingHorizontal: PixelRatio.getFontScale() * 16,
     // borderRadius: PixelRatio.getFontScale() * 8
   },
-  /* Color States */
-  colorDisabled: {
+  backgroundDisabled: {
     backgroundColor: IOColors[colorPrimaryButtonDisabled]
   }
 });
@@ -117,18 +115,21 @@ export const ButtonSolid = ({
   // Scaling transformation applied when the button is pressed
   const animationScaleValue = IOScaleValues?.basicButton?.pressedState;
 
+  // Using a spring-based animation for our interpolations
   const progressPressed = useDerivedValue(() =>
     withSpring(isPressed.value, IOSpringValues.button)
   );
 
   // Interpolate animation values from `isPressed` values
   const pressedAnimationStyle = useAnimatedStyle(() => {
+    // Link color states to the pressed states
     const bgColor = interpolateColor(
       progressPressed.value,
       [0, 1],
       [mapColorStates[color].default, mapColorStates[color].pressed]
     );
 
+    // Scale down button slightly when pressed
     const scale = interpolate(
       progressPressed.value,
       [0, 1],
@@ -174,9 +175,10 @@ export const ButtonSolid = ({
             ? IOButtonStyles.buttonSizeSmall
             : IOButtonStyles.buttonSizeDefault,
           disabled
-            ? styles.colorDisabled
-            : { backgroundColor: mapColorStates[color].default },
-          // Avoid background color overrides with Reanimated
+            ? styles.backgroundDisabled
+            : { backgroundColor: mapColorStates[color]?.default },
+          /* Prevent Reanimated from overriding background colors
+          if button is disabled */
           !disabled && pressedAnimationStyle
         ]}
       >
@@ -184,8 +186,8 @@ export const ButtonSolid = ({
           weight={"Bold"}
           color={
             disabled
-              ? mapColorStates[color].labelDisabled
-              : mapColorStates[color].label
+              ? mapColorStates[color]?.label?.disabled
+              : mapColorStates[color]?.label?.default
           }
           style={[
             IOButtonStyles.label,
@@ -195,8 +197,10 @@ export const ButtonSolid = ({
           ]}
           numberOfLines={1}
           ellipsizeMode="tail"
-          // allowFontScaling
-          // maxFontSizeMultiplier={1.3}
+          /* A11y-related props:
+          DON'T UNCOMMENT THEM */
+          /* allowFontScaling
+          maxFontSizeMultiplier={1.3} */
         >
           {label}
         </BaseTypography>

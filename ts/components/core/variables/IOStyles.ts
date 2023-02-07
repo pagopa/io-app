@@ -1,4 +1,4 @@
-import { StyleSheet, TextStyle } from "react-native";
+import { StyleSheet } from "react-native";
 import themeVariables from "../../../theme/variables";
 
 /**
@@ -30,32 +30,25 @@ export const IOStyles = StyleSheet.create({
  * BUTTON STYLES
  */
 
-/* Font Size */
-const btnFontSizeDefault: TextStyle["fontSize"] = 16;
-const btnFontSizeSmall: TextStyle["fontSize"] = 14;
-/* Height */
-const btnHeightDefault: TextStyle["height"] = 40;
-const btnHeightSmall: TextStyle["height"] = 39;
-
 export const IOButtonStyles = StyleSheet.create({
   /* Labels */
   label: {
     alignSelf: "center"
   },
   labelSizeDefault: {
-    fontSize: btnFontSizeDefault
+    fontSize: 16
   },
   labelSizeSmall: {
-    fontSize: btnFontSizeSmall
+    fontSize: 14
   },
   /* Heights
   Must be replaced with dynamic values, depending on the
   fontScale parameter */
   buttonSizeDefault: {
-    height: btnHeightDefault
+    height: 40
   },
   buttonSizeSmall: {
-    height: btnHeightSmall
+    height: 39
   },
   /* Widths */
   dimensionsDefault: {
