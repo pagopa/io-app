@@ -5,14 +5,7 @@ import * as React from "react";
 import { pipe } from "fp-ts/lib/function";
 import { useActor } from "@xstate/react";
 import * as O from "fp-ts/lib/Option";
-import {
-  View,
-  SafeAreaView,
-  ScrollView,
-  Text,
-  useWindowDimensions,
-  NativeScrollEvent
-} from "react-native";
+import { View, SafeAreaView, ScrollView, Text } from "react-native";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import OrganizationHeader from "../../../../components/OrganizationHeader";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
@@ -35,6 +28,7 @@ import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { LOADING_TAG, UPSERTING_TAG } from "../../../../utils/xstate";
 import I18n from "../../../../i18n";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
+import { useInitiativeDetailsScrolling } from "../utility/hooks";
 
 type InitiativeDetailsScreenRouteParams = {
   serviceId: string;
@@ -107,11 +101,15 @@ const InitiativeDetailsScreen = () => {
   const route = useRoute<InitiativeDetailsRouteProps>();
   const onboardingMachineService = useOnboardingMachineService();
   const [state, send] = useActor(onboardingMachineService);
+  const {
+    scrollViewRef,
+    onScrollViewSizeChange,
+    scrollToEnd,
+    handleIsScrollEnd,
+    requiresScrolling,
+    setMarkdownIsLoaded
+  } = useInitiativeDetailsScrolling();
 
-  const [requiresScrolling, setRequiresScrolling] = React.useState(true);
-  const markdDownIsLoadingRef = React.useRef<boolean>(true);
-  const screenHeight = useWindowDimensions().height;
-  const scrollViewRef = React.useRef<ScrollView>(null);
   const isLoading = state.tags.has(LOADING_TAG);
   const isAcceptingTos = state.tags.has(UPSERTING_TAG);
   const { serviceId } = route.params;
@@ -127,33 +125,6 @@ const InitiativeDetailsScreen = () => {
   };
   const handleContinuePress = () =>
     requiresScrolling ? scrollToEnd() : send({ type: "ACCEPT_TOS" });
-
-  const onScrollViewSizeChange = (_: number, height: number) => {
-    // this method is called multiple times during the loading of the markdown
-    if (!markdDownIsLoadingRef.current) {
-      setRequiresScrolling(height >= screenHeight);
-    }
-  };
-
-  const scrollToEnd = () => {
-    if (!markdDownIsLoadingRef.current) {
-      scrollViewRef.current?.scrollToEnd();
-      setRequiresScrolling(false);
-    }
-  };
-
-  // required in order to detect the scroll end
-  const isCloseToBottom = ({
-    layoutMeasurement,
-    contentOffset,
-    contentSize
-  }: NativeScrollEvent) => {
-    const paddingToBottom = 20;
-    return (
-      layoutMeasurement.height + contentOffset.y >=
-      contentSize.height - paddingToBottom
-    );
-  };
 
   // TODO show initaitveID for testing purposes
   const headerContent = pipe(
@@ -172,11 +143,7 @@ const InitiativeDetailsScreen = () => {
     <SafeAreaView style={IOStyles.flex}>
       <ScrollView
         onContentSizeChange={onScrollViewSizeChange}
-        onScroll={({ nativeEvent }) => {
-          if (isCloseToBottom(nativeEvent)) {
-            setRequiresScrolling(false);
-          }
-        }}
+        onScroll={({ nativeEvent }) => handleIsScrollEnd(nativeEvent)}
         scrollEventThrottle={400}
         ref={scrollViewRef}
         style={IOStyles.flex}
@@ -188,11 +155,11 @@ const InitiativeDetailsScreen = () => {
           {headerContent && <Text>{headerContent}</Text>}
           <VSpacer size={16} />
           {state.context.initiative?.description !== undefined ? (
-            <Markdown onLoadEnd={() => (markdDownIsLoadingRef.current = false)}>
+            <Markdown onLoadEnd={setMarkdownIsLoaded}>
               {state.context.initiative.description}
             </Markdown>
           ) : (
-            (markdDownIsLoadingRef.current = false)
+            setMarkdownIsLoaded()
           )}
           <VSpacer size={16} />
           <ItemSeparatorComponent noPadded={true} />
