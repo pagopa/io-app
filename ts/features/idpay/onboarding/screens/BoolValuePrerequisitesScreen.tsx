@@ -1,6 +1,4 @@
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import { useActor } from "@xstate/react";
+import { useActor, useSelector } from "@xstate/react";
 import React from "react";
 import { View, SafeAreaView } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
@@ -15,8 +13,9 @@ import { Link } from "../../../../components/core/typography/Link";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import ListItemComponent from "../../../../components/screens/ListItemComponent";
 import { LOADING_TAG } from "../../../../utils/xstate";
-import { SelfDeclarationBoolDTO } from "../../../../../definitions/idpay/onboarding/SelfDeclarationBoolDTO";
+import { boolRequiredCriteriaSelector } from "../xstate/selectors";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
+import I18n from "../../../../i18n";
 
 const InitiativeSelfDeclarationsScreen = () => {
   const machine = useOnboardingMachineService();
@@ -24,23 +23,14 @@ const InitiativeSelfDeclarationsScreen = () => {
 
   const isLoading = state.tags.has(LOADING_TAG);
 
-  const selfCriteriaBool: Array<SelfDeclarationBoolDTO> = pipe(
-    state.context.requiredCriteria,
-    O.fromNullable,
-    O.flatten,
-    O.fold(
-      () => [],
-      // eslint-disable-next-line no-underscore-dangle
-      _ => _.selfDeclarationList.filter(SelfDeclarationBoolDTO.is)
-    )
-  );
+  const selfCriteriaBool = useSelector(machine, boolRequiredCriteriaSelector);
 
-  const continueOnPress = () => send({ type: "ACCEPT_REQUIRED_SELF_CRITERIA" });
+  const continueOnPress = () => send({ type: "ACCEPT_REQUIRED_BOOL_CRITERIA" });
   const goBackOnPress = () => send({ type: "GO_BACK" });
 
   return (
     <BaseScreenComponent
-      headerTitle="Adesione all'iniziativa"
+      headerTitle={I18n.t("idpay.onboarding.navigation.header")}
       goBack={goBackOnPress}
       contextualHelp={emptyContextualHelp}
     >
@@ -48,10 +38,10 @@ const InitiativeSelfDeclarationsScreen = () => {
         <SafeAreaView style={IOStyles.flex}>
           <ScrollView style={IOStyles.flex}>
             <View style={IOStyles.horizontalContentPadding}>
-              <H1>Per aderire, dichiari di:</H1>
+              <H1>{I18n.t("idpay.onboarding.boolPrerequisites.header")}</H1>
               <VSpacer size={16} />
-              <Body>L’autodichiarazione è resa ai sensi del</Body>
-              <Link>Dpr 28 dicembre 2000 n. 445 art 46 e 47</Link>
+              <Body>{I18n.t("idpay.onboarding.boolPrerequisites.body")}</Body>
+              <Link>{I18n.t("idpay.onboarding.boolPrerequisites.link")}</Link>
               <VSpacer size={24} />
               {selfCriteriaBool.map((criteria, index) => (
                 <View key={criteria.code}>
@@ -72,11 +62,11 @@ const InitiativeSelfDeclarationsScreen = () => {
             type={"TwoButtonsInlineHalf"}
             leftButton={{
               bordered: true,
-              title: "Indietro",
+              title: I18n.t("global.buttons.back"),
               onPress: goBackOnPress
             }}
             rightButton={{
-              title: "Continua",
+              title: I18n.t("global.buttons.continue"),
               onPress: continueOnPress
             }}
           />
