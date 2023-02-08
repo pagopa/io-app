@@ -7,6 +7,7 @@ import {
   FlatList,
   Image,
   ListRenderItemInfo,
+  Platform,
   Pressable,
   StyleProp,
   StyleSheet,
@@ -92,7 +93,18 @@ const renderItem =
           testID={`idp-${item.id}-button`}
         >
           <Image
-            source={item.localLogo ? item.localLogo : { uri: item.logo }}
+            source={
+              item.localLogo
+                ? item.localLogo
+                : {
+                    // https://github.com/facebook/react-native/issues/12606
+                    // Image cache is disable for Android by appending
+                    // the `ts` query parameter.
+                    uri:
+                      item.logo +
+                      (Platform.OS === "android" ? `?ts=${Date.now()}` : "")
+                  }
+            }
             style={styles.idpLogo}
           />
         </Pressable>
