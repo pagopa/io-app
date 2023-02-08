@@ -15,13 +15,13 @@ import Animated, {
   Extrapolate,
   interpolateColor
 } from "react-native-reanimated";
-import { IOColors, IOColorType } from "../core/variables/IOColors";
+import { hexToRgba, IOColors } from "../core/variables/IOColors";
 import { IOSpringValues, IOScaleValues } from "../core/variables/IOAnimations";
 import { IOButtonStyles } from "../core/variables/IOStyles";
 import { makeFontStyleObject } from "../core/fonts";
 
 export type ButtonOutline = {
-  color?: "primary" | "neutral" | "danger";
+  color?: "primary" | "neutral" | "contrast" | "danger";
   label: string;
   small?: boolean;
   fullWidth?: boolean;
@@ -35,10 +35,12 @@ type ColorStates = {
   border: {
     default: string;
     pressed: string;
+    disabled: string;
   };
   background: {
     default: string;
     pressed: string;
+    disabled: string;
   };
   label: {
     default: string;
@@ -57,11 +59,13 @@ const mapColorStates: Record<
   primary: {
     border: {
       default: IOColors.blue,
-      pressed: IOColors.bluegreyDark
+      pressed: IOColors.bluegreyDark,
+      disabled: IOColors.bluegreyLight
     },
     background: {
       default: IOColors.white,
-      pressed: IOColors.blueUltraLight
+      pressed: IOColors.blueUltraLight,
+      disabled: "transparent"
     },
     label: {
       default: IOColors.blue,
@@ -72,12 +76,14 @@ const mapColorStates: Record<
   // Neutral button
   neutral: {
     border: {
-      default: IOColors.bluegreyLight,
-      pressed: IOColors.bluegrey
+      default: IOColors.grey,
+      pressed: IOColors.bluegrey,
+      disabled: IOColors.bluegreyLight
     },
     background: {
       default: IOColors.white,
-      pressed: IOColors.greyUltraLight
+      pressed: IOColors.greyUltraLight,
+      disabled: "transparent"
     },
     label: {
       default: IOColors.bluegrey,
@@ -85,15 +91,35 @@ const mapColorStates: Record<
       disabled: IOColors.grey
     }
   },
+  // Contrast button
+  contrast: {
+    border: {
+      default: IOColors.white,
+      pressed: IOColors.white,
+      disabled: IOColors.greyLight
+    },
+    background: {
+      default: hexToRgba(IOColors.white, 0),
+      pressed: IOColors.white,
+      disabled: "transparent"
+    },
+    label: {
+      default: IOColors.white,
+      pressed: IOColors.blue,
+      disabled: IOColors.greyLight
+    }
+  },
   // Danger button
   danger: {
     border: {
       default: IOColors.red,
-      pressed: IOColors.red
+      pressed: IOColors.red,
+      disabled: IOColors.bluegreyLight
     },
     background: {
       default: IOColors.white,
-      pressed: IOColors.red
+      pressed: IOColors.red,
+      disabled: "transparent"
     },
     label: {
       default: IOColors.red,
@@ -102,9 +128,6 @@ const mapColorStates: Record<
     }
   }
 };
-
-// Disabled state
-const colorPrimaryButtonDisabled: IOColorType = "bluegreyLight";
 
 const IOButtonStylesLocal = StyleSheet.create({
   label: {
@@ -218,8 +241,8 @@ export const ButtonOutline = ({
             : IOButtonStyles.buttonSizeDefault,
           disabled
             ? {
-                backgroundColor: IOColors.white,
-                borderColor: IOColors[colorPrimaryButtonDisabled]
+                backgroundColor: mapColorStates[color]?.background?.disabled,
+                borderColor: mapColorStates[color]?.border?.disabled
               }
             : {
                 backgroundColor: mapColorStates[color]?.background?.default,

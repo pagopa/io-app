@@ -518,6 +518,105 @@ export const DSButtons = () => (
       </View>
     </DSComponentViewerBox>
 
+    <View
+      style={{
+        backgroundColor: IOColors.blue,
+        padding: 16,
+        borderRadius: 8
+      }}
+    >
+      <DSComponentViewerBox
+        name="ButtonOutline · Contrast variant"
+        colorMode="dark"
+      >
+        <View>
+          <ButtonOutline
+            color="contrast"
+            label={"Contrast button"}
+            onPress={() => {
+              alert("Action triggered");
+            }}
+            accessibilityLabel="Tap to trigger test alert"
+          />
+        </View>
+        <VSpacer size={16} />
+        <View>
+          <ButtonOutline
+            small
+            color="contrast"
+            accessibilityLabel="Tap to trigger test alert"
+            label={"Contrast button (Small)"}
+            onPress={() => {
+              alert("Action triggered");
+            }}
+          />
+        </View>
+      </DSComponentViewerBox>
+
+      <DSComponentViewerBox
+        name="ButtonOutline · Contrast, full width"
+        colorMode="dark"
+      >
+        <View>
+          <ButtonOutline
+            fullWidth
+            color="contrast"
+            label={"Contrast button"}
+            onPress={() => {
+              alert("Action triggered");
+            }}
+            accessibilityLabel="Tap to trigger test alert"
+          />
+        </View>
+        <VSpacer size={16} />
+        <View>
+          <ButtonOutline
+            small
+            fullWidth
+            color="contrast"
+            accessibilityLabel="Tap to trigger test alert"
+            label={"Contrast button (Small)"}
+            onPress={() => {
+              alert("Action triggered");
+            }}
+          />
+        </View>
+      </DSComponentViewerBox>
+
+      <DSComponentViewerBox
+        name="ButtonOutline · Contrast, disabled"
+        colorMode="dark"
+      >
+        <View>
+          <ButtonOutline
+            disabled
+            color="contrast"
+            label={"Contrast button, disabled"}
+            onPress={() => {
+              alert("Action triggered");
+            }}
+            accessibilityLabel="Tap to trigger test alert"
+          />
+        </View>
+        <VSpacer size={16} />
+        <View>
+          <ButtonOutline
+            small
+            fullWidth
+            disabled
+            color="contrast"
+            accessibilityLabel="Tap to trigger test alert"
+            label={"Contrast button (small, full, disabled)"}
+            onPress={() => {
+              alert("Action triggered");
+            }}
+          />
+        </View>
+      </DSComponentViewerBox>
+    </View>
+
+    <VSpacer size={40} />
+
     <DSComponentViewerBox name="ButtonExtendedOutline (using Pressable API)">
       <View>
         <ButtonExtendedOutline
