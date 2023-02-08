@@ -33,6 +33,9 @@ describe("authenticationSaga", () => {
       .next(watchCieAuthentication)
       .call(resetToAuthenticationRoute)
       .next()
+      .next() // remove previous keyTag, if any
+      .next() // generate a new keyTag
+      .next() // generate key pair
       .take(loginSuccess)
       .next(loginSuccess({ token: aSessionToken, idp: "idp" }))
       .cancel(watchCieAuthentication)
