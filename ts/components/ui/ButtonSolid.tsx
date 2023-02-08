@@ -15,13 +15,12 @@ import Animated, {
   Extrapolate,
   interpolateColor
 } from "react-native-reanimated";
-import themeVariables from "../../theme/variables";
 import { IOColors, IOColorType } from "../core/variables/IOColors";
 import { IOSpringValues, IOScaleValues } from "../core/variables/IOAnimations";
 import { BaseTypography } from "../core/typography/BaseTypography";
 import { IOButtonStyles } from "../core/variables/IOStyles";
 
-type Props = {
+export type ButtonSolid = {
   color?: "primary" | "danger" | "contrast";
   label: string;
   small?: boolean;
@@ -43,7 +42,7 @@ type ColorStates = {
 
 // COMPONENT CONFIGURATION
 
-const mapColorStates: Record<NonNullable<Props["color"]>, ColorStates> = {
+const mapColorStates: Record<NonNullable<ButtonSolid["color"]>, ColorStates> = {
   // Primary button
   primary: {
     default: IOColors.blue,
@@ -77,24 +76,6 @@ const mapColorStates: Record<NonNullable<Props["color"]>, ColorStates> = {
 const colorPrimaryButtonDisabled: IOColorType = "bluegreyLight";
 
 const styles = StyleSheet.create({
-  button: {
-    alignItems: "center",
-    textAlignVertical: "center", // Android
-    justifyContent: "center",
-    /* Legacy visual properties. They will be replaced with
-    dynamic ones once NativeBase is gone */
-    borderRadius: themeVariables.btnBorderRadius,
-    paddingHorizontal: 16,
-    // Reset default visual parameters
-    elevation: 0,
-    shadowOffset: { width: 0, height: 0 },
-    shadowRadius: 0,
-    shadowOpacity: 0
-    // Visual parameters based on the FontScale
-    // paddingVertical: PixelRatio.getFontScale() * 10,
-    // paddingHorizontal: PixelRatio.getFontScale() * 16,
-    // borderRadius: PixelRatio.getFontScale() * 8
-  },
   backgroundDisabled: {
     backgroundColor: IOColors[colorPrimaryButtonDisabled]
   }
@@ -109,7 +90,7 @@ export const ButtonSolid = ({
   onPress,
   accessibilityLabel,
   accessibilityHint
-}: Props) => {
+}: ButtonSolid) => {
   const isPressed: Animated.SharedValue<number> = useSharedValue(0);
 
   // Scaling transformation applied when the button is pressed
@@ -170,7 +151,7 @@ export const ButtonSolid = ({
     >
       <Animated.View
         style={[
-          styles.button,
+          IOButtonStyles.button,
           small
             ? IOButtonStyles.buttonSizeSmall
             : IOButtonStyles.buttonSizeDefault,

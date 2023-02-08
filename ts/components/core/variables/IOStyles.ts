@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { PixelRatio, StyleSheet } from "react-native";
 import themeVariables from "../../../theme/variables";
 
 /**
@@ -31,6 +31,27 @@ export const IOStyles = StyleSheet.create({
  */
 
 export const IOButtonStyles = StyleSheet.create({
+  /* BaseButton, used in the:
+  ButtonSolid, ButtonOutline
+  */
+  button: {
+    alignItems: "center",
+    textAlignVertical: "center", // Android
+    justifyContent: "center",
+    /* Legacy visual properties. They will be replaced with
+    dynamic ones once NativeBase is gone */
+    borderRadius: themeVariables.btnBorderRadius,
+    paddingHorizontal: 16,
+    // Reset default visual parameters
+    elevation: 0,
+    shadowOffset: { width: 0, height: 0 },
+    shadowRadius: 0,
+    shadowOpacity: 0
+    // Visual parameters based on the FontScale
+    // paddingVertical: PixelRatio.getFontScale() * 10,
+    // paddingHorizontal: PixelRatio.getFontScale() * 16,
+    // borderRadius: PixelRatio.getFontScale() * 8
+  },
   /* Labels */
   label: {
     alignSelf: "center"
