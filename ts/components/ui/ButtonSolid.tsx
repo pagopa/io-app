@@ -62,7 +62,7 @@ const mapColorStates: Record<NonNullable<Props["color"]>, ColorStates> = {
       disabled: "white"
     }
   },
-  // Inverse button
+  // Contrast button
   contrast: {
     default: IOColors.white,
     pressed: IOColors.white,
