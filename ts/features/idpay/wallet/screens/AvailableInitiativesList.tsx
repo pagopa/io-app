@@ -28,7 +28,7 @@ const InitiativeListItem = ({ item }: ListItemProps) => {
   );
 };
 
-export type PairableInitiativesListScreenNavigationParams = {
+export type AvailableInitiativesListScreenNavigationParams = {
   initiatives: Array<InitiativeDTO>;
   idWallet: number;
 };
