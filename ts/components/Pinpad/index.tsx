@@ -307,6 +307,10 @@ class Pinpad extends React.PureComponent<Props, State> {
               <NBText
                 underlined={true}
                 white={this.props.buttonType === "primary"}
+                accessibilityLabel={I18n.t(
+                  "identification.unlockCode.reset.code"
+                )}
+                accessibilityRole="button"
               >
                 {I18n.t("identification.unlockCode.reset.code")}
               </NBText>
