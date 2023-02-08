@@ -5,11 +5,29 @@ import { baseRawBackendStatus } from "../../../../../store/reducers/__mock__/bac
 import { isLollipopEnabledSelector } from "../../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { getAppVersion } from "../../../../../utils/appVersion";
+import { appReducer } from "../../../../../store/reducers";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { lollipopKeyTagSave } from "../../actions/lollipop";
+import lollipopReducer, { lollipopSelector } from "./../lollipop";
 
 jest.mock("react-native-device-info", () => ({
   getReadableVersion: jest.fn().mockReturnValue("1.2.3.4"),
   getVersion: jest.fn().mockReturnValue("1.2.3.4")
 }));
+
+const globalState = appReducer(undefined, applicationChangeState("active"));
+
+describe("Lollipop state", () => {
+  it("Test selectors and reducers", () => {
+    const lollipopState = lollipopSelector(globalState);
+    expect(lollipopState.keyTag).toBe(undefined);
+    const newLollipopState = lollipopReducer(
+      lollipopState,
+      lollipopKeyTagSave({ keyTag: "newKeyTag" })
+    );
+    expect(newLollipopState.keyTag).toBe("newKeyTag");
+  });
+});
 
 describe("LolliPOP remote flag test", () => {
   const status: BackendStatus = {

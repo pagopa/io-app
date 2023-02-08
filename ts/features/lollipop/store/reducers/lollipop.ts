@@ -28,3 +28,6 @@ export default function lollipopReducer(
 }
 
 export const lollipopSelector = (state: GlobalState) => state.lollipop;
+
+export const lollipopKeyTagSelector = (state: GlobalState) =>
+  state.lollipop?.keyTag;
