@@ -341,8 +341,7 @@ export function* initializeApplicationSaga(): Generator<
   yield* call(askMixpanelOptIn);
 
   // Track crypto key generation info
-  const lollipopState = yield* select(lollipopSelector);
-  const keyTag = lollipopState.keyTag;
+  const keyTag = yield* select(lollipopKeyTagSelector); 
   if (keyTag) {
     yield* call(trackMixpanelCryptoKeyPairEvents, keyTag);
   }
