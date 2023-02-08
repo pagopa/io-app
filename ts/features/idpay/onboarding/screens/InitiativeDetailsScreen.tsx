@@ -120,9 +120,7 @@ const InitiativeDetailsScreen = () => {
       serviceId
     });
   }, [send, serviceId]);
-  const handleGoBackPress = () => {
-    send({ type: "QUIT_ONBOARDING" });
-  };
+  const handleGoBackPress = () => send({ type: "QUIT_ONBOARDING" });
   const handleContinuePress = () =>
     requiresScrolling ? scrollToEnd() : send({ type: "ACCEPT_TOS" });
 
