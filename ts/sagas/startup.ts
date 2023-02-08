@@ -64,7 +64,7 @@ import {
   sessionInfoSelector,
   sessionTokenSelector
 } from "../store/reducers/authentication";
-import { lollipopSelector } from "../features/lollipop/store/reducers/lollipop";
+import { lollipopKeyTagSelector } from "../features/lollipop/store/reducers/lollipop";
 import { IdentificationResult } from "../store/reducers/identification";
 import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
 import { isPagoPATestEnabledSelector } from "../store/reducers/persistedPreferences";
@@ -341,7 +341,7 @@ export function* initializeApplicationSaga(): Generator<
   yield* call(askMixpanelOptIn);
 
   // Track crypto key generation info
-  const keyTag = yield* select(lollipopKeyTagSelector); 
+  const keyTag = yield* select(lollipopKeyTagSelector);
   if (keyTag) {
     yield* call(trackMixpanelCryptoKeyPairEvents, keyTag);
   }
