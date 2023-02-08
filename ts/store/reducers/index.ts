@@ -16,6 +16,9 @@ import {
 import { Action } from "../actions/types";
 import createSecureStorage from "../storages/keychain";
 import { DateISO8601Transform } from "../transforms/dateISO8601Tranform";
+import lollipopReducer, {
+  initialLollipopState
+} from "../../features/lollipop/store/reducers/lollipop";
 import appStateReducer from "./appState";
 import assistanceToolsReducer from "./assistanceTools";
 import authenticationReducer, {
@@ -131,7 +134,8 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
   payments: paymentsReducer,
   content: contentReducer,
   emailValidation: emailValidationReducer,
-  crossSessions: crossSessionsReducer
+  crossSessions: crossSessionsReducer,
+  lollipop: lollipopReducer
 });
 
 export function createRootReducer(
@@ -219,6 +223,10 @@ export function createRootReducer(
                 // eslint-disable-next-line no-underscore-dangle
                 _persist: state.wallet.wallets._persist
               }
+            },
+            lollipop: {
+              ...initialLollipopState,
+              keyTag: state.lollipop.keyTag
             }
           } as GlobalState)
         : state;
