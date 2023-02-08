@@ -101,6 +101,12 @@ const InitiativeDetailsScreen = () => {
   const route = useRoute<InitiativeDetailsRouteProps>();
   const onboardingMachineService = useOnboardingMachineService();
   const [state, send] = useActor(onboardingMachineService);
+
+  const isLoading = state.tags.has(LOADING_TAG);
+  const description = state.context.initiative?.description ?? undefined;
+  const isAcceptingTos = state.tags.has(UPSERTING_TAG);
+  const { serviceId } = route.params;
+
   const {
     scrollViewRef,
     onScrollViewSizeChange,
@@ -108,11 +114,7 @@ const InitiativeDetailsScreen = () => {
     handleIsScrollEnd,
     requiresScrolling,
     setMarkdownIsLoaded
-  } = useInitiativeDetailsScrolling();
-
-  const isLoading = state.tags.has(LOADING_TAG);
-  const isAcceptingTos = state.tags.has(UPSERTING_TAG);
-  const { serviceId } = route.params;
+  } = useInitiativeDetailsScrolling(isLoading, description);
 
   React.useEffect(() => {
     send({
@@ -154,12 +156,8 @@ const InitiativeDetailsScreen = () => {
           )}
           {headerContent && <Text>{headerContent}</Text>}
           <VSpacer size={16} />
-          {state.context.initiative?.description !== undefined ? (
-            <Markdown onLoadEnd={setMarkdownIsLoaded}>
-              {state.context.initiative.description}
-            </Markdown>
-          ) : (
-            setMarkdownIsLoaded()
+          {description !== undefined && (
+            <Markdown onLoadEnd={setMarkdownIsLoaded}>{description}</Markdown>
           )}
           <VSpacer size={16} />
           <ItemSeparatorComponent noPadded={true} />
