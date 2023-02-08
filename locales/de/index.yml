@@ -2010,51 +2010,51 @@ idpay:
       initiativeDetailsScreen:
         notConfigured:
           header: "Starte die Initiative!"
-          footer: "Füge mindestens eine Methode hinzu, um mit der {{initiative}} zu beginnen"
+          footer: "Füge mindestens eine Zahlungsmethode hinzu, um mit der {{initiative}} zu beginnen"
         configured:
-          yourOperations: Le tue Operazioni
-          yourOperationsSubtitle: "Qui vedrai le transazioni effettuate con i metodi che hai associato. "
-          yourOperationsLink: Come si fa?
+          yourOperations: "Deine Aktivitäten"
+          yourOperationsSubtitle: "Hier siehst du die Transaktionen, die mit den von dir verbundenen Zahlungsmethoden durchgeführt wurden. "
+          yourOperationsLink: "Wie geht das?"
           settings:
-            showMore: Vedi tutte
-            header: Impostazioni
-            associatedPaymentMethods: Metodi di pagamento associati
-            methodsi18n: metodi 
-            selectedIBAN: IBAN per l'accredito
-            actionsRequired: Azioni richieste 
-          startConfigurationCTA: Inizia
+            showMore: "Zeige alle"
+            header: "Einstellungen"
+            associatedPaymentMethods: "Verbundene Zahlungsmethoden"
+            methodsi18n: "Methode" 
+            selectedIBAN: "IBAN für die Gutschrift"
+            actionsRequired: "Erforderliche Aktionen "
+          startConfigurationCTA: "Beginne"
           operationsList:
-            header: Tutte le operazioni
-            title: Lista operazioni
-            lastUpdated: "Ultimo aggiornamento: "
+            header: "Alle Transaktionen"
+            title: "Liste der Transaktionen"
+            lastUpdated: "Zuletzt aktualisiert: "
             operationDescriptions:
-              ONBOARDING:  "Hai aderito all'iniziativa"
-              ADD_IBAN:  "Aggiunto IBAN"
-              ADD_INSTRUMENT: "Hai aggiunto ···· {{maskedPan}}"
-              TRANSACTION:  "Pagamento Pos"
+              ONBOARDING:  "Du hast dich der Initiative angeschlossen"
+              ADD_IBAN:  "IBAN hinzufügen"
+              ADD_INSTRUMENT: "Du hast ···· {{maskedPan}} hinzugefügt"
+              TRANSACTION:  "POS-Zahlung"
               REVERSAL:  "Ricarica saldo disponibile"
-              DELETE_INSTRUMENT:  "Hai eliminato un metodo di pagamento"
-              REJECTED_ADD_INSTRUMENT:  "Hai rifiutato un metodo di pagamento"
-              REJECTED_DELETE_INSTRUMENT: "Hai rifiutato di eliminare un metodo di pagamento"
-              PAID_REFUND:  "Rimborso"
-              REJECTED_REFUND:  "Rifiuto rimborso"
+              DELETE_INSTRUMENT:  "Du hast eine Zahlungsmethode gelöscht"
+              REJECTED_ADD_INSTRUMENT:  "Du hast eine Zahlungsmethode abgelehnt"
+              REJECTED_DELETE_INSTRUMENT: "Du hast dich geweigert, eine Zahlungsmethode zu löschen"
+              PAID_REFUND:  "Rückerstattung"
+              REJECTED_REFUND:  "Ablehnung der Rückerstattung"
     operationDetails:
-      title: Dettaglio dell'operazione
-      instrument: Metodo di pagamento
-      maskedPan: •••• {{lastDigits}}
-      amountLabel: Importo transazione
-      accruedAmountLabel: Importo rimborsabile
-      amount: € {{amount}}
-      infoTitle: Informazioni sull transazione
-      date: Data
-      circuit: Circuito di pagamento
-      acquirerId: ID transazione Acquirer
-      issuerId: ID transazione Issuer
+      title: "Transaktionsdetails"
+      instrument: "Zahlungsmethode"
+      maskedPan: "•••• {{lastDigits}}"
+      amountLabel: "Betrag der Transaktion"
+      accruedAmountLabel: "Erstattungsfähiger Betrag"
+      amount: "{{amount}} €"
+      infoTitle: "Über die Transaktion"
+      date: "Datum"
+      circuit: "Zahlungsnetzwerk"
+      acquirerId: "Transaktions-ID des Empfängers"
+      issuerId: "Transaktions-ID des Emittenten"
   onboarding:
     success:
-      understoodCta: Ho capito!
-      pleaseWait: Un attimo di pazienza...
-      requestSent: La tua richiesta è stata inviata!
+      understoodCta: "Ich habe verstanden"
+      pleaseWait: "Ein bisschen Geduld..."
+      requestSent: "Deine Anfrage wurde versandt!"
     failure:
       NO_PERMISSION:
         title: "Non hai i requisiti per aderire a questa iniziativa"
