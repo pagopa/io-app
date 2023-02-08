@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { lollipopSelector } from "../../../store/actions/lollipop";
 import { useIOSelector } from "../../../store/hooks";
 import { LoggedOutWithIdp } from "../../../store/reducers/authentication";
 import { isLollipopEnabledSelector } from "../../../store/reducers/backendStatus";
 import { taskGetPublicKey } from "../../../utils/crypto";
 import { getIdpLoginUri } from "../../../utils/login";
+import { lollipopSelector } from "../store/reducers/lollipop";
 import { LoginSourceAsync } from "../types/LollipopLoginSource";
 
 type Props = {

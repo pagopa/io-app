@@ -8,6 +8,9 @@ import { isActionOf } from "typesafe-actions";
 import { versionInfoReducer } from "../../common/versionInfo/store/reducers/versionInfo";
 import bonusReducer from "../../features/bonus/bonusVacanze/store/reducers";
 import { featuresPersistor } from "../../features/common/store/reducers";
+import lollipopReducer, {
+  initialLollipopState
+} from "../../features/lollipop/store/reducers/lollipop";
 import {
   logoutFailure,
   logoutSuccess,
@@ -40,7 +43,6 @@ import identificationReducer, {
   INITIAL_STATE as identificationInitialState
 } from "./identification";
 import installationReducer from "./installation";
-import lollipopReducer, { initialLollipopState } from "./lollipop";
 import { navigationReducer } from "./navigation";
 import notificationsReducer from "./notifications";
 import onboardingReducer from "./onboarding";

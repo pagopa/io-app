@@ -1,9 +1,9 @@
 import { PublicKey } from "@pagopa/io-react-native-crypto";
 import { useEffect, useState } from "react";
-import { lollipopSelector } from "../../../store/actions/lollipop";
 import { useIOSelector } from "../../../store/hooks";
 import { isLollipopEnabledSelector } from "../../../store/reducers/backendStatus";
 import { taskGetPublicKey } from "../../../utils/crypto";
+import { lollipopSelector } from "../store/reducers/lollipop";
 
 export const useLollipopPublicKey = () => {
   const [publicKey, setPublicKey] = useState<PublicKey | undefined>(undefined);
