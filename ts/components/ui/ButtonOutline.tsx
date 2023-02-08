@@ -59,17 +59,17 @@ const mapColorStates: Record<
   primary: {
     border: {
       default: IOColors.blue,
-      pressed: IOColors.bluegreyDark,
+      pressed: IOColors.blue,
       disabled: IOColors.bluegreyLight
     },
     background: {
-      default: IOColors.white,
-      pressed: IOColors.blueUltraLight,
+      default: hexToRgba(IOColors.blue, 0),
+      pressed: hexToRgba(IOColors.blue, 0.15),
       disabled: "transparent"
     },
     label: {
       default: IOColors.blue,
-      pressed: IOColors.bluegreyDark,
+      pressed: IOColors.blue,
       disabled: IOColors.grey
     }
   },
@@ -96,17 +96,17 @@ const mapColorStates: Record<
     border: {
       default: IOColors.white,
       pressed: IOColors.white,
-      disabled: IOColors.greyLight
+      disabled: hexToRgba(IOColors.white, 0.5)
     },
     background: {
       default: hexToRgba(IOColors.white, 0),
-      pressed: IOColors.white,
+      pressed: hexToRgba(IOColors.white, 0.2),
       disabled: "transparent"
     },
     label: {
       default: IOColors.white,
-      pressed: IOColors.blue,
-      disabled: IOColors.greyLight
+      pressed: IOColors.white,
+      disabled: hexToRgba(IOColors.white, 0.5)
     }
   },
   // Danger button
@@ -117,13 +117,13 @@ const mapColorStates: Record<
       disabled: IOColors.bluegreyLight
     },
     background: {
-      default: IOColors.white,
-      pressed: IOColors.red,
+      default: hexToRgba(IOColors.red, 0),
+      pressed: hexToRgba(IOColors.red, 0.15),
       disabled: "transparent"
     },
     label: {
       default: IOColors.red,
-      pressed: IOColors.white,
+      pressed: IOColors.red,
       disabled: IOColors.grey
     }
   }
