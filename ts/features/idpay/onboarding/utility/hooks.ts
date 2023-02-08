@@ -41,11 +41,8 @@ export const useInitiativeDetailsScrolling = () => {
     }
   };
 
-  const handleIsScrollEnd = ({
-    layoutMeasurement,
-    contentOffset,
-    contentSize
-  }: NativeScrollEvent) => {
+  const handleIsScrollEnd = (event: NativeScrollEvent) => {
+    const { layoutMeasurement, contentOffset, contentSize } = event;
     const paddingToBottom = 20;
     if (
       layoutMeasurement.height + contentOffset.y >=
