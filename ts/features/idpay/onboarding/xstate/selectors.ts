@@ -7,6 +7,7 @@ import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/onboarding
 import { SelfDeclarationBoolDTO } from "../../../../../definitions/idpay/onboarding/SelfDeclarationBoolDTO";
 import { SelfDeclarationDTO } from "../../../../../definitions/idpay/onboarding/SelfDeclarationDTO";
 import { SelfDeclarationMultiDTO } from "../../../../../definitions/idpay/onboarding/SelfDeclarationMultiDTO";
+import { LOADING_TAG, UPSERTING_TAG } from "../../../../utils/xstate";
 import { Context, IDPayOnboardingMachineType } from "./machine";
 
 type StateWithContext = StateFrom<IDPayOnboardingMachineType>;
@@ -17,6 +18,8 @@ const selectMultiConsents = (state: StateWithContext) =>
   state.context.multiConsentsAnswers;
 const selectCurrentPage = (state: StateWithContext) =>
   state.context.multiConsentsPage;
+const selectTags = (state: StateWithContext) => state.tags;
+const selectInitiative = (state: StateWithContext) => state.context.initiative;
 
 const filterCriteria = <T extends SelfDeclarationDTO>(
   criteria: O.Option<RequiredCriteriaDTO> | undefined,
@@ -66,6 +69,22 @@ const prerequisiteAnswerIndexSelector = createSelector(
       : currentCriteria.value.indexOf(multiConsents[currentPage]?.value)
 );
 
+const isLoadingSelector = createSelector(selectTags, tags =>
+  tags.has(LOADING_TAG)
+);
+const isUpsertingSelector = createSelector(selectTags, tags =>
+  tags.has(UPSERTING_TAG)
+);
+
+const initiativeDescriptionSelector = createSelector(
+  selectInitiative,
+  initiative => initiative?.description ?? undefined
+);
+const initiativeIDSelector = createSelector(
+  selectInitiative,
+  initiative => initiative?.initiativeId ?? undefined
+);
+
 const getMultiRequiredCriteriaFromContext = (context: Context) =>
   filterCriteria<SelfDeclarationMultiDTO>(
     context.requiredCriteria,
@@ -84,5 +103,9 @@ export {
   getMultiRequiredCriteriaFromContext,
   getBoolRequiredCriteriaFromContext,
   criteriaToDisplaySelector,
-  prerequisiteAnswerIndexSelector
+  prerequisiteAnswerIndexSelector,
+  isLoadingSelector,
+  initiativeDescriptionSelector,
+  isUpsertingSelector,
+  initiativeIDSelector
 };

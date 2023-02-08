@@ -1,22 +1,26 @@
 /* eslint-disable functional/immutable-data */
+import { useSelector } from "@xstate/react";
 import { useEffect, useRef, useState } from "react";
 import {
   NativeScrollEvent,
   ScrollView,
   useWindowDimensions
 } from "react-native";
+import { useOnboardingMachineService } from "../xstate/provider";
+import {
+  initiativeDescriptionSelector,
+  isLoadingSelector
+} from "../xstate/selectors";
 
-export const useInitiativeDetailsScrolling = (
-  isLoading: boolean,
-  description: string | undefined
-  // type definition for the single "state" object
-  // gets esoteric very fast, so passing the single 
-  // values as arguments sounds like a more readable and easier approach
-) => {
+export const useInitiativeDetailsScrolling = () => {
+  const machine = useOnboardingMachineService();
   const scrollViewRef = useRef<ScrollView>(null);
   const markdownIsLoadingRef = useRef<boolean>(true);
   const screenHeight = useWindowDimensions().height;
   const [requiresScrolling, setRequiresScrolling] = useState<boolean>(true);
+
+  const isLoading = useSelector(machine, isLoadingSelector);
+  const description = useSelector(machine, initiativeDescriptionSelector);
 
   useEffect(() => {
     if (!isLoading) {
@@ -58,6 +62,8 @@ export const useInitiativeDetailsScrolling = (
     scrollToEnd,
     handleIsScrollEnd,
     setMarkdownIsLoaded,
-    requiresScrolling
+    requiresScrolling,
+    isLoading,
+    description
   };
 };

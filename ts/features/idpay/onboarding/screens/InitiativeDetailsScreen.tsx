@@ -1,34 +1,34 @@
 /* eslint-disable functional/immutable-data */
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useRoute } from "@react-navigation/native";
-import * as React from "react";
-import { pipe } from "fp-ts/lib/function";
-import { useActor } from "@xstate/react";
+import { useSelector } from "@xstate/react";
 import * as O from "fp-ts/lib/Option";
-import { View, SafeAreaView, ScrollView, Text } from "react-native";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
+import { pipe } from "fp-ts/lib/function";
+import * as React from "react";
+import { SafeAreaView, ScrollView, Text, View } from "react-native";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import OrganizationHeader from "../../../../components/OrganizationHeader";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
+import { Body } from "../../../../components/core/typography/Body";
+import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
+import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import Markdown from "../../../../components/ui/Markdown";
-import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
-import { Body } from "../../../../components/core/typography/Body";
-import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
-import { UIService } from "../../../../store/reducers/entities/services/types";
+import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { serviceByIdSelector } from "../../../../store/reducers/entities/services/servicesById";
 import { toUIService } from "../../../../store/reducers/entities/services/transformers";
+import { UIService } from "../../../../store/reducers/entities/services/types";
+import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { showToast } from "../../../../utils/showToast";
 import { openWebUrl } from "../../../../utils/url";
 import { IDPayOnboardingParamsList } from "../navigation/navigator";
-import { useOnboardingMachineService } from "../xstate/provider";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { LOADING_TAG, UPSERTING_TAG } from "../../../../utils/xstate";
-import I18n from "../../../../i18n";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { useInitiativeDetailsScrolling } from "../utility/hooks";
+import { useOnboardingMachineService } from "../xstate/provider";
+import { initiativeIDSelector, isUpsertingSelector } from "../xstate/selectors";
 
 type InitiativeDetailsScreenRouteParams = {
   serviceId: string;
@@ -99,39 +99,38 @@ const BeforeContinueBody = (props: BeforeContinueBodyProps) => {
 
 const InitiativeDetailsScreen = () => {
   const route = useRoute<InitiativeDetailsRouteProps>();
-  const onboardingMachineService = useOnboardingMachineService();
-  const [state, send] = useActor(onboardingMachineService);
+  const machine = useOnboardingMachineService();
 
-  const isLoading = state.tags.has(LOADING_TAG);
-  const description = state.context.initiative?.description ?? undefined;
-  const isAcceptingTos = state.tags.has(UPSERTING_TAG);
+  const isAcceptingTos = useSelector(machine, isUpsertingSelector);
+  const initiativeId = useSelector(machine, initiativeIDSelector);
   const { serviceId } = route.params;
-
   const {
     scrollViewRef,
     onScrollViewSizeChange,
     scrollToEnd,
     handleIsScrollEnd,
     requiresScrolling,
-    setMarkdownIsLoaded
-  } = useInitiativeDetailsScrolling(isLoading, description);
+    setMarkdownIsLoaded,
+    isLoading,
+    description
+  } = useInitiativeDetailsScrolling();
 
   React.useEffect(() => {
-    send({
+    machine.send({
       type: "SELECT_INITIATIVE",
       serviceId
     });
-  }, [send, serviceId]);
+  }, [machine, serviceId]);
   const handleGoBackPress = () => {
-    send({ type: "QUIT_ONBOARDING" });
+    machine.send({ type: "QUIT_ONBOARDING" });
   };
   const handleContinuePress = () =>
-    requiresScrolling ? scrollToEnd() : send({ type: "ACCEPT_TOS" });
+    requiresScrolling ? scrollToEnd() : machine.send({ type: "ACCEPT_TOS" });
 
   // TODO show initaitveID for testing purposes
   const headerContent = pipe(
-    O.fromNullable(state.context.initiative),
-    O.map(initiative => `Initiative ID: ${initiative.initiativeId}`),
+    O.fromNullable(initiativeId),
+    O.map(id => `Initiative ID: ${id}`),
     O.toUndefined
   );
   const service = pipe(
