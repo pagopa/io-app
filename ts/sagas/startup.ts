@@ -64,6 +64,7 @@ import {
   sessionInfoSelector,
   sessionTokenSelector
 } from "../store/reducers/authentication";
+import { lollipopKeyTagSelector } from "../features/lollipop/store/reducers/lollipop";
 import { IdentificationResult } from "../store/reducers/identification";
 import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
 import { isPagoPATestEnabledSelector } from "../store/reducers/persistedPreferences";
@@ -138,7 +139,6 @@ import { watchLoadMessageById } from "./messages/watchLoadMessageById";
 import { watchThirdPartyMessageSaga } from "./messages/watchThirdPartyMessageSaga";
 import { checkNotificationsPreferencesSaga } from "./startup/checkNotificationsPreferencesSaga";
 import { trackMixpanelCryptoKeyPairEvents } from "./startup/generateCryptoKeyPair";
-import { lollipopSelector } from "./../store/actions/lollipop";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -341,8 +341,7 @@ export function* initializeApplicationSaga(): Generator<
   yield* call(askMixpanelOptIn);
 
   // Track crypto key generation info
-  const lollipopState = yield* select(lollipopSelector);
-  const keyTag = lollipopState.keyTag;
+  const keyTag = yield* select(lollipopKeyTagSelector);
   if (keyTag) {
     yield* call(trackMixpanelCryptoKeyPairEvents, keyTag);
   }

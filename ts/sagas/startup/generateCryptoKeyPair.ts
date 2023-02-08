@@ -1,15 +1,15 @@
 import {
+  generate,
   CryptoError,
-  deleteKey,
-  generate
+  deleteKey
 } from "@pagopa/io-react-native-crypto";
 import { call, select } from "typed-redux-saga/macro";
 import { isLollipopEnabledSelector } from "../../store/reducers/backendStatus";
 import {
   checkPublicKeyExists,
+  setKeyGenerationInfo,
   getKeyGenerationInfo,
-  KeyGenerationInfo,
-  setKeyGenerationInfo
+  KeyGenerationInfo
 } from "../../utils/crypto";
 import { mixpanelTrack } from "./../../mixpanel";
 

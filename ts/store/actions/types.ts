@@ -27,6 +27,7 @@ import { CdcActions } from "../../features/bonus/cdc/store/actions";
 import { PnActions } from "../../features/pn/store/actions";
 import { FciActions } from "../../features/fci/store/actions";
 import { IDPayActions } from "../../features/idpay/common/actions";
+import { LollipopActions } from "../../features/lollipop/store/actions/lollipop";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { AuthenticationActions } from "./authentication";
@@ -55,7 +56,6 @@ import { UserDataProcessingActions } from "./userDataProcessing";
 import { UserMetadataActions } from "./userMetadata";
 import { WalletActions } from "./wallet";
 import { OutcomeCodeActions } from "./wallet/outcomeCode";
-import { LollipopActions } from "./lollipop";
 
 export type Action =
   | AnalyticsActions
