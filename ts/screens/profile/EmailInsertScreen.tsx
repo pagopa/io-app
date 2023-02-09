@@ -24,6 +24,7 @@ import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
+import { VSpacer } from "../../components/core/spacer/Spacer";
 import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { ProfileParamsList } from "../../navigation/params/ProfileParamsList";
@@ -236,7 +237,7 @@ const EmailInsertScreen = (props: Props) => {
             >
               {I18n.t("email.edit.title")}
             </H1>
-            <View spacer={true} />
+            <VSpacer />
             <View style={styles.horizontalPadding}>
               <NBText>
                 {isEmailValidated
@@ -250,7 +251,7 @@ const EmailInsertScreen = (props: Props) => {
                 </NBText>
               </NBText>
             </View>
-            <View spacer={true} />
+            <VSpacer />
             <View style={styles.horizontalPadding}>
               <Form>
                 <LabelledItem
