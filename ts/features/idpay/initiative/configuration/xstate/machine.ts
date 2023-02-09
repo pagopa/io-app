@@ -58,7 +58,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
       initial: "WAITING_START",
       on: {
         QUIT: {
-          actions: "exitConfiguration"
+          target: "#ROOT.CONFIGURATION_CLOSED"
         }
       },
       states: {
@@ -163,7 +163,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 BACK: [
                   {
                     cond: "isIbanOnlyMode",
-                    actions: "exitConfiguration"
+                    target: "#ROOT.CONFIGURATION_CLOSED"
                   },
                   {
                     target: "#ROOT.DISPLAYING_INTRO"
@@ -211,7 +211,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 BACK: [
                   {
                     cond: "isIbanOnlyMode",
-                    actions: "exitConfiguration"
+                    target: "#ROOT.CONFIGURATION_CLOSED"
                   },
                   {
                     target: "#ROOT.DISPLAYING_INTRO"
@@ -266,7 +266,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 src: "loadInstruments",
                 id: "loadInstruments",
                 onDone: {
-                  target: "DISPLAYING_INSTRUMENTS",
+                  target: "EVALUATING_INSTRUMENTS",
                   actions: "loadInstrumentsSuccess"
                 },
                 onError: [
@@ -286,8 +286,12 @@ const createIDPayInitiativeConfigurationMachine = () =>
               tags: [LOADING_TAG],
               always: [
                 {
-                  target: "DISPLAYING_INSTRUMENTS",
-                  cond: "hasInstruments"
+                  cond: "hasInstruments",
+                  target: "DISPLAYING_INSTRUMENTS"
+                },
+                {
+                  cond: "isInstrumentsOnlyMode",
+                  target: "DISPLAYING_INSTRUMENTS"
                 },
                 {
                   target: "#ROOT.DISPLAYING_CONFIGURATION_SUCCESS"
@@ -311,7 +315,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 BACK: [
                   {
                     cond: "isInstrumentsOnlyMode",
-                    actions: "exitConfiguration"
+                    target: "#ROOT.CONFIGURATION_CLOSED"
                   },
                   {
                     target: "#ROOT.CONFIGURING_IBAN"
@@ -396,6 +400,10 @@ const createIDPayInitiativeConfigurationMachine = () =>
           type: "final",
           entry: "navigateToInitiativeDetailScreen"
         },
+        CONFIGURATION_CLOSED: {
+          type: "final",
+          entry: "exitConfiguration"
+        },
         CONFIGURATION_FAILURE: {
           type: "final",
           entry: ["showFailureToast", "exitConfiguration"]
@@ -468,7 +476,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
           context.mode === ConfigurationMode.INSTRUMENTS,
         hasInstruments: (context, _) =>
           p.getOrElse(
-            p.map(context.idPayInstruments, list => list.length > 0),
+            p.map(context.pagoPAInstruments, list => list.length > 0),
             false
           )
       }
