@@ -20,6 +20,8 @@ import themeVariables from "../theme/variables";
 import { GlobalState } from "../store/reducers/types";
 import { idpsStateSelector } from "../store/reducers/content";
 import { LocalIdpsFallback } from "../utils/idps";
+import { localeDateFormat } from "../utils/locale";
+import I18n from "../i18n";
 import { VSpacer } from "./core/spacer/Spacer";
 import { IOColors } from "./core/variables/IOColors";
 
@@ -74,6 +76,17 @@ const styles = StyleSheet.create({
 
 const keyExtractor = (idp: LocalIdpsFallback): string => idp.id;
 
+// https://github.com/facebook/react-native/issues/12606
+// Image cache is disable for Android by appending
+// the `ts` query parameter as DDMMYYYY to simulate a 24h TTL
+const disableAndroidImageCache = () => {
+  const timestampValue = localeDateFormat(
+    new Date(),
+    I18n.t("global.dateFormats.shortFormat").replace(/\//g, "")
+  );
+  return Platform.OS === "android" ? `?ts=${timestampValue}` : "";
+};
+
 const renderItem =
   (props: Props) =>
   (info: ListRenderItemInfo<LocalIdpsFallback>): React.ReactElement => {
@@ -97,12 +110,7 @@ const renderItem =
               item.localLogo
                 ? item.localLogo
                 : {
-                    // https://github.com/facebook/react-native/issues/12606
-                    // Image cache is disable for Android by appending
-                    // the `ts` query parameter.
-                    uri:
-                      item.logo +
-                      (Platform.OS === "android" ? `?ts=${Date.now()}` : "")
+                    uri: `${item.logo}${disableAndroidImageCache()}`
                   }
             }
             style={styles.idpLogo}
