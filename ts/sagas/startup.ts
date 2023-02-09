@@ -142,7 +142,6 @@ import {
   getCryptoPublicKey,
   trackMixpanelCryptoKeyPairEvents
 } from "./startup/generateCryptoKeyPair";
-import { KeyInfo } from "./../utils/crypto";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
