@@ -1,5 +1,5 @@
 import { Text as NBText } from "native-base";
-import { View } from "react-native";
+import { View, StyleSheet } from "react-native";
 import * as React from "react";
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { ButtonExtendedOutline } from "../../../components/ui/ButtonExtendedOutline";
@@ -19,7 +19,17 @@ import { PaymentNoticeNumber } from "../../../../definitions/backend/PaymentNoti
 import IconFont from "../../../components/ui/IconFont";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
+import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";
+import IconButton from "../../../components/ui/IconButton";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
+
+const styles = StyleSheet.create({
+  primaryBlock: {
+    backgroundColor: IOColors.blue,
+    padding: 16,
+    borderRadius: 8
+  }
+});
 
 export const DSButtons = () => (
   <DesignSystemScreen title={"Buttons"}>
@@ -182,13 +192,7 @@ export const DSButtons = () => (
       </View>
     </DSComponentViewerBox>
 
-    <View
-      style={{
-        backgroundColor: IOColors.blue,
-        padding: 16,
-        borderRadius: 8
-      }}
-    >
+    <View style={styles.primaryBlock}>
       <DSComponentViewerBox
         name="ButtonSolid · Contrast variant"
         colorMode="dark"
@@ -250,6 +254,7 @@ export const DSButtons = () => (
       <DSComponentViewerBox
         name="ButtonSolid · Contrast, disabled"
         colorMode="dark"
+        last
       >
         <View>
           <ButtonSolid
@@ -518,13 +523,7 @@ export const DSButtons = () => (
       </View>
     </DSComponentViewerBox>
 
-    <View
-      style={{
-        backgroundColor: IOColors.blue,
-        padding: 16,
-        borderRadius: 8
-      }}
-    >
+    <View style={styles.primaryBlock}>
       <DSComponentViewerBox
         name="ButtonOutline · Contrast variant"
         colorMode="dark"
@@ -586,6 +585,7 @@ export const DSButtons = () => (
       <DSComponentViewerBox
         name="ButtonOutline · Contrast, disabled"
         colorMode="dark"
+        last
       >
         <View>
           <ButtonOutline
@@ -607,6 +607,94 @@ export const DSButtons = () => (
             color="contrast"
             accessibilityLabel="Tap to trigger test alert"
             label={"Contrast button (small, full, disabled)"}
+            onPress={() => {
+              alert("Action triggered");
+            }}
+          />
+        </View>
+      </DSComponentViewerBox>
+    </View>
+
+    <VSpacer size={40} />
+
+    <H2
+      color={"bluegrey"}
+      weight={"SemiBold"}
+      style={{ marginBottom: 16, marginTop: 16 }}
+    >
+      IconButton
+    </H2>
+    <DSComponentViewerBox name="IconButton · Primary Variant (using Pressable API)">
+      <View style={IOStyles.row}>
+        <IconButton
+          accessibilityLabel="Tap to trigger test alert"
+          icon="help"
+          onPress={() => {
+            alert("Action triggered");
+          }}
+        />
+
+        <HSpacer size={16} />
+
+        <IconButton
+          accessibilityLabel="Tap to trigger test alert"
+          icon="help"
+          disabled
+          onPress={() => {
+            alert("Action triggered");
+          }}
+        />
+      </View>
+    </DSComponentViewerBox>
+
+    <DSComponentViewerBox name="IconButton · Neutral Variant, small">
+      <View style={IOStyles.row}>
+        <IconButton
+          color="neutral"
+          accessibilityLabel="Tap to trigger test alert"
+          icon="help"
+          onPress={() => {
+            alert("Action triggered");
+          }}
+        />
+
+        <HSpacer size={16} />
+
+        <IconButton
+          color="neutral"
+          accessibilityLabel="Tap to trigger test alert"
+          icon="help"
+          disabled
+          onPress={() => {
+            alert("Action triggered");
+          }}
+        />
+      </View>
+    </DSComponentViewerBox>
+
+    <View style={styles.primaryBlock}>
+      <DSComponentViewerBox
+        name="IconButton · Neutral Variant, small"
+        colorMode="dark"
+        last
+      >
+        <View style={IOStyles.row}>
+          <IconButton
+            color="contrast"
+            accessibilityLabel="Tap to trigger test alert"
+            icon="help"
+            onPress={() => {
+              alert("Action triggered");
+            }}
+          />
+
+          <HSpacer size={16} />
+
+          <IconButton
+            color="contrast"
+            accessibilityLabel="Tap to trigger test alert"
+            icon="help"
+            disabled
             onPress={() => {
               alert("Action triggered");
             }}

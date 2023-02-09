@@ -30,6 +30,13 @@ export const IOStyles = StyleSheet.create({
  * BUTTON STYLES
  */
 
+/* SIZE
+- Height for classic buttons
+- Width and height for icon buttons
+*/
+const btnSizeDefault = 40;
+const btnSizeSmall = 39;
+
 export const IOButtonStyles = StyleSheet.create({
   /* BaseButton, used in the:
   ButtonSolid, ButtonOutline
@@ -66,10 +73,15 @@ export const IOButtonStyles = StyleSheet.create({
   Must be replaced with dynamic values, depending on the
   fontScale parameter */
   buttonSizeDefault: {
-    height: 40
+    height: btnSizeDefault
   },
   buttonSizeSmall: {
-    height: 39
+    height: btnSizeSmall
+  },
+  iconButtonSizeDefault: {
+    width: btnSizeDefault,
+    height: btnSizeDefault,
+    borderRadius: btnSizeDefault
   },
   /* Widths */
   dimensionsDefault: {

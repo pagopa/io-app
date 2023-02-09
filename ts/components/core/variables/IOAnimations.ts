@@ -17,8 +17,12 @@ export const IOScaleValues = {
   basicButton: {
     pressedState: 0.99
   },
-  // Exaggerated scale effect
+  // Medium scale effect
   magnifiedButton: {
     pressedState: 0.97
+  },
+  // Exaggerated scale effect
+  exaggeratedButton: {
+    pressedState: 0.95
   }
 };
