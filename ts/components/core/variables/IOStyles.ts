@@ -1,4 +1,4 @@
-import { PixelRatio, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import themeVariables from "../../../theme/variables";
 
 /**
