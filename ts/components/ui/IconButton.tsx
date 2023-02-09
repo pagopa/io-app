@@ -22,7 +22,7 @@ import { Icon, IOIconType } from "../core/icons";
 
 export type IconButton = {
   icon: IOIconType;
-  color?: "primary" | "neutral" | "contrast" | "danger";
+  color?: "primary" | "neutral" | "contrast";
   disabled?: boolean;
   accessibilityLabel: string;
   accessibilityHint?: string;
@@ -103,24 +103,6 @@ const mapColorStates: Record<NonNullable<IconButton["color"]>, ColorStates> = {
       default: IOColors.white,
       pressed: IOColors.white,
       disabled: hexToRgba(IOColors.white, 0.25)
-    }
-  },
-  // Danger button
-  danger: {
-    border: {
-      default: IOColors.red,
-      pressed: IOColors.red,
-      disabled: IOColors.bluegreyLight
-    },
-    background: {
-      default: hexToRgba(IOColors.red, 0),
-      pressed: hexToRgba(IOColors.red, 0.15),
-      disabled: "transparent"
-    },
-    icon: {
-      default: IOColors.red,
-      pressed: IOColors.red,
-      disabled: IOColors.grey
     }
   }
 };
