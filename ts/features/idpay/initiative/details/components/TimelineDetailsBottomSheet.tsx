@@ -25,6 +25,7 @@ import {
   IOBottomSheetModal,
   useIOBottomSheetModal
 } from "../../../../../utils/hooks/bottomSheet";
+import { formatNumberAmount } from "../../../../../utils/stringBuilder";
 import { idpayTimelineDetailsSelector } from "../store";
 import { idpayTimelineDetailsGet } from "../store/actions";
 
@@ -103,7 +104,7 @@ const TimelineDetailsComponent = (props: TransactionDetailsProps) => {
             </Body>
             <Body weight="SemiBold">
               {I18n.t("idpay.initiative.operationDetails.amount", {
-                amount: details.amount.toFixed(2)
+                amount: formatNumberAmount(details.amount, false)
               })}
             </Body>
           </View>
@@ -113,7 +114,7 @@ const TimelineDetailsComponent = (props: TransactionDetailsProps) => {
             </Body>
             <Body weight="SemiBold">
               {I18n.t("idpay.initiative.operationDetails.amount", {
-                amount: details.accrued.toFixed(2)
+                amount: formatNumberAmount(details.accrued, false)
               })}
             </Body>
           </View>
