@@ -134,7 +134,9 @@ const TimelineDetailsComponent = (props: TransactionDetailsProps) => {
               {I18n.t("idpay.initiative.operationDetails.acquirerId")}
             </Body>
             <View style={IOStyles.row}>
-              <Body weight="SemiBold">{details.operationId}</Body>
+              <Body weight="SemiBold" numberOfLines={1} ellipsizeMode="tail">
+                {details.operationId}
+              </Body>
               <HSpacer size={8} />
               <CopyButtonComponent textToCopy={details.idTrxAcquirer} />
             </View>
@@ -142,7 +144,9 @@ const TimelineDetailsComponent = (props: TransactionDetailsProps) => {
           <View style={styles.detailRow}>
             <Body>{I18n.t("idpay.initiative.operationDetails.issuerId")}</Body>
             <View style={IOStyles.row}>
-              <Body weight="SemiBold">{details.idTrxIssuer}</Body>
+              <Body weight="SemiBold" numberOfLines={1} ellipsizeMode="tail">
+                {details.idTrxIssuer}
+              </Body>
               <HSpacer size={8} />
               <CopyButtonComponent textToCopy={details.operationId} />
             </View>
