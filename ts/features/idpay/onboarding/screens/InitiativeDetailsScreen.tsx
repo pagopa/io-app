@@ -29,6 +29,7 @@ import { IDPayOnboardingParamsList } from "../navigation/navigator";
 import { useInitiativeDetailsScrolling } from "../utility/hooks";
 import { useOnboardingMachineService } from "../xstate/provider";
 import { initiativeIDSelector, isUpsertingSelector } from "../xstate/selectors";
+import { IOColors } from "../../../../components/core/variables/IOColors";
 
 type InitiativeDetailsScreenRouteParams = {
   serviceId: string;
@@ -127,12 +128,6 @@ const InitiativeDetailsScreen = () => {
   const handleContinuePress = () =>
     requiresScrolling ? scrollToEnd() : machine.send({ type: "ACCEPT_TOS" });
 
-  // TODO show initaitveID for testing purposes
-  const headerContent = pipe(
-    O.fromNullable(initiativeId),
-    O.map(id => `Initiative ID: ${id}`),
-    O.toUndefined
-  );
   const service = pipe(
     pot.toOption(
       useIOSelector(serviceByIdSelector(serviceId as ServiceId)) || pot.none
@@ -153,7 +148,7 @@ const InitiativeDetailsScreen = () => {
           {service !== undefined && (
             <InitiativeOrganizationHeader {...toUIService(service)} />
           )}
-          {headerContent && <Text>{headerContent}</Text>}
+          {initiativeId !== undefined && <Text>{initiativeId}</Text>}
           <VSpacer size={16} />
           {description !== undefined && (
             <Markdown onLoadEnd={setMarkdownIsLoaded}>{description}</Markdown>
@@ -180,7 +175,10 @@ const InitiativeDetailsScreen = () => {
           title: I18n.t("global.buttons.continue"),
           onPress: handleContinuePress,
           testID: "IDPayOnboardingContinue",
-          gray: requiresScrolling,
+          style: {
+            flex: 2,
+            backgroundColor: requiresScrolling ? IOColors.grey : IOColors.blue
+          },
           isLoading: isAcceptingTos,
           disabled: isAcceptingTos
         }}
