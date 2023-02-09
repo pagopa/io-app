@@ -28,6 +28,7 @@ export type ButtonOutline = {
   disabled?: boolean;
   accessibilityLabel: string;
   accessibilityHint?: string;
+  testID?: string;
   onPress: (event: GestureResponderEvent) => void;
 };
 
@@ -146,7 +147,8 @@ export const ButtonOutline = ({
   disabled = false,
   onPress,
   accessibilityLabel,
-  accessibilityHint
+  accessibilityHint,
+  testID
 }: ButtonOutline) => {
   const isPressed: Animated.SharedValue<number> = useSharedValue(0);
 
@@ -221,6 +223,7 @@ export const ButtonOutline = ({
       accessibilityLabel={accessibilityLabel}
       accessibilityHint={accessibilityHint}
       accessibilityRole={"button"}
+      testID={testID}
       onPress={onPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
