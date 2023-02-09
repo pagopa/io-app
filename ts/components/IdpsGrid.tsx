@@ -77,9 +77,9 @@ const styles = StyleSheet.create({
 const keyExtractor = (idp: LocalIdpsFallback): string => idp.id;
 
 // https://github.com/facebook/react-native/issues/12606
-// Image cache is disable for Android by appending
-// the `ts` query parameter as DDMMYYYY to simulate a 24h TTL
-const disableAndroidImageCache = () => {
+// Image cache forced refresh for Android by appending
+// the `ts` query parameter as DDMMYYYY to simulate a 24h TTL.
+const androidIdpLogoForcedRefreshed = () => {
   const timestampValue = localeDateFormat(
     new Date(),
     I18n.t("global.dateFormats.shortFormat").replace(/\//g, "")
@@ -110,7 +110,7 @@ const renderItem =
               item.localLogo
                 ? item.localLogo
                 : {
-                    uri: `${item.logo}${disableAndroidImageCache()}`
+                    uri: `${item.logo}${androidIdpLogoForcedRefreshed()}`
                   }
             }
             style={styles.idpLogo}
