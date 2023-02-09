@@ -138,7 +138,7 @@ const TimelineDetailsComponent = (props: TransactionDetailsProps) => {
                 {details.operationId}
               </Body>
               <HSpacer size={8} />
-              <CopyButtonComponent textToCopy={details.idTrxAcquirer} />
+              <CopyButtonComponent textToCopy={details.operationId} />
             </View>
           </View>
           <View style={styles.detailRow}>
@@ -148,7 +148,7 @@ const TimelineDetailsComponent = (props: TransactionDetailsProps) => {
                 {details.idTrxIssuer}
               </Body>
               <HSpacer size={8} />
-              <CopyButtonComponent textToCopy={details.operationId} />
+              <CopyButtonComponent textToCopy={details.idTrxIssuer} />
             </View>
           </View>
         </View>
