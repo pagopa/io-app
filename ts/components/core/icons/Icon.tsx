@@ -199,7 +199,7 @@ export type IOIconType = keyof typeof IOIcons;
 
 type IOIconsProps = {
   name: IOIconType;
-  color?: IOColorType;
+  color?: IOColorType | ColorValue;
   size?: number | "100%";
 };
 
@@ -215,7 +215,13 @@ const Icon = ({
   ...props
 }: IOIconsProps) => {
   const IconElement = IOIcons[name];
-  return <IconElement {...props} size={size} color={IOColors[color]} />;
+  return (
+    <IconElement
+      {...props}
+      size={size}
+      color={IOColors[color as IOColorType] || color}
+    />
+  );
 };
 
 export default Icon;
