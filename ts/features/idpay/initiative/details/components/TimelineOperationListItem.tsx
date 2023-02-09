@@ -1,11 +1,13 @@
 import { format } from "date-fns";
 import { ListItem } from "native-base";
 import React from "react";
-import { View, Image, StyleSheet } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 import { OperationTypeEnum as IbanOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/IbanOperationDTO";
 import { OperationTypeEnum as OnboardingOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/OnboardingOperationDTO";
 import { OperationListDTO } from "../../../../../../definitions/idpay/timeline/OperationListDTO";
 import { OperationTypeEnum as RefundOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/RefundOperationDTO";
+import { OperationTypeEnum } from "../../../../../../definitions/idpay/timeline/RejectedInstrumentOperationDTO";
+import { OperationTypeEnum as TransactionOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/TransactionOperationDTO";
 import { Icon } from "../../../../../components/core/icons";
 import { HSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H4 } from "../../../../../components/core/typography/H4";
@@ -37,27 +39,54 @@ type TimelineOperationListItemProps = {
   onPress?: () => void;
 };
 
-export const TimelineOperationListItem = (
-  props: TimelineOperationListItemProps
-) => {
-  const { operation, onPress } = props;
+const generateTimelineOperationListItemData = (operation: OperationListDTO) => {
   const hasAmount = "amount" in operation;
 
-  const renderOperationIcon = (operation: OperationListDTO) => {
-    if ("brandLogo" in operation) {
-      return (
-        <Image style={styles.imageSize} source={{ uri: operation.brandLogo }} />
-      );
-    }
+  const OperationIcon = () => {
     switch (operation.operationType) {
       case OnboardingOperationTypeEnum.ONBOARDING:
-        return <Icon name={"bonus"} color="blue" />;
+        return <Icon name={"ok"} />;
+
       case IbanOperationTypeEnum.ADD_IBAN:
-        return <Icon name={"amount"} color="bluegreyLight" />;
+        return <Icon name={"institution"} color="bluegreyLight" />;
+
       case RefundOperationTypeEnum.PAID_REFUND:
-        return <Icon name={"reload"} color="bluegreyLight" />;
+        return <Icon name={"arrowCircleUp"} color="bluegrey" />;
+
+      case OperationTypeEnum.REJECTED_ADD_INSTRUMENT:
+      case OperationTypeEnum.REJECTED_DELETE_INSTRUMENT:
       case RefundOperationTypeEnum.REJECTED_REFUND:
-        return <Icon name={"error"} color="bluegreyLight" />;
+        return <Icon name={"warning"} color="red" />;
+
+      default:
+        if ("brandLogo" in operation) {
+          return (
+            <Image
+              style={styles.imageSize}
+              source={{ uri: operation.brandLogo }}
+            />
+          );
+        }
+        return null;
+    }
+  };
+
+  const OperationAmount = () => {
+    if (!hasAmount) {
+      return null;
+    }
+    switch (operation.operationType) {
+      case TransactionOperationTypeEnum.TRANSACTION:
+        return <H4> {`–${formatNumberAmount(operation.amount, false)} €`}</H4>;
+      case TransactionOperationTypeEnum.REVERSAL:
+        return <H4> {`+${formatNumberAmount(operation.amount, false)} €`}</H4>;
+      case RefundOperationTypeEnum.PAID_REFUND:
+        return (
+          <H4 color="greenLight">
+            {" "}
+            {`${formatNumberAmount(operation.amount, false)} €`}
+          </H4>
+        );
       default:
         return null;
     }
@@ -73,6 +102,34 @@ export const TimelineOperationListItem = (
           `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.${operation.operationType}`
         );
 
+  const renderOperationInvoiceAmount = () => {
+    switch (operation.operationType) {
+      case TransactionOperationTypeEnum.TRANSACTION:
+        return "· " + formatNumberAmount(operation.amount, true);
+      case TransactionOperationTypeEnum.REVERSAL:
+        return `· € -${operation.amount}`;
+      default:
+        return "";
+    }
+  };
+  return {
+    OperationIcon,
+    OperationAmount,
+    renderOperationTitle,
+    renderOperationInvoiceAmount
+  };
+};
+
+export const TimelineOperationListItem = (
+  props: TimelineOperationListItemProps
+) => {
+  const { operation, onPress } = props;
+  const {
+    OperationIcon,
+    OperationAmount,
+    renderOperationTitle,
+    renderOperationInvoiceAmount
+  } = generateTimelineOperationListItemData(operation);
   return (
     <ListItem
       style={[
@@ -84,23 +141,19 @@ export const TimelineOperationListItem = (
       ]}
       onPress={onPress}
     >
-      {renderOperationIcon(operation)}
+      <OperationIcon />
       <HSpacer size={16} />
       <View style={IOStyles.flex}>
         <H4>{renderOperationTitle()}</H4>
         <LabelSmall weight="Regular" color="bluegrey">
           {`${formatDateAsShortFormat(
             operation.operationDate
-          )}, ${getHourAndMinuteFromDate(operation.operationDate)} ${
-            hasAmount
-              ? "· " + formatNumberAmount(Math.abs(operation.amount), true)
-              : ""
-          }`}
+          )}, ${getHourAndMinuteFromDate(
+            operation.operationDate
+          )} ${renderOperationInvoiceAmount()}`}
         </LabelSmall>
       </View>
-      {hasAmount ? (
-        <H4> {`${formatNumberAmount(operation.amount, false)} €`}</H4>
-      ) : null}
+      <OperationAmount />
     </ListItem>
   );
 };
