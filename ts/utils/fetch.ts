@@ -150,12 +150,13 @@ function signFetchWithLollipop(
           // TODO: - sign signature base with private key and add related headers:
           // - signature -> sign(signatureBase)
           // - signature-input -> signatureInput
+          // eslint-disable-next-line no-console
           console.log("Signature: " + value);
           newInit = {
             ...newInit,
             headers: {
               ...newInit.headers,
-              signature: value,
+              signature: `sig1:${value}:`,
               "signature-input": signatureInput
             }
           };
