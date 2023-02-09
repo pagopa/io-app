@@ -29,6 +29,7 @@ type Props = {
   disabled?: boolean;
   accessibilityLabel: string;
   accessibilityHint?: string;
+  testID?: string;
   onPress: (event: GestureResponderEvent) => void;
 };
 
@@ -108,7 +109,8 @@ export const ButtonSolid = ({
   disabled = false,
   onPress,
   accessibilityLabel,
-  accessibilityHint
+  accessibilityHint,
+  testID
 }: Props) => {
   const isPressed: Animated.SharedValue<number> = useSharedValue(0);
 
@@ -157,6 +159,7 @@ export const ButtonSolid = ({
       accessibilityLabel={accessibilityLabel}
       accessibilityHint={accessibilityHint}
       accessibilityRole={"button"}
+      testID={testID}
       onPress={onPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
