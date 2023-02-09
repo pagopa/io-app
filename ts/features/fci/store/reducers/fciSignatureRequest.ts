@@ -44,7 +44,7 @@ export const fciSignatureDetailDocumentsSelector = createSelector(
     pot.isSome(signatureDetailView) ? signatureDetailView.value.documents : []
 );
 
-export const fciDocumentSignatureFieldsFieldsSelector = (
+export const fciDocumentSignatureFieldsSelector = (
   documentId: DocumentDetailView["id"]
 ) =>
   createSelector(fciSignatureRequestSelector, signatureDetailView =>

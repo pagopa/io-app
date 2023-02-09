@@ -77,6 +77,11 @@ export const NotificationsPreferencesScreen = () => {
             rightElement={
               <RemoteSwitch
                 value={preview}
+                accessibilityLabel={`${I18n.t(
+                  "profile.preferences.notifications.preview.title"
+                )}. ${I18n.t(
+                  "profile.preferences.notifications.preview.description"
+                )}`}
                 onValueChange={(value: boolean) => {
                   trackNotificationsPreferencesPreviewStatus(value);
                   togglePreference<PushNotificationsContentTypeEnum>(
@@ -99,6 +104,11 @@ export const NotificationsPreferencesScreen = () => {
             rightElement={
               <RemoteSwitch
                 value={reminder}
+                accessibilityLabel={`${I18n.t(
+                  "profile.preferences.notifications.reminders.title"
+                )}. ${I18n.t(
+                  "profile.preferences.notifications.reminders.description"
+                )}`}
                 onValueChange={(value: boolean) => {
                   trackNotificationsPreferencesReminderStatus(value);
                   togglePreference<ReminderStatusEnum>(

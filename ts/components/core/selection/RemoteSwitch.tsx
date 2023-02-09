@@ -15,7 +15,10 @@ type Props<E> = {
   value: pot.Pot<boolean, E>;
   onRetry?: () => void;
 } & TestID &
-  Pick<React.ComponentProps<typeof Switch>, "onValueChange">;
+  Pick<
+    React.ComponentProps<typeof Switch>,
+    "onValueChange" | "accessibilityLabel"
+  >;
 
 const iconSize = 24;
 const slop = calculateSlop(iconSize);
@@ -32,7 +35,7 @@ const LoadingVersion = (props: TestID) => (
 
 type SwitchProps = Pick<
   React.ComponentProps<typeof Switch>,
-  "testID" | "value" | "disabled" | "onValueChange"
+  "testID" | "value" | "disabled" | "onValueChange" | "accessibilityLabel"
 >;
 
 const SwitchVersion = (props: SwitchProps) => (
@@ -41,6 +44,7 @@ const SwitchVersion = (props: SwitchProps) => (
     value={props.value}
     disabled={props.disabled}
     onValueChange={props.onValueChange}
+    accessibilityLabel={props.accessibilityLabel}
   />
 );
 
@@ -80,6 +84,7 @@ export const RemoteSwitch = <E, _>(props: Props<E>): React.ReactElement => {
       testID={props.testID}
       value={value}
       onValueChange={props.onValueChange}
+      accessibilityLabel={props.accessibilityLabel}
     />
   );
 
