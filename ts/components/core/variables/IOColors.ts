@@ -75,7 +75,7 @@ export const IOColors = asIOColors({
   /* ↳ ALIAS TOKEN: brandDanger → red */
   /* ↳ ALIAS TOKEN: calendarExpirableColor → red */
   green: "#005C3C",
-  greenLight:'#5CA85A'
+  greenLight: "#5CA85A"
   /* ↳ ALIAS TOKEN: brandSuccess → green */
 });
 
