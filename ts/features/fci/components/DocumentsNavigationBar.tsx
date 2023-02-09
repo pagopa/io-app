@@ -96,7 +96,7 @@ const DocumentsNavigationBar = (props: Props) => (
     {props.indicatorPosition === "left" && (
       <>
         {renderNavigationComponent(props, props.titleLeft)}
-        <View style={{ flex: 2 }} />
+        <View style={{ flex: 1 }} />
         <H4 style={IOStyles.horizontalContentPadding}>{props.titleRight}</H4>
       </>
     )}
@@ -104,7 +104,7 @@ const DocumentsNavigationBar = (props: Props) => (
       <>
         <HSpacer />
         <H4>{props.titleLeft}</H4>
-        <View style={{ flex: 2 }} />
+        <View style={{ flex: 1 }} />
         {renderNavigationComponent(props, props.titleRight)}
       </>
     )}
