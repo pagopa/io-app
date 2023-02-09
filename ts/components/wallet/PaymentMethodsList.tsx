@@ -30,6 +30,7 @@ import { HSpacer, VSpacer } from "../core/spacer/Spacer";
 import { H3 } from "../core/typography/H3";
 import { H5 } from "../core/typography/H5";
 import { IOColors } from "../core/variables/IOColors";
+import { IOStyles } from "../core/variables/IOStyles";
 import { withLightModalContext } from "../helpers/withLightModalContext";
 import { statusColorMap } from "../SectionStatus";
 import IconFont from "../ui/IconFont";
@@ -219,20 +220,22 @@ const renderListItem = (
 const PaymentMethodsList: React.FunctionComponent<Props> = (props: Props) => (
   <>
     <VSpacer size={24} />
-    <FlatList
-      removeClippedSubviews={false}
-      data={props.paymentMethods}
-      keyExtractor={item => item.name}
-      ListFooterComponent={<VSpacer size={16} />}
-      renderItem={i =>
-        renderListItem(
-          i,
-          props.paymentMethods.filter(pm => pm.status !== "notImplemented")
-            .length,
-          props.sectionStatus
-        )
-      }
-    />
+    <View style={IOStyles.horizontalContentPadding}>
+      <FlatList
+        removeClippedSubviews={false}
+        data={props.paymentMethods}
+        keyExtractor={item => item.name}
+        ListFooterComponent={<VSpacer size={16} />}
+        renderItem={i =>
+          renderListItem(
+            i,
+            props.paymentMethods.filter(pm => pm.status !== "notImplemented")
+              .length,
+            props.sectionStatus
+          )
+        }
+      />
+    </View>
   </>
 );
 const mapStateToProps = (state: GlobalState) => ({
