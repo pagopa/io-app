@@ -20,9 +20,11 @@ import {
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { pipe } from "fp-ts/lib/function";
 import URLParse from "url-parse";
+import { sign } from "@pagopa/io-react-native-crypto";
 import { fetchMaxRetries, fetchTimeout } from "../config";
 import { SignatureConfig } from "./httpSignature/types/SignatureConfig";
 import { generateSignatureBase } from "./httpSignature/signature";
+import { KeyInfo } from "./crypto";
 
 // FIXME: This is a temporary type created to avoid
 // a compilation error caused by the `toFetch` function
@@ -46,7 +48,7 @@ type FixedFetch = (
 export function defaultRetryingFetch(
   timeout: Millisecond = fetchTimeout,
   maxRetries: number = fetchMaxRetries,
-  signHttpRequest: boolean = true // TODO: set default to `false`
+  keyInfo?: KeyInfo
 ): typeof fetch {
   const fetchApi = (global as any).fetch;
   const abortableFetch = AbortableFetch(fetchApi);
@@ -66,8 +68,8 @@ export function defaultRetryingFetch(
   );
   return retriableFetch(retryWithTransient429s)(
     (input: RequestInfo | URL, init?: RequestInit) => {
-      if (signHttpRequest) {
-        return signFetchWithLollipop(input, init, timeoutFetch);
+      if (keyInfo) {
+        return signFetchWithLollipop(input, init, keyInfo, timeoutFetch);
       } else {
         return timeoutFetch(input, init);
       }
@@ -81,18 +83,15 @@ export function defaultRetryingFetch(
 function signFetchWithLollipop(
   input: RequestInfo | URL,
   init: RequestInit | undefined,
+  keyInfo: KeyInfo,
   wrappableFetch: FixedFetch
 ) {
   // eslint-disable-next-line functional/no-let
-  let newInit = init;
   if (!JSON.stringify(input).includes("backend.json")) {
-    // eslint-disable-next-line no-console
-    console.log(typeof input === "string");
-    // eslint-disable-next-line no-console
-    console.log(input instanceof URL);
-    // eslint-disable-next-line no-console
-    console.log(JSON.stringify(input));
+    const { keyTag, publicKey } = keyInfo;
     if (
+      keyTag &&
+      publicKey &&
       typeof input === "string" &&
       init &&
       "headers" in init &&
@@ -100,14 +99,17 @@ function signFetchWithLollipop(
       "method" in init &&
       init.method
     ) {
+      // eslint-disable-next-line functional/no-let
+      let newInit = init;
       const inputUrl = new URLParse(input, true);
       const queryString: string | undefined = inputUrl.href.split("?")[1];
       const method = init.method.toUpperCase();
       const originalUrl =
         inputUrl.pathname + (queryString ? "?" + queryString : "");
       const signatureConfig: SignatureConfig = {
-        signAlgorithm: "ecdsa-p256-sha256",
-        signKeyTag: "lp-temp-key",
+        signAlgorithm:
+          publicKey?.kty === "EC" ? "ecdsa-p256-sha256" : "rsa-pss-sha256",
+        signKeyTag: keyTag,
         signKeyId: "AF2G87coad7/KJl9800==",
         nonce: "xyz",
         signatureComponents: {
@@ -126,10 +128,6 @@ function signFetchWithLollipop(
           "x-pagopa-lollipop-original-url"
         ]
       };
-      // eslint-disable-next-line no-console
-      console.log("signatureConfig: " + JSON.stringify(signatureConfig));
-      // eslint-disable-next-line no-console
-      console.log("inputURL: " + JSON.stringify(inputUrl));
       // TODO: if we have a body we need to add all three content releated headers:
       // - content-digest -> sign(sha256(body))
       // - content-length -> body lenght in bytes
@@ -147,31 +145,30 @@ function signFetchWithLollipop(
         newInitHeaders,
         signatureConfig
       );
-      // eslint-disable-next-line no-console
-      console.log("signatureBase --> " + JSON.stringify(signatureBase));
-      // eslint-disable-next-line no-console
-      console.log("signatureInput --> " + JSON.stringify(signatureInput));
-      // TODO: - sign signature base with private key and add related headers:
-      // - signature -> sign(signatureBase)
-      // - signature-input -> signatureInput
-      newInit = {
-        ...newInit,
-        headers: {
-          ...newInit.headers,
-          signature: "TODO: BASE64 of the digital signature of signatureBase",
-          "signature-input": signatureInput
-        }
-      };
-      // TODO: - put all this in an utility function
+      return sign(signatureBase, keyTag)
+        .then(function (value) {
+          // TODO: - sign signature base with private key and add related headers:
+          // - signature -> sign(signatureBase)
+          // - signature-input -> signatureInput
+          console.log("Signature: " + value);
+          newInit = {
+            ...newInit,
+            headers: {
+              ...newInit.headers,
+              signature: value,
+              "signature-input": signatureInput
+            }
+          };
+          // TODO: - put all this in an utility function
+          return wrappableFetch(input, newInit);
+        })
+        .catch(function () {
+          return wrappableFetch(input, init);
+        });
     }
-    // eslint-disable-next-line no-console
-    console.log("input: " + JSON.stringify(input));
-    // eslint-disable-next-line no-console
-    console.log("init: " + JSON.stringify(init));
-    // eslint-disable-next-line no-console
-    console.log("newInit: " + JSON.stringify(newInit));
+    return wrappableFetch(input, init);
   }
-  return wrappableFetch(input, newInit);
+  return wrappableFetch(input, init);
 }
 
 /**

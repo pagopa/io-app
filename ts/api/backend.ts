@@ -67,6 +67,8 @@ import {
 } from "../utils/api";
 import { PaginatedPublicMessagesCollection } from "../../definitions/backend/PaginatedPublicMessagesCollection";
 import { CreatedMessageWithContentAndAttachments } from "../../definitions/backend/CreatedMessageWithContentAndAttachments";
+import { fetchMaxRetries, fetchTimeout } from "../config";
+import { KeyInfo } from './../utils/crypto';
 
 /**
  * We will retry for as many times when polling for a payment ID.
@@ -134,7 +136,12 @@ export type LogoutT = IPostApiRequestType<
 export function BackendClient(
   baseUrl: string,
   token: SessionToken,
-  fetchApi: typeof fetch = defaultRetryingFetch()
+  keyInfo: KeyInfo,
+  fetchApi: typeof fetch = defaultRetryingFetch(
+    fetchTimeout,
+    fetchMaxRetries,
+    keyInfo
+  )
 ) {
   const options = {
     baseUrl,

@@ -1,15 +1,16 @@
 import {
   generate,
   CryptoError,
-  deleteKey
-} from "@pagopa/io-react-native-crypto";
+  deleteKey,
+  getPublicKey} from "@pagopa/io-react-native-crypto";
 import { call, select } from "typed-redux-saga/macro";
 import { isLollipopEnabledSelector } from "../../store/reducers/backendStatus";
 import {
   checkPublicKeyExists,
   setKeyGenerationInfo,
   getKeyGenerationInfo,
-  KeyGenerationInfo
+  KeyGenerationInfo,
+  KeyInfo
 } from "../../utils/crypto";
 import { mixpanelTrack } from "./../../mixpanel";
 
@@ -89,6 +90,30 @@ function* generateCryptoKeyPair(keyTag: string) {
     yield* call(setKeyGenerationInfo, keyTag, keyGenerationInfo);
   } catch (e) {
     yield* saveKeyGenerationFailureInfo(keyTag, e);
+  }
+}
+
+/**
+ * Get the public key liked the provided keyTag
+ */
+export function* getCryptoPublicKey(keyTag?: string) {
+  const eptyKeyInfo: KeyInfo = {
+    keyTag,
+    publicKey: undefined
+  };
+  try { 
+    if (keyTag) {
+      const publicKey = yield* call(getPublicKey, keyTag);    
+      const keyInfo: KeyInfo = {
+        keyTag,
+        publicKey
+      };
+      return keyInfo;
+    } else {
+      return eptyKeyInfo;
+    } 
+} catch (e) {
+    return eptyKeyInfo;
   }
 }
 
