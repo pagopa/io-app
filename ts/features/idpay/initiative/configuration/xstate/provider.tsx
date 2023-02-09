@@ -125,4 +125,8 @@ const IDPayConfigurationMachineProvider = (props: Props) => {
 const useConfigurationMachineService = () =>
   React.useContext(ConfigurationMachineContext);
 
-export { IDPayConfigurationMachineProvider, useConfigurationMachineService };
+export {
+  IDPayConfigurationMachineProvider,
+  useConfigurationMachineService,
+  ConfigurationMachineContext
+};
