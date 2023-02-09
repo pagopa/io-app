@@ -103,9 +103,7 @@ const TimelineDetailsComponent = (props: TransactionDetailsProps) => {
               {I18n.t("idpay.initiative.operationDetails.amountLabel")}
             </Body>
             <Body weight="SemiBold">
-              {I18n.t("idpay.initiative.operationDetails.amount", {
-                amount: formatNumberAmount(details.amount, false)
-              })}
+              {formatNumberAmount(details.amount, true)}
             </Body>
           </View>
           <View style={styles.detailRow}>
@@ -113,9 +111,7 @@ const TimelineDetailsComponent = (props: TransactionDetailsProps) => {
               {I18n.t("idpay.initiative.operationDetails.accruedAmountLabel")}
             </Body>
             <Body weight="SemiBold">
-              {I18n.t("idpay.initiative.operationDetails.amount", {
-                amount: formatNumberAmount(details.accrued, false)
-              })}
+              {formatNumberAmount(details.accrued, true)}
             </Body>
           </View>
           <ItemSeparatorComponent noPadded={true} />
