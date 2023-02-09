@@ -241,7 +241,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
           this.state.email,
           O.map(e => {
             this.props.updateEmail(e as EmailString);
-            this.setState({ email: O.some(EMPTY_EMAIL) })
+            this.setState({ email: O.some(EMPTY_EMAIL) });
           })
         );
       } else {
