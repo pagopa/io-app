@@ -9,7 +9,6 @@ import {
   View
 } from "react-native";
 import { OperationListDTO } from "../../../../../../definitions/idpay/timeline/OperationListDTO";
-import { OperationTypeEnum as TransactionOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/TransactionOperationDTO";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
@@ -81,12 +80,8 @@ export const OperationsListScreen = () => {
 
   const detailsBottomSheet = useTimelineDetailsBottomSheet(initiativeId);
 
-  const showOperationDetailsBottomSheet = (operation: OperationListDTO) => {
-    if (operation.operationType === TransactionOperationTypeEnum.TRANSACTION) {
-      // Currently we only show details for transaction operations
-      detailsBottomSheet.present(operation.operationId);
-    }
-  };
+  const showOperationDetailsBottomSheet = (operation: OperationListDTO) =>
+    detailsBottomSheet.present(operation);
 
   const renderContent = () => (
     <SafeAreaView>

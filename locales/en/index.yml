@@ -3333,7 +3333,9 @@ idpay:
               PAID_REFUND:  "Rimborso"
               REJECTED_REFUND:  "Rifiuto rimborso"
     operationDetails:
-      title: Dettaglio dell'operazione
+      title: 
+        transaction: Dettaglio dell'operazione
+        refund: Dettaglio del rimborso
       instrument: Metodo di pagamento
       maskedPan: •••• {{lastDigits}}
       amountLabel: Importo transazione

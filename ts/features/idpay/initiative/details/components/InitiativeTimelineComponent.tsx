@@ -4,7 +4,6 @@ import { List as NBList } from "native-base";
 import React, { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { OperationListDTO } from "../../../../../../definitions/idpay/timeline/OperationListDTO";
-import { OperationTypeEnum as TransactionOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/TransactionOperationDTO";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H3 } from "../../../../../components/core/typography/H3";
@@ -89,12 +88,8 @@ const ConfiguredInitiativeData = (props: Props) => {
     });
   };
 
-  const showOperationDetailsBottomSheet = (operation: OperationListDTO) => {
-    if (operation.operationType === TransactionOperationTypeEnum.TRANSACTION) {
-      // Currently we only show details for transaction operations
-      detailsBottomSheet.present(operation.operationId);
-    }
-  };
+  const showOperationDetailsBottomSheet = (operation: OperationListDTO) =>
+    detailsBottomSheet.present(operation);
 
   return (
     <>
