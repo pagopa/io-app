@@ -23,7 +23,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-between"
   },
   sidePadding: {
-    paddingHorizontal: 8
+    paddingLeft: 8,
+    // required since ListItem has a default paddingRight
+    paddingRight: 0
   },
   imageSize: { height: 16, width: 24 }
 });
@@ -72,33 +74,33 @@ export const TimelineOperationListItem = (
         );
 
   return (
-    <ListItem style={styles.spaceBetween} onPress={onPress}>
-      <View
-        style={[
-          IOStyles.flex,
-          IOStyles.row,
-          styles.alignCenter,
-          styles.sidePadding
-        ]}
-      >
-        {renderOperationIcon(operation)}
-        <HSpacer size={16} />
-        <View style={IOStyles.flex}>
-          <H4>{renderOperationTitle()}</H4>
-          <LabelSmall weight="Regular" color="bluegrey">
-            {`${formatDateAsShortFormat(
-              operation.operationDate
-            )}, ${getHourAndMinuteFromDate(operation.operationDate)} ${
-              hasAmount
-                ? "· " + formatNumberAmount(Math.abs(operation.amount), true)
-                : ""
-            }`}
-          </LabelSmall>
-        </View>
-        {hasAmount ? (
-          <H4> {`${formatNumberAmount(operation.amount, false)} €`}</H4>
-        ) : null}
+    <ListItem
+      style={[
+        IOStyles.flex,
+        IOStyles.row,
+        styles.alignCenter,
+        styles.sidePadding,
+        styles.spaceBetween
+      ]}
+      onPress={onPress}
+    >
+      {renderOperationIcon(operation)}
+      <HSpacer size={16} />
+      <View style={IOStyles.flex}>
+        <H4>{renderOperationTitle()}</H4>
+        <LabelSmall weight="Regular" color="bluegrey">
+          {`${formatDateAsShortFormat(
+            operation.operationDate
+          )}, ${getHourAndMinuteFromDate(operation.operationDate)} ${
+            hasAmount
+              ? "· " + formatNumberAmount(Math.abs(operation.amount), true)
+              : ""
+          }`}
+        </LabelSmall>
       </View>
+      {hasAmount ? (
+        <H4> {`${formatNumberAmount(operation.amount, false)} €`}</H4>
+      ) : null}
     </ListItem>
   );
 };

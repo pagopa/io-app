@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.26.0-rc.0](https://github.com/pagopa/io-app/compare/2.25.0-rc.2...2.26.0-rc.0) (2023-02-09)
+
+
+### Features
+
+* [[IA-362](https://pagopa.atlassian.net/browse/IA-362),[IA-363](https://pagopa.atlassian.net/browse/IA-363),[IA-364](https://pagopa.atlassian.net/browse/IA-364),[IA-319](https://pagopa.atlassian.net/browse/IA-319)] -- Carousel accessibility ([#4345](https://github.com/pagopa/io-app/issues/4345)) ([923f8cc](https://github.com/pagopa/io-app/commit/923f8cc1a8e8d043e36bd52c0726848feddad7b2))
+* [[IA-362](https://pagopa.atlassian.net/browse/IA-362),[IA-367](https://pagopa.atlassian.net/browse/IA-367)] -- Accessibility doesn't recognise CIE/SPID login button ([#4346](https://github.com/pagopa/io-app/issues/4346)) ([e773d82](https://github.com/pagopa/io-app/commit/e773d822c3a82a2bebd533effb528dd1b43f6aeb))
+* [[IA-362](https://pagopa.atlassian.net/browse/IA-362),[IA-369](https://pagopa.atlassian.net/browse/IA-369)] Accessibility: unlock code forgotten not recognised as button ([#4349](https://github.com/pagopa/io-app/issues/4349)) ([c8a1e59](https://github.com/pagopa/io-app/commit/c8a1e59dce1d6406c904a2b3eb9b29a65d581006))
+* [[IA-362](https://pagopa.atlassian.net/browse/IA-362),[IA-389](https://pagopa.atlassian.net/browse/IA-389),[IA-344](https://pagopa.atlassian.net/browse/IA-344)] Added accessibility support to switch components. ([#4350](https://github.com/pagopa/io-app/issues/4350)) ([d55929e](https://github.com/pagopa/io-app/commit/d55929e3c4264ffb3ef5ff727a7ed07b247fc010))
+* [[IOAPPCIT-38](https://pagopa.atlassian.net/browse/IOAPPCIT-38)] Crypto key pair refactoring ([#4326](https://github.com/pagopa/io-app/issues/4326)) ([6573577](https://github.com/pagopa/io-app/commit/65735776216e87aac8933133f7dc00e727d6a75a)), closes [/github.com/pagopa/io-dev-api-server/blob/42c26404cb3dfe68f6726b9f6027b24cb0699baf/src/payloads/backend.ts#L79](https://github.com/pagopa//github.com/pagopa/io-dev-api-server/blob/42c26404cb3dfe68f6726b9f6027b24cb0699baf/src/payloads/backend.ts/issues/L79)
+* **IDPay:** [IODPAY-76, IODPAY-92] Inclusion of multivalue selfPrerequisites flow ([#4323](https://github.com/pagopa/io-app/issues/4323)) ([e83d382](https://github.com/pagopa/io-app/commit/e83d382ccadadeee30daefdfa944a380962e5ae8))
+
+
+### Bug Fixes
+
+* **IDPay:** [[IODPAY-126](https://pagopa.atlassian.net/browse/IODPAY-126)] Fix `IbanEnrollmentScreen` with correct buttons and title ([#4355](https://github.com/pagopa/io-app/issues/4355)) ([43b2547](https://github.com/pagopa/io-app/commit/43b2547bd8810c9a21b8f6f496c8a8b70d694e2a))
+* **IDPay:** [[IODPAY-134](https://pagopa.atlassian.net/browse/IODPAY-134)] TransactionsList padding problem ([#4362](https://github.com/pagopa/io-app/issues/4362)) ([de30be3](https://github.com/pagopa/io-app/commit/de30be359e2aaf04982a288c794b169d07ecbbc8))
+* [[IABT-1204](https://pagopa.atlassian.net/browse/IABT-1204)] Remove legacy `darkGray` and `gray` buttons ([#4341](https://github.com/pagopa/io-app/issues/4341)) ([45896c6](https://github.com/pagopa/io-app/commit/45896c632319097bb053f0ea8a6cdb621afad43f))
+* [[IABT-1389](https://pagopa.atlassian.net/browse/IABT-1389)] On Android IdP logo never refresh when it's changed ([#4360](https://github.com/pagopa/io-app/issues/4360)) ([b58957c](https://github.com/pagopa/io-app/commit/b58957cd97f247d63c211e2afdc83d0e909a3dc1))
+* **Firma con IO:** [[SFEQS-1369](https://pagopa.atlassian.net/browse/SFEQS-1369)] Update file path for Android to fix the PDF preview and download actions ([#4357](https://github.com/pagopa/io-app/issues/4357)) ([1d55230](https://github.com/pagopa/io-app/commit/1d5523074ff9116cddf6b22862a562b101a7f103))
+* [[IABT-1432](https://pagopa.atlassian.net/browse/IABT-1432)] Fix UI regression in the `Add Payment Method` screen ([#4361](https://github.com/pagopa/io-app/issues/4361)) ([54af69e](https://github.com/pagopa/io-app/commit/54af69ed32b6d54e684dfd3d84c0b1848a606453))
+* **Firma con IO:** [[SFEQS-1232](https://pagopa.atlassian.net/browse/SFEQS-1232)] Required signature clauses are now auto selected and not editable by the user  ([#4328](https://github.com/pagopa/io-app/issues/4328)) ([90aaf6d](https://github.com/pagopa/io-app/commit/90aaf6d5e3086b2748a405da5a2c7e84091e5c86))
+* **Firma con IO:** [[SFEQS-1248](https://pagopa.atlassian.net/browse/SFEQS-1248)] Update documents navigation bar behavior ([#4332](https://github.com/pagopa/io-app/issues/4332)) ([f7cfe5c](https://github.com/pagopa/io-app/commit/f7cfe5c0e81cadb5ceb9b207343c5f34f94a3dc2))
+
+
+### Chores
+
+* [[IAI-258](https://pagopa.atlassian.net/browse/IAI-258)] Add SVG pictograms to transaction error screens ([#4283](https://github.com/pagopa/io-app/issues/4283)) ([d2d69ed](https://github.com/pagopa/io-app/commit/d2d69ed49d36461e4f96e1e1af36cd674ac5fea8))
+* **IDPay:** [[IODPAY-93](https://pagopa.atlassian.net/browse/IODPAY-93)] IDPay configuration machine tests ([#4327](https://github.com/pagopa/io-app/issues/4327)) ([162e528](https://github.com/pagopa/io-app/commit/162e528d01f6abcecfca562e58eb551122483b1d))
+
 ## [2.25.0-rc.2](https://github.com/pagopa/io-app/compare/2.25.0-rc.1...2.25.0-rc.2) (2023-02-02)
 
 
