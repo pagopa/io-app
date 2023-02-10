@@ -7,7 +7,12 @@ import {
   OperationTypeEnum as TransactionDetailOperationTypeEnum,
   TransactionDetailDTO
 } from "../../../../../../definitions/idpay/timeline/TransactionDetailDTO";
+import {
+  OperationTypeEnum as RefundOperationTypeEnum,
+  RefundOperationDTO
+} from "../../../../../../definitions/idpay/timeline/RefundOperationDTO";
 import { InitiativeDTO } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
+import { InfoBox } from "../../../../../components/box/InfoBox";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
 import CopyButtonComponent from "../../../../../components/CopyButtonComponent";
 import { Pictogram } from "../../../../../components/core/pictograms";
@@ -100,7 +105,83 @@ const CopyTextComponent = (props: CopyTextProps) => (
 );
 
 type TransactionDetailsProps = {
-  details: OperationDTO;
+  transaction: TransactionDetailDTO;
+};
+
+/**
+ * Displays details for both `REVERSAL` and `TRANSACTION` type operation
+ * @param props
+ * @returns
+ */
+const TransactionDetailsComponent = (props: TransactionDetailsProps) => {
+  const { transaction } = props;
+
+  const isReversal =
+    transaction.operationType === TransactionDetailOperationTypeEnum.REVERSAL;
+
+  return (
+    <View style={styles.container}>
+      {isReversal && (
+        <>
+          <InfoBox>
+            <Body>
+              {I18n.t("idpay.initiative.operationDetails.reversalAdvice")}
+            </Body>
+          </InfoBox>
+          <VSpacer size={16} />
+        </>
+      )}
+      <View style={styles.detailRow}>
+        <Body>{I18n.t("idpay.initiative.operationDetails.instrument")}</Body>
+        <InstrumentDetailsComponent {...transaction} />
+      </View>
+      <View style={styles.detailRow}>
+        <Body>{I18n.t("idpay.initiative.operationDetails.amountLabel")}</Body>
+        <Body weight="SemiBold">
+          {formatNumberAmount(transaction.amount, true)}
+        </Body>
+      </View>
+      <View style={styles.detailRow}>
+        <Body>
+          {I18n.t("idpay.initiative.operationDetails.accruedAmountLabel")}
+        </Body>
+        <Body weight="SemiBold">
+          {formatNumberAmount(transaction.accrued, true)}
+        </Body>
+      </View>
+      <ItemSeparatorComponent noPadded={true} />
+      <VSpacer size={24} />
+      <H4>{I18n.t("idpay.initiative.operationDetails.infoTitle")}</H4>
+      <View style={styles.detailRow}>
+        <Body>{I18n.t("idpay.initiative.operationDetails.date")}</Body>
+        <Body weight="SemiBold">
+          {format(transaction.operationDate, "DD MMM YYYY, HH:mm")}
+        </Body>
+      </View>
+      <View style={styles.detailRow}>
+        <Body>{I18n.t("idpay.initiative.operationDetails.circuit")}</Body>
+        <Body weight="SemiBold">
+          {operationCircuitTypeMap[transaction.circuitType]}
+        </Body>
+      </View>
+      <View style={styles.detailRow}>
+        <Body>{I18n.t("idpay.initiative.operationDetails.acquirerId")}</Body>
+        <HSpacer size={16} />
+        <CopyTextComponent text={transaction.idTrxAcquirer} />
+      </View>
+      <View style={styles.detailRow}>
+        <Body style={{ flex: 1 }}>
+          {I18n.t("idpay.initiative.operationDetails.issuerId")}
+        </Body>
+        <HSpacer size={16} />
+        <CopyTextComponent text={transaction.idTrxIssuer} />
+      </View>
+    </View>
+  );
+};
+
+type TimelineDetailsProps = {
+  operation: OperationDTO;
 };
 
 /**
@@ -108,66 +189,13 @@ type TransactionDetailsProps = {
  * @param {TransactionDetailsProps} props
  * @returns {React.ReactElement}
  */
-const TimelineDetailsComponent = (props: TransactionDetailsProps) => {
-  const { details } = props;
+const TimelineDetailsComponent = (props: TimelineDetailsProps) => {
+  const { operation } = props;
 
-  switch (details.operationType) {
+  switch (operation.operationType) {
     case TransactionDetailOperationTypeEnum.TRANSACTION:
-      return (
-        <View style={styles.container}>
-          <View style={styles.detailRow}>
-            <Body>
-              {I18n.t("idpay.initiative.operationDetails.instrument")}
-            </Body>
-            <InstrumentDetailsComponent {...details} />
-          </View>
-          <View style={styles.detailRow}>
-            <Body>
-              {I18n.t("idpay.initiative.operationDetails.amountLabel")}
-            </Body>
-            <Body weight="SemiBold">
-              {formatNumberAmount(details.amount, true)}
-            </Body>
-          </View>
-          <View style={styles.detailRow}>
-            <Body>
-              {I18n.t("idpay.initiative.operationDetails.accruedAmountLabel")}
-            </Body>
-            <Body weight="SemiBold">
-              {formatNumberAmount(details.accrued, true)}
-            </Body>
-          </View>
-          <ItemSeparatorComponent noPadded={true} />
-          <VSpacer size={24} />
-          <H4>{I18n.t("idpay.initiative.operationDetails.infoTitle")}</H4>
-          <View style={styles.detailRow}>
-            <Body>{I18n.t("idpay.initiative.operationDetails.date")}</Body>
-            <Body weight="SemiBold">
-              {format(details.operationDate, "DD MMM YYYY, HH:mm")}
-            </Body>
-          </View>
-          <View style={styles.detailRow}>
-            <Body>{I18n.t("idpay.initiative.operationDetails.circuit")}</Body>
-            <Body weight="SemiBold">
-              {operationCircuitTypeMap[details.circuitType]}
-            </Body>
-          </View>
-          <View style={styles.detailRow}>
-            <Body>
-              {I18n.t("idpay.initiative.operationDetails.acquirerId")}
-            </Body>
-            <HSpacer size={16} />
-            <CopyTextComponent text={details.idTrxAcquirer} />
-          </View>
-          <View style={styles.detailRow}>
-            <Body style={{ flex: 1 }}>
-              {I18n.t("idpay.initiative.operationDetails.issuerId")}
-            </Body>
-            <HSpacer size={16} />
-            <CopyTextComponent text={details.idTrxIssuer} />
-          </View>
-        </View>
-      );
+    case TransactionDetailOperationTypeEnum.REVERSAL:
+      return <TransactionDetailsComponent transaction={operation} />;
     default:
       // We don't show additional info for other operation types
       return null;
@@ -187,7 +215,7 @@ const TimelineDetailsBottomSheet = () => {
     if (pot.isError(detailsPot)) {
       return <TimelineDetailsErrorComponent />;
     } else if (pot.isSome(detailsPot)) {
-      return <TimelineDetailsComponent details={detailsPot.value} />;
+      return <TimelineDetailsComponent operation={detailsPot.value} />;
     }
     return null;
   };
