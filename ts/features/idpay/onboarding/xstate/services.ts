@@ -36,11 +36,11 @@ const createServicesImplementation = (
       dataResponse,
       E.fold(
         _ => Promise.reject(OnboardingFailureEnum.GENERIC),
-        _ => {
-          if (_.status !== 200) {
+        response => {
+          if (response.status !== 200) {
             return Promise.reject(OnboardingFailureEnum.GENERIC);
           }
-          return Promise.resolve(_.value);
+          return Promise.resolve(response.value);
         }
       )
     );
@@ -62,9 +62,9 @@ const createServicesImplementation = (
       statusResponse,
       E.fold(
         _ => Promise.reject(OnboardingFailureEnum.GENERIC),
-        _ => {
-          if (_.status === 200) {
-            switch (_.value.status) {
+        response => {
+          if (response.status === 200) {
+            switch (response.value.status) {
               case StatusEnum.ELIGIBILE_KO:
                 return Promise.reject(OnboardingFailureEnum.NOT_ELIGIBLE);
               case StatusEnum.ONBOARDING_KO:
@@ -77,9 +77,9 @@ const createServicesImplementation = (
               case StatusEnum.ON_EVALUATION:
                 return Promise.reject(OnboardingFailureEnum.ON_EVALUATION);
               default:
-                return Promise.resolve(O.some(_.value.status));
+                return Promise.resolve(O.some(response.value.status));
             }
-          } else if (_.status === 404) {
+          } else if (response.status === 404) {
             // Initiative not yet started by the citizen
             return Promise.resolve(O.none);
           }
@@ -108,8 +108,8 @@ const createServicesImplementation = (
       response,
       E.fold(
         _ => Promise.reject(OnboardingFailureEnum.GENERIC),
-        _ => {
-          if (_.status === 204) {
+        response => {
+          if (response.status === 204) {
             return Promise.resolve(undefined);
           }
 
@@ -137,12 +137,12 @@ const createServicesImplementation = (
       response,
       E.fold(
         _ => Promise.reject(OnboardingFailureEnum.GENERIC),
-        _ => {
-          if (_.status === 200) {
-            return Promise.resolve(O.some(_.value));
-          } else if (_.status === 202) {
+        response => {
+          if (response.status === 200) {
+            return Promise.resolve(O.some(response.value));
+          } else if (response.status === 202) {
             return Promise.resolve(O.none);
-          } else if (_.status === 403) {
+          } else if (response.status === 403) {
             // TODO error mapping
             return Promise.reject(OnboardingFailureEnum.NOT_STARTED);
           }
@@ -187,8 +187,8 @@ const createServicesImplementation = (
       response,
       E.fold(
         _ => Promise.reject(OnboardingFailureEnum.GENERIC),
-        _ => {
-          if (_.status === 202) {
+        response => {
+          if (response.status === 202) {
             return Promise.resolve(undefined);
           }
           return Promise.reject(OnboardingFailureEnum.GENERIC);
