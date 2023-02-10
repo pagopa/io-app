@@ -106,14 +106,15 @@ function signFetchWithLollipop(
       const queryString: string | undefined = inputUrl.href.split("?")[1];
       const method = init.method.toUpperCase();
       const body = init.body;
+      const bodyString = body as string;
       if (body) {
-        const bodyString = JSON.stringify(body);
+        const bodySize = Buffer.byteLength(bodyString);
         newInit = addHeader(
           newInit,
-          "content-digest",
+          "Content-Digest",
           generateDigestHeader(bodyString)
         );
-        newInit = addHeader(newInit, "Content-Length", "8");
+        newInit = addHeader(newInit, "Content-Length", `"${bodySize}"`);
       }
       const originalUrl =
         inputUrl.pathname + (queryString ? "?" + queryString : "");
@@ -174,12 +175,12 @@ function signFetchWithLollipop(
 }
 
 function addHeader(init: RequestInit, headerName: string, headerValue: string) {
+  const currentHeaders = (init.headers as Record<string, string>) ?? {};
+  // eslint-disable-next-line functional/immutable-data
+  currentHeaders[headerName] = headerValue;
   return {
     ...init,
-    headers: {
-      ...init.headers,
-      [headerName]: headerValue
-    }
+    headers: currentHeaders
   };
 }
 
