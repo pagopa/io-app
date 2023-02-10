@@ -68,7 +68,7 @@ import {
 import { PaginatedPublicMessagesCollection } from "../../definitions/backend/PaginatedPublicMessagesCollection";
 import { CreatedMessageWithContentAndAttachments } from "../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { fetchMaxRetries, fetchTimeout } from "../config";
-import { KeyInfo } from './../utils/crypto';
+import { KeyInfo } from "./../utils/crypto";
 
 /**
  * We will retry for as many times when polling for a payment ID.

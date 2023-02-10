@@ -2,7 +2,8 @@ import {
   generate,
   CryptoError,
   deleteKey,
-  getPublicKey} from "@pagopa/io-react-native-crypto";
+  getPublicKey
+} from "@pagopa/io-react-native-crypto";
 import { call, select } from "typed-redux-saga/macro";
 import { isLollipopEnabledSelector } from "../../store/reducers/backendStatus";
 import {
@@ -101,9 +102,9 @@ export function* getCryptoPublicKey(keyTag?: string) {
     keyTag,
     publicKey: undefined
   };
-  try { 
+  try {
     if (keyTag) {
-      const publicKey = yield* call(getPublicKey, keyTag);    
+      const publicKey = yield* call(getPublicKey, keyTag);
       const keyInfo: KeyInfo = {
         keyTag,
         publicKey
@@ -111,8 +112,8 @@ export function* getCryptoPublicKey(keyTag?: string) {
       return keyInfo;
     } else {
       return eptyKeyInfo;
-    } 
-} catch (e) {
+    }
+  } catch (e) {
     return eptyKeyInfo;
   }
 }
