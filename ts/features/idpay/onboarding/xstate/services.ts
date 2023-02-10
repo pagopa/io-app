@@ -171,7 +171,7 @@ const createServicesImplementation = (
         code: _.code,
         accepted: true
       })),
-      ...Object.entries(multiConsentsAnswers)
+      ...Object.values(multiConsentsAnswers)
     ] as Array<SelfConsentDTO>;
 
     const response = await onboardingClient.consentOnboarding({
