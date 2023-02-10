@@ -25,6 +25,7 @@ import { fetchMaxRetries, fetchTimeout } from "../config";
 import { SignatureConfig } from "./httpSignature/types/SignatureConfig";
 import { generateSignatureBase } from "./httpSignature/signature";
 import { KeyInfo } from "./crypto";
+import { generateDigestHeader } from "./httpSignature/digest";
 
 // FIXME: This is a temporary type created to avoid
 // a compilation error caused by the `toFetch` function
@@ -104,6 +105,16 @@ function signFetchWithLollipop(
       const inputUrl = new URLParse(input, true);
       const queryString: string | undefined = inputUrl.href.split("?")[1];
       const method = init.method.toUpperCase();
+      const body = init.body;
+      if (body) {
+        const bodyString = JSON.stringify(body);
+        newInit = addHeader(
+          newInit,
+          "content-digest",
+          generateDigestHeader(bodyString)
+        );
+        newInit = addHeader(newInit, "Content-Length", "8");
+      }
       const originalUrl =
         inputUrl.pathname + (queryString ? "?" + queryString : "");
       const signatureConfig: SignatureConfig = {
@@ -132,14 +143,12 @@ function signFetchWithLollipop(
       // - content-digest -> sign(sha256(body))
       // - content-length -> body lenght in bytes
       // - content-type -> e.g. application/json
-      newInit = {
-        ...init,
-        headers: {
-          ...init.headers,
-          "x-pagopa-lollipop-original-method": method,
-          "x-pagopa-lollipop-original-url": originalUrl
-        }
-      };
+      newInit = addHeader(newInit, "x-pagopa-lollipop-original-method", method);
+      newInit = addHeader(
+        newInit,
+        "x-pagopa-lollipop-original-url",
+        originalUrl
+      );
       const newInitHeaders = (newInit.headers as Record<string, string>) ?? {};
       const { signatureBase, signatureInput } = generateSignatureBase(
         newInitHeaders,
@@ -147,20 +156,12 @@ function signFetchWithLollipop(
       );
       return sign(signatureBase, keyTag)
         .then(function (value) {
-          // TODO: - sign signature base with private key and add related headers:
-          // - signature -> sign(signatureBase)
-          // - signature-input -> signatureInput
           // eslint-disable-next-line no-console
-          console.log("Signature: " + value);
-          newInit = {
-            ...newInit,
-            headers: {
-              ...newInit.headers,
-              signature: `sig1:${value}:`,
-              "signature-input": signatureInput
-            }
-          };
+          newInit = addHeader(init, "signature", `sig1:${value}:`);
+          newInit = addHeader(init, "signature-input", signatureInput);
           // TODO: - put all this in an utility function
+          // eslint-disable-next-line no-console
+          console.log("✅🚀" + JSON.stringify(newInit.headers));
           return wrappableFetch(input, newInit);
         })
         .catch(function () {
@@ -170,6 +171,16 @@ function signFetchWithLollipop(
     return wrappableFetch(input, init);
   }
   return wrappableFetch(input, init);
+}
+
+function addHeader(init: RequestInit, headerName: string, headerValue: string) {
+  const currentHeaders = (init.headers as Record<string, string>) ?? {};
+  // eslint-disable-next-line functional/immutable-data
+  currentHeaders[headerName] = headerValue;
+  return {
+    ...init,
+    headers: currentHeaders
+  };
 }
 
 /**
