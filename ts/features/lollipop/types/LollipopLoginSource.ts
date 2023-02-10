@@ -1,3 +1,5 @@
+import { PublicKey } from "@pagopa/io-react-native-crypto";
+import * as O from "fp-ts/lib/Option";
 import { WebViewSourceUri } from "react-native-webview/lib/WebViewTypes";
 
 /**
@@ -6,6 +8,7 @@ import { WebViewSourceUri } from "react-native-webview/lib/WebViewTypes";
 type LoginSourceReady = {
   kind: "ready";
   value: WebViewSourceUri;
+  publicKey: O.Option<PublicKey>;
 };
 
 /**
@@ -16,10 +19,22 @@ type LoginSourceInitial = {
 };
 
 /**
+ * Type represeting that the login source cannot be calculated
+ */
+type LoginSourceError = {
+  kind: "error";
+};
+
+/**
  * Type representing all handled objects
  */
-export type LoginSourceAsync = LoginSourceReady | LoginSourceInitial;
+export type LoginSourceAsync =
+  | LoginSourceReady
+  | LoginSourceInitial
+  | LoginSourceError;
 
-export const isLoginSourceReady = (
-  lgs: LoginSourceAsync
-): lgs is LoginSourceReady => lgs.kind === "ready";
+const isLoginSourceReady = (lgs: LoginSourceAsync): lgs is LoginSourceReady =>
+  lgs.kind === "ready";
+
+export const publicKey = (lgs: LoginSourceAsync) =>
+  isLoginSourceReady(lgs) ? lgs.publicKey : O.none;
