@@ -1540,7 +1540,7 @@ wallet:
     contactECsubtitle: Contact the Institution for more information.
     assistanceLabel: "Use this code to get support:"
     sendReport: Send report
-    loadingData: loading failure, try again.
+    loadingData: Loading failure, try again.
   walletCardTransaction:
     contextualHelpTitle: All transactions for this method
     contextualHelpContent: !include wallet/wallet_card_transaction.md
@@ -3450,5 +3450,4 @@ idpay:
         body: Aggiungi un conto corrente a te intestato. L’autodichiarazione è resa ai sensi del
         bodyLink: Dpr 28 dicembre 2000 n. 445 art 46 e 47 
         nameAssignInput: Assegna un nome
-        bottomLabel: Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento visitando la sezione Profilo
-    
+        bottomLabel: Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento visitando la sezione Profilo 
