@@ -4,14 +4,12 @@ import pako from "pako";
 import { parseStringPromise } from "xml2js";
 
 export const lollipopSamlVerify = (
-  samlRequest: string,
+  decodedSaml: string,
   publicKey: PublicKey,
   onSuccess: () => void,
   onFailure: () => void
 ) => {
-  const decodeSaml = decodeURIComponent(samlRequest);
-
-  const xmlSamlRequest = pako.inflateRaw(Buffer.from(decodeSaml, "base64"), {
+  const xmlSamlRequest = pako.inflateRaw(Buffer.from(decodedSaml, "base64"), {
     to: "string"
   });
 

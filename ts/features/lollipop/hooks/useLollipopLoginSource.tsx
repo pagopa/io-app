@@ -1,10 +1,11 @@
+import * as O from "fp-ts/lib/Option";
 import { useEffect, useState } from "react";
 import { useIOSelector } from "../../../store/hooks";
 import { LoggedOutWithIdp } from "../../../store/reducers/authentication";
 import { isLollipopEnabledSelector } from "../../../store/reducers/backendStatus";
 import { taskGetPublicKey } from "../../../utils/crypto";
 import { getIdpLoginUri } from "../../../utils/login";
-import { lollipopSelector } from "../store/reducers/lollipop";
+import { lollipopKeyTagSelector } from "../store/reducers/lollipop";
 import { LoginSourceAsync } from "../types/LollipopLoginSource";
 
 type Props = {
@@ -19,28 +20,23 @@ export const useLollipopLoginSource = ({ loggedOutWithIdpAuth }: Props) => {
   });
 
   const isLollipopEnabled = useIOSelector(isLollipopEnabledSelector);
-  const lollipopState = useIOSelector(lollipopSelector);
+  const lollipopKeyTag = useIOSelector(lollipopKeyTagSelector);
 
   const loginUri = loggedOutWithIdpAuth
     ? getIdpLoginUri(loggedOutWithIdpAuth.idp.id)
     : undefined;
 
   useEffect(() => {
-    if (
-      loginUri &&
-      isLollipopEnabled &&
-      lollipopState &&
-      lollipopState.keyTag
-    ) {
-      taskGetPublicKey(lollipopState.keyTag)
-        .then(k => {
+    if (loginUri && isLollipopEnabled && O.isSome(lollipopKeyTag)) {
+      taskGetPublicKey(lollipopKeyTag.value)
+        .then(key => {
           setLoginSource({
             kind: "ready",
             value: {
               uri: loginUri,
               headers: {
                 "x-pagopa-lollipop-pub-key": Buffer.from(
-                  JSON.stringify(k)
+                  JSON.stringify(key)
                 ).toString("base64"),
                 "x-pagopa-lollipop-pub-key-hash-algo":
                   DEFAULT_LOLLIPOP_HASH_ALGORITHM
@@ -57,7 +53,7 @@ export const useLollipopLoginSource = ({ loggedOutWithIdpAuth }: Props) => {
           });
         });
     }
-  }, [isLollipopEnabled, lollipopState, loginUri]);
+  }, [isLollipopEnabled, lollipopKeyTag, loginUri]);
 
   return loginSource;
 };

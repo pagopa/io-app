@@ -1,14 +1,11 @@
-type LoginSource = {
-  uri: string;
-  headers?: Record<string, string>;
-};
+import { WebViewSourceUri } from "react-native-webview/lib/WebViewTypes";
 
 /**
  * Type representing login source successfully defined
  */
 type LoginSourceReady = {
   kind: "ready";
-  value: LoginSource;
+  value: WebViewSourceUri;
 };
 
 /**

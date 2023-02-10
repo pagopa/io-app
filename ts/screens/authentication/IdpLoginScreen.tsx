@@ -195,25 +195,29 @@ const IdpLoginScreen = (props: Props) => {
 
   const handleNavigationStateChange = useCallback(
     (event: WebViewNavigation) => {
-      if (event.url) {
-        const urlChanged = getUrlBasepath(event.url);
-        if (urlChanged !== loginTrace) {
-          props.dispatchIdpLoginUrlChanged(urlChanged);
-          updateLoginTrace(urlChanged);
+      const url = event.url;
+
+      if (url) {
+        const urlBasePath = getUrlBasepath(url);
+        if (urlBasePath !== loginTrace) {
+          props.dispatchIdpLoginUrlChanged(urlBasePath);
+          updateLoginTrace(urlBasePath);
         }
       }
 
       if (publicKey && !lollipopCheck) {
-        const queryParam = new URLParse(event.url, true).query;
-        if (queryParam && queryParam.SAMLRequest) {
+        const queryParam = new URLParse(url, true).query;
+        const samlRequest = queryParam?.SAMLRequest;
+
+        if (samlRequest) {
           setWebviewSource(undefined);
-          const decodeSaml = decodeURIComponent(queryParam.SAMLRequest);
+          const decodedSaml = decodeURIComponent(samlRequest);
           lollipopSamlVerify(
-            decodeSaml,
+            decodedSaml,
             publicKey,
             () => {
               setLollipopCheck(true);
-              setWebviewSource({ uri: event.url });
+              setWebviewSource({ uri: url });
             },
             () => {
               setRequestState(pot.some(true));
@@ -222,7 +226,7 @@ const IdpLoginScreen = (props: Props) => {
         }
       }
       const isAssertion = pipe(
-        event.url,
+        url,
         O.fromNullable,
         O.fold(
           () => false,
