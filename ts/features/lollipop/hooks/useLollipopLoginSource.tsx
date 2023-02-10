@@ -55,6 +55,10 @@ export const useLollipopLoginSource = ({ loggedOutWithIdpAuth }: Props) => {
 
     taskGetPublicKey(lollipopKeyTag.value)
       .then(key => {
+        if (!key) {
+          setDeprecatedLoginUri(loginUri);
+          return;
+        }
         setLoginSource({
           kind: "ready",
           value: {
@@ -67,7 +71,7 @@ export const useLollipopLoginSource = ({ loggedOutWithIdpAuth }: Props) => {
                 DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER
             }
           },
-          publicKey: key ? O.some(key) : O.none
+          publicKey: O.some(key)
         });
       })
       .catch(_ => {
