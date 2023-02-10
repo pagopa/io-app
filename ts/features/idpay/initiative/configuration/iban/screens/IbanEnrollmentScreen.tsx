@@ -25,7 +25,8 @@ import {
   ibanListSelector,
   isLoadingSelector,
   isUpsertingIbanSelector,
-  selectEnrolledIban
+  selectEnrolledIban,
+  selectIsIbanOnlyMode
 } from "../../xstate/selectors";
 
 type IbanEnrollmentScreenRouteParams = {
@@ -45,6 +46,7 @@ const IbanEnrollmentScreen = () => {
 
   const isLoading = useSelector(configurationMachine, isLoadingSelector);
   const ibanList = useSelector(configurationMachine, ibanListSelector);
+  const isIbanOnly = useSelector(configurationMachine, selectIsIbanOnlyMode);
 
   const enrolledIban = useSelector(configurationMachine, selectEnrolledIban);
   const [selectedIban, setSelectedIban] = React.useState<IbanDTO | undefined>();
@@ -72,6 +74,40 @@ const IbanEnrollmentScreen = () => {
 
   const handleAddNewIbanPress = () => {
     configurationMachine.send({ type: "NEW_IBAN_ONBOARDING" });
+  };
+
+  const renderFooter = () => {
+    if (isIbanOnly) {
+      return (
+        <FooterWithButtons
+          type="SingleButton"
+          leftButton={{
+            title: "Aggiungi nuovo",
+            onPress: handleAddNewIbanPress,
+            testID: "addIbanButtonTestID"
+          }}
+        />
+      );
+    }
+
+    return (
+      <FooterWithButtons
+        type="TwoButtonsInlineHalf"
+        leftButton={{
+          title: "Aggiungi nuovo",
+          bordered: true,
+          onPress: handleAddNewIbanPress,
+          testID: "addIbanButtonTestID"
+        }}
+        rightButton={{
+          title: I18n.t("global.buttons.continue"),
+          disabled: !selectedIban || isUpsertingIban,
+          isLoading: isUpsertingIban,
+          onPress: handleContinuePress,
+          testID: "continueButtonTestID"
+        }}
+      />
+    );
   };
 
   /**
@@ -110,7 +146,11 @@ const IbanEnrollmentScreen = () => {
   return (
     <BaseScreenComponent
       goBack={handleBackPress}
-      headerTitle={I18n.t("idpay.configuration.headerTitle")}
+      headerTitle={I18n.t(
+        isIbanOnly
+          ? "idpay.configuration.iban.title"
+          : "idpay.configuration.headerTitle"
+      )}
       contextualHelp={emptyContextualHelp}
     >
       <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={1}>
@@ -138,22 +178,7 @@ const IbanEnrollmentScreen = () => {
             </View>
           </ScrollView>
         </View>
-        <SafeAreaView>
-          <FooterWithButtons
-            type="TwoButtonsInlineHalf"
-            leftButton={{
-              title: "Aggiungi nuovo",
-              bordered: true,
-              onPress: handleAddNewIbanPress
-            }}
-            rightButton={{
-              title: I18n.t("global.buttons.continue"),
-              disabled: !selectedIban || isUpsertingIban,
-              isLoading: isUpsertingIban,
-              onPress: handleContinuePress
-            }}
-          />
-        </SafeAreaView>
+        <SafeAreaView>{renderFooter()}</SafeAreaView>
       </LoadingSpinnerOverlay>
     </BaseScreenComponent>
   );
