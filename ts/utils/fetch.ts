@@ -114,7 +114,7 @@ function signFetchWithLollipop(
           "Content-Digest",
           generateDigestHeader(bodyString)
         );
-        newInit = addHeader(newInit, "Content-Length", `"${bodySize}"`);
+        newInit = addHeader(newInit, "Content-Length", bodySize);
       }
       const originalUrl =
         inputUrl.pathname + (queryString ? "?" + queryString : "");
@@ -140,10 +140,6 @@ function signFetchWithLollipop(
           "x-pagopa-lollipop-original-url"
         ]
       };
-      // TODO: if we have a body we need to add all three content releated headers:
-      // - content-digest -> sign(sha256(body))
-      // - content-length -> body lenght in bytes
-      // - content-type -> e.g. application/json
       newInit = addHeader(newInit, "x-pagopa-lollipop-original-method", method);
       newInit = addHeader(
         newInit,
@@ -158,8 +154,8 @@ function signFetchWithLollipop(
       return sign(signatureBase, keyTag)
         .then(function (value) {
           // eslint-disable-next-line no-console
-          newInit = addHeader(init, "signature", `sig1:${value}:`);
-          newInit = addHeader(init, "signature-input", signatureInput);
+          newInit = addHeader(newInit, "signature", `sig1:${value}:`);
+          newInit = addHeader(newInit, "signature-input", signatureInput);
           // TODO: - put all this in an utility function
           // eslint-disable-next-line no-console
           console.log("✅🚀" + JSON.stringify(newInit.headers));
@@ -174,13 +170,20 @@ function signFetchWithLollipop(
   return wrappableFetch(input, init);
 }
 
-function addHeader(init: RequestInit, headerName: string, headerValue: string) {
-  const currentHeaders = (init.headers as Record<string, string>) ?? {};
-  // eslint-disable-next-line functional/immutable-data
-  currentHeaders[headerName] = headerValue;
+/**
+ * Add a pair header:value to the current fetch init.headers.
+ */
+function addHeader(
+  init: RequestInit,
+  headerName: string,
+  headerValue: string | number
+) {
   return {
     ...init,
-    headers: currentHeaders
+    headers: {
+      ...init.headers,
+      [headerName]: headerValue
+    }
   };
 }
 
