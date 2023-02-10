@@ -5,7 +5,7 @@ import { useSelector } from "@xstate/react";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
-import { SafeAreaView, ScrollView, Text, View } from "react-native";
+import { SafeAreaView, ScrollView, View } from "react-native";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
@@ -13,6 +13,7 @@ import OrganizationHeader from "../../../../components/OrganizationHeader";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../components/core/typography/Body";
 import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
+import { IOColors } from "../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
@@ -28,8 +29,7 @@ import { openWebUrl } from "../../../../utils/url";
 import { IDPayOnboardingParamsList } from "../navigation/navigator";
 import { useInitiativeDetailsScrolling } from "../utility/hooks";
 import { useOnboardingMachineService } from "../xstate/provider";
-import { initiativeIDSelector, isUpsertingSelector } from "../xstate/selectors";
-import { IOColors } from "../../../../components/core/variables/IOColors";
+import { isUpsertingSelector } from "../xstate/selectors";
 
 type InitiativeDetailsScreenRouteParams = {
   serviceId: string;
@@ -103,7 +103,6 @@ const InitiativeDetailsScreen = () => {
   const machine = useOnboardingMachineService();
 
   const isAcceptingTos = useSelector(machine, isUpsertingSelector);
-  const initiativeId = useSelector(machine, initiativeIDSelector);
   const { serviceId } = route.params;
   const {
     scrollViewRef,
@@ -148,7 +147,6 @@ const InitiativeDetailsScreen = () => {
           {service !== undefined && (
             <InitiativeOrganizationHeader {...toUIService(service)} />
           )}
-          {initiativeId !== undefined && <Text>{initiativeId}</Text>}
           <VSpacer size={16} />
           {description !== undefined && (
             <Markdown onLoadEnd={setMarkdownIsLoaded}>{description}</Markdown>
