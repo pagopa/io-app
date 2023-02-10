@@ -21,7 +21,7 @@ import { useIOSelector } from "../../../../store/hooks";
 import { serviceByIdSelector } from "../../../../store/reducers/entities/services/servicesById";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { useOnboardingMachineService } from "../xstate/provider";
-import { pdndCriteriaSelector, serviceIdSelector } from "../xstate/selectors";
+import { pdndCriteriaSelector, selectServiceId } from "../xstate/selectors";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.main.contextualHelpTitle",
@@ -58,17 +58,16 @@ const BOTTOM_SHEET_HEIGHT = 290;
 export const PDNDPrerequisitesScreen = () => {
   const machine = useOnboardingMachineService();
   const [authority, setAuthority] = React.useState<string | undefined>();
-  const serviceId = useSelector(machine, serviceIdSelector);
+  const serviceId = useSelector(machine, selectServiceId);
 
-  const { service_name } = pipe(
+  const serviceName = pipe(
     pot.toOption(
       useIOSelector(serviceByIdSelector(serviceId as ServiceId)) || pot.none
     ),
-    O.getOrElse(() => ({
-      service_name: I18n.t(
-        "idpay.onboarding.PDNDPrerequisites.fallbackInitiativeName"
-      )
-    }))
+    O.fold(
+      () => I18n.t("idpay.onboarding.PDNDPrerequisites.fallbackInitiativeName"),
+      service => service.service_name
+    )
   );
 
   const continueOnPress = () =>
@@ -110,7 +109,7 @@ export const PDNDPrerequisitesScreen = () => {
             <VSpacer size={16} />
             <H1>{title}</H1>
             <VSpacer size={16} />
-            <Body>{subtitle(service_name)}</Body>
+            <Body>{subtitle(serviceName)}</Body>
           </View>
           <View
             style={[IOStyles.horizontalContentPadding, styles.listContainer]}

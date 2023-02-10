@@ -72,11 +72,6 @@ const pdndCriteriaSelector = createSelector(
     )
 );
 
-const serviceIdSelector = createSelector(
-  selectServiceId,
-  serviceId => serviceId
-);
-
 const prerequisiteAnswerIndexSelector = createSelector(
   criteriaToDisplaySelector,
   selectMultiConsents,
@@ -100,12 +95,12 @@ const getBoolRequiredCriteriaFromContext = (context: Context) =>
   );
 
 export {
+  selectServiceId,
   multiRequiredCriteriaSelector,
   boolRequiredCriteriaSelector,
   getMultiRequiredCriteriaFromContext,
   getBoolRequiredCriteriaFromContext,
   criteriaToDisplaySelector,
   prerequisiteAnswerIndexSelector,
-  pdndCriteriaSelector,
-  serviceIdSelector
+  pdndCriteriaSelector
 };
