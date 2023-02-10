@@ -3,14 +3,14 @@ import * as React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import themeVariables from "../../theme/variables";
 import { setAccessibilityFocus } from "../../utils/accessibility";
+import { IOPictogramType, Pictogram } from "../core/pictograms";
 import { VSpacer } from "../core/spacer/Spacer";
 import { Body } from "../core/typography/Body";
 import { H2 } from "../core/typography/H2";
 
 type Props = {
-  image: React.ReactNode;
+  image: IOPictogramType;
   title: string;
-  // this is necessary in order to render text with different formatting
   body?: string | React.ReactNode;
 };
 
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
 const renderNode = (body: string | React.ReactNode) => {
   if (typeof body === "string") {
     return (
-      <Body testID="infoScreenBody" style={styles.textAlignCenter}>
+      <Body testID="InfoAltScreenBody" style={styles.textAlignCenter}>
         {body}
       </Body>
     );
@@ -39,17 +39,20 @@ const renderNode = (body: string | React.ReactNode) => {
 };
 
 /**
- * A base screen that displays one image, text, and one bottom button
+ * A base screen that displays one illustration (through the Pictogram component),
+ * text, and one bottom button. It's an alternative to the InfoScreenComponent
+ * that accepts a generic raster image.
+ *
  * @param props
  * @constructor
  */
-export const InfoScreenComponent: React.FunctionComponent<Props> = props => {
+export const InfoAltScreenComponent = ({ image, title, body }: Props) => {
   const elementRef = React.createRef<Text>();
 
   return (
-    <View style={styles.main} testID="InfoScreenComponent">
+    <View style={styles.main} testID="InfoAltScreenComponent">
       <NavigationEvents onWillFocus={() => setAccessibilityFocus(elementRef)} />
-      {props.image}
+      <Pictogram name={image} />
       <VSpacer size={24} />
       <H2
         testID="infoScreenTitle"
@@ -57,10 +60,14 @@ export const InfoScreenComponent: React.FunctionComponent<Props> = props => {
         ref={elementRef}
         style={styles.textAlignCenter}
       >
-        {props.title}
+        {title}
       </H2>
-      <VSpacer size={16} />
-      {renderNode(props.body)}
+      {body && (
+        <>
+          <VSpacer size={16} />
+          {renderNode(body)}
+        </>
+      )}
     </View>
   );
 };
