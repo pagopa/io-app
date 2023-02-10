@@ -118,7 +118,7 @@ const TimelineDetailsComponent = (props: TransactionDetailsProps) => {
           <VSpacer size={24} />
           <H4>{I18n.t("idpay.initiative.operationDetails.infoTitle")}</H4>
           <View style={styles.detailRow}>
-            <Body>Data</Body>
+            <Body>{I18n.t("idpay.initiative.operationDetails.date")}</Body>
             <Body weight="SemiBold">
               {format(details.operationDate, "DD MMM YYYY, HH:mm")}
             </Body>
