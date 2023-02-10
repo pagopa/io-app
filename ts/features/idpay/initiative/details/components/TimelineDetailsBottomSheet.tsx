@@ -135,10 +135,10 @@ const TimelineDetailsComponent = (props: TransactionDetailsProps) => {
             </Body>
             <View style={IOStyles.row}>
               <Body weight="SemiBold" numberOfLines={1} ellipsizeMode="tail">
-                {details.operationId}
+                {details.idTrxAcquirer}
               </Body>
               <HSpacer size={8} />
-              <CopyButtonComponent textToCopy={details.operationId} />
+              <CopyButtonComponent textToCopy={details.idTrxAcquirer} />
             </View>
           </View>
           <View style={styles.detailRow}>
