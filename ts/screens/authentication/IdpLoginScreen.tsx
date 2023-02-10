@@ -407,9 +407,15 @@ const IdpLoginScreen = (props: Props) => {
     return <IdpSuccessfulAuthentication />;
   }
 
+  // This condition will be true if the navigation occurs
+  // before the redux state is updated successfully OR if
+  // the hook that retrieves the LolliPOP public key has
+  // failed because there was no login-url to use OR when
+  // the LolliPOP checks are running
   if (!loggedOutWithIdpAuth || !webviewSource) {
-    // This condition will be true only temporarily (if the navigation occurs
-    // before the redux state is updated successfully)
+    // This internal if handles the case where the initial
+    // login-url was not available and so the hook that
+    // ertrieves the public key cannot produce a valid output
     if (pot.isError(requestState)) {
       return renderMask();
     }
