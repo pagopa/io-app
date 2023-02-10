@@ -174,12 +174,12 @@ function signFetchWithLollipop(
 }
 
 function addHeader(init: RequestInit, headerName: string, headerValue: string) {
-  const currentHeaders = (init.headers as Record<string, string>) ?? {};
-  // eslint-disable-next-line functional/immutable-data
-  currentHeaders[headerName] = headerValue;
   return {
     ...init,
-    headers: currentHeaders
+    headers: {
+      ...init.headers,
+      [headerName]: headerValue
+    }
   };
 }
 
