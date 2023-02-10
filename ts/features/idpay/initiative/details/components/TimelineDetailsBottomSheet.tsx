@@ -76,6 +76,29 @@ const TimelineDetailsErrorComponent = () => (
   </View>
 );
 
+type CopyTextProps = {
+  text: string;
+};
+
+/**
+ * Utility component to display a text with a CopyButtonComponent
+ * @param props
+ */
+const CopyTextComponent = (props: CopyTextProps) => (
+  <View style={[IOStyles.flex, IOStyles.row]}>
+    <Body
+      weight="SemiBold"
+      numberOfLines={1}
+      ellipsizeMode="tail"
+      style={IOStyles.flex}
+    >
+      {props.text}
+    </Body>
+    <HSpacer size={8} />
+    <CopyButtonComponent textToCopy={props.text} />
+  </View>
+);
+
 type TransactionDetailsProps = {
   details: OperationDTO;
 };
@@ -133,23 +156,15 @@ const TimelineDetailsComponent = (props: TransactionDetailsProps) => {
             <Body>
               {I18n.t("idpay.initiative.operationDetails.acquirerId")}
             </Body>
-            <View style={IOStyles.row}>
-              <Body weight="SemiBold" numberOfLines={1} ellipsizeMode="tail">
-                {details.idTrxAcquirer}
-              </Body>
-              <HSpacer size={8} />
-              <CopyButtonComponent textToCopy={details.idTrxAcquirer} />
-            </View>
+            <HSpacer size={16} />
+            <CopyTextComponent text={details.idTrxAcquirer} />
           </View>
           <View style={styles.detailRow}>
-            <Body>{I18n.t("idpay.initiative.operationDetails.issuerId")}</Body>
-            <View style={IOStyles.row}>
-              <Body weight="SemiBold" numberOfLines={1} ellipsizeMode="tail">
-                {details.idTrxIssuer}
-              </Body>
-              <HSpacer size={8} />
-              <CopyButtonComponent textToCopy={details.idTrxIssuer} />
-            </View>
+            <Body style={{ flex: 1 }}>
+              {I18n.t("idpay.initiative.operationDetails.issuerId")}
+            </Body>
+            <HSpacer size={16} />
+            <CopyTextComponent text={details.idTrxIssuer} />
           </View>
         </View>
       );
