@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.26.0-rc.1](https://github.com/pagopa/io-app/compare/2.26.0-rc.0...2.26.0-rc.1) (2023-02-10)
+
+
+### Bug Fixes
+
+* **IDPay:** [[IODPAY-148](https://pagopa.atlassian.net/browse/IODPAY-148)] Serialization bug in multivaluePrerequisites ([#4368](https://github.com/pagopa/io-app/issues/4368)) ([45e26c9](https://github.com/pagopa/io-app/commit/45e26c993440af9a1ab5aefec458fa2bfb863df8))
+
 ## [2.26.0-rc.0](https://github.com/pagopa/io-app/compare/2.25.0-rc.2...2.26.0-rc.0) (2023-02-09)
 
 
