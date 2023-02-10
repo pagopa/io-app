@@ -9,7 +9,7 @@ import * as O from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import * as React from "react";
 import { ComponentProps } from "react";
-import { Image, ImageSourcePropType, SafeAreaView, View } from "react-native";
+import { View, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJson";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
@@ -18,7 +18,6 @@ import CopyButtonComponent from "../../../components/CopyButtonComponent";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { H4 } from "../../../components/core/typography/H4";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
-import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import {
   cancelButtonProps,
@@ -64,6 +63,8 @@ import {
   zendeskCategoryId,
   zendeskPaymentCategory
 } from "../../../utils/supportAssistance";
+import { IOPictogramType } from "../../../components/core/pictograms/Pictogram";
+import { InfoAltScreenComponent } from "../../../components/InfoAltScreenComponent/InfoAltScreenComponent";
 
 export type TransactionErrorScreenNavigationParams = {
   error: O.Option<
@@ -86,18 +87,18 @@ type Props = OwnProps &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
-const baseIconPath = "../../../../img/";
-
-const imageMapping: Record<ErrorTypes, ImageSourcePropType> = {
-  DATA: require(baseIconPath + "pictograms/doubt.png"),
-  DUPLICATED: require(baseIconPath + "pictograms/fireworks.png"),
-  EC: require(baseIconPath + "wallet/errors/payment-unavailable-icon.png"),
-  EXPIRED: require(baseIconPath + "servicesStatus/error-detail-icon.png"),
-  ONGOING: require(baseIconPath + "pictograms/hourglass.png"),
-  REVOKED: require(baseIconPath + "servicesStatus/error-detail-icon.png"),
-  UNCOVERED: require(baseIconPath + "/wallet/errors/generic-error-icon.png"),
-  TECHNICAL: require(baseIconPath + "servicesStatus/error-detail-icon.png"),
-  NOT_FOUND: require(baseIconPath + "pictograms/payment-unrecognized.png")
+const imageTimeout: IOPictogramType = "inProgress";
+const imageDefaultFallback: IOPictogramType = "error";
+const imageMapping: Record<ErrorTypes, IOPictogramType> = {
+  DATA: "question",
+  DUPLICATED: "fireworks",
+  EC: "notAvailable",
+  ONGOING: "hourglass",
+  UNCOVERED: "umbrella",
+  REVOKED: "error",
+  EXPIRED: "error",
+  TECHNICAL: "error",
+  NOT_FOUND: "unrecognized"
 };
 
 const requestZendeskAssistanceForPaymentFailure = (
@@ -119,7 +120,7 @@ const requestZendeskAssistanceForPaymentFailure = (
   }
 };
 type ScreenUIContents = {
-  image: ImageSourcePropType;
+  image: IOPictogramType;
   title: string;
   subtitle?: React.ReactNode;
   footerButtons?: ComponentProps<typeof FooterStackButton>["buttons"];
@@ -209,8 +210,7 @@ export const errorTransactionUIElements = (
 
   if (errorORUndefined === "PAYMENT_ID_TIMEOUT") {
     return {
-      image: require(baseIconPath +
-        "wallet/errors/missing-payment-id-icon.png"),
+      image: imageTimeout,
       title: I18n.t("wallet.errors.MISSING_PAYMENT_ID"),
       footerButtons: [...closeButtonCancel]
     };
@@ -231,9 +231,7 @@ export const errorTransactionUIElements = (
     )
   );
 
-  const image = errorMacro
-    ? imageMapping[errorMacro]
-    : require(baseIconPath + "/wallet/errors/generic-error-icon.png");
+  const image = errorMacro ? imageMapping[errorMacro] : imageDefaultFallback;
 
   switch (errorMacro) {
     case "TECHNICAL":
@@ -386,11 +384,7 @@ const TransactionErrorScreen = (props: Props) => {
   return (
     <BaseScreenComponent>
       <SafeAreaView style={IOStyles.flex}>
-        <InfoScreenComponent
-          image={<Image source={image} />}
-          title={title}
-          body={subtitle}
-        />
+        <InfoAltScreenComponent image={image} title={title} body={subtitle} />
         {footerButtons && <FooterStackButton buttons={footerButtons} />}
       </SafeAreaView>
     </BaseScreenComponent>

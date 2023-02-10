@@ -7,6 +7,7 @@ import {
   FlatList,
   Image,
   ListRenderItemInfo,
+  Platform,
   Pressable,
   StyleProp,
   StyleSheet,
@@ -19,6 +20,8 @@ import themeVariables from "../theme/variables";
 import { GlobalState } from "../store/reducers/types";
 import { idpsStateSelector } from "../store/reducers/content";
 import { LocalIdpsFallback } from "../utils/idps";
+import { localeDateFormat } from "../utils/locale";
+import I18n from "../i18n";
 import { VSpacer } from "./core/spacer/Spacer";
 import { IOColors } from "./core/variables/IOColors";
 
@@ -73,6 +76,17 @@ const styles = StyleSheet.create({
 
 const keyExtractor = (idp: LocalIdpsFallback): string => idp.id;
 
+// https://github.com/facebook/react-native/issues/12606
+// Image cache forced refresh for Android by appending
+// the `ts` query parameter as DDMMYYYY to simulate a 24h TTL.
+const androidIdpLogoForcedRefreshed = () => {
+  const timestampValue = localeDateFormat(
+    new Date(),
+    I18n.t("global.dateFormats.shortFormat").replace(/\//g, "")
+  );
+  return Platform.OS === "android" ? `?ts=${timestampValue}` : "";
+};
+
 const renderItem =
   (props: Props) =>
   (info: ListRenderItemInfo<LocalIdpsFallback>): React.ReactElement => {
@@ -92,7 +106,13 @@ const renderItem =
           testID={`idp-${item.id}-button`}
         >
           <Image
-            source={item.localLogo ? item.localLogo : { uri: item.logo }}
+            source={
+              item.localLogo
+                ? item.localLogo
+                : {
+                    uri: `${item.logo}${androidIdpLogoForcedRefreshed()}`
+                  }
+            }
             style={styles.idpLogo}
           />
         </Pressable>
