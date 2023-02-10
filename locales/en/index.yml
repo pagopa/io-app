@@ -3438,6 +3438,7 @@ idpay:
         skip: "Più tardi"
         addPaymentMethod: "Aggiungi un metodo di pagamento"
     iban:
+      title: IBAN associato
       landing:
         header: Aggiungi un IBAN al tuo Profilo
         body: Salva i dati del tuo conto e ottieni più facilmente i rimborsi a te previsti.
