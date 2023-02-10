@@ -1,8 +1,8 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Badge, ListItem, View } from "native-base";
+import { Badge, ListItem } from "native-base";
 import { default as React, forwardRef, useImperativeHandle } from "react";
-import { StyleSheet } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 import {
   InstrumentDTO,
   StatusEnum
@@ -13,6 +13,8 @@ import { IOColors } from "../../../../../components/core/variables/IOColors";
 import Switch from "../../../../../components/ui/Switch";
 import { Wallet } from "../../../../../types/pagopa";
 import { instrumentStatusLabels } from "../../../common/labels";
+import { HSpacer } from "../../../../../components/core/spacer/Spacer";
+import { Icon } from "../../../../../components/core/icons";
 
 export type InstrumentEnrollmentSwitchRef = {
   switchStatus: boolean;
@@ -58,8 +60,19 @@ const InstrumentEnrollmentSwitch = forwardRef<
     switch (wallet.type) {
       case "CREDIT_CARD":
         return O.some({
-          logo: <View />,
-          maskedPan: wallet.creditCard?.pan ?? ""
+          logo:
+            wallet.creditCard?.brandLogo === undefined ? (
+              <Icon name="creditCard" size={24} color={"bluegrey"} />
+            ) : (
+              <Image
+                style={styles.imageSize}
+                source={{ uri: wallet.creditCard?.brandLogo }}
+              />
+            ),
+          maskedPan:
+            wallet.creditCard?.pan === undefined
+              ? ""
+              : `•••• ${wallet.creditCard.pan}`
         });
       default:
         return O.none;
@@ -100,7 +113,11 @@ const InstrumentEnrollmentSwitch = forwardRef<
   return (
     <ListItem>
       <View style={styles.listItemContainer}>
-        <H4>{instrumentInfo.maskedPan}</H4>
+        <View style={styles.logoAndPanContainer}>
+          {instrumentInfo.logo}
+          <HSpacer size={8} />
+          <H4>{instrumentInfo.maskedPan}</H4>
+        </View>
         {renderControl()}
       </View>
     </ListItem>
@@ -118,6 +135,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: IOColors.blue
+  },
+  imageSize: { height: 16, width: 24 },
+  logoAndPanContainer: {
+    flexDirection: "row",
+    alignItems: "center"
   }
 });
 
