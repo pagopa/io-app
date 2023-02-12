@@ -116,8 +116,11 @@ export const useTimelineDetailsBottomSheet = (
 ): TimelineDetailsBottomSheetModal => {
   const dispatch = useIODispatch();
 
-  const [snapPoint, setSnapPoint] = React.useState(530);
-  const [title, setTitle] = React.useState("");
+  const [modalConfig, setModalConfig] =
+    React.useState<TimelineDetailsBottomSheetConfiguration>({
+      snapPoint: 530,
+      title: ""
+    });
 
   const bottomSheetFooter = (
     <View style={styles.footer}>
@@ -133,8 +136,8 @@ export const useTimelineDetailsBottomSheet = (
 
   const modal = useIOBottomSheetModal(
     <TimelineDetailsBottomSheet />,
-    title,
-    snapPoint,
+    modalConfig.title,
+    modalConfig.snapPoint,
     bottomSheetFooter
   );
 
@@ -148,8 +151,7 @@ export const useTimelineDetailsBottomSheet = (
       return;
     }
 
-    setSnapPoint(config.snapPoint);
-    setTitle(config.title);
+    setModalConfig(config);
 
     dispatch(
       idpayTimelineDetailsGet.request({
