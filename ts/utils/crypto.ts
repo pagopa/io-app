@@ -11,6 +11,7 @@ import {
 export type KeyInfo = {
   keyTag?: string;
   publicKey?: PublicKey;
+  nonce?: string;
 };
 
 export type KeyGenerationInfo = {

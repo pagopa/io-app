@@ -60,7 +60,11 @@ import {
   getThirdPartyMessageDefaultDecoder
 } from "../../definitions/backend/requestTypes";
 import { SessionToken } from "../types/SessionToken";
-import { constantPollingFetch, defaultRetryingFetch } from "../utils/fetch";
+import {
+  constantPollingFetch,
+  defaultRetryingFetch,
+  lollipopFetch
+} from "../utils/fetch";
 import {
   tokenHeaderProducer,
   withBearerToken as withToken
@@ -136,12 +140,7 @@ export type LogoutT = IPostApiRequestType<
 export function BackendClient(
   baseUrl: string,
   token: SessionToken,
-  keyInfo: KeyInfo,
-  fetchApi: typeof fetch = defaultRetryingFetch(
-    fetchTimeout,
-    fetchMaxRetries,
-    keyInfo
-  )
+  fetchApi: typeof fetch = defaultRetryingFetch(fetchTimeout, fetchMaxRetries)
 ) {
   const options = {
     baseUrl,
@@ -507,6 +506,15 @@ export function BackendClient(
     createOrUpdateProfile: withBearerToken(
       createFetchRequestForApi(createOrUpdateProfileT, options)
     ),
+    getProfileLollipop: (keyInfo: KeyInfo) => {
+      const lpFetch = lollipopFetch(fetchTimeout, fetchMaxRetries, keyInfo);
+      return withBearerToken(
+        createFetchRequestForApi(getProfileT, {
+          ...options,
+          fetchApi: lpFetch
+        })
+      );
+    },
     getUserMetadata: withBearerToken(
       createFetchRequestForApi(getUserMetadataT, options)
     ),

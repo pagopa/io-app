@@ -602,13 +602,12 @@ export function* watchWalletSaga(
   const pagopaNodoClient = BackendClient(
     apiUrlPrefix,
     sessionToken,
-    {},
     defaultRetryingFetch(fetchPagoPaTimeout, 0)
   );
 
   // Backend client for polling for paymentId - uses an instance of fetch that
   // considers a 404 as a transient error and retries with a constant delay
-  const pollingPagopaNodoClient = BackendClient(apiUrlPrefix, sessionToken, {});
+  const pollingPagopaNodoClient = BackendClient(apiUrlPrefix, sessionToken);
 
   // Client for the PagoPA PaymentManager
   const paymentManagerClient: PaymentManagerClient = PaymentManagerClient(

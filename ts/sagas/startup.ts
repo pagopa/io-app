@@ -103,6 +103,7 @@ import {
 import { updateInstallationSaga } from "./notifications";
 import {
   loadProfile,
+  loadProfileLollipop,
   watchProfile,
   watchProfileRefreshRequestsSaga,
   watchProfileUpsertRequestsSaga
@@ -217,12 +218,9 @@ export function* initializeApplicationSaga(): Generator<
   yield* fork(watchSessionExpiredSaga);
 
   // Instantiate a backend client from the session token
-  const keyTag = yield* select(lollipopKeyTagSelector);
-  const keyInfo = yield* call(getCryptoPublicKey, keyTag);
   const backendClient: ReturnType<typeof BackendClient> = BackendClient(
     apiUrlPrefix,
-    sessionToken,
-    keyInfo
+    sessionToken
   );
 
   // eslint-disable-next-line no-console
@@ -281,9 +279,12 @@ export function* initializeApplicationSaga(): Generator<
   // loaded and valid
 
   // Load the profile info
+  const keyTag = yield* select(lollipopKeyTagSelector);
+  const keyInfo = yield* call(getCryptoPublicKey, keyTag);
   const maybeUserProfile: SagaCallReturnType<typeof loadProfile> = yield* call(
-    loadProfile,
-    backendClient.getProfile
+    loadProfileLollipop,
+    keyInfo,
+    backendClient.getProfileLollipop
   );
 
   if (O.isNone(maybeUserProfile)) {

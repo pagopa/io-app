@@ -48,8 +48,7 @@ type FixedFetch = (
  */
 export function defaultRetryingFetch(
   timeout: Millisecond = fetchTimeout,
-  maxRetries: number = fetchMaxRetries,
-  keyInfo?: KeyInfo
+  maxRetries: number = fetchMaxRetries
 ): typeof fetch {
   const fetchApi = (global as any).fetch;
   const abortableFetch = AbortableFetch(fetchApi);
@@ -68,123 +67,8 @@ export function defaultRetryingFetch(
     retryLogic
   );
   return retriableFetch(retryWithTransient429s)(
-    (input: RequestInfo | URL, init?: RequestInit) => {
-      if (keyInfo) {
-        return signFetchWithLollipop(input, init, keyInfo, timeoutFetch);
-      } else {
-        return timeoutFetch(input, init);
-      }
-    }
+    (input: RequestInfo | URL, init?: RequestInit) => timeoutFetch(input, init)
   );
-}
-
-/**
- * Decorates the current fetch with LolliPOP headers and http-signature
- */
-function signFetchWithLollipop(
-  input: RequestInfo | URL,
-  init: RequestInit | undefined,
-  keyInfo: KeyInfo,
-  wrappableFetch: FixedFetch
-) {
-  // eslint-disable-next-line functional/no-let
-  if (!JSON.stringify(input).includes("backend.json")) {
-    const { keyTag, publicKey } = keyInfo;
-    if (
-      keyTag &&
-      publicKey &&
-      typeof input === "string" &&
-      init &&
-      "headers" in init &&
-      init.headers &&
-      "method" in init &&
-      init.method
-    ) {
-      // eslint-disable-next-line functional/no-let
-      let newInit = init;
-      const inputUrl = new URLParse(input, true);
-      const queryString: string | undefined = inputUrl.href.split("?")[1];
-      const method = init.method.toUpperCase();
-      const body = init.body;
-      const bodyString = body as string;
-      if (body) {
-        const bodySize = Buffer.byteLength(bodyString);
-        newInit = addHeader(
-          newInit,
-          "Content-Digest",
-          generateDigestHeader(bodyString)
-        );
-        newInit = addHeader(newInit, "Content-Length", bodySize);
-      }
-      const originalUrl =
-        inputUrl.pathname + (queryString ? "?" + queryString : "");
-      const signatureConfig: SignatureConfig = {
-        signAlgorithm:
-          publicKey?.kty === "EC" ? "ecdsa-p256-sha256" : "rsa-pss-sha256",
-        signKeyTag: keyTag,
-        signKeyId: "AF2G87coad7/KJl9800==",
-        nonce: "xyz",
-        signatureComponents: {
-          method,
-          authority: inputUrl.hostname,
-          path: inputUrl.pathname,
-          requestTarget: originalUrl,
-          scheme: inputUrl.protocol,
-          targetUri: `${inputUrl.protocol}://${inputUrl.hostname}/${originalUrl}`
-        },
-        signatureParams: [
-          "Content-Digest",
-          "Content-Type",
-          "Content-Length",
-          "x-pagopa-lollipop-original-method",
-          "x-pagopa-lollipop-original-url"
-        ]
-      };
-      newInit = addHeader(newInit, "x-pagopa-lollipop-original-method", method);
-      newInit = addHeader(
-        newInit,
-        "x-pagopa-lollipop-original-url",
-        originalUrl
-      );
-      const newInitHeaders = (newInit.headers as Record<string, string>) ?? {};
-      const { signatureBase, signatureInput } = generateSignatureBase(
-        newInitHeaders,
-        signatureConfig
-      );
-      return sign(signatureBase, keyTag)
-        .then(function (value) {
-          // eslint-disable-next-line no-console
-          newInit = addHeader(newInit, "signature", `sig1:${value}:`);
-          newInit = addHeader(newInit, "signature-input", signatureInput);
-          // TODO: - put all this in an utility function
-          // eslint-disable-next-line no-console
-          console.log("✅🚀" + JSON.stringify(newInit.headers));
-          return wrappableFetch(input, newInit);
-        })
-        .catch(function () {
-          return wrappableFetch(input, init);
-        });
-    }
-    return wrappableFetch(input, init);
-  }
-  return wrappableFetch(input, init);
-}
-
-/**
- * Add a pair header:value to the current fetch init.headers.
- */
-function addHeader(
-  init: RequestInit,
-  headerName: string,
-  headerValue: string | number
-) {
-  return {
-    ...init,
-    headers: {
-      ...init.headers,
-      [headerName]: headerValue
-    }
-  };
 }
 
 /**
@@ -238,3 +122,136 @@ export const constantPollingFetch = (
 
   return retriableFetch(retryWithTransient404s, shouldAbort)(timeoutFetch);
 };
+
+/**
+ * Decorates the current fetch with LolliPOP headers and http-signature
+ */
+export function lollipopFetch(
+  timeout: Millisecond = fetchTimeout,
+  maxRetries: number = fetchMaxRetries,
+  keyInfo: KeyInfo
+) {
+  const fetchApi = (global as any).fetch;
+  const abortableFetch = AbortableFetch(fetchApi);
+  const timeoutFetch = toFetch(
+    setFetchTimeout(timeout, abortableFetch)
+  ) as FixedFetch;
+  // configure retry logic with default exponential backoff
+  // @see https://github.com/pagopa/io-ts-commons/blob/master/src/backoff.ts
+  const exponentialBackoff = calculateExponentialBackoffInterval();
+  const retryLogic = withRetries<Error, Response>(
+    maxRetries,
+    exponentialBackoff
+  );
+  const retryWithTransient429s = retryLogicForTransientResponseError(
+    _ => _.status === 429,
+    retryLogic
+  );
+  return retriableFetch(retryWithTransient429s)(
+    (input: RequestInfo | URL, init?: RequestInit) => {
+      // eslint-disable-next-line functional/no-let
+      if (!JSON.stringify(input).includes("backend.json")) {
+        const { keyTag, publicKey } = keyInfo;
+        if (
+          keyTag &&
+          publicKey &&
+          typeof input === "string" &&
+          init &&
+          "headers" in init &&
+          init.headers &&
+          "method" in init &&
+          init.method
+        ) {
+          // eslint-disable-next-line functional/no-let
+          let newInit = init;
+          const inputUrl = new URLParse(input, true);
+          const queryString: string | undefined = inputUrl.href.split("?")[1];
+          const method = init.method.toUpperCase();
+          const body = init.body;
+          const bodyString = body as string;
+          if (body) {
+            const bodySize = Buffer.byteLength(bodyString);
+            newInit = addHeader(
+              newInit,
+              "Content-Digest",
+              generateDigestHeader(bodyString)
+            );
+            newInit = addHeader(newInit, "Content-Length", bodySize);
+          }
+          const originalUrl =
+            inputUrl.pathname + (queryString ? "?" + queryString : "");
+          const signatureConfig: SignatureConfig = {
+            signAlgorithm:
+              publicKey?.kty === "EC" ? "ecdsa-p256-sha256" : "rsa-pss-sha256",
+            signKeyTag: keyTag,
+            signKeyId: "AF2G87coad7/KJl9800==",
+            nonce: "xyz",
+            signatureComponents: {
+              method,
+              authority: inputUrl.hostname,
+              path: inputUrl.pathname,
+              requestTarget: originalUrl,
+              scheme: inputUrl.protocol,
+              targetUri: `${inputUrl.protocol}://${inputUrl.hostname}/${originalUrl}`
+            },
+            signatureParams: [
+              "Content-Digest",
+              "Content-Type",
+              "Content-Length",
+              "x-pagopa-lollipop-original-method",
+              "x-pagopa-lollipop-original-url"
+            ]
+          };
+          newInit = addHeader(
+            newInit,
+            "x-pagopa-lollipop-original-method",
+            method
+          );
+          newInit = addHeader(
+            newInit,
+            "x-pagopa-lollipop-original-url",
+            originalUrl
+          );
+          const newInitHeaders =
+            (newInit.headers as Record<string, string>) ?? {};
+          const { signatureBase, signatureInput } = generateSignatureBase(
+            newInitHeaders,
+            signatureConfig
+          );
+          return sign(signatureBase, keyTag)
+            .then(function (value) {
+              // eslint-disable-next-line no-console
+              newInit = addHeader(newInit, "signature", `sig1:${value}:`);
+              newInit = addHeader(newInit, "signature-input", signatureInput);
+              // TODO: - put all this in an utility function
+              // eslint-disable-next-line no-console
+              console.log("✅🚀" + JSON.stringify(newInit.headers));
+              return timeoutFetch(input, newInit);
+            })
+            .catch(function () {
+              return timeoutFetch(input, init);
+            });
+        }
+        return timeoutFetch(input, init);
+      }
+      return timeoutFetch(input, init);
+    }
+  );
+}
+
+/**
+ * Add a pair header:value to the current fetch init.headers.
+ */
+function addHeader(
+  init: RequestInit,
+  headerName: string,
+  headerValue: string | number
+) {
+  return {
+    ...init,
+    headers: {
+      ...init.headers,
+      [headerName]: headerValue
+    }
+  };
+}

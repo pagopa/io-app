@@ -110,8 +110,6 @@ describe("initializeApplicationSaga", () => {
       .next(aSessionToken)
       .fork(watchSessionExpiredSaga)
       .next()
-      .next() // keyTag
-      .next() // getPublicKey
       .next(401) // checksession
       .put(sessionExpired());
   });
@@ -142,8 +140,6 @@ describe("initializeApplicationSaga", () => {
       .next(aSessionToken)
       .fork(watchSessionExpiredSaga)
       .next()
-      .next() // keyTag
-      .next() // getPublicKey
       .next(200) // check session
       .select(sessionInfoSelector)
       .next(
