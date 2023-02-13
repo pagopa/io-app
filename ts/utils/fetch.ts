@@ -250,6 +250,7 @@ export function lollipopFetch(
               });
             });
           }) ?? [];
+
         return sign(mainSignatureBase, keyTag)
           .then(function (mainSignValue) {
             return chainSignPromises(customSignPromises).then(function (
@@ -277,9 +278,6 @@ export function lollipopFetch(
                 "signature-input",
                 signatureInputs.join(",")
               );
-              // TODO: - put all this in an utility function
-              // eslint-disable-next-line no-console
-              console.log("✅🚀" + JSON.stringify(newInit.headers));
               return timeoutFetch(input, newInit);
             });
           })

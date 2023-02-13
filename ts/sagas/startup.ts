@@ -224,11 +224,6 @@ export function* initializeApplicationSaga(): Generator<
     sessionToken
   );
 
-  // eslint-disable-next-line no-console
-  console.log("🚀 apiUrlPrefix " + apiUrlPrefix);
-  // eslint-disable-next-line no-console
-  console.log("🚀🚀 sessionToken " + sessionToken);
-
   // check if the current session is still valid
   const checkSessionResponse: SagaCallReturnType<typeof checkSession> =
     yield* call(checkSession, backendClient.getSession);
