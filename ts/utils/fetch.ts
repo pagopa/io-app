@@ -155,7 +155,6 @@ export function lollipopFetch(
   );
   return retriableFetch(retryWithTransient429s)(
     (input: RequestInfo | URL, init?: RequestInit) => {
-      // eslint-disable-next-line functional/no-let
       const { keyTag, publicKey } = lollipopConfig.keyInfo;
       if (
         keyTag &&
@@ -186,8 +185,14 @@ export function lollipopFetch(
           inputUrl,
           originalUrl
         };
-        const mainSignatureConfig: SignatureConfig = forgeMainSignatureConfig(
-          signatureConfigForgeInput
+        const mainSignatureConfig: SignatureConfig = forgeSignatureConfig(
+          signatureConfigForgeInput,
+          [
+            "Content-Digest",
+            "Content-Type",
+            "x-pagopa-lollipop-original-method",
+            "x-pagopa-lollipop-original-url"
+          ]
         );
         newInit = addHeader(
           newInit,
@@ -213,10 +218,7 @@ export function lollipopFetch(
               [headerName]: headerValue
             };
             const customHeaderSignatureConfig: SignatureConfig =
-              forgeCustomHeaderSignatureConfig(
-                signatureConfigForgeInput,
-                headerName
-              );
+              forgeSignatureConfig(signatureConfigForgeInput, [headerName]);
             const {
               signatureBase: customSignatureBase,
               signatureInput: customSignatureInput
@@ -245,18 +247,23 @@ export function lollipopFetch(
               customSignValues.forEach(
                 v => (newInit = addHeader(newInit, v.headerName, v.headerValue))
               );
+              // Prepare custom signature inputs array
               const customSignatureInputs = customSignValues.map(
                 v => v["signature-input"]
               );
+              // Prepare custom signature array
               const customSignatures = customSignValues.map(v => v.signature);
+              // Setup signature array
               const signatures = [
                 `sig1:${mainSignValue}:`,
                 ...customSignatures
               ];
+              // Setup signature input array
               const signatureInputs = [
                 mainSignatureInput,
                 ...customSignatureInputs
               ];
+              // Add all to their corresponding headers
               newInit = addHeader(newInit, "signature", signatures.join(","));
               newInit = addHeader(
                 newInit,
@@ -284,9 +291,9 @@ type SignatureConfigForgeInput = {
   originalUrl: string;
 };
 
-function forgeCustomHeaderSignatureConfig(
+function forgeSignatureConfig(
   forgeInput: SignatureConfigForgeInput,
-  headerName: string
+  signatureParams: Array<string>
 ): SignatureConfig {
   return {
     signAlgorithm: getSignAlgorithm(forgeInput.publicKey),
@@ -298,30 +305,7 @@ function forgeCustomHeaderSignatureConfig(
       forgeInput.inputUrl,
       forgeInput.originalUrl
     ),
-    signatureParams: [headerName]
-  };
-}
-
-function forgeMainSignatureConfig(
-  forgeInput: SignatureConfigForgeInput
-): SignatureConfig {
-  return {
-    signAlgorithm: getSignAlgorithm(forgeInput.publicKey),
-    signKeyTag: forgeInput.keyTag,
-    signKeyId: forgeInput.lollipopConfig.keyInfo.publicKeyThumbprint ?? "",
-    nonce: forgeInput.lollipopConfig.nonce,
-    signatureComponents: forgeSignatureComponents(
-      forgeInput.method,
-      forgeInput.inputUrl,
-      forgeInput.originalUrl
-    ),
-    signatureParams: [
-      "Content-Digest",
-      "Content-Type",
-      "Content-Length",
-      "x-pagopa-lollipop-original-method",
-      "x-pagopa-lollipop-original-url"
-    ]
+    signatureParams
   };
 }
 
