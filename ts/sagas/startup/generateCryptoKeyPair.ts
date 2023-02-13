@@ -98,7 +98,7 @@ function* generateCryptoKeyPair(keyTag: string) {
  * Get the public key liked the provided keyTag
  */
 export function* getCryptoPublicKey(keyTag?: string) {
-  const eptyKeyInfo: KeyInfo = {
+  const emptyKeyInfo: KeyInfo = {
     keyTag,
     publicKey: undefined
   };
@@ -112,10 +112,10 @@ export function* getCryptoPublicKey(keyTag?: string) {
       };
       return keyInfo;
     } else {
-      return eptyKeyInfo;
+      return emptyKeyInfo;
     }
   } catch (e) {
-    return eptyKeyInfo;
+    return emptyKeyInfo;
   }
 }
 

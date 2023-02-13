@@ -20,7 +20,7 @@ import {
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { pipe } from "fp-ts/lib/function";
 import URLParse from "url-parse";
-import { sign } from "@pagopa/io-react-native-crypto";
+import { PublicKey, sign } from "@pagopa/io-react-native-crypto";
 import { fetchMaxRetries, fetchTimeout } from "../config";
 import {
   chainSignPromises,
@@ -169,11 +169,8 @@ export function lollipopFetch(
       ) {
         // eslint-disable-next-line functional/no-let
         let newInit = init;
-        const inputUrl = new URLParse(input, true);
-        const queryString: string | undefined = inputUrl.href.split("?")[1];
-        const method = init.method.toUpperCase();
-        const body = init.body;
-        const bodyString = body as string;
+        const { body, bodyString, inputUrl, method, originalUrl } =
+          extractHttpRequestComponents(input, init);
         if (body) {
           newInit = addHeader(
             newInit,
@@ -181,26 +178,17 @@ export function lollipopFetch(
             generateDigestHeader(bodyString)
           );
         }
-        const originalUrl =
-          inputUrl.pathname + (queryString ? "?" + queryString : "");
-        const mainSignatureConfig: SignatureConfig = {
-          signAlgorithm: getSignAlgorithm(publicKey),
-          signKeyTag: keyTag,
-          signKeyId: lollipopConfig.keyInfo.publicKeyThumbprint ?? "",
-          nonce: lollipopConfig.nonce,
-          signatureComponents: forgeSignatureComponents(
-            method,
-            inputUrl,
-            originalUrl
-          ),
-          signatureParams: [
-            "Content-Digest",
-            "Content-Type",
-            "Content-Length",
-            "x-pagopa-lollipop-original-method",
-            "x-pagopa-lollipop-original-url"
-          ]
+        const signatureConfigForgeInput: SignatureConfigForgeInput = {
+          publicKey,
+          keyTag,
+          lollipopConfig,
+          method,
+          inputUrl,
+          originalUrl
         };
+        const mainSignatureConfig: SignatureConfig = forgeMainSignatureConfig(
+          signatureConfigForgeInput
+        );
         newInit = addHeader(
           newInit,
           "x-pagopa-lollipop-original-method",
@@ -224,18 +212,11 @@ export function lollipopFetch(
             const customHeader = {
               [headerName]: headerValue
             };
-            const customHeaderSignatureConfig: SignatureConfig = {
-              signAlgorithm: getSignAlgorithm(publicKey),
-              signKeyTag: keyTag,
-              signKeyId: lollipopConfig.keyInfo.publicKeyThumbprint ?? "",
-              nonce: lollipopConfig.nonce,
-              signatureComponents: forgeSignatureComponents(
-                method,
-                inputUrl,
-                originalUrl
-              ),
-              signatureParams: [headerName]
-            };
+            const customHeaderSignatureConfig: SignatureConfig =
+              forgeCustomHeaderSignatureConfig(
+                signatureConfigForgeInput,
+                headerName
+              );
             const {
               signatureBase: customSignatureBase,
               signatureInput: customSignatureInput
@@ -292,6 +273,67 @@ export function lollipopFetch(
       return timeoutFetch(input, init);
     }
   );
+}
+
+type SignatureConfigForgeInput = {
+  publicKey: PublicKey;
+  keyTag: string;
+  lollipopConfig: LollipopConfig;
+  method: string;
+  inputUrl: URLParse;
+  originalUrl: string;
+};
+
+function forgeCustomHeaderSignatureConfig(
+  forgeInput: SignatureConfigForgeInput,
+  headerName: string
+): SignatureConfig {
+  return {
+    signAlgorithm: getSignAlgorithm(forgeInput.publicKey),
+    signKeyTag: forgeInput.keyTag,
+    signKeyId: forgeInput.lollipopConfig.keyInfo.publicKeyThumbprint ?? "",
+    nonce: forgeInput.lollipopConfig.nonce,
+    signatureComponents: forgeSignatureComponents(
+      forgeInput.method,
+      forgeInput.inputUrl,
+      forgeInput.originalUrl
+    ),
+    signatureParams: [headerName]
+  };
+}
+
+function forgeMainSignatureConfig(
+  forgeInput: SignatureConfigForgeInput
+): SignatureConfig {
+  return {
+    signAlgorithm: getSignAlgorithm(forgeInput.publicKey),
+    signKeyTag: forgeInput.keyTag,
+    signKeyId: forgeInput.lollipopConfig.keyInfo.publicKeyThumbprint ?? "",
+    nonce: forgeInput.lollipopConfig.nonce,
+    signatureComponents: forgeSignatureComponents(
+      forgeInput.method,
+      forgeInput.inputUrl,
+      forgeInput.originalUrl
+    ),
+    signatureParams: [
+      "Content-Digest",
+      "Content-Type",
+      "Content-Length",
+      "x-pagopa-lollipop-original-method",
+      "x-pagopa-lollipop-original-url"
+    ]
+  };
+}
+
+function extractHttpRequestComponents(input: string, init: RequestInit) {
+  const inputUrl = new URLParse(input, true);
+  const queryString: string | undefined = inputUrl.href.split("?")[1];
+  const method = init.method?.toUpperCase() ?? "";
+  const body = init.body;
+  const bodyString = body as string;
+  const originalUrl =
+    inputUrl.pathname + (queryString ? "?" + queryString : "");
+  return { body, bodyString, inputUrl, queryString, method, originalUrl };
 }
 
 /**
