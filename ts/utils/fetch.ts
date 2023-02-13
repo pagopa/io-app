@@ -171,13 +171,11 @@ export function lollipopFetch(
         const body = init.body;
         const bodyString = body as string;
         if (body) {
-          const bodySize = Buffer.byteLength(bodyString);
           newInit = addHeader(
             newInit,
             "Content-Digest",
             generateDigestHeader(bodyString)
           );
-          newInit = addHeader(newInit, "Content-Length", bodySize);
         }
         const originalUrl =
           inputUrl.pathname + (queryString ? "?" + queryString : "");
