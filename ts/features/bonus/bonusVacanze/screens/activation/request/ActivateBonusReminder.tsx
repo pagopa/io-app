@@ -1,9 +1,10 @@
-import { Text as NBText, View } from "native-base";
+import { Text as NBText } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import IconFont from "../../../../../../components/ui/IconFont";
 import { bonusVacanzeStyle } from "../../../components/Styles";
 import { IOColors } from "../../../../../../components/core/variables/IOColors";
+import { HSpacer } from "../../../../../../components/core/spacer/Spacer";
 import { activateBonusStyle } from "./Style";
 
 type Props = {
@@ -24,7 +25,7 @@ const styles = StyleSheet.create({
 export const ActivateBonusReminder: React.FunctionComponent<Props> = props => (
   <View style={bonusVacanzeStyle.row}>
     <IconFont name={"io-titolare"} size={24} color={IOColors.grey} />
-    <View hspacer={true} />
+    <HSpacer size={16} />
     <NBText style={[activateBonusStyle.boxText, styles.reminder]}>
       {props.text}
     </NBText>

@@ -64,6 +64,7 @@ import {
   sessionInfoSelector,
   sessionTokenSelector
 } from "../store/reducers/authentication";
+import { lollipopKeyTagSelector } from "../features/lollipop/store/reducers/lollipop";
 import { IdentificationResult } from "../store/reducers/identification";
 import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
 import { isPagoPATestEnabledSelector } from "../store/reducers/persistedPreferences";
@@ -138,6 +139,7 @@ import { completeOnboardingSaga } from "./startup/completeOnboardingSaga";
 import { watchLoadMessageById } from "./messages/watchLoadMessageById";
 import { watchThirdPartyMessageSaga } from "./messages/watchThirdPartyMessageSaga";
 import { checkNotificationsPreferencesSaga } from "./startup/checkNotificationsPreferencesSaga";
+import { trackMixpanelCryptoKeyPairEvents } from "./startup/generateCryptoKeyPair";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -339,6 +341,12 @@ export function* initializeApplicationSaga(): Generator<
   // check if the user expressed preference about mixpanel, if not ask for it
   yield* call(askMixpanelOptIn);
 
+  // Track crypto key generation info
+  const keyTag = yield* select(lollipopKeyTagSelector);
+  if (keyTag) {
+    yield* call(trackMixpanelCryptoKeyPairEvents, keyTag);
+  }
+
   if (hasPreviousSessionAndPin) {
     // We have to retrieve the pin here and not on the previous if-condition (same guard)
     // otherwise the typescript compiler will complain of an unassigned variable later on
@@ -414,10 +422,9 @@ export function* initializeApplicationSaga(): Generator<
     yield* fork(watchPnSaga, sessionToken);
   }
 
-  if (mvlEnabled || pnEnabled) {
-    // Start watching for message attachments actions
-    yield* fork(watchMessageAttachmentsSaga, sessionToken);
-  }
+  // Start watching for message attachments actions (general
+  // third-party message attachments, PN attachments and MVL ones)
+  yield* fork(watchMessageAttachmentsSaga, sessionToken);
 
   if (idPayEnabled) {
     // Start watching for IDPay wallet actions

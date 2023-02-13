@@ -1,7 +1,8 @@
-import { Text as NBText, View } from "native-base";
+import { Text as NBText } from "native-base";
 import * as React from "react";
-import { Image, ImageSourcePropType, StyleSheet } from "react-native";
+import { View, Image, ImageSourcePropType, StyleSheet } from "react-native";
 import customVariables from "../../theme/variables";
+import { VSpacer } from "../core/spacer/Spacer";
 
 const styles = StyleSheet.create({
   view: {
@@ -25,7 +26,7 @@ type Props = Readonly<{
 
 export const EmptyListComponent = (props: Props) => (
   <View style={styles.view}>
-    <View spacer={true} />
+    <VSpacer size={16} />
     <Image source={props.image} />
     <NBText style={styles.title}>{props.title}</NBText>
     {props.subtitle && (

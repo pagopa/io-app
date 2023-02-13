@@ -30,10 +30,7 @@ const FciThankyouScreen = () => {
 
   const SuccessComponent = () => (
     <BaseScreenComponent goBack={false}>
-      <SafeAreaView
-        style={[IOStyles.flex, IOStyles.horizontalContentPadding]}
-        testID={"FciTypSuccessTestID"}
-      >
+      <SafeAreaView style={IOStyles.flex} testID={"FciTypSuccessTestID"}>
         <InfoScreenComponent
           image={renderInfoRasterImage(paymentCompleted)}
           title={I18n.t("features.fci.thankYouPage.title")}

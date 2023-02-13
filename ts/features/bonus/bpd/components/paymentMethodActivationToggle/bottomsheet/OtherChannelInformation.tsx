@@ -1,6 +1,7 @@
 import { none } from "fp-ts/lib/Option";
 import { View } from "native-base";
 import * as React from "react";
+import { VSpacer } from "../../../../../../components/core/spacer/Spacer";
 import BlockButtons from "../../../../../../components/ui/BlockButtons";
 import Markdown from "../../../../../../components/ui/Markdown";
 import I18n from "../../../../../../i18n";
@@ -31,14 +32,14 @@ const addPaymentMethodButton = (onPress: () => void) => (
 export const OtherChannelInformation: React.FunctionComponent<Props> =
   props => (
     <View>
-      <View spacer={true} />
+      <VSpacer size={16} />
       <Markdown>
         {I18n.t(
           "bonus.bpd.details.paymentMethods.activateOnOthersChannel.body"
         )}
       </Markdown>
-      <View spacer={true} />
-      <View spacer={true} />
+      <VSpacer size={16} />
+      <VSpacer size={16} />
       {addPaymentMethodButton(props.onAddPayment)}
     </View>
   );

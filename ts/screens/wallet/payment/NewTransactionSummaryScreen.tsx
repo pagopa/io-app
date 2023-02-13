@@ -485,7 +485,11 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
       })
     );
     dispatch(
-      zendeskSupportStart({ startingRoute: "n/a", assistanceForPayment: true })
+      zendeskSupportStart({
+        startingRoute: "n/a",
+        assistanceForPayment: true,
+        assistanceForCard: false
+      })
     );
     dispatch(zendeskSelectedCategory(zendeskPaymentCategory));
   };

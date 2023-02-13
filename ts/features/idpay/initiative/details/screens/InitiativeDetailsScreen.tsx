@@ -1,16 +1,16 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { Route, useNavigation, useRoute } from "@react-navigation/core";
-import { useFocusEffect } from "@react-navigation/native";
-import { Text, View } from "native-base";
+import { useNavigation, useRoute } from "@react-navigation/core";
+import { RouteProp, useFocusEffect } from "@react-navigation/native";
+import { Text } from "native-base";
 import React, { useCallback } from "react";
-import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { View, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
-
 import {
   InitiativeDTO,
   StatusEnum
 } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
 import EmptyInitiativeSvg from "../../../../../../img/features/idpay/empty_initiative.svg";
+import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -31,6 +31,7 @@ import { InitiativeSettingsComponent } from "../components/InitiativeSettingsCom
 import InitiativeTimelineComponent from "../components/InitiativeTimelineComponent";
 import { idpayInitiativeDetailsSelector } from "../store";
 import { idpayInitiativeGet } from "../store/actions";
+import { IDPayDetailsParamsList } from "../navigation";
 
 const styles = StyleSheet.create({
   newInitiativeMessageContainer: {
@@ -53,32 +54,36 @@ export type InitiativeDetailsScreenParams = {
   initiativeId: string;
 };
 
-type RouteProps = Route<
-  "IDPAY_INITIATIVE_DETAILS",
-  InitiativeDetailsScreenParams
+type InitiativeDetailsScreenRouteProps = RouteProp<
+  IDPayDetailsParamsList,
+  "IDPAY_DETAILS_MONITORING"
 >;
 
-const InitiativeNotConfiguredComponent = () => (
+const InitiativeNotConfiguredComponent = ({
+  initiativeName
+}: {
+  initiativeName: string;
+}) => (
   <View style={[styles.newInitiativeMessageContainer, IOStyles.flex]}>
     <EmptyInitiativeSvg width={130} height={130} />
-    <View spacer />
+    <VSpacer size={16} />
     <H3>
       {I18n.t(
         "idpay.initiative.details.initiativeDetailsScreen.notConfigured.header"
       )}
     </H3>
-    <View spacer />
+    <VSpacer size={16} />
     <Text style={styles.textCenter}>
       {I18n.t(
         "idpay.initiative.details.initiativeDetailsScreen.notConfigured.footer",
-        { initiative: "18 app" }
+        { initiative: initiativeName }
       )}
     </Text>
   </View>
 );
 
 export const InitiativeDetailsScreen = () => {
-  const route = useRoute<RouteProps>();
+  const route = useRoute<InitiativeDetailsScreenRouteProps>();
 
   const { initiativeId } = route.params;
 
@@ -148,14 +153,16 @@ export const InitiativeDetailsScreen = () => {
           >
             <View style={styles.paddedContent}>
               {initiativeNeedsConfiguration && (
-                <InitiativeNotConfiguredComponent />
+                <InitiativeNotConfiguredComponent
+                  initiativeName={initiativeData.initiativeName ?? ""}
+                />
               )}
               {!initiativeNeedsConfiguration && (
                 <>
                   <InitiativeTimelineComponent
                     initiativeId={initiativeData.initiativeId}
                   />
-                  <View spacer large />
+                  <VSpacer size={24} />
                   <InitiativeSettingsComponent initiative={initiativeData} />
                 </>
               )}

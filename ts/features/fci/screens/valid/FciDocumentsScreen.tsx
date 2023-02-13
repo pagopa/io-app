@@ -23,6 +23,7 @@ import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
 import { fciSignatureDetailDocumentsSelector } from "../../store/reducers/fciSignatureRequest";
 import { FCI_ROUTES } from "../../navigation/routes";
 import { SignatureField } from "../../../../../definitions/fci/SignatureField";
+import { TypeEnum as ClauseType } from "../../../../../definitions/fci/Clause";
 import { FciParamsList } from "../../navigation/params";
 import { ExistingSignatureFieldAttrs } from "../../../../../definitions/fci/ExistingSignatureFieldAttrs";
 import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
@@ -59,6 +60,7 @@ const FciDocumentsScreen = () => {
   const [currentDoc, setCurrentDoc] = React.useState(0);
   const [signaturePage, setSignaturePage] = React.useState(0);
   const [pdfString, setPdfString] = React.useState<string>("");
+  const [isPdfLoaded, setIsPdfLoaded] = React.useState(false);
   const documents = useSelector(fciSignatureDetailDocumentsSelector);
   const navigation = useNavigation();
   const route = useRoute<RouteProp<FciParamsList, "FCI_DOCUMENTS">>();
@@ -78,7 +80,9 @@ const FciDocumentsScreen = () => {
         RA.map(d => {
           const docSignature = {
             document_id: d.id,
-            signature_fields: []
+            signature_fields: d.metadata.signature_fields.filter(
+              s => s.clause.type === ClauseType.REQUIRED
+            )
           } as DocumentToSign;
           dispatch(fciUpdateDocumentSignaturesRequest(docSignature));
         })
@@ -104,6 +108,8 @@ const FciDocumentsScreen = () => {
       const existingPdfBytes = await ReactNativeBlobUtil.fetch("GET", url).then(
         res => res.base64()
       );
+
+      setIsPdfLoaded(false);
 
       await PDFDocument.load(pdfFromBase64(existingPdfBytes)).then(res => {
         // get the signature field by unique name
@@ -158,6 +164,8 @@ const FciDocumentsScreen = () => {
       const existingPdfBytes = await ReactNativeBlobUtil.fetch("GET", url).then(
         res => res.base64()
       );
+
+      setIsPdfLoaded(false);
 
       await PDFDocument.load(pdfFromBase64(existingPdfBytes)).then(res => {
         const page = attrs.page;
@@ -218,6 +226,16 @@ const FciDocumentsScreen = () => {
     );
   }, [attrs, cDoc, onSignatureDetail]);
 
+  React.useEffect(() => {
+    if (isPdfLoaded) {
+      pipe(
+        pdfRef.current,
+        O.fromNullable,
+        O.map(_ => _.setPage(signaturePage))
+      );
+    }
+  }, [pdfRef, signaturePage, isPdfLoaded]);
+
   const { present, bottomSheet: fciAbortSignature } =
     useFciAbortSignatureFlow();
 
@@ -244,16 +262,18 @@ const FciDocumentsScreen = () => {
     title: I18n.t("global.buttons.continue")
   };
 
+  const pointToPage = (page: number) =>
+    pipe(
+      pdfRef.current,
+      O.fromNullable,
+      O.map(_ => _.setPage(page))
+    );
+
   const keepReadingButtonProps = {
     block: true,
     light: true,
     bordered: true,
-    onPress: () =>
-      pipe(
-        pdfRef.current,
-        O.fromNullable,
-        O.map(_ => _.setPage(totalPages))
-      ),
+    onPress: () => pointToPage(totalPages),
     title: I18n.t("global.buttons.continue")
   };
 
@@ -270,13 +290,10 @@ const FciDocumentsScreen = () => {
       source={{
         uri: S.isEmpty(pdfString) ? `${documents[currentDoc].url}` : pdfString
       }}
+      onLoadProgress={() => setIsPdfLoaded(false)}
       onLoadComplete={(numberOfPages, _) => {
         setTotalPages(numberOfPages);
-        pipe(
-          pdfRef.current,
-          O.fromNullable,
-          O.map(_ => _.setPage(signaturePage))
-        );
+        setIsPdfLoaded(true);
       }}
       onPageChanged={(page, _) => {
         setCurrentPage(page);
@@ -289,19 +306,25 @@ const FciDocumentsScreen = () => {
 
   const onPrevious = () => {
     pipe(
-      currentDoc,
+      currentPage,
       O.fromNullable,
-      O.chain(doc => (doc > 0 ? O.some(doc - 1) : O.none)),
-      O.map(setCurrentDoc)
+      O.chain(page => (page > 1 ? O.some(page - 1) : O.none)),
+      O.map(page => {
+        setCurrentPage(page);
+        pointToPage(page);
+      })
     );
   };
 
   const onNext = () => {
     pipe(
-      currentDoc,
+      currentPage,
       O.fromNullable,
-      O.chain(doc => (doc < documents.length - 1 ? O.some(doc + 1) : O.none)),
-      O.map(setCurrentDoc)
+      O.chain(page => (page < totalPages ? O.some(page + 1) : O.none)),
+      O.map(page => {
+        setCurrentPage(page);
+        pointToPage(page);
+      })
     );
   };
 
@@ -334,6 +357,7 @@ const FciDocumentsScreen = () => {
       contextualHelp={emptyContextualHelp}
     >
       <DocumentsNavigationBar
+        indicatorPosition={"right"}
         titleLeft={I18n.t("features.fci.documentsBar.titleLeft", {
           currentDoc: currentDoc + 1,
           totalDocs: documents.length
@@ -343,22 +367,21 @@ const FciDocumentsScreen = () => {
           totalPages
         })}
         iconLeftColor={
-          currentDoc === 0 ? IOColors.bluegreyLight : IOColors.blue
+          currentPage === 1 ? IOColors.bluegreyLight : IOColors.blue
         }
         iconRightColor={
-          currentDoc === documents.length - 1
-            ? IOColors.bluegreyLight
-            : IOColors.blue
+          currentPage === totalPages ? IOColors.bluegreyLight : IOColors.blue
         }
         onPrevious={onPrevious}
         onNext={onNext}
-        disabled={true}
+        disabled={false}
         testID={"FciDocumentsNavBarTestID"}
       />
       <SafeAreaView style={IOStyles.flex} testID={"FciDocumentsScreenTestID"}>
         {documents.length > 0 && (
           <>
             {renderPager()}
+
             <FooterWithButtons
               type={"TwoButtonsInlineThird"}
               leftButton={cancelButtonProps}

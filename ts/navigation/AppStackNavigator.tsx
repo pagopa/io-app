@@ -20,8 +20,7 @@ import {
   bpdOptInPaymentMethodsEnabled,
   fimsEnabled,
   myPortalEnabled,
-  svEnabled,
-  idPayEnabled
+  svEnabled
 } from "../config";
 import BPD_ROUTES from "../features/bonus/bpd/navigation/routes";
 import { CdcStackNavigator } from "../features/bonus/cdc/navigation/CdcStackNavigator";
@@ -44,7 +43,6 @@ import {
   FimsNavigator
 } from "../features/fims/navigation/navigator";
 import FIMS_ROUTES from "../features/fims/navigation/routes";
-import { InitiativeDetailsScreen } from "../features/idpay/initiative/details/screens/InitiativeDetailsScreen";
 import {
   IDPayConfigurationNavigator,
   IDPayConfigurationRoutes
@@ -71,12 +69,17 @@ import {
   isCdcEnabledSelector,
   isCGNEnabledSelector,
   isFciEnabledSelector,
+  isIdPayEnabledSelector,
   isFIMSEnabledSelector
 } from "../store/reducers/backendStatus";
 import { isTestEnv } from "../utils/environment";
 import { startApplicationInitialization } from "../store/actions/application";
 import { IO_INTERNAL_LINK_PREFIX } from "../utils/navigation";
 import { isStartupLoaded } from "../store/reducers/startup";
+import {
+  IDPayDetailsRoutes,
+  IDpayDetailsNavigator
+} from "../features/idpay/initiative/details/navigation";
 import authenticationNavigator from "./AuthenticationNavigator";
 import { MessagesStackNavigator } from "./MessagesNavigator";
 import NavigationService, { navigationRef } from "./NavigationService";
@@ -96,6 +99,7 @@ export const AppStackNavigator = (): React.ReactElement => {
   const fimsEnabledSelector = useIOSelector(isFIMSEnabledSelector);
   const cgnEnabled = useIOSelector(isCGNEnabledSelector);
   const fciEnabledSelector = useIOSelector(isFciEnabledSelector);
+  const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
   const isFimsEnabled = fimsEnabled && fimsEnabledSelector;
   const isFciEnabled = fciEnabledSelector;
 
@@ -201,15 +205,15 @@ export const AppStackNavigator = (): React.ReactElement => {
         <Stack.Screen name={FCI_ROUTES.MAIN} component={FciStackNavigator} />
       )}
 
-      {idPayEnabled && (
+      {isIdPayEnabled && (
         <>
           <Stack.Screen
             name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN}
             component={IDPayOnboardingNavigator}
           />
           <Stack.Screen
-            name={ROUTES.IDPAY_INITIATIVE_DETAILS}
-            component={InitiativeDetailsScreen}
+            name={IDPayDetailsRoutes.IDPAY_DETAILS_MAIN}
+            component={IDpayDetailsNavigator}
           />
           <Stack.Screen
             name={IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN}
@@ -236,6 +240,7 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
   const cgnEnabled = useIOSelector(isCGNEnabledSelector);
   const isFimsEnabled = useIOSelector(isFIMSEnabledSelector) && fimsEnabled;
   const isFciEnabled = useIOSelector(isFciEnabledSelector);
+  const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
 
   const bpdRemoteConfig = useIOSelector(bpdRemoteConfigSelector);
   const isOptInPaymentMethodsEnabled =
@@ -300,7 +305,7 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
         ...(isFimsEnabled ? fimsLinkingOptions : {}),
         ...(cgnEnabled ? cgnLinkingOptions : {}),
         ...(isFciEnabled ? fciLinkingOptions : {}),
-        ...(idPayEnabled ? idPayOnboardingLinkingOptions : {}),
+        ...(isIdPayEnabled ? idPayOnboardingLinkingOptions : {}),
         [UADONATION_ROUTES.WEBVIEW]: "uadonations-webview",
         [ROUTES.WORKUNIT_GENERIC_FAILURE]: "*"
       }

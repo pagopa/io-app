@@ -10,6 +10,7 @@ import { ZendeskConfig } from "../store/reducers";
 export const handleContactSupport = (
   navigation: IOStackNavigationProp<AppParamsList>,
   assistanceForPayment: boolean,
+  assistanceForCard: boolean,
   zendeskRemoteConfig: ZendeskConfig
 ) => {
   const canSkipCategoryChoice: boolean =
@@ -26,12 +27,12 @@ export const handleContactSupport = (
   if (canSkipCategoryChoice) {
     navigation.navigate(ZENDESK_ROUTES.MAIN, {
       screen: ZENDESK_ROUTES.ASK_PERMISSIONS,
-      params: { assistanceForPayment }
+      params: { assistanceForPayment, assistanceForCard }
     });
   } else {
     navigation.navigate(ZENDESK_ROUTES.MAIN, {
       screen: ZENDESK_ROUTES.CHOOSE_CATEGORY,
-      params: { assistanceForPayment }
+      params: { assistanceForPayment, assistanceForCard }
     });
   }
 };

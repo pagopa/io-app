@@ -215,9 +215,11 @@ export const POSTE_DATAMATRIX_SCAN_PREFERRED_PSPS:
  * IDPay
  */
 
-export const IDPAY_API_TEST_TOKEN =
+export const idPayEnabled = Config.IDPAY_ENABLED === "YES";
+
+export const idPayTestToken =
   Config.IDPAY_API_TEST_TOKEN !== "" ? Config.IDPAY_API_TEST_TOKEN : undefined;
 
-export const IDPAY_API_UAT_BASEURL = Config.IDPAY_API_UAT_BASEURL;
+export const idPayApiUatBaseUrl = Config.IDPAY_API_UAT_BASEURL;
 
-export const idPayEnabled = Config.IDPAY_ENABLED === "YES";
+export const idPayApiBaseUrl = Config.IDPAY_API_BASEURL;

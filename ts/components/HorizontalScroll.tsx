@@ -12,9 +12,9 @@ import {
   ScrollView,
   StyleSheet
 } from "react-native";
-import I18n from "../i18n";
 import variables from "../theme/variables";
 import { roundToThirdDecimal } from "../utils/number";
+import { VSpacer } from "./core/spacer/Spacer";
 
 import { IOColors } from "./core/variables/IOColors";
 
@@ -140,13 +140,6 @@ export const HorizontalScroll: React.FunctionComponent<Props> = (
             event
           );
         }}
-        accessible={true}
-        accessibilityLabel={I18n.t(
-          "authentication.landing.accessibility.carousel.label"
-        )}
-        accessibilityHint={I18n.t(
-          "authentication.landing.accessibility.carousel.hint"
-        )}
       >
         {props.cards}
       </ScrollView>
@@ -154,7 +147,7 @@ export const HorizontalScroll: React.FunctionComponent<Props> = (
       {props.cards.length > 1 && (
         <View style={styles.barContainer}>{barArray}</View>
       )}
-      <View spacer={true} />
+      <VSpacer size={16} />
     </View>
   );
 };

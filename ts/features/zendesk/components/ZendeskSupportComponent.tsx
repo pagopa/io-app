@@ -1,11 +1,11 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
-import { View } from "native-base";
 import * as React from "react";
 import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
 import AdviceComponent from "../../../components/AdviceComponent";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { H3 } from "../../../components/core/typography/H3";
 import { H4 } from "../../../components/core/typography/H4";
 import { Label } from "../../../components/core/typography/Label";
@@ -27,6 +27,7 @@ import { handleContactSupport } from "../utils";
 
 type Props = {
   assistanceForPayment: boolean;
+  assistanceForCard: boolean;
 };
 
 /**
@@ -37,8 +38,10 @@ type Props = {
  * If the panic mode is active in the remote Zendesk config pressing the open a ticket button, the user will be sent to the ZendeskPanicMode
  * @constructor
  */
-const ZendeskSupportComponent = (props: Props) => {
-  const { assistanceForPayment } = props;
+const ZendeskSupportComponent = ({
+  assistanceForPayment,
+  assistanceForCard
+}: Props) => {
   const profile = useIOSelector(profileSelector);
   const maybeProfile: O.Option<InitializedProfile> = pot.toOption(profile);
   const zendeskRemoteConfig = useIOSelector(zendeskConfigSelector);
@@ -49,15 +52,16 @@ const ZendeskSupportComponent = (props: Props) => {
       handleContactSupport(
         navigation,
         assistanceForPayment,
+        assistanceForCard,
         zendeskRemoteConfig
       ),
-    [navigation, assistanceForPayment, zendeskRemoteConfig]
+    [navigation, assistanceForPayment, assistanceForCard, zendeskRemoteConfig]
   );
 
   return (
     <>
       <H3>{I18n.t("support.helpCenter.supportComponent.title")}</H3>
-      <View spacer={true} />
+      <VSpacer size={16} />
       <H4 weight={"Regular"}>
         {I18n.t("support.helpCenter.supportComponent.subtitle")}{" "}
         <Link
@@ -70,11 +74,11 @@ const ZendeskSupportComponent = (props: Props) => {
           {I18n.t("support.askPermissions.privacyLink")}
         </Link>
       </H4>
-      <View spacer={true} large={true} />
+      <VSpacer size={24} />
       <AdviceComponent
         text={I18n.t("support.helpCenter.supportComponent.adviceMessage")}
       />
-      <View spacer={true} />
+      <VSpacer size={16} />
 
       <ButtonDefaultOpacity
         onPress={() => {
@@ -82,12 +86,12 @@ const ZendeskSupportComponent = (props: Props) => {
           if (O.isNone(maybeProfile)) {
             navigation.navigate(ZENDESK_ROUTES.MAIN, {
               screen: ZENDESK_ROUTES.SEE_REPORTS_ROUTERS,
-              params: { assistanceForPayment }
+              params: { assistanceForPayment, assistanceForCard }
             });
           } else {
             navigation.navigate(ZENDESK_ROUTES.MAIN, {
               screen: ZENDESK_ROUTES.ASK_SEE_REPORTS_PERMISSIONS,
-              params: { assistanceForPayment }
+              params: { assistanceForPayment, assistanceForCard }
             });
           }
         }}
@@ -100,7 +104,7 @@ const ZendeskSupportComponent = (props: Props) => {
       >
         <Label>{I18n.t("support.helpCenter.cta.seeReports")}</Label>
       </ButtonDefaultOpacity>
-      <View spacer={true} />
+      <VSpacer size={16} />
 
       <ButtonDefaultOpacity
         style={{

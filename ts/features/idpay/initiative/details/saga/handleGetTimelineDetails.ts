@@ -7,44 +7,39 @@ import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { IDPayTimelineClient } from "../api/client";
 import {
-  idpayTimelineGet,
-  IdPayInitiativeGetPayloadType
+  idpayTimelineDetailsGet,
+  IdPayTimelineDetailsGetPayloadType
 } from "../store/actions";
 
-/**
- * Handle the remote call to retrieve the IDPay initiative details
- * @param getTimeline
- * @param action
- * @param initiativeId
- */
-
-export function* handleGetTimeline(
-  getTimeline: IDPayTimelineClient["getTimeline"],
+export function* handleGetTimelineDetails(
+  getTimelineDetail: IDPayTimelineClient["getTimelineDetail"],
   token: string,
   language: PreferredLanguageEnum,
-  payload: IdPayInitiativeGetPayloadType
+  payload: IdPayTimelineDetailsGetPayloadType
 ) {
   try {
-    const getTimelineResult: SagaCallReturnType<typeof getTimeline> =
-      yield* call(getTimeline, {
-        bearerAuth: token,
-        "Accept-Language": language,
-        initiativeId: payload.initiativeId
-      });
+    const getTimelineDetailResult: SagaCallReturnType<
+      typeof getTimelineDetail
+    > = yield* call(getTimelineDetail, {
+      bearerAuth: token,
+      "Accept-Language": language,
+      initiativeId: payload.initiativeId,
+      operationId: payload.operationId
+    });
     yield pipe(
-      getTimelineResult,
+      getTimelineDetailResult,
       E.fold(
         error =>
           put(
-            idpayTimelineGet.failure({
+            idpayTimelineDetailsGet.failure({
               ...getGenericError(new Error(readablePrivacyReport(error)))
             })
           ),
         response =>
           put(
             response.status === 200
-              ? idpayTimelineGet.success(response.value)
-              : idpayTimelineGet.failure({
+              ? idpayTimelineDetailsGet.success(response.value)
+              : idpayTimelineDetailsGet.failure({
                   ...getGenericError(
                     new Error(`response status code ${response.status}`)
                   )
@@ -53,6 +48,6 @@ export function* handleGetTimeline(
       )
     );
   } catch (e) {
-    yield* put(idpayTimelineGet.failure({ ...getNetworkError(e) }));
+    yield* put(idpayTimelineDetailsGet.failure({ ...getNetworkError(e) }));
   }
 }

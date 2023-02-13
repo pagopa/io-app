@@ -41,6 +41,7 @@ import {
 import { GlobalState } from "../store/reducers/types";
 import customVariables from "../theme/variables";
 import { isOnboardingCompleted } from "../utils/navigation";
+import { VSpacer } from "./core/spacer/Spacer";
 import { ContextualHelpPropsMarkdown } from "./screens/BaseScreenComponent";
 import TopScreenComponent, {
   TopScreenComponentProps
@@ -320,7 +321,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
                 this.state.isCtaSentEmailValidationDisabled
             }}
           />
-          <View spacer={true} />
+          <VSpacer size={16} />
           <BlockButtons
             type={"TwoButtonsInlineThirdInverted"}
             leftButton={{
@@ -385,14 +386,14 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
         accessibilityEvents={{ avoidNavigationEventsUsage: true }}
       >
         <Content bounces={false}>
-          <View spacer={true} extralarge={true} />
+          <VSpacer size={40} />
           <IconFont
             name={icon}
             size={VALIDATION_ICON_WIDTH}
             color={customVariables.colorHighlight}
             style={styles.center}
           />
-          <View spacer={true} extralarge={true} />
+          <VSpacer size={40} />
           <NBText alignCenter={true} bold={true}>
             {title}
           </NBText>
@@ -412,7 +413,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
               </NBText>
             </View>
           )}
-          <View spacer={true} large={true} />
+          <VSpacer size={24} />
         </Content>
 
         {this.state.displayError && this.renderErrorBanner}
