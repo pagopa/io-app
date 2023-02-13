@@ -179,8 +179,8 @@ export function lollipopFetch(
         }
         const originalUrl =
           inputUrl.pathname + (queryString ? "?" + queryString : "");
-        const signatureConfig: SignatureConfig = {
-          signAlgorithm: getSignAltorithm(publicKey),
+        const mainSignatureConfig: SignatureConfig = {
+          signAlgorithm: getSignAlgorithm(publicKey),
           signKeyTag: keyTag,
           signKeyId: lollipopConfig.keyInfo.publicKeyThumbprint ?? "",
           nonce: lollipopConfig.nonce,
@@ -209,20 +209,19 @@ export function lollipopFetch(
         );
         const newInitHeaders =
           (newInit.headers as Record<string, string>) ?? {};
-        const { signatureBase, signatureInput } = generateSignatureBase(
-          newInitHeaders,
-          signatureConfig,
-          1
-        );
+        const {
+          signatureBase: mainSignatureBase,
+          signatureInput: mainSignatureInput
+        } = generateSignatureBase(newInitHeaders, mainSignatureConfig, 1);
         const customSignPromises: Array<Promise<SignPromiseResult>> =
           lollipopConfig.customSignatures?.map((headerValue, index) => {
-            const signatureIndex: number = index + 1;
-            const headerName = `x-pagopa-lollipop-custom-${signatureIndex}`;
+            const headerIndex: number = index + 2;
+            const headerName = `x-pagopa-lollipop-custom-${headerIndex}`;
             const customHeader = {
               [headerName]: headerValue
             };
-            const signatureConfig: SignatureConfig = {
-              signAlgorithm: getSignAltorithm(publicKey),
+            const customHeaderSignatureConfig: SignatureConfig = {
+              signAlgorithm: getSignAlgorithm(publicKey),
               signKeyTag: keyTag,
               signKeyId: lollipopConfig.keyInfo.publicKeyThumbprint ?? "",
               nonce: lollipopConfig.nonce,
@@ -233,35 +232,51 @@ export function lollipopFetch(
               ),
               signatureParams: [headerName]
             };
-            const { signatureBase, signatureInput } = generateSignatureBase(
+            const {
+              signatureBase: customSignatureBase,
+              signatureInput: customSignatureInput
+            } = generateSignatureBase(
               customHeader,
-              signatureConfig,
-              signatureIndex
+              customHeaderSignatureConfig,
+              headerIndex
             );
-            return sign(signatureBase, keyTag).then(function (value) {
+            return sign(customSignatureBase, keyTag).then(function (value) {
               return Promise.resolve({
+                headerIndex,
                 headerName,
                 headerValue,
-                signature: `sig${signatureIndex}:${value}:`,
-                "signature-input": signatureInput
+                signature: `sig${headerIndex}:${value}:`,
+                "signature-input": customSignatureInput
               });
             });
           }) ?? [];
-        return sign(signatureBase, keyTag)
+        return sign(mainSignatureBase, keyTag)
           .then(function (mainSignValue) {
             return chainSignPromises(customSignPromises).then(function (
               customSignValues
             ) {
+              // Add custom headers
               customSignValues.forEach(
                 v => (newInit = addHeader(newInit, v.headerName, v.headerValue))
               );
-              // eslint-disable-next-line no-console
+              const customSignatureInputs = customSignValues.map(
+                v => v["signature-input"]
+              );
+              const customSignatures = customSignValues.map(v => v.signature);
+              const signatures = [
+                `sig1:${mainSignValue}:`,
+                ...customSignatures
+              ];
+              const signatureInputs = [
+                mainSignatureInput,
+                ...customSignatureInputs
+              ];
+              newInit = addHeader(newInit, "signature", signatures.join(","));
               newInit = addHeader(
                 newInit,
-                "signature",
-                `sig1:${mainSignValue}:`
+                "signature-input",
+                signatureInputs.join(",")
               );
-              newInit = addHeader(newInit, "signature-input", signatureInput);
               // TODO: - put all this in an utility function
               // eslint-disable-next-line no-console
               console.log("✅🚀" + JSON.stringify(newInit.headers));
@@ -292,11 +307,12 @@ function forgeSignatureComponents(
   };
 }
 
-function getSignAltorithm(publicKey: PublicKey): SignatureAlgorithm {
+function getSignAlgorithm(publicKey: PublicKey): SignatureAlgorithm {
   return publicKey?.kty === "EC" ? "ecdsa-p256-sha256" : "rsa-pss-sha256";
 }
 
 type SignPromiseResult = {
+  headerIndex: number;
   headerName: string;
   headerValue: string;
   signature: string;

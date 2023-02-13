@@ -1,4 +1,3 @@
-import { LollipopConfig } from "./../features/lollipop/index";
 import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
@@ -144,6 +143,7 @@ import {
   getCryptoPublicKey,
   trackMixpanelCryptoKeyPairEvents
 } from "./startup/generateCryptoKeyPair";
+import { LollipopConfig } from "./../features/lollipop/index";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -284,7 +284,8 @@ export function* initializeApplicationSaga(): Generator<
   const keyInfo = yield* call(getCryptoPublicKey, keyTag);
   const lollipopConfig: LollipopConfig = {
     keyInfo,
-    nonce: "nonce-123"
+    nonce: "nonce-123",
+    customSignatures: ["ASDFFA324SDFA==", "DAFDEFAF323DSFA=="]
   };
   const maybeUserProfile: SagaCallReturnType<typeof loadProfile> = yield* call(
     loadProfileLollipop,
