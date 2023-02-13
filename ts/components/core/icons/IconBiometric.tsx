@@ -25,7 +25,9 @@ const IconBiometric = ({
   ...props
 }: IOBiometricIconsProps) => {
   const IconElement = IOBiometricIcons[name];
-  return <IconElement {...props} size={size} color={IOColors[color]} />;
+  return (
+    <IconElement {...props} size={size} style={{ color: IOColors[color] }} />
+  );
 };
 
 export default IconBiometric;

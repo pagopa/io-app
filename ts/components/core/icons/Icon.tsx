@@ -1,5 +1,5 @@
 import React from "react";
-import { ColorValue } from "react-native";
+import { ColorValue, StyleProp } from "react-native";
 import { IOColors, IOColorType } from "../variables/IOColors";
 
 /* Icons */
@@ -197,18 +197,22 @@ export const IOIcons = {
 
 export type IOIconType = keyof typeof IOIcons;
 
-type IOIconsProps = {
+export type IOIconsProps = {
   name: IOIconType;
-  color?: IOColorType | ColorValue;
+  color?: IOColorType;
   size?: number | "100%";
 };
 
 export type SVGIconProps = {
   size: number | "100%";
-  color: ColorValue;
+  style: StyleProp<any>;
 };
 
-const Icon = ({
+/*
+Static icon component. Use it when you need an ion that doesn't
+change its color values. It accepts `IOColors` values only.
+*/
+export const Icon = ({
   name,
   color = "bluegrey",
   size = 24,
@@ -216,12 +220,26 @@ const Icon = ({
 }: IOIconsProps) => {
   const IconElement = IOIcons[name];
   return (
-    <IconElement
-      {...props}
-      size={size}
-      color={IOColors[color as IOColorType] || color}
-    />
+    <IconElement {...props} style={{ color: IOColors[color] }} size={size} />
   );
 };
 
-export default Icon;
+export type IOAnimatedIconsProps = {
+  name: IOIconType;
+  color?: ColorValue;
+  size?: number | "100%";
+};
+
+/*
+Animated icon component. Use it when you need a color
+transition between different states.
+*/
+export const AnimatedIcon = ({
+  name,
+  color = IOColors.bluegrey,
+  size = 24,
+  ...props
+}: IOAnimatedIconsProps) => {
+  const IconElement = IOIcons[name];
+  return <IconElement {...props} style={{ color }} size={size} />;
+};

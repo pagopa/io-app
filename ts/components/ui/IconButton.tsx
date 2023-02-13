@@ -1,14 +1,10 @@
 import * as React from "react";
 import { useCallback } from "react";
-import {
-  StyleSheet,
-  Pressable,
-  GestureResponderEvent
-  // PixelRatio
-} from "react-native";
+import { StyleSheet, Pressable, GestureResponderEvent } from "react-native";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
+  useAnimatedProps,
   withSpring,
   useDerivedValue,
   interpolate,
@@ -18,7 +14,7 @@ import Animated, {
 import { hexToRgba, IOColors } from "../core/variables/IOColors";
 import { IOSpringValues, IOScaleValues } from "../core/variables/IOAnimations";
 import { IOButtonStyles } from "../core/variables/IOStyles";
-import { Icon, IOIconType } from "../core/icons";
+import { AnimatedIcon, IOAnimatedIconsProps, IOIconType } from "../core/icons";
 
 export type IconButton = {
   icon: IOIconType;
@@ -31,11 +27,6 @@ export type IconButton = {
 };
 
 type ColorStates = {
-  border: {
-    default: string;
-    pressed: string;
-    disabled: string;
-  };
   background: {
     default: string;
     pressed: string;
@@ -53,11 +44,6 @@ type ColorStates = {
 const mapColorStates: Record<NonNullable<IconButton["color"]>, ColorStates> = {
   // Primary button
   primary: {
-    border: {
-      default: IOColors.blue,
-      pressed: IOColors.blue,
-      disabled: IOColors.bluegreyLight
-    },
     background: {
       default: hexToRgba(IOColors.blue, 0),
       pressed: hexToRgba(IOColors.blue, 0.15),
@@ -71,11 +57,6 @@ const mapColorStates: Record<NonNullable<IconButton["color"]>, ColorStates> = {
   },
   // Neutral button
   neutral: {
-    border: {
-      default: IOColors.grey,
-      pressed: IOColors.bluegrey,
-      disabled: IOColors.bluegreyLight
-    },
     background: {
       default: IOColors.white,
       pressed: IOColors.greyUltraLight,
@@ -83,17 +64,12 @@ const mapColorStates: Record<NonNullable<IconButton["color"]>, ColorStates> = {
     },
     icon: {
       default: IOColors.bluegrey,
-      pressed: IOColors.bluegreyDark,
+      pressed: IOColors.black,
       disabled: IOColors.grey
     }
   },
   // Contrast button
   contrast: {
-    border: {
-      default: IOColors.white,
-      pressed: IOColors.white,
-      disabled: hexToRgba(IOColors.white, 0.5)
-    },
     background: {
       default: hexToRgba(IOColors.white, 0),
       pressed: hexToRgba(IOColors.white, 0.2),
@@ -119,6 +95,20 @@ const IOIconButtonStyles = StyleSheet.create({
     shadowOpacity: 0
   }
 });
+
+/* Make <Icon> component animatable. Reanimated supports class components only,
+so we need to convert <Icon> into a class component first.
+https://github.com/software-mansion/react-native-reanimated/discussions/1527  */
+class IconComponent extends React.Component<IOAnimatedIconsProps> {
+  constructor(props: IOAnimatedIconsProps) {
+    super(props);
+  }
+  render() {
+    return <AnimatedIcon {...this.props} />;
+  }
+}
+const AnimatedIconClassComponent =
+  Animated.createAnimatedComponent(IconComponent);
 
 export const IconButton = ({
   icon,
@@ -151,15 +141,6 @@ export const IconButton = ({
       ]
     );
 
-    const borderColor = interpolateColor(
-      progressPressed.value,
-      [0, 1],
-      [
-        mapColorStates[color].border.default,
-        mapColorStates[color].border.pressed
-      ]
-    );
-
     // Scale down button slightly when pressed
     const scale = interpolate(
       progressPressed.value,
@@ -169,24 +150,20 @@ export const IconButton = ({
     );
 
     return {
-      borderColor,
       backgroundColor,
       transform: [{ scale }]
     };
   });
 
-  // const pressedColorLabelAnimationStyle = useAnimatedStyle(() => {
-  //   // Link color states to the pressed states
-  //   const labelColor = interpolateColor(
-  //     progressPressed.value,
-  //     [0, 1],
-  //     [mapColorStates[color].icon.default, mapColorStates[color].icon.pressed]
-  //   );
-
-  //   return {
-  //     color: labelColor
-  //   };
-  // });
+  // Animate the <Icon> color prop
+  const animatedColor = useAnimatedProps(() => {
+    const iconColor = interpolateColor(
+      progressPressed.value,
+      [0, 1],
+      [mapColorStates[color].icon.default, mapColorStates[color].icon.pressed]
+    );
+    return { color: iconColor };
+  });
 
   const onPressIn = useCallback(() => {
     // eslint-disable-next-line functional/immutable-data
@@ -214,26 +191,21 @@ export const IconButton = ({
         style={[
           IOIconButtonStyles.button,
           IOButtonStyles.iconButtonSizeDefault,
-          disabled
-            ? {
-                backgroundColor: mapColorStates[color]?.background?.disabled
-              }
-            : {
-                backgroundColor: mapColorStates[color]?.background?.default
-              },
-          /* Prevent Reanimated from overriding background colors
-          if button is disabled */
           !disabled && pressedAnimationStyle
         ]}
       >
-        <Icon
-          name={icon}
-          color={
-            disabled
-              ? mapColorStates[color]?.icon?.disabled
-              : mapColorStates[color]?.icon?.default
-          }
-        />
+        {!disabled ? (
+          <AnimatedIconClassComponent
+            name={icon}
+            animatedProps={animatedColor}
+            color={mapColorStates[color]?.icon?.default}
+          />
+        ) : (
+          <AnimatedIcon
+            name={icon}
+            color={mapColorStates[color]?.icon?.disabled}
+          />
+        )}
       </Animated.View>
     </Pressable>
   );

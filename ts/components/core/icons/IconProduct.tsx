@@ -25,7 +25,9 @@ const IconProduct = ({
   ...props
 }: IOProductIconsProps) => {
   const IconElement = IOProductIcons[name];
-  return <IconElement {...props} size={size} color={IOColors[color]} />;
+  return (
+    <IconElement {...props} size={size} style={{ color: IOColors[color] }} />
+  );
 };
 
 export default IconProduct;

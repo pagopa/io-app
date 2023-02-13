@@ -31,7 +31,9 @@ const IconNav = ({
   ...props
 }: IONavIconsProps) => {
   const IconElement = IONavIcons[name];
-  return <IconElement {...props} size={size} color={IOColors[color]} />;
+  return (
+    <IconElement {...props} size={size} style={{ color: IOColors[color] }} />
+  );
 };
 
 export default IconNav;
