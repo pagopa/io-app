@@ -1,4 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import * as _ from "lodash";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
@@ -103,6 +105,17 @@ const idpayInitativeSelector = (state: GlobalState) =>
 export const idpayInitiativeDetailsSelector = createSelector(
   idpayInitativeSelector,
   initiative => initiative.details
+);
+
+export const idpayInitiativeIdSelector = createSelector(
+  idpayInitiativeDetailsSelector,
+  details =>
+    pipe(
+      details,
+      pot.toOption,
+      O.map(details => details.initiativeId),
+      O.toUndefined
+    )
 );
 
 export const idpayPaginatedTimelineSelector = createSelector(
