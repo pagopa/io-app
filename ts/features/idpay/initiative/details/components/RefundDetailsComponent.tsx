@@ -77,7 +77,9 @@ const RefundDetailsComponent = (props: RefundDetailsProps) => {
   const handleEditIbanPress = () => {
     closeBottomSheet();
 
-    // We need to use NavigationService because the library use to display bottom sheets uses it's own NavigationContainer, so using "useNavigation" here would get error
+    // The utilization of the NavigationService is imperative, as the library employed for presenting bottom sheets
+    // utilizes its own NavigationContainer. Consequently, utilizing the "useNavigation" hook in this scenario
+    // would result in an error.
     NavigationService.dispatchNavigationAction(
       CommonActions.navigate(
         IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN,
