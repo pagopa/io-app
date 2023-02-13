@@ -415,7 +415,7 @@ const IdpLoginScreen = (props: Props) => {
   if (!loggedOutWithIdpAuth || !webviewSource) {
     // This internal if handles the case where the initial
     // login-url was not available and so the hook that
-    // ertrieves the public key cannot produce a valid output
+    // retrieves the public key cannot produce a valid output
     if (pot.isError(requestState)) {
       return renderMask();
     }
