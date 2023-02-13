@@ -185,7 +185,7 @@ export function lollipopFetch(
               publicKey?.kty === "EC" ? "ecdsa-p256-sha256" : "rsa-pss-sha256",
             signKeyTag: keyTag,
             signKeyId: "AF2G87coad7/KJl9800==",
-            nonce: "xyz",
+            nonce: lollipopConfig.nonce,
             signatureComponents: {
               method,
               authority: inputUrl.hostname,
