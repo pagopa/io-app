@@ -31,51 +31,6 @@ const operationCircuitTypeMap: Record<string, string> = {
   "10": "PrivateCircuit"
 };
 
-type InstrumentDetailsComponentProps = Pick<
-  TransactionDetailDTO,
-  "brandLogo" | "maskedPan"
->;
-
-/**
- * Displays the info of the instrument used for the transaction, with the logo of the brand and the masked pan
- * @param {InstrumentDetailsComponentProps} props
- * @returns
- */
-const InstrumentDetailsComponent = (props: InstrumentDetailsComponentProps) => (
-  <View style={styles.centerRow}>
-    <Image style={styles.brandLogo} source={{ uri: props.brandLogo }} />
-    <HSpacer size={8} />
-    <Body weight="SemiBold">
-      {I18n.t("idpay.initiative.operationDetails.maskedPan", {
-        lastDigits: props.maskedPan
-      })}
-    </Body>
-  </View>
-);
-
-type CopyTextProps = {
-  text: string;
-};
-
-/**
- * Utility component to display a text with a CopyButtonComponent
- * @param props
- */
-const CopyTextComponent = (props: CopyTextProps) => (
-  <View style={[IOStyles.flex, IOStyles.row]}>
-    <Body
-      weight="SemiBold"
-      numberOfLines={1}
-      ellipsizeMode="tail"
-      style={IOStyles.flex}
-    >
-      {props.text}
-    </Body>
-    <HSpacer size={8} />
-    <CopyButtonComponent textToCopy={props.text} />
-  </View>
-);
-
 type TransactionDetailsProps = {
   transaction: TransactionDetailDTO;
 };
@@ -105,7 +60,18 @@ const TransactionDetailsComponent = (props: TransactionDetailsProps) => {
       )}
       <View style={styles.detailRow}>
         <Body>{I18n.t("idpay.initiative.operationDetails.instrument")}</Body>
-        <InstrumentDetailsComponent {...transaction} />
+        <View style={styles.centerRow}>
+          <Image
+            style={styles.brandLogo}
+            source={{ uri: transaction.brandLogo }}
+          />
+          <HSpacer size={8} />
+          <Body weight="SemiBold">
+            {I18n.t("idpay.initiative.operationDetails.maskedPan", {
+              lastDigits: transaction.maskedPan
+            })}
+          </Body>
+        </View>
       </View>
       <View style={styles.detailRow}>
         <Body>{I18n.t("idpay.initiative.operationDetails.amountLabel")}</Body>
@@ -139,14 +105,36 @@ const TransactionDetailsComponent = (props: TransactionDetailsProps) => {
       <View style={styles.detailRow}>
         <Body>{I18n.t("idpay.initiative.operationDetails.acquirerId")}</Body>
         <HSpacer size={16} />
-        <CopyTextComponent text={transaction.idTrxAcquirer} />
+        <View style={[IOStyles.flex, IOStyles.row]}>
+          <Body
+            weight="SemiBold"
+            numberOfLines={1}
+            ellipsizeMode="tail"
+            style={IOStyles.flex}
+          >
+            {transaction.idTrxAcquirer}
+          </Body>
+          <HSpacer size={8} />
+          <CopyButtonComponent textToCopy={transaction.idTrxAcquirer} />
+        </View>
       </View>
       <View style={styles.detailRow}>
         <Body style={{ flex: 1 }}>
           {I18n.t("idpay.initiative.operationDetails.issuerId")}
         </Body>
         <HSpacer size={16} />
-        <CopyTextComponent text={transaction.idTrxIssuer} />
+        <View style={[IOStyles.flex, IOStyles.row]}>
+          <Body
+            weight="SemiBold"
+            numberOfLines={1}
+            ellipsizeMode="tail"
+            style={IOStyles.flex}
+          >
+            {transaction.idTrxIssuer}
+          </Body>
+          <HSpacer size={8} />
+          <CopyButtonComponent textToCopy={transaction.idTrxIssuer} />
+        </View>
       </View>
     </View>
   );
