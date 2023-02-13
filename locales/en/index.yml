@@ -3346,6 +3346,15 @@ idpay:
       acquirerId: ID transazione Acquirer
       issuerId: ID transazione Issuer
       reversalAdvice: Questa transazione è uno storno, ovvero annulla una transazione che era stata effettuata in precedenza.
+      iban: IBAN
+      refundAmount: Importo rimborso
+      resultLabel: Esito
+      result: 
+        PAID_REFUND: Eseguito
+        REJECTED_REFUND: Fallito
+      rejectedAdvice: 
+        text: Se non l’hai già fatto, inserisci un nuovo IBAN per ricevere il rimborso.
+        editIban: Modifica IBAN 
   onboarding:
     success:
       understoodCta: Ho capito!
