@@ -8,55 +8,30 @@ import {
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { H3 } from "../../../../components/core/typography/H3";
 import { OnboardingFailureType } from "../xstate/failure";
+import I18n from "../../../../i18n";
 
 type Props = {
   type: OnboardingFailureType;
 };
 
-type OnboardingFailure = {
-  picture: IOPictogramType;
-  title: string;
-  subtitle: string;
-};
-
 const FailureMessage = (props: Props) => {
-  const failures: { [key in OnboardingFailureType]: OnboardingFailure } = {
-    [OnboardingFailureType.NO_PERMISSION]: {
-      picture: "question",
-      title: "Non hai i requisiti per aderire a questa iniziativa",
-      subtitle: "Non puoi richiedere il bonus!"
-    },
-    [OnboardingFailureType.GENERIC]: {
-      picture: "umbrella",
-      title: "C’è un problema sui nostri sistemi",
-      subtitle:
-        "Ci scusiamo per il disagio.\nTi invitiamo a riprovare più tardi."
-    },
-    [OnboardingFailureType.ALREADY_COMPLETED]: {
-      picture: "inProgress",
-      title: "Onboarding concluso",
-      subtitle: "Hai già fatto l'onboarding per questa iniziativa"
-    },
-    [OnboardingFailureType.ONBOARDING_KO]: {
-      picture: "question",
-      title: "Onboarding fallito",
-      subtitle: "L'adesione non è andata a buon fine"
-    }
+  const failureIcons: { [key in OnboardingFailureType]: IOPictogramType } = {
+    [OnboardingFailureType.NO_PERMISSION]: "question",
+    [OnboardingFailureType.GENERIC]: "umbrella",
+    [OnboardingFailureType.ALREADY_COMPLETED]: "inProgress",
+    [OnboardingFailureType.ONBOARDING_KO]: "question"
   };
-
-  const failure = failures[props.type];
-
-  if (failure === undefined) {
-    return null;
-  }
-
   return (
     <>
-      <Pictogram name={failure.picture} size={80} />
+      <Pictogram name={failureIcons[props.type]} size={80} />
       <VSpacer size={16} />
-      <H3 style={styles.title}>{failure.title}</H3>
+      <H3 style={styles.title}>
+        {I18n.t(`idpay.onboarding.failure.${props.type}.title`)}
+      </H3>
       <VSpacer size={16} />
-      <Text alignCenter={true}>{failure.subtitle}</Text>
+      <Text alignCenter={true}>
+        {I18n.t(`idpay.onboarding.failure.${props.type}.subtitle`)}
+      </Text>
     </>
   );
 };

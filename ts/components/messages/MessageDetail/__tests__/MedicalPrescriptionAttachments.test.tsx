@@ -11,7 +11,7 @@ describe("MedicalPrescriptionAttachments component", () => {
   describe("with default properties", () => {
     it("should render", () => {
       const component = render(
-        <MedicalPrescriptionAttachments attachments={[]} />
+        <MedicalPrescriptionAttachments prescriptionAttachments={[]} />
       );
       expect(component.toJSON()).toMatchSnapshot();
     });
@@ -23,7 +23,7 @@ describe("MedicalPrescriptionAttachments component", () => {
         render(
           <MedicalPrescriptionAttachments
             organizationName={organizationName}
-            attachments={[]}
+            prescriptionAttachments={[]}
           />
         ).toJSON()
       ).toMatchSnapshot();
@@ -42,7 +42,7 @@ describe("MedicalPrescriptionAttachments component", () => {
         render(
           <MedicalPrescriptionAttachments
             organizationName={organizationName}
-            attachments={[attachment]}
+            prescriptionAttachments={[attachment]}
           />
         ).toJSON()
       ).toMatchSnapshot();
@@ -62,7 +62,7 @@ describe("MedicalPrescriptionAttachments component", () => {
           render(
             <MedicalPrescriptionAttachments
               organizationName={organizationName}
-              attachments={[svgAttachment]}
+              prescriptionAttachments={[svgAttachment]}
             />
           ).toJSON()
         ).toMatchSnapshot();
@@ -80,7 +80,7 @@ describe("MedicalPrescriptionAttachments component", () => {
           render(
             <MedicalPrescriptionAttachments
               organizationName={organizationName}
-              attachments={[attachmentWithPrescriptionData]}
+              prescriptionAttachments={[attachmentWithPrescriptionData]}
               prescriptionData={{
                 nre: "what the heck is this btw?"
               }}

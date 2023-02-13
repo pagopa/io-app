@@ -64,6 +64,7 @@ import {
   sessionInfoSelector,
   sessionTokenSelector
 } from "../store/reducers/authentication";
+import { lollipopKeyTagSelector } from "../features/lollipop/store/reducers/lollipop";
 import { IdentificationResult } from "../store/reducers/identification";
 import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
 import { isPagoPATestEnabledSelector } from "../store/reducers/persistedPreferences";
@@ -83,7 +84,6 @@ import { watchMessageAttachmentsSaga } from "../features/messages/saga/attachmen
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
 import { watchIDPayWalletSaga } from "../features/idpay/wallet/saga";
 import { idpayInitiativeDetailsSaga } from "../features/idpay/initiative/details/saga";
-import { isLollipopEnabledSelector } from "../store/reducers/backendStatus";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -138,7 +138,7 @@ import { completeOnboardingSaga } from "./startup/completeOnboardingSaga";
 import { watchLoadMessageById } from "./messages/watchLoadMessageById";
 import { watchThirdPartyMessageSaga } from "./messages/watchThirdPartyMessageSaga";
 import { checkNotificationsPreferencesSaga } from "./startup/checkNotificationsPreferencesSaga";
-import { generateCryptoKeyPair } from "./startup/generateCryptoKeyPair";
+import { trackMixpanelCryptoKeyPairEvents } from "./startup/generateCryptoKeyPair";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -340,10 +340,10 @@ export function* initializeApplicationSaga(): Generator<
   // check if the user expressed preference about mixpanel, if not ask for it
   yield* call(askMixpanelOptIn);
 
-  // generate crypto key
-  const isLollipopEnabled = yield* select(isLollipopEnabledSelector);
-  if (isLollipopEnabled) {
-    yield* call(generateCryptoKeyPair);
+  // Track crypto key generation info
+  const keyTag = yield* select(lollipopKeyTagSelector);
+  if (keyTag) {
+    yield* call(trackMixpanelCryptoKeyPairEvents, keyTag);
   }
 
   if (hasPreviousSessionAndPin) {
@@ -421,10 +421,9 @@ export function* initializeApplicationSaga(): Generator<
     yield* fork(watchPnSaga, sessionToken);
   }
 
-  if (mvlEnabled || pnEnabled) {
-    // Start watching for message attachments actions
-    yield* fork(watchMessageAttachmentsSaga, sessionToken);
-  }
+  // Start watching for message attachments actions (general
+  // third-party message attachments, PN attachments and MVL ones)
+  yield* fork(watchMessageAttachmentsSaga, sessionToken);
 
   if (idPayEnabled) {
     // Start watching for IDPay wallet actions
