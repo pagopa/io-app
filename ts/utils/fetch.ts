@@ -20,14 +20,18 @@ import {
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { pipe } from "fp-ts/lib/function";
 import URLParse from "url-parse";
-import { PublicKey, sign } from "@pagopa/io-react-native-crypto";
+import { sign } from "@pagopa/io-react-native-crypto";
 import { fetchMaxRetries, fetchTimeout } from "../config";
-import { LollipopConfig } from "../features/lollipop";
+import {
+  chainSignPromises,
+  forgeSignatureComponents,
+  getSignAlgorithm,
+  LollipopConfig,
+  SignPromiseResult
+} from "../features/lollipop";
 import { SignatureConfig } from "./httpSignature/types/SignatureConfig";
 import { generateSignatureBase } from "./httpSignature/signature";
 import { generateDigestHeader } from "./httpSignature/digest";
-import { SignatureAlgorithm } from "./httpSignature/types/SignatureAlgorithms";
-import { SignatureComponents } from "./httpSignature/types/SignatureComponents";
 
 // FIXME: This is a temporary type created to avoid
 // a compilation error caused by the `toFetch` function
@@ -288,54 +292,6 @@ export function lollipopFetch(
       return timeoutFetch(input, init);
     }
   );
-}
-
-/**
- * Utility function to forge the `SignatureComponents` based on the provided inputs.
- */
-function forgeSignatureComponents(
-  method: string,
-  inputUrl: URLParse,
-  originalUrl: string
-): SignatureComponents {
-  return {
-    method,
-    authority: inputUrl.hostname,
-    path: inputUrl.pathname,
-    requestTarget: originalUrl,
-    scheme: inputUrl.protocol,
-    targetUri: `${inputUrl.protocol}://${inputUrl.hostname}/${originalUrl}`
-  };
-}
-
-/**
- * Returns the http-signature algorithm used to sign the signature base specified by
- * the signature-input header.
- */
-function getSignAlgorithm(publicKey: PublicKey): SignatureAlgorithm {
-  return publicKey?.kty === "EC" ? "ecdsa-p256-sha256" : "rsa-pss-sha256";
-}
-
-/**
- * Result type of promises returnd by `chainSignPromises`
- */
-type SignPromiseResult = {
-  headerIndex: number;
-  headerName: string;
-  headerValue: string;
-  signature: string;
-  "signature-input": string;
-};
-
-/**
- * Chains all custom sign promises passed as its input array.
- */
-function chainSignPromises(
-  promises: Array<Promise<SignPromiseResult>>
-): Promise<Array<SignPromiseResult>> {
-  return Promise.all(promises)
-    .then(results => results)
-    .catch(error => Promise.reject(error));
 }
 
 /**
