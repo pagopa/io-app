@@ -82,7 +82,7 @@ const bottomSheetConfigurations: Record<
   TimelineDetailsBottomSheetConfiguration
 > = {
   PAID_REFUND: {
-    snapPoint: 530,
+    snapPoint: 390,
     title: I18n.t("idpay.initiative.operationDetails.title.refund")
   },
   REJECTED_REFUND: {
