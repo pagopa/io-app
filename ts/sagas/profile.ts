@@ -1,4 +1,3 @@
-import { KeyInfo } from "./../utils/crypto";
 /**
  * A saga that manages the Profile.
  */
@@ -64,10 +63,11 @@ import {
   getLocalePrimaryWithFallback
 } from "../utils/locale";
 import { readablePrivacyReport } from "../utils/reporters";
+import { LollipopConfig } from "./../features/lollipop";
 
 // A saga to load the Profile.
 export function* loadProfileLollipop(
-  keyInfo: KeyInfo,
+  lollipopConfig: LollipopConfig,
   getProfileLollipop: ReturnType<typeof BackendClient>["getProfileLollipop"]
 ): Generator<
   ReduxSagaEffect,
@@ -75,7 +75,7 @@ export function* loadProfileLollipop(
   SagaCallReturnType<typeof getProfileLollipop>
 > {
   try {
-    const response = yield* call(getProfileLollipop, keyInfo);
+    const response = yield* call(getProfileLollipop, lollipopConfig);
     // we got an error, throw it
     if (E.isLeft(response)) {
       throw Error(readablePrivacyReport(response.left));

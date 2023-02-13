@@ -72,7 +72,7 @@ import {
 import { PaginatedPublicMessagesCollection } from "../../definitions/backend/PaginatedPublicMessagesCollection";
 import { CreatedMessageWithContentAndAttachments } from "../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { fetchMaxRetries, fetchTimeout } from "../config";
-import { KeyInfo } from "./../utils/crypto";
+import { LollipopConfig } from "./../features/lollipop";
 
 /**
  * We will retry for as many times when polling for a payment ID.
@@ -506,14 +506,18 @@ export function BackendClient(
     createOrUpdateProfile: withBearerToken(
       createFetchRequestForApi(createOrUpdateProfileT, options)
     ),
-    getProfileLollipop: (keyInfo: KeyInfo) => {
-      const lpFetch = lollipopFetch(fetchTimeout, fetchMaxRetries, keyInfo);
+    getProfileLollipop: (lollipopConfig: LollipopConfig) => {
+      const lpFetch = lollipopFetch(
+        fetchTimeout,
+        fetchMaxRetries,
+        lollipopConfig
+      );
       return withBearerToken(
         createFetchRequestForApi(getProfileT, {
           ...options,
           fetchApi: lpFetch
         })
-      )(keyInfo);
+      )(lollipopConfig);
     },
     getUserMetadata: withBearerToken(
       createFetchRequestForApi(getUserMetadataT, options)

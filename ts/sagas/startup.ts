@@ -1,3 +1,4 @@
+import { LollipopConfig } from "./../features/lollipop/index";
 import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
@@ -281,9 +282,13 @@ export function* initializeApplicationSaga(): Generator<
   // Load the profile info
   const keyTag = yield* select(lollipopKeyTagSelector);
   const keyInfo = yield* call(getCryptoPublicKey, keyTag);
+  const lollipopConfig: LollipopConfig = {
+    keyInfo,
+    nonce: "nonce-123"
+  };
   const maybeUserProfile: SagaCallReturnType<typeof loadProfile> = yield* call(
     loadProfileLollipop,
-    keyInfo,
+    lollipopConfig,
     backendClient.getProfileLollipop
   );
 

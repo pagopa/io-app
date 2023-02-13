@@ -22,9 +22,9 @@ import { pipe } from "fp-ts/lib/function";
 import URLParse from "url-parse";
 import { sign } from "@pagopa/io-react-native-crypto";
 import { fetchMaxRetries, fetchTimeout } from "../config";
+import { LollipopConfig } from "../features/lollipop";
 import { SignatureConfig } from "./httpSignature/types/SignatureConfig";
 import { generateSignatureBase } from "./httpSignature/signature";
-import { KeyInfo } from "./crypto";
 import { generateDigestHeader } from "./httpSignature/digest";
 
 // FIXME: This is a temporary type created to avoid
@@ -129,7 +129,7 @@ export const constantPollingFetch = (
 export function lollipopFetch(
   timeout: Millisecond = fetchTimeout,
   maxRetries: number = fetchMaxRetries,
-  keyInfo: KeyInfo
+  lollipopConfig: LollipopConfig
 ) {
   const fetchApi = (global as any).fetch;
   const abortableFetch = AbortableFetch(fetchApi);
@@ -151,7 +151,7 @@ export function lollipopFetch(
     (input: RequestInfo | URL, init?: RequestInit) => {
       // eslint-disable-next-line functional/no-let
       if (!JSON.stringify(input).includes("backend.json")) {
-        const { keyTag, publicKey } = keyInfo;
+        const { keyTag, publicKey } = lollipopConfig.keyInfo;
         if (
           keyTag &&
           publicKey &&
