@@ -12,7 +12,6 @@ export type KeyInfo = {
   keyTag?: string;
   publicKey?: PublicKey;
   publicKeyThumbprint?: string;
-  nonce?: string;
 };
 
 export type KeyGenerationInfo = {

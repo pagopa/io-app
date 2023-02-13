@@ -60,7 +60,8 @@ export type SignatureBaseResult = {
  */
 function generateSignatureBase(
   headers: Record<string, string>,
-  config: SignatureConfig
+  config: SignatureConfig,
+  signatureOrdinal: number = 1
 ): SignatureBaseResult {
   try {
     // eslint-disable-next-line functional/no-let
@@ -104,9 +105,13 @@ function generateSignatureBase(
      * field for this signature serialized according to the rules described in Section 2.3.
      * Note that this does not include the signature's label from the Signature-Input field.
      */
-    const signatureInput = generateSignatureInput(headers, config);
+    const signatureInput = generateSignatureInput(
+      headers,
+      config,
+      signatureOrdinal
+    );
     const signatureParamsString = signatureInput.replace(
-      constants.SIGNATURE_PREFIX(),
+      constants.SIGNATURE_PREFIX(signatureOrdinal),
       ""
     );
     baseString = baseString + signatureParamsString;
@@ -141,7 +146,8 @@ function contentRelatedHeaderParameterMissing(
  */
 function generateSignatureInput(
   headers: Record<string, string>,
-  config: SignatureConfig
+  config: SignatureConfig,
+  signatureOrdinal: number = 1
 ): string {
   // eslint-disable-next-line functional/no-let
   let signatureInputPayload: string = "";
@@ -153,7 +159,11 @@ function generateSignatureInput(
     signatureInputPayload += `"${param.toLowerCase()}" `;
   });
 
-  return generateSignatureInputValue(signatureInputPayload, config);
+  return generateSignatureInputValue(
+    signatureInputPayload,
+    config,
+    signatureOrdinal
+  );
 }
 
 /**

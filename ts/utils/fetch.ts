@@ -20,12 +20,14 @@ import {
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { pipe } from "fp-ts/lib/function";
 import URLParse from "url-parse";
-import { sign } from "@pagopa/io-react-native-crypto";
+import { PublicKey, sign } from "@pagopa/io-react-native-crypto";
 import { fetchMaxRetries, fetchTimeout } from "../config";
 import { LollipopConfig } from "../features/lollipop";
 import { SignatureConfig } from "./httpSignature/types/SignatureConfig";
 import { generateSignatureBase } from "./httpSignature/signature";
 import { generateDigestHeader } from "./httpSignature/digest";
+import { SignatureAlgorithm } from "./httpSignature/types/SignatureAlgorithms";
+import { SignatureComponents } from "./httpSignature/types/SignatureComponents";
 
 // FIXME: This is a temporary type created to avoid
 // a compilation error caused by the `toFetch` function
@@ -180,19 +182,15 @@ export function lollipopFetch(
         const originalUrl =
           inputUrl.pathname + (queryString ? "?" + queryString : "");
         const signatureConfig: SignatureConfig = {
-          signAlgorithm:
-            publicKey?.kty === "EC" ? "ecdsa-p256-sha256" : "rsa-pss-sha256",
+          signAlgorithm: getSignAltorithm(publicKey),
           signKeyTag: keyTag,
-          signKeyId: "AF2G87coad7/KJl9800==",
+          signKeyId: lollipopConfig.keyInfo.publicKeyThumbprint ?? "",
           nonce: lollipopConfig.nonce,
-          signatureComponents: {
+          signatureComponents: forgeSignatureComponents(
             method,
-            authority: inputUrl.hostname,
-            path: inputUrl.pathname,
-            requestTarget: originalUrl,
-            scheme: inputUrl.protocol,
-            targetUri: `${inputUrl.protocol}://${inputUrl.hostname}/${originalUrl}`
-          },
+            inputUrl,
+            originalUrl
+          ),
           signatureParams: [
             "Content-Digest",
             "Content-Type",
@@ -215,17 +213,62 @@ export function lollipopFetch(
           (newInit.headers as Record<string, string>) ?? {};
         const { signatureBase, signatureInput } = generateSignatureBase(
           newInitHeaders,
-          signatureConfig
+          signatureConfig,
+          1
         );
+        const customSignPromises: Array<Promise<SignPromiseResult>> =
+          lollipopConfig.customSignatures?.map((headerValue, index) => {
+            const signatureIndex: number = index + 1;
+            const headerName = `x-pagopa-lollipop-custom-${signatureIndex}`;
+            const customHeader = {
+              [headerName]: headerValue
+            };
+            const signatureConfig: SignatureConfig = {
+              signAlgorithm: getSignAltorithm(publicKey),
+              signKeyTag: keyTag,
+              signKeyId: lollipopConfig.keyInfo.publicKeyThumbprint ?? "",
+              nonce: lollipopConfig.nonce,
+              signatureComponents: forgeSignatureComponents(
+                method,
+                inputUrl,
+                originalUrl
+              ),
+              signatureParams: [headerName]
+            };
+            const { signatureBase, signatureInput } = generateSignatureBase(
+              customHeader,
+              signatureConfig,
+              signatureIndex
+            );
+            return sign(signatureBase, keyTag).then(function (value) {
+              return Promise.resolve({
+                headerName,
+                headerValue,
+                signature: `sig${signatureIndex}:${value}:`,
+                "signature-input": signatureInput
+              });
+            });
+          }) ?? [];
         return sign(signatureBase, keyTag)
-          .then(function (value) {
-            // eslint-disable-next-line no-console
-            newInit = addHeader(newInit, "signature", `sig1:${value}:`);
-            newInit = addHeader(newInit, "signature-input", signatureInput);
-            // TODO: - put all this in an utility function
-            // eslint-disable-next-line no-console
-            console.log("✅🚀" + JSON.stringify(newInit.headers));
-            return timeoutFetch(input, newInit);
+          .then(function (mainSignValue) {
+            return chainSignPromises(customSignPromises).then(function (
+              customSignValues
+            ) {
+              customSignValues.forEach(
+                v => (newInit = addHeader(newInit, v.headerName, v.headerValue))
+              );
+              // eslint-disable-next-line no-console
+              newInit = addHeader(
+                newInit,
+                "signature",
+                `sig1:${mainSignValue}:`
+              );
+              newInit = addHeader(newInit, "signature-input", signatureInput);
+              // TODO: - put all this in an utility function
+              // eslint-disable-next-line no-console
+              console.log("✅🚀" + JSON.stringify(newInit.headers));
+              return timeoutFetch(input, newInit);
+            });
           })
           .catch(function () {
             return timeoutFetch(input, init);
@@ -234,6 +277,40 @@ export function lollipopFetch(
       return timeoutFetch(input, init);
     }
   );
+}
+
+function forgeSignatureComponents(
+  method: string,
+  inputUrl: URLParse,
+  originalUrl: string
+): SignatureComponents {
+  return {
+    method,
+    authority: inputUrl.hostname,
+    path: inputUrl.pathname,
+    requestTarget: originalUrl,
+    scheme: inputUrl.protocol,
+    targetUri: `${inputUrl.protocol}://${inputUrl.hostname}/${originalUrl}`
+  };
+}
+
+function getSignAltorithm(publicKey: PublicKey): SignatureAlgorithm {
+  return publicKey?.kty === "EC" ? "ecdsa-p256-sha256" : "rsa-pss-sha256";
+}
+
+type SignPromiseResult = {
+  headerName: string;
+  headerValue: string;
+  signature: string;
+  "signature-input": string;
+};
+
+function chainSignPromises(
+  promises: Array<Promise<SignPromiseResult>>
+): Promise<Array<SignPromiseResult>> {
+  return Promise.all(promises)
+    .then(results => results)
+    .catch(error => Promise.reject(error));
 }
 
 /**

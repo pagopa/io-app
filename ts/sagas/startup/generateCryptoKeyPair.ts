@@ -107,7 +107,8 @@ export function* getCryptoPublicKey(keyTag?: string) {
       const publicKey = yield* call(getPublicKey, keyTag);
       const keyInfo: KeyInfo = {
         keyTag,
-        publicKey
+        publicKey,
+        publicKeyThumbprint: "TODO-public-key-thumbprint"
       };
       return keyInfo;
     } else {
