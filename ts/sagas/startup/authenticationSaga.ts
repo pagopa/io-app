@@ -30,7 +30,7 @@ export function* authenticationSaga(): Generator<
   const watchCieAuthentication = yield* fork(watchCieAuthenticationSaga);
 
   // Reset the navigation stack and navigate to the authentication screen
-  yield* call(resetToAuthenticationRoute);
+  // yield* call(resetToAuthenticationRoute);
 
   // Generate key for lollipop
   const maybeOldKeyTag = yield* select(lollipopKeyTagSelector);

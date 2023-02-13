@@ -30,7 +30,6 @@ describe("authenticationSaga", () => {
       .next(watchTestLoginRequest)
       .fork(watchCieAuthenticationSaga)
       .next(watchCieAuthentication)
-      .call(resetToAuthenticationRoute)
       .next()
       .next() // remove previous keyTag, if any
       .next() // generate a new keyTag
