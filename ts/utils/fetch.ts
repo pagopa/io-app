@@ -290,6 +290,9 @@ export function lollipopFetch(
   );
 }
 
+/**
+ * Utility function to forge the `SignatureComponents` based on the provided inputs.
+ */
 function forgeSignatureComponents(
   method: string,
   inputUrl: URLParse,
@@ -305,10 +308,17 @@ function forgeSignatureComponents(
   };
 }
 
+/**
+ * Returns the http-signature algorithm used to sign the signature base specified by
+ * the signature-input header.
+ */
 function getSignAlgorithm(publicKey: PublicKey): SignatureAlgorithm {
   return publicKey?.kty === "EC" ? "ecdsa-p256-sha256" : "rsa-pss-sha256";
 }
 
+/**
+ * Result type of promises returnd by `chainSignPromises`
+ */
 type SignPromiseResult = {
   headerIndex: number;
   headerName: string;
@@ -317,6 +327,9 @@ type SignPromiseResult = {
   "signature-input": string;
 };
 
+/**
+ * Chains all custom sign promises passed as its input array.
+ */
 function chainSignPromises(
   promises: Array<Promise<SignPromiseResult>>
 ): Promise<Array<SignPromiseResult>> {
