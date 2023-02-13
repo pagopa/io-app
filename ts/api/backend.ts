@@ -513,7 +513,7 @@ export function BackendClient(
           ...options,
           fetchApi: lpFetch
         })
-      );
+      )(keyInfo);
     },
     getUserMetadata: withBearerToken(
       createFetchRequestForApi(getUserMetadataT, options)

@@ -75,8 +75,7 @@ export function* loadProfileLollipop(
   SagaCallReturnType<typeof getProfileLollipop>
 > {
   try {
-    const lollipopRequest = getProfileLollipop(keyInfo);
-    const response = yield* call(lollipopRequest, {});
+    const response = yield* call(getProfileLollipop, keyInfo);
     // we got an error, throw it
     if (E.isLeft(response)) {
       throw Error(readablePrivacyReport(response.left));
