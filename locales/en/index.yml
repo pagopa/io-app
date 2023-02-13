@@ -3371,6 +3371,7 @@ idpay:
     navigation:
       header: Adesione all'iniziativa
     PDNDPrerequisites:
+      fallbackInitiativeName: l'iniziativa
       prerequisites:
         info:
           header: Come avviene la verifica?
