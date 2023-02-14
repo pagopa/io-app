@@ -1,3 +1,4 @@
+import { deleteKey, getPublicKey } from "@pagopa/io-react-native-crypto";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { pipe } from "fp-ts/lib/function";
 import * as T from "fp-ts/lib/Task";
@@ -60,6 +61,15 @@ export const checkPublicKeyExists = (keyId: string) =>
     ),
     TE.map(_ => true),
     TE.getOrElse(() => T.of(false))
+  )();
+
+export const taskGetPublicKey = (keyId: string) =>
+  pipe(
+    TE.tryCatch(
+      () => getPublicKey(keyId),
+      () => undefined
+    ),
+    TE.getOrElseW(() => T.of(undefined))
   )();
 
 export const deleteKeyPair = (keyId: string) =>

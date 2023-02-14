@@ -354,8 +354,8 @@ export function* initializeApplicationSaga(): Generator<
   yield* call(askMixpanelOptIn);
 
   // Track crypto key generation info
-  if (keyTag) {
-    yield* call(trackMixpanelCryptoKeyPairEvents, keyTag);
+  if (O.isSome(keyTag)) {
+    yield* call(trackMixpanelCryptoKeyPairEvents, keyTag.value);
   }
 
   if (hasPreviousSessionAndPin) {
