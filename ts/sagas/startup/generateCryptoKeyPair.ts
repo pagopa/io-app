@@ -98,16 +98,16 @@ function* generateCryptoKeyPair(keyTag: string) {
 /**
  * Get the public key liked the provided keyTag
  */
-export function* getCryptoPublicKey(keyTag?: string) {
+export function* getCryptoPublicKey(keyTag: O.Option<string>) {
   const emptyKeyInfo: KeyInfo = {
-    keyTag,
+    keyTag: undefined,
     publicKey: undefined
   };
   try {
-    if (keyTag) {
-      const publicKey = yield* call(getPublicKey, keyTag);
+    if (O.isSome(keyTag)) {
+      const publicKey = yield* call(getPublicKey, keyTag.value);
       const keyInfo: KeyInfo = {
-        keyTag,
+        keyTag: keyTag.value,
         publicKey,
         publicKeyThumbprint: "TODO-public-key-thumbprint"
       };
