@@ -22,6 +22,7 @@ import DarkLayout from "../screens/DarkLayout";
 import { H2 } from "../core/typography/H2";
 import { IOColors } from "../core/variables/IOColors";
 import { VSpacer } from "../core/spacer/Spacer";
+import { ScreenContentRoot } from "../screens/ScreenContent";
 
 type Props = Readonly<{
   accessibilityLabel?: string;
@@ -41,6 +42,7 @@ type Props = Readonly<{
   gradientHeader?: boolean;
   headerPaddingMin?: boolean;
   footerFullWidth?: React.ReactNode;
+  referenceToContentScreen?: (c: ScreenContentRoot) => ScreenContentRoot | React.LegacyRef<Content>;
 }>;
 
 const styles = StyleSheet.create({
@@ -101,7 +103,7 @@ export default class WalletLayout extends React.Component<Props> {
       footerContent,
       contentStyle,
       appLogo,
-      footerFullWidth
+      footerFullWidth,
     } = this.props;
 
     return (
@@ -125,9 +127,10 @@ export default class WalletLayout extends React.Component<Props> {
         faqCategories={this.props.faqCategories}
         gradientHeader={this.props.gradientHeader}
         headerPaddingMin={this.props.headerPaddingMin}
+        referenceToContentScreen={this.props.referenceToContentScreen}
       >
         {this.props.children}
-      </DarkLayout>
+      </DarkLayout>     
     );
   }
 }

@@ -9,6 +9,7 @@ import {
   NativeEventSubscription,
   StyleSheet
 } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import { connect } from "react-redux";
 import { BonusActivationWithQrCode } from "../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
@@ -22,6 +23,7 @@ import { withValidatedEmail } from "../../components/helpers/withValidatedEmail"
 import { withValidatedPagoPaVersion } from "../../components/helpers/withValidatedPagoPaVersion";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
+import { ScreenContentRoot } from "../../components/screens/ScreenContent";
 import SectionStatusComponent from "../../components/SectionStatus";
 import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
@@ -102,6 +104,7 @@ import customVariables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
 import { isStrictSome } from "../../utils/pot";
 import { showToast } from "../../utils/showToast";
+import { withTabItemPressWhenScreenActive } from "../../utils/tabBar";
 
 export type WalletHomeNavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -521,9 +524,15 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     const footerContent = pot.isSome(potWallets)
       ? this.footerButton(potWallets)
       : undefined;
+    
+    
 
-    return (
+    return (      
       <WalletLayout
+
+      //Questo deve diventare tipo "referenceToContentScreen" e DEVE essere tutto tipato, sia qui che negli altri TRE file (ora sta any)
+      
+      referenceToContentScreen={(c:ScreenContentRoot) => (component.enabled = c)}
         accessibilityLabel={I18n.t("wallet.wallet")}
         title={I18n.t("wallet.wallet")}
         allowGoBack={false}
@@ -618,12 +627,22 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(fetchTransactionsLoadComplete(transactions)),
   runSendAddCobadgeMessageSaga: () => dispatch(runSendAddCobadgeTrackSaga())
 });
-
+const component = {
+  enabled: {} as ScreenContentRoot
+};
 export default withValidatedPagoPaVersion(
   withValidatedEmail(
     connect(
       mapStateToProps,
       mapDispatchToProps
-    )(withLightModalContext(WalletHomeScreen))
+    )(
+      withTabItemPressWhenScreenActive(
+        withLightModalContext(WalletHomeScreen),
+        () => {
+          component.enabled._root.scrollToPosition(0, 0)
+        },
+        false
+      )
+    )
   )
 );

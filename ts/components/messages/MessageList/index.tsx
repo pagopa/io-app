@@ -1,5 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import React, { useEffect, useRef, useState } from "react";
 import {
@@ -42,6 +43,7 @@ import customVariables, {
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { useActionOnFocus } from "../../../utils/hooks/useOnFocus";
 import { showToast } from "../../../utils/showToast";
+import { tabItemPressWhenScreenActive } from "../../../utils/tabBar";
 import { EdgeBorderComponent } from "../../screens/EdgeBorderComponent";
 import {
   EmptyComponent,
@@ -171,9 +173,13 @@ const MessageList = ({
     }
   }, [isLoadingPreviousOrAll]);
 
+
+tabItemPressWhenScreenActive(() => scrollTo(0,true),true);
+  
   useOnFirstRender(
     () => {
       reloadAll();
+      
     },
     () => shouldUseLoad && !didLoad
   );
