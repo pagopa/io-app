@@ -5,7 +5,7 @@ import { PreferredLanguageEnum } from "../../../../../../definitions/backend/Pre
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
-import { IDPayWalletClient } from "../../../wallet/api/client";
+import { IDPayClient } from "../../../common/api/client";
 import {
   idpayInitiativeGet,
   IdPayInitiativeGetPayloadType
@@ -19,7 +19,7 @@ import {
  */
 
 export function* handleGetInitiativeDetails(
-  getInitiativeDetails: IDPayWalletClient["getWalletDetail"],
+  getInitiativeDetails: IDPayClient["getWalletDetail"],
   token: string,
   language: PreferredLanguageEnum,
   payload: IdPayInitiativeGetPayloadType

@@ -8,7 +8,7 @@ import LinearGradient from "react-native-linear-gradient";
 import {
   InitiativeDTO,
   StatusEnum
-} from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
+} from "../../../../../../definitions/idpay/InitiativeDTO";
 import EmptyInitiativeSvg from "../../../../../../img/features/idpay/empty_initiative.svg";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H3 } from "../../../../../components/core/typography/H3";

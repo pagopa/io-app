@@ -1,20 +1,20 @@
 import * as O from "fp-ts/lib/Option";
 import { interpret } from "xstate";
 import { waitFor } from "@testing-library/react-native";
-import { InitiativeDto } from "../../../../../../definitions/idpay/onboarding/InitiativeDto";
+import { InitiativeInfoDTO } from "../../../../../../definitions/idpay/InitiativeInfoDTO";
 import { createIDPayOnboardingMachine } from "../machine";
-import { RequiredCriteriaDTO } from "../../../../../../definitions/idpay/onboarding/RequiredCriteriaDTO";
-import { PDNDCriteriaDTO } from "../../../../../../definitions/idpay/onboarding/PDNDCriteriaDTO";
+import { RequiredCriteriaDTO } from "../../../../../../definitions/idpay/RequiredCriteriaDTO";
+import { PDNDCriteriaDTO } from "../../../../../../definitions/idpay/PDNDCriteriaDTO";
 import {
   SelfDeclarationBoolDTO,
   _typeEnum as SelfDeclarationBoolDTOType
-} from "../../../../../../definitions/idpay/onboarding/SelfDeclarationBoolDTO";
+} from "../../../../../../definitions/idpay/SelfDeclarationBoolDTO";
 import {
   SelfDeclarationMultiDTO,
   _typeEnum as SelfDeclarationMultiDTOType
-} from "../../../../../../definitions/idpay/onboarding/SelfDeclarationMultiDTO";
-import { StatusEnum } from "../../../../../../definitions/idpay/onboarding/OnboardingStatusDTO";
-import { SelfConsentMultiDTO } from "../../../../../../definitions/idpay/onboarding/SelfConsentMultiDTO";
+} from "../../../../../../definitions/idpay/SelfDeclarationMultiDTO";
+import { StatusEnum } from "../../../../../../definitions/idpay/OnboardingStatusDTO";
+import { SelfConsentMultiDTO } from "../../../../../../definitions/idpay/SelfConsentMultiDTO";
 
 const T_SERVICE_ID = "T_SERVICE_ID";
 const T_INITIATIVE_ID = "T_INITIATIVE_ID";
@@ -55,7 +55,7 @@ const T_REQUIRED_CRITERIA: RequiredCriteriaDTO = {
 };
 
 const mockLoadInitiative = jest.fn(
-  async (): Promise<InitiativeDto> => ({
+  async (): Promise<InitiativeInfoDTO> => ({
     initiativeId: T_INITIATIVE_ID
   })
 );

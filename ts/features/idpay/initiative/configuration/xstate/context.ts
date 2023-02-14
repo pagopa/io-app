@@ -1,7 +1,8 @@
 import * as p from "@pagopa/ts-commons/lib/pot";
-import { IbanDTO } from "../../../../../../definitions/idpay/iban/IbanDTO";
-import { InitiativeDTO } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
-import { InstrumentDTO } from "../../../../../../definitions/idpay/wallet/InstrumentDTO";
+import { IbanDTO } from "../../../../../../definitions/idpay/IbanDTO";
+import { IbanPutDTO } from "../../../../../../definitions/idpay/IbanPutDTO";
+import { InitiativeDTO } from "../../../../../../definitions/idpay/InitiativeDTO";
+import { InstrumentDTO } from "../../../../../../definitions/idpay/InstrumentDTO";
 import { Wallet } from "../../../../../types/pagopa";
 import { InitiativeFailureType } from "./failure";
 
@@ -21,10 +22,7 @@ export type Context = {
   selectedInstrumentId?: string;
   areInstrumentsSkipped?: boolean;
   selectedIban?: IbanDTO;
-  ibanBody?: {
-    iban: string;
-    description: string;
-  };
+  ibanBody?: IbanPutDTO;
   failure?: InitiativeFailureType;
 };
 

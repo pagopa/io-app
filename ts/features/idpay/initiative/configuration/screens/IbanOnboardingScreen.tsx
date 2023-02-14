@@ -4,25 +4,22 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
 import { View, SafeAreaView, ScrollView } from "react-native";
-import { Iban } from "../../../../../../../definitions/backend/Iban";
-import IconProfileAlt from "../../../../../../components/core/icons/svg/IconProfileAlt";
-import {
-  VSpacer,
-  HSpacer
-} from "../../../../../../components/core/spacer/Spacer";
-import { Body } from "../../../../../../components/core/typography/Body";
-import { H1 } from "../../../../../../components/core/typography/H1";
-import { LabelSmall } from "../../../../../../components/core/typography/LabelSmall";
-import { Link } from "../../../../../../components/core/typography/Link";
-import { IOColors } from "../../../../../../components/core/variables/IOColors";
-import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
-import { LabelledItem } from "../../../../../../components/LabelledItem";
-import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
-import I18n from "../../../../../../i18n";
-import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
-import { LOADING_TAG } from "../../../../../../utils/xstate";
-import { useConfigurationMachineService } from "../../xstate/provider";
+import { Iban } from "../../../../../../definitions/backend/Iban";
+import IconProfileAlt from "../../../../../components/core/icons/svg/IconProfileAlt";
+import { VSpacer, HSpacer } from "../../../../../components/core/spacer/Spacer";
+import { Body } from "../../../../../components/core/typography/Body";
+import { H1 } from "../../../../../components/core/typography/H1";
+import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
+import { Link } from "../../../../../components/core/typography/Link";
+import { IOColors } from "../../../../../components/core/variables/IOColors";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import { LabelledItem } from "../../../../../components/LabelledItem";
+import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
+import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
+import I18n from "../../../../../i18n";
+import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import { LOADING_TAG } from "../../../../../utils/xstate";
+import { useConfigurationMachineService } from "../xstate/provider";
 
 const IbanOnboardingScreen = () => {
   const configurationMachine = useConfigurationMachineService();

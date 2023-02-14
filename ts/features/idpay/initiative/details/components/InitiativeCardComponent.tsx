@@ -2,7 +2,7 @@ import { Text } from "native-base";
 import * as React from "react";
 import { View, Image, ImageBackground, StyleSheet } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
-import { StatusEnum } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
+import { StatusEnum } from "../../../../../../definitions/idpay/InitiativeDTO";
 import { makeFontStyleObject } from "../../../../../components/core/fonts";
 import { H2 } from "../../../../../components/core/typography/H2";
 import { H5 } from "../../../../../components/core/typography/H5";

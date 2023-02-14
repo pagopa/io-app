@@ -3,6 +3,7 @@ import { ConfigurationMode, Context, INITIAL_CONTEXT } from "../context";
 import { Events } from "../events";
 import { createIDPayInitiativeConfigurationMachine } from "../machine";
 import { Typegen0 } from "../machine.typegen";
+import { T_IBAN } from "../__mocks__/services";
 
 type TransitionTestType = {
   currentState: Typegen0["matchesStates"];
@@ -38,10 +39,14 @@ const transitions: ReadonlyArray<TransitionTestType> = [
     context: {
       ibanList: pot.some([
         {
-          iban: "",
+          channel: "IO",
           checkIbanStatus: "",
-          description: "",
-          channel: ""
+          description: "Test",
+          iban: T_IBAN,
+          bicCode: "",
+          checkIbanResponseDate: new Date(),
+          holderBank: "",
+          queueDate: ""
         }
       ])
     }

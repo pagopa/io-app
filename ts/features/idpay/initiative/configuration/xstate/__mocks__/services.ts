@@ -1,8 +1,8 @@
-import { IbanListDTO } from "../../../../../../../definitions/idpay/iban/IbanListDTO";
+import { IbanListDTO } from "../../../../../../../definitions/idpay/IbanListDTO";
 import {
   InitiativeDTO,
   StatusEnum
-} from "../../../../../../../definitions/idpay/wallet/InitiativeDTO";
+} from "../../../../../../../definitions/idpay/InitiativeDTO";
 
 import { TypeEnum as WalletTypeEnumV1 } from "../../../../../../../definitions/pagopa/Wallet";
 import { Wallet } from "../../../../../../types/pagopa";
@@ -40,7 +40,16 @@ export const T_REFUNDABLE_INITIATIVE_DTO: InitiativeDTO = {
 };
 
 export const T_IBAN_LIST: IbanListDTO["ibanList"] = [
-  { channel: "IO", checkIbanStatus: "", description: "Test", iban: T_IBAN }
+  {
+    channel: "IO",
+    checkIbanStatus: "",
+    description: "Test",
+    iban: T_IBAN,
+    bicCode: "",
+    checkIbanResponseDate: new Date(),
+    holderBank: "",
+    queueDate: ""
+  }
 ];
 
 export const T_PAGOPA_INSTRUMENTS = [T_WALLET];

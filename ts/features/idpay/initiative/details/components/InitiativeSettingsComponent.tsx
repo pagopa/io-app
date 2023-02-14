@@ -5,7 +5,7 @@ import React from "react";
 import {
   InitiativeDTO,
   StatusEnum
-} from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
+} from "../../../../../../definitions/idpay/InitiativeDTO";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";

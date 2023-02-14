@@ -77,7 +77,11 @@ describe("IDPay configuration machine in IBAN mode", () => {
         channel: "IO",
         checkIbanStatus: "",
         description: "Test",
-        iban: T_IBAN
+        iban: T_IBAN,
+        bicCode: "",
+        checkIbanResponseDate: new Date(),
+        holderBank: "",
+        queueDate: ""
       }
     });
 

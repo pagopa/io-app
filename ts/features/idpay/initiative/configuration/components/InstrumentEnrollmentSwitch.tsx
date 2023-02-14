@@ -6,7 +6,7 @@ import { StyleSheet } from "react-native";
 import {
   InstrumentDTO,
   StatusEnum
-} from "../../../../../../definitions/idpay/wallet/InstrumentDTO";
+} from "../../../../../../definitions/idpay/InstrumentDTO";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { IOColors } from "../../../../../components/core/variables/IOColors";

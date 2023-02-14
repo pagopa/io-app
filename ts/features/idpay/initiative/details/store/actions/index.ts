@@ -1,8 +1,8 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
-import { OperationDTO } from "../../../../../../../definitions/idpay/timeline/OperationDTO";
-import { OperationListDTO } from "../../../../../../../definitions/idpay/timeline/OperationListDTO";
-import { TimelineDTO } from "../../../../../../../definitions/idpay/timeline/TimelineDTO";
-import { InitiativeDTO } from "../../../../../../../definitions/idpay/wallet/InitiativeDTO";
+import { OperationDTO } from "../../../../../../../definitions/idpay/OperationDTO";
+import { OperationListDTO } from "../../../../../../../definitions/idpay/OperationListDTO";
+import { TimelineDTO } from "../../../../../../../definitions/idpay/TimelineDTO";
+import { InitiativeDTO } from "../../../../../../../definitions/idpay/InitiativeDTO";
 import { NetworkError } from "../../../../../../utils/errors";
 
 export type IdPayInitiativeGetPayloadType = { initiativeId: string };

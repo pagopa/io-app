@@ -5,14 +5,14 @@ import { PreferredLanguageEnum } from "../../../../../../definitions/backend/Pre
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
-import { IDPayTimelineClient } from "../api/client";
+import { IDPayClient } from "../../../common/api/client";
 import {
   idpayTimelineDetailsGet,
   IdPayTimelineDetailsGetPayloadType
 } from "../store/actions";
 
 export function* handleGetTimelineDetails(
-  getTimelineDetail: IDPayTimelineClient["getTimelineDetail"],
+  getTimelineDetail: IDPayClient["getTimelineDetail"],
   token: string,
   language: PreferredLanguageEnum,
   payload: IdPayTimelineDetailsGetPayloadType
