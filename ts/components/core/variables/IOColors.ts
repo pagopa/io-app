@@ -168,7 +168,8 @@ const {
   yellow,
   orange,
   red,
-  green
+  green,
+  greenLight
 } = IOColors;
 
 export const IOColorsLegacy = {
@@ -191,8 +192,10 @@ export const IOColorsLegacy = {
   yellow,
   orange,
   red,
-  green
+  green,
+  greenLight
 };
+export type IOColorLegacy = keyof typeof IOColorsLegacy;
 
 const {
   grey50,
@@ -216,6 +219,7 @@ export const IOColorsNeutral = {
   grey850,
   blackNew
 };
+export type IOColorsNeutral = keyof typeof IOColorsNeutral;
 
 const {
   blueNew,
@@ -244,6 +248,7 @@ export const IOColorsTints = {
   turquoise100,
   turquoise50
 };
+export type IOColorsTints = keyof typeof IOColorsTints;
 
 const {
   error,
@@ -282,6 +287,7 @@ export const IOColorsStatus = {
   info,
   infoLight
 };
+export type IOColorsStatus = keyof typeof IOColorsStatus;
 
 const { blueItalia } = IOColors;
 
@@ -289,3 +295,4 @@ export const IOColorsExtra = {
   cobalt,
   blueItalia
 };
+export type IOColorsExtra = keyof typeof IOColorsExtra;
