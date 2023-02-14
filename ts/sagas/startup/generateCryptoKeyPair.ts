@@ -46,7 +46,7 @@ export function* trackMixpanelCryptoKeyPairEvents(keyTag: string) {
   if (keyInfo && keyInfo.errorCode) {
     void mixpanelTrack("LOLLIPOP_KEY_GENERATION_FAILURE", {
       reason: keyInfo.errorCode,
-      resonMoreInfo: keyInfo.userInfo
+      reasonMoreInfo: keyInfo.userInfo
     });
   }
 }
