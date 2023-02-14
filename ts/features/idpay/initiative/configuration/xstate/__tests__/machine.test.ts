@@ -27,11 +27,7 @@ const T_IBAN_ENROLL: IbanDTO = {
   channel: "IO",
   checkIbanStatus: "",
   description: "Test",
-  iban: T_IBAN,
-  bicCode: "",
-  checkIbanResponseDate: new Date(),
-  holderBank: "",
-  queueDate: ""
+  iban: T_IBAN
 };
 
 describe("IDPay configuration machine", () => {

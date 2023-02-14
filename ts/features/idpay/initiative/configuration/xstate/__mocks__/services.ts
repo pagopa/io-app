@@ -44,11 +44,7 @@ export const T_IBAN_LIST: IbanListDTO["ibanList"] = [
     channel: "IO",
     checkIbanStatus: "",
     description: "Test",
-    iban: T_IBAN,
-    bicCode: "",
-    checkIbanResponseDate: new Date(),
-    holderBank: "",
-    queueDate: ""
+    iban: T_IBAN
   }
 ];
 
