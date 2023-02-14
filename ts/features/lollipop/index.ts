@@ -33,7 +33,7 @@ export function forgeSignatureComponents(
  * the signature-input header.
  */
 export function getSignAlgorithm(publicKey: PublicKey): SignatureAlgorithm {
-  return publicKey?.kty === "EC" ? "ecdsa-p256-sha256" : "rsa-pss-sha256";
+  return publicKey.kty === "EC" ? "ecdsa-p256-sha256" : "rsa-pss-sha256";
 }
 
 /**

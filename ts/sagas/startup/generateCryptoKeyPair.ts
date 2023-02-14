@@ -6,6 +6,8 @@ import {
   getPublicKey
 } from "@pagopa/io-react-native-crypto";
 import { call, select } from "typed-redux-saga/macro";
+import { jwkThumbprintByEncoding } from "jwk-thumbprint";
+import { DEFAULT_LOLLIPOP_HASH_ALGORITHM_CLIENT } from "../../features/lollipop/utils/login";
 import { isLollipopEnabledSelector } from "../../store/reducers/backendStatus";
 import {
   checkPublicKeyExists,
@@ -109,7 +111,11 @@ export function* getCryptoPublicKey(keyTag: O.Option<string>) {
       const keyInfo: KeyInfo = {
         keyTag: keyTag.value,
         publicKey,
-        publicKeyThumbprint: "TODO-public-key-thumbprint"
+        publicKeyThumbprint: jwkThumbprintByEncoding(
+          publicKey,
+          DEFAULT_LOLLIPOP_HASH_ALGORITHM_CLIENT,
+          "base64url"
+        )
       };
       return keyInfo;
     } else {
