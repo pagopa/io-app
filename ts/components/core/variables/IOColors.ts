@@ -93,33 +93,6 @@ export const IOColors = asIOColors({
   greenLight: "#5CA85A"
 });
 
-/*
-REFERENCEs USEFUL FOR REFACTORING
-Alias tokens:
-*/
-/* ↳ tabUnderlineColor → greyUltraLight */
-/* ↳ headerIconLight → greyLight */
-/* ↳ colorSkeleton → bluegreyLight */
-/* ↳ itemSeparator → bluegreyLight */
-/* ↳ btnLightBorderColor → grey */
-/* ↳ disabledService → grey, not referenced though */
-/* ↳ headerIconDark → milderGray */
-/* ↳ textColor → bluegrey */
-/* ↳ topTabBarTextColor → bluegrey */
-/* ↳ unselectedColor → bluegrey */
-/* ↳ textColorDark → bluegreyDark */
-/* ↳ cardTextColor → bluegreyDark */
-/* ↳ footerShadowColor → black */
-/* ↳ topTabBarActiveTextColor → blue */
-/* ↳ selectedColor → blue */
-/* ↳ contentPrimaryBackground → blue */
-/* ↳ textLinkColor → blue */
-/* ↳ colorHighlight → aqua */
-/* ↳ toastColor → aquaUltraLight */
-/* ↳ brandDanger → red */
-/* ↳ calendarExpirableColor → red */
-/* ↳ brandSuccess → green */
-
 export const IOColorGradients = asIOColorGradients({
   appLaunch: ["#0C00D3", "#0073E6"],
   appIcon: ["#1D51DF", "#1723D5"],
@@ -296,3 +269,51 @@ export const IOColorsExtra = {
   blueItalia
 };
 export type IOColorsExtra = keyof typeof IOColorsExtra;
+
+/*
+REFERENCES
+Alias tokens:
+*/
+/* 
+tabUnderlineColor → greyUltraLight
+headerIconLight → greyLight
+colorSkeleton → bluegreyLight
+itemSeparator → bluegreyLight
+btnLightBorderColor → grey
+disabledService → grey, not referenced though
+headerIconDark → milderGray
+textColor → bluegrey
+topTabBarTextColor → bluegrey
+unselectedColor → bluegrey
+textColorDark → bluegreyDark
+cardTextColor → bluegreyDark
+footerShadowColor → black
+topTabBarActiveTextColor → blue
+selectedColor → blue
+contentPrimaryBackground → blue
+textLinkColor → blue
+colorHighlight → aqua
+toastColor → aquaUltraLight
+brandDanger → red
+calendarExpirableColor → red
+brandSuccess → green
+*/
+
+/* NEW PALETTE → OLD PALETTE
+That is, which color replaces the other? */
+/*
+`blackNew` replaces `black`
+`grey50` → `greyUltraLight`
+`grey100` → `greyLight`
+`grey200` → `blueGreyLight`
+`grey450` → `grey`
+`grey650` → `milderGrey`
+`grey700` → `bluegrey`
+`grey850` → `bluegreyDark`
+`blueNew` → `blue`
+`turquoise` → `aqua`
+`turquoiseLight` → `aquaUltraLight`
+`warning` → `yellow`
+`error` → `red`
+`success` → `green`
+*/
