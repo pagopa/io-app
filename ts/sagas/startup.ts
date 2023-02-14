@@ -218,10 +218,15 @@ export function* initializeApplicationSaga(): Generator<
   // Handles the expiration of the session token
   yield* fork(watchSessionExpiredSaga);
 
+  // Get keyInfo for lollipop
+  const keyTag = yield* select(lollipopKeyTagSelector);
+  const keyInfo = yield* call(getCryptoPublicKey, keyTag);
+
   // Instantiate a backend client from the session token
   const backendClient: ReturnType<typeof BackendClient> = BackendClient(
     apiUrlPrefix,
-    sessionToken
+    sessionToken,
+    keyInfo
   );
 
   // check if the current session is still valid
@@ -275,10 +280,8 @@ export function* initializeApplicationSaga(): Generator<
   // loaded and valid
 
   // Load the profile info
-  const keyTag = yield* select(lollipopKeyTagSelector);
-  const keyInfo = yield* call(getCryptoPublicKey, keyTag);
+
   const lollipopConfig: LollipopConfig = {
-    keyInfo,
     nonce: "nonce-123",
     customSignatures: ["ASDFFA324SDFA==", "DAFDEFAF323DSFA=="]
   };

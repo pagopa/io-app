@@ -32,6 +32,7 @@ import {
 import { SignatureConfig } from "./httpSignature/types/SignatureConfig";
 import { generateSignatureBase } from "./httpSignature/signature";
 import { generateDigestHeader } from "./httpSignature/digest";
+import { KeyInfo } from "./crypto";
 
 // FIXME: This is a temporary type created to avoid
 // a compilation error caused by the `toFetch` function
@@ -135,7 +136,8 @@ export const constantPollingFetch = (
 export function lollipopFetch(
   timeout: Millisecond = fetchTimeout,
   maxRetries: number = fetchMaxRetries,
-  lollipopConfig: LollipopConfig
+  lollipopConfig: LollipopConfig,
+  keyInfo: KeyInfo
 ) {
   const fetchApi = (global as any).fetch;
   const abortableFetch = AbortableFetch(fetchApi);
@@ -155,16 +157,13 @@ export function lollipopFetch(
   );
   return retriableFetch(retryWithTransient429s)(
     (input: RequestInfo | URL, init?: RequestInit) => {
-      const { keyTag, publicKey } = lollipopConfig.keyInfo;
+      const { keyTag, publicKey } = keyInfo;
       if (
-        keyTag &&
         publicKey &&
+        keyTag &&
         typeof input === "string" &&
-        init &&
-        "headers" in init &&
-        init.headers &&
-        "method" in init &&
-        init.method
+        init?.headers &&
+        init?.method
       ) {
         // eslint-disable-next-line functional/no-let
         let newInit = init;
@@ -187,6 +186,7 @@ export function lollipopFetch(
         };
         const mainSignatureConfig: SignatureConfig = forgeSignatureConfig(
           signatureConfigForgeInput,
+          keyInfo,
           [
             "Content-Digest",
             "Content-Type",
@@ -218,7 +218,9 @@ export function lollipopFetch(
               [headerName]: headerValue
             };
             const customHeaderSignatureConfig: SignatureConfig =
-              forgeSignatureConfig(signatureConfigForgeInput, [headerName]);
+              forgeSignatureConfig(signatureConfigForgeInput, keyInfo, [
+                headerName
+              ]);
             const {
               signatureBase: customSignatureBase,
               signatureInput: customSignatureInput
@@ -293,12 +295,13 @@ type SignatureConfigForgeInput = {
 
 function forgeSignatureConfig(
   forgeInput: SignatureConfigForgeInput,
+  keyInfo: KeyInfo,
   signatureParams: Array<string>
 ): SignatureConfig {
   return {
     signAlgorithm: getSignAlgorithm(forgeInput.publicKey),
     signKeyTag: forgeInput.keyTag,
-    signKeyId: forgeInput.lollipopConfig.keyInfo.publicKeyThumbprint ?? "",
+    signKeyId: keyInfo.publicKeyThumbprint ?? "",
     nonce: forgeInput.lollipopConfig.nonce,
     signatureComponents: forgeSignatureComponents(
       forgeInput.method,

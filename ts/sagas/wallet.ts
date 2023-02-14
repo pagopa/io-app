@@ -602,6 +602,7 @@ export function* watchWalletSaga(
   const pagopaNodoClient = BackendClient(
     apiUrlPrefix,
     sessionToken,
+    {},
     defaultRetryingFetch(fetchPagoPaTimeout, 0)
   );
 

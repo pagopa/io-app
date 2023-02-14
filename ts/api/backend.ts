@@ -72,6 +72,7 @@ import {
 import { PaginatedPublicMessagesCollection } from "../../definitions/backend/PaginatedPublicMessagesCollection";
 import { CreatedMessageWithContentAndAttachments } from "../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { fetchMaxRetries, fetchTimeout } from "../config";
+import { KeyInfo } from "../utils/crypto";
 import { LollipopConfig } from "./../features/lollipop";
 
 /**
@@ -140,6 +141,7 @@ export type LogoutT = IPostApiRequestType<
 export function BackendClient(
   baseUrl: string,
   token: SessionToken,
+  keyInfo: KeyInfo = {},
   fetchApi: typeof fetch = defaultRetryingFetch()
 ) {
   const options = {
@@ -510,7 +512,8 @@ export function BackendClient(
       const lpFetch = lollipopFetch(
         fetchTimeout,
         fetchMaxRetries,
-        lollipopConfig
+        lollipopConfig,
+        keyInfo
       );
       return withBearerToken(
         createFetchRequestForApi(getProfileT, {

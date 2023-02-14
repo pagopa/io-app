@@ -2,10 +2,8 @@ import { PublicKey } from "@pagopa/io-react-native-crypto";
 import URLParse from "url-parse";
 import { SignatureAlgorithm } from "../../utils/httpSignature/types/SignatureAlgorithms";
 import { SignatureComponents } from "../../utils/httpSignature/types/SignatureComponents";
-import { KeyInfo } from "./../../utils/crypto";
 
 export type LollipopConfig = {
-  keyInfo: KeyInfo;
   nonce: string;
   customSignatures?: ReadonlyArray<string>;
 };
