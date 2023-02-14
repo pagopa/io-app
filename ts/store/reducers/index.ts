@@ -8,6 +8,9 @@ import { isActionOf } from "typesafe-actions";
 import { versionInfoReducer } from "../../common/versionInfo/store/reducers/versionInfo";
 import bonusReducer from "../../features/bonus/bonusVacanze/store/reducers";
 import { featuresPersistor } from "../../features/common/store/reducers";
+import lollipopReducer, {
+  initialLollipopState
+} from "../../features/lollipop/store/reducers/lollipop";
 import {
   logoutFailure,
   logoutSuccess,
@@ -131,7 +134,8 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
   payments: paymentsReducer,
   content: contentReducer,
   emailValidation: emailValidationReducer,
-  crossSessions: crossSessionsReducer
+  crossSessions: crossSessionsReducer,
+  lollipop: lollipopReducer
 });
 
 export function createRootReducer(
@@ -219,6 +223,10 @@ export function createRootReducer(
                 // eslint-disable-next-line no-underscore-dangle
                 _persist: state.wallet.wallets._persist
               }
+            },
+            lollipop: {
+              ...initialLollipopState,
+              keyTag: state.lollipop.keyTag
             }
           } as GlobalState)
         : state;

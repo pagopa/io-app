@@ -21,6 +21,9 @@ const selectInitiativeDetails = (state: StateWithContext) =>
 const selectIsInstrumentsOnlyMode = (state: StateWithContext) =>
   state.context.mode === ConfigurationMode.INSTRUMENTS;
 
+const selectIsIbanOnlyMode = (state: StateWithContext) =>
+  state.context.mode === ConfigurationMode.IBAN;
+
 const isLoadingIbanListSelector = (state: StateWithContext) =>
   state.matches("CONFIGURING_IBAN.LOADING_IBAN_LIST");
 
@@ -86,6 +89,7 @@ export {
   ibanListSelector,
   isUpsertingIbanSelector,
   selectInitiativeDetails,
+  selectIsIbanOnlyMode,
   selectIsInstrumentsOnlyMode,
   selectIsLoadingInstruments,
   selectIsUpsertingInstrument,
