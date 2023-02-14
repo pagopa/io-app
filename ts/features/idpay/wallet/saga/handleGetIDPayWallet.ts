@@ -1,11 +1,11 @@
 import { call, put } from "typed-redux-saga/macro";
 import * as E from "fp-ts/lib/Either";
 import { SagaCallReturnType } from "../../../../types/utils";
-import { IDPayWalletClient } from "../api/client";
 import { idPayWalletGet } from "../store/actions";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
+import { IDPayClient } from "../../common/api/client";
 
 /**
  * Handle the remote call to retrieve the IDPay wallet
@@ -13,7 +13,7 @@ import { PreferredLanguageEnum } from "../../../../../definitions/backend/Prefer
  * @param action
  */
 export function* handleGetIDPayWallet(
-  getWallet: IDPayWalletClient["getWallet"],
+  getWallet: IDPayClient["getWallet"],
   token: string,
   language: PreferredLanguageEnum
 ) {

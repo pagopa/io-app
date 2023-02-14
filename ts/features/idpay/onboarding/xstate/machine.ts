@@ -1,10 +1,10 @@
 /* eslint-disable no-underscore-dangle */
 import * as O from "fp-ts/lib/Option";
 import { assign, createMachine } from "xstate";
-import { InitiativeDto } from "../../../../../definitions/idpay/onboarding/InitiativeDto";
-import { StatusEnum } from "../../../../../definitions/idpay/onboarding/OnboardingStatusDTO";
-import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/onboarding/RequiredCriteriaDTO";
-import { SelfConsentMultiDTO } from "../../../../../definitions/idpay/onboarding/SelfConsentMultiDTO";
+import { InitiativeInfoDTO } from "../../../../../definitions/idpay/InitiativeInfoDTO";
+import { StatusEnum } from "../../../../../definitions/idpay/OnboardingStatusDTO";
+import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/RequiredCriteriaDTO";
+import { SelfConsentMultiDTO } from "../../../../../definitions/idpay/SelfConsentMultiDTO";
 import {
   LOADING_TAG,
   UPSERTING_TAG,
@@ -19,7 +19,7 @@ import {
 // Context types
 export type Context = {
   serviceId?: string;
-  initiative?: InitiativeDto;
+  initiative?: InitiativeInfoDTO;
   initiativeStatus?: StatusEnum;
   requiredCriteria?: O.Option<RequiredCriteriaDTO>;
   failure?: OnboardingFailureType;
@@ -75,7 +75,7 @@ type Events =
 // Services types
 type Services = {
   loadInitiative: {
-    data: InitiativeDto;
+    data: InitiativeInfoDTO;
   };
   loadInitiativeStatus: {
     data: StatusEnum | undefined;

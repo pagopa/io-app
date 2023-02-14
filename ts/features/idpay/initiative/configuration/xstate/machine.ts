@@ -1,12 +1,12 @@
 import * as p from "@pagopa/ts-commons/lib/pot";
 
 import { assign, createMachine } from "xstate";
-import { IbanListDTO } from "../../../../../../definitions/idpay/iban/IbanListDTO";
+import { IbanListDTO } from "../../../../../../definitions/idpay/IbanListDTO";
 import {
   InitiativeDTO,
   StatusEnum
-} from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
-import { InstrumentDTO } from "../../../../../../definitions/idpay/wallet/InstrumentDTO";
+} from "../../../../../../definitions/idpay/InitiativeDTO";
+import { InstrumentDTO } from "../../../../../../definitions/idpay/InstrumentDTO";
 
 import { Wallet } from "../../../../../types/pagopa";
 import {

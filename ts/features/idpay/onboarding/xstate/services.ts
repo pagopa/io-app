@@ -1,19 +1,19 @@
 /* eslint-disable no-underscore-dangle */
 import * as E from "fp-ts/lib/Either";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { PreferredLanguage } from "../../../../../definitions/backend/PreferredLanguage";
-import { InitiativeDto } from "../../../../../definitions/idpay/onboarding/InitiativeDto";
-import { StatusEnum } from "../../../../../definitions/idpay/onboarding/OnboardingStatusDTO";
-import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/onboarding/RequiredCriteriaDTO";
-import { SelfConsentDTO } from "../../../../../definitions/idpay/onboarding/SelfConsentDTO";
-import { OnboardingClient } from "../api/client";
+import { InitiativeInfoDTO } from "../../../../../definitions/idpay/InitiativeInfoDTO";
+import { StatusEnum } from "../../../../../definitions/idpay/OnboardingStatusDTO";
+import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/RequiredCriteriaDTO";
+import { SelfConsentDTO } from "../../../../../definitions/idpay/SelfConsentDTO";
+import { IDPayClient } from "../../common/api/client";
 import { OnboardingFailureType } from "./failure";
 import { Context } from "./machine";
 import { getBoolRequiredCriteriaFromContext } from "./selectors";
 
 const createServicesImplementation = (
-  onboardingClient: OnboardingClient,
+  client: IDPayClient,
   token: string,
   language: PreferredLanguage
 ) => {
@@ -27,12 +27,12 @@ const createServicesImplementation = (
       throw new Error("serviceId is undefined");
     }
 
-    const dataResponse = await onboardingClient.getInitiativeData({
+    const dataResponse = await client.getInitiativeData({
       ...clientOptions,
       serviceId: context.serviceId
     });
 
-    const data: Promise<InitiativeDto> = pipe(
+    const data: Promise<InitiativeInfoDTO> = pipe(
       dataResponse,
       E.fold(
         _ => Promise.reject(OnboardingFailureType.GENERIC),
@@ -53,7 +53,7 @@ const createServicesImplementation = (
       throw new Error("initiative is undefined");
     }
 
-    const statusResponse = await onboardingClient.onboardingStatus({
+    const statusResponse = await client.onboardingStatus({
       ...clientOptions,
       initiativeId: context.initiative.initiativeId
     });
@@ -83,7 +83,7 @@ const createServicesImplementation = (
       throw new Error("initative is undefined");
     }
 
-    const response = await onboardingClient.onboardingCitizen({
+    const response = await client.onboardingCitizen({
       ...clientOptions,
       body: {
         initiativeId: context.initiative.initiativeId
@@ -111,7 +111,7 @@ const createServicesImplementation = (
       throw new Error("initative is undefined");
     }
 
-    const response = await onboardingClient.checkPrerequisites({
+    const response = await client.checkPrerequisites({
       ...clientOptions,
       body: {
         initiativeId: context.initiative.initiativeId
@@ -157,7 +157,7 @@ const createServicesImplementation = (
       ...Object.values(multiConsentsAnswers)
     ] as Array<SelfConsentDTO>;
 
-    const response = await onboardingClient.consentOnboarding({
+    const response = await client.consentOnboarding({
       ...clientOptions,
       body: {
         initiativeId: initiative.initiativeId,

@@ -2,7 +2,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { View } from "react-native";
-import { InitiativeDTO } from "../../../../../definitions/idpay/wallet/InitiativeDTO";
+import { InitiativeDTO } from "../../../../../definitions/idpay/InitiativeDTO";
 import {
   AppParamsList,
   IOStackNavigationProp

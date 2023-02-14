@@ -2,13 +2,13 @@ import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
 import IbanEnrollmentScreen, {
   IbanEnrollmentScreenRouteParams
-} from "../iban/screens/IbanEnrollmentScreen";
+} from "../screens/IbanEnrollmentScreen";
 import InitiativeConfigurationIntroScreen, {
   InitiativeConfigurationIntroScreenRouteParams
 } from "../screens/InitiativeConfigurationIntroScreen";
 import ConfigurationSuccessScreen from "../screens/ConfigurationSuccessScreen";
-import IbanConfigurationLanding from "../iban/screens/IbanConfigurationLandingScreen";
-import IbanOnboardingScreen from "../iban/screens/IbanOnboardingScreen";
+import IbanConfigurationLanding from "../screens/IbanConfigurationLandingScreen";
+import IbanOnboardingScreen from "../screens/IbanOnboardingScreen";
 import InstrumentsEnrollmentScreen, {
   InstrumentsEnrollmentScreenRouteParams
 } from "../screens/InstrumentsEnrollmentScreen";

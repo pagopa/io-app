@@ -1,6 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
-import { WalletDTO } from "../../../../../../definitions/idpay/wallet/WalletDTO";
+import { WalletDTO } from "../../../../../../definitions/idpay/WalletDTO";
 import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../utils/errors";

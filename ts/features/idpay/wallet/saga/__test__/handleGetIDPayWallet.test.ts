@@ -2,8 +2,8 @@ import * as E from "fp-ts/lib/Either";
 import { expectSaga } from "redux-saga-test-plan";
 import { appReducer } from "../../../../../store/reducers";
 import { idPayWalletGet } from "../../store/actions";
-import { WalletDTO } from "../../../../../../definitions/idpay/wallet/WalletDTO";
-import { ErrorDTO } from "../../../../../../definitions/idpay/wallet/ErrorDTO";
+import { WalletDTO } from "../../../../../../definitions/idpay/WalletDTO";
+import { ErrorDTO } from "../../../../../../definitions/idpay/ErrorDTO";
 import { handleGetIDPayWallet } from "../handleGetIDPayWallet";
 import { PreferredLanguageEnum } from "../../../../../../definitions/backend/PreferredLanguage";
 
