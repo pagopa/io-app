@@ -227,14 +227,21 @@ const createIDPayInitiativeConfigurationMachine = () =>
               }
             },
             ENROLLING_IBAN: {
-              tags: [LOADING_TAG],
+              tags: [UPSERTING_TAG],
               invoke: {
                 src: "enrollIban",
                 id: "enrollIban",
-                onDone: {
-                  target: "IBAN_CONFIGURATION_COMPLETED",
-                  actions: "enrollIbanSuccess"
-                },
+                onDone: [
+                  {
+                    cond: "isIbanOnlyMode",
+                    target: "DISPLAYING_IBAN_LIST",
+                    actions: ["enrollIbanSuccess", "showUpdateIbanToast"]
+                  },
+                  {
+                    target: "IBAN_CONFIGURATION_COMPLETED",
+                    actions: "enrollIbanSuccess"
+                  }
+                ],
                 onError: {
                   target: "DISPLAYING_IBAN_LIST",
                   actions: ["setFailure", "showFailureToast"]
