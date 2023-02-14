@@ -140,7 +140,7 @@ export type LogoutT = IPostApiRequestType<
 export function BackendClient(
   baseUrl: string,
   token: SessionToken,
-  fetchApi: typeof fetch = defaultRetryingFetch(fetchTimeout, fetchMaxRetries)
+  fetchApi: typeof fetch = defaultRetryingFetch()
 ) {
   const options = {
     baseUrl,
