@@ -1,6 +1,9 @@
 /**
  * A reducer for lollipop.
  */
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import { createSelector } from "reselect";
 import { isActionOf } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
 import { lollipopKeyTagSave } from "../actions/lollipop";
@@ -29,5 +32,12 @@ export default function lollipopReducer(
 
 export const lollipopSelector = (state: GlobalState) => state.lollipop;
 
-export const lollipopKeyTagSelector = (state: GlobalState) =>
-  state.lollipop?.keyTag;
+export const lollipopKeyTagSelector = createSelector(
+  lollipopSelector,
+  (lollipop): O.Option<string> =>
+    pipe(
+      lollipop,
+      O.fromNullable,
+      O.chainNullableK(lollipop => lollipop.keyTag)
+    )
+);
