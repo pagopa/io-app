@@ -1,19 +1,26 @@
 import * as React from "react";
 import { Text, View, ColorValue, StyleSheet } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { H2 } from "../../../components/core/typography/H2";
 import { H5 } from "../../../components/core/typography/H5";
+import { LabelSmall } from "../../../components/core/typography/LabelSmall";
 import {
+  IOColorsLegacy,
   IOColors,
   IOColorGradients,
-  hexToRgba
+  hexToRgba,
+  IOColorsNeutral,
+  IOColorsTints,
+  IOColorsStatus,
+  IOColorsExtra
 } from "../../../components/core/variables/IOColors";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 const colorItemGutter = 16;
 const sectionTitleMargin = 16;
 const colorItemBorder = hexToRgba(IOColors.black, 0.1);
-const colorPillBg = hexToRgba(IOColors.black, 0.3);
+const colorPillBg = hexToRgba(IOColors.black, 0.2);
 
 const styles = StyleSheet.create({
   itemsWrapper: {
@@ -25,6 +32,10 @@ const styles = StyleSheet.create({
     marginBottom: 16
   },
   colorWrapper: {
+    justifyContent: "flex-start",
+    marginBottom: 16
+  },
+  gradientWrapper: {
     width: "50%",
     justifyContent: "flex-start",
     marginBottom: 16,
@@ -32,7 +43,6 @@ const styles = StyleSheet.create({
   },
   colorItem: {
     width: "100%",
-    aspectRatio: 4 / 1,
     padding: 8,
     borderRadius: 4,
     alignItems: "flex-end",
@@ -58,24 +68,39 @@ const styles = StyleSheet.create({
   }
 });
 
+const renderColorGroup = (
+  name: string,
+  colorObject: Record<string, ColorValue>
+) => (
+  <View style={{ marginBottom: 40 }}>
+    {name && (
+      <H2
+        color={"bluegrey"}
+        weight={"SemiBold"}
+        style={{ marginBottom: sectionTitleMargin }}
+      >
+        {name}
+      </H2>
+    )}
+
+    {Object.entries(colorObject).map(([name, colorValue]) => (
+      <ColorBox key={name} name={name} color={colorValue} />
+    ))}
+  </View>
+);
+
 export const DSColors = () => (
   <DesignSystemScreen title={"Colors"}>
-    <H2
-      color={"bluegrey"}
-      weight={"SemiBold"}
-      style={{ marginBottom: sectionTitleMargin }}
-    >
-      Plain
-    </H2>
-    <View style={styles.itemsWrapper}>
-      {Object.entries(IOColors).map(colorEntry => (
-        <ColorBox
-          key={colorEntry[0]}
-          name={colorEntry[0]}
-          color={colorEntry[1]}
-        />
-      ))}
-    </View>
+    {/* Neutrals */}
+    {renderColorGroup("Neutrals", IOColorsNeutral)}
+    {/* Tints */}
+    {renderColorGroup("Main tints", IOColorsTints)}
+    {/* Status */}
+    {renderColorGroup("Status", IOColorsStatus)}
+    {/* Extra */}
+    {renderColorGroup("Extra", IOColorsExtra)}
+
+    {/* Gradients */}
     <H2
       color={"bluegrey"}
       weight={"SemiBold"}
@@ -84,14 +109,27 @@ export const DSColors = () => (
       Gradients
     </H2>
     <View style={styles.itemsWrapper}>
-      {Object.entries(IOColorGradients).map(colorEntry => (
-        <GradientBox
-          key={colorEntry[0]}
-          name={colorEntry[0]}
-          colors={colorEntry[1]}
-        />
+      {Object.entries(IOColorGradients).map(([name, colorValues]) => (
+        <GradientBox key={name} name={name} colors={colorValues} />
       ))}
     </View>
+
+    <VSpacer size={40} />
+
+    {/* Legacy */}
+    <View style={{ marginBottom: sectionTitleMargin }}>
+      <H2 color={"bluegrey"} weight={"SemiBold"}>
+        Legacy palette (†2023)
+      </H2>
+      <LabelSmall weight={"Regular"} color="bluegrey">
+        Not moved to the &ldquo;Legacy&rdquo; category yet, because it&apos;s
+        currently used everywhere
+      </LabelSmall>
+    </View>
+    {Object.entries(IOColorsLegacy).map(([name, colorValue]) => (
+      <ColorBox key={name} name={name} color={colorValue} />
+    ))}
+    <VSpacer size={40} />
   </DesignSystemScreen>
 );
 
@@ -116,9 +154,9 @@ const ColorBox = (props: ColorBoxProps) => (
       {props.color && <Text style={styles.colorPill}>{props.color}</Text>}
     </View>
     {props.name && (
-      <H5 color={"bluegrey"} weight={"Regular"}>
+      <LabelSmall color={"bluegrey"} weight={"Regular"}>
         {props.name}
-      </H5>
+      </LabelSmall>
     )}
   </View>
 );
@@ -126,7 +164,7 @@ const ColorBox = (props: ColorBoxProps) => (
 const GradientBox = (props: GradientBoxProps) => {
   const [first, last] = props.colors;
   return (
-    <View style={styles.colorWrapper}>
+    <View style={styles.gradientWrapper}>
       <LinearGradient
         colors={props.colors}
         useAngle={true}
