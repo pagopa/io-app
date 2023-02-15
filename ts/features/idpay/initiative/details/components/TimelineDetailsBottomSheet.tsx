@@ -86,7 +86,7 @@ const bottomSheetConfigurations: Record<
     title: I18n.t("idpay.initiative.operationDetails.title.refund")
   },
   REJECTED_REFUND: {
-    snapPoint: 530,
+    snapPoint: 540,
     title: I18n.t("idpay.initiative.operationDetails.title.refund")
   },
   TRANSACTION: {

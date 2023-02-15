@@ -119,7 +119,7 @@ const RefundDetailsComponent = (props: RefundDetailsProps) => {
       <View style={styles.detailRow}>
         <Body>{I18n.t("idpay.initiative.operationDetails.refundAmount")}</Body>
         <Body weight="SemiBold">
-          {formatNumberAmount(refund.accrued || 0, true)}
+          {formatNumberAmount(refund.amount || 0, true)}
         </Body>
       </View>
       <View style={styles.detailRow}>
