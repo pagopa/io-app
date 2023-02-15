@@ -12,7 +12,6 @@ import {
 import { ContentWrapper } from "../../../components/core/ContentWrapper";
 import { Body } from "../../../components/core/typography/Body";
 import { IOColors } from "../../../components/core/variables/IOColors";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { LabelSmall } from "../../../components/core/typography/LabelSmall";
 
 const styles = StyleSheet.create({
