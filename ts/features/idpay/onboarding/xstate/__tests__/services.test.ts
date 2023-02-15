@@ -85,7 +85,7 @@ const T_ACCEPTED_SELF_DECLARATION_LIST: Array<SelfConsentDTO> = [
     code: "3",
     accepted: true
   },
-  ...Object.entries(T_MULTI_CONSENTS_ANSWERS)
+  ...Object.values(T_MULTI_CONSENTS_ANSWERS)
 ] as Array<SelfConsentDTO>;
 
 const mockOnboardingClient = {
