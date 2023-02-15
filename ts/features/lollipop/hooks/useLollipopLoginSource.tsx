@@ -74,6 +74,5 @@ export const useLollipopLoginSource = (loginUri?: string) => {
       });
   }, [isLollipopEnabled, lollipopKeyTag, loginUri, setDeprecatedLoginUri]);
 
-  console.log("✅ " + JSON.stringify(loginSource));
   return loginSource;
 };
