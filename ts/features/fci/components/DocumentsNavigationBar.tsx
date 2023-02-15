@@ -17,6 +17,15 @@ const styles = StyleSheet.create({
     paddingTop: 12,
     paddingBottom: 12
   },
+  button: {
+    paddingLeft: 8,
+    paddingRight: 8,
+    paddingBottom: 0,
+    paddingTop: 0
+  },
+  icon: {
+    paddingRight: 0
+  },
   shadow: {
     // iOS
     shadowColor: IOColors.black,
@@ -55,15 +64,14 @@ const renderNavigationComponent = (
     {/* button left */}
     <ButtonDefaultOpacity
       onPress={onPrevious}
-      style={{
-        flex: 1
-      }}
       transparent={true}
+      style={styles.button}
       disabled={disabled}
       testID={"DocumentsNavigationBarLeftButtonTestID"}
     >
       <IconFont
         name={"io-back"}
+        style={styles.icon}
         color={iconLeftColor ?? IOColors.blue}
         accessible={true}
       />
@@ -72,13 +80,14 @@ const renderNavigationComponent = (
     {/* button right */}
     <ButtonDefaultOpacity
       onPress={onNext}
-      style={{ flex: 1 }}
       transparent={true}
+      style={styles.button}
       disabled={disabled}
       testID={"DocumentsNavigationBarRightButtonTestID"}
     >
       <IconFont
         name={"io-right"}
+        style={styles.icon}
         color={iconRightColor ?? IOColors.blue}
         accessible={true}
       />
@@ -106,6 +115,7 @@ const DocumentsNavigationBar = (props: Props) => (
         <H4>{props.titleLeft}</H4>
         <View style={{ flex: 1 }} />
         {renderNavigationComponent(props, props.titleRight)}
+        <HSpacer />
       </>
     )}
   </View>
