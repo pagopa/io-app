@@ -342,8 +342,8 @@ export function* initializeApplicationSaga(): Generator<
 
   // Track crypto key generation info
   const keyTag = yield* select(lollipopKeyTagSelector);
-  if (keyTag) {
-    yield* call(trackMixpanelCryptoKeyPairEvents, keyTag);
+  if (O.isSome(keyTag)) {
+    yield* call(trackMixpanelCryptoKeyPairEvents, keyTag.value);
   }
 
   if (hasPreviousSessionAndPin) {

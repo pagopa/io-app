@@ -1,3 +1,4 @@
+import * as O from "fp-ts/lib/Option";
 import {
   generate,
   CryptoError,
@@ -18,7 +19,7 @@ import { mixpanelTrack } from "./../../mixpanel";
  */
 export function* cryptoKeyGenerationSaga(
   keyTag: string,
-  previousKeyTag?: string
+  previousKeyTag: O.Option<string>
 ) {
   const isLollipopEnabled = yield* select(isLollipopEnabledSelector);
   if (isLollipopEnabled) {
@@ -51,9 +52,9 @@ export function* trackMixpanelCryptoKeyPairEvents(keyTag: string) {
 /**
  * Deletes a previous saved crypto key pair.
  */
-export function* deletePreviousCryptoKeyPair(keyTag?: string) {
-  if (keyTag) {
-    yield* deleteCryptoKeyPair(keyTag);
+export function* deletePreviousCryptoKeyPair(keyTag: O.Option<string>) {
+  if (O.isSome(keyTag)) {
+    yield* deleteCryptoKeyPair(keyTag.value);
   }
 }
 
