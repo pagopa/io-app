@@ -1,29 +1,19 @@
 import * as O from "fp-ts/lib/Option";
 import { useCallback, useEffect, useState } from "react";
 import { useIOSelector } from "../../../store/hooks";
-import { LoggedOutWithIdp } from "../../../store/reducers/authentication";
 import { isLollipopEnabledSelector } from "../../../store/reducers/backendStatus";
-import { taskGetPublicKey } from "../../../utils/crypto";
-import { getIdpLoginUri } from "../../../utils/login";
+import { taskRegenerateKey } from "../../../utils/crypto";
 import { lollipopKeyTagSelector } from "../store/reducers/lollipop";
 import { LoginSourceAsync } from "../types/LollipopLoginSource";
 import { DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER } from "../utils/login";
 
-type Props = {
-  loggedOutWithIdpAuth?: LoggedOutWithIdp;
-};
-
-export const useLollipopLoginSource = ({ loggedOutWithIdpAuth }: Props) => {
+export const useLollipopLoginSource = (loginUri?: string) => {
   const [loginSource, setLoginSource] = useState<LoginSourceAsync>({
     kind: "initial"
   });
 
   const isLollipopEnabled = useIOSelector(isLollipopEnabledSelector);
   const lollipopKeyTag = useIOSelector(lollipopKeyTagSelector);
-
-  const loginUri = loggedOutWithIdpAuth
-    ? getIdpLoginUri(loggedOutWithIdpAuth.idp.id)
-    : undefined;
 
   const setDeprecatedLoginUri = useCallback((uri: string) => {
     setLoginSource({
@@ -53,7 +43,12 @@ export const useLollipopLoginSource = ({ loggedOutWithIdpAuth }: Props) => {
       return;
     }
 
-    taskGetPublicKey(lollipopKeyTag.value)
+    /**
+     * We generata a new key pair for every new login/relogin/retry we
+     * need to garantee the public key uniqueness on every login request.
+     * https://pagopa.atlassian.net/browse/LLK-37
+     */
+    taskRegenerateKey(lollipopKeyTag.value)
       .then(key => {
         if (!key) {
           setDeprecatedLoginUri(loginUri);
@@ -79,5 +74,6 @@ export const useLollipopLoginSource = ({ loggedOutWithIdpAuth }: Props) => {
       });
   }, [isLollipopEnabled, lollipopKeyTag, loginUri, setDeprecatedLoginUri]);
 
+  console.log("✅ " + JSON.stringify(loginSource));
   return loginSource;
 };

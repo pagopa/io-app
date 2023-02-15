@@ -71,6 +71,9 @@ describe("initializeApplicationSaga", () => {
       .next()
       .put(resetProfileState())
       .next()
+      .next() // lollipopKeyTagSelector);
+      .next() // lollipopKeyTagSave
+      .next() // cryptoKeyGenerationSaga
       .select(sessionTokenSelector)
       .next(aSessionToken)
       .fork(watchSessionExpiredSaga)
@@ -104,6 +107,9 @@ describe("initializeApplicationSaga", () => {
       .next(pot.some(profile))
       .put(resetProfileState())
       .next()
+      .next() // lollipopKeyTagSelector);
+      .next() // lollipopKeyTagSave
+      .next() // cryptoKeyGenerationSaga
       .select(sessionTokenSelector)
       .next(aSessionToken)
       .fork(watchSessionExpiredSaga)
@@ -134,6 +140,9 @@ describe("initializeApplicationSaga", () => {
       .next(pot.some(profile))
       .put(resetProfileState())
       .next()
+      .next() // lollipopKeyTagSelector;
+      .next() // lollipopKeyTagSave
+      .next() // cryptoKeyGenerationSaga
       .select(sessionTokenSelector)
       .next(aSessionToken)
       .fork(watchSessionExpiredSaga)
