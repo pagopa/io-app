@@ -150,7 +150,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
   private handleGoBack = () => {
     // goback if the onboarding is completed
     if (isOnboardingCompleted()) {
-      this.props.navigation.goBack();
+      this.setState({ isMounted: false }, () => this.props.navigation.goBack());
     }
     // if the onboarding is not completed and the email is set, force goback with a reset (user could edit his email and go back without saving)
     // see https://www.pivotaltracker.com/story/show/171424350
@@ -241,7 +241,6 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
           this.state.email,
           O.map(e => {
             this.props.updateEmail(e as EmailString);
-            this.setState({ email: O.some(EMPTY_EMAIL) });
           })
         );
       } else {
