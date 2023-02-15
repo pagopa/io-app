@@ -21,7 +21,7 @@ const debugMode = false;
 const debugBg = hexToRgba(IOColors.red, 0.2);
 
 /**
-Native `Spacer` component that replaces the legacy one, managed through NativeBase
+Native `Spacer` component
 @param  {SpacerOrientation} orientation 
 @param {IOSpacer} size
  */
