@@ -11,6 +11,7 @@ import I18n from "../../../i18n";
 type Props = {
   title: string;
   value?: boolean;
+  disabled?: boolean;
   onChange: (_: boolean) => void;
   onPressDetail: () => void;
 };
@@ -47,6 +48,7 @@ const SignatureFieldItem = (props: Props) => {
           onChange(!checked);
           setChecked(!checked);
         }}
+        disabled={props.disabled}
       >
         <View style={[IOStyles.column, { flex: 1 }]}>
           <H4 style={styles.titleMargin} testID="SignatureFieldItemTitleTestID">
@@ -63,7 +65,13 @@ const SignatureFieldItem = (props: Props) => {
         <IconFont
           testID="SignatureFieldItemCheckboxTestID"
           name={checked ? "io-checkbox-on" : "io-checkbox-off"}
-          color={checked ? IOColors.blue : IOColors.bluegreyDark}
+          color={
+            checked && !props.disabled
+              ? IOColors.blue
+              : props.disabled
+              ? IOColors.grey
+              : IOColors.bluegreyDark
+          }
           size={22}
         />
       </TouchableDefaultOpacity>

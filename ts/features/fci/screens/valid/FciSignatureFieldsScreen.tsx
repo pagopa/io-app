@@ -12,7 +12,7 @@ import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIODispatch } from "../../../../store/hooks";
 import {
-  fciDocumentSignatureFieldsFieldsSelector,
+  fciDocumentSignatureFieldsSelector,
   fciSignatureDetailDocumentsSelector
 } from "../../store/reducers/fciSignatureRequest";
 import { DocumentDetailView } from "../../../../../definitions/fci/DocumentDetailView";
@@ -49,7 +49,7 @@ const FciSignatureFieldsScreen = (
   const currentDoc = props.route.params.currentDoc;
   const documentsSelector = useSelector(fciSignatureDetailDocumentsSelector);
   const signatureFieldsSelector = useSelector(
-    fciDocumentSignatureFieldsFieldsSelector(docId)
+    fciDocumentSignatureFieldsSelector(docId)
   );
   const documentsSignaturesSelector = useSelector(
     fciDocumentSignaturesSelector
@@ -151,6 +151,7 @@ const FciSignatureFieldsScreen = (
       renderItem={({ item }) => (
         <SignatureFieldItem
           title={item.clause.title}
+          disabled={item.clause.type === ClausesTypeEnum.REQUIRED}
           value={pipe(
             documentsSignaturesSelector,
             RA.findFirst(doc => doc.document_id === docId),

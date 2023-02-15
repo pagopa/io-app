@@ -1,6 +1,8 @@
 import * as React from "react";
 import { fireEvent, render } from "@testing-library/react-native";
-import DocumentsNavigationBar from "../DocumentsNavigationBar";
+import DocumentsNavigationBar, {
+  IndicatorPositionEnum
+} from "../DocumentsNavigationBar";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 
 type Props = {
@@ -8,17 +10,20 @@ type Props = {
   titleLeft: string;
   iconRightColor?: string;
   iconLeftColor?: string;
+  disabled?: boolean;
+  indicatorPosition: IndicatorPositionEnum;
   onPrevious: () => void;
   onNext: () => void;
 };
 
 describe("Test DocumentsNavigationBar component", () => {
   it("should render a DocumentsNavigationBar Component with props correctly", () => {
-    const props = {
+    const props: Props = {
       titleRight: "Pagina 1 di 2",
       titleLeft: "Documento 1 di 2",
       iconRightColor: IOColors.blue,
       iconLeftColor: IOColors.blue,
+      indicatorPosition: "left",
       onPrevious: jest.fn(),
       onNext: jest.fn()
     };
@@ -27,9 +32,10 @@ describe("Test DocumentsNavigationBar component", () => {
     expect(component).toMatchSnapshot();
   });
   it("should render a DocumentsNavigationBar Component with titleRight as 'Page 1 of 2'", () => {
-    const props = {
+    const props: Props = {
       titleRight: "Page 1 of 2",
       titleLeft: "",
+      indicatorPosition: "left",
       onPrevious: jest.fn(),
       onNext: jest.fn()
     };
@@ -38,9 +44,10 @@ describe("Test DocumentsNavigationBar component", () => {
     expect(component.queryByText("Page 1 of 2")).toBeTruthy();
   });
   it("should render a DocumentsNavigationBar Component with titleLeft as 'Document 1 of 5'", () => {
-    const props = {
+    const props: Props = {
       titleRight: "",
       titleLeft: "Document 1 of 5",
+      indicatorPosition: "left",
       onPrevious: jest.fn(),
       onNext: jest.fn()
     };
@@ -50,9 +57,10 @@ describe("Test DocumentsNavigationBar component", () => {
   });
   it("should render a DocumentsNavigationBar Component with onPrevious button clickable", () => {
     const onPress = jest.fn();
-    const props = {
+    const props: Props = {
       titleRight: "",
       titleLeft: "",
+      indicatorPosition: "left",
       onPrevious: onPress,
       onNext: jest.fn()
     };
@@ -69,9 +77,10 @@ describe("Test DocumentsNavigationBar component", () => {
   });
   it("should render a DocumentsNavigationBar Component with onNext button clickable", () => {
     const onPress = jest.fn();
-    const props = {
+    const props: Props = {
       titleRight: "",
       titleLeft: "",
+      indicatorPosition: "left",
       onPrevious: jest.fn(),
       onNext: onPress
     };
@@ -88,10 +97,11 @@ describe("Test DocumentsNavigationBar component", () => {
   });
   it("should render a DocumentsNavigationBar Component with right arrow button disabled", () => {
     const onPress = jest.fn();
-    const props = {
+    const props: Props = {
       titleRight: "",
       titleLeft: "",
       disabled: true,
+      indicatorPosition: "left",
       onPrevious: jest.fn(),
       onNext: onPress
     };
@@ -108,10 +118,11 @@ describe("Test DocumentsNavigationBar component", () => {
   });
   it("should render a DocumentsNavigationBar Component with left arrow button disabled", () => {
     const onPress = jest.fn();
-    const props = {
+    const props: Props = {
       titleRight: "",
       titleLeft: "",
       disabled: true,
+      indicatorPosition: "left",
       onPrevious: jest.fn(),
       onNext: onPress
     };
