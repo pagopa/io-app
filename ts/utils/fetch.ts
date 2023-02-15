@@ -155,20 +155,18 @@ export function lollipopFetch(
     _ => _.status === 429,
     retryLogic
   );
+
   return retriableFetch(retryWithTransient429s)(
     (input: RequestInfo | URL, init?: RequestInit) => {
-      const { keyTag, publicKey } = keyInfo;
-      if (
-        publicKey &&
-        keyTag &&
-        typeof input === "string" &&
-        init?.headers &&
-        init?.method
-      ) {
+      const requestAndKeyInfo = isKeyInfoAndRquestValid(keyInfo, input, init);
+      if (requestAndKeyInfo) {
         // eslint-disable-next-line functional/no-let
-        let newInit = init;
+        let newInit = requestAndKeyInfo.init;
         const { body, bodyString, inputUrl, method, originalUrl } =
-          extractHttpRequestComponents(input, init);
+          extractHttpRequestComponents(
+            requestAndKeyInfo.input,
+            requestAndKeyInfo.init
+          );
         if (body) {
           newInit = addHeader(
             newInit,
@@ -177,8 +175,8 @@ export function lollipopFetch(
           );
         }
         const signatureConfigForgeInput: SignatureConfigForgeInput = {
-          publicKey,
-          keyTag,
+          publicKey: requestAndKeyInfo.publicKey,
+          keyTag: requestAndKeyInfo.keyTag,
           lollipopConfig,
           method,
           inputUrl,
@@ -229,18 +227,20 @@ export function lollipopFetch(
               customHeaderSignatureConfig,
               headerIndex
             );
-            return sign(customSignatureBase, keyTag).then(function (value) {
-              return Promise.resolve({
-                headerIndex,
-                headerName,
-                headerValue,
-                signature: `sig${headerIndex}:${value}:`,
-                "signature-input": customSignatureInput
-              });
-            });
+            return sign(customSignatureBase, requestAndKeyInfo.keyTag).then(
+              function (value) {
+                return Promise.resolve({
+                  headerIndex,
+                  headerName,
+                  headerValue,
+                  signature: `sig${headerIndex}:${value}:`,
+                  "signature-input": customSignatureInput
+                });
+              }
+            );
           }) ?? [];
 
-        return sign(mainSignatureBase, keyTag)
+        return sign(mainSignatureBase, requestAndKeyInfo.keyTag)
           .then(function (mainSignValue) {
             return chainSignPromises(customSignPromises).then(function (
               customSignValues
@@ -339,3 +339,36 @@ function addHeader(
     }
   };
 }
+
+/**
+ * Check if the keyInfo and Request properties are properly initialized for fetching
+ */
+function isKeyInfoAndRquestValid(
+  keyInfo: KeyInfo,
+  input: RequestInfo | URL,
+  init?: RequestInit
+): RequestAndKeyInfoForLPFetch | undefined {
+  return keyInfo.publicKey &&
+    keyInfo.keyTag &&
+    typeof input === "string" &&
+    init?.headers &&
+    init?.method
+    ? {
+        publicKey: keyInfo.publicKey,
+        keyTag: keyInfo.keyTag,
+        input,
+        init,
+        headers: init.headers,
+        method: init.method
+      }
+    : undefined;
+}
+
+type RequestAndKeyInfoForLPFetch = {
+  publicKey: PublicKey;
+  keyTag: string;
+  input: string;
+  init: RequestInit;
+  headers: HeadersInit;
+  method: string;
+};
