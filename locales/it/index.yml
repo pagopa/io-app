@@ -3215,8 +3215,8 @@ features:
         title: La richiesta di firma è scaduta
         subTitle: Per assistenza contattare l'ente
       waitForQtsp:
-        title: Il documento è in elaborazione
-        subTitle: Ti preghiamo di attendere, presto riceverai il contratto firmato in app.
+        title: Il firma è in elaborazione
+        subTitle: Riceverai un messaggio con i documenti firmati non appena saranno pronti.
       unsupportedDevice:
         title: C’è un problema
         subTitle: Il tuo device non supporta la funzionalità Firma con IO.

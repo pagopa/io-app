@@ -3191,8 +3191,8 @@ features:
         title: The signature request is expired
         subTitle: If you need help contact the issuer
       waitForQtsp:
-        title: The document is being processed
-        subTitle: Please wait, you will soon receive the signed contract in the app.
+        title: The signature is being processed.
+        subTitle: You will receive a message with the signed documents as soon as they are ready.
       unsupportedDevice:
         title: There is a problem
         subTitle: Your device does not support the "Firma con IO" feature.
