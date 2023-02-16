@@ -59,8 +59,14 @@ export const checkPublicKeyExists = (keyTag: string) =>
 export const taskRegenerateKey = (keyTag: string) =>
   pipe(
     TE.tryCatch(
-      () => deleteKey(keyTag).then(() => generate(keyTag)),
+      () => deleteKey(keyTag),
       () => undefined
+    ),
+    TE.chain(() =>
+      TE.tryCatch(
+        () => generate(keyTag),
+        () => undefined
+      )
     ),
     TE.getOrElseW(() => T.of(undefined))
   )();
