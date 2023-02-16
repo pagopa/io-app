@@ -5,8 +5,6 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import Pdf from "react-native-pdf";
 import * as S from "fp-ts/lib/string";
-import genericError from "../../../../img/wallet/errors/generic-error-icon.png";
-import errorDetail from "../../../../img/servicesStatus/error-detail-icon.png";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
@@ -16,15 +14,12 @@ import { showToast } from "../../../utils/showToast";
 import { confirmButtonProps } from "../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { FciDownloadPreviewDirectoryPath } from "../saga/networking/handleDownloadDocument";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { fciDownloadPreview, fciDownloadPreviewClear } from "../store/actions";
+import { fciDownloadPreview } from "../store/actions";
 import {
   fciDownloadPathSelector,
   fciDownloadPreviewSelector
 } from "../store/reducers/fciDownloadPreview";
 import { LoadingErrorComponent } from "../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
-import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
-import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
-import ErrorComponent from "./ErrorComponent";
 
 const styles = StyleSheet.create({
   pdf: {
@@ -122,6 +117,7 @@ type Props = {
   documentUrl: string;
   onLoadComplete?: (totalPages: number) => void;
   onPageChanged?: (page: number) => void;
+  onError: () => void;
 };
 
 const LoadingComponent = () => (
@@ -132,6 +128,7 @@ const LoadingComponent = () => (
     testID={"FciRouterLoadingScreenTestID"}
   />
 );
+
 export const DocumentViewer = (props: Props): React.ReactElement => {
   const [isError, setIsError] = useState(false);
   const documentUrl = props.documentUrl;
@@ -147,7 +144,11 @@ export const DocumentViewer = (props: Props): React.ReactElement => {
     return <LoadingComponent />;
   }
 
-  return !pot.isError(fciDownloadSelector) ? (
+  if (pot.isError(fciDownloadSelector) || isError) {
+    props.onError();
+  }
+
+  return (
     <>
       {S.isEmpty(fciDownloadPath) === false && (
         <>
@@ -157,34 +158,12 @@ export const DocumentViewer = (props: Props): React.ReactElement => {
             onLoadComplete={props.onLoadComplete}
             onPageChanged={props.onPageChanged}
             onError={_ => {
-              // props.onError?.();
               setIsError(true);
             }}
           />
           {renderFooter(documentUrl, fciDownloadPath)}
         </>
       )}
-      {isError && (
-        <InfoScreenComponent
-          image={renderInfoRasterImage(errorDetail)}
-          title={I18n.t(
-            "features.mvl.details.attachments.pdfPreview.errors.previewing.title"
-          )}
-          body={I18n.t(
-            "features.mvl.details.attachments.pdfPreview.errors.previewing.body"
-          )}
-        />
-      )}
     </>
-  ) : (
-    <ErrorComponent
-      title={I18n.t("genericError")}
-      subTitle={I18n.t("global.jserror.title")}
-      onPress={() =>
-        dispatch(fciDownloadPreviewClear({ path: fciDownloadPath }))
-      }
-      image={genericError}
-      testID={"DocumentViewerErrorTestID"}
-    />
   );
 };

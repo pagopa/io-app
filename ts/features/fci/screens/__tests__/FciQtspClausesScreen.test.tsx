@@ -87,7 +87,7 @@ describe("Test FciQtspClauses screen", () => {
     const component = renderComponent(store);
     expect(component).toBeTruthy();
     expect(component.queryByTestId("FciLoadingScreenTestID")).toBeFalsy();
-    expect(component.queryByTestId("GenericErrorComponentTestID")).toBeTruthy();
+    expect(component.queryByTestId("PollingErrorComponentTestID")).toBeTruthy();
   });
 });
 

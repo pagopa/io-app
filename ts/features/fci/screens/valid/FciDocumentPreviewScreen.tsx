@@ -17,9 +17,11 @@ import { fciSignatureDetailDocumentsSelector } from "../../store/reducers/fciSig
 import DocumentsNavigationBar from "../../components/DocumentsNavigationBar";
 import {
   fciDownloadPreviewClear,
+  fciEndRequest,
   fciShowSignedDocumentsEndRequest
 } from "../../store/actions";
 import { fciDownloadPathSelector } from "../../store/reducers/fciDownloadPreview";
+import GenericErrorComponent from "../../components/GenericErrorComponent";
 
 export type FciDocumentPreviewScreenNavigationParams = Readonly<{
   documentUrl: string;
@@ -34,6 +36,7 @@ const styles = StyleSheet.create({
 export const FciDocumentPreviewScreen = (
   props: IOStackNavigationRouteProps<FciParamsList, "FCI_DOC_PREVIEW">
 ): React.ReactElement => {
+  const [isError, setIsError] = React.useState(false);
   const docParamUrl = props.route.params.documentUrl ?? "";
   const [documentUrl, setDocumentUrl] = React.useState("");
   const [showDocNavBar, setShowDocNavBar] = React.useState(false);
@@ -53,6 +56,17 @@ export const FciDocumentPreviewScreen = (
       setDocumentUrl(docParamUrl);
     }
   }, [currentDoc, documents, documentUrl, docParamUrl]);
+
+  if (isError) {
+    return (
+      <GenericErrorComponent
+        title={I18n.t("features.fci.errors.generic.default.title")}
+        subTitle={I18n.t("features.fci.errors.generic.default.subTitle")}
+        retry={false}
+        onPress={() => dispatch(fciEndRequest())}
+      />
+    );
+  }
 
   const customGoBack: React.ReactElement = (
     <TouchableDefaultOpacity
@@ -113,7 +127,7 @@ export const FciDocumentPreviewScreen = (
     />
   );
 
-  return (
+  return !isError ? (
     <BaseScreenComponent
       goBack={true}
       customGoBack={customGoBack}
@@ -134,9 +148,17 @@ export const FciDocumentPreviewScreen = (
               setCurrentPage(page);
             }}
             documentUrl={documentUrl}
+            onError={() => setIsError(true)}
           />
         )}
       </SafeAreaView>
     </BaseScreenComponent>
+  ) : (
+    <GenericErrorComponent
+      title={I18n.t("features.fci.errors.generic.default.title")}
+      subTitle={I18n.t("features.fci.errors.generic.default.subTitle")}
+      retry={true}
+      onPress={() => dispatch(fciEndRequest())}
+    />
   );
 };

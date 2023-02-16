@@ -81,9 +81,22 @@ const SuccessComponent = (props: {
     case SignatureRequestDetailStatus.SIGNED:
       dispatch(fciShowSignedDocumentsStartRequest());
       return null;
+    case SignatureRequestDetailStatus.REJECTED:
+      return (
+        <GenericErrorComponent
+          title={I18n.t("features.fci.errors.generic.rejected.title")}
+          subTitle={I18n.t("features.fci.errors.generic.rejected.subTitle")}
+          onPress={() => dispatch(fciEndRequest())}
+          testID="RejectedSignatureRequestTestID"
+        />
+      );
     default:
       return (
-        <GenericErrorComponent onPress={() => dispatch(fciEndRequest())} />
+        <GenericErrorComponent
+          title={I18n.t("features.fci.errors.generic.default.title")}
+          subTitle={I18n.t("features.fci.errors.generic.default.subTitle")}
+          onPress={() => dispatch(fciEndRequest())}
+        />
       );
   }
 };

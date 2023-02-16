@@ -63,7 +63,14 @@ const FciQtspClausesScreen = () => {
   );
 
   if (fciPollFilledDocumentError && !isPollFilledDocumentReady) {
-    return <GenericErrorComponent onPress={() => dispatch(fciEndRequest())} />;
+    return (
+      <GenericErrorComponent
+        title={I18n.t("features.fci.errors.generic.default.title")}
+        subTitle={I18n.t("features.fci.errors.generic.default.subTitle")}
+        onPress={() => dispatch(fciEndRequest())}
+        testID="PollingErrorComponentTestID"
+      />
+    );
   } else if (!isPollFilledDocumentReady) {
     return <LoadingComponent />;
   }
