@@ -88,6 +88,10 @@ const createActionsImplementation = (
     );
   };
 
+  const showUpdateIbanToast = () => {
+    showToast(I18n.t(`idpay.configuration.iban.updateToast`), "success");
+  };
+
   const exitConfiguration = () => {
     navigation.pop();
   };
@@ -102,6 +106,7 @@ const createActionsImplementation = (
     navigateToInitiativeDetailScreen,
     navigateToConfigurationSuccessScreen,
     showFailureToast,
+    showUpdateIbanToast,
     exitConfiguration
   };
 };
