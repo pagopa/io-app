@@ -1,5 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import { useCallback, useEffect, useState } from "react";
+import { lollipopLoginEnabled } from "../../../config";
 import { useIOSelector } from "../../../store/hooks";
 import { isLollipopEnabledSelector } from "../../../store/reducers/backendStatus";
 import { taskRegenerateKey } from "../../../utils/crypto";
@@ -12,7 +13,8 @@ export const useLollipopLoginSource = (loginUri?: string) => {
     kind: "initial"
   });
 
-  const isLollipopEnabled = useIOSelector(isLollipopEnabledSelector);
+  const useLollipopLogin =
+    useIOSelector(isLollipopEnabledSelector) && lollipopLoginEnabled;
   const lollipopKeyTag = useIOSelector(lollipopKeyTagSelector);
 
   const setDeprecatedLoginUri = useCallback((uri: string) => {
@@ -36,7 +38,7 @@ export const useLollipopLoginSource = (loginUri?: string) => {
       return;
     }
 
-    if (!isLollipopEnabled || O.isNone(lollipopKeyTag)) {
+    if (!useLollipopLogin || O.isNone(lollipopKeyTag)) {
       // Key generation may have failed. In that case, follow the old
       // non-lollipop login flow
       setDeprecatedLoginUri(loginUri);
@@ -72,7 +74,7 @@ export const useLollipopLoginSource = (loginUri?: string) => {
       .catch(_ => {
         setDeprecatedLoginUri(loginUri);
       });
-  }, [isLollipopEnabled, lollipopKeyTag, loginUri, setDeprecatedLoginUri]);
+  }, [useLollipopLogin, lollipopKeyTag, loginUri, setDeprecatedLoginUri]);
 
   return loginSource;
 };

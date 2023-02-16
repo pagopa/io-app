@@ -7,6 +7,7 @@ import {
   cryptoKeyGenerationSaga,
   deletePreviousCryptoKeyPair
 } from "../../../sagas/startup/generateCryptoKeyPair";
+import { lollipopLoginEnabled } from "../../../config";
 
 export function* generataLollipopKeySaga() {
   const maybeOldKeyTag = yield* select(lollipopKeyTagSelector);
@@ -18,6 +19,11 @@ export function* generataLollipopKeySaga() {
     const newKeyTag = uuid();
     yield* put(lollipopKeyTagSave({ keyTag: newKeyTag }));
     yield* cryptoKeyGenerationSaga(newKeyTag, maybeOldKeyTag);
+    if (!lollipopLoginEnabled) {
+      // If the lollipop login is not enable we immediately delete
+      // the new generated key.
+      yield* deletePreviousCryptoKeyPair(O.some(newKeyTag));
+    }
   }
 }
 
