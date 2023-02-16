@@ -1,7 +1,7 @@
 import * as O from "fp-ts/lib/Option";
 import { View } from "native-base";
 import React, { useCallback } from "react";
-import { StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 
 import { pipe } from "fp-ts/lib/function";
 import I18n from "../../i18n";
@@ -14,7 +14,9 @@ import MessageList from "./MessageList";
 
 const styles = StyleSheet.create({
   listWrapper: {
-    flex: 1
+    flex: 1,
+    borderTopWidth: Platform.OS === "android" ? 0.1 : undefined,
+    elevation: 0.1
   },
   listContainer: {
     flex: 1

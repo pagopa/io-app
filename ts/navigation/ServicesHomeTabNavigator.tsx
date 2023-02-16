@@ -17,6 +17,9 @@ const ServicesHomeTabNavigator = () => (
     tabBarOptions={{
       activeTintColor: IOColors.blue,
       inactiveTintColor: IOColors.bluegrey,
+      style: {
+        elevation: 0
+      },
       tabStyle: {
         height: 40
       },

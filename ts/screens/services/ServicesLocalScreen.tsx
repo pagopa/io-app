@@ -1,11 +1,20 @@
 import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import { useCallback } from "react";
+import { Platform, View, StyleSheet } from "react-native";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import LocalServicesWebView from "../../components/services/LocalServicesWebView";
 import ROUTES from "../../navigation/routes";
 import { showServiceDetails } from "../../store/actions/services";
 import { useIODispatch } from "../../store/hooks";
+
+const styles = StyleSheet.create({
+  contentWrapper: {
+    flex: 1,
+    borderTopWidth: Platform.OS === "android" ? 0.19 : undefined,
+    elevation: 0.1
+  }
+});
 
 const ServicesLocalScreen = () => {
   const dispatch = useIODispatch();
@@ -23,7 +32,11 @@ const ServicesLocalScreen = () => {
     [dispatch, navigation]
   );
 
-  return <LocalServicesWebView onServiceSelect={onServiceSelect} />;
+  return (
+    <View style={styles.contentWrapper}>
+      <LocalServicesWebView onServiceSelect={onServiceSelect} />
+    </View>
+  );
 };
 
 export default ServicesLocalScreen;

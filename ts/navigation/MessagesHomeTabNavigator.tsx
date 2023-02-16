@@ -14,6 +14,9 @@ const MessagesHomeTabNavigator = () => (
     initialRouteName="MESSAGES_INBOX"
     tabBarPosition="top"
     tabBarOptions={{
+      style: {
+        elevation: 0
+      },
       activeTintColor: IOColors.blue,
       inactiveTintColor: IOColors.bluegrey,
       tabStyle: {

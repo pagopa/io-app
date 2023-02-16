@@ -8,7 +8,8 @@ import {
   Image,
   NativeScrollEvent,
   NativeSyntheticEvent,
-  StyleSheet
+  StyleSheet,
+  Platform
 } from "react-native";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
@@ -35,7 +36,9 @@ type Props = AnimatedProps & OwnProps;
 
 const styles = StyleSheet.create({
   contentWrapper: {
-    flex: 1
+    flex: 1,
+    borderTopWidth: Platform.OS === "android" ? 0.19 : undefined,
+    elevation: 0.1
   },
   headerContentWrapper: {
     paddingRight: customVariables.contentPadding,
