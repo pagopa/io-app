@@ -513,7 +513,7 @@ profile:
         description: Su richiesta dell'ente, ricevi notifiche push in prossimità di scadenze o quando hai dei messaggi non letti
       preview:
         title: Mostra anteprime
-        description: Includi nella notifica push il mittente e l’oggetto del messaggio ·
+        description: Includi nella notifica push il mittente e l’oggetto del messaggio · 
         link: Più info
         bottomSheet:
           title: Mostra anteprime
@@ -1702,17 +1702,17 @@ messages:
         block1: Aggiungi un promemoria per il
         block2: alle
       expiringOrValidAlert:
-        block1: Scade il
-        block2: alle ore
+        block1: Scade il 
+        block2: alle ore 
       expiredAlert:
-        block1: Scaduto il
-        block2: alle ore
+        block1: Scaduto il 
+        block2: alle ore 
     prescription:
       expiringOrValidAlert:
-        block1: Scade il
+        block1: Scade il 
         block2: alle
       expiredAlert:
-        block1: Scaduta il
+        block1: Scaduta il 
         block2: alle
 
     pay: Paga € {{amount}}
@@ -3205,8 +3205,8 @@ features:
           REFUSED: REFUSED
           CANCELLED: Annullata
         expand: mostra gli stati precedenti
-        info: Puoi vedere il dettaglio di ciascuno stato, scaricare le ricevute e le attestazioni opponibili a terzi accedendo alla versione web del servizio
-        cta: Accedi alla versione web
+        info: Puoi vedere il dettaglio di ciascuno stato, scaricare le ricevute e le attestazioni opponibili a terzi accedendo alla versione web del servizio   
+        cta: Accedi alla versione web   
   fci:
     errors:
       expiredAfterSigned:
@@ -3337,9 +3337,9 @@ idpay:
             showMore: Vedi tutte
             header: Impostazioni
             associatedPaymentMethods: Metodi di pagamento associati
-            methodsi18n: metodi
+            methodsi18n: metodi 
             selectedIBAN: IBAN per l'accredito
-            actionsRequired: Azioni richieste
+            actionsRequired: Azioni richieste 
           startConfigurationCTA: Inizia
           operationsList:
             header: Tutte le operazioni
@@ -3403,7 +3403,7 @@ idpay:
             In questo modo non devi produrre alcuna autocertificazione. Comodo, no?
           understoodCTA: Ho capito
       title: Possiedi i seguenti requisiti?
-      subtitle: Verificheremo con alcuni Enti se sei in possesso dei requisiti per poter richiedere {{service}}.
+      subtitle: Verificheremo con alcuni Enti se sei in possesso dei requisiti per poter richiedere {{service}}. 
     multiPrerequisites:
       header: "Dichiari inoltre di:"
       body: L’autodichiarazione è resa ai sensi del
@@ -3411,7 +3411,7 @@ idpay:
     boolPrerequisites:
       header: "Per aderire, dichiari di:"
       body: L’autodichiarazione è resa ai sensi del
-      link: Dpr 28 dicembre 2000 n. 445 art 46 e 47
+      link: Dpr 28 dicembre 2000 n. 445 art 46 e 47 
   configuration:
     failureStates:
       GENERIC: "C'è stato un problema, riprova"
@@ -3439,7 +3439,7 @@ idpay:
       body: "Poi, usali per pagare e chiedi all’esercente di usare {{initiativeName}}."
       footer: Modifica queste scelte o aggiunti altri metodi in qualsiasi momento dalla sezione Portafoglio
       instrumentStatus:
-        active: Attivo
+        active: Attivo 
         pendingActivation: In attivazione
         pendingDeactivation: In disattivazione
       buttons:
@@ -3471,7 +3471,7 @@ idpay:
       onboarding:
         header: Qual è il tuo IBAN?
         body: Aggiungi un conto corrente a te intestato. L’autodichiarazione è resa ai sensi del
-        bodyLink: Dpr 28 dicembre 2000 n. 445 art 46 e 47
+        bodyLink: Dpr 28 dicembre 2000 n. 445 art 46 e 47 
         nameAssignInput: Assegna un nome
         bottomLabel: Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento visitando la sezione Profilo
       button:

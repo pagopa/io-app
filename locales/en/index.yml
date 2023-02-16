@@ -513,7 +513,7 @@ profile:
         description: Upon request of the sender, receive push notifications close to deadlines or when you have unread messages
       preview:
         title: Show previews
-        description: Include the sender and subject of the message in the push notification ·
+        description: Include the sender and subject of the message in the push notification · 
         link: More info
         bottomSheet:
           title: Show previews
@@ -1682,7 +1682,7 @@ messages:
         block1: Add a reminder for the
         block2: at
       expiringOrValidAlert:
-        block1: Expiring on
+        block1: Expiring on 
         block2: at
       expiredAlert:
         block1: Expired on
@@ -3181,8 +3181,8 @@ features:
           REFUSED: REFUSED
           CANCELLED: Annullata
         expand: mostra gli stati precedenti
-        info: Puoi vedere il dettaglio di ciascuno stato, scaricare le ricevute e le attestazioni opponibili a terzi accedendo alla versione web del servizio
-        cta: Accedi alla versione web
+        info: Puoi vedere il dettaglio di ciascuno stato, scaricare le ricevute e le attestazioni opponibili a terzi accedendo alla versione web del servizio   
+        cta: Accedi alla versione web  
   fci:
     errors:
       expiredAfterSigned:
@@ -3313,9 +3313,9 @@ idpay:
             showMore: Vedi tutte
             header: Impostazioni
             associatedPaymentMethods: Metodi di pagamento associati
-            methodsi18n: metodi
+            methodsi18n: metodi 
             selectedIBAN: IBAN per l'accredito
-            actionsRequired: Azioni richieste
+            actionsRequired: Azioni richieste 
           startConfigurationCTA: Inizia
           operationsList:
             header: Tutte le operazioni
@@ -3380,7 +3380,7 @@ idpay:
             In questo modo non devi produrre alcuna autocertificazione. Comodo, no?
           understoodCTA: Ho capito
       title: Possiedi i seguenti requisiti?
-      subtitle: Verificheremo con alcuni Enti se sei in possesso dei requisiti per poter richiedere {{service}}.
+      subtitle: Verificheremo con alcuni Enti se sei in possesso dei requisiti per poter richiedere {{service}}. 
     multiPrerequisites:
       header: "Dichiari inoltre di:"
       body: L’autodichiarazione è resa ai sensi del
@@ -3388,7 +3388,7 @@ idpay:
     boolPrerequisites:
       header: "Per aderire, dichiari di:"
       body: L’autodichiarazione è resa ai sensi del
-      link: Dpr 28 dicembre 2000 n. 445 art 46 e 47
+      link: Dpr 28 dicembre 2000 n. 445 art 46 e 47 
   configuration:
     failureStates:
       GENERIC: "C'è stato un problema, riprova"
@@ -3448,7 +3448,7 @@ idpay:
       onboarding:
         header: Qual è il tuo IBAN?
         body: Aggiungi un conto corrente a te intestato. L’autodichiarazione è resa ai sensi del
-        bodyLink: Dpr 28 dicembre 2000 n. 445 art 46 e 47
+        bodyLink: Dpr 28 dicembre 2000 n. 445 art 46 e 47 
         nameAssignInput: Assegna un nome
         bottomLabel: Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento visitando la sezione Profilo
       button:
