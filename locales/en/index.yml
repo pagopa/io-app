@@ -513,7 +513,7 @@ profile:
         description: Upon request of the sender, receive push notifications close to deadlines or when you have unread messages
       preview:
         title: Show previews
-        description: Include the sender and subject of the message in the push notification · 
+        description: Include the sender and subject of the message in the push notification ·
         link: More info
         bottomSheet:
           title: Show previews
@@ -1682,7 +1682,7 @@ messages:
         block1: Add a reminder for the
         block2: at
       expiringOrValidAlert:
-        block1: Expiring on 
+        block1: Expiring on
         block2: at
       expiredAlert:
         block1: Expired on
@@ -1790,6 +1790,7 @@ messageDetails:
   write: Write
   id: "ID:"
   attachments:
+    loading: "Loading Document..."
     badFormat: "The attachment format is not supported. Please contact the sender"
     corruptedFile: "The attachment is corrupt and can't be opened. Please contact the sender"
     downloadFailed: "We couldn't open the attachment. Try again"
@@ -3180,8 +3181,8 @@ features:
           REFUSED: REFUSED
           CANCELLED: Annullata
         expand: mostra gli stati precedenti
-        info: Puoi vedere il dettaglio di ciascuno stato, scaricare le ricevute e le attestazioni opponibili a terzi accedendo alla versione web del servizio   
-        cta: Accedi alla versione web  
+        info: Puoi vedere il dettaglio di ciascuno stato, scaricare le ricevute e le attestazioni opponibili a terzi accedendo alla versione web del servizio
+        cta: Accedi alla versione web
   fci:
     errors:
       expiredAfterSigned:
@@ -3312,9 +3313,9 @@ idpay:
             showMore: Vedi tutte
             header: Impostazioni
             associatedPaymentMethods: Metodi di pagamento associati
-            methodsi18n: metodi 
+            methodsi18n: metodi
             selectedIBAN: IBAN per l'accredito
-            actionsRequired: Azioni richieste 
+            actionsRequired: Azioni richieste
           startConfigurationCTA: Inizia
           operationsList:
             header: Tutte le operazioni
@@ -3328,7 +3329,7 @@ idpay:
               REVERSAL:  "Ricarica saldo disponibile"
               DELETE_INSTRUMENT:  "Hai eliminato un metodo di pagamento"
               REJECTED_ADD_INSTRUMENT:  "Hai rifiutato un metodo di pagamento"
-              REJECTED_DELETE_INSTRUMENT: 
+              REJECTED_DELETE_INSTRUMENT:
                 "Hai rifiutato di eliminare un metodo di pagamento"
               PAID_REFUND:  "Rimborso"
               REJECTED_REFUND:  "Rifiuto rimborso"
@@ -3379,7 +3380,7 @@ idpay:
             In questo modo non devi produrre alcuna autocertificazione. Comodo, no?
           understoodCTA: Ho capito
       title: Possiedi i seguenti requisiti?
-      subtitle: Verificheremo con alcuni Enti se sei in possesso dei requisiti per poter richiedere {{service}}. 
+      subtitle: Verificheremo con alcuni Enti se sei in possesso dei requisiti per poter richiedere {{service}}.
     multiPrerequisites:
       header: "Dichiari inoltre di:"
       body: L’autodichiarazione è resa ai sensi del
@@ -3387,7 +3388,7 @@ idpay:
     boolPrerequisites:
       header: "Per aderire, dichiari di:"
       body: L’autodichiarazione è resa ai sensi del
-      link: Dpr 28 dicembre 2000 n. 445 art 46 e 47 
+      link: Dpr 28 dicembre 2000 n. 445 art 46 e 47
   configuration:
     failureStates:
       GENERIC: "C'è stato un problema, riprova"
@@ -3398,10 +3399,10 @@ idpay:
       INSTRUMENT_ENROLL_FAILURE: "Errore durante l'aggiunta del metodo di pagamento"
       INSTRUMENT_DELETE_FAILURE: "Errore durante la rimozione del metodo di pagamento"
     headerTitle: "Configure the initiative"
-    intro: 
+    intro:
       title: "We are almost there"
       body: "In order to take advantage of the initiative, we need some more information."
-      requiredData: 
+      requiredData:
         title: "Required informations:"
         ibanTitle: "IBAN in your name"
         ibanSubtitle: "In order to receive any refunds"
@@ -3409,7 +3410,7 @@ idpay:
         instrumentSubtitle: "Indicate the methods to be enabled for the initiative"
       buttons:
         continue: "Start configuration"
-    instruments: 
+    instruments:
       title: "Metodi di pagamento"
       header: Scegli quali metodi di pagamento associare
       body: "Poi, usali per pagare e chiedi all’esercente di usare {{initiativeName}}."
@@ -3447,10 +3448,9 @@ idpay:
       onboarding:
         header: Qual è il tuo IBAN?
         body: Aggiungi un conto corrente a te intestato. L’autodichiarazione è resa ai sensi del
-        bodyLink: Dpr 28 dicembre 2000 n. 445 art 46 e 47 
+        bodyLink: Dpr 28 dicembre 2000 n. 445 art 46 e 47
         nameAssignInput: Assegna un nome
         bottomLabel: Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento visitando la sezione Profilo
       button:
         addNew: Aggiungi nuovo
       updateToast: IBAN modificato correttamente
-    
