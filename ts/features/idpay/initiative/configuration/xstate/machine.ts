@@ -1,5 +1,4 @@
 import * as p from "@pagopa/ts-commons/lib/pot";
-
 import { assign, createMachine } from "xstate";
 import { IbanListDTO } from "../../../../../../definitions/idpay/iban/IbanListDTO";
 import {
@@ -28,22 +27,22 @@ type Services = {
   enrollIban: {
     data: undefined;
   };
-  loadInstruments: {
-    data: {
-      pagoPAInstruments: ReadonlyArray<Wallet>;
-      idPayInstruments: ReadonlyArray<InstrumentDTO>;
-    };
+  loadWalletInstruments: {
+    data: ReadonlyArray<Wallet>;
+  };
+  loadInitiativeInstruments: {
+    data: ReadonlyArray<p.Pot<InstrumentDTO, Error>>;
   };
   enrollInstrument: {
-    data: ReadonlyArray<InstrumentDTO>;
+    data: undefined;
   };
   deleteInstrument: {
-    data: ReadonlyArray<InstrumentDTO>;
+    data: undefined;
   };
 };
 
 const createIDPayInitiativeConfigurationMachine = () =>
-  /** @xstate-layout N4IgpgJg5mDOIC5QCUDyqAqBiAigVQEkMBtABgF1FQAHAe1gEsAXB2gOypAA9EAmUgKwCAdAGYA7AICM4gGziZADlG8ANCACeiKbwC+u9WkzCA6gEEiBAHIBxAPoBlDGeTYnLjHYDCqKwDECGzxkMwwCXzJKJBA6RhZ2Th4EXhSxeSkATllFABZFLMV1LQQpRV5hDLkhUl4M0lEMnPl9Q3QMYQAZVDMAEWt7a0tQggA1AFEsCHYwYQY2ADdaAGsZgBtaAEMIAjZmBg2WebBIzli9hOikquEc3kzFB-FxetkMou1cm6rRWXkH0VyLRARnaYxGZg6eGGtjsgzCw3G3l8ASCITCviwJ2iZ3iHEuiFusmEAkUAkq4ly2SkOSy7xKTSJWTJogaOVI8gEQJBwjBEKhYRhcIICLGSP8gWCwwxxCkURo9HOeNASRyP2JpPJlMU1Npmm0UgERLuskyFKkAOUUi5bR54Mh0IGViGYURPnFqKlVkxvDlMQVuMSBKa6rJTy1OtkdMNUmE8iZpEUCZq4lE1uMvPtAsdztGordKMl6K9xFEvpxrCV3CDRJJoYpTW1NMjeoQ0hEcdkpDk2V4-zT7T6DgACh0zABNfqwqwYNBYKxjAAaJAop39FcDCF+MdumRUQhy4jZbxb2VIwhkWXZOTZCaksn7wnzEuQk4IACEzF6pmwZrAmAcZm5J9UVfD8rCxeU4nXfEECeOljVEYRckUKkcn3UgZAfYDglAz9JmmYQ-wA4QgORZ9cPA2VVygi5lT4TtFGEDCSV4HI71IZjxDpA1SRuWQySEaRBGvcQsLIkDBTAzpuj6STPzsDoCCcfCf1mBZljWTZtgAIw2NgOgYP8IL9GjKySKR6gyJiuwef47xQnI6XyIlRFIDJSVVDIBGeUkxPdHC5KsW0+QdWEwIUpTsGM8taKrEpLOsilbNEezZEclt3KsuRaleUQBDyjjOQMYEbWwl9AuCzMKIi5SZTLNdYvMhKOKSuzsjS7jb2JdihFkCRkKK1pjDKijhEHEdx2q3w326ZBZJsOdF2XerTI3KQDXKAQuwKXIAVKbidHEbrO3cp5JEUOQ-ILcqBik8bRwnQK7Gm2b5qwD8vAAaWihqzO0WojsPWQUkEVzDU64NpFchNDXqMkrvIir7smp6XpcN6Pu+qjsV+jdeBNRjmLKNjO04g7ngqX58bkXJvIyBGJNuz9hF6eawrwp9kAAWXZ8CVxx1aYIshpEtsy12vS4odHym5nLqDJ1ryMoGYCpmgtZij3rML6fsFuj4pFlqxZSiXycJu9zTZNt+JyFWbt5x8yO5zXvxmOZFhWYQAGN2AAMwYAAnABbAhdLYXXFTW7zAfWwQ7x+XhJEl-6BByCpnOvFkLNYwaSuG8TVYd5HHrVmrsExiOAyF2oRFY4H+HywRm2KB4azJbUsnNVu9GK0j-Pt99meL6rFOUivscgyOYPxhMmJ41j2LJltSTPC8bYJy9bd70qC4Hu6lImkvebLrAxisNAOg6XnK+g-WDSeYQFAs6Q+uBpO6UqM8vNclC+sT0lFB21GmfC+ilAoqTdupT2YA2AB1oKsVYoc9I30anwGojF9y5BSKSWsycECVHKGhFKCgMiJy8ikIBgorBOGQHgLmZ8MAOAgYRf8TBAI737q+ahM46EMIcCgv6m4uIthSOtMQeQ-gYSaE8ShjoaG8OnEw12LDiJ92ulw+R9DFF1WolPfW3l4J5REG5B4GFhYNCtNvfOnCqGaL4dJXoGieFaMYcw92GlhDrC2DsP8AcACuQcYFMFgAIjcKg2RIUOjSNkdxeACG4ukJC4h+CkPxgIfgghZFTjsYosaB8HpONoS4phrNsnOIYaEmCKhgZMQPLwFK6SiHxJbNSbUlMBJCGfiJLJ1gcmMLycOAptjymKK1jrfmk8q761EGhRibFrw1H4sDfKzSpZbSNKQw0eQZC-DQj07hRT7HD2GYc0Z48Vp6Lirs4QaTXgsQTB1Fp2pGLIUPP-VyMirHtBGichR-TjlyJGa4+cS5KnTMkDGE0518ruXyo8qWyTygqAeHkDIrk4nan2X0hwLMehs16UCtxUCZhbG2GwXxASglgriuEs82pE7RJqNLbi3k5mlFpqqGQ9YHwArFNdT0jg8BeC8GMBwTCfBcxHGMDAeZd6empUkJZj8UwzPkInBoNRDEy3bgoEkCYUjXjtgKqwmA7DzjGD0C1WAJVSplXy588qJkmUuUkC68F1qIRmRdCkghnip30MVNgtAIBwE4CCXRUy4oAFopAfxEEQhMTxVXiDRaJL5pgLBZkcM4VwEbb5xQPPBdkNxG5VH4Ief16auiOKoTmcYebUEICaGnb+pQdwXRpMeKWZQKiN1eJUbytxSEPgzPyLhdbZX909A2wRwMoxxK+FkURygE6pnTby6wM5UAzrxsoFyELnj4wNO5OkvwiTJKyClCyvx6hrqGt83eFEd0wX4jGW5XkygPLwSmtOvY0o1HyvUy66aflqwcfi8Ko8MDPv1s8IkbkAT8BZCoDCognJtIpGlLaT84kHh6VJUdoVB5WDLjBuKiZyhIbvLcF+DFOopnEWii6AH2T3hA4+pG+SUalzRnNfoZHzJpIqKkjIncdCiYOgeSmJp67IpWfh5mGtAoCcQP2m5SyP38AcgddJx12IHlTs8O9ecH02LA5zLmT6BYuv+oeJiZRqR5WzqJwoLS4mIQZNSJoZImU93vY7MzRcuNH2I6R6zkbzJgyQnUZJ2QKQsjdRlB4c8AbIr6tqSx-nQMOxAagS+VnJn5vMnIRCaVSTZVIISa8H8KakKyIioQjRh3scC8R4QoWyoCptR0aVFqVPJDuGnGk9Tfikjyoebi+NCY0gBDUFIh5ShYqBQ4frvZSjdRJIdRoKYu3aFZHxTsDRy05WM2oxGgLTn9Orfig5fyVvhaK3wX+G36U-p2wk7y4iUIPD1UDNNWWOMXbuwMw+hS7v9ZmXZi6pCL2lFKM3bQnZAZoRRymB47kt4A9a7d4puKbt9NWwrGM9L+JdkEHCtDLSaQiDyjF2oXknj1KW5dnFBKWdIklT1mVPQIc4PPBhBWMnOwyG4skmMrKU3uXRaxTHJmQdDPsJ1osgrhWivu4VxtvZ42idSa8V4XZwYiJZGeHVtx6mxKyEa5XJrPDmstTzh7jbuxIVp0yRotxSR0hpGeId6WWOHkq1b8IJHuu9YdxrwRaK041BQyaInBiRHUiOg0Byh4OVFX0EAA */
+  /** @xstate-layout N4IgpgJg5mDOIC5QCUDyqAqBiAigVQEkMBtABgF1FQAHAe1gEsAXB2gOypAA9EBWXgIwAWAHQAmIQN4A2ABwB2XkOkBOeQBoQAT0SKVI0vOnSAzLJVjesoRYC+tzWkwiA6gEEiBAHIBxAPoAyhhuyNhBIRh+AMKoXgBiBD54yG4YBLFklEggdIws7Jw8CGIKvCJSvEZq0rwqQpo6xeYGKq3y8qQmAtLd3faO6BgiADKobgAi3v7enqkEAGoAolgQ7GAiDGwAbrQA1usANrQAhhAEbMwMxyxbYJmcuZcF2UVWHSKyAmryrbKqQvVtIgBLIxCIbL8VAJSLJ+CYZP0QE4hqMJlM-DM0nMllgwAAnPG0PEiagHa4AMyJAFsREdTudLtcGLd7tlHvkOC8+ApSB8vu1fv9AY0TKRRNZWipYSZLEIfkJEciRIt5m5hng5r4MV5ZmkltFYgkkik0rEsKyaPQnpzQEUavITCJBIJjHUBCZpMLEGJoQYjCYobwuiYQ3JFYNlar1ZrpjqsXrFgb4olknMzcQBFlLXlWDbuMDDA1gVDpCIPfIvkohGZVOHnCq1Rq0lrMQRsYmYsnjWmvOaxFmclaOYVvQGwTZuq1OmYVCYiwgBAJ5KJDDVOtIOvJpXWhg3o83Y7qFh3DSmTele8QTAP2bmRwh7Y7nd1-u7PfOAfI-cZFypavIxGXHcREmAIAAVhjcABNdFvAwNAsC8RYAA0SAoB4hzvLkEEqEwvxDJRLCkUxPl4ecBDECwnSMQQKyDawamAzsjWSWCACE3F7VY2HWWAmGudYlWYs92M4i1BxzZ5bT4QRRAkYjSmUNR5zw6ReWhGFQQ9VoeiY09jVEri1hEPiBJEIT9NYlsOK8DMb0wqT8xwsQ1JEZcpFIVRRVUMigQXSQwRlT0VDkKxBEAvSuys6YbJGMZJmszi-GGAgghWYzNh2fZaROM4ACNjjYYYGD48Tb0cooulaFoZS+P8hEMDQ-IkZQPnhCRrHMfhIpY5BDLitFEq8ZLUuwfFCWJUkKWpHL6QKoqSqYMqHLzV5eFIfR5JkRTVCakVLFLZRYXWjpDEMHqRKGgaEpipKUrS8aiRJMkmEpPEaTpfLCuK0rMwwyTVpk4RxEkbbFCUvbvVML8YRkKsHVnMMHCRCNhIMq69ybQyRrS5aAfvD1RRB7pzGXBQjHnCQjBENRYRhAixBai70durxI0bGMMRsnHsDs-7rQJ0xeXkuQ1CEcnpEpkM5JKGQ1DwqFzuRiyor6q7QIg6DsdiNixmQG7EJQtD7Px7DJDwst4St6tYXMKWhDBXhZahMR4SMWRmeirnOJA1LNZgoa-B1vWDY4qIAGk8YF7D+GBra5HB3byNIFPqJqKUCJBL5PbV1nffAyCA9ZoOvF1kJQ7cCO+bZFb71juTQYTpQk+aqxSzCnzPOUMUFWV1HLNz722Y1wvtdLkP0TiVBkAAWSwYTZ6HqPhzN91ZDc6EayDSoZEpytqP4LcpTlawc-6ketcD4Py8n6e57DyP0Jr03pIQOULYkOpjDFM6xEpkphZ-k8lKYQdQlYDGcGjL2BBYoXyLkPEuZd9a31nlgB+1dszR1fubfCVsgw2ysCof+VFSAlFBE7WQPIjBnyugvGehl0o8Q2NsPY6wADG7ByQMHegQeay8sLYPdLg7eJgCF2z8lIAMZYXIO1qC5WQojpA0LznQhhj1JovTejSDhbAuE8L4U-TBK9BEWwItbMwhDKaGDKJOMwIItwblhMooe+d-bY3utgdBhiJJYKcvXYmYNm7KQkaQQQ35D7LiELJEwziYE+zge40aaDK6Rz+s-Xxa046Nx2sExolgPQGFhA6OGTsAKxNgX7UegcPGGxcAg6+yDfD8IqogcWoS3IOlIZQ2QoTIbFBDLyH4TtGZyBqFE3g5T4mVMvsXGpiwvBoGGMMJe3jyqAzfuYAQ5Q5QWDqHKKwf8JF1EdKQkKjMjDQi3AISZbN5mLJSkNRh6xMqsJEGANghIDgHF4YVZp6z35fk-soNSDUOiHLyZ0fQ4sXKKDUoBSiHs+6QIHv1O5qAlkMO4s8lh2V3mfO+XwtJRiBFOQBSDL+ILf7kRqOvSopg-wqE8hWBQNzlQLPRQ81muICRPSmq9GaeLaBfJ+WwP594yVAu-qC0he9agfG6QBDolD4SxK8EEZAeAZ7zIwAEJ5Jl+JMEEv3VWsE1XwU1dqgIYrsKuyohOVQjKQzmDnH5AMYS6Z-AdKCEKnlVXqotV4HVerTKGvMsa3qpr-VasDVaolPjjFOVteOEsU4nWzhUhckQalDB-kJmpeQfrzXRp1ddSNRbLXBoNUa5FJqWxmo1cWgIpa61Rstda1+i4gwg0ZinLclFagCEph0fQrQlxZysCnMQhaG2WubbGVtMbK1mRVhGlt5aY1zu1AunVGD40kqKJ2x0Ege2GG9QOymxhk1LiuVKV2vcIFDCgYPbw26m2ohulu9dQasX6uXeGy686v1vvimWmdMbiD9n5gmooSbwQpsdTOF1Ioen6A0hYBQsJPQFqRY+lFa6wMlvfaBgNJb3BLMWJEF9QG516pedlT6LhjhfLAEwc4fE8QAFcqTvKYLAdtfjPLghnA1To0SQwqUsLyZ01gSYBlnNOkjwHBqAYI02sjwwKOftUzR9Rz1prvVmhARjzHWNsHY1xnjfHVm1xtWOODk4EPOpUgGdencNwBg3OtGJOGRBPuI42zdVHtPqc00FxTOmeUaP0x9XKxmDgsbY0wTj3G2C8d3Ws+8sH7WpsQ5TWo+gwqqR+LDYwCmAtEfw+F1s7YtPhYqz4WjOLDi5QZCwJktxEvJcs-xooNgj3VhqK7H0DVKKU2sGUTylhGbKCDLpHzfnKvlZA4t2d1WEy1aW8p7lE09P8oM59VrVwbhgE6xZ1LVmTYZNHHa+D04nPNR6aWFyQZRHKslGV2d9WNurbjG2dbYXNsG103yrRhnDvtZO2ZpLZ20txoy7Zm7Dm7vpuajs8oPwlwhWsIoa5828MqfCwklbi60VLO+4GnrwJntuXtG3cwXk8vGAMBYro5hqzQnvSjGtq6CcBaJ7zit4xFgaYwImAH2rKcLhhTTyoFYahqQZ81MUWzPU+ikCCKsiKH2+fx+Tkt-O9e6omOMPwYFoLFr8FqjAAAJVA4xJfq-Xg6asPxBsWCsP-LcBgnaCE8m6kKH2N0G-F4urxl3oPXavQ65HSHEAKH0KCQbIJWgKxUIH-X0z4Eh6DeguHNnX5Zdu2m2PxQHaueK-I90whsPa4WwLoPmf-MVqQqhB3CiygyhTnYmwLkUd5IBLyWc8lPKqB6a7dPTbg-1sU1gAI4cCBgTb-CaRXfPg98V3k0RogdndAG28FlePa315LaTzlevGtZXWIK4VUOuupYd5I7tYhe1nqhFLJ26PZykHdCFRcQFD886G5sr3JN6Brba8qaICofJCrfK34w4P5drHrP6nr9pv6o5RJZoyjSxbigihIT4gTC4UagHYA-p0brAQBgDxaGqnYpZLTWYvxOSHpP4v6oGDrNRrwr5nSkwWDVj4FC4i7EHgFRZ7Y0gUFUGQ7ma0EIH9Ynp9oMpsF5KuxbLtBdBiiUQpwUTAQG5Po9iBB4BRBRCLABC6oxAzwQQUYniqw9iS7+Lxw5J9JmCGBZrf7f6VAWAaFaGN5ag6GmjDQBD6GGHGFYDG6m7m7aqW4Ua27270FXYIAehWBCaqD0oUSfAOFyCOjCCfAv7Kpa5c64ZWG+F+BeCYBFGLCLBC7jDzyoBmEi6WG9TWExER79KI7R7F4qSShljrQ9LO7wpp6IhsC0AUHwDZDIhQb7qIAAC0dQbkMgoiJQv+rs4mfkf4BgKcpCZgEoA2fR2u7gngWo4QoQYxLSxQxgogOBhCxEy4dQKkFEac0gz+J8UIUgnOSoX2a2x4Rx6y-ALkWaJ8sIU2VsY2+gq4Mg4sscJQlgwEmMnM7x+oPhF4nx94PQUoNMlEPo8ifWfSDx4INELkG0Kei4nhBcMy2o8EqAiJMcPIfI3wgoeyF6XwbkoSHoMIFEjKNeeROuR+Q8FJBeRS5Qh8u06cXo-k7qMiHonwoIKGrKbx3MHiPJiajKNiAp1QtQwplgCgToZgA+rhygrK0JB4CCcp6STRIYKJWxu0FEEgoilMR0fIIIoI6JfurKwe3MDSN08plUPSvIPQxgmyb474zUoo68tMnoygrsNKzpXhxcbpKCM8HprSeEZQ-wOOAEyg1Yvkih0xeE7eIUUSG01CABAGLiqiQ08ZcRoIyhZyPQtEig8IVizQ9xsoIIW+S4EyhZLMLiLpd0o0ZZvuYIFEoSS4qgwgwgNpz+bUMgyuFEeEfQ7Z0CsUp+hkZZAIlQZY1Ynk0I8sW4ViDU8quEQ5u+3mteuucSbMp5SY9RhRph5hou4wvZG0ZQzKXwvaG4y41KFYmB9xeyois4dQE+ZZExrUsKcx9O05SxjQlYog5YPo3kUS7oLx-6HZ2eSmH6yFZZWyVp9om8CgxgdE9JYInQmyFif4JE+Bbx0+AWIWlGFFlqZZ9xQmbO4sB5SqwpqhWy4skorsfwA6CF3ORZyFgWNFG6VFQB9W6FvoNseyqRPQSqEmUiPeLkwgPQoovqc5z6QlhGy2x+amaoIuol8UehBhRhAQZZ7QKu1ZPwvwIYHoNxlCNM5gf4FypC3+ZFWlQBsJYuGlJlxp4xb8m0e+FYhFRgG4Q6rU9EFgFihFAIrlym7lv2NWAlYlPlxxagIM8RgVZgwVWJCiK4wm02LktYalxBKFxVIgHl+lEwhlgR3lxKxxZlHwFlkoCioYlMs4MM9KXmt63kfBUZhu6Fs2HwjK9xP82kJersPwTovScs6ZXwvF+RgBAli5xOGApls4g11gUSRSeyCho4Do4gPSnUPw8IPcfBhBBp2epl1g4gWOwUDU60ygViPQNMoUKZG1U6RVy1TayFBoNRFhd5yV6yyB68R0oMLskmY1eEUFqZKl6R+aRJbi3hA8uh-hRlxhZZHoPoNUShZlXw7oGaV12aPqJMPoBZx5BRF4RRJRSE5R5R6F64zhjKFK4sRgDh1QnRnkSgUoVyOcuh15tR-1tVXxVJnwNJUoQo7Rco4gKc-xagjNPNV5owAQtNANdcwt-IllfwdJyxKJFg9KvS41jEaluhcQHg6oyAiwvZatotmtAIKkHF4ITFJQak7olQvc9gQAA */
   createMachine(
     {
       context: INITIAL_CONTEXT,
@@ -269,29 +268,68 @@ const createIDPayInitiativeConfigurationMachine = () =>
             LOADING_INSTRUMENTS: {
               tags: [LOADING_TAG],
               entry: "navigateToInstrumentsEnrollmentScreen",
-              invoke: {
-                src: "loadInstruments",
-                id: "loadInstruments",
-                onDone: {
-                  target: "EVALUATING_INSTRUMENTS",
-                  actions: "loadInstrumentsSuccess"
-                },
-                onError: [
-                  {
-                    cond: "isInstrumentsOnlyMode",
-                    target: "#ROOT.CONFIGURATION_FAILURE",
-                    actions: "setFailure"
-                  },
-                  {
-                    target: "#ROOT.CONFIGURING_IBAN",
-                    actions: ["setFailure", "showFailureToast"]
+              type: "parallel",
+              states: {
+                LOADING_WALLET_INSTRUMENTS: {
+                  initial: "LOADING",
+                  states: {
+                    LOADING: {
+                      invoke: {
+                        src: "loadWalletInstruments",
+                        id: "loadWalletInstruments",
+                        onDone: {
+                          target: "LOAD_SUCCESS",
+                          actions: "loadWalletInstrumentsSuccess"
+                        },
+                        onError: [
+                          {
+                            cond: "isInstrumentsOnlyMode",
+                            target: "#ROOT.CONFIGURATION_FAILURE",
+                            actions: "setFailure"
+                          },
+                          {
+                            target: "#ROOT.CONFIGURING_IBAN",
+                            actions: ["setFailure", "showFailureToast"]
+                          }
+                        ]
+                      }
+                    },
+                    LOAD_SUCCESS: {
+                      type: "final"
+                    }
                   }
-                ]
-              }
-            },
-            EVALUATING_INSTRUMENTS: {
-              tags: [LOADING_TAG],
-              always: [
+                },
+                LOADING_INITIATIVE_INSTRUMENTS: {
+                  initial: "LOADING",
+                  states: {
+                    LOADING: {
+                      invoke: {
+                        src: "loadInitiativeInstruments",
+                        id: "loadInitiativeInstruments",
+                        onDone: {
+                          target: "LOAD_SUCCESS",
+                          actions: "loadInitiativeInstrumentsSuccess"
+                        },
+                        onError: [
+                          {
+                            cond: "isInstrumentsOnlyMode",
+                            target: "#ROOT.CONFIGURATION_FAILURE",
+                            actions: "setFailure"
+                          },
+                          {
+                            target: "#ROOT.CONFIGURING_IBAN",
+                            actions: ["setFailure", "showFailureToast"]
+                          }
+                        ]
+                      }
+                    },
+                    LOAD_SUCCESS: {
+                      type: "final"
+                    }
+                  }
+                }
+              },
+              onDone: [
                 {
                   cond: "hasInstruments",
                   target: "DISPLAYING_INSTRUMENTS"
@@ -344,7 +382,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 id: "enrollInstrument",
                 onDone: {
                   target: "DISPLAYING_INSTRUMENTS",
-                  actions: "toggleInstrumentSuccess"
+                  actions: "enrollInstrumentSuccess"
                 },
                 onError: {
                   target: "DISPLAYING_INSTRUMENTS",
@@ -359,7 +397,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 id: "deleteInstrument",
                 onDone: {
                   target: "DISPLAYING_INSTRUMENTS",
-                  actions: "toggleInstrumentSuccess"
+                  actions: "deleteInstrumentSuccess"
                 },
                 onError: {
                   target: "DISPLAYING_INSTRUMENTS",
@@ -439,20 +477,26 @@ const createIDPayInitiativeConfigurationMachine = () =>
           selectedIban: undefined,
           failure: undefined
         })),
-        loadInstrumentsSuccess: assign((_, event) => ({
-          pagoPAInstruments: p.some(event.data.pagoPAInstruments),
-          idPayInstruments: p.some(event.data.idPayInstruments),
+        loadWalletInstrumentsSuccess: assign((_, event) => ({
+          walletInstruments: event.data,
           failure: undefined
         })),
-        selectInstrument: assign((_, event) => ({
-          selectedInstrumentId: event.instrumentId,
+        loadInitiativeInstrumentsSuccess: assign((_, event) => ({
+          initiativeInstruments: event.data,
           failure: undefined
         })),
         skipInstruments: assign((_, __) => ({
           areInstrumentsSkipped: true
         })),
-        toggleInstrumentSuccess: assign((_, event) => ({
-          idPayInstruments: p.some(event.data),
+        selectInstrument: assign((_, event) => ({
+          selectedInstrumentId: event.instrumentId,
+          failure: undefined
+        })),
+        enrollInstrumentSuccess: assign((_, __) => ({
+          selectedInstrumentId: undefined,
+          failure: undefined
+        })),
+        deleteInstrumentSuccess: assign((_, __) => ({
           selectedInstrumentId: undefined,
           failure: undefined
         })),
@@ -481,11 +525,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
           ),
         isInstrumentsOnlyMode: (context, _) =>
           context.mode === ConfigurationMode.INSTRUMENTS,
-        hasInstruments: (context, _) =>
-          p.getOrElse(
-            p.map(context.pagoPAInstruments, list => list.length > 0),
-            false
-          )
+        hasInstruments: (context, _) => context.walletInstruments.length > 0
       }
     }
   );

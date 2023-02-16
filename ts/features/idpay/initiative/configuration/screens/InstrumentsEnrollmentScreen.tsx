@@ -1,3 +1,4 @@
+import * as p from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { useSelector } from "@xstate/react";
 import { List as NBList, Text as NBText } from "native-base";
@@ -27,8 +28,8 @@ import {
   selectInitiativeDetails,
   selectIsInstrumentsOnlyMode,
   selectIsUpsertingInstrument,
-  selectorIDPayInstrumentsByIdWallet,
-  selectorPagoPAIntruments
+  initiativeInstrumentsByIdWalletSelector,
+  selectWalletInstruments
 } from "../xstate/selectors";
 
 type InstrumentsEnrollmentScreenRouteParams = {
@@ -76,14 +77,14 @@ const InstrumentsEnrollmentScreen = () => {
     selectIsInstrumentsOnlyMode
   );
 
-  const pagoPAInstruments = useSelector(
+  const walletInstruments = useSelector(
     configurationMachine,
-    selectorPagoPAIntruments
+    selectWalletInstruments
   );
 
-  const idPayInstrumentsByIdWallet = useSelector(
+  const initiativeInstrumentsByIdWallet = useSelector(
     configurationMachine,
-    selectorIDPayInstrumentsByIdWallet
+    initiativeInstrumentsByIdWalletSelector
   );
 
   const isUpserting = useSelector(
@@ -92,7 +93,7 @@ const InstrumentsEnrollmentScreen = () => {
   );
 
   const hasSelectedInstruments =
-    Object.keys(idPayInstrumentsByIdWallet).length > 0;
+    Object.keys(initiativeInstrumentsByIdWallet).length > 0;
 
   const handleBackPress = () => {
     configurationMachine.send({ type: "BACK" });
@@ -119,15 +120,13 @@ const InstrumentsEnrollmentScreen = () => {
   };
 
   const sendDeleteInstrument = (walletId: number): void => {
-    const instrument = idPayInstrumentsByIdWallet[walletId];
+    const instrumentPot = initiativeInstrumentsByIdWallet[walletId];
 
-    if (instrument === undefined) {
-      return;
+    if (p.isSome(instrumentPot)) {
+      configurationMachine.send("DELETE_INSTRUMENT", {
+        instrumentId: instrumentPot.value.instrumentId
+      });
     }
-
-    configurationMachine.send("DELETE_INSTRUMENT", {
-      instrumentId: instrument.instrumentId
-    });
   };
 
   React.useEffect(() => {
@@ -228,7 +227,6 @@ const InstrumentsEnrollmentScreen = () => {
           type="SingleButton"
           leftButton={{
             title: I18n.t("idpay.configuration.instruments.buttons.addMethod"),
-            disabled: isUpserting,
             onPress: handleAddPaymentMethodButton
           }}
         />
@@ -277,23 +275,24 @@ const InstrumentsEnrollmentScreen = () => {
             <VSpacer />
             <ScrollView>
               <NBList>
-                {pagoPAInstruments.map(pagoPAInstrument => (
+                {walletInstruments.map(walletInstrument => (
                   <InstrumentEnrollmentSwitch
                     ref={node => {
                       const map = getInstrumentItemsMap();
                       if (node) {
-                        map.set(pagoPAInstrument.idWallet, node);
+                        map.set(walletInstrument.idWallet, node);
                       } else {
-                        map.delete(pagoPAInstrument.idWallet);
+                        map.delete(walletInstrument.idWallet);
                       }
                     }}
-                    key={pagoPAInstrument.idWallet}
-                    wallet={pagoPAInstrument}
-                    status={
-                      idPayInstrumentsByIdWallet[pagoPAInstrument.idWallet]
-                        ?.status
-                    }
-                    isDisabled={isUpserting}
+                    key={walletInstrument.idWallet}
+                    wallet={walletInstrument}
+                    status={p.map(
+                      initiativeInstrumentsByIdWallet[
+                        walletInstrument.idWallet
+                      ] ?? p.none,
+                      i => i.status
+                    )}
                     onSwitch={handleInstrumentSwitch}
                   />
                 ))}

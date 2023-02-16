@@ -1,5 +1,6 @@
 import * as p from "@pagopa/ts-commons/lib/pot";
 import { IbanDTO } from "../../../../../../definitions/idpay/iban/IbanDTO";
+import { IbanPutDTO } from "../../../../../../definitions/idpay/wallet/IbanPutDTO";
 import { InitiativeDTO } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
 import { InstrumentDTO } from "../../../../../../definitions/idpay/wallet/InstrumentDTO";
 import { Wallet } from "../../../../../types/pagopa";
@@ -16,15 +17,12 @@ export type Context = {
   mode: ConfigurationMode;
   initiative: p.Pot<InitiativeDTO, Error>;
   ibanList: p.Pot<ReadonlyArray<IbanDTO>, Error>;
-  pagoPAInstruments: p.Pot<ReadonlyArray<Wallet>, Error>;
-  idPayInstruments: p.Pot<ReadonlyArray<InstrumentDTO>, Error>;
+  walletInstruments: ReadonlyArray<Wallet>;
+  initiativeInstruments: ReadonlyArray<p.Pot<InstrumentDTO, Error>>;
   selectedInstrumentId?: string;
   areInstrumentsSkipped?: boolean;
   selectedIban?: IbanDTO;
-  ibanBody?: {
-    iban: string;
-    description: string;
-  };
+  ibanBody?: IbanPutDTO;
   failure?: InitiativeFailureType;
 };
 
@@ -32,6 +30,6 @@ export const INITIAL_CONTEXT: Context = {
   initiative: p.none,
   mode: ConfigurationMode.COMPLETE,
   ibanList: p.none,
-  pagoPAInstruments: p.none,
-  idPayInstruments: p.none
+  walletInstruments: [],
+  initiativeInstruments: []
 };

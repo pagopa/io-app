@@ -1,4 +1,5 @@
 import { IbanDTO } from "../../../../../../definitions/idpay/iban/IbanDTO";
+import { IbanPutDTO } from "../../../../../../definitions/idpay/wallet/IbanPutDTO";
 import { ConfigurationMode } from "./context";
 
 type E_START_CONFIGURATION = {
@@ -27,10 +28,7 @@ type E_NEW_IBAN_ONBOARDING = {
 
 type E_CONFIRM_IBAN = {
   type: "CONFIRM_IBAN";
-  ibanBody: {
-    iban: string;
-    description: string;
-  };
+  ibanBody: IbanPutDTO;
 };
 
 type E_ENROLL_IBAN = {

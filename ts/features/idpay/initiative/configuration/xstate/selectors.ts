@@ -9,7 +9,7 @@ import { IDPayInitiativeConfigurationMachineType } from "./machine";
 type StateWithContext = StateFrom<IDPayInitiativeConfigurationMachineType>;
 
 type IDPayInstrumentsByIdWallet = {
-  [idWallet: string]: InstrumentDTO;
+  [idWallet: string]: P.Pot<InstrumentDTO, Error>;
 };
 
 const isLoadingSelector = (state: StateWithContext) =>
@@ -43,9 +43,6 @@ const selectIsUpsertingInstrument = (state: StateWithContext) =>
   state.matches("CONFIGURING_INSTRUMENTS.ENROLLING_INSTRUMENT") ||
   state.matches("CONFIGURING_INSTRUMENTS.DELETING_INSTRUMENT");
 
-const selectPagoPAInstruments = (state: StateWithContext) =>
-  state.context.pagoPAInstruments;
-
 const selectEnrolledIban = createSelector(
   selectInitiativeDetails,
   ibanListSelector,
@@ -58,27 +55,25 @@ const selectEnrolledIban = createSelector(
   }
 );
 
-const selectorPagoPAIntruments = createSelector(
-  selectPagoPAInstruments,
-  pagoPAInstruments => P.getOrElse(pagoPAInstruments, [])
-);
+const selectWalletInstruments = (state: StateWithContext) =>
+  state.context.walletInstruments;
 
-const selectIDPayInstruments = (state: StateWithContext) =>
-  state.context.idPayInstruments;
+const selectInitiativeInstruments = (state: StateWithContext) =>
+  state.context.initiativeInstruments;
 
-const selectorIDPayInstrumentsByIdWallet = createSelector(
-  selectIDPayInstruments,
-  idPayInstruments =>
-    P.getOrElse(idPayInstruments, []).reduce<IDPayInstrumentsByIdWallet>(
-      (acc, _) => {
-        if (_.idWallet !== undefined) {
+const initiativeInstrumentsByIdWalletSelector = createSelector(
+  selectInitiativeInstruments,
+  instruments =>
+    instruments.reduce<IDPayInstrumentsByIdWallet>((acc, instrumentPot) => {
+      P.map(instrumentPot, instrument => {
+        if (instrument.idWallet !== undefined) {
           // eslint-disable-next-line functional/immutable-data
-          acc[_.idWallet] = _;
+          acc[instrument.idWallet] = instrumentPot;
         }
-        return acc;
-      },
-      {}
-    )
+      });
+
+      return acc;
+    }, {})
 );
 
 const failureSelector = (state: StateWithContext) => state.context.failure;
@@ -95,7 +90,7 @@ export {
   selectIsUpsertingInstrument,
   selectAreInstrumentsSkipped,
   selectEnrolledIban,
-  selectorPagoPAIntruments,
-  selectorIDPayInstrumentsByIdWallet,
+  selectWalletInstruments,
+  initiativeInstrumentsByIdWalletSelector,
   failureSelector
 };
