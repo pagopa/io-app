@@ -15,16 +15,16 @@ import { hexToRgba, IOColors } from "../core/variables/IOColors";
 import { IOSpringValues, IOScaleValues } from "../core/variables/IOAnimations";
 import { IOButtonStyles } from "../core/variables/IOStyles";
 import { AnimatedIcon, IOAnimatedIconsProps, IOIconType } from "../core/icons";
+import { WithTestID } from "../../types/WithTestID";
 
-export type IconButton = {
+export type IconButton = WithTestID<{
   icon: IOIconType;
   color?: "primary" | "neutral" | "contrast";
   disabled?: boolean;
   accessibilityLabel: string;
   accessibilityHint?: string;
-  testID?: string;
   onPress: (event: GestureResponderEvent) => void;
-};
+}>;
 
 type ColorStates = {
   background: {
