@@ -20,8 +20,9 @@ import { IOColors, IOColorType } from "../core/variables/IOColors";
 import { IOSpringValues, IOScaleValues } from "../core/variables/IOAnimations";
 import { BaseTypography } from "../core/typography/BaseTypography";
 import { IOButtonStyles } from "../core/variables/IOStyles";
+import { WithTestID } from "../../types/WithTestID";
 
-type Props = {
+type Props = WithTestID<{
   color?: "primary" | "danger" | "contrast";
   label: string;
   small?: boolean;
@@ -29,9 +30,8 @@ type Props = {
   disabled?: boolean;
   accessibilityLabel: string;
   accessibilityHint?: string;
-  testID?: string;
   onPress: (event: GestureResponderEvent) => void;
-};
+}>;
 
 type ColorStates = {
   default: string;
