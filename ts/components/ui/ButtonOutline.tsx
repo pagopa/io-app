@@ -19,8 +19,9 @@ import { hexToRgba, IOColors } from "../core/variables/IOColors";
 import { IOSpringValues, IOScaleValues } from "../core/variables/IOAnimations";
 import { IOButtonStyles } from "../core/variables/IOStyles";
 import { makeFontStyleObject } from "../core/fonts";
+import { WithTestID } from "../../types/WithTestID";
 
-export type ButtonOutline = {
+export type ButtonOutline = WithTestID<{
   color?: "primary" | "neutral" | "contrast" | "danger";
   label: string;
   small?: boolean;
@@ -28,9 +29,8 @@ export type ButtonOutline = {
   disabled?: boolean;
   accessibilityLabel: string;
   accessibilityHint?: string;
-  testID?: string;
   onPress: (event: GestureResponderEvent) => void;
-};
+}>;
 
 type ColorStates = {
   border: {
