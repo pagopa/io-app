@@ -112,7 +112,7 @@ describe("initializeApplicationSaga", () => {
       .next(aSessionToken)
       .fork(watchSessionExpiredSaga)
       .next(lollipopKeyTagSelector)
-      .next(getCryptoPublicKey,O.none)
+      .next(getCryptoPublicKey, O.none)
       .next()
       .next(401) // checksession
       .put(sessionExpired());
@@ -144,7 +144,7 @@ describe("initializeApplicationSaga", () => {
       .next(aSessionToken)
       .fork(watchSessionExpiredSaga)
       .next(lollipopKeyTagSelector)
-      .next(getCryptoPublicKey,O.none)
+      .next(getCryptoPublicKey, O.none)
       .next()
       .next(200) // check session
       .select(sessionInfoSelector)
