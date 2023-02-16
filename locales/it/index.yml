@@ -3361,7 +3361,6 @@ idpay:
       maskedPan: •••• {{lastDigits}}
       amountLabel: Importo transazione
       accruedAmountLabel: Importo rimborsabile
-      amount: € {{amount}}
       infoTitle: Informazioni sull transazione
       date: Data
       circuit: Circuito di pagamento
@@ -3476,3 +3475,6 @@ idpay:
         bodyLink: Dpr 28 dicembre 2000 n. 445 art 46 e 47 
         nameAssignInput: Assegna un nome
         bottomLabel: Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento visitando la sezione Profilo
+      button:
+        addNew: Aggiungi nuovo
+      updateToast: IBAN modificato correttamente
