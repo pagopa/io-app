@@ -29,12 +29,10 @@ export const useLollipopLoginSource = (loginUri?: string) => {
 
   useEffect(() => {
     if (!loginUri) {
-      // This case should never happen. Nonetheless, loginUri data
-      // source can return an undefined so we must make sure to handle
-      // the 0.001% happening-case
-      setLoginSource({
-        kind: "error"
-      });
+      // When the redux state is LoggedOutWithIdp the loginUri is always defined.
+      // After the user has logged in, the status changes to LoggedIn and the loginUri is not
+      // defined any more.
+      // Therefore we must block the code flow in order for the hook to not do anything else.
       return;
     }
 

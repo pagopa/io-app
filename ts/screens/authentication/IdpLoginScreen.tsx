@@ -146,8 +146,6 @@ const IdpLoginScreen = (props: Props) => {
   const startLoginProcess = useCallback(() => {
     if (loginSource.kind === "ready") {
       setWebviewSource(loginSource.value);
-    } else if (loginSource.kind === "error") {
-      setRequestState(pot.noneError(ErrorType.LOADING_ERROR));
     }
   }, [loginSource]);
 
