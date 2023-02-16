@@ -25,7 +25,7 @@ import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
 import { useLollipopLoginSource } from "../../features/lollipop/hooks/useLollipopLoginSource";
 import { publicKey } from "../../features/lollipop/types/LollipopLoginSource";
 import { lollipopSamlVerify } from "../../features/lollipop/utils/login";
-import { LollipopCheckStatus } from "../../features/lollipop/components";
+import { LollipopCheckStatus } from "../../features/lollipop/types/LollipopCheckStatus";
 import I18n from "../../i18n";
 import { mixpanelTrack } from "../../mixpanel";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
