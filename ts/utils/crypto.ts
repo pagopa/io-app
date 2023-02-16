@@ -46,47 +46,47 @@ export const getKeyGenerationInfo = async (
     TE.getOrElse(() => T.of(null))
   )();
 
-export const checkPublicKeyExists = (keyId: string) =>
+export const checkPublicKeyExists = (keyTag: string) =>
   pipe(
     TE.tryCatch(
-      () => getPublicKey(keyId),
+      () => getPublicKey(keyTag),
       () => false
     ),
     TE.map(_ => true),
     TE.getOrElse(() => T.of(false))
   )();
 
-export const taskRegenerateKey = (keyId: string) =>
+export const taskRegenerateKey = (keyTag: string) =>
   pipe(
     TE.tryCatch(
-      () => deleteKey(keyId).then(() => generate(keyId)),
+      () => deleteKey(keyTag).then(() => generate(keyTag)),
       () => undefined
     ),
     TE.getOrElseW(() => T.of(undefined))
   )();
 
-export const taskGetPublicKey = (keyId: string) =>
+export const taskGetPublicKey = (keyTag: string) =>
   pipe(
     TE.tryCatch(
-      () => getPublicKey(keyId),
+      () => getPublicKey(keyTag),
       () => undefined
     ),
     TE.getOrElseW(() => T.of(undefined))
   )();
 
-export const taskGeneratePublicKey = (keyId: string) =>
+export const taskGeneratePublicKey = (keyTag: string) =>
   pipe(
     TE.tryCatch(
-      () => generate(keyId),
+      () => generate(keyTag),
       () => undefined
     ),
     TE.getOrElseW(() => T.of(undefined))
   )();
 
-export const deleteKeyPair = (keyId: string) =>
+export const deleteKeyPair = (keyTag: string) =>
   pipe(
     TE.tryCatch(
-      () => deleteKey(keyId),
+      () => deleteKey(keyTag),
       () => false
     ),
     TE.map(_ => true),
