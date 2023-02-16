@@ -25,6 +25,9 @@ export const wipeKeyGenerationInfo = async (keyTag: string) =>
     TE.getOrElse(() => T.of(false))
   )();
 
+// TODO: we should consider storing this data on redux instead
+// to access the AsyncStorage directly.
+// https://pagopa.atlassian.net/browse/LLK-43
 export const setKeyGenerationInfo = async (
   keyTag: string,
   value: KeyGenerationInfo
