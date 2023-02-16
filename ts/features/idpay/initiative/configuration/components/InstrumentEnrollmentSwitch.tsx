@@ -1,17 +1,22 @@
 import * as p from "@pagopa/ts-commons/lib/pot";
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
 import { Badge as NBBadge, ListItem as NBListItem } from "native-base";
 import { default as React, forwardRef, useImperativeHandle } from "react";
 import { Image, StyleSheet, View } from "react-native";
 import { StatusEnum as InstrumentStatusEnum } from "../../../../../../definitions/idpay/wallet/InstrumentDTO";
 import defaultCardIcon from "../../../../../../img/wallet/cards-icons/unknown.png";
+import {
+  IOLogoPaymentType,
+  LogoPayment
+} from "../../../../../components/core/logos";
 import { RemoteSwitch } from "../../../../../components/core/selection/RemoteSwitch";
 import { HSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import { getCardIconFromBrandLogo } from "../../../../../components/wallet/card/Logo";
-import { Wallet } from "../../../../../types/pagopa";
+import { CreditCardType, Wallet } from "../../../../../types/pagopa";
 import { instrumentStatusLabels } from "../../../common/labels";
 
 export type InstrumentEnrollmentSwitchRef = {
@@ -23,11 +28,6 @@ type InstrumentEnrollmentSwitchProps = {
   wallet: Wallet;
   status: p.Pot<InstrumentStatusEnum | undefined, Error>;
   onSwitch: (walletId: number, isEnrolling: boolean) => void;
-};
-
-type InstrumentInfo = {
-  logo: JSX.Element;
-  maskedPan?: string;
 };
 
 /**
@@ -76,15 +76,16 @@ const InstrumentEnrollmentSwitch = forwardRef<
     );
   };
 
-  const instrumentInfo = getPaymentMethodInfo(wallet);
+  const instrumentLogo = getPaymentMethodLogo(wallet);
+  const instrumentMaskedPan = getPaymentMaskedPan(wallet);
 
   return (
     <NBListItem>
       <View style={[IOStyles.flex, IOStyles.rowSpaceBetween]}>
         <View style={styles.instrumentsInfo}>
-          {instrumentInfo.logo}
+          {instrumentLogo}
           <HSpacer size={8} />
-          <H4>{`•••• ${instrumentInfo.maskedPan}`}</H4>
+          <H4>{`•••• ${instrumentMaskedPan}`}</H4>
         </View>
         {renderControl()}
       </View>
@@ -92,29 +93,53 @@ const InstrumentEnrollmentSwitch = forwardRef<
   );
 });
 
-const getPaymentMethodInfo = (wallet: Wallet): InstrumentInfo => {
-  const getLogoSource = () => {
-    if (wallet.psp?.logoPSP) {
-      return { uri: wallet.psp?.logoPSP };
-    }
+export const cardLogos: {
+  [key in CreditCardType]: IOLogoPaymentType | undefined;
+} = {
+  MASTERCARD: "mastercard",
+  VISA: "visa",
+  AMEX: "amex",
+  DINERS: "diners",
+  MAESTRO: "maestro",
+  VISAELECTRON: "visa",
+  POSTEPAY: "postepay",
+  UNIONPAY: "unionPay",
+  DISCOVER: "discover",
+  JCB: "jcb",
+  JCB15: "jcb",
+  UNKNOWN: undefined
+};
 
-    if (wallet.paymentMethod?.info) {
-      return getCardIconFromBrandLogo(wallet.paymentMethod?.info);
-    }
-    return defaultCardIcon;
-  };
-
+const getPaymentMaskedPan = (wallet: Wallet): string => {
   switch (wallet.type) {
     case "CREDIT_CARD":
-      return {
-        logo: <Image style={styles.issuerLogo} source={getLogoSource()} />,
-        maskedPan: wallet.creditCard?.pan
-      };
+      return wallet.creditCard?.pan ?? "";
     default:
-      return {
-        logo: <View />
-      };
+      return "";
   }
+};
+
+const getPaymentMethodLogo = (wallet: Wallet): JSX.Element => {
+  switch (wallet.type) {
+    case "CREDIT_CARD":
+      const creditCardType = CreditCardType.decode(
+        wallet.creditCard?.brand?.toUpperCase()
+      );
+
+      const logo =
+        cardLogos[
+          pipe(
+            creditCardType,
+            E.getOrElseW(() => "UNKNOWN" as const)
+          )
+        ];
+
+      if (logo !== undefined) {
+        return <LogoPayment name={logo} size={25} />;
+      }
+  }
+
+  return <Image style={styles.issuerLogo} source={defaultCardIcon} />;
 };
 
 const styles = StyleSheet.create({
