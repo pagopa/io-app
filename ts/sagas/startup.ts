@@ -65,7 +65,7 @@ import {
   sessionTokenSelector
 } from "../store/reducers/authentication";
 import { lollipopKeyTagSelector } from "../features/lollipop/store/reducers/lollipop";
-import { generataLollipopKeySaga } from "../features/lollipop/saga";
+import { generateLollipopKeySaga } from "../features/lollipop/saga";
 import { IdentificationResult } from "../store/reducers/identification";
 import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
 import { isPagoPATestEnabledSelector } from "../store/reducers/persistedPreferences";
@@ -209,7 +209,7 @@ export function* initializeApplicationSaga(): Generator<
   // to use this information on old app version already logged in users.
   // Here we are blocking the application startup, but we have the
   // the profile loading spinner active.
-  yield* generataLollipopKeySaga();
+  yield* generateLollipopKeySaga();
 
   // Whether the user is currently logged in.
   const previousSessionToken: ReturnType<typeof sessionTokenSelector> =

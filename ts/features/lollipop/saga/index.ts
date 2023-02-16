@@ -9,7 +9,7 @@ import {
 } from "../../../sagas/startup/generateCryptoKeyPair";
 import { lollipopLoginEnabled } from "../../../config";
 
-export function* generataLollipopKeySaga() {
+export function* generateLollipopKeySaga() {
   const maybeOldKeyTag = yield* select(lollipopKeyTagSelector);
   // Weather the user is logged in or not
   // we generate a key (if no one is present)
