@@ -222,7 +222,7 @@ const createServicesImplementation = (
       "Accept-Language": language
     });
 
-    const data: Promise<undefined> = pipe(
+    const data: Promise<ReadonlyArray<p.Pot<InstrumentDTO, Error>>> = pipe(
       response,
       E.fold(
         _ => Promise.reject(InitiativeFailureType.INSTRUMENT_ENROLL_FAILURE),
@@ -234,7 +234,7 @@ const createServicesImplementation = (
             );
           }
 
-          return Promise.resolve(undefined);
+          return loadInitiativeInstruments(context);
         }
       )
     );
@@ -258,7 +258,7 @@ const createServicesImplementation = (
       "Accept-Language": language
     });
 
-    const data: Promise<undefined> = pipe(
+    const data: Promise<ReadonlyArray<p.Pot<InstrumentDTO, Error>>> = pipe(
       response,
       E.fold(
         _ => Promise.reject(InitiativeFailureType.INSTRUMENT_DELETE_FAILURE),
@@ -270,7 +270,7 @@ const createServicesImplementation = (
             );
           }
 
-          return Promise.resolve(undefined);
+          return loadInitiativeInstruments(context);
         }
       )
     );

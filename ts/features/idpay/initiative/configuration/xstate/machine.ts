@@ -34,10 +34,10 @@ type Services = {
     data: ReadonlyArray<p.Pot<InstrumentDTO, Error>>;
   };
   enrollInstrument: {
-    data: undefined;
+    data: ReadonlyArray<p.Pot<InstrumentDTO, Error>>;
   };
   deleteInstrument: {
-    data: undefined;
+    data: ReadonlyArray<p.Pot<InstrumentDTO, Error>>;
   };
 };
 
@@ -382,7 +382,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 id: "enrollInstrument",
                 onDone: {
                   target: "DISPLAYING_INSTRUMENTS",
-                  actions: "enrollInstrumentSuccess"
+                  actions: "toggleInstrumentSuccess"
                 },
                 onError: {
                   target: "DISPLAYING_INSTRUMENTS",
@@ -397,7 +397,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 id: "deleteInstrument",
                 onDone: {
                   target: "DISPLAYING_INSTRUMENTS",
-                  actions: "deleteInstrumentSuccess"
+                  actions: "toggleInstrumentSuccess"
                 },
                 onError: {
                   target: "DISPLAYING_INSTRUMENTS",
@@ -492,11 +492,8 @@ const createIDPayInitiativeConfigurationMachine = () =>
           selectedInstrumentId: event.instrumentId,
           failure: undefined
         })),
-        enrollInstrumentSuccess: assign((_, __) => ({
-          selectedInstrumentId: undefined,
-          failure: undefined
-        })),
-        deleteInstrumentSuccess: assign((_, __) => ({
+        toggleInstrumentSuccess: assign((_, event) => ({
+          initiativeInstruments: event.data,
           selectedInstrumentId: undefined,
           failure: undefined
         })),
