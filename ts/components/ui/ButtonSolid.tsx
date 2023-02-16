@@ -91,7 +91,10 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 0 },
     shadowRadius: 0,
     shadowOpacity: 0
-    // Visual parameters based on the FontScale
+    /* Properties related to the new accessible variant
+    with visual parameters based on the FontScale.
+    We left them here because they will be a starting point
+    for the next iterations of the component. */
     // paddingVertical: PixelRatio.getFontScale() * 10,
     // paddingHorizontal: PixelRatio.getFontScale() * 16,
     // borderRadius: PixelRatio.getFontScale() * 8
