@@ -15,6 +15,16 @@ export type KeyGenerationInfo = {
   userInfo?: Record<string, string>;
 };
 
+export const wipeKeyGenerationInfo = async (keyTag: string) =>
+  pipe(
+    TE.tryCatch(
+      () => AsyncStorage.removeItem(keyTag),
+      () => false
+    ),
+    TE.map(_ => true),
+    TE.getOrElse(() => T.of(false))
+  )();
+
 export const setKeyGenerationInfo = async (
   keyTag: string,
   value: KeyGenerationInfo
@@ -92,8 +102,14 @@ export const taskGeneratePublicKey = (keyTag: string) =>
 export const deleteKeyPair = (keyTag: string) =>
   pipe(
     TE.tryCatch(
-      () => deleteKey(keyTag),
+      () => wipeKeyGenerationInfo(keyTag),
       () => false
+    ),
+    TE.chain(() =>
+      TE.tryCatch(
+        () => deleteKey(keyTag),
+        () => false
+      )
     ),
     TE.map(_ => true),
     TE.getOrElse(() => T.of(false))
