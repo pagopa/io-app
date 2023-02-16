@@ -16,13 +16,8 @@ describe("Check generateDigestHeader", () => {
 describe("Check validateDigestHeader/generateDigestHeader", () => {
   it(`against ${httpRequestBody}`, () => {
     const digestHeader = generateDigestHeader(httpRequestBody);
-    // eslint-disable-next-line functional/no-let
-    let invalidReason = "";
-    try {
+    expect(() => {
       validateDigestHeader(digestHeader, httpRequestBody);
-    } catch (e) {
-      invalidReason = `${e}`;
-    }
-    expect(invalidReason).toBe("");
+    }).not.toThrow();
   });
 });
