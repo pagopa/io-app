@@ -1,33 +1,70 @@
+import { deleteKey, getPublicKey } from "@pagopa/io-react-native-crypto";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { pipe } from "fp-ts/lib/function";
 import * as T from "fp-ts/lib/Task";
 import * as TE from "fp-ts/lib/TaskEither";
-import { getPublicKey } from "@pagopa/io-react-native-crypto";
 
-export const setKeyAlreadyGenerated = async (keyTag: string, value: string) =>
+export type KeyGenerationInfo = {
+  keyTag: string;
+  keyType?: string;
+  errorCode?: string;
+  userInfo?: Record<string, string>;
+};
+
+export const setKeyGenerationInfo = async (
+  keyTag: string,
+  value: KeyGenerationInfo
+) =>
   pipe(
     TE.tryCatch(
-      () => AsyncStorage.setItem(keyTag, value),
+      () => AsyncStorage.setItem(keyTag, JSON.stringify(value)),
       () => false
     ),
     TE.map(_ => true),
     TE.getOrElse(() => T.of(false))
   )();
 
-export const isKeyAlreadyGenerated = async (keyTag: string) =>
+export const getKeyGenerationInfo = async (
+  keyTag: string
+): Promise<KeyGenerationInfo | null> =>
   pipe(
     TE.tryCatch(
       () => AsyncStorage.getItem(keyTag),
-      () => false
+      () => null
     ),
-    TE.map(value => value !== null),
-    TE.getOrElse(() => T.of(false))
+    TE.map(value => {
+      if (value) {
+        return JSON.parse(value);
+      } else {
+        return null;
+      }
+    }),
+    TE.getOrElse(() => T.of(null))
   )();
 
 export const checkPublicKeyExists = (keyId: string) =>
   pipe(
     TE.tryCatch(
       () => getPublicKey(keyId),
+      () => false
+    ),
+    TE.map(_ => true),
+    TE.getOrElse(() => T.of(false))
+  )();
+
+export const taskGetPublicKey = (keyId: string) =>
+  pipe(
+    TE.tryCatch(
+      () => getPublicKey(keyId),
+      () => undefined
+    ),
+    TE.getOrElseW(() => T.of(undefined))
+  )();
+
+export const deleteKeyPair = (keyId: string) =>
+  pipe(
+    TE.tryCatch(
+      () => deleteKey(keyId),
       () => false
     ),
     TE.map(_ => true),

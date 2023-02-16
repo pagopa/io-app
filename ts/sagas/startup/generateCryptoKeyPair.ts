@@ -1,44 +1,107 @@
+import * as O from "fp-ts/lib/Option";
 import {
   generate,
-  deleteKey,
-  CryptoError
+  CryptoError,
+  deleteKey
 } from "@pagopa/io-react-native-crypto";
-import { call } from "typed-redux-saga/macro";
+import { call, select } from "typed-redux-saga/macro";
+import { isLollipopEnabledSelector } from "../../store/reducers/backendStatus";
 import {
   checkPublicKeyExists,
-  isKeyAlreadyGenerated,
-  setKeyAlreadyGenerated
+  setKeyGenerationInfo,
+  getKeyGenerationInfo,
+  KeyGenerationInfo
 } from "../../utils/crypto";
 import { mixpanelTrack } from "./../../mixpanel";
 
-const KEY_NAME = "lp-temp-key";
+/**
+ * Generates a new crypto key pair.
+ */
+export function* cryptoKeyGenerationSaga(
+  keyTag: string,
+  previousKeyTag: O.Option<string>
+) {
+  const isLollipopEnabled = yield* select(isLollipopEnabledSelector);
+  if (isLollipopEnabled) {
+    // Every new login we need to regenerate a brand new key pair.
+    yield* deletePreviousCryptoKeyPair(previousKeyTag);
+    yield* call(generateCryptoKeyPair, keyTag);
+  }
+}
 
-export function* generateCryptoKeyPair() {
-  try {
-    const keyAlreadyExistsOnKeystore = yield* call(
-      checkPublicKeyExists,
-      KEY_NAME
-    );
-    const keyHasBeenAlreadyGenerated = yield* call(
-      isKeyAlreadyGenerated,
-      KEY_NAME
-    );
-    const shouldWeGenerateKey = !(
-      keyHasBeenAlreadyGenerated || keyAlreadyExistsOnKeystore
-    );
+/**
+ * Sends to mixpanel the crypto key pair generation events.
+ */
+export function* trackMixpanelCryptoKeyPairEvents(keyTag: string) {
+  const keyInfo = yield* call(getKeyGenerationInfo, keyTag);
 
-    if (shouldWeGenerateKey) {
-      const key = yield* call(generate, KEY_NAME);
-      void mixpanelTrack("LOLLIPOP_KEY_GENERATION_SUCCESS", {
-        kty: key.kty
-      });
-      yield* call(setKeyAlreadyGenerated, KEY_NAME, key.kty);
-      yield* call(deleteKey, KEY_NAME);
-    }
-  } catch (e) {
-    const errorMessage = (e as CryptoError).message;
-    void mixpanelTrack("LOLLIPOP_KEY_GENERATION_FAILURE", {
-      reason: errorMessage
+  if (keyInfo && !keyInfo.errorCode) {
+    void mixpanelTrack("LOLLIPOP_KEY_GENERATION_SUCCESS", {
+      kty: keyInfo.keyType
     });
   }
+
+  if (keyInfo && keyInfo.errorCode) {
+    void mixpanelTrack("LOLLIPOP_KEY_GENERATION_FAILURE", {
+      reason: keyInfo.errorCode,
+      resonMoreInfo: keyInfo.userInfo
+    });
+  }
+}
+
+/**
+ * Deletes a previous saved crypto key pair.
+ */
+export function* deletePreviousCryptoKeyPair(keyTag: O.Option<string>) {
+  if (O.isSome(keyTag)) {
+    yield* deleteCryptoKeyPair(keyTag.value);
+  }
+}
+
+/**
+ * Deletes the crypto key pair corresponding to the provided `keyTag`.
+ */
+function* deleteCryptoKeyPair(keyTag: string) {
+  // Key is persisted even after uninstalling the application on iOS.
+  const keyAlreadyExistsOnKeystore = yield* call(checkPublicKeyExists, keyTag);
+
+  if (keyAlreadyExistsOnKeystore) {
+    try {
+      yield* call(deleteKey, keyTag);
+    } catch (e) {
+      yield* saveKeyGenerationFailureInfo(keyTag, e);
+    }
+  }
+}
+
+/**
+ * Generates a new crypto key pair.
+ */
+function* generateCryptoKeyPair(keyTag: string) {
+  try {
+    // Remove an already existing key with the same tag.
+    deleteCryptoKeyPair(keyTag);
+
+    const key = yield* call(generate, keyTag);
+    const keyGenerationInfo: KeyGenerationInfo = {
+      keyTag,
+      keyType: key.kty
+    };
+    yield* call(setKeyGenerationInfo, keyTag, keyGenerationInfo);
+  } catch (e) {
+    yield* saveKeyGenerationFailureInfo(keyTag, e);
+  }
+}
+
+/**
+ * Persists the crypto key pair generation information data.
+ */
+function* saveKeyGenerationFailureInfo(keyTag: string, e: unknown) {
+  const { message: errorCode, userInfo } = e as CryptoError;
+  const keyGenerationInfo: KeyGenerationInfo = {
+    keyTag,
+    errorCode,
+    userInfo
+  };
+  yield* call(setKeyGenerationInfo, keyTag, keyGenerationInfo);
 }
