@@ -19,19 +19,9 @@ type LoginSourceInitial = {
 };
 
 /**
- * Type represeting that the login source cannot be calculated
- */
-type LoginSourceError = {
-  kind: "error";
-};
-
-/**
  * Type representing all handled objects
  */
-export type LoginSourceAsync =
-  | LoginSourceReady
-  | LoginSourceInitial
-  | LoginSourceError;
+export type LoginSourceAsync = LoginSourceReady | LoginSourceInitial;
 
 const isLoginSourceReady = (lgs: LoginSourceAsync): lgs is LoginSourceReady =>
   lgs.kind === "ready";
