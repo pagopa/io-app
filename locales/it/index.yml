@@ -1813,7 +1813,7 @@ messageDetails:
   attachments:
     badFormat: "Il formato dell'allegato non è supportato. Contatta l'ente mittente"
     corruptedFile: "L'allegato è danneggato e non può essere aperto. Contatta l'ente mittente"
-    downloadFailed: "L'allegato non si è aperto. Riprova"
+    downloadFailed: "L'allegato non è al momento disponibile. Riprova o contatta l'ente mittente"
     showPreview: "Visualizza anteprima"
     unavailable:
       firstPart: "Gli allegati non sono più disponibili. "
