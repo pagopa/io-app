@@ -46,11 +46,7 @@ import { idpContextualHelpDataFromIdSelector } from "../../store/reducers/conten
 import { GlobalState } from "../../store/reducers/types";
 import { SessionToken } from "../../types/SessionToken";
 import { getAppVersion } from "../../utils/appVersion";
-import {
-  getIdpLoginUri,
-  getIntentFallbackUrl,
-  onLoginUriChanged
-} from "../../utils/login";
+import { getIntentFallbackUrl, onLoginUriChanged } from "../../utils/login";
 import { getSpidErrorCodeDescription } from "../../utils/spidErrorCode";
 import {
   assistanceToolRemoteConfig,
