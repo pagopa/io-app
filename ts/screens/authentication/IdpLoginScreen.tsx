@@ -46,7 +46,11 @@ import { idpContextualHelpDataFromIdSelector } from "../../store/reducers/conten
 import { GlobalState } from "../../store/reducers/types";
 import { SessionToken } from "../../types/SessionToken";
 import { getAppVersion } from "../../utils/appVersion";
-import { getIntentFallbackUrl, onLoginUriChanged } from "../../utils/login";
+import {
+  getIdpLoginUri,
+  getIntentFallbackUrl,
+  onLoginUriChanged
+} from "../../utils/login";
 import { getSpidErrorCodeDescription } from "../../utils/spidErrorCode";
 import {
   assistanceToolRemoteConfig,
@@ -130,7 +134,8 @@ const IdpLoginScreen = (props: Props) => {
     undefined
   );
 
-  const loginUri = props.loggedOutWithIdpAuth?.idp.id;
+  const idpId = props.loggedOutWithIdpAuth?.idp.id;
+  const loginUri = idpId ? getIdpLoginUri(idpId) : undefined;
   const loginSource = useLollipopLoginSource(loginUri);
 
   const choosenTool = useMemo(
