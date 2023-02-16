@@ -134,13 +134,7 @@ const IdpLoginScreen = (props: Props) => {
     undefined
   );
 
-  const loginUri = pipe(
-    props.loggedOutWithIdpAuth,
-    O.fromNullable,
-    O.map(v => getIdpLoginUri(v.idp.id)),
-    O.getOrElseW(() => undefined)
-  );
-
+  const loginUri = props.loggedOutWithIdpAuth?.idp.id;
   const loginSource = useLollipopLoginSource(loginUri);
 
   const choosenTool = useMemo(
