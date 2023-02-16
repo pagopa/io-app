@@ -27,7 +27,7 @@ export function* generateLollipopKeySaga() {
   }
 }
 
-export function* deleteTheCurrentKeyAndGenerateNewKeyTag() {
+export function* deleteCurrentLollipopKeyAndGenerateNewKeyTag() {
   const maybeCurrentKeyTag = yield* select(lollipopKeyTagSelector);
   yield* deletePreviousCryptoKeyPair(maybeCurrentKeyTag);
   const newKeyTag = uuid();
