@@ -41,6 +41,7 @@ const FciSignatureScreen = (
       title={I18n.t("features.fci.errors.generic.default.title")}
       subTitle={I18n.t("features.fci.errors.generic.default.subTitle")}
       onPress={() => dispatch(fciEndRequest())}
+      testID="GenericErrorComponentTestID"
     />
   );
 
