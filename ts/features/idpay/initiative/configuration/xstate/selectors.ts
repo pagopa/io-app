@@ -76,6 +76,15 @@ const initiativeInstrumentsByIdWalletSelector = createSelector(
     }, {})
 );
 
+const initiativeInstrumentByIdWalletSelector = (idWallet: number) =>
+  createSelector(
+    initiativeInstrumentsByIdWalletSelector,
+    instrumentsById => instrumentsById[idWallet] ?? P.none
+  );
+
+const stagedInstrumentIdSelector = (state: StateWithContext) =>
+  state.context.stagedInstrumentId;
+
 const failureSelector = (state: StateWithContext) => state.context.failure;
 
 export {
@@ -92,5 +101,7 @@ export {
   selectEnrolledIban,
   selectWalletInstruments,
   initiativeInstrumentsByIdWalletSelector,
+  initiativeInstrumentByIdWalletSelector,
+  stagedInstrumentIdSelector,
   failureSelector
 };

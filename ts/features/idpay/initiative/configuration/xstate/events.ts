@@ -8,9 +8,13 @@ type E_START_CONFIGURATION = {
   mode: ConfigurationMode;
 };
 
+type E_STAGE_INSTRUMENT = {
+  type: "STAGE_INSTRUMENT";
+  idWallet?: number;
+};
+
 type E_ENROLL_INSTRUMENT = {
   type: "ENROLL_INSTRUMENT";
-  instrumentId: string;
 };
 
 type E_DELETE_INSTRUMENT = {
@@ -58,6 +62,7 @@ type E_QUIT = {
 
 export type Events =
   | E_START_CONFIGURATION
+  | E_STAGE_INSTRUMENT
   | E_ENROLL_INSTRUMENT
   | E_DELETE_INSTRUMENT
   | E_ADD_PAYMENT_METHOD

@@ -211,13 +211,13 @@ const createServicesImplementation = (
       return Promise.reject(InitiativeFailureType.GENERIC);
     }
 
-    if (context.selectedInstrumentId === undefined) {
+    if (context.stagedInstrumentId === undefined) {
       return Promise.reject(InitiativeFailureType.GENERIC);
     }
 
     const response = await walletClient.enrollInstrument({
       initiativeId: context.initiativeId,
-      idWallet: context.selectedInstrumentId,
+      idWallet: context.stagedInstrumentId.toString(),
       bearerAuth: bearerToken,
       "Accept-Language": language
     });

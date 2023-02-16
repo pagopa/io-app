@@ -3,7 +3,7 @@ import { RouteProp, useRoute } from "@react-navigation/native";
 import { useSelector } from "@xstate/react";
 import { List as NBList, Text as NBText } from "native-base";
 import React from "react";
-import { View, SafeAreaView, ScrollView } from "react-native";
+import { SafeAreaView, ScrollView, View } from "react-native";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
@@ -14,22 +14,20 @@ import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../i18n";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
-import {
-  InstrumentEnrollmentSwitch,
-  InstrumentEnrollmentSwitchRef
-} from "../components/InstrumentEnrollmentSwitch";
+import { InstrumentEnrollmentSwitch } from "../components/InstrumentEnrollmentSwitch";
 import { IDPayConfigurationParamsList } from "../navigation/navigator";
 import { ConfigurationMode } from "../xstate/context";
 import { InitiativeFailureType } from "../xstate/failure";
 import { useConfigurationMachineService } from "../xstate/provider";
 import {
   failureSelector,
+  initiativeInstrumentsByIdWalletSelector,
   isLoadingSelector,
   selectInitiativeDetails,
   selectIsInstrumentsOnlyMode,
   selectIsUpsertingInstrument,
-  initiativeInstrumentsByIdWalletSelector,
-  selectWalletInstruments
+  selectWalletInstruments,
+  stagedInstrumentIdSelector
 } from "../xstate/selectors";
 
 type InstrumentsEnrollmentScreenRouteParams = {
@@ -46,24 +44,6 @@ const InstrumentsEnrollmentScreen = () => {
   const { initiativeId } = route.params;
 
   const configurationMachine = useConfigurationMachineService();
-
-  // See more in the docs: https://beta.reactjs.org/learn/manipulating-the-dom-with-refs#how-to-manage-a-list-of-refs-using-a-ref-callback
-  const instrumentItemsRef = React.useRef<
-    Map<number, InstrumentEnrollmentSwitchRef>
-  >(new Map<number, InstrumentEnrollmentSwitchRef>());
-  const getInstrumentItemsMap = () => {
-    if (!instrumentItemsRef.current) {
-      // eslint-disable-next-line functional/immutable-data
-      instrumentItemsRef.current = new Map<
-        number,
-        InstrumentEnrollmentSwitchRef
-      >();
-    }
-    return instrumentItemsRef.current;
-  };
-
-  const selectedInstrumentIdRef = React.useRef<number | undefined>(undefined);
-  const selectedInstrumentWasSetRef = React.useRef<boolean>(false);
 
   const isLoading = useSelector(configurationMachine, isLoadingSelector);
   const failure = useSelector(configurationMachine, failureSelector);
@@ -85,6 +65,11 @@ const InstrumentsEnrollmentScreen = () => {
   const initiativeInstrumentsByIdWallet = useSelector(
     configurationMachine,
     initiativeInstrumentsByIdWalletSelector
+  );
+
+  const stagedInstrumentId = useSelector(
+    configurationMachine,
+    stagedInstrumentIdSelector
   );
 
   const isUpserting = useSelector(
@@ -111,22 +96,9 @@ const InstrumentsEnrollmentScreen = () => {
     configurationMachine.send({ type: "ADD_PAYMENT_METHOD" });
   };
 
-  const sendEnrollInstrument = (walletId: number): void => {
-    // eslint-disable-next-line functional/immutable-data
-    selectedInstrumentWasSetRef.current = true;
-    configurationMachine.send("ENROLL_INSTRUMENT", {
-      instrumentId: walletId
-    });
-  };
-
-  const sendDeleteInstrument = (walletId: number): void => {
-    const instrumentPot = initiativeInstrumentsByIdWallet[walletId];
-
-    if (p.isSome(instrumentPot)) {
-      configurationMachine.send("DELETE_INSTRUMENT", {
-        instrumentId: instrumentPot.value.instrumentId
-      });
-    }
+  const handleEnrollConfirm = () => {
+    configurationMachine.send({ type: "ENROLL_INSTRUMENT" });
+    enrollmentBottomSheetModal.dismiss();
   };
 
   React.useEffect(() => {
@@ -155,10 +127,7 @@ const InstrumentsEnrollmentScreen = () => {
     <FooterWithButtons
       type="TwoButtonsInlineThird"
       rightButton={{
-        onPress: () => {
-          sendEnrollInstrument(selectedInstrumentIdRef.current as number);
-          enrollmentBottomSheetModal.dismiss();
-        },
+        onPress: handleEnrollConfirm,
         block: true,
         bordered: false,
         title: I18n.t(
@@ -177,48 +146,32 @@ const InstrumentsEnrollmentScreen = () => {
       }}
     />,
     () => {
-      if (!selectedInstrumentWasSetRef.current) {
-        // Resets the state of the switch only if the modal was closed without continuing
-        revertInstrumentSwitch(selectedInstrumentIdRef.current as number);
-      }
+      revertInstrumentSwitch();
     }
   );
 
-  /** Resets the switch linked to the given walletId to its previous state */
-  const revertInstrumentSwitch = React.useCallback((walletId: number): void => {
-    const node = getInstrumentItemsMap().get(walletId);
-    if (node) {
-      node.setSwitchStatus(!node.switchStatus);
+  React.useEffect(() => {
+    if (stagedInstrumentId) {
+      enrollmentBottomSheetModal.present();
     }
-  }, []);
+  }, [enrollmentBottomSheetModal, stagedInstrumentId]);
+
+  /** Resets the switch linked to the given walletId to its previous state */
+  const revertInstrumentSwitch = React.useCallback(() => {
+    configurationMachine.send({
+      type: "STAGE_INSTRUMENT",
+      idWallet: undefined
+    });
+  }, [configurationMachine]);
 
   React.useEffect(() => {
     if (
       failure === InitiativeFailureType.INSTRUMENT_ENROLL_FAILURE ||
       failure === InitiativeFailureType.INSTRUMENT_DELETE_FAILURE
     ) {
-      const walletId = selectedInstrumentIdRef.current as number;
-      revertInstrumentSwitch(walletId);
-
-      // eslint-disable-next-line functional/immutable-data
-      selectedInstrumentWasSetRef.current = false;
+      revertInstrumentSwitch();
     }
   }, [failure, revertInstrumentSwitch]);
-
-  const handleInstrumentSwitch = (
-    walletId: number,
-    isEnrolling: boolean
-  ): void => {
-    if (isEnrolling) {
-      // eslint-disable-next-line functional/immutable-data
-      selectedInstrumentIdRef.current = walletId;
-      // eslint-disable-next-line functional/immutable-data
-      selectedInstrumentWasSetRef.current = false;
-      enrollmentBottomSheetModal.present();
-    } else {
-      sendDeleteInstrument(walletId);
-    }
-  };
 
   const renderFooterButtons = () => {
     if (isInstrumentsOnlyMode) {
@@ -277,14 +230,6 @@ const InstrumentsEnrollmentScreen = () => {
               <NBList>
                 {walletInstruments.map(walletInstrument => (
                   <InstrumentEnrollmentSwitch
-                    ref={node => {
-                      const map = getInstrumentItemsMap();
-                      if (node) {
-                        map.set(walletInstrument.idWallet, node);
-                      } else {
-                        map.delete(walletInstrument.idWallet);
-                      }
-                    }}
                     key={walletInstrument.idWallet}
                     wallet={walletInstrument}
                     status={p.map(
@@ -293,7 +238,6 @@ const InstrumentsEnrollmentScreen = () => {
                       ] ?? p.none,
                       i => i.status
                     )}
-                    onSwitch={handleInstrumentSwitch}
                   />
                 ))}
               </NBList>

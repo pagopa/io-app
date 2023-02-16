@@ -1,8 +1,9 @@
-import * as p from "@pagopa/ts-commons/lib/pot";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { useSelector } from "@xstate/react";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import { Badge as NBBadge, ListItem as NBListItem } from "native-base";
-import { default as React, forwardRef, useImperativeHandle } from "react";
+import { default as React } from "react";
 import { Image, StyleSheet, View } from "react-native";
 import { StatusEnum as InstrumentStatusEnum } from "../../../../../../definitions/idpay/wallet/InstrumentDTO";
 import defaultCardIcon from "../../../../../../img/wallet/cards-icons/unknown.png";
@@ -18,6 +19,11 @@ import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { CreditCardType, Wallet } from "../../../../../types/pagopa";
 import { instrumentStatusLabels } from "../../../common/labels";
+import { useConfigurationMachineService } from "../xstate/provider";
+import {
+  initiativeInstrumentByIdWalletSelector,
+  stagedInstrumentIdSelector
+} from "../xstate/selectors";
 
 export type InstrumentEnrollmentSwitchRef = {
   switchStatus: boolean;
@@ -26,39 +32,44 @@ export type InstrumentEnrollmentSwitchRef = {
 
 type InstrumentEnrollmentSwitchProps = {
   wallet: Wallet;
-  status: p.Pot<InstrumentStatusEnum | undefined, Error>;
-  onSwitch: (walletId: number, isEnrolling: boolean) => void;
+  status: pot.Pot<InstrumentStatusEnum | undefined, Error>;
 };
 
 /**
  * A component to enable/disable the enrollment of an instrument
  */
-const InstrumentEnrollmentSwitch = forwardRef<
-  InstrumentEnrollmentSwitchRef,
-  InstrumentEnrollmentSwitchProps
->((props, ref) => {
-  const { wallet, status, onSwitch } = props;
+const InstrumentEnrollmentSwitch = (props: InstrumentEnrollmentSwitchProps) => {
+  const { wallet, status } = props;
 
-  const [switchStatus, setSwitchStatus] = React.useState(
-    p.getOrElse(
-      p.map(status, s => s === InstrumentStatusEnum.ACTIVE),
-      false
-    )
+  const configurationMachine = useConfigurationMachineService();
+
+  const instrumentPot = useSelector(
+    configurationMachine,
+    initiativeInstrumentByIdWalletSelector(wallet.idWallet)
   );
 
-  useImperativeHandle(ref, () => ({
-    switchStatus,
-    setSwitchStatus
-  }));
+  const stagedInstrumentId = useSelector(
+    configurationMachine,
+    stagedInstrumentIdSelector
+  );
 
   const handleChange = (value: boolean) => {
-    setSwitchStatus(value);
-    onSwitch(wallet.idWallet, value);
+    if (value) {
+      configurationMachine.send("STAGE_INSTRUMENT", {
+        idWallet: wallet.idWallet
+      });
+    } else {
+      if (pot.isSome(instrumentPot)) {
+        configurationMachine.send("DELETE_INSTRUMENT", {
+          instrumentId: instrumentPot.value.instrumentId
+        });
+      }
+    }
   };
 
-  const renderControl = () => {
+  const renderSwitch = () => {
     if (
-      p.isSome(status) &&
+      pot.isSome(status) &&
       (status.value === InstrumentStatusEnum.PENDING_ENROLLMENT_REQUEST ||
         status.value === InstrumentStatusEnum.PENDING_DEACTIVATION_REQUEST)
     ) {
@@ -71,9 +82,24 @@ const InstrumentEnrollmentSwitch = forwardRef<
       );
     }
 
-    return (
-      <RemoteSwitch value={p.some(switchStatus)} onValueChange={handleChange} />
+    const switchValue = pot.map(
+      instrumentPot,
+      instrument => instrument?.status === InstrumentStatusEnum.ACTIVE
     );
+
+    if (wallet.idWallet === stagedInstrumentId) {
+      return (
+        <RemoteSwitch value={pot.some(true)} onValueChange={handleChange} />
+      );
+    }
+
+    if (pot.isNone(switchValue)) {
+      return (
+        <RemoteSwitch value={pot.some(false)} onValueChange={handleChange} />
+      );
+    }
+
+    return <RemoteSwitch value={switchValue} onValueChange={handleChange} />;
   };
 
   const instrumentLogo = getPaymentMethodLogo(wallet);
@@ -87,11 +113,11 @@ const InstrumentEnrollmentSwitch = forwardRef<
           <HSpacer size={8} />
           <H4>{`•••• ${instrumentMaskedPan}`}</H4>
         </View>
-        {renderControl()}
+        {renderSwitch()}
       </View>
     </NBListItem>
   );
-});
+};
 
 export const cardLogos: {
   [key in CreditCardType]: IOLogoPaymentType | undefined;

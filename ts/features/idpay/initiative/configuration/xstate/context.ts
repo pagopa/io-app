@@ -19,6 +19,7 @@ export type Context = {
   ibanList: p.Pot<ReadonlyArray<IbanDTO>, Error>;
   walletInstruments: ReadonlyArray<Wallet>;
   initiativeInstruments: ReadonlyArray<p.Pot<InstrumentDTO, Error>>;
+  stagedInstrumentId?: number;
   selectedInstrumentId?: string;
   areInstrumentsSkipped?: boolean;
   selectedIban?: IbanDTO;

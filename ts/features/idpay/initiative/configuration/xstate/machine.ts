@@ -346,9 +346,11 @@ const createIDPayInitiativeConfigurationMachine = () =>
             DISPLAYING_INSTRUMENTS: {
               tags: [WAITING_USER_INPUT_TAG],
               on: {
+                STAGE_INSTRUMENT: {
+                  actions: "stageInstrument"
+                },
                 ENROLL_INSTRUMENT: {
-                  target: "ENROLLING_INSTRUMENT",
-                  actions: "selectInstrument"
+                  target: "ENROLLING_INSTRUMENT"
                 },
                 DELETE_INSTRUMENT: {
                   target: "DELETING_INSTRUMENT",
@@ -488,6 +490,10 @@ const createIDPayInitiativeConfigurationMachine = () =>
         skipInstruments: assign((_, __) => ({
           areInstrumentsSkipped: true
         })),
+        stageInstrument: assign((_, event) => ({
+          stagedInstrumentId: event.idWallet,
+          failure: undefined
+        })),
         selectInstrument: assign((_, event) => ({
           selectedInstrumentId: event.instrumentId,
           failure: undefined
@@ -495,6 +501,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
         toggleInstrumentSuccess: assign((_, event) => ({
           initiativeInstruments: event.data,
           selectedInstrumentId: undefined,
+          stagedInstrumentId: undefined,
           failure: undefined
         })),
         confirmIbanOnboarding: assign((_, event) => ({
