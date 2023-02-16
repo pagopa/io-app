@@ -17,6 +17,7 @@ import { DSAdvice } from "../core/DSAdvice";
 import { DSAccordion } from "../core/DSAccordion";
 import { DSListItems } from "../core/DSListItems";
 import { DSSpacing } from "../core/DSSpacing";
+import { DSAlert } from "../core/DSAlert";
 import { DesignSystemParamsList } from "./params";
 import DESIGN_SYSTEM_ROUTES from "./routes";
 
@@ -83,6 +84,11 @@ export const DesignSystemNavigator = () => (
     <Stack.Screen
       name={DESIGN_SYSTEM_ROUTES.COMPONENTS.ACCORDION.route}
       component={DSAccordion}
+    />
+
+    <Stack.Screen
+      name={DESIGN_SYSTEM_ROUTES.COMPONENTS.ALERT.route}
+      component={DSAlert}
     />
 
     <Stack.Screen
