@@ -123,6 +123,59 @@ export const DSAlert = () => {
       />
 
       <VSpacer size={40} />
+
+      <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
+        Content + Action
+      </H2>
+
+      <Alert
+        viewRef={viewRef}
+        variant="error"
+        action="Alert action"
+        onPress={() => {
+          alert("Action triggered");
+        }}
+        content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
+      />
+
+      <VSpacer />
+
+      <Alert
+        viewRef={viewRef}
+        variant="warning"
+        action="Alert action"
+        onPress={() => {
+          alert("Action triggered");
+        }}
+        content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
+      />
+
+      <VSpacer />
+
+      <Alert
+        viewRef={viewRef}
+        variant="info"
+        action="Alert action"
+        onPress={() => {
+          alert("Action triggered");
+        }}
+        content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
+      />
+
+      <VSpacer />
+
+      <Alert
+        viewRef={viewRef}
+        variant="success"
+        action="Alert action"
+        onPress={() => {
+          alert("Action triggered");
+        }}
+        content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
+      />
+
+      <VSpacer size={40} />
+
       {/* Full width */}
       <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
         Full width
@@ -169,6 +222,19 @@ export const DSAlert = () => {
           viewRef={viewRef}
           variant="info"
           title="Alert title"
+          content="Ut enim ad minim veniam, quis ullamco labo nisi ut aliquid ad minim veniam"
+        />
+
+        <VSpacer />
+
+        <Alert
+          fullWidth
+          viewRef={viewRef}
+          variant="info"
+          action="Alert action"
+          onPress={() => {
+            alert("Action triggered");
+          }}
           content="Ut enim ad minim veniam, quis ullamco labo nisi ut aliquid ad minim veniam"
         />
       </DSFullWidthComponent>

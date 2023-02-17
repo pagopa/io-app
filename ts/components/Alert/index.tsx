@@ -7,6 +7,7 @@ import {
 import React from "react";
 import { WithTestID } from "../../types/WithTestID";
 import { Label } from "../core/typography/Label";
+import { Link } from "../core/typography/Link";
 import {
   IOColors,
   IOColorsStatus,
@@ -83,6 +84,8 @@ export const Alert = ({
   variant,
   title,
   content,
+  action,
+  onPress,
   fullWidth = false,
   accessible,
   accessibilityHint,
@@ -121,6 +124,14 @@ export const Alert = ({
       <Label color={mapVariantStates[variant].foreground} weight={"Regular"}>
         {content}
       </Label>
+      {action && (
+        <>
+          <VSpacer size={4} />
+          <Link color={mapVariantStates[variant].foreground} onPress={onPress}>
+            {action}
+          </Link>
+        </>
+      )}
     </View>
   </View>
 );
