@@ -47,8 +47,7 @@ export function* trackMixpanelCryptoKeyPairEvents(keyTag: string) {
 
   if (keyInfo && keyInfo.errorCode) {
     void mixpanelTrack("LOLLIPOP_KEY_GENERATION_FAILURE", {
-      reason: keyInfo.errorCode,
-      reasonMoreInfo: keyInfo.userInfo
+      reason: keyInfo.errorCode
     });
   }
 }
@@ -130,11 +129,10 @@ export function* getCryptoPublicKey(keyTag: O.Option<string>) {
  * Persists the crypto key pair generation information data.
  */
 function* saveKeyGenerationFailureInfo(keyTag: string, e: unknown) {
-  const { message: errorCode, userInfo } = e as CryptoError;
+  const { message: errorCode } = e as CryptoError;
   const keyGenerationInfo: KeyGenerationInfo = {
     keyTag,
-    errorCode,
-    userInfo
+    errorCode
   };
   yield* call(setKeyGenerationInfo, keyTag, keyGenerationInfo);
 }
