@@ -17,6 +17,7 @@ import { Icon, IOIconType } from "../core/icons";
 import { HSpacer, VSpacer } from "../core/spacer/Spacer";
 import { H2 } from "../core/typography/H2";
 import { IOStyles } from "../core/variables/IOStyles";
+import { IOAlertRadius } from "../core/variables/IOShapes";
 
 const iconSize = 24;
 
@@ -28,7 +29,7 @@ const styles = StyleSheet.create({
   },
   spacingDefault: {
     padding: 16,
-    borderRadius: 8
+    borderRadius: IOAlertRadius
   },
   spacingFullWidth: {
     padding: 24

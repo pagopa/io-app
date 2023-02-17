@@ -1,7 +1,7 @@
 /*
-Generic spacing scale.
+SPACING SCALE
 Every margin/padding used by different components 
-should use a value defined in the following array.
+should use a value defined in the following scale.
 */
 
 export const IOSpacingScale = [
