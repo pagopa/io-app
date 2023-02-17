@@ -131,7 +131,11 @@ export const Alert = ({
       {action && (
         <>
           <VSpacer size={4} />
-          <Link color={mapVariantStates[variant].foreground} onPress={onPress}>
+          <Link
+            color={mapVariantStates[variant].foreground}
+            onPress={onPress}
+            style={{ alignSelf: "flex-start" }}
+          >
             {action}
           </Link>
         </>
