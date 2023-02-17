@@ -7,9 +7,15 @@ import {
 import React from "react";
 import { WithTestID } from "../../types/WithTestID";
 import { Label } from "../core/typography/Label";
-import { IOColors, IOColorsStatus } from "../core/variables/IOColors";
+import {
+  IOColors,
+  IOColorsStatus,
+  IOCOlorsStatusForeground
+} from "../core/variables/IOColors";
 import { Icon, IOIconType } from "../core/icons";
-import { HSpacer } from "../core/spacer/Spacer";
+import { HSpacer, VSpacer } from "../core/spacer/Spacer";
+import { H2 } from "../core/typography/H2";
+import { IOStyles } from "../core/variables/IOStyles";
 
 const iconSize = 24;
 
@@ -25,8 +31,7 @@ const styles = StyleSheet.create({
   },
   spacingFullWidth: {
     padding: 24
-  },
-  text: { flex: 1 }
+  }
 });
 
 type Props = WithTestID<{
@@ -46,7 +51,7 @@ type Props = WithTestID<{
 type VariantStates = {
   icon: IOIconType;
   background: IOColorsStatus;
-  foreground: IOColorsStatus;
+  foreground: IOCOlorsStatusForeground;
 };
 
 // COMPONENT CONFIGURATION
@@ -76,6 +81,7 @@ const mapVariantStates: Record<NonNullable<Props["variant"]>, VariantStates> = {
 
 export const Alert = ({
   variant,
+  title,
   content,
   fullWidth = false,
   accessible,
@@ -103,7 +109,15 @@ export const Alert = ({
       color={mapVariantStates[variant].foreground}
     />
     <HSpacer />
-    <View style={styles.text}>
+    <View style={IOStyles.flex}>
+      {title && (
+        <>
+          <H2 weight="SemiBold" color={mapVariantStates[variant].foreground}>
+            {title}
+          </H2>
+          <VSpacer size={4} />
+        </>
+      )}
       <Label color={mapVariantStates[variant].foreground} weight={"Regular"}>
         {content}
       </Label>

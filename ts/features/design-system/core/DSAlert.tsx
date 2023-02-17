@@ -39,6 +39,10 @@ export const DSAlert = () => {
 
   return (
     <DesignSystemScreen title={"Alert"}>
+      {/* Content only */}
+      <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
+        Content only
+      </H2>
       <Alert
         viewRef={viewRef}
         variant="error"
@@ -71,6 +75,58 @@ export const DSAlert = () => {
 
       <VSpacer size={40} />
 
+      <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
+        Title + Content
+      </H2>
+
+      <Alert
+        viewRef={viewRef}
+        variant="error"
+        title="Alert title"
+        content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
+      />
+
+      <VSpacer />
+
+      <Alert
+        viewRef={viewRef}
+        variant="warning"
+        title="Alert title"
+        content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
+      />
+
+      <VSpacer />
+
+      <Alert
+        viewRef={viewRef}
+        variant="info"
+        title="Alert title"
+        content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
+      />
+
+      <VSpacer />
+
+      <Alert
+        viewRef={viewRef}
+        variant="success"
+        title="Alert title"
+        content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
+      />
+
+      <VSpacer />
+
+      <Alert
+        viewRef={viewRef}
+        variant="info"
+        title="A very very very looooooooooong title"
+        content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
+      />
+
+      <VSpacer size={40} />
+      {/* Full width */}
+      <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
+        Full width
+      </H2>
       <DSFullWidthComponent>
         <Alert
           fullWidth
@@ -97,10 +153,22 @@ export const DSAlert = () => {
           content="Ut enim ad minim veniam, quis ullamco labo nisi ut aliquid ad minim veniam"
         />
 
+        <VSpacer />
+
         <Alert
           fullWidth
           viewRef={viewRef}
           variant="success"
+          content="Ut enim ad minim veniam, quis ullamco labo nisi ut aliquid ad minim veniam"
+        />
+
+        <VSpacer />
+
+        <Alert
+          fullWidth
+          viewRef={viewRef}
+          variant="info"
+          title="Alert title"
           content="Ut enim ad minim veniam, quis ullamco labo nisi ut aliquid ad minim veniam"
         />
       </DSFullWidthComponent>

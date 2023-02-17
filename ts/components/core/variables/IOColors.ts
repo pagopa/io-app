@@ -261,6 +261,10 @@ export const IOColorsStatus = {
   infoLight
 };
 export type IOColorsStatus = keyof typeof IOColorsStatus;
+export type IOCOlorsStatusForeground = Extract<
+  IOColorsStatus,
+  "errorDark" | "warningDark" | "infoDark" | "successDark"
+>;
 
 const { blueItalia } = IOColors;
 
