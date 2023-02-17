@@ -208,6 +208,7 @@ locales:
   it: Italian
   en: English
   de: German
+  sl: Slovenian
 clipboard:
   copyFeedback: Copied to clipboard
   copyText: copy

@@ -183,10 +183,6 @@ global:
     invalidSearchBarText: "Vnesi vsaj {{minCharacter}} znake"
     noResultsFound: "Za to iskanje ni rezultatov: poskusi iskati nekaj drugega."
     noResultsTitle: "Brez rezultata."
-  localNotifications:
-    spidLogin:
-      title: "Če želiš začeti uporabljati aplikacijo, se prijavi"
-      message: "IO deluje le, če si se vsaj enkrat prijavil/a"
   media:
     email: "Epošta"
     pec: "CEP(PEC)"
@@ -439,7 +435,6 @@ profile:
     appVersion: "Različica aplikacije"
     backendVersion: "Različica zaledja (Backend)"
     debugMode: "Način odpravljanja napak"
-    showroom: "Razstavni prostor uporabniškega vmesnika"
   data:
     title: "Tvoji podatki"
     subtitle: "Tukaj boš našel/a svoje osebne in kontaktne podatke, ki jih uporablja aplikacija IO"
@@ -1603,8 +1598,6 @@ messages:
         block1: "Obvestilo je poteklo ob"
         block2: "dne"
     prescription:
-      addMemo: "Ta recept poteče dne"
-      expiringAlert: "Ta recept poteče danes"
       expiredAlert:
         block1: "Recept je potekel ob"
         block2: "dne"
@@ -1661,7 +1654,6 @@ messages:
     iup: "Identifikacijska koda rezervacije"
     patient_fiscal_code: "Davčna številka stranke"
     prescriber_fiscal_code: "Davčna številka zdravnika"
-    deadline: "Ta recept poteče dne {{date}}"
     barcodes: "Črtne kode"
     nationalService: "Državna zdravstvena služba (Servizio Sanitario Nazionale)"
     note: "Izdano na podlagi 16. odstavka 11. člena Zakonske uredbe št. 78 z dne 31. maja 2010 in 4. odstavka 1. člena Ministrske uredbe z dne 2. novembra 2011"
@@ -2510,7 +2502,6 @@ bonus:
       cashbackUpdate:
         header: "Novice in novosti"
         title: "Novosti Cashback-a"
-        subtitle: "Ministrstvo za ekonomijo in finance"
         body: !include bonus/bpd/optInPaymentMethods.md
       choice:
         header: "Konfiguriraj IO"
