@@ -408,6 +408,19 @@ export const isFciEnabledSelector = createSelector(
     )
 );
 
+/**
+ * Return the remote config about FCI service ID
+ */
+export const fciServiceIDSelector = createSelector(
+  backendStatusSelector,
+  (backendStatus): string | undefined =>
+    pipe(
+      backendStatus,
+      O.map(bs => bs.config.fci.service_id),
+      O.toUndefined
+    )
+);
+
 export const isIdPayEnabledSelector = createSelector(
   backendStatusSelector,
   (backendStatus): boolean =>
