@@ -58,6 +58,7 @@ import {
 } from "../../utils/supportAssistance";
 import { getUrlBasepath } from "../../utils/url";
 import { originSchemasWhiteList } from "./originSchemasWhiteList";
+import { lollipopLoginEnabled } from "../../config";
 
 type NavigationProps = IOStackNavigationRouteProps<
   AuthenticationParamsList,
@@ -115,7 +116,8 @@ const styles = StyleSheet.create({
   webViewWrapper: { flex: 1 }
 });
 
-const getUserAgentForWebView = () => `IO-App/${getAppVersion()}`;
+const getUserAgentForWebView = () =>
+  lollipopLoginEnabled ? `IO-App/${getAppVersion()}` : undefined;
 
 /**
  * A screen that allows the user to login with an IDP.
