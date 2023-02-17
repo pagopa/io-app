@@ -3253,6 +3253,11 @@ features:
       title: "Ci siamo quasi!"
       subTitle: "Per firmare, devi accettare i termini e condizioni del servizio e confermare di avere letto l’informativa privacy del fornitore della firma."
       show: "Visualizza"
+    documents:
+      footer:
+        cancel: "Annulla"
+        continue: "Vai alla firma"
+        confirm: "Firma e continua"
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
