@@ -1,7 +1,8 @@
 import {
   deleteKey,
   generate,
-  getPublicKey
+  getPublicKey,
+  PublicKey
 } from "@pagopa/io-react-native-crypto";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { pipe } from "fp-ts/lib/function";

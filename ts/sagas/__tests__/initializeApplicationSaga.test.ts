@@ -30,6 +30,8 @@ import { watchSessionExpiredSaga } from "../startup/watchSessionExpiredSaga";
 import { watchProfileEmailValidationChangedSaga } from "../watchProfileEmailValidationChangedSaga";
 import { checkAppHistoryVersionSaga } from "../startup/appVersionHistorySaga";
 import { generateLollipopKeySaga } from "../../features/lollipop/saga";
+import { lollipopKeyTagSelector } from "../../features/lollipop/store/reducers/lollipop";
+import { getCryptoPublicKey } from "../startup/generateCryptoKeyPair";
 
 const aSessionToken = "a_session_token" as SessionToken;
 
@@ -160,6 +162,9 @@ describe("initializeApplicationSaga", () => {
       .next()
       .fork(watchProfile, undefined)
       .next()
+      // TODO: we got an error due to the api call "loadProfileLollipop",
+      // used for tests until the PR remains in draft state.
+      // To be fixed when the PR will be ready for review.
       .call(loadProfile, undefined);
   });
 });
