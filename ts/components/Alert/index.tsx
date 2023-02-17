@@ -81,6 +81,7 @@ const mapVariantStates: Record<NonNullable<Props["variant"]>, VariantStates> = {
 };
 
 export const Alert = ({
+  viewRef,
   variant,
   title,
   content,
@@ -91,20 +92,20 @@ export const Alert = ({
   accessibilityHint,
   accessibilityLabel,
   accessibilityRole,
-  viewRef
+  testID
 }: Props) => (
   <View
-    accessibilityHint={accessibilityHint}
-    accessibilityLabel={accessibilityLabel}
-    accessibilityRole={accessibilityRole}
-    accessible={accessible ?? true}
     ref={viewRef}
     style={[
       styles.container,
       fullWidth ? styles.spacingFullWidth : styles.spacingDefault,
       { backgroundColor: IOColors[mapVariantStates[variant].background] }
     ]}
-    testID={"SectionStatusContent"}
+    testID={testID}
+    accessibilityHint={accessibilityHint}
+    accessibilityLabel={accessibilityLabel}
+    accessibilityRole={accessibilityRole}
+    accessible={accessible ?? true}
   >
     <Icon
       name={mapVariantStates[variant].icon}
