@@ -1,3 +1,4 @@
+import * as O from "fp-ts/lib/Option";
 import {
   generate,
   CryptoError,
@@ -18,7 +19,7 @@ import { mixpanelTrack } from "./../../mixpanel";
  */
 export function* cryptoKeyGenerationSaga(
   keyTag: string,
-  previousKeyTag?: string
+  previousKeyTag: O.Option<string>
 ) {
   const isLollipopEnabled = yield* select(isLollipopEnabledSelector);
   if (isLollipopEnabled) {
@@ -42,8 +43,7 @@ export function* trackMixpanelCryptoKeyPairEvents(keyTag: string) {
 
   if (keyInfo && keyInfo.errorCode) {
     void mixpanelTrack("LOLLIPOP_KEY_GENERATION_FAILURE", {
-      reason: keyInfo.errorCode,
-      resonMoreInfo: keyInfo.userInfo
+      reason: keyInfo.errorCode
     });
   }
 }
@@ -51,9 +51,9 @@ export function* trackMixpanelCryptoKeyPairEvents(keyTag: string) {
 /**
  * Deletes a previous saved crypto key pair.
  */
-export function* deletePreviousCryptoKeyPair(keyTag?: string) {
-  if (keyTag) {
-    yield* deleteCryptoKeyPair(keyTag);
+export function* deletePreviousCryptoKeyPair(keyTag: O.Option<string>) {
+  if (O.isSome(keyTag)) {
+    yield* deleteCryptoKeyPair(keyTag.value);
   }
 }
 
@@ -96,11 +96,10 @@ function* generateCryptoKeyPair(keyTag: string) {
  * Persists the crypto key pair generation information data.
  */
 function* saveKeyGenerationFailureInfo(keyTag: string, e: unknown) {
-  const { message: errorCode, userInfo } = e as CryptoError;
+  const { message: errorCode } = e as CryptoError;
   const keyGenerationInfo: KeyGenerationInfo = {
     keyTag,
-    errorCode,
-    userInfo
+    errorCode
   };
   yield* call(setKeyGenerationInfo, keyTag, keyGenerationInfo);
 }

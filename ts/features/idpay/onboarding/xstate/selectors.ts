@@ -21,6 +21,8 @@ const selectCurrentPage = (state: StateWithContext) =>
 const selectTags = (state: StateWithContext) => state.tags;
 const selectInitiative = (state: StateWithContext) => state.context.initiative;
 
+const selectServiceId = (state: StateWithContext) => state.context.serviceId;
+
 const filterCriteria = <T extends SelfDeclarationDTO>(
   criteria: O.Option<RequiredCriteriaDTO> | undefined,
   filterFunc: typeof SelfDeclarationMultiDTO | typeof SelfDeclarationBoolDTO
@@ -57,6 +59,20 @@ const criteriaToDisplaySelector = createSelector(
   multiRequiredCriteriaSelector,
   selectCurrentPage,
   (criteria, currentPage) => criteria[currentPage]
+);
+
+const pdndCriteriaSelector = createSelector(
+  selectRequiredCriteria,
+  requiredCriteria =>
+    pipe(
+      requiredCriteria,
+      O.fromNullable,
+      O.flatten,
+      O.fold(
+        () => [],
+        some => some.pdndCriteria
+      )
+    )
 );
 
 const prerequisiteAnswerIndexSelector = createSelector(
@@ -98,11 +114,13 @@ const getBoolRequiredCriteriaFromContext = (context: Context) =>
   );
 
 export {
+  selectServiceId,
   multiRequiredCriteriaSelector,
   boolRequiredCriteriaSelector,
   getMultiRequiredCriteriaFromContext,
   getBoolRequiredCriteriaFromContext,
   criteriaToDisplaySelector,
+  pdndCriteriaSelector
   prerequisiteAnswerIndexSelector,
   isLoadingSelector,
   initiativeDescriptionSelector,
