@@ -21,6 +21,7 @@ import { H5 } from "../../../components/core/typography/H5";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { H2 } from "../../../components/core/typography/H2";
+import { Alert } from "../../../components/Alert";
 
 const styles = StyleSheet.create({
   content: {
@@ -38,6 +39,74 @@ export const DSAlert = () => {
 
   return (
     <DesignSystemScreen title={"Alert"}>
+      <Alert
+        viewRef={viewRef}
+        variant="error"
+        content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
+      />
+
+      <VSpacer />
+
+      <Alert
+        viewRef={viewRef}
+        variant="warning"
+        content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
+      />
+
+      <VSpacer />
+
+      <Alert
+        viewRef={viewRef}
+        variant="info"
+        content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
+      />
+
+      <VSpacer />
+
+      <Alert
+        viewRef={viewRef}
+        variant="success"
+        content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
+      />
+
+      <VSpacer size={40} />
+
+      <DSFullWidthComponent>
+        <Alert
+          fullWidth
+          viewRef={viewRef}
+          variant="error"
+          content="Ut enim ad minim veniam, quis ullamco labo nisi ut aliquid ad minim veniam"
+        />
+
+        <VSpacer />
+
+        <Alert
+          fullWidth
+          viewRef={viewRef}
+          variant="warning"
+          content="Ut enim ad minim veniam, quis ullamco labo nisi ut aliquid ad minim veniam"
+        />
+
+        <VSpacer />
+
+        <Alert
+          fullWidth
+          viewRef={viewRef}
+          variant="info"
+          content="Ut enim ad minim veniam, quis ullamco labo nisi ut aliquid ad minim veniam"
+        />
+
+        <Alert
+          fullWidth
+          viewRef={viewRef}
+          variant="success"
+          content="Ut enim ad minim veniam, quis ullamco labo nisi ut aliquid ad minim veniam"
+        />
+      </DSFullWidthComponent>
+
+      <VSpacer size={24} />
+
       <H2 color={"bluegrey"} weight={"SemiBold"} style={{ marginBottom: 16 }}>
         Legacy components
       </H2>
@@ -78,7 +147,6 @@ export const DSAlert = () => {
           </Body>
         }
       />
-      <VSpacer size={16} />
       <VSpacer size={16} />
       <DSFullWidthComponent>
         <StatusContent
@@ -135,9 +203,7 @@ export const DSAlert = () => {
           }
         </StatusContent>
       </DSFullWidthComponent>
-
       <VSpacer size={16} />
-
       <VSpacer size={40} />
     </DesignSystemScreen>
   );
