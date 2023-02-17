@@ -5,7 +5,14 @@ import { useSelector } from "@xstate/react";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
-import { SafeAreaView, ScrollView, View } from "react-native";
+import {
+  LayoutChangeEvent,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
+  SafeAreaView,
+  ScrollView,
+  View
+} from "react-native";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
@@ -27,7 +34,6 @@ import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { showToast } from "../../../../utils/showToast";
 import { openWebUrl } from "../../../../utils/url";
 import { IDPayOnboardingParamsList } from "../navigation/navigator";
-import { useInitiativeDetailsScrolling } from "../utils/hooks";
 import { useOnboardingMachineService } from "../xstate/provider";
 import {
   initiativeDescriptionSelector,
@@ -117,26 +123,45 @@ const InitiativeDetailsScreen = () => {
   const isAcceptingTos = useSelector(machine, isUpsertingSelector);
   const isLoading = useSelector(machine, isLoadingSelector);
   const description = useSelector(machine, initiativeDescriptionSelector);
-  const {
-    scrollViewRef,
-    onScrollViewSizeChange,
-    scrollToEnd,
-    handleIsScrollEnd,
-    requiresScrolling,
-    setMarkdownRef
-  } = useInitiativeDetailsScrolling();
 
-  React.useEffect(() => {
-    if (!isLoading) {
-      setMarkdownRef(description !== undefined);
+  const hasDescription = description !== undefined;
+
+  const [needsScrolling, setNeedsScrolling] = React.useState(true);
+  const [hasScrolled, setHasScrolled] = React.useState(false);
+  const scrollViewHeightRef = React.useRef(0);
+  const isContinueButtonDisabled =
+    isLoading || (hasDescription && needsScrolling && !hasScrolled);
+  const handleScrollViewLayout = (e: LayoutChangeEvent) => {
+    scrollViewHeightRef.current = e.nativeEvent.layout.height;
+  };
+  const isMarkdownLoadedRef = React.useRef(false);
+
+  const handleScrollViewContentSizeChange = (_: number, height: number) => {
+    // this method is called multiple times during the loading of the markdown
+    if (isMarkdownLoadedRef.current) {
+      setNeedsScrolling(height >= scrollViewHeightRef.current);
     }
-  }, [isLoading, description, setMarkdownRef]);
-
+  };
+  const handleScrollViewOnScroll = ({
+    nativeEvent
+  }: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const { layoutMeasurement, contentOffset, contentSize } = nativeEvent;
+    const paddingToBottom = 20;
+    if (
+      layoutMeasurement.height + contentOffset.y >=
+      contentSize.height - paddingToBottom
+    ) {
+      setHasScrolled(true);
+    }
+  };
+  const scrollViewRef = React.useRef<ScrollView>(null);
   const handleGoBackPress = () => {
     machine.send({ type: "QUIT_ONBOARDING" });
   };
   const handleContinuePress = () =>
-    requiresScrolling ? scrollToEnd() : machine.send({ type: "ACCEPT_TOS" });
+    isContinueButtonDisabled
+      ? scrollViewRef.current?.scrollToEnd()
+      : machine.send({ type: "ACCEPT_TOS" });
 
   const service = pipe(
     pot.toOption(
@@ -145,13 +170,14 @@ const InitiativeDetailsScreen = () => {
     O.toUndefined
   );
 
-  const setMarkdownIsLoaded = () => setMarkdownRef(false);
+  const setMarkdownIsLoaded = () => (isMarkdownLoadedRef.current = true);
 
   const screenContent = () => (
     <SafeAreaView style={IOStyles.flex}>
       <ScrollView
-        onContentSizeChange={onScrollViewSizeChange}
-        onScroll={({ nativeEvent }) => handleIsScrollEnd(nativeEvent)}
+        onLayout={handleScrollViewLayout}
+        onContentSizeChange={handleScrollViewContentSizeChange}
+        onScroll={handleScrollViewOnScroll}
         scrollEventThrottle={400}
         ref={scrollViewRef}
         style={IOStyles.flex}
@@ -186,7 +212,7 @@ const InitiativeDetailsScreen = () => {
           title: I18n.t("global.buttons.continue"),
           onPress: handleContinuePress,
           testID: "IDPayOnboardingContinue",
-          style: requiresScrolling
+          style: isContinueButtonDisabled
             ? {
                 flex: 2,
                 backgroundColor: IOColors.grey
