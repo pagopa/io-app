@@ -10,8 +10,9 @@ export const IOSpacingScale = [
 
 type IOSpacingScale = typeof IOSpacingScale[number];
 
-/*
-Values used in the new `<Spacer>` component
-*/
+// Values used in the new `<Spacer>` component
 export type IOSpacer = Extract<IOSpacingScale, 4 | 8 | 16 | 24 | 40>;
 export const IOSpacer: ReadonlyArray<IOSpacer> = [4, 8, 16, 24, 40] as const;
+// Values used in the `<Alert>` component
+export type IOAlertSpacing = Extract<IOSpacingScale, 16 | 24>;
+export const IOAlertSpacing: ReadonlyArray<IOAlertSpacing> = [16, 24] as const;

@@ -18,8 +18,10 @@ import { HSpacer, VSpacer } from "../core/spacer/Spacer";
 import { H2 } from "../core/typography/H2";
 import { IOStyles } from "../core/variables/IOStyles";
 import { IOAlertRadius } from "../core/variables/IOShapes";
+import { IOAlertSpacing } from "../core/variables/IOSpacing";
 
 const iconSize = 24;
+const [spacingDefault, spacingFullWidth] = IOAlertSpacing;
 
 const styles = StyleSheet.create({
   container: {
@@ -28,11 +30,11 @@ const styles = StyleSheet.create({
     alignContent: "center"
   },
   spacingDefault: {
-    padding: 16,
+    padding: spacingDefault,
     borderRadius: IOAlertRadius
   },
   spacingFullWidth: {
-    padding: 24
+    padding: spacingFullWidth
   }
 });
 
