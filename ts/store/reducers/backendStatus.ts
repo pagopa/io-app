@@ -215,6 +215,7 @@ export const bancomatPayConfigSelector = createSelector(
 
 /**
  * return the remote config about LolliPOP enabled/disabled
+ * based on a minumum version of the app.
  * if there is no data, false is the default value -> (LolliPOP disabled)
  */
 export const isLollipopEnabledSelector = createSelector(
@@ -222,7 +223,15 @@ export const isLollipopEnabledSelector = createSelector(
   (backendStatus): boolean =>
     pipe(
       backendStatus,
-      O.map(bs => bs.config.lollipop.enabled),
+      O.chainNullableK(bs => bs.config),
+      O.chainNullableK(cfg => cfg.lollipop),
+      O.chainNullableK(lp => lp.min_app_version),
+      O.map(mav =>
+        isVersionSupported(
+          Platform.OS === "ios" ? mav.ios : mav.android,
+          getAppVersion()
+        )
+      ),
       O.getOrElse(() => false)
     )
 );

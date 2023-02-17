@@ -64,6 +64,8 @@ import {
   sessionInfoSelector,
   sessionTokenSelector
 } from "../store/reducers/authentication";
+import { lollipopKeyTagSelector } from "../features/lollipop/store/reducers/lollipop";
+import { generateLollipopKeySaga } from "../features/lollipop/saga";
 import { IdentificationResult } from "../store/reducers/identification";
 import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
 import { isPagoPATestEnabledSelector } from "../store/reducers/persistedPreferences";
@@ -83,7 +85,6 @@ import { watchMessageAttachmentsSaga } from "../features/messages/saga/attachmen
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
 import { watchIDPayWalletSaga } from "../features/idpay/wallet/saga";
 import { idpayInitiativeDetailsSaga } from "../features/idpay/initiative/details/saga";
-import { isLollipopEnabledSelector } from "../store/reducers/backendStatus";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -138,7 +139,7 @@ import { completeOnboardingSaga } from "./startup/completeOnboardingSaga";
 import { watchLoadMessageById } from "./messages/watchLoadMessageById";
 import { watchThirdPartyMessageSaga } from "./messages/watchThirdPartyMessageSaga";
 import { checkNotificationsPreferencesSaga } from "./startup/checkNotificationsPreferencesSaga";
-import { generateCryptoKeyPair } from "./startup/generateCryptoKeyPair";
+import { trackMixpanelCryptoKeyPairEvents } from "./startup/generateCryptoKeyPair";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -199,6 +200,16 @@ export function* initializeApplicationSaga(): Generator<
   // Reset the profile cached in redux: at each startup we want to load a fresh
   // user profile.
   yield* put(resetProfileState());
+
+  // Generate key for lollipop
+  // TODO Once the lollipop feature is spread to the all the user base,
+  // consider refactoring even more by removing this, when
+  // https://pagopa.atlassian.net/browse/LLK-38 has been fixed.
+  // For now we need to generate a key in the application startup flow
+  // to use this information on old app version already logged in users.
+  // Here we are blocking the application startup, but we have the
+  // the profile loading spinner active.
+  yield* generateLollipopKeySaga();
 
   // Whether the user is currently logged in.
   const previousSessionToken: ReturnType<typeof sessionTokenSelector> =
@@ -340,10 +351,10 @@ export function* initializeApplicationSaga(): Generator<
   // check if the user expressed preference about mixpanel, if not ask for it
   yield* call(askMixpanelOptIn);
 
-  // generate crypto key
-  const isLollipopEnabled = yield* select(isLollipopEnabledSelector);
-  if (isLollipopEnabled) {
-    yield* call(generateCryptoKeyPair);
+  // Track crypto key generation info
+  const keyTag = yield* select(lollipopKeyTagSelector);
+  if (O.isSome(keyTag)) {
+    yield* call(trackMixpanelCryptoKeyPairEvents, keyTag.value);
   }
 
   if (hasPreviousSessionAndPin) {

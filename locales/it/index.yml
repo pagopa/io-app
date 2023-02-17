@@ -568,25 +568,34 @@ authentication:
     request_spid: "Ottieni SPID"
     contextualHelpTitle: "Come accedere all'app IO"
     contextualHelpContent: !include authentication/authentication_landing.md
-    loginSpid: "Entra con SPID"
-    loginCie: "Entra con CIE"
-    loginSpidCie: "Accedi con SPID o CIE"
-    infoSpidCie: "Introduzione a SPID e CIE"
-    loginSpidCieContent: "Da oggi, oltre a SPID, puoi usare la tua Carta d'Identità Elettronica per accedere"
-    nospid: "Non hai SPID? Scopri di più"
-    nospid-nocie: "Non hai SPID o CIE? Scopri di più"
-    card1-title: "Tutti i messaggi in un solo posto"
-    card1-content: "Visualizza tutte le comunicazioni in arrivo dalle Amministrazioni Pubbliche"
-    card2-title: "Usa i tuoi metodi di pagamento preferiti"
-    card2-content: "Puoi pagare un tributo o una multa con il tuo conto corrente e le tue carte"
-    card3-title: "Paga velocemente un avviso cartaceo"
-    card3-content: "Tramite la scansione del QR code puoi velocemente pagare anche un avviso cartaceo"
-    card4-title: "Puoi accedere solo con SPID"
-    card4-content: "Il dispositivo che stai utilizzando non supporta l’accesso con Carta d’Identità Elettronica (CIE)"
-    card5-title: "Benvenuto nella prima versione pubblica di IO!"
-    card5-content: "In alto a destra trovi l'icona '?' per aprire una chat con il team di IO se qualcosa non funziona come dovrebbe."
-    expiredCardTitle: "Carta scaduta o non più valida"
-    expiredCardHeaderTitle: "Entra con CIE"
+    loginSpid: Entra con SPID
+    loginCie: Entra con CIE
+    loginSpidCie: Accedi con SPID o CIE
+    infoSpidCie: Introduzione a SPID e CIE
+    loginSpidCieContent: Da oggi, oltre a SPID, puoi usare la tua Carta d'Identità Elettronica per accedere
+    nospid: Non hai SPID? Scopri di più
+    nospid-nocie: Non hai SPID o CIE? Scopri di più
+    card1-title: Tutti i messaggi in un solo posto
+    card1-content:
+      Visualizza tutte le comunicazioni in arrivo dalle Amministrazioni
+      Pubbliche
+    card2-title: Usa i tuoi metodi di pagamento preferiti
+    card2-content:
+      Puoi pagare un tributo o una multa con il tuo conto corrente e
+      le tue carte
+    card3-title: Paga velocemente un avviso cartaceo
+    card3-content:
+      Tramite la scansione del QR code puoi velocemente pagare anche
+      un avviso cartaceo
+    card4-title: Puoi accedere solo con SPID
+    card4-content: Il dispositivo che stai utilizzando non supporta l’accesso con Carta d’Identità Elettronica (CIE)
+    card5-title: Benvenuto nella prima versione pubblica di IO!
+    card5-content: In alto a destra trovi l'icona '?' per aprire
+      una chat con il team di IO se qualcosa non funziona come dovrebbe.
+    card5-content-accessibility: Seleziona elemento precedente per aprire
+      una chat con il team di IO se qualcosa non funziona come dovrebbe.
+    expiredCardTitle: Carta scaduta o non più valida
+    expiredCardHeaderTitle: Entra con CIE
     expiredCardContent: "La carta utilizzata non è più valida oppure è scaduta.\nSe vuoi autenticarti ed accedere ad IO devi usare SPID."
     expiredCardHelp: "Come rinnovare la propria Carta di Identità Elettronica?"
   cie:
@@ -1505,7 +1514,7 @@ wallet:
     contactECsubtitle: Contatta l’Ente per maggiori informazioni.
     assistanceLabel: "Per ricevere assistenza usa il codice:"
     sendReport: "Invia segnalazione"
-    loadingData: "errore durante il caricamento, riprova."
+    loadingData: "Errore durante il caricamento, riprova."
   walletCardTransaction:
     contextualHelpTitle: "Transazioni effettuate con questo metodo"
     contextualHelpContent: !include wallet/wallet_card_transaction.md
@@ -1758,7 +1767,7 @@ messageDetails:
   attachments:
     badFormat: "Il formato dell'allegato non è supportato. Contatta l'ente mittente"
     corruptedFile: "L'allegato è danneggato e non può essere aperto. Contatta l'ente mittente"
-    downloadFailed: "L'allegato non si è aperto. Riprova"
+    downloadFailed: "L'allegato non è al momento disponibile. Riprova o contatta l'ente mittente"
     showPreview: "Visualizza anteprima"
     unavailable:
       firstPart: "Gli allegati non sono più disponibili. "
@@ -3289,7 +3298,6 @@ idpay:
       maskedPan: •••• {{lastDigits}}
       amountLabel: Importo transazione
       accruedAmountLabel: Importo rimborsabile
-      amount: € {{amount}}
       infoTitle: Informazioni sull transazione
       date: Data
       circuit: Circuito di pagamento
@@ -3323,6 +3331,7 @@ idpay:
     navigation:
       header: Adesione all'iniziativa
     PDNDPrerequisites:
+      fallbackInitiativeName: l'iniziativa
       prerequisites:
         info:
           header: Come avviene la verifica?
@@ -3331,6 +3340,10 @@ idpay:
           understoodCTA: Ho capito
       title: Possiedi i seguenti requisiti?
       subtitle: Verificheremo con alcuni Enti se sei in possesso dei requisiti per poter richiedere {{service}}. 
+    multiPrerequisites:
+      header: "Dichiari inoltre di:"
+      body: L’autodichiarazione è resa ai sensi del
+      link: Dpr 28 dicembre 2000 n. 445 art 46 e 47
     boolPrerequisites:
       header: "Per aderire, dichiari di:"
       body: L’autodichiarazione è resa ai sensi del
@@ -3386,6 +3399,7 @@ idpay:
         skip: "Più tardi"
         addPaymentMethod: "Aggiungi un metodo di pagamento"
     iban:
+      title: IBAN associato
       landing:
         header: Aggiungi un IBAN al tuo Profilo
         body: Salva i dati del tuo conto e ottieni più facilmente i rimborsi a te previsti.
@@ -3396,3 +3410,6 @@ idpay:
         bodyLink: Dpr 28 dicembre 2000 n. 445 art 46 e 47 
         nameAssignInput: Assegna un nome
         bottomLabel: Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento visitando la sezione Profilo
+      button:
+        addNew: Aggiungi nuovo
+      updateToast: IBAN modificato correttamente
