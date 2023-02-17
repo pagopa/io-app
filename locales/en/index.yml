@@ -1540,7 +1540,7 @@ wallet:
     contactECsubtitle: Contact the Institution for more information.
     assistanceLabel: "Use this code to get support:"
     sendReport: Send report
-    loadingData: loading failure, try again.
+    loadingData: Loading failure, try again.
   walletCardTransaction:
     contextualHelpTitle: All transactions for this method
     contextualHelpContent: !include wallet/wallet_card_transaction.md
@@ -3458,4 +3458,3 @@ idpay:
       button:
         addNew: Aggiungi nuovo
       updateToast: IBAN modificato correttamente
-    
