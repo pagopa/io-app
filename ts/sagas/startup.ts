@@ -65,6 +65,7 @@ import {
   sessionTokenSelector
 } from "../store/reducers/authentication";
 import { lollipopKeyTagSelector } from "../features/lollipop/store/reducers/lollipop";
+import { generateLollipopKeySaga } from "../features/lollipop/saga";
 import { IdentificationResult } from "../store/reducers/identification";
 import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
 import { isPagoPATestEnabledSelector } from "../store/reducers/persistedPreferences";
@@ -198,6 +199,16 @@ export function* initializeApplicationSaga(): Generator<
   // Reset the profile cached in redux: at each startup we want to load a fresh
   // user profile.
   yield* put(resetProfileState());
+
+  // Generate key for lollipop
+  // TODO Once the lollipop feature is spread to the all the user base,
+  // consider refactoring even more by removing this, when
+  // https://pagopa.atlassian.net/browse/LLK-38 has been fixed.
+  // For now we need to generate a key in the application startup flow
+  // to use this information on old app version already logged in users.
+  // Here we are blocking the application startup, but we have the
+  // the profile loading spinner active.
+  yield* generateLollipopKeySaga();
 
   // Whether the user is currently logged in.
   const previousSessionToken: ReturnType<typeof sessionTokenSelector> =

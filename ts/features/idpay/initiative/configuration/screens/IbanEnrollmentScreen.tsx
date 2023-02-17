@@ -59,6 +59,17 @@ const IbanEnrollmentScreen = () => {
     isUpsertingIbanSelector
   );
 
+  const handleSelectIban = React.useCallback(
+    (iban: IbanDTO) => {
+      setSelectedIban(iban);
+
+      if (isIbanOnly) {
+        configurationMachine.send({ type: "ENROLL_IBAN", iban });
+      }
+    },
+    [isIbanOnly, configurationMachine]
+  );
+
   const handleBackPress = () => {
     configurationMachine.send({ type: "BACK" });
   };
@@ -79,7 +90,9 @@ const IbanEnrollmentScreen = () => {
         <FooterWithButtons
           type="SingleButton"
           leftButton={{
-            title: "Aggiungi nuovo",
+            title: I18n.t("idpay.configuration.iban.button.addNew"),
+            disabled: isUpsertingIban,
+            isLoading: isUpsertingIban,
             onPress: handleAddNewIbanPress,
             testID: "addIbanButtonTestID"
           }}
@@ -91,7 +104,9 @@ const IbanEnrollmentScreen = () => {
       <FooterWithButtons
         type="TwoButtonsInlineHalf"
         leftButton={{
-          title: "Aggiungi nuovo",
+          title: I18n.t("idpay.configuration.iban.button.addNew"),
+          disabled: isUpsertingIban,
+          isLoading: isUpsertingIban,
           bordered: true,
           onPress: handleAddNewIbanPress,
           testID: "addIbanButtonTestID"
@@ -135,7 +150,7 @@ const IbanEnrollmentScreen = () => {
           accessible={true}
           accessibilityRole={"radiogroup"}
           accessibilityState={{ checked: true }}
-          onPress={() => setSelectedIban(iban)}
+          onPress={() => handleSelectIban(iban)}
         />
       );
     });

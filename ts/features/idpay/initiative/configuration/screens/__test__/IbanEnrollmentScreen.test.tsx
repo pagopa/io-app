@@ -115,6 +115,7 @@ const renderComponent = (context?: Partial<Context>) => {
         navigateToIbanOnboardingScreen: jest.fn(),
         navigateToInitiativeDetailScreen: jest.fn(),
         navigateToInstrumentsEnrollmentScreen: jest.fn(),
+        showUpdateIbanToast: jest.fn(),
         showFailureToast: jest.fn()
       }
     })
