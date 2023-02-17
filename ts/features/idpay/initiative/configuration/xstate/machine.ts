@@ -3,7 +3,7 @@ import { assign, createMachine } from "xstate";
 import { IbanListDTO } from "../../../../../../definitions/idpay/iban/IbanListDTO";
 import {
   InitiativeDTO,
-  StatusEnum
+  StatusEnum as InitiativeStatusEnum
 } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
 import { InstrumentDTO } from "../../../../../../definitions/idpay/wallet/InstrumentDTO";
 
@@ -13,7 +13,12 @@ import {
   UPSERTING_TAG,
   WAITING_USER_INPUT_TAG
 } from "../../../../../utils/xstate";
-import { ConfigurationMode, Context, INITIAL_CONTEXT } from "./context";
+import {
+  ConfigurationMode,
+  Context,
+  INITIAL_CONTEXT,
+  InstrumentStatusByIdWallet
+} from "./context";
 import { Events } from "./events";
 import { InitiativeFailureType } from "./failure";
 
@@ -31,13 +36,13 @@ type Services = {
     data: ReadonlyArray<Wallet>;
   };
   loadInitiativeInstruments: {
-    data: ReadonlyArray<p.Pot<InstrumentDTO, Error>>;
+    data: ReadonlyArray<InstrumentDTO>;
   };
   enrollInstrument: {
-    data: ReadonlyArray<p.Pot<InstrumentDTO, Error>>;
+    data: ReadonlyArray<InstrumentDTO>;
   };
   deleteInstrument: {
-    data: ReadonlyArray<p.Pot<InstrumentDTO, Error>>;
+    data: ReadonlyArray<InstrumentDTO>;
   };
 };
 
@@ -345,16 +350,17 @@ const createIDPayInitiativeConfigurationMachine = () =>
             },
             DISPLAYING_INSTRUMENTS: {
               tags: [WAITING_USER_INPUT_TAG],
+              entry: "updateInstrumentStatuses",
               on: {
                 STAGE_INSTRUMENT: {
-                  actions: "stageInstrument"
+                  actions: "selectInstrumentToEnroll"
                 },
                 ENROLL_INSTRUMENT: {
                   target: "ENROLLING_INSTRUMENT"
                 },
                 DELETE_INSTRUMENT: {
                   target: "DELETING_INSTRUMENT",
-                  actions: "selectInstrument"
+                  actions: "selectInstrumentToDelete"
                 },
                 ADD_PAYMENT_METHOD: {
                   actions: "navigateToAddPaymentMethodScreen"
@@ -379,12 +385,13 @@ const createIDPayInitiativeConfigurationMachine = () =>
             },
             ENROLLING_INSTRUMENT: {
               tags: [UPSERTING_TAG],
+              entry: "updateInstrumentToEnrollStatus",
               invoke: {
                 src: "enrollInstrument",
                 id: "enrollInstrument",
                 onDone: {
                   target: "DISPLAYING_INSTRUMENTS",
-                  actions: "toggleInstrumentSuccess"
+                  actions: "instrumentEnrollSuccess"
                 },
                 onError: {
                   target: "DISPLAYING_INSTRUMENTS",
@@ -394,12 +401,13 @@ const createIDPayInitiativeConfigurationMachine = () =>
             },
             DELETING_INSTRUMENT: {
               tags: [UPSERTING_TAG],
+              entry: "updateInstrumentToDeleteStatus",
               invoke: {
                 src: "deleteInstrument",
                 id: "deleteInstrument",
                 onDone: {
                   target: "DISPLAYING_INSTRUMENTS",
-                  actions: "toggleInstrumentSuccess"
+                  actions: "instrumentDeleteSuccess"
                 },
                 onError: {
                   target: "DISPLAYING_INSTRUMENTS",
@@ -487,22 +495,65 @@ const createIDPayInitiativeConfigurationMachine = () =>
           initiativeInstruments: event.data,
           failure: undefined
         })),
+        updateInstrumentStatuses: assign((context, _) => ({
+          instrumentStatuses:
+            context.initiativeInstruments.reduce<InstrumentStatusByIdWallet>(
+              (acc, instrument) => {
+                if (instrument.idWallet !== undefined) {
+                  return {
+                    ...acc,
+                    [instrument.idWallet]: p.some(instrument.status)
+                  };
+                }
+                return acc;
+              },
+              {}
+            )
+        })),
+        selectInstrumentToEnroll: assign((_, event) => ({
+          instrumentToEnroll: event.instrument,
+          failure: undefined
+        })),
+        updateInstrumentToEnrollStatus: assign((context, _) => {
+          if (context.instrumentToEnroll !== undefined) {
+            return {
+              instrumentStatuses: {
+                ...context.instrumentStatuses,
+                [context.instrumentToEnroll?.idWallet]: p.none
+              },
+              failure: undefined
+            };
+          }
+          return {};
+        }),
+        instrumentEnrollSuccess: assign((_, event) => ({
+          initiativeInstruments: event.data,
+          instrumentToEnroll: undefined,
+          failure: undefined
+        })),
+        selectInstrumentToDelete: assign((_, event) => ({
+          instrumentToDelete: event.instrument,
+          failure: undefined
+        })),
+        updateInstrumentToDeleteStatus: assign((context, _) => {
+          if (context.instrumentToDelete?.idWallet !== undefined) {
+            return {
+              instrumentStatuses: {
+                ...context.instrumentStatuses,
+                [context.instrumentToDelete?.idWallet]: p.none
+              },
+              failure: undefined
+            };
+          }
+          return {};
+        }),
+        instrumentDeleteSuccess: assign((_, event) => ({
+          initiativeInstruments: event.data,
+          instrumentToDelete: undefined,
+          failure: undefined
+        })),
         skipInstruments: assign((_, __) => ({
           areInstrumentsSkipped: true
-        })),
-        stageInstrument: assign((_, event) => ({
-          stagedInstrumentId: event.idWallet,
-          failure: undefined
-        })),
-        selectInstrument: assign((_, event) => ({
-          selectedInstrumentId: event.instrumentId,
-          failure: undefined
-        })),
-        toggleInstrumentSuccess: assign((_, event) => ({
-          initiativeInstruments: event.data,
-          selectedInstrumentId: undefined,
-          stagedInstrumentId: undefined,
-          failure: undefined
         })),
         confirmIbanOnboarding: assign((_, event) => ({
           ibanBody: event.ibanBody,
@@ -517,7 +568,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
           p.getOrElse(
             p.map(
               context.initiative,
-              i => i.status === StatusEnum.NOT_REFUNDABLE
+              i => i.status === InitiativeStatusEnum.NOT_REFUNDABLE
             ),
             false
           ),

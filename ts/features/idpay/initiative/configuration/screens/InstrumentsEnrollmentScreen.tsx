@@ -1,4 +1,3 @@
-import * as p from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { useSelector } from "@xstate/react";
 import { List as NBList, Text as NBText } from "native-base";
@@ -24,10 +23,10 @@ import {
   initiativeInstrumentsByIdWalletSelector,
   isLoadingSelector,
   selectInitiativeDetails,
+  selectInstrumentToEnroll,
   selectIsInstrumentsOnlyMode,
   selectIsUpsertingInstrument,
-  selectWalletInstruments,
-  stagedInstrumentIdSelector
+  selectWalletInstruments
 } from "../xstate/selectors";
 
 type InstrumentsEnrollmentScreenRouteParams = {
@@ -67,9 +66,9 @@ const InstrumentsEnrollmentScreen = () => {
     initiativeInstrumentsByIdWalletSelector
   );
 
-  const stagedInstrumentId = useSelector(
+  const enrollingInstrument = useSelector(
     configurationMachine,
-    stagedInstrumentIdSelector
+    selectInstrumentToEnroll
   );
 
   const isUpserting = useSelector(
@@ -151,16 +150,16 @@ const InstrumentsEnrollmentScreen = () => {
   );
 
   React.useEffect(() => {
-    if (stagedInstrumentId) {
+    if (enrollingInstrument) {
       enrollmentBottomSheetModal.present();
     }
-  }, [enrollmentBottomSheetModal, stagedInstrumentId]);
+  }, [enrollmentBottomSheetModal, enrollingInstrument]);
 
   /** Resets the switch linked to the given walletId to its previous state */
   const revertInstrumentSwitch = React.useCallback(() => {
     configurationMachine.send({
       type: "STAGE_INSTRUMENT",
-      idWallet: undefined
+      instrument: undefined
     });
   }, [configurationMachine]);
 
@@ -232,12 +231,9 @@ const InstrumentsEnrollmentScreen = () => {
                   <InstrumentEnrollmentSwitch
                     key={walletInstrument.idWallet}
                     wallet={walletInstrument}
-                    status={p.map(
-                      initiativeInstrumentsByIdWallet[
-                        walletInstrument.idWallet
-                      ] ?? p.none,
-                      i => i.status
-                    )}
+                    instrument={
+                      initiativeInstrumentsByIdWallet[walletInstrument.idWallet]
+                    }
                   />
                 ))}
               </NBList>
@@ -254,6 +250,7 @@ const InstrumentsEnrollmentScreen = () => {
     </>
   );
 };
+
 export type { InstrumentsEnrollmentScreenRouteParams };
 
 export default InstrumentsEnrollmentScreen;

@@ -9,7 +9,7 @@ import { IDPayInitiativeConfigurationMachineType } from "./machine";
 type StateWithContext = StateFrom<IDPayInitiativeConfigurationMachineType>;
 
 type IDPayInstrumentsByIdWallet = {
-  [idWallet: string]: P.Pot<InstrumentDTO, Error>;
+  [idWallet: string]: InstrumentDTO;
 };
 
 const isLoadingSelector = (state: StateWithContext) =>
@@ -64,26 +64,32 @@ const selectInitiativeInstruments = (state: StateWithContext) =>
 const initiativeInstrumentsByIdWalletSelector = createSelector(
   selectInitiativeInstruments,
   instruments =>
-    instruments.reduce<IDPayInstrumentsByIdWallet>((acc, instrumentPot) => {
-      P.map(instrumentPot, instrument => {
-        if (instrument.idWallet !== undefined) {
-          // eslint-disable-next-line functional/immutable-data
-          acc[instrument.idWallet] = instrumentPot;
-        }
-      });
-
+    instruments.reduce<IDPayInstrumentsByIdWallet>((acc, instrument) => {
+      if (instrument.idWallet !== undefined) {
+        // eslint-disable-next-line functional/immutable-data
+        acc[instrument.idWallet] = instrument;
+      }
       return acc;
     }, {})
 );
 
-const initiativeInstrumentByIdWalletSelector = (idWallet: number) =>
+const selectInstrumentStatuses = (state: StateWithContext) =>
+  state.context.instrumentStatuses;
+
+const instrumentStatusByIdWalletSelector = (idWallet: number) =>
   createSelector(
-    initiativeInstrumentsByIdWalletSelector,
-    instrumentsById => instrumentsById[idWallet] ?? P.none
+    selectInstrumentStatuses,
+    statuses => statuses[idWallet] ?? P.some(undefined)
   );
 
-const stagedInstrumentIdSelector = (state: StateWithContext) =>
-  state.context.stagedInstrumentId;
+const selectInstrumentToEnroll = (state: StateWithContext) =>
+  state.context.instrumentToEnroll;
+
+const isInstrumentEnrollingSelector = (idWallet: number) =>
+  createSelector(
+    selectInstrumentToEnroll,
+    instrument => instrument?.idWallet === idWallet
+  );
 
 const failureSelector = (state: StateWithContext) => state.context.failure;
 
@@ -101,7 +107,8 @@ export {
   selectEnrolledIban,
   selectWalletInstruments,
   initiativeInstrumentsByIdWalletSelector,
-  initiativeInstrumentByIdWalletSelector,
-  stagedInstrumentIdSelector,
+  instrumentStatusByIdWalletSelector,
+  selectInstrumentToEnroll,
+  isInstrumentEnrollingSelector,
   failureSelector
 };

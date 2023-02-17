@@ -1,5 +1,4 @@
 import * as E from "fp-ts/lib/Either";
-import * as p from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { PreferredLanguageEnum } from "../../../../../../definitions/backend/PreferredLanguage";
@@ -182,7 +181,7 @@ const createServicesImplementation = (
       "Accept-Language": language
     });
 
-    const data: Promise<ReadonlyArray<p.Pot<InstrumentDTO, Error>>> = pipe(
+    const data: Promise<ReadonlyArray<InstrumentDTO>> = pipe(
       response,
       E.fold(
         _ =>
@@ -194,11 +193,7 @@ const createServicesImplementation = (
             );
           }
 
-          const instruments = response.value.instrumentList.map(instrument =>
-            p.some(instrument)
-          );
-
-          return Promise.resolve(instruments);
+          return Promise.resolve(response.value.instrumentList);
         }
       )
     );
@@ -211,18 +206,18 @@ const createServicesImplementation = (
       return Promise.reject(InitiativeFailureType.GENERIC);
     }
 
-    if (context.stagedInstrumentId === undefined) {
+    if (context.instrumentToEnroll === undefined) {
       return Promise.reject(InitiativeFailureType.GENERIC);
     }
 
     const response = await walletClient.enrollInstrument({
       initiativeId: context.initiativeId,
-      idWallet: context.stagedInstrumentId.toString(),
+      idWallet: context.instrumentToEnroll.idWallet.toString(),
       bearerAuth: bearerToken,
       "Accept-Language": language
     });
 
-    const data: Promise<ReadonlyArray<p.Pot<InstrumentDTO, Error>>> = pipe(
+    const data: Promise<ReadonlyArray<InstrumentDTO>> = pipe(
       response,
       E.fold(
         _ => Promise.reject(InitiativeFailureType.INSTRUMENT_ENROLL_FAILURE),
@@ -247,18 +242,18 @@ const createServicesImplementation = (
       return Promise.reject(InitiativeFailureType.GENERIC);
     }
 
-    if (context.selectedInstrumentId === undefined) {
+    if (context.instrumentToDelete === undefined) {
       return Promise.reject(InitiativeFailureType.GENERIC);
     }
 
     const response = await walletClient.deleteInstrument({
       initiativeId: context.initiativeId,
-      instrumentId: context.selectedInstrumentId,
+      instrumentId: context.instrumentToDelete.instrumentId,
       bearerAuth: bearerToken,
       "Accept-Language": language
     });
 
-    const data: Promise<ReadonlyArray<p.Pot<InstrumentDTO, Error>>> = pipe(
+    const data: Promise<ReadonlyArray<InstrumentDTO>> = pipe(
       response,
       E.fold(
         _ => Promise.reject(InitiativeFailureType.INSTRUMENT_DELETE_FAILURE),

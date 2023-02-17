@@ -1,5 +1,7 @@
 import { IbanDTO } from "../../../../../../definitions/idpay/iban/IbanDTO";
 import { IbanPutDTO } from "../../../../../../definitions/idpay/wallet/IbanPutDTO";
+import { InstrumentDTO } from "../../../../../../definitions/idpay/wallet/InstrumentDTO";
+import { Wallet } from "../../../../../types/pagopa";
 import { ConfigurationMode } from "./context";
 
 type E_START_CONFIGURATION = {
@@ -10,7 +12,7 @@ type E_START_CONFIGURATION = {
 
 type E_STAGE_INSTRUMENT = {
   type: "STAGE_INSTRUMENT";
-  idWallet?: number;
+  instrument?: Wallet;
 };
 
 type E_ENROLL_INSTRUMENT = {
@@ -19,7 +21,7 @@ type E_ENROLL_INSTRUMENT = {
 
 type E_DELETE_INSTRUMENT = {
   type: "DELETE_INSTRUMENT";
-  instrumentId: string;
+  instrument: InstrumentDTO;
 };
 
 type E_ADD_PAYMENT_METHOD = {

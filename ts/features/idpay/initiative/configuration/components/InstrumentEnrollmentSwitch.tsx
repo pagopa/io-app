@@ -5,7 +5,10 @@ import { pipe } from "fp-ts/lib/function";
 import { Badge as NBBadge, ListItem as NBListItem } from "native-base";
 import { default as React } from "react";
 import { Image, StyleSheet, View } from "react-native";
-import { StatusEnum as InstrumentStatusEnum } from "../../../../../../definitions/idpay/wallet/InstrumentDTO";
+import {
+  InstrumentDTO,
+  StatusEnum as InstrumentStatusEnum
+} from "../../../../../../definitions/idpay/wallet/InstrumentDTO";
 import defaultCardIcon from "../../../../../../img/wallet/cards-icons/unknown.png";
 import {
   IOLogoPaymentType,
@@ -21,8 +24,8 @@ import { CreditCardType, Wallet } from "../../../../../types/pagopa";
 import { instrumentStatusLabels } from "../../../common/labels";
 import { useConfigurationMachineService } from "../xstate/provider";
 import {
-  initiativeInstrumentByIdWalletSelector,
-  stagedInstrumentIdSelector
+  instrumentStatusByIdWalletSelector,
+  isInstrumentEnrollingSelector
 } from "../xstate/selectors";
 
 export type InstrumentEnrollmentSwitchRef = {
@@ -32,72 +35,61 @@ export type InstrumentEnrollmentSwitchRef = {
 
 type InstrumentEnrollmentSwitchProps = {
   wallet: Wallet;
-  status: pot.Pot<InstrumentStatusEnum | undefined, Error>;
+  instrument?: InstrumentDTO;
 };
 
 /**
  * A component to enable/disable the enrollment of an instrument
  */
 const InstrumentEnrollmentSwitch = (props: InstrumentEnrollmentSwitchProps) => {
-  const { wallet, status } = props;
+  const { wallet, instrument } = props;
 
   const configurationMachine = useConfigurationMachineService();
 
-  const instrumentPot = useSelector(
+  const isEnrolling = useSelector(
     configurationMachine,
-    initiativeInstrumentByIdWalletSelector(wallet.idWallet)
+    isInstrumentEnrollingSelector(wallet.idWallet)
   );
 
-  const stagedInstrumentId = useSelector(
+  const instrumentStatus = useSelector(
     configurationMachine,
-    stagedInstrumentIdSelector
+    instrumentStatusByIdWalletSelector(wallet.idWallet)
   );
 
   const handleChange = (value: boolean) => {
     if (value) {
       configurationMachine.send("STAGE_INSTRUMENT", {
-        idWallet: wallet.idWallet
+        instrument: wallet
       });
     } else {
-      if (pot.isSome(instrumentPot)) {
-        configurationMachine.send("DELETE_INSTRUMENT", {
-          instrumentId: instrumentPot.value.instrumentId
-        });
-      }
+      configurationMachine.send("DELETE_INSTRUMENT", {
+        instrument
+      });
     }
   };
 
   const renderSwitch = () => {
-    if (
-      pot.isSome(status) &&
-      (status.value === InstrumentStatusEnum.PENDING_ENROLLMENT_REQUEST ||
-        status.value === InstrumentStatusEnum.PENDING_DEACTIVATION_REQUEST)
-    ) {
-      return (
-        <NBBadge style={styles.badge}>
-          <LabelSmall color="white">
-            {instrumentStatusLabels[status.value]}
-          </LabelSmall>
-        </NBBadge>
-      );
+    if (pot.isSome(instrumentStatus)) {
+      const status = instrumentStatus.value;
+
+      if (
+        status === InstrumentStatusEnum.PENDING_ENROLLMENT_REQUEST ||
+        status === InstrumentStatusEnum.PENDING_DEACTIVATION_REQUEST
+      ) {
+        return (
+          <NBBadge style={styles.badge}>
+            <LabelSmall color="white">
+              {instrumentStatusLabels[status]}
+            </LabelSmall>
+          </NBBadge>
+        );
+      }
     }
 
     const switchValue = pot.map(
-      instrumentPot,
-      instrument => instrument?.status === InstrumentStatusEnum.ACTIVE
+      instrumentStatus,
+      status => status === InstrumentStatusEnum.ACTIVE || isEnrolling
     );
-
-    if (wallet.idWallet === stagedInstrumentId) {
-      return (
-        <RemoteSwitch value={pot.some(true)} onValueChange={handleChange} />
-      );
-    }
-
-    if (pot.isNone(switchValue)) {
-      return (
-        <RemoteSwitch value={pot.some(false)} onValueChange={handleChange} />
-      );
-    }
 
     return <RemoteSwitch value={switchValue} onValueChange={handleChange} />;
   };
