@@ -1,32 +1,16 @@
 /* eslint-disable functional/immutable-data */
-import { useSelector } from "@xstate/react";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import {
   NativeScrollEvent,
   ScrollView,
   useWindowDimensions
 } from "react-native";
-import { useOnboardingMachineService } from "../xstate/provider";
-import {
-  initiativeDescriptionSelector,
-  isLoadingSelector
-} from "../xstate/selectors";
 
 export const useInitiativeDetailsScrolling = () => {
-  const machine = useOnboardingMachineService();
   const scrollViewRef = useRef<ScrollView>(null);
   const markdownIsLoadingRef = useRef<boolean>(true);
   const screenHeight = useWindowDimensions().height;
   const [requiresScrolling, setRequiresScrolling] = useState<boolean>(true);
-
-  const isLoading = useSelector(machine, isLoadingSelector);
-  const description = useSelector(machine, initiativeDescriptionSelector);
-
-  useEffect(() => {
-    if (!isLoading) {
-      markdownIsLoadingRef.current = description !== undefined;
-    }
-  }, [isLoading, description]);
 
   const onScrollViewSizeChange = (_: number, height: number) => {
     // this method is called multiple times during the loading of the markdown
@@ -52,15 +36,15 @@ export const useInitiativeDetailsScrolling = () => {
     }
   };
 
-  const setMarkdownIsLoaded = () => (markdownIsLoadingRef.current = false);
+  const setMarkdownRef = (value: boolean) =>
+    (markdownIsLoadingRef.current = value);
+
   return {
     scrollViewRef,
     onScrollViewSizeChange,
     scrollToEnd,
     handleIsScrollEnd,
-    setMarkdownIsLoaded,
-    requiresScrolling,
-    isLoading,
-    description
+    setMarkdownRef,
+    requiresScrolling
   };
 };

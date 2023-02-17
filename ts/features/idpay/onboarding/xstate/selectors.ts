@@ -120,7 +120,7 @@ export {
   getMultiRequiredCriteriaFromContext,
   getBoolRequiredCriteriaFromContext,
   criteriaToDisplaySelector,
-  pdndCriteriaSelector
+  pdndCriteriaSelector,
   prerequisiteAnswerIndexSelector,
   isLoadingSelector,
   initiativeDescriptionSelector,

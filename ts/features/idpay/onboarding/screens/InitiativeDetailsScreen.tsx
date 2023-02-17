@@ -27,9 +27,13 @@ import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { showToast } from "../../../../utils/showToast";
 import { openWebUrl } from "../../../../utils/url";
 import { IDPayOnboardingParamsList } from "../navigation/navigator";
-import { useInitiativeDetailsScrolling } from "../utility/hooks";
+import { useInitiativeDetailsScrolling } from "../utils/hooks";
 import { useOnboardingMachineService } from "../xstate/provider";
-import { isUpsertingSelector } from "../xstate/selectors";
+import {
+  initiativeDescriptionSelector,
+  isLoadingSelector,
+  isUpsertingSelector
+} from "../xstate/selectors";
 
 type InitiativeDetailsScreenRouteParams = {
   serviceId: string;
@@ -101,19 +105,7 @@ const BeforeContinueBody = (props: BeforeContinueBodyProps) => {
 const InitiativeDetailsScreen = () => {
   const route = useRoute<InitiativeDetailsRouteProps>();
   const machine = useOnboardingMachineService();
-
-  const isAcceptingTos = useSelector(machine, isUpsertingSelector);
   const { serviceId } = route.params;
-  const {
-    scrollViewRef,
-    onScrollViewSizeChange,
-    scrollToEnd,
-    handleIsScrollEnd,
-    requiresScrolling,
-    setMarkdownIsLoaded,
-    isLoading,
-    description
-  } = useInitiativeDetailsScrolling();
 
   React.useEffect(() => {
     machine.send({
@@ -121,6 +113,25 @@ const InitiativeDetailsScreen = () => {
       serviceId
     });
   }, [machine, serviceId]);
+
+  const isAcceptingTos = useSelector(machine, isUpsertingSelector);
+  const isLoading = useSelector(machine, isLoadingSelector);
+  const description = useSelector(machine, initiativeDescriptionSelector);
+  const {
+    scrollViewRef,
+    onScrollViewSizeChange,
+    scrollToEnd,
+    handleIsScrollEnd,
+    requiresScrolling,
+    setMarkdownRef
+  } = useInitiativeDetailsScrolling();
+
+  React.useEffect(() => {
+    if (!isLoading) {
+      setMarkdownRef(description !== undefined);
+    }
+  }, [isLoading, description, setMarkdownRef]);
+
   const handleGoBackPress = () => {
     machine.send({ type: "QUIT_ONBOARDING" });
   };
@@ -133,6 +144,8 @@ const InitiativeDetailsScreen = () => {
     ),
     O.toUndefined
   );
+
+  const setMarkdownIsLoaded = () => setMarkdownRef(false);
 
   const screenContent = () => (
     <SafeAreaView style={IOStyles.flex}>
@@ -173,10 +186,14 @@ const InitiativeDetailsScreen = () => {
           title: I18n.t("global.buttons.continue"),
           onPress: handleContinuePress,
           testID: "IDPayOnboardingContinue",
-          style: {
-            flex: 2,
-            backgroundColor: requiresScrolling ? IOColors.grey : IOColors.blue
-          },
+          style: requiresScrolling
+            ? {
+                flex: 2,
+                backgroundColor: IOColors.grey
+              }
+            : { flex: 2 },
+          // the style prop overrides the default style of the button,
+          // so we need to add the flex: 2 property for consistency
           isLoading: isAcceptingTos,
           disabled: isAcceptingTos
         }}
