@@ -1,10 +1,12 @@
 /* eslint-disable no-underscore-dangle */
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { assign, createMachine } from "xstate";
 import { InitiativeDto } from "../../../../../definitions/idpay/onboarding/InitiativeDto";
 import { StatusEnum } from "../../../../../definitions/idpay/onboarding/OnboardingStatusDTO";
 import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/onboarding/RequiredCriteriaDTO";
 import { SelfConsentMultiDTO } from "../../../../../definitions/idpay/onboarding/SelfConsentMultiDTO";
+import { SelfDeclarationBoolDTO } from "../../../../../definitions/idpay/onboarding/SelfDeclarationBoolDTO";
 import {
   LOADING_TAG,
   UPSERTING_TAG,
@@ -46,6 +48,11 @@ type E_ACCEPT_REQUIRED_PDND_CRITERIA = {
   type: "ACCEPT_REQUIRED_PDND_CRITERIA";
 };
 
+type E_TOGGLE_BOOL_CRITERIA = {
+  type: "TOGGLE_BOOL_CRITERIA";
+  criteria: SelfDeclarationBoolDTO;
+};
+
 type E_ACCEPT_REQUIRED_BOOL_CRITERIA = {
   type: "ACCEPT_REQUIRED_BOOL_CRITERIA";
 };
@@ -70,6 +77,7 @@ type Events =
   | E_QUIT_ONBOARDING
   | E_GO_BACK
   | E_SELECT_MULTI_CONSENT
+  | E_TOGGLE_BOOL_CRITERIA
   | E_ACCEPT_REQUIRED_BOOL_CRITERIA;
 
 // Services types
@@ -354,6 +362,9 @@ const createIDPayOnboardingMachine = () =>
                     target: "#IDPAY_ONBOARDING.DISPLAYING_INITIATIVE"
                   }
                 ],
+                TOGGLE_BOOL_CRITERIA: {
+                  actions: "toggleBoolCriteria"
+                },
                 ACCEPT_REQUIRED_BOOL_CRITERIA: [
                   {
                     target: "DISPLAYING_MULTI_CRITERIA",
@@ -478,6 +489,24 @@ const createIDPayOnboardingMachine = () =>
         })),
         acceptTosFailure: assign((_, event) => ({
           failure: event.data as OnboardingFailureType
+        })),
+        toggleBoolCriteria: assign((context, event) => ({
+          requiredCriteria: pipe(
+            context.requiredCriteria || O.none,
+            O.map(criteria => {
+              const index = criteria.selfDeclarationList.findIndex(
+                d => d.code === event.criteria.code
+              );
+              const newList = Object.assign([], criteria.selfDeclarationList, {
+                [index]: event.criteria
+              });
+
+              return {
+                ...criteria,
+                selfDeclarationList: newList
+              };
+            })
+          )
         })),
         addMultiConsent: assign((context, event) => ({
           multiConsentsAnswers: {

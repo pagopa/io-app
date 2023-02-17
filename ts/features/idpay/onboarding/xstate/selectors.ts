@@ -1,12 +1,13 @@
 /* eslint-disable no-underscore-dangle */
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 import { StateFrom } from "xstate";
 import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/onboarding/RequiredCriteriaDTO";
 import { SelfDeclarationBoolDTO } from "../../../../../definitions/idpay/onboarding/SelfDeclarationBoolDTO";
 import { SelfDeclarationDTO } from "../../../../../definitions/idpay/onboarding/SelfDeclarationDTO";
 import { SelfDeclarationMultiDTO } from "../../../../../definitions/idpay/onboarding/SelfDeclarationMultiDTO";
+import { LOADING_TAG } from "../../../../utils/xstate";
 import { Context, IDPayOnboardingMachineType } from "./machine";
 
 type StateWithContext = StateFrom<IDPayOnboardingMachineType>;
@@ -94,6 +95,17 @@ const getBoolRequiredCriteriaFromContext = (context: Context) =>
     SelfDeclarationBoolDTO
   );
 
+const selectIsLoading = (state: StateWithContext) =>
+  state.tags.has(LOADING_TAG);
+
+const areAllSelfDeclarationsToggledSelector = createSelector(
+  boolRequiredCriteriaSelector,
+  boolSelfDeclarations =>
+    boolSelfDeclarations.filter(
+      selfDeclaration => selfDeclaration.value === false
+    ).length === 0
+);
+
 export {
   selectServiceId,
   multiRequiredCriteriaSelector,
@@ -102,5 +114,7 @@ export {
   getBoolRequiredCriteriaFromContext,
   criteriaToDisplaySelector,
   prerequisiteAnswerIndexSelector,
-  pdndCriteriaSelector
+  pdndCriteriaSelector,
+  selectIsLoading,
+  areAllSelfDeclarationsToggledSelector
 };
