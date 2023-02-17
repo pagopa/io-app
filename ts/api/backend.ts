@@ -63,7 +63,9 @@ import { SessionToken } from "../types/SessionToken";
 import {
   constantPollingFetch,
   defaultRetryingFetch,
-  lollipopFetch
+  lollipopFetch,
+  toFetchTimeout,
+  toRetriableFetch
 } from "../utils/fetch";
 import {
   tokenHeaderProducer,
@@ -71,7 +73,6 @@ import {
 } from "../utils/api";
 import { PaginatedPublicMessagesCollection } from "../../definitions/backend/PaginatedPublicMessagesCollection";
 import { CreatedMessageWithContentAndAttachments } from "../../definitions/backend/CreatedMessageWithContentAndAttachments";
-import { fetchMaxRetries, fetchTimeout } from "../config";
 import { KeyInfo } from "../utils/crypto";
 import { LollipopConfig } from "./../features/lollipop";
 
@@ -509,11 +510,10 @@ export function BackendClient(
       createFetchRequestForApi(createOrUpdateProfileT, options)
     ),
     getProfileLollipop: (lollipopConfig: LollipopConfig) => {
-      const lpFetch = lollipopFetch(
-        fetchTimeout,
-        fetchMaxRetries,
-        lollipopConfig,
-        keyInfo
+      const timeoutFetch = toFetchTimeout();
+      const retriableFetch = toRetriableFetch();
+      const lpFetch = lollipopFetch(lollipopConfig, keyInfo)(timeoutFetch)(
+        retriableFetch
       );
       return withBearerToken(
         createFetchRequestForApi(getProfileT, {
