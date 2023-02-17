@@ -24,13 +24,16 @@ import { PublicKey, sign } from "@pagopa/io-react-native-crypto";
 import { fetchMaxRetries, fetchTimeout } from "../config";
 import {
   chainSignPromises,
-  forgeSignatureComponents,
+  toSignatureComponents,
   getSignAlgorithm,
   LollipopConfig,
   SignPromiseResult
 } from "../features/lollipop";
 import { SignatureConfig } from "./httpSignature/types/SignatureConfig";
-import { generateSignatureBase } from "./httpSignature/signature";
+import {
+  generateSignatureBase,
+  SignatureBaseResult
+} from "./httpSignature/signature";
 import { generateDigestHeader } from "./httpSignature/digest";
 import { KeyInfo } from "./crypto";
 
@@ -159,6 +162,7 @@ export const lollipopFetch =
             generateDigestHeader(bodyString)
           );
         }
+
         const signatureConfigForgeInput: SignatureConfigForgeInput = {
           publicKey: requestAndKeyInfo.publicKey,
           keyTag: requestAndKeyInfo.keyTag,
@@ -177,6 +181,7 @@ export const lollipopFetch =
             "x-pagopa-lollipop-original-url"
           ]
         );
+
         newInit = addHeader(
           newInit,
           "x-pagopa-lollipop-original-method",
@@ -193,43 +198,19 @@ export const lollipopFetch =
           signatureBase: mainSignatureBase,
           signatureInput: mainSignatureInput
         } = generateSignatureBase(newInitHeaders, mainSignatureConfig, 1);
-        const customSignPromises: Array<Promise<SignPromiseResult>> =
-          lollipopConfig.customSignatures?.map((headerValue, index) => {
-            const headerIndex: number = index + 2;
-            const headerName = `x-pagopa-lollipop-custom-${headerIndex}`;
-            const customHeader = {
-              [headerName]: headerValue
-            };
-            const customHeaderSignatureConfig: SignatureConfig =
-              forgeSignatureConfig(signatureConfigForgeInput, keyInfo, [
-                headerName
-              ]);
-            const {
-              signatureBase: customSignatureBase,
-              signatureInput: customSignatureInput
-            } = generateSignatureBase(
-              customHeader,
-              customHeaderSignatureConfig,
-              headerIndex
-            );
-            return sign(customSignatureBase, requestAndKeyInfo.keyTag).then(
-              function (value) {
-                return Promise.resolve({
-                  headerIndex,
-                  headerName,
-                  headerValue,
-                  signature: `sig${headerIndex}:${value}:`,
-                  "signature-input": customSignatureInput
-                });
-              }
-            );
-          }) ?? [];
+
+        const customContentToSign: CutsomContentToSignInput = {
+          lollipopConfig,
+          keyInfo,
+          keyTag: requestAndKeyInfo.keyTag,
+          signatureConfigForgeInput
+        };
 
         return sign(mainSignatureBase, requestAndKeyInfo.keyTag)
           .then(function (mainSignValue) {
-            return chainSignPromises(customSignPromises).then(function (
-              customSignValues
-            ) {
+            return chainSignPromises(
+              customContentToSignPromises(customContentToSign)
+            ).then(function (customSignValues) {
               // Add custom headers
               customSignValues.forEach(
                 v => (newInit = addHeader(newInit, v.headerName, v.headerValue))
@@ -239,11 +220,13 @@ export const lollipopFetch =
                 v => v["signature-input"]
               );
               // Prepare custom signature array
-              const customSignatures = customSignValues.map(v => v.signature);
+              const customContentToSign = customSignValues.map(
+                v => v.signature
+              );
               // Setup signature array
               const signatures = [
                 `sig1:${mainSignValue}:`,
-                ...customSignatures
+                ...customContentToSign
               ];
               // Setup signature input array
               const signatureInputs = [
@@ -267,6 +250,59 @@ export const lollipopFetch =
       return timeoutFetch(input, init);
     });
 
+export const customContentSignatureBases = (
+  customContent: CutsomContentToSignInput
+): Array<CustomContentBaseSignature> =>
+  customContent.lollipopConfig.customContentToSign?.map(
+    (headerValue, index) => {
+      const headerIndex: number = index + 2;
+      const headerName = `x-pagopa-lollipop-custom-${headerIndex}`;
+      const customHeader = {
+        [headerName]: headerValue
+      };
+      const customHeaderSignatureConfig: SignatureConfig = forgeSignatureConfig(
+        customContent.signatureConfigForgeInput,
+        customContent.keyInfo,
+        [headerName]
+      );
+      const { signatureBase, signatureInput } = generateSignatureBase(
+        customHeader,
+        customHeaderSignatureConfig,
+        headerIndex
+      );
+      return {
+        signatureBase,
+        signatureInput,
+        headerIndex,
+        headerName,
+        headerValue
+      };
+    }
+  ) ?? [];
+
+export const customContentToSignPromises = (
+  customContent: CutsomContentToSignInput
+): Array<Promise<SignPromiseResult>> =>
+  customContentSignatureBases(customContent).map(customContentBase =>
+    sign(customContentBase.signatureBase, customContent.keyTag).then(function (
+      value
+    ) {
+      return Promise.resolve({
+        headerIndex: customContentBase.headerIndex,
+        headerName: customContentBase.headerName,
+        headerValue: customContentBase.headerValue,
+        signature: `sig${customContentBase.headerIndex}:${value}:`,
+        "signature-input": customContentBase.signatureInput
+      });
+    })
+  ) ?? [];
+
+type CustomContentBaseSignature = {
+  headerIndex: number;
+  headerName: string;
+  headerValue: string;
+} & SignatureBaseResult;
+
 type SignatureConfigForgeInput = {
   publicKey: PublicKey;
   keyTag: string;
@@ -275,6 +311,18 @@ type SignatureConfigForgeInput = {
   inputUrl: URLParse;
   originalUrl: string;
 };
+
+type RequestAndKeyInfoForLPFetch = {
+  input: string;
+  init: RequestInit;
+  headers: HeadersInit;
+} & Pick<SignatureConfigForgeInput, "publicKey" | "keyTag" | "method">;
+
+type CutsomContentToSignInput = {
+  lollipopConfig: LollipopConfig;
+  signatureConfigForgeInput: SignatureConfigForgeInput;
+  keyInfo: KeyInfo;
+} & Required<Pick<KeyInfo, "keyTag">>;
 
 function forgeSignatureConfig(
   forgeInput: SignatureConfigForgeInput,
@@ -286,7 +334,7 @@ function forgeSignatureConfig(
     signKeyTag: forgeInput.keyTag,
     signKeyId: keyInfo.publicKeyThumbprint ?? "",
     nonce: forgeInput.lollipopConfig.nonce,
-    signatureComponents: forgeSignatureComponents(
+    signatureComponents: toSignatureComponents(
       forgeInput.method,
       forgeInput.inputUrl,
       forgeInput.originalUrl
@@ -346,12 +394,3 @@ function isKeyInfoAndRquestValid(
       }
     : undefined;
 }
-
-type RequestAndKeyInfoForLPFetch = {
-  publicKey: PublicKey;
-  keyTag: string;
-  input: string;
-  init: RequestInit;
-  headers: HeadersInit;
-  method: string;
-};

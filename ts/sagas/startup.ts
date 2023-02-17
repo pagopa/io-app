@@ -292,9 +292,10 @@ export function* initializeApplicationSaga(): Generator<
 
   // Load the profile info
 
+  // TODO: lollipopConfig is just a mock, it must be removed
   const lollipopConfig: LollipopConfig = {
     nonce: "nonce-123",
-    customSignatures: ["ASDFFA324SDFA==", "DAFDEFAF323DSFA=="]
+    customContentToSign: ["ASDFFA324SDFA==", "DAFDEFAF323DSFA=="]
   };
   const maybeUserProfile: SagaCallReturnType<typeof loadProfile> = yield* call(
     loadProfileLollipop,

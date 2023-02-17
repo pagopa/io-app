@@ -5,13 +5,13 @@ import { SignatureComponents } from "../../utils/httpSignature/types/SignatureCo
 
 export type LollipopConfig = {
   nonce: string;
-  customSignatures?: ReadonlyArray<string>;
+  customContentToSign?: ReadonlyArray<string>;
 };
 
 /**
  * Utility function to forge the `SignatureComponents` based on the provided inputs.
  */
-export function forgeSignatureComponents(
+export function toSignatureComponents(
   method: string,
   inputUrl: URLParse,
   originalUrl: string
