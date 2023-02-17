@@ -10,8 +10,8 @@ import { Label } from "../core/typography/Label";
 import { Link } from "../core/typography/Link";
 import {
   IOColors,
-  IOColorsStatus,
-  IOCOlorsStatusForeground
+  IOColorsStatusBackground,
+  IOColorsStatusForeground
 } from "../core/variables/IOColors";
 import { Icon, IOIconType } from "../core/icons";
 import { HSpacer, VSpacer } from "../core/spacer/Spacer";
@@ -51,8 +51,8 @@ type Props = WithTestID<{
 
 type VariantStates = {
   icon: IOIconType;
-  background: IOColorsStatus;
-  foreground: IOCOlorsStatusForeground;
+  background: IOColorsStatusBackground;
+  foreground: IOColorsStatusForeground;
 };
 
 // COMPONENT CONFIGURATION
