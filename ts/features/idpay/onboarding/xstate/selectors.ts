@@ -18,6 +18,8 @@ const selectMultiConsents = (state: StateWithContext) =>
 const selectCurrentPage = (state: StateWithContext) =>
   state.context.multiConsentsPage;
 
+const selectServiceId = (state: StateWithContext) => state.context.serviceId;
+
 const filterCriteria = <T extends SelfDeclarationDTO>(
   criteria: O.Option<RequiredCriteriaDTO> | undefined,
   filterFunc: typeof SelfDeclarationMultiDTO | typeof SelfDeclarationBoolDTO
@@ -56,6 +58,20 @@ const criteriaToDisplaySelector = createSelector(
   (criteria, currentPage) => criteria[currentPage]
 );
 
+const pdndCriteriaSelector = createSelector(
+  selectRequiredCriteria,
+  requiredCriteria =>
+    pipe(
+      requiredCriteria,
+      O.fromNullable,
+      O.flatten,
+      O.fold(
+        () => [],
+        some => some.pdndCriteria
+      )
+    )
+);
+
 const prerequisiteAnswerIndexSelector = createSelector(
   criteriaToDisplaySelector,
   selectMultiConsents,
@@ -79,10 +95,12 @@ const getBoolRequiredCriteriaFromContext = (context: Context) =>
   );
 
 export {
+  selectServiceId,
   multiRequiredCriteriaSelector,
   boolRequiredCriteriaSelector,
   getMultiRequiredCriteriaFromContext,
   getBoolRequiredCriteriaFromContext,
   criteriaToDisplaySelector,
-  prerequisiteAnswerIndexSelector
+  prerequisiteAnswerIndexSelector,
+  pdndCriteriaSelector
 };

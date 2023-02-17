@@ -1,22 +1,27 @@
-import { useActor } from "@xstate/react";
-import { pipe } from "fp-ts/lib/function";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { useSelector } from "@xstate/react";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import React from "react";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { ScrollView, View, StyleSheet } from "react-native";
-import { H1 } from "../../../../components/core/typography/H1";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../components/core/typography/Body";
+import { H1 } from "../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../../components/screens/BaseScreenComponent";
+import ButtonExtendedOutline from "../../../../components/ui/ButtonExtendedOutline";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import Markdown from "../../../../components/ui/Markdown";
 import I18n from "../../../../i18n";
+import { useIOSelector } from "../../../../store/hooks";
+import { serviceByIdSelector } from "../../../../store/reducers/entities/services/servicesById";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { useOnboardingMachineService } from "../xstate/provider";
-import ButtonExtendedOutline from "../../../../components/ui/ButtonExtendedOutline";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
+import { pdndCriteriaSelector, selectServiceId } from "../xstate/selectors";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.main.contextualHelpTitle",
@@ -52,11 +57,22 @@ const BOTTOM_SHEET_HEIGHT = 290;
 
 export const PDNDPrerequisitesScreen = () => {
   const machine = useOnboardingMachineService();
-  const [state, send] = useActor(machine);
   const [authority, setAuthority] = React.useState<string | undefined>();
+  const serviceId = useSelector(machine, selectServiceId);
 
-  const continueOnPress = () => send({ type: "ACCEPT_REQUIRED_PDND_CRITERIA" });
-  const goBackOnPress = () => send({ type: "GO_BACK" });
+  const serviceName = pipe(
+    pot.toOption(
+      useIOSelector(serviceByIdSelector(serviceId as ServiceId)) || pot.none
+    ),
+    O.fold(
+      () => I18n.t("idpay.onboarding.PDNDPrerequisites.fallbackInitiativeName"),
+      service => service.service_name
+    )
+  );
+
+  const continueOnPress = () =>
+    machine.send({ type: "ACCEPT_REQUIRED_PDND_CRITERIA" });
+  const goBackOnPress = () => machine.send({ type: "GO_BACK" });
 
   const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
     <Markdown>
@@ -80,16 +96,7 @@ export const PDNDPrerequisitesScreen = () => {
     ></FooterWithButtons>
   );
 
-  const pdndCriteria = pipe(
-    state.context.requiredCriteria,
-    O.fromNullable,
-    O.flatten,
-    O.fold(
-      () => [],
-      _ => _.pdndCriteria
-    )
-  );
-
+  const pdndCriteria = useSelector(machine, pdndCriteriaSelector);
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <BaseScreenComponent
@@ -102,8 +109,7 @@ export const PDNDPrerequisitesScreen = () => {
             <VSpacer size={16} />
             <H1>{title}</H1>
             <VSpacer size={16} />
-            <Body>{subtitle("18App")}</Body>
-            {/* will get service name from store */}
+            <Body>{subtitle(serviceName)}</Body>
           </View>
           <View
             style={[IOStyles.horizontalContentPadding, styles.listContainer]}
