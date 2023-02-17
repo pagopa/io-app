@@ -2,6 +2,39 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.26.0-rc.3](https://github.com/pagopa/io-app/compare/2.26.0-rc.2...2.26.0-rc.3) (2023-02-17)
+
+
+### Bug Fixes
+
+* [[IOAPPCIT-46](https://pagopa.atlassian.net/browse/IOAPPCIT-46)] Fixes the missing PosteID rapid access missing choice on IdP credential screen ([#4391](https://github.com/pagopa/io-app/issues/4391)) ([a4e38ff](https://github.com/pagopa/io-app/commit/a4e38ffafe6ab53af98f0a953c17c3fb85d3a2f9))
+* **Firma con IO:** [[SFEQS-1231](https://pagopa.atlassian.net/browse/SFEQS-1231)] Update copy on abort bottom sheet ([#4342](https://github.com/pagopa/io-app/issues/4342)) ([a33f0cb](https://github.com/pagopa/io-app/commit/a33f0cbcbdeb5bb052e98f3185c9e0c826cf35b3))
+
+## [2.26.0-rc.2](https://github.com/pagopa/io-app/compare/2.26.0-rc.1...2.26.0-rc.2) (2023-02-16)
+
+
+### Features
+
+* [[IOAPPCIT-27](https://pagopa.atlassian.net/browse/IOAPPCIT-27)] Login with crypto key ([#4351](https://github.com/pagopa/io-app/issues/4351)) ([df9f182](https://github.com/pagopa/io-app/commit/df9f18209903ebc047d6dcdbb84fda312692999f))
+* [[LLK-34](https://pagopa.atlassian.net/browse/LLK-34)] Bump minor TOS version ([#4388](https://github.com/pagopa/io-app/issues/4388)) ([aab4ffc](https://github.com/pagopa/io-app/commit/aab4ffce893c3a6f076ac223957a360faad68cb4))
+
+
+### Bug Fixes
+
+* **IDPay:** [[IODPAY-136](https://pagopa.atlassian.net/browse/IODPAY-136),[IODPAY-137](https://pagopa.atlassian.net/browse/IODPAY-137),[IODPAY-140](https://pagopa.atlassian.net/browse/IODPAY-140)] Fix operation details display issues ([#4364](https://github.com/pagopa/io-app/issues/4364)) ([a4fa7d8](https://github.com/pagopa/io-app/commit/a4fa7d88e1c8c849d07d1c7ebe82d125d93e768a))
+* [[IABT-1365](https://pagopa.atlassian.net/browse/IABT-1365)]  Fixed translation keys displayed when the archived messages list is empty ([#4359](https://github.com/pagopa/io-app/issues/4359)) ([0d4d215](https://github.com/pagopa/io-app/commit/0d4d2157451a65feffd91f50bfa6e980dc889ba3))
+* [[IABT-1383](https://pagopa.atlassian.net/browse/IABT-1383)] Email already in use - bug ([#4366](https://github.com/pagopa/io-app/issues/4366)) ([8427275](https://github.com/pagopa/io-app/commit/84272759e7cc19675c7d8d685185195d7d0d38ee))
+* [[IABT-1426](https://pagopa.atlassian.net/browse/IABT-1426)] Fix new CIE read on Android ([#4380](https://github.com/pagopa/io-app/issues/4380)) ([6a2c19a](https://github.com/pagopa/io-app/commit/6a2c19a07ee1e5bd679c273b3e71a7c092b91e62))
+* **IDPay:** [[IODPAY-132](https://pagopa.atlassian.net/browse/IODPAY-132)] Added initiative name in PDNDprerequisites screen ([#4371](https://github.com/pagopa/io-app/issues/4371)) ([2ff4aab](https://github.com/pagopa/io-app/commit/2ff4aab46a93b923b0ca67d360c69cc4ca74a489))
+* **IDPay:** [[IODPAY-150](https://pagopa.atlassian.net/browse/IODPAY-150)] Fix onboarding flow for whitelist initiative ([#4377](https://github.com/pagopa/io-app/issues/4377)) ([2888e71](https://github.com/pagopa/io-app/commit/2888e7129295fde2969d3c276dcf58f2b7fe997b))
+
+
+### Chores
+
+* [[LLK-37](https://pagopa.atlassian.net/browse/LLK-37)] Support key uniqueness on retries ([#4381](https://github.com/pagopa/io-app/issues/4381)) ([4e2a174](https://github.com/pagopa/io-app/commit/4e2a17411008a6ac09fc0c57e598a159bd473edf))
+* **IDPay:** [[IODPAY-151](https://pagopa.atlassian.net/browse/IODPAY-151)] Fix IBAN change issue ([#4376](https://github.com/pagopa/io-app/issues/4376)) ([dc31b4d](https://github.com/pagopa/io-app/commit/dc31b4df3edac3a9ae827a14172cedcb36598cd7))
+* [[IOAPPFD0-33](https://pagopa.atlassian.net/browse/IOAPPFD0-33)] Add the new color palette ([#4378](https://github.com/pagopa/io-app/issues/4378)) ([64537c4](https://github.com/pagopa/io-app/commit/64537c4bc649574f8c8934923d330080ce44cae8))
+
 ## [2.26.0-rc.1](https://github.com/pagopa/io-app/compare/2.26.0-rc.0...2.26.0-rc.1) (2023-02-10)
 
 
