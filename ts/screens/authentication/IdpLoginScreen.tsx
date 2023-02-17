@@ -57,8 +57,8 @@ import {
   handleSendAssistanceLog
 } from "../../utils/supportAssistance";
 import { getUrlBasepath } from "../../utils/url";
-import { originSchemasWhiteList } from "./originSchemasWhiteList";
 import { lollipopLoginEnabled } from "../../config";
+import { originSchemasWhiteList } from "./originSchemasWhiteList";
 
 type NavigationProps = IOStackNavigationRouteProps<
   AuthenticationParamsList,
