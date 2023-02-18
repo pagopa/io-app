@@ -145,7 +145,7 @@ export const lollipopFetch =
   (lollipopConfig: LollipopConfig, keyInfo: KeyInfo) =>
   (timeoutFetch: FixedFetch) =>
   (retriableFetch: (fetch: FixedFetch) => typeof fetch) =>
-    retriableFetch((input: RequestInfo | URL, init?: RequestInit) => {
+    retriableFetch(async (input: RequestInfo | URL, init?: RequestInit) => {
       const requestAndKeyInfo = isKeyInfoAndRquestValid(keyInfo, input, init);
       if (requestAndKeyInfo) {
         // eslint-disable-next-line functional/no-let
@@ -206,46 +206,47 @@ export const lollipopFetch =
           signatureConfigForgeInput
         };
 
-        return sign(mainSignatureBase, requestAndKeyInfo.keyTag)
-          .then(function (mainSignValue) {
-            return chainSignPromises(
-              customContentToSignPromises(customContentToSign)
-            ).then(function (customSignValues) {
-              // Add custom headers
-              customSignValues.forEach(
-                v => (newInit = addHeader(newInit, v.headerName, v.headerValue))
-              );
-              // Prepare custom signature inputs array
-              const customSignatureInputs = customSignValues.map(
-                v => v["signature-input"]
-              );
-              // Prepare custom signature array
-              const customContentToSign = customSignValues.map(
-                v => v.signature
-              );
-              // Setup signature array
-              const signatures = [
-                `sig1:${mainSignValue}:`,
-                ...customContentToSign
-              ];
-              // Setup signature input array
-              const signatureInputs = [
-                mainSignatureInput,
-                ...customSignatureInputs
-              ];
-              // Add all to their corresponding headers
-              newInit = addHeader(newInit, "signature", signatures.join(","));
-              newInit = addHeader(
-                newInit,
-                "signature-input",
-                signatureInputs.join(",")
-              );
-              return timeoutFetch(input, newInit);
-            });
-          })
-          .catch(function () {
-            return timeoutFetch(input, init);
-          });
+        try {
+          const mainSignValue = await sign(
+            mainSignatureBase,
+            requestAndKeyInfo.keyTag
+          );
+          const customSignValues = await chainSignPromises(
+            customContentToSignPromises(customContentToSign)
+          );
+          // Add custom headers
+          customSignValues.forEach(
+            v => (newInit = addHeader(newInit, v.headerName, v.headerValue))
+          );
+          // Prepare custom signature inputs array
+          const customSignatureInputs = customSignValues.map(
+            v_1 => v_1["signature-input"]
+          );
+          // Prepare custom signature array
+          const customContentToSign_1 = customSignValues.map(
+            v_2 => v_2.signature
+          );
+          // Setup signature array
+          const signatures = [
+            `sig1:${mainSignValue}:`,
+            ...customContentToSign_1
+          ];
+          // Setup signature input array
+          const signatureInputs = [
+            mainSignatureInput,
+            ...customSignatureInputs
+          ];
+          // Add all to their corresponding headers
+          newInit = addHeader(newInit, "signature", signatures.join(","));
+          newInit = addHeader(
+            newInit,
+            "signature-input",
+            signatureInputs.join(",")
+          );
+          return await timeoutFetch(input, newInit);
+        } catch {
+          return await timeoutFetch(input, init);
+        }
       }
       return timeoutFetch(input, init);
     });
