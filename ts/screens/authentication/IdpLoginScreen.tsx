@@ -57,7 +57,7 @@ import {
   handleSendAssistanceLog
 } from "../../utils/supportAssistance";
 import { getUrlBasepath } from "../../utils/url";
-import { lollipopLoginEnabled } from "../../config";
+import { apiUrlPrefix, lollipopLoginEnabled } from "../../config";
 import { originSchemasWhiteList } from "./originSchemasWhiteList";
 
 type NavigationProps = IOStackNavigationRouteProps<
@@ -116,11 +116,6 @@ const styles = StyleSheet.create({
   webViewWrapper: { flex: 1 }
 });
 
-// TODO if left as it is, this would cause some IDP to offer limited login capabilities.
-// See: https://pagopa.atlassian.net/browse/IOAPPCIT-46
-const getUserAgentForWebView = () =>
-  lollipopLoginEnabled ? `IO-App/${getAppVersion()}` : undefined;
-
 /**
  * A screen that allows the user to login with an IDP.
  * The IDP page is opened in a WebView
@@ -133,6 +128,13 @@ const IdpLoginScreen = (props: Props) => {
   const [loginTrace, setLoginTrace] = useState<string | undefined>(undefined);
   const [lollipopCheckStatus, setLollipopCheckStatus] =
     useState<LollipopCheckStatus>({ status: "none", url: O.none });
+
+  const lollipopUserAgent = lollipopLoginEnabled
+    ? `IO-App/${getAppVersion()}`
+    : undefined;
+  const [userAgent, setUserAgent] = useState<string | undefined>(
+    lollipopUserAgent
+  );
 
   const [webviewSource, setWebviewSource] = useState<WebViewSource | undefined>(
     undefined
@@ -149,9 +151,10 @@ const IdpLoginScreen = (props: Props) => {
 
   const startLoginProcess = useCallback(() => {
     if (loginSource.kind === "ready") {
+      setUserAgent(lollipopUserAgent);
       setWebviewSource(loginSource.value);
     }
-  }, [loginSource]);
+  }, [loginSource, lollipopUserAgent]);
 
   useEffect(() => {
     startLoginProcess();
@@ -250,6 +253,18 @@ const IdpLoginScreen = (props: Props) => {
     }
 
     const parsedUrl = new URLParse(url, true);
+
+    // We leave the custom user agent header only for the first call
+    // to the backend API server, but we clear it for subsequent calls to
+    // IdPs' webpages.
+    // See: https://pagopa.atlassian.net/browse/IOAPPCIT-46
+    const origin = parsedUrl.origin;
+    if (origin === apiUrlPrefix) {
+      setUserAgent(lollipopUserAgent);
+    } else {
+      setUserAgent(undefined);
+    }
+
     const urlQuery = parsedUrl.query;
     const urlEncodedSamlRequest = urlQuery?.SAMLRequest;
     if (urlEncodedSamlRequest) {
@@ -282,7 +297,7 @@ const IdpLoginScreen = (props: Props) => {
       // If code reaches this point, either there is no public key
       // or lollipop is not enabled or the LolliPOP signature has
       // been verified (in both cases, let the code flow). Code
-      // flow shall never hit this method is LolliPOP signature
+      // flow shall never hit this method if LolliPOP signature
       // verification has failed, since an error is displayed and
       // the WebViewSource is left undefined
     }
@@ -431,7 +446,7 @@ const IdpLoginScreen = (props: Props) => {
             androidMicrophoneAccessDisabled={true}
             textZoom={100}
             originWhitelist={originSchemasWhiteList}
-            userAgent={getUserAgentForWebView()}
+            userAgent={userAgent}
             source={webviewSource}
             onError={handleLoadingError}
             javaScriptEnabled={true}
