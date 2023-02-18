@@ -520,7 +520,7 @@ export function BackendClient(
           ...options,
           fetchApi: lpFetch
         })
-      )(lollipopConfig);
+      );
     },
     getUserMetadata: withBearerToken(
       createFetchRequestForApi(getUserMetadataT, options)
