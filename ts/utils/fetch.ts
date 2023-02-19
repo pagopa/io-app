@@ -214,21 +214,21 @@ export const lollipopFetch = (
             mainSignatureBase,
             requestAndKeyInfo.keyTag
           );
-          const customSignValues = await chainSignPromises(
+          const customSignResult = await chainSignPromises(
             customContentToSignPromises(customContentToSignInput)
           );
           // Add custom headers
-          customSignValues.forEach(
+          customSignResult.forEach(
             v => (newInit = addHeader(newInit, v.headerName, v.headerValue))
           );
           // Prepare custom signature inputs array
-          const customSignatureInputs = customSignValues.map(
+          const customSignatureInputs = customSignResult.map(
             v => v["signature-input"]
           );
           // Prepare custom signature array
-          const customContentToSign = customSignValues.map(v => v.signature);
+          const customSignatures = customSignResult.map(v => v.signature);
           // Setup signature array
-          const signatures = [`sig1:${mainSignValue}:`, ...customContentToSign];
+          const signatures = [`sig1:${mainSignValue}:`, ...customSignatures];
           // Setup signature input array
           const signatureInputs = [
             mainSignatureInput,
