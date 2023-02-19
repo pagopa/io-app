@@ -190,6 +190,12 @@ export const localServicesWebUrl: string = pipe(
   E.getOrElse(() => "https://io.italia.it")
 );
 
+export const unsupportedDeviceMoreInfoUrl: string = pipe(
+  Config.UNSUPPORTED_DEVICE_MORE_INFO_URL,
+  t.string.decode,
+  E.getOrElse(() => "https://io.italia.it")
+);
+
 export const pageSize: number = DEFAULT_PAGE_SIZE;
 
 // This is the maximum number supported by API via pagination regardless of the content.

@@ -1,12 +1,15 @@
+import { PublicKey } from "@pagopa/io-react-native-crypto";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import React, { useEffect } from "react";
+import * as TE from "fp-ts/lib/TaskEither";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
 import { createSelector } from "reselect";
+import { LevelEnum } from "../../../definitions/content/SectionStatus";
 import { IOColors } from "../../components/core/variables/IOColors";
 import { useMessageOpening } from "../../components/messages/hooks/useMessageOpening";
 import MessageList from "../../components/messages/MessageList";
@@ -16,14 +19,19 @@ import { ScreenContentHeader } from "../../components/screens/ScreenContentHeade
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { MIN_CHARACTER_SEARCH_TEXT } from "../../components/search/SearchButton";
 import { SearchNoResultMessage } from "../../components/search/SearchNoResultMessage";
-import SectionStatusComponent from "../../components/SectionStatus";
+import SectionStatusComponent, {
+  InnerSectionStatus
+} from "../../components/SectionStatus";
 import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
+import { unsupportedDeviceMoreInfoUrl } from "../../config";
+import { lollipopKeyTagSelector } from "../../features/lollipop/store/reducers/lollipop";
 import I18n from "../../i18n";
 import MessagesHomeTabNavigator from "../../navigation/MessagesHomeTabNavigator";
 import {
   migrateToPaginatedMessages,
   resetMigrationStatus
 } from "../../store/actions/messages";
+import { useIOSelector } from "../../store/hooks";
 import { sectionStatusSelector } from "../../store/reducers/backendStatus";
 import {
   allArchiveMessagesSelector,
@@ -44,6 +52,7 @@ import {
   useScreenReaderEnabled
 } from "../../utils/accessibility";
 import { MESSAGE_ICON_HEIGHT } from "../../utils/constants";
+import { taskGetPublicKey } from "../../utils/crypto";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { showToast } from "../../utils/showToast";
 
@@ -74,6 +83,20 @@ const MessagesHomeScreen = ({
   latestMessageOperation
 }: Props) => {
   const needsMigration = Object.keys(messagesStatus).length > 0;
+
+  const [publicKeyState, setPublicKeyState] = useState<
+    PublicKey | "error" | "retrieving"
+  >("retrieving");
+  const keyTag = useIOSelector(lollipopKeyTagSelector);
+  useEffect(() => {
+    void pipe(
+      keyTag,
+      O.getOrElse(() => "error"),
+      taskGetPublicKey,
+      TE.map(key => setPublicKeyState(key)),
+      TE.mapLeft(() => setPublicKeyState("error"))
+    )();
+  }, [keyTag]);
 
   useOnFirstRender(() => {
     if (needsMigration) {
@@ -110,6 +133,25 @@ const MessagesHomeScreen = ({
 
   const isScreenReaderEnabled = useScreenReaderEnabled();
 
+  const showUnsupportedDeviceBanner = publicKeyState === undefined;
+  const unsupportedDevicesStatusComponent = showUnsupportedDeviceBanner && (
+    <InnerSectionStatus
+      sectionKey={"messages"}
+      sectionStatus={{
+        is_visible: true,
+        level: LevelEnum.warning,
+        web_url: {
+          "it-IT": unsupportedDeviceMoreInfoUrl,
+          "en-EN": unsupportedDeviceMoreInfoUrl
+        },
+        message: {
+          "it-IT": I18n.t("unsupportedDevice.text"),
+          "en-EN": I18n.t("unsupportedDevice.text")
+        }
+      }}
+    />
+  );
+
   const statusComponent = (
     <SectionStatusComponent
       sectionKey={"messages"}
@@ -136,6 +178,7 @@ const MessagesHomeScreen = ({
         backgroundColor={IOColors.white}
       />
       {isScreenReaderEnabled && statusComponent}
+      {isScreenReaderEnabled && unsupportedDevicesStatusComponent}
       {!isSearchEnabled && (
         <React.Fragment>
           <ScreenContentHeader
@@ -153,7 +196,6 @@ const MessagesHomeScreen = ({
           )}
         </React.Fragment>
       )}
-
       {isSearchEnabled &&
         pipe(
           searchText,
@@ -179,6 +221,7 @@ const MessagesHomeScreen = ({
           ))
         )}
       {!isScreenReaderEnabled && statusComponent}
+      {!isScreenReaderEnabled && unsupportedDevicesStatusComponent}
       {bottomSheet}
     </TopScreenComponent>
   );

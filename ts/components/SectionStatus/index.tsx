@@ -45,7 +45,7 @@ export const getStatusTextColor = (
 ): "bluegreyDark" | "white" =>
   level === LevelEnum.normal ? "bluegreyDark" : textDefaultColor;
 
-const InnerSectionStatus = (
+export const InnerSectionStatus = (
   props: Omit<Props, "sectionStatus"> & {
     sectionStatus: NonNullable<Props["sectionStatus"]>;
   }
