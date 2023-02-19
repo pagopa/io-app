@@ -63,9 +63,7 @@ import { SessionToken } from "../types/SessionToken";
 import {
   constantPollingFetch,
   defaultRetryingFetch,
-  lollipopFetch,
-  toFetchTimeout,
-  toRetriableFetch
+  lollipopFetch
 } from "../utils/fetch";
 import {
   tokenHeaderProducer,
@@ -510,11 +508,7 @@ export function BackendClient(
       createFetchRequestForApi(createOrUpdateProfileT, options)
     ),
     getProfileLollipop: (lollipopConfig: LollipopConfig) => {
-      const timeoutFetch = toFetchTimeout();
-      const retriableFetch = toRetriableFetch();
-      const lpFetch = lollipopFetch(lollipopConfig, keyInfo)(timeoutFetch)(
-        retriableFetch
-      );
+      const lpFetch = lollipopFetch(lollipopConfig, keyInfo);
       return withBearerToken(
         createFetchRequestForApi(getProfileT, {
           ...options,

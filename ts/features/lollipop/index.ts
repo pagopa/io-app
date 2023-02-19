@@ -51,7 +51,5 @@ export type SignPromiseResult = {
 export function chainSignPromises(
   promises: Array<Promise<SignPromiseResult>>
 ): Promise<Array<SignPromiseResult>> {
-  return Promise.all(promises)
-    .then(results => results)
-    .catch(error => Promise.reject(error));
+  return Promise.all(promises).catch(error => Promise.reject(error));
 }

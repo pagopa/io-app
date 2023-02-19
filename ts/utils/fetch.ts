@@ -141,11 +141,14 @@ export const constantPollingFetch = (
 /**
  * Decorates the current fetch with LolliPOP headers and http-signature
  */
-export const lollipopFetch =
-  (lollipopConfig: LollipopConfig, keyInfo: KeyInfo) =>
-  (timeoutFetch: FixedFetch) =>
-  (retriableFetch: (fetch: FixedFetch) => typeof fetch) =>
-    retriableFetch(async (input: RequestInfo | URL, init?: RequestInit) => {
+export const lollipopFetch = (
+  lollipopConfig: LollipopConfig,
+  keyInfo: KeyInfo
+) => {
+  const timeoutFetch = toFetchTimeout();
+  const retriableFetch = toRetriableFetch();
+  return retriableFetch(
+    async (input: RequestInfo | URL, init?: RequestInit) => {
       const requestAndKeyInfo = isKeyInfoAndRquestValid(keyInfo, input, init);
       if (requestAndKeyInfo) {
         // eslint-disable-next-line functional/no-let
@@ -199,7 +202,7 @@ export const lollipopFetch =
           signatureInput: mainSignatureInput
         } = generateSignatureBase(newInitHeaders, mainSignatureConfig, 1);
 
-        const customContentToSign: CutsomContentToSignInput = {
+        const customContentToSignInput: CutsomContentToSignInput = {
           lollipopConfig,
           keyInfo,
           keyTag: requestAndKeyInfo.keyTag,
@@ -212,7 +215,7 @@ export const lollipopFetch =
             requestAndKeyInfo.keyTag
           );
           const customSignValues = await chainSignPromises(
-            customContentToSignPromises(customContentToSign)
+            customContentToSignPromises(customContentToSignInput)
           );
           // Add custom headers
           customSignValues.forEach(
@@ -220,17 +223,12 @@ export const lollipopFetch =
           );
           // Prepare custom signature inputs array
           const customSignatureInputs = customSignValues.map(
-            v_1 => v_1["signature-input"]
+            v => v["signature-input"]
           );
           // Prepare custom signature array
-          const customContentToSign_1 = customSignValues.map(
-            v_2 => v_2.signature
-          );
+          const customContentToSign = customSignValues.map(v => v.signature);
           // Setup signature array
-          const signatures = [
-            `sig1:${mainSignValue}:`,
-            ...customContentToSign_1
-          ];
+          const signatures = [`sig1:${mainSignValue}:`, ...customContentToSign];
           // Setup signature input array
           const signatureInputs = [
             mainSignatureInput,
@@ -249,7 +247,9 @@ export const lollipopFetch =
         }
       }
       return timeoutFetch(input, init);
-    });
+    }
+  );
+};
 
 export const customContentSignatureBases = (
   customContent: CutsomContentToSignInput
