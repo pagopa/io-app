@@ -1790,7 +1790,7 @@ messageDetails:
   write: Write
   id: "ID:"
   attachments:
-    loading: "Loading Document..."
+    loading: "Loading document..."
     badFormat: "The attachment format is not supported. Please contact the sender"
     corruptedFile: "The attachment is corrupt and can't be opened. Please contact the sender"
     downloadFailed: "The attachment is currently not available. Please try again or contact the sender"
