@@ -3362,9 +3362,11 @@ idpay:
         editIban: Modifica IBAN 
   onboarding:
     success:
-      understoodCta: Ho capito!
+      button: 
+        continue: Ho capito!
       pleaseWait: Un attimo di pazienza...
-      requestSent: La tua richiesta è stata inviata!
+      title: La tua richiesta è stata inviata!
+      body:  Riceverai un messaggio con l’esito dell’operazione.
     failure:
       NO_PERMISSION:
         title: "Non hai i requisiti per aderire a questa iniziativa"
