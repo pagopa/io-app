@@ -60,11 +60,7 @@ import {
   getThirdPartyMessageDefaultDecoder
 } from "../../definitions/backend/requestTypes";
 import { SessionToken } from "../types/SessionToken";
-import {
-  constantPollingFetch,
-  defaultRetryingFetch,
-  lollipopFetch
-} from "../utils/fetch";
+import { constantPollingFetch, defaultRetryingFetch } from "../utils/fetch";
 import {
   tokenHeaderProducer,
   withBearerToken as withToken
@@ -72,7 +68,6 @@ import {
 import { PaginatedPublicMessagesCollection } from "../../definitions/backend/PaginatedPublicMessagesCollection";
 import { CreatedMessageWithContentAndAttachments } from "../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { KeyInfo } from "../utils/crypto";
-import { LollipopConfig } from "./../features/lollipop";
 
 /**
  * We will retry for as many times when polling for a payment ID.
@@ -140,7 +135,7 @@ export type LogoutT = IPostApiRequestType<
 export function BackendClient(
   baseUrl: string,
   token: SessionToken,
-  keyInfo: KeyInfo = {},
+  _keyInfo: KeyInfo = {},
   fetchApi: typeof fetch = defaultRetryingFetch()
 ) {
   const options = {
@@ -507,15 +502,6 @@ export function BackendClient(
     createOrUpdateProfile: withBearerToken(
       createFetchRequestForApi(createOrUpdateProfileT, options)
     ),
-    getProfileLollipop: (lollipopConfig: LollipopConfig) => {
-      const lpFetch = lollipopFetch(lollipopConfig, keyInfo);
-      return withBearerToken(
-        createFetchRequestForApi(getProfileT, {
-          ...options,
-          fetchApi: lpFetch
-        })
-      );
-    },
     getUserMetadata: withBearerToken(
       createFetchRequestForApi(getUserMetadataT, options)
     ),
