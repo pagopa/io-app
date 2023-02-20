@@ -12,13 +12,21 @@ import { Context, IDPayOnboardingMachineType } from "./machine";
 
 type StateWithContext = StateFrom<IDPayOnboardingMachineType>;
 
+const selectIsLoading = (state: StateWithContext) =>
+  state.tags.has(LOADING_TAG);
+
 const isUpsertingSelector = (state: StateWithContext) =>
   state.hasTag(UPSERTING_TAG as never);
 
 const selectRequiredCriteria = (state: StateWithContext) =>
   state.context.requiredCriteria;
+
+const selectSelfDeclarationBoolAnswers = (state: StateWithContext) =>
+  state.context.selfDeclarationBoolAnswers;
+
 const selectMultiConsents = (state: StateWithContext) =>
   state.context.multiConsentsAnswers;
+
 const selectCurrentPage = (state: StateWithContext) =>
   state.context.multiConsentsPage;
 
@@ -98,15 +106,12 @@ const getBoolRequiredCriteriaFromContext = (context: Context) =>
     SelfDeclarationBoolDTO
   );
 
-const selectIsLoading = (state: StateWithContext) =>
-  state.tags.has(LOADING_TAG);
-
 const areAllSelfDeclarationsToggledSelector = createSelector(
   boolRequiredCriteriaSelector,
-  boolSelfDeclarations =>
-    boolSelfDeclarations.filter(
-      selfDeclaration => selfDeclaration.value === false
-    ).length === 0
+  selectSelfDeclarationBoolAnswers,
+  (boolSelfDeclarations, answers) =>
+    boolSelfDeclarations.length ===
+    Object.values(answers).filter(answer => answer).length
 );
 
 export {
@@ -120,5 +125,6 @@ export {
   prerequisiteAnswerIndexSelector,
   pdndCriteriaSelector,
   selectIsLoading,
+  selectSelfDeclarationBoolAnswers,
   areAllSelfDeclarationsToggledSelector
 };

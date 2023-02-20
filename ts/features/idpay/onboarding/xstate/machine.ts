@@ -1,5 +1,4 @@
 /* eslint-disable no-underscore-dangle */
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { assign, createMachine } from "xstate";
 import { InitiativeDto } from "../../../../../definitions/idpay/onboarding/InitiativeDto";
@@ -27,11 +26,13 @@ export type Context = {
   failure?: OnboardingFailureType;
   multiConsentsPage: number;
   multiConsentsAnswers: Record<number, SelfConsentMultiDTO>;
+  selfDeclarationBoolAnswers: Record<string, boolean>;
 };
 
 const INITIAL_CONTEXT: Context = {
   multiConsentsPage: 0,
-  multiConsentsAnswers: {}
+  multiConsentsAnswers: {},
+  selfDeclarationBoolAnswers: {}
 };
 
 // Events types
@@ -491,22 +492,10 @@ const createIDPayOnboardingMachine = () =>
           failure: event.data as OnboardingFailureType
         })),
         toggleBoolCriteria: assign((context, event) => ({
-          requiredCriteria: pipe(
-            context.requiredCriteria || O.none,
-            O.map(criteria => {
-              const index = criteria.selfDeclarationList.findIndex(
-                d => d.code === event.criteria.code
-              );
-              const newList = Object.assign([], criteria.selfDeclarationList, {
-                [index]: event.criteria
-              });
-
-              return {
-                ...criteria,
-                selfDeclarationList: newList
-              };
-            })
-          )
+          selfDeclarationBoolAnswers: {
+            ...context.selfDeclarationBoolAnswers,
+            [event.criteria.code]: event.criteria.value
+          }
         })),
         addMultiConsent: assign((context, event) => ({
           multiConsentsAnswers: {

@@ -18,15 +18,21 @@ import { useOnboardingMachineService } from "../xstate/provider";
 import {
   areAllSelfDeclarationsToggledSelector,
   boolRequiredCriteriaSelector,
-  selectIsLoading
+  selectIsLoading,
+  selectSelfDeclarationBoolAnswers
 } from "../xstate/selectors";
 
 const InitiativeSelfDeclarationsScreen = () => {
   const machine = useOnboardingMachineService();
 
   const isLoading = useSelector(machine, selectIsLoading);
+
   const selfCriteriaBool = useSelector(machine, boolRequiredCriteriaSelector);
-  const selfCriteriaAccepted = useSelector(
+  const selfCriteriaBoolAnswers = useSelector(
+    machine,
+    selectSelfDeclarationBoolAnswers
+  );
+  const areAllSelfCriteriaBoolAccepted = useSelector(
     machine,
     areAllSelfDeclarationsToggledSelector
   );
@@ -42,6 +48,9 @@ const InitiativeSelfDeclarationsScreen = () => {
         type: "TOGGLE_BOOL_CRITERIA",
         criteria: { ...criteria, value }
       });
+
+  const getSelfCriteriaBoolAnswer = (criteria: SelfDeclarationBoolDTO) =>
+    selfCriteriaBoolAnswers[criteria.code] ?? false;
 
   return (
     <BaseScreenComponent
@@ -63,9 +72,11 @@ const InitiativeSelfDeclarationsScreen = () => {
                   <ListItemComponent
                     key={index}
                     title={criteria.description}
-                    switchValue={criteria.value}
+                    switchValue={getSelfCriteriaBoolAnswer(criteria)}
                     accessibilityRole={"switch"}
-                    accessibilityState={{ checked: criteria.value }}
+                    accessibilityState={{
+                      checked: getSelfCriteriaBoolAnswer(criteria)
+                    }}
                     isLongPressEnabled={true}
                     onSwitchValueChanged={toggleCriteria(criteria)}
                   />
@@ -84,7 +95,7 @@ const InitiativeSelfDeclarationsScreen = () => {
             rightButton={{
               title: I18n.t("global.buttons.continue"),
               onPress: continueOnPress,
-              disabled: !selfCriteriaAccepted
+              disabled: !areAllSelfCriteriaBoolAccepted
             }}
           />
         </SafeAreaView>
