@@ -12,7 +12,7 @@ import {
   WebViewSource
 } from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";
-import { lollipopLoginEnabled } from "../../config";
+import { apiUrlPrefix, lollipopLoginEnabled } from "../../config";
 import { useLollipopLoginSource } from "../../features/lollipop/hooks/useLollipopLoginSource";
 import { LollipopCheckStatus } from "../../features/lollipop/types/LollipopCheckStatus";
 import { publicKey } from "../../features/lollipop/types/LollipopLoginSource";
@@ -28,18 +28,17 @@ import GenericErrorComponent from "../screens/GenericErrorComponent";
 
 // TODO if left as it is, this would cause some IDP to offer limited login capabilities.
 // See: https://pagopa.atlassian.net/browse/IOAPPCIT-46
-const userAgentForWebView = lollipopLoginEnabled
+const lollipopUserAgent = lollipopLoginEnabled
   ? `IO-App/${getAppVersion()}`
   : undefined;
 
 // to make sure the server recognizes the client as valid iPhone device (iOS only) we use a custom header
 // on Android it is not required
 const iOSUserAgent =
-  (userAgentForWebView ? `${userAgentForWebView} ` : "") +
   "Mozilla/5.0 (iPhone; CPU iPhone OS 14_0_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1";
-const userAgent = Platform.select({
+const defaultUserAgent = Platform.select({
   ios: iOSUserAgent,
-  default: userAgentForWebView
+  default: undefined
 });
 
 // INFA PROD -> xx_servizicie
@@ -221,6 +220,13 @@ const CieWebView = (props: Props) => {
     return true;
   };
 
+  const handleNavigationStateChange = (event: WebViewNavigation): void => {
+    if (event.url) {
+      // TODO: - act the same way as https://github.com/pagopa/io-app/pull/4351
+      console.log("✅🚀 " + event.url);
+    }
+  };
+
   const handleOnError = () => {
     dispatch({ kind: "setError" });
   };
@@ -265,7 +271,13 @@ const CieWebView = (props: Props) => {
           androidCameraAccessDisabled={true}
           androidMicrophoneAccessDisabled={true}
           ref={webView}
-          userAgent={userAgent}
+          userAgent={
+            webviewSource &&
+            "uri" in webviewSource &&
+            webviewSource.uri.includes(apiUrlPrefix)
+              ? lollipopUserAgent
+              : defaultUserAgent
+          }
           javaScriptEnabled={true}
           injectedJavaScript={injectJs}
           onLoadEnd={handleOnLoadEnd}
@@ -287,14 +299,6 @@ const CieWebView = (props: Props) => {
       onCancel={props.onClose}
     />
   );
-};
-
-const handleNavigationStateChange = (event: WebViewNavigation): void => {
-  if (event.url) {
-    // TODO: - act the same way as https://github.com/pagopa/io-app/pull/4351
-    console.log("✅👀 " + userAgent);
-    console.log("✅🚀 " + event.url);
-  }
 };
 
 const ErrorComponent = (
