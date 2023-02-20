@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.26.0-rc.3](https://github.com/pagopa/io-app/compare/2.26.0-rc.2...2.26.0-rc.3) (2023-02-17)
+
+
+### Bug Fixes
+
+* [[IOAPPCIT-46](https://pagopa.atlassian.net/browse/IOAPPCIT-46)] Fixes the missing PosteID rapid access missing choice on IdP credential screen ([#4391](https://github.com/pagopa/io-app/issues/4391)) ([a4e38ff](https://github.com/pagopa/io-app/commit/a4e38ffafe6ab53af98f0a953c17c3fb85d3a2f9))
+* **Firma con IO:** [[SFEQS-1231](https://pagopa.atlassian.net/browse/SFEQS-1231)] Update copy on abort bottom sheet ([#4342](https://github.com/pagopa/io-app/issues/4342)) ([a33f0cb](https://github.com/pagopa/io-app/commit/a33f0cbcbdeb5bb052e98f3185c9e0c826cf35b3))
+
 ## [2.26.0-rc.2](https://github.com/pagopa/io-app/compare/2.26.0-rc.1...2.26.0-rc.2) (2023-02-16)
 
 
