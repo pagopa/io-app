@@ -16,6 +16,11 @@ import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";
 import { formatDateAsShortFormat } from "../../../../../utils/dates";
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
+import {
+  IOLogoPaymentType,
+  LogoPayment
+} from "../../../../../components/core/logos";
+import { operationCircuitTypeMap } from "../utils/utils";
 
 const styles = StyleSheet.create({
   alignCenter: {
@@ -58,6 +63,12 @@ const OperationIcon = ({ operation }: OperationComponentProps) => {
       return <Icon name={"warning"} color="red" />;
 
     default:
+      if ("circuitType" in operation) {
+        const cardIcon = operationCircuitTypeMap[operation.circuitType];
+        return cardIcon !== undefined ? (
+          <LogoPayment name={cardIcon} size={"100%"} />
+        ) : null;
+      }
       if ("brandLogo" in operation) {
         return (
           <Image
@@ -66,6 +77,7 @@ const OperationIcon = ({ operation }: OperationComponentProps) => {
           />
         );
       }
+
       return null;
   }
 };
