@@ -107,10 +107,10 @@ const CieWebView = (props: Props) => {
   const [lollipopCheckStatus, setLollipopCheckStatus] =
     React.useState<LollipopCheckStatus>({ status: "none", url: O.none });
 
+  const uriFromWebViewSource =
+    webviewSource && "uri" in webviewSource ? webviewSource.uri : undefined;
   const userAgentForWebView = () =>
-    webviewSource &&
-    "uri" in webviewSource &&
-    webviewSource.uri.includes(apiUrlPrefix)
+    uriFromWebViewSource?.includes(apiUrlPrefix)
       ? lollipopUserAgent
       : defaultUserAgent;
 
@@ -250,11 +250,15 @@ const CieWebView = (props: Props) => {
     // When attempting to log in with an incorrect user-agent on Lollipop,
     // we receive an HTTP 500 Server Error. Currently, we are unable to use
     // WebView.onHttpError() as our app's minSdk is set to a lower version.
-    // Instead, we rely on WebView.onError() which returns a page without a title,
+    // Instead, we rely on WebView.onError() which returns a page without a title (iOS),
+    // or a page having the same backend url for title (Android).
     // so we handle the error accordingly. Once our minSdk is set to 23 or higher,
     // we can improve this code by using WebView.onHttpError().
     // TODO: Update this code to utilize WebView.onHttpError() when our minSdk is 23 or higher.
-    if (e.nativeEvent.title === "") {
+    if (
+      e.nativeEvent.title === "" ||
+      e.nativeEvent.title === uriFromWebViewSource
+    ) {
       handleOnError();
     }
     // inject JS on every page load end
