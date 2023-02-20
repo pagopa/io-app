@@ -57,7 +57,7 @@ import {
   handleSendAssistanceLog
 } from "../../utils/supportAssistance";
 import { getUrlBasepath } from "../../utils/url";
-import { lollipopLoginEnabled } from "../../config";
+import { apiUrlPrefix, lollipopLoginEnabled } from "../../config";
 import { originSchemasWhiteList } from "./originSchemasWhiteList";
 
 type NavigationProps = IOStackNavigationRouteProps<
@@ -116,10 +116,13 @@ const styles = StyleSheet.create({
   webViewWrapper: { flex: 1 }
 });
 
-// TODO if left as it is, this would cause some IDP to offer limited login capabilities.
+// We leave the custom user agent header only for the first call
+// to the backend API server, but we clear it for subsequent calls to
+// IdPs' webpages.
 // See: https://pagopa.atlassian.net/browse/IOAPPCIT-46
-const getUserAgentForWebView = () =>
-  lollipopLoginEnabled ? `IO-App/${getAppVersion()}` : undefined;
+const lollipopUserAgent = lollipopLoginEnabled
+  ? `IO-App/${getAppVersion()}`
+  : undefined;
 
 /**
  * A screen that allows the user to login with an IDP.
@@ -141,6 +144,12 @@ const IdpLoginScreen = (props: Props) => {
   const idpId = props.loggedOutWithIdpAuth?.idp.id;
   const loginUri = idpId ? getIdpLoginUri(idpId) : undefined;
   const loginSource = useLollipopLoginSource(loginUri);
+
+  const uriFromWebViewSource =
+    webviewSource && "uri" in webviewSource ? webviewSource.uri : undefined;
+  const userAgentForWebView = uriFromWebViewSource?.includes(apiUrlPrefix)
+    ? lollipopUserAgent
+    : undefined;
 
   const choosenTool = useMemo(
     () => assistanceToolRemoteConfig(props.assistanceToolConfig),
@@ -431,7 +440,7 @@ const IdpLoginScreen = (props: Props) => {
             androidMicrophoneAccessDisabled={true}
             textZoom={100}
             originWhitelist={originSchemasWhiteList}
-            userAgent={getUserAgentForWebView()}
+            userAgent={userAgentForWebView}
             source={webviewSource}
             onError={handleLoadingError}
             javaScriptEnabled={true}
