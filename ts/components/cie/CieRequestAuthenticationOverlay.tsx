@@ -229,13 +229,6 @@ const CieWebView = (props: Props) => {
     return true;
   };
 
-  const handleNavigationStateChange = (event: WebViewNavigation): void => {
-    if (event.url) {
-      // TODO: - act the same way as https://github.com/pagopa/io-app/pull/4351
-      console.log("✅🚀 " + event.url);
-    }
-  };
-
   const handleOnError = () => {
     dispatch({ kind: "setError" });
   };
@@ -297,7 +290,6 @@ const CieWebView = (props: Props) => {
           onError={handleOnError}
           onShouldStartLoadWithRequest={handleOnShouldStartLoadWithRequest}
           source={webviewSource}
-          onNavigationStateChange={handleNavigationStateChange}
           key={key}
         />
       )}
