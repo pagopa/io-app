@@ -63,47 +63,8 @@ import {
   getLocalePrimaryWithFallback
 } from "../utils/locale";
 import { readablePrivacyReport } from "../utils/reporters";
-import { LollipopConfig } from "./../features/lollipop";
 
 // A saga to load the Profile.
-export function* loadProfileLollipop(
-  lollipopConfig: LollipopConfig,
-  getProfileLollipop: ReturnType<typeof BackendClient>["getProfileLollipop"]
-): Generator<
-  ReduxSagaEffect,
-  O.Option<InitializedProfile>,
-  SagaCallReturnType<typeof getProfileLollipop>
-> {
-  try {
-    const response = yield* call(getProfileLollipop(lollipopConfig), {});
-    // we got an error, throw it
-    if (E.isLeft(response)) {
-      throw Error(readablePrivacyReport(response.left));
-    }
-    if (response.right.status === 200) {
-      // Ok we got a valid response, send a SESSION_LOAD_SUCCESS action
-      // BEWARE: we need to cast to UserProfileUnion to make UserProfile a
-      // discriminated union!
-      // eslint-disable-next-line
-      yield* put(
-        profileLoadSuccess(response.right.value as InitializedProfile)
-      );
-      return O.some(response.right.value);
-    }
-    if (response.right.status === 401) {
-      // in case we got an expired session while loading the profile, we reset
-      // the session
-      yield* put(sessionExpired());
-    }
-    throw response
-      ? Error(`response status ${response.right.status}`)
-      : Error(I18n.t("profile.errors.load"));
-  } catch (e) {
-    yield* put(profileLoadFailure(convertUnknownToError(e)));
-  }
-  return O.none;
-}
-
 export function* loadProfile(
   getProfile: ReturnType<typeof BackendClient>["getProfile"]
 ): Generator<

@@ -104,7 +104,6 @@ import {
 import { updateInstallationSaga } from "./notifications";
 import {
   loadProfile,
-  loadProfileLollipop,
   watchProfile,
   watchProfileRefreshRequestsSaga,
   watchProfileUpsertRequestsSaga
@@ -291,16 +290,9 @@ export function* initializeApplicationSaga(): Generator<
   // loaded and valid
 
   // Load the profile info
-
-  // TODO: lollipopConfig is just a mock, it must be removed
-  const lollipopConfig: LollipopConfig = {
-    nonce: "nonce-123",
-    customContentToSign: ["ASDFFA324SDFA==", "DAFDEFAF323DSFA=="]
-  };
   const maybeUserProfile: SagaCallReturnType<typeof loadProfile> = yield* call(
-    loadProfileLollipop,
-    lollipopConfig,
-    backendClient.getProfileLollipop
+    loadProfile,
+    backendClient.getProfile
   );
 
   if (O.isNone(maybeUserProfile)) {
