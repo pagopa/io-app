@@ -3,9 +3,11 @@ import { useSelector } from "@xstate/react";
 import { List as NBList, Text as NBText } from "native-base";
 import React from "react";
 import { SafeAreaView, ScrollView, View } from "react-native";
+import AdviceComponent from "../../../../../components/AdviceComponent";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
+import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
@@ -238,9 +240,12 @@ const InstrumentsEnrollmentScreen = () => {
                 ))}
               </NBList>
               <VSpacer />
-              <NBText>
-                {I18n.t("idpay.configuration.instruments.footer")}
-              </NBText>
+
+              <AdviceComponent
+                text={I18n.t("idpay.configuration.instruments.footer")}
+                iconName="io-portafoglio"
+                iconColor={IOColors.bluegrey}
+              />
             </ScrollView>
           </View>
           <SafeAreaView>{renderFooterButtons()}</SafeAreaView>
