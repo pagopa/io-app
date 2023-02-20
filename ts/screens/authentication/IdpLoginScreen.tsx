@@ -118,8 +118,9 @@ const styles = StyleSheet.create({
 
 // TODO if left as it is, this would cause some IDP to offer limited login capabilities.
 // See: https://pagopa.atlassian.net/browse/IOAPPCIT-46
-const getUserAgentForWebView = () =>
-  lollipopLoginEnabled ? `IO-App/${getAppVersion()}` : undefined;
+const userAgentForWebView = lollipopLoginEnabled
+  ? `IO-App/${getAppVersion()}`
+  : undefined;
 
 /**
  * A screen that allows the user to login with an IDP.
@@ -431,7 +432,7 @@ const IdpLoginScreen = (props: Props) => {
             androidMicrophoneAccessDisabled={true}
             textZoom={100}
             originWhitelist={originSchemasWhiteList}
-            userAgent={getUserAgentForWebView()}
+            userAgent={userAgentForWebView}
             source={webviewSource}
             onError={handleLoadingError}
             javaScriptEnabled={true}
