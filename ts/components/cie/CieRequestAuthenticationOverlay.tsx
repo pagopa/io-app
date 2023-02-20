@@ -107,6 +107,13 @@ const CieWebView = (props: Props) => {
   const [lollipopCheckStatus, setLollipopCheckStatus] =
     React.useState<LollipopCheckStatus>({ status: "none", url: O.none });
 
+  const userAgentForWebView = () =>
+    webviewSource &&
+    "uri" in webviewSource &&
+    webviewSource.uri.includes(apiUrlPrefix)
+      ? lollipopUserAgent
+      : defaultUserAgent;
+
   const verifyLollipop = React.useCallback(
     (eventUrl: string, urlEncodedSamlRequest: string, publicKey: PublicKey) => {
       setWebviewSource(undefined);
@@ -235,6 +242,11 @@ const CieWebView = (props: Props) => {
     if (e.nativeEvent.title === "Pagina web non disponibile") {
       handleOnError();
     }
+    // On Android, if we attempt to access the idp URL twice,
+    // we are presented with an error page titled "ERROR".
+    if (e.nativeEvent.title === "ERRORE") {
+      handleOnError();
+    }
     // When attempting to log in with an incorrect user-agent on Lollipop,
     // we receive an HTTP 500 Server Error. Currently, we are unable to use
     // WebView.onHttpError() as our app's minSdk is set to a lower version.
@@ -255,9 +267,9 @@ const CieWebView = (props: Props) => {
     return (
       <ErrorComponent
         onRetry={() => {
-          dispatch({ kind: "retry" });
           setLollipopCheckStatus({ status: "none", url: O.none });
           startLoginProcess();
+          dispatch({ kind: "retry" });
         }}
         onClose={props.onClose}
       />
@@ -268,16 +280,11 @@ const CieWebView = (props: Props) => {
     <View style={IOStyles.flex}>
       {authUrl === undefined && (
         <WebView
+          cacheEnabled={false}
           androidCameraAccessDisabled={true}
           androidMicrophoneAccessDisabled={true}
           ref={webView}
-          userAgent={
-            webviewSource &&
-            "uri" in webviewSource &&
-            webviewSource.uri.includes(apiUrlPrefix)
-              ? lollipopUserAgent
-              : defaultUserAgent
-          }
+          userAgent={userAgentForWebView()}
           javaScriptEnabled={true}
           injectedJavaScript={injectJs}
           onLoadEnd={handleOnLoadEnd}
