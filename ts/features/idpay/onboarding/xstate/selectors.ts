@@ -1,15 +1,19 @@
 /* eslint-disable no-underscore-dangle */
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 import { StateFrom } from "xstate";
 import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/onboarding/RequiredCriteriaDTO";
 import { SelfDeclarationBoolDTO } from "../../../../../definitions/idpay/onboarding/SelfDeclarationBoolDTO";
 import { SelfDeclarationDTO } from "../../../../../definitions/idpay/onboarding/SelfDeclarationDTO";
 import { SelfDeclarationMultiDTO } from "../../../../../definitions/idpay/onboarding/SelfDeclarationMultiDTO";
+import { UPSERTING_TAG } from "../../../../utils/xstate";
 import { Context, IDPayOnboardingMachineType } from "./machine";
 
 type StateWithContext = StateFrom<IDPayOnboardingMachineType>;
+
+const isUpsertingSelector = (state: StateWithContext) =>
+  state.hasTag(UPSERTING_TAG as never);
 
 const selectRequiredCriteria = (state: StateWithContext) =>
   state.context.requiredCriteria;
@@ -96,6 +100,7 @@ const getBoolRequiredCriteriaFromContext = (context: Context) =>
 
 export {
   selectServiceId,
+  isUpsertingSelector,
   multiRequiredCriteriaSelector,
   boolRequiredCriteriaSelector,
   getMultiRequiredCriteriaFromContext,
