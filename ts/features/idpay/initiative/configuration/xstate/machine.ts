@@ -395,7 +395,11 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 },
                 onError: {
                   target: "DISPLAYING_INSTRUMENTS",
-                  actions: ["setFailure", "showFailureToast"]
+                  actions: [
+                    "instrumentEnrollFailure",
+                    "setFailure",
+                    "showFailureToast"
+                  ]
                 }
               }
             },
@@ -411,7 +415,11 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 },
                 onError: {
                   target: "DISPLAYING_INSTRUMENTS",
-                  actions: ["setFailure", "showFailureToast"]
+                  actions: [
+                    "instrumentDeleteFailure",
+                    "setFailure",
+                    "showFailureToast"
+                  ]
                 }
               }
             },
@@ -531,6 +539,9 @@ const createIDPayInitiativeConfigurationMachine = () =>
           instrumentToEnroll: undefined,
           failure: undefined
         })),
+        instrumentEnrollFailure: assign(_ => ({
+          instrumentToEnroll: undefined
+        })),
         selectInstrumentToDelete: assign((_, event) => ({
           instrumentToDelete: event.instrument,
           failure: undefined
@@ -551,6 +562,9 @@ const createIDPayInitiativeConfigurationMachine = () =>
           initiativeInstruments: event.data,
           instrumentToDelete: undefined,
           failure: undefined
+        })),
+        instrumentDeleteFailure: assign(_ => ({
+          instrumentToDelete: undefined
         })),
         skipInstruments: assign((_, __) => ({
           areInstrumentsSkipped: true
