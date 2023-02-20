@@ -143,7 +143,6 @@ import {
   getCryptoPublicKey,
   trackMixpanelCryptoKeyPairEvents
 } from "./startup/generateCryptoKeyPair";
-import { LollipopConfig } from "./../features/lollipop/index";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
