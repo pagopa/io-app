@@ -17,7 +17,6 @@ import { WalletParamsList } from "../../../../navigation/params/WalletParamsList
 import { useIOSelector } from "../../../../store/hooks";
 import { creditCardByIdSelector } from "../../../../store/reducers/wallet/wallets";
 import { CreditCardPaymentMethod } from "../../../../types/pagopa";
-import { getResourceNameFromUrl } from "../../../../utils/url";
 
 type ListItemProps = {
   item: InitiativeDTO;
@@ -32,15 +31,18 @@ type Props = IOStackNavigationRouteProps<
   "WALLET_IDPAY_INITIATIVE_LIST"
 >;
 
-const brandLogoToLogoPaymentMap: Record<string, IOLogoPaymentType> = {
-  carta_mc: "mastercard",
-  carta_visa: "visa",
-  carta_amex: "amex",
-  carta_diners: "diners",
-  carta_visaelectron: "visa",
-  carta_poste: "postepay",
-  carta_maestro: "maestro",
-  carta_vpay: "vPay"
+const brandToLogoPaymentMap: Record<string, IOLogoPaymentType> = {
+  MASTERCARD: "mastercard",
+  VISA: "visa",
+  AMEX: "amex",
+  DINERS: "diners",
+  MAESTRO: "maestro",
+  VISAELECTRON: "visa",
+  POSTEPAY: "postepay",
+  UNIONPAY: "unionPay",
+  DISCOVER: "discover",
+  JCB: "jcb",
+  JCB15: "jcb"
 };
 
 const InitiativeListItem = ({ item }: ListItemProps) => {
@@ -96,12 +98,11 @@ const CreditCardComponent = ({
 }: {
   creditCard: CreditCardPaymentMethod;
 }) => {
-  const { brandLogo } = creditCard.info;
-  const imageName = brandLogo ? getResourceNameFromUrl(brandLogo) : undefined;
+  const { brand } = creditCard.info;
   return (
     <View style={IOStyles.row}>
-      {imageName !== undefined ? (
-        <LogoPayment name={brandLogoToLogoPaymentMap[imageName]} />
+      {brand !== undefined ? (
+        <LogoPayment name={brandToLogoPaymentMap[brand]} />
       ) : null}
       <HSpacer size={8} />
       <H4>•••• {creditCard.info.blurredNumber}</H4>
