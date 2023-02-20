@@ -94,7 +94,7 @@ const bottomSheetConfigurations: Record<
     title: I18n.t("idpay.initiative.operationDetails.title.transaction")
   },
   REVERSAL: {
-    snapPoint: 620,
+    snapPoint: 650,
     title: I18n.t("idpay.initiative.operationDetails.title.transaction")
   }
 };

@@ -4,7 +4,7 @@ import {
   OperationTypeEnum as TransactionDetailOperationTypeEnum,
   TransactionDetailDTO
 } from "../../../../../../definitions/idpay/timeline/TransactionDetailDTO";
-import { InfoBox } from "../../../../../components/box/InfoBox";
+import { Alert } from "../../../../../components/Alert";
 import CopyButtonComponent from "../../../../../components/CopyButtonComponent";
 import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
@@ -46,15 +46,17 @@ const TransactionDetailsComponent = (props: TransactionDetailsProps) => {
   const isReversal =
     transaction.operationType === TransactionDetailOperationTypeEnum.REVERSAL;
 
+  const alertViewRef = React.createRef<View>();
+
   return (
     <View style={styles.container}>
       {isReversal && (
         <>
-          <InfoBox>
-            <Body>
-              {I18n.t("idpay.initiative.operationDetails.reversalAdvice")}
-            </Body>
-          </InfoBox>
+          <Alert
+            viewRef={alertViewRef}
+            variant="info"
+            content={I18n.t("idpay.initiative.operationDetails.reversalAdvice")}
+          />
           <VSpacer size={16} />
         </>
       )}
