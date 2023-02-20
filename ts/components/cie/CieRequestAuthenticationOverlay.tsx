@@ -248,7 +248,11 @@ const CieWebView = (props: Props) => {
   if (error) {
     return (
       <ErrorComponent
-        onRetry={() => dispatch({ kind: "retry" })}
+        onRetry={() => {
+          dispatch({ kind: "retry" });
+          setLollipopCheckStatus({ status: "none", url: O.none });
+          startLoginProcess();
+        }}
         onClose={props.onClose}
       />
     );
