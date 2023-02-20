@@ -7,10 +7,13 @@ import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/onboarding
 import { SelfDeclarationBoolDTO } from "../../../../../definitions/idpay/onboarding/SelfDeclarationBoolDTO";
 import { SelfDeclarationDTO } from "../../../../../definitions/idpay/onboarding/SelfDeclarationDTO";
 import { SelfDeclarationMultiDTO } from "../../../../../definitions/idpay/onboarding/SelfDeclarationMultiDTO";
-import { LOADING_TAG } from "../../../../utils/xstate";
+import { LOADING_TAG, UPSERTING_TAG } from "../../../../utils/xstate";
 import { Context, IDPayOnboardingMachineType } from "./machine";
 
 type StateWithContext = StateFrom<IDPayOnboardingMachineType>;
+
+const isUpsertingSelector = (state: StateWithContext) =>
+  state.hasTag(UPSERTING_TAG as never);
 
 const selectRequiredCriteria = (state: StateWithContext) =>
   state.context.requiredCriteria;
@@ -108,6 +111,7 @@ const areAllSelfDeclarationsToggledSelector = createSelector(
 
 export {
   selectServiceId,
+  isUpsertingSelector,
   multiRequiredCriteriaSelector,
   boolRequiredCriteriaSelector,
   getMultiRequiredCriteriaFromContext,
