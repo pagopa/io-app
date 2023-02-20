@@ -2,13 +2,13 @@ import { ECKey, RSAKey } from "@pagopa/io-react-native-crypto";
 import MockDate from "mockdate";
 import URLParse from "url-parse";
 import { LollipopConfig } from "../../../features/lollipop";
-import { KeyInfo } from "../../crypto";
 import {
-  CustomContentBaseSignature,
-  customContentSignatureBases,
+  SignatureConfigForgeInput,
   CutsomContentToSignInput,
-  SignatureConfigForgeInput
-} from "../../fetch";
+  customContentSignatureBases,
+  CustomContentBaseSignature
+} from "../../../features/lollipop/utils/fetch";
+import { KeyInfo } from "../../crypto";
 import { constants } from "../constants";
 import {
   generateSignatureInput,
