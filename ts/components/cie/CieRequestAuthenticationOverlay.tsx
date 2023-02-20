@@ -26,12 +26,6 @@ import { IOStyles } from "../core/variables/IOStyles";
 import { withLoadingSpinner } from "../helpers/withLoadingSpinner";
 import GenericErrorComponent from "../screens/GenericErrorComponent";
 
-// TODO if left as it is, this would cause some IDP to offer limited login capabilities.
-// See: https://pagopa.atlassian.net/browse/IOAPPCIT-46
-const lollipopUserAgent = lollipopLoginEnabled
-  ? `IO-App/${getAppVersion()}`
-  : undefined;
-
 // to make sure the server recognizes the client as valid iPhone device (iOS only) we use a custom header
 // on Android it is not required
 const iOSUserAgent =
@@ -40,6 +34,14 @@ const defaultUserAgent = Platform.select({
   ios: iOSUserAgent,
   default: undefined
 });
+
+// We leave the custom user agent header only for the first call
+// to the backend API server, but we clear it for subsequent calls to
+// IdPs' webpages.
+// See: https://pagopa.atlassian.net/browse/IOAPPCIT-46
+const lollipopUserAgent = lollipopLoginEnabled
+  ? `IO-App/${getAppVersion()}`
+  : defaultUserAgent;
 
 // INFA PROD -> xx_servizicie
 // INFRA DEV -> xx_servizicie_test
