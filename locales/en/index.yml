@@ -3299,6 +3299,9 @@ idpay:
   wallet:
     preview:
       validThrough: "Valid through {{endDate}}"
+    initiativePairing:
+      navigation: Iniziative disponibili
+      header: Scegli quali iniziative abilitare su questo metodo
   initiative:
     details:
       initiativeCard:
