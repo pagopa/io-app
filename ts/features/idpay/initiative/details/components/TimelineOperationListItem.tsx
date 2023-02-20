@@ -39,59 +39,59 @@ type TimelineOperationListItemProps = {
   onPress?: () => void;
 };
 
-const generateTimelineOperationListItemData = (operation: OperationListDTO) => {
-  const hasAmount = "amount" in operation;
+type OperationComponentProps = { operation: OperationListDTO };
 
-  const OperationIcon = () => {
-    switch (operation.operationType) {
-      case OnboardingOperationTypeEnum.ONBOARDING:
-        return <Icon name={"ok"} />;
+const OperationIcon = ({ operation }: OperationComponentProps) => {
+  switch (operation.operationType) {
+    case OnboardingOperationTypeEnum.ONBOARDING:
+      return <Icon name={"ok"} />;
 
-      case IbanOperationTypeEnum.ADD_IBAN:
-        return <Icon name={"institution"} color="bluegreyLight" />;
+    case IbanOperationTypeEnum.ADD_IBAN:
+      return <Icon name={"institution"} color="bluegreyLight" />;
 
-      case RefundOperationTypeEnum.PAID_REFUND:
-        return <Icon name={"arrowCircleUp"} color="bluegrey" />;
+    case RefundOperationTypeEnum.PAID_REFUND:
+      return <Icon name={"arrowCircleUp"} color="bluegrey" />;
 
-      case OperationTypeEnum.REJECTED_ADD_INSTRUMENT:
-      case OperationTypeEnum.REJECTED_DELETE_INSTRUMENT:
-      case RefundOperationTypeEnum.REJECTED_REFUND:
-        return <Icon name={"warning"} color="red" />;
+    case OperationTypeEnum.REJECTED_ADD_INSTRUMENT:
+    case OperationTypeEnum.REJECTED_DELETE_INSTRUMENT:
+    case RefundOperationTypeEnum.REJECTED_REFUND:
+      return <Icon name={"warning"} color="red" />;
 
-      default:
-        if ("brandLogo" in operation) {
-          return (
-            <Image
-              style={styles.imageSize}
-              source={{ uri: operation.brandLogo }}
-            />
-          );
-        }
-        return null;
-    }
-  };
-
-  const OperationAmount = () => {
-    if (!hasAmount) {
-      return null;
-    }
-    switch (operation.operationType) {
-      case TransactionOperationTypeEnum.TRANSACTION:
-        return <H4>{`–${formatNumberAmount(operation.amount, false)} €`}</H4>;
-      case TransactionOperationTypeEnum.REVERSAL:
-        return <H4>{`+${formatNumberAmount(operation.amount, false)} €`}</H4>;
-      case RefundOperationTypeEnum.PAID_REFUND:
+    default:
+      if ("brandLogo" in operation) {
         return (
-          <H4 color="greenLight">
-            {`${formatNumberAmount(operation.amount, false)} €`}
-          </H4>
+          <Image
+            style={styles.imageSize}
+            source={{ uri: operation.brandLogo }}
+          />
         );
-      default:
-        return null;
-    }
-  };
+      }
+      return null;
+  }
+};
+const OperationAmount = ({ operation }: OperationComponentProps) => {
+  const hasAmount = "amount" in operation;
+  if (!hasAmount) {
+    return null;
+  }
+  switch (operation.operationType) {
+    case TransactionOperationTypeEnum.TRANSACTION:
+      return <H4>{`–${formatNumberAmount(operation.amount, false)} €`}</H4>;
+    case TransactionOperationTypeEnum.REVERSAL:
+      return <H4>{`+${formatNumberAmount(operation.amount, false)} €`}</H4>;
+    case RefundOperationTypeEnum.PAID_REFUND:
+      return (
+        <H4 color="greenLight">
+          {`${formatNumberAmount(operation.amount, false)} €`}
+        </H4>
+      );
+    default:
+      return null;
+  }
+};
 
-  const renderOperationTitle = () =>
+const generateTimelineOperationListItemText = (operation: OperationListDTO) => {
+  const operationTitle =
     "maskedPan" in operation
       ? I18n.t(
           `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.${operation.operationType}`,
@@ -101,7 +101,7 @@ const generateTimelineOperationListItemData = (operation: OperationListDTO) => {
           `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.${operation.operationType}`
         );
 
-  const renderOperationInvoiceAmount = () => {
+  const generateOperationInvoiceText = () => {
     switch (operation.operationType) {
       case TransactionOperationTypeEnum.TRANSACTION:
         return "· " + formatNumberAmount(operation.amount, true);
@@ -112,10 +112,8 @@ const generateTimelineOperationListItemData = (operation: OperationListDTO) => {
     }
   };
   return {
-    OperationIcon,
-    OperationAmount,
-    renderOperationTitle,
-    renderOperationInvoiceAmount
+    operationTitle,
+    bonusInvoiceText: generateOperationInvoiceText()
   };
 };
 
@@ -123,12 +121,8 @@ export const TimelineOperationListItem = (
   props: TimelineOperationListItemProps
 ) => {
   const { operation, onPress } = props;
-  const {
-    OperationIcon,
-    OperationAmount,
-    renderOperationTitle,
-    renderOperationInvoiceAmount
-  } = generateTimelineOperationListItemData(operation);
+  const { operationTitle, bonusInvoiceText } =
+    generateTimelineOperationListItemText(operation);
   return (
     <ListItem
       style={[
@@ -140,19 +134,19 @@ export const TimelineOperationListItem = (
       ]}
       onPress={onPress}
     >
-      <OperationIcon />
+      <OperationIcon operation={operation} />
       <HSpacer size={16} />
       <View style={IOStyles.flex}>
-        <H4>{renderOperationTitle()}</H4>
+        <H4>{operationTitle}</H4>
         <LabelSmall weight="Regular" color="bluegrey">
           {`${formatDateAsShortFormat(
             operation.operationDate
           )}, ${getHourAndMinuteFromDate(
             operation.operationDate
-          )} ${renderOperationInvoiceAmount()}`}
+          )} ${bonusInvoiceText}`}
         </LabelSmall>
       </View>
-      <OperationAmount />
+      <OperationAmount operation={operation} />
     </ListItem>
   );
 };
