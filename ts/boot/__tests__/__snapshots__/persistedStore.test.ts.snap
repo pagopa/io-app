@@ -157,6 +157,7 @@ Object {
   },
   "isExperimentalFeaturesEnabled": false,
   "isFingerprintEnabled": undefined,
+  "isIdPayTestEnabled": false,
   "isMixpanelEnabled": null,
   "isPagoPATestEnabled": false,
   "isPnTestEnabled": false,
