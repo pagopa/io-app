@@ -301,6 +301,7 @@ const InstrumentsEnrollmentScreen = () => {
                 ))}
               </NBList>
               <VSpacer />
+              {/*  TODO:: AdviceComponent goes here once implemented @dmnplb */}
               <View style={styles.bottomSection}>
                 <IconNav name="wallet" color="bluegrey" />
                 <HSpacer size={8} />
@@ -312,6 +313,7 @@ const InstrumentsEnrollmentScreen = () => {
                   {I18n.t("idpay.configuration.instruments.footer")}
                 </LabelSmall>
               </View>
+              {/* TODO:: end AdviceComponent  */}
             </ScrollView>
           </View>
           <SafeAreaView>{renderFooterButtons()}</SafeAreaView>
