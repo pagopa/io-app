@@ -22,6 +22,7 @@ import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";
 import IconButton from "../../../components/ui/IconButton";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
+import IconButtonSolid from "../../../components/ui/IconButtonSolid";
 
 const styles = StyleSheet.create({
   primaryBlock: {
@@ -705,6 +706,41 @@ export const DSButtons = () => (
 
     <VSpacer size={40} />
 
+    <H2
+      color={"bluegrey"}
+      weight={"SemiBold"}
+      style={{ marginBottom: 16, marginTop: 16 }}
+    >
+      IconButtonSolid
+    </H2>
+
+    <DSComponentViewerBox name="IconButtonSolid · Primary Variant, Large">
+      <View style={IOStyles.row}>
+        <IconButtonSolid
+          color="primary"
+          accessibilityLabel="Tap to trigger test alert"
+          icon="arrowBottom"
+          onPress={() => {
+            alert("Action triggered");
+          }}
+        />
+
+        <HSpacer size={16} />
+
+        <IconButtonSolid
+          color="primary"
+          accessibilityLabel="Tap to trigger test alert"
+          icon="arrowBottom"
+          disabled
+          onPress={() => {
+            alert("Action triggered");
+          }}
+        />
+      </View>
+    </DSComponentViewerBox>
+
+    <VSpacer size={40} />
+
     <DSComponentViewerBox name="ButtonExtendedOutline (using Pressable API)">
       <View>
         <ButtonExtendedOutline
@@ -718,7 +754,7 @@ export const DSButtons = () => (
       <VSpacer size={16} />
       <View>
         <ButtonExtendedOutline
-          icon="arrowRight"
+          icon="chevronRight"
           label={"Label only"}
           onPress={() => {
             alert("Action triggered");
