@@ -12,24 +12,20 @@ const styles = StyleSheet.create({
   }
 });
 
-type Props = {
+type OwnProps = {
   downloadPath: string;
-  onError?: () => void;
-  onLoadComplete?: () => void;
 };
 
-const PdfViewer = ({ downloadPath, onError, onLoadComplete }: Props) => {
+type Props = OwnProps &
+  Omit<React.ComponentProps<typeof Pdf>, "source" | "style">;
+
+const PdfViewer = ({
+  downloadPath,
+  onError,
+  onLoadComplete,
+  ...rest
+}: Props) => {
   const [isLoading, setIsLoading] = useState(true);
-
-  const handleLoadComplete = () => {
-    setIsLoading(false);
-    onLoadComplete?.();
-  };
-
-  const handleError = () => {
-    setIsLoading(false);
-    onError?.();
-  };
 
   return (
     <LoadingSpinnerOverlay
@@ -38,10 +34,17 @@ const PdfViewer = ({ downloadPath, onError, onLoadComplete }: Props) => {
       loadingCaption={I18n.t("messageDetails.attachments.loading")}
     >
       <Pdf
+        {...rest}
         source={{ uri: downloadPath, cache: true }}
         style={styles.pdf}
-        onLoadComplete={handleLoadComplete}
-        onError={handleError}
+        onLoadComplete={(...args) => {
+          setIsLoading(false);
+          onLoadComplete?.(...args);
+        }}
+        onError={(...args) => {
+          setIsLoading(false);
+          onError?.(...args);
+        }}
       />
     </LoadingSpinnerOverlay>
   );
