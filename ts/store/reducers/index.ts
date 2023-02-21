@@ -8,6 +8,9 @@ import { isActionOf } from "typesafe-actions";
 import { versionInfoReducer } from "../../common/versionInfo/store/reducers/versionInfo";
 import bonusReducer from "../../features/bonus/bonusVacanze/store/reducers";
 import { featuresPersistor } from "../../features/common/store/reducers";
+import lollipopReducer, {
+  initialLollipopState
+} from "../../features/lollipop/store/reducers/lollipop";
 import {
   logoutFailure,
   logoutSuccess,
@@ -16,9 +19,6 @@ import {
 import { Action } from "../actions/types";
 import createSecureStorage from "../storages/keychain";
 import { DateISO8601Transform } from "../transforms/dateISO8601Tranform";
-import lollipopReducer, {
-  initialLollipopState
-} from "../../features/lollipop/store/reducers/lollipop";
 import appStateReducer from "./appState";
 import assistanceToolsReducer from "./assistanceTools";
 import authenticationReducer, {

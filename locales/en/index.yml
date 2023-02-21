@@ -1540,7 +1540,7 @@ wallet:
     contactECsubtitle: Contact the Institution for more information.
     assistanceLabel: "Use this code to get support:"
     sendReport: Send report
-    loadingData: loading failure, try again.
+    loadingData: Loading failure, try again.
   walletCardTransaction:
     contextualHelpTitle: All transactions for this method
     contextualHelpContent: !include wallet/wallet_card_transaction.md
@@ -1792,7 +1792,7 @@ messageDetails:
   attachments:
     badFormat: "The attachment format is not supported. Please contact the sender"
     corruptedFile: "The attachment is corrupt and can't be opened. Please contact the sender"
-    downloadFailed: "We couldn't open the attachment. Try again"
+    downloadFailed: "The attachment is currently not available. Please try again or contact the sender"
     showPreview: "See preview"
     unavailable:
       firstPart: "The attachments are no longer available. "
@@ -3229,6 +3229,11 @@ features:
       title: "We are almost there!"
       subTitle: "To sign, you must accept the terms and conditions of the service and confirm that you have read the privacy policy of the signature provider."
       show: "View"
+    documents:
+      footer:
+        cancel: "Cancel"
+        continue: "Go to signature"
+        confirm: "Sign and continue"
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
@@ -3338,7 +3343,6 @@ idpay:
       maskedPan: •••• {{lastDigits}}
       amountLabel: Importo transazione
       accruedAmountLabel: Importo rimborsabile
-      amount: € {{amount}}
       infoTitle: Informazioni sull transazione
       date: Data
       circuit: Circuito di pagamento
@@ -3346,9 +3350,11 @@ idpay:
       issuerId: ID transazione Issuer
   onboarding:
     success:
-      understoodCta: Ho capito!
+      button: 
+        continue: Ho capito!
       pleaseWait: Un attimo di pazienza...
-      requestSent: La tua richiesta è stata inviata!
+      title: La tua richiesta è stata inviata!
+      body:  Riceverai un messaggio con l’esito dell’operazione.
     failure:
       NO_PERMISSION:
         title: "Non hai i requisiti per aderire a questa iniziativa"
@@ -3414,7 +3420,7 @@ idpay:
       title: "Metodi di pagamento"
       header: Scegli quali metodi di pagamento associare
       body: "Poi, usali per pagare e chiedi all’esercente di usare {{initiativeName}}."
-      footer: Modifica queste scelte o aggiunti altri metodi in qualsiasi momento dalla sezione Portafoglio
+      footer: Modifica queste scelte o aggiungi altri metodi in qualsiasi momento dalla sezione Portafoglio
       instrumentStatus:
         active: Active
         pendingActivation: Pending activation
@@ -3451,4 +3457,6 @@ idpay:
         bodyLink: Dpr 28 dicembre 2000 n. 445 art 46 e 47 
         nameAssignInput: Assegna un nome
         bottomLabel: Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento visitando la sezione Profilo
-    
+      button:
+        addNew: Aggiungi nuovo
+      updateToast: IBAN modificato correttamente
