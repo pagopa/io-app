@@ -154,7 +154,6 @@ const CieWebView = (props: Props) => {
 
   const startLoginProcess = React.useCallback(() => {
     if (loginSource.kind === "ready") {
-      console.log("🚀 set web view source");
       setWebviewSource(loginSource.value);
     }
   }, [loginSource]);
@@ -179,7 +178,6 @@ const CieWebView = (props: Props) => {
     }
 
     const url = event.url;
-
     const parsedUrl = new URLParse(url, true);
     const urlQuery = parsedUrl.query;
     const urlEncodedSamlRequest = urlQuery?.SAMLRequest;
@@ -248,13 +246,11 @@ const CieWebView = (props: Props) => {
 
   const handleOnLoadEnd = (e: WebViewNavigationEvent | WebViewErrorEvent) => {
     if (e.nativeEvent.title === "Pagina web non disponibile") {
-      console.log("errore 1");
       handleOnError();
     }
     // On Android, if we attempt to access the idp URL twice,
     // we are presented with an error page titled "ERROR".
     if (e.nativeEvent.title === "ERRORE") {
-      console.log("errore 2");
       handleOnError();
     }
     // When attempting to log in with an incorrect user-agent on Lollipop,
@@ -270,7 +266,6 @@ const CieWebView = (props: Props) => {
       android: e.nativeEvent.title === uriFromWebViewSource
     });
     if (httpError500Condition) {
-      console.log("errore 3");
       handleOnError();
     }
     // inject JS on every page load end
@@ -307,10 +302,6 @@ const CieWebView = (props: Props) => {
           onLoadEnd={handleOnLoadEnd}
           onError={handleOnError}
           onShouldStartLoadWithRequest={handleOnShouldStartLoadWithRequest}
-          onNavigationStateChange={e => {
-            console.log("✅ " + userAgentForWebView);
-            console.log("✅ " + JSON.stringify(e.url));
-          }}
           source={webviewSource}
           key={key}
         />

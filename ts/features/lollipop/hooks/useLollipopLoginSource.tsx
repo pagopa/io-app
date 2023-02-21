@@ -53,7 +53,6 @@ export const useLollipopLoginSource = (
      */
     taskRegenerateKey(lollipopKeyTag.value)
       .then(key => {
-        console.log("🔑 " + JSON.stringify(key));
         if (!key) {
           setDeprecatedLoginUri(loginUri);
           return;
