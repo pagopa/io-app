@@ -86,10 +86,6 @@ import IconGallery from "./svg/IconGallery";
 import IconCancel from "./svg/IconCancel";
 import IconQuestion from "./svg/IconQuestion";
 import IconSearch from "./svg/IconSearch";
-import IconArrowRight from "./svg/IconArrowRight";
-import IconArrowLeft from "./svg/IconArrowLeft";
-import IconArrowDown from "./svg/IconArrowDown";
-import IconArrowUp from "./svg/IconArrowUp";
 import IconClose from "./svg/IconClose";
 import IconCloseSmall from "./svg/IconCloseSmall";
 import IconEmailLegal from "./svg/IconEmailLegal";
@@ -100,6 +96,10 @@ import IconExternalLink from "./svg/IconExternalLink";
 import IconUnknownGdo from "./svg/IconUnknownGdo";
 import IconWarningFilled from "./svg/IconWarningFilled";
 import IconErrorFilled from "./svg/IconErrorFilled";
+import IconChevronRight from "./svg/IconChevronRight";
+import IconChevronTop from "./svg/IconChevronTop";
+import IconChevronBottom from "./svg/IconChevronBottom";
+import IconChevronLeft from "./svg/IconChevronLeft";
 
 export const IOIcons = {
   spid: IconSpid,
@@ -193,10 +193,10 @@ export const IOIcons = {
   cancel: IconCancel /* io-cancel */,
   help: IconQuestion /* io-question */,
   search: IconSearch /* io-search */,
-  arrowRight: IconArrowRight /* io-right */,
-  arrowLeft: IconArrowLeft /* io-back */,
-  arrowDown: IconArrowDown,
-  arrowUp: IconArrowUp,
+  chevronRight: IconChevronRight /* io-right */,
+  chevronLeft: IconChevronLeft /* io-back */,
+  chevronBottom: IconChevronBottom,
+  chevronTop: IconChevronTop,
   close: IconClose /* io-close */,
   closeSmall: IconCloseSmall
 } as const;
