@@ -291,7 +291,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       sessionToken,
       walletToken,
       setDebugModeEnabled,
-      isIdPayTestEnabledSelector
+      isIdPayTestEnabled
     } = this.props;
     const deviceUniqueId = getDeviceId();
 
@@ -366,7 +366,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
         )}
         {this.developerListItem(
           I18n.t("profile.main.idpay.idpayTest"),
-          isIdPayTestEnabledSelector,
+          isIdPayTestEnabled,
           this.onIdPayTestToggle,
           I18n.t("profile.main.idpay.idpayTestAlert")
         )}
@@ -598,7 +598,7 @@ const mapStateToProps = (state: GlobalState) => ({
   isDebugModeEnabled: isDebugModeEnabledSelector(state),
   isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
   isPnTestEnabled: isPnTestEnabledSelector(state),
-  isIdPayTestEnabledSelector: isIdPayTestEnabledSelector(state)
+  isIdPayTestEnabled: isIdPayTestEnabledSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
