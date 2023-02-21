@@ -1,20 +1,24 @@
-import { pipe } from "fp-ts/lib/function";
+import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { Badge, ListItem } from "native-base";
 import { default as React, forwardRef, useImperativeHandle } from "react";
-import { Image, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import {
   InstrumentDTO,
   StatusEnum
 } from "../../../../../../definitions/idpay/wallet/InstrumentDTO";
+import { Icon } from "../../../../../components/core/icons";
+import LogoPayment, {
+  IOLogoPaymentType
+} from "../../../../../components/core/logos/LogoPayment";
+import { HSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import Switch from "../../../../../components/ui/Switch";
-import { Wallet } from "../../../../../types/pagopa";
+import { CreditCardType, Wallet } from "../../../../../types/pagopa";
 import { instrumentStatusLabels } from "../../../common/labels";
-import { HSpacer } from "../../../../../components/core/spacer/Spacer";
-import { Icon } from "../../../../../components/core/icons";
 
 export type InstrumentEnrollmentSwitchRef = {
   switchStatus: boolean;
@@ -56,18 +60,39 @@ const InstrumentEnrollmentSwitch = forwardRef<
     onSwitch(wallet.idWallet, !switchStatus);
   };
 
+  const cardLogos: {
+    [key in CreditCardType]: IOLogoPaymentType | undefined;
+  } = {
+    MASTERCARD: "mastercard",
+    VISA: "visa",
+    AMEX: "amex",
+    DINERS: "diners",
+    MAESTRO: "maestro",
+    VISAELECTRON: "visa",
+    POSTEPAY: "postepay",
+    UNIONPAY: "unionPay",
+    DISCOVER: "discover",
+    JCB: "jcb",
+    JCB15: "jcb",
+    UNKNOWN: undefined
+  };
+
   const getPaymentMethodInfo = (wallet: Wallet): O.Option<InstrumentInfo> => {
     switch (wallet.type) {
       case "CREDIT_CARD":
+        const logo =
+          cardLogos[
+            pipe(
+              CreditCardType.decode(wallet.creditCard?.brand?.toUpperCase()),
+              E.getOrElseW(() => "UNKNOWN" as const)
+            )
+          ];
         return O.some({
           logo:
-            wallet.creditCard?.brandLogo === undefined ? (
+            logo === undefined ? (
               <Icon name="creditCard" size={24} color={"bluegrey"} />
             ) : (
-              <Image
-                style={styles.imageSize}
-                source={{ uri: wallet.creditCard?.brandLogo }}
-              />
+              <LogoPayment name={logo} size={24} />
             ),
           maskedPan:
             wallet.creditCard?.pan === undefined
@@ -136,7 +161,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: IOColors.blue
   },
-  imageSize: { height: 16, width: 24 },
   logoAndPanContainer: {
     flexDirection: "row",
     alignItems: "center"
