@@ -48,7 +48,7 @@ const mapColorStates: Record<NonNullable<Props["color"]>, ColorStates> = {
   // Primary button
   primary: {
     default: IOColors.blue,
-    pressed: IOColors.blueUltraLight,
+    pressed: IOColors.blue600,
     label: {
       default: "white",
       disabled: "white"
@@ -66,7 +66,7 @@ const mapColorStates: Record<NonNullable<Props["color"]>, ColorStates> = {
   // Contrast button
   contrast: {
     default: IOColors.white,
-    pressed: IOColors.white,
+    pressed: IOColors.blue50,
     label: {
       default: "blue",
       disabled: "white"
