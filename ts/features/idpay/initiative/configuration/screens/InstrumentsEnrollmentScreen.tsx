@@ -2,8 +2,8 @@ import { RouteProp, useRoute } from "@react-navigation/native";
 import { useSelector } from "@xstate/react";
 import { List as NBList, Text as NBText } from "native-base";
 import React from "react";
-import { View, SafeAreaView, ScrollView } from "react-native";
-import { VSpacer } from "../../../../../components/core/spacer/Spacer";
+import { View, SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -30,6 +30,8 @@ import {
   selectorIDPayInstrumentsByIdWallet,
   selectorPagoPAIntruments
 } from "../xstate/selectors";
+import { IconNav } from "../../../../../components/core/icons";
+import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 
 type InstrumentsEnrollmentScreenRouteParams = {
   initiativeId?: string;
@@ -299,9 +301,19 @@ const InstrumentsEnrollmentScreen = () => {
                 ))}
               </NBList>
               <VSpacer />
-              <NBText>
-                {I18n.t("idpay.configuration.instruments.footer")}
-              </NBText>
+              {/*  TODO:: AdviceComponent goes here once implemented @dmnplb */}
+              <View style={styles.bottomSection}>
+                <IconNav name="wallet" color="bluegrey" />
+                <HSpacer size={8} />
+                <LabelSmall
+                  color="bluegrey"
+                  weight="Regular"
+                  style={IOStyles.flex} // required for correct wrapping
+                >
+                  {I18n.t("idpay.configuration.instruments.footer")}
+                </LabelSmall>
+              </View>
+              {/* TODO:: end AdviceComponent  */}
             </ScrollView>
           </View>
           <SafeAreaView>{renderFooterButtons()}</SafeAreaView>
@@ -311,6 +323,14 @@ const InstrumentsEnrollmentScreen = () => {
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  bottomSection: {
+    flexDirection: "row",
+    alignItems: "center"
+  }
+});
+
 export type { InstrumentsEnrollmentScreenRouteParams };
 
 export default InstrumentsEnrollmentScreen;
