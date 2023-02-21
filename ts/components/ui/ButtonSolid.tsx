@@ -56,8 +56,8 @@ const mapColorStates: Record<NonNullable<Props["color"]>, ColorStates> = {
   },
   // Danger button
   danger: {
-    default: IOColors.red,
-    pressed: IOColors.red,
+    default: IOColors.errorGraphic,
+    pressed: IOColors.errorDark,
     label: {
       default: "white",
       disabled: "white"
