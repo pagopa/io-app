@@ -140,9 +140,7 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
                     { paddingTop: customVariables.contentPadding }
                   ]}
                 >
-                  {/* <VSpacer size={44} /> */}
-                  <VSpacer size={40} />
-                  <VSpacer size={4} />
+                  <VSpacer size={48} />
 
                   {/* Ownership block rendering owner's fiscal code */}
                   <CgnOwnershipInformation />
