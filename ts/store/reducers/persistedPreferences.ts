@@ -38,7 +38,7 @@ export type PersistedPreferencesState = Readonly<{
   continueWithRootOrJailbreak?: boolean;
   isMixpanelEnabled: boolean | null;
   isPnTestEnabled: boolean;
-  isIdPayTestEnabled: boolean;
+  isIdPayTestEnabled?: boolean;
 }>;
 
 export const initialPreferencesState: PersistedPreferencesState = {
@@ -179,7 +179,7 @@ export const isPnTestEnabledSelector = (state: GlobalState) =>
   state.persistedPreferences.isPnTestEnabled;
 
 export const isIdPayTestEnabledSelector = (state: GlobalState) =>
-  state.persistedPreferences.isIdPayTestEnabled;
+  !!state.persistedPreferences?.isIdPayTestEnabled;
 
 // returns the preferred language as an Option from the persisted store
 export const preferredLanguageSelector = createSelector<

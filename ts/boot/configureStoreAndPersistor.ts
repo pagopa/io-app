@@ -307,20 +307,7 @@ const migrations: MigrationManifest = {
   "21": (state: PersistedState) => ({
     ...state,
     lollipop: initialLollipopState
-  }),
-  // Version 22
-  // added isIdPayTestEnabled
-  "22": (state: PersistedState) => {
-    const persistedPreferences = (state as PersistedGlobalState)
-      .persistedPreferences;
-    return {
-      ...state,
-      persistedPreferences: {
-        ...persistedPreferences,
-        isIdPayTestEnabled: false
-      }
-    };
-  }
+  })
 };
 
 const isDebuggingInChrome = isDevEnv && !!window.navigator.userAgent;
