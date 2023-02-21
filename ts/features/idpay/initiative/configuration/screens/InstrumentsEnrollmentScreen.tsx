@@ -2,12 +2,12 @@ import { RouteProp, useRoute } from "@react-navigation/native";
 import { useSelector } from "@xstate/react";
 import { List as NBList, Text as NBText } from "native-base";
 import React from "react";
-import { SafeAreaView, ScrollView, View } from "react-native";
-import AdviceComponent from "../../../../../components/AdviceComponent";
-import { VSpacer } from "../../../../../components/core/spacer/Spacer";
+import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
+import { IconNav } from "../../../../../components/core/icons";
+import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
+import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
@@ -239,13 +239,20 @@ const InstrumentsEnrollmentScreen = () => {
                   />
                 ))}
               </NBList>
-              <VSpacer />
-
-              <AdviceComponent
-                text={I18n.t("idpay.configuration.instruments.footer")}
-                iconName="io-portafoglio"
-                iconColor={IOColors.bluegrey}
-              />
+              <VSpacer size={16} />
+              {/*  TODO:: AdviceComponent goes here once implemented @dmnplb */}
+              <View style={styles.bottomSection}>
+                <IconNav name="wallet" color="bluegrey" />
+                <HSpacer size={8} />
+                <LabelSmall
+                  color="bluegrey"
+                  weight="Regular"
+                  style={IOStyles.flex} // required for correct wrapping
+                >
+                  {I18n.t("idpay.configuration.instruments.footer")}
+                </LabelSmall>
+              </View>
+              {/* TODO:: end AdviceComponent  */}
             </ScrollView>
           </View>
           <SafeAreaView>{renderFooterButtons()}</SafeAreaView>
@@ -255,6 +262,13 @@ const InstrumentsEnrollmentScreen = () => {
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  bottomSection: {
+    flexDirection: "row",
+    alignItems: "center"
+  }
+});
 
 export type { InstrumentsEnrollmentScreenRouteParams };
 
