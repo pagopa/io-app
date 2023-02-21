@@ -8,7 +8,10 @@ import { lollipopKeyTagSelector } from "../store/reducers/lollipop";
 import { LoginSourceAsync } from "../types/LollipopLoginSource";
 import { DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER } from "../utils/login";
 
-export const useLollipopLoginSource = (loginUri?: string) => {
+export const useLollipopLoginSource = (
+  loginUri?: string,
+  forceNewKey?: number
+) => {
   const [loginSource, setLoginSource] = useState<LoginSourceAsync>({
     kind: "initial"
   });
@@ -50,6 +53,7 @@ export const useLollipopLoginSource = (loginUri?: string) => {
      */
     taskRegenerateKey(lollipopKeyTag.value)
       .then(key => {
+        console.log("🔑 " + JSON.stringify(key));
         if (!key) {
           setDeprecatedLoginUri(loginUri);
           return;
@@ -72,7 +76,13 @@ export const useLollipopLoginSource = (loginUri?: string) => {
       .catch(_ => {
         setDeprecatedLoginUri(loginUri);
       });
-  }, [useLollipopLogin, lollipopKeyTag, loginUri, setDeprecatedLoginUri]);
+  }, [
+    useLollipopLogin,
+    lollipopKeyTag,
+    loginUri,
+    forceNewKey,
+    setDeprecatedLoginUri
+  ]);
 
   return loginSource;
 };

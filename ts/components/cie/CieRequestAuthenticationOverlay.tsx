@@ -19,6 +19,8 @@ import { publicKey } from "../../features/lollipop/types/LollipopLoginSource";
 import { lollipopSamlVerify } from "../../features/lollipop/utils/login";
 import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
 import I18n from "../../i18n";
+import { useIOSelector } from "../../store/hooks";
+import { isLollipopEnabledSelector } from "../../store/reducers/backendStatus";
 import { getAppVersion } from "../../utils/appVersion";
 import { getIdpLoginUri } from "../../utils/login";
 import { closeInjectedScript } from "../../utils/webview";
@@ -34,14 +36,6 @@ const defaultUserAgent = Platform.select({
   ios: iOSUserAgent,
   default: undefined
 });
-
-// We leave the custom user agent header only for the first call
-// to the backend API server, but we clear it for subsequent calls to
-// IdPs' webpages.
-// See: https://pagopa.atlassian.net/browse/IOAPPCIT-46
-const lollipopUserAgent = lollipopLoginEnabled
-  ? `IO-App/${getAppVersion()}`
-  : defaultUserAgent;
 
 // INFA PROD -> xx_servizicie
 // INFRA DEV -> xx_servizicie_test
@@ -102,19 +96,36 @@ const CieWebView = (props: Props) => {
   const webView = createRef<WebView>();
   const { onSuccess } = props;
 
-  const loginSource = useLollipopLoginSource(loginUri);
+  // Android CIE login flow is different from iOS.
+  // On Android to be sure to regenerate a new crypto key,
+  // we need to pass a new value to useLollipopLoginSource: loginUriRetry.
+  const [forceNewKey, setForceNewKey] = React.useState<number>(1);
+  const loginUriRetry = Platform.select({
+    ios: undefined,
+    android: forceNewKey
+  });
+  const loginSource = useLollipopLoginSource(loginUri, loginUriRetry);
   const [webviewSource, setWebviewSource] = React.useState<
     WebViewSource | undefined
   >(undefined);
   const [lollipopCheckStatus, setLollipopCheckStatus] =
     React.useState<LollipopCheckStatus>({ status: "none", url: O.none });
 
+  const isLollipopEnabled = useIOSelector(isLollipopEnabledSelector);
+  const useLollipopoUserAgent = isLollipopEnabled && lollipopLoginEnabled;
+  // We leave the custom user agent header only for the first call
+  // to the backend API server, but we clear it for subsequent calls to
+  // IdPs' webpages.
+  // See: https://pagopa.atlassian.net/browse/IOAPPCIT-46
+  const lollipopUserAgent = useLollipopoUserAgent
+    ? `IO-App/${getAppVersion()}`
+    : defaultUserAgent;
+
   const uriFromWebViewSource =
     webviewSource && "uri" in webviewSource ? webviewSource.uri : undefined;
-  const userAgentForWebView = () =>
-    uriFromWebViewSource?.includes(apiUrlPrefix)
-      ? lollipopUserAgent
-      : defaultUserAgent;
+  const userAgentForWebView = uriFromWebViewSource?.includes(apiUrlPrefix)
+    ? lollipopUserAgent
+    : defaultUserAgent;
 
   const verifyLollipop = React.useCallback(
     (eventUrl: string, urlEncodedSamlRequest: string, publicKey: PublicKey) => {
@@ -143,6 +154,7 @@ const CieWebView = (props: Props) => {
 
   const startLoginProcess = React.useCallback(() => {
     if (loginSource.kind === "ready") {
+      console.log("🚀 set web view source");
       setWebviewSource(loginSource.value);
     }
   }, [loginSource]);
@@ -167,6 +179,7 @@ const CieWebView = (props: Props) => {
     }
 
     const url = event.url;
+
     const parsedUrl = new URLParse(url, true);
     const urlQuery = parsedUrl.query;
     const urlEncodedSamlRequest = urlQuery?.SAMLRequest;
@@ -235,11 +248,13 @@ const CieWebView = (props: Props) => {
 
   const handleOnLoadEnd = (e: WebViewNavigationEvent | WebViewErrorEvent) => {
     if (e.nativeEvent.title === "Pagina web non disponibile") {
+      console.log("errore 1");
       handleOnError();
     }
     // On Android, if we attempt to access the idp URL twice,
     // we are presented with an error page titled "ERROR".
     if (e.nativeEvent.title === "ERRORE") {
+      console.log("errore 2");
       handleOnError();
     }
     // When attempting to log in with an incorrect user-agent on Lollipop,
@@ -250,10 +265,12 @@ const CieWebView = (props: Props) => {
     // so we handle the error accordingly. Once our minSdk is set to 23 or higher,
     // we can improve this code by using WebView.onHttpError().
     // TODO: Update this code to utilize WebView.onHttpError() when our minSdk is 23 or higher.
-    if (
-      e.nativeEvent.title === "" ||
-      e.nativeEvent.title === uriFromWebViewSource
-    ) {
+    const httpError500Condition = Platform.select({
+      ios: e.nativeEvent.title === "",
+      android: e.nativeEvent.title === uriFromWebViewSource
+    });
+    if (httpError500Condition) {
+      console.log("errore 3");
       handleOnError();
     }
     // inject JS on every page load end
@@ -267,7 +284,8 @@ const CieWebView = (props: Props) => {
       <ErrorComponent
         onRetry={() => {
           setLollipopCheckStatus({ status: "none", url: O.none });
-          startLoginProcess();
+          setWebviewSource(undefined);
+          setForceNewKey(forceNewKey + 1);
           dispatch({ kind: "retry" });
         }}
         onClose={props.onClose}
@@ -283,12 +301,16 @@ const CieWebView = (props: Props) => {
           androidCameraAccessDisabled={true}
           androidMicrophoneAccessDisabled={true}
           ref={webView}
-          userAgent={userAgentForWebView()}
+          userAgent={userAgentForWebView}
           javaScriptEnabled={true}
           injectedJavaScript={injectJs}
           onLoadEnd={handleOnLoadEnd}
           onError={handleOnError}
           onShouldStartLoadWithRequest={handleOnShouldStartLoadWithRequest}
+          onNavigationStateChange={e => {
+            console.log("✅ " + userAgentForWebView);
+            console.log("✅ " + JSON.stringify(e.url));
+          }}
           source={webviewSource}
           key={key}
         />
