@@ -42,12 +42,12 @@ export const IOColors = asIOColors({
   grey850: "#2B2E38",
   blackNew: "#0E0F13",
   blueNew: "#0B3EE3",
-  blueDark: "#031344",
-  blueLight: "#B6C5F7",
-  blue50: "#E7ECFC",
-  blue100: "#CED8F9",
-  blue200: "#9DB2F4",
-  blue600: "#0932B6",
+  blueNewDark: "#031344",
+  blueNewLight: "#B6C5F7",
+  blueNew50: "#E7ECFC",
+  blueNew100: "#CED8F9",
+  blueNew200: "#9DB2F4",
+  blueNew600: "#0932B6",
   turquoise: "#00C5CA",
   turquoiseDark: "#003B3D",
   turquoiseLight: "#AAEEEF",
@@ -71,6 +71,9 @@ export const IOColors = asIOColors({
   infoLight: "#E1F5FE",
   cobalt: "#2C489D" /* used in the `Bonus Vacanze` only */,
   blueItalia: "#0066CC" /* pagoPA service */,
+  /* Temporary */
+  blue600: "#0353A3",
+  blue50: "#EFF7FF",
   /* LEGACY */
   greyUltraLight: "#F5F6F7",
   greyLight: "#E6E9F2",
@@ -196,11 +199,12 @@ export type IOColorsNeutral = keyof typeof IOColorsNeutral;
 
 const {
   blueNew,
-  blueDark,
-  blueLight,
-  blue50,
-  blue100,
-  blue600,
+  blueNewDark,
+  blueNewLight,
+  blueNew50,
+  blueNew100,
+  blueNew200,
+  blueNew600,
   turquoise,
   turquoiseDark,
   turquoiseLight,
@@ -209,12 +213,13 @@ const {
 } = IOColors;
 
 export const IOColorsTints = {
-  blueDark,
-  blue600,
+  blueNewDark,
+  blueNew600,
   blueNew,
-  blueLight,
-  blue100,
-  blue50,
+  blueNew200,
+  blueNewLight,
+  blueNew100,
+  blueNew50,
   turquoiseDark,
   turquoise,
   turquoiseLight,
@@ -270,11 +275,13 @@ export type IOColorsStatusBackground = Extract<
   "errorLight" | "warningLight" | "infoLight" | "successLight"
 >;
 
-const { blueItalia } = IOColors;
+const { blueItalia, blue50, blue600 } = IOColors;
 
 export const IOColorsExtra = {
   cobalt,
-  blueItalia
+  blueItalia,
+  blue50,
+  blue600
 };
 export type IOColorsExtra = keyof typeof IOColorsExtra;
 
