@@ -3323,6 +3323,7 @@ idpay:
   wallet:
     preview:
       validThrough: "Valido fino al {{endDate}}"
+      showAll: Vedi tutte
     initiativePairing:
       navigation: Iniziative disponibili
       header: Scegli quali iniziative abilitare su questo metodo

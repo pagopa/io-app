@@ -27,7 +27,8 @@ import { idPayWalletInitiativeListSelector } from "../../../idpay/wallet/store/r
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
 import ROUTES from "../../../../navigation/routes";
-import ListItemComponent from "../../../../components/screens/ListItemComponent";
+import { Body } from "../../../../components/core/typography/Body";
+import { IDPayInitiativeListItem } from "../../../idpay/wallet/components/IDPayInitiativesListItem";
 
 type OwnProps = {
   paymentMethod: PaymentMethod;
@@ -103,32 +104,41 @@ const PaymentMethodInitiatives = (props: Props): React.ReactElement | null => {
     .filter(initiative => initiative.initiativeName !== undefined);
 
   const shouldRenderIdPay = isIdPayEnabled && namedInitiativesList.length > 0;
+  const mappedIdPayInitiatives = namedInitiativesList.map(item => (
+    <IDPayInitiativeListItem key={item.initiativeId} item={item} />
+  ));
+  const itemsArray = [
+    ...(shouldRenderIdPay ? mappedIdPayInitiatives : []),
+    ...capabilityItems
+  ];
+
   const navigateToPairableInitiativesList = () =>
     navigation.navigate(ROUTES.WALLET_IDPAY_INITIATIVE_LIST, {
-      initiatives: namedInitiativesList,
+      initiatives: itemsArray,
       idWallet: props.paymentMethod.idWallet
     });
-
-  return capabilityItems.length > 0 ? (
+  return itemsArray.length > 0 ? (
     <View style={props.style}>
       <View style={styles.row}>
-        <Initiative
-          width={20}
-          height={20}
-          stroke={IOColors.bluegreyDark}
-          style={styles.icon}
-        />
-        <HSpacer size={16} />
-        <H3 color={"bluegrey"}>{I18n.t("wallet.capability.title")}</H3>
-      </View>
-      {shouldRenderIdPay ? (
-        <ListItemComponent
-          title="IDPay"
-          subTitle="Configura iniziative"
+        <View style={styles.row}>
+          <Initiative
+            width={20}
+            height={20}
+            stroke={IOColors.bluegreyDark}
+            style={styles.icon}
+          />
+          <HSpacer size={16} />
+          <H3 color={"bluegrey"}>{I18n.t("wallet.capability.title")}</H3>
+        </View>
+        <Body
+          weight="SemiBold"
+          color="blue"
           onPress={navigateToPairableInitiativesList}
-        />
-      ) : null}
-      {capabilityItems}
+        >
+          {I18n.t("idpay.wallet.preview.showAll")}
+        </Body>
+      </View>
+      {itemsArray.slice(0, 3)}
     </View>
   ) : null;
 };

@@ -18,11 +18,8 @@ import { useIOSelector } from "../../../../store/hooks";
 import { creditCardByIdSelector } from "../../../../store/reducers/wallet/wallets";
 import { CreditCardPaymentMethod } from "../../../../types/pagopa";
 
-type ListItemProps = {
-  item: InitiativeDTO;
-};
 export type AvailableInitiativesListScreenNavigationParams = {
-  initiatives: Array<InitiativeDTO>;
+  initiatives: Array<React.ReactNode>;
   idWallet: number;
 };
 
@@ -45,22 +42,6 @@ const brandToLogoPaymentMap: Record<string, IOLogoPaymentType> = {
   JCB15: "jcb"
 };
 
-const InitiativeListItem = ({ item }: ListItemProps) => {
-  const [isActive, setIsActive] = React.useState(false);
-  const changeActiveState = () => setIsActive(_ => !_);
-  return (
-    <ListItemComponent
-      accessibilityRole="switch"
-      isLongPressEnabled={true}
-      onSwitchValueChanged={changeActiveState}
-      switchValue={isActive}
-      title={item.initiativeName ?? ""}
-      // the list is already filtered when passed to the screen,
-      // so realistically the name is never undefined
-    />
-  );
-};
-
 export const IdPayInitiativeListScreen = (props: Props) => {
   const { initiatives, idWallet } = props.route.params;
   const maybeCreditCard = useIOSelector(state =>
@@ -81,12 +62,7 @@ export const IdPayInitiativeListScreen = (props: Props) => {
         <VSpacer size={16} />
       </View>
       <ScrollView style={IOStyles.horizontalContentPadding}>
-        {initiatives.map(item => (
-          <React.Fragment key={item.initiativeId}>
-            <InitiativeListItem item={item} />
-            <VSpacer size={16} />
-          </React.Fragment>
-        ))}
+        {initiatives}
         <VSpacer size={24} />
       </ScrollView>
     </BaseScreenComponent>
