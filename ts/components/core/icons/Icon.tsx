@@ -100,6 +100,10 @@ import IconChevronRight from "./svg/IconChevronRight";
 import IconChevronTop from "./svg/IconChevronTop";
 import IconChevronBottom from "./svg/IconChevronBottom";
 import IconChevronLeft from "./svg/IconChevronLeft";
+import IconArrowBottom from "./svg/IconArrowBottom";
+import IconArrowLeft from "./svg/IconArrowLeft";
+import IconArrowTop from "./svg/IconArrowTop";
+import IconArrowRight from "./svg/IconArrowRight";
 
 export const IOIcons = {
   spid: IconSpid,
@@ -198,7 +202,11 @@ export const IOIcons = {
   chevronBottom: IconChevronBottom,
   chevronTop: IconChevronTop,
   close: IconClose /* io-close */,
-  closeSmall: IconCloseSmall
+  closeSmall: IconCloseSmall,
+  arrowBottom: IconArrowBottom,
+  arrowLeft: IconArrowLeft,
+  arrowTop: IconArrowTop,
+  arrowRight: IconArrowRight
 } as const;
 
 export type IOIconType = keyof typeof IOIcons;
@@ -266,11 +274,26 @@ export class IconClassComponent extends React.Component<IOAnimatedIconsProps> {
 /*
 VARIOUS SETS
 */
-const { success, errorFilled, warningFilled, infoFilled } = IOIcons;
+
+/* New icons */
+const {
+  success,
+  errorFilled,
+  warningFilled,
+  infoFilled,
+  arrowBottom,
+  arrowLeft,
+  arrowTop,
+  arrowRight
+} = IOIcons;
 
 export const IOIconsNew = {
   success,
   errorFilled,
   warningFilled,
-  infoFilled
+  infoFilled,
+  arrowBottom,
+  arrowLeft,
+  arrowTop,
+  arrowRight
 };
