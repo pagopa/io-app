@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 import { StateFrom } from "xstate";
 import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/onboarding/RequiredCriteriaDTO";
@@ -8,14 +8,26 @@ import { SelfDeclarationBoolDTO } from "../../../../../definitions/idpay/onboard
 import { SelfDeclarationDTO } from "../../../../../definitions/idpay/onboarding/SelfDeclarationDTO";
 import { SelfDeclarationMultiDTO } from "../../../../../definitions/idpay/onboarding/SelfDeclarationMultiDTO";
 import { LOADING_TAG, UPSERTING_TAG } from "../../../../utils/xstate";
+import { LOADING_TAG, UPSERTING_TAG } from "../../../../utils/xstate";
 import { Context, IDPayOnboardingMachineType } from "./machine";
 
 type StateWithContext = StateFrom<IDPayOnboardingMachineType>;
 
+const selectIsLoading = (state: StateWithContext) =>
+  state.tags.has(LOADING_TAG);
+
+const isUpsertingSelector = (state: StateWithContext) =>
+  state.hasTag(UPSERTING_TAG as never);
+
 const selectRequiredCriteria = (state: StateWithContext) =>
   state.context.requiredCriteria;
+
+const selectSelfDeclarationBoolAnswers = (state: StateWithContext) =>
+  state.context.selfDeclarationBoolAnswers;
+
 const selectMultiConsents = (state: StateWithContext) =>
   state.context.multiConsentsAnswers;
+
 const selectCurrentPage = (state: StateWithContext) =>
   state.context.multiConsentsPage;
 const selectTags = (state: StateWithContext) => state.tags;
@@ -113,8 +125,17 @@ const getBoolRequiredCriteriaFromContext = (context: Context) =>
     SelfDeclarationBoolDTO
   );
 
+const areAllSelfDeclarationsToggledSelector = createSelector(
+  boolRequiredCriteriaSelector,
+  selectSelfDeclarationBoolAnswers,
+  (boolSelfDeclarations, answers) =>
+    boolSelfDeclarations.length ===
+    Object.values(answers).filter(answer => answer).length
+);
+
 export {
   selectServiceId,
+  isUpsertingSelector,
   multiRequiredCriteriaSelector,
   boolRequiredCriteriaSelector,
   getMultiRequiredCriteriaFromContext,
@@ -125,5 +146,8 @@ export {
   isLoadingSelector,
   initiativeDescriptionSelector,
   isUpsertingSelector,
-  initiativeIDSelector
+  initiativeIDSelector,
+  selectIsLoading,
+  selectSelfDeclarationBoolAnswers,
+  areAllSelfDeclarationsToggledSelector
 };

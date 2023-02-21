@@ -52,8 +52,7 @@ const ErrorPaymentMethodsScreen: React.FunctionComponent<Props> = props => {
               color={IOColors.aqua as string}
               style={styles.center}
             />
-            <VSpacer size={24} />
-            <VSpacer size={24} />
+            <VSpacer size={48} />
             <H2 style={styles.center}>{title}</H2>
             <VSpacer size={40} />
             <Body style={styles.center}>{body}</Body>
