@@ -279,8 +279,18 @@ const CieWebView = (props: Props) => {
       <ErrorComponent
         onRetry={() => {
           setLollipopCheckStatus({ status: "none", url: O.none });
-          setWebviewSource(undefined);
-          setForceNewKey(forceNewKey + 1);
+          // The login flow behaves differently on Android and iOS.
+          // On iOS, we can start the login process by calling startLoginProcess().
+          // However, on Android, we need to set the webview source to
+          // undefined to avoid issues with the login flow.
+          // Additionally, to regenerate a new key, we need
+          // to increment our forceNewKey state.
+          if (Platform.OS === "android") {
+            setWebviewSource(undefined);
+            setForceNewKey(forceNewKey + 1);
+          } else {
+            startLoginProcess();
+          }
           dispatch({ kind: "retry" });
         }}
         onClose={props.onClose}
