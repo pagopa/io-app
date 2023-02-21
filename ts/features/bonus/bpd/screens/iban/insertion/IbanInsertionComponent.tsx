@@ -96,8 +96,7 @@ export const IbanInsertionComponent: React.FunctionComponent<Props> = props => {
                 style: IBANInputStyle
               }}
             />
-            <VSpacer size={24} />
-            <VSpacer size={8} />
+            <VSpacer size={32} />
             <Body>{body2}</Body>
           </View>
         </ScrollView>
