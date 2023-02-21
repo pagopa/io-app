@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useCallback } from "react";
-import { StyleSheet, Pressable, GestureResponderEvent } from "react-native";
+import { Pressable, GestureResponderEvent } from "react-native";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -13,8 +13,8 @@ import Animated, {
 } from "react-native-reanimated";
 import { hexToRgba, IOColors } from "../core/variables/IOColors";
 import { IOSpringValues, IOScaleValues } from "../core/variables/IOAnimations";
-import { IOButtonStyles } from "../core/variables/IOStyles";
-import { AnimatedIcon, IOAnimatedIconsProps, IOIconType } from "../core/icons";
+import { IOButtonStyles, IOIconButtonStyles } from "../core/variables/IOStyles";
+import { AnimatedIcon, IconClassComponent, IOIconType } from "../core/icons";
 import { WithTestID } from "../../types/WithTestID";
 
 export type IconButton = WithTestID<{
@@ -83,32 +83,8 @@ const mapColorStates: Record<NonNullable<IconButton["color"]>, ColorStates> = {
   }
 };
 
-const IOIconButtonStyles = StyleSheet.create({
-  button: {
-    alignItems: "center",
-    textAlignVertical: "center", // Android
-    justifyContent: "center",
-    // Reset default visual parameters
-    elevation: 0,
-    shadowOffset: { width: 0, height: 0 },
-    shadowRadius: 0,
-    shadowOpacity: 0
-  }
-});
-
-/* Make <Icon> component animatable. Reanimated supports class components only,
-so we need to convert <Icon> into a class component first.
-https://github.com/software-mansion/react-native-reanimated/discussions/1527  */
-class IconComponent extends React.Component<IOAnimatedIconsProps> {
-  constructor(props: IOAnimatedIconsProps) {
-    super(props);
-  }
-  render() {
-    return <AnimatedIcon {...this.props} />;
-  }
-}
 const AnimatedIconClassComponent =
-  Animated.createAnimatedComponent(IconComponent);
+  Animated.createAnimatedComponent(IconClassComponent);
 
 export const IconButton = ({
   icon,
@@ -190,7 +166,7 @@ export const IconButton = ({
       <Animated.View
         style={[
           IOIconButtonStyles.button,
-          IOButtonStyles.iconButtonSizeDefault,
+          IOIconButtonStyles.buttonSizeDefault,
           !disabled && pressedAnimationStyle
         ]}
       >

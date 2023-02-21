@@ -36,6 +36,7 @@ export const IOStyles = StyleSheet.create({
 */
 const btnSizeDefault = 40;
 const btnSizeSmall = 39;
+const btnSizeLarge = 56;
 
 export const IOButtonStyles = StyleSheet.create({
   /* BaseButton, used in the:
@@ -50,10 +51,7 @@ export const IOButtonStyles = StyleSheet.create({
     borderRadius: themeVariables.btnBorderRadius,
     paddingHorizontal: 16,
     // Reset default visual parameters
-    elevation: 0,
-    shadowOffset: { width: 0, height: 0 },
-    shadowRadius: 0,
-    shadowOpacity: 0
+    elevation: 0
     // Visual parameters based on the FontScale
     // paddingVertical: PixelRatio.getFontScale() * 10,
     // paddingHorizontal: PixelRatio.getFontScale() * 16,
@@ -78,11 +76,6 @@ export const IOButtonStyles = StyleSheet.create({
   buttonSizeSmall: {
     height: btnSizeSmall
   },
-  iconButtonSizeDefault: {
-    width: btnSizeDefault,
-    height: btnSizeDefault,
-    borderRadius: btnSizeDefault
-  },
   /* Widths */
   dimensionsDefault: {
     alignSelf: "flex-start"
@@ -90,5 +83,25 @@ export const IOButtonStyles = StyleSheet.create({
   dimensionsFullWidth: {
     flex: 1,
     alignSelf: "auto"
+  }
+});
+
+export const IOIconButtonStyles = StyleSheet.create({
+  /* IconButton */
+  button: {
+    alignItems: "center",
+    justifyContent: "center",
+    // Reset default visual parameters
+    elevation: 0
+  },
+  buttonSizeDefault: {
+    width: btnSizeDefault,
+    height: btnSizeDefault,
+    borderRadius: btnSizeDefault
+  },
+  buttonSizeLarge: {
+    width: btnSizeLarge,
+    height: btnSizeLarge,
+    borderRadius: btnSizeLarge
   }
 });

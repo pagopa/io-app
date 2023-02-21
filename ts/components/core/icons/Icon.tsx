@@ -230,16 +230,17 @@ export const Icon = ({
   );
 };
 
-export type IOAnimatedIconsProps = {
+/*
+Animated icon component. Use it when you need a color
+transition between different states.
+*/
+
+type IOAnimatedIconsProps = {
   name: IOIconType;
   color?: ColorValue;
   size?: number | "100%";
 };
 
-/*
-Animated icon component. Use it when you need a color
-transition between different states.
-*/
 export const AnimatedIcon = ({
   name,
   color = IOColors.bluegrey,
@@ -249,3 +250,15 @@ export const AnimatedIcon = ({
   const IconElement = IOIcons[name];
   return <IconElement {...props} style={{ color }} size={size} />;
 };
+
+/* Make <Icon> component animatable. Reanimated supports class components only,
+so we need to convert <Icon> into a class component first.
+https://github.com/software-mansion/react-native-reanimated/discussions/1527  */
+export class IconClassComponent extends React.Component<IOAnimatedIconsProps> {
+  constructor(props: IOAnimatedIconsProps) {
+    super(props);
+  }
+  render() {
+    return <AnimatedIcon {...this.props} />;
+  }
+}
