@@ -18,7 +18,8 @@ import {
   preferredCalendarSaveSuccess,
   preferredLanguageSaveSuccess,
   serviceAlertDisplayedOnceSuccess,
-  preferencesPnTestEnvironmentSetEnabled
+  preferencesPnTestEnvironmentSetEnabled,
+  preferencesIdPayTestSetEnabled
 } from "../actions/persistedPreferences";
 import { Action } from "../actions/types";
 import { differentProfileLoggedIn } from "../actions/crossSessions";
@@ -37,6 +38,7 @@ export type PersistedPreferencesState = Readonly<{
   continueWithRootOrJailbreak?: boolean;
   isMixpanelEnabled: boolean | null;
   isPnTestEnabled: boolean;
+  isIdPayTestEnabled: boolean;
 }>;
 
 export const initialPreferencesState: PersistedPreferencesState = {
@@ -49,7 +51,8 @@ export const initialPreferencesState: PersistedPreferencesState = {
   isCustomEmailChannelEnabled: pot.none,
   continueWithRootOrJailbreak: false,
   isMixpanelEnabled: null,
-  isPnTestEnabled: false
+  isPnTestEnabled: false,
+  isIdPayTestEnabled: false
 };
 
 export default function preferencesReducer(
@@ -137,6 +140,13 @@ export default function preferencesReducer(
     };
   }
 
+  if (isActionOf(preferencesIdPayTestSetEnabled, action)) {
+    return {
+      ...state,
+      isIdPayTestEnabled: action.payload.isIdPayTestEnabled
+    };
+  }
+
   return state;
 }
 
@@ -167,6 +177,9 @@ export const isMixpanelEnabled = (state: GlobalState): boolean | null =>
 
 export const isPnTestEnabledSelector = (state: GlobalState) =>
   state.persistedPreferences.isPnTestEnabled;
+
+export const isIdPayTestEnabledSelector = (state: GlobalState) =>
+  state.persistedPreferences.isIdPayTestEnabled;
 
 // returns the preferred language as an Option from the persisted store
 export const preferredLanguageSelector = createSelector<

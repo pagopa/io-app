@@ -30,6 +30,7 @@ import { sessionExpired } from "../../store/actions/authentication";
 import { setDebugModeEnabled } from "../../store/actions/debug";
 import { navigateToLogout } from "../../store/actions/navigation";
 import {
+  preferencesIdPayTestSetEnabled,
   preferencesPagoPaTestEnvironmentSetEnabled,
   preferencesPnTestEnvironmentSetEnabled
 } from "../../store/actions/persistedPreferences";
@@ -42,6 +43,7 @@ import {
 import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 import { notificationsInstallationSelector } from "../../store/reducers/notifications/installation";
 import {
+  isIdPayTestEnabledSelector,
   isPagoPATestEnabledSelector,
   isPnTestEnabledSelector
 } from "../../store/reducers/persistedPreferences";
@@ -238,6 +240,11 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     this.props.setPnTestEnabled(enabled);
   };
 
+  private onIdPayTestToggle = (enabled: boolean) => {
+    this.props.setIdPayTestEnabled(enabled);
+    this.showModal();
+  };
+
   private idResetTap?: number;
 
   // When tapped 5 times activate the debug mode of the application.
@@ -283,7 +290,8 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       notificationToken,
       sessionToken,
       walletToken,
-      setDebugModeEnabled
+      setDebugModeEnabled,
+      isIdPayTestEnabledSelector
     } = this.props;
     const deviceUniqueId = getDeviceId();
 
@@ -355,6 +363,12 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
           I18n.t("profile.main.debugMode"),
           isDebugModeEnabled,
           setDebugModeEnabled
+        )}
+        {this.developerListItem(
+          I18n.t("profile.main.idpay.idpayTest"),
+          isIdPayTestEnabledSelector,
+          this.onIdPayTestToggle,
+          I18n.t("profile.main.idpay.idpayTestAlert")
         )}
         {isDebugModeEnabled && (
           <React.Fragment>
@@ -583,7 +597,8 @@ const mapStateToProps = (state: GlobalState) => ({
   notificationToken: notificationsInstallationSelector(state).token,
   isDebugModeEnabled: isDebugModeEnabledSelector(state),
   isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
-  isPnTestEnabled: isPnTestEnabledSelector(state)
+  isPnTestEnabled: isPnTestEnabledSelector(state),
+  isIdPayTestEnabledSelector: isIdPayTestEnabledSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -597,7 +612,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     ),
   setPnTestEnabled: (isPnTestEnabled: boolean) =>
     dispatch(preferencesPnTestEnvironmentSetEnabled({ isPnTestEnabled })),
-  dispatchSessionExpired: () => dispatch(sessionExpired())
+  dispatchSessionExpired: () => dispatch(sessionExpired()),
+  setIdPayTestEnabled: (isIdPayTestEnabled: boolean) =>
+    dispatch(preferencesIdPayTestSetEnabled({ isIdPayTestEnabled }))
 });
 
 export default connect(
