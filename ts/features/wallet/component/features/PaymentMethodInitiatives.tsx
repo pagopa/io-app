@@ -103,12 +103,11 @@ const PaymentMethodInitiatives = (props: Props): React.ReactElement | null => {
     .getOrElse(initiativeListPot, [])
     .filter(initiative => initiative.initiativeName !== undefined);
 
-  const shouldRenderIdPay = isIdPayEnabled && namedInitiativesList.length > 0;
   const mappedIdPayInitiatives = namedInitiativesList.map(item => (
     <IDPayInitiativeListItem key={item.initiativeId} item={item} />
   ));
   const itemsArray = [
-    ...(shouldRenderIdPay ? mappedIdPayInitiatives : []),
+    ...(isIdPayEnabled ? mappedIdPayInitiatives : []),
     ...capabilityItems
   ];
 
