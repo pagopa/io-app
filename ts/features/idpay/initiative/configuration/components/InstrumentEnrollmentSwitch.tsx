@@ -153,7 +153,7 @@ const getPaymentMethodLogo = (wallet: Wallet): JSX.Element => {
         ];
 
       if (logo !== undefined) {
-        return <LogoPayment name={logo} size={25} />;
+        return <LogoPayment name={logo} size={24} />;
       }
   }
 
