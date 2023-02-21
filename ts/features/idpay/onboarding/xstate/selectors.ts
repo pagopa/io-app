@@ -8,16 +8,9 @@ import { SelfDeclarationBoolDTO } from "../../../../../definitions/idpay/onboard
 import { SelfDeclarationDTO } from "../../../../../definitions/idpay/onboarding/SelfDeclarationDTO";
 import { SelfDeclarationMultiDTO } from "../../../../../definitions/idpay/onboarding/SelfDeclarationMultiDTO";
 import { LOADING_TAG, UPSERTING_TAG } from "../../../../utils/xstate";
-import { LOADING_TAG, UPSERTING_TAG } from "../../../../utils/xstate";
 import { Context, IDPayOnboardingMachineType } from "./machine";
 
 type StateWithContext = StateFrom<IDPayOnboardingMachineType>;
-
-const selectIsLoading = (state: StateWithContext) =>
-  state.tags.has(LOADING_TAG);
-
-const isUpsertingSelector = (state: StateWithContext) =>
-  state.hasTag(UPSERTING_TAG as never);
 
 const selectRequiredCriteria = (state: StateWithContext) =>
   state.context.requiredCriteria;
@@ -145,9 +138,7 @@ export {
   prerequisiteAnswerIndexSelector,
   isLoadingSelector,
   initiativeDescriptionSelector,
-  isUpsertingSelector,
   initiativeIDSelector,
-  selectIsLoading,
   selectSelfDeclarationBoolAnswers,
   areAllSelfDeclarationsToggledSelector
 };
