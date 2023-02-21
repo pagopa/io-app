@@ -56,6 +56,7 @@ import IconCoggle from "./svg/IconCoggle";
 import IconCoggleAlt from "./svg/IconCoggleAlt";
 import IconWarning from "./svg/IconWarning";
 import IconInfo from "./svg/IconInfo";
+import IconInfoFilled from "./svg/IconInfoFilled";
 import IconNotice from "./svg/IconNotice";
 import IconError from "./svg/IconError";
 import IconReload from "./svg/IconReload";
@@ -98,6 +99,8 @@ import IconAttachment from "./svg/IconAttachment";
 import IconExternalLink from "./svg/IconExternalLink";
 import IconUnknownGdo from "./svg/IconUnknownGdo";
 import IconArrowCircleUp from "./svg/IconArrowCircleUp";
+import IconWarningFilled from "./svg/IconWarningFilled";
+import IconErrorFilled from "./svg/IconErrorFilled";
 
 export const IOIcons = {
   arrowCircleUp: IconArrowCircleUp,
@@ -158,9 +161,12 @@ export const IOIcons = {
   coggle: IconCoggle /* io-coggle */,
   coggleAlt: IconCoggleAlt /* io-preferenze */,
   warning: IconWarning /* io-warning */,
+  warningFilled: IconWarningFilled,
   notice: IconNotice /* io-notice */,
   info: IconInfo /* io-info */,
+  infoFilled: IconInfoFilled,
   error: IconError /* io-error */,
+  errorFilled: IconErrorFilled,
   reload: IconReload /* io-reload */,
   history: IconHistory,
   edit: IconEdit /* io-edit */,

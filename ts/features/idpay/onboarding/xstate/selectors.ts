@@ -7,18 +7,26 @@ import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/onboarding
 import { SelfDeclarationBoolDTO } from "../../../../../definitions/idpay/onboarding/SelfDeclarationBoolDTO";
 import { SelfDeclarationDTO } from "../../../../../definitions/idpay/onboarding/SelfDeclarationDTO";
 import { SelfDeclarationMultiDTO } from "../../../../../definitions/idpay/onboarding/SelfDeclarationMultiDTO";
-import { UPSERTING_TAG } from "../../../../utils/xstate";
+import { LOADING_TAG, UPSERTING_TAG } from "../../../../utils/xstate";
 import { Context, IDPayOnboardingMachineType } from "./machine";
 
 type StateWithContext = StateFrom<IDPayOnboardingMachineType>;
+
+const selectIsLoading = (state: StateWithContext) =>
+  state.tags.has(LOADING_TAG);
 
 const isUpsertingSelector = (state: StateWithContext) =>
   state.hasTag(UPSERTING_TAG as never);
 
 const selectRequiredCriteria = (state: StateWithContext) =>
   state.context.requiredCriteria;
+
+const selectSelfDeclarationBoolAnswers = (state: StateWithContext) =>
+  state.context.selfDeclarationBoolAnswers;
+
 const selectMultiConsents = (state: StateWithContext) =>
   state.context.multiConsentsAnswers;
+
 const selectCurrentPage = (state: StateWithContext) =>
   state.context.multiConsentsPage;
 
@@ -98,6 +106,14 @@ const getBoolRequiredCriteriaFromContext = (context: Context) =>
     SelfDeclarationBoolDTO
   );
 
+const areAllSelfDeclarationsToggledSelector = createSelector(
+  boolRequiredCriteriaSelector,
+  selectSelfDeclarationBoolAnswers,
+  (boolSelfDeclarations, answers) =>
+    boolSelfDeclarations.length ===
+    Object.values(answers).filter(answer => answer).length
+);
+
 export {
   selectServiceId,
   isUpsertingSelector,
@@ -107,5 +123,8 @@ export {
   getBoolRequiredCriteriaFromContext,
   criteriaToDisplaySelector,
   prerequisiteAnswerIndexSelector,
-  pdndCriteriaSelector
+  pdndCriteriaSelector,
+  selectIsLoading,
+  selectSelfDeclarationBoolAnswers,
+  areAllSelfDeclarationsToggledSelector
 };
