@@ -262,3 +262,15 @@ export class IconClassComponent extends React.Component<IOAnimatedIconsProps> {
     return <AnimatedIcon {...this.props} />;
   }
 }
+
+/*
+VARIOUS SETS
+*/
+const { success, errorFilled, warningFilled, infoFilled } = IOIcons;
+
+export const IOIconsNew = {
+  success,
+  errorFilled,
+  warningFilled,
+  infoFilled
+};
