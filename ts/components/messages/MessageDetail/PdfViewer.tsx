@@ -21,6 +21,16 @@ type Props = {
 const PdfViewer = ({ downloadPath, onError, onLoadComplete }: Props) => {
   const [isLoading, setIsLoading] = useState(true);
 
+  const handleLoadComplete = () => {
+    setIsLoading(false);
+    onLoadComplete?.();
+  };
+
+  const handleError = () => {
+    setIsLoading(false);
+    onError?.();
+  };
+
   return (
     <LoadingSpinnerOverlay
       isLoading={isLoading}
@@ -30,11 +40,8 @@ const PdfViewer = ({ downloadPath, onError, onLoadComplete }: Props) => {
       <Pdf
         source={{ uri: downloadPath, cache: true }}
         style={styles.pdf}
-        onLoadComplete={() => {
-          setIsLoading(false);
-          onLoadComplete?.();
-        }}
-        onError={onError}
+        onLoadComplete={handleLoadComplete}
+        onError={handleError}
       />
     </LoadingSpinnerOverlay>
   );
