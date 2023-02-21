@@ -29,6 +29,7 @@ import {
 import { watchSessionExpiredSaga } from "../startup/watchSessionExpiredSaga";
 import { watchProfileEmailValidationChangedSaga } from "../watchProfileEmailValidationChangedSaga";
 import { checkAppHistoryVersionSaga } from "../startup/appVersionHistorySaga";
+import { generateLollipopKeySaga } from "../../features/lollipop/saga";
 
 const aSessionToken = "a_session_token" as SessionToken;
 
@@ -71,6 +72,7 @@ describe("initializeApplicationSaga", () => {
       .next()
       .put(resetProfileState())
       .next()
+      .next(generateLollipopKeySaga)
       .select(sessionTokenSelector)
       .next(aSessionToken)
       .fork(watchSessionExpiredSaga)
@@ -104,6 +106,7 @@ describe("initializeApplicationSaga", () => {
       .next(pot.some(profile))
       .put(resetProfileState())
       .next()
+      .next(generateLollipopKeySaga)
       .select(sessionTokenSelector)
       .next(aSessionToken)
       .fork(watchSessionExpiredSaga)
@@ -134,6 +137,7 @@ describe("initializeApplicationSaga", () => {
       .next(pot.some(profile))
       .put(resetProfileState())
       .next()
+      .next(generateLollipopKeySaga)
       .select(sessionTokenSelector)
       .next(aSessionToken)
       .fork(watchSessionExpiredSaga)

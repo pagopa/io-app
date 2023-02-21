@@ -1,32 +1,56 @@
-import { useActor, useSelector } from "@xstate/react";
+import { useSelector } from "@xstate/react";
 import React from "react";
-import { View, SafeAreaView } from "react-native";
+import { SafeAreaView, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import { SelfDeclarationBoolDTO } from "../../../../../definitions/idpay/onboarding/SelfDeclarationBoolDTO";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
+import { Body } from "../../../../components/core/typography/Body";
 import { H1 } from "../../../../components/core/typography/H1";
+import { Link } from "../../../../components/core/typography/Link";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import ListItemComponent from "../../../../components/screens/ListItemComponent";
+import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
+import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useOnboardingMachineService } from "../xstate/provider";
-import { Body } from "../../../../components/core/typography/Body";
-import { Link } from "../../../../components/core/typography/Link";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import ListItemComponent from "../../../../components/screens/ListItemComponent";
-import { LOADING_TAG } from "../../../../utils/xstate";
-import { boolRequiredCriteriaSelector } from "../xstate/selectors";
-import { VSpacer } from "../../../../components/core/spacer/Spacer";
-import I18n from "../../../../i18n";
+import {
+  areAllSelfDeclarationsToggledSelector,
+  boolRequiredCriteriaSelector,
+  selectIsLoading,
+  selectSelfDeclarationBoolAnswers
+} from "../xstate/selectors";
 
 const InitiativeSelfDeclarationsScreen = () => {
   const machine = useOnboardingMachineService();
-  const [state, send] = useActor(machine);
 
-  const isLoading = state.tags.has(LOADING_TAG);
+  const isLoading = useSelector(machine, selectIsLoading);
 
   const selfCriteriaBool = useSelector(machine, boolRequiredCriteriaSelector);
+  const selfCriteriaBoolAnswers = useSelector(
+    machine,
+    selectSelfDeclarationBoolAnswers
+  );
+  const areAllSelfCriteriaBoolAccepted = useSelector(
+    machine,
+    areAllSelfDeclarationsToggledSelector
+  );
 
-  const continueOnPress = () => send({ type: "ACCEPT_REQUIRED_BOOL_CRITERIA" });
-  const goBackOnPress = () => send({ type: "GO_BACK" });
+  const continueOnPress = () =>
+    machine.send({ type: "ACCEPT_REQUIRED_BOOL_CRITERIA" });
+
+  const goBackOnPress = () => machine.send({ type: "GO_BACK" });
+
+  const toggleCriteria =
+    (criteria: SelfDeclarationBoolDTO) => (value: boolean) =>
+      machine.send({
+        type: "TOGGLE_BOOL_CRITERIA",
+        criteria: { ...criteria, value }
+      });
+
+  const getSelfCriteriaBoolAnswer = (criteria: SelfDeclarationBoolDTO) =>
+    selfCriteriaBoolAnswers[criteria.code] ?? false;
 
   return (
     <BaseScreenComponent
@@ -48,10 +72,13 @@ const InitiativeSelfDeclarationsScreen = () => {
                   <ListItemComponent
                     key={index}
                     title={criteria.description}
-                    switchValue={true}
+                    switchValue={getSelfCriteriaBoolAnswer(criteria)}
                     accessibilityRole={"switch"}
-                    accessibilityState={{ checked: false }}
+                    accessibilityState={{
+                      checked: getSelfCriteriaBoolAnswer(criteria)
+                    }}
                     isLongPressEnabled={true}
+                    onSwitchValueChanged={toggleCriteria(criteria)}
                   />
                   <VSpacer size={16} />
                 </View>
@@ -67,7 +94,8 @@ const InitiativeSelfDeclarationsScreen = () => {
             }}
             rightButton={{
               title: I18n.t("global.buttons.continue"),
-              onPress: continueOnPress
+              onPress: continueOnPress,
+              disabled: !areAllSelfCriteriaBoolAccepted
             }}
           />
         </SafeAreaView>
