@@ -35,13 +35,17 @@ import {
   loginFailure,
   loginSuccess
 } from "../../store/actions/authentication";
+import { useIOSelector } from "../../store/hooks";
 import { Dispatch } from "../../store/actions/types";
 import {
   isLoggedIn,
   isLoggedOutWithIdp,
   selectedIdentityProviderSelector
 } from "../../store/reducers/authentication";
-import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
+import {
+  assistanceToolConfigSelector,
+  isLollipopEnabledSelector
+} from "../../store/reducers/backendStatus";
 import { idpContextualHelpDataFromIdSelector } from "../../store/reducers/content";
 import { GlobalState } from "../../store/reducers/types";
 import { SessionToken } from "../../types/SessionToken";
@@ -116,14 +120,6 @@ const styles = StyleSheet.create({
   webViewWrapper: { flex: 1 }
 });
 
-// We leave the custom user agent header only for the first call
-// to the backend API server, but we clear it for subsequent calls to
-// IdPs' webpages.
-// See: https://pagopa.atlassian.net/browse/IOAPPCIT-46
-const lollipopUserAgent = lollipopLoginEnabled
-  ? `IO-App/${getAppVersion()}`
-  : undefined;
-
 /**
  * A screen that allows the user to login with an IDP.
  * The IDP page is opened in a WebView
@@ -144,6 +140,16 @@ const IdpLoginScreen = (props: Props) => {
   const idpId = props.loggedOutWithIdpAuth?.idp.id;
   const loginUri = idpId ? getIdpLoginUri(idpId) : undefined;
   const loginSource = useLollipopLoginSource(loginUri);
+
+  // We leave the custom user agent header only for the first call
+  // to the backend API server, but we clear it for subsequent calls to
+  // IdPs' webpages.
+  // See: https://pagopa.atlassian.net/browse/IOAPPCIT-46
+  const isLollipopEnabled = useIOSelector(isLollipopEnabledSelector);
+  const useLollipopoUserAgent = isLollipopEnabled && lollipopLoginEnabled;
+  const lollipopUserAgent = useLollipopoUserAgent
+    ? `IO-App/${getAppVersion()}`
+    : undefined;
 
   const uriFromWebViewSource =
     webviewSource && "uri" in webviewSource ? webviewSource.uri : undefined;
