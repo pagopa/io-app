@@ -120,9 +120,7 @@ const FiscalCodeLandscapeOverlay: React.FunctionComponent<Props> = (
           municipality={props.municipality}
         />
 
-        {/* <VSpacer size={48} /> */}
-        <VSpacer size={24} />
-        <VSpacer size={24} />
+        <VSpacer size={48} />
       </ScrollView>
     </Container>
   );

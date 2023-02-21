@@ -283,12 +283,7 @@ const MessageDetailsComponent = ({
       </NBContent>
 
       <>
-        {DeviceInfo.hasNotch() && (
-          <React.Fragment>
-            <VSpacer size={24} />
-            <VSpacer size={8} />
-          </React.Fragment>
-        )}
+        {DeviceInfo.hasNotch() && <VSpacer size={32} />}
 
         <CtaBar
           isPaid={hasPaidBadge}
