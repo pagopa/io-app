@@ -16,10 +16,10 @@ type OwnProps = {
   downloadPath: string;
 };
 
-type Props = OwnProps &
-  Omit<React.ComponentProps<typeof Pdf>, "source" | "style">;
+type Props = OwnProps & Omit<React.ComponentProps<typeof Pdf>, "source">;
 
 const PdfViewer = ({
+  style,
   downloadPath,
   onError,
   onLoadComplete,
@@ -36,7 +36,7 @@ const PdfViewer = ({
       <Pdf
         {...rest}
         source={{ uri: downloadPath, cache: true }}
-        style={styles.pdf}
+        style={[styles.pdf, style]}
         onLoadComplete={(...args) => {
           setIsLoading(false);
           onLoadComplete?.(...args);
