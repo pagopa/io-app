@@ -1,5 +1,5 @@
 import { Text as NBText } from "native-base";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Alert } from "react-native";
 import * as React from "react";
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { ButtonExtendedOutline } from "../../../components/ui/ButtonExtendedOutline";
@@ -32,6 +32,10 @@ const styles = StyleSheet.create({
   }
 });
 
+const onButtonPress = () => {
+  Alert.alert("Alert", "Action triggered");
+};
+
 export const DSButtons = () => (
   <DesignSystemScreen title={"Buttons"}>
     {/* The title should be dynamic, got from the route object */}
@@ -47,9 +51,7 @@ export const DSButtons = () => (
         <ButtonSolid
           accessibilityLabel="Tap to trigger test alert"
           label={"Primary button"}
-          onPress={() => {
-            alert("Action triggered");
-          }}
+          onPress={onButtonPress}
         />
       </View>
       <VSpacer size={16} />
@@ -58,9 +60,7 @@ export const DSButtons = () => (
           small
           label={"Primary Button (Small)"}
           accessibilityLabel="Tap to trigger test alert"
-          onPress={() => {
-            alert("Action triggered");
-          }}
+          onPress={onButtonPress}
         />
       </View>
     </DSComponentViewerBox>
@@ -70,9 +70,7 @@ export const DSButtons = () => (
           fullWidth
           accessibilityLabel="Tap to trigger test alert"
           label={"Primary button (Full Width)"}
-          onPress={() => {
-            alert("Action triggered");
-          }}
+          onPress={onButtonPress}
         />
       </View>
       <VSpacer size={16} />
@@ -82,9 +80,7 @@ export const DSButtons = () => (
           fullWidth
           accessibilityLabel="Tap to trigger test alert"
           label={"Primary Button (Small, Full Width)"}
-          onPress={() => {
-            alert("Action triggered");
-          }}
+          onPress={onButtonPress}
         />
       </View>
     </DSComponentViewerBox>
@@ -94,9 +90,7 @@ export const DSButtons = () => (
           disabled
           accessibilityLabel="Tap to trigger test alert"
           label={"Primary button (disabled)"}
-          onPress={() => {
-            alert("Action triggered");
-          }}
+          onPress={onButtonPress}
         />
       </View>
       <VSpacer size={16} />
@@ -107,9 +101,7 @@ export const DSButtons = () => (
           fullWidth
           accessibilityLabel="Tap to trigger test alert"
           label={"Primary Button (small, full, disabled)"}
-          onPress={() => {
-            alert("Action triggered");
-          }}
+          onPress={onButtonPress}
         />
       </View>
     </DSComponentViewerBox>
@@ -119,9 +111,7 @@ export const DSButtons = () => (
         <ButtonSolid
           color="danger"
           label={"Danger button"}
-          onPress={() => {
-            alert("Action triggered");
-          }}
+          onPress={onButtonPress}
           accessibilityLabel="Tap to trigger test alert"
         />
       </View>
@@ -132,9 +122,7 @@ export const DSButtons = () => (
           color="danger"
           accessibilityLabel="Tap to trigger test alert"
           label={"Danger Button (Small)"}
-          onPress={() => {
-            alert("Action triggered");
-          }}
+          onPress={onButtonPress}
         />
       </View>
     </DSComponentViewerBox>
@@ -145,9 +133,7 @@ export const DSButtons = () => (
           color="danger"
           accessibilityLabel="Tap to trigger test alert"
           label={"Primary button (Full Width)"}
-          onPress={() => {
-            alert("Action triggered");
-          }}
+          onPress={onButtonPress}
         />
       </View>
       <VSpacer size={16} />
@@ -158,9 +144,7 @@ export const DSButtons = () => (
           color="danger"
           accessibilityLabel="Tap to trigger test alert"
           label={"Primary Button (Small, Full Width)"}
-          onPress={() => {
-            alert("Action triggered");
-          }}
+          onPress={onButtonPress}
         />
       </View>
     </DSComponentViewerBox>
@@ -172,9 +156,7 @@ export const DSButtons = () => (
           disabled
           accessibilityLabel="Tap to trigger test alert"
           label={"Danger button (disabled)"}
-          onPress={() => {
-            alert("Action triggered");
-          }}
+          onPress={onButtonPress}
         />
       </View>
       <VSpacer size={16} />
@@ -186,9 +168,7 @@ export const DSButtons = () => (
           fullWidth
           accessibilityLabel="Tap to trigger test alert"
           label={"Danger Button (small, full, disabled)"}
-          onPress={() => {
-            alert("Action triggered");
-          }}
+          onPress={onButtonPress}
         />
       </View>
     </DSComponentViewerBox>
@@ -202,9 +182,7 @@ export const DSButtons = () => (
           <ButtonSolid
             color="contrast"
             label={"Contrast button"}
-            onPress={() => {
-              alert("Action triggered");
-            }}
+            onPress={onButtonPress}
             accessibilityLabel="Tap to trigger test alert"
           />
         </View>
@@ -215,9 +193,7 @@ export const DSButtons = () => (
             color="contrast"
             accessibilityLabel="Tap to trigger test alert"
             label={"Contrast button (Small)"}
-            onPress={() => {
-              alert("Action triggered");
-            }}
+            onPress={onButtonPress}
           />
         </View>
       </DSComponentViewerBox>
@@ -231,9 +207,7 @@ export const DSButtons = () => (
             fullWidth
             color="contrast"
             label={"Contrast button"}
-            onPress={() => {
-              alert("Action triggered");
-            }}
+            onPress={onButtonPress}
             accessibilityLabel="Tap to trigger test alert"
           />
         </View>
@@ -245,9 +219,7 @@ export const DSButtons = () => (
             color="contrast"
             accessibilityLabel="Tap to trigger test alert"
             label={"Contrast button (Small)"}
-            onPress={() => {
-              alert("Action triggered");
-            }}
+            onPress={onButtonPress}
           />
         </View>
       </DSComponentViewerBox>
@@ -262,9 +234,7 @@ export const DSButtons = () => (
             disabled
             color="contrast"
             label={"Contrast button, disabled"}
-            onPress={() => {
-              alert("Action triggered");
-            }}
+            onPress={onButtonPress}
             accessibilityLabel="Tap to trigger test alert"
           />
         </View>
@@ -277,9 +247,7 @@ export const DSButtons = () => (
             color="contrast"
             accessibilityLabel="Tap to trigger test alert"
             label={"Contrast button (small, full, disabled)"}
-            onPress={() => {
-              alert("Action triggered");
-            }}
+            onPress={onButtonPress}
           />
         </View>
       </DSComponentViewerBox>
@@ -533,9 +501,7 @@ export const DSButtons = () => (
           <ButtonOutline
             color="contrast"
             label={"Contrast button"}
-            onPress={() => {
-              alert("Action triggered");
-            }}
+            onPress={onButtonPress}
             accessibilityLabel="Tap to trigger test alert"
           />
         </View>
@@ -546,9 +512,7 @@ export const DSButtons = () => (
             color="contrast"
             accessibilityLabel="Tap to trigger test alert"
             label={"Contrast button (Small)"}
-            onPress={() => {
-              alert("Action triggered");
-            }}
+            onPress={onButtonPress}
           />
         </View>
       </DSComponentViewerBox>
@@ -562,9 +526,7 @@ export const DSButtons = () => (
             fullWidth
             color="contrast"
             label={"Contrast button"}
-            onPress={() => {
-              alert("Action triggered");
-            }}
+            onPress={onButtonPress}
             accessibilityLabel="Tap to trigger test alert"
           />
         </View>
@@ -576,9 +538,7 @@ export const DSButtons = () => (
             color="contrast"
             accessibilityLabel="Tap to trigger test alert"
             label={"Contrast button (Small)"}
-            onPress={() => {
-              alert("Action triggered");
-            }}
+            onPress={onButtonPress}
           />
         </View>
       </DSComponentViewerBox>
@@ -593,9 +553,7 @@ export const DSButtons = () => (
             disabled
             color="contrast"
             label={"Contrast button, disabled"}
-            onPress={() => {
-              alert("Action triggered");
-            }}
+            onPress={onButtonPress}
             accessibilityLabel="Tap to trigger test alert"
           />
         </View>
@@ -608,9 +566,7 @@ export const DSButtons = () => (
             color="contrast"
             accessibilityLabel="Tap to trigger test alert"
             label={"Contrast button (small, full, disabled)"}
-            onPress={() => {
-              alert("Action triggered");
-            }}
+            onPress={onButtonPress}
           />
         </View>
       </DSComponentViewerBox>
@@ -684,9 +640,7 @@ export const DSButtons = () => (
             color="contrast"
             accessibilityLabel="Tap to trigger test alert"
             icon="help"
-            onPress={() => {
-              alert("Action triggered");
-            }}
+            onPress={onButtonPress}
           />
 
           <HSpacer size={16} />
@@ -696,9 +650,7 @@ export const DSButtons = () => (
             accessibilityLabel="Tap to trigger test alert"
             icon="help"
             disabled
-            onPress={() => {
-              alert("Action triggered");
-            }}
+            onPress={onButtonPress}
           />
         </View>
       </DSComponentViewerBox>
@@ -750,9 +702,7 @@ export const DSButtons = () => (
             color="contrast"
             accessibilityLabel="Tap to trigger test alert"
             icon="arrowBottom"
-            onPress={() => {
-              alert("Action triggered");
-            }}
+            onPress={onButtonPress}
           />
 
           <HSpacer size={16} />
@@ -762,9 +712,7 @@ export const DSButtons = () => (
             accessibilityLabel="Tap to trigger test alert"
             icon="arrowBottom"
             disabled
-            onPress={() => {
-              alert("Action triggered");
-            }}
+            onPress={onButtonPress}
           />
         </View>
       </DSComponentViewerBox>
