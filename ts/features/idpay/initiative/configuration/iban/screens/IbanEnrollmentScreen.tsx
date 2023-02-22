@@ -95,7 +95,6 @@ const IbanEnrollmentScreen = () => {
           leftButton={{
             title: I18n.t("idpay.configuration.iban.button.addNew"),
             disabled: isUpsertingIban,
-            isLoading: isUpsertingIban,
             onPress: handleAddNewIbanPress,
             testID: "addIbanButtonTestID"
           }}
