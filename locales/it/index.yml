@@ -3231,7 +3231,7 @@ features:
           subTitle: Vai allo store del tuo dispositivo e verifica di avere installato l’ultima versione di IO.
         rejected:
           title: La firma non è andata a buon fine
-          subTitle: L’ente mittente ti contatterà nei prossimi giorni per farti firmare di nuovo. Se ciò non dovesse succedere, scrivi a {{email}}.
+          subTitle: L’ente mittente ti contatterà nei prossimi giorni per farti firmare di nuovo. Se ciò non dovesse succedere, scrivi a
         signing:
           title: La firma non è andata a buon fine
           subTitle: A causa di un problema tecnico, la firma non è andata a buon fine. Se il problema si ripete contatta l’assistenza.

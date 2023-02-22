@@ -25,6 +25,7 @@ const SuccessComponent = (props: {
   const now = new Date();
   const expires_at = new Date(props.signatureRequest.expires_at);
   const updated_at = new Date(props.signatureRequest.updated_at);
+  const issuer_email = props.signatureRequest.issuer.email;
   const status = props.signatureRequest.status;
   const dispatch = useIODispatch();
 
@@ -86,6 +87,7 @@ const SuccessComponent = (props: {
         <GenericErrorComponent
           title={I18n.t("features.fci.errors.generic.rejected.title")}
           subTitle={I18n.t("features.fci.errors.generic.rejected.subTitle")}
+          email={issuer_email}
           onPress={() => dispatch(fciEndRequest())}
           testID="RejectedSignatureRequestTestID"
         />

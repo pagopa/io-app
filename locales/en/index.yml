@@ -3207,7 +3207,7 @@ features:
           subTitle: Go to your device store and check that you have the latest version of IO installed.
         rejected:
           title: The signing failed
-          subTitle: The sender will contact you in the next few days to get you to re-sign. If this doesn't happen, write to {{email}}.    
+          subTitle: The sender will contact you in the next few days to get you to re-sign. If this doesn't happen, write to    
         signing:
           title: The signing failed
           subTitle: Due to a technical problem, the signing was not successful. If the problem persists, contact support.   
