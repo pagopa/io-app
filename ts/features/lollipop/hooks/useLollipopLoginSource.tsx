@@ -84,7 +84,8 @@ export const useLollipopLoginSource = (
       TE.mapLeft(error => {
         trackLollipopIdpLoginFailure(error.message);
         setDeprecatedLoginUri(loginUri);
-      });
+      })
+    )();
   }, [
     useLollipopLogin,
     lollipopKeyTag,
