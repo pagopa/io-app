@@ -803,20 +803,23 @@ const createIDPayInitiativeConfigurationMachine = () =>
           failure: undefined
         })),
         updateInstrumentToEnrollStatus: assign((context, _) => {
-          if (context.instrumentToEnroll !== undefined) {
-            const currentStatus =
-              context.instrumentStatuses[context.instrumentToEnroll.idWallet];
-
-            return {
-              instrumentStatuses: {
-                ...context.instrumentStatuses,
-                [context.instrumentToEnroll.idWallet]:
-                  p.toLoading(currentStatus)
-              },
-              failure: undefined
-            };
+          if (context.instrumentToEnroll === undefined) {
+            return {};
           }
-          return {};
+          const currentStatus =
+            context.instrumentStatuses[context.instrumentToEnroll.idWallet];
+
+          if (currentStatus === undefined) {
+            return {};
+          }
+
+          return {
+            instrumentStatuses: {
+              ...context.instrumentStatuses,
+              [context.instrumentToEnroll.idWallet]: p.toLoading(currentStatus)
+            },
+            failure: undefined
+          };
         }),
         instrumentEnrollSuccess: assign((_, event) => ({
           initiativeInstruments: event.data,
@@ -824,19 +827,24 @@ const createIDPayInitiativeConfigurationMachine = () =>
           failure: undefined
         })),
         instrumentEnrollFailure: assign(context => {
-          if (context.instrumentToEnroll !== undefined) {
-            const prevStatus =
-              context.instrumentStatuses[context.instrumentToEnroll.idWallet];
-
-            return {
-              instrumentStatuses: {
-                ...context.instrumentStatuses,
-                [context.instrumentToEnroll.idWallet]: p.some(prevStatus)
-              },
-              instrumentToEnroll: undefined
-            };
+          if (context.instrumentToEnroll === undefined) {
+            return {};
           }
-          return {};
+
+          const prevStatus =
+            context.instrumentStatuses[context.instrumentToEnroll.idWallet];
+
+          if (prevStatus === undefined) {
+            return {};
+          }
+
+          return {
+            instrumentStatuses: {
+              ...context.instrumentStatuses,
+              [context.instrumentToEnroll.idWallet]: p.some(prevStatus)
+            },
+            instrumentToEnroll: undefined
+          };
         }),
         selectInstrumentToDelete: assign((_, event) => ({
           instrumentToDelete: event.instrument,
