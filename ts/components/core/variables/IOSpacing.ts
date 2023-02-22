@@ -1,7 +1,7 @@
 /*
-Generic spacing scale.
+SPACING SCALE
 Every margin/padding used by different components 
-should use a value defined in the following array.
+should use a value defined in the following scale.
 */
 
 export const IOSpacingScale = [
@@ -10,16 +10,18 @@ export const IOSpacingScale = [
 
 type IOSpacingScale = typeof IOSpacingScale[number];
 
-/*
-Values used in the new `<Spacer>` component
-*/
-export type IOSpacer = Extract<IOSpacingScale, 4 | 8 | 16 | 24 | 40>;
-export const IOSpacer: ReadonlyArray<IOSpacer> = [4, 8, 16, 24, 40] as const;
+// Values used in the new `<Spacer>` component
+export type IOSpacer = Extract<IOSpacingScale, 4 | 8 | 16 | 24 | 32 | 40 | 48>;
+export const IOSpacer: ReadonlyArray<IOSpacer> = [
+  4, 8, 16, 24, 32, 40, 48
+] as const;
 
-/*
-Margin values used in the new `<ContentWrapper>` component
-*/
+// Margin values used in the new `<ContentWrapper>` component
 export type IOContentWrapper = Extract<IOSpacingScale, 8 | 24 | 32>;
 export const IOContentWrapper: ReadonlyArray<IOContentWrapper> = [
   8, 24, 32
 ] as const;
+
+// Values used in the `<Alert>` component
+export type IOAlertSpacing = Extract<IOSpacingScale, 16 | 24>;
+export const IOAlertSpacing: ReadonlyArray<IOAlertSpacing> = [16, 24] as const;
