@@ -46,8 +46,9 @@ type Services = {
   };
 };
 
+/** PLEASE DO NO USE AUTO-LAYOUT WHEN USING VISUAL EDITOR */
 const createIDPayInitiativeConfigurationMachine = () =>
-  /** @xstate-layout N4IgpgJg5mDOIC5QCUDyqAqBiAigVQEkMBtABgF1FQAHAe1gEsAXB2gOypAA9EBWXgIwAWAHQAmIQN4A2ABwB2XkOkBOeQBoQAT0SKVI0vOnSAzLJVjesoRYC+tzWkwiA6gEEiBAHIBxAPoAyhhuyNhBIRh+AMKoXgBiBD54yG4YBLFklEggdIws7Jw8CGIKvCJSvEZq0rwqQpo6xeYGKq3y8qQmAtLd3faO6BgiADKobgAi3v7enqkEAGoAolgQ7GAiDGwAbrQA1usANrQAhhAEbMwMxyxbYJmcuZcF2UVWHSKyAmryrbKqQvVtIgBLIxCIbL8VAJSLJ+CYZP0QE4hqMJlM-DM0nMllgwAAnPG0PEiagHa4AMyJAFsREdTudLtcGLd7tlHvkOC8+ApSB8vu1fv9AY0TKRRNZWipYSZLEIfkJEciRIt5m5hng5r4MV5ZmkltFYgkkik0rEsKyaPQnpzQEUavITCJBIJjHUBCZpMLEGJoQYjCYobwuiYQ3JFYNlar1ZrpjqsXrFgb4olknMzcQBFlLXlWDbuMDDA1gVDpCIPfIvkohGZVOHnCq1Rq0lrMQRsYmYsnjWmvOaxFmclaOYVvQGwTZuq1OmYVCYiwgBAJ5KJDDVOtIOvJpXWhg3o83Y7qFh3DSmTele8QTAP2bmRwh7Y7nd1-u7PfOAfI-cZFypavIxGXHcREmAIAAVhjcABNdFvAwNAsC8RYAA0SAoB4hzvLkEEqEwvxDJRLCkUxPl4ecBDECwnSMQQKyDawamAzsjWSWCACE3F7VY2HWWAmGudYlWYs92M4i1BxzZ5bT4QRRAkYjSmUNR5zw6ReWhGFQQ9VoeiY09jVEri1hEPiBJEIT9NYlsOK8DMb0wqT8xwsQ1JEZcpFIVRRVUMigQXSQwRlT0VDkKxBEAvSuys6YbJGMZJmszi-GGAgghWYzNh2fZaROM4ACNjjYYYGD48Tb0cooulaFoZS+P8hEMDQ-IkZQPnhCRrHMfhIpY5BDLitFEq8ZLUuwfFCWJUkKWpHL6QKoqSqYMqHLzV5eFIfR5JkRTVCakVLFLZRYXWjpDEMHqRKGgaEpipKUrS8aiRJMkmEpPEaTpfLCuK0rMwwyTVpk4RxEkbbFCUvbvVML8YRkKsHVnMMHCRCNhIMq69ybQyRrS5aAfvD1RRB7pzGXBQjHnCQjBENRYRhAixBai70durxI0bGMMRsnHsDs-7rQJ0xeXkuQ1CEcnpEpkM5JKGQ1DwqFzuRiyor6q7QIg6DsdiNixmQG7EJQtD7Px7DJDwst4St6tYXMKWhDBXhZahMR4SMWRmeirnOJA1LNZgoa-B1vWDY4qIAGk8YF7D+GBra5HB3byNIFPqJqKUCJBL5PbV1nffAyCA9ZoOvF1kJQ7cCO+bZFb71juTQYTpQk+aqxSzCnzPOUMUFWV1HLNz722Y1wvtdLkP0TiVBkAAWSwYTZ6HqPhzN91ZDc6EayDSoZEpytqP4LcpTlawc-6ketcD4Py8n6e57DyP0Jr03pIQOULYkOpjDFM6xEpkphZ-k8lKYQdQlYDGcGjL2BBYoXyLkPEuZd9a31nlgB+1dszR1fubfCVsgw2ysCof+VFSAlFBE7WQPIjBnyugvGehl0o8Q2NsPY6wADG7ByQMHegQeay8sLYPdLg7eJgCF2z8lIAMZYXIO1qC5WQojpA0LznQhhj1JovTejSDhbAuE8L4U-TBK9BEWwItbMwhDKaGDKJOMwIItwblhMooe+d-bY3utgdBhiJJYKcvXYmYNm7KQkaQQQ35D7LiELJEwziYE+zge40aaDK6Rz+s-Xxa046Nx2sExolgPQGFhA6OGTsAKxNgX7UegcPGGxcAg6+yDfD8IqogcWoS3IOlIZQ2QoTIbFBDLyH4TtGZyBqFE3g5T4mVMvsXGpiwvBoGGMMJe3jyqAzfuYAQ5Q5QWDqHKKwf8JF1EdKQkKjMjDQi3AISZbN5mLJSkNRh6xMqsJEGANghIDgHF4YVZp6z35fk-soNSDUOiHLyZ0fQ4sXKKDUoBSiHs+6QIHv1O5qAlkMO4s8lh2V3mfO+XwtJRiBFOQBSDL+ILf7kRqOvSopg-wqE8hWBQNzlQLPRQ81muICRPSmq9GaeLaBfJ+WwP594yVAu-qC0he9agfG6QBDolD4SxK8EEZAeAZ7zIwAEJ5Jl+JMEEv3VWsE1XwU1dqgIYrsKuyohOVQjKQzmDnH5AMYS6Z-AdKCEKnlVXqotV4HVerTKGvMsa3qpr-VasDVaolPjjFOVteOEsU4nWzhUhckQalDB-kJmpeQfrzXRp1ddSNRbLXBoNUa5FJqWxmo1cWgIpa61Rstda1+i4gwg0ZinLclFagCEph0fQrQlxZysCnMQhaG2WubbGVtMbK1mRVhGlt5aY1zu1AunVGD40kqKJ2x0Ege2GG9QOymxhk1LiuVKV2vcIFDCgYPbw26m2ohulu9dQasX6uXeGy686v1vvimWmdMbiD9n5gmooSbwQpsdTOF1Ioen6A0hYBQsJPQFqRY+lFa6wMlvfaBgNJb3BLMWJEF9QG516pedlT6LhjhfLAEwc4fE8QAFcqTvKYLAdtfjPLghnA1To0SQwqUsLyZ01gSYBlnNOkjwHBqAYI02sjwwKOftUzR9Rz1prvVmhARjzHWNsHY1xnjfHVm1xtWOODk4EPOpUgGdencNwBg3OtGJOGRBPuI42zdVHtPqc00FxTOmeUaP0x9XKxmDgsbY0wTj3G2C8d3Ws+8sH7WpsQ5TWo+gwqqR+LDYwCmAtEfw+F1s7YtPhYqz4WjOLDi5QZCwJktxEvJcs-xooNgj3VhqK7H0DVKKU2sGUTylhGbKCDLpHzfnKvlZA4t2d1WEy1aW8p7lE09P8oM59VrVwbhgE6xZ1LVmTYZNHHa+D04nPNR6aWFyQZRHKslGV2d9WNurbjG2dbYXNsG103yrRhnDvtZO2ZpLZ20txoy7Zm7Dm7vpuajs8oPwlwhWsIoa5828MqfCwklbi60VLO+4GnrwJntuXtG3cwXk8vGAMBYro5hqzQnvSjGtq6CcBaJ7zit4xFgaYwImAH2rKcLhhTTyoFYahqQZ81MUWzPU+ikCCKsiKH2+fx+Tkt-O9e6omOMPwYFoLFr8FqjAAAJVA4xJfq-Xg6asPxBsWCsP-LcBgnaCE8m6kKH2N0G-F4urxl3oPXavQ65HSHEAKH0KCQbIJWgKxUIH-X0z4Eh6DeguHNnX5Zdu2m2PxQHaueK-I90whsPa4WwLoPmf-MVqQqhB3CiygyhTnYmwLkUd5IBLyWc8lPKqB6a7dPTbg-1sU1gAI4cCBgTb-CaRXfPg98V3k0RogdndAG28FlePa315LaTzlevGtZXWIK4VUOuupYd5I7tYhe1nqhFLJ26PZykHdCFRcQFD886G5sr3JN6Brba8qaICofJCrfK34w4P5drHrP6nr9pv6o5RJZoyjSxbigihIT4gTC4UagHYA-p0brAQBgDxaGqnYpZLTWYvxOSHpP4v6oGDrNRrwr5nSkwWDVj4FC4i7EHgFRZ7Y0gUFUGQ7ma0EIH9Ynp9oMpsF5KuxbLtBdBiiUQpwUTAQG5Po9iBB4BRBRCLABC6oxAzwQQUYniqw9iS7+Lxw5J9JmCGBZrf7f6VAWAaFaGN5ag6GmjDQBD6GGHGFYDG6m7m7aqW4Ua27270FXYIAehWBCaqD0oUSfAOFyCOjCCfAv7Kpa5c64ZWG+F+BeCYBFGLCLBC7jDzyoBmEi6WG9TWExER79KI7R7F4qSShljrQ9LO7wpp6IhsC0AUHwDZDIhQb7qIAAC0dQbkMgoiJQv+rs4mfkf4BgKcpCZgEoA2fR2u7gngWo4QoQYxLSxQxgogOBhCxEy4dQKkFEac0gz+J8UIUgnOSoX2a2x4Rx6y-ALkWaJ8sIU2VsY2+gq4Mg4sscJQlgwEmMnM7x+oPhF4nx94PQUoNMlEPo8ifWfSDx4INELkG0Kei4nhBcMy2o8EqAiJMcPIfI3wgoeyF6XwbkoSHoMIFEjKNeeROuR+Q8FJBeRS5Qh8u06cXo-k7qMiHonwoIKGrKbx3MHiPJiajKNiAp1QtQwplgCgToZgA+rhygrK0JB4CCcp6STRIYKJWxu0FEEgoilMR0fIIIoI6JfurKwe3MDSN08plUPSvIPQxgmyb474zUoo68tMnoygrsNKzpXhxcbpKCM8HprSeEZQ-wOOAEyg1Yvkih0xeE7eIUUSG01CABAGLiqiQ08ZcRoIyhZyPQtEig8IVizQ9xsoIIW+S4EyhZLMLiLpd0o0ZZvuYIFEoSS4qgwgwgNpz+bUMgyuFEeEfQ7Z0CsUp+hkZZAIlQZY1Ynk0I8sW4ViDU8quEQ5u+3mteuucSbMp5SY9RhRph5hou4wvZG0ZQzKXwvaG4y41KFYmB9xeyois4dQE+ZZExrUsKcx9O05SxjQlYog5YPo3kUS7oLx-6HZ2eSmH6yFZZWyVp9om8CgxgdE9JYInQmyFif4JE+Bbx0+AWIWlGFFlqZZ9xQmbO4sB5SqwpqhWy4skorsfwA6CF3ORZyFgWNFG6VFQB9W6FvoNseyqRPQSqEmUiPeLkwgPQoovqc5z6QlhGy2x+amaoIuol8UehBhRhAQZZ7QKu1ZPwvwIYHoNxlCNM5gf4FypC3+ZFWlQBsJYuGlJlxp4xb8m0e+FYhFRgG4Q6rU9EFgFihFAIrlym7lv2NWAlYlPlxxagIM8RgVZgwVWJCiK4wm02LktYalxBKFxVIgHl+lEwhlgR3lxKxxZlHwFlkoCioYlMs4MM9KXmt63kfBUZhu6Fs2HwjK9xP82kJersPwTovScs6ZXwvF+RgBAli5xOGApls4g11gUSRSeyCho4Do4gPSnUPw8IPcfBhBBp2epl1g4gWOwUDU60ygViPQNMoUKZG1U6RVy1TayFBoNRFhd5yV6yyB68R0oMLskmY1eEUFqZKl6R+aRJbi3hA8uh-hRlxhZZHoPoNUShZlXw7oGaV12aPqJMPoBZx5BRF4RRJRSE5R5R6F64zhjKFK4sRgDh1QnRnkSgUoVyOcuh15tR-1tVXxVJnwNJUoQo7Rco4gKc-xagjNPNV5owAQtNANdcwt-IllfwdJyxKJFg9KvS41jEaluhcQHg6oyAiwvZatotmtAIKkHF4ITFJQak7olQvc9gQAA */
+  /** @xstate-layout N4IgpgJg5mDOIC5QCUDyqAqBiAigVQEkMBtABgF1FQAHAe1gEsAXB2gOypAA9EBWXgIy8AdAHYALPwCc4qaSlSBAZgA0IAJ6JRvKcNKiAbKPkGDADgNKlBgL421aTMIDqAQSIEAcgHEA+gGUMV2RsQOCMXwBhVE8AMQJvPGRXDAIYskokEDpGFnZOHgQAJjNDYVNSAXEDIqV+USK1TWKzXXkFXlEhUiLSAyq7B3QMYQAZVFcAES8-Lw8UggA1AFEsCHYwYQY2ADdaAGtNgBtaAEMIAjZmBlOWHbAMzhzr-KzC3lKi4SVapVkFJTaJqIARmL68UiQqS8IrGGRFKSDECOEbjKYzXxzVILFZYMAAJ3xtHxwmoR1uADNiQBbYQnc6Xa63Bj3R5ZZ55DhvPifb6-f5SQG8YEIJSkcTCMwCwSAqSfJEo4TLRauUZ4BY+TGeeapFZRGLxRLJVIxLBsmj0F5c0CFAydESVCy8ao6CxSEVFASkPSGZ28O2iVoGUhmBXDJUqtUa2ba7G65b6uIJJILU3EASZC25VjW7gg-QigRyESlXh-KSiaFyu1hpzK1Xq1KarEEHEJ6JJo2pzxmoqZ7KWzkFRC1QXCBTBj6g4xVAyFgQSH2WST8cziIpFWsjetRpsxnVLdsG5PGtI94hKfscnPDhABh2gu0u6vujSIcTiURLmqGSxFAziFKW7CNM-gAAqjK4ACaGJeBgaBYJ4ywABokBQTyDje3IIJ0ShmJKSgyH0oLiICqhvggAgIuChh4XaOgwpYwEdoaSSwQAQq4PbrGwmywEwtybIqLEnhxXHmgO2avDafCCCIEjSLI7TKCKgLBsIXr6JIsignhzHHkaYncRswj8YJwjCQZbHNpxnjplemHSXmOH-l8RSSF64ghtYliFuIVF8gBPxynI1iiPpnbWbMtljBM0w2VxvijAQgRrCZ2x7IcdJnBcABGpxsKMDD8RJ15OYUPyQsIOi0ZCzrmCpFHudUBEwr6C5eUx9jIuGImGQlnixeiA1JSl2AEkSJJkpSNLZQy+WFcVTClY5ubvII3oKToSkKI1zQ-P6wjVGYZj6DIEJyJu3WWZFyBGUN8XRYlyWpRNxKkuSTBUvitL0nlBVFSVGYYVJa2yUIYgrjIci7eRzT-oCehmB87Q-P5iLXb1Vl3QNEYNtGmK2aNqUraDt7WEoAiQzV-nmPojRNZ+BjjoG-COpT4WY04fVRYTXF47uRnE9g9kg1a5OWFTCkVrTp0NB6VgShuUqfvofysxFrE409g2gRB0FCzE7ETMgj2IShaEOWT2H+XhBFSOYgaAaCZgK+u1UlNUG7mDoAia6JuN65BMEjUbJtm5xkQANKk+L2H8BDW3Q8pcP5lVnR2pUa7+nK-v9TrIEpfrIc674YfBBHrjR6L7KrbeCfyVDO2KKnxQfMzHydAuauEUBXMjDz2t87rRfB4bnjGxXGKxKgyAALJYCJ8-D7HQ421U3qeoB-nt1R4gekWIj2gYcqnTIAi2P3wiD-dQcG6HE-h9Ps8L5HMfobX1syQgn529o1gVn4HUT0HoSib2hHhB2gFvZ515gQGKd8S7DzLo-KemoZ7zywG-GuWY47f1tvhMwhFHZSjMC7UBUgvg9CISfLy0JjCXyGNzbG90l5zyMmlXiWxdgHE2AAY3YBSBgP0CALVXlhfByhCHENKKQ8hFEhCEUCpTMUXkqiVlgUPeB-M2EcLelNT631aQCLYEIkRYiP64LXpIu2RCHayOdidD0+gRAX0FJCIQp1SyaNvqPe+pcXrYGwZYySeDnIN2pttGGLdCykEEEuBEgI6p9B8YHPxSDtGeGFlgquMdgafzCetROTdol7RHGWZmIZ-TuS3oCUQnMmEDxYWk8CY8RqBPNs4ZB5dTYzHEeVd8cthCwlED8ZGYpAzIwVmKMQ0JoEQgaNURhPVmG3V8a0-xyCOnLE8GgUYowV4hLKmDH+rQvh2lqFKHoXQ8KFhkEoPQCIajyB6MFXgqSC47L2clAanDNgZV4cIMAbAiRHCOKIgq-STm-3wv-E+2gywwgEM4pR8zKF-FXEQj5w8lS7NQPsjhPF-k8KysC0F4KxH5KsRI5yMKxAVMAYikBCi7T4QznUTuC4JBXUadfZpny8UEt+foj6M0fpApBbQMFEK2BQtvHSuFjLgHIqakIXQJ1WjRPMA7ZZN0tawU8IEZAeA547IwP4P5pkBJMCEljNZzZDXwRNWa-wcrsKjgeROOJZDSiVGqKpaEVNkbyEBFKf8phsVeCNc6zw5rLVmRtRZO1+qHXRtNbG11VLQnWOch68cDtvXTj9XOCiakqbBi0ooeQDQL6Rsdca9N5qHoGrTS6+N1rbWrJTTGVtGbm2pqdY211Ry67YQEIo4Z64ijOmgRIMEHo4T5s9BuAtsh3lXxvgOhtLr+09sHW2olVrzJ6oDnu7dfa0SPS1L281ODs00sKOOssk6NwzrBHOhm8NTBfFkL0MigIaniDrTe-wu7r37oze249ybT3gfPU2y9LaIO3r7GLHNhQ81eqnL62cqkz4aUhEQ3+CIJDAeQ6BxDW6Y0IbihiNw+zlgRCjeR3dlqAVZT+s4U4YKwBMEuPxfEABXakwKmCwDdd-YMzND51C8V6UwqlehfloUQhxRYMa8s3We6jFHaNUaHWB+joxGNwZ06xkV00vqzU49xo4vH+NMCEyJtgYmJO5sIp6gt2GZz+tLb3coMhVNO3U2R+DunhraYM5RvwRmTPMbC+Zwk71LNGLmhALjPG+NsAE8J0T4ms3HNvJhrzPqfMlvhjoXQnc-gbinTLULZnoumai3p-ccZDzNZ3dFtjJLjg5UZCwZk9wHNOby2594Y5ISQkrP6D8oJP0jlOm5dcIY-UnRPg1lrEXOsXta1qA8ep4uNda3iJLBixW-X61cQbdwwAjdyy58TI6v7ubHFh0rxaPSnWZv+eok4pQNJWU0+1kWut7aO1tq9LY2w7ZoxF07k1RVWfFX9AbNxbv3ec65gro7v7Ff+0W3DjNKwaUDPcnQJgNNA75SD2HoHEFIbC1gMI3gEwQ7NeNkE0gfTrhhOt-0pRQHaDEFUWEYvJbik2zuhn+m21fPxQc9nsbOeUV+2IO0J8tJCGna7JqwZdCSEpsWRQNMpd9pl6DyDkxljGYwGz+t1GVdUQAuUeQbNDAnQrCiqmQo2r0wRGCM3TaLd06wFMSYvgwLQUbb4U1GAAASqBJhO5hJvPCfwPOfgdgfEn-5NLikInKQHJ78508LhsjJDuh05Ors9wpI4PP5oJzh3zzRSjqvDXEowFQeXU602XkPSu43YJxy9jDjf3uE9byOdc+EjAnQWUb2QSgg-0-SYznT5tUJO5oZKGpCgpSdGMLr+GH4vwKCnaOB2DRV-l+Lhv6v-go4EDAjv6we-1wH8kPUkMCt4nOjd0qGUD+AsFv3lyFUt2wEPXY02DJSlXBWy0cwe2Wjr3QxBAnRqWnQ-HfWgQVnMHKDoWhm0C9AdjAMFR+UgIR2S0MVmjgOlUQNGxcydwwKnTfVhFwMZhqD0HhArWnVMCAw3X5QHxt0YwfzNR60yk2AgDADsxtUx1E2YOfUwLYI-QPlhD3zIQrCMHcjLFv2t1tzENjSoPO2R1pGkNkLuwYOQMUIeWUOwPYPnSag3CphKFnDFzFBDGAhD0Hm7ACDwEiEiGWH8AtWiDnggkYyPFum7BVwiSTmbjKVFCGQrSIXHW6DkAEN5W8Oxl8P8H8MCOCLD0mAjyjyghjzj0T2T1QIfUQGsB0HHH8gRE-GRh0lUnMAeSqDIVIHT0-GdF7xLxTBNCyU8EwF8CQmWGt0mEXlQDCNt0iK1miKqIGWKAnxKyn3KxqIUF0DqC9FqGfBIjsG6jYFoGkPgCyBRDQ2qJwhFBkHzU2LuLuIyOpzcA8E1DCBCAuKWPDR+3cQ-FMErASMphoifHMEsGRkDF1XDCa2h3jA+JOX4BKA0jklGUECnSBCalaCXCUl0m70-GAh3EbANQOzmJPG7FhNvGeW9FIgD14KdmcQlCZjLHkA8galDCvkH1jTQDJPjl5B+EVk2KFA9H6F0AYTqkAnFDiUjVsi5Lx2Rjn2DDcI5XlgUQ8j3xqC5RPl6HXU0yEMyTA0yWFmlNzTkGZgqAVPqAWzblKGqjwlIkP3fS6MlP5nxIJn1MCUNIqkL3qOUHHXMCIUqGFE4MIXHQsDzw5msEdJHgr3Hknl6R8HdJqKWw0l6FKDqB8nOgVhDBZlU1kH4Jv0ENp11MHyJh6SvQwTnnjJ-jqQ0gUDiUUEAi6DtAoQlFDTBAWW1wrAjJp3iHniMgrLwlqG+DqlhAhCI33iahDF0BqFHEsAkD6El3zO7RxSLOejGgrI2geRqCZn0G0CrQDNP16FanNKIUYk7PAIoOHgrI-A+ElB6JuX12nTpO9HW2oUDTFD0gXNg11P1J8MGP1BmIiMmDXOrWGVfQviqScRZS6HKGsGnU6EPzqlXzXNbiLFIklG0FIlBEqA5RXw-NLyH3CyhyrxdQrK9BVQqxPmGRdhVm2L9lwrgSIt2223wsM1VFtzpxIq4MPlhGRgvgAkDAtMpnkFJ1BEEBnAUmLxgzwoYrh0IpAxYoYyY2koIpmArM9G9C4tZl4qaIEqLBNJuUkBKAuRSToq0SUr1LMqa1i0UrksvT8ICKCP8ArIsGbLqAdmnXURq0UwRPXFF0fAhC6m1ILIsvB2CqYtjFbHjHYoKTQMolkAXS6JFxhjFH4KEFvyhNCsIqJLL2ixIq9yan+MotlNMEECLDSpCpspCqyuYtstyPsuCKcpdysB0BqBRNGXXC+w3HHBBL-BIysD0PX1lwzRIphAeTarm1plInFAVnqQ0iMD9EqARnDJMsMKbTPJWorMrAeVaB4qLC6LBAvgViIRfS6D6FaHbj0JEL3Fhw2qlGGQdjmQ-Adm2LpIlC0Jmw3i6NhFv3wr-PCLt0AuisuN6CEorBKA3B6EoUUDIobzISOhq3U2DF2IkqcCyKiN-NqvyMcsBqWJgvBBlnRV6AAgEqdld23I-HLHkE0V8OGIiDGImJIq6K-GsD3gsFGW7nWNFC0O+Auj+LBMBCpt-NCL+vGLXJ5P5H5LRP2hkC-GBrkChGDHqQFrPCiHGH8BFuxrhLFr5IBElsQAP3HDz2MCsD6D4qVpiF8FiHcDVGQGWFFoaD5G1sFF1tFEAgN0AlqM9GXE5jsCAA */
   createMachine(
     {
       context: INITIAL_CONTEXT,
@@ -61,20 +62,35 @@ const createIDPayInitiativeConfigurationMachine = () =>
       predictableActionArguments: true,
       initial: "WAITING_START",
       on: {
+        /**
+         * Global event which closes the configuration
+         */
         QUIT: {
           target: "#ROOT.CONFIGURATION_CLOSED"
         }
       },
       states: {
+        /**
+         * In this state the machine is waiting for the start of the configuration
+         */
         WAITING_START: {
           tags: [LOADING_TAG],
           on: {
+            /**
+             * Event which starts the configuration setting the initiative and configuration mode to the context
+             */
             START_CONFIGURATION: {
               target: "LOADING_INITIATIVE",
               actions: "startConfiguration"
             }
           }
         },
+
+        /**
+         * In this state the machine is fetching the initiative details.
+         * If success the received data is set to the context.
+         * If error the machine sets the failure in the context and transits to the failure state
+         */
         LOADING_INITIATIVE: {
           tags: [LOADING_TAG],
           invoke: {
@@ -90,39 +106,71 @@ const createIDPayInitiativeConfigurationMachine = () =>
             }
           }
         },
+
+        /**
+         * Evaluation state. Based on the received data in the previous state, the machines decides which
+         * state to go next.
+         */
         EVALUATING_INITIATIVE_CONFIGURATION: {
           tags: [LOADING_TAG],
           always: [
             {
+              /**
+               * Configuration in "INSTRUMENTS" mode
+               */
               cond: "isInstrumentsOnlyMode",
               target: "CONFIGURING_INSTRUMENTS"
             },
             {
+              /**
+               * Configuration in "IBAN" mode
+               */
               cond: "isIbanOnlyMode",
               target: "CONFIGURING_IBAN"
             },
             {
+              /**
+               * Configuration in "COMPLETE" mode, no iban or instruments already configured
+               */
               cond: "isInitiativeConfigurationNeeded",
               target: "DISPLAYING_INTRO"
             },
             {
+              /**
+               * Configuration not needed (instruments and/or iban already configured)
+               */
               target: "CONFIGURATION_NOT_NEEDED"
             }
           ]
         },
+
+        /**
+         * Configuration intro where we show what the user needs to configure the initiaitve
+         */
         DISPLAYING_INTRO: {
           tags: [WAITING_USER_INPUT_TAG],
           entry: "navigateToConfigurationIntro",
           on: {
+            /**
+             * Generic event to go to the next state
+             */
             NEXT: {
               target: "CONFIGURING_IBAN"
             }
           }
         },
+        /**
+         * Iban configuration states.
+         * As soon as the machines enteres in this state, the "LOADING_IBAN_LIST" state is started
+         */
         CONFIGURING_IBAN: {
           id: "IBAN",
           initial: "LOADING_IBAN_LIST",
           states: {
+            /**
+             * In this state we are fetching the iban list of the user.
+             * If success, the `loadIbanListSuccess` actions sets the received data to the context
+             */
             LOADING_IBAN_LIST: {
               tags: [LOADING_TAG],
               invoke: {
@@ -134,66 +182,123 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 },
                 onError: [
                   {
+                    /**
+                     * If configuration mode is "IBAN", the machine should set the received failure to the
+                     * context and go to the failure state
+                     */
                     cond: "isIbanOnlyMode",
                     target: "#ROOT.CONFIGURATION_FAILURE",
                     actions: "setFailure"
                   },
                   {
+                    /**
+                     * If configuration mode is "COMPLETE", the machine should set the received failure to the
+                     * context and go to the previous state
+                     */
                     target: "#ROOT.DISPLAYING_INTRO",
                     actions: ["setFailure", "showFailureToast"]
                   }
                 ]
               }
             },
+
+            /**
+             * In this state we are checking if the user has available ibans.
+             */
             EVALUATING_IBAN_LIST: {
               tags: [LOADING_TAG],
               always: [
                 {
+                  /**
+                   * If at least one iban is present, next state should be the iban selection state.
+                   */
                   target: "DISPLAYING_IBAN_LIST",
                   cond: "hasIbanList"
                 },
                 {
+                  /**
+                   * If no iban is present, next state should be the iban onboarding.
+                   */
                   target: "DISPLAYING_IBAN_ONBOARDING"
                 }
               ]
             },
+
+            /**
+             * In this state we are showing to the user why there is a need of an IBAN
+             */
             DISPLAYING_IBAN_ONBOARDING: {
               tags: [WAITING_USER_INPUT_TAG],
               entry: "navigateToIbanLandingScreen",
               on: {
+                /**
+                 * Generic next event to go to the next state
+                 */
                 NEXT: {
                   target: "DISPLAYING_IBAN_ONBOARDING_FORM"
                 },
+                /**
+                 * Generic back event
+                 */
                 BACK: [
                   {
+                    /**
+                     * If configuration mode is "IBAN", the machine should go the the final state
+                     */
                     cond: "isIbanOnlyMode",
                     target: "#ROOT.CONFIGURATION_CLOSED"
                   },
                   {
+                    /**
+                     * If configuration mode is "COMPLEYTE", the machine should go back to the previous state
+                     */
                     target: "#ROOT.DISPLAYING_INTRO"
                   }
                 ]
               }
             },
+
+            /**
+             * In this state we are showing the IBAN onboarding form
+             */
             DISPLAYING_IBAN_ONBOARDING_FORM: {
               tags: [WAITING_USER_INPUT_TAG],
               entry: "navigateToIbanOnboardingScreen",
               on: {
+                /**
+                 * This event sets the created iban to the context wiht the `confirmIbanOnboarding` actions
+                 * and then goes to the `CONFIRMING_IBAN` state
+                 */
                 CONFIRM_IBAN: {
                   target: "CONFIRMING_IBAN",
                   actions: "confirmIbanOnboarding"
                 },
+                /**
+                 * Generic back event
+                 */
                 BACK: [
                   {
+                    /**
+                     * If the user has at least one IBAN, the machine goes to the display state
+                     */
                     cond: "hasIbanList",
                     target: "DISPLAYING_IBAN_LIST"
                   },
                   {
+                    /**
+                     * If the user does not have an IBABN, the machine goes to the previous state
+                     */
                     target: "DISPLAYING_IBAN_ONBOARDING"
                   }
                 ]
               }
             },
+
+            /**
+             * In this state the machine is sending the IBAN to be created.
+             * If success, the machine goes to the final state.
+             * If error, the machine returns to the form and shows a failure
+             */
             CONFIRMING_IBAN: {
               tags: [LOADING_TAG],
               invoke: {
@@ -208,28 +313,54 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 }
               }
             },
+
+            /**
+             * In this state the machine shows the IBAN list to the user.
+             * On entry, it navigates to the IBAN list screen
+             */
             DISPLAYING_IBAN_LIST: {
               tags: [WAITING_USER_INPUT_TAG],
               entry: "navigateToIbanEnrollmentScreen",
               on: {
+                /**
+                 * Generic back event
+                 */
                 BACK: [
                   {
+                    /**
+                     * If the configuration mode is "IBAN", the configuration should be closed
+                     */
                     cond: "isIbanOnlyMode",
                     target: "#ROOT.CONFIGURATION_CLOSED"
                   },
                   {
+                    /**
+                     * If the configuration mode is "COMPLETE", the machine should go back to the previous state
+                     */
                     target: "#ROOT.DISPLAYING_INTRO"
                   }
                 ],
+                /**
+                 * Event to transit to the IBAN creation
+                 */
                 NEW_IBAN_ONBOARDING: {
                   target: "DISPLAYING_IBAN_ONBOARDING_FORM"
                 },
+                /**
+                 * This event set the selected IBAN in the context and prepares it to be enrolled in the next state.
+                 */
                 ENROLL_IBAN: {
                   target: "ENROLLING_IBAN",
                   actions: "selectIban"
                 }
               }
             },
+
+            /**
+             * In this state the selected iban is being enrolled to the initiative with the `enrollIban` service
+             * If success, the selected iban is removed from the context.
+             * If error, the received failuer is put in the context and a failure toast is showed.
+             */
             ENROLLING_IBAN: {
               tags: [UPSERTING_TAG],
               invoke: {
@@ -237,11 +368,18 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 id: "enrollIban",
                 onDone: [
                   {
+                    /**
+                     * If success and configuration mode is "IBAN", the next state is the IBAN list
+                     * A success toast is displayed
+                     */
                     cond: "isIbanOnlyMode",
                     target: "DISPLAYING_IBAN_LIST",
                     actions: ["enrollIbanSuccess", "showUpdateIbanToast"]
                   },
                   {
+                    /**
+                     * If success and configuration mode is "COMPLETE", the next state is the final state of the IBAN
+                     */
                     target: "IBAN_CONFIGURATION_COMPLETED",
                     actions: "enrollIbanSuccess"
                   }
@@ -252,29 +390,55 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 }
               }
             },
+            /**
+             * Final Iban state, it triggers the parent `onDone`
+             */
             IBAN_CONFIGURATION_COMPLETED: {
               type: "final"
             }
           },
           onDone: [
             {
+              /**
+               * If configuration mode is "IBAN", the configuration si completed
+               */
               cond: "isIbanOnlyMode",
               target: "CONFIGURATION_COMPLETED"
             },
             {
+              /**
+               * If configuration mode is "COMPLETE", the next state is the instruments steps
+               */
               target: "#ROOT.CONFIGURING_INSTRUMENTS"
             }
           ]
         },
+
+        /**
+         * Payment instrument configuration states.
+         * As soon as the machines enteres in this state, the "LOADING_INSTRUMENTS" state is started
+         */
         CONFIGURING_INSTRUMENTS: {
           id: "INSTRUMENTS",
           initial: "LOADING_INSTRUMENTS",
           states: {
+            /**
+             * In this state we are fetching the user's instruments.
+             * This is a parallel state, which means that all the child states are executes simultaneously.
+             * So as soon as the machine enters in this state, both `LOADING_WALLET_INSTRUMENTS` and `LOADING_INITIATIVE_INSTRUMENTS` starts
+             */
             LOADING_INSTRUMENTS: {
               tags: [LOADING_TAG],
               entry: "navigateToInstrumentsEnrollmentScreen",
               type: "parallel",
               states: {
+                /**
+                 * In this state we are fetching the PagoPA payment instruments of the user.
+                 * On success we set the received instrument to the context
+                 *
+                 * Note: instead to have a single state we have two child states (LOADING and LOAD_SUCCESS).
+                 * This, unfortunately, is due to a limitation (or bug) of XState. A single state does not work.
+                 */
                 LOADING_WALLET_INSTRUMENTS: {
                   initial: "LOADING",
                   states: {
@@ -304,6 +468,14 @@ const createIDPayInitiativeConfigurationMachine = () =>
                     }
                   }
                 },
+
+                /**
+                 * In this state we are fetching the IDPay payment instruments of the user.
+                 * On success we set the received instrument to the context
+                 *
+                 * Note: instead to have a single state we have two child states (LOADING and LOAD_SUCCESS).
+                 * This, unfortunately, is due to a limitation (or bug) of XState. A single state does not work.
+                 */
                 LOADING_INITIATIVE_INSTRUMENTS: {
                   initial: "LOADING",
                   states: {
@@ -336,53 +508,112 @@ const createIDPayInitiativeConfigurationMachine = () =>
               },
               onDone: [
                 {
+                  /**
+                   * If the user has PagoPA instruments we go to the state where we show the instrument toggles
+                   */
                   cond: "hasInstruments",
                   target: "DISPLAYING_INSTRUMENTS"
                 },
                 {
+                  /**
+                   * If the configuration mode is "INSTRUMENT", we go to the state where we show the instrument toggles.
+                   * In this case we do not care if the user does not have any PagoPA instrument
+                   */
                   cond: "isInstrumentsOnlyMode",
                   target: "DISPLAYING_INSTRUMENTS"
                 },
                 {
+                  /**
+                   * User has no instrument to show, the machine goes to the success state and inform the user that
+                   * he should add an instrument in order to use the initiative
+                   */
                   target: "#ROOT.DISPLAYING_CONFIGURATION_SUCCESS"
                 }
               ]
             },
+
+            /**
+             * In this state we are showing the instruments list to the user.
+             * On entry we are updating the instrument statuses in the context to show the correct status in the instrument switch
+             */
             DISPLAYING_INSTRUMENTS: {
               tags: [WAITING_USER_INPUT_TAG],
               entry: "updateInstrumentStatuses",
               on: {
+                /**
+                 * The selected instrument is "staged", which means is being prepared to be enrolled with the confirmation modal.
+                 * If the passed parameter is undefined, the staged instrument is removed
+                 */
                 STAGE_INSTRUMENT: {
                   actions: "selectInstrumentToEnroll"
                 },
+
+                /**
+                 * This event enrolls the previously staged instrument.
+                 */
                 ENROLL_INSTRUMENT: {
                   target: "ENROLLING_INSTRUMENT"
                 },
+
+                /**
+                 * This event sets the instrument to be deleted in the context and then proceeds to its deletion in `DELETING_INSTRUMENT` state.
+                 */
                 DELETE_INSTRUMENT: {
                   target: "DELETING_INSTRUMENT",
                   actions: "selectInstrumentToDelete"
                 },
+
+                /**
+                 * Navigates to the payment method form
+                 */
                 ADD_PAYMENT_METHOD: {
                   actions: "navigateToAddPaymentMethodScreen"
                 },
+
+                /**
+                 * Back navigation event
+                 */
                 BACK: [
                   {
+                    /**
+                     * If we are configuring instruments only, back navigation should close the configuration flow
+                     */
                     cond: "isInstrumentsOnlyMode",
                     target: "#ROOT.CONFIGURATION_CLOSED"
                   },
                   {
+                    /**
+                     * If we are configuring the entire initiative, back navigation should go back to previous state
+                     */
                     target: "#ROOT.CONFIGURING_IBAN"
                   }
                 ],
+
+                /**
+                 * Default next event, we are going to the next state which completes the instruments configurations
+                 */
                 NEXT: {
                   target: "INSTRUMENTS_COMPLETED"
                 },
+
+                /**
+                 * This event is like the NEXT event, except it sets to the context the `areInstrumentsSkipped` flag.
+                 * This flag is used to display additional CTA at the end of the configuration process (DISPLAYING_CONFIGURATION_SUCCESS)
+                 */
                 SKIP: {
                   target: "INSTRUMENTS_COMPLETED",
                   actions: "skipInstruments"
                 }
               }
             },
+
+            /**
+             * In this state, the instrument is being enrolled to the initiative.
+             * The process begins by triggering the `updateInstrumentToEnrollStatus` action, which sets the staged instrument
+             * status to `pot.loading`. Next, the `enrollInstrument` service is called to enroll the instrument in the initiative.
+             * If the response is successful, an updated list of instruments is retrieved and putted in the context.
+             * If error, the instrument status is reverted and a failure is displayed to the user
+             */
             ENROLLING_INSTRUMENT: {
               tags: [UPSERTING_TAG],
               entry: "updateInstrumentToEnrollStatus",
@@ -403,6 +634,14 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 }
               }
             },
+
+            /**
+             * In this state the instrument is being deleted (unenrolled) from the initiative
+             * The process begins by triggering the `updateInstrumentToDeleteStatus` action, which sets the staged instrument
+             * status to `pot.loading`. Next, the `deleteInstrument` service is called to delete the instrument from the initiative.
+             * If the response is successful, an updated list of instruments is retrieved and putted in the context.
+             * If error, the instrument status is reverted and a failure is displayed to the user
+             */
             DELETING_INSTRUMENT: {
               tags: [UPSERTING_TAG],
               entry: "updateInstrumentToDeleteStatus",
@@ -423,50 +662,91 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 }
               }
             },
+
+            /**
+             * Final instrument section status. It triggers the parent `onDone`
+             */
             INSTRUMENTS_COMPLETED: {
               type: "final"
             }
           },
           onDone: [
             {
+              /**
+               * If we are configuring instruments, the next state is the final state
+               */
               cond: "isInstrumentsOnlyMode",
               target: "CONFIGURATION_COMPLETED"
             },
-
             {
+              /**
+               * If we are configuring the entire initiative, the next state is where we display the success message to the user
+               */
               target: "DISPLAYING_CONFIGURATION_SUCCESS"
             }
           ]
         },
+
+        /**
+         * State where we are displaying the success message to the user.
+         * On entry we navigate to the success screen with the `navigateToConfigurationSuccessScreen` action
+         */
         DISPLAYING_CONFIGURATION_SUCCESS: {
           tags: [WAITING_USER_INPUT_TAG],
           entry: "navigateToConfigurationSuccessScreen",
           on: {
+            /**
+             * Transition to the final state
+             */
             COMPLETE_CONFIGURATION: {
               target: "CONFIGURATION_COMPLETED"
             },
+
+            /**
+             * Navigation outside the configuration flow to the instrument form
+             */
             ADD_PAYMENT_METHOD: {
               actions: "navigateToAddPaymentMethodScreen"
             }
           }
         },
+
+        /**
+         * If the configuration is already complete, the machine transit to this state which navigates to the
+         * configuration success screen.
+         */
         CONFIGURATION_NOT_NEEDED: {
           tags: [WAITING_USER_INPUT_TAG],
           entry: "navigateToConfigurationSuccessScreen",
           on: {
+            /**
+             * Transition to the final state
+             */
             COMPLETE_CONFIGURATION: {
               target: "CONFIGURATION_COMPLETED"
             }
           }
         },
+
+        /**
+         * Final state, it navigates back to the initiative details screen
+         */
         CONFIGURATION_COMPLETED: {
           type: "final",
           entry: "navigateToInitiativeDetailScreen"
         },
+
+        /**
+         * Final state, configuration closed by the user. It closes the configuration flow
+         */
         CONFIGURATION_CLOSED: {
           type: "final",
           entry: "exitConfiguration"
         },
+
+        /**
+         * Final state, configuration failure. It shows a failure to the user and exits the configuration
+         */
         CONFIGURATION_FAILURE: {
           type: "final",
           entry: ["showFailureToast", "exitConfiguration"]
