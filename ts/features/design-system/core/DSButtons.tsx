@@ -3,6 +3,7 @@ import { View } from "react-native";
 import * as React from "react";
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { ButtonExtendedOutline } from "../../../components/ui/ButtonExtendedOutline";
+import { ButtonSolid } from "../../../components/ui/ButtonSolid";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { H2 } from "../../../components/core/typography/H2";
 import { IOColors } from "../../../components/core/variables/IOColors";
@@ -22,6 +23,263 @@ import { VSpacer } from "../../../components/core/spacer/Spacer";
 export const DSButtons = () => (
   <DesignSystemScreen title={"Buttons"}>
     {/* The title should be dynamic, got from the route object */}
+    <H2
+      color={"bluegrey"}
+      weight={"SemiBold"}
+      style={{ marginBottom: 16, marginTop: 16 }}
+    >
+      Custom
+    </H2>
+    <DSComponentViewerBox name="ButtonSolid · Primary Variant (using Pressable API)">
+      <View>
+        <ButtonSolid
+          accessibilityLabel="Tap to trigger test alert"
+          label={"Primary button"}
+          onPress={() => {
+            alert("Action triggered");
+          }}
+        />
+      </View>
+      <VSpacer size={16} />
+      <View>
+        <ButtonSolid
+          small
+          label={"Primary Button (Small)"}
+          accessibilityLabel="Tap to trigger test alert"
+          onPress={() => {
+            alert("Action triggered");
+          }}
+        />
+      </View>
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ButtonSolid · Primary, Full width">
+      <View>
+        <ButtonSolid
+          fullWidth
+          accessibilityLabel="Tap to trigger test alert"
+          label={"Primary button (Full Width)"}
+          onPress={() => {
+            alert("Action triggered");
+          }}
+        />
+      </View>
+      <VSpacer size={16} />
+      <View>
+        <ButtonSolid
+          small
+          fullWidth
+          accessibilityLabel="Tap to trigger test alert"
+          label={"Primary Button (Small, Full Width)"}
+          onPress={() => {
+            alert("Action triggered");
+          }}
+        />
+      </View>
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ButtonSolid · Primary, disabled">
+      <View>
+        <ButtonSolid
+          disabled
+          accessibilityLabel="Tap to trigger test alert"
+          label={"Primary button (disabled)"}
+          onPress={() => {
+            alert("Action triggered");
+          }}
+        />
+      </View>
+      <VSpacer size={16} />
+      <View>
+        <ButtonSolid
+          small
+          disabled={true}
+          fullWidth
+          accessibilityLabel="Tap to trigger test alert"
+          label={"Primary Button (small, full, disabled)"}
+          onPress={() => {
+            alert("Action triggered");
+          }}
+        />
+      </View>
+    </DSComponentViewerBox>
+
+    <DSComponentViewerBox name="ButtonSolid · Danger variant">
+      <View>
+        <ButtonSolid
+          color="danger"
+          label={"Danger button"}
+          onPress={() => {
+            alert("Action triggered");
+          }}
+          accessibilityLabel="Tap to trigger test alert"
+        />
+      </View>
+      <VSpacer size={16} />
+      <View>
+        <ButtonSolid
+          small
+          color="danger"
+          accessibilityLabel="Tap to trigger test alert"
+          label={"Danger Button (Small)"}
+          onPress={() => {
+            alert("Action triggered");
+          }}
+        />
+      </View>
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ButtonSolid · Danger, full width">
+      <View>
+        <ButtonSolid
+          fullWidth
+          color="danger"
+          accessibilityLabel="Tap to trigger test alert"
+          label={"Primary button (Full Width)"}
+          onPress={() => {
+            alert("Action triggered");
+          }}
+        />
+      </View>
+      <VSpacer size={16} />
+      <View>
+        <ButtonSolid
+          small
+          fullWidth
+          color="danger"
+          accessibilityLabel="Tap to trigger test alert"
+          label={"Primary Button (Small, Full Width)"}
+          onPress={() => {
+            alert("Action triggered");
+          }}
+        />
+      </View>
+    </DSComponentViewerBox>
+
+    <DSComponentViewerBox name="ButtonSolid · Danger, disabled">
+      <View>
+        <ButtonSolid
+          color="danger"
+          disabled
+          accessibilityLabel="Tap to trigger test alert"
+          label={"Danger button (disabled)"}
+          onPress={() => {
+            alert("Action triggered");
+          }}
+        />
+      </View>
+      <VSpacer size={16} />
+      <View>
+        <ButtonSolid
+          color="danger"
+          small
+          disabled
+          fullWidth
+          accessibilityLabel="Tap to trigger test alert"
+          label={"Danger Button (small, full, disabled)"}
+          onPress={() => {
+            alert("Action triggered");
+          }}
+        />
+      </View>
+    </DSComponentViewerBox>
+
+    <View
+      style={{
+        backgroundColor: IOColors.blue,
+        padding: 16,
+        borderRadius: 8
+      }}
+    >
+      <DSComponentViewerBox
+        name="ButtonSolid · Contrast variant"
+        colorMode="dark"
+      >
+        <View>
+          <ButtonSolid
+            color="contrast"
+            label={"Contrast button"}
+            onPress={() => {
+              alert("Action triggered");
+            }}
+            accessibilityLabel="Tap to trigger test alert"
+          />
+        </View>
+        <VSpacer size={16} />
+        <View>
+          <ButtonSolid
+            small
+            color="contrast"
+            accessibilityLabel="Tap to trigger test alert"
+            label={"Contrast button (Small)"}
+            onPress={() => {
+              alert("Action triggered");
+            }}
+          />
+        </View>
+      </DSComponentViewerBox>
+
+      <DSComponentViewerBox
+        name="ButtonSolid · Contrast, full width"
+        colorMode="dark"
+      >
+        <View>
+          <ButtonSolid
+            fullWidth
+            color="contrast"
+            label={"Contrast button"}
+            onPress={() => {
+              alert("Action triggered");
+            }}
+            accessibilityLabel="Tap to trigger test alert"
+          />
+        </View>
+        <VSpacer size={16} />
+        <View>
+          <ButtonSolid
+            small
+            fullWidth
+            color="contrast"
+            accessibilityLabel="Tap to trigger test alert"
+            label={"Contrast button (Small)"}
+            onPress={() => {
+              alert("Action triggered");
+            }}
+          />
+        </View>
+      </DSComponentViewerBox>
+
+      <DSComponentViewerBox
+        name="ButtonSolid · Contrast, disabled"
+        colorMode="dark"
+      >
+        <View>
+          <ButtonSolid
+            disabled
+            color="contrast"
+            label={"Contrast button, disabled"}
+            onPress={() => {
+              alert("Action triggered");
+            }}
+            accessibilityLabel="Tap to trigger test alert"
+          />
+        </View>
+        <VSpacer size={16} />
+        <View>
+          <ButtonSolid
+            small
+            fullWidth
+            disabled
+            color="contrast"
+            accessibilityLabel="Tap to trigger test alert"
+            label={"Contrast button (small, full, disabled)"}
+            onPress={() => {
+              alert("Action triggered");
+            }}
+          />
+        </View>
+      </DSComponentViewerBox>
+    </View>
+
+    <VSpacer size={40} />
+
     <DSComponentViewerBox name="ButtonExtendedOutline (using Pressable API)">
       <View>
         <ButtonExtendedOutline
