@@ -804,10 +804,14 @@ const createIDPayInitiativeConfigurationMachine = () =>
         })),
         updateInstrumentToEnrollStatus: assign((context, _) => {
           if (context.instrumentToEnroll !== undefined) {
+            const currentStatus =
+              context.instrumentStatuses[context.instrumentToEnroll.idWallet];
+
             return {
               instrumentStatuses: {
                 ...context.instrumentStatuses,
-                [context.instrumentToEnroll?.idWallet]: p.none
+                [context.instrumentToEnroll.idWallet]:
+                  p.toLoading(currentStatus)
               },
               failure: undefined
             };
@@ -819,9 +823,21 @@ const createIDPayInitiativeConfigurationMachine = () =>
           instrumentToEnroll: undefined,
           failure: undefined
         })),
-        instrumentEnrollFailure: assign(_ => ({
-          instrumentToEnroll: undefined
-        })),
+        instrumentEnrollFailure: assign(context => {
+          if (context.instrumentToEnroll !== undefined) {
+            const prevStatus =
+              context.instrumentStatuses[context.instrumentToEnroll.idWallet];
+
+            return {
+              instrumentStatuses: {
+                ...context.instrumentStatuses,
+                [context.instrumentToEnroll.idWallet]: p.some(prevStatus)
+              },
+              instrumentToEnroll: undefined
+            };
+          }
+          return {};
+        }),
         selectInstrumentToDelete: assign((_, event) => ({
           instrumentToDelete: event.instrument,
           failure: undefined
