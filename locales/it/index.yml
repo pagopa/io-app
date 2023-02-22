@@ -1921,6 +1921,7 @@ services:
 serviceDetail:
   fiscalCode: "C.F. Ente"
   fiscalCodeAccessibility: "Codice fiscale Ente"
+  fiscalCodeAccessibilityCopy: "Copia codice fiscale Ente"
   contacts:
     title: "Questo servizio può:"
   headerTitle: "Dettagli del Servizio"
