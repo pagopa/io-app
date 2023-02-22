@@ -26,7 +26,8 @@ const T_CONTEXT: Context = {
   failure: O.none,
   initiativeStatus: O.none,
   multiConsentsAnswers: {},
-  multiConsentsPage: 0
+  multiConsentsPage: 0,
+  selfDeclarationBoolAnswers: {}
 };
 
 const T_SERVICE_ID = "efg456";
