@@ -6,6 +6,7 @@ import { readablePrivacyReport } from "../../../../utils/reporters";
 import { BackendFciClient } from "../../api/backendFci";
 import { fciSigningRequest } from "../../store/actions";
 import { getNetworkError } from "../../../../utils/errors";
+import { LollipopConfig } from "../../../lollipop";
 
 /*
  * A saga to post signature data.
@@ -15,7 +16,11 @@ export function* handleCreateSignature(
   action: ActionType<typeof fciSigningRequest["request"]>
 ): SagaIterator {
   try {
-    const postSignatureResponse = yield* call(postSignature, {
+    const lollipopConfig: LollipopConfig = {
+      nonce: action.payload.qtsp_clauses.nonce,
+      customContentToSign: ["ASDFFA324SDFA==", "DAFDEFAF323DSFA=="]
+    };
+    const postSignatureResponse = yield* call(postSignature(lollipopConfig), {
       signatureToCreate: action.payload
     });
 
