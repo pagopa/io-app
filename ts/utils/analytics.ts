@@ -6,6 +6,7 @@ import { mixpanelTrack } from "../mixpanel";
 import { ReminderStatusEnum } from "../../definitions/backend/ReminderStatus";
 import { UIMessageId } from "../store/reducers/entities/messages/types";
 import { ServiceId } from "../../definitions/backend/ServiceId";
+import { KeyGenerationInfo } from "./crypto";
 
 const blackListRoutes: ReadonlyArray<string> = [];
 
@@ -137,3 +138,24 @@ export function trackThirdPartyMessageAttachmentUserAction(
 }
 
 // End of premium events
+
+// Lollipop events
+export function trackLollipopKeyGenerationSuccess(keyInfo: KeyGenerationInfo) {
+  void mixpanelTrack("LOLLIPOP_KEY_GENERATION_SUCCESS", {
+    kty: keyInfo.keyType
+  });
+}
+
+export function trackLollipopKeyGenerationFailure(keyInfo: KeyGenerationInfo) {
+  void mixpanelTrack("LOLLIPOP_KEY_GENERATION_FAILURE", {
+    reason: keyInfo.errorCode
+  });
+}
+
+export function trackLollipopIdpLoginFailure(reason: string) {
+  void mixpanelTrack("LOLLIPOP_IDP_LOGIN_FAILURE", {
+    reason
+  });
+}
+
+// End of lollipop events
