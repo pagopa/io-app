@@ -48,3 +48,37 @@ export const IOStyles = StyleSheet.create({
     elevation: themeVariables.footerElevation
   }
 });
+
+/**
+ * BUTTON STYLES
+ */
+
+export const IOButtonStyles = StyleSheet.create({
+  /* Labels */
+  label: {
+    alignSelf: "center"
+  },
+  labelSizeDefault: {
+    fontSize: 16
+  },
+  labelSizeSmall: {
+    fontSize: 14
+  },
+  /* Heights
+  Must be replaced with dynamic values, depending on the
+  fontScale parameter */
+  buttonSizeDefault: {
+    height: 40
+  },
+  buttonSizeSmall: {
+    height: 39
+  },
+  /* Widths */
+  dimensionsDefault: {
+    alignSelf: "flex-start"
+  },
+  dimensionsFullWidth: {
+    flex: 1,
+    alignSelf: "auto"
+  }
+});

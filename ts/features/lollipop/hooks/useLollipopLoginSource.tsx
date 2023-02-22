@@ -1,29 +1,24 @@
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import * as TE from "fp-ts/lib/TaskEither";
 import { useCallback, useEffect, useState } from "react";
+import { lollipopLoginEnabled } from "../../../config";
 import { useIOSelector } from "../../../store/hooks";
-import { LoggedOutWithIdp } from "../../../store/reducers/authentication";
 import { isLollipopEnabledSelector } from "../../../store/reducers/backendStatus";
-import { taskGetPublicKey } from "../../../utils/crypto";
-import { getIdpLoginUri } from "../../../utils/login";
+import { trackLollipopIdpLoginFailure } from "../../../utils/analytics";
+import { taskRegenerateKey } from "../../../utils/crypto";
 import { lollipopKeyTagSelector } from "../store/reducers/lollipop";
 import { LoginSourceAsync } from "../types/LollipopLoginSource";
 import { DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER } from "../utils/login";
 
-type Props = {
-  loggedOutWithIdpAuth?: LoggedOutWithIdp;
-};
-
-export const useLollipopLoginSource = ({ loggedOutWithIdpAuth }: Props) => {
+export const useLollipopLoginSource = (loginUri?: string) => {
   const [loginSource, setLoginSource] = useState<LoginSourceAsync>({
     kind: "initial"
   });
 
-  const isLollipopEnabled = useIOSelector(isLollipopEnabledSelector);
+  const useLollipopLogin =
+    useIOSelector(isLollipopEnabledSelector) && lollipopLoginEnabled;
   const lollipopKeyTag = useIOSelector(lollipopKeyTagSelector);
-
-  const loginUri = loggedOutWithIdpAuth
-    ? getIdpLoginUri(loggedOutWithIdpAuth.idp.id)
-    : undefined;
 
   const setDeprecatedLoginUri = useCallback((uri: string) => {
     setLoginSource({
@@ -37,28 +32,37 @@ export const useLollipopLoginSource = ({ loggedOutWithIdpAuth }: Props) => {
 
   useEffect(() => {
     if (!loginUri) {
-      // This case should never happen. Nonetheless, loginUri data
-      // source can return an undefined so we must make sure to handle
-      // the 0.001% happening-case
-      setLoginSource({
-        kind: "error"
-      });
+      // When the redux state is LoggedOutWithIdp the loginUri is always defined.
+      // After the user has logged in, the status changes to LoggedIn and the loginUri is not
+      // defined any more.
+      // Therefore we must block the code flow in order for the hook to not do anything else.
       return;
     }
 
-    if (!isLollipopEnabled || O.isNone(lollipopKeyTag)) {
+    if (!useLollipopLogin || O.isNone(lollipopKeyTag)) {
+      if (useLollipopLogin) {
+        // We track missing key tag event only if lollipop is enabled
+        // (since the key tag is not used without lollipop)
+        trackLollipopIdpLoginFailure(
+          "Missing key tag while trying to login with lollipop"
+        );
+      }
+
       // Key generation may have failed. In that case, follow the old
       // non-lollipop login flow
       setDeprecatedLoginUri(loginUri);
       return;
     }
 
-    taskGetPublicKey(lollipopKeyTag.value)
-      .then(key => {
-        if (!key) {
-          setDeprecatedLoginUri(loginUri);
-          return;
-        }
+    /**
+     * We generate a new key pair for every new login/relogin/retry we
+     * need to garantee the public key uniqueness on every login request.
+     * https://pagopa.atlassian.net/browse/LLK-37
+     */
+    void pipe(
+      lollipopKeyTag.value,
+      taskRegenerateKey,
+      TE.map(key =>
         setLoginSource({
           kind: "ready",
           value: {
@@ -72,12 +76,14 @@ export const useLollipopLoginSource = ({ loggedOutWithIdpAuth }: Props) => {
             }
           },
           publicKey: O.some(key)
-        });
-      })
-      .catch(_ => {
+        })
+      ),
+      TE.mapLeft(error => {
+        trackLollipopIdpLoginFailure(error.message);
         setDeprecatedLoginUri(loginUri);
-      });
-  }, [isLollipopEnabled, lollipopKeyTag, loginUri, setDeprecatedLoginUri]);
+      })
+    )();
+  }, [useLollipopLogin, lollipopKeyTag, loginUri, setDeprecatedLoginUri]);
 
   return loginSource;
 };

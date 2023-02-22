@@ -1,17 +1,23 @@
-import { pipe } from "fp-ts/lib/function";
+import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { Badge, ListItem } from "native-base";
 import { default as React, forwardRef, useImperativeHandle } from "react";
-import { View, StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import {
   InstrumentDTO,
   StatusEnum
 } from "../../../../../../definitions/idpay/wallet/InstrumentDTO";
+import { Icon } from "../../../../../components/core/icons";
+import LogoPayment, {
+  IOLogoPaymentType
+} from "../../../../../components/core/logos/LogoPayment";
+import { HSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import Switch from "../../../../../components/ui/Switch";
-import { Wallet } from "../../../../../types/pagopa";
+import { CreditCardType, Wallet } from "../../../../../types/pagopa";
 import { instrumentStatusLabels } from "../../../common/labels";
 
 export type InstrumentEnrollmentSwitchRef = {
@@ -54,12 +60,44 @@ const InstrumentEnrollmentSwitch = forwardRef<
     onSwitch(wallet.idWallet, !switchStatus);
   };
 
+  const cardLogos: {
+    [key in CreditCardType]: IOLogoPaymentType | undefined;
+  } = {
+    MASTERCARD: "mastercard",
+    VISA: "visa",
+    AMEX: "amex",
+    DINERS: "diners",
+    MAESTRO: "maestro",
+    VISAELECTRON: "visa",
+    POSTEPAY: "postepay",
+    UNIONPAY: "unionPay",
+    DISCOVER: "discover",
+    JCB: "jcb",
+    JCB15: "jcb",
+    UNKNOWN: undefined
+  };
+
   const getPaymentMethodInfo = (wallet: Wallet): O.Option<InstrumentInfo> => {
     switch (wallet.type) {
       case "CREDIT_CARD":
+        const logo =
+          cardLogos[
+            pipe(
+              CreditCardType.decode(wallet.creditCard?.brand?.toUpperCase()),
+              E.getOrElseW(() => "UNKNOWN" as const)
+            )
+          ];
         return O.some({
-          logo: <View />,
-          maskedPan: wallet.creditCard?.pan ?? ""
+          logo:
+            logo === undefined ? (
+              <Icon name="creditCard" size={24} color={"bluegrey"} />
+            ) : (
+              <LogoPayment name={logo} size={24} />
+            ),
+          maskedPan:
+            wallet.creditCard?.pan === undefined
+              ? ""
+              : `•••• ${wallet.creditCard.pan}`
         });
       default:
         return O.none;
@@ -100,7 +138,11 @@ const InstrumentEnrollmentSwitch = forwardRef<
   return (
     <ListItem>
       <View style={styles.listItemContainer}>
-        <H4>{instrumentInfo.maskedPan}</H4>
+        <View style={styles.logoAndPanContainer}>
+          {instrumentInfo.logo}
+          <HSpacer size={8} />
+          <H4>{instrumentInfo.maskedPan}</H4>
+        </View>
         {renderControl()}
       </View>
     </ListItem>
@@ -118,6 +160,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: IOColors.blue
+  },
+  logoAndPanContainer: {
+    flexDirection: "row",
+    alignItems: "center"
   }
 });
 

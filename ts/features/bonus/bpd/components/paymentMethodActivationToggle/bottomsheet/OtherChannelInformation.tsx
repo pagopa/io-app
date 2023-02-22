@@ -38,8 +38,7 @@ export const OtherChannelInformation: React.FunctionComponent<Props> =
           "bonus.bpd.details.paymentMethods.activateOnOthersChannel.body"
         )}
       </Markdown>
-      <VSpacer size={16} />
-      <VSpacer size={16} />
+      <VSpacer size={32} />
       {addPaymentMethodButton(props.onAddPayment)}
     </View>
   );
