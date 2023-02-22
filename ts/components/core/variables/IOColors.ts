@@ -1,8 +1,10 @@
-import { ColorValue } from "react-native";
-
-/* Used by `getGradientColorValues` function */
-import LinearGradient from "react-native-linear-gradient";
+import type { ColorValue } from "react-native";
+import LinearGradient from "react-native-linear-gradient"; // Used by `getGradientColorValues` function
 import { ComponentProps } from "react";
+
+/*
+TYPESCRIPT FUNCTIONS
+*/
 
 // Ensure the Type for IOColor without losing the inferred types
 function asIOColors<T extends { [key: string]: ColorValue }>(arg: T): T {
@@ -14,22 +16,10 @@ function asIOColorGradients<T extends { [key: string]: Array<ColorValue> }>(
 ): T {
   return arg;
 }
-/**
-Return the color value with RGBA format (RGB + Alpha transparency), starting from the hexadecimal color value only.
 
-@param hexCode Color value in hexadecimal format. No short version accepted.
-@param opacity Opacity value that range from 0 to 1. Default value = 1.
- */
-/* Taken from this Gist: https://gist.github.com/danieliser/b4b24c9f772066bcf0a6 */
-export const hexToRgba = (hexCode: string, opacity: number = 1) => {
-  const hex = hexCode.replace("#", "");
-
-  const r = parseInt(hex.substring(0, 2), 16);
-  const g = parseInt(hex.substring(2, 4), 16);
-  const b = parseInt(hex.substring(4, 6), 16);
-
-  return `rgba(${r},${g},${b},${opacity})`;
-};
+/*
+ENTIRE COLOR SCALE
+*/
 
 export const IOColors = asIOColors({
   white: "#FFFFFF",
@@ -74,7 +64,7 @@ export const IOColors = asIOColors({
   /* Temporary */
   blue600: "#0353A3",
   blue50: "#EFF7FF",
-  /* LEGACY */
+  /* Legacy */
   greyUltraLight: "#F5F6F7",
   greyLight: "#E6E9F2",
   bluegreyLight: "#CCD4DC",
@@ -114,15 +104,18 @@ export const IOColorGradients = asIOColorGradients({
   cgnTravel: ["#E00F69", "#F8C78C"]
 });
 
+export type IOColorGradients = keyof typeof IOColorGradients;
+
 export const getGradientColorValues = (
-  gradientId: IOColorGradientType
+  gradientId: IOColorGradients
 ): ComponentProps<typeof LinearGradient>["colors"] => {
   const [first, second]: Array<ColorValue> = IOColorGradients[gradientId];
   return [first, second];
 };
 
-export type IOColorType = keyof typeof IOColors;
-export type IOColorGradientType = keyof typeof IOColorGradients;
+/*
+COLOR SETS
+*/
 
 const {
   white,
@@ -286,7 +279,27 @@ export const IOColorsExtra = {
 export type IOColorsExtra = keyof typeof IOColorsExtra;
 
 /*
-REFERENCES
+UTILS
+*/
+
+/**
+Return the color value with RGBA format (RGB + Alpha transparency), starting from the hexadecimal color value only.
+@param hexCode Color value in hexadecimal format. No short version accepted.
+@param opacity Opacity value that range from 0 to 1. Default value = 1.
+ */
+/* Taken from this Gist: https://gist.github.com/danieliser/b4b24c9f772066bcf0a6 */
+export const hexToRgba = (hexCode: string, opacity: number = 1) => {
+  const hex = hexCode.replace("#", "");
+
+  const r = parseInt(hex.substring(0, 2), 16);
+  const g = parseInt(hex.substring(2, 4), 16);
+  const b = parseInt(hex.substring(4, 6), 16);
+
+  return `rgba(${r},${g},${b},${opacity})`;
+};
+
+/*
+REFACTORING REFERENCES
 Alias tokens:
 */
 /* 
