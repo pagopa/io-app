@@ -43,10 +43,10 @@ const CompletionScreen = () => {
       <View style={styles.container}>
         <Pictogram name="completed" size={100} />
         <VSpacer size={16} />
-        <H3> {I18n.t("idpay.onboarding.success.title")}</H3>
+        <H3> {I18n.t("idpay.onboarding.success.requestSent.title")}</H3>
         <VSpacer size={16} />
         <Body style={styles.message}>
-          {I18n.t("idpay.onboarding.success.body")}
+          {I18n.t("idpay.onboarding.success.requestSent.body")}
         </Body>
       </View>
       <FooterWithButtons
