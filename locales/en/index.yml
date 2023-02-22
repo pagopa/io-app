@@ -1790,6 +1790,7 @@ messageDetails:
   write: Write
   id: "ID:"
   attachments:
+    loading: "Loading document..."
     badFormat: "The attachment format is not supported. Please contact the sender"
     corruptedFile: "The attachment is corrupt and can't be opened. Please contact the sender"
     downloadFailed: "The attachment is currently not available. Please try again or contact the sender"
@@ -3334,7 +3335,7 @@ idpay:
               REVERSAL:  "Ricarica saldo disponibile"
               DELETE_INSTRUMENT:  "Hai eliminato un metodo di pagamento"
               REJECTED_ADD_INSTRUMENT:  "Hai rifiutato un metodo di pagamento"
-              REJECTED_DELETE_INSTRUMENT: 
+              REJECTED_DELETE_INSTRUMENT:
                 "Hai rifiutato di eliminare un metodo di pagamento"
               PAID_REFUND:  "Rimborso"
               REJECTED_REFUND:  "Rifiuto rimborso"
@@ -3406,10 +3407,10 @@ idpay:
       INSTRUMENT_ENROLL_FAILURE: "Errore durante l'aggiunta del metodo di pagamento"
       INSTRUMENT_DELETE_FAILURE: "Errore durante la rimozione del metodo di pagamento"
     headerTitle: "Configure the initiative"
-    intro: 
+    intro:
       title: "We are almost there"
       body: "In order to take advantage of the initiative, we need some more information."
-      requiredData: 
+      requiredData:
         title: "Required informations:"
         ibanTitle: "IBAN in your name"
         ibanSubtitle: "In order to receive any refunds"
@@ -3417,7 +3418,7 @@ idpay:
         instrumentSubtitle: "Indicate the methods to be enabled for the initiative"
       buttons:
         continue: "Start configuration"
-    instruments: 
+    instruments:
       title: "Metodi di pagamento"
       header: Scegli quali metodi di pagamento associare
       body: "Poi, usali per pagare e chiedi all’esercente di usare {{initiativeName}}."
