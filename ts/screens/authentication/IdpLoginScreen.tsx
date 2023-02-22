@@ -57,6 +57,8 @@ import {
   handleSendAssistanceLog
 } from "../../utils/supportAssistance";
 import { getUrlBasepath } from "../../utils/url";
+import { lollipopLoginEnabled } from "../../config";
+import { trackLollipopIdpLoginFailure } from "../../utils/analytics";
 import { originSchemasWhiteList } from "./originSchemasWhiteList";
 
 type NavigationProps = IOStackNavigationRouteProps<
@@ -115,7 +117,10 @@ const styles = StyleSheet.create({
   webViewWrapper: { flex: 1 }
 });
 
-const getUserAgentForWebView = () => `IO-App/${getAppVersion()}`;
+// TODO if left as it is, this would cause some IDP to offer limited login capabilities.
+// See: https://pagopa.atlassian.net/browse/IOAPPCIT-46
+const getUserAgentForWebView = () =>
+  lollipopLoginEnabled ? `IO-App/${getAppVersion()}` : undefined;
 
 /**
  * A screen that allows the user to login with an IDP.
@@ -305,7 +310,8 @@ const IdpLoginScreen = (props: Props) => {
           });
           setWebviewSource({ uri: eventUrl });
         },
-        () => {
+        (reason: string) => {
+          trackLollipopIdpLoginFailure(reason);
           setLollipopCheckStatus({
             status: "untrusted",
             url: O.some(eventUrl)

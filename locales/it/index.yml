@@ -3374,9 +3374,11 @@ idpay:
       issuerId: ID transazione Issuer
   onboarding:
     success:
-      understoodCta: Ho capito!
+      button: 
+        continue: Ho capito!
       pleaseWait: Un attimo di pazienza...
-      requestSent: La tua richiesta è stata inviata!
+      title: La tua richiesta è stata inviata!
+      body:  Riceverai un messaggio con l’esito dell’operazione.
     failure:
       NO_PERMISSION:
         title: "Non hai i requisiti per aderire a questa iniziativa"
@@ -3442,7 +3444,7 @@ idpay:
       title: "Metodi di pagamento"
       header: Scegli quali metodi di pagamento associare
       body: "Poi, usali per pagare e chiedi all’esercente di usare {{initiativeName}}."
-      footer: Modifica queste scelte o aggiunti altri metodi in qualsiasi momento dalla sezione Portafoglio
+      footer: Modifica queste scelte o aggiungi altri metodi in qualsiasi momento dalla sezione Portafoglio
       instrumentStatus:
         active: Attivo 
         pendingActivation: In attivazione
