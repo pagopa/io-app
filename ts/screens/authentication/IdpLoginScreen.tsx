@@ -62,6 +62,7 @@ import {
 } from "../../utils/supportAssistance";
 import { getUrlBasepath } from "../../utils/url";
 import { apiUrlPrefix, lollipopLoginEnabled } from "../../config";
+import { trackLollipopIdpLoginFailure } from "../../utils/analytics";
 import { originSchemasWhiteList } from "./originSchemasWhiteList";
 
 type NavigationProps = IOStackNavigationRouteProps<
@@ -324,7 +325,8 @@ const IdpLoginScreen = (props: Props) => {
           });
           setWebviewSource({ uri: eventUrl });
         },
-        () => {
+        (reason: string) => {
+          trackLollipopIdpLoginFailure(reason);
           setLollipopCheckStatus({
             status: "untrusted",
             url: O.some(eventUrl)
