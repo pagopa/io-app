@@ -10,7 +10,7 @@ import Animated, {
   Extrapolate,
   interpolateColor
 } from "react-native-reanimated";
-import { IOColors } from "../core/variables/IOColors";
+import { hexToRgba, IOColors } from "../core/variables/IOColors";
 import { IOSpringValues, IOScaleValues } from "../core/variables/IOAnimations";
 import { IOButtonStyles, IOIconButtonStyles } from "../core/variables/IOStyles";
 import { AnimatedIcon, IOIconType } from "../core/icons";
@@ -18,7 +18,7 @@ import { WithTestID } from "../../types/WithTestID";
 
 export type IconButtonSolid = WithTestID<{
   icon: IOIconType;
-  color?: "primary";
+  color?: "primary" | "contrast";
   disabled?: boolean;
   accessibilityLabel: string;
   accessibilityHint?: string;
@@ -53,6 +53,17 @@ const mapColorStates: Record<
     icon: {
       default: IOColors.white,
       disabled: IOColors.grey450
+    }
+  },
+  contrast: {
+    background: {
+      default: IOColors.white,
+      pressed: IOColors.blue50,
+      disabled: hexToRgba(IOColors.white, 0.25)
+    },
+    icon: {
+      default: IOColors.blue,
+      disabled: IOColors.blue
     }
   }
 };

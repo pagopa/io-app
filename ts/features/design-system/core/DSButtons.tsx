@@ -714,7 +714,7 @@ export const DSButtons = () => (
       IconButtonSolid
     </H2>
 
-    <DSComponentViewerBox name="IconButtonSolid · Primary Variant, Large">
+    <DSComponentViewerBox name="IconButtonSolid · Primary variant, large">
       <View style={IOStyles.row}>
         <IconButtonSolid
           color="primary"
@@ -738,6 +738,37 @@ export const DSButtons = () => (
         />
       </View>
     </DSComponentViewerBox>
+
+    <View style={styles.primaryBlock}>
+      <DSComponentViewerBox
+        name="IconButton · Contrast variant, large"
+        colorMode="dark"
+        last
+      >
+        <View style={IOStyles.row}>
+          <IconButtonSolid
+            color="contrast"
+            accessibilityLabel="Tap to trigger test alert"
+            icon="arrowBottom"
+            onPress={() => {
+              alert("Action triggered");
+            }}
+          />
+
+          <HSpacer size={16} />
+
+          <IconButtonSolid
+            color="contrast"
+            accessibilityLabel="Tap to trigger test alert"
+            icon="arrowBottom"
+            disabled
+            onPress={() => {
+              alert("Action triggered");
+            }}
+          />
+        </View>
+      </DSComponentViewerBox>
+    </View>
 
     <VSpacer size={40} />
 
