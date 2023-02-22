@@ -86,6 +86,56 @@ export const IOColors = asIOColors({
   greenLight: "#5CA85A"
 });
 
+export type IOColors = keyof typeof IOColors;
+
+// Dark Mode Palette
+export const IOCOlorsDark: Record<NonNullable<IOColors>, ColorValue> = {
+  /* Add original IOColors to allow overwriting
+  of specific color values */
+  ...IOColors,
+  blackNew: "#0E0F13",
+  grey50: "#2B2E38",
+  grey100: "#555C70",
+  grey200: "#636B82",
+  grey450: "#99A3C1",
+  grey650: "#D2D6E3",
+  grey700: "#E8EBF1",
+  grey850: "#E8EBF1",
+  white: "#FFFFFF",
+  blueNew: "#6D8BEE",
+  blueNewDark: "#072588",
+  blueNewLight: "#B6C5F7",
+  blueNew50: "",
+  blueNew100: "",
+  blueNew200: "",
+  blueNew600: "",
+  turquoise: "",
+  turquoiseDark: "",
+  turquoiseLight: "",
+  turquoise50: "",
+  turquoise100: "",
+  error: "",
+  errorGraphic: "",
+  errorDark: "",
+  errorLight: "",
+  warning: "",
+  warningGraphic: "",
+  warningDark: "",
+  warningLight: "",
+  success: "",
+  successGraphic: "",
+  successDark: "",
+  successLight: "",
+  info: "",
+  infoGraphic: "",
+  infoDark: "",
+  infoLight: "",
+  cobalt: "",
+  blueItalia: "",
+  blue600: "",
+  blue50: ""
+};
+
 export const IOColorGradients = asIOColorGradients({
   appLaunch: ["#0C00D3", "#0073E6"],
   appIcon: ["#1D51DF", "#1723D5"],

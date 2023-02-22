@@ -1,6 +1,6 @@
 import React from "react";
 import { ColorValue } from "react-native";
-import { IOColors, IOColorType } from "../variables/IOColors";
+import { IOColors } from "../variables/IOColors";
 
 /* Icons */
 import IconSpid from "./svg/IconSpid";
@@ -205,7 +205,7 @@ export type IOIconType = keyof typeof IOIcons;
 
 type IOIconsProps = {
   name: IOIconType;
-  color?: IOColorType;
+  color?: IOColors;
   size?: number | "100%";
 };
 

@@ -1,11 +1,11 @@
 import * as React from "react";
 import { IOFontFamily, IOFontWeight } from "../fonts";
-import { IOColorsStatusForeground, IOColorType } from "../variables/IOColors";
+import type { IOColors, IOColorsStatusForeground } from "../variables/IOColors";
 import { ExternalTypographyProps, TypographyProps } from "./common";
 import { useTypographyFactory } from "./Factory";
 
 type PartialAllowedColors = Extract<
-  IOColorType,
+  IOColors,
   "bluegreyDark" | "white" | "blue" | "bluegrey"
 >;
 type AllowedColors = PartialAllowedColors | IOColorsStatusForeground;

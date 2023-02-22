@@ -1,5 +1,5 @@
 import React from "react";
-import { IOColors, IOColorType } from "../variables/IOColors";
+import { IOColors } from "../variables/IOColors";
 
 /* Icons */
 import IconProductPagoPA from "./svg/IconProductPagoPA";
@@ -14,7 +14,7 @@ export type IOProductIconType = keyof typeof IOProductIcons;
 
 type IOProductIconsProps = {
   name: IOProductIconType;
-  color?: IOColorType;
+  color?: IOColors;
   size?: number | "100%";
 };
 
