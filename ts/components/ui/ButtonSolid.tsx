@@ -19,8 +19,9 @@ import { IOColors, IOColorType } from "../core/variables/IOColors";
 import { IOSpringValues, IOScaleValues } from "../core/variables/IOAnimations";
 import { BaseTypography } from "../core/typography/BaseTypography";
 import { IOButtonStyles } from "../core/variables/IOStyles";
+import { WithTestID } from "../../types/WithTestID";
 
-export type ButtonSolid = {
+export type ButtonSolid = WithTestID<{
   color?: "primary" | "danger" | "contrast";
   label: string;
   small?: boolean;
@@ -29,7 +30,7 @@ export type ButtonSolid = {
   accessibilityLabel: string;
   accessibilityHint?: string;
   onPress: (event: GestureResponderEvent) => void;
-};
+}>;
 
 type ColorStates = {
   default: string;
@@ -46,7 +47,7 @@ const mapColorStates: Record<NonNullable<ButtonSolid["color"]>, ColorStates> = {
   // Primary button
   primary: {
     default: IOColors.blue,
-    pressed: IOColors.blueUltraLight,
+    pressed: IOColors.blue600,
     label: {
       default: "white",
       disabled: "white"
@@ -54,8 +55,8 @@ const mapColorStates: Record<NonNullable<ButtonSolid["color"]>, ColorStates> = {
   },
   // Danger button
   danger: {
-    default: IOColors.red,
-    pressed: IOColors.red,
+    default: IOColors.errorGraphic,
+    pressed: IOColors.errorDark,
     label: {
       default: "white",
       disabled: "white"
@@ -64,7 +65,7 @@ const mapColorStates: Record<NonNullable<ButtonSolid["color"]>, ColorStates> = {
   // Contrast button
   contrast: {
     default: IOColors.white,
-    pressed: IOColors.white,
+    pressed: IOColors.blue50,
     label: {
       default: "blue",
       disabled: "white"
@@ -89,7 +90,8 @@ export const ButtonSolid = ({
   disabled = false,
   onPress,
   accessibilityLabel,
-  accessibilityHint
+  accessibilityHint,
+  testID
 }: ButtonSolid) => {
   const isPressed: Animated.SharedValue<number> = useSharedValue(0);
 
@@ -138,6 +140,7 @@ export const ButtonSolid = ({
       accessibilityLabel={accessibilityLabel}
       accessibilityHint={accessibilityHint}
       accessibilityRole={"button"}
+      testID={testID}
       onPress={onPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}

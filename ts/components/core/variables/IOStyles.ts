@@ -43,10 +43,7 @@ export const IOButtonStyles = StyleSheet.create({
     borderRadius: themeVariables.btnBorderRadius,
     paddingHorizontal: 16,
     // Reset default visual parameters
-    elevation: 0,
-    shadowOffset: { width: 0, height: 0 },
-    shadowRadius: 0,
-    shadowOpacity: 0
+    elevation: 0
     // Visual parameters based on the FontScale
     // paddingVertical: PixelRatio.getFontScale() * 10,
     // paddingHorizontal: PixelRatio.getFontScale() * 16,
