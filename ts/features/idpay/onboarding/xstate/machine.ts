@@ -6,6 +6,7 @@ import { InitiativeDto } from "../../../../../definitions/idpay/onboarding/Initi
 import { StatusEnum } from "../../../../../definitions/idpay/onboarding/OnboardingStatusDTO";
 import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/onboarding/RequiredCriteriaDTO";
 import { SelfConsentMultiDTO } from "../../../../../definitions/idpay/onboarding/SelfConsentMultiDTO";
+import { SelfDeclarationBoolDTO } from "../../../../../definitions/idpay/onboarding/SelfDeclarationBoolDTO";
 import {
   LOADING_TAG,
   UPSERTING_TAG,
@@ -25,6 +26,7 @@ export type Context = {
   requiredCriteria?: O.Option<RequiredCriteriaDTO>;
   multiConsentsPage: number;
   multiConsentsAnswers: Record<number, SelfConsentMultiDTO>;
+  selfDeclarationBoolAnswers: Record<string, boolean>;
   failure: O.Option<OnboardingFailure>;
 };
 
@@ -32,6 +34,7 @@ const INITIAL_CONTEXT: Context = {
   initiativeStatus: O.none,
   multiConsentsPage: 0,
   multiConsentsAnswers: {},
+  selfDeclarationBoolAnswers: {},
   failure: O.none
 };
 
@@ -47,6 +50,11 @@ type E_ACCEPT_TOS = {
 
 type E_ACCEPT_REQUIRED_PDND_CRITERIA = {
   type: "ACCEPT_REQUIRED_PDND_CRITERIA";
+};
+
+type E_TOGGLE_BOOL_CRITERIA = {
+  type: "TOGGLE_BOOL_CRITERIA";
+  criteria: SelfDeclarationBoolDTO;
 };
 
 type E_ACCEPT_REQUIRED_BOOL_CRITERIA = {
@@ -78,6 +86,7 @@ type Events =
   | E_SHOW_INITIATIVE_DETAILS
   | E_GO_BACK
   | E_SELECT_MULTI_CONSENT
+  | E_TOGGLE_BOOL_CRITERIA
   | E_ACCEPT_REQUIRED_BOOL_CRITERIA;
 
 // Services types
@@ -331,6 +340,9 @@ const createIDPayOnboardingMachine = () =>
                     target: "#IDPAY_ONBOARDING.DISPLAYING_INITIATIVE"
                   }
                 ],
+                TOGGLE_BOOL_CRITERIA: {
+                  actions: "toggleBoolCriteria"
+                },
                 ACCEPT_REQUIRED_BOOL_CRITERIA: [
                   {
                     target: "DISPLAYING_MULTI_CRITERIA",
@@ -442,6 +454,12 @@ const createIDPayOnboardingMachine = () =>
         })),
         loadRequiredCriteriaSuccess: assign((_, event) => ({
           requiredCriteria: event.data
+        })),
+        toggleBoolCriteria: assign((context, event) => ({
+          selfDeclarationBoolAnswers: {
+            ...context.selfDeclarationBoolAnswers,
+            [event.criteria.code]: event.criteria.value
+          }
         })),
         addMultiConsent: assign((context, event) => ({
           multiConsentsAnswers: {

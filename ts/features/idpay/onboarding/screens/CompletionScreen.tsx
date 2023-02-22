@@ -1,46 +1,54 @@
+import { useSelector } from "@xstate/react";
 import React from "react";
-import { useActor } from "@xstate/react";
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
-import { useOnboardingMachineService } from "../xstate/provider";
+import { SafeAreaView, View, StyleSheet } from "react-native";
+import { Body } from "../../../../components/core/typography/Body";
+import { H3 } from "../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import themeVariables from "../../../../theme/variables";
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
+import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
-
-type CompletionScreenRouteRaparms = undefined;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: themeVariables.contentPadding
-  }
-});
+import { useOnboardingMachineService } from "../xstate/provider";
+import { isUpsertingSelector } from "../xstate/selectors";
+import themeVariables from "../../../../theme/variables";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
+import { Pictogram } from "../../../../components/core/pictograms";
 
 const CompletionScreen = () => {
   const onboardingMachineService = useOnboardingMachineService();
-  const [state, send] = useActor(onboardingMachineService);
 
-  const content = React.useMemo(() => {
-    if (state.matches("ACCEPTING_REQUIRED_CRITERIA")) {
-      return <Text>{I18n.t("idpay.onboarding.success.pleaseWait")}</Text>;
-    }
+  const isUpserting = useSelector(
+    onboardingMachineService,
+    isUpsertingSelector
+  );
 
-    if (state.matches("DISPLAYING_ONBOARDING_COMPLETED")) {
-      return <Text>{I18n.t("idpay.onboarding.success.requestSent")}</Text>;
-    }
+  const handleClosePress = () =>
+    onboardingMachineService.send({ type: "QUIT_ONBOARDING" });
 
-    return null;
-  }, [state]);
-
-  const handleClosePress = () => {
-    send({ type: "QUIT_ONBOARDING" });
-  };
+  if (isUpserting) {
+    return (
+      <SafeAreaView style={IOStyles.flex}>
+        <BaseScreenComponent
+          goBack={true}
+          headerTitle={I18n.t("idpay.onboarding.headerTitle")}
+        >
+          <LoadingSpinnerOverlay isLoading={true}></LoadingSpinnerOverlay>
+        </BaseScreenComponent>
+      </SafeAreaView>
+    );
+  }
 
   return (
-    <SafeAreaView style={IOStyles.flex} testID={"onboardingCompletionScreen"}>
-      <View style={styles.container}>{content}</View>
+    <SafeAreaView style={IOStyles.flex}>
+      <View style={styles.container}>
+        <Pictogram name="completed" size={100} />
+        <VSpacer size={16} />
+        <H3> {I18n.t("idpay.onboarding.success.title")}</H3>
+        <VSpacer size={16} />
+        <Body style={styles.message}>
+          {I18n.t("idpay.onboarding.success.body")}
+        </Body>
+      </View>
       <FooterWithButtons
         type="SingleButton"
         leftButton={{
@@ -53,6 +61,16 @@ const CompletionScreen = () => {
   );
 };
 
-export type { CompletionScreenRouteRaparms };
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: themeVariables.contentPaddingLarge
+  },
+  message: {
+    textAlign: "center"
+  }
+});
 
 export default CompletionScreen;
