@@ -20,7 +20,6 @@ import OrganizationHeader from "../../../../components/OrganizationHeader";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../components/core/typography/Body";
 import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
@@ -158,10 +157,7 @@ const InitiativeDetailsScreen = () => {
   const handleGoBackPress = () => {
     machine.send({ type: "QUIT_ONBOARDING" });
   };
-  const handleContinuePress = () =>
-    isContinueButtonDisabled
-      ? scrollViewRef.current?.scrollToEnd()
-      : machine.send({ type: "ACCEPT_TOS" });
+  const handleContinuePress = () => machine.send({ type: "ACCEPT_TOS" });
 
   const service = pipe(
     pot.toOption(
@@ -212,16 +208,8 @@ const InitiativeDetailsScreen = () => {
           title: I18n.t("global.buttons.continue"),
           onPress: handleContinuePress,
           testID: "IDPayOnboardingContinue",
-          style: isContinueButtonDisabled
-            ? {
-                flex: 2,
-                backgroundColor: IOColors.grey
-              }
-            : { flex: 2 },
-          // the style prop overrides the default style of the button,
-          // so we need to add the flex: 2 property for consistency
           isLoading: isAcceptingTos,
-          disabled: isAcceptingTos
+          disabled: isContinueButtonDisabled || isAcceptingTos
         }}
       />
     </SafeAreaView>
