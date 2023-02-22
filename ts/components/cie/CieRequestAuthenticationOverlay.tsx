@@ -100,11 +100,7 @@ const CieWebView = (props: Props) => {
   // On Android to be sure to regenerate a new crypto key,
   // we need to pass a new value to useLollipopLoginSource: loginUriRetry.
   const [forceNewKey, setForceNewKey] = React.useState<number>(1);
-  const loginUriRetry = Platform.select({
-    ios: undefined,
-    android: forceNewKey
-  });
-  const loginSource = useLollipopLoginSource(loginUri, loginUriRetry);
+  const loginSource = useLollipopLoginSource(loginUri, forceNewKey);
   const [webviewSource, setWebviewSource] = React.useState<
     WebViewSource | undefined
   >(undefined);
@@ -214,6 +210,12 @@ const CieWebView = (props: Props) => {
       // flow shall never hit this method is LolliPOP signature
       // verification has failed, since an error is displayed and
       // the WebViewSource is left undefined
+
+      // For devices that cannot generate the key
+      // we reset the status to update user-agent.
+      if (lollipopCheckStatus.status === "none") {
+        setWebviewSource({ uri: event.url });
+      }
     }
 
     // on iOS when authnRequestString is present in the url, it means we have all stuffs to go on.
@@ -279,18 +281,7 @@ const CieWebView = (props: Props) => {
       <ErrorComponent
         onRetry={() => {
           setLollipopCheckStatus({ status: "none", url: O.none });
-          // The login flow behaves differently on Android and iOS.
-          // On iOS, we can start the login process by calling startLoginProcess().
-          // However, on Android, we need to set the webview source to
-          // undefined to avoid issues with the login flow.
-          // Additionally, to regenerate a new key, we need
-          // to increment our forceNewKey state.
-          if (Platform.OS === "android") {
-            setWebviewSource(undefined);
-            setForceNewKey(forceNewKey + 1);
-          } else {
-            startLoginProcess();
-          }
+          setForceNewKey(forceNewKey + 1);
           dispatch({ kind: "retry" });
         }}
         onClose={props.onClose}
