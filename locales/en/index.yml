@@ -1897,7 +1897,7 @@ services:
 serviceDetail:
   fiscalCode: "Organization's fiscal code"
   fiscalCodeAccessibility: "Organization's fiscal code"
-  fiscalCodeAccessibilityCopy: "Copia codice fiscale Ente"
+  fiscalCodeAccessibilityCopy: "Copy organization's fiscal code"
   contacts:
     title: "This service can:"
   headerTitle: "Service details"
