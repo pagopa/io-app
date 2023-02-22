@@ -10,7 +10,7 @@ export const lollipopSamlVerify = (
   urlEncodedSamlRequest: string,
   publicKey: PublicKey,
   onSuccess: () => void,
-  onFailure: () => void
+  onFailure: (reason: string) => void
 ) => {
   // SAMLRequest is URL encoded, so decode it
   const decodedSamlRequest = decodeURIComponent(urlEncodedSamlRequest);
@@ -32,7 +32,7 @@ export const lollipopSamlVerify = (
       const responseThumbprintWithHashAlgorithm = authnRequest?.$?.ID;
       if (!responseThumbprintWithHashAlgorithm) {
         // If the request did not include the ID, treat it as a failure
-        onFailure();
+        onFailure("Missing ID parameter in samlp:AuthnRequest");
         return;
       }
 
@@ -52,13 +52,13 @@ export const lollipopSamlVerify = (
       ) {
         // Hash signature from server did not match the
         // local one, so the response cannot be trusted
-        onFailure();
+        onFailure("Mismatch between local and remote ID parameter content");
         return;
       }
 
       onSuccess();
     })
     .catch(_ => {
-      onFailure();
+      onFailure("Unable to convert saml request from xml to json");
     });
 };

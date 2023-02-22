@@ -79,7 +79,7 @@ const ServiceMetadataComponent: React.FC<Props> = ({
           accessibilityLabel={genServiceMetadataAccessibilityLabel(
             I18n.t("serviceDetail.fiscalCodeAccessibility"),
             organizationFiscalCode,
-            I18n.t("clipboard.copyText")
+            I18n.t("serviceDetail.fiscalCodeAccessibilityCopy")
           )}
         />
       }
