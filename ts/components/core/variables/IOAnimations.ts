@@ -13,7 +13,12 @@ export const IOSpringValues = {
 };
 
 export const IOScaleValues = {
-  button: {
+  // Slight scale effect
+  basicButton: {
+    pressedState: 0.99
+  },
+  // Exaggerated scale effect
+  magnifiedButton: {
     pressedState: 0.97
   }
 };
