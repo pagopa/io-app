@@ -43,7 +43,7 @@ type ColorStates = {
 
 // COMPONENT CONFIGURATION
 
-const mapColorStates: Record<NonNullable<Props["color"]>, ColorStates> = {
+const mapColorStates: Record<NonNullable<ButtonSolid["color"]>, ColorStates> = {
   // Primary button
   primary: {
     default: IOColors.blue,
