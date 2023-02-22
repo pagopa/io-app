@@ -250,7 +250,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
                   },
                   {
                     /**
-                     * If configuration mode is "COMPLEYTE", the machine should go back to the previous state
+                     * If configuration mode is "COMPLETE", the machine should go back to the previous state
                      */
                     target: "#ROOT.DISPLAYING_INTRO"
                   }
