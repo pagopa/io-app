@@ -150,18 +150,14 @@ export const idpayTimelineLastUpdateSelector = createSelector(
 export const idpayTimelineIsLastPageSelector = createSelector(
   idpayPaginatedTimelineSelector,
   idpayTimelineCurrentPageSelector,
-  (paginatedTimeline, currentPage) => {
-    const isNotFirstPage = currentPage > 0;
-    // we are using a pot.map here since paginatedTimeline is possibly pot.none
-    return pot.getOrElse(
+  (paginatedTimeline, currentPage) =>
+    pot.getOrElse(
       pot.map(paginatedTimeline, paginatedTimeline => {
         const { totalPages } = paginatedTimeline[currentPage];
-        const isLastPage = currentPage >= totalPages;
-        return isNotFirstPage && isLastPage;
+        return currentPage >= totalPages - 1;
       }),
       false
-    );
-  }
+    )
 );
 
 export const idpayTimelineDetailsSelector = createSelector(
