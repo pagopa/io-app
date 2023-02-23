@@ -7,10 +7,7 @@ import { TimelineDTO } from "../../../../../../definitions/idpay/timeline/Timeli
 import { InitiativeDTO } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
 import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
-import {
-  getErrorFromNetworkError,
-  NetworkError
-} from "../../../../../utils/errors";
+import { NetworkError } from "../../../../../utils/errors";
 import {
   idpayInitiativeGet,
   idpayTimelineDetailsGet,
@@ -152,12 +149,17 @@ export const idpayTimelineLastUpdateSelector = createSelector(
 
 export const idpayTimelineIsLastPageSelector = createSelector(
   idpayPaginatedTimelineSelector,
-  paginatedTimeline => {
-    if (pot.isError(paginatedTimeline)) {
-      const err = getErrorFromNetworkError(paginatedTimeline.error);
-      return err.message === "404";
-    }
-    return false;
+  idpayTimelineCurrentPageSelector,
+  (paginatedTimeline, currentPage) => {
+    const gottenTimeline = pot.getOrElse(paginatedTimeline, {});
+    const isNotFirstPage = currentPage > 0;
+    return (
+      // the "isLastPage" (right hand of the >=) check can only be done here, since gottenTimeline
+      // is undefined when currentPage === -1 , and when it is === 0 it is
+      // possibly the initiative's details timeline.
+      isNotFirstPage && currentPage >= gottenTimeline[currentPage].totalPages
+      // PAGE>0 && PAGE>=TOTALPAGES
+    );
   }
 );
 
