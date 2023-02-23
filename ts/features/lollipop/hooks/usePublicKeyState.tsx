@@ -12,13 +12,20 @@ export const usePublicKeyState = () => {
     PublicKey | "error" | "retrieving"
   >("retrieving");
   const keyTag = useIOSelector(lollipopKeyTagSelector);
+  const handleError = () => setPublicKeyState("error");
   useEffect(() => {
     void pipe(
       keyTag,
-      O.getOrElse(() => ""),
-      taskGetPublicKey,
-      TE.map(key => setPublicKeyState(key)),
-      TE.mapLeft(() => setPublicKeyState("error"))
+      O.fold(
+        () => handleError,
+        tag =>
+          pipe(
+            tag,
+            taskGetPublicKey,
+            TE.map(key => setPublicKeyState(key)),
+            TE.mapLeft(handleError)
+          )
+      )
     )();
   }, [keyTag]);
   return publicKeyState;
