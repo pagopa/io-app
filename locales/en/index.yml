@@ -3305,7 +3305,7 @@ idpay:
     details:
       initiativeCard:
         availableAmount: Disponibile
-        validUntil: Valido fino al
+        validUntil: Valido fino al {{expiryDate}}
         toRefund: da rimborsare
       initiativeDetailsScreen:
         notConfigured:
