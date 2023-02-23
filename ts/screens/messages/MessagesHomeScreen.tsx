@@ -32,7 +32,10 @@ import {
   resetMigrationStatus
 } from "../../store/actions/messages";
 import { useIOSelector } from "../../store/hooks";
-import { sectionStatusSelector } from "../../store/reducers/backendStatus";
+import {
+  isLollipopEnabledSelector,
+  sectionStatusSelector
+} from "../../store/reducers/backendStatus";
 import {
   allArchiveMessagesSelector,
   allInboxMessagesSelector,
@@ -133,7 +136,8 @@ const MessagesHomeScreen = ({
 
   const isScreenReaderEnabled = useScreenReaderEnabled();
 
-  const showUnsupportedDeviceBanner = !publicKeyState;
+  const isLollipopEnabled = useIOSelector(isLollipopEnabledSelector);
+  const showUnsupportedDeviceBanner = isLollipopEnabled && !publicKeyState;
   const unsupportedDevicesStatusComponent = showUnsupportedDeviceBanner && (
     <InnerSectionStatus
       sectionKey={"messages"}
