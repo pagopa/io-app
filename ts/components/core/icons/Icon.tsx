@@ -98,10 +98,12 @@ import IconDocumentAttachmentPDF from "./svg/IconDocumentAttachmentPDF";
 import IconAttachment from "./svg/IconAttachment";
 import IconExternalLink from "./svg/IconExternalLink";
 import IconUnknownGdo from "./svg/IconUnknownGdo";
+import IconArrowCircleUp from "./svg/IconArrowCircleUp";
 import IconWarningFilled from "./svg/IconWarningFilled";
 import IconErrorFilled from "./svg/IconErrorFilled";
 
 export const IOIcons = {
+  arrowCircleUp: IconArrowCircleUp,
   spid: IconSpid,
   cie: IconCie /* io-cie */,
   qrCode: IconQrCode /* io-qr */,
