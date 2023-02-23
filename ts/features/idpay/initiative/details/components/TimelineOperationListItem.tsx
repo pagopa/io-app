@@ -1,7 +1,7 @@
 import { format } from "date-fns";
 import { ListItem } from "native-base";
 import React from "react";
-import { Image, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { OperationTypeEnum as IbanOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/IbanOperationDTO";
 import { OperationTypeEnum as OnboardingOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/OnboardingOperationDTO";
 import { OperationListDTO } from "../../../../../../definitions/idpay/timeline/OperationListDTO";
@@ -16,11 +16,8 @@ import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";
 import { formatDateAsShortFormat } from "../../../../../utils/dates";
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
-import {
-  IOLogoPaymentType,
-  LogoPayment
-} from "../../../../../components/core/logos";
-import { operationCircuitTypeMap } from "../utils/utils";
+import { LogoPayment } from "../../../../../components/core/logos";
+import { InstrumentBrandEnum, instrumentBrandMap } from "../utils/utils";
 
 const styles = StyleSheet.create({
   alignCenter: {
@@ -33,8 +30,7 @@ const styles = StyleSheet.create({
     paddingLeft: 8,
     // required since ListItem has a default paddingRight
     paddingRight: 0
-  },
-  imageSize: { height: 16, width: 24 }
+  }
 });
 
 const getHourAndMinuteFromDate = (date: Date) => format(date, "HH:mm");
@@ -63,21 +59,15 @@ const OperationIcon = ({ operation }: OperationComponentProps) => {
       return <Icon name={"warning"} color="red" />;
 
     default:
-      if ("circuitType" in operation) {
-        const cardIcon = operationCircuitTypeMap[operation.circuitType];
+      if ("brand" in operation) {
+        const cardIcon =
+          instrumentBrandMap[operation.brand as InstrumentBrandEnum];
         return cardIcon !== undefined ? (
-          <LogoPayment name={cardIcon} size={"100%"} />
-        ) : null;
-      }
-      if ("brandLogo" in operation) {
-        return (
-          <Image
-            style={styles.imageSize}
-            source={{ uri: operation.brandLogo }}
-          />
+          <LogoPayment name={cardIcon} />
+        ) : (
+          <Icon name="creditCard" size={24} />
         );
       }
-
       return null;
   }
 };
