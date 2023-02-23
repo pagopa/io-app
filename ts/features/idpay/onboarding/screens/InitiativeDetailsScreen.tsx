@@ -153,7 +153,6 @@ const InitiativeDetailsScreen = () => {
       setHasScrolled(true);
     }
   };
-  const scrollViewRef = React.useRef<ScrollView>(null);
   const handleGoBackPress = () => {
     machine.send({ type: "QUIT_ONBOARDING" });
   };
@@ -175,7 +174,6 @@ const InitiativeDetailsScreen = () => {
         onContentSizeChange={handleScrollViewContentSizeChange}
         onScroll={handleScrollViewOnScroll}
         scrollEventThrottle={400}
-        ref={scrollViewRef}
         style={IOStyles.flex}
       >
         <View style={IOStyles.horizontalContentPadding}>
