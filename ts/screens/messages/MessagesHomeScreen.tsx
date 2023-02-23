@@ -1,10 +1,8 @@
-import { PublicKey } from "@pagopa/io-react-native-crypto";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import * as TE from "fp-ts/lib/TaskEither";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
@@ -24,7 +22,7 @@ import SectionStatusComponent, {
 } from "../../components/SectionStatus";
 import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
 import { unsupportedDeviceMoreInfoUrl } from "../../config";
-import { lollipopKeyTagSelector } from "../../features/lollipop/store/reducers/lollipop";
+import { usePublicKeyState } from "../../features/lollipop/hooks/usePublicKeyState";
 import I18n from "../../i18n";
 import MessagesHomeTabNavigator from "../../navigation/MessagesHomeTabNavigator";
 import {
@@ -55,7 +53,6 @@ import {
   useScreenReaderEnabled
 } from "../../utils/accessibility";
 import { MESSAGE_ICON_HEIGHT } from "../../utils/constants";
-import { taskGetPublicKey } from "../../utils/crypto";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { showToast } from "../../utils/showToast";
 
@@ -87,19 +84,7 @@ const MessagesHomeScreen = ({
 }: Props) => {
   const needsMigration = Object.keys(messagesStatus).length > 0;
 
-  const [publicKeyState, setPublicKeyState] = useState<
-    PublicKey | "error" | "retrieving"
-  >("retrieving");
-  const keyTag = useIOSelector(lollipopKeyTagSelector);
-  useEffect(() => {
-    void pipe(
-      keyTag,
-      O.getOrElse(() => "error"),
-      taskGetPublicKey,
-      TE.map(key => setPublicKeyState(key)),
-      TE.mapLeft(() => setPublicKeyState("error"))
-    )();
-  }, [keyTag]);
+  const publicKeyState = usePublicKeyState();
 
   useOnFirstRender(() => {
     if (needsMigration) {
@@ -137,7 +122,8 @@ const MessagesHomeScreen = ({
   const isScreenReaderEnabled = useScreenReaderEnabled();
 
   const isLollipopEnabled = useIOSelector(isLollipopEnabledSelector);
-  const showUnsupportedDeviceBanner = isLollipopEnabled && !publicKeyState;
+  const showUnsupportedDeviceBanner =
+    isLollipopEnabled && publicKeyState === "error";
   const unsupportedDevicesStatusComponent = showUnsupportedDeviceBanner && (
     <InnerSectionStatus
       sectionKey={"messages"}
