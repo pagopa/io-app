@@ -151,14 +151,15 @@ export const idpayTimelineIsLastPageSelector = createSelector(
   idpayPaginatedTimelineSelector,
   idpayTimelineCurrentPageSelector,
   (paginatedTimeline, currentPage) => {
-    const gottenTimeline = pot.getOrElse(paginatedTimeline, {});
     const isNotFirstPage = currentPage > 0;
-    return (
-      // the "isLastPage" (right hand of the >=) check can only be done here, since gottenTimeline
-      // is undefined when currentPage === -1 , and when it is === 0 it is
-      // possibly the initiative's details timeline.
-      isNotFirstPage && currentPage >= gottenTimeline[currentPage].totalPages
-      // PAGE>0 && PAGE>=TOTALPAGES
+    // we are using a pot.map here since paginatedTimeline is possibly pot.none
+    return pot.getOrElse(
+      pot.map(paginatedTimeline, paginatedTimeline => {
+        const { totalPages } = paginatedTimeline[currentPage];
+        const isLastPage = currentPage >= totalPages;
+        return isNotFirstPage && isLastPage;
+      }),
+      false
     );
   }
 );
