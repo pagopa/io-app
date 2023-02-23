@@ -12,7 +12,10 @@ import {
   getKeyGenerationInfo,
   KeyGenerationInfo
 } from "../../utils/crypto";
-import { mixpanelTrack } from "./../../mixpanel";
+import {
+  trackLollipopKeyGenerationFailure,
+  trackLollipopKeyGenerationSuccess
+} from "../../utils/analytics";
 
 /**
  * Generates a new crypto key pair.
@@ -35,17 +38,16 @@ export function* cryptoKeyGenerationSaga(
 export function* trackMixpanelCryptoKeyPairEvents(keyTag: string) {
   const keyInfo = yield* call(getKeyGenerationInfo, keyTag);
 
-  if (keyInfo && !keyInfo.errorCode) {
-    void mixpanelTrack("LOLLIPOP_KEY_GENERATION_SUCCESS", {
-      kty: keyInfo.keyType
-    });
+  if (!keyInfo) {
+    return;
   }
 
-  if (keyInfo && keyInfo.errorCode) {
-    void mixpanelTrack("LOLLIPOP_KEY_GENERATION_FAILURE", {
-      reason: keyInfo.errorCode
-    });
+  if (keyInfo.errorCode) {
+    trackLollipopKeyGenerationFailure(keyInfo);
+    return;
   }
+
+  trackLollipopKeyGenerationSuccess(keyInfo);
 }
 
 /**

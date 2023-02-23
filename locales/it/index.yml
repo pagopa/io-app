@@ -1708,7 +1708,7 @@ messages:
         block1: Scaduto il 
         block2: alle ore 
     prescription:
-      expiringOrValidAlert: 
+      expiringOrValidAlert:
         block1: Scade il 
         block2: alle
       expiredAlert:
@@ -1811,6 +1811,7 @@ messageDetails:
   write: Scrivi
   id: "ID:"
   attachments:
+    loading: "Caricamento del documento..."
     badFormat: "Il formato dell'allegato non è supportato. Contatta l'ente mittente"
     corruptedFile: "L'allegato è danneggato e non può essere aperto. Contatta l'ente mittente"
     downloadFailed: "L'allegato non è al momento disponibile. Riprova o contatta l'ente mittente"
@@ -1920,6 +1921,7 @@ services:
 serviceDetail:
   fiscalCode: "C.F. Ente"
   fiscalCodeAccessibility: "Codice fiscale Ente"
+  fiscalCodeAccessibilityCopy: "Copia codice fiscale Ente"
   contacts:
     title: "Questo servizio può:"
   headerTitle: "Dettagli del Servizio"
@@ -3327,7 +3329,7 @@ idpay:
     details:
       initiativeCard:
         availableAmount: Disponibile
-        validUntil: Valido fino al
+        validUntil: Valido fino al {{expiryDate}}
         toRefund: da rimborsare
       initiativeDetailsScreen:
         notConfigured:
@@ -3428,10 +3430,10 @@ idpay:
       INSTRUMENT_ENROLL_FAILURE: "Errore durante l'aggiunta del metodo di pagamento"
       INSTRUMENT_DELETE_FAILURE: "Errore durante la rimozione del metodo di pagamento"
     headerTitle: "Configura l'iniziativa"
-    intro: 
+    intro:
       title: "Ci siamo quasi"
       body: "Per poter usufruire dell’iniziativa, abbiamo bisogno di qualche informazione in più."
-      requiredData: 
+      requiredData:
         title: "Dati richiesti:"
         ibanTitle: "IBAN a te intestato"
         ibanSubtitle: "Per poter ricevere eventuali rimborsi"
@@ -3439,11 +3441,11 @@ idpay:
         instrumentSubtitle: "Indica i metodi da abilitare all’iniziativa"
       buttons:
         continue: "Inizia la configurazione"
-    instruments: 
+    instruments:
       title: "Metodi di pagamento"
       header: Scegli quali metodi di pagamento associare
       body: "Poi, usali per pagare e chiedi all’esercente di usare {{initiativeName}}."
-      footer: Modifica queste scelte o aggiunti altri metodi in qualsiasi momento dalla sezione Portafoglio
+      footer: Modifica queste scelte o aggiungi altri metodi in qualsiasi momento dalla sezione Portafoglio
       instrumentStatus:
         active: Attivo 
         pendingActivation: In attivazione
@@ -3480,6 +3482,10 @@ idpay:
         bodyLink: Dpr 28 dicembre 2000 n. 445 art 46 e 47 
         nameAssignInput: Assegna un nome
         bottomLabel: Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento visitando la sezione Profilo
+      enrollment:
+        header: Scegli quale IBAN associare all’iniziativa
+        subTitle: Associa un IBAN salvato nel tuo profilo per poter ricevere i rimborsi legati all’iniziativa.
+        footer: Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento visitando la sezione Profilo
       button:
         addNew: Aggiungi nuovo
       updateToast: IBAN modificato correttamente
