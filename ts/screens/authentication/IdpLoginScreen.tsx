@@ -25,6 +25,7 @@ import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
 import { useLollipopLoginSource } from "../../features/lollipop/hooks/useLollipopLoginSource";
 import { publicKey } from "../../features/lollipop/types/LollipopLoginSource";
 import { lollipopSamlVerify } from "../../features/lollipop/utils/login";
+import { LollipopCheckStatus } from "../../features/lollipop/types/LollipopCheckStatus";
 import I18n from "../../i18n";
 import { mixpanelTrack } from "../../mixpanel";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
@@ -45,29 +46,20 @@ import { idpContextualHelpDataFromIdSelector } from "../../store/reducers/conten
 import { GlobalState } from "../../store/reducers/types";
 import { SessionToken } from "../../types/SessionToken";
 import { getAppVersion } from "../../utils/appVersion";
-import { getIntentFallbackUrl, onLoginUriChanged } from "../../utils/login";
+import {
+  getIdpLoginUri,
+  getIntentFallbackUrl,
+  onLoginUriChanged
+} from "../../utils/login";
 import { getSpidErrorCodeDescription } from "../../utils/spidErrorCode";
 import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
 } from "../../utils/supportAssistance";
 import { getUrlBasepath } from "../../utils/url";
+import { lollipopLoginEnabled } from "../../config";
+import { trackLollipopIdpLoginFailure } from "../../utils/analytics";
 import { originSchemasWhiteList } from "./originSchemasWhiteList";
-
-// Type used to handle the LolliPOP checks.
-// None means that the component state is ready to start a
-// verification process if a SAMLRequest query parameter is detected
-// Checking means that LolliPOP signature verification is happening
-// and the WebView shall not process any request (especially not
-// the one containing the SAMLRequest query parameter)
-// Trusted means that LolliPOP signature checking was successfull
-// and the normal login flow can be done
-// Untrusted means that LolliPOP signature checking has failed
-// and the user cannot proceed with the login
-type LollipopCheckStatus = {
-  status: "none" | "checking" | "trusted" | "untrusted";
-  url: O.Option<string>;
-};
 
 type NavigationProps = IOStackNavigationRouteProps<
   AuthenticationParamsList,
@@ -125,7 +117,10 @@ const styles = StyleSheet.create({
   webViewWrapper: { flex: 1 }
 });
 
-const getUserAgentForWebView = () => `IO-App/${getAppVersion()}`;
+// TODO if left as it is, this would cause some IDP to offer limited login capabilities.
+// See: https://pagopa.atlassian.net/browse/IOAPPCIT-46
+const getUserAgentForWebView = () =>
+  lollipopLoginEnabled ? `IO-App/${getAppVersion()}` : undefined;
 
 /**
  * A screen that allows the user to login with an IDP.
@@ -144,9 +139,9 @@ const IdpLoginScreen = (props: Props) => {
     undefined
   );
 
-  const loginSource = useLollipopLoginSource({
-    loggedOutWithIdpAuth: props.loggedOutWithIdpAuth
-  });
+  const idpId = props.loggedOutWithIdpAuth?.idp.id;
+  const loginUri = idpId ? getIdpLoginUri(idpId) : undefined;
+  const loginSource = useLollipopLoginSource(loginUri);
 
   const choosenTool = useMemo(
     () => assistanceToolRemoteConfig(props.assistanceToolConfig),
@@ -156,8 +151,6 @@ const IdpLoginScreen = (props: Props) => {
   const startLoginProcess = useCallback(() => {
     if (loginSource.kind === "ready") {
       setWebviewSource(loginSource.value);
-    } else if (loginSource.kind === "error") {
-      setRequestState(pot.noneError(ErrorType.LOADING_ERROR));
     }
   }, [loginSource]);
 
@@ -317,7 +310,8 @@ const IdpLoginScreen = (props: Props) => {
           });
           setWebviewSource({ uri: eventUrl });
         },
-        () => {
+        (reason: string) => {
+          trackLollipopIdpLoginFailure(reason);
           setLollipopCheckStatus({
             status: "untrusted",
             url: O.some(eventUrl)

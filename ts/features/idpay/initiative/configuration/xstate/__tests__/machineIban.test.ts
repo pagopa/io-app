@@ -85,12 +85,12 @@ describe("IDPay configuration machine in IBAN mode", () => {
       expect(mockServices.enrollIban).toHaveBeenCalledTimes(1)
     );
 
-    expect(currentState).toMatch("CONFIGURATION_COMPLETED");
+    expect(currentState).toMatchObject({
+      CONFIGURING_IBAN: "DISPLAYING_IBAN_LIST"
+    });
 
     await waitFor(() =>
-      expect(
-        mockActions.navigateToInitiativeDetailScreen
-      ).toHaveBeenCalledTimes(1)
+      expect(mockActions.showUpdateIbanToast).toHaveBeenCalledTimes(1)
     );
   });
 

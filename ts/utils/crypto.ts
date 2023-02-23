@@ -1,4 +1,9 @@
-import { deleteKey, getPublicKey } from "@pagopa/io-react-native-crypto";
+import {
+  deleteKey,
+  generate,
+  getPublicKey,
+  CryptoError
+} from "@pagopa/io-react-native-crypto";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { pipe } from "fp-ts/lib/function";
 import * as T from "fp-ts/lib/Task";
@@ -11,6 +16,19 @@ export type KeyGenerationInfo = {
   userInfo?: Record<string, string>;
 };
 
+export const wipeKeyGenerationInfo = async (keyTag: string) =>
+  pipe(
+    TE.tryCatch(
+      () => AsyncStorage.removeItem(keyTag),
+      () => false
+    ),
+    TE.map(_ => true),
+    TE.getOrElse(() => T.of(false))
+  )();
+
+// TODO: we should consider storing this data on redux instead
+// to access the AsyncStorage directly.
+// https://pagopa.atlassian.net/browse/LLK-43
 export const setKeyGenerationInfo = async (
   keyTag: string,
   value: KeyGenerationInfo
@@ -42,30 +60,53 @@ export const getKeyGenerationInfo = async (
     TE.getOrElse(() => T.of(null))
   )();
 
-export const checkPublicKeyExists = (keyId: string) =>
+export const checkPublicKeyExists = (keyTag: string) =>
   pipe(
     TE.tryCatch(
-      () => getPublicKey(keyId),
+      () => getPublicKey(keyTag),
       () => false
     ),
     TE.map(_ => true),
     TE.getOrElse(() => T.of(false))
   )();
 
-export const taskGetPublicKey = (keyId: string) =>
+const toCryptoError = (e: unknown) => e as CryptoError;
+
+export const taskRegenerateKey = (keyTag: string) =>
+  pipe(
+    TE.tryCatch(() => deleteKey(keyTag), toCryptoError),
+    TE.chain(() => TE.tryCatch(() => generate(keyTag), toCryptoError))
+  );
+
+export const taskGetPublicKey = (keyTag: string) =>
   pipe(
     TE.tryCatch(
-      () => getPublicKey(keyId),
+      () => getPublicKey(keyTag),
       () => undefined
     ),
     TE.getOrElseW(() => T.of(undefined))
   )();
 
-export const deleteKeyPair = (keyId: string) =>
+export const taskGeneratePublicKey = (keyTag: string) =>
   pipe(
     TE.tryCatch(
-      () => deleteKey(keyId),
+      () => generate(keyTag),
+      () => undefined
+    ),
+    TE.getOrElseW(() => T.of(undefined))
+  )();
+
+export const deleteKeyPair = (keyTag: string) =>
+  pipe(
+    TE.tryCatch(
+      () => wipeKeyGenerationInfo(keyTag),
       () => false
+    ),
+    TE.chain(() =>
+      TE.tryCatch(
+        () => deleteKey(keyTag),
+        () => false
+      )
     ),
     TE.map(_ => true),
     TE.getOrElse(() => T.of(false))

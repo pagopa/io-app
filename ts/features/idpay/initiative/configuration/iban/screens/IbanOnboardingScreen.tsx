@@ -109,7 +109,7 @@ const IbanOnboardingScreen = () => {
         <FooterWithButtons
           type="SingleButton"
           leftButton={{
-            title: I18n.t("global.buttons.continue"),
+            title: isLoading ? "" : I18n.t("global.buttons.continue"),
             isLoading,
             onPress: () => {
               const isDataSendable =

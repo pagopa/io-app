@@ -1,6 +1,5 @@
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { useSelector } from "@xstate/react";
-import { Text } from "native-base";
 import React from "react";
 import { View, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { IbanDTO } from "../../../../../../../definitions/idpay/iban/IbanDTO";
@@ -28,6 +27,7 @@ import {
   selectEnrolledIban,
   selectIsIbanOnlyMode
 } from "../../xstate/selectors";
+import { LabelSmall } from "../../../../../../components/core/typography/LabelSmall";
 
 type IbanEnrollmentScreenRouteParams = {
   initiativeId?: string;
@@ -62,6 +62,17 @@ const IbanEnrollmentScreen = () => {
     isUpsertingIbanSelector
   );
 
+  const handleSelectIban = React.useCallback(
+    (iban: IbanDTO) => {
+      setSelectedIban(iban);
+
+      if (isIbanOnly) {
+        configurationMachine.send({ type: "ENROLL_IBAN", iban });
+      }
+    },
+    [isIbanOnly, configurationMachine]
+  );
+
   const handleBackPress = () => {
     configurationMachine.send({ type: "BACK" });
   };
@@ -82,7 +93,8 @@ const IbanEnrollmentScreen = () => {
         <FooterWithButtons
           type="SingleButton"
           leftButton={{
-            title: "Aggiungi nuovo",
+            title: I18n.t("idpay.configuration.iban.button.addNew"),
+            disabled: isUpsertingIban,
             onPress: handleAddNewIbanPress,
             testID: "addIbanButtonTestID"
           }}
@@ -94,13 +106,14 @@ const IbanEnrollmentScreen = () => {
       <FooterWithButtons
         type="TwoButtonsInlineHalf"
         leftButton={{
-          title: "Aggiungi nuovo",
+          title: I18n.t("idpay.configuration.iban.button.addNew"),
+          disabled: isUpsertingIban,
           bordered: true,
           onPress: handleAddNewIbanPress,
           testID: "addIbanButtonTestID"
         }}
         rightButton={{
-          title: I18n.t("global.buttons.continue"),
+          title: isUpsertingIban ? "" : I18n.t("global.buttons.continue"),
           disabled: !selectedIban || isUpsertingIban,
           isLoading: isUpsertingIban,
           onPress: handleContinuePress,
@@ -138,7 +151,7 @@ const IbanEnrollmentScreen = () => {
           accessible={true}
           accessibilityRole={"radiogroup"}
           accessibilityState={{ checked: true }}
-          onPress={() => setSelectedIban(iban)}
+          onPress={() => !isSelected && handleSelectIban(iban)}
         />
       );
     });
@@ -157,11 +170,10 @@ const IbanEnrollmentScreen = () => {
         <View style={IOStyles.flex}>
           <VSpacer size={24} />
           <View style={IOStyles.horizontalContentPadding}>
-            <H1>Scegli quale IBAN associare all’iniziativa</H1>
+            <H1>{I18n.t("idpay.configuration.iban.enrollment.header")}</H1>
             <VSpacer size={8} />
             <Body>
-              Associa un IBAN salvato nel tuo profilo per poter ricevere i
-              rimborsi legati all’iniziativa.
+              {I18n.t("idpay.configuration.iban.enrollment.subTitle")}
             </Body>
           </View>
           <VSpacer size={24} />
@@ -171,10 +183,13 @@ const IbanEnrollmentScreen = () => {
             <View style={styles.infoRow}>
               <Icon name="profileAlt" color="grey" />
               <HSpacer size={16} />
-              <Text style={IOStyles.flex}>
-                Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento
-                visitando la sezione Profilo
-              </Text>
+              <LabelSmall
+                weight="Regular"
+                color="grey700"
+                style={IOStyles.flex}
+              >
+                {I18n.t("idpay.configuration.iban.enrollment.footer")}
+              </LabelSmall>
             </View>
           </ScrollView>
         </View>
