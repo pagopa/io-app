@@ -205,6 +205,7 @@ export const DSListItems = () => (
     <DSComponentViewerBox name="TimelineTransactionCard">
       <TimelineOperationListItem
         operation={{
+          brand: "MASTERCARD",
           operationId: "213123",
           operationType: "Pagamento Pos" as OperationTypeEnum,
           operationDate: new Date(),
