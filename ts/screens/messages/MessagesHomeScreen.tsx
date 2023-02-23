@@ -133,7 +133,7 @@ const MessagesHomeScreen = ({
 
   const isScreenReaderEnabled = useScreenReaderEnabled();
 
-  const showUnsupportedDeviceBanner = publicKeyState === undefined;
+  const showUnsupportedDeviceBanner = !publicKeyState;
   const unsupportedDevicesStatusComponent = showUnsupportedDeviceBanner && (
     <InnerSectionStatus
       sectionKey={"messages"}
