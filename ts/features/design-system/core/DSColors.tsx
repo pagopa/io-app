@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Text, View, ColorValue, StyleSheet } from "react-native";
+import { Dimensions, Text, View, ColorValue, StyleSheet } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { H2 } from "../../../components/core/typography/H2";
@@ -13,41 +13,87 @@ import {
   IOColorsNeutral,
   IOColorsTints,
   IOColorsStatus,
-  IOColorsExtra
+  IOColorsExtra,
+  IOColorsNeutralDark
 } from "../../../components/core/variables/IOColors";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
+import themeVariables from "../../../theme/variables";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
-const colorItemGutter = 16;
+const gradientItemGutter = 16;
+const colorItemGutter = 32;
 const sectionTitleMargin = 16;
-const colorItemBorder = hexToRgba(IOColors.black, 0.1);
+const colorItemBorderLightMode = hexToRgba(IOColors.black, 0.1);
+const colorItemBorderDarkMode = hexToRgba(IOColors.white, 0.25);
+
 const colorPillBg = hexToRgba(IOColors.black, 0.2);
 
 const styles = StyleSheet.create({
-  itemsWrapper: {
+  gradientItemsWrapper: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "flex-start",
+    marginLeft: (gradientItemGutter / 2) * -1,
+    marginRight: (gradientItemGutter / 2) * -1,
+    marginBottom: 16
+  },
+  colorItemsWrapper: {
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "flex-start",
     marginLeft: (colorItemGutter / 2) * -1,
-    marginRight: (colorItemGutter / 2) * -1,
-    marginBottom: 16
+    marginRight: (colorItemGutter / 2) * -1
+  },
+  colorWrapperBothModes: {
+    width: "50%",
+    paddingHorizontal: colorItemGutter / 2,
+    paddingTop: 16
   },
   colorWrapper: {
     justifyContent: "flex-start",
     marginBottom: 16
   },
+  smallCapsTitle: {
+    fontSize: 10,
+    textAlign: "right",
+    textTransform: "uppercase",
+    marginBottom: 12
+  },
+  smallCapsLightMode: {
+    color: IOColors.bluegrey
+  },
+  smallCapsDarkMode: {
+    color: IOColors.grey200
+  },
+  darkModeWrapper: {
+    position: "absolute",
+    height: "100%",
+    width: Dimensions.get("window").width / 2,
+    right: 0,
+    marginRight: themeVariables.contentPadding * -1,
+    marginLeft: themeVariables.contentPadding * -1,
+    backgroundColor: IOColors.blackNew,
+    borderTopLeftRadius: 12,
+    borderBottomLeftRadius: 12
+  },
   gradientWrapper: {
     width: "50%",
     justifyContent: "flex-start",
     marginBottom: 16,
-    paddingHorizontal: colorItemGutter / 2
+    paddingHorizontal: gradientItemGutter / 2
   },
   colorItem: {
     width: "100%",
     padding: 8,
     borderRadius: 4,
     alignItems: "flex-end",
-    borderColor: colorItemBorder,
     borderWidth: 1
+  },
+  colorItemLightMode: {
+    borderColor: colorItemBorderLightMode
+  },
+  colorItemDarkMode: {
+    borderColor: colorItemBorderDarkMode
   },
   gradientItem: {
     aspectRatio: 2 / 1,
@@ -55,7 +101,7 @@ const styles = StyleSheet.create({
     padding: 12,
     alignItems: "flex-end",
     justifyContent: "space-between",
-    borderColor: colorItemBorder,
+    borderColor: colorItemBorderLightMode,
     borderWidth: 1
   },
   colorPill: {
@@ -70,7 +116,8 @@ const styles = StyleSheet.create({
 
 const renderColorGroup = (
   name: string,
-  colorObject: Record<string, ColorValue>
+  colorObjectLightMode: Record<string, ColorValue>,
+  colorObjectDarkMode?: Record<string, ColorValue>
 ) => (
   <View style={{ marginBottom: 40 }}>
     {name && (
@@ -83,16 +130,42 @@ const renderColorGroup = (
       </H2>
     )}
 
-    {Object.entries(colorObject).map(([name, colorValue]) => (
-      <ColorBox key={name} name={name} color={colorValue} />
-    ))}
+    {colorObjectDarkMode ? (
+      <View style={IOStyles.row}>
+        <View style={styles.darkModeWrapper} />
+        <View style={styles.colorItemsWrapper}>
+          <View style={styles.colorWrapperBothModes}>
+            <SmallCapsTitle title="Light mode" />
+            <View style={IOStyles.flex}>
+              {Object.entries(colorObjectLightMode).map(
+                ([name, colorValue]) => (
+                  <ColorBox key={name} name={name} color={colorValue} />
+                )
+              )}
+            </View>
+          </View>
+          <View style={styles.colorWrapperBothModes}>
+            <SmallCapsTitle title="Dark mode" darkMode />
+            <View style={IOStyles.flex}>
+              {Object.entries(colorObjectDarkMode).map(([name, colorValue]) => (
+                <ColorBox darkMode key={name} name={name} color={colorValue} />
+              ))}
+            </View>
+          </View>
+        </View>
+      </View>
+    ) : (
+      Object.entries(colorObjectLightMode).map(([name, colorValue]) => (
+        <ColorBox key={name} name={name} color={colorValue} />
+      ))
+    )}
   </View>
 );
 
 export const DSColors = () => (
   <DesignSystemScreen title={"Colors"}>
     {/* Neutrals */}
-    {renderColorGroup("Neutrals", IOColorsNeutral)}
+    {renderColorGroup("Neutrals", IOColorsNeutral, IOColorsNeutralDark)}
     {/* Tints */}
     {renderColorGroup("Main tints", IOColorsTints)}
     {/* Status */}
@@ -108,7 +181,7 @@ export const DSColors = () => (
     >
       Gradients
     </H2>
-    <View style={styles.itemsWrapper}>
+    <View style={styles.gradientItemsWrapper}>
       {Object.entries(IOColorGradients).map(([name, colorValues]) => (
         <GradientBox key={name} name={name} colors={colorValues} />
       ))}
@@ -136,37 +209,39 @@ export const DSColors = () => (
 type ColorBoxProps = {
   name: string;
   color: ColorValue;
+  darkMode?: boolean;
 };
+
+const ColorBox = ({ name, color, darkMode }: ColorBoxProps) => (
+  <View style={styles.colorWrapper}>
+    <View
+      style={[
+        styles.colorItem,
+        darkMode ? styles.colorItemDarkMode : styles.colorItemLightMode,
+        { backgroundColor: color }
+      ]}
+    >
+      {color && <Text style={styles.colorPill}>{color}</Text>}
+    </View>
+    {name && (
+      <LabelSmall color={darkMode ? "grey200" : "bluegrey"} weight={"Regular"}>
+        {name}
+      </LabelSmall>
+    )}
+  </View>
+);
 
 type GradientBoxProps = {
   name: string;
   colors: Array<string>;
 };
 
-const ColorBox = (props: ColorBoxProps) => (
-  <View style={styles.colorWrapper}>
-    <View
-      style={{
-        ...styles.colorItem,
-        backgroundColor: props.color
-      }}
-    >
-      {props.color && <Text style={styles.colorPill}>{props.color}</Text>}
-    </View>
-    {props.name && (
-      <LabelSmall color={"bluegrey"} weight={"Regular"}>
-        {props.name}
-      </LabelSmall>
-    )}
-  </View>
-);
-
-const GradientBox = (props: GradientBoxProps) => {
-  const [first, last] = props.colors;
+const GradientBox = ({ name, colors }: GradientBoxProps) => {
+  const [first, last] = colors;
   return (
     <View style={styles.gradientWrapper}>
       <LinearGradient
-        colors={props.colors}
+        colors={colors}
         useAngle={true}
         angle={180}
         style={styles.gradientItem}
@@ -174,11 +249,27 @@ const GradientBox = (props: GradientBoxProps) => {
         {first && <Text style={styles.colorPill}>{first}</Text>}
         {last && <Text style={styles.colorPill}>{last}</Text>}
       </LinearGradient>
-      {props.name && (
+      {name && (
         <H5 color={"bluegrey"} weight={"Regular"}>
-          {props.name}
+          {name}
         </H5>
       )}
     </View>
   );
 };
+
+type SmallCapsTitleProps = {
+  title: string;
+  darkMode?: boolean;
+};
+
+const SmallCapsTitle = ({ title, darkMode }: SmallCapsTitleProps) => (
+  <Text
+    style={[
+      styles.smallCapsTitle,
+      darkMode ? styles.smallCapsDarkMode : styles.smallCapsLightMode
+    ]}
+  >
+    {title}
+  </Text>
+);

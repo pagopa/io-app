@@ -89,7 +89,7 @@ export const IOColors = asIOColors({
 export type IOColors = keyof typeof IOColors;
 
 // Dark Mode Palette
-export const IOCOlorsDark: Record<NonNullable<IOColors>, ColorValue> = {
+export const IOColorsDark: Record<NonNullable<IOColors>, ColorValue> = {
   /* Add original IOColors to allow overwriting
   of specific color values */
   ...IOColors,
@@ -100,41 +100,14 @@ export const IOCOlorsDark: Record<NonNullable<IOColors>, ColorValue> = {
   grey450: "#99A3C1",
   grey650: "#D2D6E3",
   grey700: "#E8EBF1",
-  grey850: "#E8EBF1",
+  grey850: "#F4F5F8",
   white: "#FFFFFF",
   blueNew: "#6D8BEE",
   blueNewDark: "#072588",
-  blueNewLight: "#B6C5F7",
-  blueNew50: "",
-  blueNew100: "",
-  blueNew200: "",
-  blueNew600: "",
-  turquoise: "",
-  turquoiseDark: "",
-  turquoiseLight: "",
-  turquoise50: "",
-  turquoise100: "",
-  error: "",
-  errorGraphic: "",
-  errorDark: "",
-  errorLight: "",
-  warning: "",
-  warningGraphic: "",
-  warningDark: "",
-  warningLight: "",
-  success: "",
-  successGraphic: "",
-  successDark: "",
-  successLight: "",
-  info: "",
-  infoGraphic: "",
-  infoDark: "",
-  infoLight: "",
-  cobalt: "",
-  blueItalia: "",
-  blue600: "",
-  blue50: ""
+  blueNewLight: "#B6C5F7"
 };
+
+export type IOColorsDark = keyof typeof IOColorsDark;
 
 export const IOColorGradients = asIOColorGradients({
   appLaunch: ["#0C00D3", "#0073E6"],
@@ -216,29 +189,35 @@ export const IOColorsLegacy = {
 };
 export type IOColorLegacy = keyof typeof IOColorsLegacy;
 
-const {
-  grey50,
-  grey100,
-  grey200,
-  grey450,
-  grey650,
-  grey700,
-  grey850,
-  blackNew
-} = IOColors;
-
-export const IOColorsNeutral = {
-  white,
-  grey50,
-  grey100,
-  grey200,
-  grey450,
-  grey650,
-  grey700,
-  grey850,
-  blackNew
-};
+export const IOColorsNeutral = asIOColors({
+  white: IOColors.white,
+  grey50: IOColors.grey50,
+  grey100: IOColors.grey100,
+  grey200: IOColors.grey200,
+  grey450: IOColors.grey450,
+  grey650: IOColors.grey650,
+  grey700: IOColors.grey700,
+  grey850: IOColors.grey850,
+  blackNew: IOColors.blackNew
+});
 export type IOColorsNeutral = keyof typeof IOColorsNeutral;
+
+export const IOColorsNeutralDark: Record<
+  NonNullable<IOColorsNeutral>,
+  ColorValue
+> = {
+  blackNew: IOColorsDark.blackNew,
+  grey50: IOColorsDark.grey50,
+  grey100: IOColorsDark.grey100,
+  grey200: IOColorsDark.grey200,
+  grey450: IOColorsDark.grey450,
+  grey650: IOColorsDark.grey650,
+  grey700: IOColorsDark.grey700,
+  grey850: IOColorsDark.grey850,
+  white: IOColors.white
+};
+
+export type IOColorsNeutralDark = keyof typeof IOColorsNeutralDark;
 
 const {
   blueNew,
