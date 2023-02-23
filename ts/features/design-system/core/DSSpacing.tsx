@@ -72,7 +72,7 @@ export const DSSpacing = () => (
           {/* Don't add spacer to the last item. Quick and dirty
         alternative to the Stack component.
         https://stackoverflow.com/a/60975451 */}
-          {i !== arr.length - 1 && <VSpacer size={24} />}
+          {i !== arr.length - 1 && <VSpacer size={16} />}
         </React.Fragment>
       ))}
 
@@ -89,13 +89,12 @@ export const DSSpacing = () => (
         {IOSpacer.map((spacerEntry, i, arr) => (
           <React.Fragment key={`${spacerEntry}-${i}-horizontal`}>
             <DSSpacerViewerBox orientation="horizontal" size={spacerEntry} />
-            {i !== arr.length - 1 && <HSpacer size={16} />}
+            {i !== arr.length - 1 && <HSpacer size={8} />}
           </React.Fragment>
         ))}
       </View>
 
-      <VSpacer size={40} />
-      <VSpacer size={8} />
+      <VSpacer size={48} />
     </ContentWrapper>
   </DesignSystemScreen>
 );
