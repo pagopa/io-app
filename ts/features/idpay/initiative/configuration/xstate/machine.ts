@@ -807,11 +807,8 @@ const createIDPayInitiativeConfigurationMachine = () =>
             return {};
           }
           const currentStatus =
-            context.instrumentStatuses[context.instrumentToEnroll.idWallet];
-
-          if (currentStatus === undefined) {
-            return {};
-          }
+            context.instrumentStatuses[context.instrumentToEnroll.idWallet] ||
+            p.none;
 
           return {
             instrumentStatuses: {
