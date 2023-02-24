@@ -93,15 +93,6 @@ export const IOColorsDark: Record<NonNullable<IOColors>, ColorValue> = {
   /* Add original IOColors to allow overwriting
   of specific color values */
   ...IOColors,
-  blackNew: "#0E0F13",
-  grey50: "#2B2E38",
-  grey100: "#555C70",
-  grey200: "#636B82",
-  grey450: "#99A3C1",
-  grey650: "#D2D6E3",
-  grey700: "#E8EBF1",
-  grey850: "#F4F5F8",
-  white: "#FFFFFF",
   blueNew: "#2351E6",
   turquoise: "#19CBCF",
   warning: "#FFD059",
@@ -210,7 +201,7 @@ export const IOColorsNeutralDark: Record<
   NonNullable<IOColorsNeutral>,
   ColorValue
 > = {
-  blackNew: IOColorsDark.blackNew,
+  white: IOColors.white,
   grey50: IOColorsDark.grey50,
   grey100: IOColorsDark.grey100,
   grey200: IOColorsDark.grey200,
@@ -218,7 +209,7 @@ export const IOColorsNeutralDark: Record<
   grey650: IOColorsDark.grey650,
   grey700: IOColorsDark.grey700,
   grey850: IOColorsDark.grey850,
-  white: IOColors.white
+  blackNew: IOColorsDark.blackNew
 };
 
 export type IOColorsNeutralDark = keyof typeof IOColorsNeutralDark;

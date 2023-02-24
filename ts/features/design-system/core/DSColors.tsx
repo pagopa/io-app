@@ -23,8 +23,9 @@ import themeVariables from "../../../theme/variables";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 const gradientItemGutter = 16;
-const colorItemGutter = 32;
 const sectionTitleMargin = 16;
+const colorItemGutter = 32;
+const colorItemPadding = 8;
 const colorItemBorderLightMode = hexToRgba(IOColors.black, 0.1);
 const colorItemBorderDarkMode = hexToRgba(IOColors.white, 0.25);
 
@@ -86,7 +87,7 @@ const styles = StyleSheet.create({
   },
   colorItem: {
     width: "100%",
-    padding: 8,
+    padding: colorItemPadding,
     borderRadius: 4,
     alignItems: "flex-end",
     borderWidth: 1
@@ -119,9 +120,10 @@ const styles = StyleSheet.create({
 const renderColorGroup = (
   name: string,
   colorObjectLightMode: Record<string, ColorValue>,
-  colorObjectDarkMode?: Record<string, ColorValue>
+  colorObjectDarkMode: Record<string, ColorValue>
 ) => {
   const colorArrayLightMode = Object.entries(colorObjectLightMode);
+  const colorArrayDarkMode = Object.entries(colorObjectDarkMode);
 
   return (
     <View style={{ marginBottom: 40 }}>
@@ -143,22 +145,34 @@ const renderColorGroup = (
           <View style={styles.colorItemsWrapper}>
             <View style={styles.colorWrapperBothModes}>
               <SmallCapsTitle title="Light mode" />
-              <View
-                style={
-                  (IOStyles.flex,
-                  {
-                    width:
-                      Dimensions.get("window").width -
-                      themeVariables.contentPadding -
-                      colorItemGutter +
-                      8
-                  })
-                }
-              >
+              <View style={IOStyles.flex}>
                 {Object.entries(colorObjectLightMode).map(
-                  ([name, colorValue]) => (
-                    <ColorBox key={name} name={name} color={colorValue} />
-                  )
+                  ([name, colorValue], i) => {
+                    const [, darkModeColorValue] = colorArrayDarkMode[i];
+                    const lightModeColorValue = colorValue;
+                    const isSameColorValue =
+                      lightModeColorValue === darkModeColorValue;
+                    return (
+                      <View
+                        key={`${name}-lightMode`}
+                        style={
+                          isSameColorValue && {
+                            width:
+                              Dimensions.get("window").width -
+                              themeVariables.contentPadding -
+                              colorItemGutter +
+                              colorItemPadding
+                          }
+                        }
+                      >
+                        <ColorBox
+                          mode={"light"}
+                          name={name}
+                          color={colorValue}
+                        />
+                      </View>
+                    );
+                  }
                 )}
               </View>
             </View>
@@ -174,8 +188,8 @@ const renderColorGroup = (
 
                     return (
                       <ColorBox
-                        darkMode
-                        key={name}
+                        mode="dark"
+                        key={`${name}-darkMode`}
                         name={name}
                         color={colorValue}
                         ghostMode={isSameColorValue}
@@ -205,7 +219,7 @@ export const DSColors = () => (
     {/* Status */}
     {renderColorGroup("Status", IOColorsStatus, IOColorsStatusDark)}
     {/* Extra */}
-    {renderColorGroup("Extra", IOColorsExtra)}
+    {renderColorGroup("Extra", IOColorsExtra, IOColorsExtra)}
 
     {/* Gradients */}
     <H2
@@ -243,23 +257,32 @@ export const DSColors = () => (
 type ColorBoxProps = {
   name: string;
   color: ColorValue;
-  darkMode?: boolean;
+  mode?: "light" | "dark";
   ghostMode?: boolean;
 };
 
-const ColorBox = ({ name, color, darkMode, ghostMode }: ColorBoxProps) => (
+const ColorBox = ({
+  name,
+  color,
+  mode = "light",
+  ghostMode
+}: ColorBoxProps) => (
   <View style={[styles.colorWrapper, ghostMode && { opacity: 0 }]}>
     <View
       style={[
         styles.colorItem,
-        darkMode ? styles.colorItemDarkMode : styles.colorItemLightMode,
+        mode === "dark" ? styles.colorItemDarkMode : styles.colorItemLightMode,
         { backgroundColor: color }
       ]}
     >
       {color && <Text style={styles.colorPill}>{color}</Text>}
     </View>
+
     {name && (
-      <LabelSmall color={darkMode ? "grey200" : "bluegrey"} weight={"Regular"}>
+      <LabelSmall
+        color={mode === "dark" ? "grey200" : "bluegrey"}
+        weight={"Regular"}
+      >
         {name}
       </LabelSmall>
     )}
