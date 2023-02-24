@@ -1,9 +1,10 @@
 import * as E from "fp-ts/lib/Either";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { PreferredLanguageEnum } from "../../../../../../definitions/backend/PreferredLanguage";
 import { IbanListDTO } from "../../../../../../definitions/idpay/iban/IbanListDTO";
 import { InitiativeDTO } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
+import { InstrumentDTO } from "../../../../../../definitions/idpay/wallet/InstrumentDTO";
 import { PaymentManagerClient } from "../../../../../api/pagopa";
 import { PaymentManagerToken, Wallet } from "../../../../../types/pagopa";
 import { SessionManager } from "../../../../../utils/SessionManager";
@@ -137,72 +138,67 @@ const createServicesImplementation = (
     return Promise.resolve(undefined);
   };
 
-  const loadPagoPAInstruments = async () => {
-    const pagoPAResponse = await pmSessionManager.withRefresh(
+  const loadWalletInstruments = async () => {
+    const response = await pmSessionManager.withRefresh(
       paymentManagerClient.getWalletsV2
     )();
 
-    if (E.isLeft(pagoPAResponse)) {
-      return Promise.reject("error loading pagoPA instruments");
-    }
+    const data: Promise<ReadonlyArray<Wallet>> = pipe(
+      response,
+      E.fold(
+        _ =>
+          Promise.reject(InitiativeFailureType.INSTRUMENTS_LIST_LOAD_FAILURE),
+        response => {
+          if (response.status !== 200) {
+            return Promise.reject(
+              InitiativeFailureType.INSTRUMENTS_LIST_LOAD_FAILURE
+            );
+          }
 
-    if (pagoPAResponse.right.status !== 200) {
-      return Promise.reject("error loading pagoPA instruments");
-    }
+          const wallet = pipe(
+            response.value.data,
+            O.fromNullable,
+            O.map(_ => _.map(convertWalletV2toWalletV1)),
+            O.getOrElse(() => [] as ReadonlyArray<Wallet>)
+          );
 
-    const data = pipe(
-      pagoPAResponse.right.value.data,
-      O.fromNullable,
-      O.map(_ => _.map(convertWalletV2toWalletV1)),
-      O.getOrElse(() => [] as ReadonlyArray<Wallet>)
+          return Promise.resolve(wallet);
+        }
+      )
     );
 
-    return Promise.resolve(data);
+    return data;
   };
 
-  const loadIDPayInstruments = async (initiativeId: string) => {
-    const idPayResponse = await walletClient.getInstrumentList({
-      initiativeId,
-      bearerAuth: bearerToken,
-      "Accept-Language": language
-    });
-
-    if (E.isLeft(idPayResponse)) {
-      return Promise.reject(
-        InitiativeFailureType.INSTRUMENTS_LIST_LOAD_FAILURE
-      );
-    }
-
-    if (idPayResponse.right.status === 404) {
-      return Promise.resolve([]);
-    }
-
-    if (idPayResponse.right.status !== 200) {
-      return Promise.reject(
-        InitiativeFailureType.INSTRUMENTS_LIST_LOAD_FAILURE
-      );
-    }
-
-    return Promise.resolve(idPayResponse.right.value.instrumentList);
-  };
-
-  const loadInstruments = async (context: Context) => {
+  const loadInitiativeInstruments = async (context: Context) => {
     if (context.initiativeId === undefined) {
       return Promise.reject(InitiativeFailureType.GENERIC);
     }
 
-    try {
-      const [pagoPAInstruments, idPayInstruments] = await Promise.all([
-        loadPagoPAInstruments(),
-        loadIDPayInstruments(context.initiativeId)
-      ]);
+    const response = await walletClient.getInstrumentList({
+      initiativeId: context.initiativeId,
+      bearerAuth: bearerToken,
+      "Accept-Language": language
+    });
 
-      return Promise.resolve({ pagoPAInstruments, idPayInstruments });
-    } catch {
-      return Promise.reject(
-        InitiativeFailureType.INSTRUMENTS_LIST_LOAD_FAILURE
-      );
-    }
+    const data: Promise<ReadonlyArray<InstrumentDTO>> = pipe(
+      response,
+      E.fold(
+        _ =>
+          Promise.reject(InitiativeFailureType.INSTRUMENTS_LIST_LOAD_FAILURE),
+        response => {
+          if (response.status !== 200) {
+            return Promise.reject(
+              InitiativeFailureType.INSTRUMENTS_LIST_LOAD_FAILURE
+            );
+          }
+
+          return Promise.resolve(response.value.instrumentList);
+        }
+      )
+    );
+
+    return data;
   };
 
   const enrollInstrument = async (context: Context) => {
@@ -210,27 +206,35 @@ const createServicesImplementation = (
       return Promise.reject(InitiativeFailureType.GENERIC);
     }
 
-    if (context.selectedInstrumentId === undefined) {
+    if (context.instrumentToEnroll === undefined) {
       return Promise.reject(InitiativeFailureType.GENERIC);
     }
 
     const response = await walletClient.enrollInstrument({
       initiativeId: context.initiativeId,
-      idWallet: context.selectedInstrumentId,
+      idWallet: context.instrumentToEnroll.idWallet.toString(),
       bearerAuth: bearerToken,
       "Accept-Language": language
     });
 
-    if (E.isLeft(response)) {
-      return Promise.reject(InitiativeFailureType.INSTRUMENT_ENROLL_FAILURE);
-    }
+    const data: Promise<ReadonlyArray<InstrumentDTO>> = pipe(
+      response,
+      E.fold(
+        _ => Promise.reject(InitiativeFailureType.INSTRUMENT_ENROLL_FAILURE),
 
-    if (response.right.status !== 200) {
-      return Promise.reject(InitiativeFailureType.INSTRUMENT_ENROLL_FAILURE);
-    }
+        response => {
+          if (response.status !== 200) {
+            return Promise.reject(
+              InitiativeFailureType.INSTRUMENT_ENROLL_FAILURE
+            );
+          }
 
-    // After updating the list of instruments, we need to reload the list of enrolled instruments
-    return loadIDPayInstruments(context.initiativeId);
+          return loadInitiativeInstruments(context);
+        }
+      )
+    );
+
+    return data;
   };
 
   const deleteInstrument = async (context: Context) => {
@@ -238,27 +242,35 @@ const createServicesImplementation = (
       return Promise.reject(InitiativeFailureType.GENERIC);
     }
 
-    if (context.selectedInstrumentId === undefined) {
+    if (context.instrumentToDelete === undefined) {
       return Promise.reject(InitiativeFailureType.GENERIC);
     }
 
     const response = await walletClient.deleteInstrument({
       initiativeId: context.initiativeId,
-      instrumentId: context.selectedInstrumentId,
+      instrumentId: context.instrumentToDelete.instrumentId,
       bearerAuth: bearerToken,
       "Accept-Language": language
     });
 
-    if (E.isLeft(response)) {
-      return Promise.reject(InitiativeFailureType.INSTRUMENT_DELETE_FAILURE);
-    }
+    const data: Promise<ReadonlyArray<InstrumentDTO>> = pipe(
+      response,
+      E.fold(
+        _ => Promise.reject(InitiativeFailureType.INSTRUMENT_DELETE_FAILURE),
 
-    if (response.right.status !== 200) {
-      return Promise.reject(InitiativeFailureType.INSTRUMENT_DELETE_FAILURE);
-    }
+        response => {
+          if (response.status !== 200) {
+            return Promise.reject(
+              InitiativeFailureType.INSTRUMENT_DELETE_FAILURE
+            );
+          }
 
-    // After updating the list of instruments, we need to reload the list of enrolled instruments
-    return loadIDPayInstruments(context.initiativeId);
+          return loadInitiativeInstruments(context);
+        }
+      )
+    );
+
+    return data;
   };
 
   return {
@@ -266,7 +278,8 @@ const createServicesImplementation = (
     loadIbanList,
     enrollIban,
     confirmIban,
-    loadInstruments,
+    loadWalletInstruments,
+    loadInitiativeInstruments,
     enrollInstrument,
     deleteInstrument
   };
