@@ -5,7 +5,10 @@ import { ExternalTypographyProps, RequiredTypographyProps } from "./common";
 import { useTypographyFactory } from "./Factory";
 
 // when the weight is bold, only these color are allowed
-type AllowedBoldColors = Extract<IOColors, "bluegreyDark" | "blue" | "white" | "greenLight">;
+type AllowedBoldColors = Extract<
+  IOColors,
+  "bluegreyDark" | "blue" | "white" | "greenLight"
+>;
 
 // these colors are allowed only when the weight is SemiBold
 type AllowedSemiBoldColors = Extract<
