@@ -11,10 +11,7 @@ import { lollipopKeyTagSelector } from "../store/reducers/lollipop";
 import { LoginSourceAsync } from "../types/LollipopLoginSource";
 import { DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER } from "../utils/login";
 
-export const useLollipopLoginSource = (
-  loginUri?: string,
-  forceNewKey?: number
-) => {
+export const useLollipopLoginSource = (loginUri?: string) => {
   const [loginSource, setLoginSource] = useState<LoginSourceAsync>({
     kind: "initial"
   });
@@ -34,7 +31,9 @@ export const useLollipopLoginSource = (
   }, []);
 
   const regenerateLoginSource = useCallback(() => {
+    console.log(`=== HOOK regenerateLoginSource`);
     if (!loginUri) {
+      console.log(`=== HOOK STOPPED: NO loginUri`);
       // When the redux state is LoggedOutWithIdp the loginUri is always defined.
       // After the user has logged in, the status changes to LoggedIn and the loginUri is not
       // defined any more.
@@ -51,6 +50,11 @@ export const useLollipopLoginSource = (
         );
       }
 
+      console.log(
+        `=== HOOK DEPRECATED LOGIN: (${!useLollipopLogin}) (${O.isNone(
+          lollipopKeyTag
+        )})`
+      );
       // Key generation may have failed. In that case, follow the old
       // non-lollipop login flow
       setDeprecatedLoginUri(loginUri);
@@ -65,7 +69,8 @@ export const useLollipopLoginSource = (
     void pipe(
       lollipopKeyTag.value,
       taskRegenerateKey,
-      TE.map(key =>
+      TE.map(key => {
+        console.log(`=== HOOK public key retrieved, setting loginSource`);
         setLoginSource({
           kind: "ready",
           value: {
@@ -79,22 +84,20 @@ export const useLollipopLoginSource = (
             }
           },
           publicKey: O.some(key)
-        })
-      ),
+        });
+      }),
       TE.mapLeft(error => {
+        console.log(
+          `=== HOOK RETRIEVAL OF PUBLIC KEY FAILED: (${JSON.stringify(error)})`
+        );
         trackLollipopIdpLoginFailure(error.message);
         setDeprecatedLoginUri(loginUri);
       })
     )();
-  }, [
-    useLollipopLogin,
-    lollipopKeyTag,
-    loginUri,
-    forceNewKey,
-    setDeprecatedLoginUri
-  ]);
+  }, [useLollipopLogin, lollipopKeyTag, loginUri, setDeprecatedLoginUri]);
 
   useEffect(() => {
+    console.log(`=== HOOK useEffect`);
     regenerateLoginSource();
   }, [regenerateLoginSource]);
 
