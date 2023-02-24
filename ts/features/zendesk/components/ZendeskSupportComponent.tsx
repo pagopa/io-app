@@ -3,13 +3,14 @@ import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
-import AdviceComponent from "../../../components/AdviceComponent";
+import { InfoBox } from "../../../components/box/InfoBox";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { H3 } from "../../../components/core/typography/H3";
 import { H4 } from "../../../components/core/typography/H4";
 import { Label } from "../../../components/core/typography/Label";
 import { Link } from "../../../components/core/typography/Link";
+import { IOColors } from "../../../components/core/variables/IOColors";
 import { zendeskPrivacyUrl } from "../../../config";
 import I18n from "../../../i18n";
 import { mixpanelTrack } from "../../../mixpanel";
@@ -75,9 +76,11 @@ const ZendeskSupportComponent = ({
         </Link>
       </H4>
       <VSpacer size={24} />
-      <AdviceComponent
-        text={I18n.t("support.helpCenter.supportComponent.adviceMessage")}
-      />
+      <InfoBox iconName={"io-notice"} iconColor={IOColors.blue} iconSize={18}>
+        <Label color={"bluegrey"} weight={"Regular"}>
+          {I18n.t("support.helpCenter.supportComponent.adviceMessage")}
+        </Label>
+      </InfoBox>
       <VSpacer size={16} />
 
       <ButtonDefaultOpacity
