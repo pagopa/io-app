@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     color: IOColors.bluegrey
   },
   smallCapsDarkMode: {
-    color: IOColors.grey200
+    color: IOColors.grey450
   },
   darkModeWrapper: {
     position: "absolute",
