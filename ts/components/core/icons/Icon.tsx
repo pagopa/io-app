@@ -94,6 +94,7 @@ import IconDocumentAttachmentPDF from "./svg/IconDocumentAttachmentPDF";
 import IconAttachment from "./svg/IconAttachment";
 import IconExternalLink from "./svg/IconExternalLink";
 import IconUnknownGdo from "./svg/IconUnknownGdo";
+import IconArrowCircleUp from "./svg/IconArrowCircleUp";
 import IconWarningFilled from "./svg/IconWarningFilled";
 import IconErrorFilled from "./svg/IconErrorFilled";
 import IconChevronRight from "./svg/IconChevronRight";
@@ -106,6 +107,7 @@ import IconArrowTop from "./svg/IconArrowTop";
 import IconArrowRight from "./svg/IconArrowRight";
 
 export const IOIcons = {
+  arrowCircleUp: IconArrowCircleUp,
   spid: IconSpid,
   cie: IconCie /* io-cie */,
   qrCode: IconQrCode /* io-qr */,

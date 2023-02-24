@@ -19,8 +19,9 @@ import { hexToRgba, IOColors } from "../core/variables/IOColors";
 import { IOSpringValues, IOScaleValues } from "../core/variables/IOAnimations";
 import { IOButtonStyles } from "../core/variables/IOStyles";
 import { makeFontStyleObject } from "../core/fonts";
+import { WithTestID } from "../../types/WithTestID";
 
-export type ButtonOutline = {
+export type ButtonOutline = WithTestID<{
   color?: "primary" | "neutral" | "contrast" | "danger";
   label: string;
   small?: boolean;
@@ -29,7 +30,7 @@ export type ButtonOutline = {
   accessibilityLabel: string;
   accessibilityHint?: string;
   onPress: (event: GestureResponderEvent) => void;
-};
+}>;
 
 type ColorStates = {
   border: {
@@ -146,7 +147,8 @@ export const ButtonOutline = ({
   disabled = false,
   onPress,
   accessibilityLabel,
-  accessibilityHint
+  accessibilityHint,
+  testID
 }: ButtonOutline) => {
   const isPressed: Animated.SharedValue<number> = useSharedValue(0);
 
@@ -221,6 +223,7 @@ export const ButtonOutline = ({
       accessibilityLabel={accessibilityLabel}
       accessibilityHint={accessibilityHint}
       accessibilityRole={"button"}
+      testID={testID}
       onPress={onPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
