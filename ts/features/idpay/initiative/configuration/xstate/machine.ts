@@ -806,12 +806,11 @@ const createIDPayInitiativeConfigurationMachine = () =>
           if (context.instrumentToEnroll === undefined) {
             return {};
           }
-          const currentStatus =
-            context.instrumentStatuses[context.instrumentToEnroll.idWallet];
 
-          if (currentStatus === undefined) {
-            return {};
-          }
+          // We fallback to `pot.none` if it's the first time we are enrolling the instrument
+          const currentStatus =
+            context.instrumentStatuses[context.instrumentToEnroll.idWallet] ||
+            p.none;
 
           return {
             instrumentStatuses: {
