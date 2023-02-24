@@ -48,7 +48,7 @@ export function* handleGetTimelinePage(
             return put(
               idpayTimelinePageGet.success({
                 timeline: response.value,
-                page: payload.page ?? 0
+                page: response.value.pageNo ?? 0
               })
             );
           } else {
