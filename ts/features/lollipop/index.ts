@@ -34,9 +34,6 @@ export function getSignAlgorithm(publicKey: PublicKey): SignatureAlgorithm {
   return publicKey.kty === "EC" ? "ecdsa-p256-sha256" : "rsa-pss-sha256";
 }
 
-/**
- * Result type of promises returnd by `chainSignPromises`
- */
 export type SignPromiseResult = {
   headerIndex: number;
   headerName: string;

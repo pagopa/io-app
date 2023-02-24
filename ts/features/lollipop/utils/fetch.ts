@@ -27,7 +27,11 @@ export const lollipopFetch = (
   const retriableFetch = toRetriableFetch();
   return retriableFetch(
     async (input: RequestInfo | URL, init?: RequestInit) => {
-      const requestAndKeyInfo = isKeyInfoAndRquestValid(keyInfo, input, init);
+      const requestAndKeyInfo = toRequestAndKeyInfoForLPFetch(
+        keyInfo,
+        input,
+        init
+      );
       if (requestAndKeyInfo) {
         // eslint-disable-next-line functional/no-let
         let newInit = requestAndKeyInfo.init;
@@ -251,7 +255,7 @@ function addHeader(
 /**
  * Check if the keyInfo and Request properties are properly initialized for fetching
  */
-function isKeyInfoAndRquestValid(
+function toRequestAndKeyInfoForLPFetch(
   keyInfo: KeyInfo,
   input: RequestInfo | URL,
   init?: RequestInit

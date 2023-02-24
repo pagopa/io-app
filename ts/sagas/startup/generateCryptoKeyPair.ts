@@ -99,7 +99,7 @@ function* generateCryptoKeyPair(keyTag: string) {
 }
 
 /**
- * Get the public key liked the provided keyTag
+ * Get the public key tied to the provided keyTag
  */
 export function* getCryptoPublicKey(keyTag: O.Option<string>) {
   const emptyKeyInfo: KeyInfo = {
