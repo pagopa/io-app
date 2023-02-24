@@ -8,14 +8,14 @@ import {
   Image,
   NativeScrollEvent,
   NativeSyntheticEvent,
-  StyleSheet,
-  Platform
+  StyleSheet
 } from "react-native";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import { ServicesSectionState } from "../../store/reducers/entities/services";
 import customVariables from "../../theme/variables";
 import { VSpacer } from "../core/spacer/Spacer";
+import { IOStyles } from "../core/variables/IOStyles";
 import ServiceList from "./ServiceList";
 
 type AnimatedProps = {
@@ -36,9 +36,7 @@ type Props = AnimatedProps & OwnProps;
 
 const styles = StyleSheet.create({
   contentWrapper: {
-    flex: 1,
-    borderTopWidth: Platform.OS === "android" ? 0.19 : undefined,
-    elevation: 0.1
+    flex: 1
   },
   headerContentWrapper: {
     paddingRight: customVariables.contentPadding,
@@ -67,7 +65,10 @@ const emptyListComponent = () => (
 );
 
 const ServicesSectionsList = (props: Props) => (
-  <View style={styles.contentWrapper}>
+  <View style={[styles.contentWrapper,IOStyles.topBorderForMessagesAndServices]}>
+    {/*TODO: This is a workaround to make sure that the list is not placed under the tab bar
+    https://pagopa.atlassian.net/jira/software/projects/IOAPPFD0/boards/313?selectedIssue=IOAPPFD0-40*/}
+    <View style={{marginTop:0.1}}/>
     <ServiceList
       animated={props.animated}
       sections={props.sections}

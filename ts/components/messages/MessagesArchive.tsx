@@ -1,7 +1,7 @@
 import * as O from "fp-ts/lib/Option";
 import { View } from "native-base";
 import React, { useCallback } from "react";
-import { Platform, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 
 import { pipe } from "fp-ts/lib/function";
 import I18n from "../../i18n";
@@ -11,12 +11,11 @@ import { useItemsSelection } from "../../utils/hooks/useItemsSelection";
 import ListSelectionBar from "../ListSelectionBar";
 import { EmptyListComponent } from "./EmptyListComponent";
 import MessageList from "./MessageList";
+import { IOStyles } from "../core/variables/IOStyles";
 
 const styles = StyleSheet.create({
   listWrapper: {
-    flex: 1,
-    borderTopWidth: Platform.OS === "android" ? 0.1 : undefined,
-    elevation: 0.1
+    flex: 1
   },
   listContainer: {
     flex: 1
@@ -74,7 +73,7 @@ const MessagesArchive = ({
   );
 
   return (
-    <View style={styles.listWrapper}>
+    <View style={[styles.listWrapper, IOStyles.topBorderForMessagesAndServices]}>
       <View style={styles.listContainer}>
         <MessageList
           filter={{ getArchived: true }}
