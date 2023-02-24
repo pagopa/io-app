@@ -16,7 +16,8 @@ import {
   IOCategoryIconType,
   IconProduct,
   IOProductIcons,
-  IOProductIconType
+  IOProductIconType,
+  IOIconsNew
 } from "../../../components/core/icons";
 import { H2 } from "../../../components/core/typography/H2";
 import { H3 } from "../../../components/core/typography/H3";
@@ -49,6 +50,7 @@ export const DSIcons = () => (
           name={iconItemName}
           size="small"
           image={<Icon name={iconItemName as IOIconType} size="100%" />}
+          withDot={Object.keys(IOIconsNew).includes(iconItemName)}
         />
       ))}
     </View>

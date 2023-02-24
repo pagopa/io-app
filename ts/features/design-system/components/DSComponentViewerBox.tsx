@@ -6,6 +6,9 @@ const styles = StyleSheet.create({
   componentWrapper: {
     marginBottom: 24
   },
+  lastItem: {
+    marginBottom: 0
+  },
   labelWrapper: {
     display: "flex",
     flexDirection: "row",
@@ -26,15 +29,17 @@ const styles = StyleSheet.create({
 type DSComponentViewerBoxProps = {
   name: string;
   colorMode?: "dark" | "light";
+  last?: boolean;
   children: React.ReactNode;
 };
 
 export const DSComponentViewerBox = ({
   name,
   colorMode = "light",
+  last = false,
   children
 }: DSComponentViewerBoxProps) => (
-  <View style={styles.componentWrapper}>
+  <View style={last ? styles.lastItem : styles.componentWrapper}>
     {children}
     <View style={styles.labelWrapper}>
       {name && (
