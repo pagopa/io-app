@@ -15,14 +15,13 @@ import Animated, {
   Extrapolate,
   interpolateColor
 } from "react-native-reanimated";
-import themeVariables from "../../theme/variables";
 import { IOColors } from "../core/variables/IOColors";
 import { IOSpringValues, IOScaleValues } from "../core/variables/IOAnimations";
 import { BaseTypography } from "../core/typography/BaseTypography";
 import { IOButtonStyles } from "../core/variables/IOStyles";
 import { WithTestID } from "../../types/WithTestID";
 
-type Props = WithTestID<{
+export type ButtonSolid = WithTestID<{
   color?: "primary" | "danger" | "contrast";
   label: string;
   small?: boolean;
@@ -44,7 +43,7 @@ type ColorStates = {
 
 // COMPONENT CONFIGURATION
 
-const mapColorStates: Record<NonNullable<Props["color"]>, ColorStates> = {
+const mapColorStates: Record<NonNullable<ButtonSolid["color"]>, ColorStates> = {
   // Primary button
   primary: {
     default: IOColors.blue,
@@ -78,27 +77,6 @@ const mapColorStates: Record<NonNullable<Props["color"]>, ColorStates> = {
 const colorPrimaryButtonDisabled: IOColors = "bluegreyLight";
 
 const styles = StyleSheet.create({
-  button: {
-    alignItems: "center",
-    textAlignVertical: "center", // Android
-    justifyContent: "center",
-    /* Legacy visual properties. They will be replaced with
-    dynamic ones once NativeBase is gone */
-    borderRadius: themeVariables.btnBorderRadius,
-    paddingHorizontal: 16,
-    // Reset default visual parameters
-    elevation: 0,
-    shadowOffset: { width: 0, height: 0 },
-    shadowRadius: 0,
-    shadowOpacity: 0
-    /* Properties related to the new accessible variant
-    with visual parameters based on the FontScale.
-    We left them here because they will be a starting point
-    for the next iterations of the component. */
-    // paddingVertical: PixelRatio.getFontScale() * 10,
-    // paddingHorizontal: PixelRatio.getFontScale() * 16,
-    // borderRadius: PixelRatio.getFontScale() * 8
-  },
   backgroundDisabled: {
     backgroundColor: IOColors[colorPrimaryButtonDisabled]
   }
@@ -114,7 +92,7 @@ export const ButtonSolid = ({
   accessibilityLabel,
   accessibilityHint,
   testID
-}: Props) => {
+}: ButtonSolid) => {
   const isPressed: Animated.SharedValue<number> = useSharedValue(0);
 
   // Scaling transformation applied when the button is pressed
@@ -176,7 +154,7 @@ export const ButtonSolid = ({
     >
       <Animated.View
         style={[
-          styles.button,
+          IOButtonStyles.button,
           small
             ? IOButtonStyles.buttonSizeSmall
             : IOButtonStyles.buttonSizeDefault,
