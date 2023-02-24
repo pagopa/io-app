@@ -75,7 +75,7 @@ const MessagesInbox = ({
 
   return (
     <View
-      style={[styles.listWrapper, IOStyles.topBorderForMessagesAndServices]}
+      style={[styles.listWrapper, IOStyles.topListBorderBelowTabsStyle]}
     >
       <View style={styles.listContainer}>
         <MessageList

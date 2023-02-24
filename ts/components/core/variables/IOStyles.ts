@@ -25,7 +25,7 @@ export const IOStyles = StyleSheet.create({
     justifyContent: "space-between"
   },
   // https://github.com/pagopa/io-app/pull/4387
-  topBorderForMessagesAndServices: {
+  topListBorderBelowTabsStyle: {
     borderTopWidth: Platform.OS === "android" ? 0.1 : undefined,
     elevation: 0.1
   }
