@@ -24,7 +24,7 @@ export const IOStyles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between"
   },
-  //https://github.com/pagopa/io-app/pull/4387
+  // https://github.com/pagopa/io-app/pull/4387
   topBorderForMessagesAndServices: {
     borderTopWidth: Platform.OS === "android" ? 0.1 : undefined,
     elevation: 0.1

@@ -9,9 +9,9 @@ import { UIMessage } from "../../store/reducers/entities/messages/types";
 
 import { useItemsSelection } from "../../utils/hooks/useItemsSelection";
 import ListSelectionBar from "../ListSelectionBar";
+import { IOStyles } from "../core/variables/IOStyles";
 import { EmptyListComponent } from "./EmptyListComponent";
 import MessageList from "./MessageList";
-import { IOStyles } from "../core/variables/IOStyles";
 
 const styles = StyleSheet.create({
   listWrapper: {
@@ -73,7 +73,9 @@ const MessagesArchive = ({
   );
 
   return (
-    <View style={[styles.listWrapper, IOStyles.topBorderForMessagesAndServices]}>
+    <View
+      style={[styles.listWrapper, IOStyles.topBorderForMessagesAndServices]}
+    >
       <View style={styles.listContainer}>
         <MessageList
           filter={{ getArchived: true }}

@@ -32,10 +32,12 @@ const ServicesLocalScreen = () => {
   );
 
   return (
-    <View style={[styles.contentWrapper,IOStyles.topBorderForMessagesAndServices]}>
-      {/*TODO: This is a workaround to make sure that the list is not placed under the tab bar
-      https://pagopa.atlassian.net/jira/software/projects/IOAPPFD0/boards/313?selectedIssue=IOAPPFD0-40*/}
-      <View style={{marginTop:0.1}}/>
+    <View
+      style={[styles.contentWrapper, IOStyles.topBorderForMessagesAndServices]}
+    >
+      {/* TODO: This is a workaround to make sure that the list is not placed under the tab bar
+      https://pagopa.atlassian.net/jira/software/projects/IOAPPFD0/boards/313?selectedIssue=IOAPPFD0-40 */}
+      <View style={{ marginTop: 0.1 }} />
       <LocalServicesWebView onServiceSelect={onServiceSelect} />
     </View>
   );
