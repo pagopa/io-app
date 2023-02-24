@@ -5,7 +5,7 @@ import { SignatureComponents } from "../../utils/httpSignature/types/SignatureCo
 
 export type LollipopConfig = {
   nonce: string;
-  customContentToSign?: ReadonlyArray<string>;
+  customContentToSign?: Record<string, string>;
 };
 
 /**
@@ -36,6 +36,7 @@ export function getSignAlgorithm(publicKey: PublicKey): SignatureAlgorithm {
 
 export type SignPromiseResult = {
   headerIndex: number;
+  headerPrefix: string;
   headerName: string;
   headerValue: string;
   signature: string;

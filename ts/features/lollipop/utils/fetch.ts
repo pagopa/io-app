@@ -135,31 +135,40 @@ export const lollipopFetch = (
 
 export const customContentSignatureBases = (
   customContent: CutsomContentToSignInput
-): Array<CustomContentBaseSignature> =>
-  customContent.customContentToSign?.map((headerValue, index) => {
-    const headerIndex: number = index + 2;
-    const headerName = `x-pagopa-lollipop-custom-${headerIndex}`;
-    const customHeader = {
-      [headerName]: headerValue
-    };
-    const customHeaderSignatureConfig: SignatureConfig = forgeSignatureConfig(
-      customContent.signatureConfigForgeInput,
-      customContent.keyInfo,
-      [headerName]
-    );
-    const { signatureBase, signatureInput } = generateSignatureBase(
-      customHeader,
-      customHeaderSignatureConfig,
-      headerIndex
-    );
-    return {
-      signatureBase,
-      signatureInput,
-      headerIndex,
-      headerName,
-      headerValue
-    };
-  }) ?? [];
+): Array<CustomContentBaseSignature> => {
+  const contentToSign = customContent.customContentToSign ?? {};
+  const contentToSignKeys = Object.keys(
+    customContent.customContentToSign ?? []
+  );
+  return (
+    contentToSignKeys.map((headerPrefix, index) => {
+      const headerIndex = index + 2;
+      const headerName = `x-pagopa-lollipop-custom-${headerPrefix}`;
+      const headerValue = contentToSign[headerPrefix];
+      const customHeader = {
+        [headerName]: headerValue
+      };
+      const customHeaderSignatureConfig: SignatureConfig = forgeSignatureConfig(
+        customContent.signatureConfigForgeInput,
+        customContent.keyInfo,
+        [headerName]
+      );
+      const { signatureBase, signatureInput } = generateSignatureBase(
+        customHeader,
+        customHeaderSignatureConfig,
+        headerIndex
+      );
+      return {
+        signatureBase,
+        signatureInput,
+        headerIndex,
+        headerPrefix,
+        headerName,
+        headerValue
+      };
+    }) ?? []
+  );
+};
 
 export const customContentToSignPromises = (
   customContent: CutsomContentToSignInput
@@ -170,6 +179,7 @@ export const customContentToSignPromises = (
     ) {
       return Promise.resolve({
         headerIndex: customContentBase.headerIndex,
+        headerPrefix: customContentBase.headerPrefix,
         headerName: customContentBase.headerName,
         headerValue: customContentBase.headerValue,
         signature: `sig${customContentBase.headerIndex}:${value}:`,
@@ -180,6 +190,7 @@ export const customContentToSignPromises = (
 
 export type CustomContentBaseSignature = {
   headerIndex: number;
+  headerPrefix: string;
   headerName: string;
   headerValue: string;
 } & SignatureBaseResult;
@@ -200,7 +211,7 @@ type RequestAndKeyInfoForLPFetch = {
 } & Pick<SignatureConfigForgeInput, "publicKey" | "keyTag" | "method">;
 
 export type CutsomContentToSignInput = {
-  customContentToSign: ReadonlyArray<string> | undefined;
+  customContentToSign: Record<string, string> | undefined;
   signatureConfigForgeInput: SignatureConfigForgeInput;
   keyInfo: KeyInfo;
 } & Required<Pick<KeyInfo, "keyTag">>;
