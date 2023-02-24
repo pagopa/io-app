@@ -73,9 +73,7 @@ const MessagesArchive = ({
   );
 
   return (
-    <View
-      style={[styles.listWrapper, IOStyles.topListBorderBelowTabsStyle]}
-    >
+    <View style={[styles.listWrapper, IOStyles.topListBorderBelowTabsStyle]}>
       <View style={styles.listContainer}>
         <MessageList
           filter={{ getArchived: true }}
