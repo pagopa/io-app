@@ -102,9 +102,13 @@ export const IOColorsDark: Record<NonNullable<IOColors>, ColorValue> = {
   grey700: "#E8EBF1",
   grey850: "#F4F5F8",
   white: "#FFFFFF",
-  blueNew: "#6D8BEE",
-  blueNewDark: "#072588",
-  blueNewLight: "#B6C5F7"
+  blueNew: "#2351E6",
+  turquoise: "#19CBCF",
+  warning: "#FFD059",
+  warningLight: "#FFEFC7",
+  error: "#FE7575",
+  success: "#7BCC79",
+  info: "#7AD4FB"
 };
 
 export type IOColorsDark = keyof typeof IOColorsDark;
@@ -219,74 +223,60 @@ export const IOColorsNeutralDark: Record<
 
 export type IOColorsNeutralDark = keyof typeof IOColorsNeutralDark;
 
-const {
-  blueNew,
-  blueNewDark,
-  blueNewLight,
-  blueNew50,
-  blueNew100,
-  blueNew200,
-  blueNew600,
-  turquoise,
-  turquoiseDark,
-  turquoiseLight,
-  turquoise100,
-  turquoise50
-} = IOColors;
-
-export const IOColorsTints = {
-  blueNewDark,
-  blueNew600,
-  blueNew,
-  blueNew200,
-  blueNewLight,
-  blueNew100,
-  blueNew50,
-  turquoiseDark,
-  turquoise,
-  turquoiseLight,
-  turquoise100,
-  turquoise50
-};
+export const IOColorsTints = asIOColors({
+  blueNewDark: IOColors.blueNewDark,
+  blueNew600: IOColors.blueNew600,
+  blueNew: IOColors.blueNew,
+  blueNew200: IOColors.blueNew200,
+  blueNewLight: IOColors.blueNewLight,
+  blueNew100: IOColors.blueNew100,
+  blueNew50: IOColors.blueNew50,
+  turquoiseDark: IOColors.turquoiseDark,
+  turquoise: IOColors.turquoise,
+  turquoiseLight: IOColors.turquoiseLight,
+  turquoise100: IOColors.turquoise100,
+  turquoise50: IOColors.turquoise50
+});
 export type IOColorsTints = keyof typeof IOColorsTints;
 
-const {
-  error,
-  errorGraphic,
-  errorDark,
-  errorLight,
-  warning,
-  warningGraphic,
-  warningDark,
-  warningLight,
-  success,
-  successGraphic,
-  successDark,
-  successLight,
-  info,
-  infoGraphic,
-  infoDark,
-  infoLight
-} = IOColors;
-
-export const IOColorsStatus = {
-  errorDark,
-  errorGraphic,
-  error,
-  errorLight,
-  warningDark,
-  warningGraphic,
-  warning,
-  warningLight,
-  successDark,
-  successGraphic,
-  success,
-  successLight,
-  infoDark,
-  infoGraphic,
-  info,
-  infoLight
+export const IOColorsTintsDark: Record<
+  NonNullable<IOColorsTints>,
+  ColorValue
+> = {
+  blueNewDark: IOColorsDark.blueNewDark,
+  blueNew600: IOColorsDark.blueNew600,
+  blueNew: IOColorsDark.blueNew,
+  blueNew200: IOColorsDark.blueNew200,
+  blueNewLight: IOColorsDark.blueNewLight,
+  blueNew100: IOColorsDark.blueNew100,
+  blueNew50: IOColorsDark.blueNew50,
+  turquoiseDark: IOColorsDark.turquoiseDark,
+  turquoise: IOColorsDark.turquoise,
+  turquoiseLight: IOColorsDark.turquoiseLight,
+  turquoise100: IOColorsDark.turquoise100,
+  turquoise50: IOColorsDark.turquoise50
 };
+
+export type IOColorsTintsDark = keyof typeof IOColorsTintsDark;
+
+export const IOColorsStatus = asIOColors({
+  errorDark: IOColors.errorDark,
+  errorGraphic: IOColors.errorGraphic,
+  error: IOColors.error,
+  errorLight: IOColors.errorLight,
+  warningDark: IOColors.warningDark,
+  warningGraphic: IOColors.warningGraphic,
+  warning: IOColors.warning,
+  warningLight: IOColors.warningLight,
+  successDark: IOColors.successDark,
+  successGraphic: IOColors.successGraphic,
+  success: IOColors.success,
+  successLight: IOColors.successLight,
+  infoDark: IOColors.infoDark,
+  infoGraphic: IOColors.infoGraphic,
+  info: IOColors.info,
+  infoLight: IOColors.infoLight
+});
 export type IOColorsStatus = keyof typeof IOColorsStatus;
 export type IOColorsStatusForeground = Extract<
   IOColorsStatus,
@@ -296,6 +286,30 @@ export type IOColorsStatusBackground = Extract<
   IOColorsStatus,
   "errorLight" | "warningLight" | "infoLight" | "successLight"
 >;
+
+export const IOColorsStatusDark: Record<
+  NonNullable<IOColorsStatus>,
+  ColorValue
+> = {
+  errorDark: IOColorsDark.errorDark,
+  errorGraphic: IOColorsDark.errorGraphic,
+  error: IOColorsDark.error,
+  errorLight: IOColorsDark.errorLight,
+  warningDark: IOColorsDark.warningDark,
+  warningGraphic: IOColorsDark.warningGraphic,
+  warning: IOColorsDark.warning,
+  warningLight: IOColorsDark.warningLight,
+  successDark: IOColorsDark.successDark,
+  successGraphic: IOColorsDark.successGraphic,
+  success: IOColorsDark.success,
+  successLight: IOColorsDark.successLight,
+  infoDark: IOColorsDark.infoDark,
+  infoGraphic: IOColorsDark.infoGraphic,
+  info: IOColorsDark.info,
+  infoLight: IOColorsDark.infoLight
+};
+
+export type IOColorsStatusDark = keyof typeof IOColorsStatusDark;
 
 const { blueItalia, blue50, blue600 } = IOColors;
 
