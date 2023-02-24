@@ -24,6 +24,7 @@ import {
   CreditCardInsertion
 } from "../../../store/reducers/wallet/creditCard";
 import variables from "../../../theme/variables";
+import { withValidatedEmail } from "../../../components/helpers/withValidatedEmail";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -61,25 +62,23 @@ class CreditCardOnboardingAttemptsScreen extends React.Component<Props, never> {
   public render(): React.ReactNode {
     const { creditCardOnboardingAttempts } = this.props;
     return (
-      <RemindEmailValidationOverlay>
-        <BaseScreenComponent
-          goBack={() => this.props.navigation.goBack()}
-          headerTitle={I18n.t("wallet.creditCard.onboardingAttempts.title")}
-        >
-          <CreditCardAttemptsList
-            title={I18n.t(
-              "wallet.creditCard.onboardingAttempts.lastAttemptsTitle"
-            )}
-            creditCardAttempts={creditCardOnboardingAttempts}
-            ListEmptyComponent={ListEmptyComponent}
-            onAttemptPress={(attempt: CreditCardInsertion) =>
-              this.props.navigateToCreditCardAttemptDetail({
-                attempt
-              })
-            }
-          />
-        </BaseScreenComponent>
-      </RemindEmailValidationOverlay>
+      <BaseScreenComponent
+        goBack={() => this.props.navigation.goBack()}
+        headerTitle={I18n.t("wallet.creditCard.onboardingAttempts.title")}
+      >
+        <CreditCardAttemptsList
+          title={I18n.t(
+            "wallet.creditCard.onboardingAttempts.lastAttemptsTitle"
+          )}
+          creditCardAttempts={creditCardOnboardingAttempts}
+          ListEmptyComponent={ListEmptyComponent}
+          onAttemptPress={(attempt: CreditCardInsertion) =>
+            this.props.navigateToCreditCardAttemptDetail({
+              attempt
+            })
+          }
+        />
+      </BaseScreenComponent>
     );
   }
 }
@@ -95,8 +94,10 @@ const mapDispatchToProps = (_: Dispatch) => ({
 });
 
 export default withValidatedPagoPaVersion(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(CreditCardOnboardingAttemptsScreen)
+  withValidatedEmail(
+    connect(
+      mapStateToProps,
+      mapDispatchToProps
+    )(CreditCardOnboardingAttemptsScreen)
+  )
 );

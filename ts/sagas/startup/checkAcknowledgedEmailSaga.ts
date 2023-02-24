@@ -32,7 +32,7 @@ export function* checkAcknowledgedEmailSaga(
       // An email exists on the user's profile but it is not validated, the conditional
       // view shows the component that reminds to validate the email address or allows the navigation to edit it.
       yield* call(NavigationService.navigate, ROUTES.ONBOARDING, {
-        screen: ROUTES.READ_EMAIL_SCREEN
+        screen: ROUTES.ONBOARDING_READ_EMAIL_SCREEN
       });
     } else {
       // we can go on, no need to wait
