@@ -107,7 +107,6 @@ import IconArrowTop from "./svg/IconArrowTop";
 import IconArrowRight from "./svg/IconArrowRight";
 
 export const IOIcons = {
-  arrowCircleUp: IconArrowCircleUp,
   spid: IconSpid,
   cie: IconCie /* io-cie */,
   qrCode: IconQrCode /* io-qr */,
@@ -208,7 +207,8 @@ export const IOIcons = {
   arrowBottom: IconArrowBottom,
   arrowLeft: IconArrowLeft,
   arrowTop: IconArrowTop,
-  arrowRight: IconArrowRight
+  arrowRight: IconArrowRight,
+  arrowCircleUp: IconArrowCircleUp
 } as const;
 
 export type IOIconType = keyof typeof IOIcons;
@@ -287,7 +287,8 @@ const {
   arrowBottom,
   arrowLeft,
   arrowTop,
-  arrowRight
+  arrowRight,
+  arrowCircleUp
 } = IOIcons;
 
 export const IOIconsNew = {
@@ -299,5 +300,6 @@ export const IOIconsNew = {
   arrowBottom,
   arrowLeft,
   arrowTop,
-  arrowRight
+  arrowRight,
+  arrowCircleUp
 };
