@@ -21,11 +21,11 @@ const DESIGN_SYSTEM_ROUTES = {
   LEGACY: {
     PICTOGRAMS: {
       route: "DESIGN_SYSTEM_LEGACY_PICTOGRAMS",
-      title: "Legacy Pictograms"
+      title: "Pictograms"
     },
     ILLUSTRATIONS: {
       route: "DESIGN_SYSTEM_LEGACY_ILLUSTRATIONS",
-      title: "Legacy Illustrations"
+      title: "Illustrations"
     }
   } as const
 } as const;
