@@ -41,11 +41,13 @@ export const getTosSignature = (qtspClauses: QtspClauses) =>
     getFileDigest,
     TE.map(
       documentDigest =>
+        // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
         qtspClauses.nonce +
         "+" +
         documentDigest +
         qtspClauses.accepted_clauses.reduce(
           (finalString, currentClause) =>
+            // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
             finalString + "+" + currentClause.text,
           ""
         )
@@ -83,6 +85,7 @@ export const getCustomSignature = (
                   signatureField.attrs.top_right.y
             )
             .join("+");
+          // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
           return hash + "+" + attributes;
         })
       )
