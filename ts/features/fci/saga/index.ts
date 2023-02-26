@@ -41,9 +41,9 @@ import {
   FciQtspClausesState,
   fciQtspNonceSelector
 } from "../store/reducers/fciQtspClauses";
+import { fciDocumentSignaturesSelector } from "../store/reducers/fciDocumentSignatures";
 import { lollipopKeyTagSelector } from "../../lollipop/store/reducers/lollipop";
 import { getCryptoPublicKey } from "../../../sagas/startup/generateCryptoKeyPair";
-import { fciDocumentSignaturesSelector } from "../store/reducers/fciDocumentSignatures";
 import { handleGetSignatureRequestById } from "./networking/handleGetSignatureRequestById";
 import { handleGetQtspMetadata } from "./networking/handleGetQtspMetadata";
 import { handleCreateFilledDocument } from "./networking/handleCreateFilledDocument";

@@ -1,36 +1,30 @@
-import * as crypto from "crypto";
 import * as t from "io-ts";
-import ReactNativeBlobUtil from "react-native-blob-util";
 import rs from "jsrsasign";
 import * as A from "fp-ts/lib/Array";
-import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { pipe } from "fp-ts/lib/function";
 import * as TE from "fp-ts/lib/TaskEither";
 import * as E from "fp-ts/lib/Either";
+import Crypto from "react-native-quick-crypto";
+import ReactNativeBlobUtil from "react-native-blob-util";
 import { QtspClauses } from "../../../../definitions/fci/QtspClauses";
 import { DocumentToSign } from "../../../../definitions/fci/DocumentToSign";
 
 export const QtspDocumentToSign = t.type({
-  url: NonEmptyString
+  url: t.string
 });
 
 export type QtspDocumentToSign =
   | t.TypeOf<typeof QtspDocumentToSign> & DocumentToSign;
 
+export const createSimpleHash = () => Crypto.createHash("sha256");
+
 const getFileDigest = (url: string) =>
   pipe(
-    TE.tryCatch(
-      () => ReactNativeBlobUtil.config({ fileCache: true }).fetch("GET", url),
-      E.toError
-    ),
-    TE.chain(response =>
-      TE.tryCatch(
-        () => ReactNativeBlobUtil.fs.readStream(response.path(), "utf8"),
-        E.toError
-      )
-    ),
-    TE.map(arrayBuffer => Buffer.from(arrayBuffer)),
-    TE.map(buffer => crypto.createHash("sha256").update(buffer).digest("hex"))
+    TE.tryCatch(() => ReactNativeBlobUtil.fetch("GET", url), E.toError),
+    TE.map(response => response.base64()),
+    TE.map(buffer =>
+      Crypto.createHash("sha256").update(buffer, "base64").digest("hex")
+    )
   );
 
 const ec = new rs.KJUR.crypto.ECDSA({ curve: "secp256k1" });
@@ -58,7 +52,7 @@ export const getTosSignature = (qtspClauses: QtspClauses) =>
     ),
     TE.map(tos => tos.replace(/\r\n/g, "")),
     TE.map(tosChallenge =>
-      crypto.createHash("sha256").update(tosChallenge).digest("hex")
+      Crypto.createHash("sha256").update(tosChallenge).digest("hex")
     ),
     TE.map(tosChallengeHashHex => ec.signHex(tosChallengeHashHex, prvhex)),
     TE.map(signatureHex => Buffer.from(signatureHex, "hex").toString("base64"))
@@ -97,7 +91,7 @@ export const getCustomSignature = (
     TE.map(chellenges => chellenges.join("+")),
     TE.map(challenge => challenge.replace(/\r\n/g, "")),
     TE.map(challenge =>
-      crypto.createHash("sha256").update(challenge).digest("hex")
+      Crypto.createHash("sha256").update(challenge).digest("hex")
     ),
     TE.map(challengeHashHex => ec.signHex(challengeHashHex, prvhex)),
     TE.map(signatureHex => Buffer.from(signatureHex, "hex").toString("base64"))
