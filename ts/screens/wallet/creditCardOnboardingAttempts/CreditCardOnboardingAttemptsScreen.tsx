@@ -1,33 +1,29 @@
 import { Content } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import { connect } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { Body } from "../../../components/core/typography/Body";
 import { H2 } from "../../../components/core/typography/H2";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
-import { withValidatedPagoPaVersion } from "../../../components/helpers/withValidatedPagoPaVersion";
 import RemindEmailValidationOverlay from "../../../components/RemindEmailValidationOverlay";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../../components/screens/EdgeBorderComponent";
 import { CreditCardAttemptsList } from "../../../components/wallet/creditCardOnboardingAttempts/CreditCardAttemptsList";
 import I18n from "../../../i18n";
 import {
-  AppParamsList,
-  IOStackNavigationRouteProps
-} from "../../../navigation/params/AppParamsList";
-import { navigateToCreditCardOnboardingAttempt } from "../../../store/actions/navigation";
-import { Dispatch } from "../../../store/actions/types";
-import { GlobalState } from "../../../store/reducers/types";
-import {
   creditCardAttemptsSelector,
   CreditCardInsertion
 } from "../../../store/reducers/wallet/creditCard";
 import variables from "../../../theme/variables";
-
-type Props = ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps> &
-  IOStackNavigationRouteProps<AppParamsList>;
+import { useIOSelector } from "../../../store/hooks";
+import ROUTES from "../../../navigation/routes";
+import { isPagoPaSupportedSelector } from "../../../common/versionInfo/store/reducers/versionInfo";
+import RemindUpdatePagoPaVersionOverlay from "../../../components/RemindUpdatePagoPaVersionOverlay";
+import { isProfileEmailValidatedSelector } from "../../../store/reducers/profile";
+import { emailValidationSelector } from "../../../store/reducers/emailValidation";
 
 const styles = StyleSheet.create({
   noBottomPadding: {
@@ -57,46 +53,52 @@ const ListEmptyComponent = (
 /**
  * This screen shows all attempts of onboarding payment instruments
  */
-class CreditCardOnboardingAttemptsScreen extends React.Component<Props, never> {
-  public render(): React.ReactNode {
-    const { creditCardOnboardingAttempts } = this.props;
+const CreditCardOnboardingAttemptsScreen = () => {
+  const creditCardOnboardingAttempts = useIOSelector(
+    creditCardAttemptsSelector
+  );
+  const isPagoPaVersionSupported = useIOSelector(isPagoPaSupportedSelector);
+  const isEmailValidated = useIOSelector(isProfileEmailValidatedSelector);
+  const acknowledgeOnEmailValidated = useIOSelector(
+    emailValidationSelector
+  ).acknowledgeOnEmailValidated;
+  const navigation = useNavigation();
+
+  if (!isPagoPaVersionSupported) {
     return (
-      <RemindEmailValidationOverlay>
-        <BaseScreenComponent
-          goBack={() => this.props.navigation.goBack()}
-          headerTitle={I18n.t("wallet.creditCard.onboardingAttempts.title")}
-        >
-          <CreditCardAttemptsList
-            title={I18n.t(
-              "wallet.creditCard.onboardingAttempts.lastAttemptsTitle"
-            )}
-            creditCardAttempts={creditCardOnboardingAttempts}
-            ListEmptyComponent={ListEmptyComponent}
-            onAttemptPress={(attempt: CreditCardInsertion) =>
-              this.props.navigateToCreditCardAttemptDetail({
-                attempt
-              })
-            }
-          />
-        </BaseScreenComponent>
-      </RemindEmailValidationOverlay>
+      <BaseScreenComponent goBack={true}>
+        <RemindUpdatePagoPaVersionOverlay />
+      </BaseScreenComponent>
     );
   }
-}
 
-const mapStateToProps = (state: GlobalState) => ({
-  creditCardOnboardingAttempts: creditCardAttemptsSelector(state)
-});
+  if (
+    !isEmailValidated &&
+    pipe(
+      acknowledgeOnEmailValidated,
+      O.getOrElse(() => true)
+    )
+  ) {
+    return <RemindEmailValidationOverlay />;
+  }
 
-const mapDispatchToProps = (_: Dispatch) => ({
-  navigateToCreditCardAttemptDetail: (param: {
-    attempt: CreditCardInsertion;
-  }) => navigateToCreditCardOnboardingAttempt(param)
-});
+  return (
+    <BaseScreenComponent
+      goBack={() => navigation.goBack()}
+      headerTitle={I18n.t("wallet.creditCard.onboardingAttempts.title")}
+    >
+      <CreditCardAttemptsList
+        title={I18n.t("wallet.creditCard.onboardingAttempts.lastAttemptsTitle")}
+        creditCardAttempts={creditCardOnboardingAttempts}
+        ListEmptyComponent={ListEmptyComponent}
+        onAttemptPress={(attempt: CreditCardInsertion) =>
+          navigation.navigate(ROUTES.CREDIT_CARD_ONBOARDING_ATTEMPT_DETAIL, {
+            attempt
+          })
+        }
+      />
+    </BaseScreenComponent>
+  );
+};
 
-export default withValidatedPagoPaVersion(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(CreditCardOnboardingAttemptsScreen)
-);
+export default CreditCardOnboardingAttemptsScreen;
