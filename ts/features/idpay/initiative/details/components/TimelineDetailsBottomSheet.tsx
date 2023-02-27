@@ -40,30 +40,26 @@ const TimelineDetailsBottomSheet = () => {
   const detailsPot = useIOSelector(idpayTimelineDetailsSelector);
   const isLoading = pot.isLoading(detailsPot);
 
-  const renderContent = () => {
-    if (pot.isError(detailsPot)) {
-      return <TimelineDetailsErrorComponent />;
-    } else if (pot.isSome(detailsPot)) {
-      const operation = detailsPot.value;
-
-      switch (operation.operationType) {
+  const contentComponent = pot.getOrElse(
+    pot.map(detailsPot, details => {
+      switch (details.operationType) {
         case TransactionDetailOperationTypeEnum.TRANSACTION:
         case TransactionDetailOperationTypeEnum.REVERSAL:
-          return <TransactionDetailsComponent transaction={operation} />;
+          return <TransactionDetailsComponent transaction={details} />;
         case RefundOperationTypeEnum.PAID_REFUND:
         case RefundOperationTypeEnum.REJECTED_REFUND:
-          return <RefundDetailsComponent refund={operation} />;
+          return <RefundDetailsComponent refund={details} />;
         default:
           // We don't show additional info for other operation types
           return null;
       }
-    }
-    return null;
-  };
+    }),
+    <TimelineDetailsErrorComponent />
+  );
 
   return (
     <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={100}>
-      {renderContent()}
+      {contentComponent}
     </LoadingSpinnerOverlay>
   );
 };
