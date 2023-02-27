@@ -192,7 +192,7 @@ export const localServicesWebUrl: string = pipe(
 
 export const unsupportedDeviceMoreInfoUrl: string = pipe(
   Config.UNSUPPORTED_DEVICE_MORE_INFO_URL,
-  t.string.decode,
+  NonEmptyString.decode,
   E.getOrElse(() => "https://io.italia.it/app-content/unsupported_device.html")
 );
 
