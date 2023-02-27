@@ -10,6 +10,7 @@ import { CreditCardPaymentMethod } from "../../../../types/pagopa";
 import BasePaymentMethodScreen from "../../common/BasePaymentMethodScreen";
 import PaymentMethodFeatures from "../../component/features/PaymentMethodFeatures";
 import CreditCardComponent from "../component/CreditCardComponent";
+import { idPayWalletInitiativesGet } from "../../../idpay/wallet/store/actions";
 
 export type CreditCardDetailScreenNavigationParams = Readonly<{
   // Since we don't have a typed ID for the payment methods, we keep the creditCard as param even if it is then read by the store
@@ -42,6 +43,16 @@ const CreditCardDetailScreen: React.FunctionComponent<Props> = props => {
     }
   }, [storeCreditCard, setWalletExisted]);
 
+  const { loadIdpayInitiatives } = props;
+
+  React.useEffect(() => {
+    console.log(storeCreditCard);
+    // console.log("props", props);
+    if (storeCreditCard?.idWallet !== undefined) {
+      loadIdpayInitiatives(storeCreditCard?.idWallet.toString());
+    }
+  }, [storeCreditCard, loadIdpayInitiatives]);
+
   return storeCreditCard ? (
     <BasePaymentMethodScreen
       paymentMethod={storeCreditCard}
@@ -58,7 +69,10 @@ const CreditCardDetailScreen: React.FunctionComponent<Props> = props => {
   ) : null;
 };
 
-const mapDispatchToProps = (_: Dispatch) => ({});
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  loadIdpayInitiatives: (idWallet: string) =>
+    dispatch(idPayWalletInitiativesGet.request({ idWallet }))
+});
 const mapStateToProps = (state: GlobalState) => ({
   creditCardById: (id: number) => creditCardByIdSelector(state, id)
 });

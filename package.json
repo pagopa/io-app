@@ -24,7 +24,7 @@
   "pagopa_cobadge_configuration": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.24/pagopa/cobadge/abi_definitions.yml",
   "pagopa_privative_configuration": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.24/pagopa/privative/definitions.yml",
   "idpay_onboarding": "https://raw.githubusercontent.com/pagopa/cstar-infrastructure/v2.12.1/src/domains/idpay-app/api/idpay_onboarding_workflow/openapi.onboarding.yml",
-  "idpay_wallet": "https://raw.githubusercontent.com/pagopa/cstar-infrastructure/v1.70.0/src/domains/idpay-app/api/idpay_wallet/openapi.wallet.yml",
+  "idpay_wallet": "https://raw.githubusercontent.com/pagopa/cstar-infrastructure/IDP-213-pdv-retry/src/domains/idpay-app/api/idpay_wallet/openapi.wallet.yml",
   "idpay_timeline": "https://raw.githubusercontent.com/pagopa/cstar-infrastructure/v1.107.0/src/domains/idpay-app/api/idpay_timeline/openapi.timeline.yml",
   "idpay_iban": "https://raw.githubusercontent.com/pagopa/cstar-infrastructure/v1.101.0/src/domains/idpay-app/api/idpay_iban/openapi.iban.yml",
   "private": true,

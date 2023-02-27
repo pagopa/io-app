@@ -8,7 +8,11 @@ import {
   idPayApiUatBaseUrl,
   idPayApiBaseUrl
 } from "../../../../config";
-import { idPayWalletGet } from "../store/actions";
+import {
+  IdpayWalletInitiativeGetPayloadType,
+  idPayWalletGet,
+  idPayWalletInitiativesGet
+} from "../store/actions";
 import { waitBackoffError } from "../../../../utils/backoffError";
 import {
   isPagoPATestEnabledSelector,
@@ -17,6 +21,7 @@ import {
 import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
 import { fromLocaleToPreferredLanguage } from "../../../../utils/locale";
 import { handleGetIDPayWallet } from "./handleGetIDPayWallet";
+import { handleGetIDPayInitiativesWithInstrument } from "./handleGetIdpayInitiativesWithInstrument";
 
 /**
  * Handle the IDPay Wallet requests
@@ -47,4 +52,19 @@ export function* watchIDPayWalletSaga(bearerToken: string): SagaIterator {
       preferredLanguage
     );
   });
+
+  yield* takeLatest(
+    idPayWalletInitiativesGet.request,
+    function* (action: { payload: IdpayWalletInitiativeGetPayloadType }) {
+      // wait backoff time if there were previous errors
+      yield* call(waitBackoffError, idPayWalletInitiativesGet.failure);
+      yield* call(
+        handleGetIDPayInitiativesWithInstrument,
+        idPayWalletClient.getInitiativesWithInstrument,
+        token,
+        preferredLanguage,
+        action.payload
+      );
+    }
+  );
 }
