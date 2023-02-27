@@ -105,7 +105,7 @@ export const lollipopFetch = (
           );
           // Prepare custom signature inputs array
           const customSignatureInputs = customSignResult.map(
-            v => v["signature-input"]
+            v => v.signatureInput
           );
           // Prepare custom signature array
           const customSignatures = customSignResult.map(v => v.signature);
@@ -183,7 +183,7 @@ export const customContentToSignPromises = (
         headerName: customContentBase.headerName,
         headerValue: customContentBase.headerValue,
         signature: `sig${customContentBase.headerIndex}:${value}:`,
-        "signature-input": customContentBase.signatureInput
+        signatureInput: customContentBase.signatureInput
       });
     })
   ) ?? [];

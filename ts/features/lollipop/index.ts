@@ -40,7 +40,7 @@ export type SignPromiseResult = {
   headerName: string;
   headerValue: string;
   signature: string;
-  "signature-input": string;
+  signatureInput: string;
 };
 
 /**
