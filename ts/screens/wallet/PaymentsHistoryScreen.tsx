@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { VSpacer } from "../../components/core/spacer/Spacer";
 import { H2 } from "../../components/core/typography/H2";
 import { IOColors } from "../../components/core/variables/IOColors";
+import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
 import { withValidatedPagoPaVersion } from "../../components/helpers/withValidatedPagoPaVersion";
 import RemindEmailValidationOverlay from "../../components/RemindEmailValidationOverlay";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
@@ -60,23 +61,21 @@ class PaymentsHistoryScreen extends React.Component<Props, never> {
   public render(): React.ReactNode {
     const { historyPayments } = this.props;
     return (
-      <RemindEmailValidationOverlay>
-        <BaseScreenComponent
-          goBack={() => this.props.navigation.goBack()}
-          headerTitle={I18n.t("payment.details.list.title")}
-        >
-          <PaymentHistoryList
-            title={I18n.t("wallet.latestTransactions")}
-            payments={AR.reverse([...historyPayments])}
-            ListEmptyComponent={ListEmptyComponent}
-            navigateToPaymentHistoryDetail={(payment: PaymentHistory) =>
-              this.props.navigateToPaymentHistoryDetail({
-                payment
-              })
-            }
-          />
-        </BaseScreenComponent>
-      </RemindEmailValidationOverlay>
+      <BaseScreenComponent
+        goBack={() => this.props.navigation.goBack()}
+        headerTitle={I18n.t("payment.details.list.title")}
+      >
+        <PaymentHistoryList
+          title={I18n.t("wallet.latestTransactions")}
+          payments={AR.reverse([...historyPayments])}
+          ListEmptyComponent={ListEmptyComponent}
+          navigateToPaymentHistoryDetail={(payment: PaymentHistory) =>
+            this.props.navigateToPaymentHistoryDetail({
+              payment
+            })
+          }
+        />
+      </BaseScreenComponent>
     );
   }
 }
@@ -91,5 +90,7 @@ const mapDispatchToProps = (_: Dispatch) => ({
 });
 
 export default withValidatedPagoPaVersion(
-  connect(mapStateToProps, mapDispatchToProps)(PaymentsHistoryScreen)
+  withValidatedEmail(
+    connect(mapStateToProps, mapDispatchToProps)(PaymentsHistoryScreen)
+  )
 );
