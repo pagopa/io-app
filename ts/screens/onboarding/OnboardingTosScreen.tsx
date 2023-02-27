@@ -39,23 +39,6 @@ const styles = StyleSheet.create({
   },
   webViewContainer: {
     flex: 1
-  },
-  errorContainer: {
-    padding: 20,
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-
-  errorTitle: {
-    fontSize: 20,
-    marginTop: 10
-  },
-  errorButtonsContainer: {
-    position: "absolute",
-    bottom: 30,
-    flex: 1,
-    flexDirection: "row"
   }
 });
 
