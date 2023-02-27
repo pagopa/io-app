@@ -72,10 +72,6 @@ const OperationIcon = ({ operation }: OperationComponentProps) => {
   }
 };
 const OperationAmount = ({ operation }: OperationComponentProps) => {
-  const hasAccrued = "accrued" in operation;
-  if (!hasAccrued) {
-    return null;
-  }
   switch (operation.operationType) {
     case TransactionOperationTypeEnum.TRANSACTION:
       return <H4>{`–${formatNumberAmount(operation.accrued, false)} €`}</H4>;
