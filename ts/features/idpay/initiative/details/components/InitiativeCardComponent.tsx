@@ -2,7 +2,10 @@ import { Text } from "native-base";
 import * as React from "react";
 import { Image, ImageBackground, StyleSheet, View } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
-import { InitiativeDTO, StatusEnum as InitiativeStatusEnum } from "../../../../../../definitions/idpay/InitiativeDTO";
+import {
+  InitiativeDTO,
+  StatusEnum as InitiativeStatusEnum
+} from "../../../../../../definitions/idpay/InitiativeDTO";
 import bonusVacanzeWhiteLogo from "../../../../../../img/bonus/bonusVacanze/logo_BonusVacanze_White.png";
 import cardBg from "../../../../../../img/features/idpay/card_full.png";
 import { makeFontStyleObject } from "../../../../../components/core/fonts";
