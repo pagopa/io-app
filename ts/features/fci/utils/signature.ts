@@ -1,5 +1,5 @@
 import * as t from "io-ts";
-import rs from "jsrsasign";
+import sha from "sha.js";
 import * as A from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
 import * as TE from "fp-ts/lib/TaskEither";
@@ -8,6 +8,7 @@ import Crypto from "react-native-quick-crypto";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import { QtspClauses } from "../../../../definitions/fci/QtspClauses";
 import { DocumentToSign } from "../../../../definitions/fci/DocumentToSign";
+import { constants } from "../../../utils/httpSignature/constants";
 
 export const QtspDocumentToSign = t.type({
   url: t.string
@@ -22,18 +23,8 @@ const getFileDigest = (url: string) =>
   pipe(
     TE.tryCatch(() => ReactNativeBlobUtil.fetch("GET", url), E.toError),
     TE.map(response => response.base64()),
-    TE.map(buffer =>
-      Crypto.createHash("sha256").update(buffer, "base64").digest("hex")
-    )
+    TE.map(buffer => sha(constants.SHA_256).update(buffer).digest("hex"))
   );
-
-const ec = new rs.KJUR.crypto.ECDSA({ curve: "secp256k1" });
-const kp1 = rs.KEYUTIL.generateKeypair("EC", "secp256k1");
-
-// The value in hexadecimal cannot be accessed directly and there is no function to do so. Therefore I disabled the controls!
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-const prvhex = kp1.prvKeyObj.prvKeyHex;
 
 export const getTosSignature = (qtspClauses: QtspClauses) =>
   pipe(
@@ -54,10 +45,8 @@ export const getTosSignature = (qtspClauses: QtspClauses) =>
     ),
     TE.map(tos => tos.replace(/\r\n/g, "")),
     TE.map(tosChallenge =>
-      Crypto.createHash("sha256").update(tosChallenge).digest("hex")
-    ),
-    TE.map(tosChallengeHashHex => ec.signHex(tosChallengeHashHex, prvhex)),
-    TE.map(signatureHex => Buffer.from(signatureHex, "hex").toString("base64"))
+      sha(constants.SHA_256).update(tosChallenge).digest("hex")
+    )
   );
 
 export const getCustomSignature = (
@@ -93,9 +82,5 @@ export const getCustomSignature = (
     A.sequence(TE.ApplicativeSeq),
     TE.map(chellenges => chellenges.join("+")),
     TE.map(challenge => challenge.replace(/\r\n/g, "")),
-    TE.map(challenge =>
-      Crypto.createHash("sha256").update(challenge).digest("hex")
-    ),
-    TE.map(challengeHashHex => ec.signHex(challengeHashHex, prvhex)),
-    TE.map(signatureHex => Buffer.from(signatureHex, "hex").toString("base64"))
+    TE.map(challenge => sha(constants.SHA_256).update(challenge).digest("hex"))
   );
