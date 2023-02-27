@@ -7,12 +7,11 @@ import {
   OperationTypeEnum,
   RefundOperationDTO
 } from "../../../../../../definitions/idpay/timeline/RefundOperationDTO";
-import { InfoBox } from "../../../../../components/box/InfoBox";
+import { Alert } from "../../../../../components/Alert";
 import CopyButtonComponent from "../../../../../components/CopyButtonComponent";
 import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
-import { Link } from "../../../../../components/core/typography/Link";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";
@@ -69,10 +68,12 @@ type RefundDetailsProps = {
 const RefundDetailsComponent = (props: RefundDetailsProps) => {
   const { refund } = props;
 
+  const alertViewRef = React.createRef<View>();
+
   const { close: closeBottomSheet } = useBottomSheet();
   const initiativeId = useIOSelector(idpayInitiativeIdSelector);
 
-  const isRejected = refund.operationType === OperationTypeEnum.REJECTED_REFUND;
+  const isRejected = true; // refund.operationType === OperationTypeEnum.REJECTED_REFUND;
 
   const handleEditIbanPress = () => {
     closeBottomSheet();
@@ -98,17 +99,17 @@ const RefundDetailsComponent = (props: RefundDetailsProps) => {
       {isRejected && (
         <>
           <VSpacer size={16} />
-          <InfoBox iconColor={IOColors.red}>
-            <Body>
-              {I18n.t("idpay.initiative.operationDetails.rejectedAdvice.text")}
-            </Body>
-            <VSpacer size={8} />
-            <Link color={"bluegreyDark"} onPress={handleEditIbanPress}>
-              {I18n.t(
-                "idpay.initiative.operationDetails.rejectedAdvice.editIban"
-              )}
-            </Link>
-          </InfoBox>
+          <Alert
+            viewRef={alertViewRef}
+            content={I18n.t(
+              "idpay.initiative.operationDetails.rejectedAdvice.text"
+            )}
+            action={I18n.t(
+              "idpay.initiative.operationDetails.rejectedAdvice.editIban"
+            )}
+            onPress={handleEditIbanPress}
+            variant="error"
+          />
           <VSpacer size={16} />
         </>
       )}
