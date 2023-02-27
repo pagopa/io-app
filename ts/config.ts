@@ -193,7 +193,7 @@ export const localServicesWebUrl: string = pipe(
 export const unsupportedDeviceMoreInfoUrl: string = pipe(
   Config.UNSUPPORTED_DEVICE_MORE_INFO_URL,
   t.string.decode,
-  E.getOrElse(() => "https://io.italia.it")
+  E.getOrElse(() => "https://io.italia.it/app-content/unsupported_device.html")
 );
 
 export const pageSize: number = DEFAULT_PAGE_SIZE;
