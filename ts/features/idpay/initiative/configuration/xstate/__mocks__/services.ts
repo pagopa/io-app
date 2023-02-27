@@ -3,6 +3,7 @@ import {
   InitiativeDTO,
   StatusEnum
 } from "../../../../../../../definitions/idpay/InitiativeDTO";
+import { InstrumentDTO } from "../../../../../../../definitions/idpay/wallet/InstrumentDTO";
 
 import { TypeEnum as WalletTypeEnumV1 } from "../../../../../../../definitions/pagopa/Wallet";
 import { Wallet } from "../../../../../../types/pagopa";
@@ -23,6 +24,11 @@ export const T_WALLET: Wallet = {
   registeredNexi: false,
   saved: true,
   paymentMethod: undefined
+};
+
+export const T_INSTRUMENT_DTO: InstrumentDTO = {
+  instrumentId: "1234",
+  idWallet: "12345"
 };
 
 export const T_NOT_REFUNDABLE_INITIATIVE_DTO: InitiativeDTO = {
@@ -54,7 +60,8 @@ export const mockServices = {
   loadInitiative: jest.fn(),
   loadIbanList: jest.fn(),
   confirmIban: jest.fn(),
-  loadInstruments: jest.fn(),
+  loadWalletInstruments: jest.fn(),
+  loadInitiativeInstruments: jest.fn(),
   deleteInstrument: jest.fn(),
   enrollIban: jest.fn(),
   enrollInstrument: jest.fn()

@@ -7,10 +7,7 @@ import { TimelineDTO } from "../../../../../../definitions/idpay/TimelineDTO";
 import { InitiativeDTO } from "../../../../../../definitions/idpay/InitiativeDTO";
 import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
-import {
-  getErrorFromNetworkError,
-  NetworkError
-} from "../../../../../utils/errors";
+import { NetworkError } from "../../../../../utils/errors";
 import {
   idpayInitiativeGet,
   idpayTimelineDetailsGet,
@@ -152,13 +149,15 @@ export const idpayTimelineLastUpdateSelector = createSelector(
 
 export const idpayTimelineIsLastPageSelector = createSelector(
   idpayPaginatedTimelineSelector,
-  paginatedTimeline => {
-    if (pot.isError(paginatedTimeline)) {
-      const err = getErrorFromNetworkError(paginatedTimeline.error);
-      return err.message === "404";
-    }
-    return false;
-  }
+  idpayTimelineCurrentPageSelector,
+  (paginatedTimeline, currentPage) =>
+    pot.getOrElse(
+      pot.map(paginatedTimeline, paginatedTimeline => {
+        const { totalPages } = paginatedTimeline[currentPage];
+        return currentPage >= totalPages - 1;
+      }),
+      false
+    )
 );
 
 export const idpayTimelineDetailsSelector = createSelector(

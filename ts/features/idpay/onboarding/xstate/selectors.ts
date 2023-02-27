@@ -12,12 +12,6 @@ import { Context, IDPayOnboardingMachineType } from "./machine";
 
 type StateWithContext = StateFrom<IDPayOnboardingMachineType>;
 
-const selectIsLoading = (state: StateWithContext) =>
-  state.tags.has(LOADING_TAG);
-
-const isUpsertingSelector = (state: StateWithContext) =>
-  state.hasTag(UPSERTING_TAG as never);
-
 const selectRequiredCriteria = (state: StateWithContext) =>
   state.context.requiredCriteria;
 
@@ -29,6 +23,8 @@ const selectMultiConsents = (state: StateWithContext) =>
 
 const selectCurrentPage = (state: StateWithContext) =>
   state.context.multiConsentsPage;
+const selectTags = (state: StateWithContext) => state.tags;
+const selectInitiative = (state: StateWithContext) => state.context.initiative;
 
 const selectServiceId = (state: StateWithContext) => state.context.serviceId;
 
@@ -94,6 +90,22 @@ const prerequisiteAnswerIndexSelector = createSelector(
       : currentCriteria.value.indexOf(multiConsents[currentPage]?.value)
 );
 
+const isLoadingSelector = createSelector(selectTags, tags =>
+  tags.has(LOADING_TAG)
+);
+const isUpsertingSelector = createSelector(selectTags, tags =>
+  tags.has(UPSERTING_TAG)
+);
+
+const initiativeDescriptionSelector = createSelector(
+  selectInitiative,
+  initiative => initiative?.description ?? undefined
+);
+const initiativeIDSelector = createSelector(
+  selectInitiative,
+  initiative => initiative?.initiativeId ?? undefined
+);
+
 const getMultiRequiredCriteriaFromContext = (context: Context) =>
   filterCriteria<SelfDeclarationMultiDTO>(
     context.requiredCriteria,
@@ -122,9 +134,11 @@ export {
   getMultiRequiredCriteriaFromContext,
   getBoolRequiredCriteriaFromContext,
   criteriaToDisplaySelector,
-  prerequisiteAnswerIndexSelector,
   pdndCriteriaSelector,
-  selectIsLoading,
+  prerequisiteAnswerIndexSelector,
+  isLoadingSelector,
+  initiativeDescriptionSelector,
+  initiativeIDSelector,
   selectSelfDeclarationBoolAnswers,
   areAllSelfDeclarationsToggledSelector
 };

@@ -18,14 +18,14 @@ import { useOnboardingMachineService } from "../xstate/provider";
 import {
   areAllSelfDeclarationsToggledSelector,
   boolRequiredCriteriaSelector,
-  selectIsLoading,
+  isLoadingSelector,
   selectSelfDeclarationBoolAnswers
 } from "../xstate/selectors";
 
 const InitiativeSelfDeclarationsScreen = () => {
   const machine = useOnboardingMachineService();
 
-  const isLoading = useSelector(machine, selectIsLoading);
+  const isLoading = useSelector(machine, isLoadingSelector);
 
   const selfCriteriaBool = useSelector(machine, boolRequiredCriteriaSelector);
   const selfCriteriaBoolAnswers = useSelector(

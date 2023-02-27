@@ -9,7 +9,7 @@ import { createIDPayInitiativeConfigurationMachine } from "../machine";
 import {
   ibanListSelector,
   selectInitiativeDetails,
-  selectorPagoPAIntruments
+  selectWalletInstruments
 } from "../selectors";
 import { mockActions } from "../__mocks__/actions";
 import {
@@ -17,10 +17,11 @@ import {
   T_IBAN,
   T_IBAN_LIST,
   T_INITIATIVE_ID,
-  T_INSTRUMENT_ID,
+  T_INSTRUMENT_DTO,
   T_NOT_REFUNDABLE_INITIATIVE_DTO,
   T_PAGOPA_INSTRUMENTS,
-  T_REFUNDABLE_INITIATIVE_DTO
+  T_REFUNDABLE_INITIATIVE_DTO,
+  T_WALLET
 } from "../__mocks__/services";
 
 const T_IBAN_ENROLL: IbanDTO = {
@@ -108,11 +109,12 @@ describe("IDPay configuration machine", () => {
       Promise.resolve(undefined)
     );
 
-    mockServices.loadInstruments.mockImplementation(async () =>
-      Promise.resolve({
-        pagoPAInstruments: T_PAGOPA_INSTRUMENTS,
-        idPayInstruments: []
-      })
+    mockServices.loadWalletInstruments.mockImplementation(async () =>
+      Promise.resolve(T_PAGOPA_INSTRUMENTS)
+    );
+
+    mockServices.loadInitiativeInstruments.mockImplementation(async () =>
+      Promise.resolve([])
     );
 
     mockServices.enrollInstrument.mockImplementation(async () =>
@@ -186,10 +188,14 @@ describe("IDPay configuration machine", () => {
     );
 
     await waitFor(() =>
-      expect(mockServices.loadInstruments).toHaveBeenCalledTimes(1)
+      expect(mockServices.loadWalletInstruments).toHaveBeenCalledTimes(1)
     );
 
-    expect(selectorPagoPAIntruments(currentState as never)).toStrictEqual(
+    await waitFor(() =>
+      expect(mockServices.loadInitiativeInstruments).toHaveBeenCalledTimes(1)
+    );
+
+    expect(selectWalletInstruments(currentState as never)).toStrictEqual(
       T_PAGOPA_INSTRUMENTS
     );
 
@@ -204,8 +210,12 @@ describe("IDPay configuration machine", () => {
     );
 
     service.send({
-      type: "ENROLL_INSTRUMENT",
-      instrumentId: T_INSTRUMENT_ID
+      type: "STAGE_INSTRUMENT",
+      instrument: T_WALLET
+    });
+
+    service.send({
+      type: "ENROLL_INSTRUMENT"
     });
 
     await waitFor(() =>
@@ -224,7 +234,7 @@ describe("IDPay configuration machine", () => {
 
     service.send({
       type: "DELETE_INSTRUMENT",
-      instrumentId: T_INSTRUMENT_ID
+      instrument: T_INSTRUMENT_DTO
     });
 
     await waitFor(() =>
@@ -366,11 +376,12 @@ describe("IDPay configuration machine", () => {
       Promise.resolve(undefined)
     );
 
-    mockServices.loadInstruments.mockImplementation(async () =>
-      Promise.resolve({
-        pagoPAInstruments: [],
-        idPayInstruments: []
-      })
+    mockServices.loadWalletInstruments.mockImplementation(async () =>
+      Promise.resolve([])
+    );
+
+    mockServices.loadInitiativeInstruments.mockImplementation(async () =>
+      Promise.resolve([])
     );
 
     const machine = createIDPayInitiativeConfigurationMachine().withConfig({
@@ -475,11 +486,12 @@ describe("IDPay configuration machine", () => {
       Promise.resolve(undefined)
     );
 
-    mockServices.loadInstruments.mockImplementation(async () =>
-      Promise.resolve({
-        pagoPAInstruments: T_PAGOPA_INSTRUMENTS,
-        idPayInstruments: []
-      })
+    mockServices.loadWalletInstruments.mockImplementation(async () =>
+      Promise.resolve(T_PAGOPA_INSTRUMENTS)
+    );
+
+    mockServices.loadInitiativeInstruments.mockImplementation(async () =>
+      Promise.resolve([])
     );
 
     const machine = createIDPayInitiativeConfigurationMachine().withConfig({
@@ -539,7 +551,11 @@ describe("IDPay configuration machine", () => {
     );
 
     await waitFor(() =>
-      expect(mockServices.loadInstruments).toHaveBeenCalledTimes(1)
+      expect(mockServices.loadWalletInstruments).toHaveBeenCalledTimes(1)
+    );
+
+    await waitFor(() =>
+      expect(mockServices.loadInitiativeInstruments).toHaveBeenCalledTimes(1)
     );
 
     expect(currentState).toMatchObject({
@@ -845,7 +861,7 @@ describe("IDPay configuration machine", () => {
       Promise.resolve(undefined)
     );
 
-    mockServices.loadInstruments.mockImplementation(async () =>
+    mockServices.loadWalletInstruments.mockImplementation(async () =>
       Promise.reject(InitiativeFailureType.INSTRUMENTS_LIST_LOAD_FAILURE)
     );
 
@@ -906,7 +922,11 @@ describe("IDPay configuration machine", () => {
     );
 
     await waitFor(() =>
-      expect(mockServices.loadInstruments).toHaveBeenCalledTimes(1)
+      expect(mockServices.loadWalletInstruments).toHaveBeenCalledTimes(1)
+    );
+
+    await waitFor(() =>
+      expect(mockServices.loadInitiativeInstruments).toHaveBeenCalledTimes(1)
     );
 
     await waitFor(() =>
@@ -931,11 +951,12 @@ describe("IDPay configuration machine", () => {
       Promise.resolve(undefined)
     );
 
-    mockServices.loadInstruments.mockImplementation(async () =>
-      Promise.resolve({
-        pagoPAInstruments: T_PAGOPA_INSTRUMENTS,
-        idPayInstruments: []
-      })
+    mockServices.loadWalletInstruments.mockImplementation(async () =>
+      Promise.resolve(T_PAGOPA_INSTRUMENTS)
+    );
+
+    mockServices.loadInitiativeInstruments.mockImplementation(async () =>
+      Promise.resolve([])
     );
 
     mockServices.enrollInstrument.mockImplementation(async () =>
@@ -1003,7 +1024,11 @@ describe("IDPay configuration machine", () => {
     );
 
     await waitFor(() =>
-      expect(mockServices.loadInstruments).toHaveBeenCalledTimes(1)
+      expect(mockServices.loadWalletInstruments).toHaveBeenCalledTimes(1)
+    );
+
+    await waitFor(() =>
+      expect(mockServices.loadInitiativeInstruments).toHaveBeenCalledTimes(1)
     );
 
     expect(currentState).toMatchObject({
@@ -1017,8 +1042,12 @@ describe("IDPay configuration machine", () => {
     );
 
     service.send({
-      type: "ENROLL_INSTRUMENT",
-      instrumentId: T_INSTRUMENT_ID
+      type: "STAGE_INSTRUMENT",
+      instrument: T_WALLET
+    });
+
+    service.send({
+      type: "ENROLL_INSTRUMENT"
     });
 
     await waitFor(() =>
@@ -1041,7 +1070,7 @@ describe("IDPay configuration machine", () => {
 
     service.send({
       type: "DELETE_INSTRUMENT",
-      instrumentId: T_INSTRUMENT_ID
+      instrument: T_INSTRUMENT_DTO
     });
 
     await waitFor(() =>

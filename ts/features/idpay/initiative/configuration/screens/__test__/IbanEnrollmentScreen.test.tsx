@@ -103,7 +103,8 @@ const renderComponent = (context?: Partial<Context>) => {
         enrollInstrument: jest.fn(),
         loadIbanList: jest.fn(),
         loadInitiative: jest.fn(),
-        loadInstruments: jest.fn()
+        loadWalletInstruments: jest.fn(),
+        loadInitiativeInstruments: jest.fn()
       },
       actions: {
         exitConfiguration: jest.fn(),

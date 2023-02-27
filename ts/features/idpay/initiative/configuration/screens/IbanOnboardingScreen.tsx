@@ -3,15 +3,14 @@ import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
-import { View, SafeAreaView, ScrollView } from "react-native";
+import { SafeAreaView, ScrollView, View } from "react-native";
 import { Iban } from "../../../../../../definitions/backend/Iban";
-import IconProfileAlt from "../../../../../components/core/icons/svg/IconProfileAlt";
-import { VSpacer, HSpacer } from "../../../../../components/core/spacer/Spacer";
+import { Icon } from "../../../../../components/core/icons";
+import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { Link } from "../../../../../components/core/typography/Link";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { LabelledItem } from "../../../../../components/LabelledItem";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
@@ -95,7 +94,7 @@ const IbanOnboardingScreen = () => {
             }
           ]}
         >
-          <IconProfileAlt size={30} color={IOColors.bluegrey} />
+          <Icon name="profileAlt" size={30} color="bluegrey" />
           <HSpacer size={16} />
           <LabelSmall color="bluegrey" weight="Regular">
             {I18n.t("idpay.configuration.iban.onboarding.bottomLabel")}

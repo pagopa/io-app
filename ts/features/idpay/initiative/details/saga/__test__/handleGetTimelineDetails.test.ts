@@ -9,6 +9,7 @@ import { handleGetTimelineDetails } from "../handleGetTimelineDetails";
 
 const mockResponseSuccess: OperationDTO = {
   operationType: TransactionOperationType.TRANSACTION,
+  brand: "VISA",
   operationDate: new Date(),
   amount: 100.34,
   brandLogo:
