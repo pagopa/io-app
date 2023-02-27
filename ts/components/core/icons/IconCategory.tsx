@@ -45,7 +45,9 @@ const IconCategory = ({
   ...props
 }: IOCategoryIconsProps) => {
   const IconElement = IOCategoryIcons[name];
-  return <IconElement {...props} size={size} color={IOColors[color]} />;
+  return (
+    <IconElement {...props} size={size} style={{ color: IOColors[color] }} />
+  );
 };
 
 export default IconCategory;
