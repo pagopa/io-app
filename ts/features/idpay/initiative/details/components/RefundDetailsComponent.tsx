@@ -73,7 +73,7 @@ const RefundDetailsComponent = (props: RefundDetailsProps) => {
   const { close: closeBottomSheet } = useBottomSheet();
   const initiativeId = useIOSelector(idpayInitiativeIdSelector);
 
-  const isRejected = true; // refund.operationType === OperationTypeEnum.REJECTED_REFUND;
+  const isRejected = refund.operationType === OperationTypeEnum.REJECTED_REFUND;
 
   const handleEditIbanPress = () => {
     closeBottomSheet();
