@@ -4,16 +4,15 @@ import { IDPayOnboardingRoutes } from "../../onboarding/navigation/navigator";
 
 export const idPayLinkingOptions: PathConfigMap = {
   [IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN]: {
-    path: "idpay",
+    path: "idpay/onboarding",
     screens: {
-      [IDPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS]:
-        "onboarding/:serviceId"
+      [IDPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS]: "/:serviceId"
     }
   },
   [IDPayDetailsRoutes.IDPAY_DETAILS_MAIN]: {
-    path: "idpay",
+    path: "idpay/initiative",
     screens: {
-      [IDPayDetailsRoutes.IDPAY_DETAILS_MONITORING]: "initiative/:initiativeId"
+      [IDPayDetailsRoutes.IDPAY_DETAILS_MONITORING]: "/:initiativeId"
     }
   }
 };
