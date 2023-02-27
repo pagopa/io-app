@@ -66,7 +66,7 @@ const testKeyInfoWithRSAKey: KeyInfo = {
 
 const testLollipopConfigWithCustomContent: LollipopConfig = {
   nonce: "xyz123",
-  customContentToSign: ["ASDFFA324SDFA==", "DAFDEFAF323DSFA=="]
+  customContentToSign: { tos: "ASDFFA324SDFA==", sign: "DAFDEFAF323DSFA==" }
 };
 
 const testSignatureConfigForgeInputWithCustomContentAndECKey: SignatureConfigForgeInput =
@@ -207,7 +207,7 @@ describe(`Test generate signature base`, () => {
 
 describe(`Test generate signature base for multiple custom signatures RSAKey`, () => {
   const customContent: CutsomContentToSignInput = {
-    customContentToSign: ["ASDFFA324SDFA==", "DAFDEFAF323DSFA=="],
+    customContentToSign: { tos: "ASDFFA324SDFA==", sign: "DAFDEFAF323DSFA==" },
     keyInfo: testKeyInfoWithRSAKey,
     keyTag: testKeyInfoWithRSAKey.keyTag!,
     signatureConfigForgeInput:
@@ -218,18 +218,21 @@ describe(`Test generate signature base for multiple custom signatures RSAKey`, (
     signatureBase.forEach((base, index) => {
       const nonce: string =
         customContent.signatureConfigForgeInput.lollipopConfig.nonce;
+      const headerPrefix: string = base.headerPrefix;
       const headerIndex: number = index + 2;
-      const headerValue: string = customContent.customContentToSign![index];
+      const headerValue: string =
+        customContent.customContentToSign![headerPrefix];
       const publicKeyThumbprint: string =
         customContent.keyInfo.publicKeyThumbprint!;
 
       const controlObject: CustomContentBaseSignature = {
         signatureBase:
-          `"x-pagopa-lollipop-custom-${headerIndex}": ${headerValue}\n` +
-          `"@signature-params": ("x-pagopa-lollipop-custom-${headerIndex}");created=1623029400;nonce="${nonce}";alg="rsa-pss-sha256";keyid="${publicKeyThumbprint}"`,
-        signatureInput: `sig${headerIndex}=("x-pagopa-lollipop-custom-${headerIndex}");created=1623029400;nonce="${nonce}";alg="rsa-pss-sha256";keyid="testThumbprint"`,
+          `"x-pagopa-lollipop-custom-${headerPrefix}": ${headerValue}\n` +
+          `"@signature-params": ("x-pagopa-lollipop-custom-${headerPrefix}");created=1623029400;nonce="${nonce}";alg="rsa-pss-sha256";keyid="${publicKeyThumbprint}"`,
+        signatureInput: `sig${headerIndex}=("x-pagopa-lollipop-custom-${headerPrefix}");created=1623029400;nonce="${nonce}";alg="rsa-pss-sha256";keyid="testThumbprint"`,
         headerIndex,
-        headerName: `x-pagopa-lollipop-custom-${headerIndex}`,
+        headerPrefix,
+        headerName: `x-pagopa-lollipop-custom-${headerPrefix}`,
         headerValue
       };
 
@@ -240,7 +243,7 @@ describe(`Test generate signature base for multiple custom signatures RSAKey`, (
 
 describe(`Test generate signature base for multiple custom signatures ECKey`, () => {
   const customContent: CutsomContentToSignInput = {
-    customContentToSign: ["ASDFFA324SDFA==", "DAFDEFAF323DSFA=="],
+    customContentToSign: { tos: "ASDFFA324SDFA==", sign: "DAFDEFAF323DSFA==" },
     keyInfo: testKeyInfoWithECKey,
     keyTag: testKeyInfoWithECKey.keyTag!,
     signatureConfigForgeInput:
@@ -251,18 +254,21 @@ describe(`Test generate signature base for multiple custom signatures ECKey`, ()
     signatureBase.forEach((base, index) => {
       const nonce: string =
         customContent.signatureConfigForgeInput.lollipopConfig.nonce;
+      const headerPrefix: string = base.headerPrefix;
       const headerIndex: number = index + 2;
-      const headerValue: string = customContent.customContentToSign![index];
+      const headerValue: string =
+        customContent.customContentToSign![headerPrefix];
       const publicKeyThumbprint: string =
         customContent.keyInfo.publicKeyThumbprint!;
 
       const controlObject: CustomContentBaseSignature = {
         signatureBase:
-          `"x-pagopa-lollipop-custom-${headerIndex}": ${headerValue}\n` +
-          `"@signature-params": ("x-pagopa-lollipop-custom-${headerIndex}");created=1623029400;nonce="${nonce}";alg="ecdsa-p256-sha256";keyid="${publicKeyThumbprint}"`,
-        signatureInput: `sig${headerIndex}=("x-pagopa-lollipop-custom-${headerIndex}");created=1623029400;nonce="${nonce}";alg="ecdsa-p256-sha256";keyid="testThumbprint"`,
+          `"x-pagopa-lollipop-custom-${headerPrefix}": ${headerValue}\n` +
+          `"@signature-params": ("x-pagopa-lollipop-custom-${headerPrefix}");created=1623029400;nonce="${nonce}";alg="ecdsa-p256-sha256";keyid="${publicKeyThumbprint}"`,
+        signatureInput: `sig${headerIndex}=("x-pagopa-lollipop-custom-${headerPrefix}");created=1623029400;nonce="${nonce}";alg="ecdsa-p256-sha256";keyid="testThumbprint"`,
         headerIndex,
-        headerName: `x-pagopa-lollipop-custom-${headerIndex}`,
+        headerPrefix,
+        headerName: `x-pagopa-lollipop-custom-${headerPrefix}`,
         headerValue
       };
 

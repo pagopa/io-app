@@ -5,7 +5,7 @@ import { SignatureComponents } from "../../utils/httpSignature/types/SignatureCo
 
 export type LollipopConfig = {
   nonce: string;
-  customContentToSign?: ReadonlyArray<string>;
+  customContentToSign?: Record<string, string>;
 };
 
 /**
@@ -34,11 +34,9 @@ export function getSignAlgorithm(publicKey: PublicKey): SignatureAlgorithm {
   return publicKey.kty === "EC" ? "ecdsa-p256-sha256" : "rsa-pss-sha256";
 }
 
-/**
- * Result type of promises returnd by `chainSignPromises`
- */
 export type SignPromiseResult = {
   headerIndex: number;
+  headerPrefix: string;
   headerName: string;
   headerValue: string;
   signature: string;
