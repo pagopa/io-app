@@ -15,6 +15,7 @@ import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreen
 import DarkLayout from "../../components/screens/DarkLayout";
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
+import { ScreenContentRoot } from "../../components/screens/ScreenContent";
 import SectionHeaderComponent from "../../components/screens/SectionHeaderComponent";
 import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
 import { AlertModal } from "../../components/ui/AlertModal";
@@ -50,6 +51,7 @@ import { getAppVersion } from "../../utils/appVersion";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { getDeviceId } from "../../utils/device";
 import { isDevEnv } from "../../utils/environment";
+import { withTabItemPressWhenScreenActive } from "../../utils/tabBar";
 
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "PROFILE_MAIN"> &
   LightModalContextInterface &
@@ -104,6 +106,8 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     };
     this.handleClearCachePress = this.handleClearCachePress.bind(this);
   }
+
+
 
   public componentWillUnmount() {
     // This ensures modals will be closed (if there are some opened)
@@ -443,6 +447,8 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       </React.Fragment>
     );
   }
+  
+  
   public render() {
     const { navigation } = this.props;
 
@@ -458,6 +464,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
         />
       );
     };
+
 
     const screenContent = () => (
       <ScrollView style={styles.whiteBg}>
@@ -546,6 +553,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
 
     return (
       <DarkLayout
+        referenceToContentScreen={(c:ScreenContentRoot) => (component.enabled = c)}
         accessibilityLabel={I18n.t("profile.main.title")}
         bounces={false}
         appLogo={true}
@@ -571,6 +579,10 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     );
   }
 }
+
+const component = {
+  enabled: {} as ScreenContentRoot
+};
 
 const mapStateToProps = (state: GlobalState) => ({
   sessionToken: isLoggedIn(state.authentication)
@@ -603,4 +615,12 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withLightModalContext(ProfileMainScreen));
+)(
+  withLightModalContext(
+    withTabItemPressWhenScreenActive(
+      ProfileMainScreen,
+      () => component.enabled._root.scrollToPosition(0, 0),
+      false
+    )
+  )
+);

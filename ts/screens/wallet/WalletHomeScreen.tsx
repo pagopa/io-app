@@ -638,9 +638,9 @@ export default withValidatedPagoPaVersion(
     )(
       withTabItemPressWhenScreenActive(
         withLightModalContext(WalletHomeScreen),
-        () => {
+        () => 
           component.enabled._root.scrollToPosition(0, 0)
-        },
+        ,
         false
       )
     )
