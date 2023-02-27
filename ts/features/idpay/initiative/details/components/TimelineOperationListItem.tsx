@@ -6,8 +6,8 @@ import { OperationTypeEnum as IbanOperationTypeEnum } from "../../../../../../de
 import { OperationTypeEnum as OnboardingOperationTypeEnum } from "../../../../../../definitions/idpay/OnboardingOperationDTO";
 import { OperationListDTO } from "../../../../../../definitions/idpay/OperationListDTO";
 import { OperationTypeEnum as RefundOperationTypeEnum } from "../../../../../../definitions/idpay/RefundOperationDTO";
-import { OperationTypeEnum } from "../../../../../../definitions/idpay/timeline/RejectedInstrumentOperationDTO";
-import { OperationTypeEnum as TransactionOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/TransactionOperationDTO";
+import { OperationTypeEnum } from "../../../../../../definitions/idpay/RejectedInstrumentOperationDTO";
+import { OperationTypeEnum as TransactionOperationTypeEnum } from "../../../../../../definitions/idpay/TransactionOperationDTO";
 import { Icon } from "../../../../../components/core/icons";
 import { LogoPayment } from "../../../../../components/core/logos";
 import { HSpacer } from "../../../../../components/core/spacer/Spacer";
