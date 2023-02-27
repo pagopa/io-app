@@ -3339,7 +3339,7 @@ idpay:
     details:
       initiativeCard:
         availableAmount: Disponibile
-        validUntil: Valido fino al
+        validUntil: Valido fino al {{expiryDate}}
         toRefund: da rimborsare
       initiativeDetailsScreen:
         notConfigured:
@@ -3362,16 +3362,16 @@ idpay:
             title: Lista operazioni
             lastUpdated: "Ultimo aggiornamento: "
             operationDescriptions:
-              ONBOARDING:  "Hai aderito all'iniziativa"
+              ONBOARDING:  "Adesione all'iniziativa"
               ADD_IBAN:  "Aggiunto IBAN"
-              ADD_INSTRUMENT: "Hai aggiunto ···· {{maskedPan}}"
-              TRANSACTION:  "Pagamento Pos"
-              REVERSAL:  "Ricarica saldo disponibile"
+              ADD_INSTRUMENT: "Attivazione metodo ···· {{maskedPan}}"
+              TRANSACTION:  "Pagamento POS"
+              REVERSAL:  "Storno"
               DELETE_INSTRUMENT:  "Hai eliminato un metodo di pagamento"
-              REJECTED_ADD_INSTRUMENT:  "Hai rifiutato un metodo di pagamento"
-              REJECTED_DELETE_INSTRUMENT: "Hai rifiutato di eliminare un metodo di pagamento"
-              PAID_REFUND:  "Rimborso"
-              REJECTED_REFUND:  "Rifiuto rimborso"
+              REJECTED_ADD_INSTRUMENT:  "Errore attivazione metodo"
+              REJECTED_DELETE_INSTRUMENT: "Errore disattivazione metodo"
+              PAID_REFUND:  "Rimborso sul tuo conto"
+              REJECTED_REFUND:  "Errore rimboso"
     operationDetails:
       title: Dettaglio dell'operazione
       instrument: Metodo di pagamento
