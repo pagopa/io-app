@@ -534,11 +534,13 @@ const createIDPayInitiativeConfigurationMachine = () =>
 
             /**
              * In this state we are showing the instruments list to the user.
-             * On entry we are updating the instrument statuses in the context to show the correct status in the instrument switch
+             * On entry we are updating the instrument statuses in the context to show the correct status in the instrument switch.
+             * This state implements a polling mechanism using XState delays (https://xstate.js.org/docs/guides/delays.html)
              */
             DISPLAYING_INSTRUMENTS: {
               tags: [WAITING_USER_INPUT_TAG],
               entry: "updateInstrumentStatuses",
+              initial: "DISPLAYING",
               on: {
                 /**
                  * The selected instrument is "staged", which means is being prepared to be enrolled with the confirmation modal.
@@ -603,6 +605,37 @@ const createIDPayInitiativeConfigurationMachine = () =>
                 SKIP: {
                   target: "INSTRUMENTS_COMPLETED",
                   actions: "skipInstruments"
+                }
+              },
+              states: {
+                /**
+                 * In this state we are displaying the instruments, after REFRESHING_INSTRUMENTS_STATES delay the substate transitions to
+                 * the REFRESHING_INSTRUMENTS_STATES state
+                 */
+                DISPLAYING: {
+                  after: {
+                    INSTRUMENTS_POLLING_INTERVAL: {
+                      target: "REFRESHING_INSTRUMENTS_STATES"
+                    }
+                  }
+                },
+                /**
+                 * In this state instruments states are refreshed by invoking loadInitiativeInstruments service and then returns to the
+                 * DISPLAYING state.
+                 */
+                REFRESHING_INSTRUMENTS_STATES: {
+                  invoke: {
+                    src: "loadInitiativeInstruments",
+                    id: "loadInitiativeInstruments",
+                    onDone: {
+                      target: "DISPLAYING",
+                      actions: "loadInitiativeInstrumentsSuccess"
+                    },
+                    onError: {
+                      target: "DISPLAYING",
+                      actions: ["setFailure", "showFailureToast"]
+                    }
+                  }
                 }
               }
             },
@@ -898,6 +931,12 @@ const createIDPayInitiativeConfigurationMachine = () =>
         isInstrumentsOnlyMode: (context, _) =>
           context.mode === ConfigurationMode.INSTRUMENTS,
         hasInstruments: (context, _) => context.walletInstruments.length > 0
+      },
+      delays: {
+        /**
+         * Instruments statuses refresh delay (ms)
+         */
+        INSTRUMENTS_POLLING_INTERVAL: 5000
       }
     }
   );
