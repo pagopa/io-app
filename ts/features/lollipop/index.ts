@@ -1,3 +1,8 @@
+import * as A from "fp-ts/lib/Array";
+import { pipe } from "fp-ts/lib/function";
+import * as T from "fp-ts/lib/Task";
+import * as TE from "fp-ts/lib/TaskEither";
+import { toError } from "fp-ts/lib/Either";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
 import URLParse from "url-parse";
 import { SignatureAlgorithm } from "../../utils/httpSignature/types/SignatureAlgorithms";
@@ -46,8 +51,12 @@ export type SignPromiseResult = {
 /**
  * Chains all custom sign promises passed as its input array.
  */
-export function chainSignPromises(
+export const chainSignPromises = (
   promises: Array<Promise<SignPromiseResult>>
-): Promise<Array<SignPromiseResult>> {
-  return Promise.all(promises).catch(error => Promise.reject(error));
-}
+) =>
+  pipe(
+    promises,
+    A.map(p => TE.tryCatch(() => p, toError)),
+    A.sequence(TE.ApplicativePar),
+    TE.getOrElse(() => T.of([] as Array<SignPromiseResult>))
+  )();
