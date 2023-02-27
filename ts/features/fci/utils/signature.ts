@@ -4,7 +4,6 @@ import * as A from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
 import * as TE from "fp-ts/lib/TaskEither";
 import * as E from "fp-ts/lib/Either";
-import Crypto from "react-native-quick-crypto";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import { QtspClauses } from "../../../../definitions/fci/QtspClauses";
 import { DocumentToSign } from "../../../../definitions/fci/DocumentToSign";
@@ -16,8 +15,6 @@ export const QtspDocumentToSign = t.type({
 
 export type QtspDocumentToSign =
   | t.TypeOf<typeof QtspDocumentToSign> & DocumentToSign;
-
-export const createSimpleHash = () => Crypto.createHash("sha256");
 
 const getFileDigest = (url: string) =>
   pipe(
