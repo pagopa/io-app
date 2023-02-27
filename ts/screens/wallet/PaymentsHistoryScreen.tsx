@@ -8,7 +8,6 @@ import { H2 } from "../../components/core/typography/H2";
 import { IOColors } from "../../components/core/variables/IOColors";
 import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
 import { withValidatedPagoPaVersion } from "../../components/helpers/withValidatedPagoPaVersion";
-import RemindEmailValidationOverlay from "../../components/RemindEmailValidationOverlay";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import PaymentHistoryList from "../../components/wallet/PaymentsHistoryList";
