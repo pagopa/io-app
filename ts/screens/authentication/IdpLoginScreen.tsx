@@ -58,6 +58,7 @@ import {
 } from "../../utils/supportAssistance";
 import { getUrlBasepath } from "../../utils/url";
 import { lollipopLoginEnabled } from "../../config";
+import { trackLollipopIdpLoginFailure } from "../../utils/analytics";
 import { originSchemasWhiteList } from "./originSchemasWhiteList";
 
 type NavigationProps = IOStackNavigationRouteProps<
@@ -140,7 +141,8 @@ const IdpLoginScreen = (props: Props) => {
 
   const idpId = props.loggedOutWithIdpAuth?.idp.id;
   const loginUri = idpId ? getIdpLoginUri(idpId) : undefined;
-  const loginSource = useLollipopLoginSource(loginUri);
+  const { loginSource, regenerateLoginSource } =
+    useLollipopLoginSource(loginUri);
 
   const choosenTool = useMemo(
     () => assistanceToolRemoteConfig(props.assistanceToolConfig),
@@ -207,7 +209,14 @@ const IdpLoginScreen = (props: Props) => {
   const onRetryButtonPressed = (): void => {
     setRequestState(pot.noneLoading);
     setLollipopCheckStatus({ status: "none", url: O.none });
-    startLoginProcess();
+    // We must set webviewSource to undefined before requesting
+    // any changes to loginSource otherwise on the next component
+    // refresh (triggered by a different value of loginSource),
+    // the old value of webviewSource is going to be loaded
+    // (i.e., the loaded webViewSource uri will be different from
+    // the loginSource.uri)
+    setWebviewSource(undefined);
+    regenerateLoginSource();
   };
 
   const handleNavigationStateChange = useCallback(
@@ -309,7 +318,8 @@ const IdpLoginScreen = (props: Props) => {
           });
           setWebviewSource({ uri: eventUrl });
         },
-        () => {
+        (reason: string) => {
+          trackLollipopIdpLoginFailure(reason);
           setLollipopCheckStatus({
             status: "untrusted",
             url: O.some(eventUrl)
