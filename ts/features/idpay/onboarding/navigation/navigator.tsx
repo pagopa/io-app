@@ -1,11 +1,7 @@
+import { ParamListBase, RouteProp } from "@react-navigation/native";
 import {
-  ParamListBase,
-  PathConfigMap,
-  RouteProp
-} from "@react-navigation/native";
-import {
-  StackNavigationProp,
-  createStackNavigator
+  createStackNavigator,
+  StackNavigationProp
 } from "@react-navigation/stack";
 import React from "react";
 import BoolValuePrerequisitesScreen from "../screens/BoolValuePrerequisitesScreen";
@@ -39,16 +35,6 @@ export type IDPayOnboardingParamsList = {
 };
 
 const Stack = createStackNavigator<IDPayOnboardingParamsList>();
-
-export const idPayOnboardingLinkingOptions: PathConfigMap = {
-  [IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN]: {
-    path: "idpay",
-    screens: {
-      [IDPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS]:
-        "onboarding/:serviceId"
-    }
-  }
-};
 
 export const IDPayOnboardingNavigator = () => (
   <IDPayOnboardingMachineProvider>
