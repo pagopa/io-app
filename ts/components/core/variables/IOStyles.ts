@@ -46,6 +46,7 @@ export const IOStyles = StyleSheet.create({
     shadowRadius: themeVariables.footerShadowRadius,
     // Android shadow
     elevation: themeVariables.footerElevation
+  },
   // https://github.com/pagopa/io-app/pull/4387
   topListBorderBelowTabsStyle: {
     borderTopWidth: Platform.OS === "android" ? 0.1 : undefined,
