@@ -28,7 +28,8 @@ export const localeToPreferredLanguageMapping = new Map<
 >([
   ["it", PreferredLanguageEnum.it_IT],
   ["en", PreferredLanguageEnum.en_GB],
-  ["de", PreferredLanguageEnum.de_DE]
+  ["de", PreferredLanguageEnum.de_DE],
+  ["sl", PreferredLanguageEnum.sl_SI]
 ]);
 
 // define the locale fallback used in the whole app code
@@ -49,7 +50,8 @@ I18n.defaultLocale = localeFallback.locale;
 I18n.translations = {
   it: locales.localeIT,
   en: locales.localeEN,
-  de: locales.localeDE
+  de: locales.localeDE,
+  sl: locales.localeSL
 };
 
 export const availableTranslations: ReadonlyArray<locales.Locales> =

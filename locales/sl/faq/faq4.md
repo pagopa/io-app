@@ -1,0 +1,1 @@
+CIE, elektronska osebna izkaznica, je zelo varen elektronski dokument, opremljen z radiofrekvenčnim mikroprocesorjem, ki omogoča uporabo v različnih scenarijih, vključno z dostopom do spletnih storitev. Zadovoljuje varnostne potrebe naše države in nadomešča papirnato različico.

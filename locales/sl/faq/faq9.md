@@ -1,0 +1,1 @@
+Geslo je alfanumerična koda, ki si jo nastavil/a pri ustvarjanju digitalne identitete SPID. Če se ga ne spominjaš, lahko izbereš obnovitev gesla in začneš povezan postopek obnovitve, ki ga upravlja neposredno ponudnik identitete.
