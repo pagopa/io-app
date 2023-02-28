@@ -74,13 +74,17 @@ const OperationIcon = ({ operation }: OperationComponentProps) => {
 const OperationAmount = ({ operation }: OperationComponentProps) => {
   switch (operation.operationType) {
     case TransactionOperationTypeEnum.TRANSACTION:
-      return <H4>{`–${formatNumberAmount(operation.accrued, false)} €`}</H4>;
+      return (
+        <H4>{`–${formatNumberAmount(operation.accrued || 0, false)} €`}</H4>
+      );
     case TransactionOperationTypeEnum.REVERSAL:
-      return <H4>{`+${formatNumberAmount(operation.accrued, false)} €`}</H4>;
+      return (
+        <H4>{`+${formatNumberAmount(operation.accrued || 0, false)} €`}</H4>
+      );
     case RefundOperationTypeEnum.PAID_REFUND:
       return (
         <H4 color="greenLight">
-          {`${formatNumberAmount(operation.accrued, false)} €`}
+          {`${formatNumberAmount(operation.accrued || 0, false)} €`}
         </H4>
       );
     default:
