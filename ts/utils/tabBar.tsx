@@ -1,52 +1,54 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { useCallback } from "react";
 
-export function tabItemPressWhenScreenActive(
+export function useTabItemPressWhenScreenActive(
   callback: () => void,
-  isTabNavigatorInParent: boolean
+  hasInternTab: boolean
 ) {
   const navigation = useNavigation();
 
-  const onTabPress = () => {
-    
+  const onTabPress = useCallback(() => {
     if (navigation.isFocused()) {
       callback();
     }
-  };
+  }, [navigation, callback]);
 
   useFocusEffect(
     useCallback(() => {
-     
-      //tabPress is not present in typed events in the library
-      if (isTabNavigatorInParent) {
-        //@ts-ignore
+      // tabPress is not present in typed events in the library
+
+      // eslint-disable-next-line
+      // @ts-ignore
+      navigation.addListener("tabPress", onTabPress);
+
+      if (hasInternTab) {
+        // eslint-disable-next-line
+        // @ts-ignore
         navigation.getParent()?.addListener("tabPress", onTabPress);
-      } else {
-        //@ts-ignore
-        navigation.addListener("tabPress", onTabPress);
       }
 
       return () => {
-        if (isTabNavigatorInParent) {
-          //@ts-ignore
+        // eslint-disable-next-line
+        // @ts-ignore
+        navigation.removeListener("tabPress", onTabPress);
+
+        if (hasInternTab) {
+          // eslint-disable-next-line
+          // @ts-ignore
           navigation.getParent()?.removeListener("tabPress", onTabPress);
-        } else {
-          //@ts-ignore
-          navigation.removeListener("tabPress", onTabPress);
         }
       };
-    }, [() => navigation.isFocused()])
+    }, [hasInternTab, navigation, onTabPress])
   );
 }
 
-export function withTabItemPressWhenScreenActive<P>(
+export function withUseTabItemPressWhenScreenActive<P>(
   WrappedComponent: React.ComponentType<P>,
   callback: () => void,
-  isTabNavigatorInParent: boolean
+  hasInternTab: boolean
 ) {
   return (props: any) => {
-    tabItemPressWhenScreenActive(callback, isTabNavigatorInParent);
+    useTabItemPressWhenScreenActive(callback, hasInternTab);
     return <WrappedComponent {...props} />;
   };
 }

@@ -9,7 +9,6 @@ import {
   NativeEventSubscription,
   StyleSheet
 } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
 import { connect } from "react-redux";
 import { BonusActivationWithQrCode } from "../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
@@ -104,7 +103,7 @@ import customVariables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
 import { isStrictSome } from "../../utils/pot";
 import { showToast } from "../../utils/showToast";
-import { withTabItemPressWhenScreenActive } from "../../utils/tabBar";
+import { withUseTabItemPressWhenScreenActive } from "../../utils/tabBar";
 
 export type WalletHomeNavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -162,7 +161,9 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
 
   constructor(props: Props) {
     super(props);
-    this.state = { hasFocus: false };
+    this.state = {
+      hasFocus: false
+    };
   }
 
   private handleBackPress = () => {
@@ -524,15 +525,13 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     const footerContent = pot.isSome(potWallets)
       ? this.footerButton(potWallets)
       : undefined;
-    
-    
 
-    return (      
+    return (
       <WalletLayout
-
-      //Questo deve diventare tipo "referenceToContentScreen" e DEVE essere tutto tipato, sia qui che negli altri TRE file (ora sta any)
-      
-      referenceToContentScreen={(c:ScreenContentRoot) => (component.enabled = c)}
+        referenceToContentScreen={(c: ScreenContentRoot) => {
+          setScreenContentRef(c);
+          return c;
+        }}
         accessibilityLabel={I18n.t("wallet.wallet")}
         title={I18n.t("wallet.wallet")}
         allowGoBack={false}
@@ -627,20 +626,24 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(fetchTransactionsLoadComplete(transactions)),
   runSendAddCobadgeMessageSaga: () => dispatch(runSendAddCobadgeTrackSaga())
 });
-const component = {
-  enabled: {} as ScreenContentRoot
+
+const screenContentRef = { content: {} as ScreenContentRoot };
+
+const setScreenContentRef = (obj: ScreenContentRoot): void => {
+  // eslint-disable-next-line functional/immutable-data
+  screenContentRef.content = obj;
 };
+
 export default withValidatedPagoPaVersion(
   withValidatedEmail(
     connect(
       mapStateToProps,
       mapDispatchToProps
     )(
-      withTabItemPressWhenScreenActive(
+      withUseTabItemPressWhenScreenActive(
         withLightModalContext(WalletHomeScreen),
-        () => 
-          component.enabled._root.scrollToPosition(0, 0)
-        ,
+        // eslint-disable-next-line no-underscore-dangle
+        () => screenContentRef.content._root.scrollToPosition(0, 0),
         false
       )
     )

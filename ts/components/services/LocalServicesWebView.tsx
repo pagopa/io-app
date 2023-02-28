@@ -16,7 +16,7 @@ import { servicesByIdSelector } from "../../store/reducers/entities/services/ser
 import { GlobalState } from "../../store/reducers/types";
 import { isStrictSome } from "../../utils/pot";
 import { showToast } from "../../utils/showToast";
-import { tabItemPressWhenScreenActive } from "../../utils/tabBar";
+import { useTabItemPressWhenScreenActive } from "../../utils/tabBar";
 import { AVOID_ZOOM_JS, closeInjectedScript } from "../../utils/webview";
 import { hexToRgba, IOColors } from "../core/variables/IOColors";
 import { withLightModalContext } from "../helpers/withLightModalContext";
@@ -71,18 +71,14 @@ const LocalServicesWebView = (props: Props) => {
   const [webViewError, setWebViewError] = React.useState<boolean>(false);
   const webViewRef = React.createRef<WebView>();
 
-
-  const scrollWebview = (x:number, y:number) => {
+  const scrollWebview = (x: number, y: number) => {
     const script = `window.scrollTo(${x}, ${y})`;
     webViewRef.current?.injectJavaScript(script);
-
   };
 
-  tabItemPressWhenScreenActive(() => scrollWebview(0,0),true);
+  useTabItemPressWhenScreenActive(() => scrollWebview(0, 0), true);
 
   const { servicesById, onServiceSelect } = props;
-
- 
 
   React.useEffect(() => {
     pipe(

@@ -42,7 +42,9 @@ type Props = Readonly<{
   gradientHeader?: boolean;
   headerPaddingMin?: boolean;
   footerFullWidth?: React.ReactNode;
-  referenceToContentScreen?: (c: ScreenContentRoot) => ScreenContentRoot | React.LegacyRef<Content>;
+  referenceToContentScreen?: (
+    c: ScreenContentRoot
+  ) => ScreenContentRoot | React.LegacyRef<Content>;
 }>;
 
 const styles = StyleSheet.create({
@@ -103,7 +105,7 @@ export default class WalletLayout extends React.Component<Props> {
       footerContent,
       contentStyle,
       appLogo,
-      footerFullWidth,
+      footerFullWidth
     } = this.props;
 
     return (
@@ -130,7 +132,7 @@ export default class WalletLayout extends React.Component<Props> {
         referenceToContentScreen={this.props.referenceToContentScreen}
       >
         {this.props.children}
-      </DarkLayout>     
+      </DarkLayout>
     );
   }
 }

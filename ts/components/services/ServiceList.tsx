@@ -16,7 +16,7 @@ import {
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import customVariables from "../../theme/variables";
 import { getLogoForOrganization } from "../../utils/organizations";
-import { withTabItemPressWhenScreenActive } from "../../utils/tabBar";
+import { withUseTabItemPressWhenScreenActive } from "../../utils/tabBar";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import SectionHeaderComponent from "../screens/SectionHeaderComponent";
 import NewServiceListItem from "./NewServiceListItem";
@@ -48,8 +48,6 @@ const styles = StyleSheet.create({
 });
 
 class ServiceList extends React.Component<Props> {
-  
-
   private renderServiceItem = (
     itemInfo: ListRenderItemInfo<pot.Pot<ServicePublic, Error>>
   ) => (
@@ -120,10 +118,10 @@ class ServiceList extends React.Component<Props> {
 
 const sectionListRef = React.createRef<SectionList>();
 
-export default   withTabItemPressWhenScreenActive(
+export default withUseTabItemPressWhenScreenActive(
   ServiceList,
   () => {
-      sectionListRef.current?.scrollToLocation({
+    sectionListRef.current?.scrollToLocation({
       animated: true,
       itemIndex: 0,
       sectionIndex: 0,

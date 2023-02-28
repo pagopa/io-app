@@ -10,16 +10,18 @@ interface OwnProps {
   contentStyle?: StyleProp<ViewStyle>;
   bounces?: boolean;
   contentRefreshControl?: ComponentProps<Content>["refreshControl"];
-  referenceToContentScreen?: (c: ScreenContentRoot) => ScreenContentRoot | React.LegacyRef<Content>
+  referenceToContentScreen?: (
+    c: ScreenContentRoot
+  ) => ScreenContentRoot | React.LegacyRef<Content>;
 }
 
 export type ScreenContentRoot = {
-  _root: ScreenContentFunctions
-}
+  _root: ScreenContentFunctions;
+};
 
 type ScreenContentFunctions = {
-  scrollToPosition: (x:number,y:number) => void;
-}
+  scrollToPosition: (x: number, y: number) => void;
+};
 
 type Props = OwnProps & ComponentProps<typeof ScreenContentHeader>;
 
@@ -27,7 +29,6 @@ type Props = OwnProps & ComponentProps<typeof ScreenContentHeader>;
  * Wraps a BaseScreenComponent with a title and a subtitle
  */
 class ScreenContent extends React.PureComponent<Props> {
-  
   public render() {
     const {
       title,
@@ -40,7 +41,7 @@ class ScreenContent extends React.PureComponent<Props> {
       bounces,
       referenceToContentScreen
     } = this.props;
-    
+
     return (
       <Content
         ref={referenceToContentScreen as unknown as React.LegacyRef<Content>}
@@ -59,7 +60,6 @@ class ScreenContent extends React.PureComponent<Props> {
           />
         )}
         {this.props.children}
-        
       </Content>
     );
   }

@@ -51,7 +51,7 @@ import { getAppVersion } from "../../utils/appVersion";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { getDeviceId } from "../../utils/device";
 import { isDevEnv } from "../../utils/environment";
-import { withTabItemPressWhenScreenActive } from "../../utils/tabBar";
+import { withUseTabItemPressWhenScreenActive } from "../../utils/tabBar";
 
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "PROFILE_MAIN"> &
   LightModalContextInterface &
@@ -106,8 +106,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     };
     this.handleClearCachePress = this.handleClearCachePress.bind(this);
   }
-
-
 
   public componentWillUnmount() {
     // This ensures modals will be closed (if there are some opened)
@@ -447,8 +445,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       </React.Fragment>
     );
   }
-  
-  
+
   public render() {
     const { navigation } = this.props;
 
@@ -464,7 +461,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
         />
       );
     };
-
 
     const screenContent = () => (
       <ScrollView style={styles.whiteBg}>
@@ -553,7 +549,10 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
 
     return (
       <DarkLayout
-        referenceToContentScreen={(c:ScreenContentRoot) => (component.enabled = c)}
+        referenceToContentScreen={(c: ScreenContentRoot) => {
+          setScreenContentRef(c);
+          return c;
+        }}
         accessibilityLabel={I18n.t("profile.main.title")}
         bounces={false}
         appLogo={true}
@@ -580,8 +579,11 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
   }
 }
 
-const component = {
-  enabled: {} as ScreenContentRoot
+const screenContentRef = { content: {} as ScreenContentRoot };
+
+const setScreenContentRef = (obj: ScreenContentRoot): void => {
+  // eslint-disable-next-line functional/immutable-data
+  screenContentRef.content = obj;
 };
 
 const mapStateToProps = (state: GlobalState) => ({
@@ -617,9 +619,10 @@ export default connect(
   mapDispatchToProps
 )(
   withLightModalContext(
-    withTabItemPressWhenScreenActive(
+    withUseTabItemPressWhenScreenActive(
       ProfileMainScreen,
-      () => component.enabled._root.scrollToPosition(0, 0),
+      // eslint-disable-next-line no-underscore-dangle
+      () => screenContentRef.content._root.scrollToPosition(0, 0),
       false
     )
   )
