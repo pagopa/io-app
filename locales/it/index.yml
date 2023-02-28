@@ -3464,7 +3464,7 @@ idpay:
           cancel: Annulla
     associationSuccess:
       title: "Grazie!"
-      body: "Da domani potrai utilizzare l'iniziativa {{initiativeName}}. Puoi abilitare altri metodi aggiungendoli al Portafoglio."
+      body: "Nella schermata successiva puoi verificare se i metodi da te abilitati sono già pronti per essere utliizzati."
       noInstrumentsBody: "Per terminare la configurazione devi aggiungere almeno un metodo di pagamento al Portafoglio e abilitarlo all’iniziativa."
       buttons:
         continue: "Vai all'iniziativa"
