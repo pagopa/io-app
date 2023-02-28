@@ -3233,6 +3233,8 @@ features:
     signatureFields:
       title: "Firma qui"
       showOnDocument: "Vedi sul documento"
+      accessibility:
+        fieldDetailHint: "Vai alla pagina per visualizzare il campo firma"
     title: "Firma con IO"
     documentsBar:
       titleLeft: Documento {{currentDoc}} di {{totalDocs}}

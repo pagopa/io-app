@@ -3209,6 +3209,8 @@ features:
     signatureFields:
       title: "Sign here"
       showOnDocument: "See on document"
+      accessibility:
+        fieldDetailHint: "Go to the page that displays the signature field"
     title: "Firma con IO"
     documentsBar:
       titleLeft: Document {{currentDoc}} of {{totalDocs}}
