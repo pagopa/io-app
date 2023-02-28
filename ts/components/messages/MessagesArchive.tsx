@@ -9,6 +9,7 @@ import { UIMessage } from "../../store/reducers/entities/messages/types";
 
 import { useItemsSelection } from "../../utils/hooks/useItemsSelection";
 import ListSelectionBar from "../ListSelectionBar";
+import { IOStyles } from "../core/variables/IOStyles";
 import { EmptyListComponent } from "./EmptyListComponent";
 import MessageList from "./MessageList";
 
@@ -72,7 +73,7 @@ const MessagesArchive = ({
   );
 
   return (
-    <View style={styles.listWrapper}>
+    <View style={[styles.listWrapper, IOStyles.topListBorderBelowTabsStyle]}>
       <View style={styles.listContainer}>
         <MessageList
           filter={{ getArchived: true }}
