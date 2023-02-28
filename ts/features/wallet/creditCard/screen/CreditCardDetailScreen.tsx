@@ -46,8 +46,6 @@ const CreditCardDetailScreen: React.FunctionComponent<Props> = props => {
   const { loadIdpayInitiatives } = props;
 
   React.useEffect(() => {
-    console.log(storeCreditCard);
-    // console.log("props", props);
     if (storeCreditCard?.idWallet !== undefined) {
       loadIdpayInitiatives(storeCreditCard?.idWallet.toString());
     }

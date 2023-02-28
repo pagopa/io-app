@@ -1,9 +1,10 @@
 import * as React from "react";
 import { InitiativeDTO } from "../../../../../definitions/idpay/wallet/InitiativeDTO";
 import ListItemComponent from "../../../../components/screens/ListItemComponent";
+import { InitiativesStatusDTO } from "../../../../../definitions/idpay/wallet/InitiativesStatusDTO";
 
 type ListItemProps = {
-  item: InitiativeDTO;
+  item: InitiativesStatusDTO;
 };
 export const IDPayInitiativeListItem = ({ item }: ListItemProps) => {
   const [isActive, setIsActive] = React.useState(false);

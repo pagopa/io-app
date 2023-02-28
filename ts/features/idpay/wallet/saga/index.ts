@@ -1,5 +1,5 @@
 import { SagaIterator } from "redux-saga";
-import { call, takeLatest, select } from "typed-redux-saga/macro";
+import { call, takeLatest, takeEvery, select } from "typed-redux-saga/macro";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { createIDPayWalletClient } from "../api/client";
@@ -9,9 +9,11 @@ import {
   idPayApiBaseUrl
 } from "../../../../config";
 import {
+  IdpayInitiativesPairingPutPayloadType,
   IdpayWalletInitiativeGetPayloadType,
   idPayWalletGet,
-  idPayWalletInitiativesGet
+  idPayWalletInitiativesGet,
+  idpayInitiativesPairingPut
 } from "../store/actions";
 import { waitBackoffError } from "../../../../utils/backoffError";
 import {
@@ -22,6 +24,7 @@ import { PreferredLanguageEnum } from "../../../../../definitions/backend/Prefer
 import { fromLocaleToPreferredLanguage } from "../../../../utils/locale";
 import { handleGetIDPayWallet } from "./handleGetIDPayWallet";
 import { handleGetIDPayInitiativesWithInstrument } from "./handleGetIdpayInitiativesWithInstrument";
+import { handlePutInitiativePairing } from "./handlePutInitiativePairing";
 
 /**
  * Handle the IDPay Wallet requests
@@ -61,6 +64,20 @@ export function* watchIDPayWalletSaga(bearerToken: string): SagaIterator {
       yield* call(
         handleGetIDPayInitiativesWithInstrument,
         idPayWalletClient.getInitiativesWithInstrument,
+        token,
+        preferredLanguage,
+        action.payload
+      );
+    }
+  );
+  yield* takeEvery(
+    idpayInitiativesPairingPut.request,
+    function* (action: { payload: IdpayInitiativesPairingPutPayloadType }) {
+      // wait backoff time if there were previous errors
+      yield* call(waitBackoffError, idpayInitiativesPairingPut.failure);
+      yield* call(
+        handlePutInitiativePairing,
+        idPayWalletClient.enrollInstrument,
         token,
         preferredLanguage,
         action.payload

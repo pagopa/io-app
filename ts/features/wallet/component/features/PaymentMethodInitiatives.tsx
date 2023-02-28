@@ -1,34 +1,30 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
+import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
-import { View, StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { useNavigation } from "@react-navigation/native";
 import { BpdConfig } from "../../../../../definitions/content/BpdConfig";
-import Initiative from "../../../../../img/wallet/initiatives.svg";
-import { H3 } from "../../../../components/core/typography/H3";
-import { IOColors } from "../../../../components/core/variables/IOColors";
-import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
-import { bpdEnabled } from "../../../../config";
-import I18n from "../../../../i18n";
-import {
-  bpdRemoteConfigSelector,
-  isIdPayEnabledSelector
-} from "../../../../store/reducers/backendStatus";
-import { GlobalState } from "../../../../store/reducers/types";
-import { PaymentMethod } from "../../../../types/pagopa";
-import BpdPaymentMethodCapability from "../../../bonus/bpd/components/BpdPaymentMethodCapability";
 import {
   EnableableFunctions,
   EnableableFunctionsEnum
 } from "../../../../../definitions/pagopa/EnableableFunctions";
+import Initiative from "../../../../../img/wallet/initiatives.svg";
+import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import { HSpacer } from "../../../../components/core/spacer/Spacer";
-import { idPayWalletInitiativeListSelector } from "../../../idpay/wallet/store/reducers";
+import { Body } from "../../../../components/core/typography/Body";
+import { H3 } from "../../../../components/core/typography/H3";
+import { IOColors } from "../../../../components/core/variables/IOColors";
+import { bpdEnabled } from "../../../../config";
+import I18n from "../../../../i18n";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
 import ROUTES from "../../../../navigation/routes";
-import { Body } from "../../../../components/core/typography/Body";
+import { bpdRemoteConfigSelector } from "../../../../store/reducers/backendStatus";
+import { GlobalState } from "../../../../store/reducers/types";
+import { PaymentMethod } from "../../../../types/pagopa";
+import BpdPaymentMethodCapability from "../../../bonus/bpd/components/BpdPaymentMethodCapability";
 import { IDPayInitiativeListItem } from "../../../idpay/wallet/components/IDPayInitiativesListItem";
+import { idpayInitiativesListSelector } from "../../../idpay/wallet/store/reducers";
 
 type OwnProps = {
   paymentMethod: PaymentMethod;
@@ -97,24 +93,18 @@ const PaymentMethodInitiatives = (props: Props): React.ReactElement | null => {
     props.paymentMethod,
     props.bpdRemoteConfig
   );
-  const { isIdPayEnabled, initiativeListPot } = props;
+  const { namedInitiativesList } = props;
   const navigation = useNavigation<IOStackNavigationProp<WalletParamsList>>();
-  const namedInitiativesList = pot
-    .getOrElse(initiativeListPot, [])
-    .filter(initiative => initiative.initiativeName !== undefined);
 
   const mappedIdPayInitiatives = namedInitiativesList.map(item => (
     <IDPayInitiativeListItem key={item.initiativeId} item={item} />
   ));
-  const itemsArray = [
-    ...(isIdPayEnabled ? mappedIdPayInitiatives : []),
-    ...capabilityItems
-  ];
+  const itemsArray = [...mappedIdPayInitiatives, ...capabilityItems];
 
   const navigateToPairableInitiativesList = () =>
     navigation.navigate(ROUTES.WALLET_IDPAY_INITIATIVE_LIST, {
-      initiatives: itemsArray,
-      idWallet: props.paymentMethod.idWallet
+      capabilityItems
+      // idWallet: props.paymentMethod.idWallet
     });
   return itemsArray.length > 0 ? (
     <View style={props.style}>
@@ -145,8 +135,7 @@ const PaymentMethodInitiatives = (props: Props): React.ReactElement | null => {
 const mapDispatchToProps = (_: Dispatch) => ({});
 const mapStateToProps = (state: GlobalState) => ({
   bpdRemoteConfig: bpdRemoteConfigSelector(state),
-  isIdPayEnabled: isIdPayEnabledSelector(state),
-  initiativeListPot: idPayWalletInitiativeListSelector(state)
+  namedInitiativesList: idpayInitiativesListSelector(state)
 });
 
 export default connect(
