@@ -127,12 +127,22 @@ export const idpayInitiativesListSelector = createSelector(
       : []
 );
 
-export const isSingleInitiativeLoading = (
-  state: GlobalState,
-  initiativeId: string
-) =>
-  state.features.idPay.wallet.initiativesWithInstrumentPairingQueue[
-    initiativeId
-  ] !== undefined;
+// export const isSingleInitiativeLoadingSelector = (
+//   state: GlobalState,
+//   initiativeId: string
+// ) =>
+//   state.features.idPay.wallet.initiativesWithInstrumentPairingQueue[
+//     initiativeId
+//   ] !== undefined;
+
+  export const singleInitiativeQueueValueSelector = (
+    state: GlobalState,
+    initiativeId: string
+  ) =>
+    state.features.idPay.wallet.initiativesWithInstrumentPairingQueue[
+      initiativeId
+    ];
+
+  
 
 export default reducer;

@@ -56,7 +56,6 @@ export const IdPayInitiativeListScreen = (props: Props) => {
     useIOSelector(idPayWalletInitiativesWithInstrumentSelector),
     {} as InitiativesWithInstrumentDTO
   );
-  // const { brand, maskedPan } = initiativesWithInstrument ?? {};
 
   const listItems = [...capabilityItems, ...idpayInitiativesComponentList];
 
