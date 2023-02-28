@@ -213,7 +213,7 @@ const MessageDetailsComponent = ({
     <>
       <NBContent noPadded={true}>
         <View style={styles.padded}>
-          <VSpacer size={16} />
+          <VSpacer size={24} />
 
           {service && <OrganizationTitle {...service} />}
 
