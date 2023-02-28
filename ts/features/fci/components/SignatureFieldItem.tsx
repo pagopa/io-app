@@ -8,7 +8,6 @@ import { IOColors } from "../../../components/core/variables/IOColors";
 import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
 import { Link } from "../../../components/core/typography/Link";
 import I18n from "../../../i18n";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
 
 type Props = {
   title: string;
