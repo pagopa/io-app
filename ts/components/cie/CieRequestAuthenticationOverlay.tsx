@@ -12,16 +12,12 @@ import {
   WebViewSource
 } from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";
-import { apiUrlPrefix, lollipopLoginEnabled } from "../../config";
 import { useLollipopLoginSource } from "../../features/lollipop/hooks/useLollipopLoginSource";
 import { LollipopCheckStatus } from "../../features/lollipop/types/LollipopCheckStatus";
 import { publicKey } from "../../features/lollipop/types/LollipopLoginSource";
 import { lollipopSamlVerify } from "../../features/lollipop/utils/login";
 import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
 import I18n from "../../i18n";
-import { useIOSelector } from "../../store/hooks";
-import { isLollipopEnabledSelector } from "../../store/reducers/backendStatus";
-import { getAppVersion } from "../../utils/appVersion";
 import { getIdpLoginUri } from "../../utils/login";
 import { getUrlBasepath } from "../../utils/url";
 import { closeInjectedScript } from "../../utils/webview";
@@ -112,23 +108,7 @@ const CieWebView = (props: Props) => {
   const [lollipopCheckStatus, setLollipopCheckStatus] =
     React.useState<LollipopCheckStatus>({ status: "none", url: O.none });
 
-  const isLollipopEnabled = useIOSelector(isLollipopEnabledSelector);
-  const useLollipopoUserAgent = isLollipopEnabled && lollipopLoginEnabled;
-  // We leave the custom user agent header only for the first call
-  // to the backend API server, but we clear it for subsequent calls to
-  // IdPs' webpages.
-  // See: https://pagopa.atlassian.net/browse/IOAPPCIT-46
-  const lollipopUserAgent = useLollipopoUserAgent
-    ? `IO-App/${getAppVersion()}`
-    : defaultUserAgent;
-
-  const uriFromWebViewSource =
-    webviewSource && "uri" in webviewSource ? webviewSource.uri : undefined;
-  const userAgentForWebView = uriFromWebViewSource?.includes(apiUrlPrefix)
-    ? lollipopUserAgent
-    : defaultUserAgent;
-
-  console.log(`=== rendering (${userAgentForWebView})`);
+  console.log(`=== rendering`);
 
   const verifyLollipop = React.useCallback(
     (eventUrl: string, urlEncodedSamlRequest: string, publicKey: PublicKey) => {
@@ -279,30 +259,15 @@ const CieWebView = (props: Props) => {
 
   const handleOnLoadEnd = (e: WebViewNavigationEvent | WebViewErrorEvent) => {
     console.log(`=== handleOnLoadEnd`);
-    if (e.nativeEvent.title === "Pagina web non disponibile") {
-      console.log(`=== handleOnLoadEnd (pagina web non disponibile)`);
-      handleOnError();
-    }
-    // On Android, if we attempt to access the idp URL twice,
-    // we are presented with an error page titled "ERROR".
-    if (e.nativeEvent.title === "ERRORE") {
-      console.log(`=== handleOnLoadEnd (ERRORE)`);
-      handleOnError();
-    }
-    // When attempting to log in with an incorrect user-agent on Lollipop,
-    // we receive an HTTP 500 Server Error. Currently, we are unable to use
-    // WebView.onHttpError() as our app's minSdk is set to a lower version.
-    // Instead, we rely on WebView.onError() which returns a page without a title (iOS),
-    // or a page having the same backend url for title (Android).
-    // so we handle the error accordingly. Once our minSdk is set to 23 or higher,
-    // we can improve this code by using WebView.onHttpError().
-    // TODO: Update this code to utilize WebView.onHttpError() when our minSdk is 23 or higher. TODO add issue on Jira
-    const httpError500Condition = Platform.select({
-      ios: e.nativeEvent.title === "",
-      android: e.nativeEvent.title === uriFromWebViewSource
-    });
-    if (httpError500Condition) {
-      console.log(`=== handleOnLoadEnd (httpError500Condition)`);
+
+    const eventTitle = e.nativeEvent.title;
+    if (
+      eventTitle === "Pagina web non disponibile" ||
+      // On Android, if we attempt to access the idp URL twice,
+      // we are presented with an error page titled "ERROR".
+      eventTitle === "ERRORE"
+    ) {
+      console.log(`=== handleOnLoadEnd (${eventTitle})`);
       handleOnError();
     }
     // inject JS on every page load end
@@ -334,7 +299,7 @@ const CieWebView = (props: Props) => {
           androidCameraAccessDisabled={true}
           androidMicrophoneAccessDisabled={true}
           ref={webView}
-          userAgent={userAgentForWebView}
+          userAgent={defaultUserAgent}
           javaScriptEnabled={true}
           injectedJavaScript={injectJs}
           onLoadEnd={handleOnLoadEnd}
