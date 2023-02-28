@@ -1,3 +1,4 @@
+import * as O from "fp-ts/lib/Option";
 import {
   generate,
   CryptoError,
@@ -11,14 +12,17 @@ import {
   getKeyGenerationInfo,
   KeyGenerationInfo
 } from "../../utils/crypto";
-import { mixpanelTrack } from "./../../mixpanel";
+import {
+  trackLollipopKeyGenerationFailure,
+  trackLollipopKeyGenerationSuccess
+} from "../../utils/analytics";
 
 /**
  * Generates a new crypto key pair.
  */
 export function* cryptoKeyGenerationSaga(
   keyTag: string,
-  previousKeyTag?: string
+  previousKeyTag: O.Option<string>
 ) {
   const isLollipopEnabled = yield* select(isLollipopEnabledSelector);
   if (isLollipopEnabled) {
@@ -34,26 +38,24 @@ export function* cryptoKeyGenerationSaga(
 export function* trackMixpanelCryptoKeyPairEvents(keyTag: string) {
   const keyInfo = yield* call(getKeyGenerationInfo, keyTag);
 
-  if (keyInfo && !keyInfo.errorCode) {
-    void mixpanelTrack("LOLLIPOP_KEY_GENERATION_SUCCESS", {
-      kty: keyInfo.keyType
-    });
+  if (!keyInfo) {
+    return;
   }
 
-  if (keyInfo && keyInfo.errorCode) {
-    void mixpanelTrack("LOLLIPOP_KEY_GENERATION_FAILURE", {
-      reason: keyInfo.errorCode,
-      resonMoreInfo: keyInfo.userInfo
-    });
+  if (keyInfo.errorCode) {
+    trackLollipopKeyGenerationFailure(keyInfo);
+    return;
   }
+
+  trackLollipopKeyGenerationSuccess(keyInfo);
 }
 
 /**
  * Deletes a previous saved crypto key pair.
  */
-export function* deletePreviousCryptoKeyPair(keyTag?: string) {
-  if (keyTag) {
-    yield* deleteCryptoKeyPair(keyTag);
+export function* deletePreviousCryptoKeyPair(keyTag: O.Option<string>) {
+  if (O.isSome(keyTag)) {
+    yield* deleteCryptoKeyPair(keyTag.value);
   }
 }
 
@@ -96,11 +98,10 @@ function* generateCryptoKeyPair(keyTag: string) {
  * Persists the crypto key pair generation information data.
  */
 function* saveKeyGenerationFailureInfo(keyTag: string, e: unknown) {
-  const { message: errorCode, userInfo } = e as CryptoError;
+  const { message: errorCode } = e as CryptoError;
   const keyGenerationInfo: KeyGenerationInfo = {
     keyTag,
-    errorCode,
-    userInfo
+    errorCode
   };
   yield* call(setKeyGenerationInfo, keyTag, keyGenerationInfo);
 }

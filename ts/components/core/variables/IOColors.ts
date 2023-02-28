@@ -33,49 +33,67 @@ export const hexToRgba = (hexCode: string, opacity: number = 1) => {
 
 export const IOColors = asIOColors({
   white: "#FFFFFF",
+  grey50: "#F4F5F8",
+  grey100: "#E8EBF1",
+  grey200: "#D2D6E3",
+  grey450: "#99A3C1",
+  grey650: "#636B82",
+  grey700: "#555C70",
+  grey850: "#2B2E38",
+  blackNew: "#0E0F13",
+  blueNew: "#0B3EE3",
+  blueNewDark: "#031344",
+  blueNewLight: "#B6C5F7",
+  blueNew50: "#E7ECFC",
+  blueNew100: "#CED8F9",
+  blueNew200: "#9DB2F4",
+  blueNew600: "#0932B6",
+  turquoise: "#00C5CA",
+  turquoiseDark: "#003B3D",
+  turquoiseLight: "#AAEEEF",
+  turquoise50: "#DBF9FA",
+  turquoise100: "#C2F3F4",
+  error: "#FE6666",
+  errorGraphic: "#D75252",
+  errorDark: "#761F1F",
+  errorLight: "#FFD1D1",
+  warning: "#FFC824",
+  warningGraphic: "#A5822A",
+  warningDark: "#614C15",
+  warningLight: "#FFF5DA",
+  success: "#6CC66A",
+  successGraphic: "#427940",
+  successDark: "#224021",
+  successLight: "#D3EED2",
+  info: "#6BCFFB",
+  infoGraphic: "#418DAF",
+  infoDark: "#215C76",
+  infoLight: "#E1F5FE",
+  cobalt: "#2C489D" /* used in the `Bonus Vacanze` only */,
+  blueItalia: "#0066CC" /* pagoPA service */,
+  /* Temporary */
+  blue600: "#0353A3",
+  blue50: "#EFF7FF",
+  /* LEGACY */
   greyUltraLight: "#F5F6F7",
-  /* ↳ ALIAS TOKEN: tabUnderlineColor → greyUltraLight */
   greyLight: "#E6E9F2",
-  /* ↳ ALIAS TOKEN: headerIconLight → greyLight */
   bluegreyLight: "#CCD4DC",
-  /* ↳ ALIAS TOKEN: colorSkeleton → bluegreyLight */
-  /* ↳ ALIAS TOKEN: itemSeparator → bluegreyLight */
   grey: "#909DA8",
-  /* ↳ ALIAS TOKEN: btnLightBorderColor → grey */
-  /* ↳ ALIAS TOKEN: disabledService → grey, not referenced though */
   milderGray: "#5F6F80",
-  /* ↳ ALIAS TOKEN: headerIconDark → milderGray */
   bluegrey: "#475A6D",
-  /* ↳ ALIAS TOKEN: textColor → bluegrey */
-  /* ↳ ALIAS TOKEN: topTabBarTextColor → bluegrey */
-  /* ↳ ALIAS TOKEN: unselectedColor → bluegrey */
   bluegreyDark: "#17324D",
-  /* ↳ ALIAS TOKEN: textColorDark → bluegreyDark */
-  /* ↳ ALIAS TOKEN: cardTextColor → bluegreyDark */
   black: "#000000",
-  /* ↳ ALIAS TOKEN: footerShadowColor → black */
-  noCieButton:
-    "#789CCD" /* Background of half-disabled noCIE CTA, from LandingScreen.tsx */,
+  noCieButton: "#789CCD" /* Half-disabled noCIE CTA BG, LandingScreen.tsx */,
   blue: "#0073E6",
-  /* ↳ ALIAS TOKEN: topTabBarActiveTextColor → blue */
-  /* ↳ ALIAS TOKEN: selectedColor → blue */
-  /* ↳ ALIAS TOKEN: contentPrimaryBackground → blue */
-  /* ↳ ALIAS TOKEN: textLinkColor → blue */
   blueUltraLight: "#99CCFF" /* Almost deprecated, avoid if possible */,
   aqua: "#00C5CA",
-  /* ↳ ALIAS TOKEN: colorHighlight → aqua */
   aquaUltraLight: "#C1F4F2",
-  /* ↳ ALIAS TOKEN: toastColor → aquaUltraLight */
-  cobalt: "#2C489D" /* used in the `Bonus Vacanze` only */,
-  antiqueFuchsia:
-    "#9B5897" /* used in the CgnDiscountValueBox component only */,
+  antiqueFuchsia: "#9B5897" /* used in the CgnDiscountValueBox only */,
   yellow: "#FFC824" /* Almost deprecated, used in `PaymentHistoryList` only */,
   orange: "#EA7614",
   red: "#C02927",
-  /* ↳ ALIAS TOKEN: brandDanger → red */
-  /* ↳ ALIAS TOKEN: calendarExpirableColor → red */
-  green: "#005C3C"
-  /* ↳ ALIAS TOKEN: brandSuccess → green */
+  green: "#005C3C",
+  greenLight: "#5CA85A"
 });
 
 export const IOColorGradients = asIOColorGradients({
@@ -105,3 +123,212 @@ export const getGradientColorValues = (
 
 export type IOColorType = keyof typeof IOColors;
 export type IOColorGradientType = keyof typeof IOColorGradients;
+
+const {
+  white,
+  greyUltraLight,
+  greyLight,
+  bluegreyLight,
+  grey,
+  milderGray,
+  bluegrey,
+  bluegreyDark,
+  black,
+  noCieButton,
+  blue,
+  blueUltraLight,
+  aqua,
+  aquaUltraLight,
+  cobalt,
+  antiqueFuchsia,
+  yellow,
+  orange,
+  red,
+  green,
+  greenLight
+} = IOColors;
+
+export const IOColorsLegacy = {
+  white,
+  greyUltraLight,
+  greyLight,
+  bluegreyLight,
+  grey,
+  milderGray,
+  bluegrey,
+  bluegreyDark,
+  black,
+  noCieButton,
+  blue,
+  blueUltraLight,
+  aqua,
+  aquaUltraLight,
+  cobalt,
+  antiqueFuchsia,
+  yellow,
+  orange,
+  red,
+  green,
+  greenLight
+};
+export type IOColorLegacy = keyof typeof IOColorsLegacy;
+
+const {
+  grey50,
+  grey100,
+  grey200,
+  grey450,
+  grey650,
+  grey700,
+  grey850,
+  blackNew
+} = IOColors;
+
+export const IOColorsNeutral = {
+  white,
+  grey50,
+  grey100,
+  grey200,
+  grey450,
+  grey650,
+  grey700,
+  grey850,
+  blackNew
+};
+export type IOColorsNeutral = keyof typeof IOColorsNeutral;
+
+const {
+  blueNew,
+  blueNewDark,
+  blueNewLight,
+  blueNew50,
+  blueNew100,
+  blueNew200,
+  blueNew600,
+  turquoise,
+  turquoiseDark,
+  turquoiseLight,
+  turquoise100,
+  turquoise50
+} = IOColors;
+
+export const IOColorsTints = {
+  blueNewDark,
+  blueNew600,
+  blueNew,
+  blueNew200,
+  blueNewLight,
+  blueNew100,
+  blueNew50,
+  turquoiseDark,
+  turquoise,
+  turquoiseLight,
+  turquoise100,
+  turquoise50
+};
+export type IOColorsTints = keyof typeof IOColorsTints;
+
+const {
+  error,
+  errorGraphic,
+  errorDark,
+  errorLight,
+  warning,
+  warningGraphic,
+  warningDark,
+  warningLight,
+  success,
+  successGraphic,
+  successDark,
+  successLight,
+  info,
+  infoGraphic,
+  infoDark,
+  infoLight
+} = IOColors;
+
+export const IOColorsStatus = {
+  errorDark,
+  errorGraphic,
+  error,
+  errorLight,
+  warningDark,
+  warningGraphic,
+  warning,
+  warningLight,
+  successDark,
+  successGraphic,
+  success,
+  successLight,
+  infoDark,
+  infoGraphic,
+  info,
+  infoLight
+};
+export type IOColorsStatus = keyof typeof IOColorsStatus;
+export type IOColorsStatusForeground = Extract<
+  IOColorsStatus,
+  "errorDark" | "warningDark" | "infoDark" | "successDark"
+>;
+export type IOColorsStatusBackground = Extract<
+  IOColorsStatus,
+  "errorLight" | "warningLight" | "infoLight" | "successLight"
+>;
+
+const { blueItalia, blue50, blue600 } = IOColors;
+
+export const IOColorsExtra = {
+  cobalt,
+  blueItalia,
+  blue50,
+  blue600
+};
+export type IOColorsExtra = keyof typeof IOColorsExtra;
+
+/*
+REFERENCES
+Alias tokens:
+*/
+/* 
+tabUnderlineColor → greyUltraLight
+headerIconLight → greyLight
+colorSkeleton → bluegreyLight
+itemSeparator → bluegreyLight
+btnLightBorderColor → grey
+disabledService → grey, not referenced though
+headerIconDark → milderGray
+textColor → bluegrey
+topTabBarTextColor → bluegrey
+unselectedColor → bluegrey
+textColorDark → bluegreyDark
+cardTextColor → bluegreyDark
+footerShadowColor → black
+topTabBarActiveTextColor → blue
+selectedColor → blue
+contentPrimaryBackground → blue
+textLinkColor → blue
+colorHighlight → aqua
+toastColor → aquaUltraLight
+brandDanger → red
+calendarExpirableColor → red
+brandSuccess → green
+*/
+
+/* NEW PALETTE → OLD PALETTE
+That is, which color replaces the other? */
+/*
+`blackNew` replaces `black`
+`grey50` → `greyUltraLight`
+`grey100` → `greyLight`
+`grey200` → `blueGreyLight`
+`grey450` → `grey`
+`grey650` → `milderGrey`
+`grey700` → `bluegrey`
+`grey850` → `bluegreyDark`
+`blueNew` → `blue`
+`turquoise` → `aqua`
+`turquoiseLight` → `aquaUltraLight`
+`warning` → `yellow`
+`error` → `red`
+`success` → `green`
+*/

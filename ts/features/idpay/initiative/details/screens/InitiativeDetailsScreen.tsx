@@ -134,13 +134,7 @@ export const InitiativeDetailsScreen = () => {
               style={[IOStyles.horizontalContentPadding, { height: 149 }]}
             />
           </LinearGradient>
-          <InitiativeCardComponent
-            endDate={initiativeData.endDate}
-            status={initiativeData.status}
-            accrued={initiativeData.accrued}
-            amount={initiativeData.amount}
-            initiativeName={initiativeData.initiativeName}
-          />
+          <InitiativeCardComponent initiative={initiativeData} />
           <View
             style={[
               IOStyles.flex,

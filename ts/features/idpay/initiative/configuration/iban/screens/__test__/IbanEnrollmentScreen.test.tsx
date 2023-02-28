@@ -103,7 +103,8 @@ const renderComponent = (context?: Partial<Context>) => {
         enrollInstrument: jest.fn(),
         loadIbanList: jest.fn(),
         loadInitiative: jest.fn(),
-        loadInstruments: jest.fn()
+        loadWalletInstruments: jest.fn(),
+        loadInitiativeInstruments: jest.fn()
       },
       actions: {
         exitConfiguration: jest.fn(),
@@ -115,6 +116,7 @@ const renderComponent = (context?: Partial<Context>) => {
         navigateToIbanOnboardingScreen: jest.fn(),
         navigateToInitiativeDetailScreen: jest.fn(),
         navigateToInstrumentsEnrollmentScreen: jest.fn(),
+        showUpdateIbanToast: jest.fn(),
         showFailureToast: jest.fn()
       }
     })

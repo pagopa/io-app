@@ -53,7 +53,7 @@ export const ButtonExtendedOutline = ({
   const isPressed: Animated.SharedValue<number> = useSharedValue(0);
 
   // Scaling transformation applied when the button is pressed
-  const animationScaleValue = IOScaleValues?.button?.pressedState;
+  const animationScaleValue = IOScaleValues?.magnifiedButton?.pressedState;
 
   const scaleTraversed = useDerivedValue(() =>
     withSpring(isPressed.value, IOSpringValues.button)

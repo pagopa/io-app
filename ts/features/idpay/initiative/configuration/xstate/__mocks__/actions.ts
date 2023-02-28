@@ -8,5 +8,6 @@ export const mockActions = {
   navigateToInitiativeDetailScreen: jest.fn(),
   navigateToInstrumentsEnrollmentScreen: jest.fn(),
   navigateToAddPaymentMethodScreen: jest.fn(),
+  showUpdateIbanToast: jest.fn(),
   showFailureToast: jest.fn()
 };

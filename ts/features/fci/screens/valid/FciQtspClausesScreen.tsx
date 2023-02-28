@@ -94,11 +94,15 @@ const FciQtspClausesScreen = () => {
             />
           )}
           ListFooterComponent={
-            <LinkedText
-              text={qtspPrivacyTextSelector}
-              replacementUrl={qtspPrivacyUrlSelector}
-              onPress={openUrl}
-            />
+            <>
+              <ItemSeparatorComponent noPadded={true} />
+              <VSpacer size={24} />
+              <LinkedText
+                text={qtspPrivacyTextSelector}
+                replacementUrl={qtspPrivacyUrlSelector}
+                onPress={openUrl}
+              />
+            </>
           }
           keyboardShouldPersistTaps={"handled"}
           testID={"FciQtspClausesListTestID"}
