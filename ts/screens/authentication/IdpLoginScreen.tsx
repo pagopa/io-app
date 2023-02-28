@@ -141,7 +141,8 @@ const IdpLoginScreen = (props: Props) => {
 
   const idpId = props.loggedOutWithIdpAuth?.idp.id;
   const loginUri = idpId ? getIdpLoginUri(idpId) : undefined;
-  const loginSource = useLollipopLoginSource(loginUri);
+  const { loginSource, regenerateLoginSource } =
+    useLollipopLoginSource(loginUri);
 
   const choosenTool = useMemo(
     () => assistanceToolRemoteConfig(props.assistanceToolConfig),
@@ -208,7 +209,14 @@ const IdpLoginScreen = (props: Props) => {
   const onRetryButtonPressed = (): void => {
     setRequestState(pot.noneLoading);
     setLollipopCheckStatus({ status: "none", url: O.none });
-    startLoginProcess();
+    // We must set webviewSource to undefined before requesting
+    // any changes to loginSource otherwise on the next component
+    // refresh (triggered by a different value of loginSource),
+    // the old value of webviewSource is going to be loaded
+    // (i.e., the loaded webViewSource uri will be different from
+    // the loginSource.uri)
+    setWebviewSource(undefined);
+    regenerateLoginSource();
   };
 
   const handleNavigationStateChange = useCallback(

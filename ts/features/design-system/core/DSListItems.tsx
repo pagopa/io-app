@@ -211,7 +211,8 @@ export const DSListItems = () => (
           operationDate: new Date(),
           brandLogo: "",
           maskedPan: "****",
-          amount: -100,
+          amount: 100,
+          accrued: 50,
           circuitType: "MasterCard"
         }}
       />
