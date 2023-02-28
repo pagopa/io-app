@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.27.0-rc.1](https://github.com/pagopa/io-app/compare/2.27.0-rc.0...2.27.0-rc.1) (2023-02-28)
+
+
+### Features
+
+* [[IOAPPCIT-47](https://pagopa.atlassian.net/browse/IOAPPCIT-47)] Regenerate public key on IdP login flow during retry ([#4403](https://github.com/pagopa/io-app/issues/4403)) ([1b4be52](https://github.com/pagopa/io-app/commit/1b4be52d0e62c9257c6119c0bbad3ffd3d06b2b4))
+
+
+### Bug Fixes
+
+* [[IABT-1433](https://pagopa.atlassian.net/browse/IABT-1433)] Unwanted tab-bar shadow Android ([#4387](https://github.com/pagopa/io-app/issues/4387)) ([4569407](https://github.com/pagopa/io-app/commit/45694070df154012d3ab52e5b9ff39c1a4f96098))
+* **Firma con IO:** [[SFEQS-1317](https://pagopa.atlassian.net/browse/SFEQS-1317)] Add item separator to tos screen ([#4417](https://github.com/pagopa/io-app/issues/4417)) ([f02250b](https://github.com/pagopa/io-app/commit/f02250b5eaadc16f39c3dab8217f32b149e7b9e4))
+* **IDPay:** [[IODPAY-160](https://pagopa.atlassian.net/browse/IODPAY-160)] Update ListItem import to follow design ([#4412](https://github.com/pagopa/io-app/issues/4412)) ([98e4fa8](https://github.com/pagopa/io-app/commit/98e4fa8533dbc70a1ccc96de72c6c076140f7464))
+* [[IABT-1429](https://pagopa.atlassian.net/browse/IABT-1429)] QR code library updated ([#4406](https://github.com/pagopa/io-app/issues/4406)) ([ab1d571](https://github.com/pagopa/io-app/commit/ab1d571a49c63b9d3b08c49fe8d8464e17adb5b7))
+* [[IABT-1435](https://pagopa.atlassian.net/browse/IABT-1435)] Fix unwrap text info box ([#4407](https://github.com/pagopa/io-app/issues/4407)) ([efb9a0b](https://github.com/pagopa/io-app/commit/efb9a0b1cf5077738434267804196cf7751ab15a))
+
+
+### Chores
+
+* [[IAI-268](https://pagopa.atlassian.net/browse/IAI-268)] Add the new native component `ButtonOutline` ([#4363](https://github.com/pagopa/io-app/issues/4363)) ([fb3fb89](https://github.com/pagopa/io-app/commit/fb3fb89ef69f8bd97863972e3b49f6e5d5579c1a))
+* [[IAI-269](https://pagopa.atlassian.net/browse/IAI-269)] Add the new `IconButton` and `IconButtonSolid` components ([#4375](https://github.com/pagopa/io-app/issues/4375)) ([7771cf9](https://github.com/pagopa/io-app/commit/7771cf97cfb7c634cd478781635b1f509773ae02))
+* [[IAI-270](https://pagopa.atlassian.net/browse/IAI-270)] Bump version of react-native-vision-camera from 2.15.1 to 2.15.4 ([#4409](https://github.com/pagopa/io-app/issues/4409)) ([6413057](https://github.com/pagopa/io-app/commit/641305714e264f483f572a41c8379b2637626a06))
+
 ## [2.27.0-rc.0](https://github.com/pagopa/io-app/compare/2.26.0-rc.3...2.27.0-rc.0) (2023-02-23)
 
 
