@@ -484,7 +484,7 @@ const createIDPayOnboardingMachine = () =>
           multiConsentsPage: context.multiConsentsPage - 1
         })),
         setFailure: assign((_, event) => ({
-          failure: pipe(event.data as any, O.filter(OnboardingFailure.is))
+          failure: pipe(O.of(event.data), O.filter(OnboardingFailure.is))
         }))
       },
       guards: {
