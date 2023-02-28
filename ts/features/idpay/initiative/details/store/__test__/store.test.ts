@@ -116,6 +116,7 @@ const mockTimelineResponseSuccess: TimelineDTO = {
       operationType: TransactionOperationType.TRANSACTION,
       operationDate: new Date("2020-05-20T09:00:00.000Z"),
       amount: 100,
+      accrued: 50,
       brandLogo: "https://www.google.com",
       maskedPan: "1234567890",
       circuitType: "CREDIT_CARD"
