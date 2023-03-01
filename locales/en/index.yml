@@ -3467,4 +3467,4 @@ idpay:
         addNew: Aggiungi nuovo
       updateToast: IBAN modificato correttamente
 unsupportedDevice:  
-  text: "Il tuo telefono non supporta caratteristiche che diventeranno obbligatorie nelle future versioni dell'app"  
+  text: "Your device may soon no longer be compatible with the IO app."
