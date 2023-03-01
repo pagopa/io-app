@@ -51,12 +51,16 @@ import { getAppVersion } from "../../utils/appVersion";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { getDeviceId } from "../../utils/device";
 import { isDevEnv } from "../../utils/environment";
-import { withUseTabItemPressWhenScreenActive } from "../../utils/tabBar";
+import {
+  TabBarItemPressType,
+  withUseTabItemPressWhenScreenActive
+} from "../../utils/tabBar";
 
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "PROFILE_MAIN"> &
   LightModalContextInterface &
   ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps>;
+  ReturnType<typeof mapStateToProps> &
+  TabBarItemPressType;
 
 type State = {
   tapsOnAppVersion: number;
@@ -550,7 +554,11 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     return (
       <DarkLayout
         referenceToContentScreen={(c: ScreenContentRoot) => {
-          setScreenContentRef(c);
+          // eslint-disable-next-line no-underscore-dangle
+          this.props.setTabPressCallback(
+            () => () => c._root.scrollToPosition(0, 0)
+          );
+
           return c;
         }}
         accessibilityLabel={I18n.t("profile.main.title")}
@@ -578,13 +586,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     );
   }
 }
-
-const screenContentRef = { content: {} as ScreenContentRoot };
-
-const setScreenContentRef = (obj: ScreenContentRoot): void => {
-  // eslint-disable-next-line functional/immutable-data
-  screenContentRef.content = obj;
-};
 
 const mapStateToProps = (state: GlobalState) => ({
   sessionToken: isLoggedIn(state.authentication)
@@ -618,12 +619,5 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(
-  withLightModalContext(
-    withUseTabItemPressWhenScreenActive(
-      ProfileMainScreen,
-      // eslint-disable-next-line no-underscore-dangle
-      () => screenContentRef.content._root.scrollToPosition(0, 0),
-      false
-    )
-  )
+  withLightModalContext(withUseTabItemPressWhenScreenActive(ProfileMainScreen))
 );

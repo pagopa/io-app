@@ -103,7 +103,10 @@ import customVariables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
 import { isStrictSome } from "../../utils/pot";
 import { showToast } from "../../utils/showToast";
-import { withUseTabItemPressWhenScreenActive } from "../../utils/tabBar";
+import {
+  TabBarItemPressType,
+  withUseTabItemPressWhenScreenActive
+} from "../../utils/tabBar";
 
 export type WalletHomeNavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -117,7 +120,8 @@ type State = {
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
   IOStackNavigationRouteProps<MainTabParamsList, "WALLET_HOME"> &
-  LightModalContextInterface;
+  LightModalContextInterface &
+  TabBarItemPressType;
 
 const styles = StyleSheet.create({
   white: {
@@ -529,7 +533,11 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     return (
       <WalletLayout
         referenceToContentScreen={(c: ScreenContentRoot) => {
-          setScreenContentRef(c);
+          // eslint-disable-next-line no-underscore-dangle
+          this.props.setTabPressCallback(
+            () => () => c._root.scrollToPosition(0, 0)
+          );
+
           return c;
         }}
         accessibilityLabel={I18n.t("wallet.wallet")}
@@ -627,13 +635,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   runSendAddCobadgeMessageSaga: () => dispatch(runSendAddCobadgeTrackSaga())
 });
 
-const screenContentRef = { content: {} as ScreenContentRoot };
-
-const setScreenContentRef = (obj: ScreenContentRoot): void => {
-  // eslint-disable-next-line functional/immutable-data
-  screenContentRef.content = obj;
-};
-
 export default withValidatedPagoPaVersion(
   withValidatedEmail(
     connect(
@@ -641,10 +642,7 @@ export default withValidatedPagoPaVersion(
       mapDispatchToProps
     )(
       withUseTabItemPressWhenScreenActive(
-        withLightModalContext(WalletHomeScreen),
-        // eslint-disable-next-line no-underscore-dangle
-        () => screenContentRef.content._root.scrollToPosition(0, 0),
-        false
+        withLightModalContext(WalletHomeScreen)
       )
     )
   )

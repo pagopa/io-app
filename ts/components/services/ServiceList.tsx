@@ -16,7 +16,10 @@ import {
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import customVariables from "../../theme/variables";
 import { getLogoForOrganization } from "../../utils/organizations";
-import { withUseTabItemPressWhenScreenActive } from "../../utils/tabBar";
+import {
+  TabBarItemPressType,
+  withUseTabItemPressWhenScreenActive
+} from "../../utils/tabBar";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import SectionHeaderComponent from "../screens/SectionHeaderComponent";
 import NewServiceListItem from "./NewServiceListItem";
@@ -38,7 +41,7 @@ type OwnProps = {
   >["ListEmptyComponent"];
 };
 
-type Props = OwnProps & AnimatedProps;
+type Props = OwnProps & AnimatedProps & TabBarItemPressType;
 
 const styles = StyleSheet.create({
   padded: {
@@ -48,6 +51,20 @@ const styles = StyleSheet.create({
 });
 
 class ServiceList extends React.Component<Props> {
+  componentDidMount() {
+    const { setHasInternTab, setTabPressCallback } = this.props;
+
+    setHasInternTab(true);
+    setTabPressCallback(() => () => {
+      sectionListRef.current?.scrollToLocation({
+        animated: true,
+        itemIndex: 0,
+        sectionIndex: 0,
+        viewOffset: 0
+      });
+    });
+  }
+
   private renderServiceItem = (
     itemInfo: ListRenderItemInfo<pot.Pot<ServicePublic, Error>>
   ) => (
@@ -118,15 +135,4 @@ class ServiceList extends React.Component<Props> {
 
 const sectionListRef = React.createRef<SectionList>();
 
-export default withUseTabItemPressWhenScreenActive(
-  ServiceList,
-  () => {
-    sectionListRef.current?.scrollToLocation({
-      animated: true,
-      itemIndex: 0,
-      sectionIndex: 0,
-      viewOffset: 0
-    });
-  },
-  true
-);
+export default withUseTabItemPressWhenScreenActive(ServiceList);

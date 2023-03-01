@@ -1,12 +1,16 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
+
+export type TabBarItemPressType = {
+  setTabPressCallback: React.Dispatch<React.SetStateAction<() => void>>;
+  setHasInternTab: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
 export function useTabItemPressWhenScreenActive(
   callback: () => void,
   hasInternTab: boolean
 ) {
   const navigation = useNavigation();
-
   const onTabPress = useCallback(() => {
     if (navigation.isFocused()) {
       callback();
@@ -43,12 +47,19 @@ export function useTabItemPressWhenScreenActive(
 }
 
 export function withUseTabItemPressWhenScreenActive<P>(
-  WrappedComponent: React.ComponentType<P>,
-  callback: () => void,
-  hasInternTab: boolean
+  WrappedComponent: React.ComponentType<P>
 ) {
   return (props: any) => {
+    const [callback, setTabPressCallback] = useState<() => void>(() => void 0);
+    const [hasInternTab, setHasInternTab] = useState(false);
+
+    const contextProps = {
+      setTabPressCallback,
+      setHasInternTab
+    };
+
     useTabItemPressWhenScreenActive(callback, hasInternTab);
-    return <WrappedComponent {...props} />;
+
+    return <WrappedComponent {...contextProps} {...props} />;
   };
 }
