@@ -3465,6 +3465,6 @@ idpay:
         footer: Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento visitando la sezione Profilo
       button:
         addNew: Aggiungi nuovo
-      updateToast: IBAN modificato correttamente
+      updateToast: IBAN associato correttamente
 unsupportedDevice:  
   text: "Your device may soon no longer be compatible with the IO app."
