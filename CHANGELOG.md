@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.27.0-rc.2](https://github.com/pagopa/io-app/compare/2.27.0-rc.1...2.27.0-rc.2) (2023-03-01)
+
+
+### Bug Fixes
+
+* **IDPay:** [[IODPAY-133](https://pagopa.atlassian.net/browse/IODPAY-133)] Fix PDND prerequisites screen list item UI ([#4420](https://github.com/pagopa/io-app/issues/4420)) ([0190155](https://github.com/pagopa/io-app/commit/0190155756a3712e2d93f8d8f0fc31c7c964630a))
+
+
+### Chores
+
+* **IDPay:** [[IODPAY-167](https://pagopa.atlassian.net/browse/IODPAY-167)] Show amount on PAID_REFUND operation ([#4426](https://github.com/pagopa/io-app/issues/4426)) ([c642ef2](https://github.com/pagopa/io-app/commit/c642ef2f82df721991a3d1bb26aec2ade819b036))
+* [[LLK-55](https://pagopa.atlassian.net/browse/LLK-55)] Removed user-agent during Spid login ([#4418](https://github.com/pagopa/io-app/issues/4418)) ([1c1c7f7](https://github.com/pagopa/io-app/commit/1c1c7f7cc149f0538a18b26ebf2ee3d19ecb6171))
+* **IDPay:** [[IODPAY-163](https://pagopa.atlassian.net/browse/IODPAY-163)] Copy changes ([#4421](https://github.com/pagopa/io-app/issues/4421)) ([3806d2a](https://github.com/pagopa/io-app/commit/3806d2a868394274815ebd3375be8e76320f3ad6))
+
 ## [2.27.0-rc.1](https://github.com/pagopa/io-app/compare/2.27.0-rc.0...2.27.0-rc.1) (2023-02-28)
 
 
