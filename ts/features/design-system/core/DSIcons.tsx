@@ -17,26 +17,29 @@ import { IOColorType } from "../../../components/core/variables/IOColors";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 // Filter the main object, removing already displayed icons in the other sets
+type IconSubsetObject = Record<
+  string,
+  ({ size, style }: SVGIconProps) => JSX.Element
+>;
+interface IconSetObject {
+  [key: string]: ({ size, style }: SVGIconProps) => JSX.Element;
+}
 const filterIconSet = (
-  iconSubsetObject: Record<
-    string,
-    ({ size, style }: SVGIconProps) => JSX.Element
-  >,
-  iconSetObject: any
-) => {
+  iconSubsetObject: IconSubsetObject,
+  iconSetObject: IconSetObject
+): IconSetObject => {
   const iconSetArray = Object.keys(iconSubsetObject);
-  return Object.keys(iconSetObject)
-    .filter(key => !iconSetArray.includes(key))
-    .reduce(
-      (obj, key) => ({
-        ...obj,
-        [key]: iconSetObject[key as IOIcons]
-      }),
-      {}
-    );
+  return Object.fromEntries(
+    Object.entries(iconSetObject).filter(([key]) => !iconSetArray.includes(key))
+  );
 };
 
-// Output: { name: 'Alice', age: 30, country: 'USA' }
+// It could be refactored in a more elegant way, but it works.
+const IOIconsLessNav = filterIconSet(IONavIcons, IOIcons);
+const IOIconsLessCategory = filterIconSet(IOCategoryIcons, IOIconsLessNav);
+const IOIconsLessProduct = filterIconSet(IOProductIcons, IOIconsLessCategory);
+// Final filtered object ↓
+const filteredIOIcons = filterIconSet(IOBiometricIcons, IOIconsLessProduct);
 
 // Just for demo purposes
 // Once we defined a general set of icon sizes,
@@ -54,11 +57,6 @@ const styles = StyleSheet.create({
     marginBottom: 16
   }
 });
-
-const IOIconsLessNav = filterIconSet(IONavIcons, IOIcons);
-const IOIconsLessCategory = filterIconSet(IOCategoryIcons, IOIconsLessNav);
-const IOIconsLessProduct = filterIconSet(IOProductIcons, IOIconsLessCategory);
-const filteredIOIcons = filterIconSet(IOBiometricIcons, IOIconsLessProduct);
 
 export const DSIcons = () => (
   <DesignSystemScreen title={"Icons"}>
