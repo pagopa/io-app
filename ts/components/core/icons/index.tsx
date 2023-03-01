@@ -1,10 +1,4 @@
 export * from "./Icon";
 export { Icon, AnimatedIcon } from "./Icon";
-export { default as IconNav } from "./IconNav";
-export * from "./IconNav";
-export { default as IconBiometric } from "./IconBiometric";
-export * from "./IconBiometric";
-export { default as IconCategory } from "./IconCategory";
-export * from "./IconCategory";
 export { default as IconProduct } from "./IconProduct";
 export * from "./IconProduct";

@@ -4,16 +4,9 @@ import { DSIconViewerBox, iconItemGutter } from "../components/DSIconViewerBox";
 import {
   Icon,
   IOIcons,
-  IOIconType,
-  IconNav,
   IONavIcons,
-  IONavIconType,
-  IconBiometric,
   IOBiometricIcons,
-  IOBiometricIconType,
-  IconCategory,
   IOCategoryIcons,
-  IOCategoryIconType,
   IconProduct,
   IOProductIcons,
   IOProductIconType,
@@ -49,7 +42,7 @@ export const DSIcons = () => (
           key={iconItemName}
           name={iconItemName}
           size="small"
-          image={<Icon name={iconItemName as IOIconType} size="100%" />}
+          image={<Icon name={iconItemName as IOIcons} size="100%" />}
           withDot={Object.keys(IOIconsNew).includes(iconItemName)}
         />
       ))}
@@ -63,7 +56,7 @@ export const DSIcons = () => (
           key={iconItemName}
           name={iconItemName}
           size="medium"
-          image={<IconNav name={iconItemName as IONavIconType} size="100%" />}
+          image={<Icon name={iconItemName as IONavIcons} size="100%" />}
         />
       ))}
     </View>
@@ -76,12 +69,7 @@ export const DSIcons = () => (
           key={iconItemName}
           name={iconItemName}
           size="large"
-          image={
-            <IconBiometric
-              name={iconItemName as IOBiometricIconType}
-              size="100%"
-            />
-          }
+          image={<Icon name={iconItemName as IOBiometricIcons} size="100%" />}
         />
       ))}
     </View>
@@ -94,12 +82,7 @@ export const DSIcons = () => (
           key={iconItemName}
           name={iconItemName}
           size="medium"
-          image={
-            <IconCategory
-              name={iconItemName as IOCategoryIconType}
-              size="100%"
-            />
-          }
+          image={<Icon name={iconItemName as IOCategoryIcons} size="100%" />}
         />
       ))}
     </View>
