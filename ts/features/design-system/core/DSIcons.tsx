@@ -8,12 +8,35 @@ import {
   IOBiometricIcons,
   IOCategoryIcons,
   IOProductIcons,
-  IOIconsNew
+  IOIconsNew,
+  SVGIconProps
 } from "../../../components/core/icons";
 import { H2 } from "../../../components/core/typography/H2";
 import { H3 } from "../../../components/core/typography/H3";
 import { IOColorType } from "../../../components/core/variables/IOColors";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
+
+// Filter the main object, removing already displayed icons in the other sets
+const filterIconSet = (
+  iconSubsetObject: Record<
+    string,
+    ({ size, style }: SVGIconProps) => JSX.Element
+  >,
+  iconSetObject: any
+) => {
+  const iconSetArray = Object.keys(iconSubsetObject);
+  return Object.keys(iconSetObject)
+    .filter(key => !iconSetArray.includes(key))
+    .reduce(
+      (obj, key) => ({
+        ...obj,
+        [key]: iconSetObject[key as IOIcons]
+      }),
+      {}
+    );
+};
+
+// Output: { name: 'Alice', age: 30, country: 'USA' }
 
 // Just for demo purposes
 // Once we defined a general set of icon sizes,
@@ -32,10 +55,15 @@ const styles = StyleSheet.create({
   }
 });
 
+const IOIconsLessNav = filterIconSet(IONavIcons, IOIcons);
+const IOIconsLessCategory = filterIconSet(IOCategoryIcons, IOIconsLessNav);
+const IOIconsLessProduct = filterIconSet(IOProductIcons, IOIconsLessCategory);
+const filteredIOIcons = filterIconSet(IOBiometricIcons, IOIconsLessProduct);
+
 export const DSIcons = () => (
   <DesignSystemScreen title={"Icons"}>
     <View style={styles.itemsWrapper}>
-      {Object.entries(IOIcons).map(([iconItemName]) => (
+      {Object.entries(filteredIOIcons).map(([iconItemName]) => (
         <DSIconViewerBox
           key={iconItemName}
           name={iconItemName}
