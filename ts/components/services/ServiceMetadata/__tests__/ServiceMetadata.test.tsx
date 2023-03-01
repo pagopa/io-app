@@ -98,7 +98,7 @@ describe("ServiceMetadata component", () => {
       const a11yLabel = genServiceMetadataAccessibilityLabel(
         I18n.t("serviceDetail.fiscalCode"),
         defaultProps.organizationFiscalCode,
-        I18n.t("clipboard.copyText")
+        I18n.t("serviceDetail.fiscalCodeAccessibilityCopy")
       );
 
       expect(
