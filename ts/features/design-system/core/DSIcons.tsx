@@ -7,9 +7,7 @@ import {
   IONavIcons,
   IOBiometricIcons,
   IOCategoryIcons,
-  IconProduct,
   IOProductIcons,
-  IOProductIconType,
   IOIconsNew
 } from "../../../components/core/icons";
 import { H2 } from "../../../components/core/typography/H2";
@@ -95,9 +93,7 @@ export const DSIcons = () => (
           key={iconItemName}
           name={iconItemName}
           size="large"
-          image={
-            <IconProduct name={iconItemName as IOProductIconType} size="100%" />
-          }
+          image={<Icon name={iconItemName as IOProductIcons} size="100%" />}
         />
       ))}
     </View>

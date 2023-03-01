@@ -124,6 +124,8 @@ import IconCategMobility from "./svg/IconCategMobility";
 import IconCategJobOffers from "./svg/IconCategJobOffers";
 import IconCategShopping from "./svg/IconCategShopping";
 import IconCategSustainability from "./svg/IconCategSustainability";
+import IconProductIOApp from "./svg/IconProductIOApp";
+import IconProductPagoPA from "./svg/IconProductPagoPA";
 
 export const IOIcons = {
   spid: IconSpid,
@@ -246,7 +248,9 @@ export const IOIcons = {
   categMobility: IconCategMobility,
   categJobOffers: IconCategJobOffers,
   categShopping: IconCategShopping,
-  categSustainability: IconCategSustainability
+  categSustainability: IconCategSustainability,
+  productIOApp: IconProductIOApp /* io-logo */,
+  productPagoPA: IconProductPagoPA /* io-pagopa */
 } as const;
 
 export type IOIcons = keyof typeof IOIcons;
@@ -398,3 +402,13 @@ export const IOCategoryIcons = {
 } as const;
 
 export type IOCategoryIcons = keyof typeof IOCategoryIcons;
+
+/* Product Logos */
+const { productIOApp, productPagoPA } = IOIcons;
+
+export const IOProductIcons = {
+  productIOApp,
+  productPagoPA
+} as const;
+
+export type IOProductIcons = keyof typeof IOProductIcons;
