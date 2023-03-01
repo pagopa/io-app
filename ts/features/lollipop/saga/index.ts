@@ -8,8 +8,13 @@ import {
   cryptoKeyGenerationSaga,
   deletePreviousCryptoKeyPair
 } from "../../../sagas/startup/generateCryptoKeyPair";
+import { isLollipopEnabledSelector } from "../../../store/reducers/backendStatus";
 
 export function* generateLollipopKeySaga() {
+  const isLollipopEnabled = yield* select(isLollipopEnabledSelector);
+  if (!isLollipopEnabled) {
+    return;
+  }
   const maybeOldKeyTag = yield* select(lollipopKeyTagSelector);
   // Weather the user is logged in or not
   // we generate a key (if no one is present)

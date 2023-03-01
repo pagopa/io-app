@@ -109,9 +109,6 @@ export const newTransactionSummaryEnabled =
 // FCI (Firma con IO) Feature Flag
 export const fciEnabled = Config.FCI_ENABLED === "YES";
 
-// LOLLIPOP login
-export const lollipopLoginEnabled = Config.LOLLIPOP_LOGIN_ENABLED === "YES";
-
 // PN (Piattaforma Notifiche) Feature Flag
 export const pnEnabled = Config.PN_ENABLED === "YES";
 
