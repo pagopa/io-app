@@ -7,8 +7,14 @@ export type IdpayWalletInitiativeGetPayloadType = {
   idWallet: string;
   isRefreshCall?: boolean;
 };
-export type IdpayInitiativesPairingPutPayloadType = {
+export type IdpayInitiativesPairingPayloadType = {
   idWallet: string;
+  initiativeId: string;
+};
+
+type InitiativeId = { initiativeId: string };
+type NetworkErrorWithInitiativeId = {
+  error: NetworkError;
   initiativeId: string;
 };
 
@@ -33,12 +39,23 @@ export const idpayInitiativesPairingPut = createAsyncAction(
   "IDPAY_INITIATIVES_PAIRING_PUT_SUCCESS",
   "IDPAY_INITIATIVES_PAIRING_PUT_FAILURE"
 )<
-  IdpayInitiativesPairingPutPayloadType,
-  { initiativeId: string },
-  { error: NetworkError; initiativeId: string }
+  IdpayInitiativesPairingPayloadType,
+  InitiativeId,
+  NetworkErrorWithInitiativeId
+>();
+
+export const idpayInitiativesPairingDelete = createAsyncAction(
+  "IDPAY_INITIATIVES_PAIRING_DELETE_REQUEST",
+  "IDPAY_INITIATIVES_PAIRING_DELETE_SUCCESS",
+  "IDPAY_INITIATIVES_PAIRING_DELETE_FAILURE"
+)<
+  IdpayInitiativesPairingPayloadType,
+  InitiativeId,
+  NetworkErrorWithInitiativeId
 >();
 
 export type IDPayWalletActions =
   | ActionType<typeof idPayWalletGet>
   | ActionType<typeof idPayWalletInitiativesGet>
-  | ActionType<typeof idpayInitiativesPairingPut>;
+  | ActionType<typeof idpayInitiativesPairingPut>
+  | ActionType<typeof idpayInitiativesPairingDelete>;

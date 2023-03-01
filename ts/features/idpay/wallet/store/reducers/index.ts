@@ -11,6 +11,7 @@ import { NetworkError } from "../../../../../utils/errors";
 import {
   idPayWalletGet,
   idPayWalletInitiativesGet,
+  idpayInitiativesPairingDelete,
   idpayInitiativesPairingPut
 } from "../actions";
 
@@ -83,6 +84,7 @@ const reducer = (
         )
       };
     // initiative pairing
+    case getType(idpayInitiativesPairingDelete.request):
     case getType(idpayInitiativesPairingPut.request):
       return {
         ...state,
@@ -91,7 +93,9 @@ const reducer = (
           [action.payload.initiativeId]: true
         }
       };
+    case getType(idpayInitiativesPairingDelete.success):
     case getType(idpayInitiativesPairingPut.success):
+    case getType(idpayInitiativesPairingDelete.failure):
     case getType(idpayInitiativesPairingPut.failure):
       return {
         ...state,

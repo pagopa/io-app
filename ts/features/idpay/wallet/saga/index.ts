@@ -9,10 +9,11 @@ import {
   idPayApiBaseUrl
 } from "../../../../config";
 import {
-  IdpayInitiativesPairingPutPayloadType,
+  IdpayInitiativesPairingPayloadType,
   IdpayWalletInitiativeGetPayloadType,
   idPayWalletGet,
   idPayWalletInitiativesGet,
+  idpayInitiativesPairingDelete,
   idpayInitiativesPairingPut
 } from "../store/actions";
 import { waitBackoffError } from "../../../../utils/backoffError";
@@ -24,7 +25,7 @@ import { PreferredLanguageEnum } from "../../../../../definitions/backend/Prefer
 import { fromLocaleToPreferredLanguage } from "../../../../utils/locale";
 import { handleGetIDPayWallet } from "./handleGetIDPayWallet";
 import { handleGetIDPayInitiativesWithInstrument } from "./handleGetIdpayInitiativesWithInstrument";
-import { handlePutInitiativePairing } from "./handlePutInitiativePairing";
+import { handleInitiativePairing } from "./handleInitiativePairing";
 
 /**
  * Handle the IDPay Wallet requests
@@ -72,14 +73,30 @@ export function* watchIDPayWalletSaga(bearerToken: string): SagaIterator {
   );
   yield* takeEvery(
     idpayInitiativesPairingPut.request,
-    function* (action: { payload: IdpayInitiativesPairingPutPayloadType }) {
+    function* (action: { payload: IdpayInitiativesPairingPayloadType }) {
       // wait backoff time if there were previous errors
       yield* call(waitBackoffError, idpayInitiativesPairingPut.failure);
       yield* call(
-        handlePutInitiativePairing,
+        handleInitiativePairing,
         idPayWalletClient.enrollInstrument,
         token,
         preferredLanguage,
+        idpayInitiativesPairingPut,
+        action.payload
+      );
+    }
+  );
+  yield* takeEvery(
+    idpayInitiativesPairingDelete.request,
+    function* (action: { payload: IdpayInitiativesPairingPayloadType }) {
+      // wait backoff time if there were previous errors
+      yield* call(waitBackoffError, idpayInitiativesPairingPut.failure);
+      yield* call(
+        handleInitiativePairing,
+        idPayWalletClient.deleteInstrument,
+        token,
+        preferredLanguage,
+        idpayInitiativesPairingDelete,
         action.payload
       );
     }
