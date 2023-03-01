@@ -7,16 +7,16 @@ import {
 } from "../../../../../definitions/idpay/wallet/InitiativesStatusDTO";
 import { RemoteSwitch } from "../../../../components/core/selection/RemoteSwitch";
 import { H4 } from "../../../../components/core/typography/H4";
-import { useIOSelector } from "../../../../store/hooks";
-import {
-  isSingleInitiativeLoadingSelector,
-  singleInitiativeQueueValueSelector
-} from "../store/reducers";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { singleInitiativeQueueValueSelector } from "../store/reducers";
+import { idpayInitiativesPairingPut } from "../store/actions";
 
 type ListItemProps = {
   item: InitiativesStatusDTO;
+  idWallet: string;
 };
-export const IDPayInitiativeListItem = ({ item }: ListItemProps) => {
+export const IDPayInitiativeListItem = ({ item, idWallet }: ListItemProps) => {
+  const dispatch = useIODispatch();
   const queueValue = useIOSelector(state =>
     singleInitiativeQueueValueSelector(state, item.initiativeId)
   );
@@ -35,10 +35,19 @@ export const IDPayInitiativeListItem = ({ item }: ListItemProps) => {
     }
   };
 
+  const activateInitiative = () => {
+    dispatch(
+      idpayInitiativesPairingPut.request({
+        idWallet,
+        initiativeId: item.initiativeId
+      })
+    );
+  };
+
   return (
     <NBlistItem style={{ justifyContent: "space-between", paddingRight: 0 }}>
       <H4>{item.initiativeName}</H4>
-      <RemoteSwitch value={switchPot()} />
+      <RemoteSwitch onValueChange={activateInitiative} value={switchPot()} />
     </NBlistItem>
   );
 };

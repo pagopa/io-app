@@ -13,13 +13,14 @@ import BaseScreenComponent from "../../../../components/screens/BaseScreenCompon
 import TypedI18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
-import { useIOSelector } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { IDPayInitiativeListItem } from "../components/IDPayInitiativesListItem";
 import {
   idPayWalletInitiativesWithInstrumentSelector,
   idpayInitiativesListSelector
 } from "../store/reducers";
 import { InitiativesWithInstrumentDTO } from "../../../../../definitions/idpay/wallet/InitiativesWithInstrumentDTO";
+import { idPayWalletInitiativesGet } from "../store/actions";
 
 export type AvailableInitiativesListScreenNavigationParams = {
   capabilityItems: ReadonlyArray<React.ReactNode>;
@@ -47,15 +48,27 @@ const brandToLogoPaymentMap: Record<string, IOLogoPaymentType> = {
 export const IdPayInitiativeListScreen = (props: Props) => {
   const { capabilityItems } = props.route.params;
 
-  const idpayInitiatives = useIOSelector(idpayInitiativesListSelector);
-
-  const idpayInitiativesComponentList = idpayInitiatives.map(item => (
-    <IDPayInitiativeListItem item={item} key={item.initiativeId} />
-  ));
-  const { brand, maskedPan } = pot.getOrElse(
+  const { brand, maskedPan, idWallet } = pot.getOrElse(
     useIOSelector(idPayWalletInitiativesWithInstrumentSelector),
     {} as InitiativesWithInstrumentDTO
   );
+  const idpayInitiatives = useIOSelector(idpayInitiativesListSelector);
+  const dispatch = useIODispatch();
+  React.useEffect(() => {
+    const timer = setInterval(
+      () => dispatch(idPayWalletInitiativesGet.request({ idWallet })),
+      3000
+    );
+    return () => clearInterval(timer);
+  }, [dispatch, idWallet]);
+
+  const idpayInitiativesComponentList = idpayInitiatives.map(item => (
+    <IDPayInitiativeListItem
+      item={item}
+      key={item.initiativeId}
+      idWallet={idWallet}
+    />
+  ));
 
   const listItems = [...capabilityItems, ...idpayInitiativesComponentList];
 

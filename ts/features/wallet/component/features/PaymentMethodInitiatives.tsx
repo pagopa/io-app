@@ -25,6 +25,7 @@ import { PaymentMethod } from "../../../../types/pagopa";
 import BpdPaymentMethodCapability from "../../../bonus/bpd/components/BpdPaymentMethodCapability";
 import { IDPayInitiativeListItem } from "../../../idpay/wallet/components/IDPayInitiativesListItem";
 import { idpayInitiativesListSelector } from "../../../idpay/wallet/store/reducers";
+import { idPayWalletInitiativesGet } from "../../../idpay/wallet/store/actions";
 
 type OwnProps = {
   paymentMethod: PaymentMethod;
@@ -93,18 +94,26 @@ const PaymentMethodInitiatives = (props: Props): React.ReactElement | null => {
     props.paymentMethod,
     props.bpdRemoteConfig
   );
-  const { namedInitiativesList } = props;
+  const { namedInitiativesList, loadIdpayInitiatives } = props;
   const navigation = useNavigation<IOStackNavigationProp<WalletParamsList>>();
 
+  React.useEffect(() => {
+    const timer = setInterval(loadIdpayInitiatives, 3000);
+    return () => clearInterval(timer);
+  }, [loadIdpayInitiatives]);
+
   const mappedIdPayInitiatives = namedInitiativesList.map(item => (
-    <IDPayInitiativeListItem key={item.initiativeId} item={item} />
+    <IDPayInitiativeListItem
+      key={item.initiativeId}
+      item={item}
+      idWallet={String(props.paymentMethod.idWallet)}
+    />
   ));
   const itemsArray = [...mappedIdPayInitiatives, ...capabilityItems];
 
   const navigateToPairableInitiativesList = () =>
     navigation.navigate(ROUTES.WALLET_IDPAY_INITIATIVE_LIST, {
       capabilityItems
-      // idWallet: props.paymentMethod.idWallet
     });
   return itemsArray.length > 0 ? (
     <View style={props.style}>
@@ -132,7 +141,10 @@ const PaymentMethodInitiatives = (props: Props): React.ReactElement | null => {
   ) : null;
 };
 
-const mapDispatchToProps = (_: Dispatch) => ({});
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  loadIdpayInitiatives: (idWallet: string) =>
+    dispatch(idPayWalletInitiativesGet.request({ idWallet }))
+});
 const mapStateToProps = (state: GlobalState) => ({
   bpdRemoteConfig: bpdRemoteConfigSelector(state),
   namedInitiativesList: idpayInitiativesListSelector(state)
