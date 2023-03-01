@@ -31,6 +31,7 @@ import { watchSessionExpiredSaga } from "../startup/watchSessionExpiredSaga";
 import { watchProfileEmailValidationChangedSaga } from "../watchProfileEmailValidationChangedSaga";
 import { checkAppHistoryVersionSaga } from "../startup/appVersionHistorySaga";
 import { generateLollipopKeySaga } from "../../features/lollipop/saga";
+import { isLollipopEnabledSelector } from "../../store/reducers/backendStatus";
 
 const aSessionToken = "a_session_token" as SessionToken;
 
@@ -74,6 +75,7 @@ describe("initializeApplicationSaga", () => {
       .put(resetProfileState())
       .next()
       .next(generateLollipopKeySaga)
+      .next(isLollipopEnabledSelector)
       .next(getPublicKey)
       .select(sessionTokenSelector)
       .next(aSessionToken)
@@ -109,6 +111,7 @@ describe("initializeApplicationSaga", () => {
       .put(resetProfileState())
       .next()
       .next(generateLollipopKeySaga)
+      .next(isLollipopEnabledSelector)
       .next(getPublicKey)
       .select(sessionTokenSelector)
       .next(aSessionToken)
@@ -141,6 +144,7 @@ describe("initializeApplicationSaga", () => {
       .put(resetProfileState())
       .next()
       .next(generateLollipopKeySaga)
+      .next(isLollipopEnabledSelector)
       .next(getPublicKey)
       .select(sessionTokenSelector)
       .next(aSessionToken)
