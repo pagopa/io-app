@@ -18,6 +18,10 @@ import { Body } from "../../components/core/typography/Body";
 import { H3 } from "../../components/core/typography/H3";
 import { IOColors } from "../../components/core/variables/IOColors";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
+import {
+  TabBarItemPressType,
+  withUseTabItemPressWhenScreenActive
+} from "../../components/helpers/withUseTabItemPressWhenScreenActive";
 import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
 import { withValidatedPagoPaVersion } from "../../components/helpers/withValidatedPagoPaVersion";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
@@ -103,10 +107,6 @@ import customVariables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
 import { isStrictSome } from "../../utils/pot";
 import { showToast } from "../../utils/showToast";
-import {
-  TabBarItemPressType,
-  withUseTabItemPressWhenScreenActive
-} from "../../utils/tabBar";
 
 export type WalletHomeNavigationParams = Readonly<{
   newMethodAdded: boolean;

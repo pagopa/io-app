@@ -11,6 +11,10 @@ import { VSpacer } from "../../components/core/spacer/Spacer";
 import { IOColors } from "../../components/core/variables/IOColors";
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
+import {
+  TabBarItemPressType,
+  withUseTabItemPressWhenScreenActive
+} from "../../components/helpers/withUseTabItemPressWhenScreenActive";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import DarkLayout from "../../components/screens/DarkLayout";
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
@@ -51,10 +55,6 @@ import { getAppVersion } from "../../utils/appVersion";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { getDeviceId } from "../../utils/device";
 import { isDevEnv } from "../../utils/environment";
-import {
-  TabBarItemPressType,
-  withUseTabItemPressWhenScreenActive
-} from "../../utils/tabBar";
 
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "PROFILE_MAIN"> &
   LightModalContextInterface &

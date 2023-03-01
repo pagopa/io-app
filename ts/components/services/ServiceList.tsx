@@ -19,7 +19,8 @@ import { getLogoForOrganization } from "../../utils/organizations";
 import {
   TabBarItemPressType,
   withUseTabItemPressWhenScreenActive
-} from "../../utils/tabBar";
+} from "../helpers/withUseTabItemPressWhenScreenActive";
+
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import SectionHeaderComponent from "../screens/SectionHeaderComponent";
 import NewServiceListItem from "./NewServiceListItem";
