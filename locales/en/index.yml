@@ -3299,10 +3299,10 @@ idpay:
   wallet:
     preview:
       validThrough: "Valid through {{endDate}}"
-      showAll: Vedi tutte
+      showAll: View all
     initiativePairing:
-      navigation: Iniziative disponibili
-      header: Scegli quali iniziative abilitare su questo metodo
+      navigation: Available initiatives
+      header: Which initiatives do you want to enable on this method?
   initiative:
     details:
       initiativeCard:
