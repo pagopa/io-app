@@ -554,8 +554,8 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     return (
       <DarkLayout
         referenceToContentScreen={(c: ScreenContentRoot) => {
-          // eslint-disable-next-line no-underscore-dangle
           this.props.setTabPressCallback(
+            // eslint-disable-next-line no-underscore-dangle
             () => () => c._root.scrollToPosition(0, 0)
           );
 
