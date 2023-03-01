@@ -51,7 +51,7 @@ export function* handleCreateSignature(
     const lollipopConfig: LollipopConfig = {
       nonce: action.payload.qtsp_clauses.nonce,
       customContentToSign: {
-        "tos-challange": tosChallengeHashHex,
+        "tos-challenge": tosChallengeHashHex,
         "sign-challenge": signChallengeHashHex
       }
     };
