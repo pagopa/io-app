@@ -31,9 +31,7 @@ export const useLollipopLoginSource = (loginUri?: string) => {
   }, []);
 
   const regenerateLoginSource = useCallback(() => {
-    console.log(`=== HOOK regenerateLoginSource`);
     if (!loginUri) {
-      console.log(`=== HOOK STOPPED: NO loginUri`);
       // When the redux state is LoggedOutWithIdp the loginUri is always defined.
       // After the user has logged in, the status changes to LoggedIn and the loginUri is not
       // defined any more.
@@ -49,12 +47,6 @@ export const useLollipopLoginSource = (loginUri?: string) => {
           "Missing key tag while trying to login with lollipop"
         );
       }
-
-      console.log(
-        `=== HOOK DEPRECATED LOGIN: (${!useLollipopLogin}) (${O.isNone(
-          lollipopKeyTag
-        )})`
-      );
       // Key generation may have failed. In that case, follow the old
       // non-lollipop login flow
       setDeprecatedLoginUri(loginUri);
@@ -70,7 +62,6 @@ export const useLollipopLoginSource = (loginUri?: string) => {
       lollipopKeyTag.value,
       taskRegenerateKey,
       TE.map(key => {
-        console.log(`=== HOOK public key retrieved, setting loginSource`);
         setLoginSource({
           kind: "ready",
           value: {
@@ -87,9 +78,6 @@ export const useLollipopLoginSource = (loginUri?: string) => {
         });
       }),
       TE.mapLeft(error => {
-        console.log(
-          `=== HOOK RETRIEVAL OF PUBLIC KEY FAILED: (${JSON.stringify(error)})`
-        );
         trackLollipopIdpLoginFailure(error.message);
         setDeprecatedLoginUri(loginUri);
       })
@@ -97,7 +85,6 @@ export const useLollipopLoginSource = (loginUri?: string) => {
   }, [useLollipopLogin, lollipopKeyTag, loginUri, setDeprecatedLoginUri]);
 
   useEffect(() => {
-    console.log(`=== HOOK useEffect`);
     regenerateLoginSource();
   }, [regenerateLoginSource]);
 

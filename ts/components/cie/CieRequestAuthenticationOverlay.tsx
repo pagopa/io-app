@@ -19,7 +19,6 @@ import { lollipopSamlVerify } from "../../features/lollipop/utils/login";
 import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
 import I18n from "../../i18n";
 import { getIdpLoginUri } from "../../utils/login";
-import { getUrlBasepath } from "../../utils/url";
 import { closeInjectedScript } from "../../utils/webview";
 import { IOStyles } from "../core/variables/IOStyles";
 import { withLoadingSpinner } from "../helpers/withLoadingSpinner";
@@ -57,33 +56,35 @@ type Props = {
   onSuccess: (authorizationUri: string) => void;
 };
 
-type OldState = {
+type InternalState = {
   authUrl: string | undefined;
   error: boolean;
   key: number;
 };
 
-const generateResetState: () => OldState = () => ({
+const generateResetState: () => InternalState = () => ({
   authUrl: undefined,
   error: false,
   key: 1
 });
 
-const generateFoundAuthUrlState: (authUr: string, state: OldState) => OldState =
-  (authUrl: string, state: OldState) => ({
-    ...state,
-    authUrl
-  });
+const generateFoundAuthUrlState: (
+  authUr: string,
+  state: InternalState
+) => InternalState = (authUrl: string, state: InternalState) => ({
+  ...state,
+  authUrl
+});
 
-const generateErrorState: (state: OldState) => OldState = (
-  state: OldState
+const generateErrorState: (state: InternalState) => InternalState = (
+  state: InternalState
 ) => ({
   ...state,
   error: true
 });
 
-const generateRetryState: (state: OldState) => OldState = (
-  state: OldState
+const generateRetryState: (state: InternalState) => InternalState = (
+  state: InternalState
 ) => ({
   ...state,
   error: false,
@@ -91,7 +92,7 @@ const generateRetryState: (state: OldState) => OldState = (
 });
 
 const CieWebView = (props: Props) => {
-  const [oldComponentState, setOldComponentState] = React.useState<OldState>(
+  const [internalState, setInternalState] = React.useState<InternalState>(
     generateResetState()
   );
   const webView = createRef<WebView>();
@@ -108,17 +109,13 @@ const CieWebView = (props: Props) => {
   const [lollipopCheckStatus, setLollipopCheckStatus] =
     React.useState<LollipopCheckStatus>({ status: "none", url: O.none });
 
-  console.log(`=== rendering`);
-
   const verifyLollipop = React.useCallback(
     (eventUrl: string, urlEncodedSamlRequest: string, publicKey: PublicKey) => {
-      console.log(`=== verifyLollipop`);
       setWebviewSource(undefined);
       lollipopSamlVerify(
         urlEncodedSamlRequest,
         publicKey,
         () => {
-          console.log(`=== verifyLollipop trusted`);
           setLollipopCheckStatus({
             status: "trusted",
             url: O.some(eventUrl)
@@ -126,7 +123,6 @@ const CieWebView = (props: Props) => {
           setWebviewSource({ uri: eventUrl });
         },
         () => {
-          console.log(`=== verifyLollipop FAILED`);
           setLollipopCheckStatus({
             status: "untrusted",
             url: O.some(eventUrl)
@@ -139,40 +135,27 @@ const CieWebView = (props: Props) => {
   );
 
   const startLoginProcess = React.useCallback(() => {
-    console.log(`=== startLoginProcess`);
     if (loginSource.kind === "ready") {
-      console.log(`=== startLoginProcess setWebViewSource`);
       setWebviewSource(loginSource.value);
     }
   }, [loginSource]);
 
   useEffect(() => {
-    console.log(`=== useEffect 1`);
     startLoginProcess();
   }, [startLoginProcess]);
 
   useEffect(() => {
-    console.log(`=== useEffect 2`);
-    if (oldComponentState.authUrl !== undefined) {
-      console.log(`=== useEffect 2 authUrl defined`);
-      onSuccess(oldComponentState.authUrl);
+    if (internalState.authUrl !== undefined) {
+      onSuccess(internalState.authUrl);
       // reset the state when authUrl has been found
-      setOldComponentState(generateResetState());
+      setInternalState(generateResetState());
     }
-  }, [oldComponentState.authUrl, onSuccess]);
+  }, [internalState.authUrl, onSuccess]);
 
   const handleOnShouldStartLoadWithRequest = (
     event: WebViewNavigation
   ): boolean => {
-    console.log(
-      `=== shouldStartLoadWithRequest (${getUrlBasepath(event.url)}) (${
-        event.loading
-      })`
-    );
-    if (oldComponentState.authUrl !== undefined) {
-      console.log(
-        `=== shouldStartLoadWithRequest return FALSE (authUrl defined in state)`
-      );
+    if (internalState.authUrl !== undefined) {
       return false;
     }
 
@@ -196,9 +179,6 @@ const CieWebView = (props: Props) => {
           // Prevent the WebView from loading the current URL (its
           // loading will be restored after LolliPOP verification
           // has succeded)
-          console.log(
-            `=== shouldStartLoadWithRequest return FALSE (start LolliPoP verification)`
-          );
           return false;
         }
         // If code reaches this point, then either the public key
@@ -207,9 +187,6 @@ const CieWebView = (props: Props) => {
       } else if (lollipopCheckStatus.status === "checking") {
         // LolliPOP signature is being verified, prevent the WebView
         // from loading the current URL,
-        console.log(
-          `=== shouldStartLoadWithRequest return FALSE (verifying LolliPoP)`
-        );
         return false;
       }
 
@@ -230,44 +207,31 @@ const CieWebView = (props: Props) => {
       // avoid redirect and follow the 'happy path'
       if (webView.current !== null) {
         const authUrl = url.replace("nextUrl=", "OpenApp?nextUrl=");
-        setOldComponentState(state =>
-          generateFoundAuthUrlState(authUrl, state)
-        );
+        setInternalState(state => generateFoundAuthUrlState(authUrl, state));
       }
-      console.log(
-        `=== shouldStartLoadWithRequest return FALSE (iOS with authnRequestString in Url)`
-      );
       return false;
     }
 
     // Once the returned url contains the "OpenApp" string, then the authorization has been given
     if (url && url.indexOf("OpenApp") !== -1) {
-      setOldComponentState(state => generateFoundAuthUrlState(url, state));
-      console.log(
-        `=== shouldStartLoadWithRequest return FALSE (OpenApp in Url)`
-      );
+      setInternalState(state => generateFoundAuthUrlState(url, state));
       return false;
     }
-    console.log(`=== shouldStartLoadWithRequest return TRUE`);
     return true;
   };
 
   const handleOnError = () => {
-    console.log(`=== handleOnError`);
-    setOldComponentState(state => generateErrorState(state));
+    setInternalState(state => generateErrorState(state));
   };
 
   const handleOnLoadEnd = (e: WebViewNavigationEvent | WebViewErrorEvent) => {
-    console.log(`=== handleOnLoadEnd`);
-
-    const eventTitle = e.nativeEvent.title;
+    const eventTitle = e.nativeEvent.title.toLowerCase();
     if (
-      eventTitle === "Pagina web non disponibile" ||
+      eventTitle === "pagina web non disponibile" ||
       // On Android, if we attempt to access the idp URL twice,
       // we are presented with an error page titled "ERROR".
-      eventTitle === "ERRORE"
+      eventTitle === "errore"
     ) {
-      console.log(`=== handleOnLoadEnd (${eventTitle})`);
       handleOnError();
     }
     // inject JS on every page load end
@@ -276,12 +240,11 @@ const CieWebView = (props: Props) => {
     }
   };
 
-  if (oldComponentState.error) {
+  if (internalState.error) {
     return (
       <ErrorComponent
         onRetry={() => {
-          console.log(`=== onRetry`);
-          setOldComponentState(state => generateRetryState(state));
+          setInternalState(state => generateRetryState(state));
           setLollipopCheckStatus({ status: "none", url: O.none });
           setWebviewSource(undefined);
           regenerateLoginSource();
@@ -293,7 +256,7 @@ const CieWebView = (props: Props) => {
 
   const WithLoading = withLoadingSpinner(() => (
     <View style={IOStyles.flex}>
-      {oldComponentState.authUrl === undefined && (
+      {internalState.authUrl === undefined && (
         <WebView
           cacheEnabled={false}
           androidCameraAccessDisabled={true}
@@ -306,7 +269,7 @@ const CieWebView = (props: Props) => {
           onError={handleOnError}
           onShouldStartLoadWithRequest={handleOnShouldStartLoadWithRequest}
           source={webviewSource}
-          key={oldComponentState.key}
+          key={internalState.key}
         />
       )}
     </View>
