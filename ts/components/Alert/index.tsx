@@ -13,7 +13,6 @@ import {
   IOColorsStatusBackground,
   IOColorsStatusForeground
 } from "../core/variables/IOColors";
-// eslint-disable-next-line no-duplicate-imports
 import { IOIcons, Icon } from "../core/icons";
 import { HSpacer, VSpacer } from "../core/spacer/Spacer";
 import { H2 } from "../core/typography/H2";
