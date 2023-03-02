@@ -47,6 +47,7 @@ export const useLollipopLoginSource = (loginUri?: string) => {
           "Missing key tag while trying to login with lollipop"
         );
       }
+
       // Key generation may have failed. In that case, follow the old
       // non-lollipop login flow
       setDeprecatedLoginUri(loginUri);
@@ -61,7 +62,7 @@ export const useLollipopLoginSource = (loginUri?: string) => {
     void pipe(
       lollipopKeyTag.value,
       taskRegenerateKey,
-      TE.map(key => {
+      TE.map(key =>
         setLoginSource({
           kind: "ready",
           value: {
@@ -75,8 +76,8 @@ export const useLollipopLoginSource = (loginUri?: string) => {
             }
           },
           publicKey: O.some(key)
-        });
-      }),
+        })
+      ),
       TE.mapLeft(error => {
         trackLollipopIdpLoginFailure(error.message);
         setDeprecatedLoginUri(loginUri);
