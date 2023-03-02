@@ -5,11 +5,9 @@ import * as React from "react";
 import * as O from "fp-ts/lib/Option";
 import { useCallback, useEffect, useState } from "react";
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
-import DeviceInfo from "react-native-device-info";
 import { useNavigation } from "@react-navigation/native";
 import I18n from "../../../i18n";
 import { OrganizationFiscalCode } from "../../../../definitions/backend/OrganizationFiscalCode";
-
 import { ServiceMetadata } from "../../../../definitions/backend/ServiceMetadata";
 import { ThirdPartyMessageWithContent } from "../../../../definitions/backend/ThirdPartyMessageWithContent";
 import { MessageAttachments } from "../../../features/messages/components/MessageAttachments";
@@ -283,7 +281,10 @@ const MessageDetailsComponent = ({
       </NBContent>
 
       <>
-        {DeviceInfo.hasNotch() && <VSpacer size={32} />}
+        {/* This space is rendered as extra space on the iPhone 14 Pro.
+        Not present on the iPhone 13 because `hasNotch` returns false value
+        caused by a bug. */}
+        {/* {DeviceInfo.hasNotch() && <VSpacer size={32} />} */}
 
         <CtaBar
           isPaid={hasPaidBadge}
