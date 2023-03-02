@@ -13,7 +13,7 @@ import {
 } from "../../../components/core/icons";
 import { H2 } from "../../../components/core/typography/H2";
 import { H3 } from "../../../components/core/typography/H3";
-import { IOColorType } from "../../../components/core/variables/IOColors";
+import type { IOColors } from "../../../components/core/variables/IOColors";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 // Filter the main object, removing already displayed icons in the other sets
@@ -147,7 +147,7 @@ export const DSIcons = () => (
           name={`${color}`}
           size="medium"
           image={
-            <Icon name="messageLegal" size={24} color={color as IOColorType} />
+            <Icon name="messageLegal" size={24} color={color as IOColors} />
           }
         />
       ))}
