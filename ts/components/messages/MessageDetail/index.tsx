@@ -283,7 +283,9 @@ const MessageDetailsComponent = ({
       <>
         {/* This space is rendered as extra space on the iPhone 14 Pro.
         Not present on the iPhone 13 because `hasNotch` returns false value
-        caused by a bug. */}
+        caused by a bug.
+        More info:
+        https://github.com/react-native-device-info/react-native-device-info/issues/1310 */}
         {/* {DeviceInfo.hasNotch() && <VSpacer size={32} />} */}
 
         <CtaBar
