@@ -34,12 +34,10 @@ const filterIconSet = (
   );
 };
 
-// It could be refactored in a more elegant way, but it works.
-const IOIconsLessNav = filterIconSet(IONavIcons, IOIcons);
-const IOIconsLessCategory = filterIconSet(IOCategoryIcons, IOIconsLessNav);
-const IOIconsLessProduct = filterIconSet(IOProductIcons, IOIconsLessCategory);
-// Final filtered object ↓
-const filteredIOIcons = filterIconSet(IOBiometricIcons, IOIconsLessProduct);
+const filteredIOIcons = filterIconSet(
+  { ...IONavIcons, ...IOCategoryIcons, ...IOProductIcons, ...IOBiometricIcons },
+  IOIcons
+);
 
 // Just for demo purposes
 // Once we defined a general set of icon sizes,
