@@ -123,7 +123,7 @@ const MessagesHomeScreen = ({
 
   const isLollipopEnabled = useIOSelector(isLollipopEnabledSelector);
   const showUnsupportedDeviceBanner =
-    isLollipopEnabled && publicKeyState === "error";
+    isLollipopEnabled && publicKeyState.kind === "error";
   const unsupportedDevicesStatusComponent = showUnsupportedDeviceBanner && (
     <InnerSectionStatus
       sectionKey={"messages"}

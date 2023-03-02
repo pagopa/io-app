@@ -7,26 +7,36 @@ import { useIOSelector } from "../../../store/hooks";
 import { taskGetPublicKey } from "../../../utils/crypto";
 import { lollipopKeyTagSelector } from "../store/reducers/lollipop";
 
+type PKReady = { kind: "ready"; publicKey: PublicKey };
+type PKChecking = { kind: "checking" };
+type PKError = { kind: "error"; error: string };
+type PKStatus = PKReady | PKChecking | PKError;
+
 export const usePublicKeyState = () => {
-  const [publicKeyState, setPublicKeyState] = useState<
-    PublicKey | "error" | "retrieving"
-  >("retrieving");
+  const [publicKeyState, setPublicKeyState] = useState<PKStatus>({
+    kind: "checking"
+  });
   const keyTag = useIOSelector(lollipopKeyTagSelector);
-  const handleError = () => setPublicKeyState("error");
+
+  const handleError = (error: string) =>
+    setPublicKeyState({ kind: "error", error });
+
   useEffect(() => {
-    void pipe(
+    pipe(
       keyTag,
       O.fold(
-        () => handleError,
+        () => handleError("Missing key tag"),
         tag =>
           pipe(
             tag,
             taskGetPublicKey,
-            TE.map(setPublicKeyState),
-            TE.mapLeft(handleError)
-          )
+            TE.map(publicKey =>
+              setPublicKeyState({ kind: "ready", publicKey })
+            ),
+            TE.mapLeft(e => handleError(e.message))
+          )()
       )
-    )();
+    );
   }, [keyTag]);
   return publicKeyState;
 };
