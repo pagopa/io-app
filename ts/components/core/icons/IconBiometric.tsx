@@ -1,5 +1,5 @@
 import React from "react";
-import { IOColors, IOColorType } from "../variables/IOColors";
+import { IOColors } from "../variables/IOColors";
 
 /* Icons */
 import IconBiomFingerprint from "./svg/IconBiomFingerprint";
@@ -14,7 +14,7 @@ export type IOBiometricIconType = keyof typeof IOBiometricIcons;
 
 type IOBiometricIconsProps = {
   name: IOBiometricIconType;
-  color?: IOColorType;
+  color?: IOColors;
   size?: number | "100%";
 };
 

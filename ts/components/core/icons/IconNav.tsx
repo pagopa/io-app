@@ -1,5 +1,5 @@
 import React from "react";
-import { IOColors, IOColorType } from "../variables/IOColors";
+import { IOColors } from "../variables/IOColors";
 
 /* Icons */
 import IconNavMessages from "./svg/IconNavMessages";
@@ -20,7 +20,7 @@ export type IONavIconType = keyof typeof IONavIcons;
 
 type IONavIconsProps = {
   name: IONavIconType;
-  color?: IOColorType;
+  color?: IOColors;
   size?: number | "100%";
 };
 
