@@ -2,7 +2,7 @@ import * as React from "react";
 import { StyleProp, Text, TextStyle } from "react-native";
 import { RequiredAll } from "../../../types/utils";
 import { IOFontWeight } from "../fonts";
-import { IOColorType } from "../variables/IOColors";
+import type { IOColors } from "../variables/IOColors";
 
 /**
  * A default function used to calculate the weight and color with some fallback values if not specified.
@@ -31,8 +31,8 @@ export type TypographyProps<WeightPropsType, ColorsPropsType> = {
   color?: ColorsPropsType;
 };
 
-// Define a standard type, using IOFontWeight and IOColorType
-type DefaultTypographyProps = TypographyProps<IOFontWeight, IOColorType>;
+// Define a standard type, using IOFontWeight and IOColors
+type DefaultTypographyProps = TypographyProps<IOFontWeight, IOColors>;
 
 /**
  * Define the common props interface for all the leaf Typography components.
