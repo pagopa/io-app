@@ -22,7 +22,7 @@ export const usePublicKeyState = () => {
           pipe(
             tag,
             taskGetPublicKey,
-            TE.map(key => setPublicKeyState(key)),
+            TE.map(setPublicKeyState),
             TE.mapLeft(handleError)
           )
       )
