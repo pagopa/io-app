@@ -13834,7 +13834,7 @@ process-nextick-args@~2.0.0:
 process@^0.11.10:
   version "0.11.10"
   resolved "https://registry.yarnpkg.com/process/-/process-0.11.10.tgz#7332300e840161bda3e69a1d1d91a7d4bc16f182"
-  integrity sha512-cdGef/drWFoydD1JsMzuFf8100nZl+GT+yacc2bEced5f9Rjk4z+WtFUTBu9PhOi9j/jfmBPu0mMEY4wIdAF8A==
+  integrity sha1-czIwDoQBYb2j5podHZGn1LwW8YI=
 
 progress@^2.0.0:
   version "2.0.3"
@@ -14701,7 +14701,7 @@ read-pkg@^5.2.0:
 readable-stream@1.1.x:
   version "1.1.14"
   resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-1.1.14.tgz#7cf4c54ef648e3813084c636dd2079e166c081d9"
-  integrity sha512-+MeVjFf4L44XUkhM1eYbD8fyEsxcV81pqMSR5gblfcLCHfZvbrqy4/qYHE+/R5HoBUT11WV5O08Cr1n3YXkWVQ==
+  integrity sha1-fPTFTvZI44EwhMY23SB54WbAgdk=
   dependencies:
     core-util-is "~1.0.0"
     inherits "~2.0.1"
@@ -15367,9 +15367,9 @@ rn-placeholder@^1.3.3:
     prop-types "15.6.2"
 
 rn-qr-generator@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/rn-qr-generator/-/rn-qr-generator-1.3.0.tgz#5f51f2b2798cecc7073af5fca7fed25f1664d90d"
-  integrity sha512-ig8RoUi0vWxkJigWosj7MZuugYIoSH7lSyw3oZT7fesacMYvoO91kyj2Zfejhu9TT6N5EbDLdMnNGcd2C3GKiA==
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/rn-qr-generator/-/rn-qr-generator-1.3.1.tgz#d9bd8bcb7d8f5d069b538c3298acff9550a12483"
+  integrity sha512-lqdKCfHN1PpcIuOyJ1zUg9NR3Mo53zQ0ZEhHuSChf9/1+/kwxY04eU8plGi3nmsmMfvv9RJSsePNSav2LeADlg==
 
 rsvp@^4.8.4:
   version "4.8.5"
