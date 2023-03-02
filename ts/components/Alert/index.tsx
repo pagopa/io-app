@@ -13,7 +13,7 @@ import {
   IOColorsStatusBackground,
   IOColorsStatusForeground
 } from "../core/variables/IOColors";
-import { Icon, IOIconType } from "../core/icons";
+import { IOIcons, Icon } from "../core/icons";
 import { HSpacer, VSpacer } from "../core/spacer/Spacer";
 import { H2 } from "../core/typography/H2";
 import { IOStyles } from "../core/variables/IOStyles";
@@ -53,7 +53,7 @@ type Props = WithTestID<{
 }>;
 
 type VariantStates = {
-  icon: IOIconType;
+  icon: IOIcons;
   background: IOColorsStatusBackground;
   foreground: IOColorsStatusForeground;
 };
