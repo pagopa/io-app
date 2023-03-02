@@ -13,11 +13,11 @@ import Animated, {
 import { hexToRgba, IOColors } from "../core/variables/IOColors";
 import { IOSpringValues, IOScaleValues } from "../core/variables/IOAnimations";
 import { IOButtonStyles, IOIconButtonStyles } from "../core/variables/IOStyles";
-import { AnimatedIcon, IOIconType } from "../core/icons";
+import { AnimatedIcon, IOIcons } from "../core/icons";
 import { WithTestID } from "../../types/WithTestID";
 
 export type IconButtonSolid = WithTestID<{
-  icon: IOIconType;
+  icon: IOIcons;
   color?: "primary" | "contrast";
   disabled?: boolean;
   accessibilityLabel: string;
