@@ -3466,3 +3466,5 @@ idpay:
       button:
         addNew: Aggiungi nuovo
       updateToast: IBAN associato correttamente
+unsupportedDevice:  
+  text: "Your device may soon no longer be compatible with the IO app."
