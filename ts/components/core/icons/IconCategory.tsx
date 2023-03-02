@@ -1,5 +1,5 @@
 import React from "react";
-import { IOColors, IOColorType } from "../variables/IOColors";
+import { IOColors } from "../variables/IOColors";
 
 /* Icons */
 import IconCategCulture from "./svg/IconCategCulture";
@@ -34,7 +34,7 @@ export type IOCategoryIconType = keyof typeof IOCategoryIcons;
 
 type IOCategoryIconsProps = {
   name: IOCategoryIconType;
-  color?: IOColorType;
+  color?: IOColors;
   size?: number | "100%";
 };
 
