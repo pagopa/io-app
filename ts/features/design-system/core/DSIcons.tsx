@@ -27,8 +27,11 @@ interface IconSetObject {
 const filterIconSet = (
   iconSubsetObject: IconSubsetObject,
   iconSetObject: IconSetObject
-): IconSetObject => Object.fromEntries(
-    Object.entries(iconSetObject).filter(([key]) => !Object.keys(iconSubsetObject).includes(key))
+): IconSetObject =>
+  Object.fromEntries(
+    Object.entries(iconSetObject).filter(
+      ([key]) => !Object.keys(iconSubsetObject).includes(key)
+    )
   );
 
 const filteredIOIcons = filterIconSet(
