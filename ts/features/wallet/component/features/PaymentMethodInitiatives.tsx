@@ -96,17 +96,21 @@ const PaymentMethodInitiatives = (props: Props): React.ReactElement | null => {
   );
   const { namedInitiativesList, loadIdpayInitiatives } = props;
   const navigation = useNavigation<IOStackNavigationProp<WalletParamsList>>();
+  const idWalletString = String(props.paymentMethod.idWallet);
 
   React.useEffect(() => {
-    const timer = setInterval(loadIdpayInitiatives, 3000);
+    const timer = setInterval(
+      () => loadIdpayInitiatives(idWalletString, true),
+      3000
+    );
     return () => clearInterval(timer);
-  }, [loadIdpayInitiatives]);
+  }, [loadIdpayInitiatives, idWalletString]);
 
   const mappedIdPayInitiatives = namedInitiativesList.map(item => (
     <IDPayInitiativeListItem
       key={item.initiativeId}
       item={item}
-      idWallet={String(props.paymentMethod.idWallet)}
+      idWallet={idWalletString}
     />
   ));
   const itemsArray = [...mappedIdPayInitiatives, ...capabilityItems];
@@ -142,8 +146,8 @@ const PaymentMethodInitiatives = (props: Props): React.ReactElement | null => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loadIdpayInitiatives: (idWallet: string) =>
-    dispatch(idPayWalletInitiativesGet.request({ idWallet }))
+  loadIdpayInitiatives: (idWallet: string, isRefreshCall?: boolean) =>
+    dispatch(idPayWalletInitiativesGet.request({ idWallet, isRefreshCall }))
 });
 const mapStateToProps = (state: GlobalState) => ({
   bpdRemoteConfig: bpdRemoteConfigSelector(state),

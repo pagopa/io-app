@@ -49,19 +49,14 @@ const reducer = (
       };
     // Initiatives with instrument
     case getType(idPayWalletInitiativesGet.request):
-      if (action.payload.isRefreshCall) {
+      if (!action.payload.isRefreshCall) {
         return {
           ...state,
-          initiativesWithInstrument: pot.toLoading(
-            state.initiativesWithInstrument
-          )
+          initiativesWithInstrument: pot.toLoading(pot.none),
+          initiativesWithInstrumentPairingQueue: {}
         };
       }
-      return {
-        ...state,
-        initiativesWithInstrument: pot.toLoading(pot.none),
-        initiativesWithInstrumentPairingQueue: {}
-      };
+      break;
     case getType(idPayWalletInitiativesGet.success):
       const initiativesToKeepInLoadingState = pipe(
         state.initiativesWithInstrumentPairingQueue,
@@ -124,28 +119,20 @@ export const idPayWalletInitiativesListWithInstrumentSelector = createSelector(
 export const idpayInitiativesListSelector = createSelector(
   [isIdPayEnabledSelector, idPayWalletInitiativesListWithInstrumentSelector],
   (isIdpayEnabled, initiatives) =>
-    isIdpayEnabled
-      ? pot
-          .getOrElse(initiatives, [])
-          .filter(({ initiativeName }) => initiativeName !== undefined)
-      : []
+    isIdpayEnabled ? pot.getOrElse(initiatives, []) : []
 );
 
-// export const isSingleInitiativeLoadingSelector = (
-//   state: GlobalState,
-//   initiativeId: string
-// ) =>
-//   state.features.idPay.wallet.initiativesWithInstrumentPairingQueue[
-//     initiativeId
-//   ] !== undefined;
+export const isIdpayWalletInitiativesWithInstrumentLoadingSelector = (
+  state: GlobalState
+) => pot.isLoading(state.features.idPay.wallet.initiativesWithInstrument);
 
-  export const singleInitiativeQueueValueSelector = (
-    state: GlobalState,
-    initiativeId: string
-  ) =>
-    state.features.idPay.wallet.initiativesWithInstrumentPairingQueue[
-      initiativeId
-    ];
+export const singleInitiativeQueueValueSelector = (
+  state: GlobalState,
+  initiativeId: string
+) =>
+  state.features.idPay.wallet.initiativesWithInstrumentPairingQueue[
+    initiativeId
+  ];
 
   
 

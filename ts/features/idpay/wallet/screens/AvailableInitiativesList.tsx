@@ -1,6 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import React from "react";
 import { ScrollView, View } from "react-native";
+import { InitiativesWithInstrumentDTO } from "../../../../../definitions/idpay/wallet/InitiativesWithInstrumentDTO";
 import {
   IOLogoPaymentType,
   LogoPayment
@@ -15,12 +16,11 @@ import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppPa
 import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { IDPayInitiativeListItem } from "../components/IDPayInitiativesListItem";
+import { idPayWalletInitiativesGet } from "../store/actions";
 import {
   idPayWalletInitiativesWithInstrumentSelector,
   idpayInitiativesListSelector
 } from "../store/reducers";
-import { InitiativesWithInstrumentDTO } from "../../../../../definitions/idpay/wallet/InitiativesWithInstrumentDTO";
-import { idPayWalletInitiativesGet } from "../store/actions";
 
 export type AvailableInitiativesListScreenNavigationParams = {
   capabilityItems: ReadonlyArray<React.ReactNode>;
@@ -54,9 +54,16 @@ export const IdPayInitiativeListScreen = (props: Props) => {
   );
   const idpayInitiatives = useIOSelector(idpayInitiativesListSelector);
   const dispatch = useIODispatch();
+
   React.useEffect(() => {
     const timer = setInterval(
-      () => dispatch(idPayWalletInitiativesGet.request({ idWallet })),
+      () =>
+        dispatch(
+          idPayWalletInitiativesGet.request({
+            idWallet,
+            isRefreshCall: true
+          })
+        ),
       3000
     );
     return () => clearInterval(timer);

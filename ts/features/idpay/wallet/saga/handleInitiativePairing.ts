@@ -24,43 +24,54 @@ export function* handleInitiativePairing(
   payload: IdpayInitiativesPairingPayloadType
 ) {
   try {
-    const updateInstrumentStatusResult: SagaCallReturnType<
-      typeof updateInstrumentStatus
-    > = yield* call(updateInstrumentStatus, {
-      bearerAuth: token,
-      "Accept-Language": language,
-      idWallet: payload.idWallet,
-      initiativeId: payload.initiativeId
-    });
-    yield* put(
-      pipe(
-        updateInstrumentStatusResult,
-        E.fold(
-          error =>
-            updatePairingStatusAction.failure({
-              initiativeId: payload.initiativeId,
-              error: {
-                ...getGenericError(new Error(readablePrivacyReport(error)))
+    const mockCall = () =>
+      new Promise((resolve, reject) => {
+        setTimeout(() => resolve({ status: 200 }), 2000);
+      });
+    const updateInstrumentStatusResult =
+      // : SagaCallReturnType<
+      //   typeof updateInstrumentStatus
+      // >
+      yield *
+      call(
+        mockCall
+        //   , {
+        //   bearerAuth: token,
+        //   "Accept-Language": language,
+        //   idWallet: payload.idWallet,
+        //   initiativeId: payload.initiativeId
+        // }
+      );
+    yield *
+      put(
+        pipe(
+          E.right(updateInstrumentStatusResult),
+          E.fold(
+            error =>
+              updatePairingStatusAction.failure({
+                initiativeId: payload.initiativeId,
+                error: {
+                  ...getGenericError(new Error(readablePrivacyReport(error)))
+                }
+              }),
+            response => {
+              if (response.status === 200) {
+                // handled success
+                return updatePairingStatusAction.success({
+                  initiativeId: payload.initiativeId
+                });
               }
-            }),
-          response => {
-            if (response.status === 200) {
-              // handled success
-              return updatePairingStatusAction.success({
-                initiativeId: payload.initiativeId
+              // not handled error codes
+              return updatePairingStatusAction.failure({
+                initiativeId: payload.initiativeId,
+                error: {
+                  ...getGenericError(new Error(`res status:${response.value}`))
+                }
               });
             }
-            // not handled error codes
-            return updatePairingStatusAction.failure({
-              initiativeId: payload.initiativeId,
-              error: {
-                ...getGenericError(new Error(`res status:${response.value}`))
-              }
-            });
-          }
+          )
         )
-      )
-    );
+      );
   } catch (e) {
     yield* put(
       updatePairingStatusAction.failure({
