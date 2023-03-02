@@ -2,7 +2,6 @@ import { SagaIterator } from "redux-saga";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import * as E from "fp-ts/lib/Either";
-import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { BackendFciClient } from "../../api/backendFci";
 import { fciSigningRequest } from "../../store/actions";
