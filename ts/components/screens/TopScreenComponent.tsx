@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ComponentProps } from "../../types/react";
 import { FAQsCategoriesType } from "../../utils/faq";
-import { IOColorType } from "../core/variables/IOColors";
+import type { IOColors } from "../core/variables/IOColors";
 import { AccessibilityEvents } from "./BaseHeader";
 import BaseScreenComponent from "./BaseScreenComponent";
 
@@ -15,7 +15,7 @@ interface OwnProps {
   };
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
   accessibilityEvents?: AccessibilityEvents;
-  titleColor?: IOColorType;
+  titleColor?: IOColors;
 }
 
 type BaseScreenComponentProps =
