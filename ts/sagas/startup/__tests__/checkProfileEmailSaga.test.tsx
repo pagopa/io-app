@@ -15,7 +15,7 @@ import { appReducer } from "../../../store/reducers";
 import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
 import { checkAcknowledgedEmailSaga } from "../checkAcknowledgedEmailSaga";
 
-describe("checkAcceptedTosSaga", () => {
+describe("checkAcknowledgedEmailSaga", () => {
   beforeEach(() => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
