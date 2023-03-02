@@ -18,6 +18,9 @@ export type QtspDocumentToSign =
 
 const getFileDigest = (url: string) =>
   pipe(
+    // TODDO: instead of use fetch to download again the file, we should refactor FcidocumentScreen
+    // to store the file locally and use it later to calculate the digest.
+    // https://pagopa.atlassian.net/browse/SFEQS-1470
     TE.tryCatch(() => ReactNativeBlobUtil.fetch("GET", url), E.toError),
     TE.map(response => response.base64()),
     TE.map(buffer => sha(constants.SHA_256).update(buffer).digest("hex"))
