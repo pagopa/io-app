@@ -1,10 +1,10 @@
 import * as React from "react";
 import { IOFontFamily, IOFontWeight } from "../fonts";
-import { IOColorType } from "../variables/IOColors";
+import type { IOColors } from "../variables/IOColors";
 import { ExternalTypographyProps, TypographyProps } from "./common";
 import { useTypographyFactory } from "./Factory";
 
-type AllowedColors = IOColorType;
+type AllowedColors = IOColors;
 type AllowedWeight = Extract<IOFontWeight, "SemiBold" | "Bold">;
 
 type OwnProps = ExternalTypographyProps<

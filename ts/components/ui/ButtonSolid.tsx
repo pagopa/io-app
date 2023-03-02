@@ -15,7 +15,7 @@ import Animated, {
   Extrapolate,
   interpolateColor
 } from "react-native-reanimated";
-import { IOColors, IOColorType } from "../core/variables/IOColors";
+import { IOColors } from "../core/variables/IOColors";
 import { IOSpringValues, IOScaleValues } from "../core/variables/IOAnimations";
 import { BaseTypography } from "../core/typography/BaseTypography";
 import { IOButtonStyles } from "../core/variables/IOStyles";
@@ -36,8 +36,8 @@ type ColorStates = {
   default: string;
   pressed: string;
   label: {
-    default: IOColorType;
-    disabled: IOColorType;
+    default: IOColors;
+    disabled: IOColors;
   };
 };
 
@@ -74,7 +74,7 @@ const mapColorStates: Record<NonNullable<ButtonSolid["color"]>, ColorStates> = {
 };
 
 // Disabled state
-const colorPrimaryButtonDisabled: IOColorType = "bluegreyLight";
+const colorPrimaryButtonDisabled: IOColors = "bluegreyLight";
 
 const styles = StyleSheet.create({
   backgroundDisabled: {
