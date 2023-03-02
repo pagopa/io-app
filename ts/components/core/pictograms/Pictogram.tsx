@@ -1,6 +1,6 @@
 import React from "react";
 import { ColorValue } from "react-native";
-import { IOColors, IOColorType } from "../variables/IOColors";
+import { IOColors } from "../variables/IOColors";
 
 import PictogramAirBaloon from "./svg/PictogramAirBaloon";
 import PictogramHeart from "./svg/PictogramHeart";
@@ -66,7 +66,7 @@ export type IOPictogramType = keyof typeof IOPictograms;
 
 type IOPictogramsProps = {
   name: IOPictogramType;
-  color?: IOColorType;
+  color?: IOColors;
   size?: number | "100%";
 };
 

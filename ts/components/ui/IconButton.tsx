@@ -14,11 +14,11 @@ import Animated, {
 import { hexToRgba, IOColors } from "../core/variables/IOColors";
 import { IOSpringValues, IOScaleValues } from "../core/variables/IOAnimations";
 import { IOButtonStyles, IOIconButtonStyles } from "../core/variables/IOStyles";
-import { AnimatedIcon, IconClassComponent, IOIconType } from "../core/icons";
+import { AnimatedIcon, IconClassComponent, IOIcons } from "../core/icons";
 import { WithTestID } from "../../types/WithTestID";
 
 export type IconButton = WithTestID<{
-  icon: IOIconType;
+  icon: IOIcons;
   color?: "primary" | "neutral" | "contrast";
   disabled?: boolean;
   accessibilityLabel: string;

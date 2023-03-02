@@ -2,7 +2,7 @@ import * as React from "react";
 import { useMemo } from "react";
 import { StyleProp, Text, TextStyle } from "react-native";
 import { IOFontFamily, IOFontWeight, makeFontStyleObject } from "../fonts";
-import { IOColors, IOColorType } from "../variables/IOColors";
+import { IOColors } from "../variables/IOColors";
 
 /**
  * The specific properties needed to calculate the font style using {@link makeFontStyleObject} (these information
@@ -10,7 +10,7 @@ import { IOColors, IOColorType } from "../variables/IOColors";
  */
 type BaseTypographyProps = {
   weight: IOFontWeight;
-  color: IOColorType;
+  color: IOColors;
   font?: IOFontFamily;
   isItalic?: boolean;
 };
@@ -25,7 +25,7 @@ type OwnProps = BaseTypographyProps & {
  * @param args the args of the function {@link makeFontStyleObject}
  */
 const calculateTextStyle = (
-  color: IOColorType,
+  color: IOColors,
   ...args: Parameters<typeof makeFontStyleObject>
 ) => ({
   ...makeFontStyleObject(...args),

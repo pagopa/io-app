@@ -1,7 +1,7 @@
 import React from "react";
 import TestRenderer from "react-test-renderer";
 import { IOFontWeight } from "../../fonts";
-import { IOColorType } from "../../variables/IOColors";
+import type { IOColors } from "../../variables/IOColors";
 import { Body } from "../Body";
 import { calculateWeightColor } from "../common";
 import { H1 } from "../H1";
@@ -191,14 +191,14 @@ describe("Test Typography Components", () => {
 
 describe("Test Typography common", () => {
   it("Test calculateWeightColor behaviour", () => {
-    const noValues = calculateWeightColor<IOFontWeight, IOColorType>(
+    const noValues = calculateWeightColor<IOFontWeight, IOColors>(
       "Bold",
       "red"
     );
     expect(noValues.color).toBe("red");
     expect(noValues.weight).toBe("Bold");
 
-    const weightProvided = calculateWeightColor<IOFontWeight, IOColorType>(
+    const weightProvided = calculateWeightColor<IOFontWeight, IOColors>(
       "Bold",
       "red",
       "Regular"
@@ -206,7 +206,7 @@ describe("Test Typography common", () => {
     expect(weightProvided.color).toBe("red");
     expect(weightProvided.weight).toBe("Regular");
 
-    const allValuesProvided = calculateWeightColor<IOFontWeight, IOColorType>(
+    const allValuesProvided = calculateWeightColor<IOFontWeight, IOColors>(
       "Bold",
       "red",
       "Regular",
