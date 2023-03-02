@@ -4,12 +4,12 @@ import {
   IOFontFamily,
   IOFontWeight
 } from "../../../../../components/core/fonts";
-import { IOColorType } from "../../../../../components/core/variables/IOColors";
+import type { IOColors } from "../../../../../components/core/variables/IOColors";
 import { useTypographyFactory } from "../../../../../components/core/typography/Factory";
 
 type AllowedWeight = Extract<IOFontWeight, "Regular">;
 
-type AllowedColors = Extract<IOColorType, "black">;
+type AllowedColors = Extract<IOColors, "black">;
 
 const fontName: IOFontFamily = "TitilliumWeb";
 const fontSize = 12;

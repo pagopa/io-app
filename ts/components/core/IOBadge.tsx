@@ -2,12 +2,12 @@ import { Badge } from "native-base";
 import React from "react";
 import { ColorValue, StyleSheet } from "react-native";
 import { LabelSmall } from "./typography/LabelSmall";
-import { IOColors, IOColorType } from "./variables/IOColors";
+import { IOColors } from "./variables/IOColors";
 
 type IOBadgeCommonProps = {
   text: string;
   small?: boolean;
-  labelColor?: Extract<IOColorType, "bluegreyDark" | "blue" | "white" | "red">;
+  labelColor?: Extract<IOColors, "bluegreyDark" | "blue" | "white" | "red">;
 };
 
 const commonBadgeStyles = StyleSheet.create({
