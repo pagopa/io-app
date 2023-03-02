@@ -3,7 +3,7 @@ import * as O from "fp-ts/lib/Option";
 import { View } from "native-base";
 import * as React from "react";
 import { createRef, useEffect } from "react";
-import { Platform } from "react-native";
+import { Platform, SafeAreaView } from "react-native";
 import WebView from "react-native-webview";
 import {
   WebViewErrorEvent,
@@ -288,13 +288,15 @@ const CieWebView = (props: Props) => {
 const ErrorComponent = (
   props: { onRetry: () => void } & Pick<Props, "onClose">
 ) => (
-  <GenericErrorComponent
-    avoidNavigationEvents={true}
-    onRetry={props.onRetry}
-    onCancel={props.onClose}
-    image={require("../../../img/broken-link.png")} // TODO: use custom or generic image?
-    text={I18n.t("authentication.errors.network.title")} // TODO: use custom or generic text?
-  />
+  <SafeAreaView style={IOStyles.flex}>
+    <GenericErrorComponent
+      avoidNavigationEvents={true}
+      onRetry={props.onRetry}
+      onCancel={props.onClose}
+      image={require("../../../img/broken-link.png")} // TODO: use custom or generic image?
+      text={I18n.t("authentication.errors.network.title")} // TODO: use custom or generic text?
+    />
+  </SafeAreaView>
 );
 
 /**
