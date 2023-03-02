@@ -23,13 +23,15 @@ export function* handleCreateSignature(
     const qtspFilledDocumentUrl = yield* select(
       fciQtspFilledDocumentUrlSelector
     );
-    const filled_document_url = qtspFilledDocumentUrl as NonEmptyString;
-    const qtspClauses = { ...action.payload.qtsp_clauses, filled_document_url };
+    const qtspClauses = {
+      ...action.payload.qtsp_clauses,
+      qtspFilledDocumentUrl
+    };
 
     const tosChallange = yield* call(getTosSignature(qtspClauses));
 
     if (E.isLeft(tosChallange)) {
-      throw Error(`Error tos challange ${tosChallange.left}`);
+      throw Error(`${tosChallange.left}`);
     }
 
     const tosChallengeHashHex = E.isRight(tosChallange)
@@ -42,7 +44,7 @@ export function* handleCreateSignature(
 
     const signChallenge = yield* call(getCustomSignature(documentSignatures));
     if (E.isLeft(signChallenge)) {
-      throw Error(`Error sign challange ${signChallenge.left}`);
+      throw Error(`${signChallenge.left}`);
     }
     const signChallengeHashHex = E.isRight(signChallenge)
       ? signChallenge.right
