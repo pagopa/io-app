@@ -61,7 +61,7 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
     </Text>
     <View
       accessibilityLabel="checkbox"
-      accessibilityRole="radio"
+      accessibilityRole="checkbox"
       accessibilityState={
         Object {
           "checked": false,
