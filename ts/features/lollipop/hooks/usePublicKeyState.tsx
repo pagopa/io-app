@@ -22,9 +22,6 @@ export const usePublicKeyState = () => {
     setPublicKeyState({ kind: "error", error });
 
   useEffect(() => {
-    if (publicKeyState.kind !== "checking") {
-      return;
-    }
     pipe(
       keyTag,
       O.fold(
@@ -40,6 +37,6 @@ export const usePublicKeyState = () => {
           )()
       )
     );
-  }, [keyTag, publicKeyState.kind]);
+  }, [keyTag]);
   return publicKeyState;
 };
