@@ -3211,6 +3211,8 @@ features:
       showOnDocument: "See on document"
       accessibility:
         fieldDetailHint: "Go to the page that displays the signature field"
+        selected: "Field selected"
+        unselected: "Field not selected"
     title: "Firma con IO"
     documentsBar:
       titleLeft: Document {{currentDoc}} of {{totalDocs}}
