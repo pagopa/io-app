@@ -1,6 +1,7 @@
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
+import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import * as E from "fp-ts/lib/Either";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { BackendFciClient } from "../../api/backendFci";
@@ -24,7 +25,7 @@ export function* handleCreateSignature(
     );
     const qtspClauses = {
       ...action.payload.qtsp_clauses,
-      qtspFilledDocumentUrl
+      filled_document_url: qtspFilledDocumentUrl as NonEmptyString
     };
 
     const tosChallange = yield* call(getTosSignature(qtspClauses));
