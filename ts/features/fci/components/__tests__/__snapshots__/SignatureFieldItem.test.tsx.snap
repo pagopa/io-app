@@ -94,12 +94,8 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
         style={
           Array [
             Object {
-              "paddingBottom": 8,
-              "paddingTop": 16,
-            },
-            Object {
-              "fontSize": 16,
-              "textDecorationLine": "underline",
+              "color": "#17324D",
+              "fontSize": 22,
             },
             Array [
               Object {},
@@ -132,7 +128,7 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
           "flexDirection": "row",
         },
         Object {
-          "paddingBottom": 16,
+          "paddingBottom": 8,
           "paddingTop": 16,
         },
       ]
