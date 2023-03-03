@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   },
   details: {
     paddingTop: 16,
-    paddingBottom: 16
+    paddingBottom: 8
   },
   titleMargin: { marginRight: 22, flex: 1 }
 });

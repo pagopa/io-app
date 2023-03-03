@@ -14,7 +14,7 @@ import Animated, {
   interpolate,
   Extrapolate
 } from "react-native-reanimated";
-import { Icon, IOIconType } from "../core/icons";
+import { Icon, IOIcons } from "../core/icons";
 import { IOStyles } from "../core/variables/IOStyles";
 import { IOColors } from "../core/variables/IOColors";
 import { IOSpringValues, IOScaleValues } from "../core/variables/IOAnimations";
@@ -25,7 +25,7 @@ type Props = {
   label: string;
   description?: string;
   onPress: (event: GestureResponderEvent) => void;
-  icon?: IOIconType;
+  icon?: IOIcons;
 };
 
 const styles = StyleSheet.create({
