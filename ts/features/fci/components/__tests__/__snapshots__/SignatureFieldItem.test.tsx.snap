@@ -60,11 +60,15 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
       Clause title 1
     </Text>
     <View
-      accessibilityLabel="checkbox"
       accessibilityRole="checkbox"
       accessibilityState={
         Object {
-          "checked": false,
+          "selected": false,
+        }
+      }
+      accessibilityValue={
+        Object {
+          "text": "Field not selected",
         }
       }
       accessible={true}
