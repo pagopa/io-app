@@ -1,10 +1,11 @@
 /* eslint-disable no-underscore-dangle */
 import * as E from "fp-ts/lib/Either";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { PreferredLanguage } from "../../../../../definitions/backend/PreferredLanguage";
-import { InitiativeDto } from "../../../../../definitions/idpay/onboarding/InitiativeDto";
+import { InitiativeInfoDTO } from "../../../../../definitions/idpay/onboarding/InitiativeInfoDTO";
 import { StatusEnum } from "../../../../../definitions/idpay/onboarding/OnboardingStatusDTO";
+import { DetailsEnum as PrerequisitesErrorDetailsEnum } from "../../../../../definitions/idpay/onboarding/PrerequisitesErrorDTO";
 import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/onboarding/RequiredCriteriaDTO";
 import { SelfConsentDTO } from "../../../../../definitions/idpay/onboarding/SelfConsentDTO";
 import { OnboardingClient } from "../api/client";
@@ -32,7 +33,7 @@ const createServicesImplementation = (
       serviceId: context.serviceId
     });
 
-    const data: Promise<InitiativeDto> = pipe(
+    const data: Promise<InitiativeInfoDTO> = pipe(
       dataResponse,
       E.fold(
         _ => Promise.reject(OnboardingFailureEnum.GENERIC),
@@ -143,8 +144,19 @@ const createServicesImplementation = (
           } else if (response.status === 202) {
             return Promise.resolve(O.none);
           } else if (response.status === 403) {
-            // TODO error mapping
-            return Promise.reject(OnboardingFailureEnum.NOT_STARTED);
+            switch (response.value.details) {
+              case PrerequisitesErrorDetailsEnum.BUDGET_TERMINATED:
+                return Promise.reject(OnboardingFailureEnum.NO_BUDGET);
+              case PrerequisitesErrorDetailsEnum.INITIATIVE_END:
+                return Promise.reject(OnboardingFailureEnum.ENDED);
+              case PrerequisitesErrorDetailsEnum.INITIATIVE_NOT_STARTED:
+                return Promise.reject(OnboardingFailureEnum.NOT_STARTED);
+              case PrerequisitesErrorDetailsEnum.INITIATIVE_SUSPENDED:
+                return Promise.reject(OnboardingFailureEnum.SUSPENDED);
+              case PrerequisitesErrorDetailsEnum.GENERIC_ERROR:
+              default:
+                return Promise.reject(OnboardingFailureEnum.GENERIC);
+            }
           }
           return Promise.reject(OnboardingFailureEnum.GENERIC);
         }

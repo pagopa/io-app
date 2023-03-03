@@ -2,8 +2,8 @@
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { PreferredLanguageEnum } from "../../../../../../definitions/backend/PreferredLanguage";
-import { ErrorDto } from "../../../../../../definitions/idpay/onboarding/ErrorDto";
-import { InitiativeDto } from "../../../../../../definitions/idpay/onboarding/InitiativeDto";
+import { ErrorDTO } from "../../../../../../definitions/idpay/onboarding/ErrorDTO";
+import { InitiativeInfoDTO } from "../../../../../../definitions/idpay/onboarding/InitiativeInfoDTO";
 import {
   OnboardingStatusDTO,
   StatusEnum
@@ -32,7 +32,7 @@ const T_CONTEXT: Context = {
 
 const T_SERVICE_ID = "efg456";
 
-const T_INITIATIVE_DTO: InitiativeDto = {
+const T_INITIATIVE_DTO: InitiativeInfoDTO = {
   initiativeId: "1234"
 };
 
@@ -118,7 +118,7 @@ describe("IDPay Onboarding machine services", () => {
     });
 
     it("should fail if response status code != 200", async () => {
-      const response: E.Either<Error, { status: number; value?: ErrorDto }> =
+      const response: E.Either<Error, { status: number; value?: ErrorDTO }> =
         E.right({ status: 400, value: { code: 0, message: "" } });
 
       mockOnboardingClient.getInitiativeData.mockImplementation(() => response);
@@ -142,7 +142,7 @@ describe("IDPay Onboarding machine services", () => {
     it("should get initiative data", async () => {
       const response: E.Either<
         Error,
-        { status: number; value?: InitiativeDto }
+        { status: number; value?: InitiativeInfoDTO }
       > = E.right({ status: 200, value: T_INITIATIVE_DTO });
 
       mockOnboardingClient.getInitiativeData.mockImplementation(() => response);
@@ -174,7 +174,7 @@ describe("IDPay Onboarding machine services", () => {
     });
 
     it("should fail if response status code != 200", async () => {
-      const response: E.Either<Error, { status: number; value?: ErrorDto }> =
+      const response: E.Either<Error, { status: number; value?: ErrorDTO }> =
         E.right({ status: 400, value: { code: 0, message: "" } });
 
       mockOnboardingClient.onboardingStatus.mockImplementation(() => response);
@@ -197,7 +197,7 @@ describe("IDPay Onboarding machine services", () => {
     });
 
     it("should return none if response status code == 404", async () => {
-      const response: E.Either<Error, { status: number; value?: ErrorDto }> =
+      const response: E.Either<Error, { status: number; value?: ErrorDTO }> =
         E.right({ status: 404, value: { code: 0, message: "" } });
 
       mockOnboardingClient.onboardingStatus.mockImplementation(() => response);
@@ -290,7 +290,7 @@ describe("IDPay Onboarding machine services", () => {
     });
 
     it("should fail if response status code != 204", async () => {
-      const response: E.Either<Error, { status: number; value?: ErrorDto }> =
+      const response: E.Either<Error, { status: number; value?: ErrorDTO }> =
         E.right({ status: 400, value: { code: 0, message: "" } });
 
       mockOnboardingClient.onboardingCitizen.mockImplementation(() => response);
@@ -350,7 +350,7 @@ describe("IDPay Onboarding machine services", () => {
     });
 
     it("should fail if response status code != 200 or 202", async () => {
-      const response: E.Either<Error, { status: number; value?: ErrorDto }> =
+      const response: E.Either<Error, { status: number; value?: ErrorDTO }> =
         E.right({ status: 400, value: { code: 0, message: "" } });
 
       mockOnboardingClient.checkPrerequisites.mockImplementation(
@@ -457,7 +457,7 @@ describe("IDPay Onboarding machine services", () => {
     });
 
     it("should fail if response status code != 202", async () => {
-      const response: E.Either<Error, { status: number; value?: ErrorDto }> =
+      const response: E.Either<Error, { status: number; value?: ErrorDTO }> =
         E.right({ status: 400, value: { code: 0, message: "" } });
 
       mockOnboardingClient.consentOnboarding.mockImplementation(() => response);
