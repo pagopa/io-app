@@ -1,6 +1,7 @@
+import { backendStatusSelector } from "./../../../store/reducers/backendStatus";
 import * as O from "fp-ts/lib/Option";
 import { v4 as uuid } from "uuid";
-import { put, select, call } from "typed-redux-saga/macro";
+import { put, select, call, take } from "typed-redux-saga/macro";
 import { getPublicKey } from "@pagopa/io-react-native-crypto";
 import { lollipopKeyTagSelector } from "../store/reducers/lollipop";
 import { lollipopKeyTagSave } from "../store/actions/lollipop";
@@ -9,8 +10,16 @@ import {
   deletePreviousCryptoKeyPair
 } from "../../../sagas/startup/generateCryptoKeyPair";
 import { isLollipopEnabledSelector } from "../../../store/reducers/backendStatus";
+import { backendStatusLoadSuccess } from "../../../store/actions/backendStatus";
 
 export function* generateLollipopKeySaga() {
+  // We must wait for the backend status to be loaded
+  // to be sure to manage alreadey logged in users
+  // coming from old app versions if lollipop is enabled.
+  const backendStatus = yield* select(backendStatusSelector);
+  if (O.isNone(backendStatus)) {
+    yield* take(backendStatusLoadSuccess);
+  }
   const isLollipopEnabled = yield* select(isLollipopEnabledSelector);
   if (!isLollipopEnabled) {
     return;
@@ -23,7 +32,7 @@ export function* generateLollipopKeySaga() {
   if (O.isNone(maybeOldKeyTag)) {
     const newKeyTag = uuid();
     yield* put(lollipopKeyTagSave({ keyTag: newKeyTag }));
-    yield* cryptoKeyGenerationSaga(newKeyTag, maybeOldKeyTag);
+    yield* call(cryptoKeyGenerationSaga, newKeyTag, maybeOldKeyTag);
   } else {
     try {
       // If we already have a keyTag, we check if there is
@@ -37,14 +46,14 @@ export function* generateLollipopKeySaga() {
       // Having a key or an error in those cases is useful to show
       // the user an informative banner saying that their device
       // is not suitable for future version of IO.
-      yield* cryptoKeyGenerationSaga(maybeOldKeyTag.value, O.none);
+      yield* call(cryptoKeyGenerationSaga, maybeOldKeyTag.value, O.none);
     }
   }
 }
 
 export function* deleteCurrentLollipopKeyAndGenerateNewKeyTag() {
   const maybeCurrentKeyTag = yield* select(lollipopKeyTagSelector);
-  yield* deletePreviousCryptoKeyPair(maybeCurrentKeyTag);
+  yield* call(deletePreviousCryptoKeyPair, maybeCurrentKeyTag);
   const newKeyTag = uuid();
   yield* put(lollipopKeyTagSave({ keyTag: newKeyTag }));
 }
