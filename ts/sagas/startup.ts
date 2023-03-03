@@ -208,7 +208,7 @@ export function* initializeApplicationSaga(): Generator<
   // to use this information on old app version already logged in users.
   // Here we are blocking the application startup, but we have the
   // the profile loading spinner active.
-  yield* generateLollipopKeySaga();
+  yield* call(generateLollipopKeySaga);
 
   // Whether the user is currently logged in.
   const previousSessionToken: ReturnType<typeof sessionTokenSelector> =

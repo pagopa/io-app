@@ -8,13 +8,8 @@ import {
   cryptoKeyGenerationSaga,
   deletePreviousCryptoKeyPair
 } from "../../../sagas/startup/generateCryptoKeyPair";
-import { isLollipopEnabledSelector } from "../../../store/reducers/backendStatus";
 
 export function* generateLollipopKeySaga() {
-  const isLollipopEnabled = yield* select(isLollipopEnabledSelector);
-  if (!isLollipopEnabled) {
-    return;
-  }
   const maybeOldKeyTag = yield* select(lollipopKeyTagSelector);
   // Weather the user is logged in or not
   // we generate a key (if no one is present)
@@ -23,7 +18,7 @@ export function* generateLollipopKeySaga() {
   if (O.isNone(maybeOldKeyTag)) {
     const newKeyTag = uuid();
     yield* put(lollipopKeyTagSave({ keyTag: newKeyTag }));
-    yield* cryptoKeyGenerationSaga(newKeyTag, maybeOldKeyTag);
+    yield* call(cryptoKeyGenerationSaga, newKeyTag, maybeOldKeyTag);
   } else {
     try {
       // If we already have a keyTag, we check if there is
@@ -37,14 +32,14 @@ export function* generateLollipopKeySaga() {
       // Having a key or an error in those cases is useful to show
       // the user an informative banner saying that their device
       // is not suitable for future version of IO.
-      yield* cryptoKeyGenerationSaga(maybeOldKeyTag.value, O.none);
+      yield* call(cryptoKeyGenerationSaga, maybeOldKeyTag.value, O.none);
     }
   }
 }
 
 export function* deleteCurrentLollipopKeyAndGenerateNewKeyTag() {
   const maybeCurrentKeyTag = yield* select(lollipopKeyTagSelector);
-  yield* deletePreviousCryptoKeyPair(maybeCurrentKeyTag);
+  yield* call(deletePreviousCryptoKeyPair, maybeCurrentKeyTag);
   const newKeyTag = uuid();
   yield* put(lollipopKeyTagSave({ keyTag: newKeyTag }));
 }
