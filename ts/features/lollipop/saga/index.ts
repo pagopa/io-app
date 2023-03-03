@@ -1,4 +1,3 @@
-import { backendStatusSelector } from "./../../../store/reducers/backendStatus";
 import * as O from "fp-ts/lib/Option";
 import { v4 as uuid } from "uuid";
 import { put, select, call, take } from "typed-redux-saga/macro";
@@ -11,6 +10,7 @@ import {
 } from "../../../sagas/startup/generateCryptoKeyPair";
 import { isLollipopEnabledSelector } from "../../../store/reducers/backendStatus";
 import { backendStatusLoadSuccess } from "../../../store/actions/backendStatus";
+import { backendStatusSelector } from "./../../../store/reducers/backendStatus";
 
 export function* generateLollipopKeySaga() {
   // We must wait for the backend status to be loaded
