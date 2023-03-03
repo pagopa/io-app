@@ -3,7 +3,7 @@ import { useSelector } from "@xstate/react";
 import { List as NBList, Text as NBText } from "native-base";
 import React from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
-import { IconNav } from "../../../../../components/core/icons";
+import { Icon } from "../../../../../components/core/icons";
 import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
@@ -242,7 +242,7 @@ const InstrumentsEnrollmentScreen = () => {
               <VSpacer size={16} />
               {/*  TODO:: AdviceComponent goes here once implemented @dmnplb */}
               <View style={styles.bottomSection}>
-                <IconNav name="wallet" color="bluegrey" />
+                <Icon name="navWallet" color="bluegrey" />
                 <HSpacer size={8} />
                 <LabelSmall
                   color="bluegrey"
