@@ -4,8 +4,7 @@ import {
   CryptoError,
   deleteKey
 } from "@pagopa/io-react-native-crypto";
-import { call, select } from "typed-redux-saga/macro";
-import { isLollipopEnabledSelector } from "../../store/reducers/backendStatus";
+import { call } from "typed-redux-saga/macro";
 import {
   checkPublicKeyExists,
   setKeyGenerationInfo,
@@ -24,12 +23,9 @@ export function* cryptoKeyGenerationSaga(
   keyTag: string,
   previousKeyTag: O.Option<string>
 ) {
-  const isLollipopEnabled = yield* select(isLollipopEnabledSelector);
-  if (isLollipopEnabled) {
-    // Every new login we need to regenerate a brand new key pair.
-    yield* deletePreviousCryptoKeyPair(previousKeyTag);
-    yield* call(generateCryptoKeyPair, keyTag);
-  }
+  // Every new login we need to regenerate a brand new key pair.
+  yield* deletePreviousCryptoKeyPair(previousKeyTag);
+  yield* call(generateCryptoKeyPair, keyTag);
 }
 
 /**
