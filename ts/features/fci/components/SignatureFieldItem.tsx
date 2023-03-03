@@ -47,13 +47,12 @@ const SignatureFieldItem = (props: Props) => {
           {props.title}
         </H4>
         <TouchableDefaultOpacity
-          accessibilityRole={"radio"}
+          accessibilityRole={"checkbox"}
           accessibilityState={{ checked }}
           accessibilityLabel="checkbox"
           testID={"SignatureFieldItemButtonTestID"}
           onPress={() => {
             onChange(!checked);
-            setChecked(!checked);
           }}
           disabled={props.disabled}
           style={{ alignSelf: "center" }}
