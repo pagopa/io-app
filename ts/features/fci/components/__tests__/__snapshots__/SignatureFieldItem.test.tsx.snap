@@ -97,7 +97,7 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
         style={
           Array [
             Object {
-              "paddingBottom": 16,
+              "paddingBottom": 8,
               "paddingTop": 16,
             },
             Object {
