@@ -77,7 +77,7 @@ function* deleteCryptoKeyPair(keyTag: string) {
 function* generateCryptoKeyPair(keyTag: string) {
   try {
     // Remove an already existing key with the same tag.
-    call(deleteCryptoKeyPair, keyTag);
+    yield* call(deleteCryptoKeyPair, keyTag);
 
     const key = yield* call(generate, keyTag);
     const keyGenerationInfo: KeyGenerationInfo = {
