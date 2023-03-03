@@ -24,7 +24,7 @@ export function* cryptoKeyGenerationSaga(
   previousKeyTag: O.Option<string>
 ) {
   // Every new login we need to regenerate a brand new key pair.
-  yield* deletePreviousCryptoKeyPair(previousKeyTag);
+  yield* call(deletePreviousCryptoKeyPair, previousKeyTag);
   yield* call(generateCryptoKeyPair, keyTag);
 }
 
@@ -51,7 +51,7 @@ export function* trackMixpanelCryptoKeyPairEvents(keyTag: string) {
  */
 export function* deletePreviousCryptoKeyPair(keyTag: O.Option<string>) {
   if (O.isSome(keyTag)) {
-    yield* deleteCryptoKeyPair(keyTag.value);
+    yield* call(deleteCryptoKeyPair, keyTag.value);
   }
 }
 
