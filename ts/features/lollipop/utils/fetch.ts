@@ -1,5 +1,8 @@
 import URLParse from "url-parse";
 import { PublicKey, sign } from "@pagopa/io-react-native-crypto";
+import { pipe } from "fp-ts/lib/function";
+import * as A from "fp-ts/lib/Array";
+import * as TE from "fp-ts/TaskEither";
 import {
   LollipopConfig,
   chainSignPromises,
@@ -15,11 +18,6 @@ import {
   SignatureBaseResult
 } from "../../../utils/httpSignature/signature";
 import { SignatureConfig } from "../../../utils/httpSignature/types/SignatureConfig";
-import { pipe } from "fp-ts/lib/function";
-import * as A from "fp-ts/lib/Array";
-import * as TE from 'fp-ts/TaskEither';
-import { toError } from "fp-ts/lib/Either";
-import * as T from "fp-ts/lib/Task";
 
 /**
  * Decorates the current fetch with LolliPOP headers and http-signature
@@ -176,31 +174,27 @@ export const customContentSignatureBases = (
 };
 
 export const customContentToSignPromises = (
-    customContent: CutsomContentToSignInput
-  ): Array<TE.TaskEither<Error, SignPromiseResult>> =>
-    pipe(
-      customContentSignatureBases(customContent),
-      A.map((customContentBase) =>
-        pipe(
-          TE.tryCatch(
-            () => sign(customContentBase.signatureBase, customContent.keyTag),
-            (error) => new Error(`Failed to sign: ${error}`),
-          ),
-          TE.map((value) => ({
-            headerIndex: customContentBase.headerIndex,
-            headerPrefix: customContentBase.headerPrefix,
-            headerName: customContentBase.headerName,
-            headerValue: customContentBase.headerValue,
-            signature: `sig${customContentBase.headerIndex}:${value}:`,
-            signatureInput: customContentBase.signatureInput,
-          }))
+  customContent: CutsomContentToSignInput
+): Array<TE.TaskEither<Error, SignPromiseResult>> =>
+  pipe(
+    customContentSignatureBases(customContent),
+    A.map(customContentBase =>
+      pipe(
+        TE.tryCatch(
+          () => sign(customContentBase.signatureBase, customContent.keyTag),
+          error => new Error(`Failed to sign: ${error}`)
         ),
-      ),
-    );
-
-
-
-  
+        TE.map(value => ({
+          headerIndex: customContentBase.headerIndex,
+          headerPrefix: customContentBase.headerPrefix,
+          headerName: customContentBase.headerName,
+          headerValue: customContentBase.headerValue,
+          signature: `sig${customContentBase.headerIndex}:${value}:`,
+          signatureInput: customContentBase.signatureInput
+        }))
+      )
+    )
+  );
 
 export type CustomContentBaseSignature = {
   headerIndex: number;
