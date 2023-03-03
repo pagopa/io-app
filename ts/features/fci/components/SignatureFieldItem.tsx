@@ -48,7 +48,7 @@ const SignatureFieldItem = (props: Props) => {
         </H4>
         <TouchableDefaultOpacity
           accessibilityRole={"checkbox"}
-          accessibilityState={{ checked }}
+          accessibilityState={{ selected: checked }}
           accessibilityLabel="checkbox"
           testID={"SignatureFieldItemButtonTestID"}
           onPress={() => {
