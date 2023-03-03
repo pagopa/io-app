@@ -10,6 +10,7 @@ import {
 } from "../../../../config";
 import {
   IdpayInitiativesPairingPayloadType,
+  IdpayInitiativesUnpairPayloadType,
   IdpayWalletInitiativeGetPayloadType,
   idPayWalletGet,
   idPayWalletInitiativesGet,
@@ -86,19 +87,21 @@ export function* watchIDPayWalletSaga(bearerToken: string): SagaIterator {
       );
     }
   );
-  yield* takeEvery(
-    idpayInitiativesPairingDelete.request,
-    function* (action: { payload: IdpayInitiativesPairingPayloadType }) {
-      // wait backoff time if there were previous errors
-      yield* call(waitBackoffError, idpayInitiativesPairingPut.failure);
-      yield* call(
-        handleInitiativePairing,
-        idPayWalletClient.deleteInstrument,
-        token,
-        preferredLanguage,
-        idpayInitiativesPairingDelete,
-        action.payload
-      );
-    }
-  );
+  yield *
+    takeEvery(
+      idpayInitiativesPairingDelete.request,
+      function* (action: { payload: IdpayInitiativesUnpairPayloadType }) {
+        // wait backoff time if there were previous errors
+        yield* call(waitBackoffError, idpayInitiativesPairingPut.failure);
+        yield* call(
+          handleInitiativePairing,
+          idPayWalletClient.deleteInstrument,
+          token,
+          preferredLanguage,
+          idpayInitiativesPairingDelete,
+          action.payload,
+
+        );
+      }
+    );
 }

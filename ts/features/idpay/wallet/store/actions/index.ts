@@ -11,6 +11,10 @@ export type IdpayInitiativesPairingPayloadType = {
   idWallet: string;
   initiativeId: string;
 };
+export type IdpayInitiativesUnpairPayloadType = {
+  instrumentId: string;
+  initiativeId: string;
+};
 
 type InitiativeId = { initiativeId: string };
 type NetworkErrorWithInitiativeId = {
@@ -49,7 +53,7 @@ export const idpayInitiativesPairingDelete = createAsyncAction(
   "IDPAY_INITIATIVES_PAIRING_DELETE_SUCCESS",
   "IDPAY_INITIATIVES_PAIRING_DELETE_FAILURE"
 )<
-  IdpayInitiativesPairingPayloadType,
+  IdpayInitiativesUnpairPayloadType,
   InitiativeId,
   NetworkErrorWithInitiativeId
 >();

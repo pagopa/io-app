@@ -82,12 +82,14 @@ export const IDPayInitiativeListItem = ({ item, idWallet }: ListItemProps) => {
 
   const updateInitiativeStatus = () => {
     if (item.status === StatusEnum.ACTIVE) {
-      dispatch(
-        idpayInitiativesPairingDelete.request({
-          idWallet,
-          initiativeId: item.initiativeId
-        })
-      );
+      if (item.idInstrument !== undefined) {
+        dispatch(
+          idpayInitiativesPairingDelete.request({
+            instrumentId: item.idInstrument,
+            initiativeId: item.initiativeId
+          })
+        );
+      }
     } else if (item.status === StatusEnum.INACTIVE) {
       dispatch(
         idpayInitiativesPairingPut.request({

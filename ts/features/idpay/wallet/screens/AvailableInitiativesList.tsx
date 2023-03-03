@@ -19,7 +19,8 @@ import { IDPayInitiativeListItem } from "../components/IDPayInitiativesListItem"
 import { idPayWalletInitiativesGet } from "../store/actions";
 import {
   idPayWalletInitiativesWithInstrumentSelector,
-  idpayInitiativesListSelector
+  idpayInitiativesListSelector,
+  isIdpayWalletInitiativesWithInstrumentErrorSelector
 } from "../store/reducers";
 
 export type AvailableInitiativesListScreenNavigationParams = {
@@ -54,6 +55,9 @@ export const IdPayInitiativeListScreen = (props: Props) => {
   );
   const idpayInitiatives = useIOSelector(idpayInitiativesListSelector);
   const dispatch = useIODispatch();
+  const areInitiativesInError = useIOSelector(
+    isIdpayWalletInitiativesWithInstrumentErrorSelector
+  );
 
   React.useEffect(() => {
     const timer = setInterval(
@@ -64,10 +68,10 @@ export const IdPayInitiativeListScreen = (props: Props) => {
             isRefreshCall: true
           })
         ),
-      3000
+      areInitiativesInError ? 6000 : 3000
     );
     return () => clearInterval(timer);
-  }, [dispatch, idWallet]);
+  }, [dispatch, idWallet, areInitiativesInError]);
 
   const idpayInitiativesComponentList = idpayInitiatives.map(item => (
     <IDPayInitiativeListItem

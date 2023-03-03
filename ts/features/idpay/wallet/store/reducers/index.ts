@@ -125,6 +125,9 @@ export const idpayInitiativesListSelector = createSelector(
 export const isIdpayWalletInitiativesWithInstrumentLoadingSelector = (
   state: GlobalState
 ) => pot.isLoading(state.features.idPay.wallet.initiativesWithInstrument);
+export const isIdpayWalletInitiativesWithInstrumentErrorSelector = (
+  state: GlobalState
+) => pot.isError(state.features.idPay.wallet.initiativesWithInstrument);
 
 export const singleInitiativeQueueValueSelector = (
   state: GlobalState,

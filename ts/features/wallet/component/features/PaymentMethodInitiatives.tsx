@@ -19,13 +19,17 @@ import I18n from "../../../../i18n";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
 import ROUTES from "../../../../navigation/routes";
+import { useIOSelector } from "../../../../store/hooks";
 import { bpdRemoteConfigSelector } from "../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../store/reducers/types";
 import { PaymentMethod } from "../../../../types/pagopa";
 import BpdPaymentMethodCapability from "../../../bonus/bpd/components/BpdPaymentMethodCapability";
 import { IDPayInitiativeListItem } from "../../../idpay/wallet/components/IDPayInitiativesListItem";
-import { idpayInitiativesListSelector } from "../../../idpay/wallet/store/reducers";
 import { idPayWalletInitiativesGet } from "../../../idpay/wallet/store/actions";
+import {
+  idpayInitiativesListSelector,
+  isIdpayWalletInitiativesWithInstrumentErrorSelector
+} from "../../../idpay/wallet/store/reducers";
 
 type OwnProps = {
   paymentMethod: PaymentMethod;
@@ -97,15 +101,17 @@ const PaymentMethodInitiatives = (props: Props): React.ReactElement | null => {
   const { namedInitiativesList, loadIdpayInitiatives } = props;
   const navigation = useNavigation<IOStackNavigationProp<WalletParamsList>>();
   const idWalletString = String(props.paymentMethod.idWallet);
+  const areInitiativesInError = useIOSelector(
+    isIdpayWalletInitiativesWithInstrumentErrorSelector
+  );
 
   React.useEffect(() => {
     const timer = setInterval(
       () => loadIdpayInitiatives(idWalletString, true),
-      3000
+      areInitiativesInError ? 6000 : 3000
     );
     return () => clearInterval(timer);
-  }, [loadIdpayInitiatives, idWalletString]);
-
+  }, [areInitiativesInError, idWalletString, loadIdpayInitiatives]);
   const mappedIdPayInitiatives = namedInitiativesList.map(item => (
     <IDPayInitiativeListItem
       key={item.initiativeId}

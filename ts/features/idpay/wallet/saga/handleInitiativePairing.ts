@@ -8,71 +8,82 @@ import { readablePrivacyReport } from "../../../../utils/reporters";
 import { IDPayWalletClient } from "../api/client";
 import {
   IdpayInitiativesPairingPayloadType,
+  IdpayInitiativesUnpairPayloadType,
   idpayInitiativesPairingDelete,
   idpayInitiativesPairingPut
 } from "../store/actions";
+import { showToast } from "../../../../utils/showToast";
+
+type ClientWithProps =
+  | {
+      client: IDPayWalletClient["deleteInstrument"];
+      props: IdpayInitiativesUnpairPayloadType;
+      action: typeof idpayInitiativesPairingDelete;
+    }
+  | {
+      client: IDPayWalletClient["enrollInstrument"];
+      props: IdpayInitiativesPairingPayloadType;
+      action: typeof idpayInitiativesPairingPut;
+    };
 
 export function* handleInitiativePairing(
-  updateInstrumentStatus:
-    | IDPayWalletClient["enrollInstrument"]
-    | IDPayWalletClient["deleteInstrument"],
+  updateInstrumentStatus: ClientWithProps["client"],
   token: string,
   language: PreferredLanguageEnum,
-  updatePairingStatusAction:
-    | typeof idpayInitiativesPairingPut
-    | typeof idpayInitiativesPairingDelete,
-  payload: IdpayInitiativesPairingPayloadType
+  updatePairingStatusAction: ClientWithProps["action"],
+  payload: ClientWithProps["props"]
 ) {
   try {
-    const mockCall = () =>
-      new Promise((resolve, reject) => {
-        setTimeout(() => resolve({ status: 200 }), 2000);
-      });
-    const updateInstrumentStatusResult =
-      // : SagaCallReturnType<
-      //   typeof updateInstrumentStatus
-      // >
-      yield *
-      call(
-        mockCall
-        //   , {
-        //   bearerAuth: token,
-        //   "Accept-Language": language,
-        //   idWallet: payload.idWallet,
-        //   initiativeId: payload.initiativeId
-        // }
-      );
-    yield *
-      put(
-        pipe(
-          E.right(updateInstrumentStatusResult),
-          E.fold(
-            error =>
-              updatePairingStatusAction.failure({
-                initiativeId: payload.initiativeId,
-                error: {
-                  ...getGenericError(new Error(readablePrivacyReport(error)))
-                }
-              }),
-            response => {
-              if (response.status === 200) {
-                // handled success
-                return updatePairingStatusAction.success({
-                  initiativeId: payload.initiativeId
-                });
+    const updateInstrumentStatusResult: SagaCallReturnType<
+      typeof updateInstrumentStatus
+    > =
+      "idWallet" in payload
+        ? yield* call(updateInstrumentStatus, {
+            bearerAuth: token,
+            "Accept-Language": language,
+            idWallet: payload.idWallet,
+            initiativeId: payload.initiativeId
+          })
+        : yield* call(updateInstrumentStatus, {
+            bearerAuth: token,
+            "Accept-Language": language,
+            initiativeId: payload.initiativeId,
+            instrumentId: payload.instrumentId
+          });
+    yield* put(
+      pipe(
+        updateInstrumentStatusResult,
+        E.fold(
+          error => {
+            showToast("Errore nel collegamento, riprova");
+            return updatePairingStatusAction.failure({
+              initiativeId: payload.initiativeId,
+              error: {
+                ...getGenericError(new Error(readablePrivacyReport(error)))
               }
-              // not handled error codes
-              return updatePairingStatusAction.failure({
-                initiativeId: payload.initiativeId,
-                error: {
-                  ...getGenericError(new Error(`res status:${response.value}`))
-                }
+            });
+          },
+          response => {
+            if (response.status === 200) {
+              // handled success
+              return updatePairingStatusAction.success({
+                initiativeId: payload.initiativeId
               });
             }
-          )
+            // not handled error codes
+            showToast("Errore nel collegamento, riprova");
+            return updatePairingStatusAction.failure({
+              initiativeId: payload.initiativeId,
+              error: {
+                ...getGenericError(new Error(`res status:${response.value}`))
+              }
+            });
+          }
         )
-      );
+      )
+    );
   } catch (e) {
+    showToast("Errore nel collegamento, riprova");
     yield* put(
       updatePairingStatusAction.failure({
         initiativeId: payload.initiativeId,
