@@ -1,3 +1,4 @@
+import { pipe } from "fp-ts/lib/function";
 /* eslint-disable no-underscore-dangle */
 import * as O from "fp-ts/lib/Option";
 import { assign, createMachine } from "xstate";
@@ -11,7 +12,7 @@ import {
   UPSERTING_TAG,
   WAITING_USER_INPUT_TAG
 } from "../../../../utils/xstate";
-import { OnboardingFailureType } from "./failure";
+import { OnboardingFailure } from "./failure";
 import {
   getBoolRequiredCriteriaFromContext,
   getMultiRequiredCriteriaFromContext
@@ -21,18 +22,20 @@ import {
 export type Context = {
   serviceId?: string;
   initiative?: InitiativeDto;
-  initiativeStatus?: StatusEnum;
+  initiativeStatus: O.Option<StatusEnum>;
   requiredCriteria?: O.Option<RequiredCriteriaDTO>;
-  failure?: OnboardingFailureType;
   multiConsentsPage: number;
   multiConsentsAnswers: Record<number, SelfConsentMultiDTO>;
   selfDeclarationBoolAnswers: Record<string, boolean>;
+  failure: O.Option<OnboardingFailure>;
 };
 
 const INITIAL_CONTEXT: Context = {
+  initiativeStatus: O.none,
   multiConsentsPage: 0,
   multiConsentsAnswers: {},
-  selfDeclarationBoolAnswers: {}
+  selfDeclarationBoolAnswers: {},
+  failure: O.none
 };
 
 // Events types
@@ -62,6 +65,10 @@ type E_QUIT_ONBOARDING = {
   type: "QUIT_ONBOARDING";
 };
 
+type E_SHOW_INITIATIVE_DETAILS = {
+  type: "SHOW_INITIATIVE_DETAILS";
+};
+
 type E_GO_BACK = {
   type: "GO_BACK";
 };
@@ -76,6 +83,7 @@ type Events =
   | E_ACCEPT_TOS
   | E_ACCEPT_REQUIRED_PDND_CRITERIA
   | E_QUIT_ONBOARDING
+  | E_SHOW_INITIATIVE_DETAILS
   | E_GO_BACK
   | E_SELECT_MULTI_CONSENT
   | E_TOGGLE_BOOL_CRITERIA
@@ -87,7 +95,7 @@ type Services = {
     data: InitiativeDto;
   };
   loadInitiativeStatus: {
-    data: StatusEnum | undefined;
+    data: O.Option<StatusEnum>;
   };
   acceptTos: {
     data: undefined;
@@ -98,19 +106,6 @@ type Services = {
   acceptRequiredCriteria: {
     data: undefined;
   };
-};
-
-const isOnboardingDone = (context: Context) => {
-  const initiativeStatus = context.initiativeStatus;
-  return (
-    initiativeStatus === StatusEnum.ONBOARDING_OK ||
-    initiativeStatus === StatusEnum.ON_EVALUATION
-  );
-};
-
-const isOnboardingFailed = (context: Context) => {
-  const initiativeStatus = context.initiativeStatus;
-  return initiativeStatus === StatusEnum.ONBOARDING_KO;
 };
 
 const hasPDNDRequiredCriteria = (context: Context) => {
@@ -197,7 +192,7 @@ const createIDPayOnboardingMachine = () =>
             onError: [
               {
                 target: "DISPLAYING_ONBOARDING_FAILURE",
-                actions: "loadInitiativeFailure"
+                actions: "setFailure"
               }
             ]
           }
@@ -210,35 +205,17 @@ const createIDPayOnboardingMachine = () =>
             id: "loadInitiativeStatus",
             onDone: [
               {
-                target: "EVALUATING_INITIATIVE_STATUS",
+                target: "DISPLAYING_INITIATIVE",
                 actions: "loadInitiativeStatusSuccess"
               }
             ],
             onError: [
               {
                 target: "DISPLAYING_ONBOARDING_FAILURE",
-                actions: "loadInitiativeStatusFailure"
+                actions: "setFailure"
               }
             ]
           }
-        },
-
-        EVALUATING_INITIATIVE_STATUS: {
-          always: [
-            {
-              target: "DISPLAYING_ONBOARDING_FAILURE",
-              cond: "isOnboardingDone",
-              actions: "onOnboardingDone"
-            },
-            {
-              target: "DISPLAYING_ONBOARDING_FAILURE",
-              cond: "isOnboardingFailed",
-              actions: "onOnboardingFailed"
-            },
-            {
-              target: "DISPLAYING_INITIATIVE"
-            }
-          ]
         },
 
         DISPLAYING_INITIATIVE: {
@@ -263,7 +240,7 @@ const createIDPayOnboardingMachine = () =>
             onError: [
               {
                 target: "DISPLAYING_ONBOARDING_FAILURE",
-                actions: "acceptTosFailure"
+                actions: "setFailure"
               }
             ]
           }
@@ -283,7 +260,7 @@ const createIDPayOnboardingMachine = () =>
             onError: [
               {
                 target: "DISPLAYING_ONBOARDING_FAILURE",
-                actions: "loadRequiredCriteriaFailure"
+                actions: "setFailure"
               }
             ]
           }
@@ -455,7 +432,12 @@ const createIDPayOnboardingMachine = () =>
         },
 
         DISPLAYING_ONBOARDING_FAILURE: {
-          entry: "navigateToFailureScreen"
+          entry: "navigateToFailureScreen",
+          on: {
+            SHOW_INITIATIVE_DETAILS: {
+              actions: "navigateToInitiativeMonitoringScreen"
+            }
+          }
         }
       }
     },
@@ -467,29 +449,11 @@ const createIDPayOnboardingMachine = () =>
         loadInitiativeSuccess: assign((_, event) => ({
           initiative: event.data
         })),
-        loadInitiativeFailure: assign((_, event) => ({
-          failure: event.data as OnboardingFailureType
-        })),
         loadInitiativeStatusSuccess: assign((_, event) => ({
           initiativeStatus: event.data
         })),
-        loadInitiativeStatusFailure: assign((_, event) => ({
-          failure: event.data as OnboardingFailureType
-        })),
-        onOnboardingDone: assign((_, __) => ({
-          failure: OnboardingFailureType.ALREADY_COMPLETED
-        })),
-        onOnboardingFailed: assign((_, __) => ({
-          failure: OnboardingFailureType.ONBOARDING_KO
-        })),
         loadRequiredCriteriaSuccess: assign((_, event) => ({
           requiredCriteria: event.data
-        })),
-        loadRequiredCriteriaFailure: assign((_, event) => ({
-          failure: event.data as OnboardingFailureType
-        })),
-        acceptTosFailure: assign((_, event) => ({
-          failure: event.data as OnboardingFailureType
         })),
         toggleBoolCriteria: assign((context, event) => ({
           selfDeclarationBoolAnswers: {
@@ -518,11 +482,12 @@ const createIDPayOnboardingMachine = () =>
         })),
         decreaseMultiConsentIndex: assign((context, _) => ({
           multiConsentsPage: context.multiConsentsPage - 1
+        })),
+        setFailure: assign((_, event) => ({
+          failure: pipe(O.of(event.data), O.filter(OnboardingFailure.is))
         }))
       },
       guards: {
-        isOnboardingDone,
-        isOnboardingFailed,
         hasPDNDRequiredCriteria,
         hasSelfRequiredCriteria,
         hasBoolRequiredCriteria,
