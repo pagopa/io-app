@@ -1,3 +1,4 @@
+import { getPublicKey } from "@pagopa/io-react-native-crypto";
 import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { testSaga } from "redux-saga-test-plan";
@@ -30,6 +31,7 @@ import { watchSessionExpiredSaga } from "../startup/watchSessionExpiredSaga";
 import { watchProfileEmailValidationChangedSaga } from "../watchProfileEmailValidationChangedSaga";
 import { checkAppHistoryVersionSaga } from "../startup/appVersionHistorySaga";
 import { generateLollipopKeySaga } from "../../features/lollipop/saga";
+import { isLollipopEnabledSelector } from "../../store/reducers/backendStatus";
 
 const aSessionToken = "a_session_token" as SessionToken;
 
@@ -73,6 +75,8 @@ describe("initializeApplicationSaga", () => {
       .put(resetProfileState())
       .next()
       .next(generateLollipopKeySaga)
+      .next(isLollipopEnabledSelector)
+      .next(getPublicKey)
       .select(sessionTokenSelector)
       .next(aSessionToken)
       .fork(watchSessionExpiredSaga)
@@ -107,6 +111,8 @@ describe("initializeApplicationSaga", () => {
       .put(resetProfileState())
       .next()
       .next(generateLollipopKeySaga)
+      .next(isLollipopEnabledSelector)
+      .next(getPublicKey)
       .select(sessionTokenSelector)
       .next(aSessionToken)
       .fork(watchSessionExpiredSaga)
@@ -138,6 +144,8 @@ describe("initializeApplicationSaga", () => {
       .put(resetProfileState())
       .next()
       .next(generateLollipopKeySaga)
+      .next(isLollipopEnabledSelector)
+      .next(getPublicKey)
       .select(sessionTokenSelector)
       .next(aSessionToken)
       .fork(watchSessionExpiredSaga)

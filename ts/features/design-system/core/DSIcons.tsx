@@ -4,25 +4,40 @@ import { DSIconViewerBox, iconItemGutter } from "../components/DSIconViewerBox";
 import {
   Icon,
   IOIcons,
-  IOIconType,
-  IconNav,
   IONavIcons,
-  IONavIconType,
-  IconBiometric,
   IOBiometricIcons,
-  IOBiometricIconType,
-  IconCategory,
   IOCategoryIcons,
-  IOCategoryIconType,
-  IconProduct,
   IOProductIcons,
-  IOProductIconType,
-  IOIconsNew
+  IOIconsNew,
+  SVGIconProps
 } from "../../../components/core/icons";
 import { H2 } from "../../../components/core/typography/H2";
 import { H3 } from "../../../components/core/typography/H3";
 import type { IOColors } from "../../../components/core/variables/IOColors";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
+
+// Filter the main object, removing already displayed icons in the other sets
+type IconSubsetObject = Record<
+  string,
+  ({ size, style }: SVGIconProps) => JSX.Element
+>;
+interface IconSetObject {
+  [key: string]: ({ size, style }: SVGIconProps) => JSX.Element;
+}
+const filterIconSet = (
+  iconSubsetObject: IconSubsetObject,
+  iconSetObject: IconSetObject
+): IconSetObject =>
+  Object.fromEntries(
+    Object.entries(iconSetObject).filter(
+      ([key]) => !Object.keys(iconSubsetObject).includes(key)
+    )
+  );
+
+const filteredIOIcons = filterIconSet(
+  { ...IONavIcons, ...IOCategoryIcons, ...IOProductIcons, ...IOBiometricIcons },
+  IOIcons
+);
 
 // Just for demo purposes
 // Once we defined a general set of icon sizes,
@@ -44,12 +59,12 @@ const styles = StyleSheet.create({
 export const DSIcons = () => (
   <DesignSystemScreen title={"Icons"}>
     <View style={styles.itemsWrapper}>
-      {Object.entries(IOIcons).map(([iconItemName]) => (
+      {Object.entries(filteredIOIcons).map(([iconItemName]) => (
         <DSIconViewerBox
           key={iconItemName}
           name={iconItemName}
           size="small"
-          image={<Icon name={iconItemName as IOIconType} size="100%" />}
+          image={<Icon name={iconItemName as IOIcons} size="100%" />}
           withDot={Object.keys(IOIconsNew).includes(iconItemName)}
         />
       ))}
@@ -63,7 +78,7 @@ export const DSIcons = () => (
           key={iconItemName}
           name={iconItemName}
           size="medium"
-          image={<IconNav name={iconItemName as IONavIconType} size="100%" />}
+          image={<Icon name={iconItemName as IONavIcons} size="100%" />}
         />
       ))}
     </View>
@@ -76,12 +91,7 @@ export const DSIcons = () => (
           key={iconItemName}
           name={iconItemName}
           size="large"
-          image={
-            <IconBiometric
-              name={iconItemName as IOBiometricIconType}
-              size="100%"
-            />
-          }
+          image={<Icon name={iconItemName as IOBiometricIcons} size="100%" />}
         />
       ))}
     </View>
@@ -94,12 +104,7 @@ export const DSIcons = () => (
           key={iconItemName}
           name={iconItemName}
           size="medium"
-          image={
-            <IconCategory
-              name={iconItemName as IOCategoryIconType}
-              size="100%"
-            />
-          }
+          image={<Icon name={iconItemName as IOCategoryIcons} size="100%" />}
         />
       ))}
     </View>
@@ -112,9 +117,7 @@ export const DSIcons = () => (
           key={iconItemName}
           name={iconItemName}
           size="large"
-          image={
-            <IconProduct name={iconItemName as IOProductIconType} size="100%" />
-          }
+          image={<Icon name={iconItemName as IOProductIcons} size="100%" />}
         />
       ))}
     </View>
