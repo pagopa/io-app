@@ -73,6 +73,7 @@ const createServicesImplementation = (
                 return Promise.reject(OnboardingFailureEnum.ONBOARDED);
               case OnbordingStatusEnum.UNSUBSCRIBED:
                 return Promise.reject(OnboardingFailureEnum.UNSUBSCRIBED);
+              case OnbordingStatusEnum.ELIGIBLE:
               case OnbordingStatusEnum.ON_EVALUATION:
                 return Promise.reject(OnboardingFailureEnum.ON_EVALUATION);
               default:
