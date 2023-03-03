@@ -4,7 +4,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { PreferredLanguage } from "../../../../../definitions/backend/PreferredLanguage";
 import { InitiativeInfoDTO } from "../../../../../definitions/idpay/onboarding/InitiativeInfoDTO";
-import { StatusEnum } from "../../../../../definitions/idpay/onboarding/OnboardingStatusDTO";
+import { StatusEnum as OnboardingStatusEnum } from "../../../../../definitions/idpay/onboarding/OnboardingStatusDTO";
 import { DetailsEnum as PrerequisitesErrorDetailsEnum } from "../../../../../definitions/idpay/onboarding/PrerequisitesErrorDTO";
 import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/onboarding/RequiredCriteriaDTO";
 import { SelfConsentDTO } from "../../../../../definitions/idpay/onboarding/SelfConsentDTO";
@@ -12,6 +12,33 @@ import { OnboardingClient } from "../api/client";
 import { OnboardingFailureEnum } from "./failure";
 import { Context } from "./machine";
 import { getBoolRequiredCriteriaFromContext } from "./selectors";
+
+// prettier-ignore
+const onboardingStatusToFailure: Record<
+  OnboardingStatusEnum,
+  O.Option<OnboardingFailureEnum>
+> = {
+  [OnboardingStatusEnum.ELIGIBILE_KO]: O.some(OnboardingFailureEnum.NOT_ELIGIBLE),
+  [OnboardingStatusEnum.ONBOARDING_KO]: O.some(OnboardingFailureEnum.NO_REQUIREMENTS),
+  [OnboardingStatusEnum.ONBOARDING_OK]: O.some(OnboardingFailureEnum.ONBOARDED),
+  [OnboardingStatusEnum.UNSUBSCRIBED]: O.some(OnboardingFailureEnum.UNSUBSCRIBED),
+  [OnboardingStatusEnum.ELIGIBLE]: O.some(OnboardingFailureEnum.ON_EVALUATION),
+  [OnboardingStatusEnum.ON_EVALUATION]: O.some(OnboardingFailureEnum.ON_EVALUATION ),
+  [OnboardingStatusEnum.ACCEPTED_TC]: O.none, // Onboarding started but not yet completed, no failure
+  [OnboardingStatusEnum.INVITED]: O.none // Whitelisted CF, no failure
+};
+
+// prettier-ignore
+const prerequisitesErrorToFailure: Record<
+  PrerequisitesErrorDetailsEnum,
+  OnboardingFailureEnum
+> = {
+  [PrerequisitesErrorDetailsEnum.BUDGET_TERMINATED]: OnboardingFailureEnum.NO_BUDGET,
+  [PrerequisitesErrorDetailsEnum.INITIATIVE_END]: OnboardingFailureEnum.ENDED,
+  [PrerequisitesErrorDetailsEnum.INITIATIVE_NOT_STARTED]: OnboardingFailureEnum.NOT_STARTED,
+  [PrerequisitesErrorDetailsEnum.INITIATIVE_SUSPENDED]: OnboardingFailureEnum.SUSPENDED,
+  [PrerequisitesErrorDetailsEnum.GENERIC_ERROR]: OnboardingFailureEnum.GENERIC
+};
 
 const createServicesImplementation = (
   onboardingClient: OnboardingClient,
@@ -59,27 +86,22 @@ const createServicesImplementation = (
       initiativeId: context.initiative.initiativeId
     });
 
-    const data: Promise<O.Option<StatusEnum>> = pipe(
+    const data: Promise<O.Option<OnboardingStatusEnum>> = pipe(
       statusResponse,
       E.fold(
         _ => Promise.reject(OnboardingFailureEnum.GENERIC),
         response => {
           if (response.status === 200) {
-            switch (response.value.status) {
-              case StatusEnum.ELIGIBILE_KO:
-                return Promise.reject(OnboardingFailureEnum.NOT_ELIGIBLE);
-              case StatusEnum.ONBOARDING_KO:
-                return Promise.reject(OnboardingFailureEnum.NO_REQUIREMENTS);
-              case StatusEnum.ONBOARDING_OK:
-                return Promise.reject(OnboardingFailureEnum.ONBOARDED);
-              case StatusEnum.UNSUBSCRIBED:
-                return Promise.reject(OnboardingFailureEnum.UNSUBSCRIBED);
-              case StatusEnum.ELIGIBLE:
-              case StatusEnum.ON_EVALUATION:
-                return Promise.reject(OnboardingFailureEnum.ON_EVALUATION);
-              default:
-                return Promise.resolve(O.some(response.value.status));
-            }
+            const onboardingStatus = response.value.status;
+            const failureOption = onboardingStatusToFailure[onboardingStatus];
+
+            return pipe(
+              failureOption,
+              O.fold(
+                () => Promise.resolve(O.some(response.value.status)), // No failure, return onboarding status
+                failure => Promise.reject(failure)
+              )
+            );
           } else if (response.status === 404) {
             // Initiative not yet started by the citizen
             return Promise.resolve(O.none);
@@ -144,19 +166,9 @@ const createServicesImplementation = (
           } else if (response.status === 202) {
             return Promise.resolve(O.none);
           } else if (response.status === 403) {
-            switch (response.value.details) {
-              case PrerequisitesErrorDetailsEnum.BUDGET_TERMINATED:
-                return Promise.reject(OnboardingFailureEnum.NO_BUDGET);
-              case PrerequisitesErrorDetailsEnum.INITIATIVE_END:
-                return Promise.reject(OnboardingFailureEnum.ENDED);
-              case PrerequisitesErrorDetailsEnum.INITIATIVE_NOT_STARTED:
-                return Promise.reject(OnboardingFailureEnum.NOT_STARTED);
-              case PrerequisitesErrorDetailsEnum.INITIATIVE_SUSPENDED:
-                return Promise.reject(OnboardingFailureEnum.SUSPENDED);
-              case PrerequisitesErrorDetailsEnum.GENERIC_ERROR:
-              default:
-                return Promise.reject(OnboardingFailureEnum.GENERIC);
-            }
+            const prerequisitesError = response.value.details;
+            const failure = prerequisitesErrorToFailure[prerequisitesError];
+            return Promise.reject(failure);
           }
           return Promise.reject(OnboardingFailureEnum.GENERIC);
         }
