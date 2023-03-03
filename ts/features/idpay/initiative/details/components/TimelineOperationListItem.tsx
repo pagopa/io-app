@@ -84,7 +84,7 @@ const OperationAmount = ({ operation }: OperationComponentProps) => {
     case RefundOperationTypeEnum.PAID_REFUND:
       return (
         <H4 color="greenLight">
-          {`${formatNumberAmount(operation.accrued || 0, false)} €`}
+          {`${formatNumberAmount(operation.amount, false)} €`}
         </H4>
       );
     default:

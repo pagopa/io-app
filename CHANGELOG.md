@@ -2,6 +2,39 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.27.0-rc.3](https://github.com/pagopa/io-app/compare/2.27.0-rc.2...2.27.0-rc.3) (2023-03-02)
+
+
+### Features
+
+* [[LLK-49](https://pagopa.atlassian.net/browse/LLK-49)] Add section status banner for unsupported devices ([#4405](https://github.com/pagopa/io-app/issues/4405)) ([c61f288](https://github.com/pagopa/io-app/commit/c61f28801077388879281747b9bb93d33a7972bb))
+
+
+### Bug Fixes
+
+* [[IABT-1436](https://pagopa.atlassian.net/browse/IABT-1436)] Change the background activity timeout ([#4424](https://github.com/pagopa/io-app/issues/4424)) ([b102fa3](https://github.com/pagopa/io-app/commit/b102fa3caf3f156ac8d2234cea87a987bb67ffff))
+
+
+### Chores
+
+* [[IAI-271](https://pagopa.atlassian.net/browse/IAI-271)] Delete separate Icon sets ([#4425](https://github.com/pagopa/io-app/issues/4425)) ([442bd13](https://github.com/pagopa/io-app/commit/442bd13a3bce17362147dc7ca86f3f8841e0f1af))
+* [[IOAPPFD0-39](https://pagopa.atlassian.net/browse/IOAPPFD0-39)] Add temporary dark mode color palette ([#4408](https://github.com/pagopa/io-app/issues/4408)) ([5c35ba3](https://github.com/pagopa/io-app/commit/5c35ba3b75d781174e1c427f5f5ca972fb766100))
+* [[LLK-29](https://pagopa.atlassian.net/browse/LLK-29)] Login with crypto key (CIE) ([#4353](https://github.com/pagopa/io-app/issues/4353)) ([019aa36](https://github.com/pagopa/io-app/commit/019aa365d1d5e71d1602c8ed980a4fd452f26961)), closes [/github.com/pagopa/io-app/blob/1f7c7da656b64c1c3a77be0ef92d9f759e7b0582/.env.production#L81](https://github.com/pagopa//github.com/pagopa/io-app/blob/1f7c7da656b64c1c3a77be0ef92d9f759e7b0582/.env.production/issues/L81)
+
+## [2.27.0-rc.2](https://github.com/pagopa/io-app/compare/2.27.0-rc.1...2.27.0-rc.2) (2023-03-01)
+
+
+### Bug Fixes
+
+* **IDPay:** [[IODPAY-133](https://pagopa.atlassian.net/browse/IODPAY-133)] Fix PDND prerequisites screen list item UI ([#4420](https://github.com/pagopa/io-app/issues/4420)) ([0190155](https://github.com/pagopa/io-app/commit/0190155756a3712e2d93f8d8f0fc31c7c964630a))
+
+
+### Chores
+
+* **IDPay:** [[IODPAY-167](https://pagopa.atlassian.net/browse/IODPAY-167)] Show amount on PAID_REFUND operation ([#4426](https://github.com/pagopa/io-app/issues/4426)) ([c642ef2](https://github.com/pagopa/io-app/commit/c642ef2f82df721991a3d1bb26aec2ade819b036))
+* [[LLK-55](https://pagopa.atlassian.net/browse/LLK-55)] Removed user-agent during Spid login ([#4418](https://github.com/pagopa/io-app/issues/4418)) ([1c1c7f7](https://github.com/pagopa/io-app/commit/1c1c7f7cc149f0538a18b26ebf2ee3d19ecb6171))
+* **IDPay:** [[IODPAY-163](https://pagopa.atlassian.net/browse/IODPAY-163)] Copy changes ([#4421](https://github.com/pagopa/io-app/issues/4421)) ([3806d2a](https://github.com/pagopa/io-app/commit/3806d2a868394274815ebd3375be8e76320f3ad6))
+
 ## [2.27.0-rc.1](https://github.com/pagopa/io-app/compare/2.27.0-rc.0...2.27.0-rc.1) (2023-02-28)
 
 
