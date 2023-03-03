@@ -5,10 +5,9 @@ import {
   deleteKey,
   getPublicKey
 } from "@pagopa/io-react-native-crypto";
-import { call, select } from "typed-redux-saga/macro";
+import { call } from "typed-redux-saga/macro";
 import { jwkThumbprintByEncoding } from "jwk-thumbprint";
 import { DEFAULT_LOLLIPOP_HASH_ALGORITHM_CLIENT } from "../../features/lollipop/utils/login";
-import { isLollipopEnabledSelector } from "../../store/reducers/backendStatus";
 import {
   checkPublicKeyExists,
   setKeyGenerationInfo,
@@ -28,12 +27,9 @@ export function* cryptoKeyGenerationSaga(
   keyTag: string,
   previousKeyTag: O.Option<string>
 ) {
-  const isLollipopEnabled = yield* select(isLollipopEnabledSelector);
-  if (isLollipopEnabled) {
-    // Every new login we need to regenerate a brand new key pair.
-    yield* deletePreviousCryptoKeyPair(previousKeyTag);
-    yield* call(generateCryptoKeyPair, keyTag);
-  }
+  // Every new login we need to regenerate a brand new key pair.
+  yield* call(deletePreviousCryptoKeyPair, previousKeyTag);
+  yield* call(generateCryptoKeyPair, keyTag);
 }
 
 /**
@@ -59,7 +55,7 @@ export function* trackMixpanelCryptoKeyPairEvents(keyTag: string) {
  */
 export function* deletePreviousCryptoKeyPair(keyTag: O.Option<string>) {
   if (O.isSome(keyTag)) {
-    yield* deleteCryptoKeyPair(keyTag.value);
+    yield* call(deleteCryptoKeyPair, keyTag.value);
   }
 }
 
@@ -85,7 +81,7 @@ function* deleteCryptoKeyPair(keyTag: string) {
 function* generateCryptoKeyPair(keyTag: string) {
   try {
     // Remove an already existing key with the same tag.
-    deleteCryptoKeyPair(keyTag);
+    yield* call(deleteCryptoKeyPair, keyTag);
 
     const key = yield* call(generate, keyTag);
     const keyGenerationInfo: KeyGenerationInfo = {

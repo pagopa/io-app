@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.27.0-rc.4](https://github.com/pagopa/io-app/compare/2.27.0-rc.3...2.27.0-rc.4) (2023-03-03)
+
+
+### Features
+
+* **IDPay:** [[IODPAY-99](https://pagopa.atlassian.net/browse/IODPAY-99),[IODPAY-130](https://pagopa.atlassian.net/browse/IODPAY-130)] IDPay onboarding failures handling ([#4343](https://github.com/pagopa/io-app/issues/4343)) ([32c8af5](https://github.com/pagopa/io-app/commit/32c8af56d0433c5c3f460d87cc3a5678c680514d))
+
+
+### Bug Fixes
+
+* **Firma con IO:** [[SFEQS-1293](https://pagopa.atlassian.net/browse/SFEQS-1293)] Update main title style for all screens ([#4419](https://github.com/pagopa/io-app/issues/4419)) ([91069ed](https://github.com/pagopa/io-app/commit/91069edbe42770fb1ee4d0d1e0ac8cbb731898cd))
+
+
+### Chores
+
+* [[LLK-57](https://pagopa.atlassian.net/browse/LLK-57)] Fix unsupported device banner visibility ([#4429](https://github.com/pagopa/io-app/issues/4429)) ([89d1762](https://github.com/pagopa/io-app/commit/89d17626ccc00b65eafacad225e2b2588f88eefa))
+* [[LLK-57](https://pagopa.atlassian.net/browse/LLK-57)] Fix unsupported device banner visibility (missing part) ([#4430](https://github.com/pagopa/io-app/issues/4430)) ([1f585f5](https://github.com/pagopa/io-app/commit/1f585f5b34d4911f198b986d664e346b1bcd7cc3))
+
 ## [2.27.0-rc.3](https://github.com/pagopa/io-app/compare/2.27.0-rc.2...2.27.0-rc.3) (2023-03-02)
 
 
