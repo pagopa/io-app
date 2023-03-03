@@ -55,7 +55,11 @@ import {
   resetCustomFields,
   zendeskBlockedPaymentRptIdId,
   zendeskCategoryId,
-  zendeskPaymentCategory
+  zendeskPaymentCategory,
+  zendeskPaymentFailure,
+  zendeskPaymentNav,
+  zendeskPaymentOrgFiscalCode,
+  zendeskPaymentStartOrigin
 } from "../../utils/supportAssistance";
 
 export type PaymentHistoryDetailsScreenNavigationParams = Readonly<{
@@ -117,6 +121,26 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
     addTicketCustomField(
       zendeskBlockedPaymentRptIdId,
       RptIdFromString.encode(this.props.route.params.payment.data)
+    );
+    // Add organization fiscal code custom field
+    addTicketCustomField(
+      zendeskPaymentOrgFiscalCode,
+      this.props.route.params.payment.data.organizationFiscalCode
+    );
+    // Add failure custom field
+    addTicketCustomField(
+      zendeskPaymentFailure,
+      this.props.route.params.payment.failure as string
+    );
+    // Add start origin custom field
+    addTicketCustomField(
+      zendeskPaymentStartOrigin,
+      this.props.route.params.payment.startOrigin
+    );
+    // Add rptId custom field
+    addTicketCustomField(
+      zendeskPaymentNav,
+      getCodiceAvviso(this.props.route.params.payment.data)
     );
     // Append the payment history details in the log
     appendLog(getPaymentHistoryDetails(this.props.route.params.payment));

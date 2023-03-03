@@ -61,7 +61,11 @@ import {
   resetCustomFields,
   zendeskBlockedPaymentRptIdId,
   zendeskCategoryId,
-  zendeskPaymentCategory
+  zendeskPaymentCategory,
+  zendeskPaymentFailure,
+  zendeskPaymentNav,
+  zendeskPaymentOrgFiscalCode,
+  zendeskPaymentStartOrigin
 } from "../../../utils/supportAssistance";
 import { IOPictogramType } from "../../../components/core/pictograms/Pictogram";
 import { InfoAltScreenComponent } from "../../../components/InfoAltScreenComponent/InfoAltScreenComponent";
@@ -114,7 +118,18 @@ const requestZendeskAssistanceForPaymentFailure = (
     zendeskBlockedPaymentRptIdId,
     RptIdFromString.encode(rptId)
   );
+  // Add organization fiscal code custom field
+  addTicketCustomField(
+    zendeskPaymentOrgFiscalCode,
+    rptId.organizationFiscalCode
+  );
+  // Add rptId custom field
+  addTicketCustomField(zendeskPaymentNav, getCodiceAvviso(rptId));
   if (payment) {
+    // Add failure custom field
+    addTicketCustomField(zendeskPaymentFailure, payment.failure as string);
+    // Add start origin custom field
+    addTicketCustomField(zendeskPaymentStartOrigin, payment.startOrigin);
     // Append the payment history details in the log
     appendLog(getPaymentHistoryDetails(payment));
   }

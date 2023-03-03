@@ -58,6 +58,7 @@ import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import {
   DetailV2Keys,
+  getCodiceAvviso,
   getV2ErrorMainType,
   isDuplicatedPayment
 } from "../../../utils/payment";
@@ -69,7 +70,11 @@ import {
   resetCustomFields,
   zendeskBlockedPaymentRptIdId,
   zendeskCategoryId,
-  zendeskPaymentCategory
+  zendeskPaymentCategory,
+  zendeskPaymentFailure,
+  zendeskPaymentNav,
+  zendeskPaymentOrgFiscalCode,
+  zendeskPaymentStartOrigin
 } from "../../../utils/supportAssistance";
 import { dispatchPickPspOrConfirm } from "./common";
 import { TransactionSummary } from "./components/TransactionSummary";
@@ -478,6 +483,19 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
       zendeskBlockedPaymentRptIdId,
       RptIdFromString.encode(rptId)
     );
+    // Add organization fiscal code custom field
+    addTicketCustomField(
+      zendeskPaymentOrgFiscalCode,
+      rptId.organizationFiscalCode
+    );
+    if (O.isSome(error)) {
+      // Add failure custom field
+      addTicketCustomField(zendeskPaymentFailure, error.value as string);
+    }
+    // Add start origin custom field
+    addTicketCustomField(zendeskPaymentStartOrigin, paymentStartOrigin);
+    // Add rptId custom field
+    addTicketCustomField(zendeskPaymentNav, getCodiceAvviso(rptId));
     appendLog(
       JSON.stringify({
         error,
