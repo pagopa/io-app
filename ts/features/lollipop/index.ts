@@ -52,11 +52,10 @@ export type SignPromiseResult = {
  * Chains all custom sign promises passed as its input array.
  */
 export const chainSignPromises = (
-  promises: Array<Promise<SignPromiseResult>>
+  promises: Array<TE.TaskEither<Error, SignPromiseResult>>
 ) =>
   pipe(
     promises,
-    A.map(p => TE.tryCatch(() => p, toError)),
     A.sequence(TE.ApplicativePar),
     TE.getOrElse(() => T.of([] as Array<SignPromiseResult>))
   )();
