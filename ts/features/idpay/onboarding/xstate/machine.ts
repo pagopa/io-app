@@ -2,7 +2,7 @@ import { pipe } from "fp-ts/lib/function";
 /* eslint-disable no-underscore-dangle */
 import * as O from "fp-ts/lib/Option";
 import { assign, createMachine } from "xstate";
-import { InitiativeDto } from "../../../../../definitions/idpay/onboarding/InitiativeDto";
+import { InitiativeInfoDTO } from "../../../../../definitions/idpay/onboarding/InitiativeInfoDTO";
 import { StatusEnum } from "../../../../../definitions/idpay/onboarding/OnboardingStatusDTO";
 import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/onboarding/RequiredCriteriaDTO";
 import { SelfConsentMultiDTO } from "../../../../../definitions/idpay/onboarding/SelfConsentMultiDTO";
@@ -21,7 +21,7 @@ import {
 // Context types
 export type Context = {
   serviceId?: string;
-  initiative?: InitiativeDto;
+  initiative?: InitiativeInfoDTO;
   initiativeStatus: O.Option<StatusEnum>;
   requiredCriteria?: O.Option<RequiredCriteriaDTO>;
   multiConsentsPage: number;
@@ -92,7 +92,7 @@ type Events =
 // Services types
 type Services = {
   loadInitiative: {
-    data: InitiativeDto;
+    data: InitiativeInfoDTO;
   };
   loadInitiativeStatus: {
     data: O.Option<StatusEnum>;
