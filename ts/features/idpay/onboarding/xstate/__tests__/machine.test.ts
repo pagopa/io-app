@@ -57,7 +57,6 @@ const T_REQUIRED_CRITERIA: RequiredCriteriaDTO = {
   ]
 };
 
-
 describe("IDPay Onboarding machine", () => {
   beforeEach(() => {
     jest.clearAllMocks();
