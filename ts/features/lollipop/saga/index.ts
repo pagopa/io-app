@@ -1,15 +1,20 @@
 import * as O from "fp-ts/lib/Option";
 import { v4 as uuid } from "uuid";
-import { put, select } from "typed-redux-saga/macro";
+import { put, select, call } from "typed-redux-saga/macro";
+import { getPublicKey } from "@pagopa/io-react-native-crypto";
 import { lollipopKeyTagSelector } from "../store/reducers/lollipop";
 import { lollipopKeyTagSave } from "../store/actions/lollipop";
 import {
   cryptoKeyGenerationSaga,
   deletePreviousCryptoKeyPair
 } from "../../../sagas/startup/generateCryptoKeyPair";
-import { lollipopLoginEnabled } from "../../../config";
+import { isLollipopEnabledSelector } from "../../../store/reducers/backendStatus";
 
 export function* generateLollipopKeySaga() {
+  const isLollipopEnabled = yield* select(isLollipopEnabledSelector);
+  if (!isLollipopEnabled) {
+    return;
+  }
   const maybeOldKeyTag = yield* select(lollipopKeyTagSelector);
   // Weather the user is logged in or not
   // we generate a key (if no one is present)
@@ -19,10 +24,20 @@ export function* generateLollipopKeySaga() {
     const newKeyTag = uuid();
     yield* put(lollipopKeyTagSave({ keyTag: newKeyTag }));
     yield* cryptoKeyGenerationSaga(newKeyTag, maybeOldKeyTag);
-    if (!lollipopLoginEnabled) {
-      // If the lollipop login is not enable we immediately delete
-      // the new generated key.
-      yield* deletePreviousCryptoKeyPair(O.some(newKeyTag));
+  } else {
+    try {
+      // If we already have a keyTag, we check if there is
+      // a public key tied with it.
+      yield* call(getPublicKey, maybeOldKeyTag.value);
+    } catch {
+      // If there is no key it could be for two reasons:
+      // - The user have a recent app and they logged out (the key is deleted).
+      // - The user is logged in and is updating from an app version
+      //    that didn't manage the key generation.
+      // Having a key or an error in those cases is useful to show
+      // the user an informative banner saying that their device
+      // is not suitable for future version of IO.
+      yield* cryptoKeyGenerationSaga(maybeOldKeyTag.value, O.none);
     }
   }
 }
