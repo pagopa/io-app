@@ -29,6 +29,19 @@ export const IOIcons = {
   …
 }
 ```
+Add the key to the relative icon set:
+```ts
+export const IONavIcons = {
+  navMessages,
+  navWallet,
+  navDocuments,
+  navServices,
+  navProfile,
+  // New icon
+  navNewIcon
+} as const;
+```
+
 You can add the recently added icon with the following declaration:
 ```jsx
 // Default size: 24×24px
