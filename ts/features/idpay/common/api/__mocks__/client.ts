@@ -15,5 +15,6 @@ export const mockIDPayClient = {
   getWallet: jest.fn(),
   getWalletDetail: jest.fn(),
   getWalletStatus: jest.fn(),
-  unsubscribe: jest.fn()
+  unsubscribe: jest.fn(),
+  getInitiativesWithInstrument: jest.fn()
 };
