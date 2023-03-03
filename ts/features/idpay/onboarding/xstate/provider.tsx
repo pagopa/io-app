@@ -10,6 +10,10 @@ import {
   idPayApiBaseUrl
 } from "../../../../config";
 import { useXStateMachine } from "../../../../hooks/useXStateMachine";
+import {
+  AppParamsList,
+  IOStackNavigationProp
+} from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { sessionInfoSelector } from "../../../../store/reducers/authentication";
 import {
@@ -49,7 +53,8 @@ const IDPayOnboardingMachineProvider = (props: Props) => {
 
   const sessionInfo = useIOSelector(sessionInfoSelector);
 
-  const navigation =
+  const rootNavigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const onboardingNavigation =
     useNavigation<
       IDPayOnboardingStackNavigationProp<IDPayOnboardingParamsList>
     >();
@@ -76,7 +81,10 @@ const IDPayOnboardingMachineProvider = (props: Props) => {
     language
   );
 
-  const actions = createActionsImplementation(navigation);
+  const actions = createActionsImplementation(
+    rootNavigation,
+    onboardingNavigation
+  );
 
   const machineService = useInterpret(machine, {
     services,

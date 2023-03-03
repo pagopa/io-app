@@ -2,6 +2,62 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.27.0-rc.3](https://github.com/pagopa/io-app/compare/2.27.0-rc.2...2.27.0-rc.3) (2023-03-02)
+
+
+### Features
+
+* [[LLK-49](https://pagopa.atlassian.net/browse/LLK-49)] Add section status banner for unsupported devices ([#4405](https://github.com/pagopa/io-app/issues/4405)) ([c61f288](https://github.com/pagopa/io-app/commit/c61f28801077388879281747b9bb93d33a7972bb))
+
+
+### Bug Fixes
+
+* [[IABT-1436](https://pagopa.atlassian.net/browse/IABT-1436)] Change the background activity timeout ([#4424](https://github.com/pagopa/io-app/issues/4424)) ([b102fa3](https://github.com/pagopa/io-app/commit/b102fa3caf3f156ac8d2234cea87a987bb67ffff))
+
+
+### Chores
+
+* [[IAI-271](https://pagopa.atlassian.net/browse/IAI-271)] Delete separate Icon sets ([#4425](https://github.com/pagopa/io-app/issues/4425)) ([442bd13](https://github.com/pagopa/io-app/commit/442bd13a3bce17362147dc7ca86f3f8841e0f1af))
+* [[IOAPPFD0-39](https://pagopa.atlassian.net/browse/IOAPPFD0-39)] Add temporary dark mode color palette ([#4408](https://github.com/pagopa/io-app/issues/4408)) ([5c35ba3](https://github.com/pagopa/io-app/commit/5c35ba3b75d781174e1c427f5f5ca972fb766100))
+* [[LLK-29](https://pagopa.atlassian.net/browse/LLK-29)] Login with crypto key (CIE) ([#4353](https://github.com/pagopa/io-app/issues/4353)) ([019aa36](https://github.com/pagopa/io-app/commit/019aa365d1d5e71d1602c8ed980a4fd452f26961)), closes [/github.com/pagopa/io-app/blob/1f7c7da656b64c1c3a77be0ef92d9f759e7b0582/.env.production#L81](https://github.com/pagopa//github.com/pagopa/io-app/blob/1f7c7da656b64c1c3a77be0ef92d9f759e7b0582/.env.production/issues/L81)
+
+## [2.27.0-rc.2](https://github.com/pagopa/io-app/compare/2.27.0-rc.1...2.27.0-rc.2) (2023-03-01)
+
+
+### Bug Fixes
+
+* **IDPay:** [[IODPAY-133](https://pagopa.atlassian.net/browse/IODPAY-133)] Fix PDND prerequisites screen list item UI ([#4420](https://github.com/pagopa/io-app/issues/4420)) ([0190155](https://github.com/pagopa/io-app/commit/0190155756a3712e2d93f8d8f0fc31c7c964630a))
+
+
+### Chores
+
+* **IDPay:** [[IODPAY-167](https://pagopa.atlassian.net/browse/IODPAY-167)] Show amount on PAID_REFUND operation ([#4426](https://github.com/pagopa/io-app/issues/4426)) ([c642ef2](https://github.com/pagopa/io-app/commit/c642ef2f82df721991a3d1bb26aec2ade819b036))
+* [[LLK-55](https://pagopa.atlassian.net/browse/LLK-55)] Removed user-agent during Spid login ([#4418](https://github.com/pagopa/io-app/issues/4418)) ([1c1c7f7](https://github.com/pagopa/io-app/commit/1c1c7f7cc149f0538a18b26ebf2ee3d19ecb6171))
+* **IDPay:** [[IODPAY-163](https://pagopa.atlassian.net/browse/IODPAY-163)] Copy changes ([#4421](https://github.com/pagopa/io-app/issues/4421)) ([3806d2a](https://github.com/pagopa/io-app/commit/3806d2a868394274815ebd3375be8e76320f3ad6))
+
+## [2.27.0-rc.1](https://github.com/pagopa/io-app/compare/2.27.0-rc.0...2.27.0-rc.1) (2023-02-28)
+
+
+### Features
+
+* [[IOAPPCIT-47](https://pagopa.atlassian.net/browse/IOAPPCIT-47)] Regenerate public key on IdP login flow during retry ([#4403](https://github.com/pagopa/io-app/issues/4403)) ([1b4be52](https://github.com/pagopa/io-app/commit/1b4be52d0e62c9257c6119c0bbad3ffd3d06b2b4))
+
+
+### Bug Fixes
+
+* [[IABT-1433](https://pagopa.atlassian.net/browse/IABT-1433)] Unwanted tab-bar shadow Android ([#4387](https://github.com/pagopa/io-app/issues/4387)) ([4569407](https://github.com/pagopa/io-app/commit/45694070df154012d3ab52e5b9ff39c1a4f96098))
+* **Firma con IO:** [[SFEQS-1317](https://pagopa.atlassian.net/browse/SFEQS-1317)] Add item separator to tos screen ([#4417](https://github.com/pagopa/io-app/issues/4417)) ([f02250b](https://github.com/pagopa/io-app/commit/f02250b5eaadc16f39c3dab8217f32b149e7b9e4))
+* **IDPay:** [[IODPAY-160](https://pagopa.atlassian.net/browse/IODPAY-160)] Update ListItem import to follow design ([#4412](https://github.com/pagopa/io-app/issues/4412)) ([98e4fa8](https://github.com/pagopa/io-app/commit/98e4fa8533dbc70a1ccc96de72c6c076140f7464))
+* [[IABT-1429](https://pagopa.atlassian.net/browse/IABT-1429)] QR code library updated ([#4406](https://github.com/pagopa/io-app/issues/4406)) ([ab1d571](https://github.com/pagopa/io-app/commit/ab1d571a49c63b9d3b08c49fe8d8464e17adb5b7))
+* [[IABT-1435](https://pagopa.atlassian.net/browse/IABT-1435)] Fix unwrap text info box ([#4407](https://github.com/pagopa/io-app/issues/4407)) ([efb9a0b](https://github.com/pagopa/io-app/commit/efb9a0b1cf5077738434267804196cf7751ab15a))
+
+
+### Chores
+
+* [[IAI-268](https://pagopa.atlassian.net/browse/IAI-268)] Add the new native component `ButtonOutline` ([#4363](https://github.com/pagopa/io-app/issues/4363)) ([fb3fb89](https://github.com/pagopa/io-app/commit/fb3fb89ef69f8bd97863972e3b49f6e5d5579c1a))
+* [[IAI-269](https://pagopa.atlassian.net/browse/IAI-269)] Add the new `IconButton` and `IconButtonSolid` components ([#4375](https://github.com/pagopa/io-app/issues/4375)) ([7771cf9](https://github.com/pagopa/io-app/commit/7771cf97cfb7c634cd478781635b1f509773ae02))
+* [[IAI-270](https://pagopa.atlassian.net/browse/IAI-270)] Bump version of react-native-vision-camera from 2.15.1 to 2.15.4 ([#4409](https://github.com/pagopa/io-app/issues/4409)) ([6413057](https://github.com/pagopa/io-app/commit/641305714e264f483f572a41c8379b2637626a06))
+
 ## [2.27.0-rc.0](https://github.com/pagopa/io-app/compare/2.26.0-rc.3...2.27.0-rc.0) (2023-02-23)
 
 

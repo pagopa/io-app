@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   container: { paddingTop: 16, paddingBottom: 16 },
   details: {
     paddingTop: 16,
-    paddingBottom: 16
+    paddingBottom: 8
   },
   borderBottom: {
     borderBottomColor: IOColors.greyLight,
