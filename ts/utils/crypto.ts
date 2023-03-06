@@ -79,13 +79,7 @@ export const taskRegenerateKey = (keyTag: string) =>
   );
 
 export const taskGetPublicKey = (keyTag: string) =>
-  pipe(
-    TE.tryCatch(
-      () => getPublicKey(keyTag),
-      () => undefined
-    ),
-    TE.getOrElseW(() => T.of(undefined))
-  )();
+  pipe(TE.tryCatch(() => getPublicKey(keyTag), toCryptoError));
 
 export const taskGeneratePublicKey = (keyTag: string) =>
   pipe(

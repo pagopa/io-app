@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 import themeVariables from "../../../theme/variables";
 
 /**
@@ -23,6 +23,11 @@ export const IOStyles = StyleSheet.create({
   rowSpaceBetween: {
     flexDirection: "row",
     justifyContent: "space-between"
+  },
+  // https://github.com/pagopa/io-app/pull/4387
+  topListBorderBelowTabsStyle: {
+    borderTopWidth: Platform.OS === "android" ? 0.1 : undefined,
+    elevation: 0.1
   }
 });
 

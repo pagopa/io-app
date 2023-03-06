@@ -101,11 +101,15 @@ const FciQtspClausesScreen = () => {
             />
           )}
           ListFooterComponent={
-            <LinkedText
-              text={qtspPrivacyTextSelector}
-              replacementUrl={qtspPrivacyUrlSelector}
-              onPress={openUrl}
-            />
+            <>
+              <ItemSeparatorComponent noPadded={true} />
+              <VSpacer size={24} />
+              <LinkedText
+                text={qtspPrivacyTextSelector}
+                replacementUrl={qtspPrivacyUrlSelector}
+                onPress={openUrl}
+              />
+            </>
           }
           keyboardShouldPersistTaps={"handled"}
           testID={"FciQtspClausesListTestID"}
@@ -143,6 +147,7 @@ const FciQtspClausesScreen = () => {
           <H4 weight="Regular" color={"bluegreyDark"}>
             {I18n.t("features.fci.qtspTos.subTitle")}
           </H4>
+          <VSpacer size={24} />
           {renderClausesFields()}
         </View>
         <FooterWithButtons

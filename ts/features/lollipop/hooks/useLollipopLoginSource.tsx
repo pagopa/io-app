@@ -2,7 +2,6 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as TE from "fp-ts/lib/TaskEither";
 import { useCallback, useEffect, useState } from "react";
-import { lollipopLoginEnabled } from "../../../config";
 import { useIOSelector } from "../../../store/hooks";
 import { isLollipopEnabledSelector } from "../../../store/reducers/backendStatus";
 import { trackLollipopIdpLoginFailure } from "../../../utils/analytics";
@@ -16,8 +15,7 @@ export const useLollipopLoginSource = (loginUri?: string) => {
     kind: "initial"
   });
 
-  const useLollipopLogin =
-    useIOSelector(isLollipopEnabledSelector) && lollipopLoginEnabled;
+  const useLollipopLogin = useIOSelector(isLollipopEnabledSelector);
   const lollipopKeyTag = useIOSelector(lollipopKeyTagSelector);
 
   const setDeprecatedLoginUri = useCallback((uri: string) => {

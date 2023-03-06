@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     color: IOColors.bluegrey
   },
   iconLabelSmall: {
-    fontSize: 9
+    fontSize: 8
   },
   iconLabelMedium: {
     fontSize: 10
