@@ -140,6 +140,7 @@ const FciQtspClausesScreen = () => {
           <H4 weight="Regular" color={"bluegreyDark"}>
             {I18n.t("features.fci.qtspTos.subTitle")}
           </H4>
+          <VSpacer size={24} />
           {renderClausesFields()}
         </View>
         <FooterWithButtons
