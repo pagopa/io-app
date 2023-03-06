@@ -7,7 +7,7 @@ import * as E from "fp-ts/lib/Either";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import { QtspClauses } from "../../../../definitions/fci/QtspClauses";
 import { DocumentToSign } from "../../../../definitions/fci/DocumentToSign";
-import { constants } from "../../../utils/httpSignature/constants";
+import { constants } from "../../lollipop/httpSignature/constants";
 
 export const QtspDocumentToSign = t.type({
   url: t.string
@@ -18,7 +18,7 @@ export type QtspDocumentToSign =
 
 const getFileDigest = (url: string) =>
   pipe(
-    // TODDO: instead of use fetch to download again the file, we should refactor FcidocumentScreen
+    // TODO: instead of use fetch to download again the file, we should refactor FcidocumentScreen
     // to store the file locally and use it later to calculate the digest.
     // https://pagopa.atlassian.net/browse/SFEQS-1470
     TE.tryCatch(() => ReactNativeBlobUtil.fetch("GET", url), E.toError),
