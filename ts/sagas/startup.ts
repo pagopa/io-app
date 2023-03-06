@@ -138,7 +138,10 @@ import { completeOnboardingSaga } from "./startup/completeOnboardingSaga";
 import { watchLoadMessageById } from "./messages/watchLoadMessageById";
 import { watchThirdPartyMessageSaga } from "./messages/watchThirdPartyMessageSaga";
 import { checkNotificationsPreferencesSaga } from "./startup/checkNotificationsPreferencesSaga";
-import { trackMixpanelCryptoKeyPairEvents } from "./startup/generateCryptoKeyPair";
+import {
+  getCryptoPublicKey,
+  trackMixpanelCryptoKeyPairEvents
+} from "./startup/generateCryptoKeyPair";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -223,10 +226,15 @@ export function* initializeApplicationSaga(): Generator<
   // Handles the expiration of the session token
   yield* fork(watchSessionExpiredSaga);
 
+  // Get keyInfo for lollipop
+  const keyTag = yield* select(lollipopKeyTagSelector);
+  const keyInfo = yield* call(getCryptoPublicKey, keyTag);
+
   // Instantiate a backend client from the session token
   const backendClient: ReturnType<typeof BackendClient> = BackendClient(
     apiUrlPrefix,
-    sessionToken
+    sessionToken,
+    keyInfo
   );
 
   // check if the current session is still valid
@@ -351,7 +359,6 @@ export function* initializeApplicationSaga(): Generator<
   yield* call(askMixpanelOptIn);
 
   // Track crypto key generation info
-  const keyTag = yield* select(lollipopKeyTagSelector);
   if (O.isSome(keyTag)) {
     yield* call(trackMixpanelCryptoKeyPairEvents, keyTag.value);
   }
