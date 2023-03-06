@@ -83,8 +83,7 @@ import { differentProfileLoggedIn } from "../store/actions/crossSessions";
 import { clearAllAttachments } from "../features/messages/saga/clearAttachments";
 import { watchMessageAttachmentsSaga } from "../features/messages/saga/attachments";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
-import { watchIDPayWalletSaga } from "../features/idpay/wallet/saga";
-import { idpayInitiativeDetailsSaga } from "../features/idpay/initiative/details/saga";
+import { watchIDPaySaga } from "../features/idpay/common/saga";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -444,12 +443,8 @@ export function* initializeApplicationSaga(): Generator<
   yield* fork(watchMessageAttachmentsSaga, sessionToken);
 
   if (idPayEnabled) {
-    // Start watching for IDPay wallet actions
-    yield* fork(watchIDPayWalletSaga, maybeSessionInformation.value.bpdToken);
-    yield* fork(
-      idpayInitiativeDetailsSaga,
-      maybeSessionInformation.value.bpdToken
-    );
+    // Start watching for IDPay actions
+    yield* fork(watchIDPaySaga, maybeSessionInformation.value.bpdToken);
   }
 
   if (fciEnabled) {

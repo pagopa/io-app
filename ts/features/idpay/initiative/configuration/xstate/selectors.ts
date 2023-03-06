@@ -1,7 +1,7 @@
 import * as P from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { StateFrom } from "xstate";
-import { InstrumentDTO } from "../../../../../../definitions/idpay/wallet/InstrumentDTO";
+import { InstrumentDTO } from "../../../../../../definitions/idpay/InstrumentDTO";
 import { LOADING_TAG } from "../../../../../utils/xstate";
 import { ConfigurationMode } from "./context";
 import { IDPayInitiativeConfigurationMachineType } from "./machine";

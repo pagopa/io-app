@@ -1,21 +1,21 @@
 /* eslint-disable sonarjs/no-identical-functions */
 /* eslint-disable functional/no-let */
-import { waitFor } from "@testing-library/react-native";
 import * as O from "fp-ts/lib/Option";
 import { interpret } from "xstate";
-import { PDNDCriteriaDTO } from "../../../../../../definitions/idpay/onboarding/PDNDCriteriaDTO";
-import { RequiredCriteriaDTO } from "../../../../../../definitions/idpay/onboarding/RequiredCriteriaDTO";
-import { SelfConsentMultiDTO } from "../../../../../../definitions/idpay/onboarding/SelfConsentMultiDTO";
+import { waitFor } from "@testing-library/react-native";
+import { createIDPayOnboardingMachine } from "../machine";
+import { RequiredCriteriaDTO } from "../../../../../../definitions/idpay/RequiredCriteriaDTO";
+import { PDNDCriteriaDTO } from "../../../../../../definitions/idpay/PDNDCriteriaDTO";
 import {
   SelfDeclarationBoolDTO,
   _typeEnum as SelfDeclarationBoolDTOType
-} from "../../../../../../definitions/idpay/onboarding/SelfDeclarationBoolDTO";
+} from "../../../../../../definitions/idpay/SelfDeclarationBoolDTO";
 import {
   SelfDeclarationMultiDTO,
   _typeEnum as SelfDeclarationMultiDTOType
-} from "../../../../../../definitions/idpay/onboarding/SelfDeclarationMultiDTO";
+} from "../../../../../../definitions/idpay/SelfDeclarationMultiDTO";
+import { SelfConsentMultiDTO } from "../../../../../../definitions/idpay/SelfConsentMultiDTO";
 import { OnboardingFailureEnum } from "../failure";
-import { createIDPayOnboardingMachine } from "../machine";
 import { mockActions } from "../__mocks__/actions";
 import { mockServices } from "../__mocks__/services";
 
