@@ -10,10 +10,10 @@ import { CreditCardPaymentMethod } from "../../../../types/pagopa";
 import BasePaymentMethodScreen from "../../common/BasePaymentMethodScreen";
 import PaymentMethodFeatures from "../../component/features/PaymentMethodFeatures";
 import CreditCardComponent from "../component/CreditCardComponent";
-import { idPayWalletInitiativesGet } from "../../../idpay/wallet/store/actions";
-import { isIdpayWalletInitiativesWithInstrumentLoadingSelector } from "../../../idpay/wallet/store/reducers";
+import { idPayAreInitiativesFromInstrumentLoadingSelector } from "../../../idpay/wallet/store/reducers";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { useIOSelector } from "../../../../store/hooks";
+import { idPayInitiativesFromInstrumentGet } from "../../../idpay/wallet/store/actions";
 
 export type CreditCardDetailScreenNavigationParams = Readonly<{
   // Since we don't have a typed ID for the payment methods, we keep the creditCard as param even if it is then read by the store
@@ -38,7 +38,7 @@ const CreditCardDetailScreen: React.FunctionComponent<Props> = props => {
   const storeCreditCard = props.creditCardById(paramCreditCard.idWallet);
 
   const areIdPayInitiativesLoading = useIOSelector(
-    isIdpayWalletInitiativesWithInstrumentLoadingSelector
+    idPayAreInitiativesFromInstrumentLoadingSelector
   );
   // This will set the flag `walletExisted` to true
   // if, during this component lifecycle, a card actually
@@ -84,7 +84,7 @@ const CreditCardDetailScreen: React.FunctionComponent<Props> = props => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadIdpayInitiatives: (idWallet: string) =>
-    dispatch(idPayWalletInitiativesGet.request({ idWallet }))
+    dispatch(idPayInitiativesFromInstrumentGet.request({ idWallet }))
 });
 const mapStateToProps = (state: GlobalState) => ({
   creditCardById: (id: number) => creditCardByIdSelector(state, id)

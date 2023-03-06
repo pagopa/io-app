@@ -25,11 +25,11 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { PaymentMethod } from "../../../../types/pagopa";
 import BpdPaymentMethodCapability from "../../../bonus/bpd/components/BpdPaymentMethodCapability";
 import { IDPayInitiativeListItem } from "../../../idpay/wallet/components/IDPayInitiativesListItem";
-import { idPayWalletInitiativesGet } from "../../../idpay/wallet/store/actions";
 import {
   idpayInitiativesListSelector,
-  isIdpayWalletInitiativesWithInstrumentErrorSelector
+  idPayAreInitiativesFromInstrumentErrorSelector
 } from "../../../idpay/wallet/store/reducers";
+import { idPayInitiativesFromInstrumentGet } from "../../../idpay/wallet/store/actions";
 
 type OwnProps = {
   paymentMethod: PaymentMethod;
@@ -102,7 +102,7 @@ const PaymentMethodInitiatives = (props: Props): React.ReactElement | null => {
   const navigation = useNavigation<IOStackNavigationProp<WalletParamsList>>();
   const idWalletString = String(props.paymentMethod.idWallet);
   const areInitiativesInError = useIOSelector(
-    isIdpayWalletInitiativesWithInstrumentErrorSelector
+    idPayAreInitiativesFromInstrumentErrorSelector
   );
 
   React.useEffect(() => {
@@ -153,7 +153,12 @@ const PaymentMethodInitiatives = (props: Props): React.ReactElement | null => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadIdpayInitiatives: (idWallet: string, isRefreshCall?: boolean) =>
-    dispatch(idPayWalletInitiativesGet.request({ idWallet, isRefreshCall }))
+    dispatch(
+      idPayInitiativesFromInstrumentGet.request({
+        idWallet,
+        isRefreshCall
+      })
+    )
 });
 const mapStateToProps = (state: GlobalState) => ({
   bpdRemoteConfig: bpdRemoteConfigSelector(state),

@@ -10,9 +10,9 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../utils/errors";
 import {
   idPayWalletGet,
-  idPayWalletInitiativesGet,
-  idpayInitiativesPairingDelete,
-  idpayInitiativesPairingPut
+  idPayInitiativesFromInstrumentGet,
+  idpayInitiativesInstrumentDelete,
+  idpayInitiativesInstrumentEnroll
 } from "../actions";
 
 export type IDPayWalletState = {
@@ -21,8 +21,8 @@ export type IDPayWalletState = {
     InitiativesWithInstrumentDTO,
     NetworkError
   >;
-  initiativesWithInstrumentPairingQueue: Record<string, boolean>;
-  // structure: {initiativeId: are_we_wating_for_a_response_from_the_backend}
+  initiativesAwaitingStatusUpdate: Record<string, boolean>;
+  // structure: {initiativeId: is waiting for response to pair/unpair api call}
   // this will be populated on selection and reset when not loading and
   // we have a response from BE
 };
@@ -30,7 +30,7 @@ export type IDPayWalletState = {
 const INITIAL_STATE: IDPayWalletState = {
   initiatives: pot.none,
   initiativesWithInstrument: pot.none,
-  initiativesWithInstrumentPairingQueue: {}
+  initiativesAwaitingStatusUpdate: {}
 };
 
 const reducer = (
@@ -48,18 +48,18 @@ const reducer = (
         initiatives: pot.toError(state.initiatives, action.payload)
       };
     // Initiatives with instrument
-    case getType(idPayWalletInitiativesGet.request):
+    case getType(idPayInitiativesFromInstrumentGet.request):
       if (!action.payload.isRefreshCall) {
         return {
           ...state,
-          initiativesWithInstrument: pot.toLoading(pot.none),
-          initiativesWithInstrumentPairingQueue: {}
+          initiativesWithInstrument: pot.noneLoading,
+          initiativesAwaitingStatusUpdate: {}
         };
       }
       break;
-    case getType(idPayWalletInitiativesGet.success):
+    case getType(idPayInitiativesFromInstrumentGet.success):
       const initiativesToKeepInLoadingState = pipe(
-        state.initiativesWithInstrumentPairingQueue,
+        state.initiativesAwaitingStatusUpdate,
         Object.entries,
         entries => entries.filter(([_, value]) => value), // only get not loading ones
         Object.fromEntries
@@ -68,9 +68,9 @@ const reducer = (
       return {
         ...state,
         initiativesWithInstrument: pot.some(action.payload),
-        initiativesWithInstrumentPairingQueue: initiativesToKeepInLoadingState
+        initiativesAwaitingStatusUpdate: initiativesToKeepInLoadingState
       };
-    case getType(idPayWalletInitiativesGet.failure):
+    case getType(idPayInitiativesFromInstrumentGet.failure):
       return {
         ...state,
         initiativesWithInstrument: pot.toError(
@@ -79,23 +79,23 @@ const reducer = (
         )
       };
     // initiative pairing
-    case getType(idpayInitiativesPairingDelete.request):
-    case getType(idpayInitiativesPairingPut.request):
+    case getType(idpayInitiativesInstrumentDelete.request):
+    case getType(idpayInitiativesInstrumentEnroll.request):
       return {
         ...state,
-        initiativesWithInstrumentPairingQueue: {
-          ...state.initiativesWithInstrumentPairingQueue,
+        initiativesAwaitingStatusUpdate: {
+          ...state.initiativesAwaitingStatusUpdate,
           [action.payload.initiativeId]: true
         }
       };
-    case getType(idpayInitiativesPairingDelete.success):
-    case getType(idpayInitiativesPairingPut.success):
-    case getType(idpayInitiativesPairingDelete.failure):
-    case getType(idpayInitiativesPairingPut.failure):
+    case getType(idpayInitiativesInstrumentDelete.success):
+    case getType(idpayInitiativesInstrumentEnroll.success):
+    case getType(idpayInitiativesInstrumentDelete.failure):
+    case getType(idpayInitiativesInstrumentEnroll.failure):
       return {
         ...state,
-        initiativesWithInstrumentPairingQueue: {
-          ...state.initiativesWithInstrumentPairingQueue,
+        initiativesAwaitingStatusUpdate: {
+          ...state.initiativesAwaitingStatusUpdate,
           [action.payload.initiativeId]: false
         }
       };
@@ -108,11 +108,10 @@ export const idPayWalletSelector = (state: GlobalState) =>
 export const idPayWalletInitiativeListSelector = (state: GlobalState) =>
   pot.map(state.features.idPay.wallet.initiatives, w => w.initiativeList);
 
-export const idPayWalletInitiativesWithInstrumentSelector = (
-  state: GlobalState
-) => pot.map(state.features.idPay.wallet.initiativesWithInstrument, w => w);
+export const idPayInitiativesFromInstrumentSelector = (state: GlobalState) =>
+  pot.map(state.features.idPay.wallet.initiativesWithInstrument, w => w);
 export const idPayWalletInitiativesListWithInstrumentSelector = createSelector(
-  [idPayWalletInitiativesWithInstrumentSelector],
+  [idPayInitiativesFromInstrumentSelector],
   initiatives => pot.map(initiatives, w => w.initiativeList)
 );
 
@@ -122,19 +121,16 @@ export const idpayInitiativesListSelector = createSelector(
     isIdpayEnabled ? pot.getOrElse(initiatives, []) : []
 );
 
-export const isIdpayWalletInitiativesWithInstrumentLoadingSelector = (
+export const idPayAreInitiativesFromInstrumentLoadingSelector = (
   state: GlobalState
 ) => pot.isLoading(state.features.idPay.wallet.initiativesWithInstrument);
-export const isIdpayWalletInitiativesWithInstrumentErrorSelector = (
+export const idPayAreInitiativesFromInstrumentErrorSelector = (
   state: GlobalState
 ) => pot.isError(state.features.idPay.wallet.initiativesWithInstrument);
 
-export const singleInitiativeQueueValueSelector = (
+export const idPayInitiativeAwaitingUpdateSelector = (
   state: GlobalState,
   initiativeId: string
-) =>
-  state.features.idPay.wallet.initiativesWithInstrumentPairingQueue[
-    initiativeId
-  ];
+) => state.features.idPay.wallet.initiativesAwaitingStatusUpdate[initiativeId];
 
 export default reducer;

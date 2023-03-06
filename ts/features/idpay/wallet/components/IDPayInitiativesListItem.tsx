@@ -12,10 +12,10 @@ import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
-  idpayInitiativesPairingDelete,
-  idpayInitiativesPairingPut
+  idpayInitiativesInstrumentDelete,
+  idpayInitiativesInstrumentEnroll
 } from "../store/actions";
-import { singleInitiativeQueueValueSelector } from "../store/reducers";
+import { idPayInitiativeAwaitingUpdateSelector } from "../store/reducers";
 
 const styles = StyleSheet.create({
   badge: {
@@ -33,7 +33,7 @@ type ListItemProps = {
 export const IDPayInitiativeListItem = ({ item, idWallet }: ListItemProps) => {
   const dispatch = useIODispatch();
   const queueValue = useIOSelector(state =>
-    singleInitiativeQueueValueSelector(state, item.initiativeId)
+    idPayInitiativeAwaitingUpdateSelector(state, item.initiativeId)
   );
 
   const statusLabels = {
@@ -84,7 +84,7 @@ export const IDPayInitiativeListItem = ({ item, idWallet }: ListItemProps) => {
     if (item.status === StatusEnum.ACTIVE) {
       if (item.idInstrument !== undefined) {
         dispatch(
-          idpayInitiativesPairingDelete.request({
+          idpayInitiativesInstrumentDelete.request({
             instrumentId: item.idInstrument,
             initiativeId: item.initiativeId
           })
@@ -92,7 +92,7 @@ export const IDPayInitiativeListItem = ({ item, idWallet }: ListItemProps) => {
       }
     } else if (item.status === StatusEnum.INACTIVE) {
       dispatch(
-        idpayInitiativesPairingPut.request({
+        idpayInitiativesInstrumentEnroll.request({
           idWallet,
           initiativeId: item.initiativeId
         })

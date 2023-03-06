@@ -7,15 +7,15 @@ import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { IDPayWalletClient } from "../api/client";
 import {
-  IdpayWalletInitiativeGetPayloadType,
-  idPayWalletInitiativesGet
+  IdPayInitiativesFromInstrumentPayloadType,
+  idPayInitiativesFromInstrumentGet
 } from "../store/actions";
 
-export function* handleGetIDPayInitiativesWithInstrument(
+export function* handleGetIDPayInitiativesFromInstrument(
   getInitiativesWithInstrument: IDPayWalletClient["getInitiativesWithInstrument"],
   token: string,
   language: PreferredLanguageEnum,
-  payload: IdpayWalletInitiativeGetPayloadType
+  payload: IdPayInitiativesFromInstrumentPayloadType
 ) {
   try {
     const getInitiativesWithInstrumentResult: SagaCallReturnType<
@@ -30,15 +30,15 @@ export function* handleGetIDPayInitiativesWithInstrument(
         getInitiativesWithInstrumentResult,
         E.fold(
           error =>
-            idPayWalletInitiativesGet.failure({
+            idPayInitiativesFromInstrumentGet.failure({
               ...getGenericError(new Error(readablePrivacyReport(error)))
             }),
 
           res => {
             if (res.status === 200) {
-              return idPayWalletInitiativesGet.success(res.value);
+              return idPayInitiativesFromInstrumentGet.success(res.value);
             }
-            return idPayWalletInitiativesGet.failure({
+            return idPayInitiativesFromInstrumentGet.failure({
               ...getGenericError(new Error(`Error: ${res.status}`))
             });
           }
@@ -46,6 +46,10 @@ export function* handleGetIDPayInitiativesWithInstrument(
       )
     );
   } catch (e) {
-    yield* put(idPayWalletInitiativesGet.failure({ ...getNetworkError(e) }));
+    yield* put(
+      idPayInitiativesFromInstrumentGet.failure({
+        ...getNetworkError(e)
+      })
+    );
   }
 }

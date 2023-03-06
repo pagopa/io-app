@@ -9,13 +9,13 @@ import {
   idPayApiBaseUrl
 } from "../../../../config";
 import {
-  IdpayInitiativesPairingPayloadType,
-  IdpayInitiativesUnpairPayloadType,
-  IdpayWalletInitiativeGetPayloadType,
+  IdpayInitiativesInstrumentEnrollPayloadType,
+  IdpayInitiativesInstrumentDeletePayloadType,
   idPayWalletGet,
-  idPayWalletInitiativesGet,
-  idpayInitiativesPairingDelete,
-  idpayInitiativesPairingPut
+  idpayInitiativesInstrumentDelete,
+  idpayInitiativesInstrumentEnroll,
+  idPayInitiativesFromInstrumentGet,
+  IdPayInitiativesFromInstrumentPayloadType
 } from "../store/actions";
 import { waitBackoffError } from "../../../../utils/backoffError";
 import {
@@ -25,8 +25,11 @@ import {
 import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
 import { fromLocaleToPreferredLanguage } from "../../../../utils/locale";
 import { handleGetIDPayWallet } from "./handleGetIDPayWallet";
-import { handleGetIDPayInitiativesWithInstrument } from "./handleGetIdpayInitiativesWithInstrument";
-import { handleInitiativePairing } from "./handleInitiativePairing";
+import { handleGetIDPayInitiativesFromInstrument } from "./handleGetIDPayInitiativesFromInstrument";
+import {
+  handleInitiativeInstrumentDelete,
+  handleInitiativeInstrumentEnrollment
+} from "./handleInitiativeInstrumentEnrollment";
 
 /**
  * Handle the IDPay Wallet requests
@@ -59,12 +62,12 @@ export function* watchIDPayWalletSaga(bearerToken: string): SagaIterator {
   });
 
   yield* takeLatest(
-    idPayWalletInitiativesGet.request,
-    function* (action: { payload: IdpayWalletInitiativeGetPayloadType }) {
+    idPayInitiativesFromInstrumentGet.request,
+    function* (action: { payload: IdPayInitiativesFromInstrumentPayloadType }) {
       // wait backoff time if there were previous errors
-      yield* call(waitBackoffError, idPayWalletInitiativesGet.failure);
+      yield* call(waitBackoffError, idPayInitiativesFromInstrumentGet.failure);
       yield* call(
-        handleGetIDPayInitiativesWithInstrument,
+        handleGetIDPayInitiativesFromInstrument,
         idPayWalletClient.getInitiativesWithInstrument,
         token,
         preferredLanguage,
@@ -73,34 +76,35 @@ export function* watchIDPayWalletSaga(bearerToken: string): SagaIterator {
     }
   );
   yield* takeEvery(
-    idpayInitiativesPairingPut.request,
-    function* (action: { payload: IdpayInitiativesPairingPayloadType }) {
+    idpayInitiativesInstrumentEnroll.request,
+    function* (action: {
+      payload: IdpayInitiativesInstrumentEnrollPayloadType;
+    }) {
       // wait backoff time if there were previous errors
-      yield* call(waitBackoffError, idpayInitiativesPairingPut.failure);
+      yield* call(waitBackoffError, idpayInitiativesInstrumentEnroll.failure);
       yield* call(
-        handleInitiativePairing,
+        handleInitiativeInstrumentEnrollment,
         idPayWalletClient.enrollInstrument,
         token,
         preferredLanguage,
-        idpayInitiativesPairingPut,
         action.payload
       );
     }
   );
-  yield *
-    takeEvery(
-      idpayInitiativesPairingDelete.request,
-      function* (action: { payload: IdpayInitiativesUnpairPayloadType }) {
-        // wait backoff time if there were previous errors
-        yield* call(waitBackoffError, idpayInitiativesPairingPut.failure);
-        yield* call(
-          handleInitiativePairing,
-          idPayWalletClient.deleteInstrument,
-          token,
-          preferredLanguage,
-          idpayInitiativesPairingDelete,
-          action.payload
-        );
-      }
-    );
+  yield* takeEvery(
+    idpayInitiativesInstrumentDelete.request,
+    function* (action: {
+      payload: IdpayInitiativesInstrumentDeletePayloadType;
+    }) {
+      // wait backoff time if there were previous errors
+      yield* call(waitBackoffError, idpayInitiativesInstrumentEnroll.failure);
+      yield* call(
+        handleInitiativeInstrumentDelete,
+        idPayWalletClient.deleteInstrument,
+        token,
+        preferredLanguage,
+        action.payload
+      );
+    }
+  );
 }

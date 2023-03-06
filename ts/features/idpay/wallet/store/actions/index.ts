@@ -1,17 +1,19 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
 import { WalletDTO } from "../../../../../../definitions/idpay/wallet/WalletDTO";
 import { NetworkError } from "../../../../../utils/errors";
-import { InitiativesWithInstrumentDTO } from "../../../../../../definitions/idpay/wallet/InitiativesWithInstrumentDTO";
+import { InitiativesWithInstrumentDTO as InitiativesFromInstrumentDTO } from "../../../../../../definitions/idpay/wallet/InitiativesWithInstrumentDTO";
 
-export type IdpayWalletInitiativeGetPayloadType = {
+export type IdPayInitiativesFromInstrumentPayloadType = {
   idWallet: string;
   isRefreshCall?: boolean;
 };
-export type IdpayInitiativesPairingPayloadType = {
+
+export type IdpayInitiativesInstrumentEnrollPayloadType = {
   idWallet: string;
   initiativeId: string;
 };
-export type IdpayInitiativesUnpairPayloadType = {
+
+export type IdpayInitiativesInstrumentDeletePayloadType = {
   instrumentId: string;
   initiativeId: string;
 };
@@ -28,38 +30,38 @@ export const idPayWalletGet = createAsyncAction(
   "IDPAY_WALLET_FAILURE"
 )<void, WalletDTO, NetworkError>();
 
-export const idPayWalletInitiativesGet = createAsyncAction(
-  "IDPAY_WALLET_INITIATIVES_REQUEST",
-  "IDPAY_WALLET_INITIATIVES_SUCCESS",
-  "IDPAY_WALLET_INITIATIVES_FAILURE"
+export const idPayInitiativesFromInstrumentGet = createAsyncAction(
+  "IDPAY_INITIATIVES_FROM_INSTRUMENT_REQUEST",
+  "IDPAY_INITIATIVES_FROM_INSTRUMENT_SUCCESS",
+  "IDPAY_INITIATIVES_FROM_INSTRUMENT_FAILURE"
 )<
-  IdpayWalletInitiativeGetPayloadType,
-  InitiativesWithInstrumentDTO,
+  IdPayInitiativesFromInstrumentPayloadType,
+  InitiativesFromInstrumentDTO,
   NetworkError
 >();
 
-export const idpayInitiativesPairingPut = createAsyncAction(
-  "IDPAY_INITIATIVES_PAIRING_PUT_REQUEST",
-  "IDPAY_INITIATIVES_PAIRING_PUT_SUCCESS",
-  "IDPAY_INITIATIVES_PAIRING_PUT_FAILURE"
+export const idpayInitiativesInstrumentEnroll = createAsyncAction(
+  "IDPAY_INITIATIVES_INSTRUMENT_ENROLL_REQUEST",
+  "IDPAY_INITIATIVES_INSTRUMENT_ENROLL_SUCCESS",
+  "IDPAY_INITIATIVES_INSTRUMENT_ENROLL_FAILURE"
 )<
-  IdpayInitiativesPairingPayloadType,
+  IdpayInitiativesInstrumentEnrollPayloadType,
   InitiativeId,
   NetworkErrorWithInitiativeId
 >();
 
-export const idpayInitiativesPairingDelete = createAsyncAction(
-  "IDPAY_INITIATIVES_PAIRING_DELETE_REQUEST",
-  "IDPAY_INITIATIVES_PAIRING_DELETE_SUCCESS",
-  "IDPAY_INITIATIVES_PAIRING_DELETE_FAILURE"
+export const idpayInitiativesInstrumentDelete = createAsyncAction(
+  "IDPAY_INITIATIVES_INSTRUMENT_DELETE_REQUEST",
+  "IDPAY_INITIATIVES_INSTRUMENT_DELETE_SUCCESS",
+  "IDPAY_INITIATIVES_INSTRUMENT_DELETE_FAILURE"
 )<
-  IdpayInitiativesUnpairPayloadType,
+  IdpayInitiativesInstrumentDeletePayloadType,
   InitiativeId,
   NetworkErrorWithInitiativeId
 >();
 
 export type IDPayWalletActions =
   | ActionType<typeof idPayWalletGet>
-  | ActionType<typeof idPayWalletInitiativesGet>
-  | ActionType<typeof idpayInitiativesPairingPut>
-  | ActionType<typeof idpayInitiativesPairingDelete>;
+  | ActionType<typeof idPayInitiativesFromInstrumentGet>
+  | ActionType<typeof idpayInitiativesInstrumentEnroll>
+  | ActionType<typeof idpayInitiativesInstrumentDelete>;

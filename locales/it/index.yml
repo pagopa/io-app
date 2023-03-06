@@ -3329,6 +3329,9 @@ idpay:
     initiativePairing:
       navigation: Iniziative disponibili
       header: Scegli quali iniziative abilitare su questo metodo
+      errorToasts:
+        enrollment: "Errore nel collegamento dell'iniziativa, riprova."
+        removal: "Errore nella rimozione dell'iniziativa, riprova."
   initiative:
     details:
       initiativeCard:

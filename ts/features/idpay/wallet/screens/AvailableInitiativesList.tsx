@@ -16,12 +16,12 @@ import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppPa
 import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { IDPayInitiativeListItem } from "../components/IDPayInitiativesListItem";
-import { idPayWalletInitiativesGet } from "../store/actions";
 import {
-  idPayWalletInitiativesWithInstrumentSelector,
+  idPayInitiativesFromInstrumentSelector,
   idpayInitiativesListSelector,
-  isIdpayWalletInitiativesWithInstrumentErrorSelector
+  idPayAreInitiativesFromInstrumentErrorSelector
 } from "../store/reducers";
+import { idPayInitiativesFromInstrumentGet } from "../store/actions";
 
 export type AvailableInitiativesListScreenNavigationParams = {
   capabilityItems: ReadonlyArray<React.ReactNode>;
@@ -50,20 +50,20 @@ export const IdPayInitiativeListScreen = (props: Props) => {
   const { capabilityItems } = props.route.params;
 
   const { brand, maskedPan, idWallet } = pot.getOrElse(
-    useIOSelector(idPayWalletInitiativesWithInstrumentSelector),
+    useIOSelector(idPayInitiativesFromInstrumentSelector),
     {} as InitiativesWithInstrumentDTO
   );
   const idpayInitiatives = useIOSelector(idpayInitiativesListSelector);
   const dispatch = useIODispatch();
   const areInitiativesInError = useIOSelector(
-    isIdpayWalletInitiativesWithInstrumentErrorSelector
+    idPayAreInitiativesFromInstrumentErrorSelector
   );
 
   React.useEffect(() => {
     const timer = setInterval(
       () =>
         dispatch(
-          idPayWalletInitiativesGet.request({
+          idPayInitiativesFromInstrumentGet.request({
             idWallet,
             isRefreshCall: true
           })
