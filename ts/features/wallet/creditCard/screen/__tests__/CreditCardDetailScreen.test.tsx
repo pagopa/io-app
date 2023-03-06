@@ -19,6 +19,10 @@ import { convertWalletV2toWalletV1 } from "../../../../../utils/walletv2";
 import CreditCardDetailScreen from "../CreditCardDetailScreen";
 // import I18n from "../../../../../i18n";
 
+      jest.mock("../../../../../store/hooks", () => ({
+        ...(jest.requireActual("../../../../../store/hooks") as object),
+        useIOSelector: jest.fn().mockReturnValue(false)
+      }));
 const creditCard: CreditCardPaymentMethod = {
   walletType: WalletTypeEnum.Card,
   createDate: "2021-07-08",
