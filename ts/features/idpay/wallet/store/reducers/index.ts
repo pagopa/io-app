@@ -104,7 +104,7 @@ const reducer = (
 };
 
 export const idPayWalletSelector = (state: GlobalState) =>
-  state.features.idPay.wallet;
+  state.features.idPay.wallet.initiatives;
 export const idPayWalletInitiativeListSelector = (state: GlobalState) =>
   pot.map(state.features.idPay.wallet.initiatives, w => w.initiativeList);
 
@@ -136,7 +136,5 @@ export const singleInitiativeQueueValueSelector = (
   state.features.idPay.wallet.initiativesWithInstrumentPairingQueue[
     initiativeId
   ];
-
-  
 
 export default reducer;

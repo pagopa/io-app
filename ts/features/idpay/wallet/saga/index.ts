@@ -99,8 +99,7 @@ export function* watchIDPayWalletSaga(bearerToken: string): SagaIterator {
           token,
           preferredLanguage,
           idpayInitiativesPairingDelete,
-          action.payload,
-
+          action.payload
         );
       }
     );
