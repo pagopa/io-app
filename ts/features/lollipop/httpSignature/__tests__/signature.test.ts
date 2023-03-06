@@ -1,14 +1,14 @@
 import { ECKey, RSAKey } from "@pagopa/io-react-native-crypto";
 import MockDate from "mockdate";
 import URLParse from "url-parse";
-import { LollipopConfig } from "../../../features/lollipop";
+import { LollipopConfig } from "../..";
 import {
   SignatureConfigForgeInput,
   CutsomContentToSignInput,
   customContentSignatureBases,
   CustomContentBaseSignature
-} from "../../../features/lollipop/utils/fetch";
-import { KeyInfo } from "../../crypto";
+} from "../../utils/fetch";
+import { KeyInfo } from "../../../../utils/crypto";
 import { constants } from "../constants";
 import {
   generateSignatureInput,
@@ -17,7 +17,7 @@ import {
 } from "../signature";
 import { SignatureConfig } from "../types/SignatureConfig";
 import { brokenMockSigner, mockSigner } from "../__mocks__/mockSigners";
-import { getError } from "./../../errors";
+import { getError } from "../../../../utils/errors";
 
 const testHeaders: Record<any, string> = {
   "": ""

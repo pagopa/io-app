@@ -1,4 +1,4 @@
-import { getError } from "../errors";
+import { getError } from "../../../utils/errors";
 import { SignatureConfig } from "./types/SignatureConfig";
 import { constants } from "./constants";
 import { Signer } from "./types/Signer";
