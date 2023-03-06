@@ -1,9 +1,9 @@
 import * as E from "fp-ts/lib/Either";
 import { expectSaga } from "redux-saga-test-plan";
 import { PreferredLanguageEnum } from "../../../../../../../definitions/backend/PreferredLanguage";
-import { ErrorDTO } from "../../../../../../../definitions/idpay/timeline/ErrorDTO";
-import { TimelineDTO } from "../../../../../../../definitions/idpay/timeline/TimelineDTO";
-import { OperationTypeEnum } from "../../../../../../../definitions/idpay/timeline/TransactionOperationDTO";
+import { ErrorDTO } from "../../../../../../../definitions/idpay/ErrorDTO";
+import { TimelineDTO } from "../../../../../../../definitions/idpay/TimelineDTO";
+import { OperationTypeEnum } from "../../../../../../../definitions/idpay/TransactionOperationDTO";
 import { appReducer } from "../../../../../../store/reducers";
 import { idpayTimelinePageGet } from "../../store/actions";
 import { handleGetTimelinePage } from "../handleGetTimelinePage";
