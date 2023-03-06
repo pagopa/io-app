@@ -140,27 +140,30 @@ export const customContentSignatureBases = (
   customContent: CutsomContentToSignInput
 ): Array<CustomContentBaseSignature> => {
   const contentToSign = customContent.customContentToSign ?? {};
-  const contentToSignKeys = Object.keys(
-    customContent.customContentToSign ?? []
-  );
-  return (
-    contentToSignKeys.map((headerPrefix, index) => {
+  const contentToSignKeys = Object.keys(contentToSign);
+
+  return pipe(
+    contentToSignKeys,
+    A.mapWithIndex((index, headerPrefix) => {
       const headerIndex = index + 2;
       const headerName = `x-pagopa-lollipop-custom-${headerPrefix}`;
       const headerValue = contentToSign[headerPrefix];
       const customHeader = {
         [headerName]: headerValue
       };
-      const customHeaderSignatureConfig: SignatureConfig = forgeSignatureConfig(
+
+      const customHeaderSignatureConfig = forgeSignatureConfig(
         customContent.signatureConfigForgeInput,
         customContent.keyInfo,
         [headerName]
       );
+
       const { signatureBase, signatureInput } = generateSignatureBase(
         customHeader,
         customHeaderSignatureConfig,
         headerIndex
       );
+
       return {
         signatureBase,
         signatureInput,
@@ -169,7 +172,7 @@ export const customContentSignatureBases = (
         headerName,
         headerValue
       };
-    }) ?? []
+    })
   );
 };
 
