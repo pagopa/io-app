@@ -63,23 +63,23 @@ type VariantStates = {
 const mapVariantStates: Record<NonNullable<Props["variant"]>, VariantStates> = {
   error: {
     icon: "errorFilled",
-    background: "errorLight",
-    foreground: "errorDark"
+    background: "error-100",
+    foreground: "error-850"
   },
   warning: {
     icon: "warningFilled",
-    background: "warningLight",
-    foreground: "warningDark"
+    background: "warning-100",
+    foreground: "warning-850"
   },
   info: {
     icon: "infoFilled",
-    background: "infoLight",
-    foreground: "infoDark"
+    background: "info-100",
+    foreground: "info-850"
   },
   success: {
     icon: "success",
-    background: "successLight",
-    foreground: "successDark"
+    background: "success-100",
+    foreground: "success-850"
   }
 };
 
