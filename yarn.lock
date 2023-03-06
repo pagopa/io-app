@@ -15367,9 +15367,9 @@ rn-placeholder@^1.3.3:
     prop-types "15.6.2"
 
 rn-qr-generator@^1.3.0:
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/rn-qr-generator/-/rn-qr-generator-1.3.1.tgz#d9bd8bcb7d8f5d069b538c3298acff9550a12483"
-  integrity sha512-lqdKCfHN1PpcIuOyJ1zUg9NR3Mo53zQ0ZEhHuSChf9/1+/kwxY04eU8plGi3nmsmMfvv9RJSsePNSav2LeADlg==
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/rn-qr-generator/-/rn-qr-generator-1.3.0.tgz#5f51f2b2798cecc7073af5fca7fed25f1664d90d"
+  integrity sha512-ig8RoUi0vWxkJigWosj7MZuugYIoSH7lSyw3oZT7fesacMYvoO91kyj2Zfejhu9TT6N5EbDLdMnNGcd2C3GKiA==
 
 rsvp@^4.8.4:
   version "4.8.5"
