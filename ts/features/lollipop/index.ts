@@ -4,8 +4,8 @@ import * as T from "fp-ts/lib/Task";
 import * as TE from "fp-ts/lib/TaskEither";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
 import URLParse from "url-parse";
-import { SignatureAlgorithm } from "../../utils/httpSignature/types/SignatureAlgorithms";
-import { SignatureComponents } from "../../utils/httpSignature/types/SignatureComponents";
+import { SignatureAlgorithm } from "./httpSignature/types/SignatureAlgorithms";
+import { SignatureComponents } from "./httpSignature/types/SignatureComponents";
 
 export type LollipopConfig = {
   nonce: string;

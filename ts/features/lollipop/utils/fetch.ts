@@ -3,6 +3,7 @@ import { PublicKey, sign } from "@pagopa/io-react-native-crypto";
 import { pipe } from "fp-ts/lib/function";
 import * as A from "fp-ts/lib/Array";
 import * as TE from "fp-ts/TaskEither";
+import * as O from "fp-ts/Option";
 import {
   LollipopConfig,
   chainSignPromises,
@@ -12,12 +13,12 @@ import {
 } from "..";
 import { KeyInfo } from "../../../utils/crypto";
 import { toFetchTimeout, toRetriableFetch } from "../../../utils/fetch";
-import { generateDigestHeader } from "../../../utils/httpSignature/digest";
+import { generateDigestHeader } from "../httpSignature/digest";
 import {
   generateSignatureBase,
   SignatureBaseResult
-} from "../../../utils/httpSignature/signature";
-import { SignatureConfig } from "../../../utils/httpSignature/types/SignatureConfig";
+} from "../httpSignature/signature";
+import { SignatureConfig } from "../httpSignature/types/SignatureConfig";
 
 /**
  * Decorates the current fetch with LolliPOP headers and http-signature
@@ -138,40 +139,47 @@ export const lollipopFetch = (
 
 export const customContentSignatureBases = (
   customContent: CutsomContentToSignInput
-): Array<CustomContentBaseSignature> => {
-  const contentToSign = customContent.customContentToSign ?? {};
-  const contentToSignKeys = Object.keys(
-    customContent.customContentToSign ?? []
+): Array<CustomContentBaseSignature> =>
+  pipe(
+    customContent.customContentToSign,
+    O.fromNullable,
+    O.fold(
+      () => [],
+      contentToSign =>
+        pipe(
+          Object.keys(contentToSign),
+          A.mapWithIndex((index, headerPrefix) => {
+            const headerIndex = index + 2;
+            const headerName = `x-pagopa-lollipop-custom-${headerPrefix}`;
+            const headerValue = contentToSign[headerPrefix];
+            const customHeader = {
+              [headerName]: headerValue
+            };
+
+            const customHeaderSignatureConfig = forgeSignatureConfig(
+              customContent.signatureConfigForgeInput,
+              customContent.keyInfo,
+              [headerName]
+            );
+
+            const { signatureBase, signatureInput } = generateSignatureBase(
+              customHeader,
+              customHeaderSignatureConfig,
+              headerIndex
+            );
+
+            return {
+              signatureBase,
+              signatureInput,
+              headerIndex,
+              headerPrefix,
+              headerName,
+              headerValue
+            };
+          })
+        )
+    )
   );
-  return (
-    contentToSignKeys.map((headerPrefix, index) => {
-      const headerIndex = index + 2;
-      const headerName = `x-pagopa-lollipop-custom-${headerPrefix}`;
-      const headerValue = contentToSign[headerPrefix];
-      const customHeader = {
-        [headerName]: headerValue
-      };
-      const customHeaderSignatureConfig: SignatureConfig = forgeSignatureConfig(
-        customContent.signatureConfigForgeInput,
-        customContent.keyInfo,
-        [headerName]
-      );
-      const { signatureBase, signatureInput } = generateSignatureBase(
-        customHeader,
-        customHeaderSignatureConfig,
-        headerIndex
-      );
-      return {
-        signatureBase,
-        signatureInput,
-        headerIndex,
-        headerPrefix,
-        headerName,
-        headerValue
-      };
-    }) ?? []
-  );
-};
 
 export const customContentToSignPromises = (
   customContent: CutsomContentToSignInput
