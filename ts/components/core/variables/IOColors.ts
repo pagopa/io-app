@@ -210,26 +210,6 @@ export const IOColorsTints = asIOColors({
 });
 export type IOColorsTints = keyof typeof IOColorsTints;
 
-// export const IOColorsTintsDark: Record<
-//   NonNullable<IOColorsTints>,
-//   ColorValue
-// > = {
-//   blueNewDark: IOColorsDark.blueNewDark,
-//   blueNew600: IOColorsDark.blueNew600,
-//   blueNew: IOColorsDark.blueNew,
-//   blueNew200: IOColorsDark.blueNew200,
-//   blueNewLight: IOColorsDark.blueNewLight,
-//   blueNew100: IOColorsDark.blueNew100,
-//   blueNew50: IOColorsDark.blueNew50,
-//   turquoiseDark: IOColorsDark.turquoiseDark,
-//   turquoise: IOColorsDark.turquoise,
-//   turquoiseLight: IOColorsDark.turquoiseLight,
-//   turquoise100: IOColorsDark.turquoise100,
-//   turquoise50: IOColorsDark.turquoise50
-// };
-
-// export type IOColorsTintsDark = keyof typeof IOColorsTintsDark;
-
 export const IOColorsStatus = asIOColors({
   "error-850": IOColors["error-850"],
   "error-600": IOColors["error-600"],
