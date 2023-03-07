@@ -3,14 +3,20 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 import { StateFrom } from "xstate";
-import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/onboarding/RequiredCriteriaDTO";
-import { SelfDeclarationBoolDTO } from "../../../../../definitions/idpay/onboarding/SelfDeclarationBoolDTO";
-import { SelfDeclarationDTO } from "../../../../../definitions/idpay/onboarding/SelfDeclarationDTO";
-import { SelfDeclarationMultiDTO } from "../../../../../definitions/idpay/onboarding/SelfDeclarationMultiDTO";
+import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/RequiredCriteriaDTO";
+import { SelfDeclarationBoolDTO } from "../../../../../definitions/idpay/SelfDeclarationBoolDTO";
+import { SelfDeclarationDTO } from "../../../../../definitions/idpay/SelfDeclarationDTO";
+import { SelfDeclarationMultiDTO } from "../../../../../definitions/idpay/SelfDeclarationMultiDTO";
 import { LOADING_TAG, UPSERTING_TAG } from "../../../../utils/xstate";
 import { Context, IDPayOnboardingMachineType } from "./machine";
 
 type StateWithContext = StateFrom<IDPayOnboardingMachineType>;
+
+const selectInitiativeStatus = (state: StateWithContext) =>
+  state.context.initiativeStatus;
+
+const selectOnboardingFailure = (state: StateWithContext) =>
+  state.context.failure;
 
 const selectRequiredCriteria = (state: StateWithContext) =>
   state.context.requiredCriteria;
@@ -23,7 +29,9 @@ const selectMultiConsents = (state: StateWithContext) =>
 
 const selectCurrentPage = (state: StateWithContext) =>
   state.context.multiConsentsPage;
+
 const selectTags = (state: StateWithContext) => state.tags;
+
 const selectInitiative = (state: StateWithContext) => state.context.initiative;
 
 const selectServiceId = (state: StateWithContext) => state.context.serviceId;
@@ -128,6 +136,8 @@ const areAllSelfDeclarationsToggledSelector = createSelector(
 
 export {
   selectServiceId,
+  selectInitiativeStatus,
+  selectOnboardingFailure,
   isUpsertingSelector,
   multiRequiredCriteriaSelector,
   boolRequiredCriteriaSelector,

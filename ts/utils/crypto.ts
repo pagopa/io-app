@@ -2,12 +2,19 @@ import {
   deleteKey,
   generate,
   getPublicKey,
+  PublicKey,
   CryptoError
 } from "@pagopa/io-react-native-crypto";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { pipe } from "fp-ts/lib/function";
 import * as T from "fp-ts/lib/Task";
 import * as TE from "fp-ts/lib/TaskEither";
+
+export type KeyInfo = {
+  keyTag?: string;
+  publicKey?: PublicKey;
+  publicKeyThumbprint?: string;
+};
 
 export type KeyGenerationInfo = {
   keyTag: string;
@@ -79,13 +86,7 @@ export const taskRegenerateKey = (keyTag: string) =>
   );
 
 export const taskGetPublicKey = (keyTag: string) =>
-  pipe(
-    TE.tryCatch(
-      () => getPublicKey(keyTag),
-      () => undefined
-    ),
-    TE.getOrElseW(() => T.of(undefined))
-  )();
+  pipe(TE.tryCatch(() => getPublicKey(keyTag), toCryptoError));
 
 export const taskGeneratePublicKey = (keyTag: string) =>
   pipe(

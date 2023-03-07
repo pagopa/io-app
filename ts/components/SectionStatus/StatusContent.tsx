@@ -3,7 +3,7 @@ import React, { ComponentProps } from "react";
 import { WithTestID } from "../../types/WithTestID";
 import IconFont from "../ui/IconFont";
 import { Label } from "../core/typography/Label";
-import { IOColors, IOColorType } from "../core/variables/IOColors";
+import { IOColors } from "../core/variables/IOColors";
 
 const iconSize = 24;
 
@@ -27,7 +27,7 @@ type Props = WithTestID<{
   accessibilityHint?: string;
   accessibilityLabel?: string;
   accessibilityRole?: AccessibilityRole;
-  backgroundColor: IOColorType;
+  backgroundColor: IOColors;
   iconColor: string;
   iconName: string;
   viewRef: React.RefObject<View>;

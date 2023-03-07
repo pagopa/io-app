@@ -2,6 +2,7 @@
 /* eslint-disable functional/no-let */
 import { waitFor } from "@testing-library/react-native";
 import { interpret, StateValue } from "xstate";
+import { IbanDTO } from "../../../../../../../definitions/idpay/IbanDTO";
 import { ConfigurationMode } from "../context";
 import { InitiativeFailureType } from "../failure";
 import { createIDPayInitiativeConfigurationMachine } from "../machine";
@@ -22,6 +23,13 @@ import {
   T_REFUNDABLE_INITIATIVE_DTO,
   T_WALLET
 } from "../__mocks__/services";
+
+const T_IBAN_ENROLL: IbanDTO = {
+  channel: "IO",
+  checkIbanStatus: "",
+  description: "Test",
+  iban: T_IBAN
+};
 
 describe("IDPay configuration machine", () => {
   beforeEach(() => {
@@ -172,12 +180,7 @@ describe("IDPay configuration machine", () => {
 
     service.send({
       type: "ENROLL_IBAN",
-      iban: {
-        channel: "IO",
-        checkIbanStatus: "",
-        description: "Test",
-        iban: T_IBAN
-      }
+      iban: T_IBAN_ENROLL
     });
 
     await waitFor(() =>
@@ -438,12 +441,7 @@ describe("IDPay configuration machine", () => {
 
     service.send({
       type: "ENROLL_IBAN",
-      iban: {
-        channel: "IO",
-        checkIbanStatus: "",
-        description: "Test",
-        iban: T_IBAN
-      }
+      iban: T_IBAN_ENROLL
     });
 
     await waitFor(() =>
@@ -553,12 +551,7 @@ describe("IDPay configuration machine", () => {
 
     service.send({
       type: "ENROLL_IBAN",
-      iban: {
-        channel: "IO",
-        checkIbanStatus: "",
-        description: "Test",
-        iban: T_IBAN
-      }
+      iban: T_IBAN_ENROLL
     });
 
     await waitFor(() =>
@@ -758,12 +751,7 @@ describe("IDPay configuration machine", () => {
 
     service.send({
       type: "ENROLL_IBAN",
-      iban: {
-        channel: "IO",
-        checkIbanStatus: "",
-        description: "Test",
-        iban: T_IBAN
-      }
+      iban: T_IBAN_ENROLL
     });
 
     await waitFor(() =>
@@ -936,12 +924,7 @@ describe("IDPay configuration machine", () => {
 
     service.send({
       type: "ENROLL_IBAN",
-      iban: {
-        channel: "IO",
-        checkIbanStatus: "",
-        description: "Test",
-        iban: T_IBAN
-      }
+      iban: T_IBAN_ENROLL
     });
 
     await waitFor(() =>
@@ -1043,12 +1026,7 @@ describe("IDPay configuration machine", () => {
 
     service.send({
       type: "ENROLL_IBAN",
-      iban: {
-        channel: "IO",
-        checkIbanStatus: "",
-        description: "Test",
-        iban: T_IBAN
-      }
+      iban: T_IBAN_ENROLL
     });
 
     await waitFor(() =>

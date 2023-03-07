@@ -8,13 +8,13 @@ import {
   idpayTimelineLastUpdateSelector,
   idpayTimelineSelector
 } from "..";
-import { TimelineDTO } from "../../../../../../../definitions/idpay/timeline/TimelineDTO";
-import { OperationTypeEnum as TransactionOperationType } from "../../../../../../../definitions/idpay/timeline/TransactionOperationDTO";
+import { TimelineDTO } from "../../../../../../../definitions/idpay/TimelineDTO";
+import { OperationTypeEnum as TransactionOperationType } from "../../../../../../../definitions/idpay/TransactionOperationDTO";
 import {
   InitiativeDTO,
   StatusEnum
-} from "../../../../../../../definitions/idpay/wallet/InitiativeDTO";
-import { TransactionDetailDTO } from "../../../../../../../InstrumentOperationDTO/../definitions/idpay/timeline/TransactionDetailDTO";
+} from "../../../../../../../definitions/idpay/InitiativeDTO";
+import { TransactionDetailDTO } from "../../../../../../../InstrumentOperationDTO/../definitions/idpay/TransactionDetailDTO";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { NetworkError } from "../../../../../../utils/errors";

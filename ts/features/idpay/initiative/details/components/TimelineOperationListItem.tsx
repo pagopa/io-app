@@ -2,13 +2,14 @@ import { format } from "date-fns";
 import { ListItem } from "native-base";
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { OperationTypeEnum as IbanOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/IbanOperationDTO";
-import { OperationTypeEnum as OnboardingOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/OnboardingOperationDTO";
-import { OperationListDTO } from "../../../../../../definitions/idpay/timeline/OperationListDTO";
-import { OperationTypeEnum as RefundOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/RefundOperationDTO";
-import { OperationTypeEnum } from "../../../../../../definitions/idpay/timeline/RejectedInstrumentOperationDTO";
-import { OperationTypeEnum as TransactionOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/TransactionOperationDTO";
+import { OperationTypeEnum as IbanOperationTypeEnum } from "../../../../../../definitions/idpay/IbanOperationDTO";
+import { OperationTypeEnum as OnboardingOperationTypeEnum } from "../../../../../../definitions/idpay/OnboardingOperationDTO";
+import { OperationListDTO } from "../../../../../../definitions/idpay/OperationListDTO";
+import { OperationTypeEnum as RefundOperationTypeEnum } from "../../../../../../definitions/idpay/RefundOperationDTO";
+import { OperationTypeEnum } from "../../../../../../definitions/idpay/RejectedInstrumentOperationDTO";
+import { OperationTypeEnum as TransactionOperationTypeEnum } from "../../../../../../definitions/idpay/TransactionOperationDTO";
 import { Icon } from "../../../../../components/core/icons";
+import { LogoPayment } from "../../../../../components/core/logos";
 import { HSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
@@ -16,7 +17,6 @@ import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";
 import { formatDateAsShortFormat } from "../../../../../utils/dates";
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
-import { LogoPayment } from "../../../../../components/core/logos";
 import { InstrumentBrandEnum, instrumentBrandMap } from "../utils/utils";
 
 const styles = StyleSheet.create({
@@ -74,13 +74,17 @@ const OperationIcon = ({ operation }: OperationComponentProps) => {
 const OperationAmount = ({ operation }: OperationComponentProps) => {
   switch (operation.operationType) {
     case TransactionOperationTypeEnum.TRANSACTION:
-      return <H4>{`–${formatNumberAmount(operation.accrued, false)} €`}</H4>;
+      return (
+        <H4>{`–${formatNumberAmount(operation.accrued || 0, false)} €`}</H4>
+      );
     case TransactionOperationTypeEnum.REVERSAL:
-      return <H4>{`+${formatNumberAmount(operation.accrued, false)} €`}</H4>;
+      return (
+        <H4>{`+${formatNumberAmount(operation.accrued || 0, false)} €`}</H4>
+      );
     case RefundOperationTypeEnum.PAID_REFUND:
       return (
         <H4 color="greenLight">
-          {`${formatNumberAmount(operation.accrued, false)} €`}
+          {`${formatNumberAmount(operation.amount, false)} €`}
         </H4>
       );
     default:
