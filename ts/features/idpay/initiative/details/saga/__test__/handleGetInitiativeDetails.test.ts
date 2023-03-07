@@ -1,11 +1,11 @@
 import * as E from "fp-ts/lib/Either";
 import { expectSaga } from "redux-saga-test-plan";
 import { PreferredLanguageEnum } from "../../../../../../../definitions/backend/PreferredLanguage";
-import { ErrorDTO } from "../../../../../../../definitions/idpay/wallet/ErrorDTO";
+import { ErrorDTO } from "../../../../../../../definitions/idpay/ErrorDTO";
 import {
   InitiativeDTO,
   StatusEnum
-} from "../../../../../../../definitions/idpay/wallet/InitiativeDTO";
+} from "../../../../../../../definitions/idpay/InitiativeDTO";
 import { appReducer } from "../../../../../../store/reducers";
 import { idpayInitiativeGet } from "../../store/actions";
 import { handleGetInitiativeDetails } from "../handleGetInitiativeDetails";
