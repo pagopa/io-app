@@ -36,7 +36,7 @@ describe("Test SuccessComponent", () => {
     };
     const component = renderComponent(props, store);
     expect(component).toBeTruthy();
-    expect(store.getActions()).toEqual([fciStartRequest()]);
+    expect(store.getActions()).toEqual([fciStartRequest(), fciStartRequest()]);
   });
   it("with a signature request EXPIRED and a signature status equal to WAIT_FOR_SIGNATURE should render the right Error component", () => {
     const now = new Date();
@@ -121,7 +121,10 @@ describe("Test SuccessComponent", () => {
     };
     const component = renderComponent(props, store);
     expect(component).toBeTruthy();
-    expect(store.getActions()).toEqual([fciShowSignedDocumentsStartRequest()]);
+    expect(store.getActions()).toEqual([
+      fciShowSignedDocumentsStartRequest(),
+      fciShowSignedDocumentsStartRequest()
+    ]);
   });
   it("with a signature request status REJECTED should render a GenericErrorComponent", () => {
     const mockStore = configureMockStore<GlobalState>();

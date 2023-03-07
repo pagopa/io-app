@@ -29,13 +29,16 @@ const SuccessComponent = (props: {
   const updated_at = new Date(props.signatureRequest.updated_at);
   const issuer_email = props.signatureRequest.issuer.email;
   const status = props.signatureRequest.status;
+  const dispatch = useIODispatch();
+
   const publicKeyState = usePublicKeyState();
   const isLollipopEnabled = useIOSelector(isLollipopEnabledSelector);
-  const dispatch = useIODispatch();
   const showUnsupportedDeviceBanner =
     isLollipopEnabled && publicKeyState.kind === "error";
 
-  // if the device is not supported by Lollipop
+  // If the device is not supported by Lollipop
+  // This is a temporary solution during the development of Lollipop
+  // and its integration with FCI
   if (showUnsupportedDeviceBanner) {
     return (
       <GenericErrorComponent
