@@ -3,7 +3,7 @@ import { Image, StyleSheet, View } from "react-native";
 import {
   OperationTypeEnum as TransactionDetailOperationTypeEnum,
   TransactionDetailDTO
-} from "../../../../../../definitions/idpay/timeline/TransactionDetailDTO";
+} from "../../../../../../definitions/idpay/TransactionDetailDTO";
 import { Alert } from "../../../../../components/Alert";
 import CopyButtonComponent from "../../../../../components/CopyButtonComponent";
 import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";

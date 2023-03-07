@@ -6,7 +6,7 @@ import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import {
   OperationTypeEnum,
   RefundOperationDTO
-} from "../../../../../../definitions/idpay/timeline/RefundOperationDTO";
+} from "../../../../../../definitions/idpay/RefundOperationDTO";
 import { Alert } from "../../../../../components/Alert";
 import CopyButtonComponent from "../../../../../components/CopyButtonComponent";
 import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
