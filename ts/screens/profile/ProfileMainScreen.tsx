@@ -333,14 +333,16 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                 })
               }
             />
-            <ListItemComponent
-              title={"IDPay Onboarding Playground"}
-              onPress={() =>
-                navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-                  screen: ROUTES.IDPAY_ONBOARDING_PLAYGROUND
-                })
-              }
-            />
+            {isIdPayTestEnabled && (
+              <ListItemComponent
+                title={"IDPay Onboarding Playground"}
+                onPress={() =>
+                  navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+                    screen: ROUTES.IDPAY_ONBOARDING_PLAYGROUND
+                  })
+                }
+              />
+            )}
           </>
         )}
         {/* Design System */}
