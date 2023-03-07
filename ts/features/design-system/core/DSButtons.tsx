@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   primaryBlock: {
     backgroundColor: IOColors.blueNew,
     padding: 16,
-    borderRadius: 8
+    borderRadius: 16
   }
 });
 
