@@ -6,7 +6,9 @@ import {
   SignatureRequestDetailView,
   StatusEnum as SignatureRequestDetailStatus
 } from "../../../../definitions/fci/SignatureRequestDetailView";
-import { useIODispatch } from "../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { isLollipopEnabledSelector } from "../../../store/reducers/backendStatus";
+import { usePublicKeyState } from "../../lollipop/hooks/usePublicKeyState";
 import {
   fciEndRequest,
   fciShowSignedDocumentsStartRequest,
@@ -27,7 +29,24 @@ const SuccessComponent = (props: {
   const updated_at = new Date(props.signatureRequest.updated_at);
   const issuer_email = props.signatureRequest.issuer.email;
   const status = props.signatureRequest.status;
+  const publicKeyState = usePublicKeyState();
+  const isLollipopEnabled = useIOSelector(isLollipopEnabledSelector);
   const dispatch = useIODispatch();
+  const showUnsupportedDeviceBanner =
+    isLollipopEnabled && publicKeyState.kind === "error";
+
+  // if the device is not supported by Lollipop
+  if (showUnsupportedDeviceBanner) {
+    return (
+      <GenericErrorComponent
+        title={I18n.t("features.fci.errors.generic.unsupportedDevice.title")}
+        subTitle={I18n.t(
+          "features.fci.errors.generic.unsupportedDevice.subTitle"
+        )}
+        onPress={() => dispatch(fciEndRequest())}
+      />
+    );
+  }
 
   // if the user (signer) has not signed and the request is expired
   // the user can no longer sign anymore
