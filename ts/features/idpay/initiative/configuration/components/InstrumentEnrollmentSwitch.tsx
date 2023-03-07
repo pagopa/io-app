@@ -8,7 +8,7 @@ import { Image, StyleSheet, View } from "react-native";
 import {
   InstrumentDTO,
   StatusEnum as InstrumentStatusEnum
-} from "../../../../../../definitions/idpay/wallet/InstrumentDTO";
+} from "../../../../../../definitions/idpay/InstrumentDTO";
 import defaultCardIcon from "../../../../../../img/wallet/cards-icons/unknown.png";
 import {
   IOLogoPaymentType,

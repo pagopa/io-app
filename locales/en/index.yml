@@ -433,6 +433,10 @@ profile:
       alertMessage: The application must be restarted for the changes to take effect.
     pnEnvironment:
       pnEnv: PN Test Environment
+    idpay: 
+      idpayTest: Test IDPay
+      idpayTestAlert: This change requires app reboot
+    designSystemEnvironment: Experimental Design System
     appVersion: App Version
     backendVersion: Backend Version
     debugMode: Debug mode

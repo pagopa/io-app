@@ -4,8 +4,8 @@ import { Image, ImageBackground, StyleSheet, View } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 import {
   InitiativeDTO,
-  StatusEnum
-} from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
+  StatusEnum as InitiativeStatusEnum
+} from "../../../../../../definitions/idpay/InitiativeDTO";
 import bonusVacanzeWhiteLogo from "../../../../../../img/bonus/bonusVacanze/logo_BonusVacanze_White.png";
 import cardBg from "../../../../../../img/features/idpay/card_full.png";
 import { makeFontStyleObject } from "../../../../../components/core/fonts";
@@ -78,7 +78,7 @@ const InitiativeCardComponent = (props: Props) => {
   const { initiativeName, endDate, status, amount, accrued, refunded } =
     props.initiative;
 
-  const isInitiativeConfigured = status === StatusEnum.REFUNDABLE;
+  const isInitiativeConfigured = status === InitiativeStatusEnum.REFUNDABLE;
   const toBeRepaidAmount = (accrued || 0) - (refunded || 0);
 
   const renderFullCard = () => (
