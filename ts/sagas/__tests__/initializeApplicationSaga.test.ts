@@ -30,6 +30,8 @@ import { watchSessionExpiredSaga } from "../startup/watchSessionExpiredSaga";
 import { watchProfileEmailValidationChangedSaga } from "../watchProfileEmailValidationChangedSaga";
 import { checkAppHistoryVersionSaga } from "../startup/appVersionHistorySaga";
 import { generateLollipopKeySaga } from "../../features/lollipop/saga";
+import { lollipopKeyTagSelector } from "../../features/lollipop/store/reducers/lollipop";
+import { getCryptoPublicKey } from "../startup/generateCryptoKeyPair";
 
 const aSessionToken = "a_session_token" as SessionToken;
 
@@ -77,6 +79,8 @@ describe("initializeApplicationSaga", () => {
       .next(aSessionToken)
       .fork(watchSessionExpiredSaga)
       .next()
+      .next() // keyTag
+      .next() // getPublicKey
       .next(200) // checkSession
       .select(sessionInfoSelector)
       .next(O.none)
@@ -110,6 +114,8 @@ describe("initializeApplicationSaga", () => {
       .select(sessionTokenSelector)
       .next(aSessionToken)
       .fork(watchSessionExpiredSaga)
+      .next(lollipopKeyTagSelector)
+      .next(getCryptoPublicKey, O.none)
       .next()
       .next(401) // checksession
       .put(sessionExpired());
@@ -141,6 +147,8 @@ describe("initializeApplicationSaga", () => {
       .select(sessionTokenSelector)
       .next(aSessionToken)
       .fork(watchSessionExpiredSaga)
+      .next(lollipopKeyTagSelector)
+      .next(getCryptoPublicKey, O.none)
       .next()
       .next(200) // check session
       .select(sessionInfoSelector)
