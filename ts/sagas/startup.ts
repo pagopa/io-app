@@ -33,8 +33,7 @@ import {
   pagoPaApiUrlPrefixTest,
   pnEnabled,
   svEnabled,
-  zendeskEnabled,
-  idPayEnabled
+  zendeskEnabled
 } from "../config";
 import { watchBonusSaga } from "../features/bonus/bonusVacanze/store/sagas/bonusSaga";
 import { watchBonusBpdSaga } from "../features/bonus/bpd/saga";
@@ -68,7 +67,10 @@ import { lollipopKeyTagSelector } from "../features/lollipop/store/reducers/loll
 import { generateLollipopKeySaga } from "../features/lollipop/saga";
 import { IdentificationResult } from "../store/reducers/identification";
 import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
-import { isPagoPATestEnabledSelector } from "../store/reducers/persistedPreferences";
+import {
+  isIdPayTestEnabledSelector,
+  isPagoPATestEnabledSelector
+} from "../store/reducers/persistedPreferences";
 import {
   isProfileFirstOnBoarding,
   profileSelector
@@ -442,7 +444,10 @@ export function* initializeApplicationSaga(): Generator<
   // third-party message attachments, PN attachments and MVL ones)
   yield* fork(watchMessageAttachmentsSaga, sessionToken);
 
-  if (idPayEnabled) {
+  const idPayTestEnabled: ReturnType<typeof isIdPayTestEnabledSelector> =
+    yield* select(isIdPayTestEnabledSelector);
+
+  if (idPayTestEnabled) {
     // Start watching for IDPay actions
     yield* fork(watchIDPaySaga, maybeSessionInformation.value.bpdToken);
   }
