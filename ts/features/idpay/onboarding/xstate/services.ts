@@ -3,12 +3,12 @@ import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { PreferredLanguage } from "../../../../../definitions/backend/PreferredLanguage";
-import { InitiativeInfoDTO } from "../../../../../definitions/idpay/onboarding/InitiativeInfoDTO";
-import { StatusEnum as OnboardingStatusEnum } from "../../../../../definitions/idpay/onboarding/OnboardingStatusDTO";
-import { DetailsEnum as PrerequisitesErrorDetailsEnum } from "../../../../../definitions/idpay/onboarding/PrerequisitesErrorDTO";
-import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/onboarding/RequiredCriteriaDTO";
-import { SelfConsentDTO } from "../../../../../definitions/idpay/onboarding/SelfConsentDTO";
-import { OnboardingClient } from "../api/client";
+import { InitiativeInfoDTO } from "../../../../../definitions/idpay/InitiativeInfoDTO";
+import { StatusEnum as OnboardingStatusEnum } from "../../../../../definitions/idpay/OnboardingStatusDTO";
+import { DetailsEnum as PrerequisitesErrorDetailsEnum } from "../../../../../definitions/idpay/PrerequisitesErrorDTO";
+import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/RequiredCriteriaDTO";
+import { SelfConsentDTO } from "../../../../../definitions/idpay/SelfConsentDTO";
+import { IDPayClient } from "../../common/api/client";
 import { OnboardingFailureEnum } from "./failure";
 import { Context } from "./machine";
 import { getBoolRequiredCriteriaFromContext } from "./selectors";
@@ -41,7 +41,7 @@ const prerequisitesErrorToFailure: Record<
 };
 
 const createServicesImplementation = (
-  onboardingClient: OnboardingClient,
+  client: IDPayClient,
   token: string,
   language: PreferredLanguage
 ) => {
@@ -55,7 +55,7 @@ const createServicesImplementation = (
       return Promise.reject(OnboardingFailureEnum.GENERIC);
     }
 
-    const dataResponse = await onboardingClient.getInitiativeData({
+    const dataResponse = await client.getInitiativeData({
       ...clientOptions,
       serviceId: context.serviceId
     });
@@ -81,7 +81,7 @@ const createServicesImplementation = (
       return Promise.reject(OnboardingFailureEnum.GENERIC);
     }
 
-    const statusResponse = await onboardingClient.onboardingStatus({
+    const statusResponse = await client.onboardingStatus({
       ...clientOptions,
       initiativeId: context.initiative.initiativeId
     });
@@ -120,7 +120,7 @@ const createServicesImplementation = (
       return Promise.reject(OnboardingFailureEnum.GENERIC);
     }
 
-    const response = await onboardingClient.onboardingCitizen({
+    const response = await client.onboardingCitizen({
       ...clientOptions,
       body: {
         initiativeId: context.initiative.initiativeId
@@ -149,7 +149,7 @@ const createServicesImplementation = (
       return Promise.reject(OnboardingFailureEnum.GENERIC);
     }
 
-    const response = await onboardingClient.checkPrerequisites({
+    const response = await client.checkPrerequisites({
       ...clientOptions,
       body: {
         initiativeId: context.initiative.initiativeId
@@ -198,7 +198,7 @@ const createServicesImplementation = (
       ...Object.values(multiConsentsAnswers)
     ] as Array<SelfConsentDTO>;
 
-    const response = await onboardingClient.consentOnboarding({
+    const response = await client.consentOnboarding({
       ...clientOptions,
       body: {
         initiativeId: initiative.initiativeId,

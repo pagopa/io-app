@@ -2,11 +2,11 @@ import { pipe } from "fp-ts/lib/function";
 /* eslint-disable no-underscore-dangle */
 import * as O from "fp-ts/lib/Option";
 import { assign, createMachine } from "xstate";
-import { InitiativeInfoDTO } from "../../../../../definitions/idpay/onboarding/InitiativeInfoDTO";
-import { StatusEnum } from "../../../../../definitions/idpay/onboarding/OnboardingStatusDTO";
-import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/onboarding/RequiredCriteriaDTO";
-import { SelfConsentMultiDTO } from "../../../../../definitions/idpay/onboarding/SelfConsentMultiDTO";
-import { SelfDeclarationBoolDTO } from "../../../../../definitions/idpay/onboarding/SelfDeclarationBoolDTO";
+import { InitiativeInfoDTO } from "../../../../../definitions/idpay/InitiativeInfoDTO";
+import { StatusEnum } from "../../../../../definitions/idpay/OnboardingStatusDTO";
+import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/RequiredCriteriaDTO";
+import { SelfConsentMultiDTO } from "../../../../../definitions/idpay/SelfConsentMultiDTO";
+import { SelfDeclarationBoolDTO } from "../../../../../definitions/idpay/SelfDeclarationBoolDTO";
 import {
   LOADING_TAG,
   UPSERTING_TAG,

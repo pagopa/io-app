@@ -24,7 +24,7 @@ import {
   fromLocaleToPreferredLanguage,
   getLocalePrimaryWithFallback
 } from "../../../../utils/locale";
-import { createOnboardingClient } from "../api/client";
+import { createIDPayClient } from "../../common/api/client";
 import {
   IDPayOnboardingParamsList,
   IDPayOnboardingStackNavigationProp
@@ -73,13 +73,9 @@ const IDPayOnboardingMachineProvider = (props: Props) => {
     fromLocaleToPreferredLanguage
   );
 
-  const onboardingClient = createOnboardingClient(baseUrl);
+  const client = createIDPayClient(baseUrl);
 
-  const services = createServicesImplementation(
-    onboardingClient,
-    token,
-    language
-  );
+  const services = createServicesImplementation(client, token, language);
 
   const actions = createActionsImplementation(
     rootNavigation,
