@@ -1,13 +1,13 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import React from "react";
 import { Image, StyleSheet, View } from "react-native";
-import { OperationDTO } from "../../../../../../definitions/idpay/timeline/OperationDTO";
-import { OperationListDTO } from "../../../../../../definitions/idpay/timeline/OperationListDTO";
+import { OperationDTO } from "../../../../../../definitions/idpay/OperationDTO";
+import { OperationListDTO } from "../../../../../../definitions/idpay/OperationListDTO";
 import {
   OperationTypeEnum as TransactionDetailOperationTypeEnum,
   TransactionDetailDTO
-} from "../../../../../../definitions/idpay/timeline/TransactionDetailDTO";
-import { InitiativeDTO } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
+} from "../../../../../../definitions/idpay/TransactionDetailDTO";
+import { InitiativeDTO } from "../../../../../../definitions/idpay/InitiativeDTO";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
 import CopyButtonComponent from "../../../../../components/CopyButtonComponent";
 import { Pictogram } from "../../../../../components/core/pictograms";

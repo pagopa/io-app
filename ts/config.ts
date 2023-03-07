@@ -109,9 +109,6 @@ export const newTransactionSummaryEnabled =
 // FCI (Firma con IO) Feature Flag
 export const fciEnabled = Config.FCI_ENABLED === "YES";
 
-// LOLLIPOP login
-export const lollipopLoginEnabled = Config.LOLLIPOP_LOGIN_ENABLED === "YES";
-
 // PN (Piattaforma Notifiche) Feature Flag
 export const pnEnabled = Config.PN_ENABLED === "YES";
 
@@ -188,6 +185,12 @@ export const localServicesWebUrl: string = pipe(
   Config.LOCAL_SERVICE_WEB_URL,
   t.string.decode,
   E.getOrElse(() => "https://io.italia.it")
+);
+
+export const unsupportedDeviceMoreInfoUrl: string = pipe(
+  Config.UNSUPPORTED_DEVICE_MORE_INFO_URL,
+  NonEmptyString.decode,
+  E.getOrElse(() => "https://io.italia.it/app-content/unsupported_device.html")
 );
 
 export const pageSize: number = DEFAULT_PAGE_SIZE;

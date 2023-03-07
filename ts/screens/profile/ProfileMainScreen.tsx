@@ -32,7 +32,8 @@ import { navigateToLogout } from "../../store/actions/navigation";
 import {
   preferencesIdPayTestSetEnabled,
   preferencesPagoPaTestEnvironmentSetEnabled,
-  preferencesPnTestEnvironmentSetEnabled
+  preferencesPnTestEnvironmentSetEnabled,
+  preferencesDesignSystemSetEnabled
 } from "../../store/actions/persistedPreferences";
 import { clearCache } from "../../store/actions/profile";
 import { Dispatch } from "../../store/actions/types";
@@ -44,6 +45,7 @@ import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 import { notificationsInstallationSelector } from "../../store/reducers/notifications/installation";
 import {
   isIdPayTestEnabledSelector,
+  isDesignSystemEnabledSelector,
   isPagoPATestEnabledSelector,
   isPnTestEnabledSelector
 } from "../../store/reducers/persistedPreferences";
@@ -245,6 +247,10 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     this.showModal();
   };
 
+  private onDesignSystemToggle = (enabled: boolean) => {
+    this.props.setDesignSystemEnabled(enabled);
+  };
+
   private idResetTap?: number;
 
   // When tapped 5 times activate the debug mode of the application.
@@ -285,6 +291,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       isDebugModeEnabled,
       isPagoPATestEnabled,
       isPnTestEnabled,
+      isDesignSystemEnabled,
       navigation,
       notificationId,
       notificationToken,
@@ -336,7 +343,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
             />
           </>
         )}
-
         {/* Design System */}
         <ListItemComponent
           title={I18n.t("profile.main.designSystem")}
@@ -347,7 +353,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
           }
           isFirstItem={true}
         />
-
         {this.developerListItem(
           I18n.t("profile.main.pagoPaEnvironment.pagoPaEnv"),
           isPagoPATestEnabled,
@@ -369,6 +374,12 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
           isIdPayTestEnabled,
           this.onIdPayTestToggle,
           I18n.t("profile.main.idpay.idpayTestAlert")
+        )}
+        ,
+        {this.developerListItem(
+          I18n.t("profile.main.designSystemEnvironment"),
+          isDesignSystemEnabled,
+          this.onDesignSystemToggle
         )}
         {isDebugModeEnabled && (
           <React.Fragment>
@@ -598,7 +609,8 @@ const mapStateToProps = (state: GlobalState) => ({
   isDebugModeEnabled: isDebugModeEnabledSelector(state),
   isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
   isPnTestEnabled: isPnTestEnabledSelector(state),
-  isIdPayTestEnabled: isIdPayTestEnabledSelector(state)
+  isIdPayTestEnabled: isIdPayTestEnabledSelector(state),
+  isDesignSystemEnabled: isDesignSystemEnabledSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -614,7 +626,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(preferencesPnTestEnvironmentSetEnabled({ isPnTestEnabled })),
   dispatchSessionExpired: () => dispatch(sessionExpired()),
   setIdPayTestEnabled: (isIdPayTestEnabled: boolean) =>
-    dispatch(preferencesIdPayTestSetEnabled({ isIdPayTestEnabled }))
+    dispatch(preferencesIdPayTestSetEnabled({ isIdPayTestEnabled })),
+  setDesignSystemEnabled: (isDesignSystemEnabled: boolean) =>
+    dispatch(preferencesDesignSystemSetEnabled({ isDesignSystemEnabled }))
 });
 
 export default connect(

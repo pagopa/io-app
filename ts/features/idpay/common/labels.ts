@@ -1,4 +1,4 @@
-import { StatusEnum } from "../../../../definitions/idpay/wallet/InstrumentDTO";
+import { StatusEnum } from "../../../../definitions/idpay/InstrumentDTO";
 import I18n from "../../../i18n";
 
 type InstrumentStatusLabels = {

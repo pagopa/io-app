@@ -49,6 +49,10 @@ export const preferencesIdPayTestSetEnabled = createStandardAction(
   "PREFERENCES_IDPAY_TEST_SET_ENABLED"
 )<{ isIdPayTestEnabled: boolean }>();
 
+export const preferencesDesignSystemSetEnabled = createStandardAction(
+  "PREFERENCES_DESIGN_SYSTEM_SET_ENABLED"
+)<{ isDesignSystemEnabled: boolean }>();
+
 export type PersistedPreferencesActions = ActionType<
   // eslint-disable-next-line
   | typeof preferenceFingerprintIsEnabledSaveSuccess
@@ -62,4 +66,5 @@ export type PersistedPreferencesActions = ActionType<
   | typeof continueWithRootOrJailbreak
   | typeof preferencesPnTestEnvironmentSetEnabled
   | typeof preferencesIdPayTestSetEnabled
+  | typeof preferencesDesignSystemSetEnabled
 >;

@@ -1,17 +1,17 @@
 import * as React from "react";
 import { IOFontFamily, IOFontWeight } from "../fonts";
-import { IOColorType } from "../variables/IOColors";
+import type { IOColors } from "../variables/IOColors";
 import { ExternalTypographyProps, RequiredTypographyProps } from "./common";
 import { useTypographyFactory } from "./Factory";
 
 // these colors are allowed only when the weight is SemiBold
 type AllowedSemiBoldColors = Extract<
-  IOColorType,
+  IOColors,
   "bluegreyDark" | "bluegreyLight" | "white" | "red" | "blue" | "bluegrey"
 >;
 
 // when the weight is bold, only the white color is allowed
-type AllowedBoldColors = Extract<IOColorType, "white" | "black">;
+type AllowedBoldColors = Extract<IOColors, "white" | "black">;
 
 // all the possible colors
 type AllowedColors = AllowedBoldColors | AllowedSemiBoldColors;
