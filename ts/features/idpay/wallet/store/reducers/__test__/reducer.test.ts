@@ -18,7 +18,7 @@ import {
   idpayInitiativesInstrumentDelete,
   idpayInitiativesInstrumentEnroll
 } from "../../actions";
-import { InitiativesWithInstrumentDTO } from "../../../../../../../definitions/idpay/wallet/InitiativesWithInstrumentDTO";
+import { InitiativesWithInstrumentDTO } from "../../../../../../../definitions/idpay/InitiativesWithInstrumentDTO";
 
 const mockResponseSuccess: WalletDTO = {
   initiativeList: []

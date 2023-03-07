@@ -5,7 +5,6 @@ import { PreferredLanguageEnum } from "../../../../../definitions/backend/Prefer
 import { SagaCallReturnType } from "../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
-import { IDPayWalletClient } from "../api/client";
 import {
   IdpayInitiativesInstrumentEnrollPayloadType,
   IdpayInitiativesInstrumentDeletePayloadType,
@@ -14,9 +13,10 @@ import {
 } from "../store/actions";
 import { showToast } from "../../../../utils/showToast";
 import TypedI18n from "../../../../i18n";
+import { IDPayClient } from "../../common/api/client";
 
 export function* handleInitiativeInstrumentEnrollment(
-  enrollInstrument: IDPayWalletClient["enrollInstrument"],
+  enrollInstrument: IDPayClient["enrollInstrument"],
   token: string,
   language: PreferredLanguageEnum,
   payload: IdpayInitiativesInstrumentEnrollPayloadType
@@ -84,7 +84,7 @@ export function* handleInitiativeInstrumentEnrollment(
 }
 
 export function* handleInitiativeInstrumentDelete(
-  deleteInstrument: IDPayWalletClient["deleteInstrument"],
+  deleteInstrument: IDPayClient["deleteInstrument"],
   token: string,
   language: PreferredLanguageEnum,
   payload: IdpayInitiativesInstrumentDeletePayloadType

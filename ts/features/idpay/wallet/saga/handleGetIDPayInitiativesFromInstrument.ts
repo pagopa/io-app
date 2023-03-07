@@ -5,14 +5,14 @@ import { PreferredLanguageEnum } from "../../../../../definitions/backend/Prefer
 import { SagaCallReturnType } from "../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
-import { IDPayWalletClient } from "../api/client";
 import {
   IdPayInitiativesFromInstrumentPayloadType,
   idPayInitiativesFromInstrumentGet
 } from "../store/actions";
+import { IDPayClient } from "../../common/api/client";
 
 export function* handleGetIDPayInitiativesFromInstrument(
-  getInitiativesWithInstrument: IDPayWalletClient["getInitiativesWithInstrument"],
+  getInitiativesWithInstrument: IDPayClient["getInitiativesWithInstrument"],
   token: string,
   language: PreferredLanguageEnum,
   payload: IdPayInitiativesFromInstrumentPayloadType

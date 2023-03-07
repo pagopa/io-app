@@ -5,7 +5,7 @@ import { StyleSheet } from "react-native";
 import {
   InitiativesStatusDTO,
   StatusEnum
-} from "../../../../../definitions/idpay/wallet/InitiativesStatusDTO";
+} from "../../../../../definitions/idpay/InitiativesStatusDTO";
 import { RemoteSwitch } from "../../../../components/core/selection/RemoteSwitch";
 import { H4 } from "../../../../components/core/typography/H4";
 import { LabelSmall } from "../../../../components/core/typography/LabelSmall";

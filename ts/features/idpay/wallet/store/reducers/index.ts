@@ -61,7 +61,7 @@ const reducer = (
       const initiativesToKeepInLoadingState = pipe(
         state.initiativesAwaitingStatusUpdate,
         Object.entries,
-        entries => entries.filter(([_, value]) => value), // only get not loading ones
+        entries => entries.filter(([_, value]) => value), // remove all entries that have completed their request
         Object.fromEntries
       );
 

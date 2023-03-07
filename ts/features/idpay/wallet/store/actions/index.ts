@@ -1,7 +1,7 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
 import { WalletDTO } from "../../../../../../definitions/idpay/WalletDTO";
 import { NetworkError } from "../../../../../utils/errors";
-import { InitiativesWithInstrumentDTO as InitiativesFromInstrumentDTO } from "../../../../../../definitions/idpay/wallet/InitiativesWithInstrumentDTO";
+import { InitiativesWithInstrumentDTO as InitiativesFromInstrumentDTO } from "../../../../../../definitions/idpay/InitiativesWithInstrumentDTO";
 
 export type IdPayInitiativesFromInstrumentPayloadType = {
   idWallet: string;

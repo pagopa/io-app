@@ -1,33 +1,19 @@
 import { SagaIterator } from "redux-saga";
-import { call, takeLatest, takeEvery, select } from "typed-redux-saga/macro";
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
-import { createIDPayWalletClient } from "../api/client";
-import {
-  idPayTestToken,
-  idPayApiUatBaseUrl,
-  idPayApiBaseUrl
-} from "../../../../config";
-import {
-  IdpayInitiativesInstrumentEnrollPayloadType,
-  IdpayInitiativesInstrumentDeletePayloadType,
-  idPayWalletGet,
-  idpayInitiativesInstrumentDelete,
-  idpayInitiativesInstrumentEnroll,
-  idPayInitiativesFromInstrumentGet,
-  IdPayInitiativesFromInstrumentPayloadType
-} from "../store/actions";
-import { waitBackoffError } from "../../../../utils/backoffError";
-import {
-  isPagoPATestEnabledSelector,
-  preferredLanguageSelector
-} from "../../../../store/reducers/persistedPreferences";
+import { call, takeEvery, takeLatest } from "typed-redux-saga/macro";
 import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
 import { waitBackoffError } from "../../../../utils/backoffError";
 import { IDPayClient } from "../../common/api/client";
-import { idPayWalletGet } from "../store/actions";
-import { handleGetIDPayWallet } from "./handleGetIDPayWallet";
+import {
+  IdPayInitiativesFromInstrumentPayloadType,
+  IdpayInitiativesInstrumentDeletePayloadType,
+  IdpayInitiativesInstrumentEnrollPayloadType,
+  idPayInitiativesFromInstrumentGet,
+  idPayWalletGet,
+  idpayInitiativesInstrumentDelete,
+  idpayInitiativesInstrumentEnroll
+} from "../store/actions";
 import { handleGetIDPayInitiativesFromInstrument } from "./handleGetIDPayInitiativesFromInstrument";
+import { handleGetIDPayWallet } from "./handleGetIDPayWallet";
 import {
   handleInitiativeInstrumentDelete,
   handleInitiativeInstrumentEnrollment
@@ -61,7 +47,7 @@ export function* watchIDPayWalletSaga(
       yield* call(waitBackoffError, idPayInitiativesFromInstrumentGet.failure);
       yield* call(
         handleGetIDPayInitiativesFromInstrument,
-        idPayWalletClient.getInitiativesWithInstrument,
+        idPayClient.getInitiativesWithInstrument,
         token,
         preferredLanguage,
         action.payload
@@ -77,7 +63,7 @@ export function* watchIDPayWalletSaga(
       yield* call(waitBackoffError, idpayInitiativesInstrumentEnroll.failure);
       yield* call(
         handleInitiativeInstrumentEnrollment,
-        idPayWalletClient.enrollInstrument,
+        idPayClient.enrollInstrument,
         token,
         preferredLanguage,
         action.payload
@@ -93,7 +79,7 @@ export function* watchIDPayWalletSaga(
       yield* call(waitBackoffError, idpayInitiativesInstrumentEnroll.failure);
       yield* call(
         handleInitiativeInstrumentDelete,
-        idPayWalletClient.deleteInstrument,
+        idPayClient.deleteInstrument,
         token,
         preferredLanguage,
         action.payload

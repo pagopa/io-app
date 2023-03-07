@@ -1,7 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import React from "react";
 import { ScrollView, View } from "react-native";
-import { InitiativesWithInstrumentDTO } from "../../../../../definitions/idpay/wallet/InitiativesWithInstrumentDTO";
+import { InitiativesWithInstrumentDTO } from "../../../../../definitions/idpay/InitiativesWithInstrumentDTO";
 import {
   IOLogoPaymentType,
   LogoPayment
