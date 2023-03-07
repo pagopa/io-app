@@ -629,7 +629,10 @@ const createIDPayInitiativeConfigurationMachine = () =>
                     id: "loadInitiativeInstruments",
                     onDone: {
                       target: "DISPLAYING",
-                      actions: "loadInitiativeInstrumentsSuccess"
+                      actions: [
+                        "loadInitiativeInstrumentsSuccess",
+                        "updateInstrumentStatuses"
+                      ]
                     },
                     onError: {
                       target: "DISPLAYING",
