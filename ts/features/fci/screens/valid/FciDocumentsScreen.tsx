@@ -53,6 +53,8 @@ const hasUniqueName = (
 ): f is ExistingSignatureFieldAttrs =>
   (f as ExistingSignatureFieldAttrs).unique_name !== undefined;
 
+const pdfFromBase64 = (r: string) => `data:application/pdf;base64,${r}`;
+
 const FciDocumentsScreen = () => {
   const pdfRef = React.useRef<Pdf>(null);
   const [totalPages, setTotalPages] = React.useState(0);
@@ -61,6 +63,7 @@ const FciDocumentsScreen = () => {
   const [signaturePage, setSignaturePage] = React.useState(0);
   const [pdfString, setPdfString] = React.useState<string>("");
   const [isPdfLoaded, setIsPdfLoaded] = React.useState(false);
+  const [currentDocPath, setCurrentDocPath] = React.useState("");
   const documents = useSelector(fciSignatureDetailDocumentsSelector);
   const navigation = useNavigation();
   const route = useRoute<RouteProp<FciParamsList, "FCI_DOCUMENTS">>();
@@ -90,8 +93,6 @@ const FciDocumentsScreen = () => {
     }
   }, [dispatch, documentSignaturesSelector, documents]);
 
-  const pdfFromBase64 = (r: string) => `data:application/pdf;base64,${r}`;
-
   /**
    * Get the pdf url from documents,
    * download it as base64 string and
@@ -105,9 +106,11 @@ const FciDocumentsScreen = () => {
       const doc = documents[currentDoc];
       const url = doc.url;
 
-      const existingPdfBytes = await ReactNativeBlobUtil.fetch("GET", url).then(
-        res => res.base64()
-      );
+      const existingPdfBytes = await ReactNativeBlobUtil.config({
+        fileCache: true
+      })
+        .fetch("GET", url)
+        .then(res => res.base64());
 
       setIsPdfLoaded(false);
 
@@ -161,9 +164,11 @@ const FciDocumentsScreen = () => {
       const doc = documents[currentDoc];
       const url = doc.url;
 
-      const existingPdfBytes = await ReactNativeBlobUtil.fetch("GET", url).then(
-        res => res.base64()
-      );
+      const existingPdfBytes = await ReactNativeBlobUtil.config({
+        fileCache: true
+      })
+        .fetch("GET", url)
+        .then(res => res.base64());
 
       setIsPdfLoaded(false);
 
@@ -209,6 +214,15 @@ const FciDocumentsScreen = () => {
       drawRectangleOverSignatureFieldById
     ]
   );
+
+  React.useEffect(() => {
+    if (documents.length !== 0) {
+      ReactNativeBlobUtil.config({ fileCache: true, session: "FCI" })
+        .fetch("GET", documents[currentDoc].url)
+        .then(res => setCurrentDocPath(res.path()))
+        .catch(readableReport);
+    }
+  }, [currentDoc, documents]);
 
   React.useEffect(() => {
     pipe(
@@ -288,7 +302,7 @@ const FciDocumentsScreen = () => {
     <Pdf
       ref={pdfRef}
       source={{
-        uri: S.isEmpty(pdfString) ? `${documents[currentDoc].url}` : pdfString
+        uri: S.isEmpty(pdfString) ? `${currentDocPath}` : pdfString
       }}
       onLoadProgress={() => setIsPdfLoaded(false)}
       onLoadComplete={(numberOfPages, _) => {

@@ -1,5 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
+import ReactNativeBlobUtil from "react-native-blob-util";
 import { SagaIterator } from "redux-saga";
 import { getType, ActionType } from "typesafe-actions";
 import RNFS from "react-native-fs";
@@ -258,6 +259,7 @@ function* watchFciSignedDocumentsEndSaga(): SagaIterator {
  */
 function* watchFciEndSaga(): SagaIterator {
   yield* put(fciClearStateRequest());
+  yield* call(ReactNativeBlobUtil.session("FCI").dispose);
   yield* call(
     NavigationService.dispatchNavigationAction,
     CommonActions.navigate(ROUTES.MAIN)
