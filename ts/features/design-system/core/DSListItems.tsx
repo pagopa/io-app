@@ -21,7 +21,7 @@ import { ProductCategoryEnum } from "../../../../definitions/cgn/merchants/Produ
 import CgnMerchantListItem from "../../bonus/cgn/components/merchants/CgnMerchantListItem";
 import DetailedlistItemComponent from "../../../components/DetailedlistItemComponent";
 import { TimelineOperationListItem } from "../../idpay/initiative/details/components/TimelineOperationListItem";
-import { OperationTypeEnum } from "../../../../definitions/idpay/timeline/TransactionOperationDTO";
+import { OperationTypeEnum } from "../../../../definitions/idpay/TransactionOperationDTO";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
 
