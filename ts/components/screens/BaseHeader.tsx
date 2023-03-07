@@ -327,6 +327,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
             accessible={true}
             accessibilityElementsHidden={true}
             importantForAccessibility="no-hide-descendants"
+            style={{ marginLeft: 8 }}
           >
             <IconFont name={"io-logo"} color={iconColor} accessible={false} />
           </View>
