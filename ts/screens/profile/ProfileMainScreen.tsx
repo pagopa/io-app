@@ -375,7 +375,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
           this.onIdPayTestToggle,
           I18n.t("profile.main.idpay.idpayTestAlert")
         )}
-        ,
         {this.developerListItem(
           I18n.t("profile.main.designSystemEnvironment"),
           isDesignSystemEnabled,
