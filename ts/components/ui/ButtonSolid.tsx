@@ -18,8 +18,13 @@ import Animated, {
 import { IOColors } from "../core/variables/IOColors";
 import { IOSpringValues, IOScaleValues } from "../core/variables/IOAnimations";
 import { BaseTypography } from "../core/typography/BaseTypography";
-import { IOButtonStyles } from "../core/variables/IOStyles";
+import {
+  IOButtonStyles,
+  IOButtonLegacyStyles
+} from "../core/variables/IOStyles";
 import { WithTestID } from "../../types/WithTestID";
+import { useIOSelector } from "../../store/hooks";
+import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 
 export type ButtonSolid = WithTestID<{
   color?: "primary" | "danger" | "contrast";
@@ -43,7 +48,10 @@ type ColorStates = {
 
 // COMPONENT CONFIGURATION
 
-const mapColorStates: Record<NonNullable<ButtonSolid["color"]>, ColorStates> = {
+const mapLegacyColorStates: Record<
+  NonNullable<ButtonSolid["color"]>,
+  ColorStates
+> = {
   // Primary button
   primary: {
     default: IOColors.blue,
@@ -74,13 +82,47 @@ const mapColorStates: Record<NonNullable<ButtonSolid["color"]>, ColorStates> = {
 };
 
 // Disabled state
-const colorPrimaryButtonDisabled: IOColors = "bluegreyLight";
+const colorPrimaryLegacyButtonDisabled: IOColors = "bluegreyLight";
+const colorPrimaryButtonDisabled: IOColors = "grey200";
 
 const styles = StyleSheet.create({
+  backgroundDisabledLegacy: {
+    backgroundColor: IOColors[colorPrimaryLegacyButtonDisabled]
+  },
   backgroundDisabled: {
     backgroundColor: IOColors[colorPrimaryButtonDisabled]
   }
 });
+
+const mapColorStates: Record<NonNullable<ButtonSolid["color"]>, ColorStates> = {
+  // Primary button
+  primary: {
+    default: IOColors.blueNew,
+    pressed: IOColors.blueNew600,
+    label: {
+      default: "white",
+      disabled: "grey700"
+    }
+  },
+  // Danger button
+  danger: {
+    default: IOColors.errorDark,
+    pressed: IOColors.errorGraphic,
+    label: {
+      default: "white",
+      disabled: "grey700"
+    }
+  },
+  // Contrast button
+  contrast: {
+    default: IOColors.white,
+    pressed: IOColors.blueNew50,
+    label: {
+      default: "blueNew",
+      disabled: "grey700"
+    }
+  }
+};
 
 export const ButtonSolid = ({
   color = "primary",
@@ -92,8 +134,10 @@ export const ButtonSolid = ({
   accessibilityLabel,
   accessibilityHint,
   testID
-}: ButtonSolid) => {
+}: // eslint-disable-next-line sonarjs/cognitive-complexity
+ButtonSolid) => {
   const isPressed: Animated.SharedValue<number> = useSharedValue(0);
+  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
 
   // Scaling transformation applied when the button is pressed
   const animationScaleValue = IOScaleValues?.basicButton?.pressedState;
@@ -106,11 +150,20 @@ export const ButtonSolid = ({
   // Interpolate animation values from `isPressed` values
   const pressedAnimationStyle = useAnimatedStyle(() => {
     // Link color states to the pressed states
-    const bgColor = interpolateColor(
-      progressPressed.value,
-      [0, 1],
-      [mapColorStates[color].default, mapColorStates[color].pressed]
-    );
+    const bgColor = isDesignSystemEnabled
+      ? interpolateColor(
+          progressPressed.value,
+          [0, 1],
+          [mapColorStates[color].default, mapColorStates[color].pressed]
+        )
+      : interpolateColor(
+          progressPressed.value,
+          [0, 1],
+          [
+            mapLegacyColorStates[color].default,
+            mapLegacyColorStates[color].pressed
+          ]
+        );
 
     // Scale down button slightly when pressed
     const scale = interpolate(
@@ -135,7 +188,64 @@ export const ButtonSolid = ({
     isPressed.value = 0;
   }, [isPressed]);
 
-  return (
+  const LegacyButton = () => (
+    <Pressable
+      accessibilityLabel={accessibilityLabel}
+      accessibilityHint={accessibilityHint}
+      accessibilityRole={"button"}
+      testID={testID}
+      onPress={onPress}
+      onPressIn={onPressIn}
+      onPressOut={onPressOut}
+      accessible={true}
+      disabled={disabled}
+      style={
+        fullWidth
+          ? IOButtonLegacyStyles.dimensionsFullWidth
+          : IOButtonLegacyStyles.dimensionsDefault
+      }
+    >
+      <Animated.View
+        style={[
+          IOButtonLegacyStyles.button,
+          small
+            ? IOButtonLegacyStyles.buttonSizeSmall
+            : IOButtonLegacyStyles.buttonSizeDefault,
+          disabled
+            ? styles.backgroundDisabledLegacy
+            : { backgroundColor: mapLegacyColorStates[color]?.default },
+          /* Prevent Reanimated from overriding background colors
+          if button is disabled */
+          !disabled && pressedAnimationStyle
+        ]}
+      >
+        <BaseTypography
+          weight={"Bold"}
+          color={
+            disabled
+              ? mapLegacyColorStates[color]?.label?.disabled
+              : mapLegacyColorStates[color]?.label?.default
+          }
+          style={[
+            IOButtonLegacyStyles.label,
+            small
+              ? IOButtonLegacyStyles.labelSizeSmall
+              : IOButtonLegacyStyles.labelSizeDefault
+          ]}
+          numberOfLines={1}
+          ellipsizeMode="tail"
+          /* A11y-related props:
+          DON'T UNCOMMENT THEM */
+          /* allowFontScaling
+          maxFontSizeMultiplier={1.3} */
+        >
+          {label}
+        </BaseTypography>
+      </Animated.View>
+    </Pressable>
+  );
+
+  const NewButton = () => (
     <Pressable
       accessibilityLabel={accessibilityLabel}
       accessibilityHint={accessibilityHint}
@@ -167,7 +277,8 @@ export const ButtonSolid = ({
         ]}
       >
         <BaseTypography
-          weight={"Bold"}
+          font="ReadexPro"
+          weight={"Regular"}
           color={
             disabled
               ? mapColorStates[color]?.label?.disabled
@@ -191,6 +302,8 @@ export const ButtonSolid = ({
       </Animated.View>
     </Pressable>
   );
+
+  return isDesignSystemEnabled ? <NewButton /> : <LegacyButton />;
 };
 
 export default ButtonSolid;
