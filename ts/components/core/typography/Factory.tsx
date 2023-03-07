@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { XOR } from "../../../types/utils";
 import { IOFontWeight } from "../fonts";
-import { IOColorType } from "../variables/IOColors";
+import type { IOColors } from "../variables/IOColors";
 import { BaseTypography } from "./BaseTypography";
 import {
   calculateWeightColor,
@@ -74,7 +74,7 @@ function isDefaultFactoryProps<WeightPropsType, ColorsPropsType>(
  */
 export function useTypographyFactory<
   WeightPropsType extends IOFontWeight,
-  ColorsPropsType extends IOColorType
+  ColorsPropsType extends IOColors
 >(props: FactoryProps<WeightPropsType, ColorsPropsType>) {
   // Use different strategy to calculate the default values, based on DefaultProps
   const { weight, color } = useMemo(

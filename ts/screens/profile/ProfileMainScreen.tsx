@@ -31,7 +31,8 @@ import { setDebugModeEnabled } from "../../store/actions/debug";
 import { navigateToLogout } from "../../store/actions/navigation";
 import {
   preferencesPagoPaTestEnvironmentSetEnabled,
-  preferencesPnTestEnvironmentSetEnabled
+  preferencesPnTestEnvironmentSetEnabled,
+  preferencesDesignSystemSetEnabled
 } from "../../store/actions/persistedPreferences";
 import { clearCache } from "../../store/actions/profile";
 import { Dispatch } from "../../store/actions/types";
@@ -42,6 +43,7 @@ import {
 import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 import { notificationsInstallationSelector } from "../../store/reducers/notifications/installation";
 import {
+  isDesignSystemEnabledSelector,
   isPagoPATestEnabledSelector,
   isPnTestEnabledSelector
 } from "../../store/reducers/persistedPreferences";
@@ -238,6 +240,10 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     this.props.setPnTestEnabled(enabled);
   };
 
+  private onDesignSystemToggle = (enabled: boolean) => {
+    this.props.setDesignSystemEnabled(enabled);
+  };
+
   private idResetTap?: number;
 
   // When tapped 5 times activate the debug mode of the application.
@@ -278,6 +284,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       isDebugModeEnabled,
       isPagoPATestEnabled,
       isPnTestEnabled,
+      isDesignSystemEnabled,
       navigation,
       notificationId,
       notificationToken,
@@ -355,6 +362,11 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
           I18n.t("profile.main.debugMode"),
           isDebugModeEnabled,
           setDebugModeEnabled
+        )}
+        {this.developerListItem(
+          I18n.t("profile.main.designSystemEnvironment"),
+          isDesignSystemEnabled,
+          this.onDesignSystemToggle
         )}
         {isDebugModeEnabled && (
           <React.Fragment>
@@ -583,7 +595,8 @@ const mapStateToProps = (state: GlobalState) => ({
   notificationToken: notificationsInstallationSelector(state).token,
   isDebugModeEnabled: isDebugModeEnabledSelector(state),
   isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
-  isPnTestEnabled: isPnTestEnabledSelector(state)
+  isPnTestEnabled: isPnTestEnabledSelector(state),
+  isDesignSystemEnabled: isDesignSystemEnabledSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -597,6 +610,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     ),
   setPnTestEnabled: (isPnTestEnabled: boolean) =>
     dispatch(preferencesPnTestEnvironmentSetEnabled({ isPnTestEnabled })),
+  setDesignSystemEnabled: (isDesignSystemEnabled: boolean) =>
+    dispatch(preferencesDesignSystemSetEnabled({ isDesignSystemEnabled })),
   dispatchSessionExpired: () => dispatch(sessionExpired())
 });
 

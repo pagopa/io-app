@@ -1,6 +1,6 @@
 import React from "react";
 import { ColorValue, StyleProp } from "react-native";
-import { IOColors, IOColorType } from "../variables/IOColors";
+import { IOColors } from "../variables/IOColors";
 
 /* Icons */
 import IconSpid from "./svg/IconSpid";
@@ -105,6 +105,27 @@ import IconArrowBottom from "./svg/IconArrowBottom";
 import IconArrowLeft from "./svg/IconArrowLeft";
 import IconArrowTop from "./svg/IconArrowTop";
 import IconArrowRight from "./svg/IconArrowRight";
+import IconNavMessages from "./svg/IconNavMessages";
+import IconNavWallet from "./svg/IconNavWallet";
+import IconNavDocuments from "./svg/IconNavDocuments";
+import IconNavServices from "./svg/IconNavServices";
+import IconNavProfile from "./svg/IconNavProfile";
+import IconBiomFingerprint from "./svg/IconBiomFingerprint";
+import IconBiomFaceID from "./svg/IconBiomFaceID";
+import IconCategCulture from "./svg/IconCategCulture";
+import IconCategWellness from "./svg/IconCategWellness";
+import IconCategLearning from "./svg/IconCategLearning";
+import IconCategSport from "./svg/IconCategSport";
+import IconCategHome from "./svg/IconCategHome";
+import IconCategTelco from "./svg/IconCategTelco";
+import IconCategFinance from "./svg/IconCategFinance";
+import IconCategTravel from "./svg/IconCategTravel";
+import IconCategMobility from "./svg/IconCategMobility";
+import IconCategJobOffers from "./svg/IconCategJobOffers";
+import IconCategShopping from "./svg/IconCategShopping";
+import IconCategSustainability from "./svg/IconCategSustainability";
+import IconProductIOApp from "./svg/IconProductIOApp";
+import IconProductPagoPA from "./svg/IconProductPagoPA";
 
 export const IOIcons = {
   spid: IconSpid,
@@ -208,14 +229,35 @@ export const IOIcons = {
   arrowLeft: IconArrowLeft,
   arrowTop: IconArrowTop,
   arrowRight: IconArrowRight,
-  arrowCircleUp: IconArrowCircleUp
+  arrowCircleUp: IconArrowCircleUp,
+  navMessages: IconNavMessages /* io-messaggi */,
+  navWallet: IconNavWallet /* io-portafoglio */,
+  navDocuments: IconNavDocuments,
+  navServices: IconNavServices,
+  navProfile: IconNavProfile /* io-profilo */,
+  biomFingerprint: IconBiomFingerprint /* io-fingerprint */,
+  biomFaceID: IconBiomFaceID /* io-face-id */,
+  categCulture: IconCategCulture,
+  categWellness: IconCategWellness,
+  categLearning: IconCategLearning,
+  categSport: IconCategSport,
+  categHome: IconCategHome,
+  categTelco: IconCategTelco,
+  categFinance: IconCategFinance,
+  categTravel: IconCategTravel,
+  categMobility: IconCategMobility,
+  categJobOffers: IconCategJobOffers,
+  categShopping: IconCategShopping,
+  categSustainability: IconCategSustainability,
+  productIOApp: IconProductIOApp /* io-logo */,
+  productPagoPA: IconProductPagoPA /* io-pagopa */
 } as const;
 
-export type IOIconType = keyof typeof IOIcons;
+export type IOIcons = keyof typeof IOIcons;
 
 export type IOIconsProps = {
-  name: IOIconType;
-  color?: IOColorType;
+  name: IOIcons;
+  color?: IOColors;
   size?: number | "100%";
 };
 
@@ -246,7 +288,7 @@ transition between different states.
 */
 
 type IOAnimatedIconsProps = {
-  name: IOIconType;
+  name: IOIcons;
   color?: ColorValue;
   size?: number | "100%";
 };
@@ -274,7 +316,7 @@ export class IconClassComponent extends React.Component<IOAnimatedIconsProps> {
 }
 
 /*
-VARIOUS SETS
+░░░ VARIOUS SETS ░░░
 */
 
 /* New icons */
@@ -303,3 +345,70 @@ export const IOIconsNew = {
   arrowRight,
   arrowCircleUp
 };
+
+/* Navigation */
+const { navMessages, navWallet, navDocuments, navServices, navProfile } =
+  IOIcons;
+
+export const IONavIcons = {
+  navMessages,
+  navWallet,
+  navDocuments,
+  navServices,
+  navProfile
+} as const;
+
+export type IONavIcons = keyof typeof IONavIcons;
+
+/* Biometric */
+const { biomFingerprint, biomFaceID } = IOIcons;
+
+export const IOBiometricIcons = {
+  biomFingerprint,
+  biomFaceID
+} as const;
+
+export type IOBiometricIcons = keyof typeof IOBiometricIcons;
+
+/* Categories (used by CGN) */
+const {
+  categCulture,
+  categWellness,
+  categLearning,
+  categSport,
+  categHome,
+  categTelco,
+  categFinance,
+  categTravel,
+  categMobility,
+  categJobOffers,
+  categShopping,
+  categSustainability
+} = IOIcons;
+
+export const IOCategoryIcons = {
+  categCulture,
+  categWellness,
+  categLearning,
+  categSport,
+  categHome,
+  categTelco,
+  categFinance,
+  categTravel,
+  categMobility,
+  categJobOffers,
+  categShopping,
+  categSustainability
+} as const;
+
+export type IOCategoryIcons = keyof typeof IOCategoryIcons;
+
+/* Product Logos */
+const { productIOApp, productPagoPA } = IOIcons;
+
+export const IOProductIcons = {
+  productIOApp,
+  productPagoPA
+} as const;
+
+export type IOProductIcons = keyof typeof IOProductIcons;

@@ -1,10 +1,10 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { OperationListDTO } from "../../../../../../definitions/idpay/timeline/OperationListDTO";
-import { OperationTypeEnum as RefundOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/RefundOperationDTO";
-import { OperationTypeEnum as TransactionDetailOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/TransactionDetailDTO";
-import { InitiativeDTO } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
+import { InitiativeDTO } from "../../../../../../definitions/idpay/InitiativeDTO";
+import { OperationListDTO } from "../../../../../../definitions/idpay/OperationListDTO";
+import { OperationTypeEnum as RefundOperationTypeEnum } from "../../../../../../definitions/idpay/RefundOperationDTO";
+import { OperationTypeEnum as TransactionDetailOperationTypeEnum } from "../../../../../../definitions/idpay/TransactionDetailDTO";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
 import { Pictogram } from "../../../../../components/core/pictograms";
 import { H4 } from "../../../../../components/core/typography/H4";

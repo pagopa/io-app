@@ -19,7 +19,7 @@ import variables from "../../theme/variables";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { isStringNullyOrEmpty, maybeNotNullyString } from "../../utils/strings";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
-import { IOColors, IOColorType } from "../core/variables/IOColors";
+import { IOColors } from "../core/variables/IOColors";
 import GoBackButton from "../GoBackButton";
 import SearchButton, { SearchType } from "../search/SearchButton";
 import AppHeader from "../ui/AppHeader";
@@ -86,7 +86,7 @@ interface OwnProps {
     accessibilityLabel?: string;
   };
   customGoBack?: React.ReactNode;
-  titleColor?: IOColorType;
+  titleColor?: IOColors;
   backButtonTestID?: string;
 }
 

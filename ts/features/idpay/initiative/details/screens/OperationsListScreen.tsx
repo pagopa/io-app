@@ -8,7 +8,7 @@ import {
   StyleSheet,
   View
 } from "react-native";
-import { OperationListDTO } from "../../../../../../definitions/idpay/timeline/OperationListDTO";
+import { OperationListDTO } from "../../../../../../definitions/idpay/OperationListDTO";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
