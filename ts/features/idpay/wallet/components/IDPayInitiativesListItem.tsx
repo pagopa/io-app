@@ -16,6 +16,7 @@ import {
   idpayInitiativesInstrumentEnroll
 } from "../store/actions";
 import { idPayInitiativeAwaitingUpdateSelector } from "../store/reducers";
+import TypedI18n from "../../../../i18n";
 
 const styles = StyleSheet.create({
   badge: {
@@ -36,12 +37,6 @@ export const IDPayInitiativeListItem = ({ item, idWallet }: ListItemProps) => {
     idPayInitiativeAwaitingUpdateSelector(state, item.initiativeId)
   );
 
-  const statusLabels = {
-    [StatusEnum.PENDING_DEACTIVATION_REQUEST]: "In disattivazione..",
-    [StatusEnum.PENDING_ENROLLMENT_REQUEST]: "In attivazione..",
-    [StatusEnum.ENROLLMENT_FAILED]: "Attivazione fallita"
-  };
-
   const renderSwitchOrStatusLabel = () => {
     switch (item.status) {
       case StatusEnum.ACTIVE:
@@ -57,7 +52,11 @@ export const IDPayInitiativeListItem = ({ item, idWallet }: ListItemProps) => {
       case StatusEnum.ENROLLMENT_FAILED:
         return (
           <NBbadge style={styles.badge}>
-            <LabelSmall color="white">{statusLabels[item.status]}</LabelSmall>
+            <LabelSmall color="white">
+              {TypedI18n.t(
+                `idpay.wallet.initiativePairing.statusLabels.${item.status}`
+              )}
+            </LabelSmall>
           </NBbadge>
         );
 
