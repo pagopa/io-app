@@ -19,7 +19,7 @@ import { H3 } from "../../components/core/typography/H3";
 import { IOColors } from "../../components/core/variables/IOColors";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import {
-  TabBarItemPressType,
+  TabBarItemPressTypeInjectedProps,
   withUseTabItemPressWhenScreenActive
 } from "../../components/helpers/withUseTabItemPressWhenScreenActive";
 import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
@@ -121,7 +121,7 @@ type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
   IOStackNavigationRouteProps<MainTabParamsList, "WALLET_HOME"> &
   LightModalContextInterface &
-  TabBarItemPressType;
+  TabBarItemPressTypeInjectedProps;
 
 const styles = StyleSheet.create({
   white: {

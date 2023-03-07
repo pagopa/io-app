@@ -17,7 +17,7 @@ import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import customVariables from "../../theme/variables";
 import { getLogoForOrganization } from "../../utils/organizations";
 import {
-  TabBarItemPressType,
+  TabBarItemPressTypeInjectedProps,
   withUseTabItemPressWhenScreenActive
 } from "../helpers/withUseTabItemPressWhenScreenActive";
 
@@ -42,7 +42,7 @@ type OwnProps = {
   >["ListEmptyComponent"];
 };
 
-type Props = OwnProps & AnimatedProps & TabBarItemPressType;
+type Props = OwnProps & AnimatedProps & TabBarItemPressTypeInjectedProps;
 
 const styles = StyleSheet.create({
   padded: {
@@ -53,9 +53,9 @@ const styles = StyleSheet.create({
 
 class ServiceList extends React.Component<Props> {
   componentDidMount() {
-    const { setHasInternTab, setTabPressCallback } = this.props;
+    const { setHasInternalTab, setTabPressCallback } = this.props;
 
-    setHasInternTab(true);
+    setHasInternalTab(true);
     setTabPressCallback(() => () => {
       sectionListRef.current?.scrollToLocation({
         animated: true,

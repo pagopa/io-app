@@ -12,7 +12,7 @@ import { IOColors } from "../../components/core/variables/IOColors";
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import {
-  TabBarItemPressType,
+  TabBarItemPressTypeInjectedProps,
   withUseTabItemPressWhenScreenActive
 } from "../../components/helpers/withUseTabItemPressWhenScreenActive";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
@@ -62,7 +62,7 @@ type Props = IOStackNavigationRouteProps<MainTabParamsList, "PROFILE_MAIN"> &
   LightModalContextInterface &
   ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
-  TabBarItemPressType;
+  TabBarItemPressTypeInjectedProps;
 
 type State = {
   tapsOnAppVersion: number;
