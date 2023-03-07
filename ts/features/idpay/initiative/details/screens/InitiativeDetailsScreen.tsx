@@ -43,10 +43,6 @@ const styles = StyleSheet.create({
   },
   flexGrow: {
     flexGrow: 1
-  },
-  paddedContent: {
-    flex: 1,
-    paddingTop: 80
   }
 });
 
@@ -124,28 +120,17 @@ export const InitiativeDetailsScreen = () => {
 
     return (
       <SafeAreaView style={IOStyles.flex}>
-        <ScrollView
-          style={IOStyles.flex}
-          bounces={false}
-          contentContainerStyle={styles.flexGrow}
-        >
-          <LinearGradient colors={[IOColors.bluegrey, IOColors.bluegreyDark]}>
-            <View
-              style={[IOStyles.horizontalContentPadding, { height: 149 }]}
-            />
-          </LinearGradient>
+        <ScrollView bounces={false}>
           <InitiativeCardComponent initiative={initiativeData} />
           <View
             style={[
               IOStyles.flex,
               IOStyles.horizontalContentPadding,
-              styles.flexGrow,
-              {
-                paddingTop: customVariables.contentPadding
-              }
+              styles.flexGrow
             ]}
           >
-            <View style={styles.paddedContent}>
+            <VSpacer size={16} />
+            <View style={IOStyles.flex}>
               {initiativeNeedsConfiguration && (
                 <InitiativeNotConfiguredComponent
                   initiativeName={initiativeData.initiativeName ?? ""}
@@ -162,6 +147,7 @@ export const InitiativeDetailsScreen = () => {
               )}
             </View>
           </View>
+          <VSpacer size={32} />
         </ScrollView>
         {initiativeNeedsConfiguration && (
           <FooterWithButtons
@@ -182,18 +168,15 @@ export const InitiativeDetailsScreen = () => {
 
   return (
     <BaseScreenComponent
-      dark={true}
-      titleColor={"white"}
       goBack={true}
-      headerTitle={initiativeData?.initiativeName}
-      headerBackgroundColor={IOColors.bluegrey}
+      headerBackgroundColor={IOColors.blueNew50}
     >
       <FocusAwareStatusBar
-        backgroundColor={IOColors.bluegrey}
-        barStyle={"light-content"}
+        backgroundColor={IOColors.blueNew50}
+        barStyle={"dark-content"}
       />
       <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={100}>
-        {renderContent()}
+        {isLoading ? null : renderContent()}
       </LoadingSpinnerOverlay>
     </BaseScreenComponent>
   );

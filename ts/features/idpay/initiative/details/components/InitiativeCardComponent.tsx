@@ -1,17 +1,15 @@
-import { Text } from "native-base";
+import { Badge } from "native-base";
 import * as React from "react";
-import { Image, ImageBackground, StyleSheet, View } from "react-native";
-import { widthPercentageToDP } from "react-native-responsive-screen";
+import { ImageBackground, StyleSheet, View } from "react-native";
 import {
   InitiativeDTO,
   StatusEnum as InitiativeStatusEnum
 } from "../../../../../../definitions/idpay/InitiativeDTO";
-import bonusVacanzeWhiteLogo from "../../../../../../img/bonus/bonusVacanze/logo_BonusVacanze_White.png";
 import cardBg from "../../../../../../img/features/idpay/card_full.png";
-import { makeFontStyleObject } from "../../../../../components/core/fonts";
 import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
-import { H2 } from "../../../../../components/core/typography/H2";
-import { H5 } from "../../../../../components/core/typography/H5";
+import { Body } from "../../../../../components/core/typography/Body";
+import { H1 } from "../../../../../components/core/typography/H1";
+import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";
@@ -23,52 +21,30 @@ type Props = {
 };
 
 const styles = StyleSheet.create({
-  fullHeight: {
-    height: "100%"
-  },
   cardContainer: {
-    height: 230,
-    width: widthPercentageToDP(100)
+    paddingHorizontal: 8
   },
-  card: {
-    position: "absolute",
-    alignSelf: "center",
-    width: widthPercentageToDP(100),
-    height: 230
+  cardImg: {
+    height: 320
   },
-  imageFull: {
+  imageBG: {
     zIndex: -1
+  },
+  badge: {
+    backgroundColor: IOColors.blue
   },
   row: {
     flexDirection: "row",
     alignItems: "center",
     textAlign: "center"
   },
-  spaced: {
-    justifyContent: "space-between"
-  },
-  bottomInitiativeIcon: {
-    flex: 1,
-    justifyContent: "flex-end"
-  },
+
   paddedMainContent: {
-    zIndex: 1,
     padding: 32,
-    width: "100%",
-    height: "100%",
-    position: "absolute"
+    paddingTop: 0,
+    flex: 1
   },
-  amount: {
-    lineHeight: 32,
-    fontSize: 24,
-    color: IOColors.white,
-    ...makeFontStyleObject("Bold", undefined, "TitilliumWeb")
-  },
-  logo: {
-    resizeMode: "contain",
-    height: 65,
-    width: 65
-  },
+
   consumedOpacity: {
     opacity: 0.5
   }
@@ -81,73 +57,99 @@ const InitiativeCardComponent = (props: Props) => {
   const isInitiativeConfigured = status === InitiativeStatusEnum.REFUNDABLE;
   const toBeRepaidAmount = (accrued || 0) - (refunded || 0);
 
-  const renderFullCard = () => (
-    <View style={[styles.row, styles.spaced, IOStyles.flex]}>
-      <View style={[styles.fullHeight, styles.spaced]}>
-        <View>
-          <VSpacer size={8} />
-          <H2 color="white">{initiativeName}</H2>
-          <Text style={{ color: IOColors.white }}>
-            {I18n.t("idpay.initiative.details.initiativeCard.validUntil", {
-              expiryDate: formatDateAsLocal(endDate, true)
-            })}
-          </Text>
-        </View>
-        <View style={styles.row}>
-          <View>
-            <Text
-              bold={true}
-              style={[
-                !isInitiativeConfigured ? styles.consumedOpacity : {},
-                styles.amount
-              ]}
-            >
-              {formatNumberAmount(amount || 0, true)}
-            </Text>
-            <H5 color="white">
-              {I18n.t(
-                "idpay.initiative.details.initiativeCard.availableAmount"
-              )}
-            </H5>
-          </View>
+  const dateString = formatDateAsLocal(endDate, true);
+
+  const remainingAmount = (amount || 0) - (refunded || 0);
+  const remainintPercentage =
+    (remainingAmount / (amount || remainingAmount)) * 100;
+
+  const renderNewCard = () => (
+    <View style={IOStyles.flex}>
+      {/* top part */}
+      <View style={[IOStyles.flex, { flex: 2, alignItems: "center" }]}>
+        <View
+          style={{
+            backgroundColor: IOColors.white,
+            height: 56,
+            width: 56,
+            borderRadius: 8
+          }}
+        ></View>
+        <VSpacer size={8} />
+        <H1>{initiativeName}</H1>
+        <Body>{/* the ministry would go here */}</Body>
+        <VSpacer size={8} />
+        <View style={[IOStyles.row, { alignItems: "center" }]}>
+          <Badge style={styles.badge}>
+            <LabelSmall color="white">
+              {isInitiativeConfigured ? "ATTIVO" : "ERRORE"}
+            </LabelSmall>
+          </Badge>
           <HSpacer size={8} />
-          <View>
-            <Text
-              bold={true}
-              style={[
-                !isInitiativeConfigured ? styles.consumedOpacity : {},
-                styles.amount
-              ]}
-            >
-              {formatNumberAmount(toBeRepaidAmount, true)}
-            </Text>
-            <H5 color="white">
-              {I18n.t("idpay.initiative.details.initiativeCard.toRefund")}
-            </H5>
-          </View>
+          <LabelSmall color="bluegreyDark">
+            {isInitiativeConfigured ? "Fino al" : "Scade il"} {dateString}
+          </LabelSmall>
         </View>
       </View>
-      <View>
-        <View
-          style={styles.bottomInitiativeIcon}
-          accessible={true}
-          importantForAccessibility={"no-hide-descendants"}
-          accessibilityElementsHidden={true}
-        >
-          <Image source={bonusVacanzeWhiteLogo} style={styles.logo} />
+      <VSpacer size={48} />
+
+      {/* bottom part */}
+      <View
+        style={[
+          IOStyles.flex,
+          styles.row,
+          { alignItems: "flex-end", justifyContent: "space-evenly" }
+        ]}
+      >
+        <View style={{ alignItems: "center" }}>
+          <LabelSmall color="bluegreyDark" weight="Regular">
+            {I18n.t("idpay.initiative.details.initiativeCard.availableAmount")}
+          </LabelSmall>
+          <H1 style={!isInitiativeConfigured ? styles.consumedOpacity : {}}>
+            {formatNumberAmount((amount || 0) - (refunded || 0), true)}
+          </H1>
+          <VSpacer size={8} />
+          <View
+            style={{
+              height: 4,
+              backgroundColor: IOColors.white,
+              width: "100%",
+              borderRadius: 4
+            }}
+          >
+            <View
+              style={{
+                width: `${remainintPercentage}%`,
+                backgroundColor: IOColors.blue,
+                flex: 1,
+                borderRadius: 4
+              }}
+            ></View>
+          </View>
+        </View>
+        <View style={{ alignItems: "center" }}>
+          <LabelSmall color="bluegreyDark" weight="Regular">
+            {I18n.t("idpay.initiative.details.initiativeCard.toRefund")}
+          </LabelSmall>
+          <H1 style={!isInitiativeConfigured ? styles.consumedOpacity : {}}>
+            {formatNumberAmount(toBeRepaidAmount, true)}
+          </H1>
+          <VSpacer size={4} />
+          <VSpacer size={8} />
         </View>
       </View>
     </View>
   );
 
   return (
-    <View style={styles.card} testID={"card-component"}>
+    <View style={styles.cardContainer} testID={"card-component"}>
       <ImageBackground
         source={cardBg}
-        imageStyle={[styles.imageFull]}
-        style={styles.cardContainer}
-      />
-      <View style={styles.paddedMainContent}>{renderFullCard()}</View>
+        imageStyle={styles.imageBG}
+        style={styles.cardImg}
+      >
+        <View style={styles.paddedMainContent}>{renderNewCard()}</View>
+      </ImageBackground>
     </View>
   );
 };
