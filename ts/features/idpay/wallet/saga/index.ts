@@ -23,7 +23,9 @@ import {
   preferredLanguageSelector
 } from "../../../../store/reducers/persistedPreferences";
 import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
-import { fromLocaleToPreferredLanguage } from "../../../../utils/locale";
+import { waitBackoffError } from "../../../../utils/backoffError";
+import { IDPayClient } from "../../common/api/client";
+import { idPayWalletGet } from "../store/actions";
 import { handleGetIDPayWallet } from "./handleGetIDPayWallet";
 import { handleGetIDPayInitiativesFromInstrument } from "./handleGetIDPayInitiativesFromInstrument";
 import {
@@ -35,27 +37,18 @@ import {
  * Handle the IDPay Wallet requests
  * @param bearerToken
  */
-export function* watchIDPayWalletSaga(bearerToken: string): SagaIterator {
-  const isPagoPATestEnabled = yield* select(isPagoPATestEnabledSelector);
-  const baseUrl = isPagoPATestEnabled ? idPayApiUatBaseUrl : idPayApiBaseUrl;
-  const token = idPayTestToken ?? bearerToken;
-
-  const idPayWalletClient = createIDPayWalletClient(baseUrl);
-  const language = yield* select(preferredLanguageSelector);
-
-  const preferredLanguage = pipe(
-    language,
-    O.map(fromLocaleToPreferredLanguage),
-    O.getOrElse(() => PreferredLanguageEnum.it_IT)
-  );
-
+export function* watchIDPayWalletSaga(
+  idPayClient: IDPayClient,
+  token: string,
+  preferredLanguage: PreferredLanguageEnum
+): SagaIterator {
   // handle the request of getting id pay wallet
   yield* takeLatest(idPayWalletGet.request, function* () {
     // wait backoff time if there were previous errors
     yield* call(waitBackoffError, idPayWalletGet.failure);
     yield* call(
       handleGetIDPayWallet,
-      idPayWalletClient.getWallet,
+      idPayClient.getWallet,
       token,
       preferredLanguage
     );

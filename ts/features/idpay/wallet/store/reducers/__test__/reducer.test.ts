@@ -8,7 +8,7 @@ import {
   idPayInitiativeAwaitingUpdateSelector,
   idPayAreInitiativesFromInstrumentLoadingSelector
 } from "..";
-import { WalletDTO } from "../../../../../../../definitions/idpay/wallet/WalletDTO";
+import { WalletDTO } from "../../../../../../../definitions/idpay/WalletDTO";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { NetworkError } from "../../../../../../utils/errors";
