@@ -177,12 +177,14 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
             </View>
             <HSpacer size={8} />
             {O.isSome(maybeStatusDescription) && (
-              <IOBadge
-                small
-                variant="solid"
-                color="white"
-                text={maybeStatusDescription.value}
-              />
+              <View style={{ alignSelf: "flex-start" }}>
+                <IOBadge
+                  small
+                  variant="solid"
+                  color="white"
+                  text={maybeStatusDescription.value}
+                />
+              </View>
             )}
           </View>
           <VSpacer size={16} />

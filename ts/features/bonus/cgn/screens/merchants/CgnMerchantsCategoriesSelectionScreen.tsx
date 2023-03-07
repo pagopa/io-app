@@ -68,14 +68,16 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
           child={
             <View style={[{ justifyContent: "flex-end" }, IOStyles.flex]}>
               <VSpacer size={16} />
-              <IOBadge
-                small
-                text={`${info.item.newDiscounts} ${I18n.t(
-                  "bonus.cgn.merchantsList.news"
-                )}`}
-                variant="solid"
-                color="white"
-              />
+              <View style={{ alignSelf: "flex-start" }}>
+                <IOBadge
+                  small
+                  text={`${info.item.newDiscounts} ${I18n.t(
+                    "bonus.cgn.merchantsList.news"
+                  )}`}
+                  variant="solid"
+                  color="white"
+                />
+              </View>
             </View>
           }
         />
@@ -97,14 +99,16 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
             >
               {countAvailable && (
                 <View style={IOStyles.flex}>
-                  <IOBadge
-                    small
-                    text={`${info.item.newDiscounts} ${I18n.t(
-                      "bonus.cgn.merchantsList.news"
-                    )}`}
-                    variant="solid"
-                    color="white"
-                  />
+                  <View style={{ alignSelf: "flex-start" }}>
+                    <IOBadge
+                      small
+                      text={`${info.item.newDiscounts} ${I18n.t(
+                        "bonus.cgn.merchantsList.news"
+                      )}`}
+                      variant="solid"
+                      color="white"
+                    />
+                  </View>
                 </View>
               )}
               {s.icon({

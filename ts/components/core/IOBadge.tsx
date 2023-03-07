@@ -73,7 +73,6 @@ const defaultColor: IOBadgeProps["color"] = "blue";
 
 const styles = StyleSheet.create({
   badge: {
-    alignSelf: "flex-start",
     alignItems: "center",
     textAlignVertical: "center", // Android
     justifyContent: "center",
@@ -86,7 +85,7 @@ const styles = StyleSheet.create({
   },
   label: {
     alignSelf: "center",
-    ...makeFontStyleObject("SemiBold", undefined, "TitilliumWeb")
+    ...makeFontStyleObject("SemiBold")
   },
   labelSizeDefault: {
     fontSize: 14,
