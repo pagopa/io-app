@@ -21,7 +21,6 @@ import {
   cdcEnabled,
   cgnMerchantsV2Enabled,
   fciEnabled,
-  idPayEnabled,
   pnEnabled,
   premiumMessagesOptInEnabled,
   scanAdditionalBarcodesEnabled,
@@ -33,6 +32,7 @@ import { getAppVersion, isVersionSupported } from "../../utils/appVersion";
 import { backendStatusLoadSuccess } from "../actions/backendStatus";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
+import { isIdPayTestEnabledSelector } from "./persistedPreferences";
 
 export type SectionStatusKey = keyof Sections;
 /** note that this state is not persisted so Option type is accepted
@@ -410,8 +410,9 @@ export const isFciEnabledSelector = createSelector(
 
 export const isIdPayEnabledSelector = createSelector(
   backendStatusSelector,
-  (backendStatus): boolean =>
-    idPayEnabled &&
+  isIdPayTestEnabledSelector,
+  (backendStatus, isIdPayTestEnabled): boolean =>
+    isIdPayTestEnabled &&
     pipe(
       backendStatus,
       O.map(bs =>

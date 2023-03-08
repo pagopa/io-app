@@ -2,21 +2,19 @@ import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { PreferredLanguageEnum } from "../../../../../../definitions/backend/PreferredLanguage";
-import { IbanListDTO } from "../../../../../../definitions/idpay/iban/IbanListDTO";
-import { InitiativeDTO } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
-import { InstrumentDTO } from "../../../../../../definitions/idpay/wallet/InstrumentDTO";
+import { IbanListDTO } from "../../../../../../definitions/idpay/IbanListDTO";
+import { InitiativeDTO } from "../../../../../../definitions/idpay/InitiativeDTO";
+import { InstrumentDTO } from "../../../../../../definitions/idpay/InstrumentDTO";
 import { PaymentManagerClient } from "../../../../../api/pagopa";
 import { PaymentManagerToken, Wallet } from "../../../../../types/pagopa";
 import { SessionManager } from "../../../../../utils/SessionManager";
 import { convertWalletV2toWalletV1 } from "../../../../../utils/walletv2";
-import { IDPayWalletClient } from "../../../wallet/api/client";
-import { IDPayIbanClient } from "../iban/api/client";
+import { IDPayClient } from "../../../common/api/client";
 import { Context } from "./context";
 import { InitiativeFailureType } from "./failure";
 
 const createServicesImplementation = (
-  walletClient: IDPayWalletClient,
-  ibanClient: IDPayIbanClient,
+  idPayClient: IDPayClient,
   paymentManagerClient: PaymentManagerClient,
   pmSessionManager: SessionManager<PaymentManagerToken>,
   bearerToken: string,
@@ -27,7 +25,7 @@ const createServicesImplementation = (
       return Promise.reject(InitiativeFailureType.GENERIC);
     }
 
-    const response = await walletClient.getWalletDetail({
+    const response = await idPayClient.getWalletDetail({
       initiativeId: context.initiativeId,
       bearerAuth: bearerToken,
       "Accept-Language": language
@@ -50,7 +48,7 @@ const createServicesImplementation = (
   };
 
   const loadIbanList = async (_: Context) => {
-    const response = await ibanClient.getIbanList({
+    const response = await idPayClient.getIbanList({
       bearerAuth: bearerToken,
       "Accept-Language": language
     });
@@ -85,7 +83,7 @@ const createServicesImplementation = (
       return Promise.reject(InitiativeFailureType.GENERIC);
     }
     try {
-      const res = await walletClient.enrollIban({
+      const res = await idPayClient.enrollIban({
         "Accept-Language": language,
         bearerAuth: bearerToken,
         initiativeId: context.initiativeId,
@@ -117,7 +115,7 @@ const createServicesImplementation = (
       return Promise.reject(InitiativeFailureType.GENERIC);
     }
 
-    const response = await walletClient.enrollIban({
+    const response = await idPayClient.enrollIban({
       initiativeId: context.initiativeId,
       body: {
         iban: context.selectedIban.iban,
@@ -175,7 +173,7 @@ const createServicesImplementation = (
       return Promise.reject(InitiativeFailureType.GENERIC);
     }
 
-    const response = await walletClient.getInstrumentList({
+    const response = await idPayClient.getInstrumentList({
       initiativeId: context.initiativeId,
       bearerAuth: bearerToken,
       "Accept-Language": language
@@ -210,7 +208,7 @@ const createServicesImplementation = (
       return Promise.reject(InitiativeFailureType.GENERIC);
     }
 
-    const response = await walletClient.enrollInstrument({
+    const response = await idPayClient.enrollInstrument({
       initiativeId: context.initiativeId,
       idWallet: context.instrumentToEnroll.idWallet.toString(),
       bearerAuth: bearerToken,
@@ -246,7 +244,7 @@ const createServicesImplementation = (
       return Promise.reject(InitiativeFailureType.GENERIC);
     }
 
-    const response = await walletClient.deleteInstrument({
+    const response = await idPayClient.deleteInstrument({
       initiativeId: context.initiativeId,
       instrumentId: context.instrumentToDelete.instrumentId,
       bearerAuth: bearerToken,

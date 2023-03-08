@@ -19,6 +19,7 @@ import {
   preferredLanguageSaveSuccess,
   serviceAlertDisplayedOnceSuccess,
   preferencesPnTestEnvironmentSetEnabled,
+  preferencesIdPayTestSetEnabled,
   preferencesDesignSystemSetEnabled
 } from "../actions/persistedPreferences";
 import { Action } from "../actions/types";
@@ -38,6 +39,7 @@ export type PersistedPreferencesState = Readonly<{
   continueWithRootOrJailbreak?: boolean;
   isMixpanelEnabled: boolean | null;
   isPnTestEnabled: boolean;
+  isIdPayTestEnabled?: boolean;
   isDesignSystemEnabled: boolean;
 }>;
 
@@ -52,6 +54,7 @@ export const initialPreferencesState: PersistedPreferencesState = {
   continueWithRootOrJailbreak: false,
   isMixpanelEnabled: null,
   isPnTestEnabled: false,
+  isIdPayTestEnabled: false,
   isDesignSystemEnabled: false
 };
 
@@ -147,6 +150,13 @@ export default function preferencesReducer(
     };
   }
 
+  if (isActionOf(preferencesIdPayTestSetEnabled, action)) {
+    return {
+      ...state,
+      isIdPayTestEnabled: action.payload.isIdPayTestEnabled
+    };
+  }
+
   return state;
 }
 
@@ -177,6 +187,9 @@ export const isMixpanelEnabled = (state: GlobalState): boolean | null =>
 
 export const isPnTestEnabledSelector = (state: GlobalState) =>
   state.persistedPreferences.isPnTestEnabled;
+
+export const isIdPayTestEnabledSelector = (state: GlobalState) =>
+  !!state.persistedPreferences?.isIdPayTestEnabled;
 
 export const isDesignSystemEnabledSelector = (state: GlobalState) =>
   state.persistedPreferences.isDesignSystemEnabled;

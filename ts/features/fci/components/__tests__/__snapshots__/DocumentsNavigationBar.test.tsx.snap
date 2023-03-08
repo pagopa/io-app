@@ -8,7 +8,7 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
         "borderBottomWidth": 0,
         "elevation": 8,
         "position": "relative",
-        "shadowColor": "#000000",
+        "shadowColor": "#0E0F13",
         "shadowOffset": Object {
           "height": 2,
           "width": 0,
