@@ -7,7 +7,11 @@ import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
 import { Action } from "../../../../store/actions/types";
-import { lollipopKeyTagSave, lollipopSetPublicKey } from "../actions/lollipop";
+import {
+  lollipopKeyTagSave,
+  lollipopRemovePublicKey,
+  lollipopSetPublicKey
+} from "../actions/lollipop";
 import { GlobalState } from "../../../../store/reducers/types";
 
 export type LollipopState = Readonly<{
@@ -35,6 +39,11 @@ export default function lollipopReducer(
         ...state,
         publicKey: action.payload.publicKey
       };
+    case getType(lollipopRemovePublicKey):
+      return {
+        ...state,
+        publicKey: undefined
+      };
     default:
       return state;
   }
@@ -51,3 +60,12 @@ export const lollipopKeyTagSelector = createSelector(
       O.chainNullableK(lollipop => lollipop.keyTag)
     )
 );
+
+export const lollipopPublicKeySelector: (
+  state: GlobalState
+) => O.Option<PublicKey> = (state: GlobalState) =>
+  pipe(
+    state.lollipop,
+    O.fromNullable,
+    O.chainNullableK(lollipop => lollipop.publicKey)
+  );

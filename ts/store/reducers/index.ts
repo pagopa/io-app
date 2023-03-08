@@ -225,7 +225,9 @@ export function createRootReducer(
             },
             lollipop: {
               ...initialLollipopState,
-              keyTag: state.lollipop.keyTag
+              keyTag: state.lollipop.keyTag,
+              // eslint-disable-next-line no-underscore-dangle
+              _persist: state.lollipop._persist
             }
           } as GlobalState)
         : state;

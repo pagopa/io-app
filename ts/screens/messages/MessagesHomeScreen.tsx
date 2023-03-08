@@ -3,7 +3,7 @@ import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React, { useEffect } from "react";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import { Dispatch } from "redux";
 
 import { createSelector } from "reselect";
@@ -22,7 +22,7 @@ import SectionStatusComponent, {
 } from "../../components/SectionStatus";
 import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
 import { unsupportedDeviceMoreInfoUrl } from "../../config";
-import { usePublicKeyState } from "../../features/lollipop/hooks/usePublicKeyState";
+import { lollipopPublicKeySelector } from "../../features/lollipop/store/reducers/lollipop";
 import I18n from "../../i18n";
 import MessagesHomeTabNavigator from "../../navigation/MessagesHomeTabNavigator";
 import {
@@ -84,7 +84,12 @@ const MessagesHomeScreen = ({
 }: Props) => {
   const needsMigration = Object.keys(messagesStatus).length > 0;
 
-  const publicKeyState = usePublicKeyState();
+  const publicKeyOption = useSelector(lollipopPublicKeySelector);
+  console.log(
+    `=== MessagesHomeScreen publicKeyOption (${JSON.stringify(
+      publicKeyOption
+    )})`
+  );
 
   useOnFirstRender(() => {
     if (needsMigration) {
@@ -123,7 +128,7 @@ const MessagesHomeScreen = ({
 
   const isLollipopEnabled = useIOSelector(isLollipopEnabledSelector);
   const showUnsupportedDeviceBanner =
-    isLollipopEnabled && publicKeyState.kind === "error";
+    isLollipopEnabled && O.isNone(publicKeyOption);
   const unsupportedDevicesStatusComponent = showUnsupportedDeviceBanner && (
     <InnerSectionStatus
       sectionKey={"messages"}
