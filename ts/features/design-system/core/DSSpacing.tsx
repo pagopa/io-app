@@ -16,10 +16,10 @@ import { LabelSmall } from "../../../components/core/typography/LabelSmall";
 
 const styles = StyleSheet.create({
   debugComponent: {
-    backgroundColor: IOColors.grey200
+    backgroundColor: IOColors["grey-200"]
   },
   contentWrapperBg: {
-    backgroundColor: IOColors.grey50,
+    backgroundColor: IOColors["grey-50"],
     paddingVertical: 16
   }
 });
@@ -45,7 +45,7 @@ export const DSSpacing = () => (
                 style={{ position: "absolute", right: 4, top: 4 }}
                 fontSize="small"
                 weight="Regular"
-                color="grey700"
+                color="grey-700"
               >
                 {value}
               </LabelSmall>

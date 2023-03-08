@@ -33,8 +33,7 @@ import {
   pagoPaApiUrlPrefixTest,
   pnEnabled,
   svEnabled,
-  zendeskEnabled,
-  idPayEnabled
+  zendeskEnabled
 } from "../config";
 import { watchBonusSaga } from "../features/bonus/bonusVacanze/store/sagas/bonusSaga";
 import { watchBonusBpdSaga } from "../features/bonus/bpd/saga";
@@ -68,7 +67,10 @@ import { lollipopKeyTagSelector } from "../features/lollipop/store/reducers/loll
 import { generateLollipopKeySaga } from "../features/lollipop/saga";
 import { IdentificationResult } from "../store/reducers/identification";
 import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
-import { isPagoPATestEnabledSelector } from "../store/reducers/persistedPreferences";
+import {
+  isIdPayTestEnabledSelector,
+  isPagoPATestEnabledSelector
+} from "../store/reducers/persistedPreferences";
 import {
   isProfileFirstOnBoarding,
   profileSelector
@@ -83,8 +85,7 @@ import { differentProfileLoggedIn } from "../store/actions/crossSessions";
 import { clearAllAttachments } from "../features/messages/saga/clearAttachments";
 import { watchMessageAttachmentsSaga } from "../features/messages/saga/attachments";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
-import { watchIDPayWalletSaga } from "../features/idpay/wallet/saga";
-import { idpayInitiativeDetailsSaga } from "../features/idpay/initiative/details/saga";
+import { watchIDPaySaga } from "../features/idpay/common/saga";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -443,13 +444,12 @@ export function* initializeApplicationSaga(): Generator<
   // third-party message attachments, PN attachments and MVL ones)
   yield* fork(watchMessageAttachmentsSaga, sessionToken);
 
-  if (idPayEnabled) {
-    // Start watching for IDPay wallet actions
-    yield* fork(watchIDPayWalletSaga, maybeSessionInformation.value.bpdToken);
-    yield* fork(
-      idpayInitiativeDetailsSaga,
-      maybeSessionInformation.value.bpdToken
-    );
+  const idPayTestEnabled: ReturnType<typeof isIdPayTestEnabledSelector> =
+    yield* select(isIdPayTestEnabledSelector);
+
+  if (idPayTestEnabled) {
+    // Start watching for IDPay actions
+    yield* fork(watchIDPaySaga, maybeSessionInformation.value.bpdToken);
   }
 
   if (fciEnabled) {

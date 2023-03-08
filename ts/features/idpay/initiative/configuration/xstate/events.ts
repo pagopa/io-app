@@ -1,6 +1,6 @@
-import { IbanDTO } from "../../../../../../definitions/idpay/iban/IbanDTO";
-import { IbanPutDTO } from "../../../../../../definitions/idpay/wallet/IbanPutDTO";
-import { InstrumentDTO } from "../../../../../../definitions/idpay/wallet/InstrumentDTO";
+import { IbanDTO } from "../../../../../../definitions/idpay/IbanDTO";
+import { IbanPutDTO } from "../../../../../../definitions/idpay/IbanPutDTO";
+import { InstrumentDTO } from "../../../../../../definitions/idpay/InstrumentDTO";
 import { Wallet } from "../../../../../types/pagopa";
 import { ConfigurationMode } from "./context";
 

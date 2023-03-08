@@ -19,6 +19,9 @@ import {
   withBearerToken as withToken
 } from "../../../utils/api";
 import { defaultRetryingFetch } from "../../../utils/fetch";
+import { LollipopConfig } from "../../lollipop";
+import { lollipopFetch } from "../../lollipop/utils/fetch";
+import { KeyInfo } from "../../../utils/crypto";
 
 const getSignatureDetailViewById: GetSignatureRequestByIdT = {
   method: "get",
@@ -59,6 +62,7 @@ const postSignature: CreateSignatureT = {
 export const BackendFciClient = (
   baseUrl: string,
   token: SessionToken,
+  keyInfo: KeyInfo = {},
   fetchApi: typeof fetch = defaultRetryingFetch()
 ) => {
   const options = {
@@ -76,8 +80,14 @@ export const BackendFciClient = (
     postQtspFilledBody: withBearerToken(
       createFetchRequestForApi(postQtspFilledBody, options)
     ),
-    postSignature: withBearerToken(
-      createFetchRequestForApi(postSignature, options)
-    )
+    postSignature: (lollipopConfig: LollipopConfig) => {
+      const lpFetch = lollipopFetch(lollipopConfig, keyInfo);
+      return withBearerToken(
+        createFetchRequestForApi(postSignature, {
+          ...options,
+          fetchApi: lpFetch
+        })
+      );
+    }
   };
 };
