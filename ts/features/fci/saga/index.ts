@@ -42,6 +42,8 @@ import {
   fciQtspNonceSelector
 } from "../store/reducers/fciQtspClauses";
 import { fciDocumentSignaturesSelector } from "../store/reducers/fciDocumentSignatures";
+import { lollipopKeyTagSelector } from "../../lollipop/store/reducers/lollipop";
+import { getCryptoPublicKey } from "../../../sagas/startup/generateCryptoKeyPair";
 import { handleGetSignatureRequestById } from "./networking/handleGetSignatureRequestById";
 import { handleGetQtspMetadata } from "./networking/handleGetQtspMetadata";
 import { handleCreateFilledDocument } from "./networking/handleCreateFilledDocument";
@@ -53,7 +55,9 @@ import { handleCreateSignature } from "./networking/handleCreateSignature";
  * @param bearerToken
  */
 export function* watchFciSaga(bearerToken: SessionToken): SagaIterator {
-  const fciClient = BackendFciClient(apiUrlPrefix, bearerToken);
+  const keyTag = yield* select(lollipopKeyTagSelector);
+  const keyInfo = yield* call(getCryptoPublicKey, keyTag);
+  const fciClient = BackendFciClient(apiUrlPrefix, bearerToken, keyInfo);
 
   // handle the request of getting FCI signatureRequestDetails
   yield* takeLatest(

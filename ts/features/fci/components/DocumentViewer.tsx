@@ -37,7 +37,7 @@ const renderFooter = (url: string, filePath: string) =>
       type={"SingleButton"}
       leftButton={confirmButtonProps(() => {
         ReactNativeBlobUtil.ios.presentOptionsMenu(filePath);
-      }, I18n.t("features.mvl.details.attachments.pdfPreview.singleBtn"))}
+      }, I18n.t("features.mvl.details.attachments.pdfPreview.open"))}
     />
   ) : (
     <FooterWithButtons

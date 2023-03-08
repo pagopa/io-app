@@ -31,7 +31,7 @@ import SectionCardComponent, {
 import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletHomeHeader from "../../components/wallet/WalletHomeHeader";
 import WalletLayout from "../../components/wallet/WalletLayout";
-import { bonusVacanzeEnabled, bpdEnabled, idPayEnabled } from "../../config";
+import { bonusVacanzeEnabled, bpdEnabled } from "../../config";
 import RequestBonus from "../../features/bonus/bonusVacanze/components/RequestBonus";
 import {
   navigateToAvailableBonusScreen,
@@ -383,7 +383,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
 
         {bpdEnabled && <BpdCardsInWalletContainer />}
         <CgnCardInWalletContainer />
-        {idPayEnabled && <IDPayCardsInWalletContainer />}
+        {this.props.isIdPayEnabled && <IDPayCardsInWalletContainer />}
       </View>
     );
   }
