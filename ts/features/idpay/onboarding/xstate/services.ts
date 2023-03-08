@@ -1,19 +1,19 @@
 /* eslint-disable no-underscore-dangle */
 import * as E from "fp-ts/lib/Either";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { PreferredLanguage } from "../../../../../definitions/backend/PreferredLanguage";
-import { InitiativeDto } from "../../../../../definitions/idpay/onboarding/InitiativeDto";
-import { StatusEnum } from "../../../../../definitions/idpay/onboarding/OnboardingStatusDTO";
-import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/onboarding/RequiredCriteriaDTO";
-import { SelfConsentDTO } from "../../../../../definitions/idpay/onboarding/SelfConsentDTO";
-import { OnboardingClient } from "../api/client";
+import { InitiativeInfoDTO } from "../../../../../definitions/idpay/InitiativeInfoDTO";
+import { StatusEnum as OnbordingStatusEnum } from "../../../../../definitions/idpay/OnboardingStatusDTO";
+import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/RequiredCriteriaDTO";
+import { SelfConsentDTO } from "../../../../../definitions/idpay/SelfConsentDTO";
+import { IDPayClient } from "../../common/api/client";
 import { OnboardingFailureEnum } from "./failure";
 import { Context } from "./machine";
 import { getBoolRequiredCriteriaFromContext } from "./selectors";
 
 const createServicesImplementation = (
-  onboardingClient: OnboardingClient,
+  client: IDPayClient,
   token: string,
   language: PreferredLanguage
 ) => {
@@ -27,12 +27,12 @@ const createServicesImplementation = (
       return Promise.reject(OnboardingFailureEnum.GENERIC);
     }
 
-    const dataResponse = await onboardingClient.getInitiativeData({
+    const dataResponse = await client.getInitiativeData({
       ...clientOptions,
       serviceId: context.serviceId
     });
 
-    const data: Promise<InitiativeDto> = pipe(
+    const data: Promise<InitiativeInfoDTO> = pipe(
       dataResponse,
       E.fold(
         _ => Promise.reject(OnboardingFailureEnum.GENERIC),
@@ -53,28 +53,28 @@ const createServicesImplementation = (
       return Promise.reject(OnboardingFailureEnum.GENERIC);
     }
 
-    const statusResponse = await onboardingClient.onboardingStatus({
+    const statusResponse = await client.onboardingStatus({
       ...clientOptions,
       initiativeId: context.initiative.initiativeId
     });
 
-    const data: Promise<O.Option<StatusEnum>> = pipe(
+    const data: Promise<O.Option<OnbordingStatusEnum>> = pipe(
       statusResponse,
       E.fold(
         _ => Promise.reject(OnboardingFailureEnum.GENERIC),
         response => {
           if (response.status === 200) {
             switch (response.value.status) {
-              case StatusEnum.ELIGIBILE_KO:
+              case OnbordingStatusEnum.ELIGIBILE_KO:
                 return Promise.reject(OnboardingFailureEnum.NOT_ELIGIBLE);
-              case StatusEnum.ONBOARDING_KO:
+              case OnbordingStatusEnum.ONBOARDING_KO:
                 return Promise.reject(OnboardingFailureEnum.NO_REQUIREMENTS);
-              case StatusEnum.ONBOARDING_OK:
+              case OnbordingStatusEnum.ONBOARDING_OK:
                 return Promise.reject(OnboardingFailureEnum.ONBOARDED);
-              case StatusEnum.UNSUBSCRIBED:
+              case OnbordingStatusEnum.UNSUBSCRIBED:
                 return Promise.reject(OnboardingFailureEnum.UNSUBSCRIBED);
-              case StatusEnum.ELIGIBLE:
-              case StatusEnum.ON_EVALUATION:
+              case OnbordingStatusEnum.ELIGIBLE:
+              case OnbordingStatusEnum.ON_EVALUATION:
                 return Promise.reject(OnboardingFailureEnum.ON_EVALUATION);
               default:
                 return Promise.resolve(O.some(response.value.status));
@@ -97,7 +97,7 @@ const createServicesImplementation = (
       return Promise.reject(OnboardingFailureEnum.GENERIC);
     }
 
-    const response = await onboardingClient.onboardingCitizen({
+    const response = await client.onboardingCitizen({
       ...clientOptions,
       body: {
         initiativeId: context.initiative.initiativeId
@@ -126,7 +126,7 @@ const createServicesImplementation = (
       return Promise.reject(OnboardingFailureEnum.GENERIC);
     }
 
-    const response = await onboardingClient.checkPrerequisites({
+    const response = await client.checkPrerequisites({
       ...clientOptions,
       body: {
         initiativeId: context.initiative.initiativeId
@@ -174,7 +174,7 @@ const createServicesImplementation = (
       ...Object.values(multiConsentsAnswers)
     ] as Array<SelfConsentDTO>;
 
-    const response = await onboardingClient.consentOnboarding({
+    const response = await client.consentOnboarding({
       ...clientOptions,
       body: {
         initiativeId: initiative.initiativeId,

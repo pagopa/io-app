@@ -1,11 +1,11 @@
 import * as p from "@pagopa/ts-commons/lib/pot";
-import { IbanDTO } from "../../../../../../definitions/idpay/iban/IbanDTO";
-import { IbanPutDTO } from "../../../../../../definitions/idpay/wallet/IbanPutDTO";
-import { InitiativeDTO } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
+import { IbanDTO } from "../../../../../../definitions/idpay/IbanDTO";
+import { IbanPutDTO } from "../../../../../../definitions/idpay/IbanPutDTO";
+import { InitiativeDTO } from "../../../../../../definitions/idpay/InitiativeDTO";
 import {
   InstrumentDTO,
   StatusEnum as InstrumentStatusEnum
-} from "../../../../../../definitions/idpay/wallet/InstrumentDTO";
+} from "../../../../../../definitions/idpay/InstrumentDTO";
 import { Wallet } from "../../../../../types/pagopa";
 import { InitiativeFailureType } from "./failure";
 

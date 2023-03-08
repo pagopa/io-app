@@ -1,20 +1,20 @@
 import * as React from "react";
 import configureMockStore from "redux-mock-store";
 import { interpret } from "xstate";
-import { applicationChangeState } from "../../../../../../../store/actions/application";
-import { appReducer } from "../../../../../../../store/reducers";
-import { GlobalState } from "../../../../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../../../../utils/testWrapper";
-import { IDPayConfigurationRoutes } from "../../../navigation/navigator";
-import { createIDPayInitiativeConfigurationMachine } from "../../../xstate/machine";
-import { ConfigurationMachineContext } from "../../../xstate/provider";
+import { applicationChangeState } from "../../../../../../store/actions/application";
+import { appReducer } from "../../../../../../store/reducers";
+import { GlobalState } from "../../../../../../store/reducers/types";
+import { renderScreenFakeNavRedux } from "../../../../../../utils/testWrapper";
+import { IDPayConfigurationRoutes } from "../../navigation/navigator";
+import { createIDPayInitiativeConfigurationMachine } from "../../xstate/machine";
+import { ConfigurationMachineContext } from "../../xstate/provider";
 import IbanEnrollmentScreen from "../IbanEnrollmentScreen";
-import I18n from "../../../../../../../i18n";
+import I18n from "../../../../../../i18n";
 import {
   ConfigurationMode,
   Context,
   INITIAL_CONTEXT
-} from "../../../xstate/context";
+} from "../../xstate/context";
 
 describe("IbanEnrollmentScreen", () => {
   beforeEach(() => {
