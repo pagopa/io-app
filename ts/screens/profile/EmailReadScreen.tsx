@@ -7,7 +7,6 @@
  */
 import * as React from "react";
 import EmailReadScreenComponent from "../../components/EmailReadScreenComponent";
-import RemindEmailValidationOverlay from "../../components/RemindEmailValidationOverlay";
 import { SingleButton } from "../../components/ui/BlockButtons";
 import { useValidatedEmailModal } from "../../hooks/useValidateEmailModal";
 import I18n from "../../i18n";
