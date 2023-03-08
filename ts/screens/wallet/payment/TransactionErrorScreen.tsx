@@ -2,7 +2,7 @@
  * The screen to display to the user the various types of errors that occurred during the transaction.
  * Inside the cancel and retry buttons are conditionally returned.
  */
-import { RptId, RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import { RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
