@@ -1,4 +1,3 @@
-import { RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { Text as NBText } from "native-base";
@@ -53,7 +52,6 @@ import {
   appendLog,
   assistanceToolRemoteConfig,
   resetCustomFields,
-  zendeskBlockedPaymentRptIdId,
   zendeskCategoryId,
   zendeskPaymentCategory,
   zendeskPaymentFailure,
@@ -117,21 +115,18 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
     // Set pagamenti_pagopa as category
     addTicketCustomField(zendeskCategoryId, zendeskPaymentCategory.value);
 
-    // Add rptId custom field
-    addTicketCustomField(
-      zendeskBlockedPaymentRptIdId,
-      RptIdFromString.encode(this.props.route.params.payment.data)
-    );
     // Add organization fiscal code custom field
     addTicketCustomField(
       zendeskPaymentOrgFiscalCode,
       this.props.route.params.payment.data.organizationFiscalCode
     );
-    // Add failure custom field
-    addTicketCustomField(
-      zendeskPaymentFailure,
-      this.props.route.params.payment.failure as string
-    );
+    if (this.props.route.params.payment.failure) {
+      // Add failure custom field
+      addTicketCustomField(
+        zendeskPaymentFailure,
+        this.props.route.params.payment.failure
+      );
+    }
     // Add start origin custom field
     addTicketCustomField(
       zendeskPaymentStartOrigin,

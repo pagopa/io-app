@@ -59,7 +59,6 @@ import {
   appendLog,
   assistanceToolRemoteConfig,
   resetCustomFields,
-  zendeskBlockedPaymentRptIdId,
   zendeskCategoryId,
   zendeskPaymentCategory,
   zendeskPaymentFailure,
@@ -113,11 +112,6 @@ const requestZendeskAssistanceForPaymentFailure = (
   // Set pagamenti_pagopa as category
   addTicketCustomField(zendeskCategoryId, zendeskPaymentCategory.value);
 
-  // Add rptId custom field
-  addTicketCustomField(
-    zendeskBlockedPaymentRptIdId,
-    RptIdFromString.encode(rptId)
-  );
   // Add organization fiscal code custom field
   addTicketCustomField(
     zendeskPaymentOrgFiscalCode,
@@ -126,8 +120,10 @@ const requestZendeskAssistanceForPaymentFailure = (
   // Add rptId custom field
   addTicketCustomField(zendeskPaymentNav, getCodiceAvviso(rptId));
   if (payment) {
-    // Add failure custom field
-    addTicketCustomField(zendeskPaymentFailure, payment.failure as string);
+    if (payment.failure) {
+      // Add failure custom field
+      addTicketCustomField(zendeskPaymentFailure, payment.failure);
+    }
     // Add start origin custom field
     addTicketCustomField(zendeskPaymentStartOrigin, payment.startOrigin);
     // Append the payment history details in the log

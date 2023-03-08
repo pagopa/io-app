@@ -1,7 +1,4 @@
-import {
-  PaymentNoticeNumberFromString,
-  RptIdFromString
-} from "@pagopa/io-pagopa-commons/lib/pagopa";
+import { PaymentNoticeNumberFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -68,7 +65,6 @@ import {
   addTicketCustomField,
   appendLog,
   resetCustomFields,
-  zendeskBlockedPaymentRptIdId,
   zendeskCategoryId,
   zendeskPaymentCategory,
   zendeskPaymentFailure,
@@ -479,18 +475,14 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
   ) => {
     resetCustomFields();
     addTicketCustomField(zendeskCategoryId, zendeskPaymentCategory.value);
-    addTicketCustomField(
-      zendeskBlockedPaymentRptIdId,
-      RptIdFromString.encode(rptId)
-    );
     // Add organization fiscal code custom field
     addTicketCustomField(
       zendeskPaymentOrgFiscalCode,
       rptId.organizationFiscalCode
     );
-    if (O.isSome(error)) {
+    if (O.isSome(error) && error.value) {
       // Add failure custom field
-      addTicketCustomField(zendeskPaymentFailure, error.value as string);
+      addTicketCustomField(zendeskPaymentFailure, error.value);
     }
     // Add start origin custom field
     addTicketCustomField(zendeskPaymentStartOrigin, paymentStartOrigin);
