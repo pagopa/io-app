@@ -198,17 +198,17 @@ const mapColorStates: Record<
     border: {
       default: IOColors.white,
       pressed: IOColors.white,
-      disabled: hexToRgba(IOColors.white, 0.5)
+      disabled: IOColors.blueNew200
     },
     background: {
-      default: hexToRgba(IOColors.white, 0),
-      pressed: hexToRgba(IOColors.white, 0.2),
+      default: hexToRgba(IOColors.blueNew600, 0),
+      pressed: IOColors.blueNew600,
       disabled: "transparent"
     },
     label: {
       default: IOColors.white,
       pressed: IOColors.white,
-      disabled: hexToRgba(IOColors.white, 0.5)
+      disabled: IOColors.blueNew200
     }
   },
   // Danger button
@@ -266,6 +266,8 @@ ButtonOutline) => {
   // Interpolate animation values from `isPressed` values
   const pressedAnimationStyle = useAnimatedStyle(() => {
     // Link color states to the pressed states
+
+    /* ◀ REMOVE_LEGACY_COMPONENT: Remove the following condition */
     const backgroundColor = isDesignSystemEnabled
       ? interpolateColor(
           progressPressed.value,
@@ -301,6 +303,7 @@ ButtonOutline) => {
             mapLegacyColorStates[color].border.pressed
           ]
         );
+    /* REMOVE_LEGACY_COMPONENT: End ▶ */
 
     // Scale down button slightly when pressed
     const scale = interpolate(
@@ -319,6 +322,8 @@ ButtonOutline) => {
 
   const pressedColorLabelAnimationStyle = useAnimatedStyle(() => {
     // Link color states to the pressed states
+
+    /* ◀ REMOVE_LEGACY_COMPONENT: Remove the following condition */
     const labelColor = isDesignSystemEnabled
       ? interpolateColor(
           progressPressed.value,
@@ -336,6 +341,7 @@ ButtonOutline) => {
             mapLegacyColorStates[color].label.pressed
           ]
         );
+    /* REMOVE_LEGACY_COMPONENT: End ▶ */
 
     return {
       color: labelColor
@@ -351,6 +357,7 @@ ButtonOutline) => {
     isPressed.value = 0;
   }, [isPressed]);
 
+  /* ◀ REMOVE_LEGACY_COMPONENT: Start */
   const LegacyButton = () => (
     <Pressable
       accessibilityLabel={accessibilityLabel}
@@ -415,6 +422,7 @@ ButtonOutline) => {
       </Animated.View>
     </Pressable>
   );
+  /* REMOVE_LEGACY_COMPONENT: End ▶ */
 
   const NewButton = () => (
     <Pressable
