@@ -115,6 +115,7 @@ export type WalletHomeNavigationParams = Readonly<{
 
 type State = {
   hasFocus: boolean;
+  contentRef: ScreenContentRoot;
 };
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -154,6 +155,10 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "wallet.contextualHelpContent"
 };
 
+export const WalletHomeScreenContext = React.createContext({
+  setScreenContentRef: (_: ScreenContentRoot) => undefined
+});
+
 /**
  * Wallet home screen, with a list of recent transactions and payment methods,
  * a "pay notice" button and payment methods info/button to add new ones
@@ -166,7 +171,8 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      hasFocus: false
+      hasFocus: false,
+      contentRef: {} as ScreenContentRoot
     };
   }
 
@@ -250,6 +256,11 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     // to add the co-badge card.
     // This cover the case in which a user update the app and don't refresh the wallet.
     this.props.runSendAddCobadgeMessageSaga();
+
+    this.props.setTabPressCallback(
+      // eslint-disable-next-line no-underscore-dangle
+      () => () => this.state.contentRef._root.scrollToPosition(0, 0)
+    );
   }
 
   public componentWillUnmount() {
@@ -530,38 +541,45 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
       ? this.footerButton(potWallets)
       : undefined;
 
-    return (
-      <WalletLayout
-        referenceToContentScreen={(c: ScreenContentRoot) => {
-          this.props.setTabPressCallback(
-            // eslint-disable-next-line no-underscore-dangle
-            () => () => c._root.scrollToPosition(0, 0)
-          );
+    const setScreenContentRef = (ref: ScreenContentRoot) => {
+      this.setState({
+        contentRef: ref
+      });
+      return undefined;
+    };
 
-          return c;
+    return (
+      <WalletHomeScreenContext.Provider
+        value={{
+          setScreenContentRef
         }}
-        accessibilityLabel={I18n.t("wallet.wallet")}
-        title={I18n.t("wallet.wallet")}
-        allowGoBack={false}
-        appLogo={true}
-        hideHeader={true}
-        topContentHeight={this.getHeaderHeight()}
-        hasDynamicSubHeader={false}
-        topContent={headerContent}
-        footerContent={footerContent}
-        contextualHelpMarkdown={contextualHelpMarkdown}
-        faqCategories={["wallet", "wallet_methods"]}
-        gradientHeader={true}
-        headerPaddingMin={true}
-        footerFullWidth={<SectionStatusComponent sectionKey={"wallets"} />}
       >
-        <BpdOptInPaymentMethodsContainer />
-        <>
-          {(bpdEnabled || this.props.isCgnEnabled) && <FeaturedCardCarousel />}
-          {transactionContent}
-        </>
-        <NewPaymentMethodAddedNotifier />
-      </WalletLayout>
+        <WalletLayout
+          accessibilityLabel={I18n.t("wallet.wallet")}
+          title={I18n.t("wallet.wallet")}
+          allowGoBack={false}
+          appLogo={true}
+          hideHeader={true}
+          topContentHeight={this.getHeaderHeight()}
+          hasDynamicSubHeader={false}
+          topContent={headerContent}
+          footerContent={footerContent}
+          contextualHelpMarkdown={contextualHelpMarkdown}
+          faqCategories={["wallet", "wallet_methods"]}
+          gradientHeader={true}
+          headerPaddingMin={true}
+          footerFullWidth={<SectionStatusComponent sectionKey={"wallets"} />}
+        >
+          <BpdOptInPaymentMethodsContainer />
+          <>
+            {(bpdEnabled || this.props.isCgnEnabled) && (
+              <FeaturedCardCarousel />
+            )}
+            {transactionContent}
+          </>
+          <NewPaymentMethodAddedNotifier />
+        </WalletLayout>
+      </WalletHomeScreenContext.Provider>
     );
   }
 

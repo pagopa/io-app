@@ -2,6 +2,8 @@ import { Content } from "native-base";
 import * as React from "react";
 
 import { StyleProp, ViewStyle } from "react-native";
+import { ProfileMainScreenContext } from "../../screens/profile/ProfileMainScreen";
+import { WalletHomeScreenContext } from "../../screens/wallet/WalletHomeScreen";
 import { ComponentProps } from "../../types/react";
 import { ScreenContentHeader } from "./ScreenContentHeader";
 
@@ -38,29 +40,43 @@ class ScreenContent extends React.PureComponent<Props> {
       dark,
       hideHeader,
       contentStyle,
-      bounces,
-      referenceToContentScreen
+      bounces
     } = this.props;
 
     return (
-      <Content
-        ref={referenceToContentScreen as unknown as React.LegacyRef<Content>}
-        noPadded={true}
-        style={contentStyle}
-        bounces={bounces}
-        refreshControl={this.props.contentRefreshControl}
-      >
-        {!hideHeader && (
-          <ScreenContentHeader
-            icon={icon}
-            iconFont={iconFont}
-            title={title}
-            subtitle={subtitle}
-            dark={dark}
-          />
+      <ProfileMainScreenContext.Consumer>
+        {ProfileContentRef => (
+          <WalletHomeScreenContext.Consumer>
+            {walletContentRef => (
+              <Content
+                ref={c => {
+                  walletContentRef.setScreenContentRef(
+                    c as unknown as ScreenContentRoot
+                  );
+                  ProfileContentRef.setScreenContentRef(
+                    c as unknown as ScreenContentRoot
+                  );
+                }}
+                noPadded={true}
+                style={contentStyle}
+                bounces={bounces}
+                refreshControl={this.props.contentRefreshControl}
+              >
+                {!hideHeader && (
+                  <ScreenContentHeader
+                    icon={icon}
+                    iconFont={iconFont}
+                    title={title}
+                    subtitle={subtitle}
+                    dark={dark}
+                  />
+                )}
+                {this.props.children}
+              </Content>
+            )}
+          </WalletHomeScreenContext.Consumer>
         )}
-        {this.props.children}
-      </Content>
+      </ProfileMainScreenContext.Consumer>
     );
   }
 }

@@ -68,6 +68,7 @@ type Props = IOStackNavigationRouteProps<MainTabParamsList, "PROFILE_MAIN"> &
 
 type State = {
   tapsOnAppVersion: number;
+  contentRef: ScreenContentRoot;
 };
 
 const styles = StyleSheet.create({
@@ -103,6 +104,10 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 const consecutiveTapRequired = 4;
 const RESET_COUNTER_TIMEOUT = 2000 as Millisecond;
 
+export const ProfileMainScreenContext = React.createContext({
+  setScreenContentRef: (_: ScreenContentRoot) => undefined
+});
+
 /**
  * A screen to show all the options related to the user profile
  */
@@ -110,7 +115,8 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      tapsOnAppVersion: 0
+      tapsOnAppVersion: 0,
+      contentRef: {} as ScreenContentRoot
     };
     this.handleClearCachePress = this.handleClearCachePress.bind(this);
   }
@@ -121,6 +127,13 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     if (this.idResetTap) {
       clearInterval(this.idResetTap);
     }
+  }
+
+  public componentDidMount() {
+    this.props.setTabPressCallback(
+      // eslint-disable-next-line no-underscore-dangle
+      () => () => this.state.contentRef._root.scrollToPosition(0, 0)
+    );
   }
 
   private handleClearCachePress() {
@@ -577,38 +590,42 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       </ScrollView>
     );
 
+    const setScreenContentRef = (ref: ScreenContentRoot) => {
+      this.setState({
+        contentRef: ref
+      });
+      return undefined;
+    };
     return (
-      <DarkLayout
-        referenceToContentScreen={(c: ScreenContentRoot) => {
-          this.props.setTabPressCallback(
-            // eslint-disable-next-line no-underscore-dangle
-            () => () => c._root.scrollToPosition(0, 0)
-          );
-
-          return c;
+      <ProfileMainScreenContext.Provider
+        value={{
+          setScreenContentRef
         }}
-        accessibilityLabel={I18n.t("profile.main.title")}
-        bounces={false}
-        appLogo={true}
-        title={I18n.t("profile.main.title")}
-        icon={require("../../../img/icons/profile-illustration.png")}
-        topContent={
-          <TouchableDefaultOpacity
-            accessibilityRole={"button"}
-            onPress={() =>
-              this.props.navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-                screen: ROUTES.PROFILE_FISCAL_CODE
-              })
-            }
-          >
-            <FiscalCodeComponent type={"Preview"} />
-          </TouchableDefaultOpacity>
-        }
-        contextualHelpMarkdown={contextualHelpMarkdown}
-        faqCategories={["profile"]}
       >
-        {screenContent()}
-      </DarkLayout>
+        <DarkLayout
+          accessibilityLabel={I18n.t("profile.main.title")}
+          bounces={false}
+          appLogo={true}
+          title={I18n.t("profile.main.title")}
+          icon={require("../../../img/icons/profile-illustration.png")}
+          topContent={
+            <TouchableDefaultOpacity
+              accessibilityRole={"button"}
+              onPress={() =>
+                this.props.navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+                  screen: ROUTES.PROFILE_FISCAL_CODE
+                })
+              }
+            >
+              <FiscalCodeComponent type={"Preview"} />
+            </TouchableDefaultOpacity>
+          }
+          contextualHelpMarkdown={contextualHelpMarkdown}
+          faqCategories={["profile"]}
+        >
+          {screenContent()}
+        </DarkLayout>
+      </ProfileMainScreenContext.Provider>
     );
   }
 }
