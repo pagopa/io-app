@@ -62,7 +62,7 @@ const mapLegacyColorStates: Record<
   // Primary button
   primary: {
     default: IOColors.blue,
-    pressed: IOColors.blue600,
+    pressed: IOColors["blue-600"],
     label: {
       default: "white",
       disabled: "white"
@@ -70,8 +70,8 @@ const mapLegacyColorStates: Record<
   },
   // Danger button
   danger: {
-    default: IOColors.errorGraphic,
-    pressed: IOColors.errorDark,
+    default: IOColors["error-600"],
+    pressed: IOColors["error-500"],
     label: {
       default: "white",
       disabled: "white"
@@ -80,7 +80,7 @@ const mapLegacyColorStates: Record<
   // Contrast button
   contrast: {
     default: IOColors.white,
-    pressed: IOColors.blue50,
+    pressed: IOColors["blue-50"],
     label: {
       default: "blue",
       disabled: "white"

@@ -11,6 +11,10 @@ function asIOColors<T extends { [key: string]: ColorValue }>(arg: T): T {
   return arg;
 }
 
+function asIOThemeColors<T extends { [key: string]: IOColors }>(arg: T): T {
+  return arg;
+}
+
 function asIOColorGradients<T extends { [key: string]: Array<ColorValue> }>(
   arg: T
 ): T {
@@ -23,47 +27,56 @@ ENTIRE COLOR SCALE
 
 export const IOColors = asIOColors({
   white: "#FFFFFF",
-  grey50: "#F4F5F8",
-  grey100: "#E8EBF1",
-  grey200: "#D2D6E3",
-  grey450: "#99A3C1",
-  grey650: "#636B82",
-  grey700: "#555C70",
-  grey850: "#2B2E38",
-  blackNew: "#0E0F13",
-  blueNew: "#0B3EE3",
-  blueNewDark: "#031344",
-  blueNewLight: "#B6C5F7",
-  blueNew50: "#E7ECFC",
-  blueNew100: "#CED8F9",
-  blueNew200: "#9DB2F4",
-  blueNew600: "#0932B6",
-  turquoise: "#00C5CA",
-  turquoiseDark: "#003B3D",
-  turquoiseLight: "#AAEEEF",
-  turquoise50: "#DBF9FA",
-  turquoise100: "#C2F3F4",
-  error: "#FE6666",
-  errorGraphic: "#D75252",
-  errorDark: "#761F1F",
-  errorLight: "#FFD1D1",
-  warning: "#FFC824",
-  warningGraphic: "#A5822A",
-  warningDark: "#614C15",
-  warningLight: "#FFF5DA",
-  success: "#6CC66A",
-  successGraphic: "#427940",
-  successDark: "#224021",
-  successLight: "#D3EED2",
-  info: "#6BCFFB",
-  infoGraphic: "#418DAF",
-  infoDark: "#215C76",
-  infoLight: "#E1F5FE",
+  "grey-50": "#F4F5F8",
+  "grey-100": "#E8EBF1",
+  "grey-200": "#D2D6E3",
+  "grey-450": "#99A3C1",
+  "grey-650": "#636B82",
+  "grey-700": "#555C70",
+  "grey-850": "#2B2E38",
+  black: "#0E0F13",
+  "blueIO-850": "#031344",
+  "blueIO-600": "#0932B6",
+  "blueIO-500": "#0B3EE3",
+  "blueIO-450": "#2351E6" /* Dark mode */,
+  "blueIO-200": "#9DB2F4",
+  "blueIO-150": "#B6C5F7",
+  "blueIO-100": "#CED8F9",
+  "turquoise-850": "#003B3D",
+  "turquoise-500": "#00C5CA",
+  "turquoise-450": "#19CBCF" /* Dark mode */,
+  "turquoise-150": "#AAEEEF",
+  "turquoise-100": "#C2F3F4",
+  "turquoise-50": "#DBF9FA",
+  "error-850": "#761F1F",
+  "error-600": "#D75252",
+  "error-500": "#FE6666",
+  "error-450": "#FE7575" /* Dark mode */,
+  "error-100": "#FFD1D1",
+  "warning-850": "#614C15",
+  "warning-700": "#A5822A",
+  "warning-500": "#FFC824",
+  "warning-450": "#FFD059" /* Dark mode */,
+  "warning-100": "#FFF5DA",
+  "success-850": "#224021",
+  "success-700": "#427940",
+  "success-500": "#6CC66A",
+  "success-450": "#7BCC79" /* Dark mode */,
+  "success-100": "#D3EED2",
+  "info-850": "#215C76",
+  "info-700": "#418DAF",
+  "info-500": "#6BCFFB",
+  "info-450": "#7AD4FB" /* Dark mode */,
+  "info-100": "#E1F5FE",
   cobalt: "#2C489D" /* used in the `Bonus Vacanze` only */,
-  blueItalia: "#0066CC" /* pagoPA service */,
-  /* Temporary */
-  blue600: "#0353A3",
-  blue50: "#EFF7FF",
+  "blueItalia-850": "#001F3D",
+  "blueItalia-600": "#0052A3",
+  "blueItalia-500": "#0066CC" /* pagoPA service */,
+  "blueItalia-100": "#C4DCF5",
+  "blueItalia-50": "#DDEBFA",
+  /* Temporary scale based on legacy Blue */
+  "blue-600": "#0353A3",
+  "blue-50": "#EFF7FF",
   /* Legacy */
   greyUltraLight: "#F5F6F7",
   greyLight: "#E6E9F2",
@@ -72,7 +85,6 @@ export const IOColors = asIOColors({
   milderGray: "#5F6F80",
   bluegrey: "#475A6D",
   bluegreyDark: "#17324D",
-  black: "#000000",
   noCieButton: "#789CCD" /* Half-disabled noCIE CTA BG, LandingScreen.tsx */,
   blue: "#0073E6",
   blueUltraLight: "#99CCFF" /* Almost deprecated, avoid if possible */,
@@ -87,22 +99,6 @@ export const IOColors = asIOColors({
 });
 
 export type IOColors = keyof typeof IOColors;
-
-// Dark Mode Palette
-export const IOColorsDark: Record<NonNullable<IOColors>, ColorValue> = {
-  /* Add original IOColors to allow overwriting
-  of specific color values */
-  ...IOColors,
-  blueNew: "#2351E6",
-  turquoise: "#19CBCF",
-  warning: "#FFD059",
-  warningLight: "#FFEFC7",
-  error: "#FE7575",
-  success: "#7BCC79",
-  info: "#7AD4FB"
-};
-
-export type IOColorsDark = keyof typeof IOColorsDark;
 
 export const IOColorGradients = asIOColorGradients({
   appLaunch: ["#0C00D3", "#0073E6"],
@@ -132,7 +128,7 @@ export const getGradientColorValues = (
 };
 
 /*
-COLOR SETS
+░░░ COLORS SETS ░░░
 */
 
 const {
@@ -185,132 +181,156 @@ export const IOColorsLegacy = {
 export type IOColorLegacy = keyof typeof IOColorsLegacy;
 
 export const IOColorsNeutral = asIOColors({
-  white: IOColors.white,
-  grey50: IOColors.grey50,
-  grey100: IOColors.grey100,
-  grey200: IOColors.grey200,
-  grey450: IOColors.grey450,
-  grey650: IOColors.grey650,
-  grey700: IOColors.grey700,
-  grey850: IOColors.grey850,
-  blackNew: IOColors.blackNew
+  black: IOColors.black,
+  "grey-850": IOColors["grey-850"],
+  "grey-700": IOColors["grey-700"],
+  "grey-650": IOColors["grey-650"],
+  "grey-450": IOColors["grey-450"],
+  "grey-200": IOColors["grey-200"],
+  "grey-150": IOColors["grey-100"],
+  "grey-50": IOColors["grey-50"],
+  white: IOColors.white
 });
 export type IOColorsNeutral = keyof typeof IOColorsNeutral;
 
-export const IOColorsNeutralDark: Record<
-  NonNullable<IOColorsNeutral>,
-  ColorValue
-> = {
-  white: IOColors.white,
-  grey50: IOColorsDark.grey50,
-  grey100: IOColorsDark.grey100,
-  grey200: IOColorsDark.grey200,
-  grey450: IOColorsDark.grey450,
-  grey650: IOColorsDark.grey650,
-  grey700: IOColorsDark.grey700,
-  grey850: IOColorsDark.grey850,
-  blackNew: IOColorsDark.blackNew
-};
-
-export type IOColorsNeutralDark = keyof typeof IOColorsNeutralDark;
-
 export const IOColorsTints = asIOColors({
-  blueNewDark: IOColors.blueNewDark,
-  blueNew600: IOColors.blueNew600,
-  blueNew: IOColors.blueNew,
-  blueNew200: IOColors.blueNew200,
-  blueNewLight: IOColors.blueNewLight,
-  blueNew100: IOColors.blueNew100,
-  blueNew50: IOColors.blueNew50,
-  turquoiseDark: IOColors.turquoiseDark,
-  turquoise: IOColors.turquoise,
-  turquoiseLight: IOColors.turquoiseLight,
-  turquoise100: IOColors.turquoise100,
-  turquoise50: IOColors.turquoise50
+  "blueIO-850": IOColors["blueIO-850"],
+  "blueIO-600": IOColors["blueIO-600"],
+  "blueIO-500": IOColors["blueIO-500"],
+  "blueIO-450": IOColors["blueIO-450"],
+  "blueIO-200": IOColors["blueIO-200"],
+  "blueIO-150": IOColors["blueIO-150"],
+  "blueIO-100": IOColors["blueIO-100"],
+  "turquoise-850": IOColors["turquoise-850"],
+  "turquoise-500": IOColors["turquoise-500"],
+  "turquoise-450": IOColors["turquoise-450"],
+  "turquoise-150": IOColors["turquoise-150"],
+  "turquoise-100": IOColors["turquoise-100"],
+  "turquoise-50": IOColors["turquoise-50"]
 });
 export type IOColorsTints = keyof typeof IOColorsTints;
 
-export const IOColorsTintsDark: Record<
-  NonNullable<IOColorsTints>,
-  ColorValue
-> = {
-  blueNewDark: IOColorsDark.blueNewDark,
-  blueNew600: IOColorsDark.blueNew600,
-  blueNew: IOColorsDark.blueNew,
-  blueNew200: IOColorsDark.blueNew200,
-  blueNewLight: IOColorsDark.blueNewLight,
-  blueNew100: IOColorsDark.blueNew100,
-  blueNew50: IOColorsDark.blueNew50,
-  turquoiseDark: IOColorsDark.turquoiseDark,
-  turquoise: IOColorsDark.turquoise,
-  turquoiseLight: IOColorsDark.turquoiseLight,
-  turquoise100: IOColorsDark.turquoise100,
-  turquoise50: IOColorsDark.turquoise50
-};
-
-export type IOColorsTintsDark = keyof typeof IOColorsTintsDark;
-
 export const IOColorsStatus = asIOColors({
-  errorDark: IOColors.errorDark,
-  errorGraphic: IOColors.errorGraphic,
-  error: IOColors.error,
-  errorLight: IOColors.errorLight,
-  warningDark: IOColors.warningDark,
-  warningGraphic: IOColors.warningGraphic,
-  warning: IOColors.warning,
-  warningLight: IOColors.warningLight,
-  successDark: IOColors.successDark,
-  successGraphic: IOColors.successGraphic,
-  success: IOColors.success,
-  successLight: IOColors.successLight,
-  infoDark: IOColors.infoDark,
-  infoGraphic: IOColors.infoGraphic,
-  info: IOColors.info,
-  infoLight: IOColors.infoLight
+  "error-850": IOColors["error-850"],
+  "error-600": IOColors["error-600"],
+  "error-500": IOColors["error-500"],
+  "error-450": IOColors["error-450"],
+  "error-100": IOColors["error-100"],
+  "warning-850": IOColors["warning-850"],
+  "warning-700": IOColors["warning-700"],
+  "warning-500": IOColors["warning-500"],
+  "warning-450": IOColors["warning-450"],
+  "warning-100": IOColors["warning-100"],
+  "success-850": IOColors["success-850"],
+  "success-700": IOColors["success-700"],
+  "success-500": IOColors["success-500"],
+  "success-450": IOColors["success-450"],
+  "success-100": IOColors["success-100"],
+  "info-850": IOColors["info-850"],
+  "info-700": IOColors["info-700"],
+  "info-500": IOColors["info-500"],
+  "info-450": IOColors["info-450"],
+  "info-100": IOColors["info-100"]
 });
+
 export type IOColorsStatus = keyof typeof IOColorsStatus;
 export type IOColorsStatusForeground = Extract<
   IOColorsStatus,
-  "errorDark" | "warningDark" | "infoDark" | "successDark"
+  "error-850" | "warning-850" | "info-850" | "success-850"
 >;
 export type IOColorsStatusBackground = Extract<
   IOColorsStatus,
-  "errorLight" | "warningLight" | "infoLight" | "successLight"
+  "error-100" | "warning-100" | "info-100" | "success-100"
 >;
 
-export const IOColorsStatusDark: Record<
-  NonNullable<IOColorsStatus>,
-  ColorValue
-> = {
-  errorDark: IOColorsDark.errorDark,
-  errorGraphic: IOColorsDark.errorGraphic,
-  error: IOColorsDark.error,
-  errorLight: IOColorsDark.errorLight,
-  warningDark: IOColorsDark.warningDark,
-  warningGraphic: IOColorsDark.warningGraphic,
-  warning: IOColorsDark.warning,
-  warningLight: IOColorsDark.warningLight,
-  successDark: IOColorsDark.successDark,
-  successGraphic: IOColorsDark.successGraphic,
-  success: IOColorsDark.success,
-  successLight: IOColorsDark.successLight,
-  infoDark: IOColorsDark.infoDark,
-  infoGraphic: IOColorsDark.infoGraphic,
-  info: IOColorsDark.info,
-  infoLight: IOColorsDark.infoLight
-};
-
-export type IOColorsStatusDark = keyof typeof IOColorsStatusDark;
-
-const { blueItalia, blue50, blue600 } = IOColors;
-
 export const IOColorsExtra = {
-  cobalt,
-  blueItalia,
-  blue50,
-  blue600
+  cobalt: IOColors.cobalt,
+  "blueItalia-850": IOColors["blueItalia-850"],
+  "blueItalia-600": IOColors["blueItalia-600"],
+  "blueItalia-500": IOColors["blueItalia-500"],
+  "blueItalia-100": IOColors["blueItalia-100"],
+  "blueItalia-50": IOColors["blueItalia-50"],
+  "blue-600": IOColors["blue-600"],
+  "blue-50": IOColors["blue-50"]
 };
 export type IOColorsExtra = keyof typeof IOColorsExtra;
+
+/*
+░░░ THEME COLORS ░░░
+*/
+
+export const themeColorsLightMode = asIOThemeColors({
+  // General
+  "appBackground-primary": "white",
+  "appBackground-secondary": "grey-50",
+  "interactiveElem-default": "blueIO-500",
+  "interactiveElem-pressed": "blueIO-600",
+  // Typography
+  "textHeading-default": "black",
+  "textBody-default": "black"
+});
+
+export type themeColorsLightMode = keyof typeof themeColorsLightMode;
+
+export const themeColorsDarkMode: Record<
+  NonNullable<themeColorsLightMode>,
+  IOColors
+> = {
+  // General
+  "appBackground-primary": "white",
+  "appBackground-secondary": "grey-50",
+  "interactiveElem-default": "blueIO-450",
+  "interactiveElem-pressed": "blueIO-600",
+  // Typography
+  "textHeading-default": "black",
+  "textBody-default": "black"
+};
+
+export const themeStatusColorsLightMode = asIOThemeColors({
+  errorMain: "error-500",
+  errorBackground: "error-100",
+  errorGraphics: "error-600",
+  errorTypography: "error-850",
+  warningMain: "warning-500",
+  warningBackground: "warning-100",
+  warningGraphics: "warning-700",
+  warningTypography: "warning-850",
+  successMain: "success-500",
+  successBackground: "success-100",
+  successGraphics: "success-700",
+  successTypography: "success-850",
+  infoMain: "info-500",
+  infoBackground: "info-100",
+  infoGraphics: "info-700",
+  infoTypography: "info-850"
+});
+
+export type themeStatusColorsLightMode =
+  keyof typeof themeStatusColorsLightMode;
+
+export const themeStatusColorsDarkMode: Record<
+  NonNullable<themeStatusColorsLightMode>,
+  IOColorsStatus
+> = {
+  errorMain: "error-450",
+  errorBackground: "error-100",
+  errorGraphics: "error-600",
+  errorTypography: "error-850",
+  warningMain: "warning-450",
+  warningBackground: "warning-100",
+  warningGraphics: "warning-700",
+  warningTypography: "warning-850",
+  successMain: "success-450",
+  successBackground: "success-100",
+  successGraphics: "success-700",
+  successTypography: "success-850",
+  infoMain: "info-450",
+  infoBackground: "info-100",
+  infoGraphics: "info-700",
+  infoTypography: "info-850"
+};
+
+export type themeStatusColorsDarkMode = keyof typeof themeStatusColorsDarkMode;
 
 /*
 UTILS
