@@ -104,13 +104,11 @@ const FciDocumentsScreen = () => {
     async (uniqueName: string) => {
       // TODO: refactor this function to use fp-ts
       const doc = documents[currentDoc];
-      const url = doc.url;
 
-      const existingPdfBytes = await ReactNativeBlobUtil.config({
-        fileCache: true
-      })
-        .fetch("GET", url)
-        .then(res => res.base64());
+      const existingPdfBytes = await ReactNativeBlobUtil.fs.readFile(
+        `${ReactNativeBlobUtil.fs.dirs.DocumentDir}/fci/${doc.id}.pdf`,
+        "base64"
+      );
 
       setIsPdfLoaded(false);
 
@@ -162,17 +160,15 @@ const FciDocumentsScreen = () => {
     async (attrs: SignatureFieldToBeCreatedAttrs) => {
       // TODO: refactor this function to use fp-ts
       const doc = documents[currentDoc];
-      const url = doc.url;
 
-      const existingPdfBytes = await ReactNativeBlobUtil.config({
-        fileCache: true
-      })
-        .fetch("GET", url)
-        .then(res => res.base64());
+      const existingPdfBytes = await ReactNativeBlobUtil.fs.readFile(
+        `${ReactNativeBlobUtil.fs.dirs.DocumentDir}/fci/${doc.id}.pdf`,
+        "base64"
+      );
 
       setIsPdfLoaded(false);
 
-      await PDFDocument.load(pdfFromBase64(existingPdfBytes)).then(res => {
+      await PDFDocument.load(existingPdfBytes).then(res => {
         const page = attrs.page;
         // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
         setSignaturePage(page.valueOf() + 1);
@@ -217,9 +213,21 @@ const FciDocumentsScreen = () => {
 
   React.useEffect(() => {
     if (documents.length !== 0) {
-      ReactNativeBlobUtil.config({ fileCache: true, session: "FCI" })
-        .fetch("GET", documents[currentDoc].url)
-        .then(res => setCurrentDocPath(res.path()))
+      // download the current pdf and save it in the device
+      ReactNativeBlobUtil.fs
+        .exists(
+          `${ReactNativeBlobUtil.fs.dirs.DocumentDir}/fci/${documents[currentDoc].id}.pdf`
+        )
+        .then(exists => {
+          if (!exists) {
+            ReactNativeBlobUtil.config({
+              path: `${ReactNativeBlobUtil.fs.dirs.DocumentDir}/fci/${documents[currentDoc].id}.pdf`
+            })
+              .fetch("GET", documents[currentDoc].url)
+              .then(res => setCurrentDocPath(res.path()))
+              .catch(readableReport);
+          }
+        })
         .catch(readableReport);
     }
   }, [currentDoc, documents]);

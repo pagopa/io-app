@@ -28,8 +28,7 @@ export function* handleDownloadDocument(
     const config = yield* call(ReactNativeBlobUtil.config, {
       path: savePath(document.url),
       timeout: fetchTimeout,
-      fileCache: true,
-      session: "FCI"
+      fileCache: true
     });
     const result = yield* call(config.fetch, "GET", document.url);
     const { status } = result.info();

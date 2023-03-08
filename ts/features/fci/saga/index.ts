@@ -35,7 +35,8 @@ import {
   fciSigningRequest,
   fciEndRequest,
   fciShowSignedDocumentsStartRequest,
-  fciShowSignedDocumentsEndRequest
+  fciShowSignedDocumentsEndRequest,
+  fciClearAllFiles
 } from "../store/actions";
 import {
   fciQtspClausesMetadataSelector,
@@ -115,6 +116,8 @@ export function* watchFciSaga(bearerToken: SessionToken): SagaIterator {
   );
 
   yield* takeLatest(getType(fciEndRequest), watchFciEndSaga);
+
+  yield* takeLatest(getType(fciClearAllFiles), deleteAllFiles);
 }
 
 /**
@@ -254,12 +257,33 @@ function* watchFciSignedDocumentsEndSaga(): SagaIterator {
   );
 }
 
+function* deleteAllFiles(action: ActionType<typeof fciClearAllFiles>) {
+  try {
+    const { dirPath } = action.payload;
+    const files = yield* call(RNFS.readdir, dirPath);
+    yield files.forEach(file => {
+      const filePath = `${dirPath}/${file}`;
+      try {
+        call(RNFS.unlink, filePath);
+      } catch (error) {
+        put({ type: "DELETE_ALL_FILES_ERROR", error });
+      }
+    });
+    yield* put({ type: "DELETE_ALL_FILES_SUCCESS" });
+  } catch (error) {
+    yield* put({ type: "DELETE_ALL_FILES_ERROR", error });
+  }
+}
+
 /**
  * Handle the FCI abort requests saga
  */
 function* watchFciEndSaga(): SagaIterator {
   yield* put(fciClearStateRequest());
-  yield* call(ReactNativeBlobUtil.session("FCI").dispose);
+  yield* put({
+    type: "CLEAN_ALL_FILES",
+    payload: { dirPath: `${ReactNativeBlobUtil.fs.dirs.DocumentDir}/fci` }
+  });
   yield* call(
     NavigationService.dispatchNavigationAction,
     CommonActions.navigate(ROUTES.MAIN)

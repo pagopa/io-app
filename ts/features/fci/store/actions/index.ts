@@ -118,6 +118,9 @@ export const fciCancelPollingFilledDocument = createStandardAction(
   "POLL_FILLED_DOCUMENT_CANCEL"
 )<void>();
 
+export const fciClearAllFiles =
+  createStandardAction("CLEAN_ALL_FILES")<{ dirPath: string }>();
+
 export type FciActions =
   | ActionType<typeof fciSignatureRequestFromId>
   | ActionType<typeof fciLoadQtspClauses>
@@ -133,4 +136,5 @@ export type FciActions =
   | ActionType<typeof fciShowSignedDocumentsStartRequest>
   | ActionType<typeof fciShowSignedDocumentsEndRequest>
   | ActionType<typeof fciPollFilledDocument>
-  | ActionType<typeof fciCancelPollingFilledDocument>;
+  | ActionType<typeof fciCancelPollingFilledDocument>
+  | ActionType<typeof fciClearAllFiles>;
