@@ -64,15 +64,20 @@ export const DSButtons = () => {
             onPress={onButtonPress}
           />
         </View>
-        <VSpacer size={16} />
-        <View>
-          <ButtonSolid
-            small
-            label={"Primary Button (Small)"}
-            accessibilityLabel="Tap to trigger test alert"
-            onPress={onButtonPress}
-          />
-        </View>
+
+        {!isDesignSystemEnabled && (
+          <>
+            <VSpacer size={16} />
+            <View>
+              <ButtonSolid
+                small
+                label={"Primary Button (Small)"}
+                accessibilityLabel="Tap to trigger test alert"
+                onPress={onButtonPress}
+              />
+            </View>
+          </>
+        )}
       </DSComponentViewerBox>
       <DSComponentViewerBox name="ButtonSolid · Primary, Full width">
         <View>
@@ -83,16 +88,21 @@ export const DSButtons = () => {
             onPress={onButtonPress}
           />
         </View>
-        <VSpacer size={16} />
-        <View>
-          <ButtonSolid
-            small
-            fullWidth
-            accessibilityLabel="Tap to trigger test alert"
-            label={"Primary Button (Small, Full Width)"}
-            onPress={onButtonPress}
-          />
-        </View>
+
+        {!isDesignSystemEnabled && (
+          <>
+            <VSpacer size={16} />
+            <View>
+              <ButtonSolid
+                small
+                fullWidth
+                accessibilityLabel="Tap to trigger test alert"
+                label={"Primary Button (Small, Full Width)"}
+                onPress={onButtonPress}
+              />
+            </View>
+          </>
+        )}
       </DSComponentViewerBox>
       <DSComponentViewerBox name="ButtonSolid · Primary, disabled">
         <View>
@@ -103,17 +113,21 @@ export const DSButtons = () => {
             onPress={onButtonPress}
           />
         </View>
-        <VSpacer size={16} />
-        <View>
-          <ButtonSolid
-            small
-            disabled={true}
-            fullWidth
-            accessibilityLabel="Tap to trigger test alert"
-            label={"Primary Button (small, full, disabled)"}
-            onPress={onButtonPress}
-          />
-        </View>
+        {!isDesignSystemEnabled && (
+          <>
+            <VSpacer size={16} />
+            <View>
+              <ButtonSolid
+                small
+                disabled={true}
+                fullWidth
+                accessibilityLabel="Tap to trigger test alert"
+                label={"Primary Button (small, full, disabled)"}
+                onPress={onButtonPress}
+              />
+            </View>
+          </>
+        )}
       </DSComponentViewerBox>
 
       <DSComponentViewerBox name="ButtonSolid · Danger variant">
@@ -125,16 +139,20 @@ export const DSButtons = () => {
             accessibilityLabel="Tap to trigger test alert"
           />
         </View>
-        <VSpacer size={16} />
-        <View>
-          <ButtonSolid
-            small
-            color="danger"
-            accessibilityLabel="Tap to trigger test alert"
-            label={"Danger Button (Small)"}
-            onPress={onButtonPress}
-          />
-        </View>
+        {!isDesignSystemEnabled && (
+          <>
+            <VSpacer size={16} />
+            <View>
+              <ButtonSolid
+                small
+                color="danger"
+                accessibilityLabel="Tap to trigger test alert"
+                label={"Danger Button (Small)"}
+                onPress={onButtonPress}
+              />
+            </View>
+          </>
+        )}
       </DSComponentViewerBox>
       <DSComponentViewerBox name="ButtonSolid · Danger, full width">
         <View>
@@ -142,21 +160,25 @@ export const DSButtons = () => {
             fullWidth
             color="danger"
             accessibilityLabel="Tap to trigger test alert"
-            label={"Primary button (Full Width)"}
+            label={"Danger button (Full Width)"}
             onPress={onButtonPress}
           />
         </View>
-        <VSpacer size={16} />
-        <View>
-          <ButtonSolid
-            small
-            fullWidth
-            color="danger"
-            accessibilityLabel="Tap to trigger test alert"
-            label={"Primary Button (Small, Full Width)"}
-            onPress={onButtonPress}
-          />
-        </View>
+        {!isDesignSystemEnabled && (
+          <>
+            <VSpacer size={16} />
+            <View>
+              <ButtonSolid
+                small
+                fullWidth
+                color="danger"
+                accessibilityLabel="Tap to trigger test alert"
+                label={"Danger Button (Small, Full Width)"}
+                onPress={onButtonPress}
+              />
+            </View>
+          </>
+        )}
       </DSComponentViewerBox>
 
       <DSComponentViewerBox name="ButtonSolid · Danger, disabled">
