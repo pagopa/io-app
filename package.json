@@ -13,7 +13,7 @@
   "io_bpd_award_periods": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.24/bonus/specs/bpd/award.json",
   "io_bpd_winning_transactions": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.24/bonus/specs/bpd/winning_transactions.json",
   "io_bpd_winning_transactions_v2": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.24/bonus/specs/bpd/winning_transactions_v2.json",
-  "api_fci": "https://raw.githubusercontent.com/pagopa/io-backend/60c472552814b6815ea146ca18ddfe579f671452/api_io_sign.yaml",
+  "api_fci": "https://raw.githubusercontent.com/pagopa/io-backend/v10.1.0-RELEASE/api_io_sign.yaml",
   "io_eu_covid_cert": "https://raw.githubusercontent.com/pagopa/io-backend/v9.2.0-RELEASE/api_eucovidcert.yaml",
   "io_sicilia_vola_token": "https://raw.githubusercontent.com/pagopa/io-backend/v9.2.0-RELEASE/api_mit_voucher.yaml",
   "io_pn_specs": "https://raw.githubusercontent.com/pagopa/io-backend/v9.2.0-RELEASE/api_pn.yaml",
