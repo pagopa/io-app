@@ -182,7 +182,7 @@ const IbanEnrollmentScreen = () => {
               <HSpacer size={16} />
               <LabelSmall
                 weight="Regular"
-                color="grey700"
+                color="grey-700"
                 style={IOStyles.flex}
               >
                 {I18n.t("idpay.configuration.iban.enrollment.footer")}
