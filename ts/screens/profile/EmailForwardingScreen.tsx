@@ -10,6 +10,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
+import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
 import RemindEmailValidationOverlay from "../../components/RemindEmailValidationOverlay";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
@@ -116,94 +117,90 @@ class EmailForwardingScreen extends React.Component<Props, State> {
 
   public render() {
     return (
-      <RemindEmailValidationOverlay>
-        <TopScreenComponent
-          headerTitle={I18n.t("send_email_messages.title")}
-          contextualHelpMarkdown={contextualHelpMarkdown}
-          goBack={() => this.props.navigation.goBack()}
-        >
-          <ScreenContent title={I18n.t("send_email_messages.title")}>
-            <NBText
-              style={{ paddingHorizontal: customVariables.contentPadding }}
-            >
-              {I18n.t("send_email_messages.subtitle")}
-              <NBText bold={true}>{` ${this.props.userEmail}`}</NBText>
-              <NBText>{I18n.t("global.symbols.question")}</NBText>
-            </NBText>
-            <List withContentLateralPadding={true}>
-              {/* ALL INACTIVE */}
-              {renderListItem(
-                I18n.t("send_email_messages.options.disable_all.label"),
-                I18n.t("send_email_messages.options.disable_all.info"),
-                !this.props.isEmailEnabled,
-                () => {
-                  if (this.state.isLoading) {
-                    return;
-                  }
-                  // Disable custom email notification and disable email notifications from all visible service
-                  // The upsert of blocked_inbox_or_channels is avoided: the backend will block any email notification
-                  // when is_email_enabled is false
-                  this.setState(
-                    { isCustomChannelEnabledChoice: false, isLoading: true },
-                    () => {
-                      this.props.setEmailChannel(false);
-                    }
-                  );
+      <TopScreenComponent
+        headerTitle={I18n.t("send_email_messages.title")}
+        contextualHelpMarkdown={contextualHelpMarkdown}
+        goBack={() => this.props.navigation.goBack()}
+      >
+        <ScreenContent title={I18n.t("send_email_messages.title")}>
+          <NBText style={{ paddingHorizontal: customVariables.contentPadding }}>
+            {I18n.t("send_email_messages.subtitle")}
+            <NBText bold={true}>{` ${this.props.userEmail}`}</NBText>
+            <NBText>{I18n.t("global.symbols.question")}</NBText>
+          </NBText>
+          <List withContentLateralPadding={true}>
+            {/* ALL INACTIVE */}
+            {renderListItem(
+              I18n.t("send_email_messages.options.disable_all.label"),
+              I18n.t("send_email_messages.options.disable_all.info"),
+              !this.props.isEmailEnabled,
+              () => {
+                if (this.state.isLoading) {
+                  return;
                 }
-              )}
-              {/* ALL ACTIVE */}
-              {renderListItem(
-                I18n.t("send_email_messages.options.enable_all.label"),
-                I18n.t("send_email_messages.options.enable_all.info"),
-                this.props.isEmailEnabled &&
-                  !this.props.isCustomEmailChannelEnabled,
-                () => {
-                  if (this.state.isLoading) {
-                    return;
+                // Disable custom email notification and disable email notifications from all visible service
+                // The upsert of blocked_inbox_or_channels is avoided: the backend will block any email notification
+                // when is_email_enabled is false
+                this.setState(
+                  { isCustomChannelEnabledChoice: false, isLoading: true },
+                  () => {
+                    this.props.setEmailChannel(false);
                   }
-                  // Disable custom email notification and enable email notifications from all visible services.
-                  // The upsert of blocked_inbox_or_channels is required to enable those channel that was disabled
-                  // from the service detail
-                  this.setState(
-                    { isCustomChannelEnabledChoice: false, isLoading: true },
-                    () => {
-                      this.props.disableOrEnableAllEmailNotifications(
-                        this.props.visibleServicesId,
-                        this.props.potProfile
-                      );
-                    }
-                  );
-                }
-              )}
-              {/* CASE BY CASE */}
-              {/* ByService option is disabled until it will be persisted on backend as a proper attribute */}
-              {
-                // TODO this option should be reintegrated once option will supported back from backend https://pagopa.atlassian.net/browse/IARS-17
-                // renderListItem(
-                //   I18n.t("send_email_messages.options.by_service.label"),
-                //   I18n.t("send_email_messages.options.by_service.info"),
-                //   this.props.isEmailEnabled &&
-                //     this.props.isCustomEmailChannelEnabled,
-                //   // Enable custom set of the email notification for each visible service
-                //   () => {
-                //     if (this.state.isLoading) {
-                //       return;
-                //     }
-                //     this.setState(
-                //       { isCustomChannelEnabledChoice: true, isLoading: true },
-                //       () => {
-                //         this.props.setEmailChannel(true);
-                //       }
-                //     );
-                //   }
-                // )
+                );
               }
+            )}
+            {/* ALL ACTIVE */}
+            {renderListItem(
+              I18n.t("send_email_messages.options.enable_all.label"),
+              I18n.t("send_email_messages.options.enable_all.info"),
+              this.props.isEmailEnabled &&
+                !this.props.isCustomEmailChannelEnabled,
+              () => {
+                if (this.state.isLoading) {
+                  return;
+                }
+                // Disable custom email notification and enable email notifications from all visible services.
+                // The upsert of blocked_inbox_or_channels is required to enable those channel that was disabled
+                // from the service detail
+                this.setState(
+                  { isCustomChannelEnabledChoice: false, isLoading: true },
+                  () => {
+                    this.props.disableOrEnableAllEmailNotifications(
+                      this.props.visibleServicesId,
+                      this.props.potProfile
+                    );
+                  }
+                );
+              }
+            )}
+            {/* CASE BY CASE */}
+            {/* ByService option is disabled until it will be persisted on backend as a proper attribute */}
+            {
+              // TODO this option should be reintegrated once option will supported back from backend https://pagopa.atlassian.net/browse/IARS-17
+              // renderListItem(
+              //   I18n.t("send_email_messages.options.by_service.label"),
+              //   I18n.t("send_email_messages.options.by_service.info"),
+              //   this.props.isEmailEnabled &&
+              //     this.props.isCustomEmailChannelEnabled,
+              //   // Enable custom set of the email notification for each visible service
+              //   () => {
+              //     if (this.state.isLoading) {
+              //       return;
+              //     }
+              //     this.setState(
+              //       { isCustomChannelEnabledChoice: true, isLoading: true },
+              //       () => {
+              //         this.props.setEmailChannel(true);
+              //       }
+              //     );
+              //   }
+              // )
+            }
 
-              <EdgeBorderComponent />
-            </List>
-          </ScreenContent>
-        </TopScreenComponent>
-      </RemindEmailValidationOverlay>
+            <EdgeBorderComponent />
+          </List>
+        </ScreenContent>
+      </TopScreenComponent>
     );
   }
 }
@@ -275,7 +272,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   }
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withLoadingSpinner(EmailForwardingScreen));
+export default withValidatedEmail(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(withLoadingSpinner(EmailForwardingScreen))
+);

@@ -9,6 +9,7 @@ import * as React from "react";
 import EmailReadScreenComponent from "../../components/EmailReadScreenComponent";
 import RemindEmailValidationOverlay from "../../components/RemindEmailValidationOverlay";
 import { SingleButton } from "../../components/ui/BlockButtons";
+import { useValidatedEmailModal } from "../../hooks/useValidateEmailModal";
 import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { OnboardingParamsList } from "../../navigation/params/OnboardingParamsList";
@@ -20,6 +21,7 @@ type Props = IOStackNavigationRouteProps<
 >;
 
 const EmailReadScreen = (props: Props) => {
+  useValidatedEmailModal();
   const handleGoBack = () => {
     props.navigation.goBack();
   };
@@ -35,12 +37,10 @@ const EmailReadScreen = (props: Props) => {
   };
 
   return (
-    <RemindEmailValidationOverlay>
-      <EmailReadScreenComponent
-        handleGoBack={handleGoBack}
-        footerProps={footerProps}
-      />
-    </RemindEmailValidationOverlay>
+    <EmailReadScreenComponent
+      handleGoBack={handleGoBack}
+      footerProps={footerProps}
+    />
   );
 };
 

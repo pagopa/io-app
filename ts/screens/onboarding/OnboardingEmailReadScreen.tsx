@@ -13,6 +13,7 @@ import EmailReadScreenComponent from "../../components/EmailReadScreenComponent"
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import RemindEmailValidationOverlay from "../../components/RemindEmailValidationOverlay";
 import { TwoButtonsInlineHalf } from "../../components/ui/BlockButtons";
+import { useValidatedEmailModal } from "../../hooks/useValidateEmailModal";
 import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { OnboardingParamsList } from "../../navigation/params/OnboardingParamsList";
@@ -30,6 +31,7 @@ type Props = IOStackNavigationRouteProps<
 >;
 
 const OnboardingEmailReadScreen = (props: Props) => {
+  useValidatedEmailModal(true);
   const dispatch = useIODispatch();
   const potUserMetadata = useIOSelector(userMetadataSelector);
 
@@ -77,12 +79,10 @@ const OnboardingEmailReadScreen = (props: Props) => {
 
   return (
     <LoadingSpinnerOverlay isLoading={isLoading}>
-      <RemindEmailValidationOverlay isOnboarding={true}>
-        <EmailReadScreenComponent
-          handleGoBack={handleGoBack}
-          footerProps={footerProps}
-        />
-      </RemindEmailValidationOverlay>
+      <EmailReadScreenComponent
+        handleGoBack={handleGoBack}
+        footerProps={footerProps}
+      />
     </LoadingSpinnerOverlay>
   );
 };
