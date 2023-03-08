@@ -2,19 +2,20 @@
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { PreferredLanguageEnum } from "../../../../../../definitions/backend/PreferredLanguage";
-import { ErrorDto } from "../../../../../../definitions/idpay/onboarding/ErrorDto";
-import { InitiativeDto } from "../../../../../../definitions/idpay/onboarding/InitiativeDto";
+import { ErrorDTO } from "../../../../../../definitions/idpay/ErrorDTO";
+import { InitiativeInfoDTO } from "../../../../../../definitions/idpay/InitiativeInfoDTO";
 import {
   OnboardingStatusDTO,
   StatusEnum
-} from "../../../../../../definitions/idpay/onboarding/OnboardingStatusDTO";
-import { RequiredCriteriaDTO } from "../../../../../../definitions/idpay/onboarding/RequiredCriteriaDTO";
-import { _typeEnum as BoolTypeEnum } from "../../../../../../definitions/idpay/onboarding/SelfConsentBoolDTO";
-import { SelfConsentDTO } from "../../../../../../definitions/idpay/onboarding/SelfConsentDTO";
+} from "../../../../../../definitions/idpay/OnboardingStatusDTO";
+import { RequiredCriteriaDTO } from "../../../../../../definitions/idpay/RequiredCriteriaDTO";
+import { _typeEnum as BoolTypeEnum } from "../../../../../../definitions/idpay/SelfConsentBoolDTO";
+import { SelfConsentDTO } from "../../../../../../definitions/idpay/SelfConsentDTO";
 import {
   SelfConsentMultiDTO,
   _typeEnum as MultiTypeEnum
-} from "../../../../../../definitions/idpay/onboarding/SelfConsentMultiDTO";
+} from "../../../../../../definitions/idpay/SelfConsentMultiDTO";
+import { mockIDPayClient } from "../../../common/api/__mocks__/client";
 import { OnboardingFailureEnum } from "../failure";
 import { Context } from "../machine";
 import { createServicesImplementation } from "../services";
@@ -32,7 +33,7 @@ const T_CONTEXT: Context = {
 
 const T_SERVICE_ID = "efg456";
 
-const T_INITIATIVE_DTO: InitiativeDto = {
+const T_INITIATIVE_INFO_DTO: InitiativeInfoDTO = {
   initiativeId: "1234"
 };
 
@@ -89,17 +90,9 @@ const T_ACCEPTED_SELF_DECLARATION_LIST: Array<SelfConsentDTO> = [
   ...Object.values(T_MULTI_CONSENTS_ANSWERS)
 ] as Array<SelfConsentDTO>;
 
-const mockOnboardingClient = {
-  getInitiativeData: jest.fn(),
-  checkPrerequisites: jest.fn(),
-  consentOnboarding: jest.fn(),
-  onboardingCitizen: jest.fn(),
-  onboardingStatus: jest.fn()
-};
-
 describe("IDPay Onboarding machine services", () => {
   const services = createServicesImplementation(
-    mockOnboardingClient,
+    mockIDPayClient,
     T_AUTH_TOKEN,
     T_PREFERRED_LANGUAGE
   );
@@ -114,14 +107,14 @@ describe("IDPay Onboarding machine services", () => {
         OnboardingFailureEnum.GENERIC
       );
 
-      expect(mockOnboardingClient.getInitiativeData).toHaveBeenCalledTimes(0);
+      expect(mockIDPayClient.getInitiativeData).toHaveBeenCalledTimes(0);
     });
 
     it("should fail if response status code != 200", async () => {
-      const response: E.Either<Error, { status: number; value?: ErrorDto }> =
+      const response: E.Either<Error, { status: number; value?: ErrorDTO }> =
         E.right({ status: 400, value: { code: 0, message: "" } });
 
-      mockOnboardingClient.getInitiativeData.mockImplementation(() => response);
+      mockIDPayClient.getInitiativeData.mockImplementation(() => response);
 
       await expect(
         services.loadInitiative({
@@ -130,7 +123,7 @@ describe("IDPay Onboarding machine services", () => {
         })
       ).rejects.toMatch(OnboardingFailureEnum.GENERIC);
 
-      expect(mockOnboardingClient.getInitiativeData).toHaveBeenCalledWith(
+      expect(mockIDPayClient.getInitiativeData).toHaveBeenCalledWith(
         expect.objectContaining({
           bearerAuth: T_AUTH_TOKEN,
           "Accept-Language": T_PREFERRED_LANGUAGE,
@@ -142,19 +135,19 @@ describe("IDPay Onboarding machine services", () => {
     it("should get initiative data", async () => {
       const response: E.Either<
         Error,
-        { status: number; value?: InitiativeDto }
-      > = E.right({ status: 200, value: T_INITIATIVE_DTO });
+        { status: number; value?: InitiativeInfoDTO }
+      > = E.right({ status: 200, value: T_INITIATIVE_INFO_DTO });
 
-      mockOnboardingClient.getInitiativeData.mockImplementation(() => response);
+      mockIDPayClient.getInitiativeData.mockImplementation(() => response);
 
       await expect(
         services.loadInitiative({
           ...T_CONTEXT,
           serviceId: T_SERVICE_ID
         })
-      ).resolves.toMatchObject(T_INITIATIVE_DTO);
+      ).resolves.toMatchObject(T_INITIATIVE_INFO_DTO);
 
-      expect(mockOnboardingClient.getInitiativeData).toHaveBeenCalledWith(
+      expect(mockIDPayClient.getInitiativeData).toHaveBeenCalledWith(
         expect.objectContaining({
           bearerAuth: T_AUTH_TOKEN,
           "Accept-Language": T_PREFERRED_LANGUAGE,
@@ -170,51 +163,51 @@ describe("IDPay Onboarding machine services", () => {
         OnboardingFailureEnum.GENERIC
       );
 
-      expect(mockOnboardingClient.onboardingStatus).toHaveBeenCalledTimes(0);
+      expect(mockIDPayClient.onboardingStatus).toHaveBeenCalledTimes(0);
     });
 
     it("should fail if response status code != 200", async () => {
-      const response: E.Either<Error, { status: number; value?: ErrorDto }> =
+      const response: E.Either<Error, { status: number; value?: ErrorDTO }> =
         E.right({ status: 400, value: { code: 0, message: "" } });
 
-      mockOnboardingClient.onboardingStatus.mockImplementation(() => response);
+      mockIDPayClient.onboardingStatus.mockImplementation(() => response);
 
       await expect(
         services.loadInitiativeStatus({
           ...T_CONTEXT,
           serviceId: T_SERVICE_ID,
-          initiative: T_INITIATIVE_DTO
+          initiative: T_INITIATIVE_INFO_DTO
         })
       ).rejects.toMatch(OnboardingFailureEnum.GENERIC);
 
-      expect(mockOnboardingClient.onboardingStatus).toHaveBeenCalledWith(
+      expect(mockIDPayClient.onboardingStatus).toHaveBeenCalledWith(
         expect.objectContaining({
           bearerAuth: T_AUTH_TOKEN,
           "Accept-Language": T_PREFERRED_LANGUAGE,
-          initiativeId: T_INITIATIVE_DTO.initiativeId
+          initiativeId: T_INITIATIVE_INFO_DTO.initiativeId
         })
       );
     });
 
     it("should return none if response status code == 404", async () => {
-      const response: E.Either<Error, { status: number; value?: ErrorDto }> =
+      const response: E.Either<Error, { status: number; value?: ErrorDTO }> =
         E.right({ status: 404, value: { code: 0, message: "" } });
 
-      mockOnboardingClient.onboardingStatus.mockImplementation(() => response);
+      mockIDPayClient.onboardingStatus.mockImplementation(() => response);
 
       await expect(
         services.loadInitiativeStatus({
           ...T_CONTEXT,
           serviceId: T_SERVICE_ID,
-          initiative: T_INITIATIVE_DTO
+          initiative: T_INITIATIVE_INFO_DTO
         })
       ).resolves.toMatchObject(O.none);
 
-      expect(mockOnboardingClient.onboardingStatus).toHaveBeenCalledWith(
+      expect(mockIDPayClient.onboardingStatus).toHaveBeenCalledWith(
         expect.objectContaining({
           bearerAuth: T_AUTH_TOKEN,
           "Accept-Language": T_PREFERRED_LANGUAGE,
-          initiativeId: T_INITIATIVE_DTO.initiativeId
+          initiativeId: T_INITIATIVE_INFO_DTO.initiativeId
         })
       );
     });
@@ -238,15 +231,13 @@ describe("IDPay Onboarding machine services", () => {
           { status: number; value?: OnboardingStatusDTO }
         > = E.right({ status: 200, value: { status } });
 
-        mockOnboardingClient.onboardingStatus.mockImplementation(
-          () => response
-        );
+        mockIDPayClient.onboardingStatus.mockImplementation(() => response);
 
         await expect(
           services.loadInitiativeStatus({
             ...T_CONTEXT,
             serviceId: T_SERVICE_ID,
-            initiative: T_INITIATIVE_DTO
+            initiative: T_INITIATIVE_INFO_DTO
           })
         ).rejects.toMatch(failure);
       }
@@ -265,15 +256,13 @@ describe("IDPay Onboarding machine services", () => {
           { status: number; value?: OnboardingStatusDTO }
         > = E.right({ status: 200, value: { status } });
 
-        mockOnboardingClient.onboardingStatus.mockImplementation(
-          () => response
-        );
+        mockIDPayClient.onboardingStatus.mockImplementation(() => response);
 
         await expect(
           services.loadInitiativeStatus({
             ...T_CONTEXT,
             serviceId: T_SERVICE_ID,
-            initiative: T_INITIATIVE_DTO
+            initiative: T_INITIATIVE_INFO_DTO
           })
         ).resolves.toMatchObject(O.some(status));
       }
@@ -286,29 +275,29 @@ describe("IDPay Onboarding machine services", () => {
         OnboardingFailureEnum.GENERIC
       );
 
-      expect(mockOnboardingClient.onboardingCitizen).toHaveBeenCalledTimes(0);
+      expect(mockIDPayClient.onboardingCitizen).toHaveBeenCalledTimes(0);
     });
 
     it("should fail if response status code != 204", async () => {
-      const response: E.Either<Error, { status: number; value?: ErrorDto }> =
+      const response: E.Either<Error, { status: number; value?: ErrorDTO }> =
         E.right({ status: 400, value: { code: 0, message: "" } });
 
-      mockOnboardingClient.onboardingCitizen.mockImplementation(() => response);
+      mockIDPayClient.onboardingCitizen.mockImplementation(() => response);
 
       await expect(
         services.acceptTos({
           ...T_CONTEXT,
           serviceId: T_SERVICE_ID,
-          initiative: T_INITIATIVE_DTO
+          initiative: T_INITIATIVE_INFO_DTO
         })
       ).rejects.toMatch(OnboardingFailureEnum.GENERIC);
 
-      expect(mockOnboardingClient.onboardingCitizen).toHaveBeenCalledWith(
+      expect(mockIDPayClient.onboardingCitizen).toHaveBeenCalledWith(
         expect.objectContaining({
           bearerAuth: T_AUTH_TOKEN,
           "Accept-Language": T_PREFERRED_LANGUAGE,
           body: {
-            initiativeId: T_INITIATIVE_DTO.initiativeId
+            initiativeId: T_INITIATIVE_INFO_DTO.initiativeId
           }
         })
       );
@@ -318,22 +307,22 @@ describe("IDPay Onboarding machine services", () => {
       const response: E.Either<Error, { status: number; value?: undefined }> =
         E.right({ status: 204, value: undefined });
 
-      mockOnboardingClient.onboardingCitizen.mockImplementation(() => response);
+      mockIDPayClient.onboardingCitizen.mockImplementation(() => response);
 
       await expect(
         services.acceptTos({
           ...T_CONTEXT,
           serviceId: T_SERVICE_ID,
-          initiative: T_INITIATIVE_DTO
+          initiative: T_INITIATIVE_INFO_DTO
         })
       ).resolves.toBeUndefined();
 
-      expect(mockOnboardingClient.onboardingCitizen).toHaveBeenCalledWith(
+      expect(mockIDPayClient.onboardingCitizen).toHaveBeenCalledWith(
         expect.objectContaining({
           bearerAuth: T_AUTH_TOKEN,
           "Accept-Language": T_PREFERRED_LANGUAGE,
           body: {
-            initiativeId: T_INITIATIVE_DTO.initiativeId
+            initiativeId: T_INITIATIVE_INFO_DTO.initiativeId
           }
         })
       );
@@ -346,31 +335,29 @@ describe("IDPay Onboarding machine services", () => {
         OnboardingFailureEnum.GENERIC
       );
 
-      expect(mockOnboardingClient.checkPrerequisites).toHaveBeenCalledTimes(0);
+      expect(mockIDPayClient.checkPrerequisites).toHaveBeenCalledTimes(0);
     });
 
     it("should fail if response status code != 200 or 202", async () => {
-      const response: E.Either<Error, { status: number; value?: ErrorDto }> =
+      const response: E.Either<Error, { status: number; value?: ErrorDTO }> =
         E.right({ status: 400, value: { code: 0, message: "" } });
 
-      mockOnboardingClient.checkPrerequisites.mockImplementation(
-        () => response
-      );
+      mockIDPayClient.checkPrerequisites.mockImplementation(() => response);
 
       await expect(
         services.loadRequiredCriteria({
           ...T_CONTEXT,
           serviceId: T_SERVICE_ID,
-          initiative: T_INITIATIVE_DTO
+          initiative: T_INITIATIVE_INFO_DTO
         })
       ).rejects.toMatch(OnboardingFailureEnum.GENERIC);
 
-      expect(mockOnboardingClient.checkPrerequisites).toHaveBeenCalledWith(
+      expect(mockIDPayClient.checkPrerequisites).toHaveBeenCalledWith(
         expect.objectContaining({
           bearerAuth: T_AUTH_TOKEN,
           "Accept-Language": T_PREFERRED_LANGUAGE,
           body: {
-            initiativeId: T_INITIATIVE_DTO.initiativeId
+            initiativeId: T_INITIATIVE_INFO_DTO.initiativeId
           }
         })
       );
@@ -380,24 +367,22 @@ describe("IDPay Onboarding machine services", () => {
       const response: E.Either<Error, { status: number; value?: undefined }> =
         E.right({ status: 202, value: undefined });
 
-      mockOnboardingClient.checkPrerequisites.mockImplementation(
-        () => response
-      );
+      mockIDPayClient.checkPrerequisites.mockImplementation(() => response);
 
       await expect(
         services.loadRequiredCriteria({
           ...T_CONTEXT,
           serviceId: T_SERVICE_ID,
-          initiative: T_INITIATIVE_DTO
+          initiative: T_INITIATIVE_INFO_DTO
         })
       ).resolves.toMatchObject(O.none);
 
-      expect(mockOnboardingClient.checkPrerequisites).toHaveBeenCalledWith(
+      expect(mockIDPayClient.checkPrerequisites).toHaveBeenCalledWith(
         expect.objectContaining({
           bearerAuth: T_AUTH_TOKEN,
           "Accept-Language": T_PREFERRED_LANGUAGE,
           body: {
-            initiativeId: T_INITIATIVE_DTO.initiativeId
+            initiativeId: T_INITIATIVE_INFO_DTO.initiativeId
           }
         })
       );
@@ -412,24 +397,22 @@ describe("IDPay Onboarding machine services", () => {
         value: T_REQUIRED_CRITERIA_DTO
       });
 
-      mockOnboardingClient.checkPrerequisites.mockImplementation(
-        () => response
-      );
+      mockIDPayClient.checkPrerequisites.mockImplementation(() => response);
 
       await expect(
         services.loadRequiredCriteria({
           ...T_CONTEXT,
           serviceId: T_SERVICE_ID,
-          initiative: T_INITIATIVE_DTO
+          initiative: T_INITIATIVE_INFO_DTO
         })
       ).resolves.toMatchObject(O.some(T_REQUIRED_CRITERIA_DTO));
 
-      expect(mockOnboardingClient.checkPrerequisites).toHaveBeenCalledWith(
+      expect(mockIDPayClient.checkPrerequisites).toHaveBeenCalledWith(
         expect.objectContaining({
           bearerAuth: T_AUTH_TOKEN,
           "Accept-Language": T_PREFERRED_LANGUAGE,
           body: {
-            initiativeId: T_INITIATIVE_DTO.initiativeId
+            initiativeId: T_INITIATIVE_INFO_DTO.initiativeId
           }
         })
       );
@@ -442,7 +425,7 @@ describe("IDPay Onboarding machine services", () => {
         OnboardingFailureEnum.GENERIC
       );
 
-      expect(mockOnboardingClient.consentOnboarding).toHaveBeenCalledTimes(0);
+      expect(mockIDPayClient.consentOnboarding).toHaveBeenCalledTimes(0);
     });
 
     it("should fail if required criteria in context is none", async () => {
@@ -453,31 +436,31 @@ describe("IDPay Onboarding machine services", () => {
         })
       ).rejects.toMatch(OnboardingFailureEnum.GENERIC);
 
-      expect(mockOnboardingClient.consentOnboarding).toHaveBeenCalledTimes(0);
+      expect(mockIDPayClient.consentOnboarding).toHaveBeenCalledTimes(0);
     });
 
     it("should fail if response status code != 202", async () => {
-      const response: E.Either<Error, { status: number; value?: ErrorDto }> =
+      const response: E.Either<Error, { status: number; value?: ErrorDTO }> =
         E.right({ status: 400, value: { code: 0, message: "" } });
 
-      mockOnboardingClient.consentOnboarding.mockImplementation(() => response);
+      mockIDPayClient.consentOnboarding.mockImplementation(() => response);
 
       await expect(
         services.acceptRequiredCriteria({
           ...T_CONTEXT,
           serviceId: T_SERVICE_ID,
-          initiative: T_INITIATIVE_DTO,
+          initiative: T_INITIATIVE_INFO_DTO,
           requiredCriteria: O.some(T_REQUIRED_CRITERIA_DTO),
           multiConsentsAnswers: T_MULTI_CONSENTS_ANSWERS
         })
       ).rejects.toMatch(OnboardingFailureEnum.GENERIC);
 
-      expect(mockOnboardingClient.consentOnboarding).toHaveBeenCalledWith(
+      expect(mockIDPayClient.consentOnboarding).toHaveBeenCalledWith(
         expect.objectContaining({
           bearerAuth: T_AUTH_TOKEN,
           "Accept-Language": T_PREFERRED_LANGUAGE,
           body: {
-            initiativeId: T_INITIATIVE_DTO.initiativeId,
+            initiativeId: T_INITIATIVE_INFO_DTO.initiativeId,
             pdndAccept: true,
             selfDeclarationList: T_ACCEPTED_SELF_DECLARATION_LIST
           }
@@ -489,24 +472,24 @@ describe("IDPay Onboarding machine services", () => {
       const response: E.Either<Error, { status: number; value?: undefined }> =
         E.right({ status: 202, value: undefined });
 
-      mockOnboardingClient.consentOnboarding.mockImplementation(() => response);
+      mockIDPayClient.consentOnboarding.mockImplementation(() => response);
 
       await expect(
         services.acceptRequiredCriteria({
           ...T_CONTEXT,
           serviceId: T_SERVICE_ID,
-          initiative: T_INITIATIVE_DTO,
+          initiative: T_INITIATIVE_INFO_DTO,
           requiredCriteria: O.some(T_REQUIRED_CRITERIA_DTO),
           multiConsentsAnswers: T_MULTI_CONSENTS_ANSWERS
         })
       ).resolves.toBeUndefined();
 
-      expect(mockOnboardingClient.consentOnboarding).toHaveBeenCalledWith(
+      expect(mockIDPayClient.consentOnboarding).toHaveBeenCalledWith(
         expect.objectContaining({
           bearerAuth: T_AUTH_TOKEN,
           "Accept-Language": T_PREFERRED_LANGUAGE,
           body: {
-            initiativeId: T_INITIATIVE_DTO.initiativeId,
+            initiativeId: T_INITIATIVE_INFO_DTO.initiativeId,
             pdndAccept: true,
             selfDeclarationList: T_ACCEPTED_SELF_DECLARATION_LIST
           }
