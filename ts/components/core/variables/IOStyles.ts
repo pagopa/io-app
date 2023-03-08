@@ -1,6 +1,5 @@
 import { Platform, StyleSheet } from "react-native";
 import themeVariables from "../../../theme/variables";
-import { makeFontStyleObject } from "../fonts";
 
 /**
  * A collection of default styles used within IO App.

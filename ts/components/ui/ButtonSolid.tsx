@@ -46,7 +46,14 @@ type ColorStates = {
   };
 };
 
-// COMPONENT CONFIGURATION
+/*
+░░░ COMPONENT CONFIGURATION ░░░
+*/
+
+/* Delete the following block if you want to
+get rid of legacy variant */
+
+/* ◀ REMOVE_LEGACY_COMPONENT: Start */
 
 const mapLegacyColorStates: Record<
   NonNullable<ButtonSolid["color"]>,
@@ -83,12 +90,18 @@ const mapLegacyColorStates: Record<
 
 // Disabled state
 const colorPrimaryLegacyButtonDisabled: IOColors = "bluegreyLight";
+const legacyStyles = StyleSheet.create({
+  backgroundDisabled: {
+    backgroundColor: IOColors[colorPrimaryLegacyButtonDisabled]
+  }
+});
+
+/* REMOVE_LEGACY_COMPONENT: End ▶ */
+
+// Disabled state
 const colorPrimaryButtonDisabled: IOColors = "grey200";
 
 const styles = StyleSheet.create({
-  backgroundDisabledLegacy: {
-    backgroundColor: IOColors[colorPrimaryLegacyButtonDisabled]
-  },
   backgroundDisabled: {
     backgroundColor: IOColors[colorPrimaryButtonDisabled]
   }
@@ -150,6 +163,8 @@ ButtonSolid) => {
   // Interpolate animation values from `isPressed` values
   const pressedAnimationStyle = useAnimatedStyle(() => {
     // Link color states to the pressed states
+
+    /* ◀ REMOVE_LEGACY_COMPONENT: Remove the following condition */
     const bgColor = isDesignSystemEnabled
       ? interpolateColor(
           progressPressed.value,
@@ -164,6 +179,7 @@ ButtonSolid) => {
             mapLegacyColorStates[color].pressed
           ]
         );
+    /* REMOVE_LEGACY_COMPONENT: End ▶ */
 
     // Scale down button slightly when pressed
     const scale = interpolate(
@@ -188,6 +204,7 @@ ButtonSolid) => {
     isPressed.value = 0;
   }, [isPressed]);
 
+  /* ◀ REMOVE_LEGACY_COMPONENT: Start */
   const LegacyButton = () => (
     <Pressable
       accessibilityLabel={accessibilityLabel}
@@ -212,7 +229,7 @@ ButtonSolid) => {
             ? IOButtonLegacyStyles.buttonSizeSmall
             : IOButtonLegacyStyles.buttonSizeDefault,
           disabled
-            ? styles.backgroundDisabledLegacy
+            ? legacyStyles.backgroundDisabled
             : { backgroundColor: mapLegacyColorStates[color]?.default },
           /* Prevent Reanimated from overriding background colors
           if button is disabled */
@@ -244,6 +261,7 @@ ButtonSolid) => {
       </Animated.View>
     </Pressable>
   );
+  /* REMOVE_LEGACY_COMPONENT: End ▶ */
 
   const NewButton = () => (
     <Pressable
@@ -303,6 +321,8 @@ ButtonSolid) => {
     </Pressable>
   );
 
+  /* ◀ REMOVE_LEGACY_COMPONENT: Move the entire <NewButton /> here,
+  without the following condition */
   return isDesignSystemEnabled ? <NewButton /> : <LegacyButton />;
 };
 
