@@ -3224,15 +3224,12 @@ features:
         title: Il documento è in elaborazione
         subTitle: Ti preghiamo di attendere, presto riceverai il contratto firmato in app.
       generic:
-        unsupportedDevice:
-          title: Non puoi firmare con questo dispositivo
-          subTitle: Il dispositivo non è compatibile con Firma con IO. Quindi, non puoi usarlo per firmare documenti tramite l’app.
         default:
           title: C’è un problema sui nostri sistemi
           subTitle: Riprova tra qualche minuto. Se si ripete, contatta l’assistenza.
         update:
           title: Aggiorna l’app
-          subTitle: Vai allo store del tuo dispositivo e verifica di avere installato l’ultima versione di IO.
+          subTitle: Per utilizzare questo nuovo servizio devi aggiornare l’app ed effettuare un nuovo login.
         rejected:
           title: La firma non è andata a buon fine
           subTitle: L’ente mittente ti contatterà nei prossimi giorni per farti firmare di nuovo. Se ciò non dovesse succedere, scrivi a

@@ -3200,15 +3200,12 @@ features:
         title: The document is being processed
         subTitle: Please wait, you will soon receive the signed contract in the app.
       generic:
-        unsupportedDevice:
-          title: There is a problem
-          subTitle: Your device does not support the "Firma con IO" feature.
         default:
           title: There is a problem
           subTitle: To proceed with the signature, check that you have updated the IO app to the latest version.
         update:
           title: Update the app
-          subTitle: Go to your device store and check that you have the latest version of IO installed.
+          subTitle: To use this new functionality, you must update the app and re-log in.
         rejected:
           title: The signing failed
           subTitle: The sender will contact you in the next few days to get you to re-sign. If this doesn't happen, write to    

@@ -42,10 +42,8 @@ const SuccessComponent = (props: {
   if (showUnsupportedDeviceBanner) {
     return (
       <GenericErrorComponent
-        title={I18n.t("features.fci.errors.generic.unsupportedDevice.title")}
-        subTitle={I18n.t(
-          "features.fci.errors.generic.unsupportedDevice.subTitle"
-        )}
+        title={I18n.t("features.fci.errors.generic.update.title")}
+        subTitle={I18n.t("features.fci.errors.generic.update.subTitle")}
         onPress={() => dispatch(fciEndRequest())}
       />
     );
