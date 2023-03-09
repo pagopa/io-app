@@ -78,7 +78,7 @@ const InitiativeCardComponent = (props: Props) => {
 
   const isInitiativeConfigured = status === InitiativeStatusEnum.REFUNDABLE;
   const toBeRepaidAmount = (accrued || 0) - (refunded || 0);
-  const remainingAmount = (amount || 0) - (refunded || 0);
+  const remainingAmount = (amount || 0) - (accrued || 0);
 
   const dateString = formatDateAsLocal(endDate, true);
   const remainingBonusAmountPercentage =
