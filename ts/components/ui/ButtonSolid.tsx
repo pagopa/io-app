@@ -99,7 +99,7 @@ const legacyStyles = StyleSheet.create({
 /* REMOVE_LEGACY_COMPONENT: End ▶ */
 
 // Disabled state
-const colorPrimaryButtonDisabled: IOColors = "grey200";
+const colorPrimaryButtonDisabled: IOColors = "grey-200";
 
 const styles = StyleSheet.create({
   backgroundDisabled: {
@@ -110,29 +110,29 @@ const styles = StyleSheet.create({
 const mapColorStates: Record<NonNullable<ButtonSolid["color"]>, ColorStates> = {
   // Primary button
   primary: {
-    default: IOColors.blueNew,
-    pressed: IOColors.blueNew600,
+    default: IOColors["blueIO-500"],
+    pressed: IOColors["blueIO-600"],
     label: {
       default: "white",
-      disabled: "grey700"
+      disabled: "grey-700"
     }
   },
   // Danger button
   danger: {
-    default: IOColors.errorDark,
-    pressed: IOColors.errorGraphic,
+    default: IOColors["error-850"],
+    pressed: IOColors["error-600"],
     label: {
       default: "white",
-      disabled: "grey700"
+      disabled: "grey-700"
     }
   },
   // Contrast button
   contrast: {
     default: IOColors.white,
-    pressed: IOColors.blueNew50,
+    pressed: IOColors["blueIO-50"],
     label: {
-      default: "blueNew",
-      disabled: "grey700"
+      default: "blueIO-500",
+      disabled: "grey-700"
     }
   }
 };

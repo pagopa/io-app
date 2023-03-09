@@ -160,19 +160,19 @@ const mapColorStates: Record<
   // Primary button
   primary: {
     border: {
-      default: IOColors.blueNew,
-      pressed: IOColors.blueNew600,
-      disabled: IOColors.grey200
+      default: IOColors["blueIO-500"],
+      pressed: IOColors["blueIO-600"],
+      disabled: IOColors["grey-200"]
     },
     background: {
-      default: hexToRgba(IOColors.blueNew50, 0),
-      pressed: hexToRgba(IOColors.blueNew50, 1),
+      default: hexToRgba(IOColors["blueIO-50"], 0),
+      pressed: hexToRgba(IOColors["blueIO-50"], 1),
       disabled: "transparent"
     },
     label: {
-      default: IOColors.blueNew,
-      pressed: IOColors.blueNew600,
-      disabled: IOColors.grey700
+      default: IOColors["blueIO-500"],
+      pressed: IOColors["blueIO-600"],
+      disabled: IOColors["grey-700"]
     }
   },
   // Neutral button
@@ -198,17 +198,17 @@ const mapColorStates: Record<
     border: {
       default: IOColors.white,
       pressed: IOColors.white,
-      disabled: IOColors.blueNew200
+      disabled: IOColors["blueIO-200"]
     },
     background: {
-      default: hexToRgba(IOColors.blueNew600, 0),
-      pressed: IOColors.blueNew600,
+      default: hexToRgba(IOColors["blueIO-600"], 0),
+      pressed: IOColors["blueIO-600"],
       disabled: "transparent"
     },
     label: {
       default: IOColors.white,
       pressed: IOColors.white,
-      disabled: IOColors.blueNew200
+      disabled: IOColors["blueIO-200"]
     }
   },
   // Danger button
