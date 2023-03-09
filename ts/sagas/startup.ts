@@ -457,7 +457,7 @@ export function* initializeApplicationSaga(): Generator<
   }
 
   if (fciEnabled) {
-    yield* fork(watchFciSaga, sessionToken);
+    yield* fork(watchFciSaga, sessionToken, keyInfo);
   }
 
   // Load the user metadata
