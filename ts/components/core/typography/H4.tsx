@@ -1,4 +1,6 @@
 import * as React from "react";
+import { useIOSelector } from "../../../store/hooks";
+import { isDesignSystemEnabledSelector } from "../../../store/reducers/persistedPreferences";
 import { IOFontFamily, IOFontWeight } from "../fonts";
 import type { IOColors } from "../variables/IOColors";
 import { ExternalTypographyProps, RequiredTypographyProps } from "./common";
@@ -53,9 +55,14 @@ type BoldKindProps = SemiBoldProps | BoldProps | RegularProps;
 
 type OwnProps = ExternalTypographyProps<BoldKindProps>;
 
-const fontName: IOFontFamily = "TitilliumWeb";
-export const h4FontSize = 16;
-export const h4LineHeight = 22;
+/* Legacy typograhic style */
+const legacyFontName: IOFontFamily = "TitilliumWeb";
+export const h4LegacyFontSize = 16;
+export const h4LegacyLineHeight = 22;
+/* New typograhic style */
+const fontName: IOFontFamily = "ReadexPro";
+export const h4FontSize = 20;
+export const h4LineHeight = 24;
 
 /**
  * A custom function to calculate the values if no weight or color is provided.
@@ -89,10 +96,28 @@ export const calculateH4WeightColor = (
  * @param props
  * @constructor
  */
-export const H4: React.FunctionComponent<OwnProps> = props =>
-  useTypographyFactory<AllowedWeight, AllowedColors>({
-    ...props,
-    weightColorFactory: calculateH4WeightColor,
-    font: fontName,
-    fontStyle: { fontSize: h4FontSize, lineHeight: h4LineHeight }
-  });
+export const H4: React.FunctionComponent<OwnProps> = props => {
+  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
+
+  return useTypographyFactory<AllowedWeight, AllowedColors>(
+    isDesignSystemEnabled
+      ? {
+          ...props,
+          weightColorFactory: calculateH4WeightColor,
+          font: fontName,
+          fontStyle: {
+            fontSize: h4FontSize,
+            lineHeight: h4LineHeight
+          }
+        }
+      : {
+          ...props,
+          weightColorFactory: calculateH4WeightColor,
+          font: legacyFontName,
+          fontStyle: {
+            fontSize: h4LegacyFontSize,
+            lineHeight: h4LegacyLineHeight
+          }
+        }
+  );
+};
