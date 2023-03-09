@@ -33,20 +33,42 @@ const styles = StyleSheet.create({
   badge: {
     backgroundColor: IOColors.blue
   },
-  row: {
-    flexDirection: "row",
-    alignItems: "center",
-    textAlign: "center"
-  },
-
   paddedMainContent: {
     padding: 32,
     paddingTop: 0,
     flex: 1
   },
-
+  bonusLogoContainer: {
+    backgroundColor: IOColors.white,
+    height: 56,
+    width: 56,
+    borderRadius: 8
+  },
+  topCardSection: {
+    flex: 2,
+    alignItems: "center"
+  },
+  bottomCardSection: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    alignItems: "flex-end"
+  },
+  bonusStatusContainer: {
+    flexDirection: "row",
+    alignItems: "center"
+  },
   consumedOpacity: {
     opacity: 0.5
+  },
+  remainingPercentageSliderContainer: {
+    height: 4,
+    backgroundColor: IOColors.white,
+    width: "100%",
+    borderRadius: 4
+  },
+  alignCenter: {
+    alignItems: "center"
   }
 });
 
@@ -56,52 +78,47 @@ const InitiativeCardComponent = (props: Props) => {
 
   const isInitiativeConfigured = status === InitiativeStatusEnum.REFUNDABLE;
   const toBeRepaidAmount = (accrued || 0) - (refunded || 0);
+  const remainingAmount = (amount || 0) - (refunded || 0);
 
   const dateString = formatDateAsLocal(endDate, true);
-
-  const remainingAmount = (amount || 0) - (refunded || 0);
-  const remainintPercentage =
+  const remainingBonusAmountPercentage =
     (remainingAmount / (amount || remainingAmount)) * 100;
 
   const renderNewCard = () => (
     <View style={IOStyles.flex}>
       {/* top part */}
-      <View style={[IOStyles.flex, { flex: 2, alignItems: "center" }]}>
-        <View
-          style={{
-            backgroundColor: IOColors.white,
-            height: 56,
-            width: 56,
-            borderRadius: 8
-          }}
-        ></View>
+      <View style={styles.topCardSection}>
+        <View style={styles.bonusLogoContainer}></View>
         <VSpacer size={8} />
         <H1>{initiativeName}</H1>
         <Body>{/* the ministry would go here */}</Body>
         <VSpacer size={8} />
-        <View style={[IOStyles.row, { alignItems: "center" }]}>
+        <View style={styles.bonusStatusContainer}>
           <Badge style={styles.badge}>
             <LabelSmall color="white">
-              {isInitiativeConfigured ? "ATTIVO" : "ERRORE"}
+              {I18n.t(
+                `idpay.initiative.details.initiativeCard.statusLabels.${status}`
+              )}
             </LabelSmall>
           </Badge>
           <HSpacer size={8} />
           <LabelSmall color="bluegreyDark">
-            {isInitiativeConfigured ? "Fino al" : "Scade il"} {dateString}
+            {I18n.t(
+              `idpay.initiative.details.initiativeCard.${
+                isInitiativeConfigured ? "validUntil" : "expiresOn"
+              }`,
+              {
+                expiryDate: dateString
+              }
+            )}
           </LabelSmall>
         </View>
       </View>
       <VSpacer size={48} />
 
       {/* bottom part */}
-      <View
-        style={[
-          IOStyles.flex,
-          styles.row,
-          { alignItems: "flex-end", justifyContent: "space-evenly" }
-        ]}
-      >
-        <View style={{ alignItems: "center" }}>
+      <View style={styles.bottomCardSection}>
+        <View style={styles.alignCenter}>
           <LabelSmall color="bluegreyDark" weight="Regular">
             {I18n.t("idpay.initiative.details.initiativeCard.availableAmount")}
           </LabelSmall>
@@ -109,25 +126,20 @@ const InitiativeCardComponent = (props: Props) => {
             {formatNumberAmount((amount || 0) - (refunded || 0), true)}
           </H1>
           <VSpacer size={8} />
-          <View
-            style={{
-              height: 4,
-              backgroundColor: IOColors.white,
-              width: "100%",
-              borderRadius: 4
-            }}
-          >
+          <View style={styles.remainingPercentageSliderContainer}>
             <View
               style={{
-                width: `${remainintPercentage}%`,
-                backgroundColor: IOColors.blue,
+                width: `${remainingBonusAmountPercentage}%`,
+                backgroundColor: isInitiativeConfigured
+                  ? IOColors.blue
+                  : IOColors.grey450,
                 flex: 1,
                 borderRadius: 4
               }}
             ></View>
           </View>
         </View>
-        <View style={{ alignItems: "center" }}>
+        <View style={styles.alignCenter}>
           <LabelSmall color="bluegreyDark" weight="Regular">
             {I18n.t("idpay.initiative.details.initiativeCard.toRefund")}
           </LabelSmall>

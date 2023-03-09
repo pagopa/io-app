@@ -3309,8 +3309,15 @@ idpay:
     details:
       initiativeCard:
         availableAmount: Disponibile
-        validUntil: Valido fino al {{expiryDate}}
-        toRefund: da rimborsare
+        validUntil: Fino al {{expiryDate}}
+        expiresOn: Scade il {{expiryDate}}
+        toRefund: Da rimborsare
+        statusLabels:
+          REFUNDABLE: ATTIVO
+          NOT_REFUNDABLE: DISATTIVATO
+          NOT_REFUNDABLE_ONLY_IBAN: METODO MANCANTE
+          NOT_REFUNDABLE_ONLY_INSTRUMENT: IBAN MANCANTE
+          UNSUBSCRIBED: DISISCRITTO
       initiativeDetailsScreen:
         notConfigured:
           header: Configura l'iniziativa!

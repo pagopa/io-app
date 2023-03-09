@@ -1,20 +1,21 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation, useRoute } from "@react-navigation/core";
 import { RouteProp, useFocusEffect } from "@react-navigation/native";
+import { format } from "date-fns";
 import { Text } from "native-base";
 import React, { useCallback } from "react";
-import { View, SafeAreaView, ScrollView, StyleSheet } from "react-native";
-import LinearGradient from "react-native-linear-gradient";
+import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import {
   InitiativeDTO,
   StatusEnum
 } from "../../../../../../definitions/idpay/InitiativeDTO";
 import EmptyInitiativeSvg from "../../../../../../img/features/idpay/empty_initiative.svg";
+import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H3 } from "../../../../../components/core/typography/H3";
+import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
@@ -24,14 +25,13 @@ import {
   IOStackNavigationProp
 } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import customVariables from "../../../../../theme/variables";
 import { IDPayConfigurationRoutes } from "../../configuration/navigation/navigator";
 import InitiativeCardComponent from "../components/InitiativeCardComponent";
 import { InitiativeSettingsComponent } from "../components/InitiativeSettingsComponent";
 import InitiativeTimelineComponent from "../components/InitiativeTimelineComponent";
+import { IDPayDetailsParamsList } from "../navigation";
 import { idpayInitiativeDetailsSelector } from "../store";
 import { idpayInitiativeGet } from "../store/actions";
-import { IDPayDetailsParamsList } from "../navigation";
 
 const styles = StyleSheet.create({
   newInitiativeMessageContainer: {
@@ -85,6 +85,14 @@ export const InitiativeDetailsScreen = () => {
 
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const dispatch = useIODispatch();
+  const initiativeDetailsFromSelector = useIOSelector(
+    idpayInitiativeDetailsSelector
+  );
+
+  const initiativeData: InitiativeDTO | undefined = pot.getOrElse(
+    initiativeDetailsFromSelector,
+    undefined
+  );
 
   const navigateToConfiguration = () => {
     navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
@@ -99,21 +107,17 @@ export const InitiativeDetailsScreen = () => {
     }, [dispatch, initiativeId])
   );
 
-  const initiativeDetailsFromSelector = useIOSelector(
-    idpayInitiativeDetailsSelector
-  );
-
-  const initiativeData: InitiativeDTO | undefined = pot.getOrElse(
-    initiativeDetailsFromSelector,
-    undefined
-  );
-
   const isLoading = pot.isLoading(initiativeDetailsFromSelector);
 
   const renderContent = () => {
     if (initiativeData === undefined) {
       return null;
     }
+
+    const lastUpdated =
+      initiativeData.lastCounterUpdate !== undefined
+        ? format(initiativeData.lastCounterUpdate, "DD/MM/YYYY, HH:mm")
+        : undefined;
 
     const initiativeNeedsConfiguration =
       initiativeData.status === StatusEnum.NOT_REFUNDABLE;
@@ -138,6 +142,21 @@ export const InitiativeDetailsScreen = () => {
               )}
               {!initiativeNeedsConfiguration && (
                 <>
+                  {lastUpdated && (
+                    <>
+                      <LabelSmall
+                        style={{ alignSelf: "center" }}
+                        color="bluegrey"
+                        weight="Regular"
+                      >
+                        {I18n.t(
+                          "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.lastUpdated"
+                        )}
+                        {lastUpdated}
+                      </LabelSmall>
+                      <VSpacer size={16} />
+                    </>
+                  )}
                   <InitiativeTimelineComponent
                     initiativeId={initiativeData.initiativeId}
                   />
