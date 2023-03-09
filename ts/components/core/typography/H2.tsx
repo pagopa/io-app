@@ -15,7 +15,7 @@ type OwnProps = ExternalTypographyProps<
   TypographyProps<AllowedWeight, AllowedColors>
 >;
 
-const fontName: IOFontFamily = "TitilliumWeb";
+const fontName: IOFontFamily = "ReadexPro";
 export const h2FontSize = 20;
 export const h2LineHeight = 24;
 export const h2DefaultColor: AllowedColors = "bluegreyDark";
