@@ -1,4 +1,6 @@
 import * as React from "react";
+import { useIOSelector } from "../../../store/hooks";
+import { isDesignSystemEnabledSelector } from "../../../store/reducers/persistedPreferences";
 import { IOFontFamily, IOFontWeight } from "../fonts";
 import type { IOColors } from "../variables/IOColors";
 import { ExternalTypographyProps } from "./common";
@@ -7,7 +9,13 @@ import { useTypographyFactory } from "./Factory";
 // these colors are allowed only when the weight is SemiBold
 type AllowedSemiBoldColors = Extract<
   IOColors,
-  "bluegreyDark" | "bluegrey" | "bluegreyLight" | "blue" | "white" | "red"
+  | "bluegreyDark"
+  | "bluegrey"
+  | "bluegreyLight"
+  | "blue"
+  | "white"
+  | "red"
+  | "black"
 >;
 
 // when the weight is bold, only the white color is allowed
@@ -44,9 +52,16 @@ type BoldKindProps = SemiBoldProps | RegularProps;
 
 type OwnProps = ExternalTypographyProps<BoldKindProps>;
 
+/* Legacy typograhic style */
+const legacyFontName: IOFontFamily = "TitilliumWeb";
+export const h5LegacyFontSize = 14;
+export const h5LegacyDefaultColor: AllowedColors = "bluegreyDark";
+export const h5LegacyDefaultWeight: AllowedWeight = "SemiBold";
+/* New typograhic style */
 const fontName: IOFontFamily = "TitilliumWeb";
 export const h5FontSize = 14;
-export const h5DefaultColor: AllowedColors = "bluegreyDark";
+export const h5LineHeight = 16;
+export const h5DefaultColor: AllowedColors = "black";
 export const h5DefaultWeight: AllowedWeight = "SemiBold";
 
 /**
@@ -55,11 +70,24 @@ export const h5DefaultWeight: AllowedWeight = "SemiBold";
  * @param props
  * @constructor
  */
-export const H5: React.FunctionComponent<OwnProps> = props =>
-  useTypographyFactory<AllowedWeight, AllowedColors>({
-    ...props,
-    defaultWeight: h5DefaultWeight,
-    defaultColor: h5DefaultColor,
-    font: fontName,
-    fontStyle: { fontSize: h5FontSize }
-  });
+export const H5: React.FunctionComponent<OwnProps> = props => {
+  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
+
+  return useTypographyFactory<AllowedWeight, AllowedColors>(
+    isDesignSystemEnabled
+      ? {
+          ...props,
+          defaultWeight: h5DefaultWeight,
+          defaultColor: h5DefaultColor,
+          font: fontName,
+          fontStyle: { fontSize: h5FontSize, textTransform: "uppercase" }
+        }
+      : {
+          ...props,
+          defaultWeight: h5LegacyDefaultWeight,
+          defaultColor: h5LegacyDefaultColor,
+          font: legacyFontName,
+          fontStyle: { fontSize: h5LegacyFontSize }
+        }
+  );
+};
