@@ -1,6 +1,12 @@
 import { Badge } from "native-base";
 import * as React from "react";
 import { ImageBackground, StyleSheet, View } from "react-native";
+import Animated, {
+  WithTimingConfig,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming
+} from "react-native-reanimated";
 import {
   InitiativeDTO,
   StatusEnum as InitiativeStatusEnum
@@ -64,7 +70,7 @@ const styles = StyleSheet.create({
   remainingPercentageSliderContainer: {
     height: 4,
     backgroundColor: IOColors.white,
-    width: "100%",
+    width: 100,
     borderRadius: 4
   },
   alignCenter: {
@@ -85,6 +91,34 @@ const InitiativeCardComponent = (props: Props) => {
     amount !== 0 && amount !== undefined
       ? (remainingAmount / amount) * 100.0
       : 100.0;
+
+  const BonusPercentageSlider = () => {
+    const width = useSharedValue(0);
+    React.useEffect(() => {
+      // eslint-disable-next-line functional/immutable-data
+      width.value = remainingBonusAmountPercentage;
+    });
+    const scalingWidth = useAnimatedStyle(() => ({
+      width: withTiming(width.value, { duration: 1000 })
+    }));
+    return (
+      <View style={styles.remainingPercentageSliderContainer}>
+        <Animated.View
+          style={[
+            {
+              width: `${width.value}%`,
+              backgroundColor: isInitiativeConfigured
+                ? IOColors.blue
+                : IOColors["grey-450"],
+              flex: 1,
+              borderRadius: 4
+            },
+            scalingWidth
+          ]}
+        />
+      </View>
+    );
+  };
 
   const renderNewCard = () => (
     <View style={IOStyles.flex}>
@@ -128,18 +162,7 @@ const InitiativeCardComponent = (props: Props) => {
             {formatNumberAmount((amount || 0) - (refunded || 0), true)}
           </H1>
           <VSpacer size={8} />
-          <View style={styles.remainingPercentageSliderContainer}>
-            <View
-              style={{
-                width: `${remainingBonusAmountPercentage}%`,
-                backgroundColor: isInitiativeConfigured
-                  ? IOColors.blue
-                  : IOColors["grey-450"],
-                flex: 1,
-                borderRadius: 4
-              }}
-            ></View>
-          </View>
+          <BonusPercentageSlider />
         </View>
         <View style={styles.alignCenter}>
           <LabelSmall color="bluegreyDark" weight="Regular">
