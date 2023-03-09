@@ -81,8 +81,7 @@ const InitiativeCardComponent = (props: Props) => {
   const remainingAmount = (amount || 0) - (accrued || 0);
 
   const dateString = formatDateAsLocal(endDate, true);
-  const remainingBonusAmountPercentage =
-    (remainingAmount / (amount || remainingAmount)) * 100;
+  const remainingBonusAmountPercentage = amount !== 0 ? (remainingAmount / amount * 100.0) : 100.0;
 
   const renderNewCard = () => (
     <View style={IOStyles.flex}>
