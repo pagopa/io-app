@@ -158,7 +158,7 @@ const InitiativeCardComponent = (props: Props) => {
             {I18n.t("idpay.initiative.details.initiativeCard.availableAmount")}
           </LabelSmall>
           <H1 style={!isInitiativeConfigured ? styles.consumedOpacity : {}}>
-            {formatNumberAmount((amount || 0) - (refunded || 0), true)}
+            {formatNumberAmount(remainingAmount, true)}
           </H1>
           <VSpacer size={8} />
           <BonusPercentageSlider />
