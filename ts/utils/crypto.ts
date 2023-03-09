@@ -84,19 +84,3 @@ export const taskRegenerateKey = (keyTag: string) =>
     TE.tryCatch(() => deleteKey(keyTag), toCryptoError),
     TE.chain(() => TE.tryCatch(() => generate(keyTag), toCryptoError))
   );
-
-export const deleteKeyPair = (keyTag: string) =>
-  pipe(
-    TE.tryCatch(
-      () => wipeKeyGenerationInfo(keyTag),
-      () => false
-    ),
-    TE.chain(() =>
-      TE.tryCatch(
-        () => deleteKey(keyTag),
-        () => false
-      )
-    ),
-    TE.map(_ => true),
-    TE.getOrElse(() => T.of(false))
-  )();

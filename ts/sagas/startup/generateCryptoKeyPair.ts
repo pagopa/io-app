@@ -14,7 +14,8 @@ import {
   setKeyGenerationInfo,
   getKeyGenerationInfo,
   KeyGenerationInfo,
-  KeyInfo
+  KeyInfo,
+  wipeKeyGenerationInfo
 } from "../../utils/crypto";
 import {
   trackLollipopKeyGenerationFailure,
@@ -75,6 +76,7 @@ function* deleteCryptoKeyPair(keyTag: string) {
     try {
       yield* call(deleteKey, keyTag);
       yield* put(lollipopRemovePublicKey());
+      yield* call(wipeKeyGenerationInfo, keyTag);
     } catch (e) {
       yield* saveKeyGenerationFailureInfo(keyTag, e);
     }
