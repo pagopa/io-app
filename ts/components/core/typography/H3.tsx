@@ -1,4 +1,6 @@
 import * as React from "react";
+import { useIOSelector } from "../../../store/hooks";
+import { isDesignSystemEnabledSelector } from "../../../store/reducers/persistedPreferences";
 import { IOFontFamily, IOFontWeight } from "../fonts";
 import type { IOColors } from "../variables/IOColors";
 import { ExternalTypographyProps, RequiredTypographyProps } from "./common";
@@ -35,8 +37,13 @@ type BoldKindProps = SemiBoldProps | BoldProps;
 
 type OwnProps = ExternalTypographyProps<BoldKindProps>;
 
-const fontName: IOFontFamily = "TitilliumWeb";
-export const h3FontSize = 18;
+/* Legacy typograhic style */
+const legacyFontName: IOFontFamily = "TitilliumWeb";
+export const h3LegacyFontSize = 18;
+/* New typograhic style */
+const fontName: IOFontFamily = "ReadexPro";
+export const h3FontSize = 22;
+export const h3LineHeight = 26;
 
 /**
  * A custom function to calculate the values if no weight or color is provided.
@@ -68,10 +75,22 @@ export const calculateH3WeightColor = (
  * @param props
  * @constructor
  */
-export const H3: React.FunctionComponent<OwnProps> = props =>
-  useTypographyFactory<AllowedWeight, AllowedColors>({
-    ...props,
-    weightColorFactory: calculateH3WeightColor,
-    font: fontName,
-    fontStyle: { fontSize: h3FontSize }
-  });
+export const H3: React.FunctionComponent<OwnProps> = props => {
+  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
+
+  return useTypographyFactory<AllowedWeight, AllowedColors>(
+    isDesignSystemEnabled
+      ? {
+          ...props,
+          weightColorFactory: calculateH3WeightColor,
+          font: fontName,
+          fontStyle: { fontSize: h3LegacyFontSize, lineHeight: h3LineHeight }
+        }
+      : {
+          ...props,
+          weightColorFactory: calculateH3WeightColor,
+          font: legacyFontName,
+          fontStyle: { fontSize: h3LegacyFontSize }
+        }
+  );
+};
