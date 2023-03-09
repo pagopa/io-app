@@ -2,7 +2,6 @@ import { Badge } from "native-base";
 import * as React from "react";
 import { ImageBackground, StyleSheet, View } from "react-native";
 import Animated, {
-  WithTimingConfig,
   useAnimatedStyle,
   useSharedValue,
   withTiming
