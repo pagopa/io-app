@@ -17,7 +17,6 @@ import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { OnboardingParamsList } from "../../navigation/params/OnboardingParamsList";
 import ROUTES from "../../navigation/routes";
-import { navigateToEmailInsertScreen } from "../../store/actions/navigation";
 import {
   abortOnboarding,
   emailAcknowledged
