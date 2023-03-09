@@ -5,22 +5,25 @@
  * - it is displayed during the user onboarding
  * - it is displayed after the onboarding (navigation from the profile section)
  */
+import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import EmailReadScreenComponent from "../../components/EmailReadScreenComponent";
 import { SingleButton } from "../../components/ui/BlockButtons";
 import { useValidatedEmailModal } from "../../hooks/useValidateEmailModal";
 import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
-import { OnboardingParamsList } from "../../navigation/params/OnboardingParamsList";
-import { navigateToEmailInsertScreen } from "../../store/actions/navigation";
+import { ProfileParamsList } from "../../navigation/params/ProfileParamsList";
+import ROUTES from "../../navigation/routes";
 
 type Props = IOStackNavigationRouteProps<
-  OnboardingParamsList,
-  "ONBOARDING_READ_EMAIL_SCREEN"
+  ProfileParamsList,
+  "READ_EMAIL_SCREEN"
 >;
 
 const EmailReadScreen = (props: Props) => {
   useValidatedEmailModal();
+  const navigation = useNavigation();
+
   const handleGoBack = () => {
     props.navigation.goBack();
   };
@@ -30,8 +33,10 @@ const EmailReadScreen = (props: Props) => {
     leftButton: {
       bordered: true,
       title: I18n.t("email.edit.cta"),
-      // TODO replace with new insert screen
-      onPress: navigateToEmailInsertScreen
+      onPress: () =>
+        navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+          screen: ROUTES.INSERT_EMAIL_SCREEN
+        })
     }
   };
 

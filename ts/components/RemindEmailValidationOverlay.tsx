@@ -368,9 +368,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
       ? I18n.t("email.validate.validated")
       : I18n.t("email.validate.title");
 
-    return this.props.isEmailValidated ? (
-      this.props.children
-    ) : (
+    return (
       <TopScreenComponent
         {...(!this.props.isOnboarding
           ? this.onMainProps
