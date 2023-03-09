@@ -132,7 +132,7 @@ const InitiativeCardComponent = (props: Props) => {
                 width: `${remainingBonusAmountPercentage}%`,
                 backgroundColor: isInitiativeConfigured
                   ? IOColors.blue
-                  : IOColors.grey450,
+                  : IOColors["grey-450"],
                 flex: 1,
                 borderRadius: 4
               }}
