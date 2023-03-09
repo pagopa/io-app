@@ -86,7 +86,6 @@ const InitiativeCardComponent = (props: Props) => {
       ? (remainingAmount / amount) * 100.0
       : 100.0;
 
-
   const renderNewCard = () => (
     <View style={IOStyles.flex}>
       {/* top part */}
