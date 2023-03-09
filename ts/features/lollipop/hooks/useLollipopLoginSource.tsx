@@ -35,7 +35,6 @@ export const useLollipopLoginSource = (loginUri?: string) => {
   };
 
   const regenerateLoginSource = () => {
-    console.log(`=== useLollipopLoginSource regenerateLoginSource`);
     if (!loginUri) {
       // When the redux state is LoggedOutWithIdp the loginUri is always defined.
       // After the user has logged in, the status changes to LoggedIn and the loginUri is not

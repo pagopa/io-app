@@ -85,11 +85,6 @@ const MessagesHomeScreen = ({
   const needsMigration = Object.keys(messagesStatus).length > 0;
 
   const publicKeyOption = useSelector(lollipopPublicKeySelector);
-  console.log(
-    `=== MessagesHomeScreen publicKeyOption (${JSON.stringify(
-      publicKeyOption
-    )})`
-  );
 
   useOnFirstRender(() => {
     if (needsMigration) {
