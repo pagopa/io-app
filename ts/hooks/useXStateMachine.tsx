@@ -1,13 +1,13 @@
 import React from "react";
 
-type MachineCreatorFn<T> = () => T;
+type MachineCreatorFn<T> = (...args: any) => T;
 
-const useXStateMachine = <T,>(fn: MachineCreatorFn<T>): [T] => {
+const useXStateMachine = <T,>(fn: MachineCreatorFn<T>, ...args: any): [T] => {
   const machine = React.useRef<T | undefined>(undefined);
 
   if (machine.current === undefined) {
     // eslint-disable-next-line functional/immutable-data
-    machine.current = fn();
+    machine.current = fn(args);
   }
 
   return [machine.current];
