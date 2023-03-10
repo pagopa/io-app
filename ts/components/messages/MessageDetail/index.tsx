@@ -1,12 +1,16 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import _ from "lodash";
-import { Content as NBContent } from "native-base";
 import * as React from "react";
 import * as O from "fp-ts/lib/Option";
 import { useCallback, useEffect, useState } from "react";
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import DeviceInfo from "react-native-device-info";
 import I18n from "../../../i18n";
 import { OrganizationFiscalCode } from "../../../../definitions/backend/OrganizationFiscalCode";
 import { ServiceMetadata } from "../../../../definitions/backend/ServiceMetadata";
@@ -210,7 +214,7 @@ const MessageDetailsComponent = ({
 
   return (
     <>
-      <NBContent noPadded={true}>
+      <ScrollView>
         <View style={styles.padded}>
           <VSpacer size={24} />
 
@@ -279,22 +283,14 @@ const MessageDetailsComponent = ({
             goToServiceDetail={onServiceLinkPress}
           />
         )}
-      </NBContent>
+      </ScrollView>
 
-      <>
-        {/* This space is rendered as extra space on the iPhone 14 Pro.
-        We exclude it using "getDeviceId" */}
-        {DeviceInfo.hasNotch() && DeviceInfo.getDeviceId() !== "iPhone15,2" && (
-          <VSpacer size={32} />
-        )}
-
-        <CtaBar
-          isPaid={hasPaidBadge}
-          messageDetails={messageDetails}
-          service={service}
-          serviceMetadata={serviceMetadata}
-        />
-      </>
+      <CtaBar
+        isPaid={hasPaidBadge}
+        messageDetails={messageDetails}
+        service={service}
+        serviceMetadata={serviceMetadata}
+      />
     </>
   );
 };
