@@ -40,6 +40,7 @@ import { MessageTitle } from "./common/MessageTitle";
 import MessageContent from "./Content";
 import MedicalPrescriptionAttachments from "./MedicalPrescriptionAttachments";
 import MessageMarkdown from "./MessageMarkdown";
+import DeviceInfo from "react-native-device-info";
 
 const styles = StyleSheet.create({
   padded: {
@@ -282,11 +283,10 @@ const MessageDetailsComponent = ({
 
       <>
         {/* This space is rendered as extra space on the iPhone 14 Pro.
-        Not present on the iPhone 13 because `hasNotch` returns false value
-        caused by a bug.
-        More info:
-        https://github.com/react-native-device-info/react-native-device-info/issues/1310 */}
-        {/* {DeviceInfo.hasNotch() && <VSpacer size={32} />} */}
+        We exclude it using "getDeviceId" */}
+        {DeviceInfo.hasNotch() && DeviceInfo.getDeviceId() !== "iPhone15,2" && (
+          <VSpacer size={32} />
+        )}
 
         <CtaBar
           isPaid={hasPaidBadge}
