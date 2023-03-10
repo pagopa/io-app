@@ -89,7 +89,7 @@ const ZendeskSeeReportsRouters = (props: Props) => {
     }
   }, [ticketNumber, dispatch]);
 
-  if (pot.isLoading(ticketNumber)) {
+  if (pot.isLoading(ticketNumber) || pot.isError(ticketNumber)) {
     return (
       <LoadingErrorComponent
         isLoading={pot.isLoading(ticketNumber)}
