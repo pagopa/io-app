@@ -47,18 +47,18 @@ const mapColorStates: Record<
   primary: {
     background: {
       default: IOColors.blue,
-      pressed: IOColors.blue600,
-      disabled: IOColors.grey100
+      pressed: IOColors["blue-600"],
+      disabled: IOColors["grey-100"]
     },
     icon: {
       default: IOColors.white,
-      disabled: IOColors.grey450
+      disabled: IOColors["grey-450"]
     }
   },
   contrast: {
     background: {
       default: IOColors.white,
-      pressed: IOColors.blue50,
+      pressed: IOColors["blue-50"],
       disabled: hexToRgba(IOColors.white, 0.25)
     },
     icon: {

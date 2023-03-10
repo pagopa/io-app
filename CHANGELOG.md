@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.28.0-rc.0](https://github.com/pagopa/io-app/compare/2.27.0-rc.4...2.28.0-rc.0) (2023-03-09)
+
+
+### Features
+
+* **Firma con IO:** [[SFEQS-1253](https://pagopa.atlassian.net/browse/SFEQS-1253)] Update signature fields with accessibility ([#4423](https://github.com/pagopa/io-app/issues/4423)) ([30cef80](https://github.com/pagopa/io-app/commit/30cef805842171b841e402816b5d529a800184c4))
+* **IDPay:** [[IODPAY-168](https://pagopa.atlassian.net/browse/IODPAY-168)] Prerequisites check error mapping in onboarding flow ([#4428](https://github.com/pagopa/io-app/issues/4428)) ([9ced654](https://github.com/pagopa/io-app/commit/9ced65403fda04fed083cec8ade42ee8146fba1b))
+* **IDPay:** Replace local IDPay feature flag with switch control ([#4399](https://github.com/pagopa/io-app/issues/4399)) ([faf265b](https://github.com/pagopa/io-app/commit/faf265b82ca49851713c85f171f5caf207d39459))
+* [[IOAPPCIT-30](https://pagopa.atlassian.net/browse/IOAPPCIT-30)] HTTP signature integration ([#4304](https://github.com/pagopa/io-app/issues/4304)) ([244590a](https://github.com/pagopa/io-app/commit/244590a8bda9a73cfd83dcefc51bb4bb7b7b5eeb))
+
+
+### Bug Fixes
+
+* **Firma con IO:** [[SFEQS-1489](https://pagopa.atlassian.net/browse/SFEQS-1489)] Update footer on document preview component with right label ([#4433](https://github.com/pagopa/io-app/issues/4433)) ([ba12162](https://github.com/pagopa/io-app/commit/ba121624ac1c7c5759f4663c1141d58aad36b5e8))
+
+
+### Chores
+
+* [[IOAPPFD0-44](https://pagopa.atlassian.net/browse/IOAPPFD0-44)] Add the new basic theme variables ([#4432](https://github.com/pagopa/io-app/issues/4432)) ([c5a0af3](https://github.com/pagopa/io-app/commit/c5a0af370a5629584e6cdc2bae533326466c04cf))
+* **Firma con IO:** [[SFEQS-1452](https://pagopa.atlassian.net/browse/SFEQS-1452)] Update signing saga to use Lollipop ([#4410](https://github.com/pagopa/io-app/issues/4410)) ([6a88659](https://github.com/pagopa/io-app/commit/6a8865988cc02a2c4ecd65d6c85854db616683db))
+* **IDPay:** [[IODPAY-152](https://pagopa.atlassian.net/browse/IODPAY-152)] IDPay client refactoring with merged API definitions ([#4379](https://github.com/pagopa/io-app/issues/4379)) ([3666d00](https://github.com/pagopa/io-app/commit/3666d00767903dbd6554c79c553d5d01fefdea0e))
+* [[IOAPPFD0-43](https://pagopa.atlassian.net/browse/IOAPPFD0-43)] Add new toggle to enable preview of new design system ([#4427](https://github.com/pagopa/io-app/issues/4427)) ([0b36e4b](https://github.com/pagopa/io-app/commit/0b36e4bddc9c83369ea221bd9187afb777a5de5e))
+
 ## [2.27.0-rc.4](https://github.com/pagopa/io-app/compare/2.27.0-rc.3...2.27.0-rc.4) (2023-03-03)
 
 
