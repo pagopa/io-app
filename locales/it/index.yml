@@ -3223,6 +3223,9 @@ features:
       waitForQtsp:
         title: Il firma è in elaborazione
         subTitle: Riceverai un messaggio con i documenti firmati non appena saranno pronti.
+      signed:
+        title: Hai già firmato questi documenti
+        subTitle: Puoi visualizzarli e scaricarli dal messaggio intitolato “Documenti firmati”.
       unsupportedDevice:
         title: C’è un problema
         subTitle: Il tuo device non supporta la funzionalità Firma con IO.
