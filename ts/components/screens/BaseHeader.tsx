@@ -101,7 +101,7 @@ const setAccessibilityTimeout = 0 as Millisecond;
 const noReferenceTimeout = 150 as Millisecond;
 /** A component representing the properties common to all the screens (and the most of modal/overlay displayed) */
 class BaseHeaderComponent extends React.PureComponent<Props, State> {
-  private firstElementRef = React.createRef<any>(); // Could be NBText or View
+  private firstElementRef = React.createRef<NBText | View>();
 
   public constructor(props: Props) {
     super(props);
@@ -163,7 +163,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
         return;
       }
       setAccessibilityFocus(
-        this.firstElementRef,
+        this.firstElementRef as React.RefObject<View>,
         setAccessibilityTimeout,
         this.props.onAccessibilityNavigationHeaderFocus
       );
@@ -225,10 +225,13 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
             O.isSome(maybeAccessibilityLabel) ? (
               this.renderBodyLabel(
                 maybeAccessibilityLabel.value,
-                this.firstElementRef
+                this.firstElementRef as React.RefObject<NBText>
               )
             ) : (
-              <View ref={this.firstElementRef} accessible={true}>
+              <View
+                ref={this.firstElementRef as React.RefObject<View>}
+                accessible={true}
+              >
                 {body ? body : headerTitle && this.renderBodyLabel(headerTitle)}
               </View>
             )}
