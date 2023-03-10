@@ -33,8 +33,7 @@ import {
   pagoPaApiUrlPrefixTest,
   pnEnabled,
   svEnabled,
-  zendeskEnabled,
-  idPayEnabled
+  zendeskEnabled
 } from "../config";
 import { watchBonusSaga } from "../features/bonus/bonusVacanze/store/sagas/bonusSaga";
 import { watchBonusBpdSaga } from "../features/bonus/bpd/saga";
@@ -65,9 +64,13 @@ import {
   sessionTokenSelector
 } from "../store/reducers/authentication";
 import { lollipopKeyTagSelector } from "../features/lollipop/store/reducers/lollipop";
+import { generateLollipopKeySaga } from "../features/lollipop/saga";
 import { IdentificationResult } from "../store/reducers/identification";
 import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
-import { isPagoPATestEnabledSelector } from "../store/reducers/persistedPreferences";
+import {
+  isIdPayTestEnabledSelector,
+  isPagoPATestEnabledSelector
+} from "../store/reducers/persistedPreferences";
 import {
   isProfileFirstOnBoarding,
   profileSelector
@@ -82,8 +85,7 @@ import { differentProfileLoggedIn } from "../store/actions/crossSessions";
 import { clearAllAttachments } from "../features/messages/saga/clearAttachments";
 import { watchMessageAttachmentsSaga } from "../features/messages/saga/attachments";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
-import { watchIDPayWalletSaga } from "../features/idpay/wallet/saga";
-import { idpayInitiativeDetailsSaga } from "../features/idpay/initiative/details/saga";
+import { watchIDPaySaga } from "../features/idpay/common/saga";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -138,7 +140,10 @@ import { completeOnboardingSaga } from "./startup/completeOnboardingSaga";
 import { watchLoadMessageById } from "./messages/watchLoadMessageById";
 import { watchThirdPartyMessageSaga } from "./messages/watchThirdPartyMessageSaga";
 import { checkNotificationsPreferencesSaga } from "./startup/checkNotificationsPreferencesSaga";
-import { trackMixpanelCryptoKeyPairEvents } from "./startup/generateCryptoKeyPair";
+import {
+  getCryptoPublicKey,
+  trackMixpanelCryptoKeyPairEvents
+} from "./startup/generateCryptoKeyPair";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -200,6 +205,16 @@ export function* initializeApplicationSaga(): Generator<
   // user profile.
   yield* put(resetProfileState());
 
+  // Generate key for lollipop
+  // TODO Once the lollipop feature is spread to the all the user base,
+  // consider refactoring even more by removing this, when
+  // https://pagopa.atlassian.net/browse/LLK-38 has been fixed.
+  // For now we need to generate a key in the application startup flow
+  // to use this information on old app version already logged in users.
+  // Here we are blocking the application startup, but we have the
+  // the profile loading spinner active.
+  yield* call(generateLollipopKeySaga);
+
   // Whether the user is currently logged in.
   const previousSessionToken: ReturnType<typeof sessionTokenSelector> =
     yield* select(sessionTokenSelector);
@@ -213,10 +228,15 @@ export function* initializeApplicationSaga(): Generator<
   // Handles the expiration of the session token
   yield* fork(watchSessionExpiredSaga);
 
+  // Get keyInfo for lollipop
+  const keyTag = yield* select(lollipopKeyTagSelector);
+  const keyInfo = yield* call(getCryptoPublicKey, keyTag);
+
   // Instantiate a backend client from the session token
   const backendClient: ReturnType<typeof BackendClient> = BackendClient(
     apiUrlPrefix,
-    sessionToken
+    sessionToken,
+    keyInfo
   );
 
   // check if the current session is still valid
@@ -341,7 +361,6 @@ export function* initializeApplicationSaga(): Generator<
   yield* call(askMixpanelOptIn);
 
   // Track crypto key generation info
-  const keyTag = yield* select(lollipopKeyTagSelector);
   if (O.isSome(keyTag)) {
     yield* call(trackMixpanelCryptoKeyPairEvents, keyTag.value);
   }
@@ -425,13 +444,12 @@ export function* initializeApplicationSaga(): Generator<
   // third-party message attachments, PN attachments and MVL ones)
   yield* fork(watchMessageAttachmentsSaga, sessionToken);
 
-  if (idPayEnabled) {
-    // Start watching for IDPay wallet actions
-    yield* fork(watchIDPayWalletSaga, maybeSessionInformation.value.bpdToken);
-    yield* fork(
-      idpayInitiativeDetailsSaga,
-      maybeSessionInformation.value.bpdToken
-    );
+  const idPayTestEnabled: ReturnType<typeof isIdPayTestEnabledSelector> =
+    yield* select(isIdPayTestEnabledSelector);
+
+  if (idPayTestEnabled) {
+    // Start watching for IDPay actions
+    yield* fork(watchIDPaySaga, maybeSessionInformation.value.bpdToken);
   }
 
   if (fciEnabled) {

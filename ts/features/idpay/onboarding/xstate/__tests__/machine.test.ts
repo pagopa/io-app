@@ -1,20 +1,23 @@
+/* eslint-disable sonarjs/no-identical-functions */
+/* eslint-disable functional/no-let */
 import * as O from "fp-ts/lib/Option";
 import { interpret } from "xstate";
 import { waitFor } from "@testing-library/react-native";
-import { InitiativeDto } from "../../../../../../definitions/idpay/onboarding/InitiativeDto";
 import { createIDPayOnboardingMachine } from "../machine";
-import { RequiredCriteriaDTO } from "../../../../../../definitions/idpay/onboarding/RequiredCriteriaDTO";
-import { PDNDCriteriaDTO } from "../../../../../../definitions/idpay/onboarding/PDNDCriteriaDTO";
+import { RequiredCriteriaDTO } from "../../../../../../definitions/idpay/RequiredCriteriaDTO";
+import { PDNDCriteriaDTO } from "../../../../../../definitions/idpay/PDNDCriteriaDTO";
 import {
   SelfDeclarationBoolDTO,
   _typeEnum as SelfDeclarationBoolDTOType
-} from "../../../../../../definitions/idpay/onboarding/SelfDeclarationBoolDTO";
+} from "../../../../../../definitions/idpay/SelfDeclarationBoolDTO";
 import {
   SelfDeclarationMultiDTO,
   _typeEnum as SelfDeclarationMultiDTOType
-} from "../../../../../../definitions/idpay/onboarding/SelfDeclarationMultiDTO";
-import { StatusEnum } from "../../../../../../definitions/idpay/onboarding/OnboardingStatusDTO";
-import { SelfConsentMultiDTO } from "../../../../../../definitions/idpay/onboarding/SelfConsentMultiDTO";
+} from "../../../../../../definitions/idpay/SelfDeclarationMultiDTO";
+import { SelfConsentMultiDTO } from "../../../../../../definitions/idpay/SelfConsentMultiDTO";
+import { OnboardingFailureEnum } from "../failure";
+import { mockActions } from "../__mocks__/actions";
+import { mockServices } from "../__mocks__/services";
 
 const T_SERVICE_ID = "T_SERVICE_ID";
 const T_INITIATIVE_ID = "T_INITIATIVE_ID";
@@ -54,36 +57,7 @@ const T_REQUIRED_CRITERIA: RequiredCriteriaDTO = {
   ]
 };
 
-const mockLoadInitiative = jest.fn(
-  async (): Promise<InitiativeDto> => ({
-    initiativeId: T_INITIATIVE_ID
-  })
-);
-
-const mockLoadInitiativeStatus = jest.fn(
-  async (): Promise<StatusEnum | undefined> => undefined
-);
-
-const mockAcceptTos = jest.fn(async (): Promise<undefined> => undefined);
-
-const mockLoadRequiredCriteria = jest.fn(
-  async (): Promise<O.Option<RequiredCriteriaDTO>> =>
-    O.some(T_REQUIRED_CRITERIA)
-);
-
-const mockNavigateToInitiativeDetailsScreen = jest.fn();
-const mockNavigateToPDNDCriteriaScreen = jest.fn();
-const mockNavigateToBoolSelfDeclarationsScreen = jest.fn();
-const mockNavigateToCompletionScreen = jest.fn();
-const mockNavigateToFailureScreen = jest.fn();
-const mockNavigateToMultiSelfDeclarationsScreen = jest.fn();
-const mockExitOnboarding = jest.fn();
-
-const mockAcceptRequiredCriteria = jest.fn(
-  async (): Promise<undefined> => undefined
-);
-
-describe("machine", () => {
+describe("IDPay Onboarding machine", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -94,43 +68,50 @@ describe("machine", () => {
   });
 
   it("should allow the citizen to complete onboarding on happy path", async () => {
+    mockServices.loadInitiative.mockImplementation(async () =>
+      Promise.resolve({
+        initiativeId: T_INITIATIVE_ID
+      })
+    );
+
+    mockServices.loadInitiativeStatus.mockImplementation(async () =>
+      Promise.resolve(undefined)
+    );
+
+    mockServices.acceptTos.mockImplementation(async () =>
+      Promise.resolve(undefined)
+    );
+
+    mockServices.loadRequiredCriteria.mockImplementation(async () =>
+      Promise.resolve(O.some(T_REQUIRED_CRITERIA))
+    );
+
+    mockServices.acceptRequiredCriteria.mockImplementation(async () =>
+      Promise.resolve(undefined)
+    );
+
     const machine = createIDPayOnboardingMachine().withConfig({
-      services: {
-        loadInitiative: mockLoadInitiative,
-        loadInitiativeStatus: mockLoadInitiativeStatus,
-        acceptTos: mockAcceptTos,
-        loadRequiredCriteria: mockLoadRequiredCriteria,
-        acceptRequiredCriteria: mockAcceptRequiredCriteria
-      },
-      actions: {
-        navigateToInitiativeDetailsScreen:
-          mockNavigateToInitiativeDetailsScreen,
-        navigateToPDNDCriteriaScreen: mockNavigateToPDNDCriteriaScreen,
-        navigateToBoolSelfDeclarationsScreen:
-          mockNavigateToBoolSelfDeclarationsScreen,
-        navigateToMultiSelfDeclarationsScreen:
-          mockNavigateToMultiSelfDeclarationsScreen,
-        navigateToCompletionScreen: mockNavigateToCompletionScreen,
-        navigateToFailureScreen: mockNavigateToFailureScreen,
-        exitOnboarding: mockExitOnboarding
-      }
+      services: mockServices,
+      actions: mockActions
     });
 
-    const onboardingService = interpret(machine);
+    let currentState = machine.initialState;
 
-    onboardingService.start();
+    const service = interpret(machine).onTransition(state => {
+      currentState = state;
+    });
 
-    onboardingService.send({
+    service.start();
+
+    service.send({
       type: "SELECT_INITIATIVE",
       serviceId: T_SERVICE_ID
     });
 
-    expect(
-      onboardingService.getSnapshot().matches("LOADING_INITIATIVE")
-    ).toBeTruthy();
+    expect(currentState.value).toMatch("LOADING_INITIATIVE");
 
     await waitFor(() =>
-      expect(mockLoadInitiative).toHaveBeenCalledWith(
+      expect(mockServices.loadInitiative).toHaveBeenCalledWith(
         expect.objectContaining({
           serviceId: T_SERVICE_ID
         }),
@@ -140,7 +121,7 @@ describe("machine", () => {
     );
 
     await waitFor(() =>
-      expect(mockLoadInitiativeStatus).toHaveBeenCalledWith(
+      expect(mockServices.loadInitiativeStatus).toHaveBeenCalledWith(
         expect.objectContaining({
           initiative: {
             initiativeId: T_INITIATIVE_ID
@@ -152,20 +133,16 @@ describe("machine", () => {
       )
     );
 
-    expect(
-      onboardingService.getSnapshot().matches("DISPLAYING_INITIATIVE")
-    ).toBeTruthy();
+    expect(currentState.value).toMatch("DISPLAYING_INITIATIVE");
 
-    onboardingService.send({
+    service.send({
       type: "ACCEPT_TOS"
     });
 
-    expect(
-      onboardingService.getSnapshot().matches("ACCEPTING_TOS")
-    ).toBeTruthy();
+    expect(currentState.value).toMatch("ACCEPTING_TOS");
 
     await waitFor(() =>
-      expect(mockAcceptTos).toHaveBeenCalledWith(
+      expect(mockServices.acceptTos).toHaveBeenCalledWith(
         expect.objectContaining({
           serviceId: T_SERVICE_ID
         }),
@@ -175,7 +152,7 @@ describe("machine", () => {
     );
 
     await waitFor(() =>
-      expect(mockLoadRequiredCriteria).toHaveBeenCalledWith(
+      expect(mockServices.loadRequiredCriteria).toHaveBeenCalledWith(
         expect.objectContaining({
           serviceId: T_SERVICE_ID,
           initiative: {
@@ -188,34 +165,50 @@ describe("machine", () => {
     );
 
     await waitFor(() =>
-      expect(mockNavigateToPDNDCriteriaScreen).toHaveBeenCalled()
+      expect(mockActions.navigateToPDNDCriteriaScreen).toHaveBeenCalled()
     );
 
-    onboardingService.send({
+    expect(currentState.value).toMatch("DISPLAYING_REQUIRED_PDND_CRITERIA");
+
+    service.send({
       type: "ACCEPT_REQUIRED_PDND_CRITERIA"
     });
 
     await waitFor(() =>
-      expect(mockNavigateToBoolSelfDeclarationsScreen).toHaveBeenCalled()
+      expect(
+        mockActions.navigateToBoolSelfDeclarationsScreen
+      ).toHaveBeenCalled()
     );
 
-    onboardingService.send({
+    expect(currentState.value).toMatchObject({
+      DISPLAYING_REQUIRED_SELF_CRITERIA: "DISPLAYING_BOOL_CRITERIA"
+    });
+
+    service.send({
       type: "ACCEPT_REQUIRED_BOOL_CRITERIA"
     });
+
     await waitFor(() =>
-      expect(mockNavigateToMultiSelfDeclarationsScreen).toHaveBeenCalled()
+      expect(
+        mockActions.navigateToMultiSelfDeclarationsScreen
+      ).toHaveBeenCalled()
     );
-    onboardingService.send({
+
+    expect(currentState.value).toMatchObject({
+      DISPLAYING_REQUIRED_SELF_CRITERIA: "DISPLAYING_MULTI_CRITERIA"
+    });
+
+    service.send({
       type: "SELECT_MULTI_CONSENT",
       data: T_SELF_CONSENT_MULTI
     });
 
     await waitFor(() =>
-      expect(mockNavigateToCompletionScreen).toHaveBeenCalled()
+      expect(mockActions.navigateToCompletionScreen).toHaveBeenCalled()
     );
 
     await waitFor(() =>
-      expect(mockAcceptRequiredCriteria).toHaveBeenCalledWith(
+      expect(mockServices.acceptRequiredCriteria).toHaveBeenCalledWith(
         expect.objectContaining({
           serviceId: T_SERVICE_ID,
           initiative: {
@@ -228,121 +221,153 @@ describe("machine", () => {
       )
     );
 
-    expect(
-      onboardingService.getSnapshot().matches("DISPLAYING_ONBOARDING_COMPLETED")
-    ).toBeTruthy();
+    expect(currentState.value).toMatch("DISPLAYING_ONBOARDING_COMPLETED");
   });
 
   it("should allow the citizen to exit onboarding from any state", async () => {
-    const mockExitOnboarding = jest.fn();
-
     const machine = createIDPayOnboardingMachine().withConfig({
-      services: {
-        loadInitiative: jest.fn(),
-        loadInitiativeStatus: jest.fn(),
-        acceptTos: jest.fn(),
-        loadRequiredCriteria: jest.fn(),
-        acceptRequiredCriteria: jest.fn()
-      },
-      actions: {
-        navigateToInitiativeDetailsScreen: jest.fn(),
-        navigateToPDNDCriteriaScreen: jest.fn(),
-        navigateToBoolSelfDeclarationsScreen: jest.fn(),
-        navigateToMultiSelfDeclarationsScreen: jest.fn(),
-        navigateToCompletionScreen: jest.fn(),
-        navigateToFailureScreen: jest.fn(),
-        exitOnboarding: mockExitOnboarding
-      }
+      services: mockServices,
+      actions: mockActions
     });
 
-    const onboardingService = interpret(machine);
+    const service = interpret(machine);
 
-    onboardingService.start();
+    service.start();
 
-    onboardingService.send({
+    service.send({
       type: "QUIT_ONBOARDING"
     });
 
-    await waitFor(() => expect(mockExitOnboarding).toHaveBeenCalled());
+    await waitFor(() => expect(mockActions.exitOnboarding).toHaveBeenCalled());
   });
 
-  it("should not allow the citizen to complete the onboarding multiple times", async () => {
-    const mockLoadInitiativeStatus = jest.fn(
-      async () => StatusEnum.ONBOARDING_OK
+  it("should not allow the citizen to complete the onboarding if initiative fails to load", async () => {
+    mockServices.loadInitiative.mockImplementation(async () =>
+      Promise.reject(OnboardingFailureEnum.GENERIC)
     );
 
     const machine = createIDPayOnboardingMachine().withConfig({
-      services: {
-        loadInitiative: mockLoadInitiative,
-        loadInitiativeStatus: mockLoadInitiativeStatus,
-        acceptTos: jest.fn(),
-        loadRequiredCriteria: jest.fn(),
-        acceptRequiredCriteria: jest.fn()
-      },
-      actions: {
-        navigateToInitiativeDetailsScreen: jest.fn(),
-        navigateToPDNDCriteriaScreen: jest.fn(),
-        navigateToBoolSelfDeclarationsScreen: jest.fn(),
-        navigateToCompletionScreen: jest.fn(),
-        navigateToFailureScreen: mockNavigateToFailureScreen,
-        exitOnboarding: jest.fn(),
-        navigateToMultiSelfDeclarationsScreen: jest.fn()
-      }
+      services: mockServices,
+      actions: mockActions
     });
 
-    const onboardingService = interpret(machine);
+    let currentState = machine.initialState;
 
-    onboardingService.start();
+    const service = interpret(machine).onTransition(state => {
+      currentState = state;
+    });
 
-    onboardingService.send({
+    service.start();
+
+    expect(currentState.value).toEqual("WAITING_INITIATIVE_SELECTION");
+
+    service.send({
       type: "SELECT_INITIATIVE",
       serviceId: T_SERVICE_ID
     });
 
-    await waitFor(() => expect(mockLoadInitiative).toHaveBeenCalled());
+    await waitFor(() => expect(mockServices.loadInitiative).toHaveBeenCalled());
+    await waitFor(() =>
+      expect(mockServices.loadInitiativeStatus).toHaveBeenCalledTimes(0)
+    );
 
-    expect(
-      onboardingService.getSnapshot().matches("DISPLAYING_ONBOARDING_FAILURE")
-    ).toBeTruthy();
+    expect(currentState.value).toMatch("DISPLAYING_ONBOARDING_FAILURE");
   });
 
-  it("should not allow the citizen to complete the onboarding if rejected", async () => {
-    const mockLoadInitiativeStatus = jest.fn(
-      async () => StatusEnum.ONBOARDING_KO
+  it("should not allow the citizen to complete the onboarding if initiative status is not valid", async () => {
+    mockServices.loadInitiative.mockImplementation(async () =>
+      Promise.resolve({
+        initiativeId: T_INITIATIVE_ID
+      })
+    );
+
+    mockServices.loadInitiativeStatus.mockImplementation(async () =>
+      Promise.reject(OnboardingFailureEnum.ONBOARDED)
     );
 
     const machine = createIDPayOnboardingMachine().withConfig({
-      services: {
-        loadInitiative: mockLoadInitiative,
-        loadInitiativeStatus: mockLoadInitiativeStatus,
-        acceptTos: jest.fn(),
-        loadRequiredCriteria: jest.fn(),
-        acceptRequiredCriteria: jest.fn()
-      },
-      actions: {
-        navigateToInitiativeDetailsScreen: jest.fn(),
-        navigateToPDNDCriteriaScreen: jest.fn(),
-        navigateToBoolSelfDeclarationsScreen: jest.fn(),
-        navigateToMultiSelfDeclarationsScreen: jest.fn(),
-        navigateToCompletionScreen: jest.fn(),
-        navigateToFailureScreen: mockNavigateToFailureScreen,
-        exitOnboarding: jest.fn()
-      }
+      services: mockServices,
+      actions: mockActions
     });
 
-    const onboardingService = interpret(machine);
+    let currentState = machine.initialState;
 
-    onboardingService.start();
+    const service = interpret(machine).onTransition(state => {
+      currentState = state;
+    });
 
-    onboardingService.send({
+    service.start();
+
+    expect(currentState.value).toEqual("WAITING_INITIATIVE_SELECTION");
+
+    service.send({
       type: "SELECT_INITIATIVE",
       serviceId: T_SERVICE_ID
     });
 
-    await waitFor(() => expect(mockLoadInitiative).toHaveBeenCalled());
+    await waitFor(() => expect(mockServices.loadInitiative).toHaveBeenCalled());
+    await waitFor(() =>
+      expect(mockServices.loadInitiativeStatus).toHaveBeenCalled()
+    );
 
-    expect(
-      onboardingService.getSnapshot().matches("DISPLAYING_ONBOARDING_FAILURE")
-    ).toBeTruthy();
+    expect(currentState.value).toMatch("DISPLAYING_ONBOARDING_FAILURE");
+  });
+
+  it("should not allow the citizen to complete the onboarding if prerequesites check fails", async () => {
+    mockServices.loadInitiative.mockImplementation(async () =>
+      Promise.resolve({
+        initiativeId: T_INITIATIVE_ID
+      })
+    );
+
+    mockServices.loadInitiativeStatus.mockImplementation(async () =>
+      Promise.resolve(undefined)
+    );
+
+    mockServices.acceptTos.mockImplementation(async () =>
+      Promise.resolve(undefined)
+    );
+
+    mockServices.loadRequiredCriteria.mockImplementation(async () =>
+      Promise.reject(OnboardingFailureEnum.GENERIC)
+    );
+
+    const machine = createIDPayOnboardingMachine().withConfig({
+      services: mockServices,
+      actions: mockActions
+    });
+
+    let currentState = machine.initialState;
+
+    const service = interpret(machine).onTransition(state => {
+      currentState = state;
+    });
+
+    service.start();
+
+    expect(currentState.value).toEqual("WAITING_INITIATIVE_SELECTION");
+
+    service.send({
+      type: "SELECT_INITIATIVE",
+      serviceId: T_SERVICE_ID
+    });
+
+    await waitFor(() => expect(mockServices.loadInitiative).toHaveBeenCalled());
+    await waitFor(() =>
+      expect(mockServices.loadInitiativeStatus).toHaveBeenCalled()
+    );
+
+    expect(currentState.value).toMatch("DISPLAYING_INITIATIVE");
+
+    service.send({
+      type: "ACCEPT_TOS"
+    });
+
+    await waitFor(() => expect(mockServices.acceptTos).toHaveBeenCalled());
+    await waitFor(() =>
+      expect(mockServices.loadRequiredCriteria).toHaveBeenCalled()
+    );
+
+    expect(currentState.value).toMatch("DISPLAYING_ONBOARDING_FAILURE");
   });
 });

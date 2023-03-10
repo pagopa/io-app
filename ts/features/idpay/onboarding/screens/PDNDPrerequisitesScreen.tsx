@@ -117,8 +117,8 @@ export const PDNDPrerequisitesScreen = () => {
             {pdndCriteria.map((requisite, index) => (
               <React.Fragment key={index}>
                 <ButtonExtendedOutline
-                  label={requisite.code}
-                  description={requisite.description}
+                  label={requisite.description}
+                  description={requisite.value}
                   onPress={() => {
                     setAuthority(requisite.authority);
                     present();

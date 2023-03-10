@@ -1,12 +1,15 @@
 import { format } from "date-fns";
 import { ListItem } from "native-base";
 import React from "react";
-import { View, Image, StyleSheet } from "react-native";
-import { OperationTypeEnum as IbanOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/IbanOperationDTO";
-import { OperationTypeEnum as OnboardingOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/OnboardingOperationDTO";
-import { OperationListDTO } from "../../../../../../definitions/idpay/timeline/OperationListDTO";
-import { OperationTypeEnum as RefundOperationTypeEnum } from "../../../../../../definitions/idpay/timeline/RefundOperationDTO";
+import { StyleSheet, View } from "react-native";
+import { OperationTypeEnum as IbanOperationTypeEnum } from "../../../../../../definitions/idpay/IbanOperationDTO";
+import { OperationTypeEnum as OnboardingOperationTypeEnum } from "../../../../../../definitions/idpay/OnboardingOperationDTO";
+import { OperationListDTO } from "../../../../../../definitions/idpay/OperationListDTO";
+import { OperationTypeEnum as RefundOperationTypeEnum } from "../../../../../../definitions/idpay/RefundOperationDTO";
+import { OperationTypeEnum } from "../../../../../../definitions/idpay/RejectedInstrumentOperationDTO";
+import { OperationTypeEnum as TransactionOperationTypeEnum } from "../../../../../../definitions/idpay/TransactionOperationDTO";
 import { Icon } from "../../../../../components/core/icons";
+import { LogoPayment } from "../../../../../components/core/logos";
 import { HSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
@@ -14,6 +17,7 @@ import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";
 import { formatDateAsShortFormat } from "../../../../../utils/dates";
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
+import { InstrumentBrandEnum, instrumentBrandMap } from "../utils/utils";
 
 const styles = StyleSheet.create({
   alignCenter: {
@@ -26,8 +30,7 @@ const styles = StyleSheet.create({
     paddingLeft: 8,
     // required since ListItem has a default paddingRight
     paddingRight: 0
-  },
-  imageSize: { height: 16, width: 24 }
+  }
 });
 
 const getHourAndMinuteFromDate = (date: Date) => format(date, "HH:mm");
@@ -37,33 +40,60 @@ type TimelineOperationListItemProps = {
   onPress?: () => void;
 };
 
-export const TimelineOperationListItem = (
-  props: TimelineOperationListItemProps
-) => {
-  const { operation, onPress } = props;
-  const hasAmount = "amount" in operation;
+type OperationComponentProps = { operation: OperationListDTO };
 
-  const renderOperationIcon = (operation: OperationListDTO) => {
-    if ("brandLogo" in operation) {
+const OperationIcon = ({ operation }: OperationComponentProps) => {
+  switch (operation.operationType) {
+    case OnboardingOperationTypeEnum.ONBOARDING:
+      return <Icon name={"ok"} />;
+
+    case IbanOperationTypeEnum.ADD_IBAN:
+      return <Icon name={"institution"} color="bluegreyLight" />;
+
+    case RefundOperationTypeEnum.PAID_REFUND:
+      return <Icon name={"arrowCircleUp"} color="bluegrey" />;
+
+    case OperationTypeEnum.REJECTED_ADD_INSTRUMENT:
+    case OperationTypeEnum.REJECTED_DELETE_INSTRUMENT:
+    case RefundOperationTypeEnum.REJECTED_REFUND:
+      return <Icon name={"warning"} color="red" />;
+
+    default:
+      if ("brand" in operation) {
+        const cardIcon =
+          instrumentBrandMap[operation.brand as InstrumentBrandEnum];
+        return cardIcon !== undefined ? (
+          <LogoPayment name={cardIcon} />
+        ) : (
+          <Icon name="creditCard" size={24} />
+        );
+      }
+      return null;
+  }
+};
+const OperationAmount = ({ operation }: OperationComponentProps) => {
+  switch (operation.operationType) {
+    case TransactionOperationTypeEnum.TRANSACTION:
       return (
-        <Image style={styles.imageSize} source={{ uri: operation.brandLogo }} />
+        <H4>{`–${formatNumberAmount(operation.accrued || 0, false)} €`}</H4>
       );
-    }
-    switch (operation.operationType) {
-      case OnboardingOperationTypeEnum.ONBOARDING:
-        return <Icon name={"bonus"} color="blue" />;
-      case IbanOperationTypeEnum.ADD_IBAN:
-        return <Icon name={"amount"} color="bluegreyLight" />;
-      case RefundOperationTypeEnum.PAID_REFUND:
-        return <Icon name={"reload"} color="bluegreyLight" />;
-      case RefundOperationTypeEnum.REJECTED_REFUND:
-        return <Icon name={"error"} color="bluegreyLight" />;
-      default:
-        return null;
-    }
-  };
+    case TransactionOperationTypeEnum.REVERSAL:
+      return (
+        <H4>{`+${formatNumberAmount(operation.accrued || 0, false)} €`}</H4>
+      );
+    case RefundOperationTypeEnum.PAID_REFUND:
+      return (
+        <H4 color="greenLight">
+          {`${formatNumberAmount(operation.amount, false)} €`}
+        </H4>
+      );
+    default:
+      return null;
+  }
+};
 
-  const renderOperationTitle = () =>
+const generateTimelineOperationListItemText = (operation: OperationListDTO) => {
+  const operationTitle =
     "maskedPan" in operation
       ? I18n.t(
           `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.${operation.operationType}`,
@@ -73,6 +103,28 @@ export const TimelineOperationListItem = (
           `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.${operation.operationType}`
         );
 
+  const generateOperationInvoiceText = () => {
+    switch (operation.operationType) {
+      case TransactionOperationTypeEnum.TRANSACTION:
+        return "· " + formatNumberAmount(operation.amount, true);
+      case TransactionOperationTypeEnum.REVERSAL:
+        return `· € -${operation.amount}`;
+      default:
+        return "";
+    }
+  };
+  return {
+    operationTitle,
+    bonusInvoiceText: generateOperationInvoiceText()
+  };
+};
+
+export const TimelineOperationListItem = (
+  props: TimelineOperationListItemProps
+) => {
+  const { operation, onPress } = props;
+  const { operationTitle, bonusInvoiceText } =
+    generateTimelineOperationListItemText(operation);
   return (
     <ListItem
       style={[
@@ -84,23 +136,19 @@ export const TimelineOperationListItem = (
       ]}
       onPress={onPress}
     >
-      {renderOperationIcon(operation)}
+      <OperationIcon operation={operation} />
       <HSpacer size={16} />
       <View style={IOStyles.flex}>
-        <H4>{renderOperationTitle()}</H4>
+        <H4>{operationTitle}</H4>
         <LabelSmall weight="Regular" color="bluegrey">
           {`${formatDateAsShortFormat(
             operation.operationDate
-          )}, ${getHourAndMinuteFromDate(operation.operationDate)} ${
-            hasAmount
-              ? "· " + formatNumberAmount(Math.abs(operation.amount), true)
-              : ""
-          }`}
+          )}, ${getHourAndMinuteFromDate(
+            operation.operationDate
+          )} ${bonusInvoiceText}`}
         </LabelSmall>
       </View>
-      {hasAmount ? (
-        <H4> {`${formatNumberAmount(operation.amount, false)} €`}</H4>
-      ) : null}
+      <OperationAmount operation={operation} />
     </ListItem>
   );
 };

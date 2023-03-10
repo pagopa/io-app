@@ -1,21 +1,8 @@
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import { SagaIterator } from "redux-saga";
-import { call, select, takeLatest } from "typed-redux-saga/macro";
+import { call, takeLatest } from "typed-redux-saga/macro";
 import { PreferredLanguageEnum } from "../../../../../../definitions/backend/PreferredLanguage";
-import {
-  idPayTestToken,
-  idPayApiUatBaseUrl,
-  idPayApiBaseUrl
-} from "../../../../../config";
-import {
-  isPagoPATestEnabledSelector,
-  preferredLanguageSelector
-} from "../../../../../store/reducers/persistedPreferences";
 import { waitBackoffError } from "../../../../../utils/backoffError";
-import { fromLocaleToPreferredLanguage } from "../../../../../utils/locale";
-import { createIDPayWalletClient } from "../../../wallet/api/client";
-import { createIDPayTimelineClient } from "../api/client";
+import { IDPayClient } from "../../../common/api/client";
 import {
   idpayInitiativeGet,
   IdPayInitiativeGetPayloadType,
@@ -32,21 +19,11 @@ import { handleGetTimelinePage } from "./handleGetTimelinePage";
  * Handle IDPAY initiative requests
  * @param bearerToken
  */
-export function* idpayInitiativeDetailsSaga(bearerToken: string): SagaIterator {
-  const isPagoPATestEnabled = yield* select(isPagoPATestEnabledSelector);
-  const baseUrl = isPagoPATestEnabled ? idPayApiUatBaseUrl : idPayApiBaseUrl;
-  const token = idPayTestToken ?? bearerToken;
-
-  const idPayWalletClient = createIDPayWalletClient(baseUrl);
-  const idPayTimelineClient = createIDPayTimelineClient(baseUrl);
-
-  const language = yield* select(preferredLanguageSelector);
-
-  const preferredLanguage = pipe(
-    language,
-    O.map(fromLocaleToPreferredLanguage),
-    O.getOrElse(() => PreferredLanguageEnum.it_IT)
-  );
+export function* watchIDPayInitiativeDetailsSaga(
+  idPayClient: IDPayClient,
+  token: string,
+  preferredLanguage: PreferredLanguageEnum
+): SagaIterator {
   // handle the request of getting id pay wallet
   yield* takeLatest(
     idpayInitiativeGet.request,
@@ -55,7 +32,7 @@ export function* idpayInitiativeDetailsSaga(bearerToken: string): SagaIterator {
       yield* call(waitBackoffError, idpayInitiativeGet.failure);
       yield* call(
         handleGetInitiativeDetails,
-        idPayWalletClient.getWalletDetail,
+        idPayClient.getWalletDetail,
         token,
         preferredLanguage,
         action.payload
@@ -69,7 +46,7 @@ export function* idpayInitiativeDetailsSaga(bearerToken: string): SagaIterator {
       yield* call(waitBackoffError, idpayTimelinePageGet.failure);
       yield* call(
         handleGetTimelinePage,
-        idPayTimelineClient.getTimeline,
+        idPayClient.getTimeline,
         token,
         preferredLanguage,
         action.payload
@@ -83,7 +60,7 @@ export function* idpayInitiativeDetailsSaga(bearerToken: string): SagaIterator {
       yield* call(waitBackoffError, idpayTimelineDetailsGet.failure);
       yield* call(
         handleGetTimelineDetails,
-        idPayTimelineClient.getTimelineDetail,
+        idPayClient.getTimelineDetail,
         token,
         preferredLanguage,
         action.payload

@@ -25,6 +25,7 @@ import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
 import { useLollipopLoginSource } from "../../features/lollipop/hooks/useLollipopLoginSource";
 import { publicKey } from "../../features/lollipop/types/LollipopLoginSource";
 import { lollipopSamlVerify } from "../../features/lollipop/utils/login";
+import { LollipopCheckStatus } from "../../features/lollipop/types/LollipopCheckStatus";
 import I18n from "../../i18n";
 import { mixpanelTrack } from "../../mixpanel";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
@@ -44,30 +45,19 @@ import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus
 import { idpContextualHelpDataFromIdSelector } from "../../store/reducers/content";
 import { GlobalState } from "../../store/reducers/types";
 import { SessionToken } from "../../types/SessionToken";
-import { getAppVersion } from "../../utils/appVersion";
-import { getIntentFallbackUrl, onLoginUriChanged } from "../../utils/login";
+import {
+  getIdpLoginUri,
+  getIntentFallbackUrl,
+  onLoginUriChanged
+} from "../../utils/login";
 import { getSpidErrorCodeDescription } from "../../utils/spidErrorCode";
 import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
 } from "../../utils/supportAssistance";
 import { getUrlBasepath } from "../../utils/url";
+import { trackLollipopIdpLoginFailure } from "../../utils/analytics";
 import { originSchemasWhiteList } from "./originSchemasWhiteList";
-
-// Type used to handle the LolliPOP checks.
-// None means that the component state is ready to start a
-// verification process if a SAMLRequest query parameter is detected
-// Checking means that LolliPOP signature verification is happening
-// and the WebView shall not process any request (especially not
-// the one containing the SAMLRequest query parameter)
-// Trusted means that LolliPOP signature checking was successfull
-// and the normal login flow can be done
-// Untrusted means that LolliPOP signature checking has failed
-// and the user cannot proceed with the login
-type LollipopCheckStatus = {
-  status: "none" | "checking" | "trusted" | "untrusted";
-  url: O.Option<string>;
-};
 
 type NavigationProps = IOStackNavigationRouteProps<
   AuthenticationParamsList,
@@ -125,8 +115,6 @@ const styles = StyleSheet.create({
   webViewWrapper: { flex: 1 }
 });
 
-const getUserAgentForWebView = () => `IO-App/${getAppVersion()}`;
-
 /**
  * A screen that allows the user to login with an IDP.
  * The IDP page is opened in a WebView
@@ -144,9 +132,10 @@ const IdpLoginScreen = (props: Props) => {
     undefined
   );
 
-  const loginSource = useLollipopLoginSource({
-    loggedOutWithIdpAuth: props.loggedOutWithIdpAuth
-  });
+  const idpId = props.loggedOutWithIdpAuth?.idp.id;
+  const loginUri = idpId ? getIdpLoginUri(idpId) : undefined;
+  const { loginSource, regenerateLoginSource } =
+    useLollipopLoginSource(loginUri);
 
   const choosenTool = useMemo(
     () => assistanceToolRemoteConfig(props.assistanceToolConfig),
@@ -156,8 +145,6 @@ const IdpLoginScreen = (props: Props) => {
   const startLoginProcess = useCallback(() => {
     if (loginSource.kind === "ready") {
       setWebviewSource(loginSource.value);
-    } else if (loginSource.kind === "error") {
-      setRequestState(pot.noneError(ErrorType.LOADING_ERROR));
     }
   }, [loginSource]);
 
@@ -215,7 +202,14 @@ const IdpLoginScreen = (props: Props) => {
   const onRetryButtonPressed = (): void => {
     setRequestState(pot.noneLoading);
     setLollipopCheckStatus({ status: "none", url: O.none });
-    startLoginProcess();
+    // We must set webviewSource to undefined before requesting
+    // any changes to loginSource otherwise on the next component
+    // refresh (triggered by a different value of loginSource),
+    // the old value of webviewSource is going to be loaded
+    // (i.e., the loaded webViewSource uri will be different from
+    // the loginSource.uri)
+    setWebviewSource(undefined);
+    regenerateLoginSource();
   };
 
   const handleNavigationStateChange = useCallback(
@@ -317,7 +311,8 @@ const IdpLoginScreen = (props: Props) => {
           });
           setWebviewSource({ uri: eventUrl });
         },
-        () => {
+        (reason: string) => {
+          trackLollipopIdpLoginFailure(reason);
           setLollipopCheckStatus({
             status: "untrusted",
             url: O.some(eventUrl)
@@ -439,7 +434,6 @@ const IdpLoginScreen = (props: Props) => {
             androidMicrophoneAccessDisabled={true}
             textZoom={100}
             originWhitelist={originSchemasWhiteList}
-            userAgent={getUserAgentForWebView()}
             source={webviewSource}
             onError={handleLoadingError}
             javaScriptEnabled={true}

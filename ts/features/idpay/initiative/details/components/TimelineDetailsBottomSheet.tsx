@@ -1,13 +1,13 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import React from "react";
 import { Image, StyleSheet, View } from "react-native";
-import { OperationDTO } from "../../../../../../definitions/idpay/timeline/OperationDTO";
-import { OperationListDTO } from "../../../../../../definitions/idpay/timeline/OperationListDTO";
+import { OperationDTO } from "../../../../../../definitions/idpay/OperationDTO";
+import { OperationListDTO } from "../../../../../../definitions/idpay/OperationListDTO";
 import {
   OperationTypeEnum as TransactionDetailOperationTypeEnum,
   TransactionDetailDTO
-} from "../../../../../../definitions/idpay/timeline/TransactionDetailDTO";
-import { InitiativeDTO } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
+} from "../../../../../../definitions/idpay/TransactionDetailDTO";
+import { InitiativeDTO } from "../../../../../../definitions/idpay/InitiativeDTO";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
 import CopyButtonComponent from "../../../../../components/CopyButtonComponent";
 import { Pictogram } from "../../../../../components/core/pictograms";
@@ -25,6 +25,7 @@ import {
   IOBottomSheetModal,
   useIOBottomSheetModal
 } from "../../../../../utils/hooks/bottomSheet";
+import { formatNumberAmount } from "../../../../../utils/stringBuilder";
 import { idpayTimelineDetailsSelector } from "../store";
 import { idpayTimelineDetailsGet } from "../store/actions";
 
@@ -75,6 +76,29 @@ const TimelineDetailsErrorComponent = () => (
   </View>
 );
 
+type CopyTextProps = {
+  text: string;
+};
+
+/**
+ * Utility component to display a text with a CopyButtonComponent
+ * @param props
+ */
+const CopyTextComponent = (props: CopyTextProps) => (
+  <View style={[IOStyles.flex, IOStyles.row]}>
+    <Body
+      weight="SemiBold"
+      numberOfLines={1}
+      ellipsizeMode="tail"
+      style={IOStyles.flex}
+    >
+      {props.text}
+    </Body>
+    <HSpacer size={8} />
+    <CopyButtonComponent textToCopy={props.text} />
+  </View>
+);
+
 type TransactionDetailsProps = {
   details: OperationDTO;
 };
@@ -102,9 +126,7 @@ const TimelineDetailsComponent = (props: TransactionDetailsProps) => {
               {I18n.t("idpay.initiative.operationDetails.amountLabel")}
             </Body>
             <Body weight="SemiBold">
-              {I18n.t("idpay.initiative.operationDetails.amount", {
-                amount: details.amount.toFixed(2)
-              })}
+              {formatNumberAmount(details.amount, true)}
             </Body>
           </View>
           <View style={styles.detailRow}>
@@ -112,16 +134,14 @@ const TimelineDetailsComponent = (props: TransactionDetailsProps) => {
               {I18n.t("idpay.initiative.operationDetails.accruedAmountLabel")}
             </Body>
             <Body weight="SemiBold">
-              {I18n.t("idpay.initiative.operationDetails.amount", {
-                amount: details.accrued.toFixed(2)
-              })}
+              {formatNumberAmount(details.accrued, true)}
             </Body>
           </View>
           <ItemSeparatorComponent noPadded={true} />
           <VSpacer size={24} />
           <H4>{I18n.t("idpay.initiative.operationDetails.infoTitle")}</H4>
           <View style={styles.detailRow}>
-            <Body>Data</Body>
+            <Body>{I18n.t("idpay.initiative.operationDetails.date")}</Body>
             <Body weight="SemiBold">
               {format(details.operationDate, "DD MMM YYYY, HH:mm")}
             </Body>
@@ -136,19 +156,15 @@ const TimelineDetailsComponent = (props: TransactionDetailsProps) => {
             <Body>
               {I18n.t("idpay.initiative.operationDetails.acquirerId")}
             </Body>
-            <View style={IOStyles.row}>
-              <Body weight="SemiBold">{details.operationId}</Body>
-              <HSpacer size={8} />
-              <CopyButtonComponent textToCopy={details.idTrxAcquirer} />
-            </View>
+            <HSpacer size={16} />
+            <CopyTextComponent text={details.idTrxAcquirer} />
           </View>
           <View style={styles.detailRow}>
-            <Body>{I18n.t("idpay.initiative.operationDetails.issuerId")}</Body>
-            <View style={IOStyles.row}>
-              <Body weight="SemiBold">{details.idTrxIssuer}</Body>
-              <HSpacer size={8} />
-              <CopyButtonComponent textToCopy={details.operationId} />
-            </View>
+            <Body style={{ flex: 1 }}>
+              {I18n.t("idpay.initiative.operationDetails.issuerId")}
+            </Body>
+            <HSpacer size={16} />
+            <CopyTextComponent text={details.idTrxIssuer} />
           </View>
         </View>
       );
