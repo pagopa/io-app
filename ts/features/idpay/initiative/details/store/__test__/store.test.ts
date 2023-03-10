@@ -8,13 +8,13 @@ import {
   idpayTimelineLastUpdateSelector,
   idpayTimelineSelector
 } from "..";
-import { TimelineDTO } from "../../../../../../../definitions/idpay/timeline/TimelineDTO";
-import { OperationTypeEnum as TransactionOperationType } from "../../../../../../../definitions/idpay/timeline/TransactionOperationDTO";
+import { TimelineDTO } from "../../../../../../../definitions/idpay/TimelineDTO";
+import { OperationTypeEnum as TransactionOperationType } from "../../../../../../../definitions/idpay/TransactionOperationDTO";
 import {
   InitiativeDTO,
   StatusEnum
-} from "../../../../../../../definitions/idpay/wallet/InitiativeDTO";
-import { TransactionDetailDTO } from "../../../../../../../InstrumentOperationDTO/../definitions/idpay/timeline/TransactionDetailDTO";
+} from "../../../../../../../definitions/idpay/InitiativeDTO";
+import { TransactionDetailDTO } from "../../../../../../../InstrumentOperationDTO/../definitions/idpay/TransactionDetailDTO";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { NetworkError } from "../../../../../../utils/errors";
@@ -35,12 +35,8 @@ const mockFailure: NetworkError = {
   kind: "generic",
   value: new Error("401")
 };
-const mock404: NetworkError = {
-  kind: "generic",
-  value: new Error("404")
-};
-
 const mockTransactionDetail: TransactionDetailDTO = {
+  brand: "VISA",
   operationType: TransactionOperationType.TRANSACTION,
   operationDate: new Date(),
   amount: 100,
@@ -116,14 +112,20 @@ const mockTimelineResponseSuccess: TimelineDTO = {
   operationList: [
     {
       operationId: "1234567890",
+      brand: "VISA",
       operationType: TransactionOperationType.TRANSACTION,
       operationDate: new Date("2020-05-20T09:00:00.000Z"),
       amount: 100,
+      accrued: 50,
       brandLogo: "https://www.google.com",
       maskedPan: "1234567890",
       circuitType: "CREDIT_CARD"
     }
-  ]
+  ],
+  pageNo: 1,
+  pageSize: 10,
+  totalPages: 1,
+  totalElements: 1
 };
 describe("test idpay timeline reducer and selectors", () => {
   it("should be pot.noneLoading after the first loading action dispatched, the selector will also return empty array on pot.none states", () => {
@@ -251,10 +253,23 @@ describe("test idpay timeline pagination reducer and selectors", () => {
     );
   });
 
-  it("should return isLastPage===true if the timeline has a 404 error", () => {
+  it("should return isLastPage===true if the timeline has reached the end", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
-    store.dispatch(idpayTimelinePageGet.failure(mock404));
+    store.dispatch(
+      idpayTimelinePageGet.success({
+        page: 0,
+        timeline: mockTimelineResponseSuccess
+      })
+    );
+    store.dispatch(
+      idpayTimelinePageGet.success({
+        page: 1,
+        timeline: { ...mockTimelineResponseSuccess, operationList: [] }
+      })
+    );
+    // last call to API returns an empty operationList,
+    // but increases the currentPage
 
     expect(idpayTimelineIsLastPageSelector(store.getState())).toStrictEqual(
       true

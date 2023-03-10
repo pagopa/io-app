@@ -1,7 +1,7 @@
 import * as P from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { StateFrom } from "xstate";
-import { InstrumentDTO } from "../../../../../../definitions/idpay/wallet/InstrumentDTO";
+import { InstrumentDTO } from "../../../../../../definitions/idpay/InstrumentDTO";
 import { LOADING_TAG } from "../../../../../utils/xstate";
 import { ConfigurationMode } from "./context";
 import { IDPayInitiativeConfigurationMachineType } from "./machine";
@@ -43,9 +43,6 @@ const selectIsUpsertingInstrument = (state: StateWithContext) =>
   state.matches("CONFIGURING_INSTRUMENTS.ENROLLING_INSTRUMENT") ||
   state.matches("CONFIGURING_INSTRUMENTS.DELETING_INSTRUMENT");
 
-const selectPagoPAInstruments = (state: StateWithContext) =>
-  state.context.pagoPAInstruments;
-
 const selectEnrolledIban = createSelector(
   selectInitiativeDetails,
   ibanListSelector,
@@ -58,28 +55,41 @@ const selectEnrolledIban = createSelector(
   }
 );
 
-const selectorPagoPAIntruments = createSelector(
-  selectPagoPAInstruments,
-  pagoPAInstruments => P.getOrElse(pagoPAInstruments, [])
+const selectWalletInstruments = (state: StateWithContext) =>
+  state.context.walletInstruments;
+
+const selectInitiativeInstruments = (state: StateWithContext) =>
+  state.context.initiativeInstruments;
+
+const initiativeInstrumentsByIdWalletSelector = createSelector(
+  selectInitiativeInstruments,
+  instruments =>
+    instruments.reduce<IDPayInstrumentsByIdWallet>((acc, instrument) => {
+      if (instrument.idWallet !== undefined) {
+        // eslint-disable-next-line functional/immutable-data
+        acc[instrument.idWallet] = instrument;
+      }
+      return acc;
+    }, {})
 );
 
-const selectIDPayInstruments = (state: StateWithContext) =>
-  state.context.idPayInstruments;
+const selectInstrumentStatuses = (state: StateWithContext) =>
+  state.context.instrumentStatuses;
 
-const selectorIDPayInstrumentsByIdWallet = createSelector(
-  selectIDPayInstruments,
-  idPayInstruments =>
-    P.getOrElse(idPayInstruments, []).reduce<IDPayInstrumentsByIdWallet>(
-      (acc, _) => {
-        if (_.idWallet !== undefined) {
-          // eslint-disable-next-line functional/immutable-data
-          acc[_.idWallet] = _;
-        }
-        return acc;
-      },
-      {}
-    )
-);
+const instrumentStatusByIdWalletSelector = (idWallet: number) =>
+  createSelector(
+    selectInstrumentStatuses,
+    statuses => statuses[idWallet] ?? P.some(undefined)
+  );
+
+const selectInstrumentToEnroll = (state: StateWithContext) =>
+  state.context.instrumentToEnroll;
+
+const isInstrumentEnrollingSelector = (idWallet: number) =>
+  createSelector(
+    selectInstrumentToEnroll,
+    instrument => instrument?.idWallet === idWallet
+  );
 
 const failureSelector = (state: StateWithContext) => state.context.failure;
 
@@ -95,7 +105,10 @@ export {
   selectIsUpsertingInstrument,
   selectAreInstrumentsSkipped,
   selectEnrolledIban,
-  selectorPagoPAIntruments,
-  selectorIDPayInstrumentsByIdWallet,
+  selectWalletInstruments,
+  initiativeInstrumentsByIdWalletSelector,
+  instrumentStatusByIdWalletSelector,
+  selectInstrumentToEnroll,
+  isInstrumentEnrollingSelector,
   failureSelector
 };

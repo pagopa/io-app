@@ -1,6 +1,6 @@
 import React from "react";
-import { ColorValue } from "react-native";
-import { IOColors, IOColorType } from "../variables/IOColors";
+import { ColorValue, StyleProp } from "react-native";
+import { IOColors } from "../variables/IOColors";
 
 /* Icons */
 import IconSpid from "./svg/IconSpid";
@@ -86,10 +86,6 @@ import IconGallery from "./svg/IconGallery";
 import IconCancel from "./svg/IconCancel";
 import IconQuestion from "./svg/IconQuestion";
 import IconSearch from "./svg/IconSearch";
-import IconArrowRight from "./svg/IconArrowRight";
-import IconArrowLeft from "./svg/IconArrowLeft";
-import IconArrowDown from "./svg/IconArrowDown";
-import IconArrowUp from "./svg/IconArrowUp";
 import IconClose from "./svg/IconClose";
 import IconCloseSmall from "./svg/IconCloseSmall";
 import IconEmailLegal from "./svg/IconEmailLegal";
@@ -98,8 +94,38 @@ import IconDocumentAttachmentPDF from "./svg/IconDocumentAttachmentPDF";
 import IconAttachment from "./svg/IconAttachment";
 import IconExternalLink from "./svg/IconExternalLink";
 import IconUnknownGdo from "./svg/IconUnknownGdo";
+import IconArrowCircleUp from "./svg/IconArrowCircleUp";
 import IconWarningFilled from "./svg/IconWarningFilled";
 import IconErrorFilled from "./svg/IconErrorFilled";
+import IconChevronRight from "./svg/IconChevronRight";
+import IconChevronTop from "./svg/IconChevronTop";
+import IconChevronBottom from "./svg/IconChevronBottom";
+import IconChevronLeft from "./svg/IconChevronLeft";
+import IconArrowBottom from "./svg/IconArrowBottom";
+import IconArrowLeft from "./svg/IconArrowLeft";
+import IconArrowTop from "./svg/IconArrowTop";
+import IconArrowRight from "./svg/IconArrowRight";
+import IconNavMessages from "./svg/IconNavMessages";
+import IconNavWallet from "./svg/IconNavWallet";
+import IconNavDocuments from "./svg/IconNavDocuments";
+import IconNavServices from "./svg/IconNavServices";
+import IconNavProfile from "./svg/IconNavProfile";
+import IconBiomFingerprint from "./svg/IconBiomFingerprint";
+import IconBiomFaceID from "./svg/IconBiomFaceID";
+import IconCategCulture from "./svg/IconCategCulture";
+import IconCategWellness from "./svg/IconCategWellness";
+import IconCategLearning from "./svg/IconCategLearning";
+import IconCategSport from "./svg/IconCategSport";
+import IconCategHome from "./svg/IconCategHome";
+import IconCategTelco from "./svg/IconCategTelco";
+import IconCategFinance from "./svg/IconCategFinance";
+import IconCategTravel from "./svg/IconCategTravel";
+import IconCategMobility from "./svg/IconCategMobility";
+import IconCategJobOffers from "./svg/IconCategJobOffers";
+import IconCategShopping from "./svg/IconCategShopping";
+import IconCategSustainability from "./svg/IconCategSustainability";
+import IconProductIOApp from "./svg/IconProductIOApp";
+import IconProductPagoPA from "./svg/IconProductPagoPA";
 
 export const IOIcons = {
   spid: IconSpid,
@@ -193,35 +219,196 @@ export const IOIcons = {
   cancel: IconCancel /* io-cancel */,
   help: IconQuestion /* io-question */,
   search: IconSearch /* io-search */,
-  arrowRight: IconArrowRight /* io-right */,
-  arrowLeft: IconArrowLeft /* io-back */,
-  arrowDown: IconArrowDown,
-  arrowUp: IconArrowUp,
+  chevronRight: IconChevronRight /* io-right */,
+  chevronLeft: IconChevronLeft /* io-back */,
+  chevronBottom: IconChevronBottom,
+  chevronTop: IconChevronTop,
   close: IconClose /* io-close */,
-  closeSmall: IconCloseSmall
+  closeSmall: IconCloseSmall,
+  arrowBottom: IconArrowBottom,
+  arrowLeft: IconArrowLeft,
+  arrowTop: IconArrowTop,
+  arrowRight: IconArrowRight,
+  arrowCircleUp: IconArrowCircleUp,
+  navMessages: IconNavMessages /* io-messaggi */,
+  navWallet: IconNavWallet /* io-portafoglio */,
+  navDocuments: IconNavDocuments,
+  navServices: IconNavServices,
+  navProfile: IconNavProfile /* io-profilo */,
+  biomFingerprint: IconBiomFingerprint /* io-fingerprint */,
+  biomFaceID: IconBiomFaceID /* io-face-id */,
+  categCulture: IconCategCulture,
+  categWellness: IconCategWellness,
+  categLearning: IconCategLearning,
+  categSport: IconCategSport,
+  categHome: IconCategHome,
+  categTelco: IconCategTelco,
+  categFinance: IconCategFinance,
+  categTravel: IconCategTravel,
+  categMobility: IconCategMobility,
+  categJobOffers: IconCategJobOffers,
+  categShopping: IconCategShopping,
+  categSustainability: IconCategSustainability,
+  productIOApp: IconProductIOApp /* io-logo */,
+  productPagoPA: IconProductPagoPA /* io-pagopa */
 } as const;
 
-export type IOIconType = keyof typeof IOIcons;
+export type IOIcons = keyof typeof IOIcons;
 
-type IOIconsProps = {
-  name: IOIconType;
-  color?: IOColorType;
+export type IOIconsProps = {
+  name: IOIcons;
+  color?: IOColors;
   size?: number | "100%";
 };
 
 export type SVGIconProps = {
   size: number | "100%";
-  color: ColorValue;
+  style: StyleProp<any>;
 };
 
-const Icon = ({
+/*
+Static icon component. Use it when you need an ion that doesn't
+change its color values. It accepts `IOColors` values only.
+*/
+export const Icon = ({
   name,
   color = "bluegrey",
   size = 24,
   ...props
 }: IOIconsProps) => {
   const IconElement = IOIcons[name];
-  return <IconElement {...props} size={size} color={IOColors[color]} />;
+  return (
+    <IconElement {...props} style={{ color: IOColors[color] }} size={size} />
+  );
 };
 
-export default Icon;
+/*
+Animated icon component. Use it when you need a color
+transition between different states.
+*/
+
+type IOAnimatedIconsProps = {
+  name: IOIcons;
+  color?: ColorValue;
+  size?: number | "100%";
+};
+
+export const AnimatedIcon = ({
+  name,
+  color = IOColors.bluegrey,
+  size = 24,
+  ...props
+}: IOAnimatedIconsProps) => {
+  const IconElement = IOIcons[name];
+  return <IconElement {...props} style={{ color }} size={size} />;
+};
+
+/* Make <Icon> component animatable. Reanimated supports class components only,
+so we need to convert <Icon> into a class component first.
+https://github.com/software-mansion/react-native-reanimated/discussions/1527  */
+export class IconClassComponent extends React.Component<IOAnimatedIconsProps> {
+  constructor(props: IOAnimatedIconsProps) {
+    super(props);
+  }
+  render() {
+    return <AnimatedIcon {...this.props} />;
+  }
+}
+
+/*
+░░░ VARIOUS SETS ░░░
+*/
+
+/* New icons */
+const {
+  success,
+  errorFilled,
+  warningFilled,
+  info,
+  infoFilled,
+  arrowBottom,
+  arrowLeft,
+  arrowTop,
+  arrowRight,
+  arrowCircleUp
+} = IOIcons;
+
+export const IOIconsNew = {
+  success,
+  errorFilled,
+  warningFilled,
+  infoFilled,
+  info,
+  arrowBottom,
+  arrowLeft,
+  arrowTop,
+  arrowRight,
+  arrowCircleUp
+};
+
+/* Navigation */
+const { navMessages, navWallet, navDocuments, navServices, navProfile } =
+  IOIcons;
+
+export const IONavIcons = {
+  navMessages,
+  navWallet,
+  navDocuments,
+  navServices,
+  navProfile
+} as const;
+
+export type IONavIcons = keyof typeof IONavIcons;
+
+/* Biometric */
+const { biomFingerprint, biomFaceID } = IOIcons;
+
+export const IOBiometricIcons = {
+  biomFingerprint,
+  biomFaceID
+} as const;
+
+export type IOBiometricIcons = keyof typeof IOBiometricIcons;
+
+/* Categories (used by CGN) */
+const {
+  categCulture,
+  categWellness,
+  categLearning,
+  categSport,
+  categHome,
+  categTelco,
+  categFinance,
+  categTravel,
+  categMobility,
+  categJobOffers,
+  categShopping,
+  categSustainability
+} = IOIcons;
+
+export const IOCategoryIcons = {
+  categCulture,
+  categWellness,
+  categLearning,
+  categSport,
+  categHome,
+  categTelco,
+  categFinance,
+  categTravel,
+  categMobility,
+  categJobOffers,
+  categShopping,
+  categSustainability
+} as const;
+
+export type IOCategoryIcons = keyof typeof IOCategoryIcons;
+
+/* Product Logos */
+const { productIOApp, productPagoPA } = IOIcons;
+
+export const IOProductIcons = {
+  productIOApp,
+  productPagoPA
+} as const;
+
+export type IOProductIcons = keyof typeof IOProductIcons;

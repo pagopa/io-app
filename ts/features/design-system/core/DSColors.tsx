@@ -1,8 +1,9 @@
 import * as React from "react";
-import { Text, View, ColorValue, StyleSheet } from "react-native";
+import { Dimensions, Text, View, ColorValue, StyleSheet } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { H2 } from "../../../components/core/typography/H2";
+import { H3 } from "../../../components/core/typography/H3";
 import { H5 } from "../../../components/core/typography/H5";
 import { LabelSmall } from "../../../components/core/typography/LabelSmall";
 import {
@@ -13,41 +14,91 @@ import {
   IOColorsNeutral,
   IOColorsTints,
   IOColorsStatus,
-  IOColorsExtra
+  IOColorsExtra,
+  themeStatusColorsLightMode,
+  themeStatusColorsDarkMode,
+  themeColorsLightMode,
+  themeColorsDarkMode
 } from "../../../components/core/variables/IOColors";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
+import themeVariables from "../../../theme/variables";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
-const colorItemGutter = 16;
+const gradientItemGutter = 16;
 const sectionTitleMargin = 16;
-const colorItemBorder = hexToRgba(IOColors.black, 0.1);
+const colorItemGutter = 32;
+const colorItemPadding = 8;
+const colorItemBorderLightMode = hexToRgba(IOColors.black, 0.1);
+const colorItemBorderDarkMode = hexToRgba(IOColors.white, 0.25);
+
 const colorPillBg = hexToRgba(IOColors.black, 0.2);
 
 const styles = StyleSheet.create({
-  itemsWrapper: {
+  gradientItemsWrapper: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "flex-start",
+    marginLeft: (gradientItemGutter / 2) * -1,
+    marginRight: (gradientItemGutter / 2) * -1,
+    marginBottom: 16
+  },
+  colorItemsWrapper: {
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "flex-start",
     marginLeft: (colorItemGutter / 2) * -1,
-    marginRight: (colorItemGutter / 2) * -1,
-    marginBottom: 16
+    marginRight: (colorItemGutter / 2) * -1
+  },
+  colorWrapperBothModes: {
+    width: "50%",
+    paddingHorizontal: colorItemGutter / 2,
+    paddingTop: 16
   },
   colorWrapper: {
     justifyContent: "flex-start",
     marginBottom: 16
   },
+  smallCapsTitle: {
+    fontSize: 10,
+    textAlign: "right",
+    textTransform: "uppercase",
+    marginBottom: 12
+  },
+  smallCapsLightMode: {
+    color: IOColors.bluegrey
+  },
+  smallCapsDarkMode: {
+    color: IOColors["grey-450"]
+  },
+  darkModeWrapper: {
+    position: "absolute",
+    height: "100%",
+    width: Dimensions.get("window").width / 2,
+    right: 0,
+    marginRight: themeVariables.contentPadding * -1,
+    marginLeft: themeVariables.contentPadding * -1,
+    backgroundColor: IOColors.black,
+    borderTopLeftRadius: 12,
+    borderBottomLeftRadius: 12
+  },
   gradientWrapper: {
     width: "50%",
     justifyContent: "flex-start",
     marginBottom: 16,
-    paddingHorizontal: colorItemGutter / 2
+    paddingHorizontal: gradientItemGutter / 2
   },
   colorItem: {
     width: "100%",
-    padding: 8,
+    padding: colorItemPadding,
     borderRadius: 4,
     alignItems: "flex-end",
-    borderColor: colorItemBorder,
     borderWidth: 1
+  },
+  colorItemLightMode: {
+    borderColor: colorItemBorderLightMode
+  },
+  colorItemDarkMode: {
+    borderColor: colorItemBorderDarkMode
   },
   gradientItem: {
     aspectRatio: 2 / 1,
@@ -55,7 +106,7 @@ const styles = StyleSheet.create({
     padding: 12,
     alignItems: "flex-end",
     justifyContent: "space-between",
-    borderColor: colorItemBorder,
+    borderColor: colorItemBorderLightMode,
     borderWidth: 1
   },
   colorPill: {
@@ -68,19 +119,107 @@ const styles = StyleSheet.create({
   }
 });
 
+const renderColorThemeGroup = (
+  name: string,
+  colorObjectLightMode: Record<string, string>,
+  colorObjectDarkMode: Record<string, string>
+) => {
+  const colorArrayLightMode = Object.entries(colorObjectLightMode);
+  const colorArrayDarkMode = Object.entries(colorObjectDarkMode);
+
+  return (
+    <View style={{ marginBottom: 40 }}>
+      {name && (
+        <H3
+          color={"bluegrey"}
+          weight={"SemiBold"}
+          style={{ marginBottom: sectionTitleMargin }}
+        >
+          {name}
+        </H3>
+      )}
+      {/* Show the two different columns
+      with both light and dark modes */}
+      <View style={IOStyles.row}>
+        <View style={styles.darkModeWrapper} />
+        <View style={styles.colorItemsWrapper}>
+          <View style={styles.colorWrapperBothModes}>
+            <SmallCapsTitle title="Light mode" />
+            <View style={IOStyles.flex}>
+              {Object.entries(colorObjectLightMode).map(
+                ([name, colorValue], i) => {
+                  const [, darkModeColorValue] = colorArrayDarkMode[i];
+                  const lightModeColorValue = colorValue;
+                  const isSameColorValue =
+                    lightModeColorValue === darkModeColorValue;
+                  return (
+                    <View
+                      key={`${name}-lightMode`}
+                      style={
+                        isSameColorValue && {
+                          width:
+                            Dimensions.get("window").width -
+                            themeVariables.contentPadding -
+                            colorItemGutter +
+                            colorItemPadding
+                        }
+                      }
+                    >
+                      <ColorBox
+                        mode={"light"}
+                        name={name}
+                        color={colorValue}
+                        themeVariable
+                      />
+                    </View>
+                  );
+                }
+              )}
+            </View>
+          </View>
+          <View style={styles.colorWrapperBothModes}>
+            <SmallCapsTitle title="Dark mode" darkMode />
+            <View style={IOStyles.flex}>
+              {Object.entries(colorObjectDarkMode).map(
+                ([name, colorValue], i) => {
+                  const [, lightModeColorValue] = colorArrayLightMode[i];
+                  const darkModeColorValue = colorValue;
+                  const isSameColorValue =
+                    lightModeColorValue === darkModeColorValue;
+
+                  return (
+                    <ColorBox
+                      mode="dark"
+                      key={`${name}-darkMode`}
+                      name={name}
+                      color={colorValue}
+                      ghostMode={isSameColorValue}
+                      themeVariable
+                    />
+                  );
+                }
+              )}
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  );
+};
+
 const renderColorGroup = (
   name: string,
   colorObject: Record<string, ColorValue>
 ) => (
-  <View style={{ marginBottom: 40 }}>
+  <View style={{ marginBottom: 24 }}>
     {name && (
-      <H2
+      <H3
         color={"bluegrey"}
         weight={"SemiBold"}
         style={{ marginBottom: sectionTitleMargin }}
       >
         {name}
-      </H2>
+      </H3>
     )}
 
     {Object.entries(colorObject).map(([name, colorValue]) => (
@@ -91,6 +230,13 @@ const renderColorGroup = (
 
 export const DSColors = () => (
   <DesignSystemScreen title={"Colors"}>
+    <H2
+      color={"bluegrey"}
+      weight={"Bold"}
+      style={{ marginBottom: sectionTitleMargin }}
+    >
+      Color scales
+    </H2>
     {/* Neutrals */}
     {renderColorGroup("Neutrals", IOColorsNeutral)}
     {/* Tints */}
@@ -100,6 +246,22 @@ export const DSColors = () => (
     {/* Extra */}
     {renderColorGroup("Extra", IOColorsExtra)}
 
+    <H2
+      color={"bluegrey"}
+      weight={"Bold"}
+      style={{ marginBottom: sectionTitleMargin }}
+    >
+      Theme
+    </H2>
+
+    {renderColorThemeGroup("Main", themeColorsLightMode, themeColorsDarkMode)}
+
+    {renderColorThemeGroup(
+      "Status",
+      themeStatusColorsLightMode,
+      themeStatusColorsDarkMode
+    )}
+
     {/* Gradients */}
     <H2
       color={"bluegrey"}
@@ -108,7 +270,7 @@ export const DSColors = () => (
     >
       Gradients
     </H2>
-    <View style={styles.itemsWrapper}>
+    <View style={styles.gradientItemsWrapper}>
       {Object.entries(IOColorGradients).map(([name, colorValues]) => (
         <GradientBox key={name} name={name} colors={colorValues} />
       ))}
@@ -136,37 +298,55 @@ export const DSColors = () => (
 type ColorBoxProps = {
   name: string;
   color: ColorValue;
+  mode?: "light" | "dark";
+  ghostMode?: boolean;
+  themeVariable?: boolean;
 };
+
+const ColorBox = ({
+  name,
+  color,
+  mode = "light",
+  ghostMode,
+  themeVariable
+}: ColorBoxProps) => (
+  <View style={[styles.colorWrapper, ghostMode && { opacity: 0 }]}>
+    <View
+      style={[
+        styles.colorItem,
+        mode === "dark" ? styles.colorItemDarkMode : styles.colorItemLightMode,
+        themeVariable
+          ? { backgroundColor: IOColors[color as IOColors] }
+          : { backgroundColor: color }
+      ]}
+    >
+      {color && <Text style={styles.colorPill}>{color}</Text>}
+    </View>
+
+    {name && (
+      <LabelSmall
+        fontSize="small"
+        numberOfLines={1}
+        color={mode === "dark" ? "grey-200" : "bluegrey"}
+        weight={"Regular"}
+      >
+        {name}
+      </LabelSmall>
+    )}
+  </View>
+);
 
 type GradientBoxProps = {
   name: string;
   colors: Array<string>;
 };
 
-const ColorBox = (props: ColorBoxProps) => (
-  <View style={styles.colorWrapper}>
-    <View
-      style={{
-        ...styles.colorItem,
-        backgroundColor: props.color
-      }}
-    >
-      {props.color && <Text style={styles.colorPill}>{props.color}</Text>}
-    </View>
-    {props.name && (
-      <LabelSmall color={"bluegrey"} weight={"Regular"}>
-        {props.name}
-      </LabelSmall>
-    )}
-  </View>
-);
-
-const GradientBox = (props: GradientBoxProps) => {
-  const [first, last] = props.colors;
+const GradientBox = ({ name, colors }: GradientBoxProps) => {
+  const [first, last] = colors;
   return (
     <View style={styles.gradientWrapper}>
       <LinearGradient
-        colors={props.colors}
+        colors={colors}
         useAngle={true}
         angle={180}
         style={styles.gradientItem}
@@ -174,11 +354,27 @@ const GradientBox = (props: GradientBoxProps) => {
         {first && <Text style={styles.colorPill}>{first}</Text>}
         {last && <Text style={styles.colorPill}>{last}</Text>}
       </LinearGradient>
-      {props.name && (
+      {name && (
         <H5 color={"bluegrey"} weight={"Regular"}>
-          {props.name}
+          {name}
         </H5>
       )}
     </View>
   );
 };
+
+type SmallCapsTitleProps = {
+  title: string;
+  darkMode?: boolean;
+};
+
+const SmallCapsTitle = ({ title, darkMode }: SmallCapsTitleProps) => (
+  <Text
+    style={[
+      styles.smallCapsTitle,
+      darkMode ? styles.smallCapsDarkMode : styles.smallCapsLightMode
+    ]}
+  >
+    {title}
+  </Text>
+);

@@ -43,12 +43,16 @@ import {
   FimsNavigator
 } from "../features/fims/navigation/navigator";
 import FIMS_ROUTES from "../features/fims/navigation/routes";
+import { idPayLinkingOptions } from "../features/idpay/common/navigation/linking";
 import {
   IDPayConfigurationNavigator,
   IDPayConfigurationRoutes
 } from "../features/idpay/initiative/configuration/navigation/navigator";
 import {
-  idPayOnboardingLinkingOptions,
+  IDpayDetailsNavigator,
+  IDPayDetailsRoutes
+} from "../features/idpay/initiative/details/navigation";
+import {
   IDPayOnboardingNavigator,
   IDPayOnboardingRoutes
 } from "../features/idpay/onboarding/navigation/navigator";
@@ -76,10 +80,6 @@ import { isTestEnv } from "../utils/environment";
 import { startApplicationInitialization } from "../store/actions/application";
 import { IO_INTERNAL_LINK_PREFIX } from "../utils/navigation";
 import { isStartupLoaded } from "../store/reducers/startup";
-import {
-  IDPayDetailsRoutes,
-  IDpayDetailsNavigator
-} from "../features/idpay/initiative/details/navigation";
 import authenticationNavigator from "./AuthenticationNavigator";
 import { MessagesStackNavigator } from "./MessagesNavigator";
 import NavigationService, { navigationRef } from "./NavigationService";
@@ -305,7 +305,7 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
         ...(isFimsEnabled ? fimsLinkingOptions : {}),
         ...(cgnEnabled ? cgnLinkingOptions : {}),
         ...(isFciEnabled ? fciLinkingOptions : {}),
-        ...(isIdPayEnabled ? idPayOnboardingLinkingOptions : {}),
+        ...(isIdPayEnabled ? idPayLinkingOptions : {}),
         [UADONATION_ROUTES.WEBVIEW]: "uadonations-webview",
         [ROUTES.WORKUNIT_GENERIC_FAILURE]: "*"
       }

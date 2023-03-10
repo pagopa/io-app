@@ -50,13 +50,22 @@ const styles = StyleSheet.create({
     color: IOColors.bluegrey
   },
   iconLabelSmall: {
-    fontSize: 9
+    fontSize: 8
   },
   iconLabelMedium: {
     fontSize: 10
   },
   iconLabelLarge: {
     fontSize: 11
+  },
+  signalDot: {
+    position: "absolute",
+    right: 4,
+    top: 4,
+    width: 4,
+    height: 4,
+    borderRadius: 4,
+    backgroundColor: IOColors["success-500"]
   }
 });
 
@@ -64,6 +73,7 @@ type DSIconViewerBoxProps = {
   name: string;
   image: React.ReactNode;
   size?: "small" | "medium" | "large" | undefined;
+  withDot?: boolean;
 };
 
 const sizeMap = {
@@ -87,7 +97,8 @@ const sizeMap = {
 export const DSIconViewerBox = ({
   name,
   image,
-  size
+  size,
+  withDot = false
 }: DSIconViewerBoxProps) => (
   <View
     style={[
@@ -96,6 +107,7 @@ export const DSIconViewerBox = ({
     ]}
   >
     <View style={[styles.iconItem, size ? sizeMap[size].item : {}]}>
+      {withDot && <View style={styles.signalDot} />}
       {image}
     </View>
     <View style={styles.nameWrapper}>

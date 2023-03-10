@@ -2,7 +2,7 @@ import { useSelector } from "@xstate/react";
 import React from "react";
 import { SafeAreaView, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { SelfDeclarationBoolDTO } from "../../../../../definitions/idpay/onboarding/SelfDeclarationBoolDTO";
+import { SelfDeclarationBoolDTO } from "../../../../../definitions/idpay/SelfDeclarationBoolDTO";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../components/core/typography/Body";
 import { H1 } from "../../../../components/core/typography/H1";
@@ -18,14 +18,14 @@ import { useOnboardingMachineService } from "../xstate/provider";
 import {
   areAllSelfDeclarationsToggledSelector,
   boolRequiredCriteriaSelector,
-  selectIsLoading,
+  isLoadingSelector,
   selectSelfDeclarationBoolAnswers
 } from "../xstate/selectors";
 
 const InitiativeSelfDeclarationsScreen = () => {
   const machine = useOnboardingMachineService();
 
-  const isLoading = useSelector(machine, selectIsLoading);
+  const isLoading = useSelector(machine, isLoadingSelector);
 
   const selfCriteriaBool = useSelector(machine, boolRequiredCriteriaSelector);
   const selfCriteriaBoolAnswers = useSelector(

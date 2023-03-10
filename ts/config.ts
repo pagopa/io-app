@@ -109,9 +109,6 @@ export const newTransactionSummaryEnabled =
 // FCI (Firma con IO) Feature Flag
 export const fciEnabled = Config.FCI_ENABLED === "YES";
 
-// LOLLIPOP login
-export const lollipopLoginEnabled = Config.LOLLIPOP_LOGIN_ENABLED === "YES";
-
 // PN (Piattaforma Notifiche) Feature Flag
 export const pnEnabled = Config.PN_ENABLED === "YES";
 
@@ -190,6 +187,12 @@ export const localServicesWebUrl: string = pipe(
   E.getOrElse(() => "https://io.italia.it")
 );
 
+export const unsupportedDeviceMoreInfoUrl: string = pipe(
+  Config.UNSUPPORTED_DEVICE_MORE_INFO_URL,
+  NonEmptyString.decode,
+  E.getOrElse(() => "https://io.italia.it/app-content/unsupported_device.html")
+);
+
 export const pageSize: number = DEFAULT_PAGE_SIZE;
 
 // This is the maximum number supported by API via pagination regardless of the content.
@@ -217,8 +220,6 @@ export const POSTE_DATAMATRIX_SCAN_PREFERRED_PSPS:
 /**
  * IDPay
  */
-
-export const idPayEnabled = Config.IDPAY_ENABLED === "YES";
 
 export const idPayTestToken =
   Config.IDPAY_API_TEST_TOKEN !== "" ? Config.IDPAY_API_TEST_TOKEN : undefined;

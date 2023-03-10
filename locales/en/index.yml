@@ -433,6 +433,10 @@ profile:
       alertMessage: The application must be restarted for the changes to take effect.
     pnEnvironment:
       pnEnv: PN Test Environment
+    idpay: 
+      idpayTest: Test IDPay
+      idpayTestAlert: This change requires app reboot
+    designSystemEnvironment: Experimental Design System
     appVersion: App Version
     backendVersion: Backend Version
     debugMode: Debug mode
@@ -1790,6 +1794,7 @@ messageDetails:
   write: Write
   id: "ID:"
   attachments:
+    loading: "Loading document..."
     badFormat: "The attachment format is not supported. Please contact the sender"
     corruptedFile: "The attachment is corrupt and can't be opened. Please contact the sender"
     downloadFailed: "The attachment is currently not available. Please try again or contact the sender"
@@ -1897,6 +1902,7 @@ services:
 serviceDetail:
   fiscalCode: "Organization's fiscal code"
   fiscalCodeAccessibility: "Organization's fiscal code"
+  fiscalCodeAccessibilityCopy: "Copy organization's fiscal code"
   contacts:
     title: "This service can:"
   headerTitle: "Service details"
@@ -3207,6 +3213,10 @@ features:
     signatureFields:
       title: "Sign here"
       showOnDocument: "See on document"
+      accessibility:
+        fieldDetailHint: "Go to the page that displays the signature field"
+        selected: "Field selected"
+        unselected: "Field not selected"
     title: "Firma con IO"
     documentsBar:
       titleLeft: Document {{currentDoc}} of {{totalDocs}}
@@ -3303,7 +3313,7 @@ idpay:
     details:
       initiativeCard:
         availableAmount: Disponibile
-        validUntil: Valido fino al
+        validUntil: Valido fino al {{expiryDate}}
         toRefund: da rimborsare
       initiativeDetailsScreen:
         notConfigured:
@@ -3326,17 +3336,17 @@ idpay:
             title: Lista operazioni
             lastUpdated: "Ultimo aggiornamento: "
             operationDescriptions:
-              ONBOARDING:  "Hai aderito all'iniziativa"
+              ONBOARDING:  "Adesione all'iniziativa"
               ADD_IBAN:  "Aggiunto IBAN"
-              ADD_INSTRUMENT: "Hai aggiunto ···· {{maskedPan}}"
-              TRANSACTION:  "Pagamento Pos"
-              REVERSAL:  "Ricarica saldo disponibile"
+              ADD_INSTRUMENT: "Attivazione metodo ···· {{maskedPan}}"
+              TRANSACTION:  "Pagamento POS"
+              REVERSAL:  "Storno"
               DELETE_INSTRUMENT:  "Hai eliminato un metodo di pagamento"
-              REJECTED_ADD_INSTRUMENT:  "Hai rifiutato un metodo di pagamento"
+              REJECTED_ADD_INSTRUMENT:  "Errore attivazione metodo"
               REJECTED_DELETE_INSTRUMENT: 
-                "Hai rifiutato di eliminare un metodo di pagamento"
-              PAID_REFUND:  "Rimborso"
-              REJECTED_REFUND:  "Rifiuto rimborso"
+                "Errore disattivazione metodo"
+              PAID_REFUND:  "Rimborso sul tuo conto"
+              REJECTED_REFUND:  "Errore rimboso"
     operationDetails:
       title: Dettaglio dell'operazione
       instrument: Metodo di pagamento
@@ -3350,25 +3360,46 @@ idpay:
       issuerId: ID transazione Issuer
   onboarding:
     success:
-      button: 
-        continue: Ho capito!
       pleaseWait: Un attimo di pazienza...
-      title: La tua richiesta è stata inviata!
-      body:  Riceverai un messaggio con l’esito dell’operazione.
+      requestSent:
+        title: La tua richiesta è stata inviata!
+        body:  Riceverai un messaggio con l’esito dell’operazione.
+      button:
+        continue: Ho capito!
     failure:
-      NO_PERMISSION:
-        title: "Non hai i requisiti per aderire a questa iniziativa"
-        subtitle: "Non puoi richiedere il bonus!"
-      GENERIC:
-        title: "C’è un problema sui nostri sistemi"
-        subtitle:
-          "Ci scusiamo per il disagio.\nTi invitiamo a riprovare più tardi."
-      ALREADY_COMPLETED:
-        title: "Onboarding concluso"
-        subtitle: "Hai già fatto l'onboarding per questa iniziativa"
-      ONBOARDING_KO:
-        title: "Onboarding fallito"
-        subtitle: "L'adesione non è andata a buon fine"
+      button:
+        goToInitiative: Vai all'iniziativa
+      message:
+        GENERIC:
+          title: "C’è un problema sui nostri sistemi"
+          subtitle: "Ci scusiamo per il disagio.\nTi invitiamo a riprovare più tardi."
+        NOT_STARTED:
+          title: "Non è ancora possibile aderire a questa iniziativa."
+          subtitle: "Testo generico di errore dove spieghiamo che l’iniziativa non è ancora partita."
+        ENDED:
+          title: "Il periodo di adesione è terminato."
+          subtitle: "Testo generico di errore dove spieghiamo che il periodo di adesione è terminato."
+        NO_BUDGET:
+          title: "Non è più possibile aderire a questa iniziativa."
+          subtitle: "So’ finiti i soldi TBD"
+        SUSPENDED:
+          title: "L’iniziativa è sospesa."
+          subtitle: "Testo generico di errore dove spieghiamo che il l’iniziativa è stata sospesa."
+        NO_REQUIREMENTS:
+          title: "Non hai i requisiti per aderire a questa iniziativa."
+          subtitle: "O non sei stato invitato oppure i controlli hanno dato esito KO. Se sta roba non ti torna, chiedi aiuto."
+        ON_EVALUATION:
+          title: "Valutazione in corso TBD"
+          subtitle: "TBD"
+        NOT_ELIGIBLE:
+          title: "Graduatoria KO"
+          subtitle: "TBD"
+        ONBOARDED:
+          title: "Evviva, hai già aderito"
+          subtitle: "Vatte a vedè l’iniziativa"
+        UNSUBSCRIBED:
+          title: "Hai fatto il recesso"
+          subtitle: "TBD"
     headerTitle: "Adesione all'iniziativa"
     beforeContinue:
       text1: "Proseguendo accetti i "
@@ -3405,10 +3436,10 @@ idpay:
       INSTRUMENT_ENROLL_FAILURE: "Errore durante l'aggiunta del metodo di pagamento"
       INSTRUMENT_DELETE_FAILURE: "Errore durante la rimozione del metodo di pagamento"
     headerTitle: "Configure the initiative"
-    intro: 
+    intro:
       title: "We are almost there"
       body: "In order to take advantage of the initiative, we need some more information."
-      requiredData: 
+      requiredData:
         title: "Required informations:"
         ibanTitle: "IBAN in your name"
         ibanSubtitle: "In order to receive any refunds"
@@ -3416,7 +3447,7 @@ idpay:
         instrumentSubtitle: "Indicate the methods to be enabled for the initiative"
       buttons:
         continue: "Start configuration"
-    instruments: 
+    instruments:
       title: "Metodi di pagamento"
       header: Scegli quali metodi di pagamento associare
       body: "Poi, usali per pagare e chiedi all’esercente di usare {{initiativeName}}."
@@ -3439,7 +3470,7 @@ idpay:
           cancel: Annulla
     associationSuccess:
       title: "Grazie!"
-      body: "Da domani potrai utilizzare l'iniziativa {{initiativeName}}. Puoi abilitare altri metodi aggiungendoli al Portafoglio."
+      body: "Nella schermata successiva puoi verificare se i metodi da te abilitati sono già pronti per essere utilizzati."
       noInstrumentsBody: "Per terminare la configurazione devi aggiungere almeno un metodo di pagamento al Portafoglio e abilitarlo all’iniziativa."
       buttons:
         continue: "Vai all'iniziativa"
@@ -3457,6 +3488,12 @@ idpay:
         bodyLink: Dpr 28 dicembre 2000 n. 445 art 46 e 47 
         nameAssignInput: Assegna un nome
         bottomLabel: Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento visitando la sezione Profilo
+      enrollment:
+        header: Scegli quale IBAN associare all’iniziativa
+        subTitle: Associa un IBAN salvato nel tuo profilo per poter ricevere i rimborsi legati all’iniziativa.
+        footer: Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento visitando la sezione Profilo
       button:
         addNew: Aggiungi nuovo
-      updateToast: IBAN modificato correttamente
+      updateToast: IBAN associato correttamente
+unsupportedDevice:  
+  text: "Your device may soon no longer be compatible with the IO app."

@@ -1,9 +1,9 @@
 import * as E from "fp-ts/lib/Either";
 import { expectSaga } from "redux-saga-test-plan";
 import { PreferredLanguageEnum } from "../../../../../../../definitions/backend/PreferredLanguage";
-import { ErrorDTO } from "../../../../../../../definitions/idpay/timeline/ErrorDTO";
-import { TimelineDTO } from "../../../../../../../definitions/idpay/timeline/TimelineDTO";
-import { OperationTypeEnum } from "../../../../../../../definitions/idpay/timeline/TransactionOperationDTO";
+import { ErrorDTO } from "../../../../../../../definitions/idpay/ErrorDTO";
+import { TimelineDTO } from "../../../../../../../definitions/idpay/TimelineDTO";
+import { OperationTypeEnum } from "../../../../../../../definitions/idpay/TransactionOperationDTO";
 import { appReducer } from "../../../../../../store/reducers";
 import { idpayTimelinePageGet } from "../../store/actions";
 import { handleGetTimelinePage } from "../handleGetTimelinePage";
@@ -13,6 +13,8 @@ const mockResponseSuccess: TimelineDTO = {
   lastUpdate: new Date("2020-05-20T09:00:00.000Z"),
   operationList: [
     {
+      brand: "VISA",
+      accrued: 50,
       operationId: "1234567890",
       operationType: OperationTypeEnum.TRANSACTION,
       operationDate: new Date("2020-05-20T09:00:00.000Z"),
@@ -21,7 +23,11 @@ const mockResponseSuccess: TimelineDTO = {
       maskedPan: "1234567890",
       circuitType: "MASTERCARD"
     }
-  ]
+  ],
+  pageNo: 0,
+  pageSize: 10,
+  totalElements: 1,
+  totalPages: 1
 };
 const mockFailure: ErrorDTO = {
   code: 0,
@@ -43,12 +49,12 @@ describe("Test IDPay timeline pagination saga", () => {
       mockLanguage,
       {
         initiativeId: "123",
-        page: 2
+        page: 0
       }
     )
       .withReducer(appReducer)
       .put(
-        idpayTimelinePageGet.success({ timeline: mockResponseSuccess, page: 2 })
+        idpayTimelinePageGet.success({ timeline: mockResponseSuccess, page: 0 })
       )
       .run();
   });

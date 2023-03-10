@@ -2,17 +2,23 @@ import * as O from "fp-ts/lib/Option";
 import {
   generate,
   CryptoError,
-  deleteKey
+  deleteKey,
+  getPublicKey
 } from "@pagopa/io-react-native-crypto";
-import { call, select } from "typed-redux-saga/macro";
-import { isLollipopEnabledSelector } from "../../store/reducers/backendStatus";
+import { call } from "typed-redux-saga/macro";
+import { jwkThumbprintByEncoding } from "jwk-thumbprint";
+import { DEFAULT_LOLLIPOP_HASH_ALGORITHM_CLIENT } from "../../features/lollipop/utils/login";
 import {
   checkPublicKeyExists,
   setKeyGenerationInfo,
   getKeyGenerationInfo,
-  KeyGenerationInfo
+  KeyGenerationInfo,
+  KeyInfo
 } from "../../utils/crypto";
-import { mixpanelTrack } from "./../../mixpanel";
+import {
+  trackLollipopKeyGenerationFailure,
+  trackLollipopKeyGenerationSuccess
+} from "../../utils/analytics";
 
 /**
  * Generates a new crypto key pair.
@@ -21,12 +27,9 @@ export function* cryptoKeyGenerationSaga(
   keyTag: string,
   previousKeyTag: O.Option<string>
 ) {
-  const isLollipopEnabled = yield* select(isLollipopEnabledSelector);
-  if (isLollipopEnabled) {
-    // Every new login we need to regenerate a brand new key pair.
-    yield* deletePreviousCryptoKeyPair(previousKeyTag);
-    yield* call(generateCryptoKeyPair, keyTag);
-  }
+  // Every new login we need to regenerate a brand new key pair.
+  yield* call(deletePreviousCryptoKeyPair, previousKeyTag);
+  yield* call(generateCryptoKeyPair, keyTag);
 }
 
 /**
@@ -35,17 +38,16 @@ export function* cryptoKeyGenerationSaga(
 export function* trackMixpanelCryptoKeyPairEvents(keyTag: string) {
   const keyInfo = yield* call(getKeyGenerationInfo, keyTag);
 
-  if (keyInfo && !keyInfo.errorCode) {
-    void mixpanelTrack("LOLLIPOP_KEY_GENERATION_SUCCESS", {
-      kty: keyInfo.keyType
-    });
+  if (!keyInfo) {
+    return;
   }
 
-  if (keyInfo && keyInfo.errorCode) {
-    void mixpanelTrack("LOLLIPOP_KEY_GENERATION_FAILURE", {
-      reason: keyInfo.errorCode
-    });
+  if (keyInfo.errorCode) {
+    trackLollipopKeyGenerationFailure(keyInfo);
+    return;
   }
+
+  trackLollipopKeyGenerationSuccess(keyInfo);
 }
 
 /**
@@ -53,7 +55,7 @@ export function* trackMixpanelCryptoKeyPairEvents(keyTag: string) {
  */
 export function* deletePreviousCryptoKeyPair(keyTag: O.Option<string>) {
   if (O.isSome(keyTag)) {
-    yield* deleteCryptoKeyPair(keyTag.value);
+    yield* call(deleteCryptoKeyPair, keyTag.value);
   }
 }
 
@@ -79,7 +81,7 @@ function* deleteCryptoKeyPair(keyTag: string) {
 function* generateCryptoKeyPair(keyTag: string) {
   try {
     // Remove an already existing key with the same tag.
-    deleteCryptoKeyPair(keyTag);
+    yield* call(deleteCryptoKeyPair, keyTag);
 
     const key = yield* call(generate, keyTag);
     const keyGenerationInfo: KeyGenerationInfo = {
@@ -89,6 +91,35 @@ function* generateCryptoKeyPair(keyTag: string) {
     yield* call(setKeyGenerationInfo, keyTag, keyGenerationInfo);
   } catch (e) {
     yield* saveKeyGenerationFailureInfo(keyTag, e);
+  }
+}
+
+/**
+ * Get the public key tied to the provided keyTag
+ */
+export function* getCryptoPublicKey(keyTag: O.Option<string>) {
+  const emptyKeyInfo: KeyInfo = {
+    keyTag: undefined,
+    publicKey: undefined
+  };
+  try {
+    if (O.isSome(keyTag)) {
+      const publicKey = yield* call(getPublicKey, keyTag.value);
+      const keyInfo: KeyInfo = {
+        keyTag: keyTag.value,
+        publicKey,
+        publicKeyThumbprint: jwkThumbprintByEncoding(
+          publicKey,
+          DEFAULT_LOLLIPOP_HASH_ALGORITHM_CLIENT,
+          "base64url"
+        )
+      };
+      return keyInfo;
+    } else {
+      return emptyKeyInfo;
+    }
+  } catch (e) {
+    return emptyKeyInfo;
   }
 }
 

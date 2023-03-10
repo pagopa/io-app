@@ -18,7 +18,9 @@ import {
   preferredCalendarSaveSuccess,
   preferredLanguageSaveSuccess,
   serviceAlertDisplayedOnceSuccess,
-  preferencesPnTestEnvironmentSetEnabled
+  preferencesPnTestEnvironmentSetEnabled,
+  preferencesIdPayTestSetEnabled,
+  preferencesDesignSystemSetEnabled
 } from "../actions/persistedPreferences";
 import { Action } from "../actions/types";
 import { differentProfileLoggedIn } from "../actions/crossSessions";
@@ -37,6 +39,8 @@ export type PersistedPreferencesState = Readonly<{
   continueWithRootOrJailbreak?: boolean;
   isMixpanelEnabled: boolean | null;
   isPnTestEnabled: boolean;
+  isIdPayTestEnabled?: boolean;
+  isDesignSystemEnabled: boolean;
 }>;
 
 export const initialPreferencesState: PersistedPreferencesState = {
@@ -49,7 +53,9 @@ export const initialPreferencesState: PersistedPreferencesState = {
   isCustomEmailChannelEnabled: pot.none,
   continueWithRootOrJailbreak: false,
   isMixpanelEnabled: null,
-  isPnTestEnabled: false
+  isPnTestEnabled: false,
+  isIdPayTestEnabled: false,
+  isDesignSystemEnabled: false
 };
 
 export default function preferencesReducer(
@@ -128,12 +134,26 @@ export default function preferencesReducer(
     };
   }
 
+  if (isActionOf(preferencesDesignSystemSetEnabled, action)) {
+    return {
+      ...state,
+      isDesignSystemEnabled: action.payload.isDesignSystemEnabled
+    };
+  }
+
   // when the current user is different from the previous logged one
   // reset the mixpanel opt-in preference
   if (isActionOf(differentProfileLoggedIn, action)) {
     return {
       ...state,
       isMixpanelEnabled: null
+    };
+  }
+
+  if (isActionOf(preferencesIdPayTestSetEnabled, action)) {
+    return {
+      ...state,
+      isIdPayTestEnabled: action.payload.isIdPayTestEnabled
     };
   }
 
@@ -167,6 +187,12 @@ export const isMixpanelEnabled = (state: GlobalState): boolean | null =>
 
 export const isPnTestEnabledSelector = (state: GlobalState) =>
   state.persistedPreferences.isPnTestEnabled;
+
+export const isIdPayTestEnabledSelector = (state: GlobalState) =>
+  !!state.persistedPreferences?.isIdPayTestEnabled;
+
+export const isDesignSystemEnabledSelector = (state: GlobalState) =>
+  state.persistedPreferences.isDesignSystemEnabled;
 
 // returns the preferred language as an Option from the persisted store
 export const preferredLanguageSelector = createSelector<

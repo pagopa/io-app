@@ -1,8 +1,10 @@
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import * as TE from "fp-ts/lib/TaskEither";
 import { useCallback, useEffect, useState } from "react";
-import { lollipopLoginEnabled } from "../../../config";
 import { useIOSelector } from "../../../store/hooks";
 import { isLollipopEnabledSelector } from "../../../store/reducers/backendStatus";
+import { trackLollipopIdpLoginFailure } from "../../../utils/analytics";
 import { taskRegenerateKey } from "../../../utils/crypto";
 import { lollipopKeyTagSelector } from "../store/reducers/lollipop";
 import { LoginSourceAsync } from "../types/LollipopLoginSource";
@@ -13,8 +15,7 @@ export const useLollipopLoginSource = (loginUri?: string) => {
     kind: "initial"
   });
 
-  const useLollipopLogin =
-    useIOSelector(isLollipopEnabledSelector) && lollipopLoginEnabled;
+  const useLollipopLogin = useIOSelector(isLollipopEnabledSelector);
   const lollipopKeyTag = useIOSelector(lollipopKeyTagSelector);
 
   const setDeprecatedLoginUri = useCallback((uri: string) => {
@@ -27,7 +28,7 @@ export const useLollipopLoginSource = (loginUri?: string) => {
     });
   }, []);
 
-  useEffect(() => {
+  const regenerateLoginSource = useCallback(() => {
     if (!loginUri) {
       // When the redux state is LoggedOutWithIdp the loginUri is always defined.
       // After the user has logged in, the status changes to LoggedIn and the loginUri is not
@@ -37,6 +38,14 @@ export const useLollipopLoginSource = (loginUri?: string) => {
     }
 
     if (!useLollipopLogin || O.isNone(lollipopKeyTag)) {
+      if (useLollipopLogin) {
+        // We track missing key tag event only if lollipop is enabled
+        // (since the key tag is not used without lollipop)
+        trackLollipopIdpLoginFailure(
+          "Missing key tag while trying to login with lollipop"
+        );
+      }
+
       // Key generation may have failed. In that case, follow the old
       // non-lollipop login flow
       setDeprecatedLoginUri(loginUri);
@@ -48,12 +57,10 @@ export const useLollipopLoginSource = (loginUri?: string) => {
      * need to garantee the public key uniqueness on every login request.
      * https://pagopa.atlassian.net/browse/LLK-37
      */
-    taskRegenerateKey(lollipopKeyTag.value)
-      .then(key => {
-        if (!key) {
-          setDeprecatedLoginUri(loginUri);
-          return;
-        }
+    void pipe(
+      lollipopKeyTag.value,
+      taskRegenerateKey,
+      TE.map(key =>
         setLoginSource({
           kind: "ready",
           value: {
@@ -67,12 +74,18 @@ export const useLollipopLoginSource = (loginUri?: string) => {
             }
           },
           publicKey: O.some(key)
-        });
-      })
-      .catch(_ => {
+        })
+      ),
+      TE.mapLeft(error => {
+        trackLollipopIdpLoginFailure(error.message);
         setDeprecatedLoginUri(loginUri);
-      });
+      })
+    )();
   }, [useLollipopLogin, lollipopKeyTag, loginUri, setDeprecatedLoginUri]);
 
-  return loginSource;
+  useEffect(() => {
+    regenerateLoginSource();
+  }, [regenerateLoginSource]);
+
+  return { loginSource, regenerateLoginSource };
 };

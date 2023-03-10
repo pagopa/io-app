@@ -1,8 +1,9 @@
-import { IbanListDTO } from "../../../../../../../definitions/idpay/iban/IbanListDTO";
+import { IbanListDTO } from "../../../../../../../definitions/idpay/IbanListDTO";
 import {
   InitiativeDTO,
   StatusEnum
-} from "../../../../../../../definitions/idpay/wallet/InitiativeDTO";
+} from "../../../../../../../definitions/idpay/InitiativeDTO";
+import { InstrumentDTO } from "../../../../../../../definitions/idpay/InstrumentDTO";
 
 import { TypeEnum as WalletTypeEnumV1 } from "../../../../../../../definitions/pagopa/Wallet";
 import { Wallet } from "../../../../../../types/pagopa";
@@ -25,6 +26,11 @@ export const T_WALLET: Wallet = {
   paymentMethod: undefined
 };
 
+export const T_INSTRUMENT_DTO: InstrumentDTO = {
+  instrumentId: "1234",
+  idWallet: "12345"
+};
+
 export const T_NOT_REFUNDABLE_INITIATIVE_DTO: InitiativeDTO = {
   initiativeId: T_INITIATIVE_ID,
   status: StatusEnum.NOT_REFUNDABLE,
@@ -40,7 +46,12 @@ export const T_REFUNDABLE_INITIATIVE_DTO: InitiativeDTO = {
 };
 
 export const T_IBAN_LIST: IbanListDTO["ibanList"] = [
-  { channel: "IO", checkIbanStatus: "", description: "Test", iban: T_IBAN }
+  {
+    channel: "IO",
+    checkIbanStatus: "",
+    description: "Test",
+    iban: T_IBAN
+  }
 ];
 
 export const T_PAGOPA_INSTRUMENTS = [T_WALLET];
@@ -49,7 +60,8 @@ export const mockServices = {
   loadInitiative: jest.fn(),
   loadIbanList: jest.fn(),
   confirmIban: jest.fn(),
-  loadInstruments: jest.fn(),
+  loadWalletInstruments: jest.fn(),
+  loadInitiativeInstruments: jest.fn(),
   deleteInstrument: jest.fn(),
   enrollIban: jest.fn(),
   enrollInstrument: jest.fn()
