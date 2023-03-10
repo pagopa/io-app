@@ -6,6 +6,7 @@ import * as O from "fp-ts/lib/Option";
 import { useCallback, useEffect, useState } from "react";
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import DeviceInfo from "react-native-device-info";
 import I18n from "../../../i18n";
 import { OrganizationFiscalCode } from "../../../../definitions/backend/OrganizationFiscalCode";
 import { ServiceMetadata } from "../../../../definitions/backend/ServiceMetadata";
@@ -40,7 +41,6 @@ import { MessageTitle } from "./common/MessageTitle";
 import MessageContent from "./Content";
 import MedicalPrescriptionAttachments from "./MedicalPrescriptionAttachments";
 import MessageMarkdown from "./MessageMarkdown";
-import DeviceInfo from "react-native-device-info";
 
 const styles = StyleSheet.create({
   padded: {
