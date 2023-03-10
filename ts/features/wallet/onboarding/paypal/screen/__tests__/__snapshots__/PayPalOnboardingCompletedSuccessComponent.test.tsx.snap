@@ -590,7 +590,7 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                                               "paddingLeft": 24,
                                               "paddingRight": 24,
                                               "paddingTop": 16,
-                                              "shadowColor": "#000000",
+                                              "shadowColor": "#0E0F13",
                                               "shadowOffset": Object {
                                                 "height": 50,
                                                 "width": 0,
