@@ -12,7 +12,6 @@ import {
   getSignAlgorithm,
   toSignatureComponents
 } from "..";
-import { KeyInfo } from "../../../utils/crypto";
 import { toFetchTimeout, toRetriableFetch } from "../../../utils/fetch";
 import { generateDigestHeader } from "../httpSignature/digest";
 import {
@@ -20,6 +19,7 @@ import {
   SignatureBaseResult
 } from "../httpSignature/signature";
 import { SignatureConfig } from "../httpSignature/types/SignatureConfig";
+import { KeyInfo } from "./crypto";
 
 /**
  * Decorates the current fetch with LolliPOP headers and http-signature
