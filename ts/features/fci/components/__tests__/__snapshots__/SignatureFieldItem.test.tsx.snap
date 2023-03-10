@@ -62,7 +62,7 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
       }
       accessibilityValue={
         Object {
-          "text": "[missing \\"en.features.fci.signatureFields.accessibility.unselected\\" translation]",
+          "text": "Field not selected",
         }
       }
       accessible={true}
@@ -132,7 +132,7 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
     }
   >
     <Text
-      accessibilityHint="[missing \\"en.features.fci.signatureFields.accessibility.fieldDetailHint\\" translation]"
+      accessibilityHint="Go to the page that displays the signature field"
       accessibilityLabel="See on document"
       accessibilityRole="link"
       color="blue"
