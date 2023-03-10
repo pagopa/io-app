@@ -20,6 +20,7 @@ import {
 import customVariables from "../../../../../theme/variables";
 import { IDPayConfigurationRoutes } from "../../configuration/navigation/navigator";
 import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
+import { IDPayUnsubscriptionRoutes } from "../../../unsubscription/navigation/navigator";
 
 type Props = {
   initiative: InitiativeDTO;
@@ -85,6 +86,12 @@ export const InitiativeSettingsComponent = (props: Props) => {
     });
   };
 
+  const navigateToUnsubscription = () => {
+    navigation.navigate(IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN, {
+      screen: IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_CONFIRMATION
+    });
+  };
+
   return (
     <>
       <H3>
@@ -115,6 +122,10 @@ export const InitiativeSettingsComponent = (props: Props) => {
           hasWarnings={
             initiative.status === StatusEnum.NOT_REFUNDABLE_ONLY_INSTRUMENT
           }
+        />
+        <SettingsButtonComponent
+          title={"Rimuovi iniziativa"}
+          onPress={navigateToUnsubscription}
         />
       </List>
     </>
