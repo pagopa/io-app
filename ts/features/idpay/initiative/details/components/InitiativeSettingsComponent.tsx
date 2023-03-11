@@ -88,7 +88,11 @@ export const InitiativeSettingsComponent = (props: Props) => {
 
   const navigateToUnsubscription = () => {
     navigation.navigate(IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN, {
-      screen: IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_CONFIRMATION
+      screen: IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_CONFIRMATION,
+      params: {
+        initiativeId: initiative.initiativeId,
+        initiativeName: initiative.initiativeName
+      }
     });
   };
 

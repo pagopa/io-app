@@ -1,4 +1,3 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import { useInterpret } from "@xstate/react";
 import { pipe } from "fp-ts/lib/function";
@@ -6,7 +5,6 @@ import * as O from "fp-ts/lib/Option";
 import React from "react";
 import { InterpreterFrom } from "xstate";
 import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
-import { InitiativeDTO } from "../../../../../definitions/idpay/InitiativeDTO";
 import {
   idPayApiBaseUrl,
   idPayApiUatBaseUrl,
@@ -25,7 +23,6 @@ import {
 } from "../../../../store/reducers/persistedPreferences";
 import { fromLocaleToPreferredLanguage } from "../../../../utils/locale";
 import { createIDPayClient } from "../../common/api/client";
-import { idpayInitiativeDetailsSelector } from "../../initiative/details/store";
 import { createActionsImplementation } from "./actions";
 import {
   createIDPayUnsubscriptionMachine,
@@ -46,21 +43,7 @@ type Props = {
 };
 
 const IDPayUnsubscriptionMachineProvider = (props: Props) => {
-  const initiativeFromSelector = useIOSelector(idpayInitiativeDetailsSelector);
-
-  const initiative: InitiativeDTO | undefined = pot.getOrElse(
-    initiativeFromSelector,
-    undefined
-  );
-
-  if (initiative === undefined) {
-    throw new Error("Undefined initiative");
-  }
-
-  const [machine] = useXStateMachine(
-    createIDPayUnsubscriptionMachine,
-    initiative
-  );
+  const [machine] = useXStateMachine(createIDPayUnsubscriptionMachine);
 
   const sessionInfo = useIOSelector(sessionInfoSelector);
   const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);

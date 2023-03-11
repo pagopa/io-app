@@ -1,16 +1,14 @@
-import { createMachine } from "xstate";
-import { InitiativeDTO } from "../../../../../definitions/idpay/InitiativeDTO";
+import * as O from "fp-ts/lib/Option";
+import { assign, createMachine } from "xstate";
 import { LOADING_TAG, WAITING_USER_INPUT_TAG } from "../../../../utils/xstate";
-import { Context } from "./context";
+import { Context, INITIAL_CONTEXT } from "./context";
 import { Events } from "./events";
 import { Services } from "./services";
 
-const createIDPayUnsubscriptionMachine = (initiative: InitiativeDTO) =>
+const createIDPayUnsubscriptionMachine = () =>
   createMachine(
     {
-      context: {
-        initiative
-      },
+      context: INITIAL_CONTEXT,
       tsTypes: {} as import("./machine.typegen").Typegen0,
       schema: {
         context: {} as Context,
@@ -19,9 +17,16 @@ const createIDPayUnsubscriptionMachine = (initiative: InitiativeDTO) =>
       },
       predictableActionArguments: true,
       id: "IDPAY_UNSUBSCRIPTION",
-      initial: "DISPLAYING_CONFIRMATION",
-      on: {},
+      initial: "WAITING_INITIATIVE_SELECTION",
       states: {
+        WAITING_INITIATIVE_SELECTION: {
+          on: {
+            SELECT_INITIATIVE: {
+              actions: "selectInitiative",
+              target: "DISPLAYING_CONFIRMATION"
+            }
+          }
+        },
         DISPLAYING_CONFIRMATION: {
           tags: [WAITING_USER_INPUT_TAG],
           entry: "navigateToConfirmationScreen",
@@ -54,7 +59,14 @@ const createIDPayUnsubscriptionMachine = (initiative: InitiativeDTO) =>
         }
       }
     },
-    {}
+    {
+      actions: {
+        selectInitiative: assign((_, event) => ({
+          initiativeId: O.some(event.initiativeId),
+          initiativeName: event.initiativeName
+        }))
+      }
+    }
   );
 
 type IDPayUnsubscriptionMachineType = ReturnType<
