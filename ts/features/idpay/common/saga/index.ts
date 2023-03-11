@@ -14,6 +14,7 @@ import {
 } from "../../../../store/reducers/persistedPreferences";
 import { fromLocaleToPreferredLanguage } from "../../../../utils/locale";
 import { watchIDPayInitiativeDetailsSaga } from "../../initiative/details/saga";
+import { watchIDPayUnsubscribeSaga } from "../../unsubscription/saga";
 import { watchIDPayWalletSaga } from "../../wallet/saga";
 import { createIDPayClient } from "../api/client";
 
@@ -40,4 +41,5 @@ export function* watchIDPaySaga(bpdToken: string): SagaIterator {
     token,
     preferredLanguage
   );
+  yield* fork(watchIDPayUnsubscribeSaga, client, token, preferredLanguage);
 }
