@@ -1,4 +1,3 @@
-import * as O from "fp-ts/lib/Option";
 import { assign, createMachine } from "xstate";
 import { LOADING_TAG, WAITING_USER_INPUT_TAG } from "../../../../utils/xstate";
 import { Context, INITIAL_CONTEXT } from "./context";
@@ -62,7 +61,7 @@ const createIDPayUnsubscriptionMachine = () =>
     {
       actions: {
         selectInitiative: assign((_, event) => ({
-          initiativeId: O.some(event.initiativeId),
+          initiativeId: event.initiativeId,
           initiativeName: event.initiativeName
         }))
       }

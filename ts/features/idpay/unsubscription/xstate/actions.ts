@@ -5,13 +5,18 @@ import {
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { IDPayUnsubscriptionRoutes } from "../navigation/navigator";
+import { Context } from "./context";
 
 const createActionsImplementation = (
   navigation: IOStackNavigationProp<AppParamsList, keyof AppParamsList>
 ) => {
-  const navigateToConfirmationScreen = () =>
+  const navigateToConfirmationScreen = (context: Context) =>
     navigation.navigate(IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN, {
-      screen: IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_CONFIRMATION
+      screen: IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_CONFIRMATION,
+      params: {
+        initiativeId: context.initiativeId,
+        initiativeName: context.initiativeName
+      }
     });
 
   const navigateToSuccessScreen = () =>

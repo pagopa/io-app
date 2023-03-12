@@ -4,7 +4,7 @@ type E_GO_BACK = {
 
 type E_SELECT_INITIATIVE = {
   type: "SELECT_INITIATIVE";
-  initiativeId: string;
+  initiativeId?: string;
   initiativeName?: string;
 };
 

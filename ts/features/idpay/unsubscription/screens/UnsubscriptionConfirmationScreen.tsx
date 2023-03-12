@@ -6,7 +6,7 @@ import { IDPayUnsubscriptionParamsList } from "../navigation/navigator";
 import { useUnsubscriptionMachineService } from "../xstate/provider";
 
 export type IDPayUnsubscriptionConfirmationScreenParams = {
-  initiativeId: string;
+  initiativeId?: string;
   initiativeName?: string;
 };
 
