@@ -30,8 +30,12 @@ import InitiativeCardComponent from "../components/InitiativeCardComponent";
 import { InitiativeSettingsComponent } from "../components/InitiativeSettingsComponent";
 import InitiativeTimelineComponent from "../components/InitiativeTimelineComponent";
 import { IDPayDetailsParamsList } from "../navigation";
-import { idpayInitiativeDetailsSelector } from "../store";
-import { idpayInitiativeGet } from "../store/actions";
+import {
+  idpayInitiativeDetailsSelector,
+  idpayTimelineSelector
+} from "../store";
+import { idpayInitiativeGet, idpayTimelinePageGet } from "../store/actions";
+import { Alert } from "../../../../../components/Alert";
 
 const styles = StyleSheet.create({
   newInitiativeMessageContainer: {
@@ -100,14 +104,35 @@ export const InitiativeDetailsScreen = () => {
       params: { initiativeId }
     });
   };
+  const navigateToInstrumentsConfiguration = () => {
+    navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
+      screen:
+        IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT,
+      params: {
+        initiativeId
+      }
+    });
+  };
+
+  const navigateToIbanConfiguration = () => {
+    navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
+      screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ENROLLMENT,
+      params: {
+        initiativeId
+      }
+    });
+  };
 
   useFocusEffect(
     useCallback(() => {
       dispatch(idpayInitiativeGet.request({ initiativeId }));
+      dispatch(idpayTimelinePageGet.request({ initiativeId, page: 0 }));
     }, [dispatch, initiativeId])
   );
 
   const isLoading = pot.isLoading(initiativeDetailsFromSelector);
+  const isFirstInitiativeConfiguration =
+    useIOSelector(idpayTimelineSelector).length <= 1;
 
   const renderContent = () => {
     if (initiativeData === undefined) {
@@ -120,8 +145,52 @@ export const InitiativeDetailsScreen = () => {
         : undefined;
 
     const initiativeNeedsConfiguration =
-      initiativeData.status === StatusEnum.NOT_REFUNDABLE;
+      initiativeData.status === StatusEnum.NOT_REFUNDABLE &&
+      isFirstInitiativeConfiguration;
 
+    type ErrorAlertStatus = Exclude<
+      StatusEnum,
+      StatusEnum.REFUNDABLE | StatusEnum.UNSUBSCRIBED
+    >;
+    const ErrorAlert = () => {
+      const viewRef = React.createRef<View>();
+      const baseAlert = (navFunction: () => void, status: ErrorAlertStatus) => (
+        <>
+          <Alert
+            viewRef={viewRef}
+            content={I18n.t(
+              `idpay.initiative.details.initiativeDetailsScreen.configured.errorAlerts.${status}.content`
+            )}
+            action={I18n.t(
+              `idpay.initiative.details.initiativeDetailsScreen.configured.errorAlerts.${status}.action`
+            )}
+            onPress={navFunction}
+            variant="error"
+          />
+          <VSpacer size={16} />
+        </>
+      );
+
+      switch (initiativeData.status) {
+        case StatusEnum.NOT_REFUNDABLE_ONLY_IBAN:
+          return baseAlert(
+            navigateToInstrumentsConfiguration,
+            initiativeData.status
+          );
+        case StatusEnum.NOT_REFUNDABLE_ONLY_INSTRUMENT:
+          return baseAlert(navigateToIbanConfiguration, initiativeData.status);
+        case StatusEnum.NOT_REFUNDABLE:
+          if (
+            initiativeData.iban === undefined &&
+            initiativeData.nInstr === 0
+          ) {
+            return baseAlert(navigateToConfiguration, initiativeData.status);
+          }
+          return null;
+        default:
+          return null;
+      }
+    };
     return (
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView bounces={false}>
@@ -157,6 +226,7 @@ export const InitiativeDetailsScreen = () => {
                       <VSpacer size={16} />
                     </>
                   )}
+                  <ErrorAlert />
                   <InitiativeTimelineComponent
                     initiativeId={initiativeData.initiativeId}
                   />
