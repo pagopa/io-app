@@ -16,7 +16,8 @@ import { toFetchTimeout, toRetriableFetch } from "../../../utils/fetch";
 import { generateDigestHeader } from "../httpSignature/digest";
 import {
   generateSignatureBase,
-  SignatureBaseResult
+  SignatureBaseResult,
+  toSignatureHeaderValue
 } from "../httpSignature/signature";
 import { SignatureConfig } from "../httpSignature/types/SignatureConfig";
 import { KeyInfo } from "./crypto";
@@ -115,7 +116,10 @@ export const lollipopFetch = (
           // Prepare custom signature array
           const customSignatures = customSignResult.map(v => v.signature);
           // Setup signature array
-          const signatures = [`sig1:${mainSignValue}:`, ...customSignatures];
+          const signatures = [
+            toSignatureHeaderValue(mainSignValue),
+            ...customSignatures
+          ];
           // Setup signature input array
           const signatureInputs = [
             mainSignatureInput,
@@ -198,7 +202,10 @@ export const customContentToSignPromises = (
           headerPrefix: customContentBase.headerPrefix,
           headerName: customContentBase.headerName,
           headerValue: customContentBase.headerValue,
-          signature: `sig${customContentBase.headerIndex}:${value}:`,
+          signature: toSignatureHeaderValue(
+            value,
+            customContentBase.headerIndex
+          ),
           signatureInput: customContentBase.signatureInput
         }))
       )

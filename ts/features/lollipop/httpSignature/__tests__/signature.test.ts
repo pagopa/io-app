@@ -13,6 +13,7 @@ import { constants } from "../constants";
 import {
   generateSignatureInput,
   generateSignatureBase,
+  toSignatureHeaderValue,
   generateSignature
 } from "../signature";
 import { SignatureConfig } from "../types/SignatureConfig";
@@ -277,13 +278,29 @@ describe(`Test generate signature base for multiple custom signatures ECKey`, ()
   });
 });
 
-describe(`Test generate signature`, () => {
+describe(`Test generate signature with mock signed data`, () => {
+  it(`with "${constants.HEADERS.CONTENT_DIGEST}" for config ${JSON.stringify(
+    testConfig
+  )}`, async () => {
+    const signature = toSignatureHeaderValue("mocksigneddata");
+    const validateSignature = /^((sig[0-9]+)=:[A-Za-z0-9+/=]*:(, ?)?)+$/.test(
+      signature
+    );
+    expect(validateSignature).toBeTruthy();
+    expect(signature).toBe("sig1=:mocksigneddata:");
+  });
+});
+
+describe(`Test generate signature with signer`, () => {
   it(`with "${constants.HEADERS.CONTENT_DIGEST}" for config ${JSON.stringify(
     testConfig
   )}`, async () => {
     const signer = mockSigner;
     const signature = await generateSignature(testHeaders, testConfig, signer);
-    expect(signature.length).toBeGreaterThan(0);
+    const validateSignature = /^((sig[0-9]+)=:[A-Za-z0-9+/=]*:(, ?)?)+$/.test(
+      signature
+    );
+    expect(validateSignature).toBeTruthy();
   });
 });
 
