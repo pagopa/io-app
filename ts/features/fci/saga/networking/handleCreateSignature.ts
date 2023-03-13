@@ -58,6 +58,8 @@ export function* handleCreateSignature(
       }
     };
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore TODO: fix header typings
     const postSignatureResponse = yield* call(postSignature(lollipopConfig), {
       signatureToCreate: action.payload
     });
