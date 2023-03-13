@@ -4,6 +4,7 @@ import * as A from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
 import * as TE from "fp-ts/lib/TaskEither";
 import * as E from "fp-ts/lib/Either";
+import * as S from "fp-ts/lib/string";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import { QtspClauses } from "../../../../definitions/fci/QtspClauses";
 import { DocumentToSign } from "../../../../definitions/fci/DocumentToSign";
@@ -75,7 +76,7 @@ export const getCustomSignature = (
             )
             .join("+");
           // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-          return hash + "+" + attributes;
+          return S.isEmpty(attributes) ? hash : hash + "+" + attributes;
         })
       )
     ),
