@@ -1,19 +1,16 @@
-import { PublicKey } from "@pagopa/io-react-native-crypto";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { Text as NBText, View } from "native-base";
 import * as React from "react";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { Image, Linking, StyleSheet } from "react-native";
 import { WebView } from "react-native-webview";
 import {
   WebViewErrorEvent,
-  WebViewNavigation,
-  WebViewSource
+  WebViewNavigation
 } from "react-native-webview/lib/WebViewTypes";
 import { connect } from "react-redux";
-import URLParse from "url-parse";
 import brokenLinkImage from "../../../img/broken-link.png";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
@@ -23,9 +20,6 @@ import IdpCustomContextualHelpContent from "../../components/screens/IdpCustomCo
 import Markdown from "../../components/ui/Markdown";
 import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
 import { useLollipopLoginSource } from "../../features/lollipop/hooks/useLollipopLoginSource";
-import { publicKey } from "../../features/lollipop/types/LollipopLoginSource";
-import { lollipopSamlVerify } from "../../features/lollipop/utils/login";
-import { LollipopCheckStatus } from "../../features/lollipop/types/LollipopCheckStatus";
 import I18n from "../../i18n";
 import { mixpanelTrack } from "../../mixpanel";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
@@ -56,7 +50,6 @@ import {
   handleSendAssistanceLog
 } from "../../utils/supportAssistance";
 import { getUrlBasepath } from "../../utils/url";
-import { trackLollipopIdpLoginFailure } from "../../utils/analytics";
 import { originSchemasWhiteList } from "./originSchemasWhiteList";
 
 type NavigationProps = IOStackNavigationRouteProps<
@@ -120,37 +113,29 @@ const styles = StyleSheet.create({
  * The IDP page is opened in a WebView
  */
 const IdpLoginScreen = (props: Props) => {
+  console.log(`=== IdpLoginScreen`);
   const [requestState, setRequestState] = useState<pot.Pot<true, ErrorType>>(
     pot.noneLoading
   );
   const [errorCode, setErrorCode] = useState<string | undefined>(undefined);
   const [loginTrace, setLoginTrace] = useState<string | undefined>(undefined);
-  const [lollipopCheckStatus, setLollipopCheckStatus] =
-    useState<LollipopCheckStatus>({ status: "none", url: O.none });
 
-  const [webviewSource, setWebviewSource] = useState<WebViewSource | undefined>(
-    undefined
-  );
+  const handleOnLolliPoPCheckFailure = useCallback(() => {
+    setRequestState(pot.noneError(ErrorType.LOGIN_ERROR));
+  }, []);
 
   const idpId = props.loggedOutWithIdpAuth?.idp.id;
   const loginUri = idpId ? getIdpLoginUri(idpId) : undefined;
-  const { loginSource, regenerateLoginSource } =
-    useLollipopLoginSource(loginUri);
+  const {
+    retryLolliPoPLogin,
+    shouldBlockUrlNavigationWhileCheckingLolliPoP,
+    webviewSource
+  } = useLollipopLoginSource(handleOnLolliPoPCheckFailure, loginUri);
 
   const choosenTool = useMemo(
     () => assistanceToolRemoteConfig(props.assistanceToolConfig),
     [props.assistanceToolConfig]
   );
-
-  const startLoginProcess = useCallback(() => {
-    if (loginSource.kind === "ready") {
-      setWebviewSource(loginSource.value);
-    }
-  }, [loginSource]);
-
-  useEffect(() => {
-    startLoginProcess();
-  }, [startLoginProcess]);
 
   const idp = useMemo(
     () => props.loggedOutWithIdpAuth?.idp.id ?? "n/a",
@@ -158,6 +143,7 @@ const IdpLoginScreen = (props: Props) => {
   );
 
   const handleLoadingError = (error: WebViewErrorEvent): void => {
+    console.log(`=== IdpLoginScreen handleLoadingError`);
     const { code, description, domain } = error.nativeEvent;
     void mixpanelTrack("SPID_ERROR", {
       idp: props.loggedOutWithIdpAuth?.idp.id,
@@ -171,6 +157,7 @@ const IdpLoginScreen = (props: Props) => {
 
   const handleLoginFailure = useCallback(
     (code?: string) => {
+      console.log(`=== IdpLoginScreen handleLoginFailure`);
       props.dispatchLoginFailure(
         new Error(`login failure with code ${code || "n/a"}`),
         idp
@@ -195,25 +182,24 @@ const IdpLoginScreen = (props: Props) => {
   );
 
   const handleLoginSuccess = (token: SessionToken) => {
+    console.log(`=== IdpLoginScreen handleLoginSuccess`);
     handleSendAssistanceLog(choosenTool, `login success`);
     props.dispatchLoginSuccess(token, idp);
   };
 
   const onRetryButtonPressed = (): void => {
+    console.log(`=== IdpLoginScreen onRetryButtonPressed`);
     setRequestState(pot.noneLoading);
-    setLollipopCheckStatus({ status: "none", url: O.none });
-    // We must set webviewSource to undefined before requesting
-    // any changes to loginSource otherwise on the next component
-    // refresh (triggered by a different value of loginSource),
-    // the old value of webviewSource is going to be loaded
-    // (i.e., the loaded webViewSource uri will be different from
-    // the loginSource.uri)
-    setWebviewSource(undefined);
-    regenerateLoginSource();
+    retryLolliPoPLogin();
   };
 
   const handleNavigationStateChange = useCallback(
     (event: WebViewNavigation) => {
+      console.log(
+        `=== IdpLoginScreen handleNavigationStateChange (${getUrlBasepath(
+          event.url
+        )})`
+      );
       const url = event.url;
 
       if (url) {
@@ -240,6 +226,11 @@ const IdpLoginScreen = (props: Props) => {
   );
 
   const handleShouldStartLoading = (event: WebViewNavigation): boolean => {
+    console.log(
+      `=== IdpLoginScreen handleShouldStartLoading (${getUrlBasepath(
+        event.url
+      )})`
+    );
     const url = event.url;
     // if an intent is coming from the IDP login form, extract the fallbackUrl and use it in Linking.openURL
     const idpIntent = getIntentFallbackUrl(url);
@@ -251,42 +242,8 @@ const IdpLoginScreen = (props: Props) => {
       return false;
     }
 
-    const parsedUrl = new URLParse(url, true);
-    const urlQuery = parsedUrl.query;
-    const urlEncodedSamlRequest = urlQuery?.SAMLRequest;
-    if (urlEncodedSamlRequest) {
-      if (lollipopCheckStatus.status === "none") {
-        // Make sure that we have a public key (since its retrieval
-        // may have failed - in which case let the flow go through
-        // the non-lollipop standard check process)
-        const publicKeyOption = publicKey(loginSource);
-        if (O.isSome(publicKeyOption)) {
-          // Start Lollipop verification process
-          setLollipopCheckStatus({
-            status: "checking",
-            url: O.some(url)
-          });
-          verifyLollipop(url, urlEncodedSamlRequest, publicKeyOption.value);
-          // Prevent the WebView from loading the current URL (its
-          // loading will be restored after LolliPOP verification
-          // has succeded)
-          return false;
-        }
-        // If code reaches this point, then either the public key
-        // retrieval has failed or lollipop is not enabled. Let
-        // the code flow follow the standard non-lollipop scenario
-      } else if (lollipopCheckStatus.status === "checking") {
-        // LolliPOP signature is being verified, prevent the WebView
-        // from loading the current URL,
-        return false;
-      }
-
-      // If code reaches this point, either there is no public key
-      // or lollipop is not enabled or the LolliPOP signature has
-      // been verified (in both cases, let the code flow). Code
-      // flow shall never hit this method is LolliPOP signature
-      // verification has failed, since an error is displayed and
-      // the WebViewSource is left undefined
+    if (shouldBlockUrlNavigationWhileCheckingLolliPoP(url)) {
+      return false;
     }
 
     const isLoginUrlWithToken = onLoginUriChanged(
@@ -297,32 +254,6 @@ const IdpLoginScreen = (props: Props) => {
     // making a (useless) GET request with the session in the URL
     return !isLoginUrlWithToken;
   };
-
-  const verifyLollipop = useCallback(
-    (eventUrl: string, urlEncodedSamlRequest: string, publicKey: PublicKey) => {
-      setWebviewSource(undefined);
-      lollipopSamlVerify(
-        urlEncodedSamlRequest,
-        publicKey,
-        () => {
-          setLollipopCheckStatus({
-            status: "trusted",
-            url: O.some(eventUrl)
-          });
-          setWebviewSource({ uri: eventUrl });
-        },
-        (reason: string) => {
-          trackLollipopIdpLoginFailure(reason);
-          setLollipopCheckStatus({
-            status: "untrusted",
-            url: O.some(eventUrl)
-          });
-          setRequestState(pot.noneError(ErrorType.LOGIN_ERROR));
-        }
-      );
-    },
-    []
-  );
 
   const renderMask = () => {
     if (pot.isLoading(requestState)) {

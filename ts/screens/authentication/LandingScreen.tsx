@@ -387,6 +387,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
   };
 
   public render() {
+    console.log(`=== LandingScreen`);
     // If the async loading of the isRootedOrJailbroken is not ready, display a loading
     return pipe(
       this.state.isRootedOrJailbroken,
@@ -400,9 +401,13 @@ class LandingScreen extends React.PureComponent<Props, State> {
 }
 
 const mapStateToProps = (state: GlobalState) => {
-  const isCIEAuthenticationSupported = isCieSupportedSelector(state);
-  const hasApiLevelSupport = hasApiLevelSupportSelector(state);
-  const hasNFCFeature = hasNFCFeatureSelector(state);
+  const isCIEAuthenticationSupported = __DEV__
+    ? pot.some(true)
+    : isCieSupportedSelector(state);
+  const hasApiLevelSupport = __DEV__
+    ? pot.some(true)
+    : hasApiLevelSupportSelector(state);
+  const hasNFCFeature = __DEV__ ? pot.some(true) : hasNFCFeatureSelector(state);
   return {
     isSessionExpired: isSessionExpiredSelector(state),
     continueWithRootOrJailbreak: continueWithRootOrJailbreakSelector(state),

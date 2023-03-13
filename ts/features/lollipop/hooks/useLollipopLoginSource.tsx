@@ -1,8 +1,10 @@
-import { generate, deleteKey } from "@pagopa/io-react-native-crypto";
+import { generate, deleteKey, PublicKey } from "@pagopa/io-react-native-crypto";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as TE from "fp-ts/lib/TaskEither";
-import { useState } from "react";
+import { useCallback, useState } from "react";
+import URLParse from "url-parse";
+import { WebViewSource } from "react-native-webview/lib/WebViewTypes";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { isLollipopEnabledSelector } from "../../../store/reducers/backendStatus";
 import {
@@ -16,9 +18,15 @@ import {
   lollipopRemovePublicKey,
   lollipopSetPublicKey
 } from "../store/actions/lollipop";
-import { lollipopKeyTagSelector } from "../store/reducers/lollipop";
-import { LoginSourceAsync } from "../types/LollipopLoginSource";
-import { DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER } from "../utils/login";
+import {
+  lollipopKeyTagSelector,
+  lollipopPublicKeySelector
+} from "../store/reducers/lollipop";
+import {
+  DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER,
+  lollipopSamlVerify
+} from "../utils/login";
+import { LollipopCheckStatus } from "../types/LollipopCheckStatus";
 
 const taskRegenerateKey = (keyTag: string) =>
   pipe(
@@ -26,27 +34,57 @@ const taskRegenerateKey = (keyTag: string) =>
     TE.chain(() => TE.tryCatch(() => generate(keyTag), toCryptoError))
   );
 
-export const useLollipopLoginSource = (loginUri?: string) => {
-  const [loginSource, setLoginSource] = useState<LoginSourceAsync>({
-    kind: "initial"
-  });
+export const useLollipopLoginSource = (
+  onLolliPoPCheckFailure: () => void,
+  loginUri?: string
+) => {
+  console.log(`=== useLollipopLoginSource`);
+  const [lollipopCheckStatus, setLollipopCheckStatus] =
+    useState<LollipopCheckStatus>({ status: "none", url: O.none });
+  const [webviewSource, setWebviewSource] = useState<WebViewSource | undefined>(
+    undefined
+  );
 
   const dispatch = useIODispatch();
   const useLollipopLogin = useIOSelector(isLollipopEnabledSelector);
-  const lollipopKeyTag = useIOSelector(lollipopKeyTagSelector);
+  const maybeKeyTag = useIOSelector(lollipopKeyTagSelector);
+  const maybePublicKey = useIOSelector(lollipopPublicKeySelector);
 
-  const setDeprecatedLoginUri = (uri: string) => {
-    setLoginSource({
-      kind: "ready",
-      value: {
-        uri
-      },
-      publicKey: O.none
-    });
-  };
+  const verifyLollipop = useCallback(
+    (eventUrl: string, urlEncodedSamlRequest: string, publicKey: PublicKey) => {
+      console.log(`=== useLollipopLoginSource verifyLollipop`);
+      setWebviewSource(undefined);
+      lollipopSamlVerify(
+        urlEncodedSamlRequest,
+        publicKey,
+        () => {
+          console.log(`=== useLollipopLoginSource verifyLollipop success`);
+          setLollipopCheckStatus({
+            status: "trusted",
+            url: O.some(eventUrl)
+          });
+          setWebviewSource({ uri: eventUrl });
+        },
+        (reason: string) => {
+          console.log(`=== useLollipopLoginSource verifyLollipop FAILURE`);
+          trackLollipopIdpLoginFailure(reason);
+          setLollipopCheckStatus({
+            status: "untrusted",
+            url: O.some(eventUrl)
+          });
+          onLolliPoPCheckFailure();
+        }
+      );
+    },
+    [onLolliPoPCheckFailure]
+  );
 
-  const regenerateLoginSource = () => {
+  const regenerateLoginSource = useCallback(() => {
+    console.log(`=== useLollipopLoginSource regenerateLoginSource`);
     if (!loginUri) {
+      console.log(
+        `=== useLollipopLoginSource regenerateLoginSource NO LOGIN URI`
+      );
       // When the redux state is LoggedOutWithIdp the loginUri is always defined.
       // After the user has logged in, the status changes to LoggedIn and the loginUri is not
       // defined any more.
@@ -54,7 +92,12 @@ export const useLollipopLoginSource = (loginUri?: string) => {
       return;
     }
 
-    if (!useLollipopLogin || O.isNone(lollipopKeyTag)) {
+    if (!useLollipopLogin || O.isNone(maybeKeyTag)) {
+      console.log(
+        `=== useLollipopLoginSource regenerateLoginSource (${!useLollipopLogin}) (${O.isNone(
+          maybeKeyTag
+        )})`
+      );
       if (useLollipopLogin) {
         // We track missing key tag event only if lollipop is enabled
         // (since the key tag is not used without lollipop)
@@ -65,7 +108,9 @@ export const useLollipopLoginSource = (loginUri?: string) => {
 
       // Key generation may have failed. In that case, follow the old
       // non-lollipop login flow
-      setDeprecatedLoginUri(loginUri);
+      setWebviewSource({
+        uri: loginUri
+      });
       return;
     }
 
@@ -75,38 +120,111 @@ export const useLollipopLoginSource = (loginUri?: string) => {
      * https://pagopa.atlassian.net/browse/LLK-37
      */
     void pipe(
-      lollipopKeyTag.value,
+      maybeKeyTag.value,
       taskRegenerateKey,
       TE.map(key => {
-        setLoginSource({
-          kind: "ready",
-          value: {
-            uri: loginUri,
-            headers: {
-              "x-pagopa-lollipop-pub-key": Buffer.from(
-                JSON.stringify(key)
-              ).toString("base64"),
-              "x-pagopa-lollipop-pub-key-hash-algo":
-                DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER
-            }
-          },
-          publicKey: O.some(key)
-        });
         dispatch(lollipopSetPublicKey({ publicKey: key }));
         trackLollipopKeyGenerationSuccess(key.kty);
+        setWebviewSource({
+          uri: loginUri,
+          headers: {
+            "x-pagopa-lollipop-pub-key": Buffer.from(
+              JSON.stringify(key)
+            ).toString("base64"),
+            "x-pagopa-lollipop-pub-key-hash-algo":
+              DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER
+          }
+        });
       }),
       TE.mapLeft(error => {
-        trackLollipopIdpLoginFailure(error.message);
-        trackLollipopKeyGenerationFailure(error.message);
-        setDeprecatedLoginUri(loginUri);
         dispatch(lollipopRemovePublicKey());
+        trackLollipopKeyGenerationFailure(error.message);
+        trackLollipopIdpLoginFailure(error.message);
+        setWebviewSource({
+          uri: loginUri
+        });
       })
     )();
-  };
+  }, [dispatch, loginUri, maybeKeyTag, useLollipopLogin]);
+
+  const retryLolliPoPLogin = useCallback(() => {
+    console.log(`=== useLollipopLoginSource retryLolliPoPLogin`);
+    setLollipopCheckStatus({ status: "none", url: O.none });
+    // We must set webviewSource to undefined before requesting
+    // any changes to loginSource otherwise on the next component
+    // refresh (triggered by a different value of loginSource),
+    // the old value of webviewSource is going to be loaded
+    // (i.e., the loaded webViewSource uri will be different from
+    // the loginSource.uri)
+    setWebviewSource(undefined);
+    regenerateLoginSource();
+  }, [regenerateLoginSource]);
+
+  const shouldBlockUrlNavigationWhileCheckingLolliPoP = useCallback(
+    (url: string) => {
+      console.log(
+        `=== useLollipopLoginSource shouldBlockUrlNavigationWhileCheckingLolliPoP`
+      );
+      const parsedUrl = new URLParse(url, true);
+      const urlQuery = parsedUrl.query;
+      const urlEncodedSamlRequest = urlQuery?.SAMLRequest;
+      if (urlEncodedSamlRequest) {
+        if (lollipopCheckStatus.status === "none") {
+          // Make sure that we have a public key (since its retrieval
+          // may have failed - in which case let the flow go through
+          // the non-lollipop standard check process)
+          if (O.isSome(maybePublicKey)) {
+            // Start Lollipop verification process
+            setLollipopCheckStatus({
+              status: "checking",
+              url: O.some(url)
+            });
+            verifyLollipop(url, urlEncodedSamlRequest, maybePublicKey.value);
+            console.log(
+              `=== useLollipopLoginSource shouldBlockUrlNavigationWhileCheckingLolliPoP return TRUE (has to verify)`
+            );
+            // Prevent the WebView from loading the current URL (its
+            // loading will be restored after LolliPOP verification
+            // has succeded)
+            return true;
+          }
+          // If code reaches this point, then either the public key
+          // retrieval has failed or lollipop is not enabled. Let
+          // the code flow follow the standard non-lollipop scenario
+        } else if (lollipopCheckStatus.status === "checking") {
+          console.log(
+            `=== useLollipopLoginSource shouldBlockUrlNavigationWhileCheckingLolliPoP return TRUE (checking)`
+          );
+          // LolliPOP signature is being verified, prevent the WebView
+          // from loading the current URL,
+          return true;
+        }
+
+        // If code reaches this point, either there is no public key
+        // or lollipop is not enabled or the LolliPOP signature has
+        // been verified (in both cases, let the code flow). Code
+        // flow shall never hit this method is LolliPOP signature
+        // verification has failed, since an error is displayed and
+        // the WebViewSource is left undefined
+      }
+
+      console.log(
+        `=== useLollipopLoginSource shouldBlockUrlNavigationWhileCheckingLolliPoP return false`
+      );
+      return false;
+    },
+    [lollipopCheckStatus.status, maybePublicKey, verifyLollipop]
+  );
 
   useOnFirstRender(() => {
+    console.log(`=== useLollipopLoginSource useOnFirstRender`);
     regenerateLoginSource();
   });
 
-  return { loginSource, regenerateLoginSource };
+  return {
+    lollipopCheckStatus,
+    retryLolliPoPLogin,
+    shouldBlockUrlNavigationWhileCheckingLolliPoP,
+    webviewSource
+  };
 };
