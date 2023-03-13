@@ -32,6 +32,70 @@ exports[`Test Typography Components Body Snapshot 1`] = `
 </Text>
 `;
 
+exports[`Test Typography Components H1 (New) Snapshot 1`] = `
+<Text
+  color="black"
+  defaultColor="black"
+  defaultWeight="Regular"
+  font="ReadexPro"
+  fontStyle={
+    Object {
+      "fontSize": 28,
+      "lineHeight": 32,
+    }
+  }
+  style={
+    Array [
+      Object {
+        "fontSize": 28,
+        "lineHeight": 32,
+      },
+      Object {
+        "color": "#0E0F13",
+        "fontFamily": "Readex Pro",
+        "fontStyle": "normal",
+        "fontWeight": "400",
+      },
+    ]
+  }
+  weight="Regular"
+>
+  Text
+</Text>
+`;
+
+exports[`Test Typography Components H1 (New) Snapshot 2`] = `
+<Text
+  color="white"
+  defaultColor="black"
+  defaultWeight="Regular"
+  font="ReadexPro"
+  fontStyle={
+    Object {
+      "fontSize": 28,
+      "lineHeight": 32,
+    }
+  }
+  style={
+    Array [
+      Object {
+        "fontSize": 28,
+        "lineHeight": 32,
+      },
+      Object {
+        "color": "#FFFFFF",
+        "fontFamily": "Readex Pro",
+        "fontStyle": "normal",
+        "fontWeight": "400",
+      },
+    ]
+  }
+  weight="Regular"
+>
+  Text
+</Text>
+`;
+
 exports[`Test Typography Components H1 Snapshot 1`] = `
 <Text
   color="bluegreyDark"
@@ -96,6 +160,38 @@ exports[`Test Typography Components H1 Snapshot 2`] = `
 </Text>
 `;
 
+exports[`Test Typography Components H2 (New) Snapshot 1`] = `
+<Text
+  color="black"
+  defaultColor="black"
+  defaultWeight="Regular"
+  font="ReadexPro"
+  fontStyle={
+    Object {
+      "fontSize": 26,
+      "lineHeight": 30,
+    }
+  }
+  style={
+    Array [
+      Object {
+        "fontSize": 26,
+        "lineHeight": 30,
+      },
+      Object {
+        "color": "#0E0F13",
+        "fontFamily": "Readex Pro",
+        "fontStyle": "normal",
+        "fontWeight": "400",
+      },
+    ]
+  }
+  weight="Regular"
+>
+  Text
+</Text>
+`;
+
 exports[`Test Typography Components H2 Snapshot 1`] = `
 <Text
   color="bluegreyDark"
@@ -123,6 +219,159 @@ exports[`Test Typography Components H2 Snapshot 1`] = `
     ]
   }
   weight="Bold"
+>
+  Text
+</Text>
+`;
+
+exports[`Test Typography Components H3 (New) Snapshot 1`] = `
+<Text
+  color="bluegreyDark"
+  font="ReadexPro"
+  fontStyle={
+    Object {
+      "fontSize": 18,
+      "lineHeight": 26,
+    }
+  }
+  style={
+    Array [
+      Object {
+        "fontSize": 18,
+        "lineHeight": 26,
+      },
+      Object {
+        "color": "#17324D",
+        "fontFamily": "Readex Pro",
+        "fontStyle": "normal",
+        "fontWeight": "600",
+      },
+    ]
+  }
+  weight="SemiBold"
+  weightColorFactory={[Function]}
+>
+  Text
+</Text>
+`;
+
+exports[`Test Typography Components H3 (New) Snapshot 2`] = `
+<Text
+  color="bluegreyLight"
+  font="ReadexPro"
+  fontStyle={
+    Object {
+      "fontSize": 18,
+      "lineHeight": 26,
+    }
+  }
+  style={
+    Array [
+      Object {
+        "fontSize": 18,
+        "lineHeight": 26,
+      },
+      Object {
+        "color": "#CCD4DC",
+        "fontFamily": "Readex Pro",
+        "fontStyle": "normal",
+        "fontWeight": "600",
+      },
+    ]
+  }
+  weight="SemiBold"
+  weightColorFactory={[Function]}
+>
+  Text
+</Text>
+`;
+
+exports[`Test Typography Components H3 (New) Snapshot 3`] = `
+<Text
+  color="white"
+  font="ReadexPro"
+  fontStyle={
+    Object {
+      "fontSize": 18,
+      "lineHeight": 26,
+    }
+  }
+  style={
+    Array [
+      Object {
+        "fontSize": 18,
+        "lineHeight": 26,
+      },
+      Object {
+        "color": "#FFFFFF",
+        "fontFamily": "Readex Pro",
+        "fontStyle": "normal",
+        "fontWeight": "600",
+      },
+    ]
+  }
+  weight="SemiBold"
+  weightColorFactory={[Function]}
+>
+  Text
+</Text>
+`;
+
+exports[`Test Typography Components H3 (New) Snapshot 4`] = `
+<Text
+  color="white"
+  font="ReadexPro"
+  fontStyle={
+    Object {
+      "fontSize": 18,
+      "lineHeight": 26,
+    }
+  }
+  style={
+    Array [
+      Object {
+        "fontSize": 18,
+        "lineHeight": 26,
+      },
+      Object {
+        "color": "#FFFFFF",
+        "fontFamily": "Readex Pro",
+        "fontStyle": "normal",
+        "fontWeight": "700",
+      },
+    ]
+  }
+  weight="Bold"
+  weightColorFactory={[Function]}
+>
+  Text
+</Text>
+`;
+
+exports[`Test Typography Components H3 (New) Snapshot 5`] = `
+<Text
+  color="white"
+  font="TitilliumWeb"
+  fontStyle={
+    Object {
+      "fontSize": 18,
+    }
+  }
+  style={
+    Array [
+      Object {
+        "fontSize": 18,
+      },
+      Object {
+        "color": "#FFFFFF",
+        "fontFamily": "Titillium Web",
+        "fontStyle": "normal",
+        "fontWeight": "700",
+      },
+    ]
+  }
+  weight="Bold"
+  weightColorFactory={[Function]}
 >
   Text
 </Text>

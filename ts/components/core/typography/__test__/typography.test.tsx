@@ -19,10 +19,13 @@ import { Link } from "../Link";
 import { Monospace } from "../Monospace";
 import { preferencesDesignSystemSetEnabled } from "../../../../store/actions/persistedPreferences";
 
-const wrapTypographyComponent = (children: React.ReactNode) => {
+const wrapTypographyComponent = (
+  children: React.ReactNode,
+  isNewDSenabled: boolean = false
+) => {
   const globalState = appReducer(
     undefined,
-    preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: false })
+    preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: isNewDSenabled })
   );
   const mockStore = configureMockStore<GlobalState>();
   const store: ReturnType<typeof mockStore> = mockStore({
@@ -43,9 +46,25 @@ describe("Test Typography Components", () => {
     ).toJSON();
     expect(h1White).toMatchSnapshot();
   });
+  it("H1 (New) Snapshot", () => {
+    const h1Default = TestRenderer.create(
+      wrapTypographyComponent(<H1>Text</H1>, true)
+    ).toJSON();
+    expect(h1Default).toMatchSnapshot();
+    const h1White = TestRenderer.create(
+      wrapTypographyComponent(<H1 color={"white"}>Text</H1>, true)
+    ).toJSON();
+    expect(h1White).toMatchSnapshot();
+  });
   it("H2 Snapshot", () => {
     const h2Default = TestRenderer.create(
       wrapTypographyComponent(<H2>Text</H2>)
+    ).toJSON();
+    expect(h2Default).toMatchSnapshot();
+  });
+  it("H2 (New) Snapshot", () => {
+    const h2Default = TestRenderer.create(
+      wrapTypographyComponent(<H2>Text</H2>, true)
     ).toJSON();
     expect(h2Default).toMatchSnapshot();
   });
@@ -68,6 +87,36 @@ describe("Test Typography Components", () => {
         <H3 color={"white"} weight={"Bold"}>
           Text
         </H3>
+      )
+    ).toJSON();
+    expect(h3whiteBold).toMatchSnapshot();
+
+    // default color when choose only bold
+    const h3defaultBold = TestRenderer.create(
+      wrapTypographyComponent(<H3 weight={"Bold"}>Text</H3>)
+    ).toJSON();
+    expect(h3defaultBold).toMatchSnapshot();
+  });
+  it("H3 (New) Snapshot", () => {
+    // SemiBold weight, default weight
+    const h3Default = TestRenderer.create(
+      wrapTypographyComponent(<H3>Text</H3>, true)
+    ).toJSON();
+    expect(h3Default).toMatchSnapshot();
+    const h3bluegreyLight = TestRenderer.create(
+      wrapTypographyComponent(<H3 color={"bluegreyLight"}>Text</H3>, true)
+    ).toJSON();
+    expect(h3bluegreyLight).toMatchSnapshot();
+    const h3white = TestRenderer.create(
+      wrapTypographyComponent(<H3 color={"white"}>Text</H3>, true)
+    ).toJSON();
+    expect(h3white).toMatchSnapshot();
+    const h3whiteBold = TestRenderer.create(
+      wrapTypographyComponent(
+        <H3 color={"white"} weight={"Bold"}>
+          Text
+        </H3>,
+        true
       )
     ).toJSON();
     expect(h3whiteBold).toMatchSnapshot();
