@@ -63,7 +63,10 @@ import {
   sessionInfoSelector,
   sessionTokenSelector
 } from "../store/reducers/authentication";
-import { lollipopKeyTagSelector } from "../features/lollipop/store/reducers/lollipop";
+import {
+  lollipopKeyTagSelector,
+  lollipopPublicKeySelector
+} from "../features/lollipop/store/reducers/lollipop";
 import { generateLollipopKeySaga } from "../features/lollipop/saga";
 import { IdentificationResult } from "../store/reducers/identification";
 import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
@@ -141,7 +144,7 @@ import { watchLoadMessageById } from "./messages/watchLoadMessageById";
 import { watchThirdPartyMessageSaga } from "./messages/watchThirdPartyMessageSaga";
 import { checkNotificationsPreferencesSaga } from "./startup/checkNotificationsPreferencesSaga";
 import {
-  getCryptoPublicKey,
+  generateKeyInfo,
   trackMixpanelCryptoKeyPairEvents
 } from "./startup/generateCryptoKeyPair";
 
@@ -230,7 +233,8 @@ export function* initializeApplicationSaga(): Generator<
 
   // Get keyInfo for lollipop
   const keyTag = yield* select(lollipopKeyTagSelector);
-  const keyInfo = yield* call(getCryptoPublicKey, keyTag);
+  const publicKey = yield* select(lollipopPublicKeySelector);
+  const keyInfo = yield* call(generateKeyInfo, keyTag, publicKey);
 
   // Instantiate a backend client from the session token
   const backendClient: ReturnType<typeof BackendClient> = BackendClient(
@@ -453,7 +457,7 @@ export function* initializeApplicationSaga(): Generator<
   }
 
   if (fciEnabled) {
-    yield* fork(watchFciSaga, sessionToken);
+    yield* fork(watchFciSaga, sessionToken, keyInfo);
   }
 
   // Load the user metadata
