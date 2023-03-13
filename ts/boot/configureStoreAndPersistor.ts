@@ -319,7 +319,7 @@ const rootPersistConfig: PersistConfig = {
   migrate: createMigrate(migrations, { debug: isDevEnv }),
   // Entities and features implement a persisted reduce that avoids persisting messages.
   // Other entities section will be persisted
-  blacklist: ["entities", "features"],
+  blacklist: ["entities", "features", "lollipop"],
   // Sections of the store that must be persisted and rehydrated with this storage.
   whitelist: [
     "onboarding",
@@ -331,8 +331,7 @@ const rootPersistConfig: PersistConfig = {
     "payments",
     "content",
     "userMetadata",
-    "crossSessions",
-    "lollipop"
+    "crossSessions"
   ],
   // Transform functions used to manipulate state on store/rehydrate
   // TODO: add optionTransform https://www.pivotaltracker.com/story/show/170998374
