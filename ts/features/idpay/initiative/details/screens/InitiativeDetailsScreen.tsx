@@ -123,45 +123,47 @@ export const InitiativeDetailsScreen = () => {
       initiativeData.status === StatusEnum.NOT_REFUNDABLE;
 
     return (
-      <SafeAreaView style={IOStyles.flex}>
+      <>
         <ScrollView
           style={IOStyles.flex}
           bounces={false}
           contentContainerStyle={styles.flexGrow}
         >
-          <LinearGradient colors={[IOColors.bluegrey, IOColors.bluegreyDark]}>
+          <SafeAreaView>
+            <LinearGradient colors={[IOColors.bluegrey, IOColors.bluegreyDark]}>
+              <View
+                style={[IOStyles.horizontalContentPadding, { height: 149 }]}
+              />
+            </LinearGradient>
+            <InitiativeCardComponent initiative={initiativeData} />
             <View
-              style={[IOStyles.horizontalContentPadding, { height: 149 }]}
-            />
-          </LinearGradient>
-          <InitiativeCardComponent initiative={initiativeData} />
-          <View
-            style={[
-              IOStyles.flex,
-              IOStyles.horizontalContentPadding,
-              styles.flexGrow,
-              {
-                paddingTop: customVariables.contentPadding
-              }
-            ]}
-          >
-            <View style={styles.paddedContent}>
-              {initiativeNeedsConfiguration && (
-                <InitiativeNotConfiguredComponent
-                  initiativeName={initiativeData.initiativeName ?? ""}
-                />
-              )}
-              {!initiativeNeedsConfiguration && (
-                <>
-                  <InitiativeTimelineComponent
-                    initiativeId={initiativeData.initiativeId}
+              style={[
+                IOStyles.flex,
+                IOStyles.horizontalContentPadding,
+                styles.flexGrow,
+                {
+                  paddingTop: customVariables.contentPadding
+                }
+              ]}
+            >
+              <View style={styles.paddedContent}>
+                {initiativeNeedsConfiguration && (
+                  <InitiativeNotConfiguredComponent
+                    initiativeName={initiativeData.initiativeName ?? ""}
                   />
-                  <VSpacer size={24} />
-                  <InitiativeSettingsComponent initiative={initiativeData} />
-                </>
-              )}
+                )}
+                {!initiativeNeedsConfiguration && (
+                  <>
+                    <InitiativeTimelineComponent
+                      initiativeId={initiativeData.initiativeId}
+                    />
+                    <VSpacer size={24} />
+                    <InitiativeSettingsComponent initiative={initiativeData} />
+                  </>
+                )}
+              </View>
             </View>
-          </View>
+          </SafeAreaView>
         </ScrollView>
         {initiativeNeedsConfiguration && (
           <FooterWithButtons
@@ -176,7 +178,7 @@ export const InitiativeDetailsScreen = () => {
             }}
           />
         )}
-      </SafeAreaView>
+      </>
     );
   };
 
