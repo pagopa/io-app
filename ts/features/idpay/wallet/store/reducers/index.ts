@@ -1,5 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
+import { StatusEnum } from "../../../../../../definitions/idpay/InitiativeDTO";
 import { WalletDTO } from "../../../../../../definitions/idpay/WalletDTO";
 import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -27,7 +29,20 @@ const reducer = (
 
 export const idPayWalletSelector = (state: GlobalState) =>
   state.features.idPay.wallet;
-export const idPayWalletInitiativeListSelector = (state: GlobalState) =>
-  pot.map(state.features.idPay.wallet, w => w.initiativeList);
+
+export const idPayWalletInitiativeListSelector = createSelector(
+  idPayWalletSelector,
+  walletPot => pot.map(walletPot, wallet => wallet.initiativeList)
+);
+
+export const idPayWalletSubscribedInitiativeListSelector = createSelector(
+  idPayWalletInitiativeListSelector,
+  initiativeListPot =>
+    pot.map(initiativeListPot, initiativeList =>
+      initiativeList.filter(
+        initiative => initiative.status !== StatusEnum.UNSUBSCRIBED
+      )
+    )
+);
 
 export default reducer;
