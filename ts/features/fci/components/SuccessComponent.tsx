@@ -1,4 +1,5 @@
 import * as React from "react";
+import * as O from "fp-ts/lib/Option";
 import I18n from "../../../i18n";
 import imageExpired from "../../../../img/wallet/errors/payment-expired-icon.png";
 import hourglass from "../../../../img/pictograms/hourglass.png";
@@ -8,13 +9,13 @@ import {
 } from "../../../../definitions/fci/SignatureRequestDetailView";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { isLollipopEnabledSelector } from "../../../store/reducers/backendStatus";
-import { usePublicKeyState } from "../../lollipop/hooks/usePublicKeyState";
 import {
   fciEndRequest,
   fciShowSignedDocumentsStartRequest,
   fciStartRequest
 } from "../store/actions";
 import { daysBetweenDate } from "../utils/dates";
+import { lollipopPublicKeySelector } from "../../lollipop/store/reducers/lollipop";
 import ErrorComponent from "./ErrorComponent";
 import GenericErrorComponent from "./GenericErrorComponent";
 
@@ -31,10 +32,10 @@ const SuccessComponent = (props: {
   const status = props.signatureRequest.status;
   const dispatch = useIODispatch();
 
-  const publicKeyState = usePublicKeyState();
+  const publicKeyOption = useIOSelector(lollipopPublicKeySelector);
   const isLollipopEnabled = useIOSelector(isLollipopEnabledSelector);
   const showUnsupportedDeviceBanner =
-    isLollipopEnabled && publicKeyState.kind === "error";
+    isLollipopEnabled && O.isNone(publicKeyOption);
 
   // If the device is not supported by Lollipop
   // This is a temporary solution during the development of Lollipop
