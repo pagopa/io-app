@@ -19,7 +19,7 @@ type OwnProps = ExternalTypographyProps<
 
 /* Legacy typograhic style */
 const legacyFontName: IOFontFamily = "TitilliumWeb";
-export const h1LegacyFontSize = 28;
+export const h1LegacyFontSize = 26;
 export const h1LegacyLineHeight = 32;
 export const h1LegacyDefaultColor: AllowedColors = "bluegreyDark";
 export const h1LegacyDefaultWeight: AllowedWeight = "Bold";
