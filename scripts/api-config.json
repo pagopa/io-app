@@ -20,6 +20,7 @@
     "withValidDueDateCount": 1,
     "withInValidDueDateCount": 1,
     "standardMessageCount": 1,
+    "archivedMessageCount": 0,
     "allowRandomValues": false
   },
   "wallet": {
