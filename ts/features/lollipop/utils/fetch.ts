@@ -62,15 +62,20 @@ export const lollipopFetch = (
           inputUrl,
           originalUrl
         };
+
+        const signatureParams: Array<string> = [
+          "x-pagopa-lollipop-original-method",
+          "x-pagopa-lollipop-original-url"
+        ];
+
+        if (lollipopConfig.signBody) {
+          signatureParams.unshift("Content-Digest", "Content-Type");
+        }
+
         const mainSignatureConfig: SignatureConfig = forgeSignatureConfig(
           signatureConfigForgeInput,
           keyInfo,
-          [
-            "Content-Digest",
-            "Content-Type",
-            "x-pagopa-lollipop-original-method",
-            "x-pagopa-lollipop-original-url"
-          ]
+          signatureParams
         );
 
         newInit = addHeader(
