@@ -127,6 +127,7 @@ export const InitiativeSettingsComponent = (props: Props) => {
             initiative.status === StatusEnum.NOT_REFUNDABLE_ONLY_INSTRUMENT
           }
         />
+        {/* TODO: temporary button  */}
         <SettingsButtonComponent
           title={"Rimuovi iniziativa"}
           onPress={navigateToUnsubscription}
