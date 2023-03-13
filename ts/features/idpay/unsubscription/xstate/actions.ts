@@ -1,5 +1,5 @@
-/* eslint-disable arrow-body-style */
-
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import {
   AppParamsList,
   IOStackNavigationProp
@@ -11,13 +11,26 @@ const createActionsImplementation = (
   navigation: IOStackNavigationProp<AppParamsList, keyof AppParamsList>
 ) => {
   const navigateToConfirmationScreen = (context: Context) =>
-    navigation.navigate(IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN, {
-      screen: IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_CONFIRMATION,
-      params: {
-        initiativeId: context.initiativeId,
-        initiativeName: context.initiativeName
-      }
-    });
+    pipe(
+      context.initiativeId,
+      O.fold(
+        () => {
+          throw new Error("initiativeId is undefined");
+        },
+        initiativeId =>
+          navigation.navigate(
+            IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN,
+            {
+              screen:
+                IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_CONFIRMATION,
+              params: {
+                initiativeId,
+                initiativeName: context.initiativeName
+              }
+            }
+          )
+      )
+    );
 
   const navigateToSuccessScreen = () =>
     navigation.navigate(IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN, {
@@ -29,10 +42,21 @@ const createActionsImplementation = (
       screen: IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_FAILURE
     });
 
+  const exitUnsubscription = () => {
+    navigation.pop();
+  };
+
+  const exitToWallet = () => {
+    navigation.pop();
+    navigation.pop();
+  };
+
   return {
     navigateToConfirmationScreen,
     navigateToFailureScreen,
-    navigateToSuccessScreen
+    navigateToSuccessScreen,
+    exitUnsubscription,
+    exitToWallet
   };
 };
 

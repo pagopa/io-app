@@ -20,9 +20,8 @@ const createServicesImplementation = (
   const unsubscribeFromInitiative = async (context: Context) =>
     pipe(
       context.initiativeId,
-      O.fromNullable,
       O.fold(
-        () => Promise.reject("Undefined initiativeId"),
+        () => Promise.reject("initiativeId is undefined"),
         async initiativeId => {
           const dataResponse = await client.unsubscribe({
             bearerAuth: token,
