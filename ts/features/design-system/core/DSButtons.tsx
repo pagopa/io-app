@@ -47,22 +47,26 @@ export const DSButtons = () => (
       ButtonSolid
     </H2>
     <DSComponentViewerBox name="ButtonSolid · Primary Variant (using Pressable API)">
-      <View>
+      <ButtonSolid
+        accessibilityLabel="Tap to trigger test alert"
+        label={"Primary button"}
+        onPress={onButtonPress}
+      />
+      <VSpacer size={16} />
+      <View style={{ alignSelf: "center" }}>
         <ButtonSolid
           accessibilityLabel="Tap to trigger test alert"
-          label={"Primary button"}
+          label={"Primary button (centered)"}
           onPress={onButtonPress}
         />
       </View>
       <VSpacer size={16} />
-      <View>
-        <ButtonSolid
-          small
-          label={"Primary Button (Small)"}
-          accessibilityLabel="Tap to trigger test alert"
-          onPress={onButtonPress}
-        />
-      </View>
+      <ButtonSolid
+        small
+        label={"Primary Button (Small)"}
+        accessibilityLabel="Tap to trigger test alert"
+        onPress={onButtonPress}
+      />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ButtonSolid · Primary, Full width">
       <View>
@@ -263,26 +267,36 @@ export const DSButtons = () => (
       ButtonOutline
     </H2>
     <DSComponentViewerBox name="ButtonOutline · Primary Variant (using Pressable API)">
-      <View>
-        <ButtonOutline
-          accessibilityLabel="Tap to trigger test alert"
-          label={"Primary button"}
-          onPress={() => {
-            alert("Action triggered");
-          }}
-        />
-      </View>
+      <ButtonOutline
+        accessibilityLabel="Tap to trigger test alert"
+        label={"Primary button"}
+        onPress={() => {
+          alert("Action triggered");
+        }}
+      />
+
       <VSpacer size={16} />
-      <View>
+
+      <View style={{ alignSelf: "center" }}>
         <ButtonOutline
-          small
-          label={"Primary Button (Small)"}
           accessibilityLabel="Tap to trigger test alert"
+          label={"Primary button (centered)"}
           onPress={() => {
             alert("Action triggered");
           }}
         />
       </View>
+
+      <VSpacer size={16} />
+
+      <ButtonOutline
+        small
+        label={"Primary Button (Small)"}
+        accessibilityLabel="Tap to trigger test alert"
+        onPress={() => {
+          alert("Action triggered");
+        }}
+      />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ButtonOutline · Primary, Full width">
       <View>

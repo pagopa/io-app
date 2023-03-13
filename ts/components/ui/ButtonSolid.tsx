@@ -146,11 +146,7 @@ export const ButtonSolid = ({
       onPressOut={onPressOut}
       accessible={true}
       disabled={disabled}
-      style={
-        fullWidth
-          ? IOButtonStyles.dimensionsFullWidth
-          : IOButtonStyles.dimensionsDefault
-      }
+      style={!fullWidth ? IOButtonStyles.dimensionsDefault : {}}
     >
       <Animated.View
         style={[
