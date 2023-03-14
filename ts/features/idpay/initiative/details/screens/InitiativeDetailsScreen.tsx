@@ -32,6 +32,7 @@ import InitiativeTimelineComponent from "../components/InitiativeTimelineCompone
 import { IDPayDetailsParamsList } from "../navigation";
 import { idpayInitiativeDetailsSelector } from "../store";
 import { idpayInitiativeGet } from "../store/actions";
+import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 
 const styles = StyleSheet.create({
   newInitiativeMessageContainer: {
@@ -123,7 +124,7 @@ export const InitiativeDetailsScreen = () => {
       initiativeData.status === StatusEnum.NOT_REFUNDABLE;
 
     return (
-      <SafeAreaView style={IOStyles.flex}>
+      <>
         <ScrollView bounces={false}>
           <InitiativeCardComponent initiative={initiativeData} />
           <View
@@ -169,19 +170,21 @@ export const InitiativeDetailsScreen = () => {
           <VSpacer size={32} />
         </ScrollView>
         {initiativeNeedsConfiguration && (
-          <FooterWithButtons
-            type="SingleButton"
-            leftButton={{
-              block: true,
-              primary: true,
-              onPress: navigateToConfiguration,
-              title: I18n.t(
-                "idpay.initiative.details.initiativeDetailsScreen.configured.startConfigurationCTA"
-              )
-            }}
-          />
+          <SafeAreaView style={IOStyles.flex}>
+            <FooterWithButtons
+              type="SingleButton"
+              leftButton={{
+                block: true,
+                primary: true,
+                onPress: navigateToConfiguration,
+                title: I18n.t(
+                  "idpay.initiative.details.initiativeDetailsScreen.configured.startConfigurationCTA"
+                )
+              }}
+            />
+          </SafeAreaView>
         )}
-      </SafeAreaView>
+      </>
     );
   };
 
@@ -189,6 +192,7 @@ export const InitiativeDetailsScreen = () => {
     <BaseScreenComponent
       goBack={true}
       headerBackgroundColor={IOColors["blueItalia-50"]}
+      contextualHelp={emptyContextualHelp}
     >
       <FocusAwareStatusBar
         backgroundColor={IOColors["blueItalia-50"]}
