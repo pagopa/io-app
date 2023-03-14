@@ -97,6 +97,7 @@ const ZendeskSeeReportsRouters = (props: Props) => {
         onRetry={() => {
           dispatch(zendeskRequestTicketNumber.request());
         }}
+        onAbort={() => props.navigation.goBack()}
       />
     );
   }
