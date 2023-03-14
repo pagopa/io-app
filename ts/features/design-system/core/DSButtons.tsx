@@ -58,10 +58,18 @@ export const DSButtons = () => {
         ButtonSolid
       </H2>
       <DSComponentViewerBox name="ButtonSolid · Primary Variant (using Pressable API)">
-        <View>
+        <ButtonSolid
+          accessibilityLabel="Tap to trigger test alert"
+          label={"Primary button"}
+          onPress={onButtonPress}
+        />
+
+        <VSpacer size={16} />
+
+        <View style={{ alignSelf: "center" }}>
           <ButtonSolid
             accessibilityLabel="Tap to trigger test alert"
-            label={"Primary button"}
+            label={"Primary button (centered)"}
             onPress={onButtonPress}
           />
         </View>
@@ -318,15 +326,26 @@ export const DSButtons = () => {
         ButtonOutline
       </H2>
       <DSComponentViewerBox name="ButtonOutline · Primary variant (using Pressable API)">
-        <View>
+        <ButtonOutline
+          accessibilityLabel="Tap to trigger test alert"
+          label={"Primary button"}
+          onPress={() => {
+            alert("Action triggered");
+          }}
+        />
+
+        <VSpacer size={16} />
+
+        <View style={{ alignSelf: "center" }}>
           <ButtonOutline
             accessibilityLabel="Tap to trigger test alert"
-            label={"Primary button"}
+            label={"Primary button (centered)"}
             onPress={() => {
               alert("Action triggered");
             }}
           />
         </View>
+
         {!isDesignSystemEnabled && (
           <>
             <VSpacer size={16} />
