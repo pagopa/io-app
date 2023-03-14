@@ -10,6 +10,7 @@ import { SignatureComponents } from "./httpSignature/types/SignatureComponents";
 export type LollipopConfig = {
   nonce: string;
   customContentToSign?: Record<string, string>;
+  signBody?: boolean;
 };
 
 /**
