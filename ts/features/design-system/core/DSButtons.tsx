@@ -69,24 +69,22 @@ export const DSButtons = () => (
       />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ButtonSolid · Primary, Full width">
-      <View>
-        <ButtonSolid
-          fullWidth
-          accessibilityLabel="Tap to trigger test alert"
-          label={"Primary button (Full Width)"}
-          onPress={onButtonPress}
-        />
-      </View>
+      <ButtonSolid
+        fullWidth
+        accessibilityLabel="Tap to trigger test alert"
+        label={"Primary button (Full Width)"}
+        onPress={onButtonPress}
+      />
+
       <VSpacer size={16} />
-      <View>
-        <ButtonSolid
-          small
-          fullWidth
-          accessibilityLabel="Tap to trigger test alert"
-          label={"Primary Button (Small, Full Width)"}
-          onPress={onButtonPress}
-        />
-      </View>
+
+      <ButtonSolid
+        small
+        fullWidth
+        accessibilityLabel="Tap to trigger test alert"
+        label={"Primary Button (Small, Full Width)"}
+        onPress={onButtonPress}
+      />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ButtonSolid · Primary, disabled">
       <View>
