@@ -89,7 +89,7 @@ const ZendeskSeeReportsRouters = (props: Props) => {
     }
   }, [ticketNumber, dispatch]);
 
-  if (!isStrictSome(ticketNumber) && !pot.isNone(ticketNumber)) {
+  if (pot.isLoading(ticketNumber) || pot.isError(ticketNumber)) {
     return (
       <LoadingErrorComponent
         isLoading={pot.isLoading(ticketNumber)}
@@ -97,6 +97,7 @@ const ZendeskSeeReportsRouters = (props: Props) => {
         onRetry={() => {
           dispatch(zendeskRequestTicketNumber.request());
         }}
+        onAbort={() => props.navigation.goBack()}
       />
     );
   }
