@@ -1,9 +1,10 @@
-import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
+import { EmailString, NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { TypeEnum as ClausesTypeEnum } from "../../../../../definitions/fci/Clause";
 import { DocumentDetailView } from "../../../../../definitions/fci/DocumentDetailView";
 import { SignatureField } from "../../../../../definitions/fci/SignatureField";
 import {
   SignatureRequestDetailView,
+  SignatureRequestDetailViewIssuer,
   StatusEnum as SignatureRequestStatus
 } from "../../../../../definitions/fci/SignatureRequestDetailView";
 
@@ -53,6 +54,10 @@ export const mockDocuments: ReadonlyArray<DocumentDetailView> = [
 export const mockSignatureRequestDetailView: SignatureRequestDetailView = {
   id: "mockId" as NonEmptyString,
   status: SignatureRequestStatus.WAIT_FOR_SIGNATURE,
+  issuer: {
+    email: "mockEmail" as EmailString,
+    description: "mockDescription" as NonEmptyString
+  } as SignatureRequestDetailViewIssuer,
   expires_at: new Date(now.setDate(now.getDate() + 30)),
   created_at: now,
   dossier_id: "mockDossierId" as NonEmptyString,
