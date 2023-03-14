@@ -401,13 +401,9 @@ class LandingScreen extends React.PureComponent<Props, State> {
 }
 
 const mapStateToProps = (state: GlobalState) => {
-  const isCIEAuthenticationSupported = __DEV__
-    ? pot.some(true)
-    : isCieSupportedSelector(state);
-  const hasApiLevelSupport = __DEV__
-    ? pot.some(true)
-    : hasApiLevelSupportSelector(state);
-  const hasNFCFeature = __DEV__ ? pot.some(true) : hasNFCFeatureSelector(state);
+  const isCIEAuthenticationSupported = isCieSupportedSelector(state);
+  const hasApiLevelSupport = hasApiLevelSupportSelector(state);
+  const hasNFCFeature = hasNFCFeatureSelector(state);
   return {
     isSessionExpired: isSessionExpiredSelector(state),
     continueWithRootOrJailbreak: continueWithRootOrJailbreakSelector(state),
