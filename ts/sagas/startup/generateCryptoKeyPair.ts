@@ -3,22 +3,28 @@ import {
   generate,
   CryptoError,
   deleteKey,
-  getPublicKey
+  PublicKey
 } from "@pagopa/io-react-native-crypto";
-import { call } from "typed-redux-saga/macro";
+import { call, put } from "typed-redux-saga/macro";
 import { jwkThumbprintByEncoding } from "jwk-thumbprint";
+import { pipe } from "fp-ts/lib/function";
 import { DEFAULT_LOLLIPOP_HASH_ALGORITHM_CLIENT } from "../../features/lollipop/utils/login";
 import {
   checkPublicKeyExists,
   setKeyGenerationInfo,
   getKeyGenerationInfo,
   KeyGenerationInfo,
-  KeyInfo
+  KeyInfo,
+  wipeKeyGenerationInfo
 } from "../../utils/crypto";
 import {
   trackLollipopKeyGenerationFailure,
   trackLollipopKeyGenerationSuccess
 } from "../../utils/analytics";
+import {
+  lollipopRemovePublicKey,
+  lollipopSetPublicKey
+} from "../../features/lollipop/store/actions/lollipop";
 
 /**
  * Generates a new crypto key pair.
@@ -69,6 +75,8 @@ function* deleteCryptoKeyPair(keyTag: string) {
   if (keyAlreadyExistsOnKeystore) {
     try {
       yield* call(deleteKey, keyTag);
+      yield* put(lollipopRemovePublicKey());
+      yield* call(wipeKeyGenerationInfo, keyTag);
     } catch (e) {
       yield* saveKeyGenerationFailureInfo(keyTag, e);
     }
@@ -83,10 +91,12 @@ function* generateCryptoKeyPair(keyTag: string) {
     // Remove an already existing key with the same tag.
     yield* call(deleteCryptoKeyPair, keyTag);
 
-    const key = yield* call(generate, keyTag);
+    const publicKey = yield* call(generate, keyTag);
+    yield* put(lollipopSetPublicKey({ publicKey }));
+
     const keyGenerationInfo: KeyGenerationInfo = {
       keyTag,
-      keyType: key.kty
+      keyType: publicKey.kty
     };
     yield* call(setKeyGenerationInfo, keyTag, keyGenerationInfo);
   } catch (e) {
@@ -94,33 +104,20 @@ function* generateCryptoKeyPair(keyTag: string) {
   }
 }
 
-/**
- * Get the public key tied to the provided keyTag
- */
-export function* getCryptoPublicKey(keyTag: O.Option<string>) {
-  const emptyKeyInfo: KeyInfo = {
-    keyTag: undefined,
-    publicKey: undefined
-  };
-  try {
-    if (O.isSome(keyTag)) {
-      const publicKey = yield* call(getPublicKey, keyTag.value);
-      const keyInfo: KeyInfo = {
-        keyTag: keyTag.value,
-        publicKey,
-        publicKeyThumbprint: jwkThumbprintByEncoding(
-          publicKey,
-          DEFAULT_LOLLIPOP_HASH_ALGORITHM_CLIENT,
-          "base64url"
-        )
-      };
-      return keyInfo;
-    } else {
-      return emptyKeyInfo;
-    }
-  } catch (e) {
-    return emptyKeyInfo;
-  }
+export function generateKeyInfo(
+  maybeKeyTag: O.Option<string>,
+  maybePublicKey: O.Option<PublicKey>
+) {
+  return pipe(
+    maybeKeyTag,
+    O.chain(keyTag =>
+      pipe(
+        maybePublicKey,
+        O.map(publicKey => keyInfoFromKeyTagAndPublicKey(keyTag, publicKey))
+      )
+    ),
+    O.getOrElse(defaultKeyInfo)
+  );
 }
 
 /**
@@ -134,3 +131,21 @@ function* saveKeyGenerationFailureInfo(keyTag: string, e: unknown) {
   };
   yield* call(setKeyGenerationInfo, keyTag, keyGenerationInfo);
 }
+
+const keyInfoFromKeyTagAndPublicKey = (
+  keyTag: string,
+  publicKey: PublicKey
+): KeyInfo => ({
+  keyTag,
+  publicKey,
+  publicKeyThumbprint: jwkThumbprintByEncoding(
+    publicKey,
+    DEFAULT_LOLLIPOP_HASH_ALGORITHM_CLIENT,
+    "base64url"
+  )
+});
+
+const defaultKeyInfo = (): KeyInfo => ({
+  keyTag: undefined,
+  publicKey: undefined
+});
