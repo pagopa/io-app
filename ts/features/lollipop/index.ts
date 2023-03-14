@@ -24,35 +24,10 @@ export function toSignatureComponents(
     authority: inputUrl.host,
     path: inputUrl.pathname,
     scheme: inputUrl.protocol,
-    targetUri: normalizeForTargetUri(inputUrl),
+    targetUri: inputUrl.toString(),
     originalUrl: inputUrl.toString()
   };
 }
-
-/**
- * this function applies the indications to normalize the URI in order to
- * facilitate comparison between actual (received) URIs and signed URIs
- * https://datatracker.ietf.org/doc/draft-rundgren-signed-http-requests/00/
- */
-/* eslint-disable functional/immutable-data */
-export function normalizeForTargetUri(url: URLParse): string {
-  const normalizedUrl = new URL(url.href);
-
-  const decodedPathname = decodeURIComponent(
-    normalizedUrl.pathname.substring(1)
-  );
-  const encodedPathname = encodeURIComponent(decodedPathname);
-
-  const uppercaseEncodedPathname = encodedPathname.replace(/%\w\w/g, match =>
-    match.toUpperCase()
-  );
-  normalizedUrl.pathname = uppercaseEncodedPathname;
-
-  normalizedUrl.hostname = normalizedUrl.hostname.toLocaleLowerCase();
-
-  return normalizedUrl.toString();
-}
-/* eslint-enable */
 
 /**
  * Returns the http-signature algorithm used to sign the signature base specified by

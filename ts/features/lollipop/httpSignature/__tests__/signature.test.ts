@@ -1,7 +1,7 @@
 import { ECKey, RSAKey } from "@pagopa/io-react-native-crypto";
 import MockDate from "mockdate";
 import URLParse from "url-parse";
-import { LollipopConfig, normalizeForTargetUri } from "../..";
+import { LollipopConfig } from "../..";
 import {
   SignatureConfigForgeInput,
   CutsomContentToSignInput,
@@ -98,9 +98,7 @@ const testConfig: SignatureConfig = {
     authority: "example.com",
     path: "/hello",
     scheme: "https",
-    targetUri: normalizeForTargetUri(
-      new URLParse("https://example.com/hello?name=world")
-    ),
+    targetUri: "https://example.com/hello?name=world",
     originalUrl: "https://example.com/hello?name=world"
   },
   signatureParams: ["Content-Digest", "@method", "@path", "@authority"]
@@ -116,9 +114,7 @@ const testCustomHeadersConfig: SignatureConfig = {
     authority: "example.com",
     path: "/hello",
     scheme: "https",
-    targetUri: normalizeForTargetUri(
-      new URLParse("https://example.com/hello?name=world")
-    ),
+    targetUri: "https://example.com/hello?name=world",
     originalUrl: "https://example.com/hello?name=world"
   },
   signatureParams: [
