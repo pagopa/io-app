@@ -1,4 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import _ from "lodash";
 import {
@@ -46,11 +47,15 @@ import { DateISO8601Transform } from "../store/transforms/dateISO8601Tranform";
 import { PotTransform } from "../store/transforms/potTransform";
 import { isDevEnv } from "../utils/environment";
 import { configureReactotron } from "./configureRectotron";
+import { pipe } from "fp-ts/lib/function";
+import { PublicKey } from "@pagopa/io-react-native-crypto";
+import { UnknownArrayC } from "io-ts";
+import { PersistedLollipopState } from "../features/lollipop/store";
 
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 21;
+const CURRENT_REDUX_STORE_VERSION = 22;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -307,7 +312,25 @@ const migrations: MigrationManifest = {
   "21": (state: PersistedState) => ({
     ...state,
     lollipop: initialLollipopState
-  })
+  }),
+  // Version 22
+  // LolliPoP redux type changes from 
+  // { keyTag?: string; publicKey?: string } 
+  // to 
+  // { keyTag: O.Option<string>; publicKey: O.Option<PublicKey> }
+  "22": (state: PersistedState) => {
+    const previousLolliPoPState = (state as PersistedGlobalState).lollipop;
+    type TypePreviousLolliPoPState = { keyTag?: string; publicKey?: PublicKey };
+    const castedPeviousLolliPoPState = previousLolliPoPState as unknown as TypePreviousLolliPoPState;
+    return {
+    ...state,
+      lollipop: {
+        ...previousLolliPoPState,
+        keyTag: O.fromNullable(castedPeviousLolliPoPState.keyTag),
+        publicKey: O.fromNullable(castedPeviousLolliPoPState.publicKey) as O.Option<PublicKey>
+      }
+    };
+  },
 };
 
 const isDebuggingInChrome = isDevEnv && !!window.navigator.userAgent;
