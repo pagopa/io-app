@@ -107,10 +107,6 @@ export const IOButtonStyles = StyleSheet.create({
   /* Widths */
   dimensionsDefault: {
     alignSelf: "flex-start"
-  },
-  dimensionsFullWidth: {
-    flex: 1,
-    alignSelf: "auto"
   }
 });
 
