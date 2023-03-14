@@ -59,18 +59,21 @@ export const lollipopFetch = (
           keyTag: requestAndKeyInfo.keyTag,
           lollipopConfig,
           method,
-          inputUrl,
-          originalUrl
+          inputUrl
         };
+
+        const signatureParams: Array<string> = [
+          ...(lollipopConfig.signBody
+            ? ["Content-Digest", "Content-Type"]
+            : []),
+          "x-pagopa-lollipop-original-method",
+          "x-pagopa-lollipop-original-url"
+        ];
+
         const mainSignatureConfig: SignatureConfig = forgeSignatureConfig(
           signatureConfigForgeInput,
           keyInfo,
-          [
-            "Content-Digest",
-            "Content-Type",
-            "x-pagopa-lollipop-original-method",
-            "x-pagopa-lollipop-original-url"
-          ]
+          signatureParams
         );
 
         newInit = addHeader(
@@ -225,7 +228,6 @@ export type SignatureConfigForgeInput = {
   lollipopConfig: LollipopConfig;
   method: string;
   inputUrl: URLParse;
-  originalUrl: string;
 };
 
 type RequestAndKeyInfoForLPFetch = {
@@ -252,8 +254,7 @@ function forgeSignatureConfig(
     nonce: forgeInput.lollipopConfig.nonce,
     signatureComponents: toSignatureComponents(
       forgeInput.method,
-      forgeInput.inputUrl,
-      forgeInput.originalUrl
+      forgeInput.inputUrl
     ),
     signatureParams
   };
@@ -261,13 +262,12 @@ function forgeSignatureConfig(
 
 function extractHttpRequestComponents(input: string, init: RequestInit) {
   const inputUrl = new URLParse(input, true);
-  const queryString: string | undefined = inputUrl.href.split("?")[1];
   const method = init.method?.toUpperCase() ?? "";
   const body = init.body;
   const bodyString = body as string;
-  const originalUrl =
-    inputUrl.pathname + (queryString ? "?" + queryString : "");
-  return { body, bodyString, inputUrl, queryString, method, originalUrl };
+  const originalUrl = inputUrl.toString();
+
+  return { body, bodyString, inputUrl, method, originalUrl };
 }
 
 /**
