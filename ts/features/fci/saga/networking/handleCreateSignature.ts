@@ -58,8 +58,10 @@ export function* handleCreateSignature(
       }
     };
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore TODO: https://pagopa.atlassian.net/browse/SFEQS-1509?atlOrigin=eyJpIjoiMTQ3NWY3OTdjOTU5NDNkN2E2YzE1NzA0ZjZmM2Y1ZGYiLCJwIjoiaiJ9
     const postSignatureResponse = yield* call(postSignature(lollipopConfig), {
-      signatureToCreate: action.payload
+      body: action.payload
     });
 
     if (E.isLeft(postSignatureResponse)) {
