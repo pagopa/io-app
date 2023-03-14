@@ -17,18 +17,48 @@ export type LollipopConfig = {
  */
 export function toSignatureComponents(
   method: string,
-  inputUrl: URLParse,
-  originalUrl: string
+  inputUrl: URLParse
 ): SignatureComponents {
   return {
     method,
-    authority: inputUrl.hostname,
+    authority: inputUrl.host,
     path: inputUrl.pathname,
-    requestTarget: originalUrl,
     scheme: inputUrl.protocol,
-    targetUri: `${inputUrl.protocol}://${inputUrl.hostname}/${originalUrl}`
+    targetUri: normalizeForTargetUri(inputUrl),
+    originalUrl: getOriginalUrl(inputUrl)
   };
 }
+
+export function getOriginalUrl(inputUrl: URLParse) {
+  const newUrl = new URL(inputUrl.toString());
+  if (newUrl.port === "80") {
+    return new URL(newUrl.toString().replace(`:${newUrl.port}`, "")).toString();
+  }
+
+  return newUrl.toString();
+}
+
+/* eslint-disable functional/immutable-data */
+export function normalizeForTargetUri(url: URLParse): string {
+  const normalizedUrl = new URL(url.href);
+  normalizedUrl.port = "";
+
+  const decodedPathname = decodeURIComponent(
+    normalizedUrl.pathname.substring(1)
+  );
+  const encodedPathname = encodeURIComponent(decodedPathname);
+
+  const uppercaseEncodedPathname = encodedPathname.replace(
+    /%[0-9a-f]{2}/gi,
+    match => match.toUpperCase()
+  );
+  normalizedUrl.pathname = uppercaseEncodedPathname;
+
+  normalizedUrl.hostname = normalizedUrl.hostname.toLocaleLowerCase();
+
+  return normalizedUrl.toString();
+}
+/* eslint-enable */
 
 /**
  * Returns the http-signature algorithm used to sign the signature base specified by
