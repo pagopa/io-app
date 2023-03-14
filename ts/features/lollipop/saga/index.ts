@@ -3,7 +3,10 @@ import { v4 as uuid } from "uuid";
 import { put, select, call } from "typed-redux-saga/macro";
 import { getPublicKey } from "@pagopa/io-react-native-crypto";
 import { lollipopKeyTagSelector } from "../store/reducers/lollipop";
-import { lollipopKeyTagSave } from "../store/actions/lollipop";
+import {
+  lollipopKeyTagSave,
+  lollipopSetPublicKey
+} from "../store/actions/lollipop";
 import {
   cryptoKeyGenerationSaga,
   deletePreviousCryptoKeyPair
@@ -23,7 +26,8 @@ export function* generateLollipopKeySaga() {
     try {
       // If we already have a keyTag, we check if there is
       // a public key tied with it.
-      yield* call(getPublicKey, maybeOldKeyTag.value);
+      const publicKey = yield* call(getPublicKey, maybeOldKeyTag.value);
+      yield* put(lollipopSetPublicKey({ publicKey }));
     } catch {
       // If there is no key it could be for two reasons:
       // - The user have a recent app and they logged out (the key is deleted).
