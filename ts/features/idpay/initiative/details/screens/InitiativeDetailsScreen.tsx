@@ -191,11 +191,11 @@ export const InitiativeDetailsScreen = () => {
   return (
     <BaseScreenComponent
       goBack={true}
-      headerBackgroundColor={IOColors["blueItalia-50"]}
+      headerBackgroundColor={IOColors.bluegreyNewBonus}
       contextualHelp={emptyContextualHelp}
     >
       <FocusAwareStatusBar
-        backgroundColor={IOColors["blueItalia-50"]}
+        backgroundColor={IOColors.bluegreyNewBonus}
         barStyle={"dark-content"}
       />
       <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={100}>

@@ -1,6 +1,6 @@
 import { Badge } from "native-base";
 import * as React from "react";
-import { ImageBackground, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -10,13 +10,11 @@ import {
   InitiativeDTO,
   StatusEnum as InitiativeStatusEnum
 } from "../../../../../../definitions/idpay/InitiativeDTO";
-import cardBg from "../../../../../../img/features/idpay/card_full.png";
 import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";
 import { formatDateAsLocal } from "../../../../../utils/dates";
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
@@ -27,21 +25,15 @@ type Props = {
 
 const styles = StyleSheet.create({
   cardContainer: {
-    paddingHorizontal: 8
-  },
-  cardImg: {
-    height: 320
-  },
-  imageBG: {
-    zIndex: -1
-  },
-  badge: {
-    backgroundColor: IOColors.blue
-  },
-  paddedMainContent: {
+    backgroundColor: IOColors.bluegreyNewBonus,
+    borderBottomEndRadius: 24,
+    borderBottomStartRadius: 24,
     padding: 32,
     paddingTop: 0,
     flex: 1
+  },
+  badge: {
+    backgroundColor: IOColors.blue
   },
   bonusLogoContainer: {
     backgroundColor: IOColors.white,
@@ -77,6 +69,38 @@ const styles = StyleSheet.create({
   }
 });
 
+type PercentageSliderProps = {
+  percentage: number;
+  isGreyedOut: boolean;
+};
+const BonusPercentageSlider = ({
+  percentage,
+  isGreyedOut
+}: PercentageSliderProps) => {
+  const width = useSharedValue(0);
+  React.useEffect(() => {
+    // eslint-disable-next-line functional/immutable-data
+    width.value = percentage;
+  });
+  const scalingWidth = useAnimatedStyle(() => ({
+    width: withTiming(width.value, { duration: 1000 })
+  }));
+  return (
+    <View style={styles.remainingPercentageSliderContainer}>
+      <Animated.View
+        style={[
+          {
+            width: `${width.value}%`,
+            backgroundColor: isGreyedOut ? IOColors.blue : IOColors["grey-450"],
+            flex: 1,
+            borderRadius: 4
+          },
+          scalingWidth
+        ]}
+      />
+    </View>
+  );
+};
 const InitiativeCardComponent = (props: Props) => {
   const { initiativeName, endDate, status, amount, accrued, refunded } =
     props.initiative;
@@ -90,37 +114,8 @@ const InitiativeCardComponent = (props: Props) => {
     amount !== 0 && amount !== undefined
       ? (remainingAmount / amount) * 100.0
       : 100.0;
-
-  const BonusPercentageSlider = () => {
-    const width = useSharedValue(0);
-    React.useEffect(() => {
-      // eslint-disable-next-line functional/immutable-data
-      width.value = remainingBonusAmountPercentage;
-    });
-    const scalingWidth = useAnimatedStyle(() => ({
-      width: withTiming(width.value, { duration: 1000 })
-    }));
-    return (
-      <View style={styles.remainingPercentageSliderContainer}>
-        <Animated.View
-          style={[
-            {
-              width: `${width.value}%`,
-              backgroundColor: isInitiativeConfigured
-                ? IOColors.blue
-                : IOColors["grey-450"],
-              flex: 1,
-              borderRadius: 4
-            },
-            scalingWidth
-          ]}
-        />
-      </View>
-    );
-  };
-
-  const renderNewCard = () => (
-    <View style={IOStyles.flex}>
+  return (
+    <View style={styles.cardContainer} testID={"card-component"}>
       {/* top part */}
       <View style={styles.topCardSection}>
         <View style={styles.bonusLogoContainer}></View>
@@ -149,9 +144,10 @@ const InitiativeCardComponent = (props: Props) => {
           </LabelSmall>
         </View>
       </View>
-      <VSpacer size={48} />
 
+      <VSpacer size={48} />
       {/* bottom part */}
+
       <View style={styles.bottomCardSection}>
         <View style={styles.alignCenter}>
           <LabelSmall color="bluegreyDark" weight="Regular">
@@ -161,7 +157,10 @@ const InitiativeCardComponent = (props: Props) => {
             {formatNumberAmount(remainingAmount, true)}
           </H1>
           <VSpacer size={8} />
-          <BonusPercentageSlider />
+          <BonusPercentageSlider
+            isGreyedOut={isInitiativeConfigured}
+            percentage={remainingBonusAmountPercentage}
+          />
         </View>
         <View style={styles.alignCenter}>
           <LabelSmall color="bluegreyDark" weight="Regular">
@@ -174,18 +173,6 @@ const InitiativeCardComponent = (props: Props) => {
           <VSpacer size={8} />
         </View>
       </View>
-    </View>
-  );
-
-  return (
-    <View style={styles.cardContainer} testID={"card-component"}>
-      <ImageBackground
-        source={cardBg}
-        imageStyle={styles.imageBG}
-        style={styles.cardImg}
-      >
-        <View style={styles.paddedMainContent}>{renderNewCard()}</View>
-      </ImageBackground>
     </View>
   );
 };
