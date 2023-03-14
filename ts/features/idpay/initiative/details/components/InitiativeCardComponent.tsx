@@ -166,7 +166,7 @@ const InitiativeCardComponent = (props: Props) => {
           <LabelSmall color="bluegreyDark" weight="Regular">
             {I18n.t("idpay.initiative.details.initiativeCard.toRefund")}
           </LabelSmall>
-          <H1 style={!isInitiativeConfigured ? styles.consumedOpacity : {}}>
+          <H1 style={isInitiativeConfigured ? {} : styles.consumedOpacity}>
             {formatNumberAmount(toBeRepaidAmount, true)}
           </H1>
           <VSpacer size={4} />
