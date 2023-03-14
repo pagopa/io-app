@@ -63,14 +63,9 @@ export const lollipopFetch = (
           originalUrl
         };
 
-        const signatureParams: Array<string> = [
-          "x-pagopa-lollipop-original-method",
-          "x-pagopa-lollipop-original-url"
-        ];
-
-        if (lollipopConfig.signBody) {
-          signatureParams.unshift("Content-Digest", "Content-Type");
-        }
+        const signatureParams: Array<string> = getSignatureParams(
+          lollipopConfig.signBody
+        );
 
         const mainSignatureConfig: SignatureConfig = forgeSignatureConfig(
           signatureConfigForgeInput,
@@ -145,6 +140,18 @@ export const lollipopFetch = (
       return timeoutFetch(input, init);
     }
   );
+};
+
+const getSignatureParams = (signBody?: boolean): Array<string> => {
+  const signatureParams = [
+    "x-pagopa-lollipop-original-method",
+    "x-pagopa-lollipop-original-url"
+  ];
+
+  if (signBody) {
+    return ["Content-Digest", "Content-Type", ...signatureParams];
+  }
+  return signatureParams;
 };
 
 export const customContentSignatureBases = (
