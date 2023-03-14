@@ -10,8 +10,7 @@ import {
   chainSignPromises,
   SignPromiseResult,
   getSignAlgorithm,
-  toSignatureComponents,
-  getOriginalUrl
+  toSignatureComponents
 } from "..";
 import { KeyInfo } from "../../../utils/crypto";
 import { toFetchTimeout, toRetriableFetch } from "../../../utils/fetch";
@@ -262,7 +261,7 @@ function extractHttpRequestComponents(input: string, init: RequestInit) {
   const method = init.method?.toUpperCase() ?? "";
   const body = init.body;
   const bodyString = body as string;
-  const originalUrl = getOriginalUrl(inputUrl);
+  const originalUrl = inputUrl.toString();
 
   return { body, bodyString, inputUrl, method, originalUrl };
 }
