@@ -36,6 +36,7 @@ import {
 } from "../store";
 import { idpayInitiativeGet, idpayTimelinePageGet } from "../store/actions";
 import { Alert } from "../../../../../components/Alert";
+import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 
 const styles = StyleSheet.create({
   newInitiativeMessageContainer: {
@@ -192,7 +193,7 @@ export const InitiativeDetailsScreen = () => {
       }
     };
     return (
-      <SafeAreaView style={IOStyles.flex}>
+      <>
         <ScrollView bounces={false}>
           <InitiativeCardComponent initiative={initiativeData} />
           <View
@@ -239,29 +240,32 @@ export const InitiativeDetailsScreen = () => {
           <VSpacer size={32} />
         </ScrollView>
         {initiativeNeedsConfiguration && (
-          <FooterWithButtons
-            type="SingleButton"
-            leftButton={{
-              block: true,
-              primary: true,
-              onPress: navigateToConfiguration,
-              title: I18n.t(
-                "idpay.initiative.details.initiativeDetailsScreen.configured.startConfigurationCTA"
-              )
-            }}
-          />
+          <SafeAreaView style={IOStyles.flex}>
+            <FooterWithButtons
+              type="SingleButton"
+              leftButton={{
+                block: true,
+                primary: true,
+                onPress: navigateToConfiguration,
+                title: I18n.t(
+                  "idpay.initiative.details.initiativeDetailsScreen.configured.startConfigurationCTA"
+                )
+              }}
+            />
+          </SafeAreaView>
         )}
-      </SafeAreaView>
+      </>
     );
   };
 
   return (
     <BaseScreenComponent
       goBack={true}
-      headerBackgroundColor={IOColors["blueItalia-50"]}
+      headerBackgroundColor={IOColors.bluegreyNewBonus}
+      contextualHelp={emptyContextualHelp}
     >
       <FocusAwareStatusBar
-        backgroundColor={IOColors["blueItalia-50"]}
+        backgroundColor={IOColors.bluegreyNewBonus}
         barStyle={"dark-content"}
       />
       <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={100}>
