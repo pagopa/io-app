@@ -1,6 +1,10 @@
 import * as React from "react";
 import { ScrollView, View } from "react-native";
 import { ContentWrapper } from "../../../components/core/ContentWrapper";
+import {
+  IOColors,
+  IOThemeContext
+} from "../../../components/core/variables/IOColors";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 
 type Props = {
@@ -15,12 +19,20 @@ export const DesignSystemScreen = ({
   noMargin = false
 }: Props) => (
   <BaseScreenComponent goBack={true} headerTitle={title}>
-    <ScrollView>
-      {noMargin ? (
-        <View>{children}</View>
-      ) : (
-        <ContentWrapper>{children}</ContentWrapper>
+    <IOThemeContext.Consumer>
+      {theme => (
+        <ScrollView
+          style={{
+            backgroundColor: IOColors[theme["appBackground-primary"]]
+          }}
+        >
+          {noMargin ? (
+            <View>{children}</View>
+          ) : (
+            <ContentWrapper>{children}</ContentWrapper>
+          )}
+        </ScrollView>
       )}
-    </ScrollView>
+    </IOThemeContext.Consumer>
   </BaseScreenComponent>
 );

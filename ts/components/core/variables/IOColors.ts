@@ -1,6 +1,7 @@
-import type { ColorValue } from "react-native";
-import LinearGradient from "react-native-linear-gradient"; // Used by `getGradientColorValues` function
+import * as React from "react";
 import { ComponentProps } from "react";
+import { Appearance, ColorValue } from "react-native";
+import LinearGradient from "react-native-linear-gradient"; // Used by `getGradientColorValues` function
 
 /*
 TYPESCRIPT FUNCTIONS
@@ -259,7 +260,18 @@ export type IOColorsExtra = keyof typeof IOColorsExtra;
 ░░░ THEME COLORS ░░░
 */
 
-export const themeColorsLightMode = asIOThemeColors({
+export type IOTheme = {
+  // General
+  "appBackground-primary": IOColors;
+  "appBackground-secondary": IOColors;
+  "interactiveElem-default": IOColors;
+  "interactiveElem-pressed": IOColors;
+  // Typography
+  "textHeading-default": IOColors;
+  "textBody-default": IOColors;
+};
+
+export const IOThemeLight: IOTheme = {
   // General
   "appBackground-primary": "white",
   "appBackground-secondary": "grey-50",
@@ -268,22 +280,16 @@ export const themeColorsLightMode = asIOThemeColors({
   // Typography
   "textHeading-default": "black",
   "textBody-default": "black"
-});
+};
 
-export type themeColorsLightMode = keyof typeof themeColorsLightMode;
-
-export const themeColorsDarkMode: Record<
-  NonNullable<themeColorsLightMode>,
-  IOColors
-> = {
+export const IOThemeDark: IOTheme = {
+  ...IOThemeLight,
   // General
-  "appBackground-primary": "white",
-  "appBackground-secondary": "grey-50",
+  "appBackground-primary": "black",
   "interactiveElem-default": "blueIO-450",
   "interactiveElem-pressed": "blueIO-600",
   // Typography
-  "textHeading-default": "black",
-  "textBody-default": "black"
+  "textBody-default": "white"
 };
 
 export const themeStatusColorsLightMode = asIOThemeColors({
@@ -331,6 +337,14 @@ export const themeStatusColorsDarkMode: Record<
 };
 
 export type themeStatusColorsDarkMode = keyof typeof themeStatusColorsDarkMode;
+
+/*
+THEME CONTEXT
+*/
+export const IOThemes = { light: IOThemeLight, dark: IOThemeDark };
+export const IOThemeContext: React.Context<IOTheme> = React.createContext(
+  Appearance.getColorScheme() === "dark" ? IOThemes.dark : IOThemes.light
+);
 
 /*
 UTILS
