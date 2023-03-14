@@ -66,7 +66,9 @@ export const useLollipopLoginSource = (
           setWebviewSource({ uri: eventUrl });
         },
         (reason: string) => {
-          console.log(`=== useLollipopLoginSource verifyLollipop FAILURE`);
+          console.log(
+            `=== useLollipopLoginSource verifyLollipop FAILURE (${reason})`
+          );
           trackLollipopIdpLoginFailure(reason);
           setLollipopCheckStatus({
             status: "untrusted",
@@ -92,11 +94,15 @@ export const useLollipopLoginSource = (
       return;
     }
 
-    if (!useLollipopLogin || O.isNone(maybeKeyTag)) {
+    if (
+      !useLollipopLogin ||
+      O.isNone(maybeKeyTag) ||
+      O.isNone(maybePublicKey)
+    ) {
       console.log(
         `=== useLollipopLoginSource regenerateLoginSource (${!useLollipopLogin}) (${O.isNone(
           maybeKeyTag
-        )})`
+        )}) (${O.isNone(maybePublicKey)})`
       );
       if (useLollipopLogin) {
         // We track missing key tag event only if lollipop is enabled
@@ -145,7 +151,7 @@ export const useLollipopLoginSource = (
         });
       })
     )();
-  }, [dispatch, loginUri, maybeKeyTag, useLollipopLogin]);
+  }, [dispatch, loginUri, maybeKeyTag, maybePublicKey, useLollipopLogin]);
 
   const retryLolliPoPLogin = useCallback(() => {
     console.log(`=== useLollipopLoginSource retryLolliPoPLogin`);
@@ -165,6 +171,14 @@ export const useLollipopLoginSource = (
       console.log(
         `=== useLollipopLoginSource shouldBlockUrlNavigationWhileCheckingLolliPoP`
       );
+      if (!useLollipopLogin) {
+        console.log(
+          `=== useLollipopLoginSource shouldBlockUrlNavigationWhileCheckingLolliPoP return false (lollipop disabled)`
+        );
+        // LolliPoP not enabled, do not check the Url
+        return false;
+      }
+
       const parsedUrl = new URLParse(url, true);
       const urlQuery = parsedUrl.query;
       const urlEncodedSamlRequest = urlQuery?.SAMLRequest;
@@ -173,7 +187,7 @@ export const useLollipopLoginSource = (
           // Make sure that we have a public key (since its retrieval
           // may have failed - in which case let the flow go through
           // the non-lollipop standard check process)
-          if (O.isSome(maybePublicKey)) {
+          if (O.isSome(maybeKeyTag) && O.isSome(maybePublicKey)) {
             // Start Lollipop verification process
             setLollipopCheckStatus({
               status: "checking",
@@ -213,7 +227,13 @@ export const useLollipopLoginSource = (
       );
       return false;
     },
-    [lollipopCheckStatus.status, maybePublicKey, verifyLollipop]
+    [
+      lollipopCheckStatus.status,
+      maybeKeyTag,
+      maybePublicKey,
+      useLollipopLogin,
+      verifyLollipop
+    ]
   );
 
   useOnFirstRender(() => {
