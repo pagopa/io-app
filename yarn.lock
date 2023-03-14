@@ -3078,22 +3078,6 @@
   resolved "https://registry.yarnpkg.com/@pagopa/react-native-cie/-/react-native-cie-1.1.5.tgz#d56a524dd4ad78bee2fa949e635a4ada0854730f"
   integrity sha512-rwJiKz1s9hwyGvngjTIwF4ZjO37YpQM4LQ2Mw56qMxRVry59TeZPaHn74aT5FfgadcH6tPvyXgCTNbuvkj0fxg==
 
-"@pagopa/ts-commons@^10.13.0":
-  version "10.13.0"
-  resolved "https://registry.yarnpkg.com/@pagopa/ts-commons/-/ts-commons-10.13.0.tgz#d8828a4b4f29e6ad0674c9fcea55eab41240725f"
-  integrity sha512-NE1RXpi5R7DlG9HdXCZZYj7DLodPMTEsusdDmCjJBlvsHRLlRsvGUx2mgA4oh+iFA+nGE9mDIbBoTN9lwGjqfQ==
-  dependencies:
-    abort-controller "^3.0.0"
-    agentkeepalive "^4.1.4"
-    applicationinsights "^1.8.10"
-    fp-ts "^2.11.0"
-    io-ts "^2.2.16"
-    jose "^4.11.2"
-    json-set-map "^1.1.2"
-    node-fetch "^2.6.0"
-    semver "^7.3.7"
-    validator "^13.7.0"
-
 "@pagopa/ts-commons@^10.15.0":
   version "10.15.0"
   resolved "https://registry.yarnpkg.com/@pagopa/ts-commons/-/ts-commons-10.15.0.tgz#8e3030a2ebc16c3edb5ef99962c6e8d534826957"
