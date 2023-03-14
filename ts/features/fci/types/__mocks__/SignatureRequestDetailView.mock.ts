@@ -4,6 +4,7 @@ import { DocumentDetailView } from "../../../../../definitions/fci/DocumentDetai
 import { SignatureField } from "../../../../../definitions/fci/SignatureField";
 import {
   SignatureRequestDetailView,
+  SignatureRequestDetailViewIssuer,
   StatusEnum as SignatureRequestStatus
 } from "../../../../../definitions/fci/SignatureRequestDetailView";
 
@@ -54,9 +55,9 @@ export const mockSignatureRequestDetailView: SignatureRequestDetailView = {
   id: "mockId" as NonEmptyString,
   status: SignatureRequestStatus.WAIT_FOR_SIGNATURE,
   issuer: {
-    email: "fake-email@issuer.nomail" as EmailString,
-    description: "Description of the issuer" as NonEmptyString
-  },
+    email: "mockEmail" as EmailString,
+    description: "mockDescription" as NonEmptyString
+  } as SignatureRequestDetailViewIssuer,
   expires_at: new Date(now.setDate(now.getDate() + 30)),
   created_at: now,
   dossier_id: "mockDossierId" as NonEmptyString,

@@ -38,7 +38,7 @@ export function* handleCreateFilledDocument(
 ): SagaIterator {
   try {
     const postQtspFilledBodyResponse = yield* call(postQtspFilledBody, {
-      documentToFill: action.payload
+      body: action.payload
     });
 
     if (E.isLeft(postQtspFilledBodyResponse)) {
