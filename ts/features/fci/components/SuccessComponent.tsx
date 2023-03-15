@@ -1,5 +1,7 @@
 import * as React from "react";
+import { createSelector } from "reselect";
 import * as O from "fp-ts/lib/Option";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import I18n from "../../../i18n";
 import imageExpired from "../../../../img/wallet/errors/payment-expired-icon.png";
 import hourglass from "../../../../img/pictograms/hourglass.png";
@@ -7,7 +9,6 @@ import {
   SignatureRequestDetailView,
   StatusEnum as SignatureRequestDetailStatus
 } from "../../../../definitions/fci/SignatureRequestDetailView";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { isLollipopEnabledSelector } from "../../../store/reducers/backendStatus";
 import {
   fciEndRequest,
@@ -32,7 +33,9 @@ const SuccessComponent = (props: {
   const status = props.signatureRequest.status;
   const dispatch = useIODispatch();
 
-  const publicKeyOption = useIOSelector(lollipopPublicKeySelector);
+  const publicKeyOption = useIOSelector(
+    createSelector(lollipopPublicKeySelector, V => V)
+  );
   const isLollipopEnabled = useIOSelector(isLollipopEnabledSelector);
   const showUnsupportedDeviceBanner =
     isLollipopEnabled && O.isNone(publicKeyOption);

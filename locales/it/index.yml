@@ -3229,7 +3229,7 @@ features:
           subTitle: Riprova tra qualche minuto. Se si ripete, contatta l’assistenza.
         update:
           title: Aggiorna l’app
-          subTitle: Per utilizzare questo nuovo servizio devi aggiornare l’app ed effettuare un nuovo login.
+          subTitle: Verifica di avere installato l’ultima versione di IO oppure rifai il login. 
         rejected:
           title: La firma non è andata a buon fine
           subTitle: L’ente mittente ti contatterà nei prossimi giorni per farti firmare di nuovo. Se ciò non dovesse succedere, scrivi a
