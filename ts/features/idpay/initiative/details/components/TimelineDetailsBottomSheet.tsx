@@ -1,17 +1,17 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import { InitiativeDTO } from "../../../../../../definitions/idpay/InitiativeDTO";
 import { OperationListDTO } from "../../../../../../definitions/idpay/OperationListDTO";
 import { OperationTypeEnum as RefundOperationTypeEnum } from "../../../../../../definitions/idpay/RefundOperationDTO";
 import { OperationTypeEnum as TransactionDetailOperationTypeEnum } from "../../../../../../definitions/idpay/TransactionDetailDTO";
-import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
+import { ContentWrapper } from "../../../../../components/core/ContentWrapper";
 import { Pictogram } from "../../../../../components/core/pictograms";
-import { H4 } from "../../../../../components/core/typography/H4";
+import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
+import ButtonOutline from "../../../../../components/ui/ButtonOutline";
 import I18n from "../../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import themeVariables from "../../../../../theme/variables";
 import {
   IOBottomSheetModal,
   useIOBottomSheetModal
@@ -119,15 +119,16 @@ export const useTimelineDetailsBottomSheet = (
     });
 
   const bottomSheetFooter = (
-    <View style={styles.footer}>
-      <ButtonDefaultOpacity
-        block={true}
-        bordered={true}
+    <ContentWrapper>
+      <ButtonOutline
+        label={I18n.t("global.buttons.close")}
+        accessibilityLabel={I18n.t("global.buttons.close")}
+        color="primary"
         onPress={() => modal.dismiss()}
-      >
-        <H4 color="blue">{I18n.t("global.buttons.close")}</H4>
-      </ButtonDefaultOpacity>
-    </View>
+        fullWidth={true}
+      />
+      <VSpacer size={24} />
+    </ContentWrapper>
   );
 
   const modal = useIOBottomSheetModal(
@@ -160,9 +161,3 @@ export const useTimelineDetailsBottomSheet = (
 
   return { ...modal, present };
 };
-
-const styles = StyleSheet.create({
-  footer: {
-    padding: themeVariables.contentPadding
-  }
-});
