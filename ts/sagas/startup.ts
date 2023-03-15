@@ -33,8 +33,7 @@ import {
   pagoPaApiUrlPrefixTest,
   pnEnabled,
   svEnabled,
-  zendeskEnabled,
-  idPayEnabled
+  zendeskEnabled
 } from "../config";
 import { watchBonusSaga } from "../features/bonus/bonusVacanze/store/sagas/bonusSaga";
 import { watchBonusBpdSaga } from "../features/bonus/bpd/saga";
@@ -64,11 +63,17 @@ import {
   sessionInfoSelector,
   sessionTokenSelector
 } from "../store/reducers/authentication";
-import { lollipopKeyTagSelector } from "../features/lollipop/store/reducers/lollipop";
+import {
+  lollipopKeyTagSelector,
+  lollipopPublicKeySelector
+} from "../features/lollipop/store/reducers/lollipop";
 import { generateLollipopKeySaga } from "../features/lollipop/saga";
 import { IdentificationResult } from "../store/reducers/identification";
 import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
-import { isPagoPATestEnabledSelector } from "../store/reducers/persistedPreferences";
+import {
+  isIdPayTestEnabledSelector,
+  isPagoPATestEnabledSelector
+} from "../store/reducers/persistedPreferences";
 import {
   isProfileFirstOnBoarding,
   profileSelector
@@ -139,7 +144,7 @@ import { watchLoadMessageById } from "./messages/watchLoadMessageById";
 import { watchThirdPartyMessageSaga } from "./messages/watchThirdPartyMessageSaga";
 import { checkNotificationsPreferencesSaga } from "./startup/checkNotificationsPreferencesSaga";
 import {
-  getCryptoPublicKey,
+  generateKeyInfo,
   trackMixpanelCryptoKeyPairEvents
 } from "./startup/generateCryptoKeyPair";
 
@@ -228,7 +233,8 @@ export function* initializeApplicationSaga(): Generator<
 
   // Get keyInfo for lollipop
   const keyTag = yield* select(lollipopKeyTagSelector);
-  const keyInfo = yield* call(getCryptoPublicKey, keyTag);
+  const publicKey = yield* select(lollipopPublicKeySelector);
+  const keyInfo = yield* call(generateKeyInfo, keyTag, publicKey);
 
   // Instantiate a backend client from the session token
   const backendClient: ReturnType<typeof BackendClient> = BackendClient(
@@ -442,13 +448,16 @@ export function* initializeApplicationSaga(): Generator<
   // third-party message attachments, PN attachments and MVL ones)
   yield* fork(watchMessageAttachmentsSaga, sessionToken);
 
-  if (idPayEnabled) {
+  const idPayTestEnabled: ReturnType<typeof isIdPayTestEnabledSelector> =
+    yield* select(isIdPayTestEnabledSelector);
+
+  if (idPayTestEnabled) {
     // Start watching for IDPay actions
     yield* fork(watchIDPaySaga, maybeSessionInformation.value.bpdToken);
   }
 
   if (fciEnabled) {
-    yield* fork(watchFciSaga, sessionToken);
+    yield* fork(watchFciSaga, sessionToken, keyInfo);
   }
 
   // Load the user metadata

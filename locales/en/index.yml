@@ -433,6 +433,9 @@ profile:
       alertMessage: The application must be restarted for the changes to take effect.
     pnEnvironment:
       pnEnv: PN Test Environment
+    idpay: 
+      idpayTest: Test IDPay
+      idpayTestAlert: This change requires app reboot
     designSystemEnvironment: Experimental Design System
     appVersion: App Version
     backendVersion: Backend Version
@@ -3210,6 +3213,10 @@ features:
     signatureFields:
       title: "Sign here"
       showOnDocument: "See on document"
+      accessibility:
+        fieldDetailHint: "Go to the page that displays the signature field"
+        selected: "Field selected"
+        unselected: "Field not selected"
     title: "Firma con IO"
     documentsBar:
       titleLeft: Document {{currentDoc}} of {{totalDocs}}

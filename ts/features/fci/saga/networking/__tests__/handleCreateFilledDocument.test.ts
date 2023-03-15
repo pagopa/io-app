@@ -35,7 +35,7 @@ describe("handleCreateFilledDocument", () => {
     testSaga(handleCreateFilledDocument, mockBackendFciClient, loadAction)
       .next()
       .call(mockBackendFciClient, {
-        documentToFill: loadAction.payload
+        body: loadAction.payload
       })
       .next(right(successResponse))
       .put(fciLoadQtspFilledDocument.success(successResponse.value))
@@ -47,7 +47,7 @@ describe("handleCreateFilledDocument", () => {
   it("Should dispatch fciLoadQtspFilledDocument.failure with the response status code as payload if the response is right and the status code is different from 200", () => {
     testSaga(handleCreateFilledDocument, mockBackendFciClient, loadAction)
       .next()
-      .call(mockBackendFciClient, { documentToFill: loadAction.payload })
+      .call(mockBackendFciClient, { body: loadAction.payload })
       .next(right(failureResponse))
       .next(
         fciLoadQtspFilledDocument.failure(
@@ -60,7 +60,7 @@ describe("handleCreateFilledDocument", () => {
   it("Should dispatch fciLoadQtspFilledDocument.failure with a fixed message as payload if the response left", () => {
     testSaga(handleCreateFilledDocument, mockBackendFciClient, loadAction)
       .next()
-      .call(mockBackendFciClient, { documentToFill: loadAction.payload })
+      .call(mockBackendFciClient, { body: loadAction.payload })
       .next(left(new Error()))
       .next(
         fciLoadQtspFilledDocument.failure(
@@ -76,7 +76,7 @@ describe("handleCreateFilledDocument", () => {
     const mockedError = new Error("mockedErrorMessage");
     testSaga(handleCreateFilledDocument, mockBackendFciClient, loadAction)
       .next()
-      .call(mockBackendFciClient, { documentToFill: loadAction.payload })
+      .call(mockBackendFciClient, { body: loadAction.payload })
       .throw(mockedError)
       .next(fciLoadQtspFilledDocument.failure(getNetworkError(mockedError)))
       .next()

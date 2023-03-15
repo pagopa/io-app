@@ -10,11 +10,11 @@ import type { IOSpacer } from "../../../components/core/variables/IOSpacing";
 
 const styles = StyleSheet.create({
   spacerWrapper: {
-    backgroundColor: IOColors.grey100
+    backgroundColor: IOColors["grey-100"]
   },
   componentLabel: {
     fontSize: 9,
-    color: IOColors.grey700
+    color: IOColors["grey-700"]
   }
 });
 
