@@ -2,6 +2,53 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.28.0-rc.1](https://github.com/pagopa/io-app/compare/2.28.0-rc.0...2.28.0-rc.1) (2023-03-14)
+
+
+### Bug Fixes
+
+* **Firma con IO:** [[SFEQS-1512](https://pagopa.atlassian.net/browse/SFEQS-1512)] Update file digest to use array buffer ([#4454](https://github.com/pagopa/io-app/issues/4454)) ([a17e97a](https://github.com/pagopa/io-app/commit/a17e97a35c2b9db9d2d6b8a4bc60485eaf97398c))
+* [[IABT-1438](https://pagopa.atlassian.net/browse/IABT-1438)] Implements zendesk Custom fields for payment log ([#4431](https://github.com/pagopa/io-app/issues/4431)) ([5244c6e](https://github.com/pagopa/io-app/commit/5244c6ead22a63e8af381f823d0d579cdbee1b26))
+* [[IABT-1440](https://pagopa.atlassian.net/browse/IABT-1440)] Fixes loading when opening zendesk reports list ([#4438](https://github.com/pagopa/io-app/issues/4438)) ([6100d6d](https://github.com/pagopa/io-app/commit/6100d6de54e5450fcea16f6f27574fb6654bfc7e))
+* **Firma con IO:** [[SFEQS-1511](https://pagopa.atlassian.net/browse/SFEQS-1511)] Fix body on create signature request ([#4450](https://github.com/pagopa/io-app/issues/4450)) ([96ee9bd](https://github.com/pagopa/io-app/commit/96ee9bd3bdfa160c5b0dfb799fdff8a574593e34))
+* [[IOAPPFD0-47](https://pagopa.atlassian.net/browse/IOAPPFD0-47)] Remove extra properties from new buttons ([#4447](https://github.com/pagopa/io-app/issues/4447)) ([f4095f1](https://github.com/pagopa/io-app/commit/f4095f1e25377c1dabfdcc6f78703fc0e74b1468))
+* **Firma con IO:** [[SFEQS-1437](https://pagopa.atlassian.net/browse/SFEQS-1437)] Fix empty attributes when document to sign not has signature fields or coordinates ([#4445](https://github.com/pagopa/io-app/issues/4445)) ([a0b6980](https://github.com/pagopa/io-app/commit/a0b6980b7599672afe0323151373c5df098cd35f))
+
+
+### Chores
+
+* [[LLK-62](https://pagopa.atlassian.net/browse/LLK-62)] Added signBody config ([#4452](https://github.com/pagopa/io-app/issues/4452)) ([14539a1](https://github.com/pagopa/io-app/commit/14539a1b5694fbe70e7dcab97098d3b4bfb5233e))
+* [[LLK-64](https://pagopa.atlassian.net/browse/LLK-64)] OriginalUrl and other parameters aligned to standard ([#4451](https://github.com/pagopa/io-app/issues/4451)) ([b10112b](https://github.com/pagopa/io-app/commit/b10112bbf08a101d2718e4ec0e587c4c0595d676))
+* **deps:** bump @sideway/formula from 3.0.0 to 3.0.1 ([#4446](https://github.com/pagopa/io-app/issues/4446)) ([bfdddf8](https://github.com/pagopa/io-app/commit/bfdddf862a797ff5e9b2047b44f969b95e302b4c))
+* **Firma con IO:** [[SFEQS-1508](https://pagopa.atlassian.net/browse/SFEQS-1508)] Update fci definitions ([#4449](https://github.com/pagopa/io-app/issues/4449)) ([4352a95](https://github.com/pagopa/io-app/commit/4352a9594ef260b9eccde6f17d50a29f3355fb7a))
+* [[IOAPPFD0-48](https://pagopa.atlassian.net/browse/IOAPPFD0-48)] Remove shuffled archived message from E2E tests ([#4448](https://github.com/pagopa/io-app/issues/4448)) ([a52a255](https://github.com/pagopa/io-app/commit/a52a255038a49fbe36a75e97a5192ee4be6cf95d))
+* **deps:** bump minimatch from 3.0.4 to 3.1.2 ([#4439](https://github.com/pagopa/io-app/issues/4439)) ([fcbc9b5](https://github.com/pagopa/io-app/commit/fcbc9b595134d7021e24497d21a48e62b443c4b8))
+* [[LLK-59](https://pagopa.atlassian.net/browse/LLK-59)] Store LolliPoP public key into in-memory redux store  ([#4437](https://github.com/pagopa/io-app/issues/4437)) ([263782d](https://github.com/pagopa/io-app/commit/263782db4daf30fe3ec5439f5ed842b6317c6aa4))
+* [[LLK-61](https://pagopa.atlassian.net/browse/LLK-61)] The "signature" header value has a wrong format ([#4441](https://github.com/pagopa/io-app/issues/4441)) ([65b0019](https://github.com/pagopa/io-app/commit/65b0019540077d0fc721c33f884d4e19aa1c6af2))
+
+## [2.28.0-rc.0](https://github.com/pagopa/io-app/compare/2.27.0-rc.4...2.28.0-rc.0) (2023-03-09)
+
+
+### Features
+
+* **Firma con IO:** [[SFEQS-1253](https://pagopa.atlassian.net/browse/SFEQS-1253)] Update signature fields with accessibility ([#4423](https://github.com/pagopa/io-app/issues/4423)) ([30cef80](https://github.com/pagopa/io-app/commit/30cef805842171b841e402816b5d529a800184c4))
+* **IDPay:** [[IODPAY-168](https://pagopa.atlassian.net/browse/IODPAY-168)] Prerequisites check error mapping in onboarding flow ([#4428](https://github.com/pagopa/io-app/issues/4428)) ([9ced654](https://github.com/pagopa/io-app/commit/9ced65403fda04fed083cec8ade42ee8146fba1b))
+* **IDPay:** Replace local IDPay feature flag with switch control ([#4399](https://github.com/pagopa/io-app/issues/4399)) ([faf265b](https://github.com/pagopa/io-app/commit/faf265b82ca49851713c85f171f5caf207d39459))
+* [[IOAPPCIT-30](https://pagopa.atlassian.net/browse/IOAPPCIT-30)] HTTP signature integration ([#4304](https://github.com/pagopa/io-app/issues/4304)) ([244590a](https://github.com/pagopa/io-app/commit/244590a8bda9a73cfd83dcefc51bb4bb7b7b5eeb))
+
+
+### Bug Fixes
+
+* **Firma con IO:** [[SFEQS-1489](https://pagopa.atlassian.net/browse/SFEQS-1489)] Update footer on document preview component with right label ([#4433](https://github.com/pagopa/io-app/issues/4433)) ([ba12162](https://github.com/pagopa/io-app/commit/ba121624ac1c7c5759f4663c1141d58aad36b5e8))
+
+
+### Chores
+
+* [[IOAPPFD0-44](https://pagopa.atlassian.net/browse/IOAPPFD0-44)] Add the new basic theme variables ([#4432](https://github.com/pagopa/io-app/issues/4432)) ([c5a0af3](https://github.com/pagopa/io-app/commit/c5a0af370a5629584e6cdc2bae533326466c04cf))
+* **Firma con IO:** [[SFEQS-1452](https://pagopa.atlassian.net/browse/SFEQS-1452)] Update signing saga to use Lollipop ([#4410](https://github.com/pagopa/io-app/issues/4410)) ([6a88659](https://github.com/pagopa/io-app/commit/6a8865988cc02a2c4ecd65d6c85854db616683db))
+* **IDPay:** [[IODPAY-152](https://pagopa.atlassian.net/browse/IODPAY-152)] IDPay client refactoring with merged API definitions ([#4379](https://github.com/pagopa/io-app/issues/4379)) ([3666d00](https://github.com/pagopa/io-app/commit/3666d00767903dbd6554c79c553d5d01fefdea0e))
+* [[IOAPPFD0-43](https://pagopa.atlassian.net/browse/IOAPPFD0-43)] Add new toggle to enable preview of new design system ([#4427](https://github.com/pagopa/io-app/issues/4427)) ([0b36e4b](https://github.com/pagopa/io-app/commit/0b36e4bddc9c83369ea221bd9187afb777a5de5e))
+
 ## [2.27.0-rc.4](https://github.com/pagopa/io-app/compare/2.27.0-rc.3...2.27.0-rc.4) (2023-03-03)
 
 
