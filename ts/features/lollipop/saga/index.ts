@@ -23,6 +23,7 @@ import {
   trackLollipopKeyGenerationSuccess
 } from "../../../utils/analytics";
 import { DEFAULT_LOLLIPOP_HASH_ALGORITHM_CLIENT } from "../utils/login";
+import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
 
 export function* generateLollipopKeySaga() {
   const maybeOldKeyTag = yield* select(lollipopKeyTagSelector);
@@ -40,7 +41,10 @@ export function* generateLollipopKeySaga() {
       // a public key tied with it.
       const publicKey = yield* call(getPublicKey, maybeOldKeyTag.value);
       yield* put(lollipopSetPublicKey({ publicKey }));
-      yield* call(trackLollipopKeyGenerationSuccess, publicKey.kty);
+      const mixPanelEnabled = yield* select(isMixpanelEnabled);
+      if (mixPanelEnabled) {
+        yield* call(trackLollipopKeyGenerationSuccess, publicKey.kty);
+      }
     } catch {
       // If there is no key it could be for two reasons:
       // - The user have a recent app and they logged out (the key is deleted).
@@ -94,8 +98,11 @@ function* deleteCryptoKeyPair(keyTag: string) {
       yield* call(deleteKey, keyTag);
       yield* put(lollipopRemovePublicKey());
     } catch (e) {
-      const { message } = toCryptoError(e);
-      yield* call(trackLollipopKeyGenerationFailure, message);
+      const mixPanelEnabled = yield* select(isMixpanelEnabled);
+      if (mixPanelEnabled) {
+        const { message } = toCryptoError(e);
+        yield* call(trackLollipopKeyGenerationFailure, message);
+      }
     }
   }
 }
@@ -120,10 +127,16 @@ function* generateCryptoKeyPair(keyTag: string) {
 
     const publicKey = yield* call(generate, keyTag);
     yield* put(lollipopSetPublicKey({ publicKey }));
-    yield* call(trackLollipopKeyGenerationSuccess, publicKey.kty);
+    const mixPanelEnabled = yield* select(isMixpanelEnabled);
+    if (mixPanelEnabled) {
+      yield* call(trackLollipopKeyGenerationSuccess, publicKey.kty);
+    }
   } catch (e) {
-    const { message } = toCryptoError(e);
-    yield* call(trackLollipopKeyGenerationFailure, message);
+    const mixPanelEnabled = yield* select(isMixpanelEnabled);
+    if (mixPanelEnabled) {
+      const { message } = toCryptoError(e);
+      yield* call(trackLollipopKeyGenerationFailure, message);
+    }
   }
 }
 
