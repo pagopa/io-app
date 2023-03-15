@@ -10,6 +10,7 @@ import { SignatureComponents } from "./httpSignature/types/SignatureComponents";
 export type LollipopConfig = {
   nonce: string;
   customContentToSign?: Record<string, string>;
+  signBody?: boolean;
 };
 
 /**
@@ -17,16 +18,15 @@ export type LollipopConfig = {
  */
 export function toSignatureComponents(
   method: string,
-  inputUrl: URLParse,
-  originalUrl: string
+  inputUrl: URLParse
 ): SignatureComponents {
   return {
     method,
-    authority: inputUrl.hostname,
+    authority: inputUrl.host,
     path: inputUrl.pathname,
-    requestTarget: originalUrl,
     scheme: inputUrl.protocol,
-    targetUri: `${inputUrl.protocol}://${inputUrl.hostname}/${originalUrl}`
+    targetUri: inputUrl.toString(),
+    originalUrl: inputUrl.toString()
   };
 }
 
