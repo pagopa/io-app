@@ -10,7 +10,10 @@ import { pipe } from "fp-ts/lib/function";
 import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import { Alert, Image, SafeAreaView, StyleSheet } from "react-native";
-import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
+import {
+  WebViewMessageEvent,
+  WebViewSource
+} from "react-native-webview/lib/WebViewTypes";
 import { connect } from "react-redux";
 import brokenLinkImage from "../../../img/broken-link.png";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
@@ -22,8 +25,6 @@ import TosWebviewComponent from "../../components/TosWebviewComponent";
 import { WebViewMessage } from "../../components/ui/Markdown/types";
 import { privacyUrl, tosVersion } from "../../config";
 import I18n from "../../i18n";
-import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
-import { OnboardingParamsList } from "../../navigation/params/OnboardingParamsList";
 import { abortOnboarding, tosAccepted } from "../../store/actions/onboarding";
 import { ReduxProps } from "../../store/actions/types";
 import {
@@ -36,11 +37,7 @@ import { isOnboardingCompleted } from "../../utils/navigation";
 import { showToast } from "../../utils/showToast";
 import { openWebUrl } from "../../utils/url";
 
-type OwnProps = {
-  navigation: IOStackNavigationProp<OnboardingParamsList, "ONBOARDING_TOS">;
-};
-
-type Props = ReduxProps & OwnProps & ReturnType<typeof mapStateToProps>;
+type Props = ReduxProps & ReturnType<typeof mapStateToProps>;
 type State = {
   isLoading: boolean;
   hasError: boolean;
@@ -85,6 +82,8 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "profile.main.privacy.privacyPolicy.contextualHelpContentPolicy"
 };
 
+const webViewSource = (): WebViewSource => ({ uri: privacyUrl });
+
 /**
  * A screen to show the ToS to the user.
  */
@@ -114,9 +113,17 @@ class TosScreen extends React.PureComponent<Props, State> {
       return null;
     }
     return (
-      <View style={styles.errorContainer}>
-        <Image source={brokenLinkImage} resizeMode="contain" />
-        <NBText style={styles.errorTitle} bold={true}>
+      <View style={styles.errorContainer} testID={"toSErrorContainerView"}>
+        <Image
+          source={brokenLinkImage}
+          resizeMode="contain"
+          testID={"toSErrorContainerImage"}
+        />
+        <NBText
+          style={styles.errorTitle}
+          bold={true}
+          testID={"toSErrorContainerTitle"}
+        >
           {I18n.t("onboarding.tos.error")}
         </NBText>
 
@@ -129,7 +136,9 @@ class TosScreen extends React.PureComponent<Props, State> {
             block={true}
             primary={true}
           >
-            <NBText>{I18n.t("global.buttons.retry")}</NBText>
+            <NBText testID={"toSErrorContainerButtonText"}>
+              {I18n.t("global.buttons.retry")}
+            </NBText>
           </ButtonDefaultOpacity>
         </View>
       </View>
@@ -169,8 +178,8 @@ class TosScreen extends React.PureComponent<Props, State> {
       >
         <SafeAreaView style={styles.webViewContainer}>
           {!this.props.hasAcceptedCurrentTos && (
-            <View style={styles.alert}>
-              <NBText>
+            <View style={styles.alert} testID={"currentToSNotAcceptedView"}>
+              <NBText testID={"currentToSNotAcceptedText"}>
                 {this.props.hasAcceptedOldTosVersion
                   ? I18n.t("profile.main.privacy.privacyPolicy.updated")
                   : I18n.t("profile.main.privacy.privacyPolicy.infobox")}
@@ -183,10 +192,11 @@ class TosScreen extends React.PureComponent<Props, State> {
               handleError={this.handleError}
               handleLoadEnd={this.handleLoadEnd}
               handleWebViewMessage={this.handleWebViewMessage}
-              url={privacyUrl}
+              webViewSource={webViewSource()}
               shouldFooterRender={shouldFooterRender}
               onExit={this.handleGoBack}
               onAcceptTos={() => dispatch(tosAccepted(tosVersion))}
+              testID={"toSWebViewComponent"}
             />
           )}
         </SafeAreaView>
