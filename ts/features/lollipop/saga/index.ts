@@ -41,10 +41,6 @@ export function* generateLollipopKeySaga() {
       // a public key tied with it.
       const publicKey = yield* call(getPublicKey, maybeOldKeyTag.value);
       yield* put(lollipopSetPublicKey({ publicKey }));
-      const mixPanelEnabled = yield* select(isMixpanelEnabled);
-      if (mixPanelEnabled) {
-        yield* call(trackLollipopKeyGenerationSuccess, publicKey.kty);
-      }
     } catch {
       // If there is no key it could be for two reasons:
       // - The user have a recent app and they logged out (the key is deleted).
@@ -140,11 +136,11 @@ function* generateCryptoKeyPair(keyTag: string) {
   }
 }
 
-export function generateKeyInfo(
+export const generateKeyInfo = (
   maybeKeyTag: O.Option<string>,
   maybePublicKey: O.Option<PublicKey>
-) {
-  return pipe(
+) =>
+  pipe(
     maybeKeyTag,
     O.chain(keyTag =>
       pipe(
@@ -154,7 +150,6 @@ export function generateKeyInfo(
     ),
     O.getOrElse(defaultKeyInfo)
   );
-}
 
 const keyInfoFromKeyTagAndPublicKey = (
   keyTag: string,
