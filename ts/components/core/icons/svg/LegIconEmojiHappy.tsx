@@ -2,7 +2,7 @@ import React from "react";
 import { Svg, Path } from "react-native-svg";
 import { SVGIconProps } from "../Icon";
 
-const IconSmileHappy = ({ size, style }: SVGIconProps) => (
+const LegIconEmojiHappy = ({ size, style }: SVGIconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" style={style}>
     <Path
       fillRule="evenodd"
@@ -13,4 +13,4 @@ const IconSmileHappy = ({ size, style }: SVGIconProps) => (
   </Svg>
 );
 
-export default IconSmileHappy;
+export default LegIconEmojiHappy;

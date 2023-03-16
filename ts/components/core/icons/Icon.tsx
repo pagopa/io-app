@@ -25,10 +25,9 @@ import IconEyeShow from "./svg/IconEyeShow";
 import IconEyeHide from "./svg/IconEyeHide";
 import IconPinOff from "./svg/IconPinOff";
 import IconPinOn from "./svg/IconPinOn";
-import IconSmileSad from "./svg/IconSmileSad";
-import IconSmileHappy from "./svg/IconSmileHappy";
+import IconEmojiSad from "./svg/IconEmojiSad";
+import IconEmojiHappy from "./svg/IconEmojiHappy";
 import IconPhone from "./svg/IconPhone";
-import IconPhoneAlt from "./svg/IconPhoneAlt";
 import IconEmail from "./svg/IconEmail";
 import IconEnvelope from "./svg/IconEnvelope";
 import IconMessage from "./svg/IconMessage";
@@ -136,6 +135,15 @@ import LegIconHourglass from "./svg/LegIconHourglass";
 import LegIconShare from "./svg/LegIconShare";
 import LegIconLockOn from "./svg/LegIconLockOn";
 import LegIconLockOff from "./svg/LegIconLockOff";
+import LegIconInitiatives from "./svg/LegIconInitiatives";
+import LegIconAnalytics from "./svg/LegIconAnalytics";
+import LegIconFornitori from "./svg/LegIconFornitori";
+import LegIconEyeShow from "./svg/LegIconEyeShow";
+import LegIconEyeHide from "./svg/LegIconEyeHide";
+import LegIconPinOff from "./svg/LegIconPinOff";
+import LegIconPinOn from "./svg/LegIconPinOn";
+import LegIconEmojiSad from "./svg/LegIconEmojiSad";
+import LegIconEmojiHappy from "./svg/LegIconEmojiHappy";
 
 export const IOIcons = {
   spid: IconSpid,
@@ -164,16 +172,24 @@ export const IOIcons = {
   legLocked: LegIconLockOn /* io-locker-closed */ /* io-lucchetto */,
   legUnlocked: LegIconLockOff /* io-locker-open */,
   initiatives: IconInitiatives,
+  legInitiatives: LegIconInitiatives,
   analytics: IconAnalytics,
+  legAnalytics: LegIconAnalytics,
   fornitori: IconFornitori,
+  legFornitori: LegIconFornitori,
   eyeShow: IconEyeShow,
   eyeHide: IconEyeHide,
+  legEyeShow: LegIconEyeShow,
+  legEyeHide: LegIconEyeHide,
   pinOff: IconPinOff,
   pinOn: IconPinOn,
-  smileSad: IconSmileSad /* io-sad */,
-  smileHappy: IconSmileHappy /* io-happy */,
-  phone: IconPhone,
-  phoneAlt: IconPhoneAlt /* io-phone */,
+  legPinOff: LegIconPinOff,
+  legPinOn: LegIconPinOn,
+  emojiSad: IconEmojiSad,
+  emojiHappy: IconEmojiHappy,
+  legEmojiSad: LegIconEmojiSad /* io-sad */,
+  legEmojiHappy: LegIconEmojiHappy /* io-happy */,
+  phone: IconPhone /* io-phone */,
   email: IconEmail,
   envelope: IconEnvelope /* io-envelope */,
   pec: IconPEC,
@@ -353,6 +369,15 @@ const {
   shareAndroid,
   locked,
   unlocked,
+  initiatives,
+  analytics,
+  fornitori,
+  eyeShow,
+  eyeHide,
+  pinOff,
+  pinOn,
+  emojiSad,
+  emojiHappy,
   success,
   errorFilled,
   warningFilled,
@@ -378,6 +403,15 @@ export const IOIconsNew = {
   shareAndroid,
   locked,
   unlocked,
+  initiatives,
+  analytics,
+  fornitori,
+  eyeShow,
+  eyeHide,
+  pinOn,
+  pinOff,
+  emojiSad,
+  emojiHappy,
   success,
   errorFilled,
   warningFilled,
