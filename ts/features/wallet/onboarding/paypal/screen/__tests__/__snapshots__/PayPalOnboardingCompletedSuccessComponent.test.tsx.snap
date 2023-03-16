@@ -674,7 +674,9 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                                                       "paddingRight": 16,
                                                     },
                                                     undefined,
-                                                    undefined,
+                                                    Object {
+                                                      "color": "#FFFFFF",
+                                                    },
                                                   ]
                                                 }
                                                 uppercase={false}
