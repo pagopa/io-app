@@ -2,7 +2,7 @@ import React from "react";
 import { Svg, Path } from "react-native-svg";
 import { SVGIconProps } from "../Icon";
 
-const IconShare = ({ size, style }: SVGIconProps) => (
+const LegIconShare = ({ size, style }: SVGIconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" style={style}>
     <Path
       d="M19.708 22H4.292A2.293 2.293 0 0 1 2 19.709V7.625a2.293 2.293 0 0 1 2.292-2.291h2.916a.625.625 0 0 1 0 1.25H4.292c-.575 0-1.042.467-1.042 1.041V19.71c0 .573.467 1.041 1.042 1.041h15.416c.575 0 1.042-.468 1.042-1.041v-7.084a.625.625 0 0 1 1.25 0v7.084A2.294 2.294 0 0 1 19.708 22Z"
@@ -15,4 +15,4 @@ const IconShare = ({ size, style }: SVGIconProps) => (
   </Svg>
 );
 
-export default IconShare;
+export default LegIconShare;

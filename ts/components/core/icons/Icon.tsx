@@ -6,16 +6,16 @@ import { IOColors } from "../variables/IOColors";
 import IconSpid from "./svg/IconSpid";
 import IconCie from "./svg/IconCie";
 import IconQrCode from "./svg/IconQrCode";
-import IconQrCodeAlt from "./svg/IconQrCodeAlt";
-import IconWebsite from "./svg/IconWebsite";
 import IconHome from "./svg/IconHome";
+import IconHomeFill from "./svg/IconHomeFill";
 import IconCopy from "./svg/IconCopy";
 import IconSelfCertification from "./svg/IconSelfCertification";
+import IconInstitution from "./svg/IconInstitution";
+import IconHourglass from "./svg/IconHourglass";
 import IconPEC from "./svg/IconPEC";
 import IconMessageLegal from "./svg/IconMessageLegal";
-import IconHourglass from "./svg/IconHourglass";
-import IconShare from "./svg/IconShare";
-import IconLockOnAlt from "./svg/IconLockOnAlt";
+import IconShareiOs from "./svg/IconShareiOs";
+import IconShareAndroid from "./svg/IconShareAndroid";
 import IconLockOn from "./svg/IconLockOn";
 import IconLockOff from "./svg/IconLockOff";
 import IconInitiatives from "./svg/IconInitiatives";
@@ -32,7 +32,6 @@ import IconPhoneAlt from "./svg/IconPhoneAlt";
 import IconEmail from "./svg/IconEmail";
 import IconEnvelope from "./svg/IconEnvelope";
 import IconMessage from "./svg/IconMessage";
-import IconInstitution from "./svg/IconInstitution";
 import IconDocument from "./svg/IconDocument";
 import IconDocumentSign from "./svg/IconDocumentSign";
 import IconGiacenza from "./svg/IconGiacenza";
@@ -75,6 +74,7 @@ import IconProfileAlt from "./svg/IconProfileAlt";
 import IconStarFilled from "./svg/IconStarFilled";
 import IconStarEmpty from "./svg/IconStarEmpty";
 import IconAbacus from "./svg/IconAbacus";
+import LegIconAbacus from "./svg/LegIconAbacus";
 import IconSwitchOff from "./svg/IconSwitchOff";
 import IconDeviceSignal from "./svg/IconDeviceSignal";
 import IconDotMenu from "./svg/IconDotMenu";
@@ -126,23 +126,43 @@ import IconCategShopping from "./svg/IconCategShopping";
 import IconCategSustainability from "./svg/IconCategSustainability";
 import IconProductIOApp from "./svg/IconProductIOApp";
 import IconProductPagoPA from "./svg/IconProductPagoPA";
+import IconWebsite from "./svg/IconWebsite";
+import LegIconQrCode from "./svg/LegIconQrCode";
+import LegIconWebsite from "./svg/LegIconWebsite";
+import LegIconHome from "./svg/LegIconHome";
+import LegIconCopy from "./svg/LegIconCopy";
+import LegIconInstitution from "./svg/LegIconInstitution";
+import LegIconHourglass from "./svg/LegIconHourglass";
+import LegIconShare from "./svg/LegIconShare";
+import LegIconLockOn from "./svg/LegIconLockOn";
+import LegIconLockOff from "./svg/LegIconLockOff";
 
 export const IOIcons = {
   spid: IconSpid,
   cie: IconCie /* io-cie */,
-  qrCode: IconQrCode /* io-qr */,
-  qrCodeAlt: IconQrCodeAlt,
+  qrCode: IconQrCode,
+  legQrCode: LegIconQrCode /* io-qr */,
   website: IconWebsite,
-  abacus: IconAbacus /* io-abacus */,
+  legWebsite: LegIconWebsite,
+  abacus: IconAbacus,
+  legAbacus: LegIconAbacus /* io-abacus */,
   home: IconHome,
-  copy: IconCopy /* io-copy */,
+  homeFill: IconHomeFill,
+  legHome: LegIconHome,
+  copy: IconCopy,
+  legCopy: LegIconCopy /* io-copy */,
   selfCert: IconSelfCertification,
   institution: IconInstitution,
-  hourglass: IconHourglass /* io-hourglass */,
-  share: IconShare /* io-share */,
-  lockedAlt: IconLockOnAlt /* io-lucchetto */,
-  locked: IconLockOn /* io-locker-closed */,
-  unlocked: IconLockOff /* io-locker-open */,
+  legInstitution: LegIconInstitution,
+  hourglass: IconHourglass,
+  legHourglass: LegIconHourglass /* io-hourglass */,
+  shareiOs: IconShareiOs,
+  shareAndroid: IconShareAndroid,
+  legShare: LegIconShare /* io-share */,
+  locked: IconLockOn,
+  unlocked: IconLockOff,
+  legLocked: LegIconLockOn /* io-locker-closed */ /* io-lucchetto */,
+  legUnlocked: LegIconLockOff /* io-locker-open */,
   initiatives: IconInitiatives,
   analytics: IconAnalytics,
   fornitori: IconFornitori,
@@ -321,6 +341,18 @@ export class IconClassComponent extends React.Component<IOAnimatedIconsProps> {
 
 /* New icons */
 const {
+  qrCode,
+  website,
+  abacus,
+  home,
+  homeFill,
+  copy,
+  institution,
+  hourglass,
+  shareiOs,
+  shareAndroid,
+  locked,
+  unlocked,
   success,
   errorFilled,
   warningFilled,
@@ -334,6 +366,18 @@ const {
 } = IOIcons;
 
 export const IOIconsNew = {
+  qrCode,
+  website,
+  abacus,
+  home,
+  homeFill,
+  copy,
+  institution,
+  hourglass,
+  shareiOs,
+  shareAndroid,
+  locked,
+  unlocked,
   success,
   errorFilled,
   warningFilled,
