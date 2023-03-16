@@ -25,7 +25,7 @@ type Props = {
 
 const styles = StyleSheet.create({
   cardContainer: {
-    backgroundColor: IOColors.bluegreyNewBonus,
+    backgroundColor: IOColors["blue-50"],
     borderBottomEndRadius: 24,
     borderBottomStartRadius: 24,
     padding: 32,

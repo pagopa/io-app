@@ -81,7 +81,6 @@ export const IOColors = asIOColors({
   greyUltraLight: "#F5F6F7",
   greyLight: "#E6E9F2",
   bluegreyLight: "#CCD4DC",
-  bluegreyNewBonus: "#EAF1FF", // used in IDPay initiativeDetails
   grey: "#909DA8",
   milderGray: "#5F6F80",
   bluegrey: "#475A6D",
