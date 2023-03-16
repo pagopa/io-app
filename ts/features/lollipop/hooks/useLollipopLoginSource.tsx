@@ -27,6 +27,7 @@ import {
   lollipopSamlVerify
 } from "../utils/login";
 import { LollipopCheckStatus } from "../types/LollipopCheckStatus";
+import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
 
 const taskRegenerateKey = (keyTag: string) =>
   pipe(
@@ -49,6 +50,7 @@ export const useLollipopLoginSource = (
   const useLollipopLogin = useIOSelector(isLollipopEnabledSelector);
   const maybeKeyTag = useIOSelector(lollipopKeyTagSelector);
   const maybePublicKey = useIOSelector(lollipopPublicKeySelector);
+  const mixpanelEnabled = useIOSelector(isMixpanelEnabled);
 
   const verifyLollipop = useCallback(
     (eventUrl: string, urlEncodedSamlRequest: string, publicKey: PublicKey) => {
@@ -130,7 +132,9 @@ export const useLollipopLoginSource = (
       taskRegenerateKey,
       TE.map(key => {
         dispatch(lollipopSetPublicKey({ publicKey: key }));
-        trackLollipopKeyGenerationSuccess(key.kty);
+        if (mixpanelEnabled) {
+          trackLollipopKeyGenerationSuccess(key.kty);
+        }
         setWebviewSource({
           uri: loginUri,
           headers: {
@@ -144,14 +148,23 @@ export const useLollipopLoginSource = (
       }),
       TE.mapLeft(error => {
         dispatch(lollipopRemovePublicKey());
-        trackLollipopKeyGenerationFailure(error.message);
+        if (mixpanelEnabled) {
+          trackLollipopKeyGenerationFailure(error.message);
+        }
         trackLollipopIdpLoginFailure(error.message);
         setWebviewSource({
           uri: loginUri
         });
       })
     )();
-  }, [dispatch, loginUri, maybeKeyTag, maybePublicKey, useLollipopLogin]);
+  }, [
+    dispatch,
+    loginUri,
+    maybeKeyTag,
+    maybePublicKey,
+    mixpanelEnabled,
+    useLollipopLogin
+  ]);
 
   const retryLolliPoPLogin = useCallback(() => {
     console.log(`=== useLollipopLoginSource retryLolliPoPLogin`);
