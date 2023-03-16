@@ -7,6 +7,7 @@ import Markdown from "../../../../../../components/ui/Markdown";
 import I18n from "../../../../../../i18n";
 import { navigateToWalletAddPaymentMethod } from "../../../../../../store/actions/navigation";
 import { useIOBottomSheetModal } from "../../../../../../utils/hooks/bottomSheet";
+import { IOColors } from "../../../../../../components/core/variables/IOColors";
 
 // NotActivable: already activated by someone else
 // NotCompatible: missing bpd capability
@@ -21,6 +22,7 @@ const addPaymentMethodButton = (onPress: () => void) => (
       onPressWithGestureHandler: true,
       block: true,
       primary: true,
+      labelColor: IOColors.white,
       onPress,
       title: I18n.t(
         "bonus.bpd.details.paymentMethods.activateOnOthersChannel.addWallet"
