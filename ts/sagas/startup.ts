@@ -47,7 +47,7 @@ import I18n from "../i18n";
 import { mixpanelTrack } from "../mixpanel";
 import NavigationService from "../navigation/NavigationService";
 import { startApplicationInitialization } from "../store/actions/application";
-import { sessionExpired } from "../store/actions/authentication";
+import { sessionExpired, sessionInvalid } from "../store/actions/authentication";
 import { previousInstallationDataDeleteSuccess } from "../store/actions/installation";
 import { setMixpanelEnabled } from "../store/actions/mixpanel";
 import {
@@ -67,7 +67,7 @@ import {
   lollipopKeyTagSelector,
   lollipopPublicKeySelector
 } from "../features/lollipop/store/reducers/lollipop";
-import { generateLollipopKeySaga } from "../features/lollipop/saga";
+import { generateLollipopKeySaga, lollipopKeyCheckWithServer } from "../features/lollipop/saga";
 import { IdentificationResult } from "../store/reducers/identification";
 import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
 import {
@@ -148,6 +148,7 @@ import {
   trackMixpanelCryptoKeyPairEvents
 } from "./startup/generateCryptoKeyPair";
 import { DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER } from "../features/lollipop/utils/login";
+import { resetAssistanceData } from "../utils/supportAssistance";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -281,16 +282,7 @@ export function* initializeApplicationSaga(): Generator<
     }
   }
 
-    const lollipop_assertion_ref = maybeSessionInformation.value.lollipop_assertion_ref;
-    
-    
-    if(!lollipop_assertion_ref || lollipop_assertion_ref !== DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER + '-' + keyInfo.publicKeyThumbprint){
-      yield* put(sessionExpired());
-      return;
-    }
- 
-   
-    
+  yield* call(lollipopKeyCheckWithServer);
 
   // Start watching for profile update requests as the checkProfileEnabledSaga
   // may need to update the profile.

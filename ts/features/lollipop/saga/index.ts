@@ -2,7 +2,10 @@ import * as O from "fp-ts/lib/Option";
 import { v4 as uuid } from "uuid";
 import { put, select, call } from "typed-redux-saga/macro";
 import { getPublicKey } from "@pagopa/io-react-native-crypto";
-import { lollipopKeyTagSelector } from "../store/reducers/lollipop";
+import {
+  lollipopKeyTagSelector,
+  lollipopPublicKeySelector
+} from "../store/reducers/lollipop";
 import {
   lollipopKeyTagSave,
   lollipopSetPublicKey
@@ -11,6 +14,17 @@ import {
   cryptoKeyGenerationSaga,
   deletePreviousCryptoKeyPair
 } from "../../../sagas/startup/generateCryptoKeyPair";
+import { sessionInfoSelector } from "../../../store/reducers/authentication";
+import {
+  DEFAULT_LOLLIPOP_HASH_ALGORITHM_CLIENT,
+  DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER
+} from "../utils/login";
+import { startApplicationInitialization } from "../../../store/actions/application";
+import { sessionInvalid } from "../../../store/actions/authentication";
+import { clearCache } from "../../../store/actions/profile";
+import { resetAssistanceData } from "../../../utils/supportAssistance";
+import { jwkThumbprintByEncoding } from "jwk-thumbprint";
+import { pipe } from "fp-ts/lib/function";
 
 export function* generateLollipopKeySaga() {
   const maybeOldKeyTag = yield* select(lollipopKeyTagSelector);
@@ -47,3 +61,36 @@ export function* deleteCurrentLollipopKeyAndGenerateNewKeyTag() {
   const newKeyTag = uuid();
   yield* put(lollipopKeyTagSave({ keyTag: newKeyTag }));
 }
+
+export function* lollipopKeyCheckWithServer() {
+  const maybeSessionInformation: ReturnType<typeof sessionInfoSelector> =
+    yield* select(sessionInfoSelector);
+
+  const publicKey: ReturnType<typeof lollipopPublicKeySelector> = yield* select(
+    lollipopPublicKeySelector
+  );
+
+  if (O.isSome(maybeSessionInformation)) {
+    const lollipop_assertion_ref =
+      maybeSessionInformation.value.lollipop_assertion_ref;
+    let localAssertionRef = undefined;
+
+    if (O.isSome(publicKey)) {
+      const converted = jwkThumbprintByEncoding(
+        publicKey.value,
+        DEFAULT_LOLLIPOP_HASH_ALGORITHM_CLIENT,
+        "base64url"
+      );
+      localAssertionRef = `${DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER}-${converted}`;
+    }
+
+    if (!lollipop_assertion_ref || lollipop_assertion_ref !== localAssertionRef) {
+      yield* put(sessionInvalid());
+      resetAssistanceData();
+      yield* put(clearCache());
+      yield* put(startApplicationInitialization());
+      return;
+    }
+  }
+}
+
