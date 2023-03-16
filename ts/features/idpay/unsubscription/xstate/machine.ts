@@ -34,7 +34,7 @@ const createIDPayUnsubscriptionMachine = (
           tags: [LOADING_TAG],
           always: [
             {
-              cond: "requiresInitiativeInfo",
+              cond: "hasMissingInitiativeInfo",
               target: "LOADING_INITIATIVE_INFO"
             },
             {
@@ -81,7 +81,7 @@ const createIDPayUnsubscriptionMachine = (
           }
         },
         UNSUBSCRIPTION_SUCCESS: {
-          entry: "navigateToSuccessScreen",
+          entry: "navigateToResultScreen",
           on: {
             EXIT: {
               actions: "exitToWallet"
@@ -89,7 +89,7 @@ const createIDPayUnsubscriptionMachine = (
           }
         },
         UNSUBSCRIPTION_FAILURE: {
-          entry: "navigateToFailureScreen",
+          entry: "navigateToResultScreen",
           on: {
             EXIT: {
               actions: "exitUnsubscription"
@@ -101,16 +101,16 @@ const createIDPayUnsubscriptionMachine = (
     {
       actions: {
         loadInitiativeSuccess: assign((_, event) => ({
-          initiative: event.data.initiativeName
+          initiativeName: event.data.initiativeName
         }))
       },
       guards: {
-        requiresInitiativeInfo
+        hasMissingInitiativeInfo
       }
     }
   );
 
-const requiresInitiativeInfo = (context: Context) =>
+const hasMissingInitiativeInfo = (context: Context) =>
   context.initiativeName === undefined;
 
 type IDPayUnsubscriptionMachineType = ReturnType<

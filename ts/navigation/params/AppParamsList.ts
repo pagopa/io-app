@@ -28,11 +28,9 @@ import {
   IDPayOnboardingParamsList,
   IDPayOnboardingRoutes
 } from "../../features/idpay/onboarding/navigation/navigator";
-import {
-  IDPayUnsubscriptionNavigatorParams,
-  IDPayUnsubscriptionParamsList,
-  IDPayUnsubscriptionRoutes
-} from "../../features/idpay/unsubscription/navigation/navigator";
+import { IDPayUnsubscriptionNavigatorParams } from "../../features/idpay/unsubscription/navigation/navigator";
+import { IDPayUnsubscriptionParamsList } from "../../features/idpay/unsubscription/navigation/params";
+import { IDPayUnsubscriptionRoutes } from "../../features/idpay/unsubscription/navigation/routes";
 import UADONATION_ROUTES from "../../features/uaDonations/navigation/routes";
 import { UAWebviewScreenNavigationParams } from "../../features/uaDonations/screens/UAWebViewScreen";
 import { ZendeskParamsList } from "../../features/zendesk/navigation/params";

@@ -13,3 +13,6 @@ const selectTags = (state: StateWithContext) => state.tags;
 export const isLoadingSelector = createSelector(selectTags, tags =>
   tags.has(LOADING_TAG)
 );
+
+export const selectIsFailure = (state: StateWithContext) =>
+  state.matches("UNSUBSCRIPTION_FAILURE");

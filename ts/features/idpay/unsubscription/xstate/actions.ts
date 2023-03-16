@@ -14,14 +14,9 @@ const createActionsImplementation = (
     });
   };
 
-  const navigateToSuccessScreen = () =>
+  const navigateToResultScreen = () =>
     navigation.navigate(IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN, {
-      screen: IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_SUCCESS
-    });
-
-  const navigateToFailureScreen = () =>
-    navigation.navigate(IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN, {
-      screen: IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_FAILURE
+      screen: IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_RESULT
     });
 
   const exitUnsubscription = () => {
@@ -38,8 +33,7 @@ const createActionsImplementation = (
 
   return {
     navigateToConfirmationScreen,
-    navigateToFailureScreen,
-    navigateToSuccessScreen,
+    navigateToResultScreen,
     exitUnsubscription,
     exitToWallet
   };
