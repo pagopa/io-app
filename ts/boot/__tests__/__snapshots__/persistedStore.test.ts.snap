@@ -155,8 +155,10 @@ Object {
   "isCustomEmailChannelEnabled": Object {
     "kind": "PotNone",
   },
+  "isDesignSystemEnabled": false,
   "isExperimentalFeaturesEnabled": false,
   "isFingerprintEnabled": undefined,
+  "isIdPayTestEnabled": false,
   "isMixpanelEnabled": null,
   "isPagoPATestEnabled": false,
   "isPnTestEnabled": false,

@@ -1,31 +1,41 @@
+import * as O from "fp-ts/lib/Option";
 import {
   generate,
   CryptoError,
-  deleteKey
+  deleteKey,
+  PublicKey
 } from "@pagopa/io-react-native-crypto";
-import { call, select } from "typed-redux-saga/macro";
-import { isLollipopEnabledSelector } from "../../store/reducers/backendStatus";
+import { call, put } from "typed-redux-saga/macro";
+import { jwkThumbprintByEncoding } from "jwk-thumbprint";
+import { pipe } from "fp-ts/lib/function";
+import { DEFAULT_LOLLIPOP_HASH_ALGORITHM_CLIENT } from "../../features/lollipop/utils/login";
 import {
   checkPublicKeyExists,
   setKeyGenerationInfo,
   getKeyGenerationInfo,
-  KeyGenerationInfo
+  KeyGenerationInfo,
+  KeyInfo,
+  wipeKeyGenerationInfo
 } from "../../utils/crypto";
-import { mixpanelTrack } from "./../../mixpanel";
+import {
+  trackLollipopKeyGenerationFailure,
+  trackLollipopKeyGenerationSuccess
+} from "../../utils/analytics";
+import {
+  lollipopRemovePublicKey,
+  lollipopSetPublicKey
+} from "../../features/lollipop/store/actions/lollipop";
 
 /**
  * Generates a new crypto key pair.
  */
 export function* cryptoKeyGenerationSaga(
   keyTag: string,
-  previousKeyTag?: string
+  previousKeyTag: O.Option<string>
 ) {
-  const isLollipopEnabled = yield* select(isLollipopEnabledSelector);
-  if (isLollipopEnabled) {
-    // Every new login we need to regenerate a brand new key pair.
-    yield* deletePreviousCryptoKeyPair(previousKeyTag);
-    yield* call(generateCryptoKeyPair, keyTag);
-  }
+  // Every new login we need to regenerate a brand new key pair.
+  yield* call(deletePreviousCryptoKeyPair, previousKeyTag);
+  yield* call(generateCryptoKeyPair, keyTag);
 }
 
 /**
@@ -34,26 +44,24 @@ export function* cryptoKeyGenerationSaga(
 export function* trackMixpanelCryptoKeyPairEvents(keyTag: string) {
   const keyInfo = yield* call(getKeyGenerationInfo, keyTag);
 
-  if (keyInfo && !keyInfo.errorCode) {
-    void mixpanelTrack("LOLLIPOP_KEY_GENERATION_SUCCESS", {
-      kty: keyInfo.keyType
-    });
+  if (!keyInfo) {
+    return;
   }
 
-  if (keyInfo && keyInfo.errorCode) {
-    void mixpanelTrack("LOLLIPOP_KEY_GENERATION_FAILURE", {
-      reason: keyInfo.errorCode,
-      resonMoreInfo: keyInfo.userInfo
-    });
+  if (keyInfo.errorCode) {
+    trackLollipopKeyGenerationFailure(keyInfo);
+    return;
   }
+
+  trackLollipopKeyGenerationSuccess(keyInfo);
 }
 
 /**
  * Deletes a previous saved crypto key pair.
  */
-export function* deletePreviousCryptoKeyPair(keyTag?: string) {
-  if (keyTag) {
-    yield* deleteCryptoKeyPair(keyTag);
+export function* deletePreviousCryptoKeyPair(keyTag: O.Option<string>) {
+  if (O.isSome(keyTag)) {
+    yield* call(deleteCryptoKeyPair, keyTag.value);
   }
 }
 
@@ -67,6 +75,8 @@ function* deleteCryptoKeyPair(keyTag: string) {
   if (keyAlreadyExistsOnKeystore) {
     try {
       yield* call(deleteKey, keyTag);
+      yield* put(lollipopRemovePublicKey());
+      yield* call(wipeKeyGenerationInfo, keyTag);
     } catch (e) {
       yield* saveKeyGenerationFailureInfo(keyTag, e);
     }
@@ -79,12 +89,14 @@ function* deleteCryptoKeyPair(keyTag: string) {
 function* generateCryptoKeyPair(keyTag: string) {
   try {
     // Remove an already existing key with the same tag.
-    deleteCryptoKeyPair(keyTag);
+    yield* call(deleteCryptoKeyPair, keyTag);
 
-    const key = yield* call(generate, keyTag);
+    const publicKey = yield* call(generate, keyTag);
+    yield* put(lollipopSetPublicKey({ publicKey }));
+
     const keyGenerationInfo: KeyGenerationInfo = {
       keyTag,
-      keyType: key.kty
+      keyType: publicKey.kty
     };
     yield* call(setKeyGenerationInfo, keyTag, keyGenerationInfo);
   } catch (e) {
@@ -92,15 +104,48 @@ function* generateCryptoKeyPair(keyTag: string) {
   }
 }
 
+export function generateKeyInfo(
+  maybeKeyTag: O.Option<string>,
+  maybePublicKey: O.Option<PublicKey>
+) {
+  return pipe(
+    maybeKeyTag,
+    O.chain(keyTag =>
+      pipe(
+        maybePublicKey,
+        O.map(publicKey => keyInfoFromKeyTagAndPublicKey(keyTag, publicKey))
+      )
+    ),
+    O.getOrElse(defaultKeyInfo)
+  );
+}
+
 /**
  * Persists the crypto key pair generation information data.
  */
 function* saveKeyGenerationFailureInfo(keyTag: string, e: unknown) {
-  const { message: errorCode, userInfo } = e as CryptoError;
+  const { message: errorCode } = e as CryptoError;
   const keyGenerationInfo: KeyGenerationInfo = {
     keyTag,
-    errorCode,
-    userInfo
+    errorCode
   };
   yield* call(setKeyGenerationInfo, keyTag, keyGenerationInfo);
 }
+
+const keyInfoFromKeyTagAndPublicKey = (
+  keyTag: string,
+  publicKey: PublicKey
+): KeyInfo => ({
+  keyTag,
+  publicKey,
+  publicKeyThumbprint: jwkThumbprintByEncoding(
+    publicKey,
+    DEFAULT_LOLLIPOP_HASH_ALGORITHM_CLIENT,
+    "base64url"
+  )
+});
+
+const defaultKeyInfo = (): KeyInfo => ({
+  keyTag: undefined,
+  publicKey: undefined
+});

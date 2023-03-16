@@ -194,8 +194,7 @@ const Footer = (props: FooterProps): React.ReactElement => {
       <H5 color={"bluegrey"} weight={"Regular"}>
         {I18n.t("features.euCovidCertificate.save.bottomSheet.subTitle")}
       </H5>
-      <VSpacer size={16} />
-      <VSpacer size={16} />
+      <VSpacer size={32} />
     </View>,
     320
   );

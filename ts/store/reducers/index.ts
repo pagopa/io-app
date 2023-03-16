@@ -8,6 +8,8 @@ import { isActionOf } from "typesafe-actions";
 import { versionInfoReducer } from "../../common/versionInfo/store/reducers/versionInfo";
 import bonusReducer from "../../features/bonus/bonusVacanze/store/reducers";
 import { featuresPersistor } from "../../features/common/store/reducers";
+import { lollipopPersistor } from "../../features/lollipop/store";
+import { initialLollipopState } from "../../features/lollipop/store/reducers/lollipop";
 import {
   logoutFailure,
   logoutSuccess,
@@ -16,9 +18,6 @@ import {
 import { Action } from "../actions/types";
 import createSecureStorage from "../storages/keychain";
 import { DateISO8601Transform } from "../transforms/dateISO8601Tranform";
-import lollipopReducer, {
-  initialLollipopState
-} from "../../features/lollipop/store/reducers/lollipop";
 import appStateReducer from "./appState";
 import assistanceToolsReducer from "./assistanceTools";
 import authenticationReducer, {
@@ -135,7 +134,7 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
   content: contentReducer,
   emailValidation: emailValidationReducer,
   crossSessions: crossSessionsReducer,
-  lollipop: lollipopReducer
+  lollipop: lollipopPersistor
 });
 
 export function createRootReducer(
@@ -226,7 +225,9 @@ export function createRootReducer(
             },
             lollipop: {
               ...initialLollipopState,
-              keyTag: state.lollipop.keyTag
+              keyTag: state.lollipop.keyTag,
+              // eslint-disable-next-line no-underscore-dangle
+              _persist: state.lollipop._persist
             }
           } as GlobalState)
         : state;

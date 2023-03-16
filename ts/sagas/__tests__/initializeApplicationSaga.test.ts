@@ -29,6 +29,12 @@ import {
 import { watchSessionExpiredSaga } from "../startup/watchSessionExpiredSaga";
 import { watchProfileEmailValidationChangedSaga } from "../watchProfileEmailValidationChangedSaga";
 import { checkAppHistoryVersionSaga } from "../startup/appVersionHistorySaga";
+import { generateLollipopKeySaga } from "../../features/lollipop/saga";
+import {
+  lollipopKeyTagSelector,
+  lollipopPublicKeySelector
+} from "../../features/lollipop/store/reducers/lollipop";
+import { generateKeyInfo } from "../startup/generateCryptoKeyPair";
 
 const aSessionToken = "a_session_token" as SessionToken;
 
@@ -71,10 +77,14 @@ describe("initializeApplicationSaga", () => {
       .next()
       .put(resetProfileState())
       .next()
+      .next(generateLollipopKeySaga)
       .select(sessionTokenSelector)
       .next(aSessionToken)
       .fork(watchSessionExpiredSaga)
       .next()
+      .next() // keyTag
+      .next() // publicKey
+      .next() // getPublicKey
       .next(200) // checkSession
       .select(sessionInfoSelector)
       .next(O.none)
@@ -104,9 +114,13 @@ describe("initializeApplicationSaga", () => {
       .next(pot.some(profile))
       .put(resetProfileState())
       .next()
+      .next(generateLollipopKeySaga)
       .select(sessionTokenSelector)
       .next(aSessionToken)
       .fork(watchSessionExpiredSaga)
+      .next(lollipopKeyTagSelector)
+      .next(lollipopPublicKeySelector)
+      .next(generateKeyInfo, O.none, O.none)
       .next()
       .next(401) // checksession
       .put(sessionExpired());
@@ -134,9 +148,13 @@ describe("initializeApplicationSaga", () => {
       .next(pot.some(profile))
       .put(resetProfileState())
       .next()
+      .next(generateLollipopKeySaga)
       .select(sessionTokenSelector)
       .next(aSessionToken)
       .fork(watchSessionExpiredSaga)
+      .next(lollipopKeyTagSelector)
+      .next(lollipopPublicKeySelector)
+      .next(generateKeyInfo, O.none, O.none)
       .next()
       .next(200) // check session
       .select(sessionInfoSelector)

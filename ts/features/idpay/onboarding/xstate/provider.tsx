@@ -10,6 +10,10 @@ import {
   idPayApiBaseUrl
 } from "../../../../config";
 import { useXStateMachine } from "../../../../hooks/useXStateMachine";
+import {
+  AppParamsList,
+  IOStackNavigationProp
+} from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { sessionInfoSelector } from "../../../../store/reducers/authentication";
 import {
@@ -20,7 +24,7 @@ import {
   fromLocaleToPreferredLanguage,
   getLocalePrimaryWithFallback
 } from "../../../../utils/locale";
-import { createOnboardingClient } from "../api/client";
+import { createIDPayClient } from "../../common/api/client";
 import {
   IDPayOnboardingParamsList,
   IDPayOnboardingStackNavigationProp
@@ -49,7 +53,8 @@ const IDPayOnboardingMachineProvider = (props: Props) => {
 
   const sessionInfo = useIOSelector(sessionInfoSelector);
 
-  const navigation =
+  const rootNavigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const onboardingNavigation =
     useNavigation<
       IDPayOnboardingStackNavigationProp<IDPayOnboardingParamsList>
     >();
@@ -68,15 +73,14 @@ const IDPayOnboardingMachineProvider = (props: Props) => {
     fromLocaleToPreferredLanguage
   );
 
-  const onboardingClient = createOnboardingClient(baseUrl);
+  const client = createIDPayClient(baseUrl);
 
-  const services = createServicesImplementation(
-    onboardingClient,
-    token,
-    language
+  const services = createServicesImplementation(client, token, language);
+
+  const actions = createActionsImplementation(
+    rootNavigation,
+    onboardingNavigation
   );
-
-  const actions = createActionsImplementation(navigation);
 
   const machineService = useInterpret(machine, {
     services,

@@ -37,6 +37,7 @@ import {
   clauseTypeMaping,
   getSectionListData
 } from "../../utils/signatureFields";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
 
 export type FciSignatureFieldsScreenNavigationParams = Readonly<{
   documentId: DocumentDetailView["id"];
@@ -230,10 +231,9 @@ const FciSignatureFieldsScreen = (
       contextualHelp={emptyContextualHelp}
     >
       <SafeAreaView style={IOStyles.flex} testID={"FciSignatureFieldsTestID"}>
-        <View
-          style={[IOStyles.horizontalContentPadding, { paddingBottom: 56 }]}
-        >
+        <View style={IOStyles.horizontalContentPadding}>
           <H1>{I18n.t("features.fci.signatureFields.title")}</H1>
+          <VSpacer size={32} />
         </View>
         {renderSignatureFields()}
         <FooterWithButtons
