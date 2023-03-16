@@ -1,36 +1,18 @@
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
+import ROUTES from "../../../../navigation/routes";
 import { IDPayUnsubscriptionRoutes } from "../navigation/navigator";
-import { Context } from "./context";
 
 const createActionsImplementation = (
   navigation: IOStackNavigationProp<AppParamsList, keyof AppParamsList>
 ) => {
-  const navigateToConfirmationScreen = (context: Context) =>
-    pipe(
-      context.initiativeId,
-      O.fold(
-        () => {
-          throw new Error("initiativeId is undefined");
-        },
-        initiativeId =>
-          navigation.navigate(
-            IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN,
-            {
-              screen:
-                IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_CONFIRMATION,
-              params: {
-                initiativeId,
-                initiativeName: context.initiativeName
-              }
-            }
-          )
-      )
-    );
+  const navigateToConfirmationScreen = () => {
+    navigation.navigate(IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN, {
+      screen: IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_CONFIRMATION
+    });
+  };
 
   const navigateToSuccessScreen = () =>
     navigation.navigate(IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN, {
@@ -48,7 +30,10 @@ const createActionsImplementation = (
 
   const exitToWallet = () => {
     navigation.popToTop();
-    // TODO navigazione a wallet
+    navigation.navigate(ROUTES.MAIN, {
+      screen: ROUTES.WALLET_HOME,
+      params: { newMethodAdded: false }
+    });
   };
 
   return {

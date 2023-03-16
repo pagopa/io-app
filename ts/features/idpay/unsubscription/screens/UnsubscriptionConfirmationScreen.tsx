@@ -1,4 +1,3 @@
-import { RouteProp, useRoute } from "@react-navigation/native";
 import { useSelector } from "@xstate/react";
 import React from "react";
 import { FlatList, SafeAreaView, StyleSheet, View } from "react-native";
@@ -17,7 +16,6 @@ import customVariables from "../../../../theme/variables";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { UnsubscriptionCheckListItem } from "../components/UnsubscriptionCheckListItem";
-import { IDPayUnsubscriptionParamsList } from "../navigation/navigator";
 import { useUnsubscriptionMachineService } from "../xstate/provider";
 import { isLoadingSelector } from "../xstate/selectors";
 import {
@@ -25,16 +23,6 @@ import {
   useUnsubscriptionChecks
 } from "../hooks/useUnsubscriptionChecks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-
-export type IDPayUnsubscriptionConfirmationScreenParams = {
-  initiativeId: string;
-  initiativeName?: string;
-};
-
-type IDPayUnsubscriptionConfirmationScreenRouteProps = RouteProp<
-  IDPayUnsubscriptionParamsList,
-  "IDPAY_UNSUBSCRIPTION_CONFIRMATION"
->;
 
 const INITIAL_CHECKS: ReadonlyArray<UnsubscriptionCheck> = [
   {
@@ -60,10 +48,6 @@ const INITIAL_CHECKS: ReadonlyArray<UnsubscriptionCheck> = [
 ];
 
 const UnsubscriptionConfirmationScreen = () => {
-  const route = useRoute<IDPayUnsubscriptionConfirmationScreenRouteProps>();
-
-  const { initiativeId, initiativeName } = route.params;
-
   const machine = useUnsubscriptionMachineService();
   const isLoading = useSelector(machine, isLoadingSelector);
 
@@ -71,7 +55,7 @@ const UnsubscriptionConfirmationScreen = () => {
     useUnsubscriptionChecks(INITIAL_CHECKS);
 
   useOnFirstRender(() => {
-    machine.send({ type: "SELECT_INITIATIVE", initiativeId, initiativeName });
+    // machine.send({ type: "SELECT_INITIATIVE", initiativeId, initiativeName });
   });
 
   const handleClosePress = () =>
@@ -101,7 +85,7 @@ const UnsubscriptionConfirmationScreen = () => {
   const confirmModal = useIOBottomSheetModal(
     <Body>{I18n.t("idpay.unsubscription.modal.content")}</Body>,
 
-    I18n.t("idpay.unsubscription.modal.title", { initiativeName }),
+    I18n.t("idpay.unsubscription.modal.title", { initiativeName: "" }),
     250,
 
     <FooterWithButtons
@@ -130,7 +114,7 @@ const UnsubscriptionConfirmationScreen = () => {
   const body = (
     <SafeAreaView style={IOStyles.flex}>
       <View style={styles.content}>
-        <H1>{I18n.t("idpay.unsubscription.title", { initiativeName })}</H1>
+        <H1>{I18n.t("idpay.unsubscription.title", { initiativeName: "" })}</H1>
         <VSpacer size={16} />
         <Body>{I18n.t("idpay.unsubscription.subtitle")}</Body>
         <VSpacer size={16} />

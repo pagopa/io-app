@@ -13,10 +13,3 @@ const selectTags = (state: StateWithContext) => state.tags;
 export const isLoadingSelector = createSelector(selectTags, tags =>
   tags.has(LOADING_TAG)
 );
-
-export const selectChecks = (state: StateWithContext) => state.context.checks;
-
-export const areChecksFullfilledSelector = createSelector(
-  selectChecks,
-  checks => !checks.find(c => !c.value)
-);

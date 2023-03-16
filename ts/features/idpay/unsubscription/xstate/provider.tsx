@@ -40,10 +40,19 @@ const UnsubscriptionMachineContext =
 
 type Props = {
   children: React.ReactNode;
+  initiativeId: string;
+  initiativeName?: string;
 };
 
 const IDPayUnsubscriptionMachineProvider = (props: Props) => {
-  const [machine] = useXStateMachine(createIDPayUnsubscriptionMachine);
+  const { initiativeId, initiativeName } = props;
+
+  const [machine] = useXStateMachine(() =>
+    createIDPayUnsubscriptionMachine({
+      initiativeId,
+      initiativeName
+    })
+  );
 
   const sessionInfo = useIOSelector(sessionInfoSelector);
   const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
