@@ -147,6 +147,7 @@ import {
   generateKeyInfo,
   trackMixpanelCryptoKeyPairEvents
 } from "./startup/generateCryptoKeyPair";
+import { DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER } from "../features/lollipop/utils/login";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -279,6 +280,17 @@ export function* initializeApplicationSaga(): Generator<
       return;
     }
   }
+
+    const lollipop_assertion_ref = maybeSessionInformation.value.lollipop_assertion_ref;
+    
+    
+    if(!lollipop_assertion_ref || lollipop_assertion_ref !== DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER + '-' + keyInfo.publicKeyThumbprint){
+      yield* put(sessionExpired());
+      return;
+    }
+ 
+   
+    
 
   // Start watching for profile update requests as the checkProfileEnabledSaga
   // may need to update the profile.
