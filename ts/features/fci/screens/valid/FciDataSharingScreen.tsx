@@ -31,6 +31,7 @@ import ROUTES from "../../../../navigation/routes";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { H1 } from "../../../../components/core/typography/H1";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
+import { withValidatedEmail } from "../../../../components/helpers/withValidatedEmail";
 
 const styles = StyleSheet.create({
   padded: {
@@ -52,10 +53,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center"
-  },
-  containerTitle: {
-    paddingTop: 8,
-    paddingBottom: 7
   },
   bottomPadding: { paddingBottom: 20 }
 });
@@ -118,11 +115,6 @@ const FciDataSharingScreen = (): React.ReactElement => {
           <VSpacer size={16} />
         </View>
         <View style={styles.padded}>
-          <View style={styles.containerTitle}>
-            <H4 weight="Regular" color={"bluegrey"}>
-              {I18n.t("features.fci.shareDataScreen.content")}
-            </H4>
-          </View>
           <List testID="FciDataSharingScreenListTestID">
             {name && (
               <ListItemComponent
@@ -189,4 +181,4 @@ const FciDataSharingScreen = (): React.ReactElement => {
   );
 };
 
-export default FciDataSharingScreen;
+export default withValidatedEmail(FciDataSharingScreen);
