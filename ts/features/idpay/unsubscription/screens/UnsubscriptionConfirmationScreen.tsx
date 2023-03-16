@@ -19,11 +19,12 @@ import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { UnsubscriptionCheckListItem } from "../components/UnsubscriptionCheckListItem";
 import { IDPayUnsubscriptionParamsList } from "../navigation/navigator";
 import { useUnsubscriptionMachineService } from "../xstate/provider";
+import { isLoadingSelector } from "../xstate/selectors";
 import {
-  areChecksFullfilledSelector,
-  isLoadingSelector,
-  selectChecks
-} from "../xstate/selectors";
+  UnsubscriptionCheck,
+  useUnsubscriptionChecks
+} from "../hooks/useUnsubscriptionChecks";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 
 export type IDPayUnsubscriptionConfirmationScreenParams = {
   initiativeId: string;
@@ -35,19 +36,43 @@ type IDPayUnsubscriptionConfirmationScreenRouteProps = RouteProp<
   "IDPAY_UNSUBSCRIPTION_CONFIRMATION"
 >;
 
+const INITIAL_CHECKS: ReadonlyArray<UnsubscriptionCheck> = [
+  {
+    title: I18n.t("idpay.unsubscription.checks.1.title"),
+    subtitle: I18n.t("idpay.unsubscription.checks.1.content"),
+    value: false
+  },
+  {
+    title: I18n.t("idpay.unsubscription.checks.2.title"),
+    subtitle: I18n.t("idpay.unsubscription.checks.2.content"),
+    value: false
+  },
+  {
+    title: I18n.t("idpay.unsubscription.checks.3.title"),
+    subtitle: I18n.t("idpay.unsubscription.checks.3.content"),
+    value: false
+  },
+  {
+    title: I18n.t("idpay.unsubscription.checks.4.title"),
+    subtitle: I18n.t("idpay.unsubscription.checks.4.content"),
+    value: false
+  }
+];
+
 const UnsubscriptionConfirmationScreen = () => {
   const route = useRoute<IDPayUnsubscriptionConfirmationScreenRouteProps>();
 
   const { initiativeId, initiativeName } = route.params;
 
   const machine = useUnsubscriptionMachineService();
-  const checks = useSelector(machine, selectChecks);
-  const areChecksFullfilled = useSelector(machine, areChecksFullfilledSelector);
   const isLoading = useSelector(machine, isLoadingSelector);
 
-  React.useEffect(() => {
+  const { checks, toggleCheck, areChecksFullfilled } =
+    useUnsubscriptionChecks(INITIAL_CHECKS);
+
+  useOnFirstRender(() => {
     machine.send({ type: "SELECT_INITIATIVE", initiativeId, initiativeName });
-  }, [machine, initiativeId, initiativeName]);
+  });
 
   const handleClosePress = () =>
     machine.send({
@@ -60,12 +85,7 @@ const UnsubscriptionConfirmationScreen = () => {
     });
   };
 
-  const handleCheckToggle = (index: number) => {
-    machine.send({
-      type: "TOGGLE_CHECK",
-      index
-    });
-  };
+  const handleCheckToggle = (index: number) => toggleCheck(index);
 
   const closeButton = (
     <TouchableDefaultOpacity

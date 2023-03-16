@@ -36,9 +36,6 @@ const createIDPayUnsubscriptionMachine = () =>
             EXIT: {
               actions: "exitUnsubscription"
             },
-            TOGGLE_CHECK: {
-              actions: "toggleCheck"
-            },
             CONFIRM_UNSUBSCRIPTION: {
               target: "UNSUBSCRIBING"
             }
@@ -80,16 +77,6 @@ const createIDPayUnsubscriptionMachine = () =>
         selectInitiative: assign((_, event) => ({
           initiativeId: O.some(event.initiativeId),
           initiativeName: event.initiativeName
-        })),
-        toggleCheck: assign((context, event) => ({
-          checks: [
-            ...context.checks.slice(0, event.index),
-            {
-              ...context.checks[event.index],
-              value: !context.checks[event.index].value
-            },
-            ...context.checks.slice((event.index as number) + 1)
-          ]
         }))
       }
     }
