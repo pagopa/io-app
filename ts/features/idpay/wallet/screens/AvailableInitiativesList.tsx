@@ -1,7 +1,8 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { ScrollView, View } from "react-native";
-import { InitiativesWithInstrumentDTO } from "../../../../../definitions/idpay/InitiativesWithInstrumentDTO";
 import {
   IOLogoPaymentType,
   LogoPayment
@@ -15,16 +16,15 @@ import TypedI18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { IDPayInitiativeListItem } from "../components/IDPayInitiativesListItem";
-import {
-  idPayInitiativesFromInstrumentSelector,
-  idpayInitiativesListSelector,
-  idPayAreInitiativesFromInstrumentErrorSelector
-} from "../store/reducers";
+import { IDPayInitiativesList } from "../components/IDPayInitiativesListComponents";
 import { idPayInitiativesFromInstrumentGet } from "../store/actions";
+import {
+  idPayAreInitiativesFromInstrumentErrorSelector,
+  idPayInitiativesFromInstrumentSelector
+} from "../store/reducers";
 
 export type AvailableInitiativesListScreenNavigationParams = {
-  capabilityItems: ReadonlyArray<React.ReactNode>;
+  idWallet: string;
 };
 
 type Props = IOStackNavigationRouteProps<
@@ -47,13 +47,16 @@ const brandToLogoPaymentMap: Record<string, IOLogoPaymentType> = {
 };
 
 export const IdPayInitiativeListScreen = (props: Props) => {
-  const { capabilityItems } = props.route.params;
-
-  const { brand, maskedPan, idWallet } = pot.getOrElse(
-    useIOSelector(idPayInitiativesFromInstrumentSelector),
-    {} as InitiativesWithInstrumentDTO
-  );
-  const idpayInitiatives = useIOSelector(idpayInitiativesListSelector);
+  const { idWallet } = props.route.params;
+  const initiatives = useIOSelector(idPayInitiativesFromInstrumentSelector);
+  const [idpayInitiatives, maskedPan, brand] = pipe(
+    initiatives,
+    pot.toOption,
+    O.fold(
+      () => undefined,
+      res => [res.initiativeList, res.maskedPan, res.brand]
+    )
+  ) ?? [[], undefined, undefined];
   const dispatch = useIODispatch();
   const areInitiativesInError = useIOSelector(
     idPayAreInitiativesFromInstrumentErrorSelector
@@ -73,16 +76,6 @@ export const IdPayInitiativeListScreen = (props: Props) => {
     return () => clearInterval(timer);
   }, [dispatch, idWallet, areInitiativesInError]);
 
-  const idpayInitiativesComponentList = idpayInitiatives.map(item => (
-    <IDPayInitiativeListItem
-      item={item}
-      key={item.initiativeId}
-      idWallet={idWallet}
-    />
-  ));
-
-  const listItems = [...capabilityItems, ...idpayInitiativesComponentList];
-
   return (
     <BaseScreenComponent
       headerTitle={TypedI18n.t("idpay.wallet.initiativePairing.navigation")}
@@ -93,9 +86,7 @@ export const IdPayInitiativeListScreen = (props: Props) => {
         <VSpacer size={16} />
         {maskedPan && (
           <View style={IOStyles.row}>
-            {brand !== undefined ? (
-              <LogoPayment name={brandToLogoPaymentMap[brand]} />
-            ) : null}
+            <LogoPayment name={brandToLogoPaymentMap[brand]} />
             <HSpacer size={8} />
             <H4>•••• {maskedPan}</H4>
           </View>
@@ -103,7 +94,10 @@ export const IdPayInitiativeListScreen = (props: Props) => {
         <VSpacer size={16} />
       </View>
       <ScrollView style={IOStyles.horizontalContentPadding}>
-        {listItems}
+        <IDPayInitiativesList
+          initiatives={idpayInitiatives}
+          idWallet={idWallet}
+        />
         <VSpacer size={24} />
       </ScrollView>
     </BaseScreenComponent>
