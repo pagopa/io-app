@@ -22,6 +22,7 @@ import { idpsStateSelector } from "../store/reducers/content";
 import { LocalIdpsFallback } from "../utils/idps";
 import { localeDateFormat } from "../utils/locale";
 import I18n from "../i18n";
+import { toAndroidCacheTimestamp } from "../utils/dates";
 import { VSpacer } from "./core/spacer/Spacer";
 import { IOColors } from "./core/variables/IOColors";
 
@@ -80,10 +81,7 @@ const keyExtractor = (idp: LocalIdpsFallback): string => idp.id;
 // Image cache forced refresh for Android by appending
 // the `ts` query parameter as DDMMYYYY to simulate a 24h TTL.
 const androidIdpLogoForcedRefreshed = () => {
-  const timestampValue = localeDateFormat(
-    new Date(),
-    I18n.t("global.dateFormats.shortFormat").replace(/\//g, "")
-  );
+  const timestampValue = toAndroidCacheTimestamp();
   return Platform.OS === "android" ? `?ts=${timestampValue}` : "";
 };
 
