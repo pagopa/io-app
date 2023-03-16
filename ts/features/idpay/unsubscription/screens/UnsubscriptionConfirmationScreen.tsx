@@ -18,41 +18,34 @@ import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { UnsubscriptionCheckListItem } from "../components/UnsubscriptionCheckListItem";
 import { useUnsubscriptionMachineService } from "../xstate/provider";
 import { isLoadingSelector } from "../xstate/selectors";
-import {
-  UnsubscriptionCheck,
-  useUnsubscriptionChecks
-} from "../hooks/useUnsubscriptionChecks";
+import { useConfirmationChecks } from "../hooks/useConfirmationChecks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 
-const INITIAL_CHECKS: ReadonlyArray<UnsubscriptionCheck> = [
-  {
-    title: I18n.t("idpay.unsubscription.checks.1.title"),
-    subtitle: I18n.t("idpay.unsubscription.checks.1.content"),
-    value: false
-  },
-  {
-    title: I18n.t("idpay.unsubscription.checks.2.title"),
-    subtitle: I18n.t("idpay.unsubscription.checks.2.content"),
-    value: false
-  },
-  {
-    title: I18n.t("idpay.unsubscription.checks.3.title"),
-    subtitle: I18n.t("idpay.unsubscription.checks.3.content"),
-    value: false
-  },
-  {
-    title: I18n.t("idpay.unsubscription.checks.4.title"),
-    subtitle: I18n.t("idpay.unsubscription.checks.4.content"),
-    value: false
-  }
-];
+const unsubscriptionChecks: ReadonlyArray<{ title: string; subtitle: string }> =
+  [
+    {
+      title: I18n.t("idpay.unsubscription.checks.1.title"),
+      subtitle: I18n.t("idpay.unsubscription.checks.1.content")
+    },
+    {
+      title: I18n.t("idpay.unsubscription.checks.2.title"),
+      subtitle: I18n.t("idpay.unsubscription.checks.2.content")
+    },
+    {
+      title: I18n.t("idpay.unsubscription.checks.3.title"),
+      subtitle: I18n.t("idpay.unsubscription.checks.3.content")
+    },
+    {
+      title: I18n.t("idpay.unsubscription.checks.4.title"),
+      subtitle: I18n.t("idpay.unsubscription.checks.4.content")
+    }
+  ];
 
 const UnsubscriptionConfirmationScreen = () => {
   const machine = useUnsubscriptionMachineService();
   const isLoading = useSelector(machine, isLoadingSelector);
 
-  const { checks, toggleCheck, areChecksFullfilled } =
-    useUnsubscriptionChecks(INITIAL_CHECKS);
+  const checks = useConfirmationChecks(unsubscriptionChecks.length);
 
   useOnFirstRender(() => {
     // machine.send({ type: "SELECT_INITIATIVE", initiativeId, initiativeName });
@@ -69,7 +62,7 @@ const UnsubscriptionConfirmationScreen = () => {
     });
   };
 
-  const handleCheckToggle = (index: number) => toggleCheck(index);
+  const handleCheckToggle = (index: number) => checks.toggle(index);
 
   const closeButton = (
     <TouchableDefaultOpacity
@@ -119,13 +112,13 @@ const UnsubscriptionConfirmationScreen = () => {
         <Body>{I18n.t("idpay.unsubscription.subtitle")}</Body>
         <VSpacer size={16} />
         <FlatList
-          data={checks}
+          data={unsubscriptionChecks}
           renderItem={({ item, index }) => (
             <UnsubscriptionCheckListItem
               key={index}
               title={item.title}
               subtitle={item.subtitle}
-              checked={item.value}
+              checked={checks.values[index]}
               onValueChange={() => handleCheckToggle(index)}
             />
           )}
@@ -141,8 +134,8 @@ const UnsubscriptionConfirmationScreen = () => {
         rightButton={{
           title: I18n.t("idpay.unsubscription.button.continue"),
           onPress: confirmModal.present,
-          disabled: !areChecksFullfilled,
-          danger: areChecksFullfilled
+          disabled: !checks.areFullfilled,
+          danger: checks.areFullfilled
         }}
       />
     </SafeAreaView>

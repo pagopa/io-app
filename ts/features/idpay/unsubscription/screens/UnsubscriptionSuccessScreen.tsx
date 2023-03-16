@@ -13,9 +13,7 @@ import { useUnsubscriptionMachineService } from "../xstate/provider";
 const UnsubscriptionSuccessScreen = () => {
   const machine = useUnsubscriptionMachineService();
 
-  const handleClosePress = () => {
-    machine.send({ type: "EXIT" });
-  };
+  const handleClosePress = () => machine.send({ type: "EXIT" });
 
   return (
     <SafeAreaView style={[IOStyles.flex, { flexGrow: 1 }]}>
