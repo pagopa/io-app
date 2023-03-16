@@ -11,8 +11,6 @@ import { pipe } from "fp-ts/lib/function";
 import * as B from "fp-ts/boolean";
 import * as T from "io-ts";
 import * as E from "fp-ts/Either";
-import { localeDateFormat } from "../../utils/locale";
-import I18n from "../../i18n";
 import { toAndroidCacheTimestamp } from "../../utils/dates";
 
 interface Props extends Omit<ImageProps, "source"> {
@@ -48,19 +46,20 @@ export class MultiImage extends React.PureComponent<Props, State> {
     const atIndex = this.props.source[sourceIndex];
 
     const source: ImageURISource | ImageRequireSource = pipe(
-      Platform.OS === 'android',
+      Platform.OS === "android",
       B.fold(
         () => atIndex,
-        () => pipe(
-            atIndex, 
+        () =>
+          pipe(
+            atIndex,
             T.number.decode,
             E.fold(
               () => {
-                const {uri, ...others} = atIndex as ImageURISource;
+                const { uri, ...others } = atIndex as ImageURISource;
                 const timestampValue = toAndroidCacheTimestamp();
-                return {uri: `${uri}?ts=${timestampValue}`, ...others};
+                return { uri: `${uri}?ts=${timestampValue}`, ...others };
               },
-              () => atIndex, 
+              () => atIndex
             )
           )
       )

@@ -20,8 +20,6 @@ import themeVariables from "../theme/variables";
 import { GlobalState } from "../store/reducers/types";
 import { idpsStateSelector } from "../store/reducers/content";
 import { LocalIdpsFallback } from "../utils/idps";
-import { localeDateFormat } from "../utils/locale";
-import I18n from "../i18n";
 import { toAndroidCacheTimestamp } from "../utils/dates";
 import { VSpacer } from "./core/spacer/Spacer";
 import { IOColors } from "./core/variables/IOColors";
