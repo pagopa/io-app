@@ -43,7 +43,7 @@ type Props = {
 };
 
 const IDPayUnsubscriptionMachineProvider = (props: Props) => {
-  const [machine] = useXStateMachine(createIDPayUnsubscriptionMachine, "pippo");
+  const [machine] = useXStateMachine(createIDPayUnsubscriptionMachine);
 
   const sessionInfo = useIOSelector(sessionInfoSelector);
   const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);

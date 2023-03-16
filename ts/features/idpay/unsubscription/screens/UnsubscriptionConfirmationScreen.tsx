@@ -141,7 +141,7 @@ const UnsubscriptionConfirmationScreen = () => {
               key={index}
               title={item.title}
               subtitle={item.subtitle}
-              checked={false}
+              checked={item.value}
               onValueChange={() => handleCheckToggle(index)}
             />
           )}

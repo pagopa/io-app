@@ -47,8 +47,8 @@ const createActionsImplementation = (
   };
 
   const exitToWallet = () => {
-    navigation.pop();
-    navigation.pop();
+    navigation.popToTop();
+    // TODO navigazione a wallet
   };
 
   return {
