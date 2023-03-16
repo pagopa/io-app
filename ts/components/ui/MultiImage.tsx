@@ -55,11 +55,10 @@ export class MultiImage extends React.PureComponent<Props, State> {
             atIndex,
             T.number.decode,
             E.fold(
-              () => {
-                const { uri, ...others } = atIndex as ImageURISource;
-                const timestampValue = toAndroidCacheTimestamp();
-                return { uri: `${uri}?ts=${timestampValue}`, ...others };
-              },
+              () => ({
+                uri: `${(atIndex as ImageURISource).uri}?ts=${new Date()}`,
+                ...(atIndex as ImageURISource)
+              }),
               () => atIndex
             )
           )
