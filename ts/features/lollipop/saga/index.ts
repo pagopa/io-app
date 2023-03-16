@@ -19,12 +19,9 @@ import {
   DEFAULT_LOLLIPOP_HASH_ALGORITHM_CLIENT,
   DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER
 } from "../utils/login";
-import { startApplicationInitialization } from "../../../store/actions/application";
 import { sessionInvalid } from "../../../store/actions/authentication";
-import { clearCache } from "../../../store/actions/profile";
-import { resetAssistanceData } from "../../../utils/supportAssistance";
 import { jwkThumbprintByEncoding } from "jwk-thumbprint";
-import { pipe } from "fp-ts/lib/function";
+import { restartCleanApplication } from "../../../sagas/commons";
 
 export function* generateLollipopKeySaga() {
   const maybeOldKeyTag = yield* select(lollipopKeyTagSelector);
@@ -84,13 +81,13 @@ export function* lollipopKeyCheckWithServer() {
       localAssertionRef = `${DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER}-${converted}`;
     }
 
-    if (!lollipop_assertion_ref || lollipop_assertion_ref !== localAssertionRef) {
+    if (
+      !lollipop_assertion_ref ||
+      lollipop_assertion_ref !== localAssertionRef
+    ) {
       yield* put(sessionInvalid());
-      resetAssistanceData();
-      yield* put(clearCache());
-      yield* put(startApplicationInitialization());
+      yield* call(restartCleanApplication);
       return;
     }
   }
 }
-
