@@ -45,7 +45,7 @@ export class MultiImage extends React.PureComponent<Props, State> {
 
     const atIndex = this.props.source[sourceIndex];
 
-    // Workaround for invalidating the Android chance of the Image component.
+    // Workaround for invalidating the Android cache of the Image component.
     const source: ImageURISource | ImageRequireSource = pipe(
       Platform.OS === "android",
       B.fold(

@@ -300,7 +300,7 @@ export const getTranslatedShortNumericMonthYear = (
  * Generates a locale formatted timestamp,
  * used to force the refresh of the Image component cache for Android devices
  * every 24 hours.
- * @returns the actual locale date short format.
+ * @returns the actual locale date short format without slashes.
  */
 export const toAndroidCacheTimestamp = () =>
   localeDateFormat(
