@@ -55,8 +55,10 @@ import {
   IDPayOnboardingNavigator,
   IDPayOnboardingRoutes
 } from "../features/idpay/onboarding/navigation/navigator";
-import { IDPayUnsubscriptionNavigator } from "../features/idpay/unsubscription/navigation/navigator";
-import { IDPayUnsubscriptionRoutes } from "../features/idpay/unsubscription/navigation/routes";
+import {
+  IDPayUnsubscriptionNavigator,
+  IDPayUnsubscriptionRoutes
+} from "../features/idpay/unsubscription/navigation/navigator";
 import UADONATION_ROUTES from "../features/uaDonations/navigation/routes";
 import { UAWebViewScreen } from "../features/uaDonations/screens/UAWebViewScreen";
 import { ZendeskStackNavigator } from "../features/zendesk/navigation/navigator";
