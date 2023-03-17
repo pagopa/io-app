@@ -7,6 +7,9 @@ import { IDPayClient } from "../../common/api/client";
 import { Context } from "./context";
 
 export type Services = {
+  getInitiativeInfo: {
+    data: InitiativeDTO;
+  };
   unsubscribeFromInitiative: {
     data: undefined;
   };
