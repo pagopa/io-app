@@ -10,10 +10,7 @@ import { pipe } from "fp-ts/lib/function";
 import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import { Alert, Image, SafeAreaView, StyleSheet } from "react-native";
-import {
-  WebViewMessageEvent,
-  WebViewSource
-} from "react-native-webview/lib/WebViewTypes";
+import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
 import { connect } from "react-redux";
 import brokenLinkImage from "../../../img/broken-link.png";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
@@ -81,8 +78,6 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.main.privacy.privacyPolicy.contextualHelpTitlePolicy",
   body: "profile.main.privacy.privacyPolicy.contextualHelpContentPolicy"
 };
-
-const webViewSource = (): WebViewSource => ({ uri: privacyUrl });
 
 /**
  * A screen to show the ToS to the user.
@@ -193,7 +188,7 @@ class TosScreen extends React.PureComponent<Props, State> {
               handleError={this.handleError}
               handleLoadEnd={this.handleLoadEnd}
               handleWebViewMessage={this.handleWebViewMessage}
-              webViewSource={webViewSource()}
+              webViewSource={{ uri: privacyUrl }}
               shouldFooterRender={shouldFooterRender}
               onExit={this.handleGoBack}
               onAcceptTos={() => dispatch(tosAccepted(tosVersion))}
