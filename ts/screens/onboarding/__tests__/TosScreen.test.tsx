@@ -7,7 +7,10 @@ import { NavigationAction } from "@react-navigation/native";
 import { Alert, AlertButton } from "react-native";
 import I18n from "i18n-js";
 import WebView from "react-native-webview";
-import { WebViewErrorEvent } from "react-native-webview/lib/WebViewTypes";
+import {
+  WebViewErrorEvent,
+  WebViewNavigationEvent
+} from "react-native-webview/lib/WebViewTypes";
 import TosScreen from "../TosScreen";
 import * as config from "../../../config";
 import { appReducer } from "../../../store/reducers";
@@ -197,16 +200,71 @@ describe("TosScreen", () => {
       );
     });
   });
-  describe("When rendering the screen and there is an error", () => {
-    it("The error overlay should have been rendered with proper values and the web view should not have been rendered", () => {
+  describe("When rendering the screen initially", () => {
+    it("There should be the loading spinner overlay without the cancel button", async () => {
+      const renderAPI = commonSetup();
+
+      // Overlay component should be there
+      const overlayComponentRTI = renderAPI.getByTestId("overlayComponent");
+      expect(overlayComponentRTI).toBeTruthy();
+
+      // Overlay should have the indeterminate spinner
+      const activityIndicatorRTI = renderAPI.getByTestId("refreshIndicator");
+      expect(activityIndicatorRTI).toBeTruthy();
+
+      // There must not be the cancel button
+      const cancelButtonRTI = renderAPI.queryByTestId(
+        "loadingSpinnerOverlayCancelButton"
+      );
+      expect(cancelButtonRTI).toBeFalsy();
+    });
+  });
+  describe("When rendering the screen after the WebView has finished loading without any error", () => {
+    it("The TosWebviewComponent should be rendered without any loading spinner overlayed", async () => {
+      // eslint-disable-next-line functional/no-let
+      let maybeWebView: O.Option<WebView> = O.none;
       jest
         .spyOn(WebView.prototype, "render")
         .mockImplementationOnce(function (this: WebView) {
-          this.props.onError?.({} as WebViewErrorEvent);
+          maybeWebView = O.some(this);
         });
       const renderAPI = commonSetup({});
 
-      // Render container should be there
+      expect(maybeWebView).not.toBe(O.none);
+      const webView = maybeWebView as O.Some<WebView>;
+
+      webView.value.props.onLoadEnd?.({} as WebViewNavigationEvent);
+
+      // Overlay component should be there (since the top view is rendered nonetheless)
+      const overlayComponentRTI = renderAPI.getByTestId("overlayComponent");
+      expect(overlayComponentRTI).toBeTruthy();
+
+      // There must not be the indeterminate spinner
+      const activityIndicatorRTI = renderAPI.queryByTestId("refreshIndicator");
+      expect(activityIndicatorRTI).toBeFalsy();
+
+      // TosWebviewComponent should be rendered
+      const webViewComponentRTI = renderAPI.getByTestId("toSWebViewContainer");
+      expect(webViewComponentRTI).toBeTruthy();
+    });
+  });
+  describe("When rendering the screen and there is an error", () => {
+    it("The error overlay should have been rendered with proper values and the web view should not have been rendered", () => {
+      // eslint-disable-next-line functional/no-let
+      let maybeWebView: O.Option<WebView> = O.none;
+      jest
+        .spyOn(WebView.prototype, "render")
+        .mockImplementationOnce(function (this: WebView) {
+          maybeWebView = O.some(this);
+        });
+      const renderAPI = commonSetup({});
+
+      expect(maybeWebView).not.toBe(O.none);
+      const webView = maybeWebView as O.Some<WebView>;
+
+      webView.value.props.onError?.({} as WebViewErrorEvent);
+
+      // Error container should be there
       const errorContainerViewRTI = renderAPI.getByTestId(
         "toSErrorContainerView"
       );
@@ -234,9 +292,45 @@ describe("TosScreen", () => {
 
       // TosWebviewComponent should not be rendered
       const webViewComponentRTI = renderAPI.queryByTestId(
-        "toSWebViewComponent"
+        "toSWebViewContainer"
       );
       expect(webViewComponentRTI).toBeFalsy();
+    });
+  });
+  describe("When rendering the screen and there is an error", () => {
+    it("Pressing the retry button should update the component state", async () => {
+      // eslint-disable-next-line functional/no-let
+      let maybeWebView: O.Option<WebView> = O.none;
+      jest
+        .spyOn(WebView.prototype, "render")
+        .mockImplementationOnce(function (this: WebView) {
+          maybeWebView = O.some(this);
+        });
+      const renderAPI = commonSetup();
+
+      expect(maybeWebView).not.toBe(O.none);
+      const webView = maybeWebView as O.Some<WebView>;
+
+      webView.value.props.onError?.({} as WebViewErrorEvent);
+
+      // Retry button should be rendered
+      const errorContainerButtonRTI = renderAPI.getByTestId(
+        "toSErrorContainerButton"
+      );
+      expect(errorContainerButtonRTI).toBeDefined();
+
+      // Fire the retry button
+      fireEvent.press(errorContainerButtonRTI);
+
+      // Error container should not be rendered
+      const errorContainerViewRTI = renderAPI.queryByTestId(
+        "toSErrorContainerView"
+      );
+      expect(errorContainerViewRTI).toBeFalsy();
+
+      // TosWebviewComponent should be rendered
+      const webViewComponentRTI = renderAPI.getByTestId("toSWebViewContainer");
+      expect(webViewComponentRTI).toBeTruthy();
     });
   });
 });

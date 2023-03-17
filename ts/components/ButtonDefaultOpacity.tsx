@@ -78,6 +78,7 @@ const ButtonDefaultOpacity = (props: Props) => {
       accessibilityRole={"button"}
       accessibilityState={{ disabled: props.disabled }}
       hitSlop={hitSlop}
+      testID={props.testID}
     >
       {props.children}
     </Button>

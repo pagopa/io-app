@@ -20,7 +20,7 @@ type Props = {
 
 const TosWebviewComponent: React.FunctionComponent<Props> = (props: Props) => (
   <>
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1 }} testID={"toSWebViewContainer"}>
       <WebView
         androidCameraAccessDisabled={true}
         androidMicrophoneAccessDisabled={true}

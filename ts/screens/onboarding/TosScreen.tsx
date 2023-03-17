@@ -135,6 +135,7 @@ class TosScreen extends React.PureComponent<Props, State> {
             style={{ flex: 2 }}
             block={true}
             primary={true}
+            testID={"toSErrorContainerButton"}
           >
             <NBText testID={"toSErrorContainerButtonText"}>
               {I18n.t("global.buttons.retry")}
@@ -196,7 +197,6 @@ class TosScreen extends React.PureComponent<Props, State> {
               shouldFooterRender={shouldFooterRender}
               onExit={this.handleGoBack}
               onAcceptTos={() => dispatch(tosAccepted(tosVersion))}
-              testID={"toSWebViewComponent"}
             />
           )}
         </SafeAreaView>
