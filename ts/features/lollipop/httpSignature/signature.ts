@@ -33,9 +33,6 @@ function getHttpSignatureHeaderParameterFromConfig(
     case "@scheme":
       returnString = config.signatureComponents.scheme;
       break;
-    case "@request-target":
-      returnString = config.signatureComponents.requestTarget;
-      break;
     default:
       throw new Error(
         "Unknown http-signature header parameter " + headerParameter

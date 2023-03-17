@@ -2,7 +2,7 @@
  * The screen to display to the user the various types of errors that occurred during the transaction.
  * Inside the cancel and retry buttons are conditionally returned.
  */
-import { RptId, RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import { RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -59,9 +59,12 @@ import {
   appendLog,
   assistanceToolRemoteConfig,
   resetCustomFields,
-  zendeskBlockedPaymentRptIdId,
   zendeskCategoryId,
-  zendeskPaymentCategory
+  zendeskPaymentCategory,
+  zendeskPaymentFailure,
+  zendeskPaymentNav,
+  zendeskPaymentOrgFiscalCode,
+  zendeskPaymentStartOrigin
 } from "../../../utils/supportAssistance";
 import { IOPictogramType } from "../../../components/core/pictograms/Pictogram";
 import { InfoAltScreenComponent } from "../../../components/InfoAltScreenComponent/InfoAltScreenComponent";
@@ -109,12 +112,20 @@ const requestZendeskAssistanceForPaymentFailure = (
   // Set pagamenti_pagopa as category
   addTicketCustomField(zendeskCategoryId, zendeskPaymentCategory.value);
 
-  // Add rptId custom field
+  // Add organization fiscal code custom field
   addTicketCustomField(
-    zendeskBlockedPaymentRptIdId,
-    RptIdFromString.encode(rptId)
+    zendeskPaymentOrgFiscalCode,
+    rptId.organizationFiscalCode
   );
+  // Add rptId custom field
+  addTicketCustomField(zendeskPaymentNav, getCodiceAvviso(rptId));
   if (payment) {
+    if (payment.failure) {
+      // Add failure custom field
+      addTicketCustomField(zendeskPaymentFailure, payment.failure);
+    }
+    // Add start origin custom field
+    addTicketCustomField(zendeskPaymentStartOrigin, payment.startOrigin);
     // Append the payment history details in the log
     appendLog(getPaymentHistoryDetails(payment));
   }
