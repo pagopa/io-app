@@ -295,3 +295,15 @@ export const getTranslatedShortNumericMonthYear = (
     I18n.t("global.dateFormats.shortNumericMonthYear")
   );
 };
+
+/**
+ * Generates a locale formatted timestamp,
+ * used to force the refresh of the Image component cache for Android devices
+ * every 24 hours.
+ * @returns the actual locale date short format without slashes.
+ */
+export const toAndroidCacheTimestamp = () =>
+  localeDateFormat(
+    new Date(),
+    I18n.t("global.dateFormats.shortFormat").replace(/\//g, "")
+  );
