@@ -147,11 +147,11 @@ export const useLollipopLoginSource = (
         });
       }),
       TE.mapLeft(error => {
-        dispatch(lollipopRemovePublicKey());
+        trackLollipopIdpLoginFailure(error.message);
         if (mixpanelEnabled) {
           trackLollipopKeyGenerationFailure(error.message);
         }
-        trackLollipopIdpLoginFailure(error.message);
+        dispatch(lollipopRemovePublicKey());
         setWebviewSource({
           uri: loginUri
         });
