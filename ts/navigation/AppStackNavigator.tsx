@@ -55,6 +55,7 @@ import {
   IDPayOnboardingNavigator,
   IDPayOnboardingRoutes
 } from "../features/idpay/onboarding/navigation/navigator";
+import FailureScreen from "../features/lollipop/screens/FailureScreen";
 import UADONATION_ROUTES from "../features/uaDonations/navigation/routes";
 import { UAWebViewScreen } from "../features/uaDonations/screens/UAWebViewScreen";
 import { ZendeskStackNavigator } from "../features/zendesk/navigation/navigator";
@@ -102,6 +103,7 @@ export const AppStackNavigator = () => {
       screenOptions={{ gestureEnabled: false }}
     >
       <Stack.Screen name={ROUTES.INGRESS} component={IngressScreen} />
+      <Stack.Screen name={ROUTES.UNSUPPORTED_DEVICE} component={FailureScreen} />
       <Stack.Screen
         name={ROUTES.AUTHENTICATION}
         component={authenticationNavigator}
