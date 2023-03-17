@@ -48,6 +48,10 @@ const styles = StyleSheet.create({
     right: 0,
     top: 0,
     bottom: 0
+  },
+  webView: {
+    flex: 1,
+    opacity: Platform.OS === "android" ? 0.99 : 1 // Android workaround to avoid crashing when navigating out of a WebView
   }
 });
 const renderLoading = () => (
@@ -130,7 +134,7 @@ const LocalServicesWebView = (props: Props) => {
         androidMicrophoneAccessDisabled={true}
         ref={webViewRef}
         injectedJavaScript={closeInjectedScript(AVOID_ZOOM_JS)}
-        style={style.webView}
+        style={styles.webView}
         textZoom={100}
         source={{
           uri: localServicesWebUrl
@@ -149,13 +153,6 @@ const LocalServicesWebView = (props: Props) => {
     </>
   );
 };
-
-const style = StyleSheet.create({
-  webView: {
-    flex: 1,
-    opacity: Platform.OS === "android" ? 0.99 : 1 // Android workaround to avoid crashing when navigating out of a WebView
-  }
-});
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadService: (serviceId: string) =>
