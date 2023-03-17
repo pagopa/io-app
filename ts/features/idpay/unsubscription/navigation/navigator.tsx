@@ -4,8 +4,18 @@ import React from "react";
 import UnsubscriptionConfirmationScreen from "../screens/UnsubscriptionConfirmationScreen";
 import UnsubscriptionResultScreen from "../screens/UnsubscriptionResultScreen";
 import { IDPayUnsubscriptionMachineProvider } from "../xstate/provider";
-import { IDPayUnsubscriptionParamsList } from "./params";
-import { IDPayUnsubscriptionRoutes } from "./routes";
+
+export const IDPayUnsubscriptionRoutes = {
+  IDPAY_UNSUBSCRIPTION_MAIN: "IDPAY_UNSUBSCRIPTION_MAIN",
+  IDPAY_UNSUBSCRIPTION_CONFIRMATION: "IDPAY_UNSUBSCRIPTION_CONFIRMATION",
+  IDPAY_UNSUBSCRIPTION_RESULT: "IDPAY_UNSUBSCRIPTION_RESULT"
+} as const;
+
+export type IDPayUnsubscriptionParamsList = {
+  [IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN]: IDPayUnsubscriptionNavigatorParams;
+  [IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_CONFIRMATION]: undefined;
+  [IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_RESULT]: undefined;
+};
 
 const Stack = createStackNavigator<IDPayUnsubscriptionParamsList>();
 

@@ -33,9 +33,11 @@ import {
   IDPayDetailsParamsList,
   IDPayDetailsRoutes
 } from "../../features/idpay/initiative/details/navigation";
-import { IDPayUnsubscriptionNavigatorParams } from "../../features/idpay/unsubscription/navigation/navigator";
-import { IDPayUnsubscriptionRoutes } from "../../features/idpay/unsubscription/navigation/routes";
-import { IDPayUnsubscriptionParamsList } from "../../features/idpay/unsubscription/navigation/params";
+import {
+  IDPayUnsubscriptionNavigatorParams,
+  IDPayUnsubscriptionParamsList,
+  IDPayUnsubscriptionRoutes
+} from "../../features/idpay/unsubscription/navigation/navigator";
 import { AuthenticationParamsList } from "./AuthenticationParamsList";
 import { MainTabParamsList } from "./MainTabParamsList";
 import { MessagesParamsList } from "./MessagesParamsList";
