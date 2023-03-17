@@ -55,9 +55,6 @@ afterAll(() => {
   Object.defineProperty(config, "tosVersion", {
     value: tosVersionOriginalValue
   });
-  console.log(
-    `=== (${zendeskEnabledDefaultValue}) (${tosVersionOriginalValue})`
-  );
 });
 
 describe("TosScreen", () => {
