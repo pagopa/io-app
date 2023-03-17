@@ -1,11 +1,11 @@
 import React from "react";
 
-export const useConfirmationChecks = (lenght: number) => {
+export const useConfirmationChecks = (length: number) => {
   const [values, setValues] = React.useState<ReadonlyArray<boolean>>(
-    Array(lenght).map(() => false)
+    Array.from({ length }, () => false)
   );
 
-  const areFullfilled = !values.find(c => !c);
+  const areFullfilled = values.every(v => v === true);
 
   const toggle = (atIndex: number) =>
     setValues(current => [
