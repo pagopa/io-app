@@ -1,16 +1,29 @@
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as T from "fp-ts/lib/Task";
+import * as TE from "fp-ts/lib/TaskEither";
 import { v4 as uuid } from "uuid";
 import { put, select, call } from "typed-redux-saga/macro";
-import { getPublicKey } from "@pagopa/io-react-native-crypto";
+import {
+  deleteKey,
+  generate,
+  getPublicKey,
+  PublicKey
+} from "@pagopa/io-react-native-crypto";
+import { jwkThumbprintByEncoding } from "jwk-thumbprint";
 import { lollipopKeyTagSelector } from "../store/reducers/lollipop";
 import {
   lollipopKeyTagSave,
+  lollipopRemovePublicKey,
   lollipopSetPublicKey
 } from "../store/actions/lollipop";
+import { KeyInfo, toCryptoError } from "../utils/crypto";
 import {
-  cryptoKeyGenerationSaga,
-  deletePreviousCryptoKeyPair
-} from "../../../sagas/startup/generateCryptoKeyPair";
+  trackLollipopKeyGenerationFailure,
+  trackLollipopKeyGenerationSuccess
+} from "../../../utils/analytics";
+import { DEFAULT_LOLLIPOP_HASH_ALGORITHM_CLIENT } from "../utils/login";
+import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
 
 export function* generateLollipopKeySaga() {
   const maybeOldKeyTag = yield* select(lollipopKeyTagSelector);
@@ -47,3 +60,112 @@ export function* deleteCurrentLollipopKeyAndGenerateNewKeyTag() {
   const newKeyTag = uuid();
   yield* put(lollipopKeyTagSave({ keyTag: newKeyTag }));
 }
+
+/**
+ * Generates a new crypto key pair.
+ */
+function* cryptoKeyGenerationSaga(
+  keyTag: string,
+  previousKeyTag: O.Option<string>
+) {
+  // Every new login we need to regenerate a brand new key pair.
+  yield* call(deletePreviousCryptoKeyPair, previousKeyTag);
+  yield* call(generateCryptoKeyPair, keyTag);
+}
+
+/**
+ * Deletes a previous saved crypto key pair.
+ */
+function* deletePreviousCryptoKeyPair(keyTag: O.Option<string>) {
+  if (O.isSome(keyTag)) {
+    yield* call(deleteCryptoKeyPair, keyTag.value);
+  }
+}
+
+/**
+ * Deletes the crypto key pair corresponding to the provided `keyTag`.
+ */
+function* deleteCryptoKeyPair(keyTag: string) {
+  // Key is persisted even after uninstalling the application on iOS.
+  const keyAlreadyExistsOnKeystore = yield* call(checkPublicKeyExists, keyTag);
+
+  if (keyAlreadyExistsOnKeystore) {
+    try {
+      yield* call(deleteKey, keyTag);
+      yield* put(lollipopRemovePublicKey());
+    } catch (e) {
+      const mixPanelEnabled = yield* select(isMixpanelEnabled);
+      if (mixPanelEnabled) {
+        const { message } = toCryptoError(e);
+        yield* call(trackLollipopKeyGenerationFailure, message);
+      }
+    }
+  }
+}
+
+const checkPublicKeyExists = (keyTag: string) =>
+  pipe(
+    TE.tryCatch(
+      () => getPublicKey(keyTag),
+      () => false
+    ),
+    TE.map(_ => true),
+    TE.getOrElse(() => T.of(false))
+  )();
+
+/**
+ * Generates a new crypto key pair.
+ */
+function* generateCryptoKeyPair(keyTag: string) {
+  try {
+    // Remove an already existing key with the same tag.
+    yield* call(deleteCryptoKeyPair, keyTag);
+
+    const publicKey = yield* call(generate, keyTag);
+    yield* put(lollipopSetPublicKey({ publicKey }));
+    const mixPanelEnabled = yield* select(isMixpanelEnabled);
+    if (mixPanelEnabled) {
+      yield* call(trackLollipopKeyGenerationSuccess, publicKey.kty);
+    }
+  } catch (e) {
+    const mixPanelEnabled = yield* select(isMixpanelEnabled);
+    if (mixPanelEnabled) {
+      const { message } = toCryptoError(e);
+      yield* call(trackLollipopKeyGenerationFailure, message);
+    }
+  }
+}
+
+export const generateKeyInfo = (
+  maybeKeyTag: O.Option<string>,
+  maybePublicKey: O.Option<PublicKey>
+) =>
+  pipe(
+    maybeKeyTag,
+    O.chain(keyTag =>
+      pipe(
+        maybePublicKey,
+        O.map(publicKey => keyInfoFromKeyTagAndPublicKey(keyTag, publicKey))
+      )
+    ),
+    O.getOrElse(defaultKeyInfo)
+  );
+
+const keyInfoFromKeyTagAndPublicKey = (
+  keyTag: string,
+  publicKey: PublicKey
+): KeyInfo => ({
+  keyTag,
+  publicKey,
+  publicKeyThumbprint: jwkThumbprintByEncoding(
+    publicKey,
+    DEFAULT_LOLLIPOP_HASH_ALGORITHM_CLIENT,
+    "base64url"
+  )
+});
+
+const defaultKeyInfo = (): KeyInfo => ({
+  keyTag: undefined,
+  publicKey: undefined,
+  publicKeyThumbprint: undefined
+});
