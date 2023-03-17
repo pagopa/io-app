@@ -32,7 +32,6 @@ import InitiativeTimelineComponent from "../components/InitiativeTimelineCompone
 import { idpayInitiativeDetailsSelector } from "../store";
 import { idpayInitiativeGet } from "../store/actions";
 import { IDPayDetailsParamsList } from "../navigation";
-import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 
 const styles = StyleSheet.create({
   newInitiativeMessageContainer: {
@@ -188,7 +187,6 @@ export const InitiativeDetailsScreen = () => {
       goBack={true}
       headerTitle={initiativeData?.initiativeName}
       headerBackgroundColor={IOColors.bluegrey}
-      contextualHelp={emptyContextualHelp}
     >
       <FocusAwareStatusBar
         backgroundColor={IOColors.bluegrey}
