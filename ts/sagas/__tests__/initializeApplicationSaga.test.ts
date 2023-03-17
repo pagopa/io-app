@@ -164,6 +164,7 @@ describe("initializeApplicationSaga", () => {
           walletToken: "wallet_token"
         })
       )
+      .next()
       .fork(watchProfileUpsertRequestsSaga, undefined)
       .next()
       .fork(watchProfile, undefined)
