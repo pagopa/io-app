@@ -11,6 +11,7 @@ import { restartCleanApplication } from "../../../sagas/commons";
 import { sessionInvalid } from "../../../store/actions/authentication";
 import { expectSaga } from "redux-saga-test-plan";
 import { put, call } from "typed-redux-saga/macro";
+import { EffectProviders, StaticProvider } from "redux-saga-test-plan/providers";
 
 type DataFromServerType = {
   assertionRef: AssertionRef;
@@ -30,12 +31,23 @@ const DATA_FROM_SERVER: DataFromServerType = {
 
 const globalState = appReducer(undefined, applicationChangeState("active"));
 
+const mockedSessionInvalid: StaticProvider = [put(sessionInvalid()), true];
+const mockedRestartCleanApplication: StaticProvider = [call(restartCleanApplication), true];
+
+const mockedFunctions: Array<StaticProvider | EffectProviders> = [
+  mockedSessionInvalid,
+  mockedRestartCleanApplication
+]
+
 describe(`Test login with lollipop check and store aligned with server`, () => {
   it(`should not put sessionIvalid or call restartCleanApplication`, async () => {
     const store = createServerCompatibleStore();
 
     return expectSaga(lollipopKeyCheckWithServer)
       .withState(store.getState())
+      .provide(mockedFunctions)
+      .not.put(sessionInvalid())
+      .not.call(restartCleanApplication)
       .run();
   });
 });
@@ -46,6 +58,9 @@ describe(`Test login with lollipop check and store without session information`,
 
     return expectSaga(lollipopKeyCheckWithServer)
       .withState(store.getState())
+      .provide(mockedFunctions)
+      .not.put(sessionInvalid())
+      .not.call(restartCleanApplication)
       .run();
   });
 });
@@ -56,10 +71,7 @@ describe(`Test login with lollipop check and store out of alignment with server`
 
     return expectSaga(lollipopKeyCheckWithServer)
       .withState(store.getState())
-      .provide([
-        [put(sessionInvalid()), true],
-        [call(restartCleanApplication), true]
-      ])
+      .provide(mockedFunctions)
       .put(sessionInvalid())
       .call(restartCleanApplication)
       .run();
@@ -70,10 +82,7 @@ describe(`Test login with lollipop check and store out of alignment with server`
 
     return expectSaga(lollipopKeyCheckWithServer)
       .withState(store.getState())
-      .provide([
-        [put(sessionInvalid()), true],
-        [call(restartCleanApplication), true]
-      ])
+      .provide(mockedFunctions)
       .put(sessionInvalid())
       .call(restartCleanApplication)
       .run();
@@ -84,10 +93,7 @@ describe(`Test login with lollipop check and store out of alignment with server`
 
     return expectSaga(lollipopKeyCheckWithServer)
       .withState(store.getState())
-      .provide([
-        [put(sessionInvalid()), true],
-        [call(restartCleanApplication), true]
-      ])
+      .provide(mockedFunctions)
       .put(sessionInvalid())
       .call(restartCleanApplication)
       .run();
@@ -100,10 +106,7 @@ describe(`Test login with lollipop check and store with session information, wit
 
     return expectSaga(lollipopKeyCheckWithServer)
       .withState(store.getState())
-      .provide([
-        [put(sessionInvalid()), true],
-        [call(restartCleanApplication), true]
-      ])
+      .provide(mockedFunctions)
       .put(sessionInvalid())
       .call(restartCleanApplication)
       .run();
