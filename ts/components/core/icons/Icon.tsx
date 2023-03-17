@@ -29,7 +29,6 @@ import IconEmojiSad from "./svg/IconEmojiSad";
 import IconEmojiHappy from "./svg/IconEmojiHappy";
 import IconPhone from "./svg/IconPhone";
 import IconEmail from "./svg/IconEmail";
-import IconEnvelope from "./svg/IconEnvelope";
 import IconMessage from "./svg/IconMessage";
 import IconDocument from "./svg/IconDocument";
 import IconDocumentSign from "./svg/IconDocumentSign";
@@ -38,18 +37,15 @@ import IconChat from "./svg/IconChat";
 import IconAgreement from "./svg/IconAgreement";
 import IconSave from "./svg/IconSave";
 import IconCompleted from "./svg/IconCompleted";
-import IconCompletedBig from "./svg/IconCompletedBig";
 import IconSuccess from "./svg/IconSuccess";
 import IconOk from "./svg/IconOk";
 import IconCreditCard from "./svg/IconCreditCard";
-import IconCreditCardAlt from "./svg/IconCreditCardAlt";
 import IconBonus from "./svg/IconBonus";
 import IconTransactions from "./svg/IconTransactions";
 import IconCurrencyEuro from "./svg/IconCurrencyEuro";
 import IconAmount from "./svg/IconAmount";
 import IconPSP from "./svg/IconPSP";
 import IconAdd from "./svg/IconAdd";
-import IconAddAlt from "./svg/IconAddAlt";
 import IconCoggle from "./svg/IconCoggle";
 import IconCoggleAlt from "./svg/IconCoggleAlt";
 import IconWarning from "./svg/IconWarning";
@@ -87,7 +83,6 @@ import IconQuestion from "./svg/IconQuestion";
 import IconSearch from "./svg/IconSearch";
 import IconClose from "./svg/IconClose";
 import IconCloseSmall from "./svg/IconCloseSmall";
-import IconEmailLegal from "./svg/IconEmailLegal";
 import IconDocumentAttachment from "./svg/IconDocumentAttachment";
 import IconDocumentAttachmentPDF from "./svg/IconDocumentAttachmentPDF";
 import IconAttachment from "./svg/IconAttachment";
@@ -144,6 +139,19 @@ import LegIconPinOff from "./svg/LegIconPinOff";
 import LegIconPinOn from "./svg/LegIconPinOn";
 import LegIconEmojiSad from "./svg/LegIconEmojiSad";
 import LegIconEmojiHappy from "./svg/LegIconEmojiHappy";
+import LegIconPhone from "./svg/LegIconPhone";
+import LegIconEmail from "./svg/LegIconEmail";
+import IconEmailFill from "./svg/IconEmailFill";
+import LegIconPEC from "./svg/LegIconPEC";
+import LegIconMessageLegal from "./svg/LegIconMessageLegal";
+import LegIconMessage from "./svg/LegIconMessage";
+import LegIconChat from "./svg/LegIconChat";
+import LegIconDocumentAttachmentPDF from "./svg/LegIconDocumentAttachmentPDF";
+import LegIconAttachment from "./svg/LegIconAttachment";
+import LegIconAdd from "./svg/LegIconAdd";
+import LegIconCompleted from "./svg/LegIconCompleted";
+import LegIconCreditCard from "./svg/LegIconCreditCard";
+import LegIconBonus from "./svg/LegIconBonus";
 
 export const IOIcons = {
   spid: IconSpid,
@@ -189,30 +197,38 @@ export const IOIcons = {
   emojiHappy: IconEmojiHappy,
   legEmojiSad: LegIconEmojiSad /* io-sad */,
   legEmojiHappy: LegIconEmojiHappy /* io-happy */,
-  phone: IconPhone /* io-phone */,
+  phone: IconPhone,
+  legPhone: LegIconPhone /* io-phone */,
   email: IconEmail,
-  envelope: IconEnvelope /* io-envelope */,
+  emailFill: IconEmailFill,
+  legEmail: LegIconEmail /* io-envelope */,
   pec: IconPEC,
-  emailLegal: IconEmailLegal,
+  legPec: LegIconPEC,
   messageLegal: IconMessageLegal,
-  message: IconMessage /* io-send-message */,
+  legMessageLegal: LegIconMessageLegal,
+  message: IconMessage,
+  legMessage: LegIconMessage /* io-send-message */,
   chat: IconChat,
+  legChat: LegIconChat,
   doc: IconDocument,
   docSign: IconDocumentSign,
   docAgree: IconAgreement,
   docGiacenza: IconGiacenza,
   docAttach: IconDocumentAttachment,
   docAttachPDF: IconDocumentAttachmentPDF,
+  legDocAttachPDF: LegIconDocumentAttachmentPDF,
   attachment: IconAttachment,
-  add: IconAdd /* io-plus */,
-  addAlt: IconAddAlt,
+  legAttachment: LegIconAttachment,
+  add: IconAdd,
+  legAdd: LegIconAdd /* io-plus */,
   completed: IconCompleted,
-  completedBig: IconCompletedBig /* io-tick-big */,
+  legCompleted: LegIconCompleted /* io-tick-big */,
   success: IconSuccess /* io-success */,
   ok: IconOk /* io-complete */,
   creditCard: IconCreditCard,
-  creditCardAlt: IconCreditCardAlt /* io-carta */,
+  legCreditCard: LegIconCreditCard /* io-carta */,
   bonus: IconBonus,
+  legBonus: LegIconBonus,
   transactions: IconTransactions /* io-transactions */,
   currencyEuro: IconCurrencyEuro,
   amount: IconAmount,
@@ -378,6 +394,19 @@ const {
   pinOn,
   emojiSad,
   emojiHappy,
+  phone,
+  email,
+  emailFill,
+  pec,
+  messageLegal,
+  message,
+  chat,
+  docAttachPDF,
+  attachment,
+  add,
+  completed,
+  creditCard,
+  bonus,
   success,
   errorFilled,
   warningFilled,
@@ -412,6 +441,19 @@ export const IOIconsNew = {
   pinOff,
   emojiSad,
   emojiHappy,
+  phone,
+  email,
+  emailFill,
+  pec,
+  messageLegal,
+  message,
+  chat,
+  docAttachPDF,
+  attachment,
+  add,
+  completed,
+  creditCard,
+  bonus,
   success,
   errorFilled,
   warningFilled,
