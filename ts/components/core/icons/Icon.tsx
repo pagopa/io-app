@@ -42,13 +42,10 @@ import IconOk from "./svg/IconOk";
 import IconCreditCard from "./svg/IconCreditCard";
 import IconBonus from "./svg/IconBonus";
 import IconTransactions from "./svg/IconTransactions";
-import IconCurrencyEuro from "./svg/IconCurrencyEuro";
 import IconAmount from "./svg/IconAmount";
 import IconPSP from "./svg/IconPSP";
 import IconAdd from "./svg/IconAdd";
 import IconCoggle from "./svg/IconCoggle";
-import IconCoggleAlt from "./svg/IconCoggleAlt";
-import IconWarning from "./svg/IconWarning";
 import IconInfo from "./svg/IconInfo";
 import IconInfoFilled from "./svg/IconInfoFilled";
 import IconNotice from "./svg/IconNotice";
@@ -59,7 +56,6 @@ import IconEdit from "./svg/IconEdit";
 import IconBattery from "./svg/IconBattery";
 import IconTrashcan from "./svg/IconTrashcan";
 import IconTrashcanAlt from "./svg/IconTrashcanAlt";
-import IconLocation from "./svg/IconLocation";
 import IconCalendar from "./svg/IconCalendar";
 import IconCalendarAlt from "./svg/IconCalendarAlt";
 import IconProfileExperiment from "./svg/IconProfileExperiment";
@@ -86,6 +82,8 @@ import IconCloseSmall from "./svg/IconCloseSmall";
 import IconDocumentAttachment from "./svg/IconDocumentAttachment";
 import IconDocumentAttachmentPDF from "./svg/IconDocumentAttachmentPDF";
 import IconAttachment from "./svg/IconAttachment";
+import IconLocationiOS from "./svg/IconLocationiOS";
+import IconLocationAndroid from "./svg/IconLocationAndroid";
 import IconExternalLink from "./svg/IconExternalLink";
 import IconUnknownGdo from "./svg/IconUnknownGdo";
 import IconArrowCircleUp from "./svg/IconArrowCircleUp";
@@ -152,6 +150,12 @@ import LegIconAdd from "./svg/LegIconAdd";
 import LegIconCompleted from "./svg/LegIconCompleted";
 import LegIconCreditCard from "./svg/LegIconCreditCard";
 import LegIconBonus from "./svg/LegIconBonus";
+import LegIconDocumentAttachment from "./svg/LegIconDocumentAttachment";
+import LegIconTransactions from "./svg/LegIconTransactions";
+import LegIconAmount from "./svg/LegIconAmount";
+import LegIconCoggle from "./svg/LegIconCoggle";
+import LegIconLocation from "./svg/LegIconLocation";
+import LegIconWarning from "./svg/LegIconWarning";
 
 export const IOIcons = {
   spid: IconSpid,
@@ -216,6 +220,7 @@ export const IOIcons = {
   docGiacenza: IconGiacenza,
   docAttach: IconDocumentAttachment,
   docAttachPDF: IconDocumentAttachmentPDF,
+  legDocAttach: LegIconDocumentAttachment,
   legDocAttachPDF: LegIconDocumentAttachmentPDF,
   attachment: IconAttachment,
   legAttachment: LegIconAttachment,
@@ -230,14 +235,17 @@ export const IOIcons = {
   bonus: IconBonus,
   legBonus: LegIconBonus,
   transactions: IconTransactions /* io-transactions */,
-  currencyEuro: IconCurrencyEuro,
+  legTransactions: LegIconTransactions,
   amount: IconAmount,
+  legAmount: LegIconAmount,
   psp: IconPSP,
-  location: IconLocation,
-  coggle: IconCoggle /* io-coggle */,
-  coggleAlt: IconCoggleAlt /* io-preferenze */,
-  warning: IconWarning /* io-warning */,
+  locationiOS: IconLocationiOS,
+  locationAndroid: IconLocationAndroid,
+  legLocation: LegIconLocation,
+  coggle: IconCoggle,
+  legCoggle: LegIconCoggle /* io-coggle */ /* io-preferenze */,
   warningFilled: IconWarningFilled,
+  legWarning: LegIconWarning /* io-warning */,
   notice: IconNotice /* io-notice */,
   info: IconInfo /* io-info */,
   infoFilled: IconInfoFilled,
@@ -401,12 +409,18 @@ const {
   messageLegal,
   message,
   chat,
+  docAttach,
   docAttachPDF,
   attachment,
   add,
   completed,
   creditCard,
   bonus,
+  transactions,
+  amount,
+  coggle,
+  locationiOS,
+  locationAndroid,
   success,
   errorFilled,
   warningFilled,
@@ -448,12 +462,18 @@ export const IOIconsNew = {
   messageLegal,
   message,
   chat,
+  docAttach,
   docAttachPDF,
   attachment,
   add,
   completed,
   creditCard,
   bonus,
+  transactions,
+  amount,
+  locationiOS,
+  locationAndroid,
+  coggle,
   success,
   errorFilled,
   warningFilled,

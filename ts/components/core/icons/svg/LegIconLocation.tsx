@@ -2,7 +2,7 @@ import React from "react";
 import { Svg, Path } from "react-native-svg";
 import { SVGIconProps } from "../Icon";
 
-const IconLocation = ({ size, style }: SVGIconProps) => (
+const LegIconLocation = ({ size, style }: SVGIconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" style={style}>
     <Path
       fillRule="evenodd"
@@ -31,4 +31,4 @@ const IconLocation = ({ size, style }: SVGIconProps) => (
   </Svg>
 );
 
-export default IconLocation;
+export default LegIconLocation;
