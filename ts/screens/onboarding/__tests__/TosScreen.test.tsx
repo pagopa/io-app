@@ -46,7 +46,6 @@ beforeAll(() => {
 
 afterAll(() => {
   jest.resetAllMocks();
-  jest.clearAllMocks();
   // This can be removed if we update jest to 29.4+ and switch to jest.replaceProperty
   // eslint-disable-next-line functional/immutable-data
   Object.defineProperty(config, "zendeskEnabled", {

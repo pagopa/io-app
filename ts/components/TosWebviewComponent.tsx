@@ -42,13 +42,15 @@ const TosWebviewComponent: React.FunctionComponent<Props> = (props: Props) => (
           block: true,
           bordered: true,
           onPress: props.onExit,
-          title: I18n.t("global.buttons.exit")
+          title: I18n.t("global.buttons.exit"),
+          testID: "toSWebViewContainerFooterLeftButton"
         }}
         rightButton={{
           block: true,
           primary: true,
           onPress: props.onAcceptTos,
-          title: I18n.t("onboarding.tos.accept")
+          title: I18n.t("onboarding.tos.accept"),
+          testID: "toSWebViewContainerFooterRightButton"
         }}
       />
     )}
