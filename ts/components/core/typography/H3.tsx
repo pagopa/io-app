@@ -1,20 +1,29 @@
 import * as React from "react";
 import { IOFontFamily, IOFontWeight } from "../fonts";
-import type { IOColors } from "../variables/IOColors";
+import type { IOColors, IOTheme } from "../variables/IOColors";
 import { ExternalTypographyProps, RequiredTypographyProps } from "./common";
 import { useTypographyFactory } from "./Factory";
 
 // these colors are allowed only when the weight is SemiBold
 type AllowedSemiBoldColors = Extract<
   IOColors,
-  "bluegreyDark" | "bluegreyLight" | "white" | "red" | "blue" | "bluegrey"
+  | "bluegreyDark"
+  | "bluegreyLight"
+  | "white"
+  | "red"
+  | "blue"
+  | "bluegrey"
+  | "grey-200"
 >;
 
 // when the weight is bold, only the white color is allowed
-type AllowedBoldColors = Extract<IOColors, "white" | "black">;
+type AllowedBoldColors = Extract<IOColors, "white" | "black" | "grey-200">;
 
 // all the possible colors
-type AllowedColors = AllowedBoldColors | AllowedSemiBoldColors;
+type AllowedColors =
+  | AllowedBoldColors
+  | AllowedSemiBoldColors
+  | IOTheme["textHeading-default"];
 
 // all the possible weight
 type AllowedWeight = Extract<IOFontWeight, "Bold" | "SemiBold">;
@@ -22,13 +31,13 @@ type AllowedWeight = Extract<IOFontWeight, "Bold" | "SemiBold">;
 // these are the properties allowed only if weight is undefined or SemiBold
 type SemiBoldProps = {
   weight?: Extract<IOFontWeight, "SemiBold">;
-  color?: AllowedSemiBoldColors;
+  color?: AllowedSemiBoldColors | IOTheme["textHeading-default"];
 };
 
 // these are the properties allowed only if weight is Bold
 type BoldProps = {
   weight: Extract<IOFontWeight, "Bold">;
-  color?: AllowedBoldColors;
+  color?: AllowedBoldColors | IOTheme["textHeading-default"];
 };
 
 type BoldKindProps = SemiBoldProps | BoldProps;
