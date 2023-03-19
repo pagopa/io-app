@@ -3,7 +3,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { Content, Text as NBText } from "native-base";
 import * as React from "react";
-import { View, Alert, Modal, StatusBar, StyleSheet } from "react-native";
+import { View, Alert, Modal, StatusBar, StyleSheet, BackHandler } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { Link } from "../../components/core/typography/Link";
@@ -72,7 +72,9 @@ const checkPinInterval = 100 as Millisecond;
 // the threshold of attempts after which it is necessary to activate the timer check
 const checkTimerThreshold = maxAttempts - freeAttempts;
 
-const onRequestCloseHandler = () => undefined;
+const onRequestCloseHandler = () => {
+  BackHandler.exitApp();
+};
 
 const styles = StyleSheet.create({
   header: {

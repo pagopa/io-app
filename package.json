@@ -317,5 +317,9 @@
     "scripts": {
       "postchangelog": "node scripts/changelog/add_pivotal_stories.js"
     }
+  },
+  "volta": {
+    "node": "16.19.0",
+    "yarn": "1.22.19"
   }
 }
