@@ -4,14 +4,9 @@ import {
   Image,
   ImageProps,
   ImageRequireSource,
-  ImageURISource,
-  Platform
+  ImageURISource
 } from "react-native";
-import { pipe } from "fp-ts/lib/function";
-import * as B from "fp-ts/boolean";
-import * as T from "io-ts";
-import * as E from "fp-ts/Either";
-import { toAndroidCacheTimestamp } from "../../utils/dates";
+import { addCacheTimestampToUri } from "../../utils/image";
 
 interface Props extends Omit<ImageProps, "source"> {
   source: ReadonlyArray<ImageURISource | ImageRequireSource>;
@@ -45,27 +40,8 @@ export class MultiImage extends React.PureComponent<Props, State> {
 
     const atIndex = this.props.source[sourceIndex];
 
-    // Workaround for invalidating the Android cache of the Image component.
-    const source: ImageURISource | ImageRequireSource = pipe(
-      Platform.OS === "android",
-      B.fold(
-        () => atIndex,
-        () =>
-          pipe(
-            atIndex,
-            T.number.decode,
-            E.fold(
-              () => ({
-                ...(atIndex as ImageURISource),
-                uri: `${
-                  (atIndex as ImageURISource).uri
-                }?ts=${toAndroidCacheTimestamp()}`
-              }),
-              () => atIndex
-            )
-          )
-      )
-    );
+    const source =
+      typeof atIndex === "number" ? atIndex : addCacheTimestampToUri(atIndex);
 
     const onError = () => {
       // if current image fails loading, move to next
@@ -74,6 +50,8 @@ export class MultiImage extends React.PureComponent<Props, State> {
           sourceIndex < props.source.length ? sourceIndex + 1 : undefined
       }));
     };
-    return <Image {...this.props} source={source} onError={onError} />;
+    return (
+      source && <Image {...this.props} source={source} onError={onError} />
+    );
   }
 }
