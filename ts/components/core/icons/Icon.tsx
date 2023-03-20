@@ -67,10 +67,11 @@ import IconStarEmpty from "./svg/IconStarEmpty";
 import IconAbacus from "./svg/IconAbacus";
 import LegIconAbacus from "./svg/LegIconAbacus";
 import IconSwitchOff from "./svg/IconSwitchOff";
-import IconDeviceSignal from "./svg/IconDeviceSignal";
+import IconDevice from "./svg/IconDevice";
 import IconDotMenu from "./svg/IconDotMenu";
 import IconBarcode from "./svg/IconBarcode";
 import IconLogin from "./svg/IconLogin";
+import IconLogout from "./svg/IconLogout";
 import IconLadybug from "./svg/IconLadybug";
 import IconTag from "./svg/IconTag";
 import IconGallery from "./svg/IconGallery";
@@ -170,6 +171,19 @@ import LegIconStarEmpty from "./svg/LegIconStarEmpty";
 import LegIconSwitchOff from "./svg/LegIconSwitchOff";
 import LegIconDotMenu from "./svg/LegIconDotMenu";
 import LegIconBarcode from "./svg/LegIconBarcode";
+import LegIconSave from "./svg/LegIconSave";
+import LegIconLogin from "./svg/LegIconLogin";
+import LegIconLadybug from "./svg/LegIconLadybug";
+import LegIconTag from "./svg/LegIconTag";
+import LegIconGallery from "./svg/LegIconGallery";
+import LegIconExternalLink from "./svg/LegIconExternalLink";
+import LegIconUnknownGdo from "./svg/LegIconUnknownGdo";
+import LegIconCancel from "./svg/LegIconCancel";
+import LegIconDevice from "./svg/LegIconDevice";
+import LegIconQuestion from "./svg/LegIconQuestion";
+import LegIconSearch from "./svg/LegIconSearch";
+import LegIconClose from "./svg/LegIconClose";
+import LegIconCloseSmall from "./svg/LegIconCloseSmall";
 
 export const IOIcons = {
   spid: IconSpid,
@@ -292,27 +306,41 @@ export const IOIcons = {
   legStarEmpty: LegIconStarEmpty /* io-empty-star */,
   switchOff: IconSwitchOff,
   legSwitchOff: LegIconSwitchOff,
-  deviceSignal: IconDeviceSignal,
+  device: IconDevice,
+  legDevice: LegIconDevice,
   dotMenu: IconDotMenu,
   legDotMenu: LegIconDotMenu /* io-more */,
   barcode: IconBarcode,
   legBarcode: LegIconBarcode,
   save: IconSave /* io-save */,
+  legSave: LegIconSave /* io-save */,
   login: IconLogin,
+  logout: IconLogout,
+  legLogin: LegIconLogin,
   ladybug: IconLadybug,
+  legLadybug: LegIconLadybug,
   tag: IconTag,
+  legTag: LegIconTag,
   gallery: IconGallery,
+  legGallery: LegIconGallery,
   externalLink: IconExternalLink,
+  legExternalLink: LegIconExternalLink,
   unknownGdo: IconUnknownGdo,
+  legUnknownGdo: LegIconUnknownGdo,
   cancel: IconCancel /* io-cancel */,
+  legCancel: LegIconCancel /* io-cancel */,
   help: IconQuestion /* io-question */,
+  legHelp: LegIconQuestion /* io-question */,
   search: IconSearch /* io-search */,
+  legSearch: LegIconSearch /* io-search */,
   chevronRight: IconChevronRight /* io-right */,
   chevronLeft: IconChevronLeft /* io-back */,
   chevronBottom: IconChevronBottom,
   chevronTop: IconChevronTop,
   close: IconClose /* io-close */,
+  legClose: LegIconClose /* io-close */,
   closeSmall: IconCloseSmall,
+  legCloseSmall: LegIconCloseSmall,
   arrowBottom: IconArrowBottom,
   arrowLeft: IconArrowLeft,
   arrowTop: IconArrowTop,
@@ -466,6 +494,20 @@ const {
   switchOff,
   dotMenu,
   barcode,
+  device,
+  save,
+  login,
+  logout,
+  ladybug,
+  tag,
+  gallery,
+  externalLink,
+  unknownGdo,
+  cancel,
+  help,
+  search,
+  close,
+  closeSmall,
   success,
   errorFilled,
   warningFilled,
@@ -536,6 +578,20 @@ export const IOIconsNew = {
   switchOff,
   dotMenu,
   barcode,
+  device,
+  save,
+  login,
+  logout,
+  ladybug,
+  tag,
+  gallery,
+  externalLink,
+  unknownGdo,
+  cancel,
+  help,
+  search,
+  close,
+  closeSmall,
   success,
   errorFilled,
   warningFilled,
