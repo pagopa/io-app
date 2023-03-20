@@ -77,7 +77,7 @@ const BonusPercentageSlider = ({
   percentage,
   isGreyedOut
 }: PercentageSliderProps) => {
-  const width = useSharedValue(0);
+  const width = useSharedValue(100);
   React.useEffect(() => {
     // eslint-disable-next-line functional/immutable-data
     width.value = percentage;
@@ -101,6 +101,8 @@ const BonusPercentageSlider = ({
     </View>
   );
 };
+const formatNumberRightSign = (amount: number) =>
+  `${formatNumberAmount(amount, false)} €`;
 const InitiativeCardComponent = (props: Props) => {
   const { initiativeName, endDate, status, amount, accrued, refunded } =
     props.initiative;
@@ -154,7 +156,7 @@ const InitiativeCardComponent = (props: Props) => {
             {I18n.t("idpay.initiative.details.initiativeCard.availableAmount")}
           </LabelSmall>
           <H1 style={!isInitiativeConfigured ? styles.consumedOpacity : {}}>
-            {formatNumberAmount(remainingAmount, true)}
+            {formatNumberRightSign(remainingAmount)}
           </H1>
           <VSpacer size={8} />
           <BonusPercentageSlider
@@ -167,7 +169,7 @@ const InitiativeCardComponent = (props: Props) => {
             {I18n.t("idpay.initiative.details.initiativeCard.toRefund")}
           </LabelSmall>
           <H1 style={!isInitiativeConfigured ? styles.consumedOpacity : {}}>
-            {formatNumberAmount(toBeRepaidAmount, true)}
+            {formatNumberRightSign(toBeRepaidAmount)}
           </H1>
           <VSpacer size={4} />
           <VSpacer size={8} />
