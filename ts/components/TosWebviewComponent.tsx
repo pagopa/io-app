@@ -1,6 +1,5 @@
-import { View } from "react-native";
+import { View, ViewProps } from "react-native";
 import * as React from "react";
-import { ViewProps } from "react-native";
 import WebView from "react-native-webview";
 import { WebViewSource } from "react-native-webview/lib/WebViewTypes";
 import I18n from "../i18n";

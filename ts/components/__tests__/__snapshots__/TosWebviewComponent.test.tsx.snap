@@ -4,12 +4,9 @@ exports[`TosWebviewComponent The snapshot for the TosWebviewComponent Renders co
 Array [
   <View
     style={
-      Array [
-        Object {},
-        Object {
-          "flex": 1,
-        },
-      ]
+      Object {
+        "flex": 1,
+      }
     }
     testID="toSWebViewContainer"
   >
@@ -70,37 +67,31 @@ Array [
   <View
     pointerEvents="box-none"
     style={
-      Array [
-        Object {},
-        Object {
-          "marginTop": -50,
-          "overflow": "hidden",
-          "paddingTop": 50,
-        },
-      ]
+      Object {
+        "marginTop": -50,
+        "overflow": "hidden",
+        "paddingTop": 50,
+      }
     }
     testID="FooterWithButtons"
   >
     <View
       style={
-        Array [
-          Object {},
-          Object {
-            "backgroundColor": "#FFFFFF",
-            "elevation": 20,
-            "paddingBottom": 16,
-            "paddingLeft": 24,
-            "paddingRight": 24,
-            "paddingTop": 16,
-            "shadowColor": "#0E0F13",
-            "shadowOffset": Object {
-              "height": 50,
-              "width": 0,
-            },
-            "shadowOpacity": 0.5,
-            "shadowRadius": 37,
+        Object {
+          "backgroundColor": "#FFFFFF",
+          "elevation": 20,
+          "paddingBottom": 16,
+          "paddingLeft": 24,
+          "paddingRight": 24,
+          "paddingTop": 16,
+          "shadowColor": "#0E0F13",
+          "shadowOffset": Object {
+            "height": 50,
+            "width": 0,
           },
-        ]
+          "shadowOpacity": 0.5,
+          "shadowRadius": 37,
+        }
       }
     >
       <View
@@ -250,7 +241,7 @@ Array [
               Array [
                 Object {
                   "backgroundColor": "transparent",
-                  "color": "#fff",
+                  "color": "#007aff",
                   "fontFamily": "System",
                   "fontSize": 16.5,
                   "marginLeft": 0,
