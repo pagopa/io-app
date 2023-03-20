@@ -1,7 +1,6 @@
 import React from "react";
-import { ImageSourcePropType, SafeAreaView } from "react-native";
+import { View, ImageSourcePropType, SafeAreaView } from "react-native";
 import I18n from "../../i18n";
-import View from "../ui/TextWithIcon";
 import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
 import { IOStyles } from "../core/variables/IOStyles";
 import BaseScreenComponent from "../screens/BaseScreenComponent";

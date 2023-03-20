@@ -1,6 +1,6 @@
-import { Text as NBText, View } from "native-base";
+import { Text as NBText } from "native-base";
 import * as React from "react";
-import { Image, StyleSheet } from "react-native";
+import { View, Image, StyleSheet } from "react-native";
 import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
 import { VSpacer } from "../../core/spacer/Spacer";

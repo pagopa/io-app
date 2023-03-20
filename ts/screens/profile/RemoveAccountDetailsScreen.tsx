@@ -1,8 +1,8 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { StackActions } from "@react-navigation/compat";
-import { Content, View } from "native-base";
+import { Content } from "native-base";
 import * as React from "react";
-import { Alert, SafeAreaView } from "react-native";
+import { View, Alert, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import {
