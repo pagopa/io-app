@@ -22,8 +22,8 @@ import {
 } from "redux-persist";
 import createSagaMiddleware from "redux-saga";
 import { remoteUndefined } from "../features/bonus/bpd/model/RemoteValue";
+import { FeaturesState } from "../features/common/store/reducers";
 import { initialLollipopState } from "../features/lollipop/store/reducers/lollipop";
-import { mvlPersistConfig } from "../features/mvl";
 import rootSaga from "../sagas";
 import { Action, StoreEnhancer } from "../store/actions/types";
 import { analytics } from "../store/middlewares";
@@ -307,7 +307,18 @@ const migrations: MigrationManifest = {
   "21": (state: PersistedState) => ({
     ...state,
     lollipop: initialLollipopState
-  })
+  }),
+  // Version 22
+  // remove features.MVL section
+  "22": (state: PersistedState) => {
+    const features: FeaturesState = (state as PersistedGlobalState).features;
+    return {
+      ...state,
+      features: {
+        ..._.omit(features, "mvl")
+      }
+    };
+  }
 };
 
 const isDebuggingInChrome = isDevEnv && !!window.navigator.userAgent;
@@ -347,8 +358,7 @@ const persistedReducer: Reducer<PersistedGlobalState, Action> = persistReducer<
     rootPersistConfig,
     authenticationPersistConfig,
     walletsPersistConfig,
-    entitiesPersistConfig,
-    mvlPersistConfig
+    entitiesPersistConfig
   ])
 );
 
