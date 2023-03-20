@@ -13,6 +13,8 @@ import {
 } from "../selectors";
 import { mockActions } from "../__mocks__/actions";
 import {
+  mockDeleteInstrument,
+  mockEnrollInstrument,
   mockServices,
   T_IBAN,
   T_IBAN_LIST,
@@ -117,12 +119,12 @@ describe("IDPay configuration machine", () => {
       Promise.resolve([])
     );
 
-    mockServices.enrollInstrument.mockImplementation(async () =>
-      Promise.resolve([])
+    mockEnrollInstrument.mockImplementation(async () =>
+      Promise.resolve(undefined)
     );
 
-    mockServices.deleteInstrument.mockImplementation(async () =>
-      Promise.resolve([])
+    mockDeleteInstrument.mockImplementation(async () =>
+      Promise.resolve(undefined)
     );
 
     const machine = createIDPayInitiativeConfigurationMachine().withConfig({
@@ -210,17 +212,11 @@ describe("IDPay configuration machine", () => {
     );
 
     service.send({
-      type: "STAGE_INSTRUMENT",
+      type: "ENROLL_INSTRUMENT",
       instrument: T_WALLET
     });
 
-    service.send({
-      type: "ENROLL_INSTRUMENT"
-    });
-
-    await waitFor(() =>
-      expect(mockServices.enrollInstrument).toHaveBeenCalledTimes(1)
-    );
+    await waitFor(() => expect(mockEnrollInstrument).toHaveBeenCalledTimes(1));
 
     expect(currentState.value).toMatchObject({
       CONFIGURING_INSTRUMENTS: "DISPLAYING_INSTRUMENTS"
@@ -237,9 +233,7 @@ describe("IDPay configuration machine", () => {
       instrument: T_INSTRUMENT_DTO
     });
 
-    await waitFor(() =>
-      expect(mockServices.deleteInstrument).toHaveBeenCalledTimes(1)
-    );
+    await waitFor(() => expect(mockDeleteInstrument).toHaveBeenCalledTimes(1));
 
     expect(currentState.value).toMatchObject({
       CONFIGURING_INSTRUMENTS: "DISPLAYING_INSTRUMENTS"
@@ -959,13 +953,9 @@ describe("IDPay configuration machine", () => {
       Promise.resolve([])
     );
 
-    mockServices.enrollInstrument.mockImplementation(async () =>
-      Promise.reject(InitiativeFailureType.INSTRUMENT_ENROLL_FAILURE)
-    );
+    mockEnrollInstrument.mockImplementation(async () => Promise.reject());
 
-    mockServices.deleteInstrument.mockImplementation(async () =>
-      Promise.reject(InitiativeFailureType.INSTRUMENT_DELETE_FAILURE)
-    );
+    mockDeleteInstrument.mockImplementation(async () => Promise.reject());
 
     const machine = createIDPayInitiativeConfigurationMachine().withConfig({
       services: mockServices,
@@ -1042,20 +1032,14 @@ describe("IDPay configuration machine", () => {
     );
 
     service.send({
-      type: "STAGE_INSTRUMENT",
+      type: "ENROLL_INSTRUMENT",
       instrument: T_WALLET
     });
 
-    service.send({
-      type: "ENROLL_INSTRUMENT"
-    });
+    await waitFor(() => expect(mockEnrollInstrument).toHaveBeenCalledTimes(1));
 
     await waitFor(() =>
-      expect(mockServices.enrollInstrument).toHaveBeenCalledTimes(1)
-    );
-
-    await waitFor(() =>
-      expect(mockActions.showFailureToast).toHaveBeenCalledTimes(1)
+      expect(mockActions.showInstrumentFailureToast).toHaveBeenCalledTimes(1)
     );
 
     expect(currentState).toMatchObject({
@@ -1073,12 +1057,10 @@ describe("IDPay configuration machine", () => {
       instrument: T_INSTRUMENT_DTO
     });
 
-    await waitFor(() =>
-      expect(mockServices.deleteInstrument).toHaveBeenCalledTimes(1)
-    );
+    await waitFor(() => expect(mockDeleteInstrument).toHaveBeenCalledTimes(1));
 
     await waitFor(() =>
-      expect(mockActions.showFailureToast).toHaveBeenCalledTimes(2)
+      expect(mockActions.showInstrumentFailureToast).toHaveBeenCalledTimes(2)
     );
 
     expect(currentState).toMatchObject({

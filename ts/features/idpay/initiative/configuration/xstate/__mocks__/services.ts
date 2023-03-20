@@ -1,3 +1,4 @@
+import { Receiver, Sender } from "xstate";
 import { IbanListDTO } from "../../../../../../../definitions/idpay/IbanListDTO";
 import {
   InitiativeDTO,
@@ -7,6 +8,7 @@ import { InstrumentDTO } from "../../../../../../../definitions/idpay/Instrument
 
 import { TypeEnum as WalletTypeEnumV1 } from "../../../../../../../definitions/pagopa/Wallet";
 import { Wallet } from "../../../../../../types/pagopa";
+import { Events } from "../events";
 
 export const T_INITIATIVE_ID = "123456";
 export const T_IBAN = "IT60X0542811101000000123456";
@@ -56,13 +58,59 @@ export const T_IBAN_LIST: IbanListDTO["ibanList"] = [
 
 export const T_PAGOPA_INSTRUMENTS = [T_WALLET];
 
+export const mockEnrollInstrument: jest.Mock<Promise<undefined>> = jest.fn(
+  async () => Promise.resolve(undefined)
+);
+
+export const mockDeleteInstrument: jest.Mock<Promise<undefined>> = jest.fn(
+  async () => Promise.resolve(undefined)
+);
+
+const mockInstrumentsEnrollmentService = jest.fn(
+  () => (callback: Sender<Events>, onReceive: Receiver<Events>) =>
+    onReceive(async event => {
+      switch (event.type) {
+        case "DELETE_INSTRUMENT":
+          mockDeleteInstrument()
+            .then(() =>
+              callback({
+                type: "DELETE_INSTRUMENT_SUCCESS",
+                instrument: event.instrument
+              })
+            )
+            .catch(() =>
+              callback({
+                type: "DELETE_INSTRUMENT_FAILURE",
+                instrument: event.instrument
+              })
+            );
+          break;
+        case "ENROLL_INSTRUMENT":
+          mockEnrollInstrument()
+            .then(() =>
+              callback({
+                type: "ENROLL_INSTRUMENT_SUCCESS",
+                instrument: event.instrument
+              })
+            )
+            .catch(() =>
+              callback({
+                type: "ENROLL_INSTRUMENT_FAILURE",
+                instrument: event.instrument
+              })
+            );
+          break;
+        default:
+          break;
+      }
+    })
+);
 export const mockServices = {
   loadInitiative: jest.fn(),
   loadIbanList: jest.fn(),
+  enrollIban: jest.fn(),
   confirmIban: jest.fn(),
   loadWalletInstruments: jest.fn(),
   loadInitiativeInstruments: jest.fn(),
-  deleteInstrument: jest.fn(),
-  enrollIban: jest.fn(),
-  enrollInstrument: jest.fn()
+  instrumentsEnrollmentService: mockInstrumentsEnrollmentService
 };
