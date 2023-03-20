@@ -41,12 +41,6 @@ type Services = {
   loadInitiativeInstruments: {
     data: ReadonlyArray<InstrumentDTO>;
   };
-  enrollInstrument: {
-    data: ReadonlyArray<InstrumentDTO>;
-  };
-  deleteInstrument: {
-    data: ReadonlyArray<InstrumentDTO>;
-  };
 };
 
 /** PLEASE DO NO USE AUTO-LAYOUT WHEN USING VISUAL EDITOR */
