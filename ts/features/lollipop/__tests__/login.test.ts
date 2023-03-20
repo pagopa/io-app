@@ -122,7 +122,7 @@ describe(`Test login with lollipop check and store with session information, wit
 const createServerCompatibleStore = () => {
   const sessionInfo: PublicSession = {
     ...({} as PublicSession),
-    lollipop_assertion_ref: DATA_FROM_SERVER.assertionRef
+    lollipopAssertionRef: DATA_FROM_SERVER.assertionRef
   };
 
   const authentication: LoggedInWithSessionInfo = {
@@ -157,7 +157,7 @@ const createStoreWithoutSessionInformation = () => {
 const createServerMisalignedStore = () => {
   const sessionInfo: PublicSession = {
     ...({} as PublicSession),
-    lollipop_assertion_ref: "foo" as AssertionRef
+    lollipopAssertionRef: "foo" as AssertionRef
   };
 
   const authentication: LoggedInWithSessionInfo = {
@@ -180,7 +180,7 @@ const createServerMisalignedStore = () => {
 const createServerMisalignedStore_serverKeyUndefined = () => {
   const sessionInfo: PublicSession = {
     ...({} as PublicSession),
-    lollipop_assertion_ref: undefined
+    lollipopAssertionRef: undefined
   };
 
   const authentication: LoggedInWithSessionInfo = {
@@ -203,7 +203,7 @@ const createServerMisalignedStore_serverKeyUndefined = () => {
 const createServerMisalignedStore_storeKeyUndefined = () => {
   const sessionInfo: PublicSession = {
     ...({} as PublicSession),
-    lollipop_assertion_ref: DATA_FROM_SERVER.assertionRef
+    lollipopAssertionRef: DATA_FROM_SERVER.assertionRef
   };
 
   const authentication: LoggedInWithSessionInfo = {
@@ -226,7 +226,7 @@ const createServerMisalignedStore_storeKeyUndefined = () => {
 const createStoreWithSessionInformationWithoutPublicKey = () => {
   const sessionInfo: PublicSession = {
     ...({} as PublicSession),
-    lollipop_assertion_ref: DATA_FROM_SERVER.assertionRef
+    lollipopAssertionRef: DATA_FROM_SERVER.assertionRef
   };
 
   const authentication: LoggedInWithSessionInfo = {

@@ -9,7 +9,7 @@ type KeyTagSavePayload = {
   keyTag: string;
 };
 
-type SetPulicKeyPayload = {
+type SetPublicKeyPayload = {
   publicKey: PublicKey;
 };
 
@@ -19,7 +19,7 @@ export const lollipopKeyTagSave = createStandardAction(
 
 export const lollipopSetPublicKey = createStandardAction(
   "LOLLIPOP_SET_PUBLIC_KEY"
-)<SetPulicKeyPayload>();
+)<SetPublicKeyPayload>();
 
 export const lollipopRemovePublicKey = createStandardAction(
   "LOLLIPOP_REMOVE_PUBLIC_KEY"

@@ -47,10 +47,7 @@ import I18n from "../i18n";
 import { mixpanelTrack } from "../mixpanel";
 import NavigationService from "../navigation/NavigationService";
 import { startApplicationInitialization } from "../store/actions/application";
-import {
-  sessionExpired,
-  sessionInvalid
-} from "../store/actions/authentication";
+import { sessionExpired } from "../store/actions/authentication";
 import { previousInstallationDataDeleteSuccess } from "../store/actions/installation";
 import { setMixpanelEnabled } from "../store/actions/mixpanel";
 import {
@@ -71,8 +68,10 @@ import {
   lollipopPublicKeySelector
 } from "../features/lollipop/store/reducers/lollipop";
 import {
+  lollipopKeyCheckWithServer,
+  generateKeyInfo,
   generateLollipopKeySaga,
-  lollipopKeyCheckWithServer
+  showUnsupportedDeviceScreen
 } from "../features/lollipop/saga";
 import { IdentificationResult } from "../store/reducers/identification";
 import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
@@ -95,8 +94,8 @@ import { clearAllAttachments } from "../features/messages/saga/clearAttachments"
 import { watchMessageAttachmentsSaga } from "../features/messages/saga/attachments";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
 import { watchIDPaySaga } from "../features/idpay/common/saga";
-import { lollipopAbortAppInitialization } from "../features/lollipop/store/actions/lollipop";
 import ROUTES from "../navigation/routes";
+import { lollipopAbortAppInitialization } from "../features/lollipop/store/actions/lollipop";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -151,10 +150,6 @@ import { completeOnboardingSaga } from "./startup/completeOnboardingSaga";
 import { watchLoadMessageById } from "./messages/watchLoadMessageById";
 import { watchThirdPartyMessageSaga } from "./messages/watchThirdPartyMessageSaga";
 import { checkNotificationsPreferencesSaga } from "./startup/checkNotificationsPreferencesSaga";
-import {
-  generateKeyInfo,
-  trackMixpanelCryptoKeyPairEvents
-} from "./startup/generateCryptoKeyPair";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -216,15 +211,21 @@ export function* initializeApplicationSaga(): Generator<
   // user profile.
   yield* put(resetProfileState());
 
-  // Generate key for lollipop
-  // TODO Once the lollipop feature is spread to the all the user base,
-  // consider refactoring even more by removing this, when
-  // https://pagopa.atlassian.net/browse/LLK-38 has been fixed.
-  // For now we need to generate a key in the application startup flow
+  // We need to generate a key in the application startup flow
   // to use this information on old app version already logged in users.
   // Here we are blocking the application startup, but we have the
   // the profile loading spinner active.
+
   yield* call(generateLollipopKeySaga);
+
+  // Get keyInfo for lollipop
+  const keyTag = yield* select(lollipopKeyTagSelector);
+  const publicKey = yield* select(lollipopPublicKeySelector);
+  const keyInfo = yield* call(generateKeyInfo, keyTag, publicKey);
+
+  if(showUnsupportedDeviceScreen(publicKey)){
+    return;
+  }
 
   // Whether the user is currently logged in.
   const previousSessionToken: ReturnType<typeof sessionTokenSelector> =
@@ -238,11 +239,6 @@ export function* initializeApplicationSaga(): Generator<
 
   // Handles the expiration of the session token
   yield* fork(watchSessionExpiredSaga);
-
-  // Get keyInfo for lollipop
-  const keyTag = yield* select(lollipopKeyTagSelector);
-  const publicKey = yield* select(lollipopPublicKeySelector);
-  const keyInfo = yield* call(generateKeyInfo, keyTag, publicKey);
 
   // Instantiate a backend client from the session token
   const backendClient: ReturnType<typeof BackendClient> = BackendClient(
@@ -373,11 +369,6 @@ export function* initializeApplicationSaga(): Generator<
 
   // check if the user expressed preference about mixpanel, if not ask for it
   yield* call(askMixpanelOptIn);
-
-  // Track crypto key generation info
-  if (O.isSome(keyTag)) {
-    yield* call(trackMixpanelCryptoKeyPairEvents, keyTag.value);
-  }
 
   if (hasPreviousSessionAndPin) {
     // We have to retrieve the pin here and not on the previous if-condition (same guard)
@@ -668,23 +659,10 @@ function cancellAllLocalNotifications() {
 
 export function* startupSaga(): IterableIterator<ReduxSagaEffect> {
   // Wait until the IngressScreen gets mounted
-  yield* takeLatest(getType(startApplicationInitialization), () => start());
   yield* takeLatest(
-    getType(lollipopAbortAppInitialization),
-    interruptApplicationSaga
+    getType(startApplicationInitialization),
+    initializeApplicationSaga
   );
-}
-
-function* interruptApplicationSaga() {
-  NavigationService.navigate(ROUTES.UNSUPPORTED_DEVICE, {
-    screen: ROUTES.UNSUPPORTED_DEVICE
-  });
-
-  yield* cancel();
-}
-
-function* start(): Generator<any, any, unknown> {
-  return [yield* fork(initializeApplicationSaga)];
 }
 
 export const testWaitForNavigatorServiceInitialization = isTestEnv
