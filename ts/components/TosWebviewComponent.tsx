@@ -1,4 +1,4 @@
-import { View } from "native-base";
+import { View } from "react-native";
 import * as React from "react";
 import { ViewProps } from "react-native";
 import WebView from "react-native-webview";

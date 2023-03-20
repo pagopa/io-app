@@ -1,6 +1,5 @@
-import { View } from "native-base";
 import * as React from "react";
-import { ActivityIndicator, Platform, StyleSheet } from "react-native";
+import { View, ActivityIndicator, Platform, StyleSheet } from "react-native";
 
 import variables from "../../theme/variables";
 import { IOColors } from "../core/variables/IOColors";
