@@ -12,6 +12,8 @@ import * as O from "fp-ts/lib/Option";
 import { View } from "react-native";
 import * as React from "react";
 import { useRef } from "react";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { profileSelector } from "../store/reducers/profile";
 import { IOColors } from "../components/core/variables/IOColors";
 import workunitGenericFailure from "../components/error/WorkunitGenericFailure";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
@@ -79,7 +81,6 @@ import {
 import { isTestEnv } from "../utils/environment";
 import { startApplicationInitialization } from "../store/actions/application";
 import { IO_INTERNAL_LINK_PREFIX } from "../utils/navigation";
-import { isStartupLoaded } from "../store/reducers/startup";
 import authenticationNavigator from "./AuthenticationNavigator";
 import { MessagesStackNavigator } from "./MessagesNavigator";
 import NavigationService, { navigationRef } from "./NavigationService";
@@ -90,8 +91,6 @@ import ROUTES from "./routes";
 import ServicesNavigator from "./ServicesNavigator";
 import { MainTabNavigator } from "./TabNavigator";
 import WalletNavigator from "./WalletNavigator";
-import { profileSelector } from "../store/reducers/profile";
-import * as pot from "@pagopa/ts-commons/lib/pot";
 
 const Stack = createStackNavigator<AppParamsList>();
 
@@ -107,8 +106,6 @@ export const AppStackNavigator = (): React.ReactElement => {
 
   const maybeSessionToken = useIOSelector(sessionTokenSelector);
   const maybeSessionInfo = useIOSelector(sessionInfoSelector);
-  const startupLoaded = useIOSelector(isStartupLoaded);
-
   const userProfile = useIOSelector(profileSelector);
 
   React.useEffect(() => {
@@ -249,7 +246,6 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
   const bpdRemoteConfig = useIOSelector(bpdRemoteConfigSelector);
   const isOptInPaymentMethodsEnabled =
     bpdRemoteConfig?.opt_in_payment_methods_v2 && bpdOptInPaymentMethodsEnabled;
-  const startupLoaded = useIOSelector(isStartupLoaded);
 
   const linking: LinkingOptions = {
     enabled: true,

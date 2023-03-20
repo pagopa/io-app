@@ -1,6 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import { call, take } from "typed-redux-saga/macro";
-import { CommonActions, StackActions } from "@react-navigation/native";
+import { StackActions } from "@react-navigation/native";
 import { navigateToOnboardingPinScreenAction } from "../../store/actions/navigation";
 import { createPinSuccess } from "../../store/actions/pinset";
 

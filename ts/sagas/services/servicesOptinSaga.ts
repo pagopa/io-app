@@ -1,5 +1,5 @@
 import { call, select, take } from "typed-redux-saga/macro";
-import { CommonActions, StackActions } from "@react-navigation/native";
+import { StackActions } from "@react-navigation/native";
 import { navigateToServicesPreferenceModeSelectionScreen } from "../../store/actions/navigation";
 import { servicesOptinCompleted } from "../../store/actions/onboarding";
 import {

@@ -1,4 +1,5 @@
 import { call, put, select, take } from "typed-redux-saga/macro";
+import { StackActions } from "@react-navigation/native";
 import { navigateToOnboardingFingerprintScreenAction } from "../../store/actions/navigation";
 import { fingerprintAcknowledge } from "../../store/actions/onboarding";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../store/actions/persistedPreferences";
@@ -10,7 +11,6 @@ import {
   isBiometricsValidType
 } from "../../utils/biometrics";
 import NavigationService from "../../navigation/NavigationService";
-import { CommonActions, StackActions } from "@react-navigation/native";
 
 /**
  * Query TouchID library to retrieve availability information. The ONLY cases

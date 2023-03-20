@@ -1,5 +1,6 @@
 import { call, put, take } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
+import { StackActions } from "@react-navigation/native";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import { tosVersion } from "../../config";
 import { navigateToTosScreen } from "../../store/actions/navigation";
@@ -8,7 +9,6 @@ import { profileUpsert } from "../../store/actions/profile";
 import { isProfileFirstOnBoarding } from "../../store/reducers/profile";
 import { ReduxSagaEffect } from "../../types/utils";
 import NavigationService from "../../navigation/NavigationService";
-import { CommonActions, StackActions } from "@react-navigation/native";
 
 export function* checkAcceptedTosSaga(
   userProfile: InitializedProfile
