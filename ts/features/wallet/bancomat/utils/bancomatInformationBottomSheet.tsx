@@ -1,20 +1,12 @@
 import * as React from "react";
-import { View, StyleSheet } from "react-native";
+import { View } from "react-native";
 import I18n from "../../../../i18n";
 import InternationalCircuitIconsBar from "../../../../components/wallet/InternationalCircuitIconsBar";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import { Label } from "../../../../components/core/typography/Label";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 import { H4 } from "../../../../components/core/typography/H4";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
-
-const styles = StyleSheet.create({
-  button: {
-    width: "100%",
-    borderColor: IOColors.blue
-  }
-});
 
 /**
  * A bottomsheet that display generic information on bancomat and a cta to start the onboarding of a new
@@ -31,7 +23,8 @@ export default (onAdd?: () => void) => {
       </H4>
       <VSpacer size={16} />
       <ButtonDefaultOpacity
-        style={styles.button}
+        primary={true}
+        block={true}
         bordered={true}
         onPress={() => {
           onAdd?.();
