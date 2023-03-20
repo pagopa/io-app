@@ -9,6 +9,7 @@ import { showToast } from "../../../../../utils/showToast";
 import { IDPayDetailsRoutes } from "../../details/navigation";
 import { IDPayConfigurationRoutes } from "../navigation/navigator";
 import { Context } from "./context";
+import { Events } from "./events";
 
 const createActionsImplementation = (
   navigation: IOStackNavigationProp<AppParamsList, keyof AppParamsList>
@@ -92,6 +93,15 @@ const createActionsImplementation = (
     showToast(I18n.t(`idpay.configuration.iban.updateToast`), "success");
   };
 
+  const showInstrumentFailureToast = (_: Context, event: Events) => {
+    switch (event.type) {
+      case "ENROLL_INSTRUMENT_FAILURE":
+        break;
+      case "DELETE_INSTRUMENT_FAILURE":
+        break;
+    }
+  };
+
   const exitConfiguration = () => {
     navigation.pop();
   };
@@ -107,6 +117,7 @@ const createActionsImplementation = (
     navigateToConfigurationSuccessScreen,
     showFailureToast,
     showUpdateIbanToast,
+    showInstrumentFailureToast,
     exitConfiguration
   };
 };

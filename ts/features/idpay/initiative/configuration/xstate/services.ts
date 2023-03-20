@@ -1,6 +1,7 @@
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { InvokeCreator, Receiver, Sender } from "xstate";
 import { PreferredLanguageEnum } from "../../../../../../definitions/backend/PreferredLanguage";
 import { IbanListDTO } from "../../../../../../definitions/idpay/IbanListDTO";
 import { InitiativeDTO } from "../../../../../../definitions/idpay/InitiativeDTO";
@@ -11,6 +12,7 @@ import { SessionManager } from "../../../../../utils/SessionManager";
 import { convertWalletV2toWalletV1 } from "../../../../../utils/walletv2";
 import { IDPayClient } from "../../../common/api/client";
 import { Context } from "./context";
+import { Events } from "./events";
 import { InitiativeFailureType } from "./failure";
 
 const createServicesImplementation = (
@@ -199,23 +201,19 @@ const createServicesImplementation = (
     return data;
   };
 
-  const enrollInstrument = async (context: Context) => {
-    if (context.initiativeId === undefined) {
-      return Promise.reject(InitiativeFailureType.GENERIC);
-    }
-
-    if (context.instrumentToEnroll === undefined) {
+  const enrollInstrument = async (initiativeId?: string, idWallet?: string) => {
+    if (initiativeId === undefined || idWallet === undefined) {
       return Promise.reject(InitiativeFailureType.GENERIC);
     }
 
     const response = await idPayClient.enrollInstrument({
-      initiativeId: context.initiativeId,
-      idWallet: context.instrumentToEnroll.idWallet.toString(),
       bearerAuth: bearerToken,
-      "Accept-Language": language
+      "Accept-Language": language,
+      initiativeId,
+      idWallet
     });
 
-    const data: Promise<ReadonlyArray<InstrumentDTO>> = pipe(
+    const data: Promise<undefined> = pipe(
       response,
       E.fold(
         _ => Promise.reject(InitiativeFailureType.INSTRUMENT_ENROLL_FAILURE),
@@ -227,7 +225,7 @@ const createServicesImplementation = (
             );
           }
 
-          return loadInitiativeInstruments(context);
+          return Promise.resolve(undefined);
         }
       )
     );
@@ -235,23 +233,22 @@ const createServicesImplementation = (
     return data;
   };
 
-  const deleteInstrument = async (context: Context) => {
-    if (context.initiativeId === undefined) {
-      return Promise.reject(InitiativeFailureType.GENERIC);
-    }
-
-    if (context.instrumentToDelete === undefined) {
+  const deleteInstrument = async (
+    initiativeId?: string,
+    instrumentId?: string
+  ) => {
+    if (initiativeId === undefined || instrumentId === undefined) {
       return Promise.reject(InitiativeFailureType.GENERIC);
     }
 
     const response = await idPayClient.deleteInstrument({
-      initiativeId: context.initiativeId,
-      instrumentId: context.instrumentToDelete.instrumentId,
       bearerAuth: bearerToken,
-      "Accept-Language": language
+      "Accept-Language": language,
+      initiativeId,
+      instrumentId
     });
 
-    const data: Promise<ReadonlyArray<InstrumentDTO>> = pipe(
+    const data: Promise<undefined> = pipe(
       response,
       E.fold(
         _ => Promise.reject(InitiativeFailureType.INSTRUMENT_DELETE_FAILURE),
@@ -263,13 +260,59 @@ const createServicesImplementation = (
             );
           }
 
-          return loadInitiativeInstruments(context);
+          return Promise.resolve(undefined);
         }
       )
     );
 
     return data;
   };
+
+  const instrumentsEnrollmentService: InvokeCreator<Context, Events> =
+    (context: Context) =>
+    (callback: Sender<Events>, onReceive: Receiver<Events>) =>
+      onReceive(async event => {
+        switch (event.type) {
+          case "DELETE_INSTRUMENT":
+            deleteInstrument(
+              context.initiativeId,
+              event.instrument.instrumentId
+            )
+              .then(() =>
+                callback({
+                  type: "DELETE_INSTRUMENT_SUCCESS",
+                  instrument: event.instrument
+                })
+              )
+              .catch(() =>
+                callback({
+                  type: "DELETE_INSTRUMENT_FAILURE",
+                  instrument: event.instrument
+                })
+              );
+            break;
+          case "ENROLL_INSTRUMENT":
+            enrollInstrument(
+              context.initiativeId,
+              event.instrument.idWallet.toString()
+            )
+              .then(() =>
+                callback({
+                  type: "ENROLL_INSTRUMENT_SUCCESS",
+                  instrument: event.instrument
+                })
+              )
+              .catch(() =>
+                callback({
+                  type: "ENROLL_INSTRUMENT_FAILURE",
+                  instrument: event.instrument
+                })
+              );
+            break;
+          default:
+            break;
+        }
+      });
 
   return {
     loadInitiative,
@@ -278,8 +321,7 @@ const createServicesImplementation = (
     confirmIban,
     loadWalletInstruments,
     loadInitiativeInstruments,
-    enrollInstrument,
-    deleteInstrument
+    instrumentsEnrollmentService
   };
 };
 

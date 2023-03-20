@@ -13,6 +13,7 @@ import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverl
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../i18n";
+import { Wallet } from "../../../../../types/pagopa";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { InstrumentEnrollmentSwitch } from "../components/InstrumentEnrollmentSwitch";
@@ -25,9 +26,7 @@ import {
   initiativeInstrumentsByIdWalletSelector,
   isLoadingSelector,
   selectInitiativeDetails,
-  selectInstrumentToEnroll,
   selectIsInstrumentsOnlyMode,
-  selectIsUpsertingInstrument,
   selectWalletInstruments
 } from "../xstate/selectors";
 
@@ -43,6 +42,8 @@ type InstrumentsEnrollmentScreenRouteProps = RouteProp<
 const InstrumentsEnrollmentScreen = () => {
   const route = useRoute<InstrumentsEnrollmentScreenRouteProps>();
   const { initiativeId } = route.params;
+
+  const [stagedInstrument, setStagedInstrument] = React.useState<Wallet>();
 
   const configurationMachine = useConfigurationMachineService();
 
@@ -68,39 +69,8 @@ const InstrumentsEnrollmentScreen = () => {
     initiativeInstrumentsByIdWalletSelector
   );
 
-  const enrollingInstrument = useSelector(
-    configurationMachine,
-    selectInstrumentToEnroll
-  );
-
-  const isUpserting = useSelector(
-    configurationMachine,
-    selectIsUpsertingInstrument
-  );
-
   const hasSelectedInstruments =
     Object.keys(initiativeInstrumentsByIdWallet).length > 0;
-
-  const handleBackPress = () => {
-    configurationMachine.send({ type: "BACK" });
-  };
-
-  const handleSkipButton = () => {
-    configurationMachine.send({ type: "SKIP" });
-  };
-
-  const handleContinueButton = () => {
-    configurationMachine.send({ type: "NEXT" });
-  };
-
-  const handleAddPaymentMethodButton = () => {
-    configurationMachine.send({ type: "ADD_PAYMENT_METHOD" });
-  };
-
-  const handleEnrollConfirm = () => {
-    configurationMachine.send({ type: "ENROLL_INSTRUMENT" });
-    enrollmentBottomSheetModal.dismiss();
-  };
 
   React.useEffect(() => {
     if (initiativeId) {
@@ -111,6 +81,35 @@ const InstrumentsEnrollmentScreen = () => {
       });
     }
   }, [configurationMachine, initiativeId]);
+
+  React.useEffect(() => {
+    if (
+      failure === InitiativeFailureType.INSTRUMENT_ENROLL_FAILURE ||
+      failure === InitiativeFailureType.INSTRUMENT_DELETE_FAILURE
+    ) {
+      setStagedInstrument(undefined);
+    }
+  }, [failure]);
+
+  const handleBackPress = () => configurationMachine.send({ type: "BACK" });
+
+  const handleSkipButton = () => configurationMachine.send({ type: "SKIP" });
+
+  const handleContinueButton = () =>
+    configurationMachine.send({ type: "NEXT" });
+
+  const handleAddPaymentMethodButton = () =>
+    configurationMachine.send({ type: "ADD_PAYMENT_METHOD" });
+
+  const handleEnrollConfirm = () => {
+    if (stagedInstrument) {
+      configurationMachine.send({
+        type: "ENROLL_INSTRUMENT",
+        instrument: stagedInstrument
+      });
+      setStagedInstrument(undefined);
+    }
+  };
 
   const enrollmentBottomSheetModal = useIOBottomSheetModal(
     <Body>
@@ -147,32 +146,17 @@ const InstrumentsEnrollmentScreen = () => {
       }}
     />,
     () => {
-      revertInstrumentSwitch();
+      setStagedInstrument(undefined);
     }
   );
 
   React.useEffect(() => {
-    if (enrollingInstrument) {
+    if (stagedInstrument) {
       enrollmentBottomSheetModal.present();
+    } else {
+      enrollmentBottomSheetModal.dismiss();
     }
-  }, [enrollmentBottomSheetModal, enrollingInstrument]);
-
-  /** Resets the switch linked to the given walletId to its previous state */
-  const revertInstrumentSwitch = React.useCallback(() => {
-    configurationMachine.send({
-      type: "STAGE_INSTRUMENT",
-      instrument: undefined
-    });
-  }, [configurationMachine]);
-
-  React.useEffect(() => {
-    if (
-      failure === InitiativeFailureType.INSTRUMENT_ENROLL_FAILURE ||
-      failure === InitiativeFailureType.INSTRUMENT_DELETE_FAILURE
-    ) {
-      revertInstrumentSwitch();
-    }
-  }, [failure, revertInstrumentSwitch]);
+  }, [enrollmentBottomSheetModal, stagedInstrument]);
 
   const renderFooterButtons = () => {
     if (isInstrumentsOnlyMode) {
@@ -193,16 +177,27 @@ const InstrumentsEnrollmentScreen = () => {
         leftButton={{
           title: I18n.t("idpay.configuration.instruments.buttons.skip"),
           bordered: true,
-          disabled: isUpserting,
           onPress: handleSkipButton
         }}
         rightButton={{
           title: I18n.t("idpay.configuration.instruments.buttons.continue"),
-          disabled: isUpserting || !hasSelectedInstruments,
+          disabled: !hasSelectedInstruments,
           onPress: handleContinueButton
         }}
       />
     );
+  };
+
+  const handleInstrumentValueChange = (wallet: Wallet) => (value: boolean) => {
+    if (value) {
+      setStagedInstrument(wallet);
+    } else {
+      const instrument = initiativeInstrumentsByIdWallet[wallet.idWallet];
+      configurationMachine.send({
+        type: "DELETE_INSTRUMENT",
+        instrument
+      });
+    }
   };
 
   return (
@@ -233,9 +228,10 @@ const InstrumentsEnrollmentScreen = () => {
                   <InstrumentEnrollmentSwitch
                     key={walletInstrument.idWallet}
                     wallet={walletInstrument}
-                    instrument={
-                      initiativeInstrumentsByIdWallet[walletInstrument.idWallet]
-                    }
+                    isStaged={stagedInstrument === walletInstrument}
+                    onValueChange={handleInstrumentValueChange(
+                      walletInstrument
+                    )}
                   />
                 ))}
               </NBList>

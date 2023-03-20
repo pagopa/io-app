@@ -39,10 +39,6 @@ const selectIsLoadingInstruments = (state: StateWithContext) =>
 const selectAreInstrumentsSkipped = (state: StateWithContext) =>
   state.context.areInstrumentsSkipped ?? false;
 
-const selectIsUpsertingInstrument = (state: StateWithContext) =>
-  state.matches("CONFIGURING_INSTRUMENTS.ENROLLING_INSTRUMENT") ||
-  state.matches("CONFIGURING_INSTRUMENTS.DELETING_INSTRUMENT");
-
 const selectEnrolledIban = createSelector(
   selectInitiativeDetails,
   ibanListSelector,
@@ -50,7 +46,6 @@ const selectEnrolledIban = createSelector(
     if (initiative?.iban === undefined) {
       return undefined;
     }
-
     return ibanList.find(_ => _.iban === initiative.iban);
   }
 );
@@ -82,15 +77,6 @@ const instrumentStatusByIdWalletSelector = (idWallet: number) =>
     statuses => statuses[idWallet] ?? P.some(undefined)
   );
 
-const selectInstrumentToEnroll = (state: StateWithContext) =>
-  state.context.instrumentToEnroll;
-
-const isInstrumentEnrollingSelector = (idWallet: number) =>
-  createSelector(
-    selectInstrumentToEnroll,
-    instrument => instrument?.idWallet === idWallet
-  );
-
 const failureSelector = (state: StateWithContext) => state.context.failure;
 
 export {
@@ -102,13 +88,10 @@ export {
   selectIsIbanOnlyMode,
   selectIsInstrumentsOnlyMode,
   selectIsLoadingInstruments,
-  selectIsUpsertingInstrument,
   selectAreInstrumentsSkipped,
   selectEnrolledIban,
   selectWalletInstruments,
   initiativeInstrumentsByIdWalletSelector,
   instrumentStatusByIdWalletSelector,
-  selectInstrumentToEnroll,
-  isInstrumentEnrollingSelector,
   failureSelector
 };
