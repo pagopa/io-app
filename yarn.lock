@@ -3058,12 +3058,12 @@
   resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-crypto/-/io-react-native-crypto-0.2.1.tgz#3d62b0f0cf45b2a878e4ee0652239ea69089988e"
   integrity sha512-J+VP1kLXl1lQSJJYFMa+ljW9fWgMIYQskBJZFaVKPrtrZr8MJyrhNzlFUf2/EGwxm3kA+7o7budq6fPqdfVvvg==
 
-"@pagopa/openapi-codegen-ts@^12.0.2":
-  version "12.0.2"
-  resolved "https://registry.yarnpkg.com/@pagopa/openapi-codegen-ts/-/openapi-codegen-ts-12.0.2.tgz#1913ba4fefe3d28f5a4f8497d8f824cdd9844cd0"
-  integrity sha512-waI+xROMPDgfYZnJ55GzjBsfVIrH+0C52BsQDJz2NjM66qssF8LLmixHfET8KrIBPdBZO8ogh2M3+mX36uE7+w==
+"@pagopa/openapi-codegen-ts@^12.2.1":
+  version "12.2.1"
+  resolved "https://registry.yarnpkg.com/@pagopa/openapi-codegen-ts/-/openapi-codegen-ts-12.2.1.tgz#e2cc9cedcbb23077b4f3f80e970ebd9c55e71afe"
+  integrity sha512-NO+z8+FUuR04Kc6I6fZk2mh+PWc1wrrBiTmcmnwuGGAWcObPqt4oF7b0fpAiZF91YuAMf5BOaXsFIIeSQv3i8g==
   dependencies:
-    "@pagopa/ts-commons" "^10.3.0"
+    "@pagopa/ts-commons" "^10.15.0"
     fs-extra "^6.0.0"
     nunjucks "^3.2.3"
     openapi-types "^10.0.0"
@@ -3078,10 +3078,10 @@
   resolved "https://registry.yarnpkg.com/@pagopa/react-native-cie/-/react-native-cie-1.1.5.tgz#d56a524dd4ad78bee2fa949e635a4ada0854730f"
   integrity sha512-rwJiKz1s9hwyGvngjTIwF4ZjO37YpQM4LQ2Mw56qMxRVry59TeZPaHn74aT5FfgadcH6tPvyXgCTNbuvkj0fxg==
 
-"@pagopa/ts-commons@^10.13.0":
-  version "10.13.0"
-  resolved "https://registry.yarnpkg.com/@pagopa/ts-commons/-/ts-commons-10.13.0.tgz#d8828a4b4f29e6ad0674c9fcea55eab41240725f"
-  integrity sha512-NE1RXpi5R7DlG9HdXCZZYj7DLodPMTEsusdDmCjJBlvsHRLlRsvGUx2mgA4oh+iFA+nGE9mDIbBoTN9lwGjqfQ==
+"@pagopa/ts-commons@^10.15.0":
+  version "10.15.0"
+  resolved "https://registry.yarnpkg.com/@pagopa/ts-commons/-/ts-commons-10.15.0.tgz#8e3030a2ebc16c3edb5ef99962c6e8d534826957"
+  integrity sha512-MTmD0geIN9L9vnEYjPTE7v6Bu+IRTFMre+3K4LWYjy1AaRmYcpSrc9HTZgyCRW8uLCvw1BmDKcKtSiETM817kw==
   dependencies:
     abort-controller "^3.0.0"
     agentkeepalive "^4.1.4"
@@ -3094,7 +3094,7 @@
     semver "^7.3.7"
     validator "^13.7.0"
 
-"@pagopa/ts-commons@^10.3.0", "@pagopa/ts-commons@^10.5.0":
+"@pagopa/ts-commons@^10.5.0":
   version "10.10.0"
   resolved "https://registry.yarnpkg.com/@pagopa/ts-commons/-/ts-commons-10.10.0.tgz#9eae84003956ac44aad710b91abd7614bb09665e"
   integrity sha512-/bIEHIvswrp9mi+NdBOJftPAP9YeI5Z1+mK1WV/RDTvy6nb5Zd7C9kwdBJbXjl4zW/eiQsb5PqLHEC6odQKlWg==
@@ -3516,9 +3516,9 @@
     "@hapi/hoek" "^9.0.0"
 
 "@sideway/formula@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@sideway/formula/-/formula-3.0.0.tgz#fe158aee32e6bd5de85044be615bc08478a0a13c"
-  integrity sha512-vHe7wZ4NOXVfkoRb8T5otiENVlT7a3IAiw7H5M2+GO+9CDgcVUUsX1zalAztCmwyOr2RUTGJdgB+ZvSVqmdHmg==
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@sideway/formula/-/formula-3.0.1.tgz#80fcbcbaf7ce031e0ef2dd29b1bfc7c3f583611f"
+  integrity sha512-/poHZJJVjx3L+zVD6g9KgHfYnb443oi7wLu/XKojDviHy6HOEOA6z1Trk5aR1dGcmPenJEgb2sK2I80LeS3MIg==
 
 "@sideway/pinpoint@^2.0.0":
   version "2.0.0"
@@ -12497,14 +12497,7 @@ minimalistic-crypto-utils@^1.0.1:
   resolved "https://registry.yarnpkg.com/minimalistic-crypto-utils/-/minimalistic-crypto-utils-1.0.1.tgz#f6c00c1c0b082246e5c4d99dfb8c7c083b2b582a"
   integrity sha512-JIYlbt6g8i5jKfJ3xz7rF0LXmv2TkDxBLUkiBeZ7bAx4GnnNMr8xFpGnOxn6GhTEHx3SjRrZEoU+j04prX1ktg==
 
-"minimatch@2 || 3", minimatch@^3.0.2:
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-3.0.4.tgz#5166e286457f03306064be5497e8dbb0c3d32083"
-  integrity sha512-yJHVQEhyqPLUTgt9B83PXu6W3rx4MvvHvSUvToogpwoGDOUQ+yDrR0HRot+yOCdCO7u4hX3pWft6kWBBcqh0UA==
-  dependencies:
-    brace-expansion "^1.1.7"
-
-minimatch@^3.0.4:
+"minimatch@2 || 3", minimatch@^3.0.2, minimatch@^3.0.4:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-3.1.2.tgz#19cd194bfd3e428f049a70817c038d89ab4be35b"
   integrity sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==
@@ -12512,9 +12505,9 @@ minimatch@^3.0.4:
     brace-expansion "^1.1.7"
 
 minimatch@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-5.0.1.tgz#fb9022f7528125187c92bd9e9b6366be1cf3415b"
-  integrity sha512-nLDxIFRyhDblz3qMuq+SoRZED4+miJ/G+tdDrjkkkRnjAsBexeGpgjLEQ0blJy7rHhR2b93rhQY4SvyWu9v03g==
+  version "5.1.6"
+  resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-5.1.6.tgz#1cfcb8cf5522ea69952cd2af95ae09477f122a96"
+  integrity sha512-lKwV/1brpG6mBUFHtb7NUmtABCb2WZZmm2wNiOA5hAb8VdCS4B3dtMWyvcoViccwAW/COERjXLt0zP1zXUN26g==
   dependencies:
     brace-expansion "^2.0.1"
 

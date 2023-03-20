@@ -63,8 +63,14 @@ import {
   sessionInfoSelector,
   sessionTokenSelector
 } from "../store/reducers/authentication";
-import { lollipopKeyTagSelector } from "../features/lollipop/store/reducers/lollipop";
-import { generateLollipopKeySaga } from "../features/lollipop/saga";
+import {
+  lollipopKeyTagSelector,
+  lollipopPublicKeySelector
+} from "../features/lollipop/store/reducers/lollipop";
+import {
+  generateKeyInfo,
+  generateLollipopKeySaga
+} from "../features/lollipop/saga";
 import { IdentificationResult } from "../store/reducers/identification";
 import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
 import {
@@ -141,10 +147,6 @@ import { completeOnboardingSaga } from "./startup/completeOnboardingSaga";
 import { watchLoadMessageById } from "./messages/watchLoadMessageById";
 import { watchThirdPartyMessageSaga } from "./messages/watchThirdPartyMessageSaga";
 import { checkNotificationsPreferencesSaga } from "./startup/checkNotificationsPreferencesSaga";
-import {
-  getCryptoPublicKey,
-  trackMixpanelCryptoKeyPairEvents
-} from "./startup/generateCryptoKeyPair";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -206,11 +208,7 @@ export function* initializeApplicationSaga(): Generator<
   // user profile.
   yield* put(resetProfileState());
 
-  // Generate key for lollipop
-  // TODO Once the lollipop feature is spread to the all the user base,
-  // consider refactoring even more by removing this, when
-  // https://pagopa.atlassian.net/browse/LLK-38 has been fixed.
-  // For now we need to generate a key in the application startup flow
+  // We need to generate a key in the application startup flow
   // to use this information on old app version already logged in users.
   // Here we are blocking the application startup, but we have the
   // the profile loading spinner active.
@@ -231,7 +229,8 @@ export function* initializeApplicationSaga(): Generator<
 
   // Get keyInfo for lollipop
   const keyTag = yield* select(lollipopKeyTagSelector);
-  const keyInfo = yield* call(getCryptoPublicKey, keyTag);
+  const publicKey = yield* select(lollipopPublicKeySelector);
+  const keyInfo = yield* call(generateKeyInfo, keyTag, publicKey);
 
   // Instantiate a backend client from the session token
   const backendClient: ReturnType<typeof BackendClient> = BackendClient(
@@ -361,11 +360,6 @@ export function* initializeApplicationSaga(): Generator<
   // check if the user expressed preference about mixpanel, if not ask for it
   yield* call(askMixpanelOptIn);
 
-  // Track crypto key generation info
-  if (O.isSome(keyTag)) {
-    yield* call(trackMixpanelCryptoKeyPairEvents, keyTag.value);
-  }
-
   if (hasPreviousSessionAndPin) {
     // We have to retrieve the pin here and not on the previous if-condition (same guard)
     // otherwise the typescript compiler will complain of an unassigned variable later on
@@ -454,7 +448,7 @@ export function* initializeApplicationSaga(): Generator<
   }
 
   if (fciEnabled) {
-    yield* fork(watchFciSaga, sessionToken);
+    yield* fork(watchFciSaga, sessionToken, keyInfo);
   }
 
   // Load the user metadata
