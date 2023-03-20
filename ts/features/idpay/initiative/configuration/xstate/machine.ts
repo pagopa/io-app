@@ -939,7 +939,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
         /**
          * Instruments statuses refresh delay (ms)
          */
-        INSTRUMENTS_POLLING_INTERVAL: 5000
+        INSTRUMENTS_POLLING_INTERVAL: 3000
       }
     }
   );
