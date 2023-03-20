@@ -20,7 +20,7 @@ afterAll(() => {
 
 describe("TosWebviewComponent", () => {
   describe("The snapshot for the TosWebviewComponent", () => {
-    it("Renders correctlye", () => {
+    it("Should render correctly with bottom footer and a basic placeholding HTML", () => {
       const tree = renderer
         .create(
           <TosWebviewComponent
@@ -58,8 +58,6 @@ describe("TosWebviewComponent", () => {
       // The left button handler should have been invoked
       expect(leftButtonHandlerMock).toHaveBeenCalledTimes(1);
     });
-  });
-  describe("When rendering with the footer displayed", () => {
     it("Clicking the right button should trigger 'onAcceptTos' prop handler", () => {
       const rightButtonHandlerMock = jest.fn();
       const renderAPI = commonSetup({ onRightButton: rightButtonHandlerMock });
