@@ -47,7 +47,10 @@ import I18n from "../i18n";
 import { mixpanelTrack } from "../mixpanel";
 import NavigationService from "../navigation/NavigationService";
 import { startApplicationInitialization } from "../store/actions/application";
-import { sessionExpired, sessionInvalid } from "../store/actions/authentication";
+import {
+  sessionExpired,
+  sessionInvalid
+} from "../store/actions/authentication";
 import { previousInstallationDataDeleteSuccess } from "../store/actions/installation";
 import { setMixpanelEnabled } from "../store/actions/mixpanel";
 import {
@@ -67,7 +70,10 @@ import {
   lollipopKeyTagSelector,
   lollipopPublicKeySelector
 } from "../features/lollipop/store/reducers/lollipop";
-import { generateLollipopKeySaga, lollipopKeyCheckWithServer } from "../features/lollipop/saga";
+import {
+  generateLollipopKeySaga,
+  lollipopKeyCheckWithServer
+} from "../features/lollipop/saga";
 import { IdentificationResult } from "../store/reducers/identification";
 import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
 import {
@@ -89,6 +95,8 @@ import { clearAllAttachments } from "../features/messages/saga/clearAttachments"
 import { watchMessageAttachmentsSaga } from "../features/messages/saga/attachments";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
 import { watchIDPaySaga } from "../features/idpay/common/saga";
+import { lollipopAbortAppInitialization } from "../features/lollipop/store/actions/lollipop";
+import ROUTES from "../navigation/routes";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -147,8 +155,6 @@ import {
   generateKeyInfo,
   trackMixpanelCryptoKeyPairEvents
 } from "./startup/generateCryptoKeyPair";
-import { DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER } from "../features/lollipop/utils/login";
-import { resetAssistanceData } from "../utils/supportAssistance";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -662,10 +668,23 @@ function cancellAllLocalNotifications() {
 
 export function* startupSaga(): IterableIterator<ReduxSagaEffect> {
   // Wait until the IngressScreen gets mounted
+  yield* takeLatest(getType(startApplicationInitialization), () => start());
   yield* takeLatest(
-    getType(startApplicationInitialization),
-    initializeApplicationSaga
+    getType(lollipopAbortAppInitialization),
+    interruptApplicationSaga
   );
+}
+
+function* interruptApplicationSaga() {
+  NavigationService.navigate(ROUTES.UNSUPPORTED_DEVICE, {
+    screen: ROUTES.UNSUPPORTED_DEVICE
+  });
+
+  yield* cancel();
+}
+
+function* start(): Generator<any, any, unknown> {
+  return [yield* fork(initializeApplicationSaga)];
 }
 
 export const testWaitForNavigatorServiceInitialization = isTestEnv

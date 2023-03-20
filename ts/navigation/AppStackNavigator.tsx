@@ -103,7 +103,10 @@ export const AppStackNavigator = () => {
       screenOptions={{ gestureEnabled: false }}
     >
       <Stack.Screen name={ROUTES.INGRESS} component={IngressScreen} />
-      <Stack.Screen name={ROUTES.UNSUPPORTED_DEVICE} component={FailureScreen} />
+      <Stack.Screen
+        name={ROUTES.UNSUPPORTED_DEVICE}
+        component={FailureScreen}
+      />
       <Stack.Screen
         name={ROUTES.AUTHENTICATION}
         component={authenticationNavigator}

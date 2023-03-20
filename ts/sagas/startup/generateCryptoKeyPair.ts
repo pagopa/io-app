@@ -22,10 +22,10 @@ import {
   trackLollipopKeyGenerationSuccess
 } from "../../utils/analytics";
 import {
+  lollipopAbortAppInitialization,
   lollipopRemovePublicKey,
   lollipopSetPublicKey
 } from "../../features/lollipop/store/actions/lollipop";
-
 /**
  * Generates a new crypto key pair.
  */
@@ -101,6 +101,7 @@ function* generateCryptoKeyPair(keyTag: string) {
     yield* call(setKeyGenerationInfo, keyTag, keyGenerationInfo);
   } catch (e) {
     yield* saveKeyGenerationFailureInfo(keyTag, e);
+    yield* put(lollipopAbortAppInitialization());
   }
 }
 

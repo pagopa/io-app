@@ -25,8 +25,13 @@ export const lollipopRemovePublicKey = createStandardAction(
   "LOLLIPOP_REMOVE_PUBLIC_KEY"
 )();
 
+export const lollipopAbortAppInitialization = createStandardAction(
+  "LOLLIPOP_ABORT_APP_INITIALIZATION"
+)();
+
 export type LollipopActions = ActionType<
   | typeof lollipopKeyTagSave
   | typeof lollipopSetPublicKey
   | typeof lollipopRemovePublicKey
+  | typeof lollipopAbortAppInitialization
 >;

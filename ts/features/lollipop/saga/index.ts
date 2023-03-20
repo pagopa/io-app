@@ -2,6 +2,7 @@ import * as O from "fp-ts/lib/Option";
 import { v4 as uuid } from "uuid";
 import { put, select, call } from "typed-redux-saga/macro";
 import { getPublicKey } from "@pagopa/io-react-native-crypto";
+import { jwkThumbprintByEncoding } from "jwk-thumbprint";
 import {
   lollipopKeyTagSelector,
   lollipopPublicKeySelector
@@ -20,7 +21,6 @@ import {
   DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER
 } from "../utils/login";
 import { sessionInvalid } from "../../../store/actions/authentication";
-import { jwkThumbprintByEncoding } from "jwk-thumbprint";
 import { restartCleanApplication } from "../../../sagas/commons";
 
 export function* generateLollipopKeySaga() {
@@ -68,9 +68,11 @@ export function* lollipopKeyCheckWithServer() {
   );
 
   if (O.isSome(maybeSessionInformation)) {
-    const lollipop_assertion_ref =
-      maybeSessionInformation.value.lollipop_assertion_ref;
-    let localAssertionRef = undefined;
+    const lollipopAssertionRef =
+      maybeSessionInformation.value.lollipopAssertionRef;
+    
+    // eslint-disable-next-line functional/no-let
+    let localAssertionRef;
 
     if (O.isSome(publicKey)) {
       const converted = jwkThumbprintByEncoding(
@@ -82,8 +84,8 @@ export function* lollipopKeyCheckWithServer() {
     }
 
     if (
-      !lollipop_assertion_ref ||
-      lollipop_assertion_ref !== localAssertionRef
+      !lollipopAssertionRef ||
+      lollipopAssertionRef !== localAssertionRef
     ) {
       yield* put(sessionInvalid());
       yield* call(restartCleanApplication);

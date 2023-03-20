@@ -1,5 +1,11 @@
 import { PublicKey } from "@pagopa/io-react-native-crypto";
 import { createStore } from "redux";
+import { expectSaga } from "redux-saga-test-plan";
+import { put, call } from "typed-redux-saga/macro";
+import {
+  EffectProviders,
+  StaticProvider
+} from "redux-saga-test-plan/providers";
 import { AssertionRef } from "../../../../definitions/backend/AssertionRef";
 import { applicationChangeState } from "../../../store/actions/application";
 import { appReducer } from "../../../store/reducers";
@@ -9,9 +15,6 @@ import { PublicSession } from "../../../../definitions/backend/PublicSession";
 import { lollipopKeyCheckWithServer } from "../saga";
 import { restartCleanApplication } from "../../../sagas/commons";
 import { sessionInvalid } from "../../../store/actions/authentication";
-import { expectSaga } from "redux-saga-test-plan";
-import { put, call } from "typed-redux-saga/macro";
-import { EffectProviders, StaticProvider } from "redux-saga-test-plan/providers";
 
 type DataFromServerType = {
   assertionRef: AssertionRef;
@@ -32,12 +35,15 @@ const DATA_FROM_SERVER: DataFromServerType = {
 const globalState = appReducer(undefined, applicationChangeState("active"));
 
 const mockedSessionInvalid: StaticProvider = [put(sessionInvalid()), true];
-const mockedRestartCleanApplication: StaticProvider = [call(restartCleanApplication), true];
+const mockedRestartCleanApplication: StaticProvider = [
+  call(restartCleanApplication),
+  true
+];
 
 const mockedFunctions: Array<StaticProvider | EffectProviders> = [
   mockedSessionInvalid,
   mockedRestartCleanApplication
-]
+];
 
 describe(`Test login with lollipop check and store aligned with server`, () => {
   it(`should not put sessionIvalid or call restartCleanApplication`, async () => {
