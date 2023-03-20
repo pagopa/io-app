@@ -38,7 +38,7 @@ const createIDPayUnsubscriptionMachine = (
               target: "LOADING_INITIATIVE_INFO"
             },
             {
-              target: "DISPLAYING_CONFIRMATION"
+              target: "AWAITING_CONFIRMATION"
             }
           ]
         },
@@ -49,14 +49,14 @@ const createIDPayUnsubscriptionMachine = (
             src: "getInitiativeInfo",
             onDone: {
               actions: "loadInitiativeSuccess",
-              target: "DISPLAYING_CONFIRMATION"
+              target: "AWAITING_CONFIRMATION"
             },
             onError: {
               target: "UNSUBSCRIPTION_FAILURE"
             }
           }
         },
-        DISPLAYING_CONFIRMATION: {
+        AWAITING_CONFIRMATION: {
           tags: [WAITING_USER_INPUT_TAG],
           on: {
             EXIT: {
