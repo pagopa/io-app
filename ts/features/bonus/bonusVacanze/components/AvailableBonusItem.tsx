@@ -1,6 +1,6 @@
-import { Badge, Grid, ListItem, Row, Text as NBText, View } from "native-base";
+import { Badge, Grid, ListItem, Row, Text as NBText } from "native-base";
 import * as React from "react";
-import { Image, Platform, StyleSheet } from "react-native";
+import { View, Image, Platform, StyleSheet } from "react-native";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
 import I18n from "../../../../i18n";

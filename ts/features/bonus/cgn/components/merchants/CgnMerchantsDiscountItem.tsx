@@ -1,6 +1,5 @@
 import * as React from "react";
-import { View } from "native-base";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
