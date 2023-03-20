@@ -94,8 +94,6 @@ import { clearAllAttachments } from "../features/messages/saga/clearAttachments"
 import { watchMessageAttachmentsSaga } from "../features/messages/saga/attachments";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
 import { watchIDPaySaga } from "../features/idpay/common/saga";
-import ROUTES from "../navigation/routes";
-import { lollipopAbortAppInitialization } from "../features/lollipop/store/actions/lollipop";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -223,7 +221,7 @@ export function* initializeApplicationSaga(): Generator<
   const publicKey = yield* select(lollipopPublicKeySelector);
   const keyInfo = yield* call(generateKeyInfo, keyTag, publicKey);
 
-  if(showUnsupportedDeviceScreen(publicKey)){
+  if (showUnsupportedDeviceScreen(publicKey)) {
     return;
   }
 

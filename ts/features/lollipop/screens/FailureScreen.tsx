@@ -15,10 +15,10 @@ const FailureScreen = () => {
     openWebUrl(learnMoreLink);
   };
   const renderWhyIsThat = () => (
-      <ButtonDefaultOpacity block={true} onPress={handleWhyIsThat}>
-        <Text>{I18n.t("unsupportedDevice.cta.faq")}</Text>
-      </ButtonDefaultOpacity>
-    );
+    <ButtonDefaultOpacity block={true} onPress={handleWhyIsThat}>
+      <Text>{I18n.t("unsupportedDevice.cta.faq")}</Text>
+    </ButtonDefaultOpacity>
+  );
 
   return (
     <SafeAreaView style={IOStyles.flex}>

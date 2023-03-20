@@ -80,13 +80,13 @@ describe("initializeApplicationSaga", () => {
       .put(resetProfileState())
       .next()
       .next(generateLollipopKeySaga)
+      .next(lollipopKeyTagSelector)
+      .next(lollipopPublicKeySelector)
+      .next(generateKeyInfo, O.none, O.none)
       .select(sessionTokenSelector)
       .next(aSessionToken)
       .fork(watchSessionExpiredSaga)
       .next()
-      .next() // keyTag
-      .next() // publicKey
-      .next() // getPublicKey
       .next(200) // checkSession
       .select(sessionInfoSelector)
       .next(O.none)
@@ -117,12 +117,12 @@ describe("initializeApplicationSaga", () => {
       .put(resetProfileState())
       .next()
       .next(generateLollipopKeySaga)
-      .select(sessionTokenSelector)
-      .next(aSessionToken)
-      .fork(watchSessionExpiredSaga)
       .next(lollipopKeyTagSelector)
       .next(lollipopPublicKeySelector)
       .next(generateKeyInfo, O.none, O.none)
+      .select(sessionTokenSelector)
+      .next(aSessionToken)
+      .fork(watchSessionExpiredSaga)
       .next()
       .next(401) // checksession
       .put(sessionExpired());
@@ -151,12 +151,12 @@ describe("initializeApplicationSaga", () => {
       .put(resetProfileState())
       .next()
       .next(generateLollipopKeySaga)
-      .select(sessionTokenSelector)
-      .next(aSessionToken)
-      .fork(watchSessionExpiredSaga)
       .next(lollipopKeyTagSelector)
       .next(lollipopPublicKeySelector)
       .next(generateKeyInfo, O.none, O.none)
+      .select(sessionTokenSelector)
+      .next(aSessionToken)
+      .fork(watchSessionExpiredSaga)
       .next()
       .next(200) // check session
       .select(sessionInfoSelector)
