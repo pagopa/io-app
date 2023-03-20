@@ -25,6 +25,7 @@ import {
   failureSelector,
   initiativeInstrumentsByIdWalletSelector,
   isLoadingSelector,
+  isUpsertingInstrumentSelector,
   selectInitiativeDetails,
   selectIsInstrumentsOnlyMode,
   selectWalletInstruments
@@ -62,6 +63,11 @@ const InstrumentsEnrollmentScreen = () => {
   const walletInstruments = useSelector(
     configurationMachine,
     selectWalletInstruments
+  );
+
+  const isUpserting = useSelector(
+    configurationMachine,
+    isUpsertingInstrumentSelector
   );
 
   const initiativeInstrumentsByIdWallet = useSelector(
@@ -165,7 +171,8 @@ const InstrumentsEnrollmentScreen = () => {
           type="SingleButton"
           leftButton={{
             title: I18n.t("idpay.configuration.instruments.buttons.addMethod"),
-            onPress: handleAddPaymentMethodButton
+            onPress: handleAddPaymentMethodButton,
+            disabled: isUpserting
           }}
         />
       );
@@ -177,11 +184,12 @@ const InstrumentsEnrollmentScreen = () => {
         leftButton={{
           title: I18n.t("idpay.configuration.instruments.buttons.skip"),
           bordered: true,
+          disabled: isUpserting,
           onPress: handleSkipButton
         }}
         rightButton={{
           title: I18n.t("idpay.configuration.instruments.buttons.continue"),
-          disabled: !hasSelectedInstruments,
+          disabled: isUpserting || !hasSelectedInstruments,
           onPress: handleContinueButton
         }}
       />

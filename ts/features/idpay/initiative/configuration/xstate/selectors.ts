@@ -1,4 +1,5 @@
 import * as P from "@pagopa/ts-commons/lib/pot";
+import _ from "lodash";
 import { createSelector } from "reselect";
 import { StateFrom } from "xstate";
 import { InstrumentDTO } from "../../../../../../definitions/idpay/InstrumentDTO";
@@ -71,6 +72,11 @@ const initiativeInstrumentsByIdWalletSelector = createSelector(
 const selectInstrumentStatuses = (state: StateWithContext) =>
   state.context.instrumentStatuses;
 
+const isUpsertingInstrumentSelector = createSelector(
+  selectInstrumentStatuses,
+  statuses => Object.values(statuses).some(P.isLoading)
+);
+
 const instrumentStatusByIdWalletSelector = (idWallet: number) =>
   createSelector(
     selectInstrumentStatuses,
@@ -92,6 +98,7 @@ export {
   selectEnrolledIban,
   selectWalletInstruments,
   initiativeInstrumentsByIdWalletSelector,
+  isUpsertingInstrumentSelector,
   instrumentStatusByIdWalletSelector,
   failureSelector
 };
