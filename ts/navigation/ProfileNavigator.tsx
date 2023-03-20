@@ -2,13 +2,13 @@ import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
 import LogoutScreen from "../components/screens/LogoutScreen";
 import { remindersOptInEnabled } from "../config";
-import EmailInsertScreen from "../screens/onboarding/EmailInsertScreen";
-import EmailReadScreen from "../screens/onboarding/EmailReadScreen";
-import TosScreen from "../screens/onboarding/TosScreen";
+import { DesignSystemNavigator } from "../features/design-system/navigation/navigator";
 import CalendarsPreferencesScreen from "../screens/profile/CalendarsPreferencesScreen";
 import CgnLandingPlayground from "../screens/profile/CgnLandingPlayground";
 import DownloadProfileDataScreen from "../screens/profile/DownloadProfileDataScreen";
 import EmailForwardingScreen from "../screens/profile/EmailForwardingScreen";
+import EmailInsertScreen from "../screens/profile/EmailInsertScreen";
+import EmailReadScreen from "../screens/profile/EmailReadScreen";
 import FiscalCodeScreen from "../screens/profile/FiscalCodeScreen";
 import LanguagesPreferencesScreen from "../screens/profile/LanguagesPreferencesScreen";
 import { NotificationsPreferencesScreen } from "../screens/profile/NotificationsPreferencesScreen";
@@ -23,9 +23,9 @@ import RemoveAccountSuccess from "../screens/profile/RemoveAccountSuccessScreen"
 import SecurityScreen from "../screens/profile/SecurityScreen";
 import ServicesPreferenceScreen from "../screens/profile/ServicesPreferenceScreen";
 import ShareDataScreen from "../screens/profile/ShareDataScreen";
+import TosScreen from "../screens/profile/TosScreen";
 import WebPlayground from "../screens/profile/WebPlayground";
 import { isGestureEnabled } from "../utils/navigation";
-import { DesignSystemNavigator } from "../features/design-system/navigation/navigator";
 import { ProfileParamsList } from "./params/ProfileParamsList";
 import ROUTES from "./routes";
 

@@ -1,57 +1,53 @@
 import * as React from "react";
+import { useContext } from "react";
 import { SafeAreaView } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
-import BaseScreenComponent, {
-  ContextualHelpPropsMarkdown
-} from "../../components/screens/BaseScreenComponent";
-import { AlertModal } from "../../components/ui/AlertModal";
-import { LightModalContextInterface } from "../../components/ui/LightModal";
-import I18n from "../../i18n";
-import { useOnboardingAbortAlert } from "../../utils/hooks/useOnboardingAbortAlert";
-import { setPin } from "../../utils/keychain";
-import { PinString } from "../../types/PinString";
-import {
-  assistanceToolRemoteConfig,
-  handleSendAssistanceLog
-} from "../../utils/supportAssistance";
-import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
-import { createPinSuccess } from "../../store/actions/pinset";
-import { isOnboardingCompleted } from "../../utils/navigation";
+import I18n from "../i18n";
 import {
   AppParamsList,
   IOStackNavigationRouteProps
-} from "../../navigation/params/AppParamsList";
-import { PinCreationForm } from "../../components/PinCreationForm";
-import { withLightModalContext } from "../../components/helpers/withLightModalContext";
+} from "../navigation/params/AppParamsList";
+import { createPinSuccess } from "../store/actions/pinset";
+import { useIODispatch, useIOSelector } from "../store/hooks";
+import { assistanceToolConfigSelector } from "../store/reducers/backendStatus";
+import { PinString } from "../types/PinString";
+import { useOnboardingAbortAlert } from "../utils/hooks/useOnboardingAbortAlert";
+import { setPin } from "../utils/keychain";
+import {
+  assistanceToolRemoteConfig,
+  handleSendAssistanceLog
+} from "../utils/supportAssistance";
+import { PinCreationForm } from "./PinCreationForm";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "./screens/BaseScreenComponent";
+import { AlertModal } from "./ui/AlertModal";
+import { LightModalContext } from "./ui/LightModal";
+
+type Props = Pick<IOStackNavigationRouteProps<AppParamsList>, "navigation"> & {
+  isOnboarding: boolean;
+};
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "onboarding.unlockCode.contextualHelpTitle",
   body: "onboarding.unlockCode.contextualHelpContent"
 };
 
-type Props = IOStackNavigationRouteProps<AppParamsList> &
-  LightModalContextInterface;
-
-/**
- * A screen that allows the user to set the unlock code.
- */
-const PinScreen: React.FC<Props> = ({ navigation, showModal }) => {
+const PinScreenComponent = ({ navigation, isOnboarding }: Props) => {
   const onboardingAbortAlert = useOnboardingAbortAlert();
-  const assistanceToolConfig = useSelector(assistanceToolConfigSelector);
-  const dispatch = useDispatch();
+  const { showModal } = useContext(LightModalContext);
+  const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
+  const dispatch = useIODispatch();
 
   const assistanceTool = React.useMemo(
     () => assistanceToolRemoteConfig(assistanceToolConfig),
     [assistanceToolConfig]
   );
 
-  const handleGoBack = () => {
-    if (isOnboardingCompleted()) {
-      navigation.goBack();
-    } else {
-      onboardingAbortAlert.showAlert();
-    }
-  };
+  const handleGoBack = React.useCallback(
+    () =>
+      isOnboarding ? onboardingAbortAlert.showAlert() : navigation.goBack(),
+    [navigation, isOnboarding, onboardingAbortAlert]
+  );
 
   const showRestartModal = React.useCallback(() => {
     showModal(
@@ -66,10 +62,9 @@ const PinScreen: React.FC<Props> = ({ navigation, showModal }) => {
       setPin(pin)
         .then(() => {
           handleSendAssistanceLog(assistanceTool, `createPinSuccess`);
-
           dispatch(createPinSuccess(pin));
 
-          if (isOnboardingCompleted()) {
+          if (!isOnboarding) {
             // We need to ask the user to restart the app
             showRestartModal();
             navigation.goBack();
@@ -84,7 +79,7 @@ const PinScreen: React.FC<Props> = ({ navigation, showModal }) => {
           // end user probably.
         });
     },
-    [assistanceTool, dispatch, navigation, showRestartModal]
+    [assistanceTool, dispatch, navigation, showRestartModal, isOnboarding]
   );
 
   return (
@@ -101,4 +96,4 @@ const PinScreen: React.FC<Props> = ({ navigation, showModal }) => {
   );
 };
 
-export default withLightModalContext(PinScreen);
+export default PinScreenComponent;
