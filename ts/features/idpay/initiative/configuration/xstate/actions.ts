@@ -10,6 +10,7 @@ import { IDPayDetailsRoutes } from "../../details/navigation";
 import { IDPayConfigurationRoutes } from "../navigation/navigator";
 import { Context } from "./context";
 import { Events } from "./events";
+import { InitiativeFailureType } from "./failure";
 
 const createActionsImplementation = (
   navigation: IOStackNavigationProp<AppParamsList, keyof AppParamsList>
@@ -96,8 +97,20 @@ const createActionsImplementation = (
   const showInstrumentFailureToast = (_: Context, event: Events) => {
     switch (event.type) {
       case "ENROLL_INSTRUMENT_FAILURE":
+        showToast(
+          I18n.t(
+            `idpay.configuration.failureStates.${InitiativeFailureType.INSTRUMENT_ENROLL_FAILURE}`
+          ),
+          "danger"
+        );
         break;
       case "DELETE_INSTRUMENT_FAILURE":
+        showToast(
+          I18n.t(
+            `idpay.configuration.failureStates.${InitiativeFailureType.INSTRUMENT_DELETE_FAILURE}`
+          ),
+          "danger"
+        );
         break;
     }
   };

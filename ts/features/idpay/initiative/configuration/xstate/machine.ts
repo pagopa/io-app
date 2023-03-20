@@ -805,7 +805,7 @@ const createIDPayInitiativeConfigurationMachine = () =>
               return {
                 instrumentStatuses: {
                   ...context.instrumentStatuses,
-                  [event.instrument.idWallet]: p.none
+                  [event.instrument.idWallet]: p.some(undefined)
                 }
               };
             case "DELETE_INSTRUMENT":
