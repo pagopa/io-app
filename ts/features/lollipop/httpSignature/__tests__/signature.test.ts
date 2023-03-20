@@ -8,7 +8,7 @@ import {
   customContentSignatureBases,
   CustomContentBaseSignature
 } from "../../utils/fetch";
-import { KeyInfo } from "../../../../utils/crypto";
+import { KeyInfo } from "../../utils/crypto";
 import { constants } from "../constants";
 import {
   generateSignatureInput,

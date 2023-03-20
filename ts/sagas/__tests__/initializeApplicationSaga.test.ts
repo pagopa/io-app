@@ -29,12 +29,14 @@ import {
 import { watchSessionExpiredSaga } from "../startup/watchSessionExpiredSaga";
 import { watchProfileEmailValidationChangedSaga } from "../watchProfileEmailValidationChangedSaga";
 import { checkAppHistoryVersionSaga } from "../startup/appVersionHistorySaga";
-import { generateLollipopKeySaga } from "../../features/lollipop/saga";
+import {
+  generateKeyInfo,
+  generateLollipopKeySaga
+} from "../../features/lollipop/saga";
 import {
   lollipopKeyTagSelector,
   lollipopPublicKeySelector
 } from "../../features/lollipop/store/reducers/lollipop";
-import { generateKeyInfo } from "../startup/generateCryptoKeyPair";
 
 const aSessionToken = "a_session_token" as SessionToken;
 

@@ -67,7 +67,7 @@ import {
 } from "../utils/api";
 import { PaginatedPublicMessagesCollection } from "../../definitions/backend/PaginatedPublicMessagesCollection";
 import { CreatedMessageWithContentAndAttachments } from "../../definitions/backend/CreatedMessageWithContentAndAttachments";
-import { KeyInfo } from "../utils/crypto";
+import { KeyInfo } from "../features/lollipop/utils/crypto";
 
 /**
  * We will retry for as many times when polling for a payment ID.
