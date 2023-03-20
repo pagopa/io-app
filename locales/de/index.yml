@@ -504,7 +504,7 @@ profile:
         bottomSheet:
           title: "Vorschau anzeigen"
           content: "Wenn diese Option aktiviert ist, werden bei Push-Benachrichtigungen der Absender und der Betreff von Nachrichten angezeigt, auch wenn der Bildschirm gesperrt ist. Diese Informationen werden vom Hersteller deines Betriebssystems und von den Apps der Drittanbieter, die möglicherweise ausgeführt werden, verarbeitet."
-          cta: "Ich habe verstanden!"
+          cta: "OK, habe verstanden!"
       error: "Bei deiner Anfrage ist ein Fehler aufgetreten"
 userMetadata:
   errors:
@@ -836,7 +836,7 @@ payment:
   IUV: "IUV"
   IUV_extended: "Einheitlicher Zahlungskodex (IUV)"
   notice: "Zahlungsmitteilung"
-  noticeCode: "Zahlungsmitteilungskodex"
+  noticeCode: "Zahlungskodex"
   recipientFiscalCode: "Steuernummer des Empfängers"
   paidConfirm: "Du hast {{amount}} gezahlt"
   details:
@@ -1136,9 +1136,9 @@ wallet:
   transactionHelpMessage:
     text1: "Probleme mit einer Zahlung oder dem Hinzufügen einer neuen Methode?"
     text2: "Konsultiere die Hilfe rechts oben auf dieser Seite."
-  transactionsLoadMore: "Vorherige laden"
-  transacionsLoadingMore: "Lade vorherige..."
-  transactionsShow: "Zeige Transaktionen"
+  transactionsLoadMore: "Weitere Transaktionen laden"
+  transacionsLoadingMore: "Lade weitere Transaktionen..."
+  transactionsShow: "Zeige deine Transaktionen"
   pickPaymentMethod:
     unavailable:
       title: "Diese Zahlungsmethode ist noch nicht verfügbar"
@@ -1221,7 +1221,7 @@ wallet:
     confirmCancelTitle: "Möchtest du diese Zahlung abbrechen?"
     confirmCancelPayment: "Diese Zahlung abbrechen"
     confirmContinuePayment: "Mit der Zahlung fortfahren"
-    cancelPaymentSuccess: "Die Zahlung dieser Zahlungsaufforderung wurde abgebrochen, du kannst sie in wenigen Minuten erneut bezahlen"
+    cancelPaymentSuccess: "Die Zahlung dieser Aufforderung wurde abgebrochen, du kannst sie in wenigen Minuten erneut bezahlen"
     accessibility:
       edit: "zum Bearbeiten antippen"
       transactionCosts: "{{cost}}, Transaktion {{psp}}"
@@ -1272,7 +1272,7 @@ wallet:
     amountInfo:
       title: "Siehst du einen anderen Betrag?"
       message: "pagoPA aktualisiert den Betrag automatisch, um sicherzustellen, dass du genau den Betrag bezahlst, den du schuldest und somit weitere Strafen oder Zinsen vermeidest"
-      cta: "Ok, verstanden"
+      cta: "OK, habe verstanden"
     loadingMessage:
       activation: "Wir benachrichtigen die Körperschaft, bitte warte ein paar Sekunden..."
       verification: "Wir überprüfen deine Zahlungsangaben..."
@@ -1291,7 +1291,7 @@ wallet:
     title: "Was möchtest du bezahlen?"
     info: "Gib die Daten ein, die auf der Zahlungsmitteilung angegeben sind."
     link: "Wo finde ich die Daten?"
-    noticeCode: "Zahlungsmitteilungskodex"
+    noticeCode: "Zahlungskodex"
     entityCode: "Steuernummer der Körperschaft"
     amount: "Betrag (€)"
     proceed: "Mit der Transaktion fortfahren"
@@ -1421,7 +1421,7 @@ wallet:
     chooser: "Bild aus der Galerie wählen"
     wrongQrCode: "QR-Code nicht gültig. Gib die Daten manuell ein."
     byCameraTitle: "QR-Code scannen"
-    cameraUsageInfo: "Scanne den QR-Code der Zahlungsmitteilung oder gib die Daten (Zahlungsmitteilungskodex und Steuernummer Körperschaft) manuell ein"
+    cameraUsageInfo: "Scanne den QR-Code der Zahlungsmitteilung oder gib die Daten (Zahlungskodex und Steuernummer Körperschaft) manuell ein"
     setManually: "Manuell eingeben"
     enroll_cta: "Um den QR-Code auf der Zahlungsmitteilung zu scannen, musst du IO zunächst erlauben, die Kamera zu verwenden. Du kannst dies über das Menü “Einstellungen” deines Geräts tun."
     readStorageDisclosure:
@@ -1698,7 +1698,7 @@ messageDetails:
     organizationName: "Gesendet von"
     departmentName: "Abteilung"
     serviceName: "Dienst"
-  dateSending: "Datum und Uhrzeit der Sendung:"
+  dateSending: "Datum und Uhrzeit:"
   sender: "Absender:"
   service: "Dienst:"
   question: "Ist etwas unklar?"
@@ -1802,7 +1802,7 @@ services:
   close: "Schließen"
   emptyListMessage: "Zurzeit sind keine Dienste verfügbar, zum Aktualisieren ziehe auf dem Bildschirm nach unten"
 serviceDetail:
-  fiscalCode: "Steuernr. Körperschaft"
+  fiscalCode: "Steuernummer Körperschaft"
   fiscalCodeAccessibility: "Steuernummer Körperschaft"
   contacts:
     title: "Dieser Dienst kann:"
@@ -1894,7 +1894,6 @@ features:
   euCovidCertificate:
     save:
       album: "IO"
-      noPermission: "Die IO-App hat vermutlich keine Berechtigung zum Speichern der Bilder. Bitte überprüfen Sie Ihre Geräteeinstellungen."
       ok: "Das Bild wurde auf Ihrem Smartphone gespeichert"
       bottomSheet:
         title: "Speichern Sie das Zertifikat"
