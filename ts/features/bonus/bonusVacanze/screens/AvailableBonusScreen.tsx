@@ -1,8 +1,9 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Content, View } from "native-base";
+import { Content } from "native-base";
 import * as React from "react";
 import {
+  View,
   Alert,
   FlatList,
   Linking,

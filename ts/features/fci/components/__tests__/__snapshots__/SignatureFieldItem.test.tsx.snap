@@ -3,27 +3,21 @@
 exports[`Test SignatureFieldItem component should render a SignatureFieldItem component with props correctly 1`] = `
 <View
   style={
-    Array [
-      Object {},
-      Object {
-        "borderBottomColor": "#E6E9F2",
-        "borderBottomWidth": 1,
-        "flexDirection": "column",
-        "marginBottom": 16,
-        "paddingBottom": 8,
-        "paddingTop": 16,
-      },
-    ]
+    Object {
+      "borderBottomColor": "#E6E9F2",
+      "borderBottomWidth": 1,
+      "flexDirection": "column",
+      "marginBottom": 16,
+      "paddingBottom": 8,
+      "paddingTop": 16,
+    }
   }
 >
   <View
     style={
-      Array [
-        Object {},
-        Object {
-          "flexDirection": "row",
-        },
-      ]
+      Object {
+        "flexDirection": "row",
+      }
     }
   >
     <Text
@@ -127,7 +121,6 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
   <View
     style={
       Array [
-        Object {},
         Object {
           "flexDirection": "row",
         },

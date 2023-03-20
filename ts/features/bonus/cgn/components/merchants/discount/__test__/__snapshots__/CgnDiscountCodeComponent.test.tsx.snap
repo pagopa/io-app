@@ -51,7 +51,6 @@ Array [
     onStartShouldSetResponder={[Function]}
     style={
       Array [
-        Object {},
         Object {
           "flexDirection": "row",
         },
