@@ -23,7 +23,7 @@ describe("IDPay Unsubscription machine", () => {
     jest.clearAllMocks();
   });
 
-  it("should transition to DISPLAYING_CONFIRMATION after start", () => {
+  it("should transition to AWAITING_CONFIRMATION after start", () => {
     // NOTE: initial state is START_UNSUBSCRIPTION but since it has an "always" transitions the transition occurs immediately
 
     const machine = createIDPayUnsubscriptionMachine({
@@ -31,7 +31,7 @@ describe("IDPay Unsubscription machine", () => {
       initiativeName: T_INITIATIVE_NAME
     });
 
-    expect(machine.initialState.value).toEqual("DISPLAYING_CONFIRMATION");
+    expect(machine.initialState.value).toEqual("AWAITING_CONFIRMATION");
   });
 
   it("should transition to LOADING_INITIATIVE_INFO after start", () => {
@@ -74,7 +74,7 @@ describe("IDPay Unsubscription machine", () => {
 
     await waitFor(() => expect(mockGetInitiativeInfo).toHaveBeenCalled());
 
-    expect(currentState.value).toEqual("DISPLAYING_CONFIRMATION");
+    expect(currentState.value).toEqual("AWAITING_CONFIRMATION");
   });
 
   it("should allow the citizen to complete the unsubscription on happy path", async () => {
@@ -114,7 +114,7 @@ describe("IDPay Unsubscription machine", () => {
       expect(mockNavigateToConfirmationScreen).toHaveBeenCalled()
     );
 
-    expect(currentState.value).toEqual("DISPLAYING_CONFIRMATION");
+    expect(currentState.value).toEqual("AWAITING_CONFIRMATION");
 
     service.send({
       type: "CONFIRM_UNSUBSCRIPTION"
@@ -174,7 +174,7 @@ describe("IDPay Unsubscription machine", () => {
       expect(mockNavigateToConfirmationScreen).toHaveBeenCalled()
     );
 
-    expect(currentState.value).toEqual("DISPLAYING_CONFIRMATION");
+    expect(currentState.value).toEqual("AWAITING_CONFIRMATION");
 
     service.send({
       type: "CONFIRM_UNSUBSCRIPTION"
