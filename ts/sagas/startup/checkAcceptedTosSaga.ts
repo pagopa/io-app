@@ -7,6 +7,8 @@ import { tosAccepted } from "../../store/actions/onboarding";
 import { profileUpsert } from "../../store/actions/profile";
 import { isProfileFirstOnBoarding } from "../../store/reducers/profile";
 import { ReduxSagaEffect } from "../../types/utils";
+import NavigationService from "../../navigation/NavigationService";
+import { CommonActions, StackActions } from "@react-navigation/native";
 
 export function* checkAcceptedTosSaga(
   userProfile: InitializedProfile
@@ -36,7 +38,10 @@ export function* checkAcceptedTosSaga(
     yield* call(navigateToTosScreen);
     // Wait the user accept the ToS
     yield* take(tosAccepted);
-
+    yield* call(
+      NavigationService.dispatchNavigationAction,
+      StackActions.popToTop()
+    );
     /**
      * The user profile is updated storing the last ToS version.
      * If the user logs in for the first time, the accepted tos version is stored once the profile in initialized

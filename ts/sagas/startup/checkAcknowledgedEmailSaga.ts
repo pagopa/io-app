@@ -9,6 +9,7 @@ import {
   isProfileFirstOnBoarding
 } from "../../store/reducers/profile";
 import { ReduxSagaEffect } from "../../types/utils";
+import { CommonActions, StackActions } from "@react-navigation/native";
 
 /**
  * Launch email saga that consists of:
@@ -51,4 +52,8 @@ export function* checkAcknowledgedEmailSaga(
   // Wait for the user to press "Continue" button after having checked out
   // his own email
   yield* take(emailAcknowledged);
+  yield* call(
+    NavigationService.dispatchNavigationAction,
+    StackActions.popToTop()
+  );
 }

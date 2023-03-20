@@ -9,6 +9,8 @@ import {
   getBiometricsType,
   isBiometricsValidType
 } from "../../utils/biometrics";
+import NavigationService from "../../navigation/NavigationService";
+import { CommonActions, StackActions } from "@react-navigation/native";
 
 /**
  * Query TouchID library to retrieve availability information. The ONLY cases
@@ -49,6 +51,11 @@ function* onboardFingerprintIfAvailableSaga(): Generator<
       preferenceFingerprintIsEnabledSaveSuccess({
         isFingerprintEnabled: true
       })
+    );
+
+    yield* call(
+      NavigationService.dispatchNavigationAction,
+      StackActions.popToTop()
     );
   } else {
     // Set Fingerprint usage system preference to false otherwise

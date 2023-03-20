@@ -90,6 +90,8 @@ import ROUTES from "./routes";
 import ServicesNavigator from "./ServicesNavigator";
 import { MainTabNavigator } from "./TabNavigator";
 import WalletNavigator from "./WalletNavigator";
+import { profileSelector } from "../store/reducers/profile";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 
 const Stack = createStackNavigator<AppParamsList>();
 
@@ -106,6 +108,8 @@ export const AppStackNavigator = (): React.ReactElement => {
   const maybeSessionToken = useIOSelector(sessionTokenSelector);
   const maybeSessionInfo = useIOSelector(sessionInfoSelector);
   const startupLoaded = useIOSelector(isStartupLoaded);
+
+  const userProfile = useIOSelector(profileSelector);
 
   React.useEffect(() => {
     dispatch(startApplicationInitialization());
@@ -126,7 +130,7 @@ export const AppStackNavigator = (): React.ReactElement => {
     );
   }
 
-  if (!startupLoaded) {
+  if (pot.isNone(userProfile) || pot.isLoading(userProfile)) {
     return <IngressScreen />;
   }
   return (
@@ -316,7 +320,7 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
     <NavigationContainer
       theme={IOTheme}
       ref={navigationRef}
-      linking={startupLoaded ? linking : undefined}
+      linking={linking}
       fallback={<LoadingSpinnerOverlay isLoading={true} />}
       onReady={() => {
         NavigationService.setNavigationReady();
@@ -325,7 +329,6 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
       onStateChange={async () => {
         const previousRouteName = routeNameRef.current;
         const currentRouteName = navigationRef.current?.getCurrentRoute()?.name;
-
         if (currentRouteName !== undefined) {
           dispatch(setDebugCurrentRouteName(currentRouteName));
           trackScreen(previousRouteName, currentRouteName);

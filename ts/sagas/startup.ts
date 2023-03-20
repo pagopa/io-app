@@ -595,6 +595,7 @@ export function* initializeApplicationSaga(): Generator<
       })
     );
   } else {
+    // yield* call(navigateToMainNavigatorAction);
     yield* put(startupLoadSuccess(true));
   }
 }
