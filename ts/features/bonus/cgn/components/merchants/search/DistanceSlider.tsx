@@ -1,4 +1,4 @@
-import { View } from "native-base";
+import { View } from "react-native";
 import * as React from "react";
 import Slider from "@react-native-community/slider";
 import { H5 } from "../../../../../../components/core/typography/H5";
