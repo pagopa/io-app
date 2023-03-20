@@ -1,9 +1,9 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { debounce } from "lodash";
-import { Item, View } from "native-base";
+import { Item } from "native-base";
 import * as React from "react";
 import { useCallback, useMemo } from "react";
-import { Keyboard, SafeAreaView } from "react-native";
+import { View, Keyboard, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 import { OfflineMerchant } from "../../../../../../definitions/cgn/merchants/OfflineMerchant";

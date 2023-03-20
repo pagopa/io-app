@@ -6,7 +6,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import JailMonkey from "jail-monkey";
-import { Content, Text as NBText, View as NBView } from "native-base";
+import { Content, Text as NBText } from "native-base";
 import * as React from "react";
 import { View, Alert, StyleSheet } from "react-native";
 import DeviceInfo from "react-native-device-info";
@@ -18,6 +18,7 @@ import ContextualInfo from "../../components/ContextualInfo";
 import { VSpacer } from "../../components/core/spacer/Spacer";
 import { Link } from "../../components/core/typography/Link";
 import { IOColors } from "../../components/core/variables/IOColors";
+import { IOStyles } from "../../components/core/variables/IOStyles";
 import { DevScreenButton } from "../../components/DevScreenButton";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { HorizontalScroll } from "../../components/HorizontalScroll";
@@ -278,7 +279,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
         )}
 
         <SectionStatusComponent sectionKey={"login"} />
-        <NBView footer={true}>
+        <View style={IOStyles.footer}>
           <ButtonDefaultOpacity
             block={true}
             primary={true}
@@ -354,7 +355,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
               ? I18n.t("authentication.landing.nospid-nocie")
               : I18n.t("authentication.landing.nospid")}
           </Link>
-        </NBView>
+        </View>
       </BaseScreenComponent>
     );
   };

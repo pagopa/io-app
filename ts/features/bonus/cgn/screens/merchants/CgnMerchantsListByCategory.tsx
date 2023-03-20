@@ -1,10 +1,9 @@
 import { Route, useNavigation, useRoute } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { View } from "native-base";
 import * as React from "react";
 import { useMemo } from "react";
-import { SafeAreaView, StyleSheet } from "react-native";
+import { View, SafeAreaView, StyleSheet } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 import { H1 } from "../../../../../components/core/typography/H1";

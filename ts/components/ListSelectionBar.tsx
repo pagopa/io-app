@@ -1,6 +1,6 @@
-import { Text as NBText, View } from "native-base";
+import { Text as NBText } from "native-base";
 import React from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import I18n from "../i18n";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import { IOColors } from "./core/variables/IOColors";

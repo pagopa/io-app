@@ -1,9 +1,9 @@
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Body, Container, Content, Right, View } from "native-base";
+import { Body, Container, Content, Right } from "native-base";
 import * as React from "react";
-import { Alert, Image, StyleSheet } from "react-native";
+import { View, Alert, Image, StyleSheet } from "react-native";
 import WebView, { WebViewMessageEvent } from "react-native-webview";
 import {
   WebViewErrorEvent,
