@@ -74,11 +74,19 @@ const OperationIcon = ({ operation }: OperationComponentProps) => {
 const OperationAmount = ({ operation }: OperationComponentProps) => {
   switch (operation.operationType) {
     case TransactionOperationTypeEnum.REVERSAL:
+      return (
+        <H4>{`-${formatNumberAmount(
+          Math.abs(operation.accrued),
+          false
+        )} €`}</H4>
+      );
     case TransactionOperationTypeEnum.TRANSACTION:
-      const amount = -operation.accrued || 0; // BE is returning amounts with opposite signs
-      const prefix = amount < 0 ? "" : "+";
-
-      return <H4>{`${prefix}${formatNumberAmount(amount, false)} €`}</H4>;
+      return (
+        <H4>{`+${formatNumberAmount(
+          Math.abs(operation.accrued),
+          false
+        )} €`}</H4>
+      );
     case RefundOperationTypeEnum.PAID_REFUND:
       return (
         <H4 color="greenLight">
