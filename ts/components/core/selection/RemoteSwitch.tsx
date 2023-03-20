@@ -1,7 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { View } from "native-base";
 import * as React from "react";
-import { ActivityIndicator } from "react-native";
+import { View, ActivityIndicator } from "react-native";
 import I18n from "../../../i18n";
 import { TestID } from "../../../types/WithTestID";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";

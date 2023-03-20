@@ -3,9 +3,9 @@
  */
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { View } from "native-base";
 import * as React from "react";
 import {
+  View,
   Animated,
   Dimensions,
   Platform,
