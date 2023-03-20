@@ -1,6 +1,5 @@
-import { View } from "native-base";
 import * as React from "react";
-import { SafeAreaView, ScrollView } from "react-native";
+import { View, SafeAreaView, ScrollView } from "react-native";
 import { FamilyMember } from "../../../../../../../definitions/bonus_vacanze/FamilyMember";
 import { VSpacer } from "../../../../../../components/core/spacer/Spacer";
 import ItemSeparatorComponent from "../../../../../../components/ItemSeparatorComponent";

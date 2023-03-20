@@ -1,7 +1,6 @@
-import { View } from "native-base";
 import * as React from "react";
 import { createRef, useEffect } from "react";
-import { Platform, SafeAreaView } from "react-native";
+import { View, Platform, SafeAreaView } from "react-native";
 import WebView from "react-native-webview";
 import {
   WebViewErrorEvent,

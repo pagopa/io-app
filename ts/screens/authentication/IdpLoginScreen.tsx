@@ -1,10 +1,9 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Text as NBText, View } from "native-base";
 import * as React from "react";
 import { useCallback, useMemo, useState } from "react";
-import { Image, Linking, StyleSheet } from "react-native";
+import { Image, Linking, StyleSheet, Text, View } from "react-native";
 import { WebView } from "react-native-webview";
 import {
   WebViewErrorEvent,
@@ -85,6 +84,7 @@ const styles = StyleSheet.create({
   },
   errorTitle: {
     fontSize: 20,
+    fontWeight: "bold",
     marginTop: 10
   },
   errorBody: {
@@ -269,20 +269,20 @@ const IdpLoginScreen = (props: Props) => {
       return (
         <View style={styles.errorContainer}>
           <Image source={brokenLinkImage} resizeMode="contain" />
-          <NBText style={styles.errorTitle} bold={true}>
+          <Text style={styles.errorTitle}>
             {I18n.t(
               errorType === ErrorType.LOADING_ERROR
                 ? "authentication.errors.network.title"
                 : "authentication.errors.login.title"
             )}
-          </NBText>
+          </Text>
 
           {errorType === ErrorType.LOGIN_ERROR && (
-            <NBText style={styles.errorBody}>
+            <Text style={styles.errorBody}>
               {I18n.t(errorTranslationKey, {
                 defaultValue: I18n.t("authentication.errors.spid.unknown")
               })}
-            </NBText>
+            </Text>
           )}
 
           <View style={styles.errorButtonsContainer}>
@@ -293,7 +293,7 @@ const IdpLoginScreen = (props: Props) => {
               light={true}
               bordered={true}
             >
-              <NBText>{I18n.t("global.buttons.cancel")}</NBText>
+              <Text>{I18n.t("global.buttons.cancel")}</Text>
             </ButtonDefaultOpacity>
             <ButtonDefaultOpacity
               onPress={onRetryButtonPressed}
@@ -301,7 +301,7 @@ const IdpLoginScreen = (props: Props) => {
               block={true}
               primary={true}
             >
-              <NBText>{I18n.t("global.buttons.retry")}</NBText>
+              <Text>{I18n.t("global.buttons.retry")}</Text>
             </ButtonDefaultOpacity>
           </View>
         </View>
