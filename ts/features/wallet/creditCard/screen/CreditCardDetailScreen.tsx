@@ -56,28 +56,31 @@ const CreditCardDetailScreen: React.FunctionComponent<Props> = props => {
     }
   }, [storeCreditCard, loadIdpayInitiatives]);
 
-  const renderContent = () =>
-    storeCreditCard ? (
-      <BasePaymentMethodScreen
-        paymentMethod={storeCreditCard}
-        card={
-          <CreditCardComponent
-            testID={"CreditCardComponent"}
-            creditCard={storeCreditCard}
-          />
-        }
-        content={<PaymentMethodFeatures paymentMethod={storeCreditCard} />}
-      />
-    ) : !walletExisted ? (
-      <WorkunitGenericFailure />
-    ) : null;
+ 
 
   return (
     <LoadingSpinnerOverlay
       isLoading={areIdPayInitiativesLoading}
       loadingOpacity={100}
     >
-      {areIdPayInitiativesLoading ? null : renderContent()}
+      {storeCreditCard ? (
+        <BasePaymentMethodScreen
+          paymentMethod={storeCreditCard}
+          card={
+            <CreditCardComponent
+              testID={"CreditCardComponent"}
+              creditCard={storeCreditCard}
+            />
+          }
+          content={
+            areIdPayInitiativesLoading ? null : (
+              <PaymentMethodFeatures paymentMethod={storeCreditCard} />
+            )
+          }
+        />
+      ) : !walletExisted ? (
+        <WorkunitGenericFailure />
+      ) : null}
     </LoadingSpinnerOverlay>
   );
 };

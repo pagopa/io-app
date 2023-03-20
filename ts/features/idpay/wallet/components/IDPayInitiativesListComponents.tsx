@@ -18,7 +18,6 @@ import {
 } from "../store/actions";
 import { idPayInitiativeAwaitingUpdateSelector } from "../store/reducers";
 
-type ValidStatus = typeof StatusEnum.ACTIVE | typeof StatusEnum.INACTIVE;
 const styles = StyleSheet.create({
   badge: {
     height: 24,
@@ -55,55 +54,25 @@ type ListItemProps = {
   item: InitiativesStatusDTO;
   idWallet: string;
 };
+
 export const IDPayInitiativeListItem = ({ item, idWallet }: ListItemProps) => {
-  const dispatch = useIODispatch();
-  const isAwaitingUpdate = useIOSelector(state =>
-    idPayInitiativeAwaitingUpdateSelector(state, item.initiativeId)
-  );
-  const updateInitiativeStatus = (status: ValidStatus) => {
-    const isItemActiveAndValid =
-      status === StatusEnum.ACTIVE && item.idInstrument !== undefined;
-    if (isItemActiveAndValid) {
-      dispatch(
-        idpayInitiativesInstrumentDelete.request({
-          // checked in isItemActiveAndValid
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          instrumentId: item.idInstrument!,
-          initiativeId: item.initiativeId
-        })
-      );
-    } else {
-      dispatch(
-        idpayInitiativesInstrumentEnroll.request({
-          idWallet,
-          initiativeId: item.initiativeId
-        })
-      );
-    }
-  };
+  const { initiativeName } = item;
 
   return (
     <NBlistItem style={{ justifyContent: "space-between", paddingRight: 0 }}>
-      <H4>{item.initiativeName}</H4>
-      <SwitchOrStatusLabel
-        status={item.status}
-        onValueChangeFunction={updateInitiativeStatus}
-        isAwaitingUpdate={isAwaitingUpdate}
-      />
+      <H4>{initiativeName}</H4>
+      <SwitchOrStatusLabel item={item} idWallet={idWallet} />
     </NBlistItem>
   );
 };
 
 type SwitchOrStatusLabelProps = {
-  status: StatusEnum;
-  onValueChangeFunction: (status: ValidStatus) => void;
-  isAwaitingUpdate: boolean | undefined;
+  item: InitiativesStatusDTO;
+  idWallet: string;
 };
-const SwitchOrStatusLabel = ({
-  status,
-  onValueChangeFunction,
-  isAwaitingUpdate
-}: SwitchOrStatusLabelProps) => {
+const SwitchOrStatusLabel = ({ item, idWallet }: SwitchOrStatusLabelProps) => {
+  const { updateInitiativeStatus, status, isAwaitingUpdate } =
+    useInitiativeStatusData(item, idWallet);
   switch (status) {
     case StatusEnum.ACTIVE:
     case StatusEnum.INACTIVE:
@@ -114,7 +83,7 @@ const SwitchOrStatusLabel = ({
       return (
         // we are passing status here because we are sure it is either ACTIVE or INACTIVE
         <RemoteSwitch
-          onValueChange={() => onValueChangeFunction(status)}
+          onValueChange={() => updateInitiativeStatus(status)}
           value={switchValue}
         />
       );
@@ -142,12 +111,50 @@ const getRemoteSwitchValue = (
   const isItemActivePot = pot.some(isItemActive);
   switch (isAwaitingUpdate) {
     case undefined:
-      return isItemActivePot;
+      // return isItemActivePot;
+      break;
     case true:
-      return pot.toLoading(isItemActivePot);
+      pot.toLoading(isItemActivePot);
+      break;
     case false:
-      return pot.toUpdating(isItemActivePot, !isItemActive);
+      pot.toUpdating(isItemActivePot, !isItemActive);
+      break;
     default:
       return pot.none;
   }
+  return isItemActivePot;
+};
+
+const useInitiativeStatusData = (
+  item: InitiativesStatusDTO,
+  idWallet: string
+) => {
+  const dispatch = useIODispatch();
+  const isAwaitingUpdate = useIOSelector(state =>
+    idPayInitiativeAwaitingUpdateSelector(state, initiativeId)
+  );
+  const { idInstrument, initiativeId, status } = item;
+
+  type ValidStatus = typeof StatusEnum.ACTIVE | typeof StatusEnum.INACTIVE;
+  const updateInitiativeStatus = (status: ValidStatus) => {
+    const isItemActiveAndValid =
+      status === StatusEnum.ACTIVE && idInstrument !== undefined;
+    if (isItemActiveAndValid) {
+      dispatch(
+        idpayInitiativesInstrumentDelete.request({
+          instrumentId: idInstrument,
+          initiativeId
+        })
+      );
+    } else {
+      dispatch(
+        idpayInitiativesInstrumentEnroll.request({
+          idWallet,
+          initiativeId
+        })
+      );
+    }
+  };
+
+  return { updateInitiativeStatus, status, isAwaitingUpdate };
 };

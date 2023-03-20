@@ -52,6 +52,7 @@ const PaymentMethodInitiatives = (props: Props): React.ReactElement | null => {
     const timer = setInterval(
       () => loadIdpayInitiatives(idWalletString, true),
       areInitiativesInError ? 6000 : 3000
+      // TODO::add exponential backoff see #IODPAY-176
     );
     return () => clearInterval(timer);
   }, [areInitiativesInError, idWalletString, loadIdpayInitiatives]);
