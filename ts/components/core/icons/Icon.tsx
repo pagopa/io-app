@@ -49,18 +49,18 @@ import IconCoggle from "./svg/IconCoggle";
 import IconInfo from "./svg/IconInfo";
 import IconInfoFilled from "./svg/IconInfoFilled";
 import IconNotice from "./svg/IconNotice";
+import IconNoticeFilled from "./svg/IconNoticeFilled";
 import IconError from "./svg/IconError";
 import IconReload from "./svg/IconReload";
 import IconHistory from "./svg/IconHistory";
 import IconEdit from "./svg/IconEdit";
 import IconBattery from "./svg/IconBattery";
 import IconTrashcan from "./svg/IconTrashcan";
-import IconTrashcanAlt from "./svg/IconTrashcanAlt";
 import IconCalendar from "./svg/IconCalendar";
-import IconCalendarAlt from "./svg/IconCalendarAlt";
 import IconProfileExperiment from "./svg/IconProfileExperiment";
 import IconMagicWand from "./svg/IconMagicWand";
 import IconProfile from "./svg/IconProfile";
+import IconProfileFilled from "./svg/IconProfileFilled";
 import IconProfileAlt from "./svg/IconProfileAlt";
 import IconStarFilled from "./svg/IconStarFilled";
 import IconStarEmpty from "./svg/IconStarEmpty";
@@ -156,6 +156,20 @@ import LegIconAmount from "./svg/LegIconAmount";
 import LegIconCoggle from "./svg/LegIconCoggle";
 import LegIconLocation from "./svg/LegIconLocation";
 import LegIconWarning from "./svg/LegIconWarning";
+import LegIconNotice from "./svg/LegIconNotice";
+import LegIconHistory from "./svg/LegIconHistory";
+import LegIconEdit from "./svg/LegIconEdit";
+import LegIconBattery from "./svg/LegIconBattery";
+import LegIconTrashcan from "./svg/LegIconTrashcan";
+import LegIconCalendar from "./svg/LegIconCalendar";
+import LegIconProfile from "./svg/LegIconProfile";
+import LegIconProfileExperiment from "./svg/LegIconProfileExperiment";
+import LegIconMagicWand from "./svg/LegIconMagicWand";
+import LegIconStarFilled from "./svg/LegIconStarFilled";
+import LegIconStarEmpty from "./svg/LegIconStarEmpty";
+import LegIconSwitchOff from "./svg/LegIconSwitchOff";
+import LegIconDotMenu from "./svg/LegIconDotMenu";
+import LegIconBarcode from "./svg/LegIconBarcode";
 
 export const IOIcons = {
   spid: IconSpid,
@@ -247,28 +261,42 @@ export const IOIcons = {
   warningFilled: IconWarningFilled,
   legWarning: LegIconWarning /* io-warning */,
   notice: IconNotice /* io-notice */,
+  noticeFilled: IconNoticeFilled,
+  legNotice: LegIconNotice,
   info: IconInfo /* io-info */,
   infoFilled: IconInfoFilled,
   error: IconError /* io-error */,
   errorFilled: IconErrorFilled,
   reload: IconReload /* io-reload */,
   history: IconHistory,
-  edit: IconEdit /* io-edit */,
+  legHistory: LegIconHistory,
+  edit: IconEdit,
+  legEdit: LegIconEdit /* io-edit */,
   battery: IconBattery,
+  legBattery: LegIconBattery,
   trashcan: IconTrashcan,
-  trashcanAlt: IconTrashcanAlt /* io-trash */,
-  calendar: IconCalendar /* io-calendar */,
-  calendarAlt: IconCalendarAlt /* io-calendario */,
+  legTrashcan: LegIconTrashcan /* io-trash */,
+  calendar: IconCalendar,
+  legCalendar: LegIconCalendar /* io-calendar */ /* io-calendario */,
   profile: IconProfile,
+  profileFilled: IconProfileFilled,
   profileAlt: IconProfileAlt /* io-titolare */,
-  profileExperiment: IconProfileExperiment /* io-profilo-exp */,
+  legProfile: LegIconProfile,
+  profileExperiment: IconProfileExperiment,
+  legProfileExperiment: LegIconProfileExperiment /* io-profilo-exp */,
   magicWand: IconMagicWand,
-  starFilled: IconStarFilled /* io-filled-star */,
-  starEmpty: IconStarEmpty /* io-empty-star */,
+  legMagicWand: LegIconMagicWand,
+  starFilled: IconStarFilled,
+  starEmpty: IconStarEmpty,
+  legStarFilled: LegIconStarFilled /* io-filled-star */,
+  legStarEmpty: LegIconStarEmpty /* io-empty-star */,
   switchOff: IconSwitchOff,
+  legSwitchOff: LegIconSwitchOff,
   deviceSignal: IconDeviceSignal,
-  dotMenu: IconDotMenu /* io-more */,
+  dotMenu: IconDotMenu,
+  legDotMenu: LegIconDotMenu /* io-more */,
   barcode: IconBarcode,
+  legBarcode: LegIconBarcode,
   save: IconSave /* io-save */,
   login: IconLogin,
   ladybug: IconLadybug,
@@ -421,6 +449,23 @@ const {
   coggle,
   locationiOS,
   locationAndroid,
+  notice,
+  noticeFilled,
+  reload,
+  history,
+  edit,
+  battery,
+  trashcan,
+  calendar,
+  profile,
+  profileFilled,
+  profileExperiment,
+  magicWand,
+  starEmpty,
+  starFilled,
+  switchOff,
+  dotMenu,
+  barcode,
   success,
   errorFilled,
   warningFilled,
@@ -474,6 +519,23 @@ export const IOIconsNew = {
   locationiOS,
   locationAndroid,
   coggle,
+  notice,
+  noticeFilled,
+  reload,
+  history,
+  edit,
+  battery,
+  trashcan,
+  calendar,
+  profile,
+  profileFilled,
+  profileExperiment,
+  magicWand,
+  starEmpty,
+  starFilled,
+  switchOff,
+  dotMenu,
+  barcode,
   success,
   errorFilled,
   warningFilled,

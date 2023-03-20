@@ -2,15 +2,15 @@ import React from "react";
 import { Svg, Path } from "react-native-svg";
 import { SVGIconProps } from "../Icon";
 
-const IconDotMenu = ({ size, style }: SVGIconProps) => (
+const LegIconBarcode = ({ size, style }: SVGIconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" style={style}>
     <Path
       fillRule="evenodd"
       clipRule="evenodd"
-      d="M12 6c1.1046 0 2-.89543 2-2s-.8954-2-2-2-2 .89543-2 2 .8954 2 2 2Zm0 8c1.1046 0 2-.8954 2-2s-.8954-2-2-2-2 .8954-2 2 .8954 2 2 2Zm2 6c0 1.1046-.8954 2-2 2s-2-.8954-2-2 .8954-2 2-2 2 .8954 2 2Z"
+      d="M2.222 5a1 1 0 0 1 1-1h2v16h-2a1 1 0 0 1-1-1V5Zm6-1h3v16h-3V4Zm8 0h3v16h-3V4Zm5 0h-1v16h1a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1Zm-14 0h-1v16h1V4Zm5 0h1v16h-1V4Zm3 0h-1v16h1V4Z"
       fill="currentColor"
     />
   </Svg>
 );
 
-export default IconDotMenu;
+export default LegIconBarcode;
