@@ -1,4 +1,3 @@
-import { Badge } from "native-base";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import Animated, {
@@ -33,7 +32,10 @@ const styles = StyleSheet.create({
     flex: 1
   },
   badge: {
-    backgroundColor: IOColors.blue
+    backgroundColor: IOColors.blue,
+    borderRadius: 24,
+    paddingVertical: 2,
+    paddingHorizontal: 8
   },
   bonusLogoContainer: {
     backgroundColor: IOColors.white,
@@ -48,8 +50,7 @@ const styles = StyleSheet.create({
   bottomCardSection: {
     flex: 1,
     flexDirection: "row",
-    justifyContent: "space-evenly",
-    alignItems: "flex-end"
+    justifyContent: "center"
   },
   bonusStatusContainer: {
     flexDirection: "row",
@@ -113,7 +114,7 @@ const InitiativeCardComponent = (props: Props) => {
 
   const dateString = formatDateAsLocal(endDate, true);
   const remainingBonusAmountPercentage =
-    amount !== 0 && amount !== undefined
+    amount !== undefined && amount !== 0
       ? (remainingAmount / amount) * 100.0
       : 100.0;
   return (
@@ -126,13 +127,13 @@ const InitiativeCardComponent = (props: Props) => {
         <Body>{/* the ministry would go here */}</Body>
         <VSpacer size={8} />
         <View style={styles.bonusStatusContainer}>
-          <Badge style={styles.badge}>
+          <View style={styles.badge}>
             <LabelSmall color="white">
               {I18n.t(
                 `idpay.initiative.details.initiativeCard.statusLabels.${status}`
               )}
             </LabelSmall>
-          </Badge>
+          </View>
           <HSpacer size={8} />
           <LabelSmall color="bluegreyDark">
             {I18n.t(
@@ -147,7 +148,7 @@ const InitiativeCardComponent = (props: Props) => {
         </View>
       </View>
 
-      <VSpacer size={48} />
+      <VSpacer size={32} />
       {/* bottom part */}
 
       <View style={styles.bottomCardSection}>
@@ -164,6 +165,7 @@ const InitiativeCardComponent = (props: Props) => {
             percentage={remainingBonusAmountPercentage}
           />
         </View>
+        <HSpacer size={48} />
         <View style={styles.alignCenter}>
           <LabelSmall color="bluegreyDark" weight="Regular">
             {I18n.t("idpay.initiative.details.initiativeCard.toRefund")}
@@ -171,8 +173,6 @@ const InitiativeCardComponent = (props: Props) => {
           <H1 style={!isInitiativeConfigured ? styles.consumedOpacity : {}}>
             {formatNumberRightSign(toBeRepaidAmount)}
           </H1>
-          <VSpacer size={4} />
-          <VSpacer size={8} />
         </View>
       </View>
     </View>
