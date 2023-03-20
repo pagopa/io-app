@@ -29,7 +29,10 @@ describe("Test FciDataSharing screen", () => {
   });
   it("should render the screen with the right title", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
-    const { component } = renderComponent(globalState);
+    const { component } = renderComponent({
+      ...globalState,
+      profile: pot.some(mockedProfile)
+    });
     expect(component).toBeTruthy();
     expect(component).not.toBeNull();
     expect(
@@ -38,7 +41,10 @@ describe("Test FciDataSharing screen", () => {
   });
   it("should render the list of user data", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
-    const { component } = renderComponent(globalState);
+    const { component } = renderComponent({
+      ...globalState,
+      profile: pot.some(mockedProfile)
+    });
     expect(component).toBeTruthy();
     expect(
       component.getByTestId("FciDataSharingScreenListTestID")
