@@ -1,7 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { View } from "native-base";
+import { View } from "react-native";
 import * as React from "react";
 import { useEffect, useRef } from "react";
 import { connect } from "react-redux";

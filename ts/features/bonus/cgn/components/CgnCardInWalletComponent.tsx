@@ -1,7 +1,12 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { View } from "native-base";
 import * as React from "react";
-import { Image, ImageBackground, Platform, StyleSheet } from "react-native";
+import {
+  View,
+  Image,
+  ImageBackground,
+  Platform,
+  StyleSheet
+} from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import cgnBackground from "../../../../../img/bonus/cgn/cgn-preview.png";
