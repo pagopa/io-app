@@ -1,4 +1,4 @@
-import { View } from "native-base";
+import { View } from "react-native";
 import React from "react";
 import variables from "../../theme/variables";
 import CustomBadge from "./CustomBadge";
