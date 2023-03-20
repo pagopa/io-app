@@ -128,7 +128,7 @@ export default (): Theme => ({
       ? variables.appHeaderHeight + 18
       : variables.appHeaderHeight,
   borderBottomWidth: variables.headerBorderBottomWidth,
-  paddingLeft: variables.appHeaderPaddingHorizontal,
+  paddingLeft: variables.titleHeaderPaddingLeft,
   paddingRight: variables.appHeaderPaddingHorizontal,
   /* iOS */
   // shadowOpacity: 0,

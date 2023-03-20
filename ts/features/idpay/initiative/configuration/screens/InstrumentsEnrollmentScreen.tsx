@@ -30,6 +30,7 @@ import {
   selectIsInstrumentsOnlyMode,
   selectWalletInstruments
 } from "../xstate/selectors";
+import { IOColors } from "../../../../../components/core/variables/IOColors";
 
 type InstrumentsEnrollmentScreenRouteParams = {
   initiativeId?: string;
@@ -136,6 +137,7 @@ const InstrumentsEnrollmentScreen = () => {
         onPress: handleEnrollConfirm,
         block: true,
         bordered: false,
+        labelColor: IOColors.white,
         title: I18n.t(
           "idpay.configuration.instruments.enrollmentSheet.buttons.activate"
         )
@@ -190,6 +192,7 @@ const InstrumentsEnrollmentScreen = () => {
         rightButton={{
           title: I18n.t("idpay.configuration.instruments.buttons.continue"),
           disabled: isUpserting || !hasSelectedInstruments,
+          labelColor: IOColors.white,
           onPress: handleContinueButton
         }}
       />

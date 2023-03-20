@@ -1,9 +1,8 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
-import { View } from "native-base";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, Alert, StyleSheet } from "react-native";
+import { View, ActivityIndicator, Alert, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { InfoBox } from "../../../../../../../components/box/InfoBox";

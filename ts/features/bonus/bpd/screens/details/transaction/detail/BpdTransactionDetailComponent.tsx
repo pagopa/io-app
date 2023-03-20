@@ -1,6 +1,6 @@
-import { Badge, Text as NBText, View } from "native-base";
+import { Badge, Text as NBText } from "native-base";
 import * as React from "react";
-import { Image, StyleSheet } from "react-native";
+import { View, Image, StyleSheet } from "react-native";
 import CopyButtonComponent from "../../../../../../../components/CopyButtonComponent";
 import {
   HSpacer,
