@@ -548,18 +548,24 @@ const createIDPayInitiativeConfigurationMachine = () =>
                  */
                 ENROLL_INSTRUMENT: {
                   actions: [
-                    "updateInstrumentStatus",
+                    "updateInstrumentEnrollStatus",
                     "forwardToInstrumentsEnrollmentService"
                   ]
                 },
 
+                /**
+                 * This event is called by instrumentsEnrollmentService when an instrument is enrolled successfully
+                 */
                 ENROLL_INSTRUMENT_SUCCESS: {
-                  actions: "updateInstrumentStatus"
+                  actions: "updateInstrumentEnrollStatusSuccess"
                 },
 
+                /**
+                 * This event is called by instrumentsEnrollmentService when there is a failure in the instrument enrollment
+                 */
                 ENROLL_INSTRUMENT_FAILURE: {
                   actions: [
-                    "updateInstrumentStatus",
+                    "updateInstrumentEnrollStatusFailure",
                     "showInstrumentFailureToast"
                   ]
                 },
@@ -569,18 +575,24 @@ const createIDPayInitiativeConfigurationMachine = () =>
                  */
                 DELETE_INSTRUMENT: {
                   actions: [
-                    "updateInstrumentStatus",
+                    "updateInstrumentDeleteStatus",
                     "forwardToInstrumentsEnrollmentService"
                   ]
                 },
 
+                /**
+                 * This event is called by instrumentsEnrollmentService when an instrument is deactivated successfully
+                 */
                 DELETE_INSTRUMENT_SUCCESS: {
-                  actions: "updateInstrumentStatus"
+                  actions: "updateInstrumentDeleteStatusSuccess"
                 },
 
+                /**
+                 * This event is called by instrumentsEnrollmentService when there is a failure in the instrument deactivation
+                 */
                 DELETE_INSTRUMENT_FAILURE: {
                   actions: [
-                    "updateInstrumentStatus",
+                    "updateInstrumentDeleteStatusFailure",
                     "showInstrumentFailureToast"
                   ]
                 },
@@ -787,103 +799,119 @@ const createIDPayInitiativeConfigurationMachine = () =>
           initiativeInstruments: event.data,
           failure: undefined
         })),
-        updateInstrumentStatuses: assign((context, _) => ({
-          instrumentStatuses:
+        updateInstrumentStatuses: assign((context, _) => {
+          const updatedStatuses =
             context.initiativeInstruments.reduce<InstrumentStatusByIdWallet>(
               (acc, instrument) => {
-                if (instrument.idWallet !== undefined) {
-                  return {
-                    ...acc,
-                    [instrument.idWallet]: p.some(instrument.status)
-                  };
+                if (instrument.idWallet === undefined) {
+                  return acc;
                 }
-                return acc;
+
+                const currentStatus = acc[instrument.idWallet];
+
+                if (currentStatus !== undefined && p.isLoading(currentStatus)) {
+                  // Instrument is updating, its status will be updated by 'updateInstrumentStatus' action
+                  return acc;
+                }
+
+                return {
+                  ...acc,
+                  [instrument.idWallet]: p.some(instrument.status)
+                };
               },
-              {}
-            )
-        })),
+              context.instrumentStatuses
+            );
+
+          return {
+            instrumentStatuses: updatedStatuses
+          };
+        }),
         forwardToInstrumentsEnrollmentService: forwardTo(
           "instrumentsEnrollmentService"
         ),
-        updateInstrumentStatus: assign((context, event) => {
-          switch (event.type) {
-            case "ENROLL_INSTRUMENT":
-              return {
-                instrumentStatuses: {
-                  ...context.instrumentStatuses,
-                  [event.instrument.idWallet]: p.noneLoading
-                }
-              };
-            case "ENROLL_INSTRUMENT_SUCCESS":
-              const currentEnrollStatus =
-                context.instrumentStatuses[event.instrument.idWallet];
-
-              if (p.isSome(currentEnrollStatus)) {
-                // No need to update instrument status
-                return {};
-              }
-
-              return {
-                instrumentStatuses: {
-                  ...context.instrumentStatuses,
-                  [event.instrument.idWallet]: p.some(
-                    InstrumentStatusEnum.PENDING_ENROLLMENT_REQUEST
-                  )
-                }
-              };
-            case "ENROLL_INSTRUMENT_FAILURE":
-              return {
-                instrumentStatuses: {
-                  ...context.instrumentStatuses,
-                  [event.instrument.idWallet]: p.some(undefined)
-                }
-              };
-            case "DELETE_INSTRUMENT":
-              if (event.instrument.idWallet === undefined) {
-                return {};
-              }
-
-              return {
-                instrumentStatuses: {
-                  ...context.instrumentStatuses,
-                  [event.instrument.idWallet]: p.noneLoading
-                }
-              };
-            case "DELETE_INSTRUMENT_SUCCESS":
-              if (event.instrument.idWallet === undefined) {
-                return {};
-              }
-
-              const currentDeleteStatus =
-                context.instrumentStatuses[event.instrument.idWallet];
-
-              if (p.isSome(currentDeleteStatus)) {
-                // No need to update instrument status
-                return {};
-              }
-
-              return {
-                instrumentStatuses: {
-                  ...context.instrumentStatuses,
-                  [event.instrument.idWallet]: p.some(
-                    InstrumentStatusEnum.PENDING_DEACTIVATION_REQUEST
-                  )
-                }
-              };
-            case "DELETE_INSTRUMENT_FAILURE":
-              if (event.instrument.idWallet === undefined) {
-                return {};
-              }
-
-              return {
-                instrumentStatuses: {
-                  ...context.instrumentStatuses,
-                  [event.instrument.idWallet]: p.some(
-                    InstrumentStatusEnum.ACTIVE
-                  )
-                }
-              };
+        updateInstrumentEnrollStatus: assign((context, event) => ({
+          instrumentStatuses: {
+            ...context.instrumentStatuses,
+            [event.instrument.idWallet]: p.noneLoading
           }
+        })),
+        updateInstrumentEnrollStatusSuccess: assign((context, event) => {
+          const currentEnrollStatus =
+            context.instrumentStatuses[event.instrument.idWallet];
+
+          if (p.isSome(currentEnrollStatus)) {
+            // No need to update instrument status
+            return {};
+          }
+
+          return {
+            instrumentStatuses: {
+              ...context.instrumentStatuses,
+              [event.instrument.idWallet]: p.some(
+                InstrumentStatusEnum.PENDING_ENROLLMENT_REQUEST
+              )
+            }
+          };
+        }),
+        updateInstrumentEnrollStatusFailure: assign((context, event) => {
+          if (event.instrument.idWallet === undefined) {
+            return {};
+          }
+
+          const {
+            [event.instrument.idWallet]: _removedStatus,
+            ...updatedStatuses
+          } = context.instrumentStatuses;
+
+          return {
+            instrumentStatuses: updatedStatuses
+          };
+        }),
+        updateInstrumentDeleteStatus: assign((context, event) => {
+          if (event.instrument.idWallet === undefined) {
+            return {};
+          }
+
+          return {
+            instrumentStatuses: {
+              ...context.instrumentStatuses,
+              [event.instrument.idWallet]: p.noneLoading
+            }
+          };
+        }),
+        updateInstrumentDeleteStatusSuccess: assign((context, event) => {
+          if (event.instrument.idWallet === undefined) {
+            return {};
+          }
+
+          const currentDeleteStatus =
+            context.instrumentStatuses[event.instrument.idWallet];
+
+          if (p.isSome(currentDeleteStatus)) {
+            // No need to update instrument status
+            return {};
+          }
+
+          return {
+            instrumentStatuses: {
+              ...context.instrumentStatuses,
+              [event.instrument.idWallet]: p.some(
+                InstrumentStatusEnum.PENDING_DEACTIVATION_REQUEST
+              )
+            }
+          };
+        }),
+        updateInstrumentDeleteStatusFailure: assign((context, event) => {
+          if (event.instrument.idWallet === undefined) {
+            return {};
+          }
+
+          return {
+            instrumentStatuses: {
+              ...context.instrumentStatuses,
+              [event.instrument.idWallet]: p.some(InstrumentStatusEnum.ACTIVE)
+            }
+          };
         }),
         skipInstruments: assign((_, __) => ({
           areInstrumentsSkipped: true
