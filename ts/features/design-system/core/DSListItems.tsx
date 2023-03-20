@@ -1,4 +1,3 @@
-// import { View as NBView, Text as NBText } from "native-base";
 import * as React from "react";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 

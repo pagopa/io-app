@@ -5,9 +5,10 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Content, Text as NBText, View } from "native-base";
+import { Content, Text as NBText } from "native-base";
 import * as React from "react";
 import {
+  View,
   Alert,
   BackHandler,
   NativeEventSubscription,
@@ -42,6 +43,7 @@ import { GlobalState } from "../store/reducers/types";
 import customVariables from "../theme/variables";
 import { isOnboardingCompleted } from "../utils/navigation";
 import { VSpacer } from "./core/spacer/Spacer";
+import { IOStyles } from "./core/variables/IOStyles";
 import { ContextualHelpPropsMarkdown } from "./screens/BaseScreenComponent";
 import TopScreenComponent, {
   TopScreenComponentProps
@@ -308,7 +310,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     return (
       <>
         <SectionStatusComponent sectionKey={"email_validation"} />
-        <View footer={true}>
+        <View style={IOStyles.footer}>
           <BlockButtons
             type={"SingleButton"}
             leftButton={{

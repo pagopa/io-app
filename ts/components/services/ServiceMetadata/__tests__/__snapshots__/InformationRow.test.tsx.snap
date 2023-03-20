@@ -98,7 +98,6 @@ exports[`the InformationRow component should match the snapshot 1`] = `
   <View
     style={
       Array [
-        Object {},
         Object {
           "backgroundColor": "#CCD4DC",
         },
