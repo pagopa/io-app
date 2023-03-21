@@ -50,7 +50,7 @@ import { configureReactotron } from "./configureRectotron";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 22;
+const CURRENT_REDUX_STORE_VERSION = 21;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -307,18 +307,7 @@ const migrations: MigrationManifest = {
   "21": (state: PersistedState) => ({
     ...state,
     lollipop: initialLollipopState
-  }),
-  // Version 22
-  // remove features.MVL section
-  "22": (state: PersistedState) => {
-    const features: FeaturesState = (state as PersistedGlobalState).features;
-    return {
-      ...state,
-      features: {
-        ..._.omit(features, "mvl")
-      }
-    };
-  }
+  })
 };
 
 const isDebuggingInChrome = isDevEnv && !!window.navigator.userAgent;
