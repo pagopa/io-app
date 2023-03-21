@@ -27,9 +27,12 @@ export function* watchMvlSaga(bearerToken: SessionToken): SagaIterator {
   );
 }
 
-// after making the features.MVL non-persistent
+// After making the features.MVL non-persistent
 // because it is no longer necessary, the persist:mvl
-// must be manually removed from AsyncStorage
+// must be manually removed from AsyncStorage.
+// If an error occurs while deleting, because the key is
+// invalid or not present, it is not necessary
+// to handle the exception
 export function* removePersistMvl() {
   try {
     yield* call(AsyncStorage.removeItem, "persist:mvl");
