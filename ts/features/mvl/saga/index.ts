@@ -1,13 +1,13 @@
 import { SagaIterator } from "redux-saga";
 import { call, takeLatest } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SessionToken } from "../../../types/SessionToken";
 import { waitBackoffError } from "../../../utils/backoffError";
 import { mvlDetailsLoad } from "../store/actions";
 import { BackendMvlClient } from "../api/backendMvl";
 import { apiUrlPrefix } from "../../../config";
 import { handleGetMvl } from "./networking/handleGetMvlDetails";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 /**
  * Handle the MVL Requests
