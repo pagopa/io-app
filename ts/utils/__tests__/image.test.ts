@@ -1,4 +1,4 @@
-import { ImageURISource } from "react-native";
+import { ImageURISource, Platform } from "react-native";
 import { toAndroidCacheTimestamp } from "../dates";
 import { addCacheTimestampToUri } from "../image";
 
@@ -10,6 +10,10 @@ describe("addCacheTimestampToUri", () => {
         OS: "ios", // or 'ios'
         select: () => null
       }));
+    });
+
+    it("should set Platform.OS to iOS", () => {
+      expect(Platform.OS).toBe("ios");
     });
 
     it("shouldn't add ts param to the provided URI", () => {
@@ -26,6 +30,10 @@ describe("addCacheTimestampToUri", () => {
         OS: "android", // or 'ios'
         select: () => null
       }));
+    });
+
+    it("should set Platform.OS to Android", () => {
+      expect(Platform.OS).toBe("android");
     });
 
     it("should add ts param to the provided URI", () => {
