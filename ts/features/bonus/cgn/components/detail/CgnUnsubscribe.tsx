@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useEffect, useRef } from "react";
-import { View } from "native-base";
-import { Alert } from "react-native";
+import { View, Alert } from "react-native";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { cgnUnsubscribeSelector } from "../../store/reducers/unsubscribe";
 import { Link } from "../../../../../components/core/typography/Link";

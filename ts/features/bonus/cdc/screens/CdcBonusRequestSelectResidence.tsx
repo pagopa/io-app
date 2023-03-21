@@ -1,6 +1,5 @@
 import * as React from "react";
-import { SafeAreaView, ScrollView } from "react-native";
-import { View } from "native-base";
+import { View, SafeAreaView, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";

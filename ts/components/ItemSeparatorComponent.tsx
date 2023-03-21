@@ -1,6 +1,5 @@
-import { View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import customVariables from "../theme/variables";
 
 type Props = Readonly<{
