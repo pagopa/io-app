@@ -5,7 +5,6 @@ import { addCacheTimestampToUri } from "../image";
 describe("addCacheTimestampToUri", () => {
   describe("on ios", () => {
     beforeAll(() => {
-      jest.resetAllMocks();
       jest.resetModules();
       jest.mock("react-native/Libraries/Utilities/Platform", () => ({
         OS: "ios", // or 'ios'
@@ -22,7 +21,6 @@ describe("addCacheTimestampToUri", () => {
 
   describe("on Android", () => {
     beforeAll(() => {
-      jest.resetAllMocks();
       jest.resetModules();
       jest.mock("react-native/Libraries/Utilities/Platform", () => ({
         OS: "android", // or 'ios'
