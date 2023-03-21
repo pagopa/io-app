@@ -250,6 +250,38 @@ export function* initializeApplicationSaga(): Generator<
     return;
   }
 
+  // Now we fork the tasks that will handle the async requests coming from the
+  // UI of the application.
+  // Note that the following sagas will be automatically cancelled each time
+  // this parent saga gets restarted.
+
+  yield* fork(watchLoadUserMetadata, backendClient.getUserMetadata);
+  yield* fork(watchUpserUserMetadata, backendClient.createOrUpdateUserMetadata);
+
+  yield* fork(
+    watchUserDataProcessingSaga,
+    backendClient.getUserDataProcessingRequest,
+    backendClient.postUserDataProcessingRequest,
+    backendClient.deleteUserDataProcessingRequest
+  );
+
+  // Load visible services and service details from backend when requested
+  yield* fork(watchLoadServicesSaga, backendClient);
+
+  yield* fork(watchLoadNextPageMessages, backendClient.getMessages);
+  yield* fork(watchLoadPreviousPageMessages, backendClient.getMessages);
+  yield* fork(watchReloadAllMessages, backendClient.getMessages);
+  yield* fork(watchLoadMessageById, backendClient.getMessage);
+  yield* fork(watchLoadMessageDetails, backendClient.getMessage);
+  yield* fork(
+    watchUpsertMessageStatusAttribues,
+    backendClient.upsertMessageStatusAttributes
+  );
+  yield* fork(
+    watchMigrateToPagination,
+    backendClient.upsertMessageStatusAttributes
+  );
+
   // whether we asked the user to login again
   const isSessionRefreshed = previousSessionToken !== sessionToken;
 
@@ -471,21 +503,6 @@ export function* initializeApplicationSaga(): Generator<
   // Check that profile is up to date (e.g. inbox enabled)
   yield* call(checkProfileEnabledSaga, userProfile);
 
-  // Now we fork the tasks that will handle the async requests coming from the
-  // UI of the application.
-  // Note that the following sagas will be automatically cancelled each time
-  // this parent saga gets restarted.
-
-  yield* fork(watchLoadUserMetadata, backendClient.getUserMetadata);
-  yield* fork(watchUpserUserMetadata, backendClient.createOrUpdateUserMetadata);
-
-  yield* fork(
-    watchUserDataProcessingSaga,
-    backendClient.getUserDataProcessingRequest,
-    backendClient.postUserDataProcessingRequest,
-    backendClient.deleteUserDataProcessingRequest
-  );
-
   if (isSessionRefreshed) {
     // Only if the user are logging in check the account removal status and,
     // if is PENDING show an alert to notify him.
@@ -542,22 +559,6 @@ export function* initializeApplicationSaga(): Generator<
       loadUserDataProcessing.request(UserDataProcessingChoiceEnum.DELETE)
     );
   }
-  // Load visible services and service details from backend when requested
-  yield* fork(watchLoadServicesSaga, backendClient);
-
-  yield* fork(watchLoadNextPageMessages, backendClient.getMessages);
-  yield* fork(watchLoadPreviousPageMessages, backendClient.getMessages);
-  yield* fork(watchReloadAllMessages, backendClient.getMessages);
-  yield* fork(watchLoadMessageById, backendClient.getMessage);
-  yield* fork(watchLoadMessageDetails, backendClient.getMessage);
-  yield* fork(
-    watchUpsertMessageStatusAttribues,
-    backendClient.upsertMessageStatusAttributes
-  );
-  yield* fork(
-    watchMigrateToPagination,
-    backendClient.upsertMessageStatusAttributes
-  );
 
   // Load third party message content when requested
   yield* fork(watchThirdPartyMessageSaga, backendClient);
