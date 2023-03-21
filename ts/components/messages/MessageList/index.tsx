@@ -8,8 +8,7 @@ import {
   FlatList,
   RefreshControl,
   StyleSheet,
-  Vibration,
-  View
+  Vibration
 } from "react-native";
 import { connect } from "react-redux";
 
@@ -42,7 +41,6 @@ import customVariables, {
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { useActionOnFocus } from "../../../utils/hooks/useOnFocus";
 import { showToast } from "../../../utils/showToast";
-import { EdgeBorderComponent } from "../../screens/EdgeBorderComponent";
 import {
   EmptyComponent,
   generateItemLayout,
@@ -57,9 +55,6 @@ const styles = StyleSheet.create({
   },
   activityIndicator: {
     padding: 12
-  },
-  bottomSpacer: {
-    height: 60
   }
 });
 
@@ -274,10 +269,6 @@ const MessageList = ({
     if (shouldShowFooterLoader) {
       return <Loader />;
     }
-    if (hasMessages && !nextCursor) {
-      return <EdgeBorderComponent />;
-    }
-    return <View style={styles.bottomSpacer} />;
   };
 
   return (
