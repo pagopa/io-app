@@ -1,3 +1,4 @@
+import MockDate from "mockdate";
 import { ImageURISource, Platform } from "react-native";
 import { toAndroidCacheTimestamp } from "../dates";
 import { addCacheTimestampToUri } from "../image";
@@ -37,9 +38,11 @@ describe("addCacheTimestampToUri", () => {
     });
 
     it("should add ts param to the provided URI", () => {
+      MockDate.set(new Date(2020, 11, 21));
       const testUri = { uri: "test" };
       const res = addCacheTimestampToUri(testUri);
       expect(res.uri).toBe(`${testUri.uri}?ts=${toAndroidCacheTimestamp()}`);
+      expect(res.uri).toBe(`${testUri.uri}?ts=21122020`);
     });
 
     it("shouldn't edit the object if no uri is provided", () => {
