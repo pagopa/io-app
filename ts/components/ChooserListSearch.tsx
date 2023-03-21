@@ -1,8 +1,8 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Option } from "fp-ts/lib/Option";
-import { Text as NBText, View } from "native-base";
+import { Text as NBText } from "native-base";
 import React, { ComponentProps } from "react";
-import { Image, ImageSourcePropType, StyleSheet } from "react-native";
+import { View, Image, ImageSourcePropType, StyleSheet } from "react-native";
 import I18n from "../i18n";
 import customVariables from "../theme/variables";
 import ChooserList from "./ChooserList";

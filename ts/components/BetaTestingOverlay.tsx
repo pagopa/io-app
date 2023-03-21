@@ -1,7 +1,6 @@
-import { View } from "native-base";
 import * as React from "react";
 import { FC, useState } from "react";
-import { Platform, StyleSheet } from "react-native";
+import { View, Platform, StyleSheet } from "react-native";
 import { getStatusBarHeight, isIphoneX } from "react-native-iphone-x-helper";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { getAppVersion } from "../utils/appVersion";
