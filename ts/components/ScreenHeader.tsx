@@ -1,15 +1,15 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { View } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import * as React from "react";
-import { Image, ImageSourcePropType, StyleSheet } from "react-native";
+import { View, Image, ImageSourcePropType, StyleSheet } from "react-native";
 import { IconProps } from "react-native-vector-icons/Icon";
 import customVariables from "../theme/variables";
 import { HEADER_ICON_HEIGHT } from "../utils/constants";
 import { IOColors } from "../components/core/variables/IOColors";
 import IconFont from "./ui/IconFont";
+import { IOStyles } from "./core/variables/IOStyles";
 
 type Props = {
   heading: React.ReactNode;
@@ -93,7 +93,14 @@ class ScreenHeader extends React.Component<Props> {
   public render() {
     const { heading, dark, rightComponent } = this.props;
     return (
-      <View style={[dark && styles.darkGrayBg, styles.container]}>
+      <View
+        style={[
+          dark && styles.darkGrayBg,
+          styles.container,
+          IOStyles.row,
+          { alignItems: "center" }
+        ]}
+      >
         <View
           accessible={true}
           style={styles.text}

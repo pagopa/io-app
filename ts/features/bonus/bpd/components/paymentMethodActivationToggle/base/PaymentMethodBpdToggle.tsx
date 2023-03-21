@@ -1,10 +1,9 @@
 /* eslint-disable functional/immutable-data */
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
-import { View } from "native-base";
 import * as React from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ImageSourcePropType, StyleSheet } from "react-native";
+import { View, ImageSourcePropType, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { fetchPaymentManagerLongTimeout } from "../../../../../../config";

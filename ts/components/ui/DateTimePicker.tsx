@@ -1,8 +1,7 @@
 import * as React from "react";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { View } from "native-base";
 import { useState } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { H5 } from "../core/typography/H5";
 import { H4 } from "../core/typography/H4";
 import { IOColors } from "../core/variables/IOColors";
