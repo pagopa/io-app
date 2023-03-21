@@ -10,13 +10,13 @@ import {
   StatusEnum as InitiativeStatusEnum
 } from "../../../../../../definitions/idpay/InitiativeDTO";
 import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
-import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import I18n from "../../../../../i18n";
 import { formatDateAsLocal } from "../../../../../utils/dates";
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
+import { IOBadge } from "../../../../../components/core/IOBadge";
 
 type Props = {
   initiative: InitiativeDTO;
@@ -27,15 +27,9 @@ const styles = StyleSheet.create({
     backgroundColor: IOColors["blue-50"],
     borderBottomEndRadius: 24,
     borderBottomStartRadius: 24,
-    padding: 32,
+    paddingVertical: 32,
     paddingTop: 0,
     flex: 1
-  },
-  badge: {
-    backgroundColor: IOColors.blue,
-    borderRadius: 24,
-    paddingVertical: 2,
-    paddingHorizontal: 8
   },
   bonusLogoContainer: {
     backgroundColor: IOColors.white,
@@ -53,6 +47,7 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   bonusStatusContainer: {
+    flex: 1,
     flexDirection: "row",
     alignItems: "center"
   },
@@ -111,12 +106,11 @@ const InitiativeCardComponent = (props: Props) => {
   const isInitiativeConfigured = status === InitiativeStatusEnum.REFUNDABLE;
   const toBeRepaidAmount = (accrued || 0) - (refunded || 0);
   const remainingAmount = (amount || 0) - (accrued || 0);
+  const totalAmount = (amount || 0) + (accrued || 0);
 
   const dateString = formatDateAsLocal(endDate, true);
   const remainingBonusAmountPercentage =
-    amount !== undefined && amount !== 0
-      ? (remainingAmount / amount) * 100.0
-      : 100.0;
+    totalAmount !== 0 ? (remainingAmount / totalAmount) * 100.0 : 100.0;
   return (
     <View style={styles.cardContainer} testID={"card-component"}>
       {/* top part */}
@@ -124,15 +118,20 @@ const InitiativeCardComponent = (props: Props) => {
         <View style={styles.bonusLogoContainer}></View>
         <VSpacer size={8} />
         <H1>{initiativeName}</H1>
-        <Body>{/* the ministry would go here */}</Body>
+        <LabelSmall color={"black"} weight="Regular">
+          {/* the ministry would go here */}
+        </LabelSmall>
+
         <VSpacer size={8} />
         <View style={styles.bonusStatusContainer}>
-          <View style={styles.badge}>
-            <LabelSmall color="white">
-              {I18n.t(
+          <View>
+            {/* no idea why, but this <View/> is required to correctly center the badge  */}
+            <IOBadge
+              small={true}
+              text={I18n.t(
                 `idpay.initiative.details.initiativeCard.statusLabels.${status}`
               )}
-            </LabelSmall>
+            />
           </View>
           <HSpacer size={8} />
           <LabelSmall color="bluegreyDark">
