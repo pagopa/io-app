@@ -92,11 +92,6 @@ export const DesignSystemNavigator = () => {
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.COMPONENTS.TOASTS.route}
-          component={DSToastNotifications}
-        />
-
-        <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.COMPONENTS.LIST_ITEMS.route}
           component={DSListItems}
         />
