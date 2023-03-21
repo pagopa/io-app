@@ -217,22 +217,21 @@ const renderListItem = (
 const PaymentMethodsList: React.FunctionComponent<Props> = (props: Props) => (
   <View style={IOStyles.horizontalContentPadding}>
     <VSpacer size={24} />
-    <View style={IOStyles.horizontalContentPadding}>
-      <FlatList
-        removeClippedSubviews={false}
-        data={props.paymentMethods}
-        keyExtractor={item => item.name}
-        ListFooterComponent={<VSpacer size={16} />}
-        renderItem={i =>
-          renderListItem(
-            i,
-            props.paymentMethods.filter(pm => pm.status !== "notImplemented")
-              .length,
-            props.sectionStatus
-          )
-        }
-      />
-    </View>
+
+    <FlatList
+      removeClippedSubviews={false}
+      data={props.paymentMethods}
+      keyExtractor={item => item.name}
+      ListFooterComponent={<VSpacer size={16} />}
+      renderItem={i =>
+        renderListItem(
+          i,
+          props.paymentMethods.filter(pm => pm.status !== "notImplemented")
+            .length,
+          props.sectionStatus
+        )
+      }
+    />
   </View>
 );
 const mapStateToProps = (state: GlobalState) => ({
