@@ -170,6 +170,10 @@ function* watchFciStartSaga(): SagaIterator {
   // this is needed to get the document_url
   // that will be used to create the filled document
   yield* put(fciLoadQtspClauses.request());
+
+  // start a request to get the metadata
+  // this is needed to get the service_id
+  yield* put(fciMetadataRequest.request());
 }
 
 /**
