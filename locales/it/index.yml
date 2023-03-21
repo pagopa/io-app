@@ -1824,6 +1824,8 @@ messageDetails:
       firstPart: "Gli allegati non sono più disponibili. "
       secondPart: "Contatta l'ente mittente"
       thirdPart: " per maggiori informazioni."
+    failing:
+      details: "Non sono riuscito a scaricare l’allegato. Riprova o apri una segnalazione"
 notifications:
   installation:
     errorTitle: Notifiche push
@@ -3078,17 +3080,6 @@ features:
         title: "Allegati"
         toast:
           success: "Download completato"
-        bottomSheet:
-          warning:
-            title: "Fai attenzione agli allegati"
-            body: "IO non può garantire la sicurezza dell'allegato: salva sul tuo dispositivo o condividi solo i file che ritieni sufficientemente sicuri."
-          loading:
-            title: "Allegato"
-            body: "Sto scaricando l'allegato"
-          failing:
-            title: "Allegato"
-            details: "Non sono riuscito a scaricare l’allegato. Riprova o apri una segnalazione"
-          checkBox: "OK, non mostrarmelo più"
         pdfPreview:
           title: "Anteprima PDF"
           singleBtn: "Salva, stampa o condividi"
