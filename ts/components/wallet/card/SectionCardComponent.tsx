@@ -1,6 +1,7 @@
-import { Badge, Text as NBText, View } from "native-base";
+import { Badge, Text as NBText } from "native-base";
 import * as React from "react";
 import {
+  View,
   ActivityIndicator,
   Platform,
   StyleSheet,

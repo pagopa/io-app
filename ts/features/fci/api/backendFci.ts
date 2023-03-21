@@ -21,7 +21,7 @@ import {
 import { defaultRetryingFetch } from "../../../utils/fetch";
 import { LollipopConfig } from "../../lollipop";
 import { lollipopFetch } from "../../lollipop/utils/fetch";
-import { KeyInfo } from "../../../utils/crypto";
+import { KeyInfo } from "../../lollipop/utils/crypto";
 
 const getSignatureDetailViewById: GetSignatureRequestByIdT = {
   method: "get",

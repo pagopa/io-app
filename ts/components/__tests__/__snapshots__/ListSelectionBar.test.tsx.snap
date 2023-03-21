@@ -3,16 +3,13 @@
 exports[`ListSelectionBar component should match the snapshot with default props 1`] = `
 <View
   style={
-    Array [
-      Object {},
-      Object {
-        "backgroundColor": "#E6E9F2",
-        "flexDirection": "row",
-        "justifyContent": "space-around",
-        "padding": 5,
-        "zIndex": 1,
-      },
-    ]
+    Object {
+      "backgroundColor": "#E6E9F2",
+      "flexDirection": "row",
+      "justifyContent": "space-around",
+      "padding": 5,
+      "zIndex": 1,
+    }
   }
 >
   <View
@@ -142,7 +139,7 @@ exports[`ListSelectionBar component should match the snapshot with default props
       style={
         Object {
           "backgroundColor": "transparent",
-          "color": "#007aff",
+          "color": "#a9a9a9",
           "fontFamily": "System",
           "fontSize": 16.5,
           "marginLeft": 0,
@@ -212,7 +209,7 @@ exports[`ListSelectionBar component should match the snapshot with default props
       style={
         Object {
           "backgroundColor": "transparent",
-          "color": "#fff",
+          "color": "#a9a9a9",
           "fontFamily": "System",
           "fontSize": 16.5,
           "marginLeft": 0,
