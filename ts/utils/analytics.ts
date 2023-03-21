@@ -137,3 +137,24 @@ export function trackThirdPartyMessageAttachmentUserAction(
 }
 
 // End of premium events
+
+// Lollipop events
+export function trackLollipopKeyGenerationSuccess(keyType?: string) {
+  void mixpanelTrack("LOLLIPOP_KEY_GENERATION_SUCCESS", {
+    kty: keyType
+  });
+}
+
+export function trackLollipopKeyGenerationFailure(reason: string) {
+  void mixpanelTrack("LOLLIPOP_KEY_GENERATION_FAILURE", {
+    reason
+  });
+}
+
+export function trackLollipopIdpLoginFailure(reason: string) {
+  void mixpanelTrack("LOLLIPOP_IDP_LOGIN_FAILURE", {
+    reason
+  });
+}
+
+// End of lollipop events

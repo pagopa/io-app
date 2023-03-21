@@ -21,7 +21,6 @@ import {
   cdcEnabled,
   cgnMerchantsV2Enabled,
   fciEnabled,
-  idPayEnabled,
   pnEnabled,
   premiumMessagesOptInEnabled,
   scanAdditionalBarcodesEnabled,
@@ -33,6 +32,7 @@ import { getAppVersion, isVersionSupported } from "../../utils/appVersion";
 import { backendStatusLoadSuccess } from "../actions/backendStatus";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
+import { isIdPayTestEnabledSelector } from "./persistedPreferences";
 
 export type SectionStatusKey = keyof Sections;
 /** note that this state is not persisted so Option type is accepted
@@ -215,6 +215,7 @@ export const bancomatPayConfigSelector = createSelector(
 
 /**
  * return the remote config about LolliPOP enabled/disabled
+ * based on a minumum version of the app.
  * if there is no data, false is the default value -> (LolliPOP disabled)
  */
 export const isLollipopEnabledSelector = createSelector(
@@ -222,7 +223,15 @@ export const isLollipopEnabledSelector = createSelector(
   (backendStatus): boolean =>
     pipe(
       backendStatus,
-      O.map(bs => bs.config.lollipop.enabled),
+      O.chainNullableK(bs => bs.config),
+      O.chainNullableK(cfg => cfg.lollipop),
+      O.chainNullableK(lp => lp.min_app_version),
+      O.map(mav =>
+        isVersionSupported(
+          Platform.OS === "ios" ? mav.ios : mav.android,
+          getAppVersion()
+        )
+      ),
       O.getOrElse(() => false)
     )
 );
@@ -401,8 +410,9 @@ export const isFciEnabledSelector = createSelector(
 
 export const isIdPayEnabledSelector = createSelector(
   backendStatusSelector,
-  (backendStatus): boolean =>
-    idPayEnabled &&
+  isIdPayTestEnabledSelector,
+  (backendStatus, isIdPayTestEnabled): boolean =>
+    isIdPayTestEnabled &&
     pipe(
       backendStatus,
       O.map(bs =>

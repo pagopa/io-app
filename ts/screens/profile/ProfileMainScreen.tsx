@@ -31,8 +31,10 @@ import { sessionExpired } from "../../store/actions/authentication";
 import { setDebugModeEnabled } from "../../store/actions/debug";
 import { navigateToLogout } from "../../store/actions/navigation";
 import {
+  preferencesIdPayTestSetEnabled,
   preferencesPagoPaTestEnvironmentSetEnabled,
-  preferencesPnTestEnvironmentSetEnabled
+  preferencesPnTestEnvironmentSetEnabled,
+  preferencesDesignSystemSetEnabled
 } from "../../store/actions/persistedPreferences";
 import { clearCache } from "../../store/actions/profile";
 import { Dispatch } from "../../store/actions/types";
@@ -43,6 +45,8 @@ import {
 import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 import { notificationsInstallationSelector } from "../../store/reducers/notifications/installation";
 import {
+  isIdPayTestEnabledSelector,
+  isDesignSystemEnabledSelector,
   isPagoPATestEnabledSelector,
   isPnTestEnabledSelector
 } from "../../store/reducers/persistedPreferences";
@@ -233,6 +237,15 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     this.props.setPnTestEnabled(enabled);
   };
 
+  private onIdPayTestToggle = (enabled: boolean) => {
+    this.props.setIdPayTestEnabled(enabled);
+    this.showModal();
+  };
+
+  private onDesignSystemToggle = (enabled: boolean) => {
+    this.props.setDesignSystemEnabled(enabled);
+  };
+
   private idResetTap?: number;
 
   // When tapped 5 times activate the debug mode of the application.
@@ -273,12 +286,14 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       isDebugModeEnabled,
       isPagoPATestEnabled,
       isPnTestEnabled,
+      isDesignSystemEnabled,
       navigation,
       notificationId,
       notificationToken,
       sessionToken,
       walletToken,
-      setDebugModeEnabled
+      setDebugModeEnabled,
+      isIdPayTestEnabled
     } = this.props;
     const deviceUniqueId = getDeviceId();
 
@@ -313,17 +328,18 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
                 })
               }
             />
-            <ListItemComponent
-              title={"IDPay Onboarding Playground"}
-              onPress={() =>
-                navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-                  screen: ROUTES.IDPAY_ONBOARDING_PLAYGROUND
-                })
-              }
-            />
+            {isIdPayTestEnabled && (
+              <ListItemComponent
+                title={"IDPay Onboarding Playground"}
+                onPress={() =>
+                  navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+                    screen: ROUTES.IDPAY_ONBOARDING_PLAYGROUND
+                  })
+                }
+              />
+            )}
           </>
         )}
-
         {/* Design System */}
         <ListItemComponent
           title={I18n.t("profile.main.designSystem")}
@@ -334,7 +350,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
           }
           isFirstItem={true}
         />
-
         {this.developerListItem(
           I18n.t("profile.main.pagoPaEnvironment.pagoPaEnv"),
           isPagoPATestEnabled,
@@ -350,6 +365,17 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
           I18n.t("profile.main.debugMode"),
           isDebugModeEnabled,
           setDebugModeEnabled
+        )}
+        {this.developerListItem(
+          I18n.t("profile.main.idpay.idpayTest"),
+          isIdPayTestEnabled,
+          this.onIdPayTestToggle,
+          I18n.t("profile.main.idpay.idpayTestAlert")
+        )}
+        {this.developerListItem(
+          I18n.t("profile.main.designSystemEnvironment"),
+          isDesignSystemEnabled,
+          this.onDesignSystemToggle
         )}
         {isDebugModeEnabled && (
           <React.Fragment>
@@ -578,7 +604,9 @@ const mapStateToProps = (state: GlobalState) => ({
   notificationToken: notificationsInstallationSelector(state).token,
   isDebugModeEnabled: isDebugModeEnabledSelector(state),
   isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
-  isPnTestEnabled: isPnTestEnabledSelector(state)
+  isPnTestEnabled: isPnTestEnabledSelector(state),
+  isIdPayTestEnabled: isIdPayTestEnabledSelector(state),
+  isDesignSystemEnabled: isDesignSystemEnabledSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -592,7 +620,11 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     ),
   setPnTestEnabled: (isPnTestEnabled: boolean) =>
     dispatch(preferencesPnTestEnvironmentSetEnabled({ isPnTestEnabled })),
-  dispatchSessionExpired: () => dispatch(sessionExpired())
+  dispatchSessionExpired: () => dispatch(sessionExpired()),
+  setIdPayTestEnabled: (isIdPayTestEnabled: boolean) =>
+    dispatch(preferencesIdPayTestSetEnabled({ isIdPayTestEnabled })),
+  setDesignSystemEnabled: (isDesignSystemEnabled: boolean) =>
+    dispatch(preferencesDesignSystemSetEnabled({ isDesignSystemEnabled }))
 });
 
 export default connect(

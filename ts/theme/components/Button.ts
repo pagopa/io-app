@@ -12,8 +12,6 @@ declare module "native-base" {
       whiteBordered?: boolean;
       cancel?: boolean;
       xsmall?: boolean;
-      gray?: boolean;
-      darkGray?: boolean;
       alert?: boolean;
       lightText?: boolean;
       unNamed?: boolean;
@@ -69,26 +67,6 @@ export default (): Theme => ({
       color: IOColors.white
     },
     backgroundColor: variables.calendarExpirableColor
-  },
-
-  ".darkGray": {
-    "NativeBase.Text": {
-      color: IOColors.white
-    },
-    "UIComponent.IconFont": {
-      color: IOColors.white
-    },
-    backgroundColor: IOColors.bluegrey
-  },
-
-  ".gray": {
-    "NativeBase.Text": {
-      color: IOColors.white
-    },
-    "UIComponent.IconFont": {
-      color: IOColors.white
-    },
-    backgroundColor: IOColors.bluegreyLight
   },
 
   ".unNamed": {

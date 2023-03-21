@@ -321,8 +321,7 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
             </View>
           </View>
 
-          <VSpacer size={24} />
-          <VSpacer size={24} />
+          <VSpacer size={48} />
           <ButtonDefaultOpacity
             light={true}
             bordered={true}

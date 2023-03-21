@@ -433,6 +433,10 @@ profile:
       alertMessage: È necessario il riavvio dell'applicazione affinché le modifiche abbiano effetto.
     pnEnvironment:
       pnEnv: Ambiente PN di Test
+    idpay: 
+      idpayTest: Test IDPay
+      idpayTestAlert: La modifica richiede il riavvio dell'app
+    designSystemEnvironment: Design System sperimentale
     appVersion: Versione App
     backendVersion: Versione Backend
     debugMode: Modalità debug
@@ -594,6 +598,8 @@ authentication:
     card4-content: Il dispositivo che stai utilizzando non supporta l’accesso con Carta d’Identità Elettronica (CIE)
     card5-title: Benvenuto nella prima versione pubblica di IO!
     card5-content: In alto a destra trovi l'icona '?' per aprire
+      una chat con il team di IO se qualcosa non funziona come dovrebbe.
+    card5-content-accessibility: Seleziona elemento precedente per aprire
       una chat con il team di IO se qualcosa non funziona come dovrebbe.
     expiredCardTitle: Carta scaduta o non più valida
     expiredCardHeaderTitle: Entra con CIE
@@ -1556,7 +1562,7 @@ wallet:
     contactECsubtitle: Contatta l’Ente per maggiori informazioni.
     assistanceLabel: "Per ricevere assistenza usa il codice:"
     sendReport: Invia segnalazione
-    loadingData: errore durante il caricamento, riprova.
+    loadingData: Errore durante il caricamento, riprova.
   walletCardTransaction:
     contextualHelpTitle: Transazioni effettuate con questo metodo
     contextualHelpContent: !include wallet/wallet_card_transaction.md
@@ -1706,7 +1712,7 @@ messages:
         block1: Scaduto il 
         block2: alle ore 
     prescription:
-      expiringOrValidAlert: 
+      expiringOrValidAlert:
         block1: Scade il 
         block2: alle
       expiredAlert:
@@ -1809,9 +1815,10 @@ messageDetails:
   write: Scrivi
   id: "ID:"
   attachments:
+    loading: "Caricamento del documento..."
     badFormat: "Il formato dell'allegato non è supportato. Contatta l'ente mittente"
     corruptedFile: "L'allegato è danneggato e non può essere aperto. Contatta l'ente mittente"
-    downloadFailed: "L'allegato non si è aperto. Riprova"
+    downloadFailed: "L'allegato non è al momento disponibile. Riprova o contatta l'ente mittente"
     showPreview: "Visualizza anteprima"
     unavailable:
       firstPart: "Gli allegati non sono più disponibili. "
@@ -1918,6 +1925,7 @@ services:
 serviceDetail:
   fiscalCode: "C.F. Ente"
   fiscalCodeAccessibility: "Codice fiscale Ente"
+  fiscalCodeAccessibilityCopy: "Copia codice fiscale Ente"
   contacts:
     title: "Questo servizio può:"
   headerTitle: "Dettagli del Servizio"
@@ -3229,6 +3237,10 @@ features:
     signatureFields:
       title: "Firma qui"
       showOnDocument: "Vedi sul documento"
+      accessibility:
+        fieldDetailHint: "Vai alla pagina per visualizzare il campo firma"
+        selected: "Campo selezionato"
+        unselected: "Campo non selezionato"
     title: "Firma con IO"
     documentsBar:
       titleLeft: Documento {{currentDoc}} di {{totalDocs}}
@@ -3251,6 +3263,11 @@ features:
       title: "Ci siamo quasi!"
       subTitle: "Per firmare, devi accettare i termini e condizioni del servizio e confermare di avere letto l’informativa privacy del fornitore della firma."
       show: "Visualizza"
+    documents:
+      footer:
+        cancel: "Annulla"
+        continue: "Vai alla firma"
+        confirm: "Firma e continua"
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
@@ -3320,7 +3337,7 @@ idpay:
     details:
       initiativeCard:
         availableAmount: Disponibile
-        validUntil: Valido fino al
+        validUntil: Valido fino al {{expiryDate}}
         toRefund: da rimborsare
       initiativeDetailsScreen:
         notConfigured:
@@ -3343,23 +3360,22 @@ idpay:
             title: Lista operazioni
             lastUpdated: "Ultimo aggiornamento: "
             operationDescriptions:
-              ONBOARDING:  "Hai aderito all'iniziativa"
+              ONBOARDING:  "Adesione all'iniziativa"
               ADD_IBAN:  "Aggiunto IBAN"
-              ADD_INSTRUMENT: "Hai aggiunto ···· {{maskedPan}}"
-              TRANSACTION:  "Pagamento Pos"
-              REVERSAL:  "Ricarica saldo disponibile"
+              ADD_INSTRUMENT: "Attivazione metodo ···· {{maskedPan}}"
+              TRANSACTION:  "Pagamento POS"
+              REVERSAL:  "Storno"
               DELETE_INSTRUMENT:  "Hai eliminato un metodo di pagamento"
-              REJECTED_ADD_INSTRUMENT:  "Hai rifiutato un metodo di pagamento"
-              REJECTED_DELETE_INSTRUMENT: "Hai rifiutato di eliminare un metodo di pagamento"
-              PAID_REFUND:  "Rimborso"
-              REJECTED_REFUND:  "Rifiuto rimborso"
+              REJECTED_ADD_INSTRUMENT:  "Errore attivazione metodo"
+              REJECTED_DELETE_INSTRUMENT: "Errore disattivazione metodo"
+              PAID_REFUND:  "Rimborso sul tuo conto"
+              REJECTED_REFUND:  "Errore rimboso"
     operationDetails:
       title: Dettaglio dell'operazione
       instrument: Metodo di pagamento
       maskedPan: •••• {{lastDigits}}
       amountLabel: Importo transazione
       accruedAmountLabel: Importo rimborsabile
-      amount: € {{amount}}
       infoTitle: Informazioni sull transazione
       date: Data
       circuit: Circuito di pagamento
@@ -3367,23 +3383,46 @@ idpay:
       issuerId: ID transazione Issuer
   onboarding:
     success:
-      understoodCta: Ho capito!
       pleaseWait: Un attimo di pazienza...
-      requestSent: La tua richiesta è stata inviata!
+      requestSent:
+        title: La tua richiesta è stata inviata!
+        body:  Riceverai un messaggio con l’esito dell’operazione.
+      button:
+        continue: Ho capito!
     failure:
-      NO_PERMISSION:
-        title: "Non hai i requisiti per aderire a questa iniziativa"
-        subtitle: "Non puoi richiedere il bonus!"
-      GENERIC:
-        title: "C’è un problema sui nostri sistemi"
-        subtitle:
-          "Ci scusiamo per il disagio.\nTi invitiamo a riprovare più tardi."
-      ALREADY_COMPLETED:
-        title: "Onboarding concluso"
-        subtitle: "Hai già fatto l'onboarding per questa iniziativa"
-      ONBOARDING_KO:
-        title: "Onboarding fallito"
-        subtitle: "L'adesione non è andata a buon fine"
+      button:
+        goToInitiative: Vai all'iniziativa
+      message:
+        GENERIC:
+          title: "C’è un problema sui nostri sistemi"
+          subtitle: "Ci scusiamo per il disagio.\nTi invitiamo a riprovare più tardi."
+        NOT_STARTED:
+          title: "Non è ancora possibile aderire a questa iniziativa."
+          subtitle: "Testo generico di errore dove spieghiamo che l’iniziativa non è ancora partita."
+        ENDED:
+          title: "Il periodo di adesione è terminato."
+          subtitle: "Testo generico di errore dove spieghiamo che il periodo di adesione è terminato."
+        NO_BUDGET:
+          title: "Non è più possibile aderire a questa iniziativa."
+          subtitle: "So’ finiti i soldi TBD"
+        SUSPENDED:
+          title: "L’iniziativa è sospesa."
+          subtitle: "Testo generico di errore dove spieghiamo che il l’iniziativa è stata sospesa."
+        NO_REQUIREMENTS:
+          title: "Non hai i requisiti per aderire a questa iniziativa."
+          subtitle: "O non sei stato invitato oppure i controlli hanno dato esito KO. Se sta roba non ti torna, chiedi aiuto."
+        ON_EVALUATION:
+          title: "Valutazione in corso TBD"
+          subtitle: "TBD"
+        NOT_ELIGIBLE:
+          title: "Graduatoria KO"
+          subtitle: "TBD"
+        ONBOARDED:
+          title: "Evviva, hai già aderito"
+          subtitle: "Vatte a vedè l’iniziativa"
+        UNSUBSCRIBED:
+          title: "Hai fatto il recesso"
+          subtitle: "TBD"
     headerTitle: "Adesione all'iniziativa"
     beforeContinue:
       text1: "Proseguendo accetti i "
@@ -3393,6 +3432,7 @@ idpay:
     navigation:
       header: Adesione all'iniziativa
     PDNDPrerequisites:
+      fallbackInitiativeName: l'iniziativa
       prerequisites:
         info:
           header: Come avviene la verifica?
@@ -3401,6 +3441,10 @@ idpay:
           understoodCTA: Ho capito
       title: Possiedi i seguenti requisiti?
       subtitle: Verificheremo con alcuni Enti se sei in possesso dei requisiti per poter richiedere {{service}}. 
+    multiPrerequisites:
+      header: "Dichiari inoltre di:"
+      body: L’autodichiarazione è resa ai sensi del
+      link: Dpr 28 dicembre 2000 n. 445 art 46 e 47
     boolPrerequisites:
       header: "Per aderire, dichiari di:"
       body: L’autodichiarazione è resa ai sensi del
@@ -3415,10 +3459,10 @@ idpay:
       INSTRUMENT_ENROLL_FAILURE: "Errore durante l'aggiunta del metodo di pagamento"
       INSTRUMENT_DELETE_FAILURE: "Errore durante la rimozione del metodo di pagamento"
     headerTitle: "Configura l'iniziativa"
-    intro: 
+    intro:
       title: "Ci siamo quasi"
       body: "Per poter usufruire dell’iniziativa, abbiamo bisogno di qualche informazione in più."
-      requiredData: 
+      requiredData:
         title: "Dati richiesti:"
         ibanTitle: "IBAN a te intestato"
         ibanSubtitle: "Per poter ricevere eventuali rimborsi"
@@ -3426,11 +3470,11 @@ idpay:
         instrumentSubtitle: "Indica i metodi da abilitare all’iniziativa"
       buttons:
         continue: "Inizia la configurazione"
-    instruments: 
+    instruments:
       title: "Metodi di pagamento"
       header: Scegli quali metodi di pagamento associare
       body: "Poi, usali per pagare e chiedi all’esercente di usare {{initiativeName}}."
-      footer: Modifica queste scelte o aggiunti altri metodi in qualsiasi momento dalla sezione Portafoglio
+      footer: Modifica queste scelte o aggiungi altri metodi in qualsiasi momento dalla sezione Portafoglio
       instrumentStatus:
         active: Attivo 
         pendingActivation: In attivazione
@@ -3449,13 +3493,14 @@ idpay:
           cancel: Annulla
     associationSuccess:
       title: "Grazie!"
-      body: "Da domani potrai utilizzare l'iniziativa {{initiativeName}}. Puoi abilitare altri metodi aggiungendoli al Portafoglio."
+      body: "Nella schermata successiva puoi verificare se i metodi da te abilitati sono già pronti per essere utilizzati."
       noInstrumentsBody: "Per terminare la configurazione devi aggiungere almeno un metodo di pagamento al Portafoglio e abilitarlo all’iniziativa."
       buttons:
         continue: "Vai all'iniziativa"
         skip: "Più tardi"
         addPaymentMethod: "Aggiungi un metodo di pagamento"
     iban:
+      title: IBAN associato
       landing:
         header: Aggiungi un IBAN al tuo Profilo
         body: Salva i dati del tuo conto e ottieni più facilmente i rimborsi a te previsti.
@@ -3466,3 +3511,12 @@ idpay:
         bodyLink: Dpr 28 dicembre 2000 n. 445 art 46 e 47 
         nameAssignInput: Assegna un nome
         bottomLabel: Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento visitando la sezione Profilo
+      enrollment:
+        header: Scegli quale IBAN associare all’iniziativa
+        subTitle: Associa un IBAN salvato nel tuo profilo per poter ricevere i rimborsi legati all’iniziativa.
+        footer: Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento visitando la sezione Profilo
+      button:
+        addNew: Aggiungi nuovo
+      updateToast: IBAN associato correttamente
+unsupportedDevice:  
+  text: "A breve il tuo dispositivo potrebbe non essere più compatibile con l’app IO."

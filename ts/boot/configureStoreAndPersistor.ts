@@ -22,6 +22,7 @@ import {
 } from "redux-persist";
 import createSagaMiddleware from "redux-saga";
 import { remoteUndefined } from "../features/bonus/bpd/model/RemoteValue";
+import { initialLollipopState } from "../features/lollipop/store/reducers/lollipop";
 import { mvlPersistConfig } from "../features/mvl";
 import rootSaga from "../sagas";
 import { Action, StoreEnhancer } from "../store/actions/types";
@@ -49,7 +50,7 @@ import { configureReactotron } from "./configureRectotron";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 20;
+const CURRENT_REDUX_STORE_VERSION = 21;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -300,7 +301,13 @@ const migrations: MigrationManifest = {
         appVersionHistory: INSTALLATION_INITIAL_STATE.appVersionHistory
       }
     };
-  }
+  },
+  // Version 21
+  // add lollipop
+  "21": (state: PersistedState) => ({
+    ...state,
+    lollipop: initialLollipopState
+  })
 };
 
 const isDebuggingInChrome = isDevEnv && !!window.navigator.userAgent;
@@ -312,7 +319,7 @@ const rootPersistConfig: PersistConfig = {
   migrate: createMigrate(migrations, { debug: isDevEnv }),
   // Entities and features implement a persisted reduce that avoids persisting messages.
   // Other entities section will be persisted
-  blacklist: ["entities", "features"],
+  blacklist: ["entities", "features", "lollipop"],
   // Sections of the store that must be persisted and rehydrated with this storage.
   whitelist: [
     "onboarding",

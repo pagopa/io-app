@@ -7,6 +7,8 @@ import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { NetworkError } from "../../../../utils/errors";
 import { fciSignatureRequestFromId, fciClearStateRequest } from "../actions";
+import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
+import { QtspDocumentToSign } from "../../utils/signature";
 
 export type FciSignatureRequestState = pot.Pot<
   SignatureRequestDetailView,
@@ -44,7 +46,7 @@ export const fciSignatureDetailDocumentsSelector = createSelector(
     pot.isSome(signatureDetailView) ? signatureDetailView.value.documents : []
 );
 
-export const fciDocumentSignatureFieldsFieldsSelector = (
+export const fciDocumentSignatureFieldsSelector = (
   documentId: DocumentDetailView["id"]
 ) =>
   createSelector(fciSignatureRequestSelector, signatureDetailView =>
@@ -54,6 +56,24 @@ export const fciDocumentSignatureFieldsFieldsSelector = (
         signatureRequest =>
           signatureRequest.documents.find(d => d.id === documentId)?.metadata
             .signature_fields || []
+      ),
+      []
+    )
+  );
+
+export const fciDocumentsWithUrlSelector = (
+  documents: ReadonlyArray<DocumentToSign>
+) =>
+  createSelector(fciSignatureRequestSelector, signatureDetailView =>
+    pot.getOrElse(
+      pot.map(signatureDetailView, signatureRequest =>
+        signatureRequest.documents.map(
+          d =>
+            ({
+              ...documents.find(dd => dd.document_id === d.id),
+              url: d.url
+            } as QtspDocumentToSign)
+        )
       ),
       []
     )

@@ -14,6 +14,7 @@ import { isIos } from "../../../utils/platform";
 import { share } from "../../../utils/share";
 import { showToast } from "../../../utils/showToast";
 import { confirmButtonProps } from "../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { FciDownloadPreviewDirectoryPath } from "../saga/networking/handleDownloadDocument";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { fciDownloadPreview, fciDownloadPreviewClear } from "../store/actions";
 import {
@@ -41,7 +42,7 @@ const renderFooter = (url: string, filePath: string) =>
       type={"SingleButton"}
       leftButton={confirmButtonProps(() => {
         ReactNativeBlobUtil.ios.presentOptionsMenu(filePath);
-      }, I18n.t("features.mvl.details.attachments.pdfPreview.singleBtn"))}
+      }, I18n.t("features.mvl.details.attachments.pdfPreview.open"))}
     />
   ) : (
     <FooterWithButtons
@@ -50,7 +51,13 @@ const renderFooter = (url: string, filePath: string) =>
         bordered: true,
         primary: false,
         onPress: () => {
-          share(`${url}`, undefined, false)().catch(_ => {
+          share(
+            `file://${
+              FciDownloadPreviewDirectoryPath + "/" + getFileNameFromUrl(url)
+            }`,
+            undefined,
+            false
+          )().catch(_ => {
             showToast(
               I18n.t(
                 "features.mvl.details.attachments.pdfPreview.errors.sharing"
@@ -66,10 +73,12 @@ const renderFooter = (url: string, filePath: string) =>
         onPress: () => {
           ReactNativeBlobUtil.MediaCollection.copyToMediaStore(
             {
-              name: getFileNameFromUrl(url)
+              name: getFileNameFromUrl(url),
+              parentFolder: "",
+              mimeType: "application/pdf"
             },
             "Download",
-            url
+            FciDownloadPreviewDirectoryPath + "/" + getFileNameFromUrl(url)
           )
             .then(_ => {
               showToast(
@@ -94,7 +103,10 @@ const renderFooter = (url: string, filePath: string) =>
       }}
       rightButton={confirmButtonProps(() => {
         ReactNativeBlobUtil.android
-          .actionViewIntent(url, "application/pdf")
+          .actionViewIntent(
+            FciDownloadPreviewDirectoryPath + "/" + getFileNameFromUrl(url),
+            "application/pdf"
+          )
           .catch(_ => {
             showToast(
               I18n.t(

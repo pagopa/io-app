@@ -1,15 +1,18 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import _ from "lodash";
-import { Content as NBContent } from "native-base";
 import * as React from "react";
 import * as O from "fp-ts/lib/Option";
 import { useCallback, useEffect, useState } from "react";
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
-import DeviceInfo from "react-native-device-info";
+import {
+  ActivityIndicator,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import I18n from "../../../i18n";
 import { OrganizationFiscalCode } from "../../../../definitions/backend/OrganizationFiscalCode";
-
 import { ServiceMetadata } from "../../../../definitions/backend/ServiceMetadata";
 import { ThirdPartyMessageWithContent } from "../../../../definitions/backend/ThirdPartyMessageWithContent";
 import { MessageAttachments } from "../../../features/messages/components/MessageAttachments";
@@ -211,9 +214,9 @@ const MessageDetailsComponent = ({
 
   return (
     <>
-      <NBContent noPadded={true}>
+      <ScrollView>
         <View style={styles.padded}>
-          <VSpacer size={16} />
+          <VSpacer size={24} />
 
           {service && <OrganizationTitle {...service} />}
 
@@ -280,23 +283,14 @@ const MessageDetailsComponent = ({
             goToServiceDetail={onServiceLinkPress}
           />
         )}
-      </NBContent>
+      </ScrollView>
 
-      <>
-        {DeviceInfo.hasNotch() && (
-          <React.Fragment>
-            <VSpacer size={24} />
-            <VSpacer size={8} />
-          </React.Fragment>
-        )}
-
-        <CtaBar
-          isPaid={hasPaidBadge}
-          messageDetails={messageDetails}
-          service={service}
-          serviceMetadata={serviceMetadata}
-        />
-      </>
+      <CtaBar
+        isPaid={hasPaidBadge}
+        messageDetails={messageDetails}
+        service={service}
+        serviceMetadata={serviceMetadata}
+      />
     </>
   );
 };

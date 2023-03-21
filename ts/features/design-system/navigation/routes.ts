@@ -16,16 +16,17 @@ const DESIGN_SYSTEM_ROUTES = {
     TOASTS: { route: "DESIGN_SYSTEM_TOASTS", title: "Toasts" },
     SELECTION: { route: "DESIGN_SYSTEM_SELECTION", title: "Selection" },
     ACCORDION: { route: "DESIGN_SYSTEM_ACCORDION", title: "Accordion" },
+    ALERT: { route: "DESIGN_SYSTEM_ALERT", title: "Alert" },
     ADVICE: { route: "DESIGN_SYSTEM_ADVICE", title: "Advice" }
   },
   LEGACY: {
     PICTOGRAMS: {
       route: "DESIGN_SYSTEM_LEGACY_PICTOGRAMS",
-      title: "Legacy Pictograms"
+      title: "Pictograms"
     },
     ILLUSTRATIONS: {
       route: "DESIGN_SYSTEM_LEGACY_ILLUSTRATIONS",
-      title: "Legacy Illustrations"
+      title: "Illustrations"
     }
   } as const
 } as const;

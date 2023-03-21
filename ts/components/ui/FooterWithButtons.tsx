@@ -2,27 +2,11 @@ import * as React from "react";
 
 import { StyleSheet, View } from "react-native";
 import variables from "../../theme/variables";
+import { IOStyles } from "../core/variables/IOStyles";
 import BlockButtons, { BlockButtonsProps } from "./BlockButtons";
 
 // TODO: Refactor with an unique component like `FooterTopShadow` after bonus vacanze
 const styles = StyleSheet.create({
-  footerVariant: {
-    backgroundColor: variables.footerBackground,
-    paddingBottom: variables.footerPaddingBottom,
-    paddingLeft: variables.footerPaddingLeft,
-    paddingRight: variables.footerPaddingRight,
-    paddingTop: variables.footerPaddingTop,
-    // iOS shadow
-    shadowColor: variables.footerShadowColor,
-    shadowOffset: {
-      width: variables.footerShadowOffsetWidth,
-      height: variables.footerShadowOffsetHeight
-    },
-    shadowOpacity: variables.footerShadowOpacity,
-    shadowRadius: variables.footerShadowRadius,
-    // Android shadow
-    elevation: variables.footerElevation
-  },
   container: {
     overflow: "hidden",
     marginTop: -variables.footerShadowOffsetHeight,
@@ -46,7 +30,7 @@ export default class FooterWithButtons extends React.Component<
         pointerEvents={"box-none"}
         testID="FooterWithButtons"
       >
-        <View style={styles.footerVariant}>
+        <View style={IOStyles.footer}>
           <BlockButtons {...this.props} />
         </View>
       </View>

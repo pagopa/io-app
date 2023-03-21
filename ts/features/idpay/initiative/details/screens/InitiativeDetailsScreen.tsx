@@ -7,7 +7,7 @@ import LinearGradient from "react-native-linear-gradient";
 import {
   InitiativeDTO,
   StatusEnum
-} from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
+} from "../../../../../../definitions/idpay/InitiativeDTO";
 import EmptyInitiativeSvg from "../../../../../../img/features/idpay/empty_initiative.svg";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
@@ -133,13 +133,7 @@ export const InitiativeDetailsScreen = () => {
               style={[IOStyles.horizontalContentPadding, { height: 149 }]}
             />
           </LinearGradient>
-          <InitiativeCardComponent
-            endDate={initiativeData.endDate}
-            status={initiativeData.status}
-            accrued={initiativeData.accrued}
-            amount={initiativeData.amount}
-            initiativeName={initiativeData.initiativeName}
-          />
+          <InitiativeCardComponent initiative={initiativeData} />
           <View
             style={[
               IOStyles.flex,

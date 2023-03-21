@@ -1,28 +1,30 @@
 import * as React from "react";
-import { View, Image, ImageBackground, StyleSheet } from "react-native";
+import { Image, ImageBackground, StyleSheet, View } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
-import { StatusEnum } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
-import { H2 } from "../../../../../components/core/typography/H2";
-import { H5 } from "../../../../../components/core/typography/H5";
-import TypedI18n from "../../../../../i18n";
-import { formatDateAsLocal } from "../../../../../utils/dates";
+import {
+  InitiativeDTO,
+  StatusEnum as InitiativeStatusEnum
+} from "../../../../../../definitions/idpay/InitiativeDTO";
 import bonusVacanzeWhiteLogo from "../../../../../../img/bonus/bonusVacanze/logo_BonusVacanze_White.png";
-import { formatNumberAmount } from "../../../../../utils/stringBuilder";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import cardBg from "../../../../../../img/features/idpay/card_full.png";
 import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
+import { H2 } from "../../../../../components/core/typography/H2";
+import { H5 } from "../../../../../components/core/typography/H5";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import I18n from "../../../../../i18n";
+import { formatDateAsLocal } from "../../../../../utils/dates";
+import { formatNumberAmount } from "../../../../../utils/stringBuilder";
 
 type Props = {
-  status: StatusEnum;
-  endDate: Date;
-  initiativeName?: string;
-  amount?: number;
-  accrued?: number;
+  initiative: InitiativeDTO;
 };
 
 const styles = StyleSheet.create({
+  fullHeight: {
+    height: "100%"
+  },
   cardContainer: {
     height: 230,
     width: widthPercentageToDP(100)
@@ -66,78 +68,65 @@ const styles = StyleSheet.create({
 });
 
 const InitiativeCardComponent = (props: Props) => {
-  const renderFullCard = () => {
-    const isInitiativeConfigured = props.status === StatusEnum.REFUNDABLE;
-    return (
-      <View style={[styles.row, styles.spaced, IOStyles.flex]}>
-        <View
-          style={[
-            {
-              height: "100%"
-            },
-            styles.spaced
-          ]}
-        >
-          <View>
-            <VSpacer size={8} />
+  const { initiativeName, endDate, status, amount, accrued, refunded } =
+    props.initiative;
 
-            <H2 color="white">{props.initiativeName}</H2>
-            <Body color="white">
-              {`${TypedI18n.t(
-                "idpay.initiative.details.initiativeCard.validUntil"
-              )} ${formatDateAsLocal(props.endDate, true)}`}
-            </Body>
-          </View>
-          <View style={styles.row}>
-            <View>
-              <View
-                style={!isInitiativeConfigured ? styles.consumedOpacity : {}}
-              >
-                {/* Using H1 here seems wrong. We need a custom
-                typographic component for the wallet cards. */}
-                <H1 color="white">
-                  {formatNumberAmount(props.amount || 0, true)}
-                </H1>
-              </View>
-              <H5 color="white">
-                {TypedI18n.t(
-                  "idpay.initiative.details.initiativeCard.availableAmount"
-                )}
-              </H5>
-            </View>
+  const isInitiativeConfigured = status === InitiativeStatusEnum.REFUNDABLE;
+  const toBeRepaidAmount = (accrued || 0) - (refunded || 0);
 
-            <HSpacer size={8} />
-
-            <View>
-              <View
-                style={!isInitiativeConfigured ? styles.consumedOpacity : {}}
-              >
-                <H1 color="white">
-                  {formatNumberAmount(props.accrued || 0, true)}
-                </H1>
-              </View>
-
-              <H5 color="white">
-                {TypedI18n.t(
-                  "idpay.initiative.details.initiativeCard.toRefund"
-                )}
-              </H5>
-            </View>
-          </View>
-        </View>
+  const renderFullCard = () => (
+    <View style={[styles.row, styles.spaced, IOStyles.flex]}>
+      <View style={[styles.fullHeight, styles.spaced]}>
         <View>
-          <View
-            style={styles.bottomInitiativeIcon}
-            accessible={true}
-            importantForAccessibility={"no-hide-descendants"}
-            accessibilityElementsHidden={true}
-          >
-            <Image source={bonusVacanzeWhiteLogo} style={styles.logo} />
+          <VSpacer size={8} />
+          <H2 color="white">{initiativeName}</H2>
+          <Body color="white">
+            {I18n.t("idpay.initiative.details.initiativeCard.validUntil", {
+              expiryDate: formatDateAsLocal(endDate, true)
+            })}
+          </Body>
+        </View>
+        <View style={styles.row}>
+          <View>
+            <View style={!isInitiativeConfigured ? styles.consumedOpacity : {}}>
+              {/* Using H1 here seems wrong. We need a custom
+                typographic component for the wallet cards. */}
+              <H1 color="white">{formatNumberAmount(amount || 0, true)}</H1>
+            </View>
+
+            <H5 color="white">
+              {I18n.t(
+                "idpay.initiative.details.initiativeCard.availableAmount"
+              )}
+            </H5>
+          </View>
+
+          <HSpacer size={8} />
+
+          <View>
+            <View style={!isInitiativeConfigured ? styles.consumedOpacity : {}}>
+              <H1 color="white">
+                {formatNumberAmount(toBeRepaidAmount, true)}
+              </H1>
+            </View>
+            <H5 color="white">
+              {I18n.t("idpay.initiative.details.initiativeCard.toRefund")}
+            </H5>
           </View>
         </View>
       </View>
-    );
-  };
+      <View>
+        <View
+          style={styles.bottomInitiativeIcon}
+          accessible={true}
+          importantForAccessibility={"no-hide-descendants"}
+          accessibilityElementsHidden={true}
+        >
+          <Image source={bonusVacanzeWhiteLogo} style={styles.logo} />
+        </View>
+      </View>
+    </View>
+  );
 
   return (
     <View style={styles.card} testID={"card-component"}>

@@ -91,6 +91,7 @@ export const FciDocumentPreviewScreen = (
 
   const renderDocumentsNavigationBar = () => (
     <DocumentsNavigationBar
+      indicatorPosition={"left"}
       titleLeft={I18n.t("features.fci.documentsBar.titleLeft", {
         currentDoc: currentDoc + 1,
         totalDocs: documents.length

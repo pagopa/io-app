@@ -655,12 +655,7 @@ const ActiveBonusScreen: React.FunctionComponent<Props> = (props: Props) => {
                   </>
                 )}
                 {/* add extra bottom space when capturing screenshot */}
-                {screenShotState.isPrintable && (
-                  <>
-                    <VSpacer size={16} />
-                    <VSpacer size={16} />
-                  </>
-                )}
+                {screenShotState.isPrintable && <VSpacer size={32} />}
                 {!screenShotState.isPrintable && <EdgeBorderComponent />}
               </View>
             </View>
