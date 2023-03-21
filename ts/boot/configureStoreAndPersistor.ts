@@ -22,7 +22,6 @@ import {
 } from "redux-persist";
 import createSagaMiddleware from "redux-saga";
 import { remoteUndefined } from "../features/bonus/bpd/model/RemoteValue";
-import { FeaturesState } from "../features/common/store/reducers";
 import { initialLollipopState } from "../features/lollipop/store/reducers/lollipop";
 import rootSaga from "../sagas";
 import { Action, StoreEnhancer } from "../store/actions/types";
