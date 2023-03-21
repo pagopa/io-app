@@ -7,6 +7,7 @@ import { mvlDetailsLoad } from "../store/actions";
 import { BackendMvlClient } from "../api/backendMvl";
 import { apiUrlPrefix } from "../../../config";
 import { handleGetMvl } from "./networking/handleGetMvlDetails";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 /**
  * Handle the MVL Requests
@@ -24,4 +25,15 @@ export function* watchMvlSaga(bearerToken: SessionToken): SagaIterator {
       yield* call(handleGetMvl, mvlClient.getUserLegalMessage, action);
     }
   );
+}
+
+// after making the features.MVL non-persistent
+// because it is no longer necessary, the persist:mvl
+// must be manually removed from AsyncStorage
+export function* removePersistMvl() {
+  try {
+    yield* call(AsyncStorage.removeItem, "persist:mvl");
+  } finally {
+    // nothing to do
+  }
 }
