@@ -1,9 +1,8 @@
 // component that represents the item in the radio list
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { View } from "native-base";
 import React from "react";
-import { Dimensions, Image, StyleSheet } from "react-native";
+import { View, Dimensions, Image, StyleSheet } from "react-native";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";

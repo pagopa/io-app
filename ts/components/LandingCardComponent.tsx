@@ -2,9 +2,9 @@
  * This component renders the card displayed in the landing page carousel
  */
 
-import { Text as NBText, View } from "native-base";
+import { Text as NBText } from "native-base";
 import * as React from "react";
-import { Dimensions, Image, ScrollView, StyleSheet } from "react-native";
+import { View, Dimensions, Image, ScrollView, StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
 import { VSpacer } from "./core/spacer/Spacer";
 

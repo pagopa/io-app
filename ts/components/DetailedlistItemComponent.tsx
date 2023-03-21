@@ -1,6 +1,6 @@
-import { Badge, Text as NBText, View } from "native-base";
+import { Badge, Text as NBText } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import customVariables from "../theme/variables";
 import I18n from "../i18n";
 import { IOColors } from "./core/variables/IOColors";

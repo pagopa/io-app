@@ -3,12 +3,9 @@
 exports[`RemoteSwitch tests Snapshot for pot.none 1`] = `
 <View
   style={
-    Array [
-      Object {},
-      Object {
-        "width": 51,
-      },
-    ]
+    Object {
+      "width": 51,
+    }
   }
 >
   <ActivityIndicator
@@ -90,12 +87,9 @@ exports[`RemoteSwitch tests Snapshot for pot.noneError 1`] = `
 exports[`RemoteSwitch tests Snapshot for pot.noneLoading 1`] = `
 <View
   style={
-    Array [
-      Object {},
-      Object {
-        "width": 51,
-      },
-    ]
+    Object {
+      "width": 51,
+    }
   }
 >
   <ActivityIndicator
@@ -108,12 +102,9 @@ exports[`RemoteSwitch tests Snapshot for pot.noneLoading 1`] = `
 exports[`RemoteSwitch tests Snapshot for pot.noneUpdating 1`] = `
 <View
   style={
-    Array [
-      Object {},
-      Object {
-        "width": 51,
-      },
-    ]
+    Object {
+      "width": 51,
+    }
   }
 >
   <ActivityIndicator
@@ -230,12 +221,9 @@ exports[`RemoteSwitch tests Snapshot for pot.someError 2`] = `
 exports[`RemoteSwitch tests Snapshot for pot.someLoading 1`] = `
 <View
   style={
-    Array [
-      Object {},
-      Object {
-        "width": 51,
-      },
-    ]
+    Object {
+      "width": 51,
+    }
   }
 >
   <ActivityIndicator
@@ -248,12 +236,9 @@ exports[`RemoteSwitch tests Snapshot for pot.someLoading 1`] = `
 exports[`RemoteSwitch tests Snapshot for pot.someLoading 2`] = `
 <View
   style={
-    Array [
-      Object {},
-      Object {
-        "width": 51,
-      },
-    ]
+    Object {
+      "width": 51,
+    }
   }
 >
   <ActivityIndicator
