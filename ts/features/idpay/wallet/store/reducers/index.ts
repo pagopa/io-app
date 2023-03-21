@@ -14,6 +14,7 @@ import {
   idpayInitiativesInstrumentDelete,
   idpayInitiativesInstrumentEnroll
 } from "../actions";
+import { StatusEnum } from "../../../../../../definitions/idpay/InitiativesStatusDTO";
 
 export type IDPayWalletState = {
   initiatives: pot.Pot<WalletDTO, NetworkError>;
@@ -115,7 +116,7 @@ export const idPayWalletInitiativesListWithInstrumentSelector = createSelector(
   initiatives => pot.map(initiatives, w => w.initiativeList)
 );
 
-export const idpayInitiativesListSelector = createSelector(
+export const idPayEnabledInitiativesFromInstrumentSelector = createSelector(
   [isIdPayEnabledSelector, idPayWalletInitiativesListWithInstrumentSelector],
   (isIdpayEnabled, initiatives) =>
     isIdpayEnabled ? pot.getOrElse(initiatives, []) : []
@@ -132,5 +133,30 @@ export const idPayInitiativeAwaitingUpdateSelector = (
   state: GlobalState,
   initiativeId: string
 ) => state.features.idPay.wallet.initiativesAwaitingStatusUpdate[initiativeId];
+
+export const idPayInitiativeFromInstrumentPotSelector = (
+  state: GlobalState,
+  initiativeId: string
+) => {
+  const initiative = idPayEnabledInitiativesFromInstrumentSelector(state).find(
+    i => i.initiativeId === initiativeId
+  );
+  const isItemActive = initiative?.status === StatusEnum.ACTIVE;
+  const isAwaitingUpdate = idPayInitiativeAwaitingUpdateSelector(
+    state,
+    initiativeId
+  );
+  const isItemActivePot = pot.some(isItemActive);
+  switch (isAwaitingUpdate) {
+    case undefined:
+      return isItemActivePot;
+    case true:
+      return pot.someLoading(isItemActive);
+    case false:
+      return pot.someUpdating(isItemActive, !isItemActive);
+    default:
+      return pot.none;
+  }
+};
 
 export default reducer;

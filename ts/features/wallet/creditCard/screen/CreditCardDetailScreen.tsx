@@ -56,8 +56,6 @@ const CreditCardDetailScreen: React.FunctionComponent<Props> = props => {
     }
   }, [storeCreditCard, loadIdpayInitiatives]);
 
- 
-
   return (
     <LoadingSpinnerOverlay
       isLoading={areIdPayInitiativesLoading}

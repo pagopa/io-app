@@ -1,4 +1,3 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Badge as NBbadge, ListItem as NBlistItem } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
@@ -16,7 +15,7 @@ import {
   idpayInitiativesInstrumentDelete,
   idpayInitiativesInstrumentEnroll
 } from "../store/actions";
-import { idPayInitiativeAwaitingUpdateSelector } from "../store/reducers";
+import { idPayInitiativeFromInstrumentPotSelector } from "../store/reducers";
 
 const styles = StyleSheet.create({
   badge: {
@@ -71,15 +70,14 @@ type SwitchOrStatusLabelProps = {
   idWallet: string;
 };
 const SwitchOrStatusLabel = ({ item, idWallet }: SwitchOrStatusLabelProps) => {
-  const { updateInitiativeStatus, status, isAwaitingUpdate } =
-    useInitiativeStatusData(item, idWallet);
+  const { updateInitiativeStatus } = useInitiativeStatusUpdate(item, idWallet);
+  const { status } = item;
+  const switchValue = useIOSelector(state =>
+    idPayInitiativeFromInstrumentPotSelector(state, item.initiativeId)
+  );
   switch (status) {
     case StatusEnum.ACTIVE:
     case StatusEnum.INACTIVE:
-      const switchValue = getRemoteSwitchValue(
-        status === StatusEnum.ACTIVE,
-        isAwaitingUpdate
-      );
       return (
         // we are passing status here because we are sure it is either ACTIVE or INACTIVE
         <RemoteSwitch
@@ -104,37 +102,12 @@ const SwitchOrStatusLabel = ({ item, idWallet }: SwitchOrStatusLabelProps) => {
   }
 };
 
-const getRemoteSwitchValue = (
-  isItemActive: boolean,
-  isAwaitingUpdate: boolean | undefined
-) => {
-  const isItemActivePot = pot.some(isItemActive);
-  switch (isAwaitingUpdate) {
-    case undefined:
-      // return isItemActivePot;
-      break;
-    case true:
-      pot.toLoading(isItemActivePot);
-      break;
-    case false:
-      pot.toUpdating(isItemActivePot, !isItemActive);
-      break;
-    default:
-      return pot.none;
-  }
-  return isItemActivePot;
-};
-
-const useInitiativeStatusData = (
+const useInitiativeStatusUpdate = (
   item: InitiativesStatusDTO,
   idWallet: string
 ) => {
   const dispatch = useIODispatch();
-  const isAwaitingUpdate = useIOSelector(state =>
-    idPayInitiativeAwaitingUpdateSelector(state, initiativeId)
-  );
-  const { idInstrument, initiativeId, status } = item;
-
+  const { idInstrument, initiativeId } = item;
   type ValidStatus = typeof StatusEnum.ACTIVE | typeof StatusEnum.INACTIVE;
   const updateInitiativeStatus = (status: ValidStatus) => {
     const isItemActiveAndValid =
@@ -156,5 +129,5 @@ const useInitiativeStatusData = (
     }
   };
 
-  return { updateInitiativeStatus, status, isAwaitingUpdate };
+  return { updateInitiativeStatus };
 };

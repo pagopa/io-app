@@ -4,7 +4,7 @@ import {
   idPayWalletInitiativeListSelector,
   idPayInitiativesFromInstrumentSelector,
   idPayWalletSelector,
-  idpayInitiativesListSelector,
+  idPayEnabledInitiativesFromInstrumentSelector,
   idPayInitiativeAwaitingUpdateSelector,
   idPayAreInitiativesFromInstrumentLoadingSelector
 } from "..";
@@ -120,7 +120,9 @@ describe("test Idpay InitiativesFromInstrument reducers and selectors", () => {
     expect(
       idPayAreInitiativesFromInstrumentLoadingSelector(store.getState())
     ).toStrictEqual(true);
-    expect(idpayInitiativesListSelector(store.getState())).toStrictEqual([]);
+    expect(
+      idPayEnabledInitiativesFromInstrumentSelector(store.getState())
+    ).toStrictEqual([]);
     expect(
       idPayInitiativesFromInstrumentSelector(store.getState())
     ).toStrictEqual(pot.noneLoading);
@@ -157,9 +159,9 @@ describe("test Idpay InitiativesFromInstrument reducers and selectors", () => {
     expect(
       store.getState().features.idPay.wallet.initiativesWithInstrument
     ).toStrictEqual(pot.some(mockInitiativesWithInstrumentSuccess));
-    expect(idpayInitiativesListSelector(store.getState())).toStrictEqual(
-      mockInitiativesWithInstrumentSuccess.initiativeList
-    );
+    expect(
+      idPayEnabledInitiativesFromInstrumentSelector(store.getState())
+    ).toStrictEqual(mockInitiativesWithInstrumentSuccess.initiativeList);
     expect(
       idPayInitiativesFromInstrumentSelector(store.getState())
     ).toStrictEqual(pot.some(mockInitiativesWithInstrumentSuccess));
@@ -191,9 +193,9 @@ describe("test Idpay Initiative Enroll/Delete reducers and selectors", () => {
     expect(
       store.getState().features.idPay.wallet.initiativesAwaitingStatusUpdate
     ).toStrictEqual({ initiative: true, initiative1: true, initiative2: true });
-    expect(idpayInitiativesListSelector(store.getState())).toStrictEqual(
-      mockInitiativesWithInstrumentSuccess.initiativeList
-    );
+    expect(
+      idPayEnabledInitiativesFromInstrumentSelector(store.getState())
+    ).toStrictEqual(mockInitiativesWithInstrumentSuccess.initiativeList);
     expect(
       idPayInitiativeAwaitingUpdateSelector(store.getState(), "initiative") &&
         idPayInitiativeAwaitingUpdateSelector(

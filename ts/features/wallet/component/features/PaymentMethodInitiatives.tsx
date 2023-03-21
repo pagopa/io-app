@@ -16,7 +16,7 @@ import { useIOSelector } from "../../../../store/hooks";
 import { GlobalState } from "../../../../store/reducers/types";
 import { PaymentMethod } from "../../../../types/pagopa";
 import {
-  idpayInitiativesListSelector,
+  idPayEnabledInitiativesFromInstrumentSelector,
   idPayAreInitiativesFromInstrumentErrorSelector
 } from "../../../idpay/wallet/store/reducers";
 import { idPayInitiativesFromInstrumentGet } from "../../../idpay/wallet/store/actions";
@@ -100,7 +100,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     )
 });
 const mapStateToProps = (state: GlobalState) => ({
-  namedInitiativesList: idpayInitiativesListSelector(state)
+  namedInitiativesList: idPayEnabledInitiativesFromInstrumentSelector(state)
 });
 
 export default connect(
