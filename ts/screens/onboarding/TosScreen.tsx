@@ -25,8 +25,6 @@ import TosWebviewComponent from "../../components/TosWebviewComponent";
 import { WebViewMessage } from "../../components/ui/Markdown/types";
 import { privacyUrl, tosVersion } from "../../config";
 import I18n from "../../i18n";
-import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
-import { OnboardingParamsList } from "../../navigation/params/OnboardingParamsList";
 import { abortOnboarding, tosAccepted } from "../../store/actions/onboarding";
 import { ReduxProps } from "../../store/actions/types";
 import {
@@ -39,11 +37,7 @@ import { isOnboardingCompleted } from "../../utils/navigation";
 import { showToast } from "../../utils/showToast";
 import { openWebUrl } from "../../utils/url";
 
-type OwnProps = {
-  navigation: IOStackNavigationProp<OnboardingParamsList, "ONBOARDING_TOS">;
-};
-
-type Props = ReduxProps & OwnProps & ReturnType<typeof mapStateToProps>;
+type Props = ReduxProps & ReturnType<typeof mapStateToProps>;
 type State = {
   isLoading: boolean;
   hasError: boolean;
@@ -113,10 +107,14 @@ class TosScreen extends React.PureComponent<Props, State> {
     }
     return (
       <View style={styles.errorContainer}>
-        <Image source={brokenLinkImage} resizeMode="contain" />
+        <Image
+          source={brokenLinkImage}
+          resizeMode="contain"
+          testID={"toSErrorContainerImage"}
+        />
         <View>
           <VSpacer size={8} />
-          <H2 color="bluegrey" weight="Bold">
+          <H2 color="bluegrey" weight="Bold" testID={"toSErrorContainerTitle"}>
             {I18n.t("onboarding.tos.error")}
           </H2>
         </View>
@@ -129,8 +127,11 @@ class TosScreen extends React.PureComponent<Props, State> {
             style={{ flex: 2 }}
             block={true}
             primary={true}
+            testID={"toSErrorContainerButton"}
           >
-            <NBButtonText>{I18n.t("global.buttons.retry")}</NBButtonText>
+            <NBButtonText testID={"toSErrorContainerButtonText"}>
+              {I18n.t("global.buttons.retry")}
+            </NBButtonText>
           </ButtonDefaultOpacity>
         </View>
       </View>
@@ -170,8 +171,8 @@ class TosScreen extends React.PureComponent<Props, State> {
       >
         <SafeAreaView style={styles.webViewContainer}>
           {!this.props.hasAcceptedCurrentTos && (
-            <View style={styles.alert}>
-              <Body>
+            <View style={styles.alert} testID={"currentToSNotAcceptedView"}>
+              <Body testID={"currentToSNotAcceptedText"}>
                 {this.props.hasAcceptedOldTosVersion
                   ? I18n.t("profile.main.privacy.privacyPolicy.updated")
                   : I18n.t("profile.main.privacy.privacyPolicy.infobox")}
@@ -184,7 +185,7 @@ class TosScreen extends React.PureComponent<Props, State> {
               handleError={this.handleError}
               handleLoadEnd={this.handleLoadEnd}
               handleWebViewMessage={this.handleWebViewMessage}
-              url={privacyUrl}
+              webViewSource={{ uri: privacyUrl }}
               shouldFooterRender={shouldFooterRender}
               onExit={this.handleGoBack}
               onAcceptTos={() => dispatch(tosAccepted(tosVersion))}

@@ -184,6 +184,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
               we have two colors: dark (bluegrey) and light (white).
               We don't have any color values other than these two. */}
               <Body
+                testID={"bodyLabel"}
                 numberOfLines={1}
                 accessible={true}
                 accessibilityRole={"header"}
