@@ -124,15 +124,13 @@ const InitiativeCardComponent = (props: Props) => {
 
         <VSpacer size={8} />
         <View style={styles.bonusStatusContainer}>
-          <View>
-            {/* no idea why, but this <View/> is required to correctly center the badge  */}
-            <IOBadge
-              small={true}
-              text={I18n.t(
-                `idpay.initiative.details.initiativeCard.statusLabels.${status}`
-              )}
-            />
-          </View>
+          {/* as of now, this is misaligned, will be fixed once #4337 is merged */}
+          <IOBadge
+            small={true}
+            text={I18n.t(
+              `idpay.initiative.details.initiativeCard.statusLabels.${status}`
+            )}
+          />
           <HSpacer size={8} />
           <LabelSmall color="bluegreyDark">
             {I18n.t(
