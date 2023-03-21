@@ -78,14 +78,16 @@ const TosWebviewComponent: React.FunctionComponent<Props> = ({
           block={true}
           primary={true}
         >
-          <NBText>{I18n.t("global.buttons.retry")}</NBText>
+          <NBText testID="toSWebViewContainerRetryButton">
+            {I18n.t("global.buttons.retry")}
+          </NBText>
         </ButtonDefaultOpacity>
       </View>
     </View>
   );
 
   // A function that handles message sent by the WebView component
-  const handleWebViewMessage = (event: WebViewMessageEvent) =>
+  const handleWebViewMessage = (event: WebViewMessageEvent) => {
     pipe(
       JSON.parse(event.nativeEvent.data),
       WebViewMessage.decode,
@@ -95,6 +97,7 @@ const TosWebviewComponent: React.FunctionComponent<Props> = ({
         }
       })
     );
+  };
 
   return hasError ? (
     renderError()

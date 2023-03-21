@@ -1,4 +1,4 @@
-import { fireEvent, render } from "@testing-library/react-native";
+import { act, fireEvent, render } from "@testing-library/react-native";
 import * as React from "react";
 import WebView from "react-native-webview";
 import renderer from "react-test-renderer";
@@ -9,6 +9,7 @@ import {
   WebViewNavigationEvent
 } from "react-native-webview/lib/WebViewTypes";
 import TosWebviewComponent from "../TosWebviewComponent";
+import * as urlUtils from "../../../ts/utils/url";
 
 beforeAll(() => {
   jest.resetAllMocks();
@@ -73,7 +74,7 @@ describe("TosWebviewComponent", () => {
     });
   });
   describe("When rendering and there is an error", () => {
-    it("The 'handleError' prop should have been invoked", () => {
+    it("Pressing the 'retry' button should invoke the `handleReload` callback", async () => {
       // eslint-disable-next-line functional/no-let
       let maybeWebView: O.Option<WebView> = O.none;
       jest
@@ -81,20 +82,43 @@ describe("TosWebviewComponent", () => {
         .mockImplementationOnce(function (this: WebView) {
           maybeWebView = O.some(this);
         });
-      const errorHandlerMock = jest.fn();
-      commonSetup({ onError: errorHandlerMock });
+      const onReloadMock = jest.fn();
+      const renderAPI = commonSetup({ onReload: onReloadMock });
 
       expect(maybeWebView).not.toBe(O.none);
       const webView = maybeWebView as O.Some<WebView>;
 
-      webView.value.props.onError?.({} as WebViewErrorEvent);
+      await act(() => webView.value.props.onError?.({} as WebViewErrorEvent));
+
+      const retryButtonRTI = renderAPI.getByTestId(
+        "toSWebViewContainerRetryButton"
+      );
+      fireEvent.press(retryButtonRTI);
+
+      expect(onReloadMock).toHaveBeenCalledTimes(1);
+    });
+    it("The 'onLoaded' prop should have been invoked", async () => {
+      // eslint-disable-next-line functional/no-let
+      let maybeWebView: O.Option<WebView> = O.none;
+      jest
+        .spyOn(WebView.prototype, "render")
+        .mockImplementationOnce(function (this: WebView) {
+          maybeWebView = O.some(this);
+        });
+      const onLoadedMock = jest.fn();
+      commonSetup({ onLoaded: onLoadedMock });
+
+      expect(maybeWebView).not.toBe(O.none);
+      const webView = maybeWebView as O.Some<WebView>;
+
+      await act(() => webView.value.props.onError?.({} as WebViewErrorEvent));
 
       // The error handler should have been invoked
-      expect(errorHandlerMock).toHaveBeenCalledTimes(1);
+      expect(onLoadedMock).toHaveBeenCalledTimes(1);
     });
   });
   describe("When rendering and the webview finishes its loading without any error", () => {
-    it("The 'handleLoadEnd' prop should have been invoked", () => {
+    it("The 'handleLoadEnd' prop should have been invoked", async () => {
       // eslint-disable-next-line functional/no-let
       let maybeWebView: O.Option<WebView> = O.none;
       jest
@@ -108,14 +132,16 @@ describe("TosWebviewComponent", () => {
       expect(maybeWebView).not.toBe(O.none);
       const webView = maybeWebView as O.Some<WebView>;
 
-      webView.value.props.onLoadEnd?.({} as WebViewNavigationEvent);
+      await act(() =>
+        webView.value.props.onLoadEnd?.({} as WebViewNavigationEvent)
+      );
 
       // The load ended handler should have been invoked
       expect(loadEndedHandlerMock).toHaveBeenCalledTimes(1);
     });
   });
-  describe("When the properly loaded webview sends a javascript message", () => {
-    it("The 'handleWebViewMessage' prop should have been invoked", () => {
+  describe("When the properly loaded webview sends a javascript message to open an Url", () => {
+    it("The 'openWebUrl' method should have been invoked", async () => {
       // eslint-disable-next-line functional/no-let
       let maybeWebView: O.Option<WebView> = O.none;
       jest
@@ -123,16 +149,24 @@ describe("TosWebviewComponent", () => {
         .mockImplementationOnce(function (this: WebView) {
           maybeWebView = O.some(this);
         });
+      const spiedOpenWebUrl = jest.spyOn(urlUtils, "openWebUrl");
       const webViewMessageHandlerMock = jest.fn();
       commonSetup({ onWebViewMessageReceived: webViewMessageHandlerMock });
 
       expect(maybeWebView).not.toBe(O.none);
       const webView = maybeWebView as O.Some<WebView>;
 
-      webView.value.props.onMessage?.({} as WebViewMessageEvent);
+      const mockedUrl = "https://www.myurl.com";
+      await act(() =>
+        webView.value.props.onMessage?.({
+          nativeEvent: {
+            data: `{"type":"LINK_MESSAGE","payload":{"href":"${mockedUrl}"}}`
+          }
+        } as unknown as WebViewMessageEvent)
+      );
 
       // The load ended handler should have been invoked
-      expect(webViewMessageHandlerMock).toHaveBeenCalledTimes(1);
+      expect(spiedOpenWebUrl).toHaveBeenCalledWith(mockedUrl);
     });
   });
 });
@@ -141,17 +175,16 @@ type CurrentTestConfiguration = {
   shouldRenderFooter?: boolean;
   onLeftButton?: () => void;
   onRightButton?: () => void;
-  onError?: () => void;
+  onReload?: () => void;
   onLoaded?: () => void;
   onWebViewMessageReceived?: (event: any) => void;
 };
 
 const commonSetup = ({
-  // TODO
   shouldRenderFooter = true,
   onLeftButton = () => undefined,
   onRightButton = () => undefined,
-  onError = () => undefined,
+  onReload = () => undefined,
   onLoaded = () => undefined
 }: CurrentTestConfiguration = {}) =>
   render(
@@ -159,7 +192,7 @@ const commonSetup = ({
       shouldFooterRender={shouldRenderFooter}
       webViewSource={{ html: "<html><head></head><body></body></html>" }}
       handleLoadEnd={onLoaded}
-      handleReload={onError}
+      handleReload={onReload}
       onExit={onLeftButton}
       onAcceptTos={onRightButton}
     />

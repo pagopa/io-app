@@ -2,7 +2,7 @@ import * as React from "react";
 import { pot } from "@pagopa/ts-commons";
 import * as O from "fp-ts/lib/Option";
 import configureMockStore from "redux-mock-store";
-import { fireEvent } from "@testing-library/react-native";
+import { act, fireEvent } from "@testing-library/react-native";
 import { NavigationAction } from "@react-navigation/native";
 import { Alert, AlertButton } from "react-native";
 import I18n from "i18n-js";
@@ -18,8 +18,8 @@ import { GlobalState } from "../../../store/reducers/types";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
 import ROUTES from "../../../navigation/routes";
-import { renderScreenWithNavigationStoreContext } from "../../../../ts/utils/testWrapper";
-import NavigationService from "../../../../ts/navigation/NavigationService";
+import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
+import NavigationService from "../../../navigation/NavigationService";
 import brokenLinkImage from "../../../../img/broken-link.png";
 import * as ToastUtils from "../../../utils/showToast";
 import OnboardingTosScreen from "../OnboardingTosScreen";
@@ -213,7 +213,9 @@ describe("TosScreen", () => {
       expect(maybeWebView).not.toBe(O.none);
       const webView = maybeWebView as O.Some<WebView>;
 
-      webView.value.props.onLoadEnd?.({} as WebViewNavigationEvent);
+      await act(() =>
+        webView.value.props.onLoadEnd?.({} as WebViewNavigationEvent)
+      );
 
       // Overlay component should be there (since the top view is rendered nonetheless)
       const overlayComponentRTI = renderAPI.getByTestId("overlayComponent");
@@ -242,7 +244,9 @@ describe("TosScreen", () => {
       expect(maybeWebView).not.toBe(O.none);
       const webView = maybeWebView as O.Some<WebView>;
 
-      webView.value.props.onLoadEnd?.({} as WebViewNavigationEvent);
+      await act(() =>
+        webView.value.props.onLoadEnd?.({} as WebViewNavigationEvent)
+      );
 
       // Overlay component should be there
       const overlayComponentRTI = renderAPI.getByTestId("overlayComponent");
@@ -273,7 +277,9 @@ describe("TosScreen", () => {
       expect(maybeWebView).not.toBe(O.none);
       const webView = maybeWebView as O.Some<WebView>;
 
-      webView.value.props.onLoadEnd?.({} as WebViewNavigationEvent);
+      await act(() =>
+        webView.value.props.onLoadEnd?.({} as WebViewNavigationEvent)
+      );
 
       // Overlay component should be there
       const overlayComponentRTI = renderAPI.getByTestId("overlayComponent");
@@ -291,7 +297,7 @@ describe("TosScreen", () => {
     });
   });
   describe("When rendering the screen and there is an error", () => {
-    it("The error overlay should have been rendered with proper values and the web view should not have been rendered", () => {
+    it("The error overlay should have been rendered with proper values and the web view should not have been rendered", async () => {
       // eslint-disable-next-line functional/no-let
       let maybeWebView: O.Option<WebView> = O.none;
       jest
@@ -304,7 +310,7 @@ describe("TosScreen", () => {
       expect(maybeWebView).not.toBe(O.none);
       const webView = maybeWebView as O.Some<WebView>;
 
-      webView.value.props.onError?.({} as WebViewErrorEvent);
+      await act(() => webView.value.props.onError?.({} as WebViewErrorEvent));
 
       // Error container should be there
       const errorContainerViewRTI = renderAPI.getByTestId(
@@ -353,7 +359,7 @@ describe("TosScreen", () => {
       expect(maybeWebView).not.toBe(O.none);
       const webView = maybeWebView as O.Some<WebView>;
 
-      webView.value.props.onError?.({} as WebViewErrorEvent);
+      await act(() => webView.value.props.onError?.({} as WebViewErrorEvent));
 
       // Retry button should be rendered
       const errorContainerButtonRTI = renderAPI.getByTestId(
@@ -393,7 +399,9 @@ describe("TosScreen", () => {
       const webView = maybeWebView as O.Some<WebView>;
 
       // This is needed otherwise the componentDidUpdate method will not be triggered
-      webView.value.props.onLoadEnd?.({} as WebViewNavigationEvent);
+      await act(() =>
+        webView.value.props.onLoadEnd?.({} as WebViewNavigationEvent)
+      );
 
       // The showToast function should have been called
       expect(spiedToastFunction).toHaveBeenCalledWith(
@@ -402,7 +410,7 @@ describe("TosScreen", () => {
     });
   });
   describe("When rendering the screen on the onboarding flow, the state is not loading and there are no state errors", () => {
-    it("The ToS acceptance footer should have been rendered", () => {
+    it("The ToS acceptance footer should have been rendered", async () => {
       // eslint-disable-next-line functional/no-let
       let maybeWebView: O.Option<WebView> = O.none;
       jest
@@ -415,7 +423,9 @@ describe("TosScreen", () => {
       expect(maybeWebView).not.toBe(O.none);
       const webView = maybeWebView as O.Some<WebView>;
 
-      webView.value.props.onLoadEnd?.({} as WebViewNavigationEvent);
+      await act(() =>
+        webView.value.props.onLoadEnd?.({} as WebViewNavigationEvent)
+      );
 
       const footerWithButtonsViewRTI =
         renderAPI.getByTestId("FooterWithButtons");
@@ -423,7 +433,7 @@ describe("TosScreen", () => {
     });
   });
   describe("When rendering the screen on the onboarding flow, the state is not loading but there are state errors", () => {
-    it("The ToS acceptance footer should not have been rendered", () => {
+    it("The ToS acceptance footer should not have been rendered", async () => {
       // eslint-disable-next-line functional/no-let
       let maybeWebView: O.Option<WebView> = O.none;
       jest
@@ -436,7 +446,7 @@ describe("TosScreen", () => {
       expect(maybeWebView).not.toBe(O.none);
       const webView = maybeWebView as O.Some<WebView>;
 
-      webView.value.props.onError?.({} as WebViewErrorEvent);
+      await act(() => webView.value.props.onError?.({} as WebViewErrorEvent));
 
       const footerWithButtonsViewRTI =
         renderAPI.queryByTestId("FooterWithButtons");
@@ -453,7 +463,7 @@ describe("TosScreen", () => {
     });
   });
   describe("When rendering the screen, not from the onboarding flow, the state is not loading and there are no state errors", () => {
-    it("The ToS acceptance footer should have been rendered", () => {
+    it("The ToS acceptance footer should have been rendered", async () => {
       // eslint-disable-next-line functional/no-let
       let maybeWebView: O.Option<WebView> = O.none;
       jest
@@ -466,7 +476,9 @@ describe("TosScreen", () => {
       expect(maybeWebView).not.toBe(O.none);
       const webView = maybeWebView as O.Some<WebView>;
 
-      webView.value.props.onLoadEnd?.({} as WebViewNavigationEvent);
+      await act(() =>
+        webView.value.props.onLoadEnd?.({} as WebViewNavigationEvent)
+      );
 
       const footerWithButtonsViewRTI =
         renderAPI.queryByTestId("FooterWithButtons");
