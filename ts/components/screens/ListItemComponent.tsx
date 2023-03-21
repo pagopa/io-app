@@ -137,7 +137,7 @@ export default class ListItemComponent extends React.Component<Props> {
                   importantForAccessibility="no-hide-descendants"
                 />
               ) : (
-                <Icon name="arrowRight" size={ICON_SIZE} color="blue" />
+                <Icon name="chevronRight" size={ICON_SIZE} color="blue" />
               ))}
           </View>
           {this.props.subTitle && (
