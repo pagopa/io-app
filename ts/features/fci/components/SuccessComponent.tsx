@@ -1,5 +1,5 @@
 import * as React from "react";
-import { createSelector } from "reselect";
+import { shallowEqual } from "react-redux";
 import * as O from "fp-ts/lib/Option";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import I18n from "../../../i18n";
@@ -34,7 +34,8 @@ const SuccessComponent = (props: {
   const dispatch = useIODispatch();
 
   const publicKeyOption = useIOSelector(
-    createSelector(lollipopPublicKeySelector, V => V)
+    lollipopPublicKeySelector,
+    shallowEqual
   );
   const isLollipopEnabled = useIOSelector(isLollipopEnabledSelector);
   const showUnsupportedDeviceBanner =
