@@ -6,6 +6,7 @@ import { IOColors } from "../variables/IOColors";
 import IconSpid from "./svg/IconSpid";
 import IconCie from "./svg/IconCie";
 import IconQrCode from "./svg/IconQrCode";
+import IconBell from "./svg/IconBell";
 import IconHome from "./svg/IconHome";
 import IconHomeFill from "./svg/IconHomeFill";
 import IconCopy from "./svg/IconCopy";
@@ -84,6 +85,7 @@ import IconDocumentAttachment from "./svg/IconDocumentAttachment";
 import IconDocumentAttachmentPDF from "./svg/IconDocumentAttachmentPDF";
 import IconAttachment from "./svg/IconAttachment";
 import IconLocationiOS from "./svg/IconLocationiOS";
+import IconLocationiOSFilled from "./svg/IconLocationiOSFilled";
 import IconLocationAndroid from "./svg/IconLocationAndroid";
 import IconExternalLink from "./svg/IconExternalLink";
 import IconUnknownGdo from "./svg/IconUnknownGdo";
@@ -190,6 +192,7 @@ export const IOIcons = {
   cie: IconCie /* io-cie */,
   qrCode: IconQrCode,
   legQrCode: LegIconQrCode /* io-qr */,
+  bell: IconBell,
   website: IconWebsite,
   legWebsite: LegIconWebsite,
   abacus: IconAbacus,
@@ -268,6 +271,7 @@ export const IOIcons = {
   legAmount: LegIconAmount,
   psp: IconPSP,
   locationiOS: IconLocationiOS,
+  locationiOSFilled: IconLocationiOSFilled,
   locationAndroid: IconLocationAndroid,
   legLocation: LegIconLocation,
   coggle: IconCoggle,
@@ -440,6 +444,7 @@ const {
   qrCode,
   website,
   abacus,
+  bell,
   home,
   homeFill,
   copy,
@@ -476,6 +481,7 @@ const {
   amount,
   coggle,
   locationiOS,
+  locationiOSFilled,
   locationAndroid,
   notice,
   noticeFilled,
@@ -525,6 +531,7 @@ export const IOIconsNew = {
   website,
   abacus,
   home,
+  bell,
   homeFill,
   copy,
   institution,
@@ -559,6 +566,7 @@ export const IOIconsNew = {
   transactions,
   amount,
   locationiOS,
+  locationiOSFilled,
   locationAndroid,
   coggle,
   notice,
