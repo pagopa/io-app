@@ -45,6 +45,7 @@ exports[`WebviewComponent tests snapshot for component 1`] = `
     >
       <ActivityIndicator
         size="large"
+        testID="refreshIndicator"
       />
       <Text
         accessible={true}
