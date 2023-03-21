@@ -573,37 +573,31 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                                       <View
                                         pointerEvents="box-none"
                                         style={
-                                          Array [
-                                            Object {},
-                                            Object {
-                                              "marginTop": -50,
-                                              "overflow": "hidden",
-                                              "paddingTop": 50,
-                                            },
-                                          ]
+                                          Object {
+                                            "marginTop": -50,
+                                            "overflow": "hidden",
+                                            "paddingTop": 50,
+                                          }
                                         }
                                         testID="FooterWithButtons"
                                       >
                                         <View
                                           style={
-                                            Array [
-                                              Object {},
-                                              Object {
-                                                "backgroundColor": "#FFFFFF",
-                                                "elevation": 20,
-                                                "paddingBottom": 16,
-                                                "paddingLeft": 24,
-                                                "paddingRight": 24,
-                                                "paddingTop": 16,
-                                                "shadowColor": "#0E0F13",
-                                                "shadowOffset": Object {
-                                                  "height": 50,
-                                                  "width": 0,
-                                                },
-                                                "shadowOpacity": 0.5,
-                                                "shadowRadius": 37,
+                                            Object {
+                                              "backgroundColor": "#FFFFFF",
+                                              "elevation": 20,
+                                              "paddingBottom": 16,
+                                              "paddingLeft": 24,
+                                              "paddingRight": 24,
+                                              "paddingTop": 16,
+                                              "shadowColor": "#0E0F13",
+                                              "shadowOffset": Object {
+                                                "height": 50,
+                                                "width": 0,
                                               },
-                                            ]
+                                              "shadowOpacity": 0.5,
+                                              "shadowRadius": 37,
+                                            }
                                           }
                                         >
                                           <View
@@ -680,7 +674,9 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                                                       "paddingRight": 16,
                                                     },
                                                     undefined,
-                                                    undefined,
+                                                    Object {
+                                                      "color": "#FFFFFF",
+                                                    },
                                                   ]
                                                 }
                                                 uppercase={false}

@@ -1,6 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import _ from "lodash";
-import { View } from "native-base";
+import { View } from "react-native";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
