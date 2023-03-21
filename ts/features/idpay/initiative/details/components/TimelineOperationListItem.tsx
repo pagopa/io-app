@@ -73,16 +73,16 @@ const OperationIcon = ({ operation }: OperationComponentProps) => {
 };
 const OperationAmount = ({ operation }: OperationComponentProps) => {
   switch (operation.operationType) {
-    case TransactionOperationTypeEnum.REVERSAL:
+    case TransactionOperationTypeEnum.TRANSACTION:
       return (
-        <H4>{`-${formatNumberAmount(
+        <H4>{`+${formatNumberAmount(
           Math.abs(operation.accrued),
           false
         )} €`}</H4>
       );
-    case TransactionOperationTypeEnum.TRANSACTION:
+    case TransactionOperationTypeEnum.REVERSAL:
       return (
-        <H4>{`+${formatNumberAmount(
+        <H4>{`-${formatNumberAmount(
           Math.abs(operation.accrued),
           false
         )} €`}</H4>
