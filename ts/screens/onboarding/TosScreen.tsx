@@ -106,7 +106,7 @@ class TosScreen extends React.PureComponent<Props, State> {
       return null;
     }
     return (
-      <View style={styles.errorContainer}>
+      <View style={styles.errorContainer} testID={"toSErrorContainerView"}>
         <Image
           source={brokenLinkImage}
           resizeMode="contain"
