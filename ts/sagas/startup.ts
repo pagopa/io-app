@@ -424,7 +424,7 @@ export function* initializeApplicationSaga(): Generator<
     yield* fork(watchEUCovidCertificateSaga, sessionToken);
   }
 
-  // Remove persistent features.MVL
+  // Remove persisted features.MVL
   yield* call(removePersistMvl);
 
   if (mvlEnabled) {
