@@ -3,8 +3,9 @@ import { pipe } from "fp-ts/lib/function";
 import { Text as NBText } from "native-base";
 import * as React from "react";
 import { useCallback, useState } from "react";
-import { Image, StyleSheet, View } from "react-native";
+import { Image, StyleSheet, View, ViewProps } from "react-native";
 import WebView, { WebViewMessageEvent } from "react-native-webview";
+import { WebViewSource } from "react-native-webview/lib/WebViewTypes";
 import brokenLinkImage from "../../img/broken-link.png";
 import I18n from "../i18n";
 import { openWebUrl } from "../utils/url";
@@ -15,13 +16,13 @@ import { NOTIFY_LINK_CLICK_SCRIPT } from "./ui/Markdown/script";
 import { WebViewMessage } from "./ui/Markdown/types";
 
 type Props = {
-  url: string;
+  webViewSource: WebViewSource;
   handleLoadEnd: () => void;
   handleReload: () => void;
   onAcceptTos?: () => void;
   onExit?: () => void;
   shouldFooterRender?: boolean;
-};
+} & Pick<ViewProps, "testID">;
 
 const styles = StyleSheet.create({
   errorContainer: {
@@ -46,7 +47,7 @@ const styles = StyleSheet.create({
 const TosWebviewComponent: React.FunctionComponent<Props> = ({
   handleLoadEnd,
   handleReload,
-  url,
+  webViewSource,
   shouldFooterRender,
   onExit,
   onAcceptTos
@@ -99,7 +100,7 @@ const TosWebviewComponent: React.FunctionComponent<Props> = ({
     renderError()
   ) : (
     <>
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1 }} testID={"toSWebViewContainer"}>
         <WebView
           androidCameraAccessDisabled={true}
           androidMicrophoneAccessDisabled={true}
@@ -107,7 +108,7 @@ const TosWebviewComponent: React.FunctionComponent<Props> = ({
           style={{ flex: 1 }}
           onLoadEnd={handleLoadEnd}
           onError={handleError}
-          source={{ uri: url }}
+          source={webViewSource}
           onMessage={handleWebViewMessage}
           injectedJavaScript={closeInjectedScript(
             AVOID_ZOOM_JS + NOTIFY_LINK_CLICK_SCRIPT
@@ -121,13 +122,15 @@ const TosWebviewComponent: React.FunctionComponent<Props> = ({
             block: true,
             bordered: true,
             onPress: onExit,
-            title: I18n.t("global.buttons.exit")
+            title: I18n.t("global.buttons.exit"),
+            testID: "toSWebViewContainerFooterLeftButton"
           }}
           rightButton={{
             block: true,
             primary: true,
             onPress: onAcceptTos,
-            title: I18n.t("onboarding.tos.accept")
+            title: I18n.t("onboarding.tos.accept"),
+            testID: "toSWebViewContainerFooterRightButton"
           }}
         />
       )}

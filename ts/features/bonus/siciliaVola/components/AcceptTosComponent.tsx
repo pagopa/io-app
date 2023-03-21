@@ -45,10 +45,8 @@ const AcceptTosComponent = (props: Props): React.ReactElement => {
     switch (tosLoadingState) {
       case "loaded":
       case "loading":
-        return (
-          // TODO Replace with a proper component
-          <></>
-        );
+        // TODO Replace with a proper component (see https://pagopa.atlassian.net/browse/IASV-10)
+        return <></>;
       case "error":
         return (
           <LoadingErrorComponent

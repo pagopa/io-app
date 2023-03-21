@@ -126,7 +126,7 @@ const OnboardingTosScreen = () => {
           <TosWebviewComponent
             handleLoadEnd={handleLoadEnd}
             handleReload={handleReload}
-            url={privacyUrl}
+            webViewSource={{ uri: privacyUrl }}
             shouldFooterRender={!isLoading}
             onExit={handleGoBack}
             onAcceptTos={() => dispatch(tosAccepted(tosVersion))}
