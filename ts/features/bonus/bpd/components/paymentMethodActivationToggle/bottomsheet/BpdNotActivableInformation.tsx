@@ -45,7 +45,7 @@ const getTitle = (type: NotActivableType) => {
 
 export const BpdNotActivableInformation: React.FunctionComponent<Props> =
   props => (
-    <View style={[styles.body, IOStyles.horizontalContentPadding]}>
+    <View style={styles.body}>
       <VSpacer size={16} />
       <PaymentMethodRepresentationComponent {...props.representation} />
       <VSpacer size={16} />
