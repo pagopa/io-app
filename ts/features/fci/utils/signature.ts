@@ -24,6 +24,7 @@ const getFileDigest = (url: string) =>
     // https://pagopa.atlassian.net/browse/SFEQS-1470
     TE.tryCatch(() => ReactNativeBlobUtil.fetch("GET", url), E.toError),
     TE.map(response => response.base64()),
+    TE.map(base64 => Buffer.from(base64, "base64")),
     TE.map(buffer => sha(constants.SHA_256).update(buffer).digest("hex"))
   );
 

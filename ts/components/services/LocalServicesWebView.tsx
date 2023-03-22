@@ -3,7 +3,7 @@ import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { Platform, StyleSheet, View } from "react-native";
 import WebView, { WebViewMessageEvent } from "react-native-webview";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -130,7 +130,7 @@ const LocalServicesWebView = (props: Props) => {
         androidMicrophoneAccessDisabled={true}
         ref={webViewRef}
         injectedJavaScript={closeInjectedScript(AVOID_ZOOM_JS)}
-        style={{ flex: 1 }}
+        style={style.webView}
         textZoom={100}
         source={{
           uri: localServicesWebUrl
@@ -149,6 +149,13 @@ const LocalServicesWebView = (props: Props) => {
     </>
   );
 };
+
+const style = StyleSheet.create({
+  webView: {
+    flex: 1,
+    opacity: Platform.OS === "android" ? 0.99 : 1 // Android workaround to avoid crashing when navigating out of a WebView
+  }
+});
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadService: (serviceId: string) =>
