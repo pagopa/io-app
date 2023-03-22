@@ -8,8 +8,10 @@ import {
   WebViewMessageEvent,
   WebViewNavigationEvent
 } from "react-native-webview/lib/WebViewTypes";
+import I18n from "i18n-js";
 import TosWebviewComponent from "../TosWebviewComponent";
 import * as urlUtils from "../../../ts/utils/url";
+import brokenLinkImage from "../../../img/broken-link.png";
 
 beforeAll(() => {
   jest.resetAllMocks();
@@ -74,7 +76,54 @@ describe("TosWebviewComponent", () => {
     });
   });
   describe("When rendering and there is an error", () => {
-    it("Pressing the 'retry' button should invoke the `handleReload` callback", async () => {
+    it("The error overlay should have been rendered with proper values and the web view should not have been rendered", async () => {
+      // eslint-disable-next-line functional/no-let
+      let maybeWebView: O.Option<WebView> = O.none;
+      jest
+        .spyOn(WebView.prototype, "render")
+        .mockImplementationOnce(function (this: WebView) {
+          maybeWebView = O.some(this);
+        });
+      const renderAPI = commonSetup();
+
+      expect(maybeWebView).not.toBe(O.none);
+      const webView = maybeWebView as O.Some<WebView>;
+
+      await act(() => webView.value.props.onError?.({} as WebViewErrorEvent));
+
+      // Error container should be there
+      const errorContainerViewRTI = renderAPI.getByTestId(
+        "toSErrorContainerView"
+      );
+      expect(errorContainerViewRTI).toBeTruthy();
+      // Error image
+      const errorContainerImageRTI = renderAPI.getByTestId(
+        "toSErrorContainerImage"
+      );
+      const errorContainerImageSource = errorContainerImageRTI.props.source;
+      expect(errorContainerImageSource).toBe(brokenLinkImage);
+      // Error title
+      const errorContainerTitleTextRTI = renderAPI.getByTestId(
+        "toSErrorContainerTitle"
+      );
+      expect(errorContainerTitleTextRTI.props.children).toEqual(
+        I18n.t("onboarding.tos.error")
+      );
+      // Error button text
+      const errorContainerButtonTextRTI = renderAPI.getByTestId(
+        "toSErrorContainerButtonText"
+      );
+      expect(errorContainerButtonTextRTI.props.children).toEqual(
+        I18n.t("global.buttons.retry")
+      );
+
+      // TosWebviewComponent should not be rendered
+      const webViewComponentRTI = renderAPI.queryByTestId(
+        "toSWebViewContainer"
+      );
+      expect(webViewComponentRTI).toBeFalsy();
+    });
+    it("Pressing the 'retry' button should invoke the `handleReload` callback and the component views should change", async () => {
       // eslint-disable-next-line functional/no-let
       let maybeWebView: O.Option<WebView> = O.none;
       jest
@@ -90,12 +139,20 @@ describe("TosWebviewComponent", () => {
 
       await act(() => webView.value.props.onError?.({} as WebViewErrorEvent));
 
-      const retryButtonRTI = renderAPI.getByTestId(
-        "toSWebViewContainerRetryButton"
-      );
+      const retryButtonRTI = renderAPI.getByTestId("toSErrorContainerButton");
       fireEvent.press(retryButtonRTI);
 
       expect(onReloadMock).toHaveBeenCalledTimes(1);
+
+      // Error container should not be rendered
+      const errorContainerViewRTI = renderAPI.queryByTestId(
+        "toSErrorContainerView"
+      );
+      expect(errorContainerViewRTI).toBeFalsy();
+
+      // TosWebviewComponent should be rendered
+      const webViewComponentRTI = renderAPI.getByTestId("toSWebViewContainer");
+      expect(webViewComponentRTI).toBeTruthy();
     });
     it("The 'onLoaded' prop should have been invoked", async () => {
       // eslint-disable-next-line functional/no-let

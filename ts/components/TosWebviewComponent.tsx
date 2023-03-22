@@ -65,9 +65,17 @@ const TosWebviewComponent: React.FunctionComponent<Props> = ({
   }, [setHasError, handleReload]);
 
   const renderError = () => (
-    <View style={styles.errorContainer}>
-      <Image source={brokenLinkImage} resizeMode="contain" />
-      <NBText style={styles.errorTitle} bold={true}>
+    <View style={styles.errorContainer} testID={"toSErrorContainerView"}>
+      <Image
+        source={brokenLinkImage}
+        resizeMode="contain"
+        testID={"toSErrorContainerImage"}
+      />
+      <NBText
+        style={styles.errorTitle}
+        bold={true}
+        testID={"toSErrorContainerTitle"}
+      >
         {I18n.t("onboarding.tos.error")}
       </NBText>
 
@@ -77,8 +85,9 @@ const TosWebviewComponent: React.FunctionComponent<Props> = ({
           style={{ flex: 2 }}
           block={true}
           primary={true}
+          testID={"toSErrorContainerButton"}
         >
-          <NBText testID="toSWebViewContainerRetryButton">
+          <NBText testID={"toSErrorContainerButtonText"}>
             {I18n.t("global.buttons.retry")}
           </NBText>
         </ButtonDefaultOpacity>
