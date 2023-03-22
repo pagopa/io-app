@@ -115,8 +115,8 @@ const OnboardingTosScreen = () => {
       >
         <SafeAreaView style={styles.webViewContainer}>
           {!hasAcceptedCurrentTos && (
-            <View style={styles.alert}>
-              <NBText>
+            <View style={styles.alert} testID={"currentToSNotAcceptedView"}>
+              <NBText testID={"currentToSNotAcceptedText"}>
                 {hasAcceptedOldTosVersion
                   ? I18n.t("profile.main.privacy.privacyPolicy.updated")
                   : I18n.t("profile.main.privacy.privacyPolicy.infobox")}
