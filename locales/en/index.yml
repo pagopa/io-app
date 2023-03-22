@@ -1803,6 +1803,8 @@ messageDetails:
       firstPart: "The attachments are no longer available. "
       secondPart: "Please contact the sender"
       thirdPart: " for more information."
+    failing:
+      details: "An error occurred while downloading the attachment. Retry or create a ticket"
 notifications:
   installation:
     errorTitle: Push notifications
@@ -3054,17 +3056,6 @@ features:
         title: "Attachments"
         toast:
           success: "Download complete"
-        bottomSheet:
-          warning:
-            title: "Pay attention to attachments"
-            body: "IO cannot guarantee the security of the attachment - save to your device or share only the files that you think are safe enough."
-          loading:
-            title: "Attachment"
-            body: "Downloading the attachment"
-          failing:
-            title: "Attachment"
-            details: "An error occurred while downloading the attachment. Retry or create a ticket"
-          checkBox: "OK, don't show me again"
         pdfPreview:
           title: "PDF Preview"
           singleBtn: "Save, print, or share"
@@ -3309,6 +3300,17 @@ idpay:
   wallet:
     preview:
       validThrough: "Valid through {{endDate}}"
+      showAll: View all
+    initiativePairing:
+      navigation: Available initiatives
+      header: Which initiatives do you want to enable on this method?
+      statusLabels:
+        PENDING_DEACTIVATION_REQUEST: "In disattivazione.."
+        PENDING_ENROLLMENT_REQUEST: "In attivazione.."
+        ENROLLMENT_FAILED: "Attivazione fallita"
+      errorToasts:
+        enrollment: "Errore nel collegamento dell'iniziativa, riprova."
+        removal: "Errore nella rimozione dell'iniziativa, riprova."
   initiative:
     details:
       initiativeCard:
