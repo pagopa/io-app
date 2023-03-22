@@ -101,6 +101,12 @@ const formatNumberRightSign = (amount: number) =>
   `${formatNumberAmount(amount, false)} €`;
 const InitiativeCardComponent = (props: Props) => {
   const { initiativeName, endDate, status } = props.initiative;
+  /*
+  From BE we have:
+  - amount: the amount still available in the initiative
+  - accrued: total amount accrued with transactions
+  - refunded: amount refunded by wire transfer
+  */
 
   const amount: number = props.initiative.amount || 0;
   const accrued: number = props.initiative.accrued || 0;
@@ -108,12 +114,11 @@ const InitiativeCardComponent = (props: Props) => {
 
   const isInitiativeConfigured = status === InitiativeStatusEnum.REFUNDABLE;
   const toBeRepaidAmount = accrued - refunded;
-  const remainingAmount = amount - accrued;
   const totalAmount = amount + accrued;
 
   const dateString = formatDateAsLocal(endDate, true);
   const remainingBonusAmountPercentage =
-    totalAmount !== 0 ? (remainingAmount / totalAmount) * 100.0 : 100.0;
+    totalAmount !== 0 ? (amount / totalAmount) * 100.0 : 100.0;
   return (
     <View style={styles.cardContainer} testID={"card-component"}>
       {/* top part */}
@@ -157,7 +162,7 @@ const InitiativeCardComponent = (props: Props) => {
             {I18n.t("idpay.initiative.details.initiativeCard.availableAmount")}
           </LabelSmall>
           <H1 style={!isInitiativeConfigured ? styles.consumedOpacity : {}}>
-            {formatNumberRightSign(remainingAmount)}
+            {formatNumberRightSign(amount)}
           </H1>
           <VSpacer size={8} />
           <BonusPercentageSlider
