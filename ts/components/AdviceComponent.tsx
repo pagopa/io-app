@@ -1,7 +1,8 @@
-import { Text as NBText, View } from "native-base";
+import { Text as NBText } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import themeVariables from "../theme/variables";
+import { IOStyles } from "./core/variables/IOStyles";
 import IconFont from "./ui/IconFont";
 
 type Props = {
@@ -11,9 +12,6 @@ type Props = {
   iconColor?: string;
 };
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row"
-  },
   icon: {
     marginTop: 4
   },
@@ -29,7 +27,7 @@ const defaultIconSize = 18;
  * @constructor
  */
 const AdviceComponent: React.FunctionComponent<Props> = (props: Props) => (
-  <View style={styles.container}>
+  <View style={IOStyles.row}>
     <IconFont
       style={styles.icon}
       name={props.iconName || "io-notice"}

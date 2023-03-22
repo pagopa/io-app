@@ -4,7 +4,7 @@
  */
 
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { Button, Container, Text as NBText, View as NBView } from "native-base";
+import { Button, Container, Text as NBText } from "native-base";
 import React, { FC, useCallback, useEffect, useState } from "react";
 import {
   View,
@@ -18,6 +18,7 @@ import {
 import updateIcon from "../../../img/icons/update-icon.png";
 import { VSpacer } from "../../components/core/spacer/Spacer";
 import { H1 } from "../../components/core/typography/H1";
+import { IOStyles } from "../../components/core/variables/IOStyles";
 
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import SectionStatusComponent from "../../components/SectionStatus";
@@ -56,7 +57,7 @@ const styles = StyleSheet.create({
 type FooterProps = { onOpenAppStore: () => void };
 
 const IOSFooter: FC<FooterProps> = ({ onOpenAppStore }: FooterProps) => (
-  <NBView footer>
+  <View style={IOStyles.footer}>
     <>
       <Button
         block={true}
@@ -68,7 +69,7 @@ const IOSFooter: FC<FooterProps> = ({ onOpenAppStore }: FooterProps) => (
       </Button>
       <VSpacer size={16} />
     </>
-  </NBView>
+  </View>
 );
 
 const AndroidFooter: FC<FooterProps> = ({ onOpenAppStore }: FooterProps) => {

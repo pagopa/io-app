@@ -30,12 +30,8 @@ import InitiativeCardComponent from "../components/InitiativeCardComponent";
 import { InitiativeSettingsComponent } from "../components/InitiativeSettingsComponent";
 import InitiativeTimelineComponent from "../components/InitiativeTimelineComponent";
 import { IDPayDetailsParamsList } from "../navigation";
-import {
-  idpayInitiativeDetailsSelector,
-  idpayTimelineSelector
-} from "../store";
-import { idpayInitiativeGet, idpayTimelinePageGet } from "../store/actions";
-import { Alert } from "../../../../../components/Alert";
+import { idpayInitiativeDetailsSelector } from "../store";
+import { idpayInitiativeGet } from "../store/actions";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 
 const styles = StyleSheet.create({
@@ -227,7 +223,6 @@ export const InitiativeDetailsScreen = () => {
                       <VSpacer size={16} />
                     </>
                   )}
-                  <ErrorAlert />
                   <InitiativeTimelineComponent
                     initiativeId={initiativeData.initiativeId}
                   />
@@ -261,11 +256,11 @@ export const InitiativeDetailsScreen = () => {
   return (
     <BaseScreenComponent
       goBack={true}
-      headerBackgroundColor={IOColors.bluegreyNewBonus}
+      headerBackgroundColor={IOColors["blue-50"]}
       contextualHelp={emptyContextualHelp}
     >
       <FocusAwareStatusBar
-        backgroundColor={IOColors.bluegreyNewBonus}
+        backgroundColor={IOColors["blue-50"]}
         barStyle={"dark-content"}
       />
       <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={100}>
