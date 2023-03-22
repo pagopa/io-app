@@ -75,7 +75,9 @@ describe("IDPay configuration machine in INSTRUMENTS mode", () => {
     );
 
     expect(currentState).toMatchObject({
-      CONFIGURING_INSTRUMENTS: "DISPLAYING_INSTRUMENTS"
+      CONFIGURING_INSTRUMENTS: {
+        DISPLAYING_INSTRUMENTS: "DISPLAYING"
+      }
     });
 
     await waitFor(() =>
@@ -98,7 +100,9 @@ describe("IDPay configuration machine in INSTRUMENTS mode", () => {
     );
 
     expect(currentState).toMatchObject({
-      CONFIGURING_INSTRUMENTS: "DISPLAYING_INSTRUMENTS"
+      CONFIGURING_INSTRUMENTS: {
+        DISPLAYING_INSTRUMENTS: "DISPLAYING"
+      }
     });
 
     await waitFor(() =>
@@ -117,7 +121,9 @@ describe("IDPay configuration machine in INSTRUMENTS mode", () => {
     );
 
     expect(currentState).toMatchObject({
-      CONFIGURING_INSTRUMENTS: "DISPLAYING_INSTRUMENTS"
+      CONFIGURING_INSTRUMENTS: {
+        DISPLAYING_INSTRUMENTS: "DISPLAYING"
+      }
     });
 
     await waitFor(() =>
@@ -137,7 +143,9 @@ describe("IDPay configuration machine in INSTRUMENTS mode", () => {
     );
 
     expect(currentState).toMatchObject({
-      CONFIGURING_INSTRUMENTS: "DISPLAYING_INSTRUMENTS"
+      CONFIGURING_INSTRUMENTS: {
+        DISPLAYING_INSTRUMENTS: "DISPLAYING"
+      }
     });
 
     service.send({
@@ -198,8 +206,11 @@ describe("IDPay configuration machine in INSTRUMENTS mode", () => {
     await waitFor(() =>
       expect(mockServices.loadInitiativeInstruments).toHaveBeenCalledTimes(1)
     );
+
     expect(currentState).toMatchObject({
-      CONFIGURING_INSTRUMENTS: "DISPLAYING_INSTRUMENTS"
+      CONFIGURING_INSTRUMENTS: {
+        DISPLAYING_INSTRUMENTS: "DISPLAYING"
+      }
     });
 
     await waitFor(() =>
