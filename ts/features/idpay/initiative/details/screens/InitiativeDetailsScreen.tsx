@@ -30,9 +30,13 @@ import InitiativeCardComponent from "../components/InitiativeCardComponent";
 import { InitiativeSettingsComponent } from "../components/InitiativeSettingsComponent";
 import InitiativeTimelineComponent from "../components/InitiativeTimelineComponent";
 import { IDPayDetailsParamsList } from "../navigation";
-import { idpayInitiativeDetailsSelector } from "../store";
-import { idpayInitiativeGet } from "../store/actions";
+import {
+  idpayInitiativeDetailsSelector,
+  idpayTimelineSelector
+} from "../store";
+import { idpayInitiativeGet, idpayTimelinePageGet } from "../store/actions";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import { Alert } from "../../../../../components/Alert";
 
 const styles = StyleSheet.create({
   newInitiativeMessageContainer: {
@@ -223,6 +227,7 @@ export const InitiativeDetailsScreen = () => {
                       <VSpacer size={16} />
                     </>
                   )}
+                  <ErrorAlert />
                   <InitiativeTimelineComponent
                     initiativeId={initiativeData.initiativeId}
                   />
