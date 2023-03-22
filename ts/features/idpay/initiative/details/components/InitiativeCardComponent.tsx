@@ -100,13 +100,16 @@ const BonusPercentageSlider = ({
 const formatNumberRightSign = (amount: number) =>
   `${formatNumberAmount(amount, false)} €`;
 const InitiativeCardComponent = (props: Props) => {
-  const { initiativeName, endDate, status, amount, accrued, refunded } =
-    props.initiative;
+  const { initiativeName, endDate, status } = props.initiative;
+
+  const amount: number = props.initiative.amount || 0;
+  const accrued: number = props.initiative.accrued || 0;
+  const refunded: number = props.initiative.refunded || 0;
 
   const isInitiativeConfigured = status === InitiativeStatusEnum.REFUNDABLE;
-  const toBeRepaidAmount = (accrued || 0) - (refunded || 0);
-  const remainingAmount = (amount || 0) - (accrued || 0);
-  const totalAmount = Number(amount || 0) + Number(accrued || 0);
+  const toBeRepaidAmount = accrued - refunded;
+  const remainingAmount = amount - accrued;
+  const totalAmount = amount + accrued; 
 
   const dateString = formatDateAsLocal(endDate, true);
   const remainingBonusAmountPercentage =
