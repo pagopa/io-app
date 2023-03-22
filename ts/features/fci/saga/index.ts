@@ -1,6 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
-import ReactNativeBlobUtil from "react-native-blob-util";
 import { SagaIterator } from "redux-saga";
 import { getType, ActionType } from "typesafe-actions";
 import RNFS from "react-native-fs";
@@ -48,7 +47,10 @@ import { KeyInfo } from "../../lollipop/utils/crypto";
 import { handleGetSignatureRequestById } from "./networking/handleGetSignatureRequestById";
 import { handleGetQtspMetadata } from "./networking/handleGetQtspMetadata";
 import { handleCreateFilledDocument } from "./networking/handleCreateFilledDocument";
-import { handleDownloadDocument } from "./networking/handleDownloadDocument";
+import {
+  FciDownloadPreviewDirectoryPath,
+  handleDownloadDocument
+} from "./networking/handleDownloadDocument";
 import { handleCreateSignature } from "./networking/handleCreateSignature";
 
 /**
@@ -121,7 +123,7 @@ export function* watchFciSaga(
 
   yield* takeLatest(getType(fciEndRequest), watchFciEndSaga);
 
-  yield* takeLatest(getType(fciClearAllFiles), deleteAllFiles);
+  yield* takeLatest(getType(fciClearAllFiles), clearAllFciFiles);
 }
 
 /**
@@ -177,9 +179,7 @@ function* clearFciDownloadPreview(
 ) {
   const path = action.payload.path;
   if (path) {
-    yield RNFS.exists(path).then(exists =>
-      exists ? RNFS.unlink(path) : Promise.resolve()
-    );
+    yield* deletePath(path);
   }
   yield* put(fciDownloadPreview.cancel());
   yield* call(
@@ -261,21 +261,22 @@ function* watchFciSignedDocumentsEndSaga(): SagaIterator {
   );
 }
 
-function* deleteAllFiles(action: ActionType<typeof fciClearAllFiles>) {
-  try {
-    const { dirPath } = action.payload;
-    const files = yield* call(RNFS.readdir, dirPath);
-    yield files.forEach(file => {
-      const filePath = `${dirPath}/${file}`;
-      try {
-        call(RNFS.unlink, filePath);
-      } catch (error) {
-        put({ type: "DELETE_ALL_FILES_ERROR", error });
-      }
-    });
-    yield* put({ type: "DELETE_ALL_FILES_SUCCESS" });
-  } catch (error) {
-    yield* put({ type: "DELETE_ALL_FILES_ERROR", error });
+function* deletePath(path: string) {
+  if (path) {
+    yield RNFS.exists(path).then(exists =>
+      exists ? RNFS.unlink(path) : Promise.resolve()
+    );
+  }
+}
+
+/**
+ * Clears cached file for the fci document preview
+ * and reset the state to empty.
+ */
+function* clearAllFciFiles(action: ActionType<typeof fciDownloadPreviewClear>) {
+  const path = action.payload.path;
+  if (path) {
+    yield* deletePath(path);
   }
 }
 
@@ -285,8 +286,8 @@ function* deleteAllFiles(action: ActionType<typeof fciClearAllFiles>) {
 function* watchFciEndSaga(): SagaIterator {
   yield* put(fciClearStateRequest());
   yield* put({
-    type: "CLEAN_ALL_FILES",
-    payload: { dirPath: `${ReactNativeBlobUtil.fs.dirs.DocumentDir}/fci` }
+    type: "CLEAR_ALL_FILES",
+    payload: { dirPath: `${FciDownloadPreviewDirectoryPath}` }
   });
   yield* call(
     NavigationService.dispatchNavigationAction,

@@ -13,7 +13,7 @@ export const FciDownloadPreviewDirectoryPath =
 /**
  * Builds the save path for the given attachment
  */
-const savePath = (url: string) =>
+export const savePath = (url: string) =>
   FciDownloadPreviewDirectoryPath + "/" + getFileNameFromUrl(url);
 
 /**

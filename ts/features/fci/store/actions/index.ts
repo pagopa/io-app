@@ -119,7 +119,7 @@ export const fciCancelPollingFilledDocument = createStandardAction(
 )<void>();
 
 export const fciClearAllFiles =
-  createStandardAction("CLEAN_ALL_FILES")<{ dirPath: string }>();
+  createStandardAction("CLEAR_ALL_FILES")<{ path: string }>();
 
 export type FciActions =
   | ActionType<typeof fciSignatureRequestFromId>

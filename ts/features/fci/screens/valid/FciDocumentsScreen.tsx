@@ -27,10 +27,14 @@ import { TypeEnum as ClauseType } from "../../../../../definitions/fci/Clause";
 import { FciParamsList } from "../../navigation/params";
 import { ExistingSignatureFieldAttrs } from "../../../../../definitions/fci/ExistingSignatureFieldAttrs";
 import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
-import { fciUpdateDocumentSignaturesRequest } from "../../store/actions";
+import {
+  fciDownloadPreview,
+  fciUpdateDocumentSignaturesRequest
+} from "../../store/actions";
 import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentSignatures";
 import { useIODispatch } from "../../../../store/hooks";
 import { SignatureFieldToBeCreatedAttrs } from "../../../../../definitions/fci/SignatureFieldToBeCreatedAttrs";
+import { fciDownloadPathSelector } from "../../store/reducers/fciDownloadPreview";
 
 const styles = StyleSheet.create({
   pdf: {
@@ -63,7 +67,7 @@ const FciDocumentsScreen = () => {
   const [signaturePage, setSignaturePage] = React.useState(0);
   const [pdfString, setPdfString] = React.useState<string>("");
   const [isPdfLoaded, setIsPdfLoaded] = React.useState(false);
-  const [currentDocPath, setCurrentDocPath] = React.useState("");
+  const fciDownloadPath = useSelector(fciDownloadPathSelector);
   const documents = useSelector(fciSignatureDetailDocumentsSelector);
   const navigation = useNavigation();
   const route = useRoute<RouteProp<FciParamsList, "FCI_DOCUMENTS">>();
@@ -103,10 +107,9 @@ const FciDocumentsScreen = () => {
   const drawRectangleOverSignatureFieldById = React.useCallback(
     async (uniqueName: string) => {
       // TODO: refactor this function to use fp-ts
-      const doc = documents[currentDoc];
 
       const existingPdfBytes = await ReactNativeBlobUtil.fs.readFile(
-        `${ReactNativeBlobUtil.fs.dirs.DocumentDir}/fci/${doc.id}.pdf`,
+        `${fciDownloadPath}`,
         "base64"
       );
 
@@ -145,7 +148,7 @@ const FciDocumentsScreen = () => {
         return res.saveAsBase64().then(r => setPdfString(pdfFromBase64(r)));
       });
     },
-    [documents, currentDoc]
+    [fciDownloadPath]
   );
 
   /**
@@ -159,10 +162,9 @@ const FciDocumentsScreen = () => {
   const drawRectangleOverSignatureFieldByCoordinates = React.useCallback(
     async (attrs: SignatureFieldToBeCreatedAttrs) => {
       // TODO: refactor this function to use fp-ts
-      const doc = documents[currentDoc];
 
       const existingPdfBytes = await ReactNativeBlobUtil.fs.readFile(
-        `${ReactNativeBlobUtil.fs.dirs.DocumentDir}/fci/${doc.id}.pdf`,
+        `${fciDownloadPath}`,
         "base64"
       );
 
@@ -190,7 +192,7 @@ const FciDocumentsScreen = () => {
         return res.saveAsBase64().then(r => setPdfString(pdfFromBase64(r)));
       });
     },
-    [documents, currentDoc]
+    [fciDownloadPath]
   );
 
   const onSignatureDetail = React.useCallback(
@@ -213,24 +215,9 @@ const FciDocumentsScreen = () => {
 
   React.useEffect(() => {
     if (documents.length !== 0) {
-      // download the current pdf and save it in the device
-      ReactNativeBlobUtil.fs
-        .exists(
-          `${ReactNativeBlobUtil.fs.dirs.DocumentDir}/fci/${documents[currentDoc].id}.pdf`
-        )
-        .then(exists => {
-          if (!exists) {
-            ReactNativeBlobUtil.config({
-              path: `${ReactNativeBlobUtil.fs.dirs.DocumentDir}/fci/${documents[currentDoc].id}.pdf`
-            })
-              .fetch("GET", documents[currentDoc].url)
-              .then(res => setCurrentDocPath(res.path()))
-              .catch(readableReport);
-          }
-        })
-        .catch(readableReport);
+      dispatch(fciDownloadPreview.request({ url: documents[currentDoc].url }));
     }
-  }, [currentDoc, documents]);
+  }, [currentDoc, documents, dispatch]);
 
   React.useEffect(() => {
     pipe(
@@ -310,7 +297,7 @@ const FciDocumentsScreen = () => {
     <Pdf
       ref={pdfRef}
       source={{
-        uri: S.isEmpty(pdfString) ? `${currentDocPath}` : pdfString
+        uri: S.isEmpty(pdfString) ? `${fciDownloadPath}` : pdfString
       }}
       onLoadProgress={() => setIsPdfLoaded(false)}
       onLoadComplete={(numberOfPages, _) => {
