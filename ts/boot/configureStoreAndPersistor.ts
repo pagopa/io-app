@@ -28,7 +28,6 @@ import {
   initialLollipopState,
   LollipopState
 } from "../features/lollipop/store/reducers/lollipop";
-import { mvlPersistConfig } from "../features/mvl";
 import rootSaga from "../sagas";
 import { Action, StoreEnhancer } from "../store/actions/types";
 import { analytics } from "../store/middlewares";
@@ -377,8 +376,7 @@ const persistedReducer: Reducer<PersistedGlobalState, Action> = persistReducer<
     rootPersistConfig,
     authenticationPersistConfig,
     walletsPersistConfig,
-    entitiesPersistConfig,
-    mvlPersistConfig
+    entitiesPersistConfig
   ])
 );
 
