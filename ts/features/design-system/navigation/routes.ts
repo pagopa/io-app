@@ -6,7 +6,8 @@ const DESIGN_SYSTEM_ROUTES = {
     SPACING: { route: "DESIGN_SYSTEM_SPACING", title: "Spacing" },
     ICONS: { route: "DESIGN_SYSTEM_ICONS", title: "Icons" },
     PICTOGRAMS: { route: "DESIGN_SYSTEM_PICTOGRAMS", title: "Pictograms" },
-    LOGOS: { route: "DESIGN_SYSTEM_LOGOS", title: "Logos" }
+    LOGOS: { route: "DESIGN_SYSTEM_LOGOS", title: "Logos" },
+    LOADERS: { route: "DESIGN_SYSTEM_LOADERS", title: "Loaders" }
   },
   COMPONENTS: {
     BUTTONS: { route: "DESIGN_SYSTEM_BUTTONS", title: "Buttons" },

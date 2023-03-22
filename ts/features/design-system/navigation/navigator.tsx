@@ -20,6 +20,7 @@ import { DSAccordion } from "../core/DSAccordion";
 import { DSListItems } from "../core/DSListItems";
 import { DSSpacing } from "../core/DSSpacing";
 import { DSAlert } from "../core/DSAlert";
+import { DSLoaders } from "../core/DSLoaders";
 import {
   IOThemeContext,
   IOThemes
@@ -45,29 +46,40 @@ export const DesignSystemNavigator = () => {
           name={DESIGN_SYSTEM_ROUTES.MAIN}
           component={DesignSystem}
         />
+
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.FOUNDATION.COLOR.route}
           component={DSColors}
         />
+
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.FOUNDATION.TYPOGRAPHY.route}
           component={DSTypography}
         />
+
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.FOUNDATION.SPACING.route}
           component={DSSpacing}
         />
+
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.FOUNDATION.ICONS.route}
           component={DSIcons}
         />
+
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.FOUNDATION.PICTOGRAMS.route}
           component={DSPictograms}
         />
+
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.FOUNDATION.LOGOS.route}
           component={DSLogos}
+        />
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.FOUNDATION.LOADERS.route}
+          component={DSLoaders}
         />
 
         {/* COMPONENTS */}
