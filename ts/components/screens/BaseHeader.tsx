@@ -186,6 +186,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
               style={{
                 color: titleColor ? IOColors[titleColor] : IOColors.bluegrey
               }}
+              testID={"bodyLabel"}
             >
               {l}
             </NBText>
