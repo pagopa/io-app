@@ -140,7 +140,7 @@ const InitiativeCardComponent = (props: Props) => {
             )}
           />
           <HSpacer size={8} />
-          <LabelSmall color="bluegreyDark">
+          <LabelSmall fontSize="small" weight="SemiBold" color="bluegreyDark">
             {I18n.t(
               `idpay.initiative.details.initiativeCard.${
                 isInitiativeConfigured ? "validUntil" : "expiresOn"
