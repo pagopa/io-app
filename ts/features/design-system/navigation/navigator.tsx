@@ -17,7 +17,7 @@ import { DSSelection } from "../core/DSSelection";
 import { DSAdvice } from "../core/DSAdvice";
 import { DSAccordion } from "../core/DSAccordion";
 import { DSListItems } from "../core/DSListItems";
-import { DSSpacing } from "../core/DSSpacing";
+import { DSLayout } from "../core/DSLayout";
 import { DSAlert } from "../core/DSAlert";
 import { DSLoaders } from "../core/DSLoaders";
 import {
@@ -57,8 +57,8 @@ export const DesignSystemNavigator = () => {
         />
 
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.FOUNDATION.SPACING.route}
-          component={DSSpacing}
+          name={DESIGN_SYSTEM_ROUTES.FOUNDATION.LAYOUT.route}
+          component={DSLayout}
         />
 
         <Stack.Screen
