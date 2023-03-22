@@ -1,10 +1,23 @@
 import { SagaIterator } from "redux-saga";
-import { call, takeLatest } from "typed-redux-saga/macro";
+import { call, takeEvery, takeLatest } from "typed-redux-saga/macro";
 import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
 import { waitBackoffError } from "../../../../utils/backoffError";
 import { IDPayClient } from "../../common/api/client";
-import { idPayWalletGet } from "../store/actions";
+import {
+  IdPayInitiativesFromInstrumentPayloadType,
+  IdpayInitiativesInstrumentDeletePayloadType,
+  IdpayInitiativesInstrumentEnrollPayloadType,
+  idPayInitiativesFromInstrumentGet,
+  idPayWalletGet,
+  idpayInitiativesInstrumentDelete,
+  idpayInitiativesInstrumentEnroll
+} from "../store/actions";
+import { handleGetIDPayInitiativesFromInstrument } from "./handleGetIDPayInitiativesFromInstrument";
 import { handleGetIDPayWallet } from "./handleGetIDPayWallet";
+import {
+  handleInitiativeInstrumentDelete,
+  handleInitiativeInstrumentEnrollment
+} from "./handleInitiativeInstrumentEnrollment";
 
 /**
  * Handle the IDPay Wallet requests
@@ -26,4 +39,51 @@ export function* watchIDPayWalletSaga(
       preferredLanguage
     );
   });
+
+  yield* takeLatest(
+    idPayInitiativesFromInstrumentGet.request,
+    function* (action: { payload: IdPayInitiativesFromInstrumentPayloadType }) {
+      // wait backoff time if there were previous errors
+      yield* call(waitBackoffError, idPayInitiativesFromInstrumentGet.failure);
+      yield* call(
+        handleGetIDPayInitiativesFromInstrument,
+        idPayClient.getInitiativesWithInstrument,
+        token,
+        preferredLanguage,
+        action.payload
+      );
+    }
+  );
+  yield* takeEvery(
+    idpayInitiativesInstrumentEnroll.request,
+    function* (action: {
+      payload: IdpayInitiativesInstrumentEnrollPayloadType;
+    }) {
+      // wait backoff time if there were previous errors
+      yield* call(waitBackoffError, idpayInitiativesInstrumentEnroll.failure);
+      yield* call(
+        handleInitiativeInstrumentEnrollment,
+        idPayClient.enrollInstrument,
+        token,
+        preferredLanguage,
+        action.payload
+      );
+    }
+  );
+  yield* takeEvery(
+    idpayInitiativesInstrumentDelete.request,
+    function* (action: {
+      payload: IdpayInitiativesInstrumentDeletePayloadType;
+    }) {
+      // wait backoff time if there were previous errors
+      yield* call(waitBackoffError, idpayInitiativesInstrumentEnroll.failure);
+      yield* call(
+        handleInitiativeInstrumentDelete,
+        idPayClient.deleteInstrument,
+        token,
+        preferredLanguage,
+        action.payload
+      );
+    }
+  );
 }
