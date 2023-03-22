@@ -43,7 +43,7 @@ module.exports = {
     "no-throw-literal": "error",
     "no-new-wrappers": "error",
     "no-eval": "error",
-    "no-console": "warn",
+    "no-console": "error",
     "no-caller": "error",
     "no-bitwise": "error",
     "no-duplicate-imports": "error",
