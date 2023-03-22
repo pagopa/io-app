@@ -19,13 +19,13 @@ import { DSAccordion } from "../core/DSAccordion";
 import { DSListItems } from "../core/DSListItems";
 import { DSSpacing } from "../core/DSSpacing";
 import { DSAlert } from "../core/DSAlert";
+import { DSLoaders } from "../core/DSLoaders";
 import {
   IOThemeContext,
   IOThemes
 } from "../../../components/core/variables/IOColors";
 import { DesignSystemParamsList } from "./params";
 import DESIGN_SYSTEM_ROUTES from "./routes";
-import { DSLoaders } from "../core/DSLoaders";
 
 const Stack = createStackNavigator<DesignSystemParamsList>();
 
