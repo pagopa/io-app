@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useEffect } from "react";
-import { StyleSheet } from "react-native";
-import { View } from "native-base";
+import { View, StyleSheet } from "react-native";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import I18n from "../../i18n";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";

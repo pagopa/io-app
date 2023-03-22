@@ -1,8 +1,8 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { Button, Text as NBText, View } from "native-base";
+import { Button, Text as NBText } from "native-base";
 import * as React from "react";
 
-import { ListRenderItemInfo, SectionList } from "react-native";
+import { View, ListRenderItemInfo, SectionList } from "react-native";
 import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
 import { connect } from "react-redux";
 import ListItemComponent from "../components/screens/ListItemComponent";
