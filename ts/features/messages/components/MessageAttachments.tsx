@@ -72,57 +72,56 @@ const AttachmentItem = (props: {
   attachment: UIAttachment;
   openPreview: (attachment: UIAttachment) => void;
 }) => {
-  const { downloadPot, onAttachmentSelect, bottomSheet } =
-    useAttachmentDownload(props.attachment, props.openPreview);
+  const { downloadPot, onAttachmentSelect } = useAttachmentDownload(
+    props.attachment,
+    props.openPreview
+  );
 
   return (
-    <>
-      <TouchableOpacity
-        style={styles.container}
-        onPress={onAttachmentSelect}
-        disabled={pot.isLoading(downloadPot)}
-        accessible={true}
-        accessibilityLabel={props.attachment.displayName}
-        accessibilityRole="button"
-      >
-        <View style={styles.row}>
-          <View style={styles.icon}>
-            <AttachmentIcon contentType={props.attachment.contentType} />
-          </View>
-          <View style={styles.middleSection}>
-            <H5
-              color={"bluegrey"}
-              weight={"SemiBold"}
-              ellipsizeMode={"middle"}
-              numberOfLines={2}
-            >
-              {props.attachment.displayName}
+    <TouchableOpacity
+      style={styles.container}
+      onPress={onAttachmentSelect}
+      disabled={pot.isLoading(downloadPot)}
+      accessible={true}
+      accessibilityLabel={props.attachment.displayName}
+      accessibilityRole="button"
+    >
+      <View style={styles.row}>
+        <View style={styles.icon}>
+          <AttachmentIcon contentType={props.attachment.contentType} />
+        </View>
+        <View style={styles.middleSection}>
+          <H5
+            color={"bluegrey"}
+            weight={"SemiBold"}
+            ellipsizeMode={"middle"}
+            numberOfLines={2}
+          >
+            {props.attachment.displayName}
+          </H5>
+          {typeof props.attachment.size !== "undefined" && (
+            <H5 color={"bluegrey"} weight={"Regular"}>
+              {formatByte(props.attachment.size)}
             </H5>
-            {typeof props.attachment.size !== "undefined" && (
-              <H5 color={"bluegrey"} weight={"Regular"}>
-                {formatByte(props.attachment.size)}
-              </H5>
-            )}
-          </View>
-          {pot.isLoading(downloadPot) ? (
-            <ActivityIndicator
-              accessibilityLabel={I18n.t("global.remoteStates.loading")}
-              color={IOColors.blue}
-              style={{ ...styles.icon, width: 24 }}
-              testID={"attachmentActivityIndicator"}
-            />
-          ) : (
-            <IconFont
-              name={"io-right"}
-              color={IOColors.blue}
-              size={24}
-              style={styles.icon}
-            />
           )}
         </View>
-      </TouchableOpacity>
-      {bottomSheet}
-    </>
+        {pot.isLoading(downloadPot) ? (
+          <ActivityIndicator
+            accessibilityLabel={I18n.t("global.remoteStates.loading")}
+            color={IOColors.blue}
+            style={{ ...styles.icon, width: 24 }}
+            testID={"attachmentActivityIndicator"}
+          />
+        ) : (
+          <IconFont
+            name={"io-right"}
+            color={IOColors.blue}
+            size={24}
+            style={styles.icon}
+          />
+        )}
+      </View>
+    </TouchableOpacity>
   );
 };
 
