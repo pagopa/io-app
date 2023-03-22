@@ -265,12 +265,6 @@ const MessageList = ({
     />
   ) : undefined;
 
-  const renderListFooter = () => {
-    if (shouldShowFooterLoader) {
-      return <Loader />;
-    }
-  };
-
   return (
     <>
       <Animated.FlatList
@@ -306,7 +300,7 @@ const MessageList = ({
         onEndReached={onEndReached}
         onEndReachedThreshold={0.25}
         testID={testID}
-        ListFooterComponent={renderListFooter}
+        ListFooterComponent={shouldShowFooterLoader && <Loader />}
       />
     </>
   );
