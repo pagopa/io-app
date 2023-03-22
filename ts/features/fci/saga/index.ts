@@ -44,7 +44,7 @@ import {
   fciQtspNonceSelector
 } from "../store/reducers/fciQtspClauses";
 import { fciDocumentSignaturesSelector } from "../store/reducers/fciDocumentSignatures";
-import { KeyInfo } from "../../../utils/crypto";
+import { KeyInfo } from "../../lollipop/utils/crypto";
 import { handleGetSignatureRequestById } from "./networking/handleGetSignatureRequestById";
 import { handleGetQtspMetadata } from "./networking/handleGetQtspMetadata";
 import { handleCreateFilledDocument } from "./networking/handleCreateFilledDocument";

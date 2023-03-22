@@ -34,7 +34,7 @@
       </dict>
     </array>
     <key>CFBundleVersion</key>
-    <string>0</string>
+    <string>2</string>
     <key>ITSAppUsesNonExemptEncryption</key>
     <false/>
     <key>LSApplicationQueriesSchemes</key>
@@ -141,7 +141,5 @@
     <string>app-store</string>
     <key>UIStatusBarStyle</key>
     <string>UIStatusBarStyleLightContent</string>
-    <key>UIUserInterfaceStyle</key>
-    <string>Light</string>
   </dict>
 </plist>

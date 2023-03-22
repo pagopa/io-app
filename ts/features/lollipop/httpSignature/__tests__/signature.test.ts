@@ -8,7 +8,7 @@ import {
   customContentSignatureBases,
   CustomContentBaseSignature
 } from "../../utils/fetch";
-import { KeyInfo } from "../../../../utils/crypto";
+import { KeyInfo } from "../../utils/crypto";
 import { constants } from "../constants";
 import {
   generateSignatureInput,
@@ -76,8 +76,7 @@ const testSignatureConfigForgeInputWithCustomContentAndECKey: SignatureConfigFor
     keyTag: testKeyInfoWithRSAKey.keyTag!,
     lollipopConfig: testLollipopConfigWithCustomContent,
     method: "POST",
-    inputUrl: URLParse("https://example.com/hello?name=world"),
-    originalUrl: "example.com"
+    inputUrl: URLParse("https://example.com/hello?name=world")
   };
 
 const testSignatureConfigForgeInputWithCustomContentAndRSAKey: SignatureConfigForgeInput =
@@ -86,8 +85,7 @@ const testSignatureConfigForgeInputWithCustomContentAndRSAKey: SignatureConfigFo
     keyTag: testKeyInfoWithRSAKey.keyTag!,
     lollipopConfig: testLollipopConfigWithCustomContent,
     method: "POST",
-    inputUrl: URLParse("https://example.com/hello?name=world"),
-    originalUrl: "example.com"
+    inputUrl: URLParse("https://example.com/hello?name=world")
   };
 
 const testConfig: SignatureConfig = {
@@ -99,9 +97,9 @@ const testConfig: SignatureConfig = {
     method: "POST",
     authority: "example.com",
     path: "/hello",
-    requestTarget: "/hello?name=world",
     scheme: "https",
-    targetUri: "https://example.com/hello?name=world"
+    targetUri: "https://example.com/hello?name=world",
+    originalUrl: "https://example.com/hello?name=world"
   },
   signatureParams: ["Content-Digest", "@method", "@path", "@authority"]
 };
@@ -115,9 +113,9 @@ const testCustomHeadersConfig: SignatureConfig = {
     method: "POST",
     authority: "example.com",
     path: "/hello",
-    requestTarget: "/hello?name=world",
     scheme: "https",
-    targetUri: "https://example.com/hello?name=world"
+    targetUri: "https://example.com/hello?name=world",
+    originalUrl: "https://example.com/hello?name=world"
   },
   signatureParams: [
     "Content-Digest",
