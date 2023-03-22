@@ -222,7 +222,7 @@ describe("TosWebviewComponent", () => {
         } as unknown as WebViewMessageEvent)
       );
 
-      // The load ended handler should have been invoked
+      // The openWebUrl method should have been invoked
       expect(spiedOpenWebUrl).toHaveBeenCalledWith(mockedUrl);
     });
   });
