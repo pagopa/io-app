@@ -42,6 +42,7 @@ import {
 import { GlobalState } from "../store/reducers/types";
 import customVariables from "../theme/variables";
 import { isOnboardingCompleted } from "../utils/navigation";
+import { FCI_ROUTES } from "../features/fci/navigation/routes";
 import { VSpacer } from "./core/spacer/Spacer";
 import { IOStyles } from "./core/variables/IOStyles";
 import { ContextualHelpPropsMarkdown } from "./screens/BaseScreenComponent";
@@ -54,7 +55,6 @@ import BlockButtons from "./ui/BlockButtons";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import IconFont from "./ui/IconFont";
 import Markdown from "./ui/Markdown";
-import { FCI_ROUTES } from "../features/fci/navigation/routes";
 
 type OwnProp = {
   onClose: () => void;
