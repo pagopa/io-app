@@ -1,6 +1,5 @@
 import * as React from "react";
 import { View } from "react-native";
-import { H2 } from "../../../components/core/typography/H2";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";
 import { DSSpacerViewerBox } from "../components/DSSpacerViewerBox";
@@ -15,19 +14,29 @@ import {
   IOThemeContext
 } from "../../../components/core/variables/IOColors";
 import { LabelSmall } from "../../../components/core/typography/LabelSmall";
+import { H3 } from "../../../components/core/typography/H3";
+import { H1 } from "../../../components/core/typography/H1";
+import { Divider, VDivider } from "../../../components/core/Divider";
 
-export const DSSpacing = () => (
+export const DSLayout = () => (
   <IOThemeContext.Consumer>
     {theme => (
-      <DesignSystemScreen title={"Spacing"} noMargin>
+      <DesignSystemScreen title={"Layout"} noMargin>
         <ContentWrapper>
-          <H2
+          <H1
+            color={theme["textHeading-default"]}
+            weight={"Bold"}
+            style={{ marginBottom: 16 }}
+          >
+            Grid
+          </H1>
+          <H3
             color={theme["textHeading-default"]}
             weight={"SemiBold"}
-            style={{ marginTop: 32, marginBottom: 16 }}
+            style={{ marginBottom: 16 }}
           >
             ContentWrapper
-          </H2>
+          </H3>
         </ContentWrapper>
         {IOContentWrapper.map((value, i, arr) => (
           <React.Fragment key={`${value}-${i}`}>
@@ -61,14 +70,24 @@ export const DSSpacing = () => (
           </React.Fragment>
         ))}
 
+        <VSpacer size={40} />
+
         <ContentWrapper>
-          <H2
+          <H1
+            color={theme["textHeading-default"]}
+            weight={"Bold"}
+            style={{ marginBottom: 16 }}
+          >
+            Spacing
+          </H1>
+
+          <H3
             color={theme["textHeading-default"]}
             weight={"SemiBold"}
-            style={{ marginTop: 32, marginBottom: 16 }}
+            style={{ marginBottom: 16 }}
           >
             VSpacer
-          </H2>
+          </H3>
 
           {/* Vertical */}
           {IOSpacer.map((spacerEntry, i, arr) => (
@@ -81,13 +100,15 @@ export const DSSpacing = () => (
             </React.Fragment>
           ))}
 
-          <H2
+          <VSpacer size={24} />
+
+          <H3
             color={theme["textHeading-default"]}
             weight={"SemiBold"}
-            style={{ marginTop: 32, marginBottom: 16 }}
+            style={{ marginBottom: 16 }}
           >
             HSpacer
-          </H2>
+          </H3>
 
           {/* Horizontal */}
           <View style={{ flexDirection: "row" }}>
@@ -102,6 +123,44 @@ export const DSSpacing = () => (
             ))}
           </View>
 
+          <VSpacer size={48} />
+        </ContentWrapper>
+
+        <ContentWrapper>
+          <H1
+            color={theme["textHeading-default"]}
+            weight={"Bold"}
+            style={{ marginBottom: 16 }}
+          >
+            Divider
+          </H1>
+
+          <H3
+            color={theme["textHeading-default"]}
+            weight={"SemiBold"}
+            style={{ marginBottom: 16 }}
+          >
+            Default (Horizontal)
+          </H3>
+
+          <Divider />
+          <VSpacer size={48} />
+        </ContentWrapper>
+        <Divider />
+        <VSpacer size={48} />
+
+        <ContentWrapper>
+          <H3
+            color={theme["textHeading-default"]}
+            weight={"SemiBold"}
+            style={{ marginBottom: 16 }}
+          >
+            Vertical
+          </H3>
+
+          <View style={{ flexDirection: "row", height: 100 }}>
+            <VDivider />
+          </View>
           <VSpacer size={48} />
         </ContentWrapper>
       </DesignSystemScreen>
