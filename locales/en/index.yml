@@ -3213,8 +3213,8 @@ features:
       titleLeft: Document {{currentDoc}} of {{totalDocs}}
       titleRight: Page {{currentPage}} of {{totalPages}}
     shareDataScreen:
-      title: "Do you share this data?"
-      content: "To complete the signing process, you must share this data with the signature provider."
+      title: "Do you want to share these data?"
+      content: "These will be shared with the digital signature provider. If you cancel, you will not be able to complete the signing."
       cancel: "Cancel"
       confirm: "Ok"
       alertText: "Want to change or update your email address?"
@@ -3300,12 +3300,30 @@ idpay:
   wallet:
     preview:
       validThrough: "Valid through {{endDate}}"
+      showAll: View all
+    initiativePairing:
+      navigation: Available initiatives
+      header: Which initiatives do you want to enable on this method?
+      statusLabels:
+        PENDING_DEACTIVATION_REQUEST: "In disattivazione.."
+        PENDING_ENROLLMENT_REQUEST: "In attivazione.."
+        ENROLLMENT_FAILED: "Attivazione fallita"
+      errorToasts:
+        enrollment: "Errore nel collegamento dell'iniziativa, riprova."
+        removal: "Errore nella rimozione dell'iniziativa, riprova."
   initiative:
     details:
       initiativeCard:
         availableAmount: Disponibile
-        validUntil: Valido fino al {{expiryDate}}
-        toRefund: da rimborsare
+        validUntil: Fino al {{expiryDate}}
+        expiresOn: Scade il {{expiryDate}}
+        toRefund: Da rimborsare
+        statusLabels:
+          REFUNDABLE: Attiva
+          NOT_REFUNDABLE: Disattivata
+          NOT_REFUNDABLE_ONLY_IBAN: Metodo mancante
+          NOT_REFUNDABLE_ONLY_INSTRUMENT: IBAN mancante
+          UNSUBSCRIBED: Disiscritto
       initiativeDetailsScreen:
         notConfigured:
           header: Configura l'iniziativa!
