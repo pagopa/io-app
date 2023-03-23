@@ -39,7 +39,6 @@ export const useLollipopLoginSource = (
   onLolliPoPCheckFailure: () => void,
   loginUri?: string
 ) => {
-  console.log(`=== useLollipopLoginSource`);
   const [lollipopCheckStatus, setLollipopCheckStatus] =
     useState<LollipopCheckStatus>({ status: "none", url: O.none });
   const [webviewSource, setWebviewSource] = useState<WebViewSource | undefined>(
@@ -54,13 +53,11 @@ export const useLollipopLoginSource = (
 
   const verifyLollipop = useCallback(
     (eventUrl: string, urlEncodedSamlRequest: string, publicKey: PublicKey) => {
-      console.log(`=== useLollipopLoginSource verifyLollipop`);
       setWebviewSource(undefined);
       lollipopSamlVerify(
         urlEncodedSamlRequest,
         publicKey,
         () => {
-          console.log(`=== useLollipopLoginSource verifyLollipop success`);
           setLollipopCheckStatus({
             status: "trusted",
             url: O.some(eventUrl)
@@ -68,9 +65,6 @@ export const useLollipopLoginSource = (
           setWebviewSource({ uri: eventUrl });
         },
         (reason: string) => {
-          console.log(
-            `=== useLollipopLoginSource verifyLollipop FAILURE (${reason})`
-          );
           trackLollipopIdpLoginFailure(reason);
           setLollipopCheckStatus({
             status: "untrusted",
@@ -84,11 +78,7 @@ export const useLollipopLoginSource = (
   );
 
   const regenerateLoginSource = useCallback(() => {
-    console.log(`=== useLollipopLoginSource regenerateLoginSource`);
     if (!loginUri) {
-      console.log(
-        `=== useLollipopLoginSource regenerateLoginSource NO LOGIN URI`
-      );
       // When the redux state is LoggedOutWithIdp the loginUri is always defined.
       // After the user has logged in, the status changes to LoggedIn and the loginUri is not
       // defined any more.
@@ -101,11 +91,6 @@ export const useLollipopLoginSource = (
       O.isNone(maybeKeyTag) ||
       O.isNone(maybePublicKey)
     ) {
-      console.log(
-        `=== useLollipopLoginSource regenerateLoginSource (${!useLollipopLogin}) (${O.isNone(
-          maybeKeyTag
-        )}) (${O.isNone(maybePublicKey)})`
-      );
       if (useLollipopLogin) {
         // We track missing key tag event only if lollipop is enabled
         // (since the key tag is not used without lollipop)
@@ -167,7 +152,6 @@ export const useLollipopLoginSource = (
   ]);
 
   const retryLolliPoPLogin = useCallback(() => {
-    console.log(`=== useLollipopLoginSource retryLolliPoPLogin`);
     setLollipopCheckStatus({ status: "none", url: O.none });
     // We must set webviewSource to undefined before requesting
     // any changes to loginSource otherwise on the next component
@@ -181,13 +165,7 @@ export const useLollipopLoginSource = (
 
   const shouldBlockUrlNavigationWhileCheckingLolliPoP = useCallback(
     (url: string) => {
-      console.log(
-        `=== useLollipopLoginSource shouldBlockUrlNavigationWhileCheckingLolliPoP`
-      );
       if (!useLollipopLogin) {
-        console.log(
-          `=== useLollipopLoginSource shouldBlockUrlNavigationWhileCheckingLolliPoP return false (lollipop disabled)`
-        );
         // LolliPoP not enabled, do not check the Url
         return false;
       }
@@ -207,9 +185,6 @@ export const useLollipopLoginSource = (
               url: O.some(url)
             });
             verifyLollipop(url, urlEncodedSamlRequest, maybePublicKey.value);
-            console.log(
-              `=== useLollipopLoginSource shouldBlockUrlNavigationWhileCheckingLolliPoP return TRUE (has to verify)`
-            );
             // Prevent the WebView from loading the current URL (its
             // loading will be restored after LolliPOP verification
             // has succeded)
@@ -219,9 +194,6 @@ export const useLollipopLoginSource = (
           // retrieval has failed or lollipop is not enabled. Let
           // the code flow follow the standard non-lollipop scenario
         } else if (lollipopCheckStatus.status === "checking") {
-          console.log(
-            `=== useLollipopLoginSource shouldBlockUrlNavigationWhileCheckingLolliPoP return TRUE (checking)`
-          );
           // LolliPOP signature is being verified, prevent the WebView
           // from loading the current URL,
           return true;
@@ -235,9 +207,6 @@ export const useLollipopLoginSource = (
         // the WebViewSource is left undefined
       }
 
-      console.log(
-        `=== useLollipopLoginSource shouldBlockUrlNavigationWhileCheckingLolliPoP return false`
-      );
       return false;
     },
     [
@@ -250,7 +219,6 @@ export const useLollipopLoginSource = (
   );
 
   useOnFirstRender(() => {
-    console.log(`=== useLollipopLoginSource useOnFirstRender`);
     regenerateLoginSource();
   });
 

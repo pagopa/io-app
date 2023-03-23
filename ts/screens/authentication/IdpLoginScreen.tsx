@@ -113,7 +113,6 @@ const styles = StyleSheet.create({
  * The IDP page is opened in a WebView
  */
 const IdpLoginScreen = (props: Props) => {
-  console.log(`=== IdpLoginScreen`);
   const [requestState, setRequestState] = useState<pot.Pot<true, ErrorType>>(
     pot.noneLoading
   );
@@ -143,7 +142,6 @@ const IdpLoginScreen = (props: Props) => {
   );
 
   const handleLoadingError = (error: WebViewErrorEvent): void => {
-    console.log(`=== IdpLoginScreen handleLoadingError`);
     const { code, description, domain } = error.nativeEvent;
     void mixpanelTrack("SPID_ERROR", {
       idp: props.loggedOutWithIdpAuth?.idp.id,
@@ -157,7 +155,6 @@ const IdpLoginScreen = (props: Props) => {
 
   const handleLoginFailure = useCallback(
     (code?: string) => {
-      console.log(`=== IdpLoginScreen handleLoginFailure`);
       props.dispatchLoginFailure(
         new Error(`login failure with code ${code || "n/a"}`),
         idp
@@ -182,24 +179,17 @@ const IdpLoginScreen = (props: Props) => {
   );
 
   const handleLoginSuccess = (token: SessionToken) => {
-    console.log(`=== IdpLoginScreen handleLoginSuccess`);
     handleSendAssistanceLog(choosenTool, `login success`);
     props.dispatchLoginSuccess(token, idp);
   };
 
   const onRetryButtonPressed = (): void => {
-    console.log(`=== IdpLoginScreen onRetryButtonPressed`);
     setRequestState(pot.noneLoading);
     retryLolliPoPLogin();
   };
 
   const handleNavigationStateChange = useCallback(
     (event: WebViewNavigation) => {
-      console.log(
-        `=== IdpLoginScreen handleNavigationStateChange (${getUrlBasepath(
-          event.url
-        )})`
-      );
       const url = event.url;
 
       if (url) {
@@ -226,11 +216,6 @@ const IdpLoginScreen = (props: Props) => {
   );
 
   const handleShouldStartLoading = (event: WebViewNavigation): boolean => {
-    console.log(
-      `=== IdpLoginScreen handleShouldStartLoading (${getUrlBasepath(
-        event.url
-      )})`
-    );
     const url = event.url;
     // if an intent is coming from the IDP login form, extract the fallbackUrl and use it in Linking.openURL
     const idpIntent = getIntentFallbackUrl(url);

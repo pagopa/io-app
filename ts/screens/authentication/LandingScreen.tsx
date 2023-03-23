@@ -388,7 +388,6 @@ class LandingScreen extends React.PureComponent<Props, State> {
   };
 
   public render() {
-    console.log(`=== LandingScreen`);
     // If the async loading of the isRootedOrJailbroken is not ready, display a loading
     return pipe(
       this.state.isRootedOrJailbroken,

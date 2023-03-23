@@ -11,7 +11,6 @@ import { useLollipopLoginSource } from "../../features/lollipop/hooks/useLollipo
 import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
 import I18n from "../../i18n";
 import { getIdpLoginUri } from "../../utils/login";
-import { getUrlBasepath } from "../../utils/url";
 import { closeInjectedScript } from "../../utils/webview";
 import { IOStyles } from "../core/variables/IOStyles";
 import { withLoadingSpinner } from "../helpers/withLoadingSpinner";
@@ -85,7 +84,6 @@ const generateRetryState: (state: InternalState) => InternalState = (
 });
 
 const CieWebView = (props: Props) => {
-  console.log(`=== CieWebView`);
   const [internalState, setInternalState] = React.useState<InternalState>(
     generateResetState()
   );
@@ -93,7 +91,6 @@ const CieWebView = (props: Props) => {
   const { onSuccess } = props;
 
   const handleOnError = React.useCallback(() => {
-    console.log(`=== CieWebView handleOnError`);
     setInternalState(state => generateErrorState(state));
   }, []);
 
@@ -108,7 +105,6 @@ const CieWebView = (props: Props) => {
 
   useEffect(() => {
     if (internalState.authUrl !== undefined) {
-      console.log(`=== CieWebView useEffect onSuccess`);
       onSuccess(internalState.authUrl);
       // reset the state when authUrl has been found
       setInternalState(generateResetState());
@@ -118,11 +114,6 @@ const CieWebView = (props: Props) => {
   const handleOnShouldStartLoadWithRequest = (
     event: WebViewNavigation
   ): boolean => {
-    console.log(
-      `=== CieWebView handleOnShouldStartLoadWithRequest (${getUrlBasepath(
-        event.url
-      )})`
-    );
     if (internalState.authUrl !== undefined) {
       return false;
     }
@@ -155,7 +146,6 @@ const CieWebView = (props: Props) => {
   };
 
   const handleOnLoadEnd = (e: WebViewNavigationEvent | WebViewErrorEvent) => {
-    console.log(`=== CieWebView handleOnLoadEnd`);
     const eventTitle = e.nativeEvent.title.toLowerCase();
     if (
       eventTitle === "pagina web non disponibile" ||
