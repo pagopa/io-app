@@ -119,10 +119,6 @@ export function trackThirdPartyMessageAttachmentShowPreview() {
   void mixpanelTrack("THIRD_PARTY_MESSAGE_ATTACHMENT_SHOW_PREVIEW");
 }
 
-export function trackThirdPartyMessageAttachmentCancel() {
-  void mixpanelTrack("THIRD_PARTY_MESSAGE_ATTACHMENT_CANCEL");
-}
-
 export function trackThirdPartyMessageAttachmentDoNotShow() {
   void mixpanelTrack("THIRD_PARTY_MESSAGE_ATTACHMENT_DO_NOT_SHOW");
 }
