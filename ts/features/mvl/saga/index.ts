@@ -1,6 +1,7 @@
 import { SagaIterator } from "redux-saga";
 import { call, takeLatest } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SessionToken } from "../../../types/SessionToken";
 import { waitBackoffError } from "../../../utils/backoffError";
 import { mvlDetailsLoad } from "../store/actions";
@@ -24,4 +25,18 @@ export function* watchMvlSaga(bearerToken: SessionToken): SagaIterator {
       yield* call(handleGetMvl, mvlClient.getUserLegalMessage, action);
     }
   );
+}
+
+// After making the features.MVL non-persistent
+// because it is no longer necessary, the persist:mvl
+// must be manually removed from AsyncStorage.
+// If an error occurs while deleting, because the key is
+// invalid or not present, it is not necessary
+// to handle the exception
+export function* removePersistMvl() {
+  try {
+    yield* call(AsyncStorage.removeItem, "persist:mvl");
+  } finally {
+    // nothing to do
+  }
 }

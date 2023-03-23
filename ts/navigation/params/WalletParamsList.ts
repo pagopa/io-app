@@ -42,9 +42,11 @@ import { TransactionErrorScreenNavigationParams } from "../../screens/wallet/pay
 import { TransactionSummaryScreenNavigationParams } from "../../screens/wallet/payment/TransactionSummaryScreen";
 import { PaymentHistoryDetailsScreenNavigationParams } from "../../screens/wallet/PaymentHistoryDetailsScreen";
 import { TransactionDetailsScreenNavigationParams } from "../../screens/wallet/TransactionDetailsScreen";
+import { AvailableInitiativesListScreenNavigationParams } from "../../features/idpay/wallet/screens/AvailableInitiativesList";
 import ROUTES from "../routes";
 
 export type WalletParamsList = {
+  [ROUTES.WALLET_IDPAY_INITIATIVE_LIST]: AvailableInitiativesListScreenNavigationParams;
   [ROUTES.WALLET_ADD_PAYMENT_METHOD]: AddPaymentMethodScreenNavigationParams;
   [ROUTES.WALLET_TRANSACTION_DETAILS]: TransactionDetailsScreenNavigationParams;
   [ROUTES.WALLET_CREDIT_CARD_DETAIL]: CreditCardDetailScreenNavigationParams;
