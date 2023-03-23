@@ -11,6 +11,7 @@ import { fciSignatureRequestSelector } from "../store/reducers/fciSignatureReque
 import { LoadingErrorComponent } from "../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import SuccessComponent from "../components/SuccessComponent";
 import GenericErrorComponent from "../components/GenericErrorComponent";
+import { withValidatedEmail } from "../../../components/helpers/withValidatedEmail";
 
 export type FciRouterScreenNavigationParams = Readonly<{
   signatureRequestId: SignatureRequestDetailView["id"];
@@ -58,4 +59,4 @@ const FciSignatureScreen = (
   );
 };
 
-export default FciSignatureScreen;
+export default withValidatedEmail(FciSignatureScreen);

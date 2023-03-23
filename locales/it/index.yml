@@ -3245,7 +3245,7 @@ features:
       titleRight: Pagina {{currentPage}} di {{totalPages}}
     shareDataScreen:
       title: "Condividi questi dati?"
-      content: "Per completare la firma, devi condividere questi dati con il provider di firma."
+      content: "Verranno condivisi con il fornitore della firma digitale. Se annulli, non potrai completare la firma."
       cancel: "Annulla"
       confirm: "Ok, va bene"
       alertText: "Vuoi modificare o aggiornare il tuo indirizzo email?"
