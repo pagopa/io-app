@@ -78,10 +78,8 @@ const keyExtractor = (idp: LocalIdpsFallback): string => idp.id;
 // https://github.com/facebook/react-native/issues/12606
 // Image cache forced refresh for Android by appending
 // the `ts` query parameter as DDMMYYYY to simulate a 24h TTL.
-const androidIdpLogoForcedRefreshed = () => {
-  const timestampValue = toAndroidCacheTimestamp();
-  return Platform.OS === "android" ? `?ts=${timestampValue}` : "";
-};
+const androidIdpLogoForcedRefreshed = () =>
+  Platform.OS === "android" ? `?ts=${toAndroidCacheTimestamp()}` : "";
 
 const renderItem =
   (props: Props) =>
