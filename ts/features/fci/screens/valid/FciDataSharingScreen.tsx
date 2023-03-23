@@ -3,6 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import { List } from "native-base";
 import * as React from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
+import * as O from "fp-ts/lib/Option";
 import { H4 } from "../../../../components/core/typography/H4";
 import { Link } from "../../../../components/core/typography/Link";
 import { IOColors } from "../../../../components/core/variables/IOColors";
@@ -13,6 +14,7 @@ import IconFont from "../../../../components/ui/IconFont";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import {
+  profileEmailSelector,
   profileFiscalCodeSelector,
   profileNameSelector,
   profileSelector
@@ -25,9 +27,11 @@ import {
   confirmButtonProps
 } from "../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
+import ROUTES from "../../../../navigation/routes";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { H1 } from "../../../../components/core/typography/H1";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
+import { withValidatedEmail } from "../../../../components/helpers/withValidatedEmail";
 
 const styles = StyleSheet.create({
   padded: {
@@ -68,6 +72,7 @@ const FciDataSharingScreen = (): React.ReactElement => {
     pot.map(profile, p => p.date_of_birth),
     undefined
   );
+  const email = useIOSelector(profileEmailSelector);
 
   const { present, bottomSheet: fciAbortSignature } =
     useFciAbortSignatureFlow();
@@ -81,7 +86,15 @@ const FciDataSharingScreen = (): React.ReactElement => {
       <H4 weight="Regular" style={styles.paddingTextLarge} color={"bluegrey"}>
         {I18n.t("features.fci.shareDataScreen.alertText")}
         <View style={styles.paddingText} />
-        <Link>{I18n.t("features.fci.shareDataScreen.alertLink")}</Link>
+        <Link
+          onPress={() =>
+            navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+              screen: ROUTES.INSERT_EMAIL_SCREEN
+            })
+          }
+        >
+          {I18n.t("features.fci.shareDataScreen.alertLink")}
+        </Link>
       </H4>
     </View>
   );
@@ -135,6 +148,14 @@ const FciDataSharingScreen = (): React.ReactElement => {
                 hideIcon
               />
             )}
+            {O.isSome(email) && (
+              <ListItemComponent
+                testID="FciDataSharingScreenEmailTestID"
+                title={I18n.t("profile.data.list.email")}
+                subTitle={email.value}
+                hideIcon
+              />
+            )}
           </List>
           <AlertTextComponent />
         </View>
@@ -160,4 +181,4 @@ const FciDataSharingScreen = (): React.ReactElement => {
   );
 };
 
-export default FciDataSharingScreen;
+export default withValidatedEmail(FciDataSharingScreen);
