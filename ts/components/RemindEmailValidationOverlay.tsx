@@ -42,6 +42,7 @@ import {
 import { GlobalState } from "../store/reducers/types";
 import customVariables from "../theme/variables";
 import { isOnboardingCompleted } from "../utils/navigation";
+import { FCI_ROUTES } from "../features/fci/navigation/routes";
 import { VSpacer } from "./core/spacer/Spacer";
 import { IOStyles } from "./core/variables/IOStyles";
 import { ContextualHelpPropsMarkdown } from "./screens/BaseScreenComponent";
@@ -339,7 +340,18 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
                  * - Compose the common logic with the navigation stack dependent logic and isolate the dependent navigation logic
                  */
                 if (
-                  NavigationService.getCurrentRouteName() === ROUTES.WALLET_HOME
+                  NavigationService.getCurrentRouteName() ===
+                    ROUTES.WALLET_HOME ||
+                  pipe(
+                    NavigationService.getCurrentRouteName(),
+                    O.fromNullable,
+                    O.map(currentRoute =>
+                      (Object.values(FCI_ROUTES) as Array<string>).includes(
+                        currentRoute
+                      )
+                    ),
+                    O.getOrElse(() => false)
+                  )
                 ) {
                   NavigationService.navigate(ROUTES.PROFILE_NAVIGATOR, {
                     screen: ROUTES.INSERT_EMAIL_SCREEN
