@@ -3238,7 +3238,7 @@ features:
       titleRight: Pagina {{currentPage}} di {{totalPages}}
     shareDataScreen:
       title: "Condividi questi dati?"
-      content: "Per completare la firma, devi condividere questi dati con il provider di firma."
+      content: "Verranno condivisi con il fornitore della firma digitale. Se annulli, non potrai completare la firma."
       cancel: "Annulla"
       confirm: "Ok, va bene"
       alertText: "Vuoi modificare o aggiornare il tuo indirizzo email?"
@@ -3324,12 +3324,30 @@ idpay:
   wallet:
     preview:
       validThrough: "Valido fino al {{endDate}}"
+      showAll: Vedi tutte
+    initiativePairing:
+      navigation: Iniziative disponibili
+      header: Scegli quali iniziative abilitare su questo metodo
+      statusLabels:
+        PENDING_DEACTIVATION_REQUEST: "In disattivazione.."
+        PENDING_ENROLLMENT_REQUEST: "In attivazione.."
+        ENROLLMENT_FAILED: "Attivazione fallita"
+      errorToasts:
+        enrollment: "Errore nel collegamento dell'iniziativa, riprova."
+        removal: "Errore nella rimozione dell'iniziativa, riprova."
   initiative:
     details:
       initiativeCard:
         availableAmount: Disponibile
-        validUntil: Valido fino al {{expiryDate}}
-        toRefund: da rimborsare
+        validUntil: Fino al {{expiryDate}}
+        expiresOn: Scade il {{expiryDate}}
+        toRefund: Da rimborsare
+        statusLabels:
+          REFUNDABLE: Attiva
+          NOT_REFUNDABLE: Disattivata
+          NOT_REFUNDABLE_ONLY_IBAN: Metodo mancante
+          NOT_REFUNDABLE_ONLY_INSTRUMENT: IBAN mancante
+          UNSUBSCRIBED: Disiscritto
       initiativeDetailsScreen:
         notConfigured:
           header: Configura l'iniziativa!
