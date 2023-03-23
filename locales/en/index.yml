@@ -3213,8 +3213,8 @@ features:
       titleLeft: Document {{currentDoc}} of {{totalDocs}}
       titleRight: Page {{currentPage}} of {{totalPages}}
     shareDataScreen:
-      title: "Do you share this data?"
-      content: "To complete the signing process, you must share this data with the signature provider."
+      title: "Do you want to share these data?"
+      content: "These will be shared with the digital signature provider. If you cancel, you will not be able to complete the signing."
       cancel: "Cancel"
       confirm: "Ok"
       alertText: "Want to change or update your email address?"
