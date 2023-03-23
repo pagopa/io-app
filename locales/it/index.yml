@@ -3360,8 +3360,9 @@ idpay:
             showMore: Vedi tutte
             header: Impostazioni
             associatedPaymentMethods: Metodi di pagamento associati
-            methodsPlural: metodi 
-            methodsSingular: metodo 
+            methods:
+              one: "1 metodo"
+              other: "{{count}} metodi"
             selectedIBAN: IBAN per l'accredito
             actionsRequired: Azioni richieste 
           startConfigurationCTA: Inizia
