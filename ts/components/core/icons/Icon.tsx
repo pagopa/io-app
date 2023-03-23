@@ -96,10 +96,13 @@ import IconChevronRight from "./svg/IconChevronRight";
 import IconChevronTop from "./svg/IconChevronTop";
 import IconChevronBottom from "./svg/IconChevronBottom";
 import IconChevronLeft from "./svg/IconChevronLeft";
+import IconChevronRightListItem from "./svg/IconChevronRightListItem";
 import IconArrowBottom from "./svg/IconArrowBottom";
 import IconArrowLeft from "./svg/IconArrowLeft";
 import IconArrowTop from "./svg/IconArrowTop";
 import IconArrowRight from "./svg/IconArrowRight";
+import IconBackiOS from "./svg/IconBackiOS";
+import IconBackAndroid from "./svg/IconBackAndroid";
 import IconNavMessages from "./svg/IconNavMessages";
 import IconNavWallet from "./svg/IconNavWallet";
 import IconNavDocuments from "./svg/IconNavDocuments";
@@ -341,6 +344,7 @@ export const IOIcons = {
   chevronLeft: IconChevronLeft /* io-back */,
   chevronBottom: IconChevronBottom,
   chevronTop: IconChevronTop,
+  chevronRightListItem: IconChevronRightListItem,
   close: IconClose /* io-close */,
   legClose: LegIconClose /* io-close */,
   closeSmall: IconCloseSmall,
@@ -350,6 +354,8 @@ export const IOIcons = {
   arrowTop: IconArrowTop,
   arrowRight: IconArrowRight,
   arrowCircleUp: IconArrowCircleUp,
+  backiOS: IconBackiOS,
+  backAndroid: IconBackAndroid,
   navMessages: IconNavMessages /* io-messaggi */,
   navWallet: IconNavWallet /* io-portafoglio */,
   navDocuments: IconNavDocuments,
@@ -523,7 +529,14 @@ const {
   arrowLeft,
   arrowTop,
   arrowRight,
-  arrowCircleUp
+  arrowCircleUp,
+  backiOS,
+  backAndroid,
+  chevronTop,
+  chevronBottom,
+  chevronRight,
+  chevronLeft,
+  chevronRightListItem
 } = IOIcons;
 
 export const IOIconsNew = {
@@ -609,7 +622,14 @@ export const IOIconsNew = {
   arrowLeft,
   arrowTop,
   arrowRight,
-  arrowCircleUp
+  arrowCircleUp,
+  backiOS,
+  backAndroid,
+  chevronTop,
+  chevronBottom,
+  chevronRight,
+  chevronLeft,
+  chevronRightListItem
 };
 
 /* Navigation */
