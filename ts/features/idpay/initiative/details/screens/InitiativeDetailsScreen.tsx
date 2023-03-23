@@ -10,6 +10,7 @@ import {
   StatusEnum
 } from "../../../../../../definitions/idpay/InitiativeDTO";
 import EmptyInitiativeSvg from "../../../../../../img/features/idpay/empty_initiative.svg";
+import { Alert } from "../../../../../components/Alert";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H3 } from "../../../../../components/core/typography/H3";
@@ -25,7 +26,11 @@ import {
   IOStackNavigationProp
 } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import { IDPayConfigurationRoutes } from "../../configuration/navigation/navigator";
+import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import {
+  IDPayConfigurationParamsList,
+  IDPayConfigurationRoutes
+} from "../../configuration/navigation/navigator";
 import InitiativeCardComponent from "../components/InitiativeCardComponent";
 import { InitiativeSettingsComponent } from "../components/InitiativeSettingsComponent";
 import InitiativeTimelineComponent from "../components/InitiativeTimelineComponent";
@@ -35,8 +40,6 @@ import {
   idpayTimelineSelector
 } from "../store";
 import { idpayInitiativeGet, idpayTimelinePageGet } from "../store/actions";
-import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import { Alert } from "../../../../../components/Alert";
 
 const styles = StyleSheet.create({
   newInitiativeMessageContainer: {
@@ -105,24 +108,6 @@ export const InitiativeDetailsScreen = () => {
       params: { initiativeId }
     });
   };
-  const navigateToInstrumentsConfiguration = () => {
-    navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
-      screen:
-        IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT,
-      params: {
-        initiativeId
-      }
-    });
-  };
-
-  const navigateToIbanConfiguration = () => {
-    navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
-      screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ENROLLMENT,
-      params: {
-        initiativeId
-      }
-    });
-  };
 
   useFocusEffect(
     useCallback(() => {
@@ -149,49 +134,6 @@ export const InitiativeDetailsScreen = () => {
       initiativeData.status === StatusEnum.NOT_REFUNDABLE &&
       isFirstInitiativeConfiguration;
 
-    type ErrorAlertStatus = Exclude<
-      StatusEnum,
-      StatusEnum.REFUNDABLE | StatusEnum.UNSUBSCRIBED
-    >;
-    const ErrorAlert = () => {
-      const viewRef = React.createRef<View>();
-      const baseAlert = (navFunction: () => void, status: ErrorAlertStatus) => (
-        <>
-          <Alert
-            viewRef={viewRef}
-            content={I18n.t(
-              `idpay.initiative.details.initiativeDetailsScreen.configured.errorAlerts.${status}.content`
-            )}
-            action={I18n.t(
-              `idpay.initiative.details.initiativeDetailsScreen.configured.errorAlerts.${status}.action`
-            )}
-            onPress={navFunction}
-            variant="error"
-          />
-          <VSpacer size={16} />
-        </>
-      );
-
-      switch (initiativeData.status) {
-        case StatusEnum.NOT_REFUNDABLE_ONLY_IBAN:
-          return baseAlert(
-            navigateToInstrumentsConfiguration,
-            initiativeData.status
-          );
-        case StatusEnum.NOT_REFUNDABLE_ONLY_INSTRUMENT:
-          return baseAlert(navigateToIbanConfiguration, initiativeData.status);
-        case StatusEnum.NOT_REFUNDABLE:
-          if (
-            initiativeData.iban === undefined &&
-            initiativeData.nInstr === 0
-          ) {
-            return baseAlert(navigateToConfiguration, initiativeData.status);
-          }
-          return null;
-        default:
-          return null;
-      }
-    };
     return (
       <>
         <ScrollView bounces={false}>
@@ -227,7 +169,7 @@ export const InitiativeDetailsScreen = () => {
                       <VSpacer size={16} />
                     </>
                   )}
-                  <ErrorAlert />
+                  <MissingInitiativeDataAlert initiativeData={initiativeData} />
                   <InitiativeTimelineComponent
                     initiativeId={initiativeData.initiativeId}
                   />
@@ -272,5 +214,63 @@ export const InitiativeDetailsScreen = () => {
         {isLoading ? null : renderContent()}
       </LoadingSpinnerOverlay>
     </BaseScreenComponent>
+  );
+};
+const MissingInitiativeDataAlert = ({
+  initiativeData
+}: {
+  initiativeData: InitiativeDTO;
+}) => {
+  const { status, initiativeId, iban, nInstr } = initiativeData;
+  const navigation = useNavigation();
+  if (status === StatusEnum.UNSUBSCRIBED || status === StatusEnum.REFUNDABLE) {
+    return null;
+  }
+
+  const viewRef = React.createRef<View>();
+  const pickNavigation = () => {
+    const navigateToScreen = (screen: keyof IDPayConfigurationParamsList) =>
+      navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
+        screen,
+        params: {
+          initiativeId
+        }
+      });
+    switch (status) {
+      case StatusEnum.NOT_REFUNDABLE_ONLY_IBAN:
+        navigateToScreen(
+          IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT
+        );
+        break;
+      case StatusEnum.NOT_REFUNDABLE_ONLY_INSTRUMENT:
+        navigateToScreen(
+          IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ENROLLMENT
+        );
+        break;
+      case StatusEnum.NOT_REFUNDABLE:
+        if (iban === undefined && nInstr === 0) {
+          navigateToScreen(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO);
+          break;
+        }
+        break;
+      default:
+        break;
+    }
+  };
+  return (
+    <>
+      <Alert
+        viewRef={viewRef}
+        content={I18n.t(
+          `idpay.initiative.details.initiativeDetailsScreen.configured.errorAlerts.${status}.content`
+        )}
+        action={I18n.t(
+          `idpay.initiative.details.initiativeDetailsScreen.configured.errorAlerts.${status}.action`
+        )}
+        onPress={pickNavigation}
+        variant="error"
+      />
+      <VSpacer size={16} />
+    </>
   );
 };
