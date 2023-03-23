@@ -277,6 +277,8 @@ export type IOTheme = {
   // Design System related
   "cardBorder-default": IOColors;
   "iconColor-default": IOColors;
+  // Layout
+  "divider-default": IOColors;
 };
 
 export const IOThemeLight: IOTheme = {
@@ -293,7 +295,9 @@ export const IOThemeLight: IOTheme = {
   "textBody-tertiary": "grey-700",
   // Design System related
   "cardBorder-default": "grey-100",
-  "iconColor-default": "grey-650"
+  "iconColor-default": "grey-650",
+  // Layout
+  "divider-default": "grey-100"
 };
 
 export const IOThemeDark: IOTheme = {
@@ -311,7 +315,9 @@ export const IOThemeDark: IOTheme = {
   "textBody-tertiary": "grey-450",
   // Design System related
   "cardBorder-default": "grey-850",
-  "iconColor-default": "grey-450"
+  "iconColor-default": "grey-450",
+  // Layout
+  "divider-default": "grey-850"
 };
 
 export const themeStatusColorsLightMode = asIOThemeColors({
