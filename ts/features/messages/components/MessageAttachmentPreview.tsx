@@ -129,6 +129,7 @@ const renderFooter = (
       leftButton={{
         bordered: true,
         primary: false,
+        buttonFontSize: variables.btnSmallFontSize,
         onPress: () => {
           onShare?.();
           share(`file://${downloadPath}`, undefined, false)().catch(_ => {
@@ -144,6 +145,7 @@ const renderFooter = (
       midButton={{
         bordered: true,
         primary: false,
+        buttonFontSize: variables.btnSmallFontSize,
         onPress: () => {
           onDownload?.();
           ReactNativeBlobUtil.MediaCollection.copyToMediaStore(
@@ -176,18 +178,25 @@ const renderFooter = (
         },
         title: I18n.t("features.mvl.details.attachments.pdfPreview.save")
       }}
-      rightButton={confirmButtonProps(() => {
-        onOpen?.();
-        ReactNativeBlobUtil.android
-          .actionViewIntent(downloadPath, attachment.contentType)
-          .catch(_ => {
-            showToast(
-              I18n.t(
-                "features.mvl.details.attachments.pdfPreview.errors.opening"
-              )
-            );
-          });
-      }, I18n.t("features.mvl.details.attachments.pdfPreview.open"))}
+      rightButton={confirmButtonProps(
+        () => {
+          onOpen?.();
+          ReactNativeBlobUtil.android
+            .actionViewIntent(downloadPath, attachment.contentType)
+            .catch(_ => {
+              showToast(
+                I18n.t(
+                  "features.mvl.details.attachments.pdfPreview.errors.opening"
+                )
+              );
+            });
+        },
+        I18n.t("features.mvl.details.attachments.pdfPreview.open"),
+        undefined,
+        undefined,
+        undefined,
+        variables.btnSmallFontSize
+      )}
     />
   );
 
