@@ -3210,7 +3210,7 @@ features:
         subTitle: Se hai bisogno di una copia conttatta l'ente
       expired:
         title: La richiesta di firma è scaduta
-        subTitle: Per assistenza contattare l'ente
+        subTitle: Per assistenza, scrivi a
       waitForQtsp:
         title: Il firma è in elaborazione
         subTitle: Riceverai un messaggio con i documenti firmati non appena saranno pronti.

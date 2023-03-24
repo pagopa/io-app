@@ -3186,7 +3186,7 @@ features:
         subTitle: If you need a copy, contact the issuer
       expired:
         title: The signature request is expired
-        subTitle: If you need help contact the issuer
+        subTitle: If you need help write to
       waitForQtsp:
         title: The signature is being processed.
         subTitle: You will receive a message with the signed documents as soon as they are ready.
