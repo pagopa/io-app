@@ -461,6 +461,9 @@ jobs:
           command: |
             cp .env.local .env
             yarn run postinstall
+            which bundle
+            bundle --version
+            cat Gemfile
             cd ios && bundle exec pod install --verbose
             rm -rf /tmp/metro-bundler-cache-*
             rm -rf /tmp/haste-map-react-native-packager-*
