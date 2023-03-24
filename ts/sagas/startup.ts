@@ -303,6 +303,7 @@ export function* initializeApplicationSaga(): Generator<
     if (O.isNone(maybeSessionInformation)) {
       // we can't go further without session info, let's restart
       // the initialization process
+      yield* put(startupLoadSuccess("notAuthenticated"));
       yield* put(startApplicationInitialization());
       return;
     }
@@ -330,6 +331,7 @@ export function* initializeApplicationSaga(): Generator<
   if (O.isNone(maybeUserProfile)) {
     // Start again if we can't load the profile but wait a while
     yield* delay(WAIT_INITIALIZE_SAGA);
+    yield* put(startupLoadSuccess("notAuthenticated"));
     yield* put(startApplicationInitialization());
     return;
   }
@@ -370,6 +372,7 @@ export function* initializeApplicationSaga(): Generator<
   // Start watching for requests of abort the onboarding
   const watchAbortOnboardingSagaTask = yield* fork(watchAbortOnboardingSaga);
 
+  yield* put(startupLoadSuccess("authenticated"));
   const hasPreviousSessionAndPin =
     previousSessionToken && O.isSome(maybeStoredPin);
   if (hasPreviousSessionAndPin) {
@@ -388,7 +391,6 @@ export function* initializeApplicationSaga(): Generator<
 
   // Ask to accept ToS if there is a new available version
   yield* call(checkAcceptedTosSaga, userProfile);
-
   // check if the user expressed preference about mixpanel, if not ask for it
   yield* call(askMixpanelOptIn);
 
@@ -595,9 +597,6 @@ export function* initializeApplicationSaga(): Generator<
         fromNotification: true
       })
     );
-  } else {
-    // yield* call(navigateToMainNavigatorAction);
-    yield* put(startupLoadSuccess(true));
   }
 }
 

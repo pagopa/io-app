@@ -8,12 +8,9 @@ import {
   createStackNavigator,
   TransitionPresets
 } from "@react-navigation/stack";
-import * as O from "fp-ts/lib/Option";
 import { View } from "react-native";
 import * as React from "react";
 import { useRef } from "react";
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import { profileSelector } from "../store/reducers/profile";
 import { IOColors } from "../components/core/variables/IOColors";
 import workunitGenericFailure from "../components/error/WorkunitGenericFailure";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
@@ -67,10 +64,6 @@ import { setDebugCurrentRouteName } from "../store/actions/debug";
 import { useIODispatch, useIOSelector } from "../store/hooks";
 import { trackScreen } from "../store/middlewares/navigation";
 import {
-  sessionInfoSelector,
-  sessionTokenSelector
-} from "../store/reducers/authentication";
-import {
   bpdRemoteConfigSelector,
   isCdcEnabledSelector,
   isCGNEnabledSelector,
@@ -81,6 +74,7 @@ import {
 import { isTestEnv } from "../utils/environment";
 import { startApplicationInitialization } from "../store/actions/application";
 import { IO_INTERNAL_LINK_PREFIX } from "../utils/navigation";
+import { isStartupLoaded } from "../store/reducers/startup";
 import authenticationNavigator from "./AuthenticationNavigator";
 import { MessagesStackNavigator } from "./MessagesNavigator";
 import NavigationService, { navigationRef } from "./NavigationService";
@@ -104,15 +98,13 @@ export const AppStackNavigator = (): React.ReactElement => {
   const isFimsEnabled = fimsEnabled && fimsEnabledSelector;
   const isFciEnabled = fciEnabledSelector;
 
-  const maybeSessionToken = useIOSelector(sessionTokenSelector);
-  const maybeSessionInfo = useIOSelector(sessionInfoSelector);
-  const userProfile = useIOSelector(profileSelector);
+  const startupStatus = useIOSelector(isStartupLoaded);
 
   React.useEffect(() => {
     dispatch(startApplicationInitialization());
   }, [dispatch]);
 
-  if (maybeSessionToken === undefined && O.isNone(maybeSessionInfo)) {
+  if (startupStatus === "notAuthenticated") {
     return (
       <Stack.Navigator
         initialRouteName={ROUTES.AUTHENTICATION}
@@ -127,17 +119,18 @@ export const AppStackNavigator = (): React.ReactElement => {
     );
   }
 
-  if (pot.isNone(userProfile) || pot.isLoading(userProfile)) {
+  if (startupStatus === "initial") {
     return <IngressScreen />;
   }
+
   return (
     <Stack.Navigator
       initialRouteName={ROUTES.MAIN}
       headerMode={"none"}
       screenOptions={{ gestureEnabled: false }}
     >
-      <Stack.Screen name={ROUTES.ONBOARDING} component={OnboardingNavigator} />
       <Stack.Screen name={ROUTES.MAIN} component={MainTabNavigator} />
+      <Stack.Screen name={ROUTES.ONBOARDING} component={OnboardingNavigator} />
 
       <Stack.Screen
         name={ROUTES.MESSAGES_NAVIGATOR}

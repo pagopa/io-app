@@ -2,17 +2,18 @@
  * A reducer for not persisted preferences.
  */
 import { isActionOf } from "typesafe-actions";
+import { sessionExpired, sessionInvalid } from "../actions/authentication";
 
-import { startupLoadSuccess } from "../actions/startup";
+import { startupLoadSuccess, StartupStatus } from "../actions/startup";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
 
 export type StartupState = {
-  loaded: boolean;
+  status: StartupStatus;
 };
 
 const initialStartupState: StartupState = {
-  loaded: false
+  status: "initial"
 };
 
 export default function startupReducer(
@@ -22,13 +23,21 @@ export default function startupReducer(
   if (isActionOf(startupLoadSuccess, action)) {
     return {
       ...state,
-      loaded: action.payload
+      status: action.payload
     };
   }
-
+  if (
+    isActionOf(sessionInvalid, action) ||
+    isActionOf(sessionExpired, action)
+  ) {
+    return {
+      ...state,
+      status: "notAuthenticated"
+    };
+  }
   return state;
 }
 
 // Selector
-export const isStartupLoaded = (state: GlobalState): boolean =>
-  state.startup.loaded;
+export const isStartupLoaded = (state: GlobalState): StartupStatus =>
+  state.startup.status;

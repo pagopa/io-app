@@ -51,7 +51,10 @@ export const MainTabNavigator = () => {
   const bottomInset = insets.bottom === 0 ? additionalPadding : insets.bottom;
 
   return (
-    <LoadingSpinnerOverlay isLoading={!startupLoaded} loadingOpacity={1}>
+    <LoadingSpinnerOverlay
+      isLoading={startupLoaded === "initial"}
+      loadingOpacity={1}
+    >
       <Tab.Navigator
         tabBarOptions={{
           labelStyle: {

@@ -4,6 +4,7 @@ import {
   analyticsAuthenticationStarted
 } from "../../store/actions/analytics";
 import { loginSuccess } from "../../store/actions/authentication";
+import { startupLoadSuccess } from "../../store/actions/startup";
 import { SessionToken } from "../../types/SessionToken";
 import { ReduxSagaEffect } from "../../types/utils";
 import { stopCieManager, watchCieAuthenticationSaga } from "../cie";
@@ -18,6 +19,7 @@ export function* authenticationSaga(): Generator<
   SessionToken,
   any
 > {
+  yield* put(startupLoadSuccess("notAuthenticated"));
   yield* put(analyticsAuthenticationStarted());
 
   // Watch for the test login

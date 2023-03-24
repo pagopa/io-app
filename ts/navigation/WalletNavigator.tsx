@@ -135,7 +135,7 @@ const WalletNavigator = () => {
 
   return (
     <Stack.Navigator
-      initialRouteName={ROUTES.WALLET_ADD_PAYMENT_METHOD}
+      initialRouteName={ROUTES.PAYMENT_SCAN_QR_CODE}
       headerMode={"none"}
       screenOptions={{ gestureEnabled: true }}
     >
