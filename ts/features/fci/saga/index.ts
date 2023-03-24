@@ -151,8 +151,11 @@ function* watchFciQtspClausesSaga(): SagaIterator {
 function* watchFciStartSaga(): SagaIterator {
   yield* call(
     NavigationService.dispatchNavigationAction,
-    CommonActions.navigate(FCI_ROUTES.MAIN, {
-      screen: FCI_ROUTES.DOCUMENTS
+    StackActions.replace(FCI_ROUTES.MAIN, {
+      screen: FCI_ROUTES.DOCUMENTS,
+      params: {
+        attrs: undefined
+      }
     })
   );
   // when the user start signing flow
