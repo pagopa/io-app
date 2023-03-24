@@ -1,6 +1,7 @@
 import { ListItem } from "native-base";
 import * as React from "react";
 import {
+  Text,
   View,
   AccessibilityRole,
   StyleProp,
@@ -10,11 +11,12 @@ import {
 } from "react-native";
 import Switch from "../../components/ui/Switch";
 import customVariables from "../../theme/variables";
+import { makeFontStyleObject } from "../core/fonts";
 import { Icon } from "../core/icons";
 import { IOBadge } from "../core/IOBadge";
 import { HSpacer } from "../core/spacer/Spacer";
 import { Body } from "../core/typography/Body";
-import { H3 } from "../core/typography/H3";
+import { IOColors } from "../core/variables/IOColors";
 import { IOStyles } from "../core/variables/IOStyles";
 import IconFont from "./../ui/IconFont";
 import { BadgeComponent } from "./BadgeComponent";
@@ -57,6 +59,11 @@ const styles = StyleSheet.create({
     paddingLeft: 0,
     paddingRight: 0,
     borderBottomColor: customVariables.itemSeparator
+  },
+  listItemText: {
+    fontSize: 18,
+    lineHeight: 24,
+    ...makeFontStyleObject("SemiBold", undefined, "TitilliumWeb")
   },
   spacingBase: {
     paddingTop: 6,
@@ -103,13 +110,19 @@ export default class ListItemComponent extends React.Component<Props> {
                 </View>
               )}
 
-              <H3
-                weight="SemiBold"
-                color={this.props.isItemDisabled ? "grey" : "bluegreyDark"}
+              <Text
+                style={[
+                  styles.listItemText,
+                  {
+                    color: this.props.isItemDisabled
+                      ? IOColors.grey
+                      : IOColors.bluegreyDark
+                  }
+                ]}
                 numberOfLines={2}
               >
                 {this.props.title}
-              </H3>
+              </Text>
               <HSpacer size={16} />
 
               {this.props.titleBadge && (
@@ -137,7 +150,11 @@ export default class ListItemComponent extends React.Component<Props> {
                   importantForAccessibility="no-hide-descendants"
                 />
               ) : (
-                <Icon name="chevronRight" size={ICON_SIZE} color="blue" />
+                <Icon
+                  name="chevronRightListItem"
+                  size={ICON_SIZE}
+                  color="blue"
+                />
               ))}
           </View>
           {this.props.subTitle && (
