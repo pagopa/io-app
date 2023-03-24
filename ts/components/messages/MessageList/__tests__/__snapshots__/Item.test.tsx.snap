@@ -2395,7 +2395,6 @@ exports[`MessageList Item component when hasPaidBadge=true category=EU_COVID_CER
         Array [
           Object {
             "alignItems": "center",
-            "alignSelf": "flex-start",
             "borderRadius": 50,
             "justifyContent": "center",
             "paddingHorizontal": 20,
@@ -2726,7 +2725,6 @@ exports[`MessageList Item component when hasPaidBadge=true category=GENERIC shou
         Array [
           Object {
             "alignItems": "center",
-            "alignSelf": "flex-start",
             "borderRadius": 50,
             "justifyContent": "center",
             "paddingHorizontal": 20,
