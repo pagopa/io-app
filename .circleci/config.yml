@@ -449,13 +449,14 @@ jobs:
       - run:
           name: Configure Bundler
           command: |
+            sudo gem update --system
             echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
             source $BASH_ENV
             gem install bundler:$BUNDLER_VERSION
 
       - run:
           name: Install Bundle
-          command: bundle check || bundle install
+          command: bundle check || bundle install --path vendor/bundle --clean
 
       # Store bundle cache
       - save_cache:
