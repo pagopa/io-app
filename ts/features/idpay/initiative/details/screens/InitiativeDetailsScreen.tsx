@@ -216,47 +216,42 @@ export const InitiativeDetailsScreen = () => {
     </BaseScreenComponent>
   );
 };
+type StatusWithAlert = Exclude<
+  StatusEnum,
+  StatusEnum.REFUNDABLE | StatusEnum.UNSUBSCRIBED
+>;
+
 const MissingInitiativeDataAlert = ({
   initiativeData
 }: {
   initiativeData: InitiativeDTO;
 }) => {
-  const { status, initiativeId, iban, nInstr } = initiativeData;
+  const { status, initiativeId } = initiativeData;
   const navigation = useNavigation();
+
   if (status === StatusEnum.UNSUBSCRIBED || status === StatusEnum.REFUNDABLE) {
     return null;
   }
 
   const viewRef = React.createRef<View>();
-  const pickNavigation = () => {
-    const navigateToScreen = (screen: keyof IDPayConfigurationParamsList) =>
-      navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
-        screen,
-        params: {
-          initiativeId
-        }
-      });
-    switch (status) {
-      case StatusEnum.NOT_REFUNDABLE_ONLY_IBAN:
-        navigateToScreen(
-          IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT
-        );
-        break;
-      case StatusEnum.NOT_REFUNDABLE_ONLY_INSTRUMENT:
-        navigateToScreen(
-          IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ENROLLMENT
-        );
-        break;
-      case StatusEnum.NOT_REFUNDABLE:
-        if (iban === undefined && nInstr === 0) {
-          navigateToScreen(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO);
-          break;
-        }
-        break;
-      default:
-        break;
-    }
+
+  const screen: Record<StatusWithAlert, keyof IDPayConfigurationParamsList> = {
+    NOT_REFUNDABLE_ONLY_IBAN:
+      IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT,
+    NOT_REFUNDABLE_ONLY_INSTRUMENT:
+      IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ENROLLMENT,
+    NOT_REFUNDABLE: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO
   };
+
+  const handleNavigation = () => {
+     navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
+       screen: screen[status],
+       params: {
+         initiativeId
+       }
+     });
+  };
+
   return (
     <>
       <Alert
@@ -267,7 +262,7 @@ const MissingInitiativeDataAlert = ({
         action={I18n.t(
           `idpay.initiative.details.initiativeDetailsScreen.configured.errorAlerts.${status}.action`
         )}
-        onPress={pickNavigation}
+        onPress={handleNavigation}
         variant="error"
       />
       <VSpacer size={16} />
