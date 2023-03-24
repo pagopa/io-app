@@ -34,7 +34,8 @@ describe("handleGetSignatureRequestById", () => {
     )
       .next()
       .call(mockBackendFciClient, {
-        id: loadAction.payload
+        id: loadAction.payload,
+        Bearer: "mockedToken"
       })
       .next(right(successResponse))
       .put(fciSignatureRequestFromId.success(successResponse.value))
@@ -49,7 +50,10 @@ describe("handleGetSignatureRequestById", () => {
       loadAction
     )
       .next()
-      .call(mockBackendFciClient, { id: loadAction.payload })
+      .call(mockBackendFciClient, {
+        id: loadAction.payload,
+        Bearer: "mockedToken"
+      })
       .next(right(failureResponse))
       .next(
         fciSignatureRequestFromId.failure(
@@ -67,7 +71,10 @@ describe("handleGetSignatureRequestById", () => {
       loadAction
     )
       .next()
-      .call(mockBackendFciClient, { id: loadAction.payload })
+      .call(mockBackendFciClient, {
+        id: loadAction.payload,
+        Bearer: "mockedToken"
+      })
       .next(left(new Error()))
       .next(
         fciSignatureRequestFromId.failure(
@@ -88,7 +95,10 @@ describe("handleGetSignatureRequestById", () => {
       loadAction
     )
       .next()
-      .call(mockBackendFciClient, { id: loadAction.payload })
+      .call(mockBackendFciClient, {
+        id: loadAction.payload,
+        Bearer: "mockedToken"
+      })
       .throw(mockedError)
       .next(fciSignatureRequestFromId.failure(getNetworkError(mockedError)))
       .next()
