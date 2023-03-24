@@ -13,10 +13,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { FCI_ROUTES } from "../../navigation/routes";
-import {
-  fciShowSignedDocumentsStartRequest,
-  fciStartRequest
-} from "../../store/actions";
+import { fciStartRequest } from "../../store/actions";
 
 type Props = {
   signatureRequest: SignatureRequestDetailView;
