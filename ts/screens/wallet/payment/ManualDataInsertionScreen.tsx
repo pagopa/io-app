@@ -10,7 +10,6 @@ import {
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import * as B from "fp-ts/lib/Boolean";
 import { Content, Form, Text as NBText } from "native-base";
 import * as React from "react";
 import { Keyboard, SafeAreaView, ScrollView, StyleSheet } from "react-native";
@@ -66,8 +65,8 @@ type State = Readonly<{
   organizationFiscalCode: O.Option<
     ReturnType<typeof OrganizationFiscalCode.decode>
   >;
-  pnnInputValue: string;
-  ofcInputValue: string;
+  noticeNumberInputValue: string;
+  orgFiscalCodeInputValue: string;
 }>;
 
 const styles = StyleSheet.create({
@@ -100,8 +99,8 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
     this.state = {
       paymentNoticeNumber: O.none,
       organizationFiscalCode: O.none,
-      pnnInputValue: "",
-      ofcInputValue: ""
+      noticeNumberInputValue: "",
+      orgFiscalCodeInputValue: ""
     };
   }
 
@@ -218,12 +217,12 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                     options: { mask: "9999 9999 9999 9999 99" },
                     keyboardType: "numeric",
                     returnKeyType: "done",
-                    value: this.state.pnnInputValue,
+                    value: this.state.noticeNumberInputValue,
                     // notice code structure:
                     // <aux digit 1n 0-3>| IUV 17>>|<segregation code (2n)><local info system (2n)><payment number (11n)><check digit (2n)>
                     onChangeText: value => {
                       this.setState({
-                        pnnInputValue: value,
+                        noticeNumberInputValue: value,
                         paymentNoticeNumber: pipe(
                           O.some(value),
                           O.filter(NonEmptyString.is),
@@ -252,10 +251,10 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                     options: { mask: "99999999999" }, // 11 digits for an oragnization fiscal code
                     keyboardType: "numeric",
                     returnKeyType: "done",
-                    value: this.state.ofcInputValue,
+                    value: this.state.orgFiscalCodeInputValue,
                     onChangeText: value => {
                       this.setState({
-                        ofcInputValue: value,
+                        orgFiscalCodeInputValue: value,
                         organizationFiscalCode: pipe(
                           O.some(value),
                           O.filter(NonEmptyString.is),
