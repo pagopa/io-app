@@ -244,12 +244,12 @@ const MissingInitiativeDataAlert = ({
   };
 
   const handleNavigation = () => {
-     navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
-       screen: screen[status],
-       params: {
-         initiativeId
-       }
-     });
+    navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
+      screen: screen[status],
+      params: {
+        initiativeId
+      }
+    });
   };
 
   return (
