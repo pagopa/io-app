@@ -287,12 +287,12 @@ jobs:
             cd ruby-install-0.8.5/
             sudo make install
 
-      - run: ruby-install ruby 2.7.6
+      - run: ruby-install ruby 2.7.7
       - run:
           name: Set chruby
           command: |
             echo 'source /usr/local/share/chruby/chruby.sh' >> $BASH_ENV
-            echo 'chruby ruby-2.7.6' >> $BASH_ENV 
+            echo 'chruby ruby-2.7.7' >> $BASH_ENV 
 
       - run:
           name: Configure Bundler
@@ -440,13 +440,6 @@ jobs:
             npm install -g yarn
 
       - run:
-          name: Install Ruby 2.7.6
-          command: |
-            rbenv install 2.7.6
-            rbenv global 2.7.6
-            ruby --version
-
-      - run:
           name: Configure Bundler
           command: |
             sudo gem update --system
@@ -456,7 +449,7 @@ jobs:
 
       - run:
           name: Install Bundle
-          command: bundle check || bundle install --path vendor/bundle --clean
+          command: bundle check || bundle install
 
       # Store bundle cache
       - save_cache:
