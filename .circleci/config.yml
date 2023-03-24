@@ -287,12 +287,12 @@ jobs:
             cd ruby-install-0.8.5/
             sudo make install
 
-      - run: ruby-install ruby 2.7.6
+      - run: ruby-install ruby 2.7.7
       - run:
           name: Set chruby
           command: |
             echo 'source /usr/local/share/chruby/chruby.sh' >> $BASH_ENV
-            echo 'chruby ruby-2.7.6' >> $BASH_ENV 
+            echo 'chruby ruby-2.7.7' >> $BASH_ENV 
 
       - run:
           name: Configure Bundler
