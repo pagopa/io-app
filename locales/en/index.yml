@@ -3190,12 +3190,19 @@ features:
       waitForQtsp:
         title: The document is being processed
         subTitle: Please wait, you will soon receive the signed contract in the app.
-      unsupportedDevice:
-        title: There is a problem
-        subTitle: Your device does not support the "Firma con IO" feature.
       generic:
-        title: There is a problem
-        subTitle: To proceed with the signature, check that you have updated the IO app to the latest version.
+        default:
+          title: There is a problem
+          subTitle: To proceed with the signature, check that you have updated the IO app to the latest version.
+        update:
+          title: Update the app
+          subTitle: Check that you have installed the latest version of IO or log in again.
+        rejected:
+          title: The signing failed
+          subTitle: The sender will contact you in the next few days to get you to re-sign. If this doesn't happen, write to    
+        signing:
+          title: The signing failed
+          subTitle: Due to a technical problem, the signing was not successful. If the problem persists, contact support.   
     abort:
       title: "Cancel signing flow"
       content: "Do you want to cancel the documents signing process?"
