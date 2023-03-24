@@ -37,7 +37,7 @@ import InitiativeTimelineComponent from "../components/InitiativeTimelineCompone
 import { IDPayDetailsParamsList } from "../navigation";
 import {
   idpayInitiativeDetailsSelector,
-  idpayTimelineSelector
+  idpayOperationListLengthSelector
 } from "../store";
 import { idpayInitiativeGet, idpayTimelinePageGet } from "../store/actions";
 
@@ -117,8 +117,8 @@ export const InitiativeDetailsScreen = () => {
   );
 
   const isLoading = pot.isLoading(initiativeDetailsFromSelector);
-  const isFirstInitiativeConfiguration =
-    useIOSelector(idpayTimelineSelector).length <= 1;
+  const timelineLength = useIOSelector(idpayOperationListLengthSelector);
+  const isFirstInitiativeConfiguration = timelineLength <= 1;
 
   const renderContent = () => {
     if (initiativeData === undefined) {

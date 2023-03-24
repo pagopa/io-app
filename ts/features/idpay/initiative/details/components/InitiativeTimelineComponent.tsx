@@ -19,7 +19,7 @@ import { useIOSelector } from "../../../../../store/hooks";
 import { IDPayDetailsRoutes } from "../navigation";
 import {
   idpayPaginatedTimelineSelector,
-  idpayTimelineSelector
+  idpayOperationListSelector
 } from "../store";
 import { useTimelineDetailsBottomSheet } from "./TimelineDetailsBottomSheet";
 import { TimelineOperationListItem } from "./TimelineOperationListItem";
@@ -63,7 +63,7 @@ const ConfiguredInitiativeData = (props: Props) => {
   const detailsBottomSheet = useTimelineDetailsBottomSheet(initiativeId);
 
   const paginatedTimelinePot = useIOSelector(idpayPaginatedTimelineSelector);
-  const timeline = useIOSelector(idpayTimelineSelector);
+  const timeline = useIOSelector(idpayOperationListSelector);
   const isLoading = pot.isLoading(paginatedTimelinePot);
 
   if (isLoading) {
