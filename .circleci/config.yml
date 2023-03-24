@@ -287,12 +287,12 @@ jobs:
             cd ruby-install-0.8.5/
             sudo make install
 
-      - run: ruby-install ruby 2.7.7
+      - run: ruby-install ruby 2.7.6
       - run:
           name: Set chruby
           command: |
             echo 'source /usr/local/share/chruby/chruby.sh' >> $BASH_ENV
-            echo 'chruby ruby-2.7.7' >> $BASH_ENV 
+            echo 'chruby ruby-2.7.6' >> $BASH_ENV 
 
       - run:
           name: Configure Bundler
@@ -426,6 +426,11 @@ jobs:
       - attach_workspace:
           at: /Users/distiller
 
+      # Restore bundle cache
+      - restore_cache:
+          keys:
+            - *ios_gems_cache_key
+
       - run:
           name: Configure Node
           command: |
@@ -433,6 +438,13 @@ jobs:
             nvm install 16.19.0
             nvm alias default 16.19.0
             npm install -g yarn
+
+      - run:
+          name: Install Ruby 2.7.6
+          command: |
+            rbenv install 2.7.6
+            rbenv global 2.7.6
+            ruby --version
 
       - run:
           name: Configure Bundler
