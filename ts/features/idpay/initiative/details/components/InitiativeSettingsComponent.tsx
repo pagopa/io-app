@@ -98,9 +98,16 @@ export const InitiativeSettingsComponent = (props: Props) => {
           title={I18n.t(
             "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
           )}
-          subTitle={`${initiative.nInstr} ${I18n.t(
-            "idpay.initiative.details.initiativeDetailsScreen.configured.settings.methodsi18n"
-          )}`}
+          subTitle={I18n.t(
+            `idpay.initiative.details.initiativeDetailsScreen.configured.settings.methods`,
+            {
+              defaultValue: I18n.t(
+                `idpay.initiative.details.initiativeDetailsScreen.configured.settings.methods.other`,
+                { count: initiative.nInstr }
+              ),
+              count: initiative.nInstr
+            }
+          )}
           onPress={navigateToInstrumentsConfiguration}
           hasWarnings={
             initiative.status === StatusEnum.NOT_REFUNDABLE_ONLY_IBAN
