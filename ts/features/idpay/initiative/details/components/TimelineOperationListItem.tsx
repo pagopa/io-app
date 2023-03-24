@@ -56,7 +56,7 @@ const OperationIcon = ({ operation }: OperationComponentProps) => {
     case OperationTypeEnum.REJECTED_ADD_INSTRUMENT:
     case OperationTypeEnum.REJECTED_DELETE_INSTRUMENT:
     case RefundOperationTypeEnum.REJECTED_REFUND:
-      return <Icon name={"warning"} color="red" />;
+      return <Icon name={"legWarning"} color="red" />;
 
     default:
       if ("brand" in operation) {

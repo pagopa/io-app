@@ -5,11 +5,9 @@ import { SVGIconProps } from "../Icon";
 const IconDotMenu = ({ size, style }: SVGIconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" style={style}>
     <Path
-      d="M14 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM14 12a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM12 21a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"
-      fill="currentColor"
-    />
-    <Path
-      d="M14 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM14 12a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM12 21a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M12 6c1.1046 0 2-.89543 2-2s-.8954-2-2-2-2 .89543-2 2 .8954 2 2 2Zm0 8c1.1046 0 2-.8954 2-2s-.8954-2-2-2-2 .8954-2 2 .8954 2 2 2Zm2 6c0 1.1046-.8954 2-2 2s-2-.8954-2-2 .8954-2 2-2 2 .8954 2 2Z"
       fill="currentColor"
     />
   </Svg>
