@@ -57,7 +57,6 @@ export function* watchFciSaga(
   bearerToken: SessionToken,
   keyInfo: KeyInfo
 ): SagaIterator {
-  // const fciClient = BackendFciClient(apiUrlPrefix, bearerToken, keyInfo);
   const fciGeneratedClient = createFciClient(apiUrlPrefix);
 
   // handle the request of getting FCI signatureRequestDetails
