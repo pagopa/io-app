@@ -60,6 +60,7 @@ const SuccessComponent = (props: {
         title={I18n.t("features.fci.errors.expired.title")}
         subTitle={I18n.t("features.fci.errors.expired.subTitle")}
         onPress={() => dispatch(fciEndRequest())}
+        email={issuer_email}
         image={imageExpired}
         testID={"ExpiredSignatureRequestTestID"}
       />
