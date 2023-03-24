@@ -20,7 +20,7 @@ import { setAccessibilityFocus } from "../../utils/accessibility";
 import { isStringNullyOrEmpty, maybeNotNullyString } from "../../utils/strings";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import { Body } from "../core/typography/Body";
-import { IOColors, IOColorType } from "../core/variables/IOColors";
+import { IOColors } from "../core/variables/IOColors";
 import GoBackButton from "../GoBackButton";
 import SearchButton, { SearchType } from "../search/SearchButton";
 import AppHeader from "../ui/AppHeader";
@@ -87,7 +87,7 @@ interface OwnProps {
     accessibilityLabel?: string;
   };
   customGoBack?: React.ReactNode;
-  titleColor?: IOColorType;
+  titleColor?: IOColors;
   backButtonTestID?: string;
 }
 
@@ -102,7 +102,7 @@ const setAccessibilityTimeout = 0 as Millisecond;
 const noReferenceTimeout = 150 as Millisecond;
 /** A component representing the properties common to all the screens (and the most of modal/overlay displayed) */
 class BaseHeaderComponent extends React.PureComponent<Props, State> {
-  private firstElementRef = React.createRef<any>(); // Could be Text or View
+  private firstElementRef = React.createRef<View>();
 
   public constructor(props: Props) {
     super(props);
@@ -164,7 +164,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
         return;
       }
       setAccessibilityFocus(
-        this.firstElementRef,
+        this.firstElementRef as React.RefObject<View>,
         setAccessibilityTimeout,
         this.props.onAccessibilityNavigationHeaderFocus
       );
@@ -184,6 +184,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
               we have two colors: dark (bluegrey) and light (white).
               We don't have any color values other than these two. */}
               <Body
+                testID={"bodyLabel"}
                 numberOfLines={1}
                 accessible={true}
                 accessibilityRole={"header"}
@@ -330,6 +331,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
             accessible={true}
             accessibilityElementsHidden={true}
             importantForAccessibility="no-hide-descendants"
+            style={{ marginLeft: 8 }}
           >
             <IconFont name={"io-logo"} color={iconColor} accessible={false} />
           </View>

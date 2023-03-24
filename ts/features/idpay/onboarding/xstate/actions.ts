@@ -2,59 +2,89 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import { IDPayOnboardingRoutes } from "../navigation/navigator";
+import { IDPayDetailsRoutes } from "../../initiative/details/navigation";
+import {
+  IDPayOnboardingParamsList,
+  IDPayOnboardingRoutes,
+  IDPayOnboardingStackNavigationProp
+} from "../navigation/navigator";
 import { Context } from "./machine";
 
 const createActionsImplementation = (
-  navigation: IOStackNavigationProp<AppParamsList, keyof AppParamsList>
+  rootNavigation: IOStackNavigationProp<AppParamsList, keyof AppParamsList>,
+  onboardingNavigation: IDPayOnboardingStackNavigationProp<
+    IDPayOnboardingParamsList,
+    keyof IDPayOnboardingParamsList
+  >
 ) => {
   const navigateToInitiativeDetailsScreen = (context: Context) => {
     if (context.serviceId === undefined) {
       throw new Error("serviceId is undefined");
     }
 
-    navigation.navigate(IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
-      screen: IDPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS,
-      params: {
+    onboardingNavigation.navigate(
+      IDPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS,
+      {
         serviceId: context.serviceId
       }
-    });
+    );
   };
 
   const navigateToPDNDCriteriaScreen = () => {
-    navigation.navigate(IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
-      screen: IDPayOnboardingRoutes.IDPAY_ONBOARDING_PDNDACCEPTANCE
-    });
+    onboardingNavigation.navigate(
+      IDPayOnboardingRoutes.IDPAY_ONBOARDING_PDNDACCEPTANCE
+    );
   };
 
-  const navigateToSelfDeclarationsScreen = () => {
-    navigation.navigate(IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
-      screen: IDPayOnboardingRoutes.IDPAY_ONBOARDING_SELF_DECLARATIONS
+  const navigateToBoolSelfDeclarationsScreen = () => {
+    onboardingNavigation.navigate(
+      IDPayOnboardingRoutes.IDPAY_ONBOARDING_BOOL_SELF_DECLARATIONS
+    );
+  };
+  const navigateToMultiSelfDeclarationsScreen = (context: Context) => {
+    onboardingNavigation.navigate({
+      name: IDPayOnboardingRoutes.IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS,
+      key: String(context.multiConsentsPage)
     });
   };
 
   const navigateToCompletionScreen = () => {
-    navigation.navigate(IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
-      screen: IDPayOnboardingRoutes.IDPAY_ONBOARDING_COMPLETION
-    });
+    onboardingNavigation.navigate(
+      IDPayOnboardingRoutes.IDPAY_ONBOARDING_COMPLETION
+    );
   };
 
   const navigateToFailureScreen = () => {
-    navigation.navigate(IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
-      screen: IDPayOnboardingRoutes.IDPAY_ONBOARDING_FAILURE
+    onboardingNavigation.navigate(
+      IDPayOnboardingRoutes.IDPAY_ONBOARDING_FAILURE
+    );
+  };
+
+  const navigateToInitiativeMonitoringScreen = (context: Context) => {
+    if (context.initiative === undefined) {
+      throw new Error("initiative is undefined");
+    }
+
+    rootNavigation.replace(IDPayDetailsRoutes.IDPAY_DETAILS_MAIN, {
+      screen: IDPayDetailsRoutes.IDPAY_DETAILS_MONITORING,
+      params: {
+        initiativeId: context.initiative.initiativeId
+      }
     });
   };
 
   const exitOnboarding = () => {
-    navigation.pop();
+    onboardingNavigation.pop();
   };
 
   return {
     navigateToInitiativeDetailsScreen,
     navigateToPDNDCriteriaScreen,
-    navigateToSelfDeclarationsScreen,
+    navigateToBoolSelfDeclarationsScreen,
+    navigateToMultiSelfDeclarationsScreen,
     navigateToCompletionScreen,
     navigateToFailureScreen,
+    navigateToInitiativeMonitoringScreen,
     exitOnboarding
   };
 };

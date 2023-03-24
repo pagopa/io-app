@@ -212,6 +212,7 @@ const renderListItem = (
 const PaymentMethodsList: React.FunctionComponent<Props> = (props: Props) => (
   <View style={IOStyles.horizontalContentPadding}>
     <VSpacer size={24} />
+
     <FlatList
       removeClippedSubviews={false}
       data={props.paymentMethods}

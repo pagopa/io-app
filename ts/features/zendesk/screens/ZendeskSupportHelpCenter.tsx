@@ -230,6 +230,7 @@ const ZendeskSupportHelpCenter = () => {
             assistanceForPayment={assistanceForPayment}
             assistanceForCard={assistanceForCard}
           />
+          <VSpacer size={16} />
         </ScrollView>
       </SafeAreaView>
     </BaseScreenComponent>

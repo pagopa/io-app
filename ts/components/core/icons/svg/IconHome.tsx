@@ -2,13 +2,13 @@ import React from "react";
 import { Svg, Path } from "react-native-svg";
 import { SVGIconProps } from "../Icon";
 
-const IconHome = ({ size, color }: SVGIconProps) => (
-  <Svg width={size} height={size} viewBox="0 0 24 24">
+const IconHome = ({ size, style }: SVGIconProps) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24" style={style}>
     <Path
       fillRule="evenodd"
       clipRule="evenodd"
-      d="M23.25 13.123a.748.748 0 0 1-.53-.22l-.595-.594v9.534a2.159 2.159 0 0 1-2.156 2.156H4.03a2.159 2.159 0 0 1-2.156-2.156v-9.534l-.595.594a.75.75 0 1 1-1.06-1.06l9.327-9.328a3.473 3.473 0 0 1 4.906 0l9.327 9.328a.75.75 0 0 1-.53 1.28Zm-13.5 9.376h4.5v-5.906a.845.845 0 0 0-.844-.844h-2.812a.845.845 0 0 0-.844.844v5.906Zm6 0v-5.906a2.346 2.346 0 0 0-2.344-2.344h-2.812a2.346 2.346 0 0 0-2.344 2.344v5.906H4.031a.657.657 0 0 1-.656-.656V10.809l7.233-7.233a1.97 1.97 0 0 1 2.784 0l7.233 7.233v11.034a.657.657 0 0 1-.656.656H15.75Z"
-      fill={color}
+      d="M10.14 2.743a3 3 0 0 1 3.72 0l7 5.53A3 3 0 0 1 22 10.626V19a3 3 0 0 1-3 3h-3v-6a4 4 0 0 0-8 0v6H5a3 3 0 0 1-3-3v-8.373a3 3 0 0 1 1.14-2.355l7-5.529ZM14 22h-4v-6a2 2 0 1 1 4 0v6Zm-6 2H5a5 5 0 0 1-5-5v-8.373a5 5 0 0 1 1.9-3.924l7-5.53a5 5 0 0 1 6.2 0l7 5.53a5 5 0 0 1 1.9 3.923V19a5 5 0 0 1-5 5H8Z"
+      fill="currentColor"
     />
   </Svg>
 );

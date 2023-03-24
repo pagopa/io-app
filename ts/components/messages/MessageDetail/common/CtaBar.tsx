@@ -1,7 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import React from "react";
-import { View, Platform, StyleSheet } from "react-native";
-import DeviceInfo from "react-native-device-info";
+import { View, StyleSheet } from "react-native";
 import { CommonServiceMetadata } from "../../../../../definitions/backend/CommonServiceMetadata";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { useIODispatch } from "../../../../store/hooks";
@@ -30,17 +29,9 @@ type Props = {
   messageDetails: UIMessageDetails;
   service?: UIService;
   serviceMetadata?: CommonServiceMetadata;
-  // For retro-compatibility and use a custom padding bottom if the component is outside the SafeAreaView
-  legacySafeArea?: boolean;
 };
 
 const styles = StyleSheet.create({
-  row: {
-    flexDirection: "row"
-  },
-  legacySafeArea: {
-    paddingBottom: Platform.OS === "ios" && DeviceInfo.hasNotch() ? 28 : 15
-  },
   footerContainer: {
     overflow: "hidden",
     marginTop: -variables.footerShadowOffsetHeight,
@@ -92,8 +83,7 @@ const CtaBar = ({
   isPaid,
   messageDetails,
   service,
-  serviceMetadata,
-  legacySafeArea
+  serviceMetadata
 }: Props): React.ReactElement | null => {
   const dispatch = useIODispatch();
   // in case of medical prescription, we shouldn't render the CtaBar
@@ -111,12 +101,10 @@ const CtaBar = ({
     dueDate
   );
 
-  const footerStyle = [styles.row, legacySafeArea ? styles.legacySafeArea : {}];
-
   const footer1 = (paymentButton || calendarButton) && (
     // Added a wrapper to enable the usage of the component outside the Container of Native Base
     <View style={styles.footerContainer} pointerEvents={"box-none"}>
-      <View style={[IOStyles.footer, footerStyle]}>
+      <View style={[IOStyles.footer, IOStyles.row]}>
         {calendarButton}
         {paymentButton && calendarButton && <HSpacer size={16} />}
         {paymentButton}
@@ -131,7 +119,7 @@ const CtaBar = ({
   const footer2 = O.isSome(maybeCtas) && (
     // Added a wrapper to enable the usage of the component outside the Container of Native Base
     <View style={styles.footerContainer} pointerEvents={"box-none"}>
-      <View testID={"CtaBar_withCTA"} style={[IOStyles.footer, footerStyle]}>
+      <View testID={"CtaBar_withCTA"} style={[IOStyles.footer, IOStyles.row]}>
         <ExtractedCTABar
           ctas={maybeCtas.value}
           xsmall={false}

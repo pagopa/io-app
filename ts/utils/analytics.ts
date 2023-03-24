@@ -119,10 +119,6 @@ export function trackThirdPartyMessageAttachmentShowPreview() {
   void mixpanelTrack("THIRD_PARTY_MESSAGE_ATTACHMENT_SHOW_PREVIEW");
 }
 
-export function trackThirdPartyMessageAttachmentCancel() {
-  void mixpanelTrack("THIRD_PARTY_MESSAGE_ATTACHMENT_CANCEL");
-}
-
 export function trackThirdPartyMessageAttachmentDoNotShow() {
   void mixpanelTrack("THIRD_PARTY_MESSAGE_ATTACHMENT_DO_NOT_SHOW");
 }
@@ -137,3 +133,24 @@ export function trackThirdPartyMessageAttachmentUserAction(
 }
 
 // End of premium events
+
+// Lollipop events
+export function trackLollipopKeyGenerationSuccess(keyType?: string) {
+  void mixpanelTrack("LOLLIPOP_KEY_GENERATION_SUCCESS", {
+    kty: keyType
+  });
+}
+
+export function trackLollipopKeyGenerationFailure(reason: string) {
+  void mixpanelTrack("LOLLIPOP_KEY_GENERATION_FAILURE", {
+    reason
+  });
+}
+
+export function trackLollipopIdpLoginFailure(reason: string) {
+  void mixpanelTrack("LOLLIPOP_IDP_LOGIN_FAILURE", {
+    reason
+  });
+}
+
+// End of lollipop events

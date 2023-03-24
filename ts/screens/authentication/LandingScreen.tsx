@@ -78,25 +78,42 @@ const getCards = (
     id: 5,
     image: require("../../../img/landing/05.png"),
     title: I18n.t("authentication.landing.card5-title"),
-    content: I18n.t("authentication.landing.card5-content")
+    content: I18n.t("authentication.landing.card5-content"),
+    accessibilityLabel: `${I18n.t(
+      "authentication.landing.accessibility.carousel.label"
+    )}. ${I18n.t("authentication.landing.card5-title")}. ${I18n.t(
+      "authentication.landing.card5-content-accessibility"
+    )}`,
+    accessibilityHint: I18n.t(
+      "authentication.landing.accessibility.carousel.hint"
+    )
   },
   {
     id: 1,
     image: require("../../../img/landing/01.png"),
     title: I18n.t("authentication.landing.card1-title"),
-    content: I18n.t("authentication.landing.card1-content")
+    content: I18n.t("authentication.landing.card1-content"),
+    accessibilityLabel: `${I18n.t(
+      "authentication.landing.card1-title"
+    )}. ${I18n.t("authentication.landing.card1-content")}`
   },
   {
     id: 2,
     image: require("../../../img/landing/02.png"),
     title: I18n.t("authentication.landing.card2-title"),
-    content: I18n.t("authentication.landing.card2-content")
+    content: I18n.t("authentication.landing.card2-content"),
+    accessibilityLabel: `${I18n.t(
+      "authentication.landing.card2-title"
+    )}. ${I18n.t("authentication.landing.card2-content")}`
   },
   {
     id: 3,
     image: require("../../../img/landing/03.png"),
     title: I18n.t("authentication.landing.card3-title"),
-    content: I18n.t("authentication.landing.card3-content")
+    content: I18n.t("authentication.landing.card3-content"),
+    accessibilityLabel: `${I18n.t(
+      "authentication.landing.card3-title"
+    )}. ${I18n.t("authentication.landing.card3-content")}`
   },
   {
     id: 4,
@@ -108,7 +125,10 @@ const getCards = (
       : I18n.t("authentication.landing.card4-title"),
     content: isCIEAvailable
       ? I18n.t("authentication.landing.loginSpidCieContent")
-      : I18n.t("authentication.landing.card4-content")
+      : I18n.t("authentication.landing.card4-content"),
+    accessibilityLabel: `${I18n.t(
+      "authentication.landing.card4-title"
+    )}. ${I18n.t("authentication.landing.card4-content")}`
   }
 ];
 
@@ -269,6 +289,13 @@ class LandingScreen extends React.PureComponent<Props, State> {
                 ? this.navigateToCiePinScreen
                 : this.navigateToIdpSelection
             }
+            accessibilityRole="button"
+            accessible={true}
+            accessibilityLabel={
+              isCieSupported
+                ? I18n.t("authentication.landing.loginCie")
+                : I18n.t("authentication.landing.loginSpid")
+            }
             testID={
               isCieSupported
                 ? "landing-button-login-cie"
@@ -287,6 +314,13 @@ class LandingScreen extends React.PureComponent<Props, State> {
           </ButtonDefaultOpacity>
           <VSpacer size={16} />
           <ButtonDefaultOpacity
+            accessibilityLabel={
+              this.isCieSupported()
+                ? I18n.t("authentication.landing.loginSpid")
+                : I18n.t("authentication.landing.loginCie")
+            }
+            accessibilityRole="button"
+            accessible={true}
             style={secondButtonStyle}
             block={true}
             primary={true}

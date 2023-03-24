@@ -1,17 +1,31 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { useSelector } from "@xstate/react";
+import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import { ListItem } from "native-base";
-import { default as React, forwardRef, useImperativeHandle } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Image } from "react-native";
+import { ListItem as NBListItem } from "native-base";
+import { default as React } from "react";
 import {
   InstrumentDTO,
-  StatusEnum
-} from "../../../../../../definitions/idpay/wallet/InstrumentDTO";
-import { IOBadge } from "../../../../../components/core/IOBadge";
+  StatusEnum as InstrumentStatusEnum
+} from "../../../../../../definitions/idpay/InstrumentDTO";
+import defaultCardIcon from "../../../../../../img/wallet/cards-icons/unknown.png";
+import {
+  IOLogoPaymentType,
+  LogoPayment
+} from "../../../../../components/core/logos";
+import { RemoteSwitch } from "../../../../../components/core/selection/RemoteSwitch";
+import { HSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H4 } from "../../../../../components/core/typography/H4";
-import Switch from "../../../../../components/ui/Switch";
-import { Wallet } from "../../../../../types/pagopa";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import { CreditCardType, Wallet } from "../../../../../types/pagopa";
 import { instrumentStatusLabels } from "../../../common/labels";
+import { useConfigurationMachineService } from "../xstate/provider";
+import {
+  instrumentStatusByIdWalletSelector,
+  isInstrumentEnrollingSelector
+} from "../xstate/selectors";
+import { IOBadge } from "../../../../../components/core/IOBadge";
 
 export type InstrumentEnrollmentSwitchRef = {
   switchStatus: boolean;
@@ -20,97 +34,141 @@ export type InstrumentEnrollmentSwitchRef = {
 
 type InstrumentEnrollmentSwitchProps = {
   wallet: Wallet;
-  status?: InstrumentDTO["status"];
-  isDisabled?: boolean;
-  onSwitch: (walletId: number, isEnrolling: boolean) => void;
-};
-
-type InstrumentInfo = {
-  logo: JSX.Element;
-  maskedPan: string;
+  instrument?: InstrumentDTO;
 };
 
 /**
  * A component to enable/disable the enrollment of an instrument
  */
-const InstrumentEnrollmentSwitch = forwardRef<
-  InstrumentEnrollmentSwitchRef,
-  InstrumentEnrollmentSwitchProps
->((props, ref) => {
-  const { wallet, status, isDisabled, onSwitch } = props;
+const InstrumentEnrollmentSwitch = (props: InstrumentEnrollmentSwitchProps) => {
+  const { wallet, instrument } = props;
 
-  const [switchStatus, setSwitchStatus] = React.useState(
-    status === StatusEnum.ACTIVE
+  const configurationMachine = useConfigurationMachineService();
+
+  const isEnrolling = useSelector(
+    configurationMachine,
+    isInstrumentEnrollingSelector(wallet.idWallet)
   );
 
-  useImperativeHandle(ref, () => ({
-    switchStatus,
-    setSwitchStatus
-  }));
+  const instrumentStatus = useSelector(
+    configurationMachine,
+    instrumentStatusByIdWalletSelector(wallet.idWallet)
+  );
 
-  const handleChange = () => {
-    setSwitchStatus(!switchStatus);
-    onSwitch(wallet.idWallet, !switchStatus);
-  };
-
-  const getPaymentMethodInfo = (wallet: Wallet): O.Option<InstrumentInfo> => {
-    switch (wallet.type) {
-      case "CREDIT_CARD":
-        return O.some({
-          logo: <View />,
-          maskedPan: wallet.creditCard?.pan ?? ""
-        });
-      default:
-        return O.none;
+  const handleChange = (value: boolean) => {
+    if (value) {
+      configurationMachine.send("STAGE_INSTRUMENT", {
+        instrument: wallet
+      });
+    } else {
+      configurationMachine.send("DELETE_INSTRUMENT", {
+        instrument
+      });
     }
   };
 
-  const renderControl = () => {
-    if (
-      status === StatusEnum.PENDING_ENROLLMENT_REQUEST ||
-      status === StatusEnum.PENDING_DEACTIVATION_REQUEST
-    ) {
-      return (
-        <IOBadge
-          variant="solid"
-          color="blue"
-          text={instrumentStatusLabels[status]}
-        />
-      );
+  const renderSwitch = () => {
+    if (pot.isSome(instrumentStatus)) {
+      const status = instrumentStatus.value;
+
+      if (
+        status === InstrumentStatusEnum.PENDING_ENROLLMENT_REQUEST ||
+        status === InstrumentStatusEnum.PENDING_DEACTIVATION_REQUEST
+      ) {
+        return (
+          <IOBadge
+            text={instrumentStatusLabels[status]}
+            variant="solid"
+            color="blue"
+          />
+        );
+      }
     }
 
-    return (
-      <Switch
-        value={switchStatus}
-        onChange={handleChange}
-        disabled={isDisabled}
-      />
+    const switchValue = pot.map(
+      instrumentStatus,
+      status => status === InstrumentStatusEnum.ACTIVE || isEnrolling
     );
+
+    return <RemoteSwitch value={switchValue} onValueChange={handleChange} />;
   };
 
-  const instrumentInfo = pipe(
-    getPaymentMethodInfo(wallet),
-    O.getOrElse(() => ({
-      logo: <View />,
-      maskedPan: ""
-    }))
-  );
+  const instrumentLogo = getPaymentMethodLogo(wallet);
+  const instrumentMaskedPan = getPaymentMaskedPan(wallet);
 
   return (
-    <ListItem>
-      <View style={styles.listItemContainer}>
-        <H4>{instrumentInfo.maskedPan}</H4>
-        {renderControl()}
+    <NBListItem>
+      <View style={[IOStyles.flex, IOStyles.rowSpaceBetween]}>
+        <View style={styles.instrumentsInfo}>
+          {instrumentLogo}
+          <HSpacer size={8} />
+          <H4>{`•••• ${instrumentMaskedPan}`}</H4>
+        </View>
+        {renderSwitch()}
       </View>
-    </ListItem>
+    </NBListItem>
   );
-});
+};
+
+export const cardLogos: {
+  [key in CreditCardType]: IOLogoPaymentType | undefined;
+} = {
+  MASTERCARD: "mastercard",
+  VISA: "visa",
+  AMEX: "amex",
+  DINERS: "diners",
+  MAESTRO: "maestro",
+  VISAELECTRON: "visa",
+  POSTEPAY: "postepay",
+  UNIONPAY: "unionPay",
+  DISCOVER: "discover",
+  JCB: "jcb",
+  JCB15: "jcb",
+  UNKNOWN: undefined
+};
+
+const getPaymentMaskedPan = (wallet: Wallet): string => {
+  switch (wallet.type) {
+    case "CREDIT_CARD":
+      return wallet.creditCard?.pan ?? "";
+    default:
+      return "";
+  }
+};
+
+const getPaymentMethodLogo = (wallet: Wallet): JSX.Element => {
+  switch (wallet.type) {
+    case "CREDIT_CARD":
+      const creditCardType = CreditCardType.decode(
+        wallet.creditCard?.brand?.toUpperCase()
+      );
+
+      const logo =
+        cardLogos[
+          pipe(
+            creditCardType,
+            E.getOrElseW(() => "UNKNOWN" as const)
+          )
+        ];
+
+      if (logo !== undefined) {
+        return <LogoPayment name={logo} size={24} />;
+      }
+  }
+
+  return <Image style={styles.issuerLogo} source={defaultCardIcon} />;
+};
 
 const styles = StyleSheet.create({
-  listItemContainer: {
-    flex: 1,
+  issuerLogo: {
+    width: 24,
+    height: 16,
+    resizeMode: "contain"
+  },
+  instrumentsInfo: {
     flexDirection: "row",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    alignItems: "center"
   }
 });
 

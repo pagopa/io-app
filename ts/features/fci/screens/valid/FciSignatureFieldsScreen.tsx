@@ -12,7 +12,7 @@ import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIODispatch } from "../../../../store/hooks";
 import {
-  fciDocumentSignatureFieldsFieldsSelector,
+  fciDocumentSignatureFieldsSelector,
   fciSignatureDetailDocumentsSelector
 } from "../../store/reducers/fciSignatureRequest";
 import { DocumentDetailView } from "../../../../../definitions/fci/DocumentDetailView";
@@ -36,6 +36,7 @@ import {
   clauseTypeMaping,
   getSectionListData
 } from "../../utils/signatureFields";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
 
 export type FciSignatureFieldsScreenNavigationParams = Readonly<{
   documentId: DocumentDetailView["id"];
@@ -49,7 +50,7 @@ const FciSignatureFieldsScreen = (
   const currentDoc = props.route.params.currentDoc;
   const documentsSelector = useSelector(fciSignatureDetailDocumentsSelector);
   const signatureFieldsSelector = useSelector(
-    fciDocumentSignatureFieldsFieldsSelector(docId)
+    fciDocumentSignatureFieldsSelector(docId)
   );
   const documentsSignaturesSelector = useSelector(
     fciDocumentSignaturesSelector
@@ -151,6 +152,7 @@ const FciSignatureFieldsScreen = (
       renderItem={({ item }) => (
         <SignatureFieldItem
           title={item.clause.title}
+          disabled={item.clause.type === ClausesTypeEnum.REQUIRED}
           value={pipe(
             documentsSignaturesSelector,
             RA.findFirst(doc => doc.document_id === docId),
@@ -228,10 +230,9 @@ const FciSignatureFieldsScreen = (
       contextualHelp={emptyContextualHelp}
     >
       <SafeAreaView style={IOStyles.flex} testID={"FciSignatureFieldsTestID"}>
-        <View
-          style={[IOStyles.horizontalContentPadding, { paddingBottom: 56 }]}
-        >
+        <View style={IOStyles.horizontalContentPadding}>
           <H1>{I18n.t("features.fci.signatureFields.title")}</H1>
+          <VSpacer size={32} />
         </View>
         {renderSignatureFields()}
         <FooterWithButtons

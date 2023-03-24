@@ -67,6 +67,7 @@ import {
 } from "../utils/api";
 import { PaginatedPublicMessagesCollection } from "../../definitions/backend/PaginatedPublicMessagesCollection";
 import { CreatedMessageWithContentAndAttachments } from "../../definitions/backend/CreatedMessageWithContentAndAttachments";
+import { KeyInfo } from "../features/lollipop/utils/crypto";
 
 /**
  * We will retry for as many times when polling for a payment ID.
@@ -134,6 +135,7 @@ export type LogoutT = IPostApiRequestType<
 export function BackendClient(
   baseUrl: string,
   token: SessionToken,
+  _keyInfo: KeyInfo = {},
   fetchApi: typeof fetch = defaultRetryingFetch()
 ) {
   const options = {

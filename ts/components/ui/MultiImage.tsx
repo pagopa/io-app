@@ -6,6 +6,7 @@ import {
   ImageRequireSource,
   ImageURISource
 } from "react-native";
+import { addCacheTimestampToUri } from "../../utils/image";
 
 interface Props extends Omit<ImageProps, "source"> {
   source: ReadonlyArray<ImageURISource | ImageRequireSource>;
@@ -36,7 +37,12 @@ export class MultiImage extends React.PureComponent<Props, State> {
     if (sourceIndex === undefined) {
       return null;
     }
-    const source = this.props.source[sourceIndex];
+
+    const atIndex = this.props.source[sourceIndex];
+
+    const source =
+      typeof atIndex === "number" ? atIndex : addCacheTimestampToUri(atIndex);
+
     const onError = () => {
       // if current image fails loading, move to next
       this.setState((_, props) => ({
@@ -44,6 +50,8 @@ export class MultiImage extends React.PureComponent<Props, State> {
           sourceIndex < props.source.length ? sourceIndex + 1 : undefined
       }));
     };
-    return <Image {...this.props} source={source} onError={onError} />;
+    return (
+      source && <Image {...this.props} source={source} onError={onError} />
+    );
   }
 }

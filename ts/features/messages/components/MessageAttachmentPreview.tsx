@@ -3,12 +3,11 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { ActivityIndicator, SafeAreaView, StyleSheet } from "react-native";
 import ReactNativeBlobUtil from "react-native-blob-util";
-import Pdf from "react-native-pdf";
 import image from "../../../../img/servicesStatus/error-detail-icon.png";
 import { H2 } from "../../../components/core/typography/H2";
-import { IOColors } from "../../../components/core/variables/IOColors";
 import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
+import PdfViewer from "../../../components/messages/MessageDetail/PdfViewer";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
@@ -41,10 +40,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center"
-  },
-  pdf: {
-    flex: 1,
-    backgroundColor: IOColors.bluegrey
   },
   loadingBody: {
     marginTop: variables.spacerExtralargeWidth,
@@ -95,11 +90,10 @@ const renderPDF = (
         )
       )
     ) : (
-      <Pdf
-        source={{ uri: downloadPath, cache: true }}
-        style={styles.pdf}
-        onLoadComplete={props.onLoadComplete}
+      <PdfViewer
+        downloadPath={downloadPath}
         onError={onPDFLoadingError}
+        onLoadComplete={props.onLoadComplete}
       />
     )}
     {renderFooter(
@@ -135,6 +129,7 @@ const renderFooter = (
       leftButton={{
         bordered: true,
         primary: false,
+        buttonFontSize: variables.btnSmallFontSize,
         onPress: () => {
           onShare?.();
           share(`file://${downloadPath}`, undefined, false)().catch(_ => {
@@ -150,6 +145,7 @@ const renderFooter = (
       midButton={{
         bordered: true,
         primary: false,
+        buttonFontSize: variables.btnSmallFontSize,
         onPress: () => {
           onDownload?.();
           ReactNativeBlobUtil.MediaCollection.copyToMediaStore(
@@ -182,18 +178,25 @@ const renderFooter = (
         },
         title: I18n.t("features.mvl.details.attachments.pdfPreview.save")
       }}
-      rightButton={confirmButtonProps(() => {
-        onOpen?.();
-        ReactNativeBlobUtil.android
-          .actionViewIntent(downloadPath, attachment.contentType)
-          .catch(_ => {
-            showToast(
-              I18n.t(
-                "features.mvl.details.attachments.pdfPreview.errors.opening"
-              )
-            );
-          });
-      }, I18n.t("features.mvl.details.attachments.pdfPreview.open"))}
+      rightButton={confirmButtonProps(
+        () => {
+          onOpen?.();
+          ReactNativeBlobUtil.android
+            .actionViewIntent(downloadPath, attachment.contentType)
+            .catch(_ => {
+              showToast(
+                I18n.t(
+                  "features.mvl.details.attachments.pdfPreview.errors.opening"
+                )
+              );
+            });
+        },
+        I18n.t("features.mvl.details.attachments.pdfPreview.open"),
+        undefined,
+        undefined,
+        undefined,
+        variables.btnSmallFontSize
+      )}
     />
   );
 

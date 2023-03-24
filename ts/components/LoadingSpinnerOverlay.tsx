@@ -51,7 +51,11 @@ class LoadingSpinnerOverlay extends React.Component<Props> {
               action={
                 onCancel && (
                   <View style={IOStyles.selfCenter}>
-                    <ButtonDefaultOpacity onPress={onCancel} cancel={true}>
+                    <ButtonDefaultOpacity
+                      onPress={onCancel}
+                      cancel={true}
+                      testID={"loadingSpinnerOverlayCancelButton"}
+                    >
                       <NBButtonText>
                         {I18n.t("global.buttons.cancel")}
                       </NBButtonText>

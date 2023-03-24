@@ -24,7 +24,11 @@ import {
   fromLocaleToPreferredLanguage,
   getLocalePrimaryWithFallback
 } from "../../../../utils/locale";
-import { createOnboardingClient } from "../api/client";
+import { createIDPayClient } from "../../common/api/client";
+import {
+  IDPayOnboardingParamsList,
+  IDPayOnboardingStackNavigationProp
+} from "../navigation/navigator";
 import { createActionsImplementation } from "./actions";
 import {
   createIDPayOnboardingMachine,
@@ -49,7 +53,11 @@ const IDPayOnboardingMachineProvider = (props: Props) => {
 
   const sessionInfo = useIOSelector(sessionInfoSelector);
 
-  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const rootNavigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const onboardingNavigation =
+    useNavigation<
+      IDPayOnboardingStackNavigationProp<IDPayOnboardingParamsList>
+    >();
 
   if (O.isNone(sessionInfo)) {
     throw new Error("Session info is undefined");
@@ -65,15 +73,14 @@ const IDPayOnboardingMachineProvider = (props: Props) => {
     fromLocaleToPreferredLanguage
   );
 
-  const onboardingClient = createOnboardingClient(baseUrl);
+  const client = createIDPayClient(baseUrl);
 
-  const services = createServicesImplementation(
-    onboardingClient,
-    token,
-    language
+  const services = createServicesImplementation(client, token, language);
+
+  const actions = createActionsImplementation(
+    rootNavigation,
+    onboardingNavigation
   );
-
-  const actions = createActionsImplementation(navigation);
 
   const machineService = useInterpret(machine, {
     services,

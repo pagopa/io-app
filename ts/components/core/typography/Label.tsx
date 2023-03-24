@@ -1,13 +1,14 @@
 import * as React from "react";
 import { IOFontFamily, IOFontWeight } from "../fonts";
-import { IOColorType } from "../variables/IOColors";
+import type { IOColors, IOColorsStatusForeground } from "../variables/IOColors";
 import { ExternalTypographyProps, TypographyProps } from "./common";
 import { useTypographyFactory } from "./Factory";
 
-type AllowedColors = Extract<
-  IOColorType,
+type PartialAllowedColors = Extract<
+  IOColors,
   "blue" | "bluegrey" | "bluegreyDark" | "white" | "red"
 >;
+type AllowedColors = PartialAllowedColors | IOColorsStatusForeground;
 type AllowedWeight = Extract<IOFontWeight, "Bold" | "Regular" | "SemiBold">;
 type OwnProps = ExternalTypographyProps<
   TypographyProps<AllowedWeight, AllowedColors>

@@ -300,13 +300,15 @@ class Pinpad extends React.PureComponent<Props, State> {
           <React.Fragment>
             <View style={IOStyles.alignCenter}>
               {this.props.buttonType === "primary" ? (
-                <Body
-                  color={"white"}
-                  onPress={this.confirmResetAlert}
-                  accessibilityRole="button"
-                >
+                <Body color={"white"} onPress={this.confirmResetAlert}>
                   {`${I18n.t("identification.unlockCode.reset.button")} `}
-                  <Link color={"white"}>
+                  <Link
+                    color={"white"}
+                    accessibilityLabel={I18n.t(
+                      "identification.unlockCode.reset.code"
+                    )}
+                    accessibilityRole="button"
+                  >
                     {I18n.t("identification.unlockCode.reset.code")}
                   </Link>
                   <Body color={"white"}>
@@ -314,13 +316,15 @@ class Pinpad extends React.PureComponent<Props, State> {
                   </Body>
                 </Body>
               ) : (
-                <Body
-                  color={"bluegrey"}
-                  onPress={this.confirmResetAlert}
-                  accessibilityRole="button"
-                >
+                <Body color={"bluegrey"} onPress={this.confirmResetAlert}>
                   {`${I18n.t("identification.unlockCode.reset.button")} `}
-                  <Link color={"bluegrey"}>
+                  <Link
+                    color={"bluegrey"}
+                    accessibilityLabel={I18n.t(
+                      "identification.unlockCode.reset.code"
+                    )}
+                    accessibilityRole="button"
+                  >
                     {I18n.t("identification.unlockCode.reset.code")}
                   </Link>
                   <Body color={"bluegrey"}>

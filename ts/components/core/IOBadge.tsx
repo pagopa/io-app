@@ -1,20 +1,21 @@
 import React from "react";
 import { View, Text, StyleSheet, PixelRatio } from "react-native";
 import { makeFontStyleObject } from "./fonts";
-import { IOColors, IOColorType } from "./variables/IOColors";
+import { IOColors } from "./variables/IOColors";
 
 export type IOBadgeOutlineColors = Extract<
-  IOColorType,
+  IOColors,
   "blue" | "white" | "red" | "orange"
 >;
 export type IOBadgeSolidColors = Extract<
-  IOColorType,
+  IOColors,
   "blue" | "white" | "grey" | "aqua"
 >;
 
 type IOBadgeCommonProps = {
   text: string;
   small?: boolean;
+  labelColor?: Extract<IOColors, "bluegreyDark" | "blue" | "white" | "red">;
   testID?: string;
   labelTestID?: string;
 };
@@ -32,14 +33,11 @@ type IOBadgeConditionalProps =
 export type IOBadgeProps = IOBadgeCommonProps & IOBadgeConditionalProps;
 
 type SolidVariantProps = {
-  background: IOColorType;
-  text: IOColorType;
+  background: IOColors;
+  text: IOColors;
 };
 
-const mapOutlineColor: Record<
-  NonNullable<IOBadgeOutlineColors>,
-  IOColorType
-> = {
+const mapOutlineColor: Record<NonNullable<IOBadgeOutlineColors>, IOColors> = {
   blue: "blue",
   white: "white",
   red: "red",

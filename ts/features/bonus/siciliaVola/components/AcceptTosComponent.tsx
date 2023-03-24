@@ -50,7 +50,7 @@ const AcceptTosComponent = (props: Props): React.ReactElement => {
           <TosWebviewComponent
             handleError={() => setTosLoadingState("error")}
             handleLoadEnd={() => setTosLoadingState("loaded")}
-            url={url}
+            webViewSource={{ uri: url }}
             shouldFooterRender={false}
           />
         );

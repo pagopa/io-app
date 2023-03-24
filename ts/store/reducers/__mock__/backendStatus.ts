@@ -282,7 +282,11 @@ export const baseRawBackendStatus: BackendStatus = {
       }
     },
     lollipop: {
-      enabled: false
+      enabled: false,
+      min_app_version: {
+        android: "0.0.0.0",
+        ios: "0.0.0.0"
+      }
     },
     pn: {
       enabled: false,
@@ -361,7 +365,11 @@ export const baseBackendConfig: Config = {
     }
   },
   lollipop: {
-    enabled: false
+    enabled: false,
+    min_app_version: {
+      android: "0.0.0.0",
+      ios: "0.0.0.0"
+    }
   },
   pn: {
     enabled: false,

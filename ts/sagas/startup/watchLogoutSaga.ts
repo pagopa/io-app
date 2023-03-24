@@ -4,6 +4,7 @@ import * as E from "fp-ts/lib/Either";
 import { call, fork, put, take } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
+import { deleteCurrentLollipopKeyAndGenerateNewKeyTag } from "../../features/lollipop/saga";
 import { startApplicationInitialization } from "../../store/actions/application";
 import {
   logoutFailure,
@@ -48,6 +49,8 @@ export function* logoutSaga(
     };
     yield* put(logoutFailure(logoutError));
   } finally {
+    // clean up crypto keys
+    yield* deleteCurrentLollipopKeyAndGenerateNewKeyTag();
     // clean up any assistance data
     resetAssistanceData();
     // startApplicationInitialization is dispatched
