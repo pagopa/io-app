@@ -65,7 +65,8 @@ type State = Readonly<{
   organizationFiscalCode: O.Option<
     ReturnType<typeof OrganizationFiscalCode.decode>
   >;
-  inputValue: string;
+  pnnInputValue: string;
+  ofcInputValue: string;
 }>;
 
 const styles = StyleSheet.create({
@@ -98,7 +99,8 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
     this.state = {
       paymentNoticeNumber: O.none,
       organizationFiscalCode: O.none,
-      inputValue: ""
+      pnnInputValue: "",
+      ofcInputValue: ""
     };
   }
 
@@ -196,12 +198,12 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                     options: { mask: "9999 9999 9999 9999 99" },
                     keyboardType: "numeric",
                     returnKeyType: "done",
-                    value: this.state.inputValue,
+                    value: this.state.pnnInputValue,
                     // notice code structure:
                     // <aux digit 1n 0-3>| IUV 17>>|<segregation code (2n)><local info system (2n)><payment number (11n)><check digit (2n)>
                     onChangeText: value => {
                       this.setState({
-                        inputValue: value,
+                        pnnInputValue: value,
                         paymentNoticeNumber: pipe(
                           O.some(value),
                           O.filter(NonEmptyString.is),
@@ -222,15 +224,19 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                     "wallet.insertManually.entityCode"
                   )}
                   testID={"EntityCode"}
-                  inputProps={{
+                  inputMaskProps={{
+                    type: "custom",
+                    options: { mask: "99999999999" }, // 11 numbers for an oragnization fiscal code
                     keyboardType: "numeric",
                     returnKeyType: "done",
-                    maxLength: 11,
+                    value: this.state.ofcInputValue,
                     onChangeText: value => {
                       this.setState({
+                        ofcInputValue: value,
                         organizationFiscalCode: pipe(
                           O.some(value),
                           O.filter(NonEmptyString.is),
+                          O.map(_ => _.replace(/\s/g, "")),
                           O.map(_ => OrganizationFiscalCode.decode(_))
                         )
                       });
