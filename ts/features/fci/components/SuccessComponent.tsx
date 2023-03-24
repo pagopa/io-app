@@ -89,7 +89,7 @@ const SuccessComponent = (props: {
           subTitle={I18n.t("features.fci.errors.signed.subTitle")}
           onPress={() => dispatch(fciEndRequest())}
           image={hourglass}
-          testID={"WaitQtspSignatureRequestTestID"}
+          testID={"SignedSignatureRequestTestID"}
         />
       );
     case SignatureRequestDetailStatus.REJECTED:
