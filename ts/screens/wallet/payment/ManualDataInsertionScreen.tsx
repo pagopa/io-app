@@ -10,6 +10,7 @@ import {
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import * as B from "fp-ts/lib/Boolean";
 import { Content, Form, Text as NBText } from "native-base";
 import * as React from "react";
 import { Keyboard, SafeAreaView, ScrollView, StyleSheet } from "react-native";
@@ -162,14 +163,15 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
    * @param isFieldValid - the validator state.
    * @returns green string if isFieldValid is true, red string if false, undefined if undefined.
    */
-  private getColorFromInputValidatorState(
-    isFieldValid: boolean | undefined
-  ): string | undefined {
-    return isFieldValid === undefined
-      ? undefined
-      : isFieldValid
-      ? IOColors.green
-      : IOColors.red;
+  private getColorFromInputValidatorState(isFieldValid: boolean | undefined) {
+    return pipe(
+      isFieldValid,
+      O.fromNullable,
+      O.fold(
+        () => undefined,
+        isValid => (isValid ? IOColors.green : IOColors.red)
+      )
+    );
   }
 
   public render(): React.ReactNode {
