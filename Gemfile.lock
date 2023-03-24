@@ -281,7 +281,7 @@ DEPENDENCIES
   fastlane (~> 2.210.0)
 
 RUBY VERSION
-   ruby 2.7.6p219
+   ruby 2.7.7p221
 
 BUNDLED WITH
    2.1.4
