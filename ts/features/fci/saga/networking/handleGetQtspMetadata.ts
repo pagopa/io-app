@@ -2,23 +2,22 @@ import { SagaIterator } from "redux-saga";
 import { call, put } from "typed-redux-saga/macro";
 import * as E from "fp-ts/lib/Either";
 import { readablePrivacyReport } from "../../../../utils/reporters";
-import { BackendFciClient } from "../../api/backendFci";
 import { fciLoadQtspClauses } from "../../store/actions";
 import { getNetworkError } from "../../../../utils/errors";
+import { SessionToken } from "../../../../types/SessionToken";
+import { FciClient } from "../../api/client";
 
 /*
  * A saga to load a QTSP metadata.
  */
 export function* handleGetQtspMetadata(
-  getQtspClausesMetadata: ReturnType<
-    typeof BackendFciClient
-  >["getQtspClausesMetadata"]
+  getQtspClausesMetadata: FciClient["getQtspClausesMetadata"],
+  bearerToken: SessionToken
 ): SagaIterator {
   try {
-    const getQtspClausesMetadataResponse = yield* call(
-      getQtspClausesMetadata,
-      {}
-    );
+    const getQtspClausesMetadataResponse = yield* call(getQtspClausesMetadata, {
+      Bearer: bearerToken
+    });
 
     if (E.isLeft(getQtspClausesMetadataResponse)) {
       throw Error(readablePrivacyReport(getQtspClausesMetadataResponse.left));

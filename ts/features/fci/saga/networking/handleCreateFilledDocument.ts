@@ -12,7 +12,6 @@ import {
 import { ActionType } from "typesafe-actions";
 import * as E from "fp-ts/lib/Either";
 import { readablePrivacyReport } from "../../../../utils/reporters";
-import { BackendFciClient } from "../../api/backendFci";
 import {
   fciCancelPollingFilledDocument,
   fciLoadQtspFilledDocument,
@@ -21,6 +20,8 @@ import {
 import { getNetworkError } from "../../../../utils/errors";
 import { FilledDocumentDetailView } from "../../../../../definitions/fci/FilledDocumentDetailView";
 import { fciPollFilledDocumentReadySelector } from "../../store/reducers/fciPollFilledDocument";
+import { FciClient } from "../../api/backendFci";
+import { SessionToken } from "../../../../types/SessionToken";
 
 // Polling frequency timeout
 const POLLING_FREQ_TIMEOUT = 2000 as Millisecond;
@@ -33,12 +34,14 @@ const POLLING_TIME_THRESHOLD = (10 * 2000) as Millisecond;
  * A saga to post filled Document.
  */
 export function* handleCreateFilledDocument(
-  postQtspFilledBody: ReturnType<typeof BackendFciClient>["postQtspFilledBody"],
+  postQtspFilledBody: FciClient["createFilledDocument"],
+  bearerToken: SessionToken,
   action: ActionType<typeof fciLoadQtspFilledDocument["request"]>
 ): SagaIterator {
   try {
     const postQtspFilledBodyResponse = yield* call(postQtspFilledBody, {
-      body: action.payload
+      body: action.payload,
+      Bearer: bearerToken
     });
 
     if (E.isLeft(postQtspFilledBodyResponse)) {
