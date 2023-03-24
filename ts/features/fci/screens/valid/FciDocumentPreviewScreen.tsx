@@ -127,7 +127,7 @@ export const FciDocumentPreviewScreen = (
     />
   );
 
-  return !isError ? (
+  return (
     <BaseScreenComponent
       goBack={true}
       customGoBack={customGoBack}
@@ -153,12 +153,5 @@ export const FciDocumentPreviewScreen = (
         )}
       </SafeAreaView>
     </BaseScreenComponent>
-  ) : (
-    <GenericErrorComponent
-      title={I18n.t("features.fci.errors.generic.default.title")}
-      subTitle={I18n.t("features.fci.errors.generic.default.subTitle")}
-      retry={true}
-      onPress={() => dispatch(fciEndRequest())}
-    />
   );
 };

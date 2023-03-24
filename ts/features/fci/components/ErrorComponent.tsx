@@ -19,17 +19,20 @@ type Props = WithTestID<{
 }>;
 
 const ErrorComponent = (props: Props) => {
-  const closeButtonProps = {
+  const buttonProps = {
     block: true,
     primary: true,
+    onPress: props.onPress
+  };
+
+  const closeButtonProps = {
+    ...buttonProps,
     bordered: true,
-    onPress: props.onPress,
     title: I18n.t("global.buttons.close")
   };
+
   const retryButtonProps = {
-    block: true,
-    primary: true,
-    onPress: props.onPress,
+    ...buttonProps,
     title: I18n.t("global.buttons.retry")
   };
 
