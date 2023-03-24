@@ -247,7 +247,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                   )}
                   inputMaskProps={{
                     type: "custom",
-                    options: { mask: "99999999999" }, // 11 numbers for an oragnization fiscal code
+                    options: { mask: "99999999999" }, // 11 digits for an oragnization fiscal code
                     keyboardType: "numeric",
                     returnKeyType: "done",
                     value: this.state.ofcInputValue,
