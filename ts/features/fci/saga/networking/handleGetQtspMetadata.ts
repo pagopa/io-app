@@ -5,7 +5,7 @@ import { readablePrivacyReport } from "../../../../utils/reporters";
 import { fciLoadQtspClauses } from "../../store/actions";
 import { getNetworkError } from "../../../../utils/errors";
 import { SessionToken } from "../../../../types/SessionToken";
-import { FciClient } from "../../api/client";
+import { FciClient } from "../../api/backendFci";
 
 /*
  * A saga to load a QTSP metadata.

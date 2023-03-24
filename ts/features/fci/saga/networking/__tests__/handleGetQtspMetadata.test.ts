@@ -5,6 +5,7 @@ import { mockQtspClausesMetadata } from "../../../types/__mocks__/QtspClausesMet
 import { fciLoadQtspClauses } from "../../../store/actions";
 import { handleGetQtspMetadata } from "../handleGetQtspMetadata";
 import { QtspClausesMetadataDetailView } from "../../../../../../definitions/fci/QtspClausesMetadataDetailView";
+import { SessionToken } from "../../../../../types/SessionToken";
 
 const successResponse = {
   status: 200,
@@ -18,7 +19,11 @@ const failureResponse = {
 describe("handleGetQtspMetadata", () => {
   const mockBackendFciClient = jest.fn();
   it("Should dispatch fciLoadQtspClauses.success with the response payload if the response is right and the status code is 200", () => {
-    testSaga(handleGetQtspMetadata, mockBackendFciClient)
+    testSaga(
+      handleGetQtspMetadata,
+      mockBackendFciClient,
+      "mockedToken" as SessionToken
+    )
       .next()
       .call(mockBackendFciClient, {})
       .next(right(successResponse))
@@ -27,7 +32,11 @@ describe("handleGetQtspMetadata", () => {
       .isDone();
   });
   it("Should dispatch fciLoadQtspClauses.failure with the response status code as payload if the response is right and the status code is different from 200", () => {
-    testSaga(handleGetQtspMetadata, mockBackendFciClient)
+    testSaga(
+      handleGetQtspMetadata,
+      mockBackendFciClient,
+      "mockedToken" as SessionToken
+    )
       .next()
       .call(mockBackendFciClient, {})
       .next(right(failureResponse))
@@ -40,7 +49,11 @@ describe("handleGetQtspMetadata", () => {
       .isDone();
   });
   it("Should dispatch fciLoadQtspClauses.failure with a fixed message as payload if the response left", () => {
-    testSaga(handleGetQtspMetadata, mockBackendFciClient)
+    testSaga(
+      handleGetQtspMetadata,
+      mockBackendFciClient,
+      "mockedToken" as SessionToken
+    )
       .next()
       .call(mockBackendFciClient, {})
       .next(left(new Error()))
@@ -54,7 +67,11 @@ describe("handleGetQtspMetadata", () => {
   });
   it("Should dispatch fciLoadQtspClauses.failure with the error message as payload if an exception is raised", () => {
     const mockedError = new Error("mockedErrorMessage");
-    testSaga(handleGetQtspMetadata, mockBackendFciClient)
+    testSaga(
+      handleGetQtspMetadata,
+      mockBackendFciClient,
+      "mockedToken" as SessionToken
+    )
       .next()
       .call(mockBackendFciClient, {})
       .throw(mockedError)

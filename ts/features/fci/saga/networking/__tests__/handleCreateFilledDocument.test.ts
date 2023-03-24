@@ -11,6 +11,7 @@ import {
   handleCreateFilledDocument
 } from "../handleCreateFilledDocument";
 import { FilledDocumentDetailView } from "../../../../../../definitions/fci/FilledDocumentDetailView";
+import { SessionToken } from "../../../../../types/SessionToken";
 
 const mockedPayload: CreateFilledDocument = {
   document_url: "https://mockedUrl" as NonEmptyString
@@ -32,7 +33,12 @@ describe("handleCreateFilledDocument", () => {
     payload: mockedPayload
   };
   it("Should dispatch fciLoadQtspFilledDocument.success with the response payload if the response is right and the status code is 200", () => {
-    testSaga(handleCreateFilledDocument, mockBackendFciClient, loadAction)
+    testSaga(
+      handleCreateFilledDocument,
+      mockBackendFciClient,
+      "mockedToken" as SessionToken,
+      loadAction
+    )
       .next()
       .call(mockBackendFciClient, {
         body: loadAction.payload
@@ -45,7 +51,12 @@ describe("handleCreateFilledDocument", () => {
       .isDone();
   });
   it("Should dispatch fciLoadQtspFilledDocument.failure with the response status code as payload if the response is right and the status code is different from 200", () => {
-    testSaga(handleCreateFilledDocument, mockBackendFciClient, loadAction)
+    testSaga(
+      handleCreateFilledDocument,
+      mockBackendFciClient,
+      "mockedToken" as SessionToken,
+      loadAction
+    )
       .next()
       .call(mockBackendFciClient, { body: loadAction.payload })
       .next(right(failureResponse))
@@ -58,7 +69,12 @@ describe("handleCreateFilledDocument", () => {
       .isDone();
   });
   it("Should dispatch fciLoadQtspFilledDocument.failure with a fixed message as payload if the response left", () => {
-    testSaga(handleCreateFilledDocument, mockBackendFciClient, loadAction)
+    testSaga(
+      handleCreateFilledDocument,
+      mockBackendFciClient,
+      "mockedToken" as SessionToken,
+      loadAction
+    )
       .next()
       .call(mockBackendFciClient, { body: loadAction.payload })
       .next(left(new Error()))
@@ -74,7 +90,12 @@ describe("handleCreateFilledDocument", () => {
   });
   it("Should dispatch fciLoadQtspFilledDocument.failure with the error message as payload if an exception is raised", () => {
     const mockedError = new Error("mockedErrorMessage");
-    testSaga(handleCreateFilledDocument, mockBackendFciClient, loadAction)
+    testSaga(
+      handleCreateFilledDocument,
+      mockBackendFciClient,
+      "mockedToken" as SessionToken,
+      loadAction
+    )
       .next()
       .call(mockBackendFciClient, { body: loadAction.payload })
       .throw(mockedError)
