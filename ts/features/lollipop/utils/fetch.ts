@@ -12,14 +12,15 @@ import {
   getSignAlgorithm,
   toSignatureComponents
 } from "..";
-import { KeyInfo } from "../../../utils/crypto";
 import { toFetchTimeout, toRetriableFetch } from "../../../utils/fetch";
 import { generateDigestHeader } from "../httpSignature/digest";
 import {
   generateSignatureBase,
-  SignatureBaseResult
+  SignatureBaseResult,
+  toSignatureHeaderValue
 } from "../httpSignature/signature";
 import { SignatureConfig } from "../httpSignature/types/SignatureConfig";
+import { KeyInfo } from "./crypto";
 
 /**
  * Decorates the current fetch with LolliPOP headers and http-signature
@@ -58,18 +59,21 @@ export const lollipopFetch = (
           keyTag: requestAndKeyInfo.keyTag,
           lollipopConfig,
           method,
-          inputUrl,
-          originalUrl
+          inputUrl
         };
+
+        const signatureParams: Array<string> = [
+          ...(lollipopConfig.signBody
+            ? ["Content-Digest", "Content-Type"]
+            : []),
+          "x-pagopa-lollipop-original-method",
+          "x-pagopa-lollipop-original-url"
+        ];
+
         const mainSignatureConfig: SignatureConfig = forgeSignatureConfig(
           signatureConfigForgeInput,
           keyInfo,
-          [
-            "Content-Digest",
-            "Content-Type",
-            "x-pagopa-lollipop-original-method",
-            "x-pagopa-lollipop-original-url"
-          ]
+          signatureParams
         );
 
         newInit = addHeader(
@@ -115,7 +119,10 @@ export const lollipopFetch = (
           // Prepare custom signature array
           const customSignatures = customSignResult.map(v => v.signature);
           // Setup signature array
-          const signatures = [`sig1:${mainSignValue}:`, ...customSignatures];
+          const signatures = [
+            toSignatureHeaderValue(mainSignValue),
+            ...customSignatures
+          ];
           // Setup signature input array
           const signatureInputs = [
             mainSignatureInput,
@@ -198,7 +205,10 @@ export const customContentToSignPromises = (
           headerPrefix: customContentBase.headerPrefix,
           headerName: customContentBase.headerName,
           headerValue: customContentBase.headerValue,
-          signature: `sig${customContentBase.headerIndex}:${value}:`,
+          signature: toSignatureHeaderValue(
+            value,
+            customContentBase.headerIndex
+          ),
           signatureInput: customContentBase.signatureInput
         }))
       )
@@ -218,7 +228,6 @@ export type SignatureConfigForgeInput = {
   lollipopConfig: LollipopConfig;
   method: string;
   inputUrl: URLParse;
-  originalUrl: string;
 };
 
 type RequestAndKeyInfoForLPFetch = {
@@ -245,8 +254,7 @@ function forgeSignatureConfig(
     nonce: forgeInput.lollipopConfig.nonce,
     signatureComponents: toSignatureComponents(
       forgeInput.method,
-      forgeInput.inputUrl,
-      forgeInput.originalUrl
+      forgeInput.inputUrl
     ),
     signatureParams
   };
@@ -254,13 +262,12 @@ function forgeSignatureConfig(
 
 function extractHttpRequestComponents(input: string, init: RequestInit) {
   const inputUrl = new URLParse(input, true);
-  const queryString: string | undefined = inputUrl.href.split("?")[1];
   const method = init.method?.toUpperCase() ?? "";
   const body = init.body;
   const bodyString = body as string;
-  const originalUrl =
-    inputUrl.pathname + (queryString ? "?" + queryString : "");
-  return { body, bodyString, inputUrl, queryString, method, originalUrl };
+  const originalUrl = inputUrl.toString();
+
+  return { body, bodyString, inputUrl, method, originalUrl };
 }
 
 /**

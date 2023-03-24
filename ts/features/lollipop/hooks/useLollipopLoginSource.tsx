@@ -1,24 +1,43 @@
+import { generate, deleteKey } from "@pagopa/io-react-native-crypto";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as TE from "fp-ts/lib/TaskEither";
-import { useCallback, useEffect, useState } from "react";
-import { useIOSelector } from "../../../store/hooks";
+import { useState } from "react";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { isLollipopEnabledSelector } from "../../../store/reducers/backendStatus";
-import { trackLollipopIdpLoginFailure } from "../../../utils/analytics";
-import { taskRegenerateKey } from "../../../utils/crypto";
+import {
+  trackLollipopIdpLoginFailure,
+  trackLollipopKeyGenerationFailure,
+  trackLollipopKeyGenerationSuccess
+} from "../../../utils/analytics";
+import { toCryptoError } from "../utils/crypto";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import {
+  lollipopRemovePublicKey,
+  lollipopSetPublicKey
+} from "../store/actions/lollipop";
 import { lollipopKeyTagSelector } from "../store/reducers/lollipop";
 import { LoginSourceAsync } from "../types/LollipopLoginSource";
 import { DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER } from "../utils/login";
+import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
+
+const taskRegenerateKey = (keyTag: string) =>
+  pipe(
+    TE.tryCatch(() => deleteKey(keyTag), toCryptoError),
+    TE.chain(() => TE.tryCatch(() => generate(keyTag), toCryptoError))
+  );
 
 export const useLollipopLoginSource = (loginUri?: string) => {
   const [loginSource, setLoginSource] = useState<LoginSourceAsync>({
     kind: "initial"
   });
 
+  const dispatch = useIODispatch();
   const useLollipopLogin = useIOSelector(isLollipopEnabledSelector);
   const lollipopKeyTag = useIOSelector(lollipopKeyTagSelector);
+  const mixpanelEnabled = useIOSelector(isMixpanelEnabled);
 
-  const setDeprecatedLoginUri = useCallback((uri: string) => {
+  const setDeprecatedLoginUri = (uri: string) => {
     setLoginSource({
       kind: "ready",
       value: {
@@ -26,9 +45,9 @@ export const useLollipopLoginSource = (loginUri?: string) => {
       },
       publicKey: O.none
     });
-  }, []);
+  };
 
-  const regenerateLoginSource = useCallback(() => {
+  const regenerateLoginSource = () => {
     if (!loginUri) {
       // When the redux state is LoggedOutWithIdp the loginUri is always defined.
       // After the user has logged in, the status changes to LoggedIn and the loginUri is not
@@ -60,7 +79,7 @@ export const useLollipopLoginSource = (loginUri?: string) => {
     void pipe(
       lollipopKeyTag.value,
       taskRegenerateKey,
-      TE.map(key =>
+      TE.map(key => {
         setLoginSource({
           kind: "ready",
           value: {
@@ -74,18 +93,26 @@ export const useLollipopLoginSource = (loginUri?: string) => {
             }
           },
           publicKey: O.some(key)
-        })
-      ),
+        });
+        dispatch(lollipopSetPublicKey({ publicKey: key }));
+        if (mixpanelEnabled) {
+          trackLollipopKeyGenerationSuccess(key.kty);
+        }
+      }),
       TE.mapLeft(error => {
         trackLollipopIdpLoginFailure(error.message);
+        if (mixpanelEnabled) {
+          trackLollipopKeyGenerationFailure(error.message);
+        }
         setDeprecatedLoginUri(loginUri);
+        dispatch(lollipopRemovePublicKey());
       })
     )();
-  }, [useLollipopLogin, lollipopKeyTag, loginUri, setDeprecatedLoginUri]);
+  };
 
-  useEffect(() => {
+  useOnFirstRender(() => {
     regenerateLoginSource();
-  }, [regenerateLoginSource]);
+  });
 
   return { loginSource, regenerateLoginSource };
 };

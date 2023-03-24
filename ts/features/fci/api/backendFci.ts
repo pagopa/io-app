@@ -21,7 +21,7 @@ import {
 import { defaultRetryingFetch } from "../../../utils/fetch";
 import { LollipopConfig } from "../../lollipop";
 import { lollipopFetch } from "../../lollipop/utils/fetch";
-import { KeyInfo } from "../../../utils/crypto";
+import { KeyInfo } from "../../lollipop/utils/crypto";
 
 const getSignatureDetailViewById: GetSignatureRequestByIdT = {
   method: "get",
@@ -44,8 +44,7 @@ const postQtspFilledBody: CreateFilledDocumentT = {
   url: () => `/api/v1/sign/qtsp/clauses/filled_document`,
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   query: _ => ({}),
-  body: ({ documentToFill: { document_url } }) =>
-    JSON.stringify({ document_url }),
+  body: ({ body }) => JSON.stringify(body),
   response_decoder: createFilledDocumentDefaultDecoder()
 };
 
@@ -54,7 +53,7 @@ const postSignature: CreateSignatureT = {
   url: () => `/api/v1/sign/signatures`,
   headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
   query: _ => ({}),
-  body: ({ signatureToCreate }) => JSON.stringify({ ...signatureToCreate }),
+  body: ({ body }) => JSON.stringify(body),
   response_decoder: createSignatureDefaultDecoder()
 };
 

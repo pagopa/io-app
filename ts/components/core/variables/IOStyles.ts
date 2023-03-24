@@ -24,6 +24,29 @@ export const IOStyles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between"
   },
+  centerJustified: {
+    justifyContent: "center"
+  },
+  // The following styles come from the original
+  // NativeBase's `View`. They are moved here to
+  // prevent UI regressions.
+  footer: {
+    backgroundColor: themeVariables.footerBackground,
+    paddingBottom: themeVariables.footerPaddingBottom,
+    paddingLeft: themeVariables.footerPaddingLeft,
+    paddingRight: themeVariables.footerPaddingRight,
+    paddingTop: themeVariables.footerPaddingTop,
+    // iOS shadow
+    shadowColor: themeVariables.footerShadowColor,
+    shadowOffset: {
+      width: themeVariables.footerShadowOffsetWidth,
+      height: themeVariables.footerShadowOffsetHeight
+    },
+    shadowOpacity: themeVariables.footerShadowOpacity,
+    shadowRadius: themeVariables.footerShadowRadius,
+    // Android shadow
+    elevation: themeVariables.footerElevation
+  },
   // https://github.com/pagopa/io-app/pull/4387
   topListBorderBelowTabsStyle: {
     borderTopWidth: Platform.OS === "android" ? 0.1 : undefined,
@@ -84,10 +107,6 @@ export const IOButtonStyles = StyleSheet.create({
   /* Widths */
   dimensionsDefault: {
     alignSelf: "flex-start"
-  },
-  dimensionsFullWidth: {
-    flex: 1,
-    alignSelf: "auto"
   }
 });
 

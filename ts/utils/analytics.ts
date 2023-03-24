@@ -6,7 +6,6 @@ import { mixpanelTrack } from "../mixpanel";
 import { ReminderStatusEnum } from "../../definitions/backend/ReminderStatus";
 import { UIMessageId } from "../store/reducers/entities/messages/types";
 import { ServiceId } from "../../definitions/backend/ServiceId";
-import { KeyGenerationInfo } from "./crypto";
 
 const blackListRoutes: ReadonlyArray<string> = [];
 
@@ -120,10 +119,6 @@ export function trackThirdPartyMessageAttachmentShowPreview() {
   void mixpanelTrack("THIRD_PARTY_MESSAGE_ATTACHMENT_SHOW_PREVIEW");
 }
 
-export function trackThirdPartyMessageAttachmentCancel() {
-  void mixpanelTrack("THIRD_PARTY_MESSAGE_ATTACHMENT_CANCEL");
-}
-
 export function trackThirdPartyMessageAttachmentDoNotShow() {
   void mixpanelTrack("THIRD_PARTY_MESSAGE_ATTACHMENT_DO_NOT_SHOW");
 }
@@ -140,15 +135,15 @@ export function trackThirdPartyMessageAttachmentUserAction(
 // End of premium events
 
 // Lollipop events
-export function trackLollipopKeyGenerationSuccess(keyInfo: KeyGenerationInfo) {
+export function trackLollipopKeyGenerationSuccess(keyType?: string) {
   void mixpanelTrack("LOLLIPOP_KEY_GENERATION_SUCCESS", {
-    kty: keyInfo.keyType
+    kty: keyType
   });
 }
 
-export function trackLollipopKeyGenerationFailure(keyInfo: KeyGenerationInfo) {
+export function trackLollipopKeyGenerationFailure(reason: string) {
   void mixpanelTrack("LOLLIPOP_KEY_GENERATION_FAILURE", {
-    reason: keyInfo.errorCode
+    reason
   });
 }
 

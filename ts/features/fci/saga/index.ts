@@ -42,8 +42,7 @@ import {
   fciQtspNonceSelector
 } from "../store/reducers/fciQtspClauses";
 import { fciDocumentSignaturesSelector } from "../store/reducers/fciDocumentSignatures";
-import { lollipopKeyTagSelector } from "../../lollipop/store/reducers/lollipop";
-import { getCryptoPublicKey } from "../../../sagas/startup/generateCryptoKeyPair";
+import { KeyInfo } from "../../lollipop/utils/crypto";
 import { handleGetSignatureRequestById } from "./networking/handleGetSignatureRequestById";
 import { handleGetQtspMetadata } from "./networking/handleGetQtspMetadata";
 import { handleCreateFilledDocument } from "./networking/handleCreateFilledDocument";
@@ -54,9 +53,10 @@ import { handleCreateSignature } from "./networking/handleCreateSignature";
  * Handle the FCI Signature requests
  * @param bearerToken
  */
-export function* watchFciSaga(bearerToken: SessionToken): SagaIterator {
-  const keyTag = yield* select(lollipopKeyTagSelector);
-  const keyInfo = yield* call(getCryptoPublicKey, keyTag);
+export function* watchFciSaga(
+  bearerToken: SessionToken,
+  keyInfo: KeyInfo
+): SagaIterator {
   const fciClient = BackendFciClient(apiUrlPrefix, bearerToken, keyInfo);
 
   // handle the request of getting FCI signatureRequestDetails
@@ -153,8 +153,11 @@ function* watchFciQtspClausesSaga(): SagaIterator {
 function* watchFciStartSaga(): SagaIterator {
   yield* call(
     NavigationService.dispatchNavigationAction,
-    CommonActions.navigate(FCI_ROUTES.MAIN, {
-      screen: FCI_ROUTES.DOCUMENTS
+    StackActions.replace(FCI_ROUTES.MAIN, {
+      screen: FCI_ROUTES.DOCUMENTS,
+      params: {
+        attrs: undefined
+      }
     })
   );
   // when the user start signing flow

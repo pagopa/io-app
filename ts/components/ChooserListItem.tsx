@@ -1,8 +1,8 @@
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
-import { Text as NBText, View } from "native-base";
+import { Text as NBText } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import customVariables from "../theme/variables";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import TouchableDefaultOpacity from "./TouchableDefaultOpacity";

@@ -33,9 +33,6 @@ function getHttpSignatureHeaderParameterFromConfig(
     case "@scheme":
       returnString = config.signatureComponents.scheme;
       break;
-    case "@request-target":
-      returnString = config.signatureComponents.requestTarget;
-      break;
     default:
       throw new Error(
         "Unknown http-signature header parameter " + headerParameter
@@ -213,6 +210,24 @@ async function generateSignature(
 }
 
 /**
+ * Generate the 'Signature' header value from provided `signature` signed data.
+ * @param signature
+ * @param signatureOrdinal
+ * @returns
+ */
+function toSignatureHeaderValue(
+  signature: string,
+  signatureOrdinal: number = 1
+): string {
+  return (
+    constants.SIGNATURE_PREFIX(signatureOrdinal) +
+    constants.COLON +
+    signature +
+    constants.COLON
+  );
+}
+
+/**
  * Generate the 'Signature' header value for a string payload.
  *
  * @param {string} payload - the string payload to sign.
@@ -228,12 +243,7 @@ async function generateSignatureValue(
 ): Promise<string> {
   const signature: string = await signer.sign(payload, keyTag);
 
-  return (
-    constants.SIGNATURE_PREFIX(signatureOrdinal) +
-    constants.COLON +
-    signature +
-    constants.COLON
-  );
+  return toSignatureHeaderValue(signature, signatureOrdinal);
 }
 
 /**
@@ -249,5 +259,6 @@ export {
   generateSignatureBase,
   getUnixTimestamp,
   generateSignatureInput,
-  generateSignature
+  generateSignature,
+  toSignatureHeaderValue
 };

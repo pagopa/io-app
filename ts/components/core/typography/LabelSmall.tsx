@@ -1,10 +1,10 @@
 import * as React from "react";
 import { IOFontFamily, IOFontWeight } from "../fonts";
-import type { IOColors } from "../variables/IOColors";
+import type { IOColors, IOTheme } from "../variables/IOColors";
 import { ExternalTypographyProps, TypographyProps } from "./common";
 import { useTypographyFactory } from "./Factory";
 
-type AllowedColors = Extract<
+type PartialAllowedColors = Extract<
   IOColors,
   | "blue"
   | "bluegrey"
@@ -14,6 +14,7 @@ type AllowedColors = Extract<
   | "grey-700"
   | "grey-200"
 >;
+type AllowedColors = PartialAllowedColors | IOTheme["textBody-tertiary"];
 type AllowedWeight = Extract<IOFontWeight, "Bold" | "Regular" | "SemiBold">;
 type FontSize = "regular" | "small";
 type AllowedFontSize = { fontSize?: FontSize };
