@@ -40,7 +40,7 @@ defaults_android: &defaults_android
 defaults_macos: &defaults_macos
   <<: *defaults
   macos:
-    xcode: "13.4.1"
+    xcode: "14.2.0"
   resource_class: macos.x86.medium.gen2
   working_directory: /Users/distiller/italia-app
   environment:
