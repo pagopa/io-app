@@ -426,11 +426,6 @@ jobs:
       - attach_workspace:
           at: /Users/distiller
 
-      # Restore bundle cache
-      - restore_cache:
-          keys:
-            - *ios_gems_cache_key
-
       - run:
           name: Configure Node
           command: |
@@ -450,20 +445,11 @@ jobs:
           name: Install Bundle
           command: bundle check || bundle install
 
-      # Store bundle cache
-      - save_cache:
-          key: *ios_gems_cache_key
-          paths:
-            - vendor/bundle
-
       - run:
           name: Prepare dependencies for build
           command: |
             cp .env.local .env
             yarn run postinstall
-            which bundle
-            bundle --version
-            cat Gemfile
             cd ios && bundle exec pod install --verbose
             rm -rf /tmp/metro-bundler-cache-*
             rm -rf /tmp/haste-map-react-native-packager-*
