@@ -534,7 +534,7 @@ workflows:
             - compile-typescript
           filters:
             branches:
-              only: master
+              only: IOAPPFD0-61-xcode14
 
   # Release workflow triggered only when a new release tag is pushed
   release:
