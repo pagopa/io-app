@@ -157,6 +157,21 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
     );
   };
 
+  /**
+   * Converts the validator state into a color string.
+   * @param isFieldValid - the validator state.
+   * @returns green string if isFieldValid is true, red string if false, undefined if undefined.
+   */
+  private getColorFromInputValidatorState(
+    isFieldValid: boolean | undefined
+  ): string | undefined {
+    return isFieldValid === undefined
+      ? undefined
+      : isFieldValid
+      ? IOColors.green
+      : IOColors.red;
+  }
+
   public render(): React.ReactNode {
     const primaryButtonProps = {
       disabled: !this.isFormValid(),
@@ -193,6 +208,9 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                     "wallet.insertManually.noticeCode"
                   )}
                   testID={"NoticeCode"}
+                  overrideBorderColor={this.getColorFromInputValidatorState(
+                    unwrapOptionalEither(this.state.paymentNoticeNumber)
+                  )}
                   inputMaskProps={{
                     type: "custom",
                     options: { mask: "9999 9999 9999 9999 99" },
@@ -224,6 +242,9 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                     "wallet.insertManually.entityCode"
                   )}
                   testID={"EntityCode"}
+                  overrideBorderColor={this.getColorFromInputValidatorState(
+                    unwrapOptionalEither(this.state.organizationFiscalCode)
+                  )}
                   inputMaskProps={{
                     type: "custom",
                     options: { mask: "99999999999" }, // 11 numbers for an oragnization fiscal code
