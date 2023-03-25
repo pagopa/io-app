@@ -1,9 +1,14 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
 
-export type StartupStatus = "initial" | "notAuthenticated" | "authenticated";
+export enum StartupStatusEnum {
+  INITIAL = "initial",
+  ONBOARDING = "onboarding",
+  NOT_AUTHENTICATED = "notAuthenticated",
+  AUTHENTICATED = "authenticated"
+}
 
 export const startupLoadSuccess = createStandardAction(
   "STARTUP_LOAD_SUCCESS"
-)<StartupStatus>();
+)<StartupStatusEnum>();
 
 export type StartupActions = ActionType<typeof startupLoadSuccess>;

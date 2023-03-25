@@ -17,6 +17,7 @@ import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import { useIOSelector } from "../store/hooks";
 import { isStartupLoaded } from "../store/reducers/startup";
 import variables from "../theme/variables";
+import { StartupStatusEnum } from "../store/actions/startup";
 import { MainTabParamsList } from "./params/MainTabParamsList";
 import ROUTES from "./routes";
 
@@ -52,7 +53,7 @@ export const MainTabNavigator = () => {
 
   return (
     <LoadingSpinnerOverlay
-      isLoading={startupLoaded === "initial"}
+      isLoading={startupLoaded === StartupStatusEnum.ONBOARDING}
       loadingOpacity={1}
     >
       <Tab.Navigator

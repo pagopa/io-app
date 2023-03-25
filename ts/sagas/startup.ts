@@ -91,7 +91,10 @@ import { differentProfileLoggedIn } from "../store/actions/crossSessions";
 import { clearAllAttachments } from "../features/messages/saga/clearAttachments";
 import { watchMessageAttachmentsSaga } from "../features/messages/saga/attachments";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
-import { startupLoadSuccess } from "../store/actions/startup";
+import {
+  StartupStatusEnum,
+  startupLoadSuccess
+} from "../store/actions/startup";
 import { watchIDPaySaga } from "../features/idpay/common/saga";
 import {
   startAndReturnIdentificationResult,
@@ -303,7 +306,7 @@ export function* initializeApplicationSaga(): Generator<
     if (O.isNone(maybeSessionInformation)) {
       // we can't go further without session info, let's restart
       // the initialization process
-      yield* put(startupLoadSuccess("notAuthenticated"));
+      yield* put(startupLoadSuccess(StartupStatusEnum.NOT_AUTHENTICATED));
       yield* put(startApplicationInitialization());
       return;
     }
@@ -331,7 +334,7 @@ export function* initializeApplicationSaga(): Generator<
   if (O.isNone(maybeUserProfile)) {
     // Start again if we can't load the profile but wait a while
     yield* delay(WAIT_INITIALIZE_SAGA);
-    yield* put(startupLoadSuccess("notAuthenticated"));
+    yield* put(startupLoadSuccess(StartupStatusEnum.NOT_AUTHENTICATED));
     yield* put(startApplicationInitialization());
     return;
   }
@@ -372,7 +375,7 @@ export function* initializeApplicationSaga(): Generator<
   // Start watching for requests of abort the onboarding
   const watchAbortOnboardingSagaTask = yield* fork(watchAbortOnboardingSaga);
 
-  yield* put(startupLoadSuccess("authenticated"));
+  yield* put(startupLoadSuccess(StartupStatusEnum.ONBOARDING));
   const hasPreviousSessionAndPin =
     previousSessionToken && O.isSome(maybeStoredPin);
   if (hasPreviousSessionAndPin) {
@@ -427,6 +430,7 @@ export function* initializeApplicationSaga(): Generator<
   // possible to begin receiving push notifications
   yield* call(updateInstallationSaga, backendClient.createOrUpdateInstallation);
 
+  yield* put(startupLoadSuccess(StartupStatusEnum.AUTHENTICATED));
   //
   // User is autenticated, session token is valid
   //

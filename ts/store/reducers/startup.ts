@@ -4,16 +4,16 @@
 import { isActionOf } from "typesafe-actions";
 import { sessionExpired, sessionInvalid } from "../actions/authentication";
 
-import { startupLoadSuccess, StartupStatus } from "../actions/startup";
+import { startupLoadSuccess, StartupStatusEnum } from "../actions/startup";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
 
 export type StartupState = {
-  status: StartupStatus;
+  status: StartupStatusEnum;
 };
 
 const initialStartupState: StartupState = {
-  status: "initial"
+  status: StartupStatusEnum.INITIAL
 };
 
 export default function startupReducer(
@@ -32,12 +32,12 @@ export default function startupReducer(
   ) {
     return {
       ...state,
-      status: "notAuthenticated"
+      status: StartupStatusEnum.NOT_AUTHENTICATED
     };
   }
   return state;
 }
 
 // Selector
-export const isStartupLoaded = (state: GlobalState): StartupStatus =>
+export const isStartupLoaded = (state: GlobalState): StartupStatusEnum =>
   state.startup.status;

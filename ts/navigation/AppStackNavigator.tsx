@@ -75,6 +75,7 @@ import { isTestEnv } from "../utils/environment";
 import { startApplicationInitialization } from "../store/actions/application";
 import { IO_INTERNAL_LINK_PREFIX } from "../utils/navigation";
 import { isStartupLoaded } from "../store/reducers/startup";
+import { StartupStatusEnum } from "../store/actions/startup";
 import authenticationNavigator from "./AuthenticationNavigator";
 import { MessagesStackNavigator } from "./MessagesNavigator";
 import NavigationService, { navigationRef } from "./NavigationService";
@@ -104,7 +105,7 @@ export const AppStackNavigator = (): React.ReactElement => {
     dispatch(startApplicationInitialization());
   }, [dispatch]);
 
-  if (startupStatus === "notAuthenticated") {
+  if (startupStatus === StartupStatusEnum.NOT_AUTHENTICATED) {
     return (
       <Stack.Navigator
         initialRouteName={ROUTES.AUTHENTICATION}
@@ -119,7 +120,7 @@ export const AppStackNavigator = (): React.ReactElement => {
     );
   }
 
-  if (startupStatus === "initial") {
+  if (startupStatus === StartupStatusEnum.INITIAL) {
     return <IngressScreen />;
   }
 

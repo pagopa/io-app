@@ -11,7 +11,10 @@ import {
   logoutRequest,
   logoutSuccess
 } from "../../store/actions/authentication";
-import { startupLoadSuccess } from "../../store/actions/startup";
+import {
+  StartupStatusEnum,
+  startupLoadSuccess
+} from "../../store/actions/startup";
 import { SagaCallReturnType } from "../../types/utils";
 import { convertUnknownToError } from "../../utils/errors";
 import { resetAssistanceData } from "../../utils/supportAssistance";
@@ -55,7 +58,7 @@ export function* logoutSaga(
     resetAssistanceData();
     // startApplicationInitialization is dispatched
     // within the componentDidMount of IngressScreen
-    yield* put(startupLoadSuccess("notAuthenticated"));
+    yield* put(startupLoadSuccess(StartupStatusEnum.NOT_AUTHENTICATED));
     yield* put(startApplicationInitialization());
   }
 }
