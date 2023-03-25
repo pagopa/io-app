@@ -115,8 +115,8 @@ const OnboardingTosScreen = () => {
       >
         <SafeAreaView style={styles.webViewContainer}>
           {!hasAcceptedCurrentTos && (
-            <View style={styles.alert}>
-              <NBText>
+            <View style={styles.alert} testID={"currentToSNotAcceptedView"}>
+              <NBText testID={"currentToSNotAcceptedText"}>
                 {hasAcceptedOldTosVersion
                   ? I18n.t("profile.main.privacy.privacyPolicy.updated")
                   : I18n.t("profile.main.privacy.privacyPolicy.infobox")}
@@ -126,7 +126,7 @@ const OnboardingTosScreen = () => {
           <TosWebviewComponent
             handleLoadEnd={handleLoadEnd}
             handleReload={handleReload}
-            url={privacyUrl}
+            webViewSource={{ uri: privacyUrl }}
             shouldFooterRender={!isLoading}
             onExit={handleGoBack}
             onAcceptTos={() => dispatch(tosAccepted(tosVersion))}

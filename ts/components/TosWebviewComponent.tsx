@@ -3,8 +3,9 @@ import { pipe } from "fp-ts/lib/function";
 import { Text as NBText } from "native-base";
 import * as React from "react";
 import { useCallback, useState } from "react";
-import { Image, StyleSheet, View } from "react-native";
+import { Image, StyleSheet, View, ViewProps } from "react-native";
 import WebView, { WebViewMessageEvent } from "react-native-webview";
+import { WebViewSource } from "react-native-webview/lib/WebViewTypes";
 import brokenLinkImage from "../../img/broken-link.png";
 import I18n from "../i18n";
 import { openWebUrl } from "../utils/url";
@@ -15,13 +16,13 @@ import { NOTIFY_LINK_CLICK_SCRIPT } from "./ui/Markdown/script";
 import { WebViewMessage } from "./ui/Markdown/types";
 
 type Props = {
-  url: string;
+  webViewSource: WebViewSource;
   handleLoadEnd: () => void;
   handleReload: () => void;
   onAcceptTos?: () => void;
   onExit?: () => void;
   shouldFooterRender?: boolean;
-};
+} & Pick<ViewProps, "testID">;
 
 const styles = StyleSheet.create({
   errorContainer: {
@@ -46,7 +47,7 @@ const styles = StyleSheet.create({
 const TosWebviewComponent: React.FunctionComponent<Props> = ({
   handleLoadEnd,
   handleReload,
-  url,
+  webViewSource,
   shouldFooterRender,
   onExit,
   onAcceptTos
@@ -64,9 +65,17 @@ const TosWebviewComponent: React.FunctionComponent<Props> = ({
   }, [setHasError, handleReload]);
 
   const renderError = () => (
-    <View style={styles.errorContainer}>
-      <Image source={brokenLinkImage} resizeMode="contain" />
-      <NBText style={styles.errorTitle} bold={true}>
+    <View style={styles.errorContainer} testID={"toSErrorContainerView"}>
+      <Image
+        source={brokenLinkImage}
+        resizeMode="contain"
+        testID={"toSErrorContainerImage"}
+      />
+      <NBText
+        style={styles.errorTitle}
+        bold={true}
+        testID={"toSErrorContainerTitle"}
+      >
         {I18n.t("onboarding.tos.error")}
       </NBText>
 
@@ -76,15 +85,18 @@ const TosWebviewComponent: React.FunctionComponent<Props> = ({
           style={{ flex: 2 }}
           block={true}
           primary={true}
+          testID={"toSErrorContainerButton"}
         >
-          <NBText>{I18n.t("global.buttons.retry")}</NBText>
+          <NBText testID={"toSErrorContainerButtonText"}>
+            {I18n.t("global.buttons.retry")}
+          </NBText>
         </ButtonDefaultOpacity>
       </View>
     </View>
   );
 
   // A function that handles message sent by the WebView component
-  const handleWebViewMessage = (event: WebViewMessageEvent) =>
+  const handleWebViewMessage = (event: WebViewMessageEvent) => {
     pipe(
       JSON.parse(event.nativeEvent.data),
       WebViewMessage.decode,
@@ -94,12 +106,13 @@ const TosWebviewComponent: React.FunctionComponent<Props> = ({
         }
       })
     );
+  };
 
   return hasError ? (
     renderError()
   ) : (
     <>
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1 }} testID={"toSWebViewContainer"}>
         <WebView
           androidCameraAccessDisabled={true}
           androidMicrophoneAccessDisabled={true}
@@ -107,7 +120,7 @@ const TosWebviewComponent: React.FunctionComponent<Props> = ({
           style={{ flex: 1 }}
           onLoadEnd={handleLoadEnd}
           onError={handleError}
-          source={{ uri: url }}
+          source={webViewSource}
           onMessage={handleWebViewMessage}
           injectedJavaScript={closeInjectedScript(
             AVOID_ZOOM_JS + NOTIFY_LINK_CLICK_SCRIPT
@@ -121,13 +134,15 @@ const TosWebviewComponent: React.FunctionComponent<Props> = ({
             block: true,
             bordered: true,
             onPress: onExit,
-            title: I18n.t("global.buttons.exit")
+            title: I18n.t("global.buttons.exit"),
+            testID: "toSWebViewContainerFooterLeftButton"
           }}
           rightButton={{
             block: true,
             primary: true,
             onPress: onAcceptTos,
-            title: I18n.t("onboarding.tos.accept")
+            title: I18n.t("onboarding.tos.accept"),
+            testID: "toSWebViewContainerFooterRightButton"
           }}
         />
       )}

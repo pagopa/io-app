@@ -23,7 +23,6 @@ import {
 import createSagaMiddleware from "redux-saga";
 import { remoteUndefined } from "../features/bonus/bpd/model/RemoteValue";
 import { initialLollipopState } from "../features/lollipop/store/reducers/lollipop";
-import { mvlPersistConfig } from "../features/mvl";
 import rootSaga from "../sagas";
 import { Action, StoreEnhancer } from "../store/actions/types";
 import { analytics } from "../store/middlewares";
@@ -347,8 +346,7 @@ const persistedReducer: Reducer<PersistedGlobalState, Action> = persistReducer<
     rootPersistConfig,
     authenticationPersistConfig,
     walletsPersistConfig,
-    entitiesPersistConfig,
-    mvlPersistConfig
+    entitiesPersistConfig
   ])
 );
 

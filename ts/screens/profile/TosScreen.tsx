@@ -50,7 +50,7 @@ const TosScreen = () => {
           <TosWebviewComponent
             handleLoadEnd={handleLoadEnd}
             handleReload={handleReload}
-            url={privacyUrl}
+            webViewSource={{ uri: privacyUrl }}
             shouldFooterRender={false}
           />
         </SafeAreaView>

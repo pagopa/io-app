@@ -39,8 +39,8 @@ import {
 import { GlobalState } from "../store/reducers/types";
 import customVariables from "../theme/variables";
 import { VSpacer } from "./core/spacer/Spacer";
-import { IOStyles } from "./core/variables/IOStyles";
 import { withLightModalContext } from "./helpers/withLightModalContext";
+import { IOStyles } from "./core/variables/IOStyles";
 import { ContextualHelpPropsMarkdown } from "./screens/BaseScreenComponent";
 import TopScreenComponent, {
   TopScreenComponentProps

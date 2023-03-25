@@ -56,7 +56,7 @@ const OperationIcon = ({ operation }: OperationComponentProps) => {
     case OperationTypeEnum.REJECTED_ADD_INSTRUMENT:
     case OperationTypeEnum.REJECTED_DELETE_INSTRUMENT:
     case RefundOperationTypeEnum.REJECTED_REFUND:
-      return <Icon name={"warning"} color="red" />;
+      return <Icon name={"legWarning"} color="red" />;
 
     default:
       if ("brand" in operation) {
@@ -75,11 +75,17 @@ const OperationAmount = ({ operation }: OperationComponentProps) => {
   switch (operation.operationType) {
     case TransactionOperationTypeEnum.TRANSACTION:
       return (
-        <H4>{`–${formatNumberAmount(operation.accrued || 0, false)} €`}</H4>
+        <H4>{`-${formatNumberAmount(
+          Math.abs(operation.accrued),
+          false
+        )} €`}</H4>
       );
     case TransactionOperationTypeEnum.REVERSAL:
       return (
-        <H4>{`+${formatNumberAmount(operation.accrued || 0, false)} €`}</H4>
+        <H4>{`+${formatNumberAmount(
+          Math.abs(operation.accrued),
+          false
+        )} €`}</H4>
       );
     case RefundOperationTypeEnum.PAID_REFUND:
       return (
