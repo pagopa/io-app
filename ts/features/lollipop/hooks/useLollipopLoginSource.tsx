@@ -36,7 +36,7 @@ const taskRegenerateKey = (keyTag: string) =>
   );
 
 export const useLollipopLoginSource = (
-  onLolliPoPCheckFailure: () => void,
+  onLollipopCheckFailure: () => void,
   loginUri?: string
 ) => {
   const [lollipopCheckStatus, setLollipopCheckStatus] =
@@ -70,11 +70,11 @@ export const useLollipopLoginSource = (
             status: "untrusted",
             url: O.some(eventUrl)
           });
-          onLolliPoPCheckFailure();
+          onLollipopCheckFailure();
         }
       );
     },
-    [onLolliPoPCheckFailure]
+    [onLollipopCheckFailure]
   );
 
   const regenerateLoginSource = useCallback(() => {
@@ -151,7 +151,7 @@ export const useLollipopLoginSource = (
     useLollipopLogin
   ]);
 
-  const retryLolliPoPLogin = useCallback(() => {
+  const retryLollipopLogin = useCallback(() => {
     setLollipopCheckStatus({ status: "none", url: O.none });
     // We must set webviewSource to undefined before requesting
     // any changes to loginSource otherwise on the next component
@@ -163,10 +163,10 @@ export const useLollipopLoginSource = (
     regenerateLoginSource();
   }, [regenerateLoginSource]);
 
-  const shouldBlockUrlNavigationWhileCheckingLolliPoP = useCallback(
+  const shouldBlockUrlNavigationWhileCheckingLollipop = useCallback(
     (url: string) => {
       if (!useLollipopLogin) {
-        // LolliPoP not enabled, do not check the Url
+        // Lollipop not enabled, do not check the Url
         return false;
       }
 
@@ -224,8 +224,8 @@ export const useLollipopLoginSource = (
 
   return {
     lollipopCheckStatus,
-    retryLolliPoPLogin,
-    shouldBlockUrlNavigationWhileCheckingLolliPoP,
+    retryLollipopLogin,
+    shouldBlockUrlNavigationWhileCheckingLollipop,
     webviewSource
   };
 };

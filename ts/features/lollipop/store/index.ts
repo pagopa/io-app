@@ -16,14 +16,14 @@ export const CURRENT_REDUX_LOLLIPOP_STORE_VERSION = 0;
 
 const migrations: MigrationManifest = {
   // Version 0
-  // LolliPoP PERSISTED redux type changes from
+  // Lollipop PERSISTED redux type changes from
   // { keyTag?: string; _persist: ... }
   // to
   // { keyTag: O.Option<string>; _persist: ... }
   "0": (state: PersistedState): PersistedLollipopState => {
-    type PreviousPersistedLolliPoPState = { keyTag?: string } & PersistPartial;
+    type PreviousPersistedLollipopState = { keyTag?: string } & PersistPartial;
     const castedPeviousState =
-      state as unknown as PreviousPersistedLolliPoPState;
+      state as unknown as PreviousPersistedLollipopState;
     return {
       ...castedPeviousState,
       keyTag: O.fromNullable(castedPeviousState.keyTag),

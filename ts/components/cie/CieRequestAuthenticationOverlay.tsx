@@ -98,8 +98,8 @@ const CieWebView = (props: Props) => {
   // On Android to be sure to regenerate a new crypto key,
   // we need to pass a new value to useLollipopLoginSource: loginUriRetry.
   const {
-    retryLolliPoPLogin,
-    shouldBlockUrlNavigationWhileCheckingLolliPoP,
+    retryLollipopLogin,
+    shouldBlockUrlNavigationWhileCheckingLollipop,
     webviewSource
   } = useLollipopLoginSource(handleOnError, loginUri);
 
@@ -119,7 +119,7 @@ const CieWebView = (props: Props) => {
     }
 
     const url = event.url;
-    if (shouldBlockUrlNavigationWhileCheckingLolliPoP(url)) {
+    if (shouldBlockUrlNavigationWhileCheckingLollipop(url)) {
       return false;
     }
 
@@ -166,7 +166,7 @@ const CieWebView = (props: Props) => {
       <ErrorComponent
         onRetry={() => {
           setInternalState(state => generateRetryState(state));
-          retryLolliPoPLogin();
+          retryLollipopLogin();
         }}
         onClose={props.onClose}
       />

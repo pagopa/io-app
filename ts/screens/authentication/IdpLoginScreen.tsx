@@ -119,17 +119,17 @@ const IdpLoginScreen = (props: Props) => {
   const [errorCode, setErrorCode] = useState<string | undefined>(undefined);
   const [loginTrace, setLoginTrace] = useState<string | undefined>(undefined);
 
-  const handleOnLolliPoPCheckFailure = useCallback(() => {
+  const handleOnLollipopCheckFailure = useCallback(() => {
     setRequestState(pot.noneError(ErrorType.LOGIN_ERROR));
   }, []);
 
   const idpId = props.loggedOutWithIdpAuth?.idp.id;
   const loginUri = idpId ? getIdpLoginUri(idpId) : undefined;
   const {
-    retryLolliPoPLogin,
-    shouldBlockUrlNavigationWhileCheckingLolliPoP,
+    retryLollipopLogin,
+    shouldBlockUrlNavigationWhileCheckingLollipop,
     webviewSource
-  } = useLollipopLoginSource(handleOnLolliPoPCheckFailure, loginUri);
+  } = useLollipopLoginSource(handleOnLollipopCheckFailure, loginUri);
 
   const choosenTool = useMemo(
     () => assistanceToolRemoteConfig(props.assistanceToolConfig),
@@ -185,7 +185,7 @@ const IdpLoginScreen = (props: Props) => {
 
   const onRetryButtonPressed = (): void => {
     setRequestState(pot.noneLoading);
-    retryLolliPoPLogin();
+    retryLollipopLogin();
   };
 
   const handleNavigationStateChange = useCallback(
@@ -227,7 +227,7 @@ const IdpLoginScreen = (props: Props) => {
       return false;
     }
 
-    if (shouldBlockUrlNavigationWhileCheckingLolliPoP(url)) {
+    if (shouldBlockUrlNavigationWhileCheckingLollipop(url)) {
       return false;
     }
 
