@@ -13,7 +13,7 @@ import I18n from "../../../../i18n";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
 import { renderInfoRasterImage } from "../../../../components/infoScreen/imageRendering";
-import { fciEndRequest } from "../../store/actions";
+import { fciEndRequest, fciStartRequest } from "../../store/actions";
 
 const FciThankyouScreen = () => {
   const fciCreateSignatureSelector = useIOSelector(fciSignatureSelector);
@@ -25,6 +25,16 @@ const FciThankyouScreen = () => {
       loadingCaption={""}
       onRetry={constNull}
       testID={"FciTypLoadingScreenTestID"}
+    />
+  );
+
+  const ErrorComponent = () => (
+    <GenericErrorComponent
+      title={I18n.t("features.fci.errors.generic.signing.title")}
+      subTitle={I18n.t("features.fci.errors.generic.signing.subTitle")}
+      onPress={() => dispatch(fciStartRequest())}
+      retry={true}
+      testID="FciTypErrorScreenTestID"
     />
   );
 
@@ -56,11 +66,11 @@ const FciThankyouScreen = () => {
     () => <LoadingComponent />,
     () => <LoadingComponent />,
     () => <LoadingComponent />,
-    _ => <GenericErrorComponent onPress={() => dispatch(fciEndRequest())} />,
+    _ => <ErrorComponent />,
     _ => <SuccessComponent />,
     () => <LoadingComponent />,
     () => <LoadingComponent />,
-    _ => <GenericErrorComponent onPress={() => dispatch(fciEndRequest())} />
+    _ => <ErrorComponent />
   );
 };
 

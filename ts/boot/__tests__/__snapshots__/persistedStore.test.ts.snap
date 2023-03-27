@@ -94,15 +94,6 @@ Object {
 }
 `;
 
-exports[`Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'features.mvl' state 1`] = `
-Object {
-  "byId": Object {},
-  "preferences": Object {
-    "showAlertForAttachments": true,
-  },
-}
-`;
-
 exports[`Check the addition for new fields to the persisted store. If one of this test fails, check that exists the migration before updating the snapshot! Freeze 'identification' state 1`] = `
 Object {
   "fail": undefined,

@@ -123,6 +123,22 @@ describe("Test SuccessComponent", () => {
     expect(component).toBeTruthy();
     expect(store.getActions()).toEqual([fciShowSignedDocumentsStartRequest()]);
   });
+  it("with a signature request status REJECTED should render a GenericErrorComponent", () => {
+    const mockStore = configureMockStore<GlobalState>();
+    const store: ReturnType<typeof mockStore> = mockStore(globalState);
+
+    const signedSignatureRequest = {
+      ...mockSignatureRequestDetailView,
+      status: SignatureRequestDetailViewStatusEnum.REJECTED
+    };
+    const props = {
+      signatureRequest: signedSignatureRequest
+    };
+    const component = renderComponent(props, store);
+    expect(
+      component.getByTestId("RejectedSignatureRequestTestID")
+    ).toBeTruthy();
+  });
 });
 
 function renderComponent(props: Props, store: Store<GlobalState>) {
