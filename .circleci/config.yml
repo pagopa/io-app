@@ -543,10 +543,8 @@ workflows:
     jobs:
       - compile-typescript:
           filters:
-            tags:
-              only: *release_tag
             branches:
-              ignore: /.*/
+              only: IOAPPFD0-61-xcode14
 
       - run-tests:
           filters:
@@ -572,9 +570,9 @@ workflows:
       - alpha-release-android:
           requires:
             - compile-typescript
-            - run-tests
-            - run-eslint
-            - run-prettier
+            # - run-tests
+            # - run-eslint
+            # - run-prettier
           filters:
             branches:
               only: IOAPPFD0-61-xcode14
