@@ -26,6 +26,7 @@ import {
 } from "../../../components/core/variables/IOColors";
 import { DesignSystemParamsList } from "./params";
 import DESIGN_SYSTEM_ROUTES from "./routes";
+import { DSHapticFeedback } from "../core/DSHapticFeedback";
 
 const Stack = createStackNavigator<DesignSystemParamsList>();
 
@@ -79,6 +80,11 @@ export const DesignSystemNavigator = () => {
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.FOUNDATION.LOADERS.route}
           component={DSLoaders}
+        />
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.FOUNDATION.HAPTIC_FEEDBACK.route}
+          component={DSHapticFeedback}
         />
 
         {/* COMPONENTS */}
