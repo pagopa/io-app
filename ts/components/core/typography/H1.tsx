@@ -1,6 +1,10 @@
 import * as React from "react";
 import { IOFontFamily, IOFontWeight } from "../fonts";
-import { IOColors, IOColorsStatusForeground } from "../variables/IOColors";
+import {
+  IOColors,
+  IOColorsStatusForeground,
+  IOTheme
+} from "../variables/IOColors";
 import { ExternalTypographyProps, TypographyProps } from "./common";
 import { useTypographyFactory } from "./Factory";
 
@@ -8,7 +12,10 @@ type PartialAllowedColors = Extract<
   IOColors,
   "bluegreyDark" | "white" | "blue"
 >;
-type AllowedColors = PartialAllowedColors | IOColorsStatusForeground;
+type AllowedColors =
+  | PartialAllowedColors
+  | IOColorsStatusForeground
+  | IOTheme["textHeading-default"];
 type AllowedWeight = Extract<IOFontWeight, "Bold">;
 
 type OwnProps = ExternalTypographyProps<

@@ -3214,12 +3214,19 @@ features:
       waitForQtsp:
         title: Il documento è in elaborazione
         subTitle: Ti preghiamo di attendere, presto riceverai il contratto firmato in app.
-      unsupportedDevice:
-        title: C’è un problema
-        subTitle: Il tuo device non supporta la funzionalità Firma con IO.
       generic:
-        title: C’è un problema
-        subTitle: Per procedere alla firma, verifica di aver aggiornato l’app IO all’ultima versione
+        default:
+          title: C’è un problema sui nostri sistemi
+          subTitle: Riprova tra qualche minuto. Se si ripete, contatta l’assistenza.
+        update:
+          title: Aggiorna l’app
+          subTitle: Verifica di avere installato l’ultima versione di IO oppure rifai il login. 
+        rejected:
+          title: La firma non è andata a buon fine
+          subTitle: L’ente mittente ti contatterà nei prossimi giorni per farti firmare di nuovo. Se ciò non dovesse succedere, scrivi a
+        signing:
+          title: La firma non è andata a buon fine
+          subTitle: A causa di un problema tecnico, la firma non è andata a buon fine. Se il problema si ripete contatta l’assistenza.
     abort:
       title: "Annulla la firma"
       content: "Vuoi annullare la firma dei documenti?"
@@ -3238,7 +3245,7 @@ features:
       titleRight: Pagina {{currentPage}} di {{totalPages}}
     shareDataScreen:
       title: "Condividi questi dati?"
-      content: "Per completare la firma, devi condividere questi dati con il provider di firma."
+      content: "Verranno condivisi con il fornitore della firma digitale. Se annulli, non potrai completare la firma."
       cancel: "Annulla"
       confirm: "Ok, va bene"
       alertText: "Vuoi modificare o aggiornare il tuo indirizzo email?"
@@ -3324,12 +3331,30 @@ idpay:
   wallet:
     preview:
       validThrough: "Valido fino al {{endDate}}"
+      showAll: Vedi tutte
+    initiativePairing:
+      navigation: Iniziative disponibili
+      header: Scegli quali iniziative abilitare su questo metodo
+      statusLabels:
+        PENDING_DEACTIVATION_REQUEST: "In disattivazione.."
+        PENDING_ENROLLMENT_REQUEST: "In attivazione.."
+        ENROLLMENT_FAILED: "Attivazione fallita"
+      errorToasts:
+        enrollment: "Errore nel collegamento dell'iniziativa, riprova."
+        removal: "Errore nella rimozione dell'iniziativa, riprova."
   initiative:
     details:
       initiativeCard:
         availableAmount: Disponibile
-        validUntil: Valido fino al {{expiryDate}}
-        toRefund: da rimborsare
+        validUntil: Fino al {{expiryDate}}
+        expiresOn: Scade il {{expiryDate}}
+        toRefund: Da rimborsare
+        statusLabels:
+          REFUNDABLE: Attiva
+          NOT_REFUNDABLE: Disattivata
+          NOT_REFUNDABLE_ONLY_IBAN: Metodo mancante
+          NOT_REFUNDABLE_ONLY_INSTRUMENT: IBAN mancante
+          UNSUBSCRIBED: Disiscritto
       initiativeDetailsScreen:
         notConfigured:
           header: Configura l'iniziativa!
@@ -3342,7 +3367,9 @@ idpay:
             showMore: Vedi tutte
             header: Impostazioni
             associatedPaymentMethods: Metodi di pagamento associati
-            methodsi18n: metodi 
+            methods:
+              one: "1 metodo"
+              other: "{{count}} metodi"
             selectedIBAN: IBAN per l'accredito
             actionsRequired: Azioni richieste 
           startConfigurationCTA: Inizia
