@@ -1,11 +1,5 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
-
-export enum StartupStatusEnum {
-  INITIAL = "initial",
-  ONBOARDING = "onboarding",
-  NOT_AUTHENTICATED = "notAuthenticated",
-  AUTHENTICATED = "authenticated"
-}
+import { StartupStatusEnum } from "../reducers/startup";
 
 export const startupLoadSuccess = createStandardAction(
   "STARTUP_LOAD_SUCCESS"

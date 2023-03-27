@@ -15,9 +15,8 @@ import ProfileMainScreen from "../screens/profile/ProfileMainScreen";
 import ServicesHomeScreen from "../screens/services/ServicesHomeScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import { useIOSelector } from "../store/hooks";
-import { isStartupLoaded } from "../store/reducers/startup";
+import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
 import variables from "../theme/variables";
-import { StartupStatusEnum } from "../store/actions/startup";
 import { MainTabParamsList } from "./params/MainTabParamsList";
 import ROUTES from "./routes";
 

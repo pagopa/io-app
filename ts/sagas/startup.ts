@@ -91,11 +91,9 @@ import { differentProfileLoggedIn } from "../store/actions/crossSessions";
 import { clearAllAttachments } from "../features/messages/saga/clearAttachments";
 import { watchMessageAttachmentsSaga } from "../features/messages/saga/attachments";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
-import {
-  StartupStatusEnum,
-  startupLoadSuccess
-} from "../store/actions/startup";
+import { startupLoadSuccess } from "../store/actions/startup";
 import { watchIDPaySaga } from "../features/idpay/common/saga";
+import { StartupStatusEnum } from "../store/reducers/startup";
 import {
   startAndReturnIdentificationResult,
   watchIdentification

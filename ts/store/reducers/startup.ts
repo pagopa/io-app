@@ -4,9 +4,16 @@
 import { isActionOf } from "typesafe-actions";
 import { sessionExpired, sessionInvalid } from "../actions/authentication";
 
-import { startupLoadSuccess, StartupStatusEnum } from "../actions/startup";
+import { startupLoadSuccess } from "../actions/startup";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
+
+export enum StartupStatusEnum {
+  INITIAL = "initial",
+  ONBOARDING = "onboarding",
+  NOT_AUTHENTICATED = "notAuthenticated",
+  AUTHENTICATED = "authenticated"
+}
 
 export type StartupState = {
   status: StartupStatusEnum;

@@ -74,8 +74,7 @@ import {
 import { isTestEnv } from "../utils/environment";
 import { startApplicationInitialization } from "../store/actions/application";
 import { IO_INTERNAL_LINK_PREFIX } from "../utils/navigation";
-import { isStartupLoaded } from "../store/reducers/startup";
-import { StartupStatusEnum } from "../store/actions/startup";
+import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
 import authenticationNavigator from "./AuthenticationNavigator";
 import { MessagesStackNavigator } from "./MessagesNavigator";
 import NavigationService, { navigationRef } from "./NavigationService";

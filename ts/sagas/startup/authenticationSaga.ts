@@ -4,12 +4,10 @@ import {
   analyticsAuthenticationStarted
 } from "../../store/actions/analytics";
 import { loginSuccess } from "../../store/actions/authentication";
-import {
-  StartupStatusEnum,
-  startupLoadSuccess
-} from "../../store/actions/startup";
+import { startupLoadSuccess } from "../../store/actions/startup";
 import { SessionToken } from "../../types/SessionToken";
 import { ReduxSagaEffect } from "../../types/utils";
+import { StartupStatusEnum } from "../../store/reducers/startup";
 import { stopCieManager, watchCieAuthenticationSaga } from "../cie";
 import { watchTestLoginRequestSaga } from "../testLoginSaga";
 
