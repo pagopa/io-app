@@ -94,7 +94,20 @@ const IDPayOnboardingMachineProvider = (props: Props) => {
   );
 };
 
-const useOnboardingMachineService = () =>
-  React.useContext(OnboardingMachineContext);
+const useOnboardingMachineService = () => {
+  const machine = React.useContext(OnboardingMachineContext);
+  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+
+  const handleGestureEnd = React.useCallback(() => {
+    machine.send({ type: "GO_BACK", skipNavigation: true });
+  }, [machine]);
+
+  React.useEffect(
+    () => navigation.addListener("gestureEnd", handleGestureEnd),
+    [navigation, handleGestureEnd]
+  );
+
+  return machine;
+};
 
 export { IDPayOnboardingMachineProvider, useOnboardingMachineService };

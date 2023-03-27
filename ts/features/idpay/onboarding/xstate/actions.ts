@@ -8,7 +8,17 @@ import {
   IDPayOnboardingRoutes,
   IDPayOnboardingStackNavigationProp
 } from "../navigation/navigator";
+import { Events } from "./events";
 import { Context } from "./machine";
+
+const skipNavigation = (event: Events) => {
+  switch (event.type) {
+    case "GO_BACK":
+      return event.skipNavigation;
+    default:
+      return false;
+  }
+};
 
 const createActionsImplementation = (
   rootNavigation: IOStackNavigationProp<AppParamsList, keyof AppParamsList>,
@@ -17,9 +27,13 @@ const createActionsImplementation = (
     keyof IDPayOnboardingParamsList
   >
 ) => {
-  const navigateToInitiativeDetailsScreen = (context: Context) => {
+  const navigateToInitiativeDetailsScreen = (context: Context, event: any) => {
     if (context.serviceId === undefined) {
       throw new Error("serviceId is undefined");
+    }
+
+    if (skipNavigation(event)) {
+      return;
     }
 
     onboardingNavigation.navigate(
