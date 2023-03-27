@@ -1,6 +1,7 @@
 import * as React from "react";
 import { constNull } from "fp-ts/lib/function";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import I18n from "../../../i18n";
 import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
@@ -10,6 +11,7 @@ import { fciSignatureRequestSelector } from "../store/reducers/fciSignatureReque
 import { LoadingErrorComponent } from "../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import SuccessComponent from "../components/SuccessComponent";
 import GenericErrorComponent from "../components/GenericErrorComponent";
+import { withValidatedEmail } from "../../../components/helpers/withValidatedEmail";
 
 export type FciRouterScreenNavigationParams = Readonly<{
   signatureRequestId: SignatureRequestDetailView["id"];
@@ -35,17 +37,26 @@ const FciSignatureScreen = (
     />
   );
 
+  const ErrorComponent = () => (
+    <GenericErrorComponent
+      title={I18n.t("features.fci.errors.generic.default.title")}
+      subTitle={I18n.t("features.fci.errors.generic.default.subTitle")}
+      onPress={() => dispatch(fciEndRequest())}
+      testID="GenericErrorComponentTestID"
+    />
+  );
+
   return pot.fold(
     fciSignatureRequest,
     () => <LoadingComponent />,
     () => <LoadingComponent />,
     () => <LoadingComponent />,
-    _ => <GenericErrorComponent onPress={() => dispatch(fciEndRequest())} />,
+    _ => <ErrorComponent />,
     b => <SuccessComponent signatureRequest={b} />,
     () => <LoadingComponent />,
     () => <LoadingComponent />,
-    _ => <GenericErrorComponent onPress={() => dispatch(fciEndRequest())} />
+    _ => <ErrorComponent />
   );
 };
 
-export default FciSignatureScreen;
+export default withValidatedEmail(FciSignatureScreen);
