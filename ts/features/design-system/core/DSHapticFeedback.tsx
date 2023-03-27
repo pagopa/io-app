@@ -11,7 +11,7 @@ export const DSHapticFeedback = () => (
   <IOThemeContext.Consumer>
     {theme => (
       <DesignSystemScreen title={"Haptic Feedback"}>
-        <H2 color={theme["textHeading-default"]}>Feedbacks</H2>
+        <H2 color={theme["textHeading-default"]}>Feedback</H2>
         <VSpacer size={24} />
         <ButtonSolid
           fullWidth
