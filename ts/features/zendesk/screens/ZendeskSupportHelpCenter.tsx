@@ -3,8 +3,9 @@ import { RouteProp, useRoute } from "@react-navigation/native";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, ScrollView } from "react-native";
+import { View, SafeAreaView, ScrollView } from "react-native";
 import { useDispatch } from "react-redux";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { H3 } from "../../../components/core/typography/H3";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
@@ -18,7 +19,6 @@ import {
   reloadContextualHelpDataThreshold
 } from "../../../components/screens/BaseScreenComponent/utils";
 import ActivityIndicator from "../../../components/ui/ActivityIndicator";
-import View from "../../../components/ui/TextWithIcon";
 import I18n from "../../../i18n";
 import { loadContextualHelpData } from "../../../store/actions/content";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
@@ -123,7 +123,7 @@ const FaqManager = (props: FaqManagerProps) => {
   return (
     <>
       {isContentLoading && (
-        <View centerJustified={true}>
+        <View style={[IOStyles.flex, IOStyles.centerJustified]}>
           <ActivityIndicator color={IOColors.blueUltraLight} />
         </View>
       )}
@@ -132,13 +132,13 @@ const FaqManager = (props: FaqManagerProps) => {
           {!isStringNullyOrEmpty(contextualHelpData.title) && (
             <>
               <H3 accessible={true}>{contextualHelpData.title}</H3>
-              <View spacer={true} />
+              <VSpacer size={16} />
             </>
           )}
           {contextualHelpData.content && (
             <>
               {contextualHelpData.content}
-              <View spacer={true} />
+              <VSpacer size={16} />
             </>
           )}
           {contextualHelpData.faqs && isContentLoaded && (
@@ -175,7 +175,8 @@ const ZendeskSupportHelpCenter = () => {
     contextualHelp,
     contextualHelpMarkdown,
     startingRoute,
-    assistanceForPayment
+    assistanceForPayment,
+    assistanceForCard
   } = route.params;
 
   const [markdownContentLoaded, setMarkdownContentLoaded] = useState<boolean>(
@@ -224,10 +225,12 @@ const ZendeskSupportHelpCenter = () => {
             contentLoaded={markdownContentLoaded}
             startingRoute={startingRoute}
           />
-          <View spacer />
+          <VSpacer size={16} />
           <ZendeskSupportComponent
             assistanceForPayment={assistanceForPayment}
+            assistanceForCard={assistanceForCard}
           />
+          <VSpacer size={16} />
         </ScrollView>
       </SafeAreaView>
     </BaseScreenComponent>

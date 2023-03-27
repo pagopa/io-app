@@ -1,6 +1,4 @@
-// import { View as NBView, Text as NBText } from "native-base";
 import * as React from "react";
-import { View as NBView } from "native-base";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 
 import { H2 } from "../../../components/core/typography/H2";
@@ -23,8 +21,9 @@ import { ProductCategoryEnum } from "../../../../definitions/cgn/merchants/Produ
 import CgnMerchantListItem from "../../bonus/cgn/components/merchants/CgnMerchantListItem";
 import DetailedlistItemComponent from "../../../components/DetailedlistItemComponent";
 import { TimelineOperationListItem } from "../../idpay/initiative/details/components/TimelineOperationListItem";
-import { OperationTypeEnum } from "../../../../definitions/idpay/timeline/TransactionOperationDTO";
+import { OperationTypeEnum } from "../../../../definitions/idpay/TransactionOperationDTO";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 
 export const DSListItems = () => (
   <DesignSystemScreen title="List Items">
@@ -206,12 +205,14 @@ export const DSListItems = () => (
     <DSComponentViewerBox name="TimelineTransactionCard">
       <TimelineOperationListItem
         operation={{
+          brand: "MASTERCARD",
           operationId: "213123",
           operationType: "Pagamento Pos" as OperationTypeEnum,
           operationDate: new Date(),
           brandLogo: "",
           maskedPan: "****",
-          amount: -100,
+          amount: 100,
+          accrued: 50,
           circuitType: "MasterCard"
         }}
       />
@@ -255,6 +256,6 @@ export const DSListItems = () => (
       />
     </DSComponentViewerBox>
 
-    <NBView spacer={true} extralarge={true} />
+    <VSpacer size={40} />
   </DesignSystemScreen>
 );

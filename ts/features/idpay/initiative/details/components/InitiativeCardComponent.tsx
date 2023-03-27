@@ -1,158 +1,185 @@
-import { Text, View } from "native-base";
 import * as React from "react";
-import { Image, ImageBackground, StyleSheet } from "react-native";
-import { widthPercentageToDP } from "react-native-responsive-screen";
-import { StatusEnum } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
-import { makeFontStyleObject } from "../../../../../components/core/fonts";
-import { H2 } from "../../../../../components/core/typography/H2";
-import { H5 } from "../../../../../components/core/typography/H5";
+import { StyleSheet, View } from "react-native";
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming
+} from "react-native-reanimated";
+import {
+  InitiativeDTO,
+  StatusEnum as InitiativeStatusEnum
+} from "../../../../../../definitions/idpay/InitiativeDTO";
+import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
+import { H1 } from "../../../../../components/core/typography/H1";
+import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
-import TypedI18n from "../../../../../i18n";
+import I18n from "../../../../../i18n";
 import { formatDateAsLocal } from "../../../../../utils/dates";
-import bonusVacanzeWhiteLogo from "../../../../../../img/bonus/bonusVacanze/logo_BonusVacanze_White.png";
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import cardBg from "../../../../../../img/features/idpay/card_full.png";
+import { IOBadge } from "../../../../../components/core/IOBadge";
 
 type Props = {
-  status: StatusEnum;
-  endDate: Date;
-  initiativeName?: string;
-  amount?: number;
-  accrued?: number;
+  initiative: InitiativeDTO;
 };
 
 const styles = StyleSheet.create({
   cardContainer: {
-    height: 230,
-    width: widthPercentageToDP(100)
+    backgroundColor: IOColors["blue-50"],
+    borderBottomEndRadius: 24,
+    borderBottomStartRadius: 24,
+    paddingVertical: 32,
+    paddingTop: 0,
+    flex: 1
   },
-  card: {
-    position: "absolute",
-    alignSelf: "center",
-    width: widthPercentageToDP(100),
-    height: 230
+  bonusLogoContainer: {
+    backgroundColor: IOColors.white,
+    height: 56,
+    width: 56,
+    borderRadius: 8
   },
-  imageFull: {
-    zIndex: -1
+  topCardSection: {
+    flex: 2,
+    alignItems: "center"
   },
-  row: {
-    flexDirection: "row",
-    alignItems: "center",
-    textAlign: "center"
-  },
-  spaced: {
-    justifyContent: "space-between"
-  },
-  bottomInitiativeIcon: {
+  bottomCardSection: {
     flex: 1,
-    justifyContent: "flex-end"
+    flexDirection: "row",
+    justifyContent: "center"
   },
-  paddedMainContent: {
-    zIndex: 1,
-    padding: 32,
-    width: "100%",
-    height: "100%",
-    position: "absolute"
-  },
-  amount: {
-    lineHeight: 32,
-    fontSize: 24,
-    color: IOColors.white,
-    ...makeFontStyleObject("Bold", undefined, "TitilliumWeb")
-  },
-  logo: {
-    resizeMode: "contain",
-    height: 65,
-    width: 65
+  bonusStatusContainer: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center"
   },
   consumedOpacity: {
     opacity: 0.5
+  },
+  remainingPercentageSliderContainer: {
+    height: 4,
+    backgroundColor: IOColors.white,
+    width: 100,
+    borderRadius: 4
+  },
+  alignCenter: {
+    alignItems: "center"
   }
 });
 
+type PercentageSliderProps = {
+  percentage: number;
+  isGreyedOut: boolean;
+};
+const BonusPercentageSlider = ({
+  percentage,
+  isGreyedOut
+}: PercentageSliderProps) => {
+  const width = useSharedValue(100);
+  React.useEffect(() => {
+    // eslint-disable-next-line functional/immutable-data
+    width.value = percentage;
+  });
+  const scalingWidth = useAnimatedStyle(() => ({
+    width: withTiming(width.value, { duration: 1000 })
+  }));
+  return (
+    <View style={styles.remainingPercentageSliderContainer}>
+      <Animated.View
+        style={[
+          {
+            width: `${width.value}%`,
+            backgroundColor: isGreyedOut ? IOColors.blue : IOColors["grey-450"],
+            flex: 1,
+            borderRadius: 4
+          },
+          scalingWidth
+        ]}
+      />
+    </View>
+  );
+};
+const formatNumberRightSign = (amount: number) =>
+  `${formatNumberAmount(amount, false)} €`;
 const InitiativeCardComponent = (props: Props) => {
-  const renderFullCard = () => {
-    const isInitiativeConfigured = props.status === StatusEnum.REFUNDABLE;
-    return (
-      <View style={[styles.row, styles.spaced, IOStyles.flex]}>
-        <View
-          style={[
-            {
-              height: "100%"
-            },
-            styles.spaced
-          ]}
-        >
-          <View>
-            <View spacer={true} small={true} />
+  const { initiativeName, endDate, status } = props.initiative;
+  /*
+  From BE we have:
+  - amount: the amount still available in the initiative
+  - accrued: total amount accrued with transactions
+  - refunded: amount refunded by wire transfer
+  */
 
-            <H2 color="white">{props.initiativeName}</H2>
-            <Text style={{ color: IOColors.white }}>{`${TypedI18n.t(
-              "idpay.initiative.details.initiativeCard.validUntil"
-            )} ${formatDateAsLocal(props.endDate, true)}`}</Text>
-          </View>
-          <View style={styles.row}>
-            <View>
-              <Text
-                bold={true}
-                style={[
-                  !isInitiativeConfigured ? styles.consumedOpacity : {},
-                  styles.amount
-                ]}
-              >
-                {formatNumberAmount(props.amount || 0, true)}
-              </Text>
-              <H5 color="white">
-                {TypedI18n.t(
-                  "idpay.initiative.details.initiativeCard.availableAmount"
-                )}
-              </H5>
-            </View>
+  const amount: number = props.initiative.amount || 0;
+  const accrued: number = props.initiative.accrued || 0;
+  const refunded: number = props.initiative.refunded || 0;
 
-            <View small hspacer />
+  const isInitiativeConfigured = status === InitiativeStatusEnum.REFUNDABLE;
+  const toBeRepaidAmount = accrued - refunded;
+  const totalAmount = amount + accrued;
 
-            <View>
-              <Text
-                bold={true}
-                style={[
-                  !isInitiativeConfigured ? styles.consumedOpacity : {},
-                  styles.amount
-                ]}
-              >
-                {formatNumberAmount(props.accrued || 0, true)}
-              </Text>
+  const dateString = formatDateAsLocal(endDate, true);
+  const remainingBonusAmountPercentage =
+    totalAmount !== 0 ? (amount / totalAmount) * 100.0 : 100.0;
+  return (
+    <View style={styles.cardContainer} testID={"card-component"}>
+      {/* top part */}
+      <View style={styles.topCardSection}>
+        <View style={styles.bonusLogoContainer}></View>
+        <VSpacer size={8} />
+        <H1>{initiativeName}</H1>
+        <LabelSmall color={"black"} weight="Regular">
+          {/* the ministry would go here */}
+        </LabelSmall>
 
-              <H5 color="white">
-                {TypedI18n.t(
-                  "idpay.initiative.details.initiativeCard.toRefund"
-                )}
-              </H5>
-            </View>
-          </View>
-        </View>
-        <View>
-          <View
-            style={styles.bottomInitiativeIcon}
-            accessible={true}
-            importantForAccessibility={"no-hide-descendants"}
-            accessibilityElementsHidden={true}
-          >
-            <Image source={bonusVacanzeWhiteLogo} style={styles.logo} />
-          </View>
+        <VSpacer size={8} />
+        <View style={styles.bonusStatusContainer}>
+          {/* as of now, this is misaligned, will be fixed once #4337 is merged */}
+          <IOBadge
+            small={true}
+            text={I18n.t(
+              `idpay.initiative.details.initiativeCard.statusLabels.${status}`
+            )}
+          />
+          <HSpacer size={8} />
+          <LabelSmall fontSize="small" weight="SemiBold" color="bluegreyDark">
+            {I18n.t(
+              `idpay.initiative.details.initiativeCard.${
+                isInitiativeConfigured ? "validUntil" : "expiresOn"
+              }`,
+              {
+                expiryDate: dateString
+              }
+            )}
+          </LabelSmall>
         </View>
       </View>
-    );
-  };
 
-  return (
-    <View style={styles.card} testID={"card-component"}>
-      <ImageBackground
-        source={cardBg}
-        imageStyle={[styles.imageFull]}
-        style={styles.cardContainer}
-      />
-      <View style={styles.paddedMainContent}>{renderFullCard()}</View>
+      <VSpacer size={32} />
+      {/* bottom part */}
+
+      <View style={styles.bottomCardSection}>
+        <View style={styles.alignCenter}>
+          <LabelSmall color="bluegreyDark" weight="Regular">
+            {I18n.t("idpay.initiative.details.initiativeCard.availableAmount")}
+          </LabelSmall>
+          <H1 style={!isInitiativeConfigured ? styles.consumedOpacity : {}}>
+            {formatNumberRightSign(amount)}
+          </H1>
+          <VSpacer size={8} />
+          <BonusPercentageSlider
+            isGreyedOut={isInitiativeConfigured}
+            percentage={remainingBonusAmountPercentage}
+          />
+        </View>
+        <HSpacer size={48} />
+        <View style={styles.alignCenter}>
+          <LabelSmall color="bluegreyDark" weight="Regular">
+            {I18n.t("idpay.initiative.details.initiativeCard.toRefund")}
+          </LabelSmall>
+          <H1 style={!isInitiativeConfigured ? styles.consumedOpacity : {}}>
+            {formatNumberRightSign(toBeRepaidAmount)}
+          </H1>
+        </View>
+      </View>
     </View>
   );
 };

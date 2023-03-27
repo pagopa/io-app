@@ -10,7 +10,7 @@ import {
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Content, Form, Text as NBText, View } from "native-base";
+import { Content, Form, Text as NBText } from "native-base";
 import * as React from "react";
 import { Keyboard, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
@@ -41,6 +41,7 @@ import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
 import { withPaymentFeatureSelector } from "../../../store/reducers/wallet/wallets";
 import { alertNoPayablePaymentMethods } from "../../../utils/paymentMethod";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 import CodesPositionManualPaymentModal from "./CodesPositionManualPaymentModal";
 
 export type ManualDataInsertionScreenNavigationParams = {
@@ -181,7 +182,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
               <Link onPress={this.showModal}>
                 {I18n.t("wallet.insertManually.link")}
               </Link>
-              <View spacer />
+              <VSpacer size={16} />
               <Form>
                 <LabelledItem
                   isValid={unwrapOptionalEither(this.state.paymentNoticeNumber)}
@@ -211,7 +212,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                     }
                   }}
                 />
-                <View spacer />
+                <VSpacer size={16} />
                 <LabelledItem
                   isValid={unwrapOptionalEither(
                     this.state.organizationFiscalCode

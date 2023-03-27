@@ -465,7 +465,6 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is expired sh
                                       <View
                                         style={
                                           Array [
-                                            Object {},
                                             Object {
                                               "paddingHorizontal": 24,
                                               "paddingVertical": 12,
@@ -604,9 +603,11 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is expired sh
                                           </RNSVGGroup>
                                         </RNSVGSvgView>
                                         <View
-                                          hspacer={true}
-                                          small={true}
-                                          style={Object {}}
+                                          style={
+                                            Object {
+                                              "width": 8,
+                                            }
+                                          }
                                         />
                                         <Text
                                           style={
@@ -1142,7 +1143,6 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is expiring s
                                       <View
                                         style={
                                           Array [
-                                            Object {},
                                             Object {
                                               "paddingHorizontal": 24,
                                               "paddingVertical": 12,
@@ -1202,19 +1202,18 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is expiring s
                                           </Text>
                                         </Text>
                                         <View
-                                          spacer={true}
-                                          style={Object {}}
-                                          xsmall={true}
+                                          style={
+                                            Object {
+                                              "height": 4,
+                                            }
+                                          }
                                         />
                                         <View
                                           style={
-                                            Array [
-                                              Object {},
-                                              Object {
-                                                "alignItems": "center",
-                                                "flexDirection": "row",
-                                              },
-                                            ]
+                                            Object {
+                                              "alignItems": "center",
+                                              "flexDirection": "row",
+                                            }
                                           }
                                         >
                                           <RNSVGSvgView
@@ -1340,9 +1339,11 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is expiring s
                                             </RNSVGGroup>
                                           </RNSVGSvgView>
                                           <View
-                                            hspacer={true}
-                                            small={true}
-                                            style={Object {}}
+                                            style={
+                                              Object {
+                                                "width": 8,
+                                              }
+                                            }
                                           />
                                           <View
                                             accessibilityRole="button"
@@ -1934,7 +1935,6 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is not expira
                                       <View
                                         style={
                                           Array [
-                                            Object {},
                                             Object {
                                               "paddingHorizontal": 24,
                                               "paddingVertical": 12,
@@ -1994,19 +1994,18 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is not expira
                                           </Text>
                                         </Text>
                                         <View
-                                          spacer={true}
-                                          style={Object {}}
-                                          xsmall={true}
+                                          style={
+                                            Object {
+                                              "height": 4,
+                                            }
+                                          }
                                         />
                                         <View
                                           style={
-                                            Array [
-                                              Object {},
-                                              Object {
-                                                "alignItems": "center",
-                                                "flexDirection": "row",
-                                              },
-                                            ]
+                                            Object {
+                                              "alignItems": "center",
+                                              "flexDirection": "row",
+                                            }
                                           }
                                         >
                                           <RNSVGSvgView
@@ -2132,9 +2131,11 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is not expira
                                             </RNSVGGroup>
                                           </RNSVGSvgView>
                                           <View
-                                            hspacer={true}
-                                            small={true}
-                                            style={Object {}}
+                                            style={
+                                              Object {
+                                                "width": 8,
+                                              }
+                                            }
                                           />
                                           <View
                                             accessibilityRole="button"
@@ -2726,7 +2727,6 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is valid shou
                                       <View
                                         style={
                                           Array [
-                                            Object {},
                                             Object {
                                               "paddingHorizontal": 24,
                                               "paddingVertical": 12,
@@ -2786,19 +2786,18 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is valid shou
                                           </Text>
                                         </Text>
                                         <View
-                                          spacer={true}
-                                          style={Object {}}
-                                          xsmall={true}
+                                          style={
+                                            Object {
+                                              "height": 4,
+                                            }
+                                          }
                                         />
                                         <View
                                           style={
-                                            Array [
-                                              Object {},
-                                              Object {
-                                                "alignItems": "center",
-                                                "flexDirection": "row",
-                                              },
-                                            ]
+                                            Object {
+                                              "alignItems": "center",
+                                              "flexDirection": "row",
+                                            }
                                           }
                                         >
                                           <RNSVGSvgView
@@ -2924,9 +2923,11 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is valid shou
                                             </RNSVGGroup>
                                           </RNSVGSvgView>
                                           <View
-                                            hspacer={true}
-                                            small={true}
-                                            style={Object {}}
+                                            style={
+                                              Object {
+                                                "width": 8,
+                                              }
+                                            }
                                           />
                                           <View
                                             accessibilityRole="button"

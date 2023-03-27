@@ -175,7 +175,7 @@ const MessageRouterScreen = ({
       // happen when not coming from a push notification, since at this
       // point, the message list is already retrieved and saved in the
       // local state
-      const isNeitherFromNotificationNorWhileSynchronizing =
+      const isNotOpeningFromBackgroundNotificationWhileSynchronizingInbox =
         !fromNotification || !isSynchronizingInbox;
 
       if (isPNDetailsFromNotification) {
@@ -184,7 +184,9 @@ const MessageRouterScreen = ({
           screen: ROUTES.MESSAGES_HOME
         });
         setDidNavigateToScreenHandler(true);
-      } else if (isNeitherFromNotificationNorWhileSynchronizing) {
+      } else if (
+        isNotOpeningFromBackgroundNotificationWhileSynchronizingInbox
+      ) {
         setMessageReadState(maybeMessage);
         navigateToScreenHandler(
           maybeMessage,

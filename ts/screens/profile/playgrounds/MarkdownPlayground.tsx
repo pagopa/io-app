@@ -1,11 +1,12 @@
 import { useLinkTo } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
-import { Content, View } from "native-base";
+import { Content } from "native-base";
 import React, { useCallback } from "react";
-import { SafeAreaView, StyleSheet, TextInput } from "react-native";
+import { View, SafeAreaView, StyleSheet, TextInput } from "react-native";
 import { CreatedMessageWithContent } from "../../../../definitions/backend/CreatedMessageWithContent";
 import { MessageBodyMarkdown } from "../../../../definitions/backend/MessageBodyMarkdown";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
+import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";
 import { Label } from "../../../components/core/typography/Label";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { ExtractedCtaButton } from "../../../components/cta/ExtractedCtaButton";
@@ -63,7 +64,7 @@ const MarkdownPlayground = () => {
               onChangeText={setInputText}
               value={inputText}
             />
-            <View hspacer={true} />
+            <HSpacer size={16} />
             <View>
               <ButtonDefaultOpacity
                 style={styles.contentCenter}
@@ -87,7 +88,7 @@ const MarkdownPlayground = () => {
               {"clear"}
             </Label>
           </View>
-          <View spacer={true} />
+          <VSpacer size={16} />
           {isMarkdownSet && <Label color={"bluegrey"}>{ctaMessage}</Label>}
 
           {O.isSome(maybeCTA) && (
@@ -101,7 +102,7 @@ const MarkdownPlayground = () => {
           )}
           {O.isSome(maybeCTA) && maybeCTA.value.cta_2 && (
             <>
-              <View spacer={true} />
+              <VSpacer size={16} />
               <View style={styles.row}>
                 <ExtractedCtaButton
                   cta={maybeCTA.value.cta_2}
@@ -113,7 +114,7 @@ const MarkdownPlayground = () => {
           )}
           {isMarkdownSet && (
             <>
-              <View spacer={true} />
+              <VSpacer size={16} />
               <Markdown extraBodyHeight={60}>
                 {cleanMarkdownFromCTAs(markdownText as MessageBodyMarkdown)}
               </Markdown>

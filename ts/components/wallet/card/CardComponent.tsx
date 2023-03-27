@@ -7,9 +7,9 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Text as NBText, View } from "native-base";
+import { Text as NBText } from "native-base";
 import * as React from "react";
-import { Alert, Image } from "react-native";
+import { View, Alert, Image } from "react-native";
 import {
   Menu,
   MenuOption,
@@ -25,6 +25,7 @@ import { isPaymentMethodExpired } from "../../../utils/paymentMethod";
 import { buildExpirationDate } from "../../../utils/stringBuilder";
 import { FOUR_UNICODE_CIRCLES } from "../../../utils/wallet";
 import ButtonDefaultOpacity from "../../ButtonDefaultOpacity";
+import { VSpacer } from "../../core/spacer/Spacer";
 import { H5 } from "../../core/typography/H5";
 import { IOColors } from "../../core/variables/IOColors";
 import IconFont from "../../ui/IconFont";
@@ -323,7 +324,7 @@ export default class CardComponent extends React.Component<Props> {
             </View>
             <View>{this.renderTopRightCorner()}</View>
           </View>
-          {hasFlatBottom && <View spacer={true} />}
+          {hasFlatBottom && <VSpacer size={16} />}
           {isHeader && <View style={{ paddingTop: 20 }} />}
           {this.renderBody(wallet.creditCard)}
         </View>

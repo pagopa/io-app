@@ -1,11 +1,11 @@
 import * as React from "react";
-import { View } from "native-base";
-import { Image, StyleSheet } from "react-native";
+import { View, Image, StyleSheet } from "react-native";
 import maestro from "../../../img/wallet/cards-icons/maestro.png";
 import mastercard from "../../../img/wallet/cards-icons/mastercard.png";
 import visaElectron from "../../../img/wallet/cards-icons/visa-electron.png";
 import visa from "../../../img/wallet/cards-icons/visa.png";
 import vpay from "../../../img/wallet/cards-icons/vPay.png";
+import { HSpacer } from "../core/spacer/Spacer";
 
 const styles = StyleSheet.create({
   brandLogo: {
@@ -21,17 +21,17 @@ const styles = StyleSheet.create({
 const InternationalCircuitIconsBar: React.FunctionComponent = () => (
   <View style={styles.row} testID={"internationalCircuitIconsBar"}>
     <Image source={maestro} style={styles.brandLogo} testID={"maestro"} />
-    <View hspacer={true} />
+    <HSpacer size={16} />
     <Image source={mastercard} style={styles.brandLogo} testID={"mastercard"} />
-    <View hspacer={true} />
+    <HSpacer size={16} />
     <Image source={visa} style={styles.brandLogo} testID={"visa"} />
-    <View hspacer={true} />
+    <HSpacer size={16} />
     <Image
       source={visaElectron}
       style={styles.brandLogo}
       testID={"visaElectron"}
     />
-    <View hspacer={true} />
+    <HSpacer size={16} />
     <Image source={vpay} style={styles.brandLogo} testID={"vPay"} />
   </View>
 );

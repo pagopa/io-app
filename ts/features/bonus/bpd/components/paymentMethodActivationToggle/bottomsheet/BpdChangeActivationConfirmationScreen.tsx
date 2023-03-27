@@ -1,6 +1,7 @@
-import { View } from "native-base";
+import { View } from "react-native";
 import * as React from "react";
 import { InfoBox } from "../../../../../../components/box/InfoBox";
+import { VSpacer } from "../../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../../components/core/typography/Body";
 import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
 import Markdown from "../../../../../../components/ui/Markdown";
@@ -44,13 +45,13 @@ export const BpdChangeActivationConfirmationScreen: React.FunctionComponent<Prop
 
     return (
       <View>
-        <View spacer={true} />
+        <VSpacer size={16} />
         <PaymentMethodRepresentationComponent {...props.representation} />
-        <View spacer={true} />
+        <VSpacer size={16} />
         <Markdown>{body}</Markdown>
         {props.type === "Activation" && (
           <>
-            <View spacer={true} large={true} />
+            <VSpacer size={24} />
             <InfoBox>
               <Body>
                 {I18n.t(

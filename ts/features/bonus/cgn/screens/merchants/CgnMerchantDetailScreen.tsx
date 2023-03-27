@@ -1,10 +1,10 @@
 import { Route, useRoute } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { View } from "native-base";
 import * as React from "react";
 import { useCallback, useEffect, useMemo } from "react";
 import {
+  View,
   FlatList,
   Image,
   ListRenderItemInfo,
@@ -17,6 +17,7 @@ import { Address } from "../../../../../../definitions/cgn/merchants/Address";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 import OpenWeb from "../../../../../../img/icons/openweburl.svg";
+import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { H2 } from "../../../../../components/core/typography/H2";
 import { H4 } from "../../../../../components/core/typography/H4";
@@ -121,20 +122,20 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
                 </View>
               )}
               <View style={IOStyles.horizontalContentPadding}>
-                <View spacer large />
+                <VSpacer size={24} />
                 <H1>{merchantDetail.value.name}</H1>
-                <View spacer />
+                <VSpacer size={16} />
                 <H2>{I18n.t("bonus.cgn.merchantDetail.title.deals")}</H2>
-                <View spacer small />
+                <VSpacer size={8} />
                 <FlatList
                   data={merchantDetail.value.discounts}
                   renderItem={renderDiscountListItem}
                   keyExtractor={(item: Discount) => item.name}
                 />
-                <View spacer small />
+                <VSpacer size={8} />
                 <H2>{I18n.t("bonus.cgn.merchantDetail.title.description")}</H2>
                 <H4 weight={"Regular"}>{merchantDetail.value.description}</H4>
-                <View spacer />
+                <VSpacer size={16} />
                 <H2>{I18n.t("bonus.cgn.merchantDetail.title.addresses")}</H2>
                 {pipe(
                   merchantDetail.value.websiteUrl,

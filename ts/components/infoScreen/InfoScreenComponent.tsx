@@ -1,9 +1,9 @@
 import { NavigationEvents } from "@react-navigation/compat";
-import { View } from "native-base";
 import * as React from "react";
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import themeVariables from "../../theme/variables";
 import { setAccessibilityFocus } from "../../utils/accessibility";
+import { VSpacer } from "../core/spacer/Spacer";
 import { Body } from "../core/typography/Body";
 import { H2 } from "../core/typography/H2";
 
@@ -50,7 +50,7 @@ export const InfoScreenComponent: React.FunctionComponent<Props> = props => {
     <View style={styles.main} testID="InfoScreenComponent">
       <NavigationEvents onWillFocus={() => setAccessibilityFocus(elementRef)} />
       {props.image}
-      <View spacer={true} large={true} />
+      <VSpacer size={24} />
       <H2
         testID="infoScreenTitle"
         accessible
@@ -59,7 +59,7 @@ export const InfoScreenComponent: React.FunctionComponent<Props> = props => {
       >
         {props.title}
       </H2>
-      <View spacer={true} />
+      <VSpacer size={16} />
       {renderNode(props.body)}
     </View>
   );

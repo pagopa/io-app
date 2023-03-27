@@ -1,8 +1,8 @@
-import { View } from "native-base";
 import * as React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { VSpacer } from "../../../../../../../../components/core/spacer/Spacer";
 import { H2 } from "../../../../../../../../components/core/typography/H2";
 import { H5 } from "../../../../../../../../components/core/typography/H5";
 import { IOColors } from "../../../../../../../../components/core/variables/IOColors";
@@ -101,14 +101,14 @@ const SuperCashbackRankingNotReady = (): React.ReactElement => {
           }
           row2={
             <>
-              <View spacer={true} xsmall={true} />
+              <VSpacer size={4} />
               <IconFont
                 name={"io-hourglass"}
                 size={24}
                 color={IOColors.blue as string}
                 style={styles.center}
               />
-              <View spacer={true} xsmall={true} />
+              <VSpacer size={4} />
             </>
           }
           row3={

@@ -8,9 +8,9 @@
  * footer with a button for starting a new payment
  */
 
-import { Content, Text as NBText, View } from "native-base";
+import { Content, Text as NBText } from "native-base";
 import * as React from "react";
-import { Animated, StyleProp, StyleSheet, ViewStyle } from "react-native";
+import { View, Animated, StyleProp, StyleSheet, ViewStyle } from "react-native";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 import { FAQsCategoriesType } from "../../utils/faq";
@@ -21,6 +21,7 @@ import {
 import DarkLayout from "../screens/DarkLayout";
 import { H2 } from "../core/typography/H2";
 import { IOColors } from "../core/variables/IOColors";
+import { VSpacer } from "../core/spacer/Spacer";
 
 type Props = Readonly<{
   accessibilityLabel?: string;
@@ -81,12 +82,12 @@ export default class WalletLayout extends React.Component<Props> {
   private dynamicSubHeader() {
     return (
       <View style={[styles.whiteBg, styles.flex1, styles.shadow]}>
-        <View spacer={true} />
+        <VSpacer size={16} />
         <View style={styles.subHeaderContent}>
           <H2 color={"bluegrey"}>{I18n.t("wallet.latestTransactions")}</H2>
           <NBText>{I18n.t("wallet.amount")}</NBText>
         </View>
-        <View spacer={true} />
+        <VSpacer size={16} />
       </View>
     );
   }

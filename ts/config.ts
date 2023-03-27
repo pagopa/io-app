@@ -116,7 +116,7 @@ export const pnEnabled = Config.PN_ENABLED === "YES";
 export const remindersOptInEnabled = Config.REMINDERS_OPT_IN_ENABLED === "YES";
 
 // version of ToS
-export const tosVersion: NonNegativeNumber = 4.1 as NonNegativeNumber;
+export const tosVersion: NonNegativeNumber = 4.4 as NonNegativeNumber;
 
 export const fetchTimeout = pipe(
   parseInt(Config.FETCH_TIMEOUT_MS, 10),
@@ -187,6 +187,12 @@ export const localServicesWebUrl: string = pipe(
   E.getOrElse(() => "https://io.italia.it")
 );
 
+export const unsupportedDeviceMoreInfoUrl: string = pipe(
+  Config.UNSUPPORTED_DEVICE_MORE_INFO_URL,
+  NonEmptyString.decode,
+  E.getOrElse(() => "https://io.italia.it/app-content/unsupported_device.html")
+);
+
 export const pageSize: number = DEFAULT_PAGE_SIZE;
 
 // This is the maximum number supported by API via pagination regardless of the content.
@@ -215,9 +221,9 @@ export const POSTE_DATAMATRIX_SCAN_PREFERRED_PSPS:
  * IDPay
  */
 
-export const IDPAY_API_TEST_TOKEN =
+export const idPayTestToken =
   Config.IDPAY_API_TEST_TOKEN !== "" ? Config.IDPAY_API_TEST_TOKEN : undefined;
 
-export const IDPAY_API_UAT_BASEURL = Config.IDPAY_API_UAT_BASEURL;
+export const idPayApiUatBaseUrl = Config.IDPAY_API_UAT_BASEURL;
 
-export const idPayEnabled = Config.IDPAY_ENABLED === "YES";
+export const idPayApiBaseUrl = Config.IDPAY_API_BASEURL;

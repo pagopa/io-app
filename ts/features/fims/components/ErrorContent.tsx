@@ -1,9 +1,9 @@
 import * as React from "react";
-import { View } from "native-base";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import IconFont from "../../../components/ui/IconFont";
 import customVariables from "../../../theme/variables";
 import { Label } from "../../../components/core/typography/Label";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 import CommonContent from "./CommonContent";
 
 const styles = StyleSheet.create({
@@ -24,7 +24,7 @@ const ErrorContent = ({ text, close }: Props) => (
       color={customVariables.brandDanger}
       style={styles.selfCenter}
     />
-    <View spacer={true} />
+    <VSpacer size={16} />
 
     <View style={styles.itemsCenter}>
       <Label weight={"Bold"}>{text}</Label>

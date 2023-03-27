@@ -115,13 +115,13 @@ global:
     fullFormatFullMonthLiteral: "%d %B %Y"
     fullMonthLiteral: "%B"
     fullMonthLiteralWithYear: "%B %Y"
-    numericMonthYear: "%m.%Y"
-    shortNumericMonthYear: "%m.%-y"
     timeFormat: "%H:%M"
     timeFormatWithTimezone: "%H:%M:%S (%z)"
     dayMonthWithTime: "%d %b, %H:%M"
     dayMonthWithoutTime: "%d %b"
     dayFullMonth: "%d %B"
+    numericMonthYear: "%m/%Y"
+    shortNumericMonthYear: "%m/%-y"
     monthYear: "MMMM YYYY"
     dayAndMonth: "dddd D MMMM"
     dayMonth: "DD.MM."
@@ -504,7 +504,7 @@ profile:
         bottomSheet:
           title: "Vorschau anzeigen"
           content: "Wenn diese Option aktiviert ist, werden bei Push-Benachrichtigungen der Absender und der Betreff von Nachrichten angezeigt, auch wenn der Bildschirm gesperrt ist. Diese Informationen werden vom Hersteller deines Betriebssystems und von den Apps der Drittanbieter, die möglicherweise ausgeführt werden, verarbeitet."
-          cta: "Ich habe verstanden!"
+          cta: "OK, habe verstanden!"
       error: "Bei deiner Anfrage ist ein Fehler aufgetreten"
 userMetadata:
   errors:
@@ -763,8 +763,9 @@ onboarding:
     headerTitle: "Aktivierung"
     title: "Biometrische Authentifizierung"
     body:
+      enrolledText: !include onboarding/tos_fingerprint_enrolled.md
       enrolledType:
-        fingerprint: "Dein Fingerabdruck"
+        fingerprint: "deinen Fingerabdruck"
         faceId: "Face ID"
         touchId: "Touch ID"
   shareData:
@@ -835,7 +836,7 @@ payment:
   IUV: "IUV"
   IUV_extended: "Einheitlicher Zahlungskodex (IUV)"
   notice: "Zahlungsmitteilung"
-  noticeCode: "Zahlungsmitteilungskodex"
+  noticeCode: "Zahlungskodex"
   recipientFiscalCode: "Steuernummer des Empfängers"
   paidConfirm: "Du hast {{amount}} gezahlt"
   details:
@@ -891,16 +892,16 @@ wallet:
     bancomat:
       title: "Suche deine PagoBANCOMAT-Karten"
       description:
-        text1: "Indem du PagoBANCOMAT zu deinem Konto hinzufügst, kannst du an den auf IO verfügbaren Initiativen teilnehmen.\nWenn du fortfährst, akzeptierst du die"
+        text1: "Indem du PagoBANCOMAT zu deinem Konto hinzufügst, kannst du an den auf IO verfügbaren Initiativen teilnehmen.\nWenn du fortfährst, akzeptierst du die "
         text2: "Datenschutzbestimmungen."
-        text3: "Wenn du möchtest, kannst du die Bank wählen, bei der du eine aktive PagoBANCOMAT-Karte hast."
+        text3: "Wenn du möchtest, kannst du die Bank wählen, bei der du eine aktive PagoBANCOMAT-Karte hast. "
         text4: "Liste der verfügbaren Banken"
     bpay:
       title: "Zahle auf IO mit BANCOMAT Pay"
       description:
         text1: "Füge BANCOMAT Pay hinzu, um pagoPA-Zahlungsaufforderungen einfacher zu bezahlen sowie an den auf IO verfügbaren Initiativen teilzunehmen.\nWenn du fortfährst, akzeptierst du die "
         text2: "Datenschutzbestimmungen."
-        text3: "Drücke auf “Weiter”, um nach Konten, die auf dich lauten, zu suchen oder suche die Bank, bei der du ein aktives BANCOMAT Pay Konto hast."
+        text3: "Drücke auf “Weiter”, um nach Konten, die auf dich lauten, zu suchen oder suche die Bank, bei der du ein aktives BANCOMAT Pay Konto hast. "
         text4: "Liste der verfügbaren Banken"
     cobadge:
       title: "Suche deine Karten im internationalen Zahlungsnetzwerk"
@@ -1096,7 +1097,7 @@ wallet:
         title: "Gib die Kartennummer ein"
         body: "Gib die Ziffern auf der Vorderseite ein. IO prüft, ob die Karte mit deiner Steuernummer verbunden ist."
         disclaimer:
-          text1: "Wenn du fortfährst, akzeptierst du die"
+          text1: "Wenn du fortfährst, akzeptierst du die "
           text2: "Datenschutzbestimmungen"
       search:
         loading: "Wir überprüfen deine Karte\n\nWarte ein paar Sekunden"
@@ -1135,9 +1136,9 @@ wallet:
   transactionHelpMessage:
     text1: "Probleme mit einer Zahlung oder dem Hinzufügen einer neuen Methode?"
     text2: "Konsultiere die Hilfe rechts oben auf dieser Seite."
-  transactionsLoadMore: "Vorherige laden"
-  transacionsLoadingMore: "Lade vorherige..."
-  transactionsShow: "Zeige Transaktionen"
+  transactionsLoadMore: "Weitere Transaktionen laden"
+  transacionsLoadingMore: "Lade weitere Transaktionen..."
+  transactionsShow: "Zeige deine Transaktionen"
   pickPaymentMethod:
     unavailable:
       title: "Diese Zahlungsmethode ist noch nicht verfügbar"
@@ -1150,7 +1151,7 @@ wallet:
     add: "Hinzufügen"
     show: "Anzeigen"
     refresh: "Aktualisieren"
-    addButton: "Eine Zahlungsmethode hinzufügen"
+    addButton: "Neue Zahlungsmethode"
     addDescription: "Füge eine Zahlungsmethode hinzu, um in Sekundenschnelle in IO zu bezahlen oder fordere die Aktivierung einer Bonus- oder Rabattkarte an."
     walletAlert: "In deinem Konto sind Zahlungsmethoden registriert, aber keine davon ist mit IO kompatibel."
     successful: "Die Karte wurde erfolgreich hinzugefügt!"
@@ -1210,17 +1211,17 @@ wallet:
     transactionCosts: "Transaktionsgebühr"
     edit: "Bearbeiten"
     providedBy: "Durchgeführt von"
-    pay: "Bezahlen"
+    pay: "Bezahle"
     cancelPayment: "Transaktion abbrechen"
     fee: "Transaktionsgebühr"
-    identificationMessage: "Bestätige die Transaktion durch Eingabe deines Freischaltcodes"
+    identificationMessage: "Bestätige die Transaktion durch Eingabe deines Entsperrcodes"
     transactionSuccess: "Die Zahlung wurde abgeschlossen!"
     transactionFailure: "Bei der Zahlung ist ein Fehler aufgetreten, bitte versuche es erneut!"
     transactionTimeout: "Die Bestätigung der Zahlung konnte nicht abrufen werden!"
     confirmCancelTitle: "Möchtest du diese Zahlung abbrechen?"
     confirmCancelPayment: "Diese Zahlung abbrechen"
     confirmContinuePayment: "Mit der Zahlung fortfahren"
-    cancelPaymentSuccess: "Die Zahlung dieser Zahlungsaufforderung wurde abgebrochen, du kannst sie in wenigen Minuten erneut bezahlen"
+    cancelPaymentSuccess: "Die Zahlung dieser Aufforderung wurde abgebrochen, du kannst sie in wenigen Minuten erneut bezahlen"
     accessibility:
       edit: "zum Bearbeiten antippen"
       transactionCosts: "{{cost}}, Transaktion {{psp}}"
@@ -1271,7 +1272,7 @@ wallet:
     amountInfo:
       title: "Siehst du einen anderen Betrag?"
       message: "pagoPA aktualisiert den Betrag automatisch, um sicherzustellen, dass du genau den Betrag bezahlst, den du schuldest und somit weitere Strafen oder Zinsen vermeidest"
-      cta: "Ok, verstanden"
+      cta: "OK, habe verstanden"
     loadingMessage:
       activation: "Wir benachrichtigen die Körperschaft, bitte warte ein paar Sekunden..."
       verification: "Wir überprüfen deine Zahlungsangaben..."
@@ -1290,7 +1291,7 @@ wallet:
     title: "Was möchtest du bezahlen?"
     info: "Gib die Daten ein, die auf der Zahlungsmitteilung angegeben sind."
     link: "Wo finde ich die Daten?"
-    noticeCode: "Zahlungsmitteilungskodex"
+    noticeCode: "Zahlungskodex"
     entityCode: "Steuernummer der Körperschaft"
     amount: "Betrag (€)"
     proceed: "Mit der Transaktion fortfahren"
@@ -1420,7 +1421,7 @@ wallet:
     chooser: "Bild aus der Galerie wählen"
     wrongQrCode: "QR-Code nicht gültig. Gib die Daten manuell ein."
     byCameraTitle: "QR-Code scannen"
-    cameraUsageInfo: "Scanne den QR-Code der Zahlungsmitteilung oder gib die Daten (Zahlungsmitteilungskodex und Steuernummer Körperschaft) manuell ein"
+    cameraUsageInfo: "Scanne den QR-Code der Zahlungsmitteilung oder gib die Daten (Zahlungskodex und Steuernummer Körperschaft) manuell ein"
     setManually: "Manuell eingeben"
     enroll_cta: "Um den QR-Code auf der Zahlungsmitteilung zu scannen, musst du IO zunächst erlauben, die Kamera zu verwenden. Du kannst dies über das Menü “Einstellungen” deines Geräts tun."
     readStorageDisclosure:
@@ -1697,7 +1698,7 @@ messageDetails:
     organizationName: "Gesendet von"
     departmentName: "Abteilung"
     serviceName: "Dienst"
-  dateSending: "Datum und Uhrzeit der Sendung:"
+  dateSending: "Datum und Uhrzeit:"
   sender: "Absender:"
   service: "Dienst:"
   question: "Ist etwas unklar?"
@@ -1801,7 +1802,7 @@ services:
   close: "Schließen"
   emptyListMessage: "Zurzeit sind keine Dienste verfügbar, zum Aktualisieren ziehe auf dem Bildschirm nach unten"
 serviceDetail:
-  fiscalCode: "Steuernr. Körperschaft"
+  fiscalCode: "Steuernummer Körperschaft"
   fiscalCodeAccessibility: "Steuernummer Körperschaft"
   contacts:
     title: "Dieser Dienst kann:"
@@ -1883,6 +1884,12 @@ systemsOff:
   closeApp: "Schließe die App und versuche es erneut"
 contextualHelp:
   title: Die IO-App hilft Ihnen
+bottomSheets:
+  ciePin:
+    title: "Wo finde ich meine PIN?"
+    content: !include bottomsheets/ciePin.md
+bonus:
+  requestLabel: "Boni und Rabatte"
 features:
   euCovidCertificate:
     save:
@@ -1934,3 +1941,59 @@ features:
         title: "Dieses Zertifikat kann nicht wiederhergestellt werden: Kontaktieren Sie den Support"
         subtitle: "Nützliche Informationen um Support zu erhalten:"
         cta: "Support kontaktieren"
+support:
+  ticketList:
+    noTicket:
+      title: "Du hast keine offenen Tickets"
+      body: "Wenn du Hilfe benötigst, erstelle bitte ein neues Ticket."
+  helpCenter:
+    header: "Hilfe"
+    cta:
+      contactSupport: "Erstelle ein Ticket"
+      seeReports: "Offene Tickets"
+    supportComponent:
+      title: "Benötigst du Hilfe?"
+      subtitle: "Wirf einen Blick in die FAQ: Wenn du die gesuchte Antwort nicht findest, erstelle ein Ticket. Wenn du bereits eine Ticket eröffnet hast und dessen Status überprüfen oder Details hinzufügen möchtest, wähle bitte “Offene Tickets”."
+      adviceMessage: "Wenn dein Problem den Inhalt einer Nachricht oder den Dienst einer Körperschaft betrifft, wende dich bitte an die Körperschaft: du findest die entsprechenden Kontakte in der Nachricht oder in den Details des Dienstes."
+  panicMode:
+    title: "Leider können wir dir zur Zeit nicht helfen"
+    body: "Wir wissen, dass es ein Problem gibt, und wir arbeiten daran, es zu lösen. Wenn das Problem weiterhin besteht oder wenn du in einer anderen Angelegenheit Hilfe benötigst, versuche bitte, uns später erneut zu kontaktieren."
+  askPermissions:
+    nameSurname: "Vor- und Nachname"
+    fiscalCode: "Steuernummer"
+    emailAddress: "E-Mail-Adresse"
+    deviceAndOS: "Gerät und Betriebssystem"
+    ipAddress: "IP-Adresse"
+    ipAddressValue: "Einschließlich der geschätzten geografischen Position"
+    appVersionsHistory: "Versionsverlauf der App"
+    appVersionsHistoryValue: "Um herauszufinden, ob das Problem von der letzten Aktualisierung abhängt"
+    identityProvider: "Identitätsanbieter"
+    navigationData: "IO-App Navigationsdaten"
+    navigationDataValue: "z.B. der letzte Bildschirm oder die letzte in der IO-App angezeigte Nachricht"
+    devicePerformance: "Leistung des Geräts"
+    devicePerformanceData: "Speicher und Akkustand"
+    stock: "Daten zur Zahlungsaufforderung"
+    stockValue: "Einschließlich des Fehlers, den du gerade erhalten hast"
+    card: "Angaben zur Zahlungsmethode"
+    cardValue: "Nummer (verschlüsselt), Ablaufdatum, Zahlungsnetzwerk"
+    prominentDisclosure: "Zugriff auf die Galerie des Geräts"
+    prominentDisclosureData: "Zum Hochladen von Fotos und Screenshots"
+    header: "Erstelle ein Ticket"
+    listTitle: "Offene Tickets"
+    title: "Gibst du uns deine Zustimmung?"
+    listBody: "Um deine offenen Tickets laden zu können, benötigen wir Zugriff auf einige deiner Daten."
+    privacyLink: "Lies die Datenschutzbestimmungen"
+    body: "Um dein Ticket beantworten zu können, benötigen wir Zugriff auf einige deiner Daten. Wenn du deine Zustimmung verweigerst, musst du uns eine allgemeine Anfrage per E-Mail senden."
+    listHeader: "Wenn du deine Zustimmung gibst, erhalten wir diese Daten:"
+    cta:
+      allow: "Zustimmen"
+      denies: "Ablehnen"
+    toast:
+      emailClientNotFound: "Wenn du Hilfe benötigst, schreib uns an: {{emailAddress}}"
+  chooseCategory:
+    header: "Erstelle ein Ticket"
+    title:
+      category: "Wähle einen Bereich aus"
+      subCategory: "Kannst du uns mehr Details nennen?"
+    subTitle:
+      category: "Hilf uns, besser zu verstehen, wie wir dir helfen können, indem du den Bereich deines Problems auswählst: Wir werden uns so schnell wie möglich während der Geschäftszeiten bei dir melden."

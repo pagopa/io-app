@@ -1,4 +1,3 @@
-import { View } from "native-base";
 import * as React from "react";
 import { Image } from "react-native";
 import { connect } from "react-redux";
@@ -9,14 +8,15 @@ import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScree
 import I18n from "../../../../i18n";
 import notOperational from "../../../../../img/messages/empty-due-date-list-icon.png";
 import EuCovidCertLearnMoreLink from "../../components/EuCovidCertLearnMoreLink";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 const EuCovidCertNotOperationalComponent = (): React.ReactElement => (
   <>
-    <View spacer extralarge />
-    <View spacer extralarge />
+    <VSpacer size={40} />
+    <VSpacer size={40} />
     <InfoScreenComponent
       image={
         <Image

@@ -7,18 +7,22 @@ import {
   FlatList,
   Image,
   ListRenderItemInfo,
+  Platform,
+  Pressable,
   StyleProp,
   StyleSheet,
+  View,
   ViewStyle
 } from "react-native";
 
-import { Button } from "native-base";
 import { connect } from "react-redux";
-import variables from "../theme/variables";
+import themeVariables from "../theme/variables";
 import { GlobalState } from "../store/reducers/types";
 import { idpsStateSelector } from "../store/reducers/content";
 import { LocalIdpsFallback } from "../utils/idps";
-import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
+import { toAndroidCacheTimestamp } from "../utils/dates";
+import { VSpacer } from "./core/spacer/Spacer";
+import { IOColors } from "./core/variables/IOColors";
 
 type OwnProps = {
   columnWrapperStyle?: StyleProp<ViewStyle>;
@@ -35,17 +39,32 @@ type OwnProps = {
 
 type Props = OwnProps & ReturnType<typeof mapStateToProps>;
 
-const GRID_GUTTER = variables.gridGutter;
+const GRID_GUTTER = 8;
 
 /**
  * To create a space within items in the same row we use the bootstrap method of adding a negative margin
  * than a padding to each item.
  */
 const styles = StyleSheet.create({
+  contentContainer: {
+    backgroundColor: IOColors.greyUltraLight
+  },
+  columnStyle: {
+    paddingHorizontal: themeVariables.contentPadding,
+    marginLeft: -GRID_GUTTER / 2,
+    marginRight: -GRID_GUTTER / 2
+  },
   gridItem: {
-    margin: GRID_GUTTER / 2,
-    padding: 30,
-    flex: 1
+    alignSelf: "flex-start",
+    width: "50%"
+  },
+  gridItemButton: {
+    marginHorizontal: GRID_GUTTER / 2,
+    backgroundColor: IOColors.white,
+    alignItems: "center",
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: themeVariables.borderRadiusBase
   },
   idpLogo: {
     width: 120,
@@ -56,6 +75,12 @@ const styles = StyleSheet.create({
 
 const keyExtractor = (idp: LocalIdpsFallback): string => idp.id;
 
+// https://github.com/facebook/react-native/issues/12606
+// Image cache forced refresh for Android by appending
+// the `ts` query parameter as DDMMYYYY to simulate a 24h TTL.
+const androidIdpLogoForcedRefreshed = () =>
+  Platform.OS === "android" ? `?ts=${toAndroidCacheTimestamp()}` : "";
+
 const renderItem =
   (props: Props) =>
   (info: ListRenderItemInfo<LocalIdpsFallback>): React.ReactElement => {
@@ -63,34 +88,29 @@ const renderItem =
     const { item } = info;
 
     const onPress = () => onIdpSelected(item);
-    if (item.isTestIdp === true) {
-      return (
-        // render transparent button if idp is testIdp (see https://www.pivotaltracker.com/story/show/172082895)
-        <Button
-          transparent={true}
-          onPress={onPress}
-          style={styles.gridItem}
-          accessible={false} // ignore cause it serves only for debug mode (stores reviewers)
-        />
-      );
-    }
+
     return (
-      <ButtonDefaultOpacity
-        key={item.id}
-        accessible={true}
-        accessibilityLabel={item.name}
-        style={styles.gridItem}
-        transparent={true}
-        block={true}
-        white={true}
-        onPress={onPress}
-        testID={`idp-${item.id}-button`}
-      >
-        <Image
-          source={item.localLogo ? item.localLogo : { uri: item.logo }}
-          style={styles.idpLogo}
-        />
-      </ButtonDefaultOpacity>
+      <View style={styles.gridItem}>
+        <Pressable
+          key={item.id}
+          accessible={true}
+          accessibilityLabel={item.name}
+          style={styles.gridItemButton}
+          onPress={onPress}
+          testID={`idp-${item.id}-button`}
+        >
+          <Image
+            source={
+              item.localLogo
+                ? item.localLogo
+                : {
+                    uri: `${item.logo}${androidIdpLogoForcedRefreshed()}`
+                  }
+            }
+            style={styles.idpLogo}
+          />
+        </Pressable>
+      </View>
     );
   };
 
@@ -99,11 +119,12 @@ const IdpsGrid: React.FunctionComponent<Props> = (props: Props) => (
     bounces={false}
     data={props.idps}
     numColumns={2}
+    horizontal={false}
     keyExtractor={keyExtractor}
     renderItem={renderItem(props)}
-    columnWrapperStyle={props.columnWrapperStyle}
-    contentContainerStyle={props.contentContainerStyle}
-    ListHeaderComponentStyle={props.headerComponentStyle}
+    ItemSeparatorComponent={() => <VSpacer size={GRID_GUTTER} />}
+    columnWrapperStyle={styles.columnStyle}
+    contentContainerStyle={styles.contentContainer}
     ListHeaderComponent={props.headerComponent}
     ListFooterComponent={props.footerComponent}
   />

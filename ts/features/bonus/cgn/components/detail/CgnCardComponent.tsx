@@ -1,8 +1,7 @@
 import * as React from "react";
 import { useEffect } from "react";
-import { View } from "native-base";
 import WebView from "react-native-webview";
-import { Image, ImageBackground, StyleSheet } from "react-native";
+import { View, Image, ImageBackground, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -17,6 +16,7 @@ import cardBg from "../../../../../../img/bonus/cgn/card_mask.png";
 import { generateRandomSvgMovement, Point } from "../../utils/svgBackground";
 import { eycaDetailSelector } from "../../store/reducers/eyca/details";
 import { canEycaCardBeShown } from "../../utils/eyca";
+import { HSpacer } from "../../../../../components/core/spacer/Spacer";
 import { playSvg } from "./CardSvgPayload";
 import DepartmentLabel from "./DepartmentLabel";
 
@@ -196,7 +196,7 @@ const CgnCardComponent: React.FunctionComponent<Props> = (props: Props) => {
             {canDisplayEycaLogo ? (
               <Image source={eycaLogo} style={styles.eycaLogo} />
             ) : (
-              <View hspacer />
+              <HSpacer size={16} />
             )}
             <Image source={cgnLogo} style={styles.fullLogo} />
           </View>

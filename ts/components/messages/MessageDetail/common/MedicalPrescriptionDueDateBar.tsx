@@ -6,9 +6,9 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { capitalize } from "lodash";
-import { Text as NBText, View } from "native-base";
+import { Text as NBText } from "native-base";
 import React from "react";
-import { StyleSheet, ViewStyle } from "react-native";
+import { View, StyleSheet, ViewStyle } from "react-native";
 import { CreatedMessageWithContentAndAttachments } from "../../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import I18n from "../../../../i18n";
 import customVariables from "../../../../theme/variables";
@@ -23,6 +23,7 @@ import {
   ExpireStatus,
   getMessagePaymentExpirationInfo
 } from "../../../../utils/messages";
+import { HSpacer, VSpacer } from "../../../core/spacer/Spacer";
 import { IOColors } from "../../../core/variables/IOColors";
 import CalendarEventButton from "./CalendarEventButton";
 import CalendarIconComponent from "./CalendarIconComponent";
@@ -177,10 +178,10 @@ class MedicalPrescriptionDueDateBar extends React.PureComponent<Props> {
               <NBText style={styles.text} white={false}>
                 {this.textContent}
               </NBText>
-              <View spacer={true} xsmall={true} />
+              <VSpacer size={4} />
               <View style={styles.row}>
                 {this.renderCalendarIcon()}
-                <View hspacer={true} small={true} />
+                <HSpacer size={8} />
                 <CalendarEventButton
                   message={this.props.message}
                   medium={true}
@@ -190,7 +191,7 @@ class MedicalPrescriptionDueDateBar extends React.PureComponent<Props> {
           ) : (
             <View style={[styles.container, styles.row, this.bannerStyle]}>
               {this.renderCalendarIcon()}
-              <View hspacer={true} small={true} />
+              <HSpacer size={8} />
               <NBText style={styles.text} white={true}>
                 {this.textContent}
               </NBText>

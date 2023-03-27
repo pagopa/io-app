@@ -1,5 +1,11 @@
+import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import EUCOVIDCERT_ROUTES from "../features/euCovidCert/navigation/routes";
 import { euCovidCertificateEnabled } from "../config";
+import { PushNotificationsContentTypeEnum } from "../../definitions/backend/PushNotificationsContentType";
+import { mixpanelTrack } from "../mixpanel";
+import { ReminderStatusEnum } from "../../definitions/backend/ReminderStatus";
+import { UIMessageId } from "../store/reducers/entities/messages/types";
+import { ServiceId } from "../../definitions/backend/ServiceId";
 
 const blackListRoutes: ReadonlyArray<string> = [];
 
@@ -10,3 +16,141 @@ export const noAnalyticsRoutes = new Set<string>(
     euCovidCertificateEnabled ? Object.values(EUCOVIDCERT_ROUTES) : []
   )
 );
+
+// Premium events
+
+export function trackMessageNotificationTap(messageId: NonEmptyString) {
+  void mixpanelTrack("NOTIFICATIONS_MESSAGE_TAP", {
+    messageId
+  });
+}
+
+export function trackNotificationsOptInPreviewStatus(
+  contentType: PushNotificationsContentTypeEnum
+) {
+  void mixpanelTrack("NOTIFICATIONS_OPTIN_PREVIEW_STATUS", {
+    enabled: contentType === PushNotificationsContentTypeEnum.FULL
+  });
+}
+
+export function trackNotificationsOptInReminderStatus(
+  reminderStatus: ReminderStatusEnum
+) {
+  void mixpanelTrack("NOTIFICATIONS_OPTIN_REMINDER_STATUS", {
+    enabled: reminderStatus === ReminderStatusEnum.ENABLED
+  });
+}
+
+export function trackConflictingNotificationSettings() {
+  void mixpanelTrack("NOTIFICATIONS_OPTIN_REMINDER_ON_PERMISSIONS_OFF");
+}
+
+export function trackOpenSystemNotificationSettings() {
+  void mixpanelTrack("NOTIFICATIONS_OPTIN_OPEN_SETTINGS");
+}
+
+export function trackSkipSystemNotificationPermissions() {
+  void mixpanelTrack("NOTIFICATIONS_OPTIN_SKIP_SYSTEM_PERMISSIONS");
+}
+
+export function trackNotificationsPreferencesPreviewStatus(enabled: boolean) {
+  void mixpanelTrack("NOTIFICATIONS_PREFERENCES_PREVIEW_STATUS", {
+    enabled
+  });
+}
+
+export function trackNotificationsPreferencesReminderStatus(enabled: boolean) {
+  void mixpanelTrack("NOTIFICATIONS_PREFERENCES_REMINDER_STATUS", {
+    enabled
+  });
+}
+
+export function trackThirdPartyMessageAttachmentCount(attachmentCount: number) {
+  void mixpanelTrack("THIRD_PARTY_MESSAGE_ATTACHMENT_COUNT", {
+    attachmentCount
+  });
+}
+
+export function trackThirdPartyMessageAttachmentUnavailable(
+  messageId: UIMessageId,
+  serviceId: ServiceId | undefined
+) {
+  void mixpanelTrack("THIRD_PARTY_MESSAGE_ATTACHMENT_UNAVAILABLE", {
+    messageId,
+    serviceId: serviceId ?? ""
+  });
+}
+
+export function trackThirdPartyMessageAttachmentDownloadFailed(
+  messageId: UIMessageId,
+  serviceId: ServiceId | undefined
+) {
+  void mixpanelTrack("THIRD_PARTY_MESSAGE_ATTACHMENT_DOWNLOAD_FAILED", {
+    messageId,
+    serviceId: serviceId ?? ""
+  });
+}
+
+export function trackThirdPartyMessageAttachmentBadFormat(
+  messageId: UIMessageId,
+  serviceId: ServiceId | undefined
+) {
+  void mixpanelTrack("THIRD_PARTY_MESSAGE_ATTACHMENT_BAD_FORMAT", {
+    messageId,
+    serviceId: serviceId ?? ""
+  });
+}
+
+export function trackThirdPartyMessageAttachmentCorruptedFile(
+  messageId: UIMessageId,
+  serviceId: ServiceId | undefined
+) {
+  void mixpanelTrack("THIRD_PARTY_MESSAGE_ATTACHMENT_CORRUPTED_FILE", {
+    messageId,
+    serviceId: serviceId ?? ""
+  });
+}
+
+export function trackThirdPartyMessageAttachmentPreviewSuccess() {
+  void mixpanelTrack("THIRD_PARTY_MESSAGE_ATTACHMENT_PREVIEW_SUCCESS");
+}
+
+export function trackThirdPartyMessageAttachmentShowPreview() {
+  void mixpanelTrack("THIRD_PARTY_MESSAGE_ATTACHMENT_SHOW_PREVIEW");
+}
+
+export function trackThirdPartyMessageAttachmentDoNotShow() {
+  void mixpanelTrack("THIRD_PARTY_MESSAGE_ATTACHMENT_DO_NOT_SHOW");
+}
+
+type ThirdPartyMessageAttachmentUserAction = "download" | "open" | "share";
+export function trackThirdPartyMessageAttachmentUserAction(
+  userAction: ThirdPartyMessageAttachmentUserAction
+) {
+  void mixpanelTrack("THIRD_PARTY_MESSAGE_ATTACHMENT_USER_ACTION", {
+    userAction
+  });
+}
+
+// End of premium events
+
+// Lollipop events
+export function trackLollipopKeyGenerationSuccess(keyType?: string) {
+  void mixpanelTrack("LOLLIPOP_KEY_GENERATION_SUCCESS", {
+    kty: keyType
+  });
+}
+
+export function trackLollipopKeyGenerationFailure(reason: string) {
+  void mixpanelTrack("LOLLIPOP_KEY_GENERATION_FAILURE", {
+    reason
+  });
+}
+
+export function trackLollipopIdpLoginFailure(reason: string) {
+  void mixpanelTrack("LOLLIPOP_IDP_LOGIN_FAILURE", {
+    reason
+  });
+}
+
+// End of lollipop events

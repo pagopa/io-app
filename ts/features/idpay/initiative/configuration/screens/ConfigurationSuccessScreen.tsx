@@ -1,21 +1,32 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useActor } from "@xstate/react";
-import { Text, View } from "native-base";
+import { useSelector } from "@xstate/react";
+import { Text as NBText } from "native-base";
 import React from "react";
-import { SafeAreaView, StyleSheet } from "react-native";
+import { SafeAreaView, StyleSheet, View } from "react-native";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
 import { Pictogram } from "../../../../../components/core/pictograms";
+import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";
 import themeVariables from "../../../../../theme/variables";
 import { useConfigurationMachineService } from "../xstate/provider";
+import {
+  selectInitiativeDetails,
+  selectAreInstrumentsSkipped
+} from "../xstate/selectors";
 
 const ConfigurationSuccessScreen = () => {
   const configurationMachine = useConfigurationMachineService();
-  const [state, send] = useActor(configurationMachine);
 
-  const initiativeDetails = pot.toUndefined(state.context.initiative);
+  const initiativeDetails = useSelector(
+    configurationMachine,
+    selectInitiativeDetails
+  );
+
+  const areInstrumentsSkipped = useSelector(
+    configurationMachine,
+    selectAreInstrumentsSkipped
+  );
 
   if (initiativeDetails === undefined) {
     return null;
@@ -23,8 +34,50 @@ const ConfigurationSuccessScreen = () => {
 
   const { initiativeName } = initiativeDetails;
 
-  const handleNavigateToInitiativePress = () => {
-    send({ type: "COMPLETE_CONFIGURATION" });
+  const handleNavigateToInitiativePress = () =>
+    configurationMachine.send({ type: "COMPLETE_CONFIGURATION" });
+
+  const handleAddPaymentMethodButtonPress = () =>
+    configurationMachine.send({ type: "ADD_PAYMENT_METHOD" });
+
+  const renderButtons = () => {
+    if (areInstrumentsSkipped) {
+      return (
+        <View>
+          <ButtonDefaultOpacity
+            block={true}
+            onPress={handleAddPaymentMethodButtonPress}
+          >
+            <NBText white={true}>
+              {I18n.t(
+                "idpay.configuration.associationSuccess.buttons.addPaymentMethod"
+              )}
+            </NBText>
+          </ButtonDefaultOpacity>
+          <VSpacer />
+          <ButtonDefaultOpacity
+            block={true}
+            onPress={handleNavigateToInitiativePress}
+            bordered={true}
+          >
+            <NBText>
+              {I18n.t("idpay.configuration.associationSuccess.buttons.skip")}
+            </NBText>
+          </ButtonDefaultOpacity>
+        </View>
+      );
+    }
+
+    return (
+      <ButtonDefaultOpacity
+        block={true}
+        onPress={handleNavigateToInitiativePress}
+      >
+        <NBText white={true}>
+          {I18n.t("idpay.configuration.associationSuccess.buttons.continue")}
+        </NBText>
+      </ButtonDefaultOpacity>
+    );
   };
 
   return (
@@ -32,23 +85,21 @@ const ConfigurationSuccessScreen = () => {
       <View style={[IOStyles.horizontalContentPadding, styles.container]}>
         <View style={styles.content}>
           <Pictogram name="completed" size={80} />
-          <View spacer={true} />
+          <VSpacer />
           <H3>{I18n.t("idpay.configuration.associationSuccess.title")}</H3>
-          <View spacer={true} />
-          <Text style={styles.body}>
-            {I18n.t("idpay.configuration.associationSuccess.body", {
-              initiativeName
-            })}
-          </Text>
+          <VSpacer />
+          <NBText style={styles.body}>
+            {I18n.t(
+              areInstrumentsSkipped
+                ? "idpay.configuration.associationSuccess.noInstrumentsBody"
+                : "idpay.configuration.associationSuccess.body",
+              {
+                initiativeName
+              }
+            )}
+          </NBText>
         </View>
-        <ButtonDefaultOpacity
-          block={true}
-          onPress={handleNavigateToInitiativePress}
-        >
-          <Text white={true}>
-            {I18n.t("idpay.configuration.associationSuccess.button")}
-          </Text>
-        </ButtonDefaultOpacity>
+        {renderButtons()}
       </View>
     </SafeAreaView>
   );

@@ -6,15 +6,6 @@ import { SpidIdp } from "../../definitions/content/SpidIdp";
 
 export type LocalIdpsFallback = SpidIdp & { localLogo?: ImageSourcePropType };
 
-export const testIdp: LocalIdpsFallback = {
-  id: "test",
-  name: "Test",
-  localLogo: require("../../img/spid.png"),
-  logo: "",
-  profileUrl: "",
-  isTestIdp: true
-};
-
 export const idps: ReadonlyArray<LocalIdpsFallback> = [
   {
     id: "arubaid",

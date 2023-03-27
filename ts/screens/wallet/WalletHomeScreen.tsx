@@ -1,8 +1,9 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
-import { Content, Text as NBText, View } from "native-base";
+import { Content, Text as NBText } from "native-base";
 import * as React from "react";
 import {
+  View,
   BackHandler,
   Image,
   NativeEventSubscription,
@@ -12,6 +13,7 @@ import { connect } from "react-redux";
 import { BonusActivationWithQrCode } from "../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
+import { VSpacer } from "../../components/core/spacer/Spacer";
 import { Body } from "../../components/core/typography/Body";
 import { H3 } from "../../components/core/typography/H3";
 import { IOColors } from "../../components/core/variables/IOColors";
@@ -29,7 +31,7 @@ import SectionCardComponent, {
 import TransactionsList from "../../components/wallet/TransactionsList";
 import WalletHomeHeader from "../../components/wallet/WalletHomeHeader";
 import WalletLayout from "../../components/wallet/WalletLayout";
-import { bonusVacanzeEnabled, bpdEnabled, idPayEnabled } from "../../config";
+import { bonusVacanzeEnabled, bpdEnabled } from "../../config";
 import RequestBonus from "../../features/bonus/bonusVacanze/components/RequestBonus";
 import {
   navigateToAvailableBonusScreen,
@@ -355,7 +357,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     const bonusLoadingStatus = this.getBonusLoadingStatus();
     return (
       <View>
-        <View spacer={true} />
+        <VSpacer size={16} />
         {this.cardHeader(false)}
 
         {/* new payment methods rendering */}
@@ -381,7 +383,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
 
         {bpdEnabled && <BpdCardsInWalletContainer />}
         <CgnCardInWalletContainer />
-        {idPayEnabled && <IDPayCardsInWalletContainer />}
+        {this.props.isIdPayEnabled && <IDPayCardsInWalletContainer />}
       </View>
     );
   }
@@ -390,7 +392,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     alignCenter: boolean = false
   ): React.ReactNode => (
     <React.Fragment>
-      <View spacer={true} large={true} />
+      <VSpacer size={24} />
       <Body style={alignCenter ? styles.centered : undefined}>
         {`${I18n.t("wallet.transactionHelpMessage.text1")} `}
         <Body
@@ -410,11 +412,11 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
         style={[styles.noBottomPadding, styles.whiteBg, styles.flex1]}
       >
         {renderHelp && this.renderHelpMessage()}
-        <View spacer={true} large={true} />
+        <VSpacer size={24} />
         <H3 weight="SemiBold" color="bluegreyDark">
           {I18n.t("wallet.latestTransactions")}
         </H3>
-        <View spacer={true} />
+        <VSpacer size={16} />
         <ButtonDefaultOpacity
           block={true}
           light={true}
@@ -427,7 +429,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
           <Body color={"blue"}>{I18n.t("wallet.transactionsShow")}</Body>
         </ButtonDefaultOpacity>
         <EdgeBorderComponent />
-        <View spacer={true} />
+        <VSpacer size={16} />
       </Content>
     );
   }

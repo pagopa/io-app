@@ -1,8 +1,9 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Badge, View } from "native-base";
+import { Badge } from "native-base";
 import * as React from "react";
 import {
+  View,
   Image,
   ImageSourcePropType,
   ImageStyle,
@@ -11,6 +12,7 @@ import {
   StyleSheet
 } from "react-native";
 import unknownGdo from "../../../../../../img/wallet/unknown-gdo.png";
+import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H5 } from "../../../../../components/core/typography/H5";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import I18n from "../../../../../i18n";
@@ -163,7 +165,7 @@ const BasePrivativeCard: React.FunctionComponent<Props> = (props: Props) => {
               <View style={{ flexDirection: "row" }}>
                 <BlurredPan testID="caption">{props.caption}</BlurredPan>
               </View>
-              <View spacer small />
+              <VSpacer size={8} />
             </>
           )}
         </>

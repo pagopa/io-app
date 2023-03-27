@@ -1,7 +1,8 @@
-import { ListItem, View } from "native-base";
+import { ListItem } from "native-base";
 import * as React from "react";
-import { Dimensions } from "react-native";
+import { View, Dimensions } from "react-native";
 import { useSelector } from "react-redux";
+import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { Label } from "../../../../../components/core/typography/Label";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
@@ -24,7 +25,7 @@ export const BottomSheetMethodsToDelete = (props: Props) => (
         "bonus.bpd.optInPaymentMethods.deletePaymentMethodsBottomSheet.subtitle"
       )}
     </Label>
-    <View spacer={true} />
+    <VSpacer size={16} />
     {props.paymentMethods.map(pm => (
       <ListItem
         key={`payment_method_${pm.idWallet}`}
@@ -63,7 +64,7 @@ export const useBottomSheetMethodsToDelete = (props: {
           "bonus.bpd.optInPaymentMethods.deletePaymentMethodsBottomSheet.title"
         )}
       </H3>
-      <View spacer={true} />
+      <VSpacer size={16} />
     </View>,
     snapPoint,
     <FooterWithButtons

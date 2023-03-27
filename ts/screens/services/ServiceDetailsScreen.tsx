@@ -1,13 +1,14 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Content, Grid, View } from "native-base";
+import { Content, Grid } from "native-base";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { SafeAreaView } from "react-native";
+import { View, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { SpecialServiceMetadata } from "../../../definitions/backend/SpecialServiceMetadata";
+import { VSpacer } from "../../components/core/spacer/Spacer";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import ExtractedCTABar from "../../components/cta/ExtractedCTABar";
 import OrganizationHeader from "../../components/OrganizationHeader";
@@ -111,7 +112,7 @@ const ServiceDetailsScreen = (props: Props) => {
               logoURLs={logosForService(service)}
             />
           </Grid>
-          <View spacer={true} small={true} />
+          <VSpacer size={8} />
 
           {metadata?.description && (
             <>
@@ -122,7 +123,7 @@ const ServiceDetailsScreen = (props: Props) => {
               >
                 {metadata.description}
               </Markdown>
-              <View spacer={true} large={true} />
+              <VSpacer size={24} />
             </>
           )}
 
@@ -134,7 +135,7 @@ const ServiceDetailsScreen = (props: Props) => {
                     tosUrl={metadata.tos_url}
                     privacyUrl={metadata.privacy_url}
                   />
-                  <View spacer={true} large={true} />
+                  <VSpacer size={24} />
                 </>
               )}
 
@@ -143,7 +144,7 @@ const ServiceDetailsScreen = (props: Props) => {
                 channels={service.available_notification_channels}
                 isSpecialService={SpecialServiceMetadata.is(metadata)}
               />
-              <View spacer={true} large={true} />
+              <VSpacer size={24} />
 
               <ServiceMetadataComponent
                 servicesMetadata={service.service_metadata}
@@ -173,7 +174,7 @@ const ServiceDetailsScreen = (props: Props) => {
             )}
             {SpecialServiceMetadata.is(metadata) && (
               <>
-                <View spacer small />
+                <VSpacer size={8} />
                 <SpecialServicesCTA
                   serviceId={props.serviceId}
                   customSpecialFlow={metadata.custom_special_flow}

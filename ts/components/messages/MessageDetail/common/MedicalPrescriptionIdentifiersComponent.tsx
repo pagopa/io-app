@@ -1,12 +1,13 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Text as NBText, View } from "native-base";
+import { Text as NBText } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { PrescriptionData } from "../../../../../definitions/backend/PrescriptionData";
 import I18n from "../../../../i18n";
 import customVariables from "../../../../theme/variables";
 import CopyButtonComponent from "../../../CopyButtonComponent";
+import { VSpacer } from "../../../core/spacer/Spacer";
 import { IOColors } from "../../../core/variables/IOColors";
 
 type Props = Readonly<{
@@ -65,16 +66,16 @@ export default class MedicalPrescriptionIdentifiersComponent extends React.PureC
 
     return (
       <View style={styles.container}>
-        <View spacer={true} />
+        <VSpacer size={16} />
         {this.renderItem(I18n.t("messages.medical.nre"), prescriptionData.nre)}
-        <View spacer={true} />
+        <VSpacer size={16} />
         {this.renderItem(I18n.t("messages.medical.iup"), iup)}
-        <View spacer={true} />
+        <VSpacer size={16} />
         {this.renderItem(
           I18n.t("messages.medical.patient_fiscal_code"),
           prescriberFiscalCode
         )}
-        <View spacer={true} />
+        <VSpacer size={16} />
       </View>
     );
   }

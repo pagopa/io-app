@@ -1,12 +1,12 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
-import { View } from "native-base";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, Alert, StyleSheet } from "react-native";
+import { View, ActivityIndicator, Alert, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { InfoBox } from "../../../../../../../components/box/InfoBox";
+import { VSpacer } from "../../../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../../../components/core/typography/Body";
 import { H4 } from "../../../../../../../components/core/typography/H4";
 import { Link } from "../../../../../../../components/core/typography/Link";
@@ -57,7 +57,7 @@ const NoPaymentMethodAreActiveWarning = () => (
     <InfoBox>
       <Body>{I18n.t("bonus.bpd.details.paymentMethods.noActiveMethod")}</Body>
     </InfoBox>
-    <View spacer={true} small={true} />
+    <VSpacer size={8} />
   </View>
 );
 
@@ -104,7 +104,7 @@ const PaymentMethodError = (props: Props) => (
         caption={I18n.t("global.buttons.update").toLowerCase()}
       />
     </View>
-    <View spacer={true} />
+    <VSpacer size={16} />
     <InfoBox iconColor={IOColors.red}>
       <Body>{I18n.t("bonus.bpd.details.paymentMethods.error")}</Body>
     </InfoBox>
@@ -126,7 +126,7 @@ const PaymentMethodSome = (props: Props) =>
           caption={I18n.t("global.buttons.update").toLowerCase()}
         />
       </View>
-      <View spacer={true} />
+      <VSpacer size={16} />
       {!props.atLeastOnePaymentMethodActive &&
         props.potWallets.value.length > 0 && (
           <NoPaymentMethodAreActiveWarning />

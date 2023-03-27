@@ -1,7 +1,7 @@
 import { capitalize } from "lodash";
-import { Text as NBText, View } from "native-base";
+import { Text as NBText } from "native-base";
 import React from "react";
-import { StyleSheet, ViewStyle } from "react-native";
+import { View, StyleSheet, ViewStyle } from "react-native";
 
 import I18n from "../../../i18n";
 import { navigateToWalletHome } from "../../../store/actions/navigation";
@@ -16,6 +16,7 @@ import { IOColors } from "../../core/variables/IOColors";
 import IconFont from "../../ui/IconFont";
 
 import { localeDateFormat } from "../../../utils/locale";
+import { HSpacer, VSpacer } from "../../core/spacer/Spacer";
 import CalendarIconComponent from "./common/CalendarIconComponent";
 
 type Props = {
@@ -179,7 +180,7 @@ const DueDateBar: React.FunctionComponent<Props> = ({
       <View style={[styles.container, bannerStyle(paymentStatus)]}>
         <>
           <CalendarIcon status={paymentStatus} dueDate={dueDate} />
-          <View hspacer={true} small={true} />
+          <HSpacer size={8} />
 
           <NBText
             style={styles.text}
@@ -194,7 +195,7 @@ const DueDateBar: React.FunctionComponent<Props> = ({
           </NBText>
         </>
       </View>
-      <View spacer={true} large={true} />
+      <VSpacer size={24} />
     </>
   );
 };

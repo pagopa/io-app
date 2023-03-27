@@ -1,16 +1,17 @@
 import { useNavigation } from "@react-navigation/native";
 import { useInterpret } from "@xstate/react";
 import * as E from "fp-ts/lib/Either";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import React from "react";
 import { InterpreterFrom } from "xstate";
 import { PreferredLanguageEnum } from "../../../../../../definitions/backend/PreferredLanguage";
 import { PaymentManagerClient } from "../../../../../api/pagopa";
 import {
-  IDPAY_API_TEST_TOKEN,
-  IDPAY_API_UAT_BASEURL,
   fetchPaymentManagerLongTimeout,
+  idPayApiBaseUrl,
+  idPayApiUatBaseUrl,
+  idPayTestToken,
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest
 } from "../../../../../config";
@@ -25,15 +26,14 @@ import {
   isPagoPATestEnabledSelector,
   preferredLanguageSelector
 } from "../../../../../store/reducers/persistedPreferences";
-import { SessionManager } from "../../../../../utils/SessionManager";
 import { defaultRetryingFetch } from "../../../../../utils/fetch";
 import { fromLocaleToPreferredLanguage } from "../../../../../utils/locale";
-import { createIDPayWalletClient } from "../../../wallet/api/client";
-import { createIDPayIbanClient } from "../iban/api/client";
+import { SessionManager } from "../../../../../utils/SessionManager";
+import { createIDPayClient } from "../../../common/api/client";
 import { createActionsImplementation } from "./actions";
 import {
-  IDPayInitiativeConfigurationMachineType,
-  createIDPayInitiativeConfigurationMachine
+  createIDPayInitiativeConfigurationMachine,
+  IDPayInitiativeConfigurationMachineType
 } from "./machine";
 import { createServicesImplementation } from "./services";
 
@@ -69,8 +69,7 @@ const IDPayConfigurationMachineProvider = (props: Props) => {
 
   const { bpdToken, walletToken } = sessionInfo.value;
 
-  const idPayToken =
-    IDPAY_API_TEST_TOKEN !== undefined ? IDPAY_API_TEST_TOKEN : bpdToken;
+  const idPayToken = idPayTestToken !== undefined ? idPayTestToken : bpdToken;
 
   const paymentManagerClient = PaymentManagerClient(
     isPagoPATestEnabled ? pagoPaApiUrlPrefixTest : pagoPaApiUrlPrefix,
@@ -94,12 +93,12 @@ const IDPayConfigurationMachineProvider = (props: Props) => {
 
   const pmSessionManager = new SessionManager(getPaymentManagerSession);
 
-  const walletClient = createIDPayWalletClient(IDPAY_API_UAT_BASEURL);
-  const ibanClient = createIDPayIbanClient(IDPAY_API_UAT_BASEURL);
+  const idPayClient = createIDPayClient(
+    isPagoPATestEnabled ? idPayApiUatBaseUrl : idPayApiBaseUrl
+  );
 
   const services = createServicesImplementation(
-    walletClient,
-    ibanClient,
+    idPayClient,
     paymentManagerClient,
     pmSessionManager,
     idPayToken,
@@ -123,4 +122,8 @@ const IDPayConfigurationMachineProvider = (props: Props) => {
 const useConfigurationMachineService = () =>
   React.useContext(ConfigurationMachineContext);
 
-export { IDPayConfigurationMachineProvider, useConfigurationMachineService };
+export {
+  IDPayConfigurationMachineProvider,
+  useConfigurationMachineService,
+  ConfigurationMachineContext
+};

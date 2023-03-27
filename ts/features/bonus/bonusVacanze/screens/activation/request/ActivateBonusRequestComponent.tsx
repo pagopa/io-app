@@ -1,7 +1,7 @@
-import { View } from "native-base";
 import * as React from "react";
-import { SafeAreaView, ScrollView } from "react-native";
+import { View, SafeAreaView, ScrollView } from "react-native";
 import { FamilyMember } from "../../../../../../../definitions/bonus_vacanze/FamilyMember";
+import { VSpacer } from "../../../../../../components/core/spacer/Spacer";
 import ItemSeparatorComponent from "../../../../../../components/ItemSeparatorComponent";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
@@ -88,18 +88,18 @@ export const ActivateBonusRequestComponent: React.FunctionComponent<Props> =
         <SafeAreaView style={bonusVacanzeStyle.flex}>
           <ScrollView>
             <View style={bonusVacanzeStyle.horizontalPadding}>
-              <View spacer={true} large={true} />
+              <VSpacer size={24} />
               <ActivateBonusTitle
                 title={title}
                 description={description}
                 image={props.logo}
               />
-              <View spacer={true} large={true} />
+              <VSpacer size={24} />
               <BonusCompositionDetails
                 bonusAmount={props.bonusAmount}
                 taxBenefit={props.taxBenefit}
               />
-              <View spacer={true} />
+              <VSpacer size={16} />
             </View>
 
             {props.hasDiscrepancies ? (
@@ -111,13 +111,13 @@ export const ActivateBonusRequestComponent: React.FunctionComponent<Props> =
               <ItemSeparatorComponent />
             )}
             <View style={bonusVacanzeStyle.horizontalPadding}>
-              <View spacer={true} />
+              <VSpacer size={16} />
               {props.familyMembers.length > 0 && (
                 <>
                   <FamilyComposition familyMembers={props.familyMembers} />
-                  <View spacer={true} />
+                  <VSpacer size={16} />
                   <ItemSeparatorComponent />
-                  <View spacer={true} />
+                  <VSpacer size={16} />
                 </>
               )}
 

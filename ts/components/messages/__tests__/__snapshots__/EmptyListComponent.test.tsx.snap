@@ -3,18 +3,18 @@
 exports[`EmptyListComponent matches the snapshot 1`] = `
 <View
   style={
-    Array [
-      Object {},
-      Object {
-        "alignItems": "center",
-        "padding": 24,
-      },
-    ]
+    Object {
+      "alignItems": "center",
+      "padding": 24,
+    }
   }
 >
   <View
-    spacer={true}
-    style={Object {}}
+    style={
+      Object {
+        "height": 16,
+      }
+    }
   />
   <Image
     source={

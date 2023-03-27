@@ -1,9 +1,9 @@
 import { useNavigation } from "@react-navigation/native";
-import { View } from "native-base";
 import React from "react";
-import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { View, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
 import { IORenderHtml } from "../../../../../components/core/IORenderHtml";
+import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
@@ -74,7 +74,7 @@ const OptInPaymentMethodsCashbackUpdateScreen = () => {
               </H1>
             </View>
           </View>
-          <View spacer />
+          <VSpacer size={16} />
           <IORenderHtml
             source={{
               html: I18n.t("bonus.bpd.optInPaymentMethods.cashbackUpdate.body")

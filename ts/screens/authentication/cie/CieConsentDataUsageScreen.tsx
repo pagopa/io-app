@@ -2,7 +2,6 @@
  * A screen to display, by a webview, the consent to send user sensitive data
  * to backend and proceed with the onboarding process
  */
-import { View } from "native-base";
 import * as React from "react";
 import { Alert, BackHandler, NativeEventSubscription } from "react-native";
 import WebView from "react-native-webview";
@@ -11,6 +10,7 @@ import {
   WebViewNavigation
 } from "react-native-webview/lib/WebViewTypes";
 import { connect } from "react-redux";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
 import GenericErrorComponent from "../../../components/screens/GenericErrorComponent";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
@@ -50,7 +50,7 @@ type Props = OwnProps & NavigationProps & ReturnType<typeof mapDispatchToProps>;
 
 const loaderComponent = (
   <LoadingSpinnerOverlay loadingOpacity={1.0} isLoading={true}>
-    <View spacer={true} />
+    <VSpacer size={16} />
   </LoadingSpinnerOverlay>
 );
 

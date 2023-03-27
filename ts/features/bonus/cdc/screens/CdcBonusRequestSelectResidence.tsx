@@ -1,6 +1,5 @@
 import * as React from "react";
-import { SafeAreaView, ScrollView } from "react-native";
-import { View } from "native-base";
+import { View, SafeAreaView, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -28,6 +27,7 @@ import BonusIcon from "../../../../../img/features/cdc/bonus.svg";
 import { ResidentChoice } from "../types/CdcBonusRequest";
 import { cdcSelectedBonus as cdcSelectedBonusAction } from "../store/actions/cdcBonusRequest";
 import { compareSelectedBonusByYear } from "../utils/bonusRequest";
+import { HSpacer, VSpacer } from "../../../../components/core/spacer/Spacer";
 
 const getCheckResidencyItems = (): ReadonlyArray<RadioItem<ResidentChoice>> => [
   {
@@ -65,14 +65,14 @@ const CdcBonusRequestSelectResidence = () => {
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView style={IOStyles.horizontalContentPadding}>
           <H1>{I18n.t("bonus.cdc.bonusRequest.selectResidence.header")}</H1>
-          <View spacer={true} />
+          <VSpacer size={16} />
           <H4 weight={"Regular"}>
             {I18n.t("bonus.cdc.bonusRequest.selectResidence.info")}
           </H4>
 
           {[...cdcSelectedBonus].sort(compareSelectedBonusByYear).map(b => (
             <>
-              <View spacer large />
+              <VSpacer size={24} />
               <View
                 style={{
                   flex: 1,
@@ -81,7 +81,7 @@ const CdcBonusRequestSelectResidence = () => {
                 }}
               >
                 <BonusIcon width={20} height={20} />
-                <View hspacer />
+                <HSpacer size={16} />
                 <H3 weight={"SemiBold"} color={"bluegrey"}>
                   {b.year}
                 </H3>

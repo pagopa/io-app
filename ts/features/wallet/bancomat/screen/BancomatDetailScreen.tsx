@@ -1,7 +1,7 @@
-import { View } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import I18n from "../../../../i18n";
 import { mixpanelTrack } from "../../../../mixpanel";
@@ -45,11 +45,11 @@ const bancomatScreenContent = (
   bancomat: BancomatPaymentMethod
 ) => (
   <>
-    <View spacer={true} small={true} />
+    <VSpacer size={8} />
     <BancomatInformation onAddPaymentMethod={() => startCoBadge(props)} />
-    <View spacer={true} />
+    <VSpacer size={16} />
     <ItemSeparatorComponent noPadded={true} />
-    <View spacer={true} />
+    <VSpacer size={16} />
     <PaymentMethodFeatures paymentMethod={bancomat} />
   </>
 );

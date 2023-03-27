@@ -1,14 +1,18 @@
-import { createStore } from "redux";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { appReducer } from "../../../../../store/reducers";
+import { createStore } from "redux";
+import { Zendesk } from "../../../../../../definitions/content/Zendesk";
+import { ZendeskCategory } from "../../../../../../definitions/content/ZendeskCategory";
+import { ZendeskSubCategory } from "../../../../../../definitions/content/ZendeskSubCategory";
 import { applicationChangeState } from "../../../../../store/actions/application";
+import { toIndexed } from "../../../../../store/helpers/indexer";
+import { appReducer } from "../../../../../store/reducers";
+import { getTimeoutError } from "../../../../../utils/errors";
 import {
   remoteError,
   remoteLoading,
   remoteReady,
   remoteUndefined
 } from "../../../../bonus/bpd/model/RemoteValue";
-import { ZendeskState } from "../index";
 import {
   getZendeskConfig,
   zendeskRequestTicketNumber,
@@ -16,11 +20,7 @@ import {
   zendeskSelectedSubcategory,
   zendeskSupportStart
 } from "../../actions";
-import { ZendeskCategory } from "../../../../../../definitions/content/ZendeskCategory";
-import { getTimeoutError } from "../../../../../utils/errors";
-import { Zendesk } from "../../../../../../definitions/content/Zendesk";
-import { toIndexed } from "../../../../../store/helpers/indexer";
-import { ZendeskSubCategory } from "../../../../../../definitions/content/ZendeskSubCategory";
+import { ZendeskState } from "../index";
 
 const INITIAL_STATE: ZendeskState = {
   zendeskConfig: remoteUndefined,
@@ -140,7 +140,11 @@ describe("Zendesk reducer", () => {
     const store = createStore(appReducer, globalState as any);
     store.dispatch(zendeskSelectedCategory(mockCategory));
     store.dispatch(
-      zendeskSupportStart({ assistanceForPayment: false, startingRoute: "n/a" })
+      zendeskSupportStart({
+        assistanceForPayment: false,
+        assistanceForCard: false,
+        startingRoute: "n/a"
+      })
     );
     expect(
       store.getState().assistanceTools.zendesk.zendeskConfig

@@ -1,4 +1,4 @@
-import { Content, View } from "native-base";
+import { Content } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
@@ -23,6 +23,7 @@ import {
 } from "../../../store/reducers/wallet/creditCard";
 import variables from "../../../theme/variables";
 import { IOColors } from "../../../components/core/variables/IOColors";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
@@ -46,9 +47,9 @@ const ListEmptyComponent = (
     <H2 color={"bluegreyDark"}>
       {I18n.t("wallet.creditCard.onboardingAttempts.emptyTitle")}
     </H2>
-    <View spacer={true} />
+    <VSpacer size={16} />
     <Body>{I18n.t("wallet.creditCard.onboardingAttempts.emptyBody")}</Body>
-    <View spacer={true} large={true} />
+    <VSpacer size={24} />
     <EdgeBorderComponent />
   </Content>
 );

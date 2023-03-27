@@ -1,4 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { SafeAreaView } from "react-native";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
@@ -28,21 +29,21 @@ export type PnMessageDetailsScreenNavigationParams = Readonly<{
 
 const renderMessage = (
   messageId: UIMessageId,
-  message: pot.Pot<PNMessage | undefined, Error>,
+  messagePot: pot.Pot<O.Option<PNMessage>, Error>,
   service: ServicePublic | undefined,
   onRetry: () => void
 ) =>
   pot.fold(
-    message,
+    messagePot,
     () => <></>,
     () => <MessageLoading />,
     () => <MessageLoading />,
     () => <PnMessageDetailsError onRetry={onRetry} />,
-    message =>
-      message ? (
+    messageOption =>
+      O.isSome(messageOption) ? (
         <PnMessageDetails
           messageId={messageId}
-          message={message}
+          message={messageOption.value}
           service={service}
         />
       ) : (

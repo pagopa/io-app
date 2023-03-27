@@ -1,11 +1,11 @@
-import { View } from "native-base";
-import { Image, StyleSheet } from "react-native";
+import { View, Image, StyleSheet } from "react-native";
 import * as React from "react";
 import { Label } from "../../../components/core/typography/Label";
 import I18n from "../../../i18n";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { Body as BodyText } from "../../../components/core/typography/Body";
 import brokenLinkImage from "../../../../img/broken-link.png";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 
 const styles = StyleSheet.create({
   errorContainer: {
@@ -34,8 +34,8 @@ type Props = {
 
 const WebviewErrorComponent = ({ onWebviewClose, handleReload }: Props) => (
   <View style={styles.errorContainer}>
-    <View spacer={true} extralarge={true} />
-    <View spacer={true} extralarge={true} />
+    <VSpacer size={40} />
+    <VSpacer size={40} />
     <Image source={brokenLinkImage} resizeMode="contain" />
     <Label style={styles.errorTitle} weight={"Bold"}>
       {I18n.t("authentication.errors.network.title")}

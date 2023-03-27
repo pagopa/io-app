@@ -1,6 +1,7 @@
 import { ListItem } from "native-base";
 import React from "react";
 import {
+  View,
   FlatList,
   ListRenderItemInfo,
   SafeAreaView,
@@ -8,12 +9,12 @@ import {
 } from "react-native";
 import { useDispatch } from "react-redux";
 import { ZendeskCategory } from "../../../../definitions/content/ZendeskCategory";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { H1 } from "../../../components/core/typography/H1";
 import { H4 } from "../../../components/core/typography/H4";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import IconFont from "../../../components/ui/IconFont";
-import View from "../../../components/ui/TextWithIcon";
 import I18n from "../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { toArray } from "../../../store/helpers/indexer";
@@ -35,6 +36,7 @@ import { zendeskConfigSelector } from "../store/reducers";
 
 export type ZendeskChooseCategoryNavigationParams = {
   assistanceForPayment: boolean;
+  assistanceForCard: boolean;
 };
 
 type Props = IOStackNavigationRouteProps<
@@ -47,7 +49,7 @@ type Props = IOStackNavigationRouteProps<
  */
 const ZendeskChooseCategory = (props: Props) => {
   const dispatch = useDispatch();
-  const { assistanceForPayment } = props.route.params;
+  const { assistanceForPayment, assistanceForCard } = props.route.params;
   const zendeskConfig = useIOSelector(zendeskConfigSelector);
   const selectedCategory = (category: ZendeskCategory) =>
     dispatch(zendeskSelectedCategory(category));
@@ -85,11 +87,13 @@ const ZendeskChooseCategory = (props: Props) => {
           addTicketCustomField(categoriesId, category.value);
           if (hasSubCategories(category)) {
             props.navigation.navigate(ZENDESK_ROUTES.CHOOSE_SUB_CATEGORY, {
-              assistanceForPayment
+              assistanceForPayment,
+              assistanceForCard
             });
           } else {
             props.navigation.navigate(ZENDESK_ROUTES.ASK_PERMISSIONS, {
-              assistanceForPayment
+              assistanceForPayment,
+              assistanceForCard
             });
           }
         }}
@@ -141,11 +145,11 @@ const ZendeskChooseCategory = (props: Props) => {
       <SafeAreaView style={IOStyles.flex} testID={"ZendeskChooseCategory"}>
         <ScrollView style={IOStyles.horizontalContentPadding}>
           <H1>{I18n.t("support.chooseCategory.title.category")}</H1>
-          <View spacer />
+          <VSpacer size={16} />
           <H4 weight={"Regular"}>
             {I18n.t("support.chooseCategory.subTitle.category")}
           </H4>
-          <View spacer />
+          <VSpacer size={16} />
           <FlatList
             data={categories}
             keyExtractor={c => c.value}

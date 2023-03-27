@@ -1,9 +1,12 @@
-import { View } from "native-base";
 import * as React from "react";
-import { StyleSheet, TouchableWithoutFeedback } from "react-native";
+import { View, StyleSheet, TouchableWithoutFeedback } from "react-native";
 import { Body } from "../../../../../../components/core/typography/Body";
 import { XOR } from "../../../../../../types/utils";
 import { RawCheckBox } from "../../../../../../components/core/selection/checkbox/RawCheckBox";
+import {
+  HSpacer,
+  VSpacer
+} from "../../../../../../components/core/spacer/Spacer";
 
 const styles = StyleSheet.create({
   main: { flex: 1, flexDirection: "row", flexWrap: "nowrap" },
@@ -39,14 +42,14 @@ export const DeclarationEntry: React.FunctionComponent<Props> = props => {
     <View>
       <View style={styles.main}>
         <RawCheckBox checked={isChecked} onPress={handleOnPress} />
-        <View hspacer={true} />
+        <HSpacer size={16} />
         <View style={styles.shrink}>
           <TouchableWithoutFeedback onPress={handleOnPress}>
             {pickText(props.text)}
           </TouchableWithoutFeedback>
         </View>
       </View>
-      <View spacer={true} large={true} />
+      <VSpacer size={24} />
     </View>
   );
 };

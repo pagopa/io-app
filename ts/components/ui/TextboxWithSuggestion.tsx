@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ReactNode, useContext, useState } from "react";
-import { Body, Container, Content, Left, Right, View } from "native-base";
-import { StyleSheet, SafeAreaView } from "react-native";
+import { Body, Container, Content, Left, Right } from "native-base";
+import { View, StyleSheet, SafeAreaView } from "react-native";
 import { H4 } from "../core/typography/H4";
 import { IOColors } from "../core/variables/IOColors";
 import { H5 } from "../core/typography/H5";
@@ -9,6 +9,7 @@ import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import { IOStyles } from "../core/variables/IOStyles";
 import { LabelledItem } from "../LabelledItem";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
+import { HSpacer, VSpacer } from "../core/spacer/Spacer";
 import AppHeader from "./AppHeader";
 import { LightModalContext } from "./LightModal";
 import IconFont from "./IconFont";
@@ -91,7 +92,7 @@ const TextboxWithSuggestionModal = (props: ModalProps) => {
                   placeholder: props.placeholder
                 }}
               />
-              <View spacer large />
+              <VSpacer size={24} />
             </>
           )}
           {props.wrappedFlatlist}
@@ -121,9 +122,9 @@ const TextboxWithSuggestion = (props: Props) => {
       <View style={[styles.container, { borderBottomColor }]}>
         <View style={{ flex: 1, flexDirection: "row" }}>
           <H5 color={"bluegreyDark"}>{props.label}</H5>
-          <View hspacer={true} />
+          <HSpacer size={16} />
         </View>
-        <View spacer={true} />
+        <VSpacer size={16} />
         <TouchableDefaultOpacity
           style={styles.inputContainer}
           disabled={props.disabled}

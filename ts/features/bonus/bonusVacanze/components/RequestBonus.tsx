@@ -1,11 +1,11 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { BonusActivationWithQrCode } from "../../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { BonusesAvailable } from "../../../../../definitions/content/BonusesAvailable";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import SectionCardComponent, {
   SectionCardStatus
@@ -89,7 +89,7 @@ const RequestBonus: React.FunctionComponent<OwnProps> = (props: OwnProps) => {
             )
         )
       ) : (
-        <View spacer={true} xsmall={true} />
+        <VSpacer size={4} />
       )}
     </React.Fragment>
   );

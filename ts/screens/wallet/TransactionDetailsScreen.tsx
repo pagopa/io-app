@@ -1,9 +1,10 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Text as NBText, View } from "native-base";
+import { Text as NBText } from "native-base";
 import * as React from "react";
 import {
+  View,
   BackHandler,
   Image,
   NativeEventSubscription,
@@ -12,6 +13,7 @@ import {
 import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import CopyButtonComponent from "../../components/CopyButtonComponent";
+import { VSpacer } from "../../components/core/spacer/Spacer";
 import { Link } from "../../components/core/typography/Link";
 import { IOColors } from "../../components/core/variables/IOColors";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
@@ -240,19 +242,19 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
               {data.fullReason}
             </NBText>
           )}
-          <View spacer={true} large={true} />
+          <VSpacer size={24} />
           {data.iuv && standardRow(I18n.t("payment.IUV"), data.iuv)}
           {/** transaction date */}
-          <View spacer={true} xsmall={true} />
-          <View spacer={true} large={true} />
+          <VSpacer size={4} />
+          <VSpacer size={24} />
           {standardRow(
             I18n.t("wallet.firstTransactionSummary.date"),
             data.transactionDateTime
           )}
 
-          <View spacer={true} large={true} />
+          <VSpacer size={24} />
           <ItemSeparatorComponent noPadded={true} />
-          <View spacer={true} large={true} />
+          <VSpacer size={24} />
 
           {standardRow(
             I18n.t("wallet.firstTransactionSummary.amount"),
@@ -261,7 +263,7 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
 
           {data.fee && (
             <>
-              <View spacer={true} small={true} />
+              <VSpacer size={8} />
               {standardRow(
                 I18n.t("wallet.firstTransactionSummary.fee"),
                 data.fee
@@ -269,7 +271,7 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
             </>
           )}
 
-          <View spacer={true} />
+          <VSpacer size={16} />
 
           {/** Total amount (amount + fee) */}
           <View style={styles.row}>
@@ -287,9 +289,9 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
 
           {(data.paymentMethodIcon || (psp && psp.logoPSP)) && (
             <React.Fragment>
-              <View spacer={true} large={true} />
+              <VSpacer size={24} />
               <ItemSeparatorComponent noPadded={true} />
-              <View spacer={true} large={true} />
+              <VSpacer size={24} />
             </React.Fragment>
           )}
 
@@ -311,7 +313,7 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
           )}
 
           {(data.paymentMethodIcon || data.paymentMethodBrand) && (
-            <View spacer={true} />
+            <VSpacer size={16} />
           )}
 
           {/** Transaction id */}
@@ -325,8 +327,7 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
             </View>
           </View>
 
-          <View spacer={true} large={true} />
-          <View spacer={true} large={true} />
+          <VSpacer size={48} />
           <ButtonDefaultOpacity
             light={true}
             bordered={true}
@@ -335,7 +336,7 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
           >
             <NBText>{I18n.t("global.buttons.close")}</NBText>
           </ButtonDefaultOpacity>
-          <View spacer={true} />
+          <VSpacer size={16} />
         </SlidedContentComponent>
       </BaseScreenComponent>
     );

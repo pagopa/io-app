@@ -3,9 +3,11 @@
 exports[`when rendering should match the snapshot 1`] = `
 Array [
   <View
-    small={true}
-    spacer={true}
-    style={Object {}}
+    style={
+      Object {
+        "height": 8,
+      }
+    }
   />,
   <Text
     accessibilityRole="header"
@@ -49,7 +51,6 @@ Array [
     onStartShouldSetResponder={[Function]}
     style={
       Array [
-        Object {},
         Object {
           "flexDirection": "row",
         },
@@ -89,8 +90,11 @@ Array [
     />
   </View>,
   <View
-    spacer={true}
-    style={Object {}}
+    style={
+      Object {
+        "height": 16,
+      }
+    }
   />,
 ]
 `;

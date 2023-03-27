@@ -1,12 +1,12 @@
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { View } from "native-base";
 import * as React from "react";
-import { FlatList, SafeAreaView, StyleSheet } from "react-native";
+import { View, FlatList, SafeAreaView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { PspData } from "../../../../definitions/pagopa/PspData";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { H1 } from "../../../components/core/typography/H1";
 import { H4 } from "../../../components/core/typography/H4";
 import { H5 } from "../../../components/core/typography/H5";
@@ -95,7 +95,7 @@ class PickPspScreen extends React.Component<Props> {
           "wallet.pickPsp.maxFee"
         )} (€)`}</H5>
       </View>
-      <View spacer />
+      <VSpacer size={16} />
       <ItemSeparatorComponent noPadded />
     </View>
   );
@@ -123,10 +123,10 @@ class PickPspScreen extends React.Component<Props> {
           />
         ) : (
           <SafeAreaView style={IOStyles.flex} testID="PickPspScreen">
-            <View spacer />
+            <VSpacer size={16} />
             <View style={styles.padded}>
               <H1>{I18n.t("wallet.pickPsp.title")}</H1>
-              <View spacer small />
+              <VSpacer size={8} />
               <H4 weight="Regular" color="bluegreyDark">
                 {I18n.t("wallet.pickPsp.info")}
               </H4>
@@ -137,7 +137,7 @@ class PickPspScreen extends React.Component<Props> {
                 )}`}</H4>
               </H4>
             </View>
-            <View spacer />
+            <VSpacer size={16} />
             <FlatList
               testID="pspList"
               ItemSeparatorComponent={() => <ItemSeparatorComponent />}

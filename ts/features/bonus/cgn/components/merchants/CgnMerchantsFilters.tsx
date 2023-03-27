@@ -1,8 +1,9 @@
 import * as React from "react";
 import { useState } from "react";
 import _ from "lodash";
-import { Body, Container, Left, Right, View } from "native-base";
+import { Body, Container, Left, Right } from "native-base";
 import {
+  View,
   FlatList,
   Keyboard,
   ListRenderItemInfo,
@@ -24,6 +25,7 @@ import {
   confirmButtonProps
 } from "../../../bonusVacanze/components/buttons/ButtonConfigurations";
 import { LabelledItem } from "../../../../../components/LabelledItem";
+import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import CategoryCheckbox from "./search/CategoryCheckbox";
 import OrderOption from "./search/OrderOption";
 import { DistanceSlider } from "./search/DistanceSlider";
@@ -122,7 +124,8 @@ const CgnMerchantsFilters: React.FunctionComponent<Props> = (props: Props) => {
               }}
               icon="io-search"
             />
-            <View spacer large />
+
+            <VSpacer size={24} />
             {props.isLocal && (
               <>
                 <H2>{I18n.t("bonus.cgn.merchantsList.filter.addressTitle")}</H2>
@@ -136,17 +139,17 @@ const CgnMerchantsFilters: React.FunctionComponent<Props> = (props: Props) => {
                   }}
                   icon="io-place"
                 />
-                <View spacer />
+                <VSpacer size={16} />
                 <DistanceSlider
                   value={distance}
                   onValueChange={setDistance}
                   disabled={address.length === 0}
                 />
-                <View spacer large />
+                <VSpacer size={24} />
               </>
             )}
             <H2>{I18n.t("bonus.cgn.merchantsList.filter.categories")}</H2>
-            <View spacer small />
+            <VSpacer size={8} />
             <FlatList
               data={_.values(categories)}
               keyExtractor={cat => cat.type}
@@ -156,11 +159,11 @@ const CgnMerchantsFilters: React.FunctionComponent<Props> = (props: Props) => {
               renderItem={renderCategoryItem}
               keyboardShouldPersistTaps={"handled"}
             />
-            <View spacer large />
+            <VSpacer size={24} />
             {props.isLocal && (
               <>
                 <H2>{I18n.t("bonus.cgn.merchantsList.filter.orderTitle")}</H2>
-                <View spacer small />
+                <VSpacer size={8} />
                 <FlatList
                   data={_.values(orders)}
                   keyExtractor={ord => ord.value}

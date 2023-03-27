@@ -2,9 +2,15 @@
  * A component to show the fiscal code fac-simile in Landscape
  */
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { Body, Button, Container, Right, View } from "native-base";
+import { Body, Button, Container, Right } from "native-base";
 import * as React from "react";
-import { BackHandler, ScrollView, StatusBar, StyleSheet } from "react-native";
+import {
+  View,
+  BackHandler,
+  ScrollView,
+  StatusBar,
+  StyleSheet
+} from "react-native";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { Municipality } from "../../definitions/content/Municipality";
 import IconFont from "../components/ui/IconFont";
@@ -14,6 +20,7 @@ import { useMaxBrightness } from "../utils/brightness";
 import FiscalCodeComponent from "./FiscalCodeComponent";
 import AppHeader from "./ui/AppHeader";
 import { IOColors } from "./core/variables/IOColors";
+import { VSpacer } from "./core/spacer/Spacer";
 
 export type Props = Readonly<{
   onCancel: () => void;
@@ -100,7 +107,7 @@ const FiscalCodeLandscapeOverlay: React.FunctionComponent<Props> = (
         ref={ScrollViewRef}
         style={styles.content}
       >
-        <View spacer={true} />
+        <VSpacer size={16} />
         <View>
           <FiscalCodeComponent
             type={"Landscape"}
@@ -110,7 +117,7 @@ const FiscalCodeLandscapeOverlay: React.FunctionComponent<Props> = (
           />
         </View>
 
-        <View spacer={true} />
+        <VSpacer size={16} />
 
         <FiscalCodeComponent
           type={"Landscape"}
@@ -119,8 +126,7 @@ const FiscalCodeLandscapeOverlay: React.FunctionComponent<Props> = (
           municipality={props.municipality}
         />
 
-        <View spacer={true} large={true} />
-        <View spacer={true} large={true} />
+        <VSpacer size={48} />
       </ScrollView>
     </Container>
   );

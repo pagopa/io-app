@@ -3,7 +3,7 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as E from "fp-ts/lib/Either";
 import * as NAR from "fp-ts/lib/NonEmptyArray";
 import { debounce, shuffle } from "lodash";
-import { Text as NBText, View } from "native-base";
+import { Text as NBText } from "native-base";
 import * as React from "react";
 import { Alert, StyleSheet } from "react-native";
 import I18n from "../../i18n";
@@ -12,6 +12,7 @@ import { ComponentProps } from "../../types/react";
 import { BiometricsValidType } from "../../utils/biometrics";
 import { PIN_LENGTH, PIN_LENGTH_SIX } from "../../utils/constants";
 import { ShakeAnimation } from "../animations/ShakeAnimation";
+import { VSpacer } from "../core/spacer/Spacer";
 import { Link } from "../core/typography/Link";
 import InputPlaceHolder from "./InputPlaceholder";
 import { DigitRpr, KeyPad } from "./KeyPad";
@@ -293,7 +294,7 @@ class Pinpad extends React.PureComponent<Props, State> {
           customHorizontalMargin={INPUT_MARGIN}
           accessibilityLabel={I18n.t("identification.unlockCode.reset.code")}
         />
-        <View spacer={true} />
+        <VSpacer size={16} />
         {this.props.onPinResetHandler !== undefined && (
           <React.Fragment>
             <NBText
@@ -306,6 +307,10 @@ class Pinpad extends React.PureComponent<Props, State> {
               <NBText
                 underlined={true}
                 white={this.props.buttonType === "primary"}
+                accessibilityLabel={I18n.t(
+                  "identification.unlockCode.reset.code"
+                )}
+                accessibilityRole="button"
               >
                 {I18n.t("identification.unlockCode.reset.code")}
               </NBText>
@@ -313,10 +318,10 @@ class Pinpad extends React.PureComponent<Props, State> {
                 {I18n.t("global.symbols.question")}
               </NBText>
             </NBText>
-            <View spacer={true} />
+            <VSpacer size={16} />
           </React.Fragment>
         )}
-        <View spacer={true} />
+        <VSpacer size={16} />
         <ShakeAnimation
           duration={SHAKE_ANIMATION_DURATION}
           ref={this.shakeAnimationRef}
@@ -329,7 +334,7 @@ class Pinpad extends React.PureComponent<Props, State> {
         </ShakeAnimation>
         {this.props.onCancel && (
           <React.Fragment>
-            <View spacer={true} large={true} />
+            <VSpacer size={24} />
             <Link style={styles.mediumText} onPress={this.props.onCancel}>
               {I18n.t("global.buttons.cancel")}
             </Link>

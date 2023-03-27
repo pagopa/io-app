@@ -1,10 +1,11 @@
 import * as React from "react";
-import { Text as NBText, View as NBView, Toast as NBToast } from "native-base";
+import { Text as NBText, Toast as NBToast } from "native-base";
 
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { showToast } from "../../../utils/showToast";
 import { H2 } from "../../../components/core/typography/H2";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 
 export const DSToastNotifications = () => (
   <DesignSystemScreen title={"Toast Notifications (NativeBase)"}>
@@ -24,7 +25,7 @@ export const DSToastNotifications = () => (
       <NBText>Default behavior</NBText>
     </ButtonDefaultOpacity>
 
-    <NBView spacer={true} />
+    <VSpacer size={16} />
 
     <ButtonDefaultOpacity
       bordered={true}
@@ -36,7 +37,7 @@ export const DSToastNotifications = () => (
       <NBText>Danger</NBText>
     </ButtonDefaultOpacity>
 
-    <NBView spacer={true} />
+    <VSpacer size={16} />
 
     <ButtonDefaultOpacity
       bordered={true}
@@ -48,7 +49,7 @@ export const DSToastNotifications = () => (
       <NBText>Success</NBText>
     </ButtonDefaultOpacity>
 
-    <NBView spacer={true} />
+    <VSpacer size={16} />
 
     <ButtonDefaultOpacity
       bordered={true}
@@ -77,7 +78,7 @@ export const DSToastNotifications = () => (
       <NBText>Default · Top</NBText>
     </ButtonDefaultOpacity>
 
-    <NBView spacer={true} />
+    <VSpacer size={16} />
 
     <ButtonDefaultOpacity
       bordered={true}
@@ -89,7 +90,7 @@ export const DSToastNotifications = () => (
       <NBText>Default · Center</NBText>
     </ButtonDefaultOpacity>
 
-    <NBView spacer={true} />
+    <VSpacer size={16} />
 
     <ButtonDefaultOpacity
       bordered={true}
@@ -121,6 +122,6 @@ export const DSToastNotifications = () => (
       <NBText>Multi-line text</NBText>
     </ButtonDefaultOpacity>
 
-    <NBView spacer={true} extralarge={true} />
+    <VSpacer size={40} />
   </DesignSystemScreen>
 );

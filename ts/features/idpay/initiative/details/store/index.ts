@@ -2,26 +2,30 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as _ from "lodash";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-import { TimelineDTO } from "../../../../../../definitions/idpay/timeline/TimelineDTO";
-import { InitiativeDTO } from "../../../../../../definitions/idpay/wallet/InitiativeDTO";
+import { OperationDTO } from "../../../../../../definitions/idpay/OperationDTO";
+import { TimelineDTO } from "../../../../../../definitions/idpay/TimelineDTO";
+import { InitiativeDTO } from "../../../../../../definitions/idpay/InitiativeDTO";
 import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { NetworkError } from "../../../../../utils/errors";
 import {
-  getErrorFromNetworkError,
-  NetworkError
-} from "../../../../../utils/errors";
-import { idpayInitiativeGet, idpayTimelinePageGet } from "./actions";
+  idpayInitiativeGet,
+  idpayTimelineDetailsGet,
+  idpayTimelinePageGet
+} from "./actions";
 
 type PaginatedTimelineDTO = Record<number, TimelineDTO>;
 
 export type IDPayInitiativeState = {
   details: pot.Pot<InitiativeDTO, NetworkError>;
   timeline: pot.Pot<PaginatedTimelineDTO, NetworkError>;
+  timelineDetails: pot.Pot<OperationDTO, NetworkError>;
 };
 
 const INITIAL_STATE: IDPayInitiativeState = {
   details: pot.none,
-  timeline: pot.none
+  timeline: pot.none,
+  timelineDetails: pot.none
 };
 
 const reducer = (
@@ -70,6 +74,21 @@ const reducer = (
       return {
         ...state,
         timeline: pot.toError(state.timeline, action.payload)
+      };
+    case getType(idpayTimelineDetailsGet.request):
+      return {
+        ...state,
+        timelineDetails: pot.toLoading(pot.none)
+      };
+    case getType(idpayTimelineDetailsGet.success):
+      return {
+        ...state,
+        timelineDetails: pot.some(action.payload)
+      };
+    case getType(idpayTimelineDetailsGet.failure):
+      return {
+        ...state,
+        timelineDetails: pot.toError(state.timelineDetails, action.payload)
       };
   }
   return state;
@@ -130,13 +149,20 @@ export const idpayTimelineLastUpdateSelector = createSelector(
 
 export const idpayTimelineIsLastPageSelector = createSelector(
   idpayPaginatedTimelineSelector,
-  paginatedTimeline => {
-    if (pot.isError(paginatedTimeline)) {
-      const err = getErrorFromNetworkError(paginatedTimeline.error);
-      return err.message === "404";
-    }
-    return false;
-  }
+  idpayTimelineCurrentPageSelector,
+  (paginatedTimeline, currentPage) =>
+    pot.getOrElse(
+      pot.map(paginatedTimeline, paginatedTimeline => {
+        const { totalPages } = paginatedTimeline[currentPage];
+        return currentPage >= totalPages - 1;
+      }),
+      false
+    )
+);
+
+export const idpayTimelineDetailsSelector = createSelector(
+  idpayInitativeSelector,
+  initiative => initiative.timelineDetails
 );
 
 export default reducer;

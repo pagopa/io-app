@@ -1,12 +1,12 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { View } from "native-base";
 import * as React from "react";
 import { useCallback } from "react";
-import { View as RNView } from "react-native";
+import { View } from "react-native";
 import { StatoBeneficiarioEnum } from "../../../../../definitions/cdc/StatoBeneficiario";
 import { BonusVisibilityEnum } from "../../../../../definitions/content/BonusVisibility";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { Label } from "../../../../components/core/typography/Label";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import SectionStatusComponent from "../../../../components/SectionStatus";
@@ -81,7 +81,7 @@ type ErrorButtonProp = {
   onPress: () => void;
 };
 const ErrorButton = (props: ErrorButtonProp) => {
-  const viewRef = React.createRef<RNView>();
+  const viewRef = React.createRef<View>();
 
   return (
     <View>
@@ -97,7 +97,7 @@ const ErrorButton = (props: ErrorButtonProp) => {
       >
         {I18n.t("bonus.cdc.serviceCta.error.status")}
       </StatusContent>
-      <View spacer={true} />
+      <VSpacer size={16} />
       <ButtonDefaultOpacity
         block
         primary
@@ -169,7 +169,7 @@ const CdcServiceCTAButton = () => {
 const CdcServiceCTA = () => (
   <View>
     <SectionStatusComponent sectionKey={"cdc"} />
-    <View spacer />
+    <VSpacer size={16} />
     <CdcServiceCTAButton />
   </View>
 );

@@ -1,7 +1,6 @@
 import * as O from "fp-ts/lib/Option";
-import { View } from "native-base";
 import React, { useCallback } from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 
 import { pipe } from "fp-ts/lib/function";
 import I18n from "../../i18n";
@@ -9,6 +8,7 @@ import { UIMessage } from "../../store/reducers/entities/messages/types";
 
 import { useItemsSelection } from "../../utils/hooks/useItemsSelection";
 import ListSelectionBar from "../ListSelectionBar";
+import { IOStyles } from "../core/variables/IOStyles";
 import { EmptyListComponent } from "./EmptyListComponent";
 import MessageList from "./MessageList";
 
@@ -66,13 +66,13 @@ const MessagesArchive = ({
   const ListEmptyComponent = () => (
     <EmptyListComponent
       image={require("../../../img/messages/empty-message-list-icon.png")}
-      title={I18n.t("messages.inbox.emptyMessage.title")}
-      subtitle={I18n.t("messages.inbox.emptyMessage.subtitle")}
+      title={I18n.t("messages.archive.emptyMessage.title")}
+      subtitle={I18n.t("messages.archive.emptyMessage.subtitle")}
     />
   );
 
   return (
-    <View style={styles.listWrapper}>
+    <View style={[styles.listWrapper, IOStyles.topListBorderBelowTabsStyle]}>
       <View style={styles.listContainer}>
         <MessageList
           filter={{ getArchived: true }}

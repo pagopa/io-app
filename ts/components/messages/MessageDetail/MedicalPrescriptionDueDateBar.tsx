@@ -1,7 +1,7 @@
 import { capitalize } from "lodash";
-import { Text as NBText, View } from "native-base";
+import { Text as NBText } from "native-base";
 import React from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
 import { formatDateAsDay, formatDateAsMonth } from "../../../utils/dates";
@@ -12,6 +12,7 @@ import {
 import { UIMessageDetails } from "../../../store/reducers/entities/messages/types";
 import { IOColors } from "../../core/variables/IOColors";
 import { localeDateFormat } from "../../../utils/locale";
+import { HSpacer, VSpacer } from "../../core/spacer/Spacer";
 import CalendarIconComponent from "./common/CalendarIconComponent";
 import CalendarEventButton from "./common/CalendarEventButton";
 
@@ -80,7 +81,7 @@ const MedicalPrescriptionDueDateBar = ({
           textColor={IOColors.bluegrey}
         />
 
-        <View hspacer={true} small={true} />
+        <HSpacer size={8} />
         <NBText style={styles.text} white={true}>
           <>
             {I18n.t("messages.cta.prescription.expiredAlert.block1")}
@@ -106,7 +107,7 @@ const MedicalPrescriptionDueDateBar = ({
           <NBText bold={true} white={false}>{` ${time}`}</NBText>
         </>
       </NBText>
-      <View spacer={true} xsmall={true} />
+      <VSpacer size={4} />
       <View style={styles.row}>
         <CalendarIconComponent
           month={capitalize(formatDateAsMonth(dueDate))}
@@ -114,7 +115,7 @@ const MedicalPrescriptionDueDateBar = ({
           backgroundColor={IOColors.bluegrey}
           textColor={IOColors.white}
         />
-        <View hspacer={true} small={true} />
+        <HSpacer size={8} />
         <CalendarEventButton message={messageDetails.raw} medium={true} />
       </View>
     </View>

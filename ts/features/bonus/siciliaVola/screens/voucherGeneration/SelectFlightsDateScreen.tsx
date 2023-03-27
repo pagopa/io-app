@@ -1,5 +1,4 @@
 import { useNavigation } from "@react-navigation/native";
-import { View } from "native-base";
 import * as React from "react";
 import { useRef, useState } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
@@ -9,6 +8,7 @@ import {
   RadioButtonList,
   RadioItem
 } from "../../../../../components/core/selection/RadioButtonList";
+import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { H5 } from "../../../../../components/core/typography/H5";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -99,11 +99,11 @@ const SelectFlightsDateScreen = (props: Props): React.ReactElement => {
           <H1>
             {I18n.t("bonus.sv.voucherGeneration.selectFlightsDate.title")}
           </H1>
-          <View spacer={true} />
+          <VSpacer size={16} />
           <H5 color={"bluegrey"} weight={"Regular"}>
             {I18n.t("bonus.sv.voucherGeneration.selectFlightsDate.subtitle")}
           </H5>
-          <View spacer={true} />
+          <VSpacer size={16} />
           <RadioButtonList<boolean>
             key="flights"
             items={getShowReturnDateItems()}
@@ -118,7 +118,7 @@ const SelectFlightsDateScreen = (props: Props): React.ReactElement => {
             date={departureDate}
             onConfirm={setDepartureDate}
           />
-          <View spacer={true} />
+          <VSpacer size={16} />
 
           {showReturn && (
             <DateTimePicker

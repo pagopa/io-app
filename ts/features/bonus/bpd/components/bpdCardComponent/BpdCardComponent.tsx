@@ -1,12 +1,19 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Badge, Text as NBText, View } from "native-base";
+import { Badge, Text as NBText } from "native-base";
 import * as React from "react";
-import { Image, ImageBackground, Platform, StyleSheet } from "react-native";
+import {
+  View,
+  Image,
+  ImageBackground,
+  Platform,
+  StyleSheet
+} from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 import bpdCardBgFull from "../../../../../../img/bonus/bpd/bonus_bg.png";
 import bpdCardBgPreview from "../../../../../../img/bonus/bpd/bonus_preview_bg.png";
 import bpdBonusLogo from "../../../../../../img/bonus/bpd/logo_BonusCashback_White.png";
+import { HSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H2 } from "../../../../../components/core/typography/H2";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { H5 } from "../../../../../components/core/typography/H5";
@@ -308,7 +315,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
               </NBText>
               {amount[1]}
             </NBText>
-            <View hspacer={true} small={true} />
+            <HSpacer size={8} />
             <IconFont name={iconName} size={16} color={IOColors.white} />
           </View>
           <H5 color={"white"} weight={"Regular"}>
@@ -365,7 +372,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
               I18n.t("global.dateFormats.fullFormatFullMonthLiteral")
             )}`}
           </H5>
-          <View hspacer={true} small={true} />
+          <HSpacer size={8} />
           {isPeriodClosed && (
             <IconFont name="io-tick-big" size={20} color={IOColors.white} />
           )}
@@ -382,7 +389,7 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
             ]}
           >
             <IconFont name={iconName} size={16} color={IOColors.white} />
-            <View hspacer={true} small={true} />
+            <HSpacer size={8} />
             {isInGracePeriod || isPeriodInactive ? (
               <Badge style={styles.badgePreview}>
                 <NBText

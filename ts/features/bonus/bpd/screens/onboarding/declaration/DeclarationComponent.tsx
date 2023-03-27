@@ -1,8 +1,8 @@
-import { View } from "native-base";
 import * as React from "react";
 import { useReducer } from "react";
-import { SafeAreaView, ScrollView } from "react-native";
+import { View, SafeAreaView, ScrollView } from "react-native";
 import { InfoBox } from "../../../../../../components/box/InfoBox";
+import { VSpacer } from "../../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../../components/core/typography/H1";
 import { Label } from "../../../../../../components/core/typography/Label";
@@ -118,11 +118,11 @@ export const DeclarationComponent: React.FunctionComponent<Props> = props => {
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView>
           <View style={IOStyles.horizontalContentPadding}>
-            <View spacer={true} large={true} />
+            <VSpacer size={24} />
             <H1>{header}</H1>
-            <View spacer={true} extralarge={true} />
+            <VSpacer size={40} />
             {generateRequiredConditions(requiredConditions, dispatch)}
-            <View spacer={true} small={true} />
+            <VSpacer size={8} />
             <InfoBox>
               <Body>
                 {disclaimer.normal1}

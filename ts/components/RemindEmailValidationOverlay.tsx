@@ -5,9 +5,10 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Content, Text as NBText, View } from "native-base";
+import { Content, Text as NBText } from "native-base";
 import * as React from "react";
 import {
+  View,
   Alert,
   BackHandler,
   NativeEventSubscription,
@@ -41,6 +42,9 @@ import {
 import { GlobalState } from "../store/reducers/types";
 import customVariables from "../theme/variables";
 import { isOnboardingCompleted } from "../utils/navigation";
+import { FCI_ROUTES } from "../features/fci/navigation/routes";
+import { VSpacer } from "./core/spacer/Spacer";
+import { IOStyles } from "./core/variables/IOStyles";
 import { ContextualHelpPropsMarkdown } from "./screens/BaseScreenComponent";
 import TopScreenComponent, {
   TopScreenComponentProps
@@ -307,7 +311,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     return (
       <>
         <SectionStatusComponent sectionKey={"email_validation"} />
-        <View footer={true}>
+        <View style={IOStyles.footer}>
           <BlockButtons
             type={"SingleButton"}
             leftButton={{
@@ -320,7 +324,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
                 this.state.isCtaSentEmailValidationDisabled
             }}
           />
-          <View spacer={true} />
+          <VSpacer size={16} />
           <BlockButtons
             type={"TwoButtonsInlineThirdInverted"}
             leftButton={{
@@ -336,7 +340,18 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
                  * - Compose the common logic with the navigation stack dependent logic and isolate the dependent navigation logic
                  */
                 if (
-                  NavigationService.getCurrentRouteName() === ROUTES.WALLET_HOME
+                  NavigationService.getCurrentRouteName() ===
+                    ROUTES.WALLET_HOME ||
+                  pipe(
+                    NavigationService.getCurrentRouteName(),
+                    O.fromNullable,
+                    O.map(currentRoute =>
+                      (Object.values(FCI_ROUTES) as Array<string>).includes(
+                        currentRoute
+                      )
+                    ),
+                    O.getOrElse(() => false)
+                  )
                 ) {
                   NavigationService.navigate(ROUTES.PROFILE_NAVIGATOR, {
                     screen: ROUTES.INSERT_EMAIL_SCREEN
@@ -385,14 +400,14 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
         accessibilityEvents={{ avoidNavigationEventsUsage: true }}
       >
         <Content bounces={false}>
-          <View spacer={true} extralarge={true} />
+          <VSpacer size={40} />
           <IconFont
             name={icon}
             size={VALIDATION_ICON_WIDTH}
             color={customVariables.colorHighlight}
             style={styles.center}
           />
-          <View spacer={true} extralarge={true} />
+          <VSpacer size={40} />
           <NBText alignCenter={true} bold={true}>
             {title}
           </NBText>
@@ -412,7 +427,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
               </NBText>
             </View>
           )}
-          <View spacer={true} large={true} />
+          <VSpacer size={24} />
         </Content>
 
         {this.state.displayError && this.renderErrorBanner}

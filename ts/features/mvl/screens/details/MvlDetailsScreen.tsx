@@ -2,7 +2,6 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { View } from "native-base";
 import React, { useCallback, useEffect } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { H2 } from "../../../../components/core/typography/H2";
@@ -19,11 +18,12 @@ import {
 } from "../../../../store/reducers/entities/services/servicesById";
 import { toUIService } from "../../../../store/reducers/entities/services/transformers";
 import { GlobalState } from "../../../../store/reducers/types";
-import { UIAttachmentId } from "../../../../store/reducers/entities/messages/types";
+import { UIAttachment } from "../../../../store/reducers/entities/messages/types";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import MVL_ROUTES from "../../navigation/routes";
 import { Mvl } from "../../types/mvlData";
 import { MessageAttachments } from "../../../messages/components/MessageAttachments";
+import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { MvlBody } from "./components/MvlBody";
 import { MvlDetailsHeader } from "./components/MvlDetailsHeader";
 import { MvlMetadataComponent } from "./components/MvlMetadata";
@@ -57,8 +57,11 @@ export const MvlDetailsScreen = (props: Props): React.ReactElement => {
 
   const messageId = props.mvl.message.id;
   const openAttachment = useCallback(
-    (attachmentId: UIAttachmentId) => {
-      navigation.navigate(MVL_ROUTES.ATTACHMENT, { messageId, attachmentId });
+    (attachment: UIAttachment) => {
+      navigation.navigate(MVL_ROUTES.ATTACHMENT, {
+        messageId,
+        attachmentId: attachment.id
+      });
     },
     [messageId, navigation]
   );
@@ -73,15 +76,15 @@ export const MvlDetailsScreen = (props: Props): React.ReactElement => {
             service={service}
           />
           <MvlBody body={props.mvl.legalMessage.body} />
-          <View spacer={true} large={true} />
+          <VSpacer size={24} />
           <ItemSeparatorComponent noPadded={true} />
-          <View spacer={true} large={true} />
+          <VSpacer size={24} />
           <H2>{I18n.t("features.mvl.details.attachments.title")}</H2>
           <MessageAttachments
             attachments={props.mvl.legalMessage.attachments}
             openPreview={openAttachment}
           />
-          <View spacer={true} />
+          <VSpacer size={16} />
           <MvlMetadataComponent metadata={props.mvl.legalMessage.metadata} />
         </ScrollView>
         {/* TODO: TMP, how is calculated isPaid without using the paginated data? https://pagopa.atlassian.net/browse/IAMVL-22 */}

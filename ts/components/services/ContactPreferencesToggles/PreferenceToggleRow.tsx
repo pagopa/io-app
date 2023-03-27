@@ -17,6 +17,7 @@ type Props = WithTestID<{
   graphicalState: "loading" | "error" | "ready";
   onReload: () => void;
   disabled?: boolean;
+  accessiblityLabel?: string;
 }>;
 
 const styles = StyleSheet.create({
@@ -67,6 +68,7 @@ const PreferenceToggleRow = ({
             disabled={disabled}
             accessibilityRole={"switch"}
             accessibilityState={{ checked: value, disabled }}
+            accessibilityLabel={label}
           />
         );
     }

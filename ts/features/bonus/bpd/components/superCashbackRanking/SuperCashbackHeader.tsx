@@ -1,9 +1,10 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Badge, Text as NBText, View } from "native-base";
+import { Badge, Text as NBText } from "native-base";
 import * as React from "react";
-import { Platform, StyleSheet } from "react-native";
+import { View, Platform, StyleSheet } from "react-native";
 import { connect } from "react-redux";
+import { HSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -60,7 +61,7 @@ const SuperCashbackHeader: React.FunctionComponent<Props> = (props: Props) => (
         </NBText>
       </Badge>
     )}
-    <View hspacer />
+    <HSpacer size={16} />
     <H3>{I18n.t("bonus.bpd.details.superCashback.rankTitle")}</H3>
   </View>
 );

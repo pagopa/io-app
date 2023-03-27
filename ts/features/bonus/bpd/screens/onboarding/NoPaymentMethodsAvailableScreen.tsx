@@ -1,9 +1,9 @@
 import * as O from "fp-ts/lib/Option";
-import { View } from "native-base";
 import * as React from "react";
-import { SafeAreaView } from "react-native";
+import { View, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -39,9 +39,9 @@ const NoPaymentMethodsAvailableScreen: React.FunctionComponent<Props> =
       >
         <SafeAreaView style={IOStyles.flex}>
           <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
-            <View spacer={true} large={true} />
+            <VSpacer size={24} />
             <H1>{title}</H1>
-            <View spacer={true} large={true} />
+            <VSpacer size={24} />
             <Body>{body}</Body>
           </View>
           <FooterTwoButtons

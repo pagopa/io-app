@@ -25,7 +25,7 @@ import { paymentVerifica } from "../../../store/actions/wallet/payment";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { PnConfigSelector } from "../../../store/reducers/backendStatus";
 import {
-  UIAttachmentId,
+  UIAttachment,
   UIMessageId
 } from "../../../store/reducers/entities/messages/types";
 import { profileFiscalCodeSelector } from "../../../store/reducers/profile";
@@ -116,10 +116,10 @@ export const PnMessageDetails = (props: Props) => {
 
   const messageId = props.messageId;
   const openAttachment = useCallback(
-    (attachmentId: UIAttachmentId) => {
+    (attachment: UIAttachment) => {
       navigation.navigate(PN_ROUTES.MESSAGE_ATTACHMENT, {
         messageId,
-        attachmentId
+        attachmentId: attachment.id
       });
     },
     [messageId, navigation]

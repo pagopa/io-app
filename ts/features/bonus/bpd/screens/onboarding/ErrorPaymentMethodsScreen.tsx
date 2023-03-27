@@ -1,8 +1,8 @@
-import { View } from "native-base";
 import * as React from "react";
-import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { View, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H2 } from "../../../../../components/core/typography/H2";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
@@ -40,19 +40,21 @@ const ErrorPaymentMethodsScreen: React.FunctionComponent<Props> = props => {
     >
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView>
+          {/* TODO: Refactor the following screen because you can't
+          use huge spacers to center the screen content.
+          You have to think about position logic. */}
           <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
-            <View spacer={true} extralarge={true} />
-            <View spacer={true} extralarge={true} />
+            <VSpacer size={40} />
+            <VSpacer size={40} />
             <IconFont
               name={"io-complete"}
               size={120}
               color={IOColors.aqua as string}
               style={styles.center}
             />
-            <View spacer={true} large={true} />
-            <View spacer={true} large={true} />
+            <VSpacer size={48} />
             <H2 style={styles.center}>{title}</H2>
-            <View spacer={true} extralarge={true} />
+            <VSpacer size={40} />
             <Body style={styles.center}>{body}</Body>
           </View>
         </ScrollView>

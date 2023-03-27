@@ -1,7 +1,7 @@
-import { View } from "native-base";
 import * as React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
+import { VSpacer } from "../../../../../../../components/core/spacer/Spacer";
 import { H2 } from "../../../../../../../components/core/typography/H2";
 import { H5 } from "../../../../../../../components/core/typography/H5";
 import { IOStyles } from "../../../../../../../components/core/variables/IOStyles";
@@ -56,7 +56,7 @@ export const PercentageTransactionsSummary = (props: Props) => {
       }
       row3={
         <>
-          <View spacer={true} />
+          <VSpacer size={16} />
           <ProgressBar
             progressPercentage={props.transactions / props.minTransactions}
           />

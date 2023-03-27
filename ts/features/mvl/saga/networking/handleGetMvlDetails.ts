@@ -44,7 +44,8 @@ const convertMvlAttachment = (
     resourceUrl: {
       href: generateAttachmentUrl(messageId, attachment.id as UIAttachmentId)
     },
-    size: (attachment as unknown as { size: Byte }).size
+    size: (attachment as unknown as { size: Byte }).size,
+    category: "MVL"
   });
 
 /**

@@ -1,7 +1,11 @@
-import { Badge, Text as NBText, View } from "native-base";
+import { Badge, Text as NBText } from "native-base";
 import * as React from "react";
-import { Image, StyleSheet } from "react-native";
+import { View, Image, StyleSheet } from "react-native";
 import CopyButtonComponent from "../../../../../../../components/CopyButtonComponent";
+import {
+  HSpacer,
+  VSpacer
+} from "../../../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../../../components/core/typography/Body";
 import { H4 } from "../../../../../../../components/core/typography/H4";
 import { H5 } from "../../../../../../../components/core/typography/H5";
@@ -99,7 +103,7 @@ const Table = (props: Props) => {
               )}
         </H4>
       </View>
-      <View spacer={true} small={true} />
+      <VSpacer size={8} />
       <View style={styles.rowId}>
         <H5 weight={"Regular"} color={"bluegrey"}>
           {I18n.t("bonus.bpd.details.transaction.detail.paymentCircuit")}
@@ -110,7 +114,7 @@ const Table = (props: Props) => {
             : props.transaction.circuitType}
         </H4>
       </View>
-      <View spacer={true} small={true} />
+      <VSpacer size={8} />
       <View style={styles.rowId}>
         <H5 weight={"Regular"} color={"bluegrey"}>
           {I18n.t("bonus.bpd.details.transaction.detail.transactionAmount")}
@@ -119,7 +123,7 @@ const Table = (props: Props) => {
           {props.transaction.amount < 0 && (
             <>
               <CancelBadge />
-              <View hspacer={true} />
+              <HSpacer size={16} />
             </>
           )}
           <H4 weight={"SemiBold"} color={"bluegreyDark"}>
@@ -127,7 +131,7 @@ const Table = (props: Props) => {
           </H4>
         </View>
       </View>
-      <View spacer={true} small={true} />
+      <VSpacer size={8} />
       <View style={styles.rowId}>
         <H5 weight={"Regular"} color={"bluegrey"}>
           {I18n.t("bonus.bpd.details.transaction.detail.cashbackAmount")}
@@ -167,25 +171,25 @@ export const BpdTransactionDetailComponent: React.FunctionComponent<Props> =
 
     return (
       <View>
-        <View spacer={true} />
+        <VSpacer size={16} />
         <Body>{paymentMethod}</Body>
-        <View spacer={true} />
+        <VSpacer size={16} />
         <View style={IOStyles.row}>
           <Image
             source={props.transaction.image}
             style={styles.image}
             resizeMode={"contain"}
           />
-          <View hspacer={true} small={true} />
+          <HSpacer size={8} />
           <H4>{props.transaction.title}</H4>
         </View>
-        <View spacer={true} />
+        <VSpacer size={16} />
         {/* using the keyvaluetable with custom style in order to be quick */}
         <Table transaction={props.transaction} />
         <BpdTransactionWarning transaction={props.transaction} />
-        <View spacer={true} />
+        <VSpacer size={16} />
         <IdBlock title={acquirerId} value={props.transaction.idTrxAcquirer} />
-        <View spacer={true} />
+        <VSpacer size={16} />
         <IdBlock title={issuerId} value={props.transaction.idTrxIssuer} />
       </View>
     );

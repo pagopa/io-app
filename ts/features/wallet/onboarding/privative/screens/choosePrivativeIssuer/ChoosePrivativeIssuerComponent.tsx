@@ -1,9 +1,9 @@
-import { View } from "native-base";
 import * as React from "react";
-import { FlatList, ListRenderItemInfo, SafeAreaView } from "react-native";
+import { View, FlatList, ListRenderItemInfo, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { PrivativeServiceStatusEnum } from "../../../../../../../definitions/pagopa/privative/configuration/PrivativeServiceStatus";
+import { VSpacer } from "../../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
@@ -80,7 +80,7 @@ const ChoosePrivativeIssuerComponent = (props: Props): React.ReactElement => {
       >
         <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
           <H1>{title}</H1>
-          <View spacer={true} />
+          <VSpacer size={16} />
           <Body>{body}</Body>
           <FlatList
             data={props.privativeIssuers}

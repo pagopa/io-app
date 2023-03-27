@@ -433,6 +433,10 @@ profile:
       alertMessage: The application must be restarted for the changes to take effect.
     pnEnvironment:
       pnEnv: PN Test Environment
+    idpay: 
+      idpayTest: Test IDPay
+      idpayTestAlert: This change requires app reboot
+    designSystemEnvironment: Experimental Design System
     appVersion: App Version
     backendVersion: Backend Version
     debugMode: Debug mode
@@ -588,6 +592,8 @@ authentication:
     card5-content: In this version you can find in the upper-right corner
       the icons to report bugs or start a chat with the development team.
       We're waiting for your feedback!
+    card5-content-accessibility: Seleziona elemento precedente per aprire
+      una chat con il team di IO se qualcosa non funziona come dovrebbe.
     expiredCardTitle: Card expired or no longer valid
     expiredCardHeaderTitle: Login with CIE
     expiredCardContent: "The card used is no longer valid or has expired.\nIf you want to log in and access IO you must use SPID."
@@ -1538,7 +1544,7 @@ wallet:
     contactECsubtitle: Contact the Institution for more information.
     assistanceLabel: "Use this code to get support:"
     sendReport: Send report
-    loadingData: loading failure, try again.
+    loadingData: Loading failure, try again.
   walletCardTransaction:
     contextualHelpTitle: All transactions for this method
     contextualHelpContent: !include wallet/wallet_card_transaction.md
@@ -1787,6 +1793,18 @@ messageDetails:
   sendEmail: Send email
   write: Write
   id: "ID:"
+  attachments:
+    loading: "Loading document..."
+    badFormat: "The attachment format is not supported. Please contact the sender"
+    corruptedFile: "The attachment is corrupt and can't be opened. Please contact the sender"
+    downloadFailed: "The attachment is currently not available. Please try again or contact the sender"
+    showPreview: "See preview"
+    unavailable:
+      firstPart: "The attachments are no longer available. "
+      secondPart: "Please contact the sender"
+      thirdPart: " for more information."
+    failing:
+      details: "An error occurred while downloading the attachment. Retry or create a ticket"
 notifications:
   installation:
     errorTitle: Push notifications
@@ -1886,6 +1904,7 @@ services:
 serviceDetail:
   fiscalCode: "Organization's fiscal code"
   fiscalCodeAccessibility: "Organization's fiscal code"
+  fiscalCodeAccessibilityCopy: "Copy organization's fiscal code"
   contacts:
     title: "This service can:"
   headerTitle: "Service details"
@@ -3037,17 +3056,6 @@ features:
         title: "Attachments"
         toast:
           success: "Download complete"
-        bottomSheet:
-          warning:
-            title: "Pay attention to attachments"
-            body: "IO cannot guarantee the security of the attachment - save to your device or share only the files that you think are safe enough."
-          loading:
-            title: "Attachment"
-            body: "Downloading the attachment"
-          failing:
-            title: "Attachment"
-            details: "An error occurred while downloading the attachment. Retry or create a ticket"
-          checkBox: "OK, don't show me again"
         pdfPreview:
           title: "PDF Preview"
           singleBtn: "Save, print, or share"
@@ -3173,18 +3181,28 @@ features:
         cta: Accedi alla versione web  
   fci:
     errors:
+      expiredAfterSigned:
+        title: The documents are no longer available
+        subTitle: If you need a copy, contact the issuer
       expired:
-        title: Document no longer available for signature
-        subTitle: The document is no longer available for signature. Contact the institution for more information.
+        title: The signature request is expired
+        subTitle: If you need help contact the issuer
       waitForQtsp:
         title: The document is being processed
         subTitle: Please wait, you will soon receive the signed contract in the app.
-      unsupportedDevice:
-        title: There is a problem
-        subTitle: Your device does not support the "Firma con IO" feature.
       generic:
-        title: There is a problem
-        subTitle: To proceed with the signature, check that you have updated the IO app to the latest version.
+        default:
+          title: There is a problem
+          subTitle: To proceed with the signature, check that you have updated the IO app to the latest version.
+        update:
+          title: Update the app
+          subTitle: Check that you have installed the latest version of IO or log in again.
+        rejected:
+          title: The signing failed
+          subTitle: The sender will contact you in the next few days to get you to re-sign. If this doesn't happen, write to    
+        signing:
+          title: The signing failed
+          subTitle: Due to a technical problem, the signing was not successful. If the problem persists, contact support.   
     abort:
       title: "Cancel signing flow"
       content: "Do you want to cancel the documents signing process?"
@@ -3193,13 +3211,17 @@ features:
     signatureFields:
       title: "Sign here"
       showOnDocument: "See on document"
+      accessibility:
+        fieldDetailHint: "Go to the page that displays the signature field"
+        selected: "Field selected"
+        unselected: "Field not selected"
     title: "Firma con IO"
     documentsBar:
       titleLeft: Document {{currentDoc}} of {{totalDocs}}
       titleRight: Page {{currentPage}} of {{totalPages}}
     shareDataScreen:
-      title: "Do you share this data?"
-      content: "To complete the signing process, you must share this data with the signature provider."
+      title: "Do you want to share these data?"
+      content: "These will be shared with the digital signature provider. If you cancel, you will not be able to complete the signing."
       cancel: "Cancel"
       confirm: "Ok"
       alertText: "Want to change or update your email address?"
@@ -3212,8 +3234,14 @@ features:
       content: "You will shortly receive a message with the signed documents."
       cta: "Close"
     qtspTos:
-      title: "Do you give your consent?"
+      title: "We are almost there!"
+      subTitle: "To sign, you must accept the terms and conditions of the service and confirm that you have read the privacy policy of the signature provider."
       show: "View"
+    documents:
+      footer:
+        cancel: "Cancel"
+        continue: "Go to signature"
+        confirm: "Sign and continue"
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
@@ -3242,6 +3270,7 @@ support:
     emailAddress: "Email address"
     deviceAndOS: "Device and Operating System"
     ipAddress: "IP address"
+    ipAddressValue: "Including the assumed geographic location"
     appVersionsHistory: "App version history"
     appVersionsHistoryValue: "To determine if the issue is due to the most recent update"
     identityProvider: "Identity Provider"
@@ -3249,6 +3278,8 @@ support:
     navigationDataValue: "Such as the the last screen or message displayed in IO."
     stock: "Payment Notice details"
     stockValue: "Including the error you just received"
+    card: "Payment methods details"
+    cardValue: "Number (encrypted), expiration, network"
     header: "Submit a request"
     listTitle: "Ongoing requests"
     title: "Do you give us your consent?"
@@ -3276,31 +3307,30 @@ idpay:
   wallet:
     preview:
       validThrough: "Valid through {{endDate}}"
+      showAll: View all
+    initiativePairing:
+      navigation: Available initiatives
+      header: Which initiatives do you want to enable on this method?
+      statusLabels:
+        PENDING_DEACTIVATION_REQUEST: "In disattivazione.."
+        PENDING_ENROLLMENT_REQUEST: "In attivazione.."
+        ENROLLMENT_FAILED: "Attivazione fallita"
+      errorToasts:
+        enrollment: "Errore nel collegamento dell'iniziativa, riprova."
+        removal: "Errore nella rimozione dell'iniziativa, riprova."
   initiative:
-    configuration: 
-      instrumentStatus:
-        active: Active
-        pendingActivation: Pending activation
-        pendingDeactivation: Pending deactivation
-      bottomSheet:
-        header: Prima di continuare
-        bodyFirst: Il metodo sarà abilitato
-        bodyBold: " nelle prossime ore."
-        bodyLast: Riceverai una notifica push quando potrai iniziare ad utilizzarlo. Fino a quel momento eventuali transazioni verranno ignorate.
-        footer:
-          buttonActivate: Attiva
-          buttonCancel: Annulla
-      header: Scegli quali metodi di pagamento associare
-      subHeader: "Poi, usali per pagare e chiedi all’esercente di usare {{initiativeName}}."
-      footer: Modifica queste scelte o aggiunti altri metodi in qualsiasi momento dalla sezione Portafoglio
-      buttonFooter:
-        noneCta: Nessuno di questi
-        continueCta: Continua
     details:
       initiativeCard:
         availableAmount: Disponibile
-        validUntil: Valido fino al
-        toRefund: da rimborsare
+        validUntil: Fino al {{expiryDate}}
+        expiresOn: Scade il {{expiryDate}}
+        toRefund: Da rimborsare
+        statusLabels:
+          REFUNDABLE: Attiva
+          NOT_REFUNDABLE: Disattivata
+          NOT_REFUNDABLE_ONLY_IBAN: Metodo mancante
+          NOT_REFUNDABLE_ONLY_INSTRUMENT: IBAN mancante
+          UNSUBSCRIBED: Disiscritto
       initiativeDetailsScreen:
         notConfigured:
           header: Configura l'iniziativa!
@@ -3313,7 +3343,9 @@ idpay:
             showMore: Vedi tutte
             header: Impostazioni
             associatedPaymentMethods: Metodi di pagamento associati
-            methodsi18n: metodi 
+            methods:
+              one: "1 metodo"
+              other: "{{count}} metodi"
             selectedIBAN: IBAN per l'accredito
             actionsRequired: Azioni richieste 
           startConfigurationCTA: Inizia
@@ -3322,18 +3354,70 @@ idpay:
             title: Lista operazioni
             lastUpdated: "Ultimo aggiornamento: "
             operationDescriptions:
-              ONBOARDING:  "Hai aderito all'iniziativa"
+              ONBOARDING:  "Adesione all'iniziativa"
               ADD_IBAN:  "Aggiunto IBAN"
-              ADD_INSTRUMENT: "Hai aggiunto ···· {{maskedPan}}"
-              TRANSACTION:  "Pagamento Pos"
-              REVERSAL:  "Ricarica saldo disponibile"
+              ADD_INSTRUMENT: "Attivazione metodo ···· {{maskedPan}}"
+              TRANSACTION:  "Pagamento POS"
+              REVERSAL:  "Storno"
               DELETE_INSTRUMENT:  "Hai eliminato un metodo di pagamento"
-              REJECTED_ADD_INSTRUMENT:  "Hai rifiutato un metodo di pagamento"
+              REJECTED_ADD_INSTRUMENT:  "Errore attivazione metodo"
               REJECTED_DELETE_INSTRUMENT: 
-                "Hai rifiutato di eliminare un metodo di pagamento"
-              PAID_REFUND:  "Rimborso"
-              REJECTED_REFUND:  "Rifiuto rimborso"
+                "Errore disattivazione metodo"
+              PAID_REFUND:  "Rimborso sul tuo conto"
+              REJECTED_REFUND:  "Errore rimboso"
+    operationDetails:
+      title: Dettaglio dell'operazione
+      instrument: Metodo di pagamento
+      maskedPan: •••• {{lastDigits}}
+      amountLabel: Importo transazione
+      accruedAmountLabel: Importo rimborsabile
+      infoTitle: Informazioni sull transazione
+      date: Data
+      circuit: Circuito di pagamento
+      acquirerId: ID transazione Acquirer
+      issuerId: ID transazione Issuer
   onboarding:
+    success:
+      pleaseWait: Un attimo di pazienza...
+      requestSent:
+        title: La tua richiesta è stata inviata!
+        body:  Riceverai un messaggio con l’esito dell’operazione.
+      button:
+        continue: Ho capito!
+    failure:
+      button:
+        goToInitiative: Vai all'iniziativa
+      message:
+        GENERIC:
+          title: "C’è un problema sui nostri sistemi"
+          subtitle: "Ci scusiamo per il disagio.\nTi invitiamo a riprovare più tardi."
+        NOT_STARTED:
+          title: "Non è ancora possibile aderire a questa iniziativa."
+          subtitle: "Testo generico di errore dove spieghiamo che l’iniziativa non è ancora partita."
+        ENDED:
+          title: "Il periodo di adesione è terminato."
+          subtitle: "Testo generico di errore dove spieghiamo che il periodo di adesione è terminato."
+        NO_BUDGET:
+          title: "Non è più possibile aderire a questa iniziativa."
+          subtitle: "So’ finiti i soldi TBD"
+        SUSPENDED:
+          title: "L’iniziativa è sospesa."
+          subtitle: "Testo generico di errore dove spieghiamo che il l’iniziativa è stata sospesa."
+        NO_REQUIREMENTS:
+          title: "Non hai i requisiti per aderire a questa iniziativa."
+          subtitle: "O non sei stato invitato oppure i controlli hanno dato esito KO. Se sta roba non ti torna, chiedi aiuto."
+        ON_EVALUATION:
+          title: "Valutazione in corso TBD"
+          subtitle: "TBD"
+        NOT_ELIGIBLE:
+          title: "Graduatoria KO"
+          subtitle: "TBD"
+        ONBOARDED:
+          title: "Evviva, hai già aderito"
+          subtitle: "Vatte a vedè l’iniziativa"
+        UNSUBSCRIBED:
+          title: "Hai fatto il recesso"
+          subtitle: "TBD"
     headerTitle: "Adesione all'iniziativa"
     beforeContinue:
       text1: "Proseguendo accetti i "
@@ -3343,6 +3427,7 @@ idpay:
     navigation:
       header: Adesione all'iniziativa
     PDNDPrerequisites:
+      fallbackInitiativeName: l'iniziativa
       prerequisites:
         info:
           header: Come avviene la verifica?
@@ -3351,12 +3436,28 @@ idpay:
           understoodCTA: Ho capito
       title: Possiedi i seguenti requisiti?
       subtitle: Verificheremo con alcuni Enti se sei in possesso dei requisiti per poter richiedere {{service}}. 
+    multiPrerequisites:
+      header: "Dichiari inoltre di:"
+      body: L’autodichiarazione è resa ai sensi del
+      link: Dpr 28 dicembre 2000 n. 445 art 46 e 47
+    boolPrerequisites:
+      header: "Per aderire, dichiari di:"
+      body: L’autodichiarazione è resa ai sensi del
+      link: Dpr 28 dicembre 2000 n. 445 art 46 e 47 
   configuration:
+    failureStates:
+      GENERIC: "C'è stato un problema, riprova"
+      INITIATIVE_ERROR: "Errore nel caricamento dell'iniziativa"
+      IBAN_LIST_LOAD_FAILURE: "Errore nel caricamento della lista IBAN"
+      IBAN_ENROLL_FAILURE: "Errore durante l'aggiunta dell'IBAN"
+      INSTRUMENTS_LIST_LOAD_FAILURE: "Errore nel caricamento della lista strumenti"
+      INSTRUMENT_ENROLL_FAILURE: "Errore durante l'aggiunta del metodo di pagamento"
+      INSTRUMENT_DELETE_FAILURE: "Errore durante la rimozione del metodo di pagamento"
     headerTitle: "Configure the initiative"
-    intro: 
+    intro:
       title: "We are almost there"
       body: "In order to take advantage of the initiative, we need some more information."
-      requiredData: 
+      requiredData:
         title: "Required informations:"
         ibanTitle: "IBAN in your name"
         ibanSubtitle: "In order to receive any refunds"
@@ -3364,11 +3465,37 @@ idpay:
         instrumentSubtitle: "Indicate the methods to be enabled for the initiative"
       buttons:
         continue: "Start configuration"
+    instruments:
+      title: "Metodi di pagamento"
+      header: Scegli quali metodi di pagamento associare
+      body: "Poi, usali per pagare e chiedi all’esercente di usare {{initiativeName}}."
+      footer: Modifica queste scelte o aggiungi altri metodi in qualsiasi momento dalla sezione Portafoglio
+      instrumentStatus:
+        active: Active
+        pendingActivation: Pending activation
+        pendingDeactivation: Pending deactivation
+      buttons:
+        skip: Nessuno di questi
+        continue: Continua
+        addMethod: Aggiungi metodo
+      enrollmentSheet:
+        header: Prima di continuare
+        bodyFirst: Il metodo sarà abilitato
+        bodyBold: " nelle prossime ore."
+        bodyLast: Riceverai una notifica push quando potrai iniziare ad utilizzarlo. Fino a quel momento eventuali transazioni verranno ignorate.
+        buttons:
+          activate: Attiva
+          cancel: Annulla
     associationSuccess:
       title: "Grazie!"
-      body: "Da domani potrai utilizzare {{initiativeName}}. Puoi abilitare altri metodi aggiungendoli al Portafoglio."
-      button: "Vai all'iniziativa"
+      body: "Nella schermata successiva puoi verificare se i metodi da te abilitati sono già pronti per essere utilizzati."
+      noInstrumentsBody: "Per terminare la configurazione devi aggiungere almeno un metodo di pagamento al Portafoglio e abilitarlo all’iniziativa."
+      buttons:
+        continue: "Vai all'iniziativa"
+        skip: "Più tardi"
+        addPaymentMethod: "Aggiungi un metodo di pagamento"
     iban:
+      title: IBAN associato
       landing:
         header: Aggiungi un IBAN al tuo Profilo
         body: Salva i dati del tuo conto e ottieni più facilmente i rimborsi a te previsti.
@@ -3379,4 +3506,12 @@ idpay:
         bodyLink: Dpr 28 dicembre 2000 n. 445 art 46 e 47 
         nameAssignInput: Assegna un nome
         bottomLabel: Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento visitando la sezione Profilo
-    
+      enrollment:
+        header: Scegli quale IBAN associare all’iniziativa
+        subTitle: Associa un IBAN salvato nel tuo profilo per poter ricevere i rimborsi legati all’iniziativa.
+        footer: Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento visitando la sezione Profilo
+      button:
+        addNew: Aggiungi nuovo
+      updateToast: IBAN associato correttamente
+unsupportedDevice:  
+  text: "Your device may soon no longer be compatible with the IO app."

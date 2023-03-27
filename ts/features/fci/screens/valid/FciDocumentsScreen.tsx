@@ -23,6 +23,7 @@ import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
 import { fciSignatureDetailDocumentsSelector } from "../../store/reducers/fciSignatureRequest";
 import { FCI_ROUTES } from "../../navigation/routes";
 import { SignatureField } from "../../../../../definitions/fci/SignatureField";
+import { TypeEnum as ClauseType } from "../../../../../definitions/fci/Clause";
 import { FciParamsList } from "../../navigation/params";
 import { ExistingSignatureFieldAttrs } from "../../../../../definitions/fci/ExistingSignatureFieldAttrs";
 import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
@@ -79,7 +80,9 @@ const FciDocumentsScreen = () => {
         RA.map(d => {
           const docSignature = {
             document_id: d.id,
-            signature_fields: []
+            signature_fields: d.metadata.signature_fields.filter(
+              s => s.clause.type === ClauseType.REQUIRED
+            )
           } as DocumentToSign;
           dispatch(fciUpdateDocumentSignaturesRequest(docSignature));
         })
@@ -249,26 +252,28 @@ const FciDocumentsScreen = () => {
     light: false,
     bordered: true,
     onPress: onCancelPress,
-    title: I18n.t("global.buttons.cancel")
+    title: I18n.t("features.fci.documents.footer.cancel")
   };
 
   const continueButtonProps = {
     block: true,
     primary: true,
     onPress: onContinuePress,
-    title: I18n.t("global.buttons.continue")
+    title: I18n.t("features.fci.documents.footer.continue")
   };
+
+  const pointToPage = (page: number) =>
+    pipe(
+      pdfRef.current,
+      O.fromNullable,
+      O.map(_ => _.setPage(page))
+    );
 
   const keepReadingButtonProps = {
     block: true,
     light: true,
     bordered: true,
-    onPress: () =>
-      pipe(
-        pdfRef.current,
-        O.fromNullable,
-        O.map(_ => _.setPage(totalPages))
-      ),
+    onPress: () => pointToPage(totalPages),
     title: I18n.t("global.buttons.continue")
   };
 
@@ -276,7 +281,7 @@ const FciDocumentsScreen = () => {
     block: true,
     primary: true,
     onPress: onContinuePress,
-    title: "Procedi alla firma"
+    title: I18n.t("features.fci.documents.footer.confirm")
   };
 
   const renderPager = () => (
@@ -301,19 +306,25 @@ const FciDocumentsScreen = () => {
 
   const onPrevious = () => {
     pipe(
-      currentDoc,
+      currentPage,
       O.fromNullable,
-      O.chain(doc => (doc > 0 ? O.some(doc - 1) : O.none)),
-      O.map(setCurrentDoc)
+      O.chain(page => (page > 1 ? O.some(page - 1) : O.none)),
+      O.map(page => {
+        setCurrentPage(page);
+        pointToPage(page);
+      })
     );
   };
 
   const onNext = () => {
     pipe(
-      currentDoc,
+      currentPage,
       O.fromNullable,
-      O.chain(doc => (doc < documents.length - 1 ? O.some(doc + 1) : O.none)),
-      O.map(setCurrentDoc)
+      O.chain(page => (page < totalPages ? O.some(page + 1) : O.none)),
+      O.map(page => {
+        setCurrentPage(page);
+        pointToPage(page);
+      })
     );
   };
 
@@ -346,6 +357,7 @@ const FciDocumentsScreen = () => {
       contextualHelp={emptyContextualHelp}
     >
       <DocumentsNavigationBar
+        indicatorPosition={"right"}
         titleLeft={I18n.t("features.fci.documentsBar.titleLeft", {
           currentDoc: currentDoc + 1,
           totalDocs: documents.length
@@ -355,23 +367,20 @@ const FciDocumentsScreen = () => {
           totalPages
         })}
         iconLeftColor={
-          currentDoc === 0 ? IOColors.bluegreyLight : IOColors.blue
+          currentPage === 1 ? IOColors.bluegreyLight : IOColors.blue
         }
         iconRightColor={
-          currentDoc === documents.length - 1
-            ? IOColors.bluegreyLight
-            : IOColors.blue
+          currentPage === totalPages ? IOColors.bluegreyLight : IOColors.blue
         }
         onPrevious={onPrevious}
         onNext={onNext}
-        disabled={true}
+        disabled={false}
         testID={"FciDocumentsNavBarTestID"}
       />
       <SafeAreaView style={IOStyles.flex} testID={"FciDocumentsScreenTestID"}>
         {documents.length > 0 && (
           <>
             {renderPager()}
-
             <FooterWithButtons
               type={"TwoButtonsInlineThird"}
               leftButton={cancelButtonProps}

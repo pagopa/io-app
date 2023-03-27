@@ -1,6 +1,5 @@
-import { View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import Markdown from "../../../../../../components/ui/Markdown";
 import I18n from "../../../../../../i18n";
@@ -8,6 +7,7 @@ import { PaymentMethodRepresentation } from "../../../../../../types/pagopa";
 import { PaymentMethodRepresentationComponent } from "../base/PaymentMethodRepresentationComponent";
 import { useIOBottomSheetModal } from "../../../../../../utils/hooks/bottomSheet";
 import { IOColors } from "../../../../../../components/core/variables/IOColors";
+import { VSpacer } from "../../../../../../components/core/spacer/Spacer";
 
 // NotActivable: already activated by someone else
 // NotCompatible: missing bpd capability
@@ -46,9 +46,9 @@ const getTitle = (type: NotActivableType) => {
 export const BpdNotActivableInformation: React.FunctionComponent<Props> =
   props => (
     <View style={[styles.body, IOStyles.horizontalContentPadding]}>
-      <View spacer={true} />
+      <VSpacer size={16} />
       <PaymentMethodRepresentationComponent {...props.representation} />
-      <View spacer={true} />
+      <VSpacer size={16} />
       <Markdown>{getBody(props.type)}</Markdown>
     </View>
   );

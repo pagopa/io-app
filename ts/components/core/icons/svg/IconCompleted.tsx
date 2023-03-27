@@ -2,11 +2,13 @@ import React from "react";
 import { Svg, Path } from "react-native-svg";
 import { SVGIconProps } from "../Icon";
 
-const IconCompleted = ({ size, color }: SVGIconProps) => (
-  <Svg width={size} height={size} viewBox="0 0 24 24">
+const IconCompleted = ({ size, style }: SVGIconProps) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24" style={style}>
     <Path
-      d="M16.2 8.137a1.176 1.176 0 0 1 1.69 1.633l-.09.093-6.47 6a1.177 1.177 0 0 1-1.492.089l-.109-.09L6.2 12.59a1.176 1.176 0 0 1 1.501-1.807l.099.082 2.729 2.53L16.2 8.137Z"
-      fill={color}
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M21.7071 5.29289c.3905.39053.3905 1.02369 0 1.41422L10.4142 18c-.78103.781-2.04736.7811-2.82841 0l-5.2929-5.2929c-.39052-.3905-.39052-1.0237 0-1.4142.39053-.3905 1.02369-.3905 1.41422 0L9 16.5858 20.2929 5.29289c.3905-.39052 1.0237-.39052 1.4142 0Z"
+      fill="currentColor"
     />
   </Svg>
 );

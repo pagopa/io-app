@@ -1,9 +1,9 @@
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { ActionSheet, Content, View } from "native-base";
+import { ActionSheet, Content } from "native-base";
 import * as React from "react";
-import { Alert, SafeAreaView, StyleSheet, Text } from "react-native";
+import { View, Alert, SafeAreaView, StyleSheet, Text } from "react-native";
 import { connect } from "react-redux";
 import { ImportoEuroCents } from "../../../../definitions/backend/ImportoEuroCents";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
@@ -12,6 +12,7 @@ import CardIcon from "../../../../img/wallet/card.svg";
 import BancomatPayLogo from "../../../../img/wallet/payment-methods/bancomat_pay.svg";
 import PaypalLogo from "../../../../img/wallet/payment-methods/paypal/paypal_logo.svg";
 import TagIcon from "../../../../img/wallet/tag.svg";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { H1 } from "../../../components/core/typography/H1";
 import { H3 } from "../../../components/core/typography/H3";
 import { H4 } from "../../../components/core/typography/H4";
@@ -387,7 +388,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
       <SafeAreaView style={styles.flex}>
         <Content noPadded={true}>
           <View style={IOStyles.horizontalContentPadding}>
-            <View spacer />
+            <VSpacer size={16} />
 
             <View
               style={styles.totalContainer}
@@ -401,7 +402,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
               <H1>{formattedTotal}</H1>
             </View>
 
-            <View spacer large />
+            <VSpacer size={24} />
 
             <View style={styles.iconRow}>
               <IconFont
@@ -421,7 +422,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
               </H3>
             </View>
 
-            <View spacer />
+            <VSpacer size={16} />
 
             <View
               accessibilityLabel={`${paymentReason}, ${formattedSingleAmount}`}
@@ -436,7 +437,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
               </LabelSmall>
             </View>
 
-            <View spacer large />
+            <VSpacer size={24} />
 
             <View style={styles.iconRow}>
               <CardIcon width={20} height={20} />
@@ -450,7 +451,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
               </H3>
             </View>
 
-            <View spacer />
+            <VSpacer size={16} />
 
             <SelectionBox
               logo={paymentMethodInfo.logo}
@@ -463,7 +464,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
               }, ${I18n.t("wallet.ConfirmPayment.accessibility.edit")}`}
             />
 
-            <View spacer large />
+            <VSpacer size={24} />
 
             <View style={styles.iconRow}>
               <TagIcon width={20} height={20} />
@@ -477,7 +478,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
               </H3>
             </View>
 
-            <View spacer />
+            <VSpacer size={16} />
 
             <SelectionBox
               mainText={formattedFees}
@@ -501,7 +502,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
 
             {isPayingWithPaypal && privacyUrl && (
               <>
-                <View spacer={true} />
+                <VSpacer size={16} />
 
                 <Text
                   onPress={() => openWebUrl(privacyUrl)}
@@ -522,7 +523,7 @@ const ConfirmPaymentMethodScreen: React.FC<Props> = (props: Props) => {
               </>
             )}
 
-            <View spacer extralarge />
+            <VSpacer size={40} />
           </View>
         </Content>
 

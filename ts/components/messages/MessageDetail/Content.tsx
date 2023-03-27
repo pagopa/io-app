@@ -1,12 +1,12 @@
-import I18n from "i18n-js";
-import { Text as NBText, View as NBView } from "native-base";
+import { Text as NBText } from "native-base";
 import React from "react";
 import { StyleSheet, View } from "react-native";
-
+import I18n from "../../../i18n";
 import { UIMessage } from "../../../store/reducers/entities/messages/types";
 import customVariables from "../../../theme/variables";
 import { convertDateTimeToWordDistance } from "../../../utils/convertDateToWordDistance";
 import CopyButtonComponent from "../../CopyButtonComponent";
+import { VSpacer } from "../../core/spacer/Spacer";
 import { Link } from "../../core/typography/Link";
 import { IOColors } from "../../core/variables/IOColors";
 import EmailCallCTA from "../../screens/EmailCallCTA";
@@ -79,13 +79,13 @@ const Content = ({ message, goToServiceDetail, serviceContacts }: Props) => {
 
       {hasEmailOrPhone && (
         <>
-          <NBView spacer={true} />
+          <VSpacer size={16} />
 
           <NBText bold={true}>{I18n.t("messageDetails.question")}</NBText>
-          <NBView spacer={true} xsmall={true} />
+          <VSpacer size={4} />
 
           <NBText>{I18n.t("messageDetails.answer")}</NBText>
-          <NBView spacer={true} />
+          <VSpacer size={16} />
 
           <View style={styles.row}>
             <NBText style={styles.flex}>{`${I18n.t("messageDetails.id")} ${
@@ -93,10 +93,10 @@ const Content = ({ message, goToServiceDetail, serviceContacts }: Props) => {
             }`}</NBText>
             <CopyButtonComponent textToCopy={textToCopy} />
           </View>
-          <NBView spacer={true} />
+          <VSpacer size={16} />
 
           <EmailCallCTA phone={phone} email={email} />
-          <NBView spacer={true} small={true} />
+          <VSpacer size={8} />
         </>
       )}
     </View>

@@ -1,6 +1,7 @@
-import { Container, Content, Text as NBText, View } from "native-base";
+import { Container, Content, Text as NBText } from "native-base";
 import * as React from "react";
 import {
+  View,
   Alert,
   AlertButton,
   Image,
@@ -9,6 +10,7 @@ import {
   StyleSheet
 } from "react-native";
 import image from "../../../img/rooted/broken-phone.png";
+import { VSpacer } from "../../components/core/spacer/Spacer";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import { BlockButtonProps } from "../../components/ui/BlockButtons";
@@ -127,12 +129,12 @@ const RootedDeviceModal: React.FunctionComponent<Props> = (props: Props) => {
           <Content>
             <View style={styles.main}>
               <Image source={image} resizeMode="contain" style={styles.image} />
-              <View spacer={true} large={true} />
+              <VSpacer size={24} />
               <NBText style={styles.title} bold={true} dark={true}>
                 {I18n.t("rooted.title")}
               </NBText>
             </View>
-            <View spacer={true} small={true} />
+            <VSpacer size={8} />
             <Markdown
               cssStyle={CSS_STYLE}
               onLoadEnd={onMarkdownLoaded}

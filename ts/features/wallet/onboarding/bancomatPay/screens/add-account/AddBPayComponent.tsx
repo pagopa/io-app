@@ -1,6 +1,5 @@
-import { View } from "native-base";
 import * as React from "react";
-import { SafeAreaView, StyleSheet } from "react-native";
+import { View, SafeAreaView, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { connect } from "react-redux";
 import { InitializedProfile } from "../../../../../../../definitions/backend/InitializedProfile";
@@ -18,6 +17,10 @@ import {
 import { abiListSelector } from "../../../store/abi";
 import { BPay } from "../../../../../../../definitions/pagopa/BPay";
 import BPayCard from "../../../../bancomatpay/component/BPayCard";
+import {
+  HSpacer,
+  VSpacer
+} from "../../../../../../components/core/spacer/Spacer";
 
 type Props = {
   account: BPay;
@@ -39,13 +42,13 @@ const styles = StyleSheet.create({
 
 const AddBPayComponent: React.FunctionComponent<Props> = (props: Props) => (
   <BaseScreenComponent
-    customGoBack={<View hspacer={true} spacer={true} />}
+    customGoBack={<HSpacer size={16} />}
     headerTitle={I18n.t("wallet.onboarding.bPay.headerTitle")}
     contextualHelp={props.contextualHelp}
   >
     <SafeAreaView style={IOStyles.flex}>
       <ScrollView style={IOStyles.flex}>
-        <View spacer={true} />
+        <VSpacer size={16} />
         <View
           style={[
             styles.container,
@@ -56,17 +59,17 @@ const AddBPayComponent: React.FunctionComponent<Props> = (props: Props) => (
           <H1 style={styles.title}>
             {I18n.t("wallet.onboarding.bPay.add.screenTitle")}
           </H1>
-          <View spacer small />
+          <VSpacer size={8} />
           <H4 weight={"Regular"} style={styles.flexStart}>
             {I18n.t("wallet.onboarding.bPay.add.label", {
               current: props.currentIndex + 1,
               length: props.accountsNumber
             })}
           </H4>
-          <View spacer={true} large={true} />
+          <VSpacer size={24} />
           <BPayCard phone={props.account.numberObfuscated} />
         </View>
-        <View spacer={true} />
+        <VSpacer size={16} />
       </ScrollView>
       <FooterWithButtons
         type={"TwoButtonsInlineThird"}

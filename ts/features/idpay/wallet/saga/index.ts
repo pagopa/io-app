@@ -1,43 +1,89 @@
 import { SagaIterator } from "redux-saga";
-import { call, takeLatest, select } from "typed-redux-saga/macro";
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
-import { createIDPayWalletClient } from "../api/client";
-import {
-  IDPAY_API_TEST_TOKEN,
-  IDPAY_API_UAT_BASEURL
-} from "../../../../config";
-import { idPayWalletGet } from "../store/actions";
-import { waitBackoffError } from "../../../../utils/backoffError";
-import { preferredLanguageSelector } from "../../../../store/reducers/persistedPreferences";
+import { call, takeEvery, takeLatest } from "typed-redux-saga/macro";
 import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
-import { fromLocaleToPreferredLanguage } from "../../../../utils/locale";
+import { waitBackoffError } from "../../../../utils/backoffError";
+import { IDPayClient } from "../../common/api/client";
+import {
+  IdPayInitiativesFromInstrumentPayloadType,
+  IdpayInitiativesInstrumentDeletePayloadType,
+  IdpayInitiativesInstrumentEnrollPayloadType,
+  idPayInitiativesFromInstrumentGet,
+  idPayWalletGet,
+  idpayInitiativesInstrumentDelete,
+  idpayInitiativesInstrumentEnroll
+} from "../store/actions";
+import { handleGetIDPayInitiativesFromInstrument } from "./handleGetIDPayInitiativesFromInstrument";
 import { handleGetIDPayWallet } from "./handleGetIDPayWallet";
+import {
+  handleInitiativeInstrumentDelete,
+  handleInitiativeInstrumentEnrollment
+} from "./handleInitiativeInstrumentEnrollment";
 
 /**
  * Handle the IDPay Wallet requests
  * @param bearerToken
  */
-export function* watchIDPayWalletSaga(bearerToken: string): SagaIterator {
-  const idPayWalletClient = createIDPayWalletClient(IDPAY_API_UAT_BASEURL);
-  const token = IDPAY_API_TEST_TOKEN ?? bearerToken;
-  const language = yield* select(preferredLanguageSelector);
-
-  const preferredLanguage = pipe(
-    language,
-    O.map(fromLocaleToPreferredLanguage),
-    O.getOrElse(() => PreferredLanguageEnum.it_IT)
-  );
-
+export function* watchIDPayWalletSaga(
+  idPayClient: IDPayClient,
+  token: string,
+  preferredLanguage: PreferredLanguageEnum
+): SagaIterator {
   // handle the request of getting id pay wallet
   yield* takeLatest(idPayWalletGet.request, function* () {
     // wait backoff time if there were previous errors
     yield* call(waitBackoffError, idPayWalletGet.failure);
     yield* call(
       handleGetIDPayWallet,
-      idPayWalletClient.getWallet,
+      idPayClient.getWallet,
       token,
       preferredLanguage
     );
   });
+
+  yield* takeLatest(
+    idPayInitiativesFromInstrumentGet.request,
+    function* (action: { payload: IdPayInitiativesFromInstrumentPayloadType }) {
+      // wait backoff time if there were previous errors
+      yield* call(waitBackoffError, idPayInitiativesFromInstrumentGet.failure);
+      yield* call(
+        handleGetIDPayInitiativesFromInstrument,
+        idPayClient.getInitiativesWithInstrument,
+        token,
+        preferredLanguage,
+        action.payload
+      );
+    }
+  );
+  yield* takeEvery(
+    idpayInitiativesInstrumentEnroll.request,
+    function* (action: {
+      payload: IdpayInitiativesInstrumentEnrollPayloadType;
+    }) {
+      // wait backoff time if there were previous errors
+      yield* call(waitBackoffError, idpayInitiativesInstrumentEnroll.failure);
+      yield* call(
+        handleInitiativeInstrumentEnrollment,
+        idPayClient.enrollInstrument,
+        token,
+        preferredLanguage,
+        action.payload
+      );
+    }
+  );
+  yield* takeEvery(
+    idpayInitiativesInstrumentDelete.request,
+    function* (action: {
+      payload: IdpayInitiativesInstrumentDeletePayloadType;
+    }) {
+      // wait backoff time if there were previous errors
+      yield* call(waitBackoffError, idpayInitiativesInstrumentEnroll.failure);
+      yield* call(
+        handleInitiativeInstrumentDelete,
+        idPayClient.deleteInstrument,
+        token,
+        preferredLanguage,
+        action.payload
+      );
+    }
+  );
 }

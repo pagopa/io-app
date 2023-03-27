@@ -89,7 +89,7 @@ export const downloadsReducer = (
 /**
  * From attachment to the download pot
  */
-export const downloadFromAttachmentSelector = createSelector(
+export const downloadPotForMessageAttachmentSelector = createSelector(
   [
     (state: GlobalState) => state.entities.messages.downloads,
     (

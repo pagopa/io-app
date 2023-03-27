@@ -1,17 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MedicalPrescriptionAttachments component when an attachment is present and has mimeType=image/svg+xml should render the SVG 1`] = `
-<View
-  style={Object {}}
->
+<View>
   <View
     style={
-      Array [
-        Object {},
-        Object {
-          "paddingHorizontal": 24,
-        },
-      ]
+      Object {
+        "paddingHorizontal": 24,
+      }
     }
   >
     <Text
@@ -50,14 +45,15 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
       WHO
     </Text>
     <View
-      spacer={true}
-      style={Object {}}
-      xsmall={true}
+      style={
+        Object {
+          "height": 4,
+        }
+      }
     />
     <View
       style={
         Array [
-          Object {},
           Object {
             "backgroundColor": "#CCD4DC",
           },
@@ -69,23 +65,20 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
       }
     />
   </View>
-  <View
-    style={Object {}}
-  >
+  <View>
     <View
       style={
-        Array [
-          Object {},
-          Object {
-            "paddingHorizontal": 24,
-          },
-        ]
+        Object {
+          "paddingHorizontal": 24,
+        }
       }
     >
       <View
-        small={true}
-        spacer={true}
-        style={Object {}}
+        style={
+          Object {
+            "height": 8,
+          }
+        }
       />
       <Text
         style={
@@ -153,14 +146,16 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
         </RNSVGGroup>
       </RNSVGSvgView>
       <View
-        spacer={true}
-        style={Object {}}
+        style={
+          Object {
+            "height": 16,
+          }
+        }
       />
     </View>
     <View
       style={
         Array [
-          Object {},
           Object {
             "backgroundColor": "#CCD4DC",
           },
@@ -178,7 +173,6 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
   <View
     style={
       Array [
-        Object {},
         Object {
           "backgroundColor": "#CCD4DC",
         },
@@ -193,8 +187,11 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
     }
   />
   <View
-    spacer={true}
-    style={Object {}}
+    style={
+      Object {
+        "height": 16,
+      }
+    }
   />
   <Text
     style={
@@ -221,17 +218,12 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
 `;
 
 exports[`MedicalPrescriptionAttachments component when an attachment is present and prescriptionData is present should render it 1`] = `
-<View
-  style={Object {}}
->
+<View>
   <View
     style={
-      Array [
-        Object {},
-        Object {
-          "paddingHorizontal": 24,
-        },
-      ]
+      Object {
+        "paddingHorizontal": 24,
+      }
     }
   >
     <Text
@@ -270,14 +262,15 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
       WHO
     </Text>
     <View
-      spacer={true}
-      style={Object {}}
-      xsmall={true}
+      style={
+        Object {
+          "height": 4,
+        }
+      }
     />
     <View
       style={
         Array [
-          Object {},
           Object {
             "backgroundColor": "#CCD4DC",
           },
@@ -292,7 +285,6 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
   <View
     style={
       Array [
-        Object {},
         Object {
           "backgroundColor": "#CCD4DC",
         },
@@ -307,8 +299,11 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
     }
   />
   <View
-    spacer={true}
-    style={Object {}}
+    style={
+      Object {
+        "height": 16,
+      }
+    }
   />
   <Text
     style={
@@ -335,17 +330,12 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
 `;
 
 exports[`MedicalPrescriptionAttachments component when an attachment is present should render it 1`] = `
-<View
-  style={Object {}}
->
+<View>
   <View
     style={
-      Array [
-        Object {},
-        Object {
-          "paddingHorizontal": 24,
-        },
-      ]
+      Object {
+        "paddingHorizontal": 24,
+      }
     }
   >
     <Text
@@ -384,14 +374,15 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
       WHO
     </Text>
     <View
-      spacer={true}
-      style={Object {}}
-      xsmall={true}
+      style={
+        Object {
+          "height": 4,
+        }
+      }
     />
     <View
       style={
         Array [
-          Object {},
           Object {
             "backgroundColor": "#CCD4DC",
           },
@@ -406,7 +397,6 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
   <View
     style={
       Array [
-        Object {},
         Object {
           "backgroundColor": "#CCD4DC",
         },
@@ -421,8 +411,11 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
     }
   />
   <View
-    spacer={true}
-    style={Object {}}
+    style={
+      Object {
+        "height": 16,
+      }
+    }
   />
   <Text
     style={
@@ -449,17 +442,12 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
 `;
 
 exports[`MedicalPrescriptionAttachments component when the organization name is defined should render it 1`] = `
-<View
-  style={Object {}}
->
+<View>
   <View
     style={
-      Array [
-        Object {},
-        Object {
-          "paddingHorizontal": 24,
-        },
-      ]
+      Object {
+        "paddingHorizontal": 24,
+      }
     }
   >
     <Text
@@ -498,14 +486,15 @@ exports[`MedicalPrescriptionAttachments component when the organization name is 
       WHO
     </Text>
     <View
-      spacer={true}
-      style={Object {}}
-      xsmall={true}
+      style={
+        Object {
+          "height": 4,
+        }
+      }
     />
     <View
       style={
         Array [
-          Object {},
           Object {
             "backgroundColor": "#CCD4DC",
           },
@@ -520,7 +509,6 @@ exports[`MedicalPrescriptionAttachments component when the organization name is 
   <View
     style={
       Array [
-        Object {},
         Object {
           "backgroundColor": "#CCD4DC",
         },
@@ -535,8 +523,11 @@ exports[`MedicalPrescriptionAttachments component when the organization name is 
     }
   />
   <View
-    spacer={true}
-    style={Object {}}
+    style={
+      Object {
+        "height": 16,
+      }
+    }
   />
   <Text
     style={
@@ -563,17 +554,12 @@ exports[`MedicalPrescriptionAttachments component when the organization name is 
 `;
 
 exports[`MedicalPrescriptionAttachments component with default properties should render 1`] = `
-<View
-  style={Object {}}
->
+<View>
   <View
     style={
-      Array [
-        Object {},
-        Object {
-          "paddingHorizontal": 24,
-        },
-      ]
+      Object {
+        "paddingHorizontal": 24,
+      }
     }
   >
     <Text
@@ -595,14 +581,15 @@ exports[`MedicalPrescriptionAttachments component with default properties should
       NATIONAL HEALTH SERVICE
     </Text>
     <View
-      spacer={true}
-      style={Object {}}
-      xsmall={true}
+      style={
+        Object {
+          "height": 4,
+        }
+      }
     />
     <View
       style={
         Array [
-          Object {},
           Object {
             "backgroundColor": "#CCD4DC",
           },
@@ -617,7 +604,6 @@ exports[`MedicalPrescriptionAttachments component with default properties should
   <View
     style={
       Array [
-        Object {},
         Object {
           "backgroundColor": "#CCD4DC",
         },
@@ -632,8 +618,11 @@ exports[`MedicalPrescriptionAttachments component with default properties should
     }
   />
   <View
-    spacer={true}
-    style={Object {}}
+    style={
+      Object {
+        "height": 16,
+      }
+    }
   />
   <Text
     style={

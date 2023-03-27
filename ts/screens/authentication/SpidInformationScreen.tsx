@@ -1,12 +1,14 @@
 /**
  * A screen where the user can know more about spid and access to spid.gov.it
  */
-import { Col, Content, Grid, Row, Text as NBText, View } from "native-base";
+import { Col, Content, Grid, Row, Text as NBText } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
+import { VSpacer } from "../../components/core/spacer/Spacer";
 import { H1 } from "../../components/core/typography/H1";
+import { IOStyles } from "../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import { openLink } from "../../components/ui/Markdown/handlers/link";
 import I18n from "../../i18n";
@@ -58,14 +60,14 @@ class SpidInformationScreen extends React.Component<Props, never> {
             {I18n.t("authentication.spid_information.contentTitle")}
           </H1>
 
-          <View spacer={true} />
+          <VSpacer size={16} />
           <NBText>
             {I18n.t("authentication.spid_information.paragraph1")}
           </NBText>
-          <View spacer={true} extralarge={true} />
+          <VSpacer size={40} />
 
           <H1>{I18n.t("authentication.spid_information.subtitle")}</H1>
-          <View spacer={true} />
+          <VSpacer size={16} />
           <NBText>
             {I18n.t("authentication.spid_information.paragraph2-part1")}
             <NBText bold={true}>
@@ -75,7 +77,7 @@ class SpidInformationScreen extends React.Component<Props, never> {
               {` ${I18n.t("authentication.spid_information.paragraph2-part2")}`}
             </NBText>
           </NBText>
-          <View spacer={true} />
+          <VSpacer size={16} />
           <Grid>
             {this.getValueContent(
               I18n.t("authentication.spid_information.point1-value"),
@@ -97,10 +99,10 @@ class SpidInformationScreen extends React.Component<Props, never> {
               I18n.t("authentication.spid_information.point4-content")
             )}
           </Grid>
-          <View spacer={true} extralarge={true} />
+          <VSpacer size={40} />
         </Content>
 
-        <View footer={true}>
+        <View style={IOStyles.footer}>
           <ButtonDefaultOpacity
             block={true}
             primary={true}

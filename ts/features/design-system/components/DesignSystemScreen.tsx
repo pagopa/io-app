@@ -1,17 +1,35 @@
 import * as React from "react";
-import { View, ScrollView } from "react-native";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
+import { ScrollView, View } from "react-native";
+import { ContentWrapper } from "../../../components/core/ContentWrapper";
+import { IOThemeContext } from "../../../components/core/variables/IOColors";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 
 type Props = {
   title: string;
   children: React.ReactNode;
+  noMargin?: boolean;
 };
 
-export const DesignSystemScreen = ({ title, children }: Props) => (
+export const DesignSystemScreen = ({
+  title,
+  children,
+  noMargin = false
+}: Props) => (
   <BaseScreenComponent goBack={true} headerTitle={title}>
-    <ScrollView>
-      <View style={IOStyles.horizontalContentPadding}>{children}</View>
-    </ScrollView>
+    <IOThemeContext.Consumer>
+      {theme => (
+        <ScrollView
+          style={{
+            backgroundColor: theme["appBackground-primary"]
+          }}
+        >
+          {noMargin ? (
+            <View>{children}</View>
+          ) : (
+            <ContentWrapper>{children}</ContentWrapper>
+          )}
+        </ScrollView>
+      )}
+    </IOThemeContext.Consumer>
   </BaseScreenComponent>
 );

@@ -1,12 +1,13 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Option } from "fp-ts/lib/Option";
-import { Text as NBText, View } from "native-base";
+import { Text as NBText } from "native-base";
 import React, { ComponentProps } from "react";
-import { Image, ImageSourcePropType, StyleSheet } from "react-native";
+import { View, Image, ImageSourcePropType, StyleSheet } from "react-native";
 import I18n from "../i18n";
 import customVariables from "../theme/variables";
 import ChooserList from "./ChooserList";
 import ChooserListItem from "./ChooserListItem";
+import { VSpacer } from "./core/spacer/Spacer";
 
 type OwnProps<T> = {
   listState: ReadonlyArray<T>;
@@ -83,7 +84,7 @@ class ChooserListSearch<T> extends React.PureComponent<Props<T>, State<T>> {
     const { noSearchResultsSourceIcon, noSearchResultsSubtitle } = this.props;
     return (
       <View style={styles.emptyContentWrapper}>
-        <View spacer={true} />
+        <VSpacer size={16} />
 
         <NBText style={styles.emptyTitle} bold={true}>
           {I18n.t("global.search.noResultsTitle")}
@@ -102,7 +103,7 @@ class ChooserListSearch<T> extends React.PureComponent<Props<T>, State<T>> {
               : require("../../img/search/beer-mug.png")
           }
         />
-        <View spacer={true} />
+        <VSpacer size={16} />
       </View>
     );
   }

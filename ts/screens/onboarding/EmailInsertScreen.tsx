@@ -8,9 +8,10 @@ import { StackActions } from "@react-navigation/native";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Content, Form, Text as NBText, View } from "native-base";
+import { Content, Form, Text as NBText } from "native-base";
 import * as React from "react";
 import {
+  View,
   Alert,
   Keyboard,
   Platform,
@@ -18,6 +19,7 @@ import {
   StyleSheet
 } from "react-native";
 import { connect } from "react-redux";
+import { VSpacer } from "../../components/core/spacer/Spacer";
 import { H1 } from "../../components/core/typography/H1";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { LabelledItem } from "../../components/LabelledItem";
@@ -148,7 +150,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
   private handleGoBack = () => {
     // goback if the onboarding is completed
     if (isOnboardingCompleted()) {
-      this.props.navigation.goBack();
+      this.setState({ isMounted: false }, () => this.props.navigation.goBack());
     }
     // if the onboarding is not completed and the email is set, force goback with a reset (user could edit his email and go back without saving)
     // see https://www.pivotaltracker.com/story/show/171424350
@@ -270,7 +272,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
                 ? I18n.t("email.edit.title")
                 : I18n.t("email.insert.title")}
             </H1>
-            <View spacer={true} />
+            <VSpacer size={16} />
             <View style={styles.horizontalPadding}>
               <NBText>
                 {isFromProfileSection
@@ -288,7 +290,7 @@ class EmailInsertScreen extends React.PureComponent<Props, State> {
                 )}
               </NBText>
             </View>
-            <View spacer={true} />
+            <VSpacer size={16} />
             <View style={styles.horizontalPadding}>
               <Form>
                 <LabelledItem

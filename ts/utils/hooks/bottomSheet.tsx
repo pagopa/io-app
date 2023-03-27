@@ -5,8 +5,7 @@ import {
   BottomSheetScrollView,
   useBottomSheetModal
 } from "@gorhom/bottom-sheet";
-import { Dimensions, Modal, Platform } from "react-native";
-import { View } from "native-base";
+import { View, Dimensions, Modal, Platform } from "react-native";
 import { BottomSheetFooterProps } from "@gorhom/bottom-sheet/lib/typescript/components/bottomSheetFooter";
 import { BlurredBackgroundComponent } from "../../components/bottomSheet/BlurredBackgroundComponent";
 import { BottomSheetHeader } from "../../components/bottomSheet/BottomSheetHeader";
@@ -14,6 +13,7 @@ import { useHardwareBackButtonToDismiss } from "../../hooks/useHardwareBackButto
 import { TestID } from "../../types/WithTestID";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { isScreenReaderEnabled } from "../accessibility";
+import { VSpacer } from "../../components/core/spacer/Spacer";
 
 type Props = {
   children: React.ReactNode;
@@ -127,7 +127,7 @@ export const useIOBottomSheetModal = (
         footer !== undefined ? (
           <>
             {footer}
-            <View spacer />
+            <VSpacer size={16} />
           </>
         ) : null
       }
@@ -155,10 +155,10 @@ export const useIOBottomSheetModal = (
             {footer !== undefined ? (
               <>
                 {footer}
-                <View spacer />
+                <VSpacer size={16} />
               </>
             ) : null}
-            <View spacer />
+            <VSpacer size={16} />
           </>
         </Modal>
       ) : (

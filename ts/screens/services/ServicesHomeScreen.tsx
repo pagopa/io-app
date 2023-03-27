@@ -24,9 +24,10 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Text as NBText, View } from "native-base";
+import { Text as NBText } from "native-base";
 import * as React from "react";
 import {
+  View,
   Animated,
   Image,
   KeyboardAvoidingView,
@@ -35,6 +36,7 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import { VSpacer } from "../../components/core/spacer/Spacer";
 import { Label } from "../../components/core/typography/Label";
 import { IOColors } from "../../components/core/variables/IOColors";
 import { IOStyles } from "../../components/core/variables/IOStyles";
@@ -241,12 +243,12 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     return (
       <View style={[styles.center, styles.padded, IOStyles.flex]}>
         {Platform.OS === "ios" && <View style={styles.customSpacer} />}
-        <View spacer={true} extralarge={true} />
-        <View spacer={true} extralarge={true} />
+        <VSpacer size={40} />
+        <VSpacer size={40} />
         <Image
           source={require("../../../img/services/icon-loading-services.png")}
         />
-        <View spacer={true} extralarge={true} />
+        <VSpacer size={40} />
         <NBText bold={true}>{I18n.t("services.loading.title")}</NBText>
         <NBText>{I18n.t("services.loading.subtitle")}</NBText>
       </View>

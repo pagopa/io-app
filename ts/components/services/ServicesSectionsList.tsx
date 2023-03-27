@@ -1,9 +1,10 @@
 /**
  * A component to render a list of services organized in sections, one for each organization.
  */
-import { Text as NBText, View } from "native-base";
+import { Text as NBText } from "native-base";
 import React from "react";
 import {
+  View,
   Image,
   NativeScrollEvent,
   NativeSyntheticEvent,
@@ -13,6 +14,8 @@ import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import { ServicesSectionState } from "../../store/reducers/entities/services";
 import customVariables from "../../theme/variables";
+import { VSpacer } from "../core/spacer/Spacer";
+import { IOStyles } from "../core/variables/IOStyles";
 import ServiceList from "./ServiceList";
 
 type AnimatedProps = {
@@ -51,7 +54,7 @@ const styles = StyleSheet.create({
 // component used when the list is empty
 const emptyListComponent = () => (
   <View style={styles.headerContentWrapper}>
-    <View spacer={true} large={true} />
+    <VSpacer size={24} />
     <Image
       source={require("../../../img/services/icon-loading-services.png")}
     />
@@ -62,7 +65,10 @@ const emptyListComponent = () => (
 );
 
 const ServicesSectionsList = (props: Props) => (
-  <View style={styles.contentWrapper}>
+  <View style={[styles.contentWrapper, IOStyles.topListBorderBelowTabsStyle]}>
+    {/* TODO: This is a workaround to make sure that the list is not placed under the tab bar
+    https://pagopa.atlassian.net/jira/software/projects/IOAPPFD0/boards/313?selectedIssue=IOAPPFD0-40 */}
+    <View style={{ marginTop: 0.1 }} />
     <ServiceList
       animated={props.animated}
       sections={props.sections}

@@ -1,6 +1,5 @@
 import { useRoute } from "@react-navigation/core";
 import { RouteProp } from "@react-navigation/native";
-import { View as NBView } from "native-base";
 import React from "react";
 import {
   ActivityIndicator,
@@ -9,6 +8,9 @@ import {
   StyleSheet,
   View
 } from "react-native";
+import { OperationListDTO } from "../../../../../../definitions/idpay/OperationListDTO";
+import { OperationTypeEnum as TransactionOperationTypeEnum } from "../../../../../../definitions/idpay/TransactionOperationDTO";
+import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -19,11 +21,12 @@ import customVariables from "../../../../../theme/variables";
 import { formatDateAsLocal } from "../../../../../utils/dates";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { showToast } from "../../../../../utils/showToast";
+import { useTimelineDetailsBottomSheet } from "../components/TimelineDetailsBottomSheet";
 import { TimelineOperationListItem } from "../components/TimelineOperationListItem";
 import { IDPayDetailsParamsList } from "../navigation";
 import { useInitiativeTimelineFetcher } from "../utils/hooks";
-import { OperationListDTO } from "../../../../../../definitions/idpay/timeline/OperationListDTO";
 export type OperationsListScreenParams = { initiativeId: string };
+
 type OperationsListScreenRouteProps = RouteProp<
   IDPayDetailsParamsList,
   "IDPAY_DETAILS_TIMELINE"
@@ -42,12 +45,6 @@ const TimelineLoader = () => (
     testID={"activityIndicator"}
   />
 );
-
-const renderItem = ({ item }: { item: OperationListDTO }) => (
-  <TimelineOperationListItem operation={item} />
-);
-
-const keyExtractor = (operation: OperationListDTO) => operation.operationId;
 
 export const OperationsListScreen = () => {
   const route = useRoute<OperationsListScreenRouteProps>();
@@ -82,6 +79,15 @@ export const OperationsListScreen = () => {
     ? timeline.length === 0 && shouldRenderLoader
     : true;
 
+  const detailsBottomSheet = useTimelineDetailsBottomSheet(initiativeId);
+
+  const showOperationDetailsBottomSheet = (operation: OperationListDTO) => {
+    if (operation.operationType === TransactionOperationTypeEnum.TRANSACTION) {
+      // Currently we only show details for transaction operations
+      detailsBottomSheet.present(operation.operationId);
+    }
+  };
+
   const renderContent = () => (
     <SafeAreaView>
       <View style={IOStyles.horizontalContentPadding}>
@@ -101,13 +107,18 @@ export const OperationsListScreen = () => {
           </Body>
         )}
       </View>
-      <NBView spacer large />
+      <VSpacer size={24} />
       <FlatList
         style={IOStyles.horizontalContentPadding}
         contentContainerStyle={styles.listContainer}
         data={timeline}
-        keyExtractor={keyExtractor}
-        renderItem={renderItem}
+        keyExtractor={item => item.operationId}
+        renderItem={({ item }) => (
+          <TimelineOperationListItem
+            operation={item}
+            onPress={() => showOperationDetailsBottomSheet(item)}
+          />
+        )}
         onEndReached={fetchNextPage}
         onEndReachedThreshold={0.5}
         onRefresh={refresh}
@@ -118,16 +129,19 @@ export const OperationsListScreen = () => {
   );
 
   return (
-    <BaseScreenComponent
-      headerTitle={I18n.t(
-        "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.header"
-      )}
-      goBack={true}
-    >
-      <LoadingSpinnerOverlay isLoading={isFirstLoading} loadingOpacity={100}>
-        {isFirstLoading ? null : renderContent()}
-      </LoadingSpinnerOverlay>
-    </BaseScreenComponent>
+    <>
+      <BaseScreenComponent
+        headerTitle={I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.header"
+        )}
+        goBack={true}
+      >
+        <LoadingSpinnerOverlay isLoading={isFirstLoading} loadingOpacity={100}>
+          {isFirstLoading ? null : renderContent()}
+        </LoadingSpinnerOverlay>
+      </BaseScreenComponent>
+      {detailsBottomSheet.bottomSheet}
+    </>
   );
 };
 

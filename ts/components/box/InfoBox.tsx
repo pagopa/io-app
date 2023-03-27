@@ -1,8 +1,8 @@
-import { View } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import IconFont from "../ui/IconFont";
 import { IOColors } from "../core/variables/IOColors";
+import { HSpacer } from "../core/spacer/Spacer";
 
 type Props = {
   iconName?: string;
@@ -47,7 +47,7 @@ export const InfoBox: React.FunctionComponent<Props> = props => {
         color={iconColor}
         style={styles.icon}
       />
-      <View hspacer={true} />
+      <HSpacer size={16} />
       <View style={styles.shrink}>{props.children}</View>
     </View>
   );

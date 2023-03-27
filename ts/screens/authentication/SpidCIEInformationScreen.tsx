@@ -8,11 +8,11 @@ import {
   Row,
   Tab,
   Tabs,
-  Text as NBText,
-  View
+  Text as NBText
 } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
+import { VSpacer } from "../../components/core/spacer/Spacer";
 import { H1 } from "../../components/core/typography/H1";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
@@ -117,7 +117,7 @@ class SpidCIEInformationScreen extends React.Component<Props, State> {
               <Markdown>
                 {I18n.t("authentication.spid_information.spid")}
               </Markdown>
-              <View spacer={true} />
+              <VSpacer size={16} />
               <Grid>
                 {this.getValueContent(
                   I18n.t("authentication.spid_information.point1-value"),
@@ -139,7 +139,7 @@ class SpidCIEInformationScreen extends React.Component<Props, State> {
                   I18n.t("authentication.spid_information.point4-content")
                 )}
               </Grid>
-              <View spacer={true} extralarge={true} />
+              <VSpacer size={40} />
             </Content>
           </Tab>
           <Tab
@@ -150,7 +150,7 @@ class SpidCIEInformationScreen extends React.Component<Props, State> {
               <Markdown>
                 {I18n.t("authentication.landing.cie_information_request")}
               </Markdown>
-              <View spacer={true} extralarge={true} />
+              <VSpacer size={40} />
             </Content>
           </Tab>
         </Tabs>

@@ -1,4 +1,4 @@
-import { Content, View } from "native-base";
+import { Content } from "native-base";
 import * as React from "react";
 import { Image, SafeAreaView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
@@ -16,6 +16,7 @@ import { Dispatch } from "../../store/actions/types";
 import { logoutRequest } from "../../store/actions/authentication";
 import expiredIcon from "../../../img/wallet/errors/payment-expired-icon.png";
 import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
+import { VSpacer } from "../../components/core/spacer/Spacer";
 
 type Props = IOStackNavigationRouteProps<AppParamsList> &
   ReturnType<typeof mapDispatchToProps>;
@@ -52,7 +53,7 @@ const RemoveAccountSuccess: React.FunctionComponent<Props> = props => {
       <SafeAreaView style={IOStyles.flex}>
         <Content contentContainerStyle={styles.content}>
           <Image source={expiredIcon} />
-          <View spacer={true} />
+          <VSpacer size={16} />
           <H2>{I18n.t("profile.main.privacy.removeAccount.success.title")}</H2>
           <H4 weight="Regular" style={{ textAlign: "center" }}>
             {I18n.t("profile.main.privacy.removeAccount.success.body")}

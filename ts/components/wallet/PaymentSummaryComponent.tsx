@@ -1,11 +1,12 @@
-import { Text as NBText, View } from "native-base";
+import { Text as NBText } from "native-base";
 import * as React from "react";
-import { Image, ImageSourcePropType, StyleSheet } from "react-native";
+import { View, Image, ImageSourcePropType, StyleSheet } from "react-native";
 import I18n from "../../i18n";
 import { isStringNullyOrEmpty } from "../../utils/strings";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import { BadgeComponent } from "../screens/BadgeComponent";
 import { IOColors } from "../core/variables/IOColors";
+import { HSpacer, VSpacer } from "../core/spacer/Spacer";
 
 type Props = Readonly<{
   title: string;
@@ -69,7 +70,7 @@ export const PaymentSummaryComponent = (props: Props) => {
         >
           {value}
         </NBText>
-        <View spacer={true} />
+        <VSpacer size={16} />
       </React.Fragment>
     );
   };
@@ -78,10 +79,10 @@ export const PaymentSummaryComponent = (props: Props) => {
     <React.Fragment>
       <View style={styles.paymentOutcome}>
         <BadgeComponent color={props.paymentStatus.color} />
-        <View hspacer={true} small={true} />
+        <HSpacer size={8} />
         <NBText>{props.paymentStatus.description}</NBText>
       </View>
-      <View spacer={true} />
+      <VSpacer size={16} />
     </React.Fragment>
   );
 
@@ -95,9 +96,9 @@ export const PaymentSummaryComponent = (props: Props) => {
       </NBText>
 
       {/** screen title */}
-      <View spacer={true} />
+      <VSpacer size={16} />
       <ItemSeparatorComponent noPadded={true} />
-      <View spacer={true} large={true} />
+      <VSpacer size={24} />
 
       {paymentStatus}
 

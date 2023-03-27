@@ -1,8 +1,14 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Badge, Text as NBText, View } from "native-base";
+import { Badge, Text as NBText } from "native-base";
 import * as React from "react";
-import { Image, ImageBackground, Platform, StyleSheet } from "react-native";
+import {
+  View,
+  Image,
+  ImageBackground,
+  Platform,
+  StyleSheet
+} from "react-native";
 import {
   Menu,
   MenuOption,
@@ -17,6 +23,7 @@ import {
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import IconFont from "../../../../components/ui/IconFont";
+import { HSpacer, VSpacer } from "../../../../components/core/spacer/Spacer";
 import I18n from "../../../../i18n";
 import { makeFontStyleObject } from "../../../../theme/fonts";
 import customVariables from "../../../../theme/variables";
@@ -24,6 +31,10 @@ import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { isShareEnabled } from "../../../../utils/share";
 import { maybeNotNullyString } from "../../../../utils/strings";
 import { getBonusCodeFormatted, isBonusActive } from "../utils/bonus";
+
+import bonusVacanzeBg from "../../../../../img/bonus/bonusVacanze/bonus_bg.png";
+import bonusVacanzePreviewBg from "../../../../../img/bonus/bonusVacanze/bonus_preview_bg.png";
+import bonusVacanzeWhiteLogo from "../../../../../img/bonus/bonusVacanze/logo_BonusVacanze_White.png";
 
 type Props = {
   bonus: BonusActivationWithQrCode;
@@ -126,9 +137,6 @@ const styles = StyleSheet.create({
   }
 });
 
-import bonusVacanzeBg from "../../../../../img/bonus/bonusVacanze/bonus_bg.png";
-import bonusVacanzePreviewBg from "../../../../../img/bonus/bonusVacanze/bonus_preview_bg.png";
-import bonusVacanzeWhiteLogo from "../../../../../img/bonus/bonusVacanze/logo_BonusVacanze_White.png";
 // eslint-disable-next-line sonarjs/cognitive-complexity
 const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
   const { bonus } = props;
@@ -155,11 +163,11 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
         })}
       >
         <View style={{ flexDirection: "column" }}>
-          <View spacer={true} small={true} />
+          <VSpacer size={8} />
           <NBText bold={true} style={[styles.colorWhite, styles.fontLarge]}>
             {I18n.t("bonus.bonusVacanze.name")}
           </NBText>
-          <View spacer={true} small={true} />
+          <VSpacer size={8} />
           <View style={styles.row}>
             <NBText
               bold={true}
@@ -180,7 +188,7 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
             >
               {"€"}
             </NBText>
-            <View hspacer={true} />
+            <HSpacer size={16} />
             {O.isSome(maybeStatusDescription) && (
               <Badge style={styles.badge}>
                 <NBText style={styles.statusText} semibold={true}>
@@ -189,7 +197,7 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
               </Badge>
             )}
           </View>
-          <View spacer={true} />
+          <VSpacer size={16} />
           <NBText style={styles.colorWhite}>
             {I18n.t("bonus.bonusVacanze.code")}
           </NBText>
@@ -242,7 +250,7 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
               </MenuOptions>
             </Menu>
           </View>
-          <View spacer={true} extralarge={true} />
+          <VSpacer size={40} />
           <Image source={bonusVacanzeWhiteLogo} style={styles.logo} />
         </View>
       </View>
@@ -266,7 +274,7 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
         <NBText bold={true} style={[styles.colorWhite, styles.previewName]}>
           {I18n.t("bonus.bonusVacanze.name")}
         </NBText>
-        <View hspacer={true} large={true} />
+        <HSpacer size={24} />
         <NBText
           bold={true}
           style={[

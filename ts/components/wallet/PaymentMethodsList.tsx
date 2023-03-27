@@ -4,10 +4,11 @@
  */
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Badge, ListItem, Text as NBText, View } from "native-base";
+import { Badge, ListItem, Text as NBText } from "native-base";
 import * as React from "react";
 import { FC } from "react";
 import {
+  View,
   Alert,
   FlatList,
   ListRenderItemInfo,
@@ -25,9 +26,11 @@ import {
 } from "../../store/reducers/backendStatus";
 import { GlobalState } from "../../store/reducers/types";
 import { getFullLocale } from "../../utils/locale";
+import { HSpacer, VSpacer } from "../core/spacer/Spacer";
 import { H3 } from "../core/typography/H3";
 import { H5 } from "../core/typography/H5";
 import { IOColors } from "../core/variables/IOColors";
+import { IOStyles } from "../core/variables/IOStyles";
 import { withLightModalContext } from "../helpers/withLightModalContext";
 import { statusColorMap } from "../SectionStatus";
 import IconFont from "../ui/IconFont";
@@ -158,7 +161,7 @@ const renderListItem = (
           last={itemInfo.index === paymentMethodsLength}
         >
           {itemInfo.item.icon({ width: 20, height: 20 })}
-          <View hspacer />
+          <HSpacer size={16} />
           <View style={styles.flexColumn}>
             <View style={styles.row}>
               <View>
@@ -216,21 +219,23 @@ const renderListItem = (
 
 const PaymentMethodsList: React.FunctionComponent<Props> = (props: Props) => (
   <>
-    <View spacer={true} large={true} />
-    <FlatList
-      removeClippedSubviews={false}
-      data={props.paymentMethods}
-      keyExtractor={item => item.name}
-      ListFooterComponent={<View spacer />}
-      renderItem={i =>
-        renderListItem(
-          i,
-          props.paymentMethods.filter(pm => pm.status !== "notImplemented")
-            .length,
-          props.sectionStatus
-        )
-      }
-    />
+    <VSpacer size={24} />
+    <View style={IOStyles.horizontalContentPadding}>
+      <FlatList
+        removeClippedSubviews={false}
+        data={props.paymentMethods}
+        keyExtractor={item => item.name}
+        ListFooterComponent={<VSpacer size={16} />}
+        renderItem={i =>
+          renderListItem(
+            i,
+            props.paymentMethods.filter(pm => pm.status !== "notImplemented")
+              .length,
+            props.sectionStatus
+          )
+        }
+      />
+    </View>
   </>
 );
 const mapStateToProps = (state: GlobalState) => ({

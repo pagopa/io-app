@@ -1,7 +1,6 @@
 import * as O from "fp-ts/lib/Option";
-import { View } from "native-base";
 import * as React from "react";
-import { FlatList, StyleSheet } from "react-native";
+import { View, FlatList, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { navigateToAvailableBonusScreen } from "../../features/bonus/bonusVacanze/navigation/action";
 import I18n from "../../i18n";
@@ -12,6 +11,7 @@ import { GlobalState } from "../../store/reducers/types";
 import customVariables from "../../theme/variables";
 import { useIOBottomSheetModal } from "../../utils/hooks/bottomSheet";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
+import { HSpacer } from "../core/spacer/Spacer";
 import { H1 } from "../core/typography/H1";
 import { H3 } from "../core/typography/H3";
 import { H4 } from "../core/typography/H4";
@@ -133,7 +133,7 @@ const WalletHomeHeader = (props: Props) => {
           color={IOColors.white}
           size={customVariables.fontSize2}
         />
-        <View hspacer={true} small />
+        <HSpacer size={8} />
         <H4 color={"white"}>
           {I18n.t("wallet.newPaymentMethod.add").toUpperCase()}
         </H4>

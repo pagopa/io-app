@@ -1,6 +1,5 @@
-import { View } from "native-base";
 import * as React from "react";
-import { SafeAreaView, StyleSheet } from "react-native";
+import { View, SafeAreaView, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { connect } from "react-redux";
 import { InitializedProfile } from "../../../../../../../definitions/backend/InitializedProfile";
@@ -23,6 +22,10 @@ import { abiListSelector } from "../../../store/abi";
 import { Abi } from "../../../../../../../definitions/pagopa/walletv2/Abi";
 import { IOColors } from "../../../../../../components/core/variables/IOColors";
 import { isBancomatBlocked } from "../../../../../../utils/paymentMethod";
+import {
+  HSpacer,
+  VSpacer
+} from "../../../../../../components/core/spacer/Spacer";
 
 type Props = {
   pan: Card;
@@ -53,7 +56,7 @@ const AddBancomatComponent: React.FunctionComponent<Props> = (props: Props) => {
 
   return (
     <BaseScreenComponent
-      customGoBack={<View hspacer={true} spacer={true} />}
+      customGoBack={<HSpacer size={16} />}
       headerTitle={I18n.t("wallet.onboarding.bancomat.add.title")}
       // TODO Replace with right CH texts
       contextualHelpMarkdown={{
@@ -64,7 +67,7 @@ const AddBancomatComponent: React.FunctionComponent<Props> = (props: Props) => {
     >
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView style={IOStyles.flex}>
-          <View spacer={true} />
+          <VSpacer size={16} />
           <View
             style={[
               styles.container,
@@ -75,16 +78,16 @@ const AddBancomatComponent: React.FunctionComponent<Props> = (props: Props) => {
             <H1 style={styles.title}>
               {I18n.t("wallet.onboarding.bancomat.add.screenTitle")}
             </H1>
-            <View spacer small />
+            <VSpacer size={8} />
             <H4 weight={"Regular"} style={styles.flexStart}>
               {I18n.t("wallet.onboarding.bancomat.add.label", {
                 current: props.currentIndex + 1,
                 length: props.pansNumber
               })}
             </H4>
-            <View spacer={true} large={true} />
+            <VSpacer size={24} />
             <PreviewBancomatCard bancomat={props.pan} abi={abiInfo} />
-            <View spacer={true} large={true} />
+            <VSpacer size={24} />
             {isBancomatBlocked(props.pan) ? (
               <InfoBox iconColor={IOColors.red} iconName={"io-error"}>
                 <Body>{I18n.t("wallet.onboarding.bancomat.add.blocked")}</Body>
@@ -95,7 +98,7 @@ const AddBancomatComponent: React.FunctionComponent<Props> = (props: Props) => {
               </InfoBox>
             )}
           </View>
-          <View spacer />
+          <VSpacer size={16} />
         </ScrollView>
         {isBancomatBlocked(props.pan) ? (
           <FooterWithButtons

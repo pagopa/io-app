@@ -1,4 +1,4 @@
-import { View } from "native-base";
+import { View } from "react-native";
 import * as React from "react";
 import AlphaChannel from "../../../../img/test/alphaChannel.svg";
 import Fingerprint from "../../../../img/test/fingerprint.svg";
@@ -12,6 +12,7 @@ import { Label } from "../../../components/core/typography/Label";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 
 export const DSAccordion = () => (
   <DesignSystemScreen title={"Accordion"}>
@@ -30,9 +31,9 @@ export const DSAccordion = () => (
         </>
       </IOAccordion>
     </View>
-    <View spacer={true} extralarge={true} />
+    <VSpacer size={40} />
     <Label>{"<RawAccordion />"}</Label>
-    <View spacer={true} />
+    <VSpacer size={16} />
     <View style={[IOStyles.flex, { width: "100%" }]}>
       <RawAccordion
         headerStyle={{

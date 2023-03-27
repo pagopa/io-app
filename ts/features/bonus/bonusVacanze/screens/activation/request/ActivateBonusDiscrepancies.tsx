@@ -1,6 +1,7 @@
-import { Text as NBText, View } from "native-base";
+import { Text as NBText } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
+import { HSpacer } from "../../../../../../components/core/spacer/Spacer";
 import IconFont from "../../../../../../components/ui/IconFont";
 import themeVariables from "../../../../../../theme/variables";
 import { bonusVacanzeStyle } from "../../../components/Styles";
@@ -38,7 +39,7 @@ export const ActivateBonusDiscrepancies: React.FunctionComponent<Props> =
       ]}
     >
       <IconFont name={"io-notice"} size={iconSize} />
-      <View hspacer={true} />
+      <HSpacer size={16} />
       <NBText style={activateBonusStyle.boxText} dark={true}>
         <NBText bold={true} style={activateBonusStyle.boxText} dark={true}>
           {`${props.attention} `}

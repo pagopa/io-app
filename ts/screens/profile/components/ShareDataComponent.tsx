@@ -1,6 +1,6 @@
-import { View } from "native-base";
 import * as React from "react";
 import { InfoBox } from "../../../components/box/InfoBox";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { Body } from "../../../components/core/typography/Body";
 import { H1 } from "../../../components/core/typography/H1";
 import { Label } from "../../../components/core/typography/Label";
@@ -18,7 +18,7 @@ type MarkdownProps = {
 
 const MarkdownBody = (props: MarkdownProps): React.ReactElement => (
   <>
-    <View spacer={true} />
+    <VSpacer size={16} />
     <Markdown avoidTextSelection={true}>{props.body}</Markdown>
   </>
 );
@@ -37,9 +37,9 @@ export const ShareDataComponent = (): React.ReactElement => {
   return (
     <>
       <H1>{I18n.t("profile.main.privacy.shareData.screen.title")}</H1>
-      <View spacer={true} />
+      <VSpacer size={16} />
       <Body>{I18n.t("profile.main.privacy.shareData.screen.description")}</Body>
-      <View spacer={true} />
+      <VSpacer size={16} />
       <InfoBox iconName={"io-analytics"}>
         <Body>
           {I18n.t("profile.main.privacy.shareData.screen.why.description.one")}
@@ -56,7 +56,7 @@ export const ShareDataComponent = (): React.ReactElement => {
           </Link>
         </Body>
       </InfoBox>
-      <View spacer={true} />
+      <VSpacer size={16} />
       <InfoBox iconName={"io-eye-off"}>
         <Body>
           {`${I18n.t(
@@ -70,7 +70,7 @@ export const ShareDataComponent = (): React.ReactElement => {
           </Link>
         </Body>
       </InfoBox>
-      <View spacer={true} />
+      <VSpacer size={16} />
       <InfoBox iconName={"io-fornitori"}>
         <Body>
           {I18n.t("profile.main.privacy.shareData.screen.gdpr.description.one")}
@@ -84,7 +84,7 @@ export const ShareDataComponent = (): React.ReactElement => {
           </Link>
         </Body>
       </InfoBox>
-      <View spacer={true} />
+      <VSpacer size={16} />
       <Body
         accessibilityRole="link"
         onPress={() => openWebUrl(privacyUrl)}
