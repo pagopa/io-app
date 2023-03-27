@@ -4,7 +4,7 @@ import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { H2 } from "../../../components/core/typography/H2";
 
 import { IOThemeContext } from "../../../components/core/variables/IOColors";
-import ButtonOutline from "../../../components/ui/ButtonOutline";
+import ButtonSolid from "../../../components/ui/ButtonSolid";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 export const DSHapticFeedback = () => (
@@ -13,7 +13,7 @@ export const DSHapticFeedback = () => (
       <DesignSystemScreen title={"Haptic Feedback"}>
         <H2 color={theme["textHeading-default"]}>Feedbacks</H2>
         <VSpacer size={24} />
-        <ButtonOutline
+        <ButtonSolid
           fullWidth
           label="impactLight"
           onPress={() => ReactNativeHapticFeedback.trigger("impactLight")}
@@ -21,7 +21,7 @@ export const DSHapticFeedback = () => (
           accessibilityHint="impactLight"
         />
         <VSpacer />
-        <ButtonOutline
+        <ButtonSolid
           fullWidth
           label="impactMedium"
           onPress={() => ReactNativeHapticFeedback.trigger("impactMedium")}
@@ -29,7 +29,7 @@ export const DSHapticFeedback = () => (
           accessibilityHint="impactMedium"
         />
         <VSpacer />
-        <ButtonOutline
+        <ButtonSolid
           fullWidth
           label="impactHeavy"
           onPress={() => ReactNativeHapticFeedback.trigger("impactHeavy")}
@@ -37,7 +37,7 @@ export const DSHapticFeedback = () => (
           accessibilityHint="impactHeavy"
         />
         <VSpacer />
-        <ButtonOutline
+        <ButtonSolid
           fullWidth
           label="rigid"
           onPress={() => ReactNativeHapticFeedback.trigger("rigid")}
@@ -45,7 +45,7 @@ export const DSHapticFeedback = () => (
           accessibilityHint="rigid"
         />
         <VSpacer />
-        <ButtonOutline
+        <ButtonSolid
           fullWidth
           label="soft"
           onPress={() => ReactNativeHapticFeedback.trigger("soft")}
@@ -53,7 +53,7 @@ export const DSHapticFeedback = () => (
           accessibilityHint="soft"
         />
         <VSpacer />
-        <ButtonOutline
+        <ButtonSolid
           fullWidth
           label="notificationSuccess"
           onPress={() =>
@@ -63,7 +63,7 @@ export const DSHapticFeedback = () => (
           accessibilityHint="notificationSuccess"
         />
         <VSpacer />
-        <ButtonOutline
+        <ButtonSolid
           fullWidth
           label="notificationWarning"
           onPress={() =>
@@ -73,7 +73,7 @@ export const DSHapticFeedback = () => (
           accessibilityHint="notificationWarning"
         />
         <VSpacer />
-        <ButtonOutline
+        <ButtonSolid
           fullWidth
           label="notificationError"
           onPress={() => ReactNativeHapticFeedback.trigger("notificationError")}
