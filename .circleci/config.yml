@@ -577,7 +577,7 @@ workflows:
             - run-prettier
           filters:
             branches:
-              only: master
+              only: IOAPPFD0-61-xcode14
 
       # Create a release build, submit to the store and distributes to the beta testers
       - ios-beta-release:
