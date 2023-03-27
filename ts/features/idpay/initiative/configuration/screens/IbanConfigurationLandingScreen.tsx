@@ -1,6 +1,5 @@
 import React from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
-import IbanPlaceholderSVG from "../../../../../../img/features/idpay/iban_placeholder.svg";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H3 } from "../../../../../components/core/typography/H3";
@@ -10,13 +9,17 @@ import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../i18n";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { useConfigurationMachineService } from "../xstate/provider";
+import { Pictogram } from "../../../../../components/core/pictograms";
 
 const styles = StyleSheet.create({
-  justifyCenter: { justifyContent: "center" },
-  adjustCenterHeight: {
-    flex: 1,
+  mainContainer: {
+    justifyContent: "center",
     alignItems: "center",
-    justifyContent: "center"
+    paddingBottom: 90
+  },
+  textContainer: {
+    alignItems: "center",
+    justifyContent: "flex-start"
   },
   textCenter: { textAlign: "center" }
 });
@@ -33,17 +36,13 @@ const IbanConfigurationLanding = () => {
       <View
         style={[
           IOStyles.flex,
-          styles.justifyCenter,
+          styles.mainContainer,
           IOStyles.horizontalContentPadding
         ]}
       >
-        <View
-          style={[IOStyles.horizontalContentPadding, styles.adjustCenterHeight]}
-        >
-          <IbanPlaceholderSVG height={150} width={"100%"} />
-          <VSpacer size={32} />
-          <VSpacer size={16} />
-          <View style={{ alignSelf: "center" }} />
+        <Pictogram name="ibanCard" size={240} />
+        <VSpacer size={32} />
+        <View style={[IOStyles.horizontalContentPadding, styles.textContainer]}>
           <H3>{I18n.t("idpay.configuration.iban.landing.header")}</H3>
           <VSpacer size={16} />
           <Body style={styles.textCenter}>
