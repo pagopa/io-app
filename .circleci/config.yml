@@ -327,12 +327,12 @@ jobs:
           command: cd android && bundle exec fastlane alpha
 
       # Promote internal to alpha
-      - run:
-          command: cd android && bundle exec fastlane promote_internal_to_alpha
+      # - run:
+      #     command: cd android && bundle exec fastlane promote_internal_to_alpha
 
-      - store_artifacts:
-          path: android/app/build/outputs/bundle
-          destination: bundle
+      # - store_artifacts:
+      #     path: android/app/build/outputs/bundle
+      #     destination: bundle
 
   # Create a release build, submit to the store and distributes to the beta testers
   ios-beta-release:
@@ -576,10 +576,8 @@ workflows:
             - run-eslint
             - run-prettier
           filters:
-            tags:
-              only: *release_tag
             branches:
-              ignore: /.*/
+              only: master
 
       # Create a release build, submit to the store and distributes to the beta testers
       - ios-beta-release:

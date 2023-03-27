@@ -51,26 +51,26 @@ platform :android do
     build_release
 
     # Generate the changelog from the last commit message
-    changelog_from_git_commits(
-      commits_count: 1
-    )
+    # changelog_from_git_commits(
+    #   commits_count: 1
+    # )
 
-    upload_to_play_store(
-      track: "internal",
-      skip_upload_screenshots: true,
-      skip_upload_images: true
-    )
+    # upload_to_play_store(
+    #   track: "internal",
+    #   skip_upload_screenshots: true,
+    #   skip_upload_images: true
+    # )
   end
 
   desc "Promote the internal version to alpha"
   lane :promote_internal_to_alpha do
-    upload_to_play_store(track: "internal", track_promote_to: "alpha")
+    # upload_to_play_store(track: "internal", track_promote_to: "alpha")
   end
 
   desc "Deploy a new version to the Google Play"
   lane :deploy do
-    gradle(task: "assembleRelease")
-    supply
+    # gradle(task: "assembleRelease")
+    # supply
   end
 
   # You can define as many lanes as you want
