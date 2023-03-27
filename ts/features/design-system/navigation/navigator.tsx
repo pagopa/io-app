@@ -20,13 +20,13 @@ import { DSListItems } from "../core/DSListItems";
 import { DSLayout } from "../core/DSLayout";
 import { DSAlert } from "../core/DSAlert";
 import { DSLoaders } from "../core/DSLoaders";
+import { DSHapticFeedback } from "../core/DSHapticFeedback";
 import {
   IOThemeContext,
   IOThemes
 } from "../../../components/core/variables/IOColors";
 import { DesignSystemParamsList } from "./params";
 import DESIGN_SYSTEM_ROUTES from "./routes";
-import { DSHapticFeedback } from "../core/DSHapticFeedback";
 
 const Stack = createStackNavigator<DesignSystemParamsList>();
 
