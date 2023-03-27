@@ -1,10 +1,11 @@
 import I18n from "i18n-js";
-import { H3, Text, View } from "native-base";
+import { Text } from "native-base";
 import * as React from "react";
-import { SafeAreaView, StyleSheet } from "react-native";
+import { View, SafeAreaView, StyleSheet } from "react-native";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import Pictogram from "../../../components/core/pictograms/Pictogram";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
+import { H3 } from "../../../components/core/typography/H3";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import themeVariables from "../../../theme/variables";
 import { openWebUrl } from "../../../utils/url";
