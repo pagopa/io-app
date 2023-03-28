@@ -60,6 +60,7 @@ const createActionsImplementation = (
       IDPayOnboardingRoutes.IDPAY_ONBOARDING_BOOL_SELF_DECLARATIONS
     );
   };
+
   const navigateToMultiSelfDeclarationsScreen = (
     context: Context,
     event: any
