@@ -157,6 +157,12 @@ platform :ios do
 
   desc "Submit a new Beta Build to TestFlight"
   lane :beta_testflight do |options|
+    
+    # xCode 14.2, prevents altool to fail with error "Could not
+    # determine the package’s bundle ID" during the "pilot" step
+    # See https://github.com/fastlane/fastlane/issues/20741
+    ENV['ITMSTRANSPORTER_FORCE_ITMS_PACKAGE_UPLOAD'] = 'false'
+
     # Ensure that your git status is not dirty
     ensure_git_status_clean
 
@@ -198,6 +204,11 @@ platform :ios do
 
   desc "Submit a new Beta Build to TestFlight, using CircleCI"
   lane :beta_circleci_testflight do |options|
+
+    # xCode 14.2, prevents altool to fail with error "Could not
+    # determine the package’s bundle ID" during the "pilot" step
+    # See https://github.com/fastlane/fastlane/issues/20741
+    ENV['ITMSTRANSPORTER_FORCE_ITMS_PACKAGE_UPLOAD'] = 'false'
 
     # Setup the circleci environment
     setup_ci(
