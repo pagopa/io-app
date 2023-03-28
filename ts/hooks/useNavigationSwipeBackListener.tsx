@@ -17,8 +17,7 @@ type StackEventMap = StackNavigationEventMap &
 /**
  * A custom React hook that attaches a swipe back listener to the navigation stack.
  * When the user swipes back to dismiss the current screen, the handler function will be called.
- * @param {() => void} handler - A function that will be called when the swipe back gesture is completed.
- * @returns {void}
+ * @param handler A function that will be called when the swipe back gesture is completed.
  * @example
  * // In a React functional component:
  * import { useNavigationSwipeBackListener } from 'path/to/useNavigationSwipeBackListener';
