@@ -37,6 +37,8 @@ import {
   lollipopKeyTagSelector,
   lollipopPublicKeySelector
 } from "../../features/lollipop/store/reducers/lollipop";
+import { startupLoadSuccess } from "../../store/actions/startup";
+import { StartupStatusEnum } from "../../store/reducers/startup";
 
 const aSessionToken = "a_session_token" as SessionToken;
 
@@ -88,9 +90,22 @@ describe("initializeApplicationSaga", () => {
       .next() // publicKey
       .next() // getPublicKey
       .next(200) // checkSession
+      .next()
+      .next()
+      .next()
+      .next()
+      .next()
+      .next()
+      .next()
+      .next()
+      .next()
+      .next()
+      .next()
       .select(sessionInfoSelector)
       .next(O.none)
       .next(O.none) // loadSessionInformationSaga
+      .put(startupLoadSuccess(StartupStatusEnum.NOT_AUTHENTICATED))
+      .next()
       .put(startApplicationInitialization());
   });
 
@@ -159,6 +174,17 @@ describe("initializeApplicationSaga", () => {
       .next(generateKeyInfo, O.none, O.none)
       .next()
       .next(200) // check session
+      .next()
+      .next()
+      .next()
+      .next()
+      .next()
+      .next()
+      .next()
+      .next()
+      .next()
+      .next()
+      .next()
       .select(sessionInfoSelector)
       .next(
         O.some({

@@ -241,7 +241,7 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
     bpdRemoteConfig?.opt_in_payment_methods_v2 && bpdOptInPaymentMethodsEnabled;
 
   const linking: LinkingOptions = {
-    enabled: true,
+    enabled: !isTestEnv, // disable linking in test env
     prefixes: [IO_INTERNAL_LINK_PREFIX],
     config: {
       initialRouteName: ROUTES.MAIN,
