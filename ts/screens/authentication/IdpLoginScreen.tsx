@@ -4,7 +4,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { Text as NBText } from "native-base";
 import * as React from "react";
-import { View, Image, Linking, StyleSheet } from "react-native";
+import { View, Linking, StyleSheet } from "react-native";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { WebView } from "react-native-webview";
 import {
@@ -14,8 +14,6 @@ import {
 } from "react-native-webview/lib/WebViewTypes";
 import { connect } from "react-redux";
 import URLParse from "url-parse";
-import brokenLinkImage from "../../../img/broken-link.png";
-import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
@@ -58,6 +56,7 @@ import {
 import { getUrlBasepath } from "../../utils/url";
 import { trackLollipopIdpLoginFailure } from "../../utils/analytics";
 import { originSchemasWhiteList } from "./originSchemasWhiteList";
+import { IdpAuthErrorScreen } from "./idpAuthErrorScreen";
 
 type NavigationProps = IOStackNavigationRouteProps<
   AuthenticationParamsList,
@@ -83,34 +82,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     zIndex: 1000
-  },
-  errorContainer: {
-    padding: 20,
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  errorTitle: {
-    fontSize: 20,
-    marginTop: 10
-  },
-  errorBody: {
-    marginTop: 10,
-    marginBottom: 10,
-    textAlign: "center"
-  },
-  errorButtonsContainer: {
-    position: "absolute",
-    bottom: 30,
-    flex: 1,
-    flexDirection: "row"
-  },
-  cancelButtonStyle: {
-    flex: 1,
-    marginEnd: 10
-  },
-  flex2: {
-    flex: 2
   },
   webViewWrapper: { flex: 1 }
 });
@@ -332,48 +303,13 @@ const IdpLoginScreen = (props: Props) => {
         </View>
       );
     } else if (pot.isError(requestState)) {
-      const errorType = requestState.error;
-      const errorTranslationKey = `authentication.errors.spid.error_${errorCode}`;
-
       return (
-        <View style={styles.errorContainer}>
-          <Image source={brokenLinkImage} resizeMode="contain" />
-          <NBText style={styles.errorTitle} bold={true}>
-            {I18n.t(
-              errorType === ErrorType.LOADING_ERROR
-                ? "authentication.errors.network.title"
-                : "authentication.errors.login.title"
-            )}
-          </NBText>
-
-          {errorType === ErrorType.LOGIN_ERROR && (
-            <NBText style={styles.errorBody}>
-              {I18n.t(errorTranslationKey, {
-                defaultValue: I18n.t("authentication.errors.spid.unknown")
-              })}
-            </NBText>
-          )}
-
-          <View style={styles.errorButtonsContainer}>
-            <ButtonDefaultOpacity
-              onPress={() => props.navigation.goBack()}
-              style={styles.cancelButtonStyle}
-              block={true}
-              light={true}
-              bordered={true}
-            >
-              <NBText>{I18n.t("global.buttons.cancel")}</NBText>
-            </ButtonDefaultOpacity>
-            <ButtonDefaultOpacity
-              onPress={onRetryButtonPressed}
-              style={styles.flex2}
-              block={true}
-              primary={true}
-            >
-              <NBText>{I18n.t("global.buttons.retry")}</NBText>
-            </ButtonDefaultOpacity>
-          </View>
-        </View>
+        <IdpAuthErrorScreen
+          requestStateError={requestState.error}
+          errorCode={errorCode}
+          onCancel={() => props.navigation.goBack()}
+          onRetry={onRetryButtonPressed}
+        />
       );
     }
     // loading complete, no mask needed

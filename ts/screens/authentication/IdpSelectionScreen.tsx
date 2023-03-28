@@ -33,6 +33,7 @@ import { H1 } from "../../components/core/typography/H1";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { VSpacer } from "../../components/core/spacer/Spacer";
+import { idpAuthSession } from "./idpAuthSessionHandler";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -60,6 +61,11 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  */
 const IdpSelectionScreen = (props: Props): React.ReactElement => {
   const [counter, setCounter] = useState(0);
+
+  // It's used just to show a loading spinner until the native module is loaded.
+  // A precaution for slower phones.
+  const [loginStarted,setLoginStarted] = useState(false);
+  
   const { requestIdps, setSelectedIdp } = props;
   const choosenTool = assistanceToolRemoteConfig(props.assistanceToolConfig);
 
@@ -71,12 +77,16 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
       >
     >();
 
-  const onIdpSelected = (idp: LocalIdpsFallback) => {
+  const onIdpSelected = async (idp: LocalIdpsFallback) => {
+    setLoginStarted(true);
     setSelectedIdp(idp);
-    handleSendAssistanceLog(choosenTool, `IDP selected: ${idp.id}`);
-    navigation.navigate(ROUTES.AUTHENTICATION, {
+    await idpAuthSession("http://127.0.0.1:3000/login?authLevel=SpidL2&entityID=posteid");
+    setLoginStarted(false);
+
+    //handleSendAssistanceLog(choosenTool, `IDP selected: ${idp.id}`);
+    //navigation.navigate(ROUTES.AUTHENTICATION, {
       screen: ROUTES.AUTHENTICATION_IDP_LOGIN
-    });
+    //});
   };
 
   const evokeLoginScreenCounter = () => {
@@ -135,7 +145,7 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
       goBack={true}
       headerTitle={I18n.t("authentication.idp_selection.headerTitle")}
     >
-      <LoadingSpinnerOverlay isLoading={props.isIdpsLoading}>
+      <LoadingSpinnerOverlay isLoading={props.isIdpsLoading || loginStarted}>
         {/* Custom ScreenContentHeader with secret login */}
         <View style={IOStyles.horizontalContentPadding}>
           <VSpacer size={16} />
