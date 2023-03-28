@@ -12,12 +12,10 @@ import { Events } from "./events";
 import { Context } from "./machine";
 
 const skipNavigation = (event: Events) => {
-  switch (event.type) {
-    case "GO_BACK":
-      return event.skipNavigation;
-    default:
-      return false;
+  if (event.type === "GO_BACK") {
+    return event.skipNavigation;
   }
+  return false;
 };
 
 const createActionsImplementation = (
@@ -28,12 +26,11 @@ const createActionsImplementation = (
   >
 ) => {
   const navigateToInitiativeDetailsScreen = (context: Context, event: any) => {
-    if (context.serviceId === undefined) {
-      throw new Error("serviceId is undefined");
-    }
-
     if (skipNavigation(event)) {
       return;
+    }
+    if (context.serviceId === undefined) {
+      throw new Error("serviceId is undefined");
     }
 
     onboardingNavigation.navigate(
@@ -44,18 +41,33 @@ const createActionsImplementation = (
     );
   };
 
-  const navigateToPDNDCriteriaScreen = () => {
+  const navigateToPDNDCriteriaScreen = (_: Context, event: any) => {
+    if (skipNavigation(event)) {
+      return;
+    }
+
     onboardingNavigation.navigate(
       IDPayOnboardingRoutes.IDPAY_ONBOARDING_PDNDACCEPTANCE
     );
   };
 
-  const navigateToBoolSelfDeclarationsScreen = () => {
+  const navigateToBoolSelfDeclarationsScreen = (_: Context, event: any) => {
+    if (skipNavigation(event)) {
+      return;
+    }
+
     onboardingNavigation.navigate(
       IDPayOnboardingRoutes.IDPAY_ONBOARDING_BOOL_SELF_DECLARATIONS
     );
   };
-  const navigateToMultiSelfDeclarationsScreen = (context: Context) => {
+  const navigateToMultiSelfDeclarationsScreen = (
+    context: Context,
+    event: any
+  ) => {
+    if (skipNavigation(event)) {
+      return;
+    }
+
     onboardingNavigation.navigate({
       name: IDPayOnboardingRoutes.IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS,
       key: String(context.multiConsentsPage)
