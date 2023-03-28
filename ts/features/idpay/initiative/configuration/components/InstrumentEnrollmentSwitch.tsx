@@ -36,14 +36,14 @@ const InstrumentEnrollmentSwitch = (props: InstrumentEnrollmentSwitchProps) => {
 
   const configurationMachine = useConfigurationMachineService();
 
-  const instrumentStatus = useSelector(
+  const instrumentStatusPot = useSelector(
     configurationMachine,
     instrumentStatusByIdWalletSelector(wallet.idWallet)
   );
 
   const renderSwitch = () => {
-    if (pot.isSome(instrumentStatus)) {
-      const status = instrumentStatus.value;
+    if (pot.isSome(instrumentStatusPot)) {
+      const status = instrumentStatusPot.value;
 
       if (
         status === InstrumentStatusEnum.PENDING_ENROLLMENT_REQUEST ||
@@ -59,12 +59,25 @@ const InstrumentEnrollmentSwitch = (props: InstrumentEnrollmentSwitchProps) => {
       }
     }
 
-    const switchValue = pot.map(
-      instrumentStatus,
+    const switchValuePot = pot.map(
+      instrumentStatusPot,
       status => status === InstrumentStatusEnum.ACTIVE || isStaged
     );
 
-    return <RemoteSwitch value={switchValue} onValueChange={onValueChange} />;
+    const isActive = pot.getOrElse(
+      pot.map(
+        instrumentStatusPot,
+        status => status === InstrumentStatusEnum.ACTIVE
+      ),
+      false
+    );
+
+    return (
+      <RemoteSwitch
+        value={switchValuePot}
+        onValueChange={() => onValueChange(!isActive)}
+      />
+    );
   };
 
   const instrumentLogo = getPaymentMethodLogo(wallet);
