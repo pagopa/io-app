@@ -5,4 +5,4 @@ source "https://rubygems.org"
 ruby '2.7.7'
 
 gem "cocoapods", "1.12.0"
-gem "fastlane", "~> 2.210.0"
+gem "fastlane", "~> 2.212.1"
