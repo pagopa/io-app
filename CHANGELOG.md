@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.29.0-rc.2](https://github.com/pagopa/io-app/compare/2.29.0-rc.1...2.29.0-rc.2) (2023-03-28)
+
+
+### Chores
+
+* [[IOAPPFD0-61](https://pagopa.atlassian.net/browse/IOAPPFD0-61)] Fix an error during beta IPA upload using xCode 14.2 on fastlane's pilot step ([#4489](https://github.com/pagopa/io-app/issues/4489)) ([002e6ff](https://github.com/pagopa/io-app/commit/002e6ff9259fa8ed75326a6dd6f381d516ebfaad))
+
+## [2.29.0-rc.1](https://github.com/pagopa/io-app/compare/2.29.0-rc.0...2.29.0-rc.1) (2023-03-27)
+
+
+### Features
+
+* **Firma con IO:** [[SFEQS-1402](https://pagopa.atlassian.net/browse/SFEQS-1402)] Generic error component refactoring with copy updates ([#4389](https://github.com/pagopa/io-app/issues/4389)) ([47572d6](https://github.com/pagopa/io-app/commit/47572d6f2faa766bfebd9a9239a85ed2fb304028))
+* **Firma con IO:** [[SFEQS-1519](https://pagopa.atlassian.net/browse/SFEQS-1519)] Add metadata reducer ([#4457](https://github.com/pagopa/io-app/issues/4457)) ([5fe897f](https://github.com/pagopa/io-app/commit/5fe897fbbfa240b14a5d3034df39cbd033b3960f))
+* **Firma con IO:** [[SFEQS-1520](https://pagopa.atlassian.net/browse/SFEQS-1520)] Update client with metadata ([#4473](https://github.com/pagopa/io-app/issues/4473)) ([3ffb5db](https://github.com/pagopa/io-app/commit/3ffb5db07d32da34fefee7a0d06ae7ee5c2a735e))
+* **Firma con IO:** [[SFEQS-1535](https://pagopa.atlassian.net/browse/SFEQS-1535)] Update main FCI saga with metadata request ([#4475](https://github.com/pagopa/io-app/issues/4475)) ([102bd7e](https://github.com/pagopa/io-app/commit/102bd7ecf204b833459818d1e322a469cda1c5a2))
+
+
+### Bug Fixes
+
+* **IDPay:** [[IODPAY-183](https://pagopa.atlassian.net/browse/IODPAY-183)] Singular for payment methods i18n in initiative details page  ([#4479](https://github.com/pagopa/io-app/issues/4479)) ([0c299ab](https://github.com/pagopa/io-app/commit/0c299aba9df1fc3e2bcf92185775c4c79ba2dd5a))
+
+
+### Chores
+
+* [[IOAPPFD0-53](https://pagopa.atlassian.net/browse/IOAPPFD0-53)] Add the new icon set ([#4474](https://github.com/pagopa/io-app/issues/4474)) ([11b6e7a](https://github.com/pagopa/io-app/commit/11b6e7a809b7ae61edabb353d07ad6a32416dfc8))
+* [[IOAPPFD0-61](https://pagopa.atlassian.net/browse/IOAPPFD0-61)] CircleCI iOS build upgraded to use xCode 14.2.0 ([#4481](https://github.com/pagopa/io-app/issues/4481)) ([1b10410](https://github.com/pagopa/io-app/commit/1b10410715d6f90becb2cfc53824060fcbb754dd))
+
 ## [2.29.0-rc.0](https://github.com/pagopa/io-app/compare/2.28.0-rc.2...2.29.0-rc.0) (2023-03-23)
 
 

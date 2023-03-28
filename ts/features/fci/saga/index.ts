@@ -33,7 +33,8 @@ import {
   fciSigningRequest,
   fciEndRequest,
   fciShowSignedDocumentsStartRequest,
-  fciShowSignedDocumentsEndRequest
+  fciShowSignedDocumentsEndRequest,
+  fciMetadataRequest
 } from "../store/actions";
 import {
   fciQtspClausesMetadataSelector,
@@ -48,6 +49,7 @@ import { handleGetQtspMetadata } from "./networking/handleGetQtspMetadata";
 import { handleCreateFilledDocument } from "./networking/handleCreateFilledDocument";
 import { handleDownloadDocument } from "./networking/handleDownloadDocument";
 import { handleCreateSignature } from "./networking/handleCreateSignature";
+import { handleGetMetadata } from "./networking/handleGetMetadata";
 
 /**
  * Handle the FCI Signature requests
@@ -116,6 +118,13 @@ export function* watchFciSaga(
   );
 
   yield* takeLatest(fciEndRequest, watchFciEndSaga);
+
+  yield* takeLatest(
+    fciMetadataRequest.request,
+    handleGetMetadata,
+    fciGeneratedClient.getMetadata,
+    bearerToken
+  );
 }
 
 /**
@@ -163,6 +172,10 @@ function* watchFciStartSaga(): SagaIterator {
   // this is needed to get the document_url
   // that will be used to create the filled document
   yield* put(fciLoadQtspClauses.request());
+
+  // start a request to get the metadata
+  // this is needed to get the service_id
+  yield* put(fciMetadataRequest.request());
 }
 
 /**
