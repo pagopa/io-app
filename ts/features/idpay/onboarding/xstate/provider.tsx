@@ -5,9 +5,9 @@ import * as O from "fp-ts/lib/Option";
 import React from "react";
 import { InterpreterFrom } from "xstate";
 import {
-  idPayTestToken,
+  idPayApiBaseUrl,
   idPayApiUatBaseUrl,
-  idPayApiBaseUrl
+  idPayTestToken
 } from "../../../../config";
 import { useXStateMachine } from "../../../../hooks/useXStateMachine";
 import {
@@ -25,6 +25,7 @@ import {
   getLocalePrimaryWithFallback
 } from "../../../../utils/locale";
 import { createIDPayClient } from "../../common/api/client";
+import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
 import {
   IDPayOnboardingParamsList,
   IDPayOnboardingStackNavigationProp
@@ -96,16 +97,10 @@ const IDPayOnboardingMachineProvider = (props: Props) => {
 
 const useOnboardingMachineService = () => {
   const machine = React.useContext(OnboardingMachineContext);
-  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
-  const handleGestureEnd = React.useCallback(() => {
+  useNavigationSwipeBackListener(() => {
     machine.send({ type: "GO_BACK", skipNavigation: true });
-  }, [machine]);
-
-  React.useEffect(
-    () => navigation.addListener("gestureEnd", handleGestureEnd),
-    [navigation, handleGestureEnd]
-  );
+  });
 
   return machine;
 };

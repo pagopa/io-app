@@ -9,7 +9,7 @@ import React from "react";
 import {
   AppParamsList,
   IOStackNavigationProp
-} from "../../../../navigation/params/AppParamsList";
+} from "../navigation/params/AppParamsList";
 
 type StackEventMap = StackNavigationEventMap &
   EventMapCore<StackNavigationState<AppParamsList>>;
@@ -41,16 +41,15 @@ export const useNavigationSwipeBackListener = (handler: () => void) => {
     EventListenerCallback<StackEventMap, "transitionEnd">
   >(
     e => {
-      /**
-       * The handleTransitionEnd callback function is executed when a screen transition is completed.
-       * We only need to know if the user is swiping back, regardless of the direction of the transition.
-       * Fortunately, the transition event provides this information through the closing property in the data parameter.
-       * if it is true, it means that the user is swiping back to the previous screen
-       */
+      // The handleTransitionEnd callback function is executed when a screen transition is completed.
+      // We only need to know if the user is swiping back, regardless of the direction of the transition.
+      // Fortunately, the transition event provides this information through the closing property in the data parameter.
+      // if it is true, it means that the user is swiping back to the previous screen
       if (e.data.closing) {
         handler();
       }
-      // Everytime the transition ends
+
+      // Finally, everytime the transition ends, we remove the transitionEnd listener by setting isSwiping to false.
       setIsSwiping(false);
     },
     [handler]
@@ -63,7 +62,7 @@ export const useNavigationSwipeBackListener = (handler: () => void) => {
       return navigation.addListener("transitionEnd", handleTransitionEnd);
     }
 
-    // If no swiping is active, do nothing
+    // If there is no swiping active, do nothing
     return undefined;
   }, [navigation, isSwiping, handleTransitionEnd]);
 
