@@ -3,7 +3,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { useCallback, useMemo, useState } from "react";
-import { Image, Linking, StyleSheet, Text, View } from "react-native";
+import { Image, Linking, StyleSheet, View } from "react-native";
 import { WebView } from "react-native-webview";
 import {
   WebViewErrorEvent,
@@ -11,11 +11,16 @@ import {
 } from "react-native-webview/lib/WebViewTypes";
 import { connect } from "react-redux";
 import brokenLinkImage from "../../../img/broken-link.png";
-import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
+import { VSpacer } from "../../components/core/spacer/Spacer";
+import { Body } from "../../components/core/typography/Body";
+import { H2 } from "../../components/core/typography/H2";
+import { IOStyles } from "../../components/core/variables/IOStyles";
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import IdpCustomContextualHelpContent from "../../components/screens/IdpCustomContextualHelpContent";
+import ButtonOutline from "../../components/ui/ButtonOutline";
+import ButtonSolid from "../../components/ui/ButtonSolid";
 import Markdown from "../../components/ui/Markdown";
 import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
 import { useLollipopLoginSource } from "../../features/lollipop/hooks/useLollipopLoginSource";
@@ -81,16 +86,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center"
-  },
-  errorTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginTop: 10
-  },
-  errorBody: {
-    marginTop: 10,
-    marginBottom: 10,
-    textAlign: "center"
   },
   errorButtonsContainer: {
     position: "absolute",
@@ -252,42 +247,49 @@ const IdpLoginScreen = (props: Props) => {
       const errorTranslationKey = `authentication.errors.spid.error_${errorCode}`;
 
       return (
-        <View style={styles.errorContainer}>
+        <View
+          style={[IOStyles.horizontalContentPadding, styles.errorContainer]}
+        >
           <Image source={brokenLinkImage} resizeMode="contain" />
-          <Text style={styles.errorTitle}>
+          <VSpacer size={24} />
+          <H2>
             {I18n.t(
               errorType === ErrorType.LOADING_ERROR
                 ? "authentication.errors.network.title"
                 : "authentication.errors.login.title"
             )}
-          </Text>
+          </H2>
 
           {errorType === ErrorType.LOGIN_ERROR && (
-            <Text style={styles.errorBody}>
-              {I18n.t(errorTranslationKey, {
-                defaultValue: I18n.t("authentication.errors.spid.unknown")
-              })}
-            </Text>
+            <>
+              <VSpacer size={16} />
+              <Body style={{ textAlign: "center" }}>
+                {I18n.t(errorTranslationKey, {
+                  defaultValue: I18n.t("authentication.errors.spid.unknown")
+                })}
+              </Body>
+              <VSpacer size={16} />
+            </>
           )}
 
           <View style={styles.errorButtonsContainer}>
-            <ButtonDefaultOpacity
-              onPress={() => props.navigation.goBack()}
-              style={styles.cancelButtonStyle}
-              block={true}
-              light={true}
-              bordered={true}
-            >
-              <Text>{I18n.t("global.buttons.cancel")}</Text>
-            </ButtonDefaultOpacity>
-            <ButtonDefaultOpacity
-              onPress={onRetryButtonPressed}
-              style={styles.flex2}
-              block={true}
-              primary={true}
-            >
-              <Text>{I18n.t("global.buttons.retry")}</Text>
-            </ButtonDefaultOpacity>
+            <View style={styles.cancelButtonStyle}>
+              <ButtonOutline
+                fullWidth
+                onPress={() => props.navigation.goBack()}
+                label={I18n.t("global.buttons.cancel")}
+                accessibilityLabel={I18n.t("global.buttons.cancel")}
+              />
+            </View>
+
+            <View style={styles.flex2}>
+              <ButtonSolid
+                fullWidth
+                onPress={onRetryButtonPressed}
+                label={I18n.t("global.buttons.retry")}
+                accessibilityLabel={I18n.t("global.buttons.retry")}
+              />
+            </View>
           </View>
         </View>
       );
