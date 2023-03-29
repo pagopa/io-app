@@ -92,7 +92,7 @@ import { clearAllAttachments } from "../features/messages/saga/clearAttachments"
 import { watchMessageAttachmentsSaga } from "../features/messages/saga/attachments";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
 import { watchIDPaySaga } from "../features/idpay/common/saga";
-import { trackKeyChainGetFailure } from "../utils/analytics";
+import { trackKeychainGetFailure } from "../utils/analytics";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -366,7 +366,7 @@ export function* initializeApplicationSaga(): Generator<
 
   // workaround to send keychainError for Pixel devices
   // TODO: REMOVE AFTER FIXING https://pagopa.atlassian.net/jira/software/c/projects/IABT/boards/92?modal=detail&selectedIssue=IABT-1441
-  trackKeyChainGetFailure(keychainError);
+  trackKeychainGetFailure(keychainError);
   clearKeychainError();
 
   if (hasPreviousSessionAndPin) {
