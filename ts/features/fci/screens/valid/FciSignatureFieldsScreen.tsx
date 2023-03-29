@@ -1,7 +1,7 @@
 import * as React from "react";
 import { View, SafeAreaView, SectionList } from "react-native";
 import { useSelector } from "react-redux";
-import { useNavigation } from "@react-navigation/native";
+import { StackActions, useNavigation } from "@react-navigation/native";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as O from "fp-ts/lib/Option";
 import { constFalse, increment, pipe } from "fp-ts/lib/function";
@@ -37,6 +37,8 @@ import {
   getSectionListData
 } from "../../utils/signatureFields";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
+import { LightModalContext } from "../../../../components/ui/LightModal";
+import DocumentWithSignature from "../../components/DocumentWithSignature";
 
 export type FciSignatureFieldsScreenNavigationParams = Readonly<{
   documentId: DocumentDetailView["id"];
@@ -46,8 +48,8 @@ export type FciSignatureFieldsScreenNavigationParams = Readonly<{
 const FciSignatureFieldsScreen = (
   props: IOStackNavigationRouteProps<FciParamsList, "FCI_SIGNATURE_FIELDS">
 ) => {
-  const docId = props.route.params.documentId;
   const currentDoc = props.route.params.currentDoc;
+  const docId = props.route.params.documentId;
   const documentsSelector = useSelector(fciSignatureDetailDocumentsSelector);
   const signatureFieldsSelector = useSelector(
     fciDocumentSignatureFieldsSelector(docId)
@@ -58,6 +60,7 @@ const FciSignatureFieldsScreen = (
   const dispatch = useIODispatch();
   const navigation = useNavigation();
   const [isClausesChecked, setIsClausesChecked] = React.useState(false);
+  const { showModal, hideModal } = React.useContext(LightModalContext);
 
   // get signatureFields for the current document
   const docSignatures = pipe(
@@ -101,14 +104,14 @@ const FciSignatureFieldsScreen = (
     useFciAbortSignatureFlow();
 
   const onPressDetail = (signatureField: SignatureField) => {
-    navigation.navigate(FCI_ROUTES.MAIN, {
-      screen: FCI_ROUTES.DOCUMENTS,
-      params: {
-        attrs: signatureField.attrs,
-        currentDoc
-      },
-      merge: true
-    });
+    showModal(
+      <DocumentWithSignature
+        attrs={signatureField.attrs}
+        currentDoc={currentDoc}
+        onClose={hideModal}
+        testID={"FciDocumentWithSignatureTestID"}
+      />
+    );
   };
 
   const updateDocumentSignatures = (fn: (doc: DocumentToSign) => void) =>
@@ -183,13 +186,12 @@ const FciSignatureFieldsScreen = (
     disabled: !isClausesChecked,
     onPress: () => {
       if (currentDoc < documentsSelector.length - 1) {
-        navigation.navigate(FCI_ROUTES.MAIN, {
-          screen: FCI_ROUTES.DOCUMENTS,
-          params: {
+        navigation.dispatch(
+          StackActions.push(FCI_ROUTES.DOCUMENTS, {
             attrs: undefined,
             currentDoc: increment(currentDoc)
-          }
-        });
+          })
+        );
       } else {
         navigation.navigate(FCI_ROUTES.MAIN, {
           screen: FCI_ROUTES.USER_DATA_SHARE
@@ -204,16 +206,7 @@ const FciSignatureFieldsScreen = (
 
   const customGoBack: React.ReactElement = (
     <TouchableDefaultOpacity
-      onPress={() =>
-        navigation.navigate(FCI_ROUTES.MAIN, {
-          screen: FCI_ROUTES.DOCUMENTS,
-          params: {
-            attrs: undefined,
-            currentDoc: undefined
-          },
-          merge: true
-        })
-      }
+      onPress={navigation.goBack}
       accessible={true}
       accessibilityLabel={I18n.t("global.buttons.back")}
       accessibilityRole={"button"}
