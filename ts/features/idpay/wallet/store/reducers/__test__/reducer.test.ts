@@ -19,6 +19,7 @@ import {
   idpayInitiativesInstrumentEnroll
 } from "../../actions";
 import { InitiativesWithInstrumentDTO } from "../../../../../../../definitions/idpay/InitiativesWithInstrumentDTO";
+import { isIdPayEnabledSelector } from "../../../../../../store/reducers/backendStatus";
 
 const mockResponseSuccess: WalletDTO = {
   initiativeList: []
@@ -114,12 +115,14 @@ describe("test Idpay InitiativesFromInstrument reducers and selectors", () => {
         isRefreshCall: false
       })
     );
+    const isIdpayEnabled = isIdPayEnabledSelector(store.getState());
     expect(
       store.getState().features.idPay.wallet.initiativesAwaitingStatusUpdate
     ).toStrictEqual({});
     expect(
       idPayAreInitiativesFromInstrumentLoadingSelector(store.getState())
-    ).toStrictEqual(true);
+      // we expect it to be true, but is false in case idpay is disabled
+    ).toStrictEqual(isIdpayEnabled);
     expect(
       idPayEnabledInitiativesFromInstrumentSelector(store.getState())
     ).toStrictEqual([]);
