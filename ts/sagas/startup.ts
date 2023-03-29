@@ -68,10 +68,9 @@ import {
   lollipopPublicKeySelector
 } from "../features/lollipop/store/reducers/lollipop";
 import {
-  lollipopKeyCheckWithServer,
+  checkLollipopSessionAssertionAndInvalidateIfNeeded,
   generateKeyInfo,
-  generateLollipopKeySaga,
-  showUnsupportedDeviceScreen
+  generateLollipopKeySaga
 } from "../features/lollipop/saga";
 import { IdentificationResult } from "../store/reducers/identification";
 import { pendingMessageStateSelector } from "../store/reducers/notifications/pendingMessage";
@@ -94,6 +93,7 @@ import { clearAllAttachments } from "../features/messages/saga/clearAttachments"
 import { watchMessageAttachmentsSaga } from "../features/messages/saga/attachments";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
 import { watchIDPaySaga } from "../features/idpay/common/saga";
+import { getPublicKeyAndBlockIfNeeded } from "../features/lollipop/navigation";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -216,12 +216,9 @@ export function* initializeApplicationSaga(): Generator<
 
   yield* call(generateLollipopKeySaga);
 
-  // Get keyInfo for lollipop
-  const keyTag = yield* select(lollipopKeyTagSelector);
-  const publicKey = yield* select(lollipopPublicKeySelector);
-  const keyInfo = yield* call(generateKeyInfo, keyTag, publicKey);
-
-  if (showUnsupportedDeviceScreen(publicKey)) {
+  // This saga must select the publicKey inside to avoid confusion
+  const unsupportedDevice = yield* call(getPublicKeyAndBlockIfNeeded);
+  if (unsupportedDevice) {
     return;
   }
 
@@ -234,6 +231,13 @@ export function* initializeApplicationSaga(): Generator<
     previousSessionToken
       ? previousSessionToken
       : yield* call(authenticationSaga);
+
+  // BE CAREFUL where you get lollipop keyInfo.
+  // They MUST be placed after authenticationSaga, because they are regenerated with each login attempt.
+  // Get keyInfo for lollipop
+  const keyTag = yield* select(lollipopKeyTagSelector);
+  const publicKey = yield* select(lollipopPublicKeySelector);
+  const keyInfo = yield* call(generateKeyInfo, keyTag, publicKey);
 
   // Handles the expiration of the session token
   yield* fork(watchSessionExpiredSaga);
@@ -270,19 +274,26 @@ export function* initializeApplicationSaga(): Generator<
     yield* select(sessionInfoSelector);
   if (isSessionRefreshed || O.isNone(maybeSessionInformation)) {
     // let's try to load the session information from the backend.
+
     maybeSessionInformation = yield* call(
       loadSessionInformationSaga,
       backendClient.getSession
     );
+
     if (O.isNone(maybeSessionInformation)) {
       // we can't go further without session info, let's restart
       // the initialization process
       yield* put(startApplicationInitialization());
+
       return;
     }
   }
 
-  yield* call(lollipopKeyCheckWithServer);
+  yield* call(
+    checkLollipopSessionAssertionAndInvalidateIfNeeded,
+    publicKey,
+    maybeSessionInformation.value.lollipopAssertionRef
+  );
 
   // Start watching for profile update requests as the checkProfileEnabledSaga
   // may need to update the profile.

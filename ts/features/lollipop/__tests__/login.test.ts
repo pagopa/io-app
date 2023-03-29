@@ -6,13 +6,14 @@ import {
   EffectProviders,
   StaticProvider
 } from "redux-saga-test-plan/providers";
+import * as O from "fp-ts/lib/Option";
 import { AssertionRef } from "../../../../definitions/backend/AssertionRef";
 import { applicationChangeState } from "../../../store/actions/application";
 import { appReducer } from "../../../store/reducers";
 import { PersistedLollipopState } from "../store";
 import { LoggedInWithSessionInfo } from "../../../store/reducers/authentication";
 import { PublicSession } from "../../../../definitions/backend/PublicSession";
-import { lollipopKeyCheckWithServer } from "../saga";
+import { checkLollipopSessionAssertionAndInvalidateIfNeeded } from "../saga";
 import { restartCleanApplication } from "../../../sagas/commons";
 import { sessionInvalid } from "../../../store/actions/authentication";
 
@@ -46,79 +47,67 @@ const mockedFunctions: Array<StaticProvider | EffectProviders> = [
 ];
 
 describe(`Test login with lollipop check and store aligned with server`, () => {
-  it(`should not put sessionIvalid or call restartCleanApplication`, async () => {
-    const store = createServerCompatibleStore();
-
-    return expectSaga(lollipopKeyCheckWithServer)
-      .withState(store.getState())
+  it(`should not put sessionIvalid or call restartCleanApplication`, async () =>
+    expectSaga(
+      checkLollipopSessionAssertionAndInvalidateIfNeeded,
+      O.some(DATA_FROM_SERVER.publicKeyForAssertionRef),
+      DATA_FROM_SERVER.assertionRef
+    )
       .provide(mockedFunctions)
       .not.put(sessionInvalid())
       .not.call(restartCleanApplication)
-      .run();
-  });
+      .run());
 });
 
-describe(`Test login with lollipop check and store without session information`, () => {
-  it(`should not put sessionIvalid or call restartCleanApplication`, async () => {
-    const store = createStoreWithoutSessionInformation();
-
-    return expectSaga(lollipopKeyCheckWithServer)
-      .withState(store.getState())
+describe(`Test login with both store key and server key undefined`, () => {
+  it(`should put sessionIvalid and call restartCleanApplication`, async () =>
+    expectSaga(
+      checkLollipopSessionAssertionAndInvalidateIfNeeded,
+      O.none,
+      undefined
+    )
       .provide(mockedFunctions)
-      .not.put(sessionInvalid())
-      .not.call(restartCleanApplication)
-      .run();
-  });
+      .put(sessionInvalid())
+      .call(restartCleanApplication)
+      .run());
 });
 
 describe(`Test login with lollipop check and store out of alignment with server`, () => {
-  it(`should put sessionIvalid and call restartCleanApplication(different key)`, async () => {
-    const store = createServerMisalignedStore();
-
-    return expectSaga(lollipopKeyCheckWithServer)
-      .withState(store.getState())
+  it(`should put sessionIvalid and call restartCleanApplication(different key)`, async () =>
+    expectSaga(
+      checkLollipopSessionAssertionAndInvalidateIfNeeded,
+      O.some(DATA_FROM_SERVER.publicKeyForAssertionRef),
+      "foo" as AssertionRef
+    )
       .provide(mockedFunctions)
       .put(sessionInvalid())
       .call(restartCleanApplication)
-      .run();
-  });
+      .run());
 
-  it(`should put sessionIvalid and call restartCleanApplication(server key undefined)`, async () => {
-    const store = createServerMisalignedStore_serverKeyUndefined();
-
-    return expectSaga(lollipopKeyCheckWithServer)
-      .withState(store.getState())
+  it(`should put sessionIvalid and call restartCleanApplication(server key undefined)`, async () =>
+    expectSaga(
+      checkLollipopSessionAssertionAndInvalidateIfNeeded,
+      O.some(DATA_FROM_SERVER.publicKeyForAssertionRef),
+      undefined
+    )
       .provide(mockedFunctions)
       .put(sessionInvalid())
       .call(restartCleanApplication)
-      .run();
-  });
+      .run());
 
-  it(`should put sessionIvalid and call restartCleanApplication(store key undefined)`, async () => {
-    const store = createServerMisalignedStore_storeKeyUndefined();
-
-    return expectSaga(lollipopKeyCheckWithServer)
-      .withState(store.getState())
+  it(`should put sessionIvalid and call restartCleanApplication(store key undefined)`, async () =>
+    expectSaga(
+      checkLollipopSessionAssertionAndInvalidateIfNeeded,
+      O.none,
+      DATA_FROM_SERVER.assertionRef
+    )
       .provide(mockedFunctions)
       .put(sessionInvalid())
       .call(restartCleanApplication)
-      .run();
-  });
+      .run());
 });
 
-describe(`Test login with lollipop check and store with session information, without publicKey`, () => {
-  it(`should put sessionIvalid and call restartCleanApplication`, async () => {
-    const store = createStoreWithSessionInformationWithoutPublicKey();
-
-    return expectSaga(lollipopKeyCheckWithServer)
-      .withState(store.getState())
-      .provide(mockedFunctions)
-      .put(sessionInvalid())
-      .call(restartCleanApplication)
-      .run();
-  });
-});
-
+// The following functions are for outdated tests, but may come in handy in the future
 const createServerCompatibleStore = () => {
   const sessionInfo: PublicSession = {
     ...({} as PublicSession),
@@ -131,8 +120,8 @@ const createServerCompatibleStore = () => {
     kind: "LoggedInWithSessionInfo"
   };
   const lollipop: PersistedLollipopState = {
-    keyTag: "foo",
-    publicKey: DATA_FROM_SERVER.publicKeyForAssertionRef,
+    keyTag: O.some("foo"),
+    publicKey: O.some(DATA_FROM_SERVER.publicKeyForAssertionRef),
     _persist: { version: 1, rehydrated: false }
   };
   return createStore(appReducer, {
@@ -144,8 +133,8 @@ const createServerCompatibleStore = () => {
 
 const createStoreWithoutSessionInformation = () => {
   const lollipop: PersistedLollipopState = {
-    keyTag: "foo",
-    publicKey: DATA_FROM_SERVER.publicKeyForAssertionRef,
+    keyTag: O.some("foo"),
+    publicKey: O.some(DATA_FROM_SERVER.publicKeyForAssertionRef),
     _persist: { version: 1, rehydrated: false }
   };
   return createStore(appReducer, {
@@ -166,8 +155,8 @@ const createServerMisalignedStore = () => {
     kind: "LoggedInWithSessionInfo"
   };
   const lollipop: PersistedLollipopState = {
-    keyTag: "foo",
-    publicKey: DATA_FROM_SERVER.publicKeyForAssertionRef,
+    keyTag: O.some("foo"),
+    publicKey: O.some(DATA_FROM_SERVER.publicKeyForAssertionRef),
     _persist: { version: 1, rehydrated: false }
   };
   return createStore(appReducer, {
@@ -189,8 +178,8 @@ const createServerMisalignedStore_serverKeyUndefined = () => {
     kind: "LoggedInWithSessionInfo"
   };
   const lollipop: PersistedLollipopState = {
-    keyTag: "foo",
-    publicKey: DATA_FROM_SERVER.publicKeyForAssertionRef,
+    keyTag: O.some("foo"),
+    publicKey: O.some(DATA_FROM_SERVER.publicKeyForAssertionRef),
     _persist: { version: 1, rehydrated: false }
   };
   return createStore(appReducer, {
@@ -212,8 +201,8 @@ const createServerMisalignedStore_storeKeyUndefined = () => {
     kind: "LoggedInWithSessionInfo"
   };
   const lollipop: PersistedLollipopState = {
-    keyTag: undefined,
-    publicKey: undefined,
+    keyTag: O.none,
+    publicKey: O.none,
     _persist: { version: 1, rehydrated: false }
   };
   return createStore(appReducer, {

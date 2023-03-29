@@ -11,17 +11,13 @@ import {
   PublicKey
 } from "@pagopa/io-react-native-crypto";
 import { jwkThumbprintByEncoding } from "jwk-thumbprint";
-import {
-  lollipopKeyTagSelector,
-  lollipopPublicKeySelector
-} from "../store/reducers/lollipop";
+import { lollipopKeyTagSelector } from "../store/reducers/lollipop";
 import {
   lollipopKeyTagSave,
   lollipopRemovePublicKey,
   lollipopSetPublicKey
 } from "../store/actions/lollipop";
 import { KeyInfo, toCryptoError } from "../utils/crypto";
-import { sessionInfoSelector } from "../../../store/reducers/authentication";
 import {
   DEFAULT_LOLLIPOP_HASH_ALGORITHM_CLIENT,
   DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER
@@ -34,8 +30,7 @@ import {
   trackLollipopKeyGenerationFailure,
   trackLollipopKeyGenerationSuccess
 } from "../../../utils/analytics";
-import NavigationService from "../../../navigation/NavigationService";
-import ROUTES from "../../../navigation/routes";
+import { AssertionRef } from "../../../../definitions/backend/AssertionRef";
 
 export function* generateLollipopKeySaga() {
   const maybeOldKeyTag = yield* select(lollipopKeyTagSelector);
@@ -73,35 +68,25 @@ export function* deleteCurrentLollipopKeyAndGenerateNewKeyTag() {
   yield* put(lollipopKeyTagSave({ keyTag: newKeyTag }));
 }
 
-export function* lollipopKeyCheckWithServer() {
-  const maybeSessionInformation: ReturnType<typeof sessionInfoSelector> =
-    yield* select(sessionInfoSelector);
+export function* checkLollipopSessionAssertionAndInvalidateIfNeeded(
+  publicKey: O.Option<PublicKey>,
+  lollipopAssertionRef?: AssertionRef
+) {
+  // eslint-disable-next-line functional/no-let
+  let localAssertionRef;
 
-  const publicKey: ReturnType<typeof lollipopPublicKeySelector> = yield* select(
-    lollipopPublicKeySelector
-  );
+  if (O.isSome(publicKey)) {
+    const publicKeyThumbprint = jwkThumbprintByEncoding(
+      publicKey.value,
+      DEFAULT_LOLLIPOP_HASH_ALGORITHM_CLIENT,
+      "base64url"
+    );
+    localAssertionRef = `${DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER}-${publicKeyThumbprint}`;
+  }
 
-  if (O.isSome(maybeSessionInformation)) {
-    const lollipopAssertionRef =
-      maybeSessionInformation.value.lollipopAssertionRef;
-
-    // eslint-disable-next-line functional/no-let
-    let localAssertionRef;
-
-    if (O.isSome(publicKey)) {
-      const converted = jwkThumbprintByEncoding(
-        publicKey.value,
-        DEFAULT_LOLLIPOP_HASH_ALGORITHM_CLIENT,
-        "base64url"
-      );
-      localAssertionRef = `${DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER}-${converted}`;
-    }
-
-    if (!lollipopAssertionRef || lollipopAssertionRef !== localAssertionRef) {
-      yield* put(sessionInvalid());
-      yield* call(restartCleanApplication);
-      return;
-    }
+  if (!lollipopAssertionRef || lollipopAssertionRef !== localAssertionRef) {
+    yield* put(sessionInvalid());
+    yield* call(restartCleanApplication);
   }
 }
 /**
@@ -212,13 +197,3 @@ const defaultKeyInfo = (): KeyInfo => ({
   publicKey: undefined,
   publicKeyThumbprint: undefined
 });
-
-export const showUnsupportedDeviceScreen = (publicKey: O.Option<PublicKey>) => {
-  if (O.isNone(publicKey)) {
-    NavigationService.navigate(ROUTES.UNSUPPORTED_DEVICE, {
-      screen: ROUTES.UNSUPPORTED_DEVICE
-    });
-    return true;
-  }
-  return false;
-};

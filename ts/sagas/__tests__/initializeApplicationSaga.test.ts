@@ -80,11 +80,12 @@ describe("initializeApplicationSaga", () => {
       .put(resetProfileState())
       .next()
       .next(generateLollipopKeySaga)
+      .next(false) // unsupported device
+      .select(sessionTokenSelector)
+      .next(aSessionToken)
       .next(lollipopKeyTagSelector)
       .next(lollipopPublicKeySelector)
       .next(generateKeyInfo, O.none, O.none)
-      .select(sessionTokenSelector)
-      .next(aSessionToken)
       .fork(watchSessionExpiredSaga)
       .next()
       .next(200) // checkSession
@@ -117,11 +118,12 @@ describe("initializeApplicationSaga", () => {
       .put(resetProfileState())
       .next()
       .next(generateLollipopKeySaga)
+      .next(false) // unsupported device
+      .select(sessionTokenSelector)
+      .next(aSessionToken)
       .next(lollipopKeyTagSelector)
       .next(lollipopPublicKeySelector)
       .next(generateKeyInfo, O.none, O.none)
-      .select(sessionTokenSelector)
-      .next(aSessionToken)
       .fork(watchSessionExpiredSaga)
       .next()
       .next(401) // checksession
@@ -151,11 +153,12 @@ describe("initializeApplicationSaga", () => {
       .put(resetProfileState())
       .next()
       .next(generateLollipopKeySaga)
+      .next(false) // unsupported device
+      .select(sessionTokenSelector)
+      .next(aSessionToken)
       .next(lollipopKeyTagSelector)
       .next(lollipopPublicKeySelector)
       .next(generateKeyInfo, O.none, O.none)
-      .select(sessionTokenSelector)
-      .next(aSessionToken)
       .fork(watchSessionExpiredSaga)
       .next()
       .next(200) // check session

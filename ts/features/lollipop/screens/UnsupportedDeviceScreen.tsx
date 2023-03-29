@@ -7,33 +7,9 @@ import Pictogram from "../../../components/core/pictograms/Pictogram";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { H3 } from "../../../components/core/typography/H3";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
+import { unsupportedDeviceLearnMoreUrl } from "../../../config";
 import themeVariables from "../../../theme/variables";
 import { openWebUrl } from "../../../utils/url";
-
-const FailureScreen = () => {
-  const handleWhyIsThat = () => {
-    const learnMoreLink = "https://io.italia.it/faq/#n1_11";
-    openWebUrl(learnMoreLink);
-  };
-  const renderWhyIsThat = () => (
-    <ButtonDefaultOpacity block={true} onPress={handleWhyIsThat}>
-      <Text>{I18n.t("unsupportedDevice.cta.faq")}</Text>
-    </ButtonDefaultOpacity>
-  );
-
-  return (
-    <SafeAreaView style={IOStyles.flex}>
-      <View style={styles.errorContainer}>
-        <Pictogram name={"error"} size={120} />
-        <VSpacer size={16} />
-        <H3 style={styles.title}>{I18n.t("unsupportedDevice.title")}</H3>
-        <VSpacer size={16} />
-        <Text alignCenter={true}>{I18n.t("unsupportedDevice.subtitle")}</Text>
-      </View>
-      <View style={styles.buttonContainer}>{renderWhyIsThat()}</View>
-    </SafeAreaView>
-  );
-};
 
 const styles = StyleSheet.create({
   errorContainer: {
@@ -52,4 +28,25 @@ const styles = StyleSheet.create({
   }
 });
 
-export default FailureScreen;
+const handleLearnMorePress = () => {
+  openWebUrl(unsupportedDeviceLearnMoreUrl);
+};
+
+const UnsupportedDeviceScreen = () => (
+  <SafeAreaView style={IOStyles.flex}>
+    <View style={styles.errorContainer}>
+      <Pictogram name={"error"} size={120} />
+      <VSpacer size={16} />
+      <H3 style={styles.title}>{I18n.t("unsupportedDevice.title")}</H3>
+      <VSpacer size={16} />
+      <Text alignCenter={true}>{I18n.t("unsupportedDevice.subtitle")}</Text>
+    </View>
+    <View style={styles.buttonContainer}>
+      <ButtonDefaultOpacity block={true} onPress={handleLearnMorePress}>
+        <Text>{I18n.t("unsupportedDevice.cta.faq")}</Text>
+      </ButtonDefaultOpacity>
+    </View>
+  </SafeAreaView>
+);
+
+export default UnsupportedDeviceScreen;
