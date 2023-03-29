@@ -2,8 +2,8 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { useSelector } from "@xstate/react";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import {
   LayoutChangeEvent,
@@ -14,13 +14,13 @@ import {
   View
 } from "react-native";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
-import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import OrganizationHeader from "../../../../components/OrganizationHeader";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../components/core/typography/Body";
 import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
+import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
+import OrganizationHeader from "../../../../components/OrganizationHeader";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import Markdown from "../../../../components/ui/Markdown";
@@ -39,7 +39,6 @@ import {
   isLoadingSelector,
   isUpsertingSelector
 } from "../xstate/selectors";
-import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
 
 type InitiativeDetailsScreenRouteParams = {
   serviceId: string;
@@ -167,10 +166,6 @@ const InitiativeDetailsScreen = () => {
   );
 
   const setMarkdownIsLoaded = () => (isMarkdownLoadedRef.current = true);
-
-  useNavigationSwipeBackListener(() => {
-    machine.send({ type: "QUIT_ONBOARDING" });
-  });
 
   const screenContent = () => (
     <SafeAreaView style={IOStyles.flex}>
