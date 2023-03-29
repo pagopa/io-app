@@ -7,6 +7,7 @@ import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
+import { useNavigationSwipeBackListener } from "../../../../../hooks/useNavigationSwipeBackListener";
 import I18n from "../../../../../i18n";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { useConfigurationMachineService } from "../xstate/provider";
@@ -30,6 +31,11 @@ const styles = StyleSheet.create({
 const IbanConfigurationLanding = () => {
   const configurationMachine = useConfigurationMachineService();
   const customGoBack = () => configurationMachine.send({ type: "BACK" });
+
+  useNavigationSwipeBackListener(() => {
+    configurationMachine.send({ type: "BACK", skipNavigation: true });
+  });
+
   return (
     <BaseScreenComponent
       goBack={customGoBack}

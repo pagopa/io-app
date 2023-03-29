@@ -25,6 +25,7 @@ import {
   selectIsIbanOnlyMode
 } from "../xstate/selectors";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
+import { useNavigationSwipeBackListener } from "../../../../../hooks/useNavigationSwipeBackListener";
 
 type IbanEnrollmentScreenRouteParams = {
   initiativeId?: string;
@@ -83,6 +84,10 @@ const IbanEnrollmentScreen = () => {
   const handleAddNewIbanPress = () => {
     configurationMachine.send({ type: "NEW_IBAN_ONBOARDING" });
   };
+
+  useNavigationSwipeBackListener(() => {
+    configurationMachine.send({ type: "BACK", skipNavigation: true });
+  });
 
   const renderFooter = () => {
     if (isIbanOnly) {

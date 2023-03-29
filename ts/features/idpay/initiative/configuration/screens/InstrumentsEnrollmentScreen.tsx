@@ -31,6 +31,7 @@ import {
   selectWalletInstruments
 } from "../xstate/selectors";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
+import { useNavigationSwipeBackListener } from "../../../../../hooks/useNavigationSwipeBackListener";
 
 type InstrumentsEnrollmentScreenRouteParams = {
   initiativeId?: string;
@@ -207,6 +208,10 @@ const InstrumentsEnrollmentScreen = () => {
       />
     );
   };
+
+  useNavigationSwipeBackListener(() => {
+    configurationMachine.send({ type: "BACK", skipNavigation: true });
+  });
 
   return (
     <>
