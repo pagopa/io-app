@@ -25,7 +25,6 @@ import {
   getLocalePrimaryWithFallback
 } from "../../../../utils/locale";
 import { createIDPayClient } from "../../common/api/client";
-import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
 import {
   IDPayOnboardingParamsList,
   IDPayOnboardingStackNavigationProp
@@ -95,14 +94,7 @@ const IDPayOnboardingMachineProvider = (props: Props) => {
   );
 };
 
-const useOnboardingMachineService = () => {
-  const machine = React.useContext(OnboardingMachineContext);
-
-  useNavigationSwipeBackListener(() => {
-    machine.send({ type: "GO_BACK", skipNavigation: true });
-  });
-
-  return machine;
-};
+const useOnboardingMachineService = () =>
+  React.useContext(OnboardingMachineContext);
 
 export { IDPayOnboardingMachineProvider, useOnboardingMachineService };

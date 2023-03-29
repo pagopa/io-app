@@ -39,6 +39,7 @@ import {
   isLoadingSelector,
   isUpsertingSelector
 } from "../xstate/selectors";
+import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
 
 type InitiativeDetailsScreenRouteParams = {
   serviceId: string;
@@ -166,6 +167,10 @@ const InitiativeDetailsScreen = () => {
   );
 
   const setMarkdownIsLoaded = () => (isMarkdownLoadedRef.current = true);
+
+  useNavigationSwipeBackListener(() => {
+    machine.send({ type: "QUIT_ONBOARDING" });
+  });
 
   const screenContent = () => (
     <SafeAreaView style={IOStyles.flex}>

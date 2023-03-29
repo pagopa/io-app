@@ -12,6 +12,7 @@ import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay"
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../../../components/screens/ListItemComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
+import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useOnboardingMachineService } from "../xstate/provider";
@@ -51,6 +52,10 @@ const InitiativeSelfDeclarationsScreen = () => {
 
   const getSelfCriteriaBoolAnswer = (criteria: SelfDeclarationBoolDTO) =>
     selfCriteriaBoolAnswers[criteria.code] ?? false;
+
+  useNavigationSwipeBackListener(() => {
+    machine.send({ type: "GO_BACK", skipNavigation: true });
+  });
 
   return (
     <BaseScreenComponent
