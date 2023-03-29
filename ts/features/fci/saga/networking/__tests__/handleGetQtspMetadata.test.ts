@@ -25,7 +25,7 @@ describe("handleGetQtspMetadata", () => {
       "mockedToken" as SessionToken
     )
       .next()
-      .call(mockBackendFciClient, { Bearer: "mockedToken" })
+      .call(mockBackendFciClient, { Bearer: "Bearer mockedToken" })
       .next(right(successResponse))
       .put(fciLoadQtspClauses.success(successResponse.value))
       .next()
@@ -38,7 +38,7 @@ describe("handleGetQtspMetadata", () => {
       "mockedToken" as SessionToken
     )
       .next()
-      .call(mockBackendFciClient, { Bearer: "mockedToken" })
+      .call(mockBackendFciClient, { Bearer: "Bearer mockedToken" })
       .next(right(failureResponse))
       .next(
         fciLoadQtspClauses.failure(
@@ -55,7 +55,7 @@ describe("handleGetQtspMetadata", () => {
       "mockedToken" as SessionToken
     )
       .next()
-      .call(mockBackendFciClient, { Bearer: "mockedToken" })
+      .call(mockBackendFciClient, { Bearer: "Bearer mockedToken" })
       .next(left(new Error()))
       .next(
         fciLoadQtspClauses.failure(
@@ -73,7 +73,7 @@ describe("handleGetQtspMetadata", () => {
       "mockedToken" as SessionToken
     )
       .next()
-      .call(mockBackendFciClient, { Bearer: "mockedToken" })
+      .call(mockBackendFciClient, { Bearer: "Bearer mockedToken" })
       .throw(mockedError)
       .next(fciLoadQtspClauses.failure(getNetworkError(mockedError)))
       .next()

@@ -42,7 +42,7 @@ describe("handleCreateFilledDocument", () => {
       .next()
       .call(mockBackendFciClient, {
         body: loadAction.payload,
-        Bearer: "mockedToken"
+        Bearer: "Bearer mockedToken"
       })
       .next(right(successResponse))
       .put(fciLoadQtspFilledDocument.success(successResponse.value))
@@ -61,7 +61,7 @@ describe("handleCreateFilledDocument", () => {
       .next()
       .call(mockBackendFciClient, {
         body: loadAction.payload,
-        Bearer: "mockedToken"
+        Bearer: "Bearer mockedToken"
       })
       .next(right(failureResponse))
       .next(
@@ -82,7 +82,7 @@ describe("handleCreateFilledDocument", () => {
       .next()
       .call(mockBackendFciClient, {
         body: loadAction.payload,
-        Bearer: "mockedToken"
+        Bearer: "Bearer mockedToken"
       })
       .next(left(new Error()))
       .next(
@@ -106,7 +106,7 @@ describe("handleCreateFilledDocument", () => {
       .next()
       .call(mockBackendFciClient, {
         body: loadAction.payload,
-        Bearer: "mockedToken"
+        Bearer: "Bearer mockedToken"
       })
       .throw(mockedError)
       .next(fciLoadQtspFilledDocument.failure(getNetworkError(mockedError)))

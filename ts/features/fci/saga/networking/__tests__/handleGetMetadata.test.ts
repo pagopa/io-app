@@ -25,7 +25,7 @@ describe("handleGetMetadata", () => {
       "mockedToken" as SessionToken
     )
       .next()
-      .call(mockBackendFciClient, { Bearer: "mockedToken" })
+      .call(mockBackendFciClient, { Bearer: "Bearer mockedToken" })
       .next(right(successResponse))
       .put(fciMetadataRequest.success(successResponse.value))
       .next()
@@ -38,7 +38,7 @@ describe("handleGetMetadata", () => {
       "mockedToken" as SessionToken
     )
       .next()
-      .call(mockBackendFciClient, { Bearer: "mockedToken" })
+      .call(mockBackendFciClient, { Bearer: "Bearer mockedToken" })
       .next(right(failureResponse))
       .next(
         fciMetadataRequest.failure(
@@ -55,7 +55,7 @@ describe("handleGetMetadata", () => {
       "mockedToken" as SessionToken
     )
       .next()
-      .call(mockBackendFciClient, { Bearer: "mockedToken" })
+      .call(mockBackendFciClient, { Bearer: "Bearer mockedToken" })
       .next(left(new Error()))
       .next(
         fciMetadataRequest.failure(
@@ -73,7 +73,7 @@ describe("handleGetMetadata", () => {
       "mockedToken" as SessionToken
     )
       .next()
-      .call(mockBackendFciClient, { Bearer: "mockedToken" })
+      .call(mockBackendFciClient, { Bearer: "Bearer mockedToken" })
       .throw(mockedError)
       .next(fciMetadataRequest.failure(getNetworkError(mockedError)))
       .next()
