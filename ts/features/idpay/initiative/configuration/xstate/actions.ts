@@ -9,11 +9,23 @@ import { showToast } from "../../../../../utils/showToast";
 import { IDPayDetailsRoutes } from "../../details/navigation";
 import { IDPayConfigurationRoutes } from "../navigation/navigator";
 import { Context } from "./context";
+import { Events } from "./events";
+
+const skipNavigation = (event: Events) => {
+  if (event.type === "BACK") {
+    return event.skipNavigation;
+  }
+  return false;
+};
 
 const createActionsImplementation = (
   navigation: IOStackNavigationProp<AppParamsList, keyof AppParamsList>
 ) => {
-  const navigateToConfigurationIntro = (context: Context) => {
+  const navigateToConfigurationIntro = (context: Context, event: any) => {
+    if (skipNavigation(event)) {
+      return;
+    }
+
     if (context.initiativeId === undefined) {
       throw new Error("initiativeId is undefined");
     }
@@ -26,33 +38,52 @@ const createActionsImplementation = (
     });
   };
 
-  const navigateToIbanLandingScreen = () => {
+  const navigateToIbanLandingScreen = (_: Context, event: any) => {
+    if (skipNavigation(event)) {
+      return;
+    }
+
     navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
       screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_LANDING
     });
   };
 
-  const navigateToIbanOnboardingScreen = () => {
+  const navigateToIbanOnboardingScreen = (_: Context, event: any) => {
+    if (skipNavigation(event)) {
+      return;
+    }
+
     navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
       screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ONBOARDING
     });
   };
 
-  const navigateToIbanEnrollmentScreen = () => {
+  const navigateToIbanEnrollmentScreen = (_: Context, event: any) => {
+    if (skipNavigation(event)) {
+      return;
+    }
+
     navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
       screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ENROLLMENT,
       params: {}
     });
   };
 
-  const navigateToAddPaymentMethodScreen = () => {
+  const navigateToAddPaymentMethodScreen = (_: Context, event: any) => {
+    if (skipNavigation(event)) {
+      return;
+    }
+
     navigation.replace(ROUTES.WALLET_NAVIGATOR, {
       screen: ROUTES.WALLET_ADD_PAYMENT_METHOD,
       params: { inPayment: O.none }
     });
   };
 
-  const navigateToInstrumentsEnrollmentScreen = () => {
+  const navigateToInstrumentsEnrollmentScreen = (_: Context, event: any) => {
+    if (skipNavigation(event)) {
+      return;
+    }
     navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
       screen:
         IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT,
@@ -68,7 +99,7 @@ const createActionsImplementation = (
 
   const navigateToInitiativeDetailScreen = (context: Context) => {
     if (context.initiativeId === undefined) {
-      return;
+      throw new Error("initiativeId is undefined");
     }
 
     navigation.navigate(IDPayDetailsRoutes.IDPAY_DETAILS_MAIN, {

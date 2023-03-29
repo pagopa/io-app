@@ -56,6 +56,7 @@ type E_NEXT = {
 
 type E_BACK = {
   type: "BACK";
+  skipNavigation?: boolean;
 };
 
 type E_QUIT = {
