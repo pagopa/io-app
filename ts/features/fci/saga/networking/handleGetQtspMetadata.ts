@@ -16,7 +16,7 @@ export function* handleGetQtspMetadata(
 ): SagaIterator {
   try {
     const getQtspClausesMetadataResponse = yield* call(getQtspClausesMetadata, {
-      Bearer: bearerToken
+      Bearer: `Bearer ${bearerToken}`
     });
 
     if (E.isLeft(getQtspClausesMetadataResponse)) {

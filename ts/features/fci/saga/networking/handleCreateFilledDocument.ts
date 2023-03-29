@@ -41,7 +41,7 @@ export function* handleCreateFilledDocument(
   try {
     const postQtspFilledBodyResponse = yield* call(postQtspFilledBody, {
       body: action.payload,
-      Bearer: bearerToken
+      Bearer: `Bearer ${bearerToken}`
     });
 
     if (E.isLeft(postQtspFilledBodyResponse)) {

@@ -16,7 +16,7 @@ export function* handleGetMetadata(
 ): SagaIterator {
   try {
     const getMetadataResponse = yield* call(getMetadata, {
-      Bearer: bearerToken
+      Bearer: `Bearer ${bearerToken}`
     });
 
     if (E.isLeft(getMetadataResponse)) {

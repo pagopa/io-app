@@ -7,6 +7,7 @@ import { FciClient } from "../../api/backendFci";
 import { fciSignatureRequestFromId } from "../../store/actions";
 import { getNetworkError } from "../../../../utils/errors";
 import { SessionToken } from "../../../../types/SessionToken";
+import { SagaCallReturnType } from "../../../../types/utils";
 
 /*
  * A saga to load a FCI signature request.
@@ -17,13 +18,12 @@ export function* handleGetSignatureRequestById(
   action: ActionType<typeof fciSignatureRequestFromId["request"]>
 ): SagaIterator {
   try {
-    const getSignatureDetailViewByIdResponse = yield* call(
-      getSignatureRequestById,
-      {
-        id: action.payload,
-        Bearer: bearerToken
-      }
-    );
+    const getSignatureDetailViewByIdResponse: SagaCallReturnType<
+      typeof getSignatureRequestById
+    > = yield* call(getSignatureRequestById, {
+      id: action.payload,
+      Bearer: `Bearer ${bearerToken}`
+    });
 
     if (E.isLeft(getSignatureDetailViewByIdResponse)) {
       throw Error(
