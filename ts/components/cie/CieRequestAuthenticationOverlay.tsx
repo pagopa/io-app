@@ -1,6 +1,6 @@
 import * as React from "react";
 import { createRef, useEffect } from "react";
-import { View, Platform, SafeAreaView } from "react-native";
+import { View, Platform, SafeAreaView, StyleSheet } from "react-native";
 import WebView from "react-native-webview";
 import {
   WebViewErrorEvent,
@@ -12,9 +12,16 @@ import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
 import I18n from "../../i18n";
 import { getIdpLoginUri } from "../../utils/login";
 import { closeInjectedScript } from "../../utils/webview";
+import { IOColors } from "../core/variables/IOColors";
 import { IOStyles } from "../core/variables/IOStyles";
 import { withLoadingSpinner } from "../helpers/withLoadingSpinner";
 import GenericErrorComponent from "../screens/GenericErrorComponent";
+
+const styles = StyleSheet.create({
+  errorContainer: {
+    backgroundColor: IOColors.white
+  }
+});
 
 // to make sure the server recognizes the client as valid iPhone device (iOS only) we use a custom header
 // on Android it is not required
@@ -207,7 +214,7 @@ const CieWebView = (props: Props) => {
 const ErrorComponent = (
   props: { onRetry: () => void } & Pick<Props, "onClose">
 ) => (
-  <SafeAreaView style={IOStyles.flex}>
+  <SafeAreaView style={[IOStyles.flex, styles.errorContainer]}>
     <GenericErrorComponent
       avoidNavigationEvents={true}
       onRetry={props.onRetry}
