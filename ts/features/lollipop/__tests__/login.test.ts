@@ -108,6 +108,7 @@ describe(`Test login with lollipop check and store out of alignment with server`
 });
 
 // The following functions are for outdated tests, but may come in handy in the future
+
 const createServerCompatibleStore = () => {
   const sessionInfo: PublicSession = {
     ...({} as PublicSession),
@@ -227,4 +228,15 @@ const createStoreWithSessionInformationWithoutPublicKey = () => {
     ...globalState,
     authentication
   } as any);
+};
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore: Unused variable
+const createStoreScenarios = {
+  createServerCompatibleStore,
+  createStoreWithoutSessionInformation,
+  createServerMisalignedStore,
+  createServerMisalignedStore_serverKeyUndefined,
+  createServerMisalignedStore_storeKeyUndefined,
+  createStoreWithSessionInformationWithoutPublicKey
 };
