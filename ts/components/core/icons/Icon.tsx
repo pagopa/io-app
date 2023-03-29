@@ -189,6 +189,7 @@ import LegIconQuestion from "./svg/LegIconQuestion";
 import LegIconSearch from "./svg/LegIconSearch";
 import LegIconClose from "./svg/LegIconClose";
 import LegIconCloseSmall from "./svg/LegIconCloseSmall";
+import LegIconChevronLeft from "./svg/LegIconChevronLeft";
 
 export const IOIcons = {
   spid: IconSpid,
@@ -341,10 +342,11 @@ export const IOIcons = {
   search: IconSearch /* io-search */,
   legSearch: LegIconSearch /* io-search */,
   chevronRight: IconChevronRight /* io-right */,
-  chevronLeft: IconChevronLeft /* io-back */,
+  chevronLeft: IconChevronLeft,
   chevronBottom: IconChevronBottom,
   chevronTop: IconChevronTop,
   chevronRightListItem: IconChevronRightListItem,
+  legChevronLeft: LegIconChevronLeft /* io-back */,
   close: IconClose /* io-close */,
   legClose: LegIconClose /* io-close */,
   closeSmall: IconCloseSmall,

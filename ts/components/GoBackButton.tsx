@@ -6,6 +6,7 @@ import NavigationService from "../navigation/NavigationService";
 import { IOColors } from "../components/core/variables/IOColors";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import IconFont from "./ui/IconFont";
+import { Icon } from "./core/icons";
 
 interface OwnProps {
   [k: string]: any;
@@ -61,10 +62,7 @@ class GoBackButton extends React.PureComponent<Props> {
         {...buttonProps}
         accessibilityLabel={I18n.t("global.buttons.back")}
       >
-        <IconFont
-          name={"io-back"}
-          style={{ color: white ? IOColors.white : IOColors.black }}
-        />
+        <Icon name="legChevronLeft" color={white ? "white" : "black"} />
       </ButtonDefaultOpacity>
     );
   }
