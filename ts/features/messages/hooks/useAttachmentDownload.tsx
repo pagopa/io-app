@@ -4,7 +4,6 @@ import ReactNativeBlobUtil from "react-native-blob-util";
 import RNFS from "react-native-fs";
 import { identity, pipe } from "fp-ts/lib/function";
 import * as E from "fp-ts/lib/Either";
-import * as O from "fp-ts/lib/Option";
 import * as TE from "fp-ts/lib/TaskEither";
 import i18n from "../../../i18n";
 import { mixpanelTrack } from "../../../mixpanel";
@@ -16,6 +15,7 @@ import { downloadAttachment } from "../../../store/actions/messages";
 import { UIAttachment } from "../../../store/reducers/entities/messages/types";
 import { downloadPotForMessageAttachmentSelector } from "../../../store/reducers/entities/messages/downloads";
 import { trackThirdPartyMessageAttachmentShowPreview } from "../../../utils/analytics";
+import { isTestEnv } from "../../../utils/environment";
 
 const taskCopyToMediaStore = (
   { displayName, contentType }: UIAttachment,
@@ -51,6 +51,35 @@ const taskAddCompleteDownload = (
     E.toError
   );
 
+const taskDownloadFileIntoAndroidPublicFolder = (
+  attachment: UIAttachment,
+  path: string
+) =>
+  pipe(
+    isAndroid,
+    TE.fromPredicate(identity, () => undefined),
+    TE.mapLeft(() => ReactNativeBlobUtil.ios.presentOptionsMenu(path)),
+    TE.chain(_ =>
+      pipe(
+        taskCopyToMediaStore(attachment, path),
+        TE.chain(downloadFilePath =>
+          taskAddCompleteDownload(attachment, downloadFilePath)
+        ),
+        TE.mapLeft(_ =>
+          showToast(i18n.t("messageDetails.attachments.failing.details"))
+        )
+      )
+    )
+  );
+
+export const testableFunctions = isTestEnv
+  ? {
+      taskCopyToMediaStore,
+      taskAddCompleteDownload,
+      taskDownloadFileIntoAndroidPublicFolder
+    }
+  : undefined;
+
 // This hook has a different behaviour if the attachment is a PN
 // one or a generic third-party attachment.
 // When selecting a PN attachment, this hook takes care of downloading
@@ -80,23 +109,7 @@ export const useAttachmentDownload = (
       if (attachment.contentType === ContentTypeValues.applicationPdf) {
         openPreview(attachment);
       } else {
-        await pipe(
-          isAndroid,
-          O.fromPredicate(identity),
-          TE.fromOption(() => undefined),
-          TE.mapLeft(() => ReactNativeBlobUtil.ios.presentOptionsMenu(path)),
-          TE.chain(_ =>
-            pipe(
-              taskCopyToMediaStore(attachment, path),
-              TE.chain(downloadFilePath =>
-                taskAddCompleteDownload(attachment, downloadFilePath)
-              ),
-              TE.mapLeft(_ =>
-                showToast(i18n.t("messageDetails.attachments.failing.details"))
-              )
-            )
-          )
-        )();
+        await taskDownloadFileIntoAndroidPublicFolder(attachment, path)();
       }
     }
   }, [downloadPot, openPreview]);
@@ -127,13 +140,21 @@ export const useAttachmentDownload = (
     await pipe(
       downloadPot,
       pot.toOption,
-      TE.fromOption(() => new Error("The pot is None")),
+      TE.fromOption(() => undefined),
       TE.chain(download =>
-        TE.tryCatch(() => RNFS.exists(download.path), E.toError)
+        TE.tryCatch(
+          () => RNFS.exists(download.path),
+          () => undefined
+        )
       ),
-      TE.filterOrElse(identity, () => new Error("The file does not exist")),
+      TE.filterOrElse(identity, () => undefined),
       TE.mapLeft(() => dispatch(downloadAttachment.request(attachment))),
-      TE.chainW(() => TE.tryCatch(() => openAttachment(), E.toError))
+      TE.chainW(() =>
+        TE.tryCatch(
+          () => openAttachment(),
+          () => undefined
+        )
+      )
     )();
   };
 
