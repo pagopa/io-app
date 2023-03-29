@@ -35,11 +35,13 @@ const renderNode = (body: string | React.ReactNode, email?: EmailString) => {
       <Body testID="infoScreenBody" style={styles.textAlignCenter}>
         {body}
         {email && (
-          <Link onPress={() => Linking.openURL(`mailto:${email}`)}>
+          <Text>
             {" "}
-            {email}
+            <Link onPress={() => Linking.openURL(`mailto:${email}`)}>
+              {email}
+            </Link>
             {"."}
-          </Link>
+          </Text>
         )}
       </Body>
     );
