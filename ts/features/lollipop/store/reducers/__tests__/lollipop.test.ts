@@ -20,12 +20,12 @@ const globalState = appReducer(undefined, applicationChangeState("active"));
 describe("Lollipop state", () => {
   it("Test selectors and reducers", () => {
     const lollipopState = lollipopSelector(globalState);
-    expect(lollipopState.keyTag).toBe(undefined);
+    expect(lollipopState.keyTag).toBe(O.none);
     const newLollipopState = lollipopReducer(
       lollipopState,
       lollipopKeyTagSave({ keyTag: "newKeyTag" })
     );
-    expect(newLollipopState.keyTag).toBe("newKeyTag");
+    expect(newLollipopState.keyTag).toStrictEqual(O.some("newKeyTag"));
   });
 });
 
