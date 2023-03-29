@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.29.0-rc.3](https://github.com/pagopa/io-app/compare/2.29.0-rc.2...2.29.0-rc.3) (2023-03-28)
+
+
+### Bug Fixes
+
+* **IDPay:** [[IODPAY-197](https://pagopa.atlassian.net/browse/IODPAY-197)] Fix infinite loading in card detail ([#4491](https://github.com/pagopa/io-app/issues/4491)) ([6be1070](https://github.com/pagopa/io-app/commit/6be10709e4db4818ebac5a7c07835aab54f732e0))
+
+## [2.29.0-rc.2](https://github.com/pagopa/io-app/compare/2.29.0-rc.1...2.29.0-rc.2) (2023-03-28)
+
+
+### Chores
+
+* [[IOAPPFD0-61](https://pagopa.atlassian.net/browse/IOAPPFD0-61)] Fix an error during beta IPA upload using xCode 14.2 on fastlane's pilot step ([#4489](https://github.com/pagopa/io-app/issues/4489)) ([002e6ff](https://github.com/pagopa/io-app/commit/002e6ff9259fa8ed75326a6dd6f381d516ebfaad))
+
 ## [2.29.0-rc.1](https://github.com/pagopa/io-app/compare/2.29.0-rc.0...2.29.0-rc.1) (2023-03-27)
 
 
