@@ -1,9 +1,7 @@
 /**
  * A reducer for lollipop.
  */
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
 import { Action } from "../../../../store/actions/types";
@@ -15,13 +13,13 @@ import {
 import { GlobalState } from "../../../../store/reducers/types";
 
 export type LollipopState = Readonly<{
-  keyTag?: string;
-  publicKey?: PublicKey;
+  keyTag: O.Option<string>;
+  publicKey: O.Option<PublicKey>;
 }>;
 
 export const initialLollipopState: LollipopState = {
-  keyTag: undefined,
-  publicKey: undefined
+  keyTag: O.none,
+  publicKey: O.none
 };
 
 export default function lollipopReducer(
@@ -32,17 +30,17 @@ export default function lollipopReducer(
     case getType(lollipopKeyTagSave):
       return {
         ...state,
-        keyTag: action.payload.keyTag
+        keyTag: O.some(action.payload.keyTag)
       };
     case getType(lollipopSetPublicKey):
       return {
         ...state,
-        publicKey: action.payload.publicKey
+        publicKey: O.some(action.payload.publicKey)
       };
     case getType(lollipopRemovePublicKey):
       return {
         ...state,
-        publicKey: undefined
+        publicKey: O.none
       };
     default:
       return state;
@@ -50,22 +48,7 @@ export default function lollipopReducer(
 }
 
 export const lollipopSelector = (state: GlobalState) => state.lollipop;
-
-export const lollipopKeyTagSelector = createSelector(
-  lollipopSelector,
-  (lollipop): O.Option<string> =>
-    pipe(
-      lollipop,
-      O.fromNullable,
-      O.chainNullableK(lollipop => lollipop.keyTag)
-    )
-);
-
-export const lollipopPublicKeySelector: (
-  state: GlobalState
-) => O.Option<PublicKey> = (state: GlobalState) =>
-  pipe(
-    state.lollipop,
-    O.fromNullable,
-    O.chainNullableK(lollipop => lollipop.publicKey)
-  );
+export const lollipopKeyTagSelector = (state: GlobalState) =>
+  state.lollipop.keyTag;
+export const lollipopPublicKeySelector = (state: GlobalState) =>
+  state.lollipop.publicKey;

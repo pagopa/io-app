@@ -11,7 +11,9 @@ import {
   GetQtspClausesMetadataT,
   getQtspClausesMetadataDefaultDecoder,
   CreateSignatureT,
-  createSignatureDefaultDecoder
+  createSignatureDefaultDecoder,
+  GetMetadataT,
+  getMetadataDefaultDecoder
 } from "../../../../definitions/fci/requestTypes";
 import { SessionToken } from "../../../types/SessionToken";
 import {
@@ -21,7 +23,7 @@ import {
 import { defaultRetryingFetch } from "../../../utils/fetch";
 import { LollipopConfig } from "../../lollipop";
 import { lollipopFetch } from "../../lollipop/utils/fetch";
-import { KeyInfo } from "../../../utils/crypto";
+import { KeyInfo } from "../../lollipop/utils/crypto";
 
 const getSignatureDetailViewById: GetSignatureRequestByIdT = {
   method: "get",
@@ -57,6 +59,14 @@ const postSignature: CreateSignatureT = {
   response_decoder: createSignatureDefaultDecoder()
 };
 
+const getMetadata: GetMetadataT = {
+  method: "get",
+  url: () => `/api/v1/sign/metadata`,
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+  query: _ => ({}),
+  response_decoder: getMetadataDefaultDecoder()
+};
+
 // client for FCI to handle API communications
 export const BackendFciClient = (
   baseUrl: string,
@@ -87,6 +97,7 @@ export const BackendFciClient = (
           fetchApi: lpFetch
         })
       );
-    }
+    },
+    getMetadata: withBearerToken(createFetchRequestForApi(getMetadata, options))
   };
 };

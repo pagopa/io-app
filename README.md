@@ -51,8 +51,8 @@
   - [Fonts](#fonts)
   - [Vector graphics](#vector-graphics)
   - [Io-Icon-Font](#io-icon-font) (⚠️ deprecated)
-  - [Theming](#theming)
-  - [Custom UI components](#custom-ui-components)
+  - [Theming](#theming) (⚠️ deprecated)
+  - [Custom UI components](#custom-ui-components) (⚠️ deprecated)
   - [End to end test](./TESTING_E2E.md)
   - [Troubleshooting](#troubleshooting)
 
@@ -241,7 +241,7 @@ Note that on Linux you do not need CocoaPods as you can only build for Android.
 Bundler is a Ruby application. If you have installed a version of Ruby in your system you can use it to install the required tools with:
 
 ```
-sudo gem install bundler:2.0.2
+sudo gem install bundler:2.1.4
 ```
 
 In some version of Linux you may not have Ruby installed. In some versions of macOS, bundler is not able to install the dependencies because the ruby provided by the system is not complete enough. 
@@ -250,8 +250,8 @@ In those cases, you need to install the bundler using the ruby installed by `asd
 
 ```
 cd <work-dir>/io-app
-asdf global ruby 2.7.4
-gem install bundler:2.0.2
+asdf global ruby 2.7.7
+gem install bundler:2.1.4
 ```
 
 Verify it was installed correctly with the command `which bundle`. It should show the installation path of the command. 
@@ -571,6 +571,7 @@ $ react-native-asset
 This last command deals in particular with copying the asset within a specific folder of the Android sub-project.
 
 ### Theming
+**Note**: ⚠️ Deprecated
 
 The application uses [native-base](https://nativebase.io/) and its components for the graphical interface. In particular, we  decided to use as a basis the theme material provided by the library. Although native-base allows to customize part of the theme through the use of variables, it was nevertheless necessary to implement ad-hoc functions that allow to go to modify the theme of the individual components.
 
@@ -696,6 +697,7 @@ export default (): Theme => {
 In this case, what is defined within the attribute `NativeBase.Text` will be used only if the button has associated a property with a name `small`.
 
 ### Custom UI components
+**Note**: ⚠️ Deprecated
 
 #### TextWithIcon
 
@@ -709,8 +711,6 @@ Example of use:
   <Text>{I18n.t('onboarding.pin.confirmInvalid')}</Text>
 </TextWithIcon>
 ```
-
-To change the wrapper, icon or text theme, edit the `ts/theme/components/TextWithIcon.ts` file.
 
 [icomoon-export-settings]: docs/icomoon-font-export.png "IcoMoon Export Settings"
 

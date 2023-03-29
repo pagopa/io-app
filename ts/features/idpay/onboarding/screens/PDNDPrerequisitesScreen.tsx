@@ -22,6 +22,7 @@ import { serviceByIdSelector } from "../../../../store/reducers/entities/service
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { useOnboardingMachineService } from "../xstate/provider";
 import { pdndCriteriaSelector, selectServiceId } from "../xstate/selectors";
+import { IOColors } from "../../../../components/core/variables/IOColors";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.main.contextualHelpTitle",
@@ -89,6 +90,7 @@ export const PDNDPrerequisitesScreen = () => {
         onPress: () => dismiss(),
         block: true,
         bordered: false,
+        labelColor: IOColors.white,
         title: I18n.t(
           "idpay.onboarding.PDNDPrerequisites.prerequisites.info.understoodCTA"
         )

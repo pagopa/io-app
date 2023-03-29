@@ -1,7 +1,6 @@
-import { View } from "native-base";
 import { useEffect, useState } from "react";
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../../../../components/screens/EdgeBorderComponent";
 import ScreenContent from "../../../../../components/screens/ScreenContent";

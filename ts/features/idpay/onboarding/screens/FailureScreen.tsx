@@ -1,9 +1,9 @@
 import { useSelector } from "@xstate/react";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Text, View } from "native-base";
+import { Text } from "native-base";
 import * as React from "react";
-import { SafeAreaView, StyleSheet } from "react-native";
+import { View, SafeAreaView, StyleSheet } from "react-native";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import {
   IOPictogramType,

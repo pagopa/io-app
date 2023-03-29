@@ -1,6 +1,7 @@
-import type { ColorValue } from "react-native";
-import LinearGradient from "react-native-linear-gradient"; // Used by `getGradientColorValues` function
+import * as React from "react";
 import { ComponentProps } from "react";
+import { Appearance, ColorValue } from "react-native";
+import LinearGradient from "react-native-linear-gradient"; // Used by `getGradientColorValues` function
 
 /*
 TYPESCRIPT FUNCTIONS
@@ -259,31 +260,62 @@ export type IOColorsExtra = keyof typeof IOColorsExtra;
 ░░░ THEME COLORS ░░░
 */
 
-export const themeColorsLightMode = asIOThemeColors({
+export type IOTheme = {
+  // General
+  "appBackground-primary": IOColors;
+  "appBackground-secondary": IOColors;
+  "appBackground-tertiary": IOColors;
+  "interactiveElem-default": IOColors;
+  "interactiveElem-pressed": IOColors;
+  // Typography
+  "textHeading-default": IOColors;
+  "textBody-default": IOColors;
+  "textBody-secondary": IOColors;
+  "textBody-tertiary": IOColors;
+  // Design System related
+  "cardBorder-default": IOColors;
+  "iconColor-default": IOColors;
+  // Layout
+  "divider-default": IOColors;
+};
+
+export const IOThemeLight: IOTheme = {
   // General
   "appBackground-primary": "white",
   "appBackground-secondary": "grey-50",
+  "appBackground-tertiary": "grey-100",
   "interactiveElem-default": "blueIO-500",
   "interactiveElem-pressed": "blueIO-600",
   // Typography
   "textHeading-default": "black",
-  "textBody-default": "black"
-});
+  "textBody-default": "black",
+  "textBody-secondary": "grey-850",
+  "textBody-tertiary": "grey-700",
+  // Design System related
+  "cardBorder-default": "grey-100",
+  "iconColor-default": "grey-650",
+  // Layout
+  "divider-default": "grey-100"
+};
 
-export type themeColorsLightMode = keyof typeof themeColorsLightMode;
-
-export const themeColorsDarkMode: Record<
-  NonNullable<themeColorsLightMode>,
-  IOColors
-> = {
+export const IOThemeDark: IOTheme = {
+  ...IOThemeLight,
   // General
-  "appBackground-primary": "white",
-  "appBackground-secondary": "grey-50",
+  "appBackground-primary": "black",
+  "appBackground-secondary": "grey-850",
+  "appBackground-tertiary": "grey-700",
   "interactiveElem-default": "blueIO-450",
   "interactiveElem-pressed": "blueIO-600",
   // Typography
-  "textHeading-default": "black",
-  "textBody-default": "black"
+  "textHeading-default": "grey-200",
+  "textBody-default": "white",
+  "textBody-secondary": "grey-100",
+  "textBody-tertiary": "grey-450",
+  // Design System related
+  "cardBorder-default": "grey-850",
+  "iconColor-default": "grey-450",
+  // Layout
+  "divider-default": "grey-850"
 };
 
 export const themeStatusColorsLightMode = asIOThemeColors({
@@ -331,6 +363,14 @@ export const themeStatusColorsDarkMode: Record<
 };
 
 export type themeStatusColorsDarkMode = keyof typeof themeStatusColorsDarkMode;
+
+/*
+THEME CONTEXT
+*/
+export const IOThemes = { light: IOThemeLight, dark: IOThemeDark };
+export const IOThemeContext: React.Context<IOTheme> = React.createContext(
+  Appearance.getColorScheme() === "dark" ? IOThemes.dark : IOThemes.light
+);
 
 /*
 UTILS

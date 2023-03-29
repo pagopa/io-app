@@ -34,7 +34,8 @@ import {
   fciSigningRequest,
   fciEndRequest,
   fciShowSignedDocumentsStartRequest,
-  fciShowSignedDocumentsEndRequest
+  fciShowSignedDocumentsEndRequest,
+  fciMetadataRequest
 } from "../store/actions";
 import {
   fciQtspClausesMetadataSelector,
@@ -42,12 +43,13 @@ import {
   fciQtspNonceSelector
 } from "../store/reducers/fciQtspClauses";
 import { fciDocumentSignaturesSelector } from "../store/reducers/fciDocumentSignatures";
-import { KeyInfo } from "../../../utils/crypto";
+import { KeyInfo } from "../../lollipop/utils/crypto";
 import { handleGetSignatureRequestById } from "./networking/handleGetSignatureRequestById";
 import { handleGetQtspMetadata } from "./networking/handleGetQtspMetadata";
 import { handleCreateFilledDocument } from "./networking/handleCreateFilledDocument";
 import { handleDownloadDocument } from "./networking/handleDownloadDocument";
 import { handleCreateSignature } from "./networking/handleCreateSignature";
+import { handleGetMetadata } from "./networking/handleGetMetadata";
 
 /**
  * Handle the FCI Signature requests
@@ -118,6 +120,12 @@ export function* watchFciSaga(
   );
 
   yield* takeLatest(getType(fciEndRequest), watchFciEndSaga);
+
+  yield* takeLatest(
+    getType(fciMetadataRequest.request),
+    handleGetMetadata,
+    fciClient.getMetadata
+  );
 }
 
 /**
@@ -153,8 +161,11 @@ function* watchFciQtspClausesSaga(): SagaIterator {
 function* watchFciStartSaga(): SagaIterator {
   yield* call(
     NavigationService.dispatchNavigationAction,
-    CommonActions.navigate(FCI_ROUTES.MAIN, {
-      screen: FCI_ROUTES.DOCUMENTS
+    StackActions.replace(FCI_ROUTES.MAIN, {
+      screen: FCI_ROUTES.DOCUMENTS,
+      params: {
+        attrs: undefined
+      }
     })
   );
   // when the user start signing flow
@@ -162,6 +173,10 @@ function* watchFciStartSaga(): SagaIterator {
   // this is needed to get the document_url
   // that will be used to create the filled document
   yield* put(fciLoadQtspClauses.request());
+
+  // start a request to get the metadata
+  // this is needed to get the service_id
+  yield* put(fciMetadataRequest.request());
 }
 
 /**

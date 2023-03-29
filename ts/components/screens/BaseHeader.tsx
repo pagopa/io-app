@@ -2,10 +2,10 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { NavigationEvents } from "@react-navigation/compat";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Body, Left, Right, Text as NBText, View } from "native-base";
+import { Body, Left, Right, Text as NBText } from "native-base";
 import * as React from "react";
 import { FC, Ref } from "react";
-import { AccessibilityInfo, ColorValue, StyleSheet } from "react-native";
+import { View, AccessibilityInfo, ColorValue, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
@@ -101,7 +101,7 @@ const setAccessibilityTimeout = 0 as Millisecond;
 const noReferenceTimeout = 150 as Millisecond;
 /** A component representing the properties common to all the screens (and the most of modal/overlay displayed) */
 class BaseHeaderComponent extends React.PureComponent<Props, State> {
-  private firstElementRef = React.createRef<NBText>();
+  private firstElementRef = React.createRef<NBText | View>();
 
   public constructor(props: Props) {
     super(props);
@@ -163,7 +163,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
         return;
       }
       setAccessibilityFocus(
-        this.firstElementRef,
+        this.firstElementRef as React.RefObject<View>,
         setAccessibilityTimeout,
         this.props.onAccessibilityNavigationHeaderFocus
       );
@@ -186,6 +186,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
               style={{
                 color: titleColor ? IOColors[titleColor] : IOColors.bluegrey
               }}
+              testID={"bodyLabel"}
             >
               {l}
             </NBText>
@@ -225,10 +226,13 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
             O.isSome(maybeAccessibilityLabel) ? (
               this.renderBodyLabel(
                 maybeAccessibilityLabel.value,
-                this.firstElementRef
+                this.firstElementRef as React.RefObject<NBText>
               )
             ) : (
-              <View ref={this.firstElementRef} accessible={true}>
+              <View
+                ref={this.firstElementRef as React.RefObject<View>}
+                accessible={true}
+              >
                 {body ? body : headerTitle && this.renderBodyLabel(headerTitle)}
               </View>
             )}
@@ -327,6 +331,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
             accessible={true}
             accessibilityElementsHidden={true}
             importantForAccessibility="no-hide-descendants"
+            style={{ marginLeft: 8 }}
           >
             <IconFont name={"io-logo"} color={iconColor} accessible={false} />
           </View>

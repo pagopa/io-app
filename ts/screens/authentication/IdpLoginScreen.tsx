@@ -1,31 +1,29 @@
-import { PublicKey } from "@pagopa/io-react-native-crypto";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Text as NBText, View } from "native-base";
 import * as React from "react";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { Image, Linking, StyleSheet } from "react-native";
+import { useCallback, useMemo, useState } from "react";
+import { Image, Linking, StyleSheet, View } from "react-native";
 import { WebView } from "react-native-webview";
 import {
   WebViewErrorEvent,
-  WebViewNavigation,
-  WebViewSource
+  WebViewNavigation
 } from "react-native-webview/lib/WebViewTypes";
 import { connect } from "react-redux";
-import URLParse from "url-parse";
 import brokenLinkImage from "../../../img/broken-link.png";
-import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
+import { VSpacer } from "../../components/core/spacer/Spacer";
+import { Body } from "../../components/core/typography/Body";
+import { H2 } from "../../components/core/typography/H2";
+import { IOStyles } from "../../components/core/variables/IOStyles";
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import IdpCustomContextualHelpContent from "../../components/screens/IdpCustomContextualHelpContent";
+import ButtonOutline from "../../components/ui/ButtonOutline";
+import ButtonSolid from "../../components/ui/ButtonSolid";
 import Markdown from "../../components/ui/Markdown";
 import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
 import { useLollipopLoginSource } from "../../features/lollipop/hooks/useLollipopLoginSource";
-import { publicKey } from "../../features/lollipop/types/LollipopLoginSource";
-import { lollipopSamlVerify } from "../../features/lollipop/utils/login";
-import { LollipopCheckStatus } from "../../features/lollipop/types/LollipopCheckStatus";
 import I18n from "../../i18n";
 import { mixpanelTrack } from "../../mixpanel";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
@@ -56,7 +54,6 @@ import {
   handleSendAssistanceLog
 } from "../../utils/supportAssistance";
 import { getUrlBasepath } from "../../utils/url";
-import { trackLollipopIdpLoginFailure } from "../../utils/analytics";
 import { originSchemasWhiteList } from "./originSchemasWhiteList";
 
 type NavigationProps = IOStackNavigationRouteProps<
@@ -90,15 +87,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center"
   },
-  errorTitle: {
-    fontSize: 20,
-    marginTop: 10
-  },
-  errorBody: {
-    marginTop: 10,
-    marginBottom: 10,
-    textAlign: "center"
-  },
   errorButtonsContainer: {
     position: "absolute",
     bottom: 30,
@@ -125,32 +113,23 @@ const IdpLoginScreen = (props: Props) => {
   );
   const [errorCode, setErrorCode] = useState<string | undefined>(undefined);
   const [loginTrace, setLoginTrace] = useState<string | undefined>(undefined);
-  const [lollipopCheckStatus, setLollipopCheckStatus] =
-    useState<LollipopCheckStatus>({ status: "none", url: O.none });
 
-  const [webviewSource, setWebviewSource] = useState<WebViewSource | undefined>(
-    undefined
-  );
+  const handleOnLollipopCheckFailure = useCallback(() => {
+    setRequestState(pot.noneError(ErrorType.LOGIN_ERROR));
+  }, []);
 
   const idpId = props.loggedOutWithIdpAuth?.idp.id;
   const loginUri = idpId ? getIdpLoginUri(idpId) : undefined;
-  const { loginSource, regenerateLoginSource } =
-    useLollipopLoginSource(loginUri);
+  const {
+    retryLollipopLogin,
+    shouldBlockUrlNavigationWhileCheckingLollipop,
+    webviewSource
+  } = useLollipopLoginSource(handleOnLollipopCheckFailure, loginUri);
 
   const choosenTool = useMemo(
     () => assistanceToolRemoteConfig(props.assistanceToolConfig),
     [props.assistanceToolConfig]
   );
-
-  const startLoginProcess = useCallback(() => {
-    if (loginSource.kind === "ready") {
-      setWebviewSource(loginSource.value);
-    }
-  }, [loginSource]);
-
-  useEffect(() => {
-    startLoginProcess();
-  }, [startLoginProcess]);
 
   const idp = useMemo(
     () => props.loggedOutWithIdpAuth?.idp.id ?? "n/a",
@@ -201,15 +180,7 @@ const IdpLoginScreen = (props: Props) => {
 
   const onRetryButtonPressed = (): void => {
     setRequestState(pot.noneLoading);
-    setLollipopCheckStatus({ status: "none", url: O.none });
-    // We must set webviewSource to undefined before requesting
-    // any changes to loginSource otherwise on the next component
-    // refresh (triggered by a different value of loginSource),
-    // the old value of webviewSource is going to be loaded
-    // (i.e., the loaded webViewSource uri will be different from
-    // the loginSource.uri)
-    setWebviewSource(undefined);
-    regenerateLoginSource();
+    retryLollipopLogin();
   };
 
   const handleNavigationStateChange = useCallback(
@@ -251,42 +222,8 @@ const IdpLoginScreen = (props: Props) => {
       return false;
     }
 
-    const parsedUrl = new URLParse(url, true);
-    const urlQuery = parsedUrl.query;
-    const urlEncodedSamlRequest = urlQuery?.SAMLRequest;
-    if (urlEncodedSamlRequest) {
-      if (lollipopCheckStatus.status === "none") {
-        // Make sure that we have a public key (since its retrieval
-        // may have failed - in which case let the flow go through
-        // the non-lollipop standard check process)
-        const publicKeyOption = publicKey(loginSource);
-        if (O.isSome(publicKeyOption)) {
-          // Start Lollipop verification process
-          setLollipopCheckStatus({
-            status: "checking",
-            url: O.some(url)
-          });
-          verifyLollipop(url, urlEncodedSamlRequest, publicKeyOption.value);
-          // Prevent the WebView from loading the current URL (its
-          // loading will be restored after LolliPOP verification
-          // has succeded)
-          return false;
-        }
-        // If code reaches this point, then either the public key
-        // retrieval has failed or lollipop is not enabled. Let
-        // the code flow follow the standard non-lollipop scenario
-      } else if (lollipopCheckStatus.status === "checking") {
-        // LolliPOP signature is being verified, prevent the WebView
-        // from loading the current URL,
-        return false;
-      }
-
-      // If code reaches this point, either there is no public key
-      // or lollipop is not enabled or the LolliPOP signature has
-      // been verified (in both cases, let the code flow). Code
-      // flow shall never hit this method is LolliPOP signature
-      // verification has failed, since an error is displayed and
-      // the WebViewSource is left undefined
+    if (shouldBlockUrlNavigationWhileCheckingLollipop(url)) {
+      return false;
     }
 
     const isLoginUrlWithToken = onLoginUriChanged(
@@ -297,32 +234,6 @@ const IdpLoginScreen = (props: Props) => {
     // making a (useless) GET request with the session in the URL
     return !isLoginUrlWithToken;
   };
-
-  const verifyLollipop = useCallback(
-    (eventUrl: string, urlEncodedSamlRequest: string, publicKey: PublicKey) => {
-      setWebviewSource(undefined);
-      lollipopSamlVerify(
-        urlEncodedSamlRequest,
-        publicKey,
-        () => {
-          setLollipopCheckStatus({
-            status: "trusted",
-            url: O.some(eventUrl)
-          });
-          setWebviewSource({ uri: eventUrl });
-        },
-        (reason: string) => {
-          trackLollipopIdpLoginFailure(reason);
-          setLollipopCheckStatus({
-            status: "untrusted",
-            url: O.some(eventUrl)
-          });
-          setRequestState(pot.noneError(ErrorType.LOGIN_ERROR));
-        }
-      );
-    },
-    []
-  );
 
   const renderMask = () => {
     if (pot.isLoading(requestState)) {
@@ -336,42 +247,49 @@ const IdpLoginScreen = (props: Props) => {
       const errorTranslationKey = `authentication.errors.spid.error_${errorCode}`;
 
       return (
-        <View style={styles.errorContainer}>
+        <View
+          style={[IOStyles.horizontalContentPadding, styles.errorContainer]}
+        >
           <Image source={brokenLinkImage} resizeMode="contain" />
-          <NBText style={styles.errorTitle} bold={true}>
+          <VSpacer size={24} />
+          <H2>
             {I18n.t(
               errorType === ErrorType.LOADING_ERROR
                 ? "authentication.errors.network.title"
                 : "authentication.errors.login.title"
             )}
-          </NBText>
+          </H2>
 
           {errorType === ErrorType.LOGIN_ERROR && (
-            <NBText style={styles.errorBody}>
-              {I18n.t(errorTranslationKey, {
-                defaultValue: I18n.t("authentication.errors.spid.unknown")
-              })}
-            </NBText>
+            <>
+              <VSpacer size={16} />
+              <Body style={{ textAlign: "center" }}>
+                {I18n.t(errorTranslationKey, {
+                  defaultValue: I18n.t("authentication.errors.spid.unknown")
+                })}
+              </Body>
+              <VSpacer size={16} />
+            </>
           )}
 
           <View style={styles.errorButtonsContainer}>
-            <ButtonDefaultOpacity
-              onPress={() => props.navigation.goBack()}
-              style={styles.cancelButtonStyle}
-              block={true}
-              light={true}
-              bordered={true}
-            >
-              <NBText>{I18n.t("global.buttons.cancel")}</NBText>
-            </ButtonDefaultOpacity>
-            <ButtonDefaultOpacity
-              onPress={onRetryButtonPressed}
-              style={styles.flex2}
-              block={true}
-              primary={true}
-            >
-              <NBText>{I18n.t("global.buttons.retry")}</NBText>
-            </ButtonDefaultOpacity>
+            <View style={styles.cancelButtonStyle}>
+              <ButtonOutline
+                fullWidth
+                onPress={() => props.navigation.goBack()}
+                label={I18n.t("global.buttons.cancel")}
+                accessibilityLabel={I18n.t("global.buttons.cancel")}
+              />
+            </View>
+
+            <View style={styles.flex2}>
+              <ButtonSolid
+                fullWidth
+                onPress={onRetryButtonPressed}
+                label={I18n.t("global.buttons.retry")}
+                accessibilityLabel={I18n.t("global.buttons.retry")}
+              />
+            </View>
           </View>
         </View>
       );
