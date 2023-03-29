@@ -34,11 +34,13 @@ export const confirmButtonProps = (
   title?: string,
   iconName?: string,
   testID?: string,
-  disabled?: boolean
+  disabled?: boolean,
+  buttonFontSize?: number
 ): BlockButtonProps => ({
   primary: true,
   labelColor: IOColors.white,
   title: title ? title : I18n.t("global.buttons.confirm"),
+  buttonFontSize,
   iconName,
   onPress,
   testID,

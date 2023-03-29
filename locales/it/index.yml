@@ -3214,12 +3214,19 @@ features:
       waitForQtsp:
         title: Il documento è in elaborazione
         subTitle: Ti preghiamo di attendere, presto riceverai il contratto firmato in app.
-      unsupportedDevice:
-        title: C’è un problema
-        subTitle: Il tuo device non supporta la funzionalità Firma con IO.
       generic:
-        title: C’è un problema
-        subTitle: Per procedere alla firma, verifica di aver aggiornato l’app IO all’ultima versione
+        default:
+          title: C’è un problema sui nostri sistemi
+          subTitle: Riprova tra qualche minuto. Se si ripete, contatta l’assistenza.
+        update:
+          title: Aggiorna l’app
+          subTitle: Verifica di avere installato l’ultima versione di IO oppure rifai il login. 
+        rejected:
+          title: La firma non è andata a buon fine
+          subTitle: L’ente mittente ti contatterà nei prossimi giorni per farti firmare di nuovo. Se ciò non dovesse succedere, scrivi a
+        signing:
+          title: La firma non è andata a buon fine
+          subTitle: A causa di un problema tecnico, la firma non è andata a buon fine. Se il problema si ripete contatta l’assistenza.
     abort:
       title: "Annulla la firma"
       content: "Vuoi annullare la firma dei documenti?"
@@ -3360,7 +3367,9 @@ idpay:
             showMore: Vedi tutte
             header: Impostazioni
             associatedPaymentMethods: Metodi di pagamento associati
-            methodsi18n: metodi 
+            methods:
+              one: "1 metodo"
+              other: "{{count}} metodi"
             selectedIBAN: IBAN per l'accredito
             actionsRequired: Azioni richieste 
           startConfigurationCTA: Inizia
