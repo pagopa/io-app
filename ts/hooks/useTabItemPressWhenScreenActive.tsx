@@ -7,7 +7,7 @@ export function useTabItemPressWhenScreenActive(
 ) {
   const navigation = useNavigation();
   const onTabPress = useCallback(() => {
-    if (navigation.isFocused() && typeof callback === "function") {
+    if (navigation.isFocused()) {
       callback();
     }
   }, [navigation, callback]);
