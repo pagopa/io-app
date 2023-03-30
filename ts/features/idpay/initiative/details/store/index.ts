@@ -2,13 +2,15 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as _ from "lodash";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
+import { InitiativeDetailDTO } from "../../../../../../definitions/idpay/InitiativeDetailDTO";
+import { InitiativeDTO } from "../../../../../../definitions/idpay/InitiativeDTO";
 import { OperationDTO } from "../../../../../../definitions/idpay/OperationDTO";
 import { TimelineDTO } from "../../../../../../definitions/idpay/TimelineDTO";
-import { InitiativeDTO } from "../../../../../../definitions/idpay/InitiativeDTO";
 import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../utils/errors";
 import {
+  idPayBeneficiaryDetailsGet,
   idpayInitiativeGet,
   idpayTimelineDetailsGet,
   idpayTimelinePageGet
@@ -18,12 +20,14 @@ type PaginatedTimelineDTO = Record<number, TimelineDTO>;
 
 export type IDPayInitiativeState = {
   details: pot.Pot<InitiativeDTO, NetworkError>;
+  beneficiaryDetails: pot.Pot<InitiativeDetailDTO, NetworkError>;
   timeline: pot.Pot<PaginatedTimelineDTO, NetworkError>;
   timelineDetails: pot.Pot<OperationDTO, NetworkError>;
 };
 
 const INITIAL_STATE: IDPayInitiativeState = {
   details: pot.none,
+  beneficiaryDetails: pot.none,
   timeline: pot.none,
   timelineDetails: pot.none
 };
@@ -89,6 +93,24 @@ const reducer = (
       return {
         ...state,
         timelineDetails: pot.toError(state.timelineDetails, action.payload)
+      };
+    case getType(idPayBeneficiaryDetailsGet.request):
+      return {
+        ...state,
+        beneficiaryDetails: pot.toLoading(pot.none)
+      };
+    case getType(idPayBeneficiaryDetailsGet.success):
+      return {
+        ...state,
+        beneficiaryDetails: pot.some(action.payload)
+      };
+    case getType(idPayBeneficiaryDetailsGet.failure):
+      return {
+        ...state,
+        beneficiaryDetails: pot.toError(
+          state.beneficiaryDetails,
+          action.payload
+        )
       };
   }
   return state;
@@ -163,6 +185,11 @@ export const idpayTimelineIsLastPageSelector = createSelector(
 export const idpayTimelineDetailsSelector = createSelector(
   idpayInitativeSelector,
   initiative => initiative.timelineDetails
+);
+
+export const idPayBeneficiaryDetailsSelector = createSelector(
+  idpayInitativeSelector,
+  initiative => initiative.beneficiaryDetails
 );
 
 export default reducer;
