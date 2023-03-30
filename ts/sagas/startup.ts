@@ -216,7 +216,9 @@ export function* initializeApplicationSaga(): Generator<
 
   yield* call(generateLollipopKeySaga);
 
-  // This saga must select the publicKey inside to avoid confusion
+  // This saga must retrieve the publicKey by its own,
+  // since it must make sure to have the latest in-memory value
+  // (as an example, during the authentication saga the key may have been regenerated multiple times)
   const unsupportedDevice = yield* call(checkPublicKeyAndBlockIfNeeded);
   if (unsupportedDevice) {
     return;

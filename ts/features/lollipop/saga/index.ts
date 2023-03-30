@@ -95,10 +95,7 @@ export function* checkLollipopSessionAssertionAndInvalidateIfNeeded(
         )
       )
     ),
-    O.fold(
-      () => false,
-      checkResult => checkResult
-    )
+    O.getOrElse(() => false)
   );
 
   if (!lollipopCheckResult) {
