@@ -1,6 +1,5 @@
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { useSelector } from "@xstate/react";
-import { Text as NBText } from "native-base";
 import React from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import { Icon } from "../../../../../components/core/icons";
@@ -224,11 +223,11 @@ const InstrumentsEnrollmentScreen = () => {
           <ScrollView style={styles.container}>
             <H1>{I18n.t("idpay.configuration.instruments.header")}</H1>
             <VSpacer size={8} />
-            <NBText>
+            <Body>
               {I18n.t("idpay.configuration.instruments.body", {
                 initiativeName: initiativeDetails?.initiativeName ?? ""
               })}
-            </NBText>
+            </Body>
             <VSpacer size={24} />
             {walletInstruments.map(walletInstrument => (
               <InstrumentEnrollmentSwitch
