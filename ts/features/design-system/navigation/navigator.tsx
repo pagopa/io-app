@@ -20,6 +20,7 @@ import { DSListItems } from "../core/DSListItems";
 import { DSLayout } from "../core/DSLayout";
 import { DSAlert } from "../core/DSAlert";
 import { DSLoaders } from "../core/DSLoaders";
+import { DSHapticFeedback } from "../core/DSHapticFeedback";
 import {
   IOThemeContext,
   IOThemes
@@ -79,6 +80,11 @@ export const DesignSystemNavigator = () => {
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.FOUNDATION.LOADERS.route}
           component={DSLoaders}
+        />
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.FOUNDATION.HAPTIC_FEEDBACK.route}
+          component={DSHapticFeedback}
         />
 
         {/* COMPONENTS */}
