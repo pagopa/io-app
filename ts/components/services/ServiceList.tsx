@@ -53,9 +53,10 @@ const styles = StyleSheet.create({
 
 class ServiceList extends React.Component<Props> {
   componentDidMount() {
-    const { setHasInternTab, setTabPressCallback } = this.props;
+    const { setHasInternalTab: setHasInternalTab, setTabPressCallback } =
+      this.props;
 
-    setHasInternTab(true);
+    setHasInternalTab(true);
     setTabPressCallback(() => () => {
       sectionListRef.current?.scrollToLocation({
         animated: true,

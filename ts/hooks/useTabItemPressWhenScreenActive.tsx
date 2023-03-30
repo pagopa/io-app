@@ -3,7 +3,7 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
 export function useTabItemPressWhenScreenActive(
   callback: () => void,
-  hasInternTab: boolean
+  hasInternalTab: boolean
 ) {
   const navigation = useNavigation();
   const onTabPress = useCallback(() => {
@@ -20,7 +20,7 @@ export function useTabItemPressWhenScreenActive(
       // @ts-ignore
       navigation.addListener("tabPress", onTabPress);
 
-      if (hasInternTab) {
+      if (hasInternalTab) {
         // eslint-disable-next-line
         // @ts-ignore
         navigation.getParent()?.addListener("tabPress", onTabPress);
@@ -31,12 +31,12 @@ export function useTabItemPressWhenScreenActive(
         // @ts-ignore
         navigation.removeListener("tabPress", onTabPress);
 
-        if (hasInternTab) {
+        if (hasInternalTab) {
           // eslint-disable-next-line
           // @ts-ignore
           navigation.getParent()?.removeListener("tabPress", onTabPress);
         }
       };
-    }, [hasInternTab, navigation, onTabPress])
+    }, [hasInternalTab, navigation, onTabPress])
   );
 }
