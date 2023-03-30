@@ -58,15 +58,11 @@ describe("Test DocumentWithSignature", () => {
     const component = renderComponent({ ...props }, store);
     expect(component).toBeTruthy();
     const leftButton = component.queryByText(
-      I18n.t("features.fci.documents.footer.cancel")
+      I18n.t("features.fci.documents.footer.backToSignFieldsList")
     );
     expect(leftButton).not.toBeNull();
-    const rightButton = component.queryByText(
-      I18n.t("features.fci.documents.footer.continue")
-    );
-    expect(rightButton).not.toBeNull();
   });
-  it("with all props the left button should be render correctly", () => {
+  it("with all props the close button should be render correctly", () => {
     const onPress = jest.fn();
     const props = {
       attrs: { unique_name: "Signature1" as NonEmptyString },
@@ -81,7 +77,7 @@ describe("Test DocumentWithSignature", () => {
     const component = renderComponent({ ...props }, store);
     expect(component).toBeTruthy();
     const leftButton = component.getByTestId(
-      "FciDocumentWithSignatureTopLeftButtonTestID"
+      "FciDocumentWithSignatureTopRightButtonTestID"
     );
     expect(leftButton).not.toBeNull();
     fireEvent.press(leftButton);

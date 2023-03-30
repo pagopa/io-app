@@ -1,13 +1,6 @@
 import * as React from "react";
 import Pdf from "react-native-pdf";
-import {
-  Body,
-  Container,
-  Left,
-  Right,
-  Button,
-  Text as NBText
-} from "native-base";
+import { Body, Container, Left, Right } from "native-base";
 import { PDFDocument, rgb } from "pdf-lib";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import ReactNativeBlobUtil from "react-native-blob-util";
@@ -24,9 +17,10 @@ import { ExistingSignatureFieldAttrs } from "../../../../definitions/fci/Existin
 import { SignatureFieldToBeCreatedAttrs } from "../../../../definitions/fci/SignatureFieldToBeCreatedAttrs";
 import { fciSignatureDetailDocumentsSelector } from "../store/reducers/fciSignatureRequest";
 import AppHeader from "../../../components/ui/AppHeader";
-import { useFciAbortSignatureFlow } from "../hooks/useFciAbortSignatureFlow";
 import { useIOSelector } from "../../../store/hooks";
 import { WithTestID } from "../../../types/WithTestID";
+import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
+import { H5 } from "../../../components/core/typography/H5";
 import DocumentsNavigationBar from "./DocumentsNavigationBar";
 
 export type SignatureFieldAttrType =
@@ -201,26 +195,13 @@ const DocumentWithSignature = (props: Props) => {
     }
   }, [pdfRef, signaturePage, isPdfLoaded]);
 
-  const { present, bottomSheet: fciAbortSignature } =
-    useFciAbortSignatureFlow();
-
   const onContinuePress = () => props.onClose();
-
-  const onCancelPress = () => present();
-
-  const cancelButtonProps = {
-    block: true,
-    light: false,
-    bordered: true,
-    onPress: onCancelPress,
-    title: I18n.t("features.fci.documents.footer.cancel")
-  };
 
   const continueButtonProps = {
     block: true,
     primary: true,
     onPress: onContinuePress,
-    title: I18n.t("features.fci.documents.footer.continue")
+    title: I18n.t("features.fci.documents.footer.backToSignFieldsList")
   };
 
   const pointToPage = (page: number) =>
@@ -277,34 +258,19 @@ const DocumentWithSignature = (props: Props) => {
     <Container>
       <AppHeader>
         <Left />
-        <Body
-          style={{
-            justifyContent: "center",
-            alignItems: "center"
-          }}
-        >
-          <NBText
-            numberOfLines={1}
-            accessible={true}
-            accessibilityRole={"header"}
-            style={{
-              color: IOColors.bluegrey
-            }}
-          >
+        <Body style={{ alignItems: "center" }}>
+          <H5 weight={"SemiBold"} color={"bluegrey"}>
             {I18n.t("features.mvl.details.attachments.pdfPreview.title")}
-          </NBText>
+          </H5>
         </Body>
         <Right>
-          <Button
-            transparent={true}
+          <ButtonDefaultOpacity
             onPress={props.onClose}
-            accessible={true}
-            accessibilityRole={"button"}
-            accessibilityLabel={I18n.t("global.buttons.close")}
-            testID="FciDocumentWithSignatureTopLeftButtonTestID"
+            transparent={true}
+            testID="FciDocumentWithSignatureTopRightButtonTestID"
           >
-            <IconFont name="io-close" color={IOColors.bluegreyDark} />
-          </Button>
+            <IconFont name="io-close" />
+          </ButtonDefaultOpacity>
         </Right>
       </AppHeader>
       <DocumentsNavigationBar
@@ -337,14 +303,12 @@ const DocumentWithSignature = (props: Props) => {
               <View style={IOStyles.flex} />
             )}
             <FooterWithButtons
-              type={"TwoButtonsInlineThird"}
-              leftButton={cancelButtonProps}
-              rightButton={continueButtonProps}
+              type={"SingleButton"}
+              leftButton={continueButtonProps}
             />
           </>
         )}
       </SafeAreaView>
-      {fciAbortSignature}
     </Container>
   );
 };
