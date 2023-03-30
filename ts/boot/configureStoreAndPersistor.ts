@@ -1,4 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import _ from "lodash";
 import {
@@ -22,7 +23,11 @@ import {
 } from "redux-persist";
 import createSagaMiddleware from "redux-saga";
 import { remoteUndefined } from "../features/bonus/bpd/model/RemoteValue";
-import { initialLollipopState } from "../features/lollipop/store/reducers/lollipop";
+import { CURRENT_REDUX_LOLLIPOP_STORE_VERSION } from "../features/lollipop/store";
+import {
+  initialLollipopState,
+  LollipopState
+} from "../features/lollipop/store/reducers/lollipop";
 import rootSaga from "../sagas";
 import { Action, StoreEnhancer } from "../store/actions/types";
 import { analytics } from "../store/middlewares";
@@ -49,7 +54,7 @@ import { configureReactotron } from "./configureRectotron";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 21;
+const CURRENT_REDUX_STORE_VERSION = 22;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -306,7 +311,32 @@ const migrations: MigrationManifest = {
   "21": (state: PersistedState) => ({
     ...state,
     lollipop: initialLollipopState
-  })
+  }),
+  // Version 22
+  // This migration is necessary because
+  // in version 21 we switched from a keyTag of type string to a keyTag of type Option,
+  // also moving the persistence from the root reducer to the lollipop reducer.
+  // Therefore, there are users who are loading the old string state from the root reducer
+  // and need to convert it to the new Option state,
+  // since they don't have the lollipop persisted state yet.
+  "22": (state: PersistedState) => {
+    const lollipop: LollipopState = (state as PersistedGlobalState).lollipop;
+    const keyTag = lollipop?.keyTag as unknown;
+    if (typeof keyTag === "string") {
+      return {
+        ...state,
+        lollipop: {
+          ...initialLollipopState,
+          keyTag: keyTag ? O.some(keyTag) : O.none,
+          _persist: {
+            version: CURRENT_REDUX_LOLLIPOP_STORE_VERSION,
+            rehydrated: true
+          }
+        }
+      };
+    }
+    return state;
+  }
 };
 
 const isDebuggingInChrome = isDevEnv && !!window.navigator.userAgent;

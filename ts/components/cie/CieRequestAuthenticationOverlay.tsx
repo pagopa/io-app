@@ -1,27 +1,27 @@
-import { PublicKey } from "@pagopa/io-react-native-crypto";
-import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { createRef, useEffect } from "react";
-import { View, Platform, SafeAreaView } from "react-native";
+import { View, Platform, SafeAreaView, StyleSheet } from "react-native";
 import WebView from "react-native-webview";
 import {
   WebViewErrorEvent,
   WebViewNavigation,
-  WebViewNavigationEvent,
-  WebViewSource
+  WebViewNavigationEvent
 } from "react-native-webview/lib/WebViewTypes";
-import URLParse from "url-parse";
 import { useLollipopLoginSource } from "../../features/lollipop/hooks/useLollipopLoginSource";
-import { LollipopCheckStatus } from "../../features/lollipop/types/LollipopCheckStatus";
-import { publicKey } from "../../features/lollipop/types/LollipopLoginSource";
-import { lollipopSamlVerify } from "../../features/lollipop/utils/login";
 import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
 import I18n from "../../i18n";
 import { getIdpLoginUri } from "../../utils/login";
 import { closeInjectedScript } from "../../utils/webview";
+import { IOColors } from "../core/variables/IOColors";
 import { IOStyles } from "../core/variables/IOStyles";
 import { withLoadingSpinner } from "../helpers/withLoadingSpinner";
 import GenericErrorComponent from "../screens/GenericErrorComponent";
+
+const styles = StyleSheet.create({
+  errorContainer: {
+    backgroundColor: IOColors.white
+  }
+});
 
 // to make sure the server recognizes the client as valid iPhone device (iOS only) we use a custom header
 // on Android it is not required
@@ -97,51 +97,18 @@ const CieWebView = (props: Props) => {
   const webView = createRef<WebView>();
   const { onSuccess } = props;
 
+  const handleOnError = React.useCallback(() => {
+    setInternalState(state => generateErrorState(state));
+  }, []);
+
   // Android CIE login flow is different from iOS.
   // On Android to be sure to regenerate a new crypto key,
   // we need to pass a new value to useLollipopLoginSource: loginUriRetry.
-  const { loginSource, regenerateLoginSource } =
-    useLollipopLoginSource(loginUri);
-  const [webviewSource, setWebviewSource] = React.useState<
-    WebViewSource | undefined
-  >(undefined);
-  const [lollipopCheckStatus, setLollipopCheckStatus] =
-    React.useState<LollipopCheckStatus>({ status: "none", url: O.none });
-
-  const verifyLollipop = React.useCallback(
-    (eventUrl: string, urlEncodedSamlRequest: string, publicKey: PublicKey) => {
-      setWebviewSource(undefined);
-      lollipopSamlVerify(
-        urlEncodedSamlRequest,
-        publicKey,
-        () => {
-          setLollipopCheckStatus({
-            status: "trusted",
-            url: O.some(eventUrl)
-          });
-          setWebviewSource({ uri: eventUrl });
-        },
-        () => {
-          setLollipopCheckStatus({
-            status: "untrusted",
-            url: O.some(eventUrl)
-          });
-          handleOnError();
-        }
-      );
-    },
-    []
-  );
-
-  const startLoginProcess = React.useCallback(() => {
-    if (loginSource.kind === "ready") {
-      setWebviewSource(loginSource.value);
-    }
-  }, [loginSource]);
-
-  useEffect(() => {
-    startLoginProcess();
-  }, [startLoginProcess]);
+  const {
+    retryLollipopLogin,
+    shouldBlockUrlNavigationWhileCheckingLollipop,
+    webviewSource
+  } = useLollipopLoginSource(handleOnError, loginUri);
 
   useEffect(() => {
     if (internalState.authUrl !== undefined) {
@@ -159,42 +126,8 @@ const CieWebView = (props: Props) => {
     }
 
     const url = event.url;
-    const parsedUrl = new URLParse(url, true);
-    const urlQuery = parsedUrl.query;
-    const urlEncodedSamlRequest = urlQuery?.SAMLRequest;
-    if (urlEncodedSamlRequest) {
-      if (lollipopCheckStatus.status === "none") {
-        // Make sure that we have a public key (since its retrieval
-        // may have failed - in which case let the flow go through
-        // the non-lollipop standard check process)
-        const publicKeyOption = publicKey(loginSource);
-        if (O.isSome(publicKeyOption)) {
-          // Start Lollipop verification process
-          setLollipopCheckStatus({
-            status: "checking",
-            url: O.some(url)
-          });
-          verifyLollipop(url, urlEncodedSamlRequest, publicKeyOption.value);
-          // Prevent the WebView from loading the current URL (its
-          // loading will be restored after LolliPOP verification
-          // has succeded)
-          return false;
-        }
-        // If code reaches this point, then either the public key
-        // retrieval has failed or lollipop is not enabled. Let
-        // the code flow follow the standard non-lollipop scenario
-      } else if (lollipopCheckStatus.status === "checking") {
-        // LolliPOP signature is being verified, prevent the WebView
-        // from loading the current URL,
-        return false;
-      }
-
-      // If code reaches this point, either there is no public key
-      // or lollipop is not enabled or the LolliPOP signature has
-      // been verified (in both cases, let the code flow). Code
-      // flow shall never hit this method is LolliPOP signature
-      // verification has failed, since an error is displayed and
-      // the WebViewSource is left undefined
+    if (shouldBlockUrlNavigationWhileCheckingLollipop(url)) {
+      return false;
     }
 
     // on iOS when authnRequestString is present in the url, it means we have all stuffs to go on.
@@ -219,10 +152,6 @@ const CieWebView = (props: Props) => {
     return true;
   };
 
-  const handleOnError = () => {
-    setInternalState(state => generateErrorState(state));
-  };
-
   const handleOnLoadEnd = (e: WebViewNavigationEvent | WebViewErrorEvent) => {
     const eventTitle = e.nativeEvent.title.toLowerCase();
     if (
@@ -244,9 +173,7 @@ const CieWebView = (props: Props) => {
       <ErrorComponent
         onRetry={() => {
           setInternalState(state => generateRetryState(state));
-          setLollipopCheckStatus({ status: "none", url: O.none });
-          setWebviewSource(undefined);
-          regenerateLoginSource();
+          retryLollipopLogin();
         }}
         onClose={props.onClose}
       />
@@ -287,7 +214,7 @@ const CieWebView = (props: Props) => {
 const ErrorComponent = (
   props: { onRetry: () => void } & Pick<Props, "onClose">
 ) => (
-  <SafeAreaView style={IOStyles.flex}>
+  <SafeAreaView style={[IOStyles.flex, styles.errorContainer]}>
     <GenericErrorComponent
       avoidNavigationEvents={true}
       onRetry={props.onRetry}
