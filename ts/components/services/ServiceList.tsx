@@ -16,6 +16,11 @@ import {
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import customVariables from "../../theme/variables";
 import { getLogoForOrganization } from "../../utils/organizations";
+import {
+  TabBarItemPressType,
+  withUseTabItemPressWhenScreenActive
+} from "../helpers/withUseTabItemPressWhenScreenActive";
+
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import SectionHeaderComponent from "../screens/SectionHeaderComponent";
 import NewServiceListItem from "./NewServiceListItem";
@@ -37,7 +42,7 @@ type OwnProps = {
   >["ListEmptyComponent"];
 };
 
-type Props = OwnProps & AnimatedProps;
+type Props = OwnProps & AnimatedProps & TabBarItemPressType;
 
 const styles = StyleSheet.create({
   padded: {
@@ -47,7 +52,20 @@ const styles = StyleSheet.create({
 });
 
 class ServiceList extends React.Component<Props> {
-  private sectionListRef = React.createRef<SectionList>();
+  componentDidMount() {
+    const { setHasInternalTab: setHasInternalTab, setTabPressCallback } =
+      this.props;
+
+    setHasInternalTab(true);
+    setTabPressCallback(() => () => {
+      sectionListRef.current?.scrollToLocation({
+        animated: true,
+        itemIndex: 0,
+        sectionIndex: 0,
+        viewOffset: 0
+      });
+    });
+  }
 
   private renderServiceItem = (
     itemInfo: ListRenderItemInfo<pot.Pot<ServicePublic, Error>>
@@ -92,7 +110,7 @@ class ServiceList extends React.Component<Props> {
 
     return (
       <Animated.SectionList
-        ref={this.sectionListRef}
+        ref={sectionListRef}
         scrollEnabled={true}
         scrollEventThrottle={
           this.props.animated
@@ -117,4 +135,6 @@ class ServiceList extends React.Component<Props> {
   }
 }
 
-export default ServiceList;
+const sectionListRef = React.createRef<SectionList>();
+
+export default withUseTabItemPressWhenScreenActive(ServiceList);
