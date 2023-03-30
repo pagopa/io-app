@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useTabItemPressWhenScreenActive } from "../../hooks/useTabItemPressWhenScreenActive";
 
-export type TabBarItemPressTypeInjectedProps = {
+export type TabBarItemPressType = {
   setTabPressCallback: React.Dispatch<React.SetStateAction<() => void>>;
-  setHasInternalTab: React.Dispatch<React.SetStateAction<boolean>>;
+  setHasInternTab: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export function withUseTabItemPressWhenScreenActive<P>(
@@ -11,14 +11,14 @@ export function withUseTabItemPressWhenScreenActive<P>(
 ) {
   return (props: any) => {
     const [callback, setTabPressCallback] = useState<() => void>(() => void 0);
-    const [hasInternalTab, setHasInternalTab] = useState(false);
+    const [hasInternTab, setHasInternTab] = useState(false);
 
     const contextProps = {
       setTabPressCallback,
-      setHasInternalTab
+      setHasInternTab
     };
 
-    useTabItemPressWhenScreenActive(callback, hasInternalTab);
+    useTabItemPressWhenScreenActive(callback, hasInternTab);
 
     return <WrappedComponent {...contextProps} {...props} />;
   };

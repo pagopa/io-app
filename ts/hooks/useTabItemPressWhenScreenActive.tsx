@@ -3,11 +3,9 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
 export function useTabItemPressWhenScreenActive(
   callback: () => void,
-  // hasInternalTab, when set to true, adds to the sub-TabBar the same event and the same callback added to the main TabBar
-  hasInternalTab: boolean
+  hasInternTab: boolean
 ) {
   const navigation = useNavigation();
-
   const onTabPress = useCallback(() => {
     if (navigation.isFocused() && typeof callback === "function") {
       callback();
@@ -22,7 +20,7 @@ export function useTabItemPressWhenScreenActive(
       // @ts-ignore
       navigation.addListener("tabPress", onTabPress);
 
-      if (hasInternalTab) {
+      if (hasInternTab) {
         // eslint-disable-next-line
         // @ts-ignore
         navigation.getParent()?.addListener("tabPress", onTabPress);
@@ -33,12 +31,12 @@ export function useTabItemPressWhenScreenActive(
         // @ts-ignore
         navigation.removeListener("tabPress", onTabPress);
 
-        if (hasInternalTab) {
+        if (hasInternTab) {
           // eslint-disable-next-line
           // @ts-ignore
           navigation.getParent()?.removeListener("tabPress", onTabPress);
         }
       };
-    }, [hasInternalTab, navigation, onTabPress])
+    }, [hasInternTab, navigation, onTabPress])
   );
 }
