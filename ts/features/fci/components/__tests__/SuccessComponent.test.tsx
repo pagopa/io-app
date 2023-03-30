@@ -13,10 +13,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { FCI_ROUTES } from "../../navigation/routes";
-import {
-  fciShowSignedDocumentsStartRequest,
-  fciStartRequest
-} from "../../store/actions";
+import { fciStartRequest } from "../../store/actions";
 
 type Props = {
   signatureRequest: SignatureRequestDetailView;
@@ -89,26 +86,7 @@ describe("Test SuccessComponent", () => {
       component.getByTestId("WaitQtspSignatureRequestTestID")
     ).toBeTruthy();
   });
-  it("with a signature request SIGNED and after 90 days from signature should render the right Error component", () => {
-    const now = new Date();
-    const store: Store<GlobalState> = createStore(
-      appReducer,
-      globalState as any
-    );
-    const expiredSignatureRequest = {
-      ...mockSignatureRequestDetailView,
-      updated_at: new Date(now.setDate(now.getDate() - 91)),
-      status: SignatureRequestDetailViewStatusEnum.SIGNED
-    };
-    const props = {
-      signatureRequest: expiredSignatureRequest
-    };
-    const component = renderComponent(props, store);
-    expect(
-      component.getByTestId("ExpiredSignedSignatureRequestTestID")
-    ).toBeTruthy();
-  });
-  it("with a signature request status SIGNED should dispatch a fciShowSignedDocumentsStartRequest correctly", () => {
+  it("with a signature request status SIGNED should render a GenericErrorComponent", () => {
     const mockStore = configureMockStore<GlobalState>();
     const store: ReturnType<typeof mockStore> = mockStore(globalState);
 
@@ -120,8 +98,7 @@ describe("Test SuccessComponent", () => {
       signatureRequest: signedSignatureRequest
     };
     const component = renderComponent(props, store);
-    expect(component).toBeTruthy();
-    expect(store.getActions()).toEqual([fciShowSignedDocumentsStartRequest()]);
+    expect(component.getByTestId("SignedSignatureRequestTestID")).toBeTruthy();
   });
   it("with a signature request status REJECTED should render a GenericErrorComponent", () => {
     const mockStore = configureMockStore<GlobalState>();

@@ -10,12 +10,7 @@ import {
   StatusEnum as SignatureRequestDetailStatus
 } from "../../../../definitions/fci/SignatureRequestDetailView";
 import { isLollipopEnabledSelector } from "../../../store/reducers/backendStatus";
-import {
-  fciEndRequest,
-  fciShowSignedDocumentsStartRequest,
-  fciStartRequest
-} from "../store/actions";
-import { daysBetweenDate } from "../utils/dates";
+import { fciEndRequest, fciStartRequest } from "../store/actions";
 import { lollipopPublicKeySelector } from "../../lollipop/store/reducers/lollipop";
 import ErrorComponent from "./ErrorComponent";
 import GenericErrorComponent from "./GenericErrorComponent";
@@ -28,7 +23,6 @@ const SuccessComponent = (props: {
 }) => {
   const now = new Date();
   const expires_at = new Date(props.signatureRequest.expires_at);
-  const updated_at = new Date(props.signatureRequest.updated_at);
   const issuer_email = props.signatureRequest.issuer.email;
   const status = props.signatureRequest.status;
   const dispatch = useIODispatch();
@@ -66,25 +60,9 @@ const SuccessComponent = (props: {
         title={I18n.t("features.fci.errors.expired.title")}
         subTitle={I18n.t("features.fci.errors.expired.subTitle")}
         onPress={() => dispatch(fciEndRequest())}
+        email={issuer_email}
         image={imageExpired}
         testID={"ExpiredSignatureRequestTestID"}
-      />
-    );
-  }
-
-  // if 90 days have passed since the request has been signed
-  // the user (signer) could not download the signed documents
-  if (
-    status === SignatureRequestDetailStatus.SIGNED &&
-    daysBetweenDate(updated_at, now) > 90
-  ) {
-    return (
-      <ErrorComponent
-        title={I18n.t("features.fci.errors.expiredAfterSigned.title")}
-        subTitle={I18n.t("features.fci.errors.expiredAfterSigned.subTitle")}
-        onPress={() => dispatch(fciEndRequest())}
-        image={imageExpired}
-        testID={"ExpiredSignedSignatureRequestTestID"}
       />
     );
   }
@@ -105,8 +83,15 @@ const SuccessComponent = (props: {
         />
       );
     case SignatureRequestDetailStatus.SIGNED:
-      dispatch(fciShowSignedDocumentsStartRequest());
-      return null;
+      return (
+        <ErrorComponent
+          title={I18n.t("features.fci.errors.signed.title")}
+          subTitle={I18n.t("features.fci.errors.signed.subTitle")}
+          onPress={() => dispatch(fciEndRequest())}
+          image={hourglass}
+          testID={"SignedSignatureRequestTestID"}
+        />
+      );
     case SignatureRequestDetailStatus.REJECTED:
       return (
         <GenericErrorComponent
