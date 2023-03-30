@@ -3210,16 +3210,29 @@ features:
         subTitle: Se hai bisogno di una copia conttatta l'ente
       expired:
         title: La richiesta di firma è scaduta
-        subTitle: Per assistenza contattare l'ente
+        subTitle: Per assistenza, scrivi a
       waitForQtsp:
-        title: Il documento è in elaborazione
-        subTitle: Ti preghiamo di attendere, presto riceverai il contratto firmato in app.
+        title: Il firma è in elaborazione
+        subTitle: Riceverai un messaggio con i documenti firmati non appena saranno pronti.
+      signed:
+        title: Hai già firmato questi documenti
+        subTitle: Puoi visualizzarli e scaricarli dal messaggio intitolato “Documenti firmati”.
       unsupportedDevice:
         title: C’è un problema
         subTitle: Il tuo device non supporta la funzionalità Firma con IO.
       generic:
-        title: C’è un problema
-        subTitle: Per procedere alla firma, verifica di aver aggiornato l’app IO all’ultima versione
+        default:
+          title: C’è un problema sui nostri sistemi
+          subTitle: Riprova tra qualche minuto. Se si ripete, contatta l’assistenza.
+        update:
+          title: Aggiorna l’app
+          subTitle: Verifica di avere installato l’ultima versione di IO oppure rifai il login. 
+        rejected:
+          title: La firma non è andata a buon fine
+          subTitle: L’ente mittente ti contatterà nei prossimi giorni per farti firmare di nuovo. Se ciò non dovesse succedere, scrivi a
+        signing:
+          title: La firma non è andata a buon fine
+          subTitle: A causa di un problema tecnico, la firma non è andata a buon fine. Se il problema si ripete contatta l’assistenza.
     abort:
       title: "Annulla la firma"
       content: "Vuoi annullare la firma dei documenti?"
@@ -3238,7 +3251,7 @@ features:
       titleRight: Pagina {{currentPage}} di {{totalPages}}
     shareDataScreen:
       title: "Condividi questi dati?"
-      content: "Per completare la firma, devi condividere questi dati con il provider di firma."
+      content: "Verranno condivisi con il fornitore della firma digitale. Se annulli, non potrai completare la firma."
       cancel: "Annulla"
       confirm: "Ok, va bene"
       alertText: "Vuoi modificare o aggiornare il tuo indirizzo email?"
@@ -3360,7 +3373,9 @@ idpay:
             showMore: Vedi tutte
             header: Impostazioni
             associatedPaymentMethods: Metodi di pagamento associati
-            methodsi18n: metodi 
+            methods:
+              one: "1 metodo"
+              other: "{{count}} metodi"
             selectedIBAN: IBAN per l'accredito
             actionsRequired: Azioni richieste 
           startConfigurationCTA: Inizia
@@ -3557,4 +3572,8 @@ idpay:
       content: "Ci scusiamo per il disagio.\n Ti invitiamo a riprovare più tardi."
       button: Chiudi
 unsupportedDevice:  
-  text: "A breve il tuo dispositivo potrebbe non essere più compatibile con l’app IO."
+  warning: "A breve il tuo dispositivo potrebbe non essere più compatibile con l’app IO."
+  title: "Questo dispositivo non è più compatibile con IO"
+  subtitle: "Assicurati che il sistema operativo sia aggiornato all’ultima versione. Se è già così, per continuare a usare IO dovrai accedere da un altro dispositivo." 
+  cta:
+    faq: "Come mai?"

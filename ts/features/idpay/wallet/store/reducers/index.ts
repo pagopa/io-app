@@ -136,9 +136,14 @@ export const idPayEnabledInitiativesFromInstrumentSelector = createSelector(
     isIdpayEnabled ? pot.getOrElse(initiatives, []) : []
 );
 
-export const idPayAreInitiativesFromInstrumentLoadingSelector = (
-  state: GlobalState
-) => pot.isLoading(state.features.idPay.wallet.initiativesWithInstrument);
+const idPayInitiativesFromInstrumentPotSelector = (state: GlobalState) =>
+  state.features.idPay.wallet.initiativesWithInstrument;
+
+export const idPayAreInitiativesFromInstrumentLoadingSelector = createSelector(
+  [isIdPayEnabledSelector, idPayInitiativesFromInstrumentPotSelector],
+  (isIDPayEnabled, initiativesPot) =>
+    isIDPayEnabled && pot.isLoading(initiativesPot)
+);
 export const idPayAreInitiativesFromInstrumentErrorSelector = (
   state: GlobalState
 ) => pot.isError(state.features.idPay.wallet.initiativesWithInstrument);

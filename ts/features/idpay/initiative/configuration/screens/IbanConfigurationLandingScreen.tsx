@@ -1,28 +1,25 @@
 import React from "react";
-import { View, SafeAreaView, StyleSheet } from "react-native";
+import { SafeAreaView, StyleSheet, View } from "react-native";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H3 } from "../../../../../components/core/typography/H3";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../i18n";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { useConfigurationMachineService } from "../xstate/provider";
+import { Pictogram } from "../../../../../components/core/pictograms";
 
 const styles = StyleSheet.create({
-  greyCircle: {
-    aspectRatio: 1,
-    width: 206,
-    height: 206,
-    backgroundColor: IOColors.greyUltraLight,
-    borderRadius: 100
+  mainContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    paddingBottom: 90
   },
-  justifyCenter: { justifyContent: "center" },
-  adjustCenterHeight: {
-    marginTop: -103, // 206 / 2 , the height of the circle; this allows to center the content vertically
-    alignItems: "center"
+  textContainer: {
+    alignItems: "center",
+    justifyContent: "flex-start"
   },
   textCenter: { textAlign: "center" }
 });
@@ -39,15 +36,13 @@ const IbanConfigurationLanding = () => {
       <View
         style={[
           IOStyles.flex,
-          styles.justifyCenter,
+          styles.mainContainer,
           IOStyles.horizontalContentPadding
         ]}
       >
-        <View
-          style={[IOStyles.horizontalContentPadding, styles.adjustCenterHeight]}
-        >
-          <View style={styles.greyCircle}></View>
-          <VSpacer size={24} />
+        <Pictogram name="ibanCard" size={240} />
+        <VSpacer size={32} />
+        <View style={[IOStyles.horizontalContentPadding, styles.textContainer]}>
           <H3>{I18n.t("idpay.configuration.iban.landing.header")}</H3>
           <VSpacer size={16} />
           <Body style={styles.textCenter}>

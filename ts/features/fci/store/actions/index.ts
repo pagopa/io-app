@@ -11,6 +11,7 @@ import { QtspClausesMetadataDetailView } from "../../../../../definitions/fci/Qt
 import { SignatureDetailView } from "../../../../../definitions/fci/SignatureDetailView";
 import { SignatureRequestDetailView } from "../../../../../definitions/fci/SignatureRequestDetailView";
 import { NetworkError } from "../../../../utils/errors";
+import { Metadata } from "../../../../../definitions/fci/Metadata";
 
 /**
  * get and handle the signatureRequest from id
@@ -118,6 +119,12 @@ export const fciCancelPollingFilledDocument = createStandardAction(
   "POLL_FILLED_DOCUMENT_CANCEL"
 )<void>();
 
+export const fciMetadataRequest = createAsyncAction(
+  "FCI_METADATA_REQUEST",
+  "FCI_METADATA_SUCCESS",
+  "FCI_METADATA_FAILURE"
+)<void, Metadata, NetworkError>();
+
 export type FciActions =
   | ActionType<typeof fciSignatureRequestFromId>
   | ActionType<typeof fciLoadQtspClauses>
@@ -133,4 +140,5 @@ export type FciActions =
   | ActionType<typeof fciShowSignedDocumentsStartRequest>
   | ActionType<typeof fciShowSignedDocumentsEndRequest>
   | ActionType<typeof fciPollFilledDocument>
-  | ActionType<typeof fciCancelPollingFilledDocument>;
+  | ActionType<typeof fciCancelPollingFilledDocument>
+  | ActionType<typeof fciMetadataRequest>;

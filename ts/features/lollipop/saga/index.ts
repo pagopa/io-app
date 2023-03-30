@@ -19,11 +19,18 @@ import {
 } from "../store/actions/lollipop";
 import { KeyInfo, toCryptoError } from "../utils/crypto";
 import {
+  DEFAULT_LOLLIPOP_HASH_ALGORITHM_CLIENT,
+  DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER
+} from "../utils/login";
+import { sessionInvalid } from "../../../store/actions/authentication";
+import { restartCleanApplication } from "../../../sagas/commons";
+
+import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
+import {
   trackLollipopKeyGenerationFailure,
   trackLollipopKeyGenerationSuccess
 } from "../../../utils/analytics";
-import { DEFAULT_LOLLIPOP_HASH_ALGORITHM_CLIENT } from "../utils/login";
-import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
+import { PublicSession } from "../../../../definitions/backend/PublicSession";
 
 export function* generateLollipopKeySaga() {
   const maybeOldKeyTag = yield* select(lollipopKeyTagSelector);
@@ -61,6 +68,41 @@ export function* deleteCurrentLollipopKeyAndGenerateNewKeyTag() {
   yield* put(lollipopKeyTagSave({ keyTag: newKeyTag }));
 }
 
+export function* checkLollipopSessionAssertionAndInvalidateIfNeeded(
+  maybePublicKey: O.Option<PublicKey>,
+  maybeSessionInformation: O.Option<PublicSession>
+) {
+  const lollipopCheckResult = pipe(
+    maybeSessionInformation,
+    O.chainNullableK(
+      sessionInformation => sessionInformation.lollipopAssertionRef
+    ),
+    O.chain(sessionLollipopAssertionRef =>
+      pipe(
+        maybePublicKey,
+        O.map(publicKey =>
+          pipe(
+            jwkThumbprintByEncoding(
+              publicKey,
+              DEFAULT_LOLLIPOP_HASH_ALGORITHM_CLIENT,
+              "base64url"
+            ),
+            publicKeyThumbprint =>
+              `${DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER}-${publicKeyThumbprint}`,
+            localLollipopAssertionRef =>
+              localLollipopAssertionRef === sessionLollipopAssertionRef
+          )
+        )
+      )
+    ),
+    O.getOrElse(() => false)
+  );
+
+  if (!lollipopCheckResult) {
+    yield* put(sessionInvalid());
+    yield* call(restartCleanApplication);
+  }
+}
 /**
  * Generates a new crypto key pair.
  */
