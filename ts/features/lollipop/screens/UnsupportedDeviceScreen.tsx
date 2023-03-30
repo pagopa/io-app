@@ -10,6 +10,7 @@ import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { unsupportedDeviceLearnMoreUrl } from "../../../config";
 import themeVariables from "../../../theme/variables";
 import { openWebUrl } from "../../../utils/url";
+import { useAvoidHardwareBackButton } from "../../../utils/useAvoidHardwareBackButton";
 
 const styles = StyleSheet.create({
   errorContainer: {
@@ -35,21 +36,23 @@ const handleLearnMorePress = () => {
 // This component doesn't need a BaseHeaderComponent.
 // It Represents a blocking error screen that you can only escape with the rendered button(s).
 // A new template is coming soon: https://pagopa.atlassian.net/browse/IOAPPFD0-71
-const UnsupportedDeviceScreen = () => (
-  <SafeAreaView style={IOStyles.flex}>
-    <View style={styles.errorContainer}>
-      <Pictogram name={"error"} size={120} />
-      <VSpacer size={16} />
-      <H3 style={styles.title}>{I18n.t("unsupportedDevice.title")}</H3>
-      <VSpacer size={16} />
-      <Text alignCenter={true}>{I18n.t("unsupportedDevice.subtitle")}</Text>
-    </View>
-    <View style={styles.buttonContainer}>
-      <ButtonDefaultOpacity block={true} onPress={handleLearnMorePress}>
-        <Text>{I18n.t("unsupportedDevice.cta.faq")}</Text>
-      </ButtonDefaultOpacity>
-    </View>
-  </SafeAreaView>
-);
-
+const UnsupportedDeviceScreen = () => {
+  useAvoidHardwareBackButton();
+  return (
+    <SafeAreaView style={IOStyles.flex}>
+      <View style={styles.errorContainer}>
+        <Pictogram name={"error"} size={120} />
+        <VSpacer size={16} />
+        <H3 style={styles.title}>{I18n.t("unsupportedDevice.title")}</H3>
+        <VSpacer size={16} />
+        <Text alignCenter={true}>{I18n.t("unsupportedDevice.subtitle")}</Text>
+      </View>
+      <View style={styles.buttonContainer}>
+        <ButtonDefaultOpacity block={true} onPress={handleLearnMorePress}>
+          <Text>{I18n.t("unsupportedDevice.cta.faq")}</Text>
+        </ButtonDefaultOpacity>
+      </View>
+    </SafeAreaView>
+  );
+};
 export default UnsupportedDeviceScreen;
