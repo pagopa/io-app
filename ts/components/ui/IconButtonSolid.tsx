@@ -15,6 +15,8 @@ import { IOSpringValues, IOScaleValues } from "../core/variables/IOAnimations";
 import { IOButtonStyles, IOIconButtonStyles } from "../core/variables/IOStyles";
 import { AnimatedIcon, IOIcons } from "../core/icons";
 import { WithTestID } from "../../types/WithTestID";
+import { useIOSelector } from "../../store/hooks";
+import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 
 export type IconButtonSolid = WithTestID<{
   icon: IOIcons;
@@ -37,9 +39,16 @@ type ColorStates = {
   };
 };
 
-// COMPONENT CONFIGURATION
+/*
+░░░ COMPONENT CONFIGURATION ░░░
+*/
 
-const mapColorStates: Record<
+/* Delete the following block if you want to
+get rid of legacy variant */
+
+/* ◀ REMOVE_LEGACY_COMPONENT: Start */
+
+const mapLegacyColorStates: Record<
   NonNullable<IconButtonSolid["color"]>,
   ColorStates
 > = {
@@ -68,6 +77,37 @@ const mapColorStates: Record<
   }
 };
 
+/* REMOVE_LEGACY_COMPONENT: End ▶ */
+
+const mapColorStates: Record<
+  NonNullable<IconButtonSolid["color"]>,
+  ColorStates
+> = {
+  // Primary button
+  primary: {
+    background: {
+      default: IOColors["blueIO-500"],
+      pressed: IOColors["blueIO-600"],
+      disabled: IOColors["grey-100"]
+    },
+    icon: {
+      default: IOColors.white,
+      disabled: IOColors["grey-450"]
+    }
+  },
+  contrast: {
+    background: {
+      default: IOColors.white,
+      pressed: IOColors["blueIO-50"],
+      disabled: hexToRgba(IOColors.white, 0.25)
+    },
+    icon: {
+      default: IOColors["blueIO-500"],
+      disabled: IOColors["blueIO-500"]
+    }
+  }
+};
+
 export const IconButtonSolid = ({
   icon,
   color = "primary",
@@ -78,6 +118,7 @@ export const IconButtonSolid = ({
   testID
 }: IconButtonSolid) => {
   const isPressed: Animated.SharedValue<number> = useSharedValue(0);
+  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
 
   // Scaling transformation applied when the button is pressed
   const animationScaleValue = IOScaleValues?.exaggeratedButton?.pressedState;
@@ -90,14 +131,25 @@ export const IconButtonSolid = ({
   // Interpolate animation values from `isPressed` values
   const pressedAnimationStyle = useAnimatedStyle(() => {
     // Link color states to the pressed states
-    const backgroundColor = interpolateColor(
-      progressPressed.value,
-      [0, 1],
-      [
-        mapColorStates[color].background.default,
-        mapColorStates[color].background.pressed
-      ]
-    );
+    /* ◀ REMOVE_LEGACY_COMPONENT: Remove the following condition */
+    const backgroundColor = isDesignSystemEnabled
+      ? interpolateColor(
+          progressPressed.value,
+          [0, 1],
+          [
+            mapColorStates[color].background.default,
+            mapColorStates[color].background.pressed
+          ]
+        )
+      : interpolateColor(
+          progressPressed.value,
+          [0, 1],
+          [
+            mapLegacyColorStates[color].background.default,
+            mapLegacyColorStates[color].background.pressed
+          ]
+        );
+    /* REMOVE_LEGACY_COMPONENT: End ▶ */
 
     // Scale down button slightly when pressed
     const scale = interpolate(
@@ -122,7 +174,48 @@ export const IconButtonSolid = ({
     isPressed.value = 0;
   }, [isPressed]);
 
-  return (
+  const LegacyButton = () => (
+    <Pressable
+      accessibilityLabel={accessibilityLabel}
+      accessibilityHint={accessibilityHint}
+      accessibilityRole={"button"}
+      testID={testID}
+      onPress={onPress}
+      onPressIn={onPressIn}
+      onPressOut={onPressOut}
+      accessible={true}
+      disabled={disabled}
+      style={IOButtonStyles.dimensionsDefault}
+    >
+      <Animated.View
+        style={[
+          IOIconButtonStyles.button,
+          IOIconButtonStyles.buttonSizeLarge,
+          !disabled && pressedAnimationStyle,
+          disabled
+            ? {
+                backgroundColor:
+                  mapLegacyColorStates[color]?.background?.disabled
+              }
+            : {
+                backgroundColor:
+                  mapLegacyColorStates[color]?.background?.default
+              }
+        ]}
+      >
+        <AnimatedIcon
+          name={icon}
+          color={
+            !disabled
+              ? mapLegacyColorStates[color]?.icon?.default
+              : mapLegacyColorStates[color]?.icon?.disabled
+          }
+        />
+      </Animated.View>
+    </Pressable>
+  );
+
+  const NewButton = () => (
     <Pressable
       accessibilityLabel={accessibilityLabel}
       accessibilityHint={accessibilityHint}
@@ -160,6 +253,10 @@ export const IconButtonSolid = ({
       </Animated.View>
     </Pressable>
   );
+
+  /* ◀ REMOVE_LEGACY_COMPONENT: Move the entire <NewButton /> here,
+  without the following condition */
+  return isDesignSystemEnabled ? <NewButton /> : <LegacyButton />;
 };
 
 export default IconButtonSolid;

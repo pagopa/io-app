@@ -43,6 +43,7 @@ import { WalletParamsList } from "./WalletParamsList";
 
 export type AppParamsList = {
   [ROUTES.INGRESS]: undefined;
+  [ROUTES.UNSUPPORTED_DEVICE]: undefined;
   [ROUTES.BACKGROUND]: undefined;
   [ROUTES.AUTHENTICATION]: NavigatorScreenParams<AuthenticationParamsList>;
   [ROUTES.ONBOARDING]: NavigatorScreenParams<OnboardingParamsList>;
