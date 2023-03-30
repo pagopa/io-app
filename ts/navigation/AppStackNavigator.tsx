@@ -77,7 +77,7 @@ import {
   isFIMSEnabledSelector
 } from "../store/reducers/backendStatus";
 import { isTestEnv } from "../utils/environment";
-import { IO_INTERNAL_LINK_PREFIX } from "../utils/navigation";
+import { IO_INTERNAL_LINK_PREFIX, isGestureEnabled } from "../utils/navigation";
 import authenticationNavigator from "./AuthenticationNavigator";
 import { MessagesStackNavigator } from "./MessagesNavigator";
 import NavigationService, { navigationRef } from "./NavigationService";
@@ -202,6 +202,7 @@ export const AppStackNavigator = () => {
           <Stack.Screen
             name={IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN}
             component={IDPayUnsubscriptionNavigator}
+            options={{ gestureEnabled: isGestureEnabled }}
           />
         </>
       )}
