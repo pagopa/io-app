@@ -11,7 +11,6 @@ import { HSpacer, VSpacer } from "../../../../components/core/spacer/Spacer";
 import { H1 } from "../../../../components/core/typography/H1";
 import { H4 } from "../../../../components/core/typography/H4";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import TypedI18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
@@ -22,6 +21,7 @@ import {
   idPayAreInitiativesFromInstrumentErrorSelector,
   idPayInitiativesFromInstrumentSelector
 } from "../store/reducers";
+import { BaseHeader } from "../../../../components/screens/BaseHeader";
 
 export type AvailableInitiativesListScreenNavigationParams = {
   idWallet: string;
@@ -77,29 +77,32 @@ export const IdPayInitiativeListScreen = (props: Props) => {
   }, [dispatch, idWallet, areInitiativesInError]);
 
   return (
-    <BaseScreenComponent
-      headerTitle={TypedI18n.t("idpay.wallet.initiativePairing.navigation")}
-      goBack={true}
-    >
-      <View style={IOStyles.horizontalContentPadding}>
-        <H1>{TypedI18n.t("idpay.wallet.initiativePairing.header")}</H1>
-        <VSpacer size={16} />
-        {maskedPan && (
-          <View style={IOStyles.row}>
-            <LogoPayment name={brandToLogoPaymentMap[brand]} />
-            <HSpacer size={8} />
-            <H4>•••• {maskedPan}</H4>
-          </View>
-        )}
-        <VSpacer size={16} />
-      </View>
-      <ScrollView style={IOStyles.horizontalContentPadding}>
-        <IDPayInitiativesList
-          initiatives={idpayInitiatives}
-          idWallet={idWallet}
-        />
-        <VSpacer size={24} />
+    <>
+      <BaseHeader
+        headerTitle={TypedI18n.t("idpay.wallet.initiativePairing.navigation")}
+        goBack={true}
+      />
+      <ScrollView>
+        <View style={IOStyles.horizontalContentPadding}>
+          <H1>{TypedI18n.t("idpay.wallet.initiativePairing.header")}</H1>
+          <VSpacer size={16} />
+          {maskedPan && (
+            <View style={IOStyles.row}>
+              <LogoPayment name={brandToLogoPaymentMap[brand]} />
+              <HSpacer size={8} />
+              <H4>•••• {maskedPan}</H4>
+            </View>
+          )}
+          <VSpacer size={16} />
+        </View>
+        <View style={IOStyles.horizontalContentPadding}>
+          <IDPayInitiativesList
+            initiatives={idpayInitiatives}
+            idWallet={idWallet}
+          />
+          <VSpacer size={24} />
+        </View>
       </ScrollView>
-    </BaseScreenComponent>
+    </>
   );
 };
