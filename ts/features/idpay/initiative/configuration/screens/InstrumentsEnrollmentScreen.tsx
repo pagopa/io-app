@@ -1,6 +1,6 @@
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { useSelector } from "@xstate/react";
-import { List as NBList, Text as NBText } from "native-base";
+import { Text as NBText } from "native-base";
 import React from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import { Icon } from "../../../../../components/core/icons";
@@ -230,17 +230,15 @@ const InstrumentsEnrollmentScreen = () => {
               })}
             </NBText>
             <VSpacer size={24} />
-            <NBList>
-              {walletInstruments.map(walletInstrument => (
-                <InstrumentEnrollmentSwitch
-                  key={walletInstrument.idWallet}
-                  wallet={walletInstrument}
-                  instrument={
-                    initiativeInstrumentsByIdWallet[walletInstrument.idWallet]
-                  }
-                />
-              ))}
-            </NBList>
+            {walletInstruments.map(walletInstrument => (
+              <InstrumentEnrollmentSwitch
+                key={walletInstrument.idWallet}
+                wallet={walletInstrument}
+                instrument={
+                  initiativeInstrumentsByIdWallet[walletInstrument.idWallet]
+                }
+              />
+            ))}
             <VSpacer size={16} />
             {/*  TODO:: AdviceComponent goes here once implemented @dmnplb */}
             <View style={styles.bottomSection}>
