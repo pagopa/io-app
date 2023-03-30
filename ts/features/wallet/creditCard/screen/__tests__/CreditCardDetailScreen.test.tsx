@@ -1,6 +1,8 @@
 import * as React from "react";
 
+import { waitFor } from "@testing-library/react-native";
 import { createStore, Store } from "redux";
+import { StatusEnum } from "../../../../../../definitions/idpay/InitiativeDTO";
 import { EnableableFunctionsEnum } from "../../../../../../definitions/pagopa/EnableableFunctions";
 import { WalletTypeEnum } from "../../../../../../definitions/pagopa/WalletV2";
 import { TypeEnum } from "../../../../../../definitions/pagopa/walletv2/CardInfo";
@@ -8,6 +10,7 @@ import ROUTES from "../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { fetchWalletsSuccess } from "../../../../../store/actions/wallet/wallets";
 import { appReducer } from "../../../../../store/reducers";
+import { isIdPayEnabledSelector } from "../../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { walletsV2_1 } from "../../../../../store/reducers/wallet/__mocks__/wallets";
 import {
@@ -17,7 +20,6 @@ import {
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { convertWalletV2toWalletV1 } from "../../../../../utils/walletv2";
 import CreditCardDetailScreen from "../CreditCardDetailScreen";
-// import I18n from "../../../../../i18n";
 
 jest.mock("../../../../../store/hooks", () => ({
   ...(jest.requireActual("../../../../../store/hooks") as object),
@@ -56,6 +58,23 @@ const creditCard: CreditCardPaymentMethod = {
 jest.mock("../../../../../config", () => ({
   bpdEnabled: true
 }));
+const mockInitiative = {
+  initiativeId: "idpay",
+  initiativeName: "idpay",
+  status: StatusEnum.REFUNDABLE
+};
+jest.mock("../../../../idpay/wallet/store/reducers", () => ({
+  idPayEnabledInitiativesFromInstrumentSelector: jest
+    .fn()
+    .mockImplementation(() => [mockInitiative])
+}));
+jest
+  .spyOn(
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    require("../../../../../store/reducers/backendStatus"),
+    "isIdPayEnabledSelector"
+  )
+  .mockImplementation(() => false);
 
 describe("Test CreditCardDetailScreen", () => {
   jest.useFakeTimers();
@@ -64,6 +83,22 @@ describe("Test CreditCardDetailScreen", () => {
     const store = createStore(appReducer, globalState as any);
     const screen = renderDetailScreen(store, creditCard);
     expect(screen.getByTestId("WorkunitGenericFailure")).not.toBeNull();
+  });
+  it("does not render idpay initiatives when isIdpayEnabled is false", async () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const store = createStore(appReducer, globalState as any);
+    const paymentMethods = walletsV2_1 as PatchedWalletV2ListResponse;
+    const updatedMethods = paymentMethods.data!.map(w =>
+      convertWalletV2toWalletV1({ ...w, pagoPA: false })
+    );
+    const isEnabled = isIdPayEnabledSelector(store.getState());
+    expect(isEnabled).toStrictEqual(false);
+
+    store.dispatch(fetchWalletsSuccess(updatedMethods));
+    const screen = renderDetailScreen(store, creditCard);
+    await waitFor(() => {
+      expect(screen.queryByTestId("idPayInitiativesList")).toBeNull();
+    });
   });
   it(
     "When pagoPA=false the CreditCardDetailScreen should contains" +
