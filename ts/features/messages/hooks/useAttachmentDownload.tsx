@@ -2,16 +2,83 @@ import { useCallback, useEffect, useState } from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import RNFS from "react-native-fs";
+import { identity, pipe } from "fp-ts/lib/function";
+import * as E from "fp-ts/lib/Either";
+import * as TE from "fp-ts/lib/TaskEither";
 import i18n from "../../../i18n";
 import { mixpanelTrack } from "../../../mixpanel";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { ContentTypeValues } from "../../../types/contentType";
-import { isIos } from "../../../utils/platform";
+import { isAndroid } from "../../../utils/platform";
 import { showToast } from "../../../utils/showToast";
 import { downloadAttachment } from "../../../store/actions/messages";
 import { UIAttachment } from "../../../store/reducers/entities/messages/types";
 import { downloadPotForMessageAttachmentSelector } from "../../../store/reducers/entities/messages/downloads";
 import { trackThirdPartyMessageAttachmentShowPreview } from "../../../utils/analytics";
+import { isTestEnv } from "../../../utils/environment";
+
+const taskCopyToMediaStore = (
+  { displayName, contentType }: UIAttachment,
+  path: string
+) =>
+  TE.tryCatch(
+    () =>
+      ReactNativeBlobUtil.MediaCollection.copyToMediaStore(
+        {
+          name: displayName,
+          parentFolder: "",
+          mimeType: contentType
+        },
+        "Download",
+        path
+      ),
+    E.toError
+  );
+
+const taskAddCompleteDownload = (
+  { displayName, contentType }: UIAttachment,
+  path: string
+) =>
+  TE.tryCatch(
+    () =>
+      ReactNativeBlobUtil.android.addCompleteDownload({
+        mime: contentType,
+        title: displayName,
+        showNotification: true,
+        description: displayName,
+        path
+      }),
+    E.toError
+  );
+
+const taskDownloadFileIntoAndroidPublicFolder = (
+  attachment: UIAttachment,
+  path: string
+) =>
+  pipe(
+    isAndroid,
+    TE.fromPredicate(identity, () => undefined),
+    TE.mapLeft(() => ReactNativeBlobUtil.ios.presentOptionsMenu(path)),
+    TE.chain(_ =>
+      pipe(
+        taskCopyToMediaStore(attachment, path),
+        TE.chain(downloadFilePath =>
+          taskAddCompleteDownload(attachment, downloadFilePath)
+        ),
+        TE.mapLeft(_ =>
+          showToast(i18n.t("messageDetails.attachments.failing.details"))
+        )
+      )
+    )
+  );
+
+export const testableFunctions = isTestEnv
+  ? {
+      taskCopyToMediaStore,
+      taskAddCompleteDownload,
+      taskDownloadFileIntoAndroidPublicFolder
+    }
+  : undefined;
 
 // This hook has a different behaviour if the attachment is a PN
 // one or a generic third-party attachment.
@@ -37,37 +104,12 @@ export const useAttachmentDownload = (
       void mixpanelTrack("PN_ATTACHMENT_DOWNLOADFAILURE");
       showToast(i18n.t("messageDetails.attachments.failing.details"));
     } else if (download) {
-      const path = download.path;
-      const attachment = download.attachment;
+      const { path, attachment } = download;
+
       if (attachment.contentType === ContentTypeValues.applicationPdf) {
         openPreview(attachment);
       } else {
-        if (isIos) {
-          ReactNativeBlobUtil.ios.presentOptionsMenu(path);
-        } else {
-          try {
-            const downloadFilePath =
-              await ReactNativeBlobUtil.MediaCollection.copyToMediaStore(
-                {
-                  name: attachment.displayName,
-                  parentFolder: "",
-                  mimeType: attachment.contentType
-                },
-                "Download",
-                path
-              );
-
-            await ReactNativeBlobUtil.android.addCompleteDownload({
-              mime: attachment.contentType,
-              title: attachment.displayName,
-              showNotification: true,
-              description: attachment.displayName,
-              path: downloadFilePath
-            });
-          } catch (e) {
-            showToast(i18n.t("messageDetails.attachments.failing.details"));
-          }
-        }
+        await taskDownloadFileIntoAndroidPublicFolder(attachment, path)();
       }
     }
   }, [downloadPot, openPreview]);
@@ -95,13 +137,25 @@ export const useAttachmentDownload = (
       return;
     }
 
-    const path = pot.toUndefined(downloadPot)?.path;
-    const fileExists = path !== undefined ? await RNFS.exists(path) : false;
-    if (fileExists) {
-      await openAttachment();
-    } else {
-      dispatch(downloadAttachment.request(attachment));
-    }
+    await pipe(
+      downloadPot,
+      pot.toOption,
+      TE.fromOption(() => undefined),
+      TE.chain(download =>
+        TE.tryCatch(
+          () => RNFS.exists(download.path),
+          () => undefined
+        )
+      ),
+      TE.filterOrElse(identity, () => undefined),
+      TE.mapLeft(() => dispatch(downloadAttachment.request(attachment))),
+      TE.chainW(() =>
+        TE.tryCatch(
+          () => openAttachment(),
+          () => undefined
+        )
+      )
+    )();
   };
 
   const onAttachmentSelect = () => {
