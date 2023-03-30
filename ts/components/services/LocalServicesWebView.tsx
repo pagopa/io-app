@@ -10,6 +10,7 @@ import { Dispatch } from "redux";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { localServicesWebUrl } from "../../config";
+import { useTabItemPressWhenScreenActive } from "../../hooks/useTabItemPressWhenScreenActive";
 import I18n from "../../i18n";
 import { loadServiceDetail } from "../../store/actions/services";
 import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
@@ -73,6 +74,13 @@ const LocalServicesWebView = (props: Props) => {
   >(undefined);
   const [webViewError, setWebViewError] = React.useState<boolean>(false);
   const webViewRef = React.createRef<WebView>();
+
+  const scrollWebview = (x: number, y: number) => {
+    const script = `window.scrollTo(${x}, ${y})`;
+    webViewRef.current?.injectJavaScript(script);
+  };
+
+  useTabItemPressWhenScreenActive(() => scrollWebview(0, 0), true);
 
   const { servicesById, onServiceSelect } = props;
 
