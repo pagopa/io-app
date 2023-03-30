@@ -32,6 +32,9 @@ const handleLearnMorePress = () => {
   openWebUrl(unsupportedDeviceLearnMoreUrl);
 };
 
+// This component doesn't need a BaseHeaderComponent.
+// It Represents a blocking error screen that you can only escape with the rendered button(s).
+// A new template is coming soon: https://pagopa.atlassian.net/browse/IOAPPFD0-71
 const UnsupportedDeviceScreen = () => (
   <SafeAreaView style={IOStyles.flex}>
     <View style={styles.errorContainer}>

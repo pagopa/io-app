@@ -1,5 +1,4 @@
 import { PublicKey } from "@pagopa/io-react-native-crypto";
-import { createStore } from "redux";
 import { expectSaga } from "redux-saga-test-plan";
 import { put, call } from "typed-redux-saga/macro";
 import {
@@ -8,32 +7,39 @@ import {
 } from "redux-saga-test-plan/providers";
 import * as O from "fp-ts/lib/Option";
 import { AssertionRef } from "../../../../definitions/backend/AssertionRef";
-import { applicationChangeState } from "../../../store/actions/application";
-import { appReducer } from "../../../store/reducers";
-import { PersistedLollipopState } from "../store";
-import { LoggedInWithSessionInfo } from "../../../store/reducers/authentication";
 import { PublicSession } from "../../../../definitions/backend/PublicSession";
 import { checkLollipopSessionAssertionAndInvalidateIfNeeded } from "../saga";
 import { restartCleanApplication } from "../../../sagas/commons";
 import { sessionInvalid } from "../../../store/actions/authentication";
 
 type DataFromServerType = {
-  assertionRef: AssertionRef;
   publicKeyForAssertionRef: PublicKey;
+  publicSession: PublicSession;
+  publicSessionWithFakeKey: PublicSession;
+  publicSessionWithUndefinedKey: PublicSession;
 };
 
 const DATA_FROM_SERVER: DataFromServerType = {
-  assertionRef:
-    "sha256-QFnISfpwAico2mmNuiOMGeIdE-qzHqpU1jM3PiI-K_Q" as AssertionRef,
   publicKeyForAssertionRef: {
     crv: "P_256",
     kty: "EC",
     x: "nDbpq45jXUKfWxodyvec3F1e+r0oTSqhakbauVmB59Y=",
     y: "CtI6Cozk4O5OJ4Q6WyjiUw9/K6TyU0aDdssd25YHZxg="
+  },
+  publicSession: {
+    ...({} as PublicSession),
+    lollipopAssertionRef:
+      "sha256-QFnISfpwAico2mmNuiOMGeIdE-qzHqpU1jM3PiI-K_Q" as AssertionRef
+  },
+  publicSessionWithFakeKey: {
+    ...({} as PublicSession),
+    lollipopAssertionRef: "foo" as AssertionRef
+  },
+  publicSessionWithUndefinedKey: {
+    ...({} as PublicSession),
+    lollipopAssertionRef: undefined
   }
 };
-
-const globalState = appReducer(undefined, applicationChangeState("active"));
 
 const mockedSessionInvalid: StaticProvider = [put(sessionInvalid()), true];
 const mockedRestartCleanApplication: StaticProvider = [
@@ -51,7 +57,7 @@ describe(`Test login with lollipop check and store aligned with server`, () => {
     expectSaga(
       checkLollipopSessionAssertionAndInvalidateIfNeeded,
       O.some(DATA_FROM_SERVER.publicKeyForAssertionRef),
-      DATA_FROM_SERVER.assertionRef
+      O.some(DATA_FROM_SERVER.publicSession)
     )
       .provide(mockedFunctions)
       .not.put(sessionInvalid())
@@ -64,7 +70,33 @@ describe(`Test login with both store key and server key undefined`, () => {
     expectSaga(
       checkLollipopSessionAssertionAndInvalidateIfNeeded,
       O.none,
-      undefined
+      O.none
+    )
+      .provide(mockedFunctions)
+      .put(sessionInvalid())
+      .call(restartCleanApplication)
+      .run());
+});
+
+describe(`Test login with store key and session undefined`, () => {
+  it(`should put sessionIvalid and call restartCleanApplication`, async () =>
+    expectSaga(
+      checkLollipopSessionAssertionAndInvalidateIfNeeded,
+      O.some(DATA_FROM_SERVER.publicKeyForAssertionRef),
+      O.none
+    )
+      .provide(mockedFunctions)
+      .put(sessionInvalid())
+      .call(restartCleanApplication)
+      .run());
+});
+
+describe(`Test login with store key undefined and session LollipopAssertion undefined`, () => {
+  it(`should put sessionIvalid and call restartCleanApplication`, async () =>
+    expectSaga(
+      checkLollipopSessionAssertionAndInvalidateIfNeeded,
+      O.none,
+      O.some(DATA_FROM_SERVER.publicSessionWithUndefinedKey)
     )
       .provide(mockedFunctions)
       .put(sessionInvalid())
@@ -77,7 +109,7 @@ describe(`Test login with lollipop check and store out of alignment with server`
     expectSaga(
       checkLollipopSessionAssertionAndInvalidateIfNeeded,
       O.some(DATA_FROM_SERVER.publicKeyForAssertionRef),
-      "foo" as AssertionRef
+      O.some(DATA_FROM_SERVER.publicSessionWithFakeKey)
     )
       .provide(mockedFunctions)
       .put(sessionInvalid())
@@ -88,7 +120,7 @@ describe(`Test login with lollipop check and store out of alignment with server`
     expectSaga(
       checkLollipopSessionAssertionAndInvalidateIfNeeded,
       O.some(DATA_FROM_SERVER.publicKeyForAssertionRef),
-      undefined
+      O.some(DATA_FROM_SERVER.publicSessionWithUndefinedKey)
     )
       .provide(mockedFunctions)
       .put(sessionInvalid())
@@ -99,144 +131,10 @@ describe(`Test login with lollipop check and store out of alignment with server`
     expectSaga(
       checkLollipopSessionAssertionAndInvalidateIfNeeded,
       O.none,
-      DATA_FROM_SERVER.assertionRef
+      O.some(DATA_FROM_SERVER.publicSession)
     )
       .provide(mockedFunctions)
       .put(sessionInvalid())
       .call(restartCleanApplication)
       .run());
 });
-
-// The following functions are for outdated tests, but may come in handy in the future
-
-const createServerCompatibleStore = () => {
-  const sessionInfo: PublicSession = {
-    ...({} as PublicSession),
-    lollipopAssertionRef: DATA_FROM_SERVER.assertionRef
-  };
-
-  const authentication: LoggedInWithSessionInfo = {
-    ...({} as LoggedInWithSessionInfo),
-    sessionInfo,
-    kind: "LoggedInWithSessionInfo"
-  };
-  const lollipop: PersistedLollipopState = {
-    keyTag: O.some("foo"),
-    publicKey: O.some(DATA_FROM_SERVER.publicKeyForAssertionRef),
-    _persist: { version: 1, rehydrated: false }
-  };
-  return createStore(appReducer, {
-    ...globalState,
-    lollipop,
-    authentication
-  } as any);
-};
-
-const createStoreWithoutSessionInformation = () => {
-  const lollipop: PersistedLollipopState = {
-    keyTag: O.some("foo"),
-    publicKey: O.some(DATA_FROM_SERVER.publicKeyForAssertionRef),
-    _persist: { version: 1, rehydrated: false }
-  };
-  return createStore(appReducer, {
-    ...globalState,
-    lollipop
-  } as any);
-};
-
-const createServerMisalignedStore = () => {
-  const sessionInfo: PublicSession = {
-    ...({} as PublicSession),
-    lollipopAssertionRef: "foo" as AssertionRef
-  };
-
-  const authentication: LoggedInWithSessionInfo = {
-    ...({} as LoggedInWithSessionInfo),
-    sessionInfo,
-    kind: "LoggedInWithSessionInfo"
-  };
-  const lollipop: PersistedLollipopState = {
-    keyTag: O.some("foo"),
-    publicKey: O.some(DATA_FROM_SERVER.publicKeyForAssertionRef),
-    _persist: { version: 1, rehydrated: false }
-  };
-  return createStore(appReducer, {
-    ...globalState,
-    lollipop,
-    authentication
-  } as any);
-};
-
-const createServerMisalignedStore_serverKeyUndefined = () => {
-  const sessionInfo: PublicSession = {
-    ...({} as PublicSession),
-    lollipopAssertionRef: undefined
-  };
-
-  const authentication: LoggedInWithSessionInfo = {
-    ...({} as LoggedInWithSessionInfo),
-    sessionInfo,
-    kind: "LoggedInWithSessionInfo"
-  };
-  const lollipop: PersistedLollipopState = {
-    keyTag: O.some("foo"),
-    publicKey: O.some(DATA_FROM_SERVER.publicKeyForAssertionRef),
-    _persist: { version: 1, rehydrated: false }
-  };
-  return createStore(appReducer, {
-    ...globalState,
-    lollipop,
-    authentication
-  } as any);
-};
-
-const createServerMisalignedStore_storeKeyUndefined = () => {
-  const sessionInfo: PublicSession = {
-    ...({} as PublicSession),
-    lollipopAssertionRef: DATA_FROM_SERVER.assertionRef
-  };
-
-  const authentication: LoggedInWithSessionInfo = {
-    ...({} as LoggedInWithSessionInfo),
-    sessionInfo,
-    kind: "LoggedInWithSessionInfo"
-  };
-  const lollipop: PersistedLollipopState = {
-    keyTag: O.none,
-    publicKey: O.none,
-    _persist: { version: 1, rehydrated: false }
-  };
-  return createStore(appReducer, {
-    ...globalState,
-    lollipop,
-    authentication
-  } as any);
-};
-
-const createStoreWithSessionInformationWithoutPublicKey = () => {
-  const sessionInfo: PublicSession = {
-    ...({} as PublicSession),
-    lollipopAssertionRef: DATA_FROM_SERVER.assertionRef
-  };
-
-  const authentication: LoggedInWithSessionInfo = {
-    ...({} as LoggedInWithSessionInfo),
-    sessionInfo,
-    kind: "LoggedInWithSessionInfo"
-  };
-  return createStore(appReducer, {
-    ...globalState,
-    authentication
-  } as any);
-};
-
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore: Unused variable
-const createStoreScenarios = {
-  createServerCompatibleStore,
-  createStoreWithoutSessionInformation,
-  createServerMisalignedStore,
-  createServerMisalignedStore_serverKeyUndefined,
-  createServerMisalignedStore_storeKeyUndefined,
-  createStoreWithSessionInformationWithoutPublicKey
-};

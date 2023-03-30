@@ -30,7 +30,7 @@ import {
   trackLollipopKeyGenerationFailure,
   trackLollipopKeyGenerationSuccess
 } from "../../../utils/analytics";
-import { AssertionRef } from "../../../../definitions/backend/AssertionRef";
+import { PublicSession } from "../../../../definitions/backend/PublicSession";
 
 export function* generateLollipopKeySaga() {
   const maybeOldKeyTag = yield* select(lollipopKeyTagSelector);
@@ -69,22 +69,39 @@ export function* deleteCurrentLollipopKeyAndGenerateNewKeyTag() {
 }
 
 export function* checkLollipopSessionAssertionAndInvalidateIfNeeded(
-  publicKey: O.Option<PublicKey>,
-  lollipopAssertionRef?: AssertionRef
+  maybePublicKey: O.Option<PublicKey>,
+  maybeSessionInformation: O.Option<PublicSession>
 ) {
-  // eslint-disable-next-line functional/no-let
-  let localAssertionRef;
+  const lollipopCheckResult = pipe(
+    maybeSessionInformation,
+    O.chainNullableK(
+      sessionInformation => sessionInformation.lollipopAssertionRef
+    ),
+    O.chain(sessionLollipopAssertionRef =>
+      pipe(
+        maybePublicKey,
+        O.map(publicKey =>
+          pipe(
+            jwkThumbprintByEncoding(
+              publicKey,
+              DEFAULT_LOLLIPOP_HASH_ALGORITHM_CLIENT,
+              "base64url"
+            ),
+            publicKeyThumbprint =>
+              `${DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER}-${publicKeyThumbprint}`,
+            localLollipopAssertionRef =>
+              localLollipopAssertionRef === sessionLollipopAssertionRef
+          )
+        )
+      )
+    ),
+    O.fold(
+      () => false,
+      checkResult => checkResult
+    )
+  );
 
-  if (O.isSome(publicKey)) {
-    const publicKeyThumbprint = jwkThumbprintByEncoding(
-      publicKey.value,
-      DEFAULT_LOLLIPOP_HASH_ALGORITHM_CLIENT,
-      "base64url"
-    );
-    localAssertionRef = `${DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER}-${publicKeyThumbprint}`;
-  }
-
-  if (!lollipopAssertionRef || lollipopAssertionRef !== localAssertionRef) {
+  if (!lollipopCheckResult) {
     yield* put(sessionInvalid());
     yield* call(restartCleanApplication);
   }

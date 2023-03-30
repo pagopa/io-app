@@ -93,7 +93,7 @@ import { clearAllAttachments } from "../features/messages/saga/clearAttachments"
 import { watchMessageAttachmentsSaga } from "../features/messages/saga/attachments";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
 import { watchIDPaySaga } from "../features/idpay/common/saga";
-import { getPublicKeyAndBlockIfNeeded } from "../features/lollipop/navigation";
+import { checkPublicKeyAndBlockIfNeeded } from "../features/lollipop/navigation";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -217,7 +217,7 @@ export function* initializeApplicationSaga(): Generator<
   yield* call(generateLollipopKeySaga);
 
   // This saga must select the publicKey inside to avoid confusion
-  const unsupportedDevice = yield* call(getPublicKeyAndBlockIfNeeded);
+  const unsupportedDevice = yield* call(checkPublicKeyAndBlockIfNeeded);
   if (unsupportedDevice) {
     return;
   }
@@ -292,7 +292,7 @@ export function* initializeApplicationSaga(): Generator<
   yield* call(
     checkLollipopSessionAssertionAndInvalidateIfNeeded,
     publicKey,
-    maybeSessionInformation.value.lollipopAssertionRef
+    maybeSessionInformation
   );
 
   // Start watching for profile update requests as the checkProfileEnabledSaga
