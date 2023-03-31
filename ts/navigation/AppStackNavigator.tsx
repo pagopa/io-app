@@ -228,7 +228,8 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
             [ROUTES.MESSAGES_HOME]: "messages",
             [ROUTES.WALLET_HOME]: "wallet",
             [ROUTES.SERVICES_HOME]: "services",
-            [ROUTES.PROFILE_MAIN]: "profile"
+            [ROUTES.PROFILE_MAIN]: "profile",
+            [ROUTES.NEW_PROFILE_MAIN]: "new-profile"
           }
         },
         [ROUTES.PROFILE_NAVIGATOR]: {

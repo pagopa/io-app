@@ -6,4 +6,5 @@ export type MainTabParamsList = {
   [ROUTES.WALLET_HOME]: WalletHomeNavigationParams;
   [ROUTES.SERVICES_HOME]: undefined;
   [ROUTES.PROFILE_MAIN]: undefined;
+  [ROUTES.NEW_PROFILE_MAIN]: undefined;
 };
