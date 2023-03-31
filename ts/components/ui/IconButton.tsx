@@ -16,6 +16,8 @@ import { IOSpringValues, IOScaleValues } from "../core/variables/IOAnimations";
 import { IOButtonStyles, IOIconButtonStyles } from "../core/variables/IOStyles";
 import { AnimatedIcon, IconClassComponent, IOIcons } from "../core/icons";
 import { WithTestID } from "../../types/WithTestID";
+import { useIOSelector } from "../../store/hooks";
+import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 
 export type IconButton = WithTestID<{
   icon: IOIcons;
@@ -39,9 +41,19 @@ type ColorStates = {
   };
 };
 
-// COMPONENT CONFIGURATION
+/*
+░░░ COMPONENT CONFIGURATION ░░░
+*/
 
-const mapColorStates: Record<NonNullable<IconButton["color"]>, ColorStates> = {
+/* Delete the following block if you want to
+get rid of legacy variant */
+
+/* ◀ REMOVE_LEGACY_COMPONENT: Start */
+
+const mapLegacyColorStates: Record<
+  NonNullable<IconButton["color"]>,
+  ColorStates
+> = {
   // Primary button
   primary: {
     background: {
@@ -53,6 +65,50 @@ const mapColorStates: Record<NonNullable<IconButton["color"]>, ColorStates> = {
       default: IOColors.blue,
       pressed: IOColors.blue,
       disabled: hexToRgba(IOColors.blue, 0.25)
+    }
+  },
+  // Neutral button
+  neutral: {
+    background: {
+      default: IOColors.white,
+      pressed: IOColors.greyUltraLight,
+      disabled: "transparent"
+    },
+    icon: {
+      default: IOColors.bluegrey,
+      pressed: IOColors.black,
+      disabled: IOColors.grey
+    }
+  },
+  // Contrast button
+  contrast: {
+    background: {
+      default: hexToRgba(IOColors.white, 0),
+      pressed: hexToRgba(IOColors.white, 0.2),
+      disabled: "transparent"
+    },
+    icon: {
+      default: IOColors.white,
+      pressed: IOColors.white,
+      disabled: hexToRgba(IOColors.white, 0.25)
+    }
+  }
+};
+
+/* REMOVE_LEGACY_COMPONENT: End ▶ */
+
+const mapColorStates: Record<NonNullable<IconButton["color"]>, ColorStates> = {
+  // Primary button
+  primary: {
+    background: {
+      default: hexToRgba(IOColors["blueIO-500"], 0),
+      pressed: hexToRgba(IOColors["blueIO-500"], 0.15),
+      disabled: "transparent"
+    },
+    icon: {
+      default: IOColors["blueIO-500"],
+      pressed: IOColors["blueIO-600"],
+      disabled: hexToRgba(IOColors["blueIO-500"], 0.25)
     }
   },
   // Neutral button
@@ -96,6 +152,7 @@ export const IconButton = ({
   testID
 }: IconButton) => {
   const isPressed: Animated.SharedValue<number> = useSharedValue(0);
+  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
 
   // Scaling transformation applied when the button is pressed
   const animationScaleValue = IOScaleValues?.exaggeratedButton?.pressedState;
@@ -106,16 +163,28 @@ export const IconButton = ({
   );
 
   // Interpolate animation values from `isPressed` values
+
   const pressedAnimationStyle = useAnimatedStyle(() => {
     // Link color states to the pressed states
-    const backgroundColor = interpolateColor(
-      progressPressed.value,
-      [0, 1],
-      [
-        mapColorStates[color].background.default,
-        mapColorStates[color].background.pressed
-      ]
-    );
+    /* ◀ REMOVE_LEGACY_COMPONENT: Remove the following condition */
+    const backgroundColor = isDesignSystemEnabled
+      ? interpolateColor(
+          progressPressed.value,
+          [0, 1],
+          [
+            mapColorStates[color].background.default,
+            mapColorStates[color].background.pressed
+          ]
+        )
+      : interpolateColor(
+          progressPressed.value,
+          [0, 1],
+          [
+            mapLegacyColorStates[color].background.default,
+            mapLegacyColorStates[color].background.pressed
+          ]
+        );
+    /* REMOVE_LEGACY_COMPONENT: End ▶ */
 
     // Scale down button slightly when pressed
     const scale = interpolate(
@@ -133,13 +202,27 @@ export const IconButton = ({
 
   // Animate the <Icon> color prop
   const animatedColor = useAnimatedProps(() => {
-    const iconColor = interpolateColor(
-      progressPressed.value,
-      [0, 1],
-      [mapColorStates[color].icon.default, mapColorStates[color].icon.pressed]
-    );
+    /* ◀ REMOVE_LEGACY_COMPONENT: Remove the following condition */
+    const iconColor = isDesignSystemEnabled
+      ? interpolateColor(
+          progressPressed.value,
+          [0, 1],
+          [
+            mapColorStates[color].icon.default,
+            mapColorStates[color].icon.pressed
+          ]
+        )
+      : interpolateColor(
+          progressPressed.value,
+          [0, 1],
+          [
+            mapLegacyColorStates[color].icon.default,
+            mapLegacyColorStates[color].icon.pressed
+          ]
+        );
     return { color: iconColor };
   });
+  /* REMOVE_LEGACY_COMPONENT: End ▶ */
 
   const onPressIn = useCallback(() => {
     // eslint-disable-next-line functional/immutable-data
@@ -170,18 +253,33 @@ export const IconButton = ({
           !disabled && pressedAnimationStyle
         ]}
       >
-        {!disabled ? (
+        {/* ◀ REMOVE_LEGACY_COMPONENT: Remove the following condition */}
+        {isDesignSystemEnabled ? (
+          !disabled ? (
+            <AnimatedIconClassComponent
+              name={icon}
+              animatedProps={animatedColor}
+              color={mapColorStates[color]?.icon?.default}
+            />
+          ) : (
+            <AnimatedIcon
+              name={icon}
+              color={mapColorStates[color]?.icon?.disabled}
+            />
+          )
+        ) : !disabled ? (
           <AnimatedIconClassComponent
             name={icon}
             animatedProps={animatedColor}
-            color={mapColorStates[color]?.icon?.default}
+            color={mapLegacyColorStates[color]?.icon?.default}
           />
         ) : (
           <AnimatedIcon
             name={icon}
-            color={mapColorStates[color]?.icon?.disabled}
+            color={mapLegacyColorStates[color]?.icon?.disabled}
           />
         )}
+        {/* REMOVE_LEGACY_COMPONENT: End ▶ */}
       </Animated.View>
     </Pressable>
   );

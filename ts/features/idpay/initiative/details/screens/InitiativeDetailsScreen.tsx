@@ -9,6 +9,7 @@ import {
   StatusEnum
 } from "../../../../../../definitions/idpay/InitiativeDTO";
 import EmptyInitiativeSvg from "../../../../../../img/features/idpay/empty_initiative.svg";
+import { Alert } from "../../../../../components/Alert";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
@@ -25,14 +26,20 @@ import {
   IOStackNavigationProp
 } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import { IDPayConfigurationRoutes } from "../../configuration/navigation/navigator";
+import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import {
+  IDPayConfigurationParamsList,
+  IDPayConfigurationRoutes
+} from "../../configuration/navigation/navigator";
 import InitiativeCardComponent from "../components/InitiativeCardComponent";
 import { InitiativeSettingsComponent } from "../components/InitiativeSettingsComponent";
 import InitiativeTimelineComponent from "../components/InitiativeTimelineComponent";
 import { IDPayDetailsParamsList } from "../navigation";
-import { idpayInitiativeDetailsSelector } from "../store";
-import { idpayInitiativeGet } from "../store/actions";
-import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import {
+  idpayInitiativeDetailsSelector,
+  idpayOperationListLengthSelector
+} from "../store";
+import { idpayInitiativeGet, idpayTimelinePageGet } from "../store/actions";
 
 const styles = StyleSheet.create({
   newInitiativeMessageContainer: {
@@ -104,10 +111,13 @@ export const InitiativeDetailsScreen = () => {
   useFocusEffect(
     useCallback(() => {
       dispatch(idpayInitiativeGet.request({ initiativeId }));
+      dispatch(idpayTimelinePageGet.request({ initiativeId, page: 0 }));
     }, [dispatch, initiativeId])
   );
 
   const isLoading = pot.isLoading(initiativeDetailsFromSelector);
+  const timelineLength = useIOSelector(idpayOperationListLengthSelector);
+  const isFirstInitiativeConfiguration = timelineLength <= 1;
 
   const renderContent = () => {
     if (initiativeData === undefined) {
@@ -120,7 +130,8 @@ export const InitiativeDetailsScreen = () => {
         : undefined;
 
     const initiativeNeedsConfiguration =
-      initiativeData.status === StatusEnum.NOT_REFUNDABLE;
+      initiativeData.status === StatusEnum.NOT_REFUNDABLE &&
+      isFirstInitiativeConfiguration;
 
     return (
       <>
@@ -157,6 +168,7 @@ export const InitiativeDetailsScreen = () => {
                       <VSpacer size={16} />
                     </>
                   )}
+                  <MissingInitiativeDataAlert initiativeData={initiativeData} />
                   <InitiativeTimelineComponent
                     initiativeId={initiativeData.initiativeId}
                   />
@@ -201,5 +213,58 @@ export const InitiativeDetailsScreen = () => {
         {isLoading ? null : renderContent()}
       </LoadingSpinnerOverlay>
     </BaseScreenComponent>
+  );
+};
+type StatusWithAlert = Exclude<
+  StatusEnum,
+  StatusEnum.REFUNDABLE | StatusEnum.UNSUBSCRIBED
+>;
+
+const MissingInitiativeDataAlert = ({
+  initiativeData
+}: {
+  initiativeData: InitiativeDTO;
+}) => {
+  const { status, initiativeId } = initiativeData;
+  const navigation = useNavigation();
+
+  if (status === StatusEnum.UNSUBSCRIBED || status === StatusEnum.REFUNDABLE) {
+    return null;
+  }
+
+  const viewRef = React.createRef<View>();
+
+  const screen: Record<StatusWithAlert, keyof IDPayConfigurationParamsList> = {
+    NOT_REFUNDABLE_ONLY_IBAN:
+      IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT,
+    NOT_REFUNDABLE_ONLY_INSTRUMENT:
+      IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ENROLLMENT,
+    NOT_REFUNDABLE: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO
+  };
+
+  const handleNavigation = () => {
+    navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
+      screen: screen[status],
+      params: {
+        initiativeId
+      }
+    });
+  };
+
+  return (
+    <>
+      <Alert
+        viewRef={viewRef}
+        content={I18n.t(
+          `idpay.initiative.details.initiativeDetailsScreen.configured.errorAlerts.${status}.content`
+        )}
+        action={I18n.t(
+          `idpay.initiative.details.initiativeDetailsScreen.configured.errorAlerts.${status}.action`
+        )}
+        onPress={handleNavigation}
+        variant="error"
+      />
+      <VSpacer size={16} />
+    </>
   );
 };

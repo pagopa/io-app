@@ -241,7 +241,7 @@ Note that on Linux you do not need CocoaPods as you can only build for Android.
 Bundler is a Ruby application. If you have installed a version of Ruby in your system you can use it to install the required tools with:
 
 ```
-sudo gem install bundler:2.0.2
+sudo gem install bundler:2.1.4
 ```
 
 In some version of Linux you may not have Ruby installed. In some versions of macOS, bundler is not able to install the dependencies because the ruby provided by the system is not complete enough. 
@@ -250,8 +250,8 @@ In those cases, you need to install the bundler using the ruby installed by `asd
 
 ```
 cd <work-dir>/io-app
-asdf global ruby 2.7.4
-gem install bundler:2.0.2
+asdf global ruby 2.7.7
+gem install bundler:2.1.4
 ```
 
 Verify it was installed correctly with the command `which bundle`. It should show the installation path of the command. 

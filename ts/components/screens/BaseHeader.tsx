@@ -5,7 +5,13 @@ import * as O from "fp-ts/lib/Option";
 import { Body as NBBody, Left, Right } from "native-base";
 import * as React from "react";
 import { FC, Ref } from "react";
-import { View, AccessibilityInfo, ColorValue, StyleSheet } from "react-native";
+import {
+  View,
+  AccessibilityInfo,
+  ColorValue,
+  StyleSheet,
+  Text
+} from "react-native";
 import { connect } from "react-redux";
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
@@ -171,7 +177,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
     }, noReferenceTimeout);
   }
 
-  private renderBodyLabel = (label?: string, ref?: Ref<View>) =>
+  private renderBodyLabel = (label?: string, ref?: Ref<Text>) =>
     pipe(
       maybeNotNullyString(label),
       O.fold(
@@ -179,20 +185,20 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
         l => {
           const { titleColor } = this.props;
           return (
-            <View ref={ref}>
+            <Body
+              ref={ref}
+              weight={"Regular"}
+              testID={"bodyLabel"}
+              numberOfLines={1}
+              accessible={true}
+              accessibilityRole={"header"}
+              color={titleColor === "white" ? "white" : "bluegrey"}
+            >
               {/* TODO: titleColor prop is pretty useless because
               we have two colors: dark (bluegrey) and light (white).
               We don't have any color values other than these two. */}
-              <Body
-                testID={"bodyLabel"}
-                numberOfLines={1}
-                accessible={true}
-                accessibilityRole={"header"}
-                color={titleColor === "white" ? "white" : "bluegrey"}
-              >
-                {l}
-              </Body>
-            </View>
+              {l}
+            </Body>
           );
         }
       )
@@ -225,17 +231,23 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
         */}
         {!isSearchEnabled && (
           <NBBody style={goBack || customGoBack ? styles.body : styles.noLeft}>
-            {this.state.isScreenReaderActive &&
-            O.isSome(maybeAccessibilityLabel) ? (
-              this.renderBodyLabel(
-                maybeAccessibilityLabel.value,
-                this.firstElementRef
-              )
-            ) : (
-              <View ref={this.firstElementRef} accessible={true}>
-                {body ? body : headerTitle && this.renderBodyLabel(headerTitle)}
-              </View>
-            )}
+            <NBBody
+              style={goBack || customGoBack ? styles.body : styles.noLeft}
+            >
+              {this.state.isScreenReaderActive &&
+              O.isSome(maybeAccessibilityLabel) ? (
+                this.renderBodyLabel(
+                  maybeAccessibilityLabel.value,
+                  this.firstElementRef
+                )
+              ) : (
+                <View ref={this.firstElementRef} accessible={true}>
+                  {body
+                    ? body
+                    : headerTitle && this.renderBodyLabel(headerTitle)}
+                </View>
+              )}
+            </NBBody>
           </NBBody>
         )}
 
