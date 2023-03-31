@@ -1,0 +1,1 @@
+La sezione profilo ti permette di visualizzare le tue informazioni come nome e cognome, codice fiscale e indirizzo email.

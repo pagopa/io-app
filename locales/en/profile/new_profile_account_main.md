@@ -1,0 +1,1 @@
+The Profile section allows you to view your information like name and surname, fiscal code and email address.

@@ -304,6 +304,7 @@ profile:
     dumpAsyncStorage: Dump AsyncStorage content to console
     contextualHelpTitle: What you can do in your Profile
     contextualHelpContent: !include profile/profile_account_main.md
+    newContextualHelpContent: !include profile/new_profile_account_main.md
     developerModeOn: Developer mode enabled
     cache:
       alert: Are you sure you want to clear the cache?
@@ -445,6 +446,7 @@ profile:
     title: Your data
     subtitle: Here you will find your personal and contact data used by the IO app.
     list:
+      fiscalCode: Fiscal code
       email: Email address
       need_validate: To be validated
       nameSurname: Name and surname

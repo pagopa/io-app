@@ -304,6 +304,7 @@ profile:
     dumpAsyncStorage: Scarica contenuto di AsyncStorage
     contextualHelpTitle: Cosa puoi fare nel tuo Profilo
     contextualHelpContent: !include profile/profile_account_main.md
+    newContextualHelpContent: !include profile/new_profile_account_main.md
     developerModeOn: Modalità sviluppatore attivata
     cache:
       alert: Vuoi davvero eliminare la cache?
@@ -445,6 +446,7 @@ profile:
     title: I tuoi dati
     subtitle: Qui trovi i tuoi dati anagrafici e di contatto utilizzati da app IO
     list:
+      fiscalCode: Codice Fiscale
       email: Indirizzo email
       need_validate: Da validare
       nameSurname: Nome e cognome
