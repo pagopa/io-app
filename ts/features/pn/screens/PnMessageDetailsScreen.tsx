@@ -2,6 +2,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { SafeAreaView } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 
@@ -63,6 +64,7 @@ export const PnMessageDetailsScreen = (
   const serviceId = props.route.params.serviceId;
 
   const dispatch = useIODispatch();
+  const navigation = useNavigation();
 
   const service = pot.toUndefined(
     useIOSelector(state => serviceByIdSelector(serviceId)(state)) ?? pot.none
@@ -76,13 +78,18 @@ export const PnMessageDetailsScreen = (
     dispatch(loadThirdPartyMessage.request(messageId));
   }, [dispatch, messageId]);
 
+  const customGoBack = React.useCallback(() => {
+    dispatch(cancelPreviousAttachmentDownload());
+    navigation.goBack();
+  }, [dispatch, navigation]);
+
   useOnFirstRender(() => {
     loadContent();
   });
 
   return (
     <BaseScreenComponent
-      goBack={() => dispatch(cancelPreviousAttachmentDownload())}
+      goBack={customGoBack}
       headerTitle={I18n.t("features.pn.details.title")}
       contextualHelp={emptyContextualHelp}
     >
