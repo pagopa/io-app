@@ -11,10 +11,15 @@ import { VSpacer } from "../../components/core/spacer/Spacer";
 import { IOColors } from "../../components/core/variables/IOColors";
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
+import {
+  TabBarItemPressType,
+  withUseTabItemPressWhenScreenActive
+} from "../../components/helpers/withUseTabItemPressWhenScreenActive";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import DarkLayout from "../../components/screens/DarkLayout";
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
+import { ScreenContentRoot } from "../../components/screens/ScreenContent";
 import SectionHeaderComponent from "../../components/screens/SectionHeaderComponent";
 import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
 import { AlertModal } from "../../components/ui/AlertModal";
@@ -58,7 +63,8 @@ import { isDevEnv } from "../../utils/environment";
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "PROFILE_MAIN"> &
   LightModalContextInterface &
   ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps>;
+  ReturnType<typeof mapStateToProps> &
+  TabBarItemPressType;
 
 type State = {
   tapsOnAppVersion: number;
@@ -469,6 +475,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       </React.Fragment>
     );
   }
+
   public render() {
     const { navigation } = this.props;
 
@@ -572,6 +579,14 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
 
     return (
       <DarkLayout
+        referenceToContentScreen={(c: ScreenContentRoot) => {
+          this.props.setTabPressCallback(
+            // eslint-disable-next-line no-underscore-dangle
+            () => () => c._root.scrollToPosition(0, 0)
+          );
+
+          return c;
+        }}
         accessibilityLabel={I18n.t("profile.main.title")}
         bounces={false}
         appLogo={true}
@@ -635,4 +650,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withLightModalContext(ProfileMainScreen));
+)(
+  withLightModalContext(withUseTabItemPressWhenScreenActive(ProfileMainScreen))
+);

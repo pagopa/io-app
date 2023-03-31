@@ -13,6 +13,7 @@ import {
 import { connect } from "react-redux";
 
 import { maximumItemsFromAPI, pageSize } from "../../../config";
+import { useTabItemPressWhenScreenActive } from "../../../hooks/useTabItemPressWhenScreenActive";
 import I18n from "../../../i18n";
 import {
   Filter,
@@ -165,6 +166,8 @@ const MessageList = ({
       setIsRefreshFromUser(false);
     }
   }, [isLoadingPreviousOrAll]);
+
+  useTabItemPressWhenScreenActive(() => scrollTo(0, true), true);
 
   useOnFirstRender(
     () => {

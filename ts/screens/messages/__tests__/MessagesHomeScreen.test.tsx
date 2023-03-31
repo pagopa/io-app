@@ -36,7 +36,8 @@ jest.mock("@react-navigation/native", () => {
       navigate: mockNavigate,
       dispatch: jest.fn(),
       isFocused: jest.fn(),
-      addListener: () => jest.fn()
+      addListener: () => jest.fn(),
+      getParent: () => undefined
     })
   };
 });
