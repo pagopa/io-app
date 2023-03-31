@@ -146,6 +146,7 @@ import { completeOnboardingSaga } from "./startup/completeOnboardingSaga";
 import { watchLoadMessageById } from "./messages/watchLoadMessageById";
 import { watchThirdPartyMessageSaga } from "./messages/watchThirdPartyMessageSaga";
 import { checkNotificationsPreferencesSaga } from "./startup/checkNotificationsPreferencesSaga";
+import { watchNewProfileSaga } from "./newProfile";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -323,6 +324,9 @@ export function* initializeApplicationSaga(): Generator<
 
   // eslint-disable-next-line functional/no-let
   let storedPin: PinString;
+
+  // Start watching for requests of profile
+  yield* fork(watchNewProfileSaga, backendClient.getProfile);
 
   // Start watching for requests of refresh the profile
   yield* fork(watchProfileRefreshRequestsSaga, backendClient.getProfile);

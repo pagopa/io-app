@@ -43,6 +43,7 @@ import identificationReducer, {
 } from "./identification";
 import installationReducer from "./installation";
 import { navigationReducer } from "./navigation";
+import newProfileReducer from "./newProfile";
 import notificationsReducer from "./notifications";
 import onboardingReducer from "./onboarding";
 import paymentsReducer from "./payments";
@@ -134,7 +135,8 @@ export const appReducer: Reducer<GlobalState, Action> = combineReducers<
   content: contentReducer,
   emailValidation: emailValidationReducer,
   crossSessions: crossSessionsReducer,
-  lollipop: lollipopPersistor
+  lollipop: lollipopPersistor,
+  newProfile: newProfileReducer
 });
 
 export function createRootReducer(

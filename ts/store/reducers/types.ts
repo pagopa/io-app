@@ -18,6 +18,7 @@ import { PersistedEntitiesState } from "./entities";
 import { PersistedIdentificationState } from "./identification";
 import { InstallationState } from "./installation";
 import { NavigationState } from "./navigation";
+import { NewProfileState } from "./newProfile";
 import { NotificationsState } from "./notifications";
 import { OnboardingState } from "./onboarding";
 import { PaymentsState } from "./payments";
@@ -58,6 +59,7 @@ export type GlobalState = Readonly<{
   crossSessions: CrossSessionsState;
   assistanceTools: AssistanceToolsState;
   lollipop: PersistedLollipopState;
+  newProfile: NewProfileState;
 }>;
 
 export type PersistedGlobalState = GlobalState & PersistPartial;
