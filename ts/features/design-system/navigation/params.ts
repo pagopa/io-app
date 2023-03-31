@@ -19,5 +19,6 @@ export type DesignSystemParamsList = {
   [DESIGN_SYSTEM_ROUTES.COMPONENTS.LIST_ITEMS.route]: undefined;
   [DESIGN_SYSTEM_ROUTES.COMPONENTS.TOASTS.route]: undefined;
   [DESIGN_SYSTEM_ROUTES.LEGACY.PICTOGRAMS.route]: undefined;
+  [DESIGN_SYSTEM_ROUTES.LEGACY.BUTTONS.route]: undefined;
   [DESIGN_SYSTEM_ROUTES.LEGACY.ILLUSTRATIONS.route]: undefined;
 };
