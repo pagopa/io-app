@@ -9,6 +9,7 @@ import {
   ViewStyle,
   AccessibilityState
 } from "react-native";
+import { SvgProps } from "react-native-svg";
 import Switch from "../../components/ui/Switch";
 import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
@@ -45,6 +46,7 @@ type Props = Readonly<{
   accessibilityRole?: AccessibilityRole;
   accessibilityState?: AccessibilityState;
   testID?: string;
+  leadingIcon?: React.FC<SvgProps>;
 }>;
 const DEFAULT_ICON_SIZE = 24;
 const PADDING_R_DESCRIPTION = 24;
@@ -102,6 +104,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignContent: "center",
     marginTop: -3
+  },
+  leadingIconStyle: {
+    paddingRight: 20
   }
 });
 
@@ -122,6 +127,12 @@ export default class ListItemComponent extends React.Component<Props> {
         accessibilityRole={this.props.accessibilityRole}
         testID={this.props.testID}
       >
+        {this.props.leadingIcon && (
+          <View style={styles.leadingIconStyle}>
+            <this.props.leadingIcon width={ICON_SIZE} height={ICON_SIZE} />
+          </View>
+        )}
+
         <View style={styles.flexColumn}>
           <View style={styles.flexRow}>
             <View style={styles.flexRow2}>
