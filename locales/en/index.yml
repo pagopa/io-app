@@ -3186,10 +3186,16 @@ features:
         subTitle: If you need a copy, contact the issuer
       expired:
         title: The signature request is expired
-        subTitle: If you need help contact the issuer
+        subTitle: If you need help write to
       waitForQtsp:
-        title: The document is being processed
-        subTitle: Please wait, you will soon receive the signed contract in the app.
+        title: The signature is being processed.
+        subTitle: You will receive a message with the signed documents as soon as they are ready.
+      signed:
+        title: You have already signed these documents
+        subTitle: You can view and download them from the message titled “Signed Documents”.
+      unsupportedDevice:
+        title: There is a problem
+        subTitle: Your device does not support the "Firma con IO" feature.
       generic:
         default:
           title: There is a problem
@@ -3524,4 +3530,8 @@ idpay:
         addNew: Aggiungi nuovo
       updateToast: IBAN associato correttamente
 unsupportedDevice:  
-  text: "Your device may soon no longer be compatible with the IO app."
+  warning: "Your device may soon no longer be compatible with the IO app."
+  title: "This device is no longer compatible with IO"
+  subtitle: "Make sure your operating system is updated to the latest version. If it already is, to continue using IO you will have to log in from another device." 
+  cta:
+    faq: "Learn more"

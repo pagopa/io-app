@@ -3210,10 +3210,16 @@ features:
         subTitle: Se hai bisogno di una copia conttatta l'ente
       expired:
         title: La richiesta di firma è scaduta
-        subTitle: Per assistenza contattare l'ente
+        subTitle: Per assistenza, scrivi a
       waitForQtsp:
-        title: Il documento è in elaborazione
-        subTitle: Ti preghiamo di attendere, presto riceverai il contratto firmato in app.
+        title: Il firma è in elaborazione
+        subTitle: Riceverai un messaggio con i documenti firmati non appena saranno pronti.
+      signed:
+        title: Hai già firmato questi documenti
+        subTitle: Puoi visualizzarli e scaricarli dal messaggio intitolato “Documenti firmati”.
+      unsupportedDevice:
+        title: C’è un problema
+        subTitle: Il tuo device non supporta la funzionalità Firma con IO.
       generic:
         default:
           title: C’è un problema sui nostri sistemi
@@ -3547,4 +3553,8 @@ idpay:
         addNew: Aggiungi nuovo
       updateToast: IBAN associato correttamente
 unsupportedDevice:  
-  text: "A breve il tuo dispositivo potrebbe non essere più compatibile con l’app IO."
+  warning: "A breve il tuo dispositivo potrebbe non essere più compatibile con l’app IO."
+  title: "Questo dispositivo non è più compatibile con IO"
+  subtitle: "Assicurati che il sistema operativo sia aggiornato all’ultima versione. Se è già così, per continuare a usare IO dovrai accedere da un altro dispositivo." 
+  cta:
+    faq: "Come mai?"
