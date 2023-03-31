@@ -19,9 +19,6 @@ import { H2 } from "../core/typography/H2";
 import { IOStyles } from "../core/variables/IOStyles";
 import { IOAlertRadius } from "../core/variables/IOShapes";
 import { IOAlertSpacing } from "../core/variables/IOSpacing";
-import { H1 } from "../core/typography/H1";
-import { useIOSelector } from "../../store/hooks";
-import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 
 const iconSize = 24;
 const [spacingDefault, spacingFullWidth] = IOAlertSpacing;
@@ -99,62 +96,50 @@ export const Alert = ({
   accessibilityLabel,
   accessibilityRole,
   testID
-}: Props) => {
-  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
-
-  return (
-    <View
-      ref={viewRef}
-      style={[
-        styles.container,
-        fullWidth ? styles.spacingFullWidth : styles.spacingDefault,
-        { backgroundColor: IOColors[mapVariantStates[variant].background] }
-      ]}
-      testID={testID}
-      accessibilityHint={accessibilityHint}
-      accessibilityLabel={accessibilityLabel}
-      accessibilityRole={accessibilityRole}
-      accessible={accessible ?? true}
-    >
-      <Icon
-        name={mapVariantStates[variant].icon}
-        size={iconSize}
-        color={mapVariantStates[variant].foreground}
-      />
-      <HSpacer />
-      <View style={IOStyles.flex}>
-        {title && (
-          <>
-            {isDesignSystemEnabled ? (
-              <H1 color={mapVariantStates[variant].foreground}>{title}</H1>
-            ) : (
-              <H2
-                weight="SemiBold"
-                color={mapVariantStates[variant].foreground}
-              >
-                {title}
-              </H2>
-            )}
-
-            <VSpacer size={4} />
-          </>
-        )}
-        <Label color={mapVariantStates[variant].foreground} weight={"Regular"}>
-          {content}
-        </Label>
-        {action && (
-          <>
-            <VSpacer size={4} />
-            <Link
-              color={mapVariantStates[variant].foreground}
-              onPress={onPress}
-              style={{ alignSelf: "flex-start" }}
-            >
-              {action}
-            </Link>
-          </>
-        )}
-      </View>
+}: Props) => (
+  <View
+    ref={viewRef}
+    style={[
+      styles.container,
+      fullWidth ? styles.spacingFullWidth : styles.spacingDefault,
+      { backgroundColor: IOColors[mapVariantStates[variant].background] }
+    ]}
+    testID={testID}
+    accessibilityHint={accessibilityHint}
+    accessibilityLabel={accessibilityLabel}
+    accessibilityRole={accessibilityRole}
+    accessible={accessible ?? true}
+  >
+    <Icon
+      name={mapVariantStates[variant].icon}
+      size={iconSize}
+      color={mapVariantStates[variant].foreground}
+    />
+    <HSpacer />
+    <View style={IOStyles.flex}>
+      {title && (
+        <>
+          <H2 weight="SemiBold" color={mapVariantStates[variant].foreground}>
+            {title}
+          </H2>
+          <VSpacer size={4} />
+        </>
+      )}
+      <Label color={mapVariantStates[variant].foreground} weight={"Regular"}>
+        {content}
+      </Label>
+      {action && (
+        <>
+          <VSpacer size={4} />
+          <Link
+            color={mapVariantStates[variant].foreground}
+            onPress={onPress}
+            style={{ alignSelf: "flex-start" }}
+          >
+            {action}
+          </Link>
+        </>
+      )}
     </View>
-  );
-};
+  </View>
+);
