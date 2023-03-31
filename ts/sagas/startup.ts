@@ -68,6 +68,7 @@ import {
   lollipopPublicKeySelector
 } from "../features/lollipop/store/reducers/lollipop";
 import {
+  checkLollipopSessionAssertionAndInvalidateIfNeeded,
   generateKeyInfo,
   generateLollipopKeySaga
 } from "../features/lollipop/saga";
@@ -94,6 +95,7 @@ import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
 import { startupLoadSuccess } from "../store/actions/startup";
 import { watchIDPaySaga } from "../features/idpay/common/saga";
 import { StartupStatusEnum } from "../store/reducers/startup";
+import { checkPublicKeyAndBlockIfNeeded } from "../features/lollipop/navigation";
 import {
   startAndReturnIdentificationResult,
   watchIdentification
@@ -213,7 +215,16 @@ export function* initializeApplicationSaga(): Generator<
   // to use this information on old app version already logged in users.
   // Here we are blocking the application startup, but we have the
   // the profile loading spinner active.
+
   yield* call(generateLollipopKeySaga);
+
+  // This saga must retrieve the publicKey by its own,
+  // since it must make sure to have the latest in-memory value
+  // (as an example, during the authentication saga the key may have been regenerated multiple times)
+  const unsupportedDevice = yield* call(checkPublicKeyAndBlockIfNeeded);
+  if (unsupportedDevice) {
+    return;
+  }
 
   // Whether the user is currently logged in.
   const previousSessionToken: ReturnType<typeof sessionTokenSelector> =
@@ -225,13 +236,15 @@ export function* initializeApplicationSaga(): Generator<
       ? previousSessionToken
       : yield* call(authenticationSaga);
 
-  // Handles the expiration of the session token
-  yield* fork(watchSessionExpiredSaga);
-
+  // BE CAREFUL where you get lollipop keyInfo.
+  // They MUST be placed after authenticationSaga, because they are regenerated with each login attempt.
   // Get keyInfo for lollipop
   const keyTag = yield* select(lollipopKeyTagSelector);
   const publicKey = yield* select(lollipopPublicKeySelector);
   const keyInfo = yield* call(generateKeyInfo, keyTag, publicKey);
+
+  // Handles the expiration of the session token
+  yield* fork(watchSessionExpiredSaga);
 
   // Instantiate a backend client from the session token
   const backendClient: ReturnType<typeof BackendClient> = BackendClient(
@@ -297,18 +310,27 @@ export function* initializeApplicationSaga(): Generator<
     yield* select(sessionInfoSelector);
   if (isSessionRefreshed || O.isNone(maybeSessionInformation)) {
     // let's try to load the session information from the backend.
+
     maybeSessionInformation = yield* call(
       loadSessionInformationSaga,
       backendClient.getSession
     );
+
     if (O.isNone(maybeSessionInformation)) {
       // we can't go further without session info, let's restart
       // the initialization process
       yield* put(startupLoadSuccess(StartupStatusEnum.NOT_AUTHENTICATED));
       yield* put(startApplicationInitialization());
+
       return;
     }
   }
+
+  yield* call(
+    checkLollipopSessionAssertionAndInvalidateIfNeeded,
+    publicKey,
+    maybeSessionInformation
+  );
 
   // Start watching for profile update requests as the checkProfileEnabledSaga
   // may need to update the profile.

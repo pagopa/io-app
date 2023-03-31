@@ -8,6 +8,7 @@ import { DSTypography } from "../core/DSTypography";
 import { DSIcons } from "../core/DSIcons";
 import { DSButtons } from "../core/DSButtons";
 import { DSTextFields } from "../core/DSTextFields";
+import { DSLegacyButtons } from "../core/DSLegacyButtons";
 import { DSLegacyPictograms } from "../core/DSLegacyPictograms";
 import { DSLegacyIllustrations } from "../core/DSLegacyIllustrations";
 import { DSPictograms } from "../core/DSPictograms";
@@ -20,6 +21,7 @@ import { DSListItems } from "../core/DSListItems";
 import { DSLayout } from "../core/DSLayout";
 import { DSAlert } from "../core/DSAlert";
 import { DSLoaders } from "../core/DSLoaders";
+import { DSHapticFeedback } from "../core/DSHapticFeedback";
 import {
   IOThemeContext,
   IOThemes
@@ -81,6 +83,11 @@ export const DesignSystemNavigator = () => {
           component={DSLoaders}
         />
 
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.FOUNDATION.HAPTIC_FEEDBACK.route}
+          component={DSHapticFeedback}
+        />
+
         {/* COMPONENTS */}
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.COMPONENTS.BUTTONS.route}
@@ -126,6 +133,10 @@ export const DesignSystemNavigator = () => {
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.LEGACY.PICTOGRAMS.route}
           component={DSLegacyPictograms}
+        />
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.LEGACY.BUTTONS.route}
+          component={DSLegacyButtons}
         />
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.LEGACY.ILLUSTRATIONS.route}

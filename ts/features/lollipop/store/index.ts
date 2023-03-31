@@ -27,7 +27,8 @@ const migrations: MigrationManifest = {
     return {
       ...castedPeviousState,
       keyTag: O.fromNullable(castedPeviousState.keyTag),
-      publicKey: O.none
+      publicKey: O.none,
+      supportedDevice: true
     };
   }
 };
@@ -35,7 +36,7 @@ const migrations: MigrationManifest = {
 export type PersistedLollipopState = LollipopState & PersistPartial;
 
 export const lollipopPersistConfig: PersistConfig = {
-  blacklist: ["publicKey"],
+  blacklist: ["publicKey", "supportedDevice"],
   key: "lollipop",
   migrate: createMigrate(migrations, { debug: isDevEnv }),
   storage: AsyncStorage,

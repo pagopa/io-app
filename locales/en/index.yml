@@ -3342,6 +3342,16 @@ idpay:
           header: Configura l'iniziativa!
           footer: Aggiungi almeno un metodo per iniziare ad utilizzare {{initiative}}.
         configured:
+          errorAlerts:
+            NOT_REFUNDABLE_ONLY_IBAN:
+              content: Inserisci un metodo di pagamento valido per effettuare transazioni 
+              action: Asssocia metodo 
+            NOT_REFUNDABLE_ONLY_INSTRUMENT:
+              content: Inserisci un IBAN valido per ricevere i rimborsi.
+              action: Modifica IBAN
+            NOT_REFUNDABLE:
+              content: Inserisci un IBAN valido e un metodo di pagamento per utilizzare il bonus
+              action: Configura
           yourOperations: Le tue Operazioni
           yourOperationsSubtitle: "Qui vedrai le transazioni effettuate con i metodi che hai associato. "
           yourOperationsLink: Come si fa?
@@ -3520,4 +3530,8 @@ idpay:
         addNew: Aggiungi nuovo
       updateToast: IBAN associato correttamente
 unsupportedDevice:  
-  text: "Your device may soon no longer be compatible with the IO app."
+  warning: "Your device may soon no longer be compatible with the IO app."
+  title: "This device is no longer compatible with IO"
+  subtitle: "Make sure your operating system is updated to the latest version. If it already is, to continue using IO you will have to log in from another device." 
+  cta:
+    faq: "Learn more"
