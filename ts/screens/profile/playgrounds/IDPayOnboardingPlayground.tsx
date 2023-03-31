@@ -1,35 +1,41 @@
+/* eslint-disable sonarjs/no-identical-functions */
 import { useNavigation } from "@react-navigation/native";
-import { ListItem } from "native-base";
+import { ListItem as NBListItem } from "native-base";
 import React from "react";
-import { Button, SafeAreaView, ScrollView } from "react-native";
+import { Button, SafeAreaView, ScrollView, View } from "react-native";
+import { LabelledItem } from "../../../components/LabelledItem";
+import { IOAccordion } from "../../../components/core/accordion/IOAccordion";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
-import { H4 } from "../../../components/core/typography/H4";
+import { H2 } from "../../../components/core/typography/H2";
+import { Label } from "../../../components/core/typography/Label";
 import { Monospace } from "../../../components/core/typography/Monospace";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
-import { LabelledItem } from "../../../components/LabelledItem";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { IDPayOnboardingRoutes } from "../../../features/idpay/onboarding/navigation/navigator";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
+import { Body } from "../../../components/core/typography/Body";
 
 const IDPayOnboardingPlayground = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const [serviceId, setServiceId] = React.useState<string | undefined>();
 
-  const navigateToIDPayOnboarding = () => {
-    if (serviceId !== undefined && serviceId !== "") {
-      navigation.navigate(IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
-        screen: IDPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS,
-        params: {
-          serviceId
-        }
-      });
-    }
+  const navigateToIDPayOnboarding = (serviceId: string) => {
+    navigation.navigate(IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
+      screen: IDPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS,
+      params: {
+        serviceId
+      }
+    });
   };
 
-  const testIDs = ["01GKPJXR35WKGMW8TH4NSP0RB9"];
+  const handleServiceSubmit = () => {
+    if (serviceId !== undefined && serviceId !== "") {
+      navigateToIDPayOnboarding(serviceId);
+    }
+  };
 
   return (
     <BaseScreenComponent goBack={true} headerTitle={"Playground"}>
@@ -46,20 +52,148 @@ const IDPayOnboardingPlayground = () => {
             }}
           />
           <VSpacer size={16} />
-          <Button
-            onPress={navigateToIDPayOnboarding}
-            title="Start onboarding"
-          />
+          <Button onPress={handleServiceSubmit} title="Start onboarding" />
           <VSpacer size={24} />
-          <H4>Test service IDs:</H4>
-          {testIDs.map(id => (
-            <ListItem key={id} onPress={() => setServiceId(id)}>
-              <Monospace selectable>{id}</Monospace>
-            </ListItem>
-          ))}
+          <H2>Iniziative di test</H2>
+          <Body>Iniziative disponibili tramite io-dev-server</Body>
+          <IOAccordion title="Onboarding completo">
+            <>
+              {testServices.map(srv => (
+                <TestServiceItem
+                  key={srv.serviceId}
+                  service={srv}
+                  onPress={() => navigateToIDPayOnboarding(srv.serviceId)}
+                />
+              ))}
+            </>
+          </IOAccordion>
+          <IOAccordion title="Con errore status">
+            <>
+              {testServicesWithStatusError.map(srv => (
+                <TestServiceItem
+                  key={srv.serviceId}
+                  service={srv}
+                  onPress={() => navigateToIDPayOnboarding(srv.serviceId)}
+                />
+              ))}
+            </>
+          </IOAccordion>
+          <IOAccordion title="Con errore prerequisiti">
+            <>
+              {testServicesWithPrerequisitesError.map(srv => (
+                <TestServiceItem
+                  key={srv.serviceId}
+                  service={srv}
+                  onPress={() => navigateToIDPayOnboarding(srv.serviceId)}
+                />
+              ))}
+            </>
+          </IOAccordion>
         </ScrollView>
       </SafeAreaView>
     </BaseScreenComponent>
+  );
+};
+
+type TestService = {
+  serviceId: string;
+  label: string;
+};
+
+const testServices: ReadonlyArray<TestService> = [
+  {
+    serviceId: "TESTSRV01",
+    label: "Flusso completo"
+  },
+  {
+    serviceId: "TESTSRV07",
+    label: "Iniziativa con invito"
+  },
+  {
+    serviceId: "TESTSRV12",
+    label: "Senza prerequisiti"
+  },
+  {
+    serviceId: "TESTSRV13",
+    label: "Solo PDND"
+  },
+  {
+    serviceId: "TESTSRV14",
+    label: "Solo autodichiarazioni"
+  },
+  {
+    serviceId: "TESTSRV15",
+    label: "Solo autodichiarazioni multivalore"
+  },
+  {
+    serviceId: "TESTSRV16",
+    label: "Solo autodichiarazioni booleani"
+  }
+];
+
+const testServicesWithStatusError: ReadonlyArray<TestService> = [
+  {
+    serviceId: "TESTSRV02",
+    label: "No criteri di ammissione"
+  },
+  {
+    serviceId: "TESTSRV03",
+    label: "No requisiti"
+  },
+  {
+    serviceId: "TESTSRV04",
+    label: "Onboarding già concluso"
+  },
+  {
+    serviceId: "TESTSRV05",
+    label: "Recesso"
+  },
+  {
+    serviceId: "TESTSRV06",
+    label: "Applicazione in valutazione"
+  }
+];
+
+const testServicesWithPrerequisitesError: ReadonlyArray<TestService> = [
+  {
+    serviceId: "TESTSRV08",
+    label: "Budget terminato"
+  },
+  {
+    serviceId: "TESTSRV09",
+    label: "Periodo di iscrizione terminato"
+  },
+  {
+    serviceId: "TESTSRV10",
+    label: "Periodo di iscrizione non iniziato"
+  },
+  {
+    serviceId: "TESTSRV11",
+    label: "Iniziativa sospesa"
+  }
+];
+
+type TestServiceItemProps = {
+  service: TestService;
+  onPress: () => void;
+};
+
+const TestServiceItem = (props: TestServiceItemProps) => {
+  const { label, serviceId } = props.service;
+  return (
+    <NBListItem onPress={props.onPress}>
+      <View>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center"
+          }}
+        >
+          <Label color="bluegrey">{label}</Label>
+        </View>
+        <Monospace selectable>{serviceId}</Monospace>
+      </View>
+    </NBListItem>
   );
 };
 
