@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.29.0-rc.4](https://github.com/pagopa/io-app/compare/2.29.0-rc.3...2.29.0-rc.4) (2023-03-30)
+
+
+### Features
+
+* [[IA-186](https://pagopa.atlassian.net/browse/IA-186)] Scroll to top ([#4422](https://github.com/pagopa/io-app/issues/4422)) ([b60e9fb](https://github.com/pagopa/io-app/commit/b60e9fbc1940978ee61a8c2b807bffcdad5c4389))
+* **Firma con IO:** [[SFEQS-1275](https://pagopa.atlassian.net/browse/SFEQS-1275)] Update error screens copy ([#4484](https://github.com/pagopa/io-app/issues/4484)) ([76be53b](https://github.com/pagopa/io-app/commit/76be53b42570df3eb20e26b60edd1509f6e34e35))
+* [[IGP-99](https://pagopa.atlassian.net/browse/IGP-99)] Refactor `useAttachmentDownload` ([#4486](https://github.com/pagopa/io-app/issues/4486)) ([bf6a418](https://github.com/pagopa/io-app/commit/bf6a418db3bcf0ebd61314b59f77e1635c2aa362))
+
+
+### Bug Fixes
+
+* [[IAI-273](https://pagopa.atlassian.net/browse/IAI-273)] Fix UI regression that occurred in the `BaseHeader` component ([#4490](https://github.com/pagopa/io-app/issues/4490)) ([6fdd9ce](https://github.com/pagopa/io-app/commit/6fdd9ce597f0e230508a9daf435db2055081c991))
+* **IDPay:** [[IODPAY-115](https://pagopa.atlassian.net/browse/IODPAY-115)] New placeholder in IBAN onboarding page ([#4483](https://github.com/pagopa/io-app/issues/4483)) ([15d9998](https://github.com/pagopa/io-app/commit/15d9998e66c48e9993b75ffa9a1b3e4befd54b77))
+
+
+### Chores
+
+* [[IOAPPFD0-45](https://pagopa.atlassian.net/browse/IOAPPFD0-45)] Add next iteration of the current buttons ([#4435](https://github.com/pagopa/io-app/issues/4435)) ([24d2d1b](https://github.com/pagopa/io-app/commit/24d2d1b7f01e2041f8d9c9ceb8d243debe2b10e9))
+* [[IOAPPFD0-62](https://pagopa.atlassian.net/browse/IOAPPFD0-62)] Add the new `Haptic Feedback` page to the Design System ([#4485](https://github.com/pagopa/io-app/issues/4485)) ([6974424](https://github.com/pagopa/io-app/commit/6974424ff826dec331167e0c0979c24b6c8b5fdc))
+* [[IOAPPFD0-69](https://pagopa.atlassian.net/browse/IOAPPFD0-69)] Update Readme with latest ruby and bundler versions ([#4492](https://github.com/pagopa/io-app/issues/4492)) ([917982e](https://github.com/pagopa/io-app/commit/917982ea3125940a0f2a6b6e4f06635386147f07))
+* [[IOAPPFD0-73](https://pagopa.atlassian.net/browse/IOAPPFD0-73)] Add updated Podfile.lock ([#4499](https://github.com/pagopa/io-app/issues/4499)) ([4c7a4b3](https://github.com/pagopa/io-app/commit/4c7a4b398bd882ec7419d9ac58604096bce71801))
+* [[LLK-63](https://pagopa.atlassian.net/browse/LLK-63)] LolliPoP login code refactored to share common functionalities ([#4453](https://github.com/pagopa/io-app/issues/4453)) ([424b2e2](https://github.com/pagopa/io-app/commit/424b2e24767e40041ca47aeffa31f4b2e9578f04))
+* [[LLK-66](https://pagopa.atlassian.net/browse/LLK-66)] LP key login flow ([#4468](https://github.com/pagopa/io-app/issues/4468)) ([ca9e9f1](https://github.com/pagopa/io-app/commit/ca9e9f123c68f16ac67061a0f5316fd444c0d588))
+
 ## [2.29.0-rc.3](https://github.com/pagopa/io-app/compare/2.29.0-rc.2...2.29.0-rc.3) (2023-03-28)
 
 
