@@ -10,18 +10,18 @@ import {
   getPublicKey,
   PublicKey
 } from "@pagopa/io-react-native-crypto";
-import { jwkThumbprintByEncoding } from "jwk-thumbprint";
 import { lollipopKeyTagSelector } from "../store/reducers/lollipop";
 import {
   lollipopKeyTagSave,
   lollipopRemovePublicKey,
   lollipopSetPublicKey
 } from "../store/actions/lollipop";
-import { KeyInfo, toCryptoError } from "../utils/crypto";
 import {
-  DEFAULT_LOLLIPOP_HASH_ALGORITHM_CLIENT,
-  DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER
-} from "../utils/login";
+  KeyInfo,
+  toBase64EncodedThumbprint,
+  toCryptoError
+} from "../utils/crypto";
+import { DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER } from "../utils/login";
 import { sessionInvalid } from "../../../store/actions/authentication";
 import { restartCleanApplication } from "../../../sagas/commons";
 
@@ -82,11 +82,7 @@ export function* checkLollipopSessionAssertionAndInvalidateIfNeeded(
         maybePublicKey,
         O.map(publicKey =>
           pipe(
-            jwkThumbprintByEncoding(
-              publicKey,
-              DEFAULT_LOLLIPOP_HASH_ALGORITHM_CLIENT,
-              "base64url"
-            ),
+            toBase64EncodedThumbprint(publicKey),
             publicKeyThumbprint =>
               `${DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER}-${publicKeyThumbprint}`,
             localLollipopAssertionRef =>
@@ -199,11 +195,7 @@ const keyInfoFromKeyTagAndPublicKey = (
 ): KeyInfo => ({
   keyTag,
   publicKey,
-  publicKeyThumbprint: jwkThumbprintByEncoding(
-    publicKey,
-    DEFAULT_LOLLIPOP_HASH_ALGORITHM_CLIENT,
-    "base64url"
-  )
+  publicKeyThumbprint: toBase64EncodedThumbprint(publicKey)
 });
 
 const defaultKeyInfo = (): KeyInfo => ({
