@@ -3,9 +3,7 @@ import * as React from "react";
 import { BackHandler, NativeEventSubscription } from "react-native";
 import I18n from "../i18n";
 import NavigationService from "../navigation/NavigationService";
-import { IOColors } from "../components/core/variables/IOColors";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
-import IconFont from "./ui/IconFont";
 import { Icon } from "./core/icons";
 
 interface OwnProps {
