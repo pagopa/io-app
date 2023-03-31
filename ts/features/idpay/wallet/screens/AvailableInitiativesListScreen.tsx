@@ -87,7 +87,7 @@ export const IdPayInitiativeListScreen = (props: Props) => {
           <H1>{TypedI18n.t("idpay.wallet.initiativePairing.header")}</H1>
           <VSpacer size={16} />
           {maskedPan && (
-            <View style={IOStyles.row}>
+            <View style={[IOStyles.row, { paddingVertical: 8 }]}>
               <LogoPayment name={brandToLogoPaymentMap[brand]} />
               <HSpacer size={8} />
               <H4>•••• {maskedPan}</H4>
