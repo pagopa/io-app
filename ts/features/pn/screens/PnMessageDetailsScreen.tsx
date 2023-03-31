@@ -21,6 +21,7 @@ import { PnMessageDetailsError } from "../components/PnMessageDetailsError";
 import { PnParamsList } from "../navigation/params";
 import { pnMessageFromIdSelector } from "../store/reducers";
 import { PNMessage } from "../store/types/types";
+import { cancelPreviousAttachmentDownload } from "../../../store/actions/messages";
 
 export type PnMessageDetailsScreenNavigationParams = Readonly<{
   messageId: UIMessageId;
@@ -81,7 +82,7 @@ export const PnMessageDetailsScreen = (
 
   return (
     <BaseScreenComponent
-      goBack={true}
+      goBack={() => dispatch(cancelPreviousAttachmentDownload())}
       headerTitle={I18n.t("features.pn.details.title")}
       contextualHelp={emptyContextualHelp}
     >
