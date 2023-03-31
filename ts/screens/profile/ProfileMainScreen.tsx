@@ -60,13 +60,21 @@ import { getAppVersion } from "../../utils/appVersion";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { getDeviceId } from "../../utils/device";
 import { isDevEnv } from "../../utils/environment";
-import { toThumbprint } from "../../features/lollipop/utils/crypto";
+import {
+  toBase64EncodedThumbprint,
+  toThumbprint
+} from "../../features/lollipop/utils/crypto";
+import {
+  PublicKeyStatusInjectedProps,
+  withKeychainPublicKey
+} from "../../features/lollipop/hooks/usePublicKeyState";
 
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "PROFILE_MAIN"> &
   LightModalContextInterface &
   ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
-  TabBarItemPressType;
+  TabBarItemPressType &
+  PublicKeyStatusInjectedProps;
 
 type State = {
   tapsOnAppVersion: number;
@@ -307,10 +315,15 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       walletToken,
       setDebugModeEnabled,
       isIdPayTestEnabled,
-      publicKey
+      publicKey,
+      keychainPublicKey
     } = this.props;
     const deviceUniqueId = getDeviceId();
     const thumbprint = toThumbprint(publicKey);
+    const keychainThumbprint =
+      keychainPublicKey.kind === "ready"
+        ? toBase64EncodedThumbprint(keychainPublicKey.publicKey)
+        : undefined;
 
     return (
       <React.Fragment>
@@ -433,8 +446,15 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
 
             {thumbprint &&
               this.debugListItem(
-                `Thumbprint ${thumbprint}`,
+                `Thumbprint (R) ${thumbprint}`,
                 () => clipboardSetStringWithFeedback(thumbprint),
+                false
+              )}
+
+            {keychainThumbprint &&
+              this.debugListItem(
+                `Thumbprint (K) ${keychainThumbprint}`,
+                () => clipboardSetStringWithFeedback(keychainThumbprint),
                 false
               )}
 
@@ -663,5 +683,9 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(
-  withLightModalContext(withUseTabItemPressWhenScreenActive(ProfileMainScreen))
+  withLightModalContext(
+    withUseTabItemPressWhenScreenActive(
+      withKeychainPublicKey(ProfileMainScreen)
+    )
+  )
 );
