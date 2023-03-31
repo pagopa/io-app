@@ -6,7 +6,7 @@ import {
   idpayTimelineDetailsSelector,
   idpayTimelineIsLastPageSelector,
   idpayTimelineLastUpdateSelector,
-  idpayTimelineSelector
+  idpayOperationListSelector
 } from "..";
 import { TimelineDTO } from "../../../../../../../definitions/idpay/TimelineDTO";
 import { OperationTypeEnum as TransactionOperationType } from "../../../../../../../definitions/idpay/TransactionOperationDTO";
@@ -138,7 +138,7 @@ describe("test idpay timeline reducer and selectors", () => {
     expect(store.getState().features.idPay.initiative.timeline).toStrictEqual(
       pot.noneLoading
     );
-    expect(idpayTimelineSelector(store.getState())).toStrictEqual([]);
+    expect(idpayOperationListSelector(store.getState())).toStrictEqual([]);
   });
   it("should be pot.some with the response, after the success action", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
@@ -156,7 +156,7 @@ describe("test idpay timeline reducer and selectors", () => {
     expect(store.getState().features.idPay.initiative.timeline).toStrictEqual(
       pot.some({ 0: mockTimelineResponseSuccess })
     );
-    expect(idpayTimelineSelector(store.getState())).toStrictEqual(
+    expect(idpayOperationListSelector(store.getState())).toStrictEqual(
       mockTimelineResponseSuccess.operationList
     );
   });
@@ -204,7 +204,7 @@ describe("test idpay timeline pagination reducer and selectors", () => {
     expect(store.getState().features.idPay.initiative.timeline).toStrictEqual(
       pot.some(expectedResult)
     );
-    expect(idpayTimelineSelector(store.getState())).toStrictEqual([
+    expect(idpayOperationListSelector(store.getState())).toStrictEqual([
       ...mockTimelineResponseSuccess.operationList,
       ...mockTimelineResponseSuccess.operationList
     ]);
