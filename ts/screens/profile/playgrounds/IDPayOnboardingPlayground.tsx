@@ -106,69 +106,61 @@ const testServices: ReadonlyArray<TestService> = [
     label: "Flusso completo"
   },
   {
-    serviceId: "TESTSRV07",
+    serviceId: "TESTSRV02",
     label: "Iniziativa con invito"
   },
   {
-    serviceId: "TESTSRV12",
+    serviceId: "TESTSRV03",
     label: "Senza prerequisiti"
   },
   {
-    serviceId: "TESTSRV13",
+    serviceId: "TESTSRV04",
     label: "Solo PDND"
   },
   {
-    serviceId: "TESTSRV14",
+    serviceId: "TESTSRV05",
     label: "Solo autodichiarazioni"
-  },
-  {
-    serviceId: "TESTSRV15",
-    label: "Solo autodichiarazioni multivalore"
-  },
-  {
-    serviceId: "TESTSRV16",
-    label: "Solo autodichiarazioni booleani"
   }
 ];
 
 const testServicesWithStatusError: ReadonlyArray<TestService> = [
   {
-    serviceId: "TESTSRV02",
+    serviceId: "TESTSRV06",
     label: "No criteri di ammissione"
   },
   {
-    serviceId: "TESTSRV03",
+    serviceId: "TESTSRV07",
     label: "No requisiti"
   },
   {
-    serviceId: "TESTSRV04",
+    serviceId: "TESTSRV08",
     label: "Onboarding già concluso"
   },
   {
-    serviceId: "TESTSRV05",
+    serviceId: "TESTSRV09",
     label: "Recesso"
   },
   {
-    serviceId: "TESTSRV06",
+    serviceId: "TESTSRV10",
     label: "Applicazione in valutazione"
   }
 ];
 
 const testServicesWithPrerequisitesError: ReadonlyArray<TestService> = [
   {
-    serviceId: "TESTSRV08",
+    serviceId: "TESTSRV11",
     label: "Budget terminato"
   },
   {
-    serviceId: "TESTSRV09",
+    serviceId: "TESTSRV12",
     label: "Periodo di iscrizione terminato"
   },
   {
-    serviceId: "TESTSRV10",
+    serviceId: "TESTSRV13",
     label: "Periodo di iscrizione non iniziato"
   },
   {
-    serviceId: "TESTSRV11",
+    serviceId: "TESTSRV14",
     label: "Iniziativa sospesa"
   }
 ];
