@@ -6,7 +6,6 @@ import { fciLoadQtspClauses } from "../../../store/actions";
 import { handleGetQtspMetadata } from "../handleGetQtspMetadata";
 import { QtspClausesMetadataDetailView } from "../../../../../../definitions/fci/QtspClausesMetadataDetailView";
 import { fciIssuerEnvironmentSelector } from "../../../store/reducers/fciSignatureRequest";
-import { IssuerEnvironmentEnum } from "../../../../../../definitions/fci/IssuerEnvironment";
 
 const successResponse = {
   status: 200,
