@@ -1,10 +1,11 @@
 import { SagaIterator } from "redux-saga";
-import { call, put } from "typed-redux-saga/macro";
+import { call, put, select } from "typed-redux-saga/macro";
 import * as E from "fp-ts/lib/Either";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { BackendFciClient } from "../../api/backendFci";
 import { fciLoadQtspClauses } from "../../store/actions";
 import { getNetworkError } from "../../../../utils/errors";
+import { fciIssuerEnvironmentSelector } from "../../store/reducers/fciSignatureRequest";
 
 /*
  * A saga to load a QTSP metadata.
@@ -15,10 +16,10 @@ export function* handleGetQtspMetadata(
   >["getQtspClausesMetadata"]
 ): SagaIterator {
   try {
-    const getQtspClausesMetadataResponse = yield* call(
-      getQtspClausesMetadata,
-      {}
-    );
+    const issuerEnvironment = yield* select(fciIssuerEnvironmentSelector);
+    const getQtspClausesMetadataResponse = yield* call(getQtspClausesMetadata, {
+      "x-iosign-issuer-environment": issuerEnvironment
+    });
 
     if (E.isLeft(getQtspClausesMetadataResponse)) {
       throw Error(readablePrivacyReport(getQtspClausesMetadataResponse.left));

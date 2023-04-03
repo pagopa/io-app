@@ -13,8 +13,8 @@ import {
 } from "../../store/actions";
 import FciRouterScreen from "../FciRouterScreen";
 import { mockSignatureRequestDetailView } from "../../types/__mocks__/SignatureRequestDetailView.mock";
-import { StatusEnum as SignatureRequestDetailViewStatusEnum } from "../../../../../definitions/fci/SignatureRequestDetailView";
 import mockedProfile from "../../../../__mocks__/initializedProfile";
+import { SignatureRequestStatusEnum } from "../../../../../definitions/fci/SignatureRequestStatus";
 
 const genericError = getTimeoutError();
 const now = new Date();
@@ -95,7 +95,7 @@ describe("Test FciRouterScreen", () => {
 
     const qtspSignatureRequest = {
       ...mockSignatureRequestDetailView,
-      status: SignatureRequestDetailViewStatusEnum.WAIT_FOR_QTSP
+      status: SignatureRequestStatusEnum.WAIT_FOR_QTSP
     };
     render.store.dispatch(
       fciSignatureRequestFromId.success(qtspSignatureRequest)
@@ -121,7 +121,7 @@ describe("Test FciRouterScreen", () => {
 
     const qtspSignatureRequest = {
       ...mockSignatureRequestDetailView,
-      status: SignatureRequestDetailViewStatusEnum.WAIT_FOR_SIGNATURE
+      status: SignatureRequestStatusEnum.WAIT_FOR_SIGNATURE
     };
     render.store.dispatch(
       fciSignatureRequestFromId.success(qtspSignatureRequest)

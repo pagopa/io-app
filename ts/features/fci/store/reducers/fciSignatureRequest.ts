@@ -9,6 +9,7 @@ import { NetworkError } from "../../../../utils/errors";
 import { fciSignatureRequestFromId, fciClearStateRequest } from "../actions";
 import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
 import { QtspDocumentToSign } from "../../utils/signature";
+import { IssuerEnvironmentEnum } from "../../../../../definitions/fci/IssuerEnvironment";
 
 export type FciSignatureRequestState = pot.Pot<
   SignatureRequestDetailView,
@@ -78,5 +79,13 @@ export const fciDocumentsWithUrlSelector = (
       []
     )
   );
+
+export const fciIssuerEnvironmentSelector = createSelector(
+  fciSignatureRequestSelector,
+  signatureDetailView =>
+    pot.isSome(signatureDetailView)
+      ? signatureDetailView.value.issuer.environment
+      : IssuerEnvironmentEnum.TEST
+);
 
 export default reducer;
