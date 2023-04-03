@@ -6,6 +6,7 @@ import { fciLoadQtspClauses } from "../../../store/actions";
 import { handleGetQtspMetadata } from "../handleGetQtspMetadata";
 import { QtspClausesMetadataDetailView } from "../../../../../../definitions/fci/QtspClausesMetadataDetailView";
 import { SessionToken } from "../../../../../types/SessionToken";
+import { fciIssuerEnvironmentSelector } from "../../../store/reducers/fciSignatureRequest";
 
 const successResponse = {
   status: 200,
@@ -25,7 +26,12 @@ describe("handleGetQtspMetadata", () => {
       "mockedToken" as SessionToken
     )
       .next()
-      .call(mockBackendFciClient, { Bearer: "Bearer mockedToken" })
+      .select(fciIssuerEnvironmentSelector)
+      .next("mockedIssuerEnvironment")
+      .call(mockBackendFciClient, {
+        Bearer: "Bearer mockedToken"
+        "x-iosign-issuer-environment": "mockedIssuerEnvironment"
+      })
       .next(right(successResponse))
       .put(fciLoadQtspClauses.success(successResponse.value))
       .next()
@@ -38,7 +44,12 @@ describe("handleGetQtspMetadata", () => {
       "mockedToken" as SessionToken
     )
       .next()
-      .call(mockBackendFciClient, { Bearer: "Bearer mockedToken" })
+      .select(fciIssuerEnvironmentSelector)
+      .next("mockedIssuerEnvironment")
+      .call(mockBackendFciClient, {
+        Bearer: "Bearer mockedToken"
+        "x-iosign-issuer-environment": "mockedIssuerEnvironment"
+      })
       .next(right(failureResponse))
       .next(
         fciLoadQtspClauses.failure(
@@ -55,7 +66,12 @@ describe("handleGetQtspMetadata", () => {
       "mockedToken" as SessionToken
     )
       .next()
-      .call(mockBackendFciClient, { Bearer: "Bearer mockedToken" })
+      .select(fciIssuerEnvironmentSelector)
+      .next("mockedIssuerEnvironment")
+      .call(mockBackendFciClient, {
+        Bearer: "Bearer mockedToken"
+        "x-iosign-issuer-environment": "mockedIssuerEnvironment"
+      })
       .next(left(new Error()))
       .next(
         fciLoadQtspClauses.failure(
@@ -73,7 +89,12 @@ describe("handleGetQtspMetadata", () => {
       "mockedToken" as SessionToken
     )
       .next()
-      .call(mockBackendFciClient, { Bearer: "Bearer mockedToken" })
+      .select(fciIssuerEnvironmentSelector)
+      .next("mockedIssuerEnvironment")
+      .call(mockBackendFciClient, {
+        Bearer: "Bearer mockedToken"
+        "x-iosign-issuer-environment": "mockedIssuerEnvironment"
+      })
       .throw(mockedError)
       .next(fciLoadQtspClauses.failure(getNetworkError(mockedError)))
       .next()
