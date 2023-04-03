@@ -100,7 +100,7 @@ export const INITIAL_STATE: LoggedOutWithoutIdp = {
 
 // Type guards
 
-export function isLoggedOutWithoutIdp(
+function isLoggedOutWithoutIdp(
   state: AuthenticationState
 ): state is LoggedOutWithoutIdp {
   return state.kind === "LoggedOutWithoutIdp";
