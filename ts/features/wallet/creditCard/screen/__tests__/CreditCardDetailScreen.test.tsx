@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import * as React from "react";
 
 import { waitFor } from "@testing-library/react-native";
@@ -10,7 +11,6 @@ import ROUTES from "../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { fetchWalletsSuccess } from "../../../../../store/actions/wallet/wallets";
 import { appReducer } from "../../../../../store/reducers";
-import { isIdPayEnabledSelector } from "../../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { walletsV2_1 } from "../../../../../store/reducers/wallet/__mocks__/wallets";
 import {
@@ -63,18 +63,16 @@ const mockInitiative = {
   initiativeName: "idpay",
   status: StatusEnum.REFUNDABLE
 };
-jest.mock("../../../../idpay/wallet/store/reducers", () => ({
-  idPayEnabledInitiativesFromInstrumentSelector: jest
-    .fn()
-    .mockImplementation(() => [mockInitiative])
-}));
-jest
+const initiativesFromInstrumentMock = jest
   .spyOn(
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    require("../../../../../store/reducers/backendStatus"),
-    "isIdPayEnabledSelector"
+    require("../../../../idpay/wallet/store/reducers"),
+    "idPayEnabledInitiativesFromInstrumentSelector"
   )
-  .mockImplementation(() => false);
+  .mockImplementation(() => [mockInitiative]);
+const isIDPayEnabledMock = jest.spyOn(
+  require("../../../../../store/reducers/backendStatus"),
+  "isIdPayEnabledSelector"
+);
 
 describe("Test CreditCardDetailScreen", () => {
   jest.useFakeTimers();
@@ -84,20 +82,51 @@ describe("Test CreditCardDetailScreen", () => {
     const screen = renderDetailScreen(store, creditCard);
     expect(screen.getByTestId("WorkunitGenericFailure")).not.toBeNull();
   });
-  it("does not render idpay initiatives when isIdpayEnabled is false", async () => {
+  it("does not render idpay initiatives when isIdpayEnabled is false, even if there are some ", async () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
     const paymentMethods = walletsV2_1 as PatchedWalletV2ListResponse;
     const updatedMethods = paymentMethods.data!.map(w =>
       convertWalletV2toWalletV1({ ...w, pagoPA: false })
     );
-    const isEnabled = isIdPayEnabledSelector(store.getState());
-    expect(isEnabled).toStrictEqual(false);
+    isIDPayEnabledMock.mockReturnValue(false);
 
     store.dispatch(fetchWalletsSuccess(updatedMethods));
     const screen = renderDetailScreen(store, creditCard);
     await waitFor(() => {
       expect(screen.queryByTestId("idPayInitiativesList")).toBeNull();
+    });
+  });
+  it("does not render idpay initiatives when isIdpayEnabled is true, but there are no initiatives", async () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const store = createStore(appReducer, globalState as any);
+    const paymentMethods = walletsV2_1 as PatchedWalletV2ListResponse;
+    const updatedMethods = paymentMethods.data!.map(w =>
+      convertWalletV2toWalletV1({ ...w, pagoPA: false })
+    );
+    initiativesFromInstrumentMock.mockImplementation(() => []);
+    isIDPayEnabledMock.mockReturnValue(true);
+
+    store.dispatch(fetchWalletsSuccess(updatedMethods));
+    const screen = renderDetailScreen(store, creditCard);
+    await waitFor(() => {
+      expect(screen.queryByTestId("idPayInitiativesList")).toBeNull();
+    });
+  });
+  it("renders idpay initiatives when isIdpayEnabled is true and there are some ", async () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const store = createStore(appReducer, globalState as any);
+    const paymentMethods = walletsV2_1 as PatchedWalletV2ListResponse;
+    const updatedMethods = paymentMethods.data!.map(w =>
+      convertWalletV2toWalletV1({ ...w, pagoPA: false })
+    );
+    initiativesFromInstrumentMock.mockImplementation(() => [mockInitiative]);
+    isIDPayEnabledMock.mockReturnValue(true);
+
+    store.dispatch(fetchWalletsSuccess(updatedMethods));
+    const screen = renderDetailScreen(store, creditCard);
+    await waitFor(() => {
+      expect(screen.queryByTestId("idPayInitiativesList")).not.toBeNull();
     });
   });
   it(
