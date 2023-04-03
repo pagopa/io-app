@@ -73,7 +73,7 @@ export function* checkLollipopSessionAssertionAndInvalidateIfNeeded(
   maybePublicKey: O.Option<PublicKey>,
   maybeSessionInformation: O.Option<PublicSession>
 ) {
-  // The actual function is called after the login.
+  // The actual function is called after a successful login.
   // For the test idp we don't store any authentication data.
   // If we are logged with the test idp we don't need to check the lollipop assertion.
   const areWeLoggedWithTestIdp = yield* select(isLoggedOutWithoutIdpSelector);
