@@ -62,7 +62,7 @@ import PaymentsHistoryScreen from "../screens/wallet/PaymentsHistoryScreen";
 import TransactionDetailsScreen from "../screens/wallet/TransactionDetailsScreen";
 import { useIOSelector } from "../store/hooks";
 import { bpdRemoteConfigSelector } from "../store/reducers/backendStatus";
-import { IdPayInitiativeListScreen } from "../features/idpay/wallet/screens/AvailableInitiativesList";
+import { IdPayInitiativeListScreen } from "../features/idpay/wallet/screens/AvailableInitiativesListScreen";
 import ROUTES from "./routes";
 
 const Stack = createStackNavigator();
