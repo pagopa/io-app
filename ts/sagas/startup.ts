@@ -366,8 +366,8 @@ export function* initializeApplicationSaga(): Generator<
 
   // workaround to send keychainError for Pixel devices
   // TODO: REMOVE AFTER FIXING https://pagopa.atlassian.net/jira/software/c/projects/IABT/boards/92?modal=detail&selectedIssue=IABT-1441
-  trackKeychainGetFailure(keychainError);
-  clearKeychainError();
+  yield* call(trackKeychainGetFailure, keychainError);
+  yield* call(clearKeychainError);
 
   if (hasPreviousSessionAndPin) {
     // We have to retrieve the pin here and not on the previous if-condition (same guard)
