@@ -29,7 +29,7 @@ describe("handleGetQtspMetadata", () => {
       .select(fciIssuerEnvironmentSelector)
       .next("mockedIssuerEnvironment")
       .call(mockBackendFciClient, {
-        Bearer: "Bearer mockedToken"
+        Bearer: "Bearer mockedToken",
         "x-iosign-issuer-environment": "mockedIssuerEnvironment"
       })
       .next(right(successResponse))
@@ -47,7 +47,7 @@ describe("handleGetQtspMetadata", () => {
       .select(fciIssuerEnvironmentSelector)
       .next("mockedIssuerEnvironment")
       .call(mockBackendFciClient, {
-        Bearer: "Bearer mockedToken"
+        Bearer: "Bearer mockedToken",
         "x-iosign-issuer-environment": "mockedIssuerEnvironment"
       })
       .next(right(failureResponse))
@@ -69,7 +69,7 @@ describe("handleGetQtspMetadata", () => {
       .select(fciIssuerEnvironmentSelector)
       .next("mockedIssuerEnvironment")
       .call(mockBackendFciClient, {
-        Bearer: "Bearer mockedToken"
+        Bearer: "Bearer mockedToken",
         "x-iosign-issuer-environment": "mockedIssuerEnvironment"
       })
       .next(left(new Error()))
@@ -92,7 +92,7 @@ describe("handleGetQtspMetadata", () => {
       .select(fciIssuerEnvironmentSelector)
       .next("mockedIssuerEnvironment")
       .call(mockBackendFciClient, {
-        Bearer: "Bearer mockedToken"
+        Bearer: "Bearer mockedToken",
         "x-iosign-issuer-environment": "mockedIssuerEnvironment"
       })
       .throw(mockedError)

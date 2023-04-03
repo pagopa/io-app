@@ -16,10 +16,9 @@ export function* handleGetQtspMetadata(
   bearerToken: SessionToken
 ): SagaIterator {
   try {
-
     const issuerEnvironment = yield* select(fciIssuerEnvironmentSelector);
     const getQtspClausesMetadataResponse = yield* call(getQtspClausesMetadata, {
-      Bearer: `Bearer ${bearerToken}`
+      Bearer: `Bearer ${bearerToken}`,
       "x-iosign-issuer-environment": issuerEnvironment
     });
 
