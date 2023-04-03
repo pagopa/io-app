@@ -2,7 +2,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
-import { ScrollView, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import {
   IOLogoPaymentType,
   LogoPayment
@@ -16,6 +16,7 @@ import TypedI18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import customVariables from "../../../../theme/variables";
 import { IDPayInitiativesList } from "../components/IDPayInitiativesListComponents";
 import { idPayInitiativesFromInstrumentGet } from "../store/actions";
 import {
@@ -81,19 +82,17 @@ export const IdPayInitiativeListScreen = (props: Props) => {
       headerTitle={TypedI18n.t("idpay.wallet.initiativePairing.navigation")}
       goBack={true}
     >
-      <View style={IOStyles.horizontalContentPadding}>
+      <ScrollView style={styles.container}>
         <H1>{TypedI18n.t("idpay.wallet.initiativePairing.header")}</H1>
         <VSpacer size={16} />
         {maskedPan && (
-          <View style={IOStyles.row}>
+          <View style={[IOStyles.row, { paddingVertical: 8 }]}>
             <LogoPayment name={brandToLogoPaymentMap[brand]} />
             <HSpacer size={8} />
             <H4>•••• {maskedPan}</H4>
           </View>
         )}
         <VSpacer size={16} />
-      </View>
-      <ScrollView style={IOStyles.horizontalContentPadding}>
         <IDPayInitiativesList
           initiatives={idpayInitiatives}
           idWallet={idWallet}
@@ -103,3 +102,10 @@ export const IdPayInitiativeListScreen = (props: Props) => {
     </BaseScreenComponent>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: customVariables.contentPadding
+  }
+});
