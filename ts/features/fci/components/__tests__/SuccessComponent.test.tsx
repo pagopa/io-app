@@ -5,15 +5,13 @@ import configureMockStore from "redux-mock-store";
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import SuccessComponent from "../SuccessComponent";
 import { mockSignatureRequestDetailView } from "../../types/__mocks__/SignatureRequestDetailView.mock";
-import {
-  SignatureRequestDetailView,
-  StatusEnum as SignatureRequestDetailViewStatusEnum
-} from "../../../../../definitions/fci/SignatureRequestDetailView";
+import { SignatureRequestDetailView } from "../../../../../definitions/fci/SignatureRequestDetailView";
 import { GlobalState } from "../../../../store/reducers/types";
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { FCI_ROUTES } from "../../navigation/routes";
 import { fciStartRequest } from "../../store/actions";
+import { SignatureRequestStatusEnum } from "../../../../../definitions/fci/SignatureRequestStatus";
 
 type Props = {
   signatureRequest: SignatureRequestDetailView;
@@ -44,7 +42,7 @@ describe("Test SuccessComponent", () => {
     const expiredSignatureRequest = {
       ...mockSignatureRequestDetailView,
       expires_at: new Date(now.setDate(now.getDate() - 30)),
-      status: SignatureRequestDetailViewStatusEnum.WAIT_FOR_SIGNATURE
+      status: SignatureRequestStatusEnum.WAIT_FOR_SIGNATURE
     };
     const props = {
       signatureRequest: expiredSignatureRequest
@@ -61,7 +59,7 @@ describe("Test SuccessComponent", () => {
     const expiredSignatureRequest = {
       ...mockSignatureRequestDetailView,
       expires_at: new Date(now.setDate(now.getDate() - 30)),
-      status: SignatureRequestDetailViewStatusEnum.REJECTED
+      status: SignatureRequestStatusEnum.REJECTED
     };
     const props = {
       signatureRequest: expiredSignatureRequest
@@ -76,7 +74,7 @@ describe("Test SuccessComponent", () => {
     );
     const waitQtspSignatureRequest = {
       ...mockSignatureRequestDetailView,
-      status: SignatureRequestDetailViewStatusEnum.WAIT_FOR_QTSP
+      status: SignatureRequestStatusEnum.WAIT_FOR_QTSP
     };
     const props = {
       signatureRequest: waitQtspSignatureRequest
@@ -92,7 +90,7 @@ describe("Test SuccessComponent", () => {
 
     const signedSignatureRequest = {
       ...mockSignatureRequestDetailView,
-      status: SignatureRequestDetailViewStatusEnum.SIGNED
+      status: SignatureRequestStatusEnum.SIGNED
     };
     const props = {
       signatureRequest: signedSignatureRequest
@@ -106,7 +104,7 @@ describe("Test SuccessComponent", () => {
 
     const signedSignatureRequest = {
       ...mockSignatureRequestDetailView,
-      status: SignatureRequestDetailViewStatusEnum.REJECTED
+      status: SignatureRequestStatusEnum.REJECTED
     };
     const props = {
       signatureRequest: signedSignatureRequest
