@@ -21,7 +21,7 @@ type Props = {
   handleReload: () => void;
   onAcceptTos?: () => void;
   onExit?: () => void;
-  shouldFooterRender?: boolean;
+  shouldRenderFooter?: boolean;
 } & Pick<ViewProps, "testID">;
 
 const styles = StyleSheet.create({
@@ -48,7 +48,7 @@ const TosWebviewComponent: React.FunctionComponent<Props> = ({
   handleLoadEnd,
   handleReload,
   webViewSource,
-  shouldFooterRender,
+  shouldRenderFooter,
   onExit,
   onAcceptTos
 }: Props) => {
@@ -127,7 +127,7 @@ const TosWebviewComponent: React.FunctionComponent<Props> = ({
           )}
         />
       </View>
-      {shouldFooterRender && !hasError && (
+      {shouldRenderFooter && !hasError && (
         <FooterWithButtons
           type={"TwoButtonsInlineThird"}
           leftButton={{
