@@ -22,6 +22,7 @@ import {
   selectSelfDeclarationBoolAnswers
 } from "../xstate/selectors";
 import { openWebUrl } from "../../../../utils/url";
+import { dpr28Dec2000Url } from "../../../../urls";
 
 const InitiativeSelfDeclarationsScreen = () => {
   const machine = useOnboardingMachineService();
@@ -53,9 +54,6 @@ const InitiativeSelfDeclarationsScreen = () => {
   const getSelfCriteriaBoolAnswer = (criteria: SelfDeclarationBoolDTO) =>
     selfCriteriaBoolAnswers[criteria.code] ?? false;
 
-  const dprLink =
-    "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.del.presidente.della.repubblica:2000-12-28;445";
-
   return (
     <BaseScreenComponent
       headerTitle={I18n.t("idpay.onboarding.navigation.header")}
@@ -69,7 +67,7 @@ const InitiativeSelfDeclarationsScreen = () => {
               <H1>{I18n.t("idpay.onboarding.boolPrerequisites.header")}</H1>
               <VSpacer size={16} />
               <Body>{I18n.t("idpay.onboarding.boolPrerequisites.body")}</Body>
-              <Link onPress={() => openWebUrl(dprLink)}>
+              <Link onPress={() => openWebUrl(dpr28Dec2000Url)}>
                 {I18n.t("idpay.onboarding.boolPrerequisites.link")}
               </Link>
               <VSpacer size={24} />
