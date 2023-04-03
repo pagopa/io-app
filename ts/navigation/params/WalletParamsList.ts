@@ -42,7 +42,7 @@ import { TransactionErrorScreenNavigationParams } from "../../screens/wallet/pay
 import { TransactionSummaryScreenNavigationParams } from "../../screens/wallet/payment/TransactionSummaryScreen";
 import { PaymentHistoryDetailsScreenNavigationParams } from "../../screens/wallet/PaymentHistoryDetailsScreen";
 import { TransactionDetailsScreenNavigationParams } from "../../screens/wallet/TransactionDetailsScreen";
-import { AvailableInitiativesListScreenNavigationParams } from "../../features/idpay/wallet/screens/AvailableInitiativesList";
+import { AvailableInitiativesListScreenNavigationParams } from "../../features/idpay/wallet/screens/AvailableInitiativesListScreen";
 import ROUTES from "../routes";
 
 export type WalletParamsList = {
