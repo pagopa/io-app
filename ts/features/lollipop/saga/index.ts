@@ -76,7 +76,7 @@ export function* checkLollipopSessionAssertionAndInvalidateIfNeeded(
   // When using the test idp to login, no authentication data nor lollipop key are saved / used / sent.
   // Therefore, we must not check for the lollipop assertion,
   // when this function is called after a successful test idp login,
-  // otherwise the (test) user is immediately logged-out".
+  // otherwise the (test) user is immediately logged-out.
   // TODO: this is a temporary workaround, we should find a better way to handle test accounts.
   // See: https://pagopa.atlassian.net/browse/LLK-72
   const areWeLoggedWithTestIdp = yield* select(isLoggedOutWithoutIdpSelector);
