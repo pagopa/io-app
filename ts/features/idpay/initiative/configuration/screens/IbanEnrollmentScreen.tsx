@@ -25,6 +25,7 @@ import {
   selectIsIbanOnlyMode
 } from "../xstate/selectors";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
+import customVariables from "../../../../../theme/variables";
 
 type IbanEnrollmentScreenRouteParams = {
   initiativeId?: string;
@@ -164,32 +165,27 @@ const IbanEnrollmentScreen = () => {
       contextualHelp={emptyContextualHelp}
     >
       <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={1}>
-        <View style={IOStyles.flex}>
+        <ScrollView style={styles.container}>
+          <H1>{I18n.t("idpay.configuration.iban.enrollment.header")}</H1>
+          <VSpacer size={8} />
+          <Body>{I18n.t("idpay.configuration.iban.enrollment.subTitle")}</Body>
           <VSpacer size={24} />
-          <View style={IOStyles.horizontalContentPadding}>
-            <H1>{I18n.t("idpay.configuration.iban.enrollment.header")}</H1>
-            <VSpacer size={8} />
-            <Body>
-              {I18n.t("idpay.configuration.iban.enrollment.subTitle")}
-            </Body>
+          {renderIbanList()}
+          <VSpacer size={16} />
+          {/*  TODO:: AdviceComponent goes here once implemented @dmnplb */}
+          <View style={styles.bottomSection}>
+            <Icon name="profileAlt" color="bluegrey" />
+            <HSpacer size={8} />
+            <LabelSmall
+              color="bluegrey"
+              weight="Regular"
+              style={IOStyles.flex} // required for correct wrapping
+            >
+              {I18n.t("idpay.configuration.iban.enrollment.footer")}
+            </LabelSmall>
           </View>
-          <VSpacer size={24} />
-          <ScrollView style={IOStyles.horizontalContentPadding}>
-            {renderIbanList()}
-            <VSpacer size={16} />
-            <View style={styles.infoRow}>
-              <Icon name="profileAlt" color="grey" />
-              <HSpacer size={16} />
-              <LabelSmall
-                weight="Regular"
-                color="grey-700"
-                style={IOStyles.flex}
-              >
-                {I18n.t("idpay.configuration.iban.enrollment.footer")}
-              </LabelSmall>
-            </View>
-          </ScrollView>
-        </View>
+          {/* TODO:: end AdviceComponent  */}
+        </ScrollView>
         <SafeAreaView>{renderFooter()}</SafeAreaView>
       </LoadingSpinnerOverlay>
     </BaseScreenComponent>
@@ -197,7 +193,11 @@ const IbanEnrollmentScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  infoRow: {
+  container: {
+    flex: 1,
+    padding: customVariables.contentPadding
+  },
+  bottomSection: {
     flexDirection: "row",
     alignItems: "center"
   }
