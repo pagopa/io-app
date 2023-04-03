@@ -78,30 +78,28 @@ export const IdPayInitiativeListScreen = (props: Props) => {
   }, [dispatch, idWallet, areInitiativesInError]);
 
   return (
-    <>
-      <BaseScreenComponent
-        headerTitle={TypedI18n.t("idpay.wallet.initiativePairing.navigation")}
-        goBack={true}
-      >
-        <ScrollView style={styles.container}>
-          <H1>{TypedI18n.t("idpay.wallet.initiativePairing.header")}</H1>
-          <VSpacer size={16} />
-          {maskedPan && (
-            <View style={[IOStyles.row, { paddingVertical: 8 }]}>
-              <LogoPayment name={brandToLogoPaymentMap[brand]} />
-              <HSpacer size={8} />
-              <H4>•••• {maskedPan}</H4>
-            </View>
-          )}
-          <VSpacer size={16} />
-          <IDPayInitiativesList
-            initiatives={idpayInitiatives}
-            idWallet={idWallet}
-          />
-          <VSpacer size={24} />
-        </ScrollView>
-      </BaseScreenComponent>
-    </>
+    <BaseScreenComponent
+      headerTitle={TypedI18n.t("idpay.wallet.initiativePairing.navigation")}
+      goBack={true}
+    >
+      <ScrollView style={styles.container}>
+        <H1>{TypedI18n.t("idpay.wallet.initiativePairing.header")}</H1>
+        <VSpacer size={16} />
+        {maskedPan && (
+          <View style={[IOStyles.row, { paddingVertical: 8 }]}>
+            <LogoPayment name={brandToLogoPaymentMap[brand]} />
+            <HSpacer size={8} />
+            <H4>•••• {maskedPan}</H4>
+          </View>
+        )}
+        <VSpacer size={16} />
+        <IDPayInitiativesList
+          initiatives={idpayInitiatives}
+          idWallet={idWallet}
+        />
+        <VSpacer size={24} />
+      </ScrollView>
+    </BaseScreenComponent>
   );
 };
 
