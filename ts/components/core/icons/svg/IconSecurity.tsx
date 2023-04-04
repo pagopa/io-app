@@ -3,7 +3,7 @@ import { Svg, Path } from "react-native-svg";
 import { SVGIconProps } from "../Icon";
 
 const IconSecurity = ({ size, style }: SVGIconProps) => (
-  <Svg width={size} height={size} viewBox="0 0 32 32" style={style}>
+  <Svg width={size} height={size} viewBox="0 0 24 24" style={style}>
     <Path
       fillRule="evenodd"
       clipRule="evenodd"
