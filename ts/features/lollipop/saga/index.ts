@@ -79,8 +79,8 @@ export function* checkLollipopSessionAssertionAndInvalidateIfNeeded(
   // otherwise the (test) user is immediately logged-out.
   // TODO: this is a temporary workaround, we should find a better way to handle test accounts.
   // See: https://pagopa.atlassian.net/browse/LLK-72
-  const areWeLoggedWithTestIdp = yield* select(identityProviderSelector);
-  if (areWeLoggedWithTestIdp?.isTestIdp) {
+  const identityProvider = yield* select(identityProviderSelector);
+  if (identityProvider?.isTestIdp) {
     return;
   }
 
