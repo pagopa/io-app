@@ -123,7 +123,7 @@ export function* watchFciSaga(
 
   yield* takeLatest(fciEndRequest, watchFciEndSaga);
 
-  yield* takeLatest(getType(fciClearAllFiles), clearAllFciFiles);
+  yield* takeLatest(fciClearAllFiles, clearAllFciFiles);
 
   yield* takeLatest(
     fciMetadataRequest.request,
@@ -287,7 +287,7 @@ function* deletePath(path: string) {
  * Clears cached file for the fci document preview
  * and reset the state to empty.
  */
-function* clearAllFciFiles(action: ActionType<typeof fciDownloadPreviewClear>) {
+function* clearAllFciFiles(action: ActionType<typeof fciClearAllFiles>) {
   const path = action.payload.path;
   if (path) {
     yield* deletePath(path);
@@ -299,10 +299,7 @@ function* clearAllFciFiles(action: ActionType<typeof fciDownloadPreviewClear>) {
  */
 function* watchFciEndSaga(): SagaIterator {
   yield* put(fciClearStateRequest());
-  yield* put({
-    type: "CLEAR_ALL_FILES",
-    payload: { dirPath: `${FciDownloadPreviewDirectoryPath}` }
-  });
+  yield* put(fciClearAllFiles({ path: FciDownloadPreviewDirectoryPath }));
   yield* call(
     NavigationService.dispatchNavigationAction,
     CommonActions.navigate(ROUTES.MAIN)
