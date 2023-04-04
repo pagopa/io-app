@@ -3238,6 +3238,11 @@ features:
       content: "Vuoi annullare la firma dei documenti?"
       cancel: "Annulla la firma"
       confirm: "Continua a firmare"
+    checkService:
+      title: "Attiva i messaggi"
+      content: "Per ricevere i documenti firmati devi attivare l’opzione che consente al servizio di inviarti messaggi. Se non la attivi, puoi completare la firma ma non riceverai i documenti firmati."
+      cancel: "Non ora"
+      confirm: "Attiva"
     signatureFields:
       title: "Firma qui"
       showOnDocument: "Vedi sul documento"
