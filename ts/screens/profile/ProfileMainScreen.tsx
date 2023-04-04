@@ -28,6 +28,7 @@ import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
 import Switch from "../../components/ui/Switch";
 import { isPlaygroundsEnabled } from "../../config";
+import { lollipopPublicKeySelector } from "../../features/lollipop/store/reducers/lollipop";
 import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { MainTabParamsList } from "../../navigation/params/MainTabParamsList";
@@ -60,6 +61,7 @@ import { getAppVersion } from "../../utils/appVersion";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { getDeviceId } from "../../utils/device";
 import { isDevEnv } from "../../utils/environment";
+import { toThumbprint } from "../../features/lollipop/utils/crypto";
 
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "PROFILE_MAIN"> &
   LightModalContextInterface &
@@ -299,9 +301,11 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       sessionToken,
       walletToken,
       setDebugModeEnabled,
-      isIdPayTestEnabled
+      isIdPayTestEnabled,
+      publicKey
     } = this.props;
     const deviceUniqueId = getDeviceId();
+    const thumbprint = toThumbprint(publicKey);
 
     return (
       <React.Fragment>
@@ -421,6 +425,13 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
               () => clipboardSetStringWithFeedback(deviceUniqueId),
               false
             )}
+
+            {thumbprint &&
+              this.debugListItem(
+                `Thumbprint ${thumbprint}`,
+                () => clipboardSetStringWithFeedback(thumbprint),
+                false
+              )}
 
             {this.debugListItem(
               I18n.t("profile.main.cache.clear"),
@@ -621,7 +632,8 @@ const mapStateToProps = (state: GlobalState) => ({
   isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
   isPnTestEnabled: isPnTestEnabledSelector(state),
   isIdPayTestEnabled: isIdPayTestEnabledSelector(state),
-  isDesignSystemEnabled: isDesignSystemEnabledSelector(state)
+  isDesignSystemEnabled: isDesignSystemEnabledSelector(state),
+  publicKey: lollipopPublicKeySelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
