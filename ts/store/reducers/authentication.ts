@@ -100,12 +100,6 @@ export const INITIAL_STATE: LoggedOutWithoutIdp = {
 
 // Type guards
 
-function isLoggedOutWithoutIdp(
-  state: AuthenticationState
-): state is LoggedOutWithoutIdp {
-  return state.kind === "LoggedOutWithoutIdp";
-}
-
 export function isLoggedOutWithIdp(
   state: AuthenticationState
 ): state is LoggedOutWithIdp {
@@ -139,9 +133,6 @@ export function isSessionExpired(
 }
 
 // Selectors
-
-export const isLoggedOutWithoutIdpSelector = (state: GlobalState) =>
-  isLoggedOutWithoutIdp(state.authentication);
 
 export const isLogoutRequested = (state: GlobalState) =>
   state.authentication.kind === "LogoutRequested";
@@ -199,6 +190,11 @@ export const tokenFromNameSelector = (
         )
       )
   );
+
+export const identityProviderSelector = (state: GlobalState) =>
+  isLoggedInWithSessionInfo(state.authentication)
+    ? state.authentication.idp
+    : undefined;
 
 export const selectedIdentityProviderSelector = (state: GlobalState) =>
   isLoggedOutWithIdp(state.authentication)

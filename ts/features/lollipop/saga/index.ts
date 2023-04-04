@@ -31,7 +31,7 @@ import {
   trackLollipopKeyGenerationSuccess
 } from "../../../utils/analytics";
 import { PublicSession } from "../../../../definitions/backend/PublicSession";
-import { isLoggedOutWithoutIdpSelector } from "../../../store/reducers/authentication";
+import { identityProviderSelector } from "../../../store/reducers/authentication";
 
 export function* generateLollipopKeySaga() {
   const maybeOldKeyTag = yield* select(lollipopKeyTagSelector);
@@ -79,8 +79,8 @@ export function* checkLollipopSessionAssertionAndInvalidateIfNeeded(
   // otherwise the (test) user is immediately logged-out.
   // TODO: this is a temporary workaround, we should find a better way to handle test accounts.
   // See: https://pagopa.atlassian.net/browse/LLK-72
-  const areWeLoggedWithTestIdp = yield* select(isLoggedOutWithoutIdpSelector);
-  if (areWeLoggedWithTestIdp) {
+  const areWeLoggedWithTestIdp = yield* select(identityProviderSelector);
+  if (areWeLoggedWithTestIdp?.isTestIdp) {
     return;
   }
 

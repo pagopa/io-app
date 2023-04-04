@@ -9,6 +9,7 @@ import { PasswordLogin } from "../../definitions/backend/PasswordLogin";
 import { BackendPublicClient } from "../api/backendPublic";
 import { apiUrlPrefix } from "../config";
 import {
+  idpSelected,
   loginFailure,
   loginSuccess,
   testLoginRequest
@@ -16,6 +17,16 @@ import {
 import { SessionToken } from "../types/SessionToken";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { convertUnknownToError } from "../utils/errors";
+import { IdentityProvider } from "../models/IdentityProvider";
+
+const IdpTest: IdentityProvider = {
+  id: "test",
+  name: "Test Idp",
+  logo: "",
+  entityID: "testIdp",
+  profileUrl: "",
+  isTestIdp: true
+};
 
 // Started by redux action
 function* handleTestLogin({
@@ -42,6 +53,8 @@ function* handleTestLogin({
 
     if (E.isRight(testLoginResponse)) {
       if (testLoginResponse.right.status === 200) {
+        console.log("testLoginResponse", testLoginResponse);
+        yield* put(idpSelected(IdpTest));
         yield* put(
           loginSuccess({
             token: testLoginResponse.right.value
