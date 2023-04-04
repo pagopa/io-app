@@ -76,7 +76,7 @@
     "generate:pagopa-cobadge-configuration": "rimraf definitions/pagopa/cobadge/configuration && mkdir -p definitions/pagopa/cobadge/configuration && gen-api-models --api-spec $npm_package_pagopa_cobadge_configuration --out-dir ./definitions/pagopa/cobadge/configuration",
     "generate:pagopa-privative-configuration": "rimraf definitions/pagopa/privative/configuration && mkdir -p definitions/pagopa/privative/configuration && gen-api-models --api-spec $npm_package_pagopa_privative_configuration --out-dir ./definitions/pagopa/privative/configuration",
     "generate:cdc-api": "rimraf definitions/cdc && mkdir -p definitions/cdc  && gen-api-models --api-spec $npm_package_api_cdc --out-dir ./definitions/cdc --no-strict --request-types --response-decoders",
-    "generate:fci-api": "rimraf definitions/fci && mkdir -p definitions/fci  && gen-api-models --api-spec $npm_package_api_fci --out-dir ./definitions/fci --no-strict --request-types --response-decoders",
+    "generate:fci-api": "rimraf definitions/fci && mkdir -p definitions/fci  && gen-api-models --api-spec $npm_package_api_fci --out-dir ./definitions/fci --no-strict --request-types --response-decoders --client",
     "bundle:android-release": "node node_modules/react-native/local-cli/cli.js bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/",
     "generate:locales": "ts-node --skip-project -O '{\"lib\":[\"es2015\"]}' scripts/make-locales.ts",
     "generate:bpd": "npm-run-all generate:bpd-citizen generate:bpd-citizen-v2 generate:bpd-payment generate:bpd-award-periods generate:bpd-winning-transactions generate:bpd-winning-transactions-v2",
