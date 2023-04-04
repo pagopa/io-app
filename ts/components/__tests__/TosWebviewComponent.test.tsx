@@ -27,7 +27,7 @@ describe("TosWebviewComponent", () => {
       const tree = renderer
         .create(
           <TosWebviewComponent
-            shouldFooterRender={true}
+            shouldRenderFooter={true}
             webViewSource={{ html: "<html><head></head><body></body></html>" }}
             handleLoadEnd={() => undefined}
             handleReload={() => undefined} // TODO
@@ -37,7 +37,7 @@ describe("TosWebviewComponent", () => {
       expect(tree).toMatchSnapshot();
     });
   });
-  describe("When rendering with the shouldFooterRender set to false", () => {
+  describe("When rendering with the shouldRenderFooter set to false", () => {
     it("The footer should not render", () => {
       const renderAPI = commonSetup({ shouldRenderFooter: false });
 
@@ -246,7 +246,7 @@ const commonSetup = ({
 }: CurrentTestConfiguration = {}) =>
   render(
     <TosWebviewComponent
-      shouldFooterRender={shouldRenderFooter}
+      shouldRenderFooter={shouldRenderFooter}
       webViewSource={{ html: "<html><head></head><body></body></html>" }}
       handleLoadEnd={onLoaded}
       handleReload={onReload}

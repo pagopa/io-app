@@ -51,7 +51,7 @@ const TosScreen = () => {
             handleLoadEnd={handleLoadEnd}
             handleReload={handleReload}
             webViewSource={{ uri: privacyUrl }}
-            shouldFooterRender={false}
+            shouldRenderFooter={false}
           />
         </SafeAreaView>
       </BaseScreenComponent>

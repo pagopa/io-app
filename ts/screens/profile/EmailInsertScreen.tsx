@@ -7,7 +7,7 @@ import { EmailString } from "@pagopa/ts-commons/lib/strings";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Content, Form, Text as NBText, View } from "native-base";
+import { Content, Form } from "native-base";
 import * as React from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
@@ -15,7 +15,8 @@ import {
   Keyboard,
   Platform,
   SafeAreaView,
-  StyleSheet
+  StyleSheet,
+  View
 } from "react-native";
 import { H1 } from "../../components/core/typography/H1";
 import { LabelledItem } from "../../components/LabelledItem";
@@ -36,11 +37,12 @@ import {
   profileEmailSelector,
   profileSelector
 } from "../../store/reducers/profile";
-import customVariables from "../../theme/variables";
 import { usePrevious } from "../../utils/hooks/usePrevious";
 import { withKeyboard } from "../../utils/keyboard";
 import { areStringsEqual } from "../../utils/options";
 import { showToast } from "../../utils/showToast";
+import { Body } from "../../components/core/typography/Body";
+import { IOStyles } from "../../components/core/variables/IOStyles";
 
 type Props = IOStackNavigationRouteProps<
   ProfileParamsList,
@@ -51,14 +53,8 @@ const styles = StyleSheet.create({
   flex: {
     flex: 1
   },
-  horizontalPadding: {
-    paddingHorizontal: customVariables.contentPadding
-  },
   icon: {
     marginTop: Platform.OS === "android" ? 4 : 6 // adjust icon position to align it with baseline of email text}
-  },
-  textColorDark: {
-    color: customVariables.textColorDark
   }
 });
 
@@ -230,29 +226,24 @@ const EmailInsertScreen = (props: Props) => {
       >
         <SafeAreaView style={styles.flex}>
           <Content noPadded={true} style={styles.flex} scrollEnabled={false}>
-            <H1
-              color={"bluegreyDark"}
-              weight={"Bold"}
-              style={styles.horizontalPadding}
-            >
-              {I18n.t("email.edit.title")}
-            </H1>
-            <VSpacer />
-            <View style={styles.horizontalPadding}>
-              <NBText>
+            <View style={IOStyles.horizontalContentPadding}>
+              <H1 color={"bluegreyDark"} weight={"Bold"}>
+                {I18n.t("email.edit.title")}
+              </H1>
+              <VSpacer />
+              <VSpacer size={16} />
+              <Body>
                 {isEmailValidated
                   ? I18n.t("email.edit.validated")
                   : I18n.t("email.edit.subtitle")}
-                <NBText style={styles.textColorDark}>
+                <Body weight="SemiBold">
                   {` ${pipe(
                     optionEmail,
                     O.getOrElse(() => "")
                   )}`}
-                </NBText>
-              </NBText>
-            </View>
-            <VSpacer />
-            <View style={styles.horizontalPadding}>
+                </Body>
+              </Body>
+              <VSpacer size={16} />
               <Form>
                 <LabelledItem
                   label={I18n.t("email.edit.label")}

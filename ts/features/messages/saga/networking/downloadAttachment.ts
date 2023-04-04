@@ -1,12 +1,15 @@
 import I18n from "i18n-js";
-import { ActionType } from "typesafe-actions";
+import { ActionType, isActionOf } from "typesafe-actions";
 import RNFS from "react-native-fs";
 import ReactNativeBlobUtil from "react-native-blob-util";
-import { call, put, select } from "typed-redux-saga/macro";
+import { call, cancelled, put, select } from "typed-redux-saga/macro";
 import { fetchTimeout } from "../../../../config";
 import { SessionToken } from "../../../../types/SessionToken";
 import { getError } from "../../../../utils/errors";
-import { downloadAttachment } from "../../../../store/actions/messages";
+import {
+  cancelPreviousAttachmentDownload,
+  downloadAttachment
+} from "../../../../store/actions/messages";
 import {
   AttachmentType,
   UIAttachment,
@@ -61,8 +64,22 @@ function trackFailureEvent(
  */
 export function* downloadAttachmentSaga(
   bearerToken: SessionToken,
-  action: ActionType<typeof downloadAttachment.request>
+  action:
+    | ActionType<typeof downloadAttachment.request>
+    | ActionType<typeof cancelPreviousAttachmentDownload>
 ) {
+  // This function is triggered by either a downloadAttachment.request
+  // or a cancelPreviousAttachmentDownload action. The idea behind it
+  // is to launch the downloadAttachment.cancel action when (this saga)
+  // is automatically cancelled by receiveing either one of the mentioned
+  // actions. In this way, the download pot's status in the reducer will
+  // be properly updated.
+  // Of course, this saga runs only for an downloadAttachment.request
+  // action while it stops immediately in any other case
+  if (isActionOf(cancelPreviousAttachmentDownload, action)) {
+    return;
+  }
+
   const attachment = action.payload;
   const attachmentCategory = attachment.category;
   const messageId = attachment.messageId;
@@ -111,5 +128,9 @@ export function* downloadAttachmentSaga(
         error: getError(error)
       })
     );
+  } finally {
+    if (yield* cancelled()) {
+      yield* put(downloadAttachment.cancel(attachment));
+    }
   }
 }

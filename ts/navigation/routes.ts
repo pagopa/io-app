@@ -123,6 +123,7 @@ const ROUTES = {
   // Preferences
   READ_EMAIL_SCREEN: "READ_EMAIL_SCREEN",
   INSERT_EMAIL_SCREEN: "INSERT_EMAIL_SCREEN",
+  PIN_SCREEN: "PIN_SCREEN",
 
   // Used when the App is in background
   BACKGROUND: "BACKGROUND",

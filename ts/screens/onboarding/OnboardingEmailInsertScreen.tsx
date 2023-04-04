@@ -8,7 +8,7 @@ import { StackActions } from "@react-navigation/native";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Content, Form, Text as NBText } from "native-base";
+import { Content, Form } from "native-base";
 import * as React from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
@@ -38,11 +38,12 @@ import {
   profileEmailSelector,
   profileSelector
 } from "../../store/reducers/profile";
-import customVariables from "../../theme/variables";
 import { usePrevious } from "../../utils/hooks/usePrevious";
 import { withKeyboard } from "../../utils/keyboard";
 import { areStringsEqual } from "../../utils/options";
 import { showToast } from "../../utils/showToast";
+import { Body } from "../../components/core/typography/Body";
+import { IOStyles } from "../../components/core/variables/IOStyles";
 
 type Props = IOStackNavigationRouteProps<
   OnboardingParamsList,
@@ -52,9 +53,6 @@ type Props = IOStackNavigationRouteProps<
 const styles = StyleSheet.create({
   flex: {
     flex: 1
-  },
-  horizontalPadding: {
-    paddingHorizontal: customVariables.contentPadding
   },
   icon: {
     marginTop: Platform.OS === "android" ? 4 : 6 // adjust icon position to align it with baseline of email text}
@@ -269,19 +267,13 @@ const OnboardingEmailInsertScreen = (props: Props) => {
       >
         <SafeAreaView style={styles.flex}>
           <Content noPadded={true} style={styles.flex} scrollEnabled={false}>
-            <H1
-              color={"bluegreyDark"}
-              weight={"Bold"}
-              style={styles.horizontalPadding}
-            >
-              {I18n.t("email.insert.title")}
-            </H1>
-            <VSpacer size={16} />
-            <View style={styles.horizontalPadding}>
-              <NBText>{I18n.t("email.insert.subtitle")}</NBText>
-            </View>
-            <VSpacer size={16} />
-            <View style={styles.horizontalPadding}>
+            <View style={IOStyles.horizontalContentPadding}>
+              <H1 color={"bluegreyDark"} weight={"Bold"}>
+                {I18n.t("email.insert.title")}
+              </H1>
+              <VSpacer size={16} />
+              <Body>{I18n.t("email.insert.subtitle")}</Body>
+              <VSpacer size={16} />
               <Form>
                 <LabelledItem
                   label={I18n.t("email.insert.label")}
