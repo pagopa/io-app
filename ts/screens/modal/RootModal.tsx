@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Modal } from "react-native";
 import { connect } from "react-redux";
 import {
   isAppSupportedSelector,
