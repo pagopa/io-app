@@ -10,7 +10,6 @@ import { H3 } from "../../../components/core/typography/H3";
 import { H4 } from "../../../components/core/typography/H4";
 import { Label } from "../../../components/core/typography/Label";
 import { Link } from "../../../components/core/typography/Link";
-import { IOColors } from "../../../components/core/variables/IOColors";
 import { zendeskPrivacyUrl } from "../../../config";
 import I18n from "../../../i18n";
 import { mixpanelTrack } from "../../../mixpanel";
@@ -76,7 +75,7 @@ const ZendeskSupportComponent = ({
         </Link>
       </H4>
       <VSpacer size={24} />
-      <InfoBox iconName={"io-notice"} iconColor={IOColors.blue} iconSize={18}>
+      <InfoBox iconName="notice" iconColor="blue" iconSize={16}>
         <Label color={"bluegrey"} weight={"Regular"}>
           {I18n.t("support.helpCenter.supportComponent.adviceMessage")}
         </Label>

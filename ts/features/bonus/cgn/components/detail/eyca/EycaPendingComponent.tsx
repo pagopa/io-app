@@ -43,7 +43,7 @@ const EycaStatusDetailsComponent = (props: Props) => (
       />
     </View>
     <VSpacer size={16} />
-    <InfoBox iconName={"io-info"} alignedCentral iconSize={32}>
+    <InfoBox iconName="info" alignedCentral iconSize={32}>
       <H4 weight={"Regular"}>
         {I18n.t("bonus.cgn.detail.status.eycaPending")}
       </H4>

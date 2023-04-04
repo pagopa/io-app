@@ -260,11 +260,7 @@ export const DSAlert = () => {
           </Body>
         </InfoBox>
       </View>
-      <InfoBox
-        alignedCentral={true}
-        iconSize={24}
-        iconColor={IOColors.bluegreyDark}
-      >
+      <InfoBox iconSize={24} iconColor="bluegreyDark">
         <H5 weight={"Regular"}>
           {
             "Per verificare la tua carta, tratteniamo € 0.02. Non preoccuparti: ti restituiremo l'importo al più presto."

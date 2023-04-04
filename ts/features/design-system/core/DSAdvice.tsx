@@ -7,8 +7,6 @@ import { InfoBox } from "../../../components/box/InfoBox";
 /* Types */
 import { ImportoEuroCents } from "../../../../definitions/backend/ImportoEuroCents";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
-import { IOColors } from "../../../components/core/variables/IOColors";
-
 import { Label } from "../../../components/core/typography/Label";
 import { ActivateBonusReminder } from "../../bonus/bonusVacanze/screens/activation/request/ActivateBonusReminder";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
@@ -47,7 +45,7 @@ export const DSAdvice = () => (
     <VSpacer size={24} />
 
     <View style={[styles.content, IOStyles.horizontalContentPadding]}>
-      <InfoBox iconName={"io-titolare"} iconColor={IOColors.bluegrey}>
+      <InfoBox iconName="profileAlt" iconColor="bluegrey">
         <Label color={"bluegrey"} weight={"Regular"}>
           Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento
           visitando la sezione Profilo

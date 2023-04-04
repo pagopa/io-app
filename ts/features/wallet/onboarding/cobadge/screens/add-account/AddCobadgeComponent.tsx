@@ -93,7 +93,7 @@ const AddCobadgeComponent: React.FunctionComponent<Props> = (props: Props) => {
             <PreviewCoBadgeCard coBadge={props.pan} abi={abiInfo} />
             <VSpacer size={24} />
             {isCoBadgeOrPrivativeBlocked(props.pan) ? (
-              <InfoBox iconColor={IOColors.red} iconName={"io-error"}>
+              <InfoBox iconColor="red" iconName="legError">
                 <Body>{blockedCard}</Body>
               </InfoBox>
             ) : (

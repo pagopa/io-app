@@ -136,8 +136,8 @@ const CgnBucketCodeContent = (props: ContentProps) => {
     return (
       <>
         <InfoBox
-          iconColor={IOColors.aqua}
-          iconName={"io-error"}
+          iconColor="aqua"
+          iconName="legError"
           iconSize={24}
           alignedCentral
         >

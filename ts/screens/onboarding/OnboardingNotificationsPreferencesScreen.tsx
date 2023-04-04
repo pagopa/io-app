@@ -227,7 +227,7 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
               }
             />
             <View style={[styles.separator, styles.bottomSpacer]} />
-            <InfoBox iconName={"io-profilo"} iconColor={IOColors.bluegrey}>
+            <InfoBox iconName="navProfile" iconColor="bluegrey">
               <H5 color={"bluegrey"} weight={"Regular"}>
                 {I18n.t(
                   "profile.main.privacy.shareData.screen.profileSettings"
