@@ -14,7 +14,6 @@ import {
 import { Dispatch } from "../../store/actions/types";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import { LabelledItem } from "../LabelledItem";
-import IconFont from "../ui/IconFont";
 import { IOColors } from "../core/variables/IOColors";
 import { Icon } from "../core/icons";
 
