@@ -13,7 +13,7 @@ import { connect } from "react-redux";
 import { BonusActivationWithQrCode } from "../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
-import { VSpacer } from "../../components/core/spacer/Spacer";
+import { HSpacer, VSpacer } from "../../components/core/spacer/Spacer";
 import { Body } from "../../components/core/typography/Body";
 import { H3 } from "../../components/core/typography/H3";
 import { IOColors } from "../../components/core/variables/IOColors";
@@ -28,7 +28,6 @@ import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreen
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import { ScreenContentRoot } from "../../components/screens/ScreenContent";
 import SectionStatusComponent from "../../components/SectionStatus";
-import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import SectionCardComponent, {
   SectionCardStatus
@@ -107,6 +106,8 @@ import customVariables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
 import { isStrictSome } from "../../utils/pot";
 import { showToast } from "../../utils/showToast";
+import { Icon } from "../../components/core/icons";
+import { IOStyles } from "../../components/core/variables/IOStyles";
 
 export type WalletHomeNavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -124,12 +125,6 @@ type Props = ReturnType<typeof mapStateToProps> &
   TabBarItemPressType;
 
 const styles = StyleSheet.create({
-  white: {
-    color: IOColors.white
-  },
-  flex1: {
-    flex: 1
-  },
   emptyListWrapper: {
     padding: customVariables.contentPadding,
     alignItems: "center"
@@ -417,7 +412,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     return (
       <Content
         scrollEnabled={false}
-        style={[styles.noBottomPadding, styles.whiteBg, styles.flex1]}
+        style={[styles.noBottomPadding, styles.whiteBg, IOStyles.flex]}
       >
         {renderHelp && this.renderHelpMessage()}
         <VSpacer size={24} />
@@ -495,7 +490,8 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
         }
         activeOpacity={1}
       >
-        <IconFont name="io-qr" style={styles.white} />
+        <Icon name="legQrCode" color="white" size={24} />
+        <HSpacer size={8} />
         <NBText>{I18n.t("wallet.payNotice")}</NBText>
       </ButtonDefaultOpacity>
     );

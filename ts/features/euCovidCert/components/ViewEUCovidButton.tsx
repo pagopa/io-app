@@ -1,11 +1,11 @@
 import React from "react";
 import { StyleSheet } from "react-native";
-import IconFont from "../../../components/ui/IconFont";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { Label } from "../../../components/core/typography/Label";
-import { IOColors } from "../../../components/core/variables/IOColors";
 import I18n from "../../../i18n";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
+import { Icon } from "../../../components/core/icons";
+import { HSpacer } from "../../../components/core/spacer/Spacer";
 
 type Props = {
   onPress?: () => void;
@@ -27,7 +27,8 @@ export const ViewEUCovidButton = (props: Props) => (
     bordered={false}
     style={IOStyles.flex}
   >
-    <IconFont name={"io-qr"} color={IOColors.white} />
+    <Icon name="legQrCode" color="white" size={16} />
+    <HSpacer size={4} />
     <Label color={"white"} style={styles.label}>
       {I18n.t("features.euCovidCertificate.listItem.cta")}
     </Label>

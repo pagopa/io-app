@@ -30,7 +30,6 @@ import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
 import SectionStatusComponent from "../../components/SectionStatus";
-import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
 import { mixpanelTrack } from "../../mixpanel";
@@ -58,6 +57,7 @@ import variables from "../../theme/variables";
 import { ComponentProps } from "../../types/react";
 import { isDevEnv } from "../../utils/environment";
 import RootedDeviceModal from "../modal/RootedDeviceModal";
+import { Icon } from "../../components/core/icons";
 
 type NavigationProps = IOStackNavigationRouteProps<AppParamsList, "INGRESS">;
 
@@ -302,10 +302,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
                 : "landing-button-login-spid"
             }
           >
-            <IconFont
-              name={isCieSupported ? "io-cie" : "io-profilo"}
-              color={IOColors.white}
-            />
+            <Icon name={isCieSupported ? "cie" : "navProfile"} color="white" />
             <NBText>
               {isCieSupported
                 ? I18n.t("authentication.landing.loginCie")
@@ -336,9 +333,9 @@ class LandingScreen extends React.PureComponent<Props, State> {
                 : "landing-button-login-cie"
             }
           >
-            <IconFont
-              name={this.isCieSupported() ? "io-profilo" : "io-cie"}
-              color={IOColors.white}
+            <Icon
+              name={this.isCieSupported() ? "navProfile" : "cie"}
+              color="white"
             />
             <NBText>
               {this.isCieSupported()
