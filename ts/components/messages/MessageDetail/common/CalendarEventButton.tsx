@@ -39,8 +39,8 @@ import { requestIOAndroidPermission } from "../../../../utils/permission";
 import ButtonDefaultOpacity from "../../../ButtonDefaultOpacity";
 import { withLightModalContext } from "../../../helpers/withLightModalContext";
 import SelectCalendarModal from "../../../SelectCalendarModal";
-import IconFont from "../../../ui/IconFont";
 import { LightModalContextInterface } from "../../../ui/LightModal";
+import { Icon } from "../../../core/icons";
 
 type OwnProps = {
   message: CreatedMessageWithContentAndAttachments;
@@ -341,8 +341,8 @@ class CalendarEventButton extends React.PureComponent<Props, State> {
     );
     const { small, disabled, medium } = this.props;
     const iconName = this.state.isEventInDeviceCalendar
-      ? "io-tick-big"
-      : "io-plus";
+      ? "legCompleted"
+      : "legAdd";
     return (
       <ButtonDefaultOpacity
         disabled={disabled}
@@ -352,7 +352,9 @@ class CalendarEventButton extends React.PureComponent<Props, State> {
         bordered={!disabled}
         style={this.props.small ? styles.oneThird : styles.button}
       >
-        <IconFont name={iconName} />
+        {/* This condition doesn't make sense. We should replace it using
+        a different component (e.g. ButtonOutline) */}
+        <Icon name={iconName} color={disabled ? "white" : "blue"} />
         <NBText style={styles.marginTop1}>{reminderText}</NBText>
       </ButtonDefaultOpacity>
     );

@@ -22,6 +22,7 @@ import { IOStyles } from "../../../components/core/variables/IOStyles";
 import IconButtonSolid from "../../../components/ui/IconButtonSolid";
 import { useIOSelector } from "../../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../../store/reducers/persistedPreferences";
+import { Icon } from "../../../components/core/icons";
 
 const styles = StyleSheet.create({
   primaryBlockLegacy: {
@@ -951,12 +952,12 @@ export const DSButtons = () => {
 
       <DSComponentViewerBox name="CalendarEventButton">
         <ButtonDefaultOpacity small={true} bordered={true}>
-          <IconFont name={"io-plus"} />
+          <Icon name="legAdd" color="blue" />
           <NBText>Aggiungi promemoria</NBText>
         </ButtonDefaultOpacity>
         <VSpacer size={16} />
         <ButtonDefaultOpacity small={true} bordered={true}>
-          <IconFont name={"io-tick-big"} />
+          <Icon name="legCompleted" color="blue" />
           <NBText>Aggiunto</NBText>
         </ButtonDefaultOpacity>
       </DSComponentViewerBox>
