@@ -1,5 +1,5 @@
 import I18n from "i18n-js";
-import { ActionType, getType } from "typesafe-actions";
+import { ActionType, isActionOf } from "typesafe-actions";
 import RNFS from "react-native-fs";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import { call, cancelled, put, select } from "typed-redux-saga/macro";
@@ -76,9 +76,7 @@ export function* downloadAttachmentSaga(
   // be properly updated.
   // Of course, this saga runs only for an downloadAttachment.request
   // action while it stops immediately in any other case
-  const inputActionIsACancelOne =
-    action.type !== getType(downloadAttachment.request);
-  if (inputActionIsACancelOne) {
+  if (isActionOf(cancelPreviousAttachmentDownload, action)) {
     return;
   }
 
