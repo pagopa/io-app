@@ -1,5 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
+import { createSelector } from "reselect";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { NetworkError } from "../../../../utils/errors";
@@ -32,5 +33,11 @@ const reducer = (
 export const fciMetadataSelector = (
   state: GlobalState
 ): FciMetadataRequestState => state.features.fci.metadata;
+
+export const fciMetadataServiceIdSelector = createSelector(
+  fciMetadataSelector,
+  fciMetadata =>
+    pot.isSome(fciMetadata) ? fciMetadata.value.serviceId : undefined
+);
 
 export default reducer;
