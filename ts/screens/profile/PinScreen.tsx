@@ -1,5 +1,5 @@
 import * as React from "react";
-import PinScreenComponent from "../../components/PinScreenComponent";
+import PinSelectionComponent from "../../components/PinSelectionComponent";
 import {
   AppParamsList,
   IOStackNavigationRouteProps
@@ -11,7 +11,7 @@ type Props = IOStackNavigationRouteProps<AppParamsList>;
  * A screen that allows the user to set the unlock code.
  */
 const PinScreen = ({ navigation }: Props) => (
-  <PinScreenComponent navigation={navigation} isOnboarding={false} />
+  <PinSelectionComponent navigation={navigation} isOnboarding={false} />
 );
 
 export default PinScreen;

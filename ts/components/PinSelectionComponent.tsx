@@ -32,7 +32,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "onboarding.unlockCode.contextualHelpContent"
 };
 
-const PinScreenComponent = ({ navigation, isOnboarding }: Props) => {
+const PinSelectionComponent = ({ navigation, isOnboarding }: Props) => {
   const onboardingAbortAlert = useOnboardingAbortAlert();
   const { showModal } = useContext(LightModalContext);
   const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
@@ -96,4 +96,4 @@ const PinScreenComponent = ({ navigation, isOnboarding }: Props) => {
   );
 };
 
-export default PinScreenComponent;
+export default PinSelectionComponent;
