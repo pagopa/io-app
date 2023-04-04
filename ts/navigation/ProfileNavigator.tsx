@@ -26,6 +26,7 @@ import ShareDataScreen from "../screens/profile/ShareDataScreen";
 import TosScreen from "../screens/profile/TosScreen";
 import WebPlayground from "../screens/profile/WebPlayground";
 import { isGestureEnabled } from "../utils/navigation";
+import PinScreen from "../screens/profile/PinScreen";
 import { ProfileParamsList } from "./params/ProfileParamsList";
 import ROUTES from "./routes";
 
@@ -81,6 +82,7 @@ const ProfileStackNavigator = () => (
       name={ROUTES.INSERT_EMAIL_SCREEN}
       component={EmailInsertScreen}
     />
+    <Stack.Screen name={ROUTES.PIN_SCREEN} component={PinScreen} />
     <Stack.Screen
       name={ROUTES.PROFILE_DOWNLOAD_DATA}
       component={DownloadProfileDataScreen}
