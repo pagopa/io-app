@@ -204,7 +204,7 @@ export const IOIcons = {
   website: IconWebsite,
   legWebsite: LegIconWebsite,
   abacus: IconAbacus,
-  legAbacus: LegIconAbacus /* io-abacus */,
+  legAbacus: LegIconAbacus,
   home: IconHome,
   homeFill: IconHomeFill,
   legHome: LegIconHome,
