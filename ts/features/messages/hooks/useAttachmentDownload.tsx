@@ -11,7 +11,10 @@ import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { ContentTypeValues } from "../../../types/contentType";
 import { isAndroid } from "../../../utils/platform";
 import { showToast } from "../../../utils/showToast";
-import { downloadAttachment } from "../../../store/actions/messages";
+import {
+  cancelPreviousAttachmentDownload,
+  downloadAttachment
+} from "../../../store/actions/messages";
 import { UIAttachment } from "../../../store/reducers/entities/messages/types";
 import { downloadPotForMessageAttachmentSelector } from "../../../store/reducers/entities/messages/downloads";
 import { trackThirdPartyMessageAttachmentShowPreview } from "../../../utils/analytics";
@@ -148,10 +151,19 @@ export const useAttachmentDownload = (
         )
       ),
       TE.filterOrElse(identity, () => undefined),
-      TE.mapLeft(() => dispatch(downloadAttachment.request(attachment))),
+      TE.mapLeft(() => {
+        dispatch(downloadAttachment.request(attachment));
+      }),
       TE.chainW(() =>
         TE.tryCatch(
-          () => openAttachment(),
+          () => {
+            // We must dispatch this action in order to cancel any
+            // other download that may be running (since we support
+            // selecting other attachments while cancelling the
+            // previous selected attachment's download)
+            dispatch(cancelPreviousAttachmentDownload());
+            return openAttachment();
+          },
           () => undefined
         )
       )
