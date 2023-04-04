@@ -15,13 +15,15 @@ import { Dispatch } from "../../store/actions/types";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import { LabelledItem } from "../LabelledItem";
 import IconFont from "../ui/IconFont";
+import { IOColors } from "../core/variables/IOColors";
+import { Icon } from "../core/icons";
 
 export const MIN_CHARACTER_SEARCH_TEXT = 3;
 
 export type SearchType = "Messages" | "Services";
 
 interface OwnProps {
-  color?: string;
+  color?: IOColors;
   searchType?: SearchType;
   // if this handler is defined it will be called in place of dispatching actions about search activation (see handleSearchPress)
   onSearchTap?: () => void;
@@ -69,7 +71,7 @@ class SearchButton extends React.Component<Props, State> {
             transparent={true}
             accessibilityLabel={I18n.t("global.buttons.search")}
           >
-            <IconFont name="io-search" color={this.props.color} />
+            <Icon name="legSearch" color="black" />
           </ButtonDefaultOpacity>
         )}
       </React.Fragment>
