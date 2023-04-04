@@ -13,6 +13,7 @@ import Switch from "../../components/ui/Switch";
 import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
 import { IOColors } from "../core/variables/IOColors";
+import { Icon } from "../core/icons";
 import IconFont from "./../ui/IconFont";
 import { BadgeComponent } from "./BadgeComponent";
 
@@ -156,10 +157,10 @@ export default class ListItemComponent extends React.Component<Props> {
                   importantForAccessibility="no-hide-descendants"
                 />
               ) : (
-                <IconFont
-                  name={"io-right"}
+                <Icon
+                  name="chevronRightListItem"
                   size={ICON_SIZE}
-                  color={customVariables.contentPrimaryBackground}
+                  color="blue"
                 />
               ))}
           </View>
