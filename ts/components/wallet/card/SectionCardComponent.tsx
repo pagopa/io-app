@@ -12,6 +12,7 @@ import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
 import { hexToRgba, IOColors } from "../../core/variables/IOColors";
+import { Icon } from "../../core/icons";
 
 export type SectionCardStatus = "add" | "refresh" | "loading" | "show";
 type Props = {
@@ -122,11 +123,7 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
       case "add":
         return (
           <>
-            <IconFont
-              name="io-plus"
-              color={IOColors.white}
-              size={customVariables.fontSize2}
-            />
+            <Icon name="legAdd" size={20} color="white" />
             <NBText
               bold={true}
               style={[

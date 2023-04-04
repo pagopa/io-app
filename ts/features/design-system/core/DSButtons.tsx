@@ -13,7 +13,6 @@ import BlockButtons from "../../../components/ui/BlockButtons";
 import { ViewEUCovidButton } from "../../euCovidCert/components/ViewEUCovidButton";
 import PaymentButton from "../../../components/messages/MessageDetail/common/PaymentButton";
 import { PaymentNoticeNumber } from "../../../../definitions/backend/PaymentNoticeNumber";
-import IconFont from "../../../components/ui/IconFont";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";
@@ -976,12 +975,14 @@ export const DSButtons = () => {
 
       <DSComponentViewerBox name="Login buttons">
         <ButtonDefaultOpacity block={true} primary={true}>
-          <IconFont name={"io-profilo"} color={IOColors.white} />
+          <Icon name="navProfile" color="white" />
+          <HSpacer size={8} />
           <NBText>Entra con SPID</NBText>
         </ButtonDefaultOpacity>
         <VSpacer size={16} />
         <ButtonDefaultOpacity block={true} primary={true}>
-          <IconFont name={"io-cie"} color={IOColors.white} />
+          <Icon name="cie" color="white" />
+          <HSpacer size={8} />
           <NBText>Entra con CIE</NBText>
         </ButtonDefaultOpacity>
       </DSComponentViewerBox>
