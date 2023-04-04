@@ -1,16 +1,11 @@
 import { SagaIterator } from "redux-saga";
-import {
-  call,
-  race,
-  take,
-  takeEvery,
-  takeLatest
-} from "typed-redux-saga/macro";
+import { call, takeEvery, takeLatest } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { SessionToken } from "../../../types/SessionToken";
 import { clearCache } from "../../../store/actions/profile";
 import { logoutSuccess } from "../../../store/actions/authentication";
 import {
+  cancelPreviousAttachmentDownload,
   downloadAttachment,
   removeCachedAttachment
 } from "../../../store/actions/messages";
@@ -24,21 +19,22 @@ import { clearAllAttachments, clearAttachment } from "./clearAttachments";
 export function* watchMessageAttachmentsSaga(
   bearerToken: SessionToken
 ): SagaIterator {
-  // handle the request for a new downloadAttachment. We need to race
-  // both download and cancellation since the user can cancel the
-  // download and then re-start it. This must cause the original
-  // downloadAttachmentSaga to cancel. Relying on downloadAttachmentSaga
-  // to send the downloadAttachment.cancel event upon cancellation will
-  // cause a cancel action to dispatch after the renewed
-  // downloadAttachment.request action had been launched
+  // Handle the request for a new downloadAttachment.
+  // The first action (downloadAttachment.request) is the one
+  // that effectively handle a download while the second one
+  // (cancelPreviousAttachmentDownload) is required in order to
+  // cancel any previous download that was going on (since the
+  // cancelling can either be triggered by requesting a different
+  // download - where we do not know if there was a previous download
+  // and/or which one it is, on PN attachments - or manually by the
+  // user on generic attachments). The downloadAttachmentSaga
+  // has a finally block that triggers the reducer function updating
+  // the download pot's status and it also stops itself if the
+  // input action is not downloadAttachment.request
   yield* takeLatest(
-    downloadAttachment.request,
-    function* (action: ActionType<typeof downloadAttachment.request>) {
-      yield* race({
-        task: call(downloadAttachmentSaga, bearerToken, action),
-        cancel: take(downloadAttachment.cancel)
-      });
-    }
+    [downloadAttachment.request, cancelPreviousAttachmentDownload],
+    downloadAttachmentSaga,
+    bearerToken
   );
 
   // handle the request for removing a downloaded attachment
