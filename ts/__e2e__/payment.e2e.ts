@@ -105,7 +105,7 @@ describe("Payment", () => {
         .withTimeout(e2eWaitRenderTimeout);
 
       await element(matchNoticeCodeInput).typeText("123123123123123123");
-      await element(by.id("EntityCodeInput")).typeText("12345678901");
+      await element(by.id("EntityCodeInputMask")).typeText("12345678901");
       // Close the keyboard
       await element(by.label("Done")).atIndex(0).tap();
 
