@@ -53,7 +53,6 @@ function* handleTestLogin({
 
     if (E.isRight(testLoginResponse)) {
       if (testLoginResponse.right.status === 200) {
-        console.log("testLoginResponse", testLoginResponse);
         yield* put(idpSelected(IdpTest));
         yield* put(
           loginSuccess({
