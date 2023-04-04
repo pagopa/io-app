@@ -2,7 +2,7 @@ import React from "react";
 import { Svg, Path } from "react-native-svg";
 import { SVGIconProps } from "../Icon";
 
-const IconError = ({ size, style }: SVGIconProps) => (
+const LegIconError = ({ size, style }: SVGIconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" style={style}>
     <Path
       d="M7.74 7.74a.818.818 0 0 1 1.08-.068l.077.068L12 10.843l3.103-3.103.077-.068a.818.818 0 0 1 1.08 1.225L13.157 12l3.103 3.103a.818.818 0 0 1-1.08 1.225l-.077-.068L12 13.157 8.897 16.26l-.077.068a.818.818 0 0 1-1.08-1.225L10.843 12 7.74 8.897a.818.818 0 0 1 0-1.157Z"
@@ -27,4 +27,4 @@ const IconError = ({ size, style }: SVGIconProps) => (
   </Svg>
 );
 
-export default IconError;
+export default LegIconError;
