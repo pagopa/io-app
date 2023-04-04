@@ -65,7 +65,8 @@ type State = Readonly<{
   organizationFiscalCode: O.Option<
     ReturnType<typeof OrganizationFiscalCode.decode>
   >;
-  inputValue: string;
+  noticeNumberInputValue: string;
+  orgFiscalCodeInputValue: string;
 }>;
 
 const styles = StyleSheet.create({
@@ -98,7 +99,8 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
     this.state = {
       paymentNoticeNumber: O.none,
       organizationFiscalCode: O.none,
-      inputValue: ""
+      noticeNumberInputValue: "",
+      orgFiscalCodeInputValue: ""
     };
   }
 
@@ -155,6 +157,22 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
     );
   };
 
+  /**
+   * Converts the validator state into a color string.
+   * @param isFieldValid - the validator state.
+   * @returns green string if isFieldValid is true, red string if false, undefined if undefined.
+   */
+  private getColorFromInputValidatorState(isFieldValid: boolean | undefined) {
+    return pipe(
+      isFieldValid,
+      O.fromNullable,
+      O.fold(
+        () => undefined,
+        isValid => (isValid ? IOColors.green : IOColors.red)
+      )
+    );
+  }
+
   public render(): React.ReactNode {
     const primaryButtonProps = {
       disabled: !this.isFormValid(),
@@ -191,17 +209,20 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                     "wallet.insertManually.noticeCode"
                   )}
                   testID={"NoticeCode"}
+                  overrideBorderColor={this.getColorFromInputValidatorState(
+                    unwrapOptionalEither(this.state.paymentNoticeNumber)
+                  )}
                   inputMaskProps={{
                     type: "custom",
                     options: { mask: "9999 9999 9999 9999 99" },
                     keyboardType: "numeric",
                     returnKeyType: "done",
-                    value: this.state.inputValue,
+                    value: this.state.noticeNumberInputValue,
                     // notice code structure:
                     // <aux digit 1n 0-3>| IUV 17>>|<segregation code (2n)><local info system (2n)><payment number (11n)><check digit (2n)>
                     onChangeText: value => {
                       this.setState({
-                        inputValue: value,
+                        noticeNumberInputValue: value,
                         paymentNoticeNumber: pipe(
                           O.some(value),
                           O.filter(NonEmptyString.is),
@@ -222,15 +243,22 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
                     "wallet.insertManually.entityCode"
                   )}
                   testID={"EntityCode"}
-                  inputProps={{
+                  overrideBorderColor={this.getColorFromInputValidatorState(
+                    unwrapOptionalEither(this.state.organizationFiscalCode)
+                  )}
+                  inputMaskProps={{
+                    type: "custom",
+                    options: { mask: "99999999999" }, // 11 digits for an oragnization fiscal code
                     keyboardType: "numeric",
                     returnKeyType: "done",
-                    maxLength: 11,
+                    value: this.state.orgFiscalCodeInputValue,
                     onChangeText: value => {
                       this.setState({
+                        orgFiscalCodeInputValue: value,
                         organizationFiscalCode: pipe(
                           O.some(value),
                           O.filter(NonEmptyString.is),
+                          O.map(_ => _.replace(/\s/g, "")),
                           O.map(_ => OrganizationFiscalCode.decode(_))
                         )
                       });
