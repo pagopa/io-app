@@ -33,8 +33,8 @@ import { IOColors } from "../core/variables/IOColors";
 import { IOStyles } from "../core/variables/IOStyles";
 import { withLightModalContext } from "../helpers/withLightModalContext";
 import { statusColorMap } from "../SectionStatus";
-import IconFont from "../ui/IconFont";
 import { LightModalContextInterface } from "../ui/LightModal";
+import { Icon } from "../core/icons";
 
 type OwnProps = Readonly<{
   paymentMethods: ReadonlyArray<IPaymentMethod>;
@@ -179,7 +179,7 @@ const renderListItem = (
               {itemInfo.item.description}
             </H5>
           </View>
-          <IconFont name={"io-right"} color={IOColors.blue} size={24} />
+          <Icon name="chevronRightListItem" color="blue" size={24} />
         </ListItem>
       );
     }

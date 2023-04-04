@@ -6,7 +6,7 @@ import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
 import { BadgeComponent } from "../screens/BadgeComponent";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
-import IconFont from "../ui/IconFont";
+import { Icon } from "../core/icons";
 
 type Props = Readonly<{
   text11: string;
@@ -59,8 +59,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const ICON_WIDTH = 24;
-
 export default class PaymentHistoryItem extends React.PureComponent<Props> {
   public render() {
     return (
@@ -87,11 +85,7 @@ export default class PaymentHistoryItem extends React.PureComponent<Props> {
             </NBText>
           </View>
           <View style={styles.icon}>
-            <IconFont
-              name={"io-right"}
-              size={ICON_WIDTH}
-              color={customVariables.contentPrimaryBackground}
-            />
+            <Icon name="chevronRightListItem" size={24} color="blue" />
           </View>
         </View>
         {this.props.children}
