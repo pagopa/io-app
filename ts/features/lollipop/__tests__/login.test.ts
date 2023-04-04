@@ -42,7 +42,7 @@ const DATA_FROM_SERVER: DataFromServerType = {
 };
 
 jest.mock("../../../store/reducers/authentication", () => ({
-  isLoggedOutWithoutIdpSelector: () => false
+  identityProviderSelector: () => false
 }));
 
 const mockedSessionInvalid: StaticProvider = [put(sessionInvalid()), true];
