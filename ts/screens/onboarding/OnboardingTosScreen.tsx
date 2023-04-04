@@ -5,10 +5,10 @@
  * This screen is used also as Privacy screen From Profile section.
  */
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { Text as NBText, View } from "native-base";
+import { Text as NBText } from "native-base";
 import * as React from "react";
 import { useCallback, useEffect, useState } from "react";
-import { Alert, SafeAreaView, StyleSheet } from "react-native";
+import { Alert, SafeAreaView, StyleSheet, View } from "react-native";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
