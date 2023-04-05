@@ -15,6 +15,7 @@ export type ProfileParamsList = {
   [ROUTES.PROFILE_FISCAL_CODE]: undefined;
   [ROUTES.READ_EMAIL_SCREEN]: undefined;
   [ROUTES.INSERT_EMAIL_SCREEN]: undefined;
+  [ROUTES.PIN_SCREEN]: undefined;
   [ROUTES.PROFILE_DOWNLOAD_DATA]: undefined;
   [ROUTES.MARKDOWN_PLAYGROUND]: undefined;
   [ROUTES.DESIGN_SYSTEM]: undefined;
