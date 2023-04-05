@@ -18,8 +18,13 @@ import Animated, {
 import { IOColors } from "../core/variables/IOColors";
 import { IOSpringValues, IOScaleValues } from "../core/variables/IOAnimations";
 import { BaseTypography } from "../core/typography/BaseTypography";
-import { IOButtonStyles } from "../core/variables/IOStyles";
+import {
+  IOButtonStyles,
+  IOButtonLegacyStyles
+} from "../core/variables/IOStyles";
 import { WithTestID } from "../../types/WithTestID";
+import { useIOSelector } from "../../store/hooks";
+import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 
 export type ButtonSolid = WithTestID<{
   color?: "primary" | "danger" | "contrast";
@@ -41,9 +46,19 @@ type ColorStates = {
   };
 };
 
-// COMPONENT CONFIGURATION
+/*
+░░░ COMPONENT CONFIGURATION ░░░
+*/
 
-const mapColorStates: Record<NonNullable<ButtonSolid["color"]>, ColorStates> = {
+/* Delete the following block if you want to
+get rid of legacy variant */
+
+/* ◀ REMOVE_LEGACY_COMPONENT: Start */
+
+const mapLegacyColorStates: Record<
+  NonNullable<ButtonSolid["color"]>,
+  ColorStates
+> = {
   // Primary button
   primary: {
     default: IOColors.blue,
@@ -74,13 +89,53 @@ const mapColorStates: Record<NonNullable<ButtonSolid["color"]>, ColorStates> = {
 };
 
 // Disabled state
-const colorPrimaryButtonDisabled: IOColors = "bluegreyLight";
+const colorPrimaryLegacyButtonDisabled: IOColors = "bluegreyLight";
+const legacyStyles = StyleSheet.create({
+  backgroundDisabled: {
+    backgroundColor: IOColors[colorPrimaryLegacyButtonDisabled]
+  }
+});
+
+/* REMOVE_LEGACY_COMPONENT: End ▶ */
+
+// Disabled state
+const colorPrimaryButtonDisabled: IOColors = "grey-200";
 
 const styles = StyleSheet.create({
   backgroundDisabled: {
     backgroundColor: IOColors[colorPrimaryButtonDisabled]
   }
 });
+
+const mapColorStates: Record<NonNullable<ButtonSolid["color"]>, ColorStates> = {
+  // Primary button
+  primary: {
+    default: IOColors["blueIO-500"],
+    pressed: IOColors["blueIO-600"],
+    label: {
+      default: "white",
+      disabled: "grey-700"
+    }
+  },
+  // Danger button
+  danger: {
+    default: IOColors["error-850"],
+    pressed: IOColors["error-600"],
+    label: {
+      default: "white",
+      disabled: "grey-700"
+    }
+  },
+  // Contrast button
+  contrast: {
+    default: IOColors.white,
+    pressed: IOColors["blueIO-50"],
+    label: {
+      default: "blueIO-500",
+      disabled: "grey-700"
+    }
+  }
+};
 
 export const ButtonSolid = ({
   color = "primary",
@@ -92,8 +147,10 @@ export const ButtonSolid = ({
   accessibilityLabel,
   accessibilityHint,
   testID
-}: ButtonSolid) => {
+}: // eslint-disable-next-line sonarjs/cognitive-complexity
+ButtonSolid) => {
   const isPressed: Animated.SharedValue<number> = useSharedValue(0);
+  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
 
   // Scaling transformation applied when the button is pressed
   const animationScaleValue = IOScaleValues?.basicButton?.pressedState;
@@ -106,11 +163,23 @@ export const ButtonSolid = ({
   // Interpolate animation values from `isPressed` values
   const pressedAnimationStyle = useAnimatedStyle(() => {
     // Link color states to the pressed states
-    const bgColor = interpolateColor(
-      progressPressed.value,
-      [0, 1],
-      [mapColorStates[color].default, mapColorStates[color].pressed]
-    );
+
+    /* ◀ REMOVE_LEGACY_COMPONENT: Remove the following condition */
+    const bgColor = isDesignSystemEnabled
+      ? interpolateColor(
+          progressPressed.value,
+          [0, 1],
+          [mapColorStates[color].default, mapColorStates[color].pressed]
+        )
+      : interpolateColor(
+          progressPressed.value,
+          [0, 1],
+          [
+            mapLegacyColorStates[color].default,
+            mapLegacyColorStates[color].pressed
+          ]
+        );
+    /* REMOVE_LEGACY_COMPONENT: End ▶ */
 
     // Scale down button slightly when pressed
     const scale = interpolate(
@@ -135,7 +204,66 @@ export const ButtonSolid = ({
     isPressed.value = 0;
   }, [isPressed]);
 
-  return (
+  /* ◀ REMOVE_LEGACY_COMPONENT: Start */
+  const LegacyButton = () => (
+    <Pressable
+      accessibilityLabel={accessibilityLabel}
+      accessibilityHint={accessibilityHint}
+      accessibilityRole={"button"}
+      testID={testID}
+      onPress={onPress}
+      onPressIn={onPressIn}
+      onPressOut={onPressOut}
+      accessible={true}
+      disabled={disabled}
+      style={
+        fullWidth
+          ? IOButtonLegacyStyles.dimensionsFullWidth
+          : IOButtonLegacyStyles.dimensionsDefault
+      }
+    >
+      <Animated.View
+        style={[
+          IOButtonLegacyStyles.button,
+          small
+            ? IOButtonLegacyStyles.buttonSizeSmall
+            : IOButtonLegacyStyles.buttonSizeDefault,
+          disabled
+            ? legacyStyles.backgroundDisabled
+            : { backgroundColor: mapLegacyColorStates[color]?.default },
+          /* Prevent Reanimated from overriding background colors
+          if button is disabled */
+          !disabled && pressedAnimationStyle
+        ]}
+      >
+        <BaseTypography
+          weight={"Bold"}
+          color={
+            disabled
+              ? mapLegacyColorStates[color]?.label?.disabled
+              : mapLegacyColorStates[color]?.label?.default
+          }
+          style={[
+            IOButtonLegacyStyles.label,
+            small
+              ? IOButtonLegacyStyles.labelSizeSmall
+              : IOButtonLegacyStyles.labelSizeDefault
+          ]}
+          numberOfLines={1}
+          ellipsizeMode="tail"
+          /* A11y-related props:
+          DON'T UNCOMMENT THEM */
+          /* allowFontScaling
+          maxFontSizeMultiplier={1.3} */
+        >
+          {label}
+        </BaseTypography>
+      </Animated.View>
+    </Pressable>
+  );
+  /* REMOVE_LEGACY_COMPONENT: End ▶ */
+
+  const NewButton = () => (
     <Pressable
       accessibilityLabel={accessibilityLabel}
       accessibilityHint={accessibilityHint}
@@ -163,7 +291,8 @@ export const ButtonSolid = ({
         ]}
       >
         <BaseTypography
-          weight={"Bold"}
+          font="ReadexPro"
+          weight={"Regular"}
           color={
             disabled
               ? mapColorStates[color]?.label?.disabled
@@ -187,6 +316,10 @@ export const ButtonSolid = ({
       </Animated.View>
     </Pressable>
   );
+
+  /* ◀ REMOVE_LEGACY_COMPONENT: Move the entire <NewButton /> here,
+  without the following condition */
+  return isDesignSystemEnabled ? <NewButton /> : <LegacyButton />;
 };
 
 export default ButtonSolid;

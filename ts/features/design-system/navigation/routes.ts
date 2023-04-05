@@ -3,10 +3,12 @@ const DESIGN_SYSTEM_ROUTES = {
   FOUNDATION: {
     COLOR: { route: "DESIGN_SYSTEM_COLOR", title: "Colors" },
     TYPOGRAPHY: { route: "DESIGN_SYSTEM_TYPOGRAPHY", title: "Typography" },
-    SPACING: { route: "DESIGN_SYSTEM_SPACING", title: "Spacing" },
+    LAYOUT: { route: "DESIGN_SYSTEM_LAYOUT", title: "Layout" },
     ICONS: { route: "DESIGN_SYSTEM_ICONS", title: "Icons" },
     PICTOGRAMS: { route: "DESIGN_SYSTEM_PICTOGRAMS", title: "Pictograms" },
-    LOGOS: { route: "DESIGN_SYSTEM_LOGOS", title: "Logos" }
+    LOGOS: { route: "DESIGN_SYSTEM_LOGOS", title: "Logos" },
+    LOADERS: { route: "DESIGN_SYSTEM_LOADERS", title: "Loaders" },
+    HAPTIC_FEEDBACK: { route: "DESIGN_SYSTEM_HAPTIC", title: "Haptic Feedback" }
   },
   COMPONENTS: {
     BUTTONS: { route: "DESIGN_SYSTEM_BUTTONS", title: "Buttons" },
@@ -26,6 +28,10 @@ const DESIGN_SYSTEM_ROUTES = {
     ILLUSTRATIONS: {
       route: "DESIGN_SYSTEM_LEGACY_ILLUSTRATIONS",
       title: "Illustrations"
+    },
+    BUTTONS: {
+      route: "DESIGN_SYSTEM_LEGACY_BUTTONS",
+      title: "Buttons"
     }
   } as const
 } as const;

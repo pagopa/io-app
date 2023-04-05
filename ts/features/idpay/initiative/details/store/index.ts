@@ -120,7 +120,7 @@ export const idpayPaginatedTimelineSelector = createSelector(
   initiative => initiative.timeline
 );
 
-export const idpayTimelineSelector = createSelector(
+export const idpayOperationListSelector = createSelector(
   idpayPaginatedTimelineSelector,
   paginatedTimelinePot =>
     pot.getOrElse(
@@ -132,6 +132,10 @@ export const idpayTimelineSelector = createSelector(
       ),
       []
     )
+);
+export const idpayOperationListLengthSelector = createSelector(
+  idpayOperationListSelector,
+  operationList => operationList.length
 );
 
 export const idpayTimelineCurrentPageSelector = createSelector(

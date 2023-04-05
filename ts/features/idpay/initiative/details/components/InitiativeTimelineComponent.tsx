@@ -1,7 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import { List as NBList } from "native-base";
-import React, { useEffect } from "react";
+import React from "react";
 import { StyleSheet, View } from "react-native";
 import { OperationListDTO } from "../../../../../../definitions/idpay/OperationListDTO";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
@@ -14,13 +14,12 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../../navigation/params/AppParamsList";
-import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { useIOSelector } from "../../../../../store/hooks";
 import { IDPayDetailsRoutes } from "../navigation";
 import {
   idpayPaginatedTimelineSelector,
-  idpayTimelineSelector
+  idpayOperationListSelector
 } from "../store";
-import { idpayTimelinePageGet } from "../store/actions";
 import { useTimelineDetailsBottomSheet } from "./TimelineDetailsBottomSheet";
 import { TimelineOperationListItem } from "./TimelineOperationListItem";
 
@@ -59,16 +58,11 @@ const ConfiguredInitiativeData = (props: Props) => {
   const { initiativeId } = props;
 
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
-  const dispatch = useIODispatch();
-
-  useEffect(() => {
-    dispatch(idpayTimelinePageGet.request({ initiativeId, page: 0 }));
-  }, [dispatch, initiativeId]);
 
   const detailsBottomSheet = useTimelineDetailsBottomSheet(initiativeId);
 
   const paginatedTimelinePot = useIOSelector(idpayPaginatedTimelineSelector);
-  const timeline = useIOSelector(idpayTimelineSelector);
+  const timeline = useIOSelector(idpayOperationListSelector);
   const isLoading = pot.isLoading(paginatedTimelinePot);
 
   if (isLoading) {

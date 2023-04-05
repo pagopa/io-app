@@ -193,6 +193,12 @@ export const unsupportedDeviceMoreInfoUrl: string = pipe(
   E.getOrElse(() => "https://io.italia.it/app-content/unsupported_device.html")
 );
 
+export const unsupportedDeviceLearnMoreUrl: string = pipe(
+  Config.UNSUPPORTED_DEVICE_LEARN_MORE_URL,
+  NonEmptyString.decode,
+  E.getOrElse(() => "https://io.italia.it/faq/#n1_11")
+);
+
 export const pageSize: number = DEFAULT_PAGE_SIZE;
 
 // This is the maximum number supported by API via pagination regardless of the content.

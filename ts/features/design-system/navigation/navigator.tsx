@@ -8,6 +8,7 @@ import { DSTypography } from "../core/DSTypography";
 import { DSIcons } from "../core/DSIcons";
 import { DSButtons } from "../core/DSButtons";
 import { DSTextFields } from "../core/DSTextFields";
+import { DSLegacyButtons } from "../core/DSLegacyButtons";
 import { DSLegacyPictograms } from "../core/DSLegacyPictograms";
 import { DSLegacyIllustrations } from "../core/DSLegacyIllustrations";
 import { DSPictograms } from "../core/DSPictograms";
@@ -17,8 +18,10 @@ import { DSSelection } from "../core/DSSelection";
 import { DSAdvice } from "../core/DSAdvice";
 import { DSAccordion } from "../core/DSAccordion";
 import { DSListItems } from "../core/DSListItems";
-import { DSSpacing } from "../core/DSSpacing";
+import { DSLayout } from "../core/DSLayout";
 import { DSAlert } from "../core/DSAlert";
+import { DSLoaders } from "../core/DSLoaders";
+import { DSHapticFeedback } from "../core/DSHapticFeedback";
 import {
   IOThemeContext,
   IOThemes
@@ -44,29 +47,45 @@ export const DesignSystemNavigator = () => {
           name={DESIGN_SYSTEM_ROUTES.MAIN}
           component={DesignSystem}
         />
+
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.FOUNDATION.COLOR.route}
           component={DSColors}
         />
+
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.FOUNDATION.TYPOGRAPHY.route}
           component={DSTypography}
         />
+
         <Stack.Screen
-          name={DESIGN_SYSTEM_ROUTES.FOUNDATION.SPACING.route}
-          component={DSSpacing}
+          name={DESIGN_SYSTEM_ROUTES.FOUNDATION.LAYOUT.route}
+          component={DSLayout}
         />
+
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.FOUNDATION.ICONS.route}
           component={DSIcons}
         />
+
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.FOUNDATION.PICTOGRAMS.route}
           component={DSPictograms}
         />
+
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.FOUNDATION.LOGOS.route}
           component={DSLogos}
+        />
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.FOUNDATION.LOADERS.route}
+          component={DSLoaders}
+        />
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.FOUNDATION.HAPTIC_FEEDBACK.route}
+          component={DSHapticFeedback}
         />
 
         {/* COMPONENTS */}
@@ -114,6 +133,10 @@ export const DesignSystemNavigator = () => {
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.LEGACY.PICTOGRAMS.route}
           component={DSLegacyPictograms}
+        />
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.LEGACY.BUTTONS.route}
+          component={DSLegacyButtons}
         />
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.LEGACY.ILLUSTRATIONS.route}

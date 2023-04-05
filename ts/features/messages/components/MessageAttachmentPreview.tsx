@@ -11,7 +11,10 @@ import PdfViewer from "../../../components/messages/MessageDetail/PdfViewer";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
-import { downloadAttachment } from "../../../store/actions/messages";
+import {
+  cancelPreviousAttachmentDownload,
+  downloadAttachment
+} from "../../../store/actions/messages";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { downloadPotForMessageAttachmentSelector } from "../../../store/reducers/entities/messages/downloads";
 import {
@@ -129,6 +132,7 @@ const renderFooter = (
       leftButton={{
         bordered: true,
         primary: false,
+        buttonFontSize: variables.btnSmallFontSize,
         onPress: () => {
           onShare?.();
           share(`file://${downloadPath}`, undefined, false)().catch(_ => {
@@ -144,6 +148,7 @@ const renderFooter = (
       midButton={{
         bordered: true,
         primary: false,
+        buttonFontSize: variables.btnSmallFontSize,
         onPress: () => {
           onDownload?.();
           ReactNativeBlobUtil.MediaCollection.copyToMediaStore(
@@ -176,18 +181,25 @@ const renderFooter = (
         },
         title: I18n.t("features.mvl.details.attachments.pdfPreview.save")
       }}
-      rightButton={confirmButtonProps(() => {
-        onOpen?.();
-        ReactNativeBlobUtil.android
-          .actionViewIntent(downloadPath, attachment.contentType)
-          .catch(_ => {
-            showToast(
-              I18n.t(
-                "features.mvl.details.attachments.pdfPreview.errors.opening"
-              )
-            );
-          });
-      }, I18n.t("features.mvl.details.attachments.pdfPreview.open"))}
+      rightButton={confirmButtonProps(
+        () => {
+          onOpen?.();
+          ReactNativeBlobUtil.android
+            .actionViewIntent(downloadPath, attachment.contentType)
+            .catch(_ => {
+              showToast(
+                I18n.t(
+                  "features.mvl.details.attachments.pdfPreview.errors.opening"
+                )
+              );
+            });
+        },
+        I18n.t("features.mvl.details.attachments.pdfPreview.open"),
+        undefined,
+        undefined,
+        undefined,
+        variables.btnSmallFontSize
+      )}
     />
   );
 
@@ -236,12 +248,12 @@ export const MessageAttachmentPreview = (props: Props): React.ReactElement => {
       isGenericAttachment &&
       (pot.isLoading(downloadPot) || pot.isUpdating(downloadPot))
     ) {
-      dispatch(downloadAttachment.cancel(attachment));
+      dispatch(cancelPreviousAttachmentDownload());
     }
     // eslint-disable-next-line functional/immutable-data
     autoBackOnErrorHandled.current = true;
     navigation.goBack();
-  }, [attachment, downloadPot, dispatch, isGenericAttachment, navigation]);
+  }, [downloadPot, dispatch, isGenericAttachment, navigation]);
 
   useEffect(() => {
     // eslint-disable-next-line functional/immutable-data
