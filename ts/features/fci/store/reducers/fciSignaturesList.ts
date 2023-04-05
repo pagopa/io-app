@@ -1,19 +1,9 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-import { DocumentDetailView } from "../../../../../definitions/fci/DocumentDetailView";
-import { SignatureRequestDetailView } from "../../../../../definitions/fci/SignatureRequestDetailView";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { NetworkError } from "../../../../utils/errors";
-import {
-  fciSignatureRequestFromId,
-  fciClearStateRequest,
-  fciSignaturesListRequest
-} from "../actions";
-import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
-import { QtspDocumentToSign } from "../../utils/signature";
-import { IssuerEnvironmentEnum } from "../../../../../definitions/fci/IssuerEnvironment";
+import { fciClearStateRequest, fciSignaturesListRequest } from "../actions";
 import { SignatureRequestList } from "../../../../../definitions/fci/SignatureRequestList";
 
 export type FciSignaturesListRequestState = pot.Pot<
