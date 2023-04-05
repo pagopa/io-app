@@ -18,11 +18,11 @@ import { WalletParamsList } from "../../../../navigation/params/WalletParamsList
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import customVariables from "../../../../theme/variables";
 import { IDPayInitiativesList } from "../components/IDPayInitiativesListComponents";
-import { idPayInitiativesFromInstrumentGet } from "../store/actions";
 import {
-  idPayAreInitiativesFromInstrumentErrorSelector,
-  idPayInitiativesFromInstrumentSelector
-} from "../store/reducers";
+  idpayInitiativesFromInstrumentRefreshEnd,
+  idpayInitiativesFromInstrumentRefreshStart
+} from "../store/actions";
+import { idPayInitiativesFromInstrumentSelector } from "../store/reducers";
 
 export type AvailableInitiativesListScreenNavigationParams = {
   idWallet: string;
@@ -59,23 +59,18 @@ export const IdPayInitiativeListScreen = (props: Props) => {
     )
   ) ?? [[], undefined, undefined];
   const dispatch = useIODispatch();
-  const areInitiativesInError = useIOSelector(
-    idPayAreInitiativesFromInstrumentErrorSelector
-  );
 
   React.useEffect(() => {
-    const timer = setInterval(
-      () =>
-        dispatch(
-          idPayInitiativesFromInstrumentGet.request({
-            idWallet,
-            isRefreshCall: true
-          })
-        ),
-      areInitiativesInError ? 6000 : 3000
+    dispatch(
+      idpayInitiativesFromInstrumentRefreshStart({
+        idWallet,
+        isRefreshCall: true
+      })
     );
-    return () => clearInterval(timer);
-  }, [dispatch, idWallet, areInitiativesInError]);
+    return () => {
+      dispatch(idpayInitiativesFromInstrumentRefreshEnd);
+    };
+  }, [dispatch, idWallet]);
 
   return (
     <BaseScreenComponent

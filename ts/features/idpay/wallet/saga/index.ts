@@ -1,5 +1,11 @@
 import { SagaIterator } from "redux-saga";
-import { call, takeEvery, takeLatest } from "typed-redux-saga/macro";
+import {
+  call,
+  race,
+  take,
+  takeEvery,
+  takeLatest
+} from "typed-redux-saga/macro";
 import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
 import { waitBackoffError } from "../../../../utils/backoffError";
 import { IDPayClient } from "../../common/api/client";
@@ -10,9 +16,14 @@ import {
   idPayInitiativesFromInstrumentGet,
   idPayWalletGet,
   idpayInitiativesInstrumentDelete,
-  idpayInitiativesInstrumentEnroll
+  idpayInitiativesInstrumentEnroll,
+  idpayInitiativesFromInstrumentRefreshEnd,
+  idpayInitiativesFromInstrumentRefreshStart
 } from "../store/actions";
-import { handleGetIDPayInitiativesFromInstrument } from "./handleGetIDPayInitiativesFromInstrument";
+import {
+  handleGetIDPayInitiativesFromInstrument,
+  initiativesFromInstrumentRefresh
+} from "./handleGetIDPayInitiativesFromInstrument";
 import { handleGetIDPayWallet } from "./handleGetIDPayWallet";
 import {
   handleInitiativeInstrumentDelete,
@@ -84,6 +95,19 @@ export function* watchIDPayWalletSaga(
         preferredLanguage,
         action.payload
       );
+    }
+  );
+  yield* takeEvery(
+    idpayInitiativesFromInstrumentRefreshStart,
+    function* (action: { payload: IdPayInitiativesFromInstrumentPayloadType }) {
+      yield* race({
+        task: call(
+          initiativesFromInstrumentRefresh,
+          action.payload.idWallet,
+          action.payload.isRefreshCall
+        ),
+        cancel: take(idpayInitiativesFromInstrumentRefreshEnd.type)
+      });
     }
   );
 }

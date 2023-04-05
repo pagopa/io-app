@@ -1,13 +1,14 @@
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
-import { call, put } from "typed-redux-saga/macro";
+import { call, delay, put } from "typed-redux-saga/macro";
 import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import {
   IdPayInitiativesFromInstrumentPayloadType,
-  idPayInitiativesFromInstrumentGet
+  idPayInitiativesFromInstrumentGet,
+  idpayInitiativesFromInstrumentRefreshStart
 } from "../store/actions";
 import { IDPayClient } from "../../common/api/client";
 
@@ -52,4 +53,24 @@ export function* handleGetIDPayInitiativesFromInstrument(
       })
     );
   }
+}
+
+export function* initiativesFromInstrumentRefresh(
+  idWallet: string,
+  isRefreshCall?: boolean,
+  delayMs: number = 3000
+) {
+  yield* put(
+    idPayInitiativesFromInstrumentGet.request({
+      idWallet,
+      isRefreshCall
+    })
+  );
+  yield* delay(delayMs);
+  yield* put(
+    idpayInitiativesFromInstrumentRefreshStart({
+      idWallet,
+      isRefreshCall: true
+    })
+  );
 }
