@@ -11,7 +11,10 @@ import PdfViewer from "../../../components/messages/MessageDetail/PdfViewer";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
-import { downloadAttachment } from "../../../store/actions/messages";
+import {
+  cancelPreviousAttachmentDownload,
+  downloadAttachment
+} from "../../../store/actions/messages";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { downloadPotForMessageAttachmentSelector } from "../../../store/reducers/entities/messages/downloads";
 import {
@@ -245,12 +248,12 @@ export const MessageAttachmentPreview = (props: Props): React.ReactElement => {
       isGenericAttachment &&
       (pot.isLoading(downloadPot) || pot.isUpdating(downloadPot))
     ) {
-      dispatch(downloadAttachment.cancel(attachment));
+      dispatch(cancelPreviousAttachmentDownload());
     }
     // eslint-disable-next-line functional/immutable-data
     autoBackOnErrorHandled.current = true;
     navigation.goBack();
-  }, [attachment, downloadPot, dispatch, isGenericAttachment, navigation]);
+  }, [downloadPot, dispatch, isGenericAttachment, navigation]);
 
   useEffect(() => {
     // eslint-disable-next-line functional/immutable-data
