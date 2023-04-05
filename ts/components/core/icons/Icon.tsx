@@ -296,7 +296,7 @@ export const IOIcons = {
   legError: LegIconError /* io-error */,
   errorFilled: IconErrorFilled,
   refund: IconRefund,
-  reload: IconReload /* io-reload */,
+  reload: IconReload,
   history: IconHistory,
   legHistory: LegIconHistory,
   edit: IconEdit,
@@ -393,6 +393,7 @@ export type IOIconsProps = {
   name: IOIcons;
   color?: IOColors;
   size?: number | "100%";
+  testID?: string;
 };
 
 export type SVGIconProps = {
