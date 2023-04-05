@@ -8,12 +8,12 @@ import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../i18n";
 import { cancelButtonProps } from "../../components/buttons/ButtonConfigurations";
 import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButton";
-import { bonusVacanzeStyle } from "../../components/Styles";
 import { cancelBonusVacanzeRequest } from "../../store/actions/bonusVacanze";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
 import image from "../../../../../../img/wallet/errors/payment-unknown-icon.png";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 
 /**
  * This screen informs the user that only citizens of legal age can apply for the bonus.
@@ -33,7 +33,7 @@ const UnderageScreen: React.FunctionComponent<Props> = props => {
   });
 
   return (
-    <SafeAreaView style={bonusVacanzeStyle.flex}>
+    <SafeAreaView style={IOStyles.flex}>
       <InfoScreenComponent image={renderInfoRasterImage(image)} title={title} />
       <FooterWithButtons
         type={"SingleButton"}

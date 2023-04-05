@@ -4,7 +4,8 @@ import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Body } from "../../../components/core/typography/Body";
 import { H2 } from "../../../components/core/typography/H2";
-import { withValidatedEmail } from "../../../components/helpers/withValidatedEmail";
+import { IOColors } from "../../../components/core/variables/IOColors";
+import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { withValidatedPagoPaVersion } from "../../../components/helpers/withValidatedPagoPaVersion";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../../components/screens/EdgeBorderComponent";
@@ -22,8 +23,7 @@ import {
   CreditCardInsertion
 } from "../../../store/reducers/wallet/creditCard";
 import variables from "../../../theme/variables";
-import { IOColors } from "../../../components/core/variables/IOColors";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
+import { withValidatedEmail } from "../../../components/helpers/withValidatedEmail";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
