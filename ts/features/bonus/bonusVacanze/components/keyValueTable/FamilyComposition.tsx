@@ -1,15 +1,13 @@
-import { Text as NBText } from "native-base";
 import React from "react";
 import { View, Platform, StyleSheet } from "react-native";
 import { FamilyMembers } from "../../../../../../definitions/bonus_vacanze/FamilyMembers";
+import { VSpacer } from "../../../../../components/core/spacer/Spacer";
+import { Body } from "../../../../../components/core/typography/Body";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";
 import { makeFontStyleObject } from "../../../../../theme/fonts";
 import themeVariables from "../../../../../theme/variables";
-import {
-  KeyValueRow,
-  KeyValueTable,
-  keyValueTableStyle
-} from "./KeyValueTable";
+import { KeyValueRow, KeyValueTable } from "./KeyValueTable";
 
 type Props = {
   familyMembers: FamilyMembers;
@@ -27,9 +25,9 @@ const styles = StyleSheet.create({
 });
 
 const header = (title: string) => (
-  <NBText style={keyValueTableStyle.baseRow} bold={true}>
-    {title}
-  </NBText>
+  <View style={IOStyles.rowSpaceBetween}>
+    <Body weight="SemiBold">{title}</Body>
+  </View>
 );
 
 const getRow = (k: string, v: string): KeyValueRow => ({
@@ -55,6 +53,7 @@ export const FamilyComposition: React.FunctionComponent<Props> = props => {
   return (
     <View>
       {header(title)}
+      <VSpacer size={8} />
       <KeyValueTable
         leftFlex={1}
         rightFlex={0}

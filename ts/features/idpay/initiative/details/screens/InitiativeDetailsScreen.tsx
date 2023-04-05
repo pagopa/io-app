@@ -2,7 +2,6 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation, useRoute } from "@react-navigation/core";
 import { RouteProp, useFocusEffect } from "@react-navigation/native";
 import { format } from "date-fns";
-import { Text } from "native-base";
 import React, { useCallback } from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import {
@@ -10,8 +9,10 @@ import {
   StatusEnum
 } from "../../../../../../definitions/idpay/InitiativeDTO";
 import EmptyInitiativeSvg from "../../../../../../img/features/idpay/empty_initiative.svg";
+import { Alert } from "../../../../../components/Alert";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
+import { Body } from "../../../../../components/core/typography/Body";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
@@ -25,22 +26,25 @@ import {
   IOStackNavigationProp
 } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import { IDPayConfigurationRoutes } from "../../configuration/navigation/navigator";
+import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import {
+  IDPayConfigurationParamsList,
+  IDPayConfigurationRoutes
+} from "../../configuration/navigation/navigator";
 import InitiativeCardComponent from "../components/InitiativeCardComponent";
 import { InitiativeSettingsComponent } from "../components/InitiativeSettingsComponent";
 import InitiativeTimelineComponent from "../components/InitiativeTimelineComponent";
 import { IDPayDetailsParamsList, IDPayDetailsRoutes } from "../navigation";
-import { idpayInitiativeDetailsSelector } from "../store";
-import { idpayInitiativeGet } from "../store/actions";
-import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import {
+  idpayInitiativeDetailsSelector,
+  idpayOperationListLengthSelector
+} from "../store";
+import { idpayInitiativeGet, idpayTimelinePageGet } from "../store/actions";
 
 const styles = StyleSheet.create({
   newInitiativeMessageContainer: {
     alignItems: "center",
     justifyContent: "center"
-  },
-  textCenter: {
-    textAlign: "center"
   },
   flexGrow: {
     flexGrow: 1
@@ -70,12 +74,14 @@ const InitiativeNotConfiguredComponent = ({
       )}
     </H3>
     <VSpacer size={16} />
-    <Text style={styles.textCenter}>
-      {I18n.t(
-        "idpay.initiative.details.initiativeDetailsScreen.notConfigured.footer",
-        { initiative: initiativeName }
-      )}
-    </Text>
+    <View style={IOStyles.alignCenter}>
+      <Body>
+        {I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.notConfigured.footer",
+          { initiative: initiativeName }
+        )}
+      </Body>
+    </View>
   </View>
 );
 
@@ -105,10 +111,13 @@ export const InitiativeDetailsScreen = () => {
   useFocusEffect(
     useCallback(() => {
       dispatch(idpayInitiativeGet.request({ initiativeId }));
+      dispatch(idpayTimelinePageGet.request({ initiativeId, page: 0 }));
     }, [dispatch, initiativeId])
   );
 
   const isLoading = pot.isLoading(initiativeDetailsFromSelector);
+  const timelineLength = useIOSelector(idpayOperationListLengthSelector);
+  const isFirstInitiativeConfiguration = timelineLength <= 1;
 
   const renderContent = () => {
     if (initiativeData === undefined) {
@@ -121,7 +130,8 @@ export const InitiativeDetailsScreen = () => {
         : undefined;
 
     const initiativeNeedsConfiguration =
-      initiativeData.status === StatusEnum.NOT_REFUNDABLE;
+      initiativeData.status === StatusEnum.NOT_REFUNDABLE &&
+      isFirstInitiativeConfiguration;
 
     return (
       <>
@@ -158,6 +168,7 @@ export const InitiativeDetailsScreen = () => {
                       <VSpacer size={16} />
                     </>
                   )}
+                  <MissingInitiativeDataAlert initiativeData={initiativeData} />
                   <InitiativeTimelineComponent
                     initiativeId={initiativeData.initiativeId}
                   />
@@ -215,5 +226,58 @@ export const InitiativeDetailsScreen = () => {
         {isLoading ? null : renderContent()}
       </LoadingSpinnerOverlay>
     </BaseScreenComponent>
+  );
+};
+type StatusWithAlert = Exclude<
+  StatusEnum,
+  StatusEnum.REFUNDABLE | StatusEnum.UNSUBSCRIBED
+>;
+
+const MissingInitiativeDataAlert = ({
+  initiativeData
+}: {
+  initiativeData: InitiativeDTO;
+}) => {
+  const { status, initiativeId } = initiativeData;
+  const navigation = useNavigation();
+
+  if (status === StatusEnum.UNSUBSCRIBED || status === StatusEnum.REFUNDABLE) {
+    return null;
+  }
+
+  const viewRef = React.createRef<View>();
+
+  const screen: Record<StatusWithAlert, keyof IDPayConfigurationParamsList> = {
+    NOT_REFUNDABLE_ONLY_IBAN:
+      IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT,
+    NOT_REFUNDABLE_ONLY_INSTRUMENT:
+      IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ENROLLMENT,
+    NOT_REFUNDABLE: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO
+  };
+
+  const handleNavigation = () => {
+    navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
+      screen: screen[status],
+      params: {
+        initiativeId
+      }
+    });
+  };
+
+  return (
+    <>
+      <Alert
+        viewRef={viewRef}
+        content={I18n.t(
+          `idpay.initiative.details.initiativeDetailsScreen.configured.errorAlerts.${status}.content`
+        )}
+        action={I18n.t(
+          `idpay.initiative.details.initiativeDetailsScreen.configured.errorAlerts.${status}.action`
+        )}
+        onPress={handleNavigation}
+        variant="error"
+      />
+      <VSpacer size={16} />
+    </>
   );
 };

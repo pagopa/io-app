@@ -2,10 +2,16 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { NavigationEvents } from "@react-navigation/compat";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Body, Left, Right, Text as NBText } from "native-base";
+import { Body as NBBody, Left, Right } from "native-base";
 import * as React from "react";
 import { FC, Ref } from "react";
-import { View, AccessibilityInfo, ColorValue, StyleSheet } from "react-native";
+import {
+  View,
+  AccessibilityInfo,
+  ColorValue,
+  StyleSheet,
+  Text
+} from "react-native";
 import { connect } from "react-redux";
 import IconFont from "../../components/ui/IconFont";
 import I18n from "../../i18n";
@@ -19,6 +25,7 @@ import variables from "../../theme/variables";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { isStringNullyOrEmpty, maybeNotNullyString } from "../../utils/strings";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
+import { Body } from "../core/typography/Body";
 import { IOColors } from "../core/variables/IOColors";
 import GoBackButton from "../GoBackButton";
 import SearchButton, { SearchType } from "../search/SearchButton";
@@ -101,7 +108,7 @@ const setAccessibilityTimeout = 0 as Millisecond;
 const noReferenceTimeout = 150 as Millisecond;
 /** A component representing the properties common to all the screens (and the most of modal/overlay displayed) */
 class BaseHeaderComponent extends React.PureComponent<Props, State> {
-  private firstElementRef = React.createRef<NBText | View>();
+  private firstElementRef = React.createRef<View>();
 
   public constructor(props: Props) {
     super(props);
@@ -170,7 +177,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
     }, noReferenceTimeout);
   }
 
-  private renderBodyLabel = (label?: string, ref?: Ref<NBText>) =>
+  private renderBodyLabel = (label?: string, ref?: Ref<Text>) =>
     pipe(
       maybeNotNullyString(label),
       O.fold(
@@ -178,18 +185,20 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
         l => {
           const { titleColor } = this.props;
           return (
-            <NBText
+            <Body
               ref={ref}
+              weight={"Regular"}
+              testID={"bodyLabel"}
               numberOfLines={1}
               accessible={true}
               accessibilityRole={"header"}
-              style={{
-                color: titleColor ? IOColors[titleColor] : IOColors.bluegrey
-              }}
-              testID={"bodyLabel"}
+              color={titleColor === "white" ? "white" : "bluegrey"}
             >
+              {/* TODO: titleColor prop is pretty useless because
+              we have two colors: dark (bluegrey) and light (white).
+              We don't have any color values other than these two. */}
               {l}
-            </NBText>
+            </Body>
           );
         }
       )
@@ -221,22 +230,25 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
           as placeholder where force focus
         */}
         {!isSearchEnabled && (
-          <Body style={goBack || customGoBack ? styles.body : styles.noLeft}>
-            {this.state.isScreenReaderActive &&
-            O.isSome(maybeAccessibilityLabel) ? (
-              this.renderBodyLabel(
-                maybeAccessibilityLabel.value,
-                this.firstElementRef as React.RefObject<NBText>
-              )
-            ) : (
-              <View
-                ref={this.firstElementRef as React.RefObject<View>}
-                accessible={true}
-              >
-                {body ? body : headerTitle && this.renderBodyLabel(headerTitle)}
-              </View>
-            )}
-          </Body>
+          <NBBody style={goBack || customGoBack ? styles.body : styles.noLeft}>
+            <NBBody
+              style={goBack || customGoBack ? styles.body : styles.noLeft}
+            >
+              {this.state.isScreenReaderActive &&
+              O.isSome(maybeAccessibilityLabel) ? (
+                this.renderBodyLabel(
+                  maybeAccessibilityLabel.value,
+                  this.firstElementRef
+                )
+              ) : (
+                <View ref={this.firstElementRef} accessible={true}>
+                  {body
+                    ? body
+                    : headerTitle && this.renderBodyLabel(headerTitle)}
+                </View>
+              )}
+            </NBBody>
+          </NBBody>
         )}
 
         {this.renderRight()}

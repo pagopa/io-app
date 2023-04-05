@@ -15,12 +15,8 @@ import {
   identificationStart,
   identificationSuccess
 } from "../store/actions/identification";
-import {
-  navigateToOnboardingPinScreenAction,
-  navigateToPaginatedMessageRouterAction
-} from "../store/actions/navigation";
+import { navigateToPaginatedMessageRouterAction } from "../store/actions/navigation";
 import { clearNotificationPendingMessage } from "../store/actions/notifications";
-import { updatePin } from "../store/actions/pinset";
 import {
   paymentDeletePayment,
   runDeleteActivePaymentSaga
@@ -194,9 +190,4 @@ export function* watchIdentification(
     startAndHandleIdentificationResult,
     pin
   );
-
-  // Watch for requests to update the unlock code.
-  yield* takeLatest(getType(updatePin), function* () {
-    yield* call(navigateToOnboardingPinScreenAction);
-  });
 }
