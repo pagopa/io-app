@@ -14297,7 +14297,7 @@ react-native-image-picker@^4.0.6:
 
 "react-native-io-login-utils@https://github.com/SabPicariello/react-native-io-login-utils":
   version "1.0.0"
-  resolved "https://github.com/SabPicariello/react-native-io-login-utils#074f72b6082e184444a7b6944a643a5059bb52a6"
+  resolved "https://github.com/SabPicariello/react-native-io-login-utils#f6e26562345322c2c9d9921d41700b3946831677"
 
 react-native-iphone-x-helper@^1.0.3:
   version "1.2.1"

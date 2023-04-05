@@ -15,6 +15,7 @@ import SpidCIEInformationScreen from "../screens/authentication/SpidCIEInformati
 import SpidInformationScreen from "../screens/authentication/SpidInformationScreen";
 import TestAuthenticationScreen from "../screens/authentication/TestAuthenticationScreen";
 import MarkdownScreen from "../screens/development/MarkdownScreen";
+import { AuthSessionPage } from "../screens/authentication/idpAuthSessionHandler";
 import { AuthenticationParamsList } from "./params/AuthenticationParamsList";
 import ROUTES from "./routes";
 
@@ -44,6 +45,11 @@ const AuthenticationStackNavigator = () => (
     <Stack.Screen
       name={ROUTES.AUTHENTICATION_IDP_LOGIN}
       component={IdpLoginScreen}
+    />
+
+    <Stack.Screen
+      name={ROUTES.AUTHENTICATION_AUTH_SESSION}
+      component={AuthSessionPage}
     />
 
     <Stack.Screen

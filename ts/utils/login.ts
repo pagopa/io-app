@@ -40,8 +40,8 @@ export const getIntentFallbackUrl = (intentUrl: string): O.Option<string> => {
 };
 
 // Prefixes for LOGIN SUCCESS/ERROR
-const LOGIN_SUCCESS_PAGE = "profile.html";
-const LOGIN_FAILURE_PAGE = "error.html";
+export const LOGIN_SUCCESS_PAGE = "profile.html";
+export const LOGIN_FAILURE_PAGE = "error.html";
 
 export const extractLoginResult = (url: string): LoginResult | undefined => {
   const urlParse = new URLParse(url, true);

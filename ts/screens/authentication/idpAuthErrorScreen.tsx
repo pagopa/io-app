@@ -1,4 +1,3 @@
-import { pot } from "@pagopa/ts-commons";
 import React from "react";
 import { View, Image, StyleSheet } from "react-native";
 import { Text as NBText } from "native-base";
@@ -42,12 +41,14 @@ export enum ErrorType {
   "LOGIN_ERROR" = "LOGIN_ERROR"
 }
 
-type IdpAuthErrorScreenType = {
-    requestStateError: ErrorType;
+export type IdpAuthErrorScreenType = {
+  requestStateError: ErrorType;
   errorCode: string | undefined;
   onCancel: (() => void) | undefined;
   onRetry: (() => void) | undefined;
 };
+
+
 
 export const IdpAuthErrorScreen = ({
   requestStateError,
