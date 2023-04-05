@@ -5,6 +5,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { NetworkError } from "../../../../utils/errors";
 import { fciClearStateRequest, fciSignaturesListRequest } from "../actions";
 import { SignatureRequestList } from "../../../../../definitions/fci/SignatureRequestList";
+import { createSelector } from "reselect";
 
 export type FciSignaturesListRequestState = pot.Pot<
   SignatureRequestList,
@@ -35,5 +36,10 @@ const reducer = (
 export const fciSignaturesListRequestSelector = (
   state: GlobalState
 ): FciSignaturesListRequestState => state.features.fci.signaturesList;
+
+export const fciSignaturesListSelector = createSelector(
+  fciSignaturesListRequestSelector,
+  signaturesList => (pot.isSome(signaturesList) ? signaturesList.value : [])
+);
 
 export default reducer;
