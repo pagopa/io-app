@@ -1,14 +1,15 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Text as NBText } from "native-base";
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import { PrescriptionData } from "../../../../../definitions/backend/PrescriptionData";
 import I18n from "../../../../i18n";
-import customVariables from "../../../../theme/variables";
 import CopyButtonComponent from "../../../CopyButtonComponent";
 import { VSpacer } from "../../../core/spacer/Spacer";
+import { Body } from "../../../core/typography/Body";
+import { H3 } from "../../../core/typography/H3";
 import { IOColors } from "../../../core/variables/IOColors";
+import { IOStyles } from "../../../core/variables/IOStyles";
 
 type Props = Readonly<{
   prescriptionData: PrescriptionData;
@@ -16,30 +17,23 @@ type Props = Readonly<{
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: customVariables.contentPadding,
     backgroundColor: IOColors.greyUltraLight,
     borderBottomWidth: 1,
     borderBottomColor: IOColors.white
   },
-  row: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+  centerContent: {
     alignContent: "center"
-  },
-  value: {
-    color: customVariables.textMessageDetailLinkColor,
-    fontSize: 18
   }
 });
 
 export default class MedicalPrescriptionIdentifiersComponent extends React.PureComponent<Props> {
   private renderItem = (label: string, value: string) => (
     <React.Fragment>
-      <NBText>{label}</NBText>
-      <View style={styles.row}>
-        <NBText style={styles.value} bold={true}>
+      <Body>{label}</Body>
+      <View style={[IOStyles.rowSpaceBetween, styles.centerContent]}>
+        <H3 weight="Bold" color="blue">
           {value}
-        </NBText>
+        </H3>
         <CopyButtonComponent textToCopy={value} />
       </View>
     </React.Fragment>
@@ -65,7 +59,7 @@ export default class MedicalPrescriptionIdentifiersComponent extends React.PureC
     );
 
     return (
-      <View style={styles.container}>
+      <View style={[IOStyles.horizontalContentPadding, styles.container]}>
         <VSpacer size={16} />
         {this.renderItem(I18n.t("messages.medical.nre"), prescriptionData.nre)}
         <VSpacer size={16} />

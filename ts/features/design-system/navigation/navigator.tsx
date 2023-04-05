@@ -8,6 +8,8 @@ import { DSTypography } from "../core/DSTypography";
 import { DSIcons } from "../core/DSIcons";
 import { DSButtons } from "../core/DSButtons";
 import { DSTextFields } from "../core/DSTextFields";
+import { DSBadges } from "../core/DSBadges";
+import { DSLegacyButtons } from "../core/DSLegacyButtons";
 import { DSLegacyPictograms } from "../core/DSLegacyPictograms";
 import { DSLegacyIllustrations } from "../core/DSLegacyIllustrations";
 import { DSPictograms } from "../core/DSPictograms";
@@ -104,6 +106,11 @@ export const DesignSystemNavigator = () => {
         />
 
         <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.COMPONENTS.BADGE.route}
+          component={DSBadges}
+        />
+
+        <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.COMPONENTS.LIST_ITEMS.route}
           component={DSListItems}
         />
@@ -132,6 +139,10 @@ export const DesignSystemNavigator = () => {
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.LEGACY.PICTOGRAMS.route}
           component={DSLegacyPictograms}
+        />
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.LEGACY.BUTTONS.route}
+          component={DSLegacyButtons}
         />
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.LEGACY.ILLUSTRATIONS.route}

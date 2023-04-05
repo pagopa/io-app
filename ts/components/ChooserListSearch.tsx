@@ -1,13 +1,13 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Option } from "fp-ts/lib/Option";
-import { Text as NBText } from "native-base";
 import React, { ComponentProps } from "react";
-import { View, Image, ImageSourcePropType, StyleSheet } from "react-native";
+import { View, Image, ImageSourcePropType } from "react-native";
 import I18n from "../i18n";
-import customVariables from "../theme/variables";
 import ChooserList from "./ChooserList";
 import ChooserListItem from "./ChooserListItem";
 import { VSpacer } from "./core/spacer/Spacer";
+import { Body } from "./core/typography/Body";
+import { IOStyles } from "./core/variables/IOStyles";
 
 type OwnProps<T> = {
   listState: ReadonlyArray<T>;
@@ -29,26 +29,6 @@ type State<T> = {
   potFilteredListStates: pot.Pot<ReadonlyArray<T>, string>;
 };
 
-const styles = StyleSheet.create({
-  emptyContentWrapper: {
-    flex: 1,
-    alignItems: "center"
-  },
-  emptyTitle: {
-    fontSize: customVariables.fontSizeBase,
-    paddingRight: customVariables.contentPadding,
-    paddingLeft: customVariables.contentPadding,
-    paddingTop: customVariables.contentPadding,
-    textAlign: "center"
-  },
-  emptySubtitle: {
-    fontSize: customVariables.fontSizeBase,
-    paddingRight: customVariables.contentPadding,
-    paddingLeft: customVariables.contentPadding,
-    paddingBottom: customVariables.contentPadding,
-    textAlign: "center"
-  }
-});
 /**
  * A component that renders a list of object that match a search text.
  */
@@ -83,17 +63,23 @@ class ChooserListSearch<T> extends React.PureComponent<Props<T>, State<T>> {
   private renderResultEmptyComponent() {
     const { noSearchResultsSourceIcon, noSearchResultsSubtitle } = this.props;
     return (
-      <View style={styles.emptyContentWrapper}>
+      <View style={[IOStyles.flex, IOStyles.alignCenter]}>
         <VSpacer size={16} />
 
-        <NBText style={styles.emptyTitle} bold={true}>
-          {I18n.t("global.search.noResultsTitle")}
-        </NBText>
+        <View style={[IOStyles.alignCenter, IOStyles.horizontalContentPadding]}>
+          <VSpacer size={24} />
+          <Body weight="SemiBold">
+            {I18n.t("global.search.noResultsTitle")}
+          </Body>
+        </View>
 
         {noSearchResultsSubtitle && (
-          <NBText style={styles.emptySubtitle}>
-            {noSearchResultsSubtitle}
-          </NBText>
+          <View
+            style={[IOStyles.alignCenter, IOStyles.horizontalContentPadding]}
+          >
+            <Body weight="SemiBold">{noSearchResultsSubtitle}</Body>
+            <VSpacer size={24} />
+          </View>
         )}
 
         <Image
