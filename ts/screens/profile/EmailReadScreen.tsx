@@ -7,7 +7,7 @@
  */
 import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
-import EmailReadScreenComponent from "../../components/EmailReadScreenComponent";
+import EmailReadComponent from "../../components/EmailReadComponent";
 import { SingleButton } from "../../components/ui/BlockButtons";
 import { useValidatedEmailModal } from "../../hooks/useValidateEmailModal";
 import I18n from "../../i18n";
@@ -41,10 +41,7 @@ const EmailReadScreen = (props: Props) => {
   };
 
   return (
-    <EmailReadScreenComponent
-      handleGoBack={handleGoBack}
-      footerProps={footerProps}
-    />
+    <EmailReadComponent handleGoBack={handleGoBack} footerProps={footerProps} />
   );
 };
 

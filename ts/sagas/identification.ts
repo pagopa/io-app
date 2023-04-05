@@ -17,7 +17,6 @@ import {
 } from "../store/actions/identification";
 import { navigateToPaginatedMessageRouterAction } from "../store/actions/navigation";
 import { clearNotificationPendingMessage } from "../store/actions/notifications";
-import { updatePin } from "../store/actions/pinset";
 import {
   paymentDeletePayment,
   runDeleteActivePaymentSaga
@@ -36,7 +35,6 @@ import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { deletePin } from "../utils/keychain";
 import NavigationService from "../navigation/NavigationService";
 import { UIMessageId } from "../store/reducers/entities/messages/types";
-import ROUTES from "../navigation/routes";
 
 type ResultAction =
   | ActionType<typeof identificationCancel>
@@ -192,11 +190,4 @@ export function* watchIdentification(
     startAndHandleIdentificationResult,
     pin
   );
-
-  // Watch for requests to update the unlock code.
-  yield* takeLatest(getType(updatePin), function* () {
-    yield* call(NavigationService.navigate, ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.PIN_SCREEN
-    });
-  });
 }
