@@ -87,9 +87,6 @@ const getComponent = (privative: PrivativePaymentMethod) => {
           fims: { enabled: true }
         } as Config
       } as BackendStatus)
-    },
-    startup: {
-      loaded: false
     }
   });
   return {

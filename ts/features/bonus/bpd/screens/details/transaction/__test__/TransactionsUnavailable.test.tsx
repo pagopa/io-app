@@ -41,10 +41,7 @@ describe("TransactionsUnavailable component", () => {
           } as Config
         } as BackendStatus)
       },
-      profile: pot.some({ is_email_validated: true }),
-      startup: {
-        loaded: false
-      }
+      profile: pot.some({ is_email_validated: true })
     });
   });
 
