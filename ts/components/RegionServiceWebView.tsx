@@ -30,6 +30,7 @@ import LoadingSpinnerOverlay from "./LoadingSpinnerOverlay";
 import AppHeader from "./ui/AppHeader";
 import IconFont from "./ui/IconFont";
 import { LightModalContextInterface } from "./ui/LightModal";
+import { Icon } from "./core/icons/Icon";
 
 type Props = {
   onWebviewClose: () => void;
@@ -82,12 +83,9 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
         </Right>
       </AppHeader>
       <Content style={styles.flex1}>
-        <IconFont
-          name={"io-complete"}
-          size={120}
-          color={customVariables.colorHighlight}
-          style={styles.selfCenter}
-        />
+        <View style={styles.selfCenter}>
+          <Icon name="ok" size={120} color="aqua" />
+        </View>
         <VSpacer size={24} />
 
         <View style={styles.itemsCenter}>

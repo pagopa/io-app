@@ -4,16 +4,13 @@ import * as React from "react";
 import { useEffect, useRef } from "react";
 import { View, Alert, StyleSheet } from "react-native";
 import { Discount } from "../../../../../../../definitions/cgn/merchants/Discount";
-import Eye from "../../../../../../../img/icons/Eye.svg";
 import { InfoBox } from "../../../../../../components/box/InfoBox";
 import { VSpacer } from "../../../../../../components/core/spacer/Spacer";
 import { BaseTypography } from "../../../../../../components/core/typography/BaseTypography";
 import { H3 } from "../../../../../../components/core/typography/H3";
 import { H4 } from "../../../../../../components/core/typography/H4";
-import { IOColors } from "../../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import ActivityIndicator from "../../../../../../components/ui/ActivityIndicator";
-import IconFont from "../../../../../../components/ui/IconFont";
 import I18n from "../../../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../../../store/hooks";
 import { clipboardSetStringWithFeedback } from "../../../../../../utils/clipboard";
@@ -24,6 +21,7 @@ import {
 } from "../../../store/actions/bucket";
 import { cgnBucketSelector } from "../../../store/reducers/bucket";
 import { isDiscountBucketCodeResponseSuccess } from "../../../types/DiscountBucketCodeResponse";
+import { Icon } from "../../../../../../components/core/icons/Icon";
 
 type Props = {
   discountId: Discount["id"];
@@ -155,12 +153,13 @@ const CgnBucketCodeContent = (props: ContentProps) => {
         onPress={handleCopyPress}
         content={bucketResponse.value.value.code}
         icon={
-          <IconFont
-            name={isTap ? "io-complete" : "io-copy"}
-            size={COPY_ICON_SIZE}
-            color={IOColors.blue}
-            style={styles.flexEnd}
-          />
+          <View style={styles.flexEnd}>
+            <Icon
+              name={isTap ? "ok" : "legCopy"}
+              size={COPY_ICON_SIZE}
+              color="blue"
+            />
+          </View>
         }
       />
     );
@@ -170,13 +169,7 @@ const CgnBucketCodeContent = (props: ContentProps) => {
     <BucketCodeHandler
       onPress={props.onRequestBucket}
       content={EMPTY_CODE_CONTENT}
-      icon={
-        <Eye
-          width={COPY_ICON_SIZE}
-          height={COPY_ICON_SIZE}
-          fill={IOColors.blue}
-        />
-      }
+      icon={<Icon size={COPY_ICON_SIZE} name="legEyeShow" color="blue" />}
     />
   );
 };
