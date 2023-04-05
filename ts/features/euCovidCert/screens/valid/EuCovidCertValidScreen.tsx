@@ -17,7 +17,6 @@ import { H5 } from "../../../../components/core/typography/H5";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import IconFont from "../../../../components/ui/IconFont";
 import I18n from "../../../../i18n";
 import { mixpanelTrack } from "../../../../mixpanel";
 import { GlobalState } from "../../../../store/reducers/types";

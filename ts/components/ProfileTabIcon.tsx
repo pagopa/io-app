@@ -2,11 +2,12 @@ import React from "react";
 import { connect } from "react-redux";
 
 import { GlobalState } from "../store/reducers/types";
-import IconFont from "./ui/IconFont";
+import { IOColors } from "./core/variables/IOColors";
+import { Icon } from "./core/icons/Icon";
 
 type OwnProps = {
   size?: number;
-  color?: string;
+  color?: IOColors;
 };
 
 type Props = OwnProps & ReturnType<typeof mapStateToProps>;
@@ -21,10 +22,12 @@ class ProfileTabIcon extends React.PureComponent<Props> {
     // when new experimental features will be avaible, pick this flag from props
     const isExperimentalFeaturesEnabled = false;
     return (
-      <IconFont
+      <Icon
         size={size}
         color={color}
-        name={isExperimentalFeaturesEnabled ? "io-profilo-exp" : "io-profilo"}
+        name={
+          isExperimentalFeaturesEnabled ? "legProfileExperiment" : "navProfile"
+        }
       />
     );
   }

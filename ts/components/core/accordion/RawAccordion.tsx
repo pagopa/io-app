@@ -13,7 +13,6 @@ import {
 import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
 import { isAndroid } from "../../../utils/platform";
-import IconFont from "../../ui/IconFont";
 import { IOStyles } from "../variables/IOStyles";
 import { Icon } from "../icons/Icon";
 

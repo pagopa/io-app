@@ -7,7 +7,6 @@ import {
   StyleSheet,
   ViewStyle
 } from "react-native";
-import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
