@@ -8,7 +8,6 @@ import I18n from "../../../../../i18n";
 import { confirmButtonProps } from "../../components/buttons/ButtonConfigurations";
 import { FooterStackButton } from "../../components/buttons/FooterStackButtons";
 import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButton";
-import { bonusVacanzeStyle } from "../../components/Styles";
 import {
   cancelBonusVacanzeRequest,
   showBonusVacanze
@@ -17,6 +16,7 @@ import {
 type Props = ReturnType<typeof mapDispatchToProps>;
 
 import image from "../../../../../../img/messages/empty-due-date-list-icon.png";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 
 /**
  * This screen informs the user that the bonus cannot be activated because another active or redeemed
@@ -38,7 +38,7 @@ const BonusAlreadyExists: React.FunctionComponent<Props> = props => {
   });
 
   return (
-    <SafeAreaView style={bonusVacanzeStyle.flex}>
+    <SafeAreaView style={IOStyles.flex}>
       <InfoScreenComponent
         image={renderInfoRasterImage(image)}
         title={title}

@@ -73,33 +73,54 @@ exports[`MessageList Item component when \`isRead\` is true should match the sna
     </View>
     <View
       style={
-        Object {
-          "flexBasis": "auto",
-          "flexDirection": "row",
-          "flexGrow": 0,
-          "flexShrink": 0,
-        }
+        Array [
+          Object {
+            "flexBasis": "auto",
+            "flexDirection": "row",
+            "flexGrow": 0,
+            "flexShrink": 0,
+          },
+          Object {
+            "alignItems": "center",
+          },
+        ]
       }
     >
+      <View
+        style={
+          Object {
+            "width": 8,
+          }
+        }
+      />
       <Text
+        color="bluegrey"
+        defaultColor="blue"
+        defaultWeight="Bold"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+          }
+        }
         numberOfLines={1}
         style={
           Array [
             Object {
-              "color": "#000",
-              "fontFamily": "System",
+              "overflow": "hidden",
+            },
+            Object {
               "fontSize": 16,
             },
             Object {
-              "fontWeight": "bold",
-              "lineHeight": 20,
-              "marginLeft": 7,
-              "overflow": "hidden",
-              "textAlign": "right",
+              "color": "#475A6D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "700",
             },
           ]
         }
-        uppercase={false}
+        weight="Bold"
       >
         10/18/21
       </Text>
@@ -116,14 +137,31 @@ exports[`MessageList Item component when \`isRead\` is true should match the sna
     }
   >
     <Text
-      style={
+      color="bluegrey"
+      defaultColor="bluegrey"
+      defaultWeight="Regular"
+      font="TitilliumWeb"
+      fontStyle={
         Object {
-          "color": "#000",
-          "fontFamily": "System",
           "fontSize": 16,
+          "lineHeight": 24,
         }
       }
-      uppercase={false}
+      style={
+        Array [
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          },
+          Object {
+            "color": "#475A6D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "400",
+          },
+        ]
+      }
+      weight="Regular"
     >
       health
     </Text>
@@ -174,6 +212,7 @@ exports[`MessageList Item component when \`isRead\` is true should match the sna
           fontStyle={
             Object {
               "fontSize": 18,
+              "lineHeight": 22,
             }
           }
           numberOfLines={2}
@@ -181,6 +220,7 @@ exports[`MessageList Item component when \`isRead\` is true should match the sna
             Array [
               Object {
                 "fontSize": 18,
+                "lineHeight": 22,
               },
               Object {
                 "color": "#17324D",
@@ -274,33 +314,54 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
     </View>
     <View
       style={
-        Object {
-          "flexBasis": "auto",
-          "flexDirection": "row",
-          "flexGrow": 0,
-          "flexShrink": 0,
-        }
+        Array [
+          Object {
+            "flexBasis": "auto",
+            "flexDirection": "row",
+            "flexGrow": 0,
+            "flexShrink": 0,
+          },
+          Object {
+            "alignItems": "center",
+          },
+        ]
       }
     >
+      <View
+        style={
+          Object {
+            "width": 8,
+          }
+        }
+      />
       <Text
+        color="bluegrey"
+        defaultColor="blue"
+        defaultWeight="Bold"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+          }
+        }
         numberOfLines={1}
         style={
           Array [
             Object {
-              "color": "#000",
-              "fontFamily": "System",
+              "overflow": "hidden",
+            },
+            Object {
               "fontSize": 16,
             },
             Object {
-              "fontWeight": "bold",
-              "lineHeight": 20,
-              "marginLeft": 7,
-              "overflow": "hidden",
-              "textAlign": "right",
+              "color": "#475A6D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "700",
             },
           ]
         }
-        uppercase={false}
+        weight="Bold"
       >
         10/18/21
       </Text>
@@ -317,14 +378,31 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
     }
   >
     <Text
-      style={
+      color="bluegrey"
+      defaultColor="bluegrey"
+      defaultWeight="Regular"
+      font="TitilliumWeb"
+      fontStyle={
         Object {
-          "color": "#000",
-          "fontFamily": "System",
           "fontSize": 16,
+          "lineHeight": 24,
         }
       }
-      uppercase={false}
+      style={
+        Array [
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          },
+          Object {
+            "color": "#475A6D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "400",
+          },
+        ]
+      }
+      weight="Regular"
     >
       health
     </Text>
@@ -423,6 +501,7 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
           fontStyle={
             Object {
               "fontSize": 18,
+              "lineHeight": 22,
             }
           }
           numberOfLines={2}
@@ -430,6 +509,7 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
             Array [
               Object {
                 "fontSize": 18,
+                "lineHeight": 22,
               },
               Object {
                 "color": "#17324D",
@@ -568,33 +648,54 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
     </View>
     <View
       style={
-        Object {
-          "flexBasis": "auto",
-          "flexDirection": "row",
-          "flexGrow": 0,
-          "flexShrink": 0,
-        }
+        Array [
+          Object {
+            "flexBasis": "auto",
+            "flexDirection": "row",
+            "flexGrow": 0,
+            "flexShrink": 0,
+          },
+          Object {
+            "alignItems": "center",
+          },
+        ]
       }
     >
+      <View
+        style={
+          Object {
+            "width": 8,
+          }
+        }
+      />
       <Text
+        color="bluegrey"
+        defaultColor="blue"
+        defaultWeight="Bold"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+          }
+        }
         numberOfLines={1}
         style={
           Array [
             Object {
-              "color": "#000",
-              "fontFamily": "System",
+              "overflow": "hidden",
+            },
+            Object {
               "fontSize": 16,
             },
             Object {
-              "fontWeight": "bold",
-              "lineHeight": 20,
-              "marginLeft": 7,
-              "overflow": "hidden",
-              "textAlign": "right",
+              "color": "#475A6D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "700",
             },
           ]
         }
-        uppercase={false}
+        weight="Bold"
       >
         10/18/21
       </Text>
@@ -611,14 +712,31 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
     }
   >
     <Text
-      style={
+      color="bluegrey"
+      defaultColor="bluegrey"
+      defaultWeight="Regular"
+      font="TitilliumWeb"
+      fontStyle={
         Object {
-          "color": "#000",
-          "fontFamily": "System",
           "fontSize": 16,
+          "lineHeight": 24,
         }
       }
-      uppercase={false}
+      style={
+        Array [
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          },
+          Object {
+            "color": "#475A6D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "400",
+          },
+        ]
+      }
+      weight="Regular"
     >
       health
     </Text>
@@ -717,6 +835,7 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
           fontStyle={
             Object {
               "fontSize": 18,
+              "lineHeight": 22,
             }
           }
           numberOfLines={2}
@@ -724,6 +843,7 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
             Array [
               Object {
                 "fontSize": 18,
+                "lineHeight": 22,
               },
               Object {
                 "color": "#17324D",
@@ -862,12 +982,17 @@ exports[`MessageList Item component when category is LEGAL_MESSAGE should match 
     </View>
     <View
       style={
-        Object {
-          "flexBasis": "auto",
-          "flexDirection": "row",
-          "flexGrow": 0,
-          "flexShrink": 0,
-        }
+        Array [
+          Object {
+            "flexBasis": "auto",
+            "flexDirection": "row",
+            "flexGrow": 0,
+            "flexShrink": 0,
+          },
+          Object {
+            "alignItems": "center",
+          },
+        ]
       }
     >
       <SvgMock
@@ -875,25 +1000,41 @@ exports[`MessageList Item component when category is LEGAL_MESSAGE should match 
         height={20}
         width={20}
       />
+      <View
+        style={
+          Object {
+            "width": 8,
+          }
+        }
+      />
       <Text
+        color="bluegrey"
+        defaultColor="blue"
+        defaultWeight="Bold"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+          }
+        }
         numberOfLines={1}
         style={
           Array [
             Object {
-              "color": "#000",
-              "fontFamily": "System",
+              "overflow": "hidden",
+            },
+            Object {
               "fontSize": 16,
             },
             Object {
-              "fontWeight": "bold",
-              "lineHeight": 20,
-              "marginLeft": 7,
-              "overflow": "hidden",
-              "textAlign": "right",
+              "color": "#475A6D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "700",
             },
           ]
         }
-        uppercase={false}
+        weight="Bold"
       >
         10/18/21
       </Text>
@@ -910,14 +1051,31 @@ exports[`MessageList Item component when category is LEGAL_MESSAGE should match 
     }
   >
     <Text
-      style={
+      color="bluegrey"
+      defaultColor="bluegrey"
+      defaultWeight="Regular"
+      font="TitilliumWeb"
+      fontStyle={
         Object {
-          "color": "#000",
-          "fontFamily": "System",
           "fontSize": 16,
+          "lineHeight": 24,
         }
       }
-      uppercase={false}
+      style={
+        Array [
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          },
+          Object {
+            "color": "#475A6D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "400",
+          },
+        ]
+      }
+      weight="Regular"
     >
       health
     </Text>
@@ -1016,6 +1174,7 @@ exports[`MessageList Item component when category is LEGAL_MESSAGE should match 
           fontStyle={
             Object {
               "fontSize": 18,
+              "lineHeight": 22,
             }
           }
           numberOfLines={2}
@@ -1023,6 +1182,7 @@ exports[`MessageList Item component when category is LEGAL_MESSAGE should match 
             Array [
               Object {
                 "fontSize": 18,
+                "lineHeight": 22,
               },
               Object {
                 "color": "#17324D",
@@ -1116,12 +1276,17 @@ exports[`MessageList Item component when category is PN should match the snapsho
     </View>
     <View
       style={
-        Object {
-          "flexBasis": "auto",
-          "flexDirection": "row",
-          "flexGrow": 0,
-          "flexShrink": 0,
-        }
+        Array [
+          Object {
+            "flexBasis": "auto",
+            "flexDirection": "row",
+            "flexGrow": 0,
+            "flexShrink": 0,
+          },
+          Object {
+            "alignItems": "center",
+          },
+        ]
       }
     >
       <SvgMock
@@ -1129,25 +1294,41 @@ exports[`MessageList Item component when category is PN should match the snapsho
         height={20}
         width={20}
       />
+      <View
+        style={
+          Object {
+            "width": 8,
+          }
+        }
+      />
       <Text
+        color="bluegrey"
+        defaultColor="blue"
+        defaultWeight="Bold"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+          }
+        }
         numberOfLines={1}
         style={
           Array [
             Object {
-              "color": "#000",
-              "fontFamily": "System",
+              "overflow": "hidden",
+            },
+            Object {
               "fontSize": 16,
             },
             Object {
-              "fontWeight": "bold",
-              "lineHeight": 20,
-              "marginLeft": 7,
-              "overflow": "hidden",
-              "textAlign": "right",
+              "color": "#475A6D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "700",
             },
           ]
         }
-        uppercase={false}
+        weight="Bold"
       >
         10/18/21
       </Text>
@@ -1164,14 +1345,31 @@ exports[`MessageList Item component when category is PN should match the snapsho
     }
   >
     <Text
-      style={
+      color="bluegrey"
+      defaultColor="bluegrey"
+      defaultWeight="Regular"
+      font="TitilliumWeb"
+      fontStyle={
         Object {
-          "color": "#000",
-          "fontFamily": "System",
           "fontSize": 16,
+          "lineHeight": 24,
         }
       }
-      uppercase={false}
+      style={
+        Array [
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          },
+          Object {
+            "color": "#475A6D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "400",
+          },
+        ]
+      }
+      weight="Regular"
     >
       health
     </Text>
@@ -1270,6 +1468,7 @@ exports[`MessageList Item component when category is PN should match the snapsho
           fontStyle={
             Object {
               "fontSize": 18,
+              "lineHeight": 22,
             }
           }
           numberOfLines={2}
@@ -1277,6 +1476,7 @@ exports[`MessageList Item component when category is PN should match the snapsho
             Array [
               Object {
                 "fontSize": 18,
+                "lineHeight": 22,
               },
               Object {
                 "color": "#17324D",
@@ -1370,33 +1570,54 @@ exports[`MessageList Item component when hasPaidBadge=false category=EU_COVID_CE
     </View>
     <View
       style={
-        Object {
-          "flexBasis": "auto",
-          "flexDirection": "row",
-          "flexGrow": 0,
-          "flexShrink": 0,
-        }
+        Array [
+          Object {
+            "flexBasis": "auto",
+            "flexDirection": "row",
+            "flexGrow": 0,
+            "flexShrink": 0,
+          },
+          Object {
+            "alignItems": "center",
+          },
+        ]
       }
     >
+      <View
+        style={
+          Object {
+            "width": 8,
+          }
+        }
+      />
       <Text
+        color="bluegrey"
+        defaultColor="blue"
+        defaultWeight="Bold"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+          }
+        }
         numberOfLines={1}
         style={
           Array [
             Object {
-              "color": "#000",
-              "fontFamily": "System",
+              "overflow": "hidden",
+            },
+            Object {
               "fontSize": 16,
             },
             Object {
-              "fontWeight": "bold",
-              "lineHeight": 20,
-              "marginLeft": 7,
-              "overflow": "hidden",
-              "textAlign": "right",
+              "color": "#475A6D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "700",
             },
           ]
         }
-        uppercase={false}
+        weight="Bold"
       >
         10/18/21
       </Text>
@@ -1415,14 +1636,31 @@ exports[`MessageList Item component when hasPaidBadge=false category=EU_COVID_CE
     }
   >
     <Text
-      style={
+      color="bluegrey"
+      defaultColor="bluegrey"
+      defaultWeight="Regular"
+      font="TitilliumWeb"
+      fontStyle={
         Object {
-          "color": "#000",
-          "fontFamily": "System",
           "fontSize": 16,
+          "lineHeight": 24,
         }
       }
-      uppercase={false}
+      style={
+        Array [
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          },
+          Object {
+            "color": "#475A6D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "400",
+          },
+        ]
+      }
+      weight="Regular"
     >
       health
     </Text>
@@ -1523,6 +1761,7 @@ exports[`MessageList Item component when hasPaidBadge=false category=EU_COVID_CE
           fontStyle={
             Object {
               "fontSize": 18,
+              "lineHeight": 22,
             }
           }
           numberOfLines={2}
@@ -1530,6 +1769,7 @@ exports[`MessageList Item component when hasPaidBadge=false category=EU_COVID_CE
             Array [
               Object {
                 "fontSize": 18,
+                "lineHeight": 22,
               },
               Object {
                 "color": "#17324D",
@@ -1645,33 +1885,54 @@ exports[`MessageList Item component when hasPaidBadge=false category=GENERIC sho
     </View>
     <View
       style={
-        Object {
-          "flexBasis": "auto",
-          "flexDirection": "row",
-          "flexGrow": 0,
-          "flexShrink": 0,
-        }
+        Array [
+          Object {
+            "flexBasis": "auto",
+            "flexDirection": "row",
+            "flexGrow": 0,
+            "flexShrink": 0,
+          },
+          Object {
+            "alignItems": "center",
+          },
+        ]
       }
     >
+      <View
+        style={
+          Object {
+            "width": 8,
+          }
+        }
+      />
       <Text
+        color="bluegrey"
+        defaultColor="blue"
+        defaultWeight="Bold"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+          }
+        }
         numberOfLines={1}
         style={
           Array [
             Object {
-              "color": "#000",
-              "fontFamily": "System",
+              "overflow": "hidden",
+            },
+            Object {
               "fontSize": 16,
             },
             Object {
-              "fontWeight": "bold",
-              "lineHeight": 20,
-              "marginLeft": 7,
-              "overflow": "hidden",
-              "textAlign": "right",
+              "color": "#475A6D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "700",
             },
           ]
         }
-        uppercase={false}
+        weight="Bold"
       >
         10/18/21
       </Text>
@@ -1688,14 +1949,31 @@ exports[`MessageList Item component when hasPaidBadge=false category=GENERIC sho
     }
   >
     <Text
-      style={
+      color="bluegrey"
+      defaultColor="bluegrey"
+      defaultWeight="Regular"
+      font="TitilliumWeb"
+      fontStyle={
         Object {
-          "color": "#000",
-          "fontFamily": "System",
           "fontSize": 16,
+          "lineHeight": 24,
         }
       }
-      uppercase={false}
+      style={
+        Array [
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          },
+          Object {
+            "color": "#475A6D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "400",
+          },
+        ]
+      }
+      weight="Regular"
     >
       health
     </Text>
@@ -1794,6 +2072,7 @@ exports[`MessageList Item component when hasPaidBadge=false category=GENERIC sho
           fontStyle={
             Object {
               "fontSize": 18,
+              "lineHeight": 22,
             }
           }
           numberOfLines={2}
@@ -1801,6 +2080,7 @@ exports[`MessageList Item component when hasPaidBadge=false category=GENERIC sho
             Array [
               Object {
                 "fontSize": 18,
+                "lineHeight": 22,
               },
               Object {
                 "color": "#17324D",
@@ -1894,33 +2174,54 @@ exports[`MessageList Item component when hasPaidBadge=true category=EU_COVID_CER
     </View>
     <View
       style={
-        Object {
-          "flexBasis": "auto",
-          "flexDirection": "row",
-          "flexGrow": 0,
-          "flexShrink": 0,
-        }
+        Array [
+          Object {
+            "flexBasis": "auto",
+            "flexDirection": "row",
+            "flexGrow": 0,
+            "flexShrink": 0,
+          },
+          Object {
+            "alignItems": "center",
+          },
+        ]
       }
     >
+      <View
+        style={
+          Object {
+            "width": 8,
+          }
+        }
+      />
       <Text
+        color="bluegrey"
+        defaultColor="blue"
+        defaultWeight="Bold"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+          }
+        }
         numberOfLines={1}
         style={
           Array [
             Object {
-              "color": "#000",
-              "fontFamily": "System",
+              "overflow": "hidden",
+            },
+            Object {
               "fontSize": 16,
             },
             Object {
-              "fontWeight": "bold",
-              "lineHeight": 20,
-              "marginLeft": 7,
-              "overflow": "hidden",
-              "textAlign": "right",
+              "color": "#475A6D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "700",
             },
           ]
         }
-        uppercase={false}
+        weight="Bold"
       >
         10/18/21
       </Text>
@@ -1939,14 +2240,31 @@ exports[`MessageList Item component when hasPaidBadge=true category=EU_COVID_CER
     }
   >
     <Text
-      style={
+      color="bluegrey"
+      defaultColor="bluegrey"
+      defaultWeight="Regular"
+      font="TitilliumWeb"
+      fontStyle={
         Object {
-          "color": "#000",
-          "fontFamily": "System",
           "fontSize": 16,
+          "lineHeight": 24,
         }
       }
-      uppercase={false}
+      style={
+        Array [
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          },
+          Object {
+            "color": "#475A6D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "400",
+          },
+        ]
+      }
+      weight="Regular"
     >
       health
     </Text>
@@ -2047,6 +2365,7 @@ exports[`MessageList Item component when hasPaidBadge=true category=EU_COVID_CER
           fontStyle={
             Object {
               "fontSize": 18,
+              "lineHeight": 22,
             }
           }
           numberOfLines={2}
@@ -2054,6 +2373,7 @@ exports[`MessageList Item component when hasPaidBadge=true category=EU_COVID_CER
             Array [
               Object {
                 "fontSize": 18,
+                "lineHeight": 22,
               },
               Object {
                 "color": "#17324D",
@@ -2085,25 +2405,24 @@ exports[`MessageList Item component when hasPaidBadge=true category=EU_COVID_CER
             "paddingTop": 3,
           },
           Object {
-            "backgroundColor": "#00C5CA",
-            "borderStyle": "solid",
-            "borderWidth": 1,
-            "flexDirection": "row",
-            "height": 25,
-            "width": 74,
+            "elevation": 0.1,
+            "paddingLeft": 8,
+            "paddingRight": 8,
           },
           Object {
             "backgroundColor": "#00C5CA",
-            "borderColor": "#00C5CA",
           },
+          null,
+          Object {},
         ]
       }
     >
       <Text
         color="bluegreyDark"
-        defaultColor="bluegreyDark"
-        defaultWeight="SemiBold"
+        defaultColor="blue"
+        defaultWeight="Bold"
         font="TitilliumWeb"
+        fontSize="regular"
         fontStyle={
           Object {
             "fontSize": 14,
@@ -2204,33 +2523,54 @@ exports[`MessageList Item component when hasPaidBadge=true category=GENERIC shou
     </View>
     <View
       style={
-        Object {
-          "flexBasis": "auto",
-          "flexDirection": "row",
-          "flexGrow": 0,
-          "flexShrink": 0,
-        }
+        Array [
+          Object {
+            "flexBasis": "auto",
+            "flexDirection": "row",
+            "flexGrow": 0,
+            "flexShrink": 0,
+          },
+          Object {
+            "alignItems": "center",
+          },
+        ]
       }
     >
+      <View
+        style={
+          Object {
+            "width": 8,
+          }
+        }
+      />
       <Text
+        color="bluegrey"
+        defaultColor="blue"
+        defaultWeight="Bold"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+          }
+        }
         numberOfLines={1}
         style={
           Array [
             Object {
-              "color": "#000",
-              "fontFamily": "System",
+              "overflow": "hidden",
+            },
+            Object {
               "fontSize": 16,
             },
             Object {
-              "fontWeight": "bold",
-              "lineHeight": 20,
-              "marginLeft": 7,
-              "overflow": "hidden",
-              "textAlign": "right",
+              "color": "#475A6D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "700",
             },
           ]
         }
-        uppercase={false}
+        weight="Bold"
       >
         10/18/21
       </Text>
@@ -2247,14 +2587,31 @@ exports[`MessageList Item component when hasPaidBadge=true category=GENERIC shou
     }
   >
     <Text
-      style={
+      color="bluegrey"
+      defaultColor="bluegrey"
+      defaultWeight="Regular"
+      font="TitilliumWeb"
+      fontStyle={
         Object {
-          "color": "#000",
-          "fontFamily": "System",
           "fontSize": 16,
+          "lineHeight": 24,
         }
       }
-      uppercase={false}
+      style={
+        Array [
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          },
+          Object {
+            "color": "#475A6D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "400",
+          },
+        ]
+      }
+      weight="Regular"
     >
       health
     </Text>
@@ -2353,6 +2710,7 @@ exports[`MessageList Item component when hasPaidBadge=true category=GENERIC shou
           fontStyle={
             Object {
               "fontSize": 18,
+              "lineHeight": 22,
             }
           }
           numberOfLines={2}
@@ -2360,6 +2718,7 @@ exports[`MessageList Item component when hasPaidBadge=true category=GENERIC shou
             Array [
               Object {
                 "fontSize": 18,
+                "lineHeight": 22,
               },
               Object {
                 "color": "#17324D",
@@ -2391,25 +2750,24 @@ exports[`MessageList Item component when hasPaidBadge=true category=GENERIC shou
             "paddingTop": 3,
           },
           Object {
-            "backgroundColor": "#00C5CA",
-            "borderStyle": "solid",
-            "borderWidth": 1,
-            "flexDirection": "row",
-            "height": 25,
-            "width": 74,
+            "elevation": 0.1,
+            "paddingLeft": 8,
+            "paddingRight": 8,
           },
           Object {
             "backgroundColor": "#00C5CA",
-            "borderColor": "#00C5CA",
           },
+          null,
+          Object {},
         ]
       }
     >
       <Text
         color="bluegreyDark"
-        defaultColor="bluegreyDark"
-        defaultWeight="SemiBold"
+        defaultColor="blue"
+        defaultWeight="Bold"
         font="TitilliumWeb"
+        fontSize="regular"
         fontStyle={
           Object {
             "fontSize": 14,
@@ -2510,33 +2868,54 @@ exports[`MessageList Item component with all the flags set to false should match
     </View>
     <View
       style={
-        Object {
-          "flexBasis": "auto",
-          "flexDirection": "row",
-          "flexGrow": 0,
-          "flexShrink": 0,
-        }
+        Array [
+          Object {
+            "flexBasis": "auto",
+            "flexDirection": "row",
+            "flexGrow": 0,
+            "flexShrink": 0,
+          },
+          Object {
+            "alignItems": "center",
+          },
+        ]
       }
     >
+      <View
+        style={
+          Object {
+            "width": 8,
+          }
+        }
+      />
       <Text
+        color="bluegrey"
+        defaultColor="blue"
+        defaultWeight="Bold"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+          }
+        }
         numberOfLines={1}
         style={
           Array [
             Object {
-              "color": "#000",
-              "fontFamily": "System",
+              "overflow": "hidden",
+            },
+            Object {
               "fontSize": 16,
             },
             Object {
-              "fontWeight": "bold",
-              "lineHeight": 20,
-              "marginLeft": 7,
-              "overflow": "hidden",
-              "textAlign": "right",
+              "color": "#475A6D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "700",
             },
           ]
         }
-        uppercase={false}
+        weight="Bold"
       >
         10/18/21
       </Text>
@@ -2553,14 +2932,31 @@ exports[`MessageList Item component with all the flags set to false should match
     }
   >
     <Text
-      style={
+      color="bluegrey"
+      defaultColor="bluegrey"
+      defaultWeight="Regular"
+      font="TitilliumWeb"
+      fontStyle={
         Object {
-          "color": "#000",
-          "fontFamily": "System",
           "fontSize": 16,
+          "lineHeight": 24,
         }
       }
-      uppercase={false}
+      style={
+        Array [
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          },
+          Object {
+            "color": "#475A6D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "400",
+          },
+        ]
+      }
+      weight="Regular"
     >
       health
     </Text>
@@ -2659,6 +3055,7 @@ exports[`MessageList Item component with all the flags set to false should match
           fontStyle={
             Object {
               "fontSize": 18,
+              "lineHeight": 22,
             }
           }
           numberOfLines={2}
@@ -2666,6 +3063,7 @@ exports[`MessageList Item component with all the flags set to false should match
             Array [
               Object {
                 "fontSize": 18,
+                "lineHeight": 22,
               },
               Object {
                 "color": "#17324D",
