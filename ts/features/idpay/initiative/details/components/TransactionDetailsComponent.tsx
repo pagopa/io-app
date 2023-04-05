@@ -1,35 +1,22 @@
 import React from "react";
-import { Image, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import {
-  OperationTypeEnum as TransactionDetailOperationTypeEnum,
-  TransactionDetailDTO
+  TransactionDetailDTO,
+  OperationTypeEnum as TransactionDetailOperationTypeEnum
 } from "../../../../../../definitions/idpay/TransactionDetailDTO";
 import { Alert } from "../../../../../components/Alert";
 import CopyButtonComponent from "../../../../../components/CopyButtonComponent";
+import ItemSeparatorComponent from "../../../../../components/ItemSeparatorComponent";
 import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import ItemSeparatorComponent from "../../../../../components/ItemSeparatorComponent";
 import I18n from "../../../../../i18n";
 import themeVariables from "../../../../../theme/variables";
 import { format } from "../../../../../utils/dates";
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
-
-// TODO: this is temporary, mapping should be done on the backend
-const operationCircuitTypeMap: Record<string, string> = {
-  "00": "Bancomat",
-  "01": "Visa",
-  "02": "Mastercard",
-  "03": "Amex",
-  "04": "JCB",
-  "05": "UnionPay",
-  "06": "Diners",
-  "07": "PostePay",
-  "08": "BancomatPay",
-  "09": "Satispay",
-  "10": "PrivateCircuit"
-};
+import { getCardLogoComponent } from "../../../common/components/CardLogo";
+import { getLabelForCircuitType } from "../../../common/labels";
 
 type TransactionDetailsProps = {
   transaction: TransactionDetailDTO;
@@ -63,10 +50,7 @@ const TransactionDetailsComponent = (props: TransactionDetailsProps) => {
       <View style={styles.detailRow}>
         <Body>{I18n.t("idpay.initiative.operationDetails.instrument")}</Body>
         <View style={styles.centerRow}>
-          <Image
-            style={styles.brandLogo}
-            source={{ uri: transaction.brandLogo }}
-          />
+          {getCardLogoComponent(transaction.brand)}
           <HSpacer size={8} />
           <Body weight="SemiBold">
             {I18n.t("idpay.initiative.operationDetails.maskedPan", {
@@ -101,7 +85,7 @@ const TransactionDetailsComponent = (props: TransactionDetailsProps) => {
       <View style={styles.detailRow}>
         <Body>{I18n.t("idpay.initiative.operationDetails.circuit")}</Body>
         <Body weight="SemiBold">
-          {operationCircuitTypeMap[transaction.circuitType]}
+          {getLabelForCircuitType(transaction.circuitType)}
         </Body>
       </View>
       <View style={styles.detailRow}>
@@ -157,10 +141,6 @@ const styles = StyleSheet.create({
   centerRow: {
     flexDirection: "row",
     alignItems: "center"
-  },
-  brandLogo: {
-    width: 24,
-    height: 16
   }
 });
 

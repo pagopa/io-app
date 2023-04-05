@@ -5,10 +5,10 @@ import { InitiativeDTO } from "../../../../../../definitions/idpay/InitiativeDTO
 import { OperationListDTO } from "../../../../../../definitions/idpay/OperationListDTO";
 import { OperationTypeEnum as RefundOperationTypeEnum } from "../../../../../../definitions/idpay/RefundOperationDTO";
 import { OperationTypeEnum as TransactionDetailOperationTypeEnum } from "../../../../../../definitions/idpay/TransactionDetailDTO";
+import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { ContentWrapper } from "../../../../../components/core/ContentWrapper";
 import { Pictogram } from "../../../../../components/core/pictograms";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
-import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import ButtonOutline from "../../../../../components/ui/ButtonOutline";
 import I18n from "../../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
@@ -127,7 +127,8 @@ export const useTimelineDetailsBottomSheet = (
         onPress={() => modal.dismiss()}
         fullWidth={true}
       />
-      <VSpacer size={24} />
+      <VSpacer size={8} />
+      <VSpacer size={48} />
     </ContentWrapper>
   );
 
