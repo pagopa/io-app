@@ -46,7 +46,7 @@ type Props = {
   footerProps: BlockButtonsProps;
 };
 
-const EmailReadScreenComponent = ({ handleGoBack, footerProps }: Props) => {
+const EmailReadComponent = ({ handleGoBack, footerProps }: Props) => {
   const optionEmail = useIOSelector(profileEmailSelector);
 
   return (
@@ -81,4 +81,4 @@ const EmailReadScreenComponent = ({ handleGoBack, footerProps }: Props) => {
   );
 };
 
-export default EmailReadScreenComponent;
+export default EmailReadComponent;

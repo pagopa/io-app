@@ -9,7 +9,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { StackActions } from "@react-navigation/native";
 import * as React from "react";
 import { Alert } from "react-native";
-import EmailReadScreenComponent from "../../components/EmailReadScreenComponent";
+import EmailReadComponent from "../../components/EmailReadComponent";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import { TwoButtonsInlineHalf } from "../../components/ui/BlockButtons";
 import { useValidatedEmailModal } from "../../hooks/useValidateEmailModal";
@@ -80,7 +80,7 @@ const OnboardingEmailReadScreen = (props: Props) => {
 
   return (
     <LoadingSpinnerOverlay isLoading={isLoading}>
-      <EmailReadScreenComponent
+      <EmailReadComponent
         handleGoBack={handleGoBack}
         footerProps={footerProps}
       />
