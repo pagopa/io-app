@@ -1,7 +1,8 @@
-import { Content, Text as NBText } from "native-base";
+import { Content } from "native-base";
 import * as React from "react";
 import { Alert } from "react-native";
 import { connect } from "react-redux";
+import { Body } from "../../components/core/typography/Body";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
@@ -97,11 +98,11 @@ class FingerprintScreen extends React.PureComponent<Props> {
           iconFont={{ name: getBiometryIconName(biometryType) }}
         />
         <Content>
-          <NBText>
+          <Body>
             {I18n.t("onboarding.fingerprint.body.enrolledText", {
               biometryType: localizeBiometricsType(biometryType)
             })}
-          </NBText>
+          </Body>
         </Content>
         <FooterWithButtons
           type={"SingleButton"}

@@ -5,10 +5,14 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { List, Text as NBText } from "native-base";
+import { List } from "native-base";
 import * as React from "react";
+import { View } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { VSpacer } from "../../components/core/spacer/Spacer";
+import { Body } from "../../components/core/typography/Body";
+import { IOStyles } from "../../components/core/variables/IOStyles";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
@@ -33,7 +37,6 @@ import {
   ProfileState
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
-import customVariables from "../../theme/variables";
 import { getProfileChannelsforServicesList } from "../../utils/profile";
 import { showToast } from "../../utils/showToast";
 
@@ -122,11 +125,14 @@ class EmailForwardingScreen extends React.Component<Props, State> {
         goBack={() => this.props.navigation.goBack()}
       >
         <ScreenContent title={I18n.t("send_email_messages.title")}>
-          <NBText style={{ paddingHorizontal: customVariables.contentPadding }}>
-            {I18n.t("send_email_messages.subtitle")}
-            <NBText bold={true}>{` ${this.props.userEmail}`}</NBText>
-            <NBText>{I18n.t("global.symbols.question")}</NBText>
-          </NBText>
+          <View style={IOStyles.horizontalContentPadding}>
+            <Body>
+              <Body>{I18n.t("send_email_messages.subtitle")}</Body>
+              <Body weight="SemiBold">{` ${this.props.userEmail}`}</Body>
+              <Body>{I18n.t("global.symbols.question")}</Body>
+            </Body>
+          </View>
+          <VSpacer size={16} />
           <List withContentLateralPadding={true}>
             {/* ALL INACTIVE */}
             {renderListItem(

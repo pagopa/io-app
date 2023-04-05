@@ -1,4 +1,3 @@
-import { Text as NBText } from "native-base";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import I18n from "../../../i18n";
@@ -6,30 +5,18 @@ import { UIMessage } from "../../../store/reducers/entities/messages/types";
 import customVariables from "../../../theme/variables";
 import { convertDateTimeToWordDistance } from "../../../utils/convertDateToWordDistance";
 import CopyButtonComponent from "../../CopyButtonComponent";
-import { VSpacer } from "../../core/spacer/Spacer";
+import { HSpacer, VSpacer } from "../../core/spacer/Spacer";
+import { Body } from "../../core/typography/Body";
+import { Label } from "../../core/typography/Label";
 import { Link } from "../../core/typography/Link";
 import { IOColors } from "../../core/variables/IOColors";
+import { IOStyles } from "../../core/variables/IOStyles";
 import EmailCallCTA from "../../screens/EmailCallCTA";
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: IOColors.greyUltraLight,
     padding: customVariables.contentPadding
-  },
-  row: {
-    flexDirection: "row",
-    justifyContent: "space-between"
-  },
-  flex: {
-    flex: 1,
-    alignSelf: "center"
-  },
-  section: {
-    flex: 1,
-    flexDirection: "row"
-  },
-  sectionValue: {
-    flex: 1
   }
 });
 
@@ -50,29 +37,21 @@ const Content = ({ message, goToServiceDetail, serviceContacts }: Props) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.section}>
-        <NBText>{I18n.t("messageDetails.dateSending")}</NBText>
-        <NBText
-          style={styles.sectionValue}
-          bold={true}
-        >{` ${convertDateTimeToWordDistance(message.createdAt)}`}</NBText>
+      <View style={[IOStyles.flex, IOStyles.row]}>
+        <Body>{I18n.t("messageDetails.dateSending")}</Body>
+        <Label color="bluegrey">{` ${convertDateTimeToWordDistance(
+          message.createdAt
+        )}`}</Label>
       </View>
 
-      <View style={styles.section}>
-        <NBText>{I18n.t("messageDetails.sender")}</NBText>
-        <NBText
-          style={styles.sectionValue}
-          bold={true}
-        >{` ${message.organizationName}`}</NBText>
+      <View style={[IOStyles.flex, IOStyles.row]}>
+        <Body>{I18n.t("messageDetails.sender")}</Body>
+        <Label color="bluegrey">{` ${message.organizationName}`}</Label>
       </View>
 
-      <View style={styles.section}>
-        <NBText>{`${I18n.t("messageDetails.service")} `}</NBText>
-        <Link
-          weight={"Bold"}
-          style={styles.sectionValue}
-          onPress={goToServiceDetail}
-        >
+      <View style={[IOStyles.flex, IOStyles.row]}>
+        <Body>{`${I18n.t("messageDetails.service")} `}</Body>
+        <Link weight={"Bold"} style={IOStyles.flex} onPress={goToServiceDetail}>
           {message.serviceName}
         </Link>
       </View>
@@ -80,17 +59,17 @@ const Content = ({ message, goToServiceDetail, serviceContacts }: Props) => {
       {hasEmailOrPhone && (
         <>
           <VSpacer size={16} />
+          <Label color="bluegrey">{I18n.t("messageDetails.question")}</Label>
 
-          <NBText bold={true}>{I18n.t("messageDetails.question")}</NBText>
           <VSpacer size={4} />
+          <Body>{I18n.t("messageDetails.answer")}</Body>
 
-          <NBText>{I18n.t("messageDetails.answer")}</NBText>
           <VSpacer size={16} />
-
-          <View style={styles.row}>
-            <NBText style={styles.flex}>{`${I18n.t("messageDetails.id")} ${
-              message.id
-            }`}</NBText>
+          <View style={IOStyles.rowSpaceBetween}>
+            <View style={[IOStyles.flex, IOStyles.selfCenter]}>
+              <Body>{`${I18n.t("messageDetails.id")} ${message.id}`}</Body>
+            </View>
+            <HSpacer size={16} />
             <CopyButtonComponent textToCopy={textToCopy} />
           </View>
           <VSpacer size={16} />
