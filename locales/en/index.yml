@@ -3214,6 +3214,11 @@ features:
       content: "Do you want to cancel the documents signing process?"
       cancel: "Cancel signing"
       confirm: "Keep signing"
+    checkService:
+      title: "Turn on messages"
+      content: "To receive signed documents you must activate the option that allows the service to send you messages. If you don't activate it, you can complete the signature but you won't receive the signed documents."
+      cancel: "Not now"
+      confirm: "Turn on"
     signatureFields:
       title: "Sign here"
       showOnDocument: "See on document"
