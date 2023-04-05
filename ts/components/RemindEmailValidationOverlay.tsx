@@ -19,10 +19,7 @@ import { IOColors } from "../components/core/variables/IOColors";
 import I18n from "../i18n";
 import NavigationService from "../navigation/NavigationService";
 import ROUTES from "../navigation/routes";
-import {
-  navigateBack,
-  navigateToEmailInsertScreen
-} from "../store/actions/navigation";
+import { navigateBack } from "../store/actions/navigation";
 import {
   abortOnboarding,
   emailAcknowledged
@@ -41,10 +38,9 @@ import {
 } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
 import customVariables from "../theme/variables";
-import { isOnboardingCompleted } from "../utils/navigation";
-import { FCI_ROUTES } from "../features/fci/navigation/routes";
 import { VSpacer } from "./core/spacer/Spacer";
 import { Body } from "./core/typography/Body";
+import { withLightModalContext } from "./helpers/withLightModalContext";
 import { IOStyles } from "./core/variables/IOStyles";
 import { ContextualHelpPropsMarkdown } from "./screens/BaseScreenComponent";
 import TopScreenComponent, {
@@ -55,15 +51,17 @@ import TouchableDefaultOpacity from "./TouchableDefaultOpacity";
 import BlockButtons from "./ui/BlockButtons";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import IconFont from "./ui/IconFont";
+import { LightModalContextInterface } from "./ui/LightModal";
 import Markdown from "./ui/Markdown";
 
 type OwnProp = {
-  onClose: () => void;
+  isOnboarding?: boolean;
 };
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
-  OwnProp;
+  LightModalContextInterface &
+  React.PropsWithChildren<OwnProp>;
 
 type State = {
   ctaSendEmailValidationText: string;
@@ -110,7 +108,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
   }
 
   private handleHardwareBack = () => {
-    if (isOnboardingCompleted()) {
+    if (!this.props.isOnboarding) {
       this.props.navigateBack();
     }
     return true;
@@ -160,12 +158,12 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     }
     this.props.dispatchAcknowledgeOnEmailValidation(O.none);
     this.props.reloadProfile();
-    if (!isOnboardingCompleted()) {
+    if (this.props.isOnboarding) {
       this.props.acknowledgeEmailInsert();
     } else {
       this.props.navigateBack();
     }
-    this.props.onClose();
+    this.props.hideModal();
   };
 
   public componentDidUpdate(prevProps: Props) {
@@ -283,7 +281,6 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
   };
 
   private renderFooter = () => {
-    const onboardingCompleted = isOnboardingCompleted();
     // if the email has been validated
     // show only a button to continuer
     if (this.state.emailHasBeenValidate) {
@@ -326,32 +323,14 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
               bordered: true,
               disabled: this.state.isLoading,
               onPress: () => {
-                /**
-                 * TODO: this is a temp workaround to complete porting a react-navigation v5
-                 * without a full rework of all the related email / isOnboardingCompleted screens
-                 * Will be removed in https://pagopa.atlassian.net/browse/IAI-139 . We want:
-                 * - Have a common component with the shared logic
-                 * - Compose the common logic with the navigation stack dependent logic and isolate the dependent navigation logic
-                 */
-                if (
-                  NavigationService.getCurrentRouteName() ===
-                    ROUTES.WALLET_HOME ||
-                  pipe(
-                    NavigationService.getCurrentRouteName(),
-                    O.fromNullable,
-                    O.map(currentRoute =>
-                      (Object.values(FCI_ROUTES) as Array<string>).includes(
-                        currentRoute
-                      )
-                    ),
-                    O.getOrElse(() => false)
-                  )
-                ) {
+                if (this.props.isOnboarding) {
+                  NavigationService.navigate(ROUTES.ONBOARDING, {
+                    screen: ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN
+                  });
+                } else {
                   NavigationService.navigate(ROUTES.PROFILE_NAVIGATOR, {
                     screen: ROUTES.INSERT_EMAIL_SCREEN
                   });
-                } else {
-                  navigateToEmailInsertScreen();
                 }
               },
               title: I18n.t("email.edit.title")
@@ -361,7 +340,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
               primary: true,
               onPress: this.handleOnClose,
               disabled: this.state.isLoading,
-              title: onboardingCompleted
+              title: !this.props.isOnboarding
                 ? I18n.t("global.buttons.ok")
                 : I18n.t("global.buttons.continue")
             }}
@@ -377,8 +356,6 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
       O.getOrElse(() => EMPTY_EMAIL)
     );
 
-    const onboardingCompleted = isOnboardingCompleted();
-
     const icon = this.state.emailHasBeenValidate
       ? "io-email-validated"
       : "io-email-to-validate";
@@ -389,7 +366,9 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
 
     return (
       <TopScreenComponent
-        {...(onboardingCompleted ? this.onMainProps : this.onBoardingProps)}
+        {...(!this.props.isOnboarding
+          ? this.onMainProps
+          : this.onBoardingProps)}
         contextualHelpMarkdown={this.contextualHelpMarkdown}
         accessibilityEvents={{ avoidNavigationEventsUsage: true }}
       >
@@ -410,7 +389,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
               onLoadEnd={this.handleOnContentLoadEnd}
               cssStyle={MARKDOWN_BODY_STYLE}
             >
-              {onboardingCompleted
+              {!this.props.isOnboarding
                 ? I18n.t("email.validate.content2", { email })
                 : I18n.t("email.validate.content1", { email })}
             </Markdown>
@@ -464,4 +443,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(RemindEmailValidationOverlay);
+)(withLightModalContext(RemindEmailValidationOverlay));
