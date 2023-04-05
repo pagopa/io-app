@@ -177,12 +177,7 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
             >
               {I18n.t("wallet.newPaymentMethod.show").toUpperCase()}
             </NBText>
-            <IconFont
-              style={{ marginTop: 1, marginLeft: 2 }}
-              name={"io-right"}
-              color={IOColors.white}
-              size={20}
-            />
+            <Icon size={20} color="white" name="chevronRightListItem" />
           </View>
         );
     }

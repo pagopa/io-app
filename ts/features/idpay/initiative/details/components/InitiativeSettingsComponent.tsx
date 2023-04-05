@@ -17,9 +17,9 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../../navigation/params/AppParamsList";
-import customVariables from "../../../../../theme/variables";
 import { IDPayConfigurationRoutes } from "../../configuration/navigation/navigator";
 import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
+import { Icon } from "../../../../../components/core/icons/Icon";
 
 type Props = {
   initiative: InitiativeDTO;
@@ -54,10 +54,7 @@ const SettingsButtonComponent = (props: SettingsButtonProps) => (
         </LabelSmall>
       )}
     </View>
-    <IconFont
-      name={"io-right"}
-      color={customVariables.contentPrimaryBackground}
-    />
+    <Icon name="chevronRightListItem" color="blue" />
   </ListItem>
 );
 

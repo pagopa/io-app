@@ -8,7 +8,7 @@ import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
-import IconFont from "./IconFont";
+import { Icon } from "../core/icons/Icon";
 import Markdown from "./Markdown";
 
 type Props = {
@@ -26,10 +26,6 @@ const styles = StyleSheet.create({
   },
   pad: {
     paddingVertical: customVariables.spacerHeight
-  },
-  headerIcon: {
-    paddingHorizontal: 10,
-    alignSelf: "center"
   },
   flex: {
     flex: 1
@@ -61,17 +57,13 @@ const Accordion: React.FunctionComponent<Props> = (props: Props) => {
         <NBText bold={true} style={styles.flex}>
           {title}
         </NBText>
-        <IconFont
-          name={"io-right"}
-          color={customVariables.brandPrimary}
-          size={24}
-          style={[
-            styles.headerIcon,
-            {
-              transform: [{ rotateZ: expanded ? "-90deg" : "90deg" }]
-            }
-          ]}
-        />
+        <View
+          style={{
+            transform: [{ rotateZ: expanded ? "0deg" : "180deg" }]
+          }}
+        >
+          <Icon name="chevronTop" color="blue" size={24} />
+        </View>
       </View>
       {!expanded && <ItemSeparatorComponent noPadded={true} />}
     </TouchableDefaultOpacity>

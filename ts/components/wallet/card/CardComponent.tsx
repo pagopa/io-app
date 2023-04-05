@@ -29,6 +29,7 @@ import { VSpacer } from "../../core/spacer/Spacer";
 import { H5 } from "../../core/typography/H5";
 import { IOColors } from "../../core/variables/IOColors";
 import IconFont from "../../ui/IconFont";
+import { Icon } from "../../core/icons/Icon";
 import styles from "./CardComponent.style";
 import Logo, { cardIcons } from "./Logo";
 import { CreditCardStyles } from "./style";
@@ -277,6 +278,8 @@ export default class CardComponent extends React.Component<Props> {
     const footerTextStyle = isFullCard
       ? styles.transactionsText
       : styles.pickPaymentText;
+
+    const footerIconColor: IOColors = isFullCard ? "blue" : "white";
     const text = I18n.t(
       isFullCard ? "cardComponent.detailsAndTransactions" : "cardComponent.pick"
     );
@@ -289,11 +292,7 @@ export default class CardComponent extends React.Component<Props> {
         onPress={this.handleOnCardPress}
       >
         <NBText style={footerTextStyle}>{text}</NBText>
-        <IconFont
-          name={"io-right"}
-          size={variables.iconSize2}
-          style={footerTextStyle}
-        />
+        <Icon name="chevronRightListItem" size={20} color={footerIconColor} />
       </ButtonDefaultOpacity>
     );
   }

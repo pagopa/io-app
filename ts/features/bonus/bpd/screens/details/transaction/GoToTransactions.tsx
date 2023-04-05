@@ -5,6 +5,7 @@ import ButtonDefaultOpacity from "../../../../../../components/ButtonDefaultOpac
 import { Label } from "../../../../../../components/core/typography/Label";
 import I18n from "../../../../../../i18n";
 import { Icon } from "../../../../../../components/core/icons";
+import { HSpacer } from "../../../../../../components/core/spacer/Spacer";
 
 type Props = { goToTransactions: () => void };
 
@@ -30,6 +31,7 @@ const GoToTransactions: React.FunctionComponent<Props> = props => (
     }}
   >
     <Icon name="transactions" size={24} color="white" />
+    <HSpacer size={8} />
     <Label color={"white"}>
       {I18n.t("bonus.bpd.details.transaction.goToButton")}
     </Label>

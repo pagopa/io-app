@@ -15,6 +15,7 @@ import customVariables from "../../../theme/variables";
 import { isAndroid } from "../../../utils/platform";
 import IconFont from "../../ui/IconFont";
 import { IOStyles } from "../variables/IOStyles";
+import { Icon } from "../icons/Icon";
 
 // TODO: handle external initial open/closed state
 type Props = {
@@ -65,7 +66,7 @@ export const RawAccordion: React.FunctionComponent<Props> = props => {
   const arrowAngle = shouldAnimate
     ? animatedController.interpolate({
         inputRange: [0, 1],
-        outputRange: ["-90deg", "-270deg"]
+        outputRange: ["0deg", "-180deg"]
       })
     : getDegree(isOpen);
 
@@ -110,11 +111,7 @@ export const RawAccordion: React.FunctionComponent<Props> = props => {
               transform: [{ rotateZ: arrowAngle }]
             }}
           >
-            <IconFont
-              name={"io-right"}
-              color={customVariables.brandPrimary}
-              size={24}
-            />
+            <Icon name="chevronTop" color="blue" size={24} />
           </Animated.View>
         </View>
       </TouchableWithoutFeedback>

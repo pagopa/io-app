@@ -300,11 +300,11 @@ export const IOIcons = {
   history: IconHistory,
   legHistory: LegIconHistory,
   edit: IconEdit,
-  legEdit: LegIconEdit /* io-edit */,
+  legEdit: LegIconEdit,
   battery: IconBattery,
   legBattery: LegIconBattery,
   trashcan: IconTrashcan,
-  legTrashcan: LegIconTrashcan /* io-trash */,
+  legTrashcan: LegIconTrashcan,
   calendar: IconCalendar,
   legCalendar: LegIconCalendar /* io-calendar */ /* io-calendario */,
   profile: IconProfile,
@@ -312,7 +312,7 @@ export const IOIcons = {
   profileAlt: IconProfileAlt /* io-titolare */,
   legProfile: LegIconProfile,
   profileExperiment: IconProfileExperiment,
-  legProfileExperiment: LegIconProfileExperiment /* io-profilo-exp */,
+  legProfileExperiment: LegIconProfileExperiment,
   magicWand: IconMagicWand,
   legMagicWand: LegIconMagicWand,
   starFilled: IconStarFilled,
@@ -394,6 +394,7 @@ export type IOIconsProps = {
   color?: IOColors;
   size?: number | "100%";
   testID?: string;
+  accessible?: boolean;
 };
 
 export type SVGIconProps = {

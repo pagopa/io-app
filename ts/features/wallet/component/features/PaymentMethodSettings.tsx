@@ -35,9 +35,9 @@ const PaymentMethodSettings = (props: Props): React.ReactElement => (
   <>
     <View style={styles.row}>
       <View style={styles.icon}>
-        <Icon name="legCoggle" size={20} color="bluegreyDark" />
+        <Icon name="legCoggle" size={20} color="bluegrey" />
       </View>
-      <HSpacer size={16} />
+      <HSpacer size={8} />
       <H3 color={"bluegrey"}>{I18n.t("global.buttons.settings")}</H3>
     </View>
     <PagoPaPaymentCapability paymentMethod={props.paymentMethod} />

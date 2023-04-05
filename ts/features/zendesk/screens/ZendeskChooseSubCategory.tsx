@@ -14,11 +14,9 @@ import { H1 } from "../../../components/core/typography/H1";
 import { H4 } from "../../../components/core/typography/H4";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import IconFont from "../../../components/ui/IconFont";
 import I18n from "../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../store/hooks";
-import customVariables from "../../../theme/variables";
 import { getFullLocale } from "../../../utils/locale";
 import {
   addTicketCustomField,
@@ -30,6 +28,7 @@ import {
   zendeskSupportFailure
 } from "../store/actions";
 import { zendeskSelectedCategorySelector } from "../store/reducers";
+import { Icon } from "../../../components/core/icons/Icon";
 
 export type ZendeskChooseSubCategoryNavigationParams = {
   assistanceForPayment: boolean;
@@ -109,11 +108,7 @@ const ZendeskChooseSubCategory = (props: Props) => {
             {subCategory.description[locale]}
           </H4>
           <View>
-            <IconFont
-              name={"io-right"}
-              size={24}
-              color={customVariables.contentPrimaryBackground}
-            />
+            <Icon name="chevronRightListItem" size={24} color="blue" />
           </View>
         </View>
       </ListItem>

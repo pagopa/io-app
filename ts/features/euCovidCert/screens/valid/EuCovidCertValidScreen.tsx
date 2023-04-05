@@ -47,6 +47,7 @@ import { BaseEuCovidCertificateLayout } from "../BaseEuCovidCertificateLayout";
 import { EUCovidContext } from "../EuCovidCertificateRouterScreen";
 import { EuCovidCertHeader } from "../../components/EuCovidCertHeader";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
+import { Icon } from "../../../../components/core/icons/Icon";
 
 type OwnProps = {
   validCertificate: ValidCertificate;
@@ -159,7 +160,7 @@ const addBottomSheetItem = (config: {
             {config.subTitle}
           </H5>
         </View>
-        <IconFont name={"io-right"} color={IOColors.blue} size={24} />
+        <Icon name="chevronRightListItem" size={24} color="blue" />
       </View>
     </View>
     <VSpacer size={40} />

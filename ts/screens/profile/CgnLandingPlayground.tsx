@@ -10,6 +10,7 @@ import { H5 } from "../../components/core/typography/H5";
 import WebviewComponent from "../../components/WebviewComponent";
 import { IOColors } from "../../components/core/variables/IOColors";
 import { VSpacer } from "../../components/core/spacer/Spacer";
+import { Icon } from "../../components/core/icons/Icon";
 
 const styles = StyleSheet.create({
   textInput: { padding: 1, borderWidth: 1, height: 30, color: IOColors.black },
@@ -63,12 +64,7 @@ const CgnLandingPlayground = () => {
                 setLoadUri(navigationURI);
               }}
             >
-              <IconFont
-                name={"io-right"}
-                style={{
-                  color: IOColors.white
-                }}
-              />
+              <Icon name="chevronRight" size={24} color="white" />
             </ButtonDefaultOpacity>
           </View>
           <VSpacer size={16} />

@@ -16,11 +16,9 @@ import { H1 } from "../../../../../components/core/typography/H1";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { H5 } from "../../../../../components/core/typography/H5";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
-import IconFont from "../../../../../components/ui/IconFont";
 import I18n from "../../../../../i18n";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import {
@@ -32,6 +30,7 @@ import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { cancelButtonProps } from "../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { PaymentMethodOnboardingCoBadgeParamsList } from "../navigation/params";
 import { walletAddCoBadgeStart } from "../store/actions";
+import { Icon } from "../../../../../components/core/icons/Icon";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> & {
@@ -84,7 +83,7 @@ const renderListItem = (cardPathItem: ListRenderItemInfo<IAddCardPath>) => (
             {cardPathItem.item.title}
           </H3>
         </View>
-        <IconFont name={"io-right"} color={IOColors.blue} size={24} />
+        <Icon name="chevronRightListItem" color="blue" size={24} />
       </View>
       <H5
         color={"bluegrey"}

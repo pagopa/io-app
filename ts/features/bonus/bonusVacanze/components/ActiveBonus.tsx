@@ -6,11 +6,11 @@ import { BonusActivationWithQrCode } from "../../../../../definitions/bonus_vaca
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
-import IconFont from "../../../../components/ui/IconFont";
 import I18n from "../../../../i18n";
 import customVariables from "../../../../theme/variables";
 import { formatNumberAmount } from "../../../../utils/stringBuilder";
 import { validityInterval } from "../utils/bonus";
+import { Icon } from "../../../../components/core/icons/Icon";
 
 type Props = {
   bonus: BonusActivationWithQrCode;
@@ -112,7 +112,7 @@ const ActiveBonus: React.FunctionComponent<Props> = (props: Props) => {
           </NBText>
         </View>
         <View style={styles.icon}>
-          <IconFont name="io-right" size={ICON_WIDTH} color={IOColors.white} />
+          <Icon name="chevronRightListItem" size={ICON_WIDTH} color="white" />
         </View>
       </View>
     </TouchableDefaultOpacity>
