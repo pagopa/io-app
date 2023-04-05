@@ -5,6 +5,7 @@ import { isActionOf } from "typesafe-actions";
 import { pipe } from "fp-ts/lib/function";
 import { PublicSession } from "../../../definitions/backend/PublicSession";
 import { SessionToken } from "../../types/SessionToken";
+import { TestIdpId } from "../../sagas/testLoginSaga";
 import {
   idpSelected,
   loadSupportToken,
@@ -191,10 +192,8 @@ export const tokenFromNameSelector = (
       )
   );
 
-export const identityProviderSelector = (state: GlobalState) =>
-  isLoggedInWithSessionInfo(state.authentication)
-    ? state.authentication.idp
-    : undefined;
+export const isLoggedInWithTestIdpSelector = (state: GlobalState) =>
+  isLoggedIn(state.authentication) && state.authentication.idp.id === TestIdpId;
 
 export const selectedIdentityProviderSelector = (state: GlobalState) =>
   isLoggedOutWithIdp(state.authentication)

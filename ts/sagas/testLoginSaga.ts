@@ -9,7 +9,6 @@ import { PasswordLogin } from "../../definitions/backend/PasswordLogin";
 import { BackendPublicClient } from "../api/backendPublic";
 import { apiUrlPrefix } from "../config";
 import {
-  idpSelected,
   loginFailure,
   loginSuccess,
   testLoginRequest
@@ -17,13 +16,17 @@ import {
 import { SessionToken } from "../types/SessionToken";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { convertUnknownToError } from "../utils/errors";
-import { IdentityProvider } from "../models/IdentityProvider";
+import {
+  IdentityProvider,
+  IdentityProviderId
+} from "../models/IdentityProvider";
 
-const IdpTest: IdentityProvider = {
-  id: "test",
+export const TestIdpId = "testIdp";
+export const TestIdp: IdentityProvider = {
+  id: TestIdpId as IdentityProviderId,
   name: "Test Idp",
-  logo: "",
-  entityID: "testIdp",
+  logo: "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/spid/idps/spid.png",
+  entityID: TestIdpId,
   profileUrl: "",
   isTestIdp: true
 };
@@ -53,12 +56,11 @@ function* handleTestLogin({
 
     if (E.isRight(testLoginResponse)) {
       if (testLoginResponse.right.status === 200) {
-        yield* put(idpSelected(IdpTest));
         yield* put(
           loginSuccess({
             token: testLoginResponse.right.value
               .token as string as SessionToken,
-            idp: "idp"
+            idp: TestIdpId
           })
         );
         return;
@@ -68,7 +70,7 @@ function* handleTestLogin({
     throw new Error(readableReport(testLoginResponse.left));
   } catch (e) {
     yield* put(
-      loginFailure({ error: convertUnknownToError(e), idp: "testIdp" })
+      loginFailure({ error: convertUnknownToError(e), idp: TestIdpId })
     );
   }
 }

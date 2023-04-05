@@ -33,6 +33,7 @@ import { H1 } from "../../components/core/typography/H1";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { VSpacer } from "../../components/core/spacer/Spacer";
+import { TestIdp } from "../../sagas/testLoginSaga";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -93,6 +94,7 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
   useEffect(() => {
     if (counter === TAPS_TO_OPEN_TESTIDP) {
       setCounter(0);
+      setSelectedIdp(TestIdp);
       navigation.navigate(ROUTES.AUTHENTICATION, {
         screen: ROUTES.AUTHENTICATION_IDP_TEST
       });
