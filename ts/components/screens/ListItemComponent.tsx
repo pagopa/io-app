@@ -1,18 +1,23 @@
-import { Badge, ListItem, Text as NBText } from "native-base";
+import { ListItem } from "native-base";
 import * as React from "react";
 import {
+  Text,
   View,
   AccessibilityRole,
-  Platform,
   StyleProp,
   StyleSheet,
   ViewStyle,
   AccessibilityState
 } from "react-native";
 import Switch from "../../components/ui/Switch";
-import { makeFontStyleObject } from "../../theme/fonts";
 import customVariables from "../../theme/variables";
+import { makeFontStyleObject } from "../core/fonts";
+import { Icon } from "../core/icons";
+import { IOBadge } from "../core/IOBadge";
+import { HSpacer } from "../core/spacer/Spacer";
+import { Body } from "../core/typography/Body";
 import { IOColors } from "../core/variables/IOColors";
+import { IOStyles } from "../core/variables/IOStyles";
 import IconFont from "./../ui/IconFont";
 import { BadgeComponent } from "./BadgeComponent";
 
@@ -55,13 +60,14 @@ const styles = StyleSheet.create({
     paddingRight: 0,
     borderBottomColor: customVariables.itemSeparator
   },
+  listItemText: {
+    fontSize: 18,
+    lineHeight: 24,
+    ...makeFontStyleObject("SemiBold", undefined, "TitilliumWeb")
+  },
   spacingBase: {
     paddingTop: 6,
     paddingRight: customVariables.spacingBase
-  },
-  flexRow: {
-    flexDirection: "row",
-    justifyContent: "space-between"
   },
   flexRow2: {
     flexDirection: "row",
@@ -73,35 +79,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     flex: 1
   },
-  serviceName: {
-    fontSize: 18,
-    color: customVariables.textColorDark,
-    ...makeFontStyleObject(Platform.select, "600"),
-    alignSelf: "flex-start",
-    paddingRight: 16
-  },
-  disabledItem: {
-    color: IOColors.grey
-  },
-  description: {
-    paddingRight: PADDING_R_DESCRIPTION,
-    alignSelf: "flex-start"
-  },
-  center: {
-    alignSelf: "center"
-  },
   alignToStart: {
     alignSelf: "flex-start"
-  },
-  badgeStyle: {
-    backgroundColor: customVariables.brandPrimary,
-    borderColor: IOColors.white,
-    borderWidth: 2,
-    elevation: 0.1,
-    shadowColor: IOColors.white,
-    justifyContent: "center",
-    alignContent: "center",
-    marginTop: -3
   }
 });
 
@@ -112,7 +91,7 @@ export default class ListItemComponent extends React.Component<Props> {
       this.props.iconName === undefined && this.props.hideIcon !== true;
     return (
       <ListItem
-        style={[styles.listItem, styles.flexRow, this.props.style]}
+        style={[styles.listItem, IOStyles.rowSpaceBetween, this.props.style]}
         onPress={this.props.onPress}
         onLongPress={this.props.onLongPress}
         first={this.props.isFirstItem}
@@ -123,26 +102,41 @@ export default class ListItemComponent extends React.Component<Props> {
         testID={this.props.testID}
       >
         <View style={styles.flexColumn}>
-          <View style={styles.flexRow}>
+          <View style={IOStyles.rowSpaceBetween}>
             <View style={styles.flexRow2}>
               {this.props.hasBadge && (
                 <View style={styles.spacingBase}>
                   <BadgeComponent />
                 </View>
               )}
-              <NBText
-                numberOfLines={2}
+
+              <Text
                 style={[
-                  styles.serviceName,
-                  this.props.isItemDisabled && styles.disabledItem
+                  styles.listItemText,
+                  {
+                    color: this.props.isItemDisabled
+                      ? IOColors.grey
+                      : IOColors.bluegreyDark
+                  }
                 ]}
+                numberOfLines={2}
               >
                 {this.props.title}
-              </NBText>
+              </Text>
+              <HSpacer size={16} />
+
               {this.props.titleBadge && (
-                <Badge style={styles.badgeStyle}>
-                  <NBText badge={true}>{this.props.titleBadge}</NBText>
-                </Badge>
+                <View style={{ marginTop: 4 }}>
+                  {/* Use marginTop to align the badge
+                  to the text. TODO: Replace it with a
+                  more robust approach. */}
+                  <IOBadge
+                    text={this.props.titleBadge}
+                    small={true}
+                    labelColor={"white"}
+                  />
+                  <HSpacer size={4} />
+                </View>
               )}
             </View>
             {showDefaultIcon &&
@@ -156,18 +150,18 @@ export default class ListItemComponent extends React.Component<Props> {
                   importantForAccessibility="no-hide-descendants"
                 />
               ) : (
-                <IconFont
-                  name={"io-right"}
+                <Icon
+                  name="chevronRightListItem"
                   size={ICON_SIZE}
-                  color={customVariables.contentPrimaryBackground}
+                  color="blue"
                 />
               ))}
           </View>
           {this.props.subTitle && (
-            <NBText
+            <Body
               numberOfLines={this.props.useExtendedSubTitle ? undefined : 1}
               style={[
-                styles.description,
+                { alignSelf: "flex-start" },
                 {
                   paddingRight:
                     this.props.paddingRightDescription || PADDING_R_DESCRIPTION
@@ -175,7 +169,7 @@ export default class ListItemComponent extends React.Component<Props> {
               ]}
             >
               {this.props.subTitle}
-            </NBText>
+            </Body>
           )}
         </View>
         {this.props.iconName !== undefined && this.props.hideIcon !== true && (
@@ -183,7 +177,7 @@ export default class ListItemComponent extends React.Component<Props> {
             <IconFont
               name={this.props.iconName}
               size={this.props.smallIconSize ? ICON_SIZE : ICON_SIZE * 2}
-              style={styles.center}
+              style={IOStyles.selfCenter}
               color={customVariables.contentPrimaryBackground}
             />
           </View>

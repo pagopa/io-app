@@ -97,8 +97,10 @@ const BonusPercentageSlider = ({
     </View>
   );
 };
+
 const formatNumberRightSign = (amount: number) =>
   `${formatNumberAmount(amount, false)} €`;
+
 const InitiativeCardComponent = (props: Props) => {
   const { initiativeName, endDate, status } = props.initiative;
   /*

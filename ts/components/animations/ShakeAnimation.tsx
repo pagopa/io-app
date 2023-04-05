@@ -23,7 +23,7 @@ export class ShakeAnimation extends React.PureComponent<Props> {
       toValue: 1,
       duration: this.props.duration,
       useNativeDriver: true,
-      easing: Easing.linear
+      easing: Easing.ease
     }).start();
   };
 
