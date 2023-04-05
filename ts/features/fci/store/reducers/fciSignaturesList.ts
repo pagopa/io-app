@@ -1,11 +1,11 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
+import { createSelector } from "reselect";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { NetworkError } from "../../../../utils/errors";
 import { fciClearStateRequest, fciSignaturesListRequest } from "../actions";
 import { SignatureRequestList } from "../../../../../definitions/fci/SignatureRequestList";
-import { createSelector } from "reselect";
 
 export type FciSignaturesListRequestState = pot.Pot<
   SignatureRequestList,
