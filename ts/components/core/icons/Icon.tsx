@@ -284,7 +284,7 @@ export const IOIcons = {
   locationAndroid: IconLocationAndroid,
   legLocation: LegIconLocation,
   coggle: IconCoggle,
-  legCoggle: LegIconCoggle /* io-coggle */ /* io-preferenze */,
+  legCoggle: LegIconCoggle,
   warningFilled: IconWarningFilled,
   legWarning: LegIconWarning /* io-warning */,
   notice: IconNotice /* io-notice */,

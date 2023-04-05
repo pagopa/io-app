@@ -4,10 +4,8 @@ import { View, ActivityIndicator } from "react-native";
 import I18n from "../../../i18n";
 import { TestID } from "../../../types/WithTestID";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
-import IconFont from "../../ui/IconFont";
 import Switch from "../../ui/Switch";
 import { calculateSlop } from "../accessibility";
-import { IOColors } from "../variables/IOColors";
 import { IOStyleVariables } from "../variables/IOStyleVariables";
 import { Icon } from "../icons/Icon";
 
