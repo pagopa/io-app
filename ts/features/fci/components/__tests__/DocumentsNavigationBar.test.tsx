@@ -8,8 +8,8 @@ import { IOColors } from "../../../../components/core/variables/IOColors";
 type Props = {
   titleRight: string;
   titleLeft: string;
-  iconRightColor?: string;
-  iconLeftColor?: string;
+  iconRightColor?: IOColors;
+  iconLeftColor?: IOColors;
   disabled?: boolean;
   indicatorPosition: IndicatorPositionEnum;
   onPrevious: () => void;
@@ -21,8 +21,8 @@ describe("Test DocumentsNavigationBar component", () => {
     const props: Props = {
       titleRight: "Pagina 1 di 2",
       titleLeft: "Documento 1 di 2",
-      iconRightColor: IOColors.blue,
-      iconLeftColor: IOColors.blue,
+      iconRightColor: IOColors.blue as IOColors,
+      iconLeftColor: IOColors.blue as IOColors,
       indicatorPosition: "left",
       onPrevious: jest.fn(),
       onNext: jest.fn()
