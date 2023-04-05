@@ -1,12 +1,12 @@
 import { Body, List, ListItem, Text as NBText } from "native-base";
 import * as React from "react";
 import { useState } from "react";
-import { Platform } from "react-native";
+import { Platform, View } from "react-native";
 import I18n from "../../i18n";
-import customVariables from "../../theme/variables";
 import { VSpacer } from "../core/spacer/Spacer";
-import IconFont from "../ui/IconFont";
 import Markdown from "../ui/Markdown";
+import { IOIcons, Icon } from "../core/icons";
+import { IOColors } from "../core/variables/IOColors";
 
 type Props = {
   hasCieApiLevelSupport: boolean;
@@ -14,10 +14,10 @@ type Props = {
 };
 
 const ICON_SIZE = 24;
-const okColor = customVariables.brandSuccess;
-const koColor = customVariables.brandDanger;
-const okIcon = "io-complete";
-const koIcon = "io-error";
+const okColor: IOColors = "green";
+const koColor: IOColors = "red";
+const okIcon: IOIcons = "ok";
+const koIcon: IOIcons = "legError";
 const markDownElements = 2;
 const CieNotSupported: React.FunctionComponent<Props> = props => {
   const [markdownLoaded, setMarkdownLoaded] = useState(0);
@@ -38,9 +38,9 @@ const CieNotSupported: React.FunctionComponent<Props> = props => {
           {markdownLoaded === markDownElements && (
             <List>
               <ListItem>
-                <IconFont
-                  name={props.hasCieApiLevelSupport ? okIcon : koIcon}
+                <Icon
                   size={ICON_SIZE}
+                  name={props.hasCieApiLevelSupport ? okIcon : koIcon}
                   color={props.hasCieApiLevelSupport ? okColor : koColor}
                 />
                 <Body>
@@ -52,12 +52,13 @@ const CieNotSupported: React.FunctionComponent<Props> = props => {
                 </Body>
               </ListItem>
               <ListItem>
-                <IconFont
-                  style={{ alignItems: "flex-start" }}
-                  name={props.hasCieNFCFeature ? okIcon : koIcon}
-                  size={ICON_SIZE}
-                  color={props.hasCieNFCFeature ? okColor : koColor}
-                />
+                <View style={{ alignItems: "flex-start" }}>
+                  <Icon
+                    size={ICON_SIZE}
+                    name={props.hasCieNFCFeature ? okIcon : koIcon}
+                    color={props.hasCieNFCFeature ? okColor : koColor}
+                  />
+                </View>
                 <Body>
                   <NBText>
                     {I18n.t(
