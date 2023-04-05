@@ -269,7 +269,7 @@ export const IOIcons = {
   legAdd: LegIconAdd,
   completed: IconCompleted,
   legCompleted: LegIconCompleted /* io-tick-big */,
-  success: IconSuccess /* io-success */,
+  success: IconSuccess,
   ok: IconOk /* io-complete */,
   creditCard: IconCreditCard,
   legCreditCard: LegIconCreditCard /* io-carta */,
