@@ -158,7 +158,6 @@ import LegIconCompleted from "./svg/LegIconCompleted";
 import LegIconCreditCard from "./svg/LegIconCreditCard";
 import LegIconBonus from "./svg/LegIconBonus";
 import LegIconDocumentAttachment from "./svg/LegIconDocumentAttachment";
-import LegIconTransactions from "./svg/LegIconTransactions";
 import LegIconAmount from "./svg/LegIconAmount";
 import LegIconCoggle from "./svg/LegIconCoggle";
 import LegIconLocation from "./svg/LegIconLocation";
@@ -275,8 +274,7 @@ export const IOIcons = {
   legCreditCard: LegIconCreditCard /* io-carta */,
   bonus: IconBonus,
   legBonus: LegIconBonus,
-  transactions: IconTransactions /* io-transactions */,
-  legTransactions: LegIconTransactions,
+  transactions: IconTransactions,
   amount: IconAmount,
   legAmount: LegIconAmount,
   psp: IconPSP,

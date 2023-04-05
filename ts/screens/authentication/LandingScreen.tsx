@@ -15,7 +15,7 @@ import sessionExpiredImg from "../../../img/landing/session_expired.png";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import CieNotSupported from "../../components/cie/CieNotSupported";
 import ContextualInfo from "../../components/ContextualInfo";
-import { VSpacer } from "../../components/core/spacer/Spacer";
+import { HSpacer, VSpacer } from "../../components/core/spacer/Spacer";
 import { Link } from "../../components/core/typography/Link";
 import { IOColors } from "../../components/core/variables/IOColors";
 import { IOStyles } from "../../components/core/variables/IOStyles";
@@ -303,6 +303,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
             }
           >
             <Icon name={isCieSupported ? "cie" : "navProfile"} color="white" />
+            <HSpacer size={8} />
             <NBText>
               {isCieSupported
                 ? I18n.t("authentication.landing.loginCie")
@@ -337,6 +338,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
               name={this.isCieSupported() ? "navProfile" : "cie"}
               color="white"
             />
+            <HSpacer size={8} />
             <NBText>
               {this.isCieSupported()
                 ? I18n.t("authentication.landing.loginSpid")
