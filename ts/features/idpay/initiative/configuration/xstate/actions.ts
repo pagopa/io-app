@@ -9,7 +9,6 @@ import { showToast } from "../../../../../utils/showToast";
 import { IDPayDetailsRoutes } from "../../details/navigation";
 import { IDPayConfigurationRoutes } from "../navigation/navigator";
 import { Context } from "./context";
-import { InitiativeFailureType } from "./failure";
 
 const createActionsImplementation = (
   navigation: IOStackNavigationProp<AppParamsList, keyof AppParamsList>
@@ -82,14 +81,10 @@ const createActionsImplementation = (
     if (context.failure === undefined) {
       return;
     }
-    if (context.failure in InitiativeFailureType) {
-      showToast(
-        I18n.t(`idpay.configuration.failureStates.${context.failure}`),
-        "danger"
-      );
-    } else {
-      showToast(I18n.t("idpay.configuration.failureStates.GENERIC"), "danger");
-    }
+    showToast(
+      I18n.t(`idpay.configuration.failureStates.${context.failure}`),
+      "danger"
+    );
   };
 
   const showUpdateIbanToast = () => {
