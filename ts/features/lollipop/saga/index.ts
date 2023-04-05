@@ -10,20 +10,28 @@ import {
   getPublicKey,
   PublicKey
 } from "@pagopa/io-react-native-crypto";
-import { jwkThumbprintByEncoding } from "jwk-thumbprint";
 import { lollipopKeyTagSelector } from "../store/reducers/lollipop";
 import {
   lollipopKeyTagSave,
   lollipopRemovePublicKey,
   lollipopSetPublicKey
 } from "../store/actions/lollipop";
-import { KeyInfo, toCryptoError } from "../utils/crypto";
+import {
+  KeyInfo,
+  toBase64EncodedThumbprint,
+  toCryptoError
+} from "../utils/crypto";
+import { DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER } from "../utils/login";
+import { sessionInvalid } from "../../../store/actions/authentication";
+import { restartCleanApplication } from "../../../sagas/commons";
+
+import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
 import {
   trackLollipopKeyGenerationFailure,
   trackLollipopKeyGenerationSuccess
 } from "../../../utils/analytics";
-import { DEFAULT_LOLLIPOP_HASH_ALGORITHM_CLIENT } from "../utils/login";
-import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
+import { PublicSession } from "../../../../definitions/backend/PublicSession";
+import { isLoggedOutWithoutIdpSelector } from "../../../store/reducers/authentication";
 
 export function* generateLollipopKeySaga() {
   const maybeOldKeyTag = yield* select(lollipopKeyTagSelector);
@@ -61,6 +69,48 @@ export function* deleteCurrentLollipopKeyAndGenerateNewKeyTag() {
   yield* put(lollipopKeyTagSave({ keyTag: newKeyTag }));
 }
 
+export function* checkLollipopSessionAssertionAndInvalidateIfNeeded(
+  maybePublicKey: O.Option<PublicKey>,
+  maybeSessionInformation: O.Option<PublicSession>
+) {
+  // When using the test idp to login, no authentication data nor lollipop key are saved / used / sent.
+  // Therefore, we must not check for the lollipop assertion,
+  // when this function is called after a successful test idp login,
+  // otherwise the (test) user is immediately logged-out.
+  // TODO: this is a temporary workaround, we should find a better way to handle test accounts.
+  // See: https://pagopa.atlassian.net/browse/LLK-72
+  const areWeLoggedWithTestIdp = yield* select(isLoggedOutWithoutIdpSelector);
+  if (areWeLoggedWithTestIdp) {
+    return;
+  }
+
+  const lollipopCheckResult = pipe(
+    maybeSessionInformation,
+    O.chainNullableK(
+      sessionInformation => sessionInformation.lollipopAssertionRef
+    ),
+    O.chain(sessionLollipopAssertionRef =>
+      pipe(
+        maybePublicKey,
+        O.map(publicKey =>
+          pipe(
+            toBase64EncodedThumbprint(publicKey),
+            publicKeyThumbprint =>
+              `${DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER}-${publicKeyThumbprint}`,
+            localLollipopAssertionRef =>
+              localLollipopAssertionRef === sessionLollipopAssertionRef
+          )
+        )
+      )
+    ),
+    O.getOrElse(() => false)
+  );
+
+  if (!lollipopCheckResult) {
+    yield* put(sessionInvalid());
+    yield* call(restartCleanApplication);
+  }
+}
 /**
  * Generates a new crypto key pair.
  */
@@ -157,11 +207,7 @@ const keyInfoFromKeyTagAndPublicKey = (
 ): KeyInfo => ({
   keyTag,
   publicKey,
-  publicKeyThumbprint: jwkThumbprintByEncoding(
-    publicKey,
-    DEFAULT_LOLLIPOP_HASH_ALGORITHM_CLIENT,
-    "base64url"
-  )
+  publicKeyThumbprint: toBase64EncodedThumbprint(publicKey)
 });
 
 const defaultKeyInfo = (): KeyInfo => ({

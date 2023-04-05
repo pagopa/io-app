@@ -35,7 +35,10 @@ import { GlobalState } from "./types";
 type LoggedOutReason = "NOT_LOGGED_IN" | "SESSION_EXPIRED";
 
 // PublicSession attributes
-export type TokenName = keyof Omit<PublicSession, "spidLevel">;
+export type TokenName = keyof Omit<
+  PublicSession,
+  "spidLevel" | "lollipopAssertionRef"
+>;
 
 // The user is logged out and hasn't selected an IDP
 type LoggedOutWithoutIdp = Readonly<{
@@ -97,6 +100,12 @@ export const INITIAL_STATE: LoggedOutWithoutIdp = {
 
 // Type guards
 
+function isLoggedOutWithoutIdp(
+  state: AuthenticationState
+): state is LoggedOutWithoutIdp {
+  return state.kind === "LoggedOutWithoutIdp";
+}
+
 export function isLoggedOutWithIdp(
   state: AuthenticationState
 ): state is LoggedOutWithIdp {
@@ -130,6 +139,9 @@ export function isSessionExpired(
 }
 
 // Selectors
+
+export const isLoggedOutWithoutIdpSelector = (state: GlobalState) =>
+  isLoggedOutWithoutIdp(state.authentication);
 
 export const isLogoutRequested = (state: GlobalState) =>
   state.authentication.kind === "LogoutRequested";

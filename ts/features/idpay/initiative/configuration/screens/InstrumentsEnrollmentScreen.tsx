@@ -1,6 +1,5 @@
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { useSelector } from "@xstate/react";
-import { List as NBList } from "native-base";
 import React from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import { Icon } from "../../../../../components/core/icons";
@@ -8,11 +7,13 @@ import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
+import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../i18n";
+import customVariables from "../../../../../theme/variables";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { InstrumentEnrollmentSwitch } from "../components/InstrumentEnrollmentSwitch";
@@ -30,7 +31,6 @@ import {
   selectIsUpsertingInstrument,
   selectWalletInstruments
 } from "../xstate/selectors";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
 
 type InstrumentsEnrollmentScreenRouteParams = {
   initiativeId?: string;
@@ -220,8 +220,7 @@ const InstrumentsEnrollmentScreen = () => {
         contextualHelp={emptyContextualHelp}
       >
         <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={1}>
-          <VSpacer />
-          <View style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
+          <ScrollView style={styles.container}>
             <H1>{I18n.t("idpay.configuration.instruments.header")}</H1>
             <VSpacer size={8} />
             <Body>
@@ -229,35 +228,31 @@ const InstrumentsEnrollmentScreen = () => {
                 initiativeName: initiativeDetails?.initiativeName ?? ""
               })}
             </Body>
-            <VSpacer />
-            <ScrollView>
-              <NBList>
-                {walletInstruments.map(walletInstrument => (
-                  <InstrumentEnrollmentSwitch
-                    key={walletInstrument.idWallet}
-                    wallet={walletInstrument}
-                    instrument={
-                      initiativeInstrumentsByIdWallet[walletInstrument.idWallet]
-                    }
-                  />
-                ))}
-              </NBList>
-              <VSpacer size={16} />
-              {/*  TODO:: AdviceComponent goes here once implemented @dmnplb */}
-              <View style={styles.bottomSection}>
-                <Icon name="navWallet" color="bluegrey" />
-                <HSpacer size={8} />
-                <LabelSmall
-                  color="bluegrey"
-                  weight="Regular"
-                  style={IOStyles.flex} // required for correct wrapping
-                >
-                  {I18n.t("idpay.configuration.instruments.footer")}
-                </LabelSmall>
-              </View>
-              {/* TODO:: end AdviceComponent  */}
-            </ScrollView>
-          </View>
+            <VSpacer size={24} />
+            {walletInstruments.map(walletInstrument => (
+              <InstrumentEnrollmentSwitch
+                key={walletInstrument.idWallet}
+                wallet={walletInstrument}
+                instrument={
+                  initiativeInstrumentsByIdWallet[walletInstrument.idWallet]
+                }
+              />
+            ))}
+            <VSpacer size={16} />
+            {/*  TODO:: AdviceComponent goes here once implemented @dmnplb */}
+            <View style={styles.bottomSection}>
+              <Icon name="navWallet" color="bluegrey" />
+              <HSpacer size={8} />
+              <LabelSmall
+                color="bluegrey"
+                weight="Regular"
+                style={IOStyles.flex} // required for correct wrapping
+              >
+                {I18n.t("idpay.configuration.instruments.footer")}
+              </LabelSmall>
+            </View>
+            {/* TODO:: end AdviceComponent  */}
+          </ScrollView>
           <SafeAreaView>{renderFooterButtons()}</SafeAreaView>
         </LoadingSpinnerOverlay>
       </BaseScreenComponent>
@@ -267,6 +262,10 @@ const InstrumentsEnrollmentScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: customVariables.contentPadding
+  },
   bottomSection: {
     flexDirection: "row",
     alignItems: "center"

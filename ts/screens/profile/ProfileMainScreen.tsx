@@ -12,10 +12,15 @@ import { Body } from "../../components/core/typography/Body";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
+import {
+  TabBarItemPressType,
+  withUseTabItemPressWhenScreenActive
+} from "../../components/helpers/withUseTabItemPressWhenScreenActive";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import DarkLayout from "../../components/screens/DarkLayout";
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
+import { ScreenContentRoot } from "../../components/screens/ScreenContent";
 import SectionHeaderComponent from "../../components/screens/SectionHeaderComponent";
 import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
 import { AlertModal } from "../../components/ui/AlertModal";
@@ -23,6 +28,7 @@ import { LightModalContextInterface } from "../../components/ui/LightModal";
 import Markdown from "../../components/ui/Markdown";
 import Switch from "../../components/ui/Switch";
 import { isPlaygroundsEnabled } from "../../config";
+import { lollipopPublicKeySelector } from "../../features/lollipop/store/reducers/lollipop";
 import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { MainTabParamsList } from "../../navigation/params/MainTabParamsList";
@@ -55,11 +61,13 @@ import { getAppVersion } from "../../utils/appVersion";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { getDeviceId } from "../../utils/device";
 import { isDevEnv } from "../../utils/environment";
+import { toThumbprint } from "../../features/lollipop/utils/crypto";
 
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "PROFILE_MAIN"> &
   LightModalContextInterface &
   ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps>;
+  ReturnType<typeof mapStateToProps> &
+  TabBarItemPressType;
 
 type State = {
   tapsOnAppVersion: number;
@@ -293,9 +301,11 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       sessionToken,
       walletToken,
       setDebugModeEnabled,
-      isIdPayTestEnabled
+      isIdPayTestEnabled,
+      publicKey
     } = this.props;
     const deviceUniqueId = getDeviceId();
+    const thumbprint = toThumbprint(publicKey);
 
     return (
       <React.Fragment>
@@ -416,6 +426,13 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
               false
             )}
 
+            {thumbprint &&
+              this.debugListItem(
+                `Thumbprint ${thumbprint}`,
+                () => clipboardSetStringWithFeedback(thumbprint),
+                false
+              )}
+
             {this.debugListItem(
               I18n.t("profile.main.cache.clear"),
               this.handleClearCachePress,
@@ -464,6 +481,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       </React.Fragment>
     );
   }
+
   public render() {
     const { navigation } = this.props;
 
@@ -567,6 +585,14 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
 
     return (
       <DarkLayout
+        referenceToContentScreen={(c: ScreenContentRoot) => {
+          this.props.setTabPressCallback(
+            // eslint-disable-next-line no-underscore-dangle
+            () => () => c._root.scrollToPosition(0, 0)
+          );
+
+          return c;
+        }}
         accessibilityLabel={I18n.t("profile.main.title")}
         bounces={false}
         appLogo={true}
@@ -606,7 +632,8 @@ const mapStateToProps = (state: GlobalState) => ({
   isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
   isPnTestEnabled: isPnTestEnabledSelector(state),
   isIdPayTestEnabled: isIdPayTestEnabledSelector(state),
-  isDesignSystemEnabled: isDesignSystemEnabledSelector(state)
+  isDesignSystemEnabled: isDesignSystemEnabledSelector(state),
+  publicKey: lollipopPublicKeySelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -630,4 +657,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withLightModalContext(ProfileMainScreen));
+)(
+  withLightModalContext(withUseTabItemPressWhenScreenActive(ProfileMainScreen))
+);

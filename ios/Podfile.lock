@@ -499,6 +499,8 @@ PODS:
   - RNQrGenerator (1.3.0):
     - React
     - ZXingObjC
+  - RNReactNativeHapticFeedback (2.0.2):
+    - React-Core
   - RNReanimated (2.10.0):
     - DoubleConversion
     - FBLazyVector
@@ -672,6 +674,7 @@ DEPENDENCIES:
   - RNI18n (from `../node_modules/react-native-i18n`)
   - RNKeychain (from `../node_modules/react-native-keychain`)
   - RNQrGenerator (from `../node_modules/rn-qr-generator`)
+  - RNReactNativeHapticFeedback (from `../node_modules/react-native-haptic-feedback`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSha256 (from `../node_modules/react-native-sha256`)
@@ -864,6 +867,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-keychain"
   RNQrGenerator:
     :path: "../node_modules/rn-qr-generator"
+  RNReactNativeHapticFeedback:
+    :path: "../node_modules/react-native-haptic-feedback"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
@@ -981,6 +986,7 @@ SPEC CHECKSUMS:
   RNI18n: e2f7e76389fcc6e84f2c8733ea89b92502351fd8
   RNKeychain: 840f8e6f13be0576202aefcdffd26a4f54bfe7b5
   RNQrGenerator: 0957859af25635e39d522a38af03b23b16e6d969
+  RNReactNativeHapticFeedback: 6d24decfa94e037c2ecc312407d2a057b7933f10
   RNReanimated: 7faa787e8d4493fbc95fab2ad331fa7625828cfa
   RNScreens: f7ad633b2e0190b77b6a7aab7f914fad6f198d8d
   RNSha256: ab608b2185fb806185a2cc112e0474065842e085
@@ -1008,4 +1014,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 0d78c2a7f58353c7eed2163b7e3b3747b00ff101
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.0
