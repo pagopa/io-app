@@ -5,13 +5,11 @@ import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import I18n from "../../../i18n";
 import imageExpired from "../../../../img/wallet/errors/payment-expired-icon.png";
 import hourglass from "../../../../img/pictograms/hourglass.png";
-import {
-  SignatureRequestDetailView,
-  StatusEnum as SignatureRequestDetailStatus
-} from "../../../../definitions/fci/SignatureRequestDetailView";
+import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
 import { isLollipopEnabledSelector } from "../../../store/reducers/backendStatus";
 import { fciEndRequest, fciStartRequest } from "../store/actions";
 import { lollipopPublicKeySelector } from "../../lollipop/store/reducers/lollipop";
+import { SignatureRequestStatusEnum } from "../../../../definitions/fci/SignatureRequestStatus";
 import ErrorComponent from "./ErrorComponent";
 import GenericErrorComponent from "./GenericErrorComponent";
 
@@ -51,8 +49,8 @@ const SuccessComponent = (props: {
   // if the user (signer) has not signed and the request is expired
   // the user can no longer sign anymore
   if (
-    (status === SignatureRequestDetailStatus.WAIT_FOR_SIGNATURE ||
-      status === SignatureRequestDetailStatus.REJECTED) &&
+    (status === SignatureRequestStatusEnum.WAIT_FOR_SIGNATURE ||
+      status === SignatureRequestStatusEnum.REJECTED) &&
     expires_at < now
   ) {
     return (
@@ -69,10 +67,10 @@ const SuccessComponent = (props: {
 
   // the signature request could have various status
   switch (status) {
-    case SignatureRequestDetailStatus.WAIT_FOR_SIGNATURE:
+    case SignatureRequestStatusEnum.WAIT_FOR_SIGNATURE:
       dispatch(fciStartRequest());
       return null;
-    case SignatureRequestDetailStatus.WAIT_FOR_QTSP:
+    case SignatureRequestStatusEnum.WAIT_FOR_QTSP:
       return (
         <ErrorComponent
           title={I18n.t("features.fci.errors.waitForQtsp.title")}
@@ -82,7 +80,7 @@ const SuccessComponent = (props: {
           testID={"WaitQtspSignatureRequestTestID"}
         />
       );
-    case SignatureRequestDetailStatus.SIGNED:
+    case SignatureRequestStatusEnum.SIGNED:
       return (
         <ErrorComponent
           title={I18n.t("features.fci.errors.signed.title")}
@@ -92,7 +90,7 @@ const SuccessComponent = (props: {
           testID={"SignedSignatureRequestTestID"}
         />
       );
-    case SignatureRequestDetailStatus.REJECTED:
+    case SignatureRequestStatusEnum.REJECTED:
       return (
         <GenericErrorComponent
           title={I18n.t("features.fci.errors.generic.rejected.title")}
