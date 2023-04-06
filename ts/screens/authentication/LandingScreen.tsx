@@ -33,7 +33,6 @@ import SectionStatusComponent from "../../components/SectionStatus";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
 import { mixpanelTrack } from "../../mixpanel";
-import { IdentityProvider } from "../../models/IdentityProvider";
 import {
   AppParamsList,
   IOStackNavigationRouteProps
@@ -58,6 +57,7 @@ import { ComponentProps } from "../../types/react";
 import { isDevEnv } from "../../utils/environment";
 import RootedDeviceModal from "../modal/RootedDeviceModal";
 import { Icon } from "../../components/core/icons";
+import { SpidIdp } from "../../../definitions/content/SpidIdp";
 
 type NavigationProps = IOStackNavigationRouteProps<AppParamsList, "INGRESS">;
 
@@ -158,11 +158,10 @@ const styles = StyleSheet.create({
   }
 });
 
-export const IdpCIE: IdentityProvider = {
+const IdpCIE: SpidIdp = {
   id: "cie",
   name: "CIE",
   logo: "",
-  entityID: "cieid",
   profileUrl: ""
 };
 
