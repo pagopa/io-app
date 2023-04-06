@@ -1,13 +1,14 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Text as NBText } from "native-base";
 import * as React from "react";
 import { View, Image, StyleSheet } from "react-native";
 import { SvgXml } from "react-native-svg";
 import CopyButtonComponent from "../../../../components/CopyButtonComponent";
 import { HSpacer, VSpacer } from "../../../../components/core/spacer/Spacer";
+import { Body } from "../../../../components/core/typography/Body";
+import { H2 } from "../../../../components/core/typography/H2";
+import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
-import customVariables from "../../../../theme/variables";
 
 type Props = {
   qrCode: string;
@@ -27,20 +28,6 @@ const styles = StyleSheet.create({
     height: 249,
     width: 249,
     alignSelf: "center"
-  },
-  row: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between"
-  },
-  codeText: {
-    alignSelf: "center",
-    fontSize: customVariables.fontSize2,
-    lineHeight: 27,
-    color: customVariables.selectedColor
-  },
-  uniqueCode: {
-    color: customVariables.textColor
   },
   bonusLogo: {
     height: 48,
@@ -63,15 +50,12 @@ const QrModalBox: React.FunctionComponent<Props> = (props: Props) => {
 
   return (
     <View style={styles.modalBox}>
-      <View style={styles.row}>
+      <View style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter]}>
         <View>
-          <NBText style={styles.uniqueCode}>
-            {I18n.t("bonus.bonusVacanze.uniqueCode")}
-          </NBText>
-          <View style={styles.row}>
-            <NBText style={styles.codeText} bold={true}>
-              {codeToDisplay}
-            </NBText>
+          <Body>{I18n.t("bonus.bonusVacanze.uniqueCode")}</Body>
+          <VSpacer size={4} />
+          <View style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter]}>
+            <H2 color="blue">{codeToDisplay}</H2>
             <HSpacer size={16} />
             <CopyButtonComponent
               textToCopy={codeToCopy}
