@@ -1,8 +1,9 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Badge, Text as NBText } from "native-base";
+import { Badge, Text as NBBadgeText } from "native-base";
 import * as React from "react";
 import {
+  Text,
   View,
   Image,
   ImageBackground,
@@ -28,6 +29,7 @@ import { localeDateFormat } from "../../../../../utils/locale";
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
 import { BpdAmount } from "../../saga/networking/amount";
 import { BpdPeriod, BpdPeriodStatus } from "../../store/actions/periods";
+import { makeFontStyleObject } from "../../../../../components/core/fonts";
 
 type Props = {
   period: BpdPeriod;
@@ -102,6 +104,7 @@ const styles = StyleSheet.create({
     width: "100%"
   },
   amountTextBaseFull: {
+    color: IOColors.white,
     fontSize: 24,
     lineHeight: 35,
     // solution taken from https://github.com/facebook/react-native/issues/7687#issuecomment-309168661
@@ -109,14 +112,25 @@ const styles = StyleSheet.create({
       ios: 0,
       android: 10
     }),
-    marginBottom: -8
+    marginBottom: -8,
+    ...makeFontStyleObject("Bold")
   },
-  amountTextUpperFull: { fontSize: 32 },
+  amountTextUpperFull: {
+    color: IOColors.white,
+    fontSize: 32,
+    ...makeFontStyleObject("Bold")
+  },
   amountTextBasePreview: {
     fontSize: 16,
-    lineHeight: 32
+    lineHeight: 32,
+    color: IOColors.white,
+    ...makeFontStyleObject("Bold")
   },
-  amountTextUpperPreview: { fontSize: 24 },
+  amountTextUpperPreview: {
+    color: IOColors.white,
+    fontSize: 24,
+    ...makeFontStyleObject("Bold")
+  },
   alignItemsCenter: {
     alignItems: "center"
   },
@@ -306,15 +320,16 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
         </View>
         <View>
           <View style={[styles.row, { alignItems: "center" }]}>
-            <NBText bold={true} white={true} style={styles.amountTextBaseFull}>
+            {/* NBCard Text component */}
+            <Text style={styles.amountTextBaseFull}>
               {"€ "}
-              <NBText white={true} style={styles.amountTextUpperFull}>
+              <Text style={styles.amountTextUpperFull}>
                 {`${amount[0]}${I18n.t(
                   "global.localization.decimalSeparator"
                 )}`}
-              </NBText>
+              </Text>
               {amount[1]}
-            </NBText>
+            </Text>
             <HSpacer size={8} />
             <IconFont name={iconName} size={16} color={IOColors.white} />
           </View>
@@ -324,10 +339,11 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
         </View>
       </View>
       <View style={[styles.column, styles.flex1, styles.spaced]}>
+        {/* IOBadge - White version not available yet */}
         <Badge style={styles.badgeBase}>
-          <NBText semibold={true} style={styles.badgeTextBase} dark={true}>
+          <NBBadgeText semibold={true} style={styles.badgeTextBase} dark={true}>
             {statusBadge.label}
-          </NBText>
+          </NBBadgeText>
         </Badge>
         <Image source={bpdBonusLogo} style={styles.fullLogo} />
       </View>
@@ -392,28 +408,26 @@ export const BpdCardComponent: React.FunctionComponent<Props> = (
             <HSpacer size={8} />
             {isInGracePeriod || isPeriodInactive ? (
               <Badge style={styles.badgePreview}>
-                <NBText
+                <NBBadgeText
                   semibold={true}
                   style={styles.badgeTextBase}
                   dark={true}
                 >
                   {statusBadge.label}
-                </NBText>
+                </NBBadgeText>
               </Badge>
             ) : (
-              <NBText
-                bold={true}
-                white={true}
+              <Text
                 style={[styles.amountTextBasePreview, { textAlign: "right" }]}
               >
                 {"€ "}
-                <NBText white={true} style={styles.amountTextUpperPreview}>
+                <Text style={styles.amountTextUpperPreview}>
                   {`${amount[0]}${I18n.t(
                     "global.localization.decimalSeparator"
                   )}`}
-                </NBText>
+                </Text>
                 {amount[1]}
-              </NBText>
+              </Text>
             )}
           </View>
         </View>

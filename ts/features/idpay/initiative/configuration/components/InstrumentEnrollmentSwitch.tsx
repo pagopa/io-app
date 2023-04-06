@@ -2,9 +2,9 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useSelector } from "@xstate/react";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
+import { View, StyleSheet, Image } from "react-native";
 import { Badge as NBBadge, ListItem as NBListItem } from "native-base";
 import { default as React } from "react";
-import { Image, StyleSheet, View } from "react-native";
 import { StatusEnum as InstrumentStatusEnum } from "../../../../../../definitions/idpay/InstrumentDTO";
 import defaultCardIcon from "../../../../../../img/wallet/cards-icons/unknown.png";
 import {

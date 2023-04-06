@@ -1,10 +1,11 @@
 import I18n from "i18n-js";
-import { Text } from "native-base";
+import { Text as NBButtonText } from "native-base";
 import * as React from "react";
 import { View, SafeAreaView, StyleSheet } from "react-native";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import Pictogram from "../../../components/core/pictograms/Pictogram";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
+import { Body } from "../../../components/core/typography/Body";
 import { H3 } from "../../../components/core/typography/H3";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { unsupportedDeviceLearnMoreUrl } from "../../../config";
@@ -45,11 +46,13 @@ const UnsupportedDeviceScreen = () => {
         <VSpacer size={16} />
         <H3 style={styles.title}>{I18n.t("unsupportedDevice.title")}</H3>
         <VSpacer size={16} />
-        <Text alignCenter={true}>{I18n.t("unsupportedDevice.subtitle")}</Text>
+        <Body style={{ textAlign: "center" }}>
+          {I18n.t("unsupportedDevice.subtitle")}
+        </Body>
       </View>
       <View style={styles.buttonContainer}>
         <ButtonDefaultOpacity block={true} onPress={handleLearnMorePress}>
-          <Text>{I18n.t("unsupportedDevice.cta.faq")}</Text>
+          <NBButtonText>{I18n.t("unsupportedDevice.cta.faq")}</NBButtonText>
         </ButtonDefaultOpacity>
       </View>
     </SafeAreaView>

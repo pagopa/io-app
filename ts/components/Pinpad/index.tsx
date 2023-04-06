@@ -3,9 +3,8 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as E from "fp-ts/lib/Either";
 import * as NAR from "fp-ts/lib/NonEmptyArray";
 import { debounce, shuffle } from "lodash";
-import { Text as NBText } from "native-base";
 import * as React from "react";
-import { Alert, StyleSheet } from "react-native";
+import { Alert, StyleSheet, View } from "react-native";
 import I18n from "../../i18n";
 import { PinString } from "../../types/PinString";
 import { ComponentProps } from "../../types/react";
@@ -13,7 +12,9 @@ import { BiometricsValidType } from "../../utils/biometrics";
 import { PIN_LENGTH, PIN_LENGTH_SIX } from "../../utils/constants";
 import { ShakeAnimation } from "../animations/ShakeAnimation";
 import { VSpacer } from "../core/spacer/Spacer";
+import { Body } from "../core/typography/Body";
 import { Link } from "../core/typography/Link";
+import { IOStyles } from "../core/variables/IOStyles";
 import InputPlaceHolder from "./InputPlaceholder";
 import { DigitRpr, KeyPad } from "./KeyPad";
 
@@ -297,27 +298,41 @@ class Pinpad extends React.PureComponent<Props, State> {
         <VSpacer size={16} />
         {this.props.onPinResetHandler !== undefined && (
           <React.Fragment>
-            <NBText
-              white={this.props.buttonType === "primary"}
-              onPress={this.confirmResetAlert}
-              alignCenter={true}
-              accessibilityRole="button"
-            >
-              {`${I18n.t("identification.unlockCode.reset.button")} `}
-              <NBText
-                underlined={true}
-                white={this.props.buttonType === "primary"}
-                accessibilityLabel={I18n.t(
-                  "identification.unlockCode.reset.code"
-                )}
-                accessibilityRole="button"
-              >
-                {I18n.t("identification.unlockCode.reset.code")}
-              </NBText>
-              <NBText white={this.props.buttonType === "primary"}>
-                {I18n.t("global.symbols.question")}
-              </NBText>
-            </NBText>
+            <View style={IOStyles.alignCenter}>
+              {this.props.buttonType === "primary" ? (
+                <Body color={"white"} onPress={this.confirmResetAlert}>
+                  {`${I18n.t("identification.unlockCode.reset.button")} `}
+                  <Link
+                    color={"white"}
+                    accessibilityLabel={I18n.t(
+                      "identification.unlockCode.reset.code"
+                    )}
+                    accessibilityRole="button"
+                  >
+                    {I18n.t("identification.unlockCode.reset.code")}
+                  </Link>
+                  <Body color={"white"}>
+                    {I18n.t("global.symbols.question")}
+                  </Body>
+                </Body>
+              ) : (
+                <Body color={"bluegrey"} onPress={this.confirmResetAlert}>
+                  {`${I18n.t("identification.unlockCode.reset.button")} `}
+                  <Link
+                    color={"bluegrey"}
+                    accessibilityLabel={I18n.t(
+                      "identification.unlockCode.reset.code"
+                    )}
+                    accessibilityRole="button"
+                  >
+                    {I18n.t("identification.unlockCode.reset.code")}
+                  </Link>
+                  <Body color={"bluegrey"}>
+                    {I18n.t("global.symbols.question")}
+                  </Body>
+                </Body>
+              )}
+            </View>
             <VSpacer size={16} />
           </React.Fragment>
         )}

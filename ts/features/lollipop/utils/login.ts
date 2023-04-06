@@ -1,7 +1,7 @@
 import { PublicKey } from "@pagopa/io-react-native-crypto";
-import { jwkThumbprintByEncoding } from "jwk-thumbprint";
 import pako from "pako";
 import { parseStringPromise } from "xml2js";
+import { toBase64EncodedThumbprint } from "./crypto";
 
 export const DEFAULT_LOLLIPOP_HASH_ALGORITHM_CLIENT = "SHA-256";
 export const DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER = "sha256";
@@ -37,11 +37,7 @@ export const lollipopSamlVerify = (
       }
 
       // Hash the local public key
-      const localPublicKeyThumbprint = jwkThumbprintByEncoding(
-        publicKey,
-        DEFAULT_LOLLIPOP_HASH_ALGORITHM_CLIENT,
-        "base64url"
-      );
+      const localPublicKeyThumbprint = toBase64EncodedThumbprint(publicKey);
       // And append the algorithm used to hash it. The algorithm
       // representation must be the one that the server recognizes
       const localPublicKeyThumbprintWithHashAlgorithm = `${DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER}-${localPublicKeyThumbprint}`;
