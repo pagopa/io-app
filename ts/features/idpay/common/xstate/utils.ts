@@ -1,20 +1,20 @@
 import { DefaultContext } from "xstate";
-import { GLOBAL_E_BACK } from "./events";
+import { E_BACK } from "./events";
 
 type WrappedAction<TContext> = (context: TContext, event: any) => void;
-type Events = { type: string } | GLOBAL_E_BACK;
+type Events = { type: string } | E_BACK;
 
 /**
- * Checks if the event is of type GLOBAL_E_BACK
+ * Checks if the event is of type E_BACK
  * @param event The event object to check.
- * @returns True if the event is of type GLOBAL_E_BACK, false otherwise.
+ * @returns True if the event is of type E_BACK, false otherwise.
  */
-const isBack = (event: Events): event is GLOBAL_E_BACK => event.type === "BACK";
+const isBack = (event: Events): event is E_BACK => event.type === "BACK";
 
 /**
  * Checks if a given event should skip the navigation action.
  * @param event The event object to check.
- * @returns True if the event is of type GLOBAL_E_BACK and has a skipNavigation property set to true; otherwise, false.
+ * @returns True if the event is of type E_BACK and has a skipNavigation property set to true; otherwise, false.
  */
 const skipNavigation = (event: Events) => isBack(event) && event.skipNavigation;
 
