@@ -24,7 +24,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Text as NBText } from "native-base";
 import * as React from "react";
 import {
   View,
@@ -37,6 +36,7 @@ import {
 import { connect } from "react-redux";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { VSpacer } from "../../components/core/spacer/Spacer";
+import { Body } from "../../components/core/typography/Body";
 import { Label } from "../../components/core/typography/Label";
 import { IOColors } from "../../components/core/variables/IOColors";
 import { IOStyles } from "../../components/core/variables/IOStyles";
@@ -249,8 +249,8 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           source={require("../../../img/services/icon-loading-services.png")}
         />
         <VSpacer size={40} />
-        <NBText bold={true}>{I18n.t("services.loading.title")}</NBText>
-        <NBText>{I18n.t("services.loading.subtitle")}</NBText>
+        <Body weight="SemiBold">{I18n.t("services.loading.title")}</Body>
+        <Body>{I18n.t("services.loading.subtitle")}</Body>
       </View>
     );
   }

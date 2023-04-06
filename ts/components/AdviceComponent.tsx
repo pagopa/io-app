@@ -1,10 +1,10 @@
-import { Text as NBText } from "native-base";
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
-import themeVariables from "../theme/variables";
 import { Icon, IOIcons } from "./core/icons";
 import type { IOColors } from "./core/variables/IOColors";
 import { IOStyles } from "./core/variables/IOStyles";
+import { HSpacer } from "./core/spacer/Spacer";
+import { Body } from "./core/typography/Body";
 
 type Props = {
   text: string;
@@ -16,10 +16,6 @@ type Props = {
 const styles = StyleSheet.create({
   icon: {
     marginTop: 4
-  },
-  text: {
-    marginLeft: 8,
-    fontSize: themeVariables.fontSizeBase
   }
 });
 
@@ -37,8 +33,8 @@ const AdviceComponent: React.FunctionComponent<Props> = (props: Props) => (
         color={props.iconColor || "blue"}
       />
     </View>
-
-    <NBText style={styles.text}>{props.text}</NBText>
+    <HSpacer size={8} />
+    <Body>{props.text}</Body>
   </View>
 );
 

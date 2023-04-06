@@ -1,4 +1,4 @@
-import { Content, Text as NBText } from "native-base";
+import { Content } from "native-base";
 import * as React from "react";
 import { View, FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
 import I18n from "../../../i18n";
@@ -18,6 +18,7 @@ import { IOStyles } from "../../core/variables/IOStyles";
 import { IOColors } from "../../core/variables/IOColors";
 import { VSpacer } from "../../core/spacer/Spacer";
 import { Icon } from "../../core/icons/Icon";
+import { Body } from "../../core/typography/Body";
 
 type Props = Readonly<{
   title: string;
@@ -137,7 +138,7 @@ export const CreditCardAttemptsList: React.FC<Props> = (props: Props) => {
     <Content style={styles.whiteContent}>
       <View>
         <View style={styles.subHeaderContent}>
-          <NBText>{props.title}</NBText>
+          <Body>{props.title}</Body>
         </View>
       </View>
 

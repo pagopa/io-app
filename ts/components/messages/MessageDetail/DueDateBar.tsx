@@ -1,5 +1,4 @@
 import { capitalize } from "lodash";
-import { Text as NBText } from "native-base";
 import React from "react";
 import { View, StyleSheet, ViewStyle } from "react-native";
 
@@ -13,10 +12,11 @@ import {
   MessagePaymentExpirationInfo
 } from "../../../utils/messages";
 import { IOColors } from "../../core/variables/IOColors";
-
 import { localeDateFormat } from "../../../utils/locale";
 import { HSpacer, VSpacer } from "../../core/spacer/Spacer";
 import { Icon } from "../../core/icons";
+import { Body } from "../../core/typography/Body";
+import { IOStyles } from "../../core/variables/IOStyles";
 import CalendarIconComponent from "./common/CalendarIconComponent";
 
 type Props = {
@@ -38,13 +38,8 @@ const styles = StyleSheet.create({
     minHeight:
       CALENDAR_ICON_HEIGHT + 2 * customVariables.appHeaderPaddingHorizontal
   },
-  text: {
-    flex: 1,
-    paddingRight: 5,
-    paddingLeft: 5
-  },
-  padded: {
-    paddingHorizontal: customVariables.contentPadding
+  textContainer: {
+    paddingHorizontal: 4
   },
   messagePaidBg: {
     padding: 24,
@@ -72,9 +67,9 @@ const TextContent: React.FunctionComponent<{
       return (
         <>
           {I18n.t("messages.cta.payment.expiredAlert.block1")}
-          <NBText bold={true} white={true}>{` ${date} `}</NBText>
+          <Body weight="SemiBold" color="white">{` ${date} `}</Body>
           {I18n.t("messages.cta.payment.expiredAlert.block2")}
-          <NBText bold={true} white={true}>{` ${time}`}</NBText>
+          <Body weight="SemiBold" color="white">{` ${time}`}</Body>
         </>
       );
     case "valid":
@@ -82,9 +77,9 @@ const TextContent: React.FunctionComponent<{
       return (
         <>
           {I18n.t("messages.cta.payment.expiringOrValidAlert.block1")}
-          <NBText bold={true}>{` ${date} `}</NBText>
+          <Body weight="SemiBold">{` ${date} `}</Body>
           {I18n.t("messages.cta.payment.expiringOrValidAlert.block2")}
-          <NBText bold={true}>{` ${time}`}</NBText>
+          <Body weight="SemiBold">{` ${time}`}</Body>
         </>
       );
   }
@@ -166,9 +161,9 @@ const DueDateBar: React.FunctionComponent<Props> = ({
     return (
       <View style={styles.messagePaidBg}>
         <Icon name="ok" color="bluegreyDark" />
-        <NBText style={[styles.padded, { color: IOColors.bluegreyDark }]}>
-          {I18n.t("wallet.errors.DUPLICATED")}
-        </NBText>
+        <View style={IOStyles.horizontalContentPadding}>
+          <Body color="bluegreyDark">{I18n.t("wallet.errors.DUPLICATED")}</Body>
+        </View>
       </View>
     );
   }
@@ -178,13 +173,11 @@ const DueDateBar: React.FunctionComponent<Props> = ({
   return (
     <>
       <View style={[styles.container, bannerStyle(paymentStatus)]}>
-        <>
-          <CalendarIcon status={paymentStatus} dueDate={dueDate} />
-          <HSpacer size={8} />
-
-          <NBText
-            style={styles.text}
-            white={paymentStatus === "expired"}
+        <CalendarIcon status={paymentStatus} dueDate={dueDate} />
+        <HSpacer size={8} />
+        <View style={[styles.textContainer, IOStyles.flex]}>
+          <Body
+            color={paymentStatus === "expired" ? "white" : "bluegrey"}
             testID={"DueDateBar_TextContent"}
           >
             <TextContent
@@ -192,8 +185,8 @@ const DueDateBar: React.FunctionComponent<Props> = ({
               dueDate={dueDate}
               onPaidPress={() => navigateToWalletHome()}
             />
-          </NBText>
-        </>
+          </Body>
+        </View>
       </View>
       <VSpacer size={24} />
     </>

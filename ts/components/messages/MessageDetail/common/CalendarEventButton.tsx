@@ -1,7 +1,7 @@
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Text as NBText } from "native-base";
+import { Text as NBButtonText } from "native-base";
 import React from "react";
 import {
   Alert,
@@ -355,7 +355,7 @@ class CalendarEventButton extends React.PureComponent<Props, State> {
         {/* This condition doesn't make sense. We should replace it using
         a different component (e.g. ButtonOutline) */}
         <Icon name={iconName} color={disabled ? "white" : "blue"} />
-        <NBText style={styles.marginTop1}>{reminderText}</NBText>
+        <NBButtonText style={styles.marginTop1}>{reminderText}</NBButtonText>
       </ButtonDefaultOpacity>
     );
   }

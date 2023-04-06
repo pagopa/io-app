@@ -1,15 +1,16 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
-import { Text as NBText } from "native-base";
 import * as React from "react";
 import { ReactElement, useEffect } from "react";
 import { View, ScrollView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { HSpacer, VSpacer } from "../../components/core/spacer/Spacer";
+import { Body } from "../../components/core/typography/Body";
 import { H2 } from "../../components/core/typography/H2";
 import { IOColors } from "../../components/core/variables/IOColors";
+import { IOStyles } from "../../components/core/variables/IOStyles";
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import FiscalCodeLandscapeOverlay from "../../components/FiscalCodeLandscapeOverlay";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
@@ -27,7 +28,6 @@ import { contentMunicipalityLoad } from "../../store/actions/content";
 import { municipalitySelector } from "../../store/reducers/content";
 import { profileSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
-import customVariables from "../../theme/variables";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
 import { Icon } from "../../components/core/icons";
 
@@ -52,10 +52,6 @@ const styles = StyleSheet.create({
     shadowRadius: 4.65,
     // Android
     elevation: 8
-  },
-  text: {
-    paddingHorizontal: customVariables.contentPadding,
-    marginTop: -10
   }
 });
 
@@ -117,7 +113,7 @@ const FiscalCodeScreen: React.FunctionComponent<Props> = (props: Props) => {
         customGoBack={customGoBack}
         headerBody={
           <TouchableDefaultOpacity onPress={() => props.navigation.goBack}>
-            <NBText white={true}>{I18n.t("profile.fiscalCode.title")}</NBText>
+            <Body color="white">{I18n.t("profile.fiscalCode.title")}</Body>
           </TouchableDefaultOpacity>
         }
         contentStyle={styles.darkBg}
@@ -168,9 +164,9 @@ const FiscalCodeScreen: React.FunctionComponent<Props> = (props: Props) => {
               </TouchableDefaultOpacity>
               <HSpacer size={24} />
             </ScrollView>
-            <NBText white={true} style={styles.text}>
-              {I18n.t("profile.fiscalCode.content")}
-            </NBText>
+            <View style={IOStyles.horizontalContentPadding}>
+              <Body color="white">{I18n.t("profile.fiscalCode.content")}</Body>
+            </View>
           </React.Fragment>
         )}
       </DarkLayout>

@@ -1,4 +1,4 @@
-import { Text as NBText } from "native-base";
+import { Text as NBButtonText } from "native-base";
 import { View, StyleSheet, Alert } from "react-native";
 import * as React from "react";
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
@@ -952,12 +952,12 @@ export const DSButtons = () => {
       <DSComponentViewerBox name="CalendarEventButton">
         <ButtonDefaultOpacity small={true} bordered={true}>
           <Icon name="legAdd" color="blue" />
-          <NBText>Aggiungi promemoria</NBText>
+          <NBButtonText>Aggiungi promemoria</NBButtonText>
         </ButtonDefaultOpacity>
         <VSpacer size={16} />
         <ButtonDefaultOpacity small={true} bordered={true}>
           <Icon name="legCompleted" color="blue" />
-          <NBText>Aggiunto</NBText>
+          <NBButtonText>Aggiunto</NBButtonText>
         </ButtonDefaultOpacity>
       </DSComponentViewerBox>
 
@@ -977,13 +977,13 @@ export const DSButtons = () => {
         <ButtonDefaultOpacity block={true} primary={true}>
           <Icon name="navProfile" color="white" />
           <HSpacer size={8} />
-          <NBText>Entra con SPID</NBText>
+          <NBButtonText>Entra con SPID</NBButtonText>
         </ButtonDefaultOpacity>
         <VSpacer size={16} />
         <ButtonDefaultOpacity block={true} primary={true}>
           <Icon name="cie" color="white" />
           <HSpacer size={8} />
-          <NBText>Entra con CIE</NBText>
+          <NBButtonText>Entra con CIE</NBButtonText>
         </ButtonDefaultOpacity>
       </DSComponentViewerBox>
     </DesignSystemScreen>
