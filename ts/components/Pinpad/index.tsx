@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const SMALL_ICON_WIDTH = 17;
+const CANCEL_ICON_WIDTH = 24;
 const ICON_WIDTH = 48;
 const SHAKE_ANIMATION_DURATION = 600 as Millisecond;
 const INPUT_MARGIN = 36;
@@ -77,7 +77,7 @@ class Pinpad extends React.PureComponent<Props, State> {
       case "BIOMETRICS":
       case "TOUCH_ID":
         return E.right({
-          name: "io-fingerprint",
+          name: "biomFingerprint",
           size: ICON_WIDTH,
           accessibilityLabel: I18n.t(
             "identification.unlockCode.accessibility.fingerprint"
@@ -85,7 +85,7 @@ class Pinpad extends React.PureComponent<Props, State> {
         });
       case "FACE_ID":
         return E.right({
-          name: "io-face-id",
+          name: "biomFaceID",
           size: ICON_WIDTH,
           accessibilityLabel: I18n.t(
             "identification.unlockCode.accessibility.faceId"
@@ -163,8 +163,8 @@ class Pinpad extends React.PureComponent<Props, State> {
         ),
         Tuple2(
           E.right({
-            name: "io-cancel",
-            size: SMALL_ICON_WIDTH,
+            name: "legCancel",
+            size: CANCEL_ICON_WIDTH,
             accessibilityLabel: I18n.t(
               "identification.unlockCode.accessibility.delete"
             )
