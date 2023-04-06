@@ -21,8 +21,8 @@ describe("Test DocumentsNavigationBar component", () => {
     const props: Props = {
       titleRight: "Pagina 1 di 2",
       titleLeft: "Documento 1 di 2",
-      iconRightColor: IOColors.blue as IOColors,
-      iconLeftColor: IOColors.blue as IOColors,
+      iconRightColor: "blue",
+      iconLeftColor: "blue",
       indicatorPosition: "left",
       onPrevious: jest.fn(),
       onNext: jest.fn()
