@@ -236,9 +236,8 @@ const InstrumentsEnrollmentScreen = () => {
               <InstrumentEnrollmentSwitch
                 key={walletInstrument.idWallet}
                 wallet={walletInstrument}
-                instrument={
-                  initiativeInstrumentsByIdWallet[walletInstrument.idWallet]
-                }
+                isStaged={stagedInstrument === walletInstrument}
+                onValueChange={handleInstrumentValueChange(walletInstrument)}
               />
             ))}
             <VSpacer size={16} />
