@@ -111,7 +111,7 @@ const SectionCardComponent: React.FunctionComponent<Props> = (props: Props) => {
               {I18n.t("wallet.newPaymentMethod.refresh").toUpperCase()}
             </Label>
             <HSpacer size={8} />
-            <Icon color="white" name="reload" size={20} />
+            <Icon color="white" name="reload" size={16} />
           </View>
         );
       case "show":
