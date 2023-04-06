@@ -75,7 +75,7 @@ const ZendeskSupportComponent = ({
         </Link>
       </H4>
       <VSpacer size={24} />
-      <InfoBox iconName="notice" iconColor="blue" iconSize={16}>
+      <InfoBox iconName="notice" iconColor="blue" iconSize={24}>
         <Label color={"bluegrey"} weight={"Regular"}>
           {I18n.t("support.helpCenter.supportComponent.adviceMessage")}
         </Label>

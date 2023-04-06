@@ -354,7 +354,7 @@ export const IOIcons = {
   chevronTop: IconChevronTop,
   chevronRightListItem: IconChevronRightListItem,
   legChevronLeft: LegIconChevronLeft,
-  close: IconClose /* io-close */,
+  close: IconClose,
   legClose: LegIconClose /* io-close */,
   closeSmall: IconCloseSmall,
   legCloseSmall: LegIconCloseSmall,

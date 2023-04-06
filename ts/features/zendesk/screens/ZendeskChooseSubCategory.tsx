@@ -115,15 +115,10 @@ const ZendeskChooseSubCategory = (props: Props) => {
     );
   };
 
-  // The void customRightIcon is needed to have a centered header title
   return (
     <BaseScreenComponent
       showChat={false}
       goBack={true}
-      customRightIcon={{
-        iconName: "",
-        onPress: () => true
-      }}
       headerTitle={selectedCategory.description[locale]}
     >
       <SafeAreaView style={IOStyles.flex} testID={"ZendeskChooseCategory"}>

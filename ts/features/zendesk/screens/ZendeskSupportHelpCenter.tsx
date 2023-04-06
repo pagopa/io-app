@@ -208,7 +208,7 @@ const ZendeskSupportHelpCenter = () => {
       showChat={false}
       customGoBack={<View />}
       customRightIcon={{
-        iconName: "io-close",
+        iconName: "legClose",
         onPress: workUnitCancel,
         accessibilityLabel: I18n.t("global.accessibility.contextualHelp.close")
       }}

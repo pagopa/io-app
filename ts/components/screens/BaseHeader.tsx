@@ -30,6 +30,7 @@ import { IOColors } from "../core/variables/IOColors";
 import GoBackButton from "../GoBackButton";
 import SearchButton, { SearchType } from "../search/SearchButton";
 import AppHeader from "../ui/AppHeader";
+import { IOIcons, Icon } from "../core/icons/Icon";
 
 type HelpButtonProps = {
   onShowHelp: () => void;
@@ -88,7 +89,7 @@ interface OwnProps {
   };
   showChat?: boolean;
   customRightIcon?: {
-    iconName: string;
+    iconName: IOIcons;
     onPress: () => void;
     accessibilityLabel?: string;
   };
@@ -231,23 +232,17 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
         */}
         {!isSearchEnabled && (
           <NBBody style={goBack || customGoBack ? styles.body : styles.noLeft}>
-            <NBBody
-              style={goBack || customGoBack ? styles.body : styles.noLeft}
-            >
-              {this.state.isScreenReaderActive &&
-              O.isSome(maybeAccessibilityLabel) ? (
-                this.renderBodyLabel(
-                  maybeAccessibilityLabel.value,
-                  this.firstElementRef
-                )
-              ) : (
-                <View ref={this.firstElementRef} accessible={true}>
-                  {body
-                    ? body
-                    : headerTitle && this.renderBodyLabel(headerTitle)}
-                </View>
-              )}
-            </NBBody>
+            {this.state.isScreenReaderActive &&
+            O.isSome(maybeAccessibilityLabel) ? (
+              this.renderBodyLabel(
+                maybeAccessibilityLabel.value,
+                this.firstElementRef
+              )
+            ) : (
+              <View ref={this.firstElementRef} accessible={true}>
+                {body ? body : headerTitle && this.renderBodyLabel(headerTitle)}
+              </View>
+            )}
           </NBBody>
         )}
 
@@ -286,7 +281,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
             accessibilityLabel={customRightIcon.accessibilityLabel}
           >
             {!isStringNullyOrEmpty(customRightIcon.iconName) && (
-              <IconFont name={customRightIcon.iconName} />
+              <Icon name={customRightIcon.iconName} />
             )}
           </ButtonDefaultOpacity>
         )}

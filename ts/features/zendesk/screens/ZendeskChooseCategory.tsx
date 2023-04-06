@@ -131,10 +131,6 @@ const ZendeskChooseCategory = (props: Props) => {
     <BaseScreenComponent
       showChat={false}
       goBack={true}
-      customRightIcon={{
-        iconName: "",
-        onPress: () => true
-      }}
       headerTitle={I18n.t("support.chooseCategory.header")}
     >
       <SafeAreaView style={IOStyles.flex} testID={"ZendeskChooseCategory"}>

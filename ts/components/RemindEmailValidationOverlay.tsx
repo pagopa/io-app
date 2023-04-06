@@ -15,7 +15,6 @@ import {
   StyleSheet
 } from "react-native";
 import { connect } from "react-redux";
-import { IOColors } from "../components/core/variables/IOColors";
 import I18n from "../i18n";
 import NavigationService from "../navigation/NavigationService";
 import ROUTES from "../navigation/routes";
@@ -50,10 +49,11 @@ import SectionStatusComponent from "./SectionStatus";
 import TouchableDefaultOpacity from "./TouchableDefaultOpacity";
 import BlockButtons from "./ui/BlockButtons";
 import FooterWithButtons from "./ui/FooterWithButtons";
-import IconFont from "./ui/IconFont";
 import { LightModalContextInterface } from "./ui/LightModal";
 import Markdown from "./ui/Markdown";
 import { Icon } from "./core/icons/Icon";
+import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
+import Pictogram, { IOPictogramType } from "./core/pictograms/Pictogram";
 
 type OwnProp = {
   isOnboarding?: boolean;
@@ -88,7 +88,7 @@ const profilePolling = 5000 as Millisecond; // 5 seconds
 
 const EMPTY_EMAIL = "";
 const MARKDOWN_BODY_STYLE = "body { text-align: center;}";
-const VALIDATION_ICON_WIDTH = 84;
+const VALIDATION_ILLUSTRATION_WIDTH = 84;
 const emailCtaKey = "email.validate.cta";
 
 class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
@@ -219,15 +219,16 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     <View style={styles.error}>
       <Body color="white">{I18n.t("global.actions.retry")}</Body>
       <View>
-        <IconFont
-          name={"io-close"}
+        <ButtonDefaultOpacity
           onPress={() => {
             this.setState({ displayError: false });
           }}
-          color={IOColors.white}
+          transparent={true}
           accessible={true}
           accessibilityLabel={I18n.t("global.buttons.close")}
-        />
+        >
+          <Icon name="legClose" color="white" />
+        </ButtonDefaultOpacity>
       </View>
     </View>
   );
@@ -267,7 +268,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
 
   private onMainProps: TopScreenComponentProps = {
     customRightIcon: {
-      iconName: "io-close",
+      iconName: "legClose",
       onPress: this.props.navigateBack
     }
   };
@@ -357,9 +358,9 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
       O.getOrElse(() => EMPTY_EMAIL)
     );
 
-    const icon = this.state.emailHasBeenValidate
-      ? "io-email-validated"
-      : "io-email-to-validate";
+    const illustration: IOPictogramType = this.state.emailHasBeenValidate
+      ? "emailValidation"
+      : "emailToValidate";
 
     const title = this.state.emailHasBeenValidate
       ? I18n.t("email.validate.validated")
@@ -375,12 +376,13 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
       >
         <Content bounces={false}>
           <VSpacer size={40} />
-          <IconFont
-            name={icon}
-            size={VALIDATION_ICON_WIDTH}
-            color={customVariables.colorHighlight}
-            style={IOStyles.selfCenter}
-          />
+          <View style={IOStyles.selfCenter}>
+            <Pictogram
+              name={illustration}
+              size={VALIDATION_ILLUSTRATION_WIDTH}
+              color="aqua"
+            />
+          </View>
           <VSpacer size={40} />
           <View style={IOStyles.alignCenter}>
             <Body weight="SemiBold">{title}</Body>

@@ -28,6 +28,7 @@ import { IOColors } from "../../../../components/core/variables/IOColors";
 import { svSetFilter } from "../store/actions/voucherList";
 import { FilterState } from "../store/reducers/voucherList/filters";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
+import { Icon } from "../../../../components/core/icons";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> & {
@@ -138,7 +139,7 @@ const SvVoucherListFilters: React.FunctionComponent<Props> = (props: Props) => {
         </Body>
         <Right>
           <ButtonDefaultOpacity onPress={props.onClose} transparent={true}>
-            <IconFont name="io-close" />
+            <Icon name="legClose" />
           </ButtonDefaultOpacity>
         </Right>
       </AppHeader>

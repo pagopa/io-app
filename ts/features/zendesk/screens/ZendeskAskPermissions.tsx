@@ -349,11 +349,6 @@ const ZendeskAskPermissions = () => {
     <BaseScreenComponent
       showChat={false}
       goBack={true}
-      // customRightIcon is needed to have a centered header title
-      customRightIcon={{
-        iconName: "",
-        onPress: constNull
-      }}
       headerTitle={I18n.t("support.askPermissions.header")}
     >
       <SafeAreaView style={IOStyles.flex} testID={"ZendeskAskPermissions"}>

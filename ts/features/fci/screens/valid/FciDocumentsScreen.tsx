@@ -10,7 +10,6 @@ import * as O from "fp-ts/lib/Option";
 import { SafeAreaView, StyleSheet } from "react-native";
 import { useSelector } from "react-redux";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
-import IconFont from "../../../../components/ui/IconFont";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { IOColors } from "../../../../components/core/variables/IOColors";
@@ -31,6 +30,7 @@ import { fciUpdateDocumentSignaturesRequest } from "../../store/actions";
 import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentSignatures";
 import { useIODispatch } from "../../../../store/hooks";
 import { SignatureFieldToBeCreatedAttrs } from "../../../../../definitions/fci/SignatureFieldToBeCreatedAttrs";
+import { Icon } from "../../../../components/core/icons/Icon";
 
 const styles = StyleSheet.create({
   pdf: {
@@ -335,7 +335,7 @@ const FciDocumentsScreen = () => {
       accessibilityLabel={I18n.t("global.buttons.back")}
       accessibilityRole={"button"}
     >
-      <IconFont name={"io-close"} style={{ color: IOColors.bluegrey }} />
+      <Icon name="legClose" color="bluegrey" />
     </TouchableDefaultOpacity>
   );
 

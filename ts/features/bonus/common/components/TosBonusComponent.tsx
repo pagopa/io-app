@@ -17,9 +17,9 @@ import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { withLoadingSpinner } from "../../../../components/helpers/withLoadingSpinner";
 import AppHeader from "../../../../components/ui/AppHeader";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import IconFont from "../../../../components/ui/IconFont";
 import I18n from "../../../../i18n";
 import { AVOID_ZOOM_JS, closeInjectedScript } from "../../../../utils/webview";
+import { Icon } from "../../../../components/core/icons/Icon";
 
 type Props = {
   onClose: () => void;
@@ -111,7 +111,7 @@ const TosBonusComponent: React.FunctionComponent<Props> = props => {
         <Body />
         <Right>
           <ButtonDefaultOpacity onPress={props.onClose} transparent={true}>
-            <IconFont name="io-close" />
+            <Icon name="legClose" />
           </ButtonDefaultOpacity>
         </Right>
       </AppHeader>

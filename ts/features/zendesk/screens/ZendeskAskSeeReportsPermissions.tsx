@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { constNull, pipe } from "fp-ts/lib/function";
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
 import { SafeAreaView, ScrollView, View } from "react-native";
@@ -119,11 +119,6 @@ const ZendeskAskSeeReportsPermissions = (props: Props) => {
     <BaseScreenComponent
       showChat={false}
       goBack={true}
-      // customRightIcon is needed to have a centered header title
-      customRightIcon={{
-        iconName: "",
-        onPress: constNull
-      }}
       headerTitle={I18n.t("support.askPermissions.listTitle")}
     >
       <SafeAreaView style={IOStyles.flex} testID={"ZendeskAskPermissions"}>
