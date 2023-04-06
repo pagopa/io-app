@@ -64,7 +64,6 @@ const OnboardingEmailReadScreen = (props: Props) => {
       bordered: true,
       title: I18n.t("email.edit.cta"),
       onPress: () => {
-        props.navigation.dispatch(StackActions.popToTop());
         props.navigation.navigate(ROUTES.ONBOARDING, {
           screen: ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN
         });
