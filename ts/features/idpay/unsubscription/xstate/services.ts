@@ -21,49 +21,57 @@ const createServicesImplementation = (
   language: PreferredLanguage
 ) => {
   const getInitiativeInfo = async (context: Context) => {
-    const dataResponse = await client.getWalletDetail({
-      bearerAuth: token,
-      "Accept-Language": language,
-      initiativeId: context.initiativeId
-    });
+    try {
+      const dataResponse = await client.getWalletDetail({
+        bearerAuth: token,
+        "Accept-Language": language,
+        initiativeId: context.initiativeId
+      });
 
-    const data: Promise<InitiativeDTO> = pipe(
-      dataResponse,
-      E.fold(
-        _ => Promise.reject(undefined),
-        response => {
-          if (response.status !== 200) {
-            return Promise.reject(undefined);
+      const data: Promise<InitiativeDTO> = pipe(
+        dataResponse,
+        E.fold(
+          _ => Promise.reject(),
+          response => {
+            if (response.status !== 200) {
+              return Promise.reject();
+            }
+            return Promise.resolve(response.value);
           }
-          return Promise.resolve(response.value);
-        }
-      )
-    );
+        )
+      );
 
-    return data;
+      return data;
+    } catch {
+      return Promise.reject();
+    }
   };
 
   const unsubscribeFromInitiative = async (context: Context) => {
-    const dataResponse = await client.unsubscribe({
-      bearerAuth: token,
-      "Accept-Language": language,
-      initiativeId: context.initiativeId
-    });
+    try {
+      const dataResponse = await client.unsubscribe({
+        bearerAuth: token,
+        "Accept-Language": language,
+        initiativeId: context.initiativeId
+      });
 
-    const data: Promise<undefined> = pipe(
-      dataResponse,
-      E.fold(
-        _ => Promise.reject(undefined),
-        response => {
-          if (response.status !== 200) {
-            return Promise.reject(undefined);
+      const data: Promise<undefined> = pipe(
+        dataResponse,
+        E.fold(
+          _ => Promise.reject(undefined),
+          response => {
+            if (response.status !== 200) {
+              return Promise.reject(undefined);
+            }
+            return Promise.resolve(undefined);
           }
-          return Promise.resolve(undefined);
-        }
-      )
-    );
+        )
+      );
 
-    return data;
+      return data;
+    } catch {
+      return Promise.reject();
+    }
   };
 
   return {
