@@ -353,7 +353,7 @@ export const IOIcons = {
   chevronBottom: IconChevronBottom,
   chevronTop: IconChevronTop,
   chevronRightListItem: IconChevronRightListItem,
-  legChevronLeft: LegIconChevronLeft /* io-back */,
+  legChevronLeft: LegIconChevronLeft,
   close: IconClose /* io-close */,
   legClose: LegIconClose /* io-close */,
   closeSmall: IconCloseSmall,

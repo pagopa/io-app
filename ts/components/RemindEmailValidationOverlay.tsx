@@ -53,6 +53,7 @@ import FooterWithButtons from "./ui/FooterWithButtons";
 import IconFont from "./ui/IconFont";
 import { LightModalContextInterface } from "./ui/LightModal";
 import Markdown from "./ui/Markdown";
+import { Icon } from "./core/icons/Icon";
 
 type OwnProp = {
   isOnboarding?: boolean;
@@ -260,7 +261,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
       accessibilityLabel={I18n.t("global.buttons.back")}
       accessibilityRole={"button"}
     >
-      <IconFont name={"io-back"} />
+      <Icon name="legChevronLeft" />
     </TouchableDefaultOpacity>
   );
 

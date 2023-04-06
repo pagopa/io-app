@@ -37,6 +37,7 @@ import {
   getSectionListData
 } from "../../utils/signatureFields";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
+import { Icon } from "../../../../components/core/icons/Icon";
 
 export type FciSignatureFieldsScreenNavigationParams = Readonly<{
   documentId: DocumentDetailView["id"];
@@ -218,7 +219,7 @@ const FciSignatureFieldsScreen = (
       accessibilityLabel={I18n.t("global.buttons.back")}
       accessibilityRole={"button"}
     >
-      <IconFont name={"io-back"} style={{ color: IOColors.bluegrey }} />
+      <Icon name="legChevronLeft" color="bluegrey" />
     </TouchableDefaultOpacity>
   );
 
