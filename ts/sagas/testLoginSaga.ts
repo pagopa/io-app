@@ -16,20 +16,7 @@ import {
 import { SessionToken } from "../types/SessionToken";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { convertUnknownToError } from "../utils/errors";
-import {
-  IdentityProvider,
-  IdentityProviderId
-} from "../models/IdentityProvider";
-
-export const TestIdpId = "testIdp";
-export const TestIdp: IdentityProvider = {
-  id: TestIdpId as IdentityProviderId,
-  name: "Test Idp",
-  logo: "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/spid/idps/spid.png",
-  entityID: TestIdpId,
-  profileUrl: "",
-  isTestIdp: true
-};
+import { IdpData } from "../../definitions/content/IdpData";
 
 // Started by redux action
 function* handleTestLogin({
@@ -60,7 +47,7 @@ function* handleTestLogin({
           loginSuccess({
             token: testLoginResponse.right.value
               .token as string as SessionToken,
-            idp: TestIdpId
+            idp: "test" as keyof IdpData
           })
         );
         return;
@@ -70,7 +57,10 @@ function* handleTestLogin({
     throw new Error(readableReport(testLoginResponse.left));
   } catch (e) {
     yield* put(
-      loginFailure({ error: convertUnknownToError(e), idp: TestIdpId })
+      loginFailure({
+        error: convertUnknownToError(e),
+        idp: "test" as keyof IdpData
+      })
     );
   }
 }

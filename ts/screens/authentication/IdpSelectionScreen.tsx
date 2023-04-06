@@ -33,10 +33,18 @@ import { H1 } from "../../components/core/typography/H1";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { VSpacer } from "../../components/core/spacer/Spacer";
-import { TestIdp } from "../../sagas/testLoginSaga";
+import { IdpData } from "../../../definitions/content/IdpData";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
+
+const TestIdp: SpidIdp = {
+  id: "test" as keyof IdpData,
+  name: "Test Idp",
+  logo: "https://raw.githubusercontent.com/pagopa/io-services-metadata/master/spid/idps/spid.png",
+  profileUrl: "",
+  isTestIdp: true
+};
 
 const TAPS_TO_OPEN_TESTIDP = 5;
 
