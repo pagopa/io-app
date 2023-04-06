@@ -1,6 +1,5 @@
 import * as Keychain from "react-native-keychain";
 import { Storage } from "redux-persist";
-
 import { setGenericPasswordWithDefaultAccessibleOption } from "../../utils/keychain";
 
 /**
