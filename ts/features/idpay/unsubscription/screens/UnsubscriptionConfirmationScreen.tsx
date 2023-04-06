@@ -94,7 +94,8 @@ const UnsubscriptionConfirmationScreen = () => {
         },
         block: true,
         bordered: true,
-        title: I18n.t("global.buttons.cancel")
+        title: I18n.t("global.buttons.cancel"),
+        labelColor: IOColors.blue
       }}
     />
   );
