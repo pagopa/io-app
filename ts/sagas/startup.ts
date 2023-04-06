@@ -93,6 +93,7 @@ import { clearAllAttachments } from "../features/messages/saga/clearAttachments"
 import { watchMessageAttachmentsSaga } from "../features/messages/saga/attachments";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
 import { watchIDPaySaga } from "../features/idpay/common/saga";
+import { trackKeychainGetFailure } from "../utils/analytics";
 import { checkPublicKeyAndBlockIfNeeded } from "../features/lollipop/navigation";
 import {
   startAndReturnIdentificationResult,
@@ -148,6 +149,10 @@ import { completeOnboardingSaga } from "./startup/completeOnboardingSaga";
 import { watchLoadMessageById } from "./messages/watchLoadMessageById";
 import { watchThirdPartyMessageSaga } from "./messages/watchThirdPartyMessageSaga";
 import { checkNotificationsPreferencesSaga } from "./startup/checkNotificationsPreferencesSaga";
+import {
+  clearKeychainError,
+  keychainError
+} from "./../store/storages/keychain";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -380,6 +385,11 @@ export function* initializeApplicationSaga(): Generator<
 
   // check if the user expressed preference about mixpanel, if not ask for it
   yield* call(askMixpanelOptIn);
+
+  // workaround to send keychainError for Pixel devices
+  // TODO: REMOVE AFTER FIXING https://pagopa.atlassian.net/jira/software/c/projects/IABT/boards/92?modal=detail&selectedIssue=IABT-1441
+  yield* call(trackKeychainGetFailure, keychainError);
+  yield* call(clearKeychainError);
 
   if (hasPreviousSessionAndPin) {
     // We have to retrieve the pin here and not on the previous if-condition (same guard)
