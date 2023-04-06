@@ -1,6 +1,6 @@
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import * as O from "fp-ts/lib/Option";
-import { Text as NBText } from "native-base";
+import { Text as NBButtonText } from "native-base";
 import React from "react";
 import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
@@ -89,9 +89,9 @@ const PaymentButton = ({
       onPress={handleOnPress}
       style={styles.half}
     >
-      <NBText style={styles.marginTop1}>
+      <NBButtonText style={styles.marginTop1}>
         {I18n.t("messages.cta.seeNotice")}
-      </NBText>
+      </NBButtonText>
     </ButtonDefaultOpacity>
   );
 };

@@ -1,6 +1,5 @@
 import * as React from "react";
 import { Alert, StyleSheet, View } from "react-native";
-import { IOBadge } from "../../../components/core/IOBadge";
 import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";
 import { Body } from "../../../components/core/typography/Body";
 import { H1 } from "../../../components/core/typography/H1";
@@ -14,6 +13,7 @@ import { Link } from "../../../components/core/typography/Link";
 import { Monospace } from "../../../components/core/typography/Monospace";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
 
 const styles = StyleSheet.create({
   row: {
@@ -48,6 +48,22 @@ export const DSTypography = () => (
     <LabelRow />
     <Link onPress={() => Alert.alert("onPress link!")}>Link</Link>
     <Monospace>MonoSpace</Monospace>
+    <VSpacer size={40} />
+    <H2
+      color={"bluegrey"}
+      weight={"SemiBold"}
+      style={{ marginBottom: sectionTitleMargin }}
+    >
+      NativeBase
+    </H2>
+    <Body>This is a Body text</Body>
+    <VSpacer size={16} />
+    <Body weight="SemiBold">This is a Body SemiBold text</Body>
+    <VSpacer size={16} />
+    <View style={IOStyles.alignCenter}>
+      <Body weight="SemiBold">This is a centered text</Body>
+      <Body weight="SemiBold">Another centered text</Body>
+    </View>
     <VSpacer size={40} />
   </DesignSystemScreen>
 );
@@ -211,35 +227,6 @@ export const LabelRow = () => (
       <View style={{ backgroundColor: IOColors.bluegrey }}>
         <Label color={"white"}>Label</Label>
       </View>
-    </View>
-    <VSpacer size={40} />
-  </>
-);
-
-export const IOBadgeRow = () => (
-  <>
-    <Label>{"<IOBadge />"}</Label>
-    <VSpacer size={16} />
-    <View style={styles.row}>
-      <IOBadge text={"Badge"} small={true} labelColor={"white"} />
-      <HSpacer size={16} />
-      <IOBadge text={"Badge"} small={true} labelColor={"bluegreyDark"} />
-      <HSpacer size={16} />
-      <IOBadge text={"Badge"} small={true} labelColor={"blue"} />
-      <HSpacer size={16} />
-      <IOBadge text={"Badge"} small={true} labelColor={"red"} />
-      <HSpacer size={16} />
-    </View>
-    <VSpacer size={16} />
-    <View style={styles.row}>
-      <IOBadge text={"Badge"} labelColor={"white"} />
-      <HSpacer size={16} />
-      <IOBadge text={"Badge"} labelColor={"bluegreyDark"} />
-      <HSpacer size={16} />
-      <IOBadge text={"Badge"} labelColor={"blue"} />
-      <HSpacer size={16} />
-      <IOBadge text={"Badge"} labelColor={"red"} />
-      <HSpacer size={16} />
     </View>
     <VSpacer size={40} />
   </>

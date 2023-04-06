@@ -12,11 +12,11 @@ import {
   confirmButtonProps
 } from "../../components/buttons/ButtonConfigurations";
 import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButton";
-import { bonusVacanzeStyle } from "../../components/Styles";
 import {
   cancelBonusVacanzeRequest,
   checkBonusVacanzeEligibility
 } from "../../store/actions/bonusVacanze";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
@@ -45,7 +45,7 @@ const EligibilityExpired: React.FunctionComponent<Props> = props => {
   });
 
   return (
-    <SafeAreaView style={bonusVacanzeStyle.flex}>
+    <SafeAreaView style={IOStyles.flex}>
       <InfoScreenComponent
         image={renderInfoRasterImage(image)}
         title={title}
