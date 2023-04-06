@@ -674,24 +674,6 @@ export default (): Theme => {
 
 In this case, what is defined within the attribute `NativeBase.Text` will be used only if the button has associated a property with a name `small`.
 
-### Custom UI components
-**Note**: ⚠️ Deprecated
-
-#### TextWithIcon
-
-A simple wrapper in which you can insert an icon and a text that will be rendered side by side.
-
-Example of use:
-
-```javascript
-<TextWithIcon danger>
-  <IconFont name="io-back" />
-  <Text>{I18n.t('onboarding.pin.confirmInvalid')}</Text>
-</TextWithIcon>
-```
-
-[icomoon-export-settings]: docs/icomoon-font-export.png "IcoMoon Export Settings"
-
 ### Troubleshooting
 
 ### Bundler install error
