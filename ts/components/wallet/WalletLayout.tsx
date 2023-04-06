@@ -8,7 +8,7 @@
  * footer with a button for starting a new payment
  */
 
-import { Content, Text as NBText } from "native-base";
+import { Content } from "native-base";
 import * as React from "react";
 import { View, Animated, StyleProp, StyleSheet, ViewStyle } from "react-native";
 import I18n from "../../i18n";
@@ -22,6 +22,8 @@ import DarkLayout from "../screens/DarkLayout";
 import { H2 } from "../core/typography/H2";
 import { IOColors } from "../core/variables/IOColors";
 import { VSpacer } from "../core/spacer/Spacer";
+import { Body } from "../core/typography/Body";
+import { IOStyles } from "../core/variables/IOStyles";
 import { ScreenContentRoot } from "../screens/ScreenContent";
 
 type Props = Readonly<{
@@ -52,11 +54,6 @@ const styles = StyleSheet.create({
     backgroundColor: IOColors.white,
     marginBottom: 10
   },
-
-  flex1: {
-    flex: 1
-  },
-
   shadow: {
     // iOS
     shadowColor: IOColors.black,
@@ -72,11 +69,8 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0,
     position: "relative"
   },
-
   subHeaderContent: {
-    flexDirection: "row",
     alignItems: "baseline",
-    justifyContent: "space-between",
     paddingHorizontal: customVariables.contentPadding,
     backgroundColor: IOColors.white
   }
@@ -85,11 +79,11 @@ const styles = StyleSheet.create({
 export default class WalletLayout extends React.Component<Props> {
   private dynamicSubHeader() {
     return (
-      <View style={[styles.whiteBg, styles.flex1, styles.shadow]}>
+      <View style={[styles.whiteBg, IOStyles.flex, styles.shadow]}>
         <VSpacer size={16} />
-        <View style={styles.subHeaderContent}>
+        <View style={[IOStyles.rowSpaceBetween, styles.subHeaderContent]}>
           <H2 color={"bluegrey"}>{I18n.t("wallet.latestTransactions")}</H2>
-          <NBText>{I18n.t("wallet.amount")}</NBText>
+          <Body>{I18n.t("wallet.amount")}</Body>
         </View>
         <VSpacer size={16} />
       </View>
