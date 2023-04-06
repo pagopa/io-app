@@ -1,12 +1,13 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Badge, Text as NBText } from "native-base";
 import * as React from "react";
 import { View, Image, ImageSourcePropType, StyleSheet } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
+import { IOBadge } from "../../../../components/core/IOBadge";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { H3 } from "../../../../components/core/typography/H3";
 import { IOColors } from "../../../../components/core/variables/IOColors";
+import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import TouchableDefaultOpacity, {
   TouchableDefaultOpacityProps
 } from "../../../../components/TouchableDefaultOpacity";
@@ -39,17 +40,11 @@ const styles = StyleSheet.create({
     elevation: 2,
     marginRight: widthPercentageToDP("2.93%")
   },
-  row: {
-    flexDirection: "row",
-    justifyContent: "space-between"
-  },
   image: {
     width: 40,
     height: 40,
     resizeMode: "contain"
-  },
-  badgeContainer: { height: 18, backgroundColor: IOColors.blue },
-  badgeText: { fontSize: 12, lineHeight: 18 }
+  }
 });
 
 const FeaturedCard: React.FunctionComponent<Props> = (props: Props) => (
@@ -58,7 +53,7 @@ const FeaturedCard: React.FunctionComponent<Props> = (props: Props) => (
     onPress={props.onPress}
     testID={props.testID}
   >
-    <View style={styles.row}>
+    <View style={IOStyles.rowSpaceBetween}>
       {pipe(
         props.image,
         O.fromNullable,
@@ -75,11 +70,11 @@ const FeaturedCard: React.FunctionComponent<Props> = (props: Props) => (
         )
       )}
       {props.isNew && (
-        <Badge style={styles.badgeContainer}>
-          <NBText style={styles.badgeText} semibold={true}>
-            {I18n.t("wallet.methods.newCome")}
-          </NBText>
-        </Badge>
+        <IOBadge
+          text={I18n.t("wallet.methods.newCome")}
+          small={true}
+          labelColor={"white"}
+        />
       )}
     </View>
     <VSpacer size={8} />

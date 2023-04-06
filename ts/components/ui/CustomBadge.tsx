@@ -1,34 +1,40 @@
-import { Badge, Text as NBText } from "native-base";
 import React, { memo } from "react";
-import { StyleSheet } from "react-native";
+import { Text, StyleSheet, View } from "react-native";
 import variables from "../../theme/variables";
 import { isTestEnv } from "../../utils/environment";
 import { IOColors } from "../../components/core/variables/IOColors";
+import { makeFontStyleObject } from "../core/fonts";
 
 type Props = {
   badgeValue?: number;
 };
 
+const BADGE_SIZE = 20;
+
 const styles = StyleSheet.create({
   textStyle: {
-    paddingLeft: 0,
-    paddingRight: 0
+    color: IOColors.white,
+    fontSize: 10,
+    textAlign: "center",
+    ...makeFontStyleObject("Bold")
   },
   badgeStyle: {
+    width: BADGE_SIZE,
+    height: BADGE_SIZE,
+    borderRadius: BADGE_SIZE / 2,
+    alignSelf: "flex-start",
+    justifyContent: "center",
+    alignContent: "center",
     backgroundColor: variables.brandPrimary,
     borderColor: IOColors.white,
     borderWidth: 2,
     position: "absolute",
     elevation: 0.1,
     shadowColor: IOColors.white,
-    width: 20,
-    height: 20,
     left: 12,
     bottom: 10,
     paddingLeft: 0,
-    paddingRight: 0,
-    justifyContent: "center",
-    alignContent: "center"
+    paddingRight: 0
   }
 });
 
@@ -62,22 +68,21 @@ const CustomBadge = (props: Props) => {
     badgeValue > MAX_BADGE_VALUE ? "+" : ""
   }`;
   return (
-    <Badge
+    <View
       testID={"badgeTestID"}
       style={[
         styles.badgeStyle,
         { width: styles.badgeStyle.width * getWidthMultiplier(badge) }
       ]}
     >
-      <NBText
-        badge={true}
+      <Text
         style={styles.textStyle}
         accessible={false}
         importantForAccessibility={"no-hide-descendants"}
       >
         {badge}
-      </NBText>
-    </Badge>
+      </Text>
+    </View>
   );
 };
 

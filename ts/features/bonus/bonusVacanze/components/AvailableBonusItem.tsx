@@ -1,13 +1,16 @@
-import { Badge, Grid, ListItem, Row, Text as NBText } from "native-base";
+import { Badge, ListItem, Text as NBBadgeText } from "native-base";
 import * as React from "react";
 import { View, Image, Platform, StyleSheet } from "react-native";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
 import I18n from "../../../../i18n";
-import variables from "../../../../theme/variables";
 import { getRemoteLocale } from "../../../../utils/messages";
 
 import { IOColors } from "../../../../components/core/variables/IOColors";
+import { IOStyles } from "../../../../components/core/variables/IOStyles";
+import { HSpacer } from "../../../../components/core/spacer/Spacer";
+import { Body } from "../../../../components/core/typography/Body";
+import { H3 } from "../../../../components/core/typography/H3";
 
 export type AvailableBonusItemState = "incoming" | "active" | "completed";
 
@@ -26,12 +29,6 @@ const styles = StyleSheet.create({
   disabled: {
     opacity: 0.75
   },
-  bonusItem: {
-    flexDirection: "column"
-  },
-  methodTitle: {
-    color: IOColors.black
-  },
   methodImage: {
     width: 48,
     height: 48,
@@ -49,20 +46,17 @@ const styles = StyleSheet.create({
   },
   badge: {
     height: 18,
-    marginTop: 2,
     backgroundColor: IOColors.grey
   },
   badgeText: {
     lineHeight: Platform.OS === "ios" ? 20 : 21
-  },
-  servicesName: {
-    color: variables.textColor
   }
 });
 
 const BonusBadge = (props: { caption: string }) => (
+  // IOBadge (new style to be added)
   <Badge style={styles.badge}>
-    <NBText style={styles.badgeText}>{props.caption}</NBText>
+    <NBBadgeText style={styles.badgeText}>{props.caption}</NBBadgeText>
   </Badge>
 );
 
@@ -97,23 +91,21 @@ export const AvailableBonusItem: React.FunctionComponent<Props> = (
       testID={`AvailableBonusItem-${bonusItem.id_type}`}
     >
       <View style={styles.columnLeft}>
-        <Grid>
-          <Row>
-            <View style={styles.bonusItem}>
-              <NBText bold={true} style={[disabledStyle, styles.methodTitle]}>
-                {bonusTypeLocalizedContent.name}
-              </NBText>
-              {renderBadge(state)}
-            </View>
-          </Row>
-          <Row>
-            <NBText style={[styles.servicesName, disabledStyle]}>
-              {bonusTypeLocalizedContent.description ?? ""}
-            </NBText>
-          </Row>
-        </Grid>
+        <View style={[IOStyles.row, IOStyles.alignCenter, disabledStyle]}>
+          <H3 weight="Bold" color="bluegreyDark">
+            {bonusTypeLocalizedContent.name}
+          </H3>
+          <HSpacer size={8} />
+          {renderBadge(state)}
+        </View>
+
+        {bonusTypeLocalizedContent.description && (
+          <View style={disabledStyle}>
+            <Body>{bonusTypeLocalizedContent.description}</Body>
+          </View>
+        )}
       </View>
-      <View style={styles.columnRight}>
+      <View style={[styles.columnRight, disabledStyle]}>
         {bonusItem.cover && (
           <Image style={styles.methodImage} source={{ uri: bonusItem.cover }} />
         )}
