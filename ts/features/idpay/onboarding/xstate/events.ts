@@ -1,5 +1,6 @@
 import { SelfConsentMultiDTO } from "../../../../../definitions/idpay/SelfConsentMultiDTO";
 import { SelfDeclarationBoolDTO } from "../../../../../definitions/idpay/SelfDeclarationBoolDTO";
+import { GLOBAL_E_BACK } from "../../common/xstate/events";
 
 // Events types
 type E_SELECT_INITIATIVE = {
@@ -32,11 +33,6 @@ type E_SHOW_INITIATIVE_DETAILS = {
   type: "SHOW_INITIATIVE_DETAILS";
 };
 
-type E_GO_BACK = {
-  type: "GO_BACK";
-  skipNavigation?: boolean;
-};
-
 type E_SELECT_MULTI_CONSENT = {
   type: "SELECT_MULTI_CONSENT";
   data: SelfConsentMultiDTO;
@@ -48,7 +44,7 @@ export type Events =
   | E_ACCEPT_REQUIRED_PDND_CRITERIA
   | E_QUIT_ONBOARDING
   | E_SHOW_INITIATIVE_DETAILS
-  | E_GO_BACK
+  | GLOBAL_E_BACK
   | E_SELECT_MULTI_CONSENT
   | E_TOGGLE_BOOL_CRITERIA
   | E_ACCEPT_REQUIRED_BOOL_CRITERIA;

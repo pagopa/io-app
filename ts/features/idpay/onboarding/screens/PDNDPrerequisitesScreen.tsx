@@ -74,7 +74,7 @@ export const PDNDPrerequisitesScreen = () => {
 
   const continueOnPress = () =>
     machine.send({ type: "ACCEPT_REQUIRED_PDND_CRITERIA" });
-  const goBackOnPress = () => machine.send({ type: "GO_BACK" });
+  const goBackOnPress = () => machine.send({ type: "BACK" });
 
   const { present, bottomSheet, dismiss } = useIOBottomSheetModal(
     <Markdown>
@@ -102,7 +102,7 @@ export const PDNDPrerequisitesScreen = () => {
   const pdndCriteria = useSelector(machine, pdndCriteriaSelector);
 
   useNavigationSwipeBackListener(() => {
-    machine.send({ type: "GO_BACK", skipNavigation: true });
+    machine.send({ type: "BACK", skipNavigation: true });
   });
 
   return (

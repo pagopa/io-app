@@ -67,7 +67,7 @@ describe("TosScreen", () => {
 
       // Pressing it should trigger NavigationService.dispatchNavigationAction(CommonActions.goBack())
       fireEvent.press(backButtonRTI);
-      expect(spiedFunction).toBeCalledWith({ type: "GO_BACK" });
+      expect(spiedFunction).toBeCalledWith({ type: "BACK" });
     });
   });
   describe("When rendering the screen", () => {

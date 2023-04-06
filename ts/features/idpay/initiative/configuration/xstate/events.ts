@@ -2,6 +2,7 @@ import { IbanDTO } from "../../../../../../definitions/idpay/IbanDTO";
 import { IbanPutDTO } from "../../../../../../definitions/idpay/IbanPutDTO";
 import { InstrumentDTO } from "../../../../../../definitions/idpay/InstrumentDTO";
 import { Wallet } from "../../../../../types/pagopa";
+import { GLOBAL_E_BACK } from "../../../common/xstate/events";
 import { ConfigurationMode } from "./context";
 
 type E_START_CONFIGURATION = {
@@ -54,11 +55,6 @@ type E_NEXT = {
   type: "NEXT";
 };
 
-type E_BACK = {
-  type: "BACK";
-  skipNavigation?: boolean;
-};
-
 type E_QUIT = {
   type: "QUIT";
 };
@@ -75,5 +71,5 @@ export type Events =
   | E_COMPLETE_CONFIGURATION
   | E_SKIP
   | E_NEXT
-  | E_BACK
+  | GLOBAL_E_BACK
   | E_QUIT;

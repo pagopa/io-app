@@ -88,10 +88,10 @@ const MultiValuePrerequisitesScreen = () => {
 
     return null;
   };
-  const goBack = () => machine.send("GO_BACK");
+  const goBack = () => machine.send("BACK");
 
   useNavigationSwipeBackListener(() => {
-    machine.send({ type: "GO_BACK", skipNavigation: true });
+    machine.send({ type: "BACK", skipNavigation: true });
   });
 
   return (

@@ -2,21 +2,14 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
+import { guardedNavigationAction } from "../../common/xstate/utils";
 import { IDPayDetailsRoutes } from "../../initiative/details/navigation";
 import {
   IDPayOnboardingParamsList,
   IDPayOnboardingRoutes,
   IDPayOnboardingStackNavigationProp
 } from "../navigation/navigator";
-import { Events } from "./events";
 import { Context } from "./machine";
-
-const skipNavigation = (event: Events) => {
-  if (event.type === "GO_BACK") {
-    return event.skipNavigation;
-  }
-  return false;
-};
 
 const createActionsImplementation = (
   rootNavigation: IOStackNavigationProp<AppParamsList, keyof AppParamsList>,
@@ -25,55 +18,40 @@ const createActionsImplementation = (
     keyof IDPayOnboardingParamsList
   >
 ) => {
-  const navigateToInitiativeDetailsScreen = (context: Context, event: any) => {
-    if (skipNavigation(event)) {
-      return;
-    }
-    if (context.serviceId === undefined) {
-      throw new Error("serviceId is undefined");
-    }
-
-    onboardingNavigation.navigate(
-      IDPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS,
-      {
-        serviceId: context.serviceId
+  const navigateToInitiativeDetailsScreen = guardedNavigationAction(
+    (context: Context) => {
+      if (context.serviceId === undefined) {
+        throw new Error("serviceId is undefined");
       }
-    );
-  };
 
-  const navigateToPDNDCriteriaScreen = (_: Context, event: any) => {
-    if (skipNavigation(event)) {
-      return;
+      onboardingNavigation.navigate(
+        IDPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS,
+        {
+          serviceId: context.serviceId
+        }
+      );
     }
+  );
 
+  const navigateToPDNDCriteriaScreen = guardedNavigationAction(() =>
     onboardingNavigation.navigate(
       IDPayOnboardingRoutes.IDPAY_ONBOARDING_PDNDACCEPTANCE
-    );
-  };
+    )
+  );
 
-  const navigateToBoolSelfDeclarationsScreen = (_: Context, event: any) => {
-    if (skipNavigation(event)) {
-      return;
-    }
-
+  const navigateToBoolSelfDeclarationsScreen = guardedNavigationAction(() =>
     onboardingNavigation.navigate(
       IDPayOnboardingRoutes.IDPAY_ONBOARDING_BOOL_SELF_DECLARATIONS
-    );
-  };
+    )
+  );
 
-  const navigateToMultiSelfDeclarationsScreen = (
-    context: Context,
-    event: any
-  ) => {
-    if (skipNavigation(event)) {
-      return;
-    }
-
-    onboardingNavigation.navigate({
-      name: IDPayOnboardingRoutes.IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS,
-      key: String(context.multiConsentsPage)
-    });
-  };
+  const navigateToMultiSelfDeclarationsScreen = guardedNavigationAction(
+    (context: Context) =>
+      onboardingNavigation.navigate({
+        name: IDPayOnboardingRoutes.IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS,
+        key: String(context.multiConsentsPage)
+      })
+  );
 
   const navigateToCompletionScreen = () => {
     onboardingNavigation.navigate(

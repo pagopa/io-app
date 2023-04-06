@@ -246,7 +246,7 @@ const createIDPayOnboardingMachine = () =>
                 target: "ACCEPTING_REQUIRED_CRITERIA"
               }
             ],
-            GO_BACK: [
+            BACK: [
               {
                 target: "DISPLAYING_INITIATIVE"
               }
@@ -279,7 +279,7 @@ const createIDPayOnboardingMachine = () =>
               tags: [WAITING_USER_INPUT_TAG],
               entry: "navigateToBoolSelfDeclarationsScreen",
               on: {
-                GO_BACK: [
+                BACK: [
                   {
                     target:
                       "#IDPAY_ONBOARDING.DISPLAYING_REQUIRED_PDND_CRITERIA",
@@ -332,7 +332,7 @@ const createIDPayOnboardingMachine = () =>
                     ]
                   }
                 ],
-                GO_BACK: [
+                BACK: [
                   {
                     actions: [
                       "decreaseMultiConsentIndex",

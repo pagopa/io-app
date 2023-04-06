@@ -6,90 +6,62 @@ import {
 } from "../../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../../navigation/routes";
 import { showToast } from "../../../../../utils/showToast";
+import { guardedNavigationAction } from "../../../common/xstate/utils";
 import { IDPayDetailsRoutes } from "../../details/navigation";
 import { IDPayConfigurationRoutes } from "../navigation/navigator";
 import { Context } from "./context";
-import { Events } from "./events";
-
-const skipNavigation = (event: Events) => {
-  if (event.type === "BACK") {
-    return event.skipNavigation;
-  }
-  return false;
-};
 
 const createActionsImplementation = (
   navigation: IOStackNavigationProp<AppParamsList, keyof AppParamsList>
 ) => {
-  const navigateToConfigurationIntro = (context: Context, event: any) => {
-    if (skipNavigation(event)) {
-      return;
-    }
-
-    if (context.initiativeId === undefined) {
-      throw new Error("initiativeId is undefined");
-    }
-
-    navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
-      screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO,
-      params: {
-        initiativeId: context.initiativeId
+  const navigateToConfigurationIntro = guardedNavigationAction(
+    (context: Context) => {
+      if (context.initiativeId === undefined) {
+        throw new Error("initiativeId is undefined");
       }
-    });
-  };
 
-  const navigateToIbanLandingScreen = (_: Context, event: any) => {
-    if (skipNavigation(event)) {
-      return;
+      navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
+        screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO,
+        params: {
+          initiativeId: context.initiativeId
+        }
+      });
     }
+  );
 
+  const navigateToIbanLandingScreen = guardedNavigationAction(() =>
     navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
       screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_LANDING
-    });
-  };
+    })
+  );
 
-  const navigateToIbanOnboardingScreen = (_: Context, event: any) => {
-    if (skipNavigation(event)) {
-      return;
-    }
-
+  const navigateToIbanOnboardingScreen = guardedNavigationAction(() =>
     navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
       screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ONBOARDING
-    });
-  };
+    })
+  );
 
-  const navigateToIbanEnrollmentScreen = (_: Context, event: any) => {
-    if (skipNavigation(event)) {
-      return;
-    }
-
+  const navigateToIbanEnrollmentScreen = guardedNavigationAction(() =>
     navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
       screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_IBAN_ENROLLMENT,
       params: {}
-    });
-  };
+    })
+  );
 
-  const navigateToAddPaymentMethodScreen = (_: Context, event: any) => {
-    if (skipNavigation(event)) {
-      return;
-    }
-
+  const navigateToAddPaymentMethodScreen = guardedNavigationAction(() =>
     navigation.replace(ROUTES.WALLET_NAVIGATOR, {
       screen: ROUTES.WALLET_ADD_PAYMENT_METHOD,
       params: { inPayment: O.none }
-    });
-  };
+    })
+  );
 
-  const navigateToInstrumentsEnrollmentScreen = (_: Context, event: any) => {
-    if (skipNavigation(event)) {
-      return;
-    }
+  const navigateToInstrumentsEnrollmentScreen = guardedNavigationAction(() =>
     navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
       screen:
         IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INSTRUMENTS_ENROLLMENT,
       params: {}
-    });
-  };
+    })
+  );
 
   const navigateToConfigurationSuccessScreen = () => {
     navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {

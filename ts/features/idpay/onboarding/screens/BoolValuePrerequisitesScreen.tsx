@@ -41,7 +41,7 @@ const InitiativeSelfDeclarationsScreen = () => {
   const continueOnPress = () =>
     machine.send({ type: "ACCEPT_REQUIRED_BOOL_CRITERIA" });
 
-  const goBackOnPress = () => machine.send({ type: "GO_BACK" });
+  const goBackOnPress = () => machine.send({ type: "BACK" });
 
   const toggleCriteria =
     (criteria: SelfDeclarationBoolDTO) => (value: boolean) =>
@@ -54,7 +54,7 @@ const InitiativeSelfDeclarationsScreen = () => {
     selfCriteriaBoolAnswers[criteria.code] ?? false;
 
   useNavigationSwipeBackListener(() => {
-    machine.send({ type: "GO_BACK", skipNavigation: true });
+    machine.send({ type: "BACK", skipNavigation: true });
   });
 
   return (

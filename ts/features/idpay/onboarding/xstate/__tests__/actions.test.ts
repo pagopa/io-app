@@ -36,7 +36,7 @@ const T_CONTEXT: Context = {
 const T_SERVICE_ID = "efg456";
 
 const T_NO_EVENT = { type: "" };
-const T_BACK_EVENT = { type: "GO_BACK", skipNavigation: true };
+const T_BACK_EVENT = { type: "BACK", skipNavigation: true };
 
 const T_INITIATIVE_INFO_DTO: InitiativeInfoDTO = {
   initiativeId: "1234"
