@@ -5,7 +5,7 @@ import { View, StyleSheet } from "react-native";
 import { useDispatch } from "react-redux";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
-import { VSpacer } from "../../../components/core/spacer/Spacer";
+import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";
 import { Body } from "../../../components/core/typography/Body";
 import { H3 } from "../../../components/core/typography/H3";
 import { Label } from "../../../components/core/typography/Label";
@@ -13,7 +13,6 @@ import { IOStyles } from "../../../components/core/variables/IOStyles";
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
 import { BadgeComponent } from "../../../components/screens/BadgeComponent";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import IconFont from "../../../components/ui/IconFont";
 import { getPanDescription } from "../../../components/wallet/creditCardOnboardingAttempts/CreditCardAttemptsList";
 import { SlidedContentComponent } from "../../../components/wallet/SlidedContentComponent";
 import {
@@ -39,6 +38,7 @@ import {
   zendeskCategoryId,
   zendeskPaymentMethodCategory
 } from "../../../utils/supportAssistance";
+import { Icon } from "../../../components/core/icons/Icon";
 
 export type CreditCardOnboardingAttemptDetailScreenNavigationParams = Readonly<{
   attempt: CreditCardInsertion;
@@ -130,7 +130,8 @@ const CreditCardOnboardingAttemptDetailScreen = (props: Props) => {
         bordered={true}
         block={true}
       >
-        <IconFont name={"io-messaggi"} />
+        <Icon name="legChat" color="blue" />
+        <HSpacer size={8} />
         <NBButtonText>
           {I18n.t("payment.details.info.buttons.help")}
         </NBButtonText>

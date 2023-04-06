@@ -10,13 +10,12 @@ import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
 import { ZendeskCategory } from "../../../definitions/content/ZendeskCategory";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import CopyButtonComponent from "../../components/CopyButtonComponent";
-import { VSpacer } from "../../components/core/spacer/Spacer";
+import { HSpacer, VSpacer } from "../../components/core/spacer/Spacer";
 import { Body } from "../../components/core/typography/Body";
 import { Label } from "../../components/core/typography/Label";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import IconFont from "../../components/ui/IconFont";
 import { getPaymentHistoryInfo } from "../../components/wallet/PaymentsHistoryList";
 import {
   paymentStatusType,
@@ -62,6 +61,7 @@ import {
   zendeskPaymentStartOrigin
 } from "../../utils/supportAssistance";
 import { H2 } from "../../components/core/typography/H2";
+import { Icon } from "../../components/core/icons/Icon";
 
 export type PaymentHistoryDetailsScreenNavigationParams = Readonly<{
   payment: PaymentHistory;
@@ -283,7 +283,8 @@ class PaymentHistoryDetailsScreen extends React.Component<Props> {
         bordered={true}
         block={true}
       >
-        <IconFont name={"io-messaggi"} />
+        <Icon name="legChat" color="blue" />
+        <HSpacer size={8} />
         <NBButtonText>
           {I18n.t("payment.details.info.buttons.help")}
         </NBButtonText>

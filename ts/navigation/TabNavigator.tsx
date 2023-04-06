@@ -93,9 +93,7 @@ export const MainTabNavigator = () => {
         component={ProfileMainScreen}
         options={{
           title: I18n.t("global.navigator.profile"),
-          tabBarIcon: ({ color }) => (
-            <ProfileTabIcon color={color as IOColors} />
-          )
+          tabBarIcon: ({ color }) => <ProfileTabIcon color={color} />
         }}
       />
     </Tab.Navigator>

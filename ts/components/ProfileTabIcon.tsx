@@ -1,13 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
 
+import { ColorValue } from "react-native";
 import { GlobalState } from "../store/reducers/types";
-import { IOColors } from "./core/variables/IOColors";
-import { Icon } from "./core/icons/Icon";
+import { AnimatedIcon } from "./core/icons/Icon";
 
 type OwnProps = {
   size?: number;
-  color?: IOColors;
+  color?: ColorValue;
 };
 
 type Props = OwnProps & ReturnType<typeof mapStateToProps>;
@@ -22,7 +22,7 @@ class ProfileTabIcon extends React.PureComponent<Props> {
     // when new experimental features will be avaible, pick this flag from props
     const isExperimentalFeaturesEnabled = false;
     return (
-      <Icon
+      <AnimatedIcon
         size={size}
         color={color}
         name={

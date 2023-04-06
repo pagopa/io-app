@@ -25,7 +25,6 @@ import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { FCI_ROUTES } from "../../navigation/routes";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import { IOColors } from "../../../../components/core/variables/IOColors";
-import IconFont from "../../../../components/ui/IconFont";
 import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentSignatures";
 import { fciUpdateDocumentSignaturesRequest } from "../../store/actions";
 import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
