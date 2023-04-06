@@ -1,20 +1,20 @@
+import { DefaultContext } from "xstate";
 import { GLOBAL_E_BACK } from "./events";
 
 type WrappedAction<TContext> = (context: TContext, event: any) => void;
 type Events = { type: string } | GLOBAL_E_BACK;
 
 /**
- * Check if the event is of type GLOBAL_E_BACK
- * @param event
- * @returns True if the event is of type GLOBAL_E_BACK
+ * Checks if the event is of type GLOBAL_E_BACK
+ * @param event The event object to check.
+ * @returns True if the event is of type GLOBAL_E_BACK, false otherwise.
  */
 const isBack = (event: Events): event is GLOBAL_E_BACK => event.type === "BACK";
 
 /**
- * Check if a given event should skip the navigation action.
- * @param event - The event object to check.
- * @returns True if the event is of type BACK and has a skipNavigation property set to true;
- * otherwise, false.
+ * Checks if a given event should skip the navigation action.
+ * @param event The event object to check.
+ * @returns True if the event is of type GLOBAL_E_BACK and has a skipNavigation property set to true; otherwise, false.
  */
 const skipNavigation = (event: Events) => isBack(event) && event.skipNavigation;
 
@@ -25,7 +25,7 @@ const skipNavigation = (event: Events) => isBack(event) && event.skipNavigation;
  * and either skips the action or calls the original action based on the event.
  */
 export const guardedNavigationAction =
-  <TContext>(action: WrappedAction<TContext>) =>
+  <TContext = DefaultContext>(action: WrappedAction<TContext>) =>
   (context: TContext, event: any) => {
     /**
      * Check if the event should be skipped. If so, return immediately without calling the action.
