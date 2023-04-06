@@ -134,9 +134,9 @@ const regenerateKeyGetRedirectsAndVerifySaml = (
               }
             }
           })
-          .catch(error => reject(error));
+          .catch(error => {console.log(error);reject(error);});
       })
-      .catch(error => reject(error));
+      .catch(error => {console.log(error);reject(error);});
   });
 
 export const AuthSessionPage = () => {

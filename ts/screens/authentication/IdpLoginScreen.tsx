@@ -3,24 +3,18 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { useCallback, useMemo, useState } from "react";
-import { Image, Linking, StyleSheet, View } from "react-native";
+import { Linking, StyleSheet, View } from "react-native";
 import { WebView } from "react-native-webview";
 import {
   WebViewErrorEvent,
   WebViewNavigation
 } from "react-native-webview/lib/WebViewTypes";
 import { connect } from "react-redux";
-import brokenLinkImage from "../../../img/broken-link.png";
-import { VSpacer } from "../../components/core/spacer/Spacer";
-import { Body } from "../../components/core/typography/Body";
-import { H2 } from "../../components/core/typography/H2";
-import { IOStyles } from "../../components/core/variables/IOStyles";
+
 import { IdpSuccessfulAuthentication } from "../../components/IdpSuccessfulAuthentication";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import IdpCustomContextualHelpContent from "../../components/screens/IdpCustomContextualHelpContent";
-import ButtonOutline from "../../components/ui/ButtonOutline";
-import ButtonSolid from "../../components/ui/ButtonSolid";
 import Markdown from "../../components/ui/Markdown";
 import { RefreshIndicator } from "../../components/ui/RefreshIndicator";
 import { useLollipopLoginSource } from "../../features/lollipop/hooks/useLollipopLoginSource";
