@@ -231,23 +231,17 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
         */}
         {!isSearchEnabled && (
           <NBBody style={goBack || customGoBack ? styles.body : styles.noLeft}>
-            <NBBody
-              style={goBack || customGoBack ? styles.body : styles.noLeft}
-            >
-              {this.state.isScreenReaderActive &&
-              O.isSome(maybeAccessibilityLabel) ? (
-                this.renderBodyLabel(
-                  maybeAccessibilityLabel.value,
-                  this.firstElementRef
-                )
-              ) : (
-                <View ref={this.firstElementRef} accessible={true}>
-                  {body
-                    ? body
-                    : headerTitle && this.renderBodyLabel(headerTitle)}
-                </View>
-              )}
-            </NBBody>
+            {this.state.isScreenReaderActive &&
+            O.isSome(maybeAccessibilityLabel) ? (
+              this.renderBodyLabel(
+                maybeAccessibilityLabel.value,
+                this.firstElementRef
+              )
+            ) : (
+              <View ref={this.firstElementRef} accessible={true}>
+                {body ? body : headerTitle && this.renderBodyLabel(headerTitle)}
+              </View>
+            )}
           </NBBody>
         )}
 
