@@ -400,6 +400,10 @@ export type IOIconsProps = {
 export type SVGIconProps = {
   size: number | "100%";
   style: StyleProp<any>;
+  accessible: boolean;
+  accessibilityElementsHidden: boolean;
+  accessibilityLabel: string;
+  importantForAccessibility: string;
 };
 
 /*
@@ -410,11 +414,20 @@ export const Icon = ({
   name,
   color = "bluegrey",
   size = 24,
+  accessible = false,
   ...props
 }: IOIconsProps) => {
   const IconElement = IOIcons[name];
   return (
-    <IconElement {...props} style={{ color: IOColors[color] }} size={size} />
+    <IconElement
+      {...props}
+      style={{ color: IOColors[color] }}
+      size={size}
+      accessible={accessible}
+      accessibilityElementsHidden={true}
+      accessibilityLabel={""}
+      importantForAccessibility={"no-hide-descendants"}
+    />
   );
 };
 
@@ -427,16 +440,28 @@ type IOAnimatedIconsProps = {
   name: IOIcons;
   color?: ColorValue;
   size?: number | "100%";
+  accessible?: boolean;
 };
 
 export const AnimatedIcon = ({
   name,
   color = IOColors.bluegrey,
   size = 24,
+  accessible = false,
   ...props
 }: IOAnimatedIconsProps) => {
   const IconElement = IOIcons[name];
-  return <IconElement {...props} style={{ color }} size={size} />;
+  return (
+    <IconElement
+      {...props}
+      style={{ color }}
+      size={size}
+      accessible={accessible}
+      accessibilityElementsHidden={true}
+      accessibilityLabel={""}
+      importantForAccessibility={"no-hide-descendants"}
+    />
+  );
 };
 
 /* Make <Icon> component animatable. Reanimated supports class components only,
