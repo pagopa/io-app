@@ -6,7 +6,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import JailMonkey from "jail-monkey";
-import { Content, Text as NBText } from "native-base";
+import { Content, Text as NBButtonText } from "native-base";
 import * as React from "react";
 import { View, Alert, StyleSheet } from "react-native";
 import DeviceInfo from "react-native-device-info";
@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
   noCie: {
     // don't use opacity since the button still have the active color when it is pressed
     // TODO: Remove this half-disabled state.
-    // See also discusssion on Slack: https://pagopaspa.slack.com/archives/C012L0U4NQL/p1657171504522639
+    // See also discussion on Slack: https://pagopaspa.slack.com/archives/C012L0U4NQL/p1657171504522639
     backgroundColor: IOColors.noCieButton
   },
   fullOpacity: {
@@ -305,11 +305,11 @@ class LandingScreen extends React.PureComponent<Props, State> {
               name={isCieSupported ? "io-cie" : "io-profilo"}
               color={IOColors.white}
             />
-            <NBText>
+            <NBButtonText>
               {isCieSupported
                 ? I18n.t("authentication.landing.loginCie")
                 : I18n.t("authentication.landing.loginSpid")}
-            </NBText>
+            </NBButtonText>
           </ButtonDefaultOpacity>
           <VSpacer size={16} />
           <ButtonDefaultOpacity
@@ -339,11 +339,11 @@ class LandingScreen extends React.PureComponent<Props, State> {
               name={this.isCieSupported() ? "io-profilo" : "io-cie"}
               color={IOColors.white}
             />
-            <NBText>
+            <NBButtonText>
               {this.isCieSupported()
                 ? I18n.t("authentication.landing.loginSpid")
                 : I18n.t("authentication.landing.loginCie")}
-            </NBText>
+            </NBButtonText>
           </ButtonDefaultOpacity>
           <VSpacer size={16} />
           <Link

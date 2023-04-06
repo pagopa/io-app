@@ -1,6 +1,6 @@
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
-import { Text as NBText } from "native-base";
+import { Text as NBButtonText } from "native-base";
 import * as React from "react";
 import { useCallback, useState } from "react";
 import { Image, StyleSheet, View, ViewProps } from "react-native";
@@ -14,6 +14,8 @@ import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import { NOTIFY_LINK_CLICK_SCRIPT } from "./ui/Markdown/script";
 import { WebViewMessage } from "./ui/Markdown/types";
+import { VSpacer } from "./core/spacer/Spacer";
+import { H2 } from "./core/typography/H2";
 
 type Props = {
   webViewSource: WebViewSource;
@@ -30,11 +32,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center"
-  },
-
-  errorTitle: {
-    fontSize: 20,
-    marginTop: 10
   },
   errorButtonsContainer: {
     position: "absolute",
@@ -71,13 +68,12 @@ const TosWebviewComponent: React.FunctionComponent<Props> = ({
         resizeMode="contain"
         testID={"toSErrorContainerImage"}
       />
-      <NBText
-        style={styles.errorTitle}
-        bold={true}
-        testID={"toSErrorContainerTitle"}
-      >
-        {I18n.t("onboarding.tos.error")}
-      </NBText>
+      <View>
+        <VSpacer size={8} />
+        <H2 color="bluegrey" weight="Bold" testID={"toSErrorContainerTitle"}>
+          {I18n.t("onboarding.tos.error")}
+        </H2>
+      </View>
 
       <View style={styles.errorButtonsContainer}>
         <ButtonDefaultOpacity
@@ -87,9 +83,9 @@ const TosWebviewComponent: React.FunctionComponent<Props> = ({
           primary={true}
           testID={"toSErrorContainerButton"}
         >
-          <NBText testID={"toSErrorContainerButtonText"}>
+          <NBButtonText testID={"toSErrorContainerButtonText"}>
             {I18n.t("global.buttons.retry")}
-          </NBText>
+          </NBButtonText>
         </ButtonDefaultOpacity>
       </View>
     </View>

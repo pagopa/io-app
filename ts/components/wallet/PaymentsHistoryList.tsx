@@ -2,7 +2,7 @@
  * This component displays a list of payments
  */
 import * as O from "fp-ts/lib/Option";
-import { Content, Text as NBText } from "native-base";
+import { Content } from "native-base";
 import * as React from "react";
 import { View, FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
 
@@ -20,6 +20,7 @@ import { IOColors } from "../core/variables/IOColors";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 
+import { Body } from "../core/typography/Body";
 import PaymentHistoryItem from "./PaymentHistoryItem";
 
 type Props = Readonly<{
@@ -124,7 +125,7 @@ export default class PaymentHistoryList extends React.Component<Props> {
       <Content style={styles.whiteContent}>
         <View>
           <View style={styles.subHeaderContent}>
-            <NBText>{I18n.t("payment.details.list.title")}</NBText>
+            <Body>{I18n.t("payment.details.list.title")}</Body>
           </View>
         </View>
 

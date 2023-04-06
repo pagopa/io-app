@@ -14,6 +14,7 @@ const DESIGN_SYSTEM_ROUTES = {
     BUTTONS: { route: "DESIGN_SYSTEM_BUTTONS", title: "Buttons" },
     TEXT_FIELDS: { route: "DESIGN_SYSTEM_TEXT_FIELDS", title: "Text Fields" },
     LIST_ITEMS: { route: "DESIGN_SYSTEM_LIST_ITEMS", title: "List Items" },
+    BADGE: { route: "DESIGN_SYSTEM_BADGE", title: "Badge" },
     TOASTS: { route: "DESIGN_SYSTEM_TOASTS", title: "Toasts" },
     SELECTION: { route: "DESIGN_SYSTEM_SELECTION", title: "Selection" },
     ACCORDION: { route: "DESIGN_SYSTEM_ACCORDION", title: "Accordion" },
