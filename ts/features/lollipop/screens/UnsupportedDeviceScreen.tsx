@@ -1,14 +1,13 @@
 import I18n from "i18n-js";
 import { Text as NBButtonText } from "native-base";
 import * as React from "react";
-import { View, SafeAreaView, StyleSheet, Modal } from "react-native";
+import { View, SafeAreaView, StyleSheet } from "react-native";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import Pictogram from "../../../components/core/pictograms/Pictogram";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { Body } from "../../../components/core/typography/Body";
 import { H3 } from "../../../components/core/typography/H3";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { unsupportedDeviceLearnMoreUrl } from "../../../config";
 import themeVariables from "../../../theme/variables";
 import { openWebUrl } from "../../../utils/url";
@@ -35,6 +34,7 @@ const handleLearnMorePress = () => {
   openWebUrl(unsupportedDeviceLearnMoreUrl);
 };
 
+// This component doesn't need a BaseHeaderComponent.
 // It Represents a blocking error screen that you can only escape with the rendered button(s).
 // A new template is coming soon: https://pagopa.atlassian.net/browse/IOAPPFD0-71
 const UnsupportedDeviceScreen = () => {

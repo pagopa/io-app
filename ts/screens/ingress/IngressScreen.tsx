@@ -10,9 +10,6 @@ import { connect } from "react-redux";
 import { HSpacer } from "../../components/core/spacer/Spacer";
 import { Body } from "../../components/core/typography/Body";
 import { IOStyles } from "../../components/core/variables/IOStyles";
-import BaseScreenComponent, {
-  ContextualHelpPropsMarkdown
-} from "../../components/screens/BaseScreenComponent";
 import SectionStatusComponent from "../../components/SectionStatus";
 import I18n from "../../i18n";
 import { ReduxProps } from "../../store/actions/types";
