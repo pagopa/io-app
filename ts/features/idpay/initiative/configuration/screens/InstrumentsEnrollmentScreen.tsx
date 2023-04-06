@@ -190,10 +190,13 @@ const InstrumentsEnrollmentScreen = () => {
           onPress: handleSkipButton
         }}
         rightButton={{
-          title: I18n.t("idpay.configuration.instruments.buttons.continue"),
+          title: !isUpserting
+            ? I18n.t("idpay.configuration.instruments.buttons.continue")
+            : "",
           disabled: isUpserting || !hasSelectedInstruments,
           labelColor: IOColors.white,
-          onPress: handleContinueButton
+          onPress: handleContinueButton,
+          isLoading: isUpserting
         }}
       />
     );
