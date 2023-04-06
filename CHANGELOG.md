@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.30.0-rc.1](https://github.com/pagopa/io-app/compare/2.30.0-rc.0...2.30.0-rc.1) (2023-04-06)
+
+
+### Features
+
+* **IDPay:** [[IODPAY-206](https://pagopa.atlassian.net/browse/IODPAY-206)] IDPay Onboarding playground redesign ([#4506](https://github.com/pagopa/io-app/issues/4506)) ([98c015c](https://github.com/pagopa/io-app/commit/98c015cf885905ba2c8f1dca613fd1d327e1f1c0))
+
+
+### Bug Fixes
+
+* [[IABT-1452](https://pagopa.atlassian.net/browse/IABT-1452)] Test account login loop ([#4512](https://github.com/pagopa/io-app/issues/4512)) ([f0866a9](https://github.com/pagopa/io-app/commit/f0866a9d0397d2b1d696ecd981c878bd5e3bfa81))
+* [[IAI-275](https://pagopa.atlassian.net/browse/IAI-275)] Fix `BaseHeader` UI regression ([#4519](https://github.com/pagopa/io-app/issues/4519)) ([80c3469](https://github.com/pagopa/io-app/commit/80c34697e0eb5b85f68820434a39681b4294d725))
+
+
+### Chores
+
+* [[IAI-217](https://pagopa.atlassian.net/browse/IAI-217)] Replace legacy `Text` components with the new ones ([#4321](https://github.com/pagopa/io-app/issues/4321)) ([17b2dbd](https://github.com/pagopa/io-app/commit/17b2dbd182342508e168c647c7166499be78f3e8))
+* [[IOAPPFD0-22](https://pagopa.atlassian.net/browse/IOAPPFD0-22)] Remove isOnboardingCompleted deprecated utility ([#4303](https://github.com/pagopa/io-app/issues/4303)) ([c405a36](https://github.com/pagopa/io-app/commit/c405a36cc2066ce81d331c750f1f1e4ad989cd0e))
+* [IOAPPFD0-67,IOAPPFD0-66] Add mixpanel event for keychain get failure ([#4494](https://github.com/pagopa/io-app/issues/4494)) ([25cf3bf](https://github.com/pagopa/io-app/commit/25cf3bf18c5aa98a5b2a6af7480b1d640b6e25b1))
+
 ## [2.30.0-rc.0](https://github.com/pagopa/io-app/compare/2.29.0-rc.4...2.30.0-rc.0) (2023-04-04)
 
 
