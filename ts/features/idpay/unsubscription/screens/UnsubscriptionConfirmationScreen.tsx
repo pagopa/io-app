@@ -1,14 +1,14 @@
 import { useSelector } from "@xstate/react";
 import React from "react";
 import { FlatList, SafeAreaView, StyleSheet, View } from "react-native";
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
+import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../components/core/typography/Body";
 import { H1 } from "../../../../components/core/typography/H1";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import IconFont from "../../../../components/ui/IconFont";
 import I18n from "../../../../i18n";
@@ -16,10 +16,9 @@ import customVariables from "../../../../theme/variables";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { UnsubscriptionCheckListItem } from "../components/UnsubscriptionCheckListItem";
+import { useConfirmationChecks } from "../hooks/useConfirmationChecks";
 import { useUnsubscriptionMachineService } from "../xstate/provider";
 import { isLoadingSelector } from "../xstate/selectors";
-import { useConfirmationChecks } from "../hooks/useConfirmationChecks";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 
 const unsubscriptionChecks: ReadonlyArray<{ title: string; subtitle: string }> =
   [
@@ -46,10 +45,6 @@ const UnsubscriptionConfirmationScreen = () => {
   const isLoading = useSelector(machine, isLoadingSelector);
 
   const checks = useConfirmationChecks(unsubscriptionChecks.length);
-
-  useOnFirstRender(() => {
-    // machine.send({ type: "SELECT_INITIATIVE", initiativeId, initiativeName });
-  });
 
   const handleClosePress = () =>
     machine.send({
