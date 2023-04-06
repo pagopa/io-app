@@ -228,7 +228,6 @@ export const AuthSeq: ReadonlyArray<Action> = [
     id: "posteid",
     name: "Poste",
     logo: "http://placeimg.com/640/480/some",
-    entityID: "posteid",
     profileUrl: "https://posteid.poste.it/private/cruscotto.shtml"
   } as SpidIdp),
   loginSuccess({
