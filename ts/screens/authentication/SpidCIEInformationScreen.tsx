@@ -1,18 +1,11 @@
 /**
  * A screen where the user can know more about SPID, CIE and access to spid.gov.it
  */
-import {
-  Col,
-  Content,
-  Grid,
-  Row,
-  Tab,
-  Tabs,
-  Text as NBText
-} from "native-base";
+import { Col, Content, Grid, Row, Tab, Tabs } from "native-base";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { VSpacer } from "../../components/core/spacer/Spacer";
+import { Body } from "../../components/core/typography/Body";
 import { H1 } from "../../components/core/typography/H1";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
@@ -66,7 +59,7 @@ class SpidCIEInformationScreen extends React.Component<Props, State> {
           <H1 color={"blue"}>{value}</H1>
         </Col>
         <Col size={5}>
-          <NBText>{content}</NBText>
+          <Body>{content}</Body>
         </Col>
         <Col size={2} />
       </Row>

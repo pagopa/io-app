@@ -1,10 +1,11 @@
 import I18n from "i18n-js";
-import { Text } from "native-base";
+import { Text as NBButtonText } from "native-base";
 import * as React from "react";
 import { View, SafeAreaView, StyleSheet, Modal } from "react-native";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import Pictogram from "../../../components/core/pictograms/Pictogram";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
+import { Body } from "../../../components/core/typography/Body";
 import { H3 } from "../../../components/core/typography/H3";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
@@ -39,30 +40,22 @@ const handleLearnMorePress = () => {
 const UnsupportedDeviceScreen = () => {
   useAvoidHardwareBackButton();
   return (
-    <Modal>
-      <BaseScreenComponent
-        appLogo={false}
-        goBack={false}
-        accessibilityEvents={{ avoidNavigationEventsUsage: true }}
-      >
-        <SafeAreaView style={IOStyles.flex}>
-          <View style={styles.errorContainer}>
-            <Pictogram name={"error"} size={120} />
-            <VSpacer size={16} />
-            <H3 style={styles.title}>{I18n.t("unsupportedDevice.title")}</H3>
-            <VSpacer size={16} />
-            <Text alignCenter={true}>
-              {I18n.t("unsupportedDevice.subtitle")}
-            </Text>
-          </View>
-          <View style={styles.buttonContainer}>
-            <ButtonDefaultOpacity block={true} onPress={handleLearnMorePress}>
-              <Text>{I18n.t("unsupportedDevice.cta.faq")}</Text>
-            </ButtonDefaultOpacity>
-          </View>
-        </SafeAreaView>
-      </BaseScreenComponent>
-    </Modal>
+    <SafeAreaView style={IOStyles.flex}>
+      <View style={styles.errorContainer}>
+        <Pictogram name={"error"} size={120} />
+        <VSpacer size={16} />
+        <H3 style={styles.title}>{I18n.t("unsupportedDevice.title")}</H3>
+        <VSpacer size={16} />
+        <Body style={{ textAlign: "center" }}>
+          {I18n.t("unsupportedDevice.subtitle")}
+        </Body>
+      </View>
+      <View style={styles.buttonContainer}>
+        <ButtonDefaultOpacity block={true} onPress={handleLearnMorePress}>
+          <NBButtonText>{I18n.t("unsupportedDevice.cta.faq")}</NBButtonText>
+        </ButtonDefaultOpacity>
+      </View>
+    </SafeAreaView>
   );
 };
 export default UnsupportedDeviceScreen;

@@ -5,10 +5,10 @@
  * This screen is used also as Privacy screen From Profile section.
  */
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { Text as NBText } from "native-base";
 import * as React from "react";
 import { useCallback, useEffect, useState } from "react";
 import { Alert, SafeAreaView, StyleSheet, View } from "react-native";
+import { Body } from "../../components/core/typography/Body";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
@@ -116,11 +116,11 @@ const OnboardingTosScreen = () => {
         <SafeAreaView style={styles.webViewContainer}>
           {!hasAcceptedCurrentTos && (
             <View style={styles.alert} testID={"currentToSNotAcceptedView"}>
-              <NBText testID={"currentToSNotAcceptedText"}>
+              <Body testID={"currentToSNotAcceptedText"}>
                 {hasAcceptedOldTosVersion
                   ? I18n.t("profile.main.privacy.privacyPolicy.updated")
                   : I18n.t("profile.main.privacy.privacyPolicy.infobox")}
-              </NBText>
+              </Body>
             </View>
           )}
           <TosWebviewComponent

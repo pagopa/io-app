@@ -3,18 +3,16 @@
  */
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
-import {
-  Body,
-  Container,
-  List,
-  ListItem,
-  Spinner,
-  Text as NBText
-} from "native-base";
+import { Container, List, ListItem, Spinner } from "native-base";
 import * as React from "react";
 import { StatusBar, StyleSheet, View, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
+import { HSpacer } from "../../components/core/spacer/Spacer";
+import { Body } from "../../components/core/typography/Body";
 import { IOStyles } from "../../components/core/variables/IOStyles";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "../../components/screens/BaseScreenComponent";
 import SectionStatusComponent from "../../components/SectionStatus";
 import I18n from "../../i18n";
 import { ReduxProps } from "../../store/actions/types";
@@ -63,19 +61,21 @@ class IngressScreen extends React.PureComponent<Props> {
           backgroundColor={styles.container.backgroundColor}
         />
         <Container style={styles.container}>
-          <NBText white={true} alignCenter={true}>
-            {I18n.t("startup.title")}
-          </NBText>
+          <View style={IOStyles.alignCenter}>
+            <Body color="white">{I18n.t("startup.title")}</Body>
+          </View>
           <Spinner color="white" />
 
           <List withContentLateralPadding={true}>
             {items.map((item, index) => (
               <ListItem key={`item-${index}`}>
                 <IngressCheckBox checked={item.enabled} />
-                <Body>
-                  <NBText white={true} bold={item.enabled}>
-                    {item.label}
-                  </NBText>
+                <HSpacer size={8} />
+                <Body
+                  color="white"
+                  weight={item.enabled ? "SemiBold" : "Regular"}
+                >
+                  {item.label}
                 </Body>
               </ListItem>
             ))}

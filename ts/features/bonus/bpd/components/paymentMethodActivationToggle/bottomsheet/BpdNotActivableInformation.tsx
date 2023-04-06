@@ -1,6 +1,5 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
-import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import Markdown from "../../../../../../components/ui/Markdown";
 import I18n from "../../../../../../i18n";
 import { PaymentMethodRepresentation } from "../../../../../../types/pagopa";
@@ -45,7 +44,7 @@ const getTitle = (type: NotActivableType) => {
 
 export const BpdNotActivableInformation: React.FunctionComponent<Props> =
   props => (
-    <View style={[styles.body, IOStyles.horizontalContentPadding]}>
+    <View style={styles.body}>
       <VSpacer size={16} />
       <PaymentMethodRepresentationComponent {...props.representation} />
       <VSpacer size={16} />

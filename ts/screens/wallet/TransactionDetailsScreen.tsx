@@ -1,7 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Text as NBText } from "native-base";
+import { Text as NBButtonText } from "native-base";
 import * as React from "react";
 import {
   View,
@@ -14,8 +14,11 @@ import { connect } from "react-redux";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import CopyButtonComponent from "../../components/CopyButtonComponent";
 import { VSpacer } from "../../components/core/spacer/Spacer";
+import { Body } from "../../components/core/typography/Body";
+import { H2 } from "../../components/core/typography/H2";
 import { Link } from "../../components/core/typography/Link";
 import { IOColors } from "../../components/core/variables/IOColors";
+import { IOStyles } from "../../components/core/variables/IOStyles";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
@@ -70,15 +73,6 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
     height: 30,
     width: 48
-  },
-  bigText: {
-    fontSize: 20
-  },
-  row: { flexDirection: "row", justifyContent: "space-between" },
-  centered: { alignItems: "center" },
-  flex: {
-    flex: 1,
-    alignSelf: "center"
   }
 });
 
@@ -194,11 +188,13 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
     const data = this.getData();
 
     const standardRow = (label: string, value: string) => (
-      <View style={styles.row}>
-        <NBText style={styles.flex}>{label}</NBText>
-        <NBText bold={true} dark={true} selectable={true}>
+      <View style={IOStyles.rowSpaceBetween}>
+        <View style={[IOStyles.flex, IOStyles.selfCenter]}>
+          <Body>{label}</Body>
+        </View>
+        <Body color="bluegreyDark" weight="SemiBold" selectable={true}>
           {value}
-        </NBText>
+        </Body>
       </View>
     );
 
@@ -233,14 +229,14 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
             {I18n.t("wallet.transactionFullReason")}
           </Link>
           {this.state.showFullReason && (
-            <NBText
+            <Body
               selectable={true}
               onLongPress={() =>
                 clipboardSetStringWithFeedback(data.fullReason)
               }
             >
               {data.fullReason}
-            </NBText>
+            </Body>
           )}
           <VSpacer size={24} />
           {data.iuv && standardRow(I18n.t("payment.IUV"), data.iuv)}
@@ -274,17 +270,15 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
           <VSpacer size={16} />
 
           {/** Total amount (amount + fee) */}
-          <View style={styles.row}>
-            <NBText
-              style={[styles.bigText, styles.flex]}
-              bold={true}
-              dark={true}
-            >
-              {I18n.t("wallet.firstTransactionSummary.total")}
-            </NBText>
-            <NBText style={styles.bigText} bold={true} dark={true}>
+          <View style={IOStyles.rowSpaceBetween}>
+            <View style={[IOStyles.flex, IOStyles.selfCenter]}>
+              <H2 weight="Bold" color="bluegreyDark">
+                {I18n.t("wallet.firstTransactionSummary.total")}
+              </H2>
+            </View>
+            <H2 weight="Bold" color="bluegreyDark">
               {data.totalAmount}
-            </NBText>
+            </H2>
           </View>
 
           {(data.paymentMethodIcon || (psp && psp.logoPSP)) && (
@@ -299,8 +293,8 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
           {/** to be implemented with the card logo when https://github.com/pagopa/io-app/pull/1622/ is merged */}
 
           {data.paymentMethodIcon ? (
-            <View style={[styles.row, styles.centered]}>
-              <NBText>{I18n.t("wallet.paymentMethod")}</NBText>
+            <View style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter]}>
+              <Body>{I18n.t("wallet.paymentMethod")}</Body>
               <Image
                 style={styles.cardLogo}
                 source={{ uri: data.paymentMethodIcon }}
@@ -308,7 +302,7 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
             </View>
           ) : (
             data.paymentMethodBrand && (
-              <NBText bold={true}>{data.paymentMethodBrand}</NBText>
+              <Body weight="SemiBold">{data.paymentMethodBrand}</Body>
             )
           )}
 
@@ -318,11 +312,11 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
 
           {/** Transaction id */}
           <View>
-            <NBText>
+            <Body>
               {I18n.t("wallet.firstTransactionSummary.idTransaction")}
-            </NBText>
-            <View style={styles.row}>
-              <NBText bold={true}>{data.idTransaction}</NBText>
+            </Body>
+            <View style={IOStyles.rowSpaceBetween}>
+              <Body weight="SemiBold">{data.idTransaction}</Body>
               <CopyButtonComponent textToCopy={data.idTransaction.toString()} />
             </View>
           </View>
@@ -334,7 +328,8 @@ class TransactionDetailsScreen extends React.Component<Props, State> {
             block={true}
             onPress={this.handleBackPress}
           >
-            <NBText>{I18n.t("global.buttons.close")}</NBText>
+            {/* <ButtonText> */}
+            <NBButtonText>{I18n.t("global.buttons.close")}</NBButtonText>
           </ButtonDefaultOpacity>
           <VSpacer size={16} />
         </SlidedContentComponent>

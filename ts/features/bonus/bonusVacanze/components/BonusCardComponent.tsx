@@ -1,8 +1,9 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Badge, Text as NBText } from "native-base";
+import { Badge, Text as NBBadgeText } from "native-base";
 import * as React from "react";
 import {
+  Text,
   View,
   Image,
   ImageBackground,
@@ -25,7 +26,7 @@ import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpac
 import IconFont from "../../../../components/ui/IconFont";
 import { HSpacer, VSpacer } from "../../../../components/core/spacer/Spacer";
 import I18n from "../../../../i18n";
-import { makeFontStyleObject } from "../../../../theme/fonts";
+import { makeFontStyleObject } from "../../../../components/core/fonts";
 import customVariables from "../../../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { isShareEnabled } from "../../../../utils/share";
@@ -35,6 +36,10 @@ import { getBonusCodeFormatted, isBonusActive } from "../utils/bonus";
 import bonusVacanzeBg from "../../../../../img/bonus/bonusVacanze/bonus_bg.png";
 import bonusVacanzePreviewBg from "../../../../../img/bonus/bonusVacanze/bonus_preview_bg.png";
 import bonusVacanzeWhiteLogo from "../../../../../img/bonus/bonusVacanze/logo_BonusVacanze_White.png";
+import { H2 } from "../../../../components/core/typography/H2";
+import { IOStyles } from "../../../../components/core/variables/IOStyles";
+import { Body } from "../../../../components/core/typography/Body";
+import { H3 } from "../../../../components/core/typography/H3";
 
 type Props = {
   bonus: BonusActivationWithQrCode;
@@ -78,8 +83,7 @@ const styles = StyleSheet.create({
   },
   actions: {
     // color: customVariables.brandPrimary,
-    textAlign: "center",
-    ...makeFontStyleObject(Platform.select)
+    textAlign: "center"
   },
   paddedContent: {
     padding: 16
@@ -87,20 +91,20 @@ const styles = StyleSheet.create({
   colorWhite: {
     color: IOColors.white
   },
-  fontLarge: {
-    fontSize: customVariables.fontSize2
-  },
-  previewName: {
+  currency: {
+    fontSize: 20,
     lineHeight: 24,
-    fontSize: 18
+    ...makeFontStyleObject("Regular")
   },
   previewAmount: {
-    lineHeight: 30,
+    lineHeight: 28,
     fontSize: 28,
-    ...makeFontStyleObject(Platform.select, "700", undefined, "RobotoMono")
+    ...makeFontStyleObject("Bold", undefined, "RobotoMono")
   },
   bonusCode: {
-    ...makeFontStyleObject(Platform.select, "600", undefined, "RobotoMono")
+    fontSize: 20,
+    lineHeight: 24,
+    ...makeFontStyleObject("SemiBold", undefined, "RobotoMono")
   },
   logo: {
     resizeMode: "contain",
@@ -114,8 +118,8 @@ const styles = StyleSheet.create({
     width: 40
   },
   badge: {
+    alignSelf: "center",
     height: 18,
-    marginTop: 6,
     backgroundColor: IOColors.white
   },
   statusText: {
@@ -164,48 +168,39 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
       >
         <View style={{ flexDirection: "column" }}>
           <VSpacer size={8} />
-          <NBText bold={true} style={[styles.colorWhite, styles.fontLarge]}>
+          <H2 color="white" weight="Bold">
             {I18n.t("bonus.bonusVacanze.name")}
-          </NBText>
+          </H2>
           <VSpacer size={8} />
-          <View style={styles.row}>
-            <NBText
-              bold={true}
+          <View style={[IOStyles.row, IOStyles.alignCenter]}>
+            <View
               style={[
-                !isBonusActive(props.bonus) ? styles.consumedOpacity : {},
-                styles.colorWhite,
-                styles.previewAmount
+                IOStyles.row,
+                IOStyles.alignCenter,
+                !isBonusActive(props.bonus) ? styles.consumedOpacity : {}
               ]}
             >
-              {bonus.dsu_request.max_amount}
-            </NBText>
-            <NBText
-              style={[
-                !isBonusActive(props.bonus) ? styles.consumedOpacity : {},
-                styles.colorWhite,
-                styles.fontLarge
-              ]}
-            >
-              {"€"}
-            </NBText>
-            <HSpacer size={16} />
+              <Text style={[styles.colorWhite, styles.previewAmount]}>
+                {bonus.dsu_request.max_amount}
+              </Text>
+              <HSpacer size={4} />
+              <Text style={[styles.colorWhite, styles.currency]}>{"€"}</Text>
+            </View>
+            <HSpacer size={8} />
             {O.isSome(maybeStatusDescription) && (
+              // IOBadge · White version not available yet
               <Badge style={styles.badge}>
-                <NBText style={styles.statusText} semibold={true}>
+                <NBBadgeText style={styles.statusText} semibold={true}>
                   {maybeStatusDescription.value}
-                </NBText>
+                </NBBadgeText>
               </Badge>
             )}
           </View>
           <VSpacer size={16} />
-          <NBText style={styles.colorWhite}>
-            {I18n.t("bonus.bonusVacanze.code")}
-          </NBText>
-          <NBText
-            style={[styles.colorWhite, styles.fontLarge, styles.bonusCode]}
-          >
+          <Body color="white">{I18n.t("bonus.bonusVacanze.code")}</Body>
+          <Text style={[styles.colorWhite, styles.bonusCode]}>
             {getBonusCodeFormatted(bonus)}
-          </NBText>
+          </Text>
         </View>
         <View>
           <View
@@ -223,25 +218,25 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
                 <MenuOption
                   onSelect={() => clipboardSetStringWithFeedback(bonus.id)}
                 >
-                  <NBText style={styles.actions}>
+                  <Body style={styles.actions}>
                     {I18n.t("bonus.bonusVacanze.cta.copyCode")}
-                  </NBText>
+                  </Body>
                 </MenuOption>
                 {isBonusActive(props.bonus) && (
                   <>
                     <ItemSeparatorComponent />
                     <MenuOption onSelect={props.viewQR}>
-                      <NBText style={styles.actions}>
+                      <Body style={styles.actions}>
                         {I18n.t("bonus.bonusVacanze.cta.openQRCode")}
-                      </NBText>
+                      </Body>
                     </MenuOption>
                     {isShareEnabled() ? (
                       <>
                         <ItemSeparatorComponent />
                         <MenuOption onSelect={props.share}>
-                          <NBText style={styles.actions}>
+                          <Body style={styles.actions}>
                             {I18n.t("global.buttons.share")}
-                          </NBText>
+                          </Body>
                         </MenuOption>
                       </>
                     ) : null}
@@ -271,29 +266,23 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
       })}
     >
       <View style={styles.row}>
-        <NBText bold={true} style={[styles.colorWhite, styles.previewName]}>
+        <H3 weight="Bold" color="white">
           {I18n.t("bonus.bonusVacanze.name")}
-        </NBText>
+        </H3>
         <HSpacer size={24} />
-        <NBText
-          bold={true}
+        <View
           style={[
-            !isBonusActive(props.bonus) ? styles.consumedOpacity : {},
-            styles.colorWhite,
-            styles.previewAmount
+            IOStyles.row,
+            IOStyles.alignCenter,
+            !isBonusActive(props.bonus) ? styles.consumedOpacity : {}
           ]}
         >
-          {bonus.dsu_request.max_amount}
-        </NBText>
-        <NBText
-          style={[
-            !isBonusActive(props.bonus) ? styles.consumedOpacity : {},
-            styles.colorWhite,
-            { fontSize: 20 }
-          ]}
-        >
-          {"€"}
-        </NBText>
+          <Text style={[styles.colorWhite, styles.previewAmount]}>
+            {bonus.dsu_request.max_amount}
+          </Text>
+          <HSpacer size={4} />
+          <Text style={[styles.colorWhite, styles.currency]}>{"€"}</Text>
+        </View>
       </View>
       <Image source={bonusVacanzeWhiteLogo} style={styles.previewLogo} />
     </TouchableDefaultOpacity>

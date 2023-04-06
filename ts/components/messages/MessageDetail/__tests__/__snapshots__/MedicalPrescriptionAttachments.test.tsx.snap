@@ -9,38 +9,69 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
       }
     }
   >
-    <Text
-      bold={true}
+    <View
       style={
-        Array [
-          Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
-          },
-          Object {
-            "marginBottom": -4,
-          },
-        ]
+        Object {
+          "marginBottom": -4,
+        }
       }
-      uppercase={false}
     >
-      NATIONAL HEALTH SERVICE
-    </Text>
+      <Text
+        color="bluegrey"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#475A6D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "600",
+            },
+          ]
+        }
+        weight="SemiBold"
+      >
+        NATIONAL HEALTH SERVICE
+      </Text>
+    </View>
     <Text
+      color="bluegrey"
+      defaultColor="bluegrey"
+      defaultWeight="Regular"
+      font="TitilliumWeb"
+      fontStyle={
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        }
+      }
       style={
         Array [
           Object {
-            "color": "#000",
-            "fontFamily": "System",
             "fontSize": 16,
+            "lineHeight": 24,
           },
           Object {
-            "lineHeight": 22,
+            "color": "#475A6D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "400",
           },
         ]
       }
-      uppercase={false}
+      weight="Regular"
     >
       WHO
     </Text>
@@ -81,19 +112,31 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
         }
       />
       <Text
+        color="bluegrey"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          }
+        }
         style={
           Array [
             Object {
-              "color": "#000",
-              "fontFamily": "System",
               "fontSize": 16,
+              "lineHeight": 24,
             },
             Object {
-              "lineHeight": 22,
+              "color": "#475A6D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
             },
           ]
         }
-        uppercase={false}
+        weight="Regular"
       >
         BARCODES
       </Text>
@@ -193,27 +236,50 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
       }
     }
   />
-  <Text
+  <View
     style={
-      Array [
-        Object {
-          "color": "#000",
-          "fontFamily": "System",
-          "fontSize": 16,
-        },
-        Object {
-          "lineHeight": 16,
-          "paddingTop": 4,
-        },
-        Object {
-          "paddingHorizontal": 24,
-        },
-      ]
+      Object {
+        "paddingHorizontal": 24,
+      }
     }
-    uppercase={false}
   >
-    Rilasciato ai sensi dell'art.11, comma 16 del DL 31 mag 2010, n.78 e dell’art.1, comma 4 del DM 2 nov 2011
-  </Text>
+    <View
+      style={
+        Object {
+          "height": 4,
+        }
+      }
+    />
+    <Text
+      color="bluegrey"
+      defaultColor="bluegrey"
+      defaultWeight="Regular"
+      font="TitilliumWeb"
+      fontStyle={
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        }
+      }
+      style={
+        Array [
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          },
+          Object {
+            "color": "#475A6D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "400",
+          },
+        ]
+      }
+      weight="Regular"
+    >
+      Rilasciato ai sensi dell'art.11, comma 16 del DL 31 mag 2010, n.78 e dell’art.1, comma 4 del DM 2 nov 2011
+    </Text>
+  </View>
 </View>
 `;
 
@@ -226,38 +292,69 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
       }
     }
   >
-    <Text
-      bold={true}
+    <View
       style={
-        Array [
-          Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
-          },
-          Object {
-            "marginBottom": -4,
-          },
-        ]
+        Object {
+          "marginBottom": -4,
+        }
       }
-      uppercase={false}
     >
-      NATIONAL HEALTH SERVICE
-    </Text>
+      <Text
+        color="bluegrey"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#475A6D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "600",
+            },
+          ]
+        }
+        weight="SemiBold"
+      >
+        NATIONAL HEALTH SERVICE
+      </Text>
+    </View>
     <Text
+      color="bluegrey"
+      defaultColor="bluegrey"
+      defaultWeight="Regular"
+      font="TitilliumWeb"
+      fontStyle={
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        }
+      }
       style={
         Array [
           Object {
-            "color": "#000",
-            "fontFamily": "System",
             "fontSize": 16,
+            "lineHeight": 24,
           },
           Object {
-            "lineHeight": 22,
+            "color": "#475A6D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "400",
           },
         ]
       }
-      uppercase={false}
+      weight="Regular"
     >
       WHO
     </Text>
@@ -305,27 +402,50 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
       }
     }
   />
-  <Text
+  <View
     style={
-      Array [
-        Object {
-          "color": "#000",
-          "fontFamily": "System",
-          "fontSize": 16,
-        },
-        Object {
-          "lineHeight": 16,
-          "paddingTop": 4,
-        },
-        Object {
-          "paddingHorizontal": 24,
-        },
-      ]
+      Object {
+        "paddingHorizontal": 24,
+      }
     }
-    uppercase={false}
   >
-    Rilasciato ai sensi dell'art.11, comma 16 del DL 31 mag 2010, n.78 e dell’art.1, comma 4 del DM 2 nov 2011
-  </Text>
+    <View
+      style={
+        Object {
+          "height": 4,
+        }
+      }
+    />
+    <Text
+      color="bluegrey"
+      defaultColor="bluegrey"
+      defaultWeight="Regular"
+      font="TitilliumWeb"
+      fontStyle={
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        }
+      }
+      style={
+        Array [
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          },
+          Object {
+            "color": "#475A6D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "400",
+          },
+        ]
+      }
+      weight="Regular"
+    >
+      Rilasciato ai sensi dell'art.11, comma 16 del DL 31 mag 2010, n.78 e dell’art.1, comma 4 del DM 2 nov 2011
+    </Text>
+  </View>
 </View>
 `;
 
@@ -338,38 +458,69 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
       }
     }
   >
-    <Text
-      bold={true}
+    <View
       style={
-        Array [
-          Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
-          },
-          Object {
-            "marginBottom": -4,
-          },
-        ]
+        Object {
+          "marginBottom": -4,
+        }
       }
-      uppercase={false}
     >
-      NATIONAL HEALTH SERVICE
-    </Text>
+      <Text
+        color="bluegrey"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#475A6D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "600",
+            },
+          ]
+        }
+        weight="SemiBold"
+      >
+        NATIONAL HEALTH SERVICE
+      </Text>
+    </View>
     <Text
+      color="bluegrey"
+      defaultColor="bluegrey"
+      defaultWeight="Regular"
+      font="TitilliumWeb"
+      fontStyle={
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        }
+      }
       style={
         Array [
           Object {
-            "color": "#000",
-            "fontFamily": "System",
             "fontSize": 16,
+            "lineHeight": 24,
           },
           Object {
-            "lineHeight": 22,
+            "color": "#475A6D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "400",
           },
         ]
       }
-      uppercase={false}
+      weight="Regular"
     >
       WHO
     </Text>
@@ -417,27 +568,50 @@ exports[`MedicalPrescriptionAttachments component when an attachment is present 
       }
     }
   />
-  <Text
+  <View
     style={
-      Array [
-        Object {
-          "color": "#000",
-          "fontFamily": "System",
-          "fontSize": 16,
-        },
-        Object {
-          "lineHeight": 16,
-          "paddingTop": 4,
-        },
-        Object {
-          "paddingHorizontal": 24,
-        },
-      ]
+      Object {
+        "paddingHorizontal": 24,
+      }
     }
-    uppercase={false}
   >
-    Rilasciato ai sensi dell'art.11, comma 16 del DL 31 mag 2010, n.78 e dell’art.1, comma 4 del DM 2 nov 2011
-  </Text>
+    <View
+      style={
+        Object {
+          "height": 4,
+        }
+      }
+    />
+    <Text
+      color="bluegrey"
+      defaultColor="bluegrey"
+      defaultWeight="Regular"
+      font="TitilliumWeb"
+      fontStyle={
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        }
+      }
+      style={
+        Array [
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          },
+          Object {
+            "color": "#475A6D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "400",
+          },
+        ]
+      }
+      weight="Regular"
+    >
+      Rilasciato ai sensi dell'art.11, comma 16 del DL 31 mag 2010, n.78 e dell’art.1, comma 4 del DM 2 nov 2011
+    </Text>
+  </View>
 </View>
 `;
 
@@ -450,38 +624,69 @@ exports[`MedicalPrescriptionAttachments component when the organization name is 
       }
     }
   >
-    <Text
-      bold={true}
+    <View
       style={
-        Array [
-          Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
-          },
-          Object {
-            "marginBottom": -4,
-          },
-        ]
+        Object {
+          "marginBottom": -4,
+        }
       }
-      uppercase={false}
     >
-      NATIONAL HEALTH SERVICE
-    </Text>
+      <Text
+        color="bluegrey"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#475A6D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "600",
+            },
+          ]
+        }
+        weight="SemiBold"
+      >
+        NATIONAL HEALTH SERVICE
+      </Text>
+    </View>
     <Text
+      color="bluegrey"
+      defaultColor="bluegrey"
+      defaultWeight="Regular"
+      font="TitilliumWeb"
+      fontStyle={
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        }
+      }
       style={
         Array [
           Object {
-            "color": "#000",
-            "fontFamily": "System",
             "fontSize": 16,
+            "lineHeight": 24,
           },
           Object {
-            "lineHeight": 22,
+            "color": "#475A6D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "400",
           },
         ]
       }
-      uppercase={false}
+      weight="Regular"
     >
       WHO
     </Text>
@@ -529,27 +734,50 @@ exports[`MedicalPrescriptionAttachments component when the organization name is 
       }
     }
   />
-  <Text
+  <View
     style={
-      Array [
-        Object {
-          "color": "#000",
-          "fontFamily": "System",
-          "fontSize": 16,
-        },
-        Object {
-          "lineHeight": 16,
-          "paddingTop": 4,
-        },
-        Object {
-          "paddingHorizontal": 24,
-        },
-      ]
+      Object {
+        "paddingHorizontal": 24,
+      }
     }
-    uppercase={false}
   >
-    Rilasciato ai sensi dell'art.11, comma 16 del DL 31 mag 2010, n.78 e dell’art.1, comma 4 del DM 2 nov 2011
-  </Text>
+    <View
+      style={
+        Object {
+          "height": 4,
+        }
+      }
+    />
+    <Text
+      color="bluegrey"
+      defaultColor="bluegrey"
+      defaultWeight="Regular"
+      font="TitilliumWeb"
+      fontStyle={
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        }
+      }
+      style={
+        Array [
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          },
+          Object {
+            "color": "#475A6D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "400",
+          },
+        ]
+      }
+      weight="Regular"
+    >
+      Rilasciato ai sensi dell'art.11, comma 16 del DL 31 mag 2010, n.78 e dell’art.1, comma 4 del DM 2 nov 2011
+    </Text>
+  </View>
 </View>
 `;
 
@@ -562,24 +790,43 @@ exports[`MedicalPrescriptionAttachments component with default properties should
       }
     }
   >
-    <Text
-      bold={true}
+    <View
       style={
-        Array [
-          Object {
-            "color": "#000",
-            "fontFamily": "System",
-            "fontSize": 16,
-          },
-          Object {
-            "marginBottom": -4,
-          },
-        ]
+        Object {
+          "marginBottom": -4,
+        }
       }
-      uppercase={false}
     >
-      NATIONAL HEALTH SERVICE
-    </Text>
+      <Text
+        color="bluegrey"
+        defaultColor="bluegrey"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Object {
+              "color": "#475A6D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "600",
+            },
+          ]
+        }
+        weight="SemiBold"
+      >
+        NATIONAL HEALTH SERVICE
+      </Text>
+    </View>
     <View
       style={
         Object {
@@ -624,26 +871,49 @@ exports[`MedicalPrescriptionAttachments component with default properties should
       }
     }
   />
-  <Text
+  <View
     style={
-      Array [
-        Object {
-          "color": "#000",
-          "fontFamily": "System",
-          "fontSize": 16,
-        },
-        Object {
-          "lineHeight": 16,
-          "paddingTop": 4,
-        },
-        Object {
-          "paddingHorizontal": 24,
-        },
-      ]
+      Object {
+        "paddingHorizontal": 24,
+      }
     }
-    uppercase={false}
   >
-    Rilasciato ai sensi dell'art.11, comma 16 del DL 31 mag 2010, n.78 e dell’art.1, comma 4 del DM 2 nov 2011
-  </Text>
+    <View
+      style={
+        Object {
+          "height": 4,
+        }
+      }
+    />
+    <Text
+      color="bluegrey"
+      defaultColor="bluegrey"
+      defaultWeight="Regular"
+      font="TitilliumWeb"
+      fontStyle={
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        }
+      }
+      style={
+        Array [
+          Object {
+            "fontSize": 16,
+            "lineHeight": 24,
+          },
+          Object {
+            "color": "#475A6D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "400",
+          },
+        ]
+      }
+      weight="Regular"
+    >
+      Rilasciato ai sensi dell'art.11, comma 16 del DL 31 mag 2010, n.78 e dell’art.1, comma 4 del DM 2 nov 2011
+    </Text>
+  </View>
 </View>
 `;
