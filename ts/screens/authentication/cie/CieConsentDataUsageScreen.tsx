@@ -25,7 +25,6 @@ import { resetToAuthenticationRoute } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import { SessionToken } from "../../../types/SessionToken";
 import { onLoginUriChanged } from "../../../utils/login";
-import { IdpCIE } from "../LandingScreen";
 
 export type CieConsentDataUsageScreenNavigationParams = {
   cieConsentUri: string;
@@ -193,9 +192,8 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   resetNavigation: () => resetToAuthenticationRoute(),
   loginSuccess: (token: SessionToken) =>
-    dispatch(loginSuccess({ token, idp: IdpCIE.id })),
-  loginFailure: (error: Error) =>
-    dispatch(loginFailure({ error, idp: IdpCIE.id }))
+    dispatch(loginSuccess({ token, idp: "cie" })),
+  loginFailure: (error: Error) => dispatch(loginFailure({ error, idp: "cie" }))
 });
 
 export default connect(null, mapDispatchToProps)(CieConsentDataUsageScreen);
