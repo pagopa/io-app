@@ -51,7 +51,7 @@ import IconInfo from "./svg/IconInfo";
 import IconInfoFilled from "./svg/IconInfoFilled";
 import IconNotice from "./svg/IconNotice";
 import IconNoticeFilled from "./svg/IconNoticeFilled";
-import IconError from "./svg/IconError";
+import IconRefund from "./svg/IconRefund";
 import IconReload from "./svg/IconReload";
 import IconHistory from "./svg/IconHistory";
 import IconEdit from "./svg/IconEdit";
@@ -89,8 +89,8 @@ import IconLocationiOSFilled from "./svg/IconLocationiOSFilled";
 import IconLocationAndroid from "./svg/IconLocationAndroid";
 import IconExternalLink from "./svg/IconExternalLink";
 import IconUnknownGdo from "./svg/IconUnknownGdo";
-import IconArrowCircleUp from "./svg/IconArrowCircleUp";
 import IconWarningFilled from "./svg/IconWarningFilled";
+import IconCanceled from "./svg/IconCanceled";
 import IconErrorFilled from "./svg/IconErrorFilled";
 import IconChevronRight from "./svg/IconChevronRight";
 import IconChevronTop from "./svg/IconChevronTop";
@@ -125,6 +125,7 @@ import IconCategSustainability from "./svg/IconCategSustainability";
 import IconProductIOApp from "./svg/IconProductIOApp";
 import IconProductPagoPA from "./svg/IconProductPagoPA";
 import IconWebsite from "./svg/IconWebsite";
+import IconSecurity from "./svg/IconSecurity";
 import LegIconQrCode from "./svg/LegIconQrCode";
 import LegIconWebsite from "./svg/LegIconWebsite";
 import LegIconHome from "./svg/LegIconHome";
@@ -189,6 +190,9 @@ import LegIconQuestion from "./svg/LegIconQuestion";
 import LegIconSearch from "./svg/LegIconSearch";
 import LegIconClose from "./svg/LegIconClose";
 import LegIconCloseSmall from "./svg/LegIconCloseSmall";
+import LegIconGiacenza from "./svg/LegIconGiacenza";
+import LegIconPSP from "./svg/LegIconPSP";
+import LegIconError from "./svg/LegIconError";
 
 export const IOIcons = {
   spid: IconSpid,
@@ -251,7 +255,9 @@ export const IOIcons = {
   doc: IconDocument,
   docSign: IconDocumentSign,
   docAgree: IconAgreement,
+  security: IconSecurity,
   docGiacenza: IconGiacenza,
+  legDocGiacenza: LegIconGiacenza,
   docAttach: IconDocumentAttachment,
   docAttachPDF: IconDocumentAttachmentPDF,
   legDocAttach: LegIconDocumentAttachment,
@@ -273,6 +279,7 @@ export const IOIcons = {
   amount: IconAmount,
   legAmount: LegIconAmount,
   psp: IconPSP,
+  legPsp: LegIconPSP,
   locationiOS: IconLocationiOS,
   locationiOSFilled: IconLocationiOSFilled,
   locationAndroid: IconLocationAndroid,
@@ -286,8 +293,10 @@ export const IOIcons = {
   legNotice: LegIconNotice,
   info: IconInfo /* io-info */,
   infoFilled: IconInfoFilled,
-  error: IconError /* io-error */,
+  canceled: IconCanceled,
+  legError: LegIconError /* io-error */,
   errorFilled: IconErrorFilled,
+  refund: IconRefund,
   reload: IconReload /* io-reload */,
   history: IconHistory,
   legHistory: LegIconHistory,
@@ -353,7 +362,6 @@ export const IOIcons = {
   arrowLeft: IconArrowLeft,
   arrowTop: IconArrowTop,
   arrowRight: IconArrowRight,
-  arrowCircleUp: IconArrowCircleUp,
   backiOS: IconBackiOS,
   backAndroid: IconBackAndroid,
   navMessages: IconNavMessages /* io-messaggi */,
@@ -521,6 +529,7 @@ const {
   close,
   closeSmall,
   success,
+  canceled,
   errorFilled,
   warningFilled,
   info,
@@ -529,14 +538,17 @@ const {
   arrowLeft,
   arrowTop,
   arrowRight,
-  arrowCircleUp,
   backiOS,
   backAndroid,
   chevronTop,
   chevronBottom,
   chevronRight,
   chevronLeft,
-  chevronRightListItem
+  chevronRightListItem,
+  docGiacenza,
+  security,
+  psp,
+  refund
 } = IOIcons;
 
 export const IOIconsNew = {
@@ -614,6 +626,7 @@ export const IOIconsNew = {
   close,
   closeSmall,
   success,
+  canceled,
   errorFilled,
   warningFilled,
   infoFilled,
@@ -622,14 +635,17 @@ export const IOIconsNew = {
   arrowLeft,
   arrowTop,
   arrowRight,
-  arrowCircleUp,
   backiOS,
   backAndroid,
   chevronTop,
   chevronBottom,
   chevronRight,
   chevronLeft,
-  chevronRightListItem
+  chevronRightListItem,
+  docGiacenza,
+  security,
+  psp,
+  refund
 };
 
 /* Navigation */
