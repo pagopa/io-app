@@ -6,7 +6,7 @@ import { useTypographyFactory } from "./Factory";
 
 type PartialAllowedColors = Extract<
   IOColors,
-  "bluegreyDark" | "white" | "blue" | "bluegrey"
+  "bluegreyDark" | "white" | "blue" | "bluegrey" | "bluegreyLight"
 >;
 type AllowedColors = PartialAllowedColors | IOTheme["textBody-default"];
 type AllowedWeight = Extract<IOFontWeight, "Regular" | "SemiBold">;
@@ -18,12 +18,12 @@ type OwnProps = ExternalTypographyProps<
 const fontName: IOFontFamily = "TitilliumWeb";
 export const bodyFontSize = 16;
 export const bodyLineHeight = 24;
-export const bodyDefaultColor: AllowedColors = "bluegreyDark";
+export const bodyDefaultColor: AllowedColors = "bluegrey";
 export const bodyDefaultWeight: AllowedWeight = "Regular";
 
 /**
  * Typography component to render `Body` text with font size {@link fontSize} and fontFamily {@link fontName}.
- * default values(if not defined) are weight: `Regular`, color: `bluegreyDark`
+ * default values(if not defined) are weight: `Regular`, color: `bluegrey`
  * @param props`
  * @constructor
  */

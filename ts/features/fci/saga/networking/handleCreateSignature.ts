@@ -4,19 +4,27 @@ import { ActionType } from "typesafe-actions";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import * as E from "fp-ts/lib/Either";
 import { readablePrivacyReport } from "../../../../utils/reporters";
-import { BackendFciClient } from "../../api/backendFci";
 import { fciSigningRequest } from "../../store/actions";
 import { getNetworkError } from "../../../../utils/errors";
 import { LollipopConfig } from "../../../lollipop";
 import { getCustomSignature, getTosSignature } from "../../utils/signature";
 import { fciDocumentsWithUrlSelector } from "../../store/reducers/fciSignatureRequest";
 import { fciQtspFilledDocumentUrlSelector } from "../../store/reducers/fciQtspFilledDocument";
+import { createFciClientWithLollipop } from "../../api/backendFci";
+import { SessionToken } from "../../../../types/SessionToken";
+import { KeyInfo } from "../../../lollipop/utils/crypto";
+import { LollipopMethodEnum } from "../../../../../definitions/fci/LollipopMethod";
+import { LollipopOriginalURL } from "../../../../../definitions/fci/LollipopOriginalURL";
+import { LollipopSignatureInput } from "../../../../../definitions/fci/LollipopSignatureInput";
+import { LollipopSignature } from "../../../../../definitions/fci/LollipopSignature";
 
 /*
  * A saga to post signature data.
  */
 export function* handleCreateSignature(
-  postSignature: ReturnType<typeof BackendFciClient>["postSignature"],
+  apiUrl: string,
+  bearerToken: SessionToken,
+  keyInfo: KeyInfo = {},
   action: ActionType<typeof fciSigningRequest["request"]>
 ): SagaIterator {
   try {
@@ -58,11 +66,29 @@ export function* handleCreateSignature(
       }
     };
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore TODO: https://pagopa.atlassian.net/browse/SFEQS-1509?atlOrigin=eyJpIjoiMTQ3NWY3OTdjOTU5NDNkN2E2YzE1NzA0ZjZmM2Y1ZGYiLCJwIjoiaiJ9
-    const postSignatureResponse = yield* call(postSignature(lollipopConfig), {
-      body: action.payload
-    });
+    const fciLollipopclient = createFciClientWithLollipop(
+      apiUrl,
+      keyInfo,
+      lollipopConfig
+    );
+
+    // To avoid a type error on createSignature TypeCallApi
+    // we need to initializa the following values to the correct type
+    // and the correct values will be setted by the client
+    // using custom fetchApi (lollipopFetch)
+    const postSignatureResponse = yield* call(
+      fciLollipopclient.createSignature,
+      {
+        body: action.payload,
+        Bearer: `Bearer ${bearerToken}`,
+        "x-pagopa-lollipop-original-method": LollipopMethodEnum.POST,
+        "x-pagopa-lollipop-original-url": "" as LollipopOriginalURL,
+        "signature-input": "" as LollipopSignatureInput,
+        signature: "" as LollipopSignature,
+        "x-pagopa-lollipop-custom-tos-challenge": "",
+        "x-pagopa-lollipop-custom-sign-challenge": ""
+      }
+    );
 
     if (E.isLeft(postSignatureResponse)) {
       throw Error(readablePrivacyReport(postSignatureResponse.left));

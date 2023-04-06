@@ -3214,6 +3214,11 @@ features:
       content: "Do you want to cancel the documents signing process?"
       cancel: "Cancel signing"
       confirm: "Keep signing"
+    checkService:
+      title: "Turn on messages"
+      content: "To receive signed documents you must activate the option that allows the service to send you messages. If you don't activate it, you can complete the signature but you won't receive the signed documents."
+      cancel: "Not now"
+      confirm: "Turn on"
     signatureFields:
       title: "Sign here"
       showOnDocument: "See on document"
@@ -3342,6 +3347,16 @@ idpay:
           header: Configura l'iniziativa!
           footer: Aggiungi almeno un metodo per iniziare ad utilizzare {{initiative}}.
         configured:
+          errorAlerts:
+            NOT_REFUNDABLE_ONLY_IBAN:
+              content: Inserisci un metodo di pagamento valido per effettuare transazioni 
+              action: Asssocia metodo 
+            NOT_REFUNDABLE_ONLY_INSTRUMENT:
+              content: Inserisci un IBAN valido per ricevere i rimborsi.
+              action: Modifica IBAN
+            NOT_REFUNDABLE:
+              content: Inserisci un IBAN valido e un metodo di pagamento per utilizzare il bonus
+              action: Configura
           yourOperations: Le tue Operazioni
           yourOperationsSubtitle: "Qui vedrai le transazioni effettuate con i metodi che hai associato. "
           yourOperationsLink: Come si fa?

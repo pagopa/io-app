@@ -10,18 +10,18 @@ import {
   getPublicKey,
   PublicKey
 } from "@pagopa/io-react-native-crypto";
-import { jwkThumbprintByEncoding } from "jwk-thumbprint";
 import { lollipopKeyTagSelector } from "../store/reducers/lollipop";
 import {
   lollipopKeyTagSave,
   lollipopRemovePublicKey,
   lollipopSetPublicKey
 } from "../store/actions/lollipop";
-import { KeyInfo, toCryptoError } from "../utils/crypto";
 import {
-  DEFAULT_LOLLIPOP_HASH_ALGORITHM_CLIENT,
-  DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER
-} from "../utils/login";
+  KeyInfo,
+  toBase64EncodedThumbprint,
+  toCryptoError
+} from "../utils/crypto";
+import { DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER } from "../utils/login";
 import { sessionInvalid } from "../../../store/actions/authentication";
 import { restartCleanApplication } from "../../../sagas/commons";
 
@@ -31,6 +31,7 @@ import {
   trackLollipopKeyGenerationSuccess
 } from "../../../utils/analytics";
 import { PublicSession } from "../../../../definitions/backend/PublicSession";
+import { isLoggedOutWithoutIdpSelector } from "../../../store/reducers/authentication";
 
 export function* generateLollipopKeySaga() {
   const maybeOldKeyTag = yield* select(lollipopKeyTagSelector);
@@ -72,6 +73,17 @@ export function* checkLollipopSessionAssertionAndInvalidateIfNeeded(
   maybePublicKey: O.Option<PublicKey>,
   maybeSessionInformation: O.Option<PublicSession>
 ) {
+  // When using the test idp to login, no authentication data nor lollipop key are saved / used / sent.
+  // Therefore, we must not check for the lollipop assertion,
+  // when this function is called after a successful test idp login,
+  // otherwise the (test) user is immediately logged-out.
+  // TODO: this is a temporary workaround, we should find a better way to handle test accounts.
+  // See: https://pagopa.atlassian.net/browse/LLK-72
+  const areWeLoggedWithTestIdp = yield* select(isLoggedOutWithoutIdpSelector);
+  if (areWeLoggedWithTestIdp) {
+    return;
+  }
+
   const lollipopCheckResult = pipe(
     maybeSessionInformation,
     O.chainNullableK(
@@ -82,11 +94,7 @@ export function* checkLollipopSessionAssertionAndInvalidateIfNeeded(
         maybePublicKey,
         O.map(publicKey =>
           pipe(
-            jwkThumbprintByEncoding(
-              publicKey,
-              DEFAULT_LOLLIPOP_HASH_ALGORITHM_CLIENT,
-              "base64url"
-            ),
+            toBase64EncodedThumbprint(publicKey),
             publicKeyThumbprint =>
               `${DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER}-${publicKeyThumbprint}`,
             localLollipopAssertionRef =>
@@ -199,11 +207,7 @@ const keyInfoFromKeyTagAndPublicKey = (
 ): KeyInfo => ({
   keyTag,
   publicKey,
-  publicKeyThumbprint: jwkThumbprintByEncoding(
-    publicKey,
-    DEFAULT_LOLLIPOP_HASH_ALGORITHM_CLIENT,
-    "base64url"
-  )
+  publicKeyThumbprint: toBase64EncodedThumbprint(publicKey)
 });
 
 const defaultKeyInfo = (): KeyInfo => ({
