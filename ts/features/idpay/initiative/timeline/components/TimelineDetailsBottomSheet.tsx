@@ -1,6 +1,8 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { enumType } from "@pagopa/ts-commons/lib/types";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as t from "io-ts";
 import React from "react";
 import { View } from "react-native";
 import { InitiativeDTO } from "../../../../../../definitions/idpay/InitiativeDTO";
@@ -23,14 +25,18 @@ import { idpayTimelineDetailsGet } from "../store/actions";
 import { RefundDetailsComponent } from "./RefundDetailsComponent";
 import { TransactionDetailsComponent } from "./TransactionDetailsComponent";
 
-/**
- * Displays a generic error message
- * @returns {React.ReactElement}
- */
-const TimelineDetailsErrorComponent = () => (
-  <View>
-    <Pictogram name="error" />
-  </View>
+type TimelineDetailsBottomSheetConfiguration = {
+  snapPoint: number;
+  title: string;
+};
+
+type OperationWithDetailsType = t.TypeOf<typeof OperationWithDetailsType>;
+
+const OperationWithDetailsType = enumType<
+  TransactionOperationTypeEnum | RefundOperationTypeEnum
+>(
+  { ...TransactionOperationTypeEnum, ...RefundOperationTypeEnum },
+  "OperationWithDetails"
 );
 
 /**
@@ -58,7 +64,11 @@ const TimelineDetailsBottomSheet = () => {
           return <></>;
       }
     }),
-    O.getOrElse(() => <TimelineDetailsErrorComponent />)
+    O.getOrElse(() => (
+      <View>
+        <Pictogram name="error" />
+      </View>
+    ))
   );
 
   return (
@@ -68,32 +78,22 @@ const TimelineDetailsBottomSheet = () => {
   );
 };
 
-type TimelineDetailsBottomSheetConfiguration = {
-  snapPoint: number;
-  title: string;
-};
-
-type OperationWithDetailsTypeEnum =
-  | TransactionOperationTypeEnum
-  | RefundOperationTypeEnum;
-
-const bottomSheetConfigurations: Record<
-  OperationWithDetailsTypeEnum,
-  TimelineDetailsBottomSheetConfiguration
-> = {
-  PAID_REFUND: {
+const bottomSheetConfigurations: {
+  [key in OperationWithDetailsType]: TimelineDetailsBottomSheetConfiguration;
+} = {
+  [RefundOperationTypeEnum.PAID_REFUND]: {
     snapPoint: 420,
     title: I18n.t("idpay.initiative.operationDetails.title.refund")
   },
-  REJECTED_REFUND: {
+  [RefundOperationTypeEnum.REJECTED_REFUND]: {
     snapPoint: 540,
     title: I18n.t("idpay.initiative.operationDetails.title.refund")
   },
-  TRANSACTION: {
+  [TransactionOperationTypeEnum.REVERSAL]: {
     snapPoint: 530,
     title: I18n.t("idpay.initiative.operationDetails.title.transaction")
   },
-  REVERSAL: {
+  [TransactionOperationTypeEnum.TRANSACTION]: {
     snapPoint: 650,
     title: I18n.t("idpay.initiative.operationDetails.title.transaction")
   }
@@ -145,10 +145,9 @@ export const useTimelineDetailsBottomSheet = (
 
   const present = (operation: OperationListDTO) =>
     pipe(
-      bottomSheetConfigurations[
-        operation.operationType as OperationWithDetailsTypeEnum
-      ],
-      O.fromNullable,
+      OperationWithDetailsType.decode(operation.operationType),
+      O.fromEither,
+      O.chain(type => O.fromNullable(bottomSheetConfigurations[type])),
       O.map(config => {
         setModalConfig(config);
         dispatch(
