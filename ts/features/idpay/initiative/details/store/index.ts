@@ -10,11 +10,7 @@ import { InitiativeDTO } from "../../../../../../definitions/idpay/InitiativeDTO
 import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../utils/errors";
-import {
-  idpayInitiativeGet,
-  idpayTimelineDetailsGet,
-  idpayTimelinePageGet
-} from "./actions";
+import { idpayInitiativeGet, idpayTimelinePageGet } from "./actions";
 
 type PaginatedTimelineDTO = Record<number, TimelineDTO>;
 
@@ -76,21 +72,6 @@ const reducer = (
       return {
         ...state,
         timeline: pot.toError(state.timeline, action.payload)
-      };
-    case getType(idpayTimelineDetailsGet.request):
-      return {
-        ...state,
-        timelineDetails: pot.toLoading(pot.none)
-      };
-    case getType(idpayTimelineDetailsGet.success):
-      return {
-        ...state,
-        timelineDetails: pot.some(action.payload)
-      };
-    case getType(idpayTimelineDetailsGet.failure):
-      return {
-        ...state,
-        timelineDetails: pot.toError(state.timelineDetails, action.payload)
       };
   }
   return state;
@@ -175,11 +156,6 @@ export const idpayTimelineIsLastPageSelector = createSelector(
       }),
       false
     )
-);
-
-export const idpayTimelineDetailsSelector = createSelector(
-  idpayInitativeSelector,
-  initiative => initiative.timelineDetails
 );
 
 export default reducer;

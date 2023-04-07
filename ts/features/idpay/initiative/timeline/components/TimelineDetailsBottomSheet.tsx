@@ -20,7 +20,7 @@ import {
   IOBottomSheetModal,
   useIOBottomSheetModal
 } from "../../../../../utils/hooks/bottomSheet";
-import { idpayTimelineDetailsSelector } from "../../details/store";
+import { idpayTimelineDetailsSelector } from "../store";
 import { idpayTimelineDetailsGet } from "../store/actions";
 import { RefundDetailsComponent } from "./RefundDetailsComponent";
 import { TransactionDetailsComponent } from "./TransactionDetailsComponent";
