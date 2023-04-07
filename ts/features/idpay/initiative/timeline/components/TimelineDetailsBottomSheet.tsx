@@ -1,10 +1,12 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { View } from "react-native";
 import { InitiativeDTO } from "../../../../../../definitions/idpay/InitiativeDTO";
 import { OperationListDTO } from "../../../../../../definitions/idpay/OperationListDTO";
 import { OperationTypeEnum as RefundOperationTypeEnum } from "../../../../../../definitions/idpay/RefundOperationDTO";
-import { OperationTypeEnum as TransactionDetailOperationTypeEnum } from "../../../../../../definitions/idpay/TransactionDetailDTO";
+import { OperationTypeEnum as TransactionOperationTypeEnum } from "../../../../../../definitions/idpay/TransactionOperationDTO";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { ContentWrapper } from "../../../../../components/core/ContentWrapper";
 import { Pictogram } from "../../../../../components/core/pictograms";
@@ -16,7 +18,7 @@ import {
   IOBottomSheetModal,
   useIOBottomSheetModal
 } from "../../../../../utils/hooks/bottomSheet";
-import { idpayTimelineDetailsSelector } from "../store";
+import { idpayTimelineDetailsSelector } from "../../details/store";
 import { idpayTimelineDetailsGet } from "../store/actions";
 import { RefundDetailsComponent } from "./RefundDetailsComponent";
 import { TransactionDetailsComponent } from "./TransactionDetailsComponent";
@@ -40,26 +42,28 @@ const TimelineDetailsBottomSheet = () => {
   const detailsPot = useIOSelector(idpayTimelineDetailsSelector);
   const isLoading = pot.isLoading(detailsPot);
 
-  const contentComponent = pot.getOrElse(
-    pot.map(detailsPot, details => {
+  const content = pipe(
+    useIOSelector(idpayTimelineDetailsSelector),
+    pot.toOption,
+    O.map(details => {
       switch (details.operationType) {
-        case TransactionDetailOperationTypeEnum.TRANSACTION:
-        case TransactionDetailOperationTypeEnum.REVERSAL:
+        case TransactionOperationTypeEnum.TRANSACTION:
+        case TransactionOperationTypeEnum.REVERSAL:
           return <TransactionDetailsComponent transaction={details} />;
         case RefundOperationTypeEnum.PAID_REFUND:
         case RefundOperationTypeEnum.REJECTED_REFUND:
           return <RefundDetailsComponent refund={details} />;
         default:
           // We don't show additional info for other operation types
-          return null;
+          return <></>;
       }
     }),
-    <TimelineDetailsErrorComponent />
+    O.getOrElse(() => <TimelineDetailsErrorComponent />)
   );
 
   return (
     <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={100}>
-      {contentComponent}
+      {content}
     </LoadingSpinnerOverlay>
   );
 };
@@ -70,7 +74,7 @@ type TimelineDetailsBottomSheetConfiguration = {
 };
 
 type OperationWithDetailsTypeEnum =
-  | TransactionDetailOperationTypeEnum
+  | TransactionOperationTypeEnum
   | RefundOperationTypeEnum;
 
 const bottomSheetConfigurations: Record<
@@ -139,26 +143,23 @@ export const useTimelineDetailsBottomSheet = (
     bottomSheetFooter
   );
 
-  const present = (operation: OperationListDTO) => {
-    const config =
+  const present = (operation: OperationListDTO) =>
+    pipe(
       bottomSheetConfigurations[
         operation.operationType as OperationWithDetailsTypeEnum
-      ];
-
-    if (config === undefined) {
-      return;
-    }
-
-    setModalConfig(config);
-
-    dispatch(
-      idpayTimelineDetailsGet.request({
-        initiativeId,
-        operationId: operation.operationId
+      ],
+      O.fromNullable,
+      O.map(config => {
+        setModalConfig(config);
+        dispatch(
+          idpayTimelineDetailsGet.request({
+            initiativeId,
+            operationId: operation.operationId
+          })
+        );
+        modal.present();
       })
     );
-    modal.present();
-  };
 
   return { ...modal, present };
 };

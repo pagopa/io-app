@@ -20,7 +20,7 @@ import customVariables from "../../../../../theme/variables";
 import { formatDateAsLocal } from "../../../../../utils/dates";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { showToast } from "../../../../../utils/showToast";
-import { useTimelineDetailsBottomSheet } from "../components/TimelineDetailsBottomSheet";
+import { useTimelineDetailsBottomSheet } from "../../timeline/components/TimelineDetailsBottomSheet";
 import { TimelineOperationListItem } from "../components/TimelineOperationListItem";
 import { IDPayDetailsParamsList } from "../navigation";
 import { useInitiativeTimelineFetcher } from "../utils/hooks";

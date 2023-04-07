@@ -20,7 +20,7 @@ import { useIOSelector } from "../../../../../store/hooks";
 import themeVariables from "../../../../../theme/variables";
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
 import { IDPayConfigurationRoutes } from "../../configuration/navigation/navigator";
-import { idpayInitiativeIdSelector } from "../store";
+import { idpayInitiativeIdSelector } from "../../details/store";
 
 type ResultLabelProps = {
   type: OperationTypeEnum;

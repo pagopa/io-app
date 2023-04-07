@@ -15,12 +15,12 @@ import {
   IOStackNavigationProp
 } from "../../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../../store/hooks";
+import { useTimelineDetailsBottomSheet } from "../../timeline/components/TimelineDetailsBottomSheet";
 import { IDPayDetailsRoutes } from "../navigation";
 import {
-  idpayPaginatedTimelineSelector,
-  idpayOperationListSelector
+  idpayOperationListSelector,
+  idpayPaginatedTimelineSelector
 } from "../store";
-import { useTimelineDetailsBottomSheet } from "./TimelineDetailsBottomSheet";
 import { TimelineOperationListItem } from "./TimelineOperationListItem";
 
 const styles = StyleSheet.create({
