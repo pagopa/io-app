@@ -1,5 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { enumType } from "@pagopa/ts-commons/lib/types";
+import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as t from "io-ts";
@@ -24,11 +25,6 @@ import { idpayTimelineDetailsSelector } from "../store";
 import { idpayTimelineDetailsGet } from "../store/actions";
 import { RefundDetailsComponent } from "./RefundDetailsComponent";
 import { TransactionDetailsComponent } from "./TransactionDetailsComponent";
-
-type TimelineDetailsBottomSheetConfiguration = {
-  snapPoint: number;
-  title: string;
-};
 
 type OperationWithDetailsType = t.TypeOf<typeof OperationWithDetailsType>;
 
@@ -78,9 +74,15 @@ const TimelineDetailsBottomSheet = () => {
   );
 };
 
-const bottomSheetConfigurations: {
-  [key in OperationWithDetailsType]: TimelineDetailsBottomSheetConfiguration;
-} = {
+type ModalConfiguration = {
+  snapPoint: number;
+  title: string;
+};
+
+const modalConfigurationByOperationType: Record<
+  OperationWithDetailsType,
+  ModalConfiguration
+> = {
   [RefundOperationTypeEnum.PAID_REFUND]: {
     snapPoint: 420,
     title: I18n.t("idpay.initiative.operationDetails.title.refund")
@@ -89,11 +91,11 @@ const bottomSheetConfigurations: {
     snapPoint: 540,
     title: I18n.t("idpay.initiative.operationDetails.title.refund")
   },
-  [TransactionOperationTypeEnum.REVERSAL]: {
+  [TransactionOperationTypeEnum.TRANSACTION]: {
     snapPoint: 530,
     title: I18n.t("idpay.initiative.operationDetails.title.transaction")
   },
-  [TransactionOperationTypeEnum.TRANSACTION]: {
+  [TransactionOperationTypeEnum.REVERSAL]: {
     snapPoint: 650,
     title: I18n.t("idpay.initiative.operationDetails.title.transaction")
   }
@@ -116,13 +118,15 @@ export const useTimelineDetailsBottomSheet = (
 ): TimelineDetailsBottomSheetModal => {
   const dispatch = useIODispatch();
 
-  const [modalConfig, setModalConfig] =
-    React.useState<TimelineDetailsBottomSheetConfiguration>({
-      snapPoint: 530,
-      title: ""
-    });
+  const [modalConfig, setModalConfig] = React.useState<ModalConfiguration>({
+    title: "",
+    snapPoint: 530
+  });
 
-  const bottomSheetFooter = (
+  const modal = useIOBottomSheetModal(
+    <TimelineDetailsBottomSheet />,
+    modalConfig.title,
+    modalConfig.snapPoint,
     <ContentWrapper>
       <ButtonOutline
         label={I18n.t("global.buttons.close")}
@@ -131,24 +135,15 @@ export const useTimelineDetailsBottomSheet = (
         onPress={() => modal.dismiss()}
         fullWidth={true}
       />
-      <VSpacer size={8} />
-      <VSpacer size={48} />
+      <VSpacer size={16} />
     </ContentWrapper>
-  );
-
-  const modal = useIOBottomSheetModal(
-    <TimelineDetailsBottomSheet />,
-    modalConfig.title,
-    modalConfig.snapPoint,
-    bottomSheetFooter
   );
 
   const present = (operation: OperationListDTO) =>
     pipe(
       OperationWithDetailsType.decode(operation.operationType),
-      O.fromEither,
-      O.chain(type => O.fromNullable(bottomSheetConfigurations[type])),
-      O.map(config => {
+      E.map(type => modalConfigurationByOperationType[type]),
+      E.map(config => {
         setModalConfig(config);
         dispatch(
           idpayTimelineDetailsGet.request({
