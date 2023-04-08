@@ -3409,6 +3409,29 @@ idpay:
               REJECTED_DELETE_INSTRUMENT: "Errore disattivazione metodo"
               PAID_REFUND:  "Rimborso sul tuo conto"
               REJECTED_REFUND:  "Errore rimboso"
+    beneficiaryDetails:
+      infobox:
+        title: Cosa ti permette di fare?
+        rulesButton: Leggi le regole
+      summary: Riepilogo
+      status: Stato iniziativa
+      endDate: Scadenza
+      amount: Saldo disponibile
+      toBeRefunded: In attesa di rimborso
+      refunded: Totale rimborsato
+      spendingRules: Regole di spesa
+      spendFrom: A partire dal giorno
+      spendTo: Entro il giorno
+      spendPercentage: Percentuale riconosciuta
+      refundRules: Regole di rimborso
+      refundType: Erogazione
+      enrollmentDetails: Dettagli dell'adesione
+      enrollmentDate: Data
+      protocolNumber: Numero di protocollo
+      lastUpdate: "Ultimo aggiornamento: {{dateString}}"
+      buttons:
+        privacy: Preferenze & Privacy
+        unsubscribe: Rimuovi {{initiativeName}}
     operationDetails:
       title: Dettaglio dell'operazione
       instrument: Metodo di pagamento

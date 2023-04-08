@@ -26,6 +26,7 @@ import {
 } from "../store";
 import { idPayBeneficiaryDetailsGet } from "../store/actions";
 import { openWebUrl } from "../../../../../utils/url";
+import I18n from "../../../../../i18n";
 
 export type BeneficiaryDetailsScreenParams = {
   initiativeId: string;
@@ -169,38 +170,75 @@ const BeneficiaryDetailsComponent = (
     beneficiaryDetails.updateDate,
     O.fromNullable,
     O.map(formatDate("DD MMMM YYYY, hh:mm")),
-    O.map(dateString => `Ultimo aggiornamento: ${dateString}`),
+    O.map(dateString =>
+      I18n.t("idpay.initiative.beneficiaryDetails.lastUpdate", { dateString })
+    ),
     O.toUndefined
   );
 
   const tableItems: ReadonlyArray<TableItem> = [
     {
-      label: "Riepilogo",
+      label: I18n.t("idpay.initiative.beneficiaryDetails.summary"),
       value: [
-        { label: "Stato iniziativa", value: statusString },
-        { label: "Scadenza", value: endDateString },
-        { label: "Saldo disponibile", value: amountString },
-        { label: "In attesa di rimborso", value: toBeRefundedString },
-        { label: "Total rimborsato", value: refundedString }
+        {
+          label: I18n.t("idpay.initiative.beneficiaryDetails.status"),
+          value: statusString
+        },
+        {
+          label: I18n.t("idpay.initiative.beneficiaryDetails.endDate"),
+          value: endDateString
+        },
+        {
+          label: I18n.t("idpay.initiative.beneficiaryDetails.amount"),
+          value: amountString
+        },
+        {
+          label: I18n.t("idpay.initiative.beneficiaryDetails.toBeRefunded"),
+          value: toBeRefundedString
+        },
+        {
+          label: I18n.t("idpay.initiative.beneficiaryDetails.refundRules"),
+          value: refundedString
+        }
       ]
     },
     {
-      label: "Regole di spesa",
+      label: I18n.t("idpay.initiative.beneficiaryDetails.spendFrom"),
       value: [
-        { label: "A partire dal giorno", value: rankingStartDateString },
-        { label: "Entro il giorno", value: rankingEndDateString },
-        { label: "Percentuale riconosciuta", value: rewardPercentageString }
+        {
+          label: I18n.t("idpay.initiative.beneficiaryDetails.spendFrom"),
+          value: rankingStartDateString
+        },
+        {
+          label: I18n.t("idpay.initiative.beneficiaryDetails.spendTo"),
+          value: rankingEndDateString
+        },
+        {
+          label: I18n.t("idpay.initiative.beneficiaryDetails.spendPercentage"),
+          value: rewardPercentageString
+        }
       ]
     },
     {
-      label: "Regole di rimborso",
-      value: [{ label: "Erogazione", value: "-" }]
+      label: I18n.t("idpay.initiative.beneficiaryDetails.refundRules"),
+      value: [
+        {
+          label: I18n.t("idpay.initiative.beneficiaryDetails.refundType"),
+          value: "-"
+        }
+      ]
     },
     {
-      label: "Dettagli dell'adesione",
+      label: I18n.t("idpay.initiative.beneficiaryDetails.enrollmentDetails"),
       value: [
-        { label: "Data", value: "-" },
-        { label: "Numero di protocollo", value: "-" }
+        {
+          label: I18n.t("idpay.initiative.beneficiaryDetails.enrollmentDate"),
+          value: "-"
+        },
+        {
+          label: I18n.t("idpay.initiative.beneficiaryDetails.protocolNumber"),
+          value: "-"
+        }
       ]
     }
   ];
@@ -214,11 +252,15 @@ const BeneficiaryDetailsComponent = (
         </LabelSmall>
         <VSpacer size={16} />
         <View style={styles.linkRow}>
-          <Link onPress={handlePrivacyLinkPress}>Preferenze & Privacy</Link>
+          <Link onPress={handlePrivacyLinkPress}>
+            {I18n.t("idpay.initiative.beneficiaryDetails.buttons.privacy")}
+          </Link>
         </View>
         <View style={styles.linkRow}>
           <Link onPress={handleUnsubscribePress} color="red">
-            Rimuovi {details.initiativeName}
+            {I18n.t("idpay.initiative.beneficiaryDetails.buttons.unsubscribe", {
+              initiativeName: details.initiativeName
+            })}
           </Link>
         </View>
         <VSpacer size={32} />
