@@ -10,7 +10,7 @@ import { InitiativeDTO } from "../../../../../../definitions/idpay/InitiativeDTO
 import { InitiativeDetailDTO } from "../../../../../../definitions/idpay/InitiativeDetailDTO";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { ContentWrapper } from "../../../../../components/core/ContentWrapper";
-import { VSpacer } from "../../../../../components/core/spacer/Spacer";
+import { HSpacer, VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { Link } from "../../../../../components/core/typography/Link";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
@@ -27,6 +27,11 @@ import {
 import { idPayBeneficiaryDetailsGet } from "../store/actions";
 import { openWebUrl } from "../../../../../utils/url";
 import I18n from "../../../../../i18n";
+import { H4 } from "../../../../../components/core/typography/H4";
+import { Body } from "../../../../../components/core/typography/Body";
+import { IOColors } from "../../../../../components/core/variables/IOColors";
+import { Icon } from "../../../../../components/core/icons";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 
 export type BeneficiaryDetailsScreenParams = {
   initiativeId: string;
@@ -106,6 +111,15 @@ const BeneficiaryDetailsComponent = (
   const handleUnsubscribePress = () => {
     // TODO add unsubscription flow
   };
+
+  const ruleInfoBox = pipe(
+    beneficiaryDetails.ruleDescription,
+    O.fromNullable,
+    O.fold(
+      () => undefined,
+      info => <RulesInfoBox info={info} />
+    )
+  );
 
   const statusString = pipe(
     details.status,
@@ -246,6 +260,7 @@ const BeneficiaryDetailsComponent = (
   return (
     <ScrollView>
       <ContentWrapper>
+        {ruleInfoBox}
         <Table items={tableItems} />
         <LabelSmall weight="Regular" color="bluegrey">
           {lastUpdateString}
@@ -266,6 +281,46 @@ const BeneficiaryDetailsComponent = (
         <VSpacer size={32} />
       </ContentWrapper>
     </ScrollView>
+  );
+};
+
+type RulesInfoBoxProps = {
+  info: string;
+};
+
+const RulesInfoBox = (props: RulesInfoBoxProps) => {
+  const { info } = props;
+
+  const handleReadRulesPress = () => {
+    // TODO rules bottom sheet;
+  };
+
+  return (
+    <>
+      <View
+        style={{
+          borderColor: IOColors.bluegreyLight,
+          borderWidth: 1,
+          borderRadius: 8,
+          padding: 16
+        }}
+      >
+        <H4>{I18n.t("idpay.initiative.beneficiaryDetails.infobox.title")}</H4>
+        <VSpacer size={4} />
+        <Body numberOfLines={3} ellipsizeMode="tail">
+          {info}
+        </Body>
+        <VSpacer size={16} />
+        <View style={IOStyles.row}>
+          <Icon name="categLearning" color="blue" />
+          <HSpacer size={8} />
+          <Link onPress={handleReadRulesPress}>
+            {I18n.t("idpay.initiative.beneficiaryDetails.infobox.rulesButton")}{" "}
+          </Link>
+        </View>
+      </View>
+      <VSpacer size={16} />
+    </>
   );
 };
 
