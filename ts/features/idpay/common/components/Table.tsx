@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { StyleSheet, View } from "react-native";
 import { Divider } from "../../../../components/core/Divider";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
@@ -18,26 +18,26 @@ const renderTable = (data: ReadonlyArray<TableItem>): React.ReactNode =>
   data.map((item, index) => {
     if (Array.isArray(item.value)) {
       return (
-        <>
+        <Fragment key={item.label}>
           <View style={styles.sectionHeader}>
             <H3>{item.label}</H3>
           </View>
           {renderTable(item.value)}
           <VSpacer size={16} />
-        </>
+        </Fragment>
       );
     }
 
     const isLast = data.length === index + 1;
 
     return (
-      <>
-        <View key={item.label} style={styles.infoRow}>
+      <Fragment key={item.label}>
+        <View style={styles.infoRow}>
           <Body>{item.label}</Body>
           <Body weight="SemiBold">{item.value}</Body>
         </View>
         {!isLast && <Divider />}
-      </>
+      </Fragment>
     );
   });
 
