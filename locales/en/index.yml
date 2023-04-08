@@ -3390,6 +3390,9 @@ idpay:
       infobox:
         title: Cosa ti permette di fare?
         rulesButton: Leggi le regole
+      infoModal:
+        title: "Regole dell'iniziative"
+        button: "Ok, ho capito"
       summary: Riepilogo
       status: Stato iniziativa
       endDate: Scadenza

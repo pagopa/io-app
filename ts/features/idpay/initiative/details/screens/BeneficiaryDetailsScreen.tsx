@@ -32,6 +32,9 @@ import { Body } from "../../../../../components/core/typography/Body";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { Icon } from "../../../../../components/core/icons";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
+import ButtonSolid from "../../../../../components/ui/ButtonSolid";
+import Markdown from "../../../../../components/ui/Markdown";
 
 export type BeneficiaryDetailsScreenParams = {
   initiativeId: string;
@@ -291,20 +294,27 @@ type RulesInfoBoxProps = {
 const RulesInfoBox = (props: RulesInfoBoxProps) => {
   const { info } = props;
 
-  const handleReadRulesPress = () => {
-    // TODO rules bottom sheet;
-  };
+  const { bottomSheet, present, dismiss } = useIOBottomSheetModal(
+    <Markdown>{info}</Markdown>,
+    I18n.t("idpay.initiative.beneficiaryDetails.infoModal.title"),
+    700,
+    <ContentWrapper>
+      <VSpacer size={16} />
+      <ButtonSolid
+        label={I18n.t("idpay.initiative.beneficiaryDetails.infoModal.button")}
+        onPress={() => dismiss()}
+        accessibilityLabel={I18n.t(
+          "idpay.initiative.beneficiaryDetails.infoModal.button"
+        )}
+        fullWidth={true}
+      />
+      <VSpacer size={16} />
+    </ContentWrapper>
+  );
 
   return (
     <>
-      <View
-        style={{
-          borderColor: IOColors.bluegreyLight,
-          borderWidth: 1,
-          borderRadius: 8,
-          padding: 16
-        }}
-      >
+      <View style={styles.infoBox}>
         <H4>{I18n.t("idpay.initiative.beneficiaryDetails.infobox.title")}</H4>
         <VSpacer size={4} />
         <Body numberOfLines={3} ellipsizeMode="tail">
@@ -314,12 +324,13 @@ const RulesInfoBox = (props: RulesInfoBoxProps) => {
         <View style={IOStyles.row}>
           <Icon name="categLearning" color="blue" />
           <HSpacer size={8} />
-          <Link onPress={handleReadRulesPress}>
+          <Link onPress={() => present()}>
             {I18n.t("idpay.initiative.beneficiaryDetails.infobox.rulesButton")}{" "}
           </Link>
         </View>
       </View>
       <VSpacer size={16} />
+      {bottomSheet}
     </>
   );
 };
@@ -327,6 +338,12 @@ const RulesInfoBox = (props: RulesInfoBoxProps) => {
 const styles = StyleSheet.create({
   linkRow: {
     paddingVertical: 16
+  },
+  infoBox: {
+    borderColor: IOColors.bluegreyLight,
+    borderWidth: 1,
+    borderRadius: 8,
+    padding: 16
   }
 });
 
