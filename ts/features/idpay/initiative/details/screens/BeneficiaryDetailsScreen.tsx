@@ -11,15 +11,14 @@ import { InitiativeDetailDTO } from "../../../../../../definitions/idpay/Initiat
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { ContentWrapper } from "../../../../../components/core/ContentWrapper";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
-import { Body } from "../../../../../components/core/typography/Body";
-import { H3 } from "../../../../../components/core/typography/H3";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { Link } from "../../../../../components/core/typography/Link";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import { formatDateAsLocal } from "../../../../../utils/dates";
+import { format } from "../../../../../utils/dates";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { formatNumberAmount } from "../../../../../utils/stringBuilder";
+import { Table, TableItem } from "../../../common/components/Table";
 import { IDPayDetailsParamsList } from "../navigation";
 import {
   idPayBeneficiaryDetailsSelector,
@@ -39,7 +38,7 @@ type BeneficiaryDetailsScreenRouteProps = RouteProp<
 const formatNumberCurrency = (amount: number) =>
   `${formatNumberAmount(amount, false)} €`;
 
-const formatDate = (date: Date) => formatDateAsLocal(date, true, true);
+const formatDate = (fmt: string) => (date: Date) => format(date, fmt);
 
 const BeneficiaryDetailsScreen = () => {
   const route = useRoute<BeneficiaryDetailsScreenRouteProps>();
@@ -77,7 +76,7 @@ const BeneficiaryDetailsScreen = () => {
 
   return (
     <BaseScreenComponent goBack={true} headerTitle={initiativeName}>
-      <LoadingSpinnerOverlay isLoading={isLoading}>
+      <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={100}>
         {content}
       </LoadingSpinnerOverlay>
     </BaseScreenComponent>
@@ -94,10 +93,17 @@ const BeneficiaryDetailsComponent = (
 ) => {
   const { details, beneficiaryDetails } = props;
 
+  const statusString = pipe(
+    details.status,
+    O.fromNullable,
+    O.map(status => status.toLocaleLowerCase()),
+    O.getOrElse(() => "-")
+  );
+
   const endDateString = pipe(
     beneficiaryDetails.endDate,
     O.fromNullable,
-    O.map(formatDate),
+    O.map(formatDate("DD/MM/YYYY")),
     O.getOrElse(() => "-")
   );
 
@@ -128,14 +134,14 @@ const BeneficiaryDetailsComponent = (
   const rankingStartDateString = pipe(
     beneficiaryDetails.rankingStartDate,
     O.fromNullable,
-    O.map(formatDate),
+    O.map(formatDate("DD MMM YYYY")),
     O.getOrElse(() => "-")
   );
 
   const rankingEndDateString = pipe(
     beneficiaryDetails.rankingEndDate,
     O.fromNullable,
-    O.map(formatDate),
+    O.map(formatDate("DD MMM YYYY")),
     O.getOrElse(() => "-")
   );
 
@@ -146,72 +152,52 @@ const BeneficiaryDetailsComponent = (
     O.getOrElse(() => "-")
   );
 
+  const lastUpdateString = pipe(
+    beneficiaryDetails.updateDate,
+    O.fromNullable,
+    O.map(formatDate("DD MMMM YYYY, hh:mm")),
+    O.map(dateString => `Ultimo aggiornamento: ${dateString}`),
+    O.toUndefined
+  );
+
+  const tableItems: ReadonlyArray<TableItem> = [
+    {
+      label: "Riepilogo",
+      value: [
+        { label: "Stato iniziativa", value: statusString },
+        { label: "Scadenza", value: endDateString },
+        { label: "Saldo disponibile", value: amountString },
+        { label: "In attesa di rimborso", value: toBeRefundedString },
+        { label: "Total rimborsato", value: refundedString }
+      ]
+    },
+    {
+      label: "Regole di spesa",
+      value: [
+        { label: "A partire dal giorno", value: rankingStartDateString },
+        { label: "Entro il giorno", value: rankingEndDateString },
+        { label: "Percentuale riconosciuta", value: rewardPercentageString }
+      ]
+    },
+    {
+      label: "Regole di rimborso",
+      value: [{ label: "Erogazione", value: "-" }]
+    },
+    {
+      label: "Dettagli dell'adesione",
+      value: [
+        { label: "Data", value: "-" },
+        { label: "Numero di protocollo", value: "-" }
+      ]
+    }
+  ];
+
   return (
     <ScrollView>
       <ContentWrapper>
-        <View style={styles.sectionHeader}>
-          <H3>Riepilogo</H3>
-        </View>
-        <View style={styles.infoRow}>
-          <Body>Stato iniziativa</Body>
-          <Body weight="SemiBold">{details.status}</Body>
-        </View>
-        <View style={styles.infoRow}>
-          <Body>Scadenza</Body>
-          <Body weight="SemiBold">{endDateString}</Body>
-        </View>
-        <View style={styles.infoRow}>
-          <Body>Saldo disponibile</Body>
-          <Body weight="SemiBold">{amountString}</Body>
-        </View>
-        <View style={styles.infoRow}>
-          <Body>In attesa di rimborso</Body>
-          <Body weight="SemiBold">{toBeRefundedString}</Body>
-        </View>
-        <View style={styles.infoRow}>
-          <Body>Total rimborsato</Body>
-          <Body weight="SemiBold">{refundedString}</Body>
-        </View>
-        <VSpacer size={16} />
-        <View style={styles.sectionHeader}>
-          <H3>Regole di spesa</H3>
-        </View>
-        <View style={styles.infoRow}>
-          <Body>A partire dal giorno</Body>
-          <Body weight="SemiBold">{rankingStartDateString}</Body>
-        </View>
-        <View style={styles.infoRow}>
-          <Body>Entro il giorno</Body>
-          <Body weight="SemiBold">{rankingEndDateString}</Body>
-        </View>
-        <View style={styles.infoRow}>
-          <Body>Percentuale riconosciuta</Body>
-          <Body weight="SemiBold">{rewardPercentageString}</Body>
-        </View>
-        <VSpacer size={16} />
-        <View style={styles.sectionHeader}>
-          <H3>Regole di rimborso</H3>
-        </View>
-        <View style={styles.infoRow}>
-          <Body>Erogazione</Body>
-          <Body weight="SemiBold">-</Body>
-        </View>
-        <VSpacer size={16} />
-        <View style={styles.sectionHeader}>
-          <H3>{"Dettagli dell'adesione"}</H3>
-        </View>
-        <View style={styles.infoRow}>
-          <Body>Data</Body>
-          <Body weight="SemiBold">-</Body>
-        </View>
-        <View style={styles.infoRow}>
-          <Body>Numero di protocollo</Body>
-          <Body weight="SemiBold">-</Body>
-        </View>
-        <VSpacer size={16} />
+        <Table items={tableItems} />
         <LabelSmall weight="Regular" color="bluegrey">
-          Ultimo aggiornamento:{" "}
-          {beneficiaryDetails.updateDate?.toLocaleDateString()}
+          {lastUpdateString}
         </LabelSmall>
         <VSpacer size={16} />
         <View style={styles.linkRow}>
@@ -227,15 +213,6 @@ const BeneficiaryDetailsComponent = (
 };
 
 const styles = StyleSheet.create({
-  sectionHeader: {
-    paddingTop: 16,
-    paddingBottom: 8
-  },
-  infoRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingVertical: 8
-  },
   linkRow: {
     paddingVertical: 16
   }
