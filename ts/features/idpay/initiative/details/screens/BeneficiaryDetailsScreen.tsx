@@ -25,6 +25,7 @@ import {
   idpayInitiativeDetailsSelector
 } from "../store";
 import { idPayBeneficiaryDetailsGet } from "../store/actions";
+import { openWebUrl } from "../../../../../utils/url";
 
 export type BeneficiaryDetailsScreenParams = {
   initiativeId: string;
@@ -92,6 +93,18 @@ const BeneficiaryDetailsComponent = (
   props: BeneficiaryDetailsComponentProps
 ) => {
   const { details, beneficiaryDetails } = props;
+
+  const handlePrivacyLinkPress = () =>
+    pipe(
+      beneficiaryDetails.privacyLink,
+      O.fromNullable,
+      O.map(openWebUrl),
+      O.toUndefined
+    );
+
+  const handleUnsubscribePress = () => {
+    // TODO add unsubscription flow
+  };
 
   const statusString = pipe(
     details.status,
@@ -201,10 +214,12 @@ const BeneficiaryDetailsComponent = (
         </LabelSmall>
         <VSpacer size={16} />
         <View style={styles.linkRow}>
-          <Link>Preferenze & Privacy</Link>
+          <Link onPress={handlePrivacyLinkPress}>Preferenze & Privacy</Link>
         </View>
         <View style={styles.linkRow}>
-          <Link color="red">Rimuovi {details.initiativeName}</Link>
+          <Link onPress={handleUnsubscribePress} color="red">
+            Rimuovi {details.initiativeName}
+          </Link>
         </View>
         <VSpacer size={32} />
       </ContentWrapper>
