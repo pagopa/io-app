@@ -10,7 +10,7 @@ import {
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Content, Form, Text as NBText } from "native-base";
+import { Content, Form } from "native-base";
 import * as React from "react";
 import { Keyboard, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
@@ -42,6 +42,7 @@ import { GlobalState } from "../../../store/reducers/types";
 import { withPaymentFeatureSelector } from "../../../store/reducers/wallet/wallets";
 import { alertNoPayablePaymentMethods } from "../../../utils/paymentMethod";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
+import { Body } from "../../../components/core/typography/Body";
 import CodesPositionManualPaymentModal from "./CodesPositionManualPaymentModal";
 
 export type ManualDataInsertionScreenNavigationParams = {
@@ -196,7 +197,7 @@ class ManualDataInsertionScreen extends React.Component<Props, State> {
           >
             <Content scrollEnabled={false}>
               <H1>{I18n.t("wallet.insertManually.title")}</H1>
-              <NBText>{I18n.t("wallet.insertManually.info")}</NBText>
+              <Body>{I18n.t("wallet.insertManually.info")}</Body>
               <Link onPress={this.showModal}>
                 {I18n.t("wallet.insertManually.link")}
               </Link>

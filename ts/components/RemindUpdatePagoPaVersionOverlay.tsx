@@ -1,12 +1,15 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { Button, Content, Text as NBText } from "native-base";
+import { Button, Content, Text as NBButtonText } from "native-base";
 import * as React from "react";
-import { Image, Linking, StyleSheet } from "react-native";
+import { Image, Linking, StyleSheet, View } from "react-native";
 import I18n from "../i18n";
 import customVariables from "../theme/variables";
 import { storeUrl } from "../utils/appVersion";
 import { VSpacer } from "./core/spacer/Spacer";
+import { Body } from "./core/typography/Body";
 import { H1 } from "./core/typography/H1";
+import { H3 } from "./core/typography/H3";
+import { IOStyles } from "./core/variables/IOStyles";
 
 type State = { hasError: boolean };
 
@@ -15,18 +18,6 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginTop: customVariables.contentPadding,
     padding: customVariables.contentPadding
-  },
-  imageChecked: {
-    alignSelf: "center"
-  },
-  title: {
-    textAlign: "center"
-  },
-  textDanger: {
-    marginTop: customVariables.contentPadding,
-    fontSize: 18,
-    textAlign: "center",
-    color: customVariables.brandDanger
   }
 });
 
@@ -77,16 +68,16 @@ class RemindUpdatePagoPaVersionOverlay extends React.PureComponent<
       <Content style={styles.container}>
         <React.Fragment>
           <Image
-            style={styles.imageChecked}
+            style={IOStyles.selfCenter}
             source={require("../../img/icons/update-icon.png")}
           />
           <VSpacer size={40} />
         </React.Fragment>
-        <H1 style={styles.title}>
-          {I18n.t("wallet.alert.titlePagoPaUpdateApp")}
-        </H1>
+        <View style={IOStyles.alignCenter}>
+          <H1>{I18n.t("wallet.alert.titlePagoPaUpdateApp")}</H1>
+        </View>
         <VSpacer size={16} />
-        <NBText>{I18n.t("wallet.alert.messagePagoPaUpdateApp")}</NBText>
+        <Body>{I18n.t("wallet.alert.messagePagoPaUpdateApp")}</Body>
         <VSpacer size={16} />
 
         <Button
@@ -95,16 +86,17 @@ class RemindUpdatePagoPaVersionOverlay extends React.PureComponent<
           disabled={false}
           onPress={this.openAppStore}
         >
-          <NBText>{I18n.t("wallet.alert.btnUpdateApp")}</NBText>
+          {/* ButtonText */}
+          <NBButtonText>{I18n.t("wallet.alert.btnUpdateApp")}</NBButtonText>
         </Button>
 
         <VSpacer size={16} />
         {this.state.hasError && (
           <React.Fragment>
-            <VSpacer size={16} />
-            <NBText style={styles.textDanger}>
-              {I18n.t("wallet.alert.msgErrorUpdateApp")}
-            </NBText>
+            <VSpacer size={24} />
+            <View style={IOStyles.alignCenter}>
+              <H3>{I18n.t("wallet.alert.msgErrorUpdateApp")}</H3>
+            </View>
           </React.Fragment>
         )}
       </Content>

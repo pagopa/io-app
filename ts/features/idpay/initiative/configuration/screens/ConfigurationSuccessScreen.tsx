@@ -1,10 +1,11 @@
 import { useSelector } from "@xstate/react";
-import { Text as NBText } from "native-base";
+import { Text as NBButtonText } from "native-base";
 import React from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
 import { Pictogram } from "../../../../../components/core/pictograms";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
+import { Body } from "../../../../../components/core/typography/Body";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";
@@ -48,11 +49,11 @@ const ConfigurationSuccessScreen = () => {
             block={true}
             onPress={handleAddPaymentMethodButtonPress}
           >
-            <NBText white={true}>
+            <NBButtonText white={true}>
               {I18n.t(
                 "idpay.configuration.associationSuccess.buttons.addPaymentMethod"
               )}
-            </NBText>
+            </NBButtonText>
           </ButtonDefaultOpacity>
           <VSpacer />
           <ButtonDefaultOpacity
@@ -60,9 +61,9 @@ const ConfigurationSuccessScreen = () => {
             onPress={handleNavigateToInitiativePress}
             bordered={true}
           >
-            <NBText>
+            <NBButtonText>
               {I18n.t("idpay.configuration.associationSuccess.buttons.skip")}
-            </NBText>
+            </NBButtonText>
           </ButtonDefaultOpacity>
         </View>
       );
@@ -73,9 +74,9 @@ const ConfigurationSuccessScreen = () => {
         block={true}
         onPress={handleNavigateToInitiativePress}
       >
-        <NBText white={true}>
+        <NBButtonText white={true}>
           {I18n.t("idpay.configuration.associationSuccess.buttons.continue")}
-        </NBText>
+        </NBButtonText>
       </ButtonDefaultOpacity>
     );
   };
@@ -88,16 +89,18 @@ const ConfigurationSuccessScreen = () => {
           <VSpacer />
           <H3>{I18n.t("idpay.configuration.associationSuccess.title")}</H3>
           <VSpacer />
-          <NBText style={styles.body}>
-            {I18n.t(
-              areInstrumentsSkipped
-                ? "idpay.configuration.associationSuccess.noInstrumentsBody"
-                : "idpay.configuration.associationSuccess.body",
-              {
-                initiativeName
-              }
-            )}
-          </NBText>
+          <View style={IOStyles.alignCenter}>
+            <Body>
+              {I18n.t(
+                areInstrumentsSkipped
+                  ? "idpay.configuration.associationSuccess.noInstrumentsBody"
+                  : "idpay.configuration.associationSuccess.body",
+                {
+                  initiativeName
+                }
+              )}
+            </Body>
+          </View>
         </View>
         {renderButtons()}
       </View>
@@ -109,9 +112,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: themeVariables.contentPadding
-  },
-  body: {
-    textAlign: "center"
   },
   content: {
     flex: 1,

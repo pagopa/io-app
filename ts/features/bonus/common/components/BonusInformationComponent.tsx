@@ -1,7 +1,7 @@
 import * as AR from "fp-ts/lib/Array";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Content, Text as NBText } from "native-base";
+import { Content, Text as NBButtonText } from "native-base";
 import * as React from "react";
 import { ComponentProps } from "react";
 import { View, Image, SafeAreaView, StyleSheet } from "react-native";
@@ -10,6 +10,7 @@ import { BonusAvailable } from "../../../../../definitions/content/BonusAvailabl
 import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
+import { Body } from "../../../../components/core/typography/Body";
 import { H1 } from "../../../../components/core/typography/H1";
 import { H3 } from "../../../../components/core/typography/H3";
 import { Link } from "../../../../components/core/typography/Link";
@@ -103,9 +104,9 @@ const getTosFooter = (
                 <VSpacer size={40} />
                 <ItemSeparatorComponent noPadded={true} />
                 <VSpacer size={40} />
-                <NBText dark={true}>
+                <Body color="bluegreyDark">
                   {I18n.t("bonus.bonusVacanze.advice")}
-                </NBText>
+                </Body>
                 <Link
                   weight={"SemiBold"}
                   numberOfLines={1}
@@ -192,7 +193,7 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
           bordered={true}
           onPress={() => handleModalPress(url.url)}
         >
-          <NBText style={styles.urlButton}>{url.name}</NBText>
+          <NBButtonText style={styles.urlButton}>{url.name}</NBButtonText>
         </ButtonDefaultOpacity>
         {idx !== urls.length - 1 && <VSpacer size={8} />}
       </View>
@@ -243,7 +244,7 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
             </View>
           </View>
           <VSpacer size={24} />
-          <NBText dark={true}>{bonusTypeLocalizedContent.subtitle}</NBText>
+          <Body color="bluegreyDark">{bonusTypeLocalizedContent.subtitle}</Body>
 
           <VSpacer size={16} />
           <ItemSeparatorComponent noPadded={true} />

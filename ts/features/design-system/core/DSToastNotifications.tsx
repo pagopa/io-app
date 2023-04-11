@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Text as NBText, Toast as NBToast } from "native-base";
+import { Text as NBButtonText, Toast as NBToast } from "native-base";
 
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
@@ -22,7 +22,7 @@ export const DSToastNotifications = () => (
         });
       }}
     >
-      <NBText>Default behavior</NBText>
+      <NBButtonText>Default behavior</NBButtonText>
     </ButtonDefaultOpacity>
 
     <VSpacer size={16} />
@@ -34,7 +34,7 @@ export const DSToastNotifications = () => (
         showToast("Example of a danger message");
       }}
     >
-      <NBText>Danger</NBText>
+      <NBButtonText>Danger</NBButtonText>
     </ButtonDefaultOpacity>
 
     <VSpacer size={16} />
@@ -46,7 +46,7 @@ export const DSToastNotifications = () => (
         showToast("Example of a success message", "success");
       }}
     >
-      <NBText>Success</NBText>
+      <NBButtonText>Success</NBButtonText>
     </ButtonDefaultOpacity>
 
     <VSpacer size={16} />
@@ -58,7 +58,7 @@ export const DSToastNotifications = () => (
         showToast("Example of a warning message", "warning");
       }}
     >
-      <NBText>Warning</NBText>
+      <NBButtonText>Warning</NBButtonText>
     </ButtonDefaultOpacity>
 
     <H2
@@ -75,7 +75,7 @@ export const DSToastNotifications = () => (
         showToast("Here's the notification at the top", "danger", "top");
       }}
     >
-      <NBText>Default · Top</NBText>
+      <NBButtonText>Default · Top</NBButtonText>
     </ButtonDefaultOpacity>
 
     <VSpacer size={16} />
@@ -87,7 +87,7 @@ export const DSToastNotifications = () => (
         showToast("Here's the notification at the center", "danger", "center");
       }}
     >
-      <NBText>Default · Center</NBText>
+      <NBButtonText>Default · Center</NBButtonText>
     </ButtonDefaultOpacity>
 
     <VSpacer size={16} />
@@ -99,7 +99,7 @@ export const DSToastNotifications = () => (
         showToast("Here's the notification at the bottom", "danger", "bottom");
       }}
     >
-      <NBText>Default · Bottom</NBText>
+      <NBButtonText>Default · Bottom</NBButtonText>
     </ButtonDefaultOpacity>
 
     <H2
@@ -119,7 +119,7 @@ export const DSToastNotifications = () => (
         });
       }}
     >
-      <NBText>Multi-line text</NBText>
+      <NBButtonText>Multi-line text</NBButtonText>
     </ButtonDefaultOpacity>
 
     <VSpacer size={40} />
