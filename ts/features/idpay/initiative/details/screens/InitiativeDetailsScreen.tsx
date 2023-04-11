@@ -46,13 +46,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center"
   },
-  flexGrow: {
-    flexGrow: 1
-  },
   scroll: {
     backgroundColor: IOColors["blue-50"]
   },
   container: {
+    flex: 1,
+    flexGrow: 1,
     backgroundColor: IOColors.white,
     zIndex: -1,
     top: -50,
@@ -148,14 +147,7 @@ export const InitiativeDetailsScreen = () => {
       <>
         <ScrollView style={styles.scroll} scrollIndicatorInsets={{ right: 1 }}>
           <InitiativeCardComponent initiative={initiativeData} />
-          <View
-            style={[
-              IOStyles.flex,
-              IOStyles.horizontalContentPadding,
-              styles.flexGrow,
-              styles.container
-            ]}
-          >
+          <View style={[IOStyles.horizontalContentPadding, styles.container]}>
             <VSpacer size={16} />
             <View style={IOStyles.flex}>
               {initiativeNeedsConfiguration && (
