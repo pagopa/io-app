@@ -6,8 +6,6 @@ import {
   StyleSheet
 } from "react-native";
 import { heightPercentageToDP } from "react-native-responsive-screen";
-import customVariables from "../../theme/variables";
-import IconFont from "../ui/IconFont";
 
 const infoImageSize = 102;
 const screenHeight = Dimensions.get("screen").height;
@@ -38,16 +36,5 @@ export const renderInfoRasterImage = (image: ImageSourcePropType) => (
     resizeMode={"contain"}
     style={styles.raster}
     testID={"rasterImage"}
-  />
-);
-
-export const renderInfoIconImage = (
-  image: string,
-  iconSize: number = infoImageSize
-) => (
-  <IconFont
-    name={image}
-    size={iconSize}
-    color={customVariables.colorHighlight}
   />
 );

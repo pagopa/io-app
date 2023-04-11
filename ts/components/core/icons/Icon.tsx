@@ -395,6 +395,7 @@ export type IOIconsProps = {
   size?: number | "100%";
   testID?: string;
   accessible?: boolean;
+  accessibilityLabel?: string;
 };
 
 export type SVGIconProps = {
@@ -415,6 +416,7 @@ export const Icon = ({
   color = "bluegrey",
   size = 24,
   accessible = false,
+  accessibilityLabel = "",
   ...props
 }: IOIconsProps) => {
   const IconElement = IOIcons[name];
@@ -425,7 +427,7 @@ export const Icon = ({
       size={size}
       accessible={accessible}
       accessibilityElementsHidden={true}
-      accessibilityLabel={""}
+      accessibilityLabel={accessibilityLabel}
       importantForAccessibility={"no-hide-descendants"}
     />
   );

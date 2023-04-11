@@ -4,8 +4,8 @@ import { StyleSheet } from "react-native";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
-import IconFont from "../ui/IconFont";
 import { IOColors } from "../core/variables/IOColors";
+import { Icon } from "../core/icons/Icon";
 
 const styles = StyleSheet.create({
   button: {
@@ -31,7 +31,7 @@ export const AddPaymentMethodButton: React.SFC<Props> = ({
   labelSize
 }) => (
   <TouchableDefaultOpacity onPress={onPress} style={styles.button}>
-    <IconFont name="io-plus" color={IOColors.white} size={iconSize} />
+    <Icon name="legAdd" color="white" size={iconSize} />
     <NBButtonText bold={true} style={[styles.label, { fontSize: labelSize }]}>
       {I18n.t("wallet.newPaymentMethod.add").toUpperCase()}
     </NBButtonText>
