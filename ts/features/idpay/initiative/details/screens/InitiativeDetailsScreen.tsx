@@ -145,7 +145,7 @@ export const InitiativeDetailsScreen = () => {
       isFirstInitiativeConfiguration;
 
     return (
-      <View>
+      <>
         <ScrollView style={styles.scroll} scrollIndicatorInsets={{ right: 1 }}>
           <InitiativeCardComponent initiative={initiativeData} />
           <View
@@ -207,7 +207,7 @@ export const InitiativeDetailsScreen = () => {
             />
           </SafeAreaView>
         )}
-      </View>
+      </>
     );
   };
 
