@@ -217,6 +217,10 @@ export const InitiativeDetailsScreen = () => {
       headerBackgroundColor={IOColors["blue-50"]}
       contextualHelp={emptyContextualHelp}
     >
+      <FocusAwareStatusBar
+        backgroundColor={IOColors["blue-50"]}
+        barStyle={"dark-content"}
+      />
       <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={100}>
         {isLoading ? null : renderContent()}
       </LoadingSpinnerOverlay>
