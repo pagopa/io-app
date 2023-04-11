@@ -1,3 +1,5 @@
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { DefaultContext } from "xstate";
 import { E_BACK } from "./events";
 
@@ -12,11 +14,11 @@ type Events = { type: string } | E_BACK;
 const isBack = (event: Events): event is E_BACK => event.type === "BACK";
 
 /**
- * Checks if a given event should skip the navigation action.
+ * Checks if an E_BACK event should skip the navigation action.
  * @param event The event object to check.
- * @returns True if the event is of type E_BACK and has a skipNavigation property set to true; otherwise, false.
+ * @returns True if the event has a skipNavigation property set to true; otherwise, false.
  */
-const skipNavigation = (event: Events) => isBack(event) && event.skipNavigation;
+const skipNavigation = (event: E_BACK) => event.skipNavigation || false;
 
 /**
  * Wrap an action function with a guard clause that checks whether the event should be skipped.
@@ -26,15 +28,22 @@ const skipNavigation = (event: Events) => isBack(event) && event.skipNavigation;
  */
 export const guardedNavigationAction =
   <TContext = DefaultContext>(action: WrappedAction<TContext>) =>
-  (context: TContext, event: any) => {
-    /**
-     * Check if the event should be skipped. If so, return immediately without calling the action.
-     */
-    if (skipNavigation(event)) {
-      return;
-    }
-    /**
-     * If the event should not be skipped, call the original action function with the provided context and event objects.
-     */
-    return action(context, event);
-  };
+  (context: TContext, event: any) =>
+    pipe(
+      event,
+      O.of,
+      O.filter(isBack),
+      O.filter(skipNavigation),
+      O.fold(
+        /**
+         * The event is not of type E_BACK and/or does not contain the skipNavigation property.
+         * WrappedAction should be executed.
+         */
+        () => action(context, event),
+        /**
+         * The event is of type E_BACK and contains the skipNavigation property.
+         * No actions should be executed.
+         */
+        () => null
+      )
+    );
