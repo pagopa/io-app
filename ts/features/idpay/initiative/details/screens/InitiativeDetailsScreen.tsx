@@ -146,7 +146,7 @@ export const InitiativeDetailsScreen = () => {
 
     return (
       <View>
-        <ScrollView style={styles.scroll} scrollIndicatorInsets={{ right: 0 }}>
+        <ScrollView style={styles.scroll} scrollIndicatorInsets={{ right: 1 }}>
           <InitiativeCardComponent initiative={initiativeData} />
           <View
             style={[
