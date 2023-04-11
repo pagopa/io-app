@@ -19,6 +19,7 @@ import {
   VSpacer
 } from "../../../../../../components/core/spacer/Spacer";
 import { Icon } from "../../../../../../components/core/icons/Icon";
+import TouchableDefaultOpacity from "../../../../../../components/TouchableDefaultOpacity";
 
 type Props = {
   eycaCard: EycaCardActivated | EycaCardExpired | EycaCardRevoked;
@@ -104,12 +105,9 @@ const EycaStatusDetailsComponent = (props: Props) => {
         <View style={styles.rowBlock}>
           <H4>{I18n.t("bonus.cgn.detail.status.eyca")}</H4>
           <HSpacer size={8} />
-          <ButtonDefaultOpacity
-            onPress={props.openBottomSheet}
-            transparent={true}
-          >
+          <TouchableDefaultOpacity onPress={props.openBottomSheet}>
             <Icon name="info" size={ICON_SIZE} color="blue" />
-          </ButtonDefaultOpacity>
+          </TouchableDefaultOpacity>
         </View>
         {badgeByStatus()}
       </View>
