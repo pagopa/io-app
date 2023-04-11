@@ -41,18 +41,11 @@
   - [Building and launching on the simulator](#building-and-launching-on-the-simulator)
   - [Build (release)](#build-release)
   - [Installation on physical devices (development)](#installation-on-physical-devices-development)
-  - [Development with Backend App and Local Test IDP](#development-with-backend-app-and-local-test-idp)
   - [Development with IO dev local server](#development-with-io-dev-local-server)
-  - [Update the app icons](#update-the-app-icons)
   - [Internationalization](#internationalization)
-  - [Error handling](#error-handling)
-  - [Connection monitoring](#connection-monitoring)
   - [Deep linking](#deep-linking)
   - [Fonts](#fonts)
   - [Vector graphics](#vector-graphics)
-  - [Io-Icon-Font](#io-icon-font) (⚠️ deprecated)
-  - [Theming](#theming) (⚠️ deprecated)
-  - [Custom UI components](#custom-ui-components) (⚠️ deprecated)
   - [End to end test](./TESTING_E2E.md)
   - [Troubleshooting](#troubleshooting)
 
@@ -377,50 +370,6 @@ To test the io-app on a real iOS device you must:
 1. From Xcode select the device by the drop-down list and run ('Product' -> 'Run') on the iOS device, if the unit tests fail they can be disabled by going to Product -> Scheme -> Edit Scheme -> Build
 
 
-### Development with Backend App and Local Test IDP
-
-To develop the application on your machine using the Backend App and an IDP test, you need to follow some additional steps as described below.
-
-If you prefer a light way to run IO app backend, you should consider using [io-dev-api-server](https://github.com/pagopa/io-dev-api-server). This local server mocks almost totally IO backend behaviours and APIs. Note: about SPID, io-dev-api-server acts a pass throught so you can't test it.
-
-#### App Backend and test IDP installation
-
-Follow the documentation of the repository [italia-backend](https://github.com/pagopa/io-backend).
-
-#### WebView, HTTPS and self-signed certificates
-
-At the moment, react-native does not allow to open WebView on HTTPS url with a self-signed certificate.
-However, the test IDP uses HTTPS and a self-signed certificate. 
-To avoid this problem, it is possible to locally install a Proxy that acts as a proxy-pass to the Backend App 
-and the IDP.
-
-##### Installation of mitmproxy
-
-[Mitmproxy](https://mitmproxy.org/) is a simple proxy to use and is also suitable for our purpose. For installation, follow the documentation page on the [official website](https://docs.mitmproxy.org/stable/overview-installation/).
-
-The script `scripts/mitmproxy_metro_bundler.py` allows the proxy to intercept requests to the Simulator and, only in 
-case of specific ports, to proxy the localhost. Start the proxy with the following command:
-
-```
-SIMULATOR_HOST_IP=XXXXX mitmweb --listen-port 9060 --web-port 9061 --ssl-insecure -s scripts/mitmproxy_metro_bundler.py
-```
-
-Add in place of `XXXXX`:
-
-* `10.0.2.2` (Standard Android Emulator)
-* `10.0.3.2` (Genymotion Android Emulator)
-
-##### Installing the mitmproxy certificate within the emulator Android
-
-Install certificate mitmproxy within the emulator following the official [guide](https://docs.mitmproxy.org/stable/concepts-certificates/).
-
-#### Set the proxy for the connection in the Android emulator
-
-In the connection configuration enter:
-
-* Proxy IP: `10.0.2.2` (or `10.0.3.2` if you use Genymotion)
-* Proxy port: `9060`
-
 ### Development with IO dev local server
 It is super easy to setup and run. [Here](https://github.com/pagopa/io-dev-api-server) you can find all instructions.
 It can be used as it is, or you can run it using the [docker image](https://github.com/pagopa/io-dev-api-server/packages).
@@ -428,10 +377,6 @@ It can be used as it is, or you can run it using the [docker image](https://gith
 To use it, just run these commands:
 
 `cp .env.local .env && yarn postinstall`
-
-### Update the app icons
-
-Follow [this tutorial](https://blog.bam.tech/developper-news/change-your-react-native-app-icons-in-a-single-command-line).
 
 ### Internationalization
 
@@ -472,16 +417,6 @@ If you want to see the result in the app you must:
       de: locales.localeDE
     };
     ```
-
-### Error handling
-
-The application uses a custom handler to intercept and notify javascript errors caused by unhandled exceptions. The custom handler code is visible in the file `ts/utils/configureErrorHandler.ts`
-
-### Connection monitoring
-
-The application uses the library [react-native-offline](https://github.com/rauliyohmc/react-native-offline) to monitor the connection status. In case of no connection, a bar is displayed that notifies the user.
-
-The connection status is kept inside the Redux store in the variable `state.network.isConnected`, you can use this data to disable some functions during the absence of the connection.
 
 ### Deep linking
 
