@@ -9,9 +9,7 @@ import {
 import { H3 } from "../../../../../components/core/typography/H3";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import IconFont from "../../../../../components/ui/IconFont";
 import I18n from "../../../../../i18n";
 import {
   AppParamsList,
@@ -36,7 +34,7 @@ const SettingsButtonComponent = (props: SettingsButtonProps) => (
   <ListItem onPress={props.onPress} style={{ paddingEnd: 0 }}>
     {props.hasWarnings && (
       <>
-        <IconFont name={"io-warning"} color={IOColors.red} />
+        <Icon name="legWarning" color="red" />
         <HSpacer size={16} />
       </>
     )}

@@ -25,7 +25,6 @@ import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
-import IconFont from "../../../../../components/ui/IconFont";
 import I18n from "../../../../../i18n";
 import { Dispatch } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -38,6 +37,7 @@ import { isLoading, isReady } from "../../../bpd/model/RemoteValue";
 import CgnMerchantDiscountItem from "../../components/merchants/CgnMerchantsDiscountItem";
 import { cgnSelectedMerchant } from "../../store/actions/merchants";
 import { cgnSelectedMerchantSelector } from "../../store/reducers/merchants";
+import { Icon } from "../../../../../components/core/icons/Icon";
 
 export type CgnMerchantDetailScreenNavigationParams = Readonly<{
   merchantID: Merchant["id"];
@@ -90,12 +90,9 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
       <H4 weight={"Regular"} style={IOStyles.flex}>
         {item.full_address}
       </H4>
-      <IconFont
-        name={"io-copy"}
-        size={COPY_ICON_SIZE}
-        color={IOColors.blue}
-        style={styles.flexEnd}
-      />
+      <View style={styles.flexEnd}>
+        <Icon name="legCopy" size={COPY_ICON_SIZE} color="blue" />
+      </View>
     </TouchableDefaultOpacity>
   );
 
