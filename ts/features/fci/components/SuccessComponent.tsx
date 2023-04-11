@@ -5,6 +5,7 @@ import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import I18n from "../../../i18n";
 import imageExpired from "../../../../img/wallet/errors/payment-expired-icon.png";
 import hourglass from "../../../../img/pictograms/hourglass.png";
+import fireworks from "../../../../img/pictograms/fireworks.png";
 import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
 import { isLollipopEnabledSelector } from "../../../store/reducers/backendStatus";
 import { fciEndRequest, fciStartRequest } from "../store/actions";
@@ -86,7 +87,7 @@ const SuccessComponent = (props: {
           title={I18n.t("features.fci.errors.signed.title")}
           subTitle={I18n.t("features.fci.errors.signed.subTitle")}
           onPress={() => dispatch(fciEndRequest())}
-          image={hourglass}
+          image={fireworks}
           testID={"SignedSignatureRequestTestID"}
         />
       );
