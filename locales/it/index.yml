@@ -3205,6 +3205,11 @@ features:
         cta: Accedi alla versione web   
   fci:
     errors:
+      buttons:
+        back: "Torna indietro"
+        retry: "Riprova"
+        close: "Chiudi"
+        assistance: "Invia una segnalazione"
       expiredAfterSigned:
         title: I documenti non sono più disponibili
         subTitle: Se hai bisogno di una copia conttatta l'ente

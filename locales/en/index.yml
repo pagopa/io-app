@@ -3181,6 +3181,11 @@ features:
         cta: Accedi alla versione web  
   fci:
     errors:
+      buttons:
+        back: "Back"
+        retry: "Retry"
+        close: "Close"
+        assistance: "Open a support request"
       expiredAfterSigned:
         title: The documents are no longer available
         subTitle: If you need a copy, contact the issuer

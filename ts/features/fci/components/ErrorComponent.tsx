@@ -1,12 +1,13 @@
 import * as React from "react";
 import { SafeAreaView } from "react-native";
 import { EmailString } from "@pagopa/ts-commons/lib/strings";
+import { constNull } from "fp-ts/lib/function";
 import I18n from "../../../i18n";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
 import { WithTestID } from "../../../types/WithTestID";
+import { FooterStackButton } from "../../bonus/bonusVacanze/components/buttons/FooterStackButtons";
 import { InfoScreenComponent } from "./InfoScreenComponent";
 
 type Props = WithTestID<{
@@ -15,25 +16,54 @@ type Props = WithTestID<{
   image: number;
   email?: EmailString;
   retry?: boolean;
+  assistance?: boolean;
   onPress: () => void;
 }>;
 
 const ErrorComponent = (props: Props) => {
-  const buttonProps = {
+  const retryButtonProps = {
+    testID: "FciRetryButtonTestID",
     block: true,
     primary: true,
-    onPress: props.onPress
+    onPress: props.onPress,
+    title: I18n.t("features.fci.errors.buttons.retry")
   };
 
   const closeButtonProps = {
-    ...buttonProps,
+    testID: "FciCloseButtonTestID",
     bordered: true,
-    title: I18n.t("global.buttons.close")
+    block: true,
+    onPress: props.onPress,
+    title: I18n.t("features.fci.errors.buttons.close")
   };
 
-  const retryButtonProps = {
-    ...buttonProps,
-    title: I18n.t("global.buttons.retry")
+  const assistanceButtonProps = {
+    testID: "FciAssistanceButtonTestID",
+    bordered: true,
+    primary: false,
+    block: true,
+    onPress: constNull,
+    title: I18n.t("features.fci.errors.buttons.assistance")
+  };
+
+  const footerButtons = () => {
+    if (props.retry && props.assistance) {
+      return [retryButtonProps, assistanceButtonProps];
+    }
+    if (props.retry) {
+      return [retryButtonProps, closeButtonProps];
+    }
+    if (props.assistance) {
+      return [
+        {
+          ...closeButtonProps,
+          bordered: false,
+          title: I18n.t("features.fci.errors.buttons.back")
+        },
+        assistanceButtonProps
+      ];
+    }
+    return [closeButtonProps];
   };
 
   return (
@@ -46,10 +76,7 @@ const ErrorComponent = (props: Props) => {
           email={props.email}
         />
 
-        <FooterWithButtons
-          type={"SingleButton"}
-          leftButton={props.retry ? retryButtonProps : closeButtonProps}
-        />
+        <FooterStackButton buttons={footerButtons()} />
       </SafeAreaView>
     </BaseScreenComponent>
   );

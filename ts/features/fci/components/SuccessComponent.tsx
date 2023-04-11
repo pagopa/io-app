@@ -66,6 +66,15 @@ const SuccessComponent = (props: {
     );
   }
 
+  /* return (
+    <GenericErrorComponent
+      title={I18n.t("features.fci.errors.generic.default.title")}
+      subTitle={I18n.t("features.fci.errors.generic.default.subTitle")}
+      onPress={() => dispatch(fciEndRequest())}
+      testID="PollingErrorComponentTestID"
+    />
+  ); */
+
   // the signature request could have various status
   switch (status) {
     case SignatureRequestStatusEnum.WAIT_FOR_SIGNATURE:
