@@ -1,13 +1,10 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { List } from "native-base";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
+import { useNavigation } from "@react-navigation/native";
 import I18n from "../../i18n";
-import { GlobalState } from "../../store/reducers/types";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
-import { updatePin } from "../../store/actions/pinset";
 import { identificationRequest } from "../../store/actions/identification";
 import { shufflePinPadOnPayment } from "../../config";
 import {
@@ -19,23 +16,52 @@ import { showToast } from "../../utils/showToast";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../store/actions/persistedPreferences";
 import { useScreenReaderEnabled } from "../../utils/accessibility";
 import ScreenContent from "../../components/screens/ScreenContent";
+import { mixpanelTrack } from "../../mixpanel";
+import { useIODispatch, useIOSelector } from "../../store/hooks";
+import { isFingerprintEnabledSelector } from "../../store/reducers/persistedPreferences";
+import ROUTES from "../../navigation/routes";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.preferences.contextualHelpTitle",
   body: "profile.preferences.contextualHelpContent"
 };
 
-type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps>;
-
-const SecurityScreen: FC<Props> = ({
-  isFingerprintEnabled,
-  requestIdentificationAndResetPin,
-  setFingerprintPreference
-}): React.ReactElement => {
+const SecurityScreen = (): React.ReactElement => {
+  const dispatch = useIODispatch();
+  const isFingerprintEnabled = useIOSelector(isFingerprintEnabledSelector);
+  const navigation = useNavigation();
   const isScreenReaderEnabled = useScreenReaderEnabled();
   const [isFingerprintAvailable, setIsFingerprintAvailable] = useState(false);
 
+  const requestIdentificationAndResetPin = useCallback(() => {
+    const onSuccess = () => {
+      void mixpanelTrack("UPDATE_PIN");
+      navigation.navigate(ROUTES.PIN_SCREEN);
+    };
+
+    dispatch(
+      identificationRequest(
+        true,
+        false,
+        undefined,
+        undefined,
+        {
+          onSuccess
+        },
+        shufflePinPadOnPayment
+      )
+    );
+  }, [dispatch, navigation]);
+
+  const setFingerprintPreference = useCallback(
+    (fingerprintPreference: boolean) =>
+      dispatch(
+        preferenceFingerprintIsEnabledSaveSuccess({
+          isFingerprintEnabled: fingerprintPreference
+        })
+      ),
+    [dispatch]
+  );
   useEffect(() => {
     getBiometricsType().then(
       biometricsType => {
@@ -121,33 +147,4 @@ const SecurityScreen: FC<Props> = ({
   );
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  requestIdentificationAndResetPin: () => {
-    const onSuccess = () => dispatch(updatePin());
-
-    return dispatch(
-      identificationRequest(
-        true,
-        false,
-        undefined,
-        undefined,
-        {
-          onSuccess
-        },
-        shufflePinPadOnPayment
-      )
-    );
-  },
-  setFingerprintPreference: (fingerprintPreference: boolean) =>
-    dispatch(
-      preferenceFingerprintIsEnabledSaveSuccess({
-        isFingerprintEnabled: fingerprintPreference
-      })
-    )
-});
-
-const mapStateToProps = (state: GlobalState) => ({
-  isFingerprintEnabled: state.persistedPreferences.isFingerprintEnabled
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(SecurityScreen);
+export default SecurityScreen;

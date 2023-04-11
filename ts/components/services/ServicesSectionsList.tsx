@@ -1,7 +1,6 @@
 /**
  * A component to render a list of services organized in sections, one for each organization.
  */
-import { Text as NBText } from "native-base";
 import React from "react";
 import {
   View,
@@ -15,6 +14,7 @@ import I18n from "../../i18n";
 import { ServicesSectionState } from "../../store/reducers/entities/services";
 import customVariables from "../../theme/variables";
 import { VSpacer } from "../core/spacer/Spacer";
+import { Body } from "../core/typography/Body";
 import { IOStyles } from "../core/variables/IOStyles";
 import ServiceList from "./ServiceList";
 
@@ -39,28 +39,25 @@ const styles = StyleSheet.create({
     flex: 1
   },
   headerContentWrapper: {
-    paddingRight: customVariables.contentPadding,
-    paddingLeft: customVariables.contentPadding,
     paddingTop: customVariables.contentPadding / 2,
     paddingBottom: customVariables.contentPadding / 2,
     alignItems: "center"
-  },
-  emptyListContentTitle: {
-    paddingTop: customVariables.contentPadding,
-    textAlign: "center"
   }
 });
 
 // component used when the list is empty
 const emptyListComponent = () => (
-  <View style={styles.headerContentWrapper}>
+  <View
+    style={[styles.headerContentWrapper, IOStyles.horizontalContentPadding]}
+  >
     <VSpacer size={24} />
     <Image
       source={require("../../../img/services/icon-loading-services.png")}
     />
-    <NBText style={styles.emptyListContentTitle}>
-      {I18n.t("services.emptyListMessage")}
-    </NBText>
+    <View style={IOStyles.alignCenter}>
+      <VSpacer size={24} />
+      <Body>{I18n.t("services.emptyListMessage")}</Body>
+    </View>
   </View>
 );
 

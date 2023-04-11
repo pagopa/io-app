@@ -37,7 +37,7 @@ const emptyTimelineContent = (
         "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperations"
       )}
     </H3>
-    <VSpacer size={16} />
+    <VSpacer size={8} />
     <LabelSmall weight="Regular" color="bluegreyDark">
       {I18n.t(
         "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperationsSubtitle"

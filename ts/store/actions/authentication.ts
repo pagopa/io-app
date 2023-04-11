@@ -14,6 +14,7 @@ import { PublicSession } from "../../../definitions/backend/PublicSession";
 import { SessionToken } from "../../types/SessionToken";
 import { SupportToken } from "../../../definitions/backend/SupportToken";
 import { SpidIdp } from "../../../definitions/content/SpidIdp";
+import { IdpData } from "../../../definitions/content/IdpData";
 
 export type LogoutError = {
   error: Error;
@@ -38,12 +39,12 @@ export const idpLoginUrlChanged = createStandardAction(
 
 export const loginSuccess = createStandardAction("LOGIN_SUCCESS")<{
   token: SessionToken;
-  idp: string;
+  idp: keyof IdpData;
 }>();
 
 export const loginFailure = createStandardAction("LOGIN_FAILURE")<{
   error: Error;
-  idp: string;
+  idp: keyof IdpData | undefined;
 }>();
 
 export const logoutRequest = createStandardAction("LOGOUT_REQUEST")();

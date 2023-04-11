@@ -2,6 +2,53 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.30.0-rc.1](https://github.com/pagopa/io-app/compare/2.30.0-rc.0...2.30.0-rc.1) (2023-04-06)
+
+
+### Features
+
+* **IDPay:** [[IODPAY-206](https://pagopa.atlassian.net/browse/IODPAY-206)] IDPay Onboarding playground redesign ([#4506](https://github.com/pagopa/io-app/issues/4506)) ([98c015c](https://github.com/pagopa/io-app/commit/98c015cf885905ba2c8f1dca613fd1d327e1f1c0))
+
+
+### Bug Fixes
+
+* [[IABT-1452](https://pagopa.atlassian.net/browse/IABT-1452)] Test account login loop ([#4512](https://github.com/pagopa/io-app/issues/4512)) ([f0866a9](https://github.com/pagopa/io-app/commit/f0866a9d0397d2b1d696ecd981c878bd5e3bfa81))
+* [[IAI-275](https://pagopa.atlassian.net/browse/IAI-275)] Fix `BaseHeader` UI regression ([#4519](https://github.com/pagopa/io-app/issues/4519)) ([80c3469](https://github.com/pagopa/io-app/commit/80c34697e0eb5b85f68820434a39681b4294d725))
+
+
+### Chores
+
+* [[IAI-217](https://pagopa.atlassian.net/browse/IAI-217)] Replace legacy `Text` components with the new ones ([#4321](https://github.com/pagopa/io-app/issues/4321)) ([17b2dbd](https://github.com/pagopa/io-app/commit/17b2dbd182342508e168c647c7166499be78f3e8))
+* [[IOAPPFD0-22](https://pagopa.atlassian.net/browse/IOAPPFD0-22)] Remove isOnboardingCompleted deprecated utility ([#4303](https://github.com/pagopa/io-app/issues/4303)) ([c405a36](https://github.com/pagopa/io-app/commit/c405a36cc2066ce81d331c750f1f1e4ad989cd0e))
+* [IOAPPFD0-67,IOAPPFD0-66] Add mixpanel event for keychain get failure ([#4494](https://github.com/pagopa/io-app/issues/4494)) ([25cf3bf](https://github.com/pagopa/io-app/commit/25cf3bf18c5aa98a5b2a6af7480b1d640b6e25b1))
+
+## [2.30.0-rc.0](https://github.com/pagopa/io-app/compare/2.29.0-rc.4...2.30.0-rc.0) (2023-04-04)
+
+
+### Features
+
+* **Firma con IO:** [[SFEQS-1044](https://pagopa.atlassian.net/browse/SFEQS-1044)] Add bottom sheet to check/activate service preferences ([#4508](https://github.com/pagopa/io-app/issues/4508)) ([8e8cd78](https://github.com/pagopa/io-app/commit/8e8cd78e35bfa9732939699882d73bc9f3a69d2a))
+* **IDPay:** [[IODPAY-172](https://pagopa.atlassian.net/browse/IODPAY-172)] Details page alert component ([#4444](https://github.com/pagopa/io-app/issues/4444)) ([c23c86e](https://github.com/pagopa/io-app/commit/c23c86e882835dbf129c463371af1f17c1e47ab2))
+
+
+### Bug Fixes
+
+* [IABT-1443,IOAPPFD0-60] Invalid characters when pasting OFC ([#4480](https://github.com/pagopa/io-app/issues/4480)) ([09d2e78](https://github.com/pagopa/io-app/commit/09d2e789225d880cf30b684983b831a88e1e2b7b))
+* [[IOAPPFD0-74](https://pagopa.atlassian.net/browse/IOAPPFD0-74)] Fix regression on multiple attachment selection not working on PN ([#4501](https://github.com/pagopa/io-app/issues/4501)) ([3724ac1](https://github.com/pagopa/io-app/commit/3724ac1e12d992f30e417bd45961a2f0f0a50fa0))
+* [[LLK-71](https://pagopa.atlassian.net/browse/LLK-71)] Fix test login ([#4509](https://github.com/pagopa/io-app/issues/4509)) ([f4af3d5](https://github.com/pagopa/io-app/commit/f4af3d557f59798783d7bc694bc4be4d314ed6ca))
+* **IDPay:** [[IODPAY-124](https://pagopa.atlassian.net/browse/IODPAY-124)] Fix scroll behavior in instrument and IBAN enrollment screen ([#4497](https://github.com/pagopa/io-app/issues/4497)) ([bbbab94](https://github.com/pagopa/io-app/commit/bbbab947f67f968574413bd6cd68f14f0649621a)), closes [/github.com/pagopa/io-app/pull/4497/files#diff-e57ad3d99b7dbdc319850166ea2e2c79d356a9c9ebfa3606c0ed51d139289157](https://github.com/pagopa//github.com/pagopa/io-app/pull/4497/files/issues/diff-e57ad3d99b7dbdc319850166ea2e2c79d356a9c9ebfa3606c0ed51d139289157) [/github.com/pagopa/io-app/pull/4497/files#diff-a48aa011cee1d767d43c266ca5f3006ab59ff7aa05d1eee291f2866fbfb39085](https://github.com/pagopa//github.com/pagopa/io-app/pull/4497/files/issues/diff-a48aa011cee1d767d43c266ca5f3006ab59ff7aa05d1eee291f2866fbfb39085)
+* **IDPay:** [[IODPAY-191](https://pagopa.atlassian.net/browse/IODPAY-191)] InitiativesList scroll  ([#4500](https://github.com/pagopa/io-app/issues/4500)) ([9f68416](https://github.com/pagopa/io-app/commit/9f68416f9cb42775527da838a48c91a452092e68))
+
+
+### Chores
+
+* [[IOAPPFD0-75](https://pagopa.atlassian.net/browse/IOAPPFD0-75)] Add public key thumbprint in Profile debug info ([#4504](https://github.com/pagopa/io-app/issues/4504)) ([dab9ae6](https://github.com/pagopa/io-app/commit/dab9ae655d36a31574e2eaf19adf9bfab79cf18b)), closes [/github.com/pagopa/io-app/pull/4504/files#diff-e70e8137cd500fa6551b90da08d74031c1c74ef09f7b414cdbec642e72acbf4](https://github.com/pagopa//github.com/pagopa/io-app/pull/4504/files/issues/diff-e70e8137cd500fa6551b90da08d74031c1c74ef09f7b414cdbec642e72acbf4) [/github.com/pagopa/io-app/pull/4504/files#diff-c62d0c1b763402b50132882e178a733c55d5dc599fb1cc6f4d41bf3680decd9](https://github.com/pagopa//github.com/pagopa/io-app/pull/4504/files/issues/diff-c62d0c1b763402b50132882e178a733c55d5dc599fb1cc6f4d41bf3680decd9) [/github.com/pagopa/io-app/pull/4504/files#diff-f54ddab5813a42b9135c11cbd42b931854b83272a0763ec2fd2b759f8ede6f09](https://github.com/pagopa//github.com/pagopa/io-app/pull/4504/files/issues/diff-f54ddab5813a42b9135c11cbd42b931854b83272a0763ec2fd2b759f8ede6f09) [/github.com/pagopa/io-app/pull/4504/files#diff-f54ddab5813a42b9135c11cbd42b931854b83272a0763ec2fd2b759f8ede6f09](https://github.com/pagopa//github.com/pagopa/io-app/pull/4504/files/issues/diff-f54ddab5813a42b9135c11cbd42b931854b83272a0763ec2fd2b759f8ede6f09) [/github.com/pagopa/io-app/pull/4504/files#diff-de3c1a64bcc8fdca4c8dbc5d62dba36c8c5ded27255052ecc6526e614b1e8f5](https://github.com/pagopa//github.com/pagopa/io-app/pull/4504/files/issues/diff-de3c1a64bcc8fdca4c8dbc5d62dba36c8c5ded27255052ecc6526e614b1e8f5)
+* [[IOAPPFD0-76](https://pagopa.atlassian.net/browse/IOAPPFD0-76)] Update status colours used in the new `Alert` component ([#4505](https://github.com/pagopa/io-app/issues/4505)) ([6b0e9ab](https://github.com/pagopa/io-app/commit/6b0e9aba3dd4078f849d9778584ef071ba72afa3))
+* [[IOAPPFD0-77](https://pagopa.atlassian.net/browse/IOAPPFD0-77)] Update new icons, add new ones ([#4511](https://github.com/pagopa/io-app/issues/4511)) ([205d21b](https://github.com/pagopa/io-app/commit/205d21b874ea94d7132e77e497a01528eee10daf))
+* [[IOAPPFD0-79](https://pagopa.atlassian.net/browse/IOAPPFD0-79)] update e2e test for manual payments ([#4513](https://github.com/pagopa/io-app/issues/4513)) ([7351a16](https://github.com/pagopa/io-app/commit/7351a16fbb7653a83377be5d947bf158d66096ca))
+* **Firma con IO:** [[SFEQS-1509](https://pagopa.atlassian.net/browse/SFEQS-1509)] Refactor using auto generated client ([#4482](https://github.com/pagopa/io-app/issues/4482)) ([39a14c6](https://github.com/pagopa/io-app/commit/39a14c6d6b0858860598dda6810854a70bd98abe))
+* **Firma con IO:** [[SFEQS-1578](https://pagopa.atlassian.net/browse/SFEQS-1578)] Update FCI definitions ([#4507](https://github.com/pagopa/io-app/issues/4507)) ([1ca568d](https://github.com/pagopa/io-app/commit/1ca568ddb9cbf9d8555414a5bf9d203d932a20da))
+
 ## [2.29.0-rc.4](https://github.com/pagopa/io-app/compare/2.29.0-rc.3...2.29.0-rc.4) (2023-03-30)
 
 
