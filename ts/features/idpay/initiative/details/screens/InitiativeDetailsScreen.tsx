@@ -145,8 +145,8 @@ export const InitiativeDetailsScreen = () => {
       isFirstInitiativeConfiguration;
 
     return (
-      <>
-        <ScrollView style={styles.scroll}>
+      <View>
+        <ScrollView style={styles.scroll} scrollIndicatorInsets={{ right: 0 }}>
           <InitiativeCardComponent initiative={initiativeData} />
           <View
             style={[
@@ -207,7 +207,7 @@ export const InitiativeDetailsScreen = () => {
             />
           </SafeAreaView>
         )}
-      </>
+      </View>
     );
   };
 
@@ -217,10 +217,6 @@ export const InitiativeDetailsScreen = () => {
       headerBackgroundColor={IOColors["blue-50"]}
       contextualHelp={emptyContextualHelp}
     >
-      <FocusAwareStatusBar
-        backgroundColor={IOColors["blue-50"]}
-        barStyle={"dark-content"}
-      />
       <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={100}>
         {isLoading ? null : renderContent()}
       </LoadingSpinnerOverlay>
