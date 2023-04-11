@@ -83,7 +83,6 @@ const createActionsImplementation = (
     if (context.failure === undefined) {
       return;
     }
-
     showToast(
       I18n.t(`idpay.configuration.failureStates.${context.failure}`),
       "danger"

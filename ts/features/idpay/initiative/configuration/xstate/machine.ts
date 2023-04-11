@@ -1,5 +1,7 @@
 import * as p from "@pagopa/ts-commons/lib/pot";
 import { assign, createMachine, forwardTo } from "xstate";
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
 import { IbanListDTO } from "../../../../../../definitions/idpay/IbanListDTO";
 import {
   InitiativeDTO,
@@ -9,7 +11,6 @@ import {
   InstrumentDTO,
   StatusEnum as InstrumentStatusEnum
 } from "../../../../../../definitions/idpay/InstrumentDTO";
-
 import { Wallet } from "../../../../../types/pagopa";
 import {
   LOADING_TAG,
@@ -23,7 +24,7 @@ import {
   InstrumentStatusByIdWallet
 } from "./context";
 import { Events } from "./events";
-import { InitiativeFailureType } from "./failure";
+import { InitiativeFailure, InitiativeFailureType } from "./failure";
 
 type Services = {
   loadInitiative: {
@@ -917,7 +918,11 @@ const createIDPayInitiativeConfigurationMachine = () =>
           areInstrumentsSkipped: true
         })),
         setFailure: assign((_, event) => ({
-          failure: event.data as InitiativeFailureType
+          failure: pipe(
+            event.data,
+            InitiativeFailure.decode,
+            E.getOrElse(() => InitiativeFailureType.GENERIC)
+          )
         }))
       },
       guards: {
@@ -952,5 +957,5 @@ type IDPayInitiativeConfigurationMachineType = ReturnType<
   typeof createIDPayInitiativeConfigurationMachine
 >;
 
-export type { IDPayInitiativeConfigurationMachineType };
 export { createIDPayInitiativeConfigurationMachine };
+export type { IDPayInitiativeConfigurationMachineType };
