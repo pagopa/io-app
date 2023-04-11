@@ -317,14 +317,14 @@ export const IOIcons = {
   legMagicWand: LegIconMagicWand,
   starFilled: IconStarFilled,
   starEmpty: IconStarEmpty,
-  legStarFilled: LegIconStarFilled /* io-filled-star */,
-  legStarEmpty: LegIconStarEmpty /* io-empty-star */,
+  legStarFilled: LegIconStarFilled,
+  legStarEmpty: LegIconStarEmpty,
   switchOff: IconSwitchOff,
   legSwitchOff: LegIconSwitchOff,
   device: IconDevice,
   legDevice: LegIconDevice,
   dotMenu: IconDotMenu,
-  legDotMenu: LegIconDotMenu /* io-more */,
+  legDotMenu: LegIconDotMenu,
   barcode: IconBarcode,
   legBarcode: LegIconBarcode,
   save: IconSave,
@@ -383,7 +383,7 @@ export const IOIcons = {
   categJobOffers: IconCategJobOffers,
   categShopping: IconCategShopping,
   categSustainability: IconCategSustainability,
-  productIOApp: IconProductIOApp /* io-logo */,
+  productIOApp: IconProductIOApp,
   productPagoPA: IconProductPagoPA /* io-pagopa */
 } as const;
 

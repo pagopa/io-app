@@ -324,11 +324,11 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
     const { isSearchEnabled, appLogo, primary, dark, isPagoPATestEnabled } =
       this.props;
 
-    const iconColor = isPagoPATestEnabled
-      ? variables.colorHighlight
+    const iconColor: IOColors = isPagoPATestEnabled
+      ? "aqua"
       : primary || dark
-      ? IOColors.white
-      : variables.brandPrimary;
+      ? "white"
+      : "blue";
 
     return (
       !isSearchEnabled &&
@@ -340,7 +340,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
             importantForAccessibility="no-hide-descendants"
             style={{ marginLeft: 8 }}
           >
-            <IconFont name={"io-logo"} color={iconColor} accessible={false} />
+            <Icon name="productIOApp" color={iconColor} accessible={false} />
           </View>
         </Left>
       ) : (
