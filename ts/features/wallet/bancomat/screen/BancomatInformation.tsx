@@ -7,11 +7,11 @@ import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { H3 } from "../../../../components/core/typography/H3";
 import { Label } from "../../../../components/core/typography/Label";
 import { IOColors } from "../../../../components/core/variables/IOColors";
-import IconFont from "../../../../components/ui/IconFont";
 import InternationalCircuitIconsBar from "../../../../components/wallet/InternationalCircuitIconsBar";
 import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
 import bancomatInformationBottomSheet from "../utils/bancomatInformationBottomSheet";
+import { Icon } from "../../../../components/core/icons/Icon";
 
 type OwnProps = {
   onAddPaymentMethod: () => void;
@@ -48,12 +48,7 @@ const BancomatInformation: React.FunctionComponent<Props> = props => {
       <View style={styles.titleContainer}>
         <H3>{I18n.t("wallet.bancomat.details.debit.title")}</H3>
         <ButtonDefaultOpacity onPress={present} transparent={true}>
-          <IconFont
-            name="info"
-            size={24}
-            color="blue"
-            testID={"noticeIconFont"}
-          />
+          <Icon name="info" size={24} color="blue" testID={"noticeIconFont"} />
         </ButtonDefaultOpacity>
       </View>
       <VSpacer size={16} />

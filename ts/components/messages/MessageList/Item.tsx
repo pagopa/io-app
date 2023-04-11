@@ -248,7 +248,6 @@ const MessageListItem = ({
     message.organizationName || UNKNOWN_SERVICE_DATA.organizationName;
   const serviceName = message.serviceName || UNKNOWN_SERVICE_DATA.serviceName;
   const messageTitle = message.title || I18n.t("messages.errorLoading.noTitle");
-  const iconName = isSelected ? "io-checkbox-on" : "io-checkbox-off";
   const hasQrCode = category?.tag === "EU_COVID_CERT";
   const showQrCode = hasQrCode && !isSelectionModeEnabled;
 
@@ -310,7 +309,7 @@ const MessageListItem = ({
             ]}
           >
             <IconFont
-              name={iconName}
+              name={isSelected ? "io-checkbox-on" : "io-checkbox-off"}
               size={ICON_WIDTH}
               color={customVariables.contentPrimaryBackground}
             />
