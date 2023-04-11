@@ -1,3 +1,6 @@
+import { enumType } from "@pagopa/ts-commons/lib/types";
+import * as t from "io-ts";
+
 export enum InitiativeFailureType {
   GENERIC = "GENERIC",
   INITIATIVE_ERROR = "INITIATIVE_ERROR",
@@ -7,3 +10,8 @@ export enum InitiativeFailureType {
   INSTRUMENT_ENROLL_FAILURE = "INSTRUMENT_ENROLL_FAILURE",
   INSTRUMENT_DELETE_FAILURE = "INSTRUMENT_DELETE_FAILURE"
 }
+export type InitiativeFailure = t.TypeOf<typeof InitiativeFailure>;
+export const InitiativeFailure = enumType<InitiativeFailureType>(
+  InitiativeFailureType,
+  "InitiativeFailureType"
+);

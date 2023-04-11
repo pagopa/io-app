@@ -8,6 +8,7 @@ import { DSTypography } from "../core/DSTypography";
 import { DSIcons } from "../core/DSIcons";
 import { DSButtons } from "../core/DSButtons";
 import { DSTextFields } from "../core/DSTextFields";
+import { DSBadges } from "../core/DSBadges";
 import { DSLegacyButtons } from "../core/DSLegacyButtons";
 import { DSLegacyPictograms } from "../core/DSLegacyPictograms";
 import { DSLegacyIllustrations } from "../core/DSLegacyIllustrations";
@@ -102,6 +103,11 @@ export const DesignSystemNavigator = () => {
         <Stack.Screen
           name={DESIGN_SYSTEM_ROUTES.COMPONENTS.TEXT_FIELDS.route}
           component={DSTextFields}
+        />
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.COMPONENTS.BADGE.route}
+          component={DSBadges}
         />
 
         <Stack.Screen
