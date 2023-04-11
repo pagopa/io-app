@@ -208,7 +208,7 @@ export const IOIcons = {
   homeFill: IconHomeFill,
   legHome: LegIconHome,
   copy: IconCopy,
-  legCopy: LegIconCopy /* io-copy */,
+  legCopy: LegIconCopy,
   selfCert: IconSelfCertification,
   institution: IconInstitution,
   legInstitution: LegIconInstitution,
