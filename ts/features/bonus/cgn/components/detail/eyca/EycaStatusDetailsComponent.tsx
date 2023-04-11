@@ -19,6 +19,7 @@ import {
   HSpacer,
   VSpacer
 } from "../../../../../../components/core/spacer/Spacer";
+import { Icon } from "../../../../../../components/core/icons/Icon";
 
 type Props = {
   eycaCard: EycaCardActivated | EycaCardExpired | EycaCardRevoked;
@@ -104,12 +105,12 @@ const EycaStatusDetailsComponent = (props: Props) => {
         <View style={styles.rowBlock}>
           <H4>{I18n.t("bonus.cgn.detail.status.eyca")}</H4>
           <HSpacer size={8} />
-          <IconFont
-            name={"io-info"}
-            size={ICON_SIZE}
-            color={IOColors.blue}
+          <ButtonDefaultOpacity
             onPress={props.openBottomSheet}
-          />
+            transparent={true}
+          >
+            <Icon name="info" size={ICON_SIZE} color="blue" />
+          </ButtonDefaultOpacity>
         </View>
         {badgeByStatus()}
       </View>

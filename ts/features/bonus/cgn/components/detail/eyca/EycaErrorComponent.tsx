@@ -2,12 +2,11 @@ import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import { H4 } from "../../../../../../components/core/typography/H4";
 import I18n from "../../../../../../i18n";
-import IconFont from "../../../../../../components/ui/IconFont";
-import { IOColors } from "../../../../../../components/core/variables/IOColors";
 import ButtonDefaultOpacity from "../../../../../../components/ButtonDefaultOpacity";
 import { Label } from "../../../../../../components/core/typography/Label";
 import { InfoBox } from "../../../../../../components/box/InfoBox";
 import { VSpacer } from "../../../../../../components/core/spacer/Spacer";
+import { Icon } from "../../../../../../components/core/icons/Icon";
 
 type Props = {
   onRetry: () => void;
@@ -35,12 +34,9 @@ const EycaErrorComponent = (props: Props) => (
       testID={"eyca-error-component"}
     >
       <H4>{I18n.t("bonus.cgn.detail.status.eycaCircuit")}</H4>
-      <IconFont
-        name={"io-info"}
-        size={TITLE_ICON_SIZE}
-        color={IOColors.blue}
-        onPress={props.openBottomSheet}
-      />
+      <ButtonDefaultOpacity onPress={props.openBottomSheet} transparent={true}>
+        <Icon name="info" size={TITLE_ICON_SIZE} color="blue" />
+      </ButtonDefaultOpacity>
     </View>
     <VSpacer size={16} />
     <InfoBox iconName="legError" alignedCentral iconSize={INFOBOX_ICON_SIZE}>

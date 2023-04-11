@@ -47,13 +47,14 @@ const BancomatInformation: React.FunctionComponent<Props> = props => {
     <View testID={"bancomatInformation"}>
       <View style={styles.titleContainer}>
         <H3>{I18n.t("wallet.bancomat.details.debit.title")}</H3>
-        <IconFont
-          name={"io-info"}
-          size={24}
-          color={IOColors.blue}
-          onPress={present}
-          testID={"noticeIconFont"}
-        />
+        <ButtonDefaultOpacity onPress={present} transparent={true}>
+          <IconFont
+            name="info"
+            size={24}
+            color="blue"
+            testID={"noticeIconFont"}
+          />
+        </ButtonDefaultOpacity>
       </View>
       <VSpacer size={16} />
       <InternationalCircuitIconsBar />

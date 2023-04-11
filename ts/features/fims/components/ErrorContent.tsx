@@ -1,15 +1,10 @@
 import * as React from "react";
-import { View, StyleSheet } from "react-native";
-import IconFont from "../../../components/ui/IconFont";
-import customVariables from "../../../theme/variables";
+import { View } from "react-native";
 import { Label } from "../../../components/core/typography/Label";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
+import { Icon } from "../../../components/core/icons/Icon";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
 import CommonContent from "./CommonContent";
-
-const styles = StyleSheet.create({
-  itemsCenter: { alignItems: "center" },
-  selfCenter: { alignSelf: "center" }
-});
 
 type Props = {
   text: string;
@@ -18,15 +13,12 @@ type Props = {
 
 const ErrorContent = ({ text, close }: Props) => (
   <CommonContent close={close}>
-    <IconFont
-      name={"io-error"}
-      size={120}
-      color={customVariables.brandDanger}
-      style={styles.selfCenter}
-    />
+    <View style={IOStyles.selfCenter}>
+      <Icon name="legError" size={120} color="red" />
+    </View>
     <VSpacer size={16} />
 
-    <View style={styles.itemsCenter}>
+    <View style={IOStyles.alignCenter}>
       <Label weight={"Bold"}>{text}</Label>
     </View>
   </CommonContent>

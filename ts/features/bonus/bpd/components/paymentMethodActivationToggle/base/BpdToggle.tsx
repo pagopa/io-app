@@ -1,8 +1,8 @@
 import * as React from "react";
 import { ActivityIndicator } from "react-native";
-import { IOColors } from "../../../../../../components/core/variables/IOColors";
-import IconFont from "../../../../../../components/ui/IconFont";
 import Switch from "../../../../../../components/ui/Switch";
+import ButtonDefaultOpacity from "../../../../../../components/ButtonDefaultOpacity";
+import { Icon } from "../../../../../../components/core/icons/Icon";
 import { GraphicalValue } from "./PaymentMethodBpdToggle";
 
 type Props = {
@@ -34,13 +34,14 @@ export const BpdToggle: React.FunctionComponent<Props> = props => {
     case "ready":
     case "update":
       return props.graphicalValue.value === "notActivable" ? (
-        <IconFont
-          testID={"infoIconBpdPaymentActivationTestID"}
-          name={"io-notice"}
-          size={iconSize}
-          color={IOColors.blue}
-          onPress={props.onPress}
-        />
+        <ButtonDefaultOpacity onPress={props.onPress} transparent={true}>
+          <Icon
+            testID={"infoIconBpdPaymentActivationTestID"}
+            name="notice"
+            size={iconSize}
+            color="blue"
+          />
+        </ButtonDefaultOpacity>
       ) : (
         <Switch
           testID={"switchPaymentActivationTestID"}

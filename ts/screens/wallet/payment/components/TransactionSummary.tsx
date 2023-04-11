@@ -26,6 +26,7 @@ import {
 } from "../../../../utils/stringBuilder";
 import { usePaymentAmountInfoBottomSheet } from "../hooks/usePaymentAmountInfoBottomSheet";
 import { getRecepientName } from "../../../../utils/strings";
+import { Icon } from "../../../../components/core/icons/Icon";
 
 const styles = StyleSheet.create({
   row: {
@@ -91,7 +92,7 @@ const InfoButton = (props: { onPress: () => void }) => (
     )}
     accessibilityRole={"button"}
   >
-    <IconFont name={"io-info"} size={24} color={IOColors.blue} />
+    <Icon name="info" size={24} color="blue" />
   </TouchableDefaultOpacity>
 );
 
