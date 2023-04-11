@@ -1,16 +1,16 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
-import EmailInsertScreen from "../screens/onboarding/EmailInsertScreen";
-import EmailReadScreen from "../screens/onboarding/EmailReadScreen";
 import FingerprintScreen from "../screens/onboarding/FingerprintScreen";
 import OnboardingCompletedScreen from "../screens/onboarding/OnboardingCompletedScreen";
+import OnboardingEmailInsertScreen from "../screens/onboarding/OnboardingEmailInsertScreen";
+import OnboardingEmailReadScreen from "../screens/onboarding/OnboardingEmailReadScreen";
 import OnboardingNotificationsInfoScreenConsent from "../screens/onboarding/OnboardingNotificationsInfoScreenConsent";
 import OnboardingNotificationsPreferencesScreen from "../screens/onboarding/OnboardingNotificationsPreferencesScreen";
+import OnboardingPinScreen from "../screens/onboarding/OnboardingPinScreen";
 import OnboardingServicesPreferenceScreen from "../screens/onboarding/OnboardingServicesPreferenceScreen";
 import OnboardingShareDataScreen from "../screens/onboarding/OnboardingShareDataScreen";
-import PinScreen from "../screens/onboarding/PinScreen";
+import OnboardingTosScreen from "../screens/onboarding/OnboardingTosScreen";
 import ServicePreferenceCompleteScreen from "../screens/onboarding/ServicePreferenceCompleteScreen";
-import TosScreen from "../screens/onboarding/TosScreen";
 import { isGestureEnabled } from "../utils/navigation";
 import { OnboardingParamsList } from "./params/OnboardingParamsList";
 import ROUTES from "./routes";
@@ -37,17 +37,26 @@ const navigator = () => (
       name={ROUTES.ONBOARDING_SERVICES_PREFERENCE_COMPLETE}
       component={ServicePreferenceCompleteScreen}
     />
-    <Stack.Screen name={ROUTES.ONBOARDING_TOS} component={TosScreen} />
-    <Stack.Screen name={ROUTES.ONBOARDING_PIN} component={PinScreen} />
+    <Stack.Screen
+      name={ROUTES.ONBOARDING_TOS}
+      component={OnboardingTosScreen}
+    />
+    <Stack.Screen
+      name={ROUTES.ONBOARDING_PIN}
+      component={OnboardingPinScreen}
+    />
     <Stack.Screen
       name={ROUTES.ONBOARDING_FINGERPRINT}
       component={FingerprintScreen}
     />
     <Stack.Screen
-      name={ROUTES.INSERT_EMAIL_SCREEN}
-      component={EmailInsertScreen}
+      name={ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN}
+      component={OnboardingEmailInsertScreen}
     />
-    <Stack.Screen name={ROUTES.READ_EMAIL_SCREEN} component={EmailReadScreen} />
+    <Stack.Screen
+      name={ROUTES.ONBOARDING_READ_EMAIL_SCREEN}
+      component={OnboardingEmailReadScreen}
+    />
     <Stack.Screen
       name={ROUTES.ONBOARDING_COMPLETED}
       component={OnboardingCompletedScreen}

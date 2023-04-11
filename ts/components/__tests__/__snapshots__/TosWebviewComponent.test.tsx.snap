@@ -29,7 +29,7 @@ Array [
         injectedJavaScriptBeforeContentLoadedForMainFrameOnly={true}
         injectedJavaScriptForMainFrameOnly={true}
         javaScriptEnabled={true}
-        messagingEnabled={false}
+        messagingEnabled={true}
         onContentProcessDidTerminate={[Function]}
         onError={[Function]}
         onHttpError={[Function]}

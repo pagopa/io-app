@@ -11,7 +11,6 @@ import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
 import ROUTES from "../../../navigation/routes";
 import { identificationRequest } from "../../../store/actions/identification";
 import { shufflePinPadOnPayment } from "../../../config";
-import { updatePin } from "../../../store/actions/pinset";
 
 describe("Test SecurityScreen", () => {
   jest.useFakeTimers();
@@ -57,7 +56,7 @@ describe("Test SecurityScreen", () => {
         undefined,
         undefined,
         {
-          onSuccess: () => store.dispatch(updatePin())
+          onSuccess: () => jest.fn()
         },
         shufflePinPadOnPayment
       )
