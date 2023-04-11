@@ -3,9 +3,6 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
 import { SafeAreaView, ScrollView, View } from "react-native";
-import CardIcon from "../../../../img/assistance/card.svg";
-import EmailIcon from "../../../../img/assistance/email.svg";
-import NameSurnameIcon from "../../../../img/assistance/nameSurname.svg";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
 import { H1 } from "../../../components/core/typography/H1";
 import { H3 } from "../../../components/core/typography/H3";
@@ -33,6 +30,8 @@ import ZendeskItemPermissionComponent, {
   ItemPermissionProps
 } from "../components/ZendeskItemPermissionComponent";
 import { ZendeskParamsList } from "../navigation/params";
+import { Icon } from "../../../components/core/icons/Icon";
+import { IOColors } from "../../../components/core/variables/IOColors";
 
 export type ZendeskAskSeeReportsPermissionsNavigationParams = {
   assistanceForPayment: boolean;
@@ -45,26 +44,26 @@ type ItemProps = {
   email?: string;
 };
 
-const iconProps = { width: 24, height: 24 };
+const iconStyleProps = { size: 24, color: "blue" as IOColors };
 
 const getItems = (props: ItemProps): ReadonlyArray<ItemPermissionProps> => [
   {
     id: "profileNameSurname",
-    icon: <NameSurnameIcon {...iconProps} />,
+    icon: <Icon name="profile" {...iconStyleProps} />,
     title: I18n.t("support.askPermissions.nameSurname"),
     value: props.nameSurname,
     testId: "profileNameSurname"
   },
   {
     id: "profileFiscalCode",
-    icon: <CardIcon {...iconProps} />,
+    icon: <Icon name="fiscalCodeIndividual" {...iconStyleProps} />,
     title: I18n.t("support.askPermissions.fiscalCode"),
     value: props.fiscalCode,
     testId: "profileFiscalCode"
   },
   {
     id: "profileEmail",
-    icon: <EmailIcon {...iconProps} />,
+    icon: <Icon name="email" {...iconStyleProps} />,
     title: I18n.t("support.askPermissions.emailAddress"),
     value: props.email,
     testId: "profileEmail"

@@ -40,6 +40,7 @@ import IconSave from "./svg/IconSave";
 import IconCompleted from "./svg/IconCompleted";
 import IconSuccess from "./svg/IconSuccess";
 import IconOk from "./svg/IconOk";
+import IconFiscalCodeIndividual from "./svg/IconFiscalCodeIndividual";
 import IconCreditCard from "./svg/IconCreditCard";
 import IconBonus from "./svg/IconBonus";
 import IconTransactions from "./svg/IconTransactions";
@@ -270,6 +271,7 @@ export const IOIcons = {
   legCompleted: LegIconCompleted /* io-tick-big */,
   success: IconSuccess,
   ok: IconOk,
+  fiscalCodeIndividual: IconFiscalCodeIndividual,
   creditCard: IconCreditCard,
   legCreditCard: LegIconCreditCard /* io-carta */,
   bonus: IconBonus,
@@ -518,6 +520,7 @@ const {
   attachment,
   add,
   completed,
+  fiscalCodeIndividual,
   creditCard,
   bonus,
   transactions,
@@ -615,6 +618,7 @@ export const IOIconsNew = {
   attachment,
   add,
   completed,
+  fiscalCodeIndividual,
   creditCard,
   bonus,
   transactions,
