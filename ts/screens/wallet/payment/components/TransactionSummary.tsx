@@ -12,7 +12,6 @@ import { Body } from "../../../../components/core/typography/Body";
 import { H4 } from "../../../../components/core/typography/H4";
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
-import IconFont from "../../../../components/ui/IconFont";
 import { MultiImage } from "../../../../components/ui/MultiImage";
 import I18n from "../../../../i18n";
 import { PaymentState } from "../../../../store/reducers/wallet/payment";

@@ -4,7 +4,6 @@ import { View, ViewStyle, StyleProp, StyleSheet } from "react-native";
 import { EycaCardActivated } from "../../../../../../../definitions/cgn/EycaCardActivated";
 import { H4 } from "../../../../../../components/core/typography/H4";
 import I18n from "../../../../../../i18n";
-import IconFont from "../../../../../../components/ui/IconFont";
 import { IOColors } from "../../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import { Monospace } from "../../../../../../components/core/typography/Monospace";
