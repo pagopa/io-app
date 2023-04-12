@@ -6,7 +6,6 @@ import { Body, Container, Left, ListItem, Right } from "native-base";
 import { View, Keyboard, SafeAreaView, ScrollView } from "react-native";
 import AppHeader from "../../../../components/ui/AppHeader";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
-import IconFont from "../../../../components/ui/IconFont";
 import { H5 } from "../../../../components/core/typography/H5";
 import I18n from "../../../../i18n";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
@@ -24,7 +23,6 @@ import { possibleVoucherStateSelector } from "../store/reducers/voucherList/poss
 import { isReady } from "../../bpd/model/RemoteValue";
 import { StatoVoucherBean } from "../../../../../definitions/api_sicilia_vola/StatoVoucherBean";
 import { H4 } from "../../../../components/core/typography/H4";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 import { svSetFilter } from "../store/actions/voucherList";
 import { FilterState } from "../store/reducers/voucherList/filters";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
@@ -66,10 +64,10 @@ const PossibleVoucherStateOption = ({
     <H4 weight={checked ? "SemiBold" : "Regular"} color={"bluegreyDark"}>
       {text}
     </H4>
-    <IconFont
-      name={checked ? "io-radio-on" : "io-radio-off"}
+    <Icon
+      name={checked ? "legIconRadioOn" : "legIconRadioOff"}
       size={22}
-      color={checked ? IOColors.blue : IOColors.bluegrey}
+      color={checked ? "blue" : "bluegrey"}
     />
   </ListItem>
 );

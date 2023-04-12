@@ -3,11 +3,11 @@ import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import customVariables from "../theme/variables";
-import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import { VSpacer } from "./core/spacer/Spacer";
 import { H3 } from "./core/typography/H3";
 import TouchableDefaultOpacity from "./TouchableDefaultOpacity";
-import IconFont from "./ui/IconFont";
+import { IOColors } from "./core/variables/IOColors";
+import { IOIcons, Icon } from "./core/icons";
 
 type Props = Readonly<{
   itemTitle: string;
@@ -46,10 +46,10 @@ export default class ChooserListItem extends React.Component<Props> {
   public render() {
     const { isItemSelected, itemIconComponent, itemId, itemTitle } = this.props;
 
-    const iconName = isItemSelected ? "io-checkbox-on" : "io-checkbox-off";
-    const iconColor = isItemSelected
-      ? customVariables.selectedColor
-      : customVariables.unselectedColor;
+    const iconName: IOIcons = isItemSelected
+      ? "legIconCheckOn"
+      : "legIconCheckOff";
+    const iconColor: IOColors = isItemSelected ? "blue" : "bluegrey";
 
     const icon = itemIconComponent
       ? pipe(
@@ -68,9 +68,9 @@ export default class ChooserListItem extends React.Component<Props> {
               {itemTitle}
             </H3>
           </View>
-          <ButtonDefaultOpacity onPress={this.handleOnPress} transparent={true}>
-            <IconFont name={iconName} color={iconColor} />
-          </ButtonDefaultOpacity>
+          <TouchableDefaultOpacity onPress={this.handleOnPress}>
+            <Icon name={iconName} color={iconColor} size={22} />
+          </TouchableDefaultOpacity>
         </View>
       </TouchableDefaultOpacity>
     );

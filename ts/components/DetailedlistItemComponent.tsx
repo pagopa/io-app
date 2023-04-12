@@ -4,13 +4,13 @@ import customVariables from "../theme/variables";
 import I18n from "../i18n";
 import { BadgeComponent } from "./screens/BadgeComponent";
 import TouchableDefaultOpacity from "./TouchableDefaultOpacity";
-import IconFont from "./ui/IconFont";
 import { H5 } from "./core/typography/H5";
 import { H3 } from "./core/typography/H3";
 import { Body } from "./core/typography/Body";
 import { IOBadge } from "./core/IOBadge";
 import { IOStyles } from "./core/variables/IOStyles";
 import { Label } from "./core/typography/Label";
+import { Icon } from "./core/icons/Icon";
 
 type OwnProps = Readonly<{
   text11: string;
@@ -93,9 +93,9 @@ export default class DetailedlistItemComponent extends React.Component<Props> {
   private getIconName = () =>
     this.props.isSelectionModeEnabled
       ? this.props.isItemSelected
-        ? "io-checkbox-on"
-        : "io-checkbox-off"
-      : "io-right";
+        ? "legIconCheckOn"
+        : "legIconCheckOff"
+      : "chevronRightListItem";
 
   shouldComponentUpdate(nextProps: Readonly<Props>): boolean {
     // assuming that:
@@ -157,11 +157,7 @@ export default class DetailedlistItemComponent extends React.Component<Props> {
               />
             )}
 
-            <IconFont
-              name={this.getIconName()}
-              size={ICON_WIDTH}
-              color={customVariables.contentPrimaryBackground}
-            />
+            <Icon name={this.getIconName()} size={ICON_WIDTH} color="blue" />
           </View>
         </View>
         {this.props.children}

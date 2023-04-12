@@ -194,6 +194,10 @@ import LegIconChevronLeft from "./svg/LegIconChevronLeft";
 import LegIconGiacenza from "./svg/LegIconGiacenza";
 import LegIconPSP from "./svg/LegIconPSP";
 import LegIconError from "./svg/LegIconError";
+import LegIconRadioOn from "./svg/LegIconRadioOn";
+import LegIconRadioOff from "./svg/LegIconRadioOff";
+import LegIconCheckOn from "./svg/LegIconCheckOn";
+import LegIconCheckOff from "./svg/LegIconCheckOff";
 
 export const IOIcons = {
   spid: IconSpid,
@@ -366,6 +370,10 @@ export const IOIcons = {
   arrowRight: IconArrowRight,
   backiOS: IconBackiOS,
   backAndroid: IconBackAndroid,
+  legIconRadioOn: LegIconRadioOn,
+  legIconRadioOff: LegIconRadioOff,
+  legIconCheckOn: LegIconCheckOn,
+  legIconCheckOff: LegIconCheckOff,
   navMessages: IconNavMessages,
   navWallet: IconNavWallet,
   navDocuments: IconNavDocuments,

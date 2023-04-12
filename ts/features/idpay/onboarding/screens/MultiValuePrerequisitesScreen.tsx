@@ -8,17 +8,16 @@ import { Body } from "../../../../components/core/typography/Body";
 import { H1 } from "../../../../components/core/typography/H1";
 import { H4 } from "../../../../components/core/typography/H4";
 import { Link } from "../../../../components/core/typography/Link";
-import { IOColors } from "../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import IconFont from "../../../../components/ui/IconFont";
 import I18n from "../../../../i18n";
 import { useOnboardingMachineService } from "../xstate/provider";
 import {
   criteriaToDisplaySelector,
   prerequisiteAnswerIndexSelector
 } from "../xstate/selectors";
+import { Icon } from "../../../../components/core/icons/Icon";
 
 const styles = StyleSheet.create({
   maxheight: {
@@ -44,10 +43,10 @@ const CustomListItem = ({ text, onPress, checked }: ListItemProps) => (
     <H4 weight={checked ? "SemiBold" : "Regular"} color={"bluegreyDark"}>
       {text}
     </H4>
-    <IconFont
-      name={checked ? "io-radio-on" : "io-radio-off"}
+    <Icon
+      name={checked ? "legIconRadioOn" : "legIconRadioOff"}
       size={22}
-      color={checked ? IOColors.blue : IOColors.bluegrey}
+      color={checked ? "blue" : "bluegrey"}
     />
   </NBListItem>
 );

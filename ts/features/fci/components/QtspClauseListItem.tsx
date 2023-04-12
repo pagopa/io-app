@@ -1,12 +1,11 @@
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { useSelector } from "react-redux";
-import IconFont from "../../../components/ui/IconFont";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
-import { IOColors } from "../../../components/core/variables/IOColors";
 import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
 import { QtspClause } from "../../../../definitions/fci/QtspClause";
 import { fciQtspFilledDocumentUrlSelector } from "../store/reducers/fciQtspFilledDocument";
+import { Icon } from "../../../components/core/icons/Icon";
 import LinkedText from "./LinkedText";
 
 type Props = {
@@ -57,10 +56,10 @@ const QtspClauseListItem = (props: Props) => {
         }}
       >
         <View style={IOStyles.column}>
-          <IconFont
+          <Icon
             testID="QtspClauseListItemCheckboxTestID"
-            name={checked ? "io-checkbox-on" : "io-checkbox-off"}
-            color={checked ? IOColors.blue : IOColors.bluegreyDark}
+            name={checked ? "legIconCheckOn" : "legIconCheckOff"}
+            color={checked ? "blue" : "bluegreyDark"}
             size={22}
           />
         </View>

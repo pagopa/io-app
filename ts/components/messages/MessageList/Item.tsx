@@ -27,7 +27,7 @@ import { IOColors } from "../../core/variables/IOColors";
 import { IOStyles } from "../../core/variables/IOStyles";
 import { BadgeComponent } from "../../screens/BadgeComponent";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
-import IconFont from "../../ui/IconFont";
+import { Icon } from "../../core/icons/Icon";
 
 const ICON_WIDTH = 24;
 
@@ -308,10 +308,10 @@ const MessageListItem = ({
               hasQrCode && styles.qrCheckBoxContainer
             ]}
           >
-            <IconFont
-              name={isSelected ? "io-checkbox-on" : "io-checkbox-off"}
+            <Icon
+              name={isSelected ? "legIconCheckOn" : "legIconCheckOff"}
               size={ICON_WIDTH}
-              color={customVariables.contentPrimaryBackground}
+              color="blue"
             />
           </View>
         ) : (
