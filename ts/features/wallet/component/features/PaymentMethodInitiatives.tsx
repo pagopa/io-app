@@ -62,7 +62,7 @@ const PaymentMethodInitiatives = (props: Props): React.ReactElement | null => {
       idWallet: idWalletString
     });
   return namedInitiativesList.length > 0 ? (
-    <View style={props.style}>
+    <View testID="idPayInitiativesList" style={props.style}>
       <View style={styles.row}>
         <View style={styles.row}>
           <Initiative
