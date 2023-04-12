@@ -32,6 +32,7 @@ import { Label } from "../../core/typography/Label";
 import { IOColors } from "../../core/variables/IOColors";
 import { Icon } from "../../core/icons/Icon";
 import Logo, { cardIcons } from "./Logo";
+import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
 
 interface BaseProps {
   wallet: Wallet;
@@ -206,10 +207,7 @@ export default class CardComponent extends React.Component<Props> {
       return (
         <View style={styles.row}>
           {!hideFavoriteIcon && isFavorite !== undefined && (
-            <ButtonDefaultOpacity
-              onPress={this.handleFavoritePress}
-              transparent={true}
-            >
+            <TouchableDefaultOpacity onPress={this.handleFavoritePress}>
               <Icon
                 name={
                   pot.getOrElseWithUpdating(isFavorite, false)
@@ -218,7 +216,7 @@ export default class CardComponent extends React.Component<Props> {
                 }
                 color={pot.isUpdating(isFavorite) ? "bluegrey" : "blue"}
               />
-            </ButtonDefaultOpacity>
+            </TouchableDefaultOpacity>
           )}
 
           {!hideMenu && (
