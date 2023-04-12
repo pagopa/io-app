@@ -286,10 +286,7 @@ function* deletePath(path: string) {
  * and reset the state to empty.
  */
 function* clearAllFciFiles(action: ActionType<typeof fciClearAllFiles>) {
-  const path = action.payload.path;
-  if (path) {
-    yield* deletePath(path);
-  }
+  yield* deletePath(action.payload.path);
 }
 
 /**
