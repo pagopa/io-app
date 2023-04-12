@@ -18,8 +18,8 @@ type OwnProps = Props &
 const SIZE: number = 24;
 const BORDER_WIDTH: number = 2;
 
-const offColor = "bluegrey";
-const onColor = "blue";
+const offColor: IOColors = "bluegrey";
+const onColor: IOColors = "blue";
 const slop = calculateSlop(SIZE);
 const tickSize = SIZE;
 
