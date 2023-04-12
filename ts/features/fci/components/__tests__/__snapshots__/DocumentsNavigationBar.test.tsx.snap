@@ -82,12 +82,16 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
     testID="DocumentsNavigationBarLeftButtonTestID"
   >
     <RNSVGSvgView
+      accessibilityElementsHidden={true}
+      accessibilityLabel=""
+      accessible={true}
       align="xMidYMid"
       bbHeight={24}
       bbWidth={24}
       color={4278219750}
       focusable={false}
       height={24}
+      importantForAccessibility="no-hide-descendants"
       meetOrSlice={0}
       minX={0}
       minY={0}
@@ -214,12 +218,16 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
     testID="DocumentsNavigationBarRightButtonTestID"
   >
     <RNSVGSvgView
+      accessibilityElementsHidden={true}
+      accessibilityLabel=""
+      accessible={true}
       align="xMidYMid"
       bbHeight={24}
       bbWidth={24}
       color={4278219750}
       focusable={false}
       height={24}
+      importantForAccessibility="no-hide-descendants"
       meetOrSlice={0}
       minX={0}
       minY={0}
