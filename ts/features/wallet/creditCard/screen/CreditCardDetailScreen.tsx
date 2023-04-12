@@ -1,24 +1,22 @@
 import * as React from "react";
-
+import { connect } from "react-redux";
+import { Dispatch } from "redux";
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
+import WorkunitGenericFailure from "../../../../components/error/WorkunitGenericFailure";
+import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
+import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
+import { useIOSelector } from "../../../../store/hooks";
+import { GlobalState } from "../../../../store/reducers/types";
+import { creditCardByIdSelector } from "../../../../store/reducers/wallet/wallets";
+import { CreditCardPaymentMethod } from "../../../../types/pagopa";
 import {
   idpayInitiativesFromInstrumentRefreshEnd,
   idpayInitiativesFromInstrumentRefreshStart
 } from "../../../idpay/wallet/store/actions";
-
-import BasePaymentMethodScreen from "../../common/BasePaymentMethodScreen";
-import CreditCardComponent from "../component/CreditCardComponent";
-import { CreditCardPaymentMethod } from "../../../../types/pagopa";
-import { Dispatch } from "redux";
-import { GlobalState } from "../../../../store/reducers/types";
-import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
-import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import PaymentMethodFeatures from "../../component/features/PaymentMethodFeatures";
-import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
-import WorkunitGenericFailure from "../../../../components/error/WorkunitGenericFailure";
-import { connect } from "react-redux";
-import { creditCardByIdSelector } from "../../../../store/reducers/wallet/wallets";
 import { idPayAreInitiativesFromInstrumentLoadingSelector } from "../../../idpay/wallet/store/reducers";
-import { useIOSelector } from "../../../../store/hooks";
+import BasePaymentMethodScreen from "../../common/BasePaymentMethodScreen";
+import PaymentMethodFeatures from "../../component/features/PaymentMethodFeatures";
+import CreditCardComponent from "../component/CreditCardComponent";
 
 export type CreditCardDetailScreenNavigationParams = Readonly<{
   // Since we don't have a typed ID for the payment methods, we keep the creditCard as param even if it is then read by the store
