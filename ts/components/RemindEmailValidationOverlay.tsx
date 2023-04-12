@@ -52,7 +52,6 @@ import FooterWithButtons from "./ui/FooterWithButtons";
 import { LightModalContextInterface } from "./ui/LightModal";
 import Markdown from "./ui/Markdown";
 import { Icon } from "./core/icons/Icon";
-import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import Pictogram, { IOPictogramType } from "./core/pictograms/Pictogram";
 
 type OwnProp = {
@@ -219,16 +218,15 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
     <View style={styles.error}>
       <Body color="white">{I18n.t("global.actions.retry")}</Body>
       <View>
-        <ButtonDefaultOpacity
+        <TouchableDefaultOpacity
           onPress={() => {
             this.setState({ displayError: false });
           }}
-          transparent={true}
           accessible={true}
           accessibilityLabel={I18n.t("global.buttons.close")}
         >
           <Icon name="legClose" color="white" />
-        </ButtonDefaultOpacity>
+        </TouchableDefaultOpacity>
       </View>
     </View>
   );
