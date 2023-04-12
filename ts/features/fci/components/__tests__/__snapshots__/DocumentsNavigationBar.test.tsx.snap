@@ -81,41 +81,56 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
     }
     testID="DocumentsNavigationBarLeftButtonTestID"
   >
-    <Text
-      accessibilityElementsHidden={true}
-      accessibilityLabel=""
-      accessible={false}
-      allowFontScaling={false}
-      importantForAccessibility="no-hide-descendants"
+    <RNSVGSvgView
+      align="xMidYMid"
+      bbHeight={24}
+      bbWidth={24}
+      color={4278219750}
+      focusable={false}
+      height={24}
+      meetOrSlice={0}
+      minX={0}
+      minY={0}
       style={
         Array [
           Object {
-            "color": "#0073E6",
-            "fontSize": 12,
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
           },
-          Array [
-            Array [
-              Object {},
-              Object {
-                "paddingRight": 0,
-              },
-            ],
-            Object {
-              "color": "#0073E6",
-            },
-            Object {},
-          ],
           Object {
-            "fontFamily": "io-icon-font",
-            "fontStyle": "normal",
-            "fontWeight": "normal",
+            "color": "#0073E6",
           },
-          Object {},
+          Object {
+            "flex": 0,
+            "height": 24,
+            "width": 24,
+          },
         ]
       }
+      tintColor={4278219750}
+      vbHeight={24}
+      vbWidth={24}
+      width={24}
     >
-      v
-    </Text>
+      <RNSVGGroup>
+        <RNSVGPath
+          clipRule={0}
+          d="M15.7071 5.29289c-.3905-.39052-1.0237-.39052-1.4142 0L8.29289 11.2929c-.39052.3905-.39052 1.0237 0 1.4142l6.00001 6c.3905.3905 1.0237.3905 1.4142 0 .3905-.3905.3905-1.0237 0-1.4142L10.4142 12l5.2929-5.29289c.3905-.39053.3905-1.02369 0-1.41422Z"
+          fill={
+            Array [
+              2,
+            ]
+          }
+          fillRule={0}
+          propList={
+            Array [
+              "fill",
+              "fillRule",
+            ]
+          }
+        />
+      </RNSVGGroup>
+    </RNSVGSvgView>
   </View>
   <Text
     color="bluegreyDark"
@@ -198,41 +213,56 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
     }
     testID="DocumentsNavigationBarRightButtonTestID"
   >
-    <Text
-      accessibilityElementsHidden={true}
-      accessibilityLabel=""
-      accessible={false}
-      allowFontScaling={false}
-      importantForAccessibility="no-hide-descendants"
+    <RNSVGSvgView
+      align="xMidYMid"
+      bbHeight={24}
+      bbWidth={24}
+      color={4278219750}
+      focusable={false}
+      height={24}
+      meetOrSlice={0}
+      minX={0}
+      minY={0}
       style={
         Array [
           Object {
-            "color": "#0073E6",
-            "fontSize": 12,
+            "backgroundColor": "transparent",
+            "borderWidth": 0,
           },
-          Array [
-            Array [
-              Object {},
-              Object {
-                "paddingRight": 0,
-              },
-            ],
-            Object {
-              "color": "#0073E6",
-            },
-            Object {},
-          ],
           Object {
-            "fontFamily": "io-icon-font",
-            "fontStyle": "normal",
-            "fontWeight": "normal",
+            "color": "#0073E6",
           },
-          Object {},
+          Object {
+            "flex": 0,
+            "height": 24,
+            "width": 24,
+          },
         ]
       }
+      tintColor={4278219750}
+      vbHeight={24}
+      vbWidth={24}
+      width={24}
     >
-      t
-    </Text>
+      <RNSVGGroup>
+        <RNSVGPath
+          clipRule={0}
+          d="M8.29289 5.29289c.39053-.39052 1.02369-.39052 1.41422 0l5.99999 6.00001c.3905.3905.3905 1.0237 0 1.4142l-5.99999 6c-.39053.3905-1.02369.3905-1.41422 0-.39052-.3905-.39052-1.0237 0-1.4142L13.5858 12 8.29289 6.70711c-.39052-.39053-.39052-1.02369 0-1.41422Z"
+          fill={
+            Array [
+              2,
+            ]
+          }
+          fillRule={0}
+          propList={
+            Array [
+              "fill",
+              "fillRule",
+            ]
+          }
+        />
+      </RNSVGGroup>
+    </RNSVGSvgView>
   </View>
   <View
     style={
