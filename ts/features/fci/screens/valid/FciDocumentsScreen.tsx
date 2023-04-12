@@ -26,11 +26,15 @@ import { TypeEnum as ClauseType } from "../../../../../definitions/fci/Clause";
 import { FciParamsList } from "../../navigation/params";
 import { ExistingSignatureFieldAttrs } from "../../../../../definitions/fci/ExistingSignatureFieldAttrs";
 import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
-import { fciUpdateDocumentSignaturesRequest } from "../../store/actions";
+import {
+  fciDownloadPreview,
+  fciUpdateDocumentSignaturesRequest
+} from "../../store/actions";
 import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentSignatures";
 import { useIODispatch } from "../../../../store/hooks";
 import { SignatureFieldToBeCreatedAttrs } from "../../../../../definitions/fci/SignatureFieldToBeCreatedAttrs";
 import { Icon } from "../../../../components/core/icons/Icon";
+import { fciDownloadPathSelector } from "../../store/reducers/fciDownloadPreview";
 
 const styles = StyleSheet.create({
   pdf: {
@@ -53,6 +57,8 @@ const hasUniqueName = (
 ): f is ExistingSignatureFieldAttrs =>
   (f as ExistingSignatureFieldAttrs).unique_name !== undefined;
 
+const pdfFromBase64 = (r: string) => `data:application/pdf;base64,${r}`;
+
 const FciDocumentsScreen = () => {
   const pdfRef = React.useRef<Pdf>(null);
   const [totalPages, setTotalPages] = React.useState(0);
@@ -61,6 +67,7 @@ const FciDocumentsScreen = () => {
   const [signaturePage, setSignaturePage] = React.useState(0);
   const [pdfString, setPdfString] = React.useState<string>("");
   const [isPdfLoaded, setIsPdfLoaded] = React.useState(false);
+  const fciDownloadPath = useSelector(fciDownloadPathSelector);
   const documents = useSelector(fciSignatureDetailDocumentsSelector);
   const navigation = useNavigation();
   const route = useRoute<RouteProp<FciParamsList, "FCI_DOCUMENTS">>();
@@ -90,8 +97,6 @@ const FciDocumentsScreen = () => {
     }
   }, [dispatch, documentSignaturesSelector, documents]);
 
-  const pdfFromBase64 = (r: string) => `data:application/pdf;base64,${r}`;
-
   /**
    * Get the pdf url from documents,
    * download it as base64 string and
@@ -102,11 +107,10 @@ const FciDocumentsScreen = () => {
   const drawRectangleOverSignatureFieldById = React.useCallback(
     async (uniqueName: string) => {
       // TODO: refactor this function to use fp-ts
-      const doc = documents[currentDoc];
-      const url = doc.url;
 
-      const existingPdfBytes = await ReactNativeBlobUtil.fetch("GET", url).then(
-        res => res.base64()
+      const existingPdfBytes = await ReactNativeBlobUtil.fs.readFile(
+        `${fciDownloadPath}`,
+        "base64"
       );
 
       setIsPdfLoaded(false);
@@ -144,7 +148,7 @@ const FciDocumentsScreen = () => {
         return res.saveAsBase64().then(r => setPdfString(pdfFromBase64(r)));
       });
     },
-    [documents, currentDoc]
+    [fciDownloadPath]
   );
 
   /**
@@ -158,16 +162,15 @@ const FciDocumentsScreen = () => {
   const drawRectangleOverSignatureFieldByCoordinates = React.useCallback(
     async (attrs: SignatureFieldToBeCreatedAttrs) => {
       // TODO: refactor this function to use fp-ts
-      const doc = documents[currentDoc];
-      const url = doc.url;
 
-      const existingPdfBytes = await ReactNativeBlobUtil.fetch("GET", url).then(
-        res => res.base64()
+      const existingPdfBytes = await ReactNativeBlobUtil.fs.readFile(
+        `${fciDownloadPath}`,
+        "base64"
       );
 
       setIsPdfLoaded(false);
 
-      await PDFDocument.load(pdfFromBase64(existingPdfBytes)).then(res => {
+      await PDFDocument.load(existingPdfBytes).then(res => {
         const page = attrs.page;
         // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
         setSignaturePage(page.valueOf() + 1);
@@ -189,7 +192,7 @@ const FciDocumentsScreen = () => {
         return res.saveAsBase64().then(r => setPdfString(pdfFromBase64(r)));
       });
     },
-    [documents, currentDoc]
+    [fciDownloadPath]
   );
 
   const onSignatureDetail = React.useCallback(
@@ -209,6 +212,12 @@ const FciDocumentsScreen = () => {
       drawRectangleOverSignatureFieldById
     ]
   );
+
+  React.useEffect(() => {
+    if (documents.length !== 0) {
+      dispatch(fciDownloadPreview.request({ url: documents[currentDoc].url }));
+    }
+  }, [currentDoc, documents, dispatch]);
 
   React.useEffect(() => {
     pipe(
@@ -288,7 +297,7 @@ const FciDocumentsScreen = () => {
     <Pdf
       ref={pdfRef}
       source={{
-        uri: S.isEmpty(pdfString) ? `${documents[currentDoc].url}` : pdfString
+        uri: S.isEmpty(pdfString) ? `${fciDownloadPath}` : pdfString
       }}
       onLoadProgress={() => setIsPdfLoaded(false)}
       onLoadComplete={(numberOfPages, _) => {
