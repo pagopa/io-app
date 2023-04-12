@@ -46,6 +46,8 @@ const styles = StyleSheet.create({
   }
 });
 
+const pdfFromBase64 = (r: string) => `data:application/pdf;base64,${r}`;
+
 const DocumentWithSignature = (props: Props) => {
   const pdfRef = React.useRef<Pdf>(null);
   const [totalPages, setTotalPages] = React.useState(0);
@@ -55,8 +57,6 @@ const DocumentWithSignature = (props: Props) => {
   const [isPdfLoaded, setIsPdfLoaded] = React.useState(false);
   const documents = useIOSelector(fciSignatureDetailDocumentsSelector);
   const { attrs, currentDoc } = props;
-
-  const pdfFromBase64 = (r: string) => `data:application/pdf;base64,${r}`;
 
   /**
    * Get the pdf url from documents,
