@@ -1,5 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
+
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
@@ -18,8 +19,8 @@ import { WalletParamsList } from "../../../../navigation/params/WalletParamsList
 import { useIOSelector } from "../../../../store/hooks";
 import customVariables from "../../../../theme/variables";
 import { IDPayInitiativesList } from "../components/IDPayInitiativesListComponents";
+import { useIDPayInitiativesFromInstrument } from "../hooks/useIDPayInitiativesFromInstrument";
 import { idPayInitiativesFromInstrumentSelector } from "../store/reducers";
-import { useIDPayInitiativesFromInstrument } from "../utils/hooks";
 
 export type AvailableInitiativesListScreenNavigationParams = {
   idWallet: string;

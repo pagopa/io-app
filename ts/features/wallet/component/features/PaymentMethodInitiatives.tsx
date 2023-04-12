@@ -1,8 +1,7 @@
 import * as React from "react";
 
-import { StyleSheet, View } from "react-native";
-
 import { useNavigation } from "@react-navigation/native";
+import { StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import Initiative from "../../../../../img/wallet/initiatives.svg";
@@ -16,8 +15,8 @@ import { WalletParamsList } from "../../../../navigation/params/WalletParamsList
 import ROUTES from "../../../../navigation/routes";
 import { PaymentMethod } from "../../../../types/pagopa";
 import { IDPayInitiativesList } from "../../../idpay/wallet/components/IDPayInitiativesListComponents";
+import { useIDPayInitiativesFromInstrument } from "../../../idpay/wallet/hooks/useIDPayInitiativesFromInstrument";
 import { idPayInitiativesFromInstrumentGet } from "../../../idpay/wallet/store/actions";
-import { useIDPayInitiativesFromInstrument } from "../../../idpay/wallet/utils/hooks";
 
 type OwnProps = {
   paymentMethod: PaymentMethod;

@@ -1,4 +1,3 @@
-import { useFocusEffect } from "@react-navigation/native";
 import * as React from "react";
 import { useSelector } from "react-redux";
 import { useIODispatch } from "../../../../store/hooks";
@@ -25,7 +24,7 @@ export const useIDPayInitiativesFromInstrument = (idWallet: string) => {
       })
     );
   }, [idWallet, dispatch]);
-  useFocusEffect(() => {
+  React.useEffect(() => {
     // will be removed in #IODPAY-207 in favor of saga logic
     const timer = setInterval(
       () => {
@@ -36,10 +35,12 @@ export const useIDPayInitiativesFromInstrument = (idWallet: string) => {
           })
         );
       },
+
       areInitiativesInError ? 6000 : 3000
     );
+
     return () => clearInterval(timer);
-  });
+  }, [idWallet, areInitiativesInError, dispatch]);
 
   return {
     initiativesList
