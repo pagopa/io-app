@@ -5,12 +5,14 @@
  */
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Container, Text as NBText } from "native-base";
+import { Container } from "native-base";
 import * as React from "react";
 import { View, Image, Modal, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { VSpacer } from "../../components/core/spacer/Spacer";
+import { Body } from "../../components/core/typography/Body";
 import { H1 } from "../../components/core/typography/H1";
+import { IOStyles } from "../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
 import { backendServicesStatusSelector } from "../../store/reducers/backendStatus";
@@ -23,12 +25,6 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: customVariables.contentPadding,
     alignSelf: "center"
-  },
-  title: {
-    textAlign: "center"
-  },
-  subTitle: {
-    textAlign: "center"
   },
   image: {
     alignSelf: "center"
@@ -63,12 +59,14 @@ class SystemOffModal extends React.PureComponent<Props> {
                 />
                 <VSpacer size={40} />
               </React.Fragment>
-              <H1 style={styles.title}>{I18n.t("systemsOff.title")}</H1>
+              <View style={IOStyles.alignCenter}>
+                <H1>{I18n.t("systemsOff.title")}</H1>
+              </View>
               <VSpacer size={16} />
-              {message && <NBText style={styles.subTitle}>{message}</NBText>}
-              <NBText style={styles.subTitle} bold={true}>
-                {I18n.t("systemsOff.closeApp")}
-              </NBText>
+              <View style={IOStyles.alignCenter}>
+                {message && <Body>{message}</Body>}
+                <Body weight="SemiBold">{I18n.t("systemsOff.closeApp")}</Body>
+              </View>
             </View>
           </Container>
         </BaseScreenComponent>

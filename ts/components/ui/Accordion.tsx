@@ -1,11 +1,12 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Text as NBText } from "native-base";
 import * as React from "react";
 import { ComponentProps } from "react";
 import { View, StyleSheet } from "react-native";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
+import { Body } from "../core/typography/Body";
+import { IOStyles } from "../core/variables/IOStyles";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
 import IconFont from "./IconFont";
@@ -30,9 +31,6 @@ const styles = StyleSheet.create({
   headerIcon: {
     paddingHorizontal: 10,
     alignSelf: "center"
-  },
-  flex: {
-    flex: 1
   }
 });
 
@@ -58,9 +56,9 @@ const Accordion: React.FunctionComponent<Props> = (props: Props) => {
       onPress={() => setExpanded(!expanded)}
     >
       <View style={styles.header}>
-        <NBText bold={true} style={styles.flex}>
-          {title}
-        </NBText>
+        <View style={IOStyles.flex}>
+          <Body weight="SemiBold">{title}</Body>
+        </View>
         <IconFont
           name={"io-right"}
           color={customVariables.brandPrimary}

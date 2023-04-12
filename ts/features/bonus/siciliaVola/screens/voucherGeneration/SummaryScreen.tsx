@@ -35,6 +35,7 @@ import {
   destinationsInfoFromVoucherRequest,
   isVoucherRequest
 } from "../../utils";
+import { dpr28Dec2000Url } from "../../../../../urls";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -65,8 +66,6 @@ const styles = StyleSheet.create({
 });
 
 // TODO: update with the correct disclaimer: https://pagopa.atlassian.net/browse/IASV-40
-const disclaimerLink =
-  "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.del.presidente.della.repubblica:2000-12-28;445";
 
 const SummaryScreen = (props: Props): React.ReactElement | null => {
   const navigation = useNavigation();
@@ -157,7 +156,7 @@ const SummaryScreen = (props: Props): React.ReactElement | null => {
           <VSpacer size={16} />
           <H4 weight={"Regular"}>
             {I18n.t("bonus.sv.voucherGeneration.summary.subtitle1.normal1")}
-            <Link onPress={() => openWebUrl(disclaimerLink)}>
+            <Link onPress={() => openWebUrl(dpr28Dec2000Url)}>
               {I18n.t("bonus.sv.voucherGeneration.summary.subtitle1.link")}
             </Link>
             {I18n.t("bonus.sv.voucherGeneration.summary.subtitle1.normal2")}

@@ -1,7 +1,8 @@
-import { Text as NBText } from "native-base";
 import React from "react";
 import { View, StyleProp, StyleSheet, TextStyle } from "react-native";
-import themeVariables from "../../../../../theme/variables";
+import { VSpacer } from "../../../../../components/core/spacer/Spacer";
+import { Body } from "../../../../../components/core/typography/Body";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 
 type Props = {
   // flex proportion of left column
@@ -29,13 +30,6 @@ type ColumnWidthStyle = {
 const styles = StyleSheet.create({
   right: {
     textAlign: "right"
-  },
-  baseRow: {
-    flexDirection: "row",
-    justifyContent: "space-between"
-  },
-  row: {
-    paddingTop: themeVariables.spacerSmallHeight
   }
 });
 
@@ -43,16 +37,17 @@ export const keyValueTableStyle = styles;
 
 const row = (kvRow: KeyValueRow, columnWidthStyle: ColumnWidthStyle) => (
   <View
-    style={[styles.row, styles.baseRow]}
+    style={IOStyles.rowSpaceBetween}
     key={kvRow.key.text + kvRow.value.text}
     accessible={true}
   >
-    <NBText style={[kvRow.key.style, columnWidthStyle.left]}>
+    <VSpacer size={8} />
+    <Body style={[kvRow.key.style, columnWidthStyle.left]}>
       {kvRow.key.text}
-    </NBText>
-    <NBText style={[kvRow.value.style, styles.right, columnWidthStyle.right]}>
+    </Body>
+    <Body style={[kvRow.value.style, styles.right, columnWidthStyle.right]}>
       {kvRow.value.text}
-    </NBText>
+    </Body>
   </View>
 );
 

@@ -164,8 +164,8 @@ exports[`PspRadioItem match snapshot 1`] = `
                 }
               >
                 <Text
-                  color="bluegreyDark"
-                  defaultColor="bluegreyDark"
+                  color="bluegrey"
+                  defaultColor="bluegrey"
                   defaultWeight="Regular"
                   font="TitilliumWeb"
                   fontStyle={
@@ -181,7 +181,7 @@ exports[`PspRadioItem match snapshot 1`] = `
                         "lineHeight": 24,
                       },
                       Object {
-                        "color": "#17324D",
+                        "color": "#475A6D",
                         "fontFamily": "Titillium Web",
                         "fontStyle": "normal",
                         "fontWeight": "400",
@@ -224,8 +224,8 @@ exports[`PspRadioItem match snapshot 1`] = `
                 }
               >
                 <Text
-                  color="bluegreyDark"
-                  defaultColor="bluegreyDark"
+                  color="bluegrey"
+                  defaultColor="bluegrey"
                   defaultWeight="Regular"
                   font="TitilliumWeb"
                   fontStyle={
@@ -241,7 +241,7 @@ exports[`PspRadioItem match snapshot 1`] = `
                         "lineHeight": 24,
                       },
                       Object {
-                        "color": "#17324D",
+                        "color": "#475A6D",
                         "fontFamily": "Titillium Web",
                         "fontStyle": "normal",
                         "fontWeight": "400",
