@@ -21,7 +21,6 @@ import { useIOSelector } from "../../../store/hooks";
 import { WithTestID } from "../../../types/WithTestID";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { H5 } from "../../../components/core/typography/H5";
-import { fciDownloadPathSelector } from "../store/reducers/fciDownloadPreview";
 import { savePath } from "../saga/networking/handleDownloadDocument";
 import DocumentsNavigationBar from "./DocumentsNavigationBar";
 
@@ -58,7 +57,6 @@ const DocumentWithSignature = (props: Props) => {
   const [pdfString, setPdfString] = React.useState<string>("");
   const [isPdfLoaded, setIsPdfLoaded] = React.useState(false);
   const documents = useIOSelector(fciSignatureDetailDocumentsSelector);
-  const fciDownloadPath = useIOSelector(fciDownloadPathSelector);
   const { attrs, currentDoc } = props;
 
   /**
