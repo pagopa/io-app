@@ -22,6 +22,8 @@ import {
   isLoadingSelector,
   selectSelfDeclarationBoolAnswers
 } from "../xstate/selectors";
+import { openWebUrl } from "../../../../utils/url";
+import { dpr28Dec2000Url } from "../../../../urls";
 
 const InitiativeSelfDeclarationsScreen = () => {
   const machine = useOnboardingMachineService();
@@ -70,7 +72,9 @@ const InitiativeSelfDeclarationsScreen = () => {
               <H1>{I18n.t("idpay.onboarding.boolPrerequisites.header")}</H1>
               <VSpacer size={16} />
               <Body>{I18n.t("idpay.onboarding.boolPrerequisites.body")}</Body>
-              <Link>{I18n.t("idpay.onboarding.boolPrerequisites.link")}</Link>
+              <Link onPress={() => openWebUrl(dpr28Dec2000Url)}>
+                {I18n.t("idpay.onboarding.boolPrerequisites.link")}
+              </Link>
               <VSpacer size={24} />
               {selfCriteriaBool.map((criteria, index) => (
                 <View key={criteria.code}>
