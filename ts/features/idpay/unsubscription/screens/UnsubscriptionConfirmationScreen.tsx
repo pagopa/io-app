@@ -18,7 +18,7 @@ import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { UnsubscriptionCheckListItem } from "../components/UnsubscriptionCheckListItem";
 import { useConfirmationChecks } from "../hooks/useConfirmationChecks";
 import { useUnsubscriptionMachineService } from "../xstate/provider";
-import { isLoadingSelector } from "../xstate/selectors";
+import { isLoadingSelector, selectInitiativeName } from "../xstate/selectors";
 
 const unsubscriptionChecks: ReadonlyArray<{ title: string; subtitle: string }> =
   [
@@ -45,6 +45,7 @@ const UnsubscriptionConfirmationScreen = () => {
   const isLoading = useSelector(machine, isLoadingSelector);
 
   const checks = useConfirmationChecks(unsubscriptionChecks.length);
+  const initiativeName = useSelector(machine, selectInitiativeName);
 
   const handleClosePress = () =>
     machine.send({
@@ -103,7 +104,7 @@ const UnsubscriptionConfirmationScreen = () => {
   const body = (
     <SafeAreaView style={IOStyles.flex}>
       <View style={styles.content}>
-        <H1>{I18n.t("idpay.unsubscription.title", { initiativeName: "" })}</H1>
+        <H1>{I18n.t("idpay.unsubscription.title", { initiativeName })}</H1>
         <VSpacer size={16} />
         <Body>{I18n.t("idpay.unsubscription.subtitle")}</Body>
         <VSpacer size={16} />
