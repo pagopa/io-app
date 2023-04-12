@@ -10,7 +10,7 @@ import {
 
 export const useIDPayInitiativesFromInstrument = (idWallet: string) => {
   const dispatch = useIODispatch();
-  const namedInitiativesList = useSelector(
+  const initiativesList = useSelector(
     idPayEnabledInitiativesFromInstrumentSelector
   );
   const areInitiativesInError = useSelector(
@@ -42,6 +42,6 @@ export const useIDPayInitiativesFromInstrument = (idWallet: string) => {
   });
 
   return {
-    namedInitiativesList
+    initiativesList
   };
 };

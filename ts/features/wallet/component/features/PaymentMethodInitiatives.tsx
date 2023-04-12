@@ -14,11 +14,9 @@ import I18n from "../../../../i18n";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
 import ROUTES from "../../../../navigation/routes";
-import { GlobalState } from "../../../../store/reducers/types";
 import { PaymentMethod } from "../../../../types/pagopa";
 import { IDPayInitiativesList } from "../../../idpay/wallet/components/IDPayInitiativesListComponents";
 import { idPayInitiativesFromInstrumentGet } from "../../../idpay/wallet/store/actions";
-import { idPayEnabledInitiativesFromInstrumentSelector } from "../../../idpay/wallet/store/reducers";
 import { useIDPayInitiativesFromInstrument } from "../../../idpay/wallet/utils/hooks";
 
 type OwnProps = {
@@ -26,7 +24,6 @@ type OwnProps = {
 } & Pick<React.ComponentProps<typeof View>, "style">;
 
 type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps> &
   OwnProps;
 
 const styles = StyleSheet.create({
@@ -43,14 +40,14 @@ const PaymentMethodInitiatives = (props: Props): React.ReactElement | null => {
   const navigation = useNavigation<IOStackNavigationProp<WalletParamsList>>();
   const idWalletString = String(props.paymentMethod.idWallet);
 
-  const { namedInitiativesList } =
+  const { initiativesList} =
     useIDPayInitiativesFromInstrument(idWalletString);
 
   const navigateToPairableInitiativesList = () =>
     navigation.navigate(ROUTES.WALLET_IDPAY_INITIATIVE_LIST, {
       idWallet: idWalletString
     });
-  return namedInitiativesList.length > 0 ? (
+  return initiativesList.length > 0 ? (
     <View testID="idPayInitiativesList" style={props.style}>
       <View style={styles.row}>
         <View style={styles.row}>
@@ -73,7 +70,7 @@ const PaymentMethodInitiatives = (props: Props): React.ReactElement | null => {
       </View>
       <IDPayInitiativesList
         idWallet={idWalletString}
-        initiatives={namedInitiativesList.slice(0, 3)}
+        initiatives={initiativesList.slice(0, 3)}
       />
     </View>
   ) : null;
@@ -88,11 +85,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       })
     )
 });
-const mapStateToProps = (state: GlobalState) => ({
-  namedInitiativesList: idPayEnabledInitiativesFromInstrumentSelector(state)
-});
 
 export default connect(
-  mapStateToProps,
   mapDispatchToProps
 )(PaymentMethodInitiatives);

@@ -57,7 +57,7 @@ export const IdPayInitiativeListScreen = (props: Props) => {
   ) ?? [undefined, undefined];
 
   const idpayInitiatives =
-    useIDPayInitiativesFromInstrument(idWallet).namedInitiativesList;
+    useIDPayInitiativesFromInstrument(idWallet).initiativesList;
 
   return (
     <BaseScreenComponent
