@@ -14,6 +14,7 @@ import { idPayAreInitiativesFromInstrumentLoadingSelector } from "../../../idpay
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { useIOSelector } from "../../../../store/hooks";
 import { idPayInitiativesFromInstrumentGet } from "../../../idpay/wallet/store/actions";
+import { isIdPayEnabledSelector } from "../../../../store/reducers/backendStatus";
 
 export type CreditCardDetailScreenNavigationParams = Readonly<{
   // Since we don't have a typed ID for the payment methods, we keep the creditCard as param even if it is then read by the store
@@ -30,7 +31,7 @@ type Props = ReturnType<typeof mapDispatchToProps> &
  */
 const CreditCardDetailScreen: React.FunctionComponent<Props> = props => {
   const [walletExisted, setWalletExisted] = React.useState(false);
-  const { loadIdpayInitiatives } = props;
+  const { loadIdpayInitiatives, isIdpayEnabled } = props;
   const paramCreditCard: CreditCardPaymentMethod =
     props.route.params.creditCard;
   // We need to read the card from the store to receive the updates
@@ -51,10 +52,10 @@ const CreditCardDetailScreen: React.FunctionComponent<Props> = props => {
   }, [storeCreditCard, setWalletExisted]);
 
   React.useEffect(() => {
-    if (storeCreditCard?.idWallet !== undefined) {
-      loadIdpayInitiatives(storeCreditCard?.idWallet.toString());
+    if (isIdpayEnabled && storeCreditCard?.idWallet !== undefined) {
+      loadIdpayInitiatives(storeCreditCard.idWallet.toString());
     }
-  }, [storeCreditCard, loadIdpayInitiatives]);
+  }, [isIdpayEnabled, storeCreditCard, loadIdpayInitiatives]);
 
   return (
     <LoadingSpinnerOverlay
@@ -88,6 +89,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(idPayInitiativesFromInstrumentGet.request({ idWallet }))
 });
 const mapStateToProps = (state: GlobalState) => ({
+  isIdpayEnabled: isIdPayEnabledSelector(state),
   creditCardById: (id: number) => creditCardByIdSelector(state, id)
 });
 
