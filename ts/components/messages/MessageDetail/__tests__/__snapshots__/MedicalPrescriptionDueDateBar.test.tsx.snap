@@ -1493,12 +1493,16 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is expiring s
                                             }
                                           >
                                             <RNSVGSvgView
+                                              accessibilityElementsHidden={true}
+                                              accessibilityLabel=""
+                                              accessible={false}
                                               align="xMidYMid"
                                               bbHeight={24}
                                               bbWidth={24}
                                               color={4278219750}
                                               focusable={false}
                                               height={24}
+                                              importantForAccessibility="no-hide-descendants"
                                               meetOrSlice={0}
                                               minX={0}
                                               minY={0}
@@ -2366,12 +2370,16 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is not expira
                                             }
                                           >
                                             <RNSVGSvgView
+                                              accessibilityElementsHidden={true}
+                                              accessibilityLabel=""
+                                              accessible={false}
                                               align="xMidYMid"
                                               bbHeight={24}
                                               bbWidth={24}
                                               color={4278219750}
                                               focusable={false}
                                               height={24}
+                                              importantForAccessibility="no-hide-descendants"
                                               meetOrSlice={0}
                                               minX={0}
                                               minY={0}
@@ -3239,12 +3247,16 @@ exports[`MedicalPrescriptionDueDateBar component when payment info is valid shou
                                             }
                                           >
                                             <RNSVGSvgView
+                                              accessibilityElementsHidden={true}
+                                              accessibilityLabel=""
+                                              accessible={false}
                                               align="xMidYMid"
                                               bbHeight={24}
                                               bbWidth={24}
                                               color={4278219750}
                                               focusable={false}
                                               height={24}
+                                              importantForAccessibility="no-hide-descendants"
                                               meetOrSlice={0}
                                               minX={0}
                                               minY={0}
