@@ -1,19 +1,17 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import WorkunitGenericFailure from "../../../../components/error/WorkunitGenericFailure";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
 import { GlobalState } from "../../../../store/reducers/types";
 import { creditCardByIdSelector } from "../../../../store/reducers/wallet/wallets";
 import { CreditCardPaymentMethod } from "../../../../types/pagopa";
+import { idPayAreInitiativesFromInstrumentLoadingSelector } from "../../../idpay/wallet/store/reducers";
 import BasePaymentMethodScreen from "../../common/BasePaymentMethodScreen";
 import PaymentMethodFeatures from "../../component/features/PaymentMethodFeatures";
 import CreditCardComponent from "../component/CreditCardComponent";
-import { idPayAreInitiativesFromInstrumentLoadingSelector } from "../../../idpay/wallet/store/reducers";
-import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import { useIOSelector } from "../../../../store/hooks";
-import { idPayInitiativesFromInstrumentGet } from "../../../idpay/wallet/store/actions";
 
 export type CreditCardDetailScreenNavigationParams = Readonly<{
   // Since we don't have a typed ID for the payment methods, we keep the creditCard as param even if it is then read by the store
@@ -30,16 +28,13 @@ type Props = ReturnType<typeof mapDispatchToProps> &
  */
 const CreditCardDetailScreen: React.FunctionComponent<Props> = props => {
   const [walletExisted, setWalletExisted] = React.useState(false);
-  const { loadIdpayInitiatives } = props;
   const paramCreditCard: CreditCardPaymentMethod =
     props.route.params.creditCard;
+  const { areIdpayInitiativesLoading } = props;
   // We need to read the card from the store to receive the updates
   // TODO: to avoid this we need a store refactoring for the wallet section (all the component should receive the id and not the wallet, in order to update when needed)
   const storeCreditCard = props.creditCardById(paramCreditCard.idWallet);
 
-  const areIdPayInitiativesLoading = useIOSelector(
-    idPayAreInitiativesFromInstrumentLoadingSelector
-  );
   // This will set the flag `walletExisted` to true
   // if, during this component lifecycle, a card actually
   // existed in the state and has been removed. It's used to
@@ -50,18 +45,12 @@ const CreditCardDetailScreen: React.FunctionComponent<Props> = props => {
     }
   }, [storeCreditCard, setWalletExisted]);
 
-  React.useEffect(() => {
-    if (storeCreditCard?.idWallet !== undefined) {
-      loadIdpayInitiatives(storeCreditCard?.idWallet.toString());
-    }
-  }, [storeCreditCard, loadIdpayInitiatives]);
-
-  return (
-    <LoadingSpinnerOverlay
-      isLoading={areIdPayInitiativesLoading}
-      loadingOpacity={100}
-    >
-      {storeCreditCard ? (
+  if (storeCreditCard !== undefined) {
+    return (
+      <LoadingSpinnerOverlay
+        isLoading={areIdpayInitiativesLoading}
+        loadingOpacity={100}
+      >
         <BasePaymentMethodScreen
           paymentMethod={storeCreditCard}
           card={
@@ -70,27 +59,22 @@ const CreditCardDetailScreen: React.FunctionComponent<Props> = props => {
               creditCard={storeCreditCard}
             />
           }
-          content={
-            areIdPayInitiativesLoading ? null : (
-              <PaymentMethodFeatures paymentMethod={storeCreditCard} />
-            )
-          }
+          content={<PaymentMethodFeatures paymentMethod={storeCreditCard} />}
         />
-      ) : !walletExisted ? (
-        <WorkunitGenericFailure />
-      ) : null}
-    </LoadingSpinnerOverlay>
-  );
+      </LoadingSpinnerOverlay>
+    );
+  } else if (!walletExisted) {
+    return <WorkunitGenericFailure />;
+  }
+  return null;
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loadIdpayInitiatives: (idWallet: string) =>
-    dispatch(idPayInitiativesFromInstrumentGet.request({ idWallet }))
-});
+const mapDispatchToProps = (_: Dispatch) => ({});
 const mapStateToProps = (state: GlobalState) => ({
+  areIdpayInitiativesLoading:
+    idPayAreInitiativesFromInstrumentLoadingSelector(state),
   creditCardById: (id: number) => creditCardByIdSelector(state, id)
 });
-
 export default connect(
   mapStateToProps,
   mapDispatchToProps

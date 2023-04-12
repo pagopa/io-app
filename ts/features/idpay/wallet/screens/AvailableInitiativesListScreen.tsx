@@ -15,14 +15,11 @@ import BaseScreenComponent from "../../../../components/screens/BaseScreenCompon
 import TypedI18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { useIOSelector } from "../../../../store/hooks";
 import customVariables from "../../../../theme/variables";
 import { IDPayInitiativesList } from "../components/IDPayInitiativesListComponents";
-import { idPayInitiativesFromInstrumentGet } from "../store/actions";
-import {
-  idPayAreInitiativesFromInstrumentErrorSelector,
-  idPayInitiativesFromInstrumentSelector
-} from "../store/reducers";
+import { idPayInitiativesFromInstrumentSelector } from "../store/reducers";
+import { useIDPayInitiativesFromInstrument } from "../utils/hooks";
 
 export type AvailableInitiativesListScreenNavigationParams = {
   idWallet: string;
@@ -50,32 +47,17 @@ const brandToLogoPaymentMap: Record<string, IOLogoPaymentType> = {
 export const IdPayInitiativeListScreen = (props: Props) => {
   const { idWallet } = props.route.params;
   const initiatives = useIOSelector(idPayInitiativesFromInstrumentSelector);
-  const [idpayInitiatives, maskedPan, brand] = pipe(
+  const [maskedPan, brand] = pipe(
     initiatives,
     pot.toOption,
     O.fold(
       () => undefined,
-      res => [res.initiativeList, res.maskedPan, res.brand]
+      res => [res.maskedPan, res.brand]
     )
-  ) ?? [[], undefined, undefined];
-  const dispatch = useIODispatch();
-  const areInitiativesInError = useIOSelector(
-    idPayAreInitiativesFromInstrumentErrorSelector
-  );
+  ) ?? [undefined, undefined];
 
-  React.useEffect(() => {
-    const timer = setInterval(
-      () =>
-        dispatch(
-          idPayInitiativesFromInstrumentGet.request({
-            idWallet,
-            isRefreshCall: true
-          })
-        ),
-      areInitiativesInError ? 6000 : 3000
-    );
-    return () => clearInterval(timer);
-  }, [dispatch, idWallet, areInitiativesInError]);
+  const idpayInitiatives =
+    useIDPayInitiativesFromInstrument(idWallet).namedInitiativesList;
 
   return (
     <BaseScreenComponent

@@ -12,15 +12,12 @@ import I18n from "../../../../i18n";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
 import ROUTES from "../../../../navigation/routes";
-import { useIOSelector } from "../../../../store/hooks";
 import { GlobalState } from "../../../../store/reducers/types";
 import { PaymentMethod } from "../../../../types/pagopa";
-import {
-  idPayEnabledInitiativesFromInstrumentSelector,
-  idPayAreInitiativesFromInstrumentErrorSelector
-} from "../../../idpay/wallet/store/reducers";
-import { idPayInitiativesFromInstrumentGet } from "../../../idpay/wallet/store/actions";
 import { IDPayInitiativesList } from "../../../idpay/wallet/components/IDPayInitiativesListComponents";
+import { idPayInitiativesFromInstrumentGet } from "../../../idpay/wallet/store/actions";
+import { idPayEnabledInitiativesFromInstrumentSelector } from "../../../idpay/wallet/store/reducers";
+import { useIDPayInitiativesFromInstrument } from "../../../idpay/wallet/utils/hooks";
 
 type OwnProps = {
   paymentMethod: PaymentMethod;
@@ -41,28 +38,18 @@ const styles = StyleSheet.create({
  * @constructor
  */
 const PaymentMethodInitiatives = (props: Props): React.ReactElement | null => {
-  const { namedInitiativesList, loadIdpayInitiatives } = props;
   const navigation = useNavigation<IOStackNavigationProp<WalletParamsList>>();
   const idWalletString = String(props.paymentMethod.idWallet);
-  const areInitiativesInError = useIOSelector(
-    idPayAreInitiativesFromInstrumentErrorSelector
-  );
 
-  React.useEffect(() => {
-    const timer = setInterval(
-      () => loadIdpayInitiatives(idWalletString, true),
-      areInitiativesInError ? 6000 : 3000
-      // TODO::add exponential backoff see #IODPAY-176
-    );
-    return () => clearInterval(timer);
-  }, [areInitiativesInError, idWalletString, loadIdpayInitiatives]);
+  const { firstThreeInitiatives } =
+    useIDPayInitiativesFromInstrument(idWalletString);
 
   const navigateToPairableInitiativesList = () =>
     navigation.navigate(ROUTES.WALLET_IDPAY_INITIATIVE_LIST, {
       idWallet: idWalletString
     });
-  return namedInitiativesList.length > 0 ? (
-    <View style={props.style}>
+  return firstThreeInitiatives.length > 0 ? (
+    <View testID="idPayInitiativesList" style={props.style}>
       <View style={styles.row}>
         <View style={styles.row}>
           <Initiative
@@ -84,7 +71,7 @@ const PaymentMethodInitiatives = (props: Props): React.ReactElement | null => {
       </View>
       <IDPayInitiativesList
         idWallet={idWalletString}
-        initiatives={namedInitiativesList.slice(0, 3)}
+        initiatives={firstThreeInitiatives}
       />
     </View>
   ) : null;
