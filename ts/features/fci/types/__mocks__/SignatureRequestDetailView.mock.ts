@@ -63,6 +63,7 @@ export const mockSignatureRequestDetailView: SignatureRequestDetailView = {
   expires_at: new Date(now.setDate(now.getDate() + 30)),
   created_at: now,
   dossier_id: "mockDossierId" as NonEmptyString,
+  dossier_title: "mockDossierTitle" as NonEmptyString,
   qr_code_url: "mockQrCodeUrl",
   signer_id: "mockSignerId" as NonEmptyString,
   updated_at: now,
