@@ -2,8 +2,8 @@
 
 exports[`Test Typography Components Body Snapshot 1`] = `
 <Text
-  color="bluegreyDark"
-  defaultColor="bluegreyDark"
+  color="bluegrey"
+  defaultColor="bluegrey"
   defaultWeight="Regular"
   font="TitilliumWeb"
   fontStyle={
@@ -19,7 +19,7 @@ exports[`Test Typography Components Body Snapshot 1`] = `
         "lineHeight": 24,
       },
       Object {
-        "color": "#17324D",
+        "color": "#475A6D",
         "fontFamily": "Titillium Web",
         "fontStyle": "normal",
         "fontWeight": "400",
@@ -135,12 +135,14 @@ exports[`Test Typography Components H3 Snapshot 1`] = `
   fontStyle={
     Object {
       "fontSize": 18,
+      "lineHeight": 22,
     }
   }
   style={
     Array [
       Object {
         "fontSize": 18,
+        "lineHeight": 22,
       },
       Object {
         "color": "#17324D",
@@ -164,12 +166,14 @@ exports[`Test Typography Components H3 Snapshot 2`] = `
   fontStyle={
     Object {
       "fontSize": 18,
+      "lineHeight": 22,
     }
   }
   style={
     Array [
       Object {
         "fontSize": 18,
+        "lineHeight": 22,
       },
       Object {
         "color": "#CCD4DC",
@@ -193,12 +197,14 @@ exports[`Test Typography Components H3 Snapshot 3`] = `
   fontStyle={
     Object {
       "fontSize": 18,
+      "lineHeight": 22,
     }
   }
   style={
     Array [
       Object {
         "fontSize": 18,
+        "lineHeight": 22,
       },
       Object {
         "color": "#FFFFFF",
@@ -222,12 +228,14 @@ exports[`Test Typography Components H3 Snapshot 4`] = `
   fontStyle={
     Object {
       "fontSize": 18,
+      "lineHeight": 22,
     }
   }
   style={
     Array [
       Object {
         "fontSize": 18,
+        "lineHeight": 22,
       },
       Object {
         "color": "#FFFFFF",
@@ -251,12 +259,14 @@ exports[`Test Typography Components H3 Snapshot 5`] = `
   fontStyle={
     Object {
       "fontSize": 18,
+      "lineHeight": 22,
     }
   }
   style={
     Array [
       Object {
         "fontSize": 18,
+        "lineHeight": 22,
       },
       Object {
         "color": "#FFFFFF",
