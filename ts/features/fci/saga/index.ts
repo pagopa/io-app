@@ -35,7 +35,8 @@ import {
   fciShowSignedDocumentsStartRequest,
   fciShowSignedDocumentsEndRequest,
   fciClearAllFiles,
-  fciMetadataRequest
+  fciMetadataRequest,
+  fciSignaturesListRequest
 } from "../store/actions";
 import {
   fciQtspClausesMetadataSelector,
@@ -54,6 +55,7 @@ import {
 } from "./networking/handleDownloadDocument";
 import { handleCreateSignature } from "./networking/handleCreateSignature";
 import { handleGetMetadata } from "./networking/handleGetMetadata";
+import { handleGetSignatureRequests } from "./networking/handleGetSignatureRequests";
 
 /**
  * Handle the FCI Signature requests
@@ -129,6 +131,13 @@ export function* watchFciSaga(
     fciMetadataRequest.request,
     handleGetMetadata,
     fciGeneratedClient.getMetadata,
+    bearerToken
+  );
+
+  yield* takeLatest(
+    fciSignaturesListRequest.request,
+    handleGetSignatureRequests,
+    fciGeneratedClient.getSignatureRequests,
     bearerToken
   );
 }
