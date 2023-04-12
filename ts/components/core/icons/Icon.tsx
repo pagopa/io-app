@@ -354,7 +354,7 @@ export const IOIcons = {
   legHelp: LegIconQuestion /* io-question */,
   search: IconSearch /* io-search */,
   legSearch: LegIconSearch /* io-search */,
-  chevronRight: IconChevronRight /* io-right */,
+  chevronRight: IconChevronRight,
   chevronLeft: IconChevronLeft,
   chevronBottom: IconChevronBottom,
   chevronTop: IconChevronTop,
