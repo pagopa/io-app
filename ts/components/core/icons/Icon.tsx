@@ -272,7 +272,7 @@ export const IOIcons = {
   add: IconAdd,
   legAdd: LegIconAdd,
   completed: IconCompleted,
-  legCompleted: LegIconCompleted /* io-tick-big */,
+  legCompleted: LegIconCompleted,
   success: IconSuccess,
   ok: IconOk,
   fiscalCodeIndividual: IconFiscalCodeIndividual,
