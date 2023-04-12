@@ -93,8 +93,8 @@ export default class DetailedlistItemComponent extends React.Component<Props> {
   private getIconName = () =>
     this.props.isSelectionModeEnabled
       ? this.props.isItemSelected
-        ? "legIconCheckOn"
-        : "legIconCheckOff"
+        ? "legCheckOn"
+        : "legCheckOff"
       : "chevronRightListItem";
 
   shouldComponentUpdate(nextProps: Readonly<Props>): boolean {

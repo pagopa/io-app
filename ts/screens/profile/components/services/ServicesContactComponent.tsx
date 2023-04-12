@@ -95,7 +95,7 @@ const ServicesContactComponent = (props: Props): React.ReactElement => {
           <HSpacer size={24} />
           <View style={{ alignSelf: "flex-start" }}>
             <Icon
-              name={isSelected ? "legIconRadioOn" : "legIconRadioOff"}
+              name={isSelected ? "legRadioOn" : "legRadioOff"}
               color="blue"
               size={28}
             />

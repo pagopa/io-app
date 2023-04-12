@@ -309,7 +309,7 @@ const MessageListItem = ({
             ]}
           >
             <Icon
-              name={isSelected ? "legIconCheckOn" : "legIconCheckOff"}
+              name={isSelected ? "legCheckOn" : "legCheckOff"}
               size={ICON_WIDTH}
               color="blue"
             />

@@ -46,9 +46,7 @@ export default class ChooserListItem extends React.Component<Props> {
   public render() {
     const { isItemSelected, itemIconComponent, itemId, itemTitle } = this.props;
 
-    const iconName: IOIcons = isItemSelected
-      ? "legIconCheckOn"
-      : "legIconCheckOff";
+    const iconName: IOIcons = isItemSelected ? "legCheckOn" : "legCheckOff";
     const iconColor: IOColors = isItemSelected ? "blue" : "bluegrey";
 
     const icon = itemIconComponent

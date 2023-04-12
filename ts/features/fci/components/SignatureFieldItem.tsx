@@ -62,7 +62,7 @@ const SignatureFieldItem = (props: Props) => {
         >
           <Icon
             testID="SignatureFieldItemCheckboxTestID"
-            name={checked ? "legIconCheckOn" : "legIconCheckOff"}
+            name={checked ? "legCheckOn" : "legCheckOff"}
             color={
               checked && !props.disabled
                 ? "blue"

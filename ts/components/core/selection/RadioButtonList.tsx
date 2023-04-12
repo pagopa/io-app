@@ -127,9 +127,7 @@ export const RadioButtonList = <T,>(props: Props<T>) => (
           >
             <Icon
               name={
-                props.selectedItem === item.id
-                  ? "legIconRadioOn"
-                  : "legIconRadioOff"
+                props.selectedItem === item.id ? "legRadioOn" : "legRadioOff"
               }
               size={24}
               color="blue"

@@ -58,7 +58,7 @@ const QtspClauseListItem = (props: Props) => {
         <View style={IOStyles.column}>
           <Icon
             testID="QtspClauseListItemCheckboxTestID"
-            name={checked ? "legIconCheckOn" : "legIconCheckOff"}
+            name={checked ? "legCheckOn" : "legCheckOff"}
             color={checked ? "blue" : "bluegreyDark"}
             size={22}
           />

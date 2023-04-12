@@ -113,7 +113,7 @@ export const DSListItems = () => (
       <ListItemComponent
         title={"Title"}
         subTitle={"Subtitle"}
-        iconName={"io-radio-on"}
+        iconName={"legRadioOn"}
         smallIconSize={true}
         iconOnTop={true}
         onPress={() => alert("Action triggered")}

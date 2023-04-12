@@ -65,7 +65,7 @@ const PossibleVoucherStateOption = ({
       {text}
     </H4>
     <Icon
-      name={checked ? "legIconRadioOn" : "legIconRadioOff"}
+      name={checked ? "legRadioOn" : "legRadioOff"}
       size={22}
       color={checked ? "blue" : "bluegrey"}
     />
