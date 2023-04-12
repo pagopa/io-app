@@ -130,8 +130,8 @@ const UnsubscriptionConfirmationScreen = () => {
         rightButton={{
           title: I18n.t("idpay.unsubscription.button.continue"),
           onPress: confirmModal.present,
-          disabled: !checks.areFullfilled,
-          danger: checks.areFullfilled
+          disabled: !checks.areFulfilled,
+          danger: checks.areFulfilled
         }}
       />
     </SafeAreaView>
