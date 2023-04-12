@@ -31,8 +31,8 @@ import { H5 } from "../../core/typography/H5";
 import { Label } from "../../core/typography/Label";
 import { IOColors } from "../../core/variables/IOColors";
 import { Icon } from "../../core/icons/Icon";
-import Logo, { cardIcons } from "./Logo";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
+import Logo, { cardIcons } from "./Logo";
 
 interface BaseProps {
   wallet: Wallet;
