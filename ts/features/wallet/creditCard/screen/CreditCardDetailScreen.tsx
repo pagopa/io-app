@@ -1,6 +1,6 @@
 import * as React from "react";
+
 import { connect } from "react-redux";
-import { Dispatch } from "redux";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import WorkunitGenericFailure from "../../../../components/error/WorkunitGenericFailure";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
@@ -18,8 +18,7 @@ export type CreditCardDetailScreenNavigationParams = Readonly<{
   creditCard: CreditCardPaymentMethod;
 }>;
 
-type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps> &
+type Props = ReturnType<typeof mapStateToProps> &
   IOStackNavigationRouteProps<WalletParamsList, "WALLET_CREDIT_CARD_DETAIL">;
 
 /**
@@ -69,13 +68,9 @@ const CreditCardDetailScreen: React.FunctionComponent<Props> = props => {
   return null;
 };
 
-const mapDispatchToProps = (_: Dispatch) => ({});
 const mapStateToProps = (state: GlobalState) => ({
   areIdpayInitiativesLoading:
     idPayAreInitiativesFromInstrumentLoadingSelector(state),
   creditCardById: (id: number) => creditCardByIdSelector(state, id)
 });
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CreditCardDetailScreen);
+export default connect(mapStateToProps)(CreditCardDetailScreen);

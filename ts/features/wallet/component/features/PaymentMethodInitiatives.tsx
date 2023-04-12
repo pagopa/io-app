@@ -23,8 +23,7 @@ type OwnProps = {
   paymentMethod: PaymentMethod;
 } & Pick<React.ComponentProps<typeof View>, "style">;
 
-type Props = ReturnType<typeof mapDispatchToProps> &
-  OwnProps;
+type Props = ReturnType<typeof mapDispatchToProps> & OwnProps;
 
 const styles = StyleSheet.create({
   icon: { alignSelf: "center" },
@@ -40,8 +39,7 @@ const PaymentMethodInitiatives = (props: Props): React.ReactElement | null => {
   const navigation = useNavigation<IOStackNavigationProp<WalletParamsList>>();
   const idWalletString = String(props.paymentMethod.idWallet);
 
-  const { initiativesList} =
-    useIDPayInitiativesFromInstrument(idWalletString);
+  const { initiativesList } = useIDPayInitiativesFromInstrument(idWalletString);
 
   const navigateToPairableInitiativesList = () =>
     navigation.navigate(ROUTES.WALLET_IDPAY_INITIATIVE_LIST, {
@@ -86,6 +84,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     )
 });
 
-export default connect(
-  mapDispatchToProps
-)(PaymentMethodInitiatives);
+export default connect(mapDispatchToProps)(PaymentMethodInitiatives);
