@@ -42,7 +42,7 @@ describe("Test ErrorComponent", () => {
     expect(component.queryByText(props.title)).toBeTruthy();
     expect(component.queryByText(props.subTitle)).toBeTruthy();
   });
-  it("with all props should render a FootWithButtons with close button", () => {
+  it("with all props should render a FootStackButtons with close button", () => {
     const props = {
       title: "title",
       subTitle: "subTitle",
@@ -53,7 +53,7 @@ describe("Test ErrorComponent", () => {
     const closeButton = component.getByTestId("FciCloseButtonTestID");
     expect(closeButton).not.toBeNull();
   });
-  it("with all props should render a FootWithButtons with retry button and a close button", () => {
+  it("with all props should render a FootStackButtons with retry button and a close button", () => {
     const props = {
       title: "title",
       subTitle: "subTitle",
@@ -65,7 +65,7 @@ describe("Test ErrorComponent", () => {
     expect(component.getByTestId("FciRetryButtonTestID")).not.toBeNull();
     expect(component.getByTestId("FciCloseButtonTestID")).not.toBeNull();
   });
-  it("with all props should render a FootWithButtons with retry button and assistance button", () => {
+  it("with all props should render a FootStackButtons with retry button and assistance button", () => {
     const props = {
       title: "title",
       subTitle: "subTitle",
@@ -78,7 +78,7 @@ describe("Test ErrorComponent", () => {
     expect(component.getByTestId("FciRetryButtonTestID")).not.toBeNull();
     expect(component.getByTestId("FciAssistanceButtonTestID")).not.toBeNull();
   });
-  it("with all props should render a FootWithButtons with assistance button and a close button", () => {
+  it("with all props should render a FootStackButtons with assistance button and a close button", () => {
     const props = {
       title: "title",
       subTitle: "subTitle",
