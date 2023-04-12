@@ -28,10 +28,12 @@ import { FciParamsList } from "../../navigation/params";
 import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
 import {
   fciClearStateRequest,
+  fciDownloadPreview,
   fciUpdateDocumentSignaturesRequest
 } from "../../store/actions";
 import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentSignatures";
 import { useIODispatch } from "../../../../store/hooks";
+import { savePath } from "../../saga/networking/handleDownloadDocument";
 
 const styles = StyleSheet.create({
   pdf: {
@@ -73,6 +75,12 @@ const FciDocumentsScreen = () => {
       );
     }
   }, [dispatch, documentSignaturesSelector, documents]);
+
+  React.useEffect(() => {
+    if (documents.length !== 0) {
+      dispatch(fciDownloadPreview.request({ url: documents[currentDoc].url }));
+    }
+  }, [currentDoc, documents, dispatch]);
 
   const { present, bottomSheet: fciAbortSignature } =
     useFciAbortSignatureFlow();
@@ -121,7 +129,7 @@ const FciDocumentsScreen = () => {
     <Pdf
       ref={pdfRef}
       source={{
-        uri: `${documents[currentDoc].url}`
+        uri: `${savePath(documents[currentDoc].url)}`
       }}
       onLoadComplete={(numberOfPages, _) => {
         setTotalPages(numberOfPages);

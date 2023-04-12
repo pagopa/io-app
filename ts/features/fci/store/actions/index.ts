@@ -120,6 +120,9 @@ export const fciCancelPollingFilledDocument = createStandardAction(
   "POLL_FILLED_DOCUMENT_CANCEL"
 )<void>();
 
+export const fciClearAllFiles =
+  createStandardAction("CLEAR_ALL_FILES")<{ path: string }>();
+
 export const fciMetadataRequest = createAsyncAction(
   "FCI_METADATA_REQUEST",
   "FCI_METADATA_SUCCESS",
@@ -148,5 +151,6 @@ export type FciActions =
   | ActionType<typeof fciShowSignedDocumentsEndRequest>
   | ActionType<typeof fciPollFilledDocument>
   | ActionType<typeof fciCancelPollingFilledDocument>
+  | ActionType<typeof fciClearAllFiles>
   | ActionType<typeof fciMetadataRequest>
   | ActionType<typeof fciSignaturesListRequest>;

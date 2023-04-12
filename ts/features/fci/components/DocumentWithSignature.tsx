@@ -21,6 +21,8 @@ import { useIOSelector } from "../../../store/hooks";
 import { WithTestID } from "../../../types/WithTestID";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { H5 } from "../../../components/core/typography/H5";
+import { fciDownloadPathSelector } from "../store/reducers/fciDownloadPreview";
+import { savePath } from "../saga/networking/handleDownloadDocument";
 import DocumentsNavigationBar from "./DocumentsNavigationBar";
 
 export type SignatureFieldAttrType =
@@ -56,6 +58,7 @@ const DocumentWithSignature = (props: Props) => {
   const [pdfString, setPdfString] = React.useState<string>("");
   const [isPdfLoaded, setIsPdfLoaded] = React.useState(false);
   const documents = useIOSelector(fciSignatureDetailDocumentsSelector);
+  const fciDownloadPath = useIOSelector(fciDownloadPathSelector);
   const { attrs, currentDoc } = props;
 
   /**
@@ -68,11 +71,9 @@ const DocumentWithSignature = (props: Props) => {
   const drawRectangleOverSignatureFieldById = React.useCallback(
     async (uniqueName: string) => {
       // TODO: refactor this function to use fp-ts https://pagopa.atlassian.net/browse/SFEQS-1601
-      const doc = documents[currentDoc];
-      const url = doc.url;
-
-      const existingPdfBytes = await ReactNativeBlobUtil.fetch("GET", url).then(
-        res => res.base64()
+      const existingPdfBytes = await ReactNativeBlobUtil.fs.readFile(
+        `${savePath(documents[currentDoc].url)}`,
+        "base64"
       );
 
       await PDFDocument.load(pdfFromBase64(existingPdfBytes)).then(res => {
@@ -108,7 +109,7 @@ const DocumentWithSignature = (props: Props) => {
         return res.saveAsBase64().then(r => setPdfString(pdfFromBase64(r)));
       });
     },
-    [documents, currentDoc]
+    [currentDoc, documents]
   );
 
   /**
@@ -122,11 +123,9 @@ const DocumentWithSignature = (props: Props) => {
   const drawRectangleOverSignatureFieldByCoordinates = React.useCallback(
     async (attrs: SignatureFieldToBeCreatedAttrs) => {
       // TODO: refactor this function to use fp-ts https://pagopa.atlassian.net/browse/SFEQS-1601
-      const doc = documents[currentDoc];
-      const url = doc.url;
-
-      const existingPdfBytes = await ReactNativeBlobUtil.fetch("GET", url).then(
-        res => res.base64()
+      const existingPdfBytes = await ReactNativeBlobUtil.fs.readFile(
+        `${savePath(documents[currentDoc].url)}`,
+        "base64"
       );
 
       await PDFDocument.load(pdfFromBase64(existingPdfBytes)).then(res => {
@@ -151,7 +150,7 @@ const DocumentWithSignature = (props: Props) => {
         return res.saveAsBase64().then(r => setPdfString(pdfFromBase64(r)));
       });
     },
-    [documents, currentDoc]
+    [currentDoc, documents]
   );
 
   const onSignatureDetail = React.useCallback(
