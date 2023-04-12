@@ -42,10 +42,11 @@ const unsubscriptionChecks: ReadonlyArray<{ title: string; subtitle: string }> =
 
 const UnsubscriptionConfirmationScreen = () => {
   const machine = useUnsubscriptionMachineService();
+
   const isLoading = useSelector(machine, isLoadingSelector);
+  const initiativeName = useSelector(machine, selectInitiativeName);
 
   const checks = useConfirmationChecks(unsubscriptionChecks.length);
-  const initiativeName = useSelector(machine, selectInitiativeName);
 
   const handleClosePress = () =>
     machine.send({
@@ -74,7 +75,7 @@ const UnsubscriptionConfirmationScreen = () => {
   const confirmModal = useIOBottomSheetModal(
     <Body>{I18n.t("idpay.unsubscription.modal.content")}</Body>,
 
-    I18n.t("idpay.unsubscription.modal.title", { initiativeName: "" }),
+    I18n.t("idpay.unsubscription.modal.title", { initiativeName }),
     250,
 
     <FooterWithButtons
