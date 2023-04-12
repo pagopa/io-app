@@ -36,6 +36,7 @@ type Props = WithTestID<{
   attrs: SignatureFieldAttrType;
   currentDoc: number;
   onClose: () => void;
+  onError?: (error: object) => void;
 }>;
 
 const styles = StyleSheet.create({
@@ -66,7 +67,7 @@ const DocumentWithSignature = (props: Props) => {
    */
   const drawRectangleOverSignatureFieldById = React.useCallback(
     async (uniqueName: string) => {
-      // TODO: refactor this function to use fp-ts
+      // TODO: refactor this function to use fp-ts https://pagopa.atlassian.net/browse/SFEQS-1601
       const doc = documents[currentDoc];
       const url = doc.url;
 
@@ -120,7 +121,7 @@ const DocumentWithSignature = (props: Props) => {
    */
   const drawRectangleOverSignatureFieldByCoordinates = React.useCallback(
     async (attrs: SignatureFieldToBeCreatedAttrs) => {
-      // TODO: refactor this function to use fp-ts
+      // TODO: refactor this function to use fp-ts https://pagopa.atlassian.net/browse/SFEQS-1601
       const doc = documents[currentDoc];
       const url = doc.url;
 
@@ -224,7 +225,7 @@ const DocumentWithSignature = (props: Props) => {
       onPageChanged={(page, _) => {
         setCurrentPage(page);
       }}
-      onError={constNull}
+      onError={props.onError}
       onPressLink={constNull}
       style={styles.pdf}
     />

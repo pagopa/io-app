@@ -27,7 +27,10 @@ import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpac
 import { IOColors } from "../../../../components/core/variables/IOColors";
 import IconFont from "../../../../components/ui/IconFont";
 import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentSignatures";
-import { fciUpdateDocumentSignaturesRequest } from "../../store/actions";
+import {
+  fciEndRequest,
+  fciUpdateDocumentSignaturesRequest
+} from "../../store/actions";
 import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
 import { TypeEnum as ClausesTypeEnum } from "../../../../../definitions/fci/Clause";
 import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
@@ -39,6 +42,7 @@ import {
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { LightModalContext } from "../../../../components/ui/LightModal";
 import DocumentWithSignature from "../../components/DocumentWithSignature";
+import GenericErrorComponent from "../../components/GenericErrorComponent";
 
 export type FciSignatureFieldsScreenNavigationParams = Readonly<{
   documentId: DocumentDetailView["id"];
@@ -60,6 +64,7 @@ const FciSignatureFieldsScreen = (
   const dispatch = useIODispatch();
   const navigation = useNavigation();
   const [isClausesChecked, setIsClausesChecked] = React.useState(false);
+  const [isError, setIsError] = React.useState(false);
   const { showModal, hideModal } = React.useContext(LightModalContext);
 
   // get signatureFields for the current document
@@ -109,6 +114,7 @@ const FciSignatureFieldsScreen = (
         attrs={signatureField.attrs}
         currentDoc={currentDoc}
         onClose={hideModal}
+        onError={() => setIsError(true)}
         testID={"FciDocumentWithSignatureTestID"}
       />
     );
@@ -214,6 +220,16 @@ const FciSignatureFieldsScreen = (
       <IconFont name={"io-back"} style={{ color: IOColors.bluegrey }} />
     </TouchableDefaultOpacity>
   );
+
+  if (isError) {
+    return (
+      <GenericErrorComponent
+        title={I18n.t("features.fci.errors.generic.default.title")}
+        subTitle={I18n.t("features.fci.errors.generic.default.subTitle")}
+        onPress={() => dispatch(fciEndRequest())}
+      />
+    );
+  }
 
   return (
     <BaseScreenComponent
