@@ -7,6 +7,7 @@ import { Label } from "../../../../../../components/core/typography/Label";
 import { InfoBox } from "../../../../../../components/box/InfoBox";
 import { VSpacer } from "../../../../../../components/core/spacer/Spacer";
 import { Icon } from "../../../../../../components/core/icons/Icon";
+import TouchableDefaultOpacity from "../../../../../../components/TouchableDefaultOpacity";
 
 type Props = {
   onRetry: () => void;
@@ -34,9 +35,9 @@ const EycaErrorComponent = (props: Props) => (
       testID={"eyca-error-component"}
     >
       <H4>{I18n.t("bonus.cgn.detail.status.eycaCircuit")}</H4>
-      <ButtonDefaultOpacity onPress={props.openBottomSheet} transparent={true}>
+      <TouchableDefaultOpacity onPress={props.openBottomSheet}>
         <Icon name="info" size={TITLE_ICON_SIZE} color="blue" />
-      </ButtonDefaultOpacity>
+      </TouchableDefaultOpacity>
     </View>
     <VSpacer size={16} />
     <InfoBox iconName="legError" alignedCentral iconSize={INFOBOX_ICON_SIZE}>
