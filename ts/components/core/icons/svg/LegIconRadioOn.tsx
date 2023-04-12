@@ -2,8 +2,8 @@ import React from "react";
 import { Svg, Path } from "react-native-svg";
 import { SVGIconProps } from "../Icon";
 
-const LegIconRadioOn = ({ size, style }: SVGIconProps) => (
-  <Svg width={size} height={size} viewBox="0 0 22 22" style={style}>
+const LegIconRadioOn = ({ size, style, ...props }: SVGIconProps) => (
+  <Svg width={size} height={size} viewBox="0 0 22 22" style={style} {...props}>
     <Path
       d="M4 11c0-3.86599 3.13401-7 7-7 3.866 0 7 3.13401 7 7 0 3.866-3.134 7-7 7-3.86599 0-7-3.134-7-7Z"
       fill="currentColor"

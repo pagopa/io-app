@@ -414,7 +414,12 @@ export type SVGIconProps = {
   accessible: boolean;
   accessibilityElementsHidden: boolean;
   accessibilityLabel: string;
-  importantForAccessibility: string;
+  importantForAccessibility:
+    | "auto"
+    | "yes"
+    | "no"
+    | "no-hide-descendants"
+    | undefined;
 };
 
 /*

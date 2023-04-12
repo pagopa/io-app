@@ -2,8 +2,8 @@ import React from "react";
 import { Svg, Path } from "react-native-svg";
 import { SVGIconProps } from "../Icon";
 
-const LegIconRadioOff = ({ size, style }: SVGIconProps) => (
-  <Svg width={size} height={size} viewBox="0 0 22 22" style={style}>
+const LegIconRadioOff = ({ size, style, ...props }: SVGIconProps) => (
+  <Svg width={size} height={size} viewBox="0 0 22 22" style={style} {...props}>
     <Path
       fillRule="evenodd"
       clipRule="evenodd"

@@ -530,8 +530,8 @@ Once you understand which group you must put the asset in, you must take into co
 ```jsx
 import { Svg, Path } from "react-native-svg";
 
-const IconSpid = ({ size, style }: SVGIconProps) => (
-  <Svg width={size} height={size} viewBox="0 0 24 24" style={style}>
+const IconSpid = ({ size, style, ...props }: SVGIconProps) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24" style={style} {...props}>
     <Path
       d="M13.615 …"
       fill="currentColor"

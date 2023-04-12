@@ -2,8 +2,8 @@ import React from "react";
 import { Svg, Path } from "react-native-svg";
 import { SVGIconProps } from "../Icon";
 
-const LegIconCancel = ({ size, style }: SVGIconProps) => (
-  <Svg width={size} height={size} viewBox="0 0 24 24" style={style}>
+const LegIconCancel = ({ size, style, ...props }: SVGIconProps) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24" style={style} {...props}>
     <Path
       d="m17.023 8.923 1.013.995-2.628 2.58 2.628 2.584-1.013.995-2.627-2.582-2.627 2.582-1.013-.995 2.627-2.583-2.627-2.58 1.013-.996 2.627 2.581 2.627-2.58Z"
       fill="currentColor"
