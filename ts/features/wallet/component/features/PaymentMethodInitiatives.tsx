@@ -1,6 +1,8 @@
-import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
+
 import { StyleSheet, View } from "react-native";
+
+import { useNavigation } from "@react-navigation/native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import Initiative from "../../../../../img/wallet/initiatives.svg";
@@ -41,14 +43,14 @@ const PaymentMethodInitiatives = (props: Props): React.ReactElement | null => {
   const navigation = useNavigation<IOStackNavigationProp<WalletParamsList>>();
   const idWalletString = String(props.paymentMethod.idWallet);
 
-  const { firstThreeInitiatives } =
+  const { namedInitiativesList } =
     useIDPayInitiativesFromInstrument(idWalletString);
 
   const navigateToPairableInitiativesList = () =>
     navigation.navigate(ROUTES.WALLET_IDPAY_INITIATIVE_LIST, {
       idWallet: idWalletString
     });
-  return firstThreeInitiatives.length > 0 ? (
+  return namedInitiativesList.length > 0 ? (
     <View testID="idPayInitiativesList" style={props.style}>
       <View style={styles.row}>
         <View style={styles.row}>
@@ -71,7 +73,7 @@ const PaymentMethodInitiatives = (props: Props): React.ReactElement | null => {
       </View>
       <IDPayInitiativesList
         idWallet={idWalletString}
-        initiatives={firstThreeInitiatives}
+        initiatives={namedInitiativesList.slice(0, 3)}
       />
     </View>
   ) : null;

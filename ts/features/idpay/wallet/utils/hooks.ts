@@ -1,6 +1,5 @@
-import * as React from "react";
-
 import { useFocusEffect } from "@react-navigation/native";
+import * as React from "react";
 import { useSelector } from "react-redux";
 import { useIODispatch } from "../../../../store/hooks";
 import { idPayInitiativesFromInstrumentGet } from "../store/actions";
@@ -43,7 +42,6 @@ export const useIDPayInitiativesFromInstrument = (idWallet: string) => {
   });
 
   return {
-    namedInitiativesList,
-    firstThreeInitiatives: namedInitiativesList.slice(0, 3)
+    namedInitiativesList
   };
 };
