@@ -12,6 +12,7 @@ import { SignatureDetailView } from "../../../../../definitions/fci/SignatureDet
 import { SignatureRequestDetailView } from "../../../../../definitions/fci/SignatureRequestDetailView";
 import { NetworkError } from "../../../../utils/errors";
 import { Metadata } from "../../../../../definitions/fci/Metadata";
+import { SignatureRequestList } from "../../../../../definitions/fci/SignatureRequestList";
 
 /**
  * get and handle the signatureRequest from id
@@ -119,11 +120,20 @@ export const fciCancelPollingFilledDocument = createStandardAction(
   "POLL_FILLED_DOCUMENT_CANCEL"
 )<void>();
 
+export const fciClearAllFiles =
+  createStandardAction("CLEAR_ALL_FILES")<{ path: string }>();
+
 export const fciMetadataRequest = createAsyncAction(
   "FCI_METADATA_REQUEST",
   "FCI_METADATA_SUCCESS",
   "FCI_METADATA_FAILURE"
 )<void, Metadata, NetworkError>();
+
+export const fciSignaturesListRequest = createAsyncAction(
+  "FCI_SIGNATURES_LIST_REQUEST",
+  "FCI_SIGNATURES_LIST_SUCCESS",
+  "FCI_SIGNATURES_LIST_FAILURE"
+)<void, SignatureRequestList, NetworkError>();
 
 export type FciActions =
   | ActionType<typeof fciSignatureRequestFromId>
@@ -141,4 +151,6 @@ export type FciActions =
   | ActionType<typeof fciShowSignedDocumentsEndRequest>
   | ActionType<typeof fciPollFilledDocument>
   | ActionType<typeof fciCancelPollingFilledDocument>
-  | ActionType<typeof fciMetadataRequest>;
+  | ActionType<typeof fciClearAllFiles>
+  | ActionType<typeof fciMetadataRequest>
+  | ActionType<typeof fciSignaturesListRequest>;

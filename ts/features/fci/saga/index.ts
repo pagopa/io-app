@@ -34,7 +34,9 @@ import {
   fciEndRequest,
   fciShowSignedDocumentsStartRequest,
   fciShowSignedDocumentsEndRequest,
-  fciMetadataRequest
+  fciClearAllFiles,
+  fciMetadataRequest,
+  fciSignaturesListRequest
 } from "../store/actions";
 import {
   fciQtspClausesMetadataSelector,
@@ -47,9 +49,13 @@ import { createFciClient } from "../api/backendFci";
 import { handleGetSignatureRequestById } from "./networking/handleGetSignatureRequestById";
 import { handleGetQtspMetadata } from "./networking/handleGetQtspMetadata";
 import { handleCreateFilledDocument } from "./networking/handleCreateFilledDocument";
-import { handleDownloadDocument } from "./networking/handleDownloadDocument";
+import {
+  FciDownloadPreviewDirectoryPath,
+  handleDownloadDocument
+} from "./networking/handleDownloadDocument";
 import { handleCreateSignature } from "./networking/handleCreateSignature";
 import { handleGetMetadata } from "./networking/handleGetMetadata";
+import { handleGetSignatureRequests } from "./networking/handleGetSignatureRequests";
 
 /**
  * Handle the FCI Signature requests
@@ -119,10 +125,19 @@ export function* watchFciSaga(
 
   yield* takeLatest(fciEndRequest, watchFciEndSaga);
 
+  yield* takeLatest(fciClearAllFiles, clearAllFciFiles);
+
   yield* takeLatest(
     fciMetadataRequest.request,
     handleGetMetadata,
     fciGeneratedClient.getMetadata,
+    bearerToken
+  );
+
+  yield* takeLatest(
+    fciSignaturesListRequest.request,
+    handleGetSignatureRequests,
+    fciGeneratedClient.getSignatureRequests,
     bearerToken
   );
 }
@@ -187,9 +202,7 @@ function* clearFciDownloadPreview(
 ) {
   const path = action.payload.path;
   if (path) {
-    yield RNFS.exists(path).then(exists =>
-      exists ? RNFS.unlink(path) : Promise.resolve()
-    );
+    yield* deletePath(path);
   }
   yield* put(fciDownloadPreview.cancel());
   yield* call(
@@ -271,11 +284,26 @@ function* watchFciSignedDocumentsEndSaga(): SagaIterator {
   );
 }
 
+function* deletePath(path: string) {
+  yield RNFS.exists(path).then(exists =>
+    exists ? RNFS.unlink(path) : Promise.resolve()
+  );
+}
+
+/**
+ * Clears cached file for the fci document preview
+ * and reset the state to empty.
+ */
+function* clearAllFciFiles(action: ActionType<typeof fciClearAllFiles>) {
+  yield* deletePath(action.payload.path);
+}
+
 /**
  * Handle the FCI abort requests saga
  */
 function* watchFciEndSaga(): SagaIterator {
   yield* put(fciClearStateRequest());
+  yield* put(fciClearAllFiles({ path: FciDownloadPreviewDirectoryPath }));
   yield* call(
     NavigationService.dispatchNavigationAction,
     CommonActions.navigate(ROUTES.MAIN)
