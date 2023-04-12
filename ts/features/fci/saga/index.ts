@@ -276,11 +276,9 @@ function* watchFciSignedDocumentsEndSaga(): SagaIterator {
 }
 
 function* deletePath(path: string) {
-  if (path) {
-    yield RNFS.exists(path).then(exists =>
-      exists ? RNFS.unlink(path) : Promise.resolve()
-    );
-  }
+  yield RNFS.exists(path).then(exists =>
+    exists ? RNFS.unlink(path) : Promise.resolve()
+  );
 }
 
 /**
