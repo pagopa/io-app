@@ -14504,7 +14504,7 @@ react-native-xml2js@^1.0.3:
     timers "0.1.x"
     xmlbuilder "8.2.x"
 
-react-native@^0.69.9:
+react-native@0.69.9:
   version "0.69.9"
   resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.69.9.tgz#c988dfc2e21b3b586d35a8cc57b102537e760edc"
   integrity sha512-I1xqIn47RWxBToO4E6yqyIPSaK9mZnMiscMfrFpWjQr3Gdkicr9y+twmtrRszxaLdQLjHzh/M3y4qOqc3hZnpg==
