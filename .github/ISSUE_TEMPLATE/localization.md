@@ -2,7 +2,7 @@
 name: Localization
 about: Segnala un errore di traduzione
 title: ''
-labels: "Localization 🌍"
+labels: "i18n"
 assignees: 'thisisjp'
 
 ---
