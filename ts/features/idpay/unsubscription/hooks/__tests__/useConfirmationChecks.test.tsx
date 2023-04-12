@@ -32,8 +32,8 @@ const TestComponent = () => {
 
   return (
     <View>
-      {!checks.areFullfilled && <Text>{UNFULLFILLED_CHECK_TEST}</Text>}
-      {checks.areFullfilled && <Text>{FULLFILLED_CHECK_TEST}</Text>}
+      {!checks.areFulfilled && <Text>{UNFULLFILLED_CHECK_TEST}</Text>}
+      {checks.areFulfilled && <Text>{FULLFILLED_CHECK_TEST}</Text>}
       <TouchableOpacity onPress={() => checks.toggle(0)} testID={`check0`} />
       <TouchableOpacity onPress={() => checks.toggle(1)} testID={`check1`} />
       <TouchableOpacity onPress={() => checks.toggle(2)} testID={`check2`} />
