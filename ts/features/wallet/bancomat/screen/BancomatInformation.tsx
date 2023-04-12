@@ -12,6 +12,7 @@ import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
 import bancomatInformationBottomSheet from "../utils/bancomatInformationBottomSheet";
 import { Icon } from "../../../../components/core/icons/Icon";
+import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 
 type OwnProps = {
   onAddPaymentMethod: () => void;
@@ -47,9 +48,9 @@ const BancomatInformation: React.FunctionComponent<Props> = props => {
     <View testID={"bancomatInformation"}>
       <View style={styles.titleContainer}>
         <H3>{I18n.t("wallet.bancomat.details.debit.title")}</H3>
-        <ButtonDefaultOpacity onPress={present} transparent={true}>
-          <Icon name="info" size={24} color="blue" testID={"noticeIconFont"} />
-        </ButtonDefaultOpacity>
+        <TouchableDefaultOpacity onPress={present} testID={"noticeIconFont"}>
+          <Icon name="info" size={24} color="blue" />
+        </TouchableDefaultOpacity>
       </View>
       <VSpacer size={16} />
       <InternationalCircuitIconsBar />
