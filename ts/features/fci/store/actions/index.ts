@@ -12,6 +12,7 @@ import { SignatureDetailView } from "../../../../../definitions/fci/SignatureDet
 import { SignatureRequestDetailView } from "../../../../../definitions/fci/SignatureRequestDetailView";
 import { NetworkError } from "../../../../utils/errors";
 import { Metadata } from "../../../../../definitions/fci/Metadata";
+import { SignatureRequestList } from "../../../../../definitions/fci/SignatureRequestList";
 
 /**
  * get and handle the signatureRequest from id
@@ -128,6 +129,12 @@ export const fciMetadataRequest = createAsyncAction(
   "FCI_METADATA_FAILURE"
 )<void, Metadata, NetworkError>();
 
+export const fciSignaturesListRequest = createAsyncAction(
+  "FCI_SIGNATURES_LIST_REQUEST",
+  "FCI_SIGNATURES_LIST_SUCCESS",
+  "FCI_SIGNATURES_LIST_FAILURE"
+)<void, SignatureRequestList, NetworkError>();
+
 export type FciActions =
   | ActionType<typeof fciSignatureRequestFromId>
   | ActionType<typeof fciLoadQtspClauses>
@@ -145,4 +152,5 @@ export type FciActions =
   | ActionType<typeof fciPollFilledDocument>
   | ActionType<typeof fciCancelPollingFilledDocument>
   | ActionType<typeof fciClearAllFiles>
-  | ActionType<typeof fciMetadataRequest>;
+  | ActionType<typeof fciMetadataRequest>
+  | ActionType<typeof fciSignaturesListRequest>;
