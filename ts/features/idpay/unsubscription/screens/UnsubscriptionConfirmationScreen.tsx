@@ -16,9 +16,9 @@ import customVariables from "../../../../theme/variables";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { UnsubscriptionCheckListItem } from "../components/UnsubscriptionCheckListItem";
-import { useConfirmationChecks } from "../hooks/useConfirmationChecks";
 import { useUnsubscriptionMachineService } from "../xstate/provider";
 import { isLoadingSelector, selectInitiativeName } from "../xstate/selectors";
+import { useConfirmationChecks } from "../../../../hooks/useConfirmationChecks";
 
 const unsubscriptionChecks: ReadonlyArray<{ title: string; subtitle: string }> =
   [
