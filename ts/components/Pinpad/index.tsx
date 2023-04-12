@@ -163,7 +163,7 @@ class Pinpad extends React.PureComponent<Props, State> {
         ),
         Tuple2(
           E.right({
-            name: "legCancel",
+            name: "cancel",
             size: CANCEL_ICON_WIDTH,
             accessibilityLabel: I18n.t(
               "identification.unlockCode.accessibility.delete"

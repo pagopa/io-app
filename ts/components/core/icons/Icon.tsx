@@ -166,7 +166,6 @@ import LegIconWarning from "./svg/LegIconWarning";
 import LegIconNotice from "./svg/LegIconNotice";
 import LegIconHistory from "./svg/LegIconHistory";
 import LegIconEdit from "./svg/LegIconEdit";
-import LegIconBattery from "./svg/LegIconBattery";
 import LegIconTrashcan from "./svg/LegIconTrashcan";
 import LegIconCalendar from "./svg/LegIconCalendar";
 import LegIconProfile from "./svg/LegIconProfile";
@@ -175,17 +174,12 @@ import LegIconMagicWand from "./svg/LegIconMagicWand";
 import LegIconStarFilled from "./svg/LegIconStarFilled";
 import LegIconStarEmpty from "./svg/LegIconStarEmpty";
 import LegIconSwitchOff from "./svg/LegIconSwitchOff";
-import LegIconDotMenu from "./svg/LegIconDotMenu";
 import LegIconBarcode from "./svg/LegIconBarcode";
 import LegIconSave from "./svg/LegIconSave";
-import LegIconLogin from "./svg/LegIconLogin";
 import LegIconLadybug from "./svg/LegIconLadybug";
 import LegIconTag from "./svg/LegIconTag";
-import LegIconGallery from "./svg/LegIconGallery";
 import LegIconExternalLink from "./svg/LegIconExternalLink";
 import LegIconUnknownGdo from "./svg/LegIconUnknownGdo";
-import LegIconCancel from "./svg/LegIconCancel";
-import LegIconDevice from "./svg/LegIconDevice";
 import LegIconQuestion from "./svg/LegIconQuestion";
 import LegIconSearch from "./svg/LegIconSearch";
 import LegIconClose from "./svg/LegIconClose";
@@ -308,7 +302,6 @@ export const IOIcons = {
   edit: IconEdit,
   legEdit: LegIconEdit,
   battery: IconBattery,
-  legBattery: LegIconBattery,
   trashcan: IconTrashcan,
   legTrashcan: LegIconTrashcan,
   calendar: IconCalendar,
@@ -328,28 +321,23 @@ export const IOIcons = {
   switchOff: IconSwitchOff,
   legSwitchOff: LegIconSwitchOff,
   device: IconDevice,
-  legDevice: LegIconDevice,
   dotMenu: IconDotMenu,
-  legDotMenu: LegIconDotMenu,
   barcode: IconBarcode,
   legBarcode: LegIconBarcode,
   save: IconSave,
   legSave: LegIconSave,
   login: IconLogin,
   logout: IconLogout,
-  legLogin: LegIconLogin,
   ladybug: IconLadybug,
   legLadybug: LegIconLadybug,
   tag: IconTag,
   legTag: LegIconTag,
   gallery: IconGallery,
-  legGallery: LegIconGallery,
   externalLink: IconExternalLink,
   legExternalLink: LegIconExternalLink,
   unknownGdo: IconUnknownGdo,
   legUnknownGdo: LegIconUnknownGdo,
   cancel: IconCancel,
-  legCancel: LegIconCancel,
   help: IconQuestion,
   legHelp: LegIconQuestion /* io-question */,
   search: IconSearch,

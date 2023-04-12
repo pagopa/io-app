@@ -211,7 +211,7 @@ const BonusCardComponent: React.FunctionComponent<Props> = (props: Props) => {
           >
             <Menu>
               <MenuTrigger>
-                <Icon name="legDotMenu" color="white" />
+                <Icon name="dotMenu" color="white" />
               </MenuTrigger>
 
               <MenuOptions>

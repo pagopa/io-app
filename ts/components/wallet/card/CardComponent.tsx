@@ -222,7 +222,7 @@ export default class CardComponent extends React.Component<Props> {
           {!hideMenu && (
             <Menu>
               <MenuTrigger>
-                <Icon name="legDotMenu" color="blue" />
+                <Icon name="dotMenu" color="blue" />
                 <HSpacer size={8} />
               </MenuTrigger>
 
