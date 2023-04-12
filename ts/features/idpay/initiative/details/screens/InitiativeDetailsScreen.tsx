@@ -2,7 +2,6 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation, useRoute } from "@react-navigation/core";
 import { RouteProp, useFocusEffect } from "@react-navigation/native";
 import { format } from "date-fns";
-import { Text } from "native-base";
 import React, { useCallback } from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import {
@@ -13,6 +12,7 @@ import EmptyInitiativeSvg from "../../../../../../img/features/idpay/empty_initi
 import { Alert } from "../../../../../components/Alert";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
+import { Body } from "../../../../../components/core/typography/Body";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { LabelSmall } from "../../../../../components/core/typography/LabelSmall";
 import { IOColors } from "../../../../../components/core/variables/IOColors";
@@ -46,11 +46,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center"
   },
-  textCenter: {
-    textAlign: "center"
+  scroll: {
+    backgroundColor: IOColors["blue-50"]
   },
-  flexGrow: {
-    flexGrow: 1
+  container: {
+    flex: 1,
+    flexGrow: 1,
+    backgroundColor: IOColors.white,
+    zIndex: -1,
+    top: -50,
+    paddingTop: 50,
+    paddingBottom: 500,
+    marginBottom: -500
   }
 });
 
@@ -77,12 +84,14 @@ const InitiativeNotConfiguredComponent = ({
       )}
     </H3>
     <VSpacer size={16} />
-    <Text style={styles.textCenter}>
-      {I18n.t(
-        "idpay.initiative.details.initiativeDetailsScreen.notConfigured.footer",
-        { initiative: initiativeName }
-      )}
-    </Text>
+    <View style={IOStyles.alignCenter}>
+      <Body>
+        {I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.notConfigured.footer",
+          { initiative: initiativeName }
+        )}
+      </Body>
+    </View>
   </View>
 );
 
@@ -136,15 +145,9 @@ export const InitiativeDetailsScreen = () => {
 
     return (
       <>
-        <ScrollView bounces={false}>
+        <ScrollView style={styles.scroll} scrollIndicatorInsets={{ right: 1 }}>
           <InitiativeCardComponent initiative={initiativeData} />
-          <View
-            style={[
-              IOStyles.flex,
-              IOStyles.horizontalContentPadding,
-              styles.flexGrow
-            ]}
-          >
+          <View style={[IOStyles.horizontalContentPadding, styles.container]}>
             <VSpacer size={16} />
             <View style={IOStyles.flex}>
               {initiativeNeedsConfiguration && (

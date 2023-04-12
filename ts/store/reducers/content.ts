@@ -20,7 +20,6 @@ import {
   remoteUndefined,
   RemoteValue
 } from "../../features/bonus/bpd/model/RemoteValue";
-import { IdentityProviderId } from "../../models/IdentityProvider";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
 import { idps as idpsFallback, LocalIdpsFallback } from "../../utils/idps";
 import { getRemoteLocale } from "../../utils/messages";
@@ -31,6 +30,7 @@ import {
 } from "../actions/content";
 import { clearCache } from "../actions/profile";
 import { Action } from "../actions/types";
+import { IdpData } from "../../../definitions/content/IdpData";
 import { currentRouteSelector } from "./navigation";
 import { GlobalState } from "./types";
 
@@ -90,11 +90,10 @@ export const idpContextualHelpDataFromIdSelector = (id: SpidIdp["id"]) =>
       pot.getOrElse(
         pot.map(contextualHelpData, data => {
           const locale = getRemoteLocale();
-
           return pipe(
             data[locale],
             O.fromNullable,
-            O.chain(l => O.fromNullable(l.idps[id as IdentityProviderId]))
+            O.chain(l => O.fromNullable(l.idps[id as keyof IdpData]))
           );
         }),
         O.none

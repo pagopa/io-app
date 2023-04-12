@@ -537,8 +537,8 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                                           }
                                         />
                                         <Text
-                                          color="bluegreyDark"
-                                          defaultColor="bluegreyDark"
+                                          color="bluegrey"
+                                          defaultColor="bluegrey"
                                           defaultWeight="Regular"
                                           font="TitilliumWeb"
                                           fontStyle={
@@ -557,7 +557,7 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                                                 "lineHeight": 24,
                                               },
                                               Object {
-                                                "color": "#17324D",
+                                                "color": "#475A6D",
                                                 "fontFamily": "Titillium Web",
                                                 "fontStyle": "normal",
                                                 "fontWeight": "400",

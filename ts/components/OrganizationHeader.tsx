@@ -1,8 +1,9 @@
-import { Col, Grid, Text as NBText } from "native-base";
+import { Col, Grid } from "native-base";
 import * as React from "react";
 import { ImageURISource, StyleSheet } from "react-native";
 import { MultiImage } from "./ui/MultiImage";
 import { H2 } from "./core/typography/H2";
+import { Body } from "./core/typography/Body";
 
 const styles = StyleSheet.create({
   serviceCol: {
@@ -33,7 +34,7 @@ const OrganizationHeader = ({
   <Grid>
     <Col style={styles.leftColumnStyle}>
       <H2>{organizationName}</H2>
-      <NBText>{serviceName}</NBText>
+      <Body>{serviceName}</Body>
     </Col>
     <Col style={styles.serviceCol}>
       <MultiImage style={styles.serviceMultiImage} source={logoURLs} />

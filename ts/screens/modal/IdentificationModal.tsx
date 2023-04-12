@@ -1,9 +1,9 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Content, Text as NBText } from "native-base";
+import { Content } from "native-base";
 import * as React from "react";
-import { View, Alert, Modal, StatusBar, StyleSheet } from "react-native";
+import { View, Alert, Modal, StatusBar, StyleSheet, Text } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { Link } from "../../components/core/typography/Link";
@@ -42,6 +42,10 @@ import { IOColors } from "../../components/core/variables/IOColors";
 import customVariables from "../../theme/variables";
 
 import { VSpacer } from "../../components/core/spacer/Spacer";
+import { IOStyles } from "../../components/core/variables/IOStyles";
+import { Label } from "../../components/core/typography/Label";
+import { Body } from "../../components/core/typography/Body";
+import { H2 } from "../../components/core/typography/H2";
 import { IdentificationLockModal } from "./IdentificationLockModal";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -75,10 +79,6 @@ const checkTimerThreshold = maxAttempts - freeAttempts;
 const onRequestCloseHandler = () => undefined;
 
 const styles = StyleSheet.create({
-  header: {
-    fontSize: 20,
-    lineHeight: 22
-  },
   bottomContainer: {
     position: "absolute",
     bottom: 20,
@@ -111,8 +111,8 @@ class IdentificationModal extends React.PureComponent<Props, State> {
     };
   }
 
-  private headerRef = React.createRef<NBText>();
-  private errorStatusRef = React.createRef<NBText>();
+  private headerRef = React.createRef<Text>();
+  private errorStatusRef = React.createRef<Text>();
 
   private idUpdateCanInsertPinTooManyAttempts?: number;
 
@@ -422,16 +422,16 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       O.fold(
         () => undefined,
         des => (
-          <NBText
-            alignCenter={true}
-            bold={true}
-            white={true}
-            primary={false}
-            accessible={true}
-            ref={this.errorStatusRef}
-          >
-            {des}
-          </NBText>
+          <View style={IOStyles.alignCenter}>
+            <Label
+              weight="Bold"
+              color="white"
+              accessible={true}
+              ref={this.errorStatusRef}
+            >
+              {des}
+            </Label>
+          </View>
         )
       )
     );
@@ -449,13 +449,10 @@ class IdentificationModal extends React.PureComponent<Props, State> {
 
   private renderHeader(isValidatingTask: boolean) {
     return (
-      <React.Fragment>
-        <NBText
-          bold={true}
-          alignCenter={true}
-          style={styles.header}
-          white={!isValidatingTask}
-          dark={isValidatingTask}
+      <View style={IOStyles.alignCenter}>
+        <H2
+          weight="Bold"
+          color={isValidatingTask ? "bluegreyDark" : "white"}
           accessible={true}
           ref={this.headerRef}
         >
@@ -472,15 +469,11 @@ class IdentificationModal extends React.PureComponent<Props, State> {
                     })
                 )
               )}
-        </NBText>
-        <NBText
-          alignCenter={true}
-          white={!isValidatingTask}
-          dark={isValidatingTask}
-        >
+        </H2>
+        <Body color={isValidatingTask ? "bluegreyDark" : "white"}>
           {this.getInstructions()}
-        </NBText>
-      </React.Fragment>
+        </Body>
+      </View>
     );
   }
 
