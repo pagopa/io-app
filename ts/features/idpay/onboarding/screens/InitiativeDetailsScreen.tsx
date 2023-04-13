@@ -5,6 +5,8 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import {
+  Dimensions,
+  LayoutChangeEvent,
   NativeScrollEvent,
   NativeSyntheticEvent,
   ScrollView,
@@ -58,29 +60,37 @@ const InitiativeDetailsScreen = () => {
   const isLoading = useSelector(machine, isLoadingSelector);
 
   const scrollViewRef = React.useRef<ScrollView>(null);
+  const footerViewRef = React.useRef<View>(null);
 
   const [isDescriptionLoaded, setDescriptionLoaded] = React.useState(false);
-  const [isEndReached, setEndReached] = React.useState(true);
-
-  const shouldRenderScrollToBottomButton = isDescriptionLoaded && !isEndReached;
+  const [isFooterVisible, setFooterVisible] = React.useState(false);
 
   const handleGoBackPress = () => machine.send({ type: "QUIT_ONBOARDING" });
 
   const handleContinuePress = () => machine.send({ type: "ACCEPT_TOS" });
 
-  const handleOnScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    const { layoutMeasurement, contentOffset, contentSize } = event.nativeEvent;
-
-    const padding = 50;
-
-    setEndReached(
-      layoutMeasurement.height + contentOffset.y >= contentSize.height - padding
-    );
+  const handleOnScroll = (_: NativeSyntheticEvent<NativeScrollEvent>) => {
+    if (footerViewRef.current) {
+      footerViewRef.current.measureInWindow((_x, y, _width, height) => {
+        checkFooterVisibility(y, height);
+      });
+    }
   };
 
-  const handleScrollToBottomPress = () => {
-    scrollViewRef.current?.scrollToEnd();
+  const handleFooterLayout = (event: LayoutChangeEvent) => {
+    const { y, height } = event.nativeEvent.layout;
+    checkFooterVisibility(y, height);
   };
+
+  const checkFooterVisibility = (y: number, height: number) => {
+    const top = y;
+    const bottom = top + height;
+    const { height: screenHeight } = Dimensions.get("window");
+    const isInView = bottom > 0 && top < screenHeight;
+    setFooterVisible(isInView);
+  };
+
+  const handleScrollToBottomPress = () => scrollViewRef.current?.scrollToEnd();
 
   const serviceHeaderComponent = pipe(
     initiative,
@@ -110,7 +120,7 @@ const InitiativeDetailsScreen = () => {
 
   const scrollToBottomButton = pipe(
     O.some(undefined),
-    O.filter(_ => shouldRenderScrollToBottomButton),
+    O.filter(_ => isDescriptionLoaded && !isFooterVisible),
     O.map(_ => (
       <View key={"scrollDown"} style={styles.scrollDownButton}>
         <IconButtonSolid
@@ -128,7 +138,7 @@ const InitiativeDetailsScreen = () => {
     O.fromNullable,
     O.filter(_ => isDescriptionLoaded),
     O.map(initiative => (
-      <>
+      <View key={"footer"} ref={footerViewRef} onLayout={handleFooterLayout}>
         <ItemSeparatorComponent noPadded={true} />
         <VSpacer size={16} />
         <OnboardingPrivacyAdvice
@@ -148,7 +158,7 @@ const InitiativeDetailsScreen = () => {
             disabled: isUpserting
           }}
         />
-      </>
+      </View>
     )),
     O.toUndefined
   );
@@ -165,7 +175,7 @@ const InitiativeDetailsScreen = () => {
           scrollIndicatorInsets={{ right: 1 }}
           onScroll={handleOnScroll}
           scrollEventThrottle={400}
-          contentContainerStyle={{ flexGrow: 1, paddingHorizontal: 24 }}
+          contentContainerStyle={styles.scrollContent}
         >
           <VSpacer size={24} />
           {serviceHeaderComponent}
@@ -182,6 +192,10 @@ const InitiativeDetailsScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  scrollContent: {
+    flexGrow: 1,
+    paddingHorizontal: 24
+  },
   scrollDownButton: {
     position: "absolute",
     right: 20,
