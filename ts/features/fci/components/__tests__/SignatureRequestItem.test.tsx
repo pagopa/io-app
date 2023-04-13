@@ -1,19 +1,31 @@
 import * as React from "react";
 import { fireEvent, render } from "@testing-library/react-native";
 import { SignatureRequestListView } from "../../../../../definitions/fci/SignatureRequestListView";
-import { createRandomSignatureRequest } from "../../types/__mocks__/SignaturesList.mock";
 import SignatureRequestItem from "../SignatureRequestItem";
 import { SignatureRequestStatusEnum } from "../../../../../definitions/fci/SignatureRequestStatus";
+import { DossierTitle } from "../../../../../definitions/fci/DossierTitle";
 
 type Props = {
   item: SignatureRequestListView;
   onPress: () => void;
 };
 
+const now = new Date();
+const signatureRequestItem: SignatureRequestListView = {
+  id: "mockedId" as SignatureRequestListView["id"],
+  status: SignatureRequestStatusEnum.SIGNED,
+  created_at: new Date(),
+  dossier_id: "mockedDossierId" as SignatureRequestListView["dossier_id"],
+  dossier_title: "mockedDossierTitle" as DossierTitle,
+  expires_at: new Date(now.setDate(now.getDate() + 30)),
+  signer_id: "mockedSignerId" as SignatureRequestListView["signer_id"],
+  updated_at: new Date()
+};
+
 describe("Test SignatureRequestItem component", () => {
   it("should render a SignatureRequestItem component with props correctly", () => {
     const props = {
-      item: createRandomSignatureRequest(),
+      item: signatureRequestItem,
       onPress: jest.fn()
     };
     const component = renderComponent({ ...props });
@@ -22,7 +34,7 @@ describe("Test SignatureRequestItem component", () => {
   });
   it("should render a SignatureRequestItem component with right title 'mockedDossierTitle'", () => {
     const props = {
-      item: createRandomSignatureRequest(),
+      item: signatureRequestItem,
       onPress: jest.fn()
     };
     const component = renderComponent({ ...props });
@@ -30,7 +42,7 @@ describe("Test SignatureRequestItem component", () => {
     expect(component.queryByText("mockedDossierTitle")).toBeTruthy();
   });
   it("should render a SignatureRequestItem component with signed label", () => {
-    const item = createRandomSignatureRequest();
+    const item = signatureRequestItem;
     const props = {
       item: {
         ...item,
@@ -47,7 +59,7 @@ describe("Test SignatureRequestItem component", () => {
     expect(component.queryAllByText("io-checkbox-off")).toBeTruthy();
   });
   it("should render a SignatureRequestItem component with notAvailable label", () => {
-    const item = createRandomSignatureRequest();
+    const item = signatureRequestItem;
     const props = {
       item: {
         ...item,
@@ -64,7 +76,7 @@ describe("Test SignatureRequestItem component", () => {
     expect(component.queryAllByText("io-checkbox-off")).toBeTruthy();
   });
   it("should render a SignatureRequestItem component with inProgress label", () => {
-    const item = createRandomSignatureRequest();
+    const item = signatureRequestItem;
     const props = {
       item: {
         ...item,
@@ -83,7 +95,7 @@ describe("Test SignatureRequestItem component", () => {
 
   it("should render a SignatureRequestItem component and clickable", () => {
     const props = {
-      item: createRandomSignatureRequest(),
+      item: signatureRequestItem,
       onPress: jest.fn()
     };
     const component = renderComponent({ ...props });
