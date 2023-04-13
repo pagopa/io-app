@@ -46,7 +46,7 @@
   - [Deep linking](#deep-linking)
   - [Fonts](#fonts)
   - [Vector graphics](#vector-graphics)
-  - [End to end test](./TESTING_E2E.md)
+  - [End to end test](e2e/README.md)
   - [Troubleshooting](#troubleshooting)
 
 ## FAQ
