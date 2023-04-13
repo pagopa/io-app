@@ -71,8 +71,8 @@ The Digital Citizenship mobile app is a native mobile application for iOS and An
 
 The development of the app is carried out by several contributors:
 
-* the [Digital Transformation Team](https://teamdigitale.governo.it/)
-* volunteers who support the project.
+* [PagoPA S.p.A.](https://www.pagopa.gov.it/);
+* Volunteers who support the project.
 
 ### Can I use the app?
 
