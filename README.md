@@ -79,7 +79,7 @@ Sure! However you will need a [SPID account](https://www.agid.gov.it/en/platform
 
 ## How can I help you?
 
-[Reporting bugs](https://github.com/pagopa/io-app/issues), bug fixes, [translations](https://github.com/pagopa/io-app/tree/master/locales) and generally any improvement is welcome! [Send us a Pull Request](https://github.com/pagopa/io-app/pulls)!
+[Reporting bugs](https://github.com/pagopa/io-app/issues), bug fixes, [translations](#internationalization) and generally any improvement is welcome! [Send us a Pull Request](https://github.com/pagopa/io-app/pulls)!
 
 ## What permissions are used by the IO app?
 
@@ -331,7 +331,7 @@ The node version used in this project is stored in [.node-version](.node-version
 while the version of Ruby is stored in [.ruby-version](.ruby-version).
 
 ### React Native
-Follow the tutorial [Setting up the development environment](https://reactnative.dev/docs/environment-setup) and install `React Native CLI` for your operating system.
+Follow the [official tutorial](https://reactnative.dev/docs/environment-setup) for installing the `React Native CLI` for your operating system.
 
 If you have a macOS system, you can follow both the tutorial for iOS and for Android. If you have a Linux or Windows system, you need only to install the development environment for Android.
 
@@ -458,16 +458,17 @@ _Note: the alpha releases on Android are automatically carried by the `alpha-rel
 - ## iOS build 
   - ***error: redefinition of module 'YogaKit' build Failed***
   
-  Can be solved by restarting your machine.
+    Can be solved by restarting your machine.
 
 # Architecture
 
 ## Main technologies used
 
 * [TypeScript](https://www.typescriptlang.org/)
+* [React Native](https://facebook.github.io/react-native)
 * [Redux](http://redux.js.org/)
 * [Redux Saga](https://redux-saga.js.org/)
-* [React Native](https://facebook.github.io/react-native)
+
 
 ## SPID Authentication
 
