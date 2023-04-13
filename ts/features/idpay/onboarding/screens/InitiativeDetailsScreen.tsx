@@ -13,9 +13,7 @@ import {
 } from "react-native";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import { ContentWrapper } from "../../../../components/core/ContentWrapper";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import BlockButtons from "../../../../components/ui/BlockButtons";
 import IconButtonSolid from "../../../../components/ui/IconButtonSolid";
