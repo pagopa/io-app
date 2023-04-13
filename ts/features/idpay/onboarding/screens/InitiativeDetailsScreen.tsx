@@ -1,7 +1,6 @@
 /* eslint-disable functional/immutable-data */
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { useSelector } from "@xstate/react";
-import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
@@ -108,10 +107,12 @@ const InitiativeDetailsScreen = () => {
   );
 
   const onboardingPrivacyAdvice = pipe(
-    sequenceS(O.option)({
-      privacyUrl: pipe(initiative?.privacyLink, O.fromNullable),
-      tosUrl: pipe(initiative?.tcLink, O.fromNullable)
-    }),
+    initiative,
+    O.fromNullable,
+    O.map(initiative => ({
+      privacyUrl: initiative.privacyLink,
+      tosUrl: initiative.tcLink
+    })),
     O.map(props => <OnboardingPrivacyAdvice key={"tos"} {...props} />),
     O.toUndefined
   );
