@@ -425,31 +425,6 @@ To test the io-app on a real iOS device you must:
 9. On the real device connected, accept to trust the device
 10. From Xcode select the device by the drop-down list and run ('Product' -> 'Run') on the iOS device, if the unit tests fail they can be disabled by going to Product -> Scheme -> Edit Scheme -> Build
 
-## Build (release)
-
-For the release of the app on the stores we use [Fastlane](https://fastlane.tools/).
-
-### iOS
-
-The beta distribution is done with [TestFlight](https://developer.apple.com/testflight/).
-
-To release a new beta:
-
-```
-$ cd ios
-$ bundle exec fastlane testflight_beta
-```
-
-### Android
-
-To release a new alpha:
-
-```
-$ bundle exec fastlane alpha
-```
-
-_Note: the alpha releases on Android are automatically carried by the `alpha-release-android` job on [circleci](https://circleci.com/gh/pagopa/io-app) on each by merge to the master branch._
-
 # Troubleshooting
 - ## Bundler
   - ***Can't find gem bundler (>= 0.a) with executable bundle (Gem::GemNotFoundException):***
