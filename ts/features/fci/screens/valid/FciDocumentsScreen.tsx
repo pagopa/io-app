@@ -1,6 +1,6 @@
 import * as React from "react";
 import Pdf from "react-native-pdf";
-import { constNull, pipe } from "fp-ts/lib/function";
+import { pipe } from "fp-ts/lib/function";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as O from "fp-ts/lib/Option";
 import { SafeAreaView, StyleSheet } from "react-native";
@@ -32,8 +32,8 @@ import {
   fciUpdateDocumentSignaturesRequest
 } from "../../store/actions";
 import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentSignatures";
-import { useIODispatch } from "../../../../store/hooks";
-import { savePath } from "../../saga/networking/handleDownloadDocument";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { fciDownloadPathSelector } from "../../store/reducers/fciDownloadPreview";
 
 const styles = StyleSheet.create({
   pdf: {
@@ -53,6 +53,7 @@ const FciDocumentsScreen = () => {
   const route = useRoute<RouteProp<FciParamsList, "FCI_DOCUMENTS">>();
   const currentDoc = route.params.currentDoc ?? 0;
   const documents = useSelector(fciSignatureDetailDocumentsSelector);
+  const downloadPath = useIOSelector(fciDownloadPathSelector);
   const navigation = useNavigation();
   const documentSignaturesSelector = useSelector(fciDocumentSignaturesSelector);
   const dispatch = useIODispatch();
@@ -129,7 +130,7 @@ const FciDocumentsScreen = () => {
     <Pdf
       ref={pdfRef}
       source={{
-        uri: `${savePath(documents[currentDoc].url)}`
+        uri: `${downloadPath}`
       }}
       onLoadComplete={(numberOfPages, _) => {
         setTotalPages(numberOfPages);
@@ -137,8 +138,6 @@ const FciDocumentsScreen = () => {
       onPageChanged={(page, _) => {
         setCurrentPage(page);
       }}
-      onError={constNull}
-      onPressLink={constNull}
       style={styles.pdf}
     />
   );
