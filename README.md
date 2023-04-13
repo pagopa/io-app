@@ -82,8 +82,6 @@ Sure! However you will need a [SPID account](https://www.agid.gov.it/en/platform
 
 [Reporting bugs](https://github.com/pagopa/io-app/issues), bug fixes, [translations](https://github.com/pagopa/io-app/tree/master/locales) and generally any improvement is welcome! [Send us a Pull Request](https://github.com/pagopa/io-app/pulls)!
 
-If you have some time to spare and wish to get involved on a regular basis, [contact us](mailto:federico.feroldi@pagopa.it).
-
 ### What permissions are used by the IO app?
 
 Because different platforms have different types of Permissions below we have two sections about permissions requested by the IO app for both environments (iOS and Android). Some permissions may be defined but not used. Their presence is due to dependencies with third-party modules or because they are required by the target store.
