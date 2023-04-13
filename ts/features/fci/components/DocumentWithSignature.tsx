@@ -222,6 +222,7 @@ const DocumentWithSignature = (props: Props) => {
       onPageChanged={(page, _) => {
         setCurrentPage(page);
       }}
+      // TODO: add test for errors https://pagopa.atlassian.net/browse/SFEQS-1606
       onError={props.onError}
       onPressLink={constNull}
       style={styles.pdf}
