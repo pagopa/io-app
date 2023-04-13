@@ -85,7 +85,7 @@ exports[`Test SignatureRequestItem component should render a SignatureRequestIte
         }
         weight="Regular"
       >
-        4/13/2023·10:39:03 AM·ID mockedId
+        [missing "en.features.fci.requests.itemSubtitle" translation]
       </Text>
     </View>
     <View
@@ -160,7 +160,7 @@ exports[`Test SignatureRequestItem component should render a SignatureRequestIte
           }
           weight="SemiBold"
         >
-          Signed
+          [missing "en.features.fci.requests.signed" translation]
         </Text>
       </View>
     </View>

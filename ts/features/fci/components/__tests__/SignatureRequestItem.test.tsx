@@ -56,7 +56,6 @@ describe("Test SignatureRequestItem component", () => {
     expect(
       component.getByTestId("FciSignatureRequestItemBadgeSigned")
     ).toBeTruthy();
-    expect(component.queryAllByText("io-checkbox-off")).toBeTruthy();
   });
   it("should render a SignatureRequestItem component with notAvailable label", () => {
     const item = signatureRequestItem;
@@ -73,7 +72,6 @@ describe("Test SignatureRequestItem component", () => {
     expect(
       component.getByTestId("FciSignatureRequestItemBadgeNotAvailable")
     ).toBeTruthy();
-    expect(component.queryAllByText("io-checkbox-off")).toBeTruthy();
   });
   it("should render a SignatureRequestItem component with inProgress label", () => {
     const item = signatureRequestItem;
@@ -90,7 +88,6 @@ describe("Test SignatureRequestItem component", () => {
     expect(
       component.getByTestId("FciSignatureRequestItemBadgeInProgress")
     ).toBeTruthy();
-    expect(component.queryAllByText("io-checkbox-off")).toBeTruthy();
   });
 
   it("should render a SignatureRequestItem component and clickable", () => {
