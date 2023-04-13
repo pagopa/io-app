@@ -134,6 +134,13 @@ const getItems = (props: ItemProps): ReadonlyArray<ItemPermissionProps> => [
     testId: "addCardIssues"
   },
   {
+    id: "addFciIssues",
+    icon: <StockIcon {...iconProps} />,
+    title: I18n.t("support.askPermissions.fci"),
+    value: I18n.t("support.askPermissions.fciValue"),
+    testId: "addFciIssues"
+  },
+  {
     icon: <DeviceIcon {...iconProps} />,
     title: I18n.t("support.askPermissions.deviceAndOS"),
     value: props.deviceDescription,
@@ -176,6 +183,7 @@ const getItems = (props: ItemProps): ReadonlyArray<ItemPermissionProps> => [
 export type ZendeskAskPermissionsNavigationParams = {
   assistanceForPayment: boolean;
   assistanceForCard: boolean;
+  assistanceForFci: boolean;
 };
 
 /**
@@ -186,7 +194,8 @@ const ZendeskAskPermissions = () => {
   const route =
     useRoute<RouteProp<ZendeskParamsList, "ZENDESK_ASK_PERMISSIONS">>();
 
-  const { assistanceForPayment, assistanceForCard } = route.params;
+  const { assistanceForPayment, assistanceForCard, assistanceForFci } =
+    route.params;
 
   const dispatch = useIODispatch();
   const workUnitCompleted = () => dispatch(zendeskSupportCompleted());
@@ -268,6 +277,8 @@ const ZendeskAskPermissions = () => {
     ...(!assistanceForPayment ? ["paymentIssues"] : []),
     // if user is not asking assistance for a payment, remove the related items from those ones shown
     ...(!assistanceForCard ? ["addCardIssues"] : []),
+    // if user is not asking assistance for a signing flow, remove the related items from those ones shown
+    ...(!assistanceForFci ? ["addFciIssues"] : []),
     // if user is not logged in, remove the items related to his/her profile
     ...(!isUserLoggedIn
       ? ["profileNameSurname", "profileFiscalCode", "profileEmail"]
@@ -278,6 +289,7 @@ const ZendeskAskPermissions = () => {
   const items = getItems(itemsProps)
     .filter(it => (!assistanceForPayment ? it.id !== "paymentIssues" : true))
     .filter(it => (!assistanceForCard ? it.id !== "addCardIssues" : true))
+    .filter(it => (!assistanceForFci ? it.id !== "addFciIssues" : true))
     .filter(it => !itemsToRemove.includes(it.id ?? ""))
     // remove these item whose have no value associated
     .filter(it => it.value !== notAvailable);
