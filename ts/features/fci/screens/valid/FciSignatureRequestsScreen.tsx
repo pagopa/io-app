@@ -10,7 +10,7 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { fciSignaturesListSelector } from "../../store/reducers/fciSignaturesList";
 import { fciSignaturesListRequest } from "../../store/actions";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import SectionHeaderComponent from "../../../../components/screens/SectionHeaderComponent";
+import I18n from "../../../../i18n";
 
 const FciSignatureRequestsScreen = () => {
   const dispatch = useIODispatch();
@@ -19,12 +19,6 @@ const FciSignatureRequestsScreen = () => {
   React.useEffect(() => {
     dispatch(fciSignaturesListRequest.request());
   }, [dispatch]);
-
-  const renderSectionHeader = (info: { section: any }): React.ReactNode => (
-    <SectionHeaderComponent
-      sectionHeader={info.section.created_at.toLocaleDateString()}
-    />
-  );
 
   const renderSignatureRequests = () => (
     <SectionList
@@ -45,11 +39,11 @@ const FciSignatureRequestsScreen = () => {
     <LoadingSpinnerOverlay isLoading={dataItems === undefined}>
       <BaseScreenComponent
         goBack={true}
-        headerTitle={"Stato delle firme"}
+        headerTitle={I18n.t("features.fci.requests.header")}
         contextualHelp={emptyContextualHelp}
       >
         <SafeAreaView style={IOStyles.flex}>
-          <ScreenContent title={"Gli stati delle tue firme"}>
+          <ScreenContent title={I18n.t("features.fci.requests.title")}>
             <View style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
               {renderSignatureRequests()}
             </View>
