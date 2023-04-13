@@ -538,38 +538,60 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
         ]
       }
     >
-      <Text
+      <RNSVGSvgView
         accessibilityElementsHidden={true}
         accessibilityLabel=""
         accessible={false}
-        allowFontScaling={false}
+        align="xMidYMid"
+        bbHeight={24}
+        bbWidth={24}
+        color={4278219750}
+        focusable={false}
+        height={24}
         importantForAccessibility="no-hide-descendants"
+        meetOrSlice={0}
+        minX={0}
+        minY={0}
         style={
           Array [
             Object {
-              "color": "#0073E6",
-              "fontSize": 24,
+              "backgroundColor": "transparent",
+              "borderWidth": 0,
             },
-            Array [
-              Object {},
-              Object {
-                "color": "#0073E6",
-              },
-              Object {
-                "fontSize": 24,
-              },
-            ],
             Object {
-              "fontFamily": "io-icon-font",
-              "fontStyle": "normal",
-              "fontWeight": "normal",
+              "color": "#0073E6",
             },
-            Object {},
+            Object {
+              "flex": 0,
+              "height": 24,
+              "width": 24,
+            },
           ]
         }
+        tintColor={4278219750}
+        vbHeight={22}
+        vbWidth={22}
+        width={24}
       >
-        R
-      </Text>
+        <RNSVGGroup>
+          <RNSVGPath
+            clipRule={0}
+            d="M19.25 0H2.75C1.23122 0 0 1.23122 0 2.75v16.5C0 20.7688 1.23122 22 2.75 22h16.5c1.5188 0 2.75-1.2312 2.75-2.75V2.75C22 1.23122 20.7688 0 19.25 0ZM1.83333 2.75c0-.50626.41041-.91667.91667-.91667h16.5c.5063 0 .9167.41041.9167.91667v16.5c0 .5063-.4104.9167-.9167.9167H2.75c-.50626 0-.91667-.4104-.91667-.9167V2.75Z"
+            fill={
+              Array [
+                2,
+              ]
+            }
+            fillRule={0}
+            propList={
+              Array [
+                "fill",
+                "fillRule",
+              ]
+            }
+          />
+        </RNSVGGroup>
+      </RNSVGSvgView>
     </View>
   </View>
 </View>
@@ -872,38 +894,102 @@ exports[`MessageList Item component when \`isSelectionModeEnabled\` is true and 
         ]
       }
     >
-      <Text
+      <RNSVGSvgView
         accessibilityElementsHidden={true}
         accessibilityLabel=""
         accessible={false}
-        allowFontScaling={false}
+        align="xMidYMid"
+        bbHeight={24}
+        bbWidth={24}
+        color={4278219750}
+        focusable={false}
+        height={24}
         importantForAccessibility="no-hide-descendants"
+        meetOrSlice={0}
+        minX={0}
+        minY={0}
         style={
           Array [
             Object {
-              "color": "#0073E6",
-              "fontSize": 24,
+              "backgroundColor": "transparent",
+              "borderWidth": 0,
             },
-            Array [
-              Object {},
-              Object {
-                "color": "#0073E6",
-              },
-              Object {
-                "fontSize": 24,
-              },
-            ],
             Object {
-              "fontFamily": "io-icon-font",
-              "fontStyle": "normal",
-              "fontWeight": "normal",
+              "color": "#0073E6",
             },
-            Object {},
+            Object {
+              "flex": 0,
+              "height": 24,
+              "width": 24,
+            },
           ]
         }
+        tintColor={4278219750}
+        vbHeight={22}
+        vbWidth={22}
+        width={24}
       >
-        S
-      </Text>
+        <RNSVGGroup>
+          <RNSVGPath
+            d="m10.8251 15.2047-.0323-.0311 7.2435-7.24342-1.7369-1.73684-7.27371 7.27376-3.50128-3.3812-1.63504 1.6931 5.30066 5.1188 1.63507-1.6931Z"
+            fill={
+              Array [
+                2,
+              ]
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+          />
+          <RNSVGPath
+            clipRule={0}
+            d="M2.75 0h16.5C20.7688 0 22 1.23122 22 2.75v16.5c0 1.5188-1.2312 2.75-2.75 2.75H2.75C1.23122 22 0 20.7688 0 19.25V2.75C0 1.23122 1.23122 0 2.75 0Zm0 1.83333c-.50626 0-.91667.41041-.91667.91667v16.5c0 .5063.41041.9167.91667.9167h16.5c.5063 0 .9167-.4104.9167-.9167V2.75c0-.50626-.4104-.91667-.9167-.91667H2.75Z"
+            fill={
+              Array [
+                2,
+              ]
+            }
+            fillRule={0}
+            propList={
+              Array [
+                "fill",
+                "fillRule",
+              ]
+            }
+          />
+          <RNSVGPath
+            d="m10.8251 15.2047-.0323-.0311 7.2435-7.24342-1.7369-1.73684-7.27371 7.27376-3.50128-3.3812-1.63504 1.6931 5.30066 5.1188 1.63507-1.6931Z"
+            fill={
+              Array [
+                2,
+              ]
+            }
+            propList={
+              Array [
+                "fill",
+              ]
+            }
+          />
+          <RNSVGPath
+            clipRule={0}
+            d="M2.75 0h16.5C20.7688 0 22 1.23122 22 2.75v16.5c0 1.5188-1.2312 2.75-2.75 2.75H2.75C1.23122 22 0 20.7688 0 19.25V2.75C0 1.23122 1.23122 0 2.75 0Zm0 1.83333c-.50626 0-.91667.41041-.91667.91667v16.5c0 .5063.41041.9167.91667.9167h16.5c.5063 0 .9167-.4104.9167-.9167V2.75c0-.50626-.4104-.91667-.9167-.91667H2.75Z"
+            fill={
+              Array [
+                2,
+              ]
+            }
+            fillRule={0}
+            propList={
+              Array [
+                "fill",
+                "fillRule",
+              ]
+            }
+          />
+        </RNSVGGroup>
+      </RNSVGSvgView>
     </View>
   </View>
 </View>
