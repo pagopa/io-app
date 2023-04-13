@@ -34,6 +34,7 @@ const FciThankyouScreen = () => {
       subTitle={I18n.t("features.fci.errors.generic.signing.subTitle")}
       onPress={() => dispatch(fciStartRequest())}
       retry={true}
+      assistance={true}
       testID="FciTypErrorScreenTestID"
     />
   );

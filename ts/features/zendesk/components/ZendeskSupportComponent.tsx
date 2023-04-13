@@ -29,6 +29,7 @@ import { handleContactSupport } from "../utils";
 type Props = {
   assistanceForPayment: boolean;
   assistanceForCard: boolean;
+  assistanceForFci: boolean;
 };
 
 /**
@@ -41,7 +42,8 @@ type Props = {
  */
 const ZendeskSupportComponent = ({
   assistanceForPayment,
-  assistanceForCard
+  assistanceForCard,
+  assistanceForFci
 }: Props) => {
   const profile = useIOSelector(profileSelector);
   const maybeProfile: O.Option<InitializedProfile> = pot.toOption(profile);
@@ -54,9 +56,16 @@ const ZendeskSupportComponent = ({
         navigation,
         assistanceForPayment,
         assistanceForCard,
+        assistanceForFci,
         zendeskRemoteConfig
       ),
-    [navigation, assistanceForPayment, assistanceForCard, zendeskRemoteConfig]
+    [
+      navigation,
+      assistanceForPayment,
+      assistanceForCard,
+      assistanceForFci,
+      zendeskRemoteConfig
+    ]
   );
 
   return (
@@ -89,12 +98,20 @@ const ZendeskSupportComponent = ({
           if (O.isNone(maybeProfile)) {
             navigation.navigate(ZENDESK_ROUTES.MAIN, {
               screen: ZENDESK_ROUTES.SEE_REPORTS_ROUTERS,
-              params: { assistanceForPayment, assistanceForCard }
+              params: {
+                assistanceForPayment,
+                assistanceForCard,
+                assistanceForFci
+              }
             });
           } else {
             navigation.navigate(ZENDESK_ROUTES.MAIN, {
               screen: ZENDESK_ROUTES.ASK_SEE_REPORTS_PERMISSIONS,
-              params: { assistanceForPayment, assistanceForCard }
+              params: {
+                assistanceForPayment,
+                assistanceForCard,
+                assistanceForFci
+              }
             });
           }
         }}
