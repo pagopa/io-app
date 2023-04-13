@@ -1,7 +1,6 @@
 /* eslint-disable functional/immutable-data */
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { useSelector } from "@xstate/react";
-import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
@@ -15,6 +14,7 @@ import {
 } from "react-native";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
+import OrganizationHeader from "../../../../components/OrganizationHeader";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../components/core/typography/Body";
 import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
@@ -139,6 +139,20 @@ const InitiativeDetailsScreen = () => {
 
   const setMarkdownIsLoaded = () => (isMarkdownLoadedRef.current = true);
 
+  const serviceHeaderComponent = pipe(
+    initiative,
+    O.fromNullable,
+    O.map(initiative => (
+      <OrganizationHeader
+        key={"header"}
+        serviceName={initiative.organizationName}
+        organizationName={initiative.initiativeName}
+        logoURLs={[{ uri: initiative.logoURL }]}
+      />
+    )),
+    O.toUndefined
+  );
+
   const descriptionComponent = pipe(
     initiative?.description,
     O.fromNullable,
@@ -151,10 +165,12 @@ const InitiativeDetailsScreen = () => {
   );
 
   const beforeContinueComponent = pipe(
-    sequenceS(O.option)({
-      privacyUrl: pipe(initiative?.privacyLink, O.fromNullable),
-      tosUrl: pipe(initiative?.tcLink, O.fromNullable)
-    }),
+    initiative,
+    O.fromNullable,
+    O.map(initiative => ({
+      privacyUrl: initiative.privacyLink,
+      tosUrl: initiative.tcLink
+    })),
     O.map(props => <BeforeContinueBody key={"tos"} {...props} />),
     O.toUndefined
   );
@@ -175,6 +191,7 @@ const InitiativeDetailsScreen = () => {
             style={IOStyles.flex}
           >
             <View style={IOStyles.horizontalContentPadding}>
+              {serviceHeaderComponent}
               <VSpacer size={16} />
               {descriptionComponent}
               <VSpacer size={16} />
