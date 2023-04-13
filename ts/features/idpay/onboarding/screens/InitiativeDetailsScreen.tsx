@@ -16,16 +16,13 @@ import {
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
-import { Body } from "../../../../components/core/typography/Body";
-import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import Markdown from "../../../../components/ui/Markdown";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { showToast } from "../../../../utils/showToast";
-import { openWebUrl } from "../../../../utils/url";
+import { OnboardingPrivacyAdvice } from "../components/OnboardingPrivacyAdvice";
 import { IDPayOnboardingParamsList } from "../navigation/navigator";
 import { useOnboardingMachineService } from "../xstate/provider";
 import {
@@ -42,46 +39,6 @@ type InitiativeDetailsRouteProps = RouteProp<
   IDPayOnboardingParamsList,
   "IDPAY_ONBOARDING_INITIATIVE_DETAILS"
 >;
-
-type BeforeContinueBodyProps = {
-  tosUrl: string;
-  privacyUrl: string;
-};
-
-const BeforeContinueBody = (props: BeforeContinueBodyProps) => {
-  const { tosUrl, privacyUrl } = props;
-
-  const handlePrivacyLinkPress = () =>
-    openWebUrl(privacyUrl, () => showToast(I18n.t("global.jserror.title")));
-
-  const handleTosLinkPress = () =>
-    openWebUrl(tosUrl, () => showToast(I18n.t("global.jserror.title")));
-
-  return (
-    <Body accessibilityRole="link" testID="IDPayOnboardingBeforeContinue">
-      <LabelSmall weight={"Regular"} color={"bluegrey"}>
-        {I18n.t("idpay.onboarding.beforeContinue.text1")}
-      </LabelSmall>
-      <LabelSmall
-        color={"blue"}
-        onPress={handleTosLinkPress}
-        testID="IDPayOnboardingPrivacyLink"
-      >
-        {I18n.t("idpay.onboarding.beforeContinue.tosLink")}
-      </LabelSmall>
-      <LabelSmall weight={"Regular"} color={"bluegrey"}>
-        {I18n.t("idpay.onboarding.beforeContinue.text2")}
-      </LabelSmall>
-      <LabelSmall
-        color={"blue"}
-        onPress={handlePrivacyLinkPress}
-        testID="IDPayOnboardingTOSLink"
-      >
-        {I18n.t("idpay.onboarding.beforeContinue.privacyLink")}
-      </LabelSmall>
-    </Body>
-  );
-};
 
 const InitiativeDetailsScreen = () => {
   const route = useRoute<InitiativeDetailsRouteProps>();
@@ -150,12 +107,12 @@ const InitiativeDetailsScreen = () => {
     O.toUndefined
   );
 
-  const beforeContinueComponent = pipe(
+  const onboardingPrivacyAdvice = pipe(
     sequenceS(O.option)({
       privacyUrl: pipe(initiative?.privacyLink, O.fromNullable),
       tosUrl: pipe(initiative?.tcLink, O.fromNullable)
     }),
-    O.map(props => <BeforeContinueBody key={"tos"} {...props} />),
+    O.map(props => <OnboardingPrivacyAdvice key={"tos"} {...props} />),
     O.toUndefined
   );
 
@@ -180,7 +137,7 @@ const InitiativeDetailsScreen = () => {
               <VSpacer size={16} />
               <ItemSeparatorComponent noPadded={true} />
               <VSpacer size={16} />
-              {beforeContinueComponent}
+              {onboardingPrivacyAdvice}
               <VSpacer size={16} />
             </View>
             <VSpacer size={16} />
