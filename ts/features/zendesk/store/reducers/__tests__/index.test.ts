@@ -143,6 +143,7 @@ describe("Zendesk reducer", () => {
       zendeskSupportStart({
         assistanceForPayment: false,
         assistanceForCard: false,
+        assistanceForFci: false,
         startingRoute: "n/a"
       })
     );
