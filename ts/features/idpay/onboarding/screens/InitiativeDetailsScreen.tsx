@@ -14,7 +14,6 @@ import {
 } from "react-native";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import OrganizationHeader from "../../../../components/OrganizationHeader";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
@@ -23,6 +22,7 @@ import Markdown from "../../../../components/ui/Markdown";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { OnboardingPrivacyAdvice } from "../components/OnboardingPrivacyAdvice";
+import { OnboardingServiceHeader } from "../components/OnboardingServiceHeader";
 import { IDPayOnboardingParamsList } from "../navigation/navigator";
 import { useOnboardingMachineService } from "../xstate/provider";
 import {
@@ -99,14 +99,12 @@ const InitiativeDetailsScreen = () => {
   const serviceHeaderComponent = pipe(
     initiative,
     O.fromNullable,
-    O.map(initiative => (
-      <OrganizationHeader
-        key={"header"}
-        serviceName={initiative.organizationName}
-        organizationName={initiative.initiativeName}
-        logoURLs={[{ uri: initiative.logoURL }]}
-      />
-    )),
+    O.map(initiative => ({
+      organizationName: initiative.organizationName,
+      initiativeName: initiative.initiativeName,
+      logoURL: initiative.logoURL
+    })),
+    O.map(props => <OnboardingServiceHeader key={"header"} {...props} />),
     O.toUndefined
   );
 
@@ -149,7 +147,7 @@ const InitiativeDetailsScreen = () => {
           >
             <View style={IOStyles.horizontalContentPadding}>
               {serviceHeaderComponent}
-              <VSpacer size={16} />
+              <VSpacer size={24} />
               {descriptionComponent}
               <VSpacer size={16} />
               <ItemSeparatorComponent noPadded={true} />
