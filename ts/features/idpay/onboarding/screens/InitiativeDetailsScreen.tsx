@@ -62,7 +62,7 @@ const InitiativeDetailsScreen = () => {
   const scrollViewRef = React.useRef<ScrollView>(null);
 
   const [isDescriptionLoaded, setDescriptionLoaded] = React.useState(false);
-  const [isEndReached, setEndReached] = React.useState(false);
+  const [isEndReached, setEndReached] = React.useState(true);
 
   const shouldRenderScrollToBottomButton = isDescriptionLoaded && !isEndReached;
 
@@ -97,12 +97,15 @@ const InitiativeDetailsScreen = () => {
   );
 
   const descriptionComponent = pipe(
-    initiative?.description,
+    initiative,
     O.fromNullable,
+    O.map(({ description }) => description),
     O.map(description => (
-      <Markdown key={"desc"} onLoadEnd={() => setDescriptionLoaded(true)}>
-        {description}
-      </Markdown>
+      <View key={"desc"} style={{ flexGrow: 1 }}>
+        <Markdown onLoadEnd={() => setDescriptionLoaded(true)}>
+          {description}
+        </Markdown>
+      </View>
     )),
     O.toUndefined
   );
@@ -161,19 +164,18 @@ const InitiativeDetailsScreen = () => {
       <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={100}>
         <ScrollView
           ref={scrollViewRef}
-          style={IOStyles.flex}
           scrollIndicatorInsets={{ right: 1 }}
           onScroll={handleOnScroll}
           scrollEventThrottle={400}
+          contentContainerStyle={{ flexGrow: 1, paddingHorizontal: 24 }}
         >
-          <ContentWrapper>
-            {serviceHeaderComponent}
-            <VSpacer size={24} />
-            {descriptionComponent}
-            <VSpacer size={8} />
-            {footerComponent}
-            <VSpacer size={48} />
-          </ContentWrapper>
+          <VSpacer size={24} />
+          {serviceHeaderComponent}
+          <VSpacer size={24} />
+          {descriptionComponent}
+          <VSpacer size={8} />
+          {footerComponent}
+          <VSpacer size={48} />
         </ScrollView>
         {scrollToBottomButton}
       </LoadingSpinnerOverlay>
