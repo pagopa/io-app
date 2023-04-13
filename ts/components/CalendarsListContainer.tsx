@@ -1,5 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { Button, Text as NBText } from "native-base";
+import { Button, Text as NBButtonText } from "native-base";
 import * as React from "react";
 
 import { View, ListRenderItemInfo, SectionList } from "react-native";
@@ -12,6 +12,7 @@ import { Dispatch } from "../store/actions/types";
 import { GlobalState } from "../store/reducers/types";
 import customVariables from "../theme/variables";
 import { convertLocalCalendarName } from "../utils/calendar";
+import { Body } from "./core/typography/Body";
 import { EdgeBorderComponent } from "./screens/EdgeBorderComponent";
 import SectionHeaderComponent from "./screens/SectionHeaderComponent";
 
@@ -117,11 +118,9 @@ class CalendarsListContainer extends React.PureComponent<Props, State> {
       <React.Fragment>
         {pot.isError(calendarsByAccount) && (
           <React.Fragment>
-            <NBText>
-              {mapResourceErrorToMessage(calendarsByAccount.error)}
-            </NBText>
+            <Body>{mapResourceErrorToMessage(calendarsByAccount.error)}</Body>
             <Button onPress={this.fetchCalendars}>
-              <NBText>{I18n.t("global.buttons.retry")}</NBText>
+              <NBButtonText>{I18n.t("global.buttons.retry")}</NBButtonText>
             </Button>
           </React.Fragment>
         )}

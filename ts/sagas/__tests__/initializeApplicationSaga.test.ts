@@ -80,13 +80,14 @@ describe("initializeApplicationSaga", () => {
       .put(resetProfileState())
       .next()
       .next(generateLollipopKeySaga)
+      .next(false) // unsupported device
       .select(sessionTokenSelector)
       .next(aSessionToken)
+      .next(lollipopKeyTagSelector)
+      .next(lollipopPublicKeySelector)
+      .next(generateKeyInfo, O.none, O.none)
       .fork(watchSessionExpiredSaga)
       .next()
-      .next() // keyTag
-      .next() // publicKey
-      .next() // getPublicKey
       .next(200) // checkSession
       .select(sessionInfoSelector)
       .next(O.none)
@@ -117,12 +118,13 @@ describe("initializeApplicationSaga", () => {
       .put(resetProfileState())
       .next()
       .next(generateLollipopKeySaga)
+      .next(false) // unsupported device
       .select(sessionTokenSelector)
       .next(aSessionToken)
-      .fork(watchSessionExpiredSaga)
       .next(lollipopKeyTagSelector)
       .next(lollipopPublicKeySelector)
       .next(generateKeyInfo, O.none, O.none)
+      .fork(watchSessionExpiredSaga)
       .next()
       .next(401) // checksession
       .put(sessionExpired());
@@ -151,12 +153,13 @@ describe("initializeApplicationSaga", () => {
       .put(resetProfileState())
       .next()
       .next(generateLollipopKeySaga)
+      .next(false) // unsupported device
       .select(sessionTokenSelector)
       .next(aSessionToken)
-      .fork(watchSessionExpiredSaga)
       .next(lollipopKeyTagSelector)
       .next(lollipopPublicKeySelector)
       .next(generateKeyInfo, O.none, O.none)
+      .fork(watchSessionExpiredSaga)
       .next()
       .next(200) // check session
       .select(sessionInfoSelector)
@@ -166,6 +169,7 @@ describe("initializeApplicationSaga", () => {
           walletToken: "wallet_token"
         })
       )
+      .next()
       .fork(watchProfileUpsertRequestsSaga, undefined)
       .next()
       .fork(watchProfile, undefined)

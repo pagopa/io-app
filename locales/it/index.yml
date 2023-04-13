@@ -3214,6 +3214,12 @@ features:
       waitForQtsp:
         title: La firma è in elaborazione
         subTitle: Riceverai un messaggio con i documenti firmati non appena saranno pronti.
+      signed:
+        title: Hai già firmato questi documenti
+        subTitle: Puoi visualizzarli e scaricarli dal messaggio intitolato “Documenti firmati”.
+      unsupportedDevice:
+        title: C’è un problema
+        subTitle: Il tuo device non supporta la funzionalità Firma con IO.
       generic:
         default:
           title: C’è un problema sui nostri sistemi
@@ -3232,6 +3238,11 @@ features:
       content: "Vuoi annullare la firma dei documenti?"
       cancel: "Annulla la firma"
       confirm: "Continua a firmare"
+    checkService:
+      title: "Attiva i messaggi"
+      content: "Per ricevere i documenti firmati devi attivare l’opzione che consente al servizio di inviarti messaggi. Se non la attivi, puoi completare la firma ma non riceverai i documenti firmati."
+      cancel: "Non ora"
+      confirm: "Attiva"
     signatureFields:
       title: "Firma qui"
       showOnDocument: "Vedi sul documento"
@@ -3306,6 +3317,8 @@ support:
     stockValue: "Incluso l’errore che hai appena ricevuto"
     card: "Dati del metodo di pagamento"
     cardValue: "Numero (cifrato), scadenza, circuito"
+    fci: "Identificativo della richiesta di Firma"
+    fciValue: "Per verificare le richiesta in corso"
     prominentDisclosure: "Accesso alla galleria del dispositivo"
     prominentDisclosureData: "Per caricare foto e screenshot"
     header: "Apri una richiesta"
@@ -3360,6 +3373,16 @@ idpay:
           header: Configura l'iniziativa!
           footer: Aggiungi almeno un metodo per iniziare ad utilizzare {{initiative}}.
         configured:
+          errorAlerts:
+            NOT_REFUNDABLE_ONLY_IBAN:
+              content: Inserisci un metodo di pagamento valido per effettuare transazioni 
+              action: Asssocia metodo 
+            NOT_REFUNDABLE_ONLY_INSTRUMENT:
+              content: Inserisci un IBAN valido per ricevere i rimborsi.
+              action: Modifica IBAN
+            NOT_REFUNDABLE:
+              content: Inserisci un IBAN valido e un metodo di pagamento per utilizzare il bonus
+              action: Configura
           yourOperations: Le tue Operazioni
           yourOperationsSubtitle: "Qui vedrai le transazioni effettuate con i metodi che hai associato. "
           yourOperationsLink: Come si fa?
@@ -3537,4 +3560,8 @@ idpay:
         addNew: Aggiungi nuovo
       updateToast: IBAN associato correttamente
 unsupportedDevice:  
-  text: "A breve il tuo dispositivo potrebbe non essere più compatibile con l’app IO."
+  warning: "A breve il tuo dispositivo potrebbe non essere più compatibile con l’app IO."
+  title: "Questo dispositivo non è più compatibile con IO"
+  subtitle: "Assicurati che il sistema operativo sia aggiornato all’ultima versione. Se è già così, per continuare a usare IO dovrai accedere da un altro dispositivo." 
+  cta:
+    faq: "Come mai?"

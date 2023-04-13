@@ -1,7 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Text as NBText } from "native-base";
 import React from "react";
 import {
   View,
@@ -11,6 +10,8 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
+import { VSpacer } from "../../components/core/spacer/Spacer";
+import { Body } from "../../components/core/typography/Body";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import WorkunitGenericFailure from "../../components/error/WorkunitGenericFailure";
 import MessageDetailComponent from "../../components/messages/MessageDetail";
@@ -42,10 +43,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center"
-  },
-
-  notFullStateMessageText: {
-    marginBottom: 10
   }
 });
 
@@ -71,9 +68,8 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 
 const renderLoadingState = () => (
   <View style={styles.notFullStateContainer}>
-    <NBText style={styles.notFullStateMessageText}>
-      {I18n.t("messageDetails.loadingText")}
-    </NBText>
+    <Body>{I18n.t("messageDetails.loadingText")}</Body>
+    <VSpacer size={8} />
     <ActivityIndicator />
   </View>
 );
@@ -122,9 +118,7 @@ const MessageDetailScreen = ({
       messageDetails,
       () => (
         <View style={styles.notFullStateContainer}>
-          <NBText style={styles.notFullStateMessageText}>
-            {I18n.t("messageDetails.emptyMessage")}
-          </NBText>
+          <Body>{I18n.t("messageDetails.emptyMessage")}</Body>
         </View>
       ),
       () => renderLoadingState(),

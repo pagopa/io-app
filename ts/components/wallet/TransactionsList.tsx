@@ -2,7 +2,7 @@
  * This component displays a list of transactions
  */
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { Content, Text as NBText } from "native-base";
+import { Content, Text as NBButtonText } from "native-base";
 import * as React from "react";
 import {
   View,
@@ -23,6 +23,7 @@ import { formatDateAsLocal } from "../../utils/dates";
 import { cleanTransactionDescription } from "../../utils/payment";
 import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
+import { Body } from "../core/typography/Body";
 import { H3 } from "../core/typography/H3";
 import { IOColors } from "../core/variables/IOColors";
 import DetailedlistItemComponent from "../DetailedlistItemComponent";
@@ -151,14 +152,14 @@ export default class TransactionsList extends React.Component<Props, State> {
             );
           }}
         >
-          <NBText>
+          <NBButtonText>
             {I18n.t(
               // change the button text if we are loading another slice of transactions
               this.state.loadingMore
                 ? "wallet.transacionsLoadingMore"
                 : "wallet.transactionsLoadMore"
             )}
-          </NBText>
+          </NBButtonText>
         </ButtonDefaultOpacity>
         <EdgeBorderComponent />
       </View>
@@ -172,7 +173,7 @@ export default class TransactionsList extends React.Component<Props, State> {
       return (
         <BoxedRefreshIndicator
           white={true}
-          caption={<NBText>{I18n.t("wallet.transactionsLoadMessage")}</NBText>}
+          caption={<Body>{I18n.t("wallet.transactionsLoadMessage")}</Body>}
         />
       );
     }
@@ -191,7 +192,7 @@ export default class TransactionsList extends React.Component<Props, State> {
             <H3 weight={"SemiBold"} color={"bluegreyDark"}>
               {I18n.t("wallet.latestTransactions")}
             </H3>
-            <NBText>{I18n.t("wallet.amount")}</NBText>
+            <Body>{I18n.t("wallet.amount")}</Body>
           </View>
         </View>
         {this.props.helpMessage}

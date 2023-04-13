@@ -7,20 +7,11 @@ exports[`CustomBadge component match snapshot for 10 1`] = `
   style={
     Array [
       Object {
-        "alignSelf": "flex-start",
-        "backgroundColor": "#ED1727",
-        "borderRadius": 13.5,
-        "height": 27,
-        "justifyContent": "center",
-        "paddingBottom": 3,
-        "paddingLeft": 6,
-        "paddingRight": 6,
-        "paddingTop": 3,
-      },
-      Object {
         "alignContent": "center",
+        "alignSelf": "flex-start",
         "backgroundColor": "#0073E6",
         "borderColor": "#FFFFFF",
+        "borderRadius": 10,
         "borderWidth": 2,
         "bottom": 10,
         "elevation": 0.1,
@@ -42,26 +33,17 @@ exports[`CustomBadge component match snapshot for 10 1`] = `
 >
   <Text
     accessible={false}
-    badge={true}
     importantForAccessibility="no-hide-descendants"
     style={
-      Array [
-        Object {
-          "color": "#fff",
-          "fontFamily": "System",
-          "fontSize": 15,
-          "lineHeight": 19,
-          "paddingLeft": 3,
-          "paddingRight": 3,
-          "textAlign": "center",
-        },
-        Object {
-          "paddingLeft": 0,
-          "paddingRight": 0,
-        },
-      ]
+      Object {
+        "color": "#FFFFFF",
+        "fontFamily": "Titillium Web",
+        "fontSize": 10,
+        "fontStyle": "normal",
+        "fontWeight": "700",
+        "textAlign": "center",
+      }
     }
-    uppercase={false}
   >
     10
   </Text>
@@ -73,20 +55,11 @@ exports[`CustomBadge component match snapshot for 100 1`] = `
   style={
     Array [
       Object {
-        "alignSelf": "flex-start",
-        "backgroundColor": "#ED1727",
-        "borderRadius": 13.5,
-        "height": 27,
-        "justifyContent": "center",
-        "paddingBottom": 3,
-        "paddingLeft": 6,
-        "paddingRight": 6,
-        "paddingTop": 3,
-      },
-      Object {
         "alignContent": "center",
+        "alignSelf": "flex-start",
         "backgroundColor": "#0073E6",
         "borderColor": "#FFFFFF",
+        "borderRadius": 10,
         "borderWidth": 2,
         "bottom": 10,
         "elevation": 0.1,
@@ -108,26 +81,17 @@ exports[`CustomBadge component match snapshot for 100 1`] = `
 >
   <Text
     accessible={false}
-    badge={true}
     importantForAccessibility="no-hide-descendants"
     style={
-      Array [
-        Object {
-          "color": "#fff",
-          "fontFamily": "System",
-          "fontSize": 15,
-          "lineHeight": 19,
-          "paddingLeft": 3,
-          "paddingRight": 3,
-          "textAlign": "center",
-        },
-        Object {
-          "paddingLeft": 0,
-          "paddingRight": 0,
-        },
-      ]
+      Object {
+        "color": "#FFFFFF",
+        "fontFamily": "Titillium Web",
+        "fontSize": 10,
+        "fontStyle": "normal",
+        "fontWeight": "700",
+        "textAlign": "center",
+      }
     }
-    uppercase={false}
   >
     99+
   </Text>

@@ -4,14 +4,16 @@ import { ColorValue, StyleSheet } from "react-native";
 import { LabelSmall } from "./typography/LabelSmall";
 import { IOColors } from "./variables/IOColors";
 
-type IOBadgeCommonProps = {
+export type IOBadgeCommonProps = {
   text: string;
   small?: boolean;
   labelColor?: Extract<IOColors, "bluegreyDark" | "blue" | "white" | "red">;
+  testID?: string;
 };
 
 const commonBadgeStyles = StyleSheet.create({
   badge: {
+    elevation: 0.1,
     paddingLeft: 8,
     paddingRight: 8
   },
@@ -56,7 +58,12 @@ const borderStyle = (color: NonNullable<IOBadgeCommonProps["labelColor"]>) => {
  * A badge component styled with the
  * IO primary color.
  */
-export const IOBadge = ({ text, small, labelColor }: IOBadgeCommonProps) => {
+export const IOBadge = ({
+  text,
+  small,
+  labelColor,
+  testID
+}: IOBadgeCommonProps) => {
   const lColor = labelColor ?? "white";
 
   return (
@@ -71,6 +78,7 @@ export const IOBadge = ({ text, small, labelColor }: IOBadgeCommonProps) => {
         borderStyle(lColor ?? "white"),
         small ? commonBadgeStyles.badgeSmall : {}
       ]}
+      testID={testID}
     >
       <LabelSmall
         color={lColor}
