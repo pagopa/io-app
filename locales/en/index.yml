@@ -3291,6 +3291,8 @@ support:
     stockValue: "Including the error you just received"
     card: "Payment methods details"
     cardValue: "Number (encrypted), expiration, network"
+    fci: "Signature request identifier"
+    fciValue: "To check the requests in progress"
     header: "Submit a request"
     listTitle: "Ongoing requests"
     title: "Do you give us your consent?"
