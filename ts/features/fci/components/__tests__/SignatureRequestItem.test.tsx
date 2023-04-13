@@ -10,16 +10,16 @@ type Props = {
   onPress: () => void;
 };
 
-const now = new Date();
+const now = new Date("2020-04-01");
 const signatureRequestItem: SignatureRequestListView = {
   id: "mockedId" as SignatureRequestListView["id"],
   status: SignatureRequestStatusEnum.SIGNED,
-  created_at: new Date(),
+  created_at: now as SignatureRequestListView["created_at"],
   dossier_id: "mockedDossierId" as SignatureRequestListView["dossier_id"],
   dossier_title: "mockedDossierTitle" as DossierTitle,
   expires_at: new Date(now.setDate(now.getDate() + 30)),
   signer_id: "mockedSignerId" as SignatureRequestListView["signer_id"],
-  updated_at: new Date()
+  updated_at: now
 };
 
 describe("Test SignatureRequestItem component", () => {
