@@ -3256,7 +3256,7 @@ features:
     requests:
       header: "Status of signatures"
       title: "The states of your signatures"
-      itemSubtitle: "{{date}}·{{time}}·ID {{id}}"
+      itemSubtitle: "{{date}} · {{time}} · ID {{id}}"
       signed: "Signed"
       notAvailable: "Not available"
       signingInProgress: "Signing in progress"

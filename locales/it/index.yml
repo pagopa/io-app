@@ -3280,7 +3280,7 @@ features:
     requests:
       header: "Stato delle firme"
       title: "Gli stati delle tue firme"
-      itemSubtitle: "{{date}}·{{time}}·ID {{id}}"
+      itemSubtitle: "{{date}} · {{time}} · ID {{id}}"
       signed: "Firmato"
       notAvailable: "Non disponibile"
       signingInProgress: "Firma in corso"

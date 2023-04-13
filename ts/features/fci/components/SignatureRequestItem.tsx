@@ -77,7 +77,7 @@ const SignatureRequestItem = (props: Props) => {
         <HSpacer />
         <View style={styles.badge}>{renderStatusLabel()}</View>
       </TouchableDefaultOpacity>
-      <ItemSeparatorComponent />
+      <ItemSeparatorComponent noPadded={true} />
     </View>
   );
 };
