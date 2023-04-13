@@ -33,9 +33,9 @@
   - [Can I use the app?](#can-i-use-the-app)
   - [How can I help you?](#how-can-i-help-you)
   - [What permissions are used by the IO app?](#what-permissions-are-used-by-the-io-app)
-- [Getting started](#how-to-contribute)
+- [Getting started](#getting-started)
   - [Prerequisites](#prerequisites)
-  - [Target selection](#target-production)
+  - [Environment variables](#environment-variables)
   - [Build the app](#build-the-app)
   - [Run the app](#run-the-app)
   - [Troubleshooting](#troubleshooting)
@@ -335,7 +335,7 @@ Follow the tutorial [Setting up the development environment](https://reactnative
 
 If you have a macOS system, you can follow both the tutorial for iOS and for Android. If you have a Linux or Windows system, you need only to install the development environment for Android.
 
-## Target selection
+## Environment variables
 
 ### Production
 If you want to run the app in production mode, run these commands:
@@ -388,12 +388,6 @@ $ cd iOS && bundle exec pod install && cd ..
 # Generate the definitions from the OpenAPI specs and from the YAML translations
 # Run this only while setting up and when specs/translations change
 $ yarn generate
-
-# Run on iOS
-$ yarn run-ios
-
-# Run on Android 
-$ yarn run-android
 ```
 
 ## Run the app
@@ -403,6 +397,7 @@ Then, from your command line, run these commands:
 ```
 # Perform the port forwarding
 $ adb reverse tcp:8081 tcp:8081;adb reverse tcp:3000 tcp:3000;adb reverse tcp:9090 tcp:9090
+
 $ react-native run-android
 ```
 
