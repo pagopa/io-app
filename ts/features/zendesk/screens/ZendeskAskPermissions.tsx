@@ -125,6 +125,13 @@ const getItems = (props: ItemProps): ReadonlyArray<ItemPermissionProps> => [
     testId: "addCardIssues"
   },
   {
+    id: "addFciIssues",
+    icon: <Icon name="docGiacenza" {...iconStyleProps} />,
+    title: I18n.t("support.askPermissions.fci"),
+    value: I18n.t("support.askPermissions.fciValue"),
+    testId: "addFciIssues"
+  },
+  {
     icon: <Icon name="device" {...iconStyleProps} />,
     title: I18n.t("support.askPermissions.deviceAndOS"),
     value: props.deviceDescription,
