@@ -42,10 +42,11 @@
 - [Architecture](#architecture)
   - [Main technologies used](#main-technologies-used)
   - [SPID Authentication](#spid-authentication)
-  - [Internationalization](#internationalization)
   - [Deep linking](#deep-linking)
   - [Fonts](#fonts)
   - [Vector graphics](#vector-graphics)
+- [Appendix]
+  - [Internationalization](locales/README.md)
   - [End to end test](e2e/README.md)
 
 # FAQ
@@ -79,7 +80,7 @@ Sure! However you will need a [SPID account](https://www.agid.gov.it/en/platform
 
 ## How can I help you?
 
-[Reporting bugs](https://github.com/pagopa/io-app/issues), bug fixes, [translations](#internationalization) and generally any improvement is welcome! [Send us a Pull Request](https://github.com/pagopa/io-app/pulls)!
+[Reporting bugs](https://github.com/pagopa/io-app/issues), bug fixes, [translations](locales/README.md) and generally any improvement is welcome! [Send us a Pull Request](https://github.com/pagopa/io-app/pulls)!
 
 ## What permissions are used by the IO app?
 
@@ -489,46 +490,6 @@ The authentication flow is as follows:
 1. The endpoint that generates a new token receives the SPID attributes via the HTTP header; then, it generates a new random session token and returns to the webview an HTTP redirect to an URL well-known containing the session token.
 1. The app, which monitors the webview, intercepts this URL before the HTTP request is made, extracts the session token and ends the authentication flow by closing the webview.
 1. Next, the session token is used by the app to make calls to the backend API.
-
-## Internationalization
-
-For multi-language support the application uses:
-
-* [react-native-i18n](https://github.com/AlexanderZaytsev/react-native-i18n) for the integration of translations with user preferences
-* YAML files in the directory `locales`
-* A YAML-to-typescript conversion script (`generate:locales`).
-
-To add a new language you must:
-
-1. Clone the repository
-1. Create a new directory under [locales](locales) using the language code as the name (e.g. `es` for Spanish, `de` for German, etc...).
-1. Copy the content from the base language [locales/en](en)(`en`).
-1. Proceed with the translation by editing the YAML and Markdown files.
-    - if is a YAML file (`*.yml`) translate only the text following the colon (e.g. `today:` **`"today"`** become in italian `today:` **`"oggi"`**).
-    - if is a Mardown file (`*.md`) translate the text leaving the formatting as is.
-1. Check that the command: ```npm run generate:locales``` (or ```yarn generate:locales```) returns a success message.
-1. Create a PR using as title `Internationalization {New Language}` (e.g. `Internationalization Italiano`)and apply the label `internationalization`.
-
-If you want to see the result in the app you must:
-
-1. Run the command: ```npm run generate:locales```.
-1. Edit the file [ts/i18n.ts](ts/i18n.ts) by adding the new language in the variable `I18n.translations`.
-
-    E.g. for German
-    ```
-    I18n.translations = {
-      en: locales.localeEN,
-      it: locales.localeIT
-    };
-    ```
-    become
-    ```
-    I18n.translations = {
-      en: locales.localeEN,
-      it: locales.localeIT
-      de: locales.localeDE
-    };
-    ```
 
 ## Deep linking
 
