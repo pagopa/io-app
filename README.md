@@ -455,6 +455,11 @@ _Note: the alpha releases on Android are automatically carried by the `alpha-rel
 
     Can be solved by launching ```gem install bundler -v "$(grep -A 1 "BUNDLED WITH" Gemfile.lock | tail -n 1)```
 
+- ## iOS build 
+  - ***error: redefinition of module 'YogaKit' build Failed***
+  
+  Can be solved by restarting your machine.
+
 # Architecture
 
 ## Main technologies used
@@ -552,9 +557,9 @@ To manage fonts and variants more easily, we have created utility functions with
 
 ## Vector graphics
 Most of the images used in the app can be rendered as vector assets using SVG image format. Currently we have these groups:
-- **Pictograms**: assets with an intended size greather than `56px`
-- **Icons**: assets with an intended size between `16px` and `56px`
-- **Logos**
+- **Pictograms**: assets with an intended size greather than `56px`, checked the relevant [README](/ts/components/core/pictograms/README.md) for more information;
+- **Icons**: assets with an intended size between `16px` and `56px`, checked the relevant [README](/ts/components/core/icons/README.md) for more information;
+- **Logos**: check the relavant [README](/ts/components/core/logos/README.md) for more information.
 
 Once you understand which group you must put the asset in, you must take into consideration the following instructions for the best result in terms of quality and future maintenance:
 
