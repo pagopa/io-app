@@ -63,6 +63,25 @@ export const DSButtons = () => {
 
         <VSpacer size={16} />
 
+        <ButtonSolid
+          accessibilityLabel="Tap to trigger test alert"
+          label={"Primary button"}
+          icon="qrCode"
+          onPress={onButtonPress}
+        />
+
+        <VSpacer size={16} />
+
+        <ButtonSolid
+          accessibilityLabel="Tap to trigger test alert"
+          label={"Primary button"}
+          icon="qrCode"
+          iconPosition="end"
+          onPress={onButtonPress}
+        />
+
+        <VSpacer size={16} />
+
         <View style={{ alignSelf: "center" }}>
           <ButtonSolid
             accessibilityLabel="Tap to trigger test alert"
@@ -78,6 +97,16 @@ export const DSButtons = () => {
               <ButtonSolid
                 small
                 label={"Primary button (small)"}
+                accessibilityLabel="Tap to trigger test alert"
+                onPress={onButtonPress}
+              />
+
+              <VSpacer size={16} />
+
+              <ButtonSolid
+                small
+                label={"Primary button (small)"}
+                icon="qrCode"
                 accessibilityLabel="Tap to trigger test alert"
                 onPress={onButtonPress}
               />
@@ -118,6 +147,16 @@ export const DSButtons = () => {
             label={"Primary button (disabled)"}
             onPress={onButtonPress}
           />
+
+          <VSpacer size={16} />
+
+          <ButtonSolid
+            disabled
+            accessibilityLabel="Tap to trigger test alert"
+            label={"Primary button (disabled)"}
+            icon="qrCode"
+            onPress={onButtonPress}
+          />
         </View>
         {!isDesignSystemEnabled && (
           <>
@@ -144,6 +183,27 @@ export const DSButtons = () => {
             onPress={onButtonPress}
             accessibilityLabel="Tap to trigger test alert"
           />
+
+          <VSpacer size={16} />
+
+          <ButtonSolid
+            color="danger"
+            accessibilityLabel="Tap to trigger test alert"
+            label={"Primary button"}
+            icon="trashcan"
+            onPress={onButtonPress}
+          />
+
+          <VSpacer size={16} />
+
+          <ButtonSolid
+            color="danger"
+            accessibilityLabel="Tap to trigger test alert"
+            label={"Primary button"}
+            icon="trashcan"
+            iconPosition="end"
+            onPress={onButtonPress}
+          />
         </View>
         {!isDesignSystemEnabled && (
           <>
@@ -154,6 +214,17 @@ export const DSButtons = () => {
                 color="danger"
                 accessibilityLabel="Tap to trigger test alert"
                 label={"Danger button (small)"}
+                onPress={onButtonPress}
+              />
+
+              <VSpacer size={16} />
+
+              <ButtonSolid
+                small
+                color="danger"
+                label={"Danger button (small)"}
+                icon="trashcan"
+                accessibilityLabel="Tap to trigger test alert"
                 onPress={onButtonPress}
               />
             </View>
@@ -196,6 +267,17 @@ export const DSButtons = () => {
             label={"Danger button (disabled)"}
             onPress={onButtonPress}
           />
+
+          <VSpacer size={16} />
+
+          <ButtonSolid
+            color="danger"
+            disabled
+            accessibilityLabel="Tap to trigger test alert"
+            label={"Danger button (disabled)"}
+            icon="trashcan"
+            onPress={onButtonPress}
+          />
         </View>
         {!isDesignSystemEnabled && (
           <>
@@ -233,6 +315,27 @@ export const DSButtons = () => {
               onPress={onButtonPress}
               accessibilityLabel="Tap to trigger test alert"
             />
+
+            <VSpacer size={16} />
+
+            <ButtonSolid
+              color="contrast"
+              label={"Contrast button"}
+              icon="add"
+              onPress={onButtonPress}
+              accessibilityLabel="Tap to trigger test alert"
+            />
+
+            <VSpacer size={16} />
+
+            <ButtonSolid
+              color="contrast"
+              label={"Contrast button"}
+              icon="add"
+              iconPosition="end"
+              onPress={onButtonPress}
+              accessibilityLabel="Tap to trigger test alert"
+            />
           </View>
           {!isDesignSystemEnabled && (
             <>
@@ -243,6 +346,17 @@ export const DSButtons = () => {
                   color="contrast"
                   accessibilityLabel="Tap to trigger test alert"
                   label={"Contrast button (small)"}
+                  onPress={onButtonPress}
+                />
+
+                <VSpacer size={16} />
+
+                <ButtonSolid
+                  small
+                  color="contrast"
+                  label={"Contrast button (small)"}
+                  icon="add"
+                  accessibilityLabel="Tap to trigger test alert"
                   onPress={onButtonPress}
                 />
               </View>
@@ -290,6 +404,17 @@ export const DSButtons = () => {
               disabled
               color="contrast"
               label={"Contrast button (disabled)"}
+              onPress={onButtonPress}
+              accessibilityLabel="Tap to trigger test alert"
+            />
+
+            <VSpacer size={16} />
+
+            <ButtonSolid
+              disabled
+              color="contrast"
+              label={"Contrast button (disabled)"}
+              icon="add"
               onPress={onButtonPress}
               accessibilityLabel="Tap to trigger test alert"
             />

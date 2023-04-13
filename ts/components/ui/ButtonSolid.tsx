@@ -25,6 +25,8 @@ import {
 import { WithTestID } from "../../types/WithTestID";
 import { useIOSelector } from "../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
+import { IOIcons, Icon } from "../core/icons";
+import { HSpacer } from "../core/spacer/Spacer";
 
 export type ButtonSolid = WithTestID<{
   color?: "primary" | "danger" | "contrast";
@@ -32,8 +34,13 @@ export type ButtonSolid = WithTestID<{
   small?: boolean;
   fullWidth?: boolean;
   disabled?: boolean;
+  // Icons
+  icon?: IOIcons;
+  iconPosition?: "start" | "end";
+  // Accessibility
   accessibilityLabel: string;
   accessibilityHint?: string;
+  // Events
   onPress: (event: GestureResponderEvent) => void;
 }>;
 
@@ -143,6 +150,8 @@ export const ButtonSolid = ({
   small = false,
   fullWidth = false,
   disabled = false,
+  icon,
+  iconPosition = "start",
   onPress,
   accessibilityLabel,
   accessibilityHint,
@@ -236,6 +245,20 @@ ButtonSolid) => {
           !disabled && pressedAnimationStyle
         ]}
       >
+        {icon && iconPosition === "start" && (
+          <>
+            <Icon
+              name={icon}
+              size={small ? 16 : 20}
+              color={
+                disabled
+                  ? mapLegacyColorStates[color]?.label?.disabled
+                  : mapLegacyColorStates[color]?.label?.default
+              }
+            />
+            <HSpacer size={8} />
+          </>
+        )}
         <BaseTypography
           weight={"Bold"}
           color={
@@ -258,6 +281,20 @@ ButtonSolid) => {
         >
           {label}
         </BaseTypography>
+        {icon && iconPosition === "end" && (
+          <>
+            <HSpacer size={8} />
+            <Icon
+              name={icon}
+              size={small ? 16 : 20}
+              color={
+                disabled
+                  ? mapLegacyColorStates[color]?.label?.disabled
+                  : mapLegacyColorStates[color]?.label?.default
+              }
+            />
+          </>
+        )}
       </Animated.View>
     </Pressable>
   );
@@ -290,6 +327,20 @@ ButtonSolid) => {
           !disabled && pressedAnimationStyle
         ]}
       >
+        {icon && iconPosition === "start" && (
+          <>
+            <Icon
+              name={icon}
+              size={small ? 16 : 20}
+              color={
+                disabled
+                  ? mapColorStates[color]?.label?.disabled
+                  : mapColorStates[color]?.label?.default
+              }
+            />
+            <HSpacer size={8} />
+          </>
+        )}
         <BaseTypography
           font="ReadexPro"
           weight={"Regular"}
@@ -313,6 +364,20 @@ ButtonSolid) => {
         >
           {label}
         </BaseTypography>
+        {icon && iconPosition === "end" && (
+          <>
+            <HSpacer size={8} />
+            <Icon
+              name={icon}
+              size={small ? 16 : 20}
+              color={
+                disabled
+                  ? mapColorStates[color]?.label?.disabled
+                  : mapColorStates[color]?.label?.default
+              }
+            />
+          </>
+        )}
       </Animated.View>
     </Pressable>
   );
