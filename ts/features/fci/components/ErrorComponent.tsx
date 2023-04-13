@@ -1,13 +1,28 @@
 import * as React from "react";
 import { SafeAreaView } from "react-native";
 import { EmailString } from "@pagopa/ts-commons/lib/strings";
-import { constNull } from "fp-ts/lib/function";
 import I18n from "../../../i18n";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
 import { WithTestID } from "../../../types/WithTestID";
 import { FooterStackButton } from "../../bonus/bonusVacanze/components/buttons/FooterStackButtons";
+import {
+  addTicketCustomField,
+  appendLog,
+  assistanceToolRemoteConfig,
+  resetCustomFields,
+  zendeskCategoryId,
+  zendeskFCICategory
+} from "../../../utils/supportAssistance";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import {
+  zendeskSelectedCategory,
+  zendeskSupportStart
+} from "../../zendesk/store/actions";
+import { fciSignatureRequestIdSelector } from "../store/reducers/fciSignatureRequest";
+import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
+import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { InfoScreenComponent } from "./InfoScreenComponent";
 
 type Props = WithTestID<{
@@ -21,6 +36,35 @@ type Props = WithTestID<{
 }>;
 
 const ErrorComponent = (props: Props) => {
+  const dispatch = useIODispatch();
+  const signatureRequestId = useIOSelector(fciSignatureRequestIdSelector);
+  const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
+  const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
+
+  const zendeskAssistanceLogAndStart = () => {
+    resetCustomFields();
+    addTicketCustomField(zendeskCategoryId, zendeskFCICategory.value);
+    // Append the signatureRequestID in the log
+    appendLog(JSON.stringify(signatureRequestId));
+    dispatch(
+      zendeskSupportStart({
+        startingRoute: "n/a",
+        assistanceForPayment: false,
+        assistanceForCard: false,
+        assistanceForFci: true
+      })
+    );
+    dispatch(zendeskSelectedCategory(zendeskFCICategory));
+  };
+
+  const handleAskAssistance = () => {
+    switch (choosenTool) {
+      case ToolEnum.zendesk:
+        zendeskAssistanceLogAndStart();
+        break;
+    }
+  };
+
   const retryButtonProps = {
     testID: "FciRetryButtonTestID",
     block: true,
@@ -42,7 +86,7 @@ const ErrorComponent = (props: Props) => {
     bordered: true,
     primary: false,
     block: true,
-    onPress: constNull,
+    onPress: handleAskAssistance,
     title: I18n.t("features.fci.errors.buttons.assistance")
   };
 
