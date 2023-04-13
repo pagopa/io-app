@@ -160,7 +160,6 @@ Below there are the permissions required by the main android hardware manufactur
 * [Redux](http://redux.js.org/)
 * [Redux Saga](https://redux-saga.js.org/)
 * [React Native](https://facebook.github.io/react-native)
-* [Native Base](http://nativebase.io)
 
 ## Architecture
 
