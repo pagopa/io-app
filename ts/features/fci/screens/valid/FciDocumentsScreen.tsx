@@ -3,11 +3,13 @@ import Pdf from "react-native-pdf";
 import { pipe } from "fp-ts/lib/function";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as O from "fp-ts/lib/Option";
+import * as S from "fp-ts/lib/string";
 import { SafeAreaView, StyleSheet } from "react-native";
 import { useSelector } from "react-redux";
 import {
   RouteProp,
   StackActions,
+  useIsFocused,
   useNavigation,
   useRoute
 } from "@react-navigation/native";
@@ -34,6 +36,7 @@ import {
 import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentSignatures";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { fciDownloadPathSelector } from "../../store/reducers/fciDownloadPreview";
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 
 const styles = StyleSheet.create({
   pdf: {
@@ -57,6 +60,7 @@ const FciDocumentsScreen = () => {
   const navigation = useNavigation();
   const documentSignaturesSelector = useSelector(fciDocumentSignaturesSelector);
   const dispatch = useIODispatch();
+  const isFocused = useIsFocused();
 
   React.useEffect(() => {
     // if the user hasn't checked any signauture field,
@@ -78,10 +82,10 @@ const FciDocumentsScreen = () => {
   }, [dispatch, documentSignaturesSelector, documents]);
 
   React.useEffect(() => {
-    if (documents.length !== 0) {
+    if (documents.length !== 0 && isFocused) {
       dispatch(fciDownloadPreview.request({ url: documents[currentDoc].url }));
     }
-  }, [currentDoc, documents, dispatch]);
+  }, [currentDoc, documents, dispatch, isFocused]);
 
   const { present, bottomSheet: fciAbortSignature } =
     useFciAbortSignatureFlow();
@@ -186,47 +190,49 @@ const FciDocumentsScreen = () => {
     currentPage < totalPages ? keepReadingButtonProps : continueButtonProps;
 
   return (
-    <BaseScreenComponent
-      goBack={true}
-      headerTitle={I18n.t("features.fci.title")}
-      customGoBack={customGoBack}
-      contextualHelp={emptyContextualHelp}
-    >
-      <DocumentsNavigationBar
-        indicatorPosition={"right"}
-        titleLeft={I18n.t("features.fci.documentsBar.titleLeft", {
-          currentDoc: currentDoc + 1,
-          totalDocs: documents.length
-        })}
-        titleRight={I18n.t("features.fci.documentsBar.titleRight", {
-          currentPage,
-          totalPages
-        })}
-        iconLeftColor={
-          currentPage === 1 ? IOColors.bluegreyLight : IOColors.blue
-        }
-        iconRightColor={
-          currentPage === totalPages ? IOColors.bluegreyLight : IOColors.blue
-        }
-        onPrevious={onPrevious}
-        onNext={onNext}
-        disabled={false}
-        testID={"FciDocumentsNavBarTestID"}
-      />
-      <SafeAreaView style={IOStyles.flex} testID={"FciDocumentsScreenTestID"}>
-        {documents.length > 0 && (
-          <>
-            {renderPager()}
-            <FooterWithButtons
-              type={"TwoButtonsInlineThird"}
-              leftButton={cancelButtonProps}
-              rightButton={renderFooterButtons()}
-            />
-          </>
-        )}
-      </SafeAreaView>
-      {fciAbortSignature}
-    </BaseScreenComponent>
+    <LoadingSpinnerOverlay isLoading={S.isEmpty(downloadPath)}>
+      <BaseScreenComponent
+        goBack={true}
+        headerTitle={I18n.t("features.fci.title")}
+        customGoBack={customGoBack}
+        contextualHelp={emptyContextualHelp}
+      >
+        <DocumentsNavigationBar
+          indicatorPosition={"right"}
+          titleLeft={I18n.t("features.fci.documentsBar.titleLeft", {
+            currentDoc: currentDoc + 1,
+            totalDocs: documents.length
+          })}
+          titleRight={I18n.t("features.fci.documentsBar.titleRight", {
+            currentPage,
+            totalPages
+          })}
+          iconLeftColor={
+            currentPage === 1 ? IOColors.bluegreyLight : IOColors.blue
+          }
+          iconRightColor={
+            currentPage === totalPages ? IOColors.bluegreyLight : IOColors.blue
+          }
+          onPrevious={onPrevious}
+          onNext={onNext}
+          disabled={false}
+          testID={"FciDocumentsNavBarTestID"}
+        />
+        <SafeAreaView style={IOStyles.flex} testID={"FciDocumentsScreenTestID"}>
+          {documents.length > 0 && (
+            <>
+              {renderPager()}
+              <FooterWithButtons
+                type={"TwoButtonsInlineThird"}
+                leftButton={cancelButtonProps}
+                rightButton={renderFooterButtons()}
+              />
+            </>
+          )}
+        </SafeAreaView>
+        {fciAbortSignature}
+      </BaseScreenComponent>
+    </LoadingSpinnerOverlay>
   );
 };
 export default FciDocumentsScreen;
