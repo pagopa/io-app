@@ -3,7 +3,6 @@ import { SafeAreaView, View, SectionList } from "react-native";
 import { constNull } from "fp-ts/lib/function";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import ScreenContent from "../../../../components/screens/ScreenContent";
 import SignatureRequestItem from "../../components/SignatureRequestItem";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
