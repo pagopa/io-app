@@ -146,6 +146,7 @@ const InitiativeDetailsScreen = () => {
             style={IOStyles.flex}
           >
             <View style={IOStyles.horizontalContentPadding}>
+              <VSpacer size={24} />
               {serviceHeaderComponent}
               <VSpacer size={24} />
               {descriptionComponent}
