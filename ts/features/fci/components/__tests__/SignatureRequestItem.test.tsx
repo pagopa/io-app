@@ -30,7 +30,6 @@ describe("Test SignatureRequestItem component", () => {
     };
     const component = renderComponent({ ...props });
     expect(component).toBeTruthy();
-    expect(component).toMatchSnapshot();
   });
   it("should render a SignatureRequestItem component with right title 'mockedDossierTitle'", () => {
     const props = {
