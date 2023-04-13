@@ -85,7 +85,7 @@ exports[`Test SignatureRequestItem component should render a SignatureRequestIte
         }
         weight="Regular"
       >
-        4/13/2023·9:54:48 AM·ID mockedId
+        4/13/2023·10:20:59 AM·ID mockedId
       </Text>
     </View>
     <View
@@ -124,21 +124,18 @@ exports[`Test SignatureRequestItem component should render a SignatureRequestIte
               "paddingRight": 8,
             },
             Object {
-              "backgroundColor": "#FFFFFF",
+              "backgroundColor": "#0073E6",
             },
-            Object {
-              "borderColor": "#C02927",
-              "borderWidth": 1,
-            },
+            null,
             Object {
               "height": 18,
             },
           ]
         }
-        testID="FciSignatureRequestItemBadgeNotAvailable"
+        testID="FciSignatureRequestItemBadgeInProgress"
       >
         <Text
-          color="red"
+          color="white"
           defaultColor="blue"
           defaultWeight="Bold"
           font="TitilliumWeb"
@@ -154,7 +151,7 @@ exports[`Test SignatureRequestItem component should render a SignatureRequestIte
                 "fontSize": 12,
               },
               Object {
-                "color": "#C02927",
+                "color": "#FFFFFF",
                 "fontFamily": "Titillium Web",
                 "fontStyle": "normal",
                 "fontWeight": "600",
@@ -163,7 +160,7 @@ exports[`Test SignatureRequestItem component should render a SignatureRequestIte
           }
           weight="SemiBold"
         >
-          Not available
+          Signing in progress
         </Text>
       </View>
     </View>
