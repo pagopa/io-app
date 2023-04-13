@@ -40,7 +40,6 @@ const FciSignatureRequestsScreen = () => {
       <BaseScreenComponent
         goBack={true}
         headerTitle={I18n.t("features.fci.requests.header")}
-        contextualHelp={emptyContextualHelp}
       >
         <SafeAreaView style={IOStyles.flex}>
           <ScreenContent title={I18n.t("features.fci.requests.title")}>
