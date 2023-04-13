@@ -1,7 +1,7 @@
 /* eslint-disable functional/immutable-data */
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { useSelector } from "@xstate/react";
+import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
@@ -13,10 +13,8 @@ import {
   ScrollView,
   View
 } from "react-native";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import OrganizationHeader from "../../../../components/OrganizationHeader";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../components/core/typography/Body";
 import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
@@ -25,19 +23,15 @@ import BaseScreenComponent from "../../../../components/screens/BaseScreenCompon
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import Markdown from "../../../../components/ui/Markdown";
 import I18n from "../../../../i18n";
-import { useIOSelector } from "../../../../store/hooks";
-import { serviceByIdSelector } from "../../../../store/reducers/entities/services/servicesById";
-import { toUIService } from "../../../../store/reducers/entities/services/transformers";
-import { UIService } from "../../../../store/reducers/entities/services/types";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { showToast } from "../../../../utils/showToast";
 import { openWebUrl } from "../../../../utils/url";
 import { IDPayOnboardingParamsList } from "../navigation/navigator";
 import { useOnboardingMachineService } from "../xstate/provider";
 import {
-  initiativeDescriptionSelector,
   isLoadingSelector,
-  isUpsertingSelector
+  isUpsertingSelector,
+  selectInitiative
 } from "../xstate/selectors";
 
 type InitiativeDetailsScreenRouteParams = {
@@ -49,37 +43,19 @@ type InitiativeDetailsRouteProps = RouteProp<
   "IDPAY_ONBOARDING_INITIATIVE_DETAILS"
 >;
 
-const InitiativeOrganizationHeader = ({
-  name,
-  organizationName,
-  logoURLs
-}: UIService) => (
-  <OrganizationHeader
-    serviceName={name}
-    organizationName={organizationName}
-    logoURLs={logoURLs}
-  />
-);
-
 type BeforeContinueBodyProps = {
-  tosUrl?: string;
-  privacyUrl?: string;
+  tosUrl: string;
+  privacyUrl: string;
 };
 
 const BeforeContinueBody = (props: BeforeContinueBodyProps) => {
   const { tosUrl, privacyUrl } = props;
 
-  const handlePrivacyLinkPress = () => {
-    if (privacyUrl !== undefined) {
-      openWebUrl(privacyUrl, () => showToast(I18n.t("global.jserror.title")));
-    }
-  };
+  const handlePrivacyLinkPress = () =>
+    openWebUrl(privacyUrl, () => showToast(I18n.t("global.jserror.title")));
 
-  const handleTosLinkPress = () => {
-    if (tosUrl !== undefined) {
-      openWebUrl(tosUrl, () => showToast(I18n.t("global.jserror.title")));
-    }
-  };
+  const handleTosLinkPress = () =>
+    openWebUrl(tosUrl, () => showToast(I18n.t("global.jserror.title")));
 
   return (
     <Body accessibilityRole="link" testID="IDPayOnboardingBeforeContinue">
@@ -119,17 +95,17 @@ const InitiativeDetailsScreen = () => {
     });
   }, [machine, serviceId]);
 
+  const initiative = useSelector(machine, selectInitiative);
   const isAcceptingTos = useSelector(machine, isUpsertingSelector);
   const isLoading = useSelector(machine, isLoadingSelector);
-  const description = useSelector(machine, initiativeDescriptionSelector);
-
-  const hasDescription = description !== undefined;
 
   const [needsScrolling, setNeedsScrolling] = React.useState(true);
   const [hasScrolled, setHasScrolled] = React.useState(false);
+
   const scrollViewHeightRef = React.useRef(0);
   const isContinueButtonDisabled =
-    isLoading || (hasDescription && needsScrolling && !hasScrolled);
+    isLoading || (needsScrolling && !hasScrolled);
+
   const handleScrollViewLayout = (e: LayoutChangeEvent) => {
     scrollViewHeightRef.current = e.nativeEvent.layout.height;
   };
@@ -141,6 +117,7 @@ const InitiativeDetailsScreen = () => {
       setNeedsScrolling(height >= scrollViewHeightRef.current);
     }
   };
+
   const handleScrollViewOnScroll = ({
     nativeEvent
   }: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -153,64 +130,33 @@ const InitiativeDetailsScreen = () => {
       setHasScrolled(true);
     }
   };
+
   const handleGoBackPress = () => {
     machine.send({ type: "QUIT_ONBOARDING" });
   };
-  const handleContinuePress = () => machine.send({ type: "ACCEPT_TOS" });
 
-  const service = pipe(
-    pot.toOption(
-      useIOSelector(serviceByIdSelector(serviceId as ServiceId)) || pot.none
-    ),
-    O.toUndefined
-  );
+  const handleContinuePress = () => machine.send({ type: "ACCEPT_TOS" });
 
   const setMarkdownIsLoaded = () => (isMarkdownLoadedRef.current = true);
 
-  const screenContent = () => (
-    <SafeAreaView style={IOStyles.flex}>
-      <ScrollView
-        onLayout={handleScrollViewLayout}
-        onContentSizeChange={handleScrollViewContentSizeChange}
-        onScroll={handleScrollViewOnScroll}
-        scrollEventThrottle={400}
-        style={IOStyles.flex}
-      >
-        <View style={IOStyles.horizontalContentPadding}>
-          {service !== undefined && (
-            <InitiativeOrganizationHeader {...toUIService(service)} />
-          )}
-          <VSpacer size={16} />
-          {description !== undefined && (
-            <Markdown onLoadEnd={setMarkdownIsLoaded}>{description}</Markdown>
-          )}
-          <VSpacer size={16} />
-          <ItemSeparatorComponent noPadded={true} />
-          <VSpacer size={16} />
-          <BeforeContinueBody
-            tosUrl={service?.service_metadata?.tos_url}
-            privacyUrl={service?.service_metadata?.privacy_url}
-          />
-        </View>
-        <VSpacer size={16} />
-      </ScrollView>
-      <FooterWithButtons
-        type={"TwoButtonsInlineThird"}
-        leftButton={{
-          bordered: true,
-          title: I18n.t("global.buttons.cancel"),
-          onPress: handleGoBackPress,
-          testID: "IDPayOnboardingCancel"
-        }}
-        rightButton={{
-          title: I18n.t("global.buttons.continue"),
-          onPress: handleContinuePress,
-          testID: "IDPayOnboardingContinue",
-          isLoading: isAcceptingTos,
-          disabled: isContinueButtonDisabled || isAcceptingTos
-        }}
-      />
-    </SafeAreaView>
+  const descriptionComponent = pipe(
+    initiative?.description,
+    O.fromNullable,
+    O.map(description => (
+      <Markdown key={"desc"} onLoadEnd={setMarkdownIsLoaded}>
+        {description}
+      </Markdown>
+    )),
+    O.toUndefined
+  );
+
+  const beforeContinueComponent = pipe(
+    sequenceS(O.option)({
+      privacyUrl: pipe(initiative?.privacyLink, O.fromNullable),
+      tosUrl: pipe(initiative?.tcLink, O.fromNullable)
+    }),
+    O.map(props => <BeforeContinueBody key={"tos"} {...props} />),
+    O.toUndefined
   );
 
   return (
@@ -220,7 +166,42 @@ const InitiativeDetailsScreen = () => {
       contextualHelp={emptyContextualHelp}
     >
       <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={100}>
-        {isLoading ? null : screenContent()}
+        <SafeAreaView style={IOStyles.flex}>
+          <ScrollView
+            onLayout={handleScrollViewLayout}
+            onContentSizeChange={handleScrollViewContentSizeChange}
+            onScroll={handleScrollViewOnScroll}
+            scrollEventThrottle={400}
+            style={IOStyles.flex}
+          >
+            <View style={IOStyles.horizontalContentPadding}>
+              <VSpacer size={16} />
+              {descriptionComponent}
+              <VSpacer size={16} />
+              <ItemSeparatorComponent noPadded={true} />
+              <VSpacer size={16} />
+              {beforeContinueComponent}
+              <VSpacer size={16} />
+            </View>
+            <VSpacer size={16} />
+          </ScrollView>
+          <FooterWithButtons
+            type={"TwoButtonsInlineThird"}
+            leftButton={{
+              bordered: true,
+              title: I18n.t("global.buttons.cancel"),
+              onPress: handleGoBackPress,
+              testID: "IDPayOnboardingCancel"
+            }}
+            rightButton={{
+              title: I18n.t("global.buttons.continue"),
+              onPress: handleContinuePress,
+              testID: "IDPayOnboardingContinue",
+              isLoading: isAcceptingTos,
+              disabled: isContinueButtonDisabled || isAcceptingTos
+            }}
+          />
+        </SafeAreaView>
       </LoadingSpinnerOverlay>
     </BaseScreenComponent>
   );
