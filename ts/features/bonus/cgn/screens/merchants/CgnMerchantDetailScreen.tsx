@@ -16,12 +16,10 @@ import { connect } from "react-redux";
 import { Address } from "../../../../../../definitions/cgn/merchants/Address";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
-import OpenWeb from "../../../../../../img/icons/openweburl.svg";
 import { VSpacer } from "../../../../../components/core/spacer/Spacer";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { H2 } from "../../../../../components/core/typography/H2";
 import { H4 } from "../../../../../components/core/typography/H4";
-import { IOColors } from "../../../../../components/core/variables/IOColors";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
@@ -58,6 +56,7 @@ const styles = StyleSheet.create({
 });
 
 const COPY_ICON_SIZE = 24;
+const EXTERNAL_LINK_ICON_SIZE = 20;
 
 const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
   props: Props
@@ -155,10 +154,10 @@ const CgnMerchantDetailScreen: React.FunctionComponent<Props> = (
                         <H4 weight={"Regular"} style={IOStyles.flex}>
                           {url}
                         </H4>
-                        <OpenWeb
-                          height={COPY_ICON_SIZE}
-                          width={COPY_ICON_SIZE}
-                          fill={IOColors.blue}
+                        <Icon
+                          name="legExternalLink"
+                          size={EXTERNAL_LINK_ICON_SIZE}
+                          color="blue"
                         />
                       </TouchableDefaultOpacity>
                     )
