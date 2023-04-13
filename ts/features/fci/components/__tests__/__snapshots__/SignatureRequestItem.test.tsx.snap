@@ -1,0 +1,188 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test SignatureRequestItem component should render a SignatureRequestItem component with props correctly 1`] = `
+<View>
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "flexDirection": "row",
+        "opacity": 1,
+        "paddingBottom": 16,
+        "paddingTop": 16,
+      }
+    }
+    testID="FciSignatureRequestOnPress"
+  >
+    <View
+      style={
+        Object {
+          "flex": 1,
+          "flexDirection": "column",
+        }
+      }
+    >
+      <Text
+        color="bluegreyDark"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+            "lineHeight": 22,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 22,
+            },
+            Object {
+              "color": "#17324D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "700",
+            },
+          ]
+        }
+        weight="Bold"
+        weightColorFactory={[Function]}
+      >
+        mockedDossierTitle
+      </Text>
+      <Text
+        color="bluegrey"
+        defaultColor="blue"
+        defaultWeight="Bold"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 14,
+          }
+        }
+        numberOfLines={1}
+        style={
+          Array [
+            Object {
+              "fontSize": 14,
+            },
+            Object {
+              "color": "#475A6D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
+        }
+        weight="Regular"
+      >
+        4/13/2023·9:54:48 AM·ID mockedId
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "width": 16,
+        }
+      }
+    />
+    <View
+      style={
+        Object {
+          "alignContent": "center",
+          "alignItems": "center",
+          "justifyContent": "center",
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "alignSelf": "flex-start",
+              "backgroundColor": "#ED1727",
+              "borderRadius": 13.5,
+              "height": 27,
+              "justifyContent": "center",
+              "paddingBottom": 3,
+              "paddingLeft": 6,
+              "paddingRight": 6,
+              "paddingTop": 3,
+            },
+            Object {
+              "elevation": 0.1,
+              "paddingLeft": 8,
+              "paddingRight": 8,
+            },
+            Object {
+              "backgroundColor": "#FFFFFF",
+            },
+            Object {
+              "borderColor": "#C02927",
+              "borderWidth": 1,
+            },
+            Object {
+              "height": 18,
+            },
+          ]
+        }
+        testID="FciSignatureRequestItemBadgeNotAvailable"
+      >
+        <Text
+          color="red"
+          defaultColor="blue"
+          defaultWeight="Bold"
+          font="TitilliumWeb"
+          fontSize="small"
+          fontStyle={
+            Object {
+              "fontSize": 12,
+            }
+          }
+          style={
+            Array [
+              Object {
+                "fontSize": 12,
+              },
+              Object {
+                "color": "#C02927",
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "600",
+              },
+            ]
+          }
+          weight="SemiBold"
+        >
+          Not available
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      Array [
+        Object {
+          "backgroundColor": "#CCD4DC",
+        },
+        Object {
+          "marginLeft": 24,
+          "marginRight": 24,
+        },
+        Object {
+          "height": 0.5,
+        },
+      ]
+    }
+  />
+</View>
+`;

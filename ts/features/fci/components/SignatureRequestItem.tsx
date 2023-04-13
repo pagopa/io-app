@@ -33,6 +33,7 @@ const SignatureRequestItem = (props: Props) => {
             small
             labelColor={"white"}
             text={I18n.t("features.fci.requests.signingInProgress")}
+            testID={"FciSignatureRequestItemBadgeInProgress"}
           />
         );
       case SignatureRequestStatusEnum.SIGNED:
@@ -41,6 +42,7 @@ const SignatureRequestItem = (props: Props) => {
             small
             labelColor={"bluegreyDark"}
             text={I18n.t("features.fci.requests.signed")}
+            testID={"FciSignatureRequestItemBadgeSigned"}
           />
         );
       case SignatureRequestStatusEnum.WAIT_FOR_QTSP:
@@ -50,6 +52,7 @@ const SignatureRequestItem = (props: Props) => {
             small
             labelColor={"red"}
             text={I18n.t("features.fci.requests.notAvailable")}
+            testID={"FciSignatureRequestItemBadgeNotAvailable"}
           />
         );
     }
@@ -59,6 +62,7 @@ const SignatureRequestItem = (props: Props) => {
       <TouchableDefaultOpacity
         style={{ flexDirection: "row", paddingTop: 16, paddingBottom: 16 }}
         onPress={onPress}
+        testID={"FciSignatureRequestOnPress"}
       >
         <View style={{ flexDirection: "column", flex: 1 }}>
           <H4>{item.dossier_title}</H4>
