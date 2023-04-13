@@ -132,7 +132,6 @@ Below there are the permissions required by the main android hardware manufactur
 
 
 **ios**
-(more info about permissions requested by Apple [here](https://www.pivotaltracker.com/n/projects/2048617/stories/160232897))
 
 | Permission                                  | Usage / Meaning                                                                                                                          |
 | ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
