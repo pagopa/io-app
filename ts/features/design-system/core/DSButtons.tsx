@@ -1,18 +1,15 @@
-import { Text as NBButtonText } from "native-base";
 import { View, StyleSheet, Alert } from "react-native";
 import * as React from "react";
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { ButtonExtendedOutline } from "../../../components/ui/ButtonExtendedOutline";
 import { ButtonSolid } from "../../../components/ui/ButtonSolid";
 import { ButtonOutline } from "../../../components/ui/ButtonOutline";
-import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { H2 } from "../../../components/core/typography/H2";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import CopyButtonComponent from "../../../components/CopyButtonComponent";
 import BlockButtons from "../../../components/ui/BlockButtons";
 import PaymentButton from "../../../components/messages/MessageDetail/common/PaymentButton";
 import { PaymentNoticeNumber } from "../../../../definitions/backend/PaymentNoticeNumber";
-import IconFont from "../../../components/ui/IconFont";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";

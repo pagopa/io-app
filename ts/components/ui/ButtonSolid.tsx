@@ -107,10 +107,12 @@ const legacyStyles = StyleSheet.create({
 
 // Disabled state
 const colorPrimaryButtonDisabled: IOColors = "grey-200";
+const DISABLED_OPACITY = 0.5;
 
 const styles = StyleSheet.create({
   backgroundDisabled: {
-    backgroundColor: IOColors[colorPrimaryButtonDisabled]
+    backgroundColor: IOColors[colorPrimaryButtonDisabled],
+    opacity: DISABLED_OPACITY
   }
 });
 
