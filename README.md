@@ -150,32 +150,16 @@ Because different platforms have different types of Permissions below we have tw
         <td>Allows an app to use device&#39;s available biometric identification system (Face unlock, Iris unlock, Fingerprint) required from API Level 28</td>
     </tr>
     <tr>
-      <td>com.fingerprints.service.ACCESS_FINGERPRINT_MANAGER</td>
-      <td>Allows the application to access the fingerprint hardware for biometric identification.</td>
-    </tr>
-    <tr>
-      <td>com.samsung.android.providers.context.permission.WRITE_USE_APP_FEATURE_SURVEY</td>
-      <td>Allows the app to use the Samsung Developer SDK. Used for Samsung biometric identification.</td>
-    </tr>
-    <tr>
-      <td>android.permission.SCHEDULE_EXACT_ALARM</td>
+      <td>SCHEDULE_EXACT_ALARM</td>
       <td>Allows the app to send local notifications.</td>
-    </tr>
-    <tr>
-      <td>com.android.vending.CHECK_LICENSE</td>
+    </tr><tr>
+      <td>CHECK_LICENSE</td>
       <td>Allows the app to access Google Play Licensing.</td>
     </tr>
     <tr>
-      <td>android.permission.DOWNLOAD_WITHOUT_NOTIFICATION</td>
+      <td>DOWNLOAD_WITHOUT_NOTIFICATION</td>
       <td>Allows the app to download files in background without promping a notification.</td>
     </tr>
-    <tr>
-      <td>com.google.android.c2dm.permission.RECEIVE</td>
-      <td>Allows the app to receive GCM messages. Used for notifications.</td>
-    </tr>
-    <tr>
-      <td>com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE</td>
-      <td>Allows the app to recognize where the app was installed from.</td>
   </table>                                     
 
 Below there are the permissions required by the main android hardware manufacturers. Mainly used to manage notification badge icons.
@@ -183,6 +167,10 @@ Below there are the permissions required by the main android hardware manufactur
     <tr>
         <td>Permission (manufacturer)</td>
         <td>Usage / Meaning</td>
+    </tr>
+    <tr>
+      <td>com.android.vending.CHECK_LICENSE</td>
+      <td>Allows the app to access Google Play Licensing.</td>
     </tr>
     <tr>
         <td>com.anddoes.launcher.permission.UPDATE_COUNT</td>
@@ -195,6 +183,14 @@ Below there are the permissions required by the main android hardware manufactur
     <tr>
         <td>com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE</td>
         <td>It is used by Firebase to recognize where the app was installed from</td>
+    </tr>
+    <tr>
+      <td>com.samsung.android.providers.context.permission.WRITE_USE_APP_FEATURE_SURVEY</td>
+      <td>Allows the app to use the Samsung Developer SDK. Used for Samsung biometric identification.</td>
+    </tr>
+    <tr>
+      <td>com.fingerprints.service.ACCESS_FINGERPRINT_MANAGER</td>
+      <td>Allows the application to access the fingerprint hardware for biometric identification.</td>
     </tr>
     <tr>
         <td>com.htc.launcher.permission.READ_SETTINGS</td>
