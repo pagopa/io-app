@@ -45,7 +45,7 @@
   - [Deep linking](#deep-linking)
   - [Fonts](#fonts)
   - [Vector graphics](#vector-graphics)
-- [Appendix]
+- Appendix
   - [Internationalization](locales/README.md)
   - [End to end test](e2e/README.md)
 
@@ -316,7 +316,7 @@ Below there are the permissions required by the main android hardware manufactur
         <td>Request NFC capability.</td>
     </tr>
   </table>
-</details>
+</details></br>
 
 # Getting started
 
@@ -360,7 +360,7 @@ To use it, run these commands:
 
 ## Build the app
 In order to build the app, we use [yarn](https://yarnpkg.com/) for managing javascript dependencies. 
-As stated [previously](#nodejs-and-ruby), we also use NodeJS and Ruby for managing the environment.
+As stated [previously](#nodejs-and-ruby), we also use `nodenv` and `rbenv` for managing the environment:
 ```bash
 # CD into the repository
 $ cd io-app
@@ -426,15 +426,25 @@ To test the io-app on a real iOS device you must:
 10. From Xcode select the device by the drop-down list and run ('Product' -> 'Run') on the iOS device, if the unit tests fail they can be disabled by going to Product -> Scheme -> Edit Scheme -> Build
 
 # Troubleshooting
-- ## Bundler
+This section lists possible solutions to problems you might encounter while building the app.
+  <details>
+  <summary>Bundler</summary>
+
   - ***Can't find gem bundler (>= 0.a) with executable bundle (Gem::GemNotFoundException):***
 
     Can be solved by launching ```gem install bundler -v "$(grep -A 1 "BUNDLED WITH" Gemfile.lock | tail -n 1)```
 
-- ## iOS build 
+  </details>
+  
+
+  <details>
+  <summary>iOS build</summary>
+
   - ***error: redefinition of module 'YogaKit' build Failed***
   
     Can be solved by restarting your machine.
+
+  </details></br>
 
 # Architecture
 
