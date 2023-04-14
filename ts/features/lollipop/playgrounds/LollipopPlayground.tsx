@@ -16,6 +16,11 @@ import {
   lollipopPublicKeySelector
 } from "../store/reducers/lollipop";
 import { toThumbprint } from "../utils/crypto";
+import { DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER } from "../utils/login";
+import { apiUrlPrefix } from "../../../config";
+import ChooserListItem from "../../../components/ChooserListItem";
+import { CheckBox } from "../../../components/core/selection/checkbox/CheckBox";
+import { Label } from "../../../components/core/typography/Label";
 
 const styles = StyleSheet.create({
   textInput: {
@@ -32,6 +37,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "stretch"
+  },
+  rowStart: {
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "stretch"
   }
 });
 
@@ -39,21 +49,21 @@ const LollipopPlayground = () => {
   const [httpRequestBodyText, setHttpRequestBodyText] =
     React.useState<string>("");
 
+  const [doSignBody, setDoSignBody] = React.useState<boolean>(true);
+
   const keyTag = useIOSelector(lollipopKeyTagSelector);
   const maybePublicKey = useIOSelector(lollipopPublicKeySelector);
   const maybeSessionToken = O.fromNullable(useIOSelector(sessionTokenSelector));
 
   const lollipopClient =
     O.isSome(maybeSessionToken) && O.isSome(keyTag) && O.isSome(maybePublicKey)
-      ? LollipopBackendClient(
-          "https://api-app.io.pagopa.it",
-          maybeSessionToken.value,
-          {
-            keyTag: keyTag.value,
-            publicKey: maybePublicKey.value,
-            publicKeyThumbprint: toThumbprint(maybePublicKey)
-          }
-        )
+      ? LollipopBackendClient(apiUrlPrefix, maybeSessionToken.value, {
+          keyTag: keyTag.value,
+          publicKey: maybePublicKey.value,
+          publicKeyThumbprint: `${DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER}-${toThumbprint(
+            maybePublicKey
+          )}`
+        })
       : undefined;
 
   const onSignButtonPress = useCallback(
@@ -63,17 +73,19 @@ const LollipopPlayground = () => {
           message: body
         };
         try {
-          const response = await lollipopClient.postSignMessage({
-            nonce: "aNonce"
-          })(bodyMessage);
           console.log("🔑 response: " + JSON.stringify(maybePublicKey));
+          console.log("💙 body: " + JSON.stringify(bodyMessage));
+          const response = await lollipopClient.postSignMessage({
+            nonce: "aNonce",
+            signBody: doSignBody
+          })(bodyMessage);
           console.log("✅ response: " + JSON.stringify(response));
         } catch (e) {
           console.log("❌ error: " + JSON.stringify(e));
         }
       }
     },
-    [lollipopClient, maybePublicKey]
+    [doSignBody, lollipopClient, maybePublicKey]
   );
 
   console.log("✅ refreshing");
@@ -91,6 +103,12 @@ const LollipopPlayground = () => {
               onChangeText={setHttpRequestBodyText}
               value={httpRequestBodyText}
             />
+            <VSpacer size={16} />
+            <View style={styles.rowStart}>
+              <CheckBox checked={doSignBody} />
+              <HSpacer />
+              <Label>{"Sign body"}</Label>
+            </View>
             <VSpacer size={16} />
             <View style={styles.row}>
               <ButtonSolid
