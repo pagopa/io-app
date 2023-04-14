@@ -13,6 +13,7 @@ import {
   StyleSheet,
   View
 } from "react-native";
+import Animated, { ZoomIn, ZoomOut } from "react-native-reanimated";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
@@ -65,11 +66,21 @@ const InitiativeDetailsScreen = () => {
   const [isDescriptionLoaded, setDescriptionLoaded] = React.useState(false);
   const [isFooterVisible, setFooterVisible] = React.useState(false);
 
+  const handleDescriptionLoadEnd = () => {
+    // The markdown component has a different height for some istants after finishing loading
+    // Setting a timeout allows to properly display other components once the Markdown has finished
+    // loading.
+    setTimeout(() => {
+      setDescriptionLoaded(true);
+    }, 200);
+  };
+
   const handleGoBackPress = () => machine.send({ type: "QUIT_ONBOARDING" });
 
   const handleContinuePress = () => machine.send({ type: "ACCEPT_TOS" });
 
   const handleOnScroll = (_: NativeSyntheticEvent<NativeScrollEvent>) => {
+    // Checks if the Continue button is visibile after a scroll event
     if (footerViewRef.current) {
       footerViewRef.current.measureInWindow((_x, y, _width, height) => {
         checkFooterVisibility(y, height);
@@ -77,7 +88,8 @@ const InitiativeDetailsScreen = () => {
     }
   };
 
-  const handleFooterLayout = (event: LayoutChangeEvent) => {
+  const handleFooterOnLayout = (event: LayoutChangeEvent) => {
+    // Check if the Continue button is visibile after the Description load
     const { y, height } = event.nativeEvent.layout;
     checkFooterVisibility(y, height);
   };
@@ -110,9 +122,7 @@ const InitiativeDetailsScreen = () => {
     O.map(({ description }) => description),
     O.map(description => (
       <View key={"desc"} style={{ flexGrow: 1 }}>
-        <Markdown onLoadEnd={() => setDescriptionLoaded(true)}>
-          {description}
-        </Markdown>
+        <Markdown onLoadEnd={handleDescriptionLoadEnd}>{description}</Markdown>
       </View>
     )),
     O.toUndefined
@@ -122,13 +132,18 @@ const InitiativeDetailsScreen = () => {
     O.some(undefined),
     O.filter(_ => isDescriptionLoaded && !isFooterVisible),
     O.map(_ => (
-      <View key={"scrollDown"} style={styles.scrollDownButton}>
+      <Animated.View
+        key={"scrollDown"}
+        style={styles.scrollDownButton}
+        entering={ZoomIn.duration(200)}
+        exiting={ZoomOut.duration(200)}
+      >
         <IconButtonSolid
           accessibilityLabel="Scroll to bottom"
           icon="arrowBottom"
           onPress={handleScrollToBottomPress}
         />
-      </View>
+      </Animated.View>
     )),
     O.toUndefined
   );
@@ -167,7 +182,7 @@ const InitiativeDetailsScreen = () => {
           <VSpacer size={16} />
           {onboardingPrivacyAdvice}
           <VSpacer size={32} />
-          <View ref={footerViewRef} onLayout={handleFooterLayout}>
+          <View ref={footerViewRef} onLayout={handleFooterOnLayout}>
             <BlockButtons
               key={"continue"}
               type="SingleButton"
