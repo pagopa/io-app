@@ -213,6 +213,17 @@ ButtonSolid) => {
     isPressed.value = 0;
   }, [isPressed]);
 
+  // Icons and their colors
+  const iconSize = small ? 16 : 20;
+
+  const foregroundLegacyColor: IOColors = disabled
+    ? mapLegacyColorStates[color]?.label?.disabled
+    : mapLegacyColorStates[color]?.label?.default;
+
+  const foregroundColor: IOColors = disabled
+    ? mapColorStates[color]?.label?.disabled
+    : mapColorStates[color]?.label?.default;
+
   /* ◀ REMOVE_LEGACY_COMPONENT: Start */
   const LegacyButton = () => (
     <Pressable
@@ -234,6 +245,7 @@ ButtonSolid) => {
       <Animated.View
         style={[
           IOButtonLegacyStyles.button,
+          iconPosition === "end" && { flexDirection: "row-reverse" },
           small
             ? IOButtonLegacyStyles.buttonSizeSmall
             : IOButtonLegacyStyles.buttonSizeDefault,
@@ -245,27 +257,15 @@ ButtonSolid) => {
           !disabled && pressedAnimationStyle
         ]}
       >
-        {icon && iconPosition === "start" && (
+        {icon && (
           <>
-            <Icon
-              name={icon}
-              size={small ? 16 : 20}
-              color={
-                disabled
-                  ? mapLegacyColorStates[color]?.label?.disabled
-                  : mapLegacyColorStates[color]?.label?.default
-              }
-            />
+            <Icon name={icon} size={iconSize} color={foregroundLegacyColor} />
             <HSpacer size={8} />
           </>
         )}
         <BaseTypography
           weight={"Bold"}
-          color={
-            disabled
-              ? mapLegacyColorStates[color]?.label?.disabled
-              : mapLegacyColorStates[color]?.label?.default
-          }
+          color={foregroundLegacyColor}
           style={[
             IOButtonLegacyStyles.label,
             small
@@ -281,20 +281,6 @@ ButtonSolid) => {
         >
           {label}
         </BaseTypography>
-        {icon && iconPosition === "end" && (
-          <>
-            <HSpacer size={8} />
-            <Icon
-              name={icon}
-              size={small ? 16 : 20}
-              color={
-                disabled
-                  ? mapLegacyColorStates[color]?.label?.disabled
-                  : mapLegacyColorStates[color]?.label?.default
-              }
-            />
-          </>
-        )}
       </Animated.View>
     </Pressable>
   );
@@ -316,6 +302,7 @@ ButtonSolid) => {
       <Animated.View
         style={[
           IOButtonStyles.button,
+          iconPosition === "end" && { flexDirection: "row-reverse" },
           small
             ? IOButtonStyles.buttonSizeSmall
             : IOButtonStyles.buttonSizeDefault,
@@ -327,28 +314,20 @@ ButtonSolid) => {
           !disabled && pressedAnimationStyle
         ]}
       >
-        {icon && iconPosition === "start" && (
+        {icon && (
           <>
-            <Icon
-              name={icon}
-              size={small ? 16 : 20}
-              color={
-                disabled
-                  ? mapColorStates[color]?.label?.disabled
-                  : mapColorStates[color]?.label?.default
-              }
-            />
+            {/* If 'iconPosition' is set to 'end', we use 
+            reverse flex property to invert the position */}
+            <Icon name={icon} size={iconSize} color={foregroundColor} />
+            {/* Once we have support for 'gap' property,
+            we can get rid of that spacer */}
             <HSpacer size={8} />
           </>
         )}
         <BaseTypography
           font="ReadexPro"
           weight={"Regular"}
-          color={
-            disabled
-              ? mapColorStates[color]?.label?.disabled
-              : mapColorStates[color]?.label?.default
-          }
+          color={foregroundColor}
           style={[
             IOButtonStyles.label,
             small
@@ -364,20 +343,6 @@ ButtonSolid) => {
         >
           {label}
         </BaseTypography>
-        {icon && iconPosition === "end" && (
-          <>
-            <HSpacer size={8} />
-            <Icon
-              name={icon}
-              size={small ? 16 : 20}
-              color={
-                disabled
-                  ? mapColorStates[color]?.label?.disabled
-                  : mapColorStates[color]?.label?.default
-              }
-            />
-          </>
-        )}
       </Animated.View>
     </Pressable>
   );
