@@ -10,7 +10,6 @@ import { H2 } from "../../../components/core/typography/H2";
 import { IOColors } from "../../../components/core/variables/IOColors";
 import CopyButtonComponent from "../../../components/CopyButtonComponent";
 import BlockButtons from "../../../components/ui/BlockButtons";
-import { ViewEUCovidButton } from "../../euCovidCert/components/ViewEUCovidButton";
 import PaymentButton from "../../../components/messages/MessageDetail/common/PaymentButton";
 import { PaymentNoticeNumber } from "../../../../definitions/backend/PaymentNoticeNumber";
 import IconFont from "../../../components/ui/IconFont";
@@ -1058,13 +1057,6 @@ export const DSButtons = () => {
       >
         Specific buttons
       </H2>
-      <DSComponentViewerBox name="ViewEUCovidButton">
-        <ViewEUCovidButton
-          onPress={() => {
-            alert("Covid Certificate shown");
-          }}
-        />
-      </DSComponentViewerBox>
 
       <DSComponentViewerBox name="PaymentButton">
         <PaymentButton
