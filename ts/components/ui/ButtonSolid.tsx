@@ -213,9 +213,7 @@ ButtonSolid) => {
     isPressed.value = 0;
   }, [isPressed]);
 
-  // Icons and their colors
-  const iconSize = small ? 16 : 20;
-
+  // Label & Icons colors
   const foregroundLegacyColor: IOColors = disabled
     ? mapLegacyColorStates[color]?.label?.disabled
     : mapLegacyColorStates[color]?.label?.default;
@@ -223,6 +221,9 @@ ButtonSolid) => {
   const foregroundColor: IOColors = disabled
     ? mapColorStates[color]?.label?.disabled
     : mapColorStates[color]?.label?.default;
+
+  // Icon size
+  const iconSize = small ? 16 : 20;
 
   /* ◀ REMOVE_LEGACY_COMPONENT: Start */
   const LegacyButton = () => (

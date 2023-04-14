@@ -490,9 +490,17 @@ export const DSButtons = () => {
                 small
                 label={"Primary button (small)"}
                 accessibilityLabel="Tap to trigger test alert"
-                onPress={() => {
-                  alert("Action triggered");
-                }}
+                onPress={onButtonPress}
+              />
+
+              <VSpacer size={16} />
+
+              <ButtonOutline
+                small
+                label={"Primary button (small)"}
+                icon="arrowLeft"
+                accessibilityLabel="Tap to trigger test alert"
+                onPress={onButtonPress}
               />
             </View>
           </>
@@ -568,9 +576,28 @@ export const DSButtons = () => {
               <ButtonOutline
                 color="neutral"
                 label={"Neutral button"}
-                onPress={() => {
-                  alert("Action triggered");
-                }}
+                onPress={onButtonPress}
+                accessibilityLabel="Tap to trigger test alert"
+              />
+
+              <VSpacer size={16} />
+
+              <ButtonOutline
+                color="neutral"
+                label={"Neutral button"}
+                icon="arrowLeft"
+                onPress={onButtonPress}
+                accessibilityLabel="Tap to trigger test alert"
+              />
+
+              <VSpacer size={16} />
+
+              <ButtonOutline
+                color="neutral"
+                label={"Neutral button"}
+                icon="arrowRight"
+                iconPosition="end"
+                onPress={onButtonPress}
                 accessibilityLabel="Tap to trigger test alert"
               />
             </View>
@@ -650,14 +677,35 @@ export const DSButtons = () => {
                 onPress={onButtonPress}
                 accessibilityLabel="Tap to trigger test alert"
               />
+
+              <VSpacer size={16} />
+
+              <ButtonOutline
+                color="danger"
+                label={"Danger button"}
+                icon="trashcan"
+                accessibilityLabel="Tap to trigger test alert"
+                onPress={onButtonPress}
+              />
+
+              <VSpacer size={16} />
+
+              <ButtonOutline
+                color="danger"
+                label={"Danger button"}
+                icon="trashcan"
+                iconPosition="end"
+                accessibilityLabel="Tap to trigger test alert"
+                onPress={onButtonPress}
+              />
             </View>
             <VSpacer size={16} />
             <View>
               <ButtonOutline
                 small
                 color="danger"
+                label={"Danger button (small)"}
                 accessibilityLabel="Tap to trigger test alert"
-                label={"Danger Button (Small)"}
                 onPress={onButtonPress}
               />
             </View>
@@ -668,7 +716,7 @@ export const DSButtons = () => {
                 fullWidth
                 color="danger"
                 accessibilityLabel="Tap to trigger test alert"
-                label={"Danger button (Full Width)"}
+                label={"Danger button (full width)"}
                 onPress={() => {
                   alert("Action triggered");
                 }}
@@ -681,7 +729,7 @@ export const DSButtons = () => {
                 fullWidth
                 color="danger"
                 accessibilityLabel="Tap to trigger test alert"
-                label={"Danger Button (Small, Full Width)"}
+                label={"Danger button (small, full width)"}
                 onPress={() => {
                   alert("Action triggered");
                 }}
@@ -1115,40 +1163,46 @@ export const DSButtons = () => {
         />
       </DSComponentViewerBox>
 
-      <DSComponentViewerBox name="CalendarEventButton">
-        <ButtonDefaultOpacity small={true} bordered={true}>
-          <IconFont name={"io-plus"} />
-          <NBButtonText>Aggiungi promemoria</NBButtonText>
-        </ButtonDefaultOpacity>
+      <DSComponentViewerBox name="CalendarEventButton (using new ButtonOutline)">
+        <ButtonOutline
+          small
+          accessibilityLabel="Tap to trigger test alert"
+          label={"Aggiungi promemoria"}
+          icon="add"
+          onPress={onButtonPress}
+        />
+
         <VSpacer size={16} />
-        <ButtonDefaultOpacity small={true} bordered={true}>
-          <IconFont name={"io-tick-big"} />
-          <NBButtonText>Aggiunto</NBButtonText>
-        </ButtonDefaultOpacity>
+
+        <ButtonOutline
+          small
+          accessibilityLabel="Tap to trigger test alert"
+          label={"Aggiunto"}
+          icon="completed"
+          onPress={onButtonPress}
+        />
       </DSComponentViewerBox>
 
       <DSComponentViewerBox name="CopyButtonComponent">
         <CopyButtonComponent textToCopy={"Copied text by CopyButton"} />
       </DSComponentViewerBox>
 
-      {/* 
-      The following components are using the legacy `IconFont`
-      component because replacing assets isn't the aim of
-      the buttons' inventory.
-      Future Button components, preferrably not based
-      on NativeBase, must use the new <Icon> component.
-    */}
-
       <DSComponentViewerBox name="Login buttons">
-        <ButtonDefaultOpacity block={true} primary={true}>
-          <IconFont name={"io-profilo"} color={IOColors.white} />
-          <NBButtonText>Entra con SPID</NBButtonText>
-        </ButtonDefaultOpacity>
-        <VSpacer size={16} />
-        <ButtonDefaultOpacity block={true} primary={true}>
-          <IconFont name={"io-cie"} color={IOColors.white} />
-          <NBButtonText>Entra con CIE</NBButtonText>
-        </ButtonDefaultOpacity>
+        <ButtonSolid
+          fullWidth
+          accessibilityLabel="Tap to trigger test alert"
+          label={"Entra con SPID"}
+          icon="profile"
+          onPress={onButtonPress}
+        />
+        <VSpacer size={8} />
+        <ButtonSolid
+          fullWidth
+          accessibilityLabel="Tap to trigger test alert"
+          label={"Entra con CIE"}
+          icon="cie"
+          onPress={onButtonPress}
+        />
       </DSComponentViewerBox>
     </DesignSystemScreen>
   );
