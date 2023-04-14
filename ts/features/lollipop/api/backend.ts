@@ -21,6 +21,8 @@ import {
 } from "../../../utils/api";
 
 import { KeyInfo } from "../../../features/lollipop/utils/crypto";
+import { LollipopConfig } from "..";
+import { lollipopFetch } from "../utils/fetch";
 
 type LollipopBaseResponseType<R> =
   | IResponseType<200, R>
@@ -52,7 +54,7 @@ function lollipopBaseMessageResponseDecoder<R, O = R>(
 export function LollipopBackendClient(
   baseUrl: string,
   token: SessionToken,
-  _keyInfo: KeyInfo = {},
+  keyInfo: KeyInfo = {},
   fetchApi: typeof fetch = defaultRetryingFetch()
 ) {
   const options = {
@@ -80,15 +82,21 @@ export function LollipopBackendClient(
     method: "post",
     url: () => "/first-lollipop/sign",
     query: _ => ({}),
-    body: body => JSON.stringify(body),
+    body: body => JSON.stringify({ message: body.message }),
     headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
     response_decoder: lollipopBaseMessageResponseDecoder(SignMessageResponse)
   };
 
   const withBearerToken = withToken(token);
   return {
-    postSignMessage: withBearerToken(
-      createFetchRequestForApi(signMessageT, options)
-    )
+    postSignMessage: (lollipopConfig: LollipopConfig) => {
+      const lpFetch = lollipopFetch(lollipopConfig, keyInfo);
+      return withBearerToken(
+        createFetchRequestForApi(signMessageT, {
+          ...options,
+          fetchApi: lpFetch
+        })
+      );
+    }
   };
 }

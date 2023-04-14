@@ -1,14 +1,21 @@
 import * as O from "fp-ts/lib/Option";
 import { Content } from "native-base";
-import React from "react";
+import React, { useCallback } from "react";
 import { View, SafeAreaView, StyleSheet, TextInput } from "react-native";
 import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";
-import { Label } from "../../../components/core/typography/Label";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { maybeNotNullyString } from "../../../utils/strings";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import ButtonSolid from "../../../components/ui/ButtonSolid";
 import ButtonOutline from "../../../components/ui/ButtonOutline";
+import { sessionTokenSelector } from "../../../store/reducers/authentication";
+import { LollipopBackendClient } from "../api/backend";
+import { useIOSelector } from "../../../store/hooks";
+import {
+  lollipopKeyTagSelector,
+  lollipopPublicKeySelector
+} from "../store/reducers/lollipop";
+import { toThumbprint } from "../utils/crypto";
 
 const styles = StyleSheet.create({
   textInput: {
@@ -32,13 +39,44 @@ const LollipopPlayground = () => {
   const [httpRequestBodyText, setHttpRequestBodyText] =
     React.useState<string>("");
 
-  const onSignButtonPress = (body: string) => {
-    console.log("onSignButtonPress: " + body);
-  };
+  const keyTag = useIOSelector(lollipopKeyTagSelector);
+  const maybePublicKey = useIOSelector(lollipopPublicKeySelector);
+  const maybeSessionToken = O.fromNullable(useIOSelector(sessionTokenSelector));
 
-  const bodyMessage = {
-    message: httpRequestBodyText
-  };
+  const lollipopClient =
+    O.isSome(maybeSessionToken) && O.isSome(keyTag) && O.isSome(maybePublicKey)
+      ? LollipopBackendClient(
+          "https://api-app.io.pagopa.it",
+          maybeSessionToken.value,
+          {
+            keyTag: keyTag.value,
+            publicKey: maybePublicKey.value,
+            publicKeyThumbprint: toThumbprint(maybePublicKey)
+          }
+        )
+      : undefined;
+
+  const onSignButtonPress = useCallback(
+    async (body: string) => {
+      if (lollipopClient) {
+        const bodyMessage = {
+          message: body
+        };
+        try {
+          const response = await lollipopClient.postSignMessage({
+            nonce: "aNonce"
+          })(bodyMessage);
+          console.log("🔑 response: " + JSON.stringify(maybePublicKey));
+          console.log("✅ response: " + JSON.stringify(response));
+        } catch (e) {
+          console.log("❌ error: " + JSON.stringify(e));
+        }
+      }
+    },
+    [lollipopClient, maybePublicKey]
+  );
+
+  console.log("✅ refreshing");
 
   const isMessageBodySet = O.isSome(maybeNotNullyString(httpRequestBodyText));
   return (
