@@ -433,7 +433,7 @@ To test the io-app on a real iOS device you must:
 9. On the real device connected, accept to trust the device
 10. From Xcode select the device by the drop-down list and run ('Product' -> 'Run') on the iOS device, if the unit tests fail they can be disabled by going to Product -> Scheme -> Edit Scheme -> Build
 
-# Troubleshooting
+## Troubleshooting
 This section lists possible solutions to problems you might encounter while building the app.
   <details>
   <summary>Bundler</summary>
