@@ -2,6 +2,7 @@ import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
 import { Content } from "native-base";
 import React, { useCallback } from "react";
+import { ProblemJson } from "@pagopa/ts-commons/lib/responses";
 import { View, SafeAreaView, StyleSheet, TextInput } from "react-native";
 import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
@@ -84,12 +85,13 @@ const LollipopPlayground = () => {
             signBody: doSignBody
           })(bodyMessage);
           if (E.isRight(signResponse)) {
-            const response = signResponse.right.value as SignMessageResponse;
             const status = signResponse.right.status;
             if (status !== 200) {
+              const response = signResponse.right.value as ProblemJson;
               setIsVerificationSuccess(false);
-              setSignResponse(`${status}`);
+              setSignResponse(`${status} - ${response.title}`);
             } else {
+              const response = signResponse.right.value as SignMessageResponse;
               setIsVerificationSuccess(true);
               setSignResponse(response.response);
             }
@@ -105,8 +107,6 @@ const LollipopPlayground = () => {
     },
     [doSignBody, lollipopClient]
   );
-
-  console.log("✅ refreshing");
 
   const isMessageBodySet = O.isSome(maybeNotNullyString(httpRequestBodyText));
   return (
