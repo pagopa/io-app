@@ -88,4 +88,10 @@ export const fciIssuerEnvironmentSelector = createSelector(
       : IssuerEnvironmentEnum.TEST
 );
 
+export const fciSignatureRequestIdSelector = createSelector(
+  fciSignatureRequestSelector,
+  signatureDetailView =>
+    pot.isSome(signatureDetailView) ? signatureDetailView.value.id : undefined
+);
+
 export default reducer;
