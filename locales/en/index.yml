@@ -3304,7 +3304,7 @@ support:
     card: "Payment methods details"
     cardValue: "Number (encrypted), expiration, network"
     fci: "Signature request identifier"
-    fciValue: "To check the requests in progress"
+    fciValue: "To check the request in progress"
     header: "Submit a request"
     listTitle: "Ongoing requests"
     title: "Do you give us your consent?"

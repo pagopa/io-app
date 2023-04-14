@@ -3330,7 +3330,7 @@ support:
     card: "Dati del metodo di pagamento"
     cardValue: "Numero (cifrato), scadenza, circuito"
     fci: "Identificativo della richiesta di Firma"
-    fciValue: "Per verificare le richiesta in corso"
+    fciValue: "Per verificare la richiesta in corso"
     prominentDisclosure: "Accesso alla galleria del dispositivo"
     prominentDisclosureData: "Per caricare foto e screenshot"
     header: "Apri una richiesta"
