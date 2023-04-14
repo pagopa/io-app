@@ -97,7 +97,8 @@ const CreditCardOnboardingAttemptDetailScreen = (props: Props) => {
       zendeskSupportStart({
         startingRoute: "n/a",
         assistanceForPayment: false,
-        assistanceForCard: true
+        assistanceForCard: true,
+        assistanceForFci: false
       })
     );
     dispatch(zendeskSelectedCategory(zendeskPaymentMethodCategory));

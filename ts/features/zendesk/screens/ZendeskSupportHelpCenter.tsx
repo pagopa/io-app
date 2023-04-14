@@ -176,7 +176,8 @@ const ZendeskSupportHelpCenter = () => {
     contextualHelpMarkdown,
     startingRoute,
     assistanceForPayment,
-    assistanceForCard
+    assistanceForCard,
+    assistanceForFci
   } = route.params;
 
   const [markdownContentLoaded, setMarkdownContentLoaded] = useState<boolean>(
@@ -229,6 +230,7 @@ const ZendeskSupportHelpCenter = () => {
           <ZendeskSupportComponent
             assistanceForPayment={assistanceForPayment}
             assistanceForCard={assistanceForCard}
+            assistanceForFci={assistanceForFci}
           />
           <VSpacer size={16} />
         </ScrollView>
