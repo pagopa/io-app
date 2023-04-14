@@ -74,7 +74,7 @@ const LollipopPlayground = () => {
         };
         try {
           console.log("🔑 response: " + JSON.stringify(maybePublicKey));
-          console.log("💙 body: " + JSON.stringify(bodyMessage));
+          console.log("📜 body: " + JSON.stringify(bodyMessage));
           const response = await lollipopClient.postSignMessage({
             nonce: "aNonce",
             signBody: doSignBody
@@ -105,7 +105,7 @@ const LollipopPlayground = () => {
             />
             <VSpacer size={16} />
             <View style={styles.rowStart}>
-              <CheckBox checked={doSignBody} />
+              <CheckBox checked={doSignBody} onValueChange={setDoSignBody} />
               <HSpacer />
               <Label>{"Sign body"}</Label>
             </View>
