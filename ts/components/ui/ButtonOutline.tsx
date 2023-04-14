@@ -394,6 +394,9 @@ ButtonOutline) => {
     isPressed.value = 0;
   }, [isPressed]);
 
+  // Icon size
+  const iconSize = small ? 16 : 20;
+
   /* ◀ REMOVE_LEGACY_COMPONENT: Start */
   const LegacyButton = () => (
     <Pressable
@@ -444,10 +447,12 @@ ButtonOutline) => {
                 name={icon}
                 animatedProps={pressedColorIconAnimationStyle}
                 color={mapLegacyColorStates[color]?.label?.default}
+                size={iconSize}
               />
             ) : (
               <AnimatedIcon
                 name={icon}
+                size={iconSize}
                 color={mapLegacyColorStates[color]?.label?.disabled}
               />
             )}
