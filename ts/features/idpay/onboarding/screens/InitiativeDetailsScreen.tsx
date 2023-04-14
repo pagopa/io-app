@@ -79,26 +79,29 @@ const InitiativeDetailsScreen = () => {
 
   const handleContinuePress = () => machine.send({ type: "ACCEPT_TOS" });
 
-  const handleOnScroll = (_: NativeSyntheticEvent<NativeScrollEvent>) => {
+  const handleOnScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     // Checks if the Continue button is visibile after a scroll event
-    if (footerViewRef.current) {
-      footerViewRef.current.measureInWindow((_x, y, _width, height) => {
-        checkFooterVisibility(y, height);
-      });
-    }
+    const paddingToBottom = 100;
+
+    const { layoutMeasurement, contentOffset, contentSize } = event.nativeEvent;
+    const isCloseToBottom =
+      layoutMeasurement.height + contentOffset.y >=
+      contentSize.height - paddingToBottom;
+
+    setFooterVisible(isCloseToBottom);
   };
 
   const handleFooterOnLayout = (event: LayoutChangeEvent) => {
-    // Check if the Continue button is visibile after the Description load
+    // Check if the Continue button is visibile after the description markdown load
+    // This is necessary because if the description is short the scroll event is never
+    // triggered
+    const { height: screenHeight } = Dimensions.get("window");
     const { y, height } = event.nativeEvent.layout;
-    checkFooterVisibility(y, height);
-  };
 
-  const checkFooterVisibility = (y: number, height: number) => {
     const top = y;
     const bottom = top + height;
-    const { height: screenHeight } = Dimensions.get("window");
     const isInView = bottom > 0 && top < screenHeight;
+
     setFooterVisible(isInView);
   };
 
