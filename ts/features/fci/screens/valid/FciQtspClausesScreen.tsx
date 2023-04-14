@@ -92,6 +92,7 @@ const FciQtspClausesScreen = () => {
         title={I18n.t("features.fci.errors.generic.default.title")}
         subTitle={I18n.t("features.fci.errors.generic.default.subTitle")}
         onPress={() => dispatch(fciEndRequest())}
+        assistance={true}
         testID="PollingErrorComponentTestID"
       />
     );
