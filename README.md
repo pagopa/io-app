@@ -354,7 +354,8 @@ If you want to run the app in production mode, run these commands:
   $ cp .env.production .env
 ```
 
-_Note: The sample configuration sets the app to interface with our test environment, on which we work continuously; therefore, it may occur that some features are not always available or are fully working. Check the comments in the file for more informations about environment variables._
+> **Note**
+> The sample configuration sets the app to interface with our test environment, on which we work continuously; therefore, it may occur that some features are not always available or are fully working. Check the comments in the file for more informations about environment variables.
 
 ### io-dev-api-server
 You can also target the [io-dev-api-server](https://github.com/pagopa/io-dev-api-server) for development purposes.
