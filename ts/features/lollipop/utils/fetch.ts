@@ -47,7 +47,6 @@ export const lollipopFetch = (
             requestAndKeyInfo.init
           );
         if (body) {
-          console.log("🚀 body: ", bodyString);
           newInit = addHeader(
             newInit,
             "Content-Digest",

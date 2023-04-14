@@ -50,6 +50,31 @@ function lollipopBaseMessageResponseDecoder<R, O = R>(
   );
 }
 
+const SignMessageResponse = t.interface({
+  response: t.string
+});
+
+export type SignMessageResponse = t.TypeOf<typeof SignMessageResponse>;
+
+type SignMessageT = IPostApiRequestType<
+  {
+    readonly Bearer: string;
+    readonly message: string;
+  },
+  "Authorization" | "Content-Type",
+  never,
+  LollipopBaseResponseType<SignMessageResponse>
+>;
+
+const signMessageT: SignMessageT = {
+  method: "post",
+  url: () => "/first-lollipop/sign",
+  query: _ => ({}),
+  body: body => JSON.stringify({ message: body.message }),
+  headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
+  response_decoder: lollipopBaseMessageResponseDecoder(SignMessageResponse)
+};
+
 // eslint-disable-next-line
 export function LollipopBackendClient(
   baseUrl: string,
@@ -60,31 +85,6 @@ export function LollipopBackendClient(
   const options = {
     baseUrl,
     fetchApi
-  };
-
-  const SignMessageResponse = t.interface({
-    response: t.string
-  });
-
-  type SignMessageResponse = t.TypeOf<typeof SignMessageResponse>;
-
-  type SignMessageT = IPostApiRequestType<
-    {
-      readonly Bearer: string;
-      readonly message: string;
-    },
-    "Authorization" | "Content-Type",
-    never,
-    LollipopBaseResponseType<SignMessageResponse>
-  >;
-
-  const signMessageT: SignMessageT = {
-    method: "post",
-    url: () => "/first-lollipop/sign",
-    query: _ => ({}),
-    body: body => JSON.stringify({ message: body.message }),
-    headers: composeHeaderProducers(tokenHeaderProducer, ApiHeaderJson),
-    response_decoder: lollipopBaseMessageResponseDecoder(SignMessageResponse)
   };
 
   const withBearerToken = withToken(token);

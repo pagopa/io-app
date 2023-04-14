@@ -1,4 +1,5 @@
 import * as O from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
 import { Content } from "native-base";
 import React, { useCallback } from "react";
 import { View, SafeAreaView, StyleSheet, TextInput } from "react-native";
@@ -9,7 +10,7 @@ import { IOStyles } from "../../../components/core/variables/IOStyles";
 import ButtonSolid from "../../../components/ui/ButtonSolid";
 import ButtonOutline from "../../../components/ui/ButtonOutline";
 import { sessionTokenSelector } from "../../../store/reducers/authentication";
-import { LollipopBackendClient } from "../api/backend";
+import { LollipopBackendClient, SignMessageResponse } from "../api/backend";
 import { useIOSelector } from "../../../store/hooks";
 import {
   lollipopKeyTagSelector,
@@ -18,15 +19,16 @@ import {
 import { toThumbprint } from "../utils/crypto";
 import { DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER } from "../utils/login";
 import { apiUrlPrefix } from "../../../config";
-import ChooserListItem from "../../../components/ChooserListItem";
 import { CheckBox } from "../../../components/core/selection/checkbox/CheckBox";
 import { Label } from "../../../components/core/typography/Label";
+import { Alert } from "../../../components/Alert";
 
 const styles = StyleSheet.create({
   textInput: {
-    padding: 1,
+    padding: 10,
     borderWidth: 1,
-    height: 120
+    height: 120,
+    borderRadius: 4
   },
   column: {
     flexDirection: "column",
@@ -45,11 +47,15 @@ const styles = StyleSheet.create({
   }
 });
 
+const viewRef = React.createRef<View>();
 const LollipopPlayground = () => {
   const [httpRequestBodyText, setHttpRequestBodyText] =
     React.useState<string>("");
-
   const [doSignBody, setDoSignBody] = React.useState<boolean>(true);
+  const [isVerificationSuccess, setIsVerificationSuccess] = React.useState<
+    boolean | undefined
+  >(undefined);
+  const [signResponse, setSignResponse] = React.useState<string>("");
 
   const keyTag = useIOSelector(lollipopKeyTagSelector);
   const maybePublicKey = useIOSelector(lollipopPublicKeySelector);
@@ -73,19 +79,31 @@ const LollipopPlayground = () => {
           message: body
         };
         try {
-          console.log("🔑 response: " + JSON.stringify(maybePublicKey));
-          console.log("📜 body: " + JSON.stringify(bodyMessage));
-          const response = await lollipopClient.postSignMessage({
+          const signResponse = await lollipopClient.postSignMessage({
             nonce: "aNonce",
             signBody: doSignBody
           })(bodyMessage);
-          console.log("✅ response: " + JSON.stringify(response));
+          if (E.isRight(signResponse)) {
+            const response = signResponse.right.value as SignMessageResponse;
+            const status = signResponse.right.status;
+            if (status !== 200) {
+              setIsVerificationSuccess(false);
+              setSignResponse(`${status}`);
+            } else {
+              setIsVerificationSuccess(true);
+              setSignResponse(response.response);
+            }
+          } else {
+            setIsVerificationSuccess(false);
+            setSignResponse(JSON.stringify(signResponse.left));
+          }
         } catch (e) {
-          console.log("❌ error: " + JSON.stringify(e));
+          setIsVerificationSuccess(false);
+          setSignResponse(JSON.stringify(e));
         }
       }
     },
-    [doSignBody, lollipopClient, maybePublicKey]
+    [doSignBody, lollipopClient]
   );
 
   console.log("✅ refreshing");
@@ -122,9 +140,20 @@ const LollipopPlayground = () => {
                 accessibilityLabel="Clear"
                 label={"Clear"}
                 disabled={!isMessageBodySet}
-                onPress={() => setHttpRequestBodyText("")}
+                onPress={() => {
+                  setIsVerificationSuccess(undefined);
+                  setHttpRequestBodyText("");
+                }}
               />
             </View>
+            <VSpacer size={16} />
+            {isVerificationSuccess !== undefined && (
+              <Alert
+                viewRef={viewRef}
+                variant={isVerificationSuccess ? "success" : "error"}
+                content={signResponse}
+              />
+            )}
           </View>
         </Content>
       </SafeAreaView>
