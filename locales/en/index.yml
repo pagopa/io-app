@@ -3231,6 +3231,9 @@ features:
         fieldDetailHint: "Go to the page that displays the signature field"
         selected: "Field selected"
         unselected: "Field not selected"
+      required: "REQUIRED SIGNATURES"
+      optional: "OPTIONAL SIGNATURES"
+      unfair: "UNFAIRES SIGNATURES"
     title: "Firma con IO"
     documentsBar:
       titleLeft: Document {{currentDoc}} of {{totalDocs}}

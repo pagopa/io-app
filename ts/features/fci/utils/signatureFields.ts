@@ -3,21 +3,14 @@ import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as O from "fp-ts/lib/Option";
 import * as S from "fp-ts/lib/string";
 import { SignatureField } from "../../../../definitions/fci/SignatureField";
+import I18n from "../../../i18n";
+import { TypeEnum as ClauseTypeEnum } from "../../../../definitions/fci/Clause";
 
-export enum ClauseTypeMappingEnum {
-  "REQUIRED" = "FIRME OBBLIGATORIE",
-  "UNFAIR" = "FIRME CLAUSOLE VESSATORIE",
-  "OPTIONAL" = "FIRME FACOLTATIVE"
-}
-
-export const clauseTypeMaping: Map<string, ClauseTypeMappingEnum> = new Map<
-  string,
-  ClauseTypeMappingEnum
->([
-  ["REQUIRED", ClauseTypeMappingEnum.REQUIRED],
-  ["UNFAIR", ClauseTypeMappingEnum.UNFAIR],
-  ["OPTIONAL", ClauseTypeMappingEnum.OPTIONAL]
-]);
+export const clausesEnumValues = {
+  [ClauseTypeEnum.REQUIRED]: I18n.t("features.fci.signatureFields.required"),
+  [ClauseTypeEnum.UNFAIR]: I18n.t("features.fci.signatureFields.unfair"),
+  [ClauseTypeEnum.OPTIONAL]: I18n.t("features.fci.signatureFields.optional")
+};
 
 export type LIST_DATA_TYPE = {
   title: string;

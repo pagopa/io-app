@@ -29,11 +29,14 @@ import IconFont from "../../../../components/ui/IconFont";
 import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentSignatures";
 import { fciUpdateDocumentSignaturesRequest } from "../../store/actions";
 import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
-import { TypeEnum as ClausesTypeEnum } from "../../../../../definitions/fci/Clause";
+import {
+  Clause,
+  TypeEnum as ClausesTypeEnum
+} from "../../../../../definitions/fci/Clause";
 import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
 import {
+  clausesEnumValues,
   clausesByType,
-  clauseTypeMaping,
   getSectionListData
 } from "../../utils/signatureFields";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
@@ -139,7 +142,9 @@ const FciSignatureFieldsScreen = (
         flexDirection: "row"
       }}
     >
-      <H3 color="bluegrey">{clauseTypeMaping.get(info.section.title)}</H3>
+      <H3 color="bluegrey">
+        {clausesEnumValues[info.section.title as Clause["type"]]}
+      </H3>
     </View>
   );
 
