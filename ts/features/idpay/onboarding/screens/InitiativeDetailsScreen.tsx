@@ -133,33 +133,14 @@ const InitiativeDetailsScreen = () => {
     O.toUndefined
   );
 
-  const footerComponent = pipe(
+  const onboardingPrivacyAdvice = pipe(
     initiative,
     O.fromNullable,
-    O.filter(_ => isDescriptionLoaded),
-    O.map(initiative => (
-      <View key={"footer"} ref={footerViewRef} onLayout={handleFooterLayout}>
-        <ItemSeparatorComponent noPadded={true} />
-        <VSpacer size={16} />
-        <OnboardingPrivacyAdvice
-          privacyUrl={initiative.privacyLink}
-          tosUrl={initiative.tcLink}
-        />
-        <VSpacer size={32} />
-        <BlockButtons
-          key={"continue"}
-          type="SingleButton"
-          leftButton={{
-            title: I18n.t("global.buttons.continue"),
-            accessibilityLabel: I18n.t("global.buttons.continue"),
-            onPress: handleContinuePress,
-            testID: "IDPayOnboardingContinue",
-            isLoading: isUpserting,
-            disabled: isUpserting
-          }}
-        />
-      </View>
-    )),
+    O.map(initiative => ({
+      privacyUrl: initiative.privacyLink,
+      tosUrl: initiative.tcLink
+    })),
+    O.map(props => <OnboardingPrivacyAdvice key={"advice"} {...props} />),
     O.toUndefined
   );
 
@@ -182,7 +163,24 @@ const InitiativeDetailsScreen = () => {
           <VSpacer size={24} />
           {descriptionComponent}
           <VSpacer size={8} />
-          {footerComponent}
+          <ItemSeparatorComponent noPadded={true} />
+          <VSpacer size={16} />
+          {onboardingPrivacyAdvice}
+          <VSpacer size={32} />
+          <View ref={footerViewRef} onLayout={handleFooterLayout}>
+            <BlockButtons
+              key={"continue"}
+              type="SingleButton"
+              leftButton={{
+                title: I18n.t("global.buttons.continue"),
+                accessibilityLabel: I18n.t("global.buttons.continue"),
+                onPress: handleContinuePress,
+                testID: "IDPayOnboardingContinue",
+                isLoading: isUpserting,
+                disabled: isUpserting || !isDescriptionLoaded
+              }}
+            />
+          </View>
           <VSpacer size={48} />
         </ScrollView>
         {scrollToBottomButton}
