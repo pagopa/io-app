@@ -95,66 +95,63 @@ Because different platforms have different types of Permissions below we have tw
     </tr>
     <tr>
         <td>INTERNET</td>
-        <td>Allows applications to open network sockets (e.g. simple internet connectivity)</td>
+        <td>Allows the app to open network sockets (e.g. simple internet connectivity)</td>
     </tr>
     <tr>
         <td>ACCESS_NETWORK_STATE</td>
-        <td>Allows applications to access information about networks (e.g. details about connection quality/state)</td>
+        <td>Allows the app to access information about networks (e.g. details about connection quality/state)</td>
     </tr>
     <tr>
         <td>CAMERA</td>
-        <td>Allows applications to access device camera to scan QR codes</td>
+        <td>Allows the app to access device camera to scan QR codes</td>
     </tr>
     <tr>
         <td>NFC</td>
-        <td>Allows applications to perform I/O operations over NFC</td>
+        <td>Allows the app to perform I/O operations over NFC</td>
     </tr>
     <tr>
         <td>RECEIVE_BOOT_COMPLETED</td>
-        <td>Allows an application to receive the Intent.ACTION_BOOT_COMPLETED that is broadcast after the system finishes booting. Used for push notification.</td>
+        <td>Allows the app to receive the Intent.ACTION_BOOT_COMPLETED that is broadcast after the system finishes booting. Used for push notification.</td>
     </tr>
     <tr>
         <td>VIBRATE</td>
-        <td>Allows access to the vibrator. This allow the application to emit vibration</td>
+        <td>Allows the app to access the vibration motor. This allow the application to emit vibration.</td>
     </tr>
     <tr>
         <td>WAKE_LOCK</td>
-        <td>Allows using PowerManager WakeLocks to keep processor from sleeping or screen from dimming. Used for push notification.</td>
+        <td>Allows the app to use PowerManager WakeLocks to keep processor from sleeping or screen from dimming. Used for push notification.</td>
     </tr>
     <tr>
         <td>READ_APP_BADGE</td>
-        <td>Notification Badges that show on app icons</td>
+        <td>Allows the app to show notification badges on its icon.</td>
     </tr>
     <tr>
         <td>READ_CALENDAR</td>
-        <td>Allows an application to read the user&#39;s calendar data</td>
+        <td>Allows the app to read the user&#39;s calendar data.</td>
     </tr>
     <tr>
         <td>WRITE_CALENDAR</td>
-        <td>Allows an application to write the user&#39;s calendar data. Used to automatically set reminders.</td>
+        <td>Allows the app to write the user&#39;s calendar data. Used to automatically set reminders.</td>
     </tr>
     <tr>
         <td>READ_EXTERNAL_STORAGE</td>
-        <td>Allows an application to read from external storage. Used to pick images from gallery with payment QRCode.</td>
+        <td>Allows the app to read from external storage. Used to pick images from gallery with payment QRCode.</td>
     </tr>
     <tr>
         <td>WRITE_EXTERNAL_STORAGE</td>
-        <td>Allows an application to write to external storage. Used to store images, e.g.: save bonus information (QRCode for Bonus Vacanze or EuCovid Certificate, etc.)</td>
+        <td>Allows the app to write to external storage. Used to store images, certificates, etc.</td>
     </tr>
     <tr>
         <td>USE_FINGERPRINT</td>
-        <td>Allows an app to use fingerprint hardware for biometric identification required from API level 23 until API level 28</td>
+        <td>Allows the app to use fingerprint hardware for biometric identification required from API level 23 until API level 28</td>
     </tr>
     <tr>
         <td>USE_BIOMETRIC</td>
-        <td>Allows an app to use device&#39;s available biometric identification system (Face unlock, Iris unlock, Fingerprint) required from API Level 28</td>
+        <td>Allows the app to use device&#39;s available biometric identification system (Face unlock, Iris unlock, Fingerprint) required from API Level 28.</td>
     </tr>
     <tr>
       <td>SCHEDULE_EXACT_ALARM</td>
       <td>Allows the app to send local notifications.</td>
-    </tr><tr>
-      <td>CHECK_LICENSE</td>
-      <td>Allows the app to access Google Play Licensing.</td>
     </tr>
     <tr>
       <td>DOWNLOAD_WITHOUT_NOTIFICATION</td>
@@ -169,84 +166,84 @@ Below there are the permissions required by the main android hardware manufactur
         <td>Usage / Meaning</td>
     </tr>
     <tr>
-      <td>com.android.vending.CHECK_LICENSE</td>
-      <td>Allows the app to access Google Play Licensing.</td>
-    </tr>
-    <tr>
-        <td>com.anddoes.launcher.permission.UPDATE_COUNT</td>
-        <td>used for the notification badge</td>
-    </tr>
-    <tr>
         <td>com.google.android.c2dm.permission.RECEIVE</td>
-        <td>It is used when receiving a broadcast from GCM server that contains a GCM message. Used for push notification.</td>
+        <td>Allows the app to is receive a broadcast from GCM server that contains a GCM message. Used for push notification.</td>
     </tr>
     <tr>
         <td>com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE</td>
-        <td>It is used by Firebase to recognize where the app was installed from</td>
+        <td>Allows the app to recognize where the app was installed from. Used for Firebase.</td>
     </tr>
-    <tr>
-      <td>com.samsung.android.providers.context.permission.WRITE_USE_APP_FEATURE_SURVEY</td>
-      <td>Allows the app to use the Samsung Developer SDK. Used for Samsung biometric identification.</td>
-    </tr>
-    <tr>
-      <td>com.fingerprints.service.ACCESS_FINGERPRINT_MANAGER</td>
-      <td>Allows the application to access the fingerprint hardware for biometric identification.</td>
+     <tr>
+        <td>com.anddoes.launcher.permission.UPDATE_COUNT</td>
+        <td>Allows the app to use notification badges.</td>
     </tr>
     <tr>
         <td>com.htc.launcher.permission.READ_SETTINGS</td>
-        <td>Used for the notification badge. Specific for HTC vendor.</td>
+        <td>Allows the app to use notification badges.</td>
     </tr>
     <tr>
         <td>com.htc.launcher.permission.UPDATE_SHORTCUT</td>
-        <td>used for the notification badge</td>
+        <td>Allows the app to use notification badges.</td>
     </tr>
     <tr>
         <td>com.huawei.android.launcher.permission.CHANGE_BADGE</td>
-        <td>Used for the notification badge. Specific for Huawei vendor.</td>
+        <td>Allows the app to use notification badges.</td>
     </tr>
     <tr>
         <td>com.huawei.android.launcher.permission.READ_SETTINGS</td>
-        <td>used for the notification badge</td>
+        <td>used for the notification badges.</td>
     </tr>
     <tr>
         <td>com.huawei.android.launcher.permission.WRITE_SETTINGS</td>
-        <td>used for the notification badge</td>
+        <td>used for the notification badges.</td>
     </tr>
     <tr>
         <td>com.majeur.launcher.permission.UPDATE_BADGE</td>
-        <td>used for the notification badge</td>
+        <td>Allows the app to use notification badges.</td>
     </tr>
     <tr>
         <td>com.oppo.launcher.permission.READ_SETTINGS</td>
-        <td>used for the notification badge</td>
+        <td>Allows the app to use notification badges.</td>
     </tr>
     <tr>
         <td>com.oppo.launcher.permission.WRITE_SETTINGS</td>
-        <td>used for the notification badge</td>
+        <td>Allows the app to use notification badgee.</td>
     </tr>
     <tr>
         <td>com.sec.android.provider.badge.permission.READ</td>
-        <td>used for the notification badge</td>
+        <td>Allows the app to use notification badges.</td>
     </tr>
     <tr>
         <td>com.sec.android.provider.badge.permission.WRITE</td>
-        <td>used for the notification badge</td>
+        <td>Allows the app to use notification badges.</td>
     </tr>
     <tr>
         <td>com.sonyericsson.home.permission.BROADCAST_BADGE</td>
-        <td>used for the notification badge</td>
+        <td>Allows the app to use notification badges.</td>
     </tr>
     <tr>
         <td>com.sonymobile.home.permission.PROVIDER_INSERT_BADGE</td>
-        <td>used for the notification badge</td>
+        <td>Allows the app to use notification badges.</td>
     </tr>
     <tr>
         <td>me.everything.badger.permission.BADGE_COUNT_READ</td>
-        <td>used for the notification badge</td>
+        <td>Allows the app to use notification badges.</td>
     </tr>
     <tr>
         <td>me.everything.badger.permission.BADGE_COUNT_WRITE</td>
-        <td>used for the notification badge</td>
+        <td>Allows the app to use notification badges.</td>
+    </tr>
+     <tr>
+      <td>com.android.vending.CHECK_LICENSE</td>
+      <td>Allows the app to access Google Play Licensing.</td>
+    </tr>
+     <tr>
+      <td>com.samsung.android.providers.context.permission.WRITE_USE_APP_FEATURE_SURVEY</td>
+      <td>Allows the app to use the Samsung Developer SDK. Used for Samsung biometric identification.</td>
+    </tr>
+     <tr>
+      <td>com.fingerprints.service.ACCESS_FINGERPRINT_MANAGER</td>
+      <td>Allows the app to access the fingerprint hardware for biometric identification.</td>
     </tr>
   </table>
 </details>
