@@ -3233,7 +3233,7 @@ features:
         unselected: "Field not selected"
       required: "REQUIRED SIGNATURES"
       optional: "OPTIONAL SIGNATURES"
-      unfair: "UNFAIRES SIGNATURES"
+      unfair: "UNFAIR TERMS SIGNATURES"
     title: "Firma con IO"
     documentsBar:
       titleLeft: Document {{currentDoc}} of {{totalDocs}}
