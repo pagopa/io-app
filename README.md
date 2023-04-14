@@ -324,7 +324,7 @@ Below there are the permissions required by the main android hardware manufactur
         <td>Request NFC capability.</td>
     </tr>
   </table>
-</details></br>
+</details>
 
 # Getting started
 
@@ -452,7 +452,7 @@ This section lists possible solutions to problems you might encounter while buil
   
     Can be solved by restarting your machine.
 
-  </details></br>
+  </details>
 
 # Architecture
 
