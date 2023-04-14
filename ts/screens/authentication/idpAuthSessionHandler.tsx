@@ -83,7 +83,7 @@ const onBack = () =>
 // NativeCodeError 1 occurs when user cancels login.
 const idpAuthSession = (loginUri: string): Promise<string> =>
   new Promise((resolve, reject) =>
-    openAuthenticationSession(loginUri, "ioit")
+    openAuthenticationSession(loginUri, "iologin")
       .then(value => resolve(value))
       .catch(error => {
         if (getNativeCodeError(error.toString()) !== "1") {
@@ -134,9 +134,9 @@ const regenerateKeyGetRedirectsAndVerifySaml = (
               }
             }
           })
-          .catch(error => {console.log(error);reject(error);});
+          .catch(error => reject(error));
       })
-      .catch(error => {console.log(error);reject(error);});
+      .catch(error => reject(error));
   });
 
 export const AuthSessionPage = () => {

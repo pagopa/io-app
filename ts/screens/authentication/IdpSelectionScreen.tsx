@@ -1,7 +1,7 @@
 import { Text as NBButtonText } from "native-base";
 import * as React from "react";
 import { useNavigation } from "@react-navigation/native";
-import { Pressable, StyleSheet, View } from "react-native";
+import { Platform, Pressable, StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { useEffect, useState } from "react";
@@ -74,9 +74,16 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
   const onIdpSelected = (idp: LocalIdpsFallback) => {
     setSelectedIdp(idp);
     handleSendAssistanceLog(choosenTool, `IDP selected: ${idp.id}`);
-    navigation.navigate(ROUTES.AUTHENTICATION, {
-      screen: ROUTES.AUTHENTICATION_AUTH_SESSION
-    });
+    if(Platform.OS !== 'ios' || (Platform.OS === 'ios' && parseInt(Platform.Version,10) > 13) ){
+      navigation.navigate(ROUTES.AUTHENTICATION, {
+        screen: ROUTES.AUTHENTICATION_AUTH_SESSION
+      });
+    }
+    else {
+      navigation.navigate(ROUTES.AUTHENTICATION, {
+        screen: ROUTES.AUTHENTICATION_IDP_LOGIN
+      });
+    }
   };
 
   const evokeLoginScreenCounter = () => {
