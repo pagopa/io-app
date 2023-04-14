@@ -159,6 +159,34 @@ const InitiativeDetailsScreen = () => {
     O.toUndefined
   );
 
+  const footerComponent = pipe(
+    O.some(undefined),
+    O.filter(_ => isDescriptionLoaded),
+    O.map(_ => (
+      <>
+        <ItemSeparatorComponent noPadded={true} />
+        <VSpacer size={16} />
+        {onboardingPrivacyAdvice}
+        <VSpacer size={32} />
+        <View ref={footerViewRef} onLayout={handleFooterOnLayout}>
+          <BlockButtons
+            key={"continue"}
+            type="SingleButton"
+            leftButton={{
+              title: I18n.t("global.buttons.continue"),
+              accessibilityLabel: I18n.t("global.buttons.continue"),
+              onPress: handleContinuePress,
+              testID: "IDPayOnboardingContinue",
+              isLoading: isUpserting,
+              disabled: isUpserting || !isDescriptionLoaded
+            }}
+          />
+        </View>
+      </>
+    )),
+    O.toUndefined
+  );
+
   return (
     <BaseScreenComponent
       goBack={handleGoBackPress}
@@ -178,24 +206,7 @@ const InitiativeDetailsScreen = () => {
           <VSpacer size={24} />
           {descriptionComponent}
           <VSpacer size={8} />
-          <ItemSeparatorComponent noPadded={true} />
-          <VSpacer size={16} />
-          {onboardingPrivacyAdvice}
-          <VSpacer size={32} />
-          <View ref={footerViewRef} onLayout={handleFooterOnLayout}>
-            <BlockButtons
-              key={"continue"}
-              type="SingleButton"
-              leftButton={{
-                title: I18n.t("global.buttons.continue"),
-                accessibilityLabel: I18n.t("global.buttons.continue"),
-                onPress: handleContinuePress,
-                testID: "IDPayOnboardingContinue",
-                isLoading: isUpserting,
-                disabled: isUpserting || !isDescriptionLoaded
-              }}
-            />
-          </View>
+          {footerComponent}
           <VSpacer size={48} />
         </ScrollView>
         {scrollToBottomButton}
