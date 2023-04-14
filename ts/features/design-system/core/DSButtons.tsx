@@ -450,9 +450,26 @@ export const DSButtons = () => {
         <ButtonOutline
           accessibilityLabel="Tap to trigger test alert"
           label={"Primary button"}
-          onPress={() => {
-            alert("Action triggered");
-          }}
+          onPress={onButtonPress}
+        />
+
+        <VSpacer size={16} />
+
+        <ButtonOutline
+          accessibilityLabel="Tap to trigger test alert"
+          label={"Primary button"}
+          icon="arrowLeft"
+          onPress={onButtonPress}
+        />
+
+        <VSpacer size={16} />
+
+        <ButtonOutline
+          accessibilityLabel="Tap to trigger test alert"
+          label={"Primary button"}
+          icon="arrowRight"
+          iconPosition="end"
+          onPress={onButtonPress}
         />
 
         <VSpacer size={16} />
@@ -461,9 +478,7 @@ export const DSButtons = () => {
           <ButtonOutline
             accessibilityLabel="Tap to trigger test alert"
             label={"Primary button (centered)"}
-            onPress={() => {
-              alert("Action triggered");
-            }}
+            onPress={onButtonPress}
           />
         </View>
 
@@ -489,9 +504,7 @@ export const DSButtons = () => {
             fullWidth
             accessibilityLabel="Tap to trigger test alert"
             label={"Primary button (full width)"}
-            onPress={() => {
-              alert("Action triggered");
-            }}
+            onPress={onButtonPress}
           />
         </View>
         {!isDesignSystemEnabled && (
@@ -503,9 +516,7 @@ export const DSButtons = () => {
                 fullWidth
                 accessibilityLabel="Tap to trigger test alert"
                 label={"Primary button (small, full width)"}
-                onPress={() => {
-                  alert("Action triggered");
-                }}
+                onPress={onButtonPress}
               />
             </View>
           </>
@@ -517,9 +528,18 @@ export const DSButtons = () => {
             disabled
             accessibilityLabel="Tap to trigger test alert"
             label={"Primary button (disabled)"}
-            onPress={() => {
-              alert("Action triggered");
-            }}
+            onPress={onButtonPress}
+          />
+
+          <VSpacer size={16} />
+
+          <ButtonOutline
+            disabled
+            accessibilityLabel="Tap to trigger test alert"
+            label={"Primary button (disabled)"}
+            icon="arrowRight"
+            iconPosition="end"
+            onPress={onButtonPress}
           />
         </View>
         {!isDesignSystemEnabled && (
@@ -627,9 +647,7 @@ export const DSButtons = () => {
               <ButtonOutline
                 color="danger"
                 label={"Danger button"}
-                onPress={() => {
-                  alert("Action triggered");
-                }}
+                onPress={onButtonPress}
                 accessibilityLabel="Tap to trigger test alert"
               />
             </View>
@@ -640,9 +658,7 @@ export const DSButtons = () => {
                 color="danger"
                 accessibilityLabel="Tap to trigger test alert"
                 label={"Danger Button (Small)"}
-                onPress={() => {
-                  alert("Action triggered");
-                }}
+                onPress={onButtonPress}
               />
             </View>
           </DSComponentViewerBox>
@@ -721,6 +737,27 @@ export const DSButtons = () => {
               onPress={onButtonPress}
               accessibilityLabel="Tap to trigger test alert"
             />
+
+            <VSpacer size={16} />
+
+            <ButtonOutline
+              color="contrast"
+              label={"Contrast button"}
+              icon="arrowLeft"
+              onPress={onButtonPress}
+              accessibilityLabel="Tap to trigger test alert"
+            />
+
+            <VSpacer size={16} />
+
+            <ButtonOutline
+              color="contrast"
+              label={"Contrast button"}
+              icon="arrowRight"
+              iconPosition="end"
+              onPress={onButtonPress}
+              accessibilityLabel="Tap to trigger test alert"
+            />
           </View>
           {!isDesignSystemEnabled && (
             <>
@@ -777,7 +814,19 @@ export const DSButtons = () => {
             <ButtonOutline
               disabled
               color="contrast"
-              label={"Contrast button, disabled"}
+              label={"Contrast button (disabled)"}
+              onPress={onButtonPress}
+              accessibilityLabel="Tap to trigger test alert"
+            />
+
+            <VSpacer size={16} />
+
+            <ButtonOutline
+              disabled
+              color="contrast"
+              label={"Contrast button (disabled)"}
+              icon="arrowRight"
+              iconPosition="end"
               onPress={onButtonPress}
               accessibilityLabel="Tap to trigger test alert"
             />
