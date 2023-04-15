@@ -9,7 +9,8 @@ import {
   Modal,
   StatusBar,
   StyleSheet,
-  BackHandler
+  BackHandler,
+  Text
 } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
