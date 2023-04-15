@@ -2,6 +2,7 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { isIdPayEnabledSelector } from "../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../store/reducers/types";
 import { PaymentMethod } from "../../../../types/pagopa";
 import PaymentMethodInitiatives from "./PaymentMethodInitiatives";
@@ -28,17 +29,21 @@ const styles = StyleSheet.create({
  */
 const PaymentMethodFeatures: React.FunctionComponent<Props> = props => (
   <>
-    <PaymentMethodInitiatives
-      paymentMethod={props.paymentMethod}
-      style={styles.initiatives}
-    />
+    {props.isIdpayEnabled ? (
+      <PaymentMethodInitiatives
+        paymentMethod={props.paymentMethod}
+        style={styles.initiatives}
+      />
+    ) : null}
     <PaymentMethodSettings paymentMethod={props.paymentMethod} />
   </>
 );
 
 const mapDispatchToProps = (_: Dispatch) => ({});
 
-const mapStateToProps = (_: GlobalState) => ({});
+const mapStateToProps = (state: GlobalState) => ({
+  isIdpayEnabled: isIdPayEnabledSelector(state)
+});
 
 export default connect(
   mapStateToProps,
