@@ -1,6 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
-import { Content, Text as NBText } from "native-base";
+import { Content, Text as NBButtonText } from "native-base";
 import * as React from "react";
 import {
   View,
@@ -18,10 +18,15 @@ import { Body } from "../../components/core/typography/Body";
 import { H3 } from "../../components/core/typography/H3";
 import { IOColors } from "../../components/core/variables/IOColors";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
+import {
+  TabBarItemPressType,
+  withUseTabItemPressWhenScreenActive
+} from "../../components/helpers/withUseTabItemPressWhenScreenActive";
 import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
 import { withValidatedPagoPaVersion } from "../../components/helpers/withValidatedPagoPaVersion";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
+import { ScreenContentRoot } from "../../components/screens/ScreenContent";
 import SectionStatusComponent from "../../components/SectionStatus";
 import IconFont from "../../components/ui/IconFont";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
@@ -115,7 +120,8 @@ type State = {
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
   IOStackNavigationRouteProps<MainTabParamsList, "WALLET_HOME"> &
-  LightModalContextInterface;
+  LightModalContextInterface &
+  TabBarItemPressType;
 
 const styles = StyleSheet.create({
   white: {
@@ -159,7 +165,9 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
 
   constructor(props: Props) {
     super(props);
-    this.state = { hasFocus: false };
+    this.state = {
+      hasFocus: false
+    };
   }
 
   private handleBackPress = () => {
@@ -426,6 +434,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
             this.props.loadTransactions(this.props.transactionsLoadedLength)
           }
         >
+          {/* ButtonText */}
           <Body color={"blue"}>{I18n.t("wallet.transactionsShow")}</Body>
         </ButtonDefaultOpacity>
         <EdgeBorderComponent />
@@ -488,7 +497,8 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
         activeOpacity={1}
       >
         <IconFont name="io-qr" style={styles.white} />
-        <NBText>{I18n.t("wallet.payNotice")}</NBText>
+        {/* ButtonText */}
+        <NBButtonText>{I18n.t("wallet.payNotice")}</NBButtonText>
       </ButtonDefaultOpacity>
     );
   }
@@ -524,6 +534,14 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
 
     return (
       <WalletLayout
+        referenceToContentScreen={(c: ScreenContentRoot) => {
+          this.props.setTabPressCallback(
+            // eslint-disable-next-line no-underscore-dangle
+            () => () => c._root.scrollToPosition(0, 0)
+          );
+
+          return c;
+        }}
         accessibilityLabel={I18n.t("wallet.wallet")}
         title={I18n.t("wallet.wallet")}
         allowGoBack={false}
@@ -624,6 +642,10 @@ export default withValidatedPagoPaVersion(
     connect(
       mapStateToProps,
       mapDispatchToProps
-    )(withLightModalContext(WalletHomeScreen))
+    )(
+      withUseTabItemPressWhenScreenActive(
+        withLightModalContext(WalletHomeScreen)
+      )
+    )
   )
 );

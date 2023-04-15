@@ -4,9 +4,10 @@ import { DocumentDetailView } from "../../../../../definitions/fci/DocumentDetai
 import { SignatureField } from "../../../../../definitions/fci/SignatureField";
 import {
   SignatureRequestDetailView,
-  SignatureRequestDetailViewIssuer,
-  StatusEnum as SignatureRequestStatus
+  SignatureRequestDetailViewIssuer
 } from "../../../../../definitions/fci/SignatureRequestDetailView";
+import { SignatureRequestStatusEnum } from "../../../../../definitions/fci/SignatureRequestStatus";
+import { IssuerEnvironmentEnum } from "../../../../../definitions/fci/IssuerEnvironment";
 
 const now = new Date();
 
@@ -53,14 +54,16 @@ export const mockDocuments: ReadonlyArray<DocumentDetailView> = [
 
 export const mockSignatureRequestDetailView: SignatureRequestDetailView = {
   id: "mockId" as NonEmptyString,
-  status: SignatureRequestStatus.WAIT_FOR_SIGNATURE,
+  status: SignatureRequestStatusEnum.WAIT_FOR_SIGNATURE,
   issuer: {
     email: "mockEmail" as EmailString,
-    description: "mockDescription" as NonEmptyString
+    description: "mockDescription" as NonEmptyString,
+    environment: IssuerEnvironmentEnum.TEST
   } as SignatureRequestDetailViewIssuer,
   expires_at: new Date(now.setDate(now.getDate() + 30)),
   created_at: now,
   dossier_id: "mockDossierId" as NonEmptyString,
+  dossier_title: "mockDossierTitle" as NonEmptyString,
   qr_code_url: "mockQrCodeUrl",
   signer_id: "mockSignerId" as NonEmptyString,
   updated_at: now,

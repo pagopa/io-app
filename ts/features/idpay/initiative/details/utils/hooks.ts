@@ -6,7 +6,7 @@ import {
   idpayTimelineCurrentPageSelector,
   idpayTimelineIsLastPageSelector,
   idpayTimelineLastUpdateSelector,
-  idpayTimelineSelector
+  idpayOperationListSelector
 } from "../store";
 import { idpayTimelinePageGet } from "../store/actions";
 
@@ -22,7 +22,7 @@ export const useInitiativeTimelineFetcher = (
   const currentPage = useIOSelector(idpayTimelineCurrentPageSelector);
   const lastUpdate = useIOSelector(idpayTimelineLastUpdateSelector);
 
-  const timeline = useIOSelector(idpayTimelineSelector);
+  const timeline = useIOSelector(idpayOperationListSelector);
 
   const isLoading = pot.isLoading(paginatedTimelinePot);
   const isError = pot.isError(paginatedTimelinePot);

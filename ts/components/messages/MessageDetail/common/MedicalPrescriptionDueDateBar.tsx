@@ -6,7 +6,6 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { capitalize } from "lodash";
-import { Text as NBText } from "native-base";
 import React from "react";
 import { View, StyleSheet, ViewStyle } from "react-native";
 import { CreatedMessageWithContentAndAttachments } from "../../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
@@ -24,7 +23,10 @@ import {
   getMessagePaymentExpirationInfo
 } from "../../../../utils/messages";
 import { HSpacer, VSpacer } from "../../../core/spacer/Spacer";
+import { Body } from "../../../core/typography/Body";
+import { Label } from "../../../core/typography/Label";
 import { IOColors } from "../../../core/variables/IOColors";
+import { IOStyles } from "../../../core/variables/IOStyles";
 import CalendarEventButton from "./CalendarEventButton";
 import CalendarIconComponent from "./CalendarIconComponent";
 
@@ -34,15 +36,7 @@ type Props = {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: customVariables.contentPadding,
     paddingVertical: customVariables.appHeaderPaddingHorizontal
-  },
-  text: {
-    flex: 1
-  },
-  row: {
-    flexDirection: "row",
-    alignItems: "center"
   }
 });
 
@@ -112,18 +106,18 @@ class MedicalPrescriptionDueDateBar extends React.PureComponent<Props> {
       return (
         <React.Fragment>
           {I18n.t("messages.cta.prescription.expiredAlert.block1")}
-          <NBText bold={true} white={true}>{` ${time} `}</NBText>
+          <Label weight="Bold" color="white">{` ${time} `}</Label>
           {I18n.t("messages.cta.prescription.expiredAlert.block2")}
-          <NBText bold={true} white={true}>{` ${date}`}</NBText>
+          <Label weight="Bold" color="white">{` ${date}`}</Label>
         </React.Fragment>
       );
     } else {
       return (
         <React.Fragment>
           {I18n.t("messages.cta.prescription.expiringOrValidAlert.block1")}
-          <NBText bold={true} white={false}>{` ${time} `}</NBText>
+          <Label weight="Bold" color="white">{` ${time} `}</Label>
           {I18n.t("messages.cta.prescription.expiringOrValidAlert.block2")}
-          <NBText bold={true} white={false}>{` ${date}`}</NBText>
+          <Label weight="Bold" color="white">{` ${date}`}</Label>
         </React.Fragment>
       );
     }
@@ -174,12 +168,18 @@ class MedicalPrescriptionDueDateBar extends React.PureComponent<Props> {
         () => null,
         _ =>
           !this.isPrescriptionExpiring && !this.isPrescriptionExpired ? (
-            <View style={[styles.container, this.bannerStyle]}>
-              <NBText style={styles.text} white={false}>
-                {this.textContent}
-              </NBText>
+            <View
+              style={[
+                styles.container,
+                IOStyles.horizontalContentPadding,
+                this.bannerStyle
+              ]}
+            >
+              <View style={IOStyles.flex}>
+                <Body>{this.textContent}</Body>
+              </View>
               <VSpacer size={4} />
-              <View style={styles.row}>
+              <View style={[IOStyles.row, IOStyles.alignCenter]}>
                 {this.renderCalendarIcon()}
                 <HSpacer size={8} />
                 <CalendarEventButton
@@ -189,12 +189,20 @@ class MedicalPrescriptionDueDateBar extends React.PureComponent<Props> {
               </View>
             </View>
           ) : (
-            <View style={[styles.container, styles.row, this.bannerStyle]}>
+            <View
+              style={[
+                styles.container,
+                IOStyles.horizontalContentPadding,
+                IOStyles.row,
+                IOStyles.alignCenter,
+                this.bannerStyle
+              ]}
+            >
               {this.renderCalendarIcon()}
               <HSpacer size={8} />
-              <NBText style={styles.text} white={true}>
-                {this.textContent}
-              </NBText>
+              <View style={IOStyles.flex}>
+                <Body>{this.textContent}</Body>
+              </View>
             </View>
           )
       )
