@@ -36,7 +36,7 @@ const reducer = (
     case getType(idpayInitiativeGet.request):
       return {
         ...state,
-        details: pot.toLoading(state.details)
+        details: pot.toLoading(pot.none)
       };
     case getType(idpayInitiativeGet.success):
       return {
