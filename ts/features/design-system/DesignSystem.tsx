@@ -7,12 +7,13 @@ import {
   AppParamsList,
   IOStackNavigationRouteProps
 } from "../../navigation/params/AppParamsList";
-import ListItemComponent from "../../components/screens/ListItemComponent";
 import { H1 } from "../../components/core/typography/H1";
 import { LabelSmall } from "../../components/core/typography/LabelSmall";
 import { VSpacer } from "../../components/core/spacer/Spacer";
+import ListItemNav from "../../components/ui/ListItemNav";
 import DESIGN_SYSTEM_ROUTES from "./navigation/routes";
 import { DesignSystemParamsList } from "./navigation/params";
+import { Divider } from "../../components/core/Divider";
 
 type Props = IOStackNavigationRouteProps<
   DesignSystemParamsList,
@@ -72,13 +73,15 @@ export const DesignSystem = (props: Props) => (
       )}
       renderSectionFooter={() => <VSpacer size={40} />}
       renderItem={({ item }) => (
-        <ListItemComponent
-          title={item.title}
+        <ListItemNav
+          accessibilityLabel={`Go to the ${item.title} page`}
+          value={item.title}
           onPress={() =>
             props.navigation.navigate(item.route as keyof AppParamsList)
           }
         />
       )}
+      ItemSeparatorComponent={() => <Divider />}
       keyExtractor={(item, index) => `${item.route}-${index}`}
       sections={DESIGN_SYSTEM_SECTION_DATA}
     />
