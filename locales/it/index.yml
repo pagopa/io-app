@@ -3558,6 +3558,7 @@ idpay:
         addNew: Aggiungi nuovo
       updateToast: IBAN associato correttamente
   unsubscription:
+    headerTitle: Rimuovi l'iniziativa
     title: Vuoi rimuovere {{initiativeName}}?
     subtitle: Per proseguire, seleziona tutte le informazioni riportate di seguito.
     checks:

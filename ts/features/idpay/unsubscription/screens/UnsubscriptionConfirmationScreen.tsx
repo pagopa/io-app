@@ -142,7 +142,7 @@ const UnsubscriptionConfirmationScreen = () => {
   return (
     <BaseScreenComponent
       goBack={true}
-      headerTitle="Rimuovi iniziativa"
+      headerTitle={I18n.t("idpay.unsubscription.headerTitle")}
       customGoBack={closeButton}
       contextualHelp={emptyContextualHelp}
     >
