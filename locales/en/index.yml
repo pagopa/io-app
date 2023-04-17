@@ -3261,6 +3261,7 @@ features:
         cancel: "Cancel"
         continue: "Go to signature"
         confirm: "Sign and continue"
+        backToSignFieldsList: "Back to signatures"
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
