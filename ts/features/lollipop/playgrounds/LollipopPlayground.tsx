@@ -1,13 +1,19 @@
 import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
-import { Content } from "native-base";
 import React, { useCallback } from "react";
 import { ProblemJson } from "@pagopa/ts-commons/lib/responses";
-import { View, SafeAreaView, StyleSheet, TextInput } from "react-native";
+import {
+  View,
+  SafeAreaView,
+  StyleSheet,
+  TextInput,
+  ScrollView
+} from "react-native";
 import { HSpacer, VSpacer } from "../../../components/core/spacer/Spacer";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { maybeNotNullyString } from "../../../utils/strings";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
+import { ContentWrapper } from "../../../components/core/ContentWrapper";
 import ButtonSolid from "../../../components/ui/ButtonSolid";
 import ButtonOutline from "../../../components/ui/ButtonOutline";
 import { sessionTokenSelector } from "../../../store/reducers/authentication";
@@ -48,8 +54,8 @@ const styles = StyleSheet.create({
   }
 });
 
-const viewRef = React.createRef<View>();
 const LollipopPlayground = () => {
+  const viewRef = React.createRef<View>();
   const [httpRequestBodyText, setHttpRequestBodyText] =
     React.useState<string>("");
   const [doSignBody, setDoSignBody] = React.useState<boolean>(true);
@@ -89,7 +95,11 @@ const LollipopPlayground = () => {
             if (status !== 200) {
               const response = signResponse.right.value as ProblemJson;
               setIsVerificationSuccess(false);
-              setSignResponse(`${status} - ${response.title}`);
+              setSignResponse(
+                `${status} - ${response.title}${
+                  response.detail ? "\n" + response.detail : ""
+                }`
+              );
             } else {
               const response = signResponse.right.value as SignMessageResponse;
               setIsVerificationSuccess(true);
@@ -112,50 +122,52 @@ const LollipopPlayground = () => {
   return (
     <BaseScreenComponent goBack={true} headerTitle={"Lollipop Playground"}>
       <SafeAreaView style={IOStyles.flex}>
-        <Content contentContainerStyle={IOStyles.flex}>
-          <View style={styles.column}>
-            <TextInput
-              multiline={true}
-              placeholder={"paste here your body message"}
-              style={styles.textInput}
-              onChangeText={setHttpRequestBodyText}
-              value={httpRequestBodyText}
-            />
-            <VSpacer size={16} />
-            <View style={styles.rowStart}>
-              <CheckBox checked={doSignBody} onValueChange={setDoSignBody} />
-              <HSpacer />
-              <Label>{"Sign body"}</Label>
+        <ScrollView>
+          <ContentWrapper>
+            <View style={styles.column}>
+              <TextInput
+                multiline={true}
+                placeholder={"paste here your body message"}
+                style={styles.textInput}
+                onChangeText={setHttpRequestBodyText}
+                value={httpRequestBodyText}
+              />
+              <VSpacer size={16} />
+              <View style={styles.rowStart}>
+                <CheckBox checked={doSignBody} onValueChange={setDoSignBody} />
+                <HSpacer />
+                <Label>{"Sign body"}</Label>
+              </View>
+              <VSpacer size={16} />
+              <View style={styles.row}>
+                <ButtonSolid
+                  accessibilityLabel="Sign body message"
+                  label={"Sign body message"}
+                  disabled={!isMessageBodySet}
+                  onPress={() => onSignButtonPress(httpRequestBodyText)}
+                />
+                <HSpacer size={16} />
+                <ButtonOutline
+                  accessibilityLabel="Clear"
+                  label={"Clear"}
+                  disabled={!isMessageBodySet}
+                  onPress={() => {
+                    setIsVerificationSuccess(undefined);
+                    setHttpRequestBodyText("");
+                  }}
+                />
+              </View>
+              <VSpacer size={16} />
+              {isVerificationSuccess !== undefined && (
+                <Alert
+                  viewRef={viewRef}
+                  variant={isVerificationSuccess ? "success" : "error"}
+                  content={signResponse}
+                />
+              )}
             </View>
-            <VSpacer size={16} />
-            <View style={styles.row}>
-              <ButtonSolid
-                accessibilityLabel="Sign body message"
-                label={"Sign body message"}
-                disabled={!isMessageBodySet}
-                onPress={() => onSignButtonPress(httpRequestBodyText)}
-              />
-              <HSpacer size={16} />
-              <ButtonOutline
-                accessibilityLabel="Clear"
-                label={"Clear"}
-                disabled={!isMessageBodySet}
-                onPress={() => {
-                  setIsVerificationSuccess(undefined);
-                  setHttpRequestBodyText("");
-                }}
-              />
-            </View>
-            <VSpacer size={16} />
-            {isVerificationSuccess !== undefined && (
-              <Alert
-                viewRef={viewRef}
-                variant={isVerificationSuccess ? "success" : "error"}
-                content={signResponse}
-              />
-            )}
-          </View>
-        </Content>
+          </ContentWrapper>
+        </ScrollView>
       </SafeAreaView>
     </BaseScreenComponent>
   );
