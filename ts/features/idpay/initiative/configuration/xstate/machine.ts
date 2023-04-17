@@ -808,7 +808,11 @@ const createIDPayInitiativeConfigurationMachine = () =>
           selectedIban: event.iban,
           failure: undefined
         })),
-        enrollIbanSuccess: assign((_, _event) => ({
+        enrollIbanSuccess: assign(context => ({
+          initiative: p.map(context.initiative, initiative => ({
+            ...initiative,
+            iban: context.selectedIban?.iban
+          })),
           selectedIban: undefined,
           failure: undefined
         })),
