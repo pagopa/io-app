@@ -3282,13 +3282,14 @@ features:
         cancel: "Annulla"
         continue: "Vai alla firma"
         confirm: "Firma e continua"
+        backToSignFieldsList: "Torna alle firme"
     requests:
       header: "Stato delle firme"
       title: "Gli stati delle tue firme"
       itemSubtitle: "{{date}} · {{time}} · ID {{id}}"
       signed: "Firmato"
       notAvailable: "Non disponibile"
-      signingInProgress: "Firma in corso"
+      signingInProgress: "Firma in corso"        
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina

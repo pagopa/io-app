@@ -3258,13 +3258,14 @@ features:
         cancel: "Cancel"
         continue: "Go to signature"
         confirm: "Sign and continue"
+        backToSignFieldsList: "Back to signatures"
     requests:
       header: "Signature status"
       title: "The status of your signatures"
       itemSubtitle: "{{date}} · {{time}} · ID {{id}}"
       signed: "Signed"
       notAvailable: "Not available"
-      signingInProgress: "Signature in progress"
+      signingInProgress: "Signature in progress"   
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
