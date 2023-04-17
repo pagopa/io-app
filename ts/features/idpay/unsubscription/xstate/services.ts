@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
+import * as TE from "fp-ts/lib/TaskEither";
+import { flow, pipe } from "fp-ts/lib/function";
 import { PreferredLanguage } from "../../../../../definitions/backend/PreferredLanguage";
 import { InitiativeDTO } from "../../../../../definitions/idpay/InitiativeDTO";
 import { IDPayClient } from "../../common/api/client";
@@ -20,52 +21,62 @@ const createServicesImplementation = (
   token: string,
   language: PreferredLanguage
 ) => {
-  const getInitiativeInfo = async (context: Context) => {
-    try {
-      const dataResponse = await client.getWalletDetail({
-        bearerAuth: token,
-        "Accept-Language": language,
-        initiativeId: context.initiativeId
-      });
+  const getInitiativeInfo = async (
+    context: Context
+  ): Promise<InitiativeDTO> => {
+    const dataResponse = await TE.tryCatch(
+      () =>
+        client.getWalletDetail({
+          bearerAuth: token,
+          "Accept-Language": language,
+          initiativeId: context.initiativeId
+        }),
+      E.toError
+    )();
 
-      const data: Promise<InitiativeDTO> = pipe(
-        dataResponse,
-        E.map(response =>
-          response.status !== 200
-            ? Promise.reject(undefined)
-            : Promise.resolve(response.value)
-        ),
-        E.getOrElse(() => Promise.reject(undefined))
-      );
-
-      return data;
-    } catch {
-      return Promise.reject();
-    }
+    return pipe(
+      dataResponse,
+      E.fold(
+        () => Promise.reject(undefined),
+        flow(
+          E.fold(
+            () => Promise.reject(undefined),
+            response =>
+              response.status !== 200
+                ? Promise.reject(undefined)
+                : Promise.resolve(response.value)
+          )
+        )
+      )
+    );
   };
 
   const unsubscribeFromInitiative = async (context: Context) => {
-    try {
-      const dataResponse = await client.unsubscribe({
-        bearerAuth: token,
-        "Accept-Language": language,
-        initiativeId: context.initiativeId
-      });
+    const dataResponse = await TE.tryCatch(
+      () =>
+        client.unsubscribe({
+          bearerAuth: token,
+          "Accept-Language": language,
+          initiativeId: context.initiativeId
+        }),
+      E.toError
+    )();
 
-      const data: Promise<undefined> = pipe(
-        dataResponse,
-        E.map(response =>
-          response.status !== 200
-            ? Promise.reject(undefined)
-            : Promise.resolve(undefined)
-        ),
-        E.getOrElse(() => Promise.reject(undefined))
-      );
-
-      return data;
-    } catch {
-      return Promise.reject();
-    }
+    return pipe(
+      dataResponse,
+      E.fold(
+        () => Promise.reject(undefined),
+        flow(
+          E.fold(
+            () => Promise.reject(undefined),
+            response =>
+              response.status !== 200
+                ? Promise.reject(undefined)
+                : Promise.resolve(undefined)
+          )
+        )
+      )
+    );
   };
 
   return {
