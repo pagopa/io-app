@@ -17,7 +17,11 @@ import Animated, {
   interpolateColor
 } from "react-native-reanimated";
 import { Icon, IOIcons } from "../core/icons";
-import { IOStyles } from "../core/variables/IOStyles";
+import {
+  IOListItemPaddingHorizontal,
+  IOListItemPaddingVertical,
+  IOStyles
+} from "../core/variables/IOStyles";
 import { IOSpringValues, IOScaleValues } from "../core/variables/IOAnimations";
 import { LabelSmall } from "../core/typography/LabelSmall";
 import { IOColors, hexToRgba, useIOTheme } from "../core/variables/IOColors";
@@ -39,10 +43,10 @@ export type ListItemNav = WithTestID<{
 
 const styles = StyleSheet.create({
   listItem: {
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    marginRight: -24,
-    marginLeft: -24
+    paddingVertical: IOListItemPaddingVertical,
+    paddingHorizontal: IOListItemPaddingHorizontal,
+    marginRight: -IOListItemPaddingHorizontal,
+    marginLeft: -IOListItemPaddingHorizontal
   },
   listItemInner: {
     flex: 1,

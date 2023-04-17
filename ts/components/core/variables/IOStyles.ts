@@ -1,10 +1,19 @@
 import { Platform, StyleSheet } from "react-native";
 import themeVariables from "../../../theme/variables";
 import { IOColors } from "./IOColors";
+import { IOAppMargin, IOSpacingScale } from "./IOSpacing";
 
 /**
  * A collection of default styles used within IO App.
  */
+
+interface IOLayoutCostants {
+  appMarginDefault: IOAppMargin;
+}
+
+export const IOLayoutCostants: IOLayoutCostants = {
+  appMarginDefault: 24
+};
 
 // TODO: in a first iteration, to avoid overlaps,
 //  if a value already exists, will be used from themeVariables
@@ -190,3 +199,11 @@ export const IOIconButtonStyles = StyleSheet.create({
     borderRadius: btnSizeLarge
   }
 });
+
+/**
+ * LIST ITEM STYLES
+ */
+
+export const IOListItemPaddingVertical: IOSpacingScale = 12;
+export const IOListItemPaddingHorizontal: IOAppMargin =
+  IOLayoutCostants.appMarginDefault;
