@@ -1,6 +1,7 @@
 import * as React from "react";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 
+import { View } from "react-native";
 import { H2 } from "../../../components/core/typography/H2";
 
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
@@ -24,9 +25,54 @@ import { TimelineOperationListItem } from "../../idpay/initiative/details/compon
 import { OperationTypeEnum } from "../../../../definitions/idpay/TransactionOperationDTO";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { VSpacer } from "../../../components/core/spacer/Spacer";
+import ListItemNav from "../../../components/ui/ListItemNav";
 
 export const DSListItems = () => (
   <DesignSystemScreen title="List Items">
+    <H2
+      color={"bluegrey"}
+      weight={"SemiBold"}
+      style={{ marginBottom: 16, marginTop: 16 }}
+    >
+      ListItemNav
+    </H2>
+    <DSComponentViewerBox name="ListItemNav">
+      <View>
+        <ListItemNav
+          value={"Value"}
+          onPress={() => {
+            alert("Action triggered");
+          }}
+          accessibilityLabel="Empty just for testing purposes"
+        />
+        <ListItemNav
+          value={"Value"}
+          description="Description"
+          onPress={() => {
+            alert("Action triggered");
+          }}
+          accessibilityLabel="Empty just for testing purposes"
+        />
+        <ListItemNav
+          value={"Value"}
+          icon="gallery"
+          onPress={() => {
+            alert("Action triggered");
+          }}
+          accessibilityLabel="Empty just for testing purposes"
+        />
+
+        <ListItemNav
+          value={"Value"}
+          description="Description"
+          icon="gallery"
+          onPress={() => {
+            alert("Action triggered");
+          }}
+          accessibilityLabel="Empty just for testing purposes"
+        />
+      </View>
+    </DSComponentViewerBox>
     <H2
       color={"bluegrey"}
       weight={"SemiBold"}
