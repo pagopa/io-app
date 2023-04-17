@@ -1,14 +1,15 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as _ from "lodash";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as _ from "lodash";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-import { OperationDTO } from "../../../../../../definitions/idpay/OperationDTO";
-import { TimelineDTO } from "../../../../../../definitions/idpay/TimelineDTO";
 import {
   InitiativeDTO,
   StatusEnum as InitiativeStatusEnum
 } from "../../../../../../definitions/idpay/InitiativeDTO";
+import { OperationDTO } from "../../../../../../definitions/idpay/OperationDTO";
+import { TimelineDTO } from "../../../../../../definitions/idpay/TimelineDTO";
 import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../utils/errors";
@@ -17,7 +18,6 @@ import {
   idpayTimelineDetailsGet,
   idpayTimelinePageGet
 } from "./actions";
-import { pipe } from "fp-ts/lib/function";
 
 type PaginatedTimelineDTO = Record<number, TimelineDTO>;
 
