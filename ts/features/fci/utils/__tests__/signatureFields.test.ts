@@ -3,8 +3,8 @@ import { SignatureField } from "../../../../../definitions/fci/SignatureField";
 import I18n from "../../../../i18n";
 import {
   clausesByType,
-  clausesEnumValues,
   getAllTypes,
+  getClauseLabel,
   getSectionListData
 } from "../signatureFields";
 
@@ -112,24 +112,19 @@ describe("Test signatureFields utils", () => {
     });
   });
 
-  describe("Test clausesEnumValues", () => {
-    it("it should have a lenght equal to the total number of the clauses type", () => {
-      expect(Object.keys(clausesEnumValues).length).toBe(
-        Object.keys(ClausesTypeEnum).length
-      );
-    });
-    it("it should returns the right text for REQUIRED status", () => {
-      expect(clausesEnumValues[ClausesTypeEnum.REQUIRED]).toStrictEqual(
+  describe("Test getClauseLabel", () => {
+    it("it should returns the right text for REQUIRED type", () => {
+      expect(getClauseLabel(ClausesTypeEnum.REQUIRED)).toStrictEqual(
         I18n.t("features.fci.signatureFields.required")
       );
     });
-    it("it should returns the right text for OPTIONAL status", () => {
-      expect(clausesEnumValues[ClausesTypeEnum.OPTIONAL]).toStrictEqual(
+    it("it should returns the right text for OPTIONAL type", () => {
+      expect(getClauseLabel(ClausesTypeEnum.OPTIONAL)).toStrictEqual(
         I18n.t("features.fci.signatureFields.optional")
       );
     });
-    it("it should returns the right text for UNFAIR status", () => {
-      expect(clausesEnumValues[ClausesTypeEnum.UNFAIR]).toStrictEqual(
+    it("it should returns the right text for UNFAIR type", () => {
+      expect(getClauseLabel(ClausesTypeEnum.UNFAIR)).toStrictEqual(
         I18n.t("features.fci.signatureFields.unfair")
       );
     });

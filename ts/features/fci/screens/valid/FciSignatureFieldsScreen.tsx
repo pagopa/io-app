@@ -38,8 +38,8 @@ import {
 } from "../../../../../definitions/fci/Clause";
 import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
 import {
-  clausesEnumValues,
   clausesByType,
+  getClauseLabel,
   getSectionListData
 } from "../../utils/signatureFields";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
@@ -152,7 +152,7 @@ const FciSignatureFieldsScreen = (
       }}
     >
       <H3 color="bluegrey">
-        {clausesEnumValues[info.section.title as Clause["type"]]}
+        {getClauseLabel(info.section.title as Clause["type"])}
       </H3>
     </View>
   );

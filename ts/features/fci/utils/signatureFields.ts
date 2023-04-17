@@ -5,12 +5,16 @@ import * as S from "fp-ts/lib/string";
 import { SignatureField } from "../../../../definitions/fci/SignatureField";
 import I18n from "../../../i18n";
 import { TypeEnum as ClauseTypeEnum } from "../../../../definitions/fci/Clause";
+import { TranslationKeys } from "../../../../locales/locales";
 
-export const clausesEnumValues = {
-  [ClauseTypeEnum.REQUIRED]: I18n.t("features.fci.signatureFields.required"),
-  [ClauseTypeEnum.UNFAIR]: I18n.t("features.fci.signatureFields.unfair"),
-  [ClauseTypeEnum.OPTIONAL]: I18n.t("features.fci.signatureFields.optional")
+const clausesEnumValues = {
+  [ClauseTypeEnum.REQUIRED]: "features.fci.signatureFields.required",
+  [ClauseTypeEnum.UNFAIR]: "features.fci.signatureFields.unfair",
+  [ClauseTypeEnum.OPTIONAL]: "features.fci.signatureFields.optional"
 };
+
+export const getClauseLabel = (clauseType: ClauseTypeEnum) =>
+  I18n.t(`${clausesEnumValues[clauseType] as TranslationKeys}`);
 
 export type LIST_DATA_TYPE = {
   title: string;
