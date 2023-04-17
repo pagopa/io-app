@@ -34,7 +34,7 @@ type StackEventMap = StackNavigationEventMap &
  */
 export const useNavigationSwipeBackListener = (handler: () => void) => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
-  const [isSwiping, setIsSwiping] = React.useState(false);
+  const [withGesture, setWithGesture] = React.useState(false);
 
   const handleTransitionEnd = React.useCallback<
     EventListenerCallback<StackEventMap, "transitionEnd">
@@ -48,8 +48,8 @@ export const useNavigationSwipeBackListener = (handler: () => void) => {
         handler();
       }
 
-      // Finally, everytime the transition ends, we remove the transitionEnd listener by setting isSwiping to false.
-      setIsSwiping(false);
+      // Finally, everytime the transition ends, we remove the transitionEnd listener by setting withGesture to false.
+      setWithGesture(false);
     },
     [handler]
   );
@@ -57,23 +57,23 @@ export const useNavigationSwipeBackListener = (handler: () => void) => {
   React.useEffect(() => {
     // `transitionEnd` event is triggered everytime there is a screen transition, even if not triggered by a gesture.
     //  We need to listen the `transitionEnd` event only after a gesture is started
-    if (isSwiping) {
+    if (withGesture) {
       return navigation.addListener("transitionEnd", handleTransitionEnd);
     }
 
     // If there is no swiping active, do nothing
     return undefined;
-  }, [navigation, isSwiping, handleTransitionEnd]);
+  }, [navigation, withGesture, handleTransitionEnd]);
 
-  const handleGestureStart = React.useCallback<
-    EventListenerCallback<StackEventMap, "gestureStart">
+  const handleGestureEnd = React.useCallback<
+    EventListenerCallback<StackEventMap, "gestureEnd">
   >(() => {
-    // Everytime the user starts swiping (any direction), we save it to the state by mutating `isSwiping` to true
-    setIsSwiping(true);
-  }, [setIsSwiping]);
+    // Everytime the user ands a swipe gesture (any direction), we save it to the state by mutating `setWithGesture` to true
+    setWithGesture(true);
+  }, [setWithGesture]);
 
   React.useEffect(
-    () => navigation.addListener("gestureStart", handleGestureStart),
-    [navigation, handleGestureStart]
+    () => navigation.addListener("gestureEnd", handleGestureEnd),
+    [navigation, handleGestureEnd]
   );
 };
