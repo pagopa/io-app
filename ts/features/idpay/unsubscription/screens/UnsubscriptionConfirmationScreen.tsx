@@ -1,8 +1,10 @@
 import { useSelector } from "@xstate/react";
 import React from "react";
-import { FlatList, SafeAreaView, StyleSheet, View } from "react-native";
+import { SafeAreaView } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
+import { ContentWrapper } from "../../../../components/core/ContentWrapper";
 import { VSpacer } from "../../../../components/core/spacer/Spacer";
 import { Body } from "../../../../components/core/typography/Body";
 import { H1 } from "../../../../components/core/typography/H1";
@@ -11,16 +13,13 @@ import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import IconFont from "../../../../components/ui/IconFont";
+import { useConfirmationChecks } from "../../../../hooks/useConfirmationChecks";
 import I18n from "../../../../i18n";
-import customVariables from "../../../../theme/variables";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { UnsubscriptionCheckListItem } from "../components/UnsubscriptionCheckListItem";
 import { useUnsubscriptionMachineService } from "../xstate/provider";
 import { isLoadingSelector, selectInitiativeName } from "../xstate/selectors";
-import { useConfirmationChecks } from "../../../../hooks/useConfirmationChecks";
-import { ScrollView } from "react-native-gesture-handler";
-import { ContentWrapper } from "../../../../components/core/ContentWrapper";
 
 const unsubscriptionChecks: ReadonlyArray<{ title: string; subtitle: string }> =
   [
@@ -113,18 +112,15 @@ const UnsubscriptionConfirmationScreen = () => {
           <VSpacer size={16} />
           <Body>{I18n.t("idpay.unsubscription.subtitle")}</Body>
           <VSpacer size={16} />
-          <FlatList
-            data={unsubscriptionChecks}
-            renderItem={({ item, index }) => (
-              <UnsubscriptionCheckListItem
-                key={index}
-                title={item.title}
-                subtitle={item.subtitle}
-                checked={checks.values[index]}
-                onValueChange={() => handleCheckToggle(index)}
-              />
-            )}
-          />
+          {unsubscriptionChecks.map((item, index) => (
+            <UnsubscriptionCheckListItem
+              key={index}
+              title={item.title}
+              subtitle={item.subtitle}
+              checked={checks.values[index]}
+              onValueChange={() => handleCheckToggle(index)}
+            />
+          ))}
           <VSpacer size={48} />
         </ContentWrapper>
       </ScrollView>
@@ -159,13 +155,5 @@ const UnsubscriptionConfirmationScreen = () => {
     </BaseScreenComponent>
   );
 };
-
-const styles = StyleSheet.create({
-  content: {
-    paddingVertical: customVariables.spacerHeight,
-    paddingHorizontal: customVariables.contentPadding,
-    flex: 1
-  }
-});
 
 export default UnsubscriptionConfirmationScreen;
