@@ -30,15 +30,12 @@ const createServicesImplementation = (
 
       const data: Promise<InitiativeDTO> = pipe(
         dataResponse,
-        E.fold(
-          _ => Promise.reject(),
-          response => {
-            if (response.status !== 200) {
-              return Promise.reject();
-            }
-            return Promise.resolve(response.value);
-          }
-        )
+        E.map(response =>
+          response.status !== 200
+            ? Promise.reject(undefined)
+            : Promise.resolve(response.value)
+        ),
+        E.getOrElse(() => Promise.reject(undefined))
       );
 
       return data;
@@ -57,15 +54,12 @@ const createServicesImplementation = (
 
       const data: Promise<undefined> = pipe(
         dataResponse,
-        E.fold(
-          _ => Promise.reject(undefined),
-          response => {
-            if (response.status !== 200) {
-              return Promise.reject(undefined);
-            }
-            return Promise.resolve(undefined);
-          }
-        )
+        E.map(response =>
+          response.status !== 200
+            ? Promise.reject(undefined)
+            : Promise.resolve(undefined)
+        ),
+        E.getOrElse(() => Promise.reject(undefined))
       );
 
       return data;
