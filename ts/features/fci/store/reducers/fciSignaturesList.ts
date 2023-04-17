@@ -39,7 +39,8 @@ export const fciSignaturesListRequestSelector = (
 
 export const fciSignaturesListSelector = createSelector(
   fciSignaturesListRequestSelector,
-  signaturesList => (pot.isSome(signaturesList) ? signaturesList.value : [])
+  signaturesList =>
+    pot.isSome(signaturesList) ? signaturesList.value.items : []
 );
 
 export default reducer;
