@@ -11,9 +11,10 @@ import { H1 } from "../../components/core/typography/H1";
 import { LabelSmall } from "../../components/core/typography/LabelSmall";
 import { VSpacer } from "../../components/core/spacer/Spacer";
 import ListItemNav from "../../components/ui/ListItemNav";
+import { Divider } from "../../components/core/Divider";
+import { IOColors, useIOTheme } from "../../components/core/variables/IOColors";
 import DESIGN_SYSTEM_ROUTES from "./navigation/routes";
 import { DesignSystemParamsList } from "./navigation/params";
-import { Divider } from "../../components/core/Divider";
 
 type Props = IOStackNavigationRouteProps<
   DesignSystemParamsList,
@@ -53,37 +54,51 @@ const DESIGN_SYSTEM_SECTION_DATA = [
   }
 ];
 
-export const DesignSystem = (props: Props) => (
-  <BaseScreenComponent
-    goBack={true}
-    headerTitle={I18n.t("profile.main.designSystem")}
-  >
-    <SectionList
-      contentContainerStyle={IOStyles.horizontalContentPadding}
-      stickySectionHeadersEnabled={false}
-      renderSectionHeader={({ section: { title, description } }) => (
-        <View style={{ marginBottom: 8 }}>
-          <H1>{title}</H1>
-          {description && (
-            <LabelSmall weight={"Regular"} color="bluegrey">
-              {description}
-            </LabelSmall>
+export const DesignSystem = (props: Props) => {
+  const theme = useIOTheme();
+
+  return (
+    <BaseScreenComponent
+      goBack={true}
+      headerTitle={I18n.t("profile.main.designSystem")}
+    >
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: IOColors[theme["appBackground-primary"]]
+        }}
+      >
+        <SectionList
+          contentContainerStyle={IOStyles.horizontalContentPadding}
+          stickySectionHeadersEnabled={false}
+          renderSectionHeader={({ section: { title, description } }) => (
+            <View style={{ marginBottom: 8 }}>
+              <H1 color={theme["textHeading-default"]}>{title}</H1>
+              {description && (
+                <LabelSmall
+                  weight={"Regular"}
+                  color={theme["textBody-tertiary"]}
+                >
+                  {description}
+                </LabelSmall>
+              )}
+            </View>
           )}
-        </View>
-      )}
-      renderSectionFooter={() => <VSpacer size={40} />}
-      renderItem={({ item }) => (
-        <ListItemNav
-          accessibilityLabel={`Go to the ${item.title} page`}
-          value={item.title}
-          onPress={() =>
-            props.navigation.navigate(item.route as keyof AppParamsList)
-          }
+          renderSectionFooter={() => <VSpacer size={40} />}
+          renderItem={({ item }) => (
+            <ListItemNav
+              accessibilityLabel={`Go to the ${item.title} page`}
+              value={item.title}
+              onPress={() =>
+                props.navigation.navigate(item.route as keyof AppParamsList)
+              }
+            />
+          )}
+          ItemSeparatorComponent={() => <Divider />}
+          keyExtractor={(item, index) => `${item.route}-${index}`}
+          sections={DESIGN_SYSTEM_SECTION_DATA}
         />
-      )}
-      ItemSeparatorComponent={() => <Divider />}
-      keyExtractor={(item, index) => `${item.route}-${index}`}
-      sections={DESIGN_SYSTEM_SECTION_DATA}
-    />
-  </BaseScreenComponent>
-);
+      </View>
+    </BaseScreenComponent>
+  );
+};
