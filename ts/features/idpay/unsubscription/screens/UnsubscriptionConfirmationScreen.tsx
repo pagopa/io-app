@@ -19,6 +19,8 @@ import { UnsubscriptionCheckListItem } from "../components/UnsubscriptionCheckLi
 import { useUnsubscriptionMachineService } from "../xstate/provider";
 import { isLoadingSelector, selectInitiativeName } from "../xstate/selectors";
 import { useConfirmationChecks } from "../../../../hooks/useConfirmationChecks";
+import { ScrollView } from "react-native-gesture-handler";
+import { ContentWrapper } from "../../../../components/core/ContentWrapper";
 
 const unsubscriptionChecks: ReadonlyArray<{ title: string; subtitle: string }> =
   [
@@ -104,24 +106,28 @@ const UnsubscriptionConfirmationScreen = () => {
 
   const body = (
     <SafeAreaView style={IOStyles.flex}>
-      <View style={styles.content}>
-        <H1>{I18n.t("idpay.unsubscription.title", { initiativeName })}</H1>
-        <VSpacer size={16} />
-        <Body>{I18n.t("idpay.unsubscription.subtitle")}</Body>
-        <VSpacer size={16} />
-        <FlatList
-          data={unsubscriptionChecks}
-          renderItem={({ item, index }) => (
-            <UnsubscriptionCheckListItem
-              key={index}
-              title={item.title}
-              subtitle={item.subtitle}
-              checked={checks.values[index]}
-              onValueChange={() => handleCheckToggle(index)}
-            />
-          )}
-        />
-      </View>
+      <ScrollView>
+        <ContentWrapper>
+          <VSpacer size={16} />
+          <H1>{I18n.t("idpay.unsubscription.title", { initiativeName })}</H1>
+          <VSpacer size={16} />
+          <Body>{I18n.t("idpay.unsubscription.subtitle")}</Body>
+          <VSpacer size={16} />
+          <FlatList
+            data={unsubscriptionChecks}
+            renderItem={({ item, index }) => (
+              <UnsubscriptionCheckListItem
+                key={index}
+                title={item.title}
+                subtitle={item.subtitle}
+                checked={checks.values[index]}
+                onValueChange={() => handleCheckToggle(index)}
+              />
+            )}
+          />
+          <VSpacer size={48} />
+        </ContentWrapper>
+      </ScrollView>
       <FooterWithButtons
         type={"TwoButtonsInlineHalf"}
         leftButton={{
