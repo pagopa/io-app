@@ -3255,6 +3255,9 @@ features:
         fieldDetailHint: "Visualizza sul documento dove metterai la firma"
         selected: "Campo selezionato"
         unselected: "Campo non selezionato"
+      required: "FIRME OBBLIGATORIE"
+      optional: "FIRME FACOLTATIVE"
+      unfair: "FIRME CLAUSOLE VESSATORIE"
     title: "Firma con IO"
     documentsBar:
       titleLeft: Documento {{currentDoc}} di {{totalDocs}}
@@ -3282,6 +3285,7 @@ features:
         cancel: "Annulla"
         continue: "Vai alla firma"
         confirm: "Firma e continua"
+        backToSignFieldsList: "Torna alle firme"
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
