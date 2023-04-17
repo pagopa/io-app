@@ -25,8 +25,8 @@ const createServicesImplementation = (
     context: Context
   ): Promise<InitiativeDTO> => {
     const dataResponse = await TE.tryCatch(
-      () =>
-        client.getWalletDetail({
+      async () =>
+        await client.getWalletDetail({
           bearerAuth: token,
           "Accept-Language": language,
           initiativeId: context.initiativeId
@@ -53,8 +53,8 @@ const createServicesImplementation = (
 
   const unsubscribeFromInitiative = async (context: Context) => {
     const dataResponse = await TE.tryCatch(
-      () =>
-        client.unsubscribe({
+      async () =>
+        await client.unsubscribe({
           bearerAuth: token,
           "Accept-Language": language,
           initiativeId: context.initiativeId
