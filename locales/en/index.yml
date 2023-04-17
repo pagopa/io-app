@@ -3181,14 +3181,19 @@ features:
         cta: Accedi alla versione web  
   fci:
     errors:
+      buttons:
+        back: "Back"
+        retry: "Retry"
+        close: "Close"
+        assistance: "Open a support request"
       expiredAfterSigned:
         title: The documents are no longer available
-        subTitle: If you need a copy, contact the issuer
+        subTitle: If you need a copy, contact the institution
       expired:
-        title: The signature request is expired
-        subTitle: If you need help write to
+        title: The signature request has expired
+        subTitle: If you need help, contact the institution
       waitForQtsp:
-        title: The signature is being processed.
+        title: The signature is being processed
         subTitle: You will receive a message with the signed documents as soon as they are ready.
       signed:
         title: You have already signed these documents
@@ -3198,21 +3203,21 @@ features:
         subTitle: Your device does not support the "Firma con IO" feature.
       generic:
         default:
-          title: There is a problem
-          subTitle: To proceed with the signature, check that you have updated the IO app to the latest version.
+          title: There's a problem on our systems
+          subTitle: Try again in a few minutes. If it happens again, contact support.
         update:
           title: Update the app
-          subTitle: Check that you have installed the latest version of IO or log in again.
+          subTitle: Make sure you have installed the latest version of IO and log in again with SPID or CIE.
         rejected:
-          title: The signing failed
-          subTitle: The sender will contact you in the next few days to get you to re-sign. If this doesn't happen, write to    
+          title: The signature failed
+          subTitle: The institution will contact you in the next few days to get you to sign again. If this doesn't happen, please e-mail    
         signing:
-          title: The signing failed
-          subTitle: Due to a technical problem, the signing was not successful. If the problem persists, contact support.   
+          title: The signature failed
+          subTitle: Due to a technical problem, the signature failed. If the problem persists, contact support.   
     abort:
-      title: "Cancel signing flow"
-      content: "Do you want to cancel the documents signing process?"
-      cancel: "Cancel signing"
+      title: "Quit signing"
+      content: "Do you want to quit signing the documents?"
+      cancel: "Quit signing"
       confirm: "Keep signing"
     checkService:
       title: "Turn on messages"
@@ -3226,26 +3231,29 @@ features:
         fieldDetailHint: "Go to the page that displays the signature field"
         selected: "Field selected"
         unselected: "Field not selected"
+      required: "REQUIRED SIGNATURES"
+      optional: "OPTIONAL SIGNATURES"
+      unfair: "UNFAIR TERMS SIGNATURES"
     title: "Firma con IO"
     documentsBar:
       titleLeft: Document {{currentDoc}} of {{totalDocs}}
       titleRight: Page {{currentPage}} of {{totalPages}}
     shareDataScreen:
-      title: "Do you want to share these data?"
-      content: "These will be shared with the digital signature provider. If you cancel, you will not be able to complete the signing."
+      title: "Share these data?"
+      content: "They will be shared with the digital signature provider. If you cancel, you won't be able to complete the signature."
       cancel: "Cancel"
       confirm: "Ok"
-      alertText: "Want to change or update your email address?"
+      alertText: "Do you want to change or update your e-mail address?"
       alertLink: "Go here"
       name: "Name"
-      familyName: "Family name"
+      familyName: "Surname"
       birthDate: "Date of birth"
     thankYouPage:
       title: "Done!"
       content: "You will shortly receive a message with the signed documents."
       cta: "Close"
     qtspTos:
-      title: "We are almost there!"
+      title: "Almost there!"
       subTitle: "To sign, you must accept the terms and conditions of the service and confirm that you have read the privacy policy of the signature provider."
       show: "View"
     documents:
@@ -3253,6 +3261,7 @@ features:
         cancel: "Cancel"
         continue: "Go to signature"
         confirm: "Sign and continue"
+        backToSignFieldsList: "Back to signatures"
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
@@ -3291,6 +3300,8 @@ support:
     stockValue: "Including the error you just received"
     card: "Payment methods details"
     cardValue: "Number (encrypted), expiration, network"
+    fci: "Signature request identifier"
+    fciValue: "To check the requests in progress"
     header: "Submit a request"
     listTitle: "Ongoing requests"
     title: "Do you give us your consent?"

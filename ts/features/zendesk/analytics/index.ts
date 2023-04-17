@@ -25,7 +25,8 @@ const trackZendesk =
       case getType(zendeskSupportStart):
         return mp.track(action.type, {
           isAssistanceForPayment: action.payload.assistanceForPayment,
-          isAssistanceForCard: action.payload.assistanceForCard
+          isAssistanceForCard: action.payload.assistanceForCard,
+          isAssistanceForFci: action.payload.assistanceForFci
         });
       case getType(zendeskSupportFailure):
         return mp.track(action.type, {
