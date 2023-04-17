@@ -20,11 +20,13 @@ import { Icon, IOIcons } from "../core/icons";
 import { IOStyles } from "../core/variables/IOStyles";
 import { IOSpringValues, IOScaleValues } from "../core/variables/IOAnimations";
 import { LabelSmall } from "../core/typography/LabelSmall";
-import { IOColors, hexToRgba } from "../core/variables/IOColors";
+import { IOColors, hexToRgba, useIOTheme } from "../core/variables/IOColors";
 import { WithTestID } from "../../types/WithTestID";
-// import { useIOSelector } from "../../store/hooks";
+import { useIOSelector } from "../../store/hooks";
 import { makeFontStyleObject } from "../core/fonts";
-// import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
+import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
+import { NewH6 } from "../core/typography/NewH6";
+import { Body } from "../core/typography/Body";
 
 export type ListItemNav = WithTestID<{
   value: string;
@@ -37,7 +39,6 @@ export type ListItemNav = WithTestID<{
 
 const styles = StyleSheet.create({
   listItem: {
-    backgroundColor: IOColors["grey-50"],
     paddingVertical: 12,
     paddingHorizontal: 24,
     marginRight: -24,
@@ -56,11 +57,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapBackgroundStates = {
-  default: hexToRgba(IOColors["grey-50"], 0),
-  pressed: IOColors["grey-50"]
-};
-
 export const ListItemNav = ({
   value,
   description,
@@ -69,8 +65,15 @@ export const ListItemNav = ({
   accessibilityLabel,
   testID
 }: ListItemNav) => {
-  // const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
+  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
   const isPressed: Animated.SharedValue<number> = useSharedValue(0);
+
+  const theme = useIOTheme();
+
+  const mapBackgroundStates: Record<string, string> = {
+    default: hexToRgba(IOColors[theme["listItem-pressed"]], 0),
+    pressed: IOColors[theme["listItem-pressed"]]
+  };
 
   // Scaling transformation applied when the button is pressed
   const animationScaleValue = IOScaleValues?.basicButton?.pressedState;
@@ -114,7 +117,8 @@ export const ListItemNav = ({
     isPressed.value = 0;
   }, [isPressed]);
 
-  return (
+  /* ◀ REMOVE_LEGACY_COMPONENT: Start */
+  const LegacyListItemNav = () => (
     <Pressable
       onPress={onPress}
       onPressIn={onPressIn}
@@ -132,17 +136,10 @@ export const ListItemNav = ({
             </View>
           )}
           <View style={IOStyles.flex}>
-            <Text
-              style={[styles.textValue, { color: IOColors.bluegreyDark }]}
-              numberOfLines={1}
-            >
+            <Text style={[styles.textValue, { color: IOColors.bluegreyDark }]}>
               {value}
             </Text>
-            {description && (
-              <LabelSmall weight="Regular" color={"bluegrey"}>
-                {description}
-              </LabelSmall>
-            )}
+            {description && <Body weight="Regular">{description}</Body>}
           </View>
           <View style={{ marginLeft: 8 }}>
             <Icon name="chevronRightListItem" color="blue" size={24} />
@@ -151,6 +148,48 @@ export const ListItemNav = ({
       </Animated.View>
     </Pressable>
   );
+  /* REMOVE_LEGACY_COMPONENT: End ▶ */
+
+  const NewListItemNav = () => (
+    <Pressable
+      onPress={onPress}
+      onPressIn={onPressIn}
+      onPressOut={onPressOut}
+      accessible={true}
+      accessibilityLabel={accessibilityLabel}
+      accessibilityRole="button"
+      testID={testID}
+    >
+      <Animated.View style={[styles.listItem, animatedBackgroundStyle]}>
+        <Animated.View style={[styles.listItemInner, animatedScaleStyle]}>
+          {icon && (
+            <View style={{ marginRight: 16 }}>
+              <Icon name={icon} color="grey-450" size={24} />
+            </View>
+          )}
+          <View style={IOStyles.flex}>
+            <NewH6 color={theme["textBody-default"]}>{value}</NewH6>
+            {description && (
+              <LabelSmall weight="Regular" color={theme["textBody-tertiary"]}>
+                {description}
+              </LabelSmall>
+            )}
+          </View>
+          <View style={{ marginLeft: 8 }}>
+            <Icon
+              name="chevronRightListItem"
+              color={theme["interactiveElem-default"]}
+              size={24}
+            />
+          </View>
+        </Animated.View>
+      </Animated.View>
+    </Pressable>
+  );
+
+  /* ◀ REMOVE_LEGACY_COMPONENT: Move the entire <NewListItemNav /> here,
+  without the following condition */
+  return isDesignSystemEnabled ? <NewListItemNav /> : <LegacyListItemNav />;
 };
 
 export default ListItemNav;

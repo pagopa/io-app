@@ -269,6 +269,7 @@ export type IOTheme = {
   "appBackground-tertiary": IOColors;
   "interactiveElem-default": IOColors;
   "interactiveElem-pressed": IOColors;
+  "listItem-pressed": IOColors;
   // Typography
   "textHeading-default": IOColors;
   "textBody-default": IOColors;
@@ -288,6 +289,7 @@ export const IOThemeLight: IOTheme = {
   "appBackground-tertiary": "grey-100",
   "interactiveElem-default": "blueIO-500",
   "interactiveElem-pressed": "blueIO-600",
+  "listItem-pressed": "grey-50",
   // Typography
   "textHeading-default": "black",
   "textBody-default": "black",
@@ -308,6 +310,7 @@ export const IOThemeDark: IOTheme = {
   "appBackground-tertiary": "grey-700",
   "interactiveElem-default": "blueIO-450",
   "interactiveElem-pressed": "blueIO-600",
+  "listItem-pressed": "grey-850",
   // Typography
   "textHeading-default": "grey-200",
   "textBody-default": "white",
@@ -373,6 +376,7 @@ export const IOThemes = { light: IOThemeLight, dark: IOThemeDark };
 export const IOThemeContext: React.Context<IOTheme> = React.createContext(
   Appearance.getColorScheme() === "dark" ? IOThemes.dark : IOThemes.light
 );
+export const useIOTheme = () => React.useContext(IOThemeContext);
 
 /*
 UTILS
