@@ -1,8 +1,10 @@
 import { TypeEnum as ClausesTypeEnum } from "../../../../../definitions/fci/Clause";
 import { SignatureField } from "../../../../../definitions/fci/SignatureField";
+import I18n from "../../../../i18n";
 import {
   clausesByType,
   getAllTypes,
+  getClauseLabel,
   getSectionListData
 } from "../signatureFields";
 
@@ -107,6 +109,24 @@ describe("Test signatureFields utils", () => {
     it("it should returns an array with three items and two signature field OPTIONAL", () => {
       expect(getSectionListData(signatureFields).length).toBe(3);
       expect(getSectionListData(signatureFields)[2].data.length).toBe(2);
+    });
+  });
+
+  describe("Test getClauseLabel", () => {
+    it("it should returns the right text for REQUIRED type", () => {
+      expect(getClauseLabel(ClausesTypeEnum.REQUIRED)).toStrictEqual(
+        I18n.t("features.fci.signatureFields.required")
+      );
+    });
+    it("it should returns the right text for OPTIONAL type", () => {
+      expect(getClauseLabel(ClausesTypeEnum.OPTIONAL)).toStrictEqual(
+        I18n.t("features.fci.signatureFields.optional")
+      );
+    });
+    it("it should returns the right text for UNFAIR type", () => {
+      expect(getClauseLabel(ClausesTypeEnum.UNFAIR)).toStrictEqual(
+        I18n.t("features.fci.signatureFields.unfair")
+      );
     });
   });
 });
