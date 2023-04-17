@@ -17,11 +17,7 @@ import Animated, {
   interpolateColor
 } from "react-native-reanimated";
 import { Icon, IOIcons } from "../core/icons";
-import {
-  IOListItemPaddingHorizontal,
-  IOListItemPaddingVertical,
-  IOStyles
-} from "../core/variables/IOStyles";
+import { IOListItemVisualParams, IOStyles } from "../core/variables/IOStyles";
 import { IOSpringValues, IOScaleValues } from "../core/variables/IOAnimations";
 import { LabelSmall } from "../core/typography/LabelSmall";
 import { IOColors, hexToRgba, useIOTheme } from "../core/variables/IOColors";
@@ -43,10 +39,10 @@ export type ListItemNav = WithTestID<{
 
 const styles = StyleSheet.create({
   listItem: {
-    paddingVertical: IOListItemPaddingVertical,
-    paddingHorizontal: IOListItemPaddingHorizontal,
-    marginRight: -IOListItemPaddingHorizontal,
-    marginLeft: -IOListItemPaddingHorizontal
+    paddingVertical: IOListItemVisualParams.paddingVertical,
+    paddingHorizontal: IOListItemVisualParams.paddingHorizontal,
+    marginRight: -IOListItemVisualParams.paddingHorizontal,
+    marginLeft: -IOListItemVisualParams.paddingHorizontal
   },
   listItemInner: {
     flex: 1,
@@ -135,8 +131,12 @@ export const ListItemNav = ({
       <Animated.View style={[styles.listItem, animatedBackgroundStyle]}>
         <Animated.View style={[styles.listItemInner, animatedScaleStyle]}>
           {icon && (
-            <View style={{ marginRight: 16 }}>
-              <Icon name={icon} color="grey-450" size={24} />
+            <View style={{ marginRight: IOListItemVisualParams.iconMargin }}>
+              <Icon
+                name={icon}
+                color="grey-450"
+                size={IOListItemVisualParams.iconSize}
+              />
             </View>
           )}
           <View style={IOStyles.flex}>
@@ -145,8 +145,12 @@ export const ListItemNav = ({
             </Text>
             {description && <Body weight="Regular">{description}</Body>}
           </View>
-          <View style={{ marginLeft: 8 }}>
-            <Icon name="chevronRightListItem" color="blue" size={24} />
+          <View style={{ marginLeft: IOListItemVisualParams.iconMargin }}>
+            <Icon
+              name="chevronRightListItem"
+              color="blue"
+              size={IOListItemVisualParams.chevronSize}
+            />
           </View>
         </Animated.View>
       </Animated.View>
@@ -167,8 +171,12 @@ export const ListItemNav = ({
       <Animated.View style={[styles.listItem, animatedBackgroundStyle]}>
         <Animated.View style={[styles.listItemInner, animatedScaleStyle]}>
           {icon && (
-            <View style={{ marginRight: 16 }}>
-              <Icon name={icon} color="grey-450" size={24} />
+            <View style={{ marginRight: IOListItemVisualParams.iconMargin }}>
+              <Icon
+                name={icon}
+                color="grey-450"
+                size={IOListItemVisualParams.iconSize}
+              />
             </View>
           )}
           <View style={IOStyles.flex}>
@@ -179,11 +187,11 @@ export const ListItemNav = ({
               </LabelSmall>
             )}
           </View>
-          <View style={{ marginLeft: 8 }}>
+          <View style={{ marginLeft: IOListItemVisualParams.iconMargin }}>
             <Icon
               name="chevronRightListItem"
               color={theme["interactiveElem-default"]}
-              size={24}
+              size={IOListItemVisualParams.chevronSize}
             />
           </View>
         </Animated.View>

@@ -1,5 +1,6 @@
 import { Platform, StyleSheet } from "react-native";
 import themeVariables from "../../../theme/variables";
+import { IOIconSizeScale } from "../icons";
 import { IOColors } from "./IOColors";
 import { IOAppMargin, IOSpacingScale } from "./IOSpacing";
 
@@ -204,6 +205,18 @@ export const IOIconButtonStyles = StyleSheet.create({
  * LIST ITEM STYLES
  */
 
-export const IOListItemPaddingVertical: IOSpacingScale = 12;
-export const IOListItemPaddingHorizontal: IOAppMargin =
-  IOLayoutCostants.appMarginDefault;
+interface IOListItemVisualParams {
+  paddingVertical: IOSpacingScale;
+  paddingHorizontal: IOAppMargin;
+  iconMargin: IOSpacingScale;
+  iconSize: IOIconSizeScale;
+  chevronSize: IOIconSizeScale;
+}
+
+export const IOListItemVisualParams: IOListItemVisualParams = {
+  paddingVertical: 12,
+  paddingHorizontal: IOLayoutCostants.appMarginDefault,
+  iconMargin: 16,
+  iconSize: 24,
+  chevronSize: 24
+};

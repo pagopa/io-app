@@ -12,7 +12,7 @@ import {
 import Switch from "../../components/ui/Switch";
 import customVariables from "../../theme/variables";
 import { makeFontStyleObject } from "../core/fonts";
-import { Icon } from "../core/icons";
+import { IOIconSizeScale, Icon } from "../core/icons";
 import { IOBadge } from "../core/IOBadge";
 import { HSpacer } from "../core/spacer/Spacer";
 import { Body } from "../core/typography/Body";
@@ -33,7 +33,7 @@ type Props = Readonly<{
   iconName?: string;
   smallIconSize?: boolean;
   iconOnTop?: boolean;
-  iconSize?: number;
+  iconSize?: IOIconSizeScale;
   hideIcon?: boolean;
   paddingRightDescription?: number;
   useExtendedSubTitle?: boolean;
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
 
 export default class ListItemComponent extends React.Component<Props> {
   public render() {
-    const ICON_SIZE = this.props.iconSize || DEFAULT_ICON_SIZE;
+    const ICON_SIZE: IOIconSizeScale = this.props.iconSize || DEFAULT_ICON_SIZE;
     const showDefaultIcon =
       this.props.iconName === undefined && this.props.hideIcon !== true;
     return (

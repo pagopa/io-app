@@ -392,13 +392,16 @@ export type IOIcons = keyof typeof IOIcons;
 export type IOIconsProps = {
   name: IOIcons;
   color?: IOColors;
-  size?: number | "100%";
+  size?: IOIconSizeScale | "100%";
 };
 
 export type SVGIconProps = {
   size: number | "100%";
   style: StyleProp<any>;
 };
+
+/* The following values should be deleted: 12, 30 */
+export type IOIconSizeScale = 12 | 16 | 20 | 24 | 30 | 32 | 48;
 
 /*
 Static icon component. Use it when you need an ion that doesn't

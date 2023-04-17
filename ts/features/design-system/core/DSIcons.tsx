@@ -9,7 +9,8 @@ import {
   IOCategoryIcons,
   IOProductIcons,
   IOIconsNew,
-  SVGIconProps
+  SVGIconProps,
+  IOIconSizeScale
 } from "../../../components/core/icons";
 import { H2 } from "../../../components/core/typography/H2";
 import { H3 } from "../../../components/core/typography/H3";
@@ -45,7 +46,7 @@ const filteredIOIcons = filterIconSet(
 // Just for demo purposes
 // Once we defined a general set of icon sizes,
 // just replace the following array:
-const IOIconSizes = [16, 24, 32, 48];
+const IOIconSizes: Array<IOIconSizeScale> = [16, 24, 32, 48];
 const IOIconColors = [
   "grey-200",
   "grey-450",
