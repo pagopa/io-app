@@ -90,7 +90,7 @@ const InitiativeCardComponent = (props: Props) => {
         <VSpacer size={8} />
         <H1>{initiativeName}</H1>
         <LabelSmall color={"black"} weight="Regular">
-          ciao ciao
+          {/* TODO add organization name */}
         </LabelSmall>
         <VSpacer size={8} />
         <View style={styles.bonusStatusContainer}>
