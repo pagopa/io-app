@@ -2,7 +2,7 @@ import React from "react";
 
 type ConfirmationChecks = {
   values: ReadonlyArray<boolean>;
-  toggle: (atIndex: number) => void;
+  setValue: (atIndex: number, value: boolean) => void;
   areFulfilled: boolean;
 };
 
@@ -27,12 +27,12 @@ export const useConfirmationChecks = (length: number): ConfirmationChecks => {
    * Function that updates the `values` state using the current state and the boolean value that's being toggled at the given index.
    * @param atIndex - The zero-based index in the `values` array that needs to be toggled.
    */
-  const toggle = (atIndex: number): void =>
+  const setValue = (atIndex: number, value: boolean): void =>
     setValues(current => [
       ...current.slice(0, atIndex),
-      !current[atIndex],
+      value,
       ...current.slice((atIndex as number) + 1)
     ]);
 
-  return { values, toggle, areFulfilled };
+  return { values, setValue, areFulfilled };
 };

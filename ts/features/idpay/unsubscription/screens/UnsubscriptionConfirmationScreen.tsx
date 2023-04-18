@@ -60,8 +60,6 @@ const UnsubscriptionConfirmationScreen = () => {
     });
   };
 
-  const handleCheckToggle = (index: number) => checks.toggle(index);
-
   const closeButton = (
     <TouchableDefaultOpacity
       onPress={handleClosePress}
@@ -118,7 +116,7 @@ const UnsubscriptionConfirmationScreen = () => {
               title={item.title}
               subtitle={item.subtitle}
               checked={checks.values[index]}
-              onValueChange={() => handleCheckToggle(index)}
+              onValueChange={value => checks.setValue(index, value)}
             />
           ))}
           <VSpacer size={48} />
