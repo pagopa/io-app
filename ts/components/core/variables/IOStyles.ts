@@ -94,6 +94,7 @@ export const IOButtonLegacyStyles = StyleSheet.create({
   ButtonSolid, ButtonOutline
   */
   button: {
+    flexDirection: "row",
     alignItems: "center",
     textAlignVertical: "center", // Android
     justifyContent: "center",
@@ -142,6 +143,7 @@ export const IOButtonStyles = StyleSheet.create({
   ButtonSolid, ButtonOutline
   */
   button: {
+    flexDirection: "row",
     alignItems: "center",
     textAlignVertical: "center", // Android
     justifyContent: "center",
