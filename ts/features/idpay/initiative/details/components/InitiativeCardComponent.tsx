@@ -24,52 +24,6 @@ type Props = {
   initiative: InitiativeDTO;
 };
 
-const styles = StyleSheet.create({
-  cardContainer: {
-    backgroundColor: IOColors["blue-50"],
-    borderBottomEndRadius: 24,
-    borderBottomStartRadius: 24,
-    paddingVertical: 32,
-    paddingTop: 0,
-    flex: 1
-  },
-  initiativeName: {
-    textAlign: "center"
-  },
-  bonusLogoContainer: {
-    backgroundColor: IOColors.white,
-    height: 56,
-    width: 56,
-    borderRadius: 8
-  },
-  topCardSection: {
-    flex: 2,
-    alignItems: "center"
-  },
-  bottomCardSection: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "center"
-  },
-  bonusStatusContainer: {
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center"
-  },
-  consumedOpacity: {
-    opacity: 0.5
-  },
-  remainingPercentageSliderContainer: {
-    height: 4,
-    backgroundColor: IOColors.white,
-    width: 100,
-    borderRadius: 4
-  },
-  alignCenter: {
-    alignItems: "center"
-  }
-});
-
 type PercentageSliderProps = {
   percentage: number;
   isGreyedOut: boolean;
@@ -285,6 +239,9 @@ const styles = StyleSheet.create({
     paddingVertical: 32,
     paddingTop: 0,
     flex: 1
+  },
+  initiativeName: {
+    textAlign: "center"
   },
   bonusLogoContainer: {
     backgroundColor: IOColors.white,
