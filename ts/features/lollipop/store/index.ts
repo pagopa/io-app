@@ -13,7 +13,7 @@ import { Action } from "../../../store/actions/types";
 import { isDevEnv } from "../../../utils/environment";
 import lollipopReducer, { LollipopState } from "./reducers/lollipop";
 
-export const CURRENT_REDUX_LOLLIPOP_STORE_VERSION = 0;
+export const CURRENT_REDUX_LOLLIPOP_STORE_VERSION = 1;
 
 export const migrationKeyTag = (
   state: PersistedState
