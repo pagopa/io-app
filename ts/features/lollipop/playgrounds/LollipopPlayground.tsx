@@ -17,7 +17,7 @@ import { ContentWrapper } from "../../../components/core/ContentWrapper";
 import ButtonSolid from "../../../components/ui/ButtonSolid";
 import ButtonOutline from "../../../components/ui/ButtonOutline";
 import { sessionTokenSelector } from "../../../store/reducers/authentication";
-import { LollipopBackendClient, SignMessageResponse } from "../api/backend";
+import { createLollipopClient } from "../api/backend";
 import { useIOSelector } from "../../../store/hooks";
 import {
   lollipopKeyTagSelector,
@@ -29,6 +29,12 @@ import { apiUrlPrefix } from "../../../config";
 import { CheckBox } from "../../../components/core/selection/checkbox/CheckBox";
 import { Label } from "../../../components/core/typography/Label";
 import { Alert } from "../../../components/Alert";
+import { SignMessageResponse } from "../../../../definitions/lollipop/SignMessageResponse";
+import { LollipopOriginalURL } from "../../../../definitions/lollipop/LollipopOriginalURL";
+import { LollipopContentDigest } from "../../../../definitions/lollipop/LollipopContentDigest";
+import { LollipopSignatureInput } from "../../../../definitions/lollipop/LollipopSignatureInput";
+import { LollipopSignature } from "../../../../definitions/lollipop/LollipopSignature";
+import { LollipopMethodEnum } from "../../../../definitions/lollipop/LollipopMethod";
 
 const styles = StyleSheet.create({
   textInput: {
@@ -62,34 +68,43 @@ const LollipopPlayground = () => {
   const [isVerificationSuccess, setIsVerificationSuccess] = React.useState<
     boolean | undefined
   >(undefined);
-  const [signResponse, setSignResponse] = React.useState<string>("");
+  const [signResponse, setSignResponse] = React.useState<SignMessageResponse>();
 
   const keyTag = useIOSelector(lollipopKeyTagSelector);
   const maybePublicKey = useIOSelector(lollipopPublicKeySelector);
   const maybeSessionToken = O.fromNullable(useIOSelector(sessionTokenSelector));
 
   const lollipopClient =
-    O.isSome(maybeSessionToken) && O.isSome(keyTag) && O.isSome(maybePublicKey)
-      ? LollipopBackendClient(apiUrlPrefix, maybeSessionToken.value, {
-          keyTag: keyTag.value,
-          publicKey: maybePublicKey.value,
-          publicKeyThumbprint: `${DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER}-${toThumbprint(
-            maybePublicKey
-          )}`
-        })
+    O.isSome(keyTag) && O.isSome(maybePublicKey)
+      ? createLollipopClient(
+          apiUrlPrefix,
+          {
+            keyTag: keyTag.value,
+            publicKey: maybePublicKey.value,
+            publicKeyThumbprint: `${DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER}-${toThumbprint(
+              maybePublicKey
+            )}`
+          },
+          { nonce: "aNonce", signBody: doSignBody }
+        )
       : undefined;
 
   const onSignButtonPress = useCallback(
     async (body: string) => {
-      if (lollipopClient) {
+      if (O.isSome(maybeSessionToken) && lollipopClient) {
         const bodyMessage = {
           message: body
         };
         try {
-          const signResponse = await lollipopClient.postSignMessage({
-            nonce: "aNonce",
-            signBody: doSignBody
-          })(bodyMessage);
+          const signResponse = await lollipopClient.signMessage({
+            body: bodyMessage,
+            Bearer: `Bearer ${maybeSessionToken.value}`,
+            "x-pagopa-lollipop-original-method": LollipopMethodEnum.POST,
+            "x-pagopa-lollipop-original-url": "" as LollipopOriginalURL,
+            "content-digest": "" as LollipopContentDigest,
+            "signature-input": "" as LollipopSignatureInput,
+            signature: "" as LollipopSignature
+          });
           if (E.isRight(signResponse)) {
             const status = signResponse.right.status;
             if (status !== 200) {
@@ -103,7 +118,7 @@ const LollipopPlayground = () => {
             } else {
               const response = signResponse.right.value as SignMessageResponse;
               setIsVerificationSuccess(true);
-              setSignResponse(response.response);
+              setSignResponse(response);
             }
           } else {
             setIsVerificationSuccess(false);
@@ -115,7 +130,7 @@ const LollipopPlayground = () => {
         }
       }
     },
-    [doSignBody, lollipopClient]
+    [lollipopClient, maybeSessionToken]
   );
 
   const isMessageBodySet = O.isSome(maybeNotNullyString(httpRequestBodyText));
@@ -162,7 +177,7 @@ const LollipopPlayground = () => {
                 <Alert
                   viewRef={viewRef}
                   variant={isVerificationSuccess ? "success" : "error"}
-                  content={signResponse}
+                  content={signResponse?.response ?? ""}
                 />
               )}
             </View>
