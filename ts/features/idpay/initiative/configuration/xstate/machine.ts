@@ -867,24 +867,24 @@ const createIDPayInitiativeConfigurationMachine = () =>
           };
         }),
         updateInstrumentDeleteStatus: assign((context, event) => {
-          if (event.instrument.idWallet === undefined) {
+          if (event.walletId === undefined) {
             return {};
           }
 
           return {
             instrumentStatuses: {
               ...context.instrumentStatuses,
-              [event.instrument.idWallet]: p.noneLoading
+              [event.walletId]: p.noneLoading
             }
           };
         }),
         updateInstrumentDeleteStatusSuccess: assign((context, event) => {
-          if (event.instrument.idWallet === undefined) {
+          if (event.walletId === undefined) {
             return {};
           }
 
           const currentDeleteStatus =
-            context.instrumentStatuses[event.instrument.idWallet];
+            context.instrumentStatuses[event.walletId];
 
           if (p.isSome(currentDeleteStatus)) {
             // No need to update instrument status
@@ -894,21 +894,21 @@ const createIDPayInitiativeConfigurationMachine = () =>
           return {
             instrumentStatuses: {
               ...context.instrumentStatuses,
-              [event.instrument.idWallet]: p.some(
+              [event.walletId]: p.some(
                 InstrumentStatusEnum.PENDING_DEACTIVATION_REQUEST
               )
             }
           };
         }),
         updateInstrumentDeleteStatusFailure: assign((context, event) => {
-          if (event.instrument.idWallet === undefined) {
+          if (event.walletId === undefined) {
             return {};
           }
 
           return {
             instrumentStatuses: {
               ...context.instrumentStatuses,
-              [event.instrument.idWallet]: p.some(InstrumentStatusEnum.ACTIVE)
+              [event.walletId]: p.some(InstrumentStatusEnum.ACTIVE)
             }
           };
         }),

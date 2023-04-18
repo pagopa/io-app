@@ -274,20 +274,17 @@ const createServicesImplementation = (
       onReceive(async event => {
         switch (event.type) {
           case "DELETE_INSTRUMENT":
-            deleteInstrument(
-              context.initiativeId,
-              event.instrument.instrumentId
-            )
+            deleteInstrument(context.initiativeId, event.instrumentId)
               .then(() =>
                 callback({
-                  type: "DELETE_INSTRUMENT_SUCCESS",
-                  instrument: event.instrument
+                  ...event,
+                  type: "DELETE_INSTRUMENT_SUCCESS"
                 })
               )
               .catch(() =>
                 callback({
-                  type: "DELETE_INSTRUMENT_FAILURE",
-                  instrument: event.instrument
+                  ...event,
+                  type: "DELETE_INSTRUMENT_FAILURE"
                 })
               );
             break;
@@ -295,14 +292,14 @@ const createServicesImplementation = (
             enrollInstrument(context.initiativeId, event.walletId)
               .then(() =>
                 callback({
-                  type: "ENROLL_INSTRUMENT_SUCCESS",
-                  walletId: event.walletId
+                  ...event,
+                  type: "ENROLL_INSTRUMENT_SUCCESS"
                 })
               )
               .catch(() =>
                 callback({
-                  type: "ENROLL_INSTRUMENT_FAILURE",
-                  walletId: event.walletId
+                  ...event,
+                  type: "ENROLL_INSTRUMENT_FAILURE"
                 })
               );
             break;

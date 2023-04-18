@@ -1,6 +1,5 @@
 import { IbanDTO } from "../../../../../../definitions/idpay/IbanDTO";
 import { IbanPutDTO } from "../../../../../../definitions/idpay/IbanPutDTO";
-import { InstrumentDTO } from "../../../../../../definitions/idpay/InstrumentDTO";
 import { ConfigurationMode } from "./context";
 
 type E_START_CONFIGURATION = {
@@ -40,17 +39,20 @@ type E_ENROLL_INSTRUMENT_SUCCESS = {
 
 type E_DELETE_INSTRUMENT = {
   type: "DELETE_INSTRUMENT";
-  instrument: InstrumentDTO;
+  instrumentId: string;
+  walletId: string;
 };
 
 type E_DELETE_INSTRUMENT_SUCCESS = {
   type: "DELETE_INSTRUMENT_SUCCESS";
-  instrument: InstrumentDTO;
+  instrumentId: string;
+  walletId: string;
 };
 
 type E_DELETE_INSTRUMENT_FAILURE = {
   type: "DELETE_INSTRUMENT_FAILURE";
-  instrument: InstrumentDTO;
+  instrumentId: string;
+  walletId: string;
 };
 
 type E_ADD_PAYMENT_METHOD = {

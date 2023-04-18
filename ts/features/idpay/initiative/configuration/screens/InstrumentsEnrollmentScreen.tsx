@@ -209,7 +209,8 @@ const InstrumentsEnrollmentScreen = () => {
       const instrument = initiativeInstrumentsByIdWallet[wallet.idWallet];
       configurationMachine.send({
         type: "DELETE_INSTRUMENT",
-        instrument
+        instrumentId: instrument.instrumentId,
+        walletId: wallet.idWallet.toString()
       });
     }
   };
