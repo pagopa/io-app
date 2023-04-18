@@ -22,7 +22,7 @@ export function* handleGetBeneficiaryDetails(
       typeof getInitiativeBeneficiaryDetail
     > = yield* call(getInitiativeBeneficiaryDetail, {
       bearerAuth: token,
-      // "Accept-Language": language,
+      "Accept-Language": language,
       initiativeId: payload.initiativeId
     });
     yield pipe(
