@@ -62,6 +62,8 @@ import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { getDeviceId } from "../../utils/device";
 import { isDevEnv } from "../../utils/environment";
 import { toThumbprint } from "../../features/lollipop/utils/crypto";
+import ListItemNav from "../../components/ui/ListItemNav";
+import { Divider } from "../../components/core/Divider";
 
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "PROFILE_MAIN"> &
   LightModalContextInterface &
@@ -311,27 +313,35 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       <React.Fragment>
         <SectionHeaderComponent
           sectionHeader={I18n.t("profile.main.developersSectionHeader")}
+          style={{ borderBottomWidth: 0 }}
         />
         {isPlaygroundsEnabled && (
           <>
-            <ListItemComponent
-              title={"MyPortal Web Playground"}
+            <ListItemNav
+              value={"MyPortal Web Playground"}
+              accessibilityLabel={"MyPortal Web Playground"}
               onPress={() =>
                 navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
                   screen: ROUTES.WEB_PLAYGROUND
                 })
               }
             />
-            <ListItemComponent
-              title={"Markdown Playground"}
+            {/* We should use FlatList or FlashList to manage
+            automatically the <Divider /> component */}
+            <Divider />
+            <ListItemNav
+              value={"Markdown Playground"}
+              accessibilityLabel={"Markdown Playground"}
               onPress={() =>
                 navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
                   screen: ROUTES.MARKDOWN_PLAYGROUND
                 })
               }
             />
-            <ListItemComponent
-              title={"CGN LandingPage Playground"}
+            <Divider />
+            <ListItemNav
+              value={"CGN LandingPage Playground"}
+              accessibilityLabel="CGN LandingPage Playground"
               onPress={() =>
                 navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
                   screen: ROUTES.CGN_LANDING_PLAYGROUND
@@ -339,27 +349,33 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
               }
             />
             {isIdPayTestEnabled && (
-              <ListItemComponent
-                title={"IDPay Onboarding Playground"}
-                onPress={() =>
-                  navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-                    screen: ROUTES.IDPAY_ONBOARDING_PLAYGROUND
-                  })
-                }
-              />
+              <>
+                <Divider />
+                <ListItemNav
+                  value={"IDPay Onboarding Playground"}
+                  accessibilityLabel="IDPay Onboarding Playground"
+                  onPress={() =>
+                    navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+                      screen: ROUTES.IDPAY_ONBOARDING_PLAYGROUND
+                    })
+                  }
+                />
+              </>
             )}
           </>
         )}
+        <Divider />
         {/* Design System */}
-        <ListItemComponent
-          title={I18n.t("profile.main.designSystem")}
+        <ListItemNav
+          value={I18n.t("profile.main.designSystem")}
+          accessibilityLabel={I18n.t("profile.main.designSystem")}
           onPress={() =>
             navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
               screen: ROUTES.DESIGN_SYSTEM
             })
           }
-          isFirstItem={true}
         />
+        <Divider />
         {this.developerListItem(
           I18n.t("profile.main.pagoPaEnvironment.pagoPaEnv"),
           isPagoPATestEnabled,
