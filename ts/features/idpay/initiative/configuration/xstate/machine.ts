@@ -1,7 +1,7 @@
 import * as p from "@pagopa/ts-commons/lib/pot";
-import { assign, createMachine, forwardTo } from "xstate";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
+import { assign, createMachine, forwardTo } from "xstate";
 import { IbanListDTO } from "../../../../../../definitions/idpay/IbanListDTO";
 import {
   InitiativeDTO,
@@ -833,12 +833,12 @@ const createIDPayInitiativeConfigurationMachine = () =>
         updateInstrumentEnrollStatus: assign((context, event) => ({
           instrumentStatuses: {
             ...context.instrumentStatuses,
-            [event.instrument.idWallet]: p.noneLoading
+            [event.walletId]: p.noneLoading
           }
         })),
         updateInstrumentEnrollStatusSuccess: assign((context, event) => {
           const currentEnrollStatus =
-            context.instrumentStatuses[event.instrument.idWallet];
+            context.instrumentStatuses[event.walletId];
 
           if (p.isSome(currentEnrollStatus)) {
             // No need to update instrument status
@@ -848,21 +848,19 @@ const createIDPayInitiativeConfigurationMachine = () =>
           return {
             instrumentStatuses: {
               ...context.instrumentStatuses,
-              [event.instrument.idWallet]: p.some(
+              [event.walletId]: p.some(
                 InstrumentStatusEnum.PENDING_ENROLLMENT_REQUEST
               )
             }
           };
         }),
         updateInstrumentEnrollStatusFailure: assign((context, event) => {
-          if (event.instrument.idWallet === undefined) {
+          if (event.walletId === undefined) {
             return {};
           }
 
-          const {
-            [event.instrument.idWallet]: _removedStatus,
-            ...updatedStatuses
-          } = context.instrumentStatuses;
+          const { [event.walletId]: _removedStatus, ...updatedStatuses } =
+            context.instrumentStatuses;
 
           return {
             instrumentStatuses: updatedStatuses

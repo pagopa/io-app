@@ -1,7 +1,6 @@
 import { IbanDTO } from "../../../../../../definitions/idpay/IbanDTO";
 import { IbanPutDTO } from "../../../../../../definitions/idpay/IbanPutDTO";
 import { InstrumentDTO } from "../../../../../../definitions/idpay/InstrumentDTO";
-import { Wallet } from "../../../../../types/pagopa";
 import { ConfigurationMode } from "./context";
 
 type E_START_CONFIGURATION = {
@@ -26,17 +25,17 @@ type E_ENROLL_IBAN = {
 
 type E_ENROLL_INSTRUMENT = {
   type: "ENROLL_INSTRUMENT";
-  instrument: Wallet;
+  walletId: string;
 };
 
 type E_ENROLL_INSTRUMENT_FAILURE = {
   type: "ENROLL_INSTRUMENT_FAILURE";
-  instrument: Wallet;
+  walletId: string;
 };
 
 type E_ENROLL_INSTRUMENT_SUCCESS = {
   type: "ENROLL_INSTRUMENT_SUCCESS";
-  instrument: Wallet;
+  walletId: string;
 };
 
 type E_DELETE_INSTRUMENT = {

@@ -292,20 +292,17 @@ const createServicesImplementation = (
               );
             break;
           case "ENROLL_INSTRUMENT":
-            enrollInstrument(
-              context.initiativeId,
-              event.instrument.idWallet.toString()
-            )
+            enrollInstrument(context.initiativeId, event.walletId)
               .then(() =>
                 callback({
                   type: "ENROLL_INSTRUMENT_SUCCESS",
-                  instrument: event.instrument
+                  walletId: event.walletId
                 })
               )
               .catch(() =>
                 callback({
                   type: "ENROLL_INSTRUMENT_FAILURE",
-                  instrument: event.instrument
+                  walletId: event.walletId
                 })
               );
             break;

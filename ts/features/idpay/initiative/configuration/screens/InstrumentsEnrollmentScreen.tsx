@@ -45,7 +45,7 @@ const InstrumentsEnrollmentScreen = () => {
   const route = useRoute<InstrumentsEnrollmentScreenRouteProps>();
   const { initiativeId } = route.params;
 
-  const [stagedInstrument, setStagedInstrument] = React.useState<Wallet>();
+  const [stagedWalletId, setStagedWalletId] = React.useState<number>();
 
   const configurationMachine = useConfigurationMachineService();
 
@@ -94,7 +94,7 @@ const InstrumentsEnrollmentScreen = () => {
       failure === InitiativeFailureType.INSTRUMENT_ENROLL_FAILURE ||
       failure === InitiativeFailureType.INSTRUMENT_DELETE_FAILURE
     ) {
-      setStagedInstrument(undefined);
+      setStagedWalletId(undefined);
     }
   }, [failure]);
 
@@ -109,12 +109,12 @@ const InstrumentsEnrollmentScreen = () => {
     configurationMachine.send({ type: "ADD_PAYMENT_METHOD" });
 
   const handleEnrollConfirm = () => {
-    if (stagedInstrument) {
+    if (stagedWalletId) {
       configurationMachine.send({
         type: "ENROLL_INSTRUMENT",
-        instrument: stagedInstrument
+        walletId: stagedWalletId.toString()
       });
-      setStagedInstrument(undefined);
+      setStagedWalletId(undefined);
     }
   };
 
@@ -154,17 +154,17 @@ const InstrumentsEnrollmentScreen = () => {
       }}
     />,
     () => {
-      setStagedInstrument(undefined);
+      setStagedWalletId(undefined);
     }
   );
 
   React.useEffect(() => {
-    if (stagedInstrument) {
+    if (stagedWalletId) {
       enrollmentBottomSheetModal.present();
     } else {
       enrollmentBottomSheetModal.dismiss();
     }
-  }, [enrollmentBottomSheetModal, stagedInstrument]);
+  }, [enrollmentBottomSheetModal, stagedWalletId]);
 
   const renderFooterButtons = () => {
     if (isInstrumentsOnlyMode) {
@@ -204,7 +204,7 @@ const InstrumentsEnrollmentScreen = () => {
 
   const handleInstrumentValueChange = (wallet: Wallet) => (value: boolean) => {
     if (value) {
-      setStagedInstrument(wallet);
+      setStagedWalletId(wallet.idWallet);
     } else {
       const instrument = initiativeInstrumentsByIdWallet[wallet.idWallet];
       configurationMachine.send({
@@ -239,7 +239,7 @@ const InstrumentsEnrollmentScreen = () => {
               <InstrumentEnrollmentSwitch
                 key={walletInstrument.idWallet}
                 wallet={walletInstrument}
-                isStaged={stagedInstrument === walletInstrument}
+                isStaged={stagedWalletId === walletInstrument.idWallet}
                 onValueChange={handleInstrumentValueChange(walletInstrument)}
               />
             ))}
