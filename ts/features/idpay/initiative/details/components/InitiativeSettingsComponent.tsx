@@ -131,7 +131,7 @@ export const InitiativeSettingsComponent = (props: Props) => {
             initiative.status === StatusEnum.NOT_REFUNDABLE_ONLY_INSTRUMENT
           }
         />
-        {/* TODO: temporary button  */}
+        {/* TODO: temporary button, removed in IODPAY-175  */}
         <SettingsButtonComponent
           title={"Rimuovi iniziativa"}
           onPress={navigateToUnsubscription}
