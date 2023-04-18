@@ -1,7 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
 import React, { useCallback } from "react";
-import { ProblemJson } from "@pagopa/ts-commons/lib/responses";
 import {
   View,
   SafeAreaView,
@@ -17,7 +16,7 @@ import { ContentWrapper } from "../../../components/core/ContentWrapper";
 import ButtonSolid from "../../../components/ui/ButtonSolid";
 import ButtonOutline from "../../../components/ui/ButtonOutline";
 import { sessionTokenSelector } from "../../../store/reducers/authentication";
-import { createLollipopClient } from "../api/backend";
+import { LollipopClient, createLollipopClient } from "../api/backend";
 import { useIOSelector } from "../../../store/hooks";
 import {
   lollipopKeyTagSelector,
@@ -35,6 +34,7 @@ import { LollipopContentDigest } from "../../../../definitions/lollipop/Lollipop
 import { LollipopSignatureInput } from "../../../../definitions/lollipop/LollipopSignatureInput";
 import { LollipopSignature } from "../../../../definitions/lollipop/LollipopSignature";
 import { LollipopMethodEnum } from "../../../../definitions/lollipop/LollipopMethod";
+import { ProblemJson } from "../../../../definitions/lollipop/ProblemJson";
 
 const styles = StyleSheet.create({
   textInput: {
@@ -60,6 +60,24 @@ const styles = StyleSheet.create({
   }
 });
 
+type LollipopSignRequestBody = {
+  message: string;
+};
+const signMessage = async (
+  lollipopClient: LollipopClient,
+  body: LollipopSignRequestBody,
+  sessionToken: string
+) =>
+  await lollipopClient.signMessage({
+    body,
+    Bearer: `Bearer ${sessionToken}`,
+    "x-pagopa-lollipop-original-method": LollipopMethodEnum.POST,
+    "x-pagopa-lollipop-original-url": "" as LollipopOriginalURL,
+    "content-digest": "" as LollipopContentDigest,
+    "signature-input": "" as LollipopSignatureInput,
+    signature: "" as LollipopSignature
+  });
+
 const LollipopPlayground = () => {
   const viewRef = React.createRef<View>();
   const [httpRequestBodyText, setHttpRequestBodyText] =
@@ -68,7 +86,7 @@ const LollipopPlayground = () => {
   const [isVerificationSuccess, setIsVerificationSuccess] = React.useState<
     boolean | undefined
   >(undefined);
-  const [signResponse, setSignResponse] = React.useState<SignMessageResponse>();
+  const [signResponse, setSignResponse] = React.useState<string>();
 
   const keyTag = useIOSelector(lollipopKeyTagSelector);
   const maybePublicKey = useIOSelector(lollipopPublicKeySelector);
@@ -96,15 +114,11 @@ const LollipopPlayground = () => {
           message: body
         };
         try {
-          const signResponse = await lollipopClient.signMessage({
-            body: bodyMessage,
-            Bearer: `Bearer ${maybeSessionToken.value}`,
-            "x-pagopa-lollipop-original-method": LollipopMethodEnum.POST,
-            "x-pagopa-lollipop-original-url": "" as LollipopOriginalURL,
-            "content-digest": "" as LollipopContentDigest,
-            "signature-input": "" as LollipopSignatureInput,
-            signature: "" as LollipopSignature
-          });
+          const signResponse = await signMessage(
+            lollipopClient,
+            bodyMessage,
+            maybeSessionToken.value
+          );
           if (E.isRight(signResponse)) {
             const status = signResponse.right.status;
             if (status !== 200) {
@@ -118,7 +132,7 @@ const LollipopPlayground = () => {
             } else {
               const response = signResponse.right.value as SignMessageResponse;
               setIsVerificationSuccess(true);
-              setSignResponse(response);
+              setSignResponse(response.response);
             }
           } else {
             setIsVerificationSuccess(false);
@@ -177,7 +191,7 @@ const LollipopPlayground = () => {
                 <Alert
                   viewRef={viewRef}
                   variant={isVerificationSuccess ? "success" : "error"}
-                  content={signResponse?.response ?? ""}
+                  content={signResponse ?? ""}
                 />
               )}
             </View>
