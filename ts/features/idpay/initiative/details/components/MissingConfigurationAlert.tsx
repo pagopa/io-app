@@ -12,7 +12,9 @@ import {
 
 type StatusWithAlert = Exclude<
   InitiativeStatusEnum,
-  InitiativeStatusEnum.REFUNDABLE | InitiativeStatusEnum.UNSUBSCRIBED
+  | InitiativeStatusEnum.REFUNDABLE
+  | InitiativeStatusEnum.UNSUBSCRIBED
+  | InitiativeStatusEnum.SUSPENDED
 >;
 
 type Props = {
@@ -27,7 +29,8 @@ const MissingConfigurationAlert = (props: Props) => {
 
   if (
     status === InitiativeStatusEnum.UNSUBSCRIBED ||
-    status === InitiativeStatusEnum.REFUNDABLE
+    status === InitiativeStatusEnum.REFUNDABLE ||
+    status === InitiativeStatusEnum.SUSPENDED
   ) {
     return null;
   }
