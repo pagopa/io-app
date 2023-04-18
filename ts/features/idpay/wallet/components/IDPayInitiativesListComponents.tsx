@@ -87,7 +87,6 @@ const SwitchOrStatusLabel = ({ item, idWallet }: SwitchOrStatusLabelProps) => {
       );
     case StatusEnum.PENDING_ENROLLMENT_REQUEST:
     case StatusEnum.PENDING_DEACTIVATION_REQUEST:
-    case StatusEnum.ENROLLMENT_FAILED:
       return (
         <NBbadge style={styles.badge}>
           <LabelSmall color="white">
