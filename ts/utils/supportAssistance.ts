@@ -100,6 +100,13 @@ export const zendeskPaymentMethodCategory: ZendeskCategory = {
     "en-EN": "Payment method"
   }
 };
+export const zendeskFCICategory: ZendeskCategory = {
+  value: "firma_con_io",
+  description: {
+    "it-IT": "Firma con IO",
+    "en-EN": "Firma con IO"
+  }
+};
 
 export const resetAssistanceData = () => {
   resetCustomFields();

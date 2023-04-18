@@ -13,26 +13,32 @@ describe("Test FciDocuments screen", () => {
   beforeEach(() => {
     jest.useFakeTimers();
   });
-  it("should render the FciDocuments screen", () => {
+  it("it should render the FciDocuments screen", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store: Store<GlobalState> = createStore(
       appReducer,
       globalState as any
     );
     store.dispatch(
-      fciSignatureRequestFromId.success(mockSignatureRequestDetailView)
+      fciSignatureRequestFromId.success({
+        ...mockSignatureRequestDetailView,
+        documents: []
+      })
     );
     const component = renderComponent(store);
     expect(component).toBeTruthy();
   });
-  it("should render the content and footer with at least one document", () => {
+  it("it should render the content and footer", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store: Store<GlobalState> = createStore(
       appReducer,
       globalState as any
     );
     store.dispatch(
-      fciSignatureRequestFromId.success(mockSignatureRequestDetailView)
+      fciSignatureRequestFromId.success({
+        ...mockSignatureRequestDetailView,
+        documents: []
+      })
     );
     const testComponent = renderComponent(store);
     expect(testComponent).toBeTruthy();

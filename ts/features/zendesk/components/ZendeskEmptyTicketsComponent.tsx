@@ -18,11 +18,13 @@ import { handleContactSupport } from "../utils";
 type Props = {
   assistanceForPayment: boolean;
   assistanceForCard: boolean;
+  assistanceForFci: boolean;
 };
 
 const ZendeskEmptyTicketsComponent = ({
   assistanceForPayment,
-  assistanceForCard
+  assistanceForCard,
+  assistanceForFci
 }: Props) => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const zendeskRemoteConfig = useIOSelector(zendeskConfigSelector);
@@ -33,9 +35,16 @@ const ZendeskEmptyTicketsComponent = ({
         navigation,
         assistanceForPayment,
         assistanceForCard,
+        assistanceForFci,
         zendeskRemoteConfig
       ),
-    [navigation, assistanceForPayment, assistanceForCard, zendeskRemoteConfig]
+    [
+      navigation,
+      assistanceForPayment,
+      assistanceForCard,
+      assistanceForFci,
+      zendeskRemoteConfig
+    ]
   );
 
   const continueButtonProps = {
