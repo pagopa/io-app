@@ -6,7 +6,7 @@ import { getRandomEnumValue } from "./utils";
 
 const now = new Date();
 
-const createRandomSignatureRequest = (): SignatureRequestListView => ({
+export const createRandomSignatureRequest = (): SignatureRequestListView => ({
   id: "mockedId" as SignatureRequestListView["id"],
   status: getRandomEnumValue(SignatureRequestStatusEnum),
   created_at: new Date(),
