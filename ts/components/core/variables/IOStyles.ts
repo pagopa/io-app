@@ -144,6 +144,14 @@ export const IOButtonStyles = StyleSheet.create({
     // paddingHorizontal: PixelRatio.getFontScale() * 16,
     // borderRadius: PixelRatio.getFontScale() * 8
   },
+  buttonLink: {
+    flexDirection: "row",
+    alignItems: "center",
+    textAlignVertical: "center", // Android
+    justifyContent: "center",
+    // Reset default visual parameters
+    elevation: 0
+  },
   /* Labels */
   label: {
     alignSelf: "center"
